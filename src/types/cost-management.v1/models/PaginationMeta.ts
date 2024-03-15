@@ -4,4 +4,6 @@
 
 export type PaginationMeta = {
   count?: number;
+  limit?: number;
+  offset?: number;
 };

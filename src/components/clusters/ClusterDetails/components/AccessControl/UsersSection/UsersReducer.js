@@ -1,4 +1,4 @@
-import produce from 'immer';
+import { produce } from 'immer';
 import get from 'lodash/get';
 import {
   REJECTED_ACTION,
@@ -23,6 +23,7 @@ const initialState = {
   },
 };
 
+// eslint-disable-next-line default-param-last
 function UsersReducer(state = initialState, action) {
   // eslint-disable-next-line consistent-return
   return produce(state, (draft) => {

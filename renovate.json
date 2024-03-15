@@ -1,0 +1,19 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": [
+    "config:recommended"
+  ],
+  "labels": ["dependency update"],
+  "packageRules": [
+    {
+      "groupName": "all dependencies",
+      "groupSlug": "all-dependencies",
+      "matchPackagePatterns": [".*"]
+    },
+    {
+      "groupName": "openshift-assisted dependencies",
+      "matchPackagePatterns": ["^@openshift-assisted"],
+      "enabled": false
+    }
+  ]
+}

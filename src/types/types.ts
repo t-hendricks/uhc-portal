@@ -8,7 +8,6 @@ import type {
   ClusterState,
   ClusterStatus,
   LimitedSupportReason,
-  Subnetwork,
   VersionGateAgreement,
 } from './clusters_mgmt.v1';
 
@@ -23,7 +22,7 @@ export type ViewOptions = {
   sorting: {
     sortField: string;
     isAscending: boolean;
-    sortIndex?: number;
+    sortIndex: number;
   };
   flags: {
     [flag: string]: any;
@@ -43,8 +42,13 @@ export type FakeCluster = // AICluster &
     | 'managed'
     | 'ccs'
     | 'external_id'
+    | 'inflight_checks'
     | 'name'
     | 'version'
+    | 'hypershift'
+    | 'aws'
+    | 'gcp_network'
+    | 'status'
   > & {
     metrics: OneMetric;
     state?: string | ClusterState;
@@ -81,6 +85,9 @@ export type AugmentedCluster = ClusterWithPermissions & {
   machinePoolsActions?: {
     [action: string]: boolean;
   };
+  kubeletConfigActions?: {
+    [action: string]: boolean;
+  };
   upgradeGates?: VersionGateAgreement[];
   aiCluster?: AICluster;
   limitedSupportReasons?: LimitedSupportReason[];
@@ -109,12 +116,6 @@ export type AWSCredentials = Pick<
   AWS,
   'account_id' | 'access_key_id' | 'secret_access_key' | 'sts'
 >;
-
-/** A subnet augmented with info from its parent CloudVPC. */
-export type AugmentedSubnetwork = Subnetwork & {
-  ['vpc_id']: string;
-  ['vpc_name']?: string; // presence depends on AWS "Name" tag, not guaranteed.
-};
 
 export type ViewSorting = {
   isAscending: boolean;

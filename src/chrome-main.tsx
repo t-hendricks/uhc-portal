@@ -16,7 +16,9 @@ limitations under the License.
 import React from 'react';
 import './i18n';
 import { BrowserRouter } from 'react-router-dom';
+import { CompatRouter } from 'react-router-dom-v5-compat';
 import { Provider } from 'react-redux';
+
 // No type definitions
 // @ts-ignore
 import NotificationPortal from '@redhat-cloud-services/frontend-components-notifications/NotificationPortal';
@@ -26,16 +28,16 @@ import { SessionTiming } from '@sentry/integrations';
 
 import * as OCM from '@openshift-assisted/ui-lib/ocm';
 
-import config from './config';
+import { authInterceptor } from '~/services/apiRequest';
 
 import getNavClickParams from './common/getNavClickParams';
 import ocmBaseName from './common/getBaseName';
 
 import { userInfoResponse } from './redux/actions/userActions';
 import { detectFeatures } from './redux/actions/featureActions';
-
 import { store } from './redux/store';
-import { authInterceptor } from './services/apiRequest';
+
+import config from './config';
 
 import App from './components/App/App';
 import type { AppThunkDispatch } from './redux/types';
@@ -63,6 +65,7 @@ class AppEntry extends React.Component {
     insights.chrome.identifyApp('').then(() => {
       insights.chrome.appNavClick(getNavClickParams(window.location.pathname));
     });
+    config.dateConfig();
     insights.chrome.auth.getUser().then((data) => {
       if (data?.identity?.user) {
         store.dispatch(userInfoResponse(data.identity.user));
@@ -73,6 +76,7 @@ class AppEntry extends React.Component {
         if (!config.envOverride && config.configData.sentryDSN) {
           Sentry.init({
             dsn: config.configData.sentryDSN,
+            ...(APP_SENTRY_RELEASE_VERSION ? { release: APP_SENTRY_RELEASE_VERSION } : {}),
             integrations: [
               new SessionTiming(),
               new Sentry.Integrations.GlobalHandlers({
@@ -120,7 +124,9 @@ class AppEntry extends React.Component {
               /* Block the default browser prompt (window.confirm). */
             }}
           >
-            <App />
+            <CompatRouter>
+              <App />
+            </CompatRouter>
           </BrowserRouter>
         </Provider>
       );

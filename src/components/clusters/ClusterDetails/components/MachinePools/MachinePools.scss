@@ -1,18 +1,13 @@
 .ocm-c-machine-pools__card {
-  &--body {
-    .pf-c-button {
-      margin-top: var(--pf-global--spacer--md);
-    }
-  }
-  .pf-c-label--break-word {
+  .pf-v5-c-label--break-word {
     white-space: normal;
     word-break: break-word;
   }
-  .pf-c-table__toggle {
+  .pf-v5-c-table__toggle {
     padding-top: 0;
   }
-  .pf-c-table__expandable-row-content .autoscale__lim {
-    color: var(--pf-global--secondary-color--100);
+  .pf-v5-c-table__expandable-row-content .autoscale__lim {
+    color: var(--pf-v5-global--secondary-color--100);
   }
   .nodes-count {
     margin: 0;
@@ -23,4 +18,3 @@
 .ocm-c-machine-pools__spot-label {
   margin-left: 8px;
 }
-

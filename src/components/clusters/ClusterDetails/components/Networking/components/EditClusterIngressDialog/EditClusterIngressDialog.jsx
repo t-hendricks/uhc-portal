@@ -46,7 +46,7 @@ class EditClusterIngressDialog extends React.Component {
       editClusterRoutersResponse,
       isOpen,
       hideAdvancedOptions,
-      additionalRouterEnabled,
+      canEditAdditionalRouter,
       showRouterVisibilityWarning,
       valid,
       pristine,
@@ -93,10 +93,7 @@ class EditClusterIngressDialog extends React.Component {
               component={ReduxCheckbox}
               name="enable_additional_router"
               label="Enable additional router"
-              // All changes to the additional router are disabled due to deprecation.
-              // Except deletion.
-              isDisabled={!additionalRouterEnabled}
-              extendedHelpText="The use of an additional router is deprecated in favor of the single application ingress."
+              extendedHelpText="The use of an additional router is deprecated in favor of the single application ingress. Since it has already been enabled, the additional router can be still edited for 4.11 and 4.12 versions but once disabled, it can not be re-enabled again. In the 4.13+ versions, the additional router can not be edited but disabled only."
             />
           </FormGroup>
           <FormGroup fieldId="additional_router_address" isStack>
@@ -109,8 +106,7 @@ class EditClusterIngressDialog extends React.Component {
               component={ReduxCheckbox}
               name="private_additional_router"
               label="Make router private"
-              // All changes to the additional router are disabled due to deprecation.
-              isDisabled
+              isDisabled={!canEditAdditionalRouter}
             />
           </FormGroup>
           <Field
@@ -122,8 +118,7 @@ class EditClusterIngressDialog extends React.Component {
             helpText="Comma separated pairs in key=value format. If no label is specified, all routes will be exposed on both routers."
             validate={checkRouteSelectors}
             key="route_selectors"
-            // All changes to the additional router are disabled due to deprecation.
-            isDisabled
+            readOnlyVariant={canEditAdditionalRouter ? undefined : 'default'}
           />
         </Form>
       </ExpandableSection>
@@ -188,7 +183,7 @@ EditClusterIngressDialog.propTypes = {
   valid: PropTypes.bool.isRequired,
   pristine: PropTypes.bool.isRequired,
   hideAdvancedOptions: PropTypes.bool.isRequired,
-  additionalRouterEnabled: PropTypes.bool.isRequired,
+  canEditAdditionalRouter: PropTypes.bool.isRequired,
   showRouterVisibilityWarning: PropTypes.bool.isRequired,
 };
 

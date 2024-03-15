@@ -1,4 +1,4 @@
-import apiRequest from './apiRequest';
+import apiRequest from '~/services/apiRequest';
 import type {
   Account,
   AccountList,
@@ -16,8 +16,8 @@ import type {
 } from '../types/accounts_mgmt.v1';
 import type {
   AWSSTSPolicy,
-  STSAccountRole,
-  STSAccountRolesList,
+  AWSSTSRole,
+  AWSSTSAccountRole,
   STSCredentialRequest,
 } from '../types/clusters_mgmt.v1';
 
@@ -170,12 +170,12 @@ const getOrganizationLabels = (organizationID: string) =>
   apiRequest.get<LabelList>(`/api/accounts_mgmt/v1/organizations/${organizationID}/labels`);
 
 const getAWSAccountARNs = (awsAccountID: string) =>
-  apiRequest.post<STSAccountRolesList>('/api/clusters_mgmt/v1/aws_inquiries/sts_account_roles', {
+  apiRequest.post<AWSSTSAccountRole>('/api/clusters_mgmt/v1/aws_inquiries/sts_account_roles', {
     account_id: awsAccountID,
   });
 
 const getOCMRole = (awsAccountID: string) =>
-  apiRequest.post<STSAccountRole>('/api/clusters_mgmt/v1/aws_inquiries/sts_ocm_role', {
+  apiRequest.post<AWSSTSRole>('/api/clusters_mgmt/v1/aws_inquiries/sts_ocm_role', {
     account_id: awsAccountID,
   });
 

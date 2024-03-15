@@ -4,7 +4,7 @@ import { useDispatch } from 'react-redux';
 import { Title, Form, Alert } from '@patternfly/react-core';
 
 import { useGlobalState } from '~/redux/hooks/useGlobalState';
-import { clearCcsCredientialsInquiry } from '~/components/clusters/CreateOSDPage/CreateOSDWizard/ccsInquiriesActions';
+import { clearCcsCredientialsInquiry } from '~/redux/actions/ccsInquiriesActions';
 import { FieldId } from '~/components/clusters/wizards/osd/constants';
 import { useFormState } from '~/components/clusters/wizards/hooks';
 import { CloudProviderType } from '~/components/clusters/wizards/common/constants';

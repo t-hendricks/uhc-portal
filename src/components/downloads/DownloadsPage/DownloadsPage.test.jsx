@@ -1,8 +1,7 @@
 import React from 'react';
-import { shallow } from 'enzyme';
-import { screen } from '@testing-library/dom';
-import { MemoryRouter } from 'react-router';
-
+import { MemoryRouter } from 'react-router-dom';
+import { CompatRouter } from 'react-router-dom-v5-compat';
+import { mockRestrictedEnv, render, screen, checkAccessibility } from '~/testUtils';
 import DownloadsPage, {
   allArchitecturesForTool,
   allOperatingSystemsForTool,
@@ -17,7 +16,6 @@ import {
   architectures,
   urls,
 } from '../../../common/installLinks.mjs';
-import { mockRestrictedEnv, render } from '../../../testUtils';
 
 const { linux, mac, windows } = operatingSystems;
 const { arm, ppc, s390x, x86 } = architectures;
@@ -75,10 +73,10 @@ describe('downloadChoice', () => {
     if (urls[tool]) {
       // skip tools that have no data yet
       it(`initially ${tool} button has a url`, () => {
-        const wrapper = shallow(chooser.downloadButton);
-        wrapper.find('DownloadButton').forEach((w) => {
-          expect(w.props().url).toBeDefined();
-        });
+        const { getByRole } = render(chooser.downloadButton);
+
+        const downloadButton = getByRole('link');
+        expect(downloadButton).toHaveAttribute('href', expect.stringMatching(/.+/));
       });
     }
   });
@@ -115,29 +113,61 @@ describe('initialSelection', () => {
 });
 
 describe('<DownloadsPage>', () => {
-  it('renders', () => {
-    const props = {
-      location: { hash: '' },
-      history: { replace: () => {} },
-      token: { auths: { foo: 'bar' } },
-      getAuthToken: () => {},
-      githubReleases: {
-        'redhat-developer/app-services-cli': {
-          fulfilled: true,
-          data: {
-            tag_name: 'v0.40.0',
-            foo: 'bar',
-          },
-        },
-        'openshift-online/ocm-cli': {
-          fulfilled: false,
+  const getAuthToken = jest.fn();
+  const getLatestRelease = jest.fn();
+
+  const props = {
+    location: { hash: '' },
+    token: { auths: { foo: 'bar' } },
+    getAuthToken,
+    githubReleases: {
+      'redhat-developer/app-services-cli': {
+        fulfilled: true,
+        data: {
+          tag_name: 'v0.40.0',
+          foo: 'bar',
         },
       },
-      getLatestRelease: () => {},
-    };
+      'openshift-online/ocm-cli': {
+        fulfilled: false,
+      },
+    },
+    getLatestRelease,
+  };
 
-    const wrapper = shallow(<DownloadsPage {...props} />);
-    expect(wrapper).toMatchSnapshot();
+  afterEach(() => {
+    jest.clearAllMocks();
+  });
+
+  it.skip('is accessible', async () => {
+    const { container } = render(
+      <MemoryRouter>
+        <CompatRouter>
+          <DownloadsPage {...props} />
+        </CompatRouter>
+      </MemoryRouter>,
+    );
+    // This fails with a   "IDs used in ARIA and labels must be unique (duplicate-id-aria)" error
+    await checkAccessibility(container);
+  });
+
+  it('expand all', async () => {
+    const { user } = render(
+      <MemoryRouter>
+        <CompatRouter>
+          <DownloadsPage {...props} />
+        </CompatRouter>
+      </MemoryRouter>,
+    );
+
+    const expandBtn = screen.getByRole('button', { name: /expand all/i });
+
+    await user.click(expandBtn);
+
+    const expandButtons = screen.getAllByRole('button', { name: /details/i });
+    expandButtons.forEach((button) => {
+      expect(button).toHaveAttribute('aria-expanded', 'true');
+    });
   });
 
   describe('in restricted env', () => {
@@ -148,7 +178,6 @@ describe('<DownloadsPage>', () => {
     it('renders only OC/ROSA CLI and tokens', () => {
       const props = {
         location: { hash: '' },
-        history: { replace: () => {} },
         token: { auths: { foo: 'bar' } },
         getAuthToken: () => {},
         githubReleases: {
@@ -168,7 +197,9 @@ describe('<DownloadsPage>', () => {
       isRestrictedEnv.mockReturnValue(true);
       render(
         <MemoryRouter>
-          <DownloadsPage {...props} />
+          <CompatRouter>
+            <DownloadsPage {...props} />
+          </CompatRouter>
         </MemoryRouter>,
       );
       expect(screen.getAllByTestId(/downloads-section-.*/)).toHaveLength(2);

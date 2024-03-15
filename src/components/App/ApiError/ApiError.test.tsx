@@ -1,15 +1,11 @@
 import React from 'react';
-import { shallow } from 'enzyme';
-import { createMemoryHistory } from 'history';
+import { CompatRouter } from 'react-router-dom-v5-compat';
 import type { AxiosResponse } from 'axios';
-import apiRequest from '../../../services/apiRequest';
+import { TestRouter, screen, render } from '~/testUtils';
+import apiRequest from '~/services/apiRequest';
 import ApiError from './ApiError';
-import TermsError from '../../common/TermsGuard/TermsError';
 
-jest.mock('../../../services/apiRequest');
-
-const fixtures = {
-  history: createMemoryHistory(),
+const defaultProps = {
   children: <div>ApiErrorChildren</div>,
   apiRequest,
   showApiError: jest.fn(),
@@ -19,12 +15,17 @@ const fixtures = {
 describe('ApiError', () => {
   it('should render children if no api errors', () => {
     const apiError = null;
-    const wrapper = shallow(
-      <ApiError {...fixtures} apiError={apiError}>
-        {fixtures.children}
-      </ApiError>,
+    render(
+      <TestRouter>
+        <CompatRouter>
+          <ApiError {...defaultProps} apiError={apiError}>
+            {defaultProps.children}
+          </ApiError>
+        </CompatRouter>
+      </TestRouter>,
     );
-    expect(wrapper.equals(fixtures.children)).toBe(true);
+
+    expect(screen.getByText('ApiErrorChildren')).toBeInTheDocument();
   });
 
   it('should render terms error page', () => {
@@ -40,13 +41,17 @@ describe('ApiError', () => {
         ],
       },
     } as AxiosResponse;
-    const wrapper = shallow(
-      <ApiError {...fixtures} apiError={apiError}>
-        {fixtures.children}
-      </ApiError>,
+
+    render(
+      <TestRouter>
+        <CompatRouter>
+          <ApiError {...defaultProps} apiError={apiError}>
+            {defaultProps.children}
+          </ApiError>
+        </CompatRouter>
+      </TestRouter>,
     );
-    expect(
-      wrapper.matchesElement(<TermsError error={apiError} restore={fixtures.clearApiError} />),
-    ).toBe(true);
+
+    expect(screen.getByRole('link', { name: 'View Terms and Conditions' })).toBeInTheDocument();
   });
 });

@@ -1,5 +1,4 @@
 import { v4 } from 'uuid';
-import Login from '../../pageobjects/login.page';
 import ClusterListPage from '../../pageobjects/ClusterList.page';
 import RegisterClusterPage from '../../pageobjects/RegisterCluster.page';
 import ClusterDetailsPage from '../../pageobjects/ClusterDetails.page';
@@ -7,16 +6,6 @@ import ClusterDetailsPage from '../../pageobjects/ClusterDetails.page';
 describe('Register cluster flow', { tags: ['ci', 'smoke'] }, () => {
   const clusterID = v4();
   const displayName = `cypress-${clusterID}`;
-
-  before(() => {
-    cy.visit('/');
-    Login.isLoginPageUrl();
-    Login.login();
-
-    ClusterListPage.isClusterListUrl();
-    ClusterListPage.waitForDataReady();
-    cy.getByTestId('create_cluster_btn').should('be.visible');
-  });
 
   it('navigate to register cluster', () => {
     ClusterListPage.registerCluster().should('be.visible').click();
@@ -29,11 +18,11 @@ describe('Register cluster flow', { tags: ['ci', 'smoke'] }, () => {
     RegisterClusterPage.clusterIDError().should('be.visible');
     RegisterClusterPage.clusterIDError().should(
       'have.text',
-      " Cluster ID 'not really a uuid' is not a valid UUID.",
+      "Cluster ID 'not really a uuid' is not a valid UUID.",
     );
     RegisterClusterPage.clusterIDInput().clear();
     RegisterClusterPage.clusterIDError().should('be.visible');
-    RegisterClusterPage.clusterIDError().should('have.text', ' Cluster ID is required.');
+    RegisterClusterPage.clusterIDError().should('have.text', 'Cluster ID is required.');
   });
 
   it('shows error when display name is not valid', () => {
@@ -41,7 +30,7 @@ describe('Register cluster flow', { tags: ['ci', 'smoke'] }, () => {
     RegisterClusterPage.displayNameError().should('be.visible');
     RegisterClusterPage.displayNameError().should(
       'have.text',
-      ' Cluster display name may not exceed 63 characters.',
+      'Cluster display name may not exceed 63 characters.',
     );
   });
 
@@ -50,12 +39,12 @@ describe('Register cluster flow', { tags: ['ci', 'smoke'] }, () => {
     RegisterClusterPage.clusterURLError().should('be.visible');
     RegisterClusterPage.clusterURLError().should(
       'have.text',
-      ' The URL should include the scheme prefix (http://, https://)',
+      'The URL should include the scheme prefix (http://, https://)',
     );
     RegisterClusterPage.clusterURLInput().clear();
     RegisterClusterPage.clusterURLInput().type('https://uwu').blur();
     RegisterClusterPage.clusterURLError().should('be.visible');
-    RegisterClusterPage.clusterURLError().should('have.text', ' Invalid URL');
+    RegisterClusterPage.clusterURLError().should('have.text', 'Invalid URL');
   });
 
   it('redirects to cluster list when clicking cancel', () => {

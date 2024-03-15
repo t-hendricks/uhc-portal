@@ -1,19 +1,19 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import './HibernatingClusterCard.scss';
-
 import {
   Card,
   CardBody,
   EmptyState,
-  Title,
   EmptyStateIcon,
   EmptyStateVariant,
   EmptyStateBody,
-  EmptyStateSecondaryActions,
+  EmptyStateActions,
+  EmptyStateHeader,
+  EmptyStateFooter,
 } from '@patternfly/react-core';
+import { AsleepIcon } from '@patternfly/react-icons/dist/esm/icons/asleep-icon';
+import { InProgressIcon } from '@patternfly/react-icons/dist/esm/icons/in-progress-icon';
 
-import { AsleepIcon, InProgressIcon } from '@patternfly/react-icons';
 import clusterStates from '../clusterStates';
 import modals from '../../../common/Modal/modals';
 import ButtonWithTooltip from '../../../common/ButtonWithTooltip';
@@ -51,9 +51,6 @@ function HibernatingClusterCard({ cluster, openModal }) {
       body =
         'The cluster will not utilize any infrastructure and all operations will not be available';
       icon = InProgressIcon;
-      showButton = true;
-      buttonDisableReason =
-        'This cluster is powering down; you will be able to resume after it reaches hibernating state.';
       break;
     default:
       title = 'Cluster is currently hibernating';
@@ -66,25 +63,28 @@ function HibernatingClusterCard({ cluster, openModal }) {
   }
 
   return (
-    <Card id="hibernatingClusterCard">
+    <Card>
       <CardBody>
-        <EmptyState variant={EmptyStateVariant.large}>
-          <EmptyStateIcon className="status-icon" icon={icon} />
-          <Title headingLevel="h4" size="lg">
-            {title}
-          </Title>
+        <EmptyState variant={EmptyStateVariant.sm}>
+          <EmptyStateHeader
+            titleText={title}
+            icon={<EmptyStateIcon icon={icon} />}
+            headingLevel="h4"
+          />
           <EmptyStateBody>{body}</EmptyStateBody>
-          <EmptyStateSecondaryActions>
-            {showButton && (
-              <ButtonWithTooltip
-                variant="link"
-                disableReason={buttonDisableReason}
-                onClick={openResumeClusterModal}
-              >
-                Resume from Hibernation
-              </ButtonWithTooltip>
-            )}
-          </EmptyStateSecondaryActions>
+          <EmptyStateFooter>
+            <EmptyStateActions>
+              {showButton && (
+                <ButtonWithTooltip
+                  variant="link"
+                  disableReason={buttonDisableReason}
+                  onClick={openResumeClusterModal}
+                >
+                  Resume from Hibernation
+                </ButtonWithTooltip>
+              )}
+            </EmptyStateActions>
+          </EmptyStateFooter>
         </EmptyState>
       </CardBody>
     </Card>

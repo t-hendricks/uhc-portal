@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 
 import { Form, FormGroup, TextInput } from '@patternfly/react-core';
 
+import { FormGroupHelperText } from '~/components/common/FormGroupHelperText';
 import Modal from '../../../../../../common/Modal/Modal';
 import { validateRHITUsername } from '../../../../../../../common/validators';
 
@@ -76,7 +77,7 @@ class AddNotificationContactDialog extends Component {
         isPrimaryDisabled={!!validationMessage || addContactResponse.pending || userName === ''}
         isPending={addContactResponse.pending}
       >
-        <p className="pf-u-mb-xl">
+        <p className="pf-v5-u-mb-xl">
           Identify the user to be added as notification contact. These users will be contacted in
           the event of notifications about this cluster.
         </p>
@@ -87,22 +88,18 @@ class AddNotificationContactDialog extends Component {
             e.preventDefault();
           }}
         >
-          <FormGroup
-            helperTextInvalid={validationMessage}
-            validated={!validationMessage ? 'default' : 'error'}
-            label="Red Hat username or email"
-            isRequired
-            fieldId="username"
-          >
+          <FormGroup label="Red Hat username or email" isRequired fieldId="username">
             <TextInput
               value={userName}
               isRequired
               id="username"
               type="text"
               validated={!validationMessage ? 'default' : 'error'}
-              onChange={this.setUserNameValue}
+              onChange={(_event, userNameValue) => this.setUserNameValue(userNameValue)}
               aria-label="user name"
             />
+
+            <FormGroupHelperText touched error={validationMessage} />
           </FormGroup>
         </Form>
       </Modal>

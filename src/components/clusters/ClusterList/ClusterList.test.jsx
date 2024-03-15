@@ -1,12 +1,11 @@
 import React from 'react';
-import { screen } from '@testing-library/dom';
-import { MemoryRouter } from 'react-router';
-
+import { MemoryRouter } from 'react-router-dom';
+import { CompatRouter } from 'react-router-dom-v5-compat';
 import ClusterList from './ClusterList';
-import fixtures from '../ClusterDetails/__test__/ClusterDetails.fixtures';
+import fixtures from '../ClusterDetails/__tests__/ClusterDetails.fixtures';
 import { normalizedProducts } from '../../../common/subscriptionTypes';
 import { viewConstants } from '../../../redux/constants';
-import { mockRestrictedEnv, render } from '../../../testUtils';
+import { mockRestrictedEnv, render, screen } from '../../../testUtils';
 
 describe('<ClusterList />', () => {
   describe('in restricted env', () => {
@@ -42,7 +41,13 @@ describe('<ClusterList />', () => {
 
     it('should call onListFlagsSet with ROSA filter', () => {
       isRestrictedEnv.mockReturnValue(true);
-      render(<ClusterList {...props} />);
+      render(
+        <MemoryRouter>
+          <CompatRouter>
+            <ClusterList {...props} />
+          </CompatRouter>
+        </MemoryRouter>,
+      );
       expect(onListFlagsSet).toHaveBeenCalled();
       const args = onListFlagsSet.mock.calls[0];
       expect(args[0]).toBe('subscriptionFilter');
@@ -53,7 +58,9 @@ describe('<ClusterList />', () => {
     it('does not render filtering', () => {
       const { rerender } = render(
         <MemoryRouter>
-          <ClusterList {...props} />
+          <CompatRouter>
+            <ClusterList {...props} />
+          </CompatRouter>
         </MemoryRouter>,
       );
       expect(screen.queryByTestId('cluster-list-filter-dropdown')).toBeInTheDocument();
@@ -61,7 +68,9 @@ describe('<ClusterList />', () => {
       isRestrictedEnv.mockReturnValue(true);
       rerender(
         <MemoryRouter>
-          <ClusterList {...props} />
+          <CompatRouter>
+            <ClusterList {...props} />
+          </CompatRouter>
         </MemoryRouter>,
       );
       expect(screen.queryByTestId('cluster-list-filter-dropdown')).not.toBeInTheDocument();

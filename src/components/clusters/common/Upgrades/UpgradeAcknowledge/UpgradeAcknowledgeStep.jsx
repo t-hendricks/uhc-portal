@@ -27,6 +27,7 @@ const UpgradeAcknowledgeStep = (props) => {
     if (initiallyConfirmed) {
       setTypedWord(ackWord);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
@@ -34,6 +35,7 @@ const UpgradeAcknowledgeStep = (props) => {
       return confirmed(true);
     }
     return confirmed(false);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [typedWord]);
 
   return (
@@ -43,16 +45,11 @@ const UpgradeAcknowledgeStep = (props) => {
           1. Review and prevent update issues
         </Title>
         <ul className="wizard-step-body">
-          {unmetAcknowledgements.map((ack) => (
-            <li data-testid="unmetAcknowledgement">
+          {unmetAcknowledgements.map((ack, index) => (
+            // eslint-disable-next-line react/no-array-index-key
+            <li key={`ack-${index}`} data-testid="unmetAcknowledgement">
               {ack.description ? <p>{ack.description}</p> : null}
-              <Alert
-                id="upgrade-ack-alert"
-                isPlain
-                isInline
-                variant="warning"
-                title={ack.warning_message}
-              >
+              <Alert isPlain isInline variant="warning" title={ack.warning_message}>
                 {ack.documentation_url ? (
                   <ExternalLink href={ack.documentation_url}>Learn more</ExternalLink>
                 ) : null}
@@ -95,7 +92,7 @@ const UpgradeAcknowledgeStep = (props) => {
                 isRequired
                 id="upgradeAcknowledgementModalText"
                 type="text"
-                onChange={(val) => setTypedWord(val)}
+                onChange={(_event, val) => setTypedWord(val)}
                 placeholder="Type here"
                 data-testid="acknowledgeTextInput"
               />

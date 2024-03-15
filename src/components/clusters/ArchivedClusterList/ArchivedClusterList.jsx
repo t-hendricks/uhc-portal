@@ -21,11 +21,12 @@ import React, { Component } from 'react';
 
 import { PageHeader, PageHeaderTitle } from '@redhat-cloud-services/frontend-components/PageHeader';
 import Spinner from '@redhat-cloud-services/frontend-components/Spinner';
-import { Link } from 'react-router-dom';
+import { Link } from 'react-router-dom-v5-compat';
 
 import { Card, Toolbar, ToolbarItem, ToolbarContent, PageSection } from '@patternfly/react-core';
 
 import { AppPage } from '~/components/App/AppPage';
+import { ONLY_MY_CLUSTERS_TOGGLE_CLUSTER_ARCHIVES_LIST } from '~/common/localStorageConstants';
 import ClusterListFilter from '../common/ClusterListFilter';
 import ClusterListFilterDropDown from '../ClusterList/components/ClusterListFilterDropdown';
 import ClusterListFilterChipGroup from '../ClusterList/components/ClusterListFilterChipGroup';
@@ -34,7 +35,7 @@ import ViewOnlyMyClustersToggle from '../ClusterList/components/ViewOnlyMyCluste
 import ArchivedClusterListTable from './components/ArchiveClusterListTable/ArchivedClusterListTable';
 import RefreshBtn from '../../common/RefreshButton/RefreshButton';
 import ErrorTriangle from '../common/ErrorTriangle';
-import GlobalErrorBox from '../common/GlobalErrorBox';
+import GlobalErrorBox from '../common/GlobalErrorBox/GlobalErrorBox';
 import Breadcrumbs from '../../common/Breadcrumbs';
 
 import Unavailable from '../../common/Unavailable';
@@ -160,19 +161,20 @@ class ArchivedClusterList extends Component {
                   <ToolbarItem>
                     <ClusterListFilter view={viewConstants.ARCHIVED_CLUSTERS_VIEW} />
                   </ToolbarItem>
-                  <ToolbarItem className="pf-l-split__item split-margin-left">
+                  <ToolbarItem className="pf-v5-l-split__item split-margin-left">
                     <ClusterListFilterDropDown
                       view={viewConstants.ARCHIVED_CLUSTERS_VIEW}
                       isDisabled={pending}
                     />
                   </ToolbarItem>
-                  <ToolbarItem className="pf-l-split__item split-margin-left">
+                  <ToolbarItem className="pf-v5-l-split__item split-margin-left">
                     <ViewOnlyMyClustersToggle
                       view={viewConstants.ARCHIVED_CLUSTERS_VIEW}
                       bodyContent="Show only the clusters you previously archived, or all archived clusters in your organization."
+                      localStorageKey={ONLY_MY_CLUSTERS_TOGGLE_CLUSTER_ARCHIVES_LIST}
                     />
                   </ToolbarItem>
-                  <ToolbarItem className="pf-l-split__item split-margin-left">
+                  <ToolbarItem className="pf-v5-l-split__item split-margin-left">
                     <div className="show-active-clusters-link">
                       <Link to="/">Show active clusters</Link>
                     </div>
@@ -184,7 +186,7 @@ class ArchivedClusterList extends Component {
                     )}
                   </ToolbarItem>
                   <ToolbarItem
-                    alignment={{ default: 'alignRight' }}
+                    align={{ default: 'alignRight' }}
                     variant="pagination"
                     className="pf-m-hidden visible-on-lgplus"
                   >

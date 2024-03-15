@@ -1,6 +1,7 @@
 import React from 'react';
 import { Button, Popover, PopoverProps } from '@patternfly/react-core';
-import { OutlinedQuestionCircleIcon } from '@patternfly/react-icons';
+import { OutlinedQuestionCircleIcon } from '@patternfly/react-icons/dist/esm/icons/outlined-question-circle-icon';
+import { ExclamationCircleIcon } from '@patternfly/react-icons/dist/esm/icons/exclamation-circle-icon';
 
 import './PopoverHint.scss';
 
@@ -8,8 +9,10 @@ interface PopoverHintProps extends Omit<PopoverProps, 'bodyContent'> {
   hint?: React.ReactNode;
   title?: React.ReactNode;
   iconClassName?: string;
+  buttonAriaLabel?: string;
   footer?: React.ReactNode;
   bodyContent?: React.ReactNode | ((hide: () => void) => React.ReactNode);
+  isError?: boolean;
 }
 
 const PopoverHint = ({
@@ -18,23 +21,27 @@ const PopoverHint = ({
   iconClassName,
   footer,
   bodyContent,
+  buttonAriaLabel,
+  isError,
   ...popoverProps
 }: PopoverHintProps) => (
-  <>
-    <Popover
-      headerContent={title}
-      footerContent={footer}
-      aria-label="help"
-      bodyContent={bodyContent ?? hint}
-      {...popoverProps}
+  <Popover
+    headerContent={title}
+    footerContent={footer}
+    aria-label="help"
+    bodyContent={bodyContent ?? hint}
+    {...popoverProps}
+  >
+    <Button
+      className="popover-hint-button"
+      aria-label={buttonAriaLabel || (isError ? 'Error' : 'More information')}
+      variant="plain"
     >
-      <Button className="popover-hint-button" aria-label="More information" variant="plain">
-        <span className={iconClassName}>
-          <OutlinedQuestionCircleIcon />
-        </span>
-      </Button>
-    </Popover>
-  </>
+      <span className={iconClassName}>
+        {isError ? <ExclamationCircleIcon className="danger" /> : <OutlinedQuestionCircleIcon />}
+      </span>
+    </Button>
+  </Popover>
 );
 
 export default PopoverHint;

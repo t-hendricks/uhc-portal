@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { InfoCircleIcon } from '@patternfly/react-icons';
+import { InfoCircleIcon } from '@patternfly/react-icons/dist/esm/icons/info-circle-icon';
 import UpgradeAcknowledgeWarning from '../UpgradeAcknowledge/UpgradeAcknowledgeWarning';
 import MinorVersionUpgradeConfirm from '../MinorVersionUpgradeConfirm';
 import './UpdateGraph.scss';
@@ -46,10 +46,8 @@ const UpdateGraph = ({ currentVersion, updateVersion, hasMore }) => (
         {`Additional versions available between ${currentVersion} and ${updateVersion}`}
       </div>
     )}
-    <>
-      <UpgradeAcknowledgeWarning isPlain isInfo showConfirm />
-      <MinorVersionUpgradeConfirm />
-    </>
+    <UpgradeAcknowledgeWarning isPlain isInfo showConfirm />
+    <MinorVersionUpgradeConfirm />
   </div>
 );
 

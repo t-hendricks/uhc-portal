@@ -1,13 +1,11 @@
 import React from 'react';
-import { mount } from 'enzyme';
 import { MemoryRouter } from 'react-router-dom';
+import { CompatRouter } from 'react-router-dom-v5-compat';
 import { Provider } from 'react-redux';
 import * as useChromeHook from '@redhat-cloud-services/frontend-components/useChrome';
-
+import { mockRestrictedEnv, render, screen } from '~/testUtils';
 import Router from './Router';
 import { store } from '../../redux/store';
-
-jest.mock('../../services/apiRequest');
 
 global.insights = {
   chrome: {
@@ -73,20 +71,25 @@ describe('Router', () => {
         setPageMetadata: mockSetPageMetadata,
       },
     }));
+    mockRestrictedEnv();
   });
   describe('Every route should render: ', () =>
     test.each(routes)(
       '%s',
-      (route) => {
+      async (route) => {
         const { path, metadata } = route;
-        const wrapper = mount(
+        render(
           <Provider store={store}>
             <MemoryRouter keyLength={0} initialEntries={[{ pathname: path, key: 'testKey' }]}>
-              <Router />
+              <CompatRouter>
+                <Router />
+              </CompatRouter>
             </MemoryRouter>
           </Provider>,
         );
-        expect(wrapper).toBeTruthy();
+
+        expect(screen.queryByText('We lost that page')).not.toBeInTheDocument();
+
         expect(mockSetPageMetadata).lastCalledWith(metadata);
       },
       2000,

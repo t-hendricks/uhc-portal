@@ -9,7 +9,7 @@ import type { reportsComponent } from './reportsComponent';
  */
 export type reportsResponse = {
   clusters?: Array<string>;
-  errors?: string | null;
+  errors?: Array<string> | null;
   generated_at?: string;
   reports?: Record<
     string,

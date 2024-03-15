@@ -23,6 +23,7 @@ const subscriptionSupportLevels = {
   STANDARD: 'Standard',
   PREMIUM: 'Premium',
   SELF_SUPPORT: 'Self-Support',
+  SUPPORT_BY_IBM: 'Supported by IBM',
   NONE: 'None',
 };
 
@@ -99,6 +100,7 @@ const knownProducts = {
   RHOSAKTrial: 'RHOSAKTrial',
   RHOSE: 'RHOSE',
   RHOSETrial: 'RHOSETrial',
+  RHOIC: 'RHOIC',
 };
 
 const omittedProducts = [
@@ -147,13 +149,13 @@ const clustersServiceProducts = [
 const productFilterOptions = [
   { key: normalizedProducts.OCP, label: 'OCP', plansToQuery: ['OCP', 'OCP-AssistedInstall'] },
   { key: normalizedProducts.OSD, label: 'OSD', plansToQuery: ['OSD'] },
-  { key: normalizedProducts.ROSA, label: 'ROSA', plansToQuery: ['MOA', 'ROSA'] },
   {
-    key: normalizedProducts.ROSA_HyperShift,
-    label: 'ROSA - Hosted',
-    plansToQuery: ['MOA-HostedControlPlane'],
+    key: normalizedProducts.ROSA,
+    label: 'ROSA',
+    plansToQuery: ['MOA', 'ROSA', 'MOA-HostedControlPlane'],
   },
   { key: normalizedProducts.ARO, label: 'ARO', plansToQuery: ['ARO'] },
+  { key: normalizedProducts.RHOIC, label: 'RHOIC', plansToQuery: ['RHOIC'] },
 ];
 
 /**
@@ -164,19 +166,53 @@ const billingModels = {
   STANDARD: 'standard', // quota from Red Hat Subscriptions
   MARKETPLACE: 'marketplace', // quota from Red Hat Marketplace
   MARKETPLACE_AWS: 'marketplace-aws',
+  MARKETPLACE_GCP: 'marketplace-gcp',
   STANDARD_TRIAL: 'standard-trial',
+};
+
+type OcmRoleItem = {
+  id: string;
+  name: string;
+  description: string;
+  // ProductIds for which granting new role bindings should not be allowed
+  excludeProductIds?: string[];
 };
 
 /**
  * The ocmRoles contains all available roles that a customer
- * can grant to other users within his own organization.
+ * can grant to other users within their own organization.
  */
-const ocmRoles = {
-  CLUSTER_EDITOR: 'ClusterEditor',
-  CLUSTER_VIEWER: 'ClusterViewer',
-  CLUSTER_AUTOSCALER_EDITOR: 'ClusterAutoscalerEditor',
-  IDP_EDITOR: 'IdpEditor',
-  MACHINE_POOL_EDITOR: 'MachinePoolEditor',
+const ocmRoles: Record<string, OcmRoleItem> = {
+  CLUSTER_EDITOR: {
+    id: 'ClusterEditor',
+    name: 'Cluster editor',
+    description:
+      'Cluster editor role will allow users or groups to manage and configure the cluster.',
+  },
+  CLUSTER_VIEWER: {
+    id: 'ClusterViewer',
+    name: 'Cluster viewer',
+    description: 'Cluster viewer role will allow users or groups to view cluster details only.',
+  },
+  CLUSTER_AUTOSCALER_EDITOR: {
+    id: 'ClusterAutoscalerEditor',
+    name: 'Cluster autoscaler editor',
+    description:
+      'Cluster autoscaler editor role will allow users or groups to manage and configure the cluster autoscaler settings.',
+    excludeProductIds: [knownProducts.ROSA_HyperShift],
+  },
+  IDP_EDITOR: {
+    id: 'IdpEditor',
+    name: 'Identity provider editor',
+    description:
+      'Identity provider editor role will allow users or groups to manage and configure the identity providers.',
+  },
+  MACHINE_POOL_EDITOR: {
+    id: 'MachinePoolEditor',
+    name: 'Machine pool editor',
+    description:
+      'Machine pool editor role will allow users or groups to manage and configure the machine pools.',
+  },
 };
 
 export {

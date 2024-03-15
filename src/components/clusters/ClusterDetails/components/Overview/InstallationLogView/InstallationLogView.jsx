@@ -2,7 +2,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Button, ExpandableSection } from '@patternfly/react-core';
-import { ExpandIcon } from '@patternfly/react-icons';
+import { ExpandIcon } from '@patternfly/react-icons/dist/esm/icons/expand-icon';
 import cx from 'classnames';
 import screenfull from 'screenfull';
 import { metricsStatusMessages } from '../../../../common/ResourceUsage/ResourceUsage.consts';
@@ -246,7 +246,7 @@ class LogWindow extends React.Component {
             </div>
           </div>
         ) : (
-          cluster.state !== clusterStates.ERROR && <p className="pf-u-mt-sm">{message}</p>
+          cluster.state !== clusterStates.ERROR && <p className="pf-v5-u-mt-sm">{message}</p>
         )}
       </div>
     );
@@ -255,7 +255,7 @@ class LogWindow extends React.Component {
         id="toggle-logs"
         toggleTextCollapsed="View logs"
         toggleTextExpanded="Hide logs"
-        onToggle={this.toggleExpanded}
+        onToggle={(_event, isExpanded) => this.toggleExpanded(isExpanded)}
         isExpanded={isExpanded}
         isActive={!isFullScreen}
       >

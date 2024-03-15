@@ -1,11 +1,9 @@
 import React from 'react';
-import { shallow } from 'enzyme';
-
+import { render, screen, checkAccessibility } from '~/testUtils';
 import { ErrorState } from '~/types/types';
 import ErrorModal from './ErrorModal';
 
 describe('<ErrorModal />', () => {
-  const title = 'Error Modal';
   const errorResponse: ErrorState = {
     pending: false,
     error: true,
@@ -13,17 +11,25 @@ describe('<ErrorModal />', () => {
     errorMessage: 'Error Message',
     operationID: '1337',
   };
-  const resetResponse = () => {};
-  const closeModal = () => {};
-  const wrapper = shallow(
-    <ErrorModal
-      title={title}
-      errorResponse={errorResponse}
-      resetResponse={resetResponse}
-      closeModal={closeModal}
-    />,
-  );
-  it('should render', () => {
-    expect(wrapper).toMatchSnapshot();
+  const resetResponse = jest.fn();
+  const closeModal = jest.fn();
+
+  const defaultProps = {
+    title: 'Error Modal',
+    errorResponse,
+    resetResponse,
+    closeModal,
+  };
+
+  afterEach(() => {
+    jest.clearAllMocks();
+  });
+  it('is accessible', async () => {
+    const { container } = render(<ErrorModal {...defaultProps} />);
+
+    await checkAccessibility(container);
+
+    expect(screen.getByText('Error Message')).toBeInTheDocument();
+    expect(screen.getByText('Operation ID: 1337')).toBeInTheDocument();
   });
 });

@@ -1,5 +1,5 @@
 import { stringify } from 'qs';
-import apiRequest from './apiRequest';
+import apiRequest from '~/services/apiRequest';
 import config from '../config';
 import type {
   SourcePagination,

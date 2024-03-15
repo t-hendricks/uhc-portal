@@ -1,9 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import moment from 'moment';
+import dayjs from 'dayjs';
 import { Button, EmptyState, EmptyStateBody, EmptyStateVariant } from '@patternfly/react-core';
-import { Table, TableBody, TableHeader, TableVariant } from '@patternfly/react-table';
 import { SUPPORT_CASE_URL, isRestrictedEnv } from '~/restrictedEnv';
+import { TableVariant } from '@patternfly/react-table';
+import {
+  Table as TableDeprecated,
+  TableHeader as TableHeaderDeprecated,
+  TableBody as TableBodyDeprecated,
+} from '@patternfly/react-table/deprecated';
 import { normalizedProducts } from '../../../../../../../common/subscriptionTypes';
 
 const productMap = {
@@ -53,14 +58,12 @@ class SupportCasesCard extends React.Component {
     const supportCaseRow = (supportCase) => {
       const caseIdURL = `https://access.redhat.com/support/cases/#/case/${supportCase.caseID}`;
       const caseID = (
-        <>
-          <a href={caseIdURL} target="_blank" rel="noopener noreferrer">
-            {supportCase.caseID}
-          </a>
-        </>
+        <a href={caseIdURL} target="_blank" rel="noopener noreferrer">
+          {supportCase.caseID}
+        </a>
       );
 
-      const lastModifiedDate = moment.utc(supportCase.lastModifiedDate).format('D MMM YYYY');
+      const lastModifiedDate = dayjs.utc(supportCase.lastModifiedDate).format('D MMM YYYY');
 
       const lastModifiedBy = (
         <>
@@ -100,18 +103,18 @@ class SupportCasesCard extends React.Component {
         )}
         {!isRestrictedEnv() && (
           <>
-            <Table
+            <TableDeprecated
               aria-label="Support Cases"
               variant={TableVariant.compact}
               cells={columns}
               rows={rows}
               data-testid="support-cases-table"
             >
-              <TableHeader />
-              <TableBody />
-            </Table>
+              <TableHeaderDeprecated />
+              <TableBodyDeprecated />
+            </TableDeprecated>
             {!hasRows && (
-              <EmptyState variant={EmptyStateVariant.small}>
+              <EmptyState variant={EmptyStateVariant.sm}>
                 <EmptyStateBody>You have no open support cases</EmptyStateBody>
               </EmptyState>
             )}
@@ -126,7 +129,7 @@ SupportCasesCard.propTypes = {
   subscriptionID: PropTypes.string.isRequired,
   clusterUUID: PropTypes.string.isRequired,
   product: PropTypes.string.isRequired,
-  version: PropTypes.object.isRequired,
+  version: PropTypes.string.isRequired,
   supportCases: PropTypes.object.isRequired,
   getSupportCases: PropTypes.func.isRequired,
   isDisabled: PropTypes.bool,

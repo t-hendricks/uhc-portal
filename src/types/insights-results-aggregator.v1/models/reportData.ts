@@ -36,10 +36,6 @@ export type reportData = {
    */
   resolution?: string;
   /**
-   * Risk of change - values paired with corresponding UI elements. 0 returned when not defined, therefore to hide the UI.
-   */
-  risk_of_change?: reportData.risk_of_change;
-  /**
    * ID of a rule.
    */
   rule_id?: string;
@@ -58,17 +54,6 @@ export type reportData = {
 };
 
 export namespace reportData {
-  /**
-   * Risk of change - values paired with corresponding UI elements. 0 returned when not defined, therefore to hide the UI.
-   */
-  export enum risk_of_change {
-    '_0' = 0,
-    '_1' = 1,
-    '_2' = 2,
-    '_3' = 3,
-    '_4' = 4,
-  }
-
   /**
    * Total risk - calculated from rule impact and likelihood.
    */

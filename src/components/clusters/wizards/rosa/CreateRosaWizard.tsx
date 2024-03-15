@@ -3,8 +3,7 @@ import { useDispatch } from 'react-redux';
 import { Formik, FormikValues } from 'formik';
 import omit from 'lodash/omit';
 
-import { Banner, PageSection } from '@patternfly/react-core';
-import { Wizard, WizardStep } from '@patternfly/react-core/next';
+import { Banner, PageSection, Wizard, WizardStep } from '@patternfly/react-core';
 
 import config from '~/config';
 import { useGlobalState } from '~/redux/hooks';
@@ -15,7 +14,7 @@ import { normalizedProducts } from '~/common/subscriptionTypes';
 import PageTitle from '~/components/common/PageTitle';
 import Breadcrumbs from '~/components/common/Breadcrumbs';
 import usePreventBrowserNav from '~/hooks/usePreventBrowserNav';
-import LeaveCreateClusterPrompt from '~/components/clusters/common/LeaveCreateClusterPrompt';
+import LeaveCreateClusterPrompt from '~/components/clusters/wizards/common/LeaveCreateClusterPrompt';
 import {
   ClusterUpdates,
   ClusterSettingsMachinePool,
@@ -25,52 +24,6 @@ import { FieldId, StepName, StepId, initialValues, breadcrumbs } from './constan
 import { ReviewAndCreate } from './ReviewAndCreate';
 import { AccountsAndRoles } from './AccountsAndRoles';
 import { ClusterRolesAndPolicies } from './ClusterRolesAndPolicies';
-
-export const CreateRosaWizard = () => {
-  const dispatch = useDispatch();
-  const organization = useGlobalState((state) => state.userProfile.organization);
-
-  usePreventBrowserNav();
-
-  React.useEffect(() => {
-    if (shouldRefetchQuota(organization)) {
-      dispatch(getOrganizationAndQuota() as any);
-    }
-
-    return () => {
-      dispatch(resetCreatedClusterResponse());
-    };
-  }, [dispatch, organization]);
-
-  const onSubmit = async (values: FormikValues) => {
-    const hasNodeLabels = values[FieldId.NodeLabels].some(
-      (nodeLabel: NodeLabel) => !!nodeLabel.key,
-    );
-
-    const submitValues = omit(values, [
-      FieldId.CidrDefaultValuesEnabled,
-      ...(!hasNodeLabels ? [FieldId.NodeLabels] : []),
-    ]);
-
-    // TODO, dispatch cluster creation request
-    // eslint-disable-next-line no-console
-    console.log(submitValues);
-  };
-
-  return (
-    <Formik initialValues={initialValues} validateOnChange={false} onSubmit={onSubmit}>
-      <>
-        <PageTitle title="Create a ROSA Cluster" breadcrumbs={<Breadcrumbs path={breadcrumbs} />} />
-        <PageSection>
-          {config.fakeOSD && ( // TODO Is ?fake=true supported for ROSA clusters?
-            <Banner variant="warning">On submit, a fake ROSA cluster will be created.</Banner>
-          )}
-          <CreateRosaWizardInternal />
-        </PageSection>
-      </>
-    </Formik>
-  );
-};
 
 const CreateRosaWizardInternal = () => (
   <>
@@ -121,3 +74,49 @@ const CreateRosaWizardInternal = () => (
     <LeaveCreateClusterPrompt product={normalizedProducts.ROSA} />
   </>
 );
+
+export const CreateRosaWizard = () => {
+  const dispatch = useDispatch();
+  const organization = useGlobalState((state) => state.userProfile.organization);
+
+  usePreventBrowserNav();
+
+  React.useEffect(() => {
+    if (shouldRefetchQuota(organization)) {
+      dispatch(getOrganizationAndQuota() as any);
+    }
+
+    return () => {
+      dispatch(resetCreatedClusterResponse());
+    };
+  }, [dispatch, organization]);
+
+  const onSubmit = async (values: FormikValues) => {
+    const hasNodeLabels = values[FieldId.NodeLabels].some(
+      (nodeLabel: NodeLabel) => !!nodeLabel.key,
+    );
+
+    const submitValues = omit(values, [
+      FieldId.CidrDefaultValuesEnabled,
+      ...(!hasNodeLabels ? [FieldId.NodeLabels] : []),
+    ]);
+
+    // TODO, dispatch cluster creation request
+    // eslint-disable-next-line no-console
+    console.log(submitValues);
+  };
+
+  return (
+    <Formik initialValues={initialValues} validateOnChange={false} onSubmit={onSubmit}>
+      <>
+        <PageTitle title="Create a ROSA Cluster" breadcrumbs={<Breadcrumbs path={breadcrumbs} />} />
+        <PageSection>
+          {config.fakeOSD && ( // TODO Is ?fake=true supported for ROSA clusters?
+            <Banner variant="gold">On submit, a fake ROSA cluster will be created.</Banner>
+          )}
+          <CreateRosaWizardInternal />
+        </PageSection>
+      </>
+    </Formik>
+  );
+};

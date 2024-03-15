@@ -1,21 +1,24 @@
-import { AxiosResponse } from 'axios';
 import { ViewOptions } from '~/types/types';
-import { ClusterLogList } from '~/types/service_logs.v1';
-import { FULFILLED_ACTION, REJECTED_ACTION } from '../reduxHelpers';
+import {
+  ONLY_MY_CLUSTERS_TOGGLE_CLUSTERS_LIST,
+  ONLY_MY_CLUSTERS_TOGGLE_CLUSTER_ARCHIVES_LIST,
+} from '~/common/localStorageConstants';
+import { ClusterLogAction } from '../../components/clusters/ClusterDetails/components/ClusterLogs/clusterLogActions';
+import { GET_CLUSTER_LOGS } from '../../components/clusters/ClusterDetails/components/ClusterLogs/clusterLogConstants';
+import type { ClusterAction } from '../actions/clustersActions';
+import type { DashboardsAction } from '../actions/dashboardsActions';
+import type { SubscriptionsAction } from '../actions/subscriptionsActions';
+import type { ViewOptionsAction } from '../actions/viewOptionsActions';
 import {
   clustersConstants,
   dashboardsConstants,
   subscriptionsConstants,
   viewConstants,
-  viewPaginationConstants,
   viewOptionsConstants,
+  viewPaginationConstants,
 } from '../constants';
-import { GET_CLUSTER_LOGS } from '../../components/clusters/ClusterDetails/components/ClusterLogs/clusterLogConstants';
-import type { ViewOptionsAction } from '../actions/viewOptionsActions';
+import { FULFILLED_ACTION, REJECTED_ACTION } from '../reduxHelpers';
 import type { PromiseActionType } from '../types';
-import type { DashboardsAction } from '../actions/dashboardsActions';
-import type { ClusterAction } from '../actions/clustersActions';
-import type { SubscriptionsAction } from '../actions/subscriptionsActions';
 
 type ViewState = ViewOptions;
 
@@ -28,12 +31,34 @@ const INITIAL_VIEW_STATE: ViewState = {
   totalPages: 0,
   filter: '',
   sorting: {
+    sortField: 'created_at',
+    isAscending: false,
+    sortIndex: 3,
+  },
+  flags: {
+    showArchived: false,
+  },
+};
+
+const INITIAL_ARCHIVED_VIEW_STATE: ViewState = {
+  ...INITIAL_VIEW_STATE,
+  sorting: {
     sortField: 'name',
     isAscending: true,
     sortIndex: 0,
   },
   flags: {
-    showArchived: false,
+    ...INITIAL_VIEW_STATE.flags,
+    showMyClustersOnly:
+      localStorage.getItem(ONLY_MY_CLUSTERS_TOGGLE_CLUSTER_ARCHIVES_LIST) === 'true',
+  },
+};
+
+const INITIAL_CLUSTER_LIST_VIEW_STATE: ViewState = {
+  ...INITIAL_VIEW_STATE,
+  flags: {
+    ...INITIAL_VIEW_STATE.flags,
+    showMyClustersOnly: localStorage.getItem(ONLY_MY_CLUSTERS_TOGGLE_CLUSTERS_LIST) === 'true',
   },
 };
 
@@ -47,12 +72,14 @@ const INITIAL_OSL_VIEW_STATE: ViewState = {
     loggedBy: '',
   },
   sorting: {
+    sortIndex: 0,
     sortField: 'timestamp',
     isAscending: false,
   },
   flags: {
     conditionalFilterFlags: {
       severityTypes: [],
+      logTypes: [],
     },
   },
 };
@@ -67,8 +94,8 @@ const INITIAL_OVERVIEW_VIEW_STATE: ViewState = {
 
 const initialState: State = {};
 
-initialState[viewConstants.CLUSTERS_VIEW] = Object.assign(INITIAL_VIEW_STATE);
-initialState[viewConstants.ARCHIVED_CLUSTERS_VIEW] = Object.assign(INITIAL_VIEW_STATE);
+initialState[viewConstants.CLUSTERS_VIEW] = Object.assign(INITIAL_CLUSTER_LIST_VIEW_STATE);
+initialState[viewConstants.ARCHIVED_CLUSTERS_VIEW] = Object.assign(INITIAL_ARCHIVED_VIEW_STATE);
 initialState[viewConstants.CLUSTER_LOGS_VIEW] = Object.assign(INITIAL_OSL_VIEW_STATE);
 initialState[viewConstants.OVERVIEW_VIEW] = Object.assign(INITIAL_OVERVIEW_VIEW_STATE);
 initialState[viewConstants.OVERVIEW_EXPIRED_TRIALS] = Object.assign(INITIAL_OVERVIEW_VIEW_STATE);
@@ -80,14 +107,7 @@ const viewOptionsReducer = (
     | DashboardsAction
     | ClusterAction
     | SubscriptionsAction
-    // TODO reference cluster logs action when `clusterLogActions.js` is converted to typescript
-    | {
-        type: 'GET_CLUSTER_LOGS';
-        payload: Promise<{
-          externalClusterID: string;
-          logs: AxiosResponse<ClusterLogList>;
-        }>;
-      }
+    | ClusterLogAction
     // TODO create typescript action
     | {
         type: 'VIEW_MY_CLUSTERS_ONLY_CHANGED';

@@ -1,16 +1,17 @@
 // ClusterListEmptyState is the empty state (no clusters) for ClusterList
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link } from 'react-router-dom-v5-compat';
 import {
   EmptyState,
   EmptyStateVariant,
   EmptyStateIcon,
-  Title,
   EmptyStateBody,
-  EmptyStateSecondaryActions,
   Button,
+  EmptyStateActions,
+  EmptyStateHeader,
+  EmptyStateFooter,
 } from '@patternfly/react-core';
-import { OpenshiftIcon } from '@patternfly/react-icons';
+import { PlusCircleIcon } from '@patternfly/react-icons/dist/esm/icons/plus-circle-icon';
 
 import { ASSISTED_INSTALLER_FEATURE } from '../../../../redux/constants/featureConstants';
 import withFeatureGate from '../../../features/with-feature-gate';
@@ -27,29 +28,32 @@ const AssistedInstallerLink = withFeatureGate(
 
 function ClusterListEmptyState() {
   return (
-    <EmptyState variant={EmptyStateVariant.large} className="cluster-list-empty-state">
-      <EmptyStateIcon icon={OpenshiftIcon} color="#c00" />
-      <Title headingLevel="h4" size="2xl">
-        No OpenShift clusters to display
-      </Title>
+    <EmptyState variant={EmptyStateVariant.lg} className="cluster-list-empty-state">
+      <EmptyStateHeader
+        titleText="Let&#39;s create your first cluster"
+        icon={<EmptyStateIcon icon={PlusCircleIcon} />}
+        headingLevel="h4"
+      />
       <EmptyStateBody>
-        The Red Hat OpenShift Cluster Manager helps you create, register, and manage OpenShift 4
-        clusters. To get started, create your first cluster.
+        You don&#39;t have any clusters yet, but you can easily create or register your first
+        OpenShift 4 cluster.
       </EmptyStateBody>
-      <Link to="/create">
-        <Button data-testid="create_cluster_btn" className="pf-u-mt-xl">
-          Create cluster
-        </Button>
-      </Link>
-      <EmptyStateSecondaryActions>
-        <Link to="/register">
-          <Button variant="link">Register cluster</Button>
+      <EmptyStateFooter>
+        <Link to="/create">
+          <Button data-testid="create_cluster_btn" className="pf-v5-u-mt-xl">
+            Create cluster
+          </Button>
         </Link>
-        <Link to="/archived">
-          <Button variant="link">View cluster archives</Button>
-        </Link>
-        <AssistedInstallerLink />
-      </EmptyStateSecondaryActions>
+        <EmptyStateActions>
+          <Link to="/register">
+            <Button variant="link">Register cluster</Button>
+          </Link>
+          <Link to="/archived">
+            <Button variant="link">View cluster archives</Button>
+          </Link>
+          <AssistedInstallerLink />
+        </EmptyStateActions>
+      </EmptyStateFooter>
     </EmptyState>
   );
 }

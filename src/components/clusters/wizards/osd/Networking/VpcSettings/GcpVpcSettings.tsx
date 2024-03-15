@@ -1,0 +1,223 @@
+import React, { ReactElement, useMemo } from 'react';
+import { Field } from 'formik';
+
+import { Alert, AlertActionLink, GridItem, Title, useWizardContext } from '@patternfly/react-core';
+import { useFeatureGate } from '~/hooks/useFeatureGate';
+
+import PopoverHint from '~/components/common/PopoverHint';
+import ExternalLink from '~/components/common/ExternalLink';
+import { required, validateGCPHostProjectId, validateGCPSubnet } from '~/common/validators';
+import links from '~/common/installLinks.mjs';
+import { useFormState } from '~/components/clusters/wizards/hooks';
+import { FieldId, StepId } from '~/components/clusters/wizards/osd/constants';
+import { versionComparator } from '~/common/versionComparator';
+import { OSD_GCP_SHARED_VPC_FEATURE } from '~/redux/constants/featureConstants';
+import { GcpVpcNameSelectField } from './GcpVpcNameSelectField';
+import { GcpVpcSubnetSelectField } from './GcpVpcSubnetSelectField';
+import { CheckboxField, TextInputField } from '../../../form';
+
+export const GcpVpcSettings = () => {
+  const {
+    values: {
+      [FieldId.ClusterVersion]: clusterVersion,
+      [FieldId.InstallToSharedVpc]: installToSharedVpc,
+    },
+    getFieldProps,
+    getFieldMeta,
+    setFieldValue,
+  } = useFormState();
+
+  // is vpc permitted
+  const isVPCFeaturePermitted = useFeatureGate(OSD_GCP_SHARED_VPC_FEATURE);
+
+  const { goToStepById } = useWizardContext();
+
+  const onInstallIntoSharedVPCchange = (
+    _event: React.FormEvent<HTMLInputElement>,
+    checked: boolean,
+  ) => {
+    setFieldValue(FieldId.InstallToSharedVpc, checked);
+  };
+
+  const hostProjectId = useMemo<ReactElement | null>(() => {
+    if (installToSharedVpc) {
+      const wrongVersion = versionComparator(clusterVersion?.raw_id, '4.13.15') === -1;
+      return (
+        <>
+          {wrongVersion && (
+            <div className="pf-v5-u-mt-md">
+              <Alert
+                variant="danger"
+                isInline
+                title="You must use OpenShift version 4.13.15 or above."
+                actionLinks={
+                  <AlertActionLink onClick={() => goToStepById(StepId.ClusterSettingsDetails)}>
+                    Change version
+                  </AlertActionLink>
+                }
+              />
+            </div>
+          )}
+          <div className="pf-v5-u-mt-md" style={{ display: wrongVersion ? 'none' : 'block' }}>
+            <TextInputField
+              name={FieldId.SharedHostProjectID}
+              label="Host project ID"
+              validate={validateGCPHostProjectId}
+            />
+
+            <div className="pf-v5-u-mt-md">
+              <Alert
+                variant="info"
+                isInline
+                title="NOTE: To install a cluster into a shared VPC, the shared VPC administrator must enable a project as a
+              host project in their Google Cloud console. Then you can attach service projects to the host project."
+              />
+            </div>
+          </div>
+        </>
+      );
+    }
+    return null;
+  }, [clusterVersion?.raw_id, goToStepById, installToSharedVpc]);
+
+  return (
+    <>
+      {isVPCFeaturePermitted && (
+        <GridItem span={8}>
+          <Title headingLevel="h4" size="md">
+            GCP shared VPC
+          </Title>
+          <div className="pf-v5-u-mt-md  pf-v5-u-mb-lg">
+            <CheckboxField
+              name={FieldId.InstallToSharedVpc}
+              label="Install into GCP Shared VPC"
+              tooltip={
+                <>
+                  <p>Install into a VPC shared by another account in your GCP organization.</p>
+                  <ExternalLink href={links.INSTALL_GCP_VPC}>
+                    Learn more about GCP shared VPC.
+                  </ExternalLink>
+                </>
+              }
+              input={{ onChange: onInstallIntoSharedVPCchange }}
+            />
+            {hostProjectId}
+          </div>
+        </GridItem>
+      )}
+
+      <GridItem>
+        <Title headingLevel="h4" size="md">
+          Existing VPC
+          <PopoverHint
+            iconClassName="pf-v5-u-ml-sm"
+            hint={
+              <>
+                Install into a non-default subnet shared by another account in your CP organization
+                <ExternalLink href={links.INSTALL_GCP_VPC}>
+                  Learn more about GCP shared VPC
+                </ExternalLink>
+              </>
+            }
+          />
+        </Title>
+        <div
+          className="pf-v5-u-ml-sm pf-v5-u-mt-md  pf-v5-u-mb-lg"
+          style={{ width: 'fit-content' }}
+        >
+          <p className="pf-v5-u-mt-sm">
+            To install into an existing VPC, you need to ensure that your VPC is configured with a
+            control plane subnet and compute subnet.
+          </p>
+          <p className="pf-v5-u-mt-sm">
+            You&#39;ll also need to match these VPC subnets when you define the CIDR ranges.
+          </p>
+        </div>
+      </GridItem>
+
+      <GridItem md={3}>
+        {installToSharedVpc ? (
+          <TextInputField
+            name={FieldId.VpcName}
+            label="Existing VPC name"
+            validate={validateGCPSubnet}
+          />
+        ) : (
+          <Field
+            component={GcpVpcNameSelectField}
+            name={FieldId.VpcName}
+            validate={required}
+            label="Existing VPC name"
+            placeholder="Select VPC name"
+            emptyPlaceholder="No existing VPCs"
+            input={{
+              ...getFieldProps(FieldId.VpcName),
+              onChange: (value: string) => setFieldValue(FieldId.VpcName, value),
+            }}
+            meta={getFieldMeta(FieldId.VpcName)}
+          />
+        )}
+      </GridItem>
+
+      <GridItem md={3}>
+        {installToSharedVpc ? (
+          <TextInputField
+            name={FieldId.ControlPlaneSubnet}
+            label="Control plane subnet name"
+            validate={validateGCPSubnet}
+          />
+        ) : (
+          <Field
+            component={GcpVpcSubnetSelectField}
+            name={FieldId.ControlPlaneSubnet}
+            validate={required}
+            label="Control plane subnet name"
+            placeholder="Select subnet name"
+            emptyPlaceholder="No subnet names"
+            input={{
+              ...getFieldProps(FieldId.ControlPlaneSubnet),
+              onChange: (value: string) => setFieldValue(FieldId.ControlPlaneSubnet, value),
+            }}
+            meta={getFieldMeta(FieldId.ControlPlaneSubnet)}
+          />
+        )}
+      </GridItem>
+
+      <GridItem md={3}>
+        {installToSharedVpc ? (
+          <TextInputField
+            name={FieldId.ComputeSubnet}
+            label="Compute subnet name"
+            validate={validateGCPSubnet}
+          />
+        ) : (
+          <Field
+            component={GcpVpcSubnetSelectField}
+            name={FieldId.ComputeSubnet}
+            validate={required}
+            label="Compute subnet name"
+            placeholder="Select subnet name"
+            emptyPlaceholder="No subnet names"
+            input={{
+              ...getFieldProps(FieldId.ComputeSubnet),
+              onChange: (value: string) => setFieldValue(FieldId.ComputeSubnet, value),
+            }}
+            meta={getFieldMeta(FieldId.ComputeSubnet)}
+          />
+        )}
+      </GridItem>
+
+      {installToSharedVpc && (
+        <GridItem span={9}>
+          <div className="pf-v5-u-mt-md  pf-v5-u-mb-lg">
+            <Alert
+              variant="info"
+              isInline
+              title="For successful installation, be sure your Host project ID, Existing VPC name, Control plane subnet name, and Compute subnet name are correct."
+            />
+          </div>
+        </GridItem>
+      )}
+    </>
+  );
+};

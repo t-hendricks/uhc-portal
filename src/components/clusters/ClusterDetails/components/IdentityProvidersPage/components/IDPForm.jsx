@@ -50,7 +50,7 @@ class IDPForm extends React.Component {
     const { selectedIDP, isEditForm, idpEdited, idpName } = this.props;
     this.setState({ IDPName: idpName });
     if (isEditForm) {
-      this.setState({ isExpanded: this.checkIfExpandable(selectedIDP, idpEdited) });
+      this.setState({ isExpanded: IDPForm.checkIfExpandable(selectedIDP, idpEdited) });
     }
   }
 
@@ -78,7 +78,7 @@ class IDPForm extends React.Component {
     return undefined;
   };
 
-  checkIfExpandable = (selectedIDP, idpEdited) => {
+  static checkIfExpandable = (selectedIDP, idpEdited) => {
     if (selectedIDP === IDPformValues.OPENID) {
       if (idpEdited.open_id.openid_extra_scopes !== '' || idpEdited.open_id.openid_ca !== '') {
         return true;
@@ -255,7 +255,7 @@ class IDPForm extends React.Component {
           {IDPNeedsOAuthURL(selectedIDP) && (
             <GridItem span={span}>
               <div>
-                <span className="pf-c-form__label pf-c-form__label-text pf-u-mb-sm">
+                <span className="pf-v5-c-form__label pf-v5-c-form__label-text pf-v5-u-mb-sm">
                   OAuth callback URL
                 </span>
                 <ClipboardCopy isReadOnly>

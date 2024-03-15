@@ -1,11 +1,11 @@
 import React from 'react';
-import { shallow } from 'enzyme';
+import { render, checkAccessibility } from '~/testUtils';
 
 import SubscriptionAndSupport from '../SubscriptionAndSupport';
 
-describe('SubscriptionAndSupport', () => {
-  it('renders correctly', () => {
-    const wrapper = shallow(<SubscriptionAndSupport />);
-    expect(wrapper).toMatchSnapshot();
+describe('<SubscriptionAndSupport />', () => {
+  it('is accessible', async () => {
+    const { container } = render(<SubscriptionAndSupport />);
+    await checkAccessibility(container);
   });
 });

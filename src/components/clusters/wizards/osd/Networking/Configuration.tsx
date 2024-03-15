@@ -5,8 +5,7 @@ import { Form, Grid, GridItem, Title, Text, FormGroup, Alert } from '@patternfly
 import { ocmResourceType, trackEvents, TrackEvent } from '~/common/analytics';
 import links from '~/common/installLinks.mjs';
 import { normalizedProducts } from '~/common/subscriptionTypes';
-import { constants } from '~/components/clusters/CreateOSDPage/CreateOSDForm/CreateOSDFormConstants';
-import { PLACEHOLDER_VALUE } from '~/components/clusters/CreateOSDPage/CreateOSDForm/FormSections/NetworkingSection/AvailabilityZoneSelection';
+import { constants } from '~/components/clusters/common/CreateOSDFormConstants';
 import ExternalLink from '~/components/common/ExternalLink';
 import useAnalytics from '~/hooks/useAnalytics';
 import {
@@ -16,8 +15,10 @@ import {
 } from '~/components/clusters/wizards/form';
 import { useFormState } from '~/components/clusters/wizards/hooks';
 import { CloudProviderType } from '~/components/clusters/wizards/common/constants';
+import { FormSubnet } from '~/common/validators';
 import { FieldId } from '~/components/clusters/wizards/osd/constants';
 import { isExactMajorMinor } from '~/common/versionHelpers';
+import { getDefaultSecurityGroupsSettings } from '~/common/securityGroupsHelpers';
 
 import { ApplicationIngressType, ClusterPrivacyType } from './constants';
 import { DefaultIngressFields } from './DefaultIngressFields';
@@ -35,10 +36,8 @@ export const Configuration = () => {
       [FieldId.ConfigureProxy]: configureProxy,
       [FieldId.InstallToVpc]: installToVpc,
       [FieldId.UsePrivateLink]: usePrivateLink,
-      [FieldId.FirstAvailabilityZone]: availZoneOne,
-      [FieldId.SecondAvailabilityZone]: availZoneTwo,
-      [FieldId.ThirdAvailabilityZone]: availZoneThree,
       [FieldId.ApplicationIngress]: applicationIngress,
+      [FieldId.MachinePoolsSubnets]: machinePoolSubnets,
     },
     values,
     setFieldValue,
@@ -51,7 +50,8 @@ export const Configuration = () => {
     isByoc && [normalizedProducts.OSD, normalizedProducts.OSDTrial].includes(product);
   const trackOcmResourceType =
     product === normalizedProducts.ROSA ? ocmResourceType.MOA : ocmResourceType.OSD;
-  const showIngressSection = cloudProvider === CloudProviderType.Aws && isByoc;
+
+  const showIngressSection = isByoc;
   const isManagedIngressAllowed = canConfigureDayOneManagedIngress(clusterVersion.raw_id);
   const isOcp413 = isExactMajorMinor(clusterVersion.raw_id, 4, 13);
 
@@ -63,22 +63,24 @@ export const Configuration = () => {
       },
     });
 
-  const onClusterPrivacyChange = (value: string) => {
+  const clearSecurityGroups = () => {
+    if (values.securityGroups) {
+      setFieldValue(FieldId.SecurityGroups, getDefaultSecurityGroupsSettings());
+    }
+  };
+
+  const onClusterPrivacyChange = (_event: React.FormEvent<HTMLInputElement>, value: string) => {
     if (value === ClusterPrivacyType.External) {
       setFieldValue(FieldId.UsePrivateLink, false);
 
-      const availabilityZones = [availZoneOne, availZoneTwo, availZoneThree];
-      const hasSubnets = Object.keys(values).some(
-        (formValue) =>
-          formValue.startsWith(FieldId.PublicSubnetId) ||
-          formValue.startsWith(FieldId.PrivateSubnetId),
-      );
-      const noAvailZones = availabilityZones.every(
-        (zone) => zone === undefined || zone === PLACEHOLDER_VALUE,
+      const hasFilledMachinePoolsSubnets = machinePoolSubnets.some(
+        (mpSubnet: FormSubnet) =>
+          mpSubnet.availabilityZone || mpSubnet.publicSubnetId || mpSubnet.privateSubnetId,
       );
 
-      if (!hasSubnets && noAvailZones) {
+      if (!hasFilledMachinePoolsSubnets) {
         setFieldValue(FieldId.InstallToVpc, false);
+        clearSecurityGroups();
 
         // Also unset "Configure a cluster-wide proxy" if enabled
         if (configureProxy) {
@@ -88,7 +90,7 @@ export const Configuration = () => {
     }
   };
 
-  const onPrivateLinkChange = (checked: boolean) => {
+  const onPrivateLinkChange = (_event: React.FormEvent<HTMLInputElement>, checked: boolean) => {
     setFieldValue(FieldId.UsePrivateLink, checked);
 
     if (checked) {
@@ -96,7 +98,7 @@ export const Configuration = () => {
     }
   };
 
-  const onClusterProxyChange = (checked: boolean) => {
+  const onClusterProxyChange = (_event: React.FormEvent<HTMLInputElement>, checked: boolean) => {
     trackCheckedState(trackEvents.ConfigureClusterWideProxy, checked);
     setFieldValue(FieldId.ConfigureProxy, checked);
 
@@ -106,8 +108,9 @@ export const Configuration = () => {
     }
   };
 
-  const onInstallIntoVPCchange = (checked: boolean) => {
+  const onInstallIntoVPCchange = (_event: React.FormEvent<HTMLInputElement>, checked: boolean) => {
     setFieldValue(FieldId.InstallToVpc, checked);
+    clearSecurityGroups();
     trackCheckedState(trackEvents.InstallIntoVPC, checked);
   };
 
@@ -145,7 +148,7 @@ export const Configuration = () => {
       <Grid hasGutter>
         <GridItem>
           <Title headingLevel="h3">Networking configuration</Title>
-          <Text className="pf-u-mt-sm">Configure network access for your cluster.</Text>
+          <Text className="pf-v5-u-mt-sm">Configure network access for your cluster.</Text>
         </GridItem>
 
         {showClusterPrivacy && (
@@ -154,7 +157,7 @@ export const Configuration = () => {
               <Title headingLevel="h4" size="xl" className="privacy-heading">
                 Cluster privacy
               </Title>
-              <Text className="pf-u-mt-sm">
+              <Text className="pf-v5-u-mt-sm">
                 Install your cluster with all public or private API endpoints and application
                 routes.
               </Text>
@@ -192,7 +195,7 @@ export const Configuration = () => {
               <Title headingLevel="h4" size="xl" className="privacy-heading">
                 Virtual Private Cloud (VPC)
               </Title>
-              <Text className="pf-u-mt-sm">
+              <Text className="pf-v5-u-mt-sm">
                 By default, a new VPC will be created for your cluster. Alternatively, you may opt
                 to install to an existing VPC below.
               </Text>
@@ -207,7 +210,7 @@ export const Configuration = () => {
                   isDisabled={usePrivateLink || configureProxy}
                 />
 
-                <div className="pf-u-ml-lg pf-u-mt-md">
+                <div className="pf-v5-u-ml-lg pf-v5-u-mt-md">
                   {isPrivateCluster && cloudProvider === CloudProviderType.Aws && (
                     <CheckboxField
                       name={FieldId.UsePrivateLink}
@@ -219,7 +222,7 @@ export const Configuration = () => {
                     />
                   )}
                   {showConfigureProxy && (
-                    <div className="pf-u-mt-md">
+                    <div className="pf-v5-u-mt-md">
                       <CheckboxField
                         name={FieldId.ConfigureProxy}
                         label="Configure a cluster-wide proxy"
@@ -242,7 +245,7 @@ export const Configuration = () => {
               <Title headingLevel="h4" size="xl">
                 Application ingress settings
               </Title>
-              <Text className="pf-u-mt-sm">
+              <Text className="pf-v5-u-mt-sm">
                 Ingress is configured by default.{' '}
                 {isManagedIngressAllowed
                   ? 'Customize settings if needed.'
@@ -266,7 +269,7 @@ export const Configuration = () => {
                   <RadioGroupField
                     name={FieldId.ApplicationIngress}
                     options={applicationIngressOptions}
-                    onChange={onApplicationIngressChange}
+                    onChange={(_event, value) => onApplicationIngressChange(value)}
                   />
                 </GridItem>
                 {applicationIngress === ApplicationIngressType.Custom && <DefaultIngressFields />}

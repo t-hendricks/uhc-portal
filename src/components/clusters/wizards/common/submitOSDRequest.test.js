@@ -1,0 +1,538 @@
+import { createClusterRequest } from './submitOSDRequest';
+import { normalizedProducts } from '../../../../common/subscriptionTypes';
+
+describe('createClusterRequest', () => {
+  // These tests were captured from logging actual arguments passed to submitOSDRequest().
+  // I hope we can keep them in sync with reality...
+
+  // Common fields (as of Jan 2022, likely incomplete over time).
+  const baseFormData = {
+    name: 'test-name',
+    nodes_compute: '9',
+    dns_base_domain: '',
+    aws_access_key_id: '',
+    aws_secret_access_key: '',
+    region: 'somewhere', // GCP defaults 'us-east1', AWS 'us-east-1', not important here.
+    multi_az: 'true',
+    persistent_storage: '107374182400',
+    load_balancers: '0',
+    network_configuration_toggle: 'basic',
+    disable_scp_checks: false,
+    node_drain_grace_period: 60,
+    upgrade_policy: 'manual',
+    automatic_upgrade_schedule: '0 0 * * 0',
+    node_labels: [{}],
+    enable_user_workload_monitoring: true,
+    machine_type: 'PDP-11', // GCP defaults 'custom-4-16384', AWS 'm5.xlarge' not important here.
+    cluster_version: {
+      kind: 'Version',
+      id: 'openshift-v4.9.11',
+      href: '/api/clusters_mgmt/v1/versions/openshift-v4.9.11',
+      raw_id: '4.9.11',
+      enabled: true,
+      default: true,
+      channel_group: 'stable',
+      rosa_enabled: true,
+      end_of_life_timestamp: '2022-07-18T00:00:00Z',
+    },
+  };
+
+  const rosaFormData = {
+    ...baseFormData,
+    product: normalizedProducts.ROSA,
+    associated_aws_id: '123456789',
+    installer_role_arn: 'arn:aws:iam::123456789:role/Foo-Installer-Role',
+    support_role_arn: 'arn:aws:iam::123456789:role/Foo-Support-Role',
+    control_plane_role_arn: 'arn:aws:iam::123456789:role/Foo-ControlPlane-Role',
+    worker_role_arn: 'arn:aws:iam::123456789:role/Foo-Worker-Role',
+    role_mode: 'manual',
+    securityGroups: {
+      applyControlPlaneToAll: false,
+      controlPlane: [],
+      infra: [],
+      worker: [],
+    },
+    node_drain_grace_period: 60,
+    // TODO: can finish ROSA wizard with machine_type not set?
+  };
+
+  const gcpVPCData = {
+    install_to_vpc: true,
+    vpc_name: 'nsimha-test-1-sd8x8-network',
+    control_plane_subnet: 'nsimha-test-1-sd8x8-master-subnet',
+    compute_subnet: 'nsimha-test-1-sd8x8-worker-subnet',
+  };
+
+  const expectGCPVPC = (request) => {
+    expect(request.gcp_network).toEqual({
+      compute_subnet: 'nsimha-test-1-sd8x8-worker-subnet',
+      control_plane_subnet: 'nsimha-test-1-sd8x8-master-subnet',
+      vpc_name: 'nsimha-test-1-sd8x8-network',
+    });
+  };
+
+  const awsRosaOsdVPCData = {
+    install_to_vpc: true,
+    selected_vpc: {
+      id: 'vpc-id',
+      aws_subnets: [
+        {
+          availability_zone: 'us-east-1d',
+          subnet_id: 'subnet-00b3753ab2dd892ac',
+          public: false,
+        },
+        {
+          availability_zone: 'us-east-1d',
+          subnet_id: 'subnet-0703ec90283d1fd6b',
+          public: true,
+        },
+        {
+          availability_zone: 'us-east-1e',
+          subnet_id: 'subnet-0735da52d658da28b',
+          public: false,
+        },
+        {
+          availability_zone: 'us-east-1e',
+          subnet_id: 'subnet-09404f4fc139bd94e',
+          public: true,
+        },
+        {
+          availability_zone: 'us-east-1f',
+          subnet_id: 'subnet-00327948731118662',
+          public: false,
+        },
+        {
+          availability_zone: 'us-east-1f',
+          subnet_id: 'subnet-09ad4ef49f2e29996',
+          public: true,
+        },
+      ],
+    },
+    machinePoolsSubnets: [
+      {
+        availabilityZone: 'us-east-1d',
+        privateSubnetId: 'subnet-00b3753ab2dd892ac',
+        publicSubnetId: 'subnet-0703ec90283d1fd6b',
+      },
+      {
+        availabilityZone: 'us-east-1e',
+        privateSubnetId: 'subnet-0735da52d658da28b',
+        publicSubnetId: 'subnet-09404f4fc139bd94e',
+      },
+      {
+        availabilityZone: 'us-east-1f',
+        privateSubnetId: 'subnet-00327948731118662',
+        publicSubnetId: 'subnet-09ad4ef49f2e29996',
+      },
+    ],
+  };
+
+  const expectAWSVPC = (request) => {
+    expect(request.aws.subnet_ids).toEqual([
+      'subnet-00b3753ab2dd892ac',
+      'subnet-0703ec90283d1fd6b',
+      'subnet-0735da52d658da28b',
+      'subnet-00327948731118662',
+      'subnet-09404f4fc139bd94e',
+      'subnet-09ad4ef49f2e29996',
+    ]);
+    expect(request.nodes.availability_zones).toEqual(['us-east-1d', 'us-east-1e', 'us-east-1f']);
+  };
+
+  const CIDRData = {
+    network_machine_cidr: '10.1.128.0/17',
+    network_host_prefix: '24',
+  };
+
+  const expectCIDR = (request) => {
+    expect(request.network).toEqual({
+      machine_cidr: '10.1.128.0/17',
+      host_prefix: 24,
+    });
+  };
+
+  // TODO: this can be removed, but some scenarios tested here e.g. gcpVPCData
+  //   are worth moving to wizards tests?
+  describe('CreateOSDForm', () => {
+    // Form gets `product` prop affecting *initial* values for several fields notably
+    // `billing_model` & `product`.  The final choice is in the field.
+    // Form doesn't have `cloud_provider` field, gets it as prop.
+
+    describe('OSD button -> GCP', () => {
+      const params = { cloudProviderID: 'gcp' };
+
+      it('rhInfra', () => {
+        const data = {
+          ...baseFormData,
+          billing_model: 'standard',
+          product: normalizedProducts.OSD,
+          byoc: 'false',
+        };
+        const request = createClusterRequest(params, data);
+        expect(request.billing_model).toEqual('standard');
+        expect(request.product).toEqual({ id: 'osd' });
+        expect(request.cloud_provider.id).toEqual('gcp');
+        expect(request.ccs).toBeUndefined();
+      });
+
+      it('select Free trial, CCS', () => {
+        const data = {
+          ...baseFormData,
+          // 'standard-trial' is a fake value, a kludge for also initializing product;
+          // the backend request only gets the part before '-'.
+          billing_model: 'standard-trial',
+          product: normalizedProducts.OSDTrial,
+          byoc: 'true', // forced by OSDTrial.
+          gcp_service_account: '{}',
+          // CCS also lowers nodes_compute default, but not important for these tests.
+          network_configuration_toggle: 'advanced',
+          ...gcpVPCData,
+          ...CIDRData,
+        };
+        const request = createClusterRequest(params, data);
+        expect(request.billing_model).toEqual('standard');
+        expect(request.product).toEqual({ id: 'osdtrial' });
+        expect(request.cloud_provider.id).toEqual('gcp');
+        expect(request.ccs.enabled).toEqual(true);
+        expectGCPVPC(request);
+        expectCIDR(request);
+      });
+
+      it('select On-demand (Marketplace) billing, CCS', () => {
+        const data = {
+          ...baseFormData,
+          billing_model: 'marketplace',
+          product: normalizedProducts.OSD,
+          byoc: 'true', // forced by marketplace.
+          gcp_service_account: '{}',
+        };
+
+        const request = createClusterRequest(params, data);
+        expect(request.billing_model).toEqual('marketplace');
+        expect(request.product).toEqual({ id: 'osd' });
+        expect(request.cloud_provider.id).toEqual('gcp');
+        expect(request.ccs.enabled).toEqual(true);
+      });
+    });
+
+    describe('OSD Trial button -> AWS', () => {
+      const params = { cloudProviderID: 'aws' };
+
+      it('CCS', () => {
+        const data = {
+          ...baseFormData,
+          // 'standard-trial' is a fake value, a kludge for also initializing product;
+          // the backend request only gets the part before '-'.
+          billing_model: 'standard-trial',
+          product: normalizedProducts.OSDTrial,
+          byoc: 'true', // forced by OSDTrial.
+          network_configuration_toggle: 'advanced',
+          ...awsRosaOsdVPCData,
+        };
+        const request = createClusterRequest(params, data);
+        expect(request.billing_model).toEqual('standard');
+        expect(request.product).toEqual({ id: 'osdtrial' });
+        expect(request.cloud_provider.id).toEqual('aws');
+        expect(request.ccs.enabled).toEqual(true);
+        expectAWSVPC(request);
+      });
+
+      it('select Annual billing, rhInfra', () => {
+        const data = {
+          ...baseFormData,
+          billing_model: 'standard',
+          product: normalizedProducts.OSD,
+          byoc: 'false',
+        };
+
+        const request = createClusterRequest(params, data);
+        expect(request.billing_model).toEqual('standard');
+        expect(request.product).toEqual({ id: 'osd' });
+        expect(request.cloud_provider.id).toEqual('aws');
+        expect(request.ccs).toBeUndefined();
+      });
+
+      it('select On-demand (Marketplace) billing, CCS', () => {
+        const data = {
+          ...baseFormData,
+          billing_model: 'marketplace',
+          product: normalizedProducts.OSD,
+          byoc: 'true', // forced by marketplace.
+        };
+
+        const request = createClusterRequest(params, data);
+        expect(request.billing_model).toEqual('marketplace');
+        expect(request.product).toEqual({ id: 'osd' });
+        expect(request.cloud_provider.id).toEqual('aws');
+        expect(request.ccs.enabled).toEqual(true);
+      });
+    });
+  });
+
+  describe('CreateOSDWizard', () => {
+    // OSD wizard gets `product` prop affecting *initial* values for several fields notably
+    // `billing_model` & `product`.  The final choice is in the field.
+    // OSD wizard selects `cloud_provider` inside, it's a regular field.
+
+    describe('OSD button', () => {
+      it('rhInfra, AWS', () => {
+        const data = {
+          ...baseFormData,
+          billing_model: 'standard',
+          product: normalizedProducts.OSD,
+          byoc: 'false',
+          cloud_provider: 'aws',
+        };
+        const request = createClusterRequest({}, data);
+        expect(request.billing_model).toEqual('standard');
+        expect(request.product).toEqual({ id: 'osd' });
+        expect(request.cloud_provider.id).toEqual('aws');
+        expect(request.ccs).toBeUndefined();
+      });
+
+      it('select Free trial, CCS, AWS', () => {
+        const data = {
+          ...baseFormData,
+          // 'standard-trial' is a fake value, a kludge for also initializing product;
+          // the backend request only gets the part before '-'.
+          billing_model: 'standard-trial',
+          product: normalizedProducts.OSDTrial,
+          byoc: 'true', // forced by OSDTrial.
+          // CCS also lowers nodes_compute default, but not important for these tests.
+          cloud_provider: 'aws',
+          ...awsRosaOsdVPCData,
+          ...CIDRData,
+        };
+        const request = createClusterRequest({}, data);
+        expect(request.billing_model).toEqual('standard');
+        expect(request.product).toEqual({ id: 'osdtrial' });
+        expect(request.cloud_provider.id).toEqual('aws');
+        expect(request.ccs.enabled).toEqual(true);
+        expectAWSVPC(request);
+        expectCIDR(request);
+      });
+
+      it('select On-demand (Marketplace) billing, CCS, GCP', () => {
+        const data = {
+          ...baseFormData,
+          billing_model: 'marketplace',
+          product: normalizedProducts.OSD,
+          byoc: 'true', // forced by marketplace.
+          cloud_provider: 'gcp',
+          gcp_service_account: '{}',
+          ...gcpVPCData,
+        };
+
+        const request = createClusterRequest({}, data);
+        expect(request.billing_model).toEqual('marketplace');
+        expect(request.product).toEqual({ id: 'osd' });
+        expect(request.cloud_provider.id).toEqual('gcp');
+        expect(request.ccs.enabled).toEqual(true);
+        expectGCPVPC(request);
+      });
+    });
+
+    describe('OSD Trial button', () => {
+      it('CCS, GCP', () => {
+        const data = {
+          ...baseFormData,
+          // 'standard-trial' is a fake value, a kludge for also initializing product;
+          // the backend request only gets the part before '-'.
+          billing_model: 'standard-trial',
+          product: normalizedProducts.OSDTrial,
+          byoc: 'true', // forced by OSDTrial
+          cloud_provider: 'gcp',
+          gcp_service_account: '{}',
+        };
+        const request = createClusterRequest({}, data);
+        expect(request.billing_model).toEqual('standard');
+        expect(request.product).toEqual({ id: 'osdtrial' });
+        expect(request.cloud_provider.id).toEqual('gcp');
+        expect(request.ccs.enabled).toEqual(true);
+      });
+
+      it('select Annual billing, rhInfra, GCP', () => {
+        const data = {
+          ...baseFormData,
+          billing_model: 'standard',
+          product: normalizedProducts.OSD,
+          byoc: 'false',
+          cloud_provider: 'gcp',
+        };
+        const request = createClusterRequest({}, data);
+        expect(request.billing_model).toEqual('standard');
+        expect(request.product).toEqual({ id: 'osd' });
+        expect(request.cloud_provider.id).toEqual('gcp');
+        expect(request.ccs).toBeUndefined();
+      });
+
+      it('select On-demand (Marketplace) billing, CCS, AWS', () => {
+        const data = {
+          ...baseFormData,
+          billing_model: 'marketplace',
+          product: normalizedProducts.OSD,
+          byoc: 'true', // forced by marketplace.
+          cloud_provider: 'aws',
+        };
+
+        const request = createClusterRequest({}, data);
+        expect(request.billing_model).toEqual('marketplace');
+        expect(request.product).toEqual({ id: 'osd' });
+        expect(request.cloud_provider.id).toEqual('aws');
+        expect(request.ccs.enabled).toEqual(true);
+      });
+    });
+  });
+
+  describe('CreateROSAWizard', () => {
+    // ROSA wizard has no choice about `product` or `cloud_provider` or 'byoc'.
+    // For code uniformity, it initializes these fields in redux-form state
+    // (without registering them or connecting to an actual Field component).
+
+    describe('ROSA button', () => {
+      const hcpSubnetDetails = {
+        selected_vpc: awsRosaOsdVPCData,
+        cluster_privacy_public_subnet_id: 'subnet-0703ec90283d1fd6b',
+        machinePoolsSubnets: [
+          {
+            availabilityZone: '',
+            privateSubnetId: 'subnet-00b3753ab2dd892ac',
+            publicSubnetId: '',
+          },
+        ],
+      };
+
+      it('defaults', () => {
+        const data = {
+          ...rosaFormData,
+          billing_model: 'standard',
+          cloud_provider: 'aws',
+          byoc: 'true',
+          hypershift: 'false',
+          ...CIDRData,
+        };
+        const request = createClusterRequest({}, data);
+        expect(request.billing_model).toEqual('standard');
+        expect(request.product).toEqual({ id: 'rosa' });
+        expect(request.cloud_provider.id).toEqual('aws');
+        expect(request.ccs.enabled).toEqual(true);
+        expectCIDR(request);
+      });
+
+      it('sets billing_model to "marketplace-aws" for HCP cluster', () => {
+        const data = {
+          ...rosaFormData,
+          billing_model: 'standard',
+          cloud_provider: 'aws',
+          byoc: 'true',
+          hypershift: 'true',
+          cluster_privacy: 'external',
+          ...hcpSubnetDetails,
+          ...CIDRData,
+        };
+        const request = createClusterRequest({}, data);
+
+        expect(request.hypershift.enabled).toBeTruthy();
+        expect(request.billing_model).toEqual('marketplace-aws');
+      });
+
+      it('leaves out node_drain_grace_period if Hypershift', () => {
+        const data = {
+          ...rosaFormData,
+          hypershift: 'true',
+        };
+        const request = createClusterRequest({}, data);
+        expect(request.node_drain_grace_period).toBeUndefined();
+      });
+
+      it('includes node_drain_grace_period if rosa classic', () => {
+        const data = {
+          ...rosaFormData,
+          hypershift: 'false',
+        };
+        const request = createClusterRequest({}, data);
+        expect(request.node_drain_grace_period).toEqual({ unit: 'minutes', value: 60 });
+      });
+
+      it.each([
+        ['external', ['subnet-0703ec90283d1fd6b', 'subnet-00b3753ab2dd892ac']],
+        ['internal', ['subnet-00b3753ab2dd892ac']],
+      ])(
+        'creates the subnet and availability zone fields correctly for privacy=%p clusters',
+        (clusterPrivacy, expectedSubnetIds) => {
+          const data = {
+            ...rosaFormData,
+            cloud_provider: 'aws',
+            byoc: 'true',
+            hypershift: 'true',
+            multi_az: 'false',
+            cluster_privacy: clusterPrivacy,
+            ...hcpSubnetDetails,
+          };
+          const request = createClusterRequest({}, data);
+          expect(request.aws.subnet_ids).toEqual(expectedSubnetIds);
+        },
+      );
+
+      describe('AWS Security Groups', () => {
+        const byoVpcData = {
+          ...rosaFormData,
+          cloud_provider: 'aws',
+          byoc: 'true',
+          install_to_vpc: true,
+          shared_vpc: { is_selected: false },
+          multi_az: 'false',
+          machinePoolsSubnets: [
+            {
+              availabilityZone: 'us-east-1d',
+              privateSubnetId: 'subnet-00b3753ab2dd892ac',
+              publicSubnetId: 'subnet-0703ec90283d1fd6b',
+            },
+          ],
+        };
+
+        it('are not sent if no groups have been selected', () => {
+          const request = createClusterRequest({}, byoVpcData);
+
+          expect(request.aws.additional_control_plane_security_group_ids).toBeUndefined();
+          expect(request.aws.additional_infra_security_group_ids).toBeUndefined();
+          expect(request.aws.additional_compute_security_group_ids).toBeUndefined();
+        });
+
+        describe('when applyControlPlaneToAll', () => {
+          const getTestData = ({ applyControlPlaneToAll }) => ({
+            ...byoVpcData,
+            securityGroups: {
+              applyControlPlaneToAll,
+              controlPlane: ['sg-cp'],
+              infra: ['sg-infra1', 'sg-infra2'],
+              worker: [],
+            },
+          });
+
+          it('is false, each node type uses its own groups', () => {
+            const request = createClusterRequest(
+              {},
+              getTestData({ applyControlPlaneToAll: false }),
+            );
+
+            expect(request.aws.additional_control_plane_security_group_ids).toEqual(['sg-cp']);
+            expect(request.aws.additional_infra_security_group_ids).toEqual([
+              'sg-infra1',
+              'sg-infra2',
+            ]);
+            expect(request.aws.additional_compute_security_group_ids).toBeUndefined();
+          });
+
+          it('is true, the control plane security groups are used for all node types', () => {
+            const request = createClusterRequest({}, getTestData({ applyControlPlaneToAll: true }));
+
+            expect(request.aws.additional_control_plane_security_group_ids).toEqual(['sg-cp']);
+            expect(request.aws.additional_infra_security_group_ids).toEqual(['sg-cp']);
+            expect(request.aws.additional_compute_security_group_ids).toEqual(['sg-cp']);
+          });
+        });
+      });
+    });
+  });
+});

@@ -1,4 +1,4 @@
-import produce from 'immer';
+import { produce } from 'immer';
 import {
   REJECTED_ACTION,
   PENDING_ACTION,
@@ -18,6 +18,7 @@ const initialState = {
   },
 };
 
+// eslint-disable-next-line default-param-last
 function NetworkingReducer(state = initialState, action) {
   // eslint-disable-next-line consistent-return
   return produce(state, (draft) => {

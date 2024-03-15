@@ -1,11 +1,11 @@
 import React from 'react';
-import { shallow } from 'enzyme';
-
+import { render, screen, within } from '~/testUtils';
 import ClusterStatusMonitor from './ClusterStatusMonitor';
-import fixtures from '../../../__test__/ClusterDetails.fixtures';
+import fixtures from '../../../__tests__/ClusterDetails.fixtures';
 
-jest.useFakeTimers('legacy'); // TODO 'modern'
-
+jest.useFakeTimers({
+  legacyFakeTimers: true, // TODO 'modern'
+});
 const { clusterDetails } = fixtures;
 
 const status = {
@@ -15,49 +15,79 @@ const status = {
     id: clusterDetails.cluster.id,
   },
 };
+const inflightChecks = { fulfilled: true, pending: false, checks: [] };
+const rerunInflightCheckReq = {
+  fulfilled: true,
+  pending: false,
+};
+const rerunInflightCheckRes = {
+  fulfilled: true,
+  pending: false,
+  checks: [],
+};
+
+// TODO: These tests throw warnings due to list items not having unique keys
 
 describe('<ClusterStatusMonitor />', () => {
-  let wrapper;
-  let getClusterStatus;
-  let refresh;
-  let history;
-  beforeEach(() => {
-    getClusterStatus = jest.fn();
-    refresh = jest.fn();
-    history = { push: jest.fn() };
-    wrapper = shallow(
-      <ClusterStatusMonitor
-        cluster={{ ...clusterDetails.cluster, state: 'installing' }}
-        getClusterStatus={getClusterStatus}
-        status={status}
-        refresh={refresh}
-        history={history}
-      />,
-    );
+  const getClusterStatus = jest.fn();
+  const getInflightChecks = jest.fn();
+  const resetInflightChecks = jest.fn();
+  const refresh = jest.fn();
+  const historyPush = jest.fn();
+  const history = { push: historyPush };
+
+  const defaultProps = {
+    cluster: { ...clusterDetails.cluster, state: 'installing' },
+    inflightChecks,
+    getClusterStatus,
+    getInflightChecks,
+    resetInflightChecks,
+    rerunInflightCheckReq,
+    rerunInflightCheckRes,
+    status,
+    refresh,
+    history,
+  };
+
+  afterEach(() => {
+    getClusterStatus.mockClear();
+    getInflightChecks.mockClear();
+    refresh.mockClear();
+    historyPush.mockClear();
   });
 
   it('calls getClusterStatus on mount', () => {
+    render(<ClusterStatusMonitor {...defaultProps} />);
     expect(getClusterStatus).toBeCalledWith(clusterDetails.cluster.id);
+    expect(getInflightChecks).toBeCalledWith(clusterDetails.cluster.id);
   });
 
   it('sets the timeout when cluster is installing', () => {
-    wrapper.setProps({
-      status: {
-        ...status,
-        pending: true,
-      },
-    }); // set pending: true first since the logic depends on the pending -> fulfilled transition
+    // set pending: true first since the logic depends on the pending -> fulfilled transition
+    const { rerender } = render(
+      <ClusterStatusMonitor
+        {...defaultProps}
+        status={{
+          ...status,
+          pending: true,
+        }}
+      />,
+    );
 
-    wrapper.setProps({
-      status: {
-        fulfilled: true,
-        pending: false,
-        status: {
-          id: clusterDetails.cluster.id,
-          state: 'installing',
-        },
-      },
-    });
+    rerender(
+      <ClusterStatusMonitor
+        {...defaultProps}
+        status={{
+          fulfilled: true,
+          pending: false,
+          status: {
+            id: clusterDetails.cluster.id,
+            state: 'installing',
+          },
+        }}
+      />,
+    );
+
     expect(setTimeout).toBeCalled();
     jest.runOnlyPendingTimers();
     expect(getClusterStatus).toHaveBeenLastCalledWith(clusterDetails.cluster.id);
@@ -66,11 +96,13 @@ describe('<ClusterStatusMonitor />', () => {
   });
 
   it('renders null when no error', () => {
-    expect(wrapper).toMatchSnapshot();
+    const { container } = render(<ClusterStatusMonitor {...defaultProps} />);
+    expect(container).toBeEmptyDOMElement();
   });
 
-  it('Displays warning when install takes longer', () => {
-    wrapper.setProps({
+  it('Displays warning when install takes longer', async () => {
+    const newProps = {
+      ...defaultProps,
       status: {
         fulfilled: true,
         pending: false,
@@ -81,46 +113,63 @@ describe('<ClusterStatusMonitor />', () => {
           provision_error_message: 'Install taking longer than expected',
         },
       },
-    });
-    expect(wrapper).toMatchSnapshot();
+    };
+
+    render(<ClusterStatusMonitor {...newProps} />);
+
+    expect(
+      within(screen.getByTestId('alert-long-install')).getByText(
+        /Installation is taking longer than expected/,
+      ),
+    ).toBeInTheDocument();
   });
 
   it('calls refresh when the status changes', () => {
-    wrapper.setProps({
-      status: {
-        ...status,
-        pending: true,
-      },
-    }); // set pending: true first since the logic depends on the pending -> fulfilled transition
+    const { rerender } = render(
+      <ClusterStatusMonitor
+        {...defaultProps}
+        status={{
+          ...status,
+          pending: true,
+        }}
+      />,
+    );
+    expect(refresh).not.toHaveBeenCalled();
+    rerender(
+      <ClusterStatusMonitor
+        {...defaultProps}
+        status={{
+          fulfilled: true,
+          pending: false,
+          status: {
+            id: clusterDetails.cluster.id,
+            state: 'error',
+            provision_error_code: 'OCM1002',
+            provision_error_message: 'Invalid AWS credentials (authentication)',
+          },
+        }}
+      />,
+    );
 
-    wrapper.setProps({
-      status: {
-        fulfilled: true,
-        pending: false,
-        status: {
-          id: clusterDetails.cluster.id,
-          state: 'error',
-          provision_error_code: 'OCM1002',
-          provision_error_message: 'Invalid AWS credentials (authentication)',
-        },
-      },
-    });
     expect(refresh).toBeCalled();
   });
 
   it('renders an alert when cluster is errored', () => {
-    wrapper.setProps({
-      status: {
-        fulfilled: true,
-        pending: false,
-        status: {
-          id: clusterDetails.cluster.id,
-          state: 'error',
-          provision_error_code: 'OCM1002',
-          provision_error_message: 'Invalid AWS credentials (authentication)',
-        },
-      },
-    });
-    expect(wrapper).toMatchSnapshot();
+    render(
+      <ClusterStatusMonitor
+        {...defaultProps}
+        status={{
+          fulfilled: true,
+          pending: false,
+          status: {
+            id: clusterDetails.cluster.id,
+            state: 'error',
+            provision_error_code: 'OCM1002',
+            provision_error_message: 'Invalid AWS credentials (authentication)',
+          },
+        }}
+      />,
+    );
+    expect(screen.getByText('Danger alert:')).toBeInTheDocument();
   });
 });

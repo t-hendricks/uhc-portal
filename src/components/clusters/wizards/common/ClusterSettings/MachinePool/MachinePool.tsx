@@ -1,26 +1,32 @@
 import React from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { GlobalState } from '~/redux/store';
 import { Field } from 'formik';
 
 import { Form, Grid, GridItem, Title, Text, ExpandableSection } from '@patternfly/react-core';
 
 import { required } from '~/common/validators';
-import { getMachineTypes } from '~/redux/actions/machineTypesActions';
-import { useGlobalState } from '~/redux/hooks/useGlobalState';
-import { canAutoScaleOnCreateSelector } from '~/components/clusters/ClusterDetails/components/MachinePools/MachinePoolsSelectors';
-import MachineTypeSelection from '~/components/clusters/CreateOSDPage/CreateOSDForm/FormSections/ScaleSection/MachineTypeSelection';
+import MachineTypeSelection from '~/components/clusters/common/ScaleSection/MachineTypeSelection';
+import {
+  getMachineTypesByRegion,
+  getMachineTypes,
+  clearMachineTypesByRegion,
+} from '~/redux/actions/machineTypesActions';
 import { CloudProviderType, FieldId } from '~/components/clusters/wizards/common/constants';
 import { useFormState } from '~/components/clusters/wizards/hooks';
 import ExternalLink from '~/components/common/ExternalLink';
-import { constants } from '~/components/clusters/CreateOSDPage/CreateOSDForm/CreateOSDFormConstants';
+import { constants } from '~/components/clusters/common/CreateOSDFormConstants';
 import links from '~/common/installLinks.mjs';
 import NodeCountInput from '~/components/clusters/common/NodeCountInput';
 import { normalizedProducts } from '~/common/subscriptionTypes';
-import { getNodesCount } from '~/components/clusters/CreateOSDPage/CreateOSDForm/FormSections/ScaleSection/AutoScaleSection/AutoScaleHelper';
+import { getNodesCount } from '~/components/clusters/common/ScaleSection/AutoScaleSection/AutoScaleHelper';
 import { getMinNodesRequired } from '~/components/clusters/ClusterDetails/components/MachinePools/machinePoolsHelper';
+import useCanClusterAutoscale from '~/components/clusters/ClusterDetails/components/MachinePools/components/EditMachinePoolModal/hooks/useCanClusterAutoscale';
+import { AWSCredentials } from '~/types/types';
 import { NodeLabelsFieldArray } from './NodeLabelsFieldArray';
 import { ImdsSectionField } from './ImdsSectionField/ImdsSectionField';
 import { AutoScale } from './AutoScale/AutoScale';
+import { getAwsCcsCredentials } from '../../utils/ccsCredentials';
 
 export const MachinePool = () => {
   const dispatch = useDispatch();
@@ -35,7 +41,9 @@ export const MachinePool = () => {
       [FieldId.Byoc]: byoc,
       [FieldId.NodesCompute]: nodesCompute,
       [FieldId.NodeLabels]: nodeLabels,
+      [FieldId.Region]: region,
     },
+    values,
     errors,
     getFieldProps,
     setFieldValue,
@@ -46,8 +54,40 @@ export const MachinePool = () => {
   const isByoc = byoc === 'true';
   const isRosa = product === normalizedProducts.ROSA;
   const isAWS = cloudProvider === CloudProviderType.Aws;
-  const canAutoScale = useGlobalState((state) => canAutoScaleOnCreateSelector(state, product));
+  const canAutoScale = useCanClusterAutoscale(product);
   const [isNodeLabelsExpanded, setIsNodeLabelsExpanded] = React.useState(false);
+  const awsCreds = React.useMemo<AWSCredentials>(() => getAwsCcsCredentials(values), [values]);
+
+  const [loadNewMachineTypes, setLoadNewMachineTypes] = React.useState(false);
+  const machineTypesByRegion = useSelector((state: GlobalState) => state.machineTypesByRegion);
+
+  React.useEffect(() => {
+    if (machineTypesByRegion.region) {
+      if (!isByoc || !isAWS || cloudProvider === CloudProviderType.Gcp || isRosa) {
+        // purge cache when related wizard context changes, i.e. provider/product/credentials
+        dispatch(clearMachineTypesByRegion());
+      }
+    }
+  }, [
+    cloudProvider,
+    isRosa,
+    machineTypesByRegion.region,
+    isByoc,
+    isAWS,
+    dispatch,
+    region,
+    setFieldValue,
+  ]);
+
+  React.useEffect(() => {
+    if (isAWS && isByoc) {
+      if (!machineTypesByRegion.region || machineTypesByRegion.region?.id !== region) {
+        setLoadNewMachineTypes(true);
+        setFieldValue(FieldId.MachineTypeForceChoice, false);
+      }
+      // no preiously loaded machineTypesByRegion in redux, load new machines
+    }
+  }, [machineTypesByRegion.region, isAWS, isByoc, region, setFieldValue]);
 
   // If no value has been set for compute nodes already,
   // set an initial value based on infrastructure and availability selections.
@@ -62,25 +102,59 @@ export const MachinePool = () => {
     if (!isNodeLabelsExpanded && errors[FieldId.NodeLabels]) {
       setIsNodeLabelsExpanded(true);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [errors[FieldId.NodeLabels], isNodeLabelsExpanded]);
 
   React.useEffect(() => {
-    if (nodeLabels[0].key) setFieldTouched(FieldId.NodeLabels, true, true);
+    if (nodeLabels[0]?.key) setFieldTouched(FieldId.NodeLabels, true, true);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   React.useEffect(() => {
     dispatch(getMachineTypes());
   }, [dispatch]);
 
+  React.useEffect(() => {
+    if (nodeLabels[0]?.key) setIsNodeLabelsExpanded(true);
+  }, [nodeLabels]);
+
+  React.useEffect(() => {
+    if (
+      loadNewMachineTypes &&
+      awsCreds?.access_key_id &&
+      awsCreds?.account_id &&
+      awsCreds?.secret_access_key &&
+      region
+    ) {
+      dispatch(
+        getMachineTypesByRegion(
+          awsCreds?.access_key_id as string,
+          awsCreds?.account_id as string,
+          awsCreds?.secret_access_key as string,
+          region,
+        ),
+      );
+      setLoadNewMachineTypes(false);
+    }
+  }, [
+    dispatch,
+    loadNewMachineTypes,
+    awsCreds?.access_key_id,
+    awsCreds?.account_id,
+    awsCreds?.secret_access_key,
+    region,
+  ]);
+
   const nodeLabelsExpandableSection = (
     <ExpandableSection
       toggleText="Add node labels"
-      className="pf-u-mt-md"
-      onToggle={(isExpanded) => setIsNodeLabelsExpanded(isExpanded)}
+      className="pf-v5-u-mt-md"
+      onToggle={(_event, isExpanded) => setIsNodeLabelsExpanded(isExpanded)}
       isExpanded={isNodeLabelsExpanded}
+      data-testid="node-labels-toggle"
     >
       <Title headingLevel="h3">Node labels (optional)</Title>
-      <p className="pf-u-mb-md">
+      <p className="pf-v5-u-mb-md">
         Configure labels that will apply to all nodes in this machine pool.
       </p>
       <NodeLabelsFieldArray />
@@ -96,12 +170,11 @@ export const MachinePool = () => {
       <GridItem md={4} />
     </>
   );
-
   return (
     <Form>
       <GridItem>
         <Title headingLevel="h3">Default machine pool</Title>
-        <Text component="p" className="pf-u-mt-sm">
+        <Text component="p" className="pf-v5-u-mt-sm">
           Select a compute node instance type and count for your default machine pool. After cluster
           creation, your selected default machine pool instance type is permanent.
         </Text>

@@ -13,8 +13,8 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
-import produce from 'immer';
-import moment from 'moment';
+import { produce } from 'immer';
+import dayjs from 'dayjs';
 
 import {
   REJECTED_ACTION,
@@ -51,6 +51,7 @@ const initialState = {
   },
 };
 
+// eslint-disable-next-line default-param-last
 function UpgradesRecuder(state = initialState, action) {
   // eslint-disable-next-line consistent-return
   return produce(state, (draft) => {
@@ -80,7 +81,7 @@ function UpgradesRecuder(state = initialState, action) {
         break;
       case FULFILLED_ACTION(GET_UPGRADE_SCHEDULES): {
         const items = action.payload?.data?.items || [];
-        items.sort((a, b) => moment(a.next_run).unix() - moment(b.next_run).unix());
+        items.sort((a, b) => dayjs(a.next_run).unix() - dayjs(b.next_run).unix());
         draft.schedules = {
           ...initialState.schedules,
           fulfilled: true,

@@ -1,0 +1,138 @@
+import './Overview.scss';
+import React, { useCallback } from 'react';
+import { Button, Title, Label, Flex, FlexItem, PageSection } from '@patternfly/react-core';
+import { Link } from 'react-router-dom-v5-compat';
+import ExternalLink from '~/components/common/ExternalLink';
+import useAnalytics from '~/hooks/useAnalytics';
+import { trackEvents } from '~/common/analytics';
+import { ProductBanner, ProductBannerProps } from '../common/ProductBanner';
+import docLinks from '../../common/installLinks.mjs';
+import {
+  ListTextLabelLinkCard,
+  ListTextLabelLinkCardProps,
+} from '../common/ListTextLabelLinkCard/ListTextLabelLinkCard';
+import OpenShiftProductIcon from '../../styles/images/OpenShiftProductIcon.svg';
+import { OfferingCard } from './OfferingCard/OfferingCard';
+import { AppPage } from '../App/AppPage';
+
+const linkTextLabelLinkCardContents: ListTextLabelLinkCardProps = {
+  cardClassName: 'pf-v5-u-mb-lg',
+  textLabelLinkItems: [
+    {
+      listItemText: 'Using Red Hat OpenShift Cluster Manager to work with your OpenShift clusters',
+      listItemLabel: <Label color="gold">Documentation</Label>,
+      listItemLink: (
+        <ExternalLink href={docLinks.OCM_DOCS_MANAGING_CLUSTERS}>Learn More</ExternalLink>
+      ),
+      dataTestId: 'recommendedContent_OCM',
+    },
+    {
+      listItemText: 'OpenShift Serverless overview',
+      listItemLabel: <Label color="gold">Documentation</Label>,
+      listItemLink: <ExternalLink href={docLinks.SERVERLESS_ABOUT}>Learn More</ExternalLink>,
+      dataTestId: 'recommendedContent_ServerLess',
+    },
+    {
+      listItemText: 'Understanding Service Mesh',
+      listItemLabel: <Label color="gold">Documentation</Label>,
+      listItemLink: <ExternalLink href={docLinks.SERVICE_MESH_ABOUT}>Learn More</ExternalLink>,
+      dataTestId: 'recommendedContent_ServiceMesh',
+    },
+    {
+      listItemText: 'About OpenShift Virtualization',
+      listItemLabel: <Label color="gold">Documentation</Label>,
+      listItemLink: <ExternalLink href={docLinks.VIRT_ABOUT}>Learn More</ExternalLink>,
+      dataTestId: 'recommendedContent_OVIRT',
+    },
+  ],
+};
+
+const openshiftBannerContents: ProductBannerProps = {
+  icon: <img src={OpenShiftProductIcon} alt="OpenShift product icon" />,
+  learnMoreLink: (
+    <ExternalLink href={docLinks.WHAT_IS_OPENSHIFT}>Learn more about OpenShift</ExternalLink>
+  ),
+  title: 'Get started with OpenShift',
+  text: (
+    <>
+      Focus on work that matters with the industry&#39;s leading hybrid cloud application platform
+      powered by Kubernetes.
+      <br />
+      Develop, modernize, deploy, run, and manage your applications faster and easier.
+    </>
+  ),
+  dataTestId: 'OverviewHeader',
+};
+
+function OverviewEmptyState() {
+  const track = useAnalytics();
+  const createClusterURL = '/create';
+  const CreateClusterLink = useCallback(
+    (props) => (
+      <Link
+        {...props}
+        onClick={() => {
+          track(trackEvents.CreateCluster, {
+            url: createClusterURL,
+            path: window.location.pathname,
+          });
+        }}
+        data-testid="create-cluster"
+        to={createClusterURL}
+      />
+    ),
+    [track],
+  );
+
+  return (
+    <AppPage>
+      <ProductBanner
+        icon={openshiftBannerContents.icon}
+        learnMoreLink={openshiftBannerContents.learnMoreLink}
+        title={openshiftBannerContents.title}
+        text={openshiftBannerContents.text}
+        dataTestId={openshiftBannerContents.dataTestId}
+      />
+      <PageSection>
+        <Title size="xl" headingLevel="h2" className="pf-v5-u-mt-lg">
+          Featured OpenShift cluster types
+        </Title>
+        <Flex className="pf-v5-u-mb-lg">
+          <FlexItem className="pf-v5-u-pt-md" data-testid="offering-card_RHOSD">
+            <OfferingCard offeringType="RHOSD" />
+          </FlexItem>
+          <FlexItem className="pf-v5-u-pt-md" data-testid="offering-card_AWS">
+            <OfferingCard offeringType="AWS" />
+          </FlexItem>
+          <FlexItem className="pf-v5-u-pt-md" data-testid="offering-card_Azure">
+            <OfferingCard offeringType="Azure" />
+          </FlexItem>
+          <FlexItem className="pf-v5-u-pt-md" data-testid="offering-card_RHOCP">
+            <OfferingCard offeringType="RHOCP" />
+          </FlexItem>
+          <FlexItem className="pf-v5-u-pt-md" data-testid="offering-card_RHOIBM">
+            <OfferingCard offeringType="RHOIBM" />
+          </FlexItem>
+          <FlexItem className="pf-v5-u-pt-md" data-testid="offering-card_DEVSNBX">
+            <OfferingCard offeringType="DEVSNBX" />
+          </FlexItem>
+        </Flex>
+        <Button variant="link" component={CreateClusterLink}>
+          View all OpenShift cluster types
+        </Button>
+        <Title size="xl" headingLevel="h2" className="pf-v5-u-mt-lg pf-v5-u-mb-lg">
+          Recommended Content
+        </Title>
+        <ListTextLabelLinkCard {...linkTextLabelLinkCardContents} />
+        <ExternalLink
+          data-testid="recommendedContentFooterLink"
+          href="/openshift/learning-resources"
+        >
+          Browse all OpenShift learning resources
+        </ExternalLink>
+      </PageSection>
+    </AppPage>
+  );
+}
+
+export default OverviewEmptyState;

@@ -62,8 +62,8 @@ stages:
 📦 Install and cache dependencies:
   <<: *store-note
   image:
-    # cypress/base:18.12.1
-    name: $REGISTRY/cypress/base@sha256:f355fc0fcdf664cf5872f4492c59e4cced407fda30cb6ddb27938b0369e2bea6
+    # cypress/base:20.11.0
+    name: $REGISTRY/cypress/base@sha256:b556d79c9e9d04de77edd6bfaa185518420b470aea10503d02269bfd3222ed45
   stage: install
   only:
     - merge_requests
@@ -114,8 +114,8 @@ stages:
 🌎 Cypress testing:
   <<: *store-note
   image:
-    # cypress/included:10.0.1
-    name: $REGISTRY/cypress/included@sha256:f066902e490e15b177a19ff64004ac4ef677c682d5a627a8f05a18f08b8de631
+    # cypress/included:13.6.4
+    name: $REGISTRY/cypress/included@sha256:671d7964f757038e4c84b958e1a89bb48dd81fda38110adee22a87bf358654c8
     entrypoint: ['']
   stage: test
   cache:
@@ -133,7 +133,7 @@ stages:
   script:
     - echo "Running cypress tests"
     - node --version
-    - yarn start --env logging=quiet &
+    - yarn start --env logging=quiet --no-client-overlay &
     - NODE_TLS_REJECT_UNAUTHORIZED=0 yarn wait-on https://prod.foo.redhat.com:1337/openshift/
     - TERM=xterm LC_ALL=C.UTF-8 LANG=C.UTF-8 yarn e2e-test
   artifacts:

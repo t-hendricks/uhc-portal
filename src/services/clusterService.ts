@@ -1,5 +1,6 @@
 import { AWSCredentials } from '~/types/types';
-import apiRequest from './apiRequest';
+import apiRequest from '~/services/apiRequest';
+import { AxiosResponse } from 'axios';
 import type {
   AddOn,
   AddOnInstallation,
@@ -13,6 +14,7 @@ import type {
   NodePool,
   CloudVPC,
   KeyRing,
+  KubeletConfig,
   EncryptionKey,
   CloudRegion,
   VersionGate,
@@ -29,8 +31,11 @@ import type {
   Flavour,
   LimitedSupportReason,
   OidcConfig,
+  InflightCheck,
   ClusterAutoscaler,
   DNSDomain,
+  NodePoolUpgradePolicy,
+  ProductTechnologyPreview,
 } from '../types/clusters_mgmt.v1';
 import type { Subscription } from '../types/accounts_mgmt.v1';
 
@@ -72,6 +77,35 @@ const getClusterDetails = (clusterID: string) =>
 
 const getClusterStatus = (clusterID: string) =>
   apiRequest.get<ClusterStatus>(`/api/clusters_mgmt/v1/clusters/${clusterID}/status`);
+
+const getInflightChecks = (clusterID: string) =>
+  apiRequest.get<{
+    /**
+     * Retrieved list of clusters.
+     */
+    items?: Array<InflightCheck>;
+    /**
+     * Index of the requested page, where one corresponds to the first page.
+     */
+    page?: number;
+    /**
+     * Maximum number of items that will be contained in the returned page.
+     */
+    size?: number;
+    /**
+     * Total number of items of the collection that match the search criteria,
+     * regardless of the size of the page.
+     */
+    total?: number;
+  }>(`/api/clusters_mgmt/v1/clusters/${clusterID}/inflight_checks`);
+
+const rerunInflightChecks = (clusterID: string) =>
+  apiRequest.post<unknown>(`/api/clusters_mgmt/v1/network_verifications`, {
+    cluster_id: clusterID,
+  });
+
+const getTriggeredInflightCheckState = (subnetId: string) =>
+  apiRequest.get<unknown>(`/api/clusters_mgmt/v1/network_verifications/${subnetId}`);
 
 const editCluster = (clusterID: string, data: Cluster) =>
   apiRequest.patch<Cluster>(`/api/clusters_mgmt/v1/clusters/${clusterID}`, data);
@@ -199,6 +233,49 @@ const getMachineTypes = () =>
     },
   });
 
+const getMachineTypesByRegion = (
+  accessKeyId: string,
+  accountId: string,
+  secretAccessKey: string,
+  region: string,
+) =>
+  apiRequest.post<{
+    /**
+     * Retrieved list of cloud providers.
+     */
+    items?: Array<MachineType>;
+    /**
+     * Index of the requested page, where one corresponds to the first page.
+     */
+    page?: number;
+    /**
+     * Maximum number of items that will be contained in the returned page.
+     */
+    size?: number;
+    /**
+     * Total number of items of the collection that match the search criteria,
+     * regardless of the size of the page.
+     */
+    total?: number;
+  }>(
+    '/api/clusters_mgmt/v1/aws_inquiries/machine_types',
+    {
+      aws: {
+        access_key_id: accessKeyId,
+        account_id: accountId,
+        secret_access_key: secretAccessKey,
+      },
+      region: {
+        id: region,
+      },
+    },
+    {
+      params: {
+        size: -1,
+      },
+    },
+  );
+
 const getStorageQuotaValues = () =>
   apiRequest.get<{ items: number[] }>('/api/clusters_mgmt/v1/storage_quota_values');
 
@@ -261,7 +338,7 @@ const createNewDnsDomain = () =>
 const deleteDnsDomain = (id: string) =>
   apiRequest.delete<unknown>(`/api/clusters_mgmt/v1/dns_domains/${id}`, {});
 
-const getAddOns = (clusterID: string) =>
+const getEnabledAddOns = (clusterID: string) =>
   apiRequest.get<{
     /**
      * Retrieved list of add-ons.
@@ -280,7 +357,13 @@ const getAddOns = (clusterID: string) =>
      * regardless of the size of the page.
      */
     total?: number;
-  }>(`/api/clusters_mgmt/v1/clusters/${clusterID}/addon_inquiries`);
+  }>(`/api/clusters_mgmt/v1/clusters/${clusterID}/addon_inquiries`, {
+    // Request all enabled add-ons
+    params: {
+      size: -1,
+      search: `enabled='t'`,
+    },
+  });
 
 const getClusterAddOns = (clusterID: string) =>
   apiRequest.get<AddOn>(`/api/clusters_mgmt/v1/clusters/${clusterID}/addons`);
@@ -297,7 +380,11 @@ const updateClusterAddOn = (clusterID: string, addOnID: string, data: AddOnInsta
 const deleteClusterAddOn = (clusterID: string, addOnID: string) =>
   apiRequest.delete<unknown>(`/api/clusters_mgmt/v1/clusters/${clusterID}/addons/${addOnID}`);
 
-const getInstallableVersions = (isRosa: boolean) =>
+const getInstallableVersions = (
+  isRosa: boolean,
+  isMarketplaceGcp: boolean,
+  isHCP: boolean = false,
+) =>
   apiRequest.get<{
     /**
      * Retrieved list of versions.
@@ -321,9 +408,12 @@ const getInstallableVersions = (isRosa: boolean) =>
   }>('/api/clusters_mgmt/v1/versions/', {
     params: {
       order: 'end_of_life_timestamp desc',
+      product: isHCP ? 'hcp' : undefined,
       // Internal users can test other channels via `ocm` CLI, no UI needed.
       // For external users, make sure we only offer stable channel.
-      search: `enabled='t' AND channel_group='stable' ${isRosa ? " AND rosa_enabled='t'" : ''}`,
+      search: `enabled='t' AND channel_group='stable'${isRosa ? " AND rosa_enabled='t'" : ''}${
+        isMarketplaceGcp ? " AND gcp_marketplace_enabled='t'" : ''
+      }`,
       size: -1,
     },
   });
@@ -432,6 +522,16 @@ const postControlPlaneUpgradeSchedule = (clusterID: string, schedule: UpgradePol
     schedule,
   );
 
+const postNodePoolUpgradeSchedule = (
+  clusterID: string,
+  nodePoolID: string,
+  schedule: NodePoolUpgradePolicy,
+) =>
+  apiRequest.post<NodePoolUpgradePolicy>(
+    `/api/clusters_mgmt/v1/clusters/${clusterID}/node_pools/${nodePoolID}/upgrade_policies`,
+    schedule,
+  );
+
 const patchUpgradeSchedule = (clusterID: string, policyID: string, schedule: UpgradePolicy) =>
   apiRequest.patch<UpgradePolicy>(
     `/api/clusters_mgmt/v1/clusters/${clusterID}/upgrade_policies/${policyID}`,
@@ -495,7 +595,10 @@ const getControlPlaneUpgradeSchedules = (clusterID: string) =>
     params: {},
   });
 
-const getUpgradeScheduleState = (clusterID: string, policyID: string) =>
+const getUpgradeScheduleState = (
+  clusterID: string,
+  policyID: string,
+): Promise<AxiosResponse<UpgradePolicyState>> =>
   apiRequest.get<UpgradePolicyState>(
     `/api/clusters_mgmt/v1/clusters/${clusterID}/upgrade_policies/${policyID}/state`,
   );
@@ -530,6 +633,26 @@ const getMachinePools = (clusterID: string) =>
     total?: number;
   }>(`/api/clusters_mgmt/v1/clusters/${clusterID}/machine_pools`);
 
+const getNodePoolUpgradePolicies = (clusterId: string, nodePoolID: string) =>
+  apiRequest.get<{
+    /**
+     * Retrieved list of node pools upgrade policies.
+     */
+    items?: Array<NodePoolUpgradePolicy>;
+    /**
+     * Index of the requested page, where one corresponds to the first page.
+     */
+    page?: number;
+    /**
+     * Number of items contained in the returned page.
+     */
+    size?: number;
+    /**
+     * Total number of items of the collection.
+     */
+    total?: number;
+  }>(`/api/clusters_mgmt/v1/clusters/${clusterId}/node_pools/${nodePoolID}/upgrade_policies`);
+
 const getNodePools = (clusterID: string) =>
   apiRequest.get<{
     /**
@@ -556,17 +679,17 @@ const patchNodePool = (clusterID: string, nodePoolID: string, data: NodePool) =>
     data,
   );
 
+const patchMachinePool = (clusterID: string, machinePoolID: string, data: MachinePool) =>
+  apiRequest.patch<MachinePool>(
+    `/api/clusters_mgmt/v1/clusters/${clusterID}/machine_pools/${machinePoolID}`,
+    data,
+  );
+
 const addMachinePool = (clusterID: string, data: MachinePool) =>
   apiRequest.post<MachinePool>(`/api/clusters_mgmt/v1/clusters/${clusterID}/machine_pools`, data);
 
 const addNodePool = (clusterID: string, data: NodePool) =>
   apiRequest.post<MachinePool>(`/api/clusters_mgmt/v1/clusters/${clusterID}/node_pools`, data);
-
-const scaleMachinePool = (clusterID: string, machinePoolID: string, data: MachinePool) =>
-  apiRequest.patch<MachinePool>(
-    `/api/clusters_mgmt/v1/clusters/${clusterID}/machine_pools/${machinePoolID}`,
-    data,
-  );
 
 const deleteMachinePool = (clusterID: string, machinePoolID: string) =>
   apiRequest.delete<unknown>(
@@ -600,6 +723,17 @@ const upgradeTrialCluster = (clusterID: string, data: Cluster) =>
   apiRequest.patch<Cluster>(`/api/clusters_mgmt/v1/clusters/${clusterID}`, data);
 
 /**
+ * Gets the VPC details of a BYO VPC cluster
+ *
+ * @param clusterId {string} the cluster ID.
+ * @param {object} options - Additional parameters to include in the request query.
+ */
+const getAWSVPCDetails = (clusterId: string, options?: { includeSecurityGroups: boolean }) => {
+  const query = options?.includeSecurityGroups ? '?fetchSecurityGroups=true' : '';
+  return apiRequest.get<CloudVPC>(`/api/clusters_mgmt/v1/clusters/${clusterId}/vpc${query}`);
+};
+
+/**
  * List AWS VPCs for given CCS account.
  *
  * @param credentials {json} an object in the form:
@@ -617,9 +751,16 @@ const upgradeTrialCluster = (clusterID: string, data: Cluster) =>
  *  }`
  * @param region {string} the region ID.
  * @param {string} [subnet] - Optimization: If provided, only VPC attached to that subnet id will be included.
+ * @param {object} options - Additional parameters to include in the request query.
  */
-const listAWSVPCs = (credentials: AWSCredentials, region: string, subnet?: string) =>
-  apiRequest.post<{
+const listAWSVPCs = (
+  credentials: AWSCredentials,
+  region: string,
+  subnet?: string,
+  options?: { includeSecurityGroups: boolean },
+) => {
+  const query = options?.includeSecurityGroups ? '?fetchSecurityGroups=true' : '';
+  return apiRequest.post<{
     /**
      * Retrieved list of cloud VPC.
      */
@@ -641,14 +782,14 @@ const listAWSVPCs = (credentials: AWSCredentials, region: string, subnet?: strin
      * searching the result will always be the total number of available vpcs of the provider.
      */
     total?: number;
-  }>('/api/clusters_mgmt/v1/aws_inquiries/vpcs', {
+  }>(`/api/clusters_mgmt/v1/aws_inquiries/vpcs${query}`, {
     aws: credentials,
     region: {
       id: region,
     },
     subnets: subnet ? [subnet] : undefined,
   });
-
+};
 const listGCPVPCs = (credentials: GCP, region: string) =>
   apiRequest.post<{
     /**
@@ -868,6 +1009,26 @@ const getLimitedSupportReasons = (clusterId: string) =>
     total?: number;
   }>(`/api/clusters_mgmt/v1/clusters/${clusterId}/limited_support_reasons`);
 
+const getKubeletConfiguration = (clusterId: string) =>
+  apiRequest.get<KubeletConfig>(`/api/clusters_mgmt/v1/clusters/${clusterId}/kubelet_config`);
+
+const postKubeletConfiguration = (clusterId: string, config: KubeletConfig) =>
+  apiRequest.post<KubeletConfig>(`/api/clusters_mgmt/v1/clusters/${clusterId}/kubelet_config`, {
+    ...config,
+  });
+
+const patchKubeletConfiguration = (clusterId: string, config: KubeletConfig) =>
+  apiRequest.patch<KubeletConfig>(`/api/clusters_mgmt/v1/clusters/${clusterId}/kubelet_config`, {
+    ...config,
+  });
+
+const deleteKubeletConfiguration = (clusterId: string) =>
+  apiRequest.patch<KubeletConfig>(`/api/clusters_mgmt/v1/clusters/${clusterId}/kubelet_config`);
+const getTechPreviewStatus = (product: string, id: string) =>
+  apiRequest.get<ProductTechnologyPreview>(
+    `/api/clusters_mgmt/v1/products/${product}/technology_previews/${id}`,
+  );
+
 const clusterService = {
   getClusters,
   postNewCluster,
@@ -884,6 +1045,7 @@ const clusterService = {
   deleteIdentityProvider,
   getFlavour,
   getMachineTypes,
+  getMachineTypesByRegion,
   archiveCluster,
   hibernateCluster,
   resumeCluster,
@@ -891,7 +1053,7 @@ const clusterService = {
   getDnsDomains,
   createNewDnsDomain,
   deleteDnsDomain,
-  getAddOns,
+  getEnabledAddOns,
   getClusterAddOns,
   addClusterAddOn,
   updateClusterAddOn,
@@ -910,12 +1072,16 @@ const clusterService = {
   deleteAdditionalIngress,
   editClusterIdentityProvider,
   getClusterStatus,
+  getInflightChecks,
+  rerunInflightChecks,
+  getTriggeredInflightCheckState,
   getMachinePools,
   getNodePools,
+  getNodePoolUpgradePolicies,
   patchNodePool,
+  patchMachinePool,
   addMachinePool,
   addNodePool,
-  scaleMachinePool,
   deleteMachinePool,
   deleteNodePool,
   getClusterAutoscaler,
@@ -929,6 +1095,12 @@ const clusterService = {
   getOperatorRoleCommands,
   getLimitedSupportReasons,
   getOidcConfigurations,
+  postNodePoolUpgradeSchedule,
+  getKubeletConfiguration,
+  postKubeletConfiguration,
+  patchKubeletConfiguration,
+  deleteKubeletConfiguration,
+  getTechPreviewStatus,
 };
 
 export {
@@ -941,6 +1113,7 @@ export {
   deleteControlPlaneUpgradeSchedule,
   patchUpgradeSchedule,
   patchControlPlaneUpgradeSchedule,
+  getAWSVPCDetails,
   listAWSVPCs,
   listGCPVPCs,
   listGCPKeyRings,

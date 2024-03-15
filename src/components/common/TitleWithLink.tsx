@@ -1,8 +1,8 @@
 import React from 'react';
-import { LinkIcon } from '@patternfly/react-icons';
+import { LinkIcon } from '@patternfly/react-icons/dist/esm/icons/link-icon';
 import { Title, Split, SplitItem } from '@patternfly/react-core';
 import { HashLink as Link } from 'react-router-hash-link';
-import { useLocation } from 'react-router-dom';
+import { useLocation } from 'react-router-dom-v5-compat';
 import './TitleWithLink.scss';
 
 type Props = {
@@ -22,6 +22,7 @@ const TitleWithLink = ({ headingLevel, size, id, text }: Props) => {
       titleRef.current?.scrollIntoView();
     }
     // only run once on load
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (

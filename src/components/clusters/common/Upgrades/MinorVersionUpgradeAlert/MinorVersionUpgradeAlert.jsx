@@ -1,10 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Alert, AlertActionLink, Spinner } from '@patternfly/react-core';
-import ArrowCircleUpIcon from '@patternfly/react-icons/dist/js/icons/arrow-circle-up-icon';
+import ArrowCircleUpIcon from '@patternfly/react-icons/dist/esm/icons/arrow-circle-up-icon';
 import links from '../../../../../common/installLinks.mjs';
 import ExternalLink from '../../../../common/ExternalLink';
-import { patchUpgradeSchedule } from '../../../../../services/clusterService';
+import {
+  patchUpgradeSchedule,
+  patchControlPlaneUpgradeSchedule,
+} from '../../../../../services/clusterService';
 
 const actionLink = (onChange, isCurrentlyEnabled) => (
   <AlertActionLink onClick={() => onChange(!isCurrentlyEnabled)}>
@@ -23,6 +26,8 @@ const MinorVersionUpgradeAlert = ({
   setUpgradePolicy,
   isNextMinorVersionAvailable,
   isRosa,
+  isHypershift,
+  isSTSEnabled,
 }) => {
   const [loading, setLoading] = React.useState(false);
   const [error, setError] = React.useState(null);
@@ -32,7 +37,8 @@ const MinorVersionUpgradeAlert = ({
     hasUnmetUpgradeAcknowledge ||
     !automaticUpgradePolicyId ||
     !clusterId ||
-    !isNextMinorVersionAvailable
+    !isNextMinorVersionAvailable ||
+    isSTSEnabled
   ) {
     return null;
   }
@@ -42,7 +48,8 @@ const MinorVersionUpgradeAlert = ({
     setError(null);
 
     try {
-      const response = await patchUpgradeSchedule(clusterId, automaticUpgradePolicyId, {
+      const requestPatch = isHypershift ? patchControlPlaneUpgradeSchedule : patchUpgradeSchedule;
+      const response = await requestPatch(clusterId, automaticUpgradePolicyId, {
         enable_minor_version_upgrades: isEnable,
       });
 
@@ -57,7 +64,14 @@ const MinorVersionUpgradeAlert = ({
   };
 
   return error ? (
-    <Alert variant="danger" className="automatic-cluster-updates-alert" isInline title={error} />
+    <Alert
+      variant="danger"
+      className="automatic-cluster-updates-alert"
+      isInline
+      title={error}
+      role="alert"
+      data-testid="alert-error"
+    />
   ) : (
     <Alert
       isExpandable
@@ -70,14 +84,13 @@ const MinorVersionUpgradeAlert = ({
           : 'New minor version available'
       }
       actionLinks={
-        <>
-          {loading ? (
-            <Spinner size="sm" aria-label="Setting minor version update status" />
-          ) : (
-            actionLink(onChangeAcknowledge, isMinorVersionUpgradesEnabled)
-          )}
-        </>
+        loading ? (
+          <Spinner size="sm" aria-label="Setting minor version update status" />
+        ) : (
+          actionLink(onChangeAcknowledge, isMinorVersionUpgradesEnabled)
+        )
       }
+      data-testid="alert-success"
     >
       {isMinorVersionUpgradesEnabled ? (
         <p data-testid="minorVersionUpgradeAlertDisableMessage">
@@ -106,6 +119,8 @@ MinorVersionUpgradeAlert.propTypes = {
   setUpgradePolicy: PropTypes.func,
   isNextMinorVersionAvailable: PropTypes.bool,
   isRosa: PropTypes.bool,
+  isHypershift: PropTypes.bool,
+  isSTSEnabled: PropTypes.bool,
 };
 MinorVersionUpgradeAlert.defaultProps = {
   isMinorVersionUpgradesEnabled: false,

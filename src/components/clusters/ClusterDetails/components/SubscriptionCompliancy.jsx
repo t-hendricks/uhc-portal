@@ -84,7 +84,7 @@ function SubscriptionCompliancy({ cluster, openModal, canSubscribeOCP = false })
   if (supportLevel === subscriptionSupportLevels.NONE) {
     return (
       <Alert
-        className="subscription-settings compliancy-alert pf-u-mt-md"
+        className="subscription-settings compliancy-alert pf-v5-u-mt-md"
         isInline
         variant="danger"
         title="Your 60-day OpenShift evaluation has expired"
@@ -98,7 +98,7 @@ function SubscriptionCompliancy({ cluster, openModal, canSubscribeOCP = false })
               <Button variant="link" isInline onClick={handleArchiveCluster}>
                 Archive this cluster
               </Button>
-              {' if it no longer exits. '}
+              {' if it no longer exists. '}
             </>
           ) : (
             textForUsersCanNotEdit
@@ -109,7 +109,7 @@ function SubscriptionCompliancy({ cluster, openModal, canSubscribeOCP = false })
   }
   return (
     <Alert
-      className="subscription-settings compliancy-alert pf-u-mt-md"
+      className="subscription-settings compliancy-alert pf-v5-u-mt-md"
       isInline
       variant="warning"
       title="OpenShift evaluation expiration date"

@@ -24,7 +24,6 @@ import { AxiosError } from 'axios';
 import { humanizeValueWithUnit } from '~/common/units';
 import fedrampService from '~/services/fedrampService';
 import config from '~/config';
-import PopoverHint from '~/components/common/PopoverHint';
 import redhatLogoImg from '../../../styles/images/Logo-RedHat-Hat-Color-RGB.png';
 
 const maxFileSize = 10 * 1024 * 1024; // 10 MB
@@ -39,9 +38,9 @@ const GovCloudForm = ({
   onSubmitSuccess: () => void;
   hasGovEmail: boolean;
 }) => {
-  const [isUSCitizen, setIsUSCitizen] = React.useState(false);
-  const [backgroundCheck, setBackgroundCheck] = React.useState(false);
-  const [securityTraining, setSecurityTraining] = React.useState(false);
+  const [isUSPerson, setIsUSPerson] = React.useState(false);
+  const [govContract, setGovContract] = React.useState(false);
+  const [authPerson, setAuthPerson] = React.useState(false);
   const [fileUpload, setFileUpload] = React.useState<File>();
   const [uploadError, setUploadError] = React.useState<string>();
   const [fileReadError, setFileReadError] = React.useState<string>();
@@ -49,11 +48,7 @@ const GovCloudForm = ({
   const [isReadingFile, setIsReadingFile] = React.useState(false);
   const [contractID, setContractID] = React.useState<string>();
 
-  const formReady =
-    isUSCitizen &&
-    backgroundCheck &&
-    securityTraining &&
-    (hasGovEmail ? true : !!contractID?.trim());
+  const formReady = isUSPerson && govContract && authPerson;
   return (
     <Card style={{ maxWidth: '80rem', borderTopColor: '#e00', borderTopStyle: 'solid' }}>
       <CardTitle>
@@ -78,119 +73,136 @@ const GovCloudForm = ({
           <StackItem>
             <TextContent>
               <Text component={TextVariants.p}>
-                By checking the following boxes, you are agreeing to the requirements for accessing
-                the FedRAMP Red Hat OpenShift Service on AWS (ROSA) GovCloud instance.
+                Red Hat OpenShift Service on AWS (ROSA) and Red Hat Insights in the GovCloud Region
+                have been authorized (agency) under the Federal Risk Assessment and Management
+                Program (FedRAMP) High and DoD Cloud Computing Security Requirements Guide (SRG).
+              </Text>
+              <Text component={TextVariants.p}>
+                Federal and government agencies can be granted access to the FedRAMP environment
+                without further verification. However, commercial organizations and FISMA R&D
+                universities will need to provide documentation to show that they are supporting a
+                government contract/grant or in the process of bidding on a government
+                contract/grant (RFP, RFI, pre-bid stage), confirmation of U.S. Person only access at
+                the root level and agreement to the FedRAMP Rules of Behavior.
+              </Text>
+              <Text component={TextVariants.p}>
+                Upon submission, this form will be processed by Red Hat. If further information is
+                required you will receive a follow up email, or you will receive instructions on how
+                to access the service. By checking the boxes below you confirm that:
               </Text>
             </TextContent>
           </StackItem>
           <StackItem>
             <Checkbox
-              label="I am a U.S. citizen."
-              isChecked={isUSCitizen}
-              onChange={setIsUSCitizen}
+              label="Requestor is U.S. Person as defined by the International Traffic in Arms Regulations, 22 CFR 120.62."
+              isChecked={isUSPerson}
+              onChange={(_event, value) => setIsUSPerson(value)}
               id="citizen-checkbox"
             />
             <Checkbox
-              label="I have undergone a successful background check sponsored by my government agency or government contract sponsoring agency."
-              isChecked={backgroundCheck}
-              onChange={setBackgroundCheck}
+              label="Requestor will use the service to support a U.S. government contract and/or grant."
+              isChecked={govContract}
+              onChange={(_event, value) => setGovContract(value)}
               id="check-checkbox"
             />
             <Checkbox
-              label="I will be subject to initial and annual refresher security training."
-              isChecked={securityTraining}
-              onChange={setSecurityTraining}
+              label="Requestor will only authorize U.S. Persons to manage and access root account keys to the service."
+              isChecked={authPerson}
+              onChange={(_event, value) => setAuthPerson(value)}
               id="training-checkbox"
             />
           </StackItem>
           {!hasGovEmail && (
             <StackItem>
               <FormGroup
-                label="Contract ID or RFP number"
-                isRequired
-                labelIcon={
-                  <PopoverHint
-                    hint={
-                      <>
-                        Contract ID or RFP number from the{' '}
-                        <a
-                          href="https://www.usaspending.gov/search"
-                          target="_blank"
-                          rel="noreferrer noopener"
-                        >
-                          US Spending government
-                        </a>{' '}
-                        website.
-                      </>
-                    }
-                  />
+                label={
+                  <>
+                    Contract ID, Award ID or RFP Number from the{' '}
+                    <a
+                      href="https://www.usaspending.gov/search"
+                      target="_blank"
+                      rel="noreferrer noopener"
+                    >
+                      U.S. Spending government
+                    </a>{' '}
+                    website.
+                  </>
                 }
               >
-                <TextInput value={contractID} onChange={setContractID} isRequired />
+                <TextInput
+                  value={contractID}
+                  onChange={(_, value) => setContractID(value)}
+                  isRequired
+                />
               </FormGroup>
             </StackItem>
           )}
           <StackItem>
-            <TextContent>
-              <Text component={TextVariants.p}>
-                Please download the{' '}
-                <Button variant="link" isInline>
-                  <a
-                    href={`${config.configData.fedrampS3}/fedramp-rules-of-behavior.pdf`}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    FedRAMP Rules of Behavior document.
-                  </a>
-                </Button>{' '}
-                Read the document and attest to the requirements by signing and uploading it to the
-                designated area below.
-              </Text>
-            </TextContent>
-          </StackItem>
-          <StackItem>
-            <FileUpload
-              id="doc-upload"
-              value={fileUpload}
-              filename={fileUpload?.name}
-              filenamePlaceholder="Drag and drop a file or upload one"
-              dropzoneProps={{
-                accept: '.pdf',
-                maxSize: maxFileSize,
-                onDropRejected: () => {
-                  setFileReadError(`File must be pdf and has ${maxFileSizeHumanized} Mb or less.`);
-                },
-              }}
-              onFileInputChange={(_, file) => {
-                if (file.size > maxFileSize) {
-                  setFileReadError(
-                    `File size is too big. Upload a new file ${maxFileSizeHumanized} Mb or less`,
-                  );
-                  setFileUpload(undefined);
-                } else {
+            <FormGroup
+              label={
+                <TextContent>
+                  <Text component={TextVariants.p}>
+                    Please download the{' '}
+                    <Button variant="link" isInline>
+                      <a
+                        href={`${config.configData.fedrampS3}/fedramp-rules-of-behavior.pdf`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        FedRAMP Rules of Behavior document.
+                      </a>
+                    </Button>{' '}
+                    Read the document and attest to the requirements by signing and uploading it to
+                    the designated area below.
+                  </Text>
+                </TextContent>
+              }
+            >
+              <FileUpload
+                id="doc-upload"
+                value={fileUpload}
+                filename={fileUpload?.name}
+                filenamePlaceholder="Drag and drop a file or upload one"
+                dropzoneProps={{
+                  accept: { pdf: ['.pdf'] },
+                  maxSize: maxFileSize,
+                  onDropRejected: () => {
+                    setFileReadError(
+                      `File must be pdf and has ${maxFileSizeHumanized} Mb or less.`,
+                    );
+                  },
+                }}
+                onFileInputChange={(_, file) => {
+                  if (file.size > maxFileSize) {
+                    setFileReadError(
+                      `File size is too big. Upload a new file ${maxFileSizeHumanized} Mb or less`,
+                    );
+                    setFileUpload(undefined);
+                  } else {
+                    setFileReadError(undefined);
+                    setFileUpload(file);
+                  }
+                }}
+                onClearClick={() => {
                   setFileReadError(undefined);
-                  setFileUpload(file);
-                }
-              }}
-              onClearClick={() => {
-                setFileReadError(undefined);
-                setFileUpload(undefined);
-              }}
-              onReadFailed={(error) => {
-                setFileReadError(error.message);
-                setIsReadingFile(false);
-              }}
-              onReadStarted={() => {
-                setFileReadError(undefined);
-                setIsReadingFile(true);
-              }}
-              onReadFinished={() => {
-                setIsReadingFile(false);
-              }}
-              isDisabled={isReadingFile}
-              isLoading={isReadingFile}
-              browseButtonText="Upload"
-            />
+                  setFileUpload(undefined);
+                }}
+                onReadFailed={(_event, error) => {
+                  setFileReadError(error.message);
+                  setIsReadingFile(false);
+                }}
+                onReadStarted={() => {
+                  setFileReadError(undefined);
+                  setIsReadingFile(true);
+                }}
+                onReadFinished={() => {
+                  setIsReadingFile(false);
+                }}
+                isDisabled={isReadingFile}
+                isLoading={isReadingFile}
+                browseButtonText="Upload"
+              />
+            </FormGroup>
           </StackItem>
         </Stack>
       </CardBody>
@@ -216,9 +228,9 @@ const GovCloudForm = ({
                       await fedrampService.createIncident(
                         fileUpload,
                         {
-                          isUSCitizen,
-                          backgroundCheck,
-                          securityTraining,
+                          isUSPerson,
+                          authPerson,
+                          govContract,
                         },
                         contractID,
                       );

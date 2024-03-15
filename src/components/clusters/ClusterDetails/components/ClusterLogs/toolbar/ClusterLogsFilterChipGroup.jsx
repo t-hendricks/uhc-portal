@@ -4,13 +4,14 @@ import isEmpty from 'lodash/isEmpty';
 
 import { Button, Chip, ChipGroup, Split, SplitItem } from '@patternfly/react-core';
 
-import { SEVERITY_TYPES } from '../clusterLogConstants';
+import { SEVERITY_TYPES, LOG_TYPES } from '../clusterLogConstants';
 import { buildFilterURLParams } from '../../../../../../common/queryHelpers';
 import helpers from '../../../../../../common/helpers';
 
 const mapFilterGroup = (group, currentFilter, setFilter, history) => {
   const setFilterAndQueryParams = (key, value) => {
     history.push({
+      ...history.location,
       search: buildFilterURLParams({ [key]: [value] }),
     });
     setFilter(value);
@@ -39,6 +40,7 @@ const mapFilterGroup = (group, currentFilter, setFilter, history) => {
 const mapFlagsGroup = (group, currentFlags, setFlags, history) => {
   const setFilterAndQueryParams = (flags) => {
     history.push({
+      ...history.location,
       search: buildFilterURLParams(flags),
     });
     setFlags(flags);
@@ -70,6 +72,7 @@ const mapFlagsGroup = (group, currentFlags, setFlags, history) => {
 
 const clearFilters = (history, clearFiltersAndFlags) => {
   history.push({
+    ...history.location,
     search: '',
   });
   clearFiltersAndFlags();
@@ -80,6 +83,15 @@ const groupFlags = [
     key: 'severityTypes',
     label: 'Severity Type',
     optionLabels: SEVERITY_TYPES.reduce((map, key) => {
+      /* eslint-disable-next-line no-param-reassign */
+      map[key] = key;
+      return map;
+    }, {}),
+  },
+  {
+    key: 'logTypes',
+    label: 'Type',
+    optionLabels: LOG_TYPES.reduce((map, key) => {
       /* eslint-disable-next-line no-param-reassign */
       map[key] = key;
       return map;
@@ -147,6 +159,7 @@ ClusterLogsFilterChipGroup.propTypes = {
   setFlags: PropTypes.func.isRequired,
   currentFlags: PropTypes.shape({
     severityTypes: PropTypes.arrayOf(PropTypes.string),
+    logTypes: PropTypes.arrayOf(PropTypes.string),
   }).isRequired,
   clearFiltersAndFlags: PropTypes.func.isRequired,
   history: PropTypes.shape({

@@ -15,18 +15,19 @@ import {
 
 import links from '~/common/installLinks.mjs';
 import validators, { required } from '~/common/validators';
-import { constants } from '~/components/clusters/CreateOSDPage/CreateOSDForm/CreateOSDFormConstants';
+import { constants } from '~/components/clusters/common/CreateOSDFormConstants';
 import {
   HOST_PREFIX_DEFAULT,
   MACHINE_CIDR_DEFAULT,
-  podCidrDefaultValue,
+  POD_CIDR_DEFAULT,
   SERVICE_CIDR_DEFAULT,
-} from '~/components/clusters/CreateOSDPage/CreateOSDForm/FormSections/NetworkingSection/networkingConstants';
+} from '~/components/clusters/common/networkingConstants';
 import ExternalLink from '~/components/common/ExternalLink';
 import { CloudProviderType } from '~/components/clusters/wizards/common/constants';
 import { CheckboxField, TextInputField } from '~/components/clusters/wizards/form';
 import { useFormState } from '~/components/clusters/wizards/hooks';
 import { FieldId } from '~/components/clusters/wizards/osd/constants';
+import { constructSelectedSubnets } from '~/common/helpers';
 import {
   formatHostPrefix,
   validateMachineCidr,
@@ -51,9 +52,9 @@ export const CidrRanges = () => {
 
   React.useEffect(() => {
     if (networkPodCidr === undefined) {
-      setFieldValue(FieldId.NetworkPodCidr, podCidrDefaultValue(cloudProvider));
+      setFieldValue(FieldId.NetworkPodCidr, POD_CIDR_DEFAULT);
     }
-  }, [cloudProvider, networkPodCidr, setFieldValue]);
+  }, [networkPodCidr, setFieldValue]);
 
   const awsMachineCIDRMax = isMultiAz
     ? validators.AWS_MACHINE_CIDR_MAX_MULTI_AZ
@@ -74,13 +75,13 @@ export const CidrRanges = () => {
       </>
     ) : null;
 
-  const onDefaultValuesToggle = (checked: boolean) => {
+  const onDefaultValuesToggle = (_event: React.FormEvent<HTMLInputElement>, checked: boolean) => {
     setFieldValue(FieldId.CidrDefaultValuesEnabled, checked);
 
     if (checked) {
       setFieldValue(FieldId.NetworkMachineCidr, MACHINE_CIDR_DEFAULT);
       setFieldValue(FieldId.NetworkServiceCidr, SERVICE_CIDR_DEFAULT);
-      setFieldValue(FieldId.NetworkPodCidr, podCidrDefaultValue(cloudProvider));
+      setFieldValue(FieldId.NetworkPodCidr, POD_CIDR_DEFAULT);
       setFieldValue(FieldId.NetworkHostPrefix, HOST_PREFIX_DEFAULT);
 
       // Untouch all fields after setting defaults to reset validation
@@ -90,6 +91,8 @@ export const CidrRanges = () => {
       setFieldTouched(FieldId.NetworkHostPrefix, false);
     }
   };
+
+  const selectedSubnets = constructSelectedSubnets(values);
 
   return (
     <Form>
@@ -101,10 +104,10 @@ export const CidrRanges = () => {
             id="advanced-networking-alert"
             isInline
             variant="info"
-            className="pf-u-mt-sm"
+            className="pf-v5-u-mt-sm"
             title="CIDR ranges cannot be changed after you create your cluster."
           >
-            <p className="pf-u-mb-md">
+            <p className="pf-v5-u-mb-md">
               Specify non-overlapping ranges for machine, service, and pod ranges. Each range should
               correspond to the first IP address in their subnet.
             </p>
@@ -134,10 +137,10 @@ export const CidrRanges = () => {
             <TextInputField
               name={FieldId.NetworkMachineCidr}
               label="Machine CIDR"
-              validate={(value: string) => validateMachineCidr(value)(values)}
+              validate={(value: string) => validateMachineCidr(value)(values, selectedSubnets)}
               isDisabled={isDefaultValuesChecked}
               helperText={
-                <div className="pf-c-form__helper-text">
+                <div className="pf-v5-c-form__helper-text">
                   {cloudProvider === CloudProviderType.Aws
                     ? `Subnet mask must be between /${validators.AWS_MACHINE_CIDR_MIN} and /${awsMachineCIDRMax}.`
                     : `Range must be private. Subnet mask must be at most /${validators.GCP_MACHINE_CIDR_MAX}.`}
@@ -169,7 +172,7 @@ export const CidrRanges = () => {
             <TextInputField
               name={FieldId.NetworkServiceCidr}
               label="Service CIDR"
-              validate={(value) => validateServiceCidr(value)(values)}
+              validate={(value) => validateServiceCidr(value)(values, selectedSubnets)}
               isDisabled={isDefaultValuesChecked}
               helperText={
                 cloudProvider === CloudProviderType.Aws
@@ -194,7 +197,7 @@ export const CidrRanges = () => {
             <TextInputField
               name={FieldId.NetworkPodCidr}
               label="Pod CIDR"
-              validate={(value) => validatePodrCidr(value)(values)}
+              validate={(value) => validatePodrCidr(value)(values, selectedSubnets)}
               isDisabled={isDefaultValuesChecked}
               helperText={
                 cloudProvider === CloudProviderType.Aws
@@ -211,7 +214,7 @@ export const CidrRanges = () => {
                   </Text>
                 </>
               }
-              input={{ placeholder: podCidrDefaultValue(cloudProvider) }}
+              input={{ placeholder: POD_CIDR_DEFAULT }}
             />
           </GridItem>
 
@@ -225,7 +228,7 @@ export const CidrRanges = () => {
               tooltip={constants.hostPrefixHint}
               input={{
                 placeholder: HOST_PREFIX_DEFAULT,
-                onChange: (value) =>
+                onChange: (_event, value) =>
                   setFieldValue(FieldId.NetworkHostPrefix, formatHostPrefix(value)),
               }}
             />

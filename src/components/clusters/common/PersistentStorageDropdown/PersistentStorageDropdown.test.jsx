@@ -1,9 +1,8 @@
 import React from 'react';
-import { mount } from 'enzyme';
-
+import { render, screen, checkAccessibility, within } from '~/testUtils';
 import PersistentStorageDropdown from './PersistentStorageDropdown';
-import fixtures from '../../ClusterDetails/__test__/ClusterDetails.fixtures';
-import { storageQuotaList } from '../__test__/quota.fixtures';
+import fixtures from '../../ClusterDetails/__tests__/ClusterDetails.fixtures';
+import { storageQuotaList } from '../__tests__/quota.fixtures';
 
 const baseState = {
   error: false,
@@ -13,153 +12,106 @@ const baseState = {
 };
 
 describe('<PersistentStorageDropdown />', () => {
+  const getPersistentStorage = jest.fn();
+  const onChange = jest.fn();
+
+  const defaultCluster = fixtures.clusterDetails.cluster;
+  const defaultProps = {
+    persistentStorageValues: baseState,
+    input: { onChange },
+    getPersistentStorage,
+    quotaList: storageQuotaList,
+    product: defaultCluster.subscription.plan.type,
+    cloudProviderID: defaultCluster.cloud_provider.id,
+    billingModel: 'standard',
+    isBYOC: defaultCluster.ccs.enabled,
+    isMultiAZ: defaultCluster.multi_az,
+    disabled: false,
+  };
+  const errorState = { ...baseState, error: true, errorMessage: 'This is an error message' };
+
+  afterEach(() => {
+    jest.clearAllMocks();
+  });
   describe('when persistent storage list needs to be fetched', () => {
-    let getPersistentStorage;
-    let onChange;
-    let wrapper;
-    beforeEach(() => {
-      getPersistentStorage = jest.fn();
-      onChange = jest.fn();
-      wrapper = mount(
-        <PersistentStorageDropdown
-          persistentStorageValues={baseState}
-          input={{ onChange }}
-          getPersistentStorage={getPersistentStorage}
-          quotaList={storageQuotaList}
-          product={fixtures.clusterDetails.cluster.subscription.plan.type}
-          cloudProviderID={fixtures.clusterDetails.cluster.cloud_provider.id}
-          billingModel="standard"
-          isBYOC={fixtures.clusterDetails.cluster.ccs.enabled}
-          isMultiAZ={fixtures.clusterDetails.cluster.multi_az}
-          disabled={false}
-        />,
-      );
-    });
+    it('calls getPersistentStorage on mount and is accessible', async () => {
+      expect(getPersistentStorage).not.toBeCalled();
+      const { container } = render(<PersistentStorageDropdown {...defaultProps} />);
 
-    it('renders correctly', () => {
-      expect(wrapper).toMatchSnapshot();
-    });
-
-    it('calls getPersistentStorage', () => {
       expect(getPersistentStorage).toBeCalled();
+      expect(within(screen.getByRole('status')).getByText('Loading...')).toBeInTheDocument();
+
+      await checkAccessibility(container);
     });
   });
 
   describe('when there was an error', () => {
-    let getPersistentStorage;
-    let onChange;
-    let wrapper;
-    beforeEach(() => {
-      const state = {
-        ...baseState,
-        error: true,
-        errorMessage: 'This is an error message',
-      };
+    const errorState = { ...baseState, error: true, errorMessage: 'This is an error message' };
+    const errorProps = { ...defaultProps, persistentStorageValues: errorState };
 
-      getPersistentStorage = jest.fn();
-      onChange = jest.fn();
-      wrapper = mount(
-        <PersistentStorageDropdown
-          persistentStorageValues={state}
-          input={{ onChange }}
-          getPersistentStorage={getPersistentStorage}
-          quotaList={storageQuotaList}
-          product={fixtures.clusterDetails.cluster.subscription.plan.type}
-          cloudProviderID={fixtures.clusterDetails.cluster.cloud_provider.id}
-          billingModel="standard"
-          isBYOC={fixtures.clusterDetails.cluster.ccs.enabled}
-          isMultiAZ={fixtures.clusterDetails.cluster.multi_az}
-          disabled={false}
-        />,
-      );
-    });
+    it('displays an error', async () => {
+      const { container } = render(<PersistentStorageDropdown {...errorProps} />);
 
-    it('renders correctly', () => {
-      expect(wrapper).toMatchSnapshot();
+      expect(
+        within(screen.getByTestId('alert-error')).getByText('This is an error message'),
+      ).toBeInTheDocument();
+      await checkAccessibility(container);
     });
   });
 
   describe('when the request is pending', () => {
-    let getPersistentStorage;
-    let onChange;
-    let wrapper;
-    const state = {
+    const pendingState = {
       error: false,
       errorMessage: '',
       pending: true,
       fulfilled: false,
       values: [],
     };
-    beforeEach(() => {
-      getPersistentStorage = jest.fn();
-      onChange = jest.fn();
-      wrapper = mount(
-        <PersistentStorageDropdown
-          persistentStorageValues={state}
-          input={{ onChange }}
-          getPersistentStorage={getPersistentStorage}
-          quotaList={storageQuotaList}
-          product={fixtures.clusterDetails.cluster.subscription.plan.type}
-          cloudProviderID={fixtures.clusterDetails.cluster.cloud_provider.id}
-          billingModel="standard"
-          isBYOC={fixtures.clusterDetails.cluster.ccs.enabled}
-          isMultiAZ={fixtures.clusterDetails.cluster.multi_az}
-          disabled={false}
-        />,
-      );
-    });
 
-    it('renders correctly', () => {
-      expect(wrapper).toMatchSnapshot();
+    const pendingProps = { ...defaultProps, persistentStorageValues: pendingState };
+
+    it('displays a spinner', async () => {
+      const { container } = render(<PersistentStorageDropdown {...pendingProps} />);
+
+      expect(screen.getByRole('status')).toBeInTheDocument();
+      expect(screen.getByText('Loading persistent storage list...')).toBeInTheDocument();
+
+      await checkAccessibility(container);
     });
 
     it('does not call getPersistentStorage again if request returns an error', () => {
-      wrapper.setProps(
-        {
-          persistentStorageValues: { ...state, error: true, pending: false },
-        },
-        () => {
-          expect(getPersistentStorage).not.toBeCalled();
-        },
+      const { rerender } = render(<PersistentStorageDropdown {...pendingProps} />);
+      expect(getPersistentStorage).not.toBeCalled();
+
+      rerender(
+        <PersistentStorageDropdown {...{ ...pendingProps, persistentStorageValues: errorState }} />,
       );
+      expect(getPersistentStorage).not.toBeCalled();
     });
   });
 
   describe('when the storage list is available', () => {
-    let getPersistentStorage;
-    let onChange;
-    let wrapper;
-    beforeEach(() => {
-      const state = {
-        ...baseState,
-        fulfilled: true,
-        values: [
-          { unit: 'B', value: 107374182400 },
-          { unit: 'B', value: 644245094400 },
-          { unit: 'B', value: 1181116006400 },
-        ],
-      };
+    const fulFilledState = {
+      ...baseState,
+      fulfilled: true,
+      values: [
+        { unit: 'B', value: 107374182400 },
+        { unit: 'B', value: 644245094400 },
+        { unit: 'B', value: 1181116006400 },
+      ],
+    };
+    const fulFilledProps = { ...defaultProps, persistentStorageValues: fulFilledState };
 
-      getPersistentStorage = jest.fn();
-      onChange = jest.fn();
-      wrapper = mount(
-        <PersistentStorageDropdown
-          persistentStorageValues={state}
-          input={{ onChange }}
-          getPersistentStorage={getPersistentStorage}
-          quotaList={storageQuotaList}
-          product={fixtures.clusterDetails.cluster.subscription.plan.type}
-          cloudProviderID={fixtures.clusterDetails.cluster.cloud_provider.id}
-          billingModel="standard"
-          isBYOC={fixtures.clusterDetails.cluster.ccs.enabled}
-          isMultiAZ={fixtures.clusterDetails.cluster.multi_az}
-          disabled={false}
-        />,
-      );
-    });
+    it('displays expected options', async () => {
+      const { container } = render(<PersistentStorageDropdown {...fulFilledProps} />);
 
-    it('renders correctly', () => {
-      expect(wrapper).toMatchSnapshot();
+      expect(screen.getAllByRole('option')).toHaveLength(fulFilledState.values.length);
+
+      expect(screen.getByRole('option', { name: '100 GiB' })).toBeInTheDocument();
+      expect(screen.getByRole('option', { name: '600 GiB' })).toBeInTheDocument();
+      expect(screen.getByRole('option', { name: '1100 GiB' })).toBeInTheDocument();
+
+      await checkAccessibility(container);
     });
   });
 });

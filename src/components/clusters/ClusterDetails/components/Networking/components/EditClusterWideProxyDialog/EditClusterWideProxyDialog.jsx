@@ -21,11 +21,22 @@ import {
   DISABLED_NO_PROXY_PLACEHOLDER,
   NO_PROXY_PLACEHOLDER,
   NO_PROXY_HELPER_TEXT,
-} from '~/components/clusters/CreateOSDPage/CreateOSDForm/FormSections/NetworkingSection/networkingConstants';
+} from '~/components/clusters/common/networkingConstants';
 import { MAX_FILE_SIZE, ACCEPT } from '../../../IdentityProvidersPage/components/CAUpload';
 
 const validateUrlHttp = (value) => validateUrl(value, 'http');
 const validateUrlHttps = (value) => validateUrl(value, 'https');
+
+const validateAtLeastOne = (value, allValues) => {
+  if (
+    !allValues.http_proxy_url &&
+    !allValues.https_proxy_url &&
+    !allValues.additional_trust_bundle
+  ) {
+    return 'Configure at least one of the cluster-wide proxy fields.';
+  }
+  return undefined;
+};
 
 const EditClusterWideProxyDialog = (props) => {
   const {
@@ -49,24 +60,19 @@ const EditClusterWideProxyDialog = (props) => {
   // sets trust bundle file upload depending on whether or not a trust bundle is already uploaded
   const [openFileUpload, setOpenFileUpload] = useState(!additionalTrustBundle);
 
-  const validateAtLeastOne = useCallback((value, allValues) => {
-    if (!allValues.http_proxy_url && !allValues.https_proxy_url && !additionalTrustBundle) {
-      return 'Configure at least one of the cluster-wide proxy fields.';
-    }
-    return undefined;
-  }, []);
-
   const handleClose = useCallback(() => {
     reset();
     setOpenFileUpload(!additionalTrustBundle);
     clearClusterProxyResponse();
     closeModal();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
     if (noUrlValues) {
       change('no_proxy_domains', '');
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [noUrlValues]);
 
   useEffect(() => {
@@ -77,6 +83,7 @@ const EditClusterWideProxyDialog = (props) => {
     ) {
       handleClose();
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [editClusterProxyResponse]);
 
   const onFileRejected = () => {
@@ -106,7 +113,7 @@ const EditClusterWideProxyDialog = (props) => {
                 Enable an HTTP or HTTPS proxy to deny direct access to the Internet from your
                 cluster
               </Text>
-              <Text className="pf-u-mt-sm">
+              <Text className="pf-v5-u-mt-sm">
                 <ExternalLink href={links.CONFIGURE_PROXY_URL}>
                   Learn more about configuring a cluster-wide proxy
                 </ExternalLink>
@@ -164,7 +171,7 @@ const EditClusterWideProxyDialog = (props) => {
             <GridItem sm={12} md={10} xl2={11}>
               {!openFileUpload ? (
                 <>
-                  <Text className="ocm-c-networking-vpc-details__card pf-c-form__label-text pf-c-form__group-label">
+                  <Text className="ocm-c-networking-vpc-details__card pf-v5-c-form__label-text pf-v5-c-form__group-label">
                     Additional Trust Bundle{' '}
                     <PopoverHint
                       headerContent="Additional trust bundle"

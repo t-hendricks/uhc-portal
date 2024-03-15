@@ -29,7 +29,15 @@ import { clustersConstants } from '../constants';
 import type { PromiseActionType, PromiseReducerState } from '../types';
 import type { ClusterAction } from '../actions/clustersActions';
 import type { UpgradeGateAction } from '../actions/upgradeGateActions';
-import type { Cluster, ClusterStatus, VersionGate, Version } from '../../types/clusters_mgmt.v1';
+import type { TechPreviewActions } from '../actions/techPreviewActions';
+import type {
+  Cluster,
+  ClusterStatus,
+  VersionGate,
+  Version,
+  InflightCheck,
+  ProductTechnologyPreview,
+} from '../../types/clusters_mgmt.v1';
 import type { ErrorState, AugmentedCluster, ClusterWithPermissions } from '../../types/types';
 
 type State = {
@@ -50,8 +58,12 @@ type State = {
   clusterStatus: PromiseReducerState & {
     status: ClusterStatus;
   };
+  inflightChecks: PromiseReducerState & {
+    checks: InflightCheck[];
+  };
   clusterVersions: PromiseReducerState & {
     versions: Version[];
+    params?: { [key: string]: string } | undefined;
   };
   details: PromiseReducerState & {
     cluster: AugmentedCluster;
@@ -63,12 +75,20 @@ type State = {
   archivedCluster: PromiseReducerState;
   unarchivedCluster: PromiseReducerState;
   hibernatingCluster: PromiseReducerState;
+  rerunInflightCheckReq: PromiseReducerState;
+  rerunInflightCheckRes: PromiseReducerState & {
+    checks: any[];
+  };
   resumeHibernatingCluster: PromiseReducerState;
   upgradeGates: PromiseReducerState & {
     gates: VersionGate[];
   };
   upgradedCluster: PromiseReducerState & {
     cluster: Cluster;
+  };
+
+  techPreview: {
+    [product: string]: { [type: string]: PromiseReducerState & ProductTechnologyPreview };
   };
 };
 
@@ -101,9 +121,14 @@ const initialState: State = {
     ...baseState,
     status: {},
   },
+  inflightChecks: {
+    ...baseState,
+    checks: [],
+  },
   clusterVersions: {
     ...baseState,
     versions: [],
+    params: {},
   },
   details: {
     ...baseState,
@@ -129,6 +154,13 @@ const initialState: State = {
   resumeHibernatingCluster: {
     ...baseState,
   },
+  rerunInflightCheckReq: {
+    ...baseState,
+  },
+  rerunInflightCheckRes: {
+    ...baseState,
+    checks: [],
+  },
   upgradeGates: {
     ...baseState,
     gates: [],
@@ -137,6 +169,7 @@ const initialState: State = {
     ...baseState,
     cluster: emptyCluster,
   },
+  techPreview: {},
 };
 
 const filterAndSortClusterVersions = (versions: Version[]) => {
@@ -154,7 +187,7 @@ const filterAndSortClusterVersions = (versions: Version[]) => {
 
 const clustersReducer = (
   state = initialState,
-  action: PromiseActionType<ClusterAction | UpgradeGateAction>,
+  action: PromiseActionType<ClusterAction | UpgradeGateAction | TechPreviewActions>,
 ): State =>
   // eslint-disable-next-line consistent-return
   produce(state, (draft) => {
@@ -436,6 +469,85 @@ const clustersReducer = (
         };
         break;
 
+      // GET_INFLIGHT_CHECKS
+      case REJECTED_ACTION(clustersConstants.GET_INFLIGHT_CHECKS):
+        draft.inflightChecks = {
+          ...initialState.inflightChecks,
+          ...getErrorState(action),
+        };
+        break;
+      case PENDING_ACTION(clustersConstants.GET_INFLIGHT_CHECKS):
+        draft.inflightChecks = {
+          ...initialState.inflightChecks,
+          pending: true,
+          checks: state.inflightChecks.checks, // preserve previous checks to avoid blips
+        };
+        break;
+      case FULFILLED_ACTION(clustersConstants.GET_INFLIGHT_CHECKS):
+        draft.inflightChecks = {
+          ...baseState,
+          fulfilled: true,
+          checks: action.payload.data.items || [],
+        };
+        break;
+
+      // RERUN INFLIGHT_CHECKS
+      case FULFILLED_ACTION(clustersConstants.RERUN_INFLIGHT_CHECKS):
+        draft.rerunInflightCheckReq = {
+          ...baseState,
+          fulfilled: true,
+        };
+        break;
+      case REJECTED_ACTION(clustersConstants.RERUN_INFLIGHT_CHECKS):
+        draft.rerunInflightCheckReq = {
+          ...initialState.rerunInflightCheckReq,
+          ...getErrorState(action),
+        };
+        break;
+      case PENDING_ACTION(clustersConstants.RERUN_INFLIGHT_CHECKS):
+        draft.rerunInflightCheckRes = {
+          ...initialState.rerunInflightCheckRes,
+        };
+        draft.rerunInflightCheckReq = {
+          ...initialState.rerunInflightCheckReq,
+          pending: true,
+        };
+        break;
+
+      // GET STATES OF SUBNETS WHICH THE VALIDATOR IS BEING RERUN ON
+      case FULFILLED_ACTION(clustersConstants.GET_RERUN_INFLIGHT_CHECKS):
+        draft.rerunInflightCheckRes = {
+          ...baseState,
+          checks: action.payload.data.items || [],
+          fulfilled: true,
+        };
+        break;
+      case REJECTED_ACTION(clustersConstants.GET_RERUN_INFLIGHT_CHECKS):
+        draft.rerunInflightCheckRes = {
+          ...initialState.rerunInflightCheckRes,
+          ...getErrorState(action),
+        };
+        break;
+      case PENDING_ACTION(clustersConstants.GET_RERUN_INFLIGHT_CHECKS):
+        draft.rerunInflightCheckRes = {
+          ...initialState.rerunInflightCheckRes,
+          pending: true,
+          checks: state.rerunInflightCheckRes.checks, // preserve previous checks to avoid blips
+        };
+        break;
+
+      case clustersConstants.CLEAR_INFLIGHT_CHECKS:
+        draft.inflightChecks = {
+          ...initialState.inflightChecks,
+        };
+        draft.rerunInflightCheckReq = {
+          ...initialState.rerunInflightCheckReq,
+        };
+        draft.rerunInflightCheckRes = {
+          ...initialState.rerunInflightCheckRes,
+        };
+        break;
+
       // GET_CLUSTER_VERSIONS
       case REJECTED_ACTION(clustersConstants.GET_CLUSTER_VERSIONS):
         draft.clusterVersions = {
@@ -453,9 +565,50 @@ const clustersReducer = (
         draft.clusterVersions = {
           ...baseState,
           fulfilled: true,
+          params: action.payload.config.params,
           versions: action.payload.data.items
             ? filterAndSortClusterVersions(action.payload.data.items)
             : [],
+        };
+        break;
+
+      // GET_TECH_VERSIONS
+      case REJECTED_ACTION(clustersConstants.GET_TECH_PREVIEW): {
+        if (!draft.techPreview[action.payload.product]) {
+          draft.techPreview[action.payload.product] = {};
+        }
+
+        draft.techPreview[action.payload.product][action.payload.type] = {
+          ...baseState,
+          error: true,
+        };
+        break;
+      }
+
+      case PENDING_ACTION(clustersConstants.GET_TECH_PREVIEW):
+        if (!draft.techPreview[action.payload.product]) {
+          draft.techPreview[action.payload.product] = {};
+        }
+        draft.techPreview[action.payload.product][action.payload.type] = {
+          ...baseState,
+          pending: true,
+        };
+        break;
+
+      case FULFILLED_ACTION(clustersConstants.GET_TECH_PREVIEW):
+        if (!draft.techPreview[action.payload.product]) {
+          draft.techPreview[action.payload.product] = {};
+        }
+        draft.techPreview[action.payload.product][action.payload.type] = {
+          ...baseState,
+          fulfilled: true,
+          ...action.payload.data,
+        };
+        break;
+
+      case clustersConstants.CLEAR_CLUSTER_VERSIONS_RESPONSE:
+        draft.clusterVersions = {
+          ...initialState.clusterVersions,
         };
         break;
 

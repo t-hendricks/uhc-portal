@@ -37,15 +37,16 @@ function ActionRequiredModal({ cluster, isOpen, onClose }) {
   const createByOIDCId = (cluster) => {
     const oidcConfigID = cluster.aws.sts?.oidc_config?.id;
     const operatorRolePrefix = cluster.aws?.sts?.operator_role_prefix;
+    const installerRole = cluster.aws?.sts?.role_arn;
     const operatorRolesCliCommand = `rosa create operator-roles ${
       isHCPCluster ? '--hosted-cp' : ''
-    } --prefix "${operatorRolePrefix}" --oidc-config-id "${oidcConfigID}"`;
+    } --prefix "${operatorRolePrefix}" --oidc-config-id "${oidcConfigID}"  --installer-role-arn ${installerRole}`;
     const oidcProviderCliCommand = `rosa create oidc-provider --oidc-config-id "${oidcConfigID}"`;
 
     return (
       <Stack hasGutter>
         <StackItem>
-          <TextContent className="pf-u-pb-md">
+          <TextContent className="pf-v5-u-pb-md">
             <Text component={TextVariants.p}>
               Your cluster will proceed to ready state only after the operator roles and OIDC
               provider are created.
@@ -63,7 +64,7 @@ function ActionRequiredModal({ cluster, isOpen, onClose }) {
           </TextContent>
         </StackItem>
         <StackItem>
-          <TextContent className="pf-u-pb-md">
+          <TextContent className="pf-v5-u-pb-md">
             <Text component={TextVariants.p}>
               {' '}
               To create an OIDC provider, run the following command:

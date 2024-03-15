@@ -16,27 +16,40 @@
 // Import commands.js using ES2015 syntax:
 import './commands';
 import '@cypress/code-coverage/support';
+import Login from '../pageobjects/login.page';
+import ClusterListPage from '../pageobjects/ClusterList.page';
 
 // Alternatively you can use CommonJS syntax:
 // require('./commands')
 
-const registerCypressGrep = require('@cypress/grep')
-registerCypressGrep()
+const registerCypressGrep = require('@cypress/grep');
+registerCypressGrep();
 
 before(() => {
-  cy.log('Setting session cookies');
-  // disabling CookieConsent dialog
-  // copied from https://gitlab.cee.redhat.com/insights-qe/iqe-platform-ui-plugin/-/blob/master/iqe_platform_ui/__init__.py#L207
-  cy.setCookie('notice_gdpr_prefs', '0,1,2:');
-  cy.setCookie('notice_preferences', '2:');
-  cy.reload();
-  cy.log('Setting viewport to "macbook-13"');
-  cy.viewport('macbook-13');
+  // session login
+  cy.session('login', () => {
+    cy.log('Setting session cookies');
+    // disabling CookieConsent dialog
+    // copied from https://gitlab.cee.redhat.com/insights-qe/iqe-platform-ui-plugin/-/blob/master/iqe_platform_ui/__init__.py#L207
+    cy.setCookie('notice_gdpr_prefs', '0,1,2:');
+    cy.setCookie('notice_preferences', '2:');
+    cy.reload();
+    cy.log('Setting viewport to "macbook-13"');
+    cy.viewport('macbook-13');
+
+    Login.login();
+
+    ClusterListPage.isClusterListUrl();
+    ClusterListPage.waitForDataReady();
+    ClusterListPage.isClusterListScreen();
+    ClusterListPage.isCreateClusterBtnVisible();
+  });
 });
 
-
 beforeEach(() => {
-  cy.log('Configuring Cypress to catch all uncaught exceptions & unhandled promise rejections thrown from OCM app.');
+  cy.log(
+    'Configuring Cypress to catch all uncaught exceptions & unhandled promise rejections thrown from OCM app.',
+  );
   cy.on('uncaught:exception', (err, runnable, promise) => {
     // return false to prevent the error from failing this test
     console.error(`Cypress caught exception: ${err.message}`);

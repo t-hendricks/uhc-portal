@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Button, Tooltip } from '@patternfly/react-core';
-import { CopyIcon } from '@patternfly/react-icons';
+import { CopyIcon } from '@patternfly/react-icons/dist/esm/icons/copy-icon';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 import isEmpty from 'lodash/isEmpty';
 import { trackEvents } from '~/common/analytics';
@@ -64,7 +64,7 @@ class CopyPullSecret extends React.Component {
 }
 CopyPullSecret.propTypes = {
   pendoID: PropTypes.string,
-  track: PropTypes.object.isRequired,
+  track: PropTypes.func.isRequired,
   token: PropTypes.object.isRequired,
   text: PropTypes.string,
   variant: PropTypes.oneOf(['link-tooltip', 'link-inplace']).isRequired,

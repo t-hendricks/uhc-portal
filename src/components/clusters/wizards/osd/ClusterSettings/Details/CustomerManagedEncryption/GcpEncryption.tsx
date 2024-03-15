@@ -4,8 +4,8 @@ import { Field } from 'formik';
 import { GridItem, FormGroup } from '@patternfly/react-core';
 
 import { validateGCPKMSServiceAccount } from '~/common/validators';
-import KMSKeyLocationComboBox from '~/components/clusters/CreateOSDPage/CreateOSDForm/FormSections/EncryptionSection/KMSKeyLocationComboBox';
-import { constants } from '~/components/clusters/CreateOSDPage/CreateOSDForm/CreateOSDFormConstants';
+import KMSKeyLocationComboBox from '~/components/clusters/wizards/common/EncryptionSection/KMSKeyLocationComboBox';
+import { constants } from '~/components/clusters/common/CreateOSDFormConstants';
 import PopoverHint from '~/components/common/PopoverHint';
 import { useFormState } from '~/components/clusters/wizards/hooks';
 import { TextInputField } from '~/components/clusters/wizards/form';

@@ -8,11 +8,11 @@
 
   &--enabled-link {
     tspan {
-      fill: var(--pf-global--link--Color) !important;
+      fill: var(--pf-v5-global--link--Color) !important;
       cursor: pointer;
 
       &:hover {
-        fill: var(--pf-global--link--Color--hover) !important;
+        fill: var(--pf-v5-global--link--Color--hover) !important;
         text-decoration: underline;
       }
     }

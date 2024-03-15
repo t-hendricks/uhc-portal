@@ -311,6 +311,39 @@ const trackEvents: { [key: string]: TrackEvent } = {
     link_name: 'copy-rosa-create-cluster',
     ocm_resource_type: ocmResourceType.MOA,
   },
+  RequestRosaHandsOnExperience: {
+    event: eventNames.BUTTON_CLICKED,
+    link_name: 'request-rosa-handson-experience',
+    ocm_resource_type: ocmResourceType.ROSA,
+  },
+  TryRosaHandsOnExperience: {
+    event: eventNames.LINK_CLICKED,
+    link_name: 'try-rosa-hands-on-internal-link',
+  },
+  RosaOverview: {
+    event: eventNames.LINK_CLICKED,
+    link_name: 'rosa-overview-internal-link',
+  },
+  CreateCluster: {
+    event: eventNames.LINK_CLICKED,
+    link_name: 'create-cluster-internal-link',
+  },
+  RegisterCluster: {
+    event: eventNames.LINK_CLICKED,
+    link_name: 'register-cluster-internal-link',
+  },
+  CreateClusterROSA: {
+    event: eventNames.LINK_CLICKED,
+    link_name: 'create-rosa-cluster-internal-link',
+  },
+  CreateClusterOSD: {
+    event: eventNames.LINK_CLICKED,
+    link_name: 'create-osd-cluster-internal-link',
+  },
+  CreateClusterRHOCP: {
+    event: eventNames.LINK_CLICKED,
+    link_name: 'create-ocp-cluster-internal-link',
+  },
 };
 
 /**

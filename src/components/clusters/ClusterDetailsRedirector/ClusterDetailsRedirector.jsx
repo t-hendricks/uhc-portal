@@ -1,56 +1,57 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Redirect } from 'react-router-dom';
+import { Navigate } from 'react-router-dom-v5-compat';
 import { Spinner } from '@redhat-cloud-services/frontend-components/Spinner';
 import Unavailable from '../../common/Unavailable';
 
-class ClusterDetailsRedirector extends React.Component {
-  componentDidMount() {
-    const { match, fetchSubscriptionIDForCluster } = this.props;
-    fetchSubscriptionIDForCluster(match.params.id);
-  }
+const ClusterDetailsRedirector = (props) => {
+  const {
+    fetchSubscriptionIDForCluster,
+    clearSubscriptionIDForCluster,
+    subscriptionIDResponse,
+    params,
+    location,
+    setGlobalError,
+  } = props;
 
-  componentWillUnmount() {
-    const { clearSubscriptionIDForCluster } = this.props;
-    clearSubscriptionIDForCluster();
-  }
+  React.useEffect(() => {
+    fetchSubscriptionIDForCluster(params.id);
 
-  render() {
-    const { subscriptionIDResponse, setGlobalError, match, location } = this.props;
+    return () => {
+      clearSubscriptionIDForCluster();
+    };
+  }, [clearSubscriptionIDForCluster, fetchSubscriptionIDForCluster, params]);
 
-    if (subscriptionIDResponse.error) {
-      if (subscriptionIDResponse.errorCode === 404 || subscriptionIDResponse.errorCode === 403) {
-        // Cluster not found / no permission to see it - redirect to cluster list with error on top
-        setGlobalError(
-          <>
-            Cluster with ID <b>{match.params.id}</b> was not found, it might have been deleted or
-            you don&apos;t have permission to see it.
-          </>,
-          'clusterDetails',
-          subscriptionIDResponse.errorMessage,
-        );
-        return <Redirect to="/" />;
-      }
-      // other errors = Unavailable
-      return (
-        <Unavailable message="Error retrieving cluster details" response={subscriptionIDResponse} />
+  if (subscriptionIDResponse.error) {
+    if (subscriptionIDResponse.errorCode === 404 || subscriptionIDResponse.errorCode === 403) {
+      // Cluster not found / no permission to see it - redirect to cluster list with error on top
+      setGlobalError(
+        <>
+          Cluster with ID <b>{params.id}</b> was not found, it might have been deleted or you
+          don&apos;t have permission to see it.
+        </>,
+        'clusterDetails',
+        subscriptionIDResponse.errorMessage,
       );
+      return <Navigate replace to="/" />;
     }
-    if (subscriptionIDResponse.fulfilled) {
-      return <Redirect to={`/details/s/${subscriptionIDResponse.id}${location.hash}`} />;
-    }
-
-    return <Spinner centered />;
+    // other errors = Unavailable
+    return (
+      <Unavailable message="Error retrieving cluster details" response={subscriptionIDResponse} />
+    );
   }
-}
+  if (subscriptionIDResponse.fulfilled) {
+    return <Navigate replace to={`/details/s/${subscriptionIDResponse.id}${location.hash}`} />;
+  }
+
+  return <Spinner centered />;
+};
 
 ClusterDetailsRedirector.propTypes = {
-  match: PropTypes.shape({
-    params: PropTypes.shape({
-      id: PropTypes.string.isRequired,
-      reportId: PropTypes.string, // insights only
-      errorKey: PropTypes.string, // insights only
-    }).isRequired,
+  params: PropTypes.shape({
+    id: PropTypes.string.isRequired,
+    reportId: PropTypes.string, // insights only
+    errorKey: PropTypes.string, // insights only
   }).isRequired,
   location: PropTypes.shape({
     hash: PropTypes.string.isRequired,

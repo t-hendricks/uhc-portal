@@ -2,7 +2,7 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 
 import { Button } from '@patternfly/react-core';
-import { DownloadIcon } from '@patternfly/react-icons';
+import { DownloadIcon } from '@patternfly/react-icons/dist/esm/icons/download-icon';
 
 import { urlsSelector, tools, channels } from '../../../../common/installLinks.mjs';
 import { detectOS, architecturesForToolOS } from '../../../downloads/DownloadsPage/DownloadsPage';

@@ -41,18 +41,19 @@ class CreateOSDCluster extends Page {
     cy.contains('h2', 'Review your dedicated cluster');
   }
 
-  showsFakeClusterBanner = () => cy.contains('div', 'On submit, a fake OSD cluster will be created.');
+  showsFakeClusterBanner = () =>
+    cy.contains('div', 'On submit, a fake OSD cluster will be created.');
 
   get clusterNameInput() {
     return 'input#name';
   }
 
   get clusterNameInputError() {
-    return 'ul#rich-input-popover-name li.pf-c-helper-text__item.pf-m-error.pf-m-dynamic';
+    return 'ul#rich-input-popover-name li.pf-v5-c-helper-text__item.pf-m-error.pf-m-dynamic';
   }
 
   get primaryButton() {
-    return '#osd-wizard button.pf-c-button.pf-m-primary';
+    return '#osd-wizard button.pf-v5-c-button.pf-m-primary';
   }
 
   get CCSSelected() {
@@ -61,6 +62,10 @@ class CreateOSDCluster extends Page {
 
   get TrialSelected() {
     return 'input:checked[name="billing_model"][value="standard-trial"]';
+  }
+
+  get billingModelRedHatCloudAccountOption() {
+    return 'input[id="form-radiobutton-byoc-false-field"]';
   }
 }
 

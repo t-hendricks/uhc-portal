@@ -25,7 +25,7 @@ export const AwsByocFields = () => (
     </GridItem>
 
     <GridItem>
-      <Title headingLevel="h3" className="pf-u-mb-sm">
+      <Title headingLevel="h3" className="pf-v5-u-mb-sm">
         AWS account details
       </Title>
 

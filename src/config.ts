@@ -1,4 +1,8 @@
-const ENV_OVERRIDE_LOCALSTORAGE_KEY = 'ocmOverridenEnvironment';
+import dayjs from 'dayjs';
+import utc from 'dayjs/plugin/utc';
+import relativeTime from 'dayjs/plugin/relativeTime';
+import advancedFormat from 'dayjs/plugin/advancedFormat';
+import { ENV_OVERRIDE_LOCALSTORAGE_KEY } from './common/localStorageConstants';
 
 type EnvConfig = {
   apiGateway: string;
@@ -7,6 +11,7 @@ type EnvConfig = {
   showOldMetrics?: boolean;
   fedrampGateway?: string;
   fedrampS3?: string;
+  demoExperience?: string;
 };
 
 const configs: { [env: string]: Promise<EnvConfig> | undefined } = {};
@@ -58,10 +63,25 @@ const parseFakeQueryParam = () => {
   return ret;
 };
 
+const parseRosaV2QueryParam = () => {
+  let ret = false;
+  window.location.search
+    .substring(1)
+    .split('&')
+    .forEach((queryString) => {
+      const [key, val] = queryString.split('=');
+      if (key.toLowerCase() === 'rosav2' && val === 'true') {
+        ret = true;
+      }
+    });
+  return ret;
+};
+
 const config = {
   configData: {} as EnvConfig,
   envOverride: undefined as string | undefined,
   fakeOSD: false,
+  rosaV2: false,
 
   loadConfig(data: EnvConfig) {
     this.configData = {
@@ -83,6 +103,9 @@ const config = {
       if (parseFakeQueryParam()) {
         that.fakeOSD = true;
       }
+      if (parseRosaV2QueryParam()) {
+        that.rosaV2 = true;
+      }
       const queryEnv = parseEnvQueryParam() || localStorage.getItem(ENV_OVERRIDE_LOCALSTORAGE_KEY);
       if (queryEnv && configs[queryEnv]) {
         configs[queryEnv]!.then((data) => {
@@ -103,7 +126,12 @@ const config = {
       }
     });
   },
+
+  dateConfig() {
+    dayjs.extend(utc);
+    dayjs.extend(relativeTime);
+    dayjs.extend(advancedFormat);
+  },
 };
 
-export { ENV_OVERRIDE_LOCALSTORAGE_KEY };
 export default config;

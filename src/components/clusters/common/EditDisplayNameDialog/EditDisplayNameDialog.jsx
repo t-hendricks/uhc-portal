@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 
 import { Form, TextInput, FormGroup } from '@patternfly/react-core';
 
+import { FormGroupHelperText } from '~/components/common/FormGroupHelperText';
 import Modal from '../../../common/Modal/Modal';
 import ErrorBox from '../../../common/ErrorBox';
 import modals from '../../../common/Modal/modals';
@@ -84,20 +85,18 @@ class EditDisplayNameDialog extends Component {
               e.preventDefault();
             }}
           >
-            <FormGroup
-              helperTextInvalid={validationMessage}
-              validated={!validationMessage ? 'default' : 'error'}
-              fieldId="edit-display-name-input"
-            >
+            <FormGroup fieldId="edit-display-name-input">
               <TextInput
                 type="text"
                 validated={!validationMessage ? 'default' : 'error'}
                 value={currentValue}
                 placeholder="Enter display name"
-                onChange={(newValue) => this.setValue(newValue)}
+                onChange={(_event, newValue) => this.setValue(newValue)}
                 aria-label="Edit display name"
                 id="edit-display-name-input"
               />
+
+              <FormGroupHelperText touched error={validationMessage} />
             </FormGroup>
           </Form>
         </>

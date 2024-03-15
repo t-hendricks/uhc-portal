@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+/* eslint-disable no-console */
 import util from 'util';
 import { execFile, execFileSync } from 'child_process';
 import { fileURLToPath } from 'url';
@@ -109,10 +110,16 @@ const getEnvs = async (upstream) => {
       info: appInfo('https://raw.githubusercontent.com/RedHatInsights/uhc-portal-frontend-deploy/qa-stable/app.info.json'),
     },
     {
-      name: 'live_master',
+      name: 'live_qaprodauth_master',
       ci_job: 'https://***REMOVED***/job/insights-frontend-deployer/job/uhc-portal-frontend-deploy/job/qa-stable/',
       comment: 'Live at https://qaprodauth.console.redhat.com/openshift/',
       info: appInfo('https://qaprodauth.console.redhat.com/apps/openshift/app.info.json'),
+    },
+    {
+      name: 'live_consoledev_master',
+      ci_job: 'Ask #forum-consoledot-ui',
+      comment: 'Live at https://console.dev.redhat.com/openshift/',
+      info: appInfo('https://console.dev.redhat.com/apps/openshift/app.info.json'),
     },
     {
       name: 'build_pushed_beta_master',
@@ -121,11 +128,18 @@ const getEnvs = async (upstream) => {
       info: appInfo('https://raw.githubusercontent.com/RedHatInsights/uhc-portal-frontend-deploy/qa-beta/app.info.json'),
     },
     {
-      name: 'live_beta_master',
+      name: 'live_qaprodauth_beta_master',
       ci_job: 'https://***REMOVED***/job/insights-frontend-deployer/job/uhc-portal-frontend-deploy/job/qa-beta/',
       comment: 'Live at https://qaprodauth.console.redhat.com/preview/openshift/',
       info: appInfo('https://qaprodauth.console.redhat.com/beta/apps/openshift/app.info.json'),
     },
+    {
+      name: 'live_consoledev_beta_master',
+      ci_job: 'Ask #forum-consoledot-ui',
+      comment: 'Live at https://console.dev.redhat.com/preview/openshift/',
+      info: appInfo('https://console.dev.redhat.com/beta/apps/openshift/app.info.json'),
+    },
+
     {
       name: `${upstream}/candidate`,
       comment: 'https://gitlab.cee.redhat.com/service/uhc-portal/commits/candidate',
@@ -163,14 +177,18 @@ const getEnvs = async (upstream) => {
     },
   ];
   // Resolve all .info in parallel.
-  await Promise.all(envs.map(async (e) => {
-    // eslint-disable-next-line no-param-reassign
-    e.info = await e.info;
-    if (e.info.src_hash) {
-      e.info.assisted_ui_lib_versions = await getOpenshiftAssistedLibsVersions(e.info.src_hash);
-    }
-  }));
-  return envs;
+  return await Promise.all(
+    envs.map(async (e) => {
+      let info = await e.info;
+      if (info.src_hash) {
+        info = {
+          ...info,
+          assisted_ui_lib_versions: await getOpenshiftAssistedLibsVersions(info.src_hash),
+        };
+      }
+      return { ...e, info };
+    }),
+  );
 };
 
 const main = async () => {
@@ -192,8 +210,24 @@ const main = async () => {
     const widestName = Math.max(...envs.map((e) => e.name.length));
     const widestHash = Math.max(...envs.map((e) => (e.info.src_hash || '').length));
 
+    const compareToPrevEnv = async (prevEnv, nextEnv) => {
+      const prevHash = prevEnv?.info?.src_hash;
+      const nextHash = nextEnv?.info?.src_hash;
+      if (prevHash && nextHash && prevHash !== nextHash) {
+        const cmd = ['git', 'diff', '--shortstat', prevHash, nextHash];
+        const out = (await execFilePromise(cmd[0], cmd.slice(1))).stdout.trim();
+        console.log(`↕️  ${out || 'no diff'}`);
+      }
+    };
+
     if (flags.short) {
-      envs.forEach((e) => {
+      let prevEnv = null;
+      // I do want serial loops awaiting commands one by one, can't use forEach.
+      /* eslint-disable no-await-in-loop */
+      // eslint-disable-next-line no-restricted-syntax
+      for (const e of envs) {
+        await compareToPrevEnv(prevEnv, e);
+        prevEnv = e;
         const paddedName = e.name.padStart(widestName, ' ');
         const paddedHash = (e.info.src_hash || '').padEnd(widestHash, ' ');
         if (e.info.src_hash) {
@@ -202,13 +236,15 @@ const main = async () => {
           // Show details why data is missing.
           console.log(`${paddedName}    ### ${JSON.stringify(e.info)}`);
         }
-      });
+      }
     }
 
     if (flags.setGitBranches || flags.gitGraph) {
-      // I do want a sequential loop, can't use forEach.
+      let prevEnv = null;
       // eslint-disable-next-line no-restricted-syntax
       for (const e of envs) {
+        await compareToPrevEnv(prevEnv, e);
+        prevEnv = e;
         const paddedName = e.name.padStart(widestName, ' ');
         const paddedHash = (e.info.src_hash || '').padEnd(widestHash, ' ');
         // Don't try overwriting branches taken from git like `upstream/master`

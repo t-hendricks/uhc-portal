@@ -8,7 +8,7 @@ import installLinks from '~/common/installLinks.mjs';
 import Modal from '~/components/common/Modal/Modal';
 import modals from '~/components/common/Modal/modals';
 import { closeModal } from '~/components/common/Modal/ModalActions';
-import { clusterAutoScalingValidators, validateListOfLabels } from '~/common/validators';
+import { clusterAutoScalingValidators, validateListOfBalancingLabels } from '~/common/validators';
 import { useFormState } from '~/components/clusters/wizards/hooks';
 import { FieldId } from '~/components/clusters/wizards/osd/constants';
 import { TextInputField } from '~/components/clusters/wizards/form/TextInputField';
@@ -19,7 +19,7 @@ import {
   resourceLimitsFields,
   scaleDownFields,
 } from '~/components/clusters/common/EditClusterAutoScalingDialog/fieldDefinitions';
-import { getDefaultClusterAutoScaling } from '~/components/clusters/CreateOSDPage/clusterAutoScalingValues';
+import { getDefaultClusterAutoScaling } from '~/components/clusters/common/clusterAutoScalingValues';
 import {
   AutoscalerIgnoredLabelsHelpText,
   AutoscalerIgnoredLabelsPopoverText,
@@ -39,6 +39,7 @@ import './ClusterAutoScaleSettingsDialog.scss';
 
 interface ClusterAutoScaleSettingsDialogProps {
   isWizard: boolean;
+  isRosa: boolean;
 }
 
 const getValidator = (field: FieldDefinition) => {
@@ -106,7 +107,10 @@ const mapField = (field: FieldDefinition, isDisabled?: boolean) => {
   );
 };
 
-const ClusterAutoScaleSettingsDialog = ({ isWizard }: ClusterAutoScaleSettingsDialogProps) => {
+const ClusterAutoScaleSettingsDialog = ({
+  isWizard,
+  isRosa,
+}: ClusterAutoScaleSettingsDialogProps) => {
   const dispatch = useDispatch();
   const closeScalerModal = () => dispatch(closeModal());
 
@@ -153,7 +157,13 @@ const ClusterAutoScaleSettingsDialog = ({ isWizard }: ClusterAutoScaleSettingsDi
         <Text component="p">
           The cluster autoscaler adjusts the size of a cluster to meet its current deployment needs.
           Learn more about{' '}
-          <ExternalLink href={installLinks.APPLYING_AUTOSCALING}>cluster autoscaling</ExternalLink>{' '}
+          <ExternalLink
+            href={
+              isRosa ? installLinks.ROSA_CLUSTER_AUTOSCALING : installLinks.OSD_CLUSTER_AUTOSCALING
+            }
+          >
+            cluster autoscaling
+          </ExternalLink>{' '}
           or
           <ExternalLink href={installLinks.APPLYING_AUTOSCALING_API_DETAIL}> APIs</ExternalLink>.
         </Text>
@@ -175,7 +185,7 @@ const ClusterAutoScaleSettingsDialog = ({ isWizard }: ClusterAutoScaleSettingsDi
                   helperText={
                     <span className="custom-help-text">{AutoscalerIgnoredLabelsHelpText}</span>
                   }
-                  validate={validateListOfLabels}
+                  validate={validateListOfBalancingLabels}
                 />
               </GridItem>
             </Grid>

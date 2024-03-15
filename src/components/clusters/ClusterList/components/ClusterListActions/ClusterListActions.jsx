@@ -15,15 +15,14 @@ limitations under the License.
 */
 
 import React, { useState } from 'react';
+import { Button, ToolbarItem, Split, SplitItem } from '@patternfly/react-core';
 import {
-  Button,
-  Dropdown,
-  DropdownItem,
-  DropdownPosition,
-  KebabToggle,
-  ToolbarItem,
-} from '@patternfly/react-core';
-import { Link } from 'react-router-dom';
+  Dropdown as DropdownDeprecated,
+  DropdownItem as DropdownItemDeprecated,
+  DropdownPosition as DropdownPositionDeprecated,
+  KebabToggle as KebabToggleDeprecated,
+} from '@patternfly/react-core/deprecated';
+import { Link } from 'react-router-dom-v5-compat';
 import PropTypes from 'prop-types';
 import { isRestrictedEnv } from '~/restrictedEnv';
 
@@ -33,44 +32,56 @@ const useMediaQuery = (query) => {
   }
 
   const mediaQuery = window.matchMedia(query);
+  // eslint-disable-next-line react-hooks/rules-of-hooks
   const [match, setMatch] = React.useState(!!mediaQuery.matches);
 
+  // eslint-disable-next-line react-hooks/rules-of-hooks
   React.useEffect(() => {
     const handler = () => setMatch(!!mediaQuery.matches);
     mediaQuery.addEventListener('change', handler);
     return () => mediaQuery.removeEventListener('change', handler);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return match;
 };
 
 const dropdownRegisterCluster = (
-  <DropdownItem component="button" key="registercluster" data-testid="register-cluster-item">
+  <DropdownItemDeprecated
+    component="button"
+    key="registercluster"
+    data-testid="register-cluster-item"
+  >
     <div>
-      <Link to="/register" className="pf-c-dropdown__menu-item">
+      <Link to="/register" className="pf-v5-c-dropdown__menu-item">
         Register disconnected cluster
       </Link>
     </div>
-  </DropdownItem>
+  </DropdownItemDeprecated>
 );
 const toolbarViewArchivedClusters = (
-  <ToolbarItem key="archived">
-    <Link to="archived">View cluster archives</Link>
+  <ToolbarItem key="archived" alignSelf="center">
+    <Link to="/archived">View cluster archives</Link>
   </ToolbarItem>
 );
 const dropdownArchived = (
-  <DropdownItem component="button" key="archived">
+  <DropdownItemDeprecated component="button" key="archived">
     <div>
-      <Link to="archived" className="pf-c-dropdown__menu-item">
+      <Link to="/archived" className="pf-v5-c-dropdown__menu-item">
         View cluster archives
       </Link>
     </div>
-  </DropdownItem>
+  </DropdownItemDeprecated>
 );
 const toolbarCreateCluster = (
   <ToolbarItem key="createcluster">
-    <Link to="/create">
-      <Button data-testid="create_cluster_btn">Create cluster</Button>
+    <Link
+      to="/create"
+      role="button"
+      className="pf-v5-c-button pf-m-primary"
+      data-testid="create_cluster_btn"
+    >
+      Create cluster
     </Link>
   </ToolbarItem>
 );
@@ -84,7 +95,7 @@ const toolbarRegisterCluster = (
   </ToolbarItem>
 );
 
-const useItems = () => {
+const useItems = (isDashboardView) => {
   const wide = useMediaQuery('(min-width: 900px)');
 
   const toolbarItems = [];
@@ -92,7 +103,15 @@ const useItems = () => {
 
   toolbarItems.push(toolbarCreateCluster);
   if (!isRestrictedEnv()) {
-    if (wide) {
+    if (isDashboardView) {
+      if (wide) {
+        toolbarItems.push(toolbarRegisterCluster);
+        dropdownItems.push(dropdownArchived);
+      } else {
+        dropdownItems.push(dropdownRegisterCluster);
+        dropdownItems.push(dropdownArchived);
+      }
+    } else if (wide) {
       toolbarItems.push(toolbarRegisterCluster);
       toolbarItems.push(toolbarViewArchivedClusters);
     } else {
@@ -104,24 +123,43 @@ const useItems = () => {
   return [dropdownItems, toolbarItems];
 };
 
-const ClusterListActions = ({ className }) => {
+const ClusterListActions = ({ className, isDashboardView }) => {
   const [isOpen, onToggle] = useState(false);
-  const [dropdownItems, toolbarItems] = useItems();
-
+  const [dropdownItems, toolbarItems] = useItems(isDashboardView);
+  if (isDashboardView) {
+    return (
+      <Split hasGutter>
+        {toolbarItems.map((toolbarItem) => (
+          <SplitItem key="toolbar">{toolbarItem}</SplitItem>
+        ))}
+        <SplitItem key="dropdown">
+          <DropdownDeprecated
+            data-testid="cluster-list-extra-actions-dropdown"
+            onSelect={() => onToggle(!isOpen)}
+            toggle={<KebabToggleDeprecated onToggle={(_event, value) => onToggle(value)} />}
+            isOpen={isOpen}
+            isPlain
+            dropdownItems={dropdownItems}
+            className={className}
+            position={DropdownPositionDeprecated.right}
+          />
+        </SplitItem>
+      </Split>
+    );
+  }
   return (
     <>
       {toolbarItems}
       {dropdownItems.length > 0 && (
         <ToolbarItem>
-          <Dropdown
-            data-testid="cluster-list-extra-actions-dropdown"
+          <DropdownDeprecated
             onSelect={() => onToggle(!isOpen)}
-            toggle={<KebabToggle onToggle={onToggle} />}
+            toggle={<KebabToggleDeprecated onToggle={(_event, value) => onToggle(value)} />}
             isOpen={isOpen}
             isPlain
             dropdownItems={dropdownItems}
             className={className}
-            position={DropdownPosition.right}
+            position={DropdownPositionDeprecated.right}
           />
         </ToolbarItem>
       )}
@@ -131,6 +169,7 @@ const ClusterListActions = ({ className }) => {
 
 ClusterListActions.propTypes = {
   className: PropTypes.string,
+  isDashboardView: PropTypes.bool,
 };
 
 export default ClusterListActions;

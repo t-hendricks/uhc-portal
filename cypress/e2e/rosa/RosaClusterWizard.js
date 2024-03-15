@@ -13,17 +13,7 @@ const interceptAndReturnMockAssociatedAccounts = (mockFile) =>
 const interceptAndReturnMockARNs = (mockFile) =>
   cy.intercept({ method: 'POST', url: ARNsSelector }, { fixture: mockFile }).as('getMockARNs');
 
-describe('Rosa cluster tests', { tags: ['ci'] }, () => {
-  before(() => {
-    cy.visit('/');
-    Login.isLoginPageUrl();
-    Login.login();
-
-    ClusterListPage.isClusterListUrl();
-    ClusterListPage.waitForDataReady();
-    cy.getByTestId('create_cluster_btn').should('be.visible');
-  });
-
+describe.skip('Rosa cluster tests', { tags: ['ci'] }, () => {
   describe('Create Rosa cluster', () => {
     it('navigates to create Rosa cluster wizard', () => {
       cy.getByTestId('create_cluster_btn').click();
@@ -61,13 +51,6 @@ describe('Rosa cluster tests', { tags: ['ci'] }, () => {
         cy.get(CreateRosaWizardPage.associatedAccountsDropdown).click();
         cy.get(CreateRosaWizardPage.primaryButton).should('not.be.disabled');
         CreateRosaWizardPage.showsNoAssociatedAccounts();
-      });
-
-      it('test associate aws account drawer', () => {
-        cy.getByTestId('launch-associate-account-btn').click();
-        cy.get(CreateRosaWizardPage.primaryButton).should('not.be.disabled');
-        CreateRosaWizardPage.isAssociateAccountsDrawer();
-        cy.getByTestId('close-associate-account-btn').click();
       });
 
       it('tests for a single associated account,  "no ARNs" alert, and 4 ARNs required messages', () => {

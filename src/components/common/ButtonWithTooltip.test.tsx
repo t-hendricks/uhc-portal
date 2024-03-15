@@ -1,87 +1,68 @@
 import React from 'react';
-import { shallow } from 'enzyme';
-import { Link } from 'react-router-dom';
-import { Button, Text, Tooltip } from '@patternfly/react-core';
+
+import { screen, render, checkAccessibility } from '~/testUtils';
 
 import ButtonWithTooltip from './ButtonWithTooltip';
 
 describe('<ButtonWithTooltip>', () => {
-  describe('without disableReason', () => {
-    it('renders', () => {
-      const button = shallow(<ButtonWithTooltip className="foo">Press me</ButtonWithTooltip>);
-      expect(button).toMatchSnapshot();
-      expect(button.find(Button).at(0).props().isAriaDisabled).toBeFalsy();
-    });
+  it('displays as enabled button without disableReason', async () => {
+    const { container, user } = render(
+      <ButtonWithTooltip className="myClassIsPassedToButton">My button text</ButtonWithTooltip>,
+    );
+
+    expect(screen.getByRole('button')).toHaveAttribute('aria-disabled', 'false');
+    expect(screen.getByRole('button')).toHaveClass('myClassIsPassedToButton');
+
+    await checkAccessibility(container);
+
+    // make sure tooltip is not present
+    await user.hover(screen.getByRole('button'));
+    expect(screen.queryByRole('tooltip')).not.toBeInTheDocument();
   });
 
-  describe('with blank disableReason', () => {
-    it('renders', () => {
-      const button = shallow(
-        <ButtonWithTooltip className="foo" disableReason="">
-          Press me
-        </ButtonWithTooltip>,
-      );
-      expect(button).toMatchSnapshot();
-    });
+  it('displays as enabled button with only  an empty disableReason', async () => {
+    const { user } = render(<ButtonWithTooltip disableReason="">My button text</ButtonWithTooltip>);
+
+    expect(screen.getByRole('button')).toHaveAttribute('aria-disabled', 'false');
+
+    // make sure tooltip is not present
+    await user.hover(screen.getByRole('button'));
+    expect(screen.queryByRole('tooltip')).not.toBeInTheDocument();
   });
 
-  describe('with string disableReason', () => {
-    it('renders', () => {
-      const button = shallow(
-        <ButtonWithTooltip
-          disableReason="Unsafe in hyperspace"
-          isAriaDisabled={false}
-          tooltipProps={{ position: 'right' }}
-          className="foo"
-        >
-          Teleport
-        </ButtonWithTooltip>,
-      );
-      expect(button).toMatchSnapshot();
-      expect(button.find(Tooltip).at(0).props().content).toEqual('Unsafe in hyperspace');
-      expect(button.find(Button).at(0).props().isAriaDisabled).toBeTruthy();
-    });
+  it('displays as a disabled button if only isAriaDisabled is true', async () => {
+    const { user } = render(<ButtonWithTooltip isAriaDisabled>My button text</ButtonWithTooltip>);
+
+    expect(screen.getByRole('button')).toHaveAttribute('aria-disabled', 'true');
+
+    // make sure tooltip is not present
+    await user.hover(screen.getByRole('button'));
+    expect(screen.queryByRole('tooltip')).not.toBeInTheDocument();
   });
 
-  describe('with node disableReason', () => {
-    it('renders', () => {
-      const reason = (
-        <Text>
-          Unsupported. <Link to="http://example.com">Learn more</Link>
-        </Text>
-      );
-      const button = shallow(
-        <ButtonWithTooltip className="foo" disableReason={reason}>
-          Teleport
-        </ButtonWithTooltip>,
-      );
-      expect(button).toMatchSnapshot();
-    });
+  it('displays as disabled and with tooltip if only disableReason is provided', async () => {
+    const { user, container } = render(
+      <ButtonWithTooltip disableReason={<h2>I am a tooltip</h2>}>My button text</ButtonWithTooltip>,
+    );
+    expect(screen.getByRole('button')).toHaveAttribute('aria-disabled', 'true');
+    await user.hover(screen.getByRole('button'));
+
+    expect(await screen.findByRole('tooltip')).toBeInTheDocument();
+    expect(screen.getByRole('heading', { name: 'I am a tooltip' })).toBeInTheDocument();
+
+    await checkAccessibility(container);
   });
 
-  describe('with disableReason and isAriaDisabled', () => {
-    it('renders', () => {
-      const button = shallow(
-        <ButtonWithTooltip className="foo" disableReason="Parachute required" isAriaDisabled>
-          Eject
-        </ButtonWithTooltip>,
-      );
-      expect(button).toMatchSnapshot();
-      expect(button.find(Tooltip).at(0).props().content).toEqual('Parachute required');
-      expect(button.find(Button).at(0).props().isAriaDisabled).toBeTruthy();
-    });
-  });
+  it('displays as disabled button with tooltip if disableReason is provided and isAriaDisabled is false', async () => {
+    const { user } = render(
+      <ButtonWithTooltip disableReason={<h2>I am a tooltip</h2>} isAriaDisabled={false}>
+        My button text
+      </ButtonWithTooltip>,
+    );
+    expect(screen.getByRole('button')).toHaveAttribute('aria-disabled', 'true');
+    await user.hover(screen.getByRole('button'));
 
-  describe('with isAriaDisabled', () => {
-    it('renders', () => {
-      const button = shallow(
-        <ButtonWithTooltip className="foo" disableReason={false} isAriaDisabled>
-          Not clickable
-        </ButtonWithTooltip>,
-      );
-      expect(button).toMatchSnapshot();
-      expect(button.find(Tooltip)).toHaveLength(0);
-      expect(button.find(Button).at(0).props().isAriaDisabled).toBeTruthy();
-    });
+    expect(await screen.findByRole('tooltip')).toBeInTheDocument();
+    expect(screen.getByRole('heading', { name: 'I am a tooltip' })).toBeInTheDocument();
   });
 });

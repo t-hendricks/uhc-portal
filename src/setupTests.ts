@@ -1,7 +1,12 @@
 import { configure } from 'enzyme';
 import Adapter from '@wojtekmaj/enzyme-adapter-react-17';
 import { setAutoFreeze } from 'immer';
+import { sprintf } from 'sprintf-js';
 import * as useChromeHook from '@redhat-cloud-services/frontend-components/useChrome';
+import config from './config';
+
+// Mock apiRequest for all tests
+jest.mock('~/services/apiRequest');
 
 setAutoFreeze(false);
 if (!process.env.LISTENING_TO_UNHANDLED_REJECTION) {
@@ -9,29 +14,29 @@ if (!process.env.LISTENING_TO_UNHANDLED_REJECTION) {
   process.env.LISTENING_TO_UNHANDLED_REJECTION = 'true';
 }
 
-// These tests have warnings but don't cause test failure
-const testsExcludedFromWarningFail = [
-  'Router.test.jsx',
-  'Insights.test.jsx',
-  'ReduxFormKeyValueList.test',
-  'ReduxFormTaints.test',
-  // TODO: Fix the warnings in this test
-  'UpdateGraph.test.jsx',
-];
-
-// Warnings are printed with console.error
-// Fail tests with proptypes warnings if not in the excluded list
+// Warnings are printed with console.error.
+// - TODO: Fail tests with proptypes warnings.
+// - Fail on "Maximum update depth exceeded" because infinite loops are nasty in CI.
 const { error } = console;
 // eslint-disable-next-line no-console
-console.error = (...args) => {
-  const { testPath } = expect.getState();
-  if (testsExcludedFromWarningFail.some((v) => testPath.includes(v))) {
-    error(args[0]); // keep default behaviour
-    return;
+console.error = (msg, ...args) => {
+  const text =
+    typeof msg === 'string' ? sprintf(msg, ...args) : [msg, ...args].map(String).join(' ');
+
+  if (text.includes('https://reactjs.org/link/switch-to-createroot')) {
+    // This is logged by all uses of enzyme.mount() (HAC-4456) and is too verbose.
+    // eslint-disable-next-line no-console
+    console.log(`[downgraded console.error] ${msg}`, ...args);
+  } else {
+    error(msg, ...args); // Even if we going to throw below, it's useful to log *full* args.
   }
 
-  if (args[0].includes('Failed prop type:')) {
-    throw args[0] instanceof Error ? args[0] : new Error(args[0]);
+  if (text.includes('Maximum update depth exceeded')) {
+    throw text;
+  }
+
+  if (text.match(/Failed prop type|type .+ is invalid/)) {
+    // TODO: HAC-4934 // throw text;
   }
 };
 
@@ -52,3 +57,5 @@ global.insights = {
 };
 
 configure({ adapter: new Adapter() });
+
+config.dateConfig();

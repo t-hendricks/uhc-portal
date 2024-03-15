@@ -1,19 +1,33 @@
 import React from 'react';
-import { render, checkAccessibility, screen, fireEvent, mockRestrictedEnv } from '@testUtils';
 import { MemoryRouter, Router } from 'react-router-dom';
+import { CompatRouter } from 'react-router-dom-v5-compat';
 import { createMemoryHistory } from 'history';
-import * as hooks from '~/hooks/useFeatureGate';
+
+import {
+  render,
+  checkAccessibility,
+  screen,
+  mockRestrictedEnv,
+  mockUseFeatureGate,
+} from '~/testUtils';
+
 import { HCP_ROSA_GETTING_STARTED_PAGE } from '~/redux/constants/featureConstants';
 import CreateClusterDropDown from './CreateClusterDropDown';
 
 const getStartedPath = '/create/rosa/getstarted';
 
 describe('<CreateClusterDropDown />', () => {
+  afterAll(() => {
+    jest.resetAllMocks();
+  });
+
   it('is accessible', async () => {
     // Arrange
     const { container } = render(
       <MemoryRouter>
-        <CreateClusterDropDown />
+        <CompatRouter>
+          <CreateClusterDropDown />
+        </CompatRouter>
       </MemoryRouter>,
     );
 
@@ -23,71 +37,77 @@ describe('<CreateClusterDropDown />', () => {
 
   it('is accessible expanded', async () => {
     // Arrange
-    const { container } = render(
+    const { container, user } = render(
       <MemoryRouter>
-        <CreateClusterDropDown />
+        <CompatRouter>
+          <CreateClusterDropDown />
+        </CompatRouter>
       </MemoryRouter>,
     );
 
     // Act
-    fireEvent.click(screen.getByRole('button', { name: 'Create cluster' }));
+    await user.click(screen.getByRole('button', { name: 'Create cluster' }));
     expect(screen.getByText(/With CLI/)).toBeInTheDocument();
 
     // Assert
     await checkAccessibility(container);
   });
 
-  it('CLI option goes to getting started page', () => {
+  it('CLI option goes to getting started page', async () => {
     // Arrange
     const history = createMemoryHistory();
 
-    render(
+    const { user } = render(
       // @ts-ignore
       <Router history={history}>
-        <CreateClusterDropDown />
+        <CompatRouter>
+          <CreateClusterDropDown />
+        </CompatRouter>
       </Router>,
     );
 
     // Act
-    fireEvent.click(screen.getByRole('button', { name: 'Create cluster' }));
-    fireEvent.click(screen.getByText(/With CLI/));
+    await user.click(screen.getByRole('button', { name: 'Create cluster' }));
+    await user.click(screen.getByText(/With CLI/));
 
     // Assert
     expect(history.location.pathname).toBe(getStartedPath);
   });
 
-  it('Prerequisites link goes to getting started page', () => {
+  it('Prerequisites link goes to getting started page', async () => {
     // Arrange
     const history = createMemoryHistory();
 
-    render(
+    const { user } = render(
       // @ts-ignore
       <Router history={history}>
-        <CreateClusterDropDown />
+        <CompatRouter>
+          <CreateClusterDropDown />
+        </CompatRouter>
       </Router>,
     );
 
     // Act
-    fireEvent.click(screen.getByRole('link', { name: 'Prerequisites' }));
+    await user.click(screen.getByRole('link', { name: 'Prerequisites' }));
 
     // Assert
     expect(history.location.pathname).toBe(getStartedPath);
   });
 
-  it('shows hypershift helper text when feature flags are enabled', () => {
+  it('shows hypershift helper text when feature flags are enabled', async () => {
     // Arrange
-    jest
-      .spyOn(hooks, 'useFeatureGate')
-      .mockImplementation((feature) => feature === HCP_ROSA_GETTING_STARTED_PAGE);
+    mockUseFeatureGate([[HCP_ROSA_GETTING_STARTED_PAGE, true]]);
 
-    render(
+    const { user } = render(
       <MemoryRouter>
-        <CreateClusterDropDown />
+        <CompatRouter>
+          <CreateClusterDropDown />
+        </CompatRouter>
       </MemoryRouter>,
     );
 
     // Act
-    fireEvent.click(screen.getByRole('button', { name: 'Create cluster' }));
+    await user.click(screen.getByRole('button', { name: 'Create cluster' }));
     expect(screen.getByText(/With CLI/)).toBeInTheDocument();
 
     // Arrange
@@ -95,20 +115,20 @@ describe('<CreateClusterDropDown />', () => {
     expect(screen.getByText(/ROSA with Hosted Control Plane coming soon/)).toBeInTheDocument();
   });
 
-  it('hides hypershift helper text when feature flags are not enabled', () => {
+  it('hides hypershift helper text when feature flags are not enabled', async () => {
     // Arrange
-    jest
-      .spyOn(hooks, 'useFeatureGate')
-      .mockImplementation((feature) => feature !== HCP_ROSA_GETTING_STARTED_PAGE);
+    mockUseFeatureGate([[HCP_ROSA_GETTING_STARTED_PAGE, false]]);
 
-    render(
+    const { user } = render(
       <MemoryRouter>
-        <CreateClusterDropDown />
+        <CompatRouter>
+          <CreateClusterDropDown />
+        </CompatRouter>
       </MemoryRouter>,
     );
 
     // Act
-    fireEvent.click(screen.getByRole('button', { name: 'Create cluster' }));
+    await user.click(screen.getByRole('button', { name: 'Create cluster' }));
     expect(screen.getByText(/With CLI/)).toBeInTheDocument();
 
     // Assert
@@ -124,19 +144,20 @@ describe('<CreateClusterDropDown />', () => {
     afterEach(() => {
       isRestrictedEnv.mockReturnValue(false);
     });
-    it('does not show hypershift helper text', () => {
-      isRestrictedEnv.mockReturnValue(true);
-      jest
-        .spyOn(hooks, 'useFeatureGate')
-        .mockImplementation((feature) => feature === HCP_ROSA_GETTING_STARTED_PAGE);
 
-      render(
+    it('does not show hypershift helper text', async () => {
+      isRestrictedEnv.mockReturnValue(true);
+      mockUseFeatureGate([[HCP_ROSA_GETTING_STARTED_PAGE, true]]);
+
+      const { user } = render(
         <MemoryRouter>
-          <CreateClusterDropDown />
+          <CompatRouter>
+            <CreateClusterDropDown />
+          </CompatRouter>
         </MemoryRouter>,
       );
 
-      fireEvent.click(screen.getByRole('button', { name: 'Create cluster' }));
+      await user.click(screen.getByRole('button', { name: 'Create cluster' }));
       expect(screen.getByText(/With CLI/)).toBeInTheDocument();
       expect(screen.getByText(/With web interface/)).toBeInTheDocument();
 

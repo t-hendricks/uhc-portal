@@ -1,6 +1,6 @@
 import get from 'lodash/get';
 
-import { getDefaultClusterAutoScaling } from '~/components/clusters/CreateOSDPage/clusterAutoScalingValues';
+import { getDefaultClusterAutoScaling } from '~/components/clusters/common/clusterAutoScalingValues';
 
 export interface FieldDefinition {
   label: string;
@@ -13,10 +13,10 @@ const defaultValues = getDefaultClusterAutoScaling();
 
 const balancerFields: FieldDefinition[] = [
   {
-    label: 'balance-similar-node-groups',
-    name: 'balance_similar_node_groups',
-    type: 'boolean',
-    defaultValue: defaultValues.balance_similar_node_groups,
+    label: 'log-verbosity',
+    name: 'log_verbosity',
+    type: 'number',
+    defaultValue: defaultValues.log_verbosity,
   },
   {
     label: 'skip-nodes-with-local-storage',
@@ -25,7 +25,7 @@ const balancerFields: FieldDefinition[] = [
     defaultValue: defaultValues.skip_nodes_with_local_storage,
   },
   {
-    label: 'max-pod-grace-period (max-graceful-termination-sec)',
+    label: 'max-pod-grace-period',
     name: 'max_pod_grace_period',
     type: 'number', // expressed in seconds
     defaultValue: defaultValues.max_pod_grace_period,
@@ -37,7 +37,7 @@ const balancerFields: FieldDefinition[] = [
     defaultValue: defaultValues.max_node_provision_time,
   },
   {
-    label: 'pod-priority-threshold (expendable-pods-priority-cutoff)',
+    label: 'pod-priority-threshold',
     name: 'pod_priority_threshold',
     type: 'number',
     defaultValue: defaultValues.pod_priority_threshold,
@@ -49,10 +49,10 @@ const balancerFields: FieldDefinition[] = [
     defaultValue: defaultValues.ignore_daemonsets_utilization,
   },
   {
-    label: 'log-verbosity',
-    name: 'log_verbosity',
-    type: 'number',
-    defaultValue: defaultValues.log_verbosity,
+    label: 'balance-similar-node-groups',
+    name: 'balance_similar_node_groups',
+    type: 'boolean',
+    defaultValue: defaultValues.balance_similar_node_groups,
   },
 ];
 
@@ -91,8 +91,8 @@ const resourceLimitsFields: FieldDefinition[] = [
 
 const scaleDownFields: FieldDefinition[] = [
   {
-    label: 'enabled',
-    name: 'scale-down-enabled',
+    label: 'scale-down-enabled',
+    name: 'scale_down.enabled',
     type: 'boolean',
     defaultValue: defaultValues.scale_down.enabled,
   },

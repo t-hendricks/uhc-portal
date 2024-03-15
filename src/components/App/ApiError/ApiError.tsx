@@ -1,6 +1,6 @@
 import React from 'react';
 import { AxiosResponse, AxiosInstance } from 'axios';
-import { useHistory } from 'react-router-dom';
+import { useLocation } from 'react-router-dom-v5-compat';
 import { TERMS_REQUIRED_CODE, hasOwnErrorPage, getInternalErrorCode } from '../../../common/errors';
 import apiErrorInterceptor from './ApiErrorInterceptor';
 import TermsError from '../../common/TermsGuard/TermsError';
@@ -14,16 +14,18 @@ type Props = {
 };
 
 const ApiError = ({ apiRequest, showApiError, children, apiError, clearApiError }: Props) => {
-  const history = useHistory();
+  const location = useLocation();
+
   React.useEffect(() => {
     const ejectApiErrorInterceptor = apiErrorInterceptor(apiRequest, showApiError);
     // when user navigates away, clear any apiError state.
-    const detachHistoryListener = history.listen(() => clearApiError());
+    const detachHistoryListener = () => clearApiError();
     return () => {
       ejectApiErrorInterceptor();
       detachHistoryListener();
     };
-  }, [apiRequest, clearApiError, history]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [apiRequest, clearApiError, location]);
 
   // watch only errors that have their own error pages
   if (apiError && hasOwnErrorPage(apiError)) {

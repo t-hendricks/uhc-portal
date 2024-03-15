@@ -1,241 +1,275 @@
 import React from 'react';
-import { shallow } from 'enzyme';
-import { DropdownItem } from '@patternfly/react-core';
-import { screen } from '@testing-library/react';
+import { screen, render, checkAccessibility } from '~/testUtils';
 
 import { dropDownItems } from './ClusterActionsDropdownItems';
 import * as Fixtures from './ClusterActionsDropdown.fixtures';
-import { mockRestrictedEnv, render } from '../../../../testUtils';
 
 function DropDownItemsRenderHelper(props) {
-  return <>{dropDownItems(props).map((item) => item)}</>;
+  return <ul role="menu">{dropDownItems(props).map((item) => item)}</ul>;
 }
 
+const menuItemsText = [
+  'Open console',
+  'Edit display name',
+  'Edit load balancers and persistent storage',
+  'Edit machine pool',
+  'Hibernate cluster',
+  'Delete cluster',
+];
+
 describe('Cluster Actions Dropdown Items', () => {
+  afterEach(() => {
+    jest.clearAllMocks();
+  });
   describe('cluster with state ready and console url', () => {
-    let wrapper;
-    beforeEach(() => {
-      wrapper = shallow(<DropDownItemsRenderHelper {...Fixtures.managedReadyProps} />);
+    it('is accessible', async () => {
+      const { container } = render(<DropDownItemsRenderHelper {...Fixtures.managedReadyProps} />);
+      await checkAccessibility(container);
+
+      // Ensures that the menu items are in the expected order
+      const foundMenuItems = screen.getAllByRole('menuitem');
+      expect(foundMenuItems).toHaveLength(menuItemsText.length);
+      menuItemsText.forEach((menuItemText, index) => {
+        expect(foundMenuItems[index]).toHaveTextContent(menuItemText);
+      });
     });
 
-    it('should render', () => {
-      expect(wrapper).toMatchSnapshot();
-    });
+    it('opens edit display name modal', async () => {
+      const { user } = render(<DropDownItemsRenderHelper {...Fixtures.managedReadyProps} />);
+      expect(Fixtures.managedReadyProps.openModal).toBeCalledTimes(0);
+      await user.click(screen.getByRole('menuitem', { name: 'Edit display name' }));
 
-    it('should open edit display name modal', () => {
-      wrapper.find(DropdownItem).at(1).simulate('click');
       expect(Fixtures.managedReadyProps.openModal).toBeCalledWith(
         'edit-display-name',
         Fixtures.cluster,
       );
     });
 
-    it('should open edit cluster modal', () => {
-      wrapper.find(DropdownItem).at(2).simulate('click');
+    it('should open edit cluster modal (load balancers and persistent storage)', async () => {
+      const { user } = render(<DropDownItemsRenderHelper {...Fixtures.managedReadyProps} />);
+      expect(Fixtures.managedReadyProps.openModal).toBeCalledTimes(0);
+      await user.click(
+        screen.getByRole('menuitem', { name: 'Edit load balancers and persistent storage' }),
+      );
+
       expect(Fixtures.managedReadyProps.openModal).toBeCalledWith('edit-cluster', Fixtures.cluster);
     });
 
-    it('should open edit node count modal', () => {
-      wrapper.find(DropdownItem).at(3).simulate('click');
-      expect(Fixtures.managedReadyProps.openModal).toBeCalledWith('edit-node-count', {
+    it('should open edit machine pools modal', async () => {
+      const { user } = render(<DropDownItemsRenderHelper {...Fixtures.managedReadyProps} />);
+      expect(Fixtures.managedReadyProps.openModal).toBeCalledTimes(0);
+      await user.click(screen.getByRole('menuitem', { name: 'Edit machine pool' }));
+
+      expect(Fixtures.managedReadyProps.openModal).toBeCalledWith('edit-machine-pool', {
         cluster: Fixtures.cluster,
-        isDefaultMachinePool: true,
-        isHypershiftCluster: false,
-        clearMachineOrNodePoolsOnExit: undefined,
       });
     });
 
-    it('should open hibernate cluster modal', () => {
-      wrapper.find(DropdownItem).at(4).simulate('click');
+    it('should open hibernate cluster modal', async () => {
+      const { user } = render(<DropDownItemsRenderHelper {...Fixtures.managedReadyProps} />);
+      expect(Fixtures.managedReadyProps.openModal).toBeCalledTimes(0);
+      await user.click(screen.getByRole('menuitem', { name: 'Hibernate cluster' }));
       expect(Fixtures.managedReadyProps.openModal).toBeCalledWith(
         'hibernate-cluster',
         Fixtures.hibernateClusterModalData,
       );
     });
 
-    it('should open delete modal', () => {
-      wrapper.find(DropdownItem).at(5).simulate('click');
+    it('should open delete modal', async () => {
+      const { user } = render(<DropDownItemsRenderHelper {...Fixtures.managedReadyProps} />);
+      expect(Fixtures.managedReadyProps.openModal).toBeCalledTimes(0);
+      await user.click(screen.getByRole('menuitem', { name: 'Delete cluster' }));
       expect(Fixtures.managedReadyProps.openModal).toBeCalledWith(
         'delete-cluster',
         Fixtures.deleteModalData,
       );
     });
 
-    it('menu buttons should be enabled', () => {
-      const actions = wrapper
-        .find(DropdownItem)
-        .map((a) => [a.props().title, a.props().isAriaDisabled === true]);
-      expect(actions).toEqual([
-        ['Open console', false],
-        ['Edit display name', false],
-        ['Edit load balancers and persistent storage', false],
-        ['Edit node count', false],
-        ['Hibernate cluster', false],
-        ['Delete cluster', false],
-      ]);
+    it.each(menuItemsText)('menu button %p is enabled', (menuItem) => {
+      render(<DropDownItemsRenderHelper {...Fixtures.managedReadyProps} />);
+
+      expect(screen.getByRole('menuitem', { name: menuItem })).toHaveAttribute(
+        'aria-disabled',
+        'false',
+      );
     });
 
     describe('and product osdtrial', () => {
-      beforeEach(() => {
-        wrapper = shallow(<DropDownItemsRenderHelper {...Fixtures.managedReadyOsdTrialProps} />);
+      it('is accessible', async () => {
+        const { container } = render(
+          <DropDownItemsRenderHelper {...Fixtures.managedReadyOsdTrialProps} />,
+        );
+        await checkAccessibility(container);
       });
 
-      it('should render', () => {
-        expect(wrapper).toMatchSnapshot();
+      it('has Upgrade cluster from Trial option ', () => {
+        render(<DropDownItemsRenderHelper {...Fixtures.managedReadyOsdTrialProps} />);
+        expect(
+          screen.getByRole('menuitem', { name: 'Upgrade cluster from Trial' }),
+        ).toBeInTheDocument();
       });
 
-      it('should not find hibernate action', () => {
-        wrapper.find(DropdownItem).forEach((item) => {
-          expect(item.props().title).not.toEqual('Hibernate cluster');
-        });
+      it('does not have hibernate cluster option', () => {
+        render(<DropDownItemsRenderHelper {...Fixtures.managedReadyOsdTrialProps} />);
+        expect(
+          screen.queryByRole('menuitem', { name: 'Hibernate cluster' }),
+        ).not.toBeInTheDocument();
       });
+      it.each(menuItemsText.filter((item) => item !== 'Hibernate cluster'))(
+        'menu button %p is available',
+        (menuItem) => {
+          render(<DropDownItemsRenderHelper {...Fixtures.managedReadyOsdTrialProps} />);
+          expect(screen.getByRole('menuitem', { name: menuItem })).toBeInTheDocument();
+        },
+      );
     });
   });
 
   describe('cluster with state uninstalling', () => {
-    const wrapper = shallow(<DropDownItemsRenderHelper {...Fixtures.clusterUninstallingProps} />);
-
-    it('should render (uninstalling)', () => {
-      expect(wrapper).toMatchSnapshot();
+    it('is accessible (uninstalling)', async () => {
+      const { container } = render(
+        <DropDownItemsRenderHelper {...Fixtures.clusterUninstallingProps} />,
+      );
+      await checkAccessibility(container);
     });
 
-    it('menu buttons should be disabled', () => {
-      const actions = wrapper
-        .find(DropdownItem)
-        .map((a) => [a.props().title, a.props().isAriaDisabled === true]);
-      expect(actions).toEqual([
-        ['Open console', true],
-        ['Edit display name', true],
-        ['Edit load balancers and persistent storage', true],
-        ['Edit node count', true],
-        ['Hibernate cluster', true],
-        ['Delete cluster', true],
-      ]);
+    it.each(menuItemsText)('menu button %p is disabled', (menuItem) => {
+      render(<DropDownItemsRenderHelper {...Fixtures.clusterUninstallingProps} />);
+
+      expect(screen.getByRole('menuitem', { name: menuItem })).toHaveAttribute(
+        'aria-disabled',
+        'true',
+      );
     });
   });
 
   describe('cluster with state not ready', () => {
-    const wrapper = shallow(<DropDownItemsRenderHelper {...Fixtures.clusterNotReadyProps} />);
-
-    it('should render (not ready)', () => {
-      expect(wrapper).toMatchSnapshot();
+    it('is accessible (not ready)', async () => {
+      const { container } = render(
+        <DropDownItemsRenderHelper {...Fixtures.clusterNotReadyProps} />,
+      );
+      await checkAccessibility(container);
     });
 
-    it('disable open console & edit cluster, enable edit display name and delete cluster', () => {
-      const actions = wrapper
-        .find(DropdownItem)
-        .map((a) => [a.props().title, a.props().isAriaDisabled === true]);
-      expect(actions).toEqual([
-        ['Open console', true],
-        ['Edit display name', false],
-        ['Edit load balancers and persistent storage', true],
-        ['Edit node count', true],
-        ['Hibernate cluster', true],
-        ['Delete cluster', false],
-      ]);
+    it.each([
+      ['Open console', 'true'],
+      ['Edit display name', 'false'],
+      ['Edit load balancers and persistent storage', 'true'],
+      ['Edit machine pool', 'true'],
+      ['Hibernate cluster', 'true'],
+      ['Delete cluster', 'false'],
+    ])('menu button %p  disabled is set to %p', (menuItem, isDisabled) => {
+      render(<DropDownItemsRenderHelper {...Fixtures.clusterNotReadyProps} />);
+      expect(screen.getByRole('menuitem', { name: menuItem })).toHaveAttribute(
+        'aria-disabled',
+        isDisabled,
+      );
     });
   });
 
   describe('cluster state hibernating', () => {
-    const wrapper = shallow(<DropDownItemsRenderHelper {...Fixtures.clusterHibernatingProps} />);
-
-    it('should render (hibernating)', () => {
-      expect(wrapper).toMatchSnapshot();
+    it('is accessible (hibernating)', async () => {
+      const { container } = render(
+        <DropDownItemsRenderHelper {...Fixtures.clusterHibernatingProps} />,
+      );
+      await checkAccessibility(container);
     });
 
-    it('disable open console & edit cluster, enable edit display name and delete cluster', () => {
-      const actions = wrapper
-        .find(DropdownItem)
-        .map((a) => [a.props().title, a.props().isAriaDisabled === true]);
-      expect(actions).toEqual([
-        ['Open console', true],
-        ['Edit display name', false],
-        ['Edit load balancers and persistent storage', true],
-        ['Edit node count', true],
-        ['Resume from Hibernation', false],
-        ['Delete cluster', true],
-      ]);
+    it.each([
+      ['Open console', 'true'],
+      ['Edit display name', 'false'],
+      ['Edit load balancers and persistent storage', 'true'],
+      ['Edit machine pool', 'true'],
+      ['Resume from Hibernation', 'false'],
+      ['Delete cluster', 'true'],
+    ])('menu button %p  disabled is set to %p', (menuItem, isDisabled) => {
+      render(<DropDownItemsRenderHelper {...Fixtures.clusterHibernatingProps} />);
+      expect(screen.getByRole('menuitem', { name: menuItem })).toHaveAttribute(
+        'aria-disabled',
+        isDisabled,
+      );
     });
   });
 
   describe('cluster configuration_mode read_only', () => {
-    const wrapper = shallow(<DropDownItemsRenderHelper {...Fixtures.clusterReadOnlyProps} />);
-
-    it('should render (read_only)', () => {
-      expect(wrapper).toMatchSnapshot();
+    it('is accessible (read_only)', async () => {
+      const { container } = render(
+        <DropDownItemsRenderHelper {...Fixtures.clusterReadOnlyProps} />,
+      );
+      await checkAccessibility(container);
     });
 
-    it('disable provisioning actions, enable console and edit display name', () => {
-      const actions = wrapper
-        .find(DropdownItem)
-        .map((a) => [a.props().title, a.props().isAriaDisabled === true]);
-      expect(actions).toEqual([
-        ['Open console', false],
-        ['Edit display name', false],
-        ['Edit load balancers and persistent storage', true],
-        ['Edit node count', true],
-        ['Hibernate cluster', true],
-        ['Delete cluster', true],
-      ]);
+    it.each([
+      ['Open console', 'false'],
+      ['Edit display name', 'false'],
+      ['Edit load balancers and persistent storage', 'true'],
+      ['Edit machine pool', 'true'],
+      ['Hibernate cluster', 'true'],
+      ['Delete cluster', 'true'],
+    ])('menu button %p  disabled is set to %p', (menuItem, isDisabled) => {
+      render(<DropDownItemsRenderHelper {...Fixtures.clusterReadOnlyProps} />);
+      expect(screen.getByRole('menuitem', { name: menuItem })).toHaveAttribute(
+        'aria-disabled',
+        isDisabled,
+      );
     });
   });
 
   describe('self managed cluster', () => {
-    const wrapper = shallow(<DropDownItemsRenderHelper {...Fixtures.selfManagedProps} />);
+    it('is accessible (self managed / no console)', async () => {
+      const { container } = render(<DropDownItemsRenderHelper {...Fixtures.selfManagedProps} />);
+      await checkAccessibility(container);
+    });
 
-    it('should render (self managed)', () => {
-      expect(wrapper).toMatchSnapshot();
+    it.each([
+      ['Open console', 'true'],
+      ['Edit display name', 'false'],
+      ['Add console URL', 'false'],
+    ])('menu button %p  disabled is set to %p', (menuItem, isDisabled) => {
+      render(<DropDownItemsRenderHelper {...Fixtures.selfManagedProps} />);
+      expect(screen.getByRole('menuitem', { name: menuItem })).toHaveAttribute(
+        'aria-disabled',
+        isDisabled,
+      );
     });
   });
 
-  describe('admin console url does not exist', () => {
-    const wrapper = shallow(<DropDownItemsRenderHelper {...Fixtures.selfManagedProps} />);
-
-    it('should render (no console)', () => {
-      expect(wrapper).toMatchSnapshot();
-    });
-  });
   describe('read only cluster', () => {
-    const wrapper = shallow(<DropDownItemsRenderHelper {...Fixtures.organizationClusterProps} />);
-    it('should render correctly', () => {
-      expect(wrapper).toMatchSnapshot();
+    it('is accessible', async () => {
+      const { container } = render(
+        <DropDownItemsRenderHelper {...Fixtures.organizationClusterProps} />,
+      );
+      await checkAccessibility(container);
+    });
+
+    it('only open console options is available', () => {
+      render(<DropDownItemsRenderHelper {...Fixtures.organizationClusterProps} />);
+      expect(screen.getByRole('menuitem')).toHaveTextContent('Open console');
+
+      expect(screen.getByRole('menuitem')).toHaveAttribute('aria-disabled', 'false');
     });
   });
 
   describe('Hypershift cluster', () => {
-    it('enables "edit node count" option if not hypershift', () => {
-      const wrapper = shallow(<DropDownItemsRenderHelper {...Fixtures.managedReadyProps} />);
-      wrapper.find(DropdownItem).forEach((option) => {
-        if (option.props().title === 'Edit node count') {
-          expect(option.props().isAriaDisabled).toBeFalsy();
-        }
-      });
+    it('is accessible (hypershift)', async () => {
+      const { container } = render(
+        <DropDownItemsRenderHelper {...Fixtures.hyperShiftReadyProps} />,
+      );
+      await checkAccessibility(container);
     });
 
-    // hypershift now allows 'edit node count'
-    it('enables "edit node count" option if hypershift', () => {
-      const wrapper = shallow(<DropDownItemsRenderHelper {...Fixtures.hyperShiftReadyProps} />);
-      wrapper.find(DropdownItem).forEach((option) => {
-        if (option.props().title === 'Edit node count') {
-          expect(option.props().isAriaDisabled).toBeFalsy();
-        }
-      });
-    });
-  });
-  describe('in restricted env', () => {
-    const isRestrictedEnv = mockRestrictedEnv();
-
-    afterEach(() => {
-      isRestrictedEnv.mockReturnValue(false);
-    });
-
-    it('does not show hibernate btn', () => {
-      const { rerender } = render(<DropDownItemsRenderHelper {...Fixtures.managedReadyProps} />);
-      expect(screen.queryByTitle('Hibernate cluster')).toBeInTheDocument();
-
-      isRestrictedEnv.mockReturnValue(true);
-      rerender(<DropDownItemsRenderHelper {...Fixtures.managedReadyProps} />);
-      expect(screen.queryByTitle('Hibernate cluster')).not.toBeInTheDocument();
+    it.each([
+      ['Open console', 'false'],
+      ['Edit display name', 'false'],
+      ['Edit load balancers and persistent storage', 'false'],
+      ['Edit machine pool', 'false'],
+      ['Delete cluster', 'false'],
+    ])('menu button %p  disabled is set to %p', (menuItem, isDisabled) => {
+      render(<DropDownItemsRenderHelper {...Fixtures.hyperShiftReadyProps} />);
+      expect(screen.getByRole('menuitem', { name: menuItem })).toHaveAttribute(
+        'aria-disabled',
+        isDisabled,
+      );
     });
   });
 });

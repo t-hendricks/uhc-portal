@@ -1,15 +1,14 @@
-.cluster-log {
-  .markdown {
-    a[target="_blank"]::after {
-      font-family: "Font Awesome 5 Free", serif;
-      font-weight: 900;
-      content: ' \f35d'
-    }
-  }
-}
 .cluster-log__toolbar {
-  .pf-c-toolbar__group,
-  .pf-c-toolbar__content-section {
+  .pf-v5-c-toolbar__group,
+  .pf-v5-c-toolbar__content-section {
     align-items: start;
   }
+}
+
+.cluster-log__resources {
+  padding-top: var(--pf-v5-global--spacer--sm);
+}
+
+.cluster-log {
+  overflow-wrap: anywhere !important;
 }

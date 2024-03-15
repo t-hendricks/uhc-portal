@@ -47,8 +47,9 @@ const NetworkingSelector = (state: GlobalState): ClusterRouters => {
       loadBalancer: r.load_balancer_type,
       routeSelectors: r.route_selectors,
       excludedNamespaces: r.excluded_namespaces,
+      // Default is NamespaceOwnershipPolicy.STRICT if route_namespace_ownership_policy not set
       isNamespaceOwnershipPolicyStrict:
-        r.route_namespace_ownership_policy === NamespaceOwnershipPolicy.STRICT,
+        r.route_namespace_ownership_policy !== NamespaceOwnershipPolicy.INTER_NAMESPACE_ALLOWED,
       isWildcardPolicyAllowed: r.route_wildcard_policy === WildcardPolicy.WILDCARDS_ALLOWED,
       tlsSecretRef: r.cluster_routes_tls_secret_ref,
       hostname: r.cluster_routes_hostname,

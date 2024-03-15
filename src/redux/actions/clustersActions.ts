@@ -19,7 +19,26 @@ import { action, ActionType } from 'typesafe-actions';
 import axios, { AxiosResponse } from 'axios';
 import type { Cluster as AICluster } from '@openshift-assisted/types/assisted-installer-service';
 
-import { isHypershiftCluster } from '~/components/clusters/ClusterDetails/clusterDetailsHelper';
+import { isHypershiftCluster } from '~/components/clusters/common/clusterStates';
+
+import type { Cluster, UpgradePolicy } from '~/types/clusters_mgmt.v1';
+import {
+  SelfResourceReview,
+  SelfAccessReview,
+  SelfResourceReviewRequest,
+} from '~/types/accounts_mgmt.v1';
+import type {
+  Subscription,
+  SubscriptionCreateRequest,
+  SubscriptionPatchRequest,
+} from '~/types/accounts_mgmt.v1';
+import type {
+  AugmentedCluster,
+  AugmentedClusterResponse,
+  ClusterWithPermissions,
+} from '~/types/types';
+import type { AppThunk, AppThunkDispatch } from '../types';
+import { techPreviewStatusSelector, dispatchTechPreviewStatus } from '../hooks/clusterHooks';
 import { clustersConstants } from '../constants';
 import {
   accountsService,
@@ -42,36 +61,22 @@ import { editSubscriptionSettings } from './subscriptionSettingsActions';
 import isAssistedInstallSubscription from '../../common/isAssistedInstallerCluster';
 import { ASSISTED_INSTALLER_MERGE_LISTS_FEATURE } from '../constants/featureConstants';
 
-import type { Cluster } from '../../types/clusters_mgmt.v1';
-import {
-  SelfResourceReview,
-  SelfAccessReview,
-  SelfResourceReviewRequest,
-} from '../../types/authorizations.v1';
-import type {
-  Subscription,
-  SubscriptionList,
-  SubscriptionCreateRequest,
-  SubscriptionPatchRequest,
-} from '../../types/accounts_mgmt.v1';
-import type {
-  AugmentedCluster,
-  AugmentedClusterResponse,
-  ClusterWithPermissions,
-} from '../../types/types';
-import type { AppThunk, AppThunkDispatch } from '../types';
+const ROSA_PRODUCTS = [knownProducts.ROSA, knownProducts.ROSA_HyperShift];
+const OSD_PRODUCTS = [knownProducts.OSD, knownProducts.OSDTrial];
 
 const invalidateClusters = () => action(INVALIDATE_ACTION(clustersConstants.GET_CLUSTERS));
 
 const createClusterAndUpgradeSchedule = async (
   cluster: Cluster,
-  upgradeSchedule: boolean,
+  upgradeSchedule: UpgradePolicy,
   dispatch: AppThunkDispatch,
 ) => {
   const clusterResponse = await clusterService.postNewCluster(cluster);
   if (upgradeSchedule) {
     const clusterID = clusterResponse.data.id;
-    dispatch(postSchedule(clusterID, upgradeSchedule, isHypershiftCluster(cluster)));
+    if (clusterID) {
+      dispatch(postSchedule(clusterID, upgradeSchedule, isHypershiftCluster(cluster)));
+    }
   }
   dispatch(invalidateClusters());
   return clusterResponse;
@@ -81,7 +86,7 @@ const createClusterAction = (clusterResponse: Promise<AxiosResponse<Cluster, any
   action(clustersConstants.CREATE_CLUSTER, clusterResponse);
 
 const createCluster =
-  (params: Cluster, upgradeSchedule: boolean): AppThunk =>
+  (params: Cluster, upgradeSchedule: UpgradePolicy): AppThunk =>
   (dispatch) =>
     dispatch(
       createClusterAction(createClusterAndUpgradeSchedule(params, upgradeSchedule, dispatch)),
@@ -270,152 +275,111 @@ const fetchClustersAndPermissions = async (
   clusterRequestParams: Parameters<typeof accountsService.getSubscriptions>[0],
   aiMergeListsFeatureFlag: boolean | undefined,
 ) => {
-  let subscriptions: AxiosResponse<SubscriptionList, any>;
-  let canEdit: {
-    [clusterID: string]: boolean;
-  };
-  let canDelete: {
-    [clusterID: string]: boolean;
-  };
-
-  const promises = [
-    accountsService.getSubscriptions(clusterRequestParams).then((response) => {
-      subscriptions = mapListResponse(response, normalizeSubscription);
-    }),
+  const [subscriptions, canDelete, canEdit] = await Promise.all([
+    accountsService
+      .getSubscriptions(clusterRequestParams)
+      .then((response) => mapListResponse(response, normalizeSubscription)),
     authorizationsService
       .selfResourceReview({
         action: SelfResourceReviewRequest.action.DELETE,
         resource_type: SelfResourceReview.resource_type.CLUSTER,
       })
-      .then((response) => {
-        canDelete = buildPermissionDict(response);
-      }),
+      .then((response) => buildPermissionDict(response)),
     authorizationsService
       .selfResourceReview({
         action: SelfResourceReviewRequest.action.UPDATE,
         resource_type: SelfResourceReview.resource_type.CLUSTER,
       })
-      .then((response) => {
-        canEdit = buildPermissionDict(response);
-      }),
-  ];
+      .then((response) => buildPermissionDict(response)),
+  ]);
 
-  const handler = () => {
-    const items = subscriptions?.data?.items?.filter(
-      (item) => aiMergeListsFeatureFlag || !isAssistedInstallSubscription(item),
-    );
+  const items = subscriptions?.data?.items?.filter(
+    (item) => aiMergeListsFeatureFlag || !isAssistedInstallSubscription(item),
+  );
 
-    if (!items) {
-      return {
-        data: {
-          items: [] as ClusterWithPermissions[],
-          page: 0,
-          total: 0,
-          queryParams: { ...clusterRequestParams },
-        },
-      };
-    }
-
-    // map subscription ID to subscription info
-    // Note: Map keeps order of insertions.
-    // Will display them in order returned by getSubscriptions().
-    const subscriptionMap = new Map<string, MapEntry>();
-    items.forEach((item) => {
-      if (item.cluster_id) {
-        subscriptionMap.set(item.cluster_id, {
-          subscription: item,
-        });
-      }
-    });
-
-    const enrichForClusterService = async () => {
-      // clusters-service only needed for managed clusters.
-      const managedSubsriptions = items.filter(
-        (s) => s.managed && s.status !== subscriptionStatuses.DEPROVISIONED,
-      );
-      if (managedSubsriptions.length === 0) {
-        return {
-          data: {
-            items: createResponseForFetchClusters(subscriptionMap, canEdit, canDelete),
-            page: subscriptions.data.page,
-            total: subscriptions.data.total || 0,
-            queryParams: { ...clusterRequestParams },
-          },
-        };
-      }
-
-      // fetch managed clusters by subscription
-      const clustersQuery = buildSearchQuery(managedSubsriptions, 'cluster_id');
-      try {
-        return await clusterService.getClusters(clustersQuery).then((response) => {
-          const clusters = response?.data?.items;
-          clusters?.forEach((cluster) => {
-            if (cluster.id) {
-              const entry = subscriptionMap.get(cluster.id);
-              if (entry !== undefined) {
-                // store cluster into subscription map
-                entry.cluster = cluster;
-              }
-            }
-          });
-          return {
-            data: {
-              items: createResponseForFetchClusters(subscriptionMap, canEdit, canDelete),
-              page: subscriptions.data.page,
-              total: subscriptions.data.total || 0,
-              queryParams: { ...clusterRequestParams },
-            },
-          };
-        });
-      } catch (e) {
-        return {
-          // When clusters service is down, return AMS data only
-          data: {
-            items: createResponseForFetchClusters(subscriptionMap, canEdit, canDelete),
-            page: subscriptions.data.page,
-            total: subscriptions.data.total || 0,
-            queryParams: { ...clusterRequestParams },
-            meta: {
-              clustersServiceError: e,
-            },
-          },
-        };
-      }
+  if (!items) {
+    return {
+      data: {
+        items: [] as ClusterWithPermissions[],
+        page: 0,
+        total: 0,
+        queryParams: { ...clusterRequestParams },
+      },
     };
+  }
 
-    const subscriptionIds: string[] = [];
-    if (aiMergeListsFeatureFlag) {
-      subscriptionMap.forEach(({ subscription }) => {
-        if (isAssistedInstallSubscription(subscription) && subscription.id) {
-          subscriptionIds.push(subscription.id);
-        }
+  // map subscription ID to subscription info
+  // Note: Map keeps order of insertions.
+  // Will display them in order returned by getSubscriptions().
+  const subscriptionMap = new Map<string, MapEntry>();
+  items.forEach((item) => {
+    if (item.cluster_id) {
+      subscriptionMap.set(item.cluster_id, {
+        subscription: item,
       });
     }
+  });
 
-    let aiClusters = [] as AICluster[];
-    if (subscriptionIds.length > 0) {
-      assistedService
-        .getAIClustersBySubscription(subscriptionIds)
-        .then((res) => {
-          aiClusters = res.data;
-        })
-        .catch((error) => {
-          Sentry.captureException(error);
-        });
-    }
+  const subscriptionIds: string[] = [];
+  if (aiMergeListsFeatureFlag) {
+    subscriptionMap.forEach(({ subscription }) => {
+      if (isAssistedInstallSubscription(subscription) && subscription.id) {
+        subscriptionIds.push(subscription.id);
+      }
+    });
+  }
 
+  if (subscriptionIds.length > 0) {
+    const aiClusters = await assistedService
+      .getAIClustersBySubscription(subscriptionIds)
+      .then((res) => res.data)
+      .catch((error) => {
+        Sentry.captureException(error);
+        return [];
+      });
     aiClusters.forEach((aiCluster) => {
       const entry = subscriptionMap.get(aiCluster.id);
       if (entry) {
         entry.aiCluster = aiCluster;
       }
     });
+  }
 
-    return enrichForClusterService();
+  // clusters-service only needed for managed clusters.
+  const managedSubscriptions = items.filter(
+    (s) => s.managed && s.status !== subscriptionStatuses.DEPROVISIONED,
+  );
+
+  // fetch managed clusters by subscription
+  let clustersServiceError: unknown;
+  if (managedSubscriptions.length > 0) {
+    const clustersQuery = buildSearchQuery(managedSubscriptions, 'cluster_id');
+    try {
+      await clusterService.getClusters(clustersQuery).then((response) => {
+        const clusters = response?.data?.items;
+        clusters?.forEach((cluster) => {
+          if (cluster.id) {
+            const entry = subscriptionMap.get(cluster.id);
+            if (entry !== undefined) {
+              // store cluster into subscription map
+              entry.cluster = cluster;
+            }
+          }
+        });
+      });
+    } catch (e) {
+      clustersServiceError = e;
+    }
+  }
+  return {
+    data: {
+      items: createResponseForFetchClusters(subscriptionMap, canEdit, canDelete),
+      page: subscriptions.data.page,
+      total: subscriptions.data.total || 0,
+      queryParams: { ...clusterRequestParams },
+      ...(clustersServiceError ? { meta: { clustersServiceError } } : {}),
+    },
   };
-
-  await Promise.all(promises);
-  return handler();
 };
 
 const fetchClustersAction = (
@@ -425,10 +389,15 @@ const fetchClustersAction = (
 
 const fetchClusters =
   (params: Parameters<typeof fetchClustersAndPermissions>[0]): AppThunk =>
-  (dispatch, getState) =>
+  (dispatch, getState) => {
+    // Fetch tech preview if not already in state
+    if (!techPreviewStatusSelector(getState(), 'rosa', 'hcp')) {
+      dispatchTechPreviewStatus(dispatch, 'rosa', 'hcp');
+    }
     dispatch(
       fetchClustersAction(params, getState().features[ASSISTED_INSTALLER_MERGE_LISTS_FEATURE]),
     );
+  };
 
 const fetchSingleClusterAndPermissions = async (
   subscriptionID: string,
@@ -459,10 +428,16 @@ const fetchSingleClusterAndPermissions = async (
     buildPermissionsByActionObj,
     {} as Record<SelfAccessReview.action, boolean>,
   );
+  const kubeletConfigActions = actions.reduce(
+    buildPermissionsByActionObj,
+    {} as Record<SelfAccessReview.action, boolean>,
+  );
 
   const subscription = await accountsService.getSubscription(subscriptionID);
   subscription.data = normalizeSubscription(subscription.data);
   const isAROCluster = subscription?.data?.plan?.type === knownProducts.ARO;
+  const isROSACluster = ROSA_PRODUCTS.includes(subscription?.data?.plan?.type || '');
+  const isOSDCluster = OSD_PRODUCTS.includes(subscription?.data?.plan?.type || '');
 
   if (subscription.data.status !== subscriptionStatuses.DEPROVISIONED) {
     await authorizationsService
@@ -524,6 +499,18 @@ const fetchSingleClusterAndPermissions = async (
           machinePoolsActions[action] = response.data.allowed;
         });
     });
+
+    actions.map(async (action) => {
+      await authorizationsService
+        .selfAccessReview({
+          action,
+          resource_type: SelfAccessReview.resource_type.CLUSTER_KUBELET_CONFIG,
+          subscription_id: subscriptionID,
+        })
+        .then((response) => {
+          kubeletConfigActions[action] = response.data.allowed;
+        });
+    });
   }
 
   if (
@@ -562,12 +549,20 @@ const fetchSingleClusterAndPermissions = async (
     );
     cluster.data.limitedSupportReasons = limitedSupportReasons.data?.items || [];
 
+    if (isROSACluster || isOSDCluster) {
+      const inflightChecks = await clusterService.getInflightChecks(
+        subscription.data.cluster_id as string,
+      );
+      cluster.data.inflight_checks = inflightChecks.data?.items || [];
+    }
+
     cluster.data.canEdit = canEdit;
     cluster.data.idpActions = idpActions;
     cluster.data.canEditOCMRoles = canEditOCMRoles;
     cluster.data.canViewOCMRoles = canViewOCMRoles;
     cluster.data.canEditClusterAutoscaler = canEditClusterAutoscaler;
     cluster.data.machinePoolsActions = machinePoolsActions;
+    cluster.data.kubeletConfigActions = kubeletConfigActions;
     cluster.data.canDelete = !!canDeleteAccessReviewResponse?.data?.allowed;
 
     return cluster;
@@ -634,8 +629,45 @@ const resetCreatedClusterResponse = () => action(clustersConstants.RESET_CREATED
 const getClusterStatus = (clusterID: string) =>
   action(clustersConstants.GET_CLUSTER_STATUS, clusterService.getClusterStatus(clusterID));
 
-const getInstallableVersions = (isRosa: boolean) =>
-  action(clustersConstants.GET_CLUSTER_VERSIONS, clusterService.getInstallableVersions(isRosa));
+const getInflightChecks = (clusterID: string) =>
+  action(clustersConstants.GET_INFLIGHT_CHECKS, clusterService.getInflightChecks(clusterID));
+
+const rerunInflightChecks = (clusterID: string) =>
+  action(clustersConstants.RERUN_INFLIGHT_CHECKS, clusterService.rerunInflightChecks(clusterID));
+
+const fetchRerunInflightChecks = async (subnetIds: string[]): Promise<any> => {
+  const results = subnetIds.map((subnetId: string) =>
+    clusterService.getTriggeredInflightCheckState(subnetId),
+  );
+  // @ts-ignore  error due to using an older compiler
+  const response = await Promise.allSettled(results);
+  const items = response
+    .filter((res: { status: string }) => res.status !== 'rejected')
+    .map((item: { value: any }) => item?.value?.data);
+  return {
+    data: {
+      items,
+      page: 0,
+      total: 0,
+    },
+  };
+};
+
+const getRerunInflightChecks = (subnetIds: string[]) =>
+  action(clustersConstants.GET_RERUN_INFLIGHT_CHECKS, fetchRerunInflightChecks(subnetIds));
+
+const clearInflightChecks = () => action(clustersConstants.CLEAR_INFLIGHT_CHECKS);
+
+const clearInstallableVersions = () => action(clustersConstants.CLEAR_CLUSTER_VERSIONS_RESPONSE);
+
+const getInstallableVersions = (
+  isRosa: boolean,
+  isMarketplaceGcp: boolean,
+  isHCP: boolean = false,
+) => {
+  const versions = clusterService.getInstallableVersions(isRosa, isMarketplaceGcp, isHCP);
+  return action(clustersConstants.GET_CLUSTER_VERSIONS, versions);
+};
 
 type ClusterAction = ActionType<
   | typeof fetchClusterDetails
@@ -661,6 +693,11 @@ type ClusterAction = ActionType<
   | typeof clearClusterDetails
   | typeof resetCreatedClusterResponse
   | typeof getClusterStatus
+  | typeof getInflightChecks
+  | typeof rerunInflightChecks
+  | typeof clearInflightChecks
+  | typeof getRerunInflightChecks
+  | typeof clearInstallableVersions
   | typeof getInstallableVersions
 >;
 
@@ -679,6 +716,11 @@ const clustersActions = {
   archiveCluster,
   unarchiveCluster,
   getClusterStatus,
+  getInflightChecks,
+  rerunInflightChecks,
+  clearInflightChecks,
+  getRerunInflightChecks,
+  clearInstallableVersions,
   getInstallableVersions,
 };
 
@@ -704,7 +746,12 @@ export {
   clearClusterUnarchiveResponse,
   editClusterConsoleURL,
   getClusterStatus,
+  getInflightChecks,
+  rerunInflightChecks,
+  clearInflightChecks,
+  getRerunInflightChecks,
   upgradeTrialCluster,
   clearUpgradeTrialClusterResponse,
+  clearInstallableVersions,
   ClusterAction,
 };

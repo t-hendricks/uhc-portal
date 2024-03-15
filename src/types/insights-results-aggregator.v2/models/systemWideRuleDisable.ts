@@ -23,10 +23,6 @@ export type systemWideRuleDisable = {
    */
   rule?: string;
   /**
-   * Information about the operation status
-   */
-  status?: string;
-  /**
    * Timestamp when the rule justification has been changed (can be empty)
    */
   updated_at?: string;

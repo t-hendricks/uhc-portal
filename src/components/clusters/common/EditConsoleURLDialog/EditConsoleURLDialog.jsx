@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 
 import { Form, TextInput, FormGroup } from '@patternfly/react-core';
 
+import { FormGroupHelperText } from '~/components/common/FormGroupHelperText';
 import Modal from '../../../common/Modal/Modal';
 import modals from '../../../common/Modal/modals';
 import ErrorBox from '../../../common/ErrorBox';
@@ -48,7 +49,7 @@ class EditConsoleURLDialog extends Component {
     const { currentValue } = this.state;
 
     const cancelEdit = () => {
-      this.setState({ currentValue: null });
+      this.setState({ currentValue: '' });
       resetResponse();
       closeModal();
     };
@@ -91,21 +92,18 @@ class EditConsoleURLDialog extends Component {
               e.preventDefault();
             }}
           >
-            <FormGroup
-              label="Web console URL"
-              helperTextInvalid={validationMessage}
-              validated={(beenSet ? !validationMessage : true) ? 'default' : 'error'}
-              fieldId="edit-console-url-input"
-            >
+            <FormGroup label="Web console URL" fieldId="edit-console-url-input">
               <TextInput
                 type="text"
                 validated={(beenSet ? !validationMessage : true) ? 'default' : 'error'}
                 value={currentValue}
                 placeholder="https://console-openshift-console.apps.mycluster.example.com/"
-                onChange={(newValue) => this.setValue(newValue)}
+                onChange={(_event, newValue) => this.setValue(newValue)}
                 aria-label="Web console URL"
                 id="edit-console-url-input"
               />
+
+              <FormGroupHelperText touched={beenSet} error={validationMessage} />
             </FormGroup>
           </Form>
         </>

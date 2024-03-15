@@ -4,10 +4,15 @@ import get from 'lodash/get';
 
 import { addNotification } from '@redhat-cloud-services/frontend-components-notifications/redux';
 import { featureGateSelector } from '~/hooks/useFeatureGate';
-import { clearListVpcs } from '~/components/clusters/CreateOSDPage/CreateOSDWizard/ccsInquiriesActions';
+import { clearListVpcs } from '~/redux/actions/ccsInquiriesActions';
 import { onClearFiltersAndFlags } from '~/redux/actions/viewOptionsActions';
 
 import { clusterAutoscalerActions } from '~/redux/actions/clusterAutoscalerActions';
+import {
+  HCP_USE_NODE_UPGRADE_POLICIES,
+  ASSISTED_INSTALLER_FEATURE,
+  NETWORK_VALIDATOR_ONDEMAND_FEATURE,
+} from '~/redux/constants/featureConstants';
 import ClusterDetails from './ClusterDetails';
 import { fetchClusterDetails, invalidateClusters } from '../../../redux/actions/clustersActions';
 
@@ -23,7 +28,7 @@ import { modalActions } from '../../common/Modal/ModalActions';
 import { getOnDemandMetrics } from './components/Monitoring/MonitoringActions';
 import { getAddOns, getClusterAddOns } from './components/AddOns/AddOnsActions';
 import { getGrants } from './components/AccessControl/NetworkSelfServiceSection/NetworkSelfServiceActions';
-import { clusterLogActions, getClusterHistory } from './components/ClusterLogs/clusterLogActions';
+import { clusterLogActions } from './components/ClusterLogs/clusterLogActions';
 import { getClusterRouters } from './components/Networking/NetworkingActions';
 import { getSchedules } from '../common/Upgrades/clusterUpgradeActions';
 import { viewConstants } from '../../../redux/constants';
@@ -35,10 +40,8 @@ import {
 import canSubscribeOCPSelector from '../common/EditSubscriptionSettingsDialog/CanSubscribeOCPSelector';
 import { canTransferClusterOwnershipSelector } from '../common/TransferClusterOwnershipDialog/TransferClusterOwnershipDialogSelectors';
 import { issuesAndWarningsSelector } from './components/Monitoring/MonitoringSelectors';
-import issuesCountSelector from './components/Insights/InsightsSelectors';
-import canHibernateClusterSelector from '../common/HibernateClusterModal/HibernateClusterModalSelector';
+import { userCanHibernateClustersSelector } from '../common/HibernateClusterModal/HibernateClusterModalSelectors';
 import { toggleSubscriptionReleased } from '../common/TransferClusterOwnershipDialog/subscriptionReleasedActions';
-import { ASSISTED_INSTALLER_FEATURE } from '../../../redux/constants/featureConstants';
 import supportActions from './components/Support/SupportActions';
 import { getUserAccess } from '../../../redux/actions/costActions';
 
@@ -52,6 +55,7 @@ const mapStateToProps = (state, { location }) => {
   const { clusterIdentityProviders } = state.identityProviders;
   const { organization } = state.userProfile;
   const { insightsData } = state.insightsData;
+  const { logs } = state.clusterLogs;
   const {
     notificationContacts = {
       pending: false,
@@ -60,8 +64,7 @@ const mapStateToProps = (state, { location }) => {
       pending: false,
     },
   } = state.clusterSupport;
-  const clusterId = get(details, 'cluster.external_id');
-  const insightsIssuesCount = issuesCountSelector(state, clusterId);
+  const externalId = get(details, 'cluster.external_id');
 
   return {
     cloudProviders,
@@ -69,16 +72,15 @@ const mapStateToProps = (state, { location }) => {
     addOns,
     clusterIdentityProviders,
     organization,
-    displayClusterLogs: !!clusterId,
+    displayClusterLogs: !!externalId || !!details?.cluster?.id,
     clusterLogsViewOptions: state.viewOptions[viewConstants.CLUSTER_LOGS_VIEW],
     insightsData,
+    logs,
     canSubscribeOCP: canSubscribeOCPSelector(state),
     canTransferClusterOwnership: canTransferClusterOwnershipSelector(state),
-    canHibernateCluster: canHibernateClusterSelector(state),
+    canHibernateCluster: userCanHibernateClustersSelector(state),
     anyModalOpen: !!state.modal.modalName,
     hasIssues: issuesAndWarningsSelector(state).issues.totalCount > 0,
-    // check whether there are Critical (4) or Important (3) issues
-    hasIssuesInsights: !!(insightsIssuesCount[4] || insightsIssuesCount[3]),
     initTabOpen: location.hash.replace('#', ''),
     notificationContacts,
     supportCases,
@@ -86,6 +88,8 @@ const mapStateToProps = (state, { location }) => {
     userAccess: state.cost.userAccess,
     gotRouters: get(clusterRouters, 'getRouters.routers.length', 0) > 0,
     upgradeGates: getUpgradeGates(state),
+    useNodeUpgradePolicies: featureGateSelector(state, HCP_USE_NODE_UPGRADE_POLICIES),
+    hasNetworkOndemand: featureGateSelector(state, NETWORK_VALIDATOR_ONDEMAND_FEATURE),
   };
 };
 
@@ -114,7 +118,7 @@ const mapDispatchToProps = (dispatch) =>
       clearGetMachinePoolsResponse,
       clearGetClusterAutoscalerResponse: clusterAutoscalerActions.clearClusterAutoscalerResponse,
       clearListVpcs,
-      getClusterHistory,
+      getClusterHistory: clusterLogActions.getClusterHistory,
       toggleSubscriptionReleased,
       getNotificationContacts: supportActions.getNotificationContacts,
       getSupportCases: supportActions.getSupportCases,

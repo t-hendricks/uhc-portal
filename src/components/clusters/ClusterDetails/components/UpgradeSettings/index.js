@@ -14,10 +14,13 @@ import {
   clearPostedUpgradeScheduleResponse,
   clearDeleteScheduleResponse,
 } from '../../../common/Upgrades/clusterUpgradeActions';
-import { editCluster, fetchClusterDetails } from '../../../../../redux/actions/clustersActions';
-import { isHibernating } from '../../../common/clusterStates';
+import {
+  editCluster,
+  clearClusterResponse,
+  fetchClusterDetails,
+} from '../../../../../redux/actions/clustersActions';
+import { isHibernating, isHypershiftCluster } from '../../../common/clusterStates';
 import { openModal } from '../../../../common/Modal/ModalActions';
-import { isHypershiftCluster } from '../../clusterDetailsHelper';
 
 const reduxFormConfig = {
   form: 'ClusterUpgradeSettings',
@@ -39,7 +42,7 @@ const mapStateToProps = (state) => {
   return {
     cluster,
     isAROCluster,
-    clusterHibernating: isHibernating(cluster.state),
+    clusterHibernating: isHibernating(cluster),
     isReadOnly: cluster?.status?.configuration_mode === 'read_only',
     isAutomatic: valueSelector(state, 'upgrade_policy') === 'automatic',
     schedules: state.clusterUpgrades.schedules,
@@ -60,6 +63,7 @@ const mapDispatchToProps = (dispatch) => ({
   clearResponses: () => {
     dispatch(clearPostedUpgradeScheduleResponse());
     dispatch(clearDeleteScheduleResponse());
+    dispatch(clearClusterResponse());
   },
   openModal: (modal, data) => dispatch(openModal(modal, data)),
   getSchedules: (clusterID, isHypershift) => dispatch(getSchedules(clusterID, isHypershift)),

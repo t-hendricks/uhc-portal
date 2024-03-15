@@ -1,9 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Tabs, Tab, TabTitleText, TabTitleIcon, PageSection } from '@patternfly/react-core';
-
+import { useNavigate } from 'react-router-dom-v5-compat';
 import { Spinner } from '@redhat-cloud-services/frontend-components/Spinner';
-import { ServerIcon, CloudIcon, LaptopIcon } from '@patternfly/react-icons';
+import { ServerIcon } from '@patternfly/react-icons/dist/esm/icons/server-icon';
+import { CloudIcon } from '@patternfly/react-icons/dist/esm/icons/cloud-icon';
+import { LaptopIcon } from '@patternfly/react-icons/dist/esm/icons/laptop-icon';
 import { isRestrictedEnv } from '~/restrictedEnv';
 
 import './CreateClusterPage.scss';
@@ -28,126 +30,122 @@ const tabIndexToHash = Object.entries(hashToTabIndex).reduce((acc, tabIndex) => 
   return acc;
 }, {});
 
-class CreateCluster extends React.Component {
-  componentDidMount() {
-    // Try to get quota or organization when the component is first mounted.
-    const { getOrganizationAndQuota, organization, getAuthToken } = this.props;
+const CreateCluster = ({
+  getOrganizationAndQuota,
+  organization,
+  getAuthToken,
+  hasOSDQuota,
+  hasOSDTrialQuota,
+  rosaCreationWizardFeature,
+  token,
+  assistedInstallerFeature,
+  activeTab,
+}) => {
+  const navigate = useNavigate();
 
+  React.useEffect(() => {
     if (shouldRefetchQuota(organization)) {
       getOrganizationAndQuota();
     }
     getAuthToken();
-  }
+    // only run once on mount
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
-  handleTabClick = (event, tabIndex) => {
-    const { history } = this.props;
+  const handleTabClick = (event, tabIndex) => {
     const tabHash = tabIndexToHash[tabIndex];
-    history.push(`/create/${tabHash}`);
+    navigate(`/create/${tabHash}`);
   };
 
-  render() {
-    const {
-      hasOSDQuota,
-      hasOSDTrialQuota,
-      rosaCreationWizardFeature,
-      organization,
-      token,
-      assistedInstallerFeature,
-      osdTrialFeature,
-      activeTab,
-    } = this.props;
+  const activeTabIndex = hashToTabIndex[activeTab] || 0;
 
-    const activeTabIndex = hashToTabIndex[activeTab] || 0;
+  const title = (
+    <PageTitle
+      title="Select an OpenShift cluster type to create"
+      breadcrumbs={<Breadcrumbs path={[{ label: 'Clusters' }, { label: 'Cluster Type' }]} />}
+    />
+  );
 
-    const title = (
-      <PageTitle
-        title="Select an OpenShift cluster type to create"
-        breadcrumbs={<Breadcrumbs path={[{ label: 'Clusters' }, { label: 'Cluster Type' }]} />}
-      />
-    );
-
-    const tabTitle = (tabKey) => {
-      switch (tabKey) {
-        case 0:
-          return (
-            <>
-              <TabTitleIcon>
-                <CloudIcon />
-              </TabTitleIcon>
-              <TabTitleText>Cloud</TabTitleText>
-            </>
-          );
-        case 1:
-          return (
-            <>
-              <TabTitleIcon>
-                <ServerIcon />
-              </TabTitleIcon>
-              <TabTitleText>Datacenter</TabTitleText>
-            </>
-          );
-        case 2:
-          return (
-            <>
-              <TabTitleIcon>
-                <LaptopIcon />
-              </TabTitleIcon>
-              <TabTitleText>Local</TabTitleText>
-            </>
-          );
-        default:
-          return null;
-      }
-    };
-
-    const quotaRequestComplete = organization.fulfilled || organization.error;
-
-    return (
-      <AppPage title="Create an OpenShift cluster | Red Hat OpenShift Cluster Manager">
-        {quotaRequestComplete ? (
+  const tabTitle = (tabKey) => {
+    switch (tabKey) {
+      case 0:
+        return (
           <>
-            {title}
-            <PageSection variant="light" className="cluster-create-page">
-              <Tabs isFilled activeKey={activeTabIndex} onSelect={this.handleTabClick}>
-                {[
-                  <Tab eventKey={0} title={tabTitle(0)}>
-                    <CloudTab
-                      hasOSDQuota={hasOSDQuota}
-                      rosaCreationWizardFeature={rosaCreationWizardFeature}
-                      trialEnabled={hasOSDTrialQuota && osdTrialFeature}
-                    />
-                  </Tab>,
-                  ...(isRestrictedEnv()
-                    ? []
-                    : [
-                        <Tab eventKey={1} title={tabTitle(1)}>
-                          <DatacenterTab assistedInstallerFeature={assistedInstallerFeature} />
-                        </Tab>,
-                        <Tab eventKey={2} title={tabTitle(2)}>
-                          <LocalTab token={token} />
-                        </Tab>,
-                      ]),
-                ]}
-              </Tabs>
-            </PageSection>
+            <TabTitleIcon>
+              <CloudIcon />
+            </TabTitleIcon>
+            <TabTitleText>Cloud</TabTitleText>
           </>
-        ) : (
+        );
+      case 1:
+        return (
           <>
-            {title}
-            <PageSection variant="light">
-              <Spinner centered />
-            </PageSection>
+            <TabTitleIcon>
+              <ServerIcon />
+            </TabTitleIcon>
+            <TabTitleText>Datacenter</TabTitleText>
           </>
-        )}
-      </AppPage>
-    );
-  }
-}
+        );
+      case 2:
+        return (
+          <>
+            <TabTitleIcon>
+              <LaptopIcon />
+            </TabTitleIcon>
+            <TabTitleText>Local</TabTitleText>
+          </>
+        );
+      default:
+        return null;
+    }
+  };
+
+  const quotaRequestComplete = organization.fulfilled || organization.error;
+
+  return (
+    <AppPage title="Create an OpenShift cluster | Red Hat OpenShift Cluster Manager">
+      {quotaRequestComplete ? (
+        <>
+          {title}
+          <PageSection variant="light" className="cluster-create-page">
+            <Tabs isFilled activeKey={activeTabIndex} onSelect={handleTabClick}>
+              {[
+                <Tab eventKey={0} title={tabTitle(0)}>
+                  <CloudTab
+                    hasOSDQuota={hasOSDQuota}
+                    rosaCreationWizardFeature={rosaCreationWizardFeature}
+                    trialEnabled={hasOSDTrialQuota}
+                  />
+                </Tab>,
+                ...(isRestrictedEnv()
+                  ? []
+                  : [
+                      <Tab eventKey={1} title={tabTitle(1)}>
+                        <DatacenterTab assistedInstallerFeature={assistedInstallerFeature} />
+                      </Tab>,
+                      <Tab eventKey={2} title={tabTitle(2)}>
+                        <LocalTab token={token} />
+                      </Tab>,
+                    ]),
+              ]}
+            </Tabs>
+          </PageSection>
+        </>
+      ) : (
+        <>
+          {title}
+          <PageSection variant="light">
+            <Spinner centered />
+          </PageSection>
+        </>
+      )}
+    </AppPage>
+  );
+};
 
 CreateCluster.propTypes = {
   hasOSDQuota: PropTypes.bool.isRequired,
   hasOSDTrialQuota: PropTypes.bool.isRequired,
-  osdTrialFeature: PropTypes.bool.isRequired,
   rosaCreationWizardFeature: PropTypes.bool,
   organization: PropTypes.shape({
     fulfilled: PropTypes.bool,
@@ -157,9 +155,6 @@ CreateCluster.propTypes = {
   token: PropTypes.object.isRequired,
   getAuthToken: PropTypes.func.isRequired,
   assistedInstallerFeature: PropTypes.bool,
-  history: PropTypes.shape({
-    push: PropTypes.func.isRequired,
-  }).isRequired,
   activeTab: PropTypes.string,
 };
 

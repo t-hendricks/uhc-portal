@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom';
-import { CodeIcon } from '@patternfly/react-icons';
+import { Link } from 'react-router-dom-v5-compat';
+import { CodeIcon } from '@patternfly/react-icons/dist/esm/icons/code-icon';
 import './DeveloperPreviewSection.scss';
 
 const DeveloperPreviewSection = ({
@@ -9,7 +9,7 @@ const DeveloperPreviewSection = ({
   devPreviewLink = '/install/pre-release',
 }) => (
   <>
-    <span className="pf-c-label pf-m-compact dev-preview-label">
+    <span className="pf-v5-c-label pf-m-compact dev-preview-label">
       <CodeIcon /> Developer Preview
     </span>{' '}
     <Link to={devPreviewLink}>{isDevPreview ? 'About' : 'Download'} pre-release builds</Link>

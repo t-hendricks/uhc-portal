@@ -1,8 +1,7 @@
 import get from 'lodash/get';
 
+import { billingModels, normalizedProducts } from '~/common/subscriptionTypes';
 import { availableNodesFromQuota } from '../../../common/quotaSelectors';
-import { normalizedProducts, billingModels } from '../../../../../common/subscriptionTypes';
-import { isHypershiftCluster } from '../../clusterDetailsHelper';
 
 const hasMachinePoolsQuotaSelector = (state) => {
   const { organization } = state.userProfile;
@@ -13,7 +12,7 @@ const hasMachinePoolsQuotaSelector = (state) => {
 
   const { cluster } = state.clusters.details;
   const cloudProviderID = cluster.cloud_provider?.id;
-  const billingModel = get(cluster, 'billing_model', billingModels.STANDARD);
+  const billingModel = get(cluster, 'subscription.cluster_billing_model', billingModels.STANDARD);
 
   const hasNodesQuotaForType = (machineType) => {
     const resourceName = machineType.generic_name;
@@ -45,17 +44,13 @@ const hasOrgLevelAutoscaleCapability = (state) => {
   return !!(autoScaleClusters && autoScaleClusters.value === 'true');
 };
 
-const hasClusterLevelAutoscaleCapability = (state) => {
-  const cluster = get(state, 'clusters.details.cluster');
-  if (!cluster) {
-    return false;
-  }
-  const subCapabilities = get(cluster, 'subscription.capabilities', []);
-  const autoScaleClusters = subCapabilities.find(
-    (capability) => capability.name === 'capability.cluster.autoscale_clusters',
+const hasOrgLevelBypassPIDsLimitCapability = (state) => {
+  const capabilities = state?.userProfile?.organization?.details?.capabilities ?? [];
+  return capabilities.some(
+    (capability) =>
+      capability.name === 'capability.organization.bypass_pids_limits' &&
+      capability.value === 'true',
   );
-
-  return !!(autoScaleClusters && autoScaleClusters.value === 'true');
 };
 
 // on the OSD creation page don't check cluster level capability for autoscaling
@@ -63,26 +58,9 @@ const canAutoScaleOnCreateSelector = (state, product) =>
   product === normalizedProducts.ROSA ||
   (product === normalizedProducts.OSD && hasOrgLevelAutoscaleCapability(state));
 
-const canAutoScaleSelector = (state, product) =>
-  product === normalizedProducts.ROSA ||
-  (product === normalizedProducts.OSD && hasClusterLevelAutoscaleCapability(state)) ||
-  (product === normalizedProducts.OSD && hasOrgLevelAutoscaleCapability(state));
-
-const canUseSpotInstances = (state, product) => {
-  const { cluster } = state.clusters.details;
-  const cloudProviderID = cluster.cloud_provider?.id;
-  return (
-    cloudProviderID === 'aws' &&
-    !isHypershiftCluster(cluster) &&
-    (product === normalizedProducts.ROSA ||
-      (product === normalizedProducts.OSD && state.clusters.details?.cluster?.ccs?.enabled))
-  );
-};
-
 export {
   hasMachinePoolsQuotaSelector,
   hasOrgLevelAutoscaleCapability,
   canAutoScaleOnCreateSelector,
-  canAutoScaleSelector,
-  canUseSpotInstances,
+  hasOrgLevelBypassPIDsLimitCapability,
 };

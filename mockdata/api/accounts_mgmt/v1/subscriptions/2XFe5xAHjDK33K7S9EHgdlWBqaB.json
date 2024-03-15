@@ -1,0 +1,155 @@
+{
+  "billing_expiration_date": "0001-01-01T00:00:00Z",
+  "cloud_provider_id": "aws",
+  "cluster_billing_model": "standard",
+  "cluster_id": "2739qkd9lr9imu58nmh02pep14jfkmgi",
+  "console_url": "https://console-openshift-console.apps.osd-updating-cluster.zp51.p1.openshiftapps.com",
+  "created_at": "2023-10-25T10:17:55.423097Z",
+  "creator": {
+    "href": "/api/accounts_mgmt/v1/accounts/2UhDBavaw6xIb5mT9vuOn8V21jd",
+    "id": "2UhDBavaw6xIb5mT9vuOn8V21jd",
+    "kind": "Account"
+  },
+  "display_name": "osd-updating-cluster",
+  "eval_expiration_date": "0001-01-01T00:00:00Z",
+  "external_cluster_id": "a8797990-3f7b-43c0-9d9a-08b8bca3c795",
+  "href": "/api/accounts_mgmt/v1/subscriptions/2XFe5xAHjDK33K7S9EHgdlWBqaB",
+  "id": "2XFe5xAHjDK33K7S9EHgdlWBqaB",
+  "kind": "Subscription",
+  "last_reconcile_date": "0001-01-01T00:00:00Z",
+  "last_released_at": "0001-01-01T00:00:00Z",
+  "last_telemetry_date": "2023-10-25T11:11:54.168085Z",
+  "managed": true,
+  "metrics": [
+    {
+      "arch": "amd64",
+      "cloud_provider": "aws",
+      "cluster_type": "",
+      "compute_nodes_cpu": {
+        "total": {
+          "unit": "",
+          "value": 28
+        },
+        "updated_timestamp": "0001-01-01T00:00:00Z",
+        "used": {
+          "unit": "",
+          "value": 0
+        }
+      },
+      "compute_nodes_memory": {
+        "total": {
+          "unit": "B",
+          "value": 148392951808
+        },
+        "updated_timestamp": "0001-01-01T00:00:00Z",
+        "used": {
+          "unit": "B",
+          "value": 0
+        }
+      },
+      "compute_nodes_sockets": {
+        "total": {
+          "unit": "",
+          "value": 0
+        },
+        "updated_timestamp": "0001-01-01T00:00:00Z",
+        "used": {
+          "unit": "",
+          "value": 0
+        }
+      },
+      "console_url": "https://console-openshift-console.apps.osd-updating-cluster.zp51.p1.openshiftapps.com",
+      "cpu": {
+        "total": {
+          "unit": "",
+          "value": 52
+        },
+        "updated_timestamp": "2023-10-25T13:05:07.017Z",
+        "used": {
+          "unit": "",
+          "value": 6.943548031746012
+        }
+      },
+      "critical_alerts_firing": 0,
+      "health_state": "healthy",
+      "memory": {
+        "total": {
+          "unit": "B",
+          "value": 246813097984
+        },
+        "updated_timestamp": "2023-10-25T13:05:11.584Z",
+        "used": {
+          "unit": "B",
+          "value": 50748383232
+        }
+      },
+      "nodes": {
+        "compute": 5,
+        "infra": 2,
+        "master": 3,
+        "total": 10
+      },
+      "nodes_arch": [
+        {
+          "arch": "amd64",
+          "compute": 5,
+          "infra": 2,
+          "master": 3,
+          "total": 10
+        }
+      ],
+      "non_virt_nodes": 0,
+      "openshift_version": "4.13.14",
+      "operating_system": "",
+      "operators_condition_failing": 0,
+      "query_timestamp": "2023-10-25T13:05:02Z",
+      "region": "us-east-1",
+      "sockets": {
+        "total": {
+          "unit": "",
+          "value": 0
+        },
+        "updated_timestamp": "0001-01-01T00:00:00Z",
+        "used": {
+          "unit": "",
+          "value": 0
+        }
+      },
+      "state": "ready",
+      "state_description": "",
+      "storage": {
+        "total": {
+          "unit": "B",
+          "value": 0
+        },
+        "updated_timestamp": "0001-01-01T00:00:00Z",
+        "used": {
+          "unit": "B",
+          "value": 0
+        }
+      },
+      "subscription_cpu_total": 10,
+      "subscription_obligation_exists": 3,
+      "subscription_socket_total": 5,
+      "upgrade": {
+        "available": true,
+        "state": "running",
+        "updated_timestamp": "2023-10-25T13:05:12.416Z",
+        "version": "4.13.17"
+      }
+    }
+  ],
+  "organization_id": "1wuANBLgbvRSXRXN10OuSFE2gzB",
+  "plan": {
+    "href": "/api/accounts_mgmt/v1/plans/OSD",
+    "id": "OSD",
+    "kind": "Plan",
+    "type": "OSD"
+  },
+  "provenance": "Provisioning",
+  "region_id": "us-east-1",
+  "status": "Active",
+  "support_level": "Premium",
+  "trial_end_date": "0001-01-01T00:00:00Z",
+  "updated_at": "2023-10-25T11:11:54.17015Z"
+}

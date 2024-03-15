@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 
 import { Form, TextInput, FormGroup, Radio } from '@patternfly/react-core';
 
+import { FormGroupHelperText } from '~/components/common/FormGroupHelperText';
 import Modal from '../../../../../../common/Modal/Modal';
 import ErrorBox from '../../../../../../common/ErrorBox';
 import PopoverHint from '../../../../../../common/PopoverHint';
@@ -72,7 +73,7 @@ class AddGrantModal extends Component {
         key={role.id}
         isChecked={selectedRole === role.id}
         name={role.id}
-        onChange={this.setRoleValue}
+        onChange={(event, _) => this.setRoleValue(_, event)}
         label={
           <>
             {role.displayName}
@@ -106,8 +107,6 @@ class AddGrantModal extends Component {
               }}
             >
               <FormGroup
-                helperTextInvalid={validationMessage}
-                validated={(arnTouched ? !validationMessage : true) ? 'default' : 'error'}
                 label="AWS IAM ARN"
                 isRequired
                 fieldId="aws-iam-arn"
@@ -121,7 +120,7 @@ class AddGrantModal extends Component {
                           target="_blank"
                           rel="noreferrer noopener"
                         >
-                          Check the AWS documention.
+                          Check the AWS documentation.
                         </a>
                       </div>
                     }
@@ -136,9 +135,11 @@ class AddGrantModal extends Component {
                   type="text"
                   validated={(arnTouched ? !validationMessage : true) ? 'default' : 'error'}
                   placeholder="arn:aws:iam::123456789012:user/name"
-                  onChange={this.setArnValue}
+                  onChange={(_event, arnValue) => this.setArnValue(arnValue)}
                   aria-label="AWS IAM ARN"
                 />
+
+                <FormGroupHelperText touched={arnTouched} error={validationMessage} />
               </FormGroup>
               <h3 id="grant-role-select">Role</h3>
               {roles.map((role) => generateRadio(role))}

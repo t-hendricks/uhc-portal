@@ -10,6 +10,11 @@ export enum FieldId {
   BillingModel = 'billing_model',
   AcknowledgePrereq = 'acknowledge_prerequisites',
   CidrDefaultValuesEnabled = 'cidr_default_values_enabled',
+  CidrDefaultValuesToggle = 'cidr_default_values_toggle',
+  NetworkMachineCidr = 'network_machine_cidr',
+  NetworkServiceCidr = 'network_service_cidr',
+  NetworkPodCidr = 'network_pod_cidr',
+  NetworkHostPrefix = 'network_host_prefix',
   UpgradePolicy = 'upgrade_policy',
   AutomaticUpgradeSchedule = 'automatic_upgrade_schedule',
   NodeDrainGracePeriod = 'node_drain_grace_period',
@@ -29,6 +34,28 @@ export enum FieldId {
   DefaultRouterExcludedNamespacesFlag = 'defaultRouterExcludedNamespacesFlag',
   IsDefaultRouterNamespaceOwnershipPolicyStrict = 'isDefaultRouterNamespaceOwnershipPolicyStrict',
   IsDefaultRouterWildcardPolicyAllowed = 'isDefaultRouterWildcardPolicyAllowed',
+  SecurityGroupIds = 'securityGroupIds',
+  ComputeSubnet = 'compute_subnet',
+  ControlPlaneSubnet = 'control_plane_subnet',
+  MachinePoolsSubnets = 'machinePoolsSubnets', // OSD AWS / ROSA classic
+  Region = 'region',
+  VpcName = 'vpc_name', // OSD GCP (shared VPC)
+  SelectedVpc = 'selected_vpc', // OSD AWS / ROSA classic
+  ClusterName = 'name',
+  ClusterVersion = 'cluster_version',
+  ConfigureProxy = 'configure_proxy',
+  UsePrivateLink = 'use_privatelink',
+  InstallerRoleArn = 'installer_role_arn',
+  InstallToVpc = 'install_to_vpc',
+  GcpServiceAccount = 'gcp_service_account',
+  AccountId = 'account_id',
+  AccessKeyId = 'access_key_id',
+  SecretAccessKey = 'secret_access_key',
+  SecurityGroups = 'securityGroups',
+  HttpProxyUrl = 'http_proxy_url',
+  HttpsProxyUrl = 'https_proxy_url',
+  AdditionalTrustBundle = 'additional_trust_bundle',
+  NoProxyDomains = 'no_proxy_domains',
 }
 
 export const initialValues: FormikValues = {

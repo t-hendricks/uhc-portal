@@ -1,6 +1,5 @@
 import { v4 } from 'uuid';
 import { getAuthConfig } from '../../pageobjects/authConfig';
-import Login from '../../pageobjects/login.page';
 import ClusterListPage from '../../pageobjects/ClusterList.page';
 import ClusterDetailsPage from '../../pageobjects/ClusterDetails.page';
 import RegisterClusterPage from '../../pageobjects/RegisterCluster.page';
@@ -10,16 +9,6 @@ describe('OCM Roles And Access', { tags: ['ci'] }, () => {
   const clusterID = v4();
   const displayName = `cypress-${clusterID}`;
   const { username } = getAuthConfig();
-
-  before(() => {
-    cy.visit('/');
-    Login.isLoginPageUrl();
-    Login.login();
-
-    ClusterListPage.isClusterListUrl();
-    ClusterListPage.waitForDataReady();
-    cy.getByTestId('create_cluster_btn').should('be.visible');
-  });
 
   it('successfully registers a new cluster and redirects to its details page', () => {
     ClusterListPage.registerCluster().should('be.visible').click();
@@ -57,12 +46,11 @@ describe('OCM Roles And Access', { tags: ['ci'] }, () => {
 
   it('successfully displays the newly added user', () => {
     OCMRolesAndAccessPage.usernameCell().should('have.text', username);
-    OCMRolesAndAccessPage.OCMRolesAndAccessTableActionButton().should('exist');
   });
 
   it('successfully deletes the user', () => {
-    OCMRolesAndAccessPage.OCMRolesAndAccessTableActionButton().click();
-    OCMRolesAndAccessPage.OCMRolesAndAccessTableDeleteButton().click();
+    OCMRolesAndAccessPage.OCMRolesAndAccessTableActionButton().focus().click();
+    OCMRolesAndAccessPage.OCMRolesAndAccessTableDeleteButton().focus().click();
     OCMRolesAndAccessPage.usernameCell().should('not.exist');
   });
 

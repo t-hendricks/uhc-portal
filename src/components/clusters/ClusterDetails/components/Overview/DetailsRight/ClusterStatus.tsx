@@ -1,11 +1,16 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 
 import { Flex } from '@patternfly/react-core';
 
-import { Cluster, NodePool } from '~/types/clusters_mgmt.v1';
 import ClusterStateIcon from '~/components/clusters/common/ClusterStateIcon/ClusterStateIcon';
-import clusterStates, { getStateDescription } from '~/components/clusters/common/clusterStates';
-import { isHypershiftCluster } from '~/components/clusters/ClusterDetails/clusterDetailsHelper';
+import clusterStates, {
+  ClusterStateAndDescription,
+  getClusterStateAndDescription,
+  getStateDescription,
+  isHypershiftCluster,
+} from '~/components/clusters/common/clusterStates';
+import { NodePool } from '~/types/clusters_mgmt.v1';
+import { ClusterFromSubscription } from '~/types/types';
 
 const numberReadyNodePools = (nodePools: NodePool[]) =>
   nodePools?.filter((pool) => {
@@ -27,29 +32,28 @@ const numberReadyNodePools = (nodePools: NodePool[]) =>
     return pool.replicas === current;
   }).length || 0;
 
-type ClusterWithStateDescription = Omit<Cluster, 'state'> & {
-  state: { state: string; description: string };
-};
-
 interface ClusterStatusProps {
-  cluster: ClusterWithStateDescription;
+  cluster: ClusterFromSubscription;
   limitedSupport: boolean;
   machinePools?: NodePool[];
 }
 
 export const ClusterStatus = ({ cluster, limitedSupport, machinePools }: ClusterStatusProps) => {
-  const isHypershift = isHypershiftCluster(cluster);
-  const {
-    state: { state: stateName, description: stateDescription },
-  } = cluster;
+  const [isHypershift, setIsHypershift] = useState<boolean>();
+  const [clusterState, setClusterState] = useState<ClusterStateAndDescription | undefined>();
+
+  useEffect(() => {
+    setIsHypershift(isHypershiftCluster(cluster));
+    setClusterState(getClusterStateAndDescription(cluster));
+  }, [cluster]);
 
   const machinePoolsState = () => {
-    if (stateName === clusterStates.UNINSTALLING) {
+    if (clusterState?.state === clusterStates.UNINSTALLING) {
       return clusterStates.UNINSTALLING;
     }
 
     if (machinePools && numberReadyNodePools(machinePools) === 0 && machinePools.length === 0) {
-      switch (stateName) {
+      switch (clusterState?.state) {
         case clusterStates.WAITING:
           return clusterStates.WAITING;
         case clusterStates.INSTALLING:
@@ -65,7 +69,7 @@ export const ClusterStatus = ({ cluster, limitedSupport, machinePools }: Cluster
   };
 
   const clusterWideStateIcon = (
-    <ClusterStateIcon clusterState={stateName} limitedSupport={limitedSupport} animated />
+    <ClusterStateIcon clusterState={clusterState?.state} limitedSupport={limitedSupport} animated />
   );
 
   if (isHypershift) {
@@ -76,9 +80,9 @@ export const ClusterStatus = ({ cluster, limitedSupport, machinePools }: Cluster
           spaceItems={{ default: 'spaceItemsXs' }}
           data-testid="control-plane-status"
         >
-          <span className="pf-u-mr-sm">Control plane:</span>
+          <span className="pf-v5-u-mr-sm">Control plane:</span>
           {clusterWideStateIcon}
-          <div>{stateDescription}</div>
+          <div>{clusterState?.description}</div>
         </Flex>
 
         {machinePools ? (
@@ -87,7 +91,7 @@ export const ClusterStatus = ({ cluster, limitedSupport, machinePools }: Cluster
             spaceItems={{ default: 'spaceItemsXs' }}
             data-testid="machine-pools-status"
           >
-            <span className="pf-u-mr-sm">Machine pools:</span>
+            <span className="pf-v5-u-mr-sm">Machine pools:</span>
             <ClusterStateIcon
               clusterState={machinePoolsState()}
               limitedSupport={limitedSupport}
@@ -106,7 +110,7 @@ export const ClusterStatus = ({ cluster, limitedSupport, machinePools }: Cluster
   return (
     <>
       {clusterWideStateIcon}
-      <span className="pf-u-ml-xs">{stateDescription}</span>
+      <span className="pf-v5-u-ml-xs">{clusterState?.description}</span>
     </>
   );
 };

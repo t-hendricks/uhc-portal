@@ -1,11 +1,11 @@
 import React from 'react';
 import classNames from 'classnames';
-import { RadioButtonField } from 'formik-pf';
 
 import { FormGroup, Flex, Tooltip } from '@patternfly/react-core';
 
 import PopoverHint from '~/components/common/PopoverHint';
 import { useFormState } from '~/components/clusters/wizards/hooks';
+import { RadioButtonField } from './CustomRadioButtonField';
 
 enum RadioGroupDirection {
   Row = 'row',
@@ -19,6 +19,7 @@ export interface RadioGroupOption {
   disabled?: boolean;
   tooltip?: React.ReactNode;
   popoverHint?: React.ReactNode;
+  shouldCheck?: (fieldValue: string, radioValue: React.ReactText) => boolean;
 }
 
 interface RadioGroupFieldProps {
@@ -27,7 +28,7 @@ interface RadioGroupFieldProps {
   label?: React.ReactNode;
   isRequired?: boolean;
   direction?: 'row' | 'column';
-  onChange?(value: string): void;
+  onChange?(event: React.FormEvent<HTMLDivElement>, value: string): void;
 }
 
 export const RadioGroupField = ({
@@ -56,16 +57,22 @@ export const RadioGroupField = ({
               value={option.value}
               isDisabled={option.disabled}
               description={option.description}
-              className={classNames('pf-u-mb-md', { 'pf-u-mr-sm': !!option.popoverHint })}
+              className={classNames('pf-v5-u-mb-md', { 'pf-v5-u-mr-sm': !!option.popoverHint })}
               onChange={(value) => {
                 setFieldValue(name, value);
-                onChange?.(value?.toString());
+                // pf-formik's RadioButtonField change handler does not return an event to forward
+                onChange?.(null as unknown as React.FormEvent<HTMLDivElement>, value?.toString());
               }}
+              shouldCheck={option.shouldCheck}
             />
           );
 
           return (
-            <Flex alignItems={{ default: 'alignItemsFlexStart' }} key={option.value}>
+            <Flex
+              alignItems={{ default: 'alignItemsFlexStart' }}
+              key={option.value}
+              className="pf-m-nowrap"
+            >
               {option.tooltip ? (
                 <Tooltip content={option.tooltip} position="right">
                   {radioButton}

@@ -33,6 +33,10 @@ if ! git diff --exit-code --stat mockdata/api/clusters_mgmt/v1/clusters.json moc
 fi
 
 
+echo 'System node version not used here, but will be used by build_deploy.sh:'
+node --version
+
+
 # build app & push to image repository
 # ------------------------------------
 
@@ -43,8 +47,7 @@ export IMAGE="quay.io/app-sre/uhc-portal"
 # if running in jenkins, use the build's workspace
 export WORKSPACE=${WORKSPACE:-$APP_ROOT}
 export APP_ROOT=$(pwd)
-# 16 is the default Node version. change this to override it
-export NODE_BUILD_VERSION=16
+export NODE_BUILD_VERSION=20
 
 COMMON_BUILDER=https://raw.githubusercontent.com/RedHatInsights/insights-frontend-builder-common/master
 

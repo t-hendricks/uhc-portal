@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-no-useless-fragment */
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import {
@@ -8,9 +9,14 @@ import {
   StackItem,
   ButtonVariant,
 } from '@patternfly/react-core';
-import { Table, TableHeader, TableBody, expandable, cellWidth } from '@patternfly/react-table';
-import { Link } from 'react-router-dom';
-import { ArrowRightIcon } from '@patternfly/react-icons';
+import { expandable, cellWidth } from '@patternfly/react-table';
+import {
+  Table as TableDeprecated,
+  TableHeader as TableHeaderDeprecated,
+  TableBody as TableBodyDeprecated,
+} from '@patternfly/react-table/deprecated';
+import { Link } from 'react-router-dom-v5-compat';
+import { ArrowRightIcon } from '@patternfly/react-icons/dist/esm/icons/arrow-right-icon';
 import * as OCM from '@openshift-assisted/ui-lib/ocm';
 import { isRestrictedEnv } from '~/restrictedEnv';
 
@@ -164,7 +170,7 @@ const osdTrialRow = () => {
   };
 };
 
-const managedServices = (hasQuota, trialEnabled) => {
+const ManagedServices = ({ hasQuota, trialEnabled }) => {
   const [openRows, setOpenRows] = useState([]);
   const onCollapse = (e, rowKey, open) => {
     if (open) {
@@ -332,15 +338,15 @@ const managedServices = (hasQuota, trialEnabled) => {
   }
 
   return (
-    <Table
+    <TableDeprecated
       aria-label="Managed services table"
       rows={rows}
       cells={getColumns()}
       onCollapse={onCollapse}
     >
-      <TableHeader />
-      <TableBody />
-    </Table>
+      <TableHeaderDeprecated />
+      <TableBodyDeprecated />
+    </TableDeprecated>
   );
 };
 
@@ -349,7 +355,7 @@ const runItYourself = () => {
   const rows = [
     [
       <>
-        <Link to="/install/alibaba/installer-provisioned" className="pf-u-mr-xs">
+        <Link to="/install/alibaba/installer-provisioned" className="pf-v5-u-mr-xs">
           Alibaba Cloud
         </Link>
         <TechnologyPreview position={PreviewBadgePosition.inline} />
@@ -388,7 +394,7 @@ const runItYourself = () => {
     ],
     [
       <>
-        <Link to="/install/azure/multi/installer-provisioned" className="pf-u-mr-xs">
+        <Link to="/install/azure/multi/installer-provisioned" className="pf-v5-u-mr-xs">
           Azure (multi-architecture)
         </Link>
       </>,
@@ -427,14 +433,28 @@ const runItYourself = () => {
       </>,
       'Pre-existing infrastructure',
     ],
+    [
+      <>
+        <Link to="/install/oracle-cloud">Oracle Cloud Infrastructure (virtual machines)</Link>
+        <TechnologyPreview position={PreviewBadgePosition.inline} />
+      </>,
+      'Pre-existing infrastructure',
+    ],
   ];
   return (
-    <Table className="run-it-yourself" aria-label="Run it yourself" cells={columns} rows={rows}>
-      <TableHeader />
-      <TableBody />
-    </Table>
+    <TableDeprecated
+      className="run-it-yourself"
+      aria-label="Run it yourself"
+      cells={columns}
+      rows={rows}
+    >
+      <TableHeaderDeprecated />
+      <TableBodyDeprecated />
+    </TableDeprecated>
   );
 };
+
+const QuotaLink = (props) => <Link {...props} to="/quota" />;
 
 const CloudTab = ({ hasOSDQuota, trialEnabled }) => (
   <>
@@ -445,13 +465,9 @@ const CloudTab = ({ hasOSDQuota, trialEnabled }) => (
         </StackItem>
         <StackItem>
           Create clusters in the cloud using a managed service.
-          {managedServices(hasOSDQuota, trialEnabled)}
+          <ManagedServices hasQuota={hasOSDQuota} trialEnabled={trialEnabled} />
           {!isRestrictedEnv() && (
-            <Button
-              variant={ButtonVariant.link}
-              id="subscriptions"
-              component={(props) => <Link {...props} to="/quota" />}
-            >
+            <Button variant={ButtonVariant.link} id="subscriptions" component={QuotaLink}>
               View your available OpenShift Dedicated quota <ArrowRightIcon />
             </Button>
           )}
@@ -478,5 +494,10 @@ export default CloudTab;
 
 CloudTab.propTypes = {
   hasOSDQuota: PropTypes.bool.isRequired,
+  trialEnabled: PropTypes.bool.isRequired,
+};
+
+ManagedServices.propTypes = {
+  hasQuota: PropTypes.bool.isRequired,
   trialEnabled: PropTypes.bool.isRequired,
 };

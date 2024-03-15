@@ -3,14 +3,22 @@
 const MIRROR_BUTANE_LATEST = 'https://mirror.openshift.com/pub/openshift-v4/clients/butane/latest';
 const MIRROR_CLIENTS_STABLE_X86 =
   'https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/ocp/stable/';
+const MIRROR_CLIENTS_LATEST_X86 =
+  'https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/ocp/latest/';
 const MIRROR_CLIENTS_CANDIDATE_X86 =
   'https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/ocp/candidate/';
 const MIRROR_CLIENTS_STABLE_IBMZ =
   'https://mirror.openshift.com/pub/openshift-v4/s390x/clients/ocp/stable/';
+const MIRROR_CLIENTS_LATEST_IBMZ =
+  'https://mirror.openshift.com/pub/openshift-v4/s390x/clients/ocp/latest/';
 const MIRROR_CLIENTS_STABLE_PPC =
   'https://mirror.openshift.com/pub/openshift-v4/ppc64le/clients/ocp/stable/';
+const MIRROR_CLIENTS_LATEST_PPC =
+  'https://mirror.openshift.com/pub/openshift-v4/ppc64le/clients/ocp/latest/';
 const MIRROR_CLIENTS_STABLE_ARM =
   'https://mirror.openshift.com/pub/openshift-v4/aarch64/clients/ocp/stable/';
+const MIRROR_CLIENTS_LATEST_ARM =
+  'https://mirror.openshift.com/pub/openshift-v4/aarch64/clients/ocp/latest/';
 const MIRROR_CLIENTS_STABLE_MULTI =
   'https://mirror.openshift.com/pub/openshift-v4/multi/clients/ocp/stable/';
 const MIRROR_CLIENTS_LATEST_PRE_X86 =
@@ -52,7 +60,7 @@ const MIRROR_ROSA_LATEST = 'https://mirror.openshift.com/pub/openshift-v4/client
 const MIRROR_MIRROR_REGISTRY_LATEST =
   'https://developers.redhat.com/content-gateway/rest/mirror/pub/openshift-v4/clients/mirror-registry/latest';
 
-const DOCS_BASE = 'https://docs.openshift.com/container-platform/4.13';
+const DOCS_BASE = 'https://docs.openshift.com/container-platform/4.15';
 const OSD_DOCS_BASE = 'https://docs.openshift.com/dedicated';
 const ROSA_DOCS_BASE = 'https://docs.openshift.com/rosa';
 const ROSA_CP_DOCS_BASE =
@@ -67,11 +75,15 @@ const OCP_DOC_BASE =
   'https://access.redhat.com/documentation/en-us/openshift_container_platform/4.13';
 
 const links = {
+  ROSA_CP_DOCS: 'https://access.redhat.com/documentation/en-us/red_hat_openshift_service_on_aws/4',
   DOCS_ENTRY: `${DOCS_BASE}/welcome/index.html`,
+  ROSA_TROUBLESHOOTING_INSTALLATIONS: `${ROSA_CP_DOCS_BASE}/troubleshooting/rosa-troubleshooting-installations`,
+  ROSA_DEFINITION_DOC: `${ROSA_CP_DOCS_BASE}/introduction_to_rosa/policies-and-service-definition#rosa-service-definition`,
   WHAT_IS_OPENSHIFT: 'https://www.redhat.com/en/technologies/cloud-computing/openshift',
   WHAT_IS_ROSA: 'https://www.redhat.com/en/technologies/cloud-computing/openshift/aws',
-  ROSA_COMMUNITY_SLACK:
-    'https://join.slack.com/t/rosa-community/shared_invite/zt-1c5v1njip-dj70G3EoIX4HDR_famOx3Q',
+  ROSA_COMMUNITY_SLACK: 'https://red.ht/rosa-slack',
+  ROSA_QUICKSTART: `${ROSA_CP_DOCS_BASE}/getting_started/rosa-quickstart-guide-ui`,
+  ROSA_PRICING: 'https://aws.amazon.com/rosa/pricing',
   IDP_HTPASSWD: `${DOCS_BASE}/authentication/identity_providers/configuring-htpasswd-identity-provider.html`,
   IDP_LDAP: `${DOCS_BASE}/authentication/identity_providers/configuring-ldap-identity-provider.html`,
   IDP_GITHUB: `${DOCS_BASE}/authentication/identity_providers/configuring-github-identity-provider.html`,
@@ -88,17 +100,19 @@ const links = {
   GETTING_SUPPORT: `${DOCS_BASE}/support/getting-support.html`,
   TELEMETRY_INFORMATION: `${DOCS_BASE}/support/remote_health_monitoring/about-remote-health-monitoring.html`,
   REMOTE_HEALTH_INSIGHTS: `${DOCS_BASE}/support/remote_health_monitoring/using-insights-to-identify-issues-with-your-cluster.html`,
-  UPDATING_CLUSTER: `${DOCS_BASE}/updating/updating-cluster-within-minor.html`,
+  UPDATING_CLUSTER: `${DOCS_BASE}/updating/updating_a_cluster/updating-cluster-web-console.html`,
+  // TODO https://issues.redhat.com/browse/HAC-5192 to change the link to a public document, not a KB article
+  HIBERNATING_CLUSTER: 'https://access.redhat.com/articles/7012966',
   MIGRATING_FROM_3_TO_4: `${DOCS_BASE}/migrating_from_ocp_3_to_4/about-migrating-from-3-to-4.html`,
   SERVERLESS_ABOUT: `${DOCS_BASE}/serverless/about/about-serverless.html`,
   SERVICE_MESH_ABOUT: `${DOCS_BASE}/service_mesh/v2x/ossm-architecture.html`,
   SERVICE_MESH_OCP_DOC: `${OCP_DOC_BASE}/html/service_mesh/index`,
-  VIRT_ABOUT: `${DOCS_BASE}/virt/about-virt.html`,
+  VIRT_ABOUT: `${DOCS_BASE}/virt/about_virt/about-virt.html`,
 
   SUBSCRIPTION_EVAL_INFORMATION: 'https://access.redhat.com/articles/4389911',
   MANAGED_INGRESS_KNOWLEDGE_BASE: 'https://access.redhat.com/articles/7028653',
 
-  OSD_DEDICATED_ADMIN_ROLE: `${OSD_DOCS_BASE}/osd_cluster_admin/osd-admin-roles.html`,
+  OSD_DEDICATED_ADMIN_ROLE: `${OSD_DOCS_BASE}/authentication/osd-admin-roles.html`,
   OSD_CCS_AWS: `${OSD_DOCS_BASE}/osd_planning/aws-ccs.html`,
   OSD_CCS_AWS_LIMITS: `${OSD_DOCS_BASE}/osd_planning/aws-ccs.html#aws-limits_aws-ccs`,
   OSD_CCS_AWS_SCP: `${OSD_DOCS_BASE}/osd_planning/aws-ccs.html#ccs-aws-scp_aws-ccs`,
@@ -106,6 +120,7 @@ const links = {
   OSD_CCS_GCP: `${OSD_DOCS_BASE}/osd_planning/gcp-ccs.html`,
   OSD_CCS_GCP_LIMITS: `${OSD_DOCS_BASE}/osd_planning/gcp-ccs.html#gcp-limits_gcp-ccs`,
   OSD_CCS_GCP_SCP: `${OSD_DOCS_BASE}/osd_planning/gcp-ccs.html#ccs-gcp-customer-procedure_gcp-ccs`,
+  OSD_CCS_GCP_SHEILDED_VM: `${OSD_DOCS_BASE}/osd_install_access_delete_cluster/creating-a-gcp-cluster.html#:~:text=constraints/compute.requireShieldedVm`,
   OSD_LIFE_CYCLE: `${OSD_DOCS_BASE}/osd_architecture/osd_policy/osd-life-cycle.html`,
   OSD_Z_STREAM: `${OSD_DOCS_BASE}/osd_architecture/osd_policy/osd-life-cycle.html#rosa-patch-versions_osd-life-cycle`,
   OSD_SERVICE_DEFINITION_COMPUTE: `${OSD_DOCS_BASE}/osd_architecture/osd_policy/osd-service-definition.html#instance-types_osd-service-definition`,
@@ -116,7 +131,7 @@ const links = {
   OSD_CLUSTER_WIDE_PROXY: `${OSD_DOCS_BASE}/networking/configuring-cluster-wide-proxy.html`,
   OSD_UPGRADES: `${OSD_DOCS_BASE}/upgrading/osd-upgrades.html`,
   OSD_LIMITED_SUPPORT_DEFINITION: `${OSD_DOCS_BASE}/osd_architecture/osd_policy/osd-service-definition.html#limited-support_osd-service-definition`,
-  OSD_MONITORING_STACK: `${OSD_DOCS_BASE}/monitoring/osd-understanding-the-monitoring-stack.html`,
+  OSD_MONITORING_STACK: `${OSD_DOCS_BASE}/monitoring/monitoring-overview.html#understanding-the-monitoring-stack_monitoring-overview`,
   OSD_CIDR_MACHINE: `${OSD_DOCS_BASE}/networking/cidr-range-definitions.html#machine-cidr-description`,
   ROSA_CIDR_MACHINE: `${ROSA_DOCS_BASE}/networking/cidr-range-definitions.html#machine-cidr-description`,
   OSD_CIDR_SERVICE: `${OSD_DOCS_BASE}/networking/cidr-range-definitions.html#service-cidr-description`,
@@ -125,6 +140,8 @@ const links = {
   ROSA_CIDR_POD: `${ROSA_DOCS_BASE}/networking/cidr-range-definitions.html#pod-cidr-description`,
   OSD_CIDR_HOST: `${OSD_DOCS_BASE}/networking/cidr-range-definitions.html#host-prefix-description`,
   ROSA_CIDR_HOST: `${ROSA_DOCS_BASE}/networking/cidr-range-definitions.html#host-prefix-description`,
+  OSD_CLUSTER_AUTOSCALING: `${OSD_DOCS_BASE}/osd_cluster_admin/osd-cluster-autoscaling.html`,
+  ROSA_CLUSTER_AUTOSCALING: `${ROSA_DOCS_BASE}/rosa_cluster_admin/rosa-cluster-autoscaling.html`,
 
   CLI_TOOLS_OCP_GETTING_STARTED: `${DOCS_BASE}/cli_reference/openshift_cli/getting-started-cli.html`,
 
@@ -143,12 +160,12 @@ const links = {
   INSTALL_AWS_CUSTOMIZATIONS: `${DOCS_BASE}/installing/installing_aws/installing-aws-customizations.html`,
   INSTALL_AWS_VPC: `${DOCS_BASE}/installing/installing_aws/installing-aws-vpc.html`,
   INSTALL_AWS_CUSTOM_VPC_REQUIREMENTS: `${DOCS_BASE}/installing/installing_aws/installing-aws-vpc.html#installation-custom-aws-vpc-requirements_installing-aws-vpc`,
-  INSTALL_AWS_MULTI_ARCH: `${DOCS_BASE}/post_installation_configuration/multi-architecture-configuration.html#creating-a-cluster-with-multi-architecture-compute-machines-on-aws`,
+  INSTALL_AWS_MULTI_ARCH: `${DOCS_BASE}/post_installation_configuration/configuring-multi-arch-compute-machines/creating-multi-arch-compute-nodes-aws.html`,
 
   INSTALL_AZUREUPI_GETTING_STARTED: `${DOCS_BASE}/installing/installing_azure/installing-azure-user-infra.html`,
   INSTALL_AZUREIPI_GETTING_STARTED: `${DOCS_BASE}/installing/installing_azure/installing-azure-default.html`,
   INSTALL_AZURE_CUSTOMIZATIONS: `${DOCS_BASE}/installing/installing_azure/installing-azure-customizations.html`,
-  INSTALL_AZURE_MULTI_ARCH: `${DOCS_BASE}/post_installation_configuration/multi-architecture-configuration.html`,
+  INSTALL_AZURE_MULTI_ARCH: `${DOCS_BASE}/post_installation_configuration/configuring-multi-arch-compute-machines/creating-multi-arch-compute-nodes-azure.html`,
 
   INSTALL_ASHIPI_GETTING_STARTED: `${DOCS_BASE}/installing/installing_azure_stack_hub/installing-azure-stack-hub-default.html`,
   INSTALL_ASHUPI_GETTING_STARTED: `${DOCS_BASE}/installing/installing_azure_stack_hub/installing-azure-stack-hub-user-infra.html`,
@@ -163,7 +180,7 @@ const links = {
   INSTALL_BAREMETAL_CUSTOMIZATIONS: `${DOCS_BASE}/installing/installing_bare_metal/installing-bare-metal-network-customizations.html`,
   RHCOS_BAREMETAL_ISO_X86: `${MIRROR_RHCOS_LATEST_X86}/rhcos-live.x86_64.iso`,
   RHCOS_BAREMETAL_RAW_X86: `${MIRROR_RHCOS_LATEST_X86}/rhcos-metal.x86_64.raw.gz`,
-  INSTALL_BAREMETAL_MULTI_ARCH: `${DOCS_BASE}/post_installation_configuration/multi-architecture-configuration.html#creating-a-cluster-with-multi-architecture-compute-machine-on-bare-metal-technology-preview`,
+  INSTALL_BAREMETAL_MULTI_ARCH: `${DOCS_BASE}/post_installation_configuration/configuring-multi-arch-compute-machines/creating-multi-arch-compute-nodes-bare-metal.html`,
 
   INSTALL_CRC_GETTING_STARTED:
     'https://access.redhat.com/documentation/en-us/red_hat_openshift_local',
@@ -185,10 +202,10 @@ const links = {
   RHCOS_OSPUPI_QCOW_X86: `${MIRROR_RHCOS_LATEST_X86}/rhcos-openstack.x86_64.qcow2.gz`,
   RHCOS_OSPUPI_QCOW_PPC: `${MIRROR_RHCOS_LATEST_PPC}/rhcos-openstack.ppc64le.qcow2.gz`,
 
-  INSTALL_VSPHEREUPI_GETTING_STARTED: `${DOCS_BASE}/installing/installing_vsphere/installing-vsphere.html`,
-  INSTALL_VSPHEREIPI_GETTING_STARTED: `${DOCS_BASE}/installing/installing_vsphere/installing-vsphere-installer-provisioned.html`,
-  INSTALL_VSPHERE_RHCOS_LEARN_MORE: `${DOCS_BASE}/installing/installing_vsphere/installing-vsphere.html#installation-vsphere-machines_installing-vsphere`,
-  INSTALL_VSPHERE_CUSTOMIZATIONS: `${DOCS_BASE}/installing/installing_vsphere/installing-vsphere-installer-provisioned-customizations.html`,
+  INSTALL_VSPHEREUPI_GETTING_STARTED: `${DOCS_BASE}/installing/installing_vsphere/upi/installing-vsphere.html`,
+  INSTALL_VSPHEREIPI_GETTING_STARTED: `${DOCS_BASE}/installing/installing_vsphere/ipi/installing-vsphere-installer-provisioned.html`,
+  INSTALL_VSPHERE_RHCOS_LEARN_MORE: `${DOCS_BASE}/installing/installing_vsphere/upi/installing-vsphere.html#installation-vsphere-machines_installing-vsphere`,
+  INSTALL_VSPHERE_CUSTOMIZATIONS: `${DOCS_BASE}/installing/installing_vsphere/ipi/installing-vsphere-installer-provisioned-customizations.html`,
   RHCOS_VSPHERE_OVA_X86: `${MIRROR_RHCOS_LATEST_X86}/rhcos-vmware.x86_64.ova`,
 
   INSTALL_IBM_CLOUD_GETTING_STARTED: `${DOCS_BASE}/installing/installing_ibm_cloud_public/preparing-to-install-on-ibm-cloud.html`,
@@ -203,10 +220,6 @@ const links = {
   RHCOS_IBMZ_KERNEL: `${MIRROR_RHCOS_LATEST_IBMZ}/rhcos-live-kernel-s390x`,
   RHCOS_IBMZ_ROOTFS: `${MIRROR_RHCOS_LATEST_IBMZ}/rhcos-live-rootfs.s390x.img`,
   RHCOS_IBMZ_QCOW: `${MIRROR_RHCOS_LATEST_IBMZ}/rhcos-qemu.s390x.qcow2.gz`,
-
-  INSTALL_RHVIPI_GETTING_STARTED: `${DOCS_BASE}/installing/installing_rhv/installing-rhv-default.html`,
-  INSTALL_RHV_CUSTOMIZATIONS: `${DOCS_BASE}/installing/installing_rhv/installing-rhv-customizations.html`,
-  INSTALL_RHVUPI_GETTING_STARTED: `${DOCS_BASE}/installing/installing_rhv/installing-rhv-user-infra.html`,
 
   INSTALL_GENERIC_GETTING_STARTED: `${DOCS_BASE}/installing/installing_platform_agnostic/installing-platform-agnostic.html`,
   INSTALL_GENERIC_NON_TESTED_PLATFORMS: 'https://access.redhat.com/articles/4207611',
@@ -239,7 +252,7 @@ const links = {
   OCM_CLI_RELEASES_LATEST: 'https://github.com/openshift-online/ocm-cli/releases/latest',
 
   RHOAS_CLI_DOCS:
-    'https://access.redhat.com/documentation/en-us/red_hat_openshift_streams_for_apache_kafka/1/guide/88e1487a-2a14-4b35-85b9-a7a2d67a37f3',
+    'https://access.redhat.com/documentation/en-us/red_hat_openshift_application_services/1/guide/bb30ee92-9e0a-4fd6-a67f-aed8910d7da3',
   RHOAS_CLI_RELEASES_LATEST: 'https://github.com/redhat-developer/app-services-cli/releases/latest',
 
   HELM_DOCS: `${DOCS_BASE}/applications/working_with_helm_charts/understanding-helm.html`,
@@ -270,7 +283,7 @@ const links = {
 
   ROSA_GET_STARTED: `https://cloud.redhat.com/learn/getting-started-red-hat-openshift-service-aws-rosa`,
   ROSA_DOCS_ENTRY: `${ROSA_DOCS_BASE}/welcome/index.html`,
-  ROSA_MONITORING: `${ROSA_DOCS_BASE}/monitoring/rosa-understanding-the-monitoring-stack.html`,
+  ROSA_MONITORING: `${ROSA_DOCS_BASE}/monitoring/monitoring-overview.html#understanding-the-monitoring-stack_monitoring-overview`,
   ROSA_AUTOSCALING: `${ROSA_DOCS_BASE}/rosa_cluster_admin/rosa_nodes/rosa-nodes-about-autoscaling-nodes.html`,
   ROSA_CLI_DOCS: `${ROSA_CP_DOCS_BASE}/rosa_cli/rosa-get-started-cli`,
   ROSA_AWS_PREREQUISITES: `${ROSA_DOCS_BASE}/rosa_install_access_delete_clusters/rosa_getting_started_iam/rosa-aws-prereqs.html`,
@@ -284,7 +297,7 @@ const links = {
   ROSA_CLUSTER_WIDE_PROXY: `${ROSA_DOCS_BASE}/networking/configuring-cluster-wide-proxy.html`,
   ROSA_UPGRADES: `${ROSA_DOCS_BASE}/upgrading/rosa-upgrading-sts.html`,
   ROSA_LIMITED_SUPPORT_DEFINITION: `${ROSA_DOCS_BASE}/rosa_architecture/rosa_policy_service_definition/rosa-service-definition.html#rosa-limited-support_rosa-service-definition`,
-  ROSA_SHARED_VPC: `${ROSA_DOCS_BASE}/networking/rosa-shared-vpc-config.html`,
+  ROSA_SHARED_VPC: `${ROSA_DOCS_BASE}/rosa_install_access_delete_clusters/rosa-shared-vpc-config.html`,
 
   ROSA_AWS_STS_PREREQUISITES: `${ROSA_DOCS_BASE}/rosa_planning/rosa-sts-aws-prereqs.html`,
   ROSA_AWS_ACCOUNT_ASSOCIATION: `${ROSA_DOCS_BASE}/rosa_planning/rosa-sts-aws-prereqs.html#rosa-associating-account_rosa-sts-aws-prereqs`,
@@ -299,6 +312,7 @@ const links = {
   AWS_CONSOLE_ROSA_HOME: 'https://console.aws.amazon.com/rosa/home',
   AWS_CONSOLE_ROSA_HOME_GET_STARTED: 'https://console.aws.amazon.com/rosa/home#/get-started',
   AWS_CONSOLE_HOSTED_ZONES: 'https://console.aws.amazon.com/route53/v2/hostedzones',
+  AWS_CONSOLE_SECURITY_GROUPS: 'https://console.aws.amazon.com/ec2/home#SecurityGroups',
   AWS_CLI: 'https://aws.amazon.com/cli/',
   AWS_CLI_INSTRUCTIONS:
     'https://docs.aws.amazon.com/ROSA/latest/userguide/getting-started-sts-auto.html',
@@ -310,6 +324,9 @@ const links = {
   AWS_LOAD_BALANCER_FEATURES:
     'https://aws.amazon.com/elasticloadbalancing/features/#Product_comparisons',
   AWS_SHARED_VPC: 'https://docs.aws.amazon.com/vpc/latest/userguide/vpc-sharing.html',
+
+  GCP_CONSOLE_OSD_HOME:
+    'https://console.cloud.google.com/marketplace/agreements/redhat-marketplace/red-hat-openshift-dedicated',
 
   OCM_DOCS_MANAGING_CLUSTERS: `${OCM_DOCS_BASE}/html/managing_clusters/assembly-managing-clusters`,
   OCM_DOCS_PULL_SECRETS: `${OCM_DOCS_BASE}/html/managing_clusters/assembly-managing-clusters#downloading_and_updating_pull_secrets`,
@@ -696,7 +713,7 @@ const urls = {
     [channels.STABLE]: {
       [architectures.x86]: {
         [operatingSystems.linux]: `${MIRROR_KN_LATEST}/kn-linux-amd64.tar.gz`,
-        [operatingSystems.mac]: `${MIRROR_KN_LATEST}/kn-macos-amd64.tar.gz`,
+        [operatingSystems.mac]: `${MIRROR_KN_LATEST}/kn-darwin-amd64.tar.gz`,
         [operatingSystems.windows]: `${MIRROR_KN_LATEST}/kn-windows-amd64.zip`,
       },
       [architectures.s390x]: {
@@ -806,7 +823,16 @@ const urls = {
   [tools.OC_MIRROR_PLUGIN]: {
     [channels.STABLE]: {
       [architectures.x86]: {
-        [operatingSystems.linux]: `${MIRROR_CLIENTS_STABLE_X86}oc-mirror.tar.gz`,
+        [operatingSystems.linux]: `${MIRROR_CLIENTS_LATEST_X86}oc-mirror.tar.gz`,
+      },
+      [architectures.arm]: {
+        [operatingSystems.linux]: `${MIRROR_CLIENTS_LATEST_ARM}oc-mirror.tar.gz`,
+      },
+      [architectures.s390x]: {
+        [operatingSystems.linux]: `${MIRROR_CLIENTS_LATEST_IBMZ}oc-mirror.tar.gz`,
+      },
+      [architectures.ppc]: {
+        [operatingSystems.linux]: `${MIRROR_CLIENTS_LATEST_PPC}oc-mirror.tar.gz`,
       },
     },
   },

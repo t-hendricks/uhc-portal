@@ -1,4 +1,3 @@
-import get from 'lodash/get';
 import Page from './page';
 
 /**
@@ -9,19 +8,21 @@ class ClusterList extends Page {
     super.assertUrlIncludes('/openshift/');
   }
 
-  filterTxtField = () => cy.get('input[placeholder="Filter by name or ID..."]', { timeout: 10000 });
+  filterTxtField = () => cy.get('input[aria-label="Filter"]', { timeout: 15000 });
   viewOnlyMyCluster = () => cy.get('label > input[id="view-only-my-clusters"]');
   viewOnlyMyClusterHelp = () => cy.get('label[for="view-only-my-clusters"]').find('button').first();
-  tooltipviewOnlyMyCluster = () => cy.get('div.pf-c-popover__body');
-  viewClusterArchives = () => cy.get('div.pf-c-toolbar__item').find('a').contains("View cluster archives");
-  assistedInstallerClusters = () => cy.get('ul.pf-c-dropdown__menu').find('a').contains("Assisted Installer clusters");
-  registerCluster = () => cy.getByTestId('register-cluster-item')
+  tooltipviewOnlyMyCluster = () => cy.get('div.pf-v5-c-popover__body');
+  viewClusterArchives = () =>
+    cy.get('.pf-v5-c-toolbar__content').find('a').contains('View cluster archives');
+  assistedInstallerClusters = () =>
+    cy.get('.pf-v5-c-toolbar__content').find('a').contains('Assisted Installer clusters');
+  registerCluster = () => cy.getByTestId('register-cluster-item');
   showActiveClusters = () => cy.get('a').contains('Show active clusters');
-  itemPerPage = () => cy.get('button[aria-label="Items per page"]').last();
+  itemPerPage = () => cy.get('#options-menu-bottom-toggle').last();
   goToLastPageBtn = () => cy.get('button[aria-label="Go to last page"]').last();
   goToFirstPageBtn = () => cy.get('button[aria-label="Go to first page"]').last();
-  typeColumnsInClusterList = () => cy.get('td[data-label="Type"] > span')
-  filterdClusterTypesValues = () => cy.get('span.pf-c-chip__text')
+  typeColumnsInClusterList = () => cy.get('td[data-label="Type"] span');
+  filterdClusterTypesValues = () => cy.get('span.pf-v5-c-chip__text');
 
   isRegisterClusterUrl() {
     super.assertUrlIncludes('/openshift/register');
@@ -44,11 +45,11 @@ class ClusterList extends Page {
   }
 
   clusterListRefresh() {
-    cy.get('button[aria-label="Refresh"]').click();
+    cy.get('button[aria-label="Refresh"]').scrollIntoView().click({ force: true });
   }
 
   clickClusterTypeFilters() {
-    cy.get('button > span').contains(" Cluster type").click({ force: true });
+    cy.get('button > span').contains(' Cluster type').click({ force: true });
   }
 
   clickClusterTypes(type) {
@@ -57,80 +58,106 @@ class ClusterList extends Page {
 
   // Checks if the selected filters are populated filter rule string in cluster/archives list.
   checkFilteredClusterTypes(type, isContains) {
-    var criteria = 'eq'
+    var criteria = 'eq';
     if (!isContains) {
-      criteria = 'not.eq'
+      criteria = 'not.eq';
     }
     this.filterdClusterTypesValues().each(($elements) => {
-      cy.wrap($elements).invoke('text').should(criteria, type)
-    })
+      cy.wrap($elements).invoke('text').should(criteria, type);
+    });
   }
 
   // Checks if the selected cluster type filters matches with the list of clusters filtered in list.
   checkFilteredClustersFromClusterList(type, isContains) {
-    var criteria = 'eq'
+    var criteria = 'eq';
     if (!isContains) {
-      criteria = 'not.eq'
+      criteria = 'not.eq';
     }
     this.typeColumnsInClusterList().each(($elements) => {
-      cy.wrap($elements).invoke('text').should(criteria, type)
-    })
+      cy.wrap($elements).invoke('text').should(criteria, type);
+    });
   }
 
   goToLastPage() {
     this.goToLastPageBtn().then(($btn) => {
-      if ($btn.is(":enabled")) {
-        cy.wrap($btn).click()
+      if ($btn.is(':enabled')) {
+        cy.wrap($btn).click();
       }
-    })
+    });
   }
 
   goToFirstPage() {
     this.goToFirstPageBtn().then(($btn) => {
-      if ($btn.is(":enabled")) {
-        cy.wrap($btn).click()
+      if ($btn.is(':enabled')) {
+        cy.wrap($btn).click();
       }
-    })
+    });
   }
 
+  openClusterDefinition(clusterName) {
+    cy.get('td[data-label="Name"]').find('a').contains(clusterName).click({ force: true });
+  }
   clickClusterListExtraActions() {
     cy.getByTestId('cluster-list-extra-actions-dropdown').should('be.visible').click();
   }
+  clickClusterListExtraActions() {
+    cy.get('button.pf-v5-c-dropdown__toggle').should('be.visible').click();
+  }
+
   clickClusterListTableHeader(header) {
-    cy.get('th[data-label="' + header + '"]', { timeout: 20000 }).should('be.visible').click();
+    cy.get('th[data-label="' + header + '"]', { timeout: 20000 })
+      .should('be.visible')
+      .click();
   }
 
   scrollClusterListPageTo(direction) {
-    cy.get('main.pf-c-page__main').find('div.pf-c-drawer__content').scrollTo(direction);
+    cy.getByTestId('appDrawerContent').scrollTo(direction);
+  }
+
+  scrollToPagination() {
+    cy.get('#options-menu-bottom-pagination').scrollIntoView();
+  }
+
+  scrollToFilter() {
+    cy.get('input[aria-label="Filter"]').scrollIntoView();
   }
 
   clickPerPageItem(count) {
-    cy.get('button[data-action="per-page-' + count + '"]').scrollIntoView().click();
+    cy.get('li[data-action="per-page-' + count + '"]')
+      .scrollIntoView()
+      .click();
   }
 
   checkClusterListTableHeaders(headers) {
-    headers.forEach(header => cy.get('table[aria-label="Cluster List"]').contains('th', header).should('be.visible'));
+    headers.forEach((header) =>
+      cy.get('table[aria-label="Cluster List"]').contains('th', header).should('be.visible'),
+    );
   }
 
   searchForClusterWithStatus(status) {
-    cy.contains('td[data-label="Status"]', status).siblings().get('td[class="pf-c-table__action"] > div').first().click();
+    cy.contains('td[data-label="Status"]', status)
+      .siblings()
+      .get('td.pf-v5-c-table__action > div')
+      .first()
+      .click();
   }
 
   waitForDataReady() {
-    cy.get('div[data-ready="true"]', { timeout: 30000 }).should('exist');
+    cy.get('div[data-ready="true"]', { timeout: 60000 }).should('exist');
   }
 
   waitForArchiveDataReady() {
     cy.get('div.cluster-list', { timeout: 30000 }).should('exist');
     cy.get('div.ins-c-spinner.cluster-list-spinner', { timeout: 30000 }).should('not.exist');
-
   }
 
   clearFilters() {
-    cy.get('button', { timeout: 30000 }).contains("Clear filters").click({ force: true });
+    cy.get('button', { timeout: 30000 }).contains('Clear filters').click({ force: true });
   }
 
-
+  isCreateClusterBtnVisible() {
+    cy.getByTestId('create_cluster_btn').should('be.visible');
+  }
 }
 
 export default new ClusterList();

@@ -3,7 +3,7 @@ import { Form, FormGroup, FormSection, Grid, GridItem, Switch, Text } from '@pat
 
 import { ClusterAutoscaler } from '~/types/clusters_mgmt.v1';
 import installLinks from '~/common/installLinks.mjs';
-import { getDefaultClusterAutoScaling } from '~/components/clusters/CreateOSDPage/clusterAutoScalingValues';
+import { getDefaultClusterAutoScaling } from '~/components/clusters/common/clusterAutoScalingValues';
 import ErrorBox from '~/components/common/ErrorBox';
 import { ErrorState } from '~/types/types';
 import { Field } from 'redux-form';
@@ -11,7 +11,7 @@ import {
   AutoscalerGpuHelpText,
   AutoscalerGpuPopover,
 } from '~/components/clusters/common/EditClusterAutoScalingDialog/AutoscalerGpuTooltip';
-import { clusterAutoScalingValidators, validateListOfLabels } from '~/common/validators';
+import { clusterAutoScalingValidators, validateListOfBalancingLabels } from '~/common/validators';
 import {
   AutoscalerIgnoredLabelsHelpText,
   AutoscalerIgnoredLabelsPopover,
@@ -31,6 +31,7 @@ type AutoscaleAction = 'update' | 'enable' | 'disable';
 
 export interface EditClusterAutoScalingDialogProps {
   isOpen: boolean;
+  isRosa: boolean;
   isWizard: boolean;
   pristine: boolean;
   closeModal: () => void;
@@ -54,6 +55,7 @@ export interface EditClusterAutoScalingDialogProps {
  */
 function EditClusterAutoScalingDialog({
   isOpen,
+  isRosa,
   isWizard,
   closeModal,
   change,
@@ -70,7 +72,11 @@ function EditClusterAutoScalingDialog({
   const isScalingSelected = isWizard || autoScalingValues.isSelected;
   const isFormDisabled = !isScalingSelected || isSaving;
 
-  let primaryButtonProps = { text: 'Close', isClose: true, isDisabled: false };
+  let primaryButtonProps = {
+    text: 'Close',
+    isClose: true,
+    isDisabled: isWizard && hasAutoScalingErrors,
+  };
   if (isSaving) {
     primaryButtonProps = { text: 'Saving...', isClose: false, isDisabled: true };
   } else if (!isWizard && autoScalingValues.isSelected && !pristine) {
@@ -126,15 +132,21 @@ function EditClusterAutoScalingDialog({
         <Text component="p">
           The cluster autoscaler adjusts the size of a cluster to meet its current deployment needs.
           Learn more about{' '}
-          <ExternalLink href={installLinks.APPLYING_AUTOSCALING}>cluster autoscaling</ExternalLink>{' '}
+          <ExternalLink
+            href={
+              isRosa ? installLinks.ROSA_CLUSTER_AUTOSCALING : installLinks.OSD_CLUSTER_AUTOSCALING
+            }
+          >
+            cluster autoscaling
+          </ExternalLink>{' '}
           or
           <ExternalLink href={installLinks.APPLYING_AUTOSCALING_API_DETAIL}> APIs</ExternalLink>.
         </Text>
 
         {!isWizard && (
-          <div className="pf-u-mt-md">
+          <div className="pf-v5-u-mt-md">
             <Switch
-              className="pf-u-ml-0 pf-u-mb-md"
+              className="pf-v5-u-ml-0 pf-v5-u-mb-md"
               label="Autoscale cluster"
               labelOff="Autoscale cluster"
               isChecked={isScalingSelected}
@@ -148,6 +160,7 @@ function EditClusterAutoScalingDialog({
               <MachinePoolsAutoScalingWarning
                 hasClusterAutoScaler={isScalingSelected}
                 hasAutoscalingMachinePools={hasAutoscalingMachinePools}
+                isEnabledOnCurrentPool={false}
                 warningType="clusterView"
               />
             )}
@@ -178,7 +191,7 @@ function EditClusterAutoScalingDialog({
                     type="text"
                     disabled={isFormDisabled}
                     helpText={AutoscalerIgnoredLabelsHelpText}
-                    validate={validateListOfLabels}
+                    validate={validateListOfBalancingLabels}
                   />
                 </FormGroup>
               </GridItem>

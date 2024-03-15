@@ -1,0 +1,49 @@
+import React, { useCallback } from 'react';
+import {
+  Alert,
+  Button,
+  ButtonVariant,
+  Card,
+  CardBody,
+  CardFooter,
+  CardTitle,
+  Title,
+  Text,
+  TextVariants,
+} from '@patternfly/react-core';
+import { DesktopIcon } from '@patternfly/react-icons/dist/esm/icons/desktop-icon';
+import { Link } from 'react-router-dom-v5-compat';
+
+const WithWizard = () => {
+  const LinkComponent = useCallback((props) => <Link {...props} to="/create/rosa/wizard" />, []);
+
+  return (
+    <Card isFlat isFullHeight>
+      <CardTitle>
+        <Title headingLevel="h3" size="lg">
+          <DesktopIcon className="ocm-c-wizard-get-started--card-icon" />
+          Deploy with web interface
+        </Title>
+      </CardTitle>
+      <CardBody>
+        <Text component={TextVariants.p} className="pf-v5-u-mb-sm">
+          You can deploy your cluster with the web interface.
+        </Text>
+        {/* TODO: PatternFly incorrectly puts the content of an alert as a h4 - this text should not be a heading */}
+        <Alert
+          variant="info"
+          isInline
+          isPlain
+          title="Your AWS account will need to be associated with your Red Hat account."
+        />
+      </CardBody>
+      <CardFooter>
+        <Button variant={ButtonVariant.secondary} component={LinkComponent}>
+          <DesktopIcon /> Create with web interface
+        </Button>
+      </CardFooter>
+    </Card>
+  );
+};
+
+export default WithWizard;

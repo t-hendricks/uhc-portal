@@ -1,17 +1,16 @@
 import React from 'react';
-import { mount, ReactWrapper } from 'enzyme';
-import axios from 'axios';
-import { act } from 'react-dom/test-utils';
-import { screen } from '@testing-library/react';
-import { mockRestrictedEnv, render } from '~/testUtils';
+
+import type axios from 'axios';
+
+import apiRequest from '~/services/apiRequest';
+import { mockRestrictedEnv, render, screen, checkAccessibility, waitFor } from '~/testUtils';
+
 import Releases from './index';
 import ReleaseChannel from './ReleaseChannel';
 import ocpLifeCycleStatuses from './__mocks__/ocpLifeCycleStatuses';
 
-jest.mock('axios', () => ({
-  ...jest.requireActual('axios'),
-  get: jest.fn().mockImplementation(() => Promise.resolve(ocpLifeCycleStatuses)),
-}));
+type MockedJest = jest.Mocked<typeof axios> & jest.Mock;
+const apiRequestMock = apiRequest as unknown as MockedJest;
 
 jest.mock('./ReleaseChannel', () => ({
   __esModule: true,
@@ -22,12 +21,13 @@ jest.mock('./ReleaseChannel', () => ({
 const MockReleaseChannel = ReleaseChannel as jest.Mock;
 
 describe('<Releases />', () => {
-  let wrapper: ReactWrapper;
-
+  beforeEach(() => {
+    apiRequestMock.get.mockResolvedValue(ocpLifeCycleStatuses);
+  });
   beforeAll(() => {
     MockReleaseChannel.mockImplementation(
       ({ channel }: React.ComponentProps<typeof ReleaseChannel>) => (
-        <dt className="pf-c-description-list__term pf-u-mt-md">{channel}</dt>
+        <dt className="pf-v5-c-description-list__term pf-v5-u-mt-md">{channel}</dt>
       ),
     );
   });
@@ -37,14 +37,14 @@ describe('<Releases />', () => {
     jest.clearAllMocks();
   });
 
-  it('should render', async () => {
-    await act(async () => {
-      wrapper = mount(<Releases />);
-    });
+  it.skip('is accessible', async () => {
+    const { container } = render(<Releases />);
+    expect(await screen.findByText('Learn more about updating channels')).toBeInTheDocument();
 
-    wrapper.update();
-    expect(axios.get).toHaveBeenCalledTimes(1);
-    expect(wrapper).toMatchSnapshot();
+    expect(apiRequestMock.get).toHaveBeenCalledTimes(1);
+
+    // Fails with  "<dl> elements must only directly contain properly-ordered <dt> and <dd> groups, <script>, <template> or <div> elements (definition-list)"
+    await checkAccessibility(container);
   });
 
   describe('in restricted env', () => {
@@ -56,10 +56,11 @@ describe('<Releases />', () => {
     it('should render only stable releases', async () => {
       isRestrictedEnv.mockReturnValue(true);
 
-      await act(async () => {
-        render(<Releases />);
+      render(<Releases />);
+      await waitFor(() => {
+        expect(apiRequestMock.get).toHaveBeenCalledTimes(1);
       });
-      expect(axios.get).toHaveBeenCalledTimes(1);
+
       expect(screen.queryAllByText(/^stable/).length > 0).toBeTruthy();
       expect(screen.queryAllByText(/^fast/)).toHaveLength(0);
       expect(screen.queryAllByText(/^eus/).length > 0).toBeTruthy();

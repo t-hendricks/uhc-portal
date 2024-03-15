@@ -3,12 +3,16 @@ import PropTypes from 'prop-types';
 import get from 'lodash/get';
 import { Button, Flex, Popover } from '@patternfly/react-core';
 
-import { OutlinedQuestionCircleIcon } from '@patternfly/react-icons';
+import { OutlinedQuestionCircleIcon } from '@patternfly/react-icons/dist/esm/icons/outlined-question-circle-icon';
+import getClusterVersion from '~/components/clusters/common/getClusterVersion';
+import {
+  isClusterUpgrading,
+  isHypershiftCluster,
+} from '~/components/clusters/common/clusterStates';
 import SupportStatusLabel from '../SupportStatusLabel';
 import ClusterUpdateLink from '../../../../common/ClusterUpdateLink';
 import UpgradeStatus from '../../../../common/Upgrades/UpgradeStatus';
 import UpgradeAcknowledgeLink from '../../../../common/Upgrades/UpgradeAcknowledge/UpgradeAcknowledgeLink';
-import { isHypershiftCluster } from '../../../clusterDetailsHelper';
 
 class ClusterVersionInfo extends React.Component {
   state = {
@@ -37,11 +41,8 @@ class ClusterVersionInfo extends React.Component {
   render() {
     const { cluster, openModal, schedules } = this.props;
     const { popoverOpen } = this.state;
-    const isUpgrading = get(cluster, 'metrics.upgrade.state') === 'running';
-    const clusterVersion =
-      (isUpgrading ? cluster.version?.raw_id : cluster.openshift_version) ||
-      cluster.version?.raw_id ||
-      'N/A';
+    const isUpgrading = isClusterUpgrading(cluster);
+    const clusterVersion = getClusterVersion(cluster);
     const channel = get(cluster, 'metrics.channel');
 
     const scheduledUpdate = schedules.items.find(
@@ -50,7 +51,7 @@ class ClusterVersionInfo extends React.Component {
 
     return (
       <div>
-        <dl className="pf-l-stack">
+        <dl className="pf-v5-l-stack">
           <Flex>
             <dt>OpenShift: </dt>
             <dd>
@@ -79,8 +80,7 @@ class ClusterVersionInfo extends React.Component {
                       <UpgradeStatus
                         clusterID={cluster.id}
                         canEdit={cluster.canEdit}
-                        clusterVersion={cluster.openshift_version}
-                        clusterVersionRawID={cluster.version?.raw_id}
+                        clusterVersion={clusterVersion}
                         scheduledUpgrade={scheduledUpdate}
                         openModal={openModal}
                         // eslint-disable-next-line camelcase

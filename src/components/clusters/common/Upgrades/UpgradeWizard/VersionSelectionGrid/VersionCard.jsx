@@ -11,7 +11,8 @@ import {
   Button,
   Tooltip,
 } from '@patternfly/react-core';
-import { StarIcon, InfoCircleIcon } from '@patternfly/react-icons';
+import { StarIcon } from '@patternfly/react-icons/dist/esm/icons/star-icon';
+import { InfoCircleIcon } from '@patternfly/react-icons/dist/esm/icons/info-circle-icon';
 import { versionRegEx } from '../../../../../../common/versionComparator';
 import ExternalLink from '../../../../../common/ExternalLink';
 
@@ -23,9 +24,9 @@ const getReleaseNotesLink = (version) => {
   }
   const docURL = `https://docs.openshift.com/container-platform/${major}.${minor}/release_notes/ocp-${major}-${minor}-release-notes.html#ocp-${major}-${minor}-${revision}`;
   return (
-    <Button variant="link" className="card-footer-button">
-      <ExternalLink href={docURL}>View release notes</ExternalLink>
-    </Button>
+    <ExternalLink href={docURL} className="pf-c-button pf-m-link card-footer-button">
+      View release notes
+    </ExternalLink>
   );
 };
 
@@ -33,7 +34,7 @@ const VersionAcknowledgementPopover = (version) => (
   <Tooltip
     content={`All clusters require an administrator acknowledgement before updating to OpenShift Container Platform ${version}`}
   >
-    <Button variant="link" isInline>
+    <Button variant="link" isInline aria-label="more information">
       <InfoCircleIcon />
     </Button>
   </Tooltip>
@@ -56,7 +57,7 @@ const VersionCard = (props) => {
       id={version}
       onKeyDown={onKeyDown}
       onClick={onClick}
-      isSelectable
+      isSelectableRaised
       isCompact
       isSelected={isSelected}
     >

@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
-
 import PropTypes from 'prop-types';
-
 import { Form } from '@patternfly/react-core';
 
 import Modal from '../../../common/Modal/Modal';
 import modals from '../../../common/Modal/modals';
 import ErrorBox from '../../../common/ErrorBox';
+import HibernateClusterModalTitle from '../HibernateClusterModal/HibernateClusterModalTitle';
+import HibernateClusterContent from '../HibernateClusterModal/HibernateClusterContent';
 
 class ResumeClusterModal extends Component {
   componentDidUpdate() {
@@ -45,23 +45,19 @@ class ResumeClusterModal extends Component {
     return (
       <Modal
         data-testid="resume-cluster-modal"
-        title="Resume from Hibernation"
+        header={<HibernateClusterModalTitle title="Resume from hibernation" />}
         secondaryTitle={shouldDisplayClusterName ? clusterName : undefined}
         onClose={cancelResumeCluster}
         primaryText="Resume cluster"
-        secondaryText="Cancel"
+        secondaryText="Close"
         onPrimaryClick={handleSubmit}
         isPending={resumeClusterResponse.pending}
         onSecondaryClick={cancelResumeCluster}
       >
-        <>
-          <Form onSubmit={() => handleSubmit()}>
-            {error}
-            <p>
-              cluster will move out of Hibernating state and all cluster operations will be resumed.
-            </p>
-          </Form>
-        </>
+        <Form onSubmit={handleSubmit}>
+          {error}
+          <HibernateClusterContent clusterName={clusterName} isHibernating />
+        </Form>
       </Modal>
     );
   }

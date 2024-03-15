@@ -14,6 +14,7 @@ export type ReservedResource = ObjectReference & {
   created_at?: string;
   resource_name?: string;
   resource_type?: ReservedResource.resource_type;
+  scope?: string;
   subscription?: ObjectReference;
   updated_at?: string;
 };
@@ -25,6 +26,7 @@ export namespace ReservedResource {
     MARKETPLACE_AWS = 'marketplace-aws',
     MARKETPLACE_RHM = 'marketplace-rhm',
     MARKETPLACE_AZURE = 'marketplace-azure',
+    MARKETPLACE_GCP = 'marketplace-gcp',
   }
 
   export enum resource_type {

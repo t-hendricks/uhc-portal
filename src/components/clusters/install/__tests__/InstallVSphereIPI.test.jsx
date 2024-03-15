@@ -1,11 +1,39 @@
 import React from 'react';
-import { shallow } from 'enzyme';
+import { CompatRouter } from 'react-router-dom-v5-compat';
+import { screen, checkAccessibility, TestRouter, withState } from '~/testUtils';
 
 import { InstallVSphereIPI } from '../InstallVSphereIPI';
+import instructionsMapping from '../instructions/instructionsMapping';
+import githubReleases from '../githubReleases.mock';
 
-describe('InstallVSphereIPI', () => {
-  it('renders correctly', () => {
-    const wrapper = shallow(<InstallVSphereIPI token={{}} dispatch={() => {}} />);
-    expect(wrapper).toMatchSnapshot();
+jest.mock('../../../../redux/actions', () => ({
+  __esModule: true,
+  tollboothActions: {
+    createAuthToken: jest.fn().mockResolvedValue('foo'),
+  },
+  githubActions: {
+    getLatestRelease: jest.fn(),
+  },
+}));
+
+describe('<InstallVSphereIPI />', () => {
+  const dispatch = jest.fn();
+
+  afterEach(() => {
+    jest.clearAllMocks();
+  });
+
+  it('is accessible', async () => {
+    const { container } = withState(githubReleases).render(
+      <TestRouter>
+        <CompatRouter>
+          <InstallVSphereIPI token={{}} dispatch={dispatch} />
+        </CompatRouter>
+      </TestRouter>,
+    );
+
+    expect(await screen.findByText(instructionsMapping.vsphere.ipi.title)).toBeInTheDocument();
+
+    await checkAccessibility(container);
   });
 });

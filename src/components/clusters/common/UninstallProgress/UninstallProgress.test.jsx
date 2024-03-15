@@ -1,68 +1,93 @@
 import React from 'react';
-import { shallow } from 'enzyme';
-
+import { render, screen, checkAccessibility, within } from '~/testUtils';
 import UninstallProgress from './UninstallProgress';
 
-import fixtures from '../../ClusterDetails/__test__/ClusterDetails.fixtures';
+import fixtures from '../../ClusterDetails/__tests__/ClusterDetails.fixtures';
 import {
   mockAddOns,
   mockClusterAddOnsWithExternalResources,
-} from '../../ClusterDetails/components/AddOns/__test__/AddOns.fixtures';
+} from '../../ClusterDetails/components/AddOns/__tests__/AddOns.fixtures';
 import AddOnsConstants from '../../ClusterDetails/components/AddOns/AddOnsConstants';
 
 describe('<UninstallProgress />', () => {
-  let wrapper;
   const getClusterAddOns = jest.fn();
 
   const { clusterDetails } = fixtures;
 
-  beforeEach(() => {
-    wrapper = shallow(
-      <UninstallProgress
-        cluster={clusterDetails.cluster}
-        getClusterAddOns={getClusterAddOns}
-        addOns={mockAddOns}
-        clusterAddOns={mockClusterAddOnsWithExternalResources}
-      />,
-    );
+  const defaultProps = {
+    cluster: clusterDetails.cluster,
+    getClusterAddOns,
+    addOns: mockAddOns,
+    clusterAddOns: mockClusterAddOnsWithExternalResources,
+  };
+
+  afterEach(() => {
+    jest.clearAllMocks();
   });
 
-  it('should render', () => {
-    expect(wrapper).toMatchSnapshot();
+  it('is accessible', async () => {
+    const { container } = render(<UninstallProgress {...defaultProps} />);
+
+    expect(screen.getByText('Add-on uninstallation')).toBeInTheDocument();
+    expect(screen.getByText('Cluster uninstallation')).toBeInTheDocument();
+    await checkAccessibility(container);
   });
 
   it('should be pending when an addon is ready', () => {
-    const ProgressStepper = wrapper.find('ProgressStepper').props();
-    expect(ProgressStepper.children[0].props.description).toEqual('Pending');
+    render(<UninstallProgress {...defaultProps} />);
+
+    const addOnProgressStep = screen.getAllByRole('listitem')[0];
+
+    expect(within(addOnProgressStep).getByText('Add-on uninstallation')).toBeInTheDocument();
+    expect(within(addOnProgressStep).getByText('Pending')).toBeInTheDocument();
   });
 
   it('should be removing add-ons when an addon is deleting', () => {
-    mockClusterAddOnsWithExternalResources.items[0].state =
-      AddOnsConstants.INSTALLATION_STATE.DELETING;
-    wrapper.setProps({
-      clusterAddOns: mockClusterAddOnsWithExternalResources,
-    });
-    const ProgressStepper = wrapper.find('ProgressStepper').props();
-    expect(ProgressStepper.children[0].props.description).toEqual('Uninstalling');
+    const newAddOnsWithExternalResources = { ...mockClusterAddOnsWithExternalResources };
+    newAddOnsWithExternalResources.items[0].state = AddOnsConstants.INSTALLATION_STATE.DELETING;
+
+    const newProps = {
+      ...defaultProps,
+      clusterAddOns: newAddOnsWithExternalResources,
+    };
+
+    render(<UninstallProgress {...newProps} />);
+
+    const addOnProgressStep = screen.getAllByRole('listitem')[0];
+
+    expect(within(addOnProgressStep).getByText('Add-on uninstallation')).toBeInTheDocument();
+    expect(within(addOnProgressStep).getByText('Uninstalling')).toBeInTheDocument();
   });
 
   it('should be completed when addon is deleted', () => {
-    mockClusterAddOnsWithExternalResources.items[0].state =
-      AddOnsConstants.INSTALLATION_STATE.DELETED;
-    wrapper.setProps({
-      clusterAddOns: mockClusterAddOnsWithExternalResources,
-    });
-    const ProgressStepper = wrapper.find('ProgressStepper').props();
-    expect(ProgressStepper.children[0].props.description).toEqual('Completed');
+    const newAddOnsWithExternalResources = { ...mockClusterAddOnsWithExternalResources };
+
+    newAddOnsWithExternalResources.items[0].state = AddOnsConstants.INSTALLATION_STATE.DELETED;
+
+    const newProps = {
+      ...defaultProps,
+      clusterAddOns: newAddOnsWithExternalResources,
+    };
+
+    render(<UninstallProgress {...newProps} />);
+
+    const addOnProgressStep = screen.getAllByRole('listitem')[0];
+
+    expect(within(addOnProgressStep).getByText('Add-on uninstallation')).toBeInTheDocument();
+    expect(within(addOnProgressStep).getByText('Completed')).toBeInTheDocument();
   });
 
   it('should be completed when no addons installed', () => {
-    wrapper.setProps({
-      clusterAddOns: {
-        items: [],
-      },
-    });
-    const ProgressStepper = wrapper.find('ProgressStepper').props();
-    expect(ProgressStepper.children[0].props.description).toEqual('Completed');
+    const newProps = {
+      ...defaultProps,
+      clusterAddOns: { items: [] },
+    };
+
+    render(<UninstallProgress {...newProps} />);
+
+    const addOnProgressStep = screen.getAllByRole('listitem')[0];
+
+    expect(within(addOnProgressStep).getByText('Add-on uninstallation')).toBeInTheDocument();
+    expect(within(addOnProgressStep).getByText('Completed')).toBeInTheDocument();
   });
 });

@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { HelpIcon } from '@patternfly/react-icons';
+import { HelpIcon } from '@patternfly/react-icons/dist/esm/icons/help-icon';
 import {
   EmptyState,
   Title,
@@ -12,8 +12,14 @@ import {
   Card,
   CardBody,
   CardTitle,
+  Icon,
 } from '@patternfly/react-core';
-import { Table, TableHeader, TableBody, TableVariant } from '@patternfly/react-table';
+import { TableVariant } from '@patternfly/react-table';
+import {
+  Table as TableDeprecated,
+  TableHeader as TableHeaderDeprecated,
+  TableBody as TableBodyDeprecated,
+} from '@patternfly/react-table/deprecated';
 
 import Skeleton from '@redhat-cloud-services/frontend-components/Skeleton';
 
@@ -92,8 +98,10 @@ class UsersSection extends React.Component {
               aria-label="User IDs"
               bodyContent={<p>User IDs are matched by the cluster&apos;s identity providers.</p>}
             >
-              <Button variant="plain" isInline>
-                <HelpIcon size="sm" />
+              <Button variant="plain" isInline aria-label="Help">
+                <Icon size="md">
+                  <HelpIcon />
+                </Icon>
               </Button>
             </Popover>
           </>
@@ -113,8 +121,10 @@ class UsersSection extends React.Component {
                 </p>
               }
             >
-              <Button variant="plain" isInline>
-                <HelpIcon size="sm" />
+              <Button variant="plain" isInline aria-label="Help">
+                <Icon size="md">
+                  <HelpIcon />
+                </Icon>
               </Button>
             </Popover>
           </>
@@ -221,7 +231,7 @@ class UsersSection extends React.Component {
             <ErrorBox message="Error deleting user" response={deleteUserResponse} />
           )}
           {hasUsers && (
-            <Table
+            <TableDeprecated
               aria-label="Users"
               actions={actions}
               variant={TableVariant.compact}
@@ -229,9 +239,9 @@ class UsersSection extends React.Component {
               rows={rows}
               areActionsDisabled={() => !!disableReason}
             >
-              <TableHeader />
-              <TableBody />
-            </Table>
+              <TableHeaderDeprecated />
+              <TableBodyDeprecated />
+            </TableDeprecated>
           )}
           {addUserBtn}
           <AddUserDialog

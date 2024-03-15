@@ -17,8 +17,9 @@ limitations under the License.
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Checkbox, FormGroup, Switch, Split, SplitItem } from '@patternfly/react-core';
+
+import { FormGroupHelperText } from '~/components/common/FormGroupHelperText';
 import PopoverHint from '../PopoverHint';
-import './ReduxCheckbox.scss';
 
 // To be used inside redux-form Field component.
 function ReduxCheckbox(props) {
@@ -27,55 +28,49 @@ function ReduxCheckbox(props) {
     meta: { error, touched },
     input: { name, value, ...restInput },
     isSwitch = false,
-    isHelperTextBeforeField = false,
     helpText,
     extendedHelpText,
     isRequired = false,
     showInitialValidationErrors = false,
     ...extraProps // any extra props not specified above
   } = props;
-
-  const helperTextInvalid = () => {
-    if ((touched || showInitialValidationErrors) && error) {
-      return error;
-    }
-    return '';
-  };
-
   const InputComponent = isSwitch ? Switch : Checkbox;
   return (
-    <FormGroup
-      fieldId={name}
-      helperTextInvalid={helperTextInvalid()}
-      isHelperTextBeforeField={isHelperTextBeforeField}
-      helperText={helpText}
-      validated={(touched || showInitialValidationErrors) && error ? 'error' : null}
-    >
+    <FormGroup fieldId={name}>
       <Split hasGutter>
-        <SplitItem className={isRequired && 'pf-l-split__item-required'}>
+        <SplitItem>
           <InputComponent
             isChecked={!!value}
             id={name}
             name={name}
             {...restInput}
             {...extraProps}
-            label={label}
+            label={
+              <>
+                {label}
+                {isRequired ? (
+                  <span
+                    className="pf-v5-c-form__label-required redux-checkbox-required"
+                    aria-hidden="true"
+                  >
+                    *
+                  </span>
+                ) : null}
+              </>
+            }
             required={isRequired}
           />
         </SplitItem>
-        {isRequired && (
-          <SplitItem>
-            <span className="pf-c-form__label-required redux-checkbox-required" aria-hidden="true">
-              *
-            </span>
-          </SplitItem>
-        )}
         {extendedHelpText && (
           <SplitItem>
             <PopoverHint hint={extendedHelpText} />
           </SplitItem>
         )}
       </Split>
+
+      <FormGroupHelperText touched={touched || showInitialValidationErrors} error={error}>
+        {helpText}
+      </FormGroupHelperText>
     </FormGroup>
   );
 }

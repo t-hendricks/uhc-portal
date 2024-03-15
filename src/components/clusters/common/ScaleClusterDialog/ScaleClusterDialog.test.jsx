@@ -1,18 +1,19 @@
 import React from 'react';
-import { shallow } from 'enzyme';
-import ErrorBox from '../../../common/ErrorBox';
-
+import { render, screen, checkAccessibility } from '~/testUtils';
+import wizardConnector from '~/components/clusters/wizards/common/WizardConnector';
 import ScaleClusterDialog from './ScaleClusterDialog';
 
 describe('<ScaleClusterDialog />', () => {
-  let wrapper;
-  let closeModal;
-  let onClose;
-  let handleSubmit;
-  let change;
-  let resetResponse;
-  let getLoadBalancers;
-  let getPersistentStorage;
+  const ConnectedScaleClusterDialog = wizardConnector(ScaleClusterDialog);
+  const closeModal = jest.fn();
+  const onClose = jest.fn();
+  const handleSubmit = jest.fn();
+  const change = jest.fn();
+  const resetResponse = jest.fn();
+  const getLoadBalancers = jest.fn();
+  const getPersistentStorage = jest.fn();
+  const getCloudProviders = jest.fn();
+  const getOrganizationAndQuota = jest.fn();
 
   const fulfilledRequest = {
     pending: false,
@@ -26,92 +27,91 @@ describe('<ScaleClusterDialog />', () => {
     fulfilled: false,
   };
 
-  beforeEach(() => {
-    closeModal = jest.fn();
-    onClose = jest.fn();
-    handleSubmit = jest.fn();
-    change = jest.fn();
-    resetResponse = jest.fn();
-    getLoadBalancers = jest.fn();
-    getPersistentStorage = jest.fn();
-    wrapper = shallow(
-      <ScaleClusterDialog
-        isOpen
-        closeModal={closeModal}
-        onClose={onClose}
-        handleSubmit={handleSubmit}
-        change={change}
-        resetResponse={resetResponse}
-        getPersistentStorage={getPersistentStorage}
-        getCloudProviders={jest.fn()}
-        getOrganizationAndQuota={jest.fn()}
-        getLoadBalancers={getLoadBalancers}
-        loadBalancerValues={fulfilledRequest}
-        persistentStorageValues={fulfilledRequest}
-        organization={fulfilledRequest}
-        cloudProviderID="aws"
-        billingModel="standard"
-        isMultiAZ
-        product="OSD"
-        initialValues={{
-          id: 'test-id',
-          nodes_compute: 4,
-          load_balancers: 4,
-          persistent_storage: 107374182400,
-        }}
-        min={{ value: 4, validationMsg: 'error' }}
-        pristine={false}
-      />,
-    );
-  });
-  it('renders correctly', () => {
-    expect(wrapper).toMatchSnapshot();
+  const defaultProps = {
+    isOpen: true,
+    closeModal,
+    onClose,
+    handleSubmit,
+    change,
+    resetResponse,
+    getPersistentStorage,
+    getCloudProviders,
+    getOrganizationAndQuota,
+    getLoadBalancers,
+    loadBalancerValues: fulfilledRequest,
+    persistentStorageValues: fulfilledRequest,
+    organization: fulfilledRequest,
+    cloudProviderID: 'aws',
+    billingModel: 'standard',
+    isMultiAZ: true,
+    product: 'OSD',
+    initialValues: {
+      id: 'test-id',
+      nodes_compute: 4,
+      load_balancers: 4,
+      persistent_storage: 107374182400,
+    },
+    min: { value: 4, validationMsg: 'error' },
+    pristine: false,
+    isByoc: false,
+  };
+
+  afterEach(() => {
+    jest.clearAllMocks();
   });
 
-  it('when fulfilled, closes dialog', () => {
-    wrapper.setProps({ editClusterResponse: { fulfilled: true } });
+  it('is accessible', async () => {
+    const { container } = render(<ConnectedScaleClusterDialog {...defaultProps} />);
+
+    expect(await screen.findByText('Load balancers')).toBeInTheDocument();
+
+    await checkAccessibility(container);
+  });
+
+  it('when fulfilled, closes dialog', async () => {
+    const { rerender } = render(<ConnectedScaleClusterDialog {...defaultProps} />);
+    expect(closeModal).not.toBeCalled();
+    expect(resetResponse).not.toBeCalled();
+    expect(onClose).not.toBeCalled();
+
+    const fulFilledProps = {
+      ...defaultProps,
+      editClusterResponse: { fulfilled: true },
+    };
+
+    rerender(<ConnectedScaleClusterDialog {...fulFilledProps} />);
+    expect(await screen.findByText('Load balancers')).toBeInTheDocument();
     expect(closeModal).toBeCalled();
     expect(resetResponse).toBeCalled();
     expect(onClose).toBeCalled();
   });
 
-  it('renders correctly when an error occurs', () => {
-    wrapper.setProps({ editClusterResponse: { error: true, errorMessage: 'this is an error' } });
-    expect(wrapper).toMatchSnapshot();
-    expect(wrapper.find(ErrorBox).length).toEqual(1);
+  it('renders correctly when an error occurs', async () => {
+    const errorProps = {
+      ...defaultProps,
+      editClusterResponse: { error: true, errorMessage: 'this is an error' },
+    };
+
+    render(<ConnectedScaleClusterDialog {...errorProps} />);
+    expect(await screen.findByText('Load balancers')).toBeInTheDocument();
+
+    // There are multiple errors due to the redux state not being in shape that is
+    // expected for child components.  The logic we are checking is in the first alert.
+    expect(screen.getByText('this is an error')).toBeInTheDocument();
   });
 
-  describe('fecth data -', () => {
-    it('should fetch machine types, storgae and load balancers data', () => {
-      shallow(
-        <ScaleClusterDialog
-          isOpen
-          closeModal={closeModal}
-          onClose={onClose}
-          handleSubmit={handleSubmit}
-          change={change}
-          resetResponse={resetResponse}
-          getPersistentStorage={getPersistentStorage}
-          getCloudProviders={jest.fn()}
-          getOrganizationAndQuota={jest.fn()}
-          getLoadBalancers={getLoadBalancers}
-          loadBalancerValues={requestInitialState}
-          persistentStorageValues={requestInitialState}
-          organization={fulfilledRequest}
-          cloudProviderID="aws"
-          isMultiAZ
-          billingModel="standard"
-          product="OSD"
-          initialValues={{
-            id: 'test-id',
-            nodes_compute: 4,
-            load_balancers: 4,
-            persistent_storage: 107374182400,
-          }}
-          min={{ value: 4, validationMsg: 'error' }}
-          pristine={false}
-        />,
-      );
+  describe('fetching data -', () => {
+    it('on load fetches  storage and load balancers data', () => {
+      const initialStateProps = {
+        ...defaultProps,
+        loadBalancerValues: requestInitialState,
+        persistentStorageValues: requestInitialState,
+      };
+
+      expect(getLoadBalancers).not.toBeCalled();
+      expect(getPersistentStorage).not.toBeCalled();
+
+      render(<ConnectedScaleClusterDialog {...initialStateProps} />);
       expect(getLoadBalancers).toBeCalled();
       expect(getPersistentStorage).toBeCalled();
     });

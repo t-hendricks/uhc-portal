@@ -1,21 +1,30 @@
 import React from 'react';
 import isEmpty from 'lodash/isEmpty';
 
-import { Bullseye, Spinner, Stack, StackItem, Title } from '@patternfly/react-core';
-import { useWizardContext } from '@patternfly/react-core/next';
+import {
+  Bullseye,
+  Spinner,
+  Stack,
+  StackItem,
+  Title,
+  useWizardContext,
+} from '@patternfly/react-core';
+
 import config from '~/config';
 import ReviewSection, {
   ReviewItem,
-} from '~/components/clusters/CreateOSDPage/CreateOSDWizard/ReviewClusterScreen/ReviewSection';
-import { useGlobalState } from '~/redux/hooks/useGlobalState';
+} from '~/components/clusters/wizards/common/ReviewCluster/ReviewSection';
 import { useFormState } from '~/components/clusters/wizards/hooks';
+import { hasSelectedSecurityGroups } from '~/common/securityGroupsHelpers';
 import {
   CloudProviderType,
   UpgradePolicyType,
 } from '~/components/clusters/wizards/common/constants';
 import { FieldId, StepId } from '~/components/clusters/wizards/osd/constants';
-import { canAutoScaleOnCreateSelector } from '~/components/clusters/ClusterDetails/components/MachinePools/MachinePoolsSelectors';
-import { DebugClusterRequest } from './DebugClusterRequest';
+import useCanClusterAutoscale from '~/components/clusters/ClusterDetails/components/MachinePools/components/EditMachinePoolModal/hooks/useCanClusterAutoscale';
+import { GCP_SECURE_BOOT_UI } from '~/redux/constants/featureConstants';
+import { useFeatureGate } from '~/hooks/useFeatureGate';
+import { DebugClusterRequest } from '~/components/clusters/wizards/common/DebugClusterRequest';
 import { canSelectImds } from '../../rosa/constants';
 
 interface ReviewAndCreateContentProps {
@@ -28,6 +37,7 @@ export const ReviewAndCreateContent = ({ isPending }: ReviewAndCreateContentProp
     values: {
       [FieldId.Product]: product,
       [FieldId.InstallToVpc]: installToVpc,
+      [FieldId.InstallToSharedVpc]: installToSharedVpc,
       [FieldId.ConfigureProxy]: configureProxy,
       [FieldId.Byoc]: byoc,
       [FieldId.CloudProvider]: cloudProvider,
@@ -35,14 +45,19 @@ export const ReviewAndCreateContent = ({ isPending }: ReviewAndCreateContentProp
       [FieldId.ClusterPrivacy]: clusterPrivacy,
       [FieldId.ClusterVersion]: clusterVersion,
       [FieldId.ApplicationIngress]: applicationIngress,
+      [FieldId.SecurityGroups]: securityGroups,
     },
     values: formValues,
   } = useFormState();
-  const canAutoScale = useGlobalState((state) => canAutoScaleOnCreateSelector(state, product));
+  const canAutoScale = useCanClusterAutoscale(product);
   const autoscalingEnabled = canAutoScale && !!formValues[FieldId.AutoscalingEnabled];
 
   const isByoc = byoc === 'true';
   const isAWS = cloudProvider === CloudProviderType.Aws;
+  const isGCP = cloudProvider === CloudProviderType.Gcp;
+
+  const hasSecurityGroups = isByoc && hasSelectedSecurityGroups(securityGroups);
+  const isSecureBootFeatureEnabled = useFeatureGate(GCP_SECURE_BOOT_UI);
 
   const clusterSettingsFields = [
     FieldId.CloudProvider,
@@ -50,10 +65,10 @@ export const ReviewAndCreateContent = ({ isPending }: ReviewAndCreateContentProp
     FieldId.ClusterVersion,
     FieldId.Region,
     FieldId.MultiAz,
-    ...(!isByoc ? [FieldId.PersistentStorage] : []),
-    ...(isByoc && isAWS ? [FieldId.DisableScpChecks] : []),
+    ...(isGCP && isSecureBootFeatureEnabled ? [FieldId.SecureBoot] : []),
     FieldId.EnableUserWorkloadMonitoring,
-    ...(isByoc ? [FieldId.CustomerManagedKey] : []),
+    ...(isByoc ? [FieldId.CustomerManagedKey] : [FieldId.PersistentStorage]),
+    ...(isByoc && isAWS ? [FieldId.DisableScpChecks] : []),
     FieldId.EtcdEncryption,
     FieldId.FipsCryptography,
   ];
@@ -64,7 +79,7 @@ export const ReviewAndCreateContent = ({ isPending }: ReviewAndCreateContentProp
         <Stack>
           <StackItem>
             <Bullseye>
-              <Spinner size="xl" isSVG />
+              <Spinner size="xl" />
             </Bullseye>
           </StackItem>
           <StackItem>
@@ -125,8 +140,14 @@ export const ReviewAndCreateContent = ({ isPending }: ReviewAndCreateContentProp
         {isByoc && clusterPrivacy === 'internal' && installToVpc && (
           <ReviewItem name={FieldId.UsePrivateLink} formValues={formValues} />
         )}
+        {isByoc && isGCP && installToSharedVpc && (
+          <ReviewItem name={FieldId.SharedHostProjectID} formValues={formValues} />
+        )}
         {isByoc && installToVpc && (
           <ReviewItem name={isAWS ? 'aws_standalone_vpc' : 'gpc_vpc'} formValues={formValues} />
+        )}
+        {isByoc && installToVpc && hasSecurityGroups && (
+          <ReviewItem name="securityGroups" formValues={formValues} />
         )}
         {installToVpc && <ReviewItem name={FieldId.ConfigureProxy} formValues={formValues} />}
         {installToVpc && configureProxy && (
@@ -142,11 +163,9 @@ export const ReviewAndCreateContent = ({ isPending }: ReviewAndCreateContentProp
         <ReviewItem name={FieldId.NetworkPodCidr} formValues={formValues} />
         <ReviewItem name={FieldId.NetworkHostPrefix} formValues={formValues} />
 
-        {isAWS && isByoc && (
-          <ReviewItem name={FieldId.ApplicationIngress} formValues={formValues} />
-        )}
+        {isByoc && <ReviewItem name={FieldId.ApplicationIngress} formValues={formValues} />}
 
-        {applicationIngress !== 'default' && isAWS && isByoc && (
+        {applicationIngress !== 'default' && isByoc && (
           <>
             <ReviewItem name={FieldId.DefaultRouterSelectors} formValues={formValues} />
             <ReviewItem

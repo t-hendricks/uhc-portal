@@ -1,70 +1,89 @@
 import React from 'react';
-import { shallow } from 'enzyme';
-import { TextInput } from '@patternfly/react-core';
-
+import { render, screen, checkAccessibility } from '~/testUtils';
 import DeleteClusterDialog from '../DeleteClusterDialog';
 
 describe('<DeleteClusterDialog />', () => {
-  let wrapper;
-  let clear;
-  let closeModal;
-  let onClose;
-  let deleteCluster;
-  beforeEach(() => {
-    clear = jest.fn();
-    closeModal = jest.fn();
-    deleteCluster = jest.fn();
-    onClose = jest.fn();
-    wrapper = shallow(
-      <DeleteClusterDialog
-        isOpen
-        modalData={{
-          clusterName: 'fake-name',
-          clusterID: 'fake-id',
-        }}
-        clearDeleteClusterResponse={clear}
-        close={closeModal}
-        onClose={onClose}
-        deleteCluster={deleteCluster}
-        deleteClusterResponse={{ fulfilled: false, pending: false, error: false }}
-      />,
+  const clear = jest.fn();
+  const closeModal = jest.fn();
+  const deleteCluster = jest.fn();
+  const onClose = jest.fn();
+
+  const defaultProps = {
+    isOpen: true,
+    modalData: {
+      clusterName: 'my-cluster-name',
+      clusterID: 'my-cluster-id',
+    },
+    clearDeleteClusterResponse: clear,
+    close: closeModal,
+    onClose,
+    deleteCluster,
+    deleteClusterResponse: { fulfilled: false, pending: false, error: false },
+  };
+
+  afterEach(() => {
+    jest.clearAllMocks();
+  });
+
+  it('is accessible', async () => {
+    const { container } = render(<DeleteClusterDialog {...defaultProps} />);
+    await checkAccessibility(container);
+    expect(screen.getByRole('dialog')).toBeInTheDocument();
+  });
+
+  it('delete button is initially disabled', () => {
+    render(<DeleteClusterDialog {...defaultProps} />);
+    expect(screen.getByRole('button', { name: 'Delete' })).toHaveAttribute('aria-disabled', 'true');
+  });
+
+  it('delete button is enabled  after inputting the cluster name', async () => {
+    const { user } = render(<DeleteClusterDialog {...defaultProps} />);
+    expect(screen.getByRole('button', { name: 'Delete' })).toHaveAttribute('aria-disabled', 'true');
+
+    await user.type(screen.getByRole('textbox'), 'wrong_name');
+
+    expect(screen.getByRole('button', { name: 'Delete' })).toHaveAttribute('aria-disabled', 'true');
+
+    await user.clear(screen.getByRole('textbox'));
+    await user.type(screen.getByRole('textbox'), 'my-cluster-name');
+
+    expect(screen.getByRole('button', { name: 'Delete' })).toHaveAttribute(
+      'aria-disabled',
+      'false',
     );
   });
-  it('renders correctly', () => {
-    expect(wrapper).toMatchSnapshot();
+
+  it('should call deleteCluster correctly', async () => {
+    const { user } = render(<DeleteClusterDialog {...defaultProps} />);
+
+    await user.type(screen.getByRole('textbox'), 'my-cluster-name');
+
+    expect(deleteCluster).not.toHaveBeenCalled();
+    await user.click(screen.getByRole('button', { name: 'Delete' }));
+    expect(deleteCluster).toBeCalledWith('my-cluster-id');
   });
 
-  it('delete button should be disabled', () => {
-    const modal = wrapper.find('Modal');
-    expect(modal.props().isPrimaryDisabled).toBeTruthy();
-  });
+  it('should close modal on cancel', async () => {
+    const { user } = render(<DeleteClusterDialog {...defaultProps} />);
+    expect(closeModal).not.toBeCalled();
+    expect(clear).not.toBeCalled();
+    expect(onClose).not.toBeCalled();
 
-  it('delete button should be enabled only after inputting the cluster name', () => {
-    expect(wrapper.find('Modal').props().isPrimaryDisabled).toBeTruthy(); // disabled at first
-
-    wrapper.find(TextInput).simulate('change', 'fake');
-    expect(wrapper.find('Modal').props().isPrimaryDisabled).toBeTruthy(); // disabled when unrelated input
-
-    wrapper.find(TextInput).simulate('change', 'fake-name');
-    expect(wrapper.find('Modal').props().isPrimaryDisabled).toBeFalsy(); // enabled when correct
-  });
-
-  it('should call deleteCluster correctly', () => {
-    const modal = wrapper.find('Modal');
-    modal.props().onPrimaryClick();
-    expect(deleteCluster).toBeCalledWith('fake-id');
-  });
-
-  it('should close modal on cancel', () => {
-    const modal = wrapper.find('Modal');
-    modal.props().onSecondaryClick();
+    await user.click(screen.getByRole('button', { name: 'Cancel' }));
     expect(closeModal).toBeCalled();
     expect(clear).toBeCalled();
     expect(onClose).toHaveBeenLastCalledWith(false);
   });
 
-  it('should close correctly on succeess', () => {
-    wrapper.setProps({ deleteClusterResponse: { fulfilled: true, pending: false, error: false } });
+  it('should close correctly on success', () => {
+    const { rerender } = render(<DeleteClusterDialog {...defaultProps} />);
+
+    const newProps = {
+      ...defaultProps,
+      deleteClusterResponse: { fulfilled: true, pending: false, error: false },
+    };
+    rerender(<DeleteClusterDialog {...newProps} />);
+
     expect(closeModal).toBeCalled();
     expect(clear).toBeCalled();
     expect(onClose).toHaveBeenLastCalledWith(true);

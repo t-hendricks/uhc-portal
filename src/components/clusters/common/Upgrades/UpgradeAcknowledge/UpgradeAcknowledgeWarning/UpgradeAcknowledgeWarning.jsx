@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { AlertActionLink, Alert, Button } from '@patternfly/react-core';
-import { InfoCircleIcon } from '@patternfly/react-icons';
+import { InfoCircleIcon } from '@patternfly/react-icons/dist/esm/icons/info-circle-icon';
 
 import UpgradeAcknowledgeModal from '../UpgradeAcknowledgeModal';
 import './UpgradeAcknowledgeWarning.scss';
@@ -66,11 +66,9 @@ const UpgradeAcknowledgeWarning = (props) => {
             className={isPlain ? '' : 'automatic-cluster-updates-alert'}
             actionLinks={
               !isPlain ? (
-                <>
-                  <AlertActionLink onClick={() => handleButtonClick()}>
-                    Provide approval
-                  </AlertActionLink>
-                </>
+                <AlertActionLink onClick={() => handleButtonClick()}>
+                  Provide approval
+                </AlertActionLink>
               ) : null
             }
           />
@@ -104,8 +102,8 @@ UpgradeAcknowledgeWarning.propTypes = {
   openModal: PropTypes.func,
   clusterId: PropTypes.string,
   openshiftVersion: PropTypes.string,
-  fromVersion: PropTypes.func,
-  toVersion: PropTypes.func,
+  fromVersion: PropTypes.string,
+  toVersion: PropTypes.string,
   getAcks: PropTypes.array,
   isManual: PropTypes.bool,
 };

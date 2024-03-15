@@ -94,7 +94,7 @@ function UpgradeSettingsFields({
           </ExternalLink>{' '}
           (CVEs) that significantly impact the security or stability of the cluster, updates may be{' '}
           automatically scheduled by Red Hat SRE to the latest z-stream version not impacted by the{' '}
-          CVE within 48 hours after customer notifications.
+          CVE within 2 business days after customer notifications.
         </Text>
       </GridItem>
       <GridItem className="ocm-c-upgrade-policy-radios">
@@ -112,25 +112,27 @@ function UpgradeSettingsFields({
           disableDefaultValueHandling // interferes with enableReinitialize.
         />
       </GridItem>
-      {showDivider && <Divider />}
-      <GridItem>
-        <Title headingLevel="h4" className="ocm-c-upgrade-node-draining-title">
-          Node draining
-        </Title>
-        <TextContent>
-          <Text component={TextVariants.p}>
-            You may set a grace period for how long pod disruption budget-protected workloads will{' '}
-            be respected during updates. After this grace period, any workloads protected by pod
-            disruption budgets that have not been successfully drained from a node will be forcibly
-            evicted.
-          </Text>
-        </TextContent>
-        <Field
-          name="node_drain_grace_period"
-          component={PodDistruptionBudgetGraceSelect}
-          isDisabled={isDisabled}
-        />
-      </GridItem>
+      {showDivider && !isHypershift ? <Divider /> : null}
+      {!isHypershift ? (
+        <GridItem>
+          <Title headingLevel="h4" className="ocm-c-upgrade-node-draining-title">
+            Node draining
+          </Title>
+          <TextContent>
+            <Text component={TextVariants.p}>
+              You may set a grace period for how long pod disruption budget-protected workloads will{' '}
+              be respected during updates. After this grace period, any workloads protected by pod
+              disruption budgets that have not been successfully drained from a node will be
+              forcibly evicted.
+            </Text>
+          </TextContent>
+          <Field
+            name="node_drain_grace_period"
+            component={PodDistruptionBudgetGraceSelect}
+            isDisabled={isDisabled}
+          />
+        </GridItem>
+      ) : null}
     </>
   );
 }

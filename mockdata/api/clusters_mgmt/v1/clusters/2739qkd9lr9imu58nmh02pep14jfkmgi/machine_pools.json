@@ -1,0 +1,19 @@
+{
+  "kind": "MachinePoolList",
+  "href": "/api/clusters_mgmt/v1/clusters/2739qkd9lr9imu58nmh02pep14jfkmgi/machine_pools",
+  "page": 1,
+  "size": 1,
+  "total": 1,
+  "items": [
+    {
+      "kind": "MachinePool",
+      "href": "/api/clusters_mgmt/v1/clusters/2739qkd9lr9imu58nmh02pep14jfkmgi/machine_pools/worker",
+      "id": "worker",
+      "replicas": 4,
+      "instance_type": "m5.xlarge",
+      "availability_zones": [
+        "us-east-1a"
+      ]
+    }
+  ]
+}

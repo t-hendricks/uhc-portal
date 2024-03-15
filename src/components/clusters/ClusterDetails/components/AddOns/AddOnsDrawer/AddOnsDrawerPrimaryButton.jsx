@@ -5,7 +5,7 @@ import './AddOnsDrawer.scss';
 
 import { Button } from '@patternfly/react-core';
 
-import { ExternalLinkAltIcon } from '@patternfly/react-icons';
+import { ExternalLinkAltIcon } from '@patternfly/react-icons/dist/esm/icons/external-link-alt-icon';
 import { hasParameters } from '../AddOnsHelper';
 import clusterStates, { isHibernating } from '../../../../common/clusterStates';
 import { noQuotaTooltip } from '../../../../../../common/helpers';
@@ -69,7 +69,7 @@ function AddOnsPrimaryButton(props) {
   const isReadOnly = cluster?.status?.configuration_mode === 'read_only';
   const readOnlyReason = isReadOnly && 'This operation is not available during maintenance';
   const hibernatingReason =
-    isHibernating(cluster.state) && 'This operation is not available while cluster is hibernating';
+    isHibernating(cluster) && 'This operation is not available while cluster is hibernating';
   // a superset of hibernatingReason.
   const notReadyReason = cluster.state !== clusterStates.READY && 'This cluster is not ready';
   const requirementsReason = !activeCardRequirementsFulfilled && 'Prerequisites not met';
@@ -113,7 +113,7 @@ function AddOnsPrimaryButton(props) {
           clusterID: cluster.id,
         })
       }
-      className={hasMarginLeft && 'pf-u-ml-xs'}
+      className={hasMarginLeft && 'pf-v5-u-ml-xs'}
     >
       Uninstall
     </ButtonWithTooltip>
@@ -166,7 +166,7 @@ function AddOnsPrimaryButton(props) {
             href={url}
             target="_blank"
             rel="noopener noreferrer"
-            isSmall
+            size="sm"
           >
             Contact support
           </Button>{' '}
@@ -184,7 +184,7 @@ function AddOnsPrimaryButton(props) {
               href={url}
               target="_blank"
               rel="noopener noreferrer"
-              isSmall
+              size="sm"
             >
               Open in Console <ExternalLinkAltIcon className="link-icon" />
             </Button>{' '}

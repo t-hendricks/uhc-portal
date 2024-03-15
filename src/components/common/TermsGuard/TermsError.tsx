@@ -1,17 +1,17 @@
 import React from 'react';
 import { AxiosResponse } from 'axios';
 import {
-  Title,
   Button,
   EmptyState,
   EmptyStateVariant,
   EmptyStateIcon,
   EmptyStateBody,
-  EmptyStateSecondaryActions,
+  EmptyStateActions,
+  EmptyStateHeader,
+  EmptyStateFooter,
 } from '@patternfly/react-core';
-import { ExclamationCircleIcon } from '@patternfly/react-icons';
-// eslint-disable-next-line camelcase
-import { global_danger_color_100 } from '@patternfly/react-tokens';
+import { ExclamationCircleIcon } from '@patternfly/react-icons/dist/esm/icons/exclamation-circle-icon';
+import { global_danger_color_100 as dangerColor } from '@patternfly/react-tokens/dist/esm/global_danger_color_100';
 
 import getTermsAppLink from '../../../common/getTermsAppLink';
 import { ViewTermsButton } from './ViewTermsButton';
@@ -27,22 +27,25 @@ const TermsError = ({ error, restore }: Props) => {
   const tncAppURL = getTermsAppLink(tncBaseURL, currentHref, currentHref);
 
   return (
-    <EmptyState variant={EmptyStateVariant.large}>
-      <EmptyStateIcon icon={ExclamationCircleIcon} color={global_danger_color_100.value} />
-      <Title headingLevel="h4" size="lg">
-        This action is blocked.
-      </Title>
+    <EmptyState variant={EmptyStateVariant.lg}>
+      <EmptyStateHeader
+        titleText="This action is blocked."
+        icon={<EmptyStateIcon icon={ExclamationCircleIcon} color={dangerColor.value} />}
+        headingLevel="h4"
+      />
       <EmptyStateBody>
         You must accept the Terms and Conditions in order to make changes to this cluster. Your
         cluster will remain unaffected until then. Once you accept the terms, you will need to retry
         the action that was blocked.
       </EmptyStateBody>
-      <ViewTermsButton href={tncAppURL} />
-      <EmptyStateSecondaryActions>
-        <Button variant="link" onClick={restore}>
-          Go back to previous page
-        </Button>
-      </EmptyStateSecondaryActions>
+      <EmptyStateFooter>
+        <ViewTermsButton href={tncAppURL} />
+        <EmptyStateActions>
+          <Button variant="link" onClick={restore}>
+            Go back to previous page
+          </Button>
+        </EmptyStateActions>
+      </EmptyStateFooter>
     </EmptyState>
   );
 };

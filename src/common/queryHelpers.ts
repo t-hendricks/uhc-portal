@@ -1,7 +1,8 @@
 import isEqual from 'lodash/isEqual';
 import isEmpty from 'lodash/isEmpty';
-import { omittedProducts, productFilterOptions } from './subscriptionTypes';
+import { GetClusterHistoryParams } from '~/services/serviceLogService';
 import { ViewOptions } from '../types/types';
+import { omittedProducts, productFilterOptions } from './subscriptionTypes';
 
 type QueryObject = { [key: string]: string | number | boolean };
 
@@ -105,10 +106,12 @@ const createViewQueryObject = (viewOptions?: ViewOptions, username?: string): Qu
 
 const createServiceLogQueryObject = (
   viewOptions?: ViewOptions,
-  queryObj?: QueryObject,
-): QueryObject => {
-  const queryObject: QueryObject = {
-    ...queryObj,
+  format?: GetClusterHistoryParams['format'],
+): GetClusterHistoryParams => {
+  const queryObject: GetClusterHistoryParams = {
+    page: 1,
+    page_size: -1,
+    format,
   };
 
   if (viewOptions) {
@@ -144,10 +147,14 @@ const createServiceLogQueryObject = (
     }
 
     if (viewOptions.flags) {
-      const { severityTypes = [] } = viewOptions.flags.conditionalFilterFlags;
+      const { severityTypes = [], logTypes = [] } = viewOptions.flags.conditionalFilterFlags;
       if (severityTypes.length > 0) {
         const quotedItems = severityTypes.map(sqlString);
         clauses.push(`severity IN (${quotedItems.join(',')})`);
+      }
+      if (logTypes.length > 0) {
+        const quotedItems = logTypes.map(sqlString);
+        clauses.push(`log_type IN (${quotedItems.join(',')})`);
       }
     }
 
@@ -205,10 +212,16 @@ const getQueryParam = (param: string): string | undefined => {
     .forEach((queryString) => {
       const [key, val] = queryString.split('=');
       if (key === param) {
-        ret = val;
+        ret = decodeURI(val);
       }
     });
   return ret;
+};
+
+const deleteQueryParam = (param: string): void => {
+  const url = new URL(window.location.href);
+  url.searchParams.delete(param);
+  window.history.replaceState({}, '', url.toString());
 };
 
 export {
@@ -220,4 +233,5 @@ export {
   viewPropsChanged,
   sqlString,
   getQueryParam,
+  deleteQueryParam,
 };

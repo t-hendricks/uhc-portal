@@ -21,16 +21,11 @@ import React, { Component } from 'react';
 
 import { PageHeader, PageHeaderTitle } from '@redhat-cloud-services/frontend-components/PageHeader';
 import Spinner from '@redhat-cloud-services/frontend-components/Spinner';
-import {
-  Card,
-  PageHeaderTools,
-  PageSection,
-  Toolbar,
-  ToolbarItem,
-  ToolbarContent,
-} from '@patternfly/react-core';
+import { Card, PageSection, Toolbar, ToolbarItem, ToolbarContent } from '@patternfly/react-core';
+import { PageHeaderTools as PageHeaderToolsDeprecated } from '@patternfly/react-core/deprecated';
 import { AppPage } from '~/components/App/AppPage';
 import { isRestrictedEnv } from '~/restrictedEnv';
+import { ONLY_MY_CLUSTERS_TOGGLE_CLUSTERS_LIST } from '~/common/localStorageConstants';
 
 import ReadOnlyBanner from '../common/ReadOnlyBanner';
 import ClusterListFilter from '../common/ClusterListFilter';
@@ -44,7 +39,7 @@ import ClusterListTable from './components/ClusterListTable';
 import RefreshBtn from '../../common/RefreshButton/RefreshButton';
 import ErrorTriangle from '../common/ErrorTriangle';
 import ErrorBox from '../../common/ErrorBox';
-import GlobalErrorBox from '../common/GlobalErrorBox';
+import GlobalErrorBox from '../common/GlobalErrorBox/GlobalErrorBox';
 import Unavailable from '../../common/Unavailable';
 import CommonClusterModals from '../common/CommonClusterModals';
 
@@ -170,7 +165,6 @@ class ClusterList extends Component {
       invalidateClusters,
       errorMessage,
       operationID,
-      history,
       setClusterDetails,
       anyModalOpen,
       queryParams,
@@ -193,8 +187,10 @@ class ClusterList extends Component {
 
     const showSpinner = !isPendingNoData && pending && !loadingChangedView;
     const showSkeleton = isPendingNoData || (pending && loadingChangedView);
+    // The empty state asserts as a fact that you have no clusters;
+    // not appropriate when results are indeterminate or empty due to filtering.
     const showEmptyState =
-      !isPendingNoData && !size(clusters) && hasNoFilters && !showMyClustersOnly;
+      !isPendingNoData && !error && !size(clusters) && hasNoFilters && !showMyClustersOnly;
 
     const someReadOnly = clusters.map((c) => c?.status?.configuration_mode).includes('read_only');
 
@@ -203,12 +199,12 @@ class ClusterList extends Component {
         <ReadOnlyBanner someReadOnly={someReadOnly} />
         <PageHeader id="cluster-list-header">
           <PageHeaderTitle title="Clusters" className="page-title" />
-          <PageHeaderTools>
+          <PageHeaderToolsDeprecated>
             {showSpinner && <Spinner size="lg" className="cluster-list-spinner" />}
             {error && (
               <ErrorTriangle errorMessage={errorMessage} className="cluster-list-warning" />
             )}
-          </PageHeaderTools>
+          </PageHeaderToolsDeprecated>
           <RefreshBtn
             autoRefresh={!anyModalOpen}
             isDisabled={isPendingNoData}
@@ -218,27 +214,6 @@ class ClusterList extends Component {
         </PageHeader>
       </>
     );
-
-    if (error && !size(clusters)) {
-      return (
-        <AppPage title={PAGE_TITLE}>
-          {pageHeader}
-          <PageSection>
-            <div data-ready>
-              <Unavailable
-                message="Error retrieving clusters"
-                response={{
-                  errorMessage,
-                  operationID,
-                  errorCode,
-                  errorDetails,
-                }}
-              />
-            </div>
-          </PageSection>
-        </AppPage>
-      );
-    }
 
     // This signals to end-to-end tests that page has completed loading.
     // For now deliberately ignoring in-place reloads with a spinner;
@@ -290,7 +265,6 @@ class ClusterList extends Component {
                       <ClusterListFilterDropdown
                         view={viewConstants.CLUSTERS_VIEW}
                         isDisabled={pending}
-                        history={history}
                         className="cluster-filter-dropdown"
                       />
                     </ToolbarItem>
@@ -299,9 +273,10 @@ class ClusterList extends Component {
                   <ViewOnlyMyClustersToggle
                     view={viewConstants.CLUSTERS_VIEW}
                     bodyContent="Show only the clusters you previously created, or all clusters in your organization."
+                    localStorageKey={ONLY_MY_CLUSTERS_TOGGLE_CLUSTERS_LIST}
                   />
                   <ToolbarItem
-                    alignment={{ default: 'alignRight' }}
+                    align={{ default: 'alignRight' }}
                     variant="pagination"
                     className="pf-m-hidden visible-on-lgplus"
                   >
@@ -318,21 +293,33 @@ class ClusterList extends Component {
                 </ToolbarContent>
               </Toolbar>
               {!isRestrictedEnv() && (
-                <ClusterListFilterChipGroup view={viewConstants.CLUSTERS_VIEW} history={history} />
+                <ClusterListFilterChipGroup view={viewConstants.CLUSTERS_VIEW} />
               )}
-              <ClusterListTable
-                openModal={openModal}
-                clusters={clusters || []}
-                viewOptions={viewOptions}
-                setSorting={setSorting}
-                isPending={showSkeleton}
-                setClusterDetails={setClusterDetails}
-                canSubscribeOCPList={canSubscribeOCPList}
-                canHibernateClusterList={canHibernateClusterList}
-                canTransferClusterOwnershipList={canTransferClusterOwnershipList}
-                toggleSubscriptionReleased={toggleSubscriptionReleased}
-                refreshFunc={this.refresh}
-              />
+              {error && !size(clusters) ? (
+                <Unavailable
+                  message="Error retrieving clusters"
+                  response={{
+                    errorMessage,
+                    operationID,
+                    errorCode,
+                    errorDetails,
+                  }}
+                />
+              ) : (
+                <ClusterListTable
+                  openModal={openModal}
+                  clusters={clusters || []}
+                  viewOptions={viewOptions}
+                  setSorting={setSorting}
+                  isPending={showSkeleton}
+                  setClusterDetails={setClusterDetails}
+                  canSubscribeOCPList={canSubscribeOCPList}
+                  canHibernateClusterList={canHibernateClusterList}
+                  canTransferClusterOwnershipList={canTransferClusterOwnershipList}
+                  toggleSubscriptionReleased={toggleSubscriptionReleased}
+                  refreshFunc={this.refresh}
+                />
+              )}
               <ViewPaginationRow
                 viewType={viewConstants.CLUSTERS_VIEW}
                 currentPage={viewOptions.currentPage}
@@ -342,7 +329,7 @@ class ClusterList extends Component {
                 variant="bottom"
                 isDisabled={isPendingNoData}
               />
-              <CommonClusterModals onClose={invalidateClusters} />
+              <CommonClusterModals onClose={invalidateClusters} clearMachinePools />
             </div>
           </Card>
         </PageSection>
@@ -384,9 +371,6 @@ ClusterList.propTypes = {
   closeModal: PropTypes.func.isRequired,
   setListFlag: PropTypes.func.isRequired,
   operationID: PropTypes.string,
-  history: PropTypes.shape({
-    push: PropTypes.func.isRequired,
-  }).isRequired,
   anyModalOpen: PropTypes.bool,
   features: PropTypes.object.isRequired,
   queryParams: PropTypes.shape({

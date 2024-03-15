@@ -5,7 +5,7 @@ import {
   HOST_PREFIX_DEFAULT,
   MACHINE_CIDR_DEFAULT,
   SERVICE_CIDR_DEFAULT,
-} from '~/components/clusters/CreateOSDPage/CreateOSDForm/FormSections/NetworkingSection/networkingConstants';
+} from '~/components/clusters/common/networkingConstants';
 import {
   FieldId as CommonFieldId,
   CloudProviderType,
@@ -13,53 +13,36 @@ import {
   IMDSType,
 } from '~/components/clusters/wizards/common/constants';
 import { BreadcrumbPath } from '~/components/common/Breadcrumbs';
-import { getDefaultClusterAutoScaling } from '~/components/clusters/CreateOSDPage/clusterAutoScalingValues';
+import { emptyAWSSubnet } from '~/components/clusters/wizards/common/createOSDInitialValues';
+import { getDefaultSecurityGroupsSettings } from '~/common/securityGroupsHelpers';
+import { getDefaultClusterAutoScaling } from '~/components/clusters/common/clusterAutoScalingValues';
 import { ApplicationIngressType, ClusterPrivacyType } from './Networking/constants';
 
 export enum OsdFieldId {
   // TODO: many fields here should move to common/constants.
-  AccountId = 'account_id',
-  AccessKeyId = 'access_key_id',
-  SecretAccessKey = 'secret_access_key',
-  InstallerRoleArn = 'installer_role_arn',
-  GcpServiceAccount = 'gcp_service_account',
-  Region = 'region',
   CustomerManagedKey = 'customer_managed_key',
   CustomerOperatorRolesPrefix = 'custom_operator_roles_prefix',
-  ClusterVersion = 'cluster_version',
   PersistentStorage = 'persistent_storage',
-  ClusterName = 'name',
   LoadBalancers = 'load_balancers',
+  SecureBoot = 'secure_boot',
   EnableUserWorkloadMonitoring = 'enable_user_workload_monitoring',
   EtcdEncryption = 'etcd_encryption',
   ClusterPrivacy = 'cluster_privacy',
-  ConfigureProxy = 'configure_proxy',
-  InstallToVpc = 'install_to_vpc',
-  UsePrivateLink = 'use_privatelink',
-  PublicSubnetId = 'public_subnet_id',
-  PrivateSubnetId = 'private_subnet_id',
+  InstallToSharedVpc = 'install_to_shared_vpc',
+  SharedHostProjectID = 'shared_host_project_id',
   KeyLocation = 'key_location',
   KeyRing = 'key_ring',
   KeyName = 'key_name',
   KmsKeyArn = 'kms_key_arn',
   KmsServiceAccount = 'kms_service_account',
-  VpcName = 'vpc_name',
-  ComputeSubnet = 'compute_subnet',
-  ControlPlaneSubnet = 'control_plane_subnet',
-  FirstAvailabilityZone = 'az_0',
-  SecondAvailabilityZone = 'az_1',
-  ThirdAvailabilityZone = 'az_2',
-  HttpProxyUrl = 'http_proxy_url',
-  HttpsProxyUrl = 'https_proxy_url',
-  AdditionalTrustBundle = 'additional_trust_bundle',
   DisableScpChecks = 'disable_scp_checks',
-  NoProxyDomains = 'no_proxy_domains',
   NetworkMachineCidr = 'network_machine_cidr',
   NetworkServiceCidr = 'network_service_cidr',
   NetworkPodCidr = 'network_pod_cidr',
   NetworkHostPrefix = 'network_host_prefix',
   NetworkMachineCidrSingleAz = 'network_machine_cidr_single_az',
   NetworkMachineCidrMultiAz = 'network_machine_cidr_multi_az',
+  MarketplaceSelection = 'marketplace_selection',
 }
 
 export const FieldId = { ...CommonFieldId, ...OsdFieldId };
@@ -108,11 +91,16 @@ export const breadcrumbs: BreadcrumbPath[] = [
 
 export const initialValues: FormikValues = {
   [FieldId.Product]: normalizedProducts.OSD,
-  [FieldId.Byoc]: 'false',
+  [FieldId.Byoc]: 'true',
   [FieldId.CloudProvider]: CloudProviderType.Aws,
   [FieldId.AcknowledgePrereq]: false,
   [FieldId.BillingModel]: billingModels.STANDARD,
   [FieldId.MultiAz]: 'false',
+  [FieldId.SelectedVpc]: { id: '', name: '' },
+  [FieldId.MachinePoolsSubnets]: [emptyAWSSubnet()],
+  [FieldId.SecurityGroups]: getDefaultSecurityGroupsSettings(),
+  [FieldId.InstallToSharedVpc]: false,
+  [FieldId.SecureBoot]: false,
   [FieldId.EnableUserWorkloadMonitoring]: true,
   [FieldId.NodeLabels]: [{ key: '', value: '' }],
   [FieldId.ClusterPrivacy]: ClusterPrivacyType.External,
@@ -144,3 +132,4 @@ export const clusterNameHint =
 export const documentTitle =
   'Create an OpenShift Dedicated cluster | Red Hat OpenShift Cluster Manager';
 export const ariaLabel = 'Create OpenShift Dedicated cluster wizard';
+export const MIN_SECURE_BOOT_VERSION = '4.13.0';

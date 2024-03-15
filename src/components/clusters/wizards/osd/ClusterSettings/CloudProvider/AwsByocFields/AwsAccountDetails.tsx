@@ -1,14 +1,14 @@
 import React from 'react';
-
+import { useDispatch } from 'react-redux';
 import { Grid, GridItem, Alert, Title, Flex } from '@patternfly/react-core';
-
 import { useGlobalState } from '~/redux/hooks/useGlobalState';
+import { clearMachineTypesByRegion } from '~/redux/actions/machineTypesActions';
 import { awsNumericAccountID, required } from '~/common/validators';
 import links from '~/common/installLinks.mjs';
 import {
   billingModelConstants,
   constants,
-} from '~/components/clusters/CreateOSDPage/CreateOSDForm/CreateOSDFormConstants';
+} from '~/components/clusters/common/CreateOSDFormConstants';
 import InstructionCommand from '~/components/common/InstructionCommand';
 import ExternalLink from '~/components/common/ExternalLink';
 import { TextInputField, CheckboxField } from '~/components/clusters/wizards/form';
@@ -16,7 +16,16 @@ import { FieldId } from '~/components/clusters/wizards/osd/constants';
 
 export const AwsAccountDetails = () => {
   const { ccsCredentialsValidity } = useGlobalState((state) => state.ccsInquiries);
+  const machineTypesByRegion = useGlobalState((state) => state.machineTypesByRegion);
   const { pending: isValidating } = ccsCredentialsValidity;
+  const dispatch = useDispatch();
+
+  // clear machineTypeByRegion cache when credentials change
+  const clearMachineTypes = React.useCallback(() => {
+    if (machineTypesByRegion.region) {
+      dispatch(clearMachineTypesByRegion());
+    }
+  }, [dispatch, machineTypesByRegion.region]);
 
   return (
     <Grid hasGutter md={6}>
@@ -27,6 +36,7 @@ export const AwsAccountDetails = () => {
             label="AWS account ID"
             validate={awsNumericAccountID}
             isDisabled={isValidating}
+            onChange={clearMachineTypes}
             tooltip={
               <>
                 <p>
@@ -35,7 +45,7 @@ export const AwsAccountDetails = () => {
                 </p>
                 <br />
                 <InstructionCommand textAriaLabel="Copyable AWS account ID command">
-                  $ aws sts get-caller-identity
+                  aws sts get-caller-identity
                 </InstructionCommand>
                 <br />
                 <ExternalLink href={links.FINDING_AWS_ACCOUNT_IDENTIFIERS}>
@@ -52,7 +62,7 @@ export const AwsAccountDetails = () => {
 
         <GridItem>
           <Alert
-            className="bottom-alert pf-u-mt-0"
+            className="bottom-alert pf-v5-u-mt-0"
             variant="warning"
             title={billingModelConstants.awsCredentialsWarning}
             isInline
@@ -66,6 +76,7 @@ export const AwsAccountDetails = () => {
             validate={required}
             isDisabled={isValidating}
             helperText={isValidating ? 'Validating...' : ''}
+            onChange={clearMachineTypes}
           />
         </GridItem>
 
@@ -77,6 +88,7 @@ export const AwsAccountDetails = () => {
             isDisabled={isValidating}
             helperText={isValidating ? 'Validating...' : ''}
             type="password"
+            onChange={clearMachineTypes}
           />
         </GridItem>
 

@@ -4,7 +4,7 @@ import { Tooltip } from '@patternfly/react-core';
 
 import get from 'lodash/get';
 
-import { PreviewLabel, createdPostGa } from '~/components/clusters/common/PreviewLabel';
+import { PreviewLabel } from '~/components/clusters/common/PreviewLabel';
 import { normalizedProducts } from '../../../common/subscriptionTypes';
 
 function ClusterTypeLabel({ cluster }) {
@@ -35,15 +35,17 @@ function ClusterTypeLabel({ cluster }) {
       tooltip: 'Red Hat OpenShift Service on AWS',
     },
     [normalizedProducts.ROSA_HyperShift]: {
-      name: 'ROSA - Hosted',
-      tooltip: 'Red Hat OpenShift Service on AWS - Hosted control plane',
-      label: createdPostGa(creationDateStr) ? null : (
-        <PreviewLabel creationDateStr={creationDateStr} />
-      ),
+      name: 'ROSA',
+      tooltip: 'Red Hat OpenShift Service on AWS',
+      label: <PreviewLabel creationDateStr={creationDateStr} />, // PreviewLabel will return null if created after creationDate
     },
     [normalizedProducts.ARO]: {
       name: 'ARO',
       tooltip: 'Red Hat OpenShift Service on Azure',
+    },
+    [normalizedProducts.RHOIC]: {
+      name: 'RHOIC',
+      tooltip: 'Red Hat OpenShift Service on IBM Cloud',
     },
     [normalizedProducts.UNKNOWN]: {
       name: 'N/A',
@@ -71,11 +73,7 @@ function ClusterTypeLabel({ cluster }) {
 }
 
 ClusterTypeLabel.propTypes = {
-  cluster: PropTypes.shape({
-    product: PropTypes.shape({
-      type: PropTypes.oneOf(Object.values(normalizedProducts)).isRequired,
-    }),
-  }),
+  cluster: PropTypes.shape({}),
 };
 
 export default ClusterTypeLabel;

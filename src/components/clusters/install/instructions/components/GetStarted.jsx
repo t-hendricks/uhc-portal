@@ -19,78 +19,75 @@ const GetStarted = ({
 }) => {
   const track = useAnalytics();
   return (
-    <>
-      <Stack hasGutter>
+    <Stack hasGutter>
+      <StackItem>
+        <TextContent>
+          {/* TODO: A p tag cannot be nested inside another p tag */}
+          <Text component="p">
+            {!isBMIPI && <>The installer will take about 45 minutes to run. </>}
+            {get(instructionsMapping, `${cloudProviderID}.getStartedAdditional`, null) || ''}
+            {isBMIPI && (
+              <Text component="p">
+                When the installer is complete you will see the console URL and credentials for
+                accessing your new cluster. A <code>kubeconfig</code> file will also be generated
+                for you to use with the <code>oc</code> CLI tools you downloaded.
+              </Text>
+            )}
+          </Text>
+        </TextContent>
+      </StackItem>
+      <StackItem>
+        <Button
+          component="a"
+          href={docURL}
+          rel="noreferrer noopener"
+          target="_blank"
+          variant="secondary"
+          onClick={() => {
+            track(trackEvents.OCPInstallDocumentation, {
+              url: docURL,
+              path: pendoID,
+            });
+          }}
+        >
+          Get started
+        </Button>
+      </StackItem>
+      {!isBMIPI && !isUPI && (
+        <StackItem>
+          <Text component="p">
+            To quickly create a cluster with the default options, run the following command:
+          </Text>
+          <ClipboardCopy id="copy-command" data-testid="copy-command" isReadOnly isCode>
+            ./openshift-install create cluster
+          </ClipboardCopy>
+        </StackItem>
+      )}
+      {customizations && (
         <StackItem>
           <TextContent>
             <Text component="p">
-              {!isBMIPI && <>The installer will take about 45 minutes to run. </>}
-              {get(instructionsMapping, `${cloudProviderID}.getStartedAdditional`, null) || ''}
-              {isBMIPI && (
-                <Text component="p">
-                  When the installer is complete you will see the console URL and credentials for
-                  accessing your new cluster. A <code>kubeconfig</code> file will also be generated
-                  for you to use with the <code>oc</code> CLI tools you downloaded.
-                </Text>
-              )}
+              Refer to the documentation to{' '}
+              <ExternalLink href={customizations}>install with customizations</ExternalLink>.
             </Text>
           </TextContent>
         </StackItem>
+      )}
+      {prerequisites && (
         <StackItem>
-          <Button
-            component="a"
-            href={docURL}
-            rel="noreferrer noopener"
-            target="_blank"
-            variant="secondary"
-            onClick={() => {
-              track(trackEvents.OCPInstallDocumentation, {
-                url: docURL,
-                path: pendoID,
-              });
-            }}
-          >
-            Get started
-          </Button>
+          <TextContent>
+            <Text component="p">
+              Please make sure you{' '}
+              <ExternalLink href={prerequisites}>install the pre-requisites</ExternalLink> before
+              proceeding with the cluster installation.
+            </Text>
+          </TextContent>
         </StackItem>
-        {!isBMIPI && !isUPI && (
-          <>
-            <StackItem>
-              <Text component="p">
-                To quickly create a cluster with the default options, run the following command:
-              </Text>
-              <ClipboardCopy id="copy-command" isReadOnly isCode>
-                ./openshift-install create cluster
-              </ClipboardCopy>
-            </StackItem>
-          </>
-        )}
-        {customizations && (
-          <StackItem>
-            <TextContent>
-              <Text component="p">
-                Refer to the documentation to{' '}
-                <ExternalLink href={customizations}>install with customizations</ExternalLink>.
-              </Text>
-            </TextContent>
-          </StackItem>
-        )}
-        {prerequisites && (
-          <StackItem>
-            <TextContent>
-              <Text component="p">
-                Please make sure you{' '}
-                <ExternalLink href={prerequisites}>install the pre-requisites</ExternalLink> before
-                proceeding with the cluster installation.
-              </Text>
-            </TextContent>
-          </StackItem>
-        )}
-        <StackItem>
-          <TelemetryDisclaimer />
-        </StackItem>
-      </Stack>
-    </>
+      )}
+      <StackItem>
+        <TelemetryDisclaimer />
+      </StackItem>
+    </Stack>
   );
 };
 

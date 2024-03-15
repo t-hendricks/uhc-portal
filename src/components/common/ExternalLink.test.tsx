@@ -1,6 +1,7 @@
 import React from 'react';
-import { render, screen, fireEvent, checkAccessibility, within } from '@testUtils';
-import '@testing-library/jest-dom';
+
+import { render, screen, checkAccessibility, within } from '~/testUtils';
+
 import ExternalLink from './ExternalLink';
 
 const useAnalyticsMock = jest.fn();
@@ -40,7 +41,7 @@ describe('<ExternalLink />', () => {
     // Assert
     expect(screen.getByRole('link')).toBeInTheDocument();
     expect(screen.queryByRole('button')).not.toBeInTheDocument();
-    expect(screen.getByRole('link').getAttribute('class')).toMatch(/pf-c-button/);
+    expect(screen.getByRole('link').getAttribute('class')).toMatch(/pf-v5-c-button/);
     expect(screen.getByRole('link').getAttribute('class')).toMatch(/secondary/);
   });
 
@@ -55,7 +56,7 @@ describe('<ExternalLink />', () => {
     // Assert
     expect(screen.getByRole('link')).toBeInTheDocument();
     expect(screen.queryByRole('button')).not.toBeInTheDocument();
-    expect(screen.getByRole('link').getAttribute('class')).toMatch(/pf-c-button/);
+    expect(screen.getByRole('link').getAttribute('class')).toMatch(/pf-v5-c-button/);
     expect(screen.getByRole('link').getAttribute('class')).toMatch(/primary/);
   });
 
@@ -197,13 +198,13 @@ describe('<ExternalLink />', () => {
       mockPathname.mockClear();
     });
 
-    it('is called for unknown pathname', () => {
+    it('is called for unknown pathname', async () => {
       // Arrange
       mockPathname.mockReturnValue('/foo');
-      render(<ExternalLink href="http://example.com">Hello World</ExternalLink>);
+      const { user } = render(<ExternalLink href="http://example.com">Hello World</ExternalLink>);
 
       // Act
-      fireEvent.click(screen.getByRole('link'));
+      await user.click(screen.getByRole('link'));
 
       // Assert
       expect(useAnalyticsMock).toHaveBeenCalled();
@@ -219,13 +220,13 @@ describe('<ExternalLink />', () => {
       );
     });
 
-    it('is called for rosa pathname', () => {
+    it('is called for rosa pathname', async () => {
       // Arrange
       mockPathname.mockReturnValue('/rosa');
-      render(<ExternalLink href="http://example.com">Hello World</ExternalLink>);
+      const { user } = render(<ExternalLink href="http://example.com">Hello World</ExternalLink>);
 
       // Act
-      fireEvent.click(screen.getByRole('link'));
+      await user.click(screen.getByRole('link'));
 
       // Arrange
       expect(useAnalyticsMock).toHaveBeenCalled();
@@ -241,13 +242,13 @@ describe('<ExternalLink />', () => {
       );
     });
 
-    it('is called for osd trial pathname', () => {
+    it('is called for osd trial pathname', async () => {
       // Arrange
       mockPathname.mockReturnValue('/osdtrial');
-      render(<ExternalLink href="http://example.com">Hello World</ExternalLink>);
+      const { user } = render(<ExternalLink href="http://example.com">Hello World</ExternalLink>);
 
       // Act
-      fireEvent.click(screen.getByRole('link'));
+      await user.click(screen.getByRole('link'));
 
       // Assert
       expect(useAnalyticsMock).toHaveBeenCalled();
@@ -263,13 +264,13 @@ describe('<ExternalLink />', () => {
       );
     });
 
-    it('is called for osd pathname', () => {
+    it('is called for osd pathname', async () => {
       // Arrange
       mockPathname.mockReturnValue('/osd');
-      render(<ExternalLink href="http://example.com">Hello World</ExternalLink>);
+      const { user } = render(<ExternalLink href="http://example.com">Hello World</ExternalLink>);
 
       // Act
-      fireEvent.click(screen.getByRole('link'));
+      await user.click(screen.getByRole('link'));
 
       // Assert
       expect(useAnalyticsMock).toHaveBeenCalled();
@@ -285,13 +286,13 @@ describe('<ExternalLink />', () => {
       );
     });
 
-    it('is called for crc pathname', () => {
+    it('is called for crc pathname', async () => {
       // Arrange
       mockPathname.mockReturnValue('/crc');
-      render(<ExternalLink href="http://example.com">Hello World</ExternalLink>);
+      const { user } = render(<ExternalLink href="http://example.com">Hello World</ExternalLink>);
 
       // Act
-      fireEvent.click(screen.getByRole('link'));
+      await user.click(screen.getByRole('link'));
 
       // Assert
       expect(useAnalyticsMock).toHaveBeenCalled();
@@ -302,6 +303,41 @@ describe('<ExternalLink />', () => {
             link_url: 'http://example.com',
             module: 'openshift',
             ocm_resource_type: 'crc',
+          },
+        },
+      );
+    });
+    it('is called with custom tracking properties', async () => {
+      // Arrange
+      mockPathname.mockReturnValue('/crc');
+      const customProps = {
+        current_path: '/openshift/details/s',
+        tab_title: 'Add-ons',
+        tab_id: 'addOnsTabContent',
+        card_type: 'addon',
+        addon_id: '12345',
+        resource_id: '67890',
+        ocm_cluster_id: 'e-12345',
+        ocm_resource_type: 'osd',
+      };
+      const { user } = render(
+        <ExternalLink href="http://example.com" customTrackProperties={customProps}>
+          Hello World
+        </ExternalLink>,
+      );
+
+      // Act
+      await user.click(screen.getByRole('link'));
+
+      // Assert
+      expect(useAnalyticsMock).toHaveBeenCalled();
+      expect(useAnalyticsMock).toHaveBeenCalledWith(
+        { event: 'Link Clicked', link_name: 'external-link' },
+        {
+          customProperties: {
+            link_url: 'http://example.com',
+            module: 'openshift',
+            ...customProps,
           },
         },
       );

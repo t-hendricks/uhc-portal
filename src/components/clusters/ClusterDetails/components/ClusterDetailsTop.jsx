@@ -3,9 +3,11 @@ import PropTypes from 'prop-types';
 import get from 'lodash/get';
 
 import { Spinner } from '@redhat-cloud-services/frontend-components/Spinner';
-import { Button, Alert, Split, SplitItem, Title } from '@patternfly/react-core';
+import { Button, Alert, Split, SplitItem, Title, Flex } from '@patternfly/react-core';
 
 import { PreviewLabel } from '~/components/clusters/common/PreviewLabel';
+import { GCP_SECURE_BOOT_ENHANCEMENTS } from '~/redux/constants/featureConstants';
+import { useFeatureGate } from '~/hooks/useFeatureGate';
 import clusterStates, { isOffline } from '../../common/clusterStates';
 import modals from '../../../common/Modal/modals';
 import ClusterActionsDropdown from '../../common/ClusterActionsDropdown';
@@ -30,6 +32,29 @@ import TransferClusterOwnershipInfo from './TransferClusterOwnershipInfo';
 import TermsAlert from './TermsAlert';
 import ButtonWithTooltip from '../../../common/ButtonWithTooltip';
 import { goZeroTime2Null } from '../../../../common/helpers';
+import GcpOrgPolicyAlert from './GcpOrgPolicyAlert';
+
+const IdentityProvidersHint = () => (
+  <Alert
+    id="idpHint"
+    className="pf-v5-u-mt-md"
+    variant="warning"
+    isInline
+    title="Missing identity providers"
+  >
+    Identity providers determine how users log into the cluster.{' '}
+    <Button
+      variant="link"
+      isInline
+      onClick={() => {
+        window.location.hash = 'accessControl';
+      }}
+    >
+      Add OAuth configuration
+    </Button>{' '}
+    to allow others to log in.
+  </Alert>
+);
 
 function ClusterDetailsTop(props) {
   const {
@@ -49,6 +74,7 @@ function ClusterDetailsTop(props) {
     autoRefreshEnabled,
     toggleSubscriptionReleased,
     showPreviewLabel,
+    logs,
   } = props;
 
   const isProductOSDTrial =
@@ -65,8 +91,8 @@ function ClusterDetailsTop(props) {
   const hasIdentityProviders = clusterIdentityProviders.clusterIDPList.length > 0;
   const showIDPMessage =
     cluster.managed &&
+    cluster.idpActions?.create &&
     cluster.state === clusterStates.READY &&
-    consoleURL &&
     clusterIdentityProviders.fulfilled &&
     !hasIdentityProviders;
 
@@ -83,30 +109,8 @@ function ClusterDetailsTop(props) {
       }
     : {};
 
-  const IdentityProvidersHint = () => (
-    <Alert
-      id="idpHint"
-      className="pf-u-mt-md"
-      variant="warning"
-      isInline
-      title="Missing identity providers"
-    >
-      Identity providers determine how users log into the cluster.{' '}
-      <Button
-        variant="link"
-        isInline
-        onClick={() => {
-          window.location.hash = 'accessControl';
-        }}
-      >
-        Add OAuth configuration
-      </Button>{' '}
-      to allow others to log in.
-    </Alert>
-  );
-
   let launchConsole;
-  if (consoleURL && !isOffline(cluster.state)) {
+  if (consoleURL && !isOffline(cluster)) {
     launchConsole = (
       <a
         href={consoleURL}
@@ -187,17 +191,32 @@ function ClusterDetailsTop(props) {
       Unarchive
     </ButtonWithTooltip>
   );
+
+  const orgPolicyWarning = logs?.find(
+    (obj) =>
+      obj.summary?.includes('Please enable the Org Policy API for the GCP project') ||
+      obj.summary?.includes('GCP Organization Policy Service'),
+  );
+
+  const isSecureBootEnhancementsEnabled = useFeatureGate(GCP_SECURE_BOOT_ENHANCEMENTS);
+  const showGcpOrgPolicyWarning =
+    isSecureBootEnhancementsEnabled &&
+    orgPolicyWarning &&
+    !isDeprovisioned &&
+    cluster.state !== clusterStates.READY &&
+    cluster.state !== clusterStates.UNINSTALLING;
+
   return (
     <div id="cl-details-top" className="top-row">
       <Split>
-        <SplitItem className="pf-u-pb-md">{breadcrumbs}</SplitItem>
+        <SplitItem className="pf-v5-u-pb-md">{breadcrumbs}</SplitItem>
       </Split>
       <Split id="cl-details-top-row">
         <SplitItem>
           <Title size="2xl" headingLevel="h1" className="cl-details-page-title">
             {clusterName}
             {showPreviewLabel && (
-              <PreviewLabel creationDateStr={creationDateStr} className="pf-u-ml-sm" />
+              <PreviewLabel creationDateStr={creationDateStr} className="pf-v5-u-ml-sm" />
             )}
           </Title>
         </SplitItem>
@@ -209,14 +228,19 @@ function ClusterDetailsTop(props) {
         </SplitItem>
         <SplitItem isFilled />
         <SplitItem>
-          <span id="cl-details-btns">
+          <Flex
+            flexWrap={{ default: 'nowrap' }}
+            alignItems={{ default: 'alignItemsCenter' }}
+            spaceItems={{ default: 'spaceItemsSm' }}
+            id="cl-details-btns"
+          >
             {!isArchived && !isDeprovisioned ? (
               <>
                 {launchConsole}
                 {actions}
               </>
             ) : (
-              !isDeprovisioned && <>{unarchiveBtn}</>
+              !isDeprovisioned && unarchiveBtn
             )}
             {!isDeprovisioned && !isArchived && (
               <RefreshButton
@@ -227,7 +251,7 @@ function ClusterDetailsTop(props) {
                 useShortTimer={!Object.values(clusterStates).includes(cluster.state)}
               />
             )}
-          </span>
+          </Flex>
         </SplitItem>
       </Split>
 
@@ -239,7 +263,9 @@ function ClusterDetailsTop(props) {
 
       {showIDPMessage && (
         <Split>
-          <SplitItem isFilled>{cluster.canEdit && <IdentityProvidersHint />}</SplitItem>
+          <SplitItem isFilled>
+            <IdentityProvidersHint />
+          </SplitItem>
         </Split>
       )}
       {cluster.expiration_timestamp && (
@@ -251,6 +277,8 @@ function ClusterDetailsTop(props) {
       {OSDRHMEndDate && !isDeprovisioned && (
         <ExpirationAlert expirationTimestamp={OSDRHMEndDate} OSDRHMExpiration />
       )}
+      {showGcpOrgPolicyWarning && <GcpOrgPolicyAlert summary={orgPolicyWarning?.summary} />}
+
       <SubscriptionCompliancy
         cluster={cluster}
         openModal={openModal}
@@ -283,6 +311,12 @@ ClusterDetailsTop.propTypes = {
   autoRefreshEnabled: PropTypes.bool,
   toggleSubscriptionReleased: PropTypes.func.isRequired,
   showPreviewLabel: PropTypes.bool.isRequired,
+  logs: PropTypes.arrayOf(
+    PropTypes.shape({
+      summary: PropTypes.string,
+      description: PropTypes.string,
+    }),
+  ),
 };
 
 export default ClusterDetailsTop;

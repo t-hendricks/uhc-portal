@@ -13,7 +13,7 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
-import produce from 'immer';
+import { produce } from 'immer';
 
 import {
   REJECTED_ACTION,
@@ -31,6 +31,7 @@ const initialState = {
   logType: undefined,
 };
 
+// eslint-disable-next-line default-param-last
 function InstallationLogReducer(state = initialState, action) {
   // eslint-disable-next-line consistent-return
   return produce(state, (draft) => {

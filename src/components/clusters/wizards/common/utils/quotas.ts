@@ -1,17 +1,8 @@
-import { billingModels, normalizedProducts } from '~/common/subscriptionTypes';
-import { availableQuota, quotaTypes } from '~/components/clusters/common/quotaSelectors';
+import { normalizedProducts } from '~/common/subscriptionTypes';
+import { QuotaParams, QuotaTypes } from '~/components/clusters/common/quotaModel';
+import { availableQuota } from '~/components/clusters/common/quotaSelectors';
 import { CloudProviderType } from '~/components/clusters/wizards/common/constants';
-import { Quota } from '~/types/accounts_mgmt.v1';
-
-export interface QuotaParams {
-  resourceType: string;
-  product: string;
-  billingModel?: string;
-  cloudProviderID?: string;
-  isBYOC?: boolean;
-  isMultiAz?: boolean;
-  resourceName?: string;
-}
+import { QuotaCostList, RelatedResource } from '~/types/accounts_mgmt.v1';
 
 export enum QuotaType {
   OsdTrial = 'osdTrial',
@@ -27,66 +18,60 @@ export enum QuotaType {
   MultiAzResources = 'multiAzResources',
 }
 
-export const hasAvailableQuota = (
-  quotaList:
-    | {
-        items?: Quota[];
-      }
-    | undefined,
-  params: QuotaParams,
-) => !!quotaList && availableQuota(quotaList, params) > 0;
+export const hasAvailableQuota = (quotaList: QuotaCostList | undefined, quotaParams: QuotaParams) =>
+  !!quotaList && availableQuota(quotaList, quotaParams) > 0;
 
 export const quotaParams = {
   [QuotaType.OsdTrial]: {
-    resourceType: quotaTypes.CLUSTER,
+    resourceType: QuotaTypes.CLUSTER,
     product: normalizedProducts.OSDTrial,
   },
   [QuotaType.StandardOsd]: {
-    resourceType: quotaTypes.CLUSTER,
+    resourceType: QuotaTypes.CLUSTER,
     product: normalizedProducts.OSD,
-    billingModel: billingModels.STANDARD,
+    billingModel: RelatedResource.billing_model.STANDARD,
   },
   [QuotaType.Marketplace]: {
-    resourceType: quotaTypes.CLUSTER,
+    resourceType: QuotaTypes.CLUSTER,
     product: normalizedProducts.OSD,
-    billingModel: billingModels.MARKETPLACE,
+    billingModel: RelatedResource.billing_model.MARKETPLACE,
   },
   [QuotaType.Byoc]: {
-    resourceType: quotaTypes.CLUSTER,
-    billingModel: billingModels.STANDARD,
+    resourceType: QuotaTypes.CLUSTER,
+    billingModel: RelatedResource.billing_model.STANDARD,
     isBYOC: true,
   },
   [QuotaType.RhInfra]: {
-    resourceType: quotaTypes.CLUSTER,
-    billingModel: billingModels.STANDARD,
+    resourceType: QuotaTypes.CLUSTER,
+    billingModel: RelatedResource.billing_model.STANDARD,
     isBYOC: false,
   },
   [QuotaType.MarketplaceByoc]: {
-    resourceType: quotaTypes.CLUSTER,
-    billingModel: billingModels.MARKETPLACE,
+    resourceType: QuotaTypes.CLUSTER,
+    billingModel: RelatedResource.billing_model.MARKETPLACE,
     product: normalizedProducts.OSD,
     isBYOC: true,
   },
   [QuotaType.MarketplaceRhInfra]: {
-    resourceType: quotaTypes.CLUSTER,
-    billingModel: billingModels.MARKETPLACE,
+    resourceType: QuotaTypes.CLUSTER,
+    billingModel: RelatedResource.billing_model.MARKETPLACE,
     product: normalizedProducts.OSD,
     isBYOC: false,
   },
   [QuotaType.GcpResources]: {
-    resourceType: quotaTypes.CLUSTER,
+    resourceType: QuotaTypes.CLUSTER,
     cloudProviderID: CloudProviderType.Gcp,
   },
   [QuotaType.AwsResources]: {
-    resourceType: quotaTypes.CLUSTER,
+    resourceType: QuotaTypes.CLUSTER,
     cloudProviderID: CloudProviderType.Aws,
   },
   [QuotaType.SingleAzResources]: {
-    resourceType: quotaTypes.CLUSTER,
+    resourceType: QuotaTypes.CLUSTER,
     isMultiAz: false,
   },
   [QuotaType.MultiAzResources]: {
-    resourceType: quotaTypes.CLUSTER,
+    resourceType: QuotaTypes.CLUSTER,
     isMultiAz: true,
   },
 };

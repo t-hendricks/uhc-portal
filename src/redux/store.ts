@@ -9,6 +9,7 @@ import { notificationsMiddleware } from '@redhat-cloud-services/frontend-compone
 
 import { reduxReducers } from './reducers';
 import sentryMiddleware from './sentryMiddleware';
+import promiseRejectionMiddleware from './promiseRejectionMiddleware';
 
 declare global {
   interface Window {
@@ -28,6 +29,7 @@ const store = createStore(
     applyMiddleware(
       routerMiddleware(history),
       thunkMiddleware,
+      promiseRejectionMiddleware,
       promiseMiddleware,
       notificationsMiddleware({ ...defaultOptions }),
       sentryMiddleware,
@@ -41,9 +43,11 @@ export type GlobalState = Omit<ReturnType<typeof store.getState>, 'rosaReducer'>
     getAWSBillingAccountsResponse: any;
     getAWSAccountIDsResponse: {
       data: any[];
+      pending: boolean;
     };
     offlineToken?: string;
   };
 };
 
-export { store as default, store, history };
+export { store, history };
+export default store;

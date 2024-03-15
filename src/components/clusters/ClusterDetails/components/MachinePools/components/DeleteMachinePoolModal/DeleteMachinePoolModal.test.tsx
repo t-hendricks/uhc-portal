@@ -1,7 +1,8 @@
 import React from 'react';
-import { render, screen, fireEvent } from '@testUtils';
-import { useGlobalState } from '~/redux/hooks';
 import * as reactRedux from 'react-redux';
+
+import { render, screen } from '~/testUtils';
+import { useGlobalState } from '~/redux/hooks';
 import { closeModal } from '~/components/common/Modal/ModalActions';
 import DeleteMachinePoolModal from './DeleteMachinePoolModal';
 
@@ -30,27 +31,27 @@ describe('<DeleteMachinePoolModal />', () => {
     expect(screen.queryByText(/"machinePool1" will be lost\./i)).toBeInTheDocument();
   });
 
-  it('closes modal on cancel', () => {
+  it('closes modal on cancel', async () => {
     const useDispatchMock = jest.spyOn(reactRedux, 'useDispatch');
     const mockedDispatch = jest.fn();
     useDispatchMock.mockReturnValue(mockedDispatch);
 
-    render(<DeleteMachinePoolModal />);
+    const { user } = render(<DeleteMachinePoolModal />);
 
-    fireEvent.click(screen.getByRole('button', { name: 'Cancel' }));
+    await user.click(screen.getByRole('button', { name: 'Cancel' }));
     expect(closeModal).toBeCalled();
   });
 
-  it('calls delete function on confirm', () => {
+  it('calls delete function on confirm', async () => {
     const mockModalData = {
       machinePool: { id: 'machinePool1' },
       performDeleteAction: jest.fn(),
     };
     (useGlobalState as jest.Mock).mockReturnValue(mockModalData);
 
-    render(<DeleteMachinePoolModal />);
+    const { user } = render(<DeleteMachinePoolModal />);
 
-    fireEvent.click(screen.getByRole('button', { name: 'Delete' }));
+    await user.click(screen.getByRole('button', { name: 'Delete' }));
     expect(closeModal).toBeCalled();
     expect(mockModalData.performDeleteAction).toBeCalled();
   });

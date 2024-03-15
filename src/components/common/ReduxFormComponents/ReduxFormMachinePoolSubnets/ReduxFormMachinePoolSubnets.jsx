@@ -2,24 +2,26 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Field } from 'redux-form';
 import { Alert, Button, Grid, GridItem } from '@patternfly/react-core';
-import { PlusCircleIcon, MinusCircleIcon } from '@patternfly/react-icons';
+import { PlusCircleIcon } from '@patternfly/react-icons/dist/esm/icons/plus-circle-icon';
+import { MinusCircleIcon } from '@patternfly/react-icons/dist/esm/icons/minus-circle-icon';
 
 import { validateMultipleMachinePoolsSubnets } from '~/common/validators';
-import { SubnetSelectField } from '~/components/clusters/CreateOSDPage/CreateOSDWizard/NetworkScreen/SubnetSelectField';
+import { SubnetSelectField } from '~/components/clusters/common/SubnetSelectField';
+import { emptyAWSSubnet } from '~/components/clusters/wizards/common/createOSDInitialValues';
 
 import './ReduxFormMachinePoolSubnets.scss';
 
-const ReduxFormMachinePoolSubnets = ({ fields, selectedVPCID, meta: { warning } }) => (
+const ReduxFormMachinePoolSubnets = ({ fields, selectedVPC, meta: { warning } }) => (
   <Grid hasGutter>
     {warning && (
       <GridItem>
         <Alert variant="warning" isPlain isInline title={warning} />
       </GridItem>
     )}
-    <GridItem span={2} className="pf-c-form__label pf-c-form__label-text">
+    <GridItem span={2} className="pf-v5-c-form__label pf-v5-c-form__label-text">
       Machine pool
     </GridItem>
-    <GridItem span={4} className="pf-c-form__label pf-c-form__label-text">
+    <GridItem span={4} className="pf-v5-c-form__label pf-v5-c-form__label-text">
       Private subnet name
     </GridItem>
     <GridItem span={6} />
@@ -29,16 +31,16 @@ const ReduxFormMachinePoolSubnets = ({ fields, selectedVPCID, meta: { warning } 
       return (
         /* Adding index to fix issue when machine pool entries with same subnets are removed */
         // eslint-disable-next-line react/no-array-index-key
-        <React.Fragment key={`${fields.get(index).subnet_id}_${index}`}>
+        <React.Fragment key={`${fields.get(index).privateSubnetId}_${index}`}>
           <GridItem span={2}>Machine pool {index + 1}</GridItem>
           <GridItem span={4}>
             <Field
               component={SubnetSelectField}
-              name={`${fieldName}`}
+              name={`${fieldName}.privateSubnetId`}
               validate={validateMultipleMachinePoolsSubnets}
               isRequired
               privacy="private"
-              selectedVPC={selectedVPCID}
+              selectedVPC={selectedVPC}
               withAutoSelect={false}
               isNewCluster
             />
@@ -62,12 +64,12 @@ const ReduxFormMachinePoolSubnets = ({ fields, selectedVPCID, meta: { warning } 
     })}
     <GridItem>
       <Button
-        onClick={() => fields.push({ subnet_id: '', availability_zone: '' })}
+        onClick={() => fields.push(emptyAWSSubnet())}
         icon={<PlusCircleIcon />}
         variant="link"
         isInline
         className="reduxFormMachinePoolSubnets-addBtn"
-        isDisabled={!selectedVPCID}
+        isDisabled={!selectedVPC.id}
       >
         Add machine pool
       </Button>
@@ -77,7 +79,7 @@ const ReduxFormMachinePoolSubnets = ({ fields, selectedVPCID, meta: { warning } 
 
 ReduxFormMachinePoolSubnets.propTypes = {
   fields: PropTypes.array.isRequired,
-  selectedVPCID: PropTypes.string,
+  selectedVPC: PropTypes.object,
   meta: PropTypes.shape({
     warning: PropTypes.string,
   }),

@@ -2,7 +2,7 @@ import React from 'react';
 import { SubmitHandler } from 'redux-form';
 import { Form, ModalVariant } from '@patternfly/react-core';
 
-import { DefaultIngressFields } from '~/components/clusters/CreateOSDPage/CreateOSDWizard/NetworkScreen/DefaultIngressFields';
+import { DefaultIngressFields } from '~/components/clusters/common/DefaultIngressFields';
 import Modal from '~/components/common/Modal/Modal';
 import { BaseRequestState } from '~/redux/types';
 import ErrorBox from '~/components/common/ErrorBox';
@@ -19,8 +19,10 @@ type EditApplicationIngressDialogProps = {
   valid: boolean;
   pristine: boolean;
 
-  canEditLoadBalancer?: boolean;
   hasSufficientIngressEditVersion?: boolean;
+  canEditLoadBalancer?: boolean;
+  canShowLoadBalancer?: boolean;
+  isHypershiftCluster?: boolean;
 };
 
 const EditApplicationIngressDialog: React.FC<EditApplicationIngressDialogProps> = ({
@@ -34,8 +36,10 @@ const EditApplicationIngressDialog: React.FC<EditApplicationIngressDialogProps> 
   valid,
   pristine,
 
-  canEditLoadBalancer,
   hasSufficientIngressEditVersion,
+  canEditLoadBalancer,
+  canShowLoadBalancer,
+  isHypershiftCluster,
 }) => {
   if (!isOpen) {
     return null;
@@ -71,6 +75,9 @@ const EditApplicationIngressDialog: React.FC<EditApplicationIngressDialogProps> 
           isDay2
           hasSufficientIngressEditVersion={hasSufficientIngressEditVersion}
           canEditLoadBalancer={canEditLoadBalancer}
+          canShowLoadBalancer={canShowLoadBalancer}
+          areFieldsDisabled={isHypershiftCluster}
+          isHypershiftCluster={isHypershiftCluster}
         />
       </Form>
     </Modal>

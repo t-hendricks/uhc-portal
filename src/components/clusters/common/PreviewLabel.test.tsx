@@ -1,24 +1,146 @@
 import React from 'react';
-import { mount } from 'enzyme';
+import { screen, checkAccessibility, withState } from '~/testUtils';
+import * as hooks from '~/redux/hooks';
+import { PreviewLabel, createdPostGa, GA_DATE_STR } from './PreviewLabel';
 
-import { PreviewLabel, GA_DATE, createdPostGa } from '~/components/clusters/common/PreviewLabel';
+const expectLabelToBePresent = (container: HTMLElement) => {
+  expect(container.querySelector('.pf-v5-c-label')).toBeInTheDocument();
+  expect(screen.getByText('Preview')).toBeInTheDocument();
+};
+
+const expectLabelToBeAbsent = (container: HTMLElement) => {
+  expect(container.querySelector('.pf-v5-c-label')).not.toBeInTheDocument();
+  expect(screen.queryByText('Preview')).not.toBeInTheDocument();
+};
 
 describe('PreviewLabel', () => {
-  it('pre GA date', () => {
-    const now = new Date(GA_DATE);
-    now.setSeconds(GA_DATE.getSeconds() - 1);
-    const wrapper = mount(<PreviewLabel creationDateStr={now.toISOString()} />);
-    expect(wrapper).toMatchSnapshot();
-    expect(createdPostGa(now.toISOString())).toBe(false);
+  const gaDateStr = '2023-12-01T00:00:00Z';
+  const gaDate = new Date(gaDateStr);
+
+  const defaultState = {
+    clusters: { techPreview: { rosa: { hcp: { fulfilled: true, end_date: gaDateStr } } } },
+  };
+
+  const mockedGetPreview = jest.fn();
+  const mockedUseGetTechPreviewStatus = jest.fn(() => mockedGetPreview);
+  jest.spyOn(hooks, 'useGetTechPreviewStatus').mockImplementation(mockedUseGetTechPreviewStatus);
+
+  afterEach(() => {
+    jest.clearAllMocks();
   });
 
-  it('post GA date', () => {
-    const now = new Date(GA_DATE);
-    const wrapper = mount(<PreviewLabel creationDateStr={now.toISOString()} />);
-    expect(wrapper).toMatchSnapshot();
-    expect(createdPostGa(now.toISOString())).toBe(true);
-    now.setSeconds(GA_DATE.getSeconds() + 1);
-    expect(wrapper).toMatchSnapshot();
-    expect(createdPostGa(now.toISOString())).toBe(true);
+  it('shows preview label when pre GA date', async () => {
+    const createdDate = new Date(gaDateStr);
+    createdDate.setSeconds(gaDate.getSeconds() - 1);
+    const createdDateStr = createdDate.toISOString();
+
+    expect(createdPostGa(createdDateStr, gaDateStr)).toBeFalsy();
+
+    const { container } = withState(defaultState).render(
+      <PreviewLabel creationDateStr={createdDateStr} />,
+    );
+    expectLabelToBePresent(container);
+    await checkAccessibility(container);
+  });
+
+  it('does not display preview label if GA date is API call as not finished (aka fulfilled = false)', () => {
+    const createdDate = new Date(gaDateStr);
+    createdDate.setSeconds(gaDate.getSeconds() - 1);
+    const createdDateStr = createdDate.toISOString();
+
+    expect(createdPostGa(createdDateStr, gaDateStr)).toBeFalsy();
+
+    const newState = {
+      clusters: { techPreview: { rosa: { hcp: { fulfilled: false, end_date: gaDateStr } } } },
+    };
+
+    const { container } = withState(newState).render(
+      <PreviewLabel creationDateStr={createdDateStr} />,
+    );
+
+    expectLabelToBeAbsent(container);
+  });
+
+  it('displays preview label if api call fails and is before hard-coded date', () => {
+    const createdDateStr = '2023-12-03T00:00:00Z';
+
+    expect(createdPostGa(createdDateStr, GA_DATE_STR)).toBeFalsy();
+
+    const newState = {
+      clusters: { techPreview: { rosa: { hcp: { fulfilled: true, end_date: undefined } } } },
+    };
+    const { container } = withState(newState).render(
+      <PreviewLabel creationDateStr={createdDateStr} />,
+    );
+
+    expectLabelToBePresent(container);
+  });
+
+  it('does not display preview label if api call fails and is after hard-coded date', () => {
+    const createdDateStr = '2023-12-05T00:00:00Z';
+
+    expect(createdPostGa(createdDateStr, GA_DATE_STR)).toBeTruthy();
+
+    const newState = {
+      clusters: { techPreview: { rosa: { hcp: { fulfilled: true, end_date: undefined } } } },
+    };
+    const { container } = withState(newState).render(
+      <PreviewLabel creationDateStr={createdDateStr} />,
+    );
+
+    expectLabelToBeAbsent(container);
+  });
+
+  it('does not display preview label on GA date', () => {
+    const createdDate = new Date(gaDateStr);
+    const createdDateStr = createdDate.toISOString();
+
+    expect(createdPostGa(createdDateStr, gaDateStr)).toBeTruthy();
+
+    const { container } = withState(defaultState).render(
+      <PreviewLabel creationDateStr={createdDateStr} />,
+    );
+
+    expectLabelToBeAbsent(container);
+  });
+
+  it('does not display preview label after GA date', () => {
+    const createdDate = new Date(gaDateStr);
+    createdDate.setSeconds(gaDate.getSeconds() + 1);
+    const createdDateStr = createdDate.toISOString();
+
+    expect(createdPostGa(createdDateStr, gaDateStr)).toBeTruthy();
+
+    const { container } = withState(defaultState).render(
+      <PreviewLabel creationDateStr={createdDateStr} />,
+    );
+
+    expectLabelToBeAbsent(container);
+  });
+
+  it('calls useGetTechPreviewStatus on load with "rosa" and "hcp"', () => {
+    const createdDateStr = '2023-11-03T00:00:00Z';
+
+    withState(defaultState).render(<PreviewLabel creationDateStr={createdDateStr} />);
+
+    expect(mockedUseGetTechPreviewStatus).toBeCalledTimes(1);
+    expect(mockedUseGetTechPreviewStatus).toBeCalledWith('rosa', 'hcp');
+
+    // This is not called because it is known in the redux state
+    expect(mockedGetPreview).toBeCalledTimes(0);
+  });
+
+  it('calls useGetTechPreviewStatus on load with with custom product and type', () => {
+    const createdDateStr = '2023-11-03T00:00:00Z';
+
+    withState(defaultState).render(
+      <PreviewLabel creationDateStr={createdDateStr} product="myProduct" type="myType" />,
+    );
+
+    expect(mockedUseGetTechPreviewStatus).toBeCalledTimes(1);
+    expect(mockedUseGetTechPreviewStatus).toBeCalledWith('myProduct', 'myType');
+
+    // This is called because 'myProduct' is not in the redux state
+    expect(mockedGetPreview).toBeCalledTimes(1);
   });
 });

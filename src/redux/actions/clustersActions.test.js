@@ -71,6 +71,7 @@ describe('clustersActions', () => {
     it('dispatches successfully', () => {
       const mockGetState = jest.fn().mockImplementation(() => ({
         features: {},
+        clusters: { techPreview: {} },
       }));
       clustersActions.fetchClusters({})(mockDispatch, mockGetState);
       expect(mockDispatch).toBeCalledWith({
@@ -102,6 +103,16 @@ describe('clustersActions', () => {
       expect(result).toEqual({
         type: clustersConstants.RESET_CREATED_CLUSTER_RESPONSE,
       });
+    });
+  });
+
+  describe('getInstallableVersions', () => {
+    it('calls cluster service getInstallableVersions action with HCP', () => {
+      const isRosa = true;
+      const isMarketplaceGcp = true;
+      const isHCP = true;
+      clustersActions.getInstallableVersions(isRosa, isMarketplaceGcp, isHCP);
+      expect(clusterService.getInstallableVersions).toBeCalledWith(isRosa, isMarketplaceGcp, isHCP);
     });
   });
 });

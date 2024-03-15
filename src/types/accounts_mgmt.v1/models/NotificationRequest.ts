@@ -10,6 +10,7 @@ export type NotificationRequest = {
   cluster_uuid?: string;
   include_red_hat_associates?: boolean;
   internal_only?: boolean;
+  org_id?: string;
   subject?: string;
   subscription_id?: string;
   template_name: string;

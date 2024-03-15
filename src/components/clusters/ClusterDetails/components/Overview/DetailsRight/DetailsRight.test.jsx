@@ -1,3 +1,5 @@
+import React from 'react';
+
 import {
   checkAccessibility,
   insightsMock,
@@ -5,15 +7,17 @@ import {
   screen,
   within,
   mockRestrictedEnv,
-} from '@testUtils';
-import React from 'react';
+} from '~/testUtils';
 import { subscriptionStatuses } from '~/common/subscriptionTypes';
-import fixtures from '../../../__test__/ClusterDetails.fixtures';
+import fixtures from '../../../__tests__/ClusterDetails.fixtures';
 import DetailsRight from './DetailsRight';
 
 const defaultProps = {
   cluster: fixtures.clusterDetails.cluster,
   cloudProviders: fixtures.cloudProviders,
+  hasAutoscaleMachinePools: false,
+  hasAutoscaleCluster: false,
+  canAutoscaleCluster: false,
 };
 
 const componentText = {

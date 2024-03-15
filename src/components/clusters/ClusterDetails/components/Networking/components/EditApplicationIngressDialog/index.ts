@@ -4,7 +4,13 @@ import { Action } from 'typesafe-actions';
 
 import { GlobalState } from '~/redux/store';
 import { LoadBalancerFlavor } from '~/types/clusters_mgmt.v1';
-import { canConfigureDayTwoManagedIngress } from '~/components/clusters/wizards/rosa/constants';
+import {
+  canConfigureDayTwoManagedIngress,
+  canConfigureLoadBalancer,
+} from '~/components/clusters/wizards/rosa/constants';
+import { CloudProviderType } from '~/components/clusters/wizards/common';
+import { isHypershiftCluster } from '../../../../../common/clusterStates';
+
 import modals from '../../../../../../common/Modal/modals';
 import shouldShowModal from '../../../../../../common/Modal/ModalSelectors';
 import { closeModal } from '../../../../../../common/Modal/ModalActions';
@@ -32,18 +38,19 @@ type TDispatchProps = {
 const reduxFormEditIngress = reduxForm(reduxFormConfig)(EditApplicationIngressDialog);
 
 const mapStateToProps = (state: GlobalState) => {
-  const { cluster } = state.clusters?.details;
+  const { cluster } = state.clusters?.details ?? {};
 
   const provider = cluster?.cloud_provider?.id;
-
-  // @ts-ignore
+  const isAWS = provider === CloudProviderType.Aws;
   const isSTSEnabled = cluster?.aws?.sts?.enabled === true;
 
   const clusterRouters = NetworkingSelector(state);
   const clusterRoutesTlsSecretRef = clusterRouters.default?.tlsSecretRef;
-  const hasSufficientIngressEditVersion = canConfigureDayTwoManagedIngress(
-    cluster?.openshift_version || '',
-  );
+  const clusterVersion = cluster?.openshift_version || cluster?.version?.raw_id || '';
+  const hasSufficientIngressEditVersion = canConfigureDayTwoManagedIngress(clusterVersion);
+  const canShowLoadBalancer = isAWS;
+  const canEditLoadBalancer =
+    canShowLoadBalancer && canConfigureLoadBalancer(clusterVersion, isSTSEnabled);
 
   const ingressProps = hasSufficientIngressEditVersion
     ? {
@@ -73,8 +80,10 @@ const mapStateToProps = (state: GlobalState) => {
     clusterRouters,
     editClusterRoutersResponse: state.clusterRouters.editRouters,
 
-    canEditLoadBalancer: !isSTSEnabled,
     hasSufficientIngressEditVersion,
+    canEditLoadBalancer,
+    canShowLoadBalancer,
+    isHypershiftCluster: isHypershiftCluster(cluster),
   };
 
   return props;

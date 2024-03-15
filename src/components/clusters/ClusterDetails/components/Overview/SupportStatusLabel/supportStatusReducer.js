@@ -1,5 +1,5 @@
 import get from 'lodash/get';
-import produce from 'immer';
+import { produce } from 'immer';
 import {
   REJECTED_ACTION,
   PENDING_ACTION,
@@ -13,6 +13,7 @@ const initialState = {
   supportStatus: {},
 };
 
+// eslint-disable-next-line default-param-last
 function supportStatusReducer(state = initialState, action) {
   // eslint-disable-next-line consistent-return
   return produce(state, (draft) => {

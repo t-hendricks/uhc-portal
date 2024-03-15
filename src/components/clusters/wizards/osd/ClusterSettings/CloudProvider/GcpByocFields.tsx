@@ -9,6 +9,10 @@ import {
   TextContent,
   Flex,
   Grid,
+  Hint,
+  HintBody,
+  HintFooter,
+  HintTitle,
 } from '@patternfly/react-core';
 
 import { useGlobalState } from '~/redux/hooks/useGlobalState';
@@ -18,27 +22,51 @@ import ExternalLink from '~/components/common/ExternalLink';
 import { Prerequisites } from '~/components/clusters/wizards/common/Prerequisites/Prerequisites';
 import { FileUploadField } from '~/components/clusters/wizards/form';
 import { FieldId } from '~/components/clusters/wizards/osd/constants';
+import { useFormState } from '~/components/clusters/wizards/hooks';
+import { billingModels } from '~/common/subscriptionTypes';
 
 export const GcpByocFields = () => {
   const { ccsCredentialsValidity } = useGlobalState((state) => state.ccsInquiries);
+  const {
+    values: { [FieldId.BillingModel]: billingModel },
+  } = useFormState();
+
+  const gcpTitle = 'Have you prepared your Google account?';
+  const gcpText = `To prepare your account, accept the Google Cloud Terms and Agreements. If you've already accepted the terms, you can continue to complete OSD prerequisites.`;
 
   return (
     <Grid hasGutter>
-      <GridItem>
-        <Alert variant="info" isInline title="Customer cloud subscription">
-          Provision your cluster in a Google Cloud Platform account owned by you or your company to
-          leverage your existing relationship and pay Google Cloud Platform directly for public
-          cloud costs.
-        </Alert>
-      </GridItem>
+      {billingModel !== billingModels.MARKETPLACE_GCP && (
+        <GridItem>
+          <Alert variant="info" isInline title="Customer cloud subscription">
+            Provision your cluster in a Google Cloud Platform account owned by you or your company
+            to leverage your existing relationship and pay Google Cloud Platform directly for public
+            cloud costs.
+          </Alert>
+        </GridItem>
+      )}
 
       <Flex direction={{ default: 'column' }} spaceItems={{ default: 'spaceItemsLg' }}>
         <GridItem>
-          <Title headingLevel="h3" className="pf-u-mb-sm">
+          <Title headingLevel="h3" className="pf-v5-u-mb-sm">
             GCP service account
           </Title>
 
           <Prerequisites acknowledgementRequired initiallyExpanded>
+            {billingModel === billingModels.MARKETPLACE_GCP && (
+              <Hint className="pf-v5-u-mb-md pf-v5-u-mt-sm">
+                <HintTitle>
+                  <strong>{gcpTitle}</strong>
+                </HintTitle>
+                <HintBody>{gcpText}</HintBody>
+                <HintFooter>
+                  <ExternalLink href={links.GCP_CONSOLE_OSD_HOME}>
+                    Review Google terms and agreements.
+                  </ExternalLink>
+                </HintFooter>
+              </Hint>
+            )}
+
             <TextContent>
               <Text component={TextVariants.p} className="ocm-secondary-text">
                 Successful cluster provisioning requires that:
@@ -131,7 +159,7 @@ export const GcpByocFields = () => {
                 </>
               }
             />
-            <p className="pf-u-mt-md">{ccsCredentialsValidity.pending && 'Validating...'}</p>
+            <p className="pf-v5-u-mt-md">{ccsCredentialsValidity.pending && 'Validating...'}</p>
           </GridItem>
         </Grid>
       </Flex>

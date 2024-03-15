@@ -1,10 +1,17 @@
 import React from 'react';
 
-import { FileUpload, FileUploadProps, FormGroup, FormGroupProps } from '@patternfly/react-core';
+import {
+  DropEvent,
+  FileUpload,
+  FileUploadProps,
+  FormGroup,
+  FormGroupProps,
+} from '@patternfly/react-core';
 import { Field, FieldProps, FieldConfig, FieldValidator } from 'formik';
 
 import PopoverHint from '~/components/common/PopoverHint';
 import { useFormState } from '~/components/clusters/wizards/hooks';
+import { FormGroupHelperText } from '~/components/common/FormGroupHelperText';
 
 interface FileUploadFieldProps {
   name: string;
@@ -18,6 +25,9 @@ interface FileUploadFieldProps {
   formGroup?: FormGroupProps;
   input?: Partial<FileUploadProps>;
 }
+
+const isHtmlInputElement = (element: EventTarget): element is HTMLInputElement =>
+  (element as HTMLInputElement).files !== undefined;
 
 export const FileUploadField = ({
   name,
@@ -33,7 +43,9 @@ export const FileUploadField = ({
   const { setFieldValue } = useFormState();
   const [filename, setFilename] = React.useState('');
 
-  const onChange = (value: string | File, _: string, event: React.ChangeEvent<any>) => {
+  const onDataChange = (_event: DropEvent, data: string) => setFieldValue(name, data);
+
+  const onTextChange = (event: React.ChangeEvent<HTMLTextAreaElement>, text: string) => {
     if (isHtmlInputElement(event.target) && event.target.files) {
       const [file] = event.target.files;
       const reader = new FileReader();
@@ -44,7 +56,7 @@ export const FileUploadField = ({
       };
       reader.readAsText(file, 'UTF-8');
     } else {
-      setFieldValue(name, value);
+      setFieldValue(name, text);
     }
   };
 
@@ -55,38 +67,40 @@ export const FileUploadField = ({
 
   return (
     <Field name={name} validate={validate} {...field}>
-      {({ field, meta }: FieldProps) => (
-        <FormGroup
-          fieldId={field.name}
-          helperText={helperText}
-          helperTextInvalid={meta.touched && meta.error}
-          validated={meta.touched && meta.error ? 'error' : 'default'}
-          label={label}
-          {...(tooltip && { labelIcon: <PopoverHint hint={tooltip} /> })}
-          {...(validate && { isRequired: true })}
-          {...formGroup}
-        >
-          <FileUpload
-            allowEditingUploadedText
-            isDisabled={isDisabled}
-            id={field.name}
-            name={field.name}
-            type="text"
-            value={field.value}
-            filename={filename}
-            onChange={onChange}
-            onClearClick={onClearClick}
-            onTextAreaBlur={(event) => field.onBlur(event)}
-            onFileInputChange={(_, file) => setFilename(file.name)}
-            validated={meta.touched && meta.error ? 'error' : 'default'}
-            {...input}
-          />
-        </FormGroup>
-      )}
+      {({ field, meta }: FieldProps) => {
+        const isTouchedWithError = meta.touched && meta.error;
+
+        return (
+          <FormGroup
+            fieldId={field.name}
+            label={label}
+            {...(tooltip && { labelIcon: <PopoverHint hint={tooltip} /> })}
+            {...(validate && { isRequired: true })}
+            {...formGroup}
+          >
+            <FileUpload
+              allowEditingUploadedText
+              isDisabled={isDisabled}
+              id={field.name}
+              name={field.name}
+              type="text"
+              value={field.value}
+              filename={filename}
+              onDataChange={onDataChange}
+              onTextChange={onTextChange}
+              onClearClick={onClearClick}
+              onTextAreaBlur={(event) => field.onBlur(event)}
+              onFileInputChange={(_, file) => setFilename(file.name)}
+              validated={isTouchedWithError ? 'error' : 'default'}
+              {...input}
+            />
+
+            <FormGroupHelperText touched={meta.touched} error={meta.error}>
+              {helperText}
+            </FormGroupHelperText>
+          </FormGroup>
+        );
+      }}
     </Field>
   );
 };
-
-function isHtmlInputElement(element: EventTarget): element is HTMLInputElement {
-  return (element as HTMLInputElement).files !== undefined;
-}

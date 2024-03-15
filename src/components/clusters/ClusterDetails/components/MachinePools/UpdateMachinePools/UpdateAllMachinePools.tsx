@@ -1,20 +1,26 @@
 import React from 'react';
 import { Alert, AlertActionLink, AlertVariant, Spinner } from '@patternfly/react-core';
 import { useSelector, useDispatch } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { Link } from 'react-router-dom-v5-compat';
 import semver from 'semver';
 import { GlobalState } from '~/redux/store';
 import ExternalLink from '~/components/common/ExternalLink';
 import { NodePool } from '~/types/clusters_mgmt.v1/models/NodePool';
 import links from '~/common/installLinks.mjs';
+import { useFeatureGate } from '~/hooks/useFeatureGate';
+import { HCP_USE_NODE_UPGRADE_POLICIES } from '~/redux/constants/featureConstants';
 import { isHypershiftCluster } from '../../../clusterDetailsHelper';
 import { getMachineOrNodePools } from '../MachinePoolsActions';
+
 import {
   updateAllMachinePools as updateAllPools,
-  useControlPlaneUpToDate,
+  useHCPControlPlaneUpdating,
   controlPlaneVersionSelector,
   controlPlaneIdSelector,
   compareIsMachinePoolBehindControlPlane,
+  isControlPlaneValidForMachinePool,
+  isMachinePoolUpgrading,
+  isMachinePoolScheduleError,
 } from './updateMachinePoolsHelpers';
 
 const UpdateAllMachinePools = ({
@@ -30,24 +36,32 @@ const UpdateAllMachinePools = ({
     initialErrorMessage ? [initialErrorMessage] : [],
   );
 
-  const controlPlaneUpToDate = useControlPlaneUpToDate();
+  const useNodeUpdatePolicies = useFeatureGate(HCP_USE_NODE_UPGRADE_POLICIES);
+
+  const controlPlaneUpdating = useHCPControlPlaneUpdating();
 
   const clusterId = useSelector(controlPlaneIdSelector);
 
-  const controlPlaneVersion = useSelector(controlPlaneVersionSelector);
+  const controlPlaneVersion = useSelector((state: GlobalState) =>
+    controlPlaneVersionSelector(state),
+  );
   const machinePools = useSelector((state: GlobalState) => state.machinePools?.getMachinePools);
   const isHypershift = useSelector((state: GlobalState) =>
     isHypershiftCluster(state.clusters.details.cluster),
   );
 
-  if (!controlPlaneUpToDate) {
+  if (controlPlaneUpdating) {
     return null;
   }
 
-  const machinePoolsToUpdate = machinePools.data.filter((pool: NodePool) =>
-    // @ts-ignore pool.version not picked up by running yarn gen-type
-    compareIsMachinePoolBehindControlPlane(controlPlaneVersion, pool.version.id),
-  );
+  const machinePoolsToUpdate =
+    machinePools.data?.filter(
+      (pool: NodePool) =>
+        compareIsMachinePoolBehindControlPlane(controlPlaneVersion, pool.version?.id) &&
+        isControlPlaneValidForMachinePool(pool, controlPlaneVersion) &&
+        !isMachinePoolScheduleError(pool) &&
+        !isMachinePoolUpgrading(pool),
+    ) || [];
 
   if (machinePoolsToUpdate.length === 0) {
     return null;
@@ -55,10 +69,22 @@ const UpdateAllMachinePools = ({
 
   const updateNodePools = async () => {
     setPending(true);
-    const errors = await updateAllPools(machinePoolsToUpdate, clusterId, controlPlaneVersion || '');
+    const errors = await updateAllPools(
+      machinePoolsToUpdate,
+      clusterId,
+      controlPlaneVersion,
+      useNodeUpdatePolicies,
+    );
     setPending(false);
     setErrors(errors);
-    dispatch(getMachineOrNodePools(clusterId, isHypershift) as any);
+    dispatch(
+      getMachineOrNodePools(
+        clusterId,
+        isHypershift,
+        controlPlaneVersion,
+        useNodeUpdatePolicies,
+      ) as any,
+    );
   };
 
   return (
@@ -70,27 +96,31 @@ const UpdateAllMachinePools = ({
           isExpandable
           isInline
           role="alert"
-          className="pf-u-mt-md"
+          className="pf-v5-u-mt-md"
+          data-testid="alert-danger"
         >
-          {errors.map((error) => (
-            <p>{error}</p>
+          {errors.map((error, index) => (
+            // There isn't another accessible unique key
+            // eslint-disable-next-line react/no-array-index-key
+            <p key={index}>{error}</p>
           ))}
         </Alert>
       ) : null}
       <Alert
-        className={goToMachinePoolTab ? 'pf-u-mb-lg' : 'pf-u-mt-lg'}
+        className={goToMachinePoolTab ? 'pf-v5-u-mb-lg' : 'pf-v5-u-mt-lg'}
         isExpandable
         isInline
         role="alert"
         variant={AlertVariant.warning}
         title="Update available for Machine pools"
+        data-testid="alert-warning"
         actionLinks={
           <>
             {pending && !goToMachinePoolTab ? (
               <Spinner size="sm" aria-label="Updating machine pools" />
             ) : null}
             {!pending && !goToMachinePoolTab ? (
-              <AlertActionLink onClick={() => updateNodePools()}>
+              <AlertActionLink onClick={() => updateNodePools()} data-testid="btn-update-all">
                 Update all Machine pools now
               </AlertActionLink>
             ) : null}

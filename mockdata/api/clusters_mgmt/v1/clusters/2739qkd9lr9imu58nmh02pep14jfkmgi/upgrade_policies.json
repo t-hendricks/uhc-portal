@@ -1,0 +1,19 @@
+{
+  "kind": "UpgradePolicyList",
+  "page": 1,
+  "size": 1,
+  "total": 1,
+  "items": [
+    {
+      "kind": "UpgradePolicy",
+      "id": "5959d8e5-732e-11ee-bcda-0a580a8306ab",
+      "href": "/api/clusters_mgmt/v1/clusters/2739qkd9lr9imu58nmh02pep14jfkmgi/upgrade_policies/5959d8e5-732e-11ee-bcda-0a580a8306ab",
+      "schedule_type": "manual",
+      "upgrade_type": "OSD",
+      "version": "4.13.17",
+      "next_run": "2023-10-25T12:08:19Z",
+      "cluster_id": "2739qkd9lr9imu58nmh02pep14jfkmgi",
+      "enable_minor_version_upgrades": true
+    }
+  ]
+}

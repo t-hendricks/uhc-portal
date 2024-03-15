@@ -1,7 +1,7 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
 
-import { useWizardContext } from '@patternfly/react-core/next';
+import { useWizardContext } from '@patternfly/react-core';
 import { useFormState } from '~/components/clusters/wizards/hooks';
 import { useGlobalState } from '~/redux/hooks';
 import {

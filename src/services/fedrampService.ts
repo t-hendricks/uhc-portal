@@ -1,12 +1,12 @@
 import config from '~/config';
-import apiRequest from './apiRequest';
+import apiRequest from '~/services/apiRequest';
 
 const createIncident = (
   file: File,
   checks: {
-    isUSCitizen: boolean;
-    backgroundCheck: boolean;
-    securityTraining: boolean;
+    isUSPerson: boolean;
+    authPerson: boolean;
+    govContract: boolean;
   },
   contractID?: string,
 ) =>

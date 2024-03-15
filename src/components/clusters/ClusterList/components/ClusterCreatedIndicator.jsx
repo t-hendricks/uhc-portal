@@ -1,12 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import get from 'lodash/get';
-import moment from 'moment';
-import { Popover, PopoverPosition, Button } from '@patternfly/react-core';
-import { ExclamationTriangleIcon, ExclamationCircleIcon } from '@patternfly/react-icons';
+import dayjs from 'dayjs';
+import { Popover, PopoverPosition, Button, Icon } from '@patternfly/react-core';
+import { ExclamationTriangleIcon } from '@patternfly/react-icons/dist/esm/icons/exclamation-triangle-icon';
+import { ExclamationCircleIcon } from '@patternfly/react-icons/dist/esm/icons/exclamation-circle-icon';
 import { DateFormat } from '@redhat-cloud-services/frontend-components/DateFormat';
-// eslint-disable-next-line camelcase
-import { global_warning_color_100, global_danger_color_100 } from '@patternfly/react-tokens';
+import { global_warning_color_100 as warningColor } from '@patternfly/react-tokens/dist/esm/global_warning_color_100';
+import { global_danger_color_100 as dangerColor } from '@patternfly/react-tokens/dist/esm/global_danger_color_100';
 import ExternalLink from '../../../common/ExternalLink';
 import {
   subscriptionSupportLevels,
@@ -45,7 +46,11 @@ function ClusterCreatedIndicator({ cluster }) {
         <Button
           variant="link"
           isInline
-          icon={<ExclamationTriangleIcon color={global_warning_color_100.value} />}
+          icon={
+            <Icon>
+              <ExclamationTriangleIcon color={warningColor.value} />
+            </Icon>
+          }
         >
           {trialExpiresStr}
           &nbsp; left
@@ -61,7 +66,7 @@ function ClusterCreatedIndicator({ cluster }) {
   ) {
     const clusterCreationTime = get(cluster, 'creation_timestamp', false);
     if (clusterCreationTime) {
-      return moment(cluster.creation_timestamp).format('DD MMM YYYY');
+      return dayjs(cluster.creation_timestamp).format('DD MMM YYYY');
     }
     return 'N/A';
   }
@@ -71,13 +76,17 @@ function ClusterCreatedIndicator({ cluster }) {
     return (
       <Popover
         position={PopoverPosition.top}
-        bodyContent="Your 60-day evaluation has expired. Edit subscription settings to continue using this cluster, or archive this cluster if it no longer exits"
+        bodyContent="Your 60-day evaluation has expired. Edit subscription settings to continue using this cluster, or archive this cluster if it no longer exists."
         aria-label="Evaluation expired"
       >
         <Button
           variant="link"
           isInline
-          icon={<ExclamationCircleIcon color={global_danger_color_100.value} />}
+          icon={
+            <Icon>
+              <ExclamationCircleIcon color={dangerColor.value} />
+            </Icon>
+          }
         >
           Evaluation expired
         </Button>
@@ -91,20 +100,29 @@ function ClusterCreatedIndicator({ cluster }) {
         <strong>OCP Cluster</strong>
       </h1>
       <p>
-        Your OCP cluster subscription will expire in&nbsp;
+        Your OCP cluster evaluation will expire in&nbsp;
         {OCPTrialExpiresStr}
         &nbsp;on&nbsp;
         <strong>
           <DateFormat date={subscription.eval_expiration_date} type="onlyDate" />
         </strong>
-        .&nbsp;After it expires, your cluster will not be&nbsp;
+        .&nbsp;Your cluster is not&nbsp;
         <ExternalLink
           href="https://access.redhat.com/support/policy/updates/openshift/policies"
           noIcon
+          noTarget
         >
           supported
         </ExternalLink>
-        .
+        . To get Red Hat support for clusters, learn more about{' '}
+        <ExternalLink
+          href="https://www.redhat.com/en/resources/self-managed-openshift-sizing-subscription-guide"
+          noIcon
+          noTarget
+        >
+          OCP subscriptions
+        </ExternalLink>
+        . Though your cluster will be functional.
       </p>
     </>
   );
@@ -118,7 +136,11 @@ function ClusterCreatedIndicator({ cluster }) {
       <Button
         variant="link"
         isInline
-        icon={<ExclamationTriangleIcon color={global_warning_color_100.value} />}
+        icon={
+          <Icon>
+            <ExclamationTriangleIcon color={warningColor.value} />
+          </Icon>
+        }
       >
         {OCPTrialExpiresStr}
         &nbsp; left

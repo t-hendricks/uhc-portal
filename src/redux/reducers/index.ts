@@ -5,6 +5,7 @@ import { connectRouter } from 'connected-react-router';
 // TODO remove ignore statement once frontend-components-notifications has types
 // @ts-ignore
 import { notificationsReducer } from '@redhat-cloud-services/frontend-components-notifications/redux';
+import rosaReducer from './rosaReducer';
 import { clustersReducer } from './clustersReducer';
 import { clusterLogReducer } from '../../components/clusters/ClusterDetails/components/ClusterLogs/clusterLogReducer';
 import { deleteClusterDialogReducer } from '../../components/clusters/common/DeleteClusterDialog/DeleteClusterDialogReducer';
@@ -25,6 +26,7 @@ import addOnsReducer from '../../components/clusters/ClusterDetails/components/A
 import globalErrorReducer from './globalErrorReducer';
 import flavoursReducer from './flavoursReducer';
 import machineTypesReducer from './machineTypesReducer';
+import machineTypesByRegionReducer from './machineTypesByRegionReducer';
 import dnsDomainsReducer from './dnsDomainsReducer';
 import insightsReducer from '../../components/clusters/ClusterDetails/components/Insights/InsightsReducer';
 import { clusterAutoscalerReducer } from './clusterAutoscalerReducer';
@@ -39,12 +41,11 @@ import entitlementConfigReducer from './entitlementConfigReducer';
 import clusterUpgrades from '../../components/clusters/common/Upgrades/clusterUpgradeReducer';
 import machinePools from '../../components/clusters/ClusterDetails/components/MachinePools/MachinePoolsReducer';
 import githubReducer from './githubReducer';
-import ccsInquiriesReducer from '../../components/clusters/CreateOSDPage/CreateOSDWizard/ccsInquiriesReducer';
-import ocmRolesReducer from '../../components/clusters/ClusterDetails/components/AccessControl/OCMRolesSection/OCMRolesReducer';
+import ccsInquiriesReducer from './ccsInquiriesReducer';
+import ocmRolesReducer from './OCMRolesReducer';
 
 import featuresReducer from './featuresReducer';
 import apiErrorReducer from '../../components/App/ApiError/ApiErrorReducer';
-import rosaReducer from '../../components/clusters/CreateROSAPage/CreateROSAWizard/rosaReducer';
 
 const reducers = {
   clusters: clustersReducer,
@@ -65,6 +66,7 @@ const reducers = {
   globalError: globalErrorReducer,
   flavours: flavoursReducer,
   machineTypes: machineTypesReducer,
+  machineTypesByRegion: machineTypesByRegionReducer,
   monitoring: MonitoringReducer,
   subscriptions: subscriptionsReducer,
   persistentStorageValues: persistentStorageReducer,

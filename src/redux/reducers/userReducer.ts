@@ -1,5 +1,6 @@
-import produce from 'immer';
-import { TermsReviewResponse } from '~/types/authorizations.v1';
+import { produce } from 'immer';
+import { Organization, QuotaCost, TermsReviewResponse } from '~/types/accounts_mgmt.v1';
+import { UserInfo } from '~/types/types';
 import { userConstants } from '../constants';
 import {
   REJECTED_ACTION,
@@ -10,8 +11,6 @@ import {
 import { getErrorState } from '../../common/errors';
 import { UserAction } from '../actions/userActions';
 import { PromiseActionType, PromiseReducerState } from '../types';
-import { Organization, QuotaCost } from '../../types/accounts_mgmt.v1';
-import { UserInfo } from '../../types/types';
 
 export type OrganizationState = {
   details: Organization;
@@ -43,7 +42,6 @@ const initialState: State = {
     redirect_url: '',
   },
 };
-
 const userProfile = (state = initialState, action: PromiseActionType<UserAction>): State =>
   produce(state, (draft) => {
     // eslint-disable-next-line default-case

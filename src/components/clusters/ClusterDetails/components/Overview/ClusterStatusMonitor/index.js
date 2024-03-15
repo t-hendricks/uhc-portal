@@ -1,14 +1,30 @@
 import { connect } from 'react-redux';
 import { addNotification } from '@redhat-cloud-services/frontend-components-notifications/redux';
-import { getClusterStatus } from '../../../../../../redux/actions/clustersActions';
+import { featureGateSelector } from '~/hooks/useFeatureGate';
+import { NETWORK_VALIDATOR_ONDEMAND_FEATURE } from '~/redux/constants/featureConstants';
+import {
+  getClusterStatus,
+  getInflightChecks,
+  rerunInflightChecks,
+  clearInflightChecks,
+  getRerunInflightChecks,
+} from '../../../../../../redux/actions/clustersActions';
 import ClusterStatusMonitor from './ClusterStatusMonitor';
 
 const mapStateToProps = (state) => ({
   status: state.clusters.clusterStatus,
+  inflightChecks: state.clusters.inflightChecks,
+  rerunInflightCheckReq: state.clusters.rerunInflightCheckReq,
+  rerunInflightCheckRes: state.clusters.rerunInflightCheckRes,
+  hasNetworkOndemand: featureGateSelector(state, NETWORK_VALIDATOR_ONDEMAND_FEATURE),
 });
 
 const mapDispatchToProps = (dispatch) => ({
   getClusterStatus: (clusterID) => dispatch(getClusterStatus(clusterID)),
+  getInflightChecks: (clusterID) => dispatch(getInflightChecks(clusterID)),
+  rerunInflightChecks: (clusterID) => dispatch(rerunInflightChecks(clusterID)),
+  resetInflightChecks: () => dispatch(clearInflightChecks()),
+  getRerunInflightChecks: (subnetIds) => dispatch(getRerunInflightChecks(subnetIds)),
   addNotification: (data) => dispatch(addNotification(data)),
 });
 

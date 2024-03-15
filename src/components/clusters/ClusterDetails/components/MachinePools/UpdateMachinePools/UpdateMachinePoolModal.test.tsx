@@ -1,9 +1,11 @@
 import React from 'react';
 import * as reactRedux from 'react-redux';
-import { checkAccessibility, screen, render, userEvent, within, waitFor } from '~/testUtils';
+
+import { withState, checkAccessibility, screen, within, waitFor } from '~/testUtils';
 import * as updateMachinePoolsHelpers from './updateMachinePoolsHelpers';
 
 import { UpdatePoolButton, UpdateMachinePoolModal } from './UpdateMachinePoolModal';
+import { NodePoolWithUpgradePolicies } from '../machinePoolCustomTypes';
 
 const defaultMachinePool = {
   id: 'my-machine-pool',
@@ -50,10 +52,8 @@ describe('UpdateMachinePoolModal', () => {
   });
   describe('<UpdatePoolButton />', () => {
     it('displays the update button when the machine pool version is behind the control plane', async () => {
-      const { container, user } = render(
+      const { container, user } = withState(defaultState).render(
         <UpdatePoolButton machinePool={defaultMachinePool} />,
-        {},
-        defaultState,
       );
 
       expect(screen.getByRole('button')).toBeInTheDocument();
@@ -64,6 +64,25 @@ describe('UpdateMachinePoolModal', () => {
 
       expect(useDispatchMock).toHaveBeenCalledTimes(1);
       expect(mockedDispatch.mock.calls[0][0].type).toEqual('OPEN_MODAL');
+    });
+
+    it('displays the update button when the machine pool version is behind the control plane and control plane has available upgrades', () => {
+      const newCluster = {
+        ...defaultCluster,
+        version: { ...defaultCluster.version, available_upgrades: ['I am an upgrade object'] },
+      };
+
+      const newState = {
+        ...defaultState,
+        clusters: {
+          details: {
+            cluster: newCluster,
+          },
+        },
+      };
+      withState(newState).render(<UpdatePoolButton machinePool={defaultMachinePool} />);
+
+      expect(screen.getByRole('button')).toBeInTheDocument();
     });
 
     describe('displays null when', () => {
@@ -78,10 +97,8 @@ describe('UpdateMachinePoolModal', () => {
             },
           },
         };
-        const { container } = render(
+        const { container } = withState(newState).render(
           <UpdatePoolButton machinePool={defaultMachinePool} />,
-          {},
-          newState,
         );
 
         expect(container).toBeEmptyDOMElement();
@@ -98,10 +115,8 @@ describe('UpdateMachinePoolModal', () => {
             },
           },
         };
-        const { container } = render(
+        const { container } = withState(newState).render(
           <UpdatePoolButton machinePool={defaultMachinePool} />,
-          {},
-          newState,
         );
 
         expect(container).toBeEmptyDOMElement();
@@ -114,10 +129,8 @@ describe('UpdateMachinePoolModal', () => {
             getMachinePools: { error: true, fulfilled: true, data: [defaultMachinePool] },
           },
         };
-        const { container } = render(
+        const { container } = withState(newState).render(
           <UpdatePoolButton machinePool={defaultMachinePool} />,
-          {},
-          newState,
         );
 
         expect(container).toBeEmptyDOMElement();
@@ -130,10 +143,8 @@ describe('UpdateMachinePoolModal', () => {
             getMachinePools: { error: false, fulfilled: false, data: [defaultMachinePool] },
           },
         };
-        const { container } = render(
+        const { container } = withState(newState).render(
           <UpdatePoolButton machinePool={defaultMachinePool} />,
-          {},
-          newState,
         );
 
         expect(container).toBeEmptyDOMElement();
@@ -146,10 +157,8 @@ describe('UpdateMachinePoolModal', () => {
             getMachinePools: { error: true, fulfilled: true, data: [] },
           },
         };
-        const { container } = render(
+        const { container } = withState(newState).render(
           <UpdatePoolButton machinePool={defaultMachinePool} />,
-          {},
-          newState,
         );
 
         expect(container).toBeEmptyDOMElement();
@@ -166,33 +175,8 @@ describe('UpdateMachinePoolModal', () => {
             },
           },
         };
-        const { container } = render(
+        const { container } = withState(newState).render(
           <UpdatePoolButton machinePool={defaultMachinePool} />,
-          {},
-          newState,
-        );
-
-        expect(container).toBeEmptyDOMElement();
-      });
-
-      it('the control plane has available upgrades', () => {
-        const newCluster = {
-          ...defaultCluster,
-          version: { available_upgrades: ['I am an upgrade object'] },
-        };
-
-        const newState = {
-          ...defaultState,
-          clusters: {
-            details: {
-              cluster: newCluster,
-            },
-          },
-        };
-        const { container } = render(
-          <UpdatePoolButton machinePool={defaultMachinePool} />,
-          {},
-          newState,
         );
 
         expect(container).toBeEmptyDOMElement();
@@ -200,10 +184,8 @@ describe('UpdateMachinePoolModal', () => {
 
       it('the machine pool version is not known', () => {
         const newMachinePool = { ...defaultMachinePool, version: {} };
-        const { container } = render(
+        const { container } = withState(defaultState).render(
           <UpdatePoolButton machinePool={newMachinePool} />,
-          {},
-          defaultState,
         );
 
         expect(container).toBeEmptyDOMElement();
@@ -213,13 +195,79 @@ describe('UpdateMachinePoolModal', () => {
         const newMachinePool = { ...defaultMachinePool, version: { id: 'openshift-v4.13.3' } };
 
         expect(defaultCluster.version.id).toEqual('openshift-v4.13.3');
-        const { container } = render(
+        const { container } = withState(defaultState).render(
           <UpdatePoolButton machinePool={newMachinePool} />,
-          {},
-          defaultState,
         );
 
         expect(container).toBeEmptyDOMElement();
+      });
+
+      describe('shows helper popover when', () => {
+        it('the control plane version is not a valid version for machine pool', async () => {
+          const newMachinePool = {
+            ...defaultMachinePool,
+            version: { id: 'openshift-v4.13.1', available_upgrades: ['4.13.2'] },
+          };
+
+          expect(defaultCluster.version.id).toEqual('openshift-v4.13.3');
+
+          const { user } = withState(defaultState).render(
+            <UpdatePoolButton machinePool={newMachinePool} />,
+          );
+
+          expect(screen.getByRole('button', { name: 'More information' })).toBeInTheDocument();
+
+          await user.click(screen.getByRole('button'));
+          expect(await screen.findByRole('dialog')).toBeInTheDocument();
+
+          expect(
+            screen.getByText(
+              `This machine pool cannot be updated because there isn't a migration path to version openshift-v4.13.3`,
+            ),
+          );
+        });
+
+        it('the machine pool is scheduled to be updated', async () => {
+          const newMachinePool = {
+            ...defaultMachinePool,
+            version: { id: 'openshift-v4.13.1', available_upgrades: ['4.13.3'] },
+            upgradePolicies: { items: ['I am an upgrade policy'] },
+          } as NodePoolWithUpgradePolicies;
+
+          expect(defaultCluster.version.id).toEqual('openshift-v4.13.3');
+
+          const { user } = withState(defaultState).render(
+            <UpdatePoolButton machinePool={newMachinePool} />,
+          );
+
+          expect(screen.getByRole('button', { name: 'More information' })).toBeInTheDocument();
+
+          await user.click(screen.getByRole('button'));
+          expect(await screen.findByRole('dialog')).toBeInTheDocument();
+
+          expect(screen.getByText(`This machine pool is scheduled to be updated`));
+        });
+
+        it('there was error getting machine pool upgrade policies', async () => {
+          const newMachinePool = {
+            ...defaultMachinePool,
+            version: { id: 'openshift-v4.13.1', available_upgrades: ['4.13.3'] },
+            upgradePolicies: { errorMessage: 'I am an error' },
+          } as NodePoolWithUpgradePolicies;
+
+          expect(defaultCluster.version.id).toEqual('openshift-v4.13.3');
+
+          const { user } = withState(defaultState).render(
+            <UpdatePoolButton machinePool={newMachinePool} />,
+          );
+
+          expect(screen.getByRole('button', { name: 'Error' })).toBeInTheDocument();
+
+          await user.click(screen.getByRole('button'));
+          expect(await screen.findByRole('dialog')).toBeInTheDocument();
+
+          expect(screen.getByText(`I am an error`));
+        });
       });
     });
   });
@@ -233,14 +281,14 @@ describe('UpdateMachinePoolModal', () => {
     });
     it('is hidden when redux state has modal closed', () => {
       const newState = { ...defaultState, modal: { data: {} } };
-      const { container } = render(<UpdateMachinePoolModal />, {}, newState);
+      const { container } = withState(newState).render(<UpdateMachinePoolModal />);
 
       expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
       expect(container).toBeEmptyDOMElement();
     });
 
     it('displays modal with machine name', async () => {
-      const { container } = render(<UpdateMachinePoolModal />, {}, defaultState);
+      const { container } = withState(defaultState).render(<UpdateMachinePoolModal />);
       expect(screen.getByRole('dialog')).toBeInTheDocument();
       expect(
         screen.getByText('Update machine pool my-machine-pool', { exact: false }),
@@ -253,7 +301,7 @@ describe('UpdateMachinePoolModal', () => {
       useDispatchMock.mockReturnValue(mockedDispatch);
       mockUpdatePools.mockResolvedValue([]);
 
-      const { user } = render(<UpdateMachinePoolModal />, {}, defaultState);
+      const { user } = withState(defaultState).render(<UpdateMachinePoolModal />);
       expect(screen.getByRole('dialog')).toBeInTheDocument();
       expect(mockUpdatePools).toBeCalledTimes(0);
 
@@ -267,12 +315,11 @@ describe('UpdateMachinePoolModal', () => {
     });
 
     it('displays error', async () => {
-      const user = userEvent.setup();
       mockUpdatePools.mockResolvedValue(['I am an error!']);
       const mockedDispatch = jest.fn();
       useDispatchMock.mockReturnValue(mockedDispatch);
 
-      render(<UpdateMachinePoolModal />, {}, defaultState);
+      const { user } = withState(defaultState).render(<UpdateMachinePoolModal />);
       expect(screen.getByRole('dialog')).toBeInTheDocument();
       expect(mockUpdatePools).toBeCalledTimes(0);
 

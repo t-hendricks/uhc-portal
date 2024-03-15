@@ -1,28 +1,22 @@
 import React from 'react';
-import {
-  FormGroup,
-  GridItem,
-  HelperText,
-  HelperTextItem,
-  Flex,
-  Button,
-} from '@patternfly/react-core';
+import { FormGroup, GridItem, HelperTextItem, Flex, Button } from '@patternfly/react-core';
 import { Field } from 'formik';
 import { useDispatch } from 'react-redux';
 
 import { FieldId } from '~/components/clusters/wizards/common/constants';
 import PopoverHint from '~/components/common/PopoverHint';
-import { constants } from '~/components/clusters/CreateOSDPage/CreateOSDForm/CreateOSDFormConstants';
+import { constants } from '~/components/clusters/common/CreateOSDFormConstants';
 import ExternalLink from '~/components/common/ExternalLink';
 import links from '~/common/installLinks.mjs';
 import { openModal } from '~/components/common/Modal/ModalActions';
 import modals from '~/components/common/Modal/modals';
 import { normalizedProducts } from '~/common/subscriptionTypes';
-import { MAX_NODES } from '~/components/clusters/common/NodeCountInput/NodeCountInput';
 import { required, validateNumericInput } from '~/common/validators';
-import getMinNodesAllowed from '~/components/clusters/CreateOSDPage/CreateOSDForm/FormSections/ScaleSection/AutoScaleSection/AutoScaleHelper';
+import getMinNodesAllowed from '~/components/clusters/common/ScaleSection/AutoScaleSection/AutoScaleHelper';
 import { CheckboxField } from '~/components/clusters/wizards/form/CheckboxField';
 import { useFormState } from '~/components/clusters/wizards/hooks';
+import { MAX_NODES } from '~/components/clusters/common/machinePools/constants';
+import { FormGroupHelperText } from '~/components/common/FormGroupHelperText';
 import { NodesInput } from './NodesInput';
 import ClusterAutoScaleSettingsDialog from './ClusterAutoScaleSettingsDialog';
 
@@ -73,6 +67,7 @@ export const AutoScale = ({ isDefaultMachinePool }: AutoScaleProps) => {
         setFieldValue(FieldId.MaxReplicas, defaultReplicas);
       }
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [minReplicas, isBYOC, isDefaultMachinePool, isMultiAz, product, setFieldValue]);
 
   const minNodes = React.useMemo(() => {
@@ -125,27 +120,13 @@ export const AutoScale = ({ isDefaultMachinePool }: AutoScaleProps) => {
     <Flex
       flexWrap={{ default: 'nowrap' }}
       spaceItems={{ default: 'spaceItemsMd' }}
-      className="pf-u-mt-md"
+      className="pf-v5-u-mt-md"
     >
       <FormGroup
         label={isMultiAz ? 'Minimum nodes per zone' : 'Minimum node count'}
         isRequired
         fieldId="nodes_min"
         className="autoscaling__nodes-formGroup"
-        helperText={
-          <HelperText>
-            {isMultiAz && (
-              <HelperTextItem>{`x 3 zones = ${
-                (parseInt(minReplicas, 10) || 0) * 3
-              }`}</HelperTextItem>
-            )}
-            {minErrorMessage && (
-              <HelperTextItem variant="error" hasIcon>
-                {minErrorMessage}
-              </HelperTextItem>
-            )}
-          </HelperText>
-        }
       >
         <Field
           component={NodesInput}
@@ -164,26 +145,23 @@ export const AutoScale = ({ isDefaultMachinePool }: AutoScaleProps) => {
           }}
           meta={getFieldMeta(FieldId.MinReplicas)}
         />
+
+        <FormGroupHelperText>
+          {isMultiAz && (
+            <HelperTextItem>{`x 3 zones = ${(parseInt(minReplicas, 10) || 0) * 3}`}</HelperTextItem>
+          )}
+          {minErrorMessage && (
+            <HelperTextItem variant="error" hasIcon>
+              {minErrorMessage}
+            </HelperTextItem>
+          )}
+        </FormGroupHelperText>
       </FormGroup>
       <FormGroup
         label={isMultiAz ? 'Maximum nodes per zone' : 'Maximum node count'}
         isRequired
         fieldId="nodes_max"
         className="autoscaling__nodes-formGroup"
-        helperText={
-          <HelperText>
-            {isMultiAz && (
-              <HelperTextItem>{`x 3 zones = ${
-                (parseInt(maxReplicas, 10) || 0) * 3
-              }`}</HelperTextItem>
-            )}
-            {maxErrorMessage && (
-              <HelperTextItem variant="error" hasIcon>
-                {maxErrorMessage}
-              </HelperTextItem>
-            )}
-          </HelperText>
-        }
         labelIcon={
           <PopoverHint
             hint={
@@ -220,47 +198,56 @@ export const AutoScale = ({ isDefaultMachinePool }: AutoScaleProps) => {
           }}
           meta={getFieldMeta(FieldId.MaxReplicas)}
         />
+
+        <FormGroupHelperText>
+          {isMultiAz && (
+            <HelperTextItem>{`x 3 zones = ${(parseInt(maxReplicas, 10) || 0) * 3}`}</HelperTextItem>
+          )}
+          {maxErrorMessage && (
+            <HelperTextItem variant="error" hasIcon>
+              {maxErrorMessage}
+            </HelperTextItem>
+          )}
+        </FormGroupHelperText>
       </FormGroup>
     </Flex>
   );
 
   return (
-    <>
-      <GridItem id="autoscaling">
-        <FormGroup
-          fieldId="autoscaling"
-          label="Autoscaling"
-          labelIcon={
-            <PopoverHint
-              hint={
-                <>
-                  {constants.autoscaleHint}{' '}
-                  <ExternalLink href={autoScalingUrl}>
-                    Learn more about autoscaling
-                    {isRosa ? ' with ROSA' : ''}
-                  </ExternalLink>
-                </>
-              }
-            />
-          }
-        />
+    <GridItem id="autoscaling">
+      <FormGroup
+        fieldId="autoscaling"
+        label="Autoscaling"
+        labelIcon={
+          <PopoverHint
+            hint={
+              <>
+                {constants.autoscaleHint}{' '}
+                <ExternalLink href={autoScalingUrl}>
+                  Learn more about autoscaling
+                  {isRosa ? ' with ROSA' : ''}
+                </ExternalLink>
+              </>
+            }
+          />
+        }
+      />
 
-        <CheckboxField name={FieldId.AutoscalingEnabled} label="Enable autoscaling" />
+      <CheckboxField name={FieldId.AutoscalingEnabled} label="Enable autoscaling" />
 
-        <GridItem md={3}>
-          <Button
-            data-testid="set-cluster-autoscaling-btn"
-            variant="secondary"
-            className="pf-u-mt-md"
-            onClick={openEditClusterAutoScalingModal}
-            isDisabled={!autoscalingEnabled}
-          >
-            Edit cluster autoscaling settings
-          </Button>
-        </GridItem>
-        <ClusterAutoScaleSettingsDialog isWizard />
-        {autoscalingEnabled && azFormGroups}
+      <GridItem md={3}>
+        <Button
+          data-testid="set-cluster-autoscaling-btn"
+          variant="secondary"
+          className="pf-v5-u-mt-md"
+          onClick={openEditClusterAutoScalingModal}
+          isDisabled={!autoscalingEnabled}
+        >
+          Edit cluster autoscaling settings
+        </Button>
       </GridItem>
-    </>
+      <ClusterAutoScaleSettingsDialog isWizard isRosa={isRosa} />
+      {autoscalingEnabled && azFormGroups}
+    </GridItem>
   );
 };

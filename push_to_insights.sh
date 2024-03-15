@@ -56,6 +56,10 @@ VERSION="$(git rev-parse --short HEAD)"
 SUBJECT="$(git log --pretty=format:'%s' -n 1)"
 COMMIT_DATE="$(git log --pretty=format:'%ci' -n 1)"
 
+# sentry
+SENTRY_STAGE_PROJECT="ocm-uhc-portal-stage"
+SENTRY_STAGE_VERSION="$SENTRY_STAGE_PROJECT-$VERSION"
+
 function cleanup_secrets() {
   rm --force key ssh
 }
@@ -67,6 +71,7 @@ cleanup_secrets
 printenv PUSH_KEY | base64 --decode > key
 chmod u=r,g=,o= key
 
+node --version
 git --version
 ssh -V
 # The version of `git` in the Jenkins node didn't support the
@@ -163,7 +168,9 @@ if [ "$1" == "staging" ] || [ "$1" == "beta" ]; then
     echo "running staging push"
     echo "staging branch is available on https://qaprodauth.console.redhat.com/openshift"
     rm -rf dist
-    yarn build --mode=production --env api-env=staging
+    yarn build --mode=production --env api-env=staging sentry-version="$SENTRY_STAGE_VERSION"
+    yarn sentry:sourcemaps
+    yarn sentry:release --auth-token $GLITCHTIP_TOKEN --project="$SENTRY_STAGE_PROJECT" files "$SENTRY_STAGE_VERSION" upload-sourcemaps dist/
     push_build "qa-stable"
 
     echo "running staging (qa-beta) push"

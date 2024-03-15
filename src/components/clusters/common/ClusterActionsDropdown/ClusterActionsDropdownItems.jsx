@@ -1,13 +1,11 @@
 import get from 'lodash/get';
 import React from 'react';
-import { DropdownItem } from '@patternfly/react-core';
-import { isRestrictedEnv } from '~/restrictedEnv';
-import clusterStates, { isHibernating } from '../clusterStates';
+import { DropdownItem as DropdownItemDeprecated } from '@patternfly/react-core/deprecated';
+import clusterStates, { isHibernating, isHypershiftCluster } from '../clusterStates';
 import { subscriptionStatuses, normalizedProducts } from '../../../../common/subscriptionTypes';
 import getClusterName from '../../../../common/getClusterName';
 import modals from '../../../common/Modal/modals';
 import { isAssistedInstallCluster } from '../../../../common/isAssistedInstallerCluster';
-import { isHypershiftCluster } from '../../ClusterDetails/clusterDetailsHelper';
 
 /**
  * Helper using reason message why it's disabled as source-of-truth
@@ -20,7 +18,9 @@ import { isHypershiftCluster } from '../../ClusterDetails/clusterDetailsHelper';
 const disableIfTooltip = (tooltip, propsIfEnabled = {}) =>
   // isDisabled blocks mouse events, so tooltip doesn't show on hover.
   // isAriaDisabled solved this, https://github.com/patternfly/patternfly-react/pull/6038.
-  tooltip ? { isAriaDisabled: true, tooltip, tooltipProps: { position: 'left' } } : propsIfEnabled;
+  tooltip
+    ? { isAriaDisabled: true, tooltipProps: { position: 'left', content: tooltip } }
+    : propsIfEnabled;
 
 /**
  * This function is used by PF tables to determine which dropdown items are displayed
@@ -51,7 +51,7 @@ function actionResolver(
   const isClusterReady = cluster.state === clusterStates.READY;
   // Superset of more specific uninstallingMessage.
   const notReadyMessage = !isClusterReady && <span>This cluster is not ready</span>;
-  const isClusterInHibernatingProcess = isHibernating(cluster.state);
+  const isClusterInHibernatingProcess = isHibernating(cluster);
   const hibernatingMessage =
     isClusterInHibernatingProcess &&
     (cluster.state === clusterStates.RESUMING ? (
@@ -88,9 +88,8 @@ function actionResolver(
     title: 'Open console',
     key: getKey('adminconsole'),
     ...disableIfTooltip(uninstallingMessage || hibernatingMessage || consoleDisabledMessage, {
-      component: 'a',
-      href: consoleURL,
-      target: '_blank',
+      to: consoleURL,
+      isExternalLink: true,
       rel: 'noopener noreferrer',
     }),
   });
@@ -140,20 +139,17 @@ function actionResolver(
     ),
   });
 
-  const getEditNodeCountProps = () => ({
+  const getEditMachinePoolProps = () => ({
     ...baseProps,
-    title: 'Edit node count',
-    key: getKey('editnodecount'),
+    title: 'Edit machine pool',
+    key: getKey('editmachinepools'),
     ...disableIfTooltip(
       uninstallingMessage || readOnlyMessage || hibernatingMessage || notReadyMessage,
       {
         onClick: () =>
-          openModal(modals.EDIT_NODE_COUNT, {
+          openModal(modals.EDIT_MACHINE_POOL, {
             cluster,
-            isDefaultMachinePool: !isHypershiftCluster(cluster),
             shouldDisplayClusterName: inClusterList,
-            isHypershiftCluster: isHypershiftCluster(cluster),
-            clearMachineOrNodePoolsOnExit: inClusterList,
           }),
       },
     ),
@@ -297,19 +293,6 @@ function actionResolver(
     };
   };
 
-  const adminConsoleItemProps = getAdminConsoleProps();
-  const scaleClusterItemProps = getScaleClusterProps();
-  const editNodeCountItemProps = getEditNodeCountProps();
-  const editDisplayNameItemProps = getEditDisplayNameProps();
-  const editConsoleURLItemProps = getEditConsoleURLProps();
-  const deleteClusterItemProps = getDeleteItemProps();
-  const archiveClusterItemProps = getArchiveClusterProps();
-  const unarchiveClusterItemProps = getUnarchiveClusterProps();
-  const editSubscriptionSettingsProps = getEditSubscriptionSettingsProps();
-  const transferClusterOwnershipProps = getTransferClusterOwnershipProps();
-  const upgradeTrialClusterProps = getUpgradeTrialClusterProps();
-  const hibernateClusterProps = getHibernateClusterProps();
-
   const showDelete = cluster.canDelete && cluster.managed;
   const showScale = cluster.canEdit && cluster.managed && !cluster.ccs?.enabled;
   const showHibernateCluster =
@@ -317,9 +300,8 @@ function actionResolver(
     cluster.managed &&
     canHibernateCluster &&
     !isProductOSDTrial &&
-    !isHypershiftCluster(cluster) &&
-    !isRestrictedEnv();
-  const showEditNodeCount = cluster.canEdit && cluster.managed;
+    !isHypershiftCluster(cluster);
+  const showEditMachinePool = cluster.canEdit && cluster.managed;
   const isArchived = get(cluster, 'subscription.status', false) === subscriptionStatuses.ARCHIVED;
   const showArchive = cluster.canEdit && !cluster.managed && cluster.subscription && !isArchived;
   const showUnarchive = cluster.canEdit && !cluster.managed && cluster.subscription && isArchived;
@@ -340,18 +322,18 @@ function actionResolver(
   const showUpgradeTrialCluster = isClusterReady && cluster.canEdit && isProductOSDTrial;
 
   return [
-    showConsoleButton && adminConsoleItemProps,
-    cluster.canEdit && editDisplayNameItemProps,
-    showEditURL && editConsoleURLItemProps,
-    showScale && scaleClusterItemProps,
-    showEditNodeCount && editNodeCountItemProps,
-    showHibernateCluster && hibernateClusterProps,
-    showUpgradeTrialCluster && upgradeTrialClusterProps,
-    showDelete && deleteClusterItemProps,
-    showArchive && archiveClusterItemProps,
-    showUnarchive && unarchiveClusterItemProps,
-    showEditSubscriptionSettings && editSubscriptionSettingsProps,
-    showTransferClusterOwnership && transferClusterOwnershipProps,
+    showConsoleButton && getAdminConsoleProps(),
+    cluster.canEdit && getEditDisplayNameProps(),
+    showEditURL && getEditConsoleURLProps(),
+    showScale && getScaleClusterProps(),
+    showEditMachinePool && getEditMachinePoolProps(),
+    showHibernateCluster && getHibernateClusterProps(),
+    showUpgradeTrialCluster && getUpgradeTrialClusterProps(),
+    showDelete && getDeleteItemProps(),
+    showArchive && getArchiveClusterProps(),
+    showUnarchive && getUnarchiveClusterProps(),
+    showEditSubscriptionSettings && getEditSubscriptionSettingsProps(),
+    showTransferClusterOwnership && getTransferClusterOwnershipProps(),
   ].filter(Boolean);
 }
 
@@ -378,7 +360,7 @@ function dropDownItems({
     inClusterList,
   );
   const menuItems = actions.map((action) => (
-    <DropdownItem {...action}>{action.title}</DropdownItem>
+    <DropdownItemDeprecated {...action}>{action.title}</DropdownItemDeprecated>
   ));
   return menuItems;
 }

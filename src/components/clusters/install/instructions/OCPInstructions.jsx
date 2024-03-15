@@ -32,51 +32,47 @@ const OCPInstructions = (props) => {
     ? `Follow the documentation to configure your ${instructionsMapping[cloudProviderID].cloudProvider} account and run the installer`
     : 'Follow the instructions to configure your environment and install your cluster';
   return (
-    <>
-      <Card
-        ouiaId={`${cloudProviderID}${installationTypeId ? '-'.concat(installationTypeId) : ''}`}
-      >
-        <CardBody>
-          {token.error && (
-            <>
-              <TokenErrorAlert token={token} />
-              <div className="pf-u-mb-lg" />
-            </>
-          )}
-          <Instructions>
-            <Instruction>
-              <DownloadsAndPullSecretSection
-                showPreReleaseDocs={showPreReleaseDocs}
-                preReleasePageLink={preReleasePageLink}
-                token={token}
-                pendoID={pendoID}
-                cloudProviderID={cloudProviderID}
-                rhcos={rhcos}
-                tool={installer}
-                channel={channel}
-                isBMIPI={isBMIPI}
-                showPreReleasePageLink={showPreReleasePageLink}
-              />
-            </Instruction>
-            <Instruction>
-              <Text component="h2">{getStartedTitleText}</Text>
-              <GetStarted
-                docURL={docURL}
-                pendoID={pendoID}
-                cloudProviderID={cloudProviderID}
-                customizations={customizations}
-                prerequisites={prerequisites}
-                isBMIPI={isBMIPI}
-                isUPI={isUPI}
-              />
-            </Instruction>
-            <Instruction>
-              <SubscriptionAndSupport />
-            </Instruction>
-          </Instructions>
-        </CardBody>
-      </Card>
-    </>
+    <Card ouiaId={`${cloudProviderID}${installationTypeId ? '-'.concat(installationTypeId) : ''}`}>
+      <CardBody>
+        {token.error && (
+          <>
+            <TokenErrorAlert token={token} />
+            <div className="pf-v5-u-mb-lg" />
+          </>
+        )}
+        <Instructions>
+          <Instruction>
+            <DownloadsAndPullSecretSection
+              showPreReleaseDocs={showPreReleaseDocs}
+              preReleasePageLink={preReleasePageLink}
+              token={token}
+              pendoID={pendoID}
+              cloudProviderID={cloudProviderID}
+              rhcos={rhcos}
+              tool={installer}
+              channel={channel}
+              isBMIPI={isBMIPI}
+              showPreReleasePageLink={showPreReleasePageLink}
+            />
+          </Instruction>
+          <Instruction>
+            <Text component="h2">{getStartedTitleText}</Text>
+            <GetStarted
+              docURL={docURL}
+              pendoID={pendoID}
+              cloudProviderID={cloudProviderID}
+              customizations={customizations}
+              prerequisites={prerequisites}
+              isBMIPI={isBMIPI}
+              isUPI={isUPI}
+            />
+          </Instruction>
+          <Instruction>
+            <SubscriptionAndSupport />
+          </Instruction>
+        </Instructions>
+      </CardBody>
+    </Card>
   );
 };
 

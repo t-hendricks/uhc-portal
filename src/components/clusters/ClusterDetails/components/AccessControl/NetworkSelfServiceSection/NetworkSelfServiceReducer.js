@@ -1,4 +1,4 @@
-import produce from 'immer';
+import { produce } from 'immer';
 import sortBy from 'lodash/sortBy';
 
 import {
@@ -34,6 +34,7 @@ const initialState = {
   },
 };
 
+// eslint-disable-next-line default-param-last
 function NetworkSelfServiceReducer(state = initialState, action) {
   // eslint-disable-next-line consistent-return
   return produce(state, (draft) => {

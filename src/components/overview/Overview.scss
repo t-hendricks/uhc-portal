@@ -1,39 +1,121 @@
 @import '~@patternfly/patternfly/sass-utilities/_all';
 
-.ocm-c-overview {
-  max-width: 1710px;
+$ocm-c-marketing-banner--breakpoint-map: build-breakpoint-map();
 
-  a.overview-clusters-link {
-    &:hover {
-      text-decoration: none;
-    }
+.ocm-c-marketing-banner {
+  --ocm-m-marketing-page--RowGap: var(--pf-v5-global--spacer--xl);
+  --ocm-m-marketing-page--ColumnGap: var(--pf-v5-global--spacer--xl);
+  --ocm-m-marketing-page--section--PaddingTop: var(--pf-v5-global--spacer--xl);
+  --ocm-m-marketing-page--section--PaddingRight: var(--pf-v5-global--spacer--2xl);
+  --ocm-m-marketing-page--section--PaddingBottom: var(--pf-v5-global--spacer--xl);
+  --ocm-m-marketing-page--section--PaddingLeft: var(--pf-v5-global--spacer--2xl);
+
+  .ocm-l-autofit {
+    --ocm-l-autofit--m-gutter--RowGap: var(--ins-m-marketing-page--RowGap);
+    --ocm-l-autofit--m-gutter--ColumnGap: var(--ins-m-marketing-page--ColumnGap);
   }
 
-  .ocm-overview-clusters__card {
-    height: 100%;
-    span.clusters-with-issues-zero {
-      font-size: var(--pf-global--FontSize--3xl);
-      padding-right: var(--pf-global--spacer--sm);
-    }
-    span.clusters-with-issues-non-zero {
-      color: var(--pf-global--danger-color--100);
-      font-size: var(--pf-global--FontSize--3xl);
-      padding-right: var(--pf-global--spacer--sm);
-    }
+  .pf-v5-c-page__main-section {
+    --pf-v5-c-page__main-section--PaddingTop: var(--ins-m-marketing-page--section--PaddingTop);
+    --pf-v5-c-page__main-section--PaddingRight: var(--ins-m-marketing-page--section--PaddingRight);
+    --pf-v5-c-page__main-section--PaddingBottom: var(--ins-m-marketing-page--section--PaddingBottom);
+    --pf-v5-c-page__main-section--PaddingLeft: var(--ins-m-marketing-page--section--PaddingLeft);
   }
 
-  .ocm-c-metrics-charts__card {
-     min-height: 300px;
-    .pf-c-card__header .pf-c-alert {
-      margin-top: 10px;
-    }
+  .ocm-c-marketing-banner {
+    --ocm-c-marketing-banner--PaddingTop: var(--pf-v5-global--spacer--2xl);
+    --ocm-c-marketing-banner--PaddingBottom: var(--pf-v5-global--spacer--2xl);
   }
 
-  @media only screen and (max-width: $pf-global--breakpoint--md) {
-    .ocm-overview-clusters__card {
-      .pf-c-table.clusters-with-issues td {
-        text-align: left;
-      }
+  a {
+    color: #000;
+    text-decoration: none;
+  }
+
+  .pf-v5-l-grid {
+    --pf-v5-l-grid--m-gutter--GridGap: var(--pf-v5-global--spacer--xl);
+  }
+}
+
+
+
+.dashboard-emptystate-card .pf-v5-c-card__body {
+  a {
+    display: block;
+    margin-top: 16px;
+  }
+
+  .pf-v5-c-button {
+    padding-left: 0;
+  }
+
+  .pf-v5-c-button > .pf-v5-c-button__icon {
+    float: right;
+    margin-left: 5px;
+  }
+}
+
+.dashboard-emptystate-card{
+  max-width: 570px;
+}
+
+#dashboard-emptystate-osd {
+  padding-bottom: var(--pf-v5-global--spacer--lg);
+}
+
+#overview-emptystate-get-productive .flex-pair{
+  div{
+    margin-bottom: var(--pf-v5-global--spacer--lg);
+    @media (max-width: 480px) {
+      width: 338px;
+    }
+    @media (min-width: 481px) and (max-width: 768px) {
+      width: 520px;
+    }
+    @media (min-width: 779px) and (max-width: 1199px){
+      width: 463px;
     }
   }
+  div:first-child{
+      @media (min-width: 1023px) {
+      margin-right: var(--pf-v5-global--spacer--lg);
+    }
+  }
+}
+
+#emptystate-learn-more {
+  display: flex;
+  flex-wrap: wrap;
+
+  iframe {
+    min-height: 375px;
+  }
+
+  .pf-v5-c-list{
+   list-style: none;
+  }
+
+  div:first-child{
+    @media (max-width: 769px) {
+      margin-bottom: var(--pf-v5-global--spacer--lg);
+    }
+    @media (min-width: 737px) {
+      margin-right: var(--pf-v5-global--spacer--lg);
+    }
+  }
+}
+
+#request-information-btn {
+  text-decoration: none;
+  button {
+    display: block;
+    margin-top: var(--pf-v5-global--spacer--md);
+  }
+}
+
+#create-cluster-card-image {
+  height: 12em;
+  width: 18em;
+  padding-right: 1em;
+  padding-top: 1em;
 }

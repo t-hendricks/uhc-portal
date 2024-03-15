@@ -1,8 +1,9 @@
 import React from 'react';
-import { Button, ButtonProps, ButtonVariant } from '@patternfly/react-core';
-import { ExternalLinkAltIcon } from '@patternfly/react-icons';
+import { Button, ButtonProps, ButtonVariant, Icon } from '@patternfly/react-core';
+import { ExternalLinkAltIcon } from '@patternfly/react-icons/dist/esm/icons/external-link-alt-icon';
 import { trackEvents } from '~/common/analytics';
 import useAnalytics from '~/hooks/useAnalytics';
+import './ExternalLink.scss';
 
 type Props = {
   href: string;
@@ -13,6 +14,8 @@ type Props = {
   stopClickPropagation?: boolean;
   isButton?: boolean;
   variant?: ButtonProps['variant'];
+  customTrackProperties?: Record<string, unknown>;
+  'data-testid'?: string;
 };
 
 const ExternalLink = ({
@@ -24,6 +27,8 @@ const ExternalLink = ({
   stopClickPropagation,
   isButton,
   variant = ButtonVariant.secondary,
+  customTrackProperties = {},
+  'data-testid': dataTestId,
 }: Props) => {
   const track = useAnalytics();
 
@@ -47,6 +52,7 @@ const ExternalLink = ({
         link_url: href,
         module: 'openshift',
         ocm_resource_type: resource,
+        ...customTrackProperties,
       },
     });
   };
@@ -66,20 +72,21 @@ const ExternalLink = ({
     rel: 'noreferrer noopener',
     className,
     onClick: handleClick,
+    'data-testid': dataTestId,
   };
 
   const childrenComp = (
     <>
       {children}
-      {noTarget ? null : <span className="pf-u-screen-reader"> (new window or tab)</span>}
-      {!noIcon && (
-        <ExternalLinkAltIcon
-          color="#0066cc"
-          size="sm"
-          className="pf-u-ml-sm"
-          data-testid="openInNewWindowIcon"
-        />
-      )}
+      {noTarget ? null : <span className="pf-v5-u-screen-reader"> (new window or tab)</span>}
+      {
+        // TODO: replace it by <Button component="a" href="..." variant="link" icon={<ExternalLinkSquareAltIcon />} ...
+        !noIcon && (
+          <Icon size="md" className="external-link-alt-icon">
+            <ExternalLinkAltIcon color="#0066cc" data-testid="openInNewWindowIcon" />
+          </Icon>
+        )
+      }
     </>
   );
   return isButton ? (

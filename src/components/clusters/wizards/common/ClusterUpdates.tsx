@@ -48,7 +48,7 @@ export const ClusterUpdates = () => {
     },
   ];
 
-  const onUpgradePolicyChange = (value: string) => {
+  const onUpgradePolicyChange = (_event: React.FormEvent<HTMLDivElement>, value: string) => {
     if (value === UpgradePolicyType.Manual) {
       setFieldValue(
         FieldId.AutomaticUpgradeSchedule,
@@ -62,14 +62,14 @@ export const ClusterUpdates = () => {
       <GridItem>
         <Title headingLevel="h3">Cluster update strategy</Title>
 
-        <Text component={TextVariants.p} className="pf-u-mt-sm">
+        <Text component={TextVariants.p} className="pf-v5-u-mt-sm">
           In the event of{' '}
           <ExternalLink href="https://access.redhat.com/security/updates/classification/#critical">
             Critical security concerns
           </ExternalLink>{' '}
           (CVEs) that significantly impact the security or stability of the cluster, updates may be
           automatically scheduled by Red Hat SRE to the latest z-stream version not impacted by the
-          CVE within 48 hours after customer notifications.
+          CVE within 2 business days after customer notifications.
         </Text>
       </GridItem>
 
@@ -91,7 +91,7 @@ export const ClusterUpdates = () => {
                   onChange: (value: string) =>
                     setFieldValue(FieldId.AutomaticUpgradeSchedule, value),
                 }}
-                className="pf-u-mt-md"
+                className="pf-v5-u-mt-md"
               />
             )}
           </GridItem>

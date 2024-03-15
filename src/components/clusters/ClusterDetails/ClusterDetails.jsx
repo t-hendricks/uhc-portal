@@ -13,7 +13,7 @@ limitations under the License.
 
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Redirect } from 'react-router-dom';
+import { Navigate } from 'react-router-dom-v5-compat';
 import get from 'lodash/get';
 
 import { PageSection, TabContent } from '@patternfly/react-core';
@@ -23,10 +23,9 @@ import * as OCM from '@openshift-assisted/ui-lib/ocm';
 import { AppPage } from '~/components/App/AppPage';
 import { isRestrictedEnv } from '~/restrictedEnv';
 import ClusterDetailsTop from './components/ClusterDetailsTop';
-import TabsRow from './components/TabsRow';
+import TabsRow from './components/TabsRow/TabsRow';
 import Overview from './components/Overview/Overview';
 import Monitoring from './components/Monitoring';
-import ClusterLogs from './components/ClusterLogs';
 import Networking from './components/Networking';
 import AccessControl from './components/AccessControl/AccessControl';
 import AddOns from './components/AddOns';
@@ -40,10 +39,14 @@ import CommonClusterModals from '../common/CommonClusterModals';
 import CancelUpgradeModal from '../common/Upgrades/CancelUpgradeModal';
 
 import { isValid, shouldRefetchQuota } from '../../../common/helpers';
-import { isHypershiftCluster } from './clusterDetailsHelper';
+import { eventTypes } from './clusterDetailsHelper';
 import getClusterName from '../../../common/getClusterName';
 import { subscriptionStatuses, knownProducts } from '../../../common/subscriptionTypes';
-import clusterStates, { isHibernating } from '../common/clusterStates';
+import clusterStates, {
+  isHibernating,
+  isHypershiftCluster,
+  canViewMachinePoolTab,
+} from '../common/clusterStates';
 import AddGrantModal from './components/AccessControl/NetworkSelfServiceSection/AddGrantModal';
 import Unavailable from '../../common/Unavailable';
 import Support from './components/Support';
@@ -53,6 +56,8 @@ import { isUninstalledAICluster } from '../../../common/isAssistedInstallerClust
 import { hasCapability, subscriptionCapabilities } from '../../../common/subscriptionCapabilities';
 import withFeatureGate from '../../features/with-feature-gate';
 import { ASSISTED_INSTALLER_FEATURE } from '../../../redux/constants/featureConstants';
+import { ClusterTabsId } from './components/common/ClusterTabIds';
+import ClusterLogs from './components/ClusterLogs/ClusterLogs';
 
 const { HostsClusterDetailTab, getAddHostsTabState } = OCM;
 const GatedAIHostsClusterDetailTab = withFeatureGate(
@@ -64,7 +69,7 @@ const PAGE_TITLE = 'Red Hat OpenShift Cluster Manager';
 class ClusterDetails extends Component {
   state = {
     selectedTab: '',
-    refreshEvent: null,
+    refreshEvent: { type: eventTypes.NONE },
   };
 
   constructor(props) {
@@ -73,7 +78,6 @@ class ClusterDetails extends Component {
     this.refreshIDP = this.refreshIDP.bind(this);
 
     this.overviewTabRef = React.createRef();
-    this.insightsTabRef = React.createRef();
     this.monitoringTabRef = React.createRef();
     this.accessControlTabRef = React.createRef();
     this.addOnsTabRef = React.createRef();
@@ -202,8 +206,10 @@ class ClusterDetails extends Component {
       getSchedules,
       fetchClusterInsights,
       fetchUpgradeGates,
+      useNodeUpgradePolicies,
     } = this.props;
     const clusterID = get(clusterDetails, 'cluster.id');
+    const clusterVersion = clusterDetails.cluster?.version?.id;
     const isManaged = get(clusterDetails, 'cluster.managed', false);
 
     if (shouldRefetchQuota(organization)) {
@@ -213,7 +219,10 @@ class ClusterDetails extends Component {
     if (externalClusterID) {
       fetchClusterInsights(externalClusterID);
       this.fetchSupportData();
-      getClusterHistory(externalClusterID, clusterLogsViewOptions);
+    }
+
+    if (externalClusterID || clusterID) {
+      getClusterHistory(externalClusterID, clusterID, clusterLogsViewOptions);
     }
 
     if (isManaged) {
@@ -223,7 +232,12 @@ class ClusterDetails extends Component {
       getUsers(clusterID);
       getClusterRouters(clusterID);
       this.refreshIDP();
-      getMachineOrNodePools(clusterID, isHypershiftCluster(clusterDetails?.cluster));
+      getMachineOrNodePools(
+        clusterID,
+        isHypershiftCluster(clusterDetails?.cluster),
+        clusterVersion,
+        useNodeUpgradePolicies,
+      );
       getSchedules(clusterID, isHypershiftCluster(clusterDetails?.cluster));
       fetchUpgradeGates();
 
@@ -236,27 +250,17 @@ class ClusterDetails extends Component {
       getOnDemandMetrics(subscriptionID);
     }
 
-    this.setState({ refreshEvent: { type: clicked } });
+    this.setState({ refreshEvent: { type: clicked || eventTypes.AUTO } });
   }
 
   fetchSupportData() {
-    const {
-      clusterDetails,
-      getNotificationContacts,
-      getSupportCases,
-      supportCases,
-      notificationContacts,
-    } = this.props;
+    const { clusterDetails, getNotificationContacts, notificationContacts } = this.props;
 
     const subscriptionID = clusterDetails.cluster?.subscription?.id;
 
     if (isValid(subscriptionID)) {
       if (!notificationContacts.pending) {
         getNotificationContacts(subscriptionID);
-      }
-
-      if (!supportCases.pending) {
-        getSupportCases(subscriptionID);
       }
     }
   }
@@ -274,17 +278,18 @@ class ClusterDetails extends Component {
       setGlobalError,
       displayClusterLogs,
       insightsData,
+      logs,
       canSubscribeOCP,
       canTransferClusterOwnership,
       canHibernateCluster,
       anyModalOpen,
       hasIssues,
-      hasIssuesInsights,
       toggleSubscriptionReleased,
       initTabOpen,
       assistedInstallerEnabled,
       userAccess,
       gotRouters,
+      hasNetworkOndemand,
     } = this.props;
     const { selectedTab, refreshEvent } = this.state;
 
@@ -335,7 +340,7 @@ class ClusterDetails extends Component {
           'clusterDetails',
           clusterDetails.errorMessage,
         );
-        return <Redirect to="/" />;
+        return <Navigate replace to="/" />;
       }
       return errorState();
     }
@@ -344,12 +349,14 @@ class ClusterDetails extends Component {
       this.setState({ selectedTab: tabId });
     };
 
-    const clusterHibernating = isHibernating(cluster.state);
+    const clusterHibernating = isHibernating(cluster);
     const isArchived =
       get(cluster, 'subscription.status', false) === subscriptionStatuses.ARCHIVED ||
       get(cluster, 'subscription.status', false) === subscriptionStatuses.DEPROVISIONED;
     const isAROCluster = get(cluster, 'subscription.plan.type', '') === knownProducts.ARO;
     const isOSDTrial = get(cluster, 'subscription.plan.type', '') === knownProducts.OSDTrial;
+    const isRHOIC = get(cluster, 'subscription.plan.type', '') === knownProducts.RHOIC;
+
     const isManaged = cluster.managed;
     const isHypershift = isHypershiftCluster(cluster);
     const isClusterWaiting = cluster.state === clusterStates.WAITING;
@@ -358,8 +365,6 @@ class ClusterDetails extends Component {
     const isClusterReady = cluster.state === clusterStates.READY;
     const isClusterUpdating = cluster.state === clusterStates.UPDATING;
     const isReadOnly = cluster?.status?.configuration_mode === 'read_only';
-    const isPrivateCluster =
-      cluster.aws && get(cluster, 'ccs.enabled') && get(cluster, 'aws.private_link');
     const canCreateGCPNonCCSCluster = hasCapability(
       organization.details,
       subscriptionCapabilities.CREATE_GCP_NON_CCS_CLUSTER,
@@ -376,6 +381,7 @@ class ClusterDetails extends Component {
       !isArchived &&
       !cluster.managed &&
       !isAROCluster &&
+      !isRHOIC &&
       !isUninstalledAICluster(cluster) &&
       !isRestrictedEnv();
     const displayAccessControlTab = !isArchived;
@@ -384,17 +390,16 @@ class ClusterDetails extends Component {
       (isClusterReady || isClusterUpdating || clusterHibernating) &&
       cluster.managed &&
       !!get(cluster, 'api.url') &&
-      ((cloudProvider === 'aws' && (!isPrivateCluster || isHypershift || isRestrictedEnv())) ||
+      ((cloudProvider === 'aws' && (cluster?.ccs?.enabled || isHypershift || isRestrictedEnv())) ||
         (cloudProvider === 'gcp' &&
           (get(cluster, 'ccs.enabled') || (gotRouters && canCreateGCPNonCCSCluster)))) &&
       !isArchived;
-    const displayMachinePoolsTab =
-      cluster.managed && (isClusterReady || clusterHibernating) && !isArchived;
-    const hideSupportTab =
-      cluster.managed &&
-      // The (managed) cluster has not yet reported its cluster ID to AMS
-      // eslint-disable-next-line camelcase
-      cluster.subscription?.external_cluster_id === undefined;
+    const hideSupportTab = isRestrictedEnv()
+      ? false
+      : cluster.managed &&
+        // The (managed) cluster has not yet reported its cluster ID to AMS
+        // eslint-disable-next-line camelcase
+        cluster.subscription?.external_cluster_id === undefined;
     const displaySupportTab = !hideSupportTab && !isOSDTrial;
     const displayUpgradeSettingsTab =
       (cluster.managed || isAROCluster) && cluster.canEdit && !isArchived;
@@ -413,7 +418,7 @@ class ClusterDetails extends Component {
             openModal={openModal}
             pending={clusterDetails.pending}
             refreshFunc={this.refresh}
-            clickRefreshFunc={() => this.refresh('clicked')}
+            clickRefreshFunc={() => this.refresh(eventTypes.CLICKED)}
             clusterIdentityProviders={clusterIdentityProviders}
             organization={organization}
             error={clusterDetails.error}
@@ -424,30 +429,36 @@ class ClusterDetails extends Component {
             autoRefreshEnabled={!anyModalOpen}
             toggleSubscriptionReleased={toggleSubscriptionReleased}
             showPreviewLabel={isHypershift}
+            logs={logs}
           >
             <TabsRow
-              displayMonitoringTab={displayMonitoringTab}
-              displayAccessControlTab={displayAccessControlTab}
-              displayAddOnsTab={displayAddOnsTab}
-              displayClusterHistoryTab={displayClusterLogs}
-              displayNetworkingTab={displayNetworkingTab}
-              displaySupportTab={displaySupportTab}
-              displayMachinePoolsTab={displayMachinePoolsTab}
-              displayUpgradeSettingsTab={displayUpgradeSettingsTab}
-              addHostTabDetails={addHostsTabState}
-              overviewTabRef={this.overviewTabRef}
-              monitoringTabRef={this.monitoringTabRef}
-              accessControlTabRef={this.accessControlTabRef}
-              addOnsTabRef={this.addOnsTabRef}
-              clusterHistoryTabRef={this.clusterHistoryTabRef}
-              networkingTabRef={this.networkingTabRef}
-              insightsTabRef={this.insightsTabRef}
-              supportTabRef={this.supportTabRef}
-              machinePoolsTabRef={this.machinePoolsTabRef}
-              upgradeSettingsTabRef={this.upgradeSettingsTabRef}
-              addAssistedTabRef={this.addAssistedTabRef}
-              hasIssues={cluster.state !== clusterStates.INSTALLING && hasIssues}
-              hasIssuesInsights={hasIssuesInsights}
+              tabsInfo={{
+                overview: { ref: this.overviewTabRef, hasIssues: false },
+                monitoring: {
+                  ref: this.monitoringTabRef,
+                  show: displayMonitoringTab,
+                  hasIssues: cluster.state !== clusterStates.INSTALLING && hasIssues,
+                },
+                accessControl: { ref: this.accessControlTabRef, show: displayAccessControlTab },
+                addOns: { ref: this.addOnsTabRef, show: displayAddOnsTab },
+                clusterHistory: { ref: this.clusterHistoryTabRef, show: displayClusterLogs },
+                networking: { ref: this.networkingTabRef, show: displayNetworkingTab },
+                machinePools: {
+                  ref: this.machinePoolsTabRef,
+                  show: canViewMachinePoolTab(cluster),
+                },
+                support: { ref: this.supportTabRef, show: displaySupportTab },
+                upgradeSettings: {
+                  ref: this.upgradeSettingsTabRef,
+                  show: displayUpgradeSettingsTab,
+                },
+                addAssisted: {
+                  ref: this.addAssistedTabRef,
+                  show: addHostsTabState.showTab,
+                  isDisabled: addHostsTabState.isDisabled,
+                  tooltip: addHostsTabState.tabTooltip,
+                },
+              }}
               initTabOpen={initTabOpen}
               onTabSelected={onTabSelected}
             />
@@ -467,6 +478,7 @@ class ClusterDetails extends Component {
                 refresh={this.refresh}
                 openModal={openModal}
                 insightsData={insightsData[cluster.external_id]}
+                hasNetworkOndemand={hasNetworkOndemand}
                 userAccess={userAccess}
               />
             </ErrorBoundary>
@@ -519,7 +531,17 @@ class ClusterDetails extends Component {
               hidden
             >
               <ErrorBoundary>
-                <ClusterLogs externalClusterID={cluster.external_id} history={history} />
+                <ClusterLogs
+                  externalClusterID={cluster.external_id}
+                  clusterID={cluster.id}
+                  createdAt={cluster.creation_timestamp}
+                  history={history}
+                  refreshEvent={{
+                    type: refreshEvent.type,
+                    reset: () => this.setState({ refreshEvent: { type: eventTypes.NONE } }),
+                  }}
+                  isVisible={selectedTab === ClusterTabsId.CLUSTER_HISTORY}
+                />
               </ErrorBoundary>
             </TabContent>
           )}
@@ -547,7 +569,7 @@ class ClusterDetails extends Component {
               <Support isDisabled={isArchived} />
             </ErrorBoundary>
           </TabContent>
-          {displayMachinePoolsTab && (
+          {canViewMachinePoolTab(cluster) && (
             <TabContent
               eventKey={6}
               id="machinePoolsContent"
@@ -585,7 +607,7 @@ class ClusterDetails extends Component {
               <ErrorBoundary>
                 <GatedAIHostsClusterDetailTab
                   cluster={cluster}
-                  isVisible={selectedTab === 'addAssistedHosts'}
+                  isVisible={selectedTab === ClusterTabsId.ADD_ASSISTED_HOSTS}
                 />
               </ErrorBoundary>
             </TabContent>
@@ -627,6 +649,12 @@ ClusterDetails.propTypes = {
   resetClusterHistory: PropTypes.func.isRequired,
   getClusterIdentityProviders: PropTypes.func.isRequired,
   insightsData: PropTypes.object,
+  logs: PropTypes.arrayOf(
+    PropTypes.shape({
+      summary: PropTypes.string,
+      description: PropTypes.string,
+    }),
+  ),
   clusterIdentityProviders: PropTypes.object.isRequired,
   organization: PropTypes.object.isRequired,
   clusterDetails: PropTypes.shape({
@@ -654,13 +682,11 @@ ClusterDetails.propTypes = {
   getClusterRouters: PropTypes.func.isRequired,
   anyModalOpen: PropTypes.bool,
   hasIssues: PropTypes.bool.isRequired,
-  hasIssuesInsights: PropTypes.bool.isRequired,
   toggleSubscriptionReleased: PropTypes.func.isRequired,
   initTabOpen: PropTypes.string.isRequired,
   notificationContacts: PropTypes.object.isRequired,
   getNotificationContacts: PropTypes.func.isRequired,
-  getSupportCases: PropTypes.func.isRequired,
-  supportCases: PropTypes.object.isRequired,
+  hasNetworkOndemand: PropTypes.bool.isRequired,
   assistedInstallerEnabled: PropTypes.bool,
   getSchedules: PropTypes.func,
   getUserAccess: PropTypes.func.isRequired,
@@ -671,6 +697,7 @@ ClusterDetails.propTypes = {
   }).isRequired,
   fetchUpgradeGates: PropTypes.func,
   clearFiltersAndFlags: PropTypes.func.isRequired,
+  useNodeUpgradePolicies: PropTypes.bool,
 };
 
 ClusterDetails.defaultProps = {

@@ -1,4 +1,3 @@
-import * as React from 'react';
 import {
   Card,
   CardBody,
@@ -8,9 +7,11 @@ import {
   FormGroup,
   Radio,
 } from '@patternfly/react-core';
+import * as React from 'react';
+import { BillingQuota } from '~/components/clusters/common/quotaModel';
 import AddOnsConstants from '../AddOnsConstants';
 import AddOnsSubscriptionCard from './AddOnsSubscriptionCard';
-import { SubscriptionModels, SetSubscriptionModel, CloudAccount } from './AddOnsTypes';
+import { SetSubscriptionModel, SubscriptionModels } from './AddOnsTypes';
 
 const AddOnsSubscription = ({
   activeCardId,
@@ -20,23 +21,7 @@ const AddOnsSubscription = ({
   setAddonsDrawer,
 }: {
   activeCardId: string;
-  billingQuota: {
-    standard?: {
-      allowed: number;
-      consumed: number;
-      cost: number;
-    };
-    marketplace?: {
-      allowed: number;
-      consumed: number;
-      cost: number;
-      cloudAccounts: {
-        rhm: CloudAccount[];
-        aws: CloudAccount[];
-        azure: CloudAccount[];
-      };
-    };
-  };
+  billingQuota: BillingQuota;
   installedAddOn: any;
   subscriptionModels: SubscriptionModels;
   setAddonsDrawer: (props: any) => void;
@@ -112,6 +97,7 @@ const AddOnsSubscription = ({
         },
       });
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [subscriptionModels, activeCardId, installedAddOn]);
 
   const standardOptions = (
@@ -119,7 +105,7 @@ const AddOnsSubscription = ({
       id="standard-rh"
       isSelectableRaised
       isSelected={activeSubscription?.billingModel === 'standard'}
-      isDisabledRaised={!hasQuotaStandard || !isReady}
+      isDisabled={!hasQuotaStandard || !isReady}
     >
       <CardTitle>Red Hat Standard</CardTitle>
       <CardBody>Fixed capacity subscription.</CardBody>
@@ -178,11 +164,10 @@ const AddOnsSubscription = ({
       isChecked={activeSubscription?.billingModel === 'standard'}
       name="billing-model"
       id="standard"
-      className="addons-radio"
       value="standard"
       label={
         <div>
-          <span className={disabled ? 'pf-u-mr-xs' : ''}>Standard</span>
+          <span className={disabled ? 'pf-v5-u-mr-xs' : ''}>Standard</span>
         </div>
       }
       isDisabled={disabled}
@@ -203,11 +188,10 @@ const AddOnsSubscription = ({
       isChecked={activeSubscription?.billingModel.startsWith('marketplace')}
       name="billing-model"
       id="marketplace"
-      className="addons-radio"
       value="marketplace"
       label={
         <div>
-          <span className={disabled ? 'pf-u-mr-xs' : ''}>Marketplace</span>
+          <span className={disabled ? 'pf-v5-u-mr-xs' : ''}>Marketplace</span>
         </div>
       }
       isDisabled={disabled}
@@ -226,7 +210,9 @@ const AddOnsSubscription = ({
   return (
     <>
       <div
-        className={billingQuota.standard && billingQuota.marketplace ? 'pf-u-mb-sm' : 'pf-u-mb-lg'}
+        className={
+          billingQuota.standard && billingQuota.marketplace ? 'pf-v5-u-mb-sm' : 'pf-v5-u-mb-lg'
+        }
       >
         <strong>
           <small>Subscription type</small>

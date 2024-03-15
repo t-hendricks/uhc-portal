@@ -1,5 +1,7 @@
 import React from 'react';
-import { shallow } from 'enzyme';
+
+import { screen, render, checkAccessibility, TestRouter } from '~/testUtils';
+import { CompatRouter } from 'react-router-dom-v5-compat';
 import IDPSection from './IDPSection';
 
 const baseIDPs = {
@@ -14,50 +16,52 @@ const clusterUrls = {
   api: 'https://api.test-liza.wiex.s1.devshift.org:6443',
 };
 
+const openModal = jest.fn();
+const props = {
+  idpActions: {
+    list: true,
+  },
+  clusterID: 'fake id',
+  subscriptionID: 'fake sub',
+  identityProviders: baseIDPs,
+  clusterHibernating: false,
+  isReadOnly: false,
+  isHypershift: false,
+  openModal,
+  clusterUrls,
+};
+
 describe('<IDPSection />', () => {
-  it('should render (no IDPs)', () => {
-    const openModal = jest.fn();
-    const wrapper = shallow(
-      <IDPSection
-        idpActions={{
-          list: true,
-        }}
-        clusterID="fake id"
-        subscriptionID="fake sub"
-        identityProviders={baseIDPs}
-        clusterHibernating={false}
-        isReadOnly={false}
-        isHypershift={false}
-        openModal={openModal}
-        clusterUrls={clusterUrls}
-      />,
+  it('should render (no IDPs)', async () => {
+    const { container } = render(
+      <TestRouter>
+        <CompatRouter>
+          <IDPSection {...props} />
+        </CompatRouter>
+      </TestRouter>,
     );
-    expect(wrapper).toMatchSnapshot();
+    expect(screen.queryByRole('grid')).not.toBeInTheDocument();
+    expect(container.querySelectorAll('.pf-v5-c-skeleton').length).toBe(0);
+    await checkAccessibility(container);
   });
 
-  it('should render (IDPs pending)', () => {
+  it('should render (IDPs pending)', async () => {
     const IDPs = {
       ...baseIDPs,
       pending: true,
       fulfilled: false,
     };
 
-    const wrapper = shallow(
-      <IDPSection
-        idpActions={{
-          list: true,
-        }}
-        clusterHibernating={false}
-        isReadOnly={false}
-        clusterID="fake id"
-        subscriptionID="fake sub"
-        identityProviders={IDPs}
-        isHypershift={false}
-        openModal={jest.fn()}
-        clusterUrls={clusterUrls}
-      />,
+    const newProps = { ...props, identityProviders: IDPs };
+    const { container } = render(
+      <TestRouter>
+        <CompatRouter>
+          <IDPSection {...newProps} />
+        </CompatRouter>
+      </TestRouter>,
     );
-    expect(wrapper).toMatchSnapshot();
+    expect(container.querySelectorAll('.pf-v5-c-skeleton').length).toBeGreaterThan(0);
+    await checkAccessibility(container);
   });
 
   describe('should render (with IDPs)', () => {
@@ -78,33 +82,36 @@ describe('<IDPSection />', () => {
       fulfilled: true,
     };
 
-    const buildWrapper = ({ isHypershift }) => {
-      const openModal = jest.fn();
-      return shallow(
-        <IDPSection
-          idpActions={{
-            list: true,
-          }}
-          clusterID="fake id"
-          subscriptionID="fake sub"
-          identityProviders={IDPs}
-          clusterHibernating={false}
-          isReadOnly={false}
-          isHypershift={isHypershift}
-          openModal={openModal}
-          clusterUrls={clusterUrls}
-        />,
+    it('non-Hypershift cluster', async () => {
+      const newProps = { ...props, identityProviders: IDPs };
+      const { container } = render(
+        <TestRouter>
+          <CompatRouter>
+            <IDPSection {...newProps} />
+          </CompatRouter>
+        </TestRouter>,
       );
-    };
-
-    it('non-Hypershift cluster', () => {
-      const wrapper = buildWrapper({ isHypershift: false });
-      expect(wrapper).toMatchSnapshot();
+      expect(screen.getByRole('grid')).toBeInTheDocument();
+      expect(screen.getByRole('cell', { name: 'hi' })).toBeInTheDocument();
+      expect(screen.getByRole('cell', { name: 'hello' })).toBeInTheDocument();
+      expect(container.querySelectorAll('.pf-v5-c-skeleton').length).toBe(0);
+      await checkAccessibility(container);
     });
 
-    it('Hypershift cluster', () => {
-      const wrapper = buildWrapper({ isHypershift: true });
-      expect(wrapper).toMatchSnapshot();
+    it('Hypershift cluster', async () => {
+      const newProps = { ...props, identityProviders: IDPs, isHypershift: true };
+      const { container } = render(
+        <TestRouter>
+          <CompatRouter>
+            <IDPSection {...newProps} />
+          </CompatRouter>
+        </TestRouter>,
+      );
+      expect(screen.getByRole('grid')).toBeInTheDocument();
+      expect(screen.getByRole('cell', { name: 'hi' })).toBeInTheDocument();
+      expect(screen.getByRole('cell', { name: 'hello' })).toBeInTheDocument();
+      expect(container.querySelectorAll('.pf-v5-c-skeleton').length).toBe(0);
+      await checkAccessibility(container);
     });
   });
 });

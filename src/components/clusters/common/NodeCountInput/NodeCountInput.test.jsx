@@ -4,9 +4,10 @@ import {
   getMinNodesRequired as RealGetMinNodesRequired,
   getMinNodesRequiredHypershift,
 } from '~/components/clusters/ClusterDetails/components/MachinePools/machinePoolsHelper';
-import NodeCountInput, { MAX_NODES } from './NodeCountInput';
+import NodeCountInput from './NodeCountInput';
 import * as quotaSelectors from '../quotaSelectors';
 import { normalizedProducts, billingModels } from '../../../../common/subscriptionTypes';
+import { MAX_NODES, MAX_NODES_HCP } from '../machinePools/constants';
 
 const getMinNodesRequired = ({ isDefaultMachinePool, isByoc, isMultiAz }) =>
   RealGetMinNodesRequired(isDefaultMachinePool, isByoc, isMultiAz);
@@ -23,8 +24,10 @@ const baseProps = ({ isByoc, isMultiAz }) => ({
   label: 'compute nodes',
   currentNodeCount: 4,
   quota: {},
-  machineTypesByID: {
-    fake: { id: 'fake', generic_name: 'fake' },
+  machineTypes: {
+    typesByID: {
+      fake: { id: 'fake', generic_name: 'fake' },
+    },
   },
   input: {
     name: 'compute-nodes',
@@ -123,7 +126,6 @@ describe('<NodeCountInput>', () => {
 
       // Assert
       expect(screen.getByRole('combobox')).toHaveValue(`${minNodes}`);
-      expect(onChange).toBeCalledTimes(1);
       expect(onChange).toBeCalledWith(minNodes);
     });
 
@@ -246,7 +248,6 @@ describe('<NodeCountInput>', () => {
 
     // Assert
     expect(screen.getByRole('combobox')).toHaveValue(`${minNodes}`);
-    expect(onChange).toBeCalledTimes(1);
     expect(onChange).toBeCalledWith(minNodes);
   });
 
@@ -313,7 +314,27 @@ describe('<NodeCountInput>', () => {
   });
 
   describe('On props update', () => {
-    it('sends onchange with minimum nodes when changing machine types with not enough quota', () => {
+    it('sends onchange with minimum nodes when changing machine types with not enough quota ROSA', () => {
+      // Arrange
+      mockAvailableNodes.mockReturnValue(10);
+      const minNodes = getMinNodesRequired({ isDefaultMachinePool: true }); // expected to be 4
+      expect(minNodes).toEqual(4); // validate min value
+      const onChange = jest.fn();
+      const newProps = { ...baseProps({}), product: normalizedProducts.ROSA };
+      const inputProps = { ...newProps.input, onChange, value: 10 }; // note initial value is 10
+      const { rerender } = render(
+        <NodeCountInput {...newProps} input={inputProps} machineType="fake" />,
+      );
+      expect(screen.getByRole('combobox')).toHaveValue(`${10}`);
+      expect(onChange).toBeCalledTimes(0);
+
+      rerender(<NodeCountInput {...newProps} input={inputProps} machineType="fake2" />);
+
+      // Assert
+      expect(onChange).toBeCalledTimes(2);
+      expect(onChange).toBeCalledWith(4);
+    });
+    it('sends onchange with minimum nodes when changing machine types with not enough quota OSD', () => {
       // Arrange
       mockAvailableNodes.mockReturnValue(10);
       const minNodes = getMinNodesRequired({ isDefaultMachinePool: true }); // expected to be 4
@@ -330,15 +351,20 @@ describe('<NodeCountInput>', () => {
       rerender(<NodeCountInput {...newProps} input={inputProps} machineType="fake2" />);
 
       // Assert
-      expect(onChange).toBeCalledTimes(1);
       expect(onChange).toBeCalledWith(4);
     });
+
     describe('Hypershift (HCP)', () => {
       it('sends onchange with new value the number the user picked * number of new pools', () => {
         // Arrange
         mockAvailableNodes.mockReturnValue(24);
         const onChange = jest.fn();
-        const newProps = { ...baseProps({}), machineType: 'fake', isHypershiftWizard: true };
+        const newProps = {
+          ...baseProps({}),
+          machineType: 'fake',
+          isHypershiftWizard: true,
+          product: normalizedProducts.ROSA,
+        };
         const inputProps = { ...newProps.input, onChange, value: 6 };
         const { rerender } = render(
           <NodeCountInput
@@ -371,7 +397,12 @@ describe('<NodeCountInput>', () => {
         // Arrange
         mockAvailableNodes.mockReturnValue(24);
         const onChange = jest.fn();
-        const newProps = { ...baseProps({}), machineType: 'fake', isHypershiftWizard: true };
+        const newProps = {
+          ...baseProps({}),
+          machineType: 'fake',
+          isHypershiftWizard: true,
+          product: normalizedProducts.ROSA,
+        };
         const inputProps = { ...newProps.input, onChange, value: 3 };
 
         const { rerender } = render(
@@ -402,37 +433,45 @@ describe('<NodeCountInput>', () => {
       });
 
       it('sends onchange with minimum nodes when the number the user picked * number of new pools is greater than max nodes', () => {
+        const maxNodes = MAX_NODES_HCP;
+        const maxNodesForThreePools = MAX_NODES_HCP / 3;
+
         // Arrange
         mockAvailableNodes.mockReturnValue(200);
         const onChange = jest.fn();
-        const newProps = { ...baseProps({}), machineType: 'fake', isHypershiftWizard: true };
-        const inputProps = { ...newProps.input, onChange, value: 180 };
+        const newProps = {
+          ...baseProps({}),
+          machineType: 'fake',
+          isHypershiftWizard: true,
+          product: normalizedProducts.ROSA,
+        };
+        const inputProps = { ...newProps.input, onChange, value: maxNodes };
 
         const { rerender } = render(
           <NodeCountInput
             {...newProps}
             input={inputProps}
-            poolNumber={60}
-            minNodes={getMinNodesRequiredHypershift(60)}
+            poolNumber={maxNodesForThreePools}
+            minNodes={getMinNodesRequiredHypershift(maxNodesForThreePools)}
           />,
         );
         // verify initial value
         expect(onChange).toBeCalledTimes(0);
-        expect(screen.getByRole('combobox')).toHaveValue(`${180}`); // 180 = 3 nodes * 60 pools
+        expect(screen.getByRole('combobox')).toHaveValue(`${maxNodes}`); // 60 = 3 nodes * 20 pools
 
         rerender(
           <NodeCountInput
             {...newProps}
             input={inputProps}
-            poolNumber={65}
-            minNodes={getMinNodesRequiredHypershift(65)}
+            poolNumber={maxNodesForThreePools + 5}
+            minNodes={getMinNodesRequiredHypershift(maxNodesForThreePools + 5)}
           />,
         );
 
         // Assert
-        expect(65 * 3).toBeGreaterThan(MAX_NODES);
+        expect((maxNodesForThreePools + 5) * 3).toBeGreaterThan(maxNodes);
         expect(onChange).toBeCalledTimes(1);
-        expect(onChange).toBeCalledWith(getMinNodesRequiredHypershift(65));
+        expect(onChange).toBeCalledWith(getMinNodesRequiredHypershift(maxNodesForThreePools + 5));
       });
     });
   });

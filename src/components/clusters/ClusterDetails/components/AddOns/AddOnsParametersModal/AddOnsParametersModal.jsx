@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { Button, Form, FormGroup } from '@patternfly/react-core';
 
 import { Field } from 'redux-form';
-import { LevelUpAltIcon } from '@patternfly/react-icons';
+import { LevelUpAltIcon } from '@patternfly/react-icons/dist/esm/icons/level-up-alt-icon';
 import Modal from '../../../../../common/Modal/Modal';
 import { getParameterValue, getParameters, quotaCostOptions } from '../AddOnsHelper';
 import {
@@ -31,7 +31,7 @@ class AddOnsParametersModal extends Component {
     closeModal();
   };
 
-  validationsForParameterField = (param) => {
+  static validationsForParameterField = (param) => {
     const validations = [];
 
     if (param.value_type === 'boolean') {
@@ -91,7 +91,7 @@ class AddOnsParametersModal extends Component {
     change(`parameters.${param.id}`, paramValue);
   };
 
-  getDefaultValueText = (param) => {
+  static getDefaultValueText = (param) => {
     if (param.options !== undefined && param.options.length > 0) {
       const defaultOption = param.options.find((o) => o.value === param.default_value);
       if (defaultOption !== undefined) {
@@ -153,7 +153,7 @@ class AddOnsParametersModal extends Component {
             placeholder={this.getParamDefault(param)}
             isRequired={param.required}
             isDisabled={this.isFieldDisabled(param)}
-            validate={this.validationsForParameterField(param)}
+            validate={AddOnsParametersModal.validationsForParameterField(param)}
           />
           <div className="ocm-c--reduxcheckbox-description">{this.getHelpText(param)}</div>
         </>
@@ -170,7 +170,7 @@ class AddOnsParametersModal extends Component {
         isRequired={param.required}
         isDisabled={this.isFieldDisabled(param)}
         helpText={this.getHelpText(param)}
-        validate={this.validationsForParameterField(param)}
+        validate={AddOnsParametersModal.validationsForParameterField(param)}
       />
     );
   };
@@ -213,7 +213,7 @@ class AddOnsParametersModal extends Component {
                     iconPosition="right"
                     className="addon-parameter-default-button"
                   >
-                    Use default: {this.getDefaultValueText(param)}
+                    Use default: {AddOnsParametersModal.getDefaultValueText(param)}
                   </Button>
                 )}
               </FormGroup>

@@ -1,11 +1,39 @@
 import React from 'react';
-import { shallow } from 'enzyme';
+import { CompatRouter } from 'react-router-dom-v5-compat';
+import { screen, checkAccessibility, TestRouter, withState } from '~/testUtils';
 
 import { InstallGCPUPI } from '../InstallGCPUPI';
+import instructionsMapping from '../instructions/instructionsMapping';
+import githubReleases from '../githubReleases.mock';
+
+jest.mock('../../../../redux/actions', () => ({
+  __esModule: true,
+  tollboothActions: {
+    createAuthToken: jest.fn().mockResolvedValue('foo'),
+  },
+  githubActions: {
+    getLatestRelease: jest.fn(),
+  },
+}));
 
 describe('InstallGCPUPI', () => {
-  it('renders correctly', () => {
-    const wrapper = shallow(<InstallGCPUPI token={{}} dispatch={() => {}} />);
-    expect(wrapper).toMatchSnapshot();
+  const dispatch = jest.fn();
+
+  afterEach(() => {
+    jest.clearAllMocks();
+  });
+
+  it('is accessible', async () => {
+    const { container } = withState(githubReleases).render(
+      <TestRouter>
+        <CompatRouter>
+          <InstallGCPUPI token={{}} dispatch={dispatch} />
+        </CompatRouter>
+      </TestRouter>,
+    );
+
+    expect(await screen.findByText(instructionsMapping.gcp.upi.title)).toBeInTheDocument();
+
+    await checkAccessibility(container);
   });
 });

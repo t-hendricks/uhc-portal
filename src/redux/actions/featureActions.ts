@@ -1,24 +1,27 @@
 import { action, ActionType } from 'typesafe-actions';
-import { Capability } from '~/types/accounts_mgmt.v1/models/Capability';
+import { SelfAccessReview } from '~/types/accounts_mgmt.v1';
 import {
   SET_FEATURE,
-  ASSISTED_INSTALLER_PLATFORM_OCI,
   ASSISTED_INSTALLER_FEATURE,
-  ASSISTED_INSTALLER_SNO_FEATURE,
-  ASSISTED_INSTALLER_OCS_FEATURE,
-  ASSISTED_INSTALLER_CNV_FEATURE,
-  OSD_TRIAL_FEATURE,
   ASSISTED_INSTALLER_MERGE_LISTS_FEATURE,
-  OSD_WIZARD_V2_FEATURE,
-  ROSA_CREATION_WIZARD_FEATURE,
   HYPERSHIFT_WIZARD_FEATURE,
+  ROSA_WIZARD_V2_ENABLED,
+  OSD_GOOGLE_MARKETPLACE_FEATURE,
+  OSD_GCP_SHARED_VPC_FEATURE,
+  NETWORK_VALIDATOR_ONDEMAND_FEATURE,
   HCP_ROSA_GETTING_STARTED_PAGE,
   HCP_AWS_BILLING_SHOW,
   HCP_AWS_BILLING_REQUIRED,
+  HCP_USE_UNMANAGED,
+  SECURITY_GROUPS_FEATURE,
+  SECURITY_GROUPS_FEATURE_DAY1,
+  HCP_USE_NODE_UPGRADE_POLICIES,
+  ENABLE_MACHINE_CONFIGURATION,
+  GCP_SECURE_BOOT_UI,
+  GCP_SECURE_BOOT_ENHANCEMENTS,
+  CLI_SSO_AUTHORIZATION,
 } from '../constants/featureConstants';
 import authorizationsService from '../../services/authorizationsService';
-import accountsService from '../../services/accountsService';
-import { SelfAccessReview } from '../../types/authorizations.v1/models/SelfAccessReview';
 import type { AppThunk } from '../types';
 
 export const setFeatureAction = (feature: string, enabled: boolean) =>
@@ -32,52 +35,25 @@ const getSimpleUnleashFeature = (unleashFeatureName: string, name: string) => ({
       .then((unleash) => unleash.data.enabled),
 });
 
-type MapCapabilityToAssistedInstallerFeatureFunc = {
-  (capabilityName: string): Promise<boolean>;
-  cache?: Map<string, Capability[]>;
-};
-
-const mapCapabilityToAssistedInstallerFeature: MapCapabilityToAssistedInstallerFeatureFunc = async (
-  capabilityName: string,
-) => {
-  if (!mapCapabilityToAssistedInstallerFeature.cache) {
-    mapCapabilityToAssistedInstallerFeature.cache = new Map();
-  }
-
-  let isFeatureEnabled = false;
-  const response = await accountsService.getCurrentAccount();
-  const userOrganizationId = response.data?.organization?.id;
-  if (userOrganizationId) {
-    if (!mapCapabilityToAssistedInstallerFeature.cache.has(userOrganizationId)) {
-      const organizationResponse = await accountsService.getOrganization(userOrganizationId);
-      const organization = organizationResponse.data;
-      mapCapabilityToAssistedInstallerFeature.cache.set(
-        userOrganizationId,
-        JSON.parse(JSON.stringify(organization.capabilities ?? [])) as Capability[],
-      );
-    }
-
-    const capabilities = mapCapabilityToAssistedInstallerFeature.cache.get(userOrganizationId);
-    const capabilityEntry = capabilities?.find(({ name }) => name === capabilityName);
-    isFeatureEnabled = capabilityEntry?.value === 'true';
-  }
-
-  return isFeatureEnabled;
-};
-
 // list of features to detect upon app startup
 export const features = [
-  getSimpleUnleashFeature('osd-trial', OSD_TRIAL_FEATURE),
   getSimpleUnleashFeature('hypershift-creation-wizard', HYPERSHIFT_WIZARD_FEATURE),
+  getSimpleUnleashFeature('rosa-v2-creation-wizard', ROSA_WIZARD_V2_ENABLED),
   getSimpleUnleashFeature('hcp-rosa-getting-started-page', HCP_ROSA_GETTING_STARTED_PAGE),
   getSimpleUnleashFeature('hcp-aws-billing-show', HCP_AWS_BILLING_SHOW),
+  getSimpleUnleashFeature('hcp-use-unmanaged-policies', HCP_USE_UNMANAGED),
   getSimpleUnleashFeature('hcp-aws-billing-required', HCP_AWS_BILLING_REQUIRED),
-  getSimpleUnleashFeature('assisted-installer-sno', ASSISTED_INSTALLER_SNO_FEATURE),
-  getSimpleUnleashFeature('assisted-installer-ocs', ASSISTED_INSTALLER_OCS_FEATURE),
-  getSimpleUnleashFeature('assisted-installer-cnv', ASSISTED_INSTALLER_CNV_FEATURE),
+  getSimpleUnleashFeature('hcp-use-node-upgrade-policies', HCP_USE_NODE_UPGRADE_POLICIES),
   getSimpleUnleashFeature('assisted-installer-merge-lists', ASSISTED_INSTALLER_MERGE_LISTS_FEATURE),
-  getSimpleUnleashFeature('osd-creation-wizard-v2', OSD_WIZARD_V2_FEATURE),
-  getSimpleUnleashFeature('rosa-creation-wizard', ROSA_CREATION_WIZARD_FEATURE),
+  getSimpleUnleashFeature('osd-google-marketplace', OSD_GOOGLE_MARKETPLACE_FEATURE),
+  getSimpleUnleashFeature('osd-gcp-shared-vpc', OSD_GCP_SHARED_VPC_FEATURE),
+  getSimpleUnleashFeature('network-validator-ondemand', NETWORK_VALIDATOR_ONDEMAND_FEATURE),
+  getSimpleUnleashFeature('security-groups-feature-day1', SECURITY_GROUPS_FEATURE_DAY1), // Handles only Day1
+  getSimpleUnleashFeature('security-groups-feature', SECURITY_GROUPS_FEATURE), // Handles only Day2
+  getSimpleUnleashFeature('enable-machine-configuration', ENABLE_MACHINE_CONFIGURATION),
+  getSimpleUnleashFeature('gcp-secure-boot-ui', GCP_SECURE_BOOT_UI),
+  getSimpleUnleashFeature('gcp-secure-boot-enhancements', GCP_SECURE_BOOT_ENHANCEMENTS),
+  getSimpleUnleashFeature('cli-sso-authorization', CLI_SSO_AUTHORIZATION),
   {
     name: ASSISTED_INSTALLER_FEATURE,
     action: () =>
@@ -89,13 +65,6 @@ export const features = [
         }),
         authorizationsService.selfFeatureReview('assisted-installer'),
       ]).then(([resource, unleash]) => resource.data.allowed && unleash.data.enabled),
-  },
-  {
-    name: ASSISTED_INSTALLER_PLATFORM_OCI,
-    action: async () =>
-      mapCapabilityToAssistedInstallerFeature(
-        'capability.organization.bare_metal_installer_platform_oci',
-      ),
   },
 ];
 

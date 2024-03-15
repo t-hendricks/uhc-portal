@@ -1,18 +1,11 @@
-import Login from '../../pageobjects/login.page';
 import Releases from '../../pageobjects/Releases.page';
 import Docs from '../../pageobjects/Docs.page';
 
 var current_version;
 describe('Releases pages tests', () => {
-  before(() => {
-    cy.visit('/');
-    Login.isLoginPageUrl();
-    Login.login();
-  });
-
   it('Check latest openshift release versions(OCP-41253)', { tags: ['smoke'] }, () => {
     cy.intercept('/product-life-cycles/api/v1/products?name=Openshift*').as('getProductsLifecycle');
-    cy.visit('/releases');
+    cy.visit('/releases', { retryOnNetworkFailure: true });
     Releases.isReleasesPage();
     cy.wait('@getProductsLifecycle').then((intercept) => {
       const { response } = intercept;
@@ -37,7 +30,10 @@ describe('Releases pages tests', () => {
     });
   });
   it('Check all the links from release page(OCP-41253)', { tags: ['smoke'] }, () => {
-    Docs.getcontainerPlatformDocAbsolutePath(current_version, "updating/understanding-upgrade-channels-release.html")
+    Docs.getcontainerPlatformDocAbsolutePath(
+      current_version,
+      'updating/understanding_updates/understanding-update-channels-release.html',
+    )
       .should('exist')
       .and('contain.text', 'Learn more about updating channels');
     cy.get('button')

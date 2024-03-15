@@ -3,9 +3,9 @@ import { Alert, ExpandableSection, AlertActionCloseButton } from '@patternfly/re
 import { ErrorState } from '~/types/types';
 import { formatErrorDetails } from '../../common/errors';
 
-type Props<R extends Response = Response> = {
+type Props = {
   message: string;
-  response: ErrorState;
+  response: Pick<ErrorState, 'errorDetails' | 'errorMessage' | 'operationID'>;
   variant?: 'danger' | 'warning';
   children?: React.ReactNode;
   isExpandable?: boolean;
@@ -41,6 +41,7 @@ const ErrorBox = ({
       title={message}
       role={variant === 'danger' ? 'alert' : undefined}
       className="error-box"
+      data-testid="alert-error"
       {...(showCloseBtn && closeAlertProp)}
     >
       {children && (

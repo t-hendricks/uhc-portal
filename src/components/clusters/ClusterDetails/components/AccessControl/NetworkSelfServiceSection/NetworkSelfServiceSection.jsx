@@ -10,17 +10,21 @@ import {
   CardBody,
   CardFooter,
   CardTitle,
+  Icon,
 } from '@patternfly/react-core';
-import { Table, TableHeader, TableBody, TableVariant } from '@patternfly/react-table';
-
+import { TableVariant } from '@patternfly/react-table';
 import {
-  HelpIcon,
-  ExternalLinkAltIcon,
-  ExclamationCircleIcon,
-  InProgressIcon,
-  UnknownIcon,
-  CheckCircleIcon,
-} from '@patternfly/react-icons';
+  Table as TableDeprecated,
+  TableHeader as TableHeaderDeprecated,
+  TableBody as TableBodyDeprecated,
+} from '@patternfly/react-table/deprecated';
+
+import { HelpIcon } from '@patternfly/react-icons/dist/esm/icons/help-icon';
+import { ExternalLinkAltIcon } from '@patternfly/react-icons/dist/esm/icons/external-link-alt-icon';
+import { ExclamationCircleIcon } from '@patternfly/react-icons/dist/esm/icons/exclamation-circle-icon';
+import { InProgressIcon } from '@patternfly/react-icons/dist/esm/icons/in-progress-icon';
+import { UnknownIcon } from '@patternfly/react-icons/dist/esm/icons/unknown-icon';
+import { CheckCircleIcon } from '@patternfly/react-icons/dist/esm/icons/check-circle-icon';
 
 import Skeleton from '@redhat-cloud-services/frontend-components/Skeleton';
 import ErrorBox from '../../../../../common/ErrorBox';
@@ -156,7 +160,9 @@ class NetworkSelfServiceSection extends React.Component {
               bodyContent={<p>Amazon Resource Names (ARNs) uniquely identify AWS resources.</p>}
             >
               <Button variant="plain" isInline>
-                <HelpIcon size="sm" />
+                <Icon size="md">
+                  <HelpIcon />
+                </Icon>
               </Button>
             </Popover>
           </>
@@ -196,15 +202,13 @@ class NetworkSelfServiceSection extends React.Component {
         },
         {
           title: (
-            <>
-              <ClipboardCopyLinkButton
-                className="access-control-tables-copy"
-                text={grant.console_url}
-                isDisabled={!grant.console_url}
-              >
-                Copy URL to clipboard
-              </ClipboardCopyLinkButton>
-            </>
+            <ClipboardCopyLinkButton
+              className="access-control-tables-copy"
+              text={grant.console_url}
+              isDisabled={!grant.console_url}
+            >
+              Copy URL to clipboard
+            </ClipboardCopyLinkButton>
           ),
         },
       ],
@@ -268,37 +272,35 @@ class NetworkSelfServiceSection extends React.Component {
         </CardFooter>
       </Card>
     ) : (
-      <>
-        <Card id="networkSelfService">
-          <CardBody>
-            {deleteGrantResponse.error && (
-              <ErrorBox message="Error deleting grant" response={deleteGrantResponse} />
-            )}
-            <Title size="lg" className="card-title" headingLevel="h3">
-              AWS infrastructure access
-            </Title>
-            <p>
-              Grant permission to view or manage the AWS infrastructure of the cluster to IAM users
-              defined in your AWS account. {loginAWSLink}
-              <ExternalLinkAltIcon color="#0066cc" size="sm" />
-            </p>
-            {hasGrants && (
-              <Table
-                aria-label="Grants"
-                actions={actions}
-                variant={TableVariant.compact}
-                cells={columns}
-                rows={rows}
-                areActionsDisabled={(rowData) => rowData.state === 'deleting' || !!disableReason}
-              >
-                <TableHeader />
-                <TableBody />
-              </Table>
-            )}
-            {addGrantBtn}
-          </CardBody>
-        </Card>
-      </>
+      <Card id="networkSelfService">
+        <CardBody>
+          {deleteGrantResponse.error && (
+            <ErrorBox message="Error deleting grant" response={deleteGrantResponse} />
+          )}
+          <Title size="lg" className="card-title" headingLevel="h3">
+            AWS infrastructure access
+          </Title>
+          <p>
+            Grant permission to view or manage the AWS infrastructure of the cluster to IAM users
+            defined in your AWS account. {loginAWSLink}
+            <ExternalLinkAltIcon color="#0066cc" size="sm" />
+          </p>
+          {hasGrants && (
+            <TableDeprecated
+              aria-label="Grants"
+              actions={actions}
+              variant={TableVariant.compact}
+              cells={columns}
+              rows={rows}
+              areActionsDisabled={(rowData) => rowData.state === 'deleting' || !!disableReason}
+            >
+              <TableHeaderDeprecated />
+              <TableBodyDeprecated />
+            </TableDeprecated>
+          )}
+          {addGrantBtn}
+        </CardBody>
+      </Card>
     );
   }
 }

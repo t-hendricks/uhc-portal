@@ -1,12 +1,10 @@
 import React from 'react';
-import { mount, shallow } from 'enzyme';
-import Modal from '../../../common/Modal/Modal';
+
+import { render, screen, checkAccessibility, within } from '~/testUtils';
 
 import HibernateClusterModal from './HibernateClusterModal';
-import ErrorBox from '../../../common/ErrorBox';
 
 describe('<HibernateClusterModal />', () => {
-  let wrapper;
   const closeModal = jest.fn();
   const onClose = jest.fn();
   const submit = jest.fn();
@@ -14,89 +12,91 @@ describe('<HibernateClusterModal />', () => {
   const upgradeScheduleRequest = jest.fn();
   const getSchedules = jest.fn();
   const history = { push: jest.fn() };
-  const buttonSelector = (variant) => `Button[variant="${variant}"]`;
 
-  beforeEach(() => {
-    wrapper = shallow(
-      <HibernateClusterModal
-        isOpen
-        getSchedules={getSchedules}
-        clusterUpgrades={{ errorMessage: '', error: false, items: [] }}
-        history={history}
-        hibernateClusterResponse={{ errorMessage: '', error: false }}
-        upgradeScheduleRequest={upgradeScheduleRequest}
-        closeModal={closeModal}
-        onClose={onClose}
-        submit={submit}
-        resetResponses={resetResponses}
-        clusterName="some-name"
-        clusterID="some-id"
-        subscriptionID="some-other-id"
-      />,
-    );
+  const defaultProps = {
+    isOpen: true,
+    getSchedules,
+    clusterUpgrades: { errorMessage: '', error: false, items: [] },
+    history,
+    hibernateClusterResponse: { errorMessage: '', error: false },
+    upgradeScheduleRequest,
+    closeModal,
+    onClose,
+    submit,
+    resetResponses,
+    clusterName: 'some-name',
+    clusterID: 'some-id',
+    subscriptionID: 'some-other-id',
+  };
+
+  afterEach(() => {
+    jest.clearAllMocks();
   });
 
-  it('renders correctly', () => {
-    expect(wrapper).toMatchSnapshot();
+  it('is accessible with modal open', async () => {
+    const { container } = render(<HibernateClusterModal {...defaultProps} />);
+
+    expect(screen.getByRole('dialog')).toBeInTheDocument();
+    await checkAccessibility(container);
   });
 
-  it('renders correctly when an error occurs', () => {
-    wrapper.setProps({
+  it('displays an error when hibernate cluster response is an error', () => {
+    const newProps = {
+      ...defaultProps,
       hibernateClusterResponse: { error: true, errorMessage: 'this is an error' },
-    });
-    expect(wrapper).toMatchSnapshot();
-    expect(wrapper.find(ErrorBox).length).toEqual(1);
+    };
+    render(<HibernateClusterModal {...newProps} />);
+    expect(screen.getByTestId('alert-error')).toBeInTheDocument();
+    expect(
+      within(screen.getByTestId('alert-error')).getByText('this is an error'),
+    ).toBeInTheDocument();
   });
 
   it('renders correctly when pending', () => {
-    wrapper.setProps({
+    const newProps = {
+      ...defaultProps,
       hibernateClusterResponse: { pending: true, error: false, fulfilled: false },
-    });
-    expect(wrapper).toMatchSnapshot();
-    const modal = wrapper.find(Modal);
-    expect(modal.props().isPending).toBeTruthy();
+    };
+    render(<HibernateClusterModal {...newProps} />);
+    expect(screen.getByRole('dialog')).toBeInTheDocument();
+    expect(screen.getByRole('status')).toBeInTheDocument();
+    expect(within(screen.getByRole('status')).getByText('Loading...')).toBeInTheDocument();
   });
 
   describe('mounted ', () => {
-    beforeEach(() => {
-      wrapper = mount(
-        <HibernateClusterModal
-          isOpen
-          getSchedules={getSchedules}
-          clusterUpgrades={{ errorMessage: '', error: false, items: [] }}
-          history={history}
-          hibernateClusterResponse={{ errorMessage: '', error: false }}
-          upgradeScheduleRequest={upgradeScheduleRequest}
-          closeModal={closeModal}
-          onClose={onClose}
-          submit={submit}
-          resetResponses={resetResponses}
-          clusterName="some-name"
-          clusterID="some-id"
-          subscriptionID="some-other-id"
-        />,
-      );
-    });
+    it('when cancelled, calls closeModal but not onClose ', async () => {
+      const { user } = render(<HibernateClusterModal {...defaultProps} />);
+      expect(closeModal).not.toBeCalled();
+      expect(resetResponses).not.toBeCalled();
+      expect(onClose).not.toBeCalled();
 
-    it('when cancelled, calls closeModal but not onClose ', () => {
-      wrapper.find('.pf-m-secondary').at(0).simulate('click');
+      await user.click(screen.getAllByRole('button', { name: 'Close' })[0]);
+
       expect(closeModal).toBeCalled();
       expect(resetResponses).toBeCalled();
       expect(onClose).not.toBeCalled();
     });
 
-    it('submits correctly', () => {
-      wrapper.find(buttonSelector('primary')).at(0).simulate('click');
+    it('submits when user clicks on Hibernate cluster button', async () => {
+      const { user } = render(<HibernateClusterModal {...defaultProps} />);
+      expect(submit).not.toBeCalled();
+
+      await user.click(screen.getByRole('button', { name: 'Hibernate cluster' }));
       expect(submit).toBeCalled();
-      wrapper.setProps({ hibernateClusterResponse: { fulfilled: true } });
-      setTimeout(() => {
-        expect(closeModal).toBeCalled();
-        expect(onClose).toBeCalled();
-      }, 0);
     });
 
     it('when fulfilled, closes dialog', () => {
-      wrapper.setProps({ hibernateClusterResponse: { fulfilled: true, errorMessage: '' } });
+      const fulfilledProps = {
+        ...defaultProps,
+        hibernateClusterResponse: { fulfilled: true },
+      };
+      expect(closeModal).not.toBeCalled();
+      expect(onClose).not.toBeCalled();
+      expect(resetResponses).not.toBeCalled();
+
+      const { rerender } = render(<HibernateClusterModal {...defaultProps} />);
+      // simulating a returned success
+      rerender(<HibernateClusterModal {...fulfilledProps} />);
       expect(closeModal).toBeCalled();
       expect(resetResponses).toBeCalled();
       expect(onClose).toBeCalled();

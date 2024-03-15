@@ -18,16 +18,16 @@ class ClusterLogsToolbar extends React.PureComponent {
       externalClusterID,
       currentFilter,
       currentFlags,
-      clusterLogs,
-      downloadClusterLogs,
       clearFiltersAndFlags,
       isPendingNoData,
       createdAt,
+      clusterID,
+      logs,
     } = this.props;
 
     return (
       <>
-        <Toolbar className="cluster-log__toolbar">
+        <Toolbar className="cluster-log__toolbar" data-testid="cluster-history-toolbar">
           <ToolbarContent>
             <ToolbarGroup variant="filter-group">
               <ClusterLogsDatePicker
@@ -51,12 +51,12 @@ class ClusterLogsToolbar extends React.PureComponent {
             <ToolbarItem>
               <ClusterLogsDownload
                 externalClusterID={externalClusterID}
+                clusterID={clusterID}
                 viewOptions={viewOptions}
-                clusterLogs={clusterLogs}
-                downloadClusterLogs={downloadClusterLogs}
+                logs={logs}
               />
             </ToolbarItem>
-            <ToolbarItem alignment={{ default: 'alignRight' }} variant="pagination">
+            <ToolbarItem align={{ default: 'alignRight' }} variant="pagination">
               <ViewPaginationRow
                 viewType={viewConstants.CLUSTER_LOGS_VIEW}
                 currentPage={viewOptions.currentPage}
@@ -93,6 +93,7 @@ ClusterLogsToolbar.propTypes = {
   setFlags: PropTypes.func.isRequired,
   currentFlags: PropTypes.shape({
     severityTypes: PropTypes.arrayOf(PropTypes.string),
+    logTypes: PropTypes.arrayOf(PropTypes.string),
   }).isRequired,
   clearFiltersAndFlags: PropTypes.func.isRequired,
   history: PropTypes.shape({
@@ -100,10 +101,10 @@ ClusterLogsToolbar.propTypes = {
   }).isRequired,
   externalClusterID: PropTypes.string.isRequired,
   viewOptions: PropTypes.object.isRequired,
-  clusterLogs: PropTypes.object.isRequired,
-  downloadClusterLogs: PropTypes.func.isRequired,
   isPendingNoData: PropTypes.bool.isRequired,
   createdAt: PropTypes.string.isRequired,
+  clusterID: PropTypes.string.isRequired,
+  logs: PropTypes.number.isRequired,
 };
 
 export default ClusterLogsToolbar;

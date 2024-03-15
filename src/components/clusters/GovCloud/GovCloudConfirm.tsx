@@ -1,14 +1,27 @@
-import { EmptyState, EmptyStateBody, EmptyStateIcon, Title } from '@patternfly/react-core';
+import {
+  EmptyState,
+  EmptyStateBody,
+  EmptyStateIcon,
+  EmptyStateHeader,
+  Icon,
+} from '@patternfly/react-core';
 import * as React from 'react';
-import { global_palette_green_500 as okColor } from '@patternfly/react-tokens/dist/js/global_palette_green_500';
-import { CheckCircleIcon } from '@patternfly/react-icons';
+import { global_palette_green_500 as okColor } from '@patternfly/react-tokens/dist/esm/global_palette_green_500';
+import { CheckCircleIcon } from '@patternfly/react-icons/dist/esm/icons/check-circle-icon';
+
+const EmptyIcon = (props: any) => (
+  <Icon {...props}>
+    <CheckCircleIcon color={okColor.value} />
+  </Icon>
+);
 
 const GovCloudConfirm = () => (
   <EmptyState>
-    <EmptyStateIcon icon={(props) => <CheckCircleIcon {...props} color={okColor.value} />} />
-    <Title headingLevel="h4" size="lg">
-      Submission confirmation
-    </Title>
+    <EmptyStateHeader
+      titleText="Submission confirmation"
+      icon={<EmptyStateIcon icon={EmptyIcon} />}
+      headingLevel="h4"
+    />
     <EmptyStateBody>
       Thank you for completing the GovCloud access form.
       <br />

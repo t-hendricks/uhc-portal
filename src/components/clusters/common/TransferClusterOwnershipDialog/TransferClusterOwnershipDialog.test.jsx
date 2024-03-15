@@ -1,75 +1,96 @@
 import React from 'react';
-import { mount } from 'enzyme';
-
+import { render, screen, checkAccessibility } from '~/testUtils';
 import TransferClusterOwnershipDialog from './TransferClusterOwnershipDialog';
-import ErrorBox from '../../../common/ErrorBox';
 import { subscriptionStatuses } from '../../../../common/subscriptionTypes';
 
 describe('<TransferClusterOwnershipDialog />', () => {
-  let wrapper;
-  let closeModal;
-  let onClose;
-  let submit;
-  let subscription;
-  let requestState;
+  const subscription = {
+    id: '0',
+    released: false,
+    status: subscriptionStatuses.ACTIVE,
+  };
+  const requestState = {
+    fulfilled: false,
+    error: false,
+    pending: false,
+  };
 
-  beforeEach(() => {
-    closeModal = jest.fn();
-    onClose = jest.fn();
-    submit = jest.fn();
-    subscription = {
-      id: '0',
-      released: false,
-      status: subscriptionStatuses.ACTIVE,
-    };
-    requestState = {
-      fulfilled: false,
-      error: false,
-      pending: false,
-    };
-    wrapper = mount(
-      <TransferClusterOwnershipDialog
-        isOpen
-        closeModal={closeModal}
-        onClose={onClose}
-        submit={submit}
-        subscription={subscription}
-        requestState={requestState}
-      />,
-    );
+  const closeModal = jest.fn();
+  const onClose = jest.fn();
+  const submit = jest.fn();
+
+  const defaultProps = {
+    closeModal,
+    onClose,
+    submit,
+    subscription,
+    requestState,
+  };
+
+  afterEach(() => {
+    jest.clearAllMocks();
   });
 
-  it('should release clusters', () => {
-    wrapper.setProps({ subscription: { ...subscription, released: false } });
-    expect(wrapper).toMatchSnapshot();
-    wrapper.find('Button[type="submit"]').at(0).simulate('click');
+  it('is accessible', async () => {
+    const { container } = render(<TransferClusterOwnershipDialog {...defaultProps} />);
+    expect(screen.getByRole('dialog')).toBeInTheDocument();
+    await checkAccessibility(container);
+  });
+
+  it('should release clusters', async () => {
+    const notReleasedProps = {
+      ...defaultProps,
+      subscription: { ...subscription, released: false },
+    };
+    const { user } = render(<TransferClusterOwnershipDialog {...notReleasedProps} />);
+    expect(submit).not.toBeCalled();
+
+    await user.click(screen.getByRole('button', { name: 'Initiate transfer' }));
     expect(submit).toBeCalledWith('0', true);
   });
 
   it('should not show dialog for canceling transfer', () => {
-    wrapper.setProps({ subscription: { ...subscription, released: true } });
-    expect(wrapper).toEqual({});
+    const releasedProps = {
+      ...defaultProps,
+      subscription: { ...subscription, released: true },
+    };
+    const { container } = render(<TransferClusterOwnershipDialog {...releasedProps} />);
+
+    expect(container).toBeEmptyDOMElement();
   });
 
   it('should show dialog for transferring disconnected clusters', () => {
-    wrapper.setProps({
+    const disconnectedProps = {
+      ...defaultProps,
       subscription: {
         ...subscription,
         released: false,
         status: subscriptionStatuses.DISCONNECTED,
       },
-    });
-    expect(wrapper).toMatchSnapshot();
+    };
+
+    render(<TransferClusterOwnershipDialog {...disconnectedProps} />);
+    expect(screen.getByRole('dialog')).toBeInTheDocument();
   });
 
   it('should show error', () => {
-    wrapper.setProps({ requestState: { error: true, errorMessage: 'this is an error' } });
-    expect(wrapper).toMatchSnapshot();
-    expect(wrapper.find(ErrorBox).length).toEqual(1);
+    const errorProps = {
+      ...defaultProps,
+      requestState: { error: true, errorMessage: 'this is an error' },
+    };
+
+    render(<TransferClusterOwnershipDialog {...errorProps} />);
+    expect(screen.getByRole('dialog')).toBeInTheDocument();
+    expect(screen.getByTestId('alert-error')).toBeInTheDocument();
   });
 
-  it('should not crash when subscription is undefined', () => {
-    wrapper.setProps({ subscription: undefined });
-    expect(wrapper).toMatchSnapshot();
+  it('should display modal when subscription is undefined', () => {
+    const undefinedProps = {
+      ...defaultProps,
+      subscription: undefined,
+    };
+
+    render(<TransferClusterOwnershipDialog {...undefinedProps} />);
+    expect(screen.getByRole('dialog')).toBeInTheDocument();
   });
 });

@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { InfoCircleIcon } from '@patternfly/react-icons';
+import { InfoCircleIcon } from '@patternfly/react-icons/dist/esm/icons/info-circle-icon';
 
 const MinorVersionUpgradeConfirm = ({
   getAcks,
@@ -30,7 +30,7 @@ MinorVersionUpgradeConfirm.propTypes = {
   isAutomatic: PropTypes.bool,
   isMinorVersionUpgradesEnabled: PropTypes.bool,
   isNextMinorVersionAvailable: PropTypes.bool,
-  getAcks: PropTypes.bool,
+  getAcks: PropTypes.array,
 };
 
 export default MinorVersionUpgradeConfirm;

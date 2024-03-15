@@ -78,7 +78,7 @@ export const metadataByRoute = (
   if (pathname.startsWith('/install')) {
     return { ocm_resource_type: ocmResourceType.OCP };
   }
-  if (pathname.startsWith('/overview')) {
+  if (pathname.startsWith('/dashboard')) {
     return { ocm_resource_type: ocmResourceType.ALL };
   }
   if (pathname.startsWith('/quota')) {

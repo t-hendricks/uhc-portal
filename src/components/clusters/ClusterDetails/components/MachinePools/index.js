@@ -1,6 +1,13 @@
 import { connect } from 'react-redux';
 import get from 'lodash/get';
+import modals from '~/components/common/Modal/modals';
+import { isHypershiftCluster } from '~/components/clusters/common/clusterStates';
 
+import {
+  ENABLE_MACHINE_CONFIGURATION,
+  HCP_USE_NODE_UPGRADE_POLICIES,
+} from '~/redux/constants/featureConstants';
+import { featureGateSelector } from '~/hooks/useFeatureGate';
 import MachinePools from './MachinePools';
 import {
   getMachineOrNodePools,
@@ -9,33 +16,35 @@ import {
   clearDeleteMachinePoolResponse,
 } from './MachinePoolsActions';
 
+import { canMachinePoolBeUpgradedSelector } from './UpdateMachinePools/updateMachinePoolsHelpers';
 import {
-  isControlPlaneUpToDate,
-  isMachinePoolBehindControlPlane,
-} from './UpdateMachinePools/updateMachinePoolsHelpers';
-import { hasMachinePoolsQuotaSelector } from './MachinePoolsSelectors';
+  hasOrgLevelBypassPIDsLimitCapability,
+  hasMachinePoolsQuotaSelector,
+} from './MachinePoolsSelectors';
 import { normalizeNodePool } from './machinePoolsHelper';
 
 import { getOrganizationAndQuota } from '../../../../../redux/actions/userActions';
 import { clusterAutoscalerActions } from '../../../../../redux/actions/clusterAutoscalerActions';
 import { getMachineTypes } from '../../../../../redux/actions/machineTypesActions';
 import { openModal, closeModal } from '../../../../common/Modal/ModalActions';
-import { isHypershiftCluster } from '../../clusterDetailsHelper';
+import shouldShowModal from '../../../../common/Modal/ModalSelectors';
 
 const mapStateToProps = (state) => {
   const cluster = get(state, 'clusters.details.cluster', {});
+  const canBypassPIDsLimit = hasOrgLevelBypassPIDsLimitCapability(state);
 
   const props = {
-    openModalId: state.modal.modalName,
+    isDeleteMachinePoolModalOpen: shouldShowModal(state, modals.DELETE_MACHINE_POOL),
+    isClusterAutoscalingModalOpen: shouldShowModal(state, modals.EDIT_CLUSTER_AUTOSCALING_V1),
     machinePoolsList: state.machinePools.getMachinePools,
-    addMachinePoolResponse: state.machinePools.addMachinePoolResponse,
     deleteMachinePoolResponse: state.machinePools.deleteMachinePoolResponse,
-    scaleMachinePoolResponse: state.machinePools.scaleMachinePoolResponse,
     hasMachinePoolsQuota: hasMachinePoolsQuotaSelector(state),
     machineTypes: state.machineTypes,
     organization: state.userProfile.organization,
-    canMachinePoolBeUpdated: (machinePool) =>
-      isControlPlaneUpToDate(state) && isMachinePoolBehindControlPlane(state, machinePool),
+    canMachinePoolBeUpdated: (machinePool) => canMachinePoolBeUpgradedSelector(state, machinePool),
+    useNodeUpgradePolicies: featureGateSelector(state, HCP_USE_NODE_UPGRADE_POLICIES),
+    hasMachineConfiguration: featureGateSelector(state, ENABLE_MACHINE_CONFIGURATION),
+    canBypassPIDsLimit,
   };
 
   const machinePoolsList = isHypershiftCluster(cluster)
@@ -56,8 +65,15 @@ const mapDispatchToProps = (dispatch, ownProps) => {
   return {
     openModal: (modalId, data) => dispatch(openModal(modalId, data)),
     closeModal: () => dispatch(closeModal()),
-    getMachinePools: () => {
-      dispatch(getMachineOrNodePools(ownProps.cluster.id, isHypershift));
+    getMachinePools: (skipMachinePoolPolicies) => {
+      dispatch(
+        getMachineOrNodePools(
+          ownProps.cluster.id,
+          isHypershift,
+          ownProps.cluster.version.id,
+          skipMachinePoolPolicies,
+        ),
+      );
       dispatch(
         clusterAutoscalerActions.setHasInitialClusterAutoscaler(!!ownProps.cluster.autoscaler),
       );

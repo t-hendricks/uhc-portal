@@ -1,14 +1,25 @@
 import React from 'react';
-import { shallow } from 'enzyme';
+import { screen, render, checkAccessibility } from '~/testUtils';
+import { downloadsCategories } from './downloadsStructure';
 
 import DownloadsCategoryDropdown from './DownloadsCategoryDropdown';
 
 describe('<DownloadsCategoryDropdown />', () => {
-  const wrapper = shallow(
-    <DownloadsCategoryDropdown selectedCategory="DEV" setCategory={() => {}} />,
-  );
+  const setCategory = jest.fn();
+  afterEach(() => {
+    jest.clearAllMocks();
+  });
 
-  it('should render', () => {
-    expect(wrapper).toMatchSnapshot();
+  it('is accessible', async () => {
+    const { container } = render(
+      <DownloadsCategoryDropdown selectedCategory="DEV" setCategory={setCategory} />,
+    );
+    await checkAccessibility(container);
+  });
+
+  it('has expected number of options', () => {
+    render(<DownloadsCategoryDropdown selectedCategory="DEV" setCategory={setCategory} />);
+
+    expect(screen.getAllByRole('option')).toHaveLength(downloadsCategories.length);
   });
 });

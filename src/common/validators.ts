@@ -1,15 +1,19 @@
 /* eslint-disable camelcase */
 import { get, indexOf, inRange } from 'lodash';
-import cidrTools from 'cidr-tools';
+import { overlapCidr, containsCidr } from 'cidr-tools';
+import IPCIDR from 'ip-cidr';
 import { ValidationError, Validator } from 'jsonschema';
 import { clusterService } from '~/services';
-import { State as CcsInquiriesState } from '~/components/clusters/CreateOSDPage/CreateOSDWizard/ccsInquiriesReducer';
-import { workerNodeVolumeSizeMinGiB } from '~/components/clusters/wizards/rosa/constants';
-import type { GCP, Subnetwork, Taint } from '../types/clusters_mgmt.v1';
-import type { AugmentedSubnetwork } from '../types/types';
+import { Subnet } from '~/common/helpers';
+import { FieldId } from '~/components/clusters/wizards/osd/constants';
+import {
+  maxAdditionalSecurityGroups,
+  workerNodeVolumeSizeMinGiB,
+} from '~/components/clusters/wizards/rosa/constants';
+import type { GCP, Taint } from '~/types/clusters_mgmt.v1';
 import { sqlString } from './queryHelpers';
 
-type Networks = Parameters<typeof cidrTools['overlap']>[0];
+type Networks = Parameters<typeof overlapCidr>[0];
 
 // Valid RFC-1035 labels must consist of lower case alphanumeric characters or '-', start with an
 // alphabetic character, and end with an alphanumeric character (e.g. 'my-name',  or 'abc-123').
@@ -17,6 +21,9 @@ const DNS_LABEL_REGEXP = /^[a-z]([-a-z0-9]*[a-z0-9])?$/;
 const DNS_ONLY_ALPHANUMERIC_HYPHEN = /^[-a-z0-9]+$/;
 const DNS_START_ALPHA = /^[a-z]/;
 const DNS_END_ALPHANUMERIC = /[a-z0-9]$/;
+
+// Regular expression used to check whether forward slash is multiple times
+const MULTIPLE_FORWARD_SLASH_REGEX = /^.*[/]+.*[/]+.*$/i;
 
 // Regular expression used to check base DNS domains, based on RFC-1035
 const BASE_DOMAIN_REGEXP = /^([a-z]([-a-z0-9]*[a-z0-9])?\.)+[a-z]([-a-z0-9]*[a-z0-9])?$/;
@@ -48,7 +55,6 @@ const GCP_MACHINE_CIDR_MAX = 23;
 const HOST_PREFIX_REGEXP = /^\/?(3[0-2]|[1-2][0-9]|[0-9])$/;
 const HOST_PREFIX_MIN = 23;
 const HOST_PREFIX_MAX = 26;
-const DOCKER_CIDR_RANGE = '172.17.0.0/16';
 
 // Regular expression for a valid URL for a console in a self managed cluster.
 const CONSOLE_URL_REGEXP =
@@ -66,12 +72,14 @@ const MAX_OBJECT_NAME_LENGTH = 63;
 // Maximum length of a cluster display name
 const MAX_CLUSTER_DISPLAY_NAME_LENGTH = 63;
 
+const GCP_PROJECT_ID_REGEX = /^[a-z][-a-z0-9]{4,28}[a-z0-9]{1}$/;
+
 const GCP_SUBNET_NAME_MAXLEN = 63;
 // Maximum node count
 const MAX_NODE_COUNT = 180;
 
-const AWS_USER_OR_GROUP_ARN_REGEX = /^arn:aws:iam::\d{12}:(user|group)\/\S+/;
-const AWS_ROLE_ARN_REGEX = /^arn:aws:iam::\d{12}:role\/\S+/;
+const AWS_USER_OR_GROUP_ARN_REGEX = /^arn:aws([-\w]+)?:iam::\d{12}:(user|group)\/\S+/;
+const AWS_ROLE_ARN_REGEX = /^arn:aws([-\w]+)?:iam::\d{12}:role\/\S+/;
 const AWS_PRIVATE_HOSTED_ZONE_ID_REGEX = /^Z[0-9A-Z]{3,}/;
 
 const LABEL_VALUE_MAX_LENGTH = 63;
@@ -85,10 +93,10 @@ const AWS_NUMERIC_ACCOUNT_ID_REGEX = /^\d{12}$/;
 const GCP_KMS_SERVICE_ACCOUNT_REGEX = /^[a-z0-9.+-]+@[\w.-]+\.[a-z]{2,4}$/;
 
 const AWS_KMS_SERVICE_ACCOUNT_REGEX =
-  /^arn:aws:kms:[\w-]+:\d{12}:key\/[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/;
+  /^arn:aws([-\w]+)?:kms:[\w-]+:\d{12}:key\/[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/;
 
 const AWS_KMS_MULTI_REGION_SERVICE_ACCOUNT_REGEX =
-  /^arn:aws:kms:[\w-]+:\d{12}:key\/mrk-[0-9a-f]{32}$/;
+  /^arn:aws([-\w]+)?:kms:[\w-]+:\d{12}:key\/mrk-[0-9a-f]{32}$/;
 
 /**
  * A valid label key name must consist of alphanumeric characters, '-', '_' or '.',
@@ -116,7 +124,7 @@ type Validations = {
 }[];
 
 // Function to validate that a field is mandatory, i.e. must be a non whitespace string
-const required = (value: string): string | undefined =>
+const required = (value?: string): string | undefined =>
   value && value.trim() ? undefined : 'Field is required';
 
 // Function to validate that a field has a true value.
@@ -131,7 +139,7 @@ const acknowledgePrerequisites = (value: string | boolean): string | undefined =
     : 'Acknowledge that you have read and completed all prerequisites.';
 
 // Function to validate that the identity provider name field doesn't include whitespaces:
-const checkIdentityProviderName = (value: string): string | undefined => {
+const checkIdentityProviderName = (value?: string): string | undefined => {
   if (!value) {
     return 'Name is required.';
   }
@@ -145,7 +153,7 @@ const checkIdentityProviderName = (value: string): string | undefined => {
 };
 
 // Function to validate that the issuer field uses https scheme:
-const checkOpenIDIssuer = (value: string): string | undefined => {
+const checkOpenIDIssuer = (value?: string): string | undefined => {
   if (!value) {
     return 'Issuer URL is required.';
   }
@@ -185,10 +193,14 @@ const checkObjectName = (value: string, objectName: string, maxLen: number): str
   return undefined;
 };
 
-const checkObjectNameValidation = (value: string, objectName: string, maxLen: number) => [
+const checkObjectNameValidation = (
+  value: string | undefined,
+  objectName: string,
+  maxLen: number,
+) => [
   {
     text: `1 - ${maxLen} characters`,
-    validated: value?.length > 0 && value?.length <= maxLen,
+    validated: !!value?.length && value?.length <= maxLen,
   },
   {
     text: 'Consist of lower-case alphanumeric characters, or hyphen (-)',
@@ -204,7 +216,7 @@ const checkObjectNameValidation = (value: string, objectName: string, maxLen: nu
   },
 ];
 
-const checkObjectNameAsyncValidation = (value: string) => [
+const checkObjectNameAsyncValidation = (value?: string) => [
   {
     text: 'Globally unique name in your organization',
     validator: async () => {
@@ -221,28 +233,16 @@ const checkObjectNameAsyncValidation = (value: string) => [
   },
 ];
 
-const clusterNameValidation = (value: string) =>
+const clusterNameValidation = (value?: string) =>
   checkObjectNameValidation(value, 'Cluster', MAX_CLUSTER_NAME_LENGTH);
 
-const clusterNameAsyncValidation = (value: string) => checkObjectNameAsyncValidation(value);
+const clusterNameAsyncValidation = (value?: string) => checkObjectNameAsyncValidation(value);
 
 const checkMachinePoolName = (value: string) =>
   checkObjectName(value, 'Machine pool', MAX_MACHINE_POOL_NAME_LENGTH);
 
 const checkNodePoolName = (value: string) =>
   checkObjectName(value, 'Machine pool', MAX_NODE_POOL_NAME_LENGTH);
-/**
- * executes cluster-name async validations.
- * to be used at the form level hook (asyncValidate).
- *
- * @see asyncValidate in the wizard's redux-form config.
- * @param value the value to be validated
- * @returns {Promise<void>} a promise which resolves quietly, or rejects with a form errors map.
- */
-const asyncValidateClusterName = async (value: string) => {
-  const evaluatedAsyncValidation = await evaluateClusterNameAsyncValidation(value);
-  return findFirstFailureMessage(evaluatedAsyncValidation);
-};
 
 const createAsyncValidationEvaluator =
   (
@@ -262,6 +262,26 @@ const createAsyncValidationEvaluator =
       validated: validationResults[i],
     }));
   };
+
+const evaluateClusterNameAsyncValidation = createAsyncValidationEvaluator(
+  clusterNameAsyncValidation,
+);
+
+const findFirstFailureMessage = (populatedValidation: Validations | undefined) =>
+  populatedValidation?.find((validation) => validation.validated === false)?.text;
+
+/**
+ * executes cluster-name async validations.
+ * to be used at the form level hook (asyncValidate).
+ *
+ * @see asyncValidate in the wizard's redux-form config.
+ * @param value the value to be validated
+ * @returns {Promise<void>} a promise which resolves quietly, or rejects with a form errors map.
+ */
+const asyncValidateClusterName = async (value: string) => {
+  const evaluatedAsyncValidation = await evaluateClusterNameAsyncValidation(value);
+  return findFirstFailureMessage(evaluatedAsyncValidation);
+};
 
 const k8sGpuParameter = (gpuParam: string): string | undefined => {
   if (!gpuParam) {
@@ -288,14 +308,17 @@ const k8sGpuParameter = (gpuParam: string): string | undefined => {
   return invalidParams.length === 0 ? undefined : `Invalid params: ${invalidParams.join(',')}`;
 };
 
-const validateListOfLabels = (input: string | undefined) => {
+const validateListOfBalancingLabels = (input: string | undefined) => {
   if (!input) {
     return undefined;
   }
   const labels = input.split(',');
+  if (/\s/.test(input)) {
+    return 'Labels must not contain whitespaces.';
+  }
   const nonEmptyLabels = labels.filter(Boolean);
 
-  return labels.length === nonEmptyLabels.length ? undefined : 'Empty labels are not allowed';
+  return labels.length === nonEmptyLabels.length ? undefined : 'Empty labels are not allowed.';
 };
 
 const k8sTimeParameter = (timeValue: string): string | undefined => {
@@ -303,7 +326,7 @@ const k8sTimeParameter = (timeValue: string): string | undefined => {
     return 'Field is required.';
   }
   if (!K8S_TIME_PARAMETER_REGEXP.test(timeValue)) {
-    return 'Not a valid time value';
+    return 'Not a valid time value.';
   }
   return undefined;
 };
@@ -320,14 +343,14 @@ const k8sNumberParameter = (num: number | string): string | undefined => {
 };
 
 const k8sLogVerbosityParameter = (num: number | string) => {
-  if (num < 1 || num > AUTOSCALER_MAX_LOG_VERBOSITY) {
+  if (+num < 1 || +num > AUTOSCALER_MAX_LOG_VERBOSITY) {
     return `Value must be between 1 and ${AUTOSCALER_MAX_LOG_VERBOSITY}.`;
   }
   return undefined;
 };
 
 const k8sScaleDownUtilizationThresholdParameter = (num: number | string) => {
-  if (num < 0 || num > 1) {
+  if (+num < 0 || +num > 1) {
     return 'Value must be between 0 and 1.';
   }
   return undefined;
@@ -373,10 +396,6 @@ const clusterAutoScalingValidators = {
   k8sLogVerbosityParameter,
 };
 
-const evaluateClusterNameAsyncValidation = createAsyncValidationEvaluator(
-  clusterNameAsyncValidation,
-);
-
 /**
  * creates a validator function that exits on first failure (and returns its error message),
  * using the validation provider output collection as its input.
@@ -400,9 +419,6 @@ const createPessimisticValidator =
   (value: V, allValues?: any, props?: any, name?: any) =>
     findFirstFailureMessage(validationProvider(value, allValues, props, name));
 
-const findFirstFailureMessage = (populatedValidation: Validations | undefined) =>
-  populatedValidation?.find((validation) => validation.validated === false)?.text;
-
 const checkCustomOperatorRolesPrefix = (value: string): string | undefined => {
   const label = 'Custom operator roles prefix';
   if (!value) {
@@ -418,7 +434,7 @@ const checkCustomOperatorRolesPrefix = (value: string): string | undefined => {
 };
 
 // Function to validate that the github team is formatted: <org/team>
-const checkGithubTeams = (value: string): string | undefined => {
+const checkGithubTeams = (value?: string): string | undefined => {
   if (!value) {
     return undefined;
   }
@@ -480,14 +496,19 @@ const parseNodeLabels = (input: string | string[] | undefined) => {
 const labelAndTaintKeyValidations = (
   value: string,
   items: { key?: string; value?: string }[],
+  keyType?: string,
 ): Validations => {
   const { prefix, name } = parseNodeLabelKey(value);
   const isEmptyValid = items?.length === 1 && !items[0].key && !items[0].value;
 
   return [
     {
+      validated: !!value && !MULTIPLE_FORWARD_SLASH_REGEX.test(value),
+      text: "A qualified name must consist of alphanumeric characters, '-', '_' or '.', and must start and end with an alphanumeric character with an optional DNS subdomain prefix and '/' (e.g. 'example.com/MyName')",
+    },
+    {
       validated: typeof prefix === 'undefined' || DNS_SUBDOMAIN_REGEXP.test(prefix),
-      text: 'Key prefix must be a DNS subdomain: a series of DNS labels separated by dots (.), and must end with a "/"',
+      text: "A valid key prefix part of a lowercase RFC 1123 subdomain must consist of lower case alphanumeric characters, '-' or '.', and must start and end with an alphanumeric character",
     },
     {
       validated: typeof prefix === 'undefined' || prefix.length <= LABEL_KEY_PREFIX_MAX_LENGTH,
@@ -495,15 +516,19 @@ const labelAndTaintKeyValidations = (
     },
     {
       validated: typeof name === 'undefined' || LABEL_KEY_NAME_REGEX.test(name),
-      text: "A valid key name must consist of alphanumeric characters, '-', '.' or '_' and must start and end with an alphanumeric character",
+      text: "A valid key name must consist of alphanumeric characters, '-', '.' , '_'  or '/' and must start and end with an alphanumeric character",
     },
+
     {
       validated: typeof name === 'undefined' || name.length <= LABEL_KEY_NAME_MAX_LENGTH,
       text: `A valid key name must be ${LABEL_KEY_NAME_MAX_LENGTH} characters or less`,
     },
     {
       validated: isEmptyValid || value?.length > 0,
-      text: 'Required',
+      text:
+        keyType === 'label'
+          ? "A valid key name must consist of alphanumeric characters, '-', '.' , '_'  or '/' and must start and end with an alphanumeric character"
+          : 'Required',
     },
   ];
 };
@@ -522,7 +547,7 @@ const labelAndTaintValueValidations = (value: string): Validations => [
 
 const taintKeyValidations = (value: string, allValues: { taints?: Taint[] }): Validations => {
   const items = allValues?.taints || [];
-  return labelAndTaintKeyValidations(value, items);
+  return labelAndTaintKeyValidations(value, items, 'taint');
 };
 
 const nodeLabelKeyValidations = (
@@ -530,7 +555,7 @@ const nodeLabelKeyValidations = (
   allValues: { node_labels?: Taint[] },
 ): Validations => {
   const items = allValues?.node_labels || [];
-  return labelAndTaintKeyValidations(value, items);
+  return labelAndTaintKeyValidations(value, items, 'label');
 };
 
 const checkLabelKey = createPessimisticValidator(nodeLabelKeyValidations);
@@ -539,7 +564,7 @@ const checkLabelValue = createPessimisticValidator(labelAndTaintValueValidations
 const checkTaintKey = createPessimisticValidator(taintKeyValidations);
 const checkTaintValue = createPessimisticValidator(labelAndTaintValueValidations);
 
-const checkLabels = (input: string | string[]) =>
+const checkLabels = (input?: string | string[]) =>
   parseNodeLabels(input)
     // collect the first error found
     ?.reduce<string | undefined>(
@@ -548,10 +573,39 @@ const checkLabels = (input: string | string[]) =>
       undefined,
     );
 
-const checkRouteSelectors = checkLabels;
+const findDuplicateKey = (labels: string[]) => {
+  const keys = {} as { [key: string]: boolean };
+  let duplicateKey = null;
+  labels.forEach((tag) => {
+    const labelParts = tag.split('=');
+    const labelKey = labelParts[0];
+    if (keys[labelKey]) {
+      duplicateKey = labelKey;
+    } else {
+      keys[labelKey] = true;
+    }
+  });
+  return duplicateKey;
+};
+
+const validateDuplicateLabels = (input: string | string[] | undefined) => {
+  if (!input) {
+    return undefined;
+  }
+
+  const labels = typeof input === 'string' ? input.split(',') : input;
+  const duplicateKey = findDuplicateKey(labels);
+  if (duplicateKey) {
+    return `Each label should have a unique key. "${duplicateKey}" already exists.`;
+  }
+  return undefined;
+};
+
+const checkRouteSelectors = (value: string): string | undefined =>
+  checkLabels(value) || validateDuplicateLabels(value);
 
 // Function to validate that the cluster ID field is a UUID:
-const checkClusterUUID = (value: string): string | undefined => {
+const checkClusterUUID = (value?: string): string | undefined => {
   if (!value) {
     return 'Cluster ID is required.';
   }
@@ -652,7 +706,7 @@ const validateCA = (value: string): string | undefined => {
 };
 
 // Function to validate the cluster console URL
-const checkClusterConsoleURL = (value: string, isRequired?: false): string | undefined => {
+const checkClusterConsoleURL = (value?: string, isRequired?: boolean): string | undefined => {
   if (!value) {
     return isRequired ? 'Cluster console URL should not be empty' : undefined;
   }
@@ -678,7 +732,7 @@ const checkClusterConsoleURL = (value: string, isRequired?: false): string | und
 };
 
 // Function to validate that a field contains a correct base DNS domain
-const checkBaseDNSDomain = (value: string): string | undefined => {
+const checkBaseDNSDomain = (value?: string): string | undefined => {
   if (!value) {
     return 'Base DNS domain is required.';
   }
@@ -706,14 +760,14 @@ const checkNoProxyDomains = (value?: string[]) => {
 };
 
 // Function to validate IP address blocks
-const cidr = (value: string): string | undefined => {
+const cidr = (value?: string): string | undefined => {
   if (value && !CIDR_REGEXP.test(value)) {
     return `IP address range '${value}' isn't valid CIDR notation. It must follow the RFC-4632 format: '192.168.0.0/16'.`;
   }
   return undefined;
 };
 
-const getCIDRSubnetLength = (value: string): number | undefined => {
+const getCIDRSubnetLength = (value?: string): number | undefined => {
   if (!value) {
     return undefined;
   }
@@ -721,12 +775,82 @@ const getCIDRSubnetLength = (value: string): number | undefined => {
   return parseInt(value.split('/').pop() ?? '', 10);
 };
 
-const awsMachineCidr = (value: string, formData: Record<string, string>): string | undefined => {
+const subnetCidrs = (
+  value?: string,
+  formData?: Record<string, string>,
+  fieldName?: string,
+  selectedSubnets?: Subnet[],
+): string | undefined => {
+  if (!value || selectedSubnets?.length === 0) {
+    return undefined;
+  }
+
+  const erroredSubnets: Subnet[] = [];
+
+  const startingIP = (cidr: string) => {
+    const ip = new IPCIDR(cidr);
+    return ip.start().toString();
+  };
+
+  const compareCidrs = (shouldContain: boolean) => {
+    if (shouldContain) {
+      selectedSubnets?.forEach((subnet: Subnet) => {
+        if (
+          CIDR_REGEXP.test(subnet.cidr_block) &&
+          !containsCidr(value, startingIP(subnet.cidr_block))
+        ) {
+          erroredSubnets.push(subnet);
+        }
+      });
+    } else {
+      selectedSubnets?.forEach((subnet: Subnet) => {
+        if (
+          CIDR_REGEXP.test(subnet.cidr_block) &&
+          containsCidr(value, startingIP(subnet.cidr_block))
+        ) {
+          erroredSubnets.push(subnet);
+        }
+      });
+    }
+  };
+
+  const subnetName = () =>
+    formData?.hypershift === 'true' ? erroredSubnets[0]?.name : erroredSubnets[0]?.subnet_id;
+
+  if (fieldName === FieldId.NetworkMachineCidr) {
+    compareCidrs(true);
+    if (erroredSubnets.length > 0) {
+      return `The Machine CIDR does not include the starting IP (${startingIP(
+        erroredSubnets[0].cidr_block,
+      )}) of ${subnetName()}`;
+    }
+  }
+  if (fieldName === FieldId.NetworkServiceCidr) {
+    compareCidrs(false);
+    if (erroredSubnets.length > 0) {
+      return `The Service CIDR includes the starting IP (${startingIP(
+        erroredSubnets[0].cidr_block,
+      )}) of ${subnetName()}`;
+    }
+  }
+  if (fieldName === FieldId.NetworkPodCidr) {
+    compareCidrs(false);
+    if (erroredSubnets.length > 0) {
+      return `The Pod CIDR includes the starting IP (${startingIP(
+        erroredSubnets[0].cidr_block,
+      )}) of ${subnetName()}`;
+    }
+  }
+
+  return undefined;
+};
+
+const awsMachineCidr = (value?: string, formData?: Record<string, string>): string | undefined => {
   if (!value) {
     return undefined;
   }
 
-  const isMultiAz = formData.multi_az === 'true';
+  const isMultiAz = formData?.multi_az === 'true';
   const prefixLength = getCIDRSubnetLength(value);
 
   if (prefixLength != null) {
@@ -734,7 +858,10 @@ const awsMachineCidr = (value: string, formData: Record<string, string>): string
       return `The subnet mask can't be larger than '/${AWS_MACHINE_CIDR_MIN}'.`;
     }
 
-    if (isMultiAz && prefixLength > AWS_MACHINE_CIDR_MAX_MULTI_AZ) {
+    if (
+      (isMultiAz || formData?.hypershift === 'true') &&
+      prefixLength > AWS_MACHINE_CIDR_MAX_MULTI_AZ
+    ) {
       return `The subnet mask can't be smaller than '/${AWS_MACHINE_CIDR_MAX_MULTI_AZ}'.`;
     }
 
@@ -776,7 +903,7 @@ const gcpMachineCidr = (value: string, formData: { ['multi_az']: string }): stri
 */
 /* eslint-enable max-len */
 
-const serviceCidr = (value: string): string | undefined => {
+const serviceCidr = (value?: string): string | undefined => {
   if (!value) {
     return undefined;
   }
@@ -793,7 +920,7 @@ const serviceCidr = (value: string): string | undefined => {
   return undefined;
 };
 
-const podCidr = (value: string, formData: Record<string, string>): string | undefined => {
+const podCidr = (value?: string, formData?: Record<string, string>): string | undefined => {
   if (!value) {
     return undefined;
   }
@@ -804,7 +931,7 @@ const podCidr = (value: string, formData: Record<string, string>): string | unde
       return `The subnet mask can't be smaller than /${POD_CIDR_MAX}.`;
     }
 
-    const hostPrefix = getCIDRSubnetLength(formData.network_host_prefix) || 23;
+    const hostPrefix = getCIDRSubnetLength(formData?.network_host_prefix) || 23;
     const maxPodIPs = 2 ** (32 - hostPrefix);
     const maxPodNodes = Math.floor(2 ** (32 - prefixLength) / maxPodIPs);
     if (maxPodNodes < POD_NODES_MIN) {
@@ -815,7 +942,7 @@ const podCidr = (value: string, formData: Record<string, string>): string | unde
   return undefined;
 };
 
-const validateRange = (value: string): string | undefined => {
+const validateRange = (value?: string): string | undefined => {
   if (cidr(value) !== undefined || !value) {
     return undefined;
   }
@@ -835,7 +962,7 @@ const validateRange = (value: string): string | undefined => {
 
 const disjointSubnets =
   (fieldName: string) =>
-  (value: string, formData: { [name: string]: Networks }): string | undefined => {
+  (value: string | undefined, formData: { [name: string]: Networks }): string | undefined => {
     if (!value) {
       return undefined;
     }
@@ -850,7 +977,7 @@ const disjointSubnets =
     try {
       Object.keys(networkingFields).forEach((name) => {
         const fieldValue = get(formData, name, null);
-        if (fieldValue && cidrTools.overlap(value, fieldValue)) {
+        if (fieldValue && overlapCidr(value, fieldValue)) {
           overlappingFields.push(networkingFields[name]);
         }
       });
@@ -866,7 +993,7 @@ const disjointSubnets =
     return undefined;
   };
 
-const privateAddress = (value: string): string | undefined => {
+const privateAddress = (value?: string): string | undefined => {
   if (cidr(value) !== undefined || !value) {
     return undefined;
   }
@@ -892,24 +1019,10 @@ const privateAddress = (value: string): string | undefined => {
   return 'Range is not private.';
 };
 
-const disjointFromDockerRange = (value: string): string | undefined => {
-  if (!value) {
-    return undefined;
-  }
-  try {
-    if (cidrTools.overlap(value, DOCKER_CIDR_RANGE)) {
-      return 'Selected range must not overlap with 172.17.0.0/16.';
-    }
-    return undefined;
-  } catch (e) {
-    return `Failed to parse CIDR: ${e}`;
-  }
-};
-
 const awsSubnetMask =
-  (fieldName: string) =>
-  (value: string): string | undefined => {
-    if (cidr(value) !== undefined || !value) {
+  (fieldName: string | undefined) =>
+  (value?: string): string | undefined => {
+    if (!fieldName || cidr(value) !== undefined || !value) {
       return undefined;
     }
     const awsSubnetMaskRanges: { [key: string]: [number | undefined, number] } = {
@@ -933,7 +1046,7 @@ const awsSubnetMask =
   };
 
 // Function to validate IP address masks
-const hostPrefix = (value: string): string | undefined => {
+const hostPrefix = (value?: string): string | undefined => {
   if (!value) {
     return undefined;
   }
@@ -971,10 +1084,10 @@ const nodes = (
   min: { value: number; validationMsg?: string },
   max = MAX_NODE_COUNT,
 ): string | undefined => {
-  if (value === undefined || value < min.value) {
+  if (value === undefined || +value < min.value) {
     return min.validationMsg || `The minimum number of nodes is ${min.value}.`;
   }
-  if (value > max) {
+  if (+value > max) {
     return `Maximum number allowed is ${max}.`;
   }
 
@@ -1033,16 +1146,16 @@ const validateNumericInput = (
   return undefined;
 };
 
-const checkDisconnectedConsoleURL = (value: string) => checkClusterConsoleURL(value, false);
+const checkDisconnectedConsoleURL = (value?: string) => checkClusterConsoleURL(value, false);
 
-const checkDisconnectedvCPU = (value: string) => validateNumericInput(value, { max: 16000 });
+const checkDisconnectedvCPU = (value?: string) => validateNumericInput(value, { max: 16000 });
 
-const checkDisconnectedSockets = (value: string) => validateNumericInput(value, { max: 2000 });
+const checkDisconnectedSockets = (value?: string) => validateNumericInput(value, { max: 2000 });
 
-const checkDisconnectedMemCapacity = (value: string) =>
+const checkDisconnectedMemCapacity = (value?: string) =>
   validateNumericInput(value, { allowDecimal: true, max: 256000 });
 
-const checkDisconnectedNodeCount = (value: string): string | undefined => {
+const checkDisconnectedNodeCount = (value?: string): string | undefined => {
   if (value === '') {
     return undefined;
   }
@@ -1075,6 +1188,16 @@ const validatePrivateHostedZoneId = (value: string) => {
   }
   if (!AWS_PRIVATE_HOSTED_ZONE_ID_REGEX.test(value)) {
     return 'Not a valid Private hosted zone ID.';
+  }
+  return undefined;
+};
+
+const validateGCPHostProjectId = (value: string) => {
+  if (!value) {
+    return 'Field is required.';
+  }
+  if (!GCP_PROJECT_ID_REGEX.test(value)) {
+    return 'Not a valid hosted project ID. This must be an existing GCP project ID within which all networks are defined.';
   }
   return undefined;
 };
@@ -1113,7 +1236,7 @@ const atLeastOneRequired =
     return undefined;
   };
 
-const awsNumericAccountID = (input: string): string | undefined => {
+const awsNumericAccountID = (input?: string): string | undefined => {
   if (!input) {
     return 'AWS account ID is required.';
   }
@@ -1235,13 +1358,20 @@ const createUniqueFieldValidator =
     return undefined;
   };
 
-const validateUniqueAZ = createUniqueFieldValidator(
-  'Must select 3 different AZs.',
-  (currentFieldName: string, allValues: { [key: string]: unknown }) =>
-    Object.entries(allValues)
-      .filter(([fieldKey]) => fieldKey.startsWith('az_') && fieldKey !== currentFieldName)
-      .map(([, fieldValue]) => fieldValue),
-);
+const validateSecurityGroups = (securityGroups: string[]) =>
+  securityGroups.length > maxAdditionalSecurityGroups
+    ? `A maximum of ${maxAdditionalSecurityGroups} security groups can be selected.`
+    : undefined;
+
+const validateUniqueAZ = (
+  currentAZ: string | undefined,
+  allValues: { machinePoolsSubnets: FormSubnet[] },
+) => {
+  const sameAZs = (allValues.machinePoolsSubnets || [])
+    .map((item) => item.availabilityZone)
+    .filter((az: string) => !!currentAZ && az === currentAZ);
+  return sameAZs.length > 1 ? 'Must select 3 different AZs.' : undefined;
+};
 
 const validateUniqueNodeLabel = createUniqueFieldValidator(
   'Each label must have a different key.',
@@ -1259,132 +1389,37 @@ const validateUniqueNodeLabel = createUniqueFieldValidator(
       .map(([, fieldValue]) => fieldValue.key),
 );
 
-const validateValueNotPlaceholder = (placeholder: any) => (value: any) =>
-  value !== placeholder ? undefined : 'Field is required';
-
-// AWS VPC validators expect the known vpcs to be passed as prop to the form —
-// specifically, the component wrapped by reduxForm().
-//
-// (An alternative would be validator factories `vpcs => value => ...` but Field
-// unregisters and re-registers the field when `validate` prop changes, which would
-// happen constantly without careful memoization.)
-
-type SubnetFormProps = {
-  vpcs: CcsInquiriesState['vpcs'];
-  vpcsValid: boolean;
-  pristine?: boolean;
-};
-
-type BySubnetID = { [id: string]: AugmentedSubnetwork };
-
-/** Finds all bySubnetID info hashes for AWS VPC subnet fields. */
-const awsVPCSubnetInfos = (
-  allValues: { [key: string]: string },
-  vpcsBySubnetID: BySubnetID,
-): AugmentedSubnetwork[] => {
-  const infos: AugmentedSubnetwork[] = [];
-  Object.entries(allValues).forEach(([fieldName, fieldValue]) => {
-    if (fieldName.match(/^(private|public)_subnet_id_/)) {
-      if (vpcsBySubnetID[fieldValue]) {
-        infos.push(vpcsBySubnetID[fieldValue]);
-      }
-    }
-  });
-  return infos;
-};
-
-const validateAWSSubnet = (
-  value: string,
-  allValues: { [key: string]: string },
-  formProps: SubnetFormProps,
-  name: string,
-): string | undefined => {
-  if (!value) {
-    return undefined;
-  }
-
-  const { vpcs, vpcsValid } = formProps;
-  if (vpcs.fulfilled && vpcsValid) {
-    const subnetInfo = vpcs.data.bySubnetID[value];
-    if (!subnetInfo) {
-      return `No such subnet in region ${vpcs.region}.`;
-    }
-
-    const allInfos = awsVPCSubnetInfos(allValues, vpcs.data.bySubnetID);
-    const usedVPCs = new Set(allInfos.map((info) => info.vpc_id));
-    if (usedVPCs.size > 1) {
-      const vpc = subnetInfo.vpc_name || subnetInfo.vpc_id; // prefer Name tag, not always available
-      return `All subnets must belong to the same VPC (provided subnet VPC: ${vpc}).`;
-    }
-
-    // private_subnet_id_2, public_subnet_id_2 -> az_2.
-    const selectedAZ = allValues[`az_${name.split('_').pop()}`];
-    if (!!selectedAZ && subnetInfo.availability_zone !== selectedAZ) {
-      return `Provided subnet is from different AZ ${subnetInfo.availability_zone}.`;
-    }
-  }
-  return undefined;
-};
-
-const validateRequiredMachinePoolsSubnet = (
-  subnet: Subnetwork,
+const validateRequiredPublicSubnetId = (
+  publicSubnetId: string,
   allValues: unknown,
-  props: SubnetFormProps,
-) => (!props.pristine && !subnet?.subnet_id ? 'Subnet is required' : undefined);
+  props: { pristine: boolean },
+) => (!props.pristine && !publicSubnetId ? 'Subnet is required' : undefined);
+
+export type FormSubnet = {
+  availabilityZone: string;
+  privateSubnetId: string;
+  publicSubnetId: string;
+};
 
 const validateMultipleMachinePoolsSubnets = (
-  subnet: Subnetwork,
-  allValues: { machine_pools_subnets: Subnetwork[] },
-  props: SubnetFormProps,
+  subnetId: string,
+  allValues: { machinePoolsSubnets: FormSubnet[] },
+  props: { pristine: boolean },
 ) => {
-  if (!subnet) {
-    // Happens when a subnet is deleted, no extra checks are needed
-    return undefined;
-  }
-  if (!props.pristine && subnet.subnet_id === '') {
-    return 'Subnet is required';
+  if (subnetId === '') {
+    return props.pristine ? undefined : 'Subnet is required';
   }
 
   // Validating multiple MPs
   const hasRepeatedSubnets =
-    allValues.machine_pools_subnets.filter((mpSubnet) => mpSubnet.subnet_id === subnet.subnet_id)
+    allValues.machinePoolsSubnets.filter((mpSubnet) => mpSubnet.privateSubnetId === subnetId)
       .length > 1;
   return hasRepeatedSubnets
     ? 'Every machine pool must be associated to a different subnet'
     : undefined;
 };
 
-const validateAWSSubnetIsPrivate = (
-  value: string,
-  allValues: unknown,
-  formProps: SubnetFormProps,
-) => {
-  const { vpcs, vpcsValid } = formProps;
-  if (vpcs.fulfilled && vpcsValid) {
-    const subnetInfo = vpcs.data.bySubnetID[value];
-    if (subnetInfo && subnetInfo.public) {
-      return 'Provided subnet is public, should be private.';
-    }
-  }
-  return undefined;
-};
-
-const validateAWSSubnetIsPublic = (
-  value: string,
-  allValues: unknown,
-  formProps: SubnetFormProps,
-) => {
-  const { vpcs, vpcsValid } = formProps;
-  if (vpcs.fulfilled && vpcsValid) {
-    const subnetInfo = vpcs.data.bySubnetID[value];
-    if (subnetInfo && !subnetInfo.public) {
-      return 'Provided subnet is private, should be public.';
-    }
-  }
-  return undefined;
-};
-
-const validateGCPSubnet = (value: string): string | undefined => {
+const validateGCPSubnet = (value?: string): string | undefined => {
   if (!value) {
     return 'Field is required.';
   }
@@ -1400,7 +1435,7 @@ const validateGCPSubnet = (value: string): string | undefined => {
   return undefined;
 };
 
-const validateGCPKMSServiceAccount = (value: string): string | undefined => {
+const validateGCPKMSServiceAccount = (value?: string): string | undefined => {
   if (!value) {
     return 'Field is required.';
   }
@@ -1523,7 +1558,10 @@ const validateHTPasswdPasswordConfirm = (
   return undefined;
 };
 
-const shouldSkipLabelKeyValidation = (allValues: Record<string, unknown>): boolean => {
+const shouldSkipLabelKeyValidation = (
+  allValues: Record<string, unknown>,
+  name?: string,
+): boolean => {
   const nodeLabels = (allValues?.node_labels as {
     key: string;
     value: string;
@@ -1531,7 +1569,15 @@ const shouldSkipLabelKeyValidation = (allValues: Record<string, unknown>): boole
   // filling the first and only label key/value pair is optional -it serves as a placeholder.
   // if empty, it won't be taken into account in the request payload.
   const [{ key: firstLabelKey, value: firstLabelValue }] = nodeLabels;
-  return nodeLabels.length === 1 && !firstLabelKey && !firstLabelValue;
+
+  // for deleted node labels, we need to skip validation by checking that the value does not exist in node_labels
+  // keyIndex gets the index of the label from the name prop. example: '2' from 'node_labels[2].key'
+  const keyIndex = name?.match(/\[([^[\]]*)\]/) ?? [];
+
+  return (
+    (nodeLabels.length === 1 && !firstLabelKey && !firstLabelValue) ||
+    !Object.keys(nodeLabels).includes(keyIndex[1])
+  );
 };
 
 const validateLabelKey = (
@@ -1540,7 +1586,7 @@ const validateLabelKey = (
   props?: any,
   name?: any,
 ): string | undefined => {
-  if (shouldSkipLabelKeyValidation(allValues)) {
+  if (shouldSkipLabelKeyValidation(allValues, name)) {
     return undefined;
   }
 
@@ -1596,6 +1642,21 @@ const validateWorkerVolumeSize = (
     : 'Decimals are not allowed for the worker root disk size. Enter a whole number.';
 };
 
+const composeValidators =
+  (...args: Array<(value: any) => string | undefined>) =>
+  (value: any) => {
+    for (let i = 0; i < args.length; i += 1) {
+      const validator = args[i];
+      const error = validator(value);
+
+      if (error) {
+        return error;
+      }
+    }
+
+    return undefined;
+  };
+
 const validators = {
   required,
   acknowledgePrerequisites,
@@ -1606,6 +1667,7 @@ const validators = {
   validateRHITUsername,
   checkBaseDNSDomain,
   cidr,
+  subnetCidrs,
   awsMachineCidr,
   // gcpMachineCidr, https://issues.redhat.com/browse/HAC-2118
   serviceCidr,
@@ -1614,7 +1676,6 @@ const validators = {
   validateRange,
   privateAddress,
   awsSubnetMask,
-  disjointFromDockerRange,
   hostPrefix,
   nodes,
   nodesMultiAz,
@@ -1673,16 +1734,14 @@ export {
   awsNumericAccountID,
   validateGCPServiceAccount,
   validateServiceAccountObject,
+  validateSecurityGroups,
   checkMachinePoolName,
   checkNodePoolName,
   checkCustomOperatorRolesPrefix,
   checkLabels,
   validateUniqueAZ,
-  validateValueNotPlaceholder,
-  validateAWSSubnet,
-  validateAWSSubnetIsPrivate,
-  validateAWSSubnetIsPublic,
-  validateRequiredMachinePoolsSubnet,
+  validateGCPHostProjectId,
+  validateRequiredPublicSubnetId,
   validateMultipleMachinePoolsSubnets,
   validateGCPSubnet,
   validateGCPKMSServiceAccount,
@@ -1694,7 +1753,8 @@ export {
   validateUniqueNodeLabel,
   validateLabelKey,
   validateLabelValue,
-  validateListOfLabels,
+  validateDuplicateLabels,
+  validateListOfBalancingLabels,
   createPessimisticValidator,
   clusterNameValidation,
   clusterNameAsyncValidation,
@@ -1708,6 +1768,7 @@ export {
   validateTlsSecretName,
   validateTlsHostname,
   validateNamespacesList,
+  composeValidators,
 };
 
 export default validators;

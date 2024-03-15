@@ -1,7 +1,14 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link } from 'react-router-dom-v5-compat';
 import { Spinner } from '@redhat-cloud-services/frontend-components/Spinner';
-import { EmptyState, EmptyStateBody, Title, Button, PageSection } from '@patternfly/react-core';
+import {
+  EmptyState,
+  EmptyStateBody,
+  Button,
+  PageSection,
+  EmptyStateHeader,
+  EmptyStateFooter,
+} from '@patternfly/react-core';
 import { overrideErrorMessage, BANNED_USER_CODE } from '../../common/errors';
 import links from '../../common/installLinks.mjs';
 import ExternalLink from '../common/ExternalLink';
@@ -28,11 +35,9 @@ const SubscriptionNotFulfilled = ({ data, refresh, marketplace }: Props) => {
   ) => (
     <PageSection className="subscriptions-empty-state">
       <EmptyState>
-        <Title headingLevel="h4" size="2xl">
-          {title}
-        </Title>
+        <EmptyStateHeader titleText={title} headingLevel="h4" />
         <EmptyStateBody>{text}</EmptyStateBody>
-        {button}
+        <EmptyStateFooter>{button}</EmptyStateFooter>
       </EmptyState>
     </PageSection>
   );
@@ -45,7 +50,9 @@ const SubscriptionNotFulfilled = ({ data, refresh, marketplace }: Props) => {
         overrideErrorMessage(payload)
       ) : (
         <>
-          <p>An error has occured! Try again or contact support by including this error message:</p>
+          <p>
+            An error has occurred! Try again or contact support by including this error message:
+          </p>
           <q>{errorMessage}</q>
           <p>{`Operation ID: ${operationID || 'N/A'}`}</p>
         </>

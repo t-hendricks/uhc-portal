@@ -16,7 +16,8 @@ import {
   Title,
 } from '@patternfly/react-core';
 
-import { ExclamationCircleIcon, ExclamationTriangleIcon } from '@patternfly/react-icons';
+import { ExclamationCircleIcon } from '@patternfly/react-icons/dist/esm/icons/exclamation-circle-icon';
+import { ExclamationTriangleIcon } from '@patternfly/react-icons/dist/esm/icons/exclamation-triangle-icon';
 
 import {
   subscriptionSupportLevels,
@@ -101,7 +102,7 @@ function SubscriptionSettings({
   if (systemUnits === subscriptionSystemUnits.SOCKETS && socketTotal !== undefined) {
     systemUnitsStr = 'Sockets';
   } else if (systemUnits === subscriptionSystemUnits.CORES_VCPU && cpuTotal !== undefined) {
-    systemUnitsStr = 'Cores/vCPUs ';
+    systemUnitsStr = 'Cores or vCPUs';
   }
   const displayObligation = cpuTotal !== undefined || socketTotal !== undefined;
   const obligationLabel =

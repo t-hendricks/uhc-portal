@@ -8,23 +8,25 @@ import {
   EmptyState,
   EmptyStateIcon,
   EmptyStateBody,
-  Title,
   Label,
+  EmptyStateHeader,
 } from '@patternfly/react-core';
 import {
-  Table,
-  TableHeader,
-  TableBody,
   sortable,
   classNames,
   Visibility,
   SortByDirection,
   cellWidth,
 } from '@patternfly/react-table';
-import ExclamationTriangleIcon from '@patternfly/react-icons/dist/js/icons/exclamation-triangle-icon';
-import { global_warning_color_100 as warningColor } from '@patternfly/react-tokens';
+import {
+  Table as TableDeprecated,
+  TableHeader as TableHeaderDeprecated,
+  TableBody as TableBodyDeprecated,
+} from '@patternfly/react-table/deprecated';
+import ExclamationTriangleIcon from '@patternfly/react-icons/dist/esm/icons/exclamation-triangle-icon';
+import { global_warning_color_100 as warningColor } from '@patternfly/react-tokens/dist/esm/global_warning_color_100';
 
-import { Link } from 'react-router-dom';
+import { Link } from 'react-router-dom-v5-compat';
 import * as OCM from '@openshift-assisted/ui-lib/ocm';
 import SearchIcon from '@patternfly/react-icons/dist/esm/icons/search-icon';
 import ClusterStateIcon from '../../common/ClusterStateIcon/ClusterStateIcon';
@@ -33,6 +35,7 @@ import clusterStates, {
   getClusterStateAndDescription,
   isWaitingROSAManualMode,
   isWaitingForOIDCProviderOrOperatorRolesMode,
+  isOSDGCPWaitingForRolesOnHostProject,
 } from '../../common/clusterStates';
 import ClusterUpdateLink from '../../common/ClusterUpdateLink';
 import ClusterCreatedIndicator from './ClusterCreatedIndicator';
@@ -43,6 +46,7 @@ import ClusterTypeLabel from '../../common/ClusterTypeLabel';
 import ProgressList from '../../common/InstallProgress/ProgressList';
 import ActionRequiredLink from '../../common/InstallProgress/ActionRequiredLink';
 import { isAISubscriptionWithoutMetrics } from '../../../../common/isAssistedInstallerCluster';
+import getClusterVersion from '../../common/getClusterVersion';
 
 const { ClusterStatus: AIClusterStatus } = OCM;
 function ClusterListTable(props) {
@@ -62,10 +66,11 @@ function ClusterListTable(props) {
   if (!isPending && (!clusters || clusters.length === 0)) {
     return (
       <EmptyState>
-        <EmptyStateIcon icon={SearchIcon} />
-        <Title headingLevel="h4" size="lg">
-          No clusters found.
-        </Title>
+        <EmptyStateHeader
+          titleText="No clusters found."
+          icon={<EmptyStateIcon icon={SearchIcon} />}
+          headingLevel="h4"
+        />
         <EmptyStateBody>
           This filter criteria matches no clusters.
           <br />
@@ -76,14 +81,36 @@ function ClusterListTable(props) {
   }
 
   const sortBy = {
-    index: 0, // TODO support more fields
+    index: viewOptions.sorting.sortIndex,
     direction: viewOptions.sorting.isAscending ? SortByDirection.asc : SortByDirection.desc,
   };
 
-  const onSortToggle = (_event, _index, direction) => {
+  const sortColumns = {
+    Name: 'display_name',
+    Created: 'created_at',
+  };
+
+  const hiddenOnMdOrSmaller = classNames(
+    Visibility.visibleOnLg,
+    Visibility.hiddenOnMd,
+    Visibility.hiddenOnSm,
+  );
+
+  const columns = [
+    { title: 'Name', transforms: [sortable, cellWidth(30)] },
+    { title: 'Status', transforms: [cellWidth(15)] },
+    { title: 'Type', transforms: [cellWidth(10)] },
+    { title: 'Created', transforms: [sortable], columnTransforms: [hiddenOnMdOrSmaller] },
+    { title: 'Version', columnTransforms: [hiddenOnMdOrSmaller] },
+    { title: 'Provider (Region)', columnTransforms: [hiddenOnMdOrSmaller] },
+    '', // TODO: to avoid TypeError: headerData[(cellIndex + additionalColsIndexShift)] is undefined from penshift-assisted_ui-lib
+  ];
+
+  const onSortToggle = (_event, index, direction) => {
     const sorting = { ...viewOptions.sorting };
     sorting.isAscending = direction === SortByDirection.asc;
-    sorting.sortField = 'name'; // TODO support more fields
+    sorting.sortField = sortColumns[columns[index].title];
+    sorting.sortIndex = index;
     setSorting(sorting);
   };
 
@@ -149,7 +176,8 @@ function ClusterListTable(props) {
       }
       if (
         isWaitingROSAManualMode(cluster) ||
-        isWaitingForOIDCProviderOrOperatorRolesMode(cluster)
+        isWaitingForOIDCProviderOrOperatorRolesMode(cluster) ||
+        isOSDGCPWaitingForRolesOnHostProject(cluster)
       ) {
         // Show a popover for manual creation of ROSA operator roles and OIDC provider.
         return (
@@ -188,7 +216,12 @@ function ClusterListTable(props) {
           {icon}
           {description}
           {hasLimitedSupport
-            ? linkToClusterDetails(cluster, <Label color="red">Limited support</Label>)
+            ? linkToClusterDetails(
+                cluster,
+                <Label color="red" className="pf-v5-u-ml-xs">
+                  Limited support
+                </Label>,
+              )
             : null}
         </span>
       );
@@ -197,7 +230,7 @@ function ClusterListTable(props) {
     // Note: hideOSDUpdates is set because we can't know if an update was already scheduled
     const clusterVersion = (
       <span>
-        {cluster.openshift_version || 'N/A'}
+        {getClusterVersion(cluster)}
         <ClusterUpdateLink cluster={cluster} openModal={openModal} hideOSDUpdates />
       </span>
     );
@@ -222,22 +255,6 @@ function ClusterListTable(props) {
     };
   };
 
-  const hiddenOnMdOrSmaller = classNames(
-    Visibility.visibleOnLg,
-    Visibility.hiddenOnMd,
-    Visibility.hiddenOnSm,
-  );
-
-  const columns = [
-    { title: 'Name', transforms: [sortable, cellWidth(30)] },
-    { title: 'Status', transforms: [cellWidth(15)] },
-    { title: 'Type', transforms: [cellWidth(10)] },
-    { title: 'Created', columnTransforms: [hiddenOnMdOrSmaller] },
-    { title: 'Version', columnTransforms: [hiddenOnMdOrSmaller] },
-    { title: 'Provider (Region)', columnTransforms: [hiddenOnMdOrSmaller] },
-    '',
-  ];
-
   const rows = isPending ? skeletonRows() : clusters.map((cluster) => clusterRow(cluster));
   const resolver = isPending
     ? undefined
@@ -255,7 +272,7 @@ function ClusterListTable(props) {
         );
 
   return (
-    <Table
+    <TableDeprecated
       aria-label="Cluster List"
       cells={columns}
       rows={rows}
@@ -264,9 +281,9 @@ function ClusterListTable(props) {
       sortBy={sortBy}
       ouiaId="clusterList"
     >
-      <TableHeader />
-      <TableBody />
-    </Table>
+      <TableHeaderDeprecated />
+      <TableBodyDeprecated />
+    </TableDeprecated>
   );
 }
 

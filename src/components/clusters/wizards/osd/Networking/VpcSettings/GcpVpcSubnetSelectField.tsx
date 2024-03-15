@@ -15,6 +15,7 @@ import { useFormState } from '~/components/clusters/wizards/hooks';
 import { FieldId } from '~/components/clusters/wizards/osd/constants';
 import { getGcpCcsCredentials } from '~/components/clusters/wizards/common/utils/ccsCredentials';
 import { CloudVPC } from '~/types/clusters_mgmt.v1';
+import { FormGroupHelperText } from '~/components/common/FormGroupHelperText';
 
 interface GcpVpcSubnetSelectFieldProps {
   input: FieldInputProps<FormSelectProps>;
@@ -26,6 +27,7 @@ interface GcpVpcSubnetSelectFieldProps {
   region: string;
   hasDependencies: boolean;
   matchesDependencies: boolean;
+  helperText?: string;
 }
 
 export const GcpVpcSubnetSelectField = ({
@@ -34,6 +36,7 @@ export const GcpVpcSubnetSelectField = ({
   label,
   placeholder,
   emptyPlaceholder,
+  helperText,
 }: GcpVpcSubnetSelectFieldProps) => {
   const { vpcs } = useGlobalState((state) => state.ccsInquiries);
   const {
@@ -100,13 +103,10 @@ export const GcpVpcSubnetSelectField = ({
     return options;
   }, [emptyPlaceholder, items, placeholder, showOptions, vpcs.pending]);
 
+  const { onChange, ...restInput } = input;
+
   return (
-    <FormGroup
-      label={label}
-      validated={meta.touched && meta.error ? 'error' : 'default'}
-      helperTextInvalid={meta.error}
-      fieldId={input.name}
-    >
+    <FormGroup label={label} fieldId={input.name}>
       {matchesDependencies && vpcs.error && (
         <Alert
           variant="danger"
@@ -116,9 +116,18 @@ export const GcpVpcSubnetSelectField = ({
           Verify that your entered service account details are correct
         </Alert>
       )}
-      <FormSelect aria-label={label} isDisabled={!(showOptions && items.length > 0)} {...input}>
+      <FormSelect
+        aria-label={label}
+        isDisabled={!(showOptions && items.length > 0)}
+        {...restInput}
+        onChange={(_event, value) => onChange(value)}
+      >
         {selectOptions}
       </FormSelect>
+
+      <FormGroupHelperText touched={meta.touched} error={meta.error}>
+        {helperText}
+      </FormGroupHelperText>
     </FormGroup>
   );
 };

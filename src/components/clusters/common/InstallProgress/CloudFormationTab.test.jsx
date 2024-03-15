@@ -1,8 +1,8 @@
 import React from 'react';
-import { shallow } from 'enzyme';
-import produce from 'immer';
+import { render, checkAccessibility } from '~/testUtils';
+import { produce } from 'immer';
 import CloudFormationTab, { getAccountRolePrefix } from './CloudFormationTab';
-import fixtures from '../../ClusterDetails/__test__/ClusterDetails.fixtures';
+import fixtures from '../../ClusterDetails/__tests__/ClusterDetails.fixtures';
 
 describe('<CloudFormationTab />', () => {
   it('should return the correct account role prefix', () => {
@@ -19,10 +19,10 @@ describe('<CloudFormationTab />', () => {
     expect(prefix).toBe('Custom-Prefix');
   });
 
-  it('should render correctly', () => {
-    const wrapper = shallow(
+  it('is accessible', async () => {
+    const { container } = render(
       <CloudFormationTab cluster={fixtures.ROSAManualClusterDetails.cluster} />,
     );
-    expect(wrapper).toMatchSnapshot();
+    await checkAccessibility(container);
   });
 });

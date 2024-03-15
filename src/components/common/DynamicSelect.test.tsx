@@ -1,126 +1,185 @@
 import React from 'react';
-import { shallow } from 'enzyme';
-
-import { PromiseReducerState } from '~/redux/types';
+import { render, screen, checkAccessibility, within } from '~/testUtils';
 import DynamicSelect from './DynamicSelect';
 
 type DynamicSelectProps = React.ComponentProps<typeof DynamicSelect>;
 
 describe('<DynamicSelect>', () => {
-  let loadData: DynamicSelectProps['loadData'];
-  let onChange: DynamicSelectProps['input']['onChange'];
-  let baseProps: DynamicSelectProps;
-  beforeEach(() => {
-    loadData = jest.fn();
-    onChange = jest.fn();
-    baseProps = {
-      loadData,
-      input: {
-        onChange,
-        value: '',
-      },
-      meta: {
-        invalid: false,
-        error: null,
-        touched: false,
-      },
-      label: 'Label',
-      placeholder: 'Select foo',
-      emptyAlertTitle: 'No foos',
-      noDependenciesPlaceholder: 'Must select bar first',
-      requestErrorTitle: 'Failed listing foos',
-      hasDependencies: true,
-      matchesDependencies: true,
-      requestStatus: {
-        pending: false,
-        fulfilled: false,
-        error: false,
-      },
-      items: ['Foo', 'Bar'],
-    };
+  const loadData = jest.fn();
+  const onChange = jest.fn();
+
+  const baseProps = {
+    loadData,
+    input: {
+      onChange,
+      value: '',
+    },
+    meta: {
+      invalid: false,
+      error: null,
+      touched: false,
+    },
+    label: 'Label',
+    placeholder: 'Select foo',
+    emptyAlertTitle: 'No foos',
+    noDependenciesPlaceholder: 'Must select bar first',
+    requestErrorTitle: 'Failed listing foos',
+    hasDependencies: true,
+    matchesDependencies: true,
+    requestStatus: {
+      pending: false,
+      fulfilled: false,
+      error: false,
+    },
+    items: ['Foo', 'Bar'],
+  } as DynamicSelectProps;
+
+  afterEach(() => {
+    jest.clearAllMocks();
   });
 
-  it('without dependencies', () => {
-    const select = shallow(<DynamicSelect {...baseProps} hasDependencies={false} />);
-    expect(select).toMatchSnapshot('blank');
-    expect(select.find('FormSelectOption').at(0).props().label).toEqual('Must select bar first');
+  it('displays single option with no dependencies', async () => {
+    const { container } = render(<DynamicSelect {...baseProps} hasDependencies={false} />);
+
+    // TODO - Having information information (like "loading" or directions) should not be an option
+    expect(screen.getByRole('option')).toHaveTextContent('Must select bar first');
     expect(loadData).not.toBeCalled();
+    await checkAccessibility(container);
   });
 
-  it('gets data', () => {
-    const select = shallow(<DynamicSelect {...baseProps} matchesDependencies={false} />);
-    expect(loadData).toBeCalled();
-
-    select.setProps({
-      requestStatus: { pending: true, fulfilled: false, error: null },
-      matchesDependencies: true,
-    });
-    expect(select).toMatchSnapshot('loading');
-    expect(select.find('FormSelectOption').at(0).props().label).toEqual('Loading...');
-
-    select.setProps({
-      requestStatus: { pending: false, fulfilled: true, error: null },
-    });
-    expect(select).toMatchSnapshot('items');
-    expect(select.find('FormSelectOption').at(0).props().label).toEqual('Select foo');
+  it('loading icon is shown during loading and disappears when loading is complete', () => {
+    const { rerender } = render(<DynamicSelect {...baseProps} matchesDependencies={false} />);
     expect(loadData).toBeCalledTimes(1);
+    expect(screen.queryByRole('option', { name: 'Loading...' })).not.toBeInTheDocument();
+
+    // loading has started
+    const loadingProps = {
+      ...baseProps,
+      requestStatus: { pending: true, fulfilled: false, error: false },
+      matchesDependencies: true,
+    } as DynamicSelectProps;
+
+    rerender(<DynamicSelect {...loadingProps} />);
+
+    expect(screen.getByRole('option')).toHaveTextContent('Loading...');
+
+    // loading is complete
+    const fulfilledProps = {
+      ...baseProps,
+      requestStatus: { pending: false, fulfilled: true, error: false },
+      matchesDependencies: true,
+    } as DynamicSelectProps;
+
+    rerender(<DynamicSelect {...fulfilledProps} />);
+
+    expect(screen.getAllByRole('option')).toHaveLength(3);
+    expect(screen.getAllByRole('option')[0]).toHaveTextContent('Select foo');
+    expect(loadData).toBeCalledTimes(1); // AKA loadData has not been called again since initial render
+
+    expect(screen.queryByRole('option', { name: 'Loading...' })).not.toBeInTheDocument();
   });
 
-  it('empty data', () => {
-    const status: PromiseReducerState = { pending: false, fulfilled: true, error: false };
-    const select = shallow(<DynamicSelect {...baseProps} requestStatus={status} items={[]} />);
+  it('empty option and error is shown when no data is returned', () => {
+    const emptyDataProps = {
+      ...baseProps,
+      requestStatus: { pending: false, fulfilled: true, error: false },
+      items: [],
+    } as DynamicSelectProps;
+
+    render(<DynamicSelect {...emptyDataProps} />);
     expect(loadData).not.toBeCalled();
-    expect(select).toMatchSnapshot('empty');
-    expect(select.find('FormSelectOption').at(0).props().label).toEqual('');
+
+    // TODO having an empty option without a label is not accessible
+    expect(screen.getByRole('option')).toHaveTextContent('');
+
+    expect(screen.getByRole('alert')).toBeInTheDocument();
+    expect(within(screen.getByRole('alert')).getByText('No foos', { exact: false }));
   });
 
-  it('error, untouched', () => {
-    const meta = { invalid: true, error: 'Bad!', touched: false };
-    const select = shallow(<DynamicSelect {...baseProps} meta={meta} />);
-    expect(select).toMatchSnapshot('no error');
+  it('displays a single option when there is an error but untouched', () => {
+    const untouchedProps = {
+      ...baseProps,
+      meta: { invalid: true, error: 'Bad!', touched: false },
+    } as DynamicSelectProps;
+
+    render(<DynamicSelect {...untouchedProps} />);
+
+    expect(screen.getByRole('option')).toHaveTextContent('Must select bar first');
+    expect(screen.queryByText('Bad!')).not.toBeInTheDocument();
   });
 
   it('error, touched', () => {
-    const meta = { invalid: true, error: 'Bad!', touched: true };
-    const select = shallow(<DynamicSelect {...baseProps} meta={meta} />);
-    expect(select).toMatchSnapshot('shows error');
+    const touchedProps = {
+      ...baseProps,
+      meta: { invalid: true, error: 'Bad!', touched: true },
+    } as DynamicSelectProps;
+
+    render(<DynamicSelect {...touchedProps} />);
+
+    // TODO the error is set as aria-hidden and is not accessible to assistive technologies
+    // TODO the error text is not programmatically tied (via the aria-describedby attribute) tied to the select input
+    expect(screen.getByText('Bad!')).toBeInTheDocument();
   });
 
   it('resets when selected value no longer valid option', () => {
-    const status: PromiseReducerState = { pending: false, fulfilled: true, error: false };
-    const select = shallow(
-      <DynamicSelect {...baseProps} input={{ value: 'Foo', onChange }} requestStatus={status} />,
-    );
+    const newProps = {
+      ...baseProps,
+      requestStatus: { pending: false, fulfilled: true, error: false },
+      input: { value: 'Foo', onChange },
+    } as DynamicSelectProps;
+
+    const { rerender } = render(<DynamicSelect {...newProps} />);
     expect(loadData).not.toBeCalled();
     expect(onChange).not.toBeCalled();
 
-    select.setProps({
+    const changedProps = {
+      ...newProps,
       items: ['Bar', 'Baz'],
-    });
+    };
+
+    rerender(<DynamicSelect {...changedProps} />);
     expect(onChange).toBeCalledWith('');
-    select.setProps({
+
+    const setInputProps = {
+      ...changedProps,
       input: { value: '', onChange },
-    });
-    expect(select).toMatchSnapshot('new items');
-    expect(select.find('FormSelectOption').at(0).props().label).toEqual('Select foo');
+    };
+
+    rerender(<DynamicSelect {...setInputProps} />);
+
+    const options = screen.getAllByRole('option');
+    expect(options).toHaveLength(3);
+
+    expect(options[0]).toHaveTextContent('Select foo');
+    expect(options[1]).toHaveTextContent('Bar');
+    expect(options[2]).toHaveTextContent('Baz');
   });
 
   it('resets on lost dependencies', () => {
-    const status: PromiseReducerState = { pending: false, fulfilled: true, error: false };
-    const select = shallow(
-      <DynamicSelect {...baseProps} input={{ value: 'Foo', onChange }} requestStatus={status} />,
-    );
+    const fulfilledProps = {
+      ...baseProps,
+      input: { value: 'Foo', onChange },
+      requestStatus: { pending: false, fulfilled: true, error: false },
+    } as DynamicSelectProps;
+
+    const { rerender } = render(<DynamicSelect {...fulfilledProps} />);
     expect(loadData).not.toBeCalled();
     expect(onChange).not.toBeCalled();
 
-    select.setProps({
+    const noDependenciesProps = {
+      ...fulfilledProps,
       hasDependencies: false,
       matchesDependencies: false,
-    });
+    };
+    rerender(<DynamicSelect {...noDependenciesProps} />);
     expect(onChange).toBeCalledWith('');
-    select.setProps({
+
+    const setInputProps = {
+      ...noDependenciesProps,
       input: { value: '', onChange },
-    });
-    expect(select.find('FormSelectOption').at(0).props().label).toEqual('Must select bar first');
+    };
+
+    rerender(<DynamicSelect {...setInputProps} />);
+    expect(screen.getByRole('option')).toHaveTextContent('Must select bar first');
   });
 });

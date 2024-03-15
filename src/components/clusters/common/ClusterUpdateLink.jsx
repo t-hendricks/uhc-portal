@@ -1,21 +1,23 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Button, Popover } from '@patternfly/react-core';
-import { InfoCircleIcon, OutlinedArrowAltCircleUpIcon } from '@patternfly/react-icons';
-import { isHibernating } from './clusterStates';
+import { InfoCircleIcon } from '@patternfly/react-icons/dist/esm/icons/info-circle-icon';
+import { OutlinedArrowAltCircleUpIcon } from '@patternfly/react-icons/dist/esm/icons/outlined-arrow-alt-circle-up-icon';
+import getClusterVersion from '~/components/clusters/common/getClusterVersion';
+import { isHibernating, isHypershiftCluster } from './clusterStates';
 import links from '../../../common/installLinks.mjs';
 import getClusterName from '../../../common/getClusterName';
 import modals from '../../common/Modal/modals';
 import { subscriptionStatuses } from '../../../common/subscriptionTypes';
-import { isHypershiftCluster } from '../ClusterDetails/clusterDetailsHelper';
 
 const ClusterUpdateLink = ({ cluster, openModal, hideOSDUpdates }) => {
+  const clusterVersion = getClusterVersion(cluster);
   const { upgrade } = cluster.metrics;
   // eslint-disable-next-line camelcase
   const osdUpgradeAvailable =
     cluster.managed &&
     cluster.version?.available_upgrades?.length > 0 &&
-    cluster.openshift_version &&
+    clusterVersion &&
     !hideOSDUpdates;
   const isStale = cluster?.subscription?.status === subscriptionStatuses.STALE;
 
@@ -36,11 +38,9 @@ const ClusterUpdateLink = ({ cluster, openModal, hideOSDUpdates }) => {
 
   // Only show Update tooltip/link for OSD clusters when the feature toggle is enabled
   // or OCP clusters that have available updates
-  if (
-    (cluster.managed &&
-      (!cluster.canEdit || !osdUpgradeAvailable || isHibernating(cluster.state) || isStale)) ||
-    (!cluster.managed && (!upgrade.available || isStale))
-  ) {
+  const cannotUpgrade =
+    !cluster.canEdit || !osdUpgradeAvailable || isHibernating(cluster) || isStale;
+  if ((cluster.managed && cannotUpgrade) || (!cluster.managed && (!upgrade.available || isStale))) {
     return null;
   }
 
@@ -52,7 +52,7 @@ const ClusterUpdateLink = ({ cluster, openModal, hideOSDUpdates }) => {
   if (cluster.managed) {
     return (
       <Button
-        className="cluster-update-link pf-u-mt-0"
+        className="cluster-update-link pf-v5-u-mt-0"
         variant="link"
         onClick={() =>
           openModal(modals.UPGRADE_WIZARD, {
@@ -72,7 +72,7 @@ const ClusterUpdateLink = ({ cluster, openModal, hideOSDUpdates }) => {
     return (
       <a href={`${cluster.console.url}/settings/cluster`} target="_blank" rel="noopener noreferrer">
         <Button
-          className="cluster-update-link pf-u-mt-0"
+          className="cluster-update-link pf-v5-u-mt-0"
           variant="link"
           icon={<OutlinedArrowAltCircleUpIcon />}
         >
@@ -97,7 +97,7 @@ const ClusterUpdateLink = ({ cluster, openModal, hideOSDUpdates }) => {
         </div>
       }
     >
-      <Button className="cluster-update-link pf-u-mt-0" variant="link" icon={<InfoCircleIcon />}>
+      <Button className="cluster-update-link pf-v5-u-mt-0" variant="link" icon={<InfoCircleIcon />}>
         Update
       </Button>
     </Popover>

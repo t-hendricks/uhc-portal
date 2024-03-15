@@ -13,7 +13,7 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
-import produce from 'immer';
+import { produce } from 'immer';
 import {
   REJECTED_ACTION,
   PENDING_ACTION,
@@ -28,6 +28,7 @@ const initialState = {
   cluster: null,
 };
 
+// eslint-disable-next-line default-param-last
 function deleteClusterDialogReducer(state = initialState, action) {
   // eslint-disable-next-line consistent-return
   return produce(state, (draft) => {

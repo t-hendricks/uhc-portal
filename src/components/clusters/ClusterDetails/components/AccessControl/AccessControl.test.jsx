@@ -1,9 +1,9 @@
 import React from 'react';
 import { MemoryRouter } from 'react-router-dom';
-import { render, screen } from '@testUtils';
-
+import { CompatRouter } from 'react-router-dom-v5-compat';
+import { render, screen } from '~/testUtils';
 import { normalizedProducts } from '~/common/subscriptionTypes';
-
+import clusterStates from '~/components/clusters/common/clusterStates';
 import AccessControl from './AccessControl';
 
 const buildCluster = ({ clusterProps, subscriptionProps, consoleUrl, apiUrl }) => ({
@@ -27,7 +27,9 @@ const buildCluster = ({ clusterProps, subscriptionProps, consoleUrl, apiUrl }) =
 describe('<AccessControl />', () => {
   const buildComponent = (cluster) => (
     <MemoryRouter>
-      <AccessControl cluster={cluster || buildCluster({})} />
+      <CompatRouter>
+        <AccessControl cluster={cluster || buildCluster({})} />
+      </CompatRouter>
     </MemoryRouter>
   );
 
@@ -40,7 +42,7 @@ describe('<AccessControl />', () => {
       });
       render(buildComponent(singleTabCluster));
 
-      const cardBody = document.querySelector('.pf-c-card__body');
+      const cardBody = document.querySelector('.pf-v5-c-card__body');
       expect(cardBody.classList).toContain('single-tab');
       expect(screen.getAllByRole('tab')).toHaveLength(1);
     });
@@ -53,7 +55,7 @@ describe('<AccessControl />', () => {
       });
       render(buildComponent(multipleTabCluster));
 
-      const cardBody = document.querySelector('.pf-c-card__body');
+      const cardBody = document.querySelector('.pf-v5-c-card__body');
       expect(cardBody.classList).not.toContain('single-tab');
       expect(screen.getAllByRole('tab')).toHaveLength(3);
     });
@@ -92,6 +94,41 @@ describe('<AccessControl />', () => {
       expect(
         screen.getByRole('tab', { name: 'Identity providers', selected: true }),
       ).toBeInTheDocument();
+    });
+  });
+
+  describe('Cluster roles and access', () => {
+    it('is hidden for clusters before they are ready', () => {
+      const hypershiftCluster = buildCluster({
+        clusterProps: {
+          hypershift: { enabled: true },
+          state: clusterStates.INSTALLING,
+        },
+        subscriptionProps: {
+          plan: { id: normalizedProducts.ROSA_HyperShift },
+        },
+        consoleUrl: '',
+      });
+      render(buildComponent(hypershiftCluster));
+
+      expect(
+        screen.queryByRole('tab', { name: 'Cluster Roles and Access' }),
+      ).not.toBeInTheDocument();
+    });
+
+    it('is shown for ready clusters regardless if they have a console URL', () => {
+      const hypershiftCluster = buildCluster({
+        clusterProps: {
+          hypershift: { enabled: true },
+        },
+        subscriptionProps: {
+          plan: { id: normalizedProducts.ROSA_HyperShift },
+        },
+        consoleUrl: '',
+      });
+      render(buildComponent(hypershiftCluster));
+
+      expect(screen.getByRole('tab', { name: 'Cluster Roles and Access' })).toBeInTheDocument();
     });
   });
 });

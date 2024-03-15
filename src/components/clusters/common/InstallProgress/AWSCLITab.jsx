@@ -35,6 +35,7 @@ function AWSCLITab({ cluster }) {
       .catch((e) => {
         setError(e.message || 'Could not fetch commands.');
       });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   React.useEffect(() => {

@@ -1,19 +1,16 @@
 import * as React from 'react';
+import { Card, CardBody, CardFooter, CardTitle } from '@patternfly/react-core';
 import {
-  Card,
-  CardBody,
-  CardFooter,
-  CardTitle,
-  Select,
-  SelectOption,
-} from '@patternfly/react-core';
+  Select as SelectDeprecated,
+  SelectOption as SelectOptionDeprecated,
+} from '@patternfly/react-core/deprecated';
+import { BillingQuotaCloudAccounts } from '~/components/clusters/common/quotaModel';
 import ExternalLink from '~/components/common/ExternalLink';
 import {
-  SubscriptionModels,
-  SubscriptionModel,
-  SetSubscriptionModel,
-  CloudAccount,
   CloudProviders,
+  SetSubscriptionModel,
+  SubscriptionModel,
+  SubscriptionModels,
 } from './AddOnsTypes';
 
 const SELECT_ACCOUNT_PLACEHOLDER = 'Select an account';
@@ -46,11 +43,7 @@ const AddOnsSubscriptionCard = ({
   activeCardId: string;
   hasQuota: boolean;
   isReady: boolean;
-  cloudAccounts?: {
-    rhm: CloudAccount[];
-    aws: CloudAccount[];
-    azure: CloudAccount[];
-  };
+  cloudAccounts?: BillingQuotaCloudAccounts;
   installedAddOn: any;
   billingModel: SubscriptionModel;
   name: string;
@@ -69,6 +62,7 @@ const AddOnsSubscriptionCard = ({
         setAccount(installedAccount);
       }
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [installedAddOn]);
   React.useEffect(() => {
     if (activeSubscription?.billingModel === 'standard') {
@@ -80,7 +74,7 @@ const AddOnsSubscriptionCard = ({
       id={billingModel}
       isSelectableRaised
       isSelected={activeSubscription?.billingModel === billingModel}
-      isDisabledRaised={!hasCloudAccounts || !hasQuota || !isReady}
+      isDisabled={!hasCloudAccounts || !hasQuota || !isReady}
       onClick={() => {
         if (account) {
           // re-select
@@ -108,7 +102,7 @@ const AddOnsSubscriptionCard = ({
         </CardFooter>
       ) : (
         <CardFooter>
-          <Select
+          <SelectDeprecated
             isOpen={isOpen}
             selections={account}
             onToggle={() => setIsOpen(!isOpen)}
@@ -130,11 +124,11 @@ const AddOnsSubscriptionCard = ({
           >
             {cloudAccounts &&
               cloudAccounts[cloudProvider].map(({ cloud_account_id: accountId }) => (
-                <SelectOption key={accountId} value={accountId}>
+                <SelectOptionDeprecated key={accountId} value={accountId}>
                   {accountId}
-                </SelectOption>
+                </SelectOptionDeprecated>
               ))}
-          </Select>
+          </SelectDeprecated>
         </CardFooter>
       )}
     </Card>

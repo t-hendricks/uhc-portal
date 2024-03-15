@@ -1,11 +1,15 @@
 import React from 'react';
 
-import { FormGroup, FormGroupProps, TextInput, TextInputProps } from '@patternfly/react-core';
 import { Field, FieldConfig, FieldProps, FieldValidator } from 'formik';
+import { FormGroup, FormGroupProps, TextInput, TextInputProps } from '@patternfly/react-core';
+
 import PopoverHint from '~/components/common/PopoverHint';
+import { FormGroupHelperText } from '~/components/common/FormGroupHelperText';
 
 interface TextInputFieldProps {
   name: string;
+  textInputClassName?: string;
+  formGroupClassName?: string;
   label?: string;
   validate?: FieldValidator;
   isDisabled?: boolean;
@@ -16,44 +20,52 @@ interface TextInputFieldProps {
   input?: TextInputProps;
   type?: TextInputProps['type'];
   showHelpTextOnError?: boolean;
+  onChange?: (event: React.FormEvent<HTMLInputElement>) => void;
 }
 
 interface HelperTextInvalidProps {
-  name: string;
+  name?: string;
   meta: FieldProps['meta'];
-  helpText: string | React.ReactNode;
+  helpText?: string | React.ReactNode;
   showHelpTextOnError?: boolean;
+  className?: string;
 }
 
-const HelperTextInvalid = ({
+export const HelperTextInvalid = ({
   name,
   meta,
   showHelpTextOnError,
   helpText,
+  className,
 }: HelperTextInvalidProps) => {
   const { error, touched } = meta;
+  const additionalClasses = className ? ` ${className}` : '';
   if (touched && error) {
-    if (showHelpTextOnError) {
-      if (typeof helpText === 'string') {
-        return (
-          <>
-            {helpText} {error}
-          </>
-        );
-      }
+    if (showHelpTextOnError && typeof helpText === 'string') {
       return (
-        <div className="pf-c-form__helper-text pf-m-error" id={`${name}-helper`} aria-live="polite">
+        <>
           {helpText} {error}
-        </div>
+        </>
       );
     }
-    return <div className="pf-u-background-color-danger">{error}</div>;
+    return (
+      <div
+        className={`pf-v5-c-form__helper-text pf-m-error${additionalClasses}`}
+        id={`${name}-helper`}
+        aria-live="polite"
+      >
+        {showHelpTextOnError ? <span>{helpText} </span> : null}
+        {error}
+      </div>
+    );
   }
   return null;
 };
 
 export const TextInputField = ({
   name,
+  textInputClassName,
+  formGroupClassName,
   label,
   validate,
   isDisabled,
@@ -63,37 +75,36 @@ export const TextInputField = ({
   formGroup,
   input,
   type,
-  showHelpTextOnError,
+  onChange: propOnChange,
 }: TextInputFieldProps) => (
   <Field name={name} validate={validate} {...field}>
     {({ field, form, meta }: FieldProps) => (
       <FormGroup
         fieldId={field.name}
         label={label}
-        validated={meta.touched && meta.error ? 'error' : 'default'}
-        helperTextInvalid={
-          <HelperTextInvalid
-            meta={meta}
-            helpText={helperText}
-            showHelpTextOnError={showHelpTextOnError}
-            name={field.name}
-          />
-        }
-        helperText={helperText}
+        className={formGroupClassName}
         {...(tooltip && { labelIcon: <PopoverHint hint={tooltip} /> })}
         {...(validate && { isRequired: true })}
         {...formGroup}
       >
         <TextInput
           id={field.name}
+          className={textInputClassName}
           isDisabled={isDisabled}
           validated={meta.touched && meta.error ? 'error' : 'default'}
           onBlur={() => form.setFieldTouched(name, true)}
-          onChange={(_, event) => field.onChange(event)}
+          onChange={(event, _) => {
+            if (propOnChange) propOnChange(event);
+            field.onChange(event);
+          }}
           value={field.value || (type === 'number' ? 0 : '')}
           type={type}
           {...input}
         />
+
+        <FormGroupHelperText touched={meta.touched} error={meta.error}>
+          {helperText}
+        </FormGroupHelperText>
       </FormGroup>
     )}
   </Field>

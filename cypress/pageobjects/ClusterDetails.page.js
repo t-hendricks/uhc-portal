@@ -2,7 +2,8 @@ import PropTypes from 'prop-types';
 import Page from './page';
 
 class ClusterDetails extends Page {
-  isClusterDetailsPage = (displayName) => cy.contains('h1', displayName, { timeout: 10000 });
+  isClusterDetailsPage = (displayName) =>
+    cy.contains('.cl-details-page-title', displayName, { timeout: 10000 });
 
   addConsoleURLButton = () => cy.get('button').contains('Add console URL');
 
@@ -26,6 +27,10 @@ class ClusterDetails extends Page {
 
   editDisplayNameInput = () => cy.get('input[id="edit-display-name-input"]');
 
+  overviewTab = () => cy.get('button[aria-controls="overviewTabContent"]');
+  accessControlTab = () => cy.get('button[aria-controls="overviewTabContent"]');
+  machinePoolsTab = () => cy.get('button[aria-controls="machinePoolsTabContent"]');
+  networkingTab = () => cy.get('button[aria-controls="networkingTabContent"]');
 
   editDisplaynameConfirm = () =>
     cy.get('div[aria-label="Edit display name"]').find('footer').find('button').first();
@@ -35,10 +40,10 @@ class ClusterDetails extends Page {
   archiveClusterDialogConfirm = () =>
     cy.get('div[aria-label="Archive cluster"]').find('footer').find('button').first();
 
-  successNotification = () => cy.get('div.pf-c-alert.pf-m-success.notification-item');
+  successNotification = () => cy.get('div.pf-v5-c-alert.pf-m-success.notification-item');
 
   unarchiveClusterButton = () =>
-    cy.get('span[id="cl-details-btns"]').contains('button', 'Unarchive', { timeout: 15000 });
+    cy.get('[id="cl-details-btns"]').contains('button', 'Unarchive', { timeout: 15000 });
 
   waitForUnarchiveClusterModalToLoad = () => {
     cy.getByTestId(' unarchive-cluster-dialog', { timeout: 30000 }).should('be.visible');
@@ -51,7 +56,8 @@ class ClusterDetails extends Page {
 
   deleteClusterNameInput = () => cy.get('input[aria-label="cluster name"]');
 
-  deleteClusterConfirm = () => cy.get('div[aria-label="Delete cluster"]').find('footer').find('button').first();
+  deleteClusterConfirm = () =>
+    cy.get('div[aria-label="Delete cluster"]').find('footer').find('button').first();
 
   clusterNameTitle = () => cy.get('h1.cl-details-page-title');
 
@@ -61,7 +67,16 @@ class ClusterDetails extends Page {
 
   clusterAvailabilityLabelValue = () => cy.getByTestId('availability').should('exist');
 
-  clusterInfrastructureAWSaccountLabelValue = () => cy.getByTestId('infrastructureAWSAccount').should('exist');
+  clusterAutoScalingStatus = () => cy.getByTestId('clusterAutoscalingStatus').should('exist');
+
+  clusterIMDSValue = () => cy.getByTestId('instanceMetadataService').should('exist');
+
+  clusterFipsCryptographyStatus = () => cy.getByTestId('fipsCryptographyStatus').should('exist');
+
+  clusterAdditionalEncryptionStatus = () => cy.getByTestId('etcEncryptionStatus').should('exist');
+
+  clusterInfrastructureAWSaccountLabelValue = () =>
+    cy.getByTestId('infrastructureAWSAccount').should('exist');
 
   clusterMachineCIDRLabelValue = () => cy.getByTestId('machineCIDR').should('exist');
 
@@ -71,6 +86,7 @@ class ClusterDetails extends Page {
 
   clusterHostPrefixLabelValue = () => cy.getByTestId('hostPrefix').should('exist');
 
+  clusterMachinePoolTable = () => cy.get('table[aria-label="Machine pools"]');
 
   waitForEditUrlModalToLoad = () => {
     cy.getByTestId('edit-console-url-dialog', { timeout: 30000 }).should('be.visible');
@@ -79,6 +95,34 @@ class ClusterDetails extends Page {
 
   clusterDetailsPageRefresh() {
     cy.get('button[aria-label="Refresh"]').click();
+  }
+
+  getMachinePoolName(index = 1) {
+    return this.clusterMachinePoolTable()
+      .find('tr')
+      .eq(index)
+      .find('td[data-label="Machine pool"]');
+  }
+
+  getMachinePoolInstanceType(index) {
+    return this.clusterMachinePoolTable()
+      .find('tr')
+      .eq(index)
+      .find('td[data-label="Instance type"]');
+  }
+
+  getMachinePoolAvailabilityZones(index) {
+    return this.clusterMachinePoolTable()
+      .find('tr')
+      .eq(index)
+      .find('td[data-label="Availability zones"]');
+  }
+
+  getMachinePoolNodeCount(index) {
+    return this.clusterMachinePoolTable().find('tr').eq(index).find('td[data-label="Node count"]');
+  }
+  getMachinePoolNodeAutoscaling(index) {
+    return this.clusterMachinePoolTable().find('tr').eq(index).find('td[data-label="Autoscaling"]');
   }
 
   waitForEditUrlModalToClear = () => {
@@ -113,7 +157,10 @@ class ClusterDetails extends Page {
   }
 
   waitForOidcAndOperatorRolesSetupToSuccess() {
-    cy.get('li[id="oidcAndOperatorRolesSetup"]', { timeout: 80000 }).should('have.class', 'pf-m-success');
+    cy.get('li[id="oidcAndOperatorRolesSetup"]', { timeout: 80000 }).should(
+      'have.class',
+      'pf-m-success',
+    );
     this.checkInstallationStepStatus('OIDC and operator roles', 'Completed');
   }
 
@@ -128,25 +175,25 @@ class ClusterDetails extends Page {
   }
 
   checkInstallationStepStatus(step, status = '') {
-    let installStep = cy.get('div.pf-c-progress-stepper__step-title').contains(step);
-    if (status == "") {
+    let installStep = cy.get('div.pf-v5-c-progress-stepper__step-title').contains(step);
+    if (status == '') {
       installStep.should('be.visible');
-    }
-    else {
+    } else {
       installStep.siblings().find('div').contains(status);
     }
   }
 
   waitForInstallerScreenToLoad = () => {
-    cy.get('.pf-c-spinner', { timeout: 30000 }).should('not.exist');
+    cy.get('li.pf-v5-c-wizard__nav-item', { timeout: 30000 }).should('not.exist');
     cy.get('div.cluster-loading-container', { timeout: 100000 }).should('not.exist');
   };
 
   waitForDeleteClusterActionComplete = () => {
-    cy.getByTestId('delete-cluster-dialog').get('div.ins-c-spinner', { timeout: 100000 }).should('not.exist');
+    cy.getByTestId('delete-cluster-dialog')
+      .get('div.ins-c-spinner', { timeout: 100000 })
+      .should('not.exist');
   };
 }
-
 
 ClusterDetails.propTypes = {
   displayName: PropTypes.string.isRequired,

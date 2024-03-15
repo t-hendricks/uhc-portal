@@ -1,9 +1,46 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import { Select, SelectOption, DatePicker, ToolbarItem, isValidDate } from '@patternfly/react-core';
+import {
+  DatePicker,
+  HelperText,
+  HelperTextItem,
+  ToolbarItem,
+  isValidDate,
+} from '@patternfly/react-core';
+import {
+  Select as SelectDeprecated,
+  SelectOption as SelectOptionDeprecated,
+} from '@patternfly/react-core/deprecated';
+import './ClusterLogsDatePicker.scss';
+
+const splitDateStr = (dateStr) =>
+  dateStr
+    .replace(/T.*/, '')
+    .split('-')
+    .filter((part) => part !== '' && Number.parseInt(part, 10) !== 0);
 
 // Local timezone UTC offset
 const offset = new Date().getTimezoneOffset() * 60000;
+
+/**
+ * Parses a date string that is in ISO format YYYY-MM-DD
+ */
+export const dateParse = (dateStr, asDate = true) => {
+  const split = splitDateStr(dateStr);
+  if (split.length !== 3) {
+    return asDate ? new Date() : '';
+  }
+  const year = split[0];
+  const month = split[1];
+  const day = split[2];
+  const paddedDateStr = `${year.padStart(4, '0')}-${month.padStart(2, '0')}-${day.padStart(
+    2,
+    '0',
+  )}`;
+  return asDate
+    ? new Date(Date.UTC(year, Number.parseInt(month, 10) - 1, day) + offset)
+    : paddedDateStr;
+};
 
 let defaultTimestamps;
 const getDefaultTimestamps = (refresh = false) => {
@@ -57,32 +94,6 @@ export const dateFormat = (date) => {
   return `${year}-${month.toString().padStart(2, '0')}-${day.toString().padStart(2, '0')}`;
 };
 
-const splitDateStr = (dateStr) =>
-  dateStr
-    .replace(/T.*/, '')
-    .split('-')
-    .filter((part) => part !== '' && Number.parseInt(part, 10) !== 0);
-
-/**
- * Parses a date string that is in ISO format YYYY-MM-DD
- */
-export const dateParse = (dateStr, asDate = true) => {
-  const split = splitDateStr(dateStr);
-  if (split.length !== 3) {
-    return asDate ? new Date() : '';
-  }
-  const year = split[0];
-  const month = split[1];
-  const day = split[2];
-  const paddedDateStr = `${year.padStart(4, '0')}-${month.padStart(2, '0')}-${day.padStart(
-    2,
-    '0',
-  )}`;
-  return asDate
-    ? new Date(Date.UTC(year, Number.parseInt(month, 10) - 1, day) + offset)
-    : paddedDateStr;
-};
-
 export const onDateChangeFromFilter = (dateStr) => ({
   date: `${dateStr}T00:00:00.000Z`,
   key: 'timestampFrom',
@@ -97,7 +108,6 @@ const onDateChangeToFilter = (dateStr) => ({
 
 const ClusterLogsDatePicker = ({ setFilter, currentFilter, createdAt }) => {
   const { now, lastMonthStart, lastWeekStart, last72HoursStart } = getDefaultTimestamps();
-  const minDateStr = createdAt.replace(/T.*/, '');
   const minDate = dateParse(createdAt);
 
   const options = [
@@ -113,6 +123,21 @@ const ClusterLogsDatePicker = ({ setFilter, currentFilter, createdAt }) => {
   const [selected, setSelected] = useState(options[0].value);
   // used to force re-render due to bug https://github.com/patternfly/patternfly-react/issues/7818
   const [counter, setCounter] = useState(0);
+  const endDateObject = dateParse(endDateStr);
+  const startDateObject = dateParse(startDateStr);
+
+  let invalidDateError;
+
+  if (
+    startDateObject > endDateObject &&
+    startDateObject <= now &&
+    endDateObject <= now &&
+    endDateObject >= minDate
+  ) {
+    invalidDateError = 'The end date cannot be before the start date.';
+  } else {
+    invalidDateError = '';
+  }
 
   const onDateChange = (filters) => {
     const filterObject = {
@@ -138,32 +163,49 @@ const ClusterLogsDatePicker = ({ setFilter, currentFilter, createdAt }) => {
    * Validate input against min/max dates in UTC time
    * Also determines the clickable range in the picker
    */
-  const rangeValidator = (date) => {
-    if (date < minDate) {
-      return `Min: ${minDateStr}`;
-    }
-    if (date > now) {
-      return `Max: ${dateFormat(now)}`;
-    }
-    return '';
-  };
+
+  const rangeFromValidators = [
+    (date) => (date < minDate ? 'The start date cannot be before the cluster creation date.' : ''),
+    (date) => (date > now ? 'The start date cannot be in the future.' : ''),
+  ];
+
+  const rangeToValidators = [
+    (date) => (date < minDate ? 'The end date cannot be before the cluster creation date.' : ''),
+    (date) => (date > now ? 'The end date cannot be in the future.' : ''),
+  ];
 
   const isValid = (dateStr) => isValidDate(new Date(dateStr));
 
-  const inputOnChange = (dateStr, date, onChange) => {
+  const inputOnChangeFrom = (dateStr, date) => {
     setSelected(optionValues.Custom);
     const split = splitDateStr(dateStr);
     if (split.length !== 3) {
       return;
     }
-    if (!date || rangeValidator(date)) {
+    if (!date || rangeFromValidators.some((validator) => validator(date) !== '')) {
       // invalid date
       return;
     }
     if (!isValid(dateStr)) {
       return;
     }
-    onChange(dateStr, date);
+    onDateChangeFrom(dateStr, date);
+  };
+
+  const inputOnChangeTo = (dateStr, date) => {
+    setSelected(optionValues.Custom);
+    const split = splitDateStr(dateStr);
+    if (split.length !== 3) {
+      return;
+    }
+    if (!date || rangeToValidators.some((validator) => validator(date) !== '')) {
+      // invalid date
+      return;
+    }
+    if (!isValid(dateStr)) {
+      return;
+    }
+    onDateChangeTo(dateStr, date);
   };
 
   const placeholder = 'YYYY-MM-DD';
@@ -171,7 +213,6 @@ const ClusterLogsDatePicker = ({ setFilter, currentFilter, createdAt }) => {
     className: 'cluster-log__date-picker',
     placeholder,
     invalidFormatText: `Invalid: ${placeholder}`,
-    validators: [rangeValidator],
     dateFormat,
     popoverProps: {
       position: 'right',
@@ -182,18 +223,22 @@ const ClusterLogsDatePicker = ({ setFilter, currentFilter, createdAt }) => {
 
   const pickerFrom = (
     <DatePicker
-      onChange={(_, dateStr, date) => inputOnChange(dateStr, date, onDateChangeFrom)}
+      onChange={(_, dateStr, date) => inputOnChangeFrom(dateStr, date)}
+      onBlur={(_, dateStr, date) => inputOnChangeFrom(dateStr, date)}
       value={startDateStr}
       dateParse={dateParse}
+      validators={rangeFromValidators}
       {...commonProps}
     />
   );
 
   const pickerTo = (
     <DatePicker
-      onChange={(_, dateStr, date) => inputOnChange(dateStr, date, onDateChangeTo)}
+      onChange={(_, dateStr, date) => inputOnChangeTo(dateStr, date)}
+      onBlur={(_, dateStr, date) => inputOnChangeTo(dateStr, date)}
       value={endDateStr}
       dateParse={dateParse}
+      validators={rangeToValidators}
       {...commonProps}
     />
   );
@@ -236,8 +281,8 @@ const ClusterLogsDatePicker = ({ setFilter, currentFilter, createdAt }) => {
   };
 
   const dateSelector = (
-    <Select
-      onToggle={setSelectorOpen}
+    <SelectDeprecated
+      onToggle={(_event, val) => setSelectorOpen(val)}
       onSelect={onSelectorSelect}
       selections={selected}
       isOpen={selectorOpen}
@@ -246,16 +291,23 @@ const ClusterLogsDatePicker = ({ setFilter, currentFilter, createdAt }) => {
     >
       {options.map((option, index) => (
         // eslint-disable-next-line react/no-array-index-key
-        <SelectOption key={index} value={option.value} isDisabled={option.isDisabled} />
+        <SelectOptionDeprecated key={index} value={option.value} isDisabled={option.isDisabled} />
       ))}
-    </Select>
+    </SelectDeprecated>
   );
 
   return (
     <>
       <ToolbarItem>{dateSelector}</ToolbarItem>
       <ToolbarItem>{pickerFrom}</ToolbarItem>
-      <ToolbarItem>{pickerTo}</ToolbarItem>
+      <ToolbarItem>
+        {pickerTo}{' '}
+        {invalidDateError ? (
+          <HelperText>
+            <HelperTextItem variant="error">{invalidDateError}</HelperTextItem>
+          </HelperText>
+        ) : undefined}
+      </ToolbarItem>
     </>
   );
 };

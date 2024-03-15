@@ -2,9 +2,19 @@ import get from 'lodash/get';
 import PropTypes from 'prop-types';
 import React from 'react';
 
-import { Alert, Card, CardBody, CardTitle, Grid, GridItem, Title } from '@patternfly/react-core';
+import {
+  Alert,
+  AlertActionCloseButton,
+  Card,
+  CardBody,
+  CardTitle,
+  Grid,
+  GridItem,
+  Title,
+} from '@patternfly/react-core';
 
 import * as OCM from '@openshift-assisted/ui-lib/ocm';
+import { HAD_INFLIGHT_ERROR_LOCALSTORAGE_KEY } from '~/common/localStorageConstants';
 import { subscriptionStatuses } from '~/common/subscriptionTypes';
 import { ASSISTED_INSTALLER_FEATURE } from '~/redux/constants/featureConstants';
 import { isRestrictedEnv } from '~/restrictedEnv';
@@ -18,7 +28,7 @@ import ResourceUsage from '../../../common/ResourceUsage/ResourceUsage';
 import { metricsStatusMessages } from '../../../common/ResourceUsage/ResourceUsage.consts';
 import clusterStates, {
   getClusterAIPermissions,
-  getClusterStateAndDescription,
+  hasInflightEgressErrors,
   isHibernating,
 } from '../../../common/clusterStates';
 import { hasResourceUsageMetrics } from '../Monitoring/monitoringHelper';
@@ -69,12 +79,19 @@ class Overview extends React.Component {
   }
 
   render() {
-    const { cluster, cloudProviders, history, refresh, openModal, insightsData, userAccess } =
-      this.props;
+    const {
+      cluster,
+      cloudProviders,
+      history,
+      refresh,
+      openModal,
+      insightsData,
+      userAccess,
+      hasNetworkOndemand,
+    } = this.props;
     let topCard;
 
     const { showInstallSuccessAlert } = this.state;
-    const clusterState = getClusterStateAndDescription(cluster);
     const isArchived = get(cluster, 'subscription.status', false) === subscriptionStatuses.ARCHIVED;
     const isDeprovisioned =
       get(cluster, 'subscription.status', false) === subscriptionStatuses.DEPROVISIONED;
@@ -92,7 +109,15 @@ class Overview extends React.Component {
       cluster.state === clusterStates.WAITING ||
       cluster.state === clusterStates.PENDING ||
       cluster.state === clusterStates.INSTALLING ||
-      cluster.state === clusterStates.UNINSTALLING;
+      cluster.state === clusterStates.ERROR ||
+      cluster.state === clusterStates.UNINSTALLING ||
+      (hasInflightEgressErrors(cluster) && hasNetworkOndemand);
+
+    const hadInflightErrorKey = `${HAD_INFLIGHT_ERROR_LOCALSTORAGE_KEY}_${cluster.id}`;
+    const showInflightErrorIsFixed =
+      !hasInflightEgressErrors(cluster) &&
+      cluster.state !== clusterStates.ERROR &&
+      localStorage.getItem(hadInflightErrorKey) === 'true';
 
     const showInsightsAdvisor =
       !isRestrictedEnv() &&
@@ -101,12 +126,13 @@ class Overview extends React.Component {
       !isDeprovisioned &&
       !isArchived;
     const showResourceUsage =
-      !isHibernating(cluster.state) &&
+      !isHibernating(cluster) &&
       !isAssistedInstallSubscription(cluster.subscription) &&
       !shouldShowLogs(cluster) &&
       !isDeprovisioned &&
       !isArchived &&
-      !isRestrictedEnv();
+      !isRestrictedEnv() &&
+      !hasInflightEgressErrors(cluster);
     const showCostBreakdown =
       !cluster.managed &&
       userAccess.fulfilled &&
@@ -119,10 +145,14 @@ class Overview extends React.Component {
     const showDetailsCard = !cluster.aiCluster || !isUninstalledAICluster(cluster);
     const showSubscriptionSettings = !isDeprovisioned && !isArchived;
 
-    if (isHibernating(cluster.state)) {
+    if (isHibernating(cluster)) {
       topCard = <HibernatingClusterCard cluster={cluster} openModal={openModal} />;
-    } else if (!isAssistedInstallSubscription(cluster.subscription) && shouldShowLogs(cluster)) {
-      topCard = <ClusterProgressCard cluster={cluster} refresh={refresh} history={history} />;
+    } else if (
+      cluster &&
+      !isAssistedInstallSubscription(cluster.subscription) &&
+      (shouldShowLogs(cluster) || hasInflightEgressErrors(cluster))
+    ) {
+      topCard = <ClusterProgressCard cluster={cluster} />;
     }
 
     const resourceUsage = (
@@ -131,9 +161,6 @@ class Overview extends React.Component {
           <Title headingLevel="h2" className="card-title">
             Resource usage
           </Title>
-          {shouldMonitorStatus && (
-            <ClusterStatusMonitor refresh={refresh} cluster={cluster} history={history} />
-          )}
         </CardTitle>
         <CardBody className="ocm-c-overview-resource-usage__card--body">
           <ResourceUsage
@@ -160,6 +187,24 @@ class Overview extends React.Component {
             {showInstallSuccessAlert && (
               <Alert variant="success" isInline title="Cluster installed successfully" />
             )}
+            {showInflightErrorIsFixed && (
+              <Alert
+                variant="success"
+                isInline
+                title="This cluster can now be fully-managed"
+                actionClose={
+                  <AlertActionCloseButton
+                    onClose={() => {
+                      localStorage.removeItem(hadInflightErrorKey);
+                      refresh();
+                    }}
+                  />
+                }
+              />
+            )}
+            {shouldMonitorStatus && (
+              <ClusterStatusMonitor refresh={refresh} cluster={cluster} history={history} />
+            )}
             {topCard}
             {showAssistedInstallerDetailCard && (
               <GatedAIDetailCard
@@ -185,7 +230,7 @@ class Overview extends React.Component {
                       />
                     </GridItem>
                     <GridItem sm={6}>
-                      <DetailsRight cluster={{ ...cluster, state: clusterState }} />
+                      <DetailsRight cluster={{ ...cluster }} isDeprovisioned={isDeprovisioned} />
                     </GridItem>
                   </Grid>
                   {showAssistedInstallerDetailCard && <GatedAIExtraDetailCard />}
@@ -237,6 +282,7 @@ Overview.propTypes = {
   cloudProviders: PropTypes.object.isRequired,
   history: PropTypes.object.isRequired,
   refresh: PropTypes.func,
+  hasNetworkOndemand: PropTypes.bool,
   openModal: PropTypes.func.isRequired,
   insightsData: PropTypes.object,
   userAccess: PropTypes.shape({

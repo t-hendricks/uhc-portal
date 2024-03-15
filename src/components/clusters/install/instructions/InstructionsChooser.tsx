@@ -42,7 +42,7 @@ export const InstructionsChooser = ({
   name,
 }: InstructionsChooserProps) => (
   <div
-    className="pf-c-content ocm-page instructions-chooser"
+    className="pf-v5-c-content ocm-page instructions-chooser"
     data-ouia-component-id={`${name}-instructions-chooser`}
   >
     {aiPageLink && (
@@ -76,11 +76,7 @@ export const InstructionsChooser = ({
         id="select-agent-based"
         href={agentBasedPageLink}
         title="Local Agent-based"
-        labels={
-          <>
-            <Label color="purple">CLI-based</Label>
-          </>
-        }
+        labels={<Label color="purple">CLI-based</Label>}
         body="Runs Assisted Installer securely and locally to create your cluster."
         featureListItems={[
           'Installable ISO',
@@ -91,7 +87,7 @@ export const InstructionsChooser = ({
         footerLinkText="Learn more about local agent-based"
       />
     )}
-    {!hideIPI && (
+    {!hideIPI && ipiPageLink && (
       <InstructionsChooserCard
         id="select-automated"
         href={ipiPageLink}
@@ -115,7 +111,7 @@ export const InstructionsChooser = ({
         footerLinkText="Learn more about automated"
       />
     )}
-    {!hideUPI && (
+    {!hideUPI && upiPageLink && (
       <InstructionsChooserCard
         id="select-full-control"
         href={upiPageLink}

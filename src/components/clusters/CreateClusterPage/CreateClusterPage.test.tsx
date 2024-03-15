@@ -1,7 +1,7 @@
 import * as React from 'react';
-import { screen } from '@testing-library/react';
-import { MemoryRouter } from 'react-router';
-import { mockRestrictedEnv, render } from '~/testUtils';
+import { MemoryRouter } from 'react-router-dom';
+import { CompatRouter } from 'react-router-dom-v5-compat';
+import { mockRestrictedEnv, render, screen } from '~/testUtils';
 import CreateClusterPage from './CreateClusterPage';
 
 describe('<CreateClusterPage />', () => {
@@ -16,13 +16,21 @@ describe('<CreateClusterPage />', () => {
         organization: {
           fulfilled: true,
         },
+        hasOSDQuota: true,
+        hasOSDTrialQuota: true,
+        rosaCreationWizardFeature: true,
+        assistedInstallerFeature: true,
+        getOrganizationAndQuota: () => {},
+        activeTab: 'Local',
         getAuthToken: () => {},
         token: {},
       };
 
       const { rerender } = render(
         <MemoryRouter>
-          <CreateClusterPage {...props} />
+          <CompatRouter>
+            <CreateClusterPage {...props} />
+          </CompatRouter>
         </MemoryRouter>,
       );
 
@@ -33,7 +41,9 @@ describe('<CreateClusterPage />', () => {
       isRestrictedEnv.mockReturnValue(true);
       rerender(
         <MemoryRouter>
-          <CreateClusterPage {...props} />
+          <CompatRouter>
+            <CreateClusterPage {...props} />
+          </CompatRouter>
         </MemoryRouter>,
       );
       expect(screen.queryByRole('tab', { name: 'Cloud' })).toBeInTheDocument();

@@ -1,0 +1,52 @@
+import React from 'react';
+import { Formik } from 'formik';
+import { render, screen } from '~/testUtils';
+import InstallToVPC from '~/components/clusters/wizards/rosa_v2/VPCScreen/InstallToVPC';
+import links from '~/common/installLinks.mjs';
+import { initialValues } from '../constants';
+
+const defaultProps = {
+  selectedRegion: 'us-east-1',
+  isMultiAz: false,
+  privateLinkSelected: false,
+  cloudProviderID: 'aws',
+  isSharedVpcSelected: false,
+  hostedZoneDomainName: 'cluster-name.base-domain-name.devshift.org',
+  selectedVPC: { id: '', name: '' },
+  selectedAZs: [],
+};
+
+const buildTestComponent = (children, formValues = {}) => (
+  <Formik
+    initialValues={{
+      ...initialValues,
+      ...formValues,
+      securityGroups: {
+        applyControlPlaneToAll: true,
+        controlPlane: [],
+        infra: [],
+        worker: [],
+      },
+    }}
+    onSubmit={() => {}}
+  >
+    {children}
+  </Formik>
+);
+
+describe('<InstallToVPC> (AWS)', () => {
+  it('should have a Shared VPC section', async () => {
+    render(buildTestComponent(<InstallToVPC {...defaultProps} />));
+
+    expect(await screen.findByText('AWS shared VPC')).toBeInTheDocument();
+  });
+
+  it('should show a link to AWS VPC requirements', async () => {
+    render(buildTestComponent(<InstallToVPC {...defaultProps} />));
+
+    expect(await screen.findByRole('link', { name: /Learn more about VPC/ })).toHaveAttribute(
+      'href',
+      links.INSTALL_AWS_CUSTOM_VPC_REQUIREMENTS,
+    );
+  });
+});

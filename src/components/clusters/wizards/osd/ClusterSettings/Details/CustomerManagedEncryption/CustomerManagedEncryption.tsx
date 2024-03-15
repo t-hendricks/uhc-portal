@@ -4,7 +4,7 @@ import { Grid, GridItem, Alert, FormGroup } from '@patternfly/react-core';
 
 import { validateAWSKMSKeyARN } from '~/common/validators';
 import ExternalLink from '~/components/common/ExternalLink';
-import { constants } from '~/components/clusters/CreateOSDPage/CreateOSDForm/CreateOSDFormConstants';
+import { constants } from '~/components/clusters/common/CreateOSDFormConstants';
 import { CloudProviderType } from '~/components/clusters/wizards/common/constants';
 import {
   RadioGroupField,
@@ -55,6 +55,7 @@ export const CustomerManagedEncryption = ({
   React.useEffect(() => {
     if (hasCustomerManagedKey === 'true' && kmsKeyArn && !isGCP)
       setFieldTouched(FieldId.KmsKeyArn, true, true);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
@@ -67,7 +68,7 @@ export const CustomerManagedEncryption = ({
           isRequired
           isInline
         >
-          <div className="pf-u-font-size-sm pf-u-pb-md">
+          <div className="pf-v5-u-font-size-sm pf-v5-u-pb-md">
             The cloud storage for your cluster is encrypted at rest.{' '}
             <ExternalLink href={cloudProviderLearnLink}>Learn more</ExternalLink>
           </div>
@@ -93,7 +94,7 @@ export const CustomerManagedEncryption = ({
               helperText={!kmsKeyArn ? 'Provide a custom key ARN' : ''}
               tooltip={
                 <>
-                  <p className="pf-u-mb-sm">{constants.awsKeyARN}</p>
+                  <p className="pf-v5-u-mb-sm">{constants.awsKeyARN}</p>
                   <ExternalLink href="https://docs.aws.amazon.com/kms/latest/developerguide/find-cmk-id-arn.html">
                     Finding the key ID and ARN
                   </ExternalLink>
@@ -102,7 +103,7 @@ export const CustomerManagedEncryption = ({
             />
             <GridItem md={6}>
               <Alert
-                className="pf-u-mt-sm"
+                className="pf-v5-u-mt-sm"
                 isInline
                 isLiveRegion
                 variant="info"

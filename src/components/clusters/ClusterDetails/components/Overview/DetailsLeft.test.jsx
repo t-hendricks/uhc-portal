@@ -1,7 +1,7 @@
 import React from 'react';
 import { screen, render, checkAccessibility, within, insightsMock } from '~/testUtils';
 import DetailsLeft from './DetailsLeft';
-import fixtures from '../../__test__/ClusterDetails.fixtures';
+import fixtures from '../../__tests__/ClusterDetails.fixtures';
 
 const defaultProps = {
   cluster: fixtures.clusterDetails.cluster,
@@ -16,8 +16,14 @@ const componentText = {
   ID: { label: 'Cluster ID', aiLabel: 'Assisted cluster ID / Cluster ID', NA: 'N/A' },
   VERSION: { label: 'Version' },
   OWNER: { label: 'Owner', NA: 'N/A' },
-  SUBSCRIPTION: { label: 'Subscription type' },
-  INFRASTRUCTURE: { label: 'Infrastructure type' },
+  SUBSCRIPTION: { label: 'Subscription billing model' },
+  INFRASTRUCTURE: { label: 'Infrastructure billing model' },
+  ENCRYPT_WITH_CUSTOM_KEYS: {
+    label: 'Encrypt volumes with custom keys',
+  },
+  CUSTOM_KMS_KEY: {
+    label: 'Custom KMS key ARN',
+  },
 };
 
 const checkForValue = (label, value) => {
@@ -152,6 +158,40 @@ describe('<DetailsLeft />', () => {
 
       // Assert
       checkForValue(componentText.REGION.label, componentText.REGION.NA);
+    });
+
+    describe('in RHOIC cluster', () => {
+      it('shows region if known', () => {
+        const OSDClusterFixture = fixtures.clusterDetails.cluster;
+
+        const fakedRHOICCluster = {
+          ...OSDClusterFixture,
+          region: { id: 'us-east' },
+          subscription: { plan: { type: 'RHOIC' } },
+        };
+
+        const props = { ...defaultProps, cluster: fakedRHOICCluster };
+
+        render(<DetailsLeft {...props} />);
+
+        checkForValue(componentText.REGION.label, 'us-east');
+      });
+
+      it('hides region label if region is not known', () => {
+        const OSDClusterFixture = fixtures.clusterDetails.cluster;
+
+        const fakedRHOICCluster = {
+          ...OSDClusterFixture,
+          region: {},
+          subscription: { plan: { type: 'RHOIC' } },
+        };
+
+        const props = { ...defaultProps, cluster: fakedRHOICCluster };
+
+        render(<DetailsLeft {...props} />);
+
+        checkForValueAbsence(componentText.REGION.label);
+      });
     });
   });
 
@@ -349,6 +389,42 @@ describe('<DetailsLeft />', () => {
     });
   });
 
+  describe('Custom encryption keys', () => {
+    it('shows KMS key ARN if present', () => {
+      // Arrange
+      const keyARN = 'arn:aws:kms:us-east-1:000000000006:key/98a8df03-1d14-4eb5-84dc-82a3f490dfa9';
+      const cluster = { ...fixtures.ROSAManualClusterDetails.cluster };
+      const ROSAClusterFixture = {
+        ...cluster,
+        aws: {
+          ...cluster.aws,
+          kms_key_arn: keyARN,
+        },
+      };
+
+      const props = { ...defaultProps, cluster: ROSAClusterFixture };
+      render(<DetailsLeft {...props} />);
+
+      // Assert
+      checkForValue(componentText.CUSTOM_KMS_KEY.label, keyARN);
+      checkForValue(componentText.ENCRYPT_WITH_CUSTOM_KEYS.label, 'Enabled');
+    });
+
+    it('hides KMS key ARN if not present', () => {
+      // Arrange
+      const ROSAClusterFixture = {
+        ...fixtures.ROSAManualClusterDetails.cluster,
+      };
+
+      const props = { ...defaultProps, cluster: ROSAClusterFixture };
+      render(<DetailsLeft {...props} />);
+
+      // Assert
+      checkForValueAbsence(componentText.CUSTOM_KMS_KEY.label);
+      checkForValueAbsence(componentText.ENCRYPT_WITH_CUSTOM_KEYS.label);
+    });
+  });
+
   describe('Owner', () => {
     it('shows creator name as the owner', () => {
       // Arrange
@@ -404,7 +480,7 @@ describe('<DetailsLeft />', () => {
     });
   });
 
-  describe('subscription and infrastructure headings', () => {
+  describe('Subscription and infrastructure headings', () => {
     it('shows subscription type and infrastructure headings if managed and not ROSA', () => {
       // Arrange
       const OSDClusterFixture = {

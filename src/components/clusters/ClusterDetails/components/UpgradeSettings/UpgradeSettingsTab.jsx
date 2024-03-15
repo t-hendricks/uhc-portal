@@ -14,6 +14,7 @@ import {
   Modal,
   Alert,
 } from '@patternfly/react-core';
+import getClusterVersion from '~/components/clusters/common/getClusterVersion';
 import UpgradeStatus from '../../../common/Upgrades/UpgradeStatus';
 import getClusterName from '../../../../../common/getClusterName';
 import UpgradeSettingsFields from '../../../common/Upgrades/UpgradeSettingsFields';
@@ -21,11 +22,10 @@ import ErrorBox from '../../../../common/ErrorBox';
 import modals from '../../../../common/Modal/modals';
 import UserWorkloadMonitoringSection from '../../../common/UserWorkloadMonitoringSection';
 import '../../../common/Upgrades/UpgradeSettingsFields.scss';
-import clusterStates from '../../../common/clusterStates';
+import clusterStates, { isHypershiftCluster } from '../../../common/clusterStates';
 import ButtonWithTooltip from '../../../../common/ButtonWithTooltip';
 import MinorVersionUpgradeAlert from '../../../common/Upgrades/MinorVersionUpgradeAlert';
 import UpgradeAcknowledgeWarning from '../../../common/Upgrades/UpgradeAcknowledge/UpgradeAcknowledgeWarning';
-import { isHypershiftCluster } from '../../clusterDetailsHelper';
 import { UpdateAllMachinePools } from '../MachinePools/UpdateMachinePools';
 
 class UpgradeSettingsTab extends React.Component {
@@ -62,12 +62,6 @@ class UpgradeSettingsTab extends React.Component {
     this.setState({ confirmationModalOpen: false });
   };
 
-  closeConfirmationModalAndReset = () => {
-    const { reset } = this.props;
-    this.closeConfirmationModal();
-    reset();
-  };
-
   render() {
     const {
       isAutomatic,
@@ -97,6 +91,7 @@ class UpgradeSettingsTab extends React.Component {
     const pristineReason = pristine && 'No changes to save';
     const formDisableReason = readOnlyReason || hibernatingReason;
     const isHypershift = isHypershiftCluster(cluster);
+    const clusterVersion = getClusterVersion(cluster);
 
     const scheduledManualUpgrade = schedules.items.find(
       (schedule) =>
@@ -143,7 +138,7 @@ class UpgradeSettingsTab extends React.Component {
     const hibernatingClusterInfo = (
       <Alert
         variant="info"
-        className="pf-u-mb-md"
+        className="pf-v5-u-mb-md"
         isInline
         title="Version updates will not occur while this cluster is Hibernating.
             Once resumed, updates will start according to the selected updates strategy."
@@ -243,8 +238,7 @@ class UpgradeSettingsTab extends React.Component {
               <UpgradeStatus
                 clusterID={cluster.id}
                 canEdit={cluster.canEdit}
-                clusterVersion={cluster.openshift_version || cluster?.version?.id}
-                clusterVersionRawID={cluster?.version?.raw_id}
+                clusterVersion={clusterVersion}
                 scheduledUpgrade={scheduledUpgrade}
                 availableUpgrades={availableUpgrades}
                 openModal={openModal}

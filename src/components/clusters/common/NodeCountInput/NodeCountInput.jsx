@@ -1,5 +1,4 @@
 import { FormGroup, FormSelect, FormSelectOption, Tooltip } from '@patternfly/react-core';
-import range from 'lodash/range';
 import PropTypes from 'prop-types';
 import React from 'react';
 
@@ -7,33 +6,19 @@ import {
   getNodeIncrement,
   getNodeIncrementHypershift,
 } from '~/components/clusters/ClusterDetails/components/MachinePools/machinePoolsHelper';
+import { FormGroupHelperText } from '~/components/common/FormGroupHelperText';
 import { noQuotaTooltip } from '../../../../common/helpers';
 import { billingModels, normalizedProducts } from '../../../../common/subscriptionTypes';
 import PopoverHint from '../../../common/PopoverHint';
-import { availableNodesFromQuota } from '../quotaSelectors';
-
-export const MAX_NODES = 180;
+import {
+  buildOptions,
+  getAvailableQuota as getAvailableQuotaUtil,
+  getIncludedNodes,
+} from '../machinePools/utils';
+import { MAX_NODES_HCP } from '../machinePools/constants';
 
 const incrementValue = ({ isHypershiftWizard, poolNumber, isMultiAz }) =>
   isHypershiftWizard ? getNodeIncrementHypershift(poolNumber) : getNodeIncrement(isMultiAz);
-
-const buildOptions = ({
-  included,
-  available,
-  isEditingCluster,
-  currentNodeCount,
-  minNodes,
-  increment,
-}) => {
-  // no extra node quota = only base cluster size is available
-  const optionsAvailable = available > 0 || isEditingCluster;
-  let maxValue = isEditingCluster ? available + currentNodeCount : available + included;
-  if (maxValue > MAX_NODES) {
-    maxValue = MAX_NODES;
-  }
-
-  return optionsAvailable ? range(minNodes, maxValue + 1, increment) : [minNodes];
-};
 
 class NodeCountInput extends React.Component {
   componentDidMount() {
@@ -46,8 +31,9 @@ class NodeCountInput extends React.Component {
       isHypershiftWizard,
       poolNumber,
       isMultiAz,
+      isMachinePool,
     } = this.props;
-    const included = this.getIncludedNodes();
+    const included = getIncludedNodes({ isMultiAz, isHypershift: !isMachinePool });
     const available = this.getAvailableQuota();
 
     const optionValueIncrement =
@@ -60,24 +46,48 @@ class NodeCountInput extends React.Component {
       currentNodeCount,
       minNodes,
       optionValueIncrement,
+      isHypershift: isHypershiftWizard,
     });
 
-    if (!options.includes(input.value)) {
+    if (!options.includes(Number(input.value))) {
       // if the value isn't an option, then just set to minNode (the value the user sees as the setting )
       input.onChange(minNodes);
     }
   }
 
   componentDidUpdate(prevProps) {
-    const { input, isEditingCluster, minNodes, isHypershiftWizard, poolNumber } = this.props;
+    const {
+      input,
+      isEditingCluster,
+      minNodes,
+      isHypershiftWizard,
+      poolNumber,
+      currentNodeCount,
+      isMultiAz,
+      increment,
+      isMachinePool,
+    } = this.props;
 
     const available = this.getAvailableQuota();
+    const included = getIncludedNodes({ isMultiAz, isHypershift: !isMachinePool });
+    const optionValueIncrement =
+      increment || incrementValue({ isHypershiftWizard, poolNumber, isMultiAz });
+    const options = buildOptions({
+      included,
+      available,
+      isEditingCluster,
+      currentNodeCount,
+      minNodes,
+      optionValueIncrement,
+      isHypershift: isHypershiftWizard,
+    });
+
     if (isHypershiftWizard && poolNumber !== prevProps.poolNumber) {
       // Keep value the user sees (nodes per pool) unless the number of total nodes
       // is less than the minimum total nodes
-      const prevSelected = prevProps.input?.value / prevProps.poolNumber || minNodes;
+      const prevSelected = (prevProps.input?.value ?? 0) / prevProps.poolNumber || minNodes;
       const newValue = prevSelected * poolNumber;
-      if (newValue > minNodes && newValue <= MAX_NODES) {
+      if (newValue > minNodes && newValue <= MAX_NODES_HCP) {
         input.onChange(newValue);
       } else {
         input.onChange(minNodes);
@@ -88,14 +98,11 @@ class NodeCountInput extends React.Component {
       // where they have less quota than that value.
       input.onChange(minNodes);
     }
-  }
 
-  getIncludedNodes() {
-    const { isByoc, isMultiAz, isMachinePool } = this.props;
-    if (isByoc || isMachinePool) {
-      return 0;
+    if (!options.includes(Number(input.value))) {
+      // if the value isn't an option, then just set to minNode (the value the user sees as the setting )
+      input.onChange(minNodes);
     }
-    return isMultiAz ? 9 : 4;
   }
 
   getAvailableQuota() {
@@ -104,34 +111,28 @@ class NodeCountInput extends React.Component {
       isByoc,
       isMultiAz,
       machineType,
-      machineTypesByID,
+      machineTypes,
       cloudProviderID,
       product,
       billingModel,
     } = this.props;
 
-    const machineTypeResource = machineTypesByID[machineType];
-    if (!machineTypeResource) {
-      return 0;
-    }
-    const resourceName = machineTypeResource.generic_name;
-
-    const quotaParams = {
-      product,
-      cloudProviderID,
-      isBYOC: isByoc,
-      isMultiAz,
-      resourceName,
+    return getAvailableQuotaUtil({
+      quota,
+      isByoc,
       billingModel,
-    };
-    return availableNodesFromQuota(quota, quotaParams);
+      cloudProviderID,
+      isMultiAz,
+      machineTypes,
+      machineTypeId: machineType,
+      product,
+    });
   }
 
   render() {
     const {
       input,
       isMultiAz,
-      isDisabled,
       isEditingCluster,
       currentNodeCount,
       label,
@@ -144,12 +145,13 @@ class NodeCountInput extends React.Component {
       increment,
       isHypershiftWizard,
       poolNumber = isMultiAz ? 3 : 1,
+      buttonAriaLabel,
     } = this.props;
 
     const optionValueIncrement =
       increment || incrementValue({ isHypershiftWizard, poolNumber, isMultiAz });
 
-    const included = this.getIncludedNodes();
+    const included = getIncludedNodes({ isMultiAz, isHypershift: !isMachinePool });
     const available = this.getAvailableQuota();
 
     const options = buildOptions({
@@ -159,6 +161,7 @@ class NodeCountInput extends React.Component {
       currentNodeCount,
       minNodes,
       increment: optionValueIncrement,
+      isHypershift: isHypershiftWizard,
     });
 
     let notEnoughQuota = options.length < 1;
@@ -167,7 +170,6 @@ class NodeCountInput extends React.Component {
     if (isByoc && !isEditingCluster && !isMachinePool) {
       notEnoughQuota = !machineType || options.length < 1;
     }
-    const disabled = isDisabled || notEnoughQuota;
 
     const optionLabel = (value) => {
       let labelNumber = value;
@@ -191,12 +193,15 @@ class NodeCountInput extends React.Component {
       />
     );
 
+    const { onChange, ...restInput } = input;
+
     const formSelect = (
       <FormSelect
         aria-label="Compute nodes"
-        isDisabled={disabled}
+        isDisabled={notEnoughQuota}
         className="quota-dropdown"
-        {...input}
+        onChange={(_event, value) => onChange(value)}
+        {...restInput}
       >
         {options.map((value) => option(value))}
       </FormSelect>
@@ -220,8 +225,11 @@ class NodeCountInput extends React.Component {
       <FormGroup
         fieldId={input.name}
         label={label}
-        helperText={helpText}
-        labelIcon={extendedHelpText && <PopoverHint hint={extendedHelpText} />}
+        labelIcon={
+          extendedHelpText && (
+            <PopoverHint hint={extendedHelpText} buttonAriaLabel={buttonAriaLabel} />
+          )
+        }
       >
         {notEnoughQuota ? (
           <Tooltip content={noQuotaTooltip} position="right">
@@ -231,6 +239,7 @@ class NodeCountInput extends React.Component {
           formSelect
         )}
         {showTotalNodes()}
+        <FormGroupHelperText>{helpText}</FormGroupHelperText>
       </FormGroup>
     );
   }
@@ -240,7 +249,6 @@ NodeCountInput.propTypes = {
   isEditingCluster: PropTypes.bool,
   currentNodeCount: PropTypes.number,
   minNodes: PropTypes.number,
-  isDisabled: PropTypes.bool,
   label: PropTypes.string,
   helpText: PropTypes.string,
   extendedHelpText: PropTypes.string,
@@ -249,11 +257,12 @@ NodeCountInput.propTypes = {
   isMachinePool: PropTypes.bool,
   isMultiAz: PropTypes.bool,
   machineType: PropTypes.string,
-  machineTypesByID: PropTypes.object,
+  machineTypes: PropTypes.object,
   input: PropTypes.shape({
     name: PropTypes.string.isRequired,
     value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
     onChange: PropTypes.func.isRequired,
+    onBlur: PropTypes.func.isRequired,
   }),
   cloudProviderID: PropTypes.string.isRequired,
   product: PropTypes.oneOf(Object.keys(normalizedProducts)).isRequired,
@@ -261,6 +270,7 @@ NodeCountInput.propTypes = {
   increment: PropTypes.number,
   isHypershiftWizard: PropTypes.bool,
   poolNumber: PropTypes.number,
+  buttonAriaLabel: PropTypes.string,
 };
 
 export default NodeCountInput;

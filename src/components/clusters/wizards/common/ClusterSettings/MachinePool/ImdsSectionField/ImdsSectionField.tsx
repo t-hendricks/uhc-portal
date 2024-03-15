@@ -28,6 +28,7 @@ export const ImdsSectionField = () => {
       // The user can go back and change the cluster version
       onChange(IMDSType.V1AndV2);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isDisabled, imds]);
 
   return (
@@ -41,7 +42,7 @@ export const ImdsSectionField = () => {
           id="imds"
           ariaLabel="Instance Metadata Service"
           isDisabled={isDisabled}
-          className="pf-u-mb-md"
+          className="pf-v5-u-mb-md"
           input={{
             ...getFieldProps(FieldId.IMDS),
             onChange,

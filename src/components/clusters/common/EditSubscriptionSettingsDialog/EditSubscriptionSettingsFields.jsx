@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { get, findIndex, isEqual } from 'lodash';
+
 import {
   Alert,
   FormGroup,
@@ -9,9 +10,11 @@ import {
   Text,
   TextContent,
   TextVariants,
+  Icon,
 } from '@patternfly/react-core';
+import { ExternalLinkAltIcon } from '@patternfly/react-icons/dist/esm/icons/external-link-alt-icon';
 
-import { ExternalLinkAltIcon } from '@patternfly/react-icons';
+import { FormGroupHelperText } from '~/components/common/FormGroupHelperText';
 import { ReduxFormRadioGroup } from '../../../common/ReduxFormComponents';
 import links from '../../../../common/installLinks.mjs';
 import {
@@ -54,7 +57,7 @@ const { DISCONNECTED } = subscriptionStatuses;
 
 const standardBillingModelLabel = 'Annual: Fixed capacity subscription from Red Hat';
 const marketplaceBillingModelLabel =
-  'On-Demand (Hourly): Flexible usage billed through the Red Hat Marketplace';
+  'On-Demand (Hourly): Flexible usage billed through Red Hat Marketplace';
 
 const MIN_VAL = 1;
 
@@ -86,7 +89,7 @@ class EditSubscriptionSettingsFields extends Component {
   doInit = (initialSettings) => {
     const newState = this.resetOptions(initialSettings);
     // disconnected cluster additonally requires cpu_total/socket_total
-    if (this.isDisconnected(initialSettings)) {
+    if (EditSubscriptionSettingsFields.isDisconnected(initialSettings)) {
       newState[CPU_TOTAL] = get(initialSettings, CPU_TOTAL, 1);
       newState[SOCKET_TOTAL] = get(initialSettings, SOCKET_TOTAL, 1);
     }
@@ -166,7 +169,7 @@ class EditSubscriptionSettingsFields extends Component {
         break;
       case SYSTEM_UNITS:
         options = [
-          { label: 'Cores/vCPUs', value: CORES_VCPU, isDefault: true },
+          { label: 'Cores or vCPUs', value: CORES_VCPU, isDefault: true },
           { label: 'Sockets', value: SOCKETS },
         ];
         break;
@@ -208,11 +211,12 @@ class EditSubscriptionSettingsFields extends Component {
     } = this.state;
 
     const stringValue = inputVal || (systemUnits === SOCKETS ? socketTotal : cpuTotal);
+    const fieldLabel = systemUnits === SOCKETS ? 'Sockets' : 'Cores or vCPUs';
     // validate that `value` consists of decimal digits only
     if (!/^\d+$/.test(`${stringValue}`)) {
       return {
         isValid: false,
-        errorMsg: `${systemUnits} value can only be a positive integer number.`,
+        errorMsg: `${fieldLabel} value can only be a positive integer number.`,
       };
     }
     // now value is number for sure
@@ -220,7 +224,7 @@ class EditSubscriptionSettingsFields extends Component {
     if (value < MIN_VAL) {
       return {
         isValid: false,
-        errorMsg: `${systemUnits} value must be an integer number greater than ${MIN_VAL - 1}.`,
+        errorMsg: `${fieldLabel} value must be an integer number greater than ${MIN_VAL - 1}.`,
       };
     }
     return { isValid: true, errorMsg: '' };
@@ -235,7 +239,7 @@ class EditSubscriptionSettingsFields extends Component {
       isValid = false;
     }
     // system_units must be valid for disconnected clusters
-    if (isValid && this.isDisconnected(initialSettings)) {
+    if (isValid && EditSubscriptionSettingsFields.isDisconnected(initialSettings)) {
       isValid = this.validateSystemUnitsNumericField().isValid;
     }
     const { onSettingsChange } = this.props;
@@ -284,7 +288,7 @@ class EditSubscriptionSettingsFields extends Component {
     return handler;
   };
 
-  isDisconnected = (settings) =>
+  static isDisconnected = (settings) =>
     get(settings, 'status') === DISCONNECTED || !get(settings, 'id', false);
 
   render() {
@@ -318,7 +322,7 @@ class EditSubscriptionSettingsFields extends Component {
         billingModelAlertText = `Cluster subscription type is ${standardBillingModelLabel}`;
       } else if (billingModel === MARKETPLACE_BILLING_MODEL || canSubscribeMarketplaceOCP) {
         billingModelAlertText = `Cluster subscription type is ${marketplaceBillingModelLabel}`;
-      } else if (this.isDisconnected(initialSettings)) {
+      } else if (EditSubscriptionSettingsFields.isDisconnected(initialSettings)) {
         billingModelAlertText = `Disconnected clusters subscription type is ${standardBillingModelLabel}`;
       } else {
         billingModelAlertText = `Cluster subscription type is ${standardBillingModelLabel}`;
@@ -332,7 +336,10 @@ class EditSubscriptionSettingsFields extends Component {
         title={billingModelAlertText}
       >
         <a href={links.OCM_DOCS_SUBSCRIPTIONS} target="_blank" rel="noreferrer noopener">
-          Learn more about subscriptions <ExternalLinkAltIcon color="#0066cc" size="sm" />
+          Learn more about subscriptions{' '}
+          <Icon size="sm">
+            <ExternalLinkAltIcon color="#0066cc" />
+          </Icon>
         </a>
       </Alert>
     );
@@ -342,7 +349,7 @@ class EditSubscriptionSettingsFields extends Component {
     const radioGroupClassName = radioGroupClasses.join(' ');
     let tooltips = null;
     if (isDisabledByBillingModel) {
-      const radioGroupSelector = `.${radioGroupClasses.join('.')} .pf-c-form__group-control`;
+      const radioGroupSelector = `.${radioGroupClasses.join('.')} .pf-v5-c-form__group-control`;
       // we need the tip on all the 4 form groups
       const startPos = isBillingModelVisible ? 1 : 0;
       const radioGroupComponents = [0, 1, 2, 3].map((idx) => (
@@ -352,7 +359,7 @@ class EditSubscriptionSettingsFields extends Component {
             <div>Red Hat Marketplace subscription settings are pre-set and cannot be altered.</div>
           }
           position="right"
-          reference={() => {
+          triggerRef={() => {
             const groupEls = document.querySelectorAll(radioGroupSelector);
             const groupPos = startPos + idx;
             if (groupPos < groupEls.length) {
@@ -366,16 +373,15 @@ class EditSubscriptionSettingsFields extends Component {
           }}
         />
       ));
+      // eslint-disable-next-line react/jsx-no-useless-fragment
       tooltips = <>{radioGroupComponents}</>;
     }
 
     // show validation error on system_units numeric input for disconnected clusters
-    const isDisconnectedSub = this.isDisconnected(initialSettings);
-    let systemUnitsNumericIsValid = true;
+    const isDisconnectedSub = EditSubscriptionSettingsFields.isDisconnected(initialSettings);
     let systemUnitsNumericErrorMsg = '';
     if (isDisconnectedSub) {
       const validationResult = this.validateSystemUnitsNumericField();
-      systemUnitsNumericIsValid = validationResult.isValid;
       systemUnitsNumericErrorMsg = validationResult.errorMsg;
     }
 
@@ -462,6 +468,7 @@ class EditSubscriptionSettingsFields extends Component {
 
     // the number field for CPU/vCores or Socket
     const cpuSocketValue = systemUnits === SOCKETS ? socketTotal : cpuTotal;
+    const cpuSocketLabel = systemUnits === SOCKETS ? 'Sockets' : 'Cores or vCPUs';
     const CpuSocketNumberField = isDisconnectedSub ? (
       <NumberInput
         value={cpuSocketValue}
@@ -473,7 +480,7 @@ class EditSubscriptionSettingsFields extends Component {
         onChange={this.handleUnitsNumberChange}
         inputAriaLabel={
           systemUnits === SOCKETS
-            ? 'Number of sockets'
+            ? 'Number of sockets (excluding control plane nodes)'
             : 'Number of compute cores (excluding control plane nodes)'
         }
         minusBtnAriaLabel="decrement the number by 1"
@@ -482,9 +489,7 @@ class EditSubscriptionSettingsFields extends Component {
       />
     ) : (
       <>
-        <span id="cpu-socket-value">{`${cpuSocketValue} ${
-          systemUnits === SOCKETS ? 'Sockets' : 'Cores/vCPU'
-        }`}</span>
+        <span id="cpu-socket-value">{`${cpuSocketValue} ${cpuSocketLabel}`}</span>
         <PopoverHint
           id="cpu-socket-value-hint"
           hint="This data is gathered directly from the telemetry metrics submitted by the cluster and cannot be changed."
@@ -549,19 +554,15 @@ class EditSubscriptionSettingsFields extends Component {
         <FormGroup
           label={
             systemUnits === SOCKETS
-              ? 'Number of sockets'
+              ? 'Number of sockets (excluding control plane nodes)'
               : 'Number of compute cores (excluding control plane nodes)'
           }
           isRequired={isDisconnectedSub}
-          helperText={
-            isDisconnectedSub
-              ? `${systemUnits} value can be any integer larger than ${MIN_VAL}`
-              : ''
-          }
-          helperTextInvalid={systemUnitsNumericErrorMsg}
-          validated={systemUnitsNumericIsValid ? 'default' : 'error'}
         >
           {CpuSocketNumberField}
+          <FormGroupHelperText touched error={systemUnitsNumericErrorMsg}>
+            {isDisconnectedSub && `${systemUnits} value can be any integer larger than ${MIN_VAL}`}
+          </FormGroupHelperText>
         </FormGroup>
         {tooltips}
       </>

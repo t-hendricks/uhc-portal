@@ -1,7 +1,7 @@
 {
   "openapi": "3.0.0",
   "info": {
-    "description": "The API for Project Koku and OpenShift cost management. You can find out more about Project Koku at [https://github.com/project-koku/](https://github.com/project-koku/).",
+    "description": "The API for Cost Management",
     "version": "1.0.2",
     "title": "Cost Management",
     "license": {
@@ -31,8 +31,8 @@
       "description": "Operations about OCI report interactions"
     },
     {
-      "name": "Sources",
-      "description": "Operations about platform sources interactions"
+      "name": "Integrations",
+      "description": "Operations about platform integrations interactions"
     },
     {
       "name": "Cost Models",
@@ -57,6 +57,10 @@
     {
       "name": "Status",
       "description": "Operations about status"
+    },
+    {
+      "name": "Optimizations",
+      "description": "Resource Optimization for Openshift"
     }
   ],
   "paths": {
@@ -501,8 +505,7 @@
         ],
         "parameters": [
           {
-            "$ref": "#/components/parameters/QueryFilter",
-            "name": "QueryFilter"
+            "$ref": "#/components/parameters/QueryFilter"
           }
         ],
         "responses": {
@@ -552,8 +555,7 @@
         ],
         "parameters": [
           {
-            "$ref": "#/components/parameters/QueryFilter",
-            "name": "QueryFilter"
+            "$ref": "#/components/parameters/QueryFilter"
           }
         ],
         "responses": {
@@ -603,8 +605,7 @@
         ],
         "parameters": [
           {
-            "$ref": "#/components/parameters/QueryFilter",
-            "name": "QueryFilter"
+            "$ref": "#/components/parameters/QueryFilter"
           }
         ],
         "responses": {
@@ -654,8 +655,7 @@
         ],
         "parameters": [
           {
-            "$ref": "#/components/parameters/QueryFilter",
-            "name": "QueryFilter"
+            "$ref": "#/components/parameters/QueryFilter"
           }
         ],
         "responses": {
@@ -705,8 +705,7 @@
         ],
         "parameters": [
           {
-            "$ref": "#/components/parameters/QueryFilter",
-            "name": "QueryFilter"
+            "$ref": "#/components/parameters/QueryFilter"
           }
         ],
         "responses": {
@@ -756,8 +755,7 @@
         ],
         "parameters": [
           {
-            "$ref": "#/components/parameters/QueryFilter",
-            "name": "QueryFilter"
+            "$ref": "#/components/parameters/QueryFilter"
           }
         ],
         "responses": {
@@ -807,8 +805,7 @@
         ],
         "parameters": [
           {
-            "$ref": "#/components/parameters/QueryFilter",
-            "name": "QueryFilter"
+            "$ref": "#/components/parameters/QueryFilter"
           }
         ],
         "responses": {
@@ -858,8 +855,7 @@
         ],
         "parameters": [
           {
-            "$ref": "#/components/parameters/QueryFilter",
-            "name": "QueryFilter"
+            "$ref": "#/components/parameters/QueryFilter"
           }
         ],
         "responses": {
@@ -909,8 +905,7 @@
         ],
         "parameters": [
           {
-            "$ref": "#/components/parameters/QueryFilter",
-            "name": "QueryFilter"
+            "$ref": "#/components/parameters/QueryFilter"
           }
         ],
         "responses": {
@@ -1145,12 +1140,10 @@
             "$ref": "#/components/parameters/ReportQueryLimit"
           },
           {
-            "$ref": "#/components/parameters/QueryStartDate",
-            "name": "QueryStartDate"
+            "$ref": "#/components/parameters/QueryStartDate"
           },
           {
-            "$ref": "#/components/parameters/QueryEndDate",
-            "name": "QueryEndDate"
+            "$ref": "#/components/parameters/QueryEndDate"
           }
         ],
         "responses": {
@@ -1372,12 +1365,10 @@
             "$ref": "#/components/parameters/ReportQueryLimit"
           },
           {
-            "$ref": "#/components/parameters/QueryStartDate",
-            "name": "QueryStartDate"
+            "$ref": "#/components/parameters/QueryStartDate"
           },
           {
-            "$ref": "#/components/parameters/QueryEndDate",
-            "name": "QueryEndDate"
+            "$ref": "#/components/parameters/QueryEndDate"
           }
         ],
         "responses": {
@@ -1444,9 +1435,6 @@
           },
           {
             "$ref": "#/components/parameters/ReportQueryLimit"
-          },
-          {
-            "$ref": "#/components/parameters/QueryComputeCount"
           },
           {
             "$ref": "#/components/parameters/QueryStartDate"
@@ -1591,9 +1579,6 @@
           },
           {
             "$ref": "#/components/parameters/ReportQueryLimit"
-          },
-          {
-            "$ref": "#/components/parameters/QueryComputeCount"
           },
           {
             "$ref": "#/components/parameters/QueryStartDate"
@@ -3096,6 +3081,176 @@
         ]
       }
     },
+    "/ingress/reports/": {
+      "post": {
+        "tags": [
+          "Ingress Reports"
+        ],
+        "summary": "Post ingress reports",
+        "operationId": "postIngressReports",
+        "requestBody": {
+          "description": "Reports posted for particular source",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/IngressReportIn"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "A paginated list of ingress report objects",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/IngressReportsPagination"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid Input Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "500": {
+            "description": "Unexpected Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "basic_auth": []
+          }
+        ]
+      },
+      "get": {
+        "tags": [
+          "Ingress Reports"
+        ],
+        "summary": "List Ingress Reports",
+        "operationId": "listIngressReports",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/QueryOffset"
+          },
+          {
+            "$ref": "#/components/parameters/QueryLimit"
+          }
+        ],
+        "security": [
+          {
+            "basic_auth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "A paginated list of ingress report objects",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/IngressReportsPagination"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Unexpected Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/ingress/reports/{source_id}/": {
+      "get": {
+        "tags": [
+          "Ingress Reports"
+        ],
+        "summary": "Get ingress reports for a source",
+        "operationId": "getSourceIngressReports",
+        "parameters": [
+          {
+            "name": "source_id",
+            "in": "path",
+            "description": "ID of source to get",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64",
+              "example": 1
+            }
+          },
+          {
+            "$ref": "#/components/parameters/QueryOffset"
+          },
+          {
+            "$ref": "#/components/parameters/QueryLimit"
+          }
+        ],
+        "security": [
+          {
+            "basic_auth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Report objects for a source",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/IngressReportOut"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Unexpected Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/resource-types/": {
       "get": {
         "tags": [
@@ -3159,6 +3314,44 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/ResourceTypePagination"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/resource-types/aws-categories/": {
+      "get": {
+        "tags": [
+          "Resource Type"
+        ],
+        "summary": "Obtain mapping of key and values for AWS Categories.",
+        "operationId": "listResourcesAwsCategories",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/QueryLimit"
+          },
+          {
+            "$ref": "#/components/parameters/QueryKey"
+          },
+          {
+            "$ref": "#/components/parameters/QueryValue"
+          },
+          {
+            "$ref": "#/components/parameters/QueryAccount"
+          },
+          {
+            "$ref": "#/components/parameters/QueryKeyOnly"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "| - 200 response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResourceTypeAwsCategories"
                 }
               }
             }
@@ -3516,7 +3709,7 @@
         }
       }
     },
-    "/resource-types/oci-tenant-ids/": {
+    "/resource-types/oci-payer-tenant-ids/": {
       "get": {
         "tags": [
           "Resource Type"
@@ -3858,14 +4051,66 @@
             }
           }
         }
+      },
+      "put": {
+        "tags": [
+          "Account Settings"
+        ],
+        "summary": "Modify a specific current user account setting.",
+        "parameters": [
+          {
+            "name": "setting",
+            "in": "path",
+            "description": "Name of a setting to get",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PutAccountSettingRequestBody"
+              }
+            }
+          },
+          "description": "Modify account setting",
+          "required": true
+        },
+        "operationId": "putAccountSettings",
+        "responses": {
+          "204": {
+            "description": "No Content"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "500": {
+            "description": "Unexpected Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "basic_auth": []
+          }
+        ]
       }
     },
     "/sources/": {
       "get": {
         "tags": [
-          "Sources"
+          "Integrations"
         ],
-        "summary": "List the sources",
+        "summary": "List the integrations",
         "operationId": "listSources",
         "parameters": [
           {
@@ -3925,9 +4170,9 @@
     "/sources/{source_id}/": {
       "get": {
         "tags": [
-          "Sources"
+          "Integrations"
         ],
-        "summary": "Get a source",
+        "summary": "Get an integration",
         "operationId": "getSource",
         "parameters": [
           {
@@ -3987,9 +4232,9 @@
     "/sources/{source_id}/stats/": {
       "get": {
         "tags": [
-          "Sources"
+          "Integrations"
         ],
-        "summary": "Get a source statistics",
+        "summary": "Get integration statistics",
         "operationId": "getSourceStats",
         "parameters": [
           {
@@ -4053,6 +4298,67 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/sources/aws-s3-regions/": {
+      "get": {
+        "tags": [
+          "Integrations"
+        ],
+        "summary": "List available AWS S3 regions",
+        "operationId": "getAWSS3Regions",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/QueryLimit"
+          },
+          {
+            "$ref": "#/components/parameters/QueryOffset"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "List of available S3 regions",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "description": "List of available S3 regions.",
+                  "example": {
+                    "data": [
+                      "af-south-1",
+                      "ap-east-1",
+                      "ap-northeast-1",
+                      "ap-northeast-2",
+                      "ap-northeast-3",
+                      "ap-south-1",
+                      "ap-south-2",
+                      "ap-southeast-1",
+                      "ap-southeast-2",
+                      "ap-southeast-3",
+                      "ap-southeast-4",
+                      "ca-central-1",
+                      "eu-central-1",
+                      "eu-central-2",
+                      "eu-north-1",
+                      "eu-south-1",
+                      "eu-south-2",
+                      "eu-west-1",
+                      "eu-west-2",
+                      "eu-west-3",
+                      "me-central-1",
+                      "me-south-1",
+                      "sa-east-1",
+                      "us-east-1",
+                      "us-east-2",
+                      "us-west-1",
+                      "us-west-2"
+                    ]
+                  }
                 }
               }
             }
@@ -5390,6 +5696,429 @@
           }
         ]
       }
+    },
+    "/settings/aws_category_keys/": {
+      "get": {
+        "tags": [
+          "Settings"
+        ],
+        "summary": "Query to cost management settings",
+        "operationId": "getAwsCategoryKeysSettings",
+        "responses": {
+          "200": {
+            "description": "New api endpoint for retrieving aws category keys.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/GetAwsCategorySettings"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "500": {
+            "description": "Unexpected Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "basic_auth": []
+          }
+        ]
+      }
+    },
+    "/settings/aws_category_keys/enable/": {
+      "put": {
+        "tags": [
+          "Settings"
+        ],
+        "summary": "Enable aws category key by uuid.",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ModifyKeySettingsRequestBody"
+              }
+            }
+          },
+          "description": "Enable aws category key by uuid",
+          "required": true
+        },
+        "operationId": "putEnableAwsCategoryKeysSettings",
+        "responses": {
+          "204": {
+            "description": "No Content"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "500": {
+            "description": "Unexpected Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "basic_auth": []
+          }
+        ]
+      }
+    },
+    "/settings/aws_category_keys/disable/": {
+      "put": {
+        "tags": [
+          "Settings"
+        ],
+        "summary": "Disable aws category key by uuid.",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ModifyKeySettingsRequestBody"
+              }
+            }
+          },
+          "description": "Disable aws category key by uuid",
+          "required": true
+        },
+        "operationId": "putDisableAwsCategoryKeysSettings",
+        "responses": {
+          "204": {
+            "description": "No Content"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "500": {
+            "description": "Unexpected Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "basic_auth": []
+          }
+        ]
+      }
+    },
+    "/settings/cost-groups/": {
+      "get": {
+        "tags": [
+          "Settings",
+          "Cost Groups"
+        ],
+        "summary": "Query which projects belong to which cost groups",
+        "operationId": "getSettingsCostGroups",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/QueryOffset"
+          },
+          {
+            "$ref": "#/components/parameters/QueryLimit"
+          },
+          {
+            "$ref": "#/components/parameters/QueryFilter"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OpenShift projects and the current cost group",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CostGroupsResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/settings/cost/groups/add/": {
+      "put": {
+        "tags": [
+          "Settings",
+          "Cost Groups"
+        ],
+        "summary": "Add projects to a cost group",
+        "operationId": "putSettingsCostGroups",
+        "requestBody": {
+          "$ref": "#/components/requestBodies/CostGroupsBody"
+        },
+        "responses": {
+          "204": {
+            "description": "Cost groups updated"
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/settings/cost-groups/remove/": {
+      "put": {
+        "tags": [
+          "Settings",
+          "Cost Groups"
+        ],
+        "summary": "Remove projects from a cost group",
+        "operationId": "putSettingsCostGroupsRemove",
+        "requestBody": {
+          "$ref": "#/components/requestBodies/CostGroupsBody"
+        },
+        "responses": {
+          "204": {
+            "description": "Cost groups updated"
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/settings/tags/": {
+      "get": {
+        "tags": [
+          "Settings"
+        ],
+        "summary": "Query tags in Cost Management from cloud sources",
+        "operationId": "getSettingsTags",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/QueryOffset"
+          },
+          {
+            "$ref": "#/components/parameters/QueryLimit"
+          },
+          {
+            "in": "query",
+            "name": "source_type",
+            "description": "Cloud provider type",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "enabled",
+            "description": "Enable state of the tag",
+            "schema": {
+              "type": "boolean"
+            }
+          },
+          {
+            "in": "query",
+            "name": "order_by",
+            "description": "Field(s) used to sort results. Add a '-' prefix for descending order.",
+            "schema": {
+              "type": "array",
+              "example": [
+                "source_type",
+                "-enabled"
+              ],
+              "items": {
+                "type": "string"
+              }
+            }
+          },
+          {
+            "in": "query",
+            "name": "uuid",
+            "description": "UUID of a tag entry",
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "format": "uuid"
+              }
+            }
+          },
+          {
+            "in": "query",
+            "name": "key",
+            "description": "Case insensitive search of key values. One or more key parameters may be provided.",
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Returned tags sucessfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SettingsTagsResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request parameter"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "500": {
+            "description": "Unexpected Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "basic_auth": []
+          }
+        ]
+      }
+    },
+    "/settings/tags/enable/": {
+      "put": {
+        "tags": [
+          "Settings"
+        ],
+        "summary": "Enable tags in Cost Management",
+        "operationId": "putSettingsTagsEnable",
+        "requestBody": {
+          "$ref": "#/components/requestBodies/PutTagsBody"
+        },
+        "responses": {
+          "204": {
+            "description": "Successfully changed. No content"
+          },
+          "400": {
+            "description": "Invalid request parameter"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "412": {
+            "description": "Request would exceed enabled tags limit",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SettingsTagsEnabledLimitError"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Unexpected Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "basic_auth": []
+          }
+        ]
+      }
+    },
+    "/settings/tags/disable/": {
+      "put": {
+        "tags": [
+          "Settings"
+        ],
+        "summary": "Disable tags in Cost Management",
+        "operationId": "putSettingsTagsDisable",
+        "requestBody": {
+          "$ref": "#/components/requestBodies/PutTagsBody"
+        },
+        "responses": {
+          "204": {
+            "description": "Successfully changed. No content"
+          },
+          "400": {
+            "description": "Invalid request parameter"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "500": {
+            "description": "Unexpected Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "basic_auth": []
+          }
+        ]
+      }
+    },
+    "/recommendations/openshift": {
+      "$ref": "/api/cost-management/v1/recommendations/openshift/openapi.json#/paths/~1recommendations~1openshift"
+    },
+    "/recommendations/openshift/{recommendation-id}": {
+      "$ref": "/api/cost-management/v1/recommendations/openshift/openapi.json#/paths/~1recommendations~1openshift~1%7Brecommendation-id%7D"
     }
   },
   "externalDocs": {
@@ -5402,11 +6131,9 @@
       "description": "Target Environment",
       "variables": {
         "environment": {
-          "default": "cloud",
+          "default": "console",
           "enum": [
-            "cloud",
-            "qa.cloud",
-            "ci.cloud"
+            "console"
           ]
         }
       }
@@ -5427,7 +6154,7 @@
   "components": {
     "parameters": {
       "CostType": {
-        "name": "cost-type",
+        "name": "cost_type",
         "required": false,
         "in": "query",
         "description": "String to indicate cost type in report",
@@ -5448,16 +6175,6 @@
         "description": "String to indicate org unit id",
         "schema": {
           "$ref": "#/components/schemas/OrganizationFilter"
-        }
-      },
-      "QueryComputeCount": {
-        "name": "compute_count",
-        "required": false,
-        "in": "query",
-        "description": "Toggle to include count values in report.",
-        "schema": {
-          "type": "boolean",
-          "default": false
         }
       },
       "QueryDelta": {
@@ -5527,7 +6244,7 @@
         "description": "Parameter for selecting the offset of data.",
         "schema": {
           "type": "integer",
-          "default": 0,
+          "example": 0,
           "minimum": 0
         }
       },
@@ -5538,7 +6255,7 @@
         "description": "Parameter for selecting the amount of data in a returned.",
         "schema": {
           "type": "integer",
-          "default": 10,
+          "example": 10,
           "minimum": 1,
           "maximum": 1000
         }
@@ -5580,11 +6297,38 @@
           "type": "string"
         }
       },
+      "QuerySearch": {
+        "in": "query",
+        "name": "search",
+        "required": false,
+        "description": "Parameter for matching on a key using a contains.",
+        "schema": {
+          "type": "string"
+        }
+      },
+      "QueryKey": {
+        "in": "query",
+        "name": "key",
+        "required": false,
+        "description": "Parameter for matching on a key using a contains.",
+        "schema": {
+          "type": "string"
+        }
+      },
       "QueryValue": {
         "in": "query",
         "name": "value",
         "required": false,
         "description": "Parameter for matching the value data using a contains.",
+        "schema": {
+          "type": "string"
+        }
+      },
+      "QueryAccount": {
+        "in": "query",
+        "name": "account",
+        "required": false,
+        "description": "Parameter for matching the account data using a contains.",
         "schema": {
           "type": "string"
         }
@@ -5603,6 +6347,69 @@
         }
       }
     },
+    "requestBodies": {
+      "PutTagsBody": {
+        "description": "List of tag UUIDs",
+        "required": true,
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "ids": {
+                  "type": "array",
+                  "minItems": 1,
+                  "items": {
+                    "type": "string",
+                    "format": "uuid"
+                  }
+                }
+              },
+              "example": {
+                "ids": [
+                  "ac6efba7-6047-4d8f-9055-8f3a1c896a18",
+                  "67423602-0f13-47dc-ac09-4d145a9def35",
+                  "832a3858-d80f-4751-bbcc-b345febacf99"
+                ]
+              }
+            }
+          }
+        }
+      },
+      "CostGroupsBody": {
+        "description": "List of project name and cost group",
+        "required": true,
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "array",
+              "minItems": 1,
+              "items": {
+                "type": "object",
+                "properties": {
+                  "project": {
+                    "type": "string"
+                  },
+                  "group": {
+                    "type": "string"
+                  }
+                }
+              },
+              "example": [
+                {
+                  "project": "accounting",
+                  "group": "Platform"
+                },
+                {
+                  "project": "infra",
+                  "group": "Platform"
+                }
+              ]
+            }
+          }
+        }
+      }
+    },
     "securitySchemes": {
       "basic_auth": {
         "type": "http",
@@ -5611,6 +6418,36 @@
       }
     },
     "schemas": {
+      "CostGroupsResponse": {
+        "type": "object",
+        "required": [
+          "data"
+        ],
+        "properties": {
+          "data": {
+            "type": "array",
+            "items": {
+              "properties": {
+                "project": {
+                  "type": "string"
+                },
+                "group": {
+                  "type": "string"
+                },
+                "default": {
+                  "type": "boolean"
+                },
+                "clusters": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
       "CostModel": {
         "properties": {
           "name": {
@@ -5914,7 +6751,7 @@
             "items": {
               "type": "object",
               "example": {
-                "detail": "{'sources': ['RabbitMQ unavailable. Unable to update Source ID 1.']}",
+                "detail": "{'sources': ['Redis unavailable. Unable to update Source ID 1.']}",
                 "source": "detail",
                 "status": 424
               }
@@ -6006,23 +6843,18 @@
                       "type": "object",
                       "properties": {
                         "total": {
-                          "description": "The forecast Y-value.",
                           "$ref": "#/components/schemas/ForecastDataValueNumber"
                         },
                         "confidence_max": {
-                          "description": "The forecast confidence interval's upper-bound.",
                           "$ref": "#/components/schemas/ForecastDataValueNumber"
                         },
                         "confidence_min": {
-                          "description": "The forecast confidence interval's lower-bound.",
                           "$ref": "#/components/schemas/ForecastDataValueNumber"
                         },
                         "rsquared": {
-                          "description": "The forecast's R-squared value.",
                           "$ref": "#/components/schemas/ForecastDataValueString"
                         },
                         "pvalues": {
-                          "description": "The forecast's p-test values.",
                           "$ref": "#/components/schemas/ForecastDataValueString"
                         }
                       }
@@ -6031,23 +6863,18 @@
                       "type": "object",
                       "properties": {
                         "total": {
-                          "description": "The forecast Y-value.",
                           "$ref": "#/components/schemas/ForecastDataValueNumber"
                         },
                         "confidence_max": {
-                          "description": "The forecast confidence interval's upper-bound.",
                           "$ref": "#/components/schemas/ForecastDataValueNumber"
                         },
                         "confidence_min": {
-                          "description": "The forecast confidence interval's lower-bound.",
                           "$ref": "#/components/schemas/ForecastDataValueNumber"
                         },
                         "rsquared": {
-                          "description": "The forecast's R-squared value.",
                           "$ref": "#/components/schemas/ForecastDataValueString"
                         },
                         "pvalues": {
-                          "description": "The forecast's p-test values.",
                           "$ref": "#/components/schemas/ForecastDataValueString"
                         }
                       }
@@ -6056,23 +6883,18 @@
                       "type": "object",
                       "properties": {
                         "total": {
-                          "description": "The forecast Y-value.",
                           "$ref": "#/components/schemas/ForecastDataValueNumber"
                         },
                         "confidence_max": {
-                          "description": "The forecast confidence interval's upper-bound.",
                           "$ref": "#/components/schemas/ForecastDataValueNumber"
                         },
                         "confidence_min": {
-                          "description": "The forecast confidence interval's lower-bound.",
                           "$ref": "#/components/schemas/ForecastDataValueNumber"
                         },
                         "rsquared": {
-                          "description": "The forecast's R-squared value.",
                           "$ref": "#/components/schemas/ForecastDataValueString"
                         },
                         "pvalues": {
-                          "description": "The forecast's p-test values.",
                           "$ref": "#/components/schemas/ForecastDataValueString"
                         }
                       }
@@ -6181,6 +7003,16 @@
             "type": "integer",
             "format": "int64",
             "example": 30
+          },
+          "limit": {
+            "type": "integer",
+            "format": "int64",
+            "example": 5
+          },
+          "offset": {
+            "type": "integer",
+            "format": "int64",
+            "example": 10
           }
         }
       },
@@ -6420,6 +7252,36 @@
           }
         ]
       },
+      "ResourceTypeAwsCategories": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/ListPagination"
+          },
+          {
+            "type": "object",
+            "required": [
+              "data"
+            ],
+            "properties": {
+              "data": {
+                "type": "array",
+                "example": [
+                  {
+                    "key": "env",
+                    "values": [
+                      "prod",
+                      "ephemeral",
+                      "stage"
+                    ],
+                    "enabled": "True"
+                  }
+                ],
+                "items": {}
+              }
+            }
+          }
+        ]
+      },
       "ResourceTypeOut": {
         "properties": {
           "value": {
@@ -6621,6 +7483,122 @@
                 "type": "array",
                 "items": {
                   "$ref": "#/components/schemas/SourceOut"
+                }
+              }
+            }
+          }
+        ]
+      },
+      "IngressReportIn": {
+        "allOf": [
+          {
+            "type": "object",
+            "required": [
+              "source",
+              "reports_list",
+              "billing_year",
+              "billing_month"
+            ],
+            "properties": {
+              "source": {
+                "type": "string",
+                "description": "Source uuid for reports.",
+                "example": "402719af-93b2-4ae5-9eda-380d1a1e5843"
+              },
+              "reports_list": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "description": "Report files"
+                },
+                "description": "List of reports for ingestion.",
+                "example": [
+                  "report1.csv",
+                  "report2.csv"
+                ]
+              },
+              "billing_year": {
+                "type": "string",
+                "description": "Billing year for report files",
+                "example": "2022"
+              },
+              "billing_month": {
+                "type": "string",
+                "description": "Billing month for report files",
+                "example": "01"
+              }
+            }
+          }
+        ]
+      },
+      "IngressReportOut": {
+        "allOf": [
+          {
+            "type": "object",
+            "required": [
+              "id"
+            ],
+            "properties": {
+              "uuid": {
+                "type": "string",
+                "format": "uuid",
+                "example": "57e60f90-8c0c-4bd1-87a0-2143759aae1d"
+              },
+              "source_uuid": {
+                "type": "string",
+                "format": "uuid",
+                "example": "57e60f90-8c0c-4bd1-87a0-2143759aae1d"
+              },
+              "reports_list": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "description": "Report files"
+                },
+                "example": [
+                  "file1",
+                  "file2"
+                ]
+              },
+              "bill_year": {
+                "type": "string",
+                "description": "Billing year for files.",
+                "example": "2022"
+              },
+              "billing_month": {
+                "type": "string",
+                "description": "Billing month for files.",
+                "example": "01"
+              },
+              "created_timestamp": {
+                "format": "date-time",
+                "readOnly": true,
+                "description": "Timestamp of posted reports."
+              },
+              "completed_timestamp": {
+                "format": "date-time",
+                "readOnly": true,
+                "description": "Timestamp of successfully processed reports."
+              }
+            }
+          }
+        ]
+      },
+      "IngressReportsPagination": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/ListPagination"
+          },
+          {
+            "type": "object",
+            "required": [
+              "data"
+            ],
+            "properties": {
+              "data": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/IngressReportOut"
                 }
               }
             }
@@ -8547,14 +9525,14 @@
                         "date": "2018-07",
                         "accounts": [
                           {
-                            "account": "4418636104713",
+                            "account": "9420673783214",
                             "values": [
                               {
                                 "date": "2018-07",
                                 "source_uuid": [
                                   "56c3d549-0ebb-4648-8467-e4274687fcff"
                                 ],
-                                "account": "4418636104713",
+                                "account": "9420673783214",
                                 "usage": {
                                   "value": 1826.74238146924,
                                   "units": "GB-Mo"
@@ -9109,10 +10087,6 @@
                               "usage": {
                                 "value": 24,
                                 "units": "Hrs"
-                              },
-                              "count": {
-                                "value": 1,
-                                "units": "instances"
                               }
                             }
                           ]
@@ -9556,6 +10530,131 @@
             "type": "string"
           }
         }
+      },
+      "SettingsTagsResponse": {
+        "properties": {
+          "meta": {
+            "$ref": "#/components/schemas/PaginationMeta"
+          },
+          "links": {
+            "$ref": "#/components/schemas/PaginationLinks"
+          },
+          "data": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": [
+                "data"
+              ],
+              "properties": {
+                "uuid": {
+                  "type": "string",
+                  "format": "uuid"
+                }
+              },
+              "example": [
+                {
+                  "uuid": "ac6efba7-6047-4d8f-9055-8f3a1c896a18",
+                  "key": "openshift_project",
+                  "enabled": false,
+                  "source_type": "AWS"
+                }
+              ]
+            }
+          }
+        }
+      },
+      "SettingsTagsEnabledLimitError": {
+        "properties": {
+          "error": {
+            "type": "string",
+            "default": "The maximum number of enabled tags is 200."
+          },
+          "enabled": {
+            "type": "integer",
+            "example": 187
+          },
+          "limit": {
+            "type": "integer",
+            "example": 200
+          }
+        }
+      },
+      "GetAwsCategorySettings": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/ListPagination"
+          },
+          {
+            "type": "object",
+            "required": [
+              "data"
+            ],
+            "properties": {
+              "data": {
+                "type": "array",
+                "example": [
+                  {
+                    "uuid": "be9b46e1-ae73-425c-a3bc-738018d2a41f",
+                    "key": "env",
+                    "enabled": "True"
+                  }
+                ],
+                "items": {}
+              }
+            }
+          }
+        ]
+      },
+      "ModifyKeySettingsRequestBody": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/ListPagination"
+          },
+          {
+            "type": "object",
+            "required": [
+              "data"
+            ],
+            "properties": {
+              "data": {
+                "type": "array",
+                "example": [
+                  {
+                    "ids": [
+                      "be9b46e1-ae73-425c-a3bc-738018d2a41f"
+                    ]
+                  }
+                ],
+                "items": {}
+              }
+            }
+          }
+        ]
+      },
+      "PutAccountSettingRequestBody": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/ListPagination"
+          },
+          {
+            "type": "object",
+            "required": [
+              "data"
+            ],
+            "properties": {
+              "data": {
+                "type": "array",
+                "example": [
+                  {
+                    "cost_type": "blended_cost"
+                  }
+                ],
+                "items": {}
+              }
+            }
+          }
+        ]
       },
       "Status": {
         "required": [

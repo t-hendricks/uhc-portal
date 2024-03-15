@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { FileUpload, FormGroup } from '@patternfly/react-core';
 
+import { FormGroupHelperText } from '~/components/common/FormGroupHelperText';
 import PopoverHint from '../PopoverHint';
 
 class ReduxFileUpload extends React.Component {
@@ -37,21 +38,17 @@ class ReduxFileUpload extends React.Component {
     onBlur(event);
   };
 
-  handleFileChange = (value, _, e) => {
+  handleFileChange = (_e, file) => {
     const { input } = this.props;
-    if (e.target.files) {
-      const file = e.target.files[0];
-      const reader = new FileReader();
-      reader.onload = () => {
-        this.setState({
-          filename: file.name,
-        });
-        input.onChange(reader.result);
-      };
-      reader.readAsText(file, 'UTF-8');
-    } else {
-      input.onChange(value);
-    }
+    this.setState({
+      filename: file.name,
+    });
+    input.onChange(file);
+  };
+
+  handleFileContentChange = (_e, value) => {
+    const { input } = this.props;
+    input.onChange(value);
   };
 
   handleFileRejected = (rejectedFiles, event) => {
@@ -67,6 +64,9 @@ class ReduxFileUpload extends React.Component {
   };
 
   handleClear = () => {
+    const { input } = this.props;
+    input.onChange('');
+
     this.setState({ filename: '' });
   };
 
@@ -83,19 +83,9 @@ class ReduxFileUpload extends React.Component {
     } = this.props;
     const { filename } = this.state;
 
-    const helperTextInvalidText = () => {
-      if ((dirty || touched) && error) {
-        return error;
-      }
-      return '';
-    };
-
     return (
       <FormGroup
         fieldId={name}
-        helperText={helpText}
-        helperTextInvalid={helperTextInvalidText()}
-        validated={(dirty || touched) && error ? 'error' : 'default'}
         label={label}
         labelIcon={
           extendedHelpText && <PopoverHint title={extendedHelpTitle} hint={extendedHelpText} />
@@ -110,14 +100,20 @@ class ReduxFileUpload extends React.Component {
           type="text"
           value={value}
           filename={filename}
-          onChange={this.handleFileChange}
           validated={(dirty || touched) && error ? 'error' : 'default'}
+          onFileInputChange={this.handleFileChange}
+          onDataChange={this.handleFileContentChange}
+          onTextChange={this.handleFileContentChange}
           onClearClick={this.handleClear}
           dropzoneProps={{
             ...dropzoneProps,
             onDropRejected: this.handleFileRejected,
           }}
         />
+
+        <FormGroupHelperText touched={dirty || touched} error={error}>
+          {helpText}
+        </FormGroupHelperText>
       </FormGroup>
     );
   }

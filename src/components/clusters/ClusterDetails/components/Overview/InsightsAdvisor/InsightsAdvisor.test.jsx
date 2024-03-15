@@ -1,10 +1,12 @@
 import React from 'react';
-import { shallow, mount } from 'enzyme';
-
-import fixtures from '../../../__test__/ClusterDetails.fixtures';
+import { screen, render, checkAccessibility } from '~/testUtils';
+import fixtures from '../../../__tests__/ClusterDetails.fixtures';
 
 import InsightsAdvisor from './InsightsAdvisor';
 import Chart from './Chart';
+
+// Note: These tests throw a warning that the prop datum is required by the InsightsLabelComponent
+// but when it is called inside the Chart component, it does not contain a datum prop
 
 describe('<InsightsAdvisor />', () => {
   const props = {
@@ -17,47 +19,55 @@ describe('<InsightsAdvisor />', () => {
     issueCount: 3,
     externalId: 'foo-bar',
   };
-  const widgetWrapper = shallow(
-    <InsightsAdvisor insightsData={fixtures.insightsData} externalId="foo-bar" />,
-  );
-  const chartWrapper = shallow(<Chart {...props} />);
-  const chartDonutWrapper = chartWrapper.find('ChartDonut');
-  const chartMounted = mount(<Chart {...props} />);
 
-  it('should render the widget', () => {
-    expect(widgetWrapper).toMatchSnapshot();
+  // This fails due to accessibility issues inside PatternFly chart component
+  it.skip('widget is accessible', async () => {
+    const { container } = render(
+      <InsightsAdvisor insightsData={fixtures.insightsData} externalId="foo-bar" />,
+    );
+    await checkAccessibility(container);
   });
 
-  it('should render the chart', () => {
-    expect(chartWrapper).toMatchSnapshot();
+  // This fails due to accessibility issues inside PatternFly chart component
+  it.skip('chart is accessible', async () => {
+    const { container } = render(<Chart {...props} />);
+    await checkAccessibility(container);
   });
 
   it('should show 3 issues in total', () => {
-    expect(chartDonutWrapper.prop('title')).toBe('3');
-  });
-
-  it('should preserve original color scale', () => {
-    expect(chartDonutWrapper.prop('colorScale')).toStrictEqual([
-      '#a30000',
-      '#ec7a08',
-      '#f0ab00',
-      '#e7f1fa',
-    ]);
+    render(<Chart {...props} issueCount={44} />);
+    expect(screen.getByText('44')).toBeInTheDocument();
   });
 
   it('should render title links to OCP Advisor', () => {
-    const links = chartMounted.find('InsightsLabelComponent > a');
-    expect(links).toHaveLength(4);
-    links.forEach((link, index) => {
-      expect(link.props().href).toBe(
-        `/openshift/insights/advisor/clusters/foo-bar?total_risk=${index + 1}`,
-      );
-    });
+    const { container } = render(<Chart {...props} />);
+    expect(
+      container.querySelector(
+        'a[href="/openshift/insights/advisor/clusters/foo-bar?total_risk=1"]',
+      ),
+    ).toBeInTheDocument();
+    expect(
+      container.querySelector(
+        'a[href="/openshift/insights/advisor/clusters/foo-bar?total_risk=2"]',
+      ),
+    ).toBeInTheDocument();
+    expect(
+      container.querySelector(
+        'a[href="/openshift/insights/advisor/clusters/foo-bar?total_risk=3"]',
+      ),
+    ).toBeInTheDocument();
+
+    expect(
+      container.querySelector(
+        'a[href="/openshift/insights/advisor/clusters/foo-bar?total_risk=4"]',
+      ),
+    ).toBeInTheDocument();
   });
 
   it('should render sub-title link to OCP Advisor', () => {
-    const link = chartMounted.find('InsightsSubtitleComponent > a');
-    expect(link).toHaveLength(1);
-    expect(link.props().href).toBe('/openshift/insights/advisor/clusters/foo-bar');
+    const { container } = render(<Chart {...props} />);
+    expect(
+      container.querySelector('a[href="/openshift/insights/advisor/clusters/foo-bar"]'),
+    ).toBeInTheDocument();
   });
 });

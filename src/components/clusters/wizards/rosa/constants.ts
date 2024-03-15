@@ -7,7 +7,11 @@ import {
   CloudProviderType,
   IMDSType,
 } from '~/components/clusters/wizards/common/constants';
-import { isMajorMinorEqualOrGreater, splitVersion } from '~/common/versionHelpers';
+import {
+  isExactMajorMinor,
+  isMajorMinorEqualOrGreater,
+  splitVersion,
+} from '~/common/versionHelpers';
 
 export enum RosaFieldId {}
 
@@ -51,7 +55,7 @@ export enum UrlPath {
 export const breadcrumbs: BreadcrumbPath[] = [
   { label: 'Clusters' },
   { label: 'Cluster Type', path: UrlPath.Create },
-  { label: 'Get Started with ROSA', path: UrlPath.CreateGetStarted },
+  { label: 'Set up ROSA', path: UrlPath.CreateGetStarted },
   { label: 'Create a ROSA Cluster' },
 ];
 
@@ -69,8 +73,12 @@ export const canSelectImds = (clusterVersionRawId: string): boolean => {
   return major > 4 || (major === 4 && minor >= 11);
 };
 
+export const maxAdditionalSecurityGroups = 5;
+
 export const defaultWorkerNodeVolumeSizeGiB = 300;
+
 export const workerNodeVolumeSizeMinGiB = 128;
+
 /**
  * Returns ROSA/AWS OSD max worker node volume size, varies per cluster version.
  * In GiB.
@@ -86,3 +94,11 @@ export const canConfigureDayOneManagedIngress = (clusterVersionRawId: string): b
 /* When changing, consider updating the COnfiguration and NetworkScreen components as well (they contain 4.13-specific logic */
 export const canConfigureDayTwoManagedIngress = (clusterVersionRawId: string): boolean =>
   isMajorMinorEqualOrGreater(clusterVersionRawId, 4, 13);
+
+export const canConfigureLoadBalancer = (
+  clusterVersionRawId: string,
+  isSTSEnabled: boolean,
+): boolean => !isSTSEnabled || canConfigureDayTwoManagedIngress(clusterVersionRawId);
+
+export const canConfigureAdditionalRouter = (clusterVersionRawId: string): boolean =>
+  isExactMajorMinor(clusterVersionRawId, 4, 11) || isExactMajorMinor(clusterVersionRawId, 4, 12);

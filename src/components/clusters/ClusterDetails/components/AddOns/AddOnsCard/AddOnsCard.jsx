@@ -1,14 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
-import {
-  Card,
-  CardBody,
-  CardFooter,
-  CardHeader,
-  CardHeaderMain,
-  CardTitle,
-} from '@patternfly/react-core';
+import { Card, CardBody, CardFooter, CardHeader, CardTitle } from '@patternfly/react-core';
 
 import AddOnStateLabel from '../AddOnStateLabel';
 
@@ -16,7 +9,7 @@ import './AddOnsCard.scss';
 
 class AddOnsCard extends Component {
   // reduce card description to 60 chars for uniform cards
-  reduceCardDescription = (addOn) => {
+  static reduceCardDescription = (addOn) => {
     const descriptionLength = 60;
     return addOn.description.length > descriptionLength
       ? `${addOn.description.substring(0, descriptionLength - 3)}...`
@@ -28,8 +21,7 @@ class AddOnsCard extends Component {
 
     return (
       <Card
-        isHoverable
-        isSelectable
+        isSelectableRaised
         isSelected={activeCard === addOn.id}
         key={addOn.id}
         ouiaId={`card-addon-${addOn.id}`}
@@ -37,13 +29,11 @@ class AddOnsCard extends Component {
         className="ocm-c-addons__card"
       >
         <CardHeader className="ocm-c-addons__card--header">
-          <CardHeaderMain>
-            {addOn.icon && <img alt={addOn.name} src={`data:image/png;base64,${addOn.icon}`} />}
-          </CardHeaderMain>
+          {addOn.icon && <img alt={addOn.name} src={`data:image/png;base64,${addOn.icon}`} />}
         </CardHeader>
         <CardTitle>{addOn.name}</CardTitle>
         <CardBody className="ocm-c-addons__card--body">
-          {this.reduceCardDescription(addOn)}
+          {AddOnsCard.reduceCardDescription(addOn)}
         </CardBody>
         <CardFooter>
           <AddOnStateLabel

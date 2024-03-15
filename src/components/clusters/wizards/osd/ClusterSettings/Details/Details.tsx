@@ -1,7 +1,7 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
 import { Field } from 'formik';
-import { CheckboxField } from 'formik-pf';
+import { CheckboxField } from '~/components/clusters/wizards/form/CheckboxField';
 
 import {
   Form,
@@ -13,17 +13,19 @@ import {
   SplitItem,
   Split,
   ExpandableSection,
+  Alert,
 } from '@patternfly/react-core';
 
 import { getCloudProviders } from '~/redux/actions/cloudProviderActions';
 import { useGlobalState } from '~/redux/hooks/useGlobalState';
+import { Version } from '~/types/clusters_mgmt.v1';
 import { noQuotaTooltip } from '~/common/helpers';
 import ExternalLink from '~/components/common/ExternalLink';
 import links from '~/common/installLinks.mjs';
 import {
   getMinReplicasCount,
   getNodesCount,
-} from '~/components/clusters/CreateOSDPage/CreateOSDForm/FormSections/ScaleSection/AutoScaleSection/AutoScaleHelper';
+} from '~/components/clusters/common/ScaleSection/AutoScaleSection/AutoScaleHelper';
 import {
   asyncValidateClusterName,
   clusterNameAsyncValidation,
@@ -31,24 +33,28 @@ import {
   createPessimisticValidator,
   validateAWSKMSKeyARN,
 } from '~/common/validators';
-import { constants } from '~/components/clusters/CreateOSDPage/CreateOSDForm/CreateOSDFormConstants';
+import { constants } from '~/components/clusters/common/CreateOSDFormConstants';
 import { CloudProviderType } from '~/components/clusters/wizards/common/constants';
 import PopoverHint from '~/components/common/PopoverHint';
 import PersistentStorageDropdown from '~/components/clusters/common/PersistentStorageDropdown';
 import LoadBalancersDropdown from '~/components/clusters/common/LoadBalancersDropdown';
-import { PLACEHOLDER_VALUE as AvailabilityZonePlaceholder } from '~/components/clusters/CreateOSDPage/CreateOSDForm/FormSections/NetworkingSection/AvailabilityZoneSelection';
 import {
   RadioGroupField,
   RadioGroupOption,
   RichInputField,
 } from '~/components/clusters/wizards/form';
+import { getIncompatibleVersionReason } from '~/common/versionCompatibility';
+import { SupportedFeature } from '~/common/featureCompatibility';
 import { useFormState } from '~/components/clusters/wizards/hooks';
-import {
-  hasAvailableQuota,
-  quotaParams,
-  QuotaParams,
-} from '~/components/clusters/wizards/common/utils/quotas';
-import { FieldId } from '~/components/clusters/wizards/osd/constants';
+import { hasAvailableQuota, quotaParams } from '~/components/clusters/wizards/common/utils/quotas';
+import { FieldId, MIN_SECURE_BOOT_VERSION } from '~/components/clusters/wizards/osd/constants';
+import { emptyAWSSubnet } from '~/components/clusters/wizards/common/createOSDInitialValues';
+import { billingModels } from '~/common/subscriptionTypes';
+import { QuotaCostList } from '~/types/accounts_mgmt.v1';
+import { QuotaParams } from '~/components/clusters/common/quotaModel';
+import { GCP_SECURE_BOOT_UI } from '~/redux/constants/featureConstants';
+import { useFeatureGate } from '~/hooks/useFeatureGate';
+import { versionComparator } from '~/common/versionComparator';
 import { VersionSelectField } from './VersionSelectField';
 import CloudRegionSelectField from './CloudRegionSelectField';
 import { CustomerManagedEncryption } from './CustomerManagedEncryption';
@@ -67,6 +73,9 @@ export const Details = () => {
       [FieldId.KmsKeyArn]: kmsKeyArn,
       [FieldId.EtcdEncryption]: etcdEncryption,
       [FieldId.FipsCryptography]: fipsCryptography,
+      [FieldId.ClusterVersion]: selectedVersion,
+      [FieldId.SecureBoot]: secureBoot,
+      [FieldId.MachinePoolsSubnets]: machinePoolsSubnets,
     },
     errors,
     isValidating,
@@ -75,6 +84,7 @@ export const Details = () => {
   } = useFormState();
 
   const [isExpanded, setIsExpanded] = React.useState(false);
+  const [showSecureBootAlert, setShowSecureBootAlert] = React.useState(false);
 
   const isByoc = byoc === 'true';
   const isMultiAz = multiAz === 'true';
@@ -96,6 +106,9 @@ export const Details = () => {
   const isGCPError =
     gcpKeyRings.error || keyRingError || keyNameError || kmsServiceAccountError || keyLocationError;
 
+  const isIncompatibleSecureBootVersion =
+    isGCP && versionComparator(selectedVersion?.raw_id, MIN_SECURE_BOOT_VERSION) === -1;
+
   React.useEffect(() => {
     dispatch(getCloudProviders());
   }, [dispatch]);
@@ -106,7 +119,19 @@ export const Details = () => {
         setIsExpanded(true);
       }
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isValidating]);
+
+  React.useEffect(() => {
+    if (!secureBoot && !isIncompatibleSecureBootVersion) {
+      setShowSecureBootAlert(false);
+    }
+    if (secureBoot && isIncompatibleSecureBootVersion) {
+      setShowSecureBootAlert(true);
+      setFieldValue(FieldId.SecureBoot, false);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isIncompatibleSecureBootVersion]);
 
   const azQuotaParams = {
     product,
@@ -115,32 +140,62 @@ export const Details = () => {
     cloudProviderID: cloudProvider,
   } as QuotaParams;
 
-  const hasSingleAzResources = hasAvailableQuota(quotaList, {
+  const hasSingleAzResources = hasAvailableQuota(quotaList as QuotaCostList, {
     ...quotaParams.singleAzResources,
     ...azQuotaParams,
   });
 
-  const hasMultiAzResources = hasAvailableQuota(quotaList, {
+  const hasMultiAzResources = hasAvailableQuota(quotaList as QuotaCostList, {
     ...quotaParams.multiAzResources,
     ...azQuotaParams,
   });
 
   const handleCloudRegionChange = () => {
-    // Set az selection to its default value once the cloudRegion changes to avoid incorrect zone.
+    // Clears fields related to the region: VPC and machinePoolsSubnets
     const azCount = isMultiAz ? 3 : 1;
+    const mpSubnetsReset = [];
 
     for (let i = 0; i < azCount; i += 1) {
-      setFieldValue(`az_${i}`, AvailabilityZonePlaceholder);
+      mpSubnetsReset.push(emptyAWSSubnet());
     }
+
+    setFieldValue(FieldId.MachinePoolsSubnets, mpSubnetsReset);
+    setFieldValue(FieldId.SelectedVpc, '');
   };
 
-  const handleMultiAzChange = (value: string) => {
+  const handleMultiAzChange = (_event: React.FormEvent<HTMLDivElement>, value: string) => {
     const isMultiAz = value === 'true';
 
     // When multiAz changes, update the node count
     setFieldValue(FieldId.NodesCompute, getNodesCount(isByoc, isMultiAz, true));
     setFieldValue(FieldId.MinReplicas, getMinReplicasCount(isByoc, isMultiAz, true));
     setFieldValue(FieldId.MaxReplicas, '');
+    setFieldValue(FieldId.MaxReplicas, '');
+
+    // Make "machinePoolsSubnets" of the correct length
+    const mpSubnetsReset = [machinePoolsSubnets[0]];
+    if (isMultiAz) {
+      mpSubnetsReset.push(emptyAWSSubnet());
+      mpSubnetsReset.push(emptyAWSSubnet());
+    }
+    setFieldValue(FieldId.MachinePoolsSubnets, mpSubnetsReset);
+  };
+
+  const handleVersionChange = (clusterVersion: Version) => {
+    // If features become incompatible with the new version, clear their settings
+    const canDefineSecurityGroups = !getIncompatibleVersionReason(
+      SupportedFeature.SECURITY_GROUPS,
+      clusterVersion.raw_id,
+      { day1: true },
+    );
+    if (!canDefineSecurityGroups) {
+      setFieldValue(FieldId.SecurityGroups, {
+        applyControlPlaneToAll: true,
+        controlPlane: [],
+        infra: [],
+        worker: [],
+      });
+    }
   };
 
   const availabilityZoneOptions: RadioGroupOption[] = [
@@ -178,6 +233,18 @@ export const Details = () => {
     setIsExpanded(!isExpanded);
   };
 
+  const isSecureBootFeatureEnabled = useFeatureGate(GCP_SECURE_BOOT_UI);
+
+  const secureBootAlert = (
+    <div className="pf-v5-u-mt-sm">
+      <Alert
+        isInline
+        variant="danger"
+        title={`Secure Boot support requires OpenShift version ${MIN_SECURE_BOOT_VERSION} or above`}
+      />
+    </div>
+  );
+
   return (
     <Form>
       <Grid hasGutter md={6}>
@@ -203,7 +270,15 @@ export const Details = () => {
           </GridItem>
 
           <GridItem>
-            <VersionSelectField name={FieldId.ClusterVersion} label="Version" />
+            <VersionSelectField
+              name={FieldId.ClusterVersion}
+              label={
+                billingModel === billingModels.MARKETPLACE_GCP
+                  ? 'Version (Google Cloud Marketplace enabled)'
+                  : 'Version'
+              }
+              onChange={handleVersionChange}
+            />
           </GridItem>
 
           <GridItem>
@@ -283,12 +358,30 @@ export const Details = () => {
               </GridItem>
             </>
           )}
-
+          {isGCP && isSecureBootFeatureEnabled && (
+            <GridItem>
+              <FormGroup label="Shielded VM" fieldId={FieldId.SecureBoot}>
+                <Split hasGutter className="pf-u-mb-0">
+                  <SplitItem>
+                    <CheckboxField
+                      name={FieldId.SecureBoot}
+                      label="Enable Secure Boot support for Shielded VMs"
+                      isDisabled={isIncompatibleSecureBootVersion}
+                    />
+                  </SplitItem>
+                  <SplitItem>
+                    <PopoverHint hint={constants.enableSecureBootHint} />
+                  </SplitItem>
+                </Split>
+                {showSecureBootAlert && secureBootAlert}
+              </FormGroup>
+            </GridItem>
+          )}
           <GridItem>
             <Title headingLevel="h4">Monitoring</Title>
           </GridItem>
 
-          <Split hasGutter className="pf-u-mb-0">
+          <Split hasGutter className="pf-v5-u-mb-0">
             <SplitItem>
               <CheckboxField
                 name={FieldId.EnableUserWorkloadMonitoring}
@@ -306,7 +399,7 @@ export const Details = () => {
               />
             </SplitItem>
           </Split>
-          <div className="pf-u-font-size-sm pf-u-color-200 pf-u-ml-lg pf-u-mt-xs">
+          <div className="pf-v5-u-font-size-sm pf-v5-u-color-200 pf-v5-u-ml-lg pf-v5-u-mt-xs">
             {constants.enableUserWorkloadMonitoringHint}
           </div>
           <ExpandableSection
@@ -346,20 +439,20 @@ export const Details = () => {
                       />
                     </SplitItem>
                   </Split>
-                  <div className="pf-u-font-size-sm pf-u-color-200 pf-u-ml-lg pf-u-mt-xs">
+                  <div className="pf-v5-u-font-size-sm pf-v5-u-color-200 pf-v5-u-ml-lg pf-v5-u-mt-xs">
                     Add more encryption for OpenShift and Kubernetes API resources.
                   </div>
                 </GridItem>
               </FormGroup>
 
               {etcdEncryption && (
-                <FormGroup label="FIPS cryptography" className="pf-u-mt-md">
+                <FormGroup label="FIPS cryptography" className="pf-v5-u-mt-md">
                   <GridItem>
                     <CheckboxField
                       name={FieldId.FipsCryptography}
                       label="Enable FIPS cryptography"
                     />
-                    <div className="pf-u-font-size-sm pf-u-color-200 pf-u-ml-lg pf-u-mt-xs">
+                    <div className="pf-v5-u-font-size-sm pf-v5-u-color-200 pf-v5-u-ml-lg pf-v5-u-mt-xs">
                       Install a cluster that uses FIPS Validated / Modules in Process cryptographic
                       libraries on the x86_64 architecture.
                     </div>

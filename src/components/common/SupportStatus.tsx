@@ -68,6 +68,9 @@ const SupportStatus = ({ status }: Props) => {
         color={labelColor}
         variant="outline"
         className="support-status-label support-status-label--clickable"
+        onClick={(event) => {
+          event.preventDefault();
+        }}
       >
         {labelText}
       </Label>

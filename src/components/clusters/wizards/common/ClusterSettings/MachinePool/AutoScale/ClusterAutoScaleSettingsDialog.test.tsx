@@ -2,12 +2,12 @@ import React from 'react';
 import { Formik } from 'formik';
 import merge from 'lodash/merge';
 
-import { checkAccessibility, render, screen, userEvent, UserEventType } from '~/testUtils';
+import { withState, checkAccessibility, screen, within, UserEventType, waitFor } from '~/testUtils';
 import modals from '~/components/common/Modal/modals';
 import { ClusterAutoscaler } from '~/types/clusters_mgmt.v1';
 import { FieldId } from '~/components/clusters/wizards/common';
 
-import { getDefaultClusterAutoScaling } from '~/components/clusters/CreateOSDPage/clusterAutoScalingValues';
+import { getDefaultClusterAutoScaling } from '~/components/clusters/common/clusterAutoScalingValues';
 import ClusterAutoScaleSettingsDialog from './ClusterAutoScaleSettingsDialog';
 
 const defaultState = {
@@ -43,7 +43,7 @@ const buildTestComponent = (values?: Partial<ClusterAutoscaler>) => {
       initialTouched={{ [testInputFieldId]: true }} // so that it shows the errors if it's invalid initially
       onSubmit={() => {}}
     >
-      <ClusterAutoScaleSettingsDialog isWizard />
+      <ClusterAutoScaleSettingsDialog isWizard isRosa={false} />
     </Formik>
   );
 };
@@ -51,7 +51,7 @@ const buildTestComponent = (values?: Partial<ClusterAutoscaler>) => {
 describe('<ClusterAutoScaleSettingsDialog />', () => {
   it('is accessible', async () => {
     // Arrange
-    const { container } = render(buildTestComponent(), {}, defaultState);
+    const { container } = withState(defaultState).render(buildTestComponent());
 
     // Assert
     await checkAccessibility(container);
@@ -60,7 +60,7 @@ describe('<ClusterAutoScaleSettingsDialog />', () => {
   describe('Field values', () => {
     it('enables autoScaling fields when scaleDown is enabled', async () => {
       // Arrange
-      render(buildTestComponent(), {}, defaultState);
+      withState(defaultState).render(buildTestComponent());
 
       // Assert
       const scaleDownField = getTestInputField();
@@ -69,14 +69,12 @@ describe('<ClusterAutoScaleSettingsDialog />', () => {
 
     it('disables autoScaling fields when scaleDown is disabled', async () => {
       // Arrange
-      render(
+      withState(defaultState).render(
         buildTestComponent({
           scale_down: {
             enabled: false,
           },
         }),
-        {},
-        defaultState,
       );
 
       // Assert
@@ -86,20 +84,26 @@ describe('<ClusterAutoScaleSettingsDialog />', () => {
 
     it('shows the correct boolean values in the boolean select component', async () => {
       // Arrange
-      render(buildTestComponent(), {}, defaultState);
+      withState(defaultState).render(buildTestComponent());
 
       // Assert
-      const booleanDropdownButtons = screen.getAllByRole('button', { expanded: false });
-      expect(booleanDropdownButtons[0]).toHaveTextContent('false'); // for the balance_similar_node_groups field
-      expect(booleanDropdownButtons[1]).toHaveTextContent('true'); // for the skip_nodes_with_local_storage field
+      expect(
+        within(screen.getByRole('group', { name: /skip-nodes-with-local-storage/ })).getByRole(
+          'button',
+        ),
+      ).toHaveTextContent('true');
+      expect(
+        within(screen.getByRole('group', { name: /balance-similar-node-groups/ })).getByRole(
+          'button',
+        ),
+      ).toHaveTextContent('false');
     });
   });
 
   describe('Modal Buttons', () => {
     it('"Close" becomes disabled when some field has errors', async () => {
       // Arrange
-      const user = userEvent.setup();
-      render(buildTestComponent(), {}, defaultState);
+      const { user } = withState(defaultState).render(buildTestComponent());
       expect(getModalActionButton('Close')).toBeEnabled();
       expect(getTestInputField()).toHaveValue(0.5);
 
@@ -108,21 +112,20 @@ describe('<ClusterAutoScaleSettingsDialog />', () => {
 
       // Assert
       expect(getTestInputField()).toHaveValue(440.5); // It's a range between 0 and 1
-      expect(getModalActionButton('Close')).toBeDisabled();
+      await waitFor(() => expect(getModalActionButton('Close')).toBeDisabled());
     });
 
     it('"Close" button becomes enabled when the error is fixed', async () => {
       // Arrange
-      const user = userEvent.setup();
-      render(buildTestComponent(), {}, defaultState);
+      const { user } = withState(defaultState).render(buildTestComponent());
 
       // Act - first get the component in an error state and fix it
       await updateTestInputValue(user, { typeValue: '11', clearBefore: true });
-      expect(getModalActionButton('Close')).toBeDisabled();
+      await waitFor(() => expect(getModalActionButton('Close')).toBeDisabled());
       await updateTestInputValue(user, { typeValue: '0.33', clearBefore: true });
 
       // Assert
-      expect(getModalActionButton('Close')).toBeEnabled();
+      await waitFor(() => expect(getModalActionButton('Close')).toBeEnabled());
     });
   });
 });

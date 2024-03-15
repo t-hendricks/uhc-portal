@@ -46,7 +46,9 @@ const ReduxFormNumberInput = ({ meta, input, ...restProps }: Props) => {
         />
       </StackItem>
       {meta.error && (
-        <StackItem className="pf-u-danger-color-100 pf-u-font-size-sm">{meta.error}</StackItem>
+        <StackItem className="pf-v5-u-danger-color-100 pf-v5-u-font-size-sm">
+          {meta.error}
+        </StackItem>
       )}
     </Stack>
   );

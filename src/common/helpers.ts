@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 import isEmpty from 'lodash/isEmpty';
 import semver from 'semver';
 
@@ -81,7 +82,7 @@ const noQuotaTooltip =
   'You do not have enough quota for this option. Contact sales to purchase additional quota.';
 
 const noMachineTypes =
-  'You do not have enough quota to create a cluster with the minimum required worker capacity. Contact sales to purchase additional quota.';
+  'You do not have enough quota to create a cluster with the minimum required worker capacity.';
 
 const nodeKeyValueTooltipText =
   "To add an additional label, make sure all of your labels' keys are filled out (value fields are optional).";
@@ -262,11 +263,81 @@ const formatMinorVersion = (version: string) => {
  * @param {string} defaultValue used when the value is missing (like input === "foo").
  *
  */
-const strToKeyValueObject = (input: string, defaultValue?: string) =>
-  input.split(',').reduce((accum, pair) => {
+const strToKeyValueObject = (input?: string, defaultValue?: string) => {
+  if (input === undefined) {
+    return undefined;
+  }
+
+  if (!input) {
+    return {};
+  }
+
+  return input.split(',').reduce((accum, pair) => {
     const [key, value] = pair.split('=');
     return { ...accum, [key]: value ?? defaultValue };
   }, {});
+};
+
+const truncateTextWithEllipsis = (text?: string, maxLength?: number) => {
+  if (text && maxLength && text.length > maxLength) {
+    return `${text.slice(0, maxLength / 3)}... ${text.slice((-maxLength * 2) / 3)}`;
+  }
+  return text;
+};
+
+type Subnet = {
+  cidr_block: string;
+  name: string;
+  subnet_id: string;
+};
+
+const constructSelectedSubnets = (formValues?: Record<string, any>) => {
+  type MachinePoolSubnet = {
+    availability_zone: string;
+    privateSubnetId: string;
+    publicSubnetId: string;
+  };
+  const isHypershift = formValues?.hypershift === 'true';
+  const usePrivateLink = formValues?.use_privatelink;
+
+  let privateSubnets: Subnet[] = [];
+  let publicSubnets: Subnet[] = [];
+  let selectedSubnets: Subnet[] = [];
+
+  if (formValues?.install_to_vpc) {
+    let publicSubnetIds: string[] = [];
+
+    const privateSubnetIds = formValues?.machinePoolsSubnets
+      .map((obj: MachinePoolSubnet) => obj.privateSubnetId)
+      .filter((id: string) => id !== undefined && id !== '');
+
+    if (isHypershift) {
+      publicSubnetIds = formValues?.cluster_privacy_public_subnet_id;
+    } else {
+      publicSubnetIds = formValues?.machinePoolsSubnets
+        .map((obj: MachinePoolSubnet) => obj.publicSubnetId)
+        .filter((id: string) => id !== undefined && id !== '');
+    }
+
+    if (formValues?.selected_vpc?.aws_subnets) {
+      privateSubnets = formValues?.selected_vpc?.aws_subnets.filter((obj: Subnet) =>
+        privateSubnetIds.includes(obj.subnet_id),
+      );
+
+      publicSubnets = formValues?.selected_vpc?.aws_subnets.filter((obj: Subnet) =>
+        publicSubnetIds.includes(obj.subnet_id),
+      );
+    }
+
+    if (usePrivateLink) {
+      selectedSubnets = privateSubnets;
+    } else {
+      selectedSubnets = privateSubnets.concat(publicSubnets);
+    }
+  }
+
+  return selectedSubnets;
+};
 
 export {
   noop,
@@ -284,13 +355,17 @@ export {
   scrollToFirstField,
   parseReduxFormKeyValueList,
   parseReduxFormTaints,
+  goZeroTime,
   goZeroTime2Null,
   stringToArray,
   arrayToString,
+  truncateTextWithEllipsis,
   isSupportedMinorVersion,
   formatMinorVersion,
   strToKeyValueObject,
   stringToArrayTrimmed,
+  constructSelectedSubnets,
+  Subnet,
 };
 
 export default helpers;

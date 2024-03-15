@@ -7,15 +7,14 @@ import OCMRolesSection from './OCMRolesSection';
 import UsersSection from './UsersSection';
 import IDPSection from './IDPSection';
 import NetworkSelfServiceSection from './NetworkSelfServiceSection';
-import { isHibernating } from '../../../common/clusterStates';
+import { isHibernating, isHypershiftCluster } from '../../../common/clusterStates';
 import {
-  isHypershiftCluster,
   isReadyForAwsAccessActions,
   isReadyForIdpActions,
   isReadyForRoleAccessActions,
 } from '../../clusterDetailsHelper';
 
-function AccessControl({ cluster, history, refreshEvent = null }) {
+function AccessControl({ cluster, refreshEvent = null }) {
   const [activeKey, setActiveKey] = React.useState(0);
 
   // class for whether display vertical tabs (wider screen)
@@ -93,10 +92,9 @@ function AccessControl({ cluster, history, refreshEvent = null }) {
             <IDPSection
               clusterID={get(cluster, 'id')}
               isHypershift={isHypershiftCluster(cluster)}
-              history={history}
               clusterUrls={clusterUrls}
               idpActions={cluster.idpActions}
-              clusterHibernating={isHibernating(cluster.state)}
+              clusterHibernating={isHibernating(cluster)}
               isReadOnly={isReadOnly}
             />
           </Tab>
@@ -108,7 +106,7 @@ function AccessControl({ cluster, history, refreshEvent = null }) {
           >
             <UsersSection
               cluster={cluster}
-              clusterHibernating={isHibernating(cluster.state)}
+              clusterHibernating={isHibernating(cluster)}
               isReadOnly={isReadOnly}
             />
           </Tab>
@@ -133,7 +131,7 @@ function AccessControl({ cluster, history, refreshEvent = null }) {
             <NetworkSelfServiceSection
               clusterID={get(cluster, 'id')}
               canEdit={cluster.canEdit}
-              clusterHibernating={isHibernating(cluster.state)}
+              clusterHibernating={isHibernating(cluster)}
               isReadOnly={isReadOnly}
             />
           </Tab>
@@ -145,7 +143,6 @@ function AccessControl({ cluster, history, refreshEvent = null }) {
 
 AccessControl.propTypes = {
   cluster: PropTypes.object.isRequired,
-  history: PropTypes.object,
   refreshEvent: PropTypes.object,
 };
 
