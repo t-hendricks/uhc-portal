@@ -169,9 +169,9 @@ if [ "$1" == "staging" ] || [ "$1" == "beta" ]; then
     rm -rf dist
     yarn build --mode=production --env api-env=staging sentry-version="$SENTRY_STAGE_VERSION"
     yarn sentry:sourcemaps
-    yarn sentry:release --auth-token $GLITCHTIP_TOKEN --project="$SENTRY_STAGE_PROJECT" files "$SENTRY_STAGE_VERSION" upload-sourcemaps dist/
     push_build "qa-stable"
     echo "staging branch is available on https://console.dev.redhat.com/openshift"
+    yarn sentry:release --auth-token $GLITCHTIP_TOKEN --project="$SENTRY_STAGE_PROJECT" files "$SENTRY_STAGE_VERSION" upload-sourcemaps dist/ --url-prefix "/apps"
 
     echo "running staging (qa-beta) push"
     rm -rf dist

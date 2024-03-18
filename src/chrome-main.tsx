@@ -78,6 +78,7 @@ class AppEntry extends React.Component {
           Sentry.init({
             dsn: config.configData.sentryDSN,
             ...(APP_SENTRY_RELEASE_VERSION ? { release: APP_SENTRY_RELEASE_VERSION } : {}),
+            autoSessionTracking: false,
             integrations: [
               new SessionTiming(),
               new Sentry.Integrations.GlobalHandlers({
