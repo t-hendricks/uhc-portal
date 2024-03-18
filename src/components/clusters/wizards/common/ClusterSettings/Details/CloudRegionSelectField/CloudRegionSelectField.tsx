@@ -35,17 +35,28 @@ export const CloudRegionSelectField = ({
   const { setFieldValue } = useFormState();
 
   React.useEffect(() => {
-    const selectedRegionData =
-      cloudProviders?.providers?.[cloudProviderID]?.regions?.[field.value?.toString()];
+    const regionsData = cloudProviders?.providers?.[cloudProviderID]?.regions;
+    const selectedRegionData = regionsData?.[field.value?.toString()];
 
+    // TODO: only do this when isMultiAz!  us-west-1 is fine for Single AZ.
+    //   Well it somehow works, I suspect due to incomplete dependency array?
     if (!selectedRegionData?.supports_multi_az) {
-      setFieldValue(
-        field.name,
-        cloudProviderID === 'aws' ? AWS_DEFAULT_REGION : GCP_DEFAULT_REGION,
-      );
+      const resetRegion = cloudProviderID === 'aws' ? AWS_DEFAULT_REGION : GCP_DEFAULT_REGION;
+      // Guard from infinite loop resetting to a region we don't [yet] have data on.
+      if (regionsData?.[resetRegion]) {
+        setFieldValue(field.name, resetRegion);
+        handleCloudRegionChange?.();
+      }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isMultiAz, cloudProviders, setFieldValue, field.name, cloudProviderID]);
+  }, [
+    isMultiAz,
+    cloudProviders,
+    setFieldValue,
+    field.name,
+    cloudProviderID,
+    handleCloudRegionChange,
+  ]);
 
   if (cloudProviders.fulfilled) {
     return (
@@ -56,8 +67,8 @@ export const CloudRegionSelectField = ({
         isDisabled={isDisabled}
         value={field.value}
         onChange={(_event, value) => {
-          handleCloudRegionChange?.();
           setFieldValue(field.name, value);
+          handleCloudRegionChange?.();
         }}
       >
         {availableRegions.map((region) => (
