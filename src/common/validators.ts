@@ -814,7 +814,7 @@ const subnetCidrs = (
     }
   };
 
-  const subnetName = () => erroredSubnets[0]?.name;
+  const subnetName = () => erroredSubnets[0]?.name || erroredSubnets[0]?.subnet_id;
 
   if (fieldName === FieldId.NetworkMachineCidr) {
     compareCidrs(true);
