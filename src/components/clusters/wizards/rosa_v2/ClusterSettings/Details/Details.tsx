@@ -254,6 +254,7 @@ function Details() {
               cloudProviderID={CloudProviderType.Aws}
               isBYOC
               isMultiAz={isMultiAz}
+              isHypershiftSelected={isHypershiftSelected}
               handleCloudRegionChange={handleCloudRegionChange}
             />
           </FormGroup>
