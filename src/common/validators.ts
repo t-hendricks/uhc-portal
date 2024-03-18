@@ -973,16 +973,20 @@ const disjointSubnets =
     };
     delete networkingFields[fieldName];
     const overlappingFields: string[] = [];
-    try {
+
+    if (CIDR_REGEXP.test(value)) {
       Object.keys(networkingFields).forEach((name) => {
         const fieldValue = get(formData, name, null);
-        if (fieldValue && overlapCidr(value, fieldValue)) {
-          overlappingFields.push(networkingFields[name]);
+        try {
+          if (fieldValue && overlapCidr(value, fieldValue)) {
+            overlappingFields.push(networkingFields[name]);
+          }
+        } catch {
+          // parse error for fieldValue; ignore
         }
       });
-    } catch (e) {
-      return `Failed to parse CIDR: ${e}`;
     }
+
     const plural = overlappingFields.length > 1;
     if (overlappingFields.length > 0) {
       return `This subnet overlaps with the subnet${
