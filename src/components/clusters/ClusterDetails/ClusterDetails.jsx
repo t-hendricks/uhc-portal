@@ -380,7 +380,7 @@ const ClusterDetails = (props) => {
       cluster.subscription?.external_cluster_id === undefined;
   const displaySupportTab = !hideSupportTab && !isOSDTrial;
   const displayUpgradeSettingsTab =
-    (cluster.managed || isAROCluster) && cluster.canEdit && !isArchived;
+    cluster.managed && !isAROCluster && cluster.canEdit && !isArchived;
 
   let addHostsTabState = { showTab: false, isDisabled: false, tabTooltip: '' };
   if (assistedInstallerEnabled && !isArchived) {
