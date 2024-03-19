@@ -192,7 +192,7 @@ export function TreeViewSelect(props: TreeViewSelectProps) {
     >
       <PanelMain
         style={{
-          height: '100%',
+          maxHeight: '100%',
         }}
       >
         <section>
