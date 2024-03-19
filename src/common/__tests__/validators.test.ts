@@ -392,6 +392,11 @@ describe('Subnet cidrs are valid against machine, network and pod cidr ranges', 
       { network_machine_cidr: '10.0.0.0/16', network_pod_cidr: '10.128.0.0/16' },
       'string',
     ],
+    [
+      '10.0.34.0/24',
+      { network_machine_cidr: '10.0.32.0/24', network_pod_cidr: '10.128.0.0/16' },
+      'string',
+    ],
   ])(
     'value %p and formData %p to be %p',
     (
