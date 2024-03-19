@@ -186,7 +186,9 @@ function AccountRolesARNsSection({
       change('rosa_max_os_version', undefined);
       setShowMissingArnsError(true);
     } else {
-      setInstallerRoleOptions(installerOptions);
+      setInstallerRoleOptions(
+        installerOptions.filter((installerRole) => installerRole.value !== undefined),
+      );
       setShowMissingArnsError(false);
     }
     setAccountRoles(accountRolesARNs);
