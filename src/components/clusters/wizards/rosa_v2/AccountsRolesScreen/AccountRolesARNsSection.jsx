@@ -193,7 +193,9 @@ function AccountRolesARNsSection({
       setFieldValue(FieldId.RosaMaxOsVersion, undefined);
       setShowMissingArnsError(true);
     } else {
-      setInstallerRoleOptions(installerOptions);
+      setInstallerRoleOptions(
+        installerOptions.filter((installerRole) => installerRole.value !== undefined),
+      );
       setShowMissingArnsError(false);
     }
     setAccountRoles(accountRolesARNs);
