@@ -781,19 +781,26 @@ const subnetCidrs = (
   fieldName?: string,
   selectedSubnets?: Subnet[],
 ): string | undefined => {
+  type ErroredSubnet = {
+    cidr_block: string;
+    name: string;
+    subnet_id: string;
+    overlaps?: boolean;
+  };
+
   if (!value || selectedSubnets?.length === 0) {
     return undefined;
   }
 
-  const erroredSubnets: Subnet[] = [];
+  const erroredSubnets: ErroredSubnet[] = [];
 
   const startingIP = (cidr: string) => {
     const ip = new IPCIDR(cidr);
     return ip.start().toString();
   };
 
-  const compareCidrs = (shouldContain: boolean) => {
-    if (shouldContain) {
+  const compareCidrs = (shouldInclude: boolean) => {
+    if (shouldInclude) {
       selectedSubnets?.forEach((subnet: Subnet) => {
         if (
           CIDR_REGEXP.test(subnet.cidr_block) &&
@@ -804,11 +811,13 @@ const subnetCidrs = (
       });
     } else {
       selectedSubnets?.forEach((subnet: Subnet) => {
-        if (
-          CIDR_REGEXP.test(subnet.cidr_block) &&
-          containsCidr(value, startingIP(subnet.cidr_block))
-        ) {
-          erroredSubnets.push(subnet);
+        if (CIDR_REGEXP.test(subnet.cidr_block)) {
+          if (containsCidr(value, startingIP(subnet.cidr_block))) {
+            erroredSubnets.push(subnet);
+          } else if (overlapCidr(value, subnet.cidr_block)) {
+            const overlappedSubnet = { ...subnet, overlaps: true };
+            erroredSubnets.push(overlappedSubnet);
+          }
         }
       });
     }
@@ -827,6 +836,10 @@ const subnetCidrs = (
   if (fieldName === FieldId.NetworkServiceCidr) {
     compareCidrs(false);
     if (erroredSubnets.length > 0) {
+      if (erroredSubnets[0]?.overlaps) {
+        return `The Service CIDR overlaps with ${subnetName()} CIDR 
+        '${erroredSubnets[0].cidr_block}'`;
+      }
       return `The Service CIDR includes the starting IP (${startingIP(
         erroredSubnets[0].cidr_block,
       )}) of ${subnetName()}`;
@@ -835,6 +848,10 @@ const subnetCidrs = (
   if (fieldName === FieldId.NetworkPodCidr) {
     compareCidrs(false);
     if (erroredSubnets.length > 0) {
+      if (erroredSubnets[0]?.overlaps) {
+        return `The Pod CIDR overlaps with ${subnetName()} CIDR 
+        '${erroredSubnets[0].cidr_block}'`;
+      }
       return `The Pod CIDR includes the starting IP (${startingIP(
         erroredSubnets[0].cidr_block,
       )}) of ${subnetName()}`;
