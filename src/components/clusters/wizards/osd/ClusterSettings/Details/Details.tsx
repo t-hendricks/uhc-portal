@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import { useDispatch } from 'react-redux';
 import { Field } from 'formik';
 
@@ -148,7 +148,7 @@ export const Details = () => {
     ...azQuotaParams,
   });
 
-  const handleCloudRegionChange = () => {
+  const handleCloudRegionChange = useCallback(() => {
     // Clears fields related to the region: VPC and machinePoolsSubnets
     const azCount = isMultiAz ? 3 : 1;
     const mpSubnetsReset = [];
@@ -159,7 +159,7 @@ export const Details = () => {
 
     setFieldValue(FieldId.MachinePoolsSubnets, mpSubnetsReset);
     setFieldValue(FieldId.SelectedVpc, '');
-  };
+  }, [isMultiAz, setFieldValue]);
 
   const handleMultiAzChange = (_event: React.FormEvent<HTMLDivElement>, value: string) => {
     const isMultiAz = value === 'true';
