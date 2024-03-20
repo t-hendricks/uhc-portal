@@ -108,33 +108,34 @@ function AccountRolesARNsSection({
     getAWSAccountRolesARNsResponse,
   );
 
-  const touchARNsFields = React.useCallback(() => {
-    setFieldTouched(FieldId.InstallerRoleArn);
-    setFieldTouched(FieldId.SupportRoleArn);
-    setFieldTouched(FieldId.WorkerRoleArn);
-    if (!isHypershiftSelected) {
-      setFieldTouched(FieldId.ControlPlaneRoleArn);
-    }
-  }, [isHypershiftSelected, setFieldTouched]);
-
-  const updateRoleArns = (role) => {
-    setFieldValue(FieldId.InstallerRoleArn, role?.Installer || NO_ROLE_DETECTED);
-    setFieldValue(FieldId.SupportRoleArn, role?.Support || NO_ROLE_DETECTED);
-    setFieldValue(FieldId.WorkerRoleArn, role?.Worker || NO_ROLE_DETECTED);
-    if (!isHypershiftSelected) {
-      setFieldValue(FieldId.ControlPlaneRoleArn, role?.ControlPlane || NO_ROLE_DETECTED);
-    }
-  };
-
   useEffect(() => {
     // this is required to show any validation error messages for the 4 disabled ARNs fields
-    touchARNsFields();
-  }, [touchARNsFields]);
-
-  useEffect(() => {
-    validateForm();
+    setFieldTouched(FieldId.InstallerRoleArn, true, false);
+    setFieldTouched(FieldId.SupportRoleArn, true, false);
+    setFieldTouched(FieldId.WorkerRoleArn, true, false);
+    if (!isHypershiftSelected) {
+      setFieldTouched(FieldId.ControlPlaneRoleArn, true, false);
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [showMissingArnsError]);
+  }, [isHypershiftSelected]);
+
+  const updateRoleArns = (role) => {
+    const promiseArr = [
+      setFieldValue(FieldId.InstallerRoleArn, role?.Installer || NO_ROLE_DETECTED, false),
+      setFieldValue(FieldId.SupportRoleArn, role?.Support || NO_ROLE_DETECTED, false),
+      setFieldValue(FieldId.WorkerRoleArn, role?.Worker || NO_ROLE_DETECTED, false),
+    ];
+    if (!isHypershiftSelected) {
+      promiseArr.push(
+        setFieldValue(FieldId.ControlPlaneRoleArn, role?.ControlPlane || NO_ROLE_DETECTED, false),
+      );
+    }
+    Promise.all(promiseArr).then(() => {
+      setTimeout(() => {
+        validateForm();
+      }, 10);
+    });
+  };
 
   useEffect(() => {
     setSelectedInstallerRole(NO_ROLE_DETECTED);
@@ -281,7 +282,7 @@ function AccountRolesARNsSection({
 
     // Clear the installer role/version if the latest fetched roles do not possess the previously selected one.
     if (!accountRoles.some((role) => role.Installer === selectedInstallerRole)) {
-      setFieldValue(FieldId.InstallerRoleArn, '');
+      setFieldValue(FieldId.InstallerRoleArn, '', false);
       setSelectedInstallerRole('');
       setFieldValue(FieldId.ClusterVersion, undefined);
     }
