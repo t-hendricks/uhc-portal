@@ -5,14 +5,7 @@ import { CompatRouter } from 'react-router-dom-v5-compat';
 import type axios from 'axios';
 import semver from 'semver';
 import apiRequest from '~/services/apiRequest';
-import {
-  withState,
-  screen,
-  checkAccessibility,
-  within,
-  insightsMock,
-  TestRouter,
-} from '~/testUtils';
+import { withState, screen, checkAccessibility, within, TestRouter } from '~/testUtils';
 
 import { NodePoolUpgradePolicy } from '~/types/clusters_mgmt.v1';
 import { UpdateAllMachinePools } from './index';
@@ -27,8 +20,6 @@ jest.mock('react-redux', () => {
   };
   return config;
 });
-
-insightsMock();
 
 // @ts-ignore
 const getApiPatchParams = (index: number) => apiRequestMock.patch.mock.calls[index][1]?.params;

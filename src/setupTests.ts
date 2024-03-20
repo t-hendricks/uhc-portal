@@ -2,7 +2,6 @@ import { configure } from 'enzyme';
 import Adapter from '@wojtekmaj/enzyme-adapter-react-17';
 import { setAutoFreeze } from 'immer';
 import { sprintf } from 'sprintf-js';
-import * as useChromeHook from '@redhat-cloud-services/frontend-components/useChrome';
 import config from './config';
 
 // Mock apiRequest for all tests
@@ -40,21 +39,7 @@ console.error = (msg, ...args) => {
   }
 };
 
-// global mock for useChrome
-const useChromeSpy = jest.spyOn(useChromeHook, 'default');
-const mockSetPageMetadata = jest.fn();
-useChromeSpy.mockImplementation(() => ({
-  segment: {
-    setPageMetadata: mockSetPageMetadata,
-  },
-}));
-
-global.insights = {
-  chrome: {
-    ...window.insights?.chrome,
-    getEnvironment: window.insights?.chrome?.getEnvironment || (() => ''),
-  },
-};
+global.insights = {};
 
 configure({ adapter: new Adapter() });
 

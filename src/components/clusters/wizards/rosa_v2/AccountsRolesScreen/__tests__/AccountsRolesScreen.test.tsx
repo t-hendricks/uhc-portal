@@ -1,6 +1,6 @@
 import React from 'react';
 import { Formik } from 'formik';
-import { withState, checkAccessibility, insightsMock, screen, act, TestRouter } from '~/testUtils';
+import { withState, checkAccessibility, screen, act, TestRouter } from '~/testUtils';
 import { CompatRouter } from 'react-router-dom-v5-compat';
 import { normalizeSTSUsersByAWSAccounts } from '~/redux/actions/rosaActions';
 import AccountsRolesScreen, {
@@ -11,7 +11,6 @@ import { initialValues } from '../../constants';
 
 const useAnalyticsMock = jest.fn();
 jest.mock('~/hooks/useAnalytics', () => jest.fn(() => useAnalyticsMock));
-insightsMock();
 
 const accountRolesScreenProps: AccountsRolesScreenProps = {
   getAWSAccountIDs: () => {},

@@ -1,8 +1,6 @@
 import * as React from 'react';
-import { insightsMock, render, screen, within } from '~/testUtils';
+import { render, screen, within } from '~/testUtils';
 import EditMachinePoolModal from './EditMachinePoolModal';
-
-insightsMock();
 
 describe('<EditMachinePoolModal />', () => {
   describe('error state', () => {

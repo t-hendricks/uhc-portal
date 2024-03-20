@@ -1,12 +1,10 @@
 import React from 'react';
 
-import { render, screen, checkAccessibility, within, insightsMock } from '~/testUtils';
+import { render, screen, checkAccessibility, within } from '~/testUtils';
 import apiRequest from '~/services/apiRequest';
 import wizardConnector from '~/components/clusters/wizards/common/WizardConnector';
 import { constants } from '~/components/clusters/common/CreateOSDFormConstants';
 import ScaleSection from './ScaleSection';
-
-insightsMock();
 
 const defaultProps = {
   isBYOC: false,
