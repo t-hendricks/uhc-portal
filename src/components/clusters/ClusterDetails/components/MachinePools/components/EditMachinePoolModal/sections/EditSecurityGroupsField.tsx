@@ -8,6 +8,7 @@ import { SupportedFeature } from '~/common/featureCompatibility';
 import { useAWSVPCFromCluster } from '~/components/clusters/common/useAWSVPCFromCluster';
 import EditSecurityGroups from '~/components/clusters/ClusterDetails/components/SecurityGroups/EditSecurityGroups';
 import SecurityGroupsEmptyAlert from '~/components/clusters/ClusterDetails/components/SecurityGroups/SecurityGroupsEmptyAlert';
+import SecurityGroupsNoChangeAlert from '~/components/clusters/ClusterDetails/components/SecurityGroups/SecurityGroupsNoChangeAlert';
 import useFormikOnChange from '~/hooks/useFormikOnChange';
 
 import { EditMachinePoolValues } from '../hooks/useMachinePoolFormik';
@@ -48,12 +49,15 @@ const EditSecurityGroupsField = ({ cluster, isReadOnly }: EditSecurityGroupsFiel
   return incompatibleReason ? (
     <>incompatibleReason</>
   ) : (
-    <EditSecurityGroups
-      selectedVPC={clusterVpc}
-      isReadOnly={isReadOnly}
-      selectedGroupIds={field.value}
-      onChange={onChange}
-    />
+    <>
+      <SecurityGroupsNoChangeAlert />
+      <EditSecurityGroups
+        selectedVPC={clusterVpc}
+        isReadOnly={isReadOnly}
+        selectedGroupIds={field.value}
+        onChange={onChange}
+      />
+    </>
   );
 };
 
