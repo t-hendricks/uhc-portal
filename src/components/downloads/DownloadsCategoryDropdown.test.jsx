@@ -20,6 +20,6 @@ describe('<DownloadsCategoryDropdown />', () => {
   it('has expected number of options', () => {
     render(<DownloadsCategoryDropdown selectedCategory="DEV" setCategory={setCategory} />);
 
-    expect(screen.getAllByRole('option')).toHaveLength(downloadsCategories.length);
+    expect(screen.getAllByRole('option')).toHaveLength(downloadsCategories().length);
   });
 });

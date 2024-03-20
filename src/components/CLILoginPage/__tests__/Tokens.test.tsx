@@ -15,7 +15,6 @@ limitations under the License.
 */
 
 import React from 'react';
-
 import {
   mockRestrictedEnv,
   mockRefreshToken,
@@ -28,24 +27,24 @@ import {
 import { CompatRouter } from 'react-router-dom-v5-compat';
 import Tokens from '../Instructions';
 
-const mockGetToken = jest
-  .fn()
-  .mockResolvedValue({ data: { refresh_token: 'hello offline access token!' } });
-
-window.insights = {
-  chrome: {
-    ...window.insights?.chrome,
-    auth: {
-      ...window.insights?.chrome?.auth,
-      getOfflineToken: mockGetToken,
-    },
-  },
-};
-
 describe('<Tokens />', () => {
-  mockRefreshToken();
-  afterEach(() => {
+  beforeEach(() => {
     jest.clearAllMocks();
+  });
+
+  mockRefreshToken();
+  const getOfflineTokenMock = jest.fn(() =>
+    Promise.resolve({
+      data: {
+        scope: 'scope',
+        refresh_token: 'refresh_token',
+      },
+    }),
+  );
+  mockUseChrome({
+    auth: {
+      getOfflineToken: getOfflineTokenMock,
+    },
   });
 
   it('is accessible with button', async () => {
@@ -91,7 +90,7 @@ describe('<Tokens />', () => {
   });
 
   it('Calls getOfflineToken', async () => {
-    expect(mockGetToken).not.toHaveBeenCalled();
+    expect(getOfflineTokenMock).not.toHaveBeenCalled();
 
     render(
       <TestRouter>
@@ -100,7 +99,7 @@ describe('<Tokens />', () => {
         </CompatRouter>
       </TestRouter>,
     );
-    expect(mockGetToken).toHaveBeenCalled();
+    expect(getOfflineTokenMock).toHaveBeenCalled();
     expect(await screen.findByRole('link', { name: 'Download ocm CLI' })).toBeInTheDocument();
   });
 
@@ -112,7 +111,6 @@ describe('<Tokens />', () => {
 
     it('Renders screen with refresh token', async () => {
       isRestrictedEnv.mockReturnValue(true);
-      mockUseChrome();
       render(
         <TestRouter>
           <CompatRouter>

@@ -2,11 +2,11 @@ import React from 'react';
 import PageHeader, { PageHeaderTitle } from '@redhat-cloud-services/frontend-components/PageHeader';
 import { Spinner } from '@redhat-cloud-services/frontend-components/Spinner';
 import useChrome from '@redhat-cloud-services/frontend-components/useChrome';
-import type { ChromeAPI } from '@redhat-cloud-services/types';
 import { PageSection, Alert, Card, CardBody, CardTitle, Title } from '@patternfly/react-core';
 import { Error } from '~/types/accounts_mgmt.v1';
 import { isRestrictedEnv } from '~/restrictedEnv';
 import { hasRestrictTokensCapability, defaultToOfflineTokens } from '~/common/restrictTokensHelper';
+import { Chrome } from '~/types/types';
 import useOrganization from './useOrganization';
 import InstructionsOCM from './Instructions';
 import InstructionsROSA from './InstructionsROSA';
@@ -36,10 +36,10 @@ type CLILoginPageProps = {
 };
 
 const CLILoginPage = ({ showToken = false, showPath, isRosa = false }: CLILoginPageProps) => {
-  const chrome = useChrome();
+  const chrome = useChrome() as Chrome;
   const { organization, isLoading, error } = useOrganization();
 
-  const restrictedEnv = isRestrictedEnv(chrome as unknown as ChromeAPI);
+  const restrictedEnv = isRestrictedEnv(chrome);
   let restrictTokens = false;
 
   if (!restrictedEnv) {

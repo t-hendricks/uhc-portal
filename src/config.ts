@@ -3,6 +3,17 @@ import utc from 'dayjs/plugin/utc';
 import relativeTime from 'dayjs/plugin/relativeTime';
 import advancedFormat from 'dayjs/plugin/advancedFormat';
 import { ENV_OVERRIDE_LOCALSTORAGE_KEY } from './common/localStorageConstants';
+import { Chrome } from './types/types';
+import { isRestrictedEnv, getRestrictedEnvApi } from './restrictedEnv';
+
+export type Config = {
+  configData: EnvConfigWithFedRamp;
+  dateConfig: () => void;
+  envOverride: string | undefined;
+  fakeOSD: boolean;
+  fetchConfig: (chrome: Chrome) => Promise<any>;
+  loadConfig: (data: EnvConfigWithFedRamp) => void;
+};
 
 type EnvConfig = {
   apiGateway: string;
@@ -13,6 +24,11 @@ type EnvConfig = {
   fedrampS3?: string;
   demoExperience?: string;
 };
+
+type EnvConfigWithFedRamp = {
+  restrictedEnv: boolean;
+  restrictedEnvApi: string;
+} & EnvConfig;
 
 const configs: { [env: string]: Promise<EnvConfig> | undefined } = {};
 
@@ -76,12 +92,12 @@ const parseRosaV2QueryParam = () => {
 };
 
 const config = {
-  configData: {} as EnvConfig,
+  configData: {} as EnvConfigWithFedRamp,
   envOverride: undefined as string | undefined,
   fakeOSD: false,
   rosaV2: false,
 
-  loadConfig(data: EnvConfig) {
+  loadConfig(data: EnvConfigWithFedRamp) {
     this.configData = {
       ...data,
       // replace $SELF_PATH$ with the current host
@@ -95,7 +111,7 @@ const config = {
     (window as any).ocmConfig = this;
   },
 
-  fetchConfig() {
+  fetchConfig(chrome: Chrome) {
     const that = this;
     return new Promise<void>((resolve) => {
       if (parseFakeQueryParam()) {
@@ -104,10 +120,17 @@ const config = {
       if (parseRosaV2QueryParam()) {
         that.rosaV2 = true;
       }
+      const fedRampConfig = {
+        restrictedEnv: isRestrictedEnv(chrome),
+        restrictedEnvApi: getRestrictedEnvApi(chrome),
+      };
       const queryEnv = parseEnvQueryParam() || localStorage.getItem(ENV_OVERRIDE_LOCALSTORAGE_KEY);
       if (queryEnv && configs[queryEnv]) {
         configs[queryEnv]!.then((data) => {
-          this.loadConfig(data);
+          this.loadConfig({
+            ...data,
+            ...fedRampConfig,
+          });
           // eslint-disable-next-line no-console
           console.info(`Loaded override config: ${queryEnv}`);
           that.envOverride = queryEnv;
@@ -116,7 +139,10 @@ const config = {
         });
       } else {
         configs.default?.then((data) => {
-          this.loadConfig(data);
+          this.loadConfig({
+            ...data,
+            ...fedRampConfig,
+          });
           // eslint-disable-next-line no-console
           console.info(`Loaded default config: ${APP_API_ENV}`);
           resolve();

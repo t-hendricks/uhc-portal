@@ -27,23 +27,25 @@ import * as Sentry from '@sentry/browser';
 import { sessionTimingIntegration } from '@sentry/integrations';
 
 import * as OCM from '@openshift-assisted/ui-lib/ocm';
-
-import { authInterceptor } from '~/services/apiRequest';
-
 import { GenerateId } from '@patternfly/react-core';
+
+import useChrome from '@redhat-cloud-services/frontend-components/useChrome';
+import config from './config';
+
 import getNavClickParams from './common/getNavClickParams';
 import ocmBaseName from './common/getBaseName';
 
 import { userInfoResponse } from './redux/actions/userActions';
 import { detectFeatures } from './redux/actions/featureActions';
-import { store } from './redux/store';
 
-import config from './config';
+import { store } from './redux/store';
+import { authInterceptor } from './services/apiRequest';
 
 import App from './components/App/App';
 import type { AppThunkDispatch } from './redux/types';
 
 import './styles/main.scss';
+import { Chrome } from './types/types';
 
 const { Api, Config } = OCM;
 
@@ -57,21 +59,22 @@ const { Api, Config } = OCM;
 Api.setAuthInterceptor(authInterceptor);
 Config.setRouteBasePath('/assisted-installer');
 
-// Chrome 2.0 renders this
-class AppEntry extends React.Component {
+type Props = {
+  chrome: Chrome;
+};
+
+class AppEntry extends React.Component<Props> {
   state = { ready: false };
 
   componentDidMount() {
-    insights.chrome.init();
-    insights.chrome.identifyApp('').then(() => {
-      insights.chrome.appNavClick(getNavClickParams(window.location.pathname));
-    });
+    const { chrome } = this.props;
+    chrome.appNavClick(getNavClickParams(window.location.pathname));
     config.dateConfig();
-    insights.chrome.auth.getUser().then((data) => {
+    chrome.auth.getUser().then((data: any) => {
       if (data?.identity?.user) {
         store.dispatch(userInfoResponse(data.identity.user));
       }
-      config.fetchConfig().then(() => {
+      config.fetchConfig(chrome).then(() => {
         (store.dispatch as AppThunkDispatch)(detectFeatures());
         this.setState({ ready: true });
         if (!APP_DEV_SERVER && !config.envOverride && config.configData.sentryDSN) {
@@ -109,7 +112,7 @@ class AppEntry extends React.Component {
       // build is not deployed in a production environment
       APP_API_ENV !== 'production'
     ) {
-      insights.chrome.enable.segmentDev();
+      chrome.enable.segmentDev();
     }
   }
 
@@ -139,4 +142,15 @@ class AppEntry extends React.Component {
     return null;
   }
 }
-export default AppEntry;
+
+/**
+ * Entry point for Chrome 2.0
+ *
+ * This wrapper exists to call the useChrome hook
+ */
+const AppEntryWrapper = () => {
+  const chrome = useChrome() as Chrome;
+  return chrome.initialized ? <AppEntry chrome={chrome} /> : null;
+};
+
+export default AppEntryWrapper;

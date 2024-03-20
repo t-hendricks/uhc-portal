@@ -1,7 +1,7 @@
 import React from 'react';
 import type axios from 'axios';
 
-import { insightsMock, render, within, waitFor } from '~/testUtils';
+import { render, within, waitFor } from '~/testUtils';
 
 import apiRequest from '~/services/apiRequest';
 import { Subscription } from '~/types/accounts_mgmt.v1';
@@ -12,8 +12,6 @@ import fixtures from '../../../../__tests__/ClusterDetails.fixtures';
 
 type MockedJest = jest.Mocked<typeof axios> & jest.Mock;
 const apiRequestMock = apiRequest as unknown as MockedJest;
-
-insightsMock();
 
 describe('<OCMRolesSection />', () => {
   afterEach(() => {

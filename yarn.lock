@@ -2373,15 +2373,15 @@
   dependencies:
     axios "^0.27.2"
 
+"@redhat-cloud-services/types@1.0.6":
+  version "1.0.6"
+  resolved "https://registry.yarnpkg.com/@redhat-cloud-services/types/-/types-1.0.6.tgz#f4cd20a7e6404f724572c7170fa22619d84dd350"
+  integrity sha512-2esuuvW2aM03IOWlMSxqKkGVAjeL9YrS7cBx814nuqBV4SNyC/JxVBUJ8TsjDACRp4jRINWBF27YqZcX7flzLg==
+
 "@redhat-cloud-services/types@^0.0.24":
   version "0.0.24"
   resolved "https://registry.yarnpkg.com/@redhat-cloud-services/types/-/types-0.0.24.tgz#25ddb393b7b280af619a1d7ed8185afe935a3a2f"
   integrity sha512-P50stc+mnWLycID46/AKmD/760r5N1eoam//O6MUVriqVorUdht7xkUL78aJZU1vw8WW6xlrDHwz3F6BM148qg==
-
-"@redhat-cloud-services/types@^1.0.6":
-  version "1.0.6"
-  resolved "https://registry.yarnpkg.com/@redhat-cloud-services/types/-/types-1.0.6.tgz#f4cd20a7e6404f724572c7170fa22619d84dd350"
-  integrity sha512-2esuuvW2aM03IOWlMSxqKkGVAjeL9YrS7cBx814nuqBV4SNyC/JxVBUJ8TsjDACRp4jRINWBF27YqZcX7flzLg==
 
 "@reduxjs/toolkit@^1.9.1":
   version "1.9.5"
