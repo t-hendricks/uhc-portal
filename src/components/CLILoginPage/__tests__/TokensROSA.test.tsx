@@ -20,7 +20,20 @@ import { screen, render, checkAccessibility, mockUseChrome, TestRouter } from '~
 import TokensROSA from '../InstructionsROSA';
 
 describe('<TokensROSA />', () => {
-  mockUseChrome();
+  const getOfflineTokenMock = jest.fn(() =>
+    Promise.resolve({
+      data: {
+        scope: 'scope',
+        refresh_token: 'hello',
+      },
+    }),
+  );
+  mockUseChrome({
+    auth: {
+      getOfflineToken: getOfflineTokenMock,
+    },
+  });
+
   it('is accessible with button', async () => {
     const { container } = render(
       <TestRouter>
@@ -35,16 +48,6 @@ describe('<TokensROSA />', () => {
   });
 
   it('Renders token', async () => {
-    global.insights = {
-      chrome: {
-        ...global.insights.chrome,
-        on: () => () => {}, // a function that returns a function
-        appNavClick: () => {},
-        auth: {
-          getOfflineToken: () => Promise.resolve({ data: { refresh_token: 'hello' } }),
-        },
-      },
-    };
     render(
       <TestRouter>
         <CompatRouter>

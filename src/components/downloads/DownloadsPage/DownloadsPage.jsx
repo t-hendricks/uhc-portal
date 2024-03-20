@@ -236,16 +236,16 @@ const ToolAndDescriptionRows = ({
       toolRefs={toolRefs}
       expandKey={tool}
       cells={[
-        <Td dataLabel="Name" key="Name">
+        <Td dataLabel="Name" key={`${tool}-name`}>
           <span>{name}</span>
         </Td>,
-        <Td dataLabel="OS" key="OS">
+        <Td dataLabel="OS" key={`${tool}-os`}>
           {chooser.osDropdown}
         </Td>,
-        <Td dataLabel="Architecture" key="Arch">
+        <Td dataLabel="Architecture" key={`${tool}-arch`}>
           {chooser.archDropdown}
         </Td>,
-        <Td dataLabel="" key="downloadBtn">
+        <Td dataLabel="" key={`${tool}-download`}>
           <AlignRight>{chooser.downloadButton} </AlignRight>
         </Td>,
       ]}
@@ -825,7 +825,7 @@ const DownloadsPage = ({ token, githubReleases, getLatestRelease, getAuthToken }
    */
   const updateURL = (selectedCategory, expanded) => {
     let lastExpanded = null;
-    const shownKeys = downloadsCategories.find((c) => c.key === selectedCategory)?.tools;
+    const shownKeys = downloadsCategories().find((c) => c.key === selectedCategory)?.tools;
     shownKeys.forEach((key) => {
       if (expanded[key]) {
         lastExpanded = key;
@@ -909,7 +909,7 @@ const DownloadsPage = ({ token, githubReleases, getLatestRelease, getAuthToken }
 
   const urls = urlsSelector(githubReleases);
 
-  const shownKeys = downloadsCategories.find((c) => c.key === selectedCategory)?.tools;
+  const shownKeys = downloadsCategories().find((c) => c.key === selectedCategory)?.tools;
   const allExpanded = shownKeys?.every((key) => expanded[key]);
   const willExpandAll = !allExpanded;
 

@@ -7,7 +7,7 @@ import '@testing-library/jest-dom';
 import { MemoryRouter } from 'react-router-dom';
 import { toHaveNoViolations, axe } from 'jest-axe';
 
-import useChrome from '@redhat-cloud-services/frontend-components/useChrome';
+import * as useChromeHook from '@redhat-cloud-services/frontend-components/useChrome';
 import * as featureGates from '~/hooks/useFeatureGate';
 import { createBrowserHistory } from 'history';
 
@@ -106,8 +106,7 @@ export const checkAccessibility = async (container: HTMLElement | string, option
   expect(results).toHaveNoViolations();
 };
 
-const stubbedChrome = {
-  ...global.insights.chrome,
+export const stubbedChrome = {
   on: () => () => {},
   appNavClick: () => {},
   auth: {
@@ -116,14 +115,9 @@ const stubbedChrome = {
     getOfflineToken: () => Promise.resolve({ data: { refresh_token: 'hello' } }),
   },
   getEnvironment: () => 'prod',
-};
-
-export const insightsMock = () => {
-  global.insights = {
-    chrome: {
-      ...stubbedChrome,
-    },
-  };
+  segment: {
+    setPageMetadata: () => {},
+  },
 };
 
 export const mockRestrictedEnv = () => {
@@ -138,9 +132,13 @@ export const mockRefreshToken = () => {
   return mock;
 };
 
-export const mockUseChrome = () => {
-  const useChromeMock = useChrome as jest.Mock;
-  useChromeMock.mockReturnValue(stubbedChrome);
+export const mockUseChrome = (mockImpl?: any) => {
+  const useChromeSpy = jest.spyOn(useChromeHook, 'default');
+  useChromeSpy.mockImplementation(() => ({
+    ...stubbedChrome,
+    ...mockImpl,
+  }));
+  return useChromeSpy;
 };
 
 export const TestRouter = ({ children }: { children: React.ReactNode }) => (

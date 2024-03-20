@@ -1,13 +1,6 @@
 import React from 'react';
 
-import {
-  checkAccessibility,
-  insightsMock,
-  render,
-  screen,
-  within,
-  mockRestrictedEnv,
-} from '~/testUtils';
+import { checkAccessibility, render, screen, within, mockRestrictedEnv } from '~/testUtils';
 import { subscriptionStatuses } from '~/common/subscriptionTypes';
 import fixtures from '../../../__tests__/ClusterDetails.fixtures';
 import DetailsRight from './DetailsRight';
@@ -70,8 +63,6 @@ const checkForValueAbsence = (label, value, testId) => {
     expect(container.queryByText(value)).not.toBeInTheDocument();
   }
 };
-
-insightsMock();
 
 describe('<DetailsRight />', () => {
   it('is accessible on initial render', async () => {

@@ -27,6 +27,7 @@
 import Keycloak, { KeycloakConfig, KeycloakInitOptions } from 'keycloak-js';
 import urijs from 'urijs';
 import axios, { AxiosError } from 'axios';
+import type { Chrome } from '~/types/types';
 
 const defaultOptions = {
   realm: 'redhat-external',
@@ -187,8 +188,9 @@ export const doOffline = (onDone: (tokenOrError: string, errorReason?: string) =
 export const loadOfflineToken = (
   callback: (tokenOrError: string, errorReason?: string) => void,
   targetOrigin: string,
+  chrome: Chrome,
 ) => {
-  insights.chrome.auth
+  chrome.auth
     .getOfflineToken()
     .then((response: any) => {
       // eslint-disable-next-line no-console

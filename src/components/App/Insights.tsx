@@ -1,11 +1,14 @@
 import React from 'react';
 import { Location, matchPath, useLocation, useNavigate } from 'react-router-dom-v5-compat';
+import useChrome from '@redhat-cloud-services/frontend-components/useChrome';
+import { Chrome } from '~/types/types';
 import getNavClickParams from '../../common/getNavClickParams';
 import { ocmAppPath, removeOcmBaseName } from '../../common/getBaseName';
 
 const Insights = () => {
   const location = useLocation();
   const navigate = useNavigate();
+  const chrome = useChrome() as Chrome;
 
   const ocmListeners = React.useRef<{ [event: string]: (() => void)[] }>({ APP_REFRESH: [] });
 
@@ -40,9 +43,9 @@ const Insights = () => {
       return cleanupFn;
     };
 
-    const cleanupInsightsListener = insights.chrome.on('APP_NAVIGATION', navigateToApp);
+    const cleanupInsightsListener = chrome.on('APP_NAVIGATION', navigateToApp);
     const cleanupRouteListener = (location: Location<any>) => {
-      insights.chrome.appNavClick(getNavClickParams(location.pathname));
+      chrome.appNavClick(getNavClickParams(location.pathname));
     };
 
     insights.ocm = {
@@ -61,6 +64,7 @@ const Insights = () => {
       cleanupRouteListener(location);
       delete insights.ocm;
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [location, navigate]);
 
   return null;

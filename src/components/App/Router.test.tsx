@@ -2,21 +2,9 @@ import React from 'react';
 import { MemoryRouter } from 'react-router-dom';
 import { CompatRouter } from 'react-router-dom-v5-compat';
 import { Provider } from 'react-redux';
-import * as useChromeHook from '@redhat-cloud-services/frontend-components/useChrome';
-import { mockRestrictedEnv, render, screen } from '~/testUtils';
+import { mockRestrictedEnv, render, screen, mockUseChrome } from '~/testUtils';
 import Router from './Router';
 import { store } from '../../redux/store';
-
-global.insights = {
-  chrome: {
-    ...global.insights.chrome,
-    on: () => () => {}, // a function that returns a function
-    appNavClick: () => {},
-    auth: {
-      getOfflineToken: () => Promise.resolve({ data: { refresh_token: 'hello' } }),
-    },
-  },
-};
 
 const routes = [
   { path: '/', metadata: { ocm_resource_type: 'all' } },
@@ -63,16 +51,18 @@ const routes = [
 );
 
 describe('Router', () => {
-  const useChromeSpy = jest.spyOn(useChromeHook, 'default');
-  const mockSetPageMetadata = jest.fn();
-  beforeAll(() => {
-    useChromeSpy.mockImplementation(() => ({
-      segment: {
-        setPageMetadata: mockSetPageMetadata,
-      },
-    }));
-    mockRestrictedEnv();
+  beforeEach(() => {
+    jest.clearAllMocks();
   });
+
+  mockRestrictedEnv();
+  const mockSetPageMetadata = jest.fn();
+  mockUseChrome({
+    segment: {
+      setPageMetadata: mockSetPageMetadata,
+    },
+  });
+
   describe('Every route should render: ', () =>
     test.each(routes)(
       '%s',

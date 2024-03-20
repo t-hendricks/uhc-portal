@@ -9,7 +9,7 @@ import links from '~/common/installLinks.mjs';
 import { RosaCliCommand } from '~/components/clusters/wizards/rosa_v2/AccountsRolesScreen/constants/cliCommands';
 import { isRestrictedEnv, getRefreshToken } from '~/restrictedEnv';
 import useChrome from '@redhat-cloud-services/frontend-components/useChrome';
-import type { ChromeAPI } from '@redhat-cloud-services/types';
+import type { Chrome } from '~/types/types';
 
 type StepCreateAWSAccountRolesProps = {
   offlineToken?: string;
@@ -20,14 +20,12 @@ const StepCreateAWSAccountRoles = ({
   offlineToken,
   setOfflineToken,
 }: StepCreateAWSAccountRolesProps) => {
-  const chrome = useChrome();
-  const restrictedEnv = isRestrictedEnv(chrome as unknown as ChromeAPI);
+  const chrome = useChrome() as Chrome;
+  const restrictedEnv = isRestrictedEnv(chrome);
   const [token, setToken] = React.useState<string>('');
   React.useEffect(() => {
     if (restrictedEnv) {
-      getRefreshToken(chrome as unknown as ChromeAPI).then((refreshToken) =>
-        setToken(refreshToken),
-      );
+      getRefreshToken(chrome).then((refreshToken) => setToken(refreshToken));
     } else if (offlineToken) {
       setToken(offlineToken as string);
     }
@@ -45,9 +43,13 @@ const StepCreateAWSAccountRoles = ({
 
   React.useEffect(() => {
     if (!restrictedEnv && !offlineToken) {
-      loadOfflineToken((tokenOrError, errorReason) => {
-        setOfflineToken(errorReason || tokenOrError);
-      }, window.location.origin);
+      loadOfflineToken(
+        (tokenOrError, errorReason) => {
+          setOfflineToken(errorReason || tokenOrError);
+        },
+        window.location.origin,
+        chrome,
+      );
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
