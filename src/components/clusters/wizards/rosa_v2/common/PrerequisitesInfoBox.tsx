@@ -28,7 +28,7 @@ export const PrerequisitesInfoBox: React.FC<PrerequisitesInfoBoxProps> = (props)
           <Link to="/create/rosa/getstarted" onClick={onClick}>
             Set up ROSA page
           </Link>
-          Ok , .
+          .
         </p>
         {showRosaCliRequirement && (
           <p>
