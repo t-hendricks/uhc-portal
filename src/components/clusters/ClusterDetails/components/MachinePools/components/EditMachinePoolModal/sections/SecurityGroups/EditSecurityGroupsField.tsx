@@ -10,10 +10,8 @@ import EditSecurityGroups from '~/components/clusters/ClusterDetails/components/
 import SecurityGroupsEmptyAlert from '~/components/clusters/ClusterDetails/components/SecurityGroups/SecurityGroupsEmptyAlert';
 import SecurityGroupsNoChangeAlert from '~/components/clusters/ClusterDetails/components/SecurityGroups/SecurityGroupsNoChangeAlert';
 import useFormikOnChange from '~/hooks/useFormikOnChange';
-
-import { EditMachinePoolValues } from '../hooks/useMachinePoolFormik';
-
-const fieldId = 'securityGroupIds';
+import { FieldId } from '~/components/clusters/wizards/common';
+import { EditMachinePoolValues } from '../../hooks/useMachinePoolFormik';
 
 export interface EditSecurityGroupsFieldProps {
   cluster: Cluster;
@@ -21,8 +19,10 @@ export interface EditSecurityGroupsFieldProps {
 }
 
 const EditSecurityGroupsField = ({ cluster, isReadOnly }: EditSecurityGroupsFieldProps) => {
-  const [field] = useField<EditMachinePoolValues['securityGroupIds']>(fieldId);
-  const onChange = useFormikOnChange(fieldId);
+  const [field] = useField<EditMachinePoolValues[FieldId.SecurityGroupIds]>(
+    FieldId.SecurityGroupIds,
+  );
+  const onChange = useFormikOnChange(FieldId.SecurityGroupIds);
 
   const { clusterVpc, isLoading } = useAWSVPCFromCluster(cluster);
 
@@ -47,7 +47,7 @@ const EditSecurityGroupsField = ({ cluster, isReadOnly }: EditSecurityGroupsFiel
     { day2: true },
   );
   return incompatibleReason ? (
-    <>incompatibleReason</>
+    <Alert variant={AlertVariant.warning} title={incompatibleReason} isInline />
   ) : (
     <>
       <SecurityGroupsNoChangeAlert />

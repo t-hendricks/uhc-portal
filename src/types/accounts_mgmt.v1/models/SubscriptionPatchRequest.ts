@@ -57,6 +57,7 @@ export namespace SubscriptionPatchRequest {
     PREMIUM = 'Premium',
     SELF_SUPPORT = 'Self-Support',
     NONE = 'None',
+    SUPPORTED_BY_IBM = 'SupportedByIBM',
   }
 
   export enum system_units {

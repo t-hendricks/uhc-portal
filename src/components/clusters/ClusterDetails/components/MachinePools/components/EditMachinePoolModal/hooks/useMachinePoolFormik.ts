@@ -120,7 +120,10 @@ const useMachinePoolFormik = ({
       diskSize: diskSize || defaultWorkerNodeVolumeSizeGiB,
       instanceType,
       privateSubnetId: undefined,
-      securityGroupIds: machinePool?.aws?.additional_security_group_ids || [],
+      securityGroupIds:
+        machinePool?.aws?.additional_security_group_ids ||
+        (machinePool as NodePool)?.aws_node_pool?.additional_security_group_ids ||
+        [],
     };
   }, [machinePool, isMachinePoolMz, minNodesRequired]);
 

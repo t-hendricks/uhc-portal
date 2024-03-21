@@ -1,8 +1,8 @@
-import { CompatibilityOptions, SupportedFeature } from '~/common/featureCompatibility';
-import { getIncompatibleVersionReason } from '~/common/versionCompatibility';
+import { SupportedFeature } from '~/common/featureCompatibility';
+import { CompatibilityOptions, getIncompatibleVersionReason } from '~/common/versionCompatibility';
 
 const sgReasonDay1 = 'To use security groups, your cluster must be version 4.14.0 or newer.';
-const sgReasonDay2 = 'To use security groups, your cluster must be version 4.11.0 or newer.';
+const sgReasonDay2 = 'To use security groups, your cluster must be version 4.15.0 or newer.';
 const sharedVpcReason = 'To use shared VPCs, your cluster must be version 4.13.9 or newer.';
 
 describe('versionCompatibility', () => {
@@ -28,7 +28,7 @@ describe('versionCompatibility', () => {
   describe('No incompatible reason is given for', () => {
     it.each([
       [SupportedFeature.SECURITY_GROUPS, '4.14.4', { day1: true }, ''],
-      [SupportedFeature.SECURITY_GROUPS, '4.11.0', { day2: true }, ''],
+      [SupportedFeature.SECURITY_GROUPS, '4.15.0', { day2: true }, ''],
       [SupportedFeature.AWS_SHARED_VPC, '4.13.10', { day1: true }, ''],
       [SupportedFeature.AWS_SHARED_VPC, '4.13.10', { day2: true }, ''],
     ])(

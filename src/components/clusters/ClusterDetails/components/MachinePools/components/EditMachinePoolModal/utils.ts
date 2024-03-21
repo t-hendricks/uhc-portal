@@ -114,6 +114,7 @@ export const buildNodePoolRequest = (
     nodePool.subnet = values.privateSubnetId;
     nodePool.aws_node_pool = {
       instance_type: values.instanceType,
+      additional_security_group_ids: values.securityGroupIds,
     };
   }
   return nodePool;

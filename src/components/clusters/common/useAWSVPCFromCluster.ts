@@ -101,6 +101,7 @@ export const useAWSVPCFromCluster = (cluster: Cluster) => {
         awsCredentials: { sts: { role_arn: roleArn } },
         region: regionId,
         subnet: subnetId,
+        options: { includeSecurityGroups: isHypershift },
       };
       return manageVpcFetch(fetchVpcByStsCredentials(request));
     };

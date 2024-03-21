@@ -43,4 +43,8 @@ export type CloudProviderData = {
    * Openshift version
    */
   version?: Version;
+  /**
+   * VPC ids
+   */
+  vpc_ids?: Array<string>;
 };

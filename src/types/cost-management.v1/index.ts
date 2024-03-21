@@ -80,6 +80,8 @@ export type { ResourceTypePagination } from './models/ResourceTypePagination';
 export type { SettingIn } from './models/SettingIn';
 export type { SettingOut } from './models/SettingOut';
 export type { SettingsTagsEnabledLimitError } from './models/SettingsTagsEnabledLimitError';
+export type { SettingsTagsMappingsOptionsResponse } from './models/SettingsTagsMappingsOptionsResponse';
+export type { SettingsTagsMappingsResponse } from './models/SettingsTagsMappingsResponse';
 export type { SettingsTagsResponse } from './models/SettingsTagsResponse';
 export type { Source } from './models/Source';
 export type { SourceIn } from './models/SourceIn';

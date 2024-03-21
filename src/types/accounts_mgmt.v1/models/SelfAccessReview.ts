@@ -69,5 +69,6 @@ export namespace SelfAccessReview {
     CLUSTER_SELF_MANAGED_STATUS = 'ClusterSelfManagedStatus',
     CLUSTER_KUBELET_CONFIG = 'ClusterKubeletConfig',
     MACHINE_POOL = 'MachinePool',
+    CLUSTER_BREAK_GLASS_CREDENTIAL = 'ClusterBreakGlassCredential',
   }
 }
