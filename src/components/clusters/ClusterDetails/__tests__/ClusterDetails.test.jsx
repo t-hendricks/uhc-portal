@@ -162,8 +162,9 @@ describe('<ClusterDetails />', () => {
       );
     });
 
-    it('it should hide 1 tab', () => {
+    it('it should hide 2 tabs', () => {
       expect(screen.queryByText('Monitoring')).toBe(null);
+      expect(screen.queryByText('Settings')).toBe(null);
     });
   });
 
