@@ -19,6 +19,7 @@ const InstructionCommand = ({
   trackEvent,
   className,
   outerClassName,
+  ...props
 }: Props) => {
   const track = useAnalytics();
   return (
@@ -33,6 +34,7 @@ const InstructionCommand = ({
           clipboardCopyFunc(event, text);
         }}
         className={className}
+        {...props}
       >
         {children}
       </ClipboardCopy>
