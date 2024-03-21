@@ -2,7 +2,9 @@
 /* tslint:disable */
 /* eslint-disable */
 
-export type TemplateParameter = {
-  content: string;
+export type operator_condition = {
+  condition: string;
   name: string;
+  reason: string;
+  url: string;
 };

@@ -6,6 +6,7 @@ import type { AWSNodePool } from './AWSNodePool';
 import type { NodePoolAutoscaling } from './NodePoolAutoscaling';
 import type { NodePoolStatus } from './NodePoolStatus';
 import type { Taint } from './Taint';
+import type { Value } from './Value';
 import type { Version } from './Version';
 
 /**
@@ -45,6 +46,10 @@ export type NodePool = {
    * The labels set on the Nodes created.
    */
   labels?: Record<string, string>;
+  /**
+   * Time to wait for a NodePool to drain when it is upgraded or replaced before it is forcibly removed.
+   */
+  node_drain_grace_period?: Value;
   /**
    * The number of Machines (and Nodes) to create.
    * Replicas and autoscaling cannot be used together.

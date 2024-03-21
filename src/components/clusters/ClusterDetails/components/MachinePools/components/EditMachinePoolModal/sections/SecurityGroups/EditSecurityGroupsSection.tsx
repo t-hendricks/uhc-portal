@@ -17,8 +17,7 @@ export interface EditSecurityGroupsSectionProps {
 const EditSecurityGroupsSection = ({ cluster, isReadOnly }: EditSecurityGroupsSectionProps) => {
   const hasFeatureGate = useFeatureGate(SECURITY_GROUPS_FEATURE);
   const showSecurityGroupSection =
-    hasFeatureGate &&
-    isCompatibleFeature(SupportedFeature.SECURITY_GROUPS, cluster, { day2: true });
+    hasFeatureGate && isCompatibleFeature(SupportedFeature.SECURITY_GROUPS, cluster);
 
   return showSecurityGroupSection ? (
     <ExpandableSection

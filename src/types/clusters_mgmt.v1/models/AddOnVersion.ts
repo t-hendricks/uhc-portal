@@ -45,6 +45,10 @@ export type AddOnVersion = {
    */
   enabled?: boolean;
   /**
+   * The package image for this addon version
+   */
+  package_image?: string;
+  /**
    * List of parameters for this add-on version.
    */
   parameters?: Array<AddOnParameter>;
