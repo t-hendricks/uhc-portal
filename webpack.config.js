@@ -15,6 +15,8 @@ limitations under the License.
 */
 
 const path = require('path');
+const fs = require('fs');
+const baseSrcPath = path.resolve(__dirname, 'src');
 const webpack = require('webpack');
 const axios = require('axios').default;
 const HtmlWebpackPlugin = require('html-webpack-plugin');
@@ -36,6 +38,7 @@ const outDir = path.resolve(__dirname, 'dist', insights.appname);
 
 module.exports = async (_env, argv) => {
   const devMode = argv.mode !== 'production';
+  process.env.DEV_MODE = devMode;
   const betaMode = argv.env.beta === 'true';
   const sentryReleaseVersion = argv.env['sentry-version'];
   const isDevServer = process.argv.includes('serve');
@@ -228,6 +231,10 @@ module.exports = async (_env, argv) => {
     devServer: {
       historyApiFallback: {
         index: `${publicPath}index.html`,
+        rewrites: [
+          { from: /^\/src\/.*\.[a-zA-Z0-9]+$/, to: (context) => context.parsedUrl.pathname },
+          // Add other rewrites or leave existing rewrites here
+        ],
       },
       setupMiddlewares: (middlewares, devServer) => {
         if (!devServer) {
@@ -240,6 +247,43 @@ module.exports = async (_env, argv) => {
             middleware: (request, response, next) => {
               console.log('Handling', request.originalUrl);
               next();
+            },
+          });
+        }
+
+        // Custom middleware for logging request URLs
+        middlewares.unshift({
+          name: 'log-requests',
+          middleware: (req, res, next) => {
+            console.log('---> Request URL:', req.url); // Log the request URL
+            next(); // Continue to the next middleware
+          },
+        });
+
+        if (devMode) {
+          middlewares.unshift({
+            name: 'local-source-code-loader-middleware',
+            middleware: (req, res, next) => {
+              console.log('Adding local-source-code-loader-middleware', req.url);
+              if (req.url.startsWith('/src/')) {
+                const relativePath = req.url.substring('/src/'.length);
+                const filePath = path.join(baseSrcPath, relativePath);
+
+                try {
+                  if (fs.existsSync(filePath)) {
+                    const fileContent = fs.readFileSync(filePath, 'utf8');
+                    res.setHeader('Content-Type', 'text/plain');
+                    res.send(fileContent);
+                  } else {
+                    res.status(404).send('File not found');
+                  }
+                } catch (error) {
+                  console.error('Error reading source code file:', error);
+                  res.status(500).send('Internal Server Error');
+                }
+              } else {
+                next();
+              }
             },
           });
         }
@@ -264,6 +308,7 @@ module.exports = async (_env, argv) => {
               context: [
                 '**',
                 '!/mockdata/**',
+                '!/src/**',
                 `!/apps/${insights.appname}/**`,
                 `!/beta/apps/${insights.appname}/**`,
                 `!/preview/apps/${insights.appname}/**`, // not expected to be used

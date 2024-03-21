@@ -2,6 +2,9 @@ const pfReactIconsMapper = {
   IconSize: '@patternfly/react-icons/dist/esm/createIcon',
 };
 
+// Use the environment variable set in webpack.config.js
+const isDevelopment = process.env.DEV_MODE === 'true';
+
 module.exports = {
   presets: [
     [
@@ -22,6 +25,7 @@ module.exports = {
     '@babel/plugin-transform-object-assign',
     '@babel/plugin-transform-optional-chaining',
     '@babel/plugin-transform-modules-commonjs',
+    isDevelopment && './babel-plugins/sol-sc-explorer/index.js', // Conditionally include this plugin based on development mode
     [
       'transform-imports',
       {
@@ -43,5 +47,5 @@ module.exports = {
         regenerator: true,
       },
     ],
-  ],
+  ].filter(Boolean), // Filter out false values from the plugins array
 };
