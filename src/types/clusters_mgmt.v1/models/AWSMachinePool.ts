@@ -25,7 +25,15 @@ export type AWSMachinePool = {
    */
   additional_security_group_ids?: Array<string>;
   /**
+   * Associates nodepool availability zones with zone types (e.g. wavelength, local).
+   */
+  availability_zone_types?: Record<string, string>;
+  /**
    * Use spot instances on this machine pool to reduce cost.
    */
   spot_market_options?: AWSSpotMarketOptions;
+  /**
+   * Associates nodepool subnets with AWS Outposts.
+   */
+  subnet_outposts?: Record<string, string>;
 };

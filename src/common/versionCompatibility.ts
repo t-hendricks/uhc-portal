@@ -1,6 +1,8 @@
 import semver from 'semver';
 
-import { CompatibilityOptions, SupportedFeature } from './featureCompatibility';
+import { SupportedFeature } from './featureCompatibility';
+
+type CompatibilityOptions = { day1?: boolean; day2?: boolean };
 
 type FeatureCompatibility = {
   label: string;
@@ -12,7 +14,7 @@ const featureCompatibilityMap: Record<SupportedFeature, FeatureCompatibility> = 
   [SupportedFeature.SECURITY_GROUPS]: {
     label: 'security groups',
     day1: '4.14.0',
-    day2: '4.11.0',
+    day2: '4.15.0',
   },
   [SupportedFeature.AWS_SHARED_VPC]: {
     label: 'shared VPCs',
@@ -57,4 +59,4 @@ const getIncompatibleVersionReason = (
   return incompatibilityReason(featureCompatibility, versionRawId, options);
 };
 
-export { getIncompatibleVersionReason };
+export { getIncompatibleVersionReason, CompatibilityOptions };
