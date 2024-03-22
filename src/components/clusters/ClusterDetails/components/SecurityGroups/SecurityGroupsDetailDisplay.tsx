@@ -1,17 +1,23 @@
 import React from 'react';
 import { Link } from 'react-router-dom-v5-compat';
-import { SecurityGroup, MachinePool } from '~/types/clusters_mgmt.v1';
+import { SecurityGroup, MachinePool, NodePool } from '~/types/clusters_mgmt.v1';
 import {
   MachinePoolItemList,
   securityGroupsRenderer,
 } from '~/components/clusters/ClusterDetails/components/MachinePools/components/MachinePoolExpandedRow';
 
-const getCombinedMachinePoolSecurityGroupIds = (machinePoolData: MachinePool[]): string[] => {
+const getCombinedMachinePoolSecurityGroupIds = (
+  machinePoolData: MachinePool[] | NodePool[],
+): string[] => {
   // Step through the machine pools and combine the security groups into single array
   const securityGroups: string[] = [];
-  machinePoolData.forEach((mp) => {
-    if (mp?.aws?.additional_security_group_ids?.length ?? 0) {
-      securityGroups.push(...(mp?.aws?.additional_security_group_ids || []));
+  machinePoolData.forEach((pool) => {
+    const additionalSecurityGroupIds =
+      (pool as MachinePool)?.aws?.additional_security_group_ids ||
+      (pool as NodePool)?.aws_node_pool?.additional_security_group_ids ||
+      [];
+    if (additionalSecurityGroupIds?.length ?? 0) {
+      securityGroups.push(...(additionalSecurityGroupIds || []));
     }
   });
   // Remove duplicates
@@ -53,21 +59,23 @@ const SecurityGroupsDisplayByNode = ({
     )}
 
     {!showWorkerNodesTogether &&
-      machinePoolData.map(
-        (mp) =>
-          (mp?.aws?.additional_security_group_ids?.length || 0) > 0 && (
-            <dd key={`sg-detail-display-compute-nodes-${mp?.id}`}>
+      machinePoolData.map((pool) => {
+        const additionalSecurityGroupIds =
+          (pool as MachinePool)?.aws?.additional_security_group_ids ||
+          (pool as NodePool)?.aws_node_pool?.additional_security_group_ids ||
+          [];
+        return (
+          (additionalSecurityGroupIds?.length || 0) > 0 && (
+            <dd key={`sg-detail-display-compute-nodes-${pool?.id}`}>
               <MachinePoolItemList
-                title={`Compute (${mp?.id}) nodes `}
-                items={securityGroupsRenderer(
-                  mp?.aws?.additional_security_group_ids || [],
-                  securityGroups || [],
-                )}
+                title={`Compute (${pool?.id}) nodes `}
+                items={securityGroupsRenderer(additionalSecurityGroupIds, securityGroups || [])}
                 showSmallTitle
               />
             </dd>
-          ),
-      )}
+          )
+        );
+      })}
     {showWorkerNodesTogether && (
       <dd key="sg-detail-display-all-compute-nodes">
         <MachinePoolItemList
