@@ -1,6 +1,6 @@
 import React from 'react';
 import { Alert, AlertVariant, Spinner } from '@patternfly/react-core';
-import { useField } from 'formik';
+import { Field } from 'formik';
 
 import { Cluster } from '~/types/clusters_mgmt.v1';
 import { getIncompatibleVersionReason } from '~/common/versionCompatibility';
@@ -9,9 +9,9 @@ import { useAWSVPCFromCluster } from '~/components/clusters/common/useAWSVPCFrom
 import EditSecurityGroups from '~/components/clusters/ClusterDetails/components/SecurityGroups/EditSecurityGroups';
 import SecurityGroupsEmptyAlert from '~/components/clusters/ClusterDetails/components/SecurityGroups/SecurityGroupsEmptyAlert';
 import SecurityGroupsNoChangeAlert from '~/components/clusters/ClusterDetails/components/SecurityGroups/SecurityGroupsNoChangeAlert';
-import useFormikOnChange from '~/hooks/useFormikOnChange';
 import { FieldId } from '~/components/clusters/wizards/common';
-import { EditMachinePoolValues } from '../../hooks/useMachinePoolFormik';
+import { useFormState } from '~/components/clusters/wizards/hooks';
+import { validateSecurityGroups } from '~/common/validators';
 
 export interface EditSecurityGroupsFieldProps {
   cluster: Cluster;
@@ -19,10 +19,11 @@ export interface EditSecurityGroupsFieldProps {
 }
 
 const EditSecurityGroupsField = ({ cluster, isReadOnly }: EditSecurityGroupsFieldProps) => {
-  const [field] = useField<EditMachinePoolValues[FieldId.SecurityGroupIds]>(
-    FieldId.SecurityGroupIds,
-  );
-  const onChange = useFormikOnChange(FieldId.SecurityGroupIds);
+  const {
+    values: { [FieldId.SecurityGroupIds]: selectedGroupIds },
+    setFieldValue,
+    setFieldTouched,
+  } = useFormState();
 
   const { clusterVpc, isLoading } = useAWSVPCFromCluster(cluster);
 
@@ -51,11 +52,17 @@ const EditSecurityGroupsField = ({ cluster, isReadOnly }: EditSecurityGroupsFiel
   ) : (
     <>
       <SecurityGroupsNoChangeAlert />
-      <EditSecurityGroups
+      <Field
+        component={EditSecurityGroups}
+        name={FieldId.SecurityGroupIds}
+        onChange={(values: string[]) => {
+          setFieldValue(FieldId.SecurityGroupIds, values, true);
+          setFieldTouched(FieldId.SecurityGroupIds, true, false);
+        }}
+        validate={validateSecurityGroups}
         selectedVPC={clusterVpc}
         isReadOnly={isReadOnly}
-        selectedGroupIds={field.value}
-        onChange={onChange}
+        selectedGroupIds={selectedGroupIds}
       />
     </>
   );
