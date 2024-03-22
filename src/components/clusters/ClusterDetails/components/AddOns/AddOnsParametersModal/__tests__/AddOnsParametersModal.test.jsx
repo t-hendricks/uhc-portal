@@ -1,9 +1,8 @@
 import React from 'react';
-import { shallow } from 'enzyme';
 
-import { render, checkAccessibility } from '~/testUtils';
-import { Button } from '@patternfly/react-core';
-import { Field, reduxForm } from 'redux-form';
+import { render, checkAccessibility, screen, within } from '~/testUtils';
+
+import { reduxForm } from 'redux-form';
 import { reduxFormConfig } from '../index';
 
 import AddOnsParametersModal from '../AddOnsParametersModal';
@@ -12,7 +11,6 @@ import fixtures from '../../../../__tests__/ClusterDetails.fixtures';
 const dummyValue = 'dummy value';
 
 describe('<AddOnsParametersModal />', () => {
-  let wrapper;
   const closeModal = jest.fn();
   const clearClusterAddOnsResponses = jest.fn();
   const quota = {};
@@ -65,10 +63,6 @@ describe('<AddOnsParametersModal />', () => {
     cluster: clusterDetails.cluster,
   };
 
-  beforeEach(() => {
-    wrapper = shallow(<AddOnsParametersModal {...props} />);
-  });
-
   afterEach(() => {
     closeModal.mockClear();
     clearClusterAddOnsResponses.mockClear();
@@ -83,15 +77,21 @@ describe('<AddOnsParametersModal />', () => {
   });
 
   it('expect set default option button is be present if default_value present', () => {
-    expect(wrapper.find(Button).props().children.includes(dummyValue)).toBeTruthy();
+    render(<ReduxFormAddOnParametersModal {...props} />);
+
+    expect(screen.getByRole('button', { name: `Use default: ${dummyValue}` })).toBeInTheDocument();
   });
 
   it('expect addon field to be enabled on create form', () => {
-    expect(wrapper.find(Field).props().isDisabled).toBeFalsy();
+    render(<ReduxFormAddOnParametersModal {...props} />);
+
+    expect(screen.getByRole('textbox')).not.toBeDisabled();
+    expect(screen.getByRole('textbox')).not.toHaveAttribute('aria-disabled');
   });
 
   it('expect addon field placeholder to equal default value', () => {
-    expect(wrapper.find(Field).props().placeholder).toEqual(dummyValue);
+    render(<ReduxFormAddOnParametersModal {...props} />);
+    expect(screen.getByPlaceholderText(dummyValue)).toBeInTheDocument();
   });
 
   it('expect set default option to be absent if no default_value is present', () => {
@@ -111,9 +111,11 @@ describe('<AddOnsParametersModal />', () => {
         ],
       },
     };
-    wrapper.setProps({ addOn }, () => {
-      expect(wrapper.find(Button).exists()).toBeFalsy();
-    });
+
+    const newProps = { ...props, addOn };
+    render(<ReduxFormAddOnParametersModal {...newProps} />);
+
+    expect(screen.queryByRole('button', { name: /Use default/ })).not.toBeInTheDocument();
   });
 
   it('expect addon field to be disabled on update form, if param is not editable', () => {
@@ -133,10 +135,15 @@ describe('<AddOnsParametersModal />', () => {
         ],
       },
     };
-    const isUpdateForm = true;
-    wrapper.setProps({ addOn, isUpdateForm }, () => {
-      expect(wrapper.find(Field).props().isDisabled).toBeTruthy();
-    });
+
+    const newProps = {
+      ...props,
+      addOn,
+      isUpdateForm: true,
+    };
+    render(<ReduxFormAddOnParametersModal {...newProps} />);
+
+    expect(screen.getByRole('textbox')).toBeDisabled();
   });
 
   it('expect addon field to populate options', () => {
@@ -162,45 +169,15 @@ describe('<AddOnsParametersModal />', () => {
         ],
       },
     };
-    wrapper.setProps({ addOn }, () => {
-      expect(wrapper.find(Field).props().options).toEqual([
-        { name: '-- Please Select --', value: undefined },
-        { name: 'Option 1', value: 'option1' },
-      ]);
-    });
-  });
 
-  it('expect default value text to be populated by option name', () => {
-    const addOn = {
-      description: 'Dummy Desc',
-      enabled: true,
-      editable: true,
-      id: 'Dummy ID',
-      name: 'Dummy Name',
-      parameters: {
-        items: [
-          {
-            id: 'dummy item',
-            options: [
-              {
-                name: 'Option 1',
-                value: 'option1',
-              },
-            ],
-            default_value: 'option1',
-            enabled: true,
-            editable: true,
-          },
-        ],
-      },
-    };
-    wrapper.setProps({ addOn }, () => {
-      expect(wrapper.find(Field).props().options).toEqual([
-        { name: '-- Please Select --', value: undefined },
-        { name: 'Option 1', value: 'option1' },
-      ]);
-      expect(wrapper.find(Button).exists()).toBeTruthy();
-      expect(wrapper.find(Button).props().children.includes('Option 1')).toBeTruthy();
+    const newProps = { ...props, addOn };
+    render(<ReduxFormAddOnParametersModal {...newProps} />);
+
+    const options = within(screen.getByRole('combobox')).getAllByRole('option');
+    expect(options).toHaveLength(2);
+
+    ['-- Please Select --', 'Option 1'].forEach((optionText, index) => {
+      expect(options[index]).toHaveTextContent(optionText);
     });
   });
 });

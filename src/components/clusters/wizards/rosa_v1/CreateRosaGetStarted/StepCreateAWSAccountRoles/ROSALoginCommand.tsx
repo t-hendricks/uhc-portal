@@ -68,11 +68,7 @@ const ROSALoginCommand = ({
 
   if (restrictTokens) {
     return (
-      <InstructionCommand
-        className="ocm-c-api-token-limit-width"
-        outerClassName="pf-v5-u-mt-md"
-        data-testid="sso-login"
-      >
+      <InstructionCommand className="ocm-c-api-token-limit-width" outerClassName="pf-v5-u-mt-md">
         rosa login --use-auth-code
       </InstructionCommand>
     );

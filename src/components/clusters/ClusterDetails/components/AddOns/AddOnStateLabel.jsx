@@ -18,7 +18,7 @@ function AddOnStateLabel(props) {
 
   if (hasRequirements(addOn) && !requirements.fulfilled) {
     return (
-      <Label variant="outline" color="red" icon={<CubesIcon />}>
+      <Label variant="outline" color="red" icon={<CubesIcon data-icon="cubes" />}>
         Prerequisites not met
       </Label>
     );
@@ -34,38 +34,42 @@ function AddOnStateLabel(props) {
     case AddOnsConstants.INSTALLATION_STATE.PENDING:
     case AddOnsConstants.INSTALLATION_STATE.INSTALLING:
       return (
-        <Label variant="outline" icon={<InProgressIcon />}>
+        <Label variant="outline" icon={<InProgressIcon data-icon="inProgress" />}>
           Installing
         </Label>
       );
     case AddOnsConstants.INSTALLATION_STATE.UPDATING:
       return (
-        <Label variant="outline" icon={<InProgressIcon />}>
+        <Label variant="outline" icon={<InProgressIcon data-icon="inProgress" />}>
           Updating
         </Label>
       );
     case AddOnsConstants.INSTALLATION_STATE.DELETED:
     case AddOnsConstants.INSTALLATION_STATE.DELETING:
       return (
-        <Label variant="outline" icon={<InProgressIcon />}>
+        <Label variant="outline" icon={<InProgressIcon data-icon="inProgress" />}>
           Uninstalling
         </Label>
       );
     case AddOnsConstants.INSTALLATION_STATE.FAILED:
       return (
-        <Label variant="outline" color="red" icon={<ExclamationCircleIcon />}>
+        <Label
+          variant="outline"
+          color="red"
+          icon={<ExclamationCircleIcon data-icon="exclamationCircle" />}
+        >
           Add-on failed
         </Label>
       );
     case AddOnsConstants.INSTALLATION_STATE.READY:
       return (
-        <Label variant="outline" color="green" icon={<CheckCircleIcon />}>
+        <Label variant="outline" color="green" icon={<CheckCircleIcon data-icon="checkCircle" />}>
           Installed
         </Label>
       );
     default:
       return (
-        <Label variant="outline" icon={<UnknownIcon />}>
+        <Label variant="outline" icon={<UnknownIcon data-icon="unknown" />}>
           Unknown
         </Label>
       );

@@ -1,25 +1,10 @@
 import React from 'react';
-import { shallow } from 'enzyme';
 
-import { render, checkAccessibility } from '~/testUtils';
+import { render, checkAccessibility, screen } from '~/testUtils';
 import AddOnStateLabel from '../AddOnStateLabel';
 import AddOnsConstants from '../AddOnsConstants';
 
 describe('<AddOnsStateLabel />', () => {
-  let wrapper;
-
-  beforeEach(() => {
-    wrapper = shallow(
-      <AddOnStateLabel
-        addOn={{}}
-        installedAddOn={{
-          state: AddOnsConstants.INSTALLATION_STATE.READY,
-        }}
-        requirements={{ fulfilled: true, errorMsgs: [] }}
-      />,
-    );
-  });
-
   it('is accessible', async () => {
     const { container } = render(
       <AddOnStateLabel
@@ -34,13 +19,22 @@ describe('<AddOnsStateLabel />', () => {
   });
 
   it('should render installed label if state is ready', () => {
-    const label = wrapper.find('Label').props();
-    expect(label.children).toEqual('Installed');
-    expect(label.icon.type.displayName).toEqual('CheckCircleIcon');
+    const { container } = render(
+      <AddOnStateLabel
+        addOn={{}}
+        installedAddOn={{
+          state: AddOnsConstants.INSTALLATION_STATE.READY,
+        }}
+        requirements={{ fulfilled: true, errorMsgs: [] }}
+      />,
+    );
+
+    expect(container.querySelector(`[ data-icon="checkCircle"]`)).toBeInTheDocument();
+    expect(screen.getByText('Installed')).toBeInTheDocument();
   });
 
-  it('should render prerequisits not met if addon has requirements', () => {
-    wrapper.setProps({
+  it('should render prerequisites not met if addon has requirements', () => {
+    const props = {
       addOn: {
         requirements: [
           {
@@ -54,83 +48,101 @@ describe('<AddOnsStateLabel />', () => {
         ],
       },
       requirements: { fulfilled: false, errorMsgs: [] },
-    });
-    const label = wrapper.find('Label').props();
-    expect(label.children).toEqual('Prerequisites not met');
-    expect(label.icon.type.displayName).toEqual('CubesIcon');
+    };
+
+    const { container } = render(<AddOnStateLabel {...props} />);
+
+    expect(container.querySelector(`[ data-icon="cubes"]`)).toBeInTheDocument();
+    expect(screen.getByText('Prerequisites not met')).toBeInTheDocument();
   });
 
-  it('should render installing if addon is pending or installing', () => {
-    wrapper.setProps({
+  it('should render installing if addon is pending ', () => {
+    const props = {
       addOn: {},
       requirements: { fulfilled: true, errorMsgs: [] },
       installedAddOn: {
         state: AddOnsConstants.INSTALLATION_STATE.PENDING,
       },
-    });
-    const Label = wrapper.find('Label').props();
-    expect(Label.children).toEqual('Installing');
-    expect(Label.icon.type.displayName).toEqual('InProgressIcon');
+    };
 
-    wrapper.setProps({
+    const { container } = render(<AddOnStateLabel {...props} />);
+
+    expect(container.querySelector(`[ data-icon="inProgress"]`)).toBeInTheDocument();
+    expect(screen.getByText('Installing')).toBeInTheDocument();
+  });
+
+  it('should render installing if addon is  installing', () => {
+    const props = {
       addOn: {},
       requirements: { fulfilled: true, errorMsgs: [] },
       installedAddOn: {
         state: AddOnsConstants.INSTALLATION_STATE.INSTALLING,
       },
-    });
-    const newLabel = wrapper.find('Label').props();
-    expect(newLabel.children).toEqual('Installing');
-    expect(newLabel.icon.type.displayName).toEqual('InProgressIcon');
+    };
+
+    const { container } = render(<AddOnStateLabel {...props} />);
+
+    expect(container.querySelector(`[ data-icon="inProgress"]`)).toBeInTheDocument();
+    expect(screen.getByText('Installing')).toBeInTheDocument();
   });
 
-  it('should render uninstalling if addon is deleted or deleting', () => {
-    wrapper.setProps({
+  it('should render uninstalling if addon is deleted', () => {
+    const props = {
       addOn: {},
       requirements: { fulfilled: true, errorMsgs: [] },
       installedAddOn: {
         state: AddOnsConstants.INSTALLATION_STATE.DELETED,
       },
-    });
-    const label = wrapper.find('Label').props();
-    expect(label.children).toEqual('Uninstalling');
-    expect(label.icon.type.displayName).toEqual('InProgressIcon');
+    };
 
-    wrapper.setProps({
+    const { container } = render(<AddOnStateLabel {...props} />);
+
+    expect(container.querySelector(`[ data-icon="inProgress"]`)).toBeInTheDocument();
+    expect(screen.getByText('Uninstalling')).toBeInTheDocument();
+  });
+
+  it('should render uninstalling if addon is deleting', () => {
+    const props = {
       addOn: {},
       requirements: { fulfilled: true, errorMsgs: [] },
       installedAddOn: {
         state: AddOnsConstants.INSTALLATION_STATE.DELETING,
       },
-    });
-    const updatedLabel = wrapper.find('Label').props();
-    expect(updatedLabel.children).toEqual('Uninstalling');
-    expect(updatedLabel.icon.type.displayName).toEqual('InProgressIcon');
+    };
+
+    const { container } = render(<AddOnStateLabel {...props} />);
+
+    expect(container.querySelector(`[ data-icon="inProgress"]`)).toBeInTheDocument();
+    expect(screen.getByText('Uninstalling')).toBeInTheDocument();
   });
 
   it('should render add-on failed if addon state is failed', () => {
-    wrapper.setProps({
+    const props = {
       addOn: {},
       requirements: { fulfilled: true, errorMsgs: [] },
       installedAddOn: {
         state: AddOnsConstants.INSTALLATION_STATE.FAILED,
       },
-    });
-    const label = wrapper.find('Label').props();
-    expect(label.children).toEqual('Add-on failed');
-    expect(label.icon.type.displayName).toEqual('ExclamationCircleIcon');
+    };
+
+    const { container } = render(<AddOnStateLabel {...props} />);
+
+    expect(container.querySelector(`[ data-icon="exclamationCircle"]`)).toBeInTheDocument();
+    expect(screen.getByText('Add-on failed')).toBeInTheDocument();
   });
 
   it('should render unknown if addon state is unknown', () => {
-    wrapper.setProps({
+    const props = {
       addOn: {},
       requirements: { fulfilled: true, errorMsgs: [] },
       installedAddOn: {
         state: 'something wrong',
       },
-    });
-    const label = wrapper.find('Label').props();
-    expect(label.children).toEqual('Unknown');
-    expect(label.icon.type.displayName).toEqual('UnknownIcon');
+    };
+
+    const { container } = render(<AddOnStateLabel {...props} />);
+
+    expect(container.querySelector(`[ data-icon="unknown"]`)).toBeInTheDocument();
+    expect(screen.getByText('Unknown')).toBeInTheDocument();
   });
 });
