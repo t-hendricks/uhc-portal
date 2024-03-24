@@ -51,15 +51,6 @@ const DEFAULT_ROUTES = {
     sso: 'https://sso.qa.redhat.com/auth',
     portal: 'https://access.qa.redhat.com',
   },
-  qaprodauth: {
-    url: [
-      'qaprodauth.foo.redhat.com',
-      'qaprodauth.cloud.redhat.com',
-      'qaprodauth.console.redhat.com',
-    ],
-    sso: 'https://sso.redhat.com/auth',
-    portal: 'https://access.redhat.com',
-  },
   stage: {
     url: [
       'stage.foo.redhat.com',
