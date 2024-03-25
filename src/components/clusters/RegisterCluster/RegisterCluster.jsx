@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Field } from 'redux-form';
-import { Link, Redirect } from 'react-router-dom';
+import { Navigate, Link } from 'react-router-dom-v5-compat';
 import {
   Card,
   CardFooter,
@@ -103,7 +103,7 @@ class RegisterCluster extends React.Component {
     if (registerClusterResponse.fulfilled) {
       return (
         // TODO 'cluster' here is actually subscription, should be renamed
-        <Redirect to={`/details/s/${registerClusterResponse.cluster.id}`} />
+        <Navigate replace to={`/details/s/${registerClusterResponse.cluster.id}`} />
       );
     }
 

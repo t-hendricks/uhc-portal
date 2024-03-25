@@ -54,7 +54,10 @@ describe('OCM Cluster archives page', () => {
         ClusterListPage.clickClusterTypes('ARO');
         ClusterListPage.clickClusterTypes('OCP');
         ClusterListPage.clearFilters();
-        ClusterListPage.filterTxtField().should('be.visible').click({ force: true });
+        ClusterListPage.filterTxtField()
+          .scrollIntoView()
+          .should('be.visible')
+          .click({ force: true });
         ClusterListPage.filterTxtField().clear().type('smoke cluster');
         ClusterListPage.filterTxtField().clear();
         ClusterListPage.waitForArchiveDataReady();

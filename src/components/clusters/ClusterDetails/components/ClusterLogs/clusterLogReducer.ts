@@ -1,4 +1,4 @@
-import produce from 'immer';
+import { produce } from 'immer';
 import { PromiseActionType, PromiseReducerState } from '~/redux/types';
 import { ClusterLog } from '~/types/service_logs.v1';
 import { ViewOptionsAction } from '~/redux/actions/viewOptionsActions';

@@ -30,10 +30,11 @@ const getIdFields = (cluster, showAssistedId) => {
 };
 function DetailsLeft({ cluster, cloudProviders, showAssistedId }) {
   const cloudProviderId = cluster.cloud_provider ? cluster.cloud_provider.id : null;
-  const region = get(cluster, 'region.id', 'N/A');
+  const region = cluster?.region?.id;
   const planType = get(cluster, 'subscription.plan.type');
   const isROSA = planType === normalizedProducts.ROSA;
   const isHypershift = isHypershiftCluster(cluster);
+  const isRHOIC = cluster?.subscription?.plan?.type === normalizedProducts.RHOIC;
 
   let cloudProvider;
   if (cloudProviderId && cloudProviders.fulfilled && cloudProviders.providers[cloudProviderId]) {
@@ -68,12 +69,14 @@ function DetailsLeft({ cluster, cloudProviders, showAssistedId }) {
           </DescriptionListDescription>
         </DescriptionListGroup>
       )}
-      <DescriptionListGroup>
-        <DescriptionListTerm>Region</DescriptionListTerm>
-        <DescriptionListDescription>
-          <span data-testid="region">{region}</span>
-        </DescriptionListDescription>
-      </DescriptionListGroup>
+      {!isRHOIC || (isRHOIC && region) ? (
+        <DescriptionListGroup>
+          <DescriptionListTerm>Region</DescriptionListTerm>
+          <DescriptionListDescription>
+            <span data-testid="region">{region || 'N/A'}</span>
+          </DescriptionListDescription>
+        </DescriptionListGroup>
+      ) : null}
       {!isROSA && (
         <DescriptionListGroup>
           <DescriptionListTerm>Provider</DescriptionListTerm>
@@ -153,11 +156,13 @@ function DetailsLeft({ cluster, cloudProviders, showAssistedId }) {
         <>
           <DescriptionListGroup>
             <DescriptionListTerm>Subscription billing model</DescriptionListTerm>
-            <DescriptionListDescription>{getBillingModelLabel(cluster)}</DescriptionListDescription>
+            <DescriptionListDescription data-testid="subscription-billing-model">
+              {getBillingModelLabel(cluster)}
+            </DescriptionListDescription>
           </DescriptionListGroup>
           <DescriptionListGroup>
             <DescriptionListTerm>Infrastructure billing model</DescriptionListTerm>
-            <DescriptionListDescription>
+            <DescriptionListDescription data-testid="infrastructure-billing-model">
               <InfrastructureModelLabel cluster={cluster} />
             </DescriptionListDescription>
           </DescriptionListGroup>

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import get from 'lodash/get';
 import { Field } from 'redux-form';
-import { Link } from 'react-router-dom';
+import { Link } from 'react-router-dom-v5-compat';
 import {
   Alert,
   Button,
@@ -186,7 +186,9 @@ function AccountRolesARNsSection({
       change('rosa_max_os_version', undefined);
       setShowMissingArnsError(true);
     } else {
-      setInstallerRoleOptions(installerOptions);
+      setInstallerRoleOptions(
+        installerOptions.filter((installerRole) => installerRole.value !== undefined),
+      );
       setShowMissingArnsError(false);
     }
     setAccountRoles(accountRolesARNs);

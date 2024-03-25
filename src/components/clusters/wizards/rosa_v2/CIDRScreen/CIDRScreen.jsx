@@ -1,19 +1,24 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Form, Grid, GridItem, Title } from '@patternfly/react-core';
+import { useFormState } from '~/components/clusters/wizards/hooks';
+import { FieldId } from '~/components/clusters/wizards/rosa_v2/constants';
 
 import CIDRFields from './CIDRFields';
 
-function CIDRScreen({
-  cloudProviderID,
-  isMultiAz,
-  installToVpcSelected,
-  isDefaultValuesChecked,
-  change,
-  isOSD,
-  isROSA,
-  formValues,
-}) {
+function CIDRScreen({ isROSA }) {
+  const {
+    values: {
+      [FieldId.CloudProvider]: cloudProviderID,
+      [FieldId.MultiAz]: multiAz,
+      [FieldId.InstallToVpc]: installToVPC,
+      [FieldId.CidrDefaultValuesToggle]: cidrDefaultValuesToggle,
+    },
+    values,
+  } = useFormState();
+
+  const isMultiAz = multiAz === true;
+
   return (
     <Form
       onSubmit={(event) => {
@@ -29,12 +34,10 @@ function CIDRScreen({
         <CIDRFields
           cloudProviderID={cloudProviderID}
           isMultiAz={isMultiAz}
-          installToVpcSelected={installToVpcSelected}
-          isDefaultValuesChecked={isDefaultValuesChecked}
-          change={change}
-          isOSD={isOSD}
+          installToVpcSelected={installToVPC}
+          isDefaultValuesChecked={cidrDefaultValuesToggle}
           isROSA={isROSA}
-          formValues={formValues}
+          formValues={values}
         />
       </Grid>
     </Form>
@@ -42,14 +45,7 @@ function CIDRScreen({
 }
 
 CIDRScreen.propTypes = {
-  cloudProviderID: PropTypes.string,
-  isMultiAz: PropTypes.bool,
-  installToVpcSelected: PropTypes.bool,
-  isDefaultValuesChecked: PropTypes.bool,
-  change: PropTypes.func,
   isROSA: PropTypes.bool,
-  isOSD: PropTypes.bool,
-  formValues: PropTypes.object,
 };
 
 export default CIDRScreen;

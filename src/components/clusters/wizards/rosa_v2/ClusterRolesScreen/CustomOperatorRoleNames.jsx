@@ -1,14 +1,16 @@
 import React from 'react';
-import { Field } from 'redux-form';
+import { Field } from 'formik';
 
 import { GridItem, Text, TextContent, TextVariants, Title } from '@patternfly/react-core';
-
+import { useFormState } from '~/components/clusters/wizards/hooks';
+import { FieldId } from '~/components/clusters/wizards/rosa_v2/constants';
 import ExternalLink from '../../../../common/ExternalLink';
 import ReduxVerticalFormGroup from '../../../../common/ReduxFormComponents/ReduxVerticalFormGroup';
 import validators from '../../../../../common/validators';
 import links from '../../../../../common/installLinks.mjs';
 
 function CustomOperatorRoleNames() {
+  const { getFieldProps, getFieldMeta } = useFormState();
   return (
     <>
       <GridItem>
@@ -24,7 +26,7 @@ function CustomOperatorRoleNames() {
       <GridItem span={6}>
         <Field
           component={ReduxVerticalFormGroup}
-          name="custom_operator_roles_prefix"
+          name={FieldId.CustomOperatorRolesPrefix}
           label="Custom operator roles prefix"
           type="text"
           // eslint-disable-next-line import/no-named-as-default-member
@@ -42,6 +44,8 @@ function CustomOperatorRoleNames() {
               </Text>
             </TextContent>
           }
+          input={getFieldProps(FieldId.CustomOperatorRolesPrefix)}
+          meta={getFieldMeta(FieldId.CustomOperatorRolesPrefix)}
           showHelpTextOnError={false}
         />
       </GridItem>

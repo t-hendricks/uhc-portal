@@ -18,6 +18,11 @@ import { useOCPLifeCycleStatusData } from '~/components/releases/hooks';
 import ErrorBox from '../../../../../../common/ErrorBox';
 import RosaVersionErrorAlert from './RosaVersionErrorAlert';
 
+const SupportStatusType = {
+  Full: 'Full Support',
+  Maintenance: 'Maintenance Support',
+};
+
 function VersionSelection({
   isRosa,
   rosaMaxOSVersion,
@@ -323,11 +328,6 @@ function VersionSelection({
     </FormGroup>
   );
 }
-
-const SupportStatusType = {
-  Full: 'Full Support',
-  Maintenance: 'Maintenance Support',
-};
 
 VersionSelection.propTypes = {
   isDisabled: PropTypes.bool,

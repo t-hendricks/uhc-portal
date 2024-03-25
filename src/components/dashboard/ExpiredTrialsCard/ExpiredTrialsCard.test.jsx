@@ -1,5 +1,6 @@
 import React from 'react';
 import { screen, render, checkAccessibility, TestRouter } from '~/testUtils';
+import { CompatRouter } from 'react-router-dom-v5-compat';
 import ExpiredTrialsCard from './ExpiredTrialsCard';
 import { expiredTrials } from '../Dashboard.fixtures';
 import { expiredTrialsFilter } from './expiredTrialsHelpers';
@@ -38,7 +39,13 @@ describe('<ExpiredTrialsCard />', () => {
     });
 
     it('return null', () => {
-      const { container } = render(<ExpiredTrialsCard {...initialProps} />);
+      const { container } = render(
+        <TestRouter>
+          <CompatRouter>
+            <ExpiredTrialsCard {...initialProps} />
+          </CompatRouter>
+        </TestRouter>,
+      );
 
       expect(container).toBeEmptyDOMElement();
     });
@@ -67,7 +74,9 @@ describe('<ExpiredTrialsCard />', () => {
     it('is accessible', async () => {
       const { container } = render(
         <TestRouter>
-          <ExpiredTrialsCard {...dataAvailableProps} />
+          <CompatRouter>
+            <ExpiredTrialsCard {...dataAvailableProps} />
+          </CompatRouter>
         </TestRouter>,
       );
       expect(await screen.findByText('Expired Trials')).toBeInTheDocument();

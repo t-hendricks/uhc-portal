@@ -21,7 +21,7 @@ import React, { Component } from 'react';
 
 import { PageHeader, PageHeaderTitle } from '@redhat-cloud-services/frontend-components/PageHeader';
 import Spinner from '@redhat-cloud-services/frontend-components/Spinner';
-import { Link } from 'react-router-dom';
+import { Link } from 'react-router-dom-v5-compat';
 
 import { Card, Toolbar, ToolbarItem, ToolbarContent, PageSection } from '@patternfly/react-core';
 
@@ -161,7 +161,10 @@ class ArchivedClusterList extends Component {
                   <ToolbarItem>
                     <ClusterListFilter view={viewConstants.ARCHIVED_CLUSTERS_VIEW} />
                   </ToolbarItem>
-                  <ToolbarItem className="pf-v5-l-split__item split-margin-left">
+                  <ToolbarItem
+                    className="pf-v5-l-split__item split-margin-left"
+                    data-testid="cluster-list-filter-dropdown"
+                  >
                     <ClusterListFilterDropDown
                       view={viewConstants.ARCHIVED_CLUSTERS_VIEW}
                       isDisabled={pending}

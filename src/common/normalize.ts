@@ -1,4 +1,4 @@
-import produce, { Draft } from 'immer';
+import { produce, Draft } from 'immer';
 import * as OCM from '@openshift-assisted/ui-lib/ocm';
 import type { Cluster as AICluster } from '@openshift-assisted/types/assisted-installer-service';
 import type { AxiosResponse } from 'axios';
@@ -49,6 +49,7 @@ const normalizeProductID = (id: string | undefined): string => {
     RHOSAKTRIAL: normalizedProducts.RHOSAKTrial,
     RHOSE: normalizedProducts.RHOSE,
     RHOSETRIAL: normalizedProducts.RHOSETrial,
+    RHOIC: normalizedProducts.RHOIC,
     ANY: normalizedProducts.ANY, // used by account-manager in quota_cost
   };
 

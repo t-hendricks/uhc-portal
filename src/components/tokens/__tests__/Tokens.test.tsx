@@ -15,13 +15,17 @@ limitations under the License.
 */
 
 import React from 'react';
-import { mount, shallow } from 'enzyme';
-import { BrowserRouter, MemoryRouter } from 'react-router-dom';
-import { Provider } from 'react-redux';
 
-import { mockRestrictedEnv, mockRefreshToken, render, screen } from '~/testUtils';
-
-import { store } from '../../../redux/store';
+import {
+  mockRestrictedEnv,
+  mockRefreshToken,
+  render,
+  screen,
+  TestRouter,
+  checkAccessibility,
+  mockUseChrome,
+} from '~/testUtils';
+import { CompatRouter } from 'react-router-dom-v5-compat';
 import Tokens from '../Tokens';
 
 const mockGetToken = jest
@@ -40,48 +44,69 @@ window.insights = {
 
 describe('<Tokens />', () => {
   mockRefreshToken();
-  beforeEach(() => {
+  afterEach(() => {
     jest.clearAllMocks();
   });
 
-  it('Renders screen with button', () => {
-    const component = shallow(
-      <Tokens show={false} showPath="/token/show" setOfflineToken={() => {}} />,
+  it('is accessible with button', async () => {
+    const { container } = render(
+      <TestRouter>
+        <CompatRouter>
+          <Tokens show={false} showPath="/token/show" setOfflineToken={() => {}} />
+        </CompatRouter>
+      </TestRouter>,
     );
-    expect(component).toMatchSnapshot();
+
+    expect(await screen.findByRole('button', { name: 'Load token' })).toBeInTheDocument();
+
+    await checkAccessibility(container);
   });
 
-  it('Renders screen with token', () => {
-    const component = shallow(
-      <Tokens
-        show={false}
-        showPath="/token/show"
-        offlineToken="test-token"
-        setOfflineToken={() => {}}
-      />,
+  it('is accessible with token', async () => {
+    const { container } = render(
+      <TestRouter>
+        <CompatRouter>
+          <Tokens
+            show={false}
+            showPath="/token/show"
+            offlineToken="test-token"
+            setOfflineToken={() => {}}
+          />
+        </CompatRouter>
+      </TestRouter>,
     );
-    expect(component).toMatchSnapshot();
+
+    expect(await screen.findByRole('link', { name: 'Download ocm CLI' })).toBeInTheDocument();
+    await checkAccessibility(container);
   });
 
-  it('Renders loading screen', () => {
-    const loadingcomponent = shallow(<Tokens show setOfflineToken={() => {}} />);
-    expect(loadingcomponent).toMatchSnapshot();
+  it('Renders loading screen', async () => {
+    const { container } = render(
+      <TestRouter>
+        <CompatRouter>
+          <Tokens show setOfflineToken={() => {}} />
+        </CompatRouter>
+      </TestRouter>,
+    );
+
+    expect(
+      await screen.findByText('Copy and paste the authentication command in your terminal:'),
+    ).toBeInTheDocument();
+    expect(container.querySelector('.pf-v5-c-skeleton')).toBeInTheDocument();
   });
 
-  it('Calls getOfflineToken', () => {
-    mount(<Tokens show setOfflineToken={() => {}} />, {
-      wrappingComponent: ({ children }) => (
-        <Provider store={store}>
-          <BrowserRouter>{children}</BrowserRouter>
-        </Provider>
-      ),
-    });
-    expect(mockGetToken).toBeCalled();
-  });
+  it('Calls getOfflineToken', async () => {
+    expect(mockGetToken).not.toHaveBeenCalled();
 
-  it('Renders token', () => {
-    const component = shallow(<Tokens show setOfflineToken={() => {}} />);
-    expect(component).toMatchSnapshot();
+    render(
+      <TestRouter>
+        <CompatRouter>
+          <Tokens show setOfflineToken={() => {}} />
+        </CompatRouter>
+      </TestRouter>,
+    );
+    expect(mockGetToken).toHaveBeenCalled();
+    expect(await screen.findByRole('link', { name: 'Download ocm CLI' })).toBeInTheDocument();
   });
 
   describe('in restricted env', () => {
@@ -89,15 +114,19 @@ describe('<Tokens />', () => {
     afterAll(() => {
       isRestrictedEnv.mockReturnValue(false);
     });
-    it('Renders screen with refresh token', () => {
-      isRestrictedEnv.mockReturnValue(true);
 
+    it('Renders screen with refresh token', async () => {
+      isRestrictedEnv.mockReturnValue(true);
+      mockUseChrome();
       render(
-        <MemoryRouter>
-          <Tokens offlineToken="refresh-token" setOfflineToken={() => {}} />
-        </MemoryRouter>,
+        <TestRouter>
+          <CompatRouter>
+            <Tokens offlineToken="refresh-token" setOfflineToken={() => {}} showPath="myshowpath" />
+          </CompatRouter>
+        </TestRouter>,
       );
-      expect(screen.getByText('Connect with refresh tokens')).toBeInTheDocument();
+
+      expect(await screen.findByText('Your API token')).toBeInTheDocument();
     });
   });
 });

@@ -26,7 +26,7 @@ import {
 import ExclamationTriangleIcon from '@patternfly/react-icons/dist/esm/icons/exclamation-triangle-icon';
 import { global_warning_color_100 as warningColor } from '@patternfly/react-tokens/dist/esm/global_warning_color_100';
 
-import { Link } from 'react-router-dom';
+import { Link } from 'react-router-dom-v5-compat';
 import * as OCM from '@openshift-assisted/ui-lib/ocm';
 import SearchIcon from '@patternfly/react-icons/dist/esm/icons/search-icon';
 import ClusterStateIcon from '../../common/ClusterStateIcon/ClusterStateIcon';
@@ -89,6 +89,22 @@ function ClusterListTable(props) {
     Name: 'display_name',
     Created: 'created_at',
   };
+
+  const hiddenOnMdOrSmaller = classNames(
+    Visibility.visibleOnLg,
+    Visibility.hiddenOnMd,
+    Visibility.hiddenOnSm,
+  );
+
+  const columns = [
+    { title: 'Name', transforms: [sortable, cellWidth(30)] },
+    { title: 'Status', transforms: [cellWidth(15)] },
+    { title: 'Type', transforms: [cellWidth(10)] },
+    { title: 'Created', transforms: [sortable], columnTransforms: [hiddenOnMdOrSmaller] },
+    { title: 'Version', columnTransforms: [hiddenOnMdOrSmaller] },
+    { title: 'Provider (Region)', columnTransforms: [hiddenOnMdOrSmaller] },
+    '', // TODO: to avoid TypeError: headerData[(cellIndex + additionalColsIndexShift)] is undefined from penshift-assisted_ui-lib
+  ];
 
   const onSortToggle = (_event, index, direction) => {
     const sorting = { ...viewOptions.sorting };
@@ -238,22 +254,6 @@ function ClusterListTable(props) {
       cluster,
     };
   };
-
-  const hiddenOnMdOrSmaller = classNames(
-    Visibility.visibleOnLg,
-    Visibility.hiddenOnMd,
-    Visibility.hiddenOnSm,
-  );
-
-  const columns = [
-    { title: 'Name', transforms: [sortable, cellWidth(30)] },
-    { title: 'Status', transforms: [cellWidth(15)] },
-    { title: 'Type', transforms: [cellWidth(10)] },
-    { title: 'Created', transforms: [sortable], columnTransforms: [hiddenOnMdOrSmaller] },
-    { title: 'Version', columnTransforms: [hiddenOnMdOrSmaller] },
-    { title: 'Provider (Region)', columnTransforms: [hiddenOnMdOrSmaller] },
-    '',
-  ];
 
   const rows = isPending ? skeletonRows() : clusters.map((cluster) => clusterRow(cluster));
   const resolver = isPending

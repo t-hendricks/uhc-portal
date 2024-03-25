@@ -1,7 +1,8 @@
 import React from 'react';
-import { render, screen, mockUseFeatureGate } from '~/testUtils';
+import { Formik } from 'formik';
+import { render, screen, mockUseFeatureGate, waitFor } from '~/testUtils';
 import { SECURITY_GROUPS_FEATURE_DAY1 } from '~/redux/constants/featureConstants';
-
+import { FieldId, initialValues } from '../constants';
 import SecurityGroupsSection from './SecurityGroupsSection';
 
 const mockState = {
@@ -21,6 +22,24 @@ const defaultProps = {
   selectedVPC: { id: 'my-vpc', name: 'my vpc' },
 };
 
+const buildTestComponent = (children: React.ReactNode, formValues = {}) => (
+  <Formik
+    initialValues={{
+      ...initialValues,
+      ...formValues,
+      [FieldId.SecurityGroups]: {
+        applyControlPlaneToAll: true,
+        controlPlane: [],
+        infra: [],
+        worker: [],
+      },
+    }}
+    onSubmit={() => {}}
+  >
+    {children}
+  </Formik>
+);
+
 describe('<SecurityGroupsSection />', () => {
   beforeEach(() => {
     mockUseFeatureGate([[SECURITY_GROUPS_FEATURE_DAY1, true]]);
@@ -35,29 +54,39 @@ describe('<SecurityGroupsSection />', () => {
   });
 
   describe('is displayed when', () => {
-    it('the VPC has been selected', () => {
-      render(<SecurityGroupsSection {...defaultProps} />);
-      expect(screen.getByText('Additional security groups')).toBeInTheDocument();
+    it('the VPC has been selected', async () => {
+      render(buildTestComponent(<SecurityGroupsSection {...defaultProps} />));
+      await waitFor(() => {
+        expect(screen.getByText('Additional security groups')).toBeInTheDocument();
+      });
     });
 
-    it('the feature gate is enabled', () => {
-      render(<SecurityGroupsSection {...defaultProps} />);
-      expect(screen.getByText('Additional security groups')).toBeInTheDocument();
+    it('the feature gate is enabled', async () => {
+      render(buildTestComponent(<SecurityGroupsSection {...defaultProps} />));
+      await waitFor(() => {
+        expect(screen.getByText('Additional security groups')).toBeInTheDocument();
+      });
     });
   });
 
   describe('is hidden when', () => {
-    it('the VPC has not been selected', () => {
+    it('the VPC has not been selected', async () => {
       render(
-        <SecurityGroupsSection openshiftVersion="4.14.0" selectedVPC={{ id: '', name: '' }} />,
+        buildTestComponent(
+          <SecurityGroupsSection openshiftVersion="4.14.0" selectedVPC={{ id: '', name: '' }} />,
+        ),
       );
-      expect(screen.queryByText('Additional security groups')).not.toBeInTheDocument();
+      await waitFor(() => {
+        expect(screen.queryByText('Additional security groups')).not.toBeInTheDocument();
+      });
     });
 
-    it('the feature gate is not enabled', () => {
+    it('the feature gate is not enabled', async () => {
       mockUseFeatureGate([[SECURITY_GROUPS_FEATURE_DAY1, false]]);
-      render(<SecurityGroupsSection {...defaultProps} />);
-      expect(screen.queryByText('Additional security groups')).not.toBeInTheDocument();
+      render(buildTestComponent(<SecurityGroupsSection {...defaultProps} />));
+      await waitFor(() => {
+        expect(screen.queryByText('Additional security groups')).not.toBeInTheDocument();
+      });
     });
   });
 });

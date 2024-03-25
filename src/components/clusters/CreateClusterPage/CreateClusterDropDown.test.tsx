@@ -1,5 +1,6 @@
 import React from 'react';
 import { MemoryRouter, Router } from 'react-router-dom';
+import { CompatRouter } from 'react-router-dom-v5-compat';
 import { createMemoryHistory } from 'history';
 
 import {
@@ -24,7 +25,9 @@ describe('<CreateClusterDropDown />', () => {
     // Arrange
     const { container } = render(
       <MemoryRouter>
-        <CreateClusterDropDown />
+        <CompatRouter>
+          <CreateClusterDropDown />
+        </CompatRouter>
       </MemoryRouter>,
     );
 
@@ -36,7 +39,9 @@ describe('<CreateClusterDropDown />', () => {
     // Arrange
     const { container, user } = render(
       <MemoryRouter>
-        <CreateClusterDropDown />
+        <CompatRouter>
+          <CreateClusterDropDown />
+        </CompatRouter>
       </MemoryRouter>,
     );
 
@@ -55,7 +60,9 @@ describe('<CreateClusterDropDown />', () => {
     const { user } = render(
       // @ts-ignore
       <Router history={history}>
-        <CreateClusterDropDown />
+        <CompatRouter>
+          <CreateClusterDropDown />
+        </CompatRouter>
       </Router>,
     );
 
@@ -74,7 +81,9 @@ describe('<CreateClusterDropDown />', () => {
     const { user } = render(
       // @ts-ignore
       <Router history={history}>
-        <CreateClusterDropDown />
+        <CompatRouter>
+          <CreateClusterDropDown />
+        </CompatRouter>
       </Router>,
     );
 
@@ -91,7 +100,9 @@ describe('<CreateClusterDropDown />', () => {
 
     const { user } = render(
       <MemoryRouter>
-        <CreateClusterDropDown />
+        <CompatRouter>
+          <CreateClusterDropDown />
+        </CompatRouter>
       </MemoryRouter>,
     );
 
@@ -110,7 +121,9 @@ describe('<CreateClusterDropDown />', () => {
 
     const { user } = render(
       <MemoryRouter>
-        <CreateClusterDropDown />
+        <CompatRouter>
+          <CreateClusterDropDown />
+        </CompatRouter>
       </MemoryRouter>,
     );
 
@@ -138,7 +151,9 @@ describe('<CreateClusterDropDown />', () => {
 
       const { user } = render(
         <MemoryRouter>
-          <CreateClusterDropDown />
+          <CompatRouter>
+            <CreateClusterDropDown />
+          </CompatRouter>
         </MemoryRouter>,
       );
 

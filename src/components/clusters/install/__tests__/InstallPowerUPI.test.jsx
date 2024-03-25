@@ -1,4 +1,5 @@
 import React from 'react';
+import { CompatRouter } from 'react-router-dom-v5-compat';
 import { screen, checkAccessibility, TestRouter, withState } from '~/testUtils';
 
 import { InstallPowerUPI } from '../InstallPowerUPI';
@@ -25,7 +26,9 @@ describe('InstallPower', () => {
   it('is accessible', async () => {
     const { container } = withState(githubReleases).render(
       <TestRouter>
-        <InstallPowerUPI token={{}} dispatch={dispatch} />
+        <CompatRouter>
+          <InstallPowerUPI token={{}} dispatch={dispatch} />
+        </CompatRouter>
       </TestRouter>,
     );
 

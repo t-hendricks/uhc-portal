@@ -64,6 +64,7 @@ const ClusterProgressCard = ({ cluster }: ClusterProgressCardProps) => {
             headingLevel="h2"
             size="lg"
             className="card-title pf-v5-u-display-inline-block pf-v5-u-mr-md"
+            data-testid="installation-header"
           >
             {inProgress && <Spinner size="sm" className="progressing-icon pf-v5-u-mr-md" />}
             {isError && (
@@ -77,7 +78,11 @@ const ClusterProgressCard = ({ cluster }: ClusterProgressCardProps) => {
             <DownloadOcCliButton />
           )}
           {installationInProgress && !isUninstalling && (
-            <Text component={TextVariants.p} className="expected-cluster-installation-text">
+            <Text
+              component={TextVariants.p}
+              data-testid="expected-cluster-installation-msg"
+              className="expected-cluster-installation-text"
+            >
               Cluster creation usually takes {estCompletionTime} minutes to complete.
             </Text>
           )}

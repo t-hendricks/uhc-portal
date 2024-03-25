@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link } from 'react-router-dom-v5-compat';
 import { Spinner } from '@redhat-cloud-services/frontend-components/Spinner';
 import {
   EmptyState,
@@ -50,7 +50,9 @@ const SubscriptionNotFulfilled = ({ data, refresh, marketplace }: Props) => {
         overrideErrorMessage(payload)
       ) : (
         <>
-          <p>An error has occured! Try again or contact support by including this error message:</p>
+          <p>
+            An error has occurred! Try again or contact support by including this error message:
+          </p>
           <q>{errorMessage}</q>
           <p>{`Operation ID: ${operationID || 'N/A'}`}</p>
         </>

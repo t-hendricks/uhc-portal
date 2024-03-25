@@ -1,10 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import get from 'lodash/get';
-import { Link } from 'react-router-dom';
+import { useParams, Navigate, Link } from 'react-router-dom-v5-compat';
 import { useDispatch } from 'react-redux';
 import { reset } from 'redux-form';
-import { useParams, Navigate } from 'react-router-dom-v5-compat';
 import {
   PageSection,
   Card,
@@ -110,7 +109,7 @@ const IdentityProvidersPage = (props) => {
   }, [dispatch, params.id, clusterDetails]);
 
   if (submitIDPResponse.fulfilled) {
-    return <Navigate to={`/details/s/${cluster.subscription.id}#accessControl`} />;
+    return <Navigate replace to={`/details/s/${cluster.subscription.id}#accessControl`} />;
   }
 
   const requestedSubscriptionID = params.id;
@@ -176,7 +175,7 @@ const IdentityProvidersPage = (props) => {
     (!isEditForm && !selectedIDP && !params.idpTypeName) ||
     (isEditForm && clusterIDPs.fulfilled && !editedType)
   ) {
-    return <Navigate to={`/details/s/${cluster.subscription.id}#accessControl`} />;
+    return <Navigate replace to={`/details/s/${cluster.subscription.id}#accessControl`} />;
   }
   const idpTypeName = IDPTypeNames[selectedIDP];
   const title = isEditForm

@@ -1,4 +1,4 @@
-// a redux-form Field-compatible component for selecting an associated AWS account id
+// a Field-compatible component for selecting an associated AWS account id
 
 import React, { useState, useEffect, createRef, ReactElement, useCallback, useMemo } from 'react';
 import {
@@ -42,22 +42,22 @@ function sortFn(a: FuzzyEntryType, b: FuzzyEntryType) {
   return ret || b.label.localeCompare(a.label);
 }
 export interface AWSAccountSelectionProps {
-  isDisabled?: boolean;
-  isLoading?: boolean;
-  label?: string;
   input: {
     value?: string;
     onChange?: any;
     onBlur: any;
   };
-  extendedHelpText: string | ReactElement;
-  accounts: CloudAccount[];
-  selectedAWSAccountID?: string;
-  initialValue?: string;
   meta: {
     touched?: boolean;
     error?: string;
   };
+  isDisabled?: boolean;
+  isLoading?: boolean;
+  label?: string;
+  extendedHelpText: string | ReactElement;
+  accounts: CloudAccount[];
+  selectedAWSAccountID?: string;
+  initialValue?: string;
   refresh: {
     onRefresh: any;
     text: string;
@@ -69,14 +69,14 @@ export interface AWSAccountSelectionProps {
 
 function AWSAccountSelection({
   input: {
-    // Redux Form's onBlur interferes with Patternfly's Select footer onClick handlers.
+    // onBlur interferes with Patternfly's Select footer onClick handlers.
     onBlur: _onBlur,
     ...inputProps
   },
+  meta: { error, touched },
   isDisabled,
   isLoading,
   label,
-  meta: { error, touched },
   extendedHelpText,
   selectedAWSAccountID,
   accounts,

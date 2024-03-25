@@ -13,6 +13,8 @@ import {
   getMinReplicasCount,
 } from '~/components/clusters/common/ScaleSection/AutoScaleSection/AutoScaleHelper';
 import { normalizedProducts } from '~/common/subscriptionTypes';
+import { emptyAWSSubnet } from '~/components/clusters/wizards/common/createOSDInitialValues';
+
 import CloudRegionComboBox from './CloudRegionComboBox';
 import PopoverHint from '../../../../../common/PopoverHint';
 import ReduxVerticalFormGroup from '../../../../../common/ReduxFormComponents/ReduxVerticalFormGroup';
@@ -51,11 +53,7 @@ function BasicFieldsSection({
     const mpSubnetsReset = [];
 
     for (let i = 0; i < azCount; i += 1) {
-      mpSubnetsReset.push({
-        availabilityZone: '',
-        privateSubnetId: '',
-        publicSubnetId: '',
-      });
+      mpSubnetsReset.push(emptyAWSSubnet());
     }
 
     change('machinePoolsSubnets', mpSubnetsReset);
@@ -75,14 +73,10 @@ function BasicFieldsSection({
     change('min_replicas', getMinReplicasCount(isBYOC, isValueMultiAz, true, isHypershiftSelected));
     change('max_replicas', getMinReplicasCount(isBYOC, isValueMultiAz, true, isHypershiftSelected));
 
-    if (!isValueMultiAz) {
-      change('machinePoolsSubnets', [
-        {
-          availabilityZone: '',
-          privateSubnetId: '',
-          publicSubnetId: '',
-        },
-      ]);
+    if (isValueMultiAz) {
+      change('machinePoolsSubnets', [emptyAWSSubnet(), emptyAWSSubnet(), emptyAWSSubnet()]);
+    } else {
+      change('machinePoolsSubnets', [emptyAWSSubnet()]);
     }
   };
 

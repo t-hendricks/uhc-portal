@@ -59,9 +59,8 @@ const ExpirationAlert = ({
       variant = 'info';
   }
 
-  let contents:
-    | string
-    | React.ReactElement = `This cluster is scheduled for deletion on ${expirationTimeString}`;
+  let contents: string | React.ReactElement =
+    `This cluster is scheduled for deletion on ${expirationTimeString}`;
   if (OSDRHMExpiration) {
     contents = (
       <>

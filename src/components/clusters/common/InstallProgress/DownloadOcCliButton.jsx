@@ -22,7 +22,14 @@ function DownloadOcCliButton() {
   }
 
   return href ? (
-    <Button component="a" href={href} variant="link" icon={<DownloadIcon />} isInline>
+    <Button
+      component="a"
+      data-testid="download-oc-cli"
+      href={href}
+      variant="link"
+      icon={<DownloadIcon />}
+      isInline
+    >
       Download OC CLI
     </Button>
   ) : null;

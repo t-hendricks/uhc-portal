@@ -319,6 +319,7 @@ const links = {
   AWS_CLI_GETTING_STARTED_MANUAL:
     'https://docs.aws.amazon.com/ROSA/latest/userguide/getting-started-sts-manual.html',
   AWS_ROSA_GET_STARTED: 'https://docs.aws.amazon.com/ROSA/latest/userguide/getting-started.html',
+  AWS_FINDING_KEY_ARN: 'https://docs.aws.amazon.com/kms/latest/developerguide/find-cmk-id-arn.html',
   AWS_IMDS:
     'https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/configuring-instance-metadata-options.html',
   AWS_LOAD_BALANCER_FEATURES:

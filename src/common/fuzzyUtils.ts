@@ -1,51 +1,3 @@
-// find the longest common string between two strings
-// iow for these two strings 873456 and 98745687 the longest common string is 456
-// we use this to find the characters that match with the search term in order to boldface it
-const lcss = (str1: string, str2: string) => {
-  let matches;
-  let item = str1;
-  let find = str2;
-  let ret: { beg: number; end: number }[] = [];
-  do {
-    // find all occurances of current longest string
-    // save them and replace with spaces
-    let match;
-    matches = [];
-    let res = lcs(item, find);
-    if (res.length > 0) {
-      // escape search pattern (ex: if there's a period, escape to \\.)
-      const { length: len } = res;
-      res = res.replace(/[-[\]{}()*+?.,\\^$|#]/g, '\\$&');
-      const regex = new RegExp(res, 'g');
-      do {
-        match = regex.exec(item);
-        if (match) matches.push(match);
-      } while (match !== null);
-      if (matches.length) {
-        ret = [
-          ...ret,
-          ...matches.map((match) => {
-            const beg = match.index;
-            const end = beg + match[0].length - 1;
-            return { beg, end };
-          }),
-        ];
-        // so that we don't constantly find the same matches over and over again
-        // we replace the matching characters with spaces
-        // iow the above strings become '987   87' and '873   ' so that 456 isn't found again
-        item = item.replace(regex, () => ' '.repeat(len));
-        find = find.replace(regex, () => ' '.repeat(len));
-      }
-    }
-  } while (find.length && matches.length);
-
-  // longest common strings will be found out of order
-  // but when we create the string it needs in order
-  ret.sort(({ beg: begA }, { beg: begB }) => begA - begB);
-
-  return ret;
-};
-
 const lcs = (str1: string, str2: string) => {
   let sequence = '';
   const str1Length = str1.length;
@@ -101,6 +53,54 @@ const lcs = (str1: string, str2: string) => {
     i += 1;
   }
   return sequence;
+};
+
+// find the longest common string between two strings
+// iow for these two strings 873456 and 98745687 the longest common string is 456
+// we use this to find the characters that match with the search term in order to boldface it
+const lcss = (str1: string, str2: string) => {
+  let matches;
+  let item = str1;
+  let find = str2;
+  let ret: { beg: number; end: number }[] = [];
+  do {
+    // find all occurances of current longest string
+    // save them and replace with spaces
+    let match;
+    matches = [];
+    let res = lcs(item, find);
+    if (res.length > 0) {
+      // escape search pattern (ex: if there's a period, escape to \\.)
+      const { length: len } = res;
+      res = res.replace(/[-[\]{}()*+?.,\\^$|#]/g, '\\$&');
+      const regex = new RegExp(res, 'g');
+      do {
+        match = regex.exec(item);
+        if (match) matches.push(match);
+      } while (match !== null);
+      if (matches.length) {
+        ret = [
+          ...ret,
+          ...matches.map((match) => {
+            const beg = match.index;
+            const end = beg + match[0].length - 1;
+            return { beg, end };
+          }),
+        ];
+        // so that we don't constantly find the same matches over and over again
+        // we replace the matching characters with spaces
+        // iow the above strings become '987   87' and '873   ' so that 456 isn't found again
+        item = item.replace(regex, () => ' '.repeat(len));
+        find = find.replace(regex, () => ' '.repeat(len));
+      }
+    }
+  } while (find.length && matches.length);
+
+  // longest common strings will be found out of order
+  // but when we create the string it needs in order
+  ret.sort(({ beg: begA }, { beg: begB }) => begA - begB);
+
+  return ret;
 };
 
 interface IdSlice {

@@ -19,7 +19,7 @@ import {
   TableBody as TableBodyDeprecated,
 } from '@patternfly/react-table/deprecated';
 import SearchIcon from '@patternfly/react-icons/dist/esm/icons/search-icon';
-import { Link } from 'react-router-dom';
+import { Link } from 'react-router-dom-v5-compat';
 import { ClusterWithPermissions, ViewOptions, ViewSorting } from '~/types/types';
 import ButtonWithTooltip from '../../../../common/ButtonWithTooltip';
 import ClusterLocationLabel from '../../../common/ClusterLocationLabel';
@@ -70,7 +70,7 @@ const ArchivedClusterListTable = ({
     { title: 'Type' },
     { title: 'Status', transforms: [sortable] },
     { title: 'Provider (Location)', columnTransforms: [hiddenOnMdOrSmaller] },
-    '',
+    '', // TODO: to avoid TypeError: headerData[(cellIndex + additionalColsIndexShift)] is undefined from openshift-assisted_ui-lib
   ];
 
   const sortBy = {

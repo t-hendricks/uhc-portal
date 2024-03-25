@@ -43,6 +43,10 @@ function ClusterTypeLabel({ cluster }) {
       name: 'ARO',
       tooltip: 'Red Hat OpenShift Service on Azure',
     },
+    [normalizedProducts.RHOIC]: {
+      name: 'RHOIC',
+      tooltip: 'Red Hat OpenShift Service on IBM Cloud',
+    },
     [normalizedProducts.UNKNOWN]: {
       name: 'N/A',
       tooltip: 'Not Available',

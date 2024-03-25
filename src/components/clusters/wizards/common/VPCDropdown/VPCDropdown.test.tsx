@@ -1,7 +1,10 @@
 import React from 'react';
 
 import { render, screen } from '~/testUtils';
+import { CloudVPC } from '~/types/clusters_mgmt.v1';
+import * as vpcHelpers from '~/common/vpcHelpers';
 import { useAWSVPCInquiry } from '~/components/clusters/common/useVPCInquiry';
+
 import VPCDropdown from './VPCDropdown';
 
 const defaultProps = {
@@ -9,6 +12,7 @@ const defaultProps = {
   input: { value: '', onBlur: () => {}, onChange: () => {} },
   showRefresh: true,
   meta: { error: '', touched: false },
+  usePrivateLink: false,
 };
 
 const vpcList = [
@@ -164,6 +168,36 @@ describe('<VPCDropdown />', () => {
       expect(screen.getByText('jaosorior-8vns4-vpc')).toBeInTheDocument();
       expect(screen.getByText('zac-east-vpc')).toBeInTheDocument();
       expect(screen.queryByText('caa-e2e-test-vpc')).not.toBeInTheDocument();
+    });
+
+    describe('VPC description', () => {
+      it('is not shown when the VPC has all necessary subnets', async () => {
+        jest
+          .spyOn(vpcHelpers, 'vpcHasRequiredSubnets')
+          .mockImplementation((vpc: CloudVPC) => vpc.name === 'lz-p2-318-z6fst-vpc');
+
+        const { user } = render(<VPCDropdown {...defaultProps} />);
+
+        const selectDropdown = screen.getByRole('button', { name: 'Options menu' });
+        await user.click(selectDropdown);
+
+        expect(screen.getByText('lz-p2-318-z6fst-vpc').nextElementSibling).toBeNull();
+      });
+
+      it('is shown as disabled when the VPC does not have all necessary subnets', async () => {
+        jest
+          .spyOn(vpcHelpers, 'vpcHasRequiredSubnets')
+          .mockImplementation((vpc: CloudVPC) => vpc.name !== 'lz-p2-318-z6fst-vpc');
+
+        const { user } = render(<VPCDropdown {...defaultProps} />);
+
+        const selectDropdown = screen.getByRole('button', { name: 'Options menu' });
+        await user.click(selectDropdown);
+
+        expect(screen.getByText('lz-p2-318-z6fst-vpc').nextElementSibling).toHaveTextContent(
+          'This VPC does not have all necessary subnets',
+        );
+      });
     });
   });
 

@@ -48,15 +48,17 @@ import { SupportedFeature } from '~/common/featureCompatibility';
 import { useFormState } from '~/components/clusters/wizards/hooks';
 import { hasAvailableQuota, quotaParams } from '~/components/clusters/wizards/common/utils/quotas';
 import { FieldId, MIN_SECURE_BOOT_VERSION } from '~/components/clusters/wizards/osd/constants';
+import { emptyAWSSubnet } from '~/components/clusters/wizards/common/createOSDInitialValues';
 import { billingModels } from '~/common/subscriptionTypes';
 import { QuotaCostList } from '~/types/accounts_mgmt.v1';
 import { QuotaParams } from '~/components/clusters/common/quotaModel';
 import { GCP_SECURE_BOOT_UI } from '~/redux/constants/featureConstants';
 import { useFeatureGate } from '~/hooks/useFeatureGate';
 import { versionComparator } from '~/common/versionComparator';
-import { VersionSelectField } from './VersionSelectField';
-import CloudRegionSelectField from './CloudRegionSelectField';
-import { CustomerManagedEncryption } from './CustomerManagedEncryption';
+import { VersionSelectField } from '~/components/clusters/wizards/common/ClusterSettings/Details/VersionSelectField';
+import CloudRegionSelectField from '~/components/clusters/wizards/common/ClusterSettings/Details/CloudRegionSelectField';
+import { CustomerManagedEncryption } from '~/components/clusters/wizards/osd/ClusterSettings/Details/CustomerManagedEncryption';
+import { ClassicEtcdFipsSection } from '~/components/clusters/wizards/common/ClusterSettings/Details/ClassicEtcdFipsSection';
 
 export const Details = () => {
   const dispatch = useDispatch();
@@ -70,10 +72,9 @@ export const Details = () => {
       [FieldId.CloudProvider]: cloudProvider,
       [FieldId.CustomerManagedKey]: hasCustomerManagedKey,
       [FieldId.KmsKeyArn]: kmsKeyArn,
-      [FieldId.EtcdEncryption]: etcdEncryption,
-      [FieldId.FipsCryptography]: fipsCryptography,
       [FieldId.ClusterVersion]: selectedVersion,
       [FieldId.SecureBoot]: secureBoot,
+      [FieldId.MachinePoolsSubnets]: machinePoolsSubnets,
     },
     errors,
     isValidating,
@@ -149,13 +150,15 @@ export const Details = () => {
   });
 
   const handleCloudRegionChange = () => {
-    // Clears fields related to the region: Availability zones, subnet IDs, VPCs
+    // Clears fields related to the region: VPC and machinePoolsSubnets
     const azCount = isMultiAz ? 3 : 1;
+    const mpSubnetsReset = [];
+
     for (let i = 0; i < azCount; i += 1) {
-      setFieldValue(`az_${i}`, '');
-      setFieldValue(`private_subnet_id_${i}`, '');
-      setFieldValue(`public_subnet_id_${i}`, '');
+      mpSubnetsReset.push(emptyAWSSubnet());
     }
+
+    setFieldValue(FieldId.MachinePoolsSubnets, mpSubnetsReset);
     setFieldValue(FieldId.SelectedVpc, '');
   };
 
@@ -166,6 +169,14 @@ export const Details = () => {
     setFieldValue(FieldId.NodesCompute, getNodesCount(isByoc, isMultiAz, true));
     setFieldValue(FieldId.MinReplicas, getMinReplicasCount(isByoc, isMultiAz, true));
     setFieldValue(FieldId.MaxReplicas, '');
+
+    // Make "machinePoolsSubnets" of the correct length
+    const mpSubnetsReset = [machinePoolsSubnets[0]];
+    if (isMultiAz) {
+      mpSubnetsReset.push(emptyAWSSubnet());
+      mpSubnetsReset.push(emptyAWSSubnet());
+    }
+    setFieldValue(FieldId.MachinePoolsSubnets, mpSubnetsReset);
   };
 
   const handleVersionChange = (clusterVersion: Version) => {
@@ -389,6 +400,7 @@ export const Details = () => {
           <div className="pf-v5-u-font-size-sm pf-v5-u-color-200 pf-v5-u-ml-lg pf-v5-u-mt-xs">
             {constants.enableUserWorkloadMonitoringHint}
           </div>
+
           <ExpandableSection
             toggleText="Advanced Encryption"
             onToggle={onToggle}
@@ -402,51 +414,8 @@ export const Details = () => {
                 kmsKeyArn={kmsKeyArn}
               />
             )}
-            <Grid hasGutter>
-              <FormGroup label="etcd encryption">
-                <GridItem>
-                  <Split hasGutter>
-                    <SplitItem>
-                      <CheckboxField
-                        name={FieldId.EtcdEncryption}
-                        label="Enable additional etcd encryption"
-                        isDisabled={fipsCryptography}
-                      />
-                    </SplitItem>
-                    <SplitItem>
-                      <PopoverHint
-                        hint={
-                          <>
-                            {constants.enableAdditionalEtcdHint}{' '}
-                            <ExternalLink href={links.OSD_ETCD_ENCRYPTION}>
-                              Learn more about etcd encryption
-                            </ExternalLink>
-                          </>
-                        }
-                      />
-                    </SplitItem>
-                  </Split>
-                  <div className="pf-v5-u-font-size-sm pf-v5-u-color-200 pf-v5-u-ml-lg pf-v5-u-mt-xs">
-                    Add more encryption for OpenShift and Kubernetes API resources.
-                  </div>
-                </GridItem>
-              </FormGroup>
 
-              {etcdEncryption && (
-                <FormGroup label="FIPS cryptography" className="pf-v5-u-mt-md">
-                  <GridItem>
-                    <CheckboxField
-                      name={FieldId.FipsCryptography}
-                      label="Enable FIPS cryptography"
-                    />
-                    <div className="pf-v5-u-font-size-sm pf-v5-u-color-200 pf-v5-u-ml-lg pf-v5-u-mt-xs">
-                      Install a cluster that uses FIPS Validated / Modules in Process cryptographic
-                      libraries on the x86_64 architecture.
-                    </div>
-                  </GridItem>
-                </FormGroup>
-              )}
-            </Grid>
+            <ClassicEtcdFipsSection isRosa={false} />
           </ExpandableSection>
         </Flex>
       </Grid>

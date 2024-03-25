@@ -30,6 +30,7 @@ import * as OCM from '@openshift-assisted/ui-lib/ocm';
 
 import { authInterceptor } from '~/services/apiRequest';
 
+import { GenerateId } from '@patternfly/react-core';
 import getNavClickParams from './common/getNavClickParams';
 import ocmBaseName from './common/getBaseName';
 
@@ -94,6 +95,11 @@ class AppEntry extends React.Component {
           }
         }
       });
+      // avoid collisions with generated PF IDs in masthead
+      // workaround for:
+      //   https://issues.redhat.com/browse/RHCLOUD-31437
+      //   https://github.com/patternfly/patternfly-react/issues/10160
+      GenerateId.defaultProps = { prefix: 'pf-random-ocmui-id-' };
     });
 
     if (

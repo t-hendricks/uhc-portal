@@ -23,7 +23,7 @@ class Releases extends Page {
         cy.get('.support-status-label').contains(`${support_type}`).should('exist');
       });
     cy.get('@link_to_version')
-      .parentsUntil('.pf-v5-c-card__body')
+      .parentsUntil('.pf-v5-c-card__body', 'dl')
       .within(() => {
         cy.get('button[aria-label="More information"]').scrollIntoView().click({ force: true });
       });
@@ -35,7 +35,7 @@ class Releases extends Page {
     Docs.getcontainerPlatformDocAbsolutePath(version, 'updating/' + relativePath)
       .should('exist')
       .and('contain.text', 'Learn more about candidate channels');
-    cy.get('button[aria-label="Close"]').click();
+    cy.get('button[aria-label="Close"]').filter(':visible').click();
   };
 }
 

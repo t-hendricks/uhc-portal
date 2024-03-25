@@ -3,40 +3,67 @@ import { Field } from 'formik';
 
 import { GridItem } from '@patternfly/react-core';
 
-import { required, validateOsdUniqueAZ, validateAWSSubnet } from '~/common/validators';
+import useFormikOnChange from '~/hooks/useFormikOnChange';
+import { required, validateUniqueAZ } from '~/common/validators';
 import WithTooltip from '~/components/common/WithTooltip';
 import AvailabilityZoneSelection from '~/components/clusters/wizards/common/NetworkingSection/AvailabilityZoneSelection';
 import { useFormState } from '~/components/clusters/wizards/hooks';
-import { TextInputField } from '~/components/clusters/wizards/form';
+import { getMatchingAvailabilityZones, SubnetPrivacy } from '~/common/vpcHelpers';
+import { FieldId } from '~/components/clusters/wizards/osd/constants';
+import { SubnetSelectField } from '~/components/clusters/common/SubnetSelectField';
 
-interface SingleSubnetFieldProps {
-  index: number;
-  region: string;
-  isMultiAz: boolean;
-  usePrivateLink: boolean;
-  isDisabled: boolean;
-}
+const AwsSingleSubnetField = ({ index }: { index: number }) => {
+  const {
+    values: {
+      [FieldId.UsePrivateLink]: usePrivateLink,
+      [FieldId.SelectedVpc]: selectedVPC,
+      [FieldId.Region]: selectedRegion,
+      [FieldId.MultiAz]: multiAz,
+      [FieldId.MachinePoolsSubnets]: machinePoolsSubnets,
+    },
+    getFieldProps,
+    getFieldMeta,
+    setFieldTouched,
+    setFieldValue,
+  } = useFormState();
+  const azFieldName = `${FieldId.MachinePoolsSubnets}[${index}].availabilityZone`;
+  const privateSubnetIdName = `${FieldId.MachinePoolsSubnets}[${index}].privateSubnetId`;
+  const publicSubnetIdName = `${FieldId.MachinePoolsSubnets}[${index}].publicSubnetId`;
+  const currentMp = machinePoolsSubnets[index];
 
-const AwsSingleSubnetField = ({
-  index,
-  region,
-  isMultiAz,
-  usePrivateLink,
-  isDisabled,
-}: SingleSubnetFieldProps) => {
-  const { values, getFieldProps, getFieldMeta, setFieldValue } = useFormState();
-  const azFieldName = `az_${index}`;
-  const privateSubnetIdName = `private_subnet_id_${index}`;
-  const publicSubnetIdName = `public_subnet_id_${index}`;
   const showLabels = index === 0;
+  const isMultiAz = multiAz === 'true';
 
-  const validateAvailabilityZone = (value: string) =>
-    required(value) || (isMultiAz && validateOsdUniqueAZ(value, values, null, azFieldName));
+  const onChangePrivate = useFormikOnChange(privateSubnetIdName);
+  const onChangePublic = useFormikOnChange(publicSubnetIdName);
 
-  const validatePrivateSubnet = (value: string) =>
-    validateAWSSubnet(value, values, {}, privateSubnetIdName);
-  const validatePublicSubnet = (value: string) =>
-    validateAWSSubnet(value, values, {}, publicSubnetIdName);
+  const onChangeAZ = (value: string) => {
+    setFieldValue(azFieldName, value);
+    // Necessary to get the correct validation status when switching from Single to Multi zone
+    setFieldTouched(privateSubnetIdName, true, true);
+  };
+
+  const validateAvailabilityZone = (az?: string) => {
+    // Adding this validation because otherwise, when switching from Single to Multi zone,
+    // users can move to Next step even though 2nd and 3rd subnets are not filled in
+    const isValidMP = currentMp.privateSubnetId && (usePrivateLink || currentMp.publicSubnetId);
+    return (
+      required(az) ||
+      (isMultiAz && validateUniqueAZ(az, { machinePoolsSubnets })) ||
+      (isValidMP ? '' : 'Select the subnets for this availability zone')
+    );
+  };
+
+  // We'll only allow users to select AZs that have all necessary subnets
+  const privacyList: SubnetPrivacy[] = usePrivateLink ? ['private'] : ['private', 'public'];
+  const enabledAvailabilityZones = getMatchingAvailabilityZones(
+    selectedRegion,
+    selectedVPC,
+    privacyList,
+  );
+
+  const isDisabled = !selectedVPC?.id;
+  const allowedAZs = currentMp.availabilityZone ? [currentMp.availabilityZone] : [];
 
   return (
     <>
@@ -47,11 +74,13 @@ const AwsSingleSubnetField = ({
             name={azFieldName}
             label={showLabels ? 'Availability zone' : undefined}
             validate={validateAvailabilityZone}
+            enabledAvailabilityZones={enabledAvailabilityZones}
+            vpcId={selectedVPC?.id}
             isDisabled={isDisabled}
-            region={region}
+            region={selectedRegion}
             input={{
               ...getFieldProps(azFieldName),
-              onChange: (value: string) => setFieldValue(azFieldName, value),
+              onChange: onChangeAZ,
             }}
             meta={getFieldMeta(azFieldName)}
           />
@@ -59,22 +88,40 @@ const AwsSingleSubnetField = ({
       </GridItem>
       <GridItem md={4}>
         <WithTooltip showTooltip={isDisabled} content="Select a VPC first">
-          <TextInputField
+          <Field
+            component={SubnetSelectField}
             name={privateSubnetIdName}
-            label={showLabels ? 'Private subnet ID' : undefined}
-            validate={validatePrivateSubnet}
-            isDisabled={isDisabled}
+            label={showLabels ? 'Private subnet' : undefined}
+            validate={required}
+            input={{
+              ...getFieldProps(privateSubnetIdName),
+              onChange: onChangePrivate,
+            }}
+            meta={getFieldMeta(privateSubnetIdName)}
+            privacy="private"
+            selectedVPC={selectedVPC}
+            withAutoSelect={false}
+            allowedAZs={allowedAZs}
           />
         </WithTooltip>
       </GridItem>
       {!usePrivateLink && (
         <GridItem md={4}>
           <WithTooltip showTooltip={isDisabled} content="Select a VPC first">
-            <TextInputField
+            <Field
+              component={SubnetSelectField}
               name={publicSubnetIdName}
-              label={showLabels ? 'Public subnet ID' : undefined}
-              validate={validatePublicSubnet}
-              isDisabled={isDisabled}
+              label={showLabels ? 'Public subnet' : undefined}
+              validate={required}
+              input={{
+                ...getFieldProps(publicSubnetIdName),
+                onChange: onChangePublic,
+              }}
+              meta={getFieldMeta(publicSubnetIdName)}
+              privacy="public"
+              selectedVPC={selectedVPC}
+              withAutoSelect={false}
+              allowedAZs={allowedAZs}
             />
           </WithTooltip>
         </GridItem>

@@ -18,7 +18,7 @@ limitations under the License.
 // copy it and use it with command line utitilites like `curl` or OCM.
 
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link } from 'react-router-dom-v5-compat';
 import PageHeader, { PageHeaderTitle } from '@redhat-cloud-services/frontend-components/PageHeader';
 import Skeleton from '@redhat-cloud-services/frontend-components/Skeleton';
 import {
@@ -109,7 +109,7 @@ const Tokens = (props: Props) => {
     // after that we want the token to show, but we just loaded.
     if (!blockedByTerms && show && !offlineToken) {
       // eslint-disable-next-line no-console
-      console.log('Tokens: componentDidMount, props =', props);
+      // console.log('Tokens: componentDidMount, props =', props);
       loadOfflineToken((tokenOrError, errorReason) => {
         setOfflineToken(errorReason || tokenOrError);
       }, window.location.origin);
@@ -177,7 +177,7 @@ const Tokens = (props: Props) => {
                     </TextContent>
                   </>
                 ) : (
-                  <Link to={showPath}>
+                  <Link to={showPath!}>
                     <Button
                       variant="primary"
                       className="pf-v5-u-mt-md"

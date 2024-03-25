@@ -65,6 +65,22 @@ const availableFromQuotaCostItem = (quotaCostItem: QuotaCost, query: QuotaQuery)
   return available > 0 ? available : 0;
 };
 
+const queryFromQuotaParams = (quotaParams: QuotaParams): QuotaQuery => ({
+  ...defaultQuotaQuery,
+  resource_type: quotaParams.resourceType || ANY,
+  product: quotaParams.product || normalizedProducts.ANY,
+  billing_model:
+    quotaParams.billingModel?.toString() === 'standard-trial'
+      ? RelatedResource.billing_model.STANDARD
+      : quotaParams.billingModel || RelatedResource.billing_model.ANY,
+  cloud_provider: quotaParams.cloudProviderID || ANY,
+  byoc: { true: 'byoc', false: 'rhinfra', undefined: ANY }[`${quotaParams.isBYOC}`], // TODO: this is inconsistent string vs boolean
+  availability_zone_type: { true: 'multi', false: 'single', undefined: ANY }[
+    `${quotaParams.isMultiAz}`
+  ],
+  resource_name: quotaParams.resourceName || ANY,
+});
+
 /**
  * Returns remaining matching quota (integer, possibly 0 or Infinity).
  * resourceType is required; other query fields may be omitted, default to 'any'.
@@ -126,22 +142,6 @@ const addOnBillingQuota = (quotaList: QuotaCostList, quotaParams: QuotaParams): 
   });
   return models;
 };
-
-const queryFromQuotaParams = (quotaParams: QuotaParams): QuotaQuery => ({
-  ...defaultQuotaQuery,
-  resource_type: quotaParams.resourceType || ANY,
-  product: quotaParams.product || normalizedProducts.ANY,
-  billing_model:
-    quotaParams.billingModel?.toString() === 'standard-trial'
-      ? RelatedResource.billing_model.STANDARD
-      : quotaParams.billingModel || RelatedResource.billing_model.ANY,
-  cloud_provider: quotaParams.cloudProviderID || ANY,
-  byoc: { true: 'byoc', false: 'rhinfra', undefined: ANY }[`${quotaParams.isBYOC}`], // TODO: this is inconsistent string vs boolean
-  availability_zone_type: { true: 'multi', false: 'single', undefined: ANY }[
-    `${quotaParams.isMultiAz}`
-  ],
-  resource_name: quotaParams.resourceName || ANY,
-});
 
 /**
  * Returns true if org has matching quota with cost 0 or allowed > 0, even if it's all consumed!

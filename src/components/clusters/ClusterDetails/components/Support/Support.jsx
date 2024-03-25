@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Card, CardBody, CardTitle } from '@patternfly/react-core';
+import { normalizedProducts } from '~/common/subscriptionTypes';
 
 import NotificationContactsCard from './components/NotificationContactsSection';
 import SupportCasesCard from './components/SupportCasesSection';
@@ -33,8 +34,7 @@ const Support = ({
   clearDeleteNotificationContacts,
   clearNotificationContacts,
   addNotificationToaster,
-  supportCases,
-  getSupportCases,
+  product,
   isDisabled = false,
 }) => (
   <>
@@ -63,17 +63,14 @@ const Support = ({
         />
       </CardBody>
     </Card>
-    <Card className="ocm-c-support-support-cases__card">
-      <CardTitle className="ocm-c-support-support-cases__card--header">Support cases</CardTitle>
-      <CardBody className="ocm-c-support-support-cases__card--body">
-        <SupportCasesCard
-          subscriptionID={subscriptionID}
-          supportCases={supportCases}
-          getSupportCases={getSupportCases}
-          isDisabled={isDisabled}
-        />
-      </CardBody>
-    </Card>
+    {product !== normalizedProducts.RHOIC ? (
+      <Card className="ocm-c-support-support-cases__card">
+        <CardTitle className="ocm-c-support-support-cases__card--header">Support cases</CardTitle>
+        <CardBody className="ocm-c-support-support-cases__card--body">
+          <SupportCasesCard subscriptionID={subscriptionID} isDisabled={isDisabled} />
+        </CardBody>
+      </Card>
+    ) : null}
   </>
 );
 
@@ -91,8 +88,7 @@ Support.propTypes = {
   clearNotificationContacts: PropTypes.func.isRequired,
   addNotificationToaster: PropTypes.func.isRequired,
   openModal: PropTypes.func.isRequired,
-  supportCases: PropTypes.object.isRequired,
-  getSupportCases: PropTypes.func.isRequired,
+  product: PropTypes.string,
   isDisabled: PropTypes.bool,
 };
 

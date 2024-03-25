@@ -89,7 +89,7 @@ class ClusterVersionInfo extends React.Component {
                       />
                     }
                   >
-                    <Button variant="link">
+                    <Button variant="link" className="cluster-inline-link pf-v5-u-mt-0">
                       View details <OutlinedQuestionCircleIcon />
                     </Button>
                   </Popover>

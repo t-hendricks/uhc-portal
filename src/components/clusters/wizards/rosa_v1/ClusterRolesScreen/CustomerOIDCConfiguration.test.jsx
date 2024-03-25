@@ -18,7 +18,9 @@ const defaultProps = {
 };
 
 describe('<CustomerOIDCConfiguration />', () => {
-  jest.useFakeTimers();
+  jest.useFakeTimers({
+    legacyFakeTimers: true, // TODO 'modern'
+  });
 
   afterEach(() => {
     jest.runOnlyPendingTimers();

@@ -13,6 +13,7 @@ import RedHat from '~/styles/images/Logo-Red_Hat-B-Standard-RGB.png';
 import { ApplicationIngressType } from '~/components/clusters/wizards/osd/Networking/constants';
 import { PrerequisitesInfoBox } from '~/components/clusters/wizards/rosa_v1/common/PrerequisitesInfoBox';
 import { WelcomeMessage } from '~/components/clusters/wizards/rosa_v1/common/WelcomeMessage';
+import { emptyAWSSubnet } from '~/components/clusters/wizards/common/createOSDInitialValues';
 import StandAloneTile from './StandAloneTile';
 import HostedTile from './HostedTile';
 import { hypershiftValue } from './ControlPlaneCommon';
@@ -60,15 +61,10 @@ const ControlPlaneField = ({
     change('configure_proxy', false);
 
     // Reset VPC settings in case they were configured and then came back to the Control plane step
-    change('machinePoolsSubnets', [
-      {
-        availabilityZone: '',
-        privateSubnetId: '',
-        publicSubnetId: '',
-      },
-    ]);
+    change('machinePoolsSubnets', [emptyAWSSubnet()]);
 
     if (isHypershift === 'true') {
+      change('node_labels', [{}]);
       if (formValues.multi_az === 'true') {
         change('multi_az', 'false');
       }

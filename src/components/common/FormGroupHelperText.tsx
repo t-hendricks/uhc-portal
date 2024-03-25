@@ -15,6 +15,7 @@ interface FormGroupHelperTextProps {
   touched?: boolean;
   variant?: HelperTextItemProps['variant'];
   icon?: React.ReactNode;
+  hasIcon?: boolean;
 }
 
 export const FormGroupHelperText = ({
@@ -24,20 +25,21 @@ export const FormGroupHelperText = ({
   touched,
   variant = 'default',
   icon,
+  hasIcon = icon !== undefined,
 }: FormGroupHelperTextProps) => {
-  const helpMessage = React.useMemo(() => {
-    if (typeof children === 'string') {
-      return (
+  const helpMessage = React.useMemo(
+    () =>
+      typeof children === 'string' ? (
         <HelperText id={id}>
-          <HelperTextItem icon={icon} variant={variant}>
+          <HelperTextItem icon={icon} variant={variant} hasIcon={hasIcon}>
             {children}
           </HelperTextItem>
         </HelperText>
-      );
-    }
-
-    return <HelperText>{children}</HelperText>;
-  }, [children, id, icon, variant]);
+      ) : (
+        <HelperText>{children}</HelperText>
+      ),
+    [children, id, icon, variant, hasIcon],
+  );
 
   if (!error && !children) {
     return null;
@@ -50,7 +52,7 @@ export const FormGroupHelperText = ({
     <FormHelperText>
       {touched && error && isValidError ? (
         <HelperText id={id}>
-          <HelperTextItem variant="error" icon={<ExclamationCircleIcon />}>
+          <HelperTextItem variant="error" icon={<ExclamationCircleIcon />} hasIcon={hasIcon}>
             {error}
           </HelperTextItem>
         </HelperText>

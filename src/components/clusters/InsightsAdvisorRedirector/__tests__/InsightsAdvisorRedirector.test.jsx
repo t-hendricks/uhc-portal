@@ -31,7 +31,7 @@ describe('<InsightsAdvisorRedirector />', () => {
   };
 
   afterAll(() => {
-    jest.unmock('react-router-dom');
+    jest.unmock('react-router-dom-v5-compat');
   });
 
   afterEach(() => {

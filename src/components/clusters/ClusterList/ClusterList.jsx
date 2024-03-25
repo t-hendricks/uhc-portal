@@ -165,7 +165,6 @@ class ClusterList extends Component {
       invalidateClusters,
       errorMessage,
       operationID,
-      history,
       setClusterDetails,
       anyModalOpen,
       queryParams,
@@ -266,8 +265,6 @@ class ClusterList extends Component {
                       <ClusterListFilterDropdown
                         view={viewConstants.CLUSTERS_VIEW}
                         isDisabled={pending}
-                        history={history}
-                        className="cluster-filter-dropdown"
                       />
                     </ToolbarItem>
                   )}
@@ -295,7 +292,7 @@ class ClusterList extends Component {
                 </ToolbarContent>
               </Toolbar>
               {!isRestrictedEnv() && (
-                <ClusterListFilterChipGroup view={viewConstants.CLUSTERS_VIEW} history={history} />
+                <ClusterListFilterChipGroup view={viewConstants.CLUSTERS_VIEW} />
               )}
               {error && !size(clusters) ? (
                 <Unavailable
@@ -373,9 +370,6 @@ ClusterList.propTypes = {
   closeModal: PropTypes.func.isRequired,
   setListFlag: PropTypes.func.isRequired,
   operationID: PropTypes.string,
-  history: PropTypes.shape({
-    push: PropTypes.func.isRequired,
-  }).isRequired,
   anyModalOpen: PropTypes.bool,
   features: PropTypes.object.isRequired,
   queryParams: PropTypes.shape({

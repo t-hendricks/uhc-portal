@@ -15,11 +15,10 @@ import { PageHeader, PageHeaderTitle } from '@redhat-cloud-services/frontend-com
 import { Thead, Tbody, Tr, Th, Td, ExpandableRowContent } from '@patternfly/react-table';
 import { Table as TableDeprecated } from '@patternfly/react-table/deprecated';
 import { ArrowRightIcon } from '@patternfly/react-icons/dist/esm/icons/arrow-right-icon';
-import { Link } from 'react-router-dom';
-import { useNavigate, useLocation } from 'react-router-dom-v5-compat';
+import { useNavigate, useLocation, Link } from 'react-router-dom-v5-compat';
 import * as OCM from '@openshift-assisted/ui-lib/ocm';
 
-import produce from 'immer';
+import { produce } from 'immer';
 import { has, get } from 'lodash';
 import { AppPage } from '~/components/App/AppPage';
 import { isRestrictedEnv } from '~/restrictedEnv';

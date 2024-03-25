@@ -1,7 +1,7 @@
 import { Alert } from '@patternfly/react-core';
 import get from 'lodash/get';
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link } from 'react-router-dom-v5-compat';
 import { Subscription } from '~/types/accounts_mgmt.v1';
 
 import { normalizedProducts, subscriptionStatuses } from '../../../../common/subscriptionTypes';

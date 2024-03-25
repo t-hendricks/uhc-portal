@@ -206,7 +206,7 @@ function CustomerOIDCConfiguration({
 
       <Instruction simple>
         <TextContent className="pf-v5-u-pb-md">
-          <Text component={TextVariants.p}>Run the command to create a new Operator Roles.</Text>
+          <Text component={TextVariants.p}>Run the command to create new Operator Roles.</Text>
         </TextContent>
         {operatorRolesCliCommand ? (
           <>

@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import get from 'lodash/get';
-import { Field } from 'redux-form';
-import { Link } from 'react-router-dom';
+import { Field } from 'formik';
+import { Link } from 'react-router-dom-v5-compat';
 import {
   Alert,
   Button,
@@ -18,6 +18,7 @@ import {
   Title,
   Label,
 } from '@patternfly/react-core';
+import { useFormState } from '~/components/clusters/wizards/hooks';
 import { Spinner } from '@redhat-cloud-services/frontend-components/Spinner';
 import links from '~/common/installLinks.mjs';
 import { trackEvents } from '~/common/analytics';
@@ -34,11 +35,12 @@ import ReduxVerticalFormGroup from '~/components/common/ReduxFormComponents/Redu
 import {
   MIN_MANAGED_POLICY_VERSION,
   ROSA_HOSTED_CLI_MIN_VERSION,
-} from '~/components/clusters/wizards/rosa_v1/rosaConstants';
+} from '~/components/clusters/wizards/rosa_v2/rosaConstants';
 import { AwsRoleErrorAlert } from './AwsRoleErrorAlert';
 import { RosaCliCommand } from './constants/cliCommands';
 
 import './AccountsRolesScreen.scss';
+import { FieldId } from '../constants';
 
 const NO_ROLE_DETECTED = 'No role detected';
 
@@ -82,8 +84,6 @@ const getDefaultInstallerRole = (
   return defaultRole.Installer;
 };
 function AccountRolesARNsSection({
-  touch,
-  change,
   selectedAWSAccountID,
   selectedInstallerRoleARN,
   rosaMaxOSVersion,
@@ -93,6 +93,8 @@ function AccountRolesARNsSection({
   isHypershiftSelected,
   onAccountChanged,
 }) {
+  const { setFieldValue, getFieldProps, getFieldMeta, setFieldTouched, validateForm } =
+    useFormState();
   const track = useAnalytics();
   const [isExpanded, setIsExpanded] = useState(true);
   const [accountRoles, setAccountRoles] = useState([]);
@@ -106,28 +108,34 @@ function AccountRolesARNsSection({
     getAWSAccountRolesARNsResponse,
   );
 
-  const touchARNsFields = React.useCallback(() => {
-    touch('installer_role_arn');
-    touch('support_role_arn');
-    touch('worker_role_arn');
-    if (!isHypershiftSelected) {
-      touch('control_plane_role_arn');
-    }
-  }, [isHypershiftSelected, touch]);
-
-  const updateRoleArns = (role) => {
-    change('installer_role_arn', role?.Installer || NO_ROLE_DETECTED);
-    change('support_role_arn', role?.Support || NO_ROLE_DETECTED);
-    change('worker_role_arn', role?.Worker || NO_ROLE_DETECTED);
-    if (!isHypershiftSelected) {
-      change('control_plane_role_arn', role?.ControlPlane || NO_ROLE_DETECTED);
-    }
-  };
-
   useEffect(() => {
     // this is required to show any validation error messages for the 4 disabled ARNs fields
-    touchARNsFields();
-  }, [touchARNsFields]);
+    setFieldTouched(FieldId.InstallerRoleArn, true, false);
+    setFieldTouched(FieldId.SupportRoleArn, true, false);
+    setFieldTouched(FieldId.WorkerRoleArn, true, false);
+    if (!isHypershiftSelected) {
+      setFieldTouched(FieldId.ControlPlaneRoleArn, true, false);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isHypershiftSelected]);
+
+  const updateRoleArns = (role) => {
+    const promiseArr = [
+      setFieldValue(FieldId.InstallerRoleArn, role?.Installer || NO_ROLE_DETECTED, false),
+      setFieldValue(FieldId.SupportRoleArn, role?.Support || NO_ROLE_DETECTED, false),
+      setFieldValue(FieldId.WorkerRoleArn, role?.Worker || NO_ROLE_DETECTED, false),
+    ];
+    if (!isHypershiftSelected) {
+      promiseArr.push(
+        setFieldValue(FieldId.ControlPlaneRoleArn, role?.ControlPlane || NO_ROLE_DETECTED, false),
+      );
+    }
+    Promise.all(promiseArr).then(() => {
+      setTimeout(() => {
+        validateForm();
+      }, 10);
+    });
+  };
 
   useEffect(() => {
     setSelectedInstallerRole(NO_ROLE_DETECTED);
@@ -146,7 +154,7 @@ function AccountRolesARNsSection({
       if (role.Installer === selectedInstallerRole) {
         hasMissingArns = !hasCompleteRoleSet(role, isHypershiftSelected);
         updateRoleArns(role);
-        change('rosa_max_os_version', role.version);
+        setFieldValue(FieldId.RosaMaxOsVersion, role.version, false);
       }
     });
     setShowMissingArnsError(hasMissingArns);
@@ -183,10 +191,12 @@ function AccountRolesARNsSection({
     if (installerOptions.length === 0) {
       updateRoleArns(null);
       setInstallerRoleOptions([]);
-      change('rosa_max_os_version', undefined);
+      setFieldValue(FieldId.RosaMaxOsVersion, undefined);
       setShowMissingArnsError(true);
     } else {
-      setInstallerRoleOptions(installerOptions);
+      setInstallerRoleOptions(
+        installerOptions.filter((installerRole) => installerRole.value !== undefined),
+      );
       setShowMissingArnsError(false);
     }
     setAccountRoles(accountRolesARNs);
@@ -257,7 +267,7 @@ function AccountRolesARNsSection({
     // changing to a new set of ARNs, which could have different
     // rosa_max_os_version, so clear the cluster_version which
     // will get a new default on next step of the wizard
-    change('cluster_version', undefined);
+    setFieldValue(FieldId.ClusterVersion, undefined);
     setSelectedInstallerRole(value);
   };
 
@@ -272,9 +282,9 @@ function AccountRolesARNsSection({
 
     // Clear the installer role/version if the latest fetched roles do not possess the previously selected one.
     if (!accountRoles.some((role) => role.Installer === selectedInstallerRole)) {
-      change('installer_role_arn', '');
+      setFieldValue(FieldId.InstallerRoleArn, '', false);
       setSelectedInstallerRole('');
-      change('cluster_version', undefined);
+      setFieldValue(FieldId.ClusterVersion, undefined);
     }
   };
 
@@ -375,11 +385,19 @@ function AccountRolesARNsSection({
               <GridItem span={8}>
                 <Field
                   component={ReduxSelectDropdown}
-                  name="installer_role_arn"
+                  name={FieldId.InstallerRoleArn}
+                  input={{
+                    // name, value, onBlur, onChange
+                    ...getFieldProps(FieldId.InstallerRoleArn),
+                    onChange: (value) => {
+                      setFieldValue(FieldId.InstallerRoleArn, value);
+                      onInstallerRoleChange(null, value);
+                    },
+                  }}
+                  meta={getFieldMeta(FieldId.InstallerRoleArn)}
                   label="Installer role"
                   type="text"
                   options={installerRoleOptions}
-                  onChange={onInstallerRoleChange}
                   isDisabled={installerRoleOptions.length <= 1}
                   validate={roleARNRequired}
                   isRequired
@@ -399,7 +417,13 @@ function AccountRolesARNsSection({
                 <br />
                 <Field
                   component={ReduxVerticalFormGroup}
-                  name="support_role_arn"
+                  name={FieldId.SupportRoleArn}
+                  input={{
+                    // name, value, onBlur, onChange
+                    ...getFieldProps(FieldId.SupportRoleArn),
+                    onChange: (value) => setFieldValue(FieldId.SupportRoleArn, value, false),
+                  }}
+                  meta={getFieldMeta(FieldId.SupportRoleArn)}
                   label="Support role"
                   type="text"
                   validate={roleARNRequired}
@@ -422,7 +446,13 @@ function AccountRolesARNsSection({
                 <br />
                 <Field
                   component={ReduxVerticalFormGroup}
-                  name="worker_role_arn"
+                  name={FieldId.WorkerRoleArn}
+                  input={{
+                    // name, value, onBlur, onChange
+                    ...getFieldProps(FieldId.WorkerRoleArn),
+                    onChange: (value) => setFieldValue(FieldId.WorkerRoleArn, value, false),
+                  }}
+                  meta={getFieldMeta(FieldId.WorkerRoleArn)}
                   label="Worker role"
                   type="text"
                   validate={roleARNRequired}
@@ -445,7 +475,14 @@ function AccountRolesARNsSection({
                     <br />
                     <Field
                       component={ReduxVerticalFormGroup}
-                      name="control_plane_role_arn"
+                      name={FieldId.ControlPlaneRoleArn}
+                      input={{
+                        // name, value, onBlur, onChange
+                        ...getFieldProps(FieldId.ControlPlaneRoleArn),
+                        onChange: (value) =>
+                          setFieldValue(FieldId.ControlPlaneRoleArn, value, false),
+                      }}
+                      meta={getFieldMeta(FieldId.ControlPlaneRoleArn)}
                       label="Control plane role"
                       type="text"
                       validate={roleARNRequired}
@@ -523,8 +560,6 @@ function AccountRolesARNsSection({
 }
 
 AccountRolesARNsSection.propTypes = {
-  touch: PropTypes.func,
-  change: PropTypes.func,
   selectedAWSAccountID: PropTypes.string,
   selectedInstallerRoleARN: PropTypes.string,
   rosaMaxOSVersion: PropTypes.string,

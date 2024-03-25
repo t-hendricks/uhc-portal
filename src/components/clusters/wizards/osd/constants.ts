@@ -13,53 +13,25 @@ import {
   IMDSType,
 } from '~/components/clusters/wizards/common/constants';
 import { BreadcrumbPath } from '~/components/common/Breadcrumbs';
+import { emptyAWSSubnet } from '~/components/clusters/wizards/common/createOSDInitialValues';
 import { getDefaultSecurityGroupsSettings } from '~/common/securityGroupsHelpers';
 import { getDefaultClusterAutoScaling } from '~/components/clusters/common/clusterAutoScalingValues';
 import { ApplicationIngressType, ClusterPrivacyType } from './Networking/constants';
 
 export enum OsdFieldId {
   // TODO: many fields here should move to common/constants.
-  AccountId = 'account_id',
-  AccessKeyId = 'access_key_id',
-  SecretAccessKey = 'secret_access_key',
-  InstallerRoleArn = 'installer_role_arn',
-  GcpServiceAccount = 'gcp_service_account',
-  Region = 'region',
-  CustomerManagedKey = 'customer_managed_key',
-  CustomerOperatorRolesPrefix = 'custom_operator_roles_prefix',
-  ClusterVersion = 'cluster_version',
   PersistentStorage = 'persistent_storage',
-  ClusterName = 'name',
   LoadBalancers = 'load_balancers',
   SecureBoot = 'secure_boot',
   EnableUserWorkloadMonitoring = 'enable_user_workload_monitoring',
-  EtcdEncryption = 'etcd_encryption',
   ClusterPrivacy = 'cluster_privacy',
-  ConfigureProxy = 'configure_proxy',
-  InstallToVpc = 'install_to_vpc',
-  UsePrivateLink = 'use_privatelink',
-  PublicSubnetId = 'public_subnet_id',
-  PrivateSubnetId = 'private_subnet_id',
   InstallToSharedVpc = 'install_to_shared_vpc',
   SharedHostProjectID = 'shared_host_project_id',
   KeyLocation = 'key_location',
   KeyRing = 'key_ring',
   KeyName = 'key_name',
-  KmsKeyArn = 'kms_key_arn',
   KmsServiceAccount = 'kms_service_account',
-  SelectedVpc = 'selected_vpc', // OSD AWS / ROSA classic
-  VpcName = 'vpc_name', // OSD GCP (shared VPC)
-  ComputeSubnet = 'compute_subnet',
-  ControlPlaneSubnet = 'control_plane_subnet',
-  SecurityGroups = 'securityGroups',
-  FirstAvailabilityZone = 'az_0',
-  SecondAvailabilityZone = 'az_1',
-  ThirdAvailabilityZone = 'az_2',
-  HttpProxyUrl = 'http_proxy_url',
-  HttpsProxyUrl = 'https_proxy_url',
-  AdditionalTrustBundle = 'additional_trust_bundle',
   DisableScpChecks = 'disable_scp_checks',
-  NoProxyDomains = 'no_proxy_domains',
   NetworkMachineCidr = 'network_machine_cidr',
   NetworkServiceCidr = 'network_service_cidr',
   NetworkPodCidr = 'network_pod_cidr',
@@ -121,6 +93,7 @@ export const initialValues: FormikValues = {
   [FieldId.BillingModel]: billingModels.STANDARD,
   [FieldId.MultiAz]: 'false',
   [FieldId.SelectedVpc]: { id: '', name: '' },
+  [FieldId.MachinePoolsSubnets]: [emptyAWSSubnet()],
   [FieldId.SecurityGroups]: getDefaultSecurityGroupsSettings(),
   [FieldId.InstallToSharedVpc]: false,
   [FieldId.SecureBoot]: false,

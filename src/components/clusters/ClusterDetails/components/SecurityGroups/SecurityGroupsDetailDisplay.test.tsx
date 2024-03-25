@@ -1,6 +1,6 @@
 import * as React from 'react';
-import { BrowserRouter } from 'react-router-dom';
-import { render, screen } from '~/testUtils';
+import { CompatRouter } from 'react-router-dom-v5-compat';
+import { render, screen, TestRouter } from '~/testUtils';
 import SecurityGroupsDisplayByNode from './SecurityGroupsDetailDisplay';
 
 const securityGroups = [
@@ -20,9 +20,11 @@ describe('<SecurityGroupsDetailDisplayByNode />', () => {
   describe('with empty security group ids per node', () => {
     it('returns no content', () => {
       const { container } = render(
-        <BrowserRouter>
-          <SecurityGroupsDisplayByNode securityGroups={securityGroups} />
-        </BrowserRouter>,
+        <TestRouter>
+          <CompatRouter>
+            <SecurityGroupsDisplayByNode securityGroups={securityGroups} />
+          </CompatRouter>
+        </TestRouter>,
       );
 
       expect(container).toBeEmptyDOMElement();
@@ -32,13 +34,15 @@ describe('<SecurityGroupsDetailDisplayByNode />', () => {
   describe('With all needed data provided', () => {
     it('renders each control and infra nodes', () => {
       render(
-        <BrowserRouter>
-          <SecurityGroupsDisplayByNode
-            securityGroups={securityGroups}
-            securityGroupIdsForControl={securityGroupIdsForControl}
-            securityGroupIdsForInfra={securityGroupIdsForInfra}
-          />
-        </BrowserRouter>,
+        <TestRouter>
+          <CompatRouter>
+            <SecurityGroupsDisplayByNode
+              securityGroups={securityGroups}
+              securityGroupIdsForControl={securityGroupIdsForControl}
+              securityGroupIdsForInfra={securityGroupIdsForInfra}
+            />
+          </CompatRouter>
+        </TestRouter>,
       );
 
       expect(screen.getByText('Control plane nodes')).toBeInTheDocument();
@@ -50,12 +54,14 @@ describe('<SecurityGroupsDetailDisplayByNode />', () => {
 
     it('renders each machine pool node', () => {
       render(
-        <BrowserRouter>
-          <SecurityGroupsDisplayByNode
-            securityGroups={securityGroups}
-            machinePoolData={machinePoolData}
-          />
-        </BrowserRouter>,
+        <TestRouter>
+          <CompatRouter>
+            <SecurityGroupsDisplayByNode
+              securityGroups={securityGroups}
+              machinePoolData={machinePoolData}
+            />
+          </CompatRouter>
+        </TestRouter>,
       );
 
       expect(screen.getByText('Compute (worker) nodes')).toBeInTheDocument();
@@ -65,43 +71,49 @@ describe('<SecurityGroupsDetailDisplayByNode />', () => {
     });
     it('renders link to machine pool tab', () => {
       render(
-        <BrowserRouter>
-          <SecurityGroupsDisplayByNode
-            securityGroups={securityGroups}
-            machinePoolData={machinePoolData}
-            showLinkToMachinePools
-          />
-        </BrowserRouter>,
+        <TestRouter>
+          <CompatRouter>
+            <SecurityGroupsDisplayByNode
+              securityGroups={securityGroups}
+              machinePoolData={machinePoolData}
+              showLinkToMachinePools
+            />
+          </CompatRouter>
+        </TestRouter>,
       );
       const moreInfoMessage = 'See more information in the';
       expect(screen.getByText(moreInfoMessage)).toBeInTheDocument();
     });
     it('renders no link to machine pool tab if machine pools have no security group ids, even if the showLink flag is set', () => {
       render(
-        <BrowserRouter>
-          <SecurityGroupsDisplayByNode
-            securityGroups={securityGroups}
-            securityGroupIdsForControl={securityGroupIdsForControl}
-            securityGroupIdsForInfra={securityGroupIdsForInfra}
-            machinePoolData={[]}
-            showLinkToMachinePools
-          />
-        </BrowserRouter>,
+        <TestRouter>
+          <CompatRouter>
+            <SecurityGroupsDisplayByNode
+              securityGroups={securityGroups}
+              securityGroupIdsForControl={securityGroupIdsForControl}
+              securityGroupIdsForInfra={securityGroupIdsForInfra}
+              machinePoolData={[]}
+              showLinkToMachinePools
+            />
+          </CompatRouter>
+        </TestRouter>,
       );
       const moreInfoMessage = 'See more information in the';
       expect(screen.queryByText(moreInfoMessage)).not.toBeInTheDocument();
     });
     it('renders no link to machine pool tab because the showLink flag is set to false', () => {
       render(
-        <BrowserRouter>
-          <SecurityGroupsDisplayByNode
-            securityGroups={securityGroups}
-            securityGroupIdsForControl={securityGroupIdsForControl}
-            securityGroupIdsForInfra={securityGroupIdsForInfra}
-            machinePoolData={machinePoolData}
-            showLinkToMachinePools={false}
-          />
-        </BrowserRouter>,
+        <TestRouter>
+          <CompatRouter>
+            <SecurityGroupsDisplayByNode
+              securityGroups={securityGroups}
+              securityGroupIdsForControl={securityGroupIdsForControl}
+              securityGroupIdsForInfra={securityGroupIdsForInfra}
+              machinePoolData={machinePoolData}
+              showLinkToMachinePools={false}
+            />
+          </CompatRouter>
+        </TestRouter>,
       );
       const moreInfoMessage = 'See more information in the';
       expect(screen.queryByText(moreInfoMessage)).not.toBeInTheDocument();

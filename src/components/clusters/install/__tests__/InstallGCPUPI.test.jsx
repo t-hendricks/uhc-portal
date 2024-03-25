@@ -1,4 +1,5 @@
 import React from 'react';
+import { CompatRouter } from 'react-router-dom-v5-compat';
 import { screen, checkAccessibility, TestRouter, withState } from '~/testUtils';
 
 import { InstallGCPUPI } from '../InstallGCPUPI';
@@ -25,7 +26,9 @@ describe('InstallGCPUPI', () => {
   it('is accessible', async () => {
     const { container } = withState(githubReleases).render(
       <TestRouter>
-        <InstallGCPUPI token={{}} dispatch={dispatch} />
+        <CompatRouter>
+          <InstallGCPUPI token={{}} dispatch={dispatch} />
+        </CompatRouter>
       </TestRouter>,
     );
 

@@ -1,7 +1,6 @@
-import { Tab, TabTitleText, Tabs } from '@patternfly/react-core';
 import React from 'react';
-import { useHistory } from 'react-router';
-import { UnregisterCallback } from 'history';
+import { Tab, TabTitleText, Tabs } from '@patternfly/react-core';
+import { useLocation, useNavigate } from 'react-router-dom-v5-compat';
 import { getInitTab, getTabs } from './TabsRow.helper';
 import { TabsRowInfoType, TabsRowTabType } from './TabsRow.model';
 
@@ -12,7 +11,8 @@ export type TabsRowProps = {
 };
 
 const TabsRow = ({ tabsInfo, onTabSelected, initTabOpen }: TabsRowProps) => {
-  const history = useHistory();
+  const navigate = useNavigate();
+  const location = useLocation();
 
   const [tabs, setTabs] = React.useState<TabsRowTabType[]>();
   const [activeTab, setActiveTab] = React.useState<TabsRowTabType>();
@@ -56,30 +56,43 @@ const TabsRow = ({ tabsInfo, onTabSelected, initTabOpen }: TabsRowProps) => {
   }, [initTabOpen]); // TODO: tabsInfo should be added as soon as ClusterDetails is refactored
 
   React.useEffect(() => {
-    let unlisten: UnregisterCallback | undefined;
     if (tabs?.length) {
-      unlisten = history.listen((location, action) => {
-        // listen to browser back/forward and manual URL changes
-        if (['PUSH', 'POP'].includes(action)) {
-          const targetTab = tabs.find((tab) => `#${tab.id}` === location.hash);
-          handleTabClick(
-            undefined,
-            targetTab?.isDisabled || !targetTab?.show ? 0 : targetTab.key,
-            false,
-          );
-        }
-      });
-
       if (initialTab !== null && (initialTab?.isDisabled || !initialTab?.show)) {
         setInitialTab(tabs[0]);
         handleTabClick(undefined, 0);
       }
     }
+  }, [tabs, initialTab, handleTabClick]);
 
-    return () => {
-      unlisten?.();
-    };
-  }, [tabs, initialTab, history, handleTabClick]);
+  React.useEffect(() => {
+    if (tabs?.length) {
+      const targetTab = tabs.find((tab) => `#${tab.id}` === location.hash);
+
+      /* Checking if tab exists,
+          otherwise we navigate to overview
+          if the user did not click on back button,
+          in that case we navigate to cluster list page */
+      if (!targetTab?.show || targetTab.isDisabled) {
+        if (location.hash === '') {
+          navigate('/', { replace: true });
+        } else {
+          setInitialTab(tabs[0]);
+          navigate(
+            {
+              hash: `#${tabs[0].id}`,
+            },
+            { replace: true },
+          );
+        }
+      }
+      handleTabClick(
+        undefined,
+        targetTab?.isDisabled || !targetTab?.show ? 0 : targetTab.key,
+        false,
+      );
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [location.hash]); // eslint wants dependencies, but we only need to listen to location.hash changes
 
   React.useEffect(() => {
     if (activeTab && !activeTab.show) {
@@ -95,14 +108,13 @@ const TabsRow = ({ tabsInfo, onTabSelected, initTabOpen }: TabsRowProps) => {
 
   React.useEffect(() => {
     if (initialTab === null && historyPush) {
-      history.replace({
-        ...(previousTab?.key !== activeTab?.key
-          ? { pathname: history.location.pathname }
-          : history.location),
-        hash: `#${activeTab?.id}`,
-      });
+      if (previousTab?.key !== activeTab?.key) {
+        navigate({
+          hash: `#${activeTab?.id}`,
+        });
+      }
     }
-  }, [activeTab, initialTab, historyPush, previousTab, history]);
+  }, [activeTab, initialTab, historyPush, previousTab, navigate]);
 
   return tabs && activeTab ? (
     <Tabs activeKey={activeTab.key} onSelect={handleTabClick}>

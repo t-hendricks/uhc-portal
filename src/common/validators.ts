@@ -1,16 +1,19 @@
 /* eslint-disable camelcase */
 import { get, indexOf, inRange } from 'lodash';
-import cidrTools from 'cidr-tools';
+import { overlapCidr, containsCidr } from 'cidr-tools';
+import IPCIDR from 'ip-cidr';
 import { ValidationError, Validator } from 'jsonschema';
 import { clusterService } from '~/services';
+import { Subnet } from '~/common/helpers';
+import { FieldId } from '~/components/clusters/wizards/osd/constants';
 import {
   maxAdditionalSecurityGroups,
   workerNodeVolumeSizeMinGiB,
 } from '~/components/clusters/wizards/rosa/constants';
-import type { CloudVPC, GCP, Taint } from '../types/clusters_mgmt.v1';
+import type { GCP, Taint } from '~/types/clusters_mgmt.v1';
 import { sqlString } from './queryHelpers';
 
-type Networks = Parameters<typeof cidrTools['overlap']>[0];
+type Networks = Parameters<typeof overlapCidr>[0];
 
 // Valid RFC-1035 labels must consist of lower case alphanumeric characters or '-', start with an
 // alphabetic character, and end with an alphanumeric character (e.g. 'my-name',  or 'abc-123').
@@ -240,18 +243,6 @@ const checkMachinePoolName = (value: string) =>
 
 const checkNodePoolName = (value: string) =>
   checkObjectName(value, 'Machine pool', MAX_NODE_POOL_NAME_LENGTH);
-/**
- * executes cluster-name async validations.
- * to be used at the form level hook (asyncValidate).
- *
- * @see asyncValidate in the wizard's redux-form config.
- * @param value the value to be validated
- * @returns {Promise<void>} a promise which resolves quietly, or rejects with a form errors map.
- */
-const asyncValidateClusterName = async (value: string) => {
-  const evaluatedAsyncValidation = await evaluateClusterNameAsyncValidation(value);
-  return findFirstFailureMessage(evaluatedAsyncValidation);
-};
 
 const createAsyncValidationEvaluator =
   (
@@ -271,6 +262,26 @@ const createAsyncValidationEvaluator =
       validated: validationResults[i],
     }));
   };
+
+const evaluateClusterNameAsyncValidation = createAsyncValidationEvaluator(
+  clusterNameAsyncValidation,
+);
+
+const findFirstFailureMessage = (populatedValidation: Validations | undefined) =>
+  populatedValidation?.find((validation) => validation.validated === false)?.text;
+
+/**
+ * executes cluster-name async validations.
+ * to be used at the form level hook (asyncValidate).
+ *
+ * @see asyncValidate in the wizard's redux-form config.
+ * @param value the value to be validated
+ * @returns {Promise<void>} a promise which resolves quietly, or rejects with a form errors map.
+ */
+const asyncValidateClusterName = async (value: string) => {
+  const evaluatedAsyncValidation = await evaluateClusterNameAsyncValidation(value);
+  return findFirstFailureMessage(evaluatedAsyncValidation);
+};
 
 const k8sGpuParameter = (gpuParam: string): string | undefined => {
   if (!gpuParam) {
@@ -385,10 +396,6 @@ const clusterAutoScalingValidators = {
   k8sLogVerbosityParameter,
 };
 
-const evaluateClusterNameAsyncValidation = createAsyncValidationEvaluator(
-  clusterNameAsyncValidation,
-);
-
 /**
  * creates a validator function that exits on first failure (and returns its error message),
  * using the validation provider output collection as its input.
@@ -411,9 +418,6 @@ const createPessimisticValidator =
   ) =>
   (value: V, allValues?: any, props?: any, name?: any) =>
     findFirstFailureMessage(validationProvider(value, allValues, props, name));
-
-const findFirstFailureMessage = (populatedValidation: Validations | undefined) =>
-  populatedValidation?.find((validation) => validation.validated === false)?.text;
 
 const checkCustomOperatorRolesPrefix = (value: string): string | undefined => {
   const label = 'Custom operator roles prefix';
@@ -771,6 +775,92 @@ const getCIDRSubnetLength = (value?: string): number | undefined => {
   return parseInt(value.split('/').pop() ?? '', 10);
 };
 
+const subnetCidrs = (
+  value?: string,
+  formData?: Record<string, string>,
+  fieldName?: string,
+  selectedSubnets?: Subnet[],
+): string | undefined => {
+  type ErroredSubnet = {
+    cidr_block: string;
+    name: string;
+    subnet_id: string;
+    overlaps?: boolean;
+  };
+
+  if (!value || selectedSubnets?.length === 0) {
+    return undefined;
+  }
+
+  const erroredSubnets: ErroredSubnet[] = [];
+
+  const startingIP = (cidr: string) => {
+    const ip = new IPCIDR(cidr);
+    return ip.start().toString();
+  };
+
+  const compareCidrs = (shouldInclude: boolean) => {
+    if (shouldInclude) {
+      selectedSubnets?.forEach((subnet: Subnet) => {
+        if (
+          CIDR_REGEXP.test(subnet.cidr_block) &&
+          !containsCidr(value, startingIP(subnet.cidr_block))
+        ) {
+          erroredSubnets.push(subnet);
+        }
+      });
+    } else {
+      selectedSubnets?.forEach((subnet: Subnet) => {
+        if (CIDR_REGEXP.test(subnet.cidr_block)) {
+          if (containsCidr(value, startingIP(subnet.cidr_block))) {
+            erroredSubnets.push(subnet);
+          } else if (overlapCidr(value, subnet.cidr_block)) {
+            const overlappedSubnet = { ...subnet, overlaps: true };
+            erroredSubnets.push(overlappedSubnet);
+          }
+        }
+      });
+    }
+  };
+
+  const subnetName = () => erroredSubnets[0]?.name || erroredSubnets[0]?.subnet_id;
+
+  if (fieldName === FieldId.NetworkMachineCidr) {
+    compareCidrs(true);
+    if (erroredSubnets.length > 0) {
+      return `The Machine CIDR does not include the starting IP (${startingIP(
+        erroredSubnets[0].cidr_block,
+      )}) of ${subnetName()}`;
+    }
+  }
+  if (fieldName === FieldId.NetworkServiceCidr) {
+    compareCidrs(false);
+    if (erroredSubnets.length > 0) {
+      if (erroredSubnets[0]?.overlaps) {
+        return `The Service CIDR overlaps with ${subnetName()} CIDR 
+        '${erroredSubnets[0].cidr_block}'`;
+      }
+      return `The Service CIDR includes the starting IP (${startingIP(
+        erroredSubnets[0].cidr_block,
+      )}) of ${subnetName()}`;
+    }
+  }
+  if (fieldName === FieldId.NetworkPodCidr) {
+    compareCidrs(false);
+    if (erroredSubnets.length > 0) {
+      if (erroredSubnets[0]?.overlaps) {
+        return `The Pod CIDR overlaps with ${subnetName()} CIDR 
+        '${erroredSubnets[0].cidr_block}'`;
+      }
+      return `The Pod CIDR includes the starting IP (${startingIP(
+        erroredSubnets[0].cidr_block,
+      )}) of ${subnetName()}`;
+    }
+  }
+
+  return undefined;
+};
+
 const awsMachineCidr = (value?: string, formData?: Record<string, string>): string | undefined => {
   if (!value) {
     return undefined;
@@ -900,16 +990,20 @@ const disjointSubnets =
     };
     delete networkingFields[fieldName];
     const overlappingFields: string[] = [];
-    try {
+
+    if (CIDR_REGEXP.test(value)) {
       Object.keys(networkingFields).forEach((name) => {
         const fieldValue = get(formData, name, null);
-        if (fieldValue && cidrTools.overlap(value, fieldValue)) {
-          overlappingFields.push(networkingFields[name]);
+        try {
+          if (fieldValue && overlapCidr(value, fieldValue)) {
+            overlappingFields.push(networkingFields[name]);
+          }
+        } catch {
+          // parse error for fieldValue; ignore
         }
       });
-    } catch (e) {
-      return `Failed to parse CIDR: ${e}`;
     }
+
     const plural = overlappingFields.length > 1;
     if (overlappingFields.length > 0) {
       return `This subnet overlaps with the subnet${
@@ -1289,16 +1383,8 @@ const validateSecurityGroups = (securityGroups: string[]) =>
     ? `A maximum of ${maxAdditionalSecurityGroups} security groups can be selected.`
     : undefined;
 
-const validateOsdUniqueAZ = createUniqueFieldValidator(
-  'Must select 3 different AZs.',
-  (currentFieldName: string, allValues: { [key: string]: unknown }) =>
-    Object.entries(allValues)
-      .filter(([fieldKey]) => fieldKey.startsWith('az_') && fieldKey !== currentFieldName)
-      .map(([, fieldValue]) => fieldValue),
-);
-
-const validateRosaUniqueAZ = (
-  currentAZ: string,
+const validateUniqueAZ = (
+  currentAZ: string | undefined,
   allValues: { machinePoolsSubnets: FormSubnet[] },
 ) => {
   const sameAZs = (allValues.machinePoolsSubnets || [])
@@ -1329,7 +1415,7 @@ const validateRequiredPublicSubnetId = (
   props: { pristine: boolean },
 ) => (!props.pristine && !publicSubnetId ? 'Subnet is required' : undefined);
 
-type FormSubnet = {
+export type FormSubnet = {
   availabilityZone: string;
   privateSubnetId: string;
   publicSubnetId: string;
@@ -1350,41 +1436,6 @@ const validateMultipleMachinePoolsSubnets = (
       .length > 1;
   return hasRepeatedSubnets
     ? 'Every machine pool must be associated to a different subnet'
-    : undefined;
-};
-
-// Validations for AWS subnets in OSD wizard (where a subnetId is typed)
-const validateAWSSubnet = (
-  value: string,
-  allValues: Partial<{ selected_vpc: CloudVPC; az_0: string; az_1: string; az_2: string }>,
-  formProps: object,
-  name: string,
-) => {
-  const selectedVpc = allValues.selected_vpc;
-  if (!selectedVpc?.id && value) {
-    return 'You must select the VPC first';
-  }
-  if (selectedVpc?.id && !value) {
-    return 'Field is required';
-  }
-
-  const subnet = selectedVpc?.aws_subnets?.find((subnet) => subnet.subnet_id === value);
-  if (!subnet) {
-    return 'No such subnet exists in the selected VPC';
-  }
-  const mpIndex = Number(name.split('_').pop()) as 0 | 1 | 2;
-  const selectedAZ = allValues[`az_${mpIndex}`];
-  if (!!selectedAZ && subnet.availability_zone !== selectedAZ) {
-    return `Provided subnet is from different AZ ${subnet.availability_zone}.`;
-  }
-
-  if (subnet.public) {
-    return name.startsWith('private_subnet')
-      ? 'Provided subnet is public, should be private.'
-      : undefined;
-  }
-  return name.startsWith('public_subnet')
-    ? 'Provided subnet is private, should be public.'
     : undefined;
 };
 
@@ -1611,6 +1662,21 @@ const validateWorkerVolumeSize = (
     : 'Decimals are not allowed for the worker root disk size. Enter a whole number.';
 };
 
+const composeValidators =
+  (...args: Array<(value: any) => string | undefined>) =>
+  (value: any) => {
+    for (let i = 0; i < args.length; i += 1) {
+      const validator = args[i];
+      const error = validator(value);
+
+      if (error) {
+        return error;
+      }
+    }
+
+    return undefined;
+  };
+
 const validators = {
   required,
   acknowledgePrerequisites,
@@ -1621,6 +1687,7 @@ const validators = {
   validateRHITUsername,
   checkBaseDNSDomain,
   cidr,
+  subnetCidrs,
   awsMachineCidr,
   // gcpMachineCidr, https://issues.redhat.com/browse/HAC-2118
   serviceCidr,
@@ -1692,9 +1759,7 @@ export {
   checkNodePoolName,
   checkCustomOperatorRolesPrefix,
   checkLabels,
-  validateOsdUniqueAZ,
-  validateRosaUniqueAZ,
-  validateAWSSubnet,
+  validateUniqueAZ,
   validateGCPHostProjectId,
   validateRequiredPublicSubnetId,
   validateMultipleMachinePoolsSubnets,
@@ -1723,6 +1788,7 @@ export {
   validateTlsSecretName,
   validateTlsHostname,
   validateNamespacesList,
+  composeValidators,
 };
 
 export default validators;

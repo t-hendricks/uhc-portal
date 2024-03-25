@@ -1,4 +1,5 @@
 import React from 'react';
+import { CompatRouter } from 'react-router-dom-v5-compat';
 import { render, screen, checkAccessibility, TestRouter } from '~/testUtils';
 
 import DeveloperPreviewSection from '../DeveloperPreviewSection';
@@ -7,7 +8,9 @@ describe('<DeveloperPreviewSection />', () => {
   it('shows correct link text and url with no parameters', async () => {
     const { container } = render(
       <TestRouter>
-        <DeveloperPreviewSection />
+        <CompatRouter>
+          <DeveloperPreviewSection />
+        </CompatRouter>
       </TestRouter>,
     );
 
@@ -20,7 +23,9 @@ describe('<DeveloperPreviewSection />', () => {
   it('shows correct link text when is not dev preview', () => {
     render(
       <TestRouter>
-        <DeveloperPreviewSection isDevPreviewLink={false} devPreviewLink="/myLink" />
+        <CompatRouter>
+          <DeveloperPreviewSection isDevPreviewLink={false} devPreviewLink="/myLink" />
+        </CompatRouter>
       </TestRouter>,
     );
 
@@ -31,7 +36,9 @@ describe('<DeveloperPreviewSection />', () => {
   it('shows correct link text when is dev preview', () => {
     render(
       <TestRouter>
-        <DeveloperPreviewSection isDevPreview devPreviewLink="/myLink" />
+        <CompatRouter>
+          <DeveloperPreviewSection isDevPreview devPreviewLink="/myLink" />
+        </CompatRouter>
       </TestRouter>,
     );
 

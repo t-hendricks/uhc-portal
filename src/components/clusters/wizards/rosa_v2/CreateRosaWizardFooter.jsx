@@ -1,15 +1,18 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { useSelector } from 'react-redux';
-import { isAsyncValidating } from 'redux-form';
-
 import { Button } from '@patternfly/react-core';
 import {
   WizardFooter as WizardFooterDeprecated,
   WizardContext as WizardContextDeprecated,
 } from '@patternfly/react-core/deprecated';
-
+import { setNestedObjectValues } from 'formik';
+import { scrollToFirstField } from '~/common/helpers';
+import { getScrollErrorIds } from '~/components/clusters/wizards/form/utils';
+import { useFormState } from '~/components/clusters/wizards/hooks';
 import { stepId, hasLoadingState } from './rosaWizardConstants';
+import { isUserRoleForSelectedAWSAccount } from './AccountsRolesScreen/AccountsRolesScreen';
+import { FieldId } from './constants';
 
 // Must return the step in which VPCDropdown is located, as it's in charge of fetching the VPCs
 const getVpcLoadingStep = (isHypershiftSelected) => {
@@ -22,14 +25,18 @@ const getVpcLoadingStep = (isHypershiftSelected) => {
 
 const CreateRosaWizardFooter = ({
   firstStepId,
-  onBeforeNext,
-  onBeforeSubmit,
-  onSubmit,
   isHypershiftSelected,
-  isNextDisabled,
   currentStepId,
+  accountAndRolesStepId,
+  getUserRoleResponse,
+  getUserRoleInfo,
+  isSubmitting = false,
 }) => {
-  const asyncValidating = useSelector(isAsyncValidating('CreateCluster'));
+  const { values, validateForm, setTouched, isValidating, submitForm } = useFormState();
+  // used to determine the actions' disabled state.
+  // (as a more exclusive rule than isValidating, which relying upon would block progress to the next step)
+  const [isNextDeferred, setIsNextDeferred] = useState(false);
+
   const awsRequests = useSelector((state) => ({
     accountIDsLoading: state.rosaReducer.getAWSAccountIDsResponse.pending || false,
     accountARNsLoading: state.rosaReducer.getAWSAccountRolesARNsResponse.pending || false,
@@ -48,7 +55,53 @@ const CreateRosaWizardFooter = ({
     awsRequests.oCMRoleLoading ||
     isRefreshingVPCs;
 
-  return (
+  const isButtonLoading = isValidating || areAwsResourcesLoading;
+  const isButtonDisabled = isNextDeferred || areAwsResourcesLoading;
+
+  const onValidateNext = async (onNext) => {
+    // defer execution until any ongoing validation is done
+    if (isValidating) {
+      if (!isNextDeferred) {
+        setIsNextDeferred(true);
+      }
+      return;
+    }
+
+    const errors = await validateForm(values);
+
+    if (Object.keys(errors || {}).length > 0) {
+      setTouched(setNestedObjectValues(errors, true));
+      scrollToFirstField(getScrollErrorIds(errors));
+
+      return;
+    }
+
+    // when navigating back to step 1 from link in no user-role error messages on review screen.
+    if (currentStepId === accountAndRolesStepId && !getUserRoleResponse?.fulfilled) {
+      const data = await getUserRoleInfo();
+      const gotoNextStep = isUserRoleForSelectedAWSAccount(
+        data.value,
+        values[FieldId.AssociatedAwsId],
+      );
+      if (!gotoNextStep) {
+        return;
+      }
+    }
+
+    onNext();
+  };
+
+  useEffect(() => {
+    // if "next" invocation was deferred due to earlier ongoing validation,
+    // revive the invocation when the validation is done.
+    if (isNextDeferred && isValidating === false) {
+      setIsNextDeferred(false);
+      onValidateNext();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isValidating, isNextDeferred]);
+
+  return isSubmitting ? null : (
     <WizardFooterDeprecated>
       <WizardContextDeprecated.Consumer>
         {({ activeStep, onNext, onBack, onClose }) => (
@@ -56,24 +109,20 @@ const CreateRosaWizardFooter = ({
             {activeStep.id === stepId.REVIEW_AND_CREATE ? (
               <Button
                 variant="primary"
-                type="submit"
                 data-testid="create-cluster-button"
-                onClick={() => onBeforeSubmit(onSubmit)}
+                onClick={() => submitForm()}
               >
                 Create cluster
               </Button>
             ) : (
               <Button
                 variant="primary"
-                type="submit"
                 data-testid="wizard-next-button"
-                onClick={() => onBeforeNext(onNext)}
-                isLoading={
-                  hasLoadingState(activeStep.id) && (asyncValidating || areAwsResourcesLoading)
-                }
-                isDisabled={
-                  hasLoadingState(activeStep.id) && (isNextDisabled || areAwsResourcesLoading)
-                }
+                onClick={() => {
+                  onValidateNext(onNext);
+                }}
+                isLoading={hasLoadingState(activeStep.id) && isButtonLoading}
+                isDisabled={hasLoadingState(activeStep.id) && isButtonDisabled}
               >
                 Next
               </Button>
@@ -98,12 +147,12 @@ const CreateRosaWizardFooter = ({
 
 CreateRosaWizardFooter.propTypes = {
   firstStepId: PropTypes.string.isRequired,
-  onBeforeNext: PropTypes.func.isRequired,
-  onBeforeSubmit: PropTypes.func.isRequired,
-  onSubmit: PropTypes.func.isRequired,
   isHypershiftSelected: PropTypes.bool,
-  isNextDisabled: PropTypes.bool,
   currentStepId: PropTypes.string,
+  accountAndRolesStepId: PropTypes.string.isRequired,
+  getUserRoleResponse: PropTypes.object.isRequired,
+  getUserRoleInfo: PropTypes.func.isRequired,
+  isSubmitting: PropTypes.bool,
 };
 
 export default CreateRosaWizardFooter;

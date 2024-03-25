@@ -1,16 +1,6 @@
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import {
-  isValid,
-  isAsyncValidating,
-  destroy,
-  formValueSelector,
-  getFormValues,
-  touch,
-  getFormSyncErrors,
-  getFormAsyncErrors,
-} from 'redux-form';
-import {
   resetCreatedClusterResponse,
   clearInstallableVersions,
 } from '~/redux/actions/clustersActions';
@@ -28,19 +18,10 @@ import submitOSDRequest from '../common/submitOSDRequest';
 const mapStateToProps = (state) => {
   const { organization } = state.userProfile;
   const { getUserRoleResponse } = state.rosaReducer;
-  const valueSelector = formValueSelector('CreateCluster');
-  const formSyncErrors = getFormSyncErrors('CreateCluster')(state) ?? {};
-  const formAsyncErrors = getFormAsyncErrors('CreateCluster')(state) ?? {};
   const { clusterVersions } = state?.clusters || {};
 
   return {
-    isValid: isValid('CreateCluster')(state),
-    isAsyncValidating: isAsyncValidating('CreateCluster')(state),
     isErrorModalOpen: shouldShowModal(state, 'osd-create-error'), // TODO: change 'osd' to 'rosa'
-    cloudProviderID: 'aws',
-    installToVPCSelected: valueSelector(state, 'install_to_vpc'),
-    privateLinkSelected: valueSelector(state, 'use_privatelink'),
-    configureProxySelected: valueSelector(state, 'configure_proxy'),
     createClusterResponse: state.clusters.createdCluster,
     machineTypes: state.machineTypes,
     organization,
@@ -49,35 +30,25 @@ const mapStateToProps = (state) => {
       state.userProfile.organization.quotaList,
       normalizedProducts.ROSA,
     ),
-    formValues: getFormValues('CreateCluster')(state) ?? {},
-    formErrors: {
-      ...formSyncErrors,
-      ...formAsyncErrors,
-    },
     getUserRoleResponse,
-    selectedAWSAccountID: valueSelector(state, 'associated_aws_id'),
-    isHypershiftSelected: valueSelector(state, 'hypershift') === 'true',
     getInstallableVersionsResponse: clusterVersions,
   };
 };
 
 const mapDispatchToProps = (dispatch) => ({
-  onSubmit: () =>
-    dispatch((_, getState) => {
-      const formData = getFormValues('CreateCluster')(getState());
+  onSubmit: (formikValues) =>
+    dispatch(() => {
       // If changing these params, keep test & DebugClusterRequest props synced.
       const params = { isWizard: true };
-      return submitOSDRequest(dispatch, params)(formData); // TODO: change to submitROSARequest(...
+      return submitOSDRequest(dispatch, params)(formikValues); // TODO: change to submitROSARequest(...
     }),
   resetResponse: () => dispatch(resetCreatedClusterResponse()),
-  destroyForm: () => dispatch(destroy('CreateCluster')),
   openModal: (modalName) => {
     dispatch(openModal(modalName));
   },
   closeModal: () => {
     dispatch(closeModal());
   },
-  touch: (fieldNames) => dispatch(touch('CreateCluster', ...fieldNames)),
   getOrganizationAndQuota: () => dispatch(getOrganizationAndQuota()),
   getUserRole: () => dispatch(getUserRole()),
   getMachineTypes: () => dispatch(getMachineTypes()),

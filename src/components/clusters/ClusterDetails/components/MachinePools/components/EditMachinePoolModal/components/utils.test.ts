@@ -1,6 +1,6 @@
 import { Cluster, MachinePool } from '~/types/clusters_mgmt.v1';
 import { masterResizeThresholds, masterResizeAlertThreshold } from './utils';
-import fixtures from '../../../../../__test__/ClusterDetails.fixtures';
+import fixtures from '../../../../../__tests__/ClusterDetails.fixtures';
 
 const cluster: Cluster = fixtures.clusterDetails.cluster as any;
 

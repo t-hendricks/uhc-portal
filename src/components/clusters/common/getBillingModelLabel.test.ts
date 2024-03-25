@@ -4,7 +4,7 @@ import getBillingModelLabel from './getBillingModelLabel';
 import {
   defaultClusterFromSubscription,
   defaultSubscription,
-} from './__test__/defaultClusterFromSubscription.fixtures';
+} from './__tests__/defaultClusterFromSubscription.fixtures';
 
 describe('getBillingModelLabel', () => {
   it.each([

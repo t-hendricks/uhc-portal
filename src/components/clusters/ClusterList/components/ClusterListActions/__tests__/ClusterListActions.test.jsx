@@ -1,4 +1,5 @@
 import React from 'react';
+import { CompatRouter } from 'react-router-dom-v5-compat';
 import { screen, render, checkAccessibility, TestRouter } from '~/testUtils';
 import ClusterListActions from '../ClusterListActions';
 
@@ -10,7 +11,9 @@ describe('<ClusterListActions />', () => {
   it('is accessible ', async () => {
     const { container } = render(
       <TestRouter>
-        <ClusterListActions />
+        <CompatRouter>
+          <ClusterListActions />
+        </CompatRouter>
       </TestRouter>,
     );
 

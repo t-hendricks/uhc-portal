@@ -15,6 +15,7 @@ import {
 } from '~/components/clusters/wizards/form';
 import { useFormState } from '~/components/clusters/wizards/hooks';
 import { CloudProviderType } from '~/components/clusters/wizards/common/constants';
+import { FormSubnet } from '~/common/validators';
 import { FieldId } from '~/components/clusters/wizards/osd/constants';
 import { isExactMajorMinor } from '~/common/versionHelpers';
 import { getDefaultSecurityGroupsSettings } from '~/common/securityGroupsHelpers';
@@ -35,10 +36,8 @@ export const Configuration = () => {
       [FieldId.ConfigureProxy]: configureProxy,
       [FieldId.InstallToVpc]: installToVpc,
       [FieldId.UsePrivateLink]: usePrivateLink,
-      [FieldId.FirstAvailabilityZone]: availZoneOne,
-      [FieldId.SecondAvailabilityZone]: availZoneTwo,
-      [FieldId.ThirdAvailabilityZone]: availZoneThree,
       [FieldId.ApplicationIngress]: applicationIngress,
+      [FieldId.MachinePoolsSubnets]: machinePoolSubnets,
     },
     values,
     setFieldValue,
@@ -74,15 +73,12 @@ export const Configuration = () => {
     if (value === ClusterPrivacyType.External) {
       setFieldValue(FieldId.UsePrivateLink, false);
 
-      const availabilityZones = [availZoneOne, availZoneTwo, availZoneThree];
-      const hasSubnets = Object.keys(values).some(
-        (formValue) =>
-          formValue.startsWith(FieldId.PublicSubnetId) ||
-          formValue.startsWith(FieldId.PrivateSubnetId),
+      const hasFilledMachinePoolsSubnets = machinePoolSubnets.some(
+        (mpSubnet: FormSubnet) =>
+          mpSubnet.availabilityZone || mpSubnet.publicSubnetId || mpSubnet.privateSubnetId,
       );
-      const hasAvailZones = availabilityZones.some((zone) => !!zone);
 
-      if (!hasSubnets && !hasAvailZones) {
+      if (!hasFilledMachinePoolsSubnets) {
         setFieldValue(FieldId.InstallToVpc, false);
         clearSecurityGroups();
 

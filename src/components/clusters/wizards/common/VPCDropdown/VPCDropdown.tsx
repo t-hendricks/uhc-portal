@@ -8,7 +8,7 @@ import { VPCResponse } from '~/redux/reducers/ccsInquiriesReducer';
 import { CloudVPC } from '~/types/clusters_mgmt.v1';
 import { AWSCredentials, ErrorState } from '~/types/types';
 import { useAWSVPCInquiry } from '~/components/clusters/common/useVPCInquiry';
-import { filterOutRedHatManagedVPCs, vpcHasPrivateSubnets } from '~/common/vpcHelpers';
+import { filterOutRedHatManagedVPCs, vpcHasRequiredSubnets } from '~/common/vpcHelpers';
 import { getAWSCloudProviderVPCs } from '~/redux/actions/ccsInquiriesActions';
 
 interface VCPDropdownProps {
@@ -24,7 +24,9 @@ interface VCPDropdownProps {
   };
   showRefresh?: boolean;
   isHypershift?: boolean;
+  usePrivateLink?: boolean;
   isOSD?: boolean;
+  isRosaV1?: boolean;
 }
 
 interface UseAWSVPCInquiry {
@@ -54,11 +56,16 @@ const VPCDropdown = ({
   showRefresh = false,
   isHypershift = false,
   isOSD = false,
+  isRosaV1 = true,
+  usePrivateLink,
 }: VCPDropdownProps) => {
   const dispatch = useDispatch();
   const [isOpen, setIsOpen] = React.useState<boolean>(false);
 
-  const { vpcs: vpcResponse, requestParams } = useAWSVPCInquiry(isOSD) as UseAWSVPCInquiry;
+  const { vpcs: vpcResponse, requestParams } = useAWSVPCInquiry(
+    isOSD,
+    isRosaV1,
+  ) as UseAWSVPCInquiry;
   const originalVPCs = React.useMemo<CloudVPC[]>(
     () => filterOutRedHatManagedVPCs(vpcResponse.data?.items || []),
     [vpcResponse.data?.items],
@@ -89,12 +96,12 @@ const VPCDropdown = ({
     }
 
     const vpcOptions = originalVPCs.map((vpcItem) => {
-      const isDisabledVPC = !vpcHasPrivateSubnets(vpcItem);
+      const isDisabledVPC = !vpcHasRequiredSubnets(vpcItem, usePrivateLink);
       const optionId = vpcItem.id as string;
       return {
         entryId: optionId,
         label: vpcItem.name || optionId,
-        description: isDisabledVPC ? 'This VPC has no private subnets' : '',
+        description: isDisabledVPC ? 'This VPC does not have all necessary subnets' : '',
         disabled: isDisabledVPC,
       };
     });
@@ -103,7 +110,7 @@ const VPCDropdown = ({
       placeholder,
       options: vpcOptions,
     };
-  }, [vpcResponse.pending, originalVPCs]);
+  }, [vpcResponse.pending, originalVPCs, usePrivateLink]);
 
   React.useEffect(() => {
     if (!selectedVPC) {
@@ -173,10 +180,14 @@ const VPCDropdown = ({
             </Tooltip>
           </FlexItem>
         )}
-        {vpcResponse.error && (
-          <ErrorBox message="Error retrieving VPCs" response={vpcResponse as ErrorState} />
-        )}
       </Flex>
+      {vpcResponse.error && (
+        <Flex>
+          <FlexItem flex={{ default: 'flex_1' }} style={{ minWidth: 0, marginTop: 10 }}>
+            <ErrorBox message="Error retrieving VPCs" response={vpcResponse as ErrorState} />
+          </FlexItem>
+        </Flex>
+      )}
     </FormGroup>
   );
 };

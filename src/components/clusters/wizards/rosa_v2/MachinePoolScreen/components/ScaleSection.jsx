@@ -1,0 +1,260 @@
+import React, { useCallback, useMemo, useState } from 'react';
+
+import { Field, FieldArray } from 'formik';
+
+import { ExpandableSection, GridItem, Text, TextVariants, Title } from '@patternfly/react-core';
+import { canAutoScaleOnCreateSelector } from '~/components/clusters/ClusterDetails/components/MachinePools/MachinePoolsSelectors';
+import {
+  getMinNodesRequired,
+  getNodeIncrement,
+  getNodeIncrementHypershift,
+} from '~/components/clusters/ClusterDetails/components/MachinePools/machinePoolsHelper';
+import {
+  canSelectImds,
+  getWorkerNodeVolumeSizeMaxGiB,
+} from '~/components/clusters/wizards/rosa/constants';
+import { useGlobalState } from '~/redux/hooks';
+
+import links from '~/common/installLinks.mjs';
+import { billingModels, normalizedProducts } from '~/common/subscriptionTypes';
+import NodeCountInput from '~/components/clusters/common/NodeCountInput';
+
+import { required } from '~/common/validators';
+import { computeNodeHintText } from '~/components/clusters/common/ScaleSection/AutoScaleSection/AutoScaleHelper';
+import { AutoScale } from '~/components/clusters/wizards/common/ClusterSettings/MachinePool/AutoScale/AutoScale';
+import { useFormState } from '~/components/clusters/wizards/hooks';
+import { FieldId } from '~/components/clusters/wizards/rosa_v2/constants';
+import ExternalLink from '~/components/common/ExternalLink';
+import FormKeyValueList from '~/components/common/FormikFormComponents/FormKeyValueList';
+import MachineTypeSelection from '~/components/clusters/common/ScaleSection/MachineTypeSelection';
+
+import ImdsSection from './ImdsSection';
+import WorkerNodeVolumeSizeSection from './WorkerNodeVolumeSizeSection/WorkerNodeVolumeSizeSection';
+
+function ScaleSection() {
+  const {
+    values: {
+      [FieldId.Hypershift]: isHypershift,
+      [FieldId.Byoc]: byoc,
+      [FieldId.MultiAz]: isMultiAz,
+      [FieldId.MachineType]: machineType,
+      [FieldId.CloudProviderId]: cloudProviderID,
+      [FieldId.Product]: product,
+      [FieldId.AutoscalingEnabled]: autoscalingEnabled,
+      [FieldId.NodeLabels]: nodeLabels,
+      [FieldId.ClusterVersion]: clusterVersion,
+      [FieldId.MachinePoolsSubnets]: machinePoolsSubnets,
+      [FieldId.BillingModel]: billingModelFieldValue,
+      [FieldId.Imds]: imds,
+    },
+    setFieldValue,
+    getFieldProps,
+    getFieldMeta,
+  } = useFormState();
+
+  const state = useGlobalState((state) => state);
+
+  const isByoc = byoc === 'true';
+  const poolsLength = machinePoolsSubnets?.length;
+  const isMultiAzSelected = isMultiAz === 'true';
+  const isHypershiftSelected = isHypershift === 'true';
+  const isAutoscalingEnabled = !!autoscalingEnabled;
+  const hasNodeLabels = nodeLabels?.[0]?.key ?? false;
+  const [isNodeLabelsExpanded, setIsNodeLabelsExpanded] = useState(!!hasNodeLabels);
+  const canAutoScale = useMemo(
+    () => canAutoScaleOnCreateSelector(state, product) ?? false,
+    [state, product],
+  );
+  const clusterVersionRawId = clusterVersion?.raw_id;
+
+  const minNodesRequired = useMemo(
+    () =>
+      getMinNodesRequired(
+        isHypershiftSelected,
+        { numMachinePools: poolsLength },
+        { isDefaultMachinePool: true, isByoc, isMultiAz: isMultiAzSelected },
+      ),
+    [poolsLength, isHypershiftSelected, isByoc, isMultiAzSelected],
+  );
+
+  const maxWorkerVolumeSizeGiB = useMemo(
+    () => getWorkerNodeVolumeSizeMaxGiB(clusterVersionRawId),
+    [clusterVersionRawId],
+  );
+  const isRosaClassicOrOsdCcs = useMemo(
+    () => cloudProviderID === 'aws' && !isHypershiftSelected && isByoc,
+    [cloudProviderID, isByoc, isHypershiftSelected],
+  );
+  const isRosa = useMemo(() => product === normalizedProducts.ROSA, [product]);
+  const billingModel = useMemo(
+    () => billingModelFieldValue ?? billingModels.STANDARD,
+    [billingModelFieldValue],
+  );
+  const nodeIncrement = useMemo(
+    () =>
+      isHypershiftSelected
+        ? getNodeIncrementHypershift(poolsLength)
+        : getNodeIncrement(isMultiAzSelected),
+    [isHypershiftSelected, isMultiAzSelected, poolsLength],
+  );
+  const nonAutoScaleNodeLabel = useMemo(() => {
+    const label = 'Compute node count';
+
+    if (isHypershiftSelected) {
+      return `${label} (per machine pool)`;
+    }
+    return isMultiAzSelected ? `${label} (per zone)` : label;
+  }, [isHypershiftSelected, isMultiAzSelected]);
+
+  const LabelsSectionComponent = useCallback(
+    () =>
+      !isHypershiftSelected ? (
+        <ExpandableSection
+          toggleText="Add node labels"
+          isExpanded={isNodeLabelsExpanded}
+          onToggle={(_event, val) => setIsNodeLabelsExpanded(val)}
+        >
+          <Title headingLevel="h3">Node labels (optional)</Title>
+          <p className="pf-v5-u-mb-md">
+            Configure labels that will apply to all nodes in this machine pool.
+          </p>
+          <FieldArray component={FormKeyValueList} name={FieldId.NodeLabels} />
+        </ExpandableSection>
+      ) : null,
+    [isHypershiftSelected, isNodeLabelsExpanded],
+  );
+
+  const ImdsSectionComponent = useCallback(
+    () =>
+      isRosaClassicOrOsdCcs && imds ? (
+        <>
+          <GridItem md={8}>
+            <ImdsSection
+              isDisabled={!canSelectImds(clusterVersionRawId)}
+              imds={imds}
+              onChangeImds={(value) => setFieldValue(FieldId.Imds, value)}
+            />
+          </GridItem>
+          <GridItem md={4} />
+        </>
+      ) : null,
+    [clusterVersionRawId, imds, isRosaClassicOrOsdCcs, setFieldValue],
+  );
+
+  const WorkerNodeVolumeSizeSectionComponent = useCallback(
+    () =>
+      isRosa && !isHypershiftSelected ? (
+        <>
+          <GridItem md={6}>
+            <WorkerNodeVolumeSizeSection maxWorkerVolumeSizeGiB={maxWorkerVolumeSizeGiB} />
+          </GridItem>
+          <GridItem md={6} />
+        </>
+      ) : null,
+    [isHypershiftSelected, isRosa, maxWorkerVolumeSizeGiB],
+  );
+
+  return (
+    <>
+      {/* Instance type title (only for Hypershift) */}
+      {isHypershiftSelected && (
+        <>
+          <GridItem>
+            <Title headingLevel="h3">Machine pools settings</Title>
+          </GridItem>
+          <GridItem md={12}>
+            <Text component={TextVariants.p}>
+              These settings apply to all created machine pools. After cluster creation, you can
+              alter your compute machine count at any time, but your selected default machine pool
+              instance type is permanent.
+            </Text>
+          </GridItem>
+        </>
+      )}
+      {/* Instance type */}
+      <GridItem md={6}>
+        <Field
+          component={MachineTypeSelection}
+          name={FieldId.MachineType}
+          validate={{ machine_type: required }}
+          isMultiAz={isMultiAzSelected}
+          isBYOC={isByoc}
+          cloudProviderID={cloudProviderID}
+          product={product}
+          billingModel={billingModel}
+          machine_type={{
+            input: {
+              ...getFieldProps(FieldId.MachineType),
+              onChange: (value) => setFieldValue(FieldId.MachineType, value),
+            },
+            meta: getFieldMeta(FieldId.MachineType),
+          }}
+          machine_type_force_choice={{
+            input: {
+              ...getFieldProps(FieldId.MachineTypeForceChoice),
+              onChange: (value) => setFieldValue(FieldId.MachineTypeForceChoice, value),
+            },
+          }}
+        />
+      </GridItem>
+      <GridItem md={6} />
+      {/* Cluster and default machine pool autoScaling (they use the same form prop) */}
+      {canAutoScale && (
+        <GridItem md={12}>
+          <AutoScale />
+        </GridItem>
+      )}
+      {/* Worker nodes */}
+      {!isAutoscalingEnabled ? (
+        <>
+          <GridItem md={6}>
+            <Field
+              component={NodeCountInput}
+              name={FieldId.NodesCompute}
+              buttonAriaLabel="Compute node count information"
+              label={nonAutoScaleNodeLabel}
+              isMultiAz={isMultiAzSelected}
+              isByoc={isByoc}
+              machineType={machineType}
+              extendedHelpText={
+                <>
+                  {computeNodeHintText(isHypershiftSelected, false)}{' '}
+                  <ExternalLink
+                    href={
+                      isRosa
+                        ? links.ROSA_SERVICE_DEFINITION_COMPUTE
+                        : links.OSD_SERVICE_DEFINITION_COMPUTE
+                    }
+                  >
+                    Learn more about compute node count
+                  </ExternalLink>
+                </>
+              }
+              cloudProviderID={cloudProviderID}
+              product={product}
+              minNodes={minNodesRequired}
+              increment={nodeIncrement}
+              billingModel={billingModel}
+              isHypershiftWizard={isHypershiftSelected}
+              poolNumber={poolsLength}
+              input={{
+                ...getFieldProps(FieldId.NodesCompute),
+                onChange: (value) => setFieldValue(FieldId.NodesCompute, value),
+              }}
+            />
+          </GridItem>
+          <GridItem md={6} />
+        </>
+      ) : null}
+
+      {/* IMDS */}
+      <ImdsSectionComponent />
+      {/* Worker node disk size */}
+      <WorkerNodeVolumeSizeSectionComponent />
+      {/* Labels */}
+      <LabelsSectionComponent />
+    </>
+  );
+}
+
+export default ScaleSection;
