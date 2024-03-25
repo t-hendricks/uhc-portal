@@ -63,6 +63,9 @@ const ControlPlaneField = ({
     // Reset VPC settings in case they were configured and then came back to the Control plane step
     change('machinePoolsSubnets', [emptyAWSSubnet()]);
 
+    // Uncheck fips selection checkbox when switching Control plane selection
+    change('fips', false);
+
     if (isHypershift === 'true') {
       change('node_labels', [{}]);
       if (formValues.multi_az === 'true') {
