@@ -85,7 +85,7 @@ function BasicFieldsSection({
     const canDefineSecurityGroups = !getIncompatibleVersionReason(
       SupportedFeature.SECURITY_GROUPS,
       clusterVersion.raw_id,
-      { day1: true },
+      { day1: true, isHypershift: isHypershiftSelected },
     );
     if (!canDefineSecurityGroups) {
       change('securityGroups', getDefaultSecurityGroupsSettings());

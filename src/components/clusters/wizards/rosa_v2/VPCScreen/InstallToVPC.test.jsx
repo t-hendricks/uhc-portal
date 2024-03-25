@@ -35,14 +35,18 @@ const buildTestComponent = (children, formValues = {}) => (
 );
 
 describe('<InstallToVPC> (AWS)', () => {
-  it('should have a Shared VPC section', async () => {
-    render(buildTestComponent(<InstallToVPC {...defaultProps} />));
+  it.each([[false], [true]])('should have a Shared VPC section', async (isHypershift) => {
+    render(
+      buildTestComponent(<InstallToVPC {...defaultProps} isHypershiftSelected={isHypershift} />),
+    );
 
     expect(await screen.findByText('AWS shared VPC')).toBeInTheDocument();
   });
 
-  it('should show a link to AWS VPC requirements', async () => {
-    render(buildTestComponent(<InstallToVPC {...defaultProps} />));
+  it.each([[false], [true]])('should show a link to AWS VPC requirements', async (isHypershift) => {
+    render(
+      buildTestComponent(<InstallToVPC {...defaultProps} isHypershiftSelected={isHypershift} />),
+    );
 
     expect(await screen.findByRole('link', { name: /Learn more about VPC/ })).toHaveAttribute(
       'href',

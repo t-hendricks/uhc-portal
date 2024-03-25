@@ -12,6 +12,7 @@ import SecurityGroupsNoChangeAlert from '~/components/clusters/ClusterDetails/co
 import { FieldId } from '~/components/clusters/wizards/common';
 import { useFormState } from '~/components/clusters/wizards/hooks';
 import { validateSecurityGroups } from '~/common/validators';
+import { isHypershiftCluster } from '~/components/clusters/common/clusterStates';
 
 export interface EditSecurityGroupsFieldProps {
   cluster: Cluster;
@@ -45,7 +46,7 @@ const EditSecurityGroupsField = ({ cluster, isReadOnly }: EditSecurityGroupsFiel
   const incompatibleReason = getIncompatibleVersionReason(
     SupportedFeature.SECURITY_GROUPS,
     cluster.openshift_version,
-    { day2: true },
+    { day2: true, isHypershift: isHypershiftCluster(cluster) },
   );
   return incompatibleReason ? (
     <Alert variant={AlertVariant.warning} title={incompatibleReason} isInline />
