@@ -30,16 +30,16 @@ describe('<InstallToVPC> (AWS)', () => {
     });
   });
 
-  it('should have a Shared VPC section', () => {
+  it.each([[false], [true]])('should have a Shared VPC section', (isHypershift) => {
     const ConnectedInstallToVPC = wizardConnector(InstallToVPC);
-    render(<ConnectedInstallToVPC {...defaultProps} />);
+    render(<ConnectedInstallToVPC {...defaultProps} isHypershiftSelected={isHypershift} />);
 
     expect(screen.getByText('AWS shared VPC')).toBeInTheDocument();
   });
 
-  it('should show a link to AWS VPC requirements', () => {
+  it.each([[false], [true]])('should show a link to AWS VPC requirements', (isHypershift) => {
     const ConnectedInstallToVPC = wizardConnector(InstallToVPC);
-    render(<ConnectedInstallToVPC {...defaultProps} />);
+    render(<ConnectedInstallToVPC {...defaultProps} isHypershiftSelected={isHypershift} />);
 
     expect(screen.getByRole('link', { name: /Learn more about VPC/ })).toHaveAttribute(
       'href',

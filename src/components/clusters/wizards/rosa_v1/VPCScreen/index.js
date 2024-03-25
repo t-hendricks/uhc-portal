@@ -12,12 +12,14 @@ const mapStateToProps = (state) => {
   const sharedVpcSettings = valueSelector(state, 'shared_vpc');
   const selectedVPC = valueSelector(state, 'selected_vpc');
   const machinePoolsSubnets = valueSelector(state, 'machinePoolsSubnets');
+  const isHypershiftSelected = valueSelector(state, 'hypershift') === 'true';
   const isSharedVpcSelected = sharedVpcSettings?.is_selected || false;
   const hostedZoneDomainName = isSharedVpcSelected
     ? `${clusterName}.${sharedVpcSettings.base_dns_domain || '<selected-base-domain>'}`
     : undefined;
 
   const selectedAZs = machinePoolsSubnets.map((subnet) => subnet.availabilityZone);
+
   return {
     cloudProviderID: valueSelector(state, 'cloud_provider'),
     isMultiAz: valueSelector(state, 'multi_az') === 'true',
@@ -27,6 +29,7 @@ const mapStateToProps = (state) => {
     selectedAZs,
     openshiftVersion: version.raw_id,
     selectedRegion: valueSelector(state, 'region'),
+    isHypershiftSelected,
   };
 };
 

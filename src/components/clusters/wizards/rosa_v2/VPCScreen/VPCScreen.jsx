@@ -22,6 +22,7 @@ function VPCScreen({ privateLinkSelected }) {
       [FieldId.MultiAz]: multiAzField,
       [FieldId.Region]: selectedRegion,
       [FieldId.CloudProvider]: cloudProviderID,
+      [FieldId.Hypershift]: isHypershift,
     },
   } = useFormState();
   const isSharedVpcSelected = sharedVpcSettings?.is_selected || false;
@@ -31,6 +32,7 @@ function VPCScreen({ privateLinkSelected }) {
   const selectedAZs = machinePoolsSubnets?.map((subnet) => subnet.availabilityZone);
   const isMultiAz = multiAzField === 'true';
   const openshiftVersion = version.raw_id;
+  const isHypershiftSelected = isHypershift === 'true';
 
   React.useEffect(() => {
     if (!selectedVPC.id) {
@@ -73,6 +75,7 @@ function VPCScreen({ privateLinkSelected }) {
           privateLinkSelected={privateLinkSelected}
           hostedZoneDomainName={hostedZoneDomainName}
           cloudProviderID={cloudProviderID}
+          isHypershiftSelected={isHypershiftSelected}
         />
       </Grid>
     </Form>

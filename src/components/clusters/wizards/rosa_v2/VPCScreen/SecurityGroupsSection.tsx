@@ -38,9 +38,11 @@ const SecurityGroupField = ({
 const SecurityGroupsSection = ({
   openshiftVersion,
   selectedVPC,
+  isHypershiftSelected,
 }: {
   openshiftVersion: string;
   selectedVPC: CloudVPC;
+  isHypershiftSelected: boolean;
 }) => {
   const {
     setFieldValue,
@@ -70,7 +72,7 @@ const SecurityGroupsSection = ({
   const incompatibleReason = getIncompatibleVersionReason(
     SupportedFeature.SECURITY_GROUPS,
     openshiftVersion,
-    { day1: true },
+    { day1: true, isHypershift: isHypershiftSelected },
   );
 
   const showEmptyAlert =
