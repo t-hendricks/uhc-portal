@@ -17,7 +17,7 @@ import { getUpstreamRemoteName } from './upstream-name.mjs';
 
 const assistedInstallerRegex =
   /^([Bb][Uu][Mm][Pp]|[Uu][Pp][Dd][Aa][Tt][Ee]).*openshift-assisted/gim;
-const jiraTicketRegex = /(OCMUI|HAC|RHBKAAS|MGMT|RHCLOUD|OCM|SDA|SDB)[- ]?([0-9]+)/gim;
+const jiraTicketRegex = /(OCMUI|RHBKAAS|MGMT|RHCLOUD)[- ]?([0-9]+)/gim;
 const cherrypickRegex = /cherry picked from commit ([a-fA-F0-9]+)/m;
 const diffRegex = /^-(\d+)(?:,(\d+))? \+(\d+)(?:,(\d+))? @@/;
 const qeApproved = ['Closed', 'Verified', 'Release Pending'];
@@ -516,9 +516,7 @@ async function reportOrder(jiraToken, verbose) {
       heldBackNotes.push(`${note} ${qeStatus} |`);
     } else {
       picks = qeNotReady;
-      if (commit.isBlocking) {
-        heldBackNotes.push(`${note} ${qeStatus} |`);
-      }
+      heldBackNotes.push(`${note} ${qeStatus} |`);
     }
     let lineNum = `${(inx + 1).toString().padStart(2)}.`;
     lineNum = commit.hasRequires ? dependsOnColor(lineNum) : chalk.whiteBright(lineNum);
