@@ -115,7 +115,7 @@ export const BillingModel = () => {
   const marketplaceDisabledDescription = (
     <>
       {marketplaceQuotaDescription}
-      <p>
+      <div>
         <Popover
           position={PopoverPosition.right}
           headerContent="On-Demand subscription"
@@ -145,7 +145,7 @@ export const BillingModel = () => {
               : 'How can I purchase a subscription via Marketplace?'}
           </Button>
         </Popover>
-      </p>
+      </div>
     </>
   );
 
