@@ -1,29 +1,42 @@
 import React from 'react';
-import { mount, ReactWrapper } from 'enzyme';
+import { render, screen, checkAccessibility } from '~/testUtils';
 import axios from 'axios';
-import { act } from 'react-dom/test-utils';
-
+import apiRequest from '~/services/apiRequest';
 import ReleaseChannel from './ReleaseChannel';
 import ocpReleases from './__mocks__/ocpReleases';
 
-jest.mock('axios');
+type MockedJest = jest.Mocked<typeof axios> & jest.Mock;
+const apiRequestMock = apiRequest as unknown as MockedJest;
 
 describe('<ReleaseChannel />', () => {
-  let wrapper: ReactWrapper;
-
-  // clear all mocks
   afterEach(() => {
     jest.clearAllMocks();
   });
 
-  it('should render', async () => {
-    await act(async () => {
-      await (axios.get as jest.Mock).mockImplementationOnce(() => Promise.resolve(ocpReleases));
-      wrapper = mount(<ReleaseChannel channel="stable-4.6" />);
-    });
+  it.skip('is accessible', async () => {
+    apiRequestMock.get.mockResolvedValue(ocpReleases);
 
-    wrapper.update();
-    await expect(axios.get).toHaveBeenCalledTimes(1);
-    await expect(wrapper).toMatchSnapshot();
+    const { container } = render(<ReleaseChannel channel="stable-4.6" />);
+
+    expect(await screen.findByText('stable-4.6')).toBeInTheDocument();
+
+    // fails with   "<dt> and <dd> elements must be contained by a <dl> (dlitem)" error
+    await checkAccessibility(container);
+  });
+
+  it('displays a link', async () => {
+    apiRequestMock.get.mockResolvedValue(ocpReleases);
+
+    render(<ReleaseChannel channel="stable-4.6" />);
+
+    expect(await screen.findByText('stable-4.6')).toBeInTheDocument();
+
+    expect(screen.getByRole('link')).toHaveTextContent('4.6.12');
+
+    expect(screen.getByRole('link')).toHaveAttribute(
+      'href',
+      'https://docs.openshift.com/container-platform/4.6/release_notes/ocp-4-6-release-notes.html#ocp-4-6-12',
+    );
+    expect(apiRequestMock.get).toHaveBeenCalledTimes(1);
   });
 });

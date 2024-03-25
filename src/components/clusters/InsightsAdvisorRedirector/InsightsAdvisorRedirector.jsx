@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { matchPath } from 'react-router-dom';
-import { Navigate } from 'react-router-dom-v5-compat';
+import { Navigate, matchPath } from 'react-router-dom-v5-compat';
 import { Spinner } from '@redhat-cloud-services/frontend-components/Spinner';
 import { Bullseye } from '@patternfly/react-core';
 import { validate as isUuid } from 'uuid';
@@ -30,27 +29,39 @@ const InsightsAdvisorRedirector = (props) => {
 
   if (externalId) {
     if (
-      matchPath(path, {
-        path: '/details/:clusterId',
-        exact: true,
-      }) ||
-      matchPath(path, {
-        path: '/details/s/:id',
-        exact: true,
-      })
+      matchPath(
+        {
+          path: '/details/:clusterId',
+          exact: true,
+        },
+        path,
+      ) ||
+      matchPath(
+        {
+          path: '/details/s/:id',
+          exact: true,
+        },
+        path,
+      )
     ) {
       return <ExternalRedirect url={`${advisorBaseName()}/clusters/${externalId}`} />;
     }
     if (
-      matchPath(path, {
-        path: '/details/:id/insights/:reportId/:errorKey',
-        exact: true,
-      }) ||
-      matchPath(path, {
-        path: '/details/s/:id/insights/:reportId/:errorKey',
-        exact: true,
-        strict: true,
-      })
+      matchPath(
+        {
+          path: '/details/:id/insights/:reportId/:errorKey',
+          exact: true,
+        },
+        path,
+      ) ||
+      matchPath(
+        {
+          path: '/details/s/:id/insights/:reportId/:errorKey',
+          exact: true,
+          strict: true,
+        },
+        path,
+      )
     ) {
       const { reportId, errorKey } = params;
       const ruleId = composeRuleId(reportId, errorKey);
@@ -70,7 +81,7 @@ const InsightsAdvisorRedirector = (props) => {
       'clusterDetails',
       clusterDetails?.errorMessage,
     );
-    return <Navigate to="/" />;
+    return <Navigate replace to="/" />;
   }
 
   if (clusterDetails.fulfilled && !externalId) {
@@ -82,7 +93,7 @@ const InsightsAdvisorRedirector = (props) => {
       'clusterDetails',
       clusterDetails?.errorMessage,
     );
-    return <Navigate to="/" />;
+    return <Navigate replace to="/" />;
   }
 
   return (

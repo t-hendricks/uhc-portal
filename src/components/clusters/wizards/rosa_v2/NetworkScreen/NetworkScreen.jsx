@@ -11,7 +11,7 @@ import {
   FormGroup,
   Tooltip,
 } from '@patternfly/react-core';
-import { Field } from 'redux-form';
+import { Field } from 'formik';
 
 import { normalizedProducts } from '~/common/subscriptionTypes';
 import { validateRequiredPublicSubnetId } from '~/common/validators';
@@ -26,29 +26,49 @@ import { getDefaultSecurityGroupsSettings } from '~/common/securityGroupsHelpers
 import { constants } from '~/components/clusters/common/CreateOSDFormConstants';
 import ExternalLink from '~/components/common/ExternalLink';
 import { SubnetSelectField } from '~/components/clusters/common/SubnetSelectField';
-import { DefaultIngressFields } from '~/components/clusters/common/DefaultIngressFields';
+
+import { FieldId } from '~/components/clusters/wizards/rosa_v2/constants';
+import { useFormState } from '~/components/clusters/wizards/hooks';
+import { DefaultIngressFieldsFormik } from '~/components/clusters/wizards/rosa_v2/NetworkScreen/DefaultIngressFieldsFormik';
 import { ReduxCheckbox } from '../../../../common/ReduxFormComponents';
 import RadioButtons from '../../../../common/ReduxFormComponents/RadioButtons';
 import links from '../../../../../common/installLinks.mjs';
 
 function NetworkScreen(props) {
   const {
-    change,
-    privateClusterSelected,
     showClusterPrivacy,
     showVPCCheckbox,
     showClusterWideProxyCheckbox,
-    cloudProviderID,
     privateLinkSelected,
     forcePrivateLink,
-    configureProxySelected,
-    isByoc,
-    product,
-    formValues,
-    isHypershiftSelected,
-    clusterVersionRawId,
-    applicationIngress,
   } = props;
+
+  const {
+    setFieldValue, // Set value of form field directly
+    getFieldProps, // Access: name, value, onBlur, onChange for a <Field>, useful for mapping to a field that expects the redux-form props
+    getFieldMeta, // Access: error, touched for a <Field>, useful for mapping to a field that expects the redux-form props
+    values: {
+      [FieldId.CloudProvider]: cloudProviderID,
+      [FieldId.ConfigureProxy]: configureProxySelected,
+      [FieldId.Product]: product,
+      [FieldId.Byoc]: isByoc,
+      [FieldId.ClusterPrivacy]: clusterPrivacy,
+      [FieldId.ClusterVersion]: clusterVersionValue,
+      [FieldId.Hypershift]: hypershiftValue,
+      [FieldId.ApplicationIngress]: applicationIngress,
+      [FieldId.MachinePoolsSubnets]: machinePoolsSubnets,
+      [FieldId.SecurityGroups]: securityGroups,
+      [FieldId.ClusterPrivacyPublicSubnetId]: publicSubnetId,
+      [FieldId.InstallToVpc]: installToVPC,
+      [FieldId.SharedVpc]: sharedVPC,
+      [FieldId.SelectedVpc]: selectedVPC,
+    },
+  } = useFormState();
+
+  const privateClusterSelected = clusterPrivacy === 'internal';
+  const isHypershiftSelected = hypershiftValue === 'true';
+  const clusterVersionRawId = clusterVersionValue?.raw_id;
+
   const { OSD, OSDTrial } = normalizedProducts;
   const isByocOSD = isByoc && [OSD, OSDTrial].includes(product);
   const publicSubnetIdRef = React.useRef();
@@ -77,26 +97,25 @@ function NetworkScreen(props) {
     });
 
   const shouldUncheckInstallToVPC = () => {
-    const hasEmptyByoVpcInfo = formValues.machinePoolsSubnets.every(
+    const hasEmptyByoVpcInfo = machinePoolsSubnets.every(
       (mpSubnet) =>
         !mpSubnet.privateSubnetId && !mpSubnet.publicSubnetId && !mpSubnet.availabilityZone,
     );
 
     if (hasEmptyByoVpcInfo) {
-      change('install_to_vpc', false);
+      setFieldValue(FieldId.InstallToVpc, false);
 
       // Clear also associated security groups when the wizard has this option
-      if (formValues.securityGroups) {
-        change('securityGroups', getDefaultSecurityGroupsSettings());
+      if (securityGroups) {
+        setFieldValue(FieldId.SecurityGroups, getDefaultSecurityGroupsSettings());
       }
     }
   };
 
   const onClusterPrivacyChange = (_, value) => {
-    const { cluster_privacy_public_subnet_id: publicSubnetId, cluster_privacy: clusterPrivacy } =
-      formValues;
+    setFieldValue(FieldId.ClusterPrivacy, value);
     if (value === 'external') {
-      change('use_privatelink', false);
+      setFieldValue(FieldId.UsePrivatelink, false);
 
       if (!isHypershiftSelected) {
         shouldUncheckInstallToVPC();
@@ -105,48 +124,49 @@ function NetworkScreen(props) {
       // When toggling from Private to Public, if a previous public subnet ID was selected,
       // use that previous value to rehydrate the dropdown.
       if (publicSubnetIdRef.current && clusterPrivacy === 'internal') {
-        change('cluster_privacy_public_subnet_id', publicSubnetIdRef.current);
+        setFieldValue(FieldId.ClusterPrivacyPublicSubnetId, publicSubnetIdRef.current);
       }
     } else {
       publicSubnetIdRef.current = publicSubnetId;
-      change('cluster_privacy_public_subnet_id', '');
+      setFieldValue(FieldId.ClusterPrivacyPublicSubnetId, '');
     }
   };
 
   const onPrivateLinkChange = (_event, checked) => {
+    setFieldValue(FieldId.UsePrivatelink, checked);
     if (checked) {
-      change('install_to_vpc', true);
+      setFieldValue(FieldId.InstallToVpc, true);
     }
   };
 
   if (forcePrivateLink && privateClusterSelected && !privateLinkSelected) {
-    change('install_to_vpc', true);
-    change('use_privatelink', true);
+    setFieldValue(FieldId.InstallToVpc, true);
+    setFieldValue(FieldId.UsePrivatelink, true);
   }
 
   const onClusterProxyChange = (_event, checked) => {
     trackCheckedState(trackEvents.ConfigureClusterWideProxy, checked);
-    change('configure_proxy', checked);
-    if (checked && !formValues.install_to_vpc) {
-      change('install_to_vpc', true);
+    setFieldValue(FieldId.ConfigureProxy, checked);
+    if (checked && !installToVPC) {
+      setFieldValue(FieldId.InstallToVpc, true);
       trackCheckedState(trackEvents.InstallIntoVPC, checked);
     }
   };
 
   const onInstallIntoVPCchange = (_event, checked) => {
-    change('install_to_vpc', checked);
+    setFieldValue(FieldId.InstallToVpc, checked);
     if (!checked) {
-      if (formValues.shared_vpc.is_selected) {
-        change('shared_vpc', {
-          is_allowed: formValues.shared_vpc.is_allowed,
+      if (sharedVPC.is_selected) {
+        setFieldValue(FieldId.SharedVpc, {
+          is_allowed: sharedVPC.is_allowed,
           is_selected: false,
           base_dns_domain: '',
           hosted_zone_id: '',
           hosted_zone_role_arn: '',
         });
       }
-      if (formValues.securityGroups) {
-        change('securityGroups', getDefaultSecurityGroupsSettings());
+      if (securityGroups) {
+        setFieldValue(FieldId.SecurityGroups, getDefaultSecurityGroupsSettings());
       }
     }
     trackCheckedState(trackEvents.InstallIntoVPC, checked);
@@ -156,21 +176,29 @@ function NetworkScreen(props) {
   const installToVPCCheckbox = (
     <Field
       component={ReduxCheckbox}
-      name="install_to_vpc"
+      name={FieldId.InstallToVpc}
       label="Install into an existing VPC"
-      onChange={onInstallIntoVPCchange}
       isDisabled={privateLinkAndClusterSelected || configureProxySelected}
+      input={{
+        ...getFieldProps(FieldId.InstallToVpc),
+        onChange: (event, value) => onInstallIntoVPCchange(event, value),
+      }}
+      meta={getFieldMeta(FieldId.InstallToVpc)}
     />
   );
   const configureClusterProxyField = (
     <Field
       component={ReduxCheckbox}
-      name="configure_proxy"
+      name={FieldId.ConfigureProxy}
       label="Configure a cluster-wide proxy"
-      onChange={onClusterProxyChange}
       helpText={
         <div className="ocm-c--reduxcheckbox-description">{constants.clusterProxyHint}</div>
       }
+      input={{
+        ...getFieldProps(FieldId.ConfigureProxy),
+        onChange: (event, value) => onClusterProxyChange(event, value),
+      }}
+      meta={getFieldMeta(FieldId.ConfigureProxy)}
     />
   );
 
@@ -206,9 +234,12 @@ function NetworkScreen(props) {
             <Field
               component={RadioButtons}
               isDisabled={isRestrictedEnv()}
-              name="cluster_privacy"
+              name={FieldId.ClusterPrivacy}
               ariaLabel="Cluster privacy"
-              onChange={onClusterPrivacyChange}
+              input={{
+                ...getFieldProps(FieldId.ClusterPrivacy),
+                onChange: (value) => onClusterPrivacyChange(undefined, value),
+              }}
               options={[
                 {
                   value: 'external',
@@ -224,18 +255,29 @@ function NetworkScreen(props) {
                   extraField: isHypershiftSelected && !privateClusterSelected && (
                     <Field
                       component={SubnetSelectField}
-                      name="cluster_privacy_public_subnet_id"
+                      name={FieldId.ClusterPrivacyPublicSubnetId}
+                      input={{
+                        ...getFieldProps(FieldId.ClusterPrivacyPublicSubnetId),
+                        onChange: (value) =>
+                          setFieldValue(FieldId.ClusterPrivacyPublicSubnetId, value),
+                      }}
+                      meta={getFieldMeta(FieldId.ClusterPrivacyPublicSubnetId)}
                       label="Public subnet name"
                       className="pf-v5-u-mt-md pf-v5-u-ml-lg"
                       isRequired
-                      validate={validateRequiredPublicSubnetId}
+                      validate={(value) =>
+                        validateRequiredPublicSubnetId(
+                          value,
+                          {},
+                          {
+                            pristine: !getFieldMeta(FieldId.ClusterPrivacyPublicSubnetId).touched,
+                          },
+                        )
+                      }
                       withAutoSelect={false}
-                      selectedVPC={formValues.selected_vpc}
+                      selectedVPC={selectedVPC}
                       privacy="public"
-                      allowedAZs={getSelectedAvailabilityZones(
-                        formValues.selected_vpc,
-                        formValues.machinePoolsSubnets,
-                      )}
+                      allowedAZs={getSelectedAvailabilityZones(selectedVPC, machinePoolsSubnets)}
                     />
                   ),
                 },
@@ -312,7 +354,7 @@ function NetworkScreen(props) {
                     <FormGroup>
                       <Field
                         component={ReduxCheckbox}
-                        name="use_privatelink"
+                        name={FieldId.UsePrivatelink}
                         label="Use a PrivateLink"
                         onChange={onPrivateLinkChange}
                         isDisabled={forcePrivateLink && privateClusterSelected}
@@ -321,6 +363,11 @@ function NetworkScreen(props) {
                             {constants.privateLinkHint}
                           </div>
                         }
+                        input={{
+                          ...getFieldProps(FieldId.UsePrivatelink),
+                          onChange: (event, value) => onPrivateLinkChange(event, value),
+                        }}
+                        meta={getFieldMeta(FieldId.UsePrivatelink)}
                       />
                     </FormGroup>
                   )}
@@ -358,10 +405,15 @@ function NetworkScreen(props) {
             {isManagedIngressAllowed && (
               <Field
                 component={RadioButtons}
-                name="applicationIngress"
+                name={FieldId.ApplicationIngress}
                 ariaLabel="Use application ingress defaults"
                 isDisabled={!isManagedIngressAllowed}
                 disableDefaultValueHandling
+                input={{
+                  ...getFieldProps(FieldId.ApplicationIngress),
+                  onChange: (value) => setFieldValue(FieldId.ApplicationIngress, value),
+                }}
+                meta={getFieldMeta(FieldId.ApplicationIngress)}
                 options={[
                   {
                     value: 'default',
@@ -374,7 +426,7 @@ function NetworkScreen(props) {
                     ariaLabel: 'Custom settings',
                     label: 'Custom settings',
                     extraField: applicationIngress !== 'default' && (
-                      <DefaultIngressFields
+                      <DefaultIngressFieldsFormik
                         hasSufficientIngressEditVersion
                         className="pf-v5-u-mt-md pf-v5-u-ml-lg"
                         isDay2={false}
@@ -393,21 +445,11 @@ function NetworkScreen(props) {
 }
 
 NetworkScreen.propTypes = {
-  change: PropTypes.func.isRequired,
-  privateClusterSelected: PropTypes.bool,
-  cloudProviderID: PropTypes.string,
   showClusterPrivacy: PropTypes.bool,
   showVPCCheckbox: PropTypes.bool,
   showClusterWideProxyCheckbox: PropTypes.bool,
   privateLinkSelected: PropTypes.bool,
   forcePrivateLink: PropTypes.bool,
-  configureProxySelected: PropTypes.bool,
-  isByoc: PropTypes.bool,
-  product: PropTypes.string,
-  formValues: PropTypes.object,
-  isHypershiftSelected: PropTypes.bool,
-  clusterVersionRawId: PropTypes.string.isRequired,
-  applicationIngress: PropTypes.string,
 };
 
 export default NetworkScreen;

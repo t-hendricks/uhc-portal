@@ -1,7 +1,8 @@
 import React from 'react';
-import { screen, render, checkAccessibility } from '~/testUtils';
-import wizardConnector from '~/components/clusters/wizards/common/WizardConnector';
+import { Formik } from 'formik';
+import { screen, render, checkAccessibility, waitFor, act } from '~/testUtils';
 import { useAWSVPCInquiry } from '~/components/clusters/common/useVPCInquiry';
+import { initialValues } from '../constants';
 
 import AWSSubnetFields from './AWSSubnetFields';
 
@@ -53,18 +54,28 @@ const selectedVPC = {
 
 jest.mock('~/components/clusters/common/useVPCInquiry');
 
-describe('<AWSSubnetFields />', () => {
-  const ConnectedAWSSubnetFields = wizardConnector(AWSSubnetFields);
+const buildTestComponent = (children, formValues = {}) => (
+  <Formik
+    initialValues={{
+      ...initialValues,
+      ...formValues,
+    }}
+    onSubmit={() => {}}
+  >
+    {children}
+  </Formik>
+);
 
+describe('<AWSSubnetFields />', () => {
   const defaultProps = {
     selectedRegion: 'myRegion',
     isMultiAz: false,
     privateLinkSelected: false,
     selectedAZs: [],
     selectedVPC,
-    initialValues: {
-      machinePoolsSubnets: [{ privateSubnetId: '', availabilityZone: '' }],
-    },
+  };
+  const initialValues = {
+    machinePoolsSubnets: [{ privateSubnetId: '', availabilityZone: '' }],
   };
 
   useAWSVPCInquiry.mockImplementation(() => ({
@@ -81,10 +92,10 @@ describe('<AWSSubnetFields />', () => {
 
   it('single AZ, private', async () => {
     const newProps = { ...defaultProps, privateLinkSelected: true };
-    render(<ConnectedAWSSubnetFields {...newProps} />);
+    render(buildTestComponent(<AWSSubnetFields {...newProps} />, initialValues));
 
     // Assert - the correct fields titles are shown
-    expect(screen.getByText('Select availability zone')).toBeInTheDocument();
+    expect(await screen.findByText('Select availability zone')).toBeInTheDocument();
     expect(screen.getByText('Private subnet')).toBeInTheDocument();
     expect(screen.queryByText('Public subnet')).not.toBeInTheDocument();
 
@@ -94,10 +105,15 @@ describe('<AWSSubnetFields />', () => {
   });
 
   it('single AZ, private + public', async () => {
-    const { container } = render(<ConnectedAWSSubnetFields {...defaultProps} />);
+    const { container } = render(
+      buildTestComponent(<AWSSubnetFields {...defaultProps} />, initialValues),
+    );
+    await act(() => Promise.resolve());
 
     // Assert - the correct fields titles are shown
-    expect(screen.getByText('Select availability zone')).toBeInTheDocument();
+    await waitFor(() => {
+      expect(screen.getByText('Select availability zone')).toBeInTheDocument();
+    });
     expect(screen.getByText('Private subnet')).toBeInTheDocument();
     expect(screen.getByText('Public subnet')).toBeInTheDocument();
 
@@ -108,12 +124,12 @@ describe('<AWSSubnetFields />', () => {
     await checkAccessibility(container);
   });
 
-  it('multi AZ, private', () => {
+  it('multi AZ, private', async () => {
     const newProps = { ...defaultProps, privateLinkSelected: true, isMultiAz: true };
-    render(<ConnectedAWSSubnetFields {...newProps} />);
+    render(buildTestComponent(<AWSSubnetFields {...newProps} />, initialValues));
 
     // Assert - the correct fields titles are shown
-    expect(screen.getAllByText('Select availability zone')).toHaveLength(3);
+    expect(await screen.findAllByText('Select availability zone')).toHaveLength(3);
     expect(screen.getByText('Private subnet')).toBeInTheDocument();
     expect(screen.queryByText('Public subnet')).not.toBeInTheDocument();
 
@@ -127,10 +143,12 @@ describe('<AWSSubnetFields />', () => {
       ...defaultProps,
       isMultiAz: true,
     };
-    const { container } = render(<ConnectedAWSSubnetFields {...newProps} />);
+    const { container } = render(
+      buildTestComponent(<AWSSubnetFields {...newProps} />, initialValues),
+    );
 
     // Assert - the correct fields titles are shown
-    expect(screen.getAllByText('Select availability zone')).toHaveLength(3);
+    expect(await screen.findAllByText('Select availability zone')).toHaveLength(3);
 
     expect(screen.getByText('Private subnet')).toBeInTheDocument();
     expect(screen.getByText('Public subnet')).toBeInTheDocument();
@@ -143,15 +161,15 @@ describe('<AWSSubnetFields />', () => {
   });
 
   describe('subnetDropdown options', () => {
-    it('only a placeholder text is shown when its AZ is not selected yet', () => {
+    it('only a placeholder text is shown when its AZ is not selected yet', async () => {
       const newProps = {
         ...defaultProps,
         isMultiAz: true,
         selectedAZs: [],
       };
-      render(<ConnectedAWSSubnetFields {...newProps} />);
+      render(buildTestComponent(<AWSSubnetFields {...newProps} />, initialValues));
 
-      expect(screen.getAllByText('Select availability zone')).toHaveLength(3);
+      expect(await screen.findAllByText('Select availability zone')).toHaveLength(3);
       expect(screen.queryByText(/myVPC-subnet-private-myRegion/)).not.toBeInTheDocument();
     });
 
@@ -161,22 +179,22 @@ describe('<AWSSubnetFields />', () => {
         isMultiAz: true,
         // Regions "a" and "e" have private and public subnets, Region "c" has only public subnets
         selectedAZs: ['myRegione', 'myRegionc', 'myRegiona'],
-        initialValues: {
-          machinePoolsSubnets: [
-            { availabilityZone: 'myRegione', privateSubnetId: '' },
-            { availabilityZone: 'myRegionc', privateSubnetId: '' },
-            { availabilityZone: 'myRegiona', privateSubnetId: '' },
-          ],
-        },
       };
-      const { user } = render(<ConnectedAWSSubnetFields {...newProps} />);
+      const newValues = {
+        machinePoolsSubnets: [
+          { availabilityZone: 'myRegione', privateSubnetId: '' },
+          { availabilityZone: 'myRegionc', privateSubnetId: '' },
+          { availabilityZone: 'myRegiona', privateSubnetId: '' },
+        ],
+      };
+      const { user } = render(buildTestComponent(<AWSSubnetFields {...newProps} />, newValues));
 
       // Dropdown order is:
       // 0: VPCDropdown
       // 1-3: mp[0] (az, privateSubnet, publicSubnet)
       // 4-6: mp[1] (az, privateSubnet, publicSubnet)
       // 7-9: mp[2] (az, privateSubnet, publicSubnet)
-      const dropdownButtons = screen.getAllByRole('button', { name: 'Options menu' });
+      const dropdownButtons = await screen.findAllByRole('button', { name: 'Options menu' });
       expect(dropdownButtons).toHaveLength(10);
 
       // Assert - mp[0]

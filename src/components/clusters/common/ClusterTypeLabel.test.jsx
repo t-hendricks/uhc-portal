@@ -2,7 +2,7 @@ import React from 'react';
 import { render, screen, checkAccessibility } from '~/testUtils';
 import * as PreviewLabelFile from '~/components/clusters/common/PreviewLabel';
 import ClusterTypeLabel from './ClusterTypeLabel';
-import fixtures from '../ClusterDetails/__test__/ClusterDetails.fixtures';
+import fixtures from '../ClusterDetails/__tests__/ClusterDetails.fixtures';
 
 describe('ClusterTypeLabel', () => {
   jest.spyOn(PreviewLabelFile, 'PreviewLabel').mockImplementation(() => <span>PREVIEW LABEL</span>);

@@ -15,17 +15,43 @@ limitations under the License.
 */
 
 import React from 'react';
-import { shallow } from 'enzyme';
+import { CompatRouter } from 'react-router-dom-v5-compat';
+import { screen, render, checkAccessibility, mockUseChrome, TestRouter } from '~/testUtils';
 import TokensROSA from '../TokensROSA';
 
 describe('<TokensROSA />', () => {
-  it('Renders screen with button', () => {
-    const component = shallow(<TokensROSA show={false} showPath="/token/show" />);
-    expect(component).toMatchSnapshot();
+  mockUseChrome();
+  it('is accessible with button', async () => {
+    const { container } = render(
+      <TestRouter>
+        <CompatRouter>
+          <TokensROSA show={false} showPath="/token/show" />
+        </CompatRouter>
+      </TestRouter>,
+    );
+
+    expect(screen.getByRole('button', { name: 'Load token' })).toBeInTheDocument();
+    await checkAccessibility(container);
   });
 
-  it('Renders token', () => {
-    const component = shallow(<TokensROSA show />);
-    expect(component).toMatchSnapshot();
+  it('Renders token', async () => {
+    global.insights = {
+      chrome: {
+        ...global.insights.chrome,
+        on: () => () => {}, // a function that returns a function
+        appNavClick: () => {},
+        auth: {
+          getOfflineToken: () => Promise.resolve({ data: { refresh_token: 'hello' } }),
+        },
+      },
+    };
+    render(
+      <TestRouter>
+        <CompatRouter>
+          <TokensROSA show />
+        </CompatRouter>
+      </TestRouter>,
+    );
+    expect(await screen.findByRole('link', { name: 'Download the ROSA CLI' })).toBeInTheDocument();
   });
 });

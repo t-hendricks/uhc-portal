@@ -32,6 +32,6 @@ const OCMRolesActions = {
   clearDeleteOCMRoleResponse,
 } as const;
 
-export type OCMRoleAction = ActionType<typeof OCMRolesActions[keyof typeof OCMRolesActions]>;
+export type OCMRoleAction = ActionType<(typeof OCMRolesActions)[keyof typeof OCMRolesActions]>;
 
 export default OCMRolesActions;

@@ -5,7 +5,7 @@ import {
   defaultClusterFromSubscription,
   defaultMetric,
   defaultSubscription,
-} from './__test__/clusterStates.fixtures';
+} from './__tests__/clusterStates.fixtures';
 import clusterStates, {
   getClusterStateAndDescription,
   getInflightChecks,
@@ -20,6 +20,7 @@ import clusterStates, {
   isWaitingROSAManualMode,
   isCCS,
   isAWS,
+  isAWSPrivateCluster,
 } from './clusterStates';
 
 describe('getClusterStateAndDescription', () => {
@@ -283,6 +284,27 @@ describe('getClusterStateAndDescription', () => {
       };
       expect(isCCS(cluster)).toBe(expectedResult);
     });
+  });
+
+  describe('isAWSPrivateCluster', () => {
+    it.each([
+      [true, true],
+      [false, false],
+    ])(
+      'private_link enabled: %p. It returns %p',
+      (privateLinkEnabled: boolean, expectedResult: boolean) => {
+        const cluster: ClusterFromSubscription = {
+          ...defaultClusterFromSubscription,
+          aws: {
+            private_link: privateLinkEnabled,
+          },
+          ccs: {
+            enabled: true,
+          },
+        };
+        expect(isAWSPrivateCluster(cluster)).toBe(expectedResult);
+      },
+    );
   });
 
   describe('isAWS', () => {

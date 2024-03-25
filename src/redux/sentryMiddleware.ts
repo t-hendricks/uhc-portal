@@ -1,6 +1,6 @@
 /* Sentry middleware for redux, adds "breadcrumbs" logging the redux events in case of an error */
 
-import * as Sentry from '@sentry/browser';
+import { addBreadcrumb, Breadcrumb } from '@sentry/browser';
 import { LOCATION_CHANGE } from 'connected-react-router';
 import type { AnyAction, Middleware } from 'redux';
 import { actionTypes } from 'redux-form';
@@ -8,7 +8,7 @@ import { OPEN_MODAL } from '~/components/common/Modal/ModalConstants';
 
 const sentryMiddleware: Middleware = () => (next) => (action: AnyAction) => {
   // for some actions, we want to keep some of the parameters in the breadcrumb
-  let data: Sentry.Breadcrumb['data'] = {};
+  let data: Breadcrumb['data'] = {};
   switch (action.type) {
     case LOCATION_CHANGE:
       data.location = action.payload.location;
@@ -22,7 +22,7 @@ const sentryMiddleware: Middleware = () => (next) => (action: AnyAction) => {
     default:
       data = undefined;
   }
-  Sentry.addBreadcrumb({
+  addBreadcrumb({
     category: 'redux',
     message: `Dispatching ${action.type}`,
     data,

@@ -10,7 +10,7 @@ import modals from '~/components/common/Modal/modals';
 import { closeModal } from '~/components/common/Modal/ModalActions';
 import { clusterAutoScalingValidators, validateListOfBalancingLabels } from '~/common/validators';
 import { useFormState } from '~/components/clusters/wizards/hooks';
-import { FieldId } from '~/components/clusters/wizards/osd/constants';
+import { FieldId } from '~/components/clusters/wizards/common/constants';
 import { TextInputField } from '~/components/clusters/wizards/form/TextInputField';
 import { BooleanDropdownField } from '~/components/clusters/wizards/form/BooleanDropdownField';
 import {

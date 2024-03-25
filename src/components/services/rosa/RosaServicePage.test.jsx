@@ -1,4 +1,5 @@
 import React from 'react';
+import { CompatRouter } from 'react-router-dom-v5-compat';
 import { BrowserRouter } from 'react-router-dom';
 
 import { render, screen, checkAccessibility } from '~/testUtils';
@@ -8,7 +9,9 @@ describe('<RosaServicePage />', () => {
   it('is accessible', async () => {
     const { container } = render(
       <BrowserRouter>
-        <RosaServicePage />
+        <CompatRouter>
+          <RosaServicePage />
+        </CompatRouter>
       </BrowserRouter>,
     );
     await checkAccessibility(container);
@@ -17,7 +20,9 @@ describe('<RosaServicePage />', () => {
   it('has a link for "begin setup"', () => {
     render(
       <BrowserRouter>
-        <RosaServicePage />
+        <CompatRouter>
+          <RosaServicePage />
+        </CompatRouter>
       </BrowserRouter>,
     );
 
@@ -30,7 +35,9 @@ describe('<RosaServicePage />', () => {
   it('has a working link for "self-service deployment"', async () => {
     const { user } = render(
       <BrowserRouter>
-        <RosaServicePage />
+        <CompatRouter>
+          <RosaServicePage />
+        </CompatRouter>
       </BrowserRouter>,
     );
 
@@ -46,7 +53,9 @@ describe('<RosaServicePage />', () => {
   it('has a working link for "seamless integration"', async () => {
     const { user } = render(
       <BrowserRouter>
-        <RosaServicePage />
+        <CompatRouter>
+          <RosaServicePage />
+        </CompatRouter>
       </BrowserRouter>,
     );
     const seamlessIntegrationButton = screen.getByText(
@@ -63,7 +72,9 @@ describe('<RosaServicePage />', () => {
   it('has a working link for "maximum availability"', async () => {
     const { user } = render(
       <BrowserRouter>
-        <RosaServicePage />
+        <CompatRouter>
+          <RosaServicePage />
+        </CompatRouter>
       </BrowserRouter>,
     );
     const maximumAvailabilityButton = screen.getByText('Maximum availability');
@@ -78,7 +89,9 @@ describe('<RosaServicePage />', () => {
   it('has a working link for "deploying applications"', async () => {
     const { user } = render(
       <BrowserRouter>
-        <RosaServicePage />
+        <CompatRouter>
+          <RosaServicePage />
+        </CompatRouter>
       </BrowserRouter>,
     );
 
@@ -115,7 +128,9 @@ describe('<RosaServicePage />', () => {
   it('has a working link for "flexible consumption"', async () => {
     const { user } = render(
       <BrowserRouter>
-        <RosaServicePage />
+        <CompatRouter>
+          <RosaServicePage />
+        </CompatRouter>
       </BrowserRouter>,
     );
 
@@ -131,7 +146,9 @@ describe('<RosaServicePage />', () => {
   it('has a working link for "fully-managed service"', async () => {
     const { user } = render(
       <BrowserRouter>
-        <RosaServicePage />
+        <CompatRouter>
+          <RosaServicePage />
+        </CompatRouter>
       </BrowserRouter>,
     );
 

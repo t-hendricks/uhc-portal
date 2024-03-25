@@ -1,5 +1,5 @@
 /* eslint-disable camelcase */
-import React, { useState, useCallback, useEffect, useRef } from 'react';
+import React, { useState, useCallback, useEffect, useRef, useMemo } from 'react';
 import get from 'lodash/get';
 
 import {
@@ -11,22 +11,23 @@ import {
   TextContent,
   TextVariants,
 } from '@patternfly/react-core';
-import { Field } from 'redux-form';
-
+import { Field } from 'formik';
+import { useFormState } from '~/components/clusters/wizards/hooks';
 import { required } from '~/common/validators';
 import { normalizedProducts } from '~/common/subscriptionTypes';
 import { trackEvents } from '~/common/analytics';
 import useAnalytics from '~/hooks/useAnalytics';
 import ErrorBox from '~/components/common/ErrorBox';
 
-import { PrerequisitesInfoBox } from '~/components/clusters/wizards/rosa_v1/common/PrerequisitesInfoBox';
-import { WelcomeMessage } from '~/components/clusters/wizards/rosa_v1/common/WelcomeMessage';
+import { PrerequisitesInfoBox } from '~/components/clusters/wizards/rosa_v2/common/PrerequisitesInfoBox';
+import { WelcomeMessage } from '~/components/clusters/wizards/rosa_v2/common/WelcomeMessage';
 import { AWS_ACCOUNT_ROSA_LOCALSTORAGE_KEY } from '~/common/localStorageConstants';
 import AccountRolesARNsSection from './AccountRolesARNsSection';
 import { AwsRoleErrorAlert } from './AwsRoleErrorAlert';
 import AWSAccountSelection from './AWSAccountSelection';
 import AWSBillingAccount from './AWSBillingAccount/AWSBillingAccount';
 import { useAssociateAWSAccountDrawer } from './AssociateAWSAccountDrawer/AssociateAWSAccountDrawer';
+import { FieldId } from '../constants';
 
 export const isUserRoleForSelectedAWSAccount = (users: any[] | undefined, awsAcctId: any) =>
   users?.some((user: { aws_id: any }) => user.aws_id === awsAcctId);
@@ -35,11 +36,6 @@ export const getUserRoleForSelectedAWSAccount = (users: any[], awsAcctId: any) =
   users.find((user: { aws_id: any }) => user.aws_id === awsAcctId);
 
 export interface AccountsRolesScreenProps {
-  touch?: any;
-  change?: any;
-  selectedAWSAccountID?: string;
-  selectedAWSBillingAccountID?: string;
-  selectedInstallerRoleARN?: string;
   getAWSAccountIDs: any;
   getAWSAccountIDsResponse: any;
   getAWSAccountRolesARNs: any;
@@ -49,19 +45,12 @@ export interface AccountsRolesScreenProps {
   clearGetAWSAccountRolesARNsResponse: any;
   clearGetUserRoleResponse: any;
   organizationID: string;
-  rosaMaxOSVersion?: string;
   isHypershiftEnabled: boolean;
   isHypershiftSelected: boolean;
 }
 
 function AccountsRolesScreen({
-  touch,
-  change,
   organizationID,
-  selectedAWSAccountID,
-  selectedAWSBillingAccountID,
-  selectedInstallerRoleARN,
-  rosaMaxOSVersion,
   getAWSAccountIDs,
   getAWSAccountIDsResponse,
   getAWSAccountRolesARNs,
@@ -73,10 +62,26 @@ function AccountsRolesScreen({
   isHypershiftEnabled,
   isHypershiftSelected,
 }: AccountsRolesScreenProps) {
+  const {
+    setFieldValue,
+    getFieldProps,
+    getFieldMeta,
+    values: {
+      [FieldId.AssociatedAwsId]: selectedAWSAccountID,
+      [FieldId.BillingAccountId]: selectedAWSBillingAccountID,
+      [FieldId.InstallerRoleArn]: selectedInstallerRoleARN,
+      [FieldId.RosaMaxOsVersion]: rosaMaxOSVersion,
+    },
+  } = useFormState();
   const [AWSAccountIDs, setAWSAccountIDs] = useState<string[]>([]);
   const [hasFinishedLoading, setHasFinishedLoading] = useState<boolean>(false);
   const [noUserForSelectedAWSAcct, setNoUserForSelectedAWSAcct] = useState(false);
   const [refreshButtonClicked, setRefreshButtonClicked] = useState(false);
+  const isAWSDataPending = useMemo(
+    () => getAWSAccountIDsResponse.pending || getAWSAccountRolesARNsResponse.pending,
+    [getAWSAccountIDsResponse.pending, getAWSAccountRolesARNsResponse.pending],
+  );
+
   const openDrawerButtonRef = useRef(null);
   const hasAWSAccounts = AWSAccountIDs.length > 0;
   const track = useAnalytics();
@@ -97,9 +102,9 @@ function AccountsRolesScreen({
   // default product and cloud_provider form values
   useEffect(() => {
     // default product and cloud_provider form values
-    change('cloud_provider', 'aws');
-    change('product', normalizedProducts.ROSA);
-    change('byoc', 'true');
+    setFieldValue(FieldId.CloudProvider, 'aws');
+    setFieldValue(FieldId.Product, normalizedProducts.ROSA);
+    setFieldValue(FieldId.Byoc, 'true');
     resetAWSAccountFields();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -120,7 +125,7 @@ function AccountsRolesScreen({
       if (!selectedAWSAccountID || !AWSAccountIDs.includes(selectedAWSAccountID)) {
         [selectedAWSAccountID] = AWSAccountIDs;
       }
-      change('associated_aws_id', selectedAWSAccountID);
+      setFieldValue(FieldId.AssociatedAwsId, selectedAWSAccountID);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [hasAWSAccounts, selectedAWSAccountID]);
@@ -133,7 +138,7 @@ function AccountsRolesScreen({
       setAWSAccountIDs(awsIDs);
       // Reset a previous, invalid selection
       if (selectedAWSAccountID && !awsIDs.includes(selectedAWSAccountID)) {
-        change('associated_aws_id', '');
+        setFieldValue(FieldId.AssociatedAwsId, '');
       }
       setHasFinishedLoading(true);
     } else if (getAWSAccountIDsResponse.error) {
@@ -190,7 +195,13 @@ function AccountsRolesScreen({
           ) : null}
           <Field
             component={AWSAccountSelection}
-            name="associated_aws_id"
+            name={FieldId.AssociatedAwsId}
+            input={{
+              // name, value, onBlur, onChange
+              ...getFieldProps(FieldId.AssociatedAwsId),
+              onChange: (value: string) => setFieldValue(FieldId.AssociatedAwsId, value),
+            }}
+            meta={getFieldMeta(FieldId.AssociatedAwsId)}
             label="Associated AWS infrastructure account"
             refresh={{
               onRefresh: () => {
@@ -208,8 +219,8 @@ function AccountsRolesScreen({
             }
             accounts={AWSAccountIDs.map((account) => ({ cloud_account_id: account }))}
             selectedAWSAccountID={selectedAWSAccountID}
-            isLoading={refreshButtonClicked && getAWSAccountIDsResponse.pending}
-            isDisabled={getAWSAccountIDsResponse.pending}
+            isLoading={refreshButtonClicked && isAWSDataPending}
+            isDisabled={isAWSDataPending}
             clearGetAWSAccountIDsResponse={clearGetAWSAccountIDsResponse}
           />
           <Button
@@ -225,15 +236,12 @@ function AccountsRolesScreen({
         <GridItem span={7} />
         {isHypershiftSelected && (
           <AWSBillingAccount
-            change={change}
             selectedAWSBillingAccountID={selectedAWSBillingAccountID || ''}
             selectedAWSAccountID={selectedAWSAccountID || ''}
           />
         )}
         {selectedAWSAccountID && hasAWSAccounts && (
           <AccountRolesARNsSection
-            touch={touch}
-            change={change}
             selectedAWSAccountID={selectedAWSAccountID}
             selectedInstallerRoleARN={selectedInstallerRoleARN}
             rosaMaxOSVersion={rosaMaxOSVersion}

@@ -2,7 +2,7 @@ import { Spinner } from '@redhat-cloud-services/frontend-components';
 import { isMatch } from 'lodash';
 import PropTypes from 'prop-types';
 import React, { useMemo, useState } from 'react';
-import { Redirect } from 'react-router-dom';
+import { Navigate } from 'react-router-dom-v5-compat';
 import { Banner, Bullseye, PageSection, Stack, StackItem } from '@patternfly/react-core';
 import {
   Wizard as WizardDeprecated,
@@ -42,6 +42,7 @@ import AccountsRolesScreen from './AccountsRolesScreen';
 import { isUserRoleForSelectedAWSAccount } from './AccountsRolesScreen/AccountsRolesScreen';
 import ClusterRolesScreen from './ClusterRolesScreen';
 import { ROSAWizardContext } from './ROSAWizardContext';
+import { ValuesPanel } from './ValuesPanel';
 
 import CreateRosaWizardFooter from './CreateRosaWizardFooter';
 
@@ -176,6 +177,9 @@ class CreateROSAWizardInternal extends React.Component {
   };
 
   canJumpTo = (id) => {
+    if (config.fakeOSD) {
+      return true;
+    }
     const { stepIdReached, currentStepId, accountAndRolesStepId, validatedSteps } = this.state;
     const { selectedAWSAccountID } = this.props;
 
@@ -468,11 +472,13 @@ class CreateROSAWizardInternal extends React.Component {
       // unblock history in order to not show a confirmation prompt.
       history.block(() => {});
 
-      return <Redirect to={`/details/s/${createClusterResponse.cluster.subscription.id}`} />;
+      return (
+        <Navigate replace to={`/details/s/${createClusterResponse.cluster.subscription.id}`} />
+      );
     }
 
     if (orgWasFetched && !hasProductQuota) {
-      return <Redirect to="/create" />;
+      return <Navigate replace to="/create" />;
     }
 
     const requests = [
@@ -534,10 +540,10 @@ class CreateROSAWizardInternal extends React.Component {
           {config.fakeOSD && ( // TODO Is ?fake=true supported for ROSA clusters?
             <Banner variant="gold">On submit, a fake ROSA cluster will be created.</Banner>
           )}
-          <div className="ocm-page">
+          <div className="ocm-page pf-v5-u-display-flex">
             {isErrorModalOpen && <CreateClusterErrorModal />}
             <WizardDeprecated
-              className="rosa-wizard"
+              className="rosa-wizard pf-v5-u-flex-1"
               navAriaLabel={`${ariaTitle} steps`}
               mainAriaLabel={`${ariaTitle} content`}
               steps={steps}
@@ -548,19 +554,19 @@ class CreateROSAWizardInternal extends React.Component {
               onCurrentStepChanged={this.onCurrentStepChanged}
               onClose={() => history.push('/')}
               footer={
-                !createClusterResponse.pending ? (
-                  <CreateRosaWizardFooter
-                    firstStepId={steps[0].id}
-                    onSubmit={onSubmit}
-                    onBeforeNext={this.onBeforeNext}
-                    onBeforeSubmit={this.onBeforeSubmit}
-                    isNextDisabled={!!deferredNext}
-                    isHypershiftSelected={isHypershiftSelected}
-                    currentStepId={currentStepId}
-                  />
-                ) : null
+                <CreateRosaWizardFooter
+                  firstStepId={steps[0].id}
+                  onSubmit={onSubmit}
+                  onBeforeNext={this.onBeforeNext}
+                  onBeforeSubmit={this.onBeforeSubmit}
+                  isNextDisabled={!!deferredNext}
+                  isHypershiftSelected={isHypershiftSelected}
+                  currentStepId={currentStepId}
+                  isSubmitting={createClusterResponse.pending}
+                />
               }
             />
+            {config.fakeOSD && <ValuesPanel />}
           </div>
         </PageSection>
       </>

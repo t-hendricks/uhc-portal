@@ -1,4 +1,4 @@
-import produce from 'immer';
+import { produce } from 'immer';
 import { Organization, QuotaCost, TermsReviewResponse } from '~/types/accounts_mgmt.v1';
 import { UserInfo } from '~/types/types';
 import { userConstants } from '../constants';

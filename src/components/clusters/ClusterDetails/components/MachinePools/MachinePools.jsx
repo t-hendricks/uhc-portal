@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import produce from 'immer';
+import { produce } from 'immer';
 import isEmpty from 'lodash/isEmpty';
 import get from 'lodash/get';
 
@@ -27,7 +27,7 @@ import Skeleton from '@redhat-cloud-services/frontend-components/Skeleton';
 
 import { EditClusterAutoScalerForDay2 } from '~/components/clusters/common/EditClusterAutoScalingDialog';
 import { isMultiAZ } from '~/components/clusters/ClusterDetails/clusterDetailsHelper';
-import { MachineConfiguration } from '~/components/clusters/common/MachineConfiguration/MachineConfiguration';
+import { MachineConfiguration } from '~/components/clusters/common/MachineConfiguration';
 import { noQuotaTooltip } from '~/common/helpers';
 import { versionFormatter } from '~/common/versionHelpers';
 import { clusterService } from '~/services';

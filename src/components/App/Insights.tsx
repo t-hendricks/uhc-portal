@@ -1,25 +1,30 @@
 import React from 'react';
-import { matchPath, useHistory } from 'react-router-dom';
+import { Location, matchPath, useLocation, useNavigate } from 'react-router-dom-v5-compat';
 import getNavClickParams from '../../common/getNavClickParams';
 import { ocmAppPath, removeOcmBaseName } from '../../common/getBaseName';
 
 const Insights = () => {
-  const history = useHistory();
+  const location = useLocation();
+  const navigate = useNavigate();
 
   const ocmListeners = React.useRef<{ [event: string]: (() => void)[] }>({ APP_REFRESH: [] });
+
+  const dispatchOcmEvent = (event: string) => {
+    ocmListeners.current[event].forEach((callback) => callback());
+  };
+
   React.useEffect(() => {
     const navigateToApp = (event: any) => {
-      const { location } = history;
       // update route only when it's clicked by the user and can have route change
       const path = event.domEvent?.href;
       if (path && path.startsWith(ocmAppPath)) {
         const targetPathName = removeOcmBaseName(path);
-        if (matchPath(location.pathname, { path: targetPathName, exact: true })) {
+        if (matchPath(targetPathName, location.pathname)) {
           dispatchOcmEvent('APP_REFRESH');
         } else {
           // AppNavigationCB called before new history entry is added;
           // schedule history to be replaced afterwards so that Router notices change
-          setTimeout(() => history.replace(targetPathName), 0);
+          setTimeout(() => navigate(targetPathName, { replace: true }), 0);
         }
       }
     };
@@ -35,14 +40,10 @@ const Insights = () => {
       return cleanupFn;
     };
 
-    const dispatchOcmEvent = (event: string) => {
-      ocmListeners.current[event].forEach((callback) => callback());
-    };
-
     const cleanupInsightsListener = insights.chrome.on('APP_NAVIGATION', navigateToApp);
-    const cleanupRouteListener = history.listen((location) => {
+    const cleanupRouteListener = (location: Location<any>) => {
       insights.chrome.appNavClick(getNavClickParams(location.pathname));
-    });
+    };
 
     insights.ocm = {
       on: (event: string, callback: () => void) => {
@@ -57,10 +58,10 @@ const Insights = () => {
 
     return () => {
       cleanupInsightsListener?.();
-      cleanupRouteListener();
+      cleanupRouteListener(location);
       delete insights.ocm;
     };
-  }, [history]);
+  }, [location, navigate]);
 
   return null;
 };

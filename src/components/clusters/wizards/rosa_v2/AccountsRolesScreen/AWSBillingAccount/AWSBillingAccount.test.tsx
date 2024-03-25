@@ -1,4 +1,5 @@
 import React from 'react';
+import { Formik } from 'formik';
 import * as reactRedux from 'react-redux';
 import * as helpers from '~/common/helpers';
 import { HCP_AWS_BILLING_SHOW, HCP_AWS_BILLING_REQUIRED } from '~/redux/constants/featureConstants';
@@ -9,13 +10,13 @@ import {
   checkAccessibility,
   within,
   mockUseFeatureGate,
+  act,
 } from '~/testUtils';
-import wizardConnector from '~/components/clusters/wizards/common/WizardConnector';
 import { CloudAccount } from '~/types/accounts_mgmt.v1/models/CloudAccount';
 import AWSBillingAccount from './AWSBillingAccount';
+import { initialValues } from '../../constants';
 
 const defaultProps = {
-  change: () => jest.fn(),
   selectedAWSBillingAccountID: '123',
   selectedAWSAccountID: '123',
 };
@@ -79,11 +80,21 @@ jest.mock('react-redux', () => {
   return config;
 });
 
+const buildTestComponent = (children: React.ReactNode, formValues = {}) => (
+  <Formik
+    initialValues={{
+      ...initialValues,
+      ...formValues,
+    }}
+    onSubmit={() => {}}
+  >
+    {children}
+  </Formik>
+);
+
 describe('<AWSBillingAccount />', () => {
   const useDispatchMock = jest.spyOn(reactRedux, 'useDispatch');
   const shouldRefreshQuotaMock = jest.spyOn(helpers, 'shouldRefetchQuota');
-
-  const ConnectedAWSBillingAccount = wizardConnector(AWSBillingAccount);
 
   afterEach(() => {
     jest.clearAllMocks();
@@ -98,32 +109,35 @@ describe('<AWSBillingAccount />', () => {
     mockUseFeatureGate([[HCP_AWS_BILLING_SHOW, true]]);
 
     const { container } = withState(defaultState).render(
-      <ConnectedAWSBillingAccount {...defaultProps} />,
+      buildTestComponent(<AWSBillingAccount {...defaultProps} />),
     );
+    await act(() => Promise.resolve());
 
     // Assert
     await checkAccessibility(container);
   });
 
-  it('calls dispatch to get billing account IDs when shouldRefreshQuota returns true called on load', () => {
+  it('calls dispatch to get billing account IDs when shouldRefreshQuota returns true called on load', async () => {
     // Arrange
     const dummyDispatch = jest.fn();
     useDispatchMock.mockReturnValue(dummyDispatch);
     shouldRefreshQuotaMock.mockReturnValue(true);
 
-    render(<ConnectedAWSBillingAccount {...defaultProps} />);
+    render(buildTestComponent(<AWSBillingAccount {...defaultProps} />));
+    await act(() => Promise.resolve());
 
     // Assert
     expect(dummyDispatch).toHaveBeenCalledTimes(1);
   });
 
-  it('does not call dispatch to get billing account IDs when shouldRefreshQuota returns false called on load', () => {
+  it('does not call dispatch to get billing account IDs when shouldRefreshQuota returns false called on load', async () => {
     // Arrange
     const dummyDispatch = jest.fn();
     useDispatchMock.mockReturnValue(dummyDispatch);
     shouldRefreshQuotaMock.mockReturnValue(false);
 
-    withState(defaultState).render(<ConnectedAWSBillingAccount {...defaultProps} />);
+    withState(defaultState).render(buildTestComponent(<AWSBillingAccount {...defaultProps} />));
+    await act(() => Promise.resolve());
 
     // Assert
     expect(dummyDispatch).toHaveBeenCalledTimes(0);
@@ -134,8 +148,9 @@ describe('<AWSBillingAccount />', () => {
     mockUseFeatureGate([[HCP_AWS_BILLING_SHOW, true]]);
     const accountInState = defaultState.rosaReducer.getAWSBillingAccountsResponse.data;
     const { user } = withState(defaultState).render(
-      <ConnectedAWSBillingAccount {...defaultProps} />,
+      buildTestComponent(<AWSBillingAccount {...defaultProps} />),
     );
+    await act(() => Promise.resolve());
     await user.click(screen.getByRole('button', { name: 'Options menu' })); // expand drop-down
 
     // Assert
@@ -159,7 +174,8 @@ describe('<AWSBillingAccount />', () => {
       selectedAWSBillingAccountID: 'notAnAccount',
       change: changeMock,
     };
-    withState(defaultState).render(<ConnectedAWSBillingAccount {...newProps} />);
+    withState(defaultState).render(buildTestComponent(<AWSBillingAccount {...newProps} />));
+    await act(() => Promise.resolve());
 
     // Assert
 
@@ -196,7 +212,8 @@ describe('<AWSBillingAccount />', () => {
         },
       },
     };
-    withState(newState).render(<ConnectedAWSBillingAccount {...newProps} />);
+    withState(newState).render(buildTestComponent(<AWSBillingAccount {...newProps} />));
+    await act(() => Promise.resolve());
 
     // Assert
     expect(changeMock).toHaveBeenCalledTimes(1);
@@ -224,8 +241,9 @@ describe('<AWSBillingAccount />', () => {
 
     shouldRefreshQuotaMock.mockReturnValue(false);
     const { container } = withState(newState).render(
-      <ConnectedAWSBillingAccount {...defaultProps} />,
+      buildTestComponent(<AWSBillingAccount {...defaultProps} />),
     );
+    await act(() => Promise.resolve());
 
     // Assert
     expect(screen.getByRole('alert')).toBeInTheDocument();
@@ -251,8 +269,9 @@ describe('<AWSBillingAccount />', () => {
 
     shouldRefreshQuotaMock.mockReturnValue(false);
     const { container } = withState(newState).render(
-      <ConnectedAWSBillingAccount {...defaultProps} />,
+      buildTestComponent(<AWSBillingAccount {...defaultProps} />),
     );
+    await act(() => Promise.resolve());
 
     // Assert
     expect(screen.getByRole('alert')).toBeInTheDocument();
@@ -273,8 +292,9 @@ describe('<AWSBillingAccount />', () => {
     };
     shouldRefreshQuotaMock.mockReturnValue(false);
     const { container } = withState(defaultState).render(
-      <ConnectedAWSBillingAccount {...newProps} />,
+      buildTestComponent(<AWSBillingAccount {...newProps} />),
     );
+    await act(() => Promise.resolve());
 
     // Assert
     expect(screen.getByRole('alert')).toBeInTheDocument();
@@ -289,7 +309,7 @@ describe('<AWSBillingAccount />', () => {
     await checkAccessibility(container);
   });
 
-  it('hides info alert if billing and infrastructure are the same', () => {
+  it('hides info alert if billing and infrastructure are the same', async () => {
     // Arrange
     const newProps = {
       ...defaultProps,
@@ -297,13 +317,14 @@ describe('<AWSBillingAccount />', () => {
       selectedAWSAccountID: '123',
     };
     shouldRefreshQuotaMock.mockReturnValue(false);
-    withState(defaultState).render(<ConnectedAWSBillingAccount {...newProps} />);
+    withState(defaultState).render(buildTestComponent(<AWSBillingAccount {...newProps} />));
+    await act(() => Promise.resolve());
 
     // Assert
     expect(screen.queryByRole('alert')).not.toBeInTheDocument();
   });
 
-  it('hides info alert if a billing account has not been selected', () => {
+  it('hides info alert if a billing account has not been selected', async () => {
     // Arrange
     const newProps = {
       ...defaultProps,
@@ -311,13 +332,14 @@ describe('<AWSBillingAccount />', () => {
       selectedAWSAccountID: '123',
     };
     shouldRefreshQuotaMock.mockReturnValue(false);
-    withState(defaultState).render(<ConnectedAWSBillingAccount {...newProps} />);
+    withState(defaultState).render(buildTestComponent(<AWSBillingAccount {...newProps} />));
+    await act(() => Promise.resolve());
 
     // Assert
     expect(screen.queryByRole('alert')).not.toBeInTheDocument();
   });
 
-  it('hides info alert if a infrastructure account has not been selected', () => {
+  it('hides info alert if a infrastructure account has not been selected', async () => {
     // Arrange
     const newProps = {
       ...defaultProps,
@@ -325,37 +347,40 @@ describe('<AWSBillingAccount />', () => {
       selectedAWSAccountID: '',
     };
     shouldRefreshQuotaMock.mockReturnValue(false);
-    withState(defaultState).render(<ConnectedAWSBillingAccount {...newProps} />);
+    withState(defaultState).render(buildTestComponent(<AWSBillingAccount {...newProps} />));
+    await act(() => Promise.resolve());
 
     // Assert
     expect(screen.queryByRole('alert')).not.toBeInTheDocument();
   });
 
-  it('displays empty dom element if HCP_AWS_BILLING_SHOW is false', () => {
+  it('displays empty dom element if HCP_AWS_BILLING_SHOW is false', async () => {
     // Arrange
     shouldRefreshQuotaMock.mockReturnValue(false);
     mockUseFeatureGate([[HCP_AWS_BILLING_SHOW, false]]);
     const { container } = withState(defaultState).render(
-      <ConnectedAWSBillingAccount {...defaultProps} />,
+      buildTestComponent(<AWSBillingAccount {...defaultProps} />),
     );
+    await act(() => Promise.resolve());
 
     // Assert
     expect(container).toBeEmptyDOMElement();
   });
 
-  it('does not display an empty dom element if HCP_AWS_BILLING_SHOW feature flag is true', () => {
+  it('does not display an empty dom element if HCP_AWS_BILLING_SHOW feature flag is true', async () => {
     // Arrange
     shouldRefreshQuotaMock.mockReturnValue(false);
     mockUseFeatureGate([[HCP_AWS_BILLING_SHOW, true]]);
     const { container } = withState(defaultState).render(
-      <ConnectedAWSBillingAccount {...defaultProps} />,
+      buildTestComponent(<AWSBillingAccount {...defaultProps} />),
     );
+    await act(() => Promise.resolve());
 
     // Assert
     expect(container).not.toBeEmptyDOMElement();
   });
 
-  it('makes field not required if HCP_AWS_BILLING_REQUIRED feature flag is false', () => {
+  it('makes field not required if HCP_AWS_BILLING_REQUIRED feature flag is false', async () => {
     // Arrange
     shouldRefreshQuotaMock.mockReturnValue(false);
     mockUseFeatureGate([
@@ -363,16 +388,19 @@ describe('<AWSBillingAccount />', () => {
       [HCP_AWS_BILLING_REQUIRED, false],
     ]);
     withState(defaultState).render(
-      <ConnectedAWSBillingAccount
-        {...{ ...defaultProps, selectedAWSBillingAccountID: 'notValidChoice' }}
-      />,
+      buildTestComponent(
+        <AWSBillingAccount
+          {...{ ...defaultProps, selectedAWSBillingAccountID: 'notValidChoice' }}
+        />,
+      ),
     );
+    await act(() => Promise.resolve());
 
     // Assert
     expect(screen.queryByText('Field is required')).not.toBeInTheDocument(); // With the PF 4 select,this is the only way to determine if an element is required
   });
 
-  it('makes field required if HCP_AWS_BILLING_REQUIRED feature flag is true', () => {
+  it('makes field required if HCP_AWS_BILLING_REQUIRED feature flag is true', async () => {
     // Arrange
     shouldRefreshQuotaMock.mockReturnValue(false);
     mockUseFeatureGate([
@@ -380,10 +408,13 @@ describe('<AWSBillingAccount />', () => {
       [HCP_AWS_BILLING_REQUIRED, true],
     ]);
     withState(defaultState).render(
-      <ConnectedAWSBillingAccount
-        {...{ ...defaultProps, selectedAWSBillingAccountID: 'notValidChoice' }}
-      />,
+      buildTestComponent(
+        <AWSBillingAccount
+          {...{ ...defaultProps, selectedAWSBillingAccountID: 'notValidChoice' }}
+        />,
+      ),
     );
+    await act(() => Promise.resolve());
 
     // Assert
     expect(screen.getByText('Field is required')).toBeInTheDocument(); // With the PF 4 select,this is the only way to determine if an element is required

@@ -1,26 +1,19 @@
 import React from 'react';
-import PropTypes from 'prop-types';
-
+import { useParams, useLocation } from 'react-router-dom-v5-compat';
 import ClusterDetails from '.';
 import InsightsAdvisorRedirector from '../InsightsAdvisorRedirector';
 
 const ClusterDetailsSubscriptionId = (props) => {
-  const {
-    location: { hash },
-  } = props;
+  const params = useParams();
+  const location = useLocation();
 
   /* This guarantees that the old links to OCM will redirect to OCP Advisor
        instead of the deprecated Insights Advisor tab */
-  if (hash === '#insights') {
-    // Redirect to OCP Advisor (OpenShift Insights)
-    return <InsightsAdvisorRedirector {...props} />;
-  }
-
-  return <ClusterDetails {...props} />;
-};
-
-ClusterDetailsSubscriptionId.propTypes = {
-  location: PropTypes.shape({ hash: PropTypes.string }),
+  return location.hash === '#insights' ? (
+    <InsightsAdvisorRedirector params={params} location={location} {...props} />
+  ) : (
+    <ClusterDetails params={params} location={location} {...props} />
+  );
 };
 
 export default ClusterDetailsSubscriptionId;

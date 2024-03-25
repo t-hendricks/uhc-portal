@@ -1,5 +1,5 @@
 import React from 'react';
-import { MemoryRouter } from 'react-router';
+import { MemoryRouter } from 'react-router-dom';
 import { CompatRouter } from 'react-router-dom-v5-compat';
 import { mockRestrictedEnv, render, screen, checkAccessibility } from '~/testUtils';
 import DownloadsPage, {

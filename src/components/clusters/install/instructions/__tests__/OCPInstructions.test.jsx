@@ -1,4 +1,5 @@
 import React from 'react';
+import { CompatRouter } from 'react-router-dom-v5-compat';
 import { render, screen, checkAccessibility, TestRouter } from '~/testUtils';
 import get from 'lodash/get';
 import OCPInstructions from '../OCPInstructions';
@@ -50,7 +51,9 @@ describe('<OCPInstructions />', () => {
       const option = ocpOptions[provider];
       const { container } = render(
         <TestRouter>
-          <OCPInstructions {...option} token={{}} />
+          <CompatRouter>
+            <OCPInstructions {...option} token={{}} />
+          </CompatRouter>
         </TestRouter>,
       );
 

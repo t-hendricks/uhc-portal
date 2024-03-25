@@ -15,7 +15,7 @@ import {
   TableHeader as TableHeaderDeprecated,
   TableBody as TableBodyDeprecated,
 } from '@patternfly/react-table/deprecated';
-import { Link } from 'react-router-dom';
+import { Link } from 'react-router-dom-v5-compat';
 import { CheckCircleIcon } from '@patternfly/react-icons/dist/esm/icons/check-circle-icon';
 import { global_success_color_100 as successColor } from '@patternfly/react-tokens/dist/esm/global_success_color_100';
 import getClusterName from '../../../common/getClusterName';

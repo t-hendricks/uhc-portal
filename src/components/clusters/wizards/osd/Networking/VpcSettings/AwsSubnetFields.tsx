@@ -13,21 +13,12 @@ const AwsSubnetFields = () => {
 
   const {
     [FieldId.MultiAz]: multiAz,
-    [FieldId.Region]: region,
-    [FieldId.UsePrivateLink]: usePrivateLink,
     [FieldId.SelectedVpc]: selectedVPC,
+    [FieldId.UsePrivateLink]: usePrivateLink,
   } = values;
 
   const isMultiAz = multiAz === 'true';
-
-  const subnetProps = {
-    region,
-    isMultiAz,
-    usePrivateLink,
-    isDisabled: !selectedVPC.id,
-  };
-
-  const meta = getFieldMeta(FieldId.SelectedVpc);
+  const vpcMeta = getFieldMeta(FieldId.SelectedVpc);
 
   return (
     <>
@@ -41,21 +32,22 @@ const AwsSubnetFields = () => {
               onChange: (value: string) => setFieldValue(FieldId.SelectedVpc, value),
             }}
             isOSD
-            meta={meta}
+            meta={vpcMeta}
             validate={(vpc: CloudVPC) => (dirty && !vpc?.id ? 'error' : undefined)}
             selectedVPC={selectedVPC}
             showRefresh
             isHypershift={false}
+            usePrivateLink={usePrivateLink}
           />
         </GridItem>
         <GridItem md={6} />
       </Grid>
 
-      <AwsSingleSubnetField index={0} {...subnetProps} />
+      <AwsSingleSubnetField index={0} />
       {isMultiAz && (
         <>
-          <AwsSingleSubnetField index={1} {...subnetProps} />
-          <AwsSingleSubnetField index={2} {...subnetProps} />
+          <AwsSingleSubnetField index={1} />
+          <AwsSingleSubnetField index={2} />
         </>
       )}
     </>

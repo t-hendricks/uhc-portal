@@ -1,5 +1,5 @@
 /* eslint-disable camelcase */
-import React, { useState, useCallback, useEffect, useRef } from 'react';
+import React, { useState, useCallback, useEffect, useRef, useMemo } from 'react';
 import get from 'lodash/get';
 
 import {
@@ -77,6 +77,11 @@ function AccountsRolesScreen({
   const [hasFinishedLoading, setHasFinishedLoading] = useState<boolean>(false);
   const [noUserForSelectedAWSAcct, setNoUserForSelectedAWSAcct] = useState(false);
   const [refreshButtonClicked, setRefreshButtonClicked] = useState(false);
+  const isAWSDataPending = useMemo(
+    () => getAWSAccountIDsResponse.pending || getAWSAccountRolesARNsResponse.pending,
+    [getAWSAccountIDsResponse.pending, getAWSAccountRolesARNsResponse.pending],
+  );
+
   const openDrawerButtonRef = useRef(null);
   const hasAWSAccounts = AWSAccountIDs.length > 0;
   const track = useAnalytics();
@@ -208,8 +213,8 @@ function AccountsRolesScreen({
             }
             accounts={AWSAccountIDs.map((account) => ({ cloud_account_id: account }))}
             selectedAWSAccountID={selectedAWSAccountID}
-            isLoading={refreshButtonClicked && getAWSAccountIDsResponse.pending}
-            isDisabled={getAWSAccountIDsResponse.pending}
+            isLoading={refreshButtonClicked && isAWSDataPending}
+            isDisabled={isAWSDataPending}
             clearGetAWSAccountIDsResponse={clearGetAWSAccountIDsResponse}
           />
           <Button

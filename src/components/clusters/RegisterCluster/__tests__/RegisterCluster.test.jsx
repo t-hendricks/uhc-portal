@@ -1,12 +1,13 @@
 import React from 'react';
+import { CompatRouter } from 'react-router-dom-v5-compat';
 import { render, screen, checkAccessibility, TestRouter } from '~/testUtils';
 
 // eslint-disable-next-line import/extensions
 import { reduxFormRegisterCluster as ReduxFormRegisterCluster } from '../index.js';
 
-jest.mock('react-router-dom', () => ({
-  ...jest.requireActual('react-router-dom'),
-  Redirect: jest.fn(({ to }) => `Redirected to "${to}"`),
+jest.mock('react-router-dom-v5-compat', () => ({
+  ...jest.requireActual('react-router-dom-v5-compat'),
+  Navigate: jest.fn(({ to }) => `Redirected to "${to}"`),
 }));
 
 describe('<RegisterCluster />', () => {
@@ -44,7 +45,9 @@ describe('<RegisterCluster />', () => {
   it.skip('is accessible', async () => {
     const { container } = render(
       <TestRouter>
-        <ReduxFormRegisterCluster {...baseProps} canSubscribeOCP />
+        <CompatRouter>
+          <ReduxFormRegisterCluster {...baseProps} canSubscribeOCP />
+        </CompatRouter>
       </TestRouter>,
     );
 
@@ -59,7 +62,9 @@ describe('<RegisterCluster />', () => {
     };
     render(
       <TestRouter>
-        <ReduxFormRegisterCluster {...quotaLoadingProps} canSubscribeOCP />
+        <CompatRouter>
+          <ReduxFormRegisterCluster {...quotaLoadingProps} canSubscribeOCP />
+        </CompatRouter>
       </TestRouter>,
     );
 
@@ -76,7 +81,9 @@ describe('<RegisterCluster />', () => {
     };
     render(
       <TestRouter>
-        <ReduxFormRegisterCluster {...quotaLoadingProps} canSubscribeOCP />
+        <CompatRouter>
+          <ReduxFormRegisterCluster {...quotaLoadingProps} canSubscribeOCP />
+        </CompatRouter>
       </TestRouter>,
     );
 
@@ -95,7 +102,9 @@ describe('<RegisterCluster />', () => {
     };
     render(
       <TestRouter>
-        <ReduxFormRegisterCluster {...clusterDataFulfilledProps} canSubscribeOCP />
+        <CompatRouter>
+          <ReduxFormRegisterCluster {...clusterDataFulfilledProps} canSubscribeOCP />
+        </CompatRouter>
       </TestRouter>,
     );
 

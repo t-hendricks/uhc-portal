@@ -7,9 +7,7 @@
     "plugin:react-hooks/recommended",
     "plugin:testing-library/react"
   ],
-  "plugins": [
-    "@typescript-eslint"
-  ],
+  "plugins": ["@typescript-eslint", "no-snapshot-testing"],
   "env": {
     "browser": true,
     "jest": true
@@ -81,6 +79,7 @@
       { "props": true, "ignorePropertyModificationsFor": ["draft", "response", "acc"] }
     ],
     "no-use-before-define": "off",
+    "@typescript-eslint/no-use-before-define": "error",
     "import/prefer-default-export": 0,
     "no-shadow": "off",
     "react/jsx-wrap-multilines": "off",
@@ -105,7 +104,8 @@
     "testing-library/prefer-user-event": "error",
     "testing-library/no-wait-for-multiple-assertions": "error",
     "testing-library/render-result-naming-convention": "error",
-    "testing-library/no-debugging-utils": "error"
+    "testing-library/no-debugging-utils": "error",
+    "no-snapshot-testing/no-snapshot-testing": "error"
   },
   "overrides": [
     {

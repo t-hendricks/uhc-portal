@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-no-useless-fragment */
 import React from 'react';
 import PropTypes from 'prop-types';
 import {
@@ -15,45 +16,63 @@ import {
   TableHeader as TableHeaderDeprecated,
   TableBody as TableBodyDeprecated,
 } from '@patternfly/react-table/deprecated';
-import { Link } from 'react-router-dom';
+import { Link } from 'react-router-dom-v5-compat';
 import OutlinedQuestionCircleIcon from '@patternfly/react-icons/dist/esm/icons/outlined-question-circle-icon';
 
 const ocpTableColumns = ['Infrastructure provider', 'Installation options'];
 const ocpTableRows = [
   [
-    <Link to="/install/metal">Bare Metal (x86_64)</Link>,
+    <>
+      <Link to="/install/metal">Bare Metal (x86_64)</Link>
+    </>,
     'Full stack automation and pre-existing infrastructure',
   ],
   [
-    <Link to="/install/arm">Bare Metal (ARM)</Link>,
+    <>
+      <Link to="/install/arm">Bare Metal (ARM)</Link>
+    </>,
     'Full stack automation and pre-existing infrastructure',
   ],
   [
-    <Link to="/install/azure-stack-hub">Azure Stack Hub</Link>,
+    <>
+      <Link to="/install/azure-stack-hub">Azure Stack Hub</Link>
+    </>,
     'Full stack automation and pre-existing infrastructure',
   ],
   [
-    <Link to="/install/ibmz">IBM Z (s390x)</Link>,
+    <>
+      <Link to="/install/ibmz">IBM Z (s390x)</Link>
+    </>,
     'Full stack automation and pre-existing infrastructure',
   ],
   [
-    <Link to="/install/power">IBM Power (ppc64le)</Link>,
+    <>
+      <Link to="/install/power">IBM Power (ppc64le)</Link>
+    </>,
     'Full stack automation and pre-existing infrastructure',
   ],
   [
-    <Link to="/install/nutanix">Nutanix AOS</Link>,
+    <>
+      <Link to="/install/nutanix">Nutanix AOS</Link>
+    </>,
     'Full stack automation and pre-existing infrastructure',
   ],
   [
-    <Link to="/install/openstack">Red Hat OpenStack</Link>,
+    <>
+      <Link to="/install/openstack">Red Hat OpenStack</Link>
+    </>,
     'Full stack automation and pre-existing infrastructure',
   ],
   [
-    <Link to="/install/vsphere">vSphere</Link>,
+    <>
+      <Link to="/install/vsphere">vSphere</Link>
+    </>,
     'Full stack automation and pre-existing infrastructure',
   ],
   [
-    <Link to="/install/platform-agnostic">Platform agnostic (x86_64)</Link>,
+    <>
+      <Link to="/install/platform-agnostic">Platform agnostic (x86_64)</Link>
+    </>,
     'Pre-existing infrastructure',
   ],
 ];

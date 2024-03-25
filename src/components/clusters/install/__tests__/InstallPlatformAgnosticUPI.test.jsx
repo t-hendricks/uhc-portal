@@ -1,4 +1,5 @@
 import React from 'react';
+import { CompatRouter } from 'react-router-dom-v5-compat';
 import { screen, checkAccessibility, TestRouter, withState } from '~/testUtils';
 
 import { InstallPlatformAgnosticUPI } from '../InstallPlatformAgnosticUPI';
@@ -25,7 +26,9 @@ describe('Platform agnostic UPI install', () => {
   it('is accessible', async () => {
     const { container } = withState(githubReleases).render(
       <TestRouter>
-        <InstallPlatformAgnosticUPI token={{}} dispatch={dispatch} />
+        <CompatRouter>
+          <InstallPlatformAgnosticUPI token={{}} dispatch={dispatch} />
+        </CompatRouter>
       </TestRouter>,
     );
 

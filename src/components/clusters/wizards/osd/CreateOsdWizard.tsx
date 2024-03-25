@@ -1,6 +1,6 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
-import { useHistory } from 'react-router';
+import { useHistory } from 'react-router-dom';
 import { Navigate, useNavigate } from 'react-router-dom-v5-compat';
 import { Formik, FormikValues } from 'formik';
 import omit from 'lodash/omit';
@@ -71,74 +71,6 @@ import { ReviewAndCreate } from './ReviewAndCreate';
 interface CreateOsdWizardProps {
   product?: string;
 }
-
-export const CreateOsdWizard = ({ product }: CreateOsdWizardProps) => {
-  const dispatch = useDispatch();
-  const persistentStorageValues = useGlobalState((state) => state.persistentStorageValues);
-  const loadBalancerValues = useGlobalState((state) => state.loadBalancerValues);
-  const organization = useGlobalState((state) => state.userProfile.organization);
-
-  usePreventBrowserNav();
-
-  React.useEffect(() => {
-    if (shouldRefetchQuota(organization)) {
-      dispatch(getOrganizationAndQuota() as any);
-    }
-    if (!persistentStorageValues.fulfilled && !persistentStorageValues.pending) {
-      dispatch(getPersistentStorageValues());
-    }
-    if (!loadBalancerValues.fulfilled && !loadBalancerValues.pending) {
-      dispatch(getLoadBalancerValues());
-    }
-    return () => {
-      dispatch(resetCreatedClusterResponse());
-    };
-  }, [
-    dispatch,
-    loadBalancerValues.fulfilled,
-    loadBalancerValues.pending,
-    organization,
-    persistentStorageValues.fulfilled,
-    persistentStorageValues.pending,
-  ]);
-
-  const onSubmit = async (values: FormikValues) => {
-    const hasNodeLabels = values[FieldId.NodeLabels].some(
-      (nodeLabel: NodeLabel) => !!nodeLabel.key,
-    );
-    const submitValues = omit(values, [
-      FieldId.CidrDefaultValuesEnabled,
-      FieldId.AcknowledgePrereq,
-      ...(!hasNodeLabels ? [FieldId.NodeLabels] : []),
-    ]);
-    dispatch((() => submitOSDRequest(dispatch, { isWizard: true })(submitValues)) as any);
-  };
-
-  return (
-    <AppPage title={documentTitle}>
-      <Formik
-        initialValues={{ ...initialValues, ...(product && { product }) }}
-        initialTouched={initialTouched}
-        validate={osdWizardFormValidator}
-        validateOnChange={false}
-        onSubmit={onSubmit}
-      >
-        <>
-          <PageTitle
-            title="Create an OpenShift Dedicated Cluster"
-            breadcrumbs={<Breadcrumbs path={breadcrumbs} />}
-          />
-          <PageSection>
-            {config.fakeOSD && (
-              <Banner variant="gold">On submit, a fake OSD cluster will be created.</Banner>
-            )}
-            <CreateOsdWizardInternal />
-          </PageSection>
-        </>
-      </Formik>
-    </AppPage>
-  );
-};
 
 const CreateOsdWizardInternal = () => {
   const track = useAnalytics();
@@ -239,11 +171,11 @@ const CreateOsdWizardInternal = () => {
     // history in order to not show a confirmation prompt.
     // TODO: Should be removed upon migrating to React Router v6
     history.block(() => {});
-    return <Navigate to={`/details/s/${createClusterResponse.cluster.subscription?.id}`} />;
+    return <Navigate replace to={`/details/s/${createClusterResponse.cluster.subscription?.id}`} />;
   }
 
   if (organization.fulfilled && !hasProductQuota) {
-    return <Navigate to="/create" />;
+    return <Navigate replace to="/create" />;
   }
 
   if (requestErrors.length > 0) {
@@ -327,5 +259,73 @@ const CreateOsdWizardInternal = () => {
       </Wizard>
       <LeaveCreateClusterPrompt product={product} />
     </>
+  );
+};
+
+export const CreateOsdWizard = ({ product }: CreateOsdWizardProps) => {
+  const dispatch = useDispatch();
+  const persistentStorageValues = useGlobalState((state) => state.persistentStorageValues);
+  const loadBalancerValues = useGlobalState((state) => state.loadBalancerValues);
+  const organization = useGlobalState((state) => state.userProfile.organization);
+
+  usePreventBrowserNav();
+
+  React.useEffect(() => {
+    if (shouldRefetchQuota(organization)) {
+      dispatch(getOrganizationAndQuota() as any);
+    }
+    if (!persistentStorageValues.fulfilled && !persistentStorageValues.pending) {
+      dispatch(getPersistentStorageValues());
+    }
+    if (!loadBalancerValues.fulfilled && !loadBalancerValues.pending) {
+      dispatch(getLoadBalancerValues());
+    }
+    return () => {
+      dispatch(resetCreatedClusterResponse());
+    };
+  }, [
+    dispatch,
+    loadBalancerValues.fulfilled,
+    loadBalancerValues.pending,
+    organization,
+    persistentStorageValues.fulfilled,
+    persistentStorageValues.pending,
+  ]);
+
+  const onSubmit = async (values: FormikValues) => {
+    const hasNodeLabels = values[FieldId.NodeLabels].some(
+      (nodeLabel: NodeLabel) => !!nodeLabel.key,
+    );
+    const submitValues = omit(values, [
+      FieldId.CidrDefaultValuesEnabled,
+      FieldId.AcknowledgePrereq,
+      ...(!hasNodeLabels ? [FieldId.NodeLabels] : []),
+    ]);
+    dispatch((() => submitOSDRequest(dispatch, { isWizard: true })(submitValues)) as any);
+  };
+
+  return (
+    <AppPage title={documentTitle}>
+      <Formik
+        initialValues={{ ...initialValues, ...(product && { product }) }}
+        initialTouched={initialTouched}
+        validate={osdWizardFormValidator}
+        validateOnChange={false}
+        onSubmit={onSubmit}
+      >
+        <>
+          <PageTitle
+            title="Create an OpenShift Dedicated Cluster"
+            breadcrumbs={<Breadcrumbs path={breadcrumbs} />}
+          />
+          <PageSection>
+            {config.fakeOSD && (
+              <Banner variant="gold">On submit, a fake OSD cluster will be created.</Banner>
+            )}
+            <CreateOsdWizardInternal />
+          </PageSection>
+        </>
+      </Formik>
+    </AppPage>
   );
 };

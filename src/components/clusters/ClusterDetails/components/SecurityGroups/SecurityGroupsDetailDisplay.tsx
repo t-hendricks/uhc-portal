@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link } from 'react-router-dom-v5-compat';
 import { SecurityGroup, MachinePool } from '~/types/clusters_mgmt.v1';
 import {
   MachinePoolItemList,
@@ -81,11 +81,12 @@ const SecurityGroupsDisplayByNode = ({
       </dd>
     )}
 
-    {showLinkToMachinePools && getCombinedMachinePoolSecurityGroupIds(machinePoolData).length > 0 && (
-      <dt>
-        See more information in the <Link to="#machinePools">machine pools tab</Link>
-      </dt>
-    )}
+    {showLinkToMachinePools &&
+      getCombinedMachinePoolSecurityGroupIds(machinePoolData).length > 0 && (
+        <dt>
+          See more information in the <Link to="#machinePools">machine pools tab</Link>
+        </dt>
+      )}
   </>
 );
 

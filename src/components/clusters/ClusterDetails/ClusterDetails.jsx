@@ -13,7 +13,7 @@ limitations under the License.
 
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Redirect } from 'react-router-dom';
+import { Navigate } from 'react-router-dom-v5-compat';
 import get from 'lodash/get';
 
 import { PageSection, TabContent } from '@patternfly/react-core';
@@ -254,23 +254,13 @@ class ClusterDetails extends Component {
   }
 
   fetchSupportData() {
-    const {
-      clusterDetails,
-      getNotificationContacts,
-      getSupportCases,
-      supportCases,
-      notificationContacts,
-    } = this.props;
+    const { clusterDetails, getNotificationContacts, notificationContacts } = this.props;
 
     const subscriptionID = clusterDetails.cluster?.subscription?.id;
 
     if (isValid(subscriptionID)) {
       if (!notificationContacts.pending) {
         getNotificationContacts(subscriptionID);
-      }
-
-      if (!supportCases.pending) {
-        getSupportCases(subscriptionID);
       }
     }
   }
@@ -350,7 +340,7 @@ class ClusterDetails extends Component {
           'clusterDetails',
           clusterDetails.errorMessage,
         );
-        return <Redirect to="/" />;
+        return <Navigate replace to="/" />;
       }
       return errorState();
     }
@@ -365,6 +355,8 @@ class ClusterDetails extends Component {
       get(cluster, 'subscription.status', false) === subscriptionStatuses.DEPROVISIONED;
     const isAROCluster = get(cluster, 'subscription.plan.type', '') === knownProducts.ARO;
     const isOSDTrial = get(cluster, 'subscription.plan.type', '') === knownProducts.OSDTrial;
+    const isRHOIC = get(cluster, 'subscription.plan.type', '') === knownProducts.RHOIC;
+
     const isManaged = cluster.managed;
     const isHypershift = isHypershiftCluster(cluster);
     const isClusterWaiting = cluster.state === clusterStates.WAITING;
@@ -373,8 +365,6 @@ class ClusterDetails extends Component {
     const isClusterReady = cluster.state === clusterStates.READY;
     const isClusterUpdating = cluster.state === clusterStates.UPDATING;
     const isReadOnly = cluster?.status?.configuration_mode === 'read_only';
-    const isPrivateCluster =
-      cluster.aws && get(cluster, 'ccs.enabled') && get(cluster, 'aws.private_link');
     const canCreateGCPNonCCSCluster = hasCapability(
       organization.details,
       subscriptionCapabilities.CREATE_GCP_NON_CCS_CLUSTER,
@@ -391,6 +381,7 @@ class ClusterDetails extends Component {
       !isArchived &&
       !cluster.managed &&
       !isAROCluster &&
+      !isRHOIC &&
       !isUninstalledAICluster(cluster) &&
       !isRestrictedEnv();
     const displayAccessControlTab = !isArchived;
@@ -399,7 +390,7 @@ class ClusterDetails extends Component {
       (isClusterReady || isClusterUpdating || clusterHibernating) &&
       cluster.managed &&
       !!get(cluster, 'api.url') &&
-      ((cloudProvider === 'aws' && (!isPrivateCluster || isHypershift || isRestrictedEnv())) ||
+      ((cloudProvider === 'aws' && (cluster?.ccs?.enabled || isHypershift || isRestrictedEnv())) ||
         (cloudProvider === 'gcp' &&
           (get(cluster, 'ccs.enabled') || (gotRouters && canCreateGCPNonCCSCluster)))) &&
       !isArchived;
@@ -695,9 +686,7 @@ ClusterDetails.propTypes = {
   initTabOpen: PropTypes.string.isRequired,
   notificationContacts: PropTypes.object.isRequired,
   getNotificationContacts: PropTypes.func.isRequired,
-  getSupportCases: PropTypes.func.isRequired,
   hasNetworkOndemand: PropTypes.bool.isRequired,
-  supportCases: PropTypes.object.isRequired,
   assistedInstallerEnabled: PropTypes.bool,
   getSchedules: PropTypes.func,
   getUserAccess: PropTypes.func.isRequired,

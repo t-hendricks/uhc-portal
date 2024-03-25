@@ -4,7 +4,7 @@ import { render, screen, checkAccessibility } from '~/testUtils';
 import ProgressList from './ProgressList';
 import clusterStates from '../clusterStates';
 import { normalizedProducts } from '../../../../common/subscriptionTypes';
-import fixtures from '../../ClusterDetails/__test__/ClusterDetails.fixtures';
+import fixtures from '../../ClusterDetails/__tests__/ClusterDetails.fixtures';
 
 describe('<ProgressList />', () => {
   const firstStepPending = {

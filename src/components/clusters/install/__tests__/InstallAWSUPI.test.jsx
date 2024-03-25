@@ -1,4 +1,5 @@
 import React from 'react';
+import { CompatRouter } from 'react-router-dom-v5-compat';
 import { screen, checkAccessibility, TestRouter, withState } from '~/testUtils';
 
 import { InstallAWSUPI } from '../InstallAWSUPI';
@@ -25,7 +26,9 @@ describe('InstallAWSUPI', () => {
   it('is accessible', async () => {
     const { container } = withState(githubReleases).render(
       <TestRouter>
-        <InstallAWSUPI token={{}} dispatch={dispatch} />
+        <CompatRouter>
+          <InstallAWSUPI token={{}} dispatch={dispatch} />
+        </CompatRouter>
       </TestRouter>,
     );
 

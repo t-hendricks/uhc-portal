@@ -8,7 +8,7 @@ import { IMDSType } from './constants';
 export const AWS_DEFAULT_REGION = 'us-east-1';
 export const GCP_DEFAULT_REGION = 'us-east1';
 
-const newROSASubnet = () => ({
+export const emptyAWSSubnet = () => ({
   availabilityZone: '',
   privateSubnetId: '',
   publicSubnetId: '',
@@ -80,7 +80,7 @@ const createOSDInitialValues = ({
       id: '',
       name: '',
     },
-    machinePoolsSubnets: machinePoolsSubnets ?? [newROSASubnet()],
+    machinePoolsSubnets: machinePoolsSubnets ?? [emptyAWSSubnet()],
 
     // Optional fields based on whether Hypershift is selected or not
     ...(isHypershiftSelected
