@@ -15,6 +15,7 @@ import LeadingInfo from './LeadingInfo';
 import links, { channels } from '../../common/installLinks.mjs';
 import InstructionCommand from '../common/InstructionCommand';
 import ExternalLink from '../common/ExternalLink';
+import PopoverHint from '../common/PopoverHint';
 import DownloadAndOSSelection from '../clusters/install/instructions/components/DownloadAndOSSelection';
 import './Instructions.scss';
 
@@ -46,7 +47,16 @@ const SSOLogin = ({
                 <Text component="p" />
               </ListItem>
               <ListItem>
-                To authenticate, run this command:
+                {`Make sure your ${commandTool.toUpperCase()} CLI version is ${commandTool === 'ocm' ? '0.1.73' : '1.2.37'} or higher `}
+                <PopoverHint
+                  hint={
+                    <>
+                      {`To check your ${commandTool.toUpperCase()} CLI version, run this command: `}
+                      <code>{`${commandTool} version`}</code>
+                    </>
+                  }
+                />
+                . To authenticate, run this command:
                 <Text component="p" />
                 <InstructionCommand
                   className="ocm-c-api-token-limit-width"
