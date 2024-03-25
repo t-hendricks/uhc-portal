@@ -19,6 +19,7 @@ function VPCScreen({
   hostedZoneDomainName,
   change,
   untouch,
+  isHypershiftSelected,
 }) {
   React.useEffect(() => {
     if (!selectedVPC.id) {
@@ -58,6 +59,7 @@ function VPCScreen({
           isSharedVpcSelected={isSharedVpcSelected}
           privateLinkSelected={privateLinkSelected}
           hostedZoneDomainName={hostedZoneDomainName}
+          isHypershiftSelected={isHypershiftSelected}
         />
       </Grid>
     </Form>
@@ -76,6 +78,7 @@ VPCScreen.propTypes = {
   privateLinkSelected: PropTypes.bool,
   isSharedVpcSelected: PropTypes.bool,
   hostedZoneDomainName: PropTypes.string,
+  isHypershiftSelected: PropTypes.bool,
 };
 
 export default VPCScreen;

@@ -17,16 +17,18 @@ const SharedVPCSection = ({
   hostedZoneDomainName,
   isSelected,
   openshiftVersion,
+  isHypershiftSelected,
 }: {
   hostedZoneDomainName: string;
   isSelected: boolean;
   openshiftVersion: string;
+  isHypershiftSelected: boolean;
 }) => {
   const { getFieldProps, getFieldMeta } = useFormState();
   const incompatibleReason = getIncompatibleVersionReason(
     SupportedFeature.AWS_SHARED_VPC,
     openshiftVersion,
-    { day1: true },
+    { day1: true, isHypershift: isHypershiftSelected },
   );
   if (incompatibleReason) {
     return (
