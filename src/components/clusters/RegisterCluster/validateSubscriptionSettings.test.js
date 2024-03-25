@@ -5,6 +5,7 @@ import {
   subscriptionUsages,
   subscriptionSystemUnits,
 } from '../../../common/subscriptionTypes';
+import { secureRandomValueInRange } from '../../../common/helpers';
 import validateSubscriptionSettings from './validateSubscriptionSettings';
 
 const { SUPPORT_LEVEL, SERVICE_LEVEL, USAGE, SYSTEM_UNITS, CPU_TOTAL, SOCKET_TOTAL } =
@@ -30,7 +31,7 @@ const expectedSocketTotal = (settings) =>
     : // default socket_total is 1
       1;
 
-const getRandInt = () => Math.floor(Math.random() * 1000) + 1;
+const getRandInt = () => secureRandomValueInRange(1, 1000);
 
 describe('validateSubscriptionSettings()', () => {
   it('it should be valid without configuring settings', () => {
