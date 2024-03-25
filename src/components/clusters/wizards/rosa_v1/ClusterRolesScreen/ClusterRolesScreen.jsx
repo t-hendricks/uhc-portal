@@ -32,17 +32,26 @@ import RadioButtons from '../../../../common/ReduxFormComponents/RadioButtons';
 import PopoverHint from '../../../../common/PopoverHint';
 import links from '../../../../../common/installLinks.mjs';
 import { required } from '../../../../../common/validators';
+import { secureRandomValueInRange } from '../../../../../common/helpers';
 import { BackToAssociateAwsAccountLink } from '../common/BackToAssociateAwsAccountLink';
 import CustomOperatorRoleNames from './CustomOperatorRoleNames';
 import CustomerOIDCConfiguration from './CustomerOIDCConfiguration';
 
 export const createOperatorRolesHashPrefix = () => {
-  // random 4 alphanumeric hash
-  const prefixArray = Math.random().toString(36).substr(2, 4).split('');
-  // cannot start with a number
   const alphabet = 'abcdefghijklmnopqrstuvwxyz';
-  const randomCharacter = alphabet[Math.floor(Math.random() * alphabet.length)];
+  const alphaNumeric = '0123456789abcdefghijklmnopqrstuvwxyz';
+  let prefixArray = '';
+
+  // random 4 alphanumeric hash
+  for (let i = 0; i < 4; i += 1) {
+    const randIndex = secureRandomValueInRange(0, 35);
+    prefixArray += alphaNumeric[randIndex];
+  }
+  // cannot start with a number
+  const randomCharacter = alphabet[secureRandomValueInRange(0, 25)];
+  prefixArray = prefixArray.split('');
   prefixArray[0] = randomCharacter;
+
   return prefixArray.join('');
 };
 
