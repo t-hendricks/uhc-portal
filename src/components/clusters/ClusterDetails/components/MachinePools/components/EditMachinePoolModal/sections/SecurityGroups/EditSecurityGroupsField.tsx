@@ -12,7 +12,7 @@ import SecurityGroupsNoChangeAlert from '~/components/clusters/ClusterDetails/co
 import { FieldId } from '~/components/clusters/wizards/common';
 import { useFormState } from '~/components/clusters/wizards/hooks';
 import { validateSecurityGroups } from '~/common/validators';
-import { isHypershiftCluster } from '~/components/clusters/common/clusterStates';
+import { isHypershiftCluster, isROSA } from '~/components/clusters/common/clusterStates';
 
 export interface EditSecurityGroupsFieldProps {
   cluster: Cluster;
@@ -52,7 +52,7 @@ const EditSecurityGroupsField = ({ cluster, isReadOnly }: EditSecurityGroupsFiel
     <Alert variant={AlertVariant.warning} title={incompatibleReason} isInline />
   ) : (
     <>
-      <SecurityGroupsNoChangeAlert />
+      <SecurityGroupsNoChangeAlert isRosa={isROSA(cluster)} />
       <Field
         component={EditSecurityGroups}
         name={FieldId.SecurityGroupIds}
