@@ -180,7 +180,11 @@ const checkOpenIDIssuer = (value?: string): string | undefined => {
 };
 
 // Function to validate that the object name contains a valid DNS label:
-const checkObjectName = (value: string, objectName: string, maxLen: number): string | undefined => {
+const checkObjectName = (
+  value: string | undefined,
+  objectName: string,
+  maxLen: number,
+): string | undefined => {
   if (!value) {
     return `${objectName} name is required.`;
   }
@@ -238,10 +242,10 @@ const clusterNameValidation = (value?: string) =>
 
 const clusterNameAsyncValidation = (value?: string) => checkObjectNameAsyncValidation(value);
 
-const checkMachinePoolName = (value: string) =>
+const checkMachinePoolName = (value: string | undefined) =>
   checkObjectName(value, 'Machine pool', MAX_MACHINE_POOL_NAME_LENGTH);
 
-const checkNodePoolName = (value: string) =>
+const checkNodePoolName = (value: string | undefined) =>
   checkObjectName(value, 'Machine pool', MAX_NODE_POOL_NAME_LENGTH);
 
 const createAsyncValidationEvaluator =
@@ -410,13 +414,13 @@ const clusterAutoScalingValidators = {
 const createPessimisticValidator =
   <V>(
     validationProvider: (
-      value: V,
+      value?: V,
       allValues?: any,
       props?: any,
       name?: any,
     ) => Validations | undefined = () => undefined,
   ) =>
-  (value: V, allValues?: any, props?: any, name?: any) =>
+  (value?: V, allValues?: any, props?: any, name?: any) =>
     findFirstFailureMessage(validationProvider(value, allValues, props, name));
 
 const checkCustomOperatorRolesPrefix = (value: string): string | undefined => {
@@ -465,7 +469,7 @@ const checkGithubTeams = (value?: string): string | undefined => {
 };
 
 const parseNodeLabelKey = (
-  labelKey: string,
+  labelKey: string | undefined,
 ): { name: string | undefined; prefix: string | undefined } => {
   const [name, prefix] =
     labelKey
@@ -494,7 +498,7 @@ const parseNodeLabels = (input: string | string[] | undefined) => {
 };
 
 const labelAndTaintKeyValidations = (
-  value: string,
+  value: string | undefined,
   items: { key?: string; value?: string }[],
   keyType?: string,
 ): Validations => {
@@ -524,7 +528,7 @@ const labelAndTaintKeyValidations = (
       text: `A valid key name must be ${LABEL_KEY_NAME_MAX_LENGTH} characters or less`,
     },
     {
-      validated: isEmptyValid || value?.length > 0,
+      validated: isEmptyValid || (value !== undefined && value.length > 0),
       text:
         keyType === 'label'
           ? "A valid key name must consist of alphanumeric characters, '-', '.' , '_'  or '/' and must start and end with an alphanumeric character"
@@ -533,7 +537,7 @@ const labelAndTaintKeyValidations = (
   ];
 };
 
-const labelAndTaintValueValidations = (value: string): Validations => [
+const labelAndTaintValueValidations = (value: string | undefined): Validations => [
   {
     validated:
       typeof value === 'undefined' || value === null || value.length <= LABEL_VALUE_MAX_LENGTH,
@@ -545,13 +549,16 @@ const labelAndTaintValueValidations = (value: string): Validations => [
   },
 ];
 
-const taintKeyValidations = (value: string, allValues: { taints?: Taint[] }): Validations => {
+const taintKeyValidations = (
+  value: string | undefined,
+  allValues: { taints?: Taint[] },
+): Validations => {
   const items = allValues?.taints || [];
   return labelAndTaintKeyValidations(value, items, 'taint');
 };
 
 const nodeLabelKeyValidations = (
-  value: string,
+  value: string | undefined,
   allValues: { node_labels?: Taint[] },
 ): Validations => {
   const items = allValues?.node_labels || [];
