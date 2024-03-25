@@ -36,13 +36,11 @@ const configs: { [env: string]: Promise<EnvConfig> | undefined } = {};
 // get bundled in the main chunk, and not spilt to tiny chunks
 
 configs.production = import(/* webpackMode: "eager" */ './config/production.json');
-configs.stageSSO = import(/* webpackMode: "eager" */ './config/ci.json');
 configs.staging = import(/* webpackMode: "eager" */ './config/staging.json');
 configs.integration = import(/* webpackMode: "eager" */ './config/integration.json');
 
 if (APP_DEV_SERVER) {
-  // running in webpack dev server, add development configs
-  configs.development = import(/* webpackMode: "eager" */ './config/development.json');
+  // running in webpack dev server, add mockdata configs
   configs.mockdata = import(/* webpackMode: "eager" */ './config/mockdata.json');
 }
 
