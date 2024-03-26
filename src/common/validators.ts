@@ -889,15 +889,12 @@ const awsMachineCidr = (value?: string, formData?: Record<string, string>): stri
   return undefined;
 };
 
-// Temporarily removed until messaging can be vetted according to https://issues.redhat.com/browse/HAC-2118.
-/* eslint-disable max-len */
-/*
-const gcpMachineCidr = (value: string, formData: { ['multi_az']: string }): string | undefined => {
+const gcpMachineCidr = (value?: string, formData?: Record<string, string>): string | undefined => {
   if (!value) {
     return undefined;
   }
 
-  const isMultiAz = formData.multi_az === 'true';
+  const isMultiAz = formData?.multi_az === 'true';
   const prefixLength = getCIDRSubnetLength(value);
 
   if (prefixLength != null) {
@@ -916,8 +913,6 @@ const gcpMachineCidr = (value: string, formData: { ['multi_az']: string }): stri
 
   return undefined;
 };
-*/
-/* eslint-enable max-len */
 
 const serviceCidr = (value?: string): string | undefined => {
   if (!value) {
@@ -1689,7 +1684,7 @@ const validators = {
   cidr,
   subnetCidrs,
   awsMachineCidr,
-  // gcpMachineCidr, https://issues.redhat.com/browse/HAC-2118
+  gcpMachineCidr,
   serviceCidr,
   podCidr,
   disjointSubnets,
