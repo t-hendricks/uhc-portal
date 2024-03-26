@@ -35,6 +35,7 @@ const ExpirationAlert = ({
         isInline
         title="Cluster failed to delete"
         data-testid="expiration-alert-passed"
+        role="alert"
       >
         <>
           {`This cluster should have been deleted ${timeUntilExpiryString} but is still running.`}{' '}
@@ -86,6 +87,7 @@ const ExpirationAlert = ({
       isInline
       title={`This cluster will be deleted ${timeUntilExpiryString}.`}
       data-testid="expiration-alert-will-delete"
+      role="alert"
     >
       <p>{contents}</p>
       {trialExpiration && (

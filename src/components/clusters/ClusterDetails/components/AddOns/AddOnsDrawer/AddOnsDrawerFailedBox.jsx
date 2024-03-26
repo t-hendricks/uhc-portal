@@ -15,6 +15,7 @@ function AddOnsFailedBox(props) {
         isInline
         title="Add-on failed"
         className="ocm-addons-failed--error-box"
+        role="alert"
       >
         <Flex direction={{ default: 'column' }}>
           <FlexItem>{installedAddOn?.state_description}</FlexItem>

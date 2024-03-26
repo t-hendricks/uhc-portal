@@ -1,16 +1,10 @@
 import React from 'react';
-import { shallow } from 'enzyme';
 
-import { render, checkAccessibility /* , screen  */ } from '~/testUtils';
+import { render, checkAccessibility, screen, within } from '~/testUtils';
 import AddOnsFailedBox from '../AddOnsDrawerFailedBox';
 
 describe('<AddOnsFailedBox />', () => {
-  let wrapper;
   const props = { installedAddOn: { state: 'failed', state_description: 'failed message' } };
-
-  beforeEach(() => {
-    wrapper = shallow(<AddOnsFailedBox {...props} />);
-  });
 
   it('is accessible', async () => {
     const { container } = render(<AddOnsFailedBox {...props} />);
@@ -19,20 +13,20 @@ describe('<AddOnsFailedBox />', () => {
   });
 
   it('should render alert box', () => {
-    const AlertBox = wrapper.find('Alert').props();
-    expect(AlertBox.title).toEqual('Add-on failed');
+    render(<AddOnsFailedBox {...props} />);
 
-    const Flex = wrapper.find('Flex').props();
-    expect(Flex.children[0].props.children).toEqual('failed message');
-
-    const ExternalLink = wrapper.find('ExternalLink').props();
-    expect(ExternalLink.children).toEqual('Contact support');
+    expect(
+      within(screen.getByRole('alert')).getByText('Add-on failed', { exact: false }),
+    ).toBeInTheDocument();
+    expect(within(screen.getByRole('alert')).getByText('failed message')).toBeInTheDocument();
+    expect(screen.getByRole('link')).toHaveTextContent('Contact support');
   });
 
   it('should render null if state is not failed', () => {
-    wrapper.setProps({
+    const installedProps = {
       installedAddOn: { state: 'ready' },
-    });
-    expect(wrapper).toEqual({});
+    };
+    const { container } = render(<AddOnsFailedBox {...installedProps} />);
+    expect(container).toBeEmptyDOMElement();
   });
 });
