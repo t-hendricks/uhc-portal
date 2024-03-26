@@ -393,7 +393,7 @@ export const Details = () => {
               />
             </SplitItem>
           </Split>
-          <div className="pf-v5-u-font-size-sm pf-v5-u-color-200 pf-v5-u-ml-lg pf-v5-u-mt-xs">
+          <div className="ocm-c--reduxcheckbox-description">
             {constants.enableUserWorkloadMonitoringHint}
           </div>
 
@@ -402,16 +402,18 @@ export const Details = () => {
             onToggle={onToggle}
             isExpanded={isExpanded}
           >
-            {isByoc && (
-              <CustomerManagedEncryption
-                hasCustomerManagedKey={hasCustomerManagedKey}
-                region={region}
-                cloudProvider={cloudProvider}
-                kmsKeyArn={kmsKeyArn}
-              />
-            )}
+            <Grid hasGutter>
+              {isByoc && (
+                <CustomerManagedEncryption
+                  hasCustomerManagedKey={hasCustomerManagedKey}
+                  region={region}
+                  cloudProvider={cloudProvider}
+                  kmsKeyArn={kmsKeyArn}
+                />
+              )}
 
-            <ClassicEtcdFipsSection isRosa={false} />
+              <ClassicEtcdFipsSection isRosa={false} />
+            </Grid>
           </ExpandableSection>
         </Flex>
       </Grid>

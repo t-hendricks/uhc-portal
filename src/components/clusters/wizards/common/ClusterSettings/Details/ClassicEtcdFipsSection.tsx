@@ -26,8 +26,8 @@ export function ClassicEtcdFipsSection({ isRosa }: Props) {
 
   return (
     <Grid hasGutter>
-      <FormGroup label="etcd encryption">
-        <GridItem>
+      <GridItem>
+        <FormGroup label="etcd encryption">
           <Split hasGutter>
             <SplitItem>
               <CheckboxField
@@ -51,26 +51,26 @@ export function ClassicEtcdFipsSection({ isRosa }: Props) {
               />
             </SplitItem>
           </Split>
-          <div className="pf-v5-u-font-size-sm pf-v5-u-color-200 pf-v5-u-ml-lg pf-v5-u-mt-xs">
+          <div className="ocm-c--reduxcheckbox-description">
             Add more encryption for OpenShift and Kubernetes API resources.
           </div>
-        </GridItem>
-      </FormGroup>
+        </FormGroup>
+      </GridItem>
 
       {etcdEncryption && (
-        <FormGroup label="FIPS cryptography" className="pf-v5-u-mt-md">
-          <GridItem>
+        <GridItem>
+          <FormGroup label="FIPS cryptography">
             <CheckboxField
               name={FieldId.FipsCryptography}
               label="Enable FIPS cryptography"
               isDisabled={isRestrictedEnv() /* TODO: what about OSD? TODO: tooltip? */}
             />
-            <div className="pf-v5-u-font-size-sm pf-v5-u-color-200 pf-v5-u-ml-lg pf-v5-u-mt-xs">
+            <div className="ocm-c--reduxcheckbox-description">
               Install a cluster that uses FIPS Validated / Modules in Process cryptographic
               libraries on the x86_64 architecture.
             </div>
-          </GridItem>
-        </FormGroup>
+          </FormGroup>
+        </GridItem>
       )}
     </Grid>
   );
