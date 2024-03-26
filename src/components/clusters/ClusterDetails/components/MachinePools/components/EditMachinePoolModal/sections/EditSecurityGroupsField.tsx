@@ -24,7 +24,7 @@ const EditSecurityGroupsField = ({ cluster, isReadOnly }: EditSecurityGroupsFiel
   const [field] = useField<EditMachinePoolValues['securityGroupIds']>(fieldId);
   const onChange = useFormikOnChange(fieldId);
 
-  const { clusterVpc, isLoading } = useAWSVPCFromCluster(cluster);
+  const { clusterVpc, isLoading, errorReason } = useAWSVPCFromCluster(cluster);
 
   if (isLoading) {
     return <Spinner>Loading security groups</Spinner>;
@@ -33,7 +33,7 @@ const EditSecurityGroupsField = ({ cluster, isReadOnly }: EditSecurityGroupsFiel
   if (!clusterVpc) {
     return (
       <Alert variant={AlertVariant.warning} title="Could not load the cluster's VPC" isInline>
-        Please try refreshing the machine pool details
+        {errorReason || 'Please try refreshing the machine pool details'}
       </Alert>
     );
   }
