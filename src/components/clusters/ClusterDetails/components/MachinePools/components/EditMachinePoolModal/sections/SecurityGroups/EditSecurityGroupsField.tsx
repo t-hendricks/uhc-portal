@@ -9,7 +9,7 @@ import { getIncompatibleVersionReason } from '~/common/versionCompatibility';
 import EditSecurityGroups from '~/components/clusters/ClusterDetails/components/SecurityGroups/EditSecurityGroups';
 import SecurityGroupsEmptyAlert from '~/components/clusters/ClusterDetails/components/SecurityGroups/SecurityGroupsEmptyAlert';
 import SecurityGroupsNoChangeAlert from '~/components/clusters/ClusterDetails/components/SecurityGroups/SecurityGroupsNoChangeAlert';
-import { isHypershiftCluster } from '~/components/clusters/common/clusterStates';
+import { isHypershiftCluster, isROSA } from '~/components/clusters/common/clusterStates';
 import { useAWSVPCFromCluster } from '~/components/clusters/common/useAWSVPCFromCluster';
 import { FieldId } from '~/components/clusters/wizards/common';
 import { useFormState } from '~/components/clusters/wizards/hooks';
@@ -54,7 +54,7 @@ const EditSecurityGroupsField = ({ cluster, isReadOnly }: EditSecurityGroupsFiel
     <Alert variant={AlertVariant.warning} title={incompatibleReason} isInline />
   ) : (
     <>
-      <SecurityGroupsNoChangeAlert />
+      <SecurityGroupsNoChangeAlert isRosa={isROSA(cluster)} />
       <Field
         component={EditSecurityGroups}
         name={FieldId.SecurityGroupIds}
