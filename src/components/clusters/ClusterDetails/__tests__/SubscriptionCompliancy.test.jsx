@@ -1,5 +1,4 @@
 import React from 'react';
-import { shallow } from 'enzyme';
 
 import { render, screen, checkAccessibility } from '~/testUtils';
 
@@ -16,16 +15,16 @@ const { EVAL, STANDARD, NONE } = subscriptionSupportLevels;
 describe('<SubscriptionCompliancy />', () => {
   const { OCPClusterDetails, clusterDetails, organization } = fixtures;
   const openModal = jest.fn();
-  let wrapper;
-  let props;
-  beforeEach(() => {
-    props = {
-      cluster: OCPClusterDetails.cluster,
-      canSubscribeOCP: false,
-      organization,
-      openModal,
-    };
-    wrapper = shallow(<SubscriptionCompliancy {...props} />);
+
+  const props = {
+    cluster: OCPClusterDetails.cluster,
+    canSubscribeOCP: false,
+    organization,
+    openModal,
+  };
+
+  afterEach(() => {
+    jest.clearAllMocks();
   });
 
   it('should warn during evaluation period', async () => {
@@ -112,15 +111,15 @@ describe('<SubscriptionCompliancy />', () => {
   it('should not render when it has a valid support', () => {
     const cluster = { ...OCPClusterDetails.cluster };
     cluster.subscription[SUPPORT_LEVEL] = STANDARD;
-    wrapper.setProps({ cluster }, () => {
-      expect(wrapper).toMatchObject({});
-    });
+    const newProps = { ...props, cluster };
+    const { container } = render(<SubscriptionCompliancy {...newProps} />);
+    expect(container).toBeEmptyDOMElement();
   });
 
   it('should not render when it is not OCP', () => {
     const cluster = { ...clusterDetails.cluster };
-    wrapper.setProps({ cluster }, () => {
-      expect(wrapper).toMatchObject({});
-    });
+    const newProps = { ...props, cluster };
+    const { container } = render(<SubscriptionCompliancy {...newProps} />);
+    expect(container).toBeEmptyDOMElement();
   });
 });

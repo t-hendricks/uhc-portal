@@ -14,7 +14,7 @@ const ErrorTriangle = ({ item = 'clusters', errorMessage }: ErrorTriangleProps) 
     content={`An error occurred when fetching ${item}: ${errorMessage}`}
     data-testid="error-triangle"
   >
-    <Icon size="lg" className="cluster-error-triangle">
+    <Icon size="lg" className="cluster-error-triangle" aria-label="Warning">
       <ExclamationTriangleIcon color={warningColor.value} />
     </Icon>
   </Tooltip>

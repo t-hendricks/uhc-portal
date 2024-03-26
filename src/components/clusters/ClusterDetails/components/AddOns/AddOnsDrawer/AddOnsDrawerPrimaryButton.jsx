@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 import './AddOnsDrawer.scss';
 
-import { Button } from '@patternfly/react-core';
+import { Button, ButtonSize } from '@patternfly/react-core';
 
 import { ExternalLinkAltIcon } from '@patternfly/react-icons/dist/esm/icons/external-link-alt-icon';
 import { hasParameters } from '../AddOnsHelper';
@@ -91,7 +91,7 @@ function AddOnsPrimaryButton(props) {
         unchangedReason ||
         billingReason
       }
-      isSmall
+      size={ButtonSize.sm}
       onClick={updateAddOnAction}
     >
       Save changes
@@ -105,7 +105,7 @@ function AddOnsPrimaryButton(props) {
       variant="secondary"
       isDanger
       disableReason={readOnlyReason || hibernatingReason || notReadyReason || canNotEditReason}
-      isSmall
+      size={ButtonSize.sm}
       onClick={() =>
         openModal('add-ons-delete-modal', {
           addOnName: activeCard?.name,
@@ -138,7 +138,7 @@ function AddOnsPrimaryButton(props) {
         variant="primary"
         aria-label="Install"
         onClick={installAddOnAction}
-        isSmall
+        size={ButtonSize.sm}
       >
         Install
       </ButtonWithTooltip>
@@ -166,7 +166,7 @@ function AddOnsPrimaryButton(props) {
             href={url}
             target="_blank"
             rel="noopener noreferrer"
-            size="sm"
+            size={ButtonSize.sm}
           >
             Contact support
           </Button>{' '}
@@ -184,7 +184,7 @@ function AddOnsPrimaryButton(props) {
               href={url}
               target="_blank"
               rel="noopener noreferrer"
-              size="sm"
+              size={ButtonSize.sm}
             >
               Open in Console <ExternalLinkAltIcon className="link-icon" />
             </Button>{' '}
