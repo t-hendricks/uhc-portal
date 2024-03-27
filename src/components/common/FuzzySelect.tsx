@@ -1,5 +1,5 @@
 import React, { ReactElement, useCallback, ChangeEvent, useMemo, useRef, useEffect } from 'react';
-import { KeyTypes } from '@patternfly/react-core';
+import { KeyTypes, Popover } from '@patternfly/react-core';
 import {
   Select as SelectDeprecated,
   SelectGroup as SelectGroupDeprecated,
@@ -29,6 +29,7 @@ export interface FuzzySelectProps extends Omit<SelectPropsDeprecated, 'isGrouped
   filterValidate?: { pattern: RegExp; message: string }; // regex pattern that must be true, else message is shown
   truncation?: number;
   selectionData: FuzzyDataType;
+  isPopover?: boolean;
 }
 
 const defaultSortFn = (a: FuzzyEntryType, b: FuzzyEntryType): number =>
@@ -36,7 +37,12 @@ const defaultSortFn = (a: FuzzyEntryType, b: FuzzyEntryType): number =>
 
 // We cannot convert this function to a React component such as <FuzzySelectOption entry={entry} />,
 // because Patternfly expects to find the props in entry (value, etc.) on the direct children of Select/SelectGroup
-const entryToSelectOption = (entry: FuzzyEntryType, displayLabel: React.ReactElement) => (
+const entryToSelectOption = (
+  entry: FuzzyEntryType,
+  displayLabel: React.ReactElement,
+  nonTruncatedLabel?: string,
+  isPopover?: boolean,
+) => (
   <SelectOptionDeprecated
     className="pf-v5-c-dropdown__menu-item pf-v5-u-text-wrap"
     key={entry.entryId}
@@ -44,7 +50,17 @@ const entryToSelectOption = (entry: FuzzyEntryType, displayLabel: React.ReactEle
     description={entry.description}
     isDisabled={entry.disabled}
   >
-    {displayLabel}
+    {isPopover ? (
+      <Popover
+        triggerAction="hover"
+        aria-label="Hoverable popover"
+        bodyContent={<div>{nonTruncatedLabel}</div>}
+      >
+        <span>{displayLabel}</span>
+      </Popover>
+    ) : (
+      <span>{displayLabel}</span>
+    )}
   </SelectOptionDeprecated>
 );
 
@@ -74,6 +90,7 @@ function FuzzySelect(props: FuzzySelectProps) {
     selectionData,
     isOpen,
     toggleId,
+    isPopover,
     ...rest
   } = props;
 
@@ -126,7 +143,7 @@ function FuzzySelect(props: FuzzySelectProps) {
       return sortedItems.map((entry) => {
         const entryLabel = truncateTextWithEllipsis(entry.label, truncation);
         // eslint-disable-next-line react/jsx-no-useless-fragment
-        return entryToSelectOption(entry, <>{entryLabel}</>);
+        return entryToSelectOption(entry, <>{entryLabel}</>, entry.label, isPopover);
       });
     }
     return Object.entries(selectionData || {}).map(([groupKey, groupEntries]) => (
@@ -134,11 +151,11 @@ function FuzzySelect(props: FuzzySelectProps) {
         {groupEntries.map((groupEntry) => {
           const entryLabel = truncateTextWithEllipsis(groupEntry.label, truncation);
           // eslint-disable-next-line react/jsx-no-useless-fragment
-          return entryToSelectOption(groupEntry, <>{entryLabel}</>);
+          return entryToSelectOption(groupEntry, <>{entryLabel}</>, groupEntry.label, isPopover);
         })}
       </SelectGroupDeprecated>
     ));
-  }, [selectionData, sortFn, truncation]);
+  }, [selectionData, sortFn, truncation, isPopover]);
 
   const onFilter = useCallback(
     (_: ChangeEvent<HTMLInputElement> | null, text: string) => {
