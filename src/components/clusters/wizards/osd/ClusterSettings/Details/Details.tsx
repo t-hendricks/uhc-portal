@@ -1,7 +1,6 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
 import { Field } from 'formik';
-import { CheckboxField } from '~/components/clusters/wizards/form/CheckboxField';
 
 import {
   Form,
@@ -39,10 +38,12 @@ import PopoverHint from '~/components/common/PopoverHint';
 import PersistentStorageDropdown from '~/components/clusters/common/PersistentStorageDropdown';
 import LoadBalancersDropdown from '~/components/clusters/common/LoadBalancersDropdown';
 import {
+  CheckboxField,
   RadioGroupField,
   RadioGroupOption,
   RichInputField,
 } from '~/components/clusters/wizards/form';
+import { CheckboxDescription } from '~/components/common/CheckboxDescription';
 import { getIncompatibleVersionReason } from '~/common/versionCompatibility';
 import { SupportedFeature } from '~/common/featureCompatibility';
 import { useFormState } from '~/components/clusters/wizards/hooks';
@@ -393,9 +394,7 @@ export const Details = () => {
               />
             </SplitItem>
           </Split>
-          <div className="ocm-c--reduxcheckbox-description">
-            {constants.enableUserWorkloadMonitoringHint}
-          </div>
+          <CheckboxDescription>{constants.enableUserWorkloadMonitoringHint}</CheckboxDescription>
 
           <ExpandableSection
             toggleText="Advanced Encryption"

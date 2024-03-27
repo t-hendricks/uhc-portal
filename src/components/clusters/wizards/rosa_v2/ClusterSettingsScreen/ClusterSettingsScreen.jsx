@@ -4,6 +4,7 @@ import { Title, Grid, GridItem, FormGroup, Form, ExpandableSection } from '@patt
 import { Field } from 'redux-form';
 
 import ReduxCheckbox from '~/components/common/ReduxFormComponents/ReduxCheckbox';
+import { CheckboxDescription } from '~/components/common/CheckboxDescription';
 import { validateAWSKMSKeyARN } from '~/common/validators';
 import { isRestrictedEnv } from '~/restrictedEnv';
 import { constants } from '~/components/clusters/common/CreateOSDFormConstants';
@@ -176,10 +177,10 @@ function ClusterSettingsScreen({
                   extendedHelpText="Installs and configures your cluster to use only FIPS validated cryptographic libraries for core components and the node operating system."
                   isDisabled={isRestrictedEnv()}
                 />
-                <div className="ocm-c--reduxcheckbox-description">
+                <CheckboxDescription>
                   Install a cluster that uses FIPS Validated / Modules in Process cryptographic
                   libraries on the x86_64 architecture.
-                </div>
+                </CheckboxDescription>
               </FormGroup>
             </GridItem>
           )}
