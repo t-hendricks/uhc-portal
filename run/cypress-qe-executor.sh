@@ -154,8 +154,8 @@ rosacli_container_id=$(
     --pod "${pod_id}" \
     --security-opt label="disable" \
     --user root \
-    --volume "${PWD}/cypress.env.json:/cypress.env.json" \
-    --volume "${PWD}/cypress-qe-prerun.sh:/cypress-qe-prerun.sh" \
+    --volume "${PWD}/cypress.env.json:/rosa/cypress.env.json" \
+    --volume "${PWD}/cypress-qe-prerun.sh:/rosa/cypress-qe-prerun.sh" \
     --name "${rosacli_container_name}" \
     "${rosacli_image}" \
     sh cypress-qe-prerun.sh cypress.env.json
