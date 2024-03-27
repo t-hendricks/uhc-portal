@@ -24,7 +24,7 @@ import { Provider } from 'react-redux';
 import NotificationPortal from '@redhat-cloud-services/frontend-components-notifications/NotificationPortal';
 
 import * as Sentry from '@sentry/browser';
-import { SessionTiming } from '@sentry/integrations';
+import { sessionTimingIntegration } from '@sentry/integrations';
 
 import * as OCM from '@openshift-assisted/ui-lib/ocm';
 import { GenerateId } from '@patternfly/react-core';
@@ -77,14 +77,14 @@ class AppEntry extends React.Component<Props> {
       config.fetchConfig(chrome).then(() => {
         (store.dispatch as AppThunkDispatch)(detectFeatures());
         this.setState({ ready: true });
-        if (!config.envOverride && config.configData.sentryDSN) {
+        if (!APP_DEV_SERVER && !config.envOverride && config.configData.sentryDSN) {
           Sentry.init({
             dsn: config.configData.sentryDSN,
             ...(APP_SENTRY_RELEASE_VERSION ? { release: APP_SENTRY_RELEASE_VERSION } : {}),
             autoSessionTracking: false,
             integrations: [
-              new SessionTiming(),
-              new Sentry.Integrations.GlobalHandlers({
+              sessionTimingIntegration(),
+              Sentry.globalHandlersIntegration({
                 onerror: true,
                 onunhandledrejection: false,
               }),
@@ -93,9 +93,7 @@ class AppEntry extends React.Component<Props> {
           if (data?.identity?.user) {
             const { email, username } = data.identity.user;
             // add user info to Sentry
-            Sentry.configureScope((scope) => {
-              scope.setUser({ email, username });
-            });
+            Sentry.getCurrentScope().setUser({ email, username });
           }
         }
       });
