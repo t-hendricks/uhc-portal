@@ -19,12 +19,14 @@ type SecurityGroupFieldProps = {
   selectedVPC: CloudVPC;
   label?: string;
   input: { onChange: (selectedGroupIds: string[]) => void; value: string[] };
+  isHypershift: boolean;
 };
 
 const SecurityGroupField = ({
   input: { onChange, value: selectedGroupIds },
   label,
   selectedVPC,
+  isHypershift,
 }: SecurityGroupFieldProps) => (
   <EditSecurityGroups
     label={label}
@@ -32,6 +34,7 @@ const SecurityGroupField = ({
     selectedGroupIds={selectedGroupIds}
     isReadOnly={false}
     onChange={onChange}
+    isHypershift={isHypershift}
   />
 );
 
@@ -125,12 +128,15 @@ const SecurityGroupsSection = ({
             name={controlPlaneFieldName}
             label={securityGroups.applyControlPlaneToAll ? '' : 'Control plane nodes'}
             selectedVPC={selectedVPC}
-            validate={validateSecurityGroups}
+            validate={(securityGroupIds: string[]) =>
+              validateSecurityGroups(securityGroupIds, isHypershiftSelected)
+            }
             input={{
               ...getFieldProps(controlPlaneFieldName),
               onChange: (value: string[]) => setFieldValue(controlPlaneFieldName, value),
             }}
             meta={getFieldMeta(controlPlaneFieldName)}
+            isHypershift={isHypershiftSelected}
           />
           {!securityGroups.applyControlPlaneToAll && (
             <>
@@ -139,24 +145,30 @@ const SecurityGroupsSection = ({
                 name={infraFieldName}
                 label="Infrastructure nodes"
                 selectedVPC={selectedVPC}
-                validate={validateSecurityGroups}
+                validate={(securityGroupIds: string[]) =>
+                  validateSecurityGroups(securityGroupIds, isHypershiftSelected)
+                }
                 input={{
                   ...getFieldProps(infraFieldName),
                   onChange: (value: string[]) => setFieldValue(infraFieldName, value),
                 }}
                 meta={getFieldMeta(infraFieldName)}
+                isHypershift={isHypershiftSelected}
               />
               <Field
                 component={SecurityGroupField}
                 name={workerFieldName}
                 label="Worker nodes"
                 selectedVPC={selectedVPC}
-                validate={validateSecurityGroups}
+                validate={(securityGroupIds: string[]) =>
+                  validateSecurityGroups(securityGroupIds, isHypershiftSelected)
+                }
                 input={{
                   ...getFieldProps(workerFieldName),
                   onChange: (value: string[]) => setFieldValue(workerFieldName, value),
                 }}
                 meta={getFieldMeta(workerFieldName)}
+                isHypershift={isHypershiftSelected}
               />
             </>
           )}

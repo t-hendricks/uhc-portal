@@ -74,6 +74,7 @@ export const canSelectImds = (clusterVersionRawId: string): boolean => {
 };
 
 export const maxAdditionalSecurityGroups = 5;
+export const maxAdditionalSecurityGroupsHypershift = 10;
 
 export const defaultWorkerNodeVolumeSizeGiB = 300;
 

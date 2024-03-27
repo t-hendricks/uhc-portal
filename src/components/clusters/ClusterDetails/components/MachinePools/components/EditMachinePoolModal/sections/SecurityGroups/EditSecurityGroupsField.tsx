@@ -43,10 +43,11 @@ const EditSecurityGroupsField = ({ cluster, isReadOnly }: EditSecurityGroupsFiel
     return <SecurityGroupsEmptyAlert />;
   }
 
+  const isHypershift = isHypershiftCluster(cluster);
   const incompatibleReason = getIncompatibleVersionReason(
     SupportedFeature.SECURITY_GROUPS,
     cluster.openshift_version,
-    { day2: true, isHypershift: isHypershiftCluster(cluster) },
+    { day2: true, isHypershift },
   );
   return incompatibleReason ? (
     <Alert variant={AlertVariant.warning} title={incompatibleReason} isInline />
@@ -60,10 +61,13 @@ const EditSecurityGroupsField = ({ cluster, isReadOnly }: EditSecurityGroupsFiel
           setFieldValue(FieldId.SecurityGroupIds, values, true);
           setFieldTouched(FieldId.SecurityGroupIds, true, false);
         }}
-        validate={validateSecurityGroups}
+        validate={(securityGroupIds: string[]) =>
+          validateSecurityGroups(securityGroupIds, isHypershift)
+        }
         selectedVPC={clusterVpc}
         isReadOnly={isReadOnly}
         selectedGroupIds={selectedGroupIds}
+        isHypershift={isHypershift}
       />
     </>
   );
