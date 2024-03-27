@@ -29,7 +29,7 @@
     "@types/file-saver": "^2.0.5",
     "@types/humanize-duration": "^3.27.1",
     "@wojtekmaj/enzyme-adapter-react-17": "^0.8.0",
-    "axios": ">=0.22.0 <2.0.0",
+    "axios": "^1.6.8",
     "cidr-tools": "^9.0.0",
     "classnames": "^2.2.6",
     "connected-react-router": "^6.8.0",
@@ -171,8 +171,9 @@
     "yargs": "^15.0.0"
   },
   "resolutions": {
-    "@types/react": "17.0.3",
     "@cypress/webpack-preprocessor": "5.17.0",
+    "@redhat-cloud-services/**/axios": "^1.6.8",
+    "@types/react": "17.0.3",
     "victory-area": "36.8.1",
     "victory-axis": "36.8.1",
     "victory-bar": "36.8.1",
