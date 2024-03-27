@@ -139,7 +139,7 @@ const useMachinePoolFormik = ({
     () =>
       Yup.lazy<EditMachinePoolValues>((values) => {
         const minNodes = isMachinePoolMz ? minNodesRequired / 3 : minNodesRequired;
-        const secGroupValidation = validateSecurityGroups(values.securityGroupIds);
+        const secGroupValidation = validateSecurityGroups(values.securityGroupIds, isHypershift);
         const nodeOptions = getNodeOptions({
           cluster,
           machinePools: machinePools.data || [],

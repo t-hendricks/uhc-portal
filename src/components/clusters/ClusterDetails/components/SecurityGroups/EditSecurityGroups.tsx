@@ -19,6 +19,7 @@ export interface EditSecurityGroupsProps {
   selectedGroupIds: string[];
   selectedVPC: CloudVPC;
   isReadOnly: boolean;
+  isHypershift: boolean;
   onChange: (securityGroupIds: string[]) => void;
 }
 
@@ -37,6 +38,7 @@ const EditSecurityGroups = ({
   selectedGroupIds,
   onChange,
   isReadOnly,
+  isHypershift,
 }: EditSecurityGroupsProps) => {
   const [isOpen, setIsOpen] = React.useState<boolean>(false);
 
@@ -89,7 +91,7 @@ const EditSecurityGroups = ({
     }
   };
 
-  const validationError = validateSecurityGroups(selectedGroupIds);
+  const validationError = validateSecurityGroups(selectedGroupIds, isHypershift);
 
   return (
     <GridItem>
