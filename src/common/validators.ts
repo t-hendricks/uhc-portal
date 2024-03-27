@@ -8,6 +8,7 @@ import { Subnet } from '~/common/helpers';
 import { FieldId } from '~/components/clusters/wizards/osd/constants';
 import {
   maxAdditionalSecurityGroups,
+  maxAdditionalSecurityGroupsHypershift,
   workerNodeVolumeSizeMinGiB,
 } from '~/components/clusters/wizards/rosa/constants';
 import type { GCP, Taint } from '~/types/clusters_mgmt.v1';
@@ -1380,10 +1381,14 @@ const createUniqueFieldValidator =
     return undefined;
   };
 
-const validateSecurityGroups = (securityGroups: string[]) =>
-  securityGroups.length > maxAdditionalSecurityGroups
-    ? `A maximum of ${maxAdditionalSecurityGroups} security groups can be selected.`
+const validateSecurityGroups = (securityGroups: string[], isHypershift: boolean) => {
+  const maxSecurityGroups = isHypershift
+    ? maxAdditionalSecurityGroupsHypershift
+    : maxAdditionalSecurityGroups;
+  return securityGroups.length > maxSecurityGroups
+    ? `A maximum of ${maxSecurityGroups} security groups can be selected.`
     : undefined;
+};
 
 const validateUniqueAZ = (
   currentAZ: string | undefined,

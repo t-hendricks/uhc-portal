@@ -41,6 +41,7 @@ const renderComponent = ({
       selectedVPC={clusterVpc}
       onChange={() => null}
       isReadOnly={isReadOnly}
+      isHypershift={false}
     />,
   );
 
@@ -139,6 +140,7 @@ describe('<EditSecurityGroups />', () => {
           selectedGroupIds={['sg-abc']}
           selectedVPC={clusterVpc}
           isReadOnly={false}
+          isHypershift={false}
         />,
       );
       expect(onChangeSpy).not.toHaveBeenCalled();
@@ -155,6 +157,7 @@ describe('<EditSecurityGroups />', () => {
           selectedGroupIds={sgsFromFirstVpc}
           selectedVPC={clusterVpc}
           isReadOnly={false}
+          isHypershift={false}
         />,
       );
       expect(onChangeSpy).not.toHaveBeenCalled();
@@ -175,6 +178,7 @@ describe('<EditSecurityGroups />', () => {
           selectedGroupIds={sgsFromFirstVpc}
           selectedVPC={anotherVpc}
           isReadOnly={false}
+          isHypershift={false}
         />,
       );
       expect(onChangeSpy).toHaveBeenCalledTimes(1);
