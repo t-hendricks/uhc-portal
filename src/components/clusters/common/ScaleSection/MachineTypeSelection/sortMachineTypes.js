@@ -49,10 +49,7 @@ const sortFuncs = {
   aws: compareByCategoryMemoryCPU,
 };
 
-function sortMachineTypes(machineTypes, cloudProviderID) {
-  const types = get(machineTypes.types, cloudProviderID, []);
-  types.sort(sortFuncs[cloudProviderID]);
-  return types;
-}
+const sortMachineTypes = (machineTypes, cloudProviderID) =>
+  [...get(machineTypes.types, cloudProviderID, [])].sort(sortFuncs[cloudProviderID]);
 
 export default sortMachineTypes;

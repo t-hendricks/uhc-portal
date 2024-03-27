@@ -3,18 +3,19 @@
 // This results in API errors being logged as uncaught in the console and causes Jest tests to fail
 // See https://github.com/pburtchaell/redux-promise-middleware/blob/main/docs/guides/rejected-promises.md
 
-import type { AnyAction, Middleware } from 'redux';
 import isPromise from 'is-promise';
+import { Dispatch, UnknownAction } from 'redux';
 
-const promiseRejectionMiddleware: Middleware = () => (next) => (action: AnyAction) => {
-  if (isPromise(action.payload)) {
-    return next(action).catch(
-      (err: unknown) =>
-        // ignore error; redux-promise-middleware will dispatch the REJECTED action
-        err,
-    );
-  }
-  return next(action);
-};
+const promiseRejectionMiddleware =
+  () =>
+  (next: Dispatch<UnknownAction>) =>
+  <A extends UnknownAction>(action: A) =>
+    isPromise(action.payload)
+      ? next(action as any).catch(
+          (err: unknown) =>
+            // ignore error; redux-promise-middleware will dispatch the REJECTED action
+            err,
+        )
+      : next(action);
 
 export default promiseRejectionMiddleware;
