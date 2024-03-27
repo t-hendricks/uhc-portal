@@ -1,6 +1,5 @@
 /* eslint-disable no-unused-vars */
 import createMockStore from 'redux-mock-store';
-import thunk from 'redux-thunk';
 import {
   CLEAR_DELETE_UPGRADE_SCHEDULE,
   CLEAR_GET_UPGRADE_SCHEDULE,
@@ -78,8 +77,7 @@ describe('clusterUpgradeActions', () => {
   });
 
   describe('schedules', () => {
-    const middlewares = [thunk];
-    const mockStore = createMockStore(middlewares);
+    const mockStore = createMockStore();
     const store = mockStore(initialState);
     const schedule = {
       cluster_id: 'cluster_id',
