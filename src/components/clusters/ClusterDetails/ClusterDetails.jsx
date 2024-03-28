@@ -94,6 +94,7 @@ const ClusterDetails = (props) => {
     getClusterRouters,
     organization,
     getMachineOrNodePools,
+    getDeleteProtection,
     getSchedules,
     fetchClusterInsights,
     fetchUpgradeGates,
@@ -202,6 +203,7 @@ const ClusterDetails = (props) => {
       getUsers(clusterID);
       getClusterRouters(clusterID);
       refreshIDP();
+      getDeleteProtection(clusterID);
       getMachineOrNodePools(
         clusterID,
         isHypershiftCluster(clusterDetails?.cluster),
@@ -612,6 +614,7 @@ ClusterDetails.propTypes = {
   getAddOns: PropTypes.func.isRequired,
   getClusterAddOns: PropTypes.func.isRequired,
   getUsers: PropTypes.func.isRequired,
+  getDeleteProtection: PropTypes.func.isRequired,
   invalidateClusters: PropTypes.func.isRequired,
   cloudProviders: PropTypes.object.isRequired,
   gotRouters: PropTypes.bool.isRequired,

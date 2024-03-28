@@ -39,6 +39,7 @@ import type {
   Version,
   VersionGate,
   VersionGateAgreement,
+  DeleteProtection,
 } from '../types/clusters_mgmt.v1';
 
 const OSDUpgradeType = 'OSD';
@@ -1083,6 +1084,12 @@ export function getClusterService(apiRequest: APIRequest = defaultApiRequest) {
     getTechPreviewStatus: (product: string, id: string) =>
       apiRequest.get<ProductTechnologyPreview>(
         `/api/clusters_mgmt/v1/products/${product}/technology_previews/${id}`,
+      ),
+
+    updateDeleteProtection: (clusterID: string, isProtected: boolean) =>
+      apiRequest.patch<DeleteProtection>(
+        `/api/clusters_mgmt/v1/clusters/${clusterID}/delete_protection`,
+        { enabled: isProtected },
       ),
   };
 }

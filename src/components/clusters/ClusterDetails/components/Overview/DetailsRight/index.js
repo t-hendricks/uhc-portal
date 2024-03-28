@@ -28,6 +28,7 @@ const mapStateToProps = (state) => {
       machinePools,
     };
   }
+
   return {
     hasAutoscaleMachinePools: false,
     hasAutoscaleCluster,

@@ -8,6 +8,7 @@ import { ConnectedEditMachinePoolModal } from '../ClusterDetails/components/Mach
 import UpgradeWizard from './Upgrades/UpgradeWizard';
 import ArchiveClusterDialog from './ArchiveClusterDialog';
 import DeleteClusterDialog from './DeleteClusterDialog';
+import DeleteProtectionModal from './DeleteProtectionModal';
 import EditConsoleURLDialog from './EditConsoleURLDialog';
 import EditDisplayNameDialog from './EditDisplayNameDialog';
 import EditSubscriptionSettingsDialog from './EditSubscriptionSettingsDialog';
@@ -32,6 +33,7 @@ function CommonClusterModals({ onClose, onClusterDeleted, clearMachinePools }) {
       <ConnectedModal ModalComponent={UnarchiveClusterDialog} onClose={onClose} />
       <ConnectedModal ModalComponent={UpgradeTrialClusterDialog} onClose={onClose} />
       <ConnectedModal ModalComponent={UpgradeWizard} />
+      <ConnectedModal ModalComponent={DeleteProtectionModal} />
       <ConnectedModal
         ModalComponent={DeleteClusterDialog}
         onClose={(clusterDeleted) => {

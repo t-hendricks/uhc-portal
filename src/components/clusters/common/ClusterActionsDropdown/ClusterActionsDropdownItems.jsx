@@ -42,6 +42,7 @@ function actionResolver(
   toggleSubscriptionReleased,
   refreshFunc,
   inClusterList,
+  deleteProtectionEnabled,
 ) {
   const baseProps = {
     component: 'button',
@@ -56,11 +57,11 @@ function actionResolver(
   const isClusterInHibernatingProcess = isHibernating(cluster);
   const hibernatingMessage =
     isClusterInHibernatingProcess &&
-    (cluster.state === clusterStates.RESUMING ? (
-      <>This cluster is resuming; wait for it to be ready in order to perform actions</>
-    ) : (
-      <>This cluster is hibernating; resume cluster in order to perform actions</>
-    ));
+    (cluster.state === clusterStates.RESUMING
+      ? // <>This cluster is resuming; wait for it to be ready in order to perform actions</>
+        'test'
+      : // <>This cluster is hibernating; resume cluster in order to perform actions</>
+        'test2');
 
   const isClusterHibernatingOrPoweringDown =
     cluster.state === clusterStates.HIBERNATING || cluster.state === clusterStates.POWERING_DOWN;
@@ -74,6 +75,12 @@ function actionResolver(
   const isReadOnly = cluster?.status?.configuration_mode === 'read_only';
   const readOnlyMessage = isReadOnly && (
     <span>This operation is not available during maintenance</span>
+  );
+  const deleteProtectionMessage = deleteProtectionEnabled && (
+    <span>
+      Cluster is locked and cannot be deleted. To unlock, go to cluster details and disable deletion
+      protection.
+    </span>
   );
 
   const consoleURL = get(cluster, 'console.url', false);
@@ -227,14 +234,17 @@ function actionResolver(
     ...baseProps,
     title: 'Delete cluster',
     key: getKey('deletecluster'),
-    ...disableIfTooltip(uninstallingMessage || readOnlyMessage || hibernatingMessage, {
-      onClick: () =>
-        openModal(modals.DELETE_CLUSTER, {
-          clusterID: cluster.id,
-          clusterName,
-          shouldDisplayClusterName: inClusterList,
-        }),
-    }),
+    ...disableIfTooltip(
+      uninstallingMessage || readOnlyMessage || hibernatingMessage || deleteProtectionMessage,
+      {
+        onClick: () =>
+          openModal(modals.DELETE_CLUSTER, {
+            clusterID: cluster.id,
+            clusterName,
+            shouldDisplayClusterName: inClusterList,
+          }),
+      },
+    ),
   });
 
   const getEditSubscriptionSettingsProps = () => {
@@ -353,6 +363,7 @@ function dropDownItems({
   toggleSubscriptionReleased,
   refreshFunc,
   inClusterList,
+  deleteProtectionEnabled,
 }) {
   const actions = actionResolver(
     cluster,
@@ -364,6 +375,7 @@ function dropDownItems({
     toggleSubscriptionReleased,
     refreshFunc,
     inClusterList,
+    deleteProtectionEnabled,
   );
   const menuItems = actions.map((action) => {
     // Remove props that aren't recognized by DropdownItemDeprecated

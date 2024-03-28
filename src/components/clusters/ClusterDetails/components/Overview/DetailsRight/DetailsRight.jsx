@@ -34,6 +34,7 @@ import { constants } from '../../../../common/CreateOSDFormConstants';
 import SecurityGroupsDisplayByNode from '../../SecurityGroups/SecurityGroupsDetailDisplay';
 import ClusterNetwork from '../ClusterNetwork';
 
+import DeleteProtection from './DeleteProtection/DeleteProtection';
 import { ClusterStatus } from './ClusterStatus';
 
 const { ClusterStatus: AIClusterStatus } = OCM;
@@ -102,6 +103,7 @@ function DetailsRight({
 
   return (
     <DescriptionList>
+      <DeleteProtection clusterID={cluster?.id} />
       <DescriptionListGroup>
         <DescriptionListTerm>Status</DescriptionListTerm>
         <DescriptionListDescription style={cluster.state.style}>
