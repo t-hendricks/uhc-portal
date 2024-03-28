@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 
 import { useWizardContext } from '@patternfly/react-core';
@@ -15,17 +15,34 @@ export const CloudProviderStepFooter = () => {
   const { values } = useFormState();
   const { goToNextStep } = useWizardContext();
   const { ccsCredentialsValidity } = useGlobalState((state) => state.ccsInquiries);
-  const { pending: isValidatingCcsCredentials } = ccsCredentialsValidity;
+  const [pendingValidation, setPendingValidation] = useState(false);
 
-  const onNext = async () => {
+  const onNext = () => {
     const validateCcsCredentials = shouldValidateCcsCredentials(values, ccsCredentialsValidity);
 
     if (validateCcsCredentials) {
-      await getCloudProverInfo(values, dispatch);
+      getCloudProverInfo(values, dispatch);
+      setPendingValidation(true);
+    } else {
+      goToNextStep();
     }
-
-    goToNextStep();
   };
 
-  return <CreateOsdWizardFooter onNext={onNext} isLoading={isValidatingCcsCredentials} />;
+  useEffect(() => {
+    if (pendingValidation) {
+      if (ccsCredentialsValidity.fulfilled || ccsCredentialsValidity.error) {
+        setPendingValidation(false);
+        if (ccsCredentialsValidity.fulfilled) {
+          goToNextStep();
+        }
+      }
+    }
+  }, [
+    pendingValidation,
+    ccsCredentialsValidity.fulfilled,
+    ccsCredentialsValidity.error,
+    goToNextStep,
+  ]);
+
+  return <CreateOsdWizardFooter onNext={onNext} isLoading={pendingValidation} />;
 };
