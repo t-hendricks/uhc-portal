@@ -9,8 +9,6 @@ if [ $1 ]
 then
   if [ $1 = 'staging' ]; then
     ENVIRONMENT="console.dev.redhat.com"
-  elif [ $1 = 'staging-old' ]; then
-    ENVIRONMENT="qaprodauth.console.redhat.com"
   elif [ $1 = 'production' ]; then
     ENVIRONMENT="console.redhat.com"
   elif [ $1 = 'production-preview' ]; then
