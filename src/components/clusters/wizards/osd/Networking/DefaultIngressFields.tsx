@@ -1,8 +1,7 @@
 import React from 'react';
 
-import { FormGroup, GridItem, Split, SplitItem } from '@patternfly/react-core';
+import { FormGroup, GridItem } from '@patternfly/react-core';
 import { Field } from 'formik';
-import { CheckboxField } from '~/components/clusters/wizards/form/CheckboxField';
 
 import { checkRouteSelectors, validateNamespacesList } from '~/common/validators';
 import {
@@ -16,6 +15,7 @@ import {
 import { NamespaceOwnerPolicyPopover } from '~/components/clusters/ClusterDetails/components/Networking/components/ApplicationIngressCard/NamespaceOwnerPolicyPopover';
 import { WildcardPolicyPopover } from '~/components/clusters/ClusterDetails/components/Networking/components/ApplicationIngressCard/WildcardsPolicyPopover';
 import { FormGroupHelperText } from '~/components/common/FormGroupHelperText';
+import { ReduxCheckbox } from '~/components/common/ReduxFormComponents';
 
 import { useFormState } from '../../hooks';
 import { FieldId } from '../constants';
@@ -70,29 +70,39 @@ export const DefaultIngressFields: React.FC<DefaultIngressFieldsProps> = () => {
         </FormGroup>
       </GridItem>
 
-      <Split hasGutter className="pf-v5-u-mb-0">
-        <SplitItem>
-          <CheckboxField
-            name={FieldId.IsDefaultRouterNamespaceOwnershipPolicyStrict}
-            label="Use strict namespace ownership policy"
-          />
-        </SplitItem>
-        <SplitItem>
-          <NamespaceOwnerPolicyPopover />
-        </SplitItem>
-      </Split>
+      <FormGroup
+        className="pf-v5-u-mb-0"
+        label="Namespace ownership policy"
+        labelIcon={<NamespaceOwnerPolicyPopover />}
+      >
+        <Field
+          id={FieldId.IsDefaultRouterNamespaceOwnershipPolicyStrict}
+          component={ReduxCheckbox}
+          name={FieldId.IsDefaultRouterNamespaceOwnershipPolicyStrict}
+          label="Strict"
+          labelOff="Inter-namespace ownership allowed"
+          isSwitch
+          input={getFieldProps(FieldId.IsDefaultRouterNamespaceOwnershipPolicyStrict)}
+          meta={getFieldMeta(FieldId.IsDefaultRouterNamespaceOwnershipPolicyStrict)}
+        />
+      </FormGroup>
 
-      <Split hasGutter className="pf-v5-u-mb-0">
-        <SplitItem>
-          <CheckboxField
-            name={FieldId.IsDefaultRouterWildcardPolicyAllowed}
-            label="Allow router wildcard policy"
-          />
-        </SplitItem>
-        <SplitItem>
-          <WildcardPolicyPopover />
-        </SplitItem>
-      </Split>
+      <FormGroup
+        className="pf-v5-u-mb-0"
+        label="Wildcard policy"
+        labelIcon={<WildcardPolicyPopover />}
+      >
+        <Field
+          id={FieldId.IsDefaultRouterWildcardPolicyAllowed}
+          component={ReduxCheckbox}
+          name={FieldId.IsDefaultRouterWildcardPolicyAllowed}
+          label="Allowed"
+          labelOff="Disallowed"
+          isSwitch
+          input={getFieldProps(FieldId.IsDefaultRouterWildcardPolicyAllowed)}
+          meta={getFieldMeta(FieldId.IsDefaultRouterWildcardPolicyAllowed)}
+        />
+      </FormGroup>
     </>
   );
 };
