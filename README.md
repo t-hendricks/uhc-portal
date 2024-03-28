@@ -61,13 +61,8 @@ For OCM we're somewhat misusing prod-beta to also run different app code:
 | ----------------- | ------------------------------------------------------- | --------------- | --------------- |
 | `master`          | https://console.dev.redhat.com/preview/openshift        | next version    | staging         |
 | `master`          | https://console.dev.redhat.com/openshift                | stable version  | staging         |
-| `master`          | https://qaprodauth.console.redhat.com/preview/openshift | next version    | staging         |
-| `master`          | https://qaprodauth.console.redhat.com/openshift         | stable version  | staging         |
 | `candidate`       | https://console.redhat.com/preview/openshift            | next version    | production      |
 | `stable`          | https://console.redhat.com/openshift                    | stable version  | production      |
-
-(console.dev is the official staging environment; qaprodauth expected to be decommissioned
-during March 2024 - https://issues.redhat.com/browse/OCMUI-104)
 
 On every update to the above branches, the code gets deployed into the relevant
 enviroment(s) using the `push_to_insights.sh` script. This script is
