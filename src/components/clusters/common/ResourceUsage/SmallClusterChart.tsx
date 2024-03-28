@@ -81,7 +81,7 @@ const SmallClusterChart = ({
             }}
             title={`${formattedTotal?.value}`}
             height={205}
-            width={410}
+            width={440}
           />
         ) : null}
       </div>
