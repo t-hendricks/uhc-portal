@@ -32,9 +32,14 @@ LabelGridItem.propTypes = {
   helpText: PropTypes.string,
 };
 
-const AddMoreButtonGridItem = ({ addNewField, areFieldsFilled, title = 'Add more' }) => {
-  const isDisabled = !areFieldsFilled.length || areFieldsFilled.includes(false);
-
+const AddMoreButtonGridItem = ({
+  addNewField,
+  areFieldsFilled,
+  title = 'Add more',
+  addMoreButtonDisabled = false,
+}) => {
+  const isDisabled =
+    !areFieldsFilled.length || areFieldsFilled.includes(false) || addMoreButtonDisabled;
   return (
     <GridItem className="field-grid-item">
       <Button
@@ -53,6 +58,7 @@ AddMoreButtonGridItem.propTypes = {
   addNewField: PropTypes.func.isRequired,
   areFieldsFilled: PropTypes.arrayOf(PropTypes.bool).isRequired,
   title: PropTypes.string,
+  addMoreButtonDisabled: PropTypes.bool,
 };
 
 const FieldArrayErrorGridItem = ({ isLast, errorMessage, touched, isGroupError }) => {
@@ -153,6 +159,7 @@ const RenderArrayFields = (props) => {
     FieldGridItemComponent = FieldGridItem,
     isFieldFilled = (field) => !!field.name,
     addMoreTitle,
+    addMoreButtonDisabled,
   } = props;
 
   const [touched, setTouched] = React.useState(false);
@@ -221,6 +228,7 @@ const RenderArrayFields = (props) => {
         addNewField={addNewField}
         areFieldsFilled={areFieldsFilled}
         title={addMoreTitle}
+        addMoreButtonDisabled={addMoreButtonDisabled}
       />
       {fields.map((item, index) => (
         <React.Fragment key={`${fields.get(index).id}`}>
@@ -257,6 +265,7 @@ RenderArrayFields.propTypes = {
   FieldGridItemComponent: PropTypes.func,
   addMoreTitle: PropTypes.string,
   isFieldFilled: PropTypes.func,
+  addMoreButtonDisabled: PropTypes.bool,
 };
 
 export default RenderArrayFields;
