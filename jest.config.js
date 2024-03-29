@@ -1,7 +1,7 @@
 const config = {
   roots: ['<rootDir>/src'],
   verbose: true,
-  snapshotSerializers: ['enzyme-to-json/serializer'],
+
   setupFiles: ['<rootDir>/src/setupTests.ts'],
   preset: 'ts-jest',
   testEnvironment: 'jsdom',

@@ -25,7 +25,7 @@ const reducer = reduxReducers(history);
 
 interface TestState {
   store: typeof globalStore;
-  /** Wrapper can be used as component independently of render(), notably for Enzyme. */
+  /** Wrapper can be used as component independently of render() */
   Wrapper: (props: { children: React.ReactNode }) => React.ReactNode;
   /** Convenience accessor to redux state. */
   getState: () => GlobalState;
