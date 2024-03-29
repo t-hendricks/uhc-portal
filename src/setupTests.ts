@@ -1,5 +1,3 @@
-import { configure } from 'enzyme';
-import Adapter from '@wojtekmaj/enzyme-adapter-react-17';
 import { setAutoFreeze } from 'immer';
 import { sprintf } from 'sprintf-js';
 import config from './config';
@@ -22,13 +20,7 @@ console.error = (msg, ...args) => {
   const text =
     typeof msg === 'string' ? sprintf(msg, ...args) : [msg, ...args].map(String).join(' ');
 
-  if (text.includes('https://reactjs.org/link/switch-to-createroot')) {
-    // This is logged by all uses of enzyme.mount() (HAC-4456) and is too verbose.
-    // eslint-disable-next-line no-console
-    console.log(`[downgraded console.error] ${msg}`, ...args);
-  } else {
-    error(msg, ...args); // Even if we going to throw below, it's useful to log *full* args.
-  }
+  error(msg, ...args); // Even if we going to throw below, it's useful to log *full* args.
 
   if (text.includes('Maximum update depth exceeded')) {
     throw text;
@@ -40,7 +32,5 @@ console.error = (msg, ...args) => {
 };
 
 global.insights = {};
-
-configure({ adapter: new Adapter() });
 
 config.dateConfig();
