@@ -163,8 +163,7 @@
     "webpack-bundle-analyzer": "^4.10.1",
     "webpack-cli": "^5.1.4",
     "webpack-dev-server": "^4.15.1",
-    "yargs": "^15.0.0",
-    "zx": "^7.2.3"
+    "yargs": "^15.0.0"
   },
   "resolutions": {
     "@cypress/webpack-preprocessor": "5.17.0",
