@@ -1,3 +1,4 @@
+import RadioButtons from './RadioButtons';
 import ReduxCheckbox from './ReduxCheckbox';
 import ReduxFormDropdown from './ReduxFormDropdown';
 import ReduxVerticalFormGroup from './ReduxVerticalFormGroup';
@@ -9,6 +10,7 @@ import ReduxFieldArray from './ReduxFieldArray';
 import RenderCompoundArrayFields from './RenderCompoundArrayFields';
 
 export {
+  RadioButtons,
   ReduxCheckbox,
   ReduxFormDropdown,
   ReduxSelectDropdown,

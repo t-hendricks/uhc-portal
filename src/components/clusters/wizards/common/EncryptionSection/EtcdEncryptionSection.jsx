@@ -5,6 +5,7 @@ import { Field } from 'redux-form';
 import ExternalLink from '~/components/common/ExternalLink';
 import links from '~/common/installLinks.mjs';
 import ReduxCheckbox from '~/components/common/ReduxFormComponents/ReduxCheckbox';
+import { CheckboxDescription } from '~/components/common/CheckboxDescription';
 import { constants } from '../../../common/CreateOSDFormConstants';
 import AWSCustomerManagedEncryption from './AWSCustomerManagedEncryption';
 
@@ -45,11 +46,11 @@ function EtcdEncryptionSection({
           }
         />
 
-        <div className="ocm-c--reduxcheckbox-description">
+        <CheckboxDescription>
           {isHypershiftSelected
             ? 'Etcd is always encrypted, but you can specify a custom KMS key if desired.'
             : 'Add more encryption for OpenShift and Kubernetes API resources.'}
-        </div>
+        </CheckboxDescription>
         {needsCustomEtcdKey && (
           <GridItem>
             <AWSCustomerManagedEncryption
