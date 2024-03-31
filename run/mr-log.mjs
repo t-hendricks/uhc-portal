@@ -72,12 +72,11 @@ const jiraPromise = getJiraStatuses(); // Start request early while we compute l
 // % S identifies "source" — from which commit it was reached e.g.master vs candidate.
 // % w(0, 2, 2) indents following lines of message by 2 spaces.
 const FORMAT =
-  '%C(dim)A: %ad C: %cs %C(auto) %>(24,mtrunc)%S %H %C(dim)%s⏎ %C(reset)%w(0,2,2)%b%C(auto)%d';
+  'òòòòòò %C(dim)A: %ad C: %cs %C(auto) %>(24,mtrunc)%S %H %C(dim)%s⏎ %C(reset)%w(0,2,2)%b%C(auto)%d';
 
 const gitLogArgs = [
   '--color=always',
   '--date=iso-strict',
-  '-z',
   // We want to run `git log` with some paths, otherwise on candidate/stable it will show many other commits
   // e.g. "Merge branch 'candidate-mar-21-2023' into 'candidate'".
   ...(scriptArgs.length > 0 ? scriptArgs : ['.']),
@@ -159,10 +158,9 @@ if ((await git.raw(['rev-parse', '--verify', '--quiet', 'CHERRY_PICK_HEAD'])) !=
 }
 
 const parseGitLog = (output, jiraData) =>
-  // `git log -z` output terminated by '\0'.  Split may return empty string after last \0.
   output
-    .split('\0')
-    .filter(Boolean)
+    .split(/^òòòòòò /m)
+    .filter(Boolean) // split may return empty string before first boundary.
     .map((logEntry) => {
       const fields = logEntry.split(/ +/);
       // Similar to ./compress-git-log.mjs. No graph ascii art to deal with, just pack into 1 line.
