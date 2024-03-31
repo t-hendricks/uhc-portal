@@ -1,7 +1,8 @@
 #!/usr/bin/env node
 /* eslint-disable no-console */
 
-import { $ } from 'zx';
+// Takes `DEBUG=simple-git` env var: https://github.com/steveukx/git-js/blob/main/docs/DEBUG-LOGGING-GUIDE.md
+import { simpleGit } from 'simple-git';
 
 import { getJiraStatuses, linkify, terminalLink } from './linkify.mjs';
 
@@ -10,7 +11,7 @@ const HELP = `USAGE: run/mr-log.mjs [git log FLAGS] [--] PATH...
 List MRs to master + their cherry-picks status.
 Works with most 'git log' flags for filtering history!  Most useful modes (can be combined):
 
-    # MRs that touched given path(s):  '--' optional, needed when   path got deleted.
+    # MRs that touched given path(s):  '--' optional, needed when path got deleted.
     run/mr-log.mjs -- src/common/validators.ts
 
     # MRs that touched code lines matching regexp:
@@ -52,23 +53,18 @@ if (scriptArgs.includes('--help') || scriptArgs.includes('-h')) {
   process.exit(0);
 }
 
-// zx defaults to logging commands AND their full output, too noisy.
-$.log = ({ kind, cmd }) => {
-  if (process.env.VERBOSE && kind === 'cmd') {
-    console.error(`+ ${cmd}`);
-  }
-};
+const git = simpleGit(process.cwd());
 
 // Using env vars to avoid separating our flags vs. git log's flags.
 const DEV_REF = process.env.DEV_REF || 'live_consoledev_master';
 const CANDIDATE_REF = process.env.CANDIDATE_REF || 'live_candidate';
 const STABLE_REF = process.env.STABLE_REF || 'live_stable';
 const EXTRA_REF =
-  process.env.EXTRA_REF || (await $`git branch --show-current`).toString().trimRight();
+  process.env.EXTRA_REF || (await git.raw(['branch', '--show-current'])).trimRight();
 // Hide MRs predating last merge point — no longer interesting for promotion,
 // and might confusingly show on only DEV_REF side.
 const BASE =
-  process.env.BASE || (await $`git merge-base ${DEV_REF} ${CANDIDATE_REF}`).toString().trimRight();
+  process.env.BASE || (await git.raw(['merge-base', DEV_REF, CANDIDATE_REF])).trimRight();
 
 const jiraPromise = getJiraStatuses(); // Start request early while we compute log...
 
@@ -78,9 +74,14 @@ const jiraPromise = getJiraStatuses(); // Start request early while we compute l
 const FORMAT =
   '%C(dim)A: %ad C: %cs %C(auto) %>(24,mtrunc)%S %H %C(dim)%s⏎ %C(reset)%w(0,2,2)%b%C(auto)%d';
 
-// We want to run `git log` with some paths, otherwise on candidate/stable it will show many other commits
-// e.g. "Merge branch 'candidate-mar-21-2023' into 'candidate'".
-const gitLogArgs = scriptArgs.length > 0 ? scriptArgs : ['.'];
+const gitLogArgs = [
+  '--color=always',
+  '--date=iso-strict',
+  '-z',
+  // We want to run `git log` with some paths, otherwise on candidate/stable it will show many other commits
+  // e.g. "Merge branch 'candidate-mar-21-2023' into 'candidate'".
+  ...(scriptArgs.length > 0 ? scriptArgs : ['.']),
+];
 
 // If same commit is reachable from multiple refs given on single command line e.g.
 // `git log --source stable candidate candidate-my-wip`
@@ -92,25 +93,69 @@ const gitLogArgs = scriptArgs.length > 0 ? scriptArgs : ['.'];
 const gitPromises = {
   // On master, --first-parent attributes diffs to the merge commit that landed the MR.
   // ("D" - "F" merges in diagram above, rather than individual "o" commits)
-  dev: $`git --no-pager log ^${BASE} ${DEV_REF} --first-parent --pretty=${FORMAT} --color=always --date=iso-strict -z ${gitLogArgs}`,
+  dev: git.raw([
+    '--no-pager',
+    'log',
+    `^${BASE}`,
+    DEV_REF,
+    '--first-parent',
+    `--pretty=${FORMAT}`,
+    ...gitLogArgs,
+  ]),
   // Full history — won't show all, just for handling corner case "p" in diagram above.
-  devAll: $`git --no-pager log ${DEV_REF} --first-parent --pretty=${FORMAT} --color=always --date=iso-strict -z ${gitLogArgs}`,
+  devAll: git.raw([
+    '--no-pager',
+    'log',
+    DEV_REF,
+    '--first-parent',
+    `--pretty=${FORMAT}`,
+    ...gitLogArgs,
+  ]),
 
   // On candidate & stable, cherry - picked master MRs become single - parent commits.
   // Do NOT want `--first-parent` as each merge to candidate deploys multiple MRs.
   // ("e", "g", "d" picks in diagram above, rather than "*" merges)
-  candidate: $`git --no-pager log ^${BASE} ${CANDIDATE_REF} --pretty=${FORMAT} --color=always --date=iso-strict -z ${gitLogArgs}`,
-  stable: $`git --no-pager log ^${BASE} ${STABLE_REF} --pretty=${FORMAT} --color=always --date=iso-strict -z ${gitLogArgs}`,
+  candidate: git.raw([
+    '--no-pager',
+    'log',
+    `^${BASE}`,
+    CANDIDATE_REF,
+    `--pretty=${FORMAT}`,
+    ...gitLogArgs,
+  ]),
+  stable: git.raw([
+    '--no-pager',
+    'log',
+    `^${BASE}`,
+    STABLE_REF,
+    `--pretty=${FORMAT}`,
+    ...gitLogArgs,
+  ]),
 };
 if (EXTRA_REF) {
-  gitPromises.extra = $`git --no-pager log ^${BASE} ${EXTRA_REF} --pretty=${FORMAT} --color=always --date=iso-strict -z ${gitLogArgs}`;
+  gitPromises.extra = git.raw([
+    '--no-pager',
+    'log',
+    `^${BASE}`,
+    EXTRA_REF,
+    `--pretty=${FORMAT}`,
+    ...gitLogArgs,
+  ]);
 }
 
 // During cherry - picking confict, the MR you're trying to add is not yet on EXTRA_REF.
-if ((await $`git rev-parse --verify --quiet CHERRY_PICK_HEAD > /dev/null`.exitCode) === 0) {
+if ((await git.raw(['rev-parse', '--verify', '--quiet', 'CHERRY_PICK_HEAD'])) !== '') {
   // Show only that one MR, and only if it matches given paths.
   const suffix = ' %C(bold red)(CHERRY PICKING NOW...)%C(reset)';
-  gitPromises.pick = $`git --no-pager log ^CHERRY_PICK_HEAD~1 CHERRY_PICK_HEAD --first-parent --pretty=${FORMAT}${suffix} --color=always --date=iso-strict -z ${gitLogArgs}`;
+  gitPromises.pick = git.raw([
+    '--no-pager',
+    'log',
+    '^CHERRY_PICK_HEAD~1',
+    'CHERRY_PICK_HEAD',
+    '--first-parent',
+    `--pretty=${FORMAT}${suffix}`,
+    ...gitLogArgs,
+  ]);
 }
 
 const parseGitLog = (output, jiraData) =>
@@ -138,7 +183,7 @@ const jiraData = await jiraPromise;
 const parsedLogs = {};
 await Promise.all(
   Object.entries(gitPromises).map(async ([key, promise]) => {
-    parsedLogs[key] = parseGitLog((await promise).toString(), jiraData);
+    parsedLogs[key] = parseGitLog(await promise, jiraData);
   }),
 );
 
