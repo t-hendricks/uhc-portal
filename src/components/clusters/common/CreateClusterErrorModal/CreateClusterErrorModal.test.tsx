@@ -24,7 +24,7 @@ describe('<CreateClusterErrorModal />', () => {
       fulfilled: false,
       pending: false,
     });
-    const { container } = render(<CreateClusterErrorModal />);
+    const { container } = render(<CreateClusterErrorModal onRetry={jest.fn()} />);
 
     // Assert
     expect(screen.getByRole('heading', { name: 'Error creating cluster' })).toBeInTheDocument();
@@ -40,10 +40,19 @@ describe('<CreateClusterErrorModal />', () => {
       fulfilled: false,
       pending: false,
     });
-    const { container } = render(<CreateClusterErrorModal />);
+    const { container } = render(<CreateClusterErrorModal onRetry={jest.fn()} />);
 
     // Assert
     expect(screen.getByRole('heading', { name: 'Missing prerequisite' })).toBeInTheDocument();
     await checkAccessibility(container);
+  });
+
+  it('returns no error', () => {
+    // Arrange
+    useSelectorSpy.mockReturnValueOnce({});
+    const { container } = render(<CreateClusterErrorModal onRetry={jest.fn()} />);
+
+    // Assert
+    expect(container.firstChild).toBeNull();
   });
 });

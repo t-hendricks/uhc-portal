@@ -137,6 +137,7 @@ export const SubnetSelectField = ({
             truncation={TRUNCATE_THRESHOLD}
             inlineFilterPlaceholderText="Filter by subnet ID / name"
             validated={inputError ? 'error' : undefined}
+            isPopover
           />
         </FlexItem>
       </Flex>

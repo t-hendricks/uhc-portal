@@ -27,6 +27,7 @@ export const validateMachineCidr =
     return (
       validateCidr(value)(cloudProvider) ||
       (cloudProvider === CloudProviderType.Aws && validators.awsMachineCidr(value, values)) ||
+      (cloudProvider === CloudProviderType.Gcp && validators.gcpMachineCidr(value, values)) ||
       validators.validateRange(value) ||
       (cloudProvider === CloudProviderType.Aws &&
         validators.subnetCidrs(value, values, FieldId.NetworkMachineCidr, selectedSubnets)) ||

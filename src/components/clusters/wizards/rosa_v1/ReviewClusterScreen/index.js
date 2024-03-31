@@ -9,12 +9,15 @@ import {
 } from '~/redux/actions/rosaActions';
 import wizardConnector from '~/components/clusters/wizards/common/WizardConnector';
 import ReviewClusterScreen from './ReviewClusterScreen';
-import { canAutoScaleOnCreateSelector } from '../../../ClusterDetails/components/MachinePools/MachinePoolsSelectors';
+import { canAutoScaleOnCreateSelector } from '../../../ClusterDetails/components/MachinePools/machinePoolsSelectors';
 
 const mapStateToProps = (state) => {
   const valueSelector = formValueSelector('CreateCluster');
   const product = valueSelector(state, 'product');
-  const canAutoScale = canAutoScaleOnCreateSelector(state, product);
+  const canAutoScale = canAutoScaleOnCreateSelector(
+    state.userProfile.organization?.details,
+    product,
+  );
   const autoscalingEnabled = canAutoScale && !!valueSelector(state, 'autoscalingEnabled');
   const installToVPCSelected = valueSelector(state, 'install_to_vpc');
   const configureProxySelected = valueSelector(state, 'configure_proxy');
