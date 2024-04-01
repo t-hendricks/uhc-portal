@@ -4,6 +4,7 @@
 // Takes `DEBUG=simple-git` env var: https://github.com/steveukx/git-js/blob/main/docs/DEBUG-LOGGING-GUIDE.md
 import { simpleGit } from 'simple-git';
 
+import { getUpstreamRemoteName } from './upstream-name.mjs';
 import { getJiraStatuses, linkify, terminalLink } from './linkify.mjs';
 
 const HELP = `USAGE: run/mr-log.mjs [git log FLAGS] [--] PATH...
@@ -54,11 +55,12 @@ if (scriptArgs.includes('--help') || scriptArgs.includes('-h')) {
 }
 
 const git = simpleGit(process.cwd());
+const upstreamName = await getUpstreamRemoteName(git);
 
 // Using env vars to avoid separating our flags vs. git log's flags.
-const DEV_REF = process.env.DEV_REF || 'live_consoledev_master';
-const CANDIDATE_REF = process.env.CANDIDATE_REF || 'live_candidate';
-const STABLE_REF = process.env.STABLE_REF || 'live_stable';
+const DEV_REF = process.env.DEV_REF || `${upstreamName}/master`;
+const CANDIDATE_REF = process.env.CANDIDATE_REF || `${upstreamName}/candidate`;
+const STABLE_REF = process.env.STABLE_REF || `${upstreamName}/stable`;
 const EXTRA_REF =
   process.env.EXTRA_REF || (await git.raw(['branch', '--show-current'])).trimRight();
 // Hide MRs predating last merge point — no longer interesting for promotion,
