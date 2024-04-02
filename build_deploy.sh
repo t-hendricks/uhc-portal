@@ -34,10 +34,6 @@ if ! git diff --exit-code --stat mockdata/api/clusters_mgmt/v1/clusters.json moc
 fi
 
 
-echo 'System node version:'
-node --version
-
-
 # build app & push to image repository
 # ------------------------------------
 
