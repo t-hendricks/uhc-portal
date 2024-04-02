@@ -1,11 +1,22 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Radio, Title, FormGroup, Form, DatePicker } from '@patternfly/react-core';
+
+import {
+  DatePicker,
+  Form,
+  FormGroup,
+  Radio,
+  Split,
+  SplitItem,
+  Title,
+} from '@patternfly/react-core';
 import {
   Select as SelectDeprecated,
   SelectOption as SelectOptionDeprecated,
 } from '@patternfly/react-core/deprecated';
 import { DateFormat } from '@redhat-cloud-services/frontend-components/DateFormat';
+
+import './UpgradeWizard.scss';
 
 class UpgradeTimeSelection extends React.Component {
   state = { timeSelectionOpen: false };
@@ -57,6 +68,16 @@ class UpgradeTimeSelection extends React.Component {
   render() {
     const { type, timestamp } = this.props;
     const { timeSelectionOpen } = this.state;
+
+    const formattedDate = (timestamp) => {
+      const date = new Date(timestamp);
+      const year = date.getFullYear();
+      const month = String(date.getMonth() + 1).padStart(2, '0');
+      const day = String(date.getDate()).padStart(2, '0');
+      const localDate = `${year}-${month}-${day}`;
+      return localDate;
+    };
+
     if (timeSelectionOpen) {
       // scroll to the selected item when the Select is opened
       setTimeout(() => {
@@ -98,15 +119,18 @@ class UpgradeTimeSelection extends React.Component {
       return `${hour}:${minute}`;
     };
 
-    const minDate = new Date();
+    // minDate with no time-of-day details
+    const minDate = new Date(new Date().toDateString());
     const maxDate = new Date();
     maxDate.setMonth(maxDate.getMonth() + 6);
+
     const rangeValidator = (date) => {
       if (date < minDate) {
-        return 'Date is before the allowable range.';
+        return 'The selected date is before the allowable range.';
       }
+
       if (date > maxDate) {
-        return 'Date is after the allowable range.';
+        return 'The selected date is after the allowable range.';
       }
       return '';
     };
@@ -115,7 +139,7 @@ class UpgradeTimeSelection extends React.Component {
         <Title className="wizard-step-title" size="lg" headingLevel="h3">
           Schedule update
         </Title>
-        <Form className="wizard-step-body">
+        <Form className="wizard-step-body" onSubmit={(e) => e.preventDefault()}>
           <FormGroup fieldId="upgrade-schedule-now">
             <Radio
               isChecked={type === 'now'}
@@ -138,29 +162,39 @@ class UpgradeTimeSelection extends React.Component {
           </FormGroup>
           {type === 'time' && (
             <>
-              <FormGroup
-                fieldId="upgrade-schedule-datepicker"
-                className="upgrade-schedule-datepicker"
-              >
-                <DatePicker
-                  id="upgrade-schedule-datepicker"
-                  validators={[rangeValidator]}
-                  onChange={(_, value) => this.setDate(value)}
-                  isDisabled={!timestamp}
-                  value={(timestamp && new Date(timestamp).toDateString()) || ''}
-                />
-                <SelectDeprecated
-                  selections={getSelectedTime()}
-                  onSelect={this.setTime}
-                  onToggle={() =>
-                    this.setState((state) => ({ timeSelectionOpen: !state.timeSelectionOpen }))
-                  }
-                  isOpen={timeSelectionOpen}
-                  id="upgrade-time-select-dropdown"
-                >
-                  {makeSelectOptions()}
-                </SelectDeprecated>
+              <FormGroup>
+                <Split className="upgrade-schedule-datepicker-split">
+                  <SplitItem>
+                    <DatePicker
+                      id="upgrade-schedule-datepicker"
+                      className="upgrade-schedule-datepicker-input"
+                      validators={[rangeValidator]}
+                      onChange={(_, __, date) =>
+                        date instanceof Date && !Number.isNaN(date) && this.setDate(date)
+                      }
+                      isDisabled={!timestamp}
+                      value={formattedDate(timestamp)}
+                      invalidFormatText={"Invalid date format. Use 'YYYY-MM-DD' format."}
+                    />
+                  </SplitItem>
+                  <SplitItem>
+                    <SelectDeprecated
+                      className="upgrade-schedule-time-input"
+                      selections={getSelectedTime()}
+                      onSelect={this.setTime}
+                      onToggle={() =>
+                        this.setState((state) => ({ timeSelectionOpen: !state.timeSelectionOpen }))
+                      }
+                      isOpen={timeSelectionOpen}
+                      id="upgrade-time-select-dropdown"
+                    >
+                      {makeSelectOptions()}
+                    </SelectDeprecated>
+                  </SplitItem>
+                  <SplitItem />
+                </Split>
               </FormGroup>
+
               <dl className="cluster-upgrade-dl">
                 <dt>UTC </dt>
                 <dd>
