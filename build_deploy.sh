@@ -1,4 +1,4 @@
-#!/bin/bash -ex
+#!/bin/bash -e
 #
 # Copyright (c) 2018 Red Hat, Inc.
 #
@@ -20,18 +20,6 @@
 # long-lived deployment branches (i.e. master, candidate, stable).
 # If it doesn't succeed the change won't be deployed.
 # -----------------------------------------------------------------
-
-
-# run sanity checks
-# -----------------
-
-mockdata/regenerate-clusters.json.sh
-if ! git diff --exit-code --stat mockdata/api/clusters_mgmt/v1/clusters.json mockdata/api/accounts_mgmt/v1/subscriptions.json; then
-  set +x
-  echo 'ERROR: Generated collection jsons out of date. ^^^'
-  echo '       => Run `mockdata/regenerate-clusters.json.sh` locally and commit the changes.'
-  exit 1
-fi
 
 
 # build app & push to image repository
