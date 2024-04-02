@@ -1,8 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import DatePicker from 'react-datepicker';
-
-import { Form, FormGroup, Radio, TextInput, Title } from '@patternfly/react-core';
+import { Radio, Title, FormGroup, Form, DatePicker } from '@patternfly/react-core';
 import {
   Select as SelectDeprecated,
   SelectOption as SelectOptionDeprecated,
@@ -100,9 +98,18 @@ class UpgradeTimeSelection extends React.Component {
       return `${hour}:${minute}`;
     };
 
+    const minDate = new Date();
     const maxDate = new Date();
     maxDate.setMonth(maxDate.getMonth() + 6);
-
+    const rangeValidator = (date) => {
+      if (date < minDate) {
+        return 'Date is before the allowable range.';
+      }
+      if (date > maxDate) {
+        return 'Date is after the allowable range.';
+      }
+      return '';
+    };
     return (
       <>
         <Title className="wizard-step-title" size="lg" headingLevel="h3">
@@ -137,12 +144,10 @@ class UpgradeTimeSelection extends React.Component {
               >
                 <DatePicker
                   id="upgrade-schedule-datepicker"
-                  selected={timestamp && new Date(timestamp)}
-                  onChange={this.setDate}
-                  dateFormat="yyyy-MM-dd"
-                  customInput={<TextInput />}
-                  minDate={new Date()}
-                  maxDate={maxDate}
+                  validators={[rangeValidator]}
+                  onChange={(_, value) => this.setDate(value)}
+                  isDisabled={!timestamp}
+                  value={(timestamp && new Date(timestamp).toDateString()) || ''}
                 />
                 <SelectDeprecated
                   selections={getSelectedTime()}
