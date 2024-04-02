@@ -1,54 +1,68 @@
+// Some components under Details have their own tests;
+// this file tries to take a more "black box integration" approach.
+
 import * as React from 'react';
 import { Formik } from 'formik';
 
 import { screen, withState } from '~/testUtils';
-import { FieldId, initialValues } from '../../constants';
-import { Details } from './Details';
+import { FieldId, initialValues } from '~/components/clusters/wizards/osd/constants';
+import {
+  noProviders,
+  providersResponse,
+  fulfilledProviders,
+} from '~/common/__test__/regions.fixtures';
+import ocpLifeCycleStatuses from '~/components/releases/__mocks__/ocpLifeCycleStatuses';
+
+import clusterService from '~/services/clusterService';
+import getOCPLifeCycleStatus from '~/services/productLifeCycleService';
+
+import Details from './Details';
+
+jest.mock('~/services/clusterService');
+jest.mock('~/services/productLifeCycleService');
+
+const version = { id: '4.14.0' };
 
 describe('<Details />', () => {
   const defaultValues = {
     ...initialValues,
+    [FieldId.ClusterVersion]: version,
     [FieldId.Region]: 'eu-north-1',
   };
 
-  describe('Region dropdown', () => {
-    it('displays a spinner while regions are loading', () => {
-      const loadedState = {
-        cloudProviders: {
-          fulfilled: false,
-          pending: true,
-          error: false,
-        },
-      };
+  beforeEach(() => {
+    jest.resetAllMocks();
+    (clusterService.getInstallableVersions as jest.Mock).mockResolvedValue({
+      data: { items: [version] },
+    });
+    (getOCPLifeCycleStatus as jest.Mock).mockResolvedValue(ocpLifeCycleStatuses);
+  });
 
-      withState(loadedState).render(
+  describe('Region dropdown', () => {
+    it('displays a spinner while regions are loading', async () => {
+      const notLoadedState = {
+        cloudProviders: noProviders,
+      };
+      (clusterService.getCloudProviders as jest.Mock).mockReturnValue(
+        // a promise that won't be resolved, so providers become pending but not fulfilled.
+        new Promise(() => {}),
+      );
+
+      withState(notLoadedState).render(
         <Formik initialValues={defaultValues} onSubmit={() => {}}>
           <Details />
         </Formik>,
       );
-      expect(screen.queryByText('Loading region list...')).toBeInTheDocument();
+
+      expect(await screen.findByText('Loading region list...')).toBeInTheDocument();
     });
 
-    it('displays the available regions when they are loaded', () => {
+    it('displays the available regions when they are loaded', async () => {
       const loadedState = {
-        cloudProviders: {
-          fulfilled: true,
-          error: false,
-          providers: {
-            aws: {
-              regions: [
-                { id: 'eu-north-1', display_name: 'EU, Stockholm', ccs_only: false, enabled: true },
-                {
-                  id: 'us-west-2',
-                  display_name: 'US West, Oregon',
-                  ccs_only: false,
-                  enabled: true,
-                },
-              ],
-            },
-          },
-        },
+        cloudProviders: fulfilledProviders,
       };
+      // Even if we already have data ^, Details makes a request on mount.
+      (clusterService.getCloudProviders as jest.Mock).mockResolvedValue(providersResponse);
 
       withState(loadedState).render(
         <Formik initialValues={defaultValues} onSubmit={() => {}}>
@@ -56,8 +70,8 @@ describe('<Details />', () => {
         </Formik>,
       );
 
-      expect(screen.queryByText('eu-north-1, EU, Stockholm')).toBeInTheDocument();
-      expect(screen.queryByText('us-west-2, US West, Oregon')).toBeInTheDocument();
+      expect(await screen.findByText('eu-west-0, Avalon')).toBeInTheDocument();
+      expect(await screen.findByText('single-az-3, Antarctica')).toBeInTheDocument();
     });
   });
 });
