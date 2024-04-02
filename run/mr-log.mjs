@@ -45,6 +45,8 @@ would output:
 
   A: ... C: ...              master  PPPP  Merge branch 'P' into 'master' ...
   A: "   C: month ago        stable  pppp  Merge branch 'P' into 'master' ...⏎ (cherry picked from commit PPPP)
+
+(A: are Author date, by which we're grouping; C: are Commit date)
 `;
 
 const scriptArgs = process.argv.slice(2); // 0 is `node` path, 1 is script full path.
