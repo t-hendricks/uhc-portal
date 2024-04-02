@@ -59,7 +59,7 @@ import CloudRegionSelectField from '~/components/clusters/wizards/common/Cluster
 import { CustomerManagedEncryption } from '~/components/clusters/wizards/osd/ClusterSettings/Details/CustomerManagedEncryption';
 import { ClassicEtcdFipsSection } from '~/components/clusters/wizards/common/ClusterSettings/Details/ClassicEtcdFipsSection';
 
-export const Details = () => {
+function Details() {
   const dispatch = useDispatch();
   const {
     values: {
@@ -418,4 +418,6 @@ export const Details = () => {
       </Grid>
     </Form>
   );
-};
+}
+
+export default Details;

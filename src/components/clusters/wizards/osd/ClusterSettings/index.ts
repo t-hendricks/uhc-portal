@@ -2,4 +2,4 @@ export {
   CloudProviderStepFooter,
   CloudProvider as ClusterSettingsCloudProvider,
 } from './CloudProvider';
-export { Details as ClusterSettingsDetails } from './Details';
+export { default as ClusterSettingsDetails } from './Details/Details';
