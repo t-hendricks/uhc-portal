@@ -26,7 +26,7 @@ import ClustersWithIssuesTableCard from './ClustersWithIssuesTableCard';
 import CostCard from './CostCard';
 import EditSubscriptionSettingsDialog from '../clusters/common/EditSubscriptionSettingsDialog';
 import ArchiveClusterDialog from '../clusters/common/ArchiveClusterDialog';
-import TopOverviewSection from './TopOverviewSection/TopOverviewSection';
+import TopOverviewSection from './TopOverviewSection';
 import { createOverviewQueryObject } from '../../common/queryHelpers';
 import Unavailable from '../common/Unavailable';
 import InsightsAdvisorCard from './InsightsAdvisorCard/InsightsAdvisorCard';

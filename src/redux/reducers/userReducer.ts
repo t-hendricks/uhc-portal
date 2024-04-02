@@ -20,13 +20,13 @@ export type OrganizationState = {
   timestamp: number;
 };
 
-export type State = {
+export type UserProfileState = {
   keycloakProfile: Partial<UserInfo>;
   organization: PromiseReducerState<OrganizationState>;
   selfTermsReviewResult: PromiseReducerState<TermsReviewResponse>;
 };
 
-const initialState: State = {
+const initialState: UserProfileState = {
   keycloakProfile: {},
   organization: {
     ...baseRequestState,
@@ -42,7 +42,10 @@ const initialState: State = {
     redirect_url: '',
   },
 };
-const userProfile = (state = initialState, action: PromiseActionType<UserAction>): State =>
+const userProfile = (
+  state = initialState,
+  action: PromiseActionType<UserAction>,
+): UserProfileState =>
   produce(state, (draft) => {
     // eslint-disable-next-line default-case
     switch (action.type) {

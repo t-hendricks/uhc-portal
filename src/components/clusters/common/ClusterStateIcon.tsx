@@ -1,26 +1,33 @@
 // ClusterStateIcon matches a cluster state from the API to the matching icon
 
 import React from 'react';
-import PropTypes from 'prop-types';
+import { AsleepIcon } from '@patternfly/react-icons/dist/esm/icons/asleep-icon';
+import { BanIcon } from '@patternfly/react-icons/dist/esm/icons/ban-icon';
 import { CheckCircleIcon } from '@patternfly/react-icons/dist/esm/icons/check-circle-icon';
 import { DisconnectedIcon } from '@patternfly/react-icons/dist/esm/icons/disconnected-icon';
-import { UnknownIcon } from '@patternfly/react-icons/dist/esm/icons/unknown-icon';
 import { ExclamationCircleIcon } from '@patternfly/react-icons/dist/esm/icons/exclamation-circle-icon';
-import { InProgressIcon } from '@patternfly/react-icons/dist/esm/icons/in-progress-icon';
-import { BanIcon } from '@patternfly/react-icons/dist/esm/icons/ban-icon';
 import { FolderOpenIcon } from '@patternfly/react-icons/dist/esm/icons/folder-open-icon';
-import { AsleepIcon } from '@patternfly/react-icons/dist/esm/icons/asleep-icon';
+import { InProgressIcon } from '@patternfly/react-icons/dist/esm/icons/in-progress-icon';
 import { NotStartedIcon } from '@patternfly/react-icons/dist/esm/icons/not-started-icon';
+import { UnknownIcon } from '@patternfly/react-icons/dist/esm/icons/unknown-icon';
 
 import { global_danger_color_100 as dangerColor } from '@patternfly/react-tokens/dist/esm/global_danger_color_100';
 import { global_success_color_100 as successColor } from '@patternfly/react-tokens/dist/esm/global_success_color_100';
-import { Spinner, spinnerSize, Icon } from '@patternfly/react-core';
-import clusterStates from '../clusterStates';
+import { Spinner, spinnerSize, Icon, IconComponentProps } from '@patternfly/react-core';
+import clusterStates from './clusterStates';
 
-function ClusterStateIcon(props) {
-  const { clusterState, animated, limitedSupport } = props;
+type ClusterStateIconProps = {
+  clusterState?: clusterStates | string;
+  animated?: boolean;
+  limitedSupport?: boolean;
+};
 
-  const iconProps = {
+const ClusterStateIcon = ({
+  clusterState,
+  animated = false,
+  limitedSupport,
+}: ClusterStateIconProps) => {
+  const iconProps: Pick<IconComponentProps, 'className' | 'size'> = {
     className: 'clusterstate',
     size: 'md',
   };
@@ -28,7 +35,7 @@ function ClusterStateIcon(props) {
   if (limitedSupport && clusterState !== clusterStates.ERROR) {
     return (
       <Icon {...iconProps}>
-        <ExclamationCircleIcon color={dangerColor.value} />
+        <ExclamationCircleIcon color={dangerColor.value} data-icon-type="limited-support" />
       </Icon>
     );
   }
@@ -79,13 +86,13 @@ function ClusterStateIcon(props) {
     case clusterStates.DEPROVISIONED:
       return (
         <Icon {...iconProps}>
-          <BanIcon />
+          <BanIcon data-icon-type="deprovisioned" />
         </Icon>
       );
     case clusterStates.ARCHIVED:
       return (
         <Icon {...iconProps}>
-          <FolderOpenIcon />
+          <FolderOpenIcon data-icon-type="archived" />
         </Icon>
       );
     case clusterStates.HIBERNATING:
@@ -107,14 +114,6 @@ function ClusterStateIcon(props) {
         </Icon>
       );
   }
-}
+};
 
-ClusterStateIcon.propTypes = {
-  clusterState: PropTypes.string,
-  limitedSupport: PropTypes.bool,
-  animated: PropTypes.bool,
-};
-ClusterStateIcon.defaultProps = {
-  animated: false,
-};
 export default ClusterStateIcon;

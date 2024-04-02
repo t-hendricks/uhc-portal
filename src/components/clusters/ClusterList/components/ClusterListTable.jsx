@@ -29,7 +29,7 @@ import { global_warning_color_100 as warningColor } from '@patternfly/react-toke
 import { Link } from 'react-router-dom-v5-compat';
 import * as OCM from '@openshift-assisted/ui-lib/ocm';
 import SearchIcon from '@patternfly/react-icons/dist/esm/icons/search-icon';
-import ClusterStateIcon from '../../common/ClusterStateIcon/ClusterStateIcon';
+import ClusterStateIcon from '../../common/ClusterStateIcon';
 import ClusterLocationLabel from '../../common/ClusterLocationLabel';
 import clusterStates, {
   getClusterStateAndDescription,

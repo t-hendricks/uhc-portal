@@ -101,7 +101,9 @@ class UpgradeTrialClusterDialog extends Component {
     const button = {
       primaryText: 'Contact sales',
       onPrimaryClick: () =>
-        this.buttonLinkClick('https://cloud.redhat.com/products/dedicated/contact/'),
+        UpgradeTrialClusterDialog.buttonLinkClick(
+          'https://cloud.redhat.com/products/dedicated/contact/',
+        ),
     };
 
     if (availableQuota.STANDARD && !availableQuota.MARKETPLACE) {
@@ -131,7 +133,7 @@ class UpgradeTrialClusterDialog extends Component {
     button.secondaryText = 'Enable Marketplace billing';
     button.showSecondary = true;
     button.onSecondaryClick = () =>
-      this.buttonLinkClick(
+      UpgradeTrialClusterDialog.buttonLinkClick(
         'https://marketplace.redhat.com/en-us/products/red-hat-openshift-dedicated',
       );
 

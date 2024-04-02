@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 
 import { Flex } from '@patternfly/react-core';
 
-import ClusterStateIcon from '~/components/clusters/common/ClusterStateIcon/ClusterStateIcon';
+import ClusterStateIcon from '~/components/clusters/common/ClusterStateIcon';
 import clusterStates, {
   ClusterStateAndDescription,
   getClusterStateAndDescription,

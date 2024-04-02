@@ -46,7 +46,10 @@ class CreateOSDCluster extends Page {
 
   osdCreateClusterButton = () => cy.getByTestId('osd-create-cluster-button');
 
-  subscriptionTypeFreeTrailRadio = () =>
+  osdTrialCreateClusterButton = () =>
+    cy.getByTestId('osd-create-trial-cluster', { timeout: 20000 });
+
+  subscriptionTypeFreeTrialRadio = () =>
     cy.get('input[name="billing_model"][value="standard-trial"]');
 
   subscriptionTypeAnnualFixedCapacityRadio = () =>
@@ -62,6 +65,12 @@ class CreateOSDCluster extends Page {
     cy.get('input[id="form-radiobutton-byoc-true-field"]');
 
   awsCloudProviderCard = () => cy.getByTestId('aws-provider-card');
+
+  awsAccountIDInput = () => cy.get('input[id="account_id"]');
+
+  awsAccessKeyInput = () => cy.get('input[id="access_key_id"]');
+
+  awsSecretKeyInput = () => cy.get('input[id="secret_access_key"]');
 
   gcpCloudProviderCard = () => cy.getByTestId('gcp-provider-card');
 
@@ -126,6 +135,10 @@ class CreateOSDCluster extends Page {
 
   encryptVolumesWithCustomerkeysValue = () =>
     cy.getByTestId('Encrypt-volumes-with-customer-keys').find('div');
+
+  useBothIMDSv1AndIMDSv2Radio = () => cy.getByTestId('imds-optional');
+
+  useIMDSv2Radio = () => cy.getByTestId('imds-required');
 
   additionalEtcdEncryptionValue = () => cy.getByTestId('Additional-etcd-encryption').find('div');
 

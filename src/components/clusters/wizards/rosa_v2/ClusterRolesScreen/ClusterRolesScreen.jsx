@@ -34,16 +34,19 @@ import RadioButtons from '../../../../common/ReduxFormComponents/RadioButtons';
 import PopoverHint from '../../../../common/PopoverHint';
 import links from '../../../../../common/installLinks.mjs';
 import { required } from '../../../../../common/validators';
+import { secureRandomValueInRange } from '../../../../../common/helpers';
 import { BackToAssociateAwsAccountLink } from '../common/BackToAssociateAwsAccountLink';
 import CustomOperatorRoleNames from './CustomOperatorRoleNames';
 import CustomerOIDCConfiguration from './CustomerOIDCConfiguration';
 
 export const createOperatorRolesHashPrefix = () => {
   // random 4 alphanumeric hash
-  const prefixArray = Math.random().toString(36).substr(2, 4).split('');
+  const prefixArray = Array.from(crypto.getRandomValues(new Uint8Array(4))).map((value) =>
+    (value % 36).toString(36),
+  );
   // cannot start with a number
   const alphabet = 'abcdefghijklmnopqrstuvwxyz';
-  const randomCharacter = alphabet[Math.floor(Math.random() * alphabet.length)];
+  const randomCharacter = alphabet[secureRandomValueInRange(0, 25)];
   prefixArray[0] = randomCharacter;
   return prefixArray.join('');
 };

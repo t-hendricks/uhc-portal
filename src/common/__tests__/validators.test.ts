@@ -222,6 +222,39 @@ describe('Field is valid Machine CIDR for AWS', () => {
   );
 });
 
+describe('Field is valid Machine CIDR for GCP', () => {
+  it.each([
+    [undefined, undefined, undefined],
+    [
+      '192.168.0.0/25',
+      { multi_az: 'false', hypershift: 'true' },
+      "The subnet mask can't be smaller than '/23', which provides up to 23 nodes.",
+    ],
+    ['192.168.0.0/23', { multi_az: 'false', hypershift: 'true' }, undefined],
+    [
+      '192.168.0.0/25',
+      { multi_az: 'false' },
+      "The subnet mask can't be smaller than '/23', which provides up to 23 nodes.",
+    ],
+    ['192.168.0.0/23', { multi_az: 'false' }, undefined],
+    [
+      '192.168.0.0/25',
+      { multi_az: 'true' },
+      "The subnet mask can't be smaller than '/23', which provides up to 69 nodes.",
+    ],
+    ['192.168.0.0/23', { multi_az: 'true' }, undefined],
+  ])(
+    'value %p and formData %o to be %p',
+    (
+      value: string | undefined,
+      formData: Record<string, string> | undefined,
+      expected: string | undefined,
+    ) => {
+      expect(validators.gcpMachineCidr(value, formData)).toBe(expected);
+    },
+  );
+});
+
 describe('Field is valid Service CIDR', () => {
   it.each([
     [undefined, undefined],
