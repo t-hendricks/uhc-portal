@@ -102,7 +102,9 @@ export const ClusterUpdates = () => {
         <Title headingLevel="h4" className="ocm-c-upgrade-node-draining-title">
           Node draining
         </Title>
-
+        <Text component={TextVariants.p}>
+          Note: You cannot change the node drain grace period after you start the upgrade process.
+        </Text>
         <Text component={TextVariants.p}>
           You may set a grace period for how long pod disruption budget-protected workloads will be
           respected during updates. After this grace period, any workloads protected by pod
