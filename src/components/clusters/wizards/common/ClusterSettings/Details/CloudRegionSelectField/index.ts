@@ -1,23 +1,23 @@
 import { connect } from 'react-redux';
-import { GlobalState } from '~/redux/store';
+import type { GlobalState } from '~/redux/store';
 
 import { CloudRegionSelectField } from './CloudRegionSelectField';
+import { checkRegion } from './validRegions';
 
 type OwnProps = {
   cloudProviderID: string;
-  isBYOC?: boolean;
+  isBYOC: boolean;
+  isMultiAz: boolean;
+  isHypershiftSelected?: boolean;
 };
 
 const mapStateToProps = (state: GlobalState, ownProps: OwnProps) => {
   const { cloudProviders } = state;
   const regions = cloudProviders.providers?.[ownProps.cloudProviderID]?.regions || {};
-  const enabledRegions = Object.values(regions)?.filter((region) => region.enabled);
 
   return {
     cloudProviders,
-    availableRegions: ownProps.isBYOC
-      ? enabledRegions
-      : enabledRegions.filter((region) => !region.ccs_only),
+    regions: Object.values(regions).map((region) => checkRegion(region, ownProps)),
   };
 };
 

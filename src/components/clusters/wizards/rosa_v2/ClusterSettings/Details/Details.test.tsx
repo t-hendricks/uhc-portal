@@ -5,12 +5,8 @@ import * as React from 'react';
 import { Formik } from 'formik';
 
 import { screen, withState } from '~/testUtils';
-import { FieldId, initialValues } from '~/components/clusters/wizards/osd/constants';
-import {
-  noProviders,
-  providersResponse,
-  fulfilledProviders,
-} from '~/common/__test__/regions.fixtures';
+import { FieldId, initialValues } from '~/components/clusters/wizards/rosa_v2/constants';
+import { noProviders, fulfilledProviders } from '~/common/__test__/regions.fixtures';
 import ocpLifeCycleStatuses from '~/components/releases/__mocks__/ocpLifeCycleStatuses';
 
 import clusterService from '~/services/clusterService';
@@ -26,6 +22,7 @@ const version = { id: '4.14.0' };
 describe('<Details />', () => {
   const defaultValues = {
     ...initialValues,
+    [FieldId.Hypershift]: 'false',
     [FieldId.ClusterVersion]: version,
     [FieldId.Region]: 'eu-north-1',
   };
@@ -61,8 +58,6 @@ describe('<Details />', () => {
       const loadedState = {
         cloudProviders: fulfilledProviders,
       };
-      // Even if we already have data ^, Details makes a request on mount.
-      (clusterService.getCloudProviders as jest.Mock).mockResolvedValue(providersResponse);
 
       withState(loadedState).render(
         <Formik initialValues={defaultValues} onSubmit={() => {}}>

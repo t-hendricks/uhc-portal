@@ -9,6 +9,7 @@ import {
   WizardContext as WizardContextDeprecated,
 } from '@patternfly/react-core/deprecated';
 import { Formik } from 'formik';
+import useChrome from '@redhat-cloud-services/frontend-components/useChrome';
 
 import { useFormState } from '~/components/clusters/wizards/hooks';
 import { ocmResourceType, trackEvents } from '~/common/analytics';
@@ -23,11 +24,11 @@ import { AppPage } from '~/components/App/AppPage';
 import { AppDrawerContext } from '~/components/App/AppDrawer';
 import { isRestrictedEnv } from '~/restrictedEnv';
 import { getAccountAndRolesStepId, stepId, stepNameById } from './rosaWizardConstants';
-import { initialValues, initialTouched, FieldId } from './constants';
+import { initialValues, initialValuesRestrictedEnv, initialTouched, FieldId } from './constants';
 
 import CIDRScreen from './CIDRScreen/CIDRScreen';
 import ClusterProxyScreen from './ClusterProxyScreen';
-import ClusterSettingsScreen from './ClusterSettingsScreen';
+import Details from './ClusterSettings/Details/Details';
 import MachinePoolScreen from './MachinePoolScreen';
 import NetworkScreen from './NetworkScreen/NetworkScreen';
 import ReviewClusterScreen from './ReviewClusterScreen';
@@ -254,7 +255,7 @@ class CreateROSAWizardInternal extends React.Component {
             name: stepNameById[stepId.CLUSTER_SETTINGS__DETAILS],
             component: (
               <ErrorBoundary>
-                <ClusterSettingsScreen />
+                <Details />
               </ErrorBoundary>
             ),
             canJumpTo: this.canJumpTo(stepId.CLUSTER_SETTINGS__DETAILS),
@@ -607,9 +608,11 @@ CreateROSAWizardInternal.propTypes = {
 
 const CreateROSAWizardFormik = (props) => {
   const { onSubmit, track } = props;
+  const chrome = useChrome();
+  const restrictedEnv = isRestrictedEnv(chrome);
   return (
     <Formik
-      initialValues={initialValues}
+      initialValues={restrictedEnv ? initialValuesRestrictedEnv : initialValues}
       initialTouched={initialTouched}
       validateOnChange
       onSubmit={(formikValues) => {

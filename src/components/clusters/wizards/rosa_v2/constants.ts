@@ -64,6 +64,7 @@ const hypershiftDefaultSelected = true;
 export const initialValues: FormikValues = {
   [FieldId.Hypershift]: `${hypershiftDefaultSelected}`,
   [FieldId.MultiAz]: 'false',
+  [FieldId.EnableUserWorkloadMonitoring]: true,
   [FieldId.CustomerManagedKey]: 'false',
   [FieldId.KmsKeyArn]: '',
   [FieldId.EtcdEncryption]: false,
@@ -76,6 +77,12 @@ export const initialValues: FormikValues = {
   [FieldId.NetworkPodCidr]: POD_CIDR_DEFAULT,
   [FieldId.NetworkHostPrefix]: HOST_PREFIX_DEFAULT,
   [FieldId.MachinePoolsSubnets]: [emptyAWSSubnet()],
+};
+
+export const initialValuesRestrictedEnv: FormikValues = {
+  ...initialValues,
+  [FieldId.EtcdEncryption]: true,
+  [FieldId.FipsCryptography]: true,
 };
 
 export const initialTouched: FormikTouched<FormikValues> = {
