@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import PropTypes from 'prop-types';
 import { useSelector } from 'react-redux';
 import { Button } from '@patternfly/react-core';
@@ -32,6 +32,7 @@ const CreateRosaWizardFooter = ({
   getUserRoleInfo,
   isSubmitting = false,
 }) => {
+  const { activeStep, onNext, onBack, onClose } = useContext(WizardContextDeprecated);
   const { values, validateForm, setTouched, isValidating, submitForm } = useFormState();
   // used to determine the actions' disabled state.
   // (as a more exclusive rule than isValidating, which relying upon would block progress to the next step)
@@ -58,7 +59,7 @@ const CreateRosaWizardFooter = ({
   const isButtonLoading = isValidating || areAwsResourcesLoading;
   const isButtonDisabled = isNextDeferred || areAwsResourcesLoading;
 
-  const onValidateNext = async (onNext) => {
+  const onValidateNext = async () => {
     // defer execution until any ongoing validation is done
     if (isValidating) {
       if (!isNextDeferred) {
@@ -103,44 +104,40 @@ const CreateRosaWizardFooter = ({
 
   return isSubmitting ? null : (
     <WizardFooterDeprecated>
-      <WizardContextDeprecated.Consumer>
-        {({ activeStep, onNext, onBack, onClose }) => (
-          <>
-            {activeStep.id === stepId.REVIEW_AND_CREATE ? (
-              <Button
-                variant="primary"
-                data-testid="create-cluster-button"
-                onClick={() => submitForm()}
-              >
-                Create cluster
-              </Button>
-            ) : (
-              <Button
-                variant="primary"
-                data-testid="wizard-next-button"
-                onClick={() => {
-                  onValidateNext(onNext);
-                }}
-                isLoading={hasLoadingState(activeStep.id) && isButtonLoading}
-                isDisabled={hasLoadingState(activeStep.id) && isButtonDisabled}
-              >
-                Next
-              </Button>
-            )}
-            <Button
-              variant="secondary"
-              data-testid="wizard-back-button"
-              onClick={onBack}
-              isDisabled={activeStep.id === firstStepId}
-            >
-              Back
-            </Button>
-            <Button variant="link" data-testid="wizard-cancel-button" onClick={onClose}>
-              Cancel
-            </Button>
-          </>
+      <>
+        {activeStep.id === stepId.REVIEW_AND_CREATE ? (
+          <Button
+            variant="primary"
+            data-testid="create-cluster-button"
+            onClick={() => submitForm()}
+          >
+            Create cluster
+          </Button>
+        ) : (
+          <Button
+            variant="primary"
+            data-testid="wizard-next-button"
+            onClick={() => {
+              onValidateNext();
+            }}
+            isLoading={hasLoadingState(activeStep.id) && isButtonLoading}
+            isDisabled={hasLoadingState(activeStep.id) && isButtonDisabled}
+          >
+            Next
+          </Button>
         )}
-      </WizardContextDeprecated.Consumer>
+        <Button
+          variant="secondary"
+          data-testid="wizard-back-button"
+          onClick={onBack}
+          isDisabled={activeStep.id === firstStepId}
+        >
+          Back
+        </Button>
+        <Button variant="link" data-testid="wizard-cancel-button" onClick={onClose}>
+          Cancel
+        </Button>
+      </>
     </WizardFooterDeprecated>
   );
 };
