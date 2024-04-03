@@ -39,6 +39,7 @@ const assistedLibs = [
   'openshift-assisted-ui-lib',
   '@openshift-assisted/ui-lib',
   '@openshift-assisted/locales',
+  'yup'
 ];
 
 /** @callback getOpenshiftAssistedLibsVersionsFunc
