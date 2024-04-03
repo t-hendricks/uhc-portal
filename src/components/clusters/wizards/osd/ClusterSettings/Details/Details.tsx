@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import { useDispatch } from 'react-redux';
 import { Field } from 'formik';
 
@@ -59,7 +59,7 @@ import CloudRegionSelectField from '~/components/clusters/wizards/common/Cluster
 import { CustomerManagedEncryption } from '~/components/clusters/wizards/osd/ClusterSettings/Details/CustomerManagedEncryption';
 import { ClassicEtcdFipsSection } from '~/components/clusters/wizards/common/ClusterSettings/Details/ClassicEtcdFipsSection';
 
-export const Details = () => {
+function Details() {
   const dispatch = useDispatch();
   const {
     values: {
@@ -148,7 +148,7 @@ export const Details = () => {
     ...azQuotaParams,
   });
 
-  const handleCloudRegionChange = () => {
+  const handleCloudRegionChange = useCallback(() => {
     // Clears fields related to the region: VPC and machinePoolsSubnets
     const azCount = isMultiAz ? 3 : 1;
     const mpSubnetsReset = [];
@@ -159,7 +159,7 @@ export const Details = () => {
 
     setFieldValue(FieldId.MachinePoolsSubnets, mpSubnetsReset);
     setFieldValue(FieldId.SelectedVpc, '');
-  };
+  }, [isMultiAz, setFieldValue]);
 
   const handleMultiAzChange = (_event: React.FormEvent<HTMLDivElement>, value: string) => {
     const isMultiAz = value === 'true';
@@ -418,4 +418,6 @@ export const Details = () => {
       </Grid>
     </Form>
   );
-};
+}
+
+export default Details;
