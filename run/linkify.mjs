@@ -42,7 +42,8 @@ export const getJiraStatuses = async () => {
   try {
     // HAC & OCMUI boards allow unauthenticated requests :-)
     // Note: Even mentioning a closed board e.g. `project in (OCMUI, OCM)` results in 400 error.
-    const params = new URLSearchParams({ jql: jiraQuery, maxResults: 100 });
+    const fields = 'key,priority,status,resolution,summary';
+    const params = new URLSearchParams({ jql: jiraQuery, maxResults: 100, fields });
     const url = `https://issues.redhat.com/rest/api/2/search?${params}`;
     const response = await fetch(url);
     const body = await response.text();
@@ -94,10 +95,10 @@ export const linkify = (text, linkFunction, jiraByKey = {}) => {
   );
 
   // Git commits. Shorten on output so it's painless to feed full 40-char hashes into this script.
-  text = text.replace(/[0-9a-f]{7,}/g, (match) =>
+  text = text.replace(/[0-9a-f]{6,}/g, (match) =>
     linkFunction(
       `https://gitlab.cee.redhat.com/service/${REPO}/-/commit/${match}`,
-      match.slice(0, 7),
+      match.slice(0, 9),
     ),
   );
 
