@@ -22,17 +22,17 @@ const flags = yargs
   .option('set-git-branches', { description: 'Create/update git branches.' })
   .option('git-graph', { description: 'Show git graph. Implies --set-git-branches.' })
   .version(false)
-  .help(true)
-  .argv;
+  .help(true).argv;
 
 const getUpstreamRemote = async () => {
   const remoteUrls = await listGitRemotesPromise(__dirname);
+  // eslint-disable-next-line no-restricted-syntax
   for (const remoteName of Object.keys(remoteUrls)) {
     if (remoteUrls[remoteName].match('.*gitlab\\.cee\\.redhat\\.com[:/]service/uhc-portal.*')) {
       return remoteName;
     }
   }
-  throw 'missing remote for uhc-portal repo';
+  throw new Error('missing remote for uhc-portal repo');
 };
 
 const assistedLibs = [
@@ -107,24 +107,32 @@ const getEnvs = async (upstream) => {
     {
       name: 'build_pushed_master',
       ci_job: 'https://ci.int.devshift.net/job/ocm-portal-deploy-staging/',
-      comment: 'Build pushed to https://github.com/RedHatInsights/uhc-portal-frontend-deploy/commits/qa-stable',
-      info: appInfo('https://raw.githubusercontent.com/RedHatInsights/uhc-portal-frontend-deploy/qa-stable/app.info.json'),
+      comment:
+        'Build pushed to https://github.com/RedHatInsights/uhc-portal-frontend-deploy/commits/qa-stable',
+      info: appInfo(
+        'https://raw.githubusercontent.com/RedHatInsights/uhc-portal-frontend-deploy/qa-stable/app.info.json',
+      ),
     },
     {
       name: 'live_consoledev_master',
-      ci_job: 'https://***REMOVED***/job/insights-frontend-deployer/job/uhc-portal-frontend-deploy/job/qa-stable/',
+      ci_job:
+        'https://***REMOVED***/job/insights-frontend-deployer/job/uhc-portal-frontend-deploy/job/qa-stable/',
       comment: 'Live at https://console.dev.redhat.com/openshift/',
       info: appInfo('https://console.dev.redhat.com/apps/openshift/app.info.json'),
     },
     {
       name: 'build_pushed_beta_master',
       ci_job: 'https://ci.int.devshift.net/job/ocm-portal-deploy-staging/',
-      comment: 'Build also pushed to https://github.com/RedHatInsights/uhc-portal-frontend-deploy/commits/qa-beta',
-      info: appInfo('https://raw.githubusercontent.com/RedHatInsights/uhc-portal-frontend-deploy/qa-beta/app.info.json'),
+      comment:
+        'Build also pushed to https://github.com/RedHatInsights/uhc-portal-frontend-deploy/commits/qa-beta',
+      info: appInfo(
+        'https://raw.githubusercontent.com/RedHatInsights/uhc-portal-frontend-deploy/qa-beta/app.info.json',
+      ),
     },
     {
       name: 'live_consoledev_beta_master',
-      ci_job: 'https://***REMOVED***/job/insights-frontend-deployer/job/uhc-portal-frontend-deploy/job/qa-beta/',
+      ci_job:
+        'https://***REMOVED***/job/insights-frontend-deployer/job/uhc-portal-frontend-deploy/job/qa-beta/',
       comment: 'Live at https://console.dev.redhat.com/preview/openshift/',
       info: appInfo('https://console.dev.redhat.com/beta/apps/openshift/app.info.json'),
     },
@@ -137,12 +145,16 @@ const getEnvs = async (upstream) => {
     {
       name: 'build_pushed_candidate',
       ci_job: 'https://ci.int.devshift.net/job/ocm-portal-deploy-candidate/',
-      comment: 'Build pushed to https://github.com/RedHatInsights/uhc-portal-frontend-deploy/commits/prod-beta',
-      info: appInfo('https://raw.githubusercontent.com/RedHatInsights/uhc-portal-frontend-deploy/prod-beta/app.info.json'),
+      comment:
+        'Build pushed to https://github.com/RedHatInsights/uhc-portal-frontend-deploy/commits/prod-beta',
+      info: appInfo(
+        'https://raw.githubusercontent.com/RedHatInsights/uhc-portal-frontend-deploy/prod-beta/app.info.json',
+      ),
     },
     {
       name: 'live_candidate',
-      ci_job: 'https://***REMOVED***/job/insights-frontend-deployer/job/uhc-portal-frontend-deploy/job/prod-beta/',
+      ci_job:
+        'https://***REMOVED***/job/insights-frontend-deployer/job/uhc-portal-frontend-deploy/job/prod-beta/',
       comment: 'Live at https://console.redhat.com/preview/openshift/',
       info: appInfo('https://console.redhat.com/beta/apps/openshift/app.info.json'),
     },
@@ -155,18 +167,22 @@ const getEnvs = async (upstream) => {
     {
       name: 'build_pushed_stable',
       ci_job: 'https://ci.int.devshift.net/job/ocm-portal-deploy-stable/',
-      comment: 'Build pushed to https://github.com/RedHatInsights/uhc-portal-frontend-deploy/commits/prod-stable',
-      info: appInfo('https://raw.githubusercontent.com/RedHatInsights/uhc-portal-frontend-deploy/prod-stable/app.info.json'),
+      comment:
+        'Build pushed to https://github.com/RedHatInsights/uhc-portal-frontend-deploy/commits/prod-stable',
+      info: appInfo(
+        'https://raw.githubusercontent.com/RedHatInsights/uhc-portal-frontend-deploy/prod-stable/app.info.json',
+      ),
     },
     {
       name: 'live_stable',
-      ci_job: 'https://***REMOVED***/job/insights-frontend-deployer/job/uhc-portal-frontend-deploy/job/prod-stable/',
+      ci_job:
+        'https://***REMOVED***/job/insights-frontend-deployer/job/uhc-portal-frontend-deploy/job/prod-stable/',
       comment: 'PRODUCTION - Live at https://console.redhat.com/openshift/',
       info: appInfo('https://console.redhat.com/apps/openshift/app.info.json'),
     },
   ];
   // Resolve all .info in parallel.
-  return await Promise.all(
+  return Promise.all(
     envs.map(async (e) => {
       let info = await e.info;
       if (info.src_hash) {
@@ -239,15 +255,21 @@ const main = async () => {
         // Don't try overwriting branches taken from git like `upstream/master`
         // (would probably be a no-op but safer not to).
         if (!e.name.match('build_pushed_.*|live_.*')) {
-          console.log(`#                  ${paddedName} ${paddedHash}    [${e.info.assisted_ui_lib_versions}]`);
+          console.log(
+            `#                  ${paddedName} ${paddedHash}    [${e.info.assisted_ui_lib_versions}]`,
+          );
         } else if (e.info.src_hash) {
           const cmd = ['git', 'branch', '--force', e.name, e.info.src_hash];
-          console.log(`git branch --force ${paddedName} ${paddedHash}  # [${e.info.assisted_ui_lib_versions}]`);
+          console.log(
+            `git branch --force ${paddedName} ${paddedHash}  # [${e.info.assisted_ui_lib_versions}]`,
+          );
           await execFilePromise(cmd[0], cmd.slice(1), { stdio: 'inherit' });
         } else {
           // Delete branch to avoid relying on stale data. Ignore error if already deleted.
           const cmd = ['git', 'branch', '-D', e.name];
-          console.log(`git branch -D      ${paddedName}    ### MISSING INFO: ${JSON.stringify(e.info)}`);
+          console.log(
+            `git branch -D      ${paddedName}    ### MISSING INFO: ${JSON.stringify(e.info)}`,
+          );
           await execFilePromise(cmd[0], cmd.slice(1), { stdio: 'inherit' }).catch(() => {});
           // In --git-graph mode, this will cause git to fail with `bad revision` error, but we
           // print the git command which you're free to edit if you really want a partial graph.
@@ -257,15 +279,22 @@ const main = async () => {
 
     if (flags.gitGraph) {
       const cmd = [
-        'env', 'GIT_PAGER=', 'git', 'log', ...envs.map((e) => e.name),
+        'env',
+        'GIT_PAGER=',
+        'git',
+        'log',
+        ...envs.map((e) => e.name),
         // Limit graph scope by omitting everything including 2 prod deploys ago.
-        '--not', 'live_stable~2', '--graph',
+        '--not',
+        'live_stable~2',
+        '--graph',
         // TODO: want MR merges, not internal merge commits done while working on MR content.
         //   `[Mm]erge .* into '?(master|candidate|stable).*` captures most of those.
         //   BUT must show all merges FROM master, even if done locally with edited message -
         //   these tell us which content is already deployed.
         // Also include cherry-picks (not using --merges flag which would omit them).
-        '--extended-regexp', "--grep=[Mm]erge|[Cc]herry",
+        '--extended-regexp',
+        '--grep=[Mm]erge|[Cc]herry',
         // %C: color, %h: hash, %d: (decorations).
         // %s subject "Merge branch ...", start %b body on same line to conserve vertical space.
         // %w: indents following lines of body.
