@@ -19,6 +19,8 @@ import {
   TreeViewSearch,
 } from '@patternfly/react-core';
 
+import './TreeViewSelect.scss';
+
 export interface TreeViewData extends TreeViewDataItem {
   category?: string;
   descriptionLabel?: string;
@@ -187,7 +189,9 @@ export function TreeViewSelect(props: TreeViewSelectProps) {
       isScrollable
       variant="raised"
       style={{
-        height: '60%',
+        maxHeight: '60%',
+        height: 'auto',
+        overflow: 'auto',
       }}
     >
       <PanelMain
@@ -198,6 +202,7 @@ export function TreeViewSelect(props: TreeViewSelectProps) {
         <section>
           <PanelMainBody style={{ padding: 0 }}>
             <TreeView
+              className="tree-view-custom-class"
               onSelect={(event, newItem) => {
                 if (newItem.id && !newItem?.children) {
                   setSelected(event, newItem);
