@@ -196,7 +196,7 @@ elif [ "$1" == "candidate" ]; then
 elif [ "$1" == "stable" ]; then
     echo "running stable push"
     rm -rf dist
-    yarn build --mode=production --env api-env=production beta="false"
+    yarn build --mode=production --env api-env=production beta="false" sentry-version="$SENTRY_PROD_VERSION"
     yarn sentry:sourcemaps
     push_build "prod-stable"
     echo "stable branch is available on https://console.redhat.com/openshift"
