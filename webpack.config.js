@@ -16,7 +16,6 @@ limitations under the License.
 
 const path = require('path');
 const fs = require('fs');
-const baseSrcPath = path.resolve(__dirname, 'src');
 const webpack = require('webpack');
 const axios = require('axios').default;
 const HtmlWebpackPlugin = require('html-webpack-plugin');
@@ -267,7 +266,7 @@ module.exports = async (_env, argv) => {
               console.log('Adding local-source-code-loader-middleware', req.url);
               if (req.url.startsWith('/src/')) {
                 const relativePath = req.url.substring('/src/'.length);
-                const filePath = path.join(baseSrcPath, relativePath);
+                const filePath = path.join(srcDir, relativePath);
 
                 try {
                   if (fs.existsSync(filePath)) {
@@ -295,7 +294,7 @@ module.exports = async (_env, argv) => {
               context: ['/mockdata'],
               pathRewrite: { '^/mockdata': '' },
               target: 'http://127.0.0.1:8010',
-              onProxyReq(request) {
+              onProxyReq(/*request*/) {
                 if (verboseLogging) {
                   // Redundant with mockserver's own logging.
                   // console.log('  proxying localhost:8010:', request.path);

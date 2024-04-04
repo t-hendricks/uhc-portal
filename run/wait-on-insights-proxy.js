@@ -15,11 +15,9 @@ const config = {
   // So, need to request https://prod.foo.redhat.com:1337/ without being able to resolve it!
   // This is hack, possibly incorrect SNI (would need to specify `servername` somewhere?),
   // but works.
-  resources: [
-    "https-get://localhost:1337/"
-  ],
+  resources: ['https-get://localhost:1337/'],
   headers: {
-    Host: "prod.foo.redhat.com"
+    Host: 'prod.foo.redhat.com',
   },
 };
 
@@ -27,9 +25,9 @@ waitOn(config)
   .then(() => {
     process.exit(0);
   })
-  .catch(err => {
+  .catch((err) => {
     if (err) {
-      console.error(err)
+      console.error(err);
     }
     process.exit(1);
-  })
+  });

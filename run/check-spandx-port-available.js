@@ -3,15 +3,15 @@
 // Similar to https://github.com/redhataccess/spandx/pull/52,
 // useful until a fix trickles down to insights-proxy.
 
-const porty = require("porty");
+const porty = require('porty');
 
-const spandx_port = parseInt(process.env.SPANDX_PORT, 10);
+const spandxPort = parseInt(process.env.SPANDX_PORT, 10);
 
-porty.test(spandx_port).then(available => {
-  if(available) {
-    console.log(`Port ${spandx_port} is available.`)
+porty.test(spandxPort).then((available) => {
+  if (available) {
+    console.log(`Port ${spandxPort} is available.`);
   } else {
-    console.log(`ERROR: port ${spandx_port} is taken.`)
-    process.exit(1)
+    console.log(`ERROR: port ${spandxPort} is taken.`);
+    process.exit(1);
   }
 });
