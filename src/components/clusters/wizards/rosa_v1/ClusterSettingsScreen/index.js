@@ -1,5 +1,5 @@
 import { connect } from 'react-redux';
-import { formValueSelector, touch } from 'redux-form';
+import { formValueSelector, touch, getFormValues } from 'redux-form';
 
 import wizardConnector from '~/components/clusters/wizards/common/WizardConnector';
 import createOSDInitialValues from '~/components/clusters/wizards/common/createOSDInitialValues';
@@ -25,6 +25,7 @@ const mapStateToProps = (state, ownProps) => {
   const isHypershiftSelected = valueSelector(state, 'hypershift') === 'true';
 
   return {
+    formValues: getFormValues('CreateCluster')(state),
     cloudProviderID,
     isMultiAz,
     product,

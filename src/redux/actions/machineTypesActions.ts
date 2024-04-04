@@ -43,10 +43,20 @@ const getMachineTypesByRegion = (
     { region: { id: region } },
   );
 
+const getMachineTypesByRegionARN = (roleARN: string, region: string) =>
+  action(
+    machineTypesConstants.GET_MACHINE_TYPES_BY_REGION,
+    clusterService
+      .getMachineTypesByRegionARN(roleARN, region)
+      .then((response) => groupByCloudProvider(response.data.items)),
+    { region: { id: region } },
+  );
+
 const clearMachineTypesByRegion = () => action(machineTypesConstants.RESET_INITIAL_STATE);
 
 const machineTypesByRegionActions = {
   getMachineTypesByRegion,
+  getMachineTypesByRegionARN,
   clearMachineTypesByRegion,
 };
 
@@ -57,6 +67,7 @@ export {
   machineTypesActions,
   machineTypesByRegionActions,
   getMachineTypesByRegion,
+  getMachineTypesByRegionARN,
   getMachineTypes,
   clearMachineTypesByRegion,
   groupByCloudProvider,

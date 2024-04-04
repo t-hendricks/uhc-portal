@@ -276,6 +276,44 @@ const getMachineTypesByRegion = (
     },
   );
 
+const getMachineTypesByRegionARN = (roleARN: string, region: string) =>
+  apiRequest.post<{
+    /**
+     * Retrieved list of cloud providers.
+     */
+    items?: Array<MachineType>;
+    /**
+     * Index of the requested page, where one corresponds to the first page.
+     */
+    page?: number;
+    /**
+     * Maximum number of items that will be contained in the returned page.
+     */
+    size?: number;
+    /**
+     * Total number of items of the collection that match the search criteria,
+     * regardless of the size of the page.
+     */
+    total?: number;
+  }>(
+    '/api/clusters_mgmt/v1/aws_inquiries/machine_types',
+    {
+      aws: {
+        sts: {
+          role_arn: roleARN,
+        },
+      },
+      region: {
+        id: region,
+      },
+    },
+    {
+      params: {
+        size: -1,
+      },
+    },
+  );
+
 const getStorageQuotaValues = () =>
   apiRequest.get<{ items: number[] }>('/api/clusters_mgmt/v1/storage_quota_values');
 
@@ -1046,6 +1084,7 @@ const clusterService = {
   getFlavour,
   getMachineTypes,
   getMachineTypesByRegion,
+  getMachineTypesByRegionARN,
   archiveCluster,
   hibernateCluster,
   resumeCluster,
