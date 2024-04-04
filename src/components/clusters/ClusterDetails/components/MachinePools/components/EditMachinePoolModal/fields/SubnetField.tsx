@@ -11,7 +11,6 @@ const fieldId = 'privateSubnetId';
 const SubnetField = ({ cluster }: { cluster: Cluster }) => {
   const [inputField, metaField, { setValue }] = useField<string | undefined>(fieldId);
   const { clusterVpc, isLoading, hasError } = useAWSVPCFromCluster(cluster);
-
   const fieldProps = React.useMemo(
     () => ({
       input: {

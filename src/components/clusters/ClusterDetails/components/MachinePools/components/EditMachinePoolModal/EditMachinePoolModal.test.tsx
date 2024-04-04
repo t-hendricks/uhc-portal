@@ -260,4 +260,65 @@ describe('<EditMachinePoolModal />', () => {
       });
     });
   });
+
+  describe('ROSA Hypershift cluster machine pool', () => {
+    it('Disabled Add Machine Pool button on max replicas', async () => {
+      // Render
+      const { user } = render(
+        <EditMachinePoolModal
+          cluster={{ multi_az: false, hypershift: { enabled: true }, product: { id: 'ROSA' } }}
+          onClose={() => {}}
+          isHypershift
+          machinePoolsResponse={{
+            error: false,
+            fulfilled: true,
+            pending: false,
+            data: [
+              {
+                availability_zones: ['us-east-1a'],
+                href: '/api/clusters_mgmt/v1/clusters/282fg0gt74jjb9558ge1poe8m4dlvb07/machine_pools/daznauro-mp',
+                id: 'fooId',
+                instance_type: 'm5.xlarge',
+                kind: 'MachinePool',
+                replicas: 48,
+                root_volume: { aws: { size: 300 } },
+              },
+              {
+                availability_zones: ['us-east-1a'],
+                href: '/api/clusters_mgmt/v1/clusters/282fg0gt74jjb9558ge1poe8m4dlvb07/machine_pools/daznauro-mp',
+                id: 'fooId2',
+                instance_type: 'm5.xlarge',
+                kind: 'MachinePool',
+                autoscaling: {
+                  min_replicas: 1,
+                  max_replicas: 2,
+                },
+                root_volume: { aws: { size: 300 } },
+              },
+            ],
+          }}
+          machineTypesResponse={{
+            error: false,
+            pending: false,
+            fulfilled: true,
+            types: {},
+            typesByID: {},
+          }}
+        />,
+      );
+
+      // Act
+      const inputField = await screen.findByRole('textbox');
+      await user.type(inputField, 'test');
+
+      const autoScalingCheckbox = await screen.findByRole('checkbox', {
+        name: 'Enable autoscaling',
+      });
+      await user.click(autoScalingCheckbox);
+
+      // Assert
+      expect(screen.getAllByRole('button', { name: 'Plus' })[1]).toBeDisabled();
+      expect(await screen.findByTestId('submit-btn')).toBeDisabled();
+    });
+  });
 });
