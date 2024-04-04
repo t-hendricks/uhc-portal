@@ -11,6 +11,8 @@ import {
   getldapAttributes,
   getldapca,
   isEmptyReduxArray,
+  getInitialValuesForEditing,
+  IDPObjectNames,
 } from '../IdentityProvidersHelper';
 import { IDPFormDataType } from '../model/IDPFormDataType';
 import {
@@ -51,6 +53,8 @@ import {
   openIdTrimFormDataExpected,
   preferredUsernameClaimsExpected,
   preferredUsernameLdapAttributesExpected,
+  providersFixtures,
+  providersExpectedFormData,
 } from './IdentityProvidersHelper.fixtures';
 
 describe('generateIDPName()', () => {
@@ -253,5 +257,42 @@ describe('getGitHubTeamsAndOrgsData', () => {
     ['neither teams or organizations', {}, []],
   ])('%p', (title, type, expected) =>
     expect(getGitHubTeamsAndOrgsData(type)).toStrictEqual(expected),
+  );
+});
+
+describe('getInitialValuesForEditing', () => {
+  it.each([
+    [
+      'OpenID',
+      providersFixtures[0],
+      IDPObjectNames[IDPformValues.OPENID],
+      providersExpectedFormData[0],
+    ],
+    [
+      'Gitlab',
+      providersFixtures[1],
+      IDPObjectNames[IDPformValues.GITLAB],
+      providersExpectedFormData[1],
+    ],
+    [
+      'Google',
+      providersFixtures[2],
+      IDPObjectNames[IDPformValues.GOOGLE],
+      providersExpectedFormData[2],
+    ],
+    [
+      'GitHub',
+      providersFixtures[3],
+      IDPObjectNames[IDPformValues.GITHUB],
+      providersExpectedFormData[3],
+    ],
+    [
+      'LDAP',
+      providersFixtures[4],
+      IDPObjectNames[IDPformValues.LDAP],
+      providersExpectedFormData[4],
+    ],
+  ])('returns proper form values for %p', (title, provider, type, expected) =>
+    expect(getInitialValuesForEditing(provider, type)).toStrictEqual(expected),
   );
 });

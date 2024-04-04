@@ -14,10 +14,8 @@ import {
   getCreateIDPRequestData,
   generateIDPName,
   IDPformValues,
-  getldapAttributes,
-  getOpenIdClaims,
-  getGitHubTeamsAndOrgsData,
   IDPObjectNames,
+  getInitialValuesForEditing,
 } from './IdentityProvidersHelper';
 import { scrollToFirstField } from '../../../../../common/helpers';
 
@@ -27,50 +25,6 @@ export const reduxFormConfig = {
   onSubmitFail: scrollToFirstField,
 };
 const ReduxFormCreateClusterIDP = reduxForm(reduxFormConfig)(IdentityProvidersPage);
-
-const CLIENT_SECRET = 'CLIENT_SECRET'; // Predefined value
-const initialValuesForEditing = (idpEdited, editedType) => {
-  if (!editedType) {
-    return {};
-  }
-  return {
-    idpId: idpEdited.id,
-    type: idpEdited.type,
-    name: idpEdited.name,
-    client_id: idpEdited[editedType].client_id,
-    client_secret: CLIENT_SECRET,
-    mappingMethod: idpEdited.mapping_method,
-    selectedIDP: idpEdited.type,
-    // gitlab
-    gitlab_url: idpEdited[editedType].url,
-    // openid
-    issuer: idpEdited[editedType].issuer,
-    openid_name: getOpenIdClaims(idpEdited[editedType].claims, 'name'),
-    openid_email: getOpenIdClaims(idpEdited[editedType].claims, 'email'),
-    openid_preferred_username: getOpenIdClaims(idpEdited[editedType].claims, 'preferred_username'),
-    openid_extra_scopes: idpEdited[editedType].extra_scopes
-      ? idpEdited[editedType].extra_scopes.join()
-      : '',
-    // google
-    hosted_domain: idpEdited[editedType].hosted_domain,
-    // ldap
-    ldap_id: getldapAttributes(idpEdited[editedType].attributes, 'id'),
-    ldap_preferred_username: getldapAttributes(
-      idpEdited[editedType].attributes,
-      'preferred_username',
-    ),
-    ldap_name: getldapAttributes(idpEdited[editedType].attributes, 'name'),
-    ldap_email: getldapAttributes(idpEdited[editedType].attributes, 'email'),
-    ldap_url: idpEdited[editedType].url,
-    bind_dn: idpEdited[editedType].bind_dn,
-    bind_password: idpEdited[editedType].bind_dn ? 'BIND_PASSWORD' : '',
-    ldap_insecure: idpEdited[editedType].insecure,
-    // github
-    hostname: idpEdited[editedType].hostname,
-    teams: getGitHubTeamsAndOrgsData(idpEdited[editedType]),
-    organizations: getGitHubTeamsAndOrgsData(idpEdited[editedType]),
-  };
-};
 
 const ReduxFormCreateClusterIDPWrapper = (props) => {
   const params = useParams();
@@ -108,9 +62,8 @@ const ReduxFormCreateClusterIDPWrapper = (props) => {
   }
 
   // initialValues are for redux-form initialization and has to be passed through the component
-  // eslint-disable-next-line no-unused-vars
   const initialValues = isEditForm
-    ? initialValuesForEditing(idpEdited, editedType)
+    ? getInitialValuesForEditing(idpEdited, editedType)
     : {
         idpId: null,
         type: selectedIDP || defaultIDP,
