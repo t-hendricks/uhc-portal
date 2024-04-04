@@ -105,6 +105,11 @@ function NetworkScreen(props) {
     if (hasEmptyByoVpcInfo) {
       setFieldValue(FieldId.InstallToVpc, false);
 
+      // Also unset "Configure a cluster-wide proxy" if enabled
+      if (configureProxySelected) {
+        setFieldValue(FieldId.ConfigureProxy, false);
+      }
+
       // Clear also associated security groups when the wizard has this option
       if (securityGroups) {
         setFieldValue(FieldId.SecurityGroups, getDefaultSecurityGroupsSettings());

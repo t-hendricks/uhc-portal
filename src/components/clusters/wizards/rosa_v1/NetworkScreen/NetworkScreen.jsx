@@ -85,6 +85,10 @@ function NetworkScreen(props) {
     if (hasEmptyByoVpcInfo) {
       change('install_to_vpc', false);
 
+      if (formValues.configure_proxy) {
+        change('configure_proxy', false);
+      }
+
       // Clear also associated security groups when the wizard has this option
       if (formValues.securityGroups) {
         change('securityGroups', getDefaultSecurityGroupsSettings());
