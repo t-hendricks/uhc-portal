@@ -52,18 +52,18 @@ async function jiraLabeler(jiraToken, total = 1) {
   const { git, upstreamName } = data;
 
   //  get sha of master, stable, candidate
-  const masterSha = await git.revparse([`${upstreamName}/master`]);
+  // const masterSha = await git.revparse([`${upstreamName}/master`]);
   const stableSha = await git.revparse(['--short', `${upstreamName}/stable`]);
   const condidateSha = await git.revparse(['--short', `${upstreamName}/candidate`]);
 
   // get logs of those branches
-  let masterCommits = await gitLog(git, masterSha, ['--first-parent', '-n 100']);
+  // let masterCommits = await gitLog(git, masterSha, ['--first-parent', '-n 100']);
   const candidateCommits = await gitLog(git, condidateSha, ['-n 100']);
   const candidateCommitsMap = _.keyBy(candidateCommits, 'hash');
   // filter master log to just what's in master and not candidate
-  const candidateMsgMap = _.keyBy(candidateCommits, 'message');
-  masterCommits = masterCommits.filter((commit) => !candidateMsgMap[commit.message]);
-  const masterJiraMap = getJiraCommitMap(masterCommits);
+  // const candidateMsgMap = _.keyBy(candidateCommits, 'message');
+  // masterCommits = masterCommits.filter((commit) => !candidateMsgMap[commit.message]);
+  // const masterJiraMap = getJiraCommitMap(masterCommits);
   const releases = await gitLog(git, stableSha, ['--first-parent', '-n 100']);
   // only get the commits that are merges from candidate
   // (has 2 parents where first is the previous stable commit and the second is the commit from candidate)
