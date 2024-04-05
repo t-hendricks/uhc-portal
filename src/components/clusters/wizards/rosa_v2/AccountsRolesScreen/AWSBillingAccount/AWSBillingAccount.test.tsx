@@ -10,7 +10,7 @@ import {
   checkAccessibility,
   within,
   mockUseFeatureGate,
-  act,
+  waitFor,
 } from '~/testUtils';
 import { CloudAccount } from '~/types/accounts_mgmt.v1/models/CloudAccount';
 import AWSBillingAccount from './AWSBillingAccount';
@@ -111,7 +111,7 @@ describe('<AWSBillingAccount />', () => {
     const { container } = withState(defaultState).render(
       buildTestComponent(<AWSBillingAccount {...defaultProps} />),
     );
-    await act(() => Promise.resolve());
+    // await act(() => Promise.resolve());
 
     // Assert
     await checkAccessibility(container);
@@ -124,10 +124,12 @@ describe('<AWSBillingAccount />', () => {
     shouldRefreshQuotaMock.mockReturnValue(true);
 
     render(buildTestComponent(<AWSBillingAccount {...defaultProps} />));
-    await act(() => Promise.resolve());
+    // await act(() => Promise.resolve());
 
     // Assert
-    expect(dummyDispatch).toHaveBeenCalledTimes(1);
+    await waitFor(() => {
+      expect(dummyDispatch).toHaveBeenCalledTimes(1);
+    });
   });
 
   it('does not call dispatch to get billing account IDs when shouldRefreshQuota returns false called on load', async () => {
@@ -137,10 +139,11 @@ describe('<AWSBillingAccount />', () => {
     shouldRefreshQuotaMock.mockReturnValue(false);
 
     withState(defaultState).render(buildTestComponent(<AWSBillingAccount {...defaultProps} />));
-    await act(() => Promise.resolve());
 
     // Assert
-    expect(dummyDispatch).toHaveBeenCalledTimes(0);
+    await waitFor(() => {
+      expect(dummyDispatch).toHaveBeenCalledTimes(0);
+    });
   });
 
   it('populates the billing account id drop down with accounts in Redux state', async () => {
@@ -150,8 +153,8 @@ describe('<AWSBillingAccount />', () => {
     const { user } = withState(defaultState).render(
       buildTestComponent(<AWSBillingAccount {...defaultProps} />),
     );
-    await act(() => Promise.resolve());
-    await user.click(screen.getByRole('button', { name: 'Options menu' })); // expand drop-down
+    // await act(() => Promise.resolve());
+    await user.click(await screen.findByRole('button', { name: 'Options menu' })); // expand drop-down
 
     // Assert
     expect(screen.getAllByRole('option')).toHaveLength(accountInState.length);
@@ -175,11 +178,13 @@ describe('<AWSBillingAccount />', () => {
       change: changeMock,
     };
     withState(defaultState).render(buildTestComponent(<AWSBillingAccount {...newProps} />));
-    await act(() => Promise.resolve());
+    // await act(() => Promise.resolve());
 
     // Assert
 
-    expect(changeMock).toHaveBeenCalledTimes(1);
+    await waitFor(() => {
+      expect(changeMock).toHaveBeenCalledTimes(1);
+    });
 
     expect(changeMock.mock.calls[0][0]).toEqual('billing_account_id');
     expect(changeMock.mock.calls[0][0]).toEqual('');
@@ -213,10 +218,12 @@ describe('<AWSBillingAccount />', () => {
       },
     };
     withState(newState).render(buildTestComponent(<AWSBillingAccount {...newProps} />));
-    await act(() => Promise.resolve());
+    // await act(() => Promise.resolve());
 
     // Assert
-    expect(changeMock).toHaveBeenCalledTimes(1);
+    await waitFor(() => {
+      expect(changeMock).toHaveBeenCalledTimes(1);
+    });
 
     expect(changeMock.mock.calls[0][0]).toEqual('billing_account_id');
     expect(changeMock.mock.calls[0][0]).toEqual('123');
@@ -243,10 +250,10 @@ describe('<AWSBillingAccount />', () => {
     const { container } = withState(newState).render(
       buildTestComponent(<AWSBillingAccount {...defaultProps} />),
     );
-    await act(() => Promise.resolve());
+    // await act(() => Promise.resolve());
 
     // Assert
-    expect(screen.getByRole('alert')).toBeInTheDocument();
+    expect(await screen.findByRole('alert')).toBeInTheDocument();
     expect(
       within(screen.getByRole('alert')).getByText('I am an org error', { exact: false }),
     ).toBeInTheDocument();
@@ -271,10 +278,10 @@ describe('<AWSBillingAccount />', () => {
     const { container } = withState(newState).render(
       buildTestComponent(<AWSBillingAccount {...defaultProps} />),
     );
-    await act(() => Promise.resolve());
+    // await act(() => Promise.resolve());
 
     // Assert
-    expect(screen.getByRole('alert')).toBeInTheDocument();
+    expect(await screen.findByRole('alert')).toBeInTheDocument();
     expect(
       within(screen.getByRole('alert')).getByText('I am a billing account error', { exact: false }),
     ).toBeInTheDocument();
@@ -294,10 +301,10 @@ describe('<AWSBillingAccount />', () => {
     const { container } = withState(defaultState).render(
       buildTestComponent(<AWSBillingAccount {...newProps} />),
     );
-    await act(() => Promise.resolve());
+    // await act(() => Promise.resolve());
 
     // Assert
-    expect(screen.getByRole('alert')).toBeInTheDocument();
+    expect(await screen.findByRole('alert')).toBeInTheDocument();
 
     expect(
       within(screen.getByRole('alert')).getByText(
@@ -318,10 +325,12 @@ describe('<AWSBillingAccount />', () => {
     };
     shouldRefreshQuotaMock.mockReturnValue(false);
     withState(defaultState).render(buildTestComponent(<AWSBillingAccount {...newProps} />));
-    await act(() => Promise.resolve());
+    // await act(() => Promise.resolve());
 
     // Assert
-    expect(screen.queryByRole('alert')).not.toBeInTheDocument();
+    await waitFor(() => {
+      expect(screen.queryByRole('alert')).not.toBeInTheDocument();
+    });
   });
 
   it('hides info alert if a billing account has not been selected', async () => {
@@ -333,10 +342,12 @@ describe('<AWSBillingAccount />', () => {
     };
     shouldRefreshQuotaMock.mockReturnValue(false);
     withState(defaultState).render(buildTestComponent(<AWSBillingAccount {...newProps} />));
-    await act(() => Promise.resolve());
+    // await act(() => Promise.resolve());
 
     // Assert
-    expect(screen.queryByRole('alert')).not.toBeInTheDocument();
+    await waitFor(() => {
+      expect(screen.queryByRole('alert')).not.toBeInTheDocument();
+    });
   });
 
   it('hides info alert if a infrastructure account has not been selected', async () => {
@@ -348,10 +359,12 @@ describe('<AWSBillingAccount />', () => {
     };
     shouldRefreshQuotaMock.mockReturnValue(false);
     withState(defaultState).render(buildTestComponent(<AWSBillingAccount {...newProps} />));
-    await act(() => Promise.resolve());
+    // await act(() => Promise.resolve());
 
     // Assert
-    expect(screen.queryByRole('alert')).not.toBeInTheDocument();
+    await waitFor(() => {
+      expect(screen.queryByRole('alert')).not.toBeInTheDocument();
+    });
   });
 
   it('displays empty dom element if HCP_AWS_BILLING_SHOW is false', async () => {
@@ -361,10 +374,12 @@ describe('<AWSBillingAccount />', () => {
     const { container } = withState(defaultState).render(
       buildTestComponent(<AWSBillingAccount {...defaultProps} />),
     );
-    await act(() => Promise.resolve());
+    // await act(() => Promise.resolve());
 
     // Assert
-    expect(container).toBeEmptyDOMElement();
+    await waitFor(() => {
+      expect(container).toBeEmptyDOMElement();
+    });
   });
 
   it('does not display an empty dom element if HCP_AWS_BILLING_SHOW feature flag is true', async () => {
@@ -374,10 +389,12 @@ describe('<AWSBillingAccount />', () => {
     const { container } = withState(defaultState).render(
       buildTestComponent(<AWSBillingAccount {...defaultProps} />),
     );
-    await act(() => Promise.resolve());
+    // await act(() => Promise.resolve());
 
     // Assert
-    expect(container).not.toBeEmptyDOMElement();
+    await waitFor(() => {
+      expect(container).not.toBeEmptyDOMElement();
+    });
   });
 
   it('makes field not required if HCP_AWS_BILLING_REQUIRED feature flag is false', async () => {
@@ -394,10 +411,12 @@ describe('<AWSBillingAccount />', () => {
         />,
       ),
     );
-    await act(() => Promise.resolve());
+    // await act(() => Promise.resolve());
 
     // Assert
-    expect(screen.queryByText('Field is required')).not.toBeInTheDocument(); // With the PF 4 select,this is the only way to determine if an element is required
+    await waitFor(() => {
+      expect(screen.queryByText('Field is required')).not.toBeInTheDocument(); // With the PF 4 select,this is the only way to determine if an element is required
+    });
   });
 
   it('makes field required if HCP_AWS_BILLING_REQUIRED feature flag is true', async () => {
@@ -414,9 +433,9 @@ describe('<AWSBillingAccount />', () => {
         />,
       ),
     );
-    await act(() => Promise.resolve());
+    // await act(() => Promise.resolve());
 
     // Assert
-    expect(screen.getByText('Field is required')).toBeInTheDocument(); // With the PF 4 select,this is the only way to determine if an element is required
+    expect(await screen.findByText('Field is required')).toBeInTheDocument(); // With the PF 4 select,this is the only way to determine if an element is required
   });
 });

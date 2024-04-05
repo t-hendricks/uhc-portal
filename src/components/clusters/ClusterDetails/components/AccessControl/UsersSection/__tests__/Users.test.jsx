@@ -45,7 +45,7 @@ describe('<Users />', () => {
       const newProps = { ...props, clusterGroupUsers: stateWithUsers.groupUsers, hasUsers: true };
       const { container } = render(<UsersSection {...newProps} />);
       expect(getUsers).toHaveBeenCalled();
-      expect(screen.getAllByRole('cell', { name: 'dedicated-admins' })).toHaveLength(2);
+      expect(await screen.findAllByRole('cell', { name: 'dedicated-admins' })).toHaveLength(2);
       expect(screen.getAllByRole('cell', { name: 'cluster-admins' })).toHaveLength(2);
       await checkAccessibility(container);
     });

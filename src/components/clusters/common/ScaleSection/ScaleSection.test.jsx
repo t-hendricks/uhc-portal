@@ -25,8 +25,6 @@ describe('<ScaleSection />', () => {
   it('is accessible', async () => {
     const { container } = render(<ConnectedScaleSection {...defaultProps} />);
     await checkAccessibility(container);
-
-    // select aria-label: Compute nodes
   });
   describe('non autoscaling node count hint text', () => {
     apiRequest.get.mockResolvedValue('success');
@@ -109,8 +107,11 @@ describe('<ScaleSection />', () => {
       };
       render(<ConnectedScaleSection {...newProps} />);
       // Assert
-      const sectionToggle = screen.getByRole('button', { name: 'Add node labels' });
-      expect(sectionToggle).toHaveAttribute('aria-expanded', 'true');
+
+      expect(await screen.findByRole('button', { name: 'Add node labels' })).toHaveAttribute(
+        'aria-expanded',
+        'true',
+      );
     });
   });
 });

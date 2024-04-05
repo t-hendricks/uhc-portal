@@ -101,10 +101,12 @@ export { withState, renderWithState as render };
 /* ***** Items outside of React Test Library ************ */
 expect.extend(toHaveNoViolations);
 
-export const checkAccessibility = async (container: HTMLElement | string, options?: any) => {
-  const results = await axe(container, options);
-  expect(results).toHaveNoViolations();
-};
+export const checkAccessibility = async (container: HTMLElement | string, options?: any) =>
+  // Needs to be wrapped in "act" to prevent the "not wrapped in act" warnings
+  // See https://www.benmvp.com/blog/avoiding-react-act-warning-when-accessibility-testing-next-link-jest-axe/
+  act(async () => {
+    expect(await axe(container)).toHaveNoViolations();
+  });
 
 export const stubbedChrome = {
   on: () => () => {},
