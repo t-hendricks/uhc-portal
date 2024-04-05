@@ -181,7 +181,9 @@ describe('<DownloadsPage>', () => {
         </CompatRouter>
       </MemoryRouter>,
     );
-    expect(await accountsService.getCurrentAccount).toHaveBeenCalled();
+    await waitFor(() => {
+      expect(accountsService.getCurrentAccount).toHaveBeenCalled();
+    });
     expect(accountsService.getOrganization).toHaveBeenCalled();
   });
 
@@ -227,7 +229,7 @@ describe('<DownloadsPage>', () => {
     afterEach(() => {
       isRestrictedEnv.mockReturnValue(false);
     });
-    it('renders only OC/ROSA CLI and tokens', () => {
+    it('renders only OC/ROSA CLI and tokens', async () => {
       const props = {
         location: { hash: '' },
         token: { auths: { foo: 'bar' } },
@@ -254,7 +256,7 @@ describe('<DownloadsPage>', () => {
           </CompatRouter>
         </MemoryRouter>,
       );
-      expect(screen.getAllByTestId(/downloads-section-.*/)).toHaveLength(2);
+      expect(await screen.findAllByTestId(/downloads-section-.*/)).toHaveLength(2);
 
       expect(screen.getByTestId('downloads-section-CLI')).toBeInTheDocument();
       expect(screen.getByTestId('downloads-section-TOKENS')).toBeInTheDocument();

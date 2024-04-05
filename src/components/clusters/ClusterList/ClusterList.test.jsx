@@ -39,7 +39,7 @@ describe('<ClusterList />', () => {
       isRestrictedEnv.mockReturnValue(false);
     });
 
-    it('should call onListFlagsSet with ROSA filter', () => {
+    it('should call onListFlagsSet with ROSA filter', async () => {
       isRestrictedEnv.mockReturnValue(true);
       render(
         <MemoryRouter>
@@ -53,9 +53,11 @@ describe('<ClusterList />', () => {
       expect(args[0]).toBe('subscriptionFilter');
       expect(args[1]).toStrictEqual({ plan_id: [normalizedProducts.ROSA] });
       expect(args[2]).toBe(viewConstants.CLUSTERS_VIEW);
+
+      expect(await screen.findByRole('button', { name: 'Create cluster' })).toBeInTheDocument();
     });
 
-    it('does not render filtering', () => {
+    it('does not render filtering', async () => {
       const { rerender } = render(
         <MemoryRouter>
           <CompatRouter>
@@ -74,6 +76,8 @@ describe('<ClusterList />', () => {
         </MemoryRouter>,
       );
       expect(screen.queryByTestId('cluster-list-filter-dropdown')).not.toBeInTheDocument();
+
+      expect(await screen.findByRole('button', { name: 'Create cluster' })).toBeInTheDocument();
     });
   });
 });

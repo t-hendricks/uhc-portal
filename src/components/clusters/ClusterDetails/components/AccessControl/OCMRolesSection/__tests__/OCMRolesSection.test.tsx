@@ -1,7 +1,7 @@
 import React from 'react';
 import type axios from 'axios';
 
-import { render, within, waitFor } from '~/testUtils';
+import { render, within, waitFor, screen } from '~/testUtils';
 
 import apiRequest from '~/services/apiRequest';
 import { Subscription } from '~/types/accounts_mgmt.v1';
@@ -28,28 +28,29 @@ describe('<OCMRolesSection />', () => {
   it('should render', async () => {
     apiRequestMock.get.mockResolvedValue(OCMRoles);
 
-    const { findByRole, getByRole, getAllByRole } = render(<OCMRolesSection {...props} />);
+    const { user } = render(<OCMRolesSection {...props} />);
     expect(apiRequestMock.get).toHaveBeenCalledTimes(1);
     expect(apiRequestMock.get).toHaveBeenCalledWith(
       `/api/accounts_mgmt/v1/subscriptions/${fixtures.clusterDetails.cluster.subscription.id}/role_bindings`,
       expect.objectContaining({}),
     );
 
-    await findByRole('grid', { name: 'OCM Roles and Access' });
-    expect(getAllByRole('row')).toHaveLength(5);
-    expect(getByRole('button', { name: 'Grant role' })).not.toHaveAttribute(
+    await screen.findByRole('grid', { name: 'OCM Roles and Access' });
+    expect(screen.getAllByRole('row')).toHaveLength(5);
+    expect(screen.getByRole('button', { name: 'Grant role' })).not.toHaveAttribute(
       'aria-disabled',
       'true',
     );
-    const row1 = getByRole('row', { name: /Doris Hudson/ });
+    const row1 = screen.getByRole('row', { name: /Doris Hudson/ });
     within(row1).getByRole('cell', { name: 'Cluster editor' });
-    within(row1).getByRole('button', { name: 'Kebab toggle' }).click();
-    expect(await findByRole('menuitem', { name: 'Delete' })).toBeEnabled();
-    const row2 = getByRole('row', { name: /Jak Valdez/ });
+
+    await user.click(within(row1).getByRole('button', { name: 'Kebab toggle' }));
+    expect(await screen.findByRole('menuitem', { name: 'Delete' })).toBeEnabled();
+    const row2 = screen.getByRole('row', { name: /Jak Valdez/ });
     within(row2).getByRole('cell', { name: 'Cluster viewer' });
-    const row3 = getByRole('row', { name: /Olive1/ });
+    const row3 = screen.getByRole('row', { name: /Olive1/ });
     within(row3).getByRole('cell', { name: 'Machine pool editor' });
-    const row4 = getByRole('row', { name: /Plum/ });
+    const row4 = screen.getByRole('row', { name: /Plum/ });
     within(row4).getByRole('cell', { name: 'Identity provider editor' });
   });
 

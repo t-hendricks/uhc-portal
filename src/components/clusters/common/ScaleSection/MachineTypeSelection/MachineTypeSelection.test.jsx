@@ -264,7 +264,7 @@ describe('MachineTypeSelection', () => {
 
   it('flavours are fetched on render', () => {
     render(<MachineTypeSelection {...defaultProps} />);
-    expect(getDefaultFlavour).toBeCalled();
+    expect(getDefaultFlavour).toHaveBeenCalled();
   });
 
   describe('with an error loading machineTypes', () => {
@@ -467,14 +467,14 @@ describe('MachineTypeSelection', () => {
       it('selects default according to flavours API', async () => {
         render(<MachineTypeSelection {...byocProps} />);
 
-        await waitFor(() => expect(fieldOnChange).toBeCalledWith('m5.xlarge'));
+        await waitFor(() => expect(fieldOnChange).toHaveBeenCalledWith('m5.xlarge'));
       });
 
       it('displays only machine types with quota', async () => {
         const { user } = render(<MachineTypeSelection {...byocProps} />);
 
         const optionsMenu = screen.getByLabelText('Machine type select toggle');
-        user.click(optionsMenu);
+        await user.click(optionsMenu);
 
         expect(await screen.findByText('m5.xlarge', { exact: false })).toBeInTheDocument();
       });
@@ -537,7 +537,7 @@ describe('MachineTypeSelection', () => {
       it('selects default according to flavours API', async () => {
         render(<MachineTypeSelection {...unknownCategoryProps} />);
 
-        await waitFor(() => expect(fieldOnChange).toBeCalledWith('m5.xlarge'));
+        await waitFor(() => expect(fieldOnChange).toHaveBeenCalledWith('m5.xlarge'));
       });
 
       it('displays only machine types with quota from known categories', async () => {

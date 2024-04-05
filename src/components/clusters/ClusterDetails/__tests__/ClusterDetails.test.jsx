@@ -243,7 +243,7 @@ describe('<ClusterDetails />', () => {
       );
     });
 
-    it.skip('it should hide 2 tabs', async () => {
+    it('it should hide 2 tabs', async () => {
       render(
         <RouterWrapper>
           <ClusterDetails {...props} />

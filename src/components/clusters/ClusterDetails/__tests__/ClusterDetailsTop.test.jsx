@@ -1,7 +1,8 @@
 import React from 'react';
 
 import { CompatRouter } from 'react-router-dom-v5-compat';
-import { render, checkAccessibility, TestRouter, screen, within } from '~/testUtils';
+import { render, checkAccessibility, TestRouter, screen, within, waitFor } from '~/testUtils';
+
 import ClusterDetailsTop from '../components/ClusterDetailsTop';
 import fixtures, { funcs } from './ClusterDetails.fixtures';
 import clusterStates from '../../common/clusterStates';
@@ -278,6 +279,8 @@ describe('<ClusterDetailsTop />', () => {
       </TestRouter>,
     );
 
-    expect(screen.queryByRole('alert')).not.toBeInTheDocument();
+    await waitFor(() => {
+      expect(screen.queryByRole('alert')).not.toBeInTheDocument();
+    });
   });
 });

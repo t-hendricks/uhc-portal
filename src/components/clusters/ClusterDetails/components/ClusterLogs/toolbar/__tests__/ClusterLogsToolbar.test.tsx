@@ -44,6 +44,7 @@ describe('<ClusterLogsToolbar />', () => {
     );
 
     expect(screen.getByTestId('cluster-history-toolbar')).toBeInTheDocument();
+
     await checkAccessibility(container);
   });
 
