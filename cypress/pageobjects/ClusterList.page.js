@@ -12,10 +12,8 @@ class ClusterList extends Page {
   viewOnlyMyCluster = () => cy.get('label > input[id="view-only-my-clusters"]');
   viewOnlyMyClusterHelp = () => cy.get('label[for="view-only-my-clusters"]').find('button').first();
   tooltipviewOnlyMyCluster = () => cy.get('div.pf-v5-c-popover__body');
-  viewClusterArchives = () =>
-    cy.get('.pf-v5-c-toolbar__content').find('a').contains('View cluster archives');
-  assistedInstallerClusters = () =>
-    cy.get('.pf-v5-c-toolbar__content').find('a').contains('Assisted Installer clusters');
+  viewClusterArchives = () => cy.contains('a', 'View cluster archives');
+  assistedInstallerClusters = () => cy.contains('a', 'Assisted Installer clusters');
   registerCluster = () => cy.getByTestId('register-cluster-item');
   showActiveClusters = () => cy.get('a').contains('Show active clusters');
   itemPerPage = () => cy.get('#options-menu-bottom-toggle').last();
@@ -29,7 +27,7 @@ class ClusterList extends Page {
   }
 
   isClusterListScreen() {
-    cy.contains('h1', 'Clusters');
+    cy.contains('h1, h4', /Clusters|Let's create your first cluster/);
   }
 
   isRegisterClusterScreen() {

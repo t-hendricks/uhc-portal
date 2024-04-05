@@ -1,7 +1,6 @@
 import React from 'react';
-import { shallow } from 'enzyme';
 
-import { render, checkAccessibility } from '~/testUtils';
+import { render, checkAccessibility, screen } from '~/testUtils';
 import AddOnsDrawer from '../AddOnsDrawer';
 import { mockAddOns, mockClusterAddOns } from '../../__tests__/AddOns.fixtures';
 
@@ -9,7 +8,6 @@ import fixtures from '../../../../__tests__/ClusterDetails.fixtures';
 import { addonsQuotaList } from '../../../../../common/__tests__/quota.fixtures';
 
 describe('<AddOnsDrawer />', () => {
-  let wrapper;
   const openModal = jest.fn();
   const addClusterAddOn = jest.fn();
   const updateClusterAddOn = jest.fn();
@@ -42,9 +40,6 @@ describe('<AddOnsDrawer />', () => {
     drawer,
   };
 
-  beforeEach(() => {
-    wrapper = shallow(<AddOnsDrawer {...props} />);
-  });
   afterEach(() => {
     openModal.mockClear();
     addClusterAddOn.mockClear();
@@ -58,20 +53,10 @@ describe('<AddOnsDrawer />', () => {
   });
 
   it('expect 7 rendered cards', () => {
-    const DrawerContent = wrapper.find('DrawerContentBody').props();
-    expect(DrawerContent.children.props.children.length).toEqual(7);
+    render(<AddOnsDrawer {...props} />);
+
+    expect(screen.getAllByTestId('addOnCard')).toHaveLength(7);
   });
 
-  // TODO: Update test using redux state.addOns.drawer
-  xit('ensure state is set correctly and drawer is expanded when card clicked', () => {
-    const activeCard = wrapper.state('activeCard');
-    expect(activeCard).toEqual(null);
-    expect(wrapper.state('isDrawerExpanded')).toBeFalsy();
-
-    wrapper.find('Connect(AddOnsCard)').at(1).simulate('click');
-
-    const updateActiveCard = wrapper.state('activeCard');
-    expect(updateActiveCard?.id).toEqual('managed-integration');
-    expect(wrapper.state('isDrawerExpanded')).toBeTruthy();
-  });
+  it.skip('ensure  drawer is expanded when card clicked', () => {});
 });

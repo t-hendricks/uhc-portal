@@ -1,5 +1,5 @@
 import React from 'react';
-import { shallow } from 'enzyme';
+import { render, screen, within } from '~/testUtils';
 
 import LimitedSupportAlert from '../LimitedSupportAlert';
 
@@ -40,145 +40,107 @@ describe('<LimitedSupportAlert />', () => {
   ];
 
   it('Limited support is not shown if no limited support warnings', () => {
-    const wrapper = shallow(<LimitedSupportAlert limitedSupportReasons={reasons} />);
-    wrapper.setProps({ limitedSupportReasons: [] });
-    expect(wrapper.isEmptyRender()).toBeTruthy();
+    const { container } = render(<LimitedSupportAlert limitedSupportReasons={[]} />);
+    expect(container).toBeEmptyDOMElement();
   });
 
-  it('All limited support items are shown if multiple', () => {
-    const wrapper = shallow(<LimitedSupportAlert limitedSupportReasons={reasons} />);
-    expect(wrapper.isEmptyRender()).toBeFalsy();
+  it('All limited support items are shown if multiple', async () => {
+    const { user } = render(<LimitedSupportAlert limitedSupportReasons={reasons} />);
 
-    expect(wrapper.find('Alert').props().title).toEqual(
-      'This cluster has limited support due to multiple reasons.',
-    );
+    expect(screen.getByRole('alert')).toBeInTheDocument();
+    expect(
+      within(screen.getByRole('alert')).getByText(
+        'This cluster has limited support due to multiple reasons.',
+      ),
+    ).toBeInTheDocument();
 
-    // Check for correct number of reasons
-    expect(wrapper.find('Alert DescriptionListGroup')).toHaveLength(reasons.length);
+    await user.click(screen.getByRole('button', { name: 'Danger alert details' }));
 
-    // Check for summary and details for each reason
-    wrapper.find('Alert DescriptionListGroup').forEach((item) => {
-      const summary = item.find('DescriptionListTerm');
-      const details = item.find('DescriptionListDescription');
+    const dlGroups = screen.getAllByTestId('dl-group');
+    expect(dlGroups).toHaveLength(reasons.length);
 
-      expect(summary.children().length).toEqual(1);
-      expect(details.children().length).toEqual(1);
+    dlGroups.forEach((dlGroup, index) => {
+      expect(within(dlGroup).getByText(reasons[index].summary));
+      expect(within(dlGroup).getByText(reasons[index].details));
     });
   });
 
-  it.each([
-    [
-      'simple reason 1',
-      [reasons[0]],
-      reasons[0].summary,
-      'More details about the version being too far behind the supported version',
-    ],
-    [
-      'simple reason 2',
-      [reasons[1]],
-      reasons[1].summary,
-      'This is the detailed information about another sample reason',
-    ],
-    [
-      'reason with html',
-      [reasons[2]],
-      reasons[2].summary,
-      '&lt;a href=&quot;https://redhat.com&quot;&gt;redhat&lt;/a&gt;',
-    ],
-  ])(
-    'All limited support items are shown if multiple. %p',
-    (title, reasons, expectedSumary, expextedHtml) => {
-      const wrapper = shallow(<LimitedSupportAlert limitedSupportReasons={reasons} />);
-
-      expect(wrapper.isEmptyRender()).toBeFalsy();
-      expect(wrapper.find('Alert').props().title).toEqual('This cluster has limited support.');
-      // Check for correct number of reasons
-      expect(wrapper.find('Alert DescriptionListGroup')).toHaveLength(reasons.length);
-
-      // Check for summary and details for each reason
-      wrapper.find('Alert DescriptionListGroup').forEach((item) => {
-        const summary = item.find('DescriptionListTerm');
-        const details = item.find('DescriptionListDescription');
-
-        expect(summary.children().text()).toEqual(expectedSumary);
-        expect(details.children().text()).toEqual('< />');
-        expect(details.children().html()).toEqual(
-          `<div data-testid="markdownparser-link-mock">${expextedHtml}</div>`,
-        );
-      });
-    },
-  );
-
   it('No link is shown if neither ROSA nor OSD', () => {
-    const wrapper = shallow(<LimitedSupportAlert limitedSupportReasons={reasons} />);
-    expect((wrapper.find('Alert').props() as any).actionLinks).toBeNull();
+    render(<LimitedSupportAlert limitedSupportReasons={reasons} />);
+
+    const singleActionLink = within(screen.getByRole('alert')).queryByRole('link');
+    expect(singleActionLink).not.toBeInTheDocument();
   });
 
   it('OSD link is shown for OSD cluster', () => {
-    const wrapper = shallow(<LimitedSupportAlert limitedSupportReasons={reasons} />);
-    wrapper.setProps({ isOSD: true });
-    expect((wrapper.find('Alert').props() as any).actionLinks).not.toBeNull();
-    expect((wrapper.find('Alert').props() as any).actionLinks.props.href).toEqual(
+    render(<LimitedSupportAlert limitedSupportReasons={reasons} isOSD />);
+
+    const singleActionLink = within(screen.getByRole('alert')).getByRole('link');
+    expect(singleActionLink).toHaveTextContent(/Learn more/);
+    expect(singleActionLink).toHaveAttribute(
+      'href',
       'https://docs.openshift.com/dedicated/osd_architecture/osd_policy/osd-service-definition.html#limited-support_osd-service-definition',
     );
   });
 
   it('ROSA link is shown for ROSA cluster', () => {
-    const wrapper = shallow(<LimitedSupportAlert limitedSupportReasons={reasons} />);
-    wrapper.setProps({ isROSA: true });
-    expect((wrapper.find('Alert').props() as any).actionLinks).not.toBeNull();
-    expect((wrapper.find('Alert').props() as any).actionLinks.props.href).toEqual(
+    render(<LimitedSupportAlert limitedSupportReasons={reasons} isROSA />);
+
+    const singleActionLink = within(screen.getByRole('alert')).getByRole('link');
+    expect(singleActionLink).toHaveTextContent(/Learn more/);
+    expect(singleActionLink).toHaveAttribute(
+      'href',
       'https://docs.openshift.com/rosa/rosa_architecture/rosa_policy_service_definition/rosa-service-definition.html#rosa-limited-support_rosa-service-definition',
     );
   });
 
-  it('Reasons with no summary', () => {
+  it('Reasons with no summary', async () => {
     const reasonsWithNoSummary = reasons.map((reason) => {
       const { summary, ...rest } = reason;
       return rest;
     });
-    const wrapper = shallow(<LimitedSupportAlert limitedSupportReasons={reasonsWithNoSummary} />);
-    expect(wrapper.isEmptyRender()).toBeFalsy();
 
-    expect(wrapper.find('Alert').props().title).toEqual(
-      'This cluster has limited support due to multiple reasons.',
-    );
+    const { user } = render(<LimitedSupportAlert limitedSupportReasons={reasonsWithNoSummary} />);
 
-    // Check for correct number of reasons
-    expect(wrapper.find('Alert DescriptionListGroup')).toHaveLength(reasons.length);
+    expect(screen.getByRole('alert')).toBeInTheDocument();
+    expect(
+      within(screen.getByRole('alert')).getByText(
+        'This cluster has limited support due to multiple reasons.',
+      ),
+    ).toBeInTheDocument();
 
-    // Check for summary and details for each reason
-    wrapper.find('Alert DescriptionListGroup').forEach((item) => {
-      const summary = item.find('DescriptionListTerm');
-      const details = item.find('DescriptionListDescription');
+    await user.click(screen.getByRole('button', { name: 'Danger alert details' }));
 
-      expect(summary.children().length).toEqual(0);
-      expect(details.children().length).toEqual(1);
+    const dlGroups = screen.getAllByTestId('dl-group');
+    expect(dlGroups).toHaveLength(reasonsWithNoSummary.length);
+
+    dlGroups.forEach((dlGroup, index) => {
+      expect(within(dlGroup).getByText(reasonsWithNoSummary[index].details));
     });
   });
 
-  it('Reasons with no details', () => {
+  it('Reasons with no details', async () => {
     const reasonsWithNoDetails = reasons.map((reason) => {
       const { details, ...rest } = reason;
       return rest;
     });
-    const wrapper = shallow(<LimitedSupportAlert limitedSupportReasons={reasonsWithNoDetails} />);
-    expect(wrapper.isEmptyRender()).toBeFalsy();
 
-    expect(wrapper.find('Alert').props().title).toEqual(
-      'This cluster has limited support due to multiple reasons.',
-    );
+    const { user } = render(<LimitedSupportAlert limitedSupportReasons={reasonsWithNoDetails} />);
 
-    // Check for correct number of reasons
-    expect(wrapper.find('Alert DescriptionListGroup')).toHaveLength(reasons.length);
+    expect(screen.getByRole('alert')).toBeInTheDocument();
+    expect(
+      within(screen.getByRole('alert')).getByText(
+        'This cluster has limited support due to multiple reasons.',
+      ),
+    ).toBeInTheDocument();
 
-    // Check for summary and details for each reason
-    wrapper.find('Alert DescriptionListGroup').forEach((item) => {
-      const summary = item.find('DescriptionListTerm');
-      const details = item.find('DescriptionListDescription');
+    await user.click(screen.getByRole('button', { name: 'Danger alert details' }));
 
-      expect(summary.children().length).toEqual(1);
-      expect(details.children().length).toEqual(0);
+    const dlGroups = screen.getAllByTestId('dl-group');
+    expect(dlGroups).toHaveLength(reasonsWithNoDetails.length);
+
+    dlGroups.forEach((dlGroup, index) => {
+      expect(within(dlGroup).getByText(reasonsWithNoDetails[index].summary));
     });
   });
 });

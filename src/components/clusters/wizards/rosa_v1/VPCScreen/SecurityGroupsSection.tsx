@@ -18,6 +18,7 @@ type SecurityGroupFieldProps = {
   selectedVPC: CloudVPC;
   label?: string;
   input: { onChange: (selectedGroupIds: string[]) => void; value: string[] };
+  isHypershift: boolean;
 };
 
 const CREATE_FORM = 'CreateCluster';
@@ -29,6 +30,7 @@ const SecurityGroupField = ({
   input: { onChange, value: selectedGroupIds },
   label,
   selectedVPC,
+  isHypershift,
 }: SecurityGroupFieldProps) => (
   <EditSecurityGroups
     label={label}
@@ -36,15 +38,18 @@ const SecurityGroupField = ({
     selectedGroupIds={selectedGroupIds}
     isReadOnly={false}
     onChange={onChange}
+    isHypershift={isHypershift}
   />
 );
 
 const SecurityGroupsSection = ({
   openshiftVersion,
   selectedVPC,
+  isHypershiftSelected,
 }: {
   openshiftVersion: string;
   selectedVPC: CloudVPC;
+  isHypershiftSelected: boolean;
 }) => {
   const hasFeatureGate = useFeatureGate(SECURITY_GROUPS_FEATURE_DAY1);
   const securityGroups = useGlobalState((state) => valueSelector(state, fieldId));
@@ -64,7 +69,7 @@ const SecurityGroupsSection = ({
   const incompatibleReason = getIncompatibleVersionReason(
     SupportedFeature.SECURITY_GROUPS,
     openshiftVersion,
-    { day1: true },
+    { day1: true, isHypershift: isHypershiftSelected },
   );
 
   const showEmptyAlert =
@@ -111,7 +116,10 @@ const SecurityGroupsSection = ({
             name={`${fieldId}.controlPlane`}
             label={securityGroups.applyControlPlaneToAll ? '' : 'Control plane nodes'}
             selectedVPC={selectedVPC}
-            validate={validateSecurityGroups}
+            validate={(securityGroupIds: string[]) =>
+              validateSecurityGroups(securityGroupIds, isHypershiftSelected)
+            }
+            isHypershift={isHypershiftSelected}
           />
           {!securityGroups.applyControlPlaneToAll && (
             <>
@@ -120,14 +128,20 @@ const SecurityGroupsSection = ({
                 name={`${fieldId}.infra`}
                 label="Infrastructure nodes"
                 selectedVPC={selectedVPC}
-                validate={validateSecurityGroups}
+                validate={(securityGroupIds: string[]) =>
+                  validateSecurityGroups(securityGroupIds, isHypershiftSelected)
+                }
+                isHypershift={isHypershiftSelected}
               />
               <Field
                 component={SecurityGroupField}
                 name={`${fieldId}.worker`}
                 label="Worker nodes"
                 selectedVPC={selectedVPC}
-                validate={validateSecurityGroups}
+                validate={(securityGroupIds: string[]) =>
+                  validateSecurityGroups(securityGroupIds, isHypershiftSelected)
+                }
+                isHypershift={isHypershiftSelected}
               />
             </>
           )}

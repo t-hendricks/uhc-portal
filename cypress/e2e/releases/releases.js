@@ -40,6 +40,6 @@ describe('Releases pages tests', () => {
       .contains("I don't see these versions as upgrade options for my cluster")
       .click();
     cy.get(`a[href="/openshift/"]`).should('exist').and('contain.text', 'clusters list');
-    cy.get('button[aria-label="Close"]').click();
+    cy.get('button[aria-label="Close"]').filter(':visible').click();
   });
 });

@@ -25,7 +25,7 @@ import {
 import { MAX_FILE_SIZE, ACCEPT } from '../../../IdentityProvidersPage/components/CAUpload';
 
 const validateUrlHttp = (value) => validateUrl(value, 'http');
-const validateUrlHttps = (value) => validateUrl(value, 'https');
+const validateUrlHttpsAndHttp = (value) => validateUrl(value, ['http', 'https']);
 
 const validateAtLeastOne = (value, allValues) => {
   if (
@@ -149,7 +149,7 @@ const EditClusterWideProxyDialog = (props) => {
                 label="HTTPS Proxy URL"
                 placeholder={HTTPS_PROXY_PLACEHOLDER}
                 type="text"
-                validate={[validateUrlHttps, validateAtLeastOne]}
+                validate={[validateUrlHttpsAndHttp, validateAtLeastOne]}
                 helpText="Specify a proxy URL to use for HTTPS connections outside the cluster."
                 showHelpTextOnError={false}
               />

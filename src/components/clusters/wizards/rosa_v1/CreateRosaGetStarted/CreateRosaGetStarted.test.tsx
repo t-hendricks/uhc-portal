@@ -4,7 +4,6 @@ import { CompatRouter } from 'react-router-dom-v5-compat';
 import {
   render,
   checkAccessibility,
-  insightsMock,
   mockUseChrome,
   screen,
   mockRestrictedEnv,
@@ -13,7 +12,6 @@ import {
 import { HCP_ROSA_GETTING_STARTED_PAGE } from '~/redux/constants/featureConstants';
 import CreateRosaGetStarted from './CreateRosaGetStarted';
 
-insightsMock();
 mockUseChrome();
 
 const hypershiftMessage =

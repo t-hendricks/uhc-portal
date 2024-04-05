@@ -116,6 +116,7 @@ describe('hasResourceUsageMetrics', () => {
   ])('%p', (title, cluster, showOldMetrics, expected) => {
     // Arrange
     config.configData = {
+      ...config.configData,
       showOldMetrics,
       apiGateway: '',
     };

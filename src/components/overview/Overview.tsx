@@ -64,6 +64,8 @@ const openshiftBannerContents: ProductBannerProps = {
   dataTestId: 'OverviewHeader',
 };
 
+const PAGE_TITLE = 'Overview | Red Hat OpenShift Cluster Manager';
+
 function OverviewEmptyState() {
   const track = useAnalytics();
   const createClusterURL = '/create';
@@ -85,7 +87,7 @@ function OverviewEmptyState() {
   );
 
   return (
-    <AppPage>
+    <AppPage title={PAGE_TITLE}>
       <ProductBanner
         icon={openshiftBannerContents.icon}
         learnMoreLink={openshiftBannerContents.learnMoreLink}

@@ -2,6 +2,7 @@
 /* tslint:disable */
 /* eslint-disable */
 
+import type { ComponentRoute } from './ComponentRoute';
 import type { ListeningMethod } from './ListeningMethod';
 import type { LoadBalancerFlavor } from './LoadBalancerFlavor';
 import type { NamespaceOwnershipPolicy } from './NamespaceOwnershipPolicy';
@@ -35,6 +36,10 @@ export type Ingress = {
    * Cluster routes TLS Secret reference.
    */
   cluster_routes_tls_secret_ref?: string;
+  /**
+   * Component Routes settings.
+   */
+  component_routes?: Record<string, ComponentRoute>;
   /**
    * Indicates if this is the default ingress.
    */

@@ -46,7 +46,9 @@ function ClusterListEmptyState() {
         </Link>
         <EmptyStateActions>
           <Link to="/register">
-            <Button variant="link">Register cluster</Button>
+            <Button variant="link" data-testid="register-cluster-item">
+              Register cluster
+            </Button>
           </Link>
           <Link to="/archived">
             <Button variant="link">View cluster archives</Button>

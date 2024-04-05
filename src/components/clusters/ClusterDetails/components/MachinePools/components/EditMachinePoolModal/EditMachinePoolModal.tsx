@@ -28,7 +28,7 @@ import DiskSizeField from './fields/DiskSizeField';
 import EditLabelsSection from './sections/EditLabelsSection';
 import EditTaintsSection from './sections/EditTaintsSection';
 import EditDetailsSection from './sections/EditDetailsSection';
-import EditSecurityGroupsSection from './sections/EditSecurityGroupsSection';
+import EditSecurityGroupsSection from './sections/SecurityGroups/EditSecurityGroupsSection';
 import { buildNodePoolRequest, buildMachinePoolRequest } from './utils';
 import useMachinePools from './hooks/useMachinePools';
 import useMachineTypes from './hooks/useMachineTypes';
