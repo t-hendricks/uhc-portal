@@ -13,6 +13,7 @@ import {
 } from '@patternfly/react-core/deprecated';
 import './ClusterLogsDatePicker.scss';
 
+const dateFormatRegex = /^\d{4}-\d{2}-\d{2}$/;
 const splitDateStr = (dateStr) =>
   dateStr
     .replace(/T.*/, '')
@@ -187,7 +188,8 @@ const ClusterLogsDatePicker = ({ setFilter, currentFilter, createdAt }) => {
       // invalid date
       return;
     }
-    if (!isValid(dateStr)) {
+    // Throw error if dateStr is invalid or for Chrome and Safari if it does not satisfy regex YYYY-MM-DD
+    if (!isValid(dateStr) || !dateFormatRegex.test(dateStr)) {
       setInvalidDateFormatFrom(true);
       return;
     }
@@ -205,7 +207,9 @@ const ClusterLogsDatePicker = ({ setFilter, currentFilter, createdAt }) => {
       // invalid date
       return;
     }
-    if (!isValid(dateStr)) {
+
+    // Throw error if dateStr is invalid or for Chrome and Safari if it does not satisfy regex YYYY-MM-DD
+    if (!isValid(dateStr) || !dateFormatRegex.test(dateStr)) {
       setInvalidDateFormatTo(true);
       return;
     }
