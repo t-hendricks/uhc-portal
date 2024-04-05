@@ -67,7 +67,7 @@ describe('<CreateClusterPage />', () => {
   });
 
   describe('User with no quota', () => {
-    it('should render', () => {
+    it('should render', async () => {
       render(
         <TestRouter>
           <CompatRouter>
@@ -83,7 +83,9 @@ describe('<CreateClusterPage />', () => {
           </CompatRouter>
         </TestRouter>,
       );
-      expect(screen.getByText('Select an OpenShift cluster type to create')).toBeInTheDocument();
+      expect(
+        await screen.findByText('Select an OpenShift cluster type to create'),
+      ).toBeInTheDocument();
     });
   });
 
