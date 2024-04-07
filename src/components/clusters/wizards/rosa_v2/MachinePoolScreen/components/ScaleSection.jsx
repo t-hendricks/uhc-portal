@@ -25,6 +25,8 @@ import { FieldId } from '~/components/clusters/wizards/rosa_v2/constants';
 import ExternalLink from '~/components/common/ExternalLink';
 import FormKeyValueList from '~/components/common/FormikFormComponents/FormKeyValueList';
 import { useGlobalState } from '~/redux/hooks';
+import MachineTypeSelection from '~/components/clusters/common/ScaleSection/MachineTypeSelection';
+import useCanClusterAutoscale from '~/components/clusters/ClusterDetails/components/MachinePools/components/EditMachinePoolModal/hooks/useCanClusterAutoscale';
 
 import WorkerNodeVolumeSizeSection from './WorkerNodeVolumeSizeSection/WorkerNodeVolumeSizeSection';
 import ImdsSection from './ImdsSection';
@@ -59,10 +61,7 @@ function ScaleSection() {
   const isAutoscalingEnabled = !!autoscalingEnabled;
   const hasNodeLabels = nodeLabels?.[0]?.key ?? false;
   const [isNodeLabelsExpanded, setIsNodeLabelsExpanded] = useState(!!hasNodeLabels);
-  const canAutoScale = useMemo(
-    () => canAutoScaleOnCreateSelector(state, product) ?? false,
-    [state, product],
-  );
+  const canAutoScale = useMemo(() => useCanClusterAutoscale(product) ?? false, [state, product]);
   const clusterVersionRawId = clusterVersion?.raw_id;
 
   const minNodesRequired = useMemo(

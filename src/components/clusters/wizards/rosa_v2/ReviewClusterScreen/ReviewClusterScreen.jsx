@@ -22,6 +22,8 @@ import {
   HYPERSHIFT_WIZARD_FEATURE,
 } from '~/redux/constants/featureConstants';
 
+import { canSelectImds } from '~/components/clusters/wizards/rosa/constants';
+import useCanClusterAutoscale from '~/components/clusters/ClusterDetails/components/MachinePools/components/EditMachinePoolModal/hooks/useCanClusterAutoscale';
 import { DebugClusterRequest } from '../../common/DebugClusterRequest';
 import ReviewSection, {
   FormikReviewItem as ReviewItem,
@@ -73,8 +75,7 @@ const ReviewClusterScreen = ({
     values: formValues,
     setFieldValue,
   } = useFormState();
-
-  const canAutoScale = useSelector((state) => canAutoScaleOnCreateSelector(state, product));
+  const canAutoScale = useCanClusterAutoscale(product);
   const autoscalingEnabled = canAutoScale && !!autoscalingEnabledValue;
   const isHypershiftSelected = hypershiftValue === 'true';
 

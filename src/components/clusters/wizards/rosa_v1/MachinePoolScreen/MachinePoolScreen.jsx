@@ -6,6 +6,7 @@ import { Form, Grid } from '@patternfly/react-core';
 import { billingModels, normalizedProducts } from '~/common/subscriptionTypes';
 import ScaleSection from '~/components/clusters/common/ScaleSection/ScaleSection';
 
+import useCanClusterAutoscale from '~/components/clusters/ClusterDetails/components/MachinePools/components/EditMachinePoolModal/hooks/useCanClusterAutoscale';
 import MachinePoolScreenHeader from './MachinePoolScreenHeader';
 import MachinePoolsSubnets from './MachinePoolsSubnets';
 
@@ -15,7 +16,6 @@ function MachinePoolScreen({
   machineType,
   cloudProviderID,
   product,
-  canAutoScale,
   autoscalingEnabled,
   autoScaleMinNodesValue,
   autoScaleMaxNodesValue,
@@ -32,6 +32,7 @@ function MachinePoolScreen({
   maxWorkerVolumeSizeGiB,
   hasNodeLabels,
 }) {
+  const canAutoscaleCluster = useCanClusterAutoscale(product);
   return (
     <Form
       onSubmit={(event) => {

@@ -16,10 +16,6 @@ import ReviewClusterScreen from './ReviewClusterScreen';
 const mapStateToProps = (state) => {
   const valueSelector = formValueSelector('CreateCluster');
   const product = valueSelector(state, 'product');
-  const canAutoScale = canAutoScaleOnCreateSelector(
-    state.userProfile.organization?.details,
-    product,
-  );
   const autoscalingEnabled = canAutoScale && !!valueSelector(state, 'autoscalingEnabled');
   const installToVPCSelected = valueSelector(state, 'install_to_vpc');
   const configureProxySelected = valueSelector(state, 'configure_proxy');
