@@ -71,11 +71,12 @@ const ReviewClusterScreen = ({
       [FieldId.UpgradePolicy]: upgradePolicy,
       [FieldId.UsePrivateLink]: usePrivateLink,
       [FieldId.WorkerVolumeSizeGib]: workerVolumeSizeGib,
+      [FieldId.BillingModel]: billingModel,
     },
     values: formValues,
     setFieldValue,
   } = useFormState();
-  const canAutoScale = useCanClusterAutoscale(product);
+  const canAutoScale = useCanClusterAutoscale(product, billingModel);
   const autoscalingEnabled = canAutoScale && !!autoscalingEnabledValue;
   const isHypershiftSelected = hypershiftValue === 'true';
 

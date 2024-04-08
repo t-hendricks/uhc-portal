@@ -20,7 +20,7 @@ type AutoscalingFieldProps = {
 
 const AutoscalingField = ({ cluster }: AutoscalingFieldProps) => {
   const [field] = useField(fieldId);
-  const canAutoScale = useCanClusterAutoscale(cluster.product?.id);
+  const canAutoScale = useCanClusterAutoscale(cluster.product?.id, 'test');
 
   const isRosa = isROSA(cluster);
   const autoScalingUrl = isRosa ? links.ROSA_AUTOSCALING : links.APPLYING_AUTOSCALING;

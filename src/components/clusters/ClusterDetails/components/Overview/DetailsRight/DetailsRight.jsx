@@ -51,7 +51,10 @@ function DetailsRight({
   machinePools,
   isDeprovisioned,
 }) {
-  const canAutoscaleCluster = useCanClusterAutoscale(product);
+  const canAutoscaleCluster = useCanClusterAutoscale(
+    cluster?.subscription?.plan?.type,
+    cluster?.subscription?.cluster_billing_model,
+  );
   const isAWS = cluster.subscription?.cloud_provider_id === 'aws';
   const isGCP = cluster.subscription?.cloud_provider_id === 'gcp';
   const isHypershift = isHypershiftCluster(cluster);

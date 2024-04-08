@@ -32,7 +32,7 @@ function MachinePoolScreen({
   maxWorkerVolumeSizeGiB,
   hasNodeLabels,
 }) {
-  const canAutoscaleCluster = useCanClusterAutoscale(product);
+  const canAutoscaleCluster = useCanClusterAutoscale(product, billingModel);
   return (
     <Form
       onSubmit={(event) => {

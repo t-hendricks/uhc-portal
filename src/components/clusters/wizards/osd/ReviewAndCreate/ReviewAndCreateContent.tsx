@@ -35,6 +35,7 @@ export const ReviewAndCreateContent = ({ isPending }: ReviewAndCreateContentProp
   const {
     values: {
       [FieldId.Product]: product,
+      [FieldId.BillingModel]: billingModel,
       [FieldId.InstallToVpc]: installToVpc,
       [FieldId.InstallToSharedVpc]: installToSharedVpc,
       [FieldId.ConfigureProxy]: configureProxy,
@@ -49,7 +50,7 @@ export const ReviewAndCreateContent = ({ isPending }: ReviewAndCreateContentProp
     },
     values: formValues,
   } = useFormState();
-  const canAutoScale = useCanClusterAutoscale(product);
+  const canAutoScale = useCanClusterAutoscale(product, billingModel);
   const autoscalingEnabled = canAutoScale && !!formValues[FieldId.AutoscalingEnabled];
 
   const isByoc = byoc === 'true';

@@ -56,7 +56,7 @@ export const MachinePool = () => {
   const isByoc = byoc === 'true';
   const isRosa = product === normalizedProducts.ROSA;
   const isAWS = cloudProvider === CloudProviderType.Aws;
-  const canAutoScale = useCanClusterAutoscale(product);
+  const canAutoScale = useCanClusterAutoscale(product, billingModel);
   const [isNodeLabelsExpanded, setIsNodeLabelsExpanded] = React.useState(false);
   const awsCreds = React.useMemo<AWSCredentials>(() => getAwsCcsCredentials(values), [values]);
 

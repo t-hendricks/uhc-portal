@@ -61,7 +61,10 @@ function ScaleSection() {
   const isAutoscalingEnabled = !!autoscalingEnabled;
   const hasNodeLabels = nodeLabels?.[0]?.key ?? false;
   const [isNodeLabelsExpanded, setIsNodeLabelsExpanded] = useState(!!hasNodeLabels);
-  const canAutoScale = useMemo(() => useCanClusterAutoscale(product) ?? false, [state, product]);
+  const canAutoScale = useMemo(
+    () => useCanClusterAutoscale(product, billingModelFieldValue) ?? false,
+    [state, product],
+  );
   const clusterVersionRawId = clusterVersion?.raw_id;
 
   const minNodesRequired = useMemo(

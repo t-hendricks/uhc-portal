@@ -23,7 +23,6 @@ const mapStateToProps = (state) => {
 
   if (hasMachinePoolWithAutoscaling) {
     return {
-      canAutoscaleCluster,
       hasAutoscaleMachinePools: true,
       hasAutoscaleCluster,
       totalMinNodesCount,
@@ -33,7 +32,6 @@ const mapStateToProps = (state) => {
     };
   }
   return {
-    canAutoscaleCluster,
     hasAutoscaleMachinePools: false,
     hasAutoscaleCluster,
     totalDesiredComputeNodes,

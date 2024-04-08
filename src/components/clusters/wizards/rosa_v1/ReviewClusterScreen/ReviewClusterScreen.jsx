@@ -47,7 +47,7 @@ const ReviewClusterScreen = ({
   goToStepById,
   isHypershiftSelected,
 }) => {
-  const canAutoScale = useCanClusterAutoscale(formValues.product);
+  const canAutoScale = useCanClusterAutoscale(formValues.product, formValues.billig_model);
   const isByoc = formValues.byoc === 'true';
   const isAWS = formValues.cloud_provider === 'aws';
   const isGCP = formValues.cloud_provider === 'gcp';
