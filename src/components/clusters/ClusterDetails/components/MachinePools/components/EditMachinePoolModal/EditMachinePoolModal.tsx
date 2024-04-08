@@ -142,6 +142,17 @@ const EditMachinePoolModal = ({
     setIsEdit(getIsEditValue());
   }, [getIsEditValue]);
 
+  // Checks if max nodes amount is reached for add machine pool nodes
+  const isMaxReached =
+    isHypershift &&
+    machinePoolsResponse.data &&
+    getNodeCount(
+      machinePoolsResponse?.data,
+      isHypershift,
+      currentMachinePool?.id,
+      currentMachinePool?.instance_type,
+    ) === MAX_NODES_HCP;
+
   return (
     <Formik<EditMachinePoolValues>
       onSubmit={async (values) => {
@@ -197,18 +208,27 @@ const EditMachinePoolModal = ({
               )}
 
               <StackItem>
-                <Tooltip content="Maximum cluster node count limit reached">
+                {isMaxReached ? (
+                  <Tooltip content="Maximum cluster node count limit reached">
+                    <Button
+                      isAriaDisabled={isMaxReached || !isValid}
+                      isDisabled={
+                        isSubmitting ||
+                        !machinePoolsResponse.fulfilled ||
+                        !machineTypesResponse.fulfilled ||
+                        isEqual(initialValues, values)
+                      }
+                      onClick={submitForm}
+                      isLoading={isSubmitting}
+                      className="pf-v5-u-mr-md"
+                      data-testid="submit-btn"
+                    >
+                      {isEdit ? 'Save' : 'Add machine pool'}
+                    </Button>
+                  </Tooltip>
+                ) : (
                   <Button
-                    isAriaDisabled={
-                      isHypershift &&
-                      machinePoolsResponse.data &&
-                      getNodeCount(
-                        machinePoolsResponse?.data,
-                        isHypershift,
-                        currentMachinePool?.id,
-                        currentMachinePool?.instance_type,
-                      ) === MAX_NODES_HCP
-                    }
+                    isAriaDisabled={isMaxReached}
                     isDisabled={
                       !isValid ||
                       isSubmitting ||
@@ -223,7 +243,7 @@ const EditMachinePoolModal = ({
                   >
                     {isEdit ? 'Save' : 'Add machine pool'}
                   </Button>
-                </Tooltip>
+                )}
                 <Button
                   variant="secondary"
                   isDisabled={isSubmitting}
