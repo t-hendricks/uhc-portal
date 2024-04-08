@@ -1,11 +1,10 @@
+/* generated using openapi-typescript-codegen -- do not edit */
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-
 import type { ExternalAuthClaim } from './ExternalAuthClaim';
 import type { ExternalAuthClientConfig } from './ExternalAuthClientConfig';
 import type { TokenIssuer } from './TokenIssuer';
-
 /**
  * Representation of an external authentication provider.
  */

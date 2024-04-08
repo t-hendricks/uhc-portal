@@ -1,10 +1,9 @@
+/* generated using openapi-typescript-codegen -- do not edit */
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-
 import type { ClusterConfigurationMode } from './ClusterConfigurationMode';
 import type { ClusterState } from './ClusterState';
-
 /**
  * Detailed status of a cluster.
  */

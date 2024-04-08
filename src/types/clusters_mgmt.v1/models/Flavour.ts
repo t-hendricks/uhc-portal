@@ -1,12 +1,11 @@
+/* generated using openapi-typescript-codegen -- do not edit */
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-
 import type { AWSFlavour } from './AWSFlavour';
 import type { FlavourNodes } from './FlavourNodes';
 import type { GCPFlavour } from './GCPFlavour';
 import type { Network } from './Network';
-
 /**
  * Set of predefined properties of a cluster. For example, a _huge_ flavour can be a cluster
  * with 10 infra nodes and 1000 compute nodes.

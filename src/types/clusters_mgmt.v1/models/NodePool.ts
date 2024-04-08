@@ -1,14 +1,13 @@
+/* generated using openapi-typescript-codegen -- do not edit */
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-
 import type { AWSNodePool } from './AWSNodePool';
 import type { NodePoolAutoscaling } from './NodePoolAutoscaling';
 import type { NodePoolStatus } from './NodePoolStatus';
 import type { Taint } from './Taint';
 import type { Value } from './Value';
 import type { Version } from './Version';
-
 /**
  * Representation of a node pool in a cluster.
  */

@@ -1,10 +1,9 @@
+/* generated using openapi-typescript-codegen -- do not edit */
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-
 import type { AddOnEnvironmentVariable } from './AddOnEnvironmentVariable';
 import type { AddOnSecretPropagation } from './AddOnSecretPropagation';
-
 /**
  * Representation of an add-on config.
  * The attributes under it are to be used by the addon once its installed in the cluster.

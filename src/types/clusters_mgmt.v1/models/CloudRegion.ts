@@ -1,9 +1,8 @@
+/* generated using openapi-typescript-codegen -- do not edit */
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-
 import type { CloudProvider } from './CloudProvider';
-
 /**
  * Description of a region of a cloud provider.
  */

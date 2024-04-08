@@ -1,7 +1,7 @@
+/* generated using openapi-typescript-codegen -- do not edit */
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-
 /**
  * Representation of a tuning config.
  */
@@ -25,5 +25,5 @@ export type TuningConfig = {
   /**
    * Spec of the tuning config.
    */
-  spec?: any;
+  spec?: Record<string, any>;
 };
