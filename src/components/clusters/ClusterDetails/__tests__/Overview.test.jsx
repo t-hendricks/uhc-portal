@@ -12,6 +12,8 @@ import {
   withState,
 } from '../../../../testUtils';
 
+jest.mock('../components/Overview/SupportStatusLabel');
+
 describe('<Overview />', () => {
   describe('for an OSD cluster', () => {
     const props = {
