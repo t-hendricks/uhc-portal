@@ -1,12 +1,11 @@
+/* generated using openapi-typescript-codegen -- do not edit */
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-
 import type { AWS } from './AWS';
 import type { CloudRegion } from './CloudRegion';
 import type { GCP } from './GCP';
 import type { Version } from './Version';
-
 /**
  * Description of a cloud provider data used for cloud provider inquiries.
  */

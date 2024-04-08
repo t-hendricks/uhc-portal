@@ -1,9 +1,8 @@
+/* generated using openapi-typescript-codegen -- do not edit */
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-
 import type { AWSSTSRole } from './AWSSTSRole';
-
 /**
  * Representation of an sts account role for a rosa cluster
  */

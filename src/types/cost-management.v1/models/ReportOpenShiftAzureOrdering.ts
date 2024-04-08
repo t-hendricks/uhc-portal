@@ -1,7 +1,7 @@
+/* generated using openapi-typescript-codegen -- do not edit */
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-
 /**
  * The ordering to apply to the report. Default is ascending order for the data.
  */
@@ -19,63 +19,51 @@ export type ReportOpenShiftAzureOrdering = {
   project?: ReportOpenShiftAzureOrdering.project;
   node?: ReportOpenShiftAzureOrdering.node;
 };
-
 export namespace ReportOpenShiftAzureOrdering {
   export enum infrastructure {
     ASC = 'asc',
     DESC = 'desc',
   }
-
   export enum supplementary {
     ASC = 'asc',
     DESC = 'desc',
   }
-
   export enum cost {
     ASC = 'asc',
     DESC = 'desc',
   }
-
   export enum usage {
     ASC = 'asc',
     DESC = 'desc',
   }
-
   export enum delta {
     ASC = 'asc',
     DESC = 'desc',
   }
-
   export enum subscription_guid {
     ASC = 'asc',
     DESC = 'desc',
   }
-
   export enum resource_location {
     ASC = 'asc',
     DESC = 'desc',
   }
-
   export enum service_name {
     ASC = 'asc',
     DESC = 'desc',
   }
-
   export enum instance_type {
     ASC = 'asc',
     DESC = 'desc',
   }
-
   export enum cluster {
     ASC = 'asc',
     DESC = 'desc',
   }
-
   export enum project {
     ASC = 'asc',
     DESC = 'desc',
   }
-
   export enum node {
     ASC = 'asc',
     DESC = 'desc',

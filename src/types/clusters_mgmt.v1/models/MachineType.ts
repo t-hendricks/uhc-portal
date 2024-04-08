@@ -1,12 +1,11 @@
+/* generated using openapi-typescript-codegen -- do not edit */
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-
 import type { CloudProvider } from './CloudProvider';
 import type { MachineTypeCategory } from './MachineTypeCategory';
 import type { MachineTypeSize } from './MachineTypeSize';
 import type { Value } from './Value';
-
 /**
  * Machine type.
  */

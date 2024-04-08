@@ -1,13 +1,12 @@
+/* generated using openapi-typescript-codegen -- do not edit */
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-
 import type { AddOn } from './AddOn';
 import type { AddOnInstallationBilling } from './AddOnInstallationBilling';
 import type { AddOnInstallationParameter } from './AddOnInstallationParameter';
 import type { AddOnInstallationState } from './AddOnInstallationState';
 import type { AddOnVersion } from './AddOnVersion';
-
 /**
  * Representation of an add-on installation in a cluster.
  */

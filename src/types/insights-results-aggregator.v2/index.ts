@@ -1,3 +1,4 @@
+/* generated using openapi-typescript-codegen -- do not edit */
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
@@ -18,6 +19,7 @@ export { reportData } from './models/reportData';
 export type { reportMeta } from './models/reportMeta';
 export type { reportResponse } from './models/reportResponse';
 export type { requestId } from './models/requestId';
+export type { ruleId } from './models/ruleId';
 export type { simplifiedReport } from './models/simplifiedReport';
 export type { statusResponse } from './models/statusResponse';
 export type { systemWideRuleDisable } from './models/systemWideRuleDisable';

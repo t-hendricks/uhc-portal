@@ -1,11 +1,10 @@
+/* generated using openapi-typescript-codegen -- do not edit */
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-
 import type { ScheduleType } from './ScheduleType';
 import type { UpgradePolicyState } from './UpgradePolicyState';
 import type { UpgradeType } from './UpgradeType';
-
 /**
  * Representation of an upgrade policy that can be set for a cluster.
  */

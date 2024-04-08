@@ -1,7 +1,7 @@
+/* generated using openapi-typescript-codegen -- do not edit */
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-
 export type ruleContentErrorKey = {
   HasReason?: boolean;
   generic?: string;
@@ -19,7 +19,6 @@ export type ruleContentErrorKey = {
   summary?: string;
   total_risk?: ruleContentErrorKey.total_risk;
 };
-
 export namespace ruleContentErrorKey {
   export enum likelihood {
     '_0' = 0,
@@ -28,7 +27,6 @@ export namespace ruleContentErrorKey {
     '_3' = 3,
     '_4' = 4,
   }
-
   export enum total_risk {
     '_0' = 0,
     '_1' = 1,

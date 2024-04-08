@@ -1,9 +1,8 @@
+/* generated using openapi-typescript-codegen -- do not edit */
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-
 import type { PrivateLinkPrincipal } from './PrivateLinkPrincipal';
-
 /**
  * Contains a list of principals for the Private Link.
  */

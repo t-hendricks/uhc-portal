@@ -1,7 +1,7 @@
+/* generated using openapi-typescript-codegen -- do not edit */
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-
 import type { AddOnConfig } from './AddOnConfig';
 import type { AddOnInstallMode } from './AddOnInstallMode';
 import type { AddOnNamespace } from './AddOnNamespace';
@@ -10,7 +10,6 @@ import type { AddOnRequirement } from './AddOnRequirement';
 import type { AddOnSubOperator } from './AddOnSubOperator';
 import type { AddOnVersion } from './AddOnVersion';
 import type { CredentialRequest } from './CredentialRequest';
-
 /**
  * Representation of an add-on that can be installed in a cluster.
  */

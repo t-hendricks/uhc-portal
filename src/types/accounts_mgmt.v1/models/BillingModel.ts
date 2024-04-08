@@ -1,9 +1,8 @@
+/* generated using openapi-typescript-codegen -- do not edit */
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-
 import type { ObjectReference } from './ObjectReference';
-
 export type BillingModel = ObjectReference & {
   billing_model_type: BillingModel.billing_model_type;
   description: string;
@@ -11,7 +10,6 @@ export type BillingModel = ObjectReference & {
   id: string;
   marketplace?: string;
 };
-
 export namespace BillingModel {
   export enum billing_model_type {
     STANDARD = 'standard',

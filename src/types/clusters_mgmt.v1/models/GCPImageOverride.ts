@@ -1,10 +1,9 @@
+/* generated using openapi-typescript-codegen -- do not edit */
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-
 import type { BillingModelItem } from './BillingModelItem';
 import type { Product } from './Product';
-
 /**
  * GcpImageOverride specifies what a GCP VM Image should be used for a particular product and billing model
  */

@@ -1,9 +1,8 @@
+/* generated using openapi-typescript-codegen -- do not edit */
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-
 import type { ClientComponent } from './ClientComponent';
-
 /**
  * ExternalAuthClientConfig contains configuration for the platform's clients that
  * need to request tokens from the issuer.

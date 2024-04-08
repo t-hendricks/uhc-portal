@@ -1,15 +1,8 @@
+/* generated using openapi-typescript-codegen -- do not edit */
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-
-import type { OrgUnitId } from './OrgUnitId';
-import type { ReportResolution } from './ReportResolution';
-import type { ReportTimeScopeUnits } from './ReportTimeScopeUnits';
-import type { ReportTimeScopeValue } from './ReportTimeScopeValue';
-
-export type OrganizationFilter = {
-  resolution?: ReportResolution;
-  time_scope_value?: ReportTimeScopeValue;
-  time_scope_units?: ReportTimeScopeUnits;
-  org_unit_id?: OrgUnitId;
-};
+/**
+ * String to indicate org unit id
+ */
+export type OrganizationFilter = string;

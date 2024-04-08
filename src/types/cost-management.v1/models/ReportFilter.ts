@@ -1,13 +1,12 @@
+/* generated using openapi-typescript-codegen -- do not edit */
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-
 import type { OrgUnitId } from './OrgUnitId';
 import type { ReportResolution } from './ReportResolution';
 import type { ReportResourceScope } from './ReportResourceScope';
 import type { ReportTimeScopeUnits } from './ReportTimeScopeUnits';
 import type { ReportTimeScopeValue } from './ReportTimeScopeValue';
-
 export type ReportFilter = {
   /**
    * Limits the data points returns and aggregates remaining data.

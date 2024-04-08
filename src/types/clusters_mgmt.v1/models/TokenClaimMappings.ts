@@ -1,10 +1,9 @@
+/* generated using openapi-typescript-codegen -- do not edit */
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-
 import type { GroupsClaim } from './GroupsClaim';
 import type { UsernameClaim } from './UsernameClaim';
-
 /**
  * The claim mappings defined for users and groups.
  */

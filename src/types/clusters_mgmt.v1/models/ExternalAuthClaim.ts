@@ -1,10 +1,9 @@
+/* generated using openapi-typescript-codegen -- do not edit */
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-
 import type { TokenClaimMappings } from './TokenClaimMappings';
 import type { TokenClaimValidationRule } from './TokenClaimValidationRule';
-
 /**
  * The claims and validation rules used in the configuration of the external authentication.
  */
