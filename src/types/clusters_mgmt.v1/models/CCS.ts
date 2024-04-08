@@ -1,7 +1,7 @@
+/* generated using openapi-typescript-codegen -- do not edit */
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-
 export type CCS = {
   /**
    * Indicates the type of this object. Will be 'CCS' if this is a complete object or 'CCSLink' if it is just a link.

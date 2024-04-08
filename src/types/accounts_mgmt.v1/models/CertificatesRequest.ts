@@ -1,12 +1,11 @@
+/* generated using openapi-typescript-codegen -- do not edit */
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-
 export type CertificatesRequest = {
   arch?: CertificatesRequest.arch;
   type: CertificatesRequest.type;
 };
-
 export namespace CertificatesRequest {
   export enum arch {
     X86 = 'x86',
@@ -19,7 +18,6 @@ export namespace CertificatesRequest {
     IA64 = 'ia64',
     AARCH64 = 'aarch64',
   }
-
   export enum type {
     SCA = 'sca',
   }

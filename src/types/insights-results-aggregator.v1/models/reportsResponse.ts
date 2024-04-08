@@ -1,9 +1,8 @@
+/* generated using openapi-typescript-codegen -- do not edit */
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-
 import type { reportsComponent } from './reportsComponent';
-
 /**
  * Reports for a set of clusters
  */
@@ -37,7 +36,7 @@ export type reportsResponse = {
       }>;
       system?: {
         hostname?: string | null;
-        metadata?: any;
+        metadata?: Record<string, any>;
       };
     }
   >;

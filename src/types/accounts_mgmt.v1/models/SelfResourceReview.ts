@@ -1,7 +1,7 @@
+/* generated using openapi-typescript-codegen -- do not edit */
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-
 export type SelfResourceReview = {
   action: SelfResourceReview.action;
   cluster_ids: Array<string>;
@@ -10,7 +10,6 @@ export type SelfResourceReview = {
   resource_type: SelfResourceReview.resource_type;
   subscription_ids: Array<string>;
 };
-
 export namespace SelfResourceReview {
   export enum action {
     GET = 'get',
@@ -19,7 +18,6 @@ export namespace SelfResourceReview {
     DELETE = 'delete',
     UPDATE = 'update',
   }
-
   export enum resource_type {
     CLUSTER = 'Cluster',
     SUBSCRIPTION = 'Subscription',

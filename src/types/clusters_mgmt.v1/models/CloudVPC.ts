@@ -1,10 +1,9 @@
+/* generated using openapi-typescript-codegen -- do not edit */
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-
 import type { SecurityGroup } from './SecurityGroup';
 import type { Subnetwork } from './Subnetwork';
-
 /**
  * Description of a cloud provider virtual private cloud.
  */

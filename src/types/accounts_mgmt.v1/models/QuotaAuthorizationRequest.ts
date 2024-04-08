@@ -1,9 +1,8 @@
+/* generated using openapi-typescript-codegen -- do not edit */
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-
 import type { ReservedResource } from './ReservedResource';
-
 export type QuotaAuthorizationRequest = {
   account_username: string;
   availability_zone?: string;

@@ -1,13 +1,12 @@
+/* generated using openapi-typescript-codegen -- do not edit */
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-
 import type { AuditLog } from './AuditLog';
 import type { AwsEtcdEncryption } from './AwsEtcdEncryption';
 import type { Ec2MetadataHttpTokens } from './Ec2MetadataHttpTokens';
 import type { PrivateLinkClusterConfiguration } from './PrivateLinkClusterConfiguration';
 import type { STS } from './STS';
-
 /**
  * _Amazon Web Services_ specific settings of a cluster.
  */

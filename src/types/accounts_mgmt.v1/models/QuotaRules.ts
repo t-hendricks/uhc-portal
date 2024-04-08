@@ -1,9 +1,8 @@
+/* generated using openapi-typescript-codegen -- do not edit */
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-
 import type { ObjectReference } from './ObjectReference';
-
 export type QuotaRules = ObjectReference & {
   availability_zone?: string;
   billing_model?: QuotaRules.billing_model;
@@ -15,7 +14,6 @@ export type QuotaRules = ObjectReference & {
   quota_id?: string;
   type?: string;
 };
-
 export namespace QuotaRules {
   export enum billing_model {
     STANDARD = 'standard',

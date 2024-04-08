@@ -1,10 +1,9 @@
+/* generated using openapi-typescript-codegen -- do not edit */
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-
 import type { TagRate } from './TagRate';
 import type { TieredRate } from './TieredRate';
-
 export type CostModelResp = {
   name: string;
   description: string;
@@ -17,7 +16,6 @@ export type CostModelResp = {
   rates?: Array<TieredRate | TagRate>;
   distribution?: CostModelResp.distribution;
 };
-
 export namespace CostModelResp {
   export enum distribution {
     MEMORY = 'memory',

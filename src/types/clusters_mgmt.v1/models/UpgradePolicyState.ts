@@ -1,9 +1,8 @@
+/* generated using openapi-typescript-codegen -- do not edit */
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-
 import type { UpgradePolicyStateValue } from './UpgradePolicyStateValue';
-
 /**
  * Representation of an upgrade policy state that that is set for a cluster.
  */

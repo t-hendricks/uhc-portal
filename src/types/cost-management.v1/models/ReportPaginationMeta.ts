@@ -1,7 +1,7 @@
+/* generated using openapi-typescript-codegen -- do not edit */
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-
 import type { ReportAzureFilter } from './ReportAzureFilter';
 import type { ReportAzureGrouping } from './ReportAzureGrouping';
 import type { ReportAzureOrdering } from './ReportAzureOrdering';
@@ -19,7 +19,6 @@ import type { ReportOpenShiftAzureOrdering } from './ReportOpenShiftAzureOrderin
 import type { ReportOpenShiftFilter } from './ReportOpenShiftFilter';
 import type { ReportOpenShiftGrouping } from './ReportOpenShiftGrouping';
 import type { ReportOrdering } from './ReportOrdering';
-
 export type ReportPaginationMeta = {
   count?: number;
   delta?: ReportDelta;

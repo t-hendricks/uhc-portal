@@ -1,7 +1,7 @@
+/* generated using openapi-typescript-codegen -- do not edit */
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-
 import type { Account } from './Account';
 import type { AccountReference } from './AccountReference';
 import type { Capability } from './Capability';
@@ -9,7 +9,6 @@ import type { Label } from './Label';
 import type { OneMetric } from './OneMetric';
 import type { Plan } from './Plan';
 import type { SubscriptionCommonFields } from './SubscriptionCommonFields';
-
 export type Subscription = SubscriptionCommonFields & {
   capabilities?: Array<Capability>;
   created_at?: string;

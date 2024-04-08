@@ -1,10 +1,9 @@
+/* generated using openapi-typescript-codegen -- do not edit */
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-
 import type { AMIOverride } from './AMIOverride';
 import type { GCPImageOverride } from './GCPImageOverride';
-
 /**
  * ImageOverrides holds the lists of available images per cloud provider.
  */
