@@ -13,6 +13,33 @@
       }
     },
     "schemas": {
+      "alert": {
+        "properties": {
+          "name": {
+            "example": "SomeCriticalAlert",
+            "type": "string"
+          },
+          "namespace": {
+            "example": "openshift-kube-apiserver",
+            "type": "string"
+          },
+          "severity": {
+            "example": "critical",
+            "type": "string"
+          },
+          "url": {
+            "example": "https://some_url.com/monitoring/alerts?orderBy=asc&sortBy=Severity&alert-name=SomeCriticalAlert",
+            "type": "string"
+          }
+        },
+        "required": [
+          "name",
+          "namespace",
+          "severity",
+          "url"
+        ],
+        "type": "object"
+      },
       "clusterId": {
         "description": "ID of the cluster in valid UUID format",
         "format": "uuid",
@@ -110,6 +137,46 @@
         },
         "type": "object"
       },
+      "dvoReportMeta": {
+        "properties": {
+          "highest_severity": {
+            "description": "Highest recommendation severity affecting this namespace + cluster",
+            "type": "integer"
+          },
+          "hits_by_severity": {
+            "additionalProperties": {
+              "type": "integer"
+            },
+            "description": "A dictionary with the number of DVO recommendation hits grouped by their severity. Always provides the severity keys even if there are no recommendations currently hitting.",
+            "example": {
+              "1": 2,
+              "2": 3,
+              "3": 0,
+              "4": 1
+            },
+            "type": "object"
+          },
+          "last_checked_at": {
+            "description": "Timestamp of the last analysis",
+            "format": "date-time",
+            "type": "string"
+          },
+          "objects": {
+            "description": "Total number of unique objects (workloads) being affected by DVO recommendations in this namespace. When a workload is being affected by several recommendations at once, it still counts as one affected object/workload in the context of a namespace.",
+            "type": "integer"
+          },
+          "recommendations": {
+            "description": "Total number of DVO recommendations affecting this namespace",
+            "type": "integer"
+          },
+          "reported_at": {
+            "description": "Timestamp of the first analysis",
+            "format": "date-time",
+            "type": "string"
+          }
+        },
+        "type": "object"
+      },
       "gatheringRequests": {
         "description": "List of stored requests for given orgId + clusterId",
         "items": {
@@ -145,6 +212,33 @@
         "maxLength": 36,
         "minLength": 36,
         "type": "string"
+      },
+      "operator_condition": {
+        "properties": {
+          "condition": {
+            "example": "Degraded",
+            "type": "string"
+          },
+          "name": {
+            "example": "authentication",
+            "type": "string"
+          },
+          "reason": {
+            "example": "AsExpected",
+            "type": "string"
+          },
+          "url": {
+            "example": "https://some_url.com/k8s/cluster/config.openshift.io~v1~ClusterOperator/authentication",
+            "type": "string"
+          }
+        },
+        "required": [
+          "name",
+          "condition",
+          "reason",
+          "url"
+        ],
+        "type": "object"
       },
       "ratingSchema": {
         "properties": {
@@ -549,6 +643,56 @@
             "type": "object"
           }
         },
+        "type": "object"
+      },
+      "upgradeRisksPrediction": {
+        "properties": {
+          "cluster_id": {
+            "example": "aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee",
+            "type": "string"
+          },
+          "last_checked_at": {
+            "example": "2011-15-04T00:05:23Z",
+            "format": "date-time",
+            "type": "string"
+          },
+          "prediction_status": {
+            "example": "ok",
+            "type": "string"
+          },
+          "upgrade_recommended": {
+            "example": true,
+            "type": "boolean"
+          },
+          "upgrade_risks_predictors": {
+            "$ref": "#/components/schemas/upgradeRisksPredictors"
+          }
+        },
+        "required": [
+          "cluster_id",
+          "prediction_status"
+        ],
+        "type": "object"
+      },
+      "upgradeRisksPredictors": {
+        "properties": {
+          "alerts": {
+            "items": {
+              "$ref": "#/components/schemas/alert"
+            },
+            "type": "array"
+          },
+          "operator_conditions": {
+            "items": {
+              "$ref": "#/components/schemas/operator_condition"
+            },
+            "type": "array"
+          }
+        },
+        "required": [
+          "alerts",
+          "operator_conditions"
+        ],
         "type": "object"
       }
     }
@@ -1142,57 +1286,7 @@
                           "type": "boolean"
                         },
                         "upgrade_risks_predictors": {
-                          "properties": {
-                            "alerts": {
-                              "items": {
-                                "properties": {
-                                  "name": {
-                                    "example": "APIRemovedInNextEUSReleaseInUse",
-                                    "type": "string"
-                                  },
-                                  "namespace": {
-                                    "example": "openshift-kube-apiserver",
-                                    "type": "string"
-                                  },
-                                  "severity": {
-                                    "example": "info",
-                                    "type": "string"
-                                  },
-                                  "url": {
-                                    "example": "https://my-cluster.com/monitoring/alerts?orderBy=asc&sortBy=Severity&alert-name=APIRemovedInNextEUSReleaseInUse",
-                                    "type": "string"
-                                  }
-                                },
-                                "type": "object"
-                              },
-                              "type": "array"
-                            },
-                            "operator_conditions": {
-                              "items": {
-                                "properties": {
-                                  "condition": {
-                                    "example": "Failing",
-                                    "type": "string"
-                                  },
-                                  "name": {
-                                    "example": "authentication",
-                                    "type": "string"
-                                  },
-                                  "reason": {
-                                    "example": "AsExpected",
-                                    "type": "string"
-                                  },
-                                  "url": {
-                                    "example": "https://my-cluster.com/k8s/cluster/config.openshift.io~v1~ClusterOperator/authentication",
-                                    "type": "string"
-                                  }
-                                },
-                                "type": "object"
-                              },
-                              "type": "array"
-                            }
-                          },
-                          "type": "object"
+                          "$ref": "#/components/schemas/upgradeRisksPredictors"
                         }
                       },
                       "type": "object"
@@ -1508,44 +1602,7 @@
                             "type": "object"
                           },
                           "metadata": {
-                            "properties": {
-                              "highest_severity": {
-                                "description": "Highest recommendation severity affecting this namespace",
-                                "type": "integer"
-                              },
-                              "hits_by_severity": {
-                                "additionalProperties": {
-                                  "type": "integer"
-                                },
-                                "description": "A dictionary with the number of DVO recommendation hits grouped by their severity. Always provides the severity keys even if there are no recommendations currently hitting.",
-                                "example": {
-                                  "1": 2,
-                                  "2": 3,
-                                  "3": 0,
-                                  "4": 1
-                                },
-                                "type": "object"
-                              },
-                              "last_checked_at": {
-                                "description": "Timestamp of the last analysis",
-                                "format": "date-time",
-                                "type": "string"
-                              },
-                              "objects": {
-                                "description": "Total number of objects affecting this namespace",
-                                "type": "integer"
-                              },
-                              "recommendations": {
-                                "description": "Total number of DVO recommendations affecting an organization affecting this namespace",
-                                "type": "integer"
-                              },
-                              "reported_at": {
-                                "description": "Timestamp of the first analysis",
-                                "format": "date-time",
-                                "type": "string"
-                              }
-                            },
-                            "type": "object"
+                            "$ref": "#/components/schemas/dvoReportMeta"
                           },
                           "namespace": {
                             "properties": {
@@ -1634,44 +1691,7 @@
                       "type": "object"
                     },
                     "metadata": {
-                      "properties": {
-                        "highest_severity": {
-                          "description": "Highest recommendation severity affecting this namespace + cluster",
-                          "type": "integer"
-                        },
-                        "hits_by_severity": {
-                          "additionalProperties": {
-                            "type": "integer"
-                          },
-                          "description": "A dictionary with the number of DVO recommendation hits grouped by their severity. Always provides the severity keys even if there are no recommendations currently hitting.",
-                          "example": {
-                            "1": 2,
-                            "2": 3,
-                            "3": 0,
-                            "4": 1
-                          },
-                          "type": "object"
-                        },
-                        "last_checked_at": {
-                          "description": "Timestamp of the last analysis",
-                          "format": "date-time",
-                          "type": "string"
-                        },
-                        "objects": {
-                          "description": "Total number of objects affecting this namespace and cluster",
-                          "type": "integer"
-                        },
-                        "recommendations": {
-                          "description": "Total number of DVO recommendations affecting this namespace and cluster",
-                          "type": "integer"
-                        },
-                        "reported_at": {
-                          "description": "Timestamp of the first analysis",
-                          "format": "date-time",
-                          "type": "string"
-                        }
-                      },
-                      "type": "object"
+                      "$ref": "#/components/schemas/dvoReportMeta"
                     },
                     "namespace": {
                       "properties": {
@@ -1694,8 +1714,21 @@
                             "example": "rule.module|ERROR_KEY",
                             "type": "string"
                           },
-                          "description": {
+                          "details": {
                             "description": "The title of the rule, a short description.",
+                            "type": "string"
+                          },
+                          "extra_data": {
+                            "description": "Used as templating/interpolation data for other content (details, resolution, etc.), has varying structure depending on the rules in the report, but should always be a valid JSON object.",
+                            "type": "object"
+                          },
+                          "modified": {
+                            "description": "The date the recommendation was last updated.",
+                            "format": "date-time",
+                            "type": "string"
+                          },
+                          "more_info": {
+                            "description": "Additional information regarding the recommendation.",
                             "type": "string"
                           },
                           "objects": {
@@ -1714,9 +1747,24 @@
                             },
                             "type": "array"
                           },
-                          "remediation": {
+                          "reason": {
+                            "description": "Reason for the issue, giving the user more accurate description of the cause.",
+                            "type": "string"
+                          },
+                          "resolution": {
                             "description": "Resolution steps of the issue, possibly linking to a resolution article in the knowledge base.",
                             "type": "string"
+                          },
+                          "total_risk": {
+                            "description": "Total risk - calculated from rule impact and likelihood.",
+                            "enum": [
+                              0,
+                              1,
+                              2,
+                              3,
+                              4
+                            ],
+                            "type": "integer"
                           }
                         },
                         "type": "object"
@@ -2335,6 +2383,62 @@
         "summary": "Returns a list of cluster where the given rule is active. Also returns a list of clusters, for which the rule has been disabled.",
         "tags": [
           "rule",
+          "prod"
+        ]
+      }
+    },
+    "/upgrade-risks-prediction": {
+      "post": {
+        "description": "Predictions that are going to be returned are specified by list of cluster IDs that is part of request body.",
+        "operationId": "getUpgradeRisksPredictionForClustersPost",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "example": "{\"clusters\": [\"34c3ecc5-624a-49a5-bab8-4fdc5e51a266\"]}",
+              "schema": {
+                "properties": {
+                  "clusters": {
+                    "items": {
+                      "$ref": "#/components/schemas/clusterId"
+                    },
+                    "type": "array"
+                  }
+                },
+                "type": "object"
+              }
+            }
+          },
+          "description": "List of cluster IDs. Each ID must conform to UUID format.",
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "predictions": {
+                      "items": {
+                        "$ref": "#/components/schemas/upgradeRisksPrediction"
+                      },
+                      "type": "array"
+                    },
+                    "status": {
+                      "$ref": "#/components/schemas/statusResponse"
+                    }
+                  },
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Latest available update prediction for the given list of cluster IDs. Returns status of the prediction and their predictor facts that were taken into account for each cluster."
+          },
+          "400": {
+            "description": "Invalid request, usually caused when some cluster belongs to different organization."
+          }
+        },
+        "summary": "Returns the prediction based on latest stats for the given list of clusters.",
+        "tags": [
           "prod"
         ]
       }

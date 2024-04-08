@@ -1,5 +1,5 @@
 import React from 'react';
-import { screen, render, checkAccessibility, within, insightsMock } from '~/testUtils';
+import { screen, render, checkAccessibility, within } from '~/testUtils';
 import DetailsLeft from './DetailsLeft';
 import fixtures from '../../__tests__/ClusterDetails.fixtures';
 
@@ -44,8 +44,6 @@ const checkForValueAbsence = (label, value) => {
     expect(screen.queryByText(value)).not.toBeInTheDocument();
   }
 };
-
-insightsMock();
 
 describe('<DetailsLeft />', () => {
   it('is accessible', async () => {

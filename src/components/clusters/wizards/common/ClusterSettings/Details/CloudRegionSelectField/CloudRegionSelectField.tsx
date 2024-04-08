@@ -1,51 +1,43 @@
 import React from 'react';
 import { FieldInputProps } from 'formik';
 
-import { FormSelect, FormSelectOption, FormSelectProps } from '@patternfly/react-core';
+import { FormSelect, FormSelectOption } from '@patternfly/react-core';
 import { Spinner } from '@redhat-cloud-services/frontend-components/Spinner';
 
-import { CloudRegion } from '~/types/clusters_mgmt.v1';
 import { GlobalState } from '~/redux/store';
-import {
-  AWS_DEFAULT_REGION,
-  GCP_DEFAULT_REGION,
-} from '~/components/clusters/wizards/common/createOSDInitialValues';
 import ErrorBox from '~/components/common/ErrorBox';
 import { useFormState } from '~/components/clusters/wizards/hooks';
+import { defaultRegionID, CheckedRegion } from './validRegions';
 
 interface CloudRegionSelectFieldProps {
-  field: FieldInputProps<FormSelectProps>;
+  field: FieldInputProps<string>;
   cloudProviderID: string;
-  availableRegions: CloudRegion[];
+  regions: CheckedRegion[];
   cloudProviders: GlobalState['cloudProviders'];
-  isMultiAz?: boolean;
   isDisabled?: boolean;
   handleCloudRegionChange?(): void;
 }
 
 export const CloudRegionSelectField = ({
   field,
-  isMultiAz,
   cloudProviderID,
   cloudProviders,
-  availableRegions,
+  regions,
   isDisabled,
   handleCloudRegionChange,
 }: CloudRegionSelectFieldProps) => {
   const { setFieldValue } = useFormState();
 
   React.useEffect(() => {
-    const selectedRegionData =
-      cloudProviders?.providers?.[cloudProviderID]?.regions?.[field.value?.toString()];
-
-    if (!selectedRegionData?.supports_multi_az) {
-      setFieldValue(
-        field.name,
-        cloudProviderID === 'aws' ? AWS_DEFAULT_REGION : GCP_DEFAULT_REGION,
-      );
+    const selectedRegionData = regions.find((r) => r.id === field.value);
+    if (!selectedRegionData || selectedRegionData.disableReason) {
+      const resetRegion = defaultRegionID(regions, cloudProviderID);
+      if (resetRegion) {
+        setFieldValue(field.name, resetRegion);
+        handleCloudRegionChange?.();
+      }
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isMultiAz, cloudProviders, setFieldValue, field.name, cloudProviderID]);
+  }, [regions, cloudProviderID, field.value, field.name, setFieldValue, handleCloudRegionChange]);
 
   if (cloudProviders.fulfilled) {
     return (
@@ -56,18 +48,22 @@ export const CloudRegionSelectField = ({
         isDisabled={isDisabled}
         value={field.value}
         onChange={(_event, value) => {
-          handleCloudRegionChange?.();
           setFieldValue(field.name, value);
+          handleCloudRegionChange?.();
         }}
       >
-        {availableRegions.map((region) => (
-          <FormSelectOption
-            key={region.id}
-            value={region.id}
-            label={`${region.id}, ${region.display_name}`}
-            isDisabled={isMultiAz && !region.supports_multi_az}
-          />
-        ))}
+        {regions
+          // Never hide current selection.  If current region is invalid we'll
+          // normally force a different selection — but that affects next render.
+          .filter((region) => !region.hide || region.id === field.value)
+          .map((region) => (
+            <FormSelectOption
+              key={region.id}
+              value={region.id}
+              label={`${region.id}, ${region.display_name}`}
+              isDisabled={!!region.disableReason}
+            />
+          ))}
       </FormSelect>
     );
   }

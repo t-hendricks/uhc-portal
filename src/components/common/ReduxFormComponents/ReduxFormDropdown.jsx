@@ -45,7 +45,11 @@ class DropDownSelect extends React.Component {
         {...extraProps}
       >
         {options.map((option) => (
-          <FormSelectOption key={option.value} value={option.value} label={option.name} />
+          <FormSelectOption
+            key={option.value || option.name}
+            value={option.value}
+            label={option.name}
+          />
         ))}
       </FormSelect>
     );
@@ -72,7 +76,7 @@ DropDownSelect.propTypes = {
   options: PropTypes.arrayOf(
     PropTypes.shape({
       name: PropTypes.string.isRequired,
-      value: PropTypes.string.isRequired,
+      value: PropTypes.string,
     }),
   ).isRequired,
   input: PropTypes.shape({

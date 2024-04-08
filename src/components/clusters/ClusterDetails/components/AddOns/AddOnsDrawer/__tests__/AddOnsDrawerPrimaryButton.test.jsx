@@ -1,13 +1,11 @@
 import React from 'react';
-import { shallow } from 'enzyme';
 
-import { render, checkAccessibility } from '~/testUtils';
+import { render, checkAccessibility, screen } from '~/testUtils';
 import AddOnsPrimaryButton from '../AddOnsDrawerPrimaryButton';
 
 import { managedIntegration } from '../../__tests__/AddOns.fixtures';
 
 describe('<AddOnsPrimaryButton />', () => {
-  let wrapper;
   const addClusterAddOn = jest.fn();
   const addClusterAddOnResponse = {};
   const openModal = jest.fn();
@@ -36,10 +34,6 @@ describe('<AddOnsPrimaryButton />', () => {
     subscriptionModels,
   };
 
-  beforeEach(() => {
-    wrapper = shallow(<AddOnsPrimaryButton {...props} />);
-  });
-
   afterEach(() => {
     addClusterAddOn.mockClear();
     openModal.mockClear();
@@ -51,22 +45,31 @@ describe('<AddOnsPrimaryButton />', () => {
   });
 
   it('should render both open and uninstall buttons for ready cluster', () => {
-    const OpenButton = wrapper.find('Button').at(0).props();
+    render(<AddOnsPrimaryButton {...props} />);
 
-    expect(OpenButton.children[0].trim()).toEqual('Open in Console');
-    expect(OpenButton.href).toEqual(
+    expect(screen.getByRole('link', { name: 'Open in Console' })).toHaveAttribute(
+      'href',
       'https://example.com/veryfakeconsole/k8s/ns/redhat-rhmi-operator/operators.coreos.com~v1alpha1~ClusterServiceVersion/fake-addon.0.0.1',
     );
 
-    const UninstallButton = wrapper.find('ButtonWithTooltip').at(0).props();
-    expect(UninstallButton.children).toEqual('Uninstall');
-    expect(UninstallButton.disableReason).toBeFalsy();
+    expect(screen.getByRole('link', { name: 'Open in Console' })).toHaveAttribute(
+      'aria-disabled',
+      'false',
+    );
+
+    expect(screen.getByRole('button', { name: 'Uninstall' })).toHaveAttribute(
+      'aria-disabled',
+      'false',
+    );
   });
 
-  it('uninstall button should open uninstall modal', () => {
-    const UninstallButton = wrapper.find('ButtonWithTooltip').at(0);
-    UninstallButton.simulate('click');
-    expect(openModal).toBeCalledWith('add-ons-delete-modal', {
+  it('uninstall button should open uninstall modal', async () => {
+    expect(openModal).not.toHaveBeenCalled();
+
+    const { user } = render(<AddOnsPrimaryButton {...props} />);
+    await user.click(screen.getByRole('button', { name: 'Uninstall' }));
+
+    expect(openModal).toHaveBeenCalledWith('add-ons-delete-modal', {
       addOnName: managedIntegration.name,
       addOnID: managedIntegration.id,
       clusterID: 'fake id',
@@ -74,18 +77,22 @@ describe('<AddOnsPrimaryButton />', () => {
   });
 
   it('expect contact support button if addon failed', () => {
-    wrapper.setProps({
+    const failedProps = {
+      ...props,
       installedAddOn: { state: 'failed', operator_version: '0.0.1' },
-    });
-    const SupportButton = wrapper.find('Button').at(0);
-    expect(SupportButton.props().children).toEqual('Contact support');
-    expect(SupportButton.props().href).toEqual(
+    };
+
+    render(<AddOnsPrimaryButton {...failedProps} />);
+
+    expect(screen.getByRole('link', { name: 'Contact support' })).toHaveAttribute(
+      'href',
       'https://access.redhat.com/support/cases/#/case/new',
     );
   });
 
   it('expect install button to be disabled if cluster is not ready', () => {
-    wrapper.setProps({
+    const notReadyProps = {
+      ...props,
       installedAddOn: null,
       cluster: {
         canEdit: true,
@@ -93,15 +100,19 @@ describe('<AddOnsPrimaryButton />', () => {
         state: 'installing',
         console: { url: 'https://example.com/veryfakeconsole' },
       },
-    });
+    };
 
-    const InstallButton = wrapper.find('ButtonWithTooltip').at(0);
-    expect(InstallButton.props().disableReason).toBeTruthy();
-    expect(InstallButton.props().children).toEqual('Install');
+    render(<AddOnsPrimaryButton {...notReadyProps} />);
+
+    expect(screen.getByRole('button', { name: 'Install' })).toHaveAttribute(
+      'aria-disabled',
+      'true',
+    );
   });
 
   it('expect install button to be disabled if no cluster edit', () => {
-    wrapper.setProps({
+    const noEditProps = {
+      ...props,
       installedAddOn: null,
       cluster: {
         canEdit: false,
@@ -109,15 +120,19 @@ describe('<AddOnsPrimaryButton />', () => {
         state: 'ready',
         console: { url: 'https://example.com/veryfakeconsole' },
       },
-    });
+    };
 
-    const InstallButton = wrapper.find('ButtonWithTooltip');
-    expect(InstallButton.props().disableReason).toBeTruthy();
-    expect(InstallButton.props().children).toEqual('Install');
+    render(<AddOnsPrimaryButton {...noEditProps} />);
+
+    expect(screen.getByRole('button', { name: 'Install' })).toHaveAttribute(
+      'aria-disabled',
+      'true',
+    );
   });
 
   it('expect install button to be disabled if cluster addon is pending', () => {
-    wrapper.setProps({
+    const pendingProps = {
+      ...props,
       installedAddOn: null,
       addClusterAddOnResponse: { pending: true },
       cluster: {
@@ -126,15 +141,18 @@ describe('<AddOnsPrimaryButton />', () => {
         state: 'ready',
         console: { url: 'https://example.com/veryfakeconsole' },
       },
-    });
+    };
+    render(<AddOnsPrimaryButton {...pendingProps} />);
 
-    const InstallButton = wrapper.find('ButtonWithTooltip');
-    expect(InstallButton.props().disableReason).toBeTruthy();
-    expect(InstallButton.props().children).toEqual('Install');
+    expect(screen.getByRole('button', { name: 'Install' })).toHaveAttribute(
+      'aria-disabled',
+      'true',
+    );
   });
 
   it('expect install button to be disabled if cluster addon requirements are not met', () => {
-    wrapper.setProps({
+    const reqsNotMeetProps = {
+      ...props,
       installedAddOn: null,
       addClusterAddOnResponse: {},
       activeCardRequirementsFulfilled: false,
@@ -144,15 +162,19 @@ describe('<AddOnsPrimaryButton />', () => {
         state: 'ready',
         console: { url: 'https://example.com/veryfakeconsole' },
       },
-    });
+    };
 
-    const InstallButton = wrapper.find('ButtonWithTooltip');
-    expect(InstallButton.props().disableReason).toBeTruthy();
-    expect(InstallButton.props().children).toEqual('Install');
+    render(<AddOnsPrimaryButton {...reqsNotMeetProps} />);
+
+    expect(screen.getByRole('button', { name: 'Install' })).toHaveAttribute(
+      'aria-disabled',
+      'true',
+    );
   });
 
-  it('expect to be able to install if user has permission and cluster is ready', () => {
-    wrapper.setProps({
+  it('expect to be able to install if user has permission and cluster is ready', async () => {
+    const canInstallProps = {
+      ...props,
       installedAddOn: null,
       addClusterAddOnResponse: { pending: false },
       activeCardRequirementsFulfilled: true,
@@ -162,15 +184,18 @@ describe('<AddOnsPrimaryButton />', () => {
         state: 'ready',
         console: { url: 'https://example.com/veryfakeconsole' },
       },
-    });
+    };
 
-    const InstallButton = wrapper.find('ButtonWithTooltip');
-    expect(InstallButton.props().variant).toEqual('primary');
-    expect(InstallButton.props().disableReason).toBeFalsy();
-    expect(InstallButton.props().children).toEqual('Install');
+    const { user } = render(<AddOnsPrimaryButton {...canInstallProps} />);
 
-    InstallButton.simulate('click');
-    expect(openModal).toBeCalledWith('add-ons-parameters-modal', {
+    expect(screen.getByRole('button', { name: 'Install' })).toHaveAttribute(
+      'aria-disabled',
+      'false',
+    );
+
+    await user.click(screen.getByRole('button', { name: 'Install' }));
+
+    expect(openModal).toHaveBeenCalledWith('add-ons-parameters-modal', {
       addOn: managedIntegration,
       isUpdateForm: false,
       clusterID: 'fake id',

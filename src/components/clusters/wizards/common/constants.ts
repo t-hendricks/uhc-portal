@@ -25,6 +25,7 @@ export enum FieldId {
   MinReplicas = 'min_replicas',
   MaxReplicas = 'max_replicas',
   MultiAz = 'multi_az',
+  EnableUserWorkloadMonitoring = 'enable_user_workload_monitoring',
   NodesCompute = 'nodes_compute',
   MachineTypeForceChoice = 'machine_type_force_choice',
   FipsCryptography = 'fips',

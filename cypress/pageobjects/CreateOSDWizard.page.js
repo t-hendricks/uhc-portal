@@ -44,7 +44,7 @@ class CreateOSDCluster extends Page {
   showsFakeClusterBanner = () =>
     cy.contains('div', 'On submit, a fake OSD cluster will be created.');
 
-  osdCreateClusterButton = () => cy.getByTestId('osd-create-cluster-button');
+  osdCreateClusterButton = () => cy.getByTestId('osd-create-cluster-button', { timeout: 20000 });
 
   osdTrialCreateClusterButton = () =>
     cy.getByTestId('osd-create-trial-cluster', { timeout: 20000 });

@@ -19,6 +19,7 @@ function InstallToVPC({
   cloudProviderID,
   isSharedVpcSelected,
   hostedZoneDomainName,
+  isHypershiftSelected,
 }) {
   return (
     cloudProviderID === 'aws' && (
@@ -61,11 +62,16 @@ function InstallToVPC({
           selectedAZs={selectedAZs}
           privateLinkSelected={privateLinkSelected}
         />
-        <SecurityGroupsSection selectedVPC={selectedVPC} openshiftVersion={openshiftVersion} />
+        <SecurityGroupsSection
+          selectedVPC={selectedVPC}
+          openshiftVersion={openshiftVersion}
+          isHypershiftSelected={isHypershiftSelected}
+        />
         <SharedVPCSection
           hostedZoneDomainName={hostedZoneDomainName}
           isSelected={isSharedVpcSelected}
           openshiftVersion={openshiftVersion}
+          isHypershiftSelected={isHypershiftSelected}
         />
       </>
     )
@@ -82,6 +88,7 @@ InstallToVPC.propTypes = {
   privateLinkSelected: PropTypes.bool,
   isSharedVpcSelected: PropTypes.bool,
   cloudProviderID: PropTypes.string,
+  isHypershiftSelected: PropTypes.bool,
 };
 
 export default InstallToVPC;

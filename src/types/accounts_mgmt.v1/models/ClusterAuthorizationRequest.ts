@@ -45,5 +45,6 @@ export namespace ClusterAuthorizationRequest {
     RHACS = 'RHACS',
     RHACSTRIAL = 'RHACSTrial',
     ARO = 'ARO',
+    RHOIC = 'RHOIC',
   }
 }

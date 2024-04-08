@@ -27,12 +27,13 @@ class AddOnsCard extends Component {
         ouiaId={`card-addon-${addOn.id}`}
         onClick={onClick}
         className="ocm-c-addons__card"
+        data-testid="addOnCard"
       >
         <CardHeader className="ocm-c-addons__card--header">
           {addOn.icon && <img alt={addOn.name} src={`data:image/png;base64,${addOn.icon}`} />}
         </CardHeader>
         <CardTitle>{addOn.name}</CardTitle>
-        <CardBody className="ocm-c-addons__card--body">
+        <CardBody className="ocm-c-addons__card--body" data-testid="cardBody">
           {AddOnsCard.reduceCardDescription(addOn)}
         </CardBody>
         <CardFooter>

@@ -31,6 +31,7 @@ const LimitedSupportAlert = ({
       variant="danger"
       className="pf-v5-u-mt-md"
       isInline
+      role="alert"
       isExpandable={limitedSupportReasons.length > 1}
       title={`This cluster has limited support${
         limitedSupportReasons.length > 1 ? ' due to multiple reasons' : ''
@@ -50,7 +51,7 @@ const LimitedSupportAlert = ({
       <DescriptionList>
         {limitedSupportReasons.map((reason, index) => (
           // eslint-disable-next-line react/no-array-index-key
-          <DescriptionListGroup key={`reason-${index}`}>
+          <DescriptionListGroup key={`reason-${index}`} data-testid="dl-group">
             {reason.summary ? <DescriptionListTerm>{reason.summary}</DescriptionListTerm> : null}
             {reason.details ? (
               <DescriptionListDescription>

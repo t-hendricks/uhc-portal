@@ -17,7 +17,8 @@ import { FieldId } from '~/components/clusters/wizards/osd/constants';
 import { GcpEncryption } from './GcpEncryption';
 
 interface CustomerManagedEncryptionProps {
-  hasCustomerManagedKey: string;
+  // TODO: name sounds like a bool but is actually string
+  hasCustomerManagedKey: 'true' | 'false';
   region: string;
   cloudProvider: string;
   kmsKeyArn: string;
@@ -84,6 +85,9 @@ export const CustomerManagedEncryption = ({
       </GridItem>
 
       {hasCustomerManagedKey === 'true' &&
+        // TODO: The AWS case is shared with rosa_v2/ClusterSettings/Details/AWSCustomerManagedEncryption.tsx
+        //   To reduce duplication can make this component GCP-only, lift isGCP check to parent.
+        //   (but check decision on OCMUI-1593 wrt. `isRequired`)
         (isGCP ? (
           <GcpEncryption region={region} />
         ) : (

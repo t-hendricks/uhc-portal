@@ -23,7 +23,6 @@ export enum OsdFieldId {
   PersistentStorage = 'persistent_storage',
   LoadBalancers = 'load_balancers',
   SecureBoot = 'secure_boot',
-  EnableUserWorkloadMonitoring = 'enable_user_workload_monitoring',
   ClusterPrivacy = 'cluster_privacy',
   InstallToSharedVpc = 'install_to_shared_vpc',
   SharedHostProjectID = 'shared_host_project_id',

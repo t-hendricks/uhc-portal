@@ -8,3 +8,4 @@ export type { Error } from './models/Error';
 export type { ErrorList } from './models/ErrorList';
 export type { List } from './models/List';
 export type { ObjectReference } from './models/ObjectReference';
+export type { WarehouseCount } from './models/WarehouseCount';

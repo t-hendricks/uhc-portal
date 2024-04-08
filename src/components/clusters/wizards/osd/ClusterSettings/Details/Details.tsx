@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import { useDispatch } from 'react-redux';
 import { Field } from 'formik';
 import { CheckboxField } from '~/components/clusters/wizards/form/CheckboxField';
@@ -52,15 +52,13 @@ import { emptyAWSSubnet } from '~/components/clusters/wizards/common/createOSDIn
 import { billingModels } from '~/common/subscriptionTypes';
 import { QuotaCostList } from '~/types/accounts_mgmt.v1';
 import { QuotaParams } from '~/components/clusters/common/quotaModel';
-import { GCP_SECURE_BOOT_UI } from '~/redux/constants/featureConstants';
-import { useFeatureGate } from '~/hooks/useFeatureGate';
 import { versionComparator } from '~/common/versionComparator';
 import { VersionSelectField } from '~/components/clusters/wizards/common/ClusterSettings/Details/VersionSelectField';
 import CloudRegionSelectField from '~/components/clusters/wizards/common/ClusterSettings/Details/CloudRegionSelectField';
 import { CustomerManagedEncryption } from '~/components/clusters/wizards/osd/ClusterSettings/Details/CustomerManagedEncryption';
 import { ClassicEtcdFipsSection } from '~/components/clusters/wizards/common/ClusterSettings/Details/ClassicEtcdFipsSection';
 
-export const Details = () => {
+function Details() {
   const dispatch = useDispatch();
   const {
     values: {
@@ -149,7 +147,7 @@ export const Details = () => {
     ...azQuotaParams,
   });
 
-  const handleCloudRegionChange = () => {
+  const handleCloudRegionChange = useCallback(() => {
     // Clears fields related to the region: VPC and machinePoolsSubnets
     const azCount = isMultiAz ? 3 : 1;
     const mpSubnetsReset = [];
@@ -160,7 +158,7 @@ export const Details = () => {
 
     setFieldValue(FieldId.MachinePoolsSubnets, mpSubnetsReset);
     setFieldValue(FieldId.SelectedVpc, '');
-  };
+  }, [isMultiAz, setFieldValue]);
 
   const handleMultiAzChange = (_event: React.FormEvent<HTMLDivElement>, value: string) => {
     const isMultiAz = value === 'true';
@@ -230,8 +228,6 @@ export const Details = () => {
   const onToggle = () => {
     setIsExpanded(!isExpanded);
   };
-
-  const isSecureBootFeatureEnabled = useFeatureGate(GCP_SECURE_BOOT_UI);
 
   const secureBootAlert = (
     <div className="pf-v5-u-mt-sm">
@@ -356,7 +352,7 @@ export const Details = () => {
               </GridItem>
             </>
           )}
-          {isGCP && isSecureBootFeatureEnabled && (
+          {isGCP && (
             <GridItem>
               <FormGroup label="Shielded VM" fieldId={FieldId.SecureBoot}>
                 <Split hasGutter className="pf-u-mb-0">
@@ -421,4 +417,6 @@ export const Details = () => {
       </Grid>
     </Form>
   );
-};
+}
+
+export default Details;

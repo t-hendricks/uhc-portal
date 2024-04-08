@@ -9,6 +9,7 @@
 import { execSync } from 'child_process';
 import _ from 'lodash';
 import chalk from 'chalk';
+// Takes `DEBUG=simple-git` env var: https://github.com/steveukx/git-js/blob/main/docs/DEBUG-LOGGING-GUIDE.md
 import { simpleGit } from 'simple-git';
 import ora from 'ora';
 import yargs from 'yargs';

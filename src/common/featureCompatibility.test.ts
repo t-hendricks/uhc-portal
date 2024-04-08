@@ -1,33 +1,16 @@
 import { Cluster } from '~/types/clusters_mgmt.v1';
 import { normalizedProducts } from '~/common/subscriptionTypes';
 
-import {
-  isCompatibleFeature,
-  CompatibilityOptions,
-  SupportedFeature,
-} from './featureCompatibility';
-
-const anyOptions = {};
+import { isCompatibleFeature, SupportedFeature } from './featureCompatibility';
 
 describe('isCompatibleFeature', () => {
   describe('Security groups', () => {
-    const checkCompatibility = (testCluster: Partial<Cluster>, options: CompatibilityOptions) =>
-      isCompatibleFeature(SupportedFeature.SECURITY_GROUPS, testCluster, options);
+    const checkCompatibility = (testCluster: Partial<Cluster>) =>
+      isCompatibleFeature(SupportedFeature.SECURITY_GROUPS, testCluster);
     describe('are incompatible for', () => {
       it.each([
-        ['Hypershift', { hypershift: { enabled: true } }, {}],
-        [
-          'Day1 setup',
-          {
-            product: { id: normalizedProducts.ROSA },
-            cloud_provider: { id: 'aws' },
-            aws: {
-              subnet_ids: ['subnet-private-id'],
-              sts: { role_arn: 'role-arn' },
-            },
-          },
-          { day1: true },
-        ],
+        ['Hypershift enabled', { hypershift: { enabled: true } }],
+        ['Hypershift not enabled', { hypershift: { enabled: false } }],
         [
           'ROSA GCP + BYOVPC',
           {
@@ -35,7 +18,6 @@ describe('isCompatibleFeature', () => {
             cloud_provider: { id: 'gcp' },
             gcp_network: { vpc_name: 'gcp-vpc' },
           },
-          anyOptions,
         ],
         [
           'ROSA GCP + non-BYOVPC',
@@ -44,7 +26,6 @@ describe('isCompatibleFeature', () => {
             cloud_provider: { id: 'gcp' },
             gcp_network: undefined,
           },
-          anyOptions,
         ],
         [
           'ROSA AWS + non-BYOVPC',
@@ -53,18 +34,10 @@ describe('isCompatibleFeature', () => {
             cloud_provider: { id: 'aws' },
             aws: { subnet_ids: undefined },
           },
-          anyOptions,
         ],
-      ])(
-        '"%s" clusters',
-        (
-          _clusterDesc: string,
-          clusterSettings: Partial<Cluster>,
-          options: CompatibilityOptions,
-        ) => {
-          expect(checkCompatibility(clusterSettings, options)).toBeFalsy();
-        },
-      );
+      ])('"%s" clusters', (_clusterDesc: string, clusterSettings: Partial<Cluster>) => {
+        expect(checkCompatibility(clusterSettings)).toBeFalsy();
+      });
     });
 
     describe('are compatible for', () => {
@@ -79,7 +52,6 @@ describe('isCompatibleFeature', () => {
               sts: { role_arn: 'role-arn' },
             },
           },
-          { day2: true },
         ],
         [
           'Day2 OSD AWS + BYOVPC + STS',
@@ -91,7 +63,6 @@ describe('isCompatibleFeature', () => {
               sts: { role_arn: 'role-arn' },
             },
           },
-          { day2: true },
         ],
         [
           'Day2 + ROSA AWS + BYOVPC + non-STS',
@@ -103,7 +74,6 @@ describe('isCompatibleFeature', () => {
               sts: undefined,
             },
           },
-          { day2: true },
         ],
         [
           'Day2 + OSD AWS + BYOVPC + non-STS',
@@ -115,18 +85,21 @@ describe('isCompatibleFeature', () => {
               sts: undefined,
             },
           },
-          { day2: true },
         ],
-      ])(
-        '"%s" clusters',
-        (
-          _clusterDesc: string,
-          clusterSettings: Partial<Cluster>,
-          options: CompatibilityOptions,
-        ) => {
-          expect(checkCompatibility(clusterSettings, options)).toBeTruthy();
-        },
-      );
+        [
+          'Day1 setup',
+          {
+            product: { id: normalizedProducts.ROSA },
+            cloud_provider: { id: 'aws' },
+            aws: {
+              subnet_ids: ['subnet-private-id'],
+              sts: { role_arn: 'role-arn' },
+            },
+          },
+        ],
+      ])('"%s" clusters', (_clusterDesc: string, clusterSettings: Partial<Cluster>) => {
+        expect(checkCompatibility(clusterSettings)).toBeTruthy();
+      });
     });
   });
 });

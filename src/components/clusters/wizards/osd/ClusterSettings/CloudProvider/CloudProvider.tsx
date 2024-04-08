@@ -25,28 +25,11 @@ export const CloudProvider = () => {
     },
   } = useFormState();
   const { ccsCredentialsValidity } = useGlobalState((state) => state.ccsInquiries);
-  const [showValidationAlert, setShowValidationAlert] = React.useState(false);
   const isByoc = byoc === 'true';
 
   React.useEffect(() => {
     dispatch(clearCcsCredientialsInquiry());
-
-    if (!showValidationAlert && ccsCredentialsValidity.fulfilled) {
-      setShowValidationAlert(true);
-    }
-
-    if (showValidationAlert) {
-      setShowValidationAlert(false);
-    }
-  }, [
-    accountId,
-    accessKeyId,
-    secretAccessKey,
-    gcpServiceAccount,
-    ccsCredentialsValidity.fulfilled,
-    dispatch,
-    showValidationAlert,
-  ]);
+  }, [accountId, accessKeyId, secretAccessKey, gcpServiceAccount, dispatch]);
 
   return (
     <Form>
@@ -56,7 +39,7 @@ export const CloudProvider = () => {
         <>
           {cloudProvider === CloudProviderType.Aws ? <AwsByocFields /> : <GcpByocFields />}
 
-          {(ccsCredentialsValidity.error || showValidationAlert) && (
+          {ccsCredentialsValidity.error && (
             <Alert
               variant="danger"
               isInline

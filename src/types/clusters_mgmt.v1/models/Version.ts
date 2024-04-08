@@ -53,6 +53,11 @@ export type Version = {
    */
   end_of_life_timestamp?: string;
   /**
+   * HostedControlPlaneDefault is a flag that indicates if this should be selected as the default version when a
+   * HCP cluster is created without specifying explicitly the version.
+   */
+  hosted_control_plane_default?: boolean;
+  /**
    * HostedControlPlaneEnabled indicates whether this version can be used to create HCP clusters.
    */
   hosted_control_plane_enabled?: boolean;

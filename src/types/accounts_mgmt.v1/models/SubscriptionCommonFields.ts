@@ -70,6 +70,7 @@ export namespace SubscriptionCommonFields {
     PREMIUM = 'Premium',
     SELF_SUPPORT = 'Self-Support',
     NONE = 'None',
+    SUPPORTED_BY_IBM = 'Supported By IBM',
   }
 
   export enum system_units {

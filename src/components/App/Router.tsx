@@ -105,8 +105,6 @@ import Dashboard from '../dashboard';
 import Overview from '../overview';
 import Quota from '../quota';
 import Releases from '../releases/index';
-import Tokens from '../tokens';
-import TokensROSA from '../tokens/TokensROSA';
 import ApiError from './ApiError';
 import { AppPage } from './AppPage';
 import GovCloudPage from '../clusters/GovCloud/GovCloudPage';
@@ -117,6 +115,7 @@ import TermsGuardedRoute from './TermsGuardedRoute';
 import { is404, metadataByRoute } from './routeMetadata';
 import RosaHandsOnPage from '../RosaHandsOn/RosaHandsOnPage';
 import InstallOracleCloud from '../clusters/install/InstallOracleCloud';
+import CLILoginPage from '../CLILoginPage/CLILoginPage';
 
 const AssistedUiRouterPage: typeof AssistedInstallerRoutes = (props) => (
   <AppPage>
@@ -143,8 +142,6 @@ interface RouterProps extends RouteComponentProps {
   externalClusterId: string;
 }
 
-const TokenShowComponent = () => <Tokens show />;
-const TokenNotShowComponent = () => <Tokens show={false} showPath="/token/show" />;
 const IdentityProvidersPageEditFormComponent = () => <IdentityProvidersPage isEditForm />;
 const CreateClusterPageEmptyTabComponent = () => <CreateClusterPage activeTab="" />;
 
@@ -220,7 +217,7 @@ const Router: React.FC<RouterProps> = ({ history, planType, clusterId, externalC
               path="/token/rosa/show"
               render={() => (
                 <AppPage>
-                  <TokensROSA show />
+                  <CLILoginPage showToken isRosa />
                   <EntitlementConfig />
                 </AppPage>
               )}
@@ -229,14 +226,16 @@ const Router: React.FC<RouterProps> = ({ history, planType, clusterId, externalC
               path="/token/rosa"
               render={() => (
                 <AppPage>
-                  <TokensROSA show={false} showPath="/token/rosa/show" />
+                  <CLILoginPage showToken={false} showPath="/token/rosa/show" isRosa />
                   <EntitlementConfig />
                 </AppPage>
               )}
             />
-            <CompatRoute path="/token/show" component={TokenShowComponent} />
-            <CompatRoute path="/token" component={TokenNotShowComponent} />
-
+            <CompatRoute path="/token/show" render={() => <CLILoginPage showToken />} />
+            <CompatRoute
+              path="/token"
+              render={() => <CLILoginPage showToken={false} showPath="/token/show" />}
+            />
             <CompatRoute
               path="/install/alibaba/installer-provisioned"
               component={ConnectedInstallAlibaba}

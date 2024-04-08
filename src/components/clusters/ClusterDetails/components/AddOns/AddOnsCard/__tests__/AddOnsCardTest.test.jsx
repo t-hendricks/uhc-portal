@@ -1,13 +1,11 @@
 import React from 'react';
-import { shallow } from 'enzyme';
 
-import { render, checkAccessibility } from '~/testUtils';
+import { render, checkAccessibility, screen } from '~/testUtils';
 
 import AddOnsCard from '../AddOnsCard';
 import AddOnsConstants from '../../AddOnsConstants';
 
 describe('<AddOnsCard />', () => {
-  let wrapper;
   const onClick = jest.fn();
 
   const props = {
@@ -38,9 +36,9 @@ describe('<AddOnsCard />', () => {
     onClick,
     activeCard: 'dummy-id',
   };
-  beforeEach(() => {
-    wrapper = shallow(<AddOnsCard {...props} />);
-  });
+  // beforeEach(() => {
+  //   wrapper = shallow(<AddOnsCard {...props} />);
+  // });
 
   afterEach(() => {
     onClick.mockClear();
@@ -48,17 +46,18 @@ describe('<AddOnsCard />', () => {
 
   it('is accessible', async () => {
     const { container } = render(<AddOnsCard {...props} />);
-
     await checkAccessibility(container);
   });
 
   it('should render reduced description to 60 char length', () => {
-    const cardBodyDescription = wrapper.find('CardBody').props().children;
-    expect(cardBodyDescription.length).toEqual(60);
+    render(<AddOnsCard {...props} />);
+    const cardBody = screen.getByTestId('cardBody');
+
+    expect(cardBody.textContent).toHaveLength(60);
   });
 
   it('should have a label that matches installed addon state', () => {
-    const label = wrapper.find('AddOnStateLabel').props().installedAddOn.state;
-    expect(label).toEqual('ready');
+    render(<AddOnsCard {...props} />);
+    expect(screen.getByText('Installed')).toBeInTheDocument();
   });
 });

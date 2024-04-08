@@ -7,6 +7,7 @@ const ClusterNonEditableAlert = () => (
     isInline
     variant="info"
     title="You cannot edit the cluster."
+    role="alert"
   >
     <p>To get permission to edit, contact the Cluster Owner or Organization Admin.</p>
   </Alert>

@@ -42,10 +42,10 @@ class CloudRegionComboBox extends React.Component {
       input: { onChange },
       handleCloudRegionChange,
     } = this.props;
+    onChange(value);
     if (handleCloudRegionChange) {
       handleCloudRegionChange();
     }
-    onChange(value);
   };
 
   render() {

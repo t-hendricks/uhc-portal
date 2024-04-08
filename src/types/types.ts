@@ -1,6 +1,7 @@
 import type React from 'react';
 import type { FeaturesSupportsLevel } from '@openshift-assisted/ui-lib/ocm';
 import type { Cluster as AICluster } from '@openshift-assisted/types/assisted-installer-service';
+import type { ChromeAPI } from '@redhat-cloud-services/types';
 import type { List, OneMetric, Subscription } from './accounts_mgmt.v1';
 import type {
   AWS,
@@ -10,6 +11,13 @@ import type {
   LimitedSupportReason,
   VersionGateAgreement,
 } from './clusters_mgmt.v1';
+
+export type Chrome = ChromeAPI & {
+  enable: {
+    // missing debug function types
+    segmentDev: () => void;
+  };
+};
 
 export type ViewOptions = {
   currentPage: number;
