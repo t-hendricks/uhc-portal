@@ -25,6 +25,7 @@ const componentText = {
     label: 'Custom KMS key ARN',
   },
 };
+jest.mock('./SupportStatusLabel');
 
 const checkForValue = (label, value) => {
   expect(screen.getByText(label)).toBeInTheDocument();
