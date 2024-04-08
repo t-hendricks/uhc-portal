@@ -1,0 +1,44 @@
+{
+  "kind": "ProductList",
+  "href": "/api/clusters_mgmt/v1/products",
+  "page": 1,
+  "size": 7,
+  "total": 7,
+  "items": [
+    {
+      "kind": "ProductLink",
+      "id": "aro",
+      "href": "/api/clusters_mgmt/v1/products/aro"
+    },
+    {
+      "kind": "ProductLink",
+      "id": "ocp",
+      "href": "/api/clusters_mgmt/v1/products/ocp"
+    },
+    {
+      "kind": "ProductLink",
+      "id": "osd",
+      "href": "/api/clusters_mgmt/v1/products/osd"
+    },
+    {
+      "kind": "ProductLink",
+      "id": "osdtrial",
+      "href": "/api/clusters_mgmt/v1/products/osdtrial"
+    },
+    {
+      "kind": "ProductLink",
+      "id": "rhmi",
+      "href": "/api/clusters_mgmt/v1/products/rhmi"
+    },
+    {
+      "kind": "ProductLink",
+      "id": "rhoic",
+      "href": "/api/clusters_mgmt/v1/products/rhoic"
+    },
+    {
+      "kind": "ProductLink",
+      "id": "rosa",
+      "href": "/api/clusters_mgmt/v1/products/rosa"
+    }
+  ]
+}
