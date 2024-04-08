@@ -1,0 +1,8 @@
+{
+  "kind": "ProductTechnologyPreview",
+  "id": "hcp",
+  "href": "/api/clusters_mgmt/v1/products/rosa/technology_previews/hcp",
+  "start_date": "2023-05-22T00:00:00Z",
+  "end_date": "2023-12-04T00:00:00Z",
+  "additional_text": "Hosted control planes are currently in Technology Preview (https://access.redhat.com/support/offerings/techpreview). Any Technology Preview clusters will need to be destroyed and recreated prior to general availability."
+}
