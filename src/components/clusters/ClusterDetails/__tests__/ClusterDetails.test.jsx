@@ -7,6 +7,8 @@ import clusterStates from '../../common/clusterStates';
 import ClusterDetails from '../ClusterDetails';
 import fixtures, { funcs } from './ClusterDetails.fixtures';
 
+jest.mock('../components/Overview/ClusterVersionInfo');
+
 jest.mock('react-router-dom-v5-compat', () => ({
   ...jest.requireActual('react-router-dom-v5-compat'), // Preserve other exports from react-router-dom
   useParams: jest.fn(), // Mock useParams
