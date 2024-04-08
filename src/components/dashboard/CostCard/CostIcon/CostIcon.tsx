@@ -1,9 +1,12 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 
 import CostIconImg from './CostIcon.svg';
 
-const CostIcon = ({ className }) => (
+type CostIconProps = {
+  className: string;
+};
+
+const CostIcon = ({ className }: CostIconProps) => (
   <img
     className={`ocm--cost-icon ${className}`}
     src={CostIconImg}
@@ -11,9 +14,5 @@ const CostIcon = ({ className }) => (
     aria-hidden="true"
   />
 );
-
-CostIcon.propTypes = {
-  className: PropTypes.string,
-};
 
 export default CostIcon;
