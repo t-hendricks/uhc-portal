@@ -117,6 +117,12 @@ const MachineTypeSelection = ({
     meta: { error, touched },
   } = machineType;
   const { input: forceChoiceInput } = machineTypeForceChoice;
+
+  // checks if previous selection was from unfiltered machine set. Will flip filter value.
+  const previousSelectionFromUnfilteredSet =
+    !machineTypesByRegion?.typesByID[machineType.input.value]?.id &&
+    machineTypes?.typesByID[machineType.input.value]?.id;
+
   /** Checks whether required data arrived. */
   const isDataReady =
     organization.fulfilled &&
@@ -133,7 +139,9 @@ const MachineTypeSelection = ({
     cloudProviderID === CloudProviderType.Aws &&
     !inModal;
 
-  const [isMachineTypeFilteredByRegion, setIsMachineTypeFilteredByRegion] = React.useState(true);
+  const [isMachineTypeFilteredByRegion, setIsMachineTypeFilteredByRegion] = React.useState(
+    !previousSelectionFromUnfilteredSet,
+  );
   const activeMachineTypes =
     isRegionSpecificDataReady && useRegionFilteredData && isMachineTypeFilteredByRegion
       ? machineTypesByRegion
