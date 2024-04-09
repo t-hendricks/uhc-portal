@@ -1,12 +1,13 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import isEmpty from 'lodash/isEmpty';
+import PropTypes from 'prop-types';
 import { useNavigate } from 'react-router-dom-v5-compat';
-import { Chip, ChipGroup, Button, Split, SplitItem } from '@patternfly/react-core';
 
-import { productFilterOptions } from '../../../../../common/subscriptionTypes';
+import { Button, Chip, ChipGroup, Split, SplitItem } from '@patternfly/react-core';
+
 import helpers from '../../../../../common/helpers';
 import { buildFilterURLParams } from '../../../../../common/queryHelpers';
+import { productFilterOptions } from '../../../../../common/subscriptionTypes';
 
 function ClusterListFilterChipGroup({ currentFilters, setFilter }) {
   const navigate = useNavigate();

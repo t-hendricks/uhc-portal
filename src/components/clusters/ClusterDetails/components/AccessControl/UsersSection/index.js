@@ -1,10 +1,11 @@
 import { connect } from 'react-redux';
 
+import { closeModal, openModal } from '../../../../../common/Modal/ModalActions';
+import shouldShowModal from '../../../../../common/Modal/ModalSelectors';
+
 import usersActions from './UsersActions';
 import UsersSection from './UsersSection';
 import canAllowAdminSelector from './UsersSelector';
-import shouldShowModal from '../../../../../common/Modal/ModalSelectors';
-import { openModal, closeModal } from '../../../../../common/Modal/ModalActions';
 
 const mapStateToProps = (state) => {
   const { groupUsers, addUserResponse, deleteUserResponse } = state.clusterUsers;

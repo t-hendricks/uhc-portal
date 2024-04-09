@@ -1,7 +1,8 @@
 import React from 'react';
-
-import { screen, render, checkAccessibility, TestRouter } from '~/testUtils';
 import { CompatRouter } from 'react-router-dom-v5-compat';
+
+import { checkAccessibility, render, screen, TestRouter } from '~/testUtils';
+
 import IDPSection from './IDPSection';
 
 const baseIDPs = {

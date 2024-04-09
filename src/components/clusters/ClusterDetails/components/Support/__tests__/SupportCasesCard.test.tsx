@@ -1,9 +1,10 @@
 import * as React from 'react';
 
-import { render, screen, mockRestrictedEnv } from '~/testUtils';
 import { SUPPORT_CASE_URL } from '~/restrictedEnv';
+import { mockRestrictedEnv, render, screen } from '~/testUtils';
 
 import SupportCasesCard from '../components/SupportCasesSection/SupportCasesCard';
+
 import { baseProps } from './Support.fixtures';
 
 describe('<SupportCasesCard />', () => {

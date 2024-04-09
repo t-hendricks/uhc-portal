@@ -1,5 +1,7 @@
 import React from 'react';
-import { Grid, GridItem, Form, Title } from '@patternfly/react-core';
+
+import { Form, Grid, GridItem, Title } from '@patternfly/react-core';
+
 import UpgradeSettingsFields from '../common/Upgrades/UpgradeSettingsFields';
 
 function UpdatesScreen() {

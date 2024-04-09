@@ -1,7 +1,7 @@
-import reducer, { initialState } from '../clusterLogReducer';
-import { GET_CLUSTER_LOGS } from '../clusterLogConstants';
-import { FULFILLED_ACTION } from '../../../../../../redux/reduxHelpers';
 import * as mockPayloadGet from '../../../../../../../mockdata/api/service_logs/v1/cluster_logs.json';
+import { FULFILLED_ACTION } from '../../../../../../redux/reduxHelpers';
+import { GET_CLUSTER_LOGS } from '../clusterLogConstants';
+import reducer, { initialState } from '../clusterLogReducer';
 
 describe('cluster log Reducer', () => {
   describe('should not handle unrelated actions', () => {

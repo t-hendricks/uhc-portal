@@ -1,5 +1,6 @@
-import './OfferingCard.scss';
 import React, { useCallback } from 'react';
+import { Link } from 'react-router-dom-v5-compat';
+
 import {
   Button,
   ButtonVariant,
@@ -8,28 +9,31 @@ import {
   CardFooter,
   CardHeader,
   DescriptionList,
-  DescriptionListTerm,
-  DescriptionListGroup,
   DescriptionListDescription,
+  DescriptionListGroup,
+  DescriptionListTerm,
   Flex,
   FlexItem,
   Label,
   Split,
   SplitItem,
-  TextContent,
   Text,
+  TextContent,
   Title,
 } from '@patternfly/react-core';
-import { Link } from 'react-router-dom-v5-compat';
+
+import { trackEvents } from '~/common/analytics';
 import ExternalLink from '~/components/common/ExternalLink';
 import useAnalytics from '~/hooks/useAnalytics';
-import { trackEvents } from '~/common/analytics';
-import microsoftLogo from '../../../styles/images/Microsoft_logo.svg';
-import AWSLogo from '../../../styles/images/AWSLogo';
-import RHLogo from '../../../styles/images/RedHatLogo';
-import IBMLogo from '../../../styles/images/ibm_cloud-icon.svg';
-import OpenShiftProductIcon from '../../../styles/images/OpenShiftProductIcon.svg';
+
 import docLinks from '../../../common/installLinks.mjs';
+import AWSLogo from '../../../styles/images/AWSLogo';
+import IBMLogo from '../../../styles/images/ibm_cloud-icon.svg';
+import microsoftLogo from '../../../styles/images/Microsoft_logo.svg';
+import OpenShiftProductIcon from '../../../styles/images/OpenShiftProductIcon.svg';
+import RHLogo from '../../../styles/images/RedHatLogo';
+
+import './OfferingCard.scss';
 
 type OfferingCardProps = {
   offeringType?: 'AWS' | 'Azure' | 'RHOSD' | 'RHOCP' | 'RHOIBM' | 'DEVSNBX';

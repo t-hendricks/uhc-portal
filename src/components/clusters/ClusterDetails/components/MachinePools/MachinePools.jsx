@@ -1,8 +1,8 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { produce } from 'immer';
-import isEmpty from 'lodash/isEmpty';
 import get from 'lodash/get';
+import isEmpty from 'lodash/isEmpty';
+import PropTypes from 'prop-types';
 
 import {
   ButtonVariant,
@@ -20,44 +20,44 @@ import {
 import { cellWidth, expandable } from '@patternfly/react-table';
 import {
   Table as TableDeprecated,
-  TableHeader as TableHeaderDeprecated,
   TableBody as TableBodyDeprecated,
+  TableHeader as TableHeaderDeprecated,
 } from '@patternfly/react-table/deprecated';
 import Skeleton from '@redhat-cloud-services/frontend-components/Skeleton';
 
-import { EditClusterAutoScalerForDay2 } from '~/components/clusters/common/EditClusterAutoScalingDialog';
-import { isMultiAZ } from '~/components/clusters/ClusterDetails/clusterDetailsHelper';
-import { MachineConfiguration } from '~/components/clusters/common/MachineConfiguration';
 import { noQuotaTooltip } from '~/common/helpers';
 import { versionFormatter } from '~/common/versionHelpers';
+import { isMultiAZ } from '~/components/clusters/ClusterDetails/clusterDetailsHelper';
+import { EditClusterAutoScalerForDay2 } from '~/components/clusters/common/EditClusterAutoScalingDialog';
+import { MachineConfiguration } from '~/components/clusters/common/MachineConfiguration';
 import { clusterService } from '~/services';
-import MachinePoolNodesSummary from './MachinePoolNodesSummary';
-import {
-  UpdateAllMachinePools,
-  UpdatePoolButton,
-  UpdateMachinePoolModal,
-} from './UpdateMachinePools';
-
-import MachinePoolExpandedRow from './components/MachinePoolExpandedRow';
-import DeleteMachinePoolModal from './components/DeleteMachinePoolModal/DeleteMachinePoolModal';
-import {
-  actionResolver,
-  hasDefaultOrExplicitAutoscalingMachinePool,
-  hasSubnets,
-} from './machinePoolsHelper';
 
 import ButtonWithTooltip from '../../../../common/ButtonWithTooltip';
 import ErrorBox from '../../../../common/ErrorBox';
 import modals from '../../../../common/Modal/modals';
 import clusterStates, {
+  isAWS,
+  isCCS,
   isHibernating,
   isHypershiftCluster,
-  isROSA,
   isOSD,
-  isCCS,
-  isAWS,
+  isROSA,
 } from '../../../common/clusterStates';
+
+import DeleteMachinePoolModal from './components/DeleteMachinePoolModal/DeleteMachinePoolModal';
 import EditMachinePoolModal from './components/EditMachinePoolModal/EditMachinePoolModal';
+import MachinePoolExpandedRow from './components/MachinePoolExpandedRow';
+import MachinePoolNodesSummary from './MachinePoolNodesSummary';
+import {
+  actionResolver,
+  hasDefaultOrExplicitAutoscalingMachinePool,
+  hasSubnets,
+} from './machinePoolsHelper';
+import {
+  UpdateAllMachinePools,
+  UpdateMachinePoolModal,
+  UpdatePoolButton,
+} from './UpdateMachinePools';
 
 import './MachinePools.scss';
 

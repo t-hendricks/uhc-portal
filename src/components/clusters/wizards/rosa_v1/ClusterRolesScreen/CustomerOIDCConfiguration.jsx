@@ -1,6 +1,7 @@
-import React, { useEffect, useState, useMemo } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import PropTypes from 'prop-types';
 import { Field } from 'redux-form';
+
 import {
   Button,
   ClipboardCopy,
@@ -8,19 +9,21 @@ import {
   FlexItem,
   FormGroup,
   Popover,
+  Skeleton,
   Text,
   TextContent,
   TextVariants,
-  Skeleton,
 } from '@patternfly/react-core';
+
 import ExternalLink from '~/components/common/ExternalLink';
-import PopoverHint from '~/components/common/PopoverHint';
+import { FormGroupHelperText } from '~/components/common/FormGroupHelperText';
+import FuzzySelect from '~/components/common/FuzzySelect';
 import Instruction from '~/components/common/Instruction';
 import Instructions from '~/components/common/Instructions';
-import FuzzySelect from '~/components/common/FuzzySelect';
-import { FormGroupHelperText } from '~/components/common/FormGroupHelperText';
-import validators from '../../../../../common/validators';
+import PopoverHint from '~/components/common/PopoverHint';
+
 import links from '../../../../../common/installLinks.mjs';
+import validators from '../../../../../common/validators';
 import ReduxVerticalFormGroup from '../../../../common/ReduxFormComponents/ReduxVerticalFormGroup';
 
 function CreateOIDCProviderInstructions() {

@@ -1,6 +1,8 @@
 import getOCPLifeCycleStatus from '~/services/productLifeCycleService';
-import { getSupportStatus } from './supportStatusActions';
+
 import GET_SUPPORT_STATUS from '../constants/supportStatusConstants';
+
+import { getSupportStatus } from './supportStatusActions';
 
 jest.mock('~/services/productLifeCycleService');
 

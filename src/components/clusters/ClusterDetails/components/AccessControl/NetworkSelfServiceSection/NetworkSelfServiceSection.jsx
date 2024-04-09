@@ -1,35 +1,35 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+
 import {
-  EmptyState,
-  Title,
   Button,
-  Popover,
-  PopoverPosition,
   Card,
   CardBody,
   CardFooter,
   CardTitle,
+  EmptyState,
   Icon,
+  Popover,
+  PopoverPosition,
+  Title,
 } from '@patternfly/react-core';
+import { CheckCircleIcon } from '@patternfly/react-icons/dist/esm/icons/check-circle-icon';
+import { ExclamationCircleIcon } from '@patternfly/react-icons/dist/esm/icons/exclamation-circle-icon';
+import { ExternalLinkAltIcon } from '@patternfly/react-icons/dist/esm/icons/external-link-alt-icon';
+import { HelpIcon } from '@patternfly/react-icons/dist/esm/icons/help-icon';
+import { InProgressIcon } from '@patternfly/react-icons/dist/esm/icons/in-progress-icon';
+import { UnknownIcon } from '@patternfly/react-icons/dist/esm/icons/unknown-icon';
 import { TableVariant } from '@patternfly/react-table';
 import {
   Table as TableDeprecated,
-  TableHeader as TableHeaderDeprecated,
   TableBody as TableBodyDeprecated,
+  TableHeader as TableHeaderDeprecated,
 } from '@patternfly/react-table/deprecated';
-
-import { HelpIcon } from '@patternfly/react-icons/dist/esm/icons/help-icon';
-import { ExternalLinkAltIcon } from '@patternfly/react-icons/dist/esm/icons/external-link-alt-icon';
-import { ExclamationCircleIcon } from '@patternfly/react-icons/dist/esm/icons/exclamation-circle-icon';
-import { InProgressIcon } from '@patternfly/react-icons/dist/esm/icons/in-progress-icon';
-import { UnknownIcon } from '@patternfly/react-icons/dist/esm/icons/unknown-icon';
-import { CheckCircleIcon } from '@patternfly/react-icons/dist/esm/icons/check-circle-icon';
-
 import Skeleton from '@redhat-cloud-services/frontend-components/Skeleton';
-import ErrorBox from '../../../../../common/ErrorBox';
-import ClipboardCopyLinkButton from '../../../../../common/ClipboardCopyLinkButton';
+
 import ButtonWithTooltip from '../../../../../common/ButtonWithTooltip';
+import ClipboardCopyLinkButton from '../../../../../common/ClipboardCopyLinkButton';
+import ErrorBox from '../../../../../common/ErrorBox';
 
 class NetworkSelfServiceSection extends React.Component {
   state = { deletedRowIndex: undefined };

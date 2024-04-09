@@ -1,9 +1,10 @@
 import { connect } from 'react-redux';
-import {
-  fetchSubscriptionIDForCluster,
-  clearSubscriptionIDForCluster,
-} from '../../../redux/actions/subscriptionsActions';
+
 import { setGlobalError } from '../../../redux/actions/globalErrorActions';
+import {
+  clearSubscriptionIDForCluster,
+  fetchSubscriptionIDForCluster,
+} from '../../../redux/actions/subscriptionsActions';
 
 import ClusterDetailsRedirector from './ClusterDetailsRedirector';
 

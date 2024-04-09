@@ -1,6 +1,8 @@
 import React from 'react';
-import { PageSection, Label } from '@patternfly/react-core';
-import { Table, Tr, Td, Tbody } from '@patternfly/react-table';
+
+import { Label, PageSection } from '@patternfly/react-core';
+import { Table, Tbody, Td, Tr } from '@patternfly/react-table';
+
 import ExternalLink from '../common/ExternalLink';
 
 const content = [

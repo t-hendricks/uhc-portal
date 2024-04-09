@@ -1,10 +1,12 @@
 import React from 'react';
+import PropTypes from 'prop-types';
+import { useLocation, useNavigate } from 'react-router-dom-v5-compat';
+
 import ConditionalFilter from '@redhat-cloud-services/frontend-components/ConditionalFilter';
 import { conditionalFilterType } from '@redhat-cloud-services/frontend-components/ConditionalFilter/conditionalFilterConstants';
-import PropTypes from 'prop-types';
-import { useNavigate, useLocation } from 'react-router-dom-v5-compat';
-import { SEVERITY_TYPES, LOG_TYPES } from '../clusterLogConstants';
+
 import { buildFilterURLParams } from '../../../../../../common/queryHelpers';
+import { LOG_TYPES, SEVERITY_TYPES } from '../clusterLogConstants';
 
 const ClusterLogsConditionalFilter = (props) => {
   const { currentFilter, currentFlags, setFilter, setFlags } = props;

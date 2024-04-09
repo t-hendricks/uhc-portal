@@ -1,8 +1,11 @@
+import React from 'react';
+
 import { TabTitleIcon, TabTitleText } from '@patternfly/react-core';
 import { ExclamationCircleIcon } from '@patternfly/react-icons/dist/esm/icons/exclamation-circle-icon';
-import React from 'react';
-import { TabsRowInfoType, TabsRowTabType } from './TabsRow.model';
+
 import { ClusterTabsId } from '../common/ClusterTabIds';
+
+import { TabsRowInfoType, TabsRowTabType } from './TabsRow.model';
 
 export const getTabs = (tabsInfo: TabsRowInfoType): TabsRowTabType[] => [
   {

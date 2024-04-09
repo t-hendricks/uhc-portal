@@ -1,9 +1,10 @@
 import React from 'react';
 
-import { render, screen, checkAccessibility, within } from '~/testUtils';
-import apiRequest from '~/services/apiRequest';
-import wizardConnector from '~/components/clusters/wizards/common/WizardConnector';
 import { constants } from '~/components/clusters/common/CreateOSDFormConstants';
+import wizardConnector from '~/components/clusters/wizards/common/WizardConnector';
+import apiRequest from '~/services/apiRequest';
+import { checkAccessibility, render, screen, within } from '~/testUtils';
+
 import ScaleSection from './ScaleSection';
 
 const defaultProps = {

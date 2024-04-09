@@ -1,6 +1,7 @@
 import React from 'react';
 
 import { checkAccessibility, render, screen, userEvent } from '~/testUtils';
+
 import FormKeyLabelValue from '../FormKeyLabelValue';
 import LabelKeyValueProps from '../LabelKeyValueProps';
 

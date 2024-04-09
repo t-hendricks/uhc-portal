@@ -1,32 +1,31 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { HelpIcon } from '@patternfly/react-icons/dist/esm/icons/help-icon';
 import {
-  EmptyState,
-  Title,
   Button,
-  CardFooter,
-  Popover,
-  PopoverPosition,
   Card,
   CardBody,
+  CardFooter,
   CardTitle,
+  EmptyState,
   Icon,
+  Popover,
+  PopoverPosition,
+  Title,
 } from '@patternfly/react-core';
+import { HelpIcon } from '@patternfly/react-icons/dist/esm/icons/help-icon';
 import { TableVariant } from '@patternfly/react-table';
 import {
   Table as TableDeprecated,
-  TableHeader as TableHeaderDeprecated,
   TableBody as TableBodyDeprecated,
+  TableHeader as TableHeaderDeprecated,
 } from '@patternfly/react-table/deprecated';
-
 import Skeleton from '@redhat-cloud-services/frontend-components/Skeleton';
 
 import links from '../../../../../../common/installLinks.mjs';
+import ButtonWithTooltip from '../../../../../common/ButtonWithTooltip';
 import ErrorBox from '../../../../../common/ErrorBox';
 import ExternalLink from '../../../../../common/ExternalLink';
-import ButtonWithTooltip from '../../../../../common/ButtonWithTooltip';
 
 import AddUserDialog from './AddUserDialog';
 

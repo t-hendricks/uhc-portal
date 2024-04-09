@@ -1,26 +1,28 @@
-import { connect } from 'react-redux';
-import { reduxForm, formValueSelector } from 'redux-form';
-import isEmpty from 'lodash/isEmpty';
 import get from 'lodash/get';
+import isEmpty from 'lodash/isEmpty';
+import { connect } from 'react-redux';
+import { formValueSelector, reduxForm } from 'redux-form';
 
 import { knownProducts } from '~/common/subscriptionTypes';
-import UpgradeSettingsTab from './UpgradeSettingsTab';
+
 import {
-  getSchedules,
-  postSchedule,
-  editSchedule,
-  deleteSchedule,
-  replaceSchedule,
-  clearPostedUpgradeScheduleResponse,
-  clearDeleteScheduleResponse,
-} from '../../../common/Upgrades/clusterUpgradeActions';
-import {
-  editCluster,
   clearClusterResponse,
+  editCluster,
   fetchClusterDetails,
 } from '../../../../../redux/actions/clustersActions';
-import { isHibernating, isHypershiftCluster } from '../../../common/clusterStates';
 import { openModal } from '../../../../common/Modal/ModalActions';
+import { isHibernating, isHypershiftCluster } from '../../../common/clusterStates';
+import {
+  clearDeleteScheduleResponse,
+  clearPostedUpgradeScheduleResponse,
+  deleteSchedule,
+  editSchedule,
+  getSchedules,
+  postSchedule,
+  replaceSchedule,
+} from '../../../common/Upgrades/clusterUpgradeActions';
+
+import UpgradeSettingsTab from './UpgradeSettingsTab';
 
 const reduxFormConfig = {
   form: 'ClusterUpgradeSettings',

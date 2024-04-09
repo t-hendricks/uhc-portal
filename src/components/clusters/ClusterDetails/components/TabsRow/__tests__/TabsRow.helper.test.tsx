@@ -1,8 +1,11 @@
-import { TabTitleText, Tooltip } from '@patternfly/react-core';
 import React from 'react';
+
+import { TabTitleText, Tooltip } from '@patternfly/react-core';
+
 import { ClusterTabsId } from '../../common/ClusterTabIds';
 import { getInitTab, getTabs } from '../TabsRow.helper';
 import { TabsRowTabType } from '../TabsRow.model';
+
 import {
   mocksTabsRowTab,
   regularTabsInfoAllHidden,

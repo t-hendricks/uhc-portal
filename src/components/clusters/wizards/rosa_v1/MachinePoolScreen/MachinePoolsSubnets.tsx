@@ -1,10 +1,12 @@
 import React from 'react';
-import { Grid, GridItem } from '@patternfly/react-core';
 import { Field, FieldArray } from 'redux-form';
+
+import { Grid, GridItem } from '@patternfly/react-core';
 
 import { FormSubnet } from '~/common/validators';
 import ReduxFormMachinePoolSubnets from '~/components/common/ReduxFormComponents/ReduxFormMachinePoolSubnets/ReduxFormMachinePoolSubnets';
 import { CloudVPC } from '~/types/clusters_mgmt.v1';
+
 import VPCDropdown from '../../common/VPCDropdown/VPCDropdown';
 
 const subnetWarnings = (

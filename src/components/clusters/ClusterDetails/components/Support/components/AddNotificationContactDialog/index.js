@@ -1,9 +1,10 @@
 import { connect } from 'react-redux';
 
 import { closeModal } from '../../../../../../common/Modal/ModalActions';
-import AddNotificationContactDialog from './AddNotificationContactDialog';
-import supportActions from '../../SupportActions';
 import shouldShowModal from '../../../../../../common/Modal/ModalSelectors';
+import supportActions from '../../SupportActions';
+
+import AddNotificationContactDialog from './AddNotificationContactDialog';
 
 const mapStateToProps = (state) => {
   const { cluster } = state.clusters.details;

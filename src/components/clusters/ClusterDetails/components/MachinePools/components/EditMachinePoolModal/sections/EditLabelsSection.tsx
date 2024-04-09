@@ -1,12 +1,14 @@
-import { Button, FormGroup, Grid, GridItem, Text, TextVariants } from '@patternfly/react-core';
-import { FieldArray, useField } from 'formik';
 import * as React from 'react';
-import { PlusCircleIcon } from '@patternfly/react-icons/dist/esm/icons/plus-circle-icon';
-import TextField from '~/components/common/formik/TextField';
-import { FormGroupHelperText } from '~/components/common/FormGroupHelperText';
+import { FieldArray, useField } from 'formik';
 
-import { EditMachinePoolValues } from '../hooks/useMachinePoolFormik';
+import { Button, FormGroup, Grid, GridItem, Text, TextVariants } from '@patternfly/react-core';
+import { PlusCircleIcon } from '@patternfly/react-icons/dist/esm/icons/plus-circle-icon';
+
+import { FormGroupHelperText } from '~/components/common/FormGroupHelperText';
+import TextField from '~/components/common/formik/TextField';
+
 import FieldArrayRemoveButton from '../components/FieldArrayRemoveButton';
+import { EditMachinePoolValues } from '../hooks/useMachinePoolFormik';
 
 import './EditLabelsSection.scss';
 

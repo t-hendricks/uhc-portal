@@ -1,12 +1,16 @@
 import React from 'react';
-import PropTypes from 'prop-types';
-import { Stack, StackItem, Text, TextContent, Button, ClipboardCopy } from '@patternfly/react-core';
 import { get } from 'lodash';
-import useAnalytics from '~/hooks/useAnalytics';
+import PropTypes from 'prop-types';
+
+import { Button, ClipboardCopy, Stack, StackItem, Text, TextContent } from '@patternfly/react-core';
+
 import { trackEvents } from '~/common/analytics';
+import useAnalytics from '~/hooks/useAnalytics';
+
 import ExternalLink from '../../../../common/ExternalLink';
-import TelemetryDisclaimer from './TelemetryDisclaimer';
 import instructionsMapping from '../instructionsMapping';
+
+import TelemetryDisclaimer from './TelemetryDisclaimer';
 
 const GetStarted = ({
   docURL,

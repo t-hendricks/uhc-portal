@@ -2,17 +2,18 @@ import React from 'react';
 
 import {
   Alert,
-  GridItem,
-  TextContent,
-  Text,
-  Title,
-  TextVariants,
   Grid,
+  GridItem,
+  Text,
+  TextContent,
+  TextVariants,
+  Title,
 } from '@patternfly/react-core';
 
 import links from '~/common/installLinks.mjs';
-import ExternalLink from '~/components/common/ExternalLink';
 import { Prerequisites } from '~/components/clusters/wizards/common/Prerequisites/Prerequisites';
+import ExternalLink from '~/components/common/ExternalLink';
+
 import { AwsAccountDetails } from './AwsAccountDetails';
 
 export const AwsByocFields = () => (

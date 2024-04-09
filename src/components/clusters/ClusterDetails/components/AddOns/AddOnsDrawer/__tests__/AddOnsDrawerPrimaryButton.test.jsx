@@ -1,9 +1,9 @@
 import React from 'react';
 
-import { render, checkAccessibility, screen } from '~/testUtils';
-import AddOnsPrimaryButton from '../AddOnsDrawerPrimaryButton';
+import { checkAccessibility, render, screen } from '~/testUtils';
 
 import { managedIntegration } from '../../__tests__/AddOns.fixtures';
+import AddOnsPrimaryButton from '../AddOnsDrawerPrimaryButton';
 
 describe('<AddOnsPrimaryButton />', () => {
   const addClusterAddOn = jest.fn();

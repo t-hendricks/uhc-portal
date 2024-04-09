@@ -1,6 +1,6 @@
-import canAllowAdminSelector from '../UsersSelector';
-import clusterStates from '../../../../../common/clusterStates';
 import { normalizedProducts } from '../../../../../../../common/subscriptionTypes';
+import clusterStates from '../../../../../common/clusterStates';
+import canAllowAdminSelector from '../UsersSelector';
 
 describe('canAllowAdminSelector', () => {
   it('should return false when user has no capability to allow cluster admins', () => {

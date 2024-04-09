@@ -1,15 +1,16 @@
 import { produce } from 'immer';
-import {
-  REJECTED_ACTION,
-  PENDING_ACTION,
-  FULFILLED_ACTION,
-  baseRequestState,
-} from '../reduxHelpers';
+
 import { getErrorState } from '../../common/errors';
 import { githubReleasesToFetch } from '../../common/installLinks.mjs';
-import { GITHUB_GET_LATEST_RELEASE, GithubActions } from '../actions/githubActions';
-import type { PromiseActionType, PromiseReducerState } from '../types';
 import type { GitHubRelease } from '../../services/githubService';
+import { GITHUB_GET_LATEST_RELEASE, GithubActions } from '../actions/githubActions';
+import {
+  baseRequestState,
+  FULFILLED_ACTION,
+  PENDING_ACTION,
+  REJECTED_ACTION,
+} from '../reduxHelpers';
+import type { PromiseActionType, PromiseReducerState } from '../types';
 
 type State = { [repo: string]: PromiseReducerState<{ data: GitHubRelease }> };
 

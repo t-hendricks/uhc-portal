@@ -1,38 +1,40 @@
 import React, { FormEvent } from 'react';
-import { Form, FormSection, Grid, GridItem, Text } from '@patternfly/react-core';
 import { useDispatch } from 'react-redux';
 
-import { useGlobalState } from '~/redux/hooks';
-import ExternalLink from '~/components/common/ExternalLink';
+import { Form, FormSection, Grid, GridItem, Text } from '@patternfly/react-core';
+
 import installLinks from '~/common/installLinks.mjs';
-import Modal from '~/components/common/Modal/Modal';
-import modals from '~/components/common/Modal/modals';
-import { closeModal } from '~/components/common/Modal/ModalActions';
 import { clusterAutoScalingValidators, validateListOfBalancingLabels } from '~/common/validators';
-import { useFormState } from '~/components/clusters/wizards/hooks';
-import { FieldId } from '~/components/clusters/wizards/common/constants';
-import { TextInputField } from '~/components/clusters/wizards/form/TextInputField';
-import { BooleanDropdownField } from '~/components/clusters/wizards/form/BooleanDropdownField';
-import {
-  FieldDefinition,
-  balancerFields,
-  resourceLimitsFields,
-  scaleDownFields,
-} from '~/components/clusters/common/EditClusterAutoScalingDialog/fieldDefinitions';
 import { getDefaultClusterAutoScaling } from '~/components/clusters/common/clusterAutoScalingValues';
-import {
-  AutoscalerIgnoredLabelsHelpText,
-  AutoscalerIgnoredLabelsPopoverText,
-} from '~/components/clusters/common/EditClusterAutoScalingDialog/AutoscalerIgnoredLabelsTooltip';
 import {
   AutoscalerGpuHelpText,
   AutoscalerGpuPopoverText,
 } from '~/components/clusters/common/EditClusterAutoScalingDialog/AutoscalerGpuTooltip';
 import {
-  utilizationThresholdValidator,
+  AutoscalerIgnoredLabelsHelpText,
+  AutoscalerIgnoredLabelsPopoverText,
+} from '~/components/clusters/common/EditClusterAutoScalingDialog/AutoscalerIgnoredLabelsTooltip';
+import {
+  balancerFields,
+  FieldDefinition,
+  resourceLimitsFields,
+  scaleDownFields,
+} from '~/components/clusters/common/EditClusterAutoScalingDialog/fieldDefinitions';
+import { FieldId } from '~/components/clusters/wizards/common/constants';
+import { BooleanDropdownField } from '~/components/clusters/wizards/form/BooleanDropdownField';
+import { TextInputField } from '~/components/clusters/wizards/form/TextInputField';
+import { useFormState } from '~/components/clusters/wizards/hooks';
+import ExternalLink from '~/components/common/ExternalLink';
+import Modal from '~/components/common/Modal/Modal';
+import { closeModal } from '~/components/common/Modal/ModalActions';
+import modals from '~/components/common/Modal/modals';
+import { useGlobalState } from '~/redux/hooks';
+
+import {
   logVerbosityValidator,
-  positiveNumberValidator,
   numberValidator,
+  positiveNumberValidator,
+  utilizationThresholdValidator,
 } from './validators';
 
 import './ClusterAutoScaleSettingsDialog.scss';

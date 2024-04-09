@@ -1,46 +1,50 @@
-import React, { useState, useEffect } from 'react';
-import PropTypes from 'prop-types';
-import get from 'lodash/get';
+import React, { useEffect, useState } from 'react';
 import { Field } from 'formik';
+import get from 'lodash/get';
+import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom-v5-compat';
+
 import {
   Alert,
   Button,
   ExpandableSection,
   Grid,
   GridItem,
-  TextContent,
+  Label,
   Text,
-  TextVariants,
+  TextContent,
   TextList,
   TextListItem,
   TextListVariants,
+  TextVariants,
   Title,
-  Label,
 } from '@patternfly/react-core';
-import { useFormState } from '~/components/clusters/wizards/hooks';
 import { Spinner } from '@redhat-cloud-services/frontend-components/Spinner';
-import links from '~/common/installLinks.mjs';
+
 import { trackEvents } from '~/common/analytics';
-import useAnalytics from '~/hooks/useAnalytics';
-import { useOCPLatestVersion } from '~/components/releases/hooks';
-import { isSupportedMinorVersion, formatMinorVersion } from '~/common/helpers';
-import { useFeatureGate } from '~/hooks/useFeatureGate';
-import { HCP_USE_UNMANAGED } from '~/redux/constants/featureConstants';
+import { formatMinorVersion, isSupportedMinorVersion } from '~/common/helpers';
+import links from '~/common/installLinks.mjs';
+import { useFormState } from '~/components/clusters/wizards/hooks';
+import {
+  MIN_MANAGED_POLICY_VERSION,
+  ROSA_HOSTED_CLI_MIN_VERSION,
+} from '~/components/clusters/wizards/rosa_v2/rosaConstants';
 import ErrorBox from '~/components/common/ErrorBox';
 import ExternalLink from '~/components/common/ExternalLink';
 import InstructionCommand from '~/components/common/InstructionCommand';
 import { ReduxSelectDropdown } from '~/components/common/ReduxFormComponents';
 import ReduxVerticalFormGroup from '~/components/common/ReduxFormComponents/ReduxVerticalFormGroup';
-import {
-  MIN_MANAGED_POLICY_VERSION,
-  ROSA_HOSTED_CLI_MIN_VERSION,
-} from '~/components/clusters/wizards/rosa_v2/rosaConstants';
-import { AwsRoleErrorAlert } from './AwsRoleErrorAlert';
+import { useOCPLatestVersion } from '~/components/releases/hooks';
+import useAnalytics from '~/hooks/useAnalytics';
+import { useFeatureGate } from '~/hooks/useFeatureGate';
+import { HCP_USE_UNMANAGED } from '~/redux/constants/featureConstants';
+
+import { FieldId } from '../constants';
+
 import { RosaCliCommand } from './constants/cliCommands';
+import { AwsRoleErrorAlert } from './AwsRoleErrorAlert';
 
 import './AccountsRolesScreen.scss';
-import { FieldId } from '../constants';
 
 const NO_ROLE_DETECTED = 'No role detected';
 

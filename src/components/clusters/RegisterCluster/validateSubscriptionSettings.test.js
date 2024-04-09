@@ -1,11 +1,12 @@
+import { secureRandomValueInRange } from '../../../common/helpers';
 import {
+  subscriptionServiceLevels,
   subscriptionSettings,
   subscriptionSupportLevels,
-  subscriptionServiceLevels,
-  subscriptionUsages,
   subscriptionSystemUnits,
+  subscriptionUsages,
 } from '../../../common/subscriptionTypes';
-import { secureRandomValueInRange } from '../../../common/helpers';
+
 import validateSubscriptionSettings from './validateSubscriptionSettings';
 
 const { SUPPORT_LEVEL, SERVICE_LEVEL, USAGE, SYSTEM_UNITS, CPU_TOTAL, SOCKET_TOTAL } =

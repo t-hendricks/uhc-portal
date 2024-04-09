@@ -6,36 +6,36 @@ import {
   Bullseye,
   EmptyState,
   EmptyStateBody,
+  EmptyStateHeader,
   EmptyStateIcon,
   EmptyStateVariant,
-  Text,
   Spinner,
+  Text,
   TextVariants,
-  EmptyStateHeader,
 } from '@patternfly/react-core';
-
-import {
-  SortByDirection,
-  TableVariant,
-  Table,
-  Thead,
-  Tr,
-  Th,
-  ThProps,
-  Tbody,
-  Td,
-  ExpandableRowContent,
-} from '@patternfly/react-table';
-
 import { SearchIcon } from '@patternfly/react-icons/dist/esm/icons/search-icon';
 import { WrenchIcon } from '@patternfly/react-icons/dist/esm/icons/wrench-icon';
-import { ClusterLog } from '~/types/service_logs.v1/index';
-import { ViewSorting } from '~/types/types';
-import './LogTable.scss';
-import ExternalLink from '~/components/common/ExternalLink';
+import {
+  ExpandableRowContent,
+  SortByDirection,
+  Table,
+  TableVariant,
+  Tbody,
+  Td,
+  Th,
+  Thead,
+  ThProps,
+  Tr,
+} from '@patternfly/react-table';
 
 import MarkdownParser from '~/common/MarkdownParser';
+import ExternalLink from '~/components/common/ExternalLink';
+import { ClusterLog } from '~/types/service_logs.v1/index';
+import { ViewSorting } from '~/types/types';
+
 import { eventTypes } from '../../clusterDetailsHelper';
+
+import './LogTable.scss';
 
 const columns = [
   {

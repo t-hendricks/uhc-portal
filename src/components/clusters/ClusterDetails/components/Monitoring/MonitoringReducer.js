@@ -14,13 +14,15 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 import { produce } from 'immer';
-import {
-  REJECTED_ACTION,
-  PENDING_ACTION,
-  FULFILLED_ACTION,
-  baseRequestState,
-} from '../../../../../redux/reduxHelpers';
+
 import { getErrorState } from '../../../../../common/errors';
+import {
+  baseRequestState,
+  FULFILLED_ACTION,
+  PENDING_ACTION,
+  REJECTED_ACTION,
+} from '../../../../../redux/reduxHelpers';
+
 import monitoringConstants from './MonitoringConstants';
 
 const initialState = {

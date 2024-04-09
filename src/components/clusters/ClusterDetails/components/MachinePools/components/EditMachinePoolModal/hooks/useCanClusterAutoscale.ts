@@ -1,6 +1,7 @@
+import { normalizedProducts } from '~/common/subscriptionTypes';
 import { useGlobalState } from '~/redux/hooks';
 import { Product } from '~/types/clusters_mgmt.v1';
-import { normalizedProducts } from '~/common/subscriptionTypes';
+
 import { hasOrgLevelAutoscaleCapability } from '../../../machinePoolsSelectors';
 
 const useCanClusterAutoscale = (product: Product['id']) => {

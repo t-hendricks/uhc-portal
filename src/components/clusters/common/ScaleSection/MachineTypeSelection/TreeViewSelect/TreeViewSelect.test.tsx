@@ -1,6 +1,8 @@
 import React from 'react';
-import { render, screen, checkAccessibility } from '~/testUtils';
-import { TreeViewSelect, TreeViewSelectMenuItem, TreeViewData } from './TreeViewSelect';
+
+import { checkAccessibility, render, screen } from '~/testUtils';
+
+import { TreeViewData, TreeViewSelect, TreeViewSelectMenuItem } from './TreeViewSelect';
 
 const machineTypeMap: TreeViewData[] = [
   {

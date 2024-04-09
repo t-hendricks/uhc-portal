@@ -1,9 +1,9 @@
 import * as React from 'react';
-
-import { mockRestrictedEnv, render, screen } from '~/testUtils';
-import NetworkScreen from '~/components/clusters/wizards/rosa_v2/NetworkScreen/NetworkScreen';
 import { Formik } from 'formik';
+
 import { initialValues } from '~/components/clusters/wizards/rosa_v2/constants';
+import NetworkScreen from '~/components/clusters/wizards/rosa_v2/NetworkScreen/NetworkScreen';
+import { mockRestrictedEnv, render, screen } from '~/testUtils';
 
 const testValues = {
   cloud_provider: 'aws',

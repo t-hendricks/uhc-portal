@@ -1,11 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Field } from 'redux-form';
+
 import { GridItem } from '@patternfly/react-core';
 
 import { checkHostDomain } from '../../../../../../../common/validators';
-import IDPBasicFields from './IDPBasicFields';
 import ReduxVerticalFormGroup from '../../../../../../common/ReduxFormComponents/ReduxVerticalFormGroup';
+
+import IDPBasicFields from './IDPBasicFields';
 
 function GoogleForm({ isPending, isRequired }) {
   return (

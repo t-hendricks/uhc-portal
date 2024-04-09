@@ -1,8 +1,11 @@
 import React from 'react';
 import { CompatRouter } from 'react-router-dom-v5-compat';
-import { render, screen, within, TestRouter } from '~/testUtils';
-import ClusterStatusMonitor from './ClusterStatusMonitor';
+
+import { render, screen, TestRouter, within } from '~/testUtils';
+
 import fixtures from '../../../__tests__/ClusterDetails.fixtures';
+
+import ClusterStatusMonitor from './ClusterStatusMonitor';
 
 jest.useFakeTimers({
   legacyFakeTimers: true, // TODO 'modern'

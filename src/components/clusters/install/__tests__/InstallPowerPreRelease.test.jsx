@@ -1,8 +1,9 @@
 import React from 'react';
-import { screen, checkAccessibility, TestRouter, withState } from '~/testUtils';
 
-import { InstallPowerPreRelease } from '../InstallPowerPreRelease';
+import { checkAccessibility, screen, TestRouter, withState } from '~/testUtils';
+
 import githubReleases from '../githubReleases.mock';
+import { InstallPowerPreRelease } from '../InstallPowerPreRelease';
 
 jest.mock('../../../../redux/actions', () => ({
   __esModule: true,

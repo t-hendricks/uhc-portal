@@ -1,7 +1,9 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
+
 import { getCloudProviders } from '~/redux/actions/cloudProviderActions';
 import { withState } from '~/testUtils';
+
 import ClusterLocationLabel, { ClusterLocationLabelProps } from '../ClusterLocationLabel';
 
 jest.mock('react-redux', () => ({

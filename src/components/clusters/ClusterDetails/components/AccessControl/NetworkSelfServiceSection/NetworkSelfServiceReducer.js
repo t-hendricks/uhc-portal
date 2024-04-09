@@ -1,20 +1,20 @@
 import { produce } from 'immer';
 import sortBy from 'lodash/sortBy';
 
-import {
-  REJECTED_ACTION,
-  PENDING_ACTION,
-  FULFILLED_ACTION,
-  baseRequestState,
-} from '../../../../../../redux/reduxHelpers';
 import { getErrorState } from '../../../../../../common/errors';
+import {
+  baseRequestState,
+  FULFILLED_ACTION,
+  PENDING_ACTION,
+  REJECTED_ACTION,
+} from '../../../../../../redux/reduxHelpers';
 
 import {
-  GET_ROLES,
-  GET_GRANTS,
   ADD_GRANT,
   CLEAR_ADD_GRANT_RESPONSE,
   DELETE_GRANT,
+  GET_GRANTS,
+  GET_ROLES,
 } from './NetworkSelfServiceConstants';
 
 const initialState = {

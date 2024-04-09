@@ -1,10 +1,12 @@
 import * as React from 'react';
 import { Link } from 'react-router-dom-v5-compat';
 
-import ExternalLink from '~/components/common/ExternalLink';
-import links from '~/common/installLinks.mjs';
 import { Alert } from '@patternfly/react-core';
+
+import links from '~/common/installLinks.mjs';
+import ExternalLink from '~/components/common/ExternalLink';
 import { Cluster, MachinePool } from '~/types/clusters_mgmt.v1';
+
 import { masterResizeAlertThreshold } from './utils';
 
 type ResizingAlertProps = {

@@ -1,13 +1,15 @@
-import { connect } from 'react-redux';
 import get from 'lodash/get';
-import Dashboard from './Dashboard';
-import { getSummaryDashboard, getUnhealthyClusters } from '../../redux/actions/dashboardsActions';
-import { getUserAccess } from '../../redux/actions/costActions';
-import { invalidateSubscriptions } from '../../redux/actions/subscriptionsActions';
-import { fetchOrganizationInsights } from '../clusters/ClusterDetails/components/Insights/InsightsActions';
+import { connect } from 'react-redux';
+
 import { fetchClusters } from '../../redux/actions/clustersActions';
-import { viewConstants } from '../../redux/constants';
+import { getUserAccess } from '../../redux/actions/costActions';
+import { getSummaryDashboard, getUnhealthyClusters } from '../../redux/actions/dashboardsActions';
+import { invalidateSubscriptions } from '../../redux/actions/subscriptionsActions';
 import { getOrganizationAndQuota } from '../../redux/actions/userActions';
+import { viewConstants } from '../../redux/constants';
+import { fetchOrganizationInsights } from '../clusters/ClusterDetails/components/Insights/InsightsActions';
+
+import Dashboard from './Dashboard';
 
 const mapDispatchToProps = {
   fetchClusters,

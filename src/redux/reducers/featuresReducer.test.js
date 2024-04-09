@@ -1,5 +1,6 @@
-import featuresReducer from './featuresReducer';
 import { SET_FEATURE } from '../constants/featureConstants';
+
+import featuresReducer from './featuresReducer';
 
 describe('featuresReducer', () => {
   const initialState = {};

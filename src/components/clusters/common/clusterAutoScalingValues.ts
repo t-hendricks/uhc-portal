@@ -1,7 +1,7 @@
 import {
-  ClusterAutoscaler,
   AutoscalerResourceLimits,
   AutoscalerResourceLimitsGPULimit,
+  ClusterAutoscaler,
 } from '~/types/clusters_mgmt.v1';
 
 const MAX_NODES_DEFAULT = 180;

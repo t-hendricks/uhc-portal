@@ -1,4 +1,5 @@
 import React from 'react';
+
 import {
   EmptyState,
   EmptyStateBody,
@@ -9,8 +10,11 @@ import {
 } from '@patternfly/react-core';
 import { Unavailable as FcUnavailable } from '@redhat-cloud-services/frontend-components/Unavailable';
 import * as Sentry from '@sentry/browser';
+
 import { ErrorState } from '~/types/types';
+
 import { formatErrorDetails } from '../../common/errors';
+
 import './Unavailable.scss';
 
 type ErrorProp = { key?: string; message: string; response: ErrorState };

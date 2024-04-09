@@ -1,11 +1,12 @@
 import React from 'react';
 
-import { screen, render, checkAccessibility } from '~/testUtils';
-import { initialState } from '../UsersReducer';
-import { stateWithUsers } from './Users.fixtures';
-import UsersSection from '../UsersSection';
+import { checkAccessibility, render, screen } from '~/testUtils';
 
 import fixtures from '../../../../__tests__/ClusterDetails.fixtures';
+import { initialState } from '../UsersReducer';
+import UsersSection from '../UsersSection';
+
+import { stateWithUsers } from './Users.fixtures';
 
 describe('<Users />', () => {
   const getUsers = jest.fn();

@@ -1,9 +1,11 @@
 import React from 'react';
-import { screen, render, checkAccessibility } from '~/testUtils';
+
 import { normalizedProducts } from '~/common/subscriptionTypes';
 import { baseRequestState } from '~/redux/reduxHelpers';
-import MachinePools from '../MachinePools';
+import { checkAccessibility, render, screen } from '~/testUtils';
+
 import clusterStates from '../../../../common/clusterStates';
+import MachinePools from '../MachinePools';
 
 const vpc = {
   aws_security_groups: [

@@ -1,10 +1,13 @@
 import React from 'react';
-import { render, screen, checkAccessibility } from '~/testUtils';
-import ClusterCreatedIndicator from './ClusterCreatedIndicator';
+
+import { checkAccessibility, render, screen } from '~/testUtils';
+
 import {
-  subscriptionSupportLevels,
   subscriptionSettings,
+  subscriptionSupportLevels,
 } from '../../../../common/subscriptionTypes';
+
+import ClusterCreatedIndicator from './ClusterCreatedIndicator';
 
 const { SUPPORT_LEVEL, EVALUATION_EXPIRATION_DATE } = subscriptionSettings;
 

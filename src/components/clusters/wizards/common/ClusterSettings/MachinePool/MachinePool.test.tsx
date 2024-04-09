@@ -1,7 +1,9 @@
 import * as React from 'react';
 import { Formik } from 'formik';
-import { render, screen, waitFor } from '~/testUtils';
+
 import { FieldId } from '~/components/clusters/wizards/common';
+import { render, screen, waitFor } from '~/testUtils';
+
 import { MachinePool } from './MachinePool';
 
 // const inputMetaProps = {

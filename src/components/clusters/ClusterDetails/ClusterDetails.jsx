@@ -12,52 +12,51 @@ limitations under the License.
 */
 
 import React from 'react';
+import get from 'lodash/get';
 import PropTypes from 'prop-types';
 import { Navigate, useNavigate, useParams } from 'react-router-dom-v5-compat';
-import get from 'lodash/get';
 
+import * as OCM from '@openshift-assisted/ui-lib/ocm';
 import { PageSection, TabContent } from '@patternfly/react-core';
 import { Spinner } from '@redhat-cloud-services/frontend-components/Spinner';
-import * as OCM from '@openshift-assisted/ui-lib/ocm';
 
 import { AppPage } from '~/components/App/AppPage';
 import { isRestrictedEnv } from '~/restrictedEnv';
-import ClusterDetailsTop from './components/ClusterDetailsTop';
-import TabsRow from './components/TabsRow/TabsRow';
-import Overview from './components/Overview/Overview';
-import Monitoring from './components/Monitoring';
-import Networking from './components/Networking';
-import AccessControl from './components/AccessControl/AccessControl';
-import AddOns from './components/AddOns';
-import MachinePools from './components/MachinePools';
-import DeleteIDPDialog from './components/DeleteIDPDialog';
 
-import ErrorBoundary from '../../App/ErrorBoundary';
-
-import ReadOnlyBanner from '../common/ReadOnlyBanner';
-import CommonClusterModals from '../common/CommonClusterModals';
-import CancelUpgradeModal from '../common/Upgrades/CancelUpgradeModal';
-
-import { isValid, shouldRefetchQuota } from '../../../common/helpers';
-import { eventTypes } from './clusterDetailsHelper';
 import getClusterName from '../../../common/getClusterName';
-import { subscriptionStatuses, knownProducts } from '../../../common/subscriptionTypes';
-import clusterStates, {
-  isHibernating,
-  isHypershiftCluster,
-  canViewMachinePoolTab,
-} from '../common/clusterStates';
-import AddGrantModal from './components/AccessControl/NetworkSelfServiceSection/AddGrantModal';
-import Unavailable from '../../common/Unavailable';
-import Support from './components/Support';
-import AddNotificationContactDialog from './components/Support/components/AddNotificationContactDialog';
-import UpgradeSettingsTab from './components/UpgradeSettings';
+import { isValid, shouldRefetchQuota } from '../../../common/helpers';
 import { isUninstalledAICluster } from '../../../common/isAssistedInstallerCluster';
 import { hasCapability, subscriptionCapabilities } from '../../../common/subscriptionCapabilities';
-import withFeatureGate from '../../features/with-feature-gate';
+import { knownProducts, subscriptionStatuses } from '../../../common/subscriptionTypes';
 import { ASSISTED_INSTALLER_FEATURE } from '../../../redux/constants/featureConstants';
-import { ClusterTabsId } from './components/common/ClusterTabIds';
+import ErrorBoundary from '../../App/ErrorBoundary';
+import Unavailable from '../../common/Unavailable';
+import withFeatureGate from '../../features/with-feature-gate';
+import clusterStates, {
+  canViewMachinePoolTab,
+  isHibernating,
+  isHypershiftCluster,
+} from '../common/clusterStates';
+import CommonClusterModals from '../common/CommonClusterModals';
+import ReadOnlyBanner from '../common/ReadOnlyBanner';
+import CancelUpgradeModal from '../common/Upgrades/CancelUpgradeModal';
+
+import AccessControl from './components/AccessControl/AccessControl';
+import AddGrantModal from './components/AccessControl/NetworkSelfServiceSection/AddGrantModal';
+import AddOns from './components/AddOns';
+import ClusterDetailsTop from './components/ClusterDetailsTop';
 import ClusterLogs from './components/ClusterLogs/ClusterLogs';
+import { ClusterTabsId } from './components/common/ClusterTabIds';
+import DeleteIDPDialog from './components/DeleteIDPDialog';
+import MachinePools from './components/MachinePools';
+import Monitoring from './components/Monitoring';
+import Networking from './components/Networking';
+import Overview from './components/Overview/Overview';
+import Support from './components/Support';
+import AddNotificationContactDialog from './components/Support/components/AddNotificationContactDialog';
+import TabsRow from './components/TabsRow/TabsRow';
+import UpgradeSettingsTab from './components/UpgradeSettings';
+import { eventTypes } from './clusterDetailsHelper';
 
 const { HostsClusterDetailTab, getAddHostsTabState } = OCM;
 const GatedAIHostsClusterDetailTab = withFeatureGate(

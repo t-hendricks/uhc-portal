@@ -1,8 +1,10 @@
 import * as React from 'react';
-import { Formik, Form } from 'formik';
-import { checkAccessibility, screen, waitFor, render, userEvent } from '~/testUtils';
-import { FieldId, initialValues } from '~/components/clusters/wizards/osd/constants';
+import { Form, Formik } from 'formik';
+
 import { CloudProviderType } from '~/components/clusters/wizards/common';
+import { FieldId, initialValues } from '~/components/clusters/wizards/osd/constants';
+import { checkAccessibility, render, screen, userEvent, waitFor } from '~/testUtils';
+
 import { CloudProviderTileField } from './CloudProviderTileField';
 
 jest.mock('~/components/clusters/wizards/osd/BillingModel/useGetBillingQuotas', () => ({

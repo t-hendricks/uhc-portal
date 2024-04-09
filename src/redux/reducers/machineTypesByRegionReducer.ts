@@ -14,18 +14,18 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 import keyBy from 'lodash/keyBy';
+
+import { getErrorState } from '../../common/errors';
+import { MachineType } from '../../types/clusters_mgmt.v1/models/MachineType';
+import { MachineTypesByRegionAction } from '../actions/machineTypesActions';
+import { machineTypesConstants } from '../constants';
 import {
-  REJECTED_ACTION,
+  baseRequestState,
   FULFILLED_ACTION,
   PENDING_ACTION,
-  baseRequestState,
+  REJECTED_ACTION,
 } from '../reduxHelpers';
-import { getErrorState } from '../../common/errors';
-
-import { machineTypesConstants } from '../constants';
 import { PromiseActionType, PromiseReducerState } from '../types';
-import { MachineTypesByRegionAction } from '../actions/machineTypesActions';
-import { MachineType } from '../../types/clusters_mgmt.v1/models/MachineType';
 
 type State = PromiseReducerState<{
   types: {

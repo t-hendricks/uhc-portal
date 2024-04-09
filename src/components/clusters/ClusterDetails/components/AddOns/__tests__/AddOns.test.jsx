@@ -1,10 +1,12 @@
 import React from 'react';
 
-import { render, checkAccessibility } from '~/testUtils';
-import AddOns from '../AddOns';
-import { mockAddOns, mockClusterAddOns } from './AddOns.fixtures';
+import { checkAccessibility, render } from '~/testUtils';
+
 import { addonsQuotaList } from '../../../../common/__tests__/quota.fixtures';
 import fixtures from '../../../__tests__/ClusterDetails.fixtures';
+import AddOns from '../AddOns';
+
+import { mockAddOns, mockClusterAddOns } from './AddOns.fixtures';
 
 describe('<AddOns />', () => {
   const getAddOns = jest.fn();

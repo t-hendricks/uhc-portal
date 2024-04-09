@@ -1,7 +1,9 @@
 import React from 'react';
+
 import { Label, Popover } from '@patternfly/react-core';
 
 import ExternalLink from './ExternalLink';
+
 import './SupportStatus.scss';
 
 type Props = {

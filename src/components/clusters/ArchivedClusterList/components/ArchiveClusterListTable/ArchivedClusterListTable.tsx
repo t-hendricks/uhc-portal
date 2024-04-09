@@ -1,11 +1,14 @@
-import get from 'lodash/get';
 import React from 'react';
+import get from 'lodash/get';
+import { Link } from 'react-router-dom-v5-compat';
+
 import {
   EmptyState,
   EmptyStateBody,
-  EmptyStateIcon,
   EmptyStateHeader,
+  EmptyStateIcon,
 } from '@patternfly/react-core';
+import SearchIcon from '@patternfly/react-icons/dist/esm/icons/search-icon';
 import {
   cellWidth,
   classNames,
@@ -15,19 +18,19 @@ import {
 } from '@patternfly/react-table';
 import {
   Table as TableDeprecated,
-  TableHeader as TableHeaderDeprecated,
   TableBody as TableBodyDeprecated,
+  TableHeader as TableHeaderDeprecated,
 } from '@patternfly/react-table/deprecated';
-import SearchIcon from '@patternfly/react-icons/dist/esm/icons/search-icon';
-import { Link } from 'react-router-dom-v5-compat';
+
 import { ClusterWithPermissions, ViewOptions, ViewSorting } from '~/types/types';
-import ButtonWithTooltip from '../../../../common/ButtonWithTooltip';
-import ClusterLocationLabel from '../../../common/ClusterLocationLabel';
+
 import getClusterName from '../../../../../common/getClusterName';
-import modals from '../../../../common/Modal/modals';
-import ClusterTypeLabel from '../../../common/ClusterTypeLabel';
 import { subscriptionStatuses } from '../../../../../common/subscriptionTypes';
+import ButtonWithTooltip from '../../../../common/ButtonWithTooltip';
+import modals from '../../../../common/Modal/modals';
+import ClusterLocationLabel from '../../../common/ClusterLocationLabel';
 import { getClusterStateAndDescription } from '../../../common/clusterStates';
+import ClusterTypeLabel from '../../../common/ClusterTypeLabel';
 
 type ArchivedClusterListTableProps = {
   clusters: ClusterWithPermissions[];

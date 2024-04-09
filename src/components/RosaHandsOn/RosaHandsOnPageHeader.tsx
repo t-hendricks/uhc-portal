@@ -1,9 +1,9 @@
 import React from 'react';
 
 import {
+  Divider,
   Flex,
   FlexItem,
-  Divider,
   Stack,
   StackItem,
   Text,
@@ -11,10 +11,11 @@ import {
 } from '@patternfly/react-core';
 import { PageHeader } from '@redhat-cloud-services/frontend-components';
 
+import Breadcrumbs from '../common/Breadcrumbs';
 import ExternalLink from '../common/ExternalLink';
+
 import OpenshiftIcon from './RosaHandsOnIcons/OpenshiftIcon';
 import { rosaHandsOnLinks } from './constants';
-import Breadcrumbs from '../common/Breadcrumbs';
 
 const RosaHandsOnPageHeader = () => (
   <PageHeader>

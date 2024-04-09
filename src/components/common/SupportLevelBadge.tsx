@@ -1,8 +1,10 @@
 import React from 'react';
-import { Popover, PopoverPosition, Label, Icon } from '@patternfly/react-core';
+
+import { Icon, Label, Popover, PopoverPosition } from '@patternfly/react-core';
 import { InfoCircleIcon } from '@patternfly/react-icons/dist/esm/icons/info-circle-icon';
 
 import links from '../../common/installLinks.mjs';
+
 import ExternalLink from './ExternalLink';
 
 export enum SupportLevelType {

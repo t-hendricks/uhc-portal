@@ -1,7 +1,10 @@
 import React from 'react';
-import { Spinner } from '@redhat-cloud-services/frontend-components/Spinner';
+
 import { Alert, Skeleton } from '@patternfly/react-core';
+import { Spinner } from '@redhat-cloud-services/frontend-components/Spinner';
+
 import InstructionCommand from '../common/InstructionCommand';
+
 import RevokeTokensInstructions from './RevokeTokensInstructions';
 
 type Props = {

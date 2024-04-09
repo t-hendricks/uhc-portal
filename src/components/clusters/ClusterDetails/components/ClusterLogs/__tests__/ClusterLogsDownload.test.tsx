@@ -1,10 +1,13 @@
 import React from 'react';
 import { AxiosResponse } from 'axios';
+
 import { serviceLogService } from '~/services';
-import { ClusterLogList } from '~/types/service_logs.v1';
 import { render, screen, waitFor } from '~/testUtils';
+import { ClusterLogList } from '~/types/service_logs.v1';
 import { ViewOptions } from '~/types/types';
+
 import ClusterLogsDownload from '../toolbar/ClusterLogsDownload';
+
 import fixtures from './ClusterLogs.fixtures';
 
 const mockLogService = () => {

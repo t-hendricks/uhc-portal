@@ -1,8 +1,8 @@
 import { connect } from 'react-redux';
-import { formValueSelector, touch, getFormValues } from 'redux-form';
+import { formValueSelector, getFormValues, touch } from 'redux-form';
 
-import wizardConnector from '~/components/clusters/wizards/common/WizardConnector';
 import createOSDInitialValues from '~/components/clusters/wizards/common/createOSDInitialValues';
+import wizardConnector from '~/components/clusters/wizards/common/WizardConnector';
 
 import ClusterSettingsScreen from './ClusterSettingsScreen';
 

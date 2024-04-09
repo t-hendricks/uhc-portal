@@ -1,6 +1,8 @@
 import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
+
 import { closeModal } from '../Modal/ModalActions';
+
 import ErrorModal from './ErrorModal';
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({

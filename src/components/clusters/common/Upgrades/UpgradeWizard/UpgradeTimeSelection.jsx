@@ -1,12 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Radio, Title, FormGroup, Form, TextInput } from '@patternfly/react-core';
+import DatePicker from 'react-datepicker';
+
+import { Form, FormGroup, Radio, TextInput, Title } from '@patternfly/react-core';
 import {
   Select as SelectDeprecated,
   SelectOption as SelectOptionDeprecated,
 } from '@patternfly/react-core/deprecated';
 import { DateFormat } from '@redhat-cloud-services/frontend-components/DateFormat';
-import DatePicker from 'react-datepicker';
 
 class UpgradeTimeSelection extends React.Component {
   state = { timeSelectionOpen: false };

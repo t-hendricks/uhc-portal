@@ -1,23 +1,24 @@
 /* eslint-disable react/jsx-no-useless-fragment */
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom-v5-compat';
+
 import {
-  PageSection,
-  Title,
   Button,
+  PageSection,
+  Popover,
+  Split,
+  SplitItem,
   Stack,
   StackItem,
-  Popover,
-  SplitItem,
-  Split,
+  Title,
 } from '@patternfly/react-core';
+import OutlinedQuestionCircleIcon from '@patternfly/react-icons/dist/esm/icons/outlined-question-circle-icon';
 import {
   Table as TableDeprecated,
-  TableHeader as TableHeaderDeprecated,
   TableBody as TableBodyDeprecated,
+  TableHeader as TableHeaderDeprecated,
 } from '@patternfly/react-table/deprecated';
-import { Link } from 'react-router-dom-v5-compat';
-import OutlinedQuestionCircleIcon from '@patternfly/react-icons/dist/esm/icons/outlined-question-circle-icon';
 
 const ocpTableColumns = ['Infrastructure provider', 'Installation options'];
 const ocpTableRows = [

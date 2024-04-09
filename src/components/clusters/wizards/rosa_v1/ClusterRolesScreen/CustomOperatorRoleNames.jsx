@@ -3,10 +3,10 @@ import { Field } from 'redux-form';
 
 import { GridItem, Text, TextContent, TextVariants, Title } from '@patternfly/react-core';
 
+import links from '../../../../../common/installLinks.mjs';
+import validators from '../../../../../common/validators';
 import ExternalLink from '../../../../common/ExternalLink';
 import ReduxVerticalFormGroup from '../../../../common/ReduxFormComponents/ReduxVerticalFormGroup';
-import validators from '../../../../../common/validators';
-import links from '../../../../../common/installLinks.mjs';
 
 function CustomOperatorRoleNames() {
   return (

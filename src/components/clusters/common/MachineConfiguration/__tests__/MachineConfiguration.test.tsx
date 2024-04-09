@@ -1,15 +1,17 @@
-import { AxiosResponse } from 'axios';
 import React from 'react';
+import { AxiosResponse } from 'axios';
+
 import {
   MachineConfiguration,
   MachineConfigurationProps,
 } from '~/components/clusters/common/MachineConfiguration';
 import { checkAccessibility, render, screen, waitFor } from '~/testUtils';
 import { KubeletConfig } from '~/types/clusters_mgmt.v1';
+
 import {
-  ResponseError404,
   defaultProps,
   existingConfigResponse,
+  ResponseError404,
 } from './MachineConfiguration.fixtures';
 
 describe('<MachineConfiguration />', () => {

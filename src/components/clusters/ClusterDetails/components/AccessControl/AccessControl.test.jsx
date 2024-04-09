@@ -1,9 +1,11 @@
 import React from 'react';
 import { MemoryRouter } from 'react-router-dom';
 import { CompatRouter } from 'react-router-dom-v5-compat';
-import { render, screen } from '~/testUtils';
+
 import { normalizedProducts } from '~/common/subscriptionTypes';
 import clusterStates from '~/components/clusters/common/clusterStates';
+import { render, screen } from '~/testUtils';
+
 import AccessControl from './AccessControl';
 
 const buildCluster = ({ clusterProps, subscriptionProps, consoleUrl, apiUrl }) => ({

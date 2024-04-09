@@ -1,17 +1,17 @@
 import get from 'lodash/get';
 
 import {
+  dedicatedRhInfra,
+  rhmiAddon,
+  unlimitedROSA,
+} from '../../components/clusters/common/__tests__/quota_cost.fixtures';
+import {
   normalizeCluster,
+  normalizeMetrics,
   normalizeProductID,
   normalizeQuotaCost,
-  normalizeMetrics,
 } from '../normalize';
 import { normalizedProducts } from '../subscriptionTypes';
-import {
-  dedicatedRhInfra,
-  unlimitedROSA,
-  rhmiAddon,
-} from '../../components/clusters/common/__tests__/quota_cost.fixtures';
 
 const productOCP = {
   kind: 'ProductLink',

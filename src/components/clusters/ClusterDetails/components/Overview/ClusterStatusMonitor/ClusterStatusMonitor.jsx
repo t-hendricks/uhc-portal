@@ -2,25 +2,26 @@
 // can't access lexical declaration '__WEBPACK_DEFAULT_EXPORT__' before initialization
 /* eslint-disable react-hooks/rules-of-hooks */
 import React from 'react';
-import PropTypes from 'prop-types';
 import get from 'lodash/get';
+import PropTypes from 'prop-types';
 import { useNavigate } from 'react-router-dom-v5-compat';
 
-import PlusCircleIcon from '@patternfly/react-icons/dist/esm/icons/plus-circle-icon';
+import { Alert, Button, ButtonVariant, Flex, FlexItem, Spinner } from '@patternfly/react-core';
 import MinusCircleIcon from '@patternfly/react-icons/dist/esm/icons/minus-circle-icon';
-import { Alert, Flex, FlexItem, Button, ButtonVariant, Spinner } from '@patternfly/react-core';
-import { TableVariant, Table, Thead, Tr, Th, Tbody, Td } from '@patternfly/react-table';
-import { HAD_INFLIGHT_ERROR_LOCALSTORAGE_KEY } from '~/common/localStorageConstants';
+import PlusCircleIcon from '@patternfly/react-icons/dist/esm/icons/plus-circle-icon';
+import { Table, TableVariant, Tbody, Td, Th, Thead, Tr } from '@patternfly/react-table';
 
+import { HAD_INFLIGHT_ERROR_LOCALSTORAGE_KEY } from '~/common/localStorageConstants';
 import { InflightCheckState } from '~/types/clusters_mgmt.v1';
+
+import getClusterName from '../../../../../../common/getClusterName';
 import { usePreviousProps } from '../../../../../../hooks/usePreviousProps';
+import ErrorModal from '../../../../../common/ErrorModal';
+import ExternalLink from '../../../../../common/ExternalLink';
 import clusterStates, {
   hasInflightEgressErrors,
   isOSDGCPWaitingForRolesOnHostProject,
 } from '../../../../common/clusterStates';
-import getClusterName from '../../../../../../common/getClusterName';
-import ExternalLink from '../../../../../common/ExternalLink';
-import ErrorModal from '../../../../../common/ErrorModal';
 
 const ClusterStatusMonitor = (props) => {
   const {

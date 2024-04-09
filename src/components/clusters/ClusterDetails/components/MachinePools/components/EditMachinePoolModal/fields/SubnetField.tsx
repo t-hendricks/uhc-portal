@@ -1,10 +1,11 @@
 import * as React from 'react';
-import { Alert, Spinner } from '@patternfly/react-core';
 import { useField } from 'formik';
 
-import { Cluster } from '~/types/clusters_mgmt.v1';
+import { Alert, Spinner } from '@patternfly/react-core';
+
 import { SubnetSelectField } from '~/components/clusters/common/SubnetSelectField';
 import { useAWSVPCFromCluster } from '~/components/clusters/common/useAWSVPCFromCluster';
+import { Cluster } from '~/types/clusters_mgmt.v1';
 
 const fieldId = 'privateSubnetId';
 

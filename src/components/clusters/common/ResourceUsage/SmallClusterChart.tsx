@@ -1,12 +1,14 @@
 import React, { useEffect, useMemo, useState } from 'react';
+
 import { ChartDonut } from '@patternfly/react-charts';
 
 import {
-  Unit,
-  ValueWithUnits,
   humanizeValueWithUnit,
   roundValueWithUnit,
+  Unit,
+  ValueWithUnits,
 } from '../../../../common/units';
+
 import './SmallClusterChart.scss';
 
 type SmallClusterChartProps = {

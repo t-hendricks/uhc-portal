@@ -1,18 +1,19 @@
 import React from 'react';
-import { Alert, AlertVariant, Spinner } from '@patternfly/react-core';
 import { Field } from 'formik';
 
-import { Cluster } from '~/types/clusters_mgmt.v1';
-import { getIncompatibleVersionReason } from '~/common/versionCompatibility';
+import { Alert, AlertVariant, Spinner } from '@patternfly/react-core';
+
 import { SupportedFeature } from '~/common/featureCompatibility';
-import { useAWSVPCFromCluster } from '~/components/clusters/common/useAWSVPCFromCluster';
+import { validateSecurityGroups } from '~/common/validators';
+import { getIncompatibleVersionReason } from '~/common/versionCompatibility';
 import EditSecurityGroups from '~/components/clusters/ClusterDetails/components/SecurityGroups/EditSecurityGroups';
 import SecurityGroupsEmptyAlert from '~/components/clusters/ClusterDetails/components/SecurityGroups/SecurityGroupsEmptyAlert';
 import SecurityGroupsNoChangeAlert from '~/components/clusters/ClusterDetails/components/SecurityGroups/SecurityGroupsNoChangeAlert';
+import { isHypershiftCluster, isROSA } from '~/components/clusters/common/clusterStates';
+import { useAWSVPCFromCluster } from '~/components/clusters/common/useAWSVPCFromCluster';
 import { FieldId } from '~/components/clusters/wizards/common';
 import { useFormState } from '~/components/clusters/wizards/hooks';
-import { validateSecurityGroups } from '~/common/validators';
-import { isHypershiftCluster, isROSA } from '~/components/clusters/common/clusterStates';
+import { Cluster } from '~/types/clusters_mgmt.v1';
 
 export interface EditSecurityGroupsFieldProps {
   cluster: Cluster;

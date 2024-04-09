@@ -1,10 +1,11 @@
 import React from 'react';
 import { CompatRouter } from 'react-router-dom-v5-compat';
-import { screen, checkAccessibility, TestRouter, withState } from '~/testUtils';
 
+import { checkAccessibility, screen, TestRouter, withState } from '~/testUtils';
+
+import githubReleases from '../githubReleases.mock';
 import { InstallAzureUPI } from '../InstallAzureUPI';
 import instructionsMapping from '../instructions/instructionsMapping';
-import githubReleases from '../githubReleases.mock';
 
 jest.mock('../../../../redux/actions', () => ({
   __esModule: true,

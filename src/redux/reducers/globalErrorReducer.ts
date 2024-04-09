@@ -1,5 +1,5 @@
 import { GlobalErrorAction } from '../actions/globalErrorActions';
-import { SET_GLOBAL_ERROR, CLEAR_GLOBAL_ERROR } from '../constants/globalErrorConstants';
+import { CLEAR_GLOBAL_ERROR, SET_GLOBAL_ERROR } from '../constants/globalErrorConstants';
 
 type State = {
   errorMessage?: string;

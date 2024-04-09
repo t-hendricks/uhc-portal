@@ -1,16 +1,19 @@
 /* eslint-disable camelcase */
 import isEmpty from 'lodash/isEmpty';
+
 import {
   GithubIdentityProvider,
   IdentityProvider,
   LDAPAttributes,
   OpenIDClaims,
 } from '~/types/clusters_mgmt.v1';
+
 import { multiInputToCleanArray, strToCleanArray } from '../../../../../common/helpers';
+
 import { GitHubTeamsAndOrgsDataType } from './model/GitHubTeamsAndOrgsDataType';
+import { IDPFormDataType } from './model/IDPFormDataType';
 import { LdapAttributesType } from './model/LdapAttributesType';
 import { OpenIdClaimsType } from './model/OpenIdClaimsType';
-import { IDPFormDataType } from './model/IDPFormDataType';
 
 const IDPformValues = {
   GITHUB: 'GithubIdentityProvider',

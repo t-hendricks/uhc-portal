@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+
 import { Form, TextInput } from '@patternfly/react-core';
 
-import Modal from '../../../../../common/Modal/Modal';
-
 import ErroBox from '../../../../../common/ErrorBox';
+import Modal from '../../../../../common/Modal/Modal';
 
 import '../AddOns.scss';
 

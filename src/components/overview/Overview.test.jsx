@@ -1,9 +1,12 @@
 import React from 'react';
-import { render, screen, checkAccessibility } from '~/testUtils';
-import { CompatRouter } from 'react-router-dom-v5-compat';
-import '@testing-library/jest-dom';
 import { BrowserRouter } from 'react-router-dom';
+import { CompatRouter } from 'react-router-dom-v5-compat';
+
+import { checkAccessibility, render, screen } from '~/testUtils';
+
 import Overview from './Overview';
+
+import '@testing-library/jest-dom';
 
 describe('<Overview />', () => {
   it('contains correct links', async () => {

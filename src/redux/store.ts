@@ -1,8 +1,10 @@
-import { Middleware, configureStore } from '@reduxjs/toolkit';
 import { routerMiddleware } from 'connected-react-router';
 import { createBrowserHistory } from 'history';
 import promiseMiddleware from 'redux-promise-middleware';
+
 import notificationsMiddleware from '@redhat-cloud-services/frontend-components-notifications/notificationsMiddleware';
+import { configureStore, Middleware } from '@reduxjs/toolkit';
+
 import promiseRejectionMiddleware from './promiseRejectionMiddleware';
 import { reduxReducers } from './reducers';
 import sentryMiddleware from './sentryMiddleware';

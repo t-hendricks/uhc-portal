@@ -1,21 +1,25 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Tabs, Tab, TabTitleText, TabTitleIcon, PageSection } from '@patternfly/react-core';
 import { useNavigate } from 'react-router-dom-v5-compat';
-import { Spinner } from '@redhat-cloud-services/frontend-components/Spinner';
-import { ServerIcon } from '@patternfly/react-icons/dist/esm/icons/server-icon';
+
+import { PageSection, Tab, Tabs, TabTitleIcon, TabTitleText } from '@patternfly/react-core';
 import { CloudIcon } from '@patternfly/react-icons/dist/esm/icons/cloud-icon';
 import { LaptopIcon } from '@patternfly/react-icons/dist/esm/icons/laptop-icon';
+import { ServerIcon } from '@patternfly/react-icons/dist/esm/icons/server-icon';
+import { Spinner } from '@redhat-cloud-services/frontend-components/Spinner';
+
+import { AppPage } from '~/components/App/AppPage';
 import { isRestrictedEnv } from '~/restrictedEnv';
 
-import './CreateClusterPage.scss';
-import { AppPage } from '~/components/App/AppPage';
-import PageTitle from '../../common/PageTitle';
-import Breadcrumbs from '../../common/Breadcrumbs';
 import { shouldRefetchQuota } from '../../../common/helpers';
-import DatacenterTab from './DatacenterTab';
+import Breadcrumbs from '../../common/Breadcrumbs';
+import PageTitle from '../../common/PageTitle';
+
 import CloudTab from './CloudTab';
+import DatacenterTab from './DatacenterTab';
 import LocalTab from './LocalTab';
+
+import './CreateClusterPage.scss';
 
 const hashToTabIndex = {
   cloud: 0,

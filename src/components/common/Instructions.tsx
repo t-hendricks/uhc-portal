@@ -1,4 +1,5 @@
 import React from 'react';
+
 import { TextContent, TextList, TextListVariants } from '@patternfly/react-core';
 
 import './Instructions.scss';

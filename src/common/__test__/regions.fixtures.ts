@@ -1,12 +1,12 @@
+import { AxiosResponse } from 'axios';
 import type { FormikValues } from 'formik';
 
-import type { CloudProvider, CloudRegion } from '~/types/clusters_mgmt.v1';
-import type { State as CloudProvidersState } from '~/redux/reducers/cloudProvidersReducer';
-import { indexRegions, State as CcsInquiriesState } from '~/redux/reducers/ccsInquiriesReducer';
-import { baseRequestState } from '~/redux/reduxHelpers';
 import { getAwsCcsCredentials } from '~/components/clusters/wizards/common/utils/ccsCredentials';
 import { FieldId } from '~/components/clusters/wizards/osd/constants';
-import { AxiosResponse } from 'axios';
+import { indexRegions, State as CcsInquiriesState } from '~/redux/reducers/ccsInquiriesReducer';
+import type { State as CloudProvidersState } from '~/redux/reducers/cloudProvidersReducer';
+import { baseRequestState } from '~/redux/reduxHelpers';
+import type { CloudProvider, CloudRegion } from '~/types/clusters_mgmt.v1';
 
 export const awsRegions: CloudRegion[] = [
   // To better test logic of choosing default:

@@ -1,4 +1,5 @@
 import React from 'react';
+import { Field, FieldConfig, FieldProps, FieldValidator } from 'formik';
 
 import {
   DropEvent,
@@ -7,11 +8,10 @@ import {
   FormGroup,
   FormGroupProps,
 } from '@patternfly/react-core';
-import { Field, FieldProps, FieldConfig, FieldValidator } from 'formik';
 
-import PopoverHint from '~/components/common/PopoverHint';
 import { useFormState } from '~/components/clusters/wizards/hooks';
 import { FormGroupHelperText } from '~/components/common/FormGroupHelperText';
+import PopoverHint from '~/components/common/PopoverHint';
 
 interface FileUploadFieldProps {
   name: string;

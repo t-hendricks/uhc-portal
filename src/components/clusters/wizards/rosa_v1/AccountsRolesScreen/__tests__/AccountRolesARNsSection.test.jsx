@@ -1,8 +1,10 @@
 import React from 'react';
-import { render, screen, checkAccessibility, mockUseFeatureGate } from '~/testUtils';
+
 import wizardConnector from '~/components/clusters/wizards/common/WizardConnector';
-import { HCP_USE_UNMANAGED } from '~/redux/constants/featureConstants';
 import { ROSA_HOSTED_CLI_MIN_VERSION } from '~/components/clusters/wizards/rosa_v1/rosaConstants';
+import { HCP_USE_UNMANAGED } from '~/redux/constants/featureConstants';
+import { checkAccessibility, mockUseFeatureGate, render, screen } from '~/testUtils';
+
 import AccountRolesARNsSection from '../AccountRolesARNsSection';
 
 const latestOCPVersion = '4.13.3';

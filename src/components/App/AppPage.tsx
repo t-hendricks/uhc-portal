@@ -1,8 +1,10 @@
 import React, { PropsWithChildren, useEffect } from 'react';
+
 import config from '../../config';
+
+import { AppDrawer } from './AppDrawer';
 import EnvOverrideMessage from './EnvOverrideMessage';
 import ErrorBoundary from './ErrorBoundary';
-import { AppDrawer } from './AppDrawer';
 
 export const AppPage: React.FC<PropsWithChildren<{ title?: string }>> = ({ children, title }) => {
   useEffect(() => {

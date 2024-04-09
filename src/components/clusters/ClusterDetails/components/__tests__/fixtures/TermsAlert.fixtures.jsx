@@ -1,4 +1,5 @@
 import { defaultSubscription } from '~/components/clusters/common/__tests__/defaultClusterFromSubscription.fixtures';
+
 import { normalizedProducts } from '../../../../../../common/subscriptionTypes';
 
 const tncUrl = 'https://www.redhat.com/wapps/tnc/ackrequired?site=ocm&event=register';

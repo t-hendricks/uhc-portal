@@ -1,4 +1,5 @@
 import { action, ActionType } from 'typesafe-actions';
+
 import { createAuthorizationToken } from '../../services/accountManager';
 
 const ACTION_TYPE = 'FETCH_AUTHORIZATION_TOKEN';

@@ -1,10 +1,11 @@
 import dayjs from 'dayjs';
-import utc from 'dayjs/plugin/utc';
-import relativeTime from 'dayjs/plugin/relativeTime';
 import advancedFormat from 'dayjs/plugin/advancedFormat';
+import relativeTime from 'dayjs/plugin/relativeTime';
+import utc from 'dayjs/plugin/utc';
+
 import { ENV_OVERRIDE_LOCALSTORAGE_KEY } from './common/localStorageConstants';
 import { Chrome } from './types/types';
-import { isRestrictedEnv, getRestrictedEnvApi } from './restrictedEnv';
+import { getRestrictedEnvApi, isRestrictedEnv } from './restrictedEnv';
 
 export type Config = {
   configData: EnvConfigWithFedRamp;

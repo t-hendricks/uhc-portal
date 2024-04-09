@@ -1,18 +1,21 @@
 import { connect } from 'react-redux';
+
 import { isHypershiftCluster } from '~/components/clusters/common/clusterStates';
-import {
-  getIsManual,
-  getHasUnMetClusterAcks,
-  getClusterIdFromState,
-} from '../UpgradeAcknowledge/UpgradeAcknowledgeSelectors';
+
 import { setAutomaticUpgradePolicy } from '../clusterUpgradeActions';
+import {
+  getClusterIdFromState,
+  getHasUnMetClusterAcks,
+  getIsManual,
+} from '../UpgradeAcknowledge/UpgradeAcknowledgeSelectors';
+
+import MinorVersionUpgradeAlert from './MinorVersionUpgradeAlert';
 import {
   getEnableMinorVersionUpgrades,
   getUpgradeScheduleId,
   isNextMinorVersionAvailable,
   isRosa,
 } from './MinorVersionUpgradeSelectors';
-import MinorVersionUpgradeAlert from './MinorVersionUpgradeAlert';
 
 const mapStateToProps = (state) => {
   const { cluster } = state.clusters.details;

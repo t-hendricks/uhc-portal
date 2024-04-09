@@ -1,6 +1,7 @@
 import * as React from 'react';
-import { SelectOption as SelectOptionDeprecated } from '@patternfly/react-core/deprecated';
 import { useField } from 'formik';
+
+import { SelectOption as SelectOptionDeprecated } from '@patternfly/react-core/deprecated';
 
 import useFormikOnChange from '~/hooks/useFormikOnChange';
 

@@ -1,26 +1,28 @@
-import * as clusterStates from '~/components/clusters/common/clusterStates';
 import * as normalize from '~/common/normalize';
+import * as clusterStates from '~/components/clusters/common/clusterStates';
+
 import { normalizedProducts } from '../../../../../../common/subscriptionTypes';
 import {
   actionResolver,
-  normalizeNodePool,
-  isMinimumCountWithoutTaints,
-  isEnforcedDefaultMachinePool,
-  getSubnetIds,
-  hasSubnets,
-  getMinNodesRequired,
-  getNodeIncrementHypershift,
-  hasExplicitAutoscalingMachinePool,
-  hasDefaultOrExplicitAutoscalingMachinePool,
   canUseSpotInstances,
   getClusterMinNodes,
+  getMinNodesRequired,
+  getNodeIncrementHypershift,
+  getSubnetIds,
+  hasDefaultOrExplicitAutoscalingMachinePool,
+  hasExplicitAutoscalingMachinePool,
+  hasSubnets,
+  isEnforcedDefaultMachinePool,
+  isMinimumCountWithoutTaints,
+  normalizeNodePool,
 } from '../machinePoolsHelper';
+
 import {
+  machinePoolsWithAutoscaling,
+  machinePoolsWithoutAutoscaling,
   machinePoolWithBothSubnetAndSubnets,
   machinePoolWithSubnet,
   machinePoolWithSubnets,
-  machinePoolsWithAutoscaling,
-  machinePoolsWithoutAutoscaling,
 } from './MachinePools.fixtures';
 
 const isHypershiftClusterMock = jest.spyOn(clusterStates, 'isHypershiftCluster');

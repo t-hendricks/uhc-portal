@@ -1,14 +1,16 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
+
 import { ModalVariant } from '@patternfly/react-core';
-import UpgradeAcknowledgeStep from '../UpgradeAcknowledgeStep';
-import Modal from '../../../../../common/Modal/Modal';
+
 import { getErrorState } from '../../../../../../common/errors';
-import ErrorBox from '../../../../../common/ErrorBox';
 import clusterService, {
-  patchUpgradeSchedule,
   patchControlPlaneUpgradeSchedule,
+  patchUpgradeSchedule,
 } from '../../../../../../services/clusterService';
+import ErrorBox from '../../../../../common/ErrorBox';
+import Modal from '../../../../../common/Modal/Modal';
+import UpgradeAcknowledgeStep from '../UpgradeAcknowledgeStep';
 
 const UpgradeAcknowledgeModal = (props) => {
   const [pending, setPending] = useState(false);

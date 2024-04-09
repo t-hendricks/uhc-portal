@@ -1,4 +1,5 @@
 import type { ChromeAPI } from '@redhat-cloud-services/types';
+
 import type { Config } from '~/config';
 
 // 'isRestrictedEnv' is for an internal insights-chrome environment which may change the visibility of certain ocm pages and features.

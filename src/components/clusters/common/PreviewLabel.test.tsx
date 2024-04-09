@@ -1,7 +1,9 @@
 import React from 'react';
-import { screen, checkAccessibility, withState } from '~/testUtils';
+
 import * as hooks from '~/redux/hooks';
-import { PreviewLabel, createdPostGa, GA_DATE_STR } from './PreviewLabel';
+import { checkAccessibility, screen, withState } from '~/testUtils';
+
+import { createdPostGa, GA_DATE_STR, PreviewLabel } from './PreviewLabel';
 
 const expectLabelToBePresent = (container: HTMLElement) => {
   expect(container.querySelector('.pf-v5-c-label')).toBeInTheDocument();

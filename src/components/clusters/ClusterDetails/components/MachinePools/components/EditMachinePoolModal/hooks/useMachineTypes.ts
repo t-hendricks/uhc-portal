@@ -1,7 +1,8 @@
 import * as React from 'react';
 import { useDispatch } from 'react-redux';
-import { useGlobalState } from '~/redux/hooks';
+
 import { getMachineTypes } from '~/redux/actions/machineTypesActions';
+import { useGlobalState } from '~/redux/hooks';
 
 const useMachineTypes = () => {
   const dispatch = useDispatch();

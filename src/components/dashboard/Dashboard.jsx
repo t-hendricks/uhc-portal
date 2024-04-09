@@ -2,37 +2,38 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
 import {
-  PageSection,
-  Title,
-  Split,
-  SplitItem,
-  CardTitle,
+  Card,
   CardBody,
+  CardTitle,
   EmptyState,
   EmptyStateBody,
-  Card,
   Grid,
   GridItem,
+  PageSection,
+  Split,
+  SplitItem,
+  Title,
 } from '@patternfly/react-core';
 import { PageHeader } from '@redhat-cloud-services/frontend-components/PageHeader';
 import Spinner from '@redhat-cloud-services/frontend-components/Spinner';
 
+import { createOverviewQueryObject } from '../../common/queryHelpers';
+import { AppPage } from '../App/AppPage';
 import ClusterListActions from '../clusters/ClusterList/components/ClusterListActions/ClusterListActions';
-import ConnectedModal from '../common/Modal/ConnectedModal';
+import ArchiveClusterDialog from '../clusters/common/ArchiveClusterDialog';
+import EditSubscriptionSettingsDialog from '../clusters/common/EditSubscriptionSettingsDialog';
 import SmallClusterChart from '../clusters/common/ResourceUsage/SmallClusterChart';
+import ConnectedModal from '../common/Modal/ConnectedModal';
+import Unavailable from '../common/Unavailable';
+
 import DashboardEmptyState from './EmptyState/DashboardEmptyState';
-import ExpiredTrialsCard from './ExpiredTrialsCard';
+import InsightsAdvisorCard from './InsightsAdvisorCard/InsightsAdvisorCard';
 import ClustersWithIssuesTableCard from './ClustersWithIssuesTableCard';
 import CostCard from './CostCard';
-import EditSubscriptionSettingsDialog from '../clusters/common/EditSubscriptionSettingsDialog';
-import ArchiveClusterDialog from '../clusters/common/ArchiveClusterDialog';
+import ExpiredTrialsCard from './ExpiredTrialsCard';
 import TopOverviewSection from './TopOverviewSection';
-import { createOverviewQueryObject } from '../../common/queryHelpers';
-import Unavailable from '../common/Unavailable';
-import InsightsAdvisorCard from './InsightsAdvisorCard/InsightsAdvisorCard';
 
 import './Dashboard.scss';
-import { AppPage } from '../App/AppPage';
 
 const PAGE_TITLE = 'Overview | Red Hat OpenShift Cluster Manager';
 

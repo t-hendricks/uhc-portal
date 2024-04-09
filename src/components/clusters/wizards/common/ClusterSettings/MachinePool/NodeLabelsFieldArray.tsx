@@ -1,18 +1,19 @@
-import './NodeLabelsFieldArray.scss';
 import React from 'react';
-import { FieldArray } from 'formik';
 import classNames from 'classnames';
+import { FieldArray } from 'formik';
 
 import { Button, Split, SplitItem, Stack, StackItem } from '@patternfly/react-core';
 import { MinusCircleIcon } from '@patternfly/react-icons/dist/esm/icons/minus-circle-icon';
 import { PlusCircleIcon } from '@patternfly/react-icons/dist/esm/icons/plus-circle-icon';
 
+import { nodeKeyValueTooltipText } from '~/common/helpers';
 import { checkLabelKey, checkLabelValue } from '~/common/validators';
 import { FieldId } from '~/components/clusters/wizards/common/constants';
-import { useFormState } from '~/components/clusters/wizards/hooks';
 import { TextInputField } from '~/components/clusters/wizards/form/TextInputField';
-import { nodeKeyValueTooltipText } from '~/common/helpers';
+import { useFormState } from '~/components/clusters/wizards/hooks';
 import ButtonWithTooltip from '~/components/common/ButtonWithTooltip';
+
+import './NodeLabelsFieldArray.scss';
 
 export interface NodeLabel {
   key: string;

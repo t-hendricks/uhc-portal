@@ -1,4 +1,5 @@
 import { normalizedProducts } from '~/common/subscriptionTypes';
+
 import getMinNodesAllowed from '../AutoScaleHelper';
 
 test('Autoscaling min nodes allowed', () => {

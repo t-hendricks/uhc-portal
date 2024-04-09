@@ -2,11 +2,12 @@ import React, { useEffect, useState } from 'react';
 import { setNestedObjectValues } from 'formik';
 
 import { Button, useWizardContext, WizardFooterWrapper } from '@patternfly/react-core';
+
 import { scrollToFirstField } from '~/common/helpers';
 import { getScrollErrorIds } from '~/components/clusters/wizards/form/utils';
 import { useFormState } from '~/components/clusters/wizards/hooks';
-import { useGlobalState } from '~/redux/hooks/useGlobalState';
 import { StepId } from '~/components/clusters/wizards/osd/constants';
+import { useGlobalState } from '~/redux/hooks/useGlobalState';
 
 interface CreateOsdWizardFooterProps {
   isLoading?: boolean;

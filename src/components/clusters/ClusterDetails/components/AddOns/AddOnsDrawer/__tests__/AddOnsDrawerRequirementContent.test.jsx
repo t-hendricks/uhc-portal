@@ -1,6 +1,7 @@
 import React from 'react';
 
-import { render, checkAccessibility, screen } from '~/testUtils';
+import { checkAccessibility, render, screen } from '~/testUtils';
+
 import AddOnsRequirementContent from '../AddOnsDrawerRequirementContent';
 
 describe('<AddOnsRequirementContent />', () => {

@@ -1,54 +1,54 @@
 import React, { useState } from 'react';
 import { Field } from 'formik';
+
 import {
-  Title,
+  Alert,
+  ExpandableSection,
+  Form,
+  FormGroup,
   Grid,
   GridItem,
-  FormGroup,
-  Form,
-  ExpandableSection,
-  SplitItem,
-  Alert,
   Split,
+  SplitItem,
+  Title,
 } from '@patternfly/react-core';
 
-import { normalizedProducts } from '~/common/subscriptionTypes';
-import { CloudProviderType } from '~/components/clusters/wizards/common';
-import links from '~/common/installLinks.mjs';
-import ExternalLink from '~/components/common/ExternalLink';
-import PopoverHint from '~/components/common/PopoverHint';
-import { noQuotaTooltip } from '~/common/helpers';
-import { QuotaTypes } from '~/components/clusters/common/quotaModel';
-import { availableQuota } from '~/components/clusters/common/quotaSelectors';
-import { getDefaultSecurityGroupsSettings } from '~/common/securityGroupsHelpers';
 import { SupportedFeature } from '~/common/featureCompatibility';
-
-import { useGlobalState } from '~/redux/hooks';
-import { useFormState } from '~/components/clusters/wizards/hooks';
-import { FieldId } from '~/components/clusters/wizards/rosa_v2/constants';
-import { constants } from '~/components/clusters/common/CreateOSDFormConstants';
-import { emptyAWSSubnet } from '~/components/clusters/wizards/common/createOSDInitialValues';
+import { noQuotaTooltip } from '~/common/helpers';
+import links from '~/common/installLinks.mjs';
+import { getDefaultSecurityGroupsSettings } from '~/common/securityGroupsHelpers';
+import { normalizedProducts } from '~/common/subscriptionTypes';
 import {
   asyncValidateClusterName,
   clusterNameAsyncValidation,
   clusterNameValidation,
   createPessimisticValidator,
 } from '~/common/validators';
-import { CheckboxField } from '~/components/clusters/wizards/form/CheckboxField';
-import { RadioGroupField, RichInputField } from '~/components/clusters/wizards/form';
-import CloudRegionSelectField from '~/components/clusters/wizards/common/ClusterSettings/Details/CloudRegionSelectField';
-import { VersionSelectField } from '~/components/clusters/wizards/common/ClusterSettings/Details/VersionSelectField';
 import { getIncompatibleVersionReason } from '~/common/versionCompatibility';
-import { AWSCustomerManagedEncryption } from '~/components/clusters/wizards/rosa_v2/ClusterSettings/Details/AWSCustomerManagedEncryption';
-import { Version } from '~/types/clusters_mgmt.v1';
+import { constants } from '~/components/clusters/common/CreateOSDFormConstants';
+import { QuotaTypes } from '~/components/clusters/common/quotaModel';
+import { availableQuota } from '~/components/clusters/common/quotaSelectors';
 import {
   getMinReplicasCount,
   getNodesCount,
 } from '~/components/clusters/common/ScaleSection/AutoScaleSection/AutoScaleHelper';
+import { CloudProviderType } from '~/components/clusters/wizards/common';
 import { ClassicEtcdFipsSection } from '~/components/clusters/wizards/common/ClusterSettings/Details/ClassicEtcdFipsSection';
-import { HCPEtcdEncryptionSection } from '~/components/clusters/wizards/rosa_v2/ClusterSettings/Details/HCPEtcdEncryptionSection';
+import CloudRegionSelectField from '~/components/clusters/wizards/common/ClusterSettings/Details/CloudRegionSelectField';
+import { VersionSelectField } from '~/components/clusters/wizards/common/ClusterSettings/Details/VersionSelectField';
+import { emptyAWSSubnet } from '~/components/clusters/wizards/common/createOSDInitialValues';
+import { RadioGroupField, RichInputField } from '~/components/clusters/wizards/form';
+import { CheckboxField } from '~/components/clusters/wizards/form/CheckboxField';
+import { useFormState } from '~/components/clusters/wizards/hooks';
 import { createOperatorRolesHashPrefix } from '~/components/clusters/wizards/rosa_v2/ClusterRolesScreen/ClusterRolesScreen';
+import { AWSCustomerManagedEncryption } from '~/components/clusters/wizards/rosa_v2/ClusterSettings/Details/AWSCustomerManagedEncryption';
+import { HCPEtcdEncryptionSection } from '~/components/clusters/wizards/rosa_v2/ClusterSettings/Details/HCPEtcdEncryptionSection';
+import { FieldId } from '~/components/clusters/wizards/rosa_v2/constants';
+import ExternalLink from '~/components/common/ExternalLink';
+import PopoverHint from '~/components/common/PopoverHint';
+import { useGlobalState } from '~/redux/hooks';
 import { QuotaCostList } from '~/types/accounts_mgmt.v1';
+import { Version } from '~/types/clusters_mgmt.v1';
 
 function Details() {
   const {

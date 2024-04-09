@@ -1,4 +1,5 @@
 import React from 'react';
+
 import {
   Card,
   CardBody,
@@ -11,12 +12,15 @@ import {
   TextContent,
   Title,
 } from '@patternfly/react-core';
-import LeadingInfo from './LeadingInfo';
+
 import links, { channels } from '../../common/installLinks.mjs';
-import InstructionCommand from '../common/InstructionCommand';
-import ExternalLink from '../common/ExternalLink';
-import PopoverHint from '../common/PopoverHint';
 import DownloadAndOSSelection from '../clusters/install/instructions/components/DownloadAndOSSelection';
+import ExternalLink from '../common/ExternalLink';
+import InstructionCommand from '../common/InstructionCommand';
+import PopoverHint from '../common/PopoverHint';
+
+import LeadingInfo from './LeadingInfo';
+
 import './Instructions.scss';
 
 const SSOLogin = ({

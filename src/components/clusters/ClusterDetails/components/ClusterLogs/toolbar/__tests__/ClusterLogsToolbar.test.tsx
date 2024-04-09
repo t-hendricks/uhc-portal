@@ -1,6 +1,8 @@
 import React from 'react';
 import { CompatRouter } from 'react-router-dom-v5-compat';
-import { screen, render, userEvent, checkAccessibility, TestRouter } from '~/testUtils';
+
+import { checkAccessibility, render, screen, TestRouter, userEvent } from '~/testUtils';
+
 import ClusterLogsToolbar from '../ClusterLogsToolbar';
 
 const mockSetFilter = jest.fn();

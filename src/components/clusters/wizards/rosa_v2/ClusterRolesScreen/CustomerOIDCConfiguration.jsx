@@ -1,6 +1,7 @@
-import React, { useEffect, useState, useMemo } from 'react';
-import PropTypes from 'prop-types';
+import React, { useEffect, useMemo, useState } from 'react';
 import { Field } from 'formik';
+import PropTypes from 'prop-types';
+
 import {
   Button,
   ClipboardCopy,
@@ -8,21 +9,23 @@ import {
   FlexItem,
   FormGroup,
   Popover,
+  Skeleton,
   Text,
   TextContent,
   TextVariants,
-  Skeleton,
 } from '@patternfly/react-core';
-import ExternalLink from '~/components/common/ExternalLink';
-import PopoverHint from '~/components/common/PopoverHint';
-import Instruction from '~/components/common/Instruction';
-import Instructions from '~/components/common/Instructions';
-import FuzzySelect from '~/components/common/FuzzySelect';
-import { FormGroupHelperText } from '~/components/common/FormGroupHelperText';
+
 import { useFormState } from '~/components/clusters/wizards/hooks';
 import { FieldId } from '~/components/clusters/wizards/rosa_v2/constants';
-import validators from '../../../../../common/validators';
+import ExternalLink from '~/components/common/ExternalLink';
+import { FormGroupHelperText } from '~/components/common/FormGroupHelperText';
+import FuzzySelect from '~/components/common/FuzzySelect';
+import Instruction from '~/components/common/Instruction';
+import Instructions from '~/components/common/Instructions';
+import PopoverHint from '~/components/common/PopoverHint';
+
 import links from '../../../../../common/installLinks.mjs';
+import validators from '../../../../../common/validators';
 import ReduxVerticalFormGroup from '../../../../common/ReduxFormComponents/ReduxVerticalFormGroup';
 
 function CreateOIDCProviderInstructions() {

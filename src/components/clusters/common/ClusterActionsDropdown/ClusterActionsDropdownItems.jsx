@@ -1,11 +1,13 @@
-import get from 'lodash/get';
 import React from 'react';
+import get from 'lodash/get';
+
 import { DropdownItem as DropdownItemDeprecated } from '@patternfly/react-core/deprecated';
-import clusterStates, { isHibernating, isHypershiftCluster } from '../clusterStates';
-import { subscriptionStatuses, normalizedProducts } from '../../../../common/subscriptionTypes';
+
 import getClusterName from '../../../../common/getClusterName';
-import modals from '../../../common/Modal/modals';
 import { isAssistedInstallCluster } from '../../../../common/isAssistedInstallerCluster';
+import { normalizedProducts, subscriptionStatuses } from '../../../../common/subscriptionTypes';
+import modals from '../../../common/Modal/modals';
+import clusterStates, { isHibernating, isHypershiftCluster } from '../clusterStates';
 
 /**
  * Helper using reason message why it's disabled as source-of-truth

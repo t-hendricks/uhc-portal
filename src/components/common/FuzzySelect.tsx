@@ -1,4 +1,6 @@
-import React, { ReactElement, useCallback, ChangeEvent, useMemo, useRef, useEffect } from 'react';
+import React, { ChangeEvent, ReactElement, useCallback, useEffect, useMemo, useRef } from 'react';
+import Fuse from 'fuse.js';
+
 import { KeyTypes, Popover } from '@patternfly/react-core';
 import {
   Select as SelectDeprecated,
@@ -7,8 +9,6 @@ import {
   SelectProps as SelectPropsDeprecated,
 } from '@patternfly/react-core/deprecated';
 import { ErrorCircleOIcon } from '@patternfly/react-icons/dist/esm/icons/error-circle-o-icon';
-
-import Fuse from 'fuse.js';
 
 import { getIdSlices } from '~/common/fuzzyUtils';
 import { truncateTextWithEllipsis } from '~/common/helpers';

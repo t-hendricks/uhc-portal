@@ -1,6 +1,8 @@
 import { connect } from 'react-redux';
-import DownloadAndOSSelection from './DownloadAndOSSelection';
+
 import { githubActions } from '../../../../../../redux/actions';
+
+import DownloadAndOSSelection from './DownloadAndOSSelection';
 
 const mapStateToProps = (state) => ({
   token: state.tollbooth.token || {},

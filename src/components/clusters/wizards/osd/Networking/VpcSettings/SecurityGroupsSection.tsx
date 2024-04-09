@@ -1,19 +1,20 @@
 import React, { useState } from 'react';
-import { Alert, AlertActionLink, ExpandableSection } from '@patternfly/react-core';
 import { Field } from 'formik';
 
-import { CloudVPC } from '~/types/clusters_mgmt.v1';
-import { useFeatureGate } from '~/hooks/useFeatureGate';
-import { validateSecurityGroups } from '~/common/validators';
+import { Alert, AlertActionLink, ExpandableSection } from '@patternfly/react-core';
+
 import { SupportedFeature } from '~/common/featureCompatibility';
+import links from '~/common/installLinks.mjs';
+import { validateSecurityGroups } from '~/common/validators';
 import { getIncompatibleVersionReason } from '~/common/versionCompatibility';
-import { SECURITY_GROUPS_FEATURE_DAY1 } from '~/redux/constants/featureConstants';
 import EditSecurityGroups from '~/components/clusters/ClusterDetails/components/SecurityGroups/EditSecurityGroups';
 import SecurityGroupsEmptyAlert from '~/components/clusters/ClusterDetails/components/SecurityGroups/SecurityGroupsEmptyAlert';
 import { CheckboxField } from '~/components/clusters/wizards/form';
 import { useFormState } from '~/components/clusters/wizards/hooks';
 import { FieldId } from '~/components/clusters/wizards/osd/constants';
-import links from '~/common/installLinks.mjs';
+import { useFeatureGate } from '~/hooks/useFeatureGate';
+import { SECURITY_GROUPS_FEATURE_DAY1 } from '~/redux/constants/featureConstants';
+import { CloudVPC } from '~/types/clusters_mgmt.v1';
 
 type SecurityGroupFieldProps = {
   selectedVPC: CloudVPC;

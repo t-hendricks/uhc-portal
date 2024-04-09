@@ -1,11 +1,11 @@
-import { useGlobalState } from '~/redux/hooks/useGlobalState';
+import { QuotaParams } from '~/components/clusters/common/quotaModel';
 import {
-  quotaParams as wizardQuotaParams,
   hasAvailableQuota,
+  quotaParams as wizardQuotaParams,
   QuotaType,
 } from '~/components/clusters/wizards/common/utils/quotas';
+import { useGlobalState } from '~/redux/hooks/useGlobalState';
 import { QuotaCostList } from '~/types/accounts_mgmt.v1';
-import { QuotaParams } from '~/components/clusters/common/quotaModel';
 
 export const useGetBillingQuotas = (quotaParams: QuotaParams) => {
   const quotaList = useGlobalState(

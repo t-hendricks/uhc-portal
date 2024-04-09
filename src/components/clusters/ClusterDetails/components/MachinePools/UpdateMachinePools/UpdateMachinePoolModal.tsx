@@ -1,30 +1,33 @@
 import React from 'react';
-import { Button, Alert, AlertVariant, ButtonVariant } from '@patternfly/react-core';
+import { useDispatch, useSelector } from 'react-redux';
+
+import { Alert, AlertVariant, Button, ButtonVariant } from '@patternfly/react-core';
 import { OutlinedArrowAltCircleUpIcon } from '@patternfly/react-icons/dist/esm/icons/outlined-arrow-alt-circle-up-icon';
 import { DateFormat } from '@redhat-cloud-services/frontend-components/DateFormat';
-import { useSelector, useDispatch } from 'react-redux';
+
+import { isHypershiftCluster } from '~/components/clusters/common/clusterStates';
 import Modal from '~/components/common/Modal/Modal';
+import { modalActions } from '~/components/common/Modal/ModalActions';
 import modalIds from '~/components/common/Modal/modals';
 import shouldShowModal from '~/components/common/Modal/ModalSelectors';
-import { modalActions } from '~/components/common/Modal/ModalActions';
-import { GlobalState } from '~/redux/store';
-import { isHypershiftCluster } from '~/components/clusters/common/clusterStates';
+import PopoverHint from '~/components/common/PopoverHint';
 import { useFeatureGate } from '~/hooks/useFeatureGate';
 import { HCP_USE_NODE_UPGRADE_POLICIES } from '~/redux/constants/featureConstants';
-import PopoverHint from '~/components/common/PopoverHint';
-import {
-  controlPlaneVersionSelector,
-  displayControlPlaneVersion,
-  updateAllMachinePools as updatePool,
-  controlPlaneIdSelector,
-  useIsControlPlaneValidForMachinePool,
-  isMachinePoolUpgrading,
-  isMachinePoolScheduleError,
-  canMachinePoolBeUpgradedSelector,
-} from './updateMachinePoolsHelpers';
+import { GlobalState } from '~/redux/store';
 
 import { NodePoolWithUpgradePolicies } from '../machinePoolCustomTypes';
 import { getMachineOrNodePools } from '../MachinePoolsActions';
+
+import {
+  canMachinePoolBeUpgradedSelector,
+  controlPlaneIdSelector,
+  controlPlaneVersionSelector,
+  displayControlPlaneVersion,
+  isMachinePoolScheduleError,
+  isMachinePoolUpgrading,
+  updateAllMachinePools as updatePool,
+  useIsControlPlaneValidForMachinePool,
+} from './updateMachinePoolsHelpers';
 
 const updateModalId = modalIds.UPDATE_MACHINE_POOL_VERSION;
 

@@ -14,38 +14,33 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 import React from 'react';
-import './i18n';
+import { Provider } from 'react-redux';
 import { BrowserRouter } from 'react-router-dom';
 import { CompatRouter } from 'react-router-dom-v5-compat';
-import { Provider } from 'react-redux';
-
-// No type definitions
-// @ts-ignore
-import NotificationPortal from '@redhat-cloud-services/frontend-components-notifications/NotificationPortal';
-
-import * as Sentry from '@sentry/browser';
-import { sessionTimingIntegration } from '@sentry/integrations';
 
 import * as OCM from '@openshift-assisted/ui-lib/ocm';
 import { GenerateId } from '@patternfly/react-core';
-
 import useChrome from '@redhat-cloud-services/frontend-components/useChrome';
+// No type definitions
+// @ts-ignore
+import NotificationPortal from '@redhat-cloud-services/frontend-components-notifications/NotificationPortal';
+import * as Sentry from '@sentry/browser';
+import { sessionTimingIntegration } from '@sentry/integrations';
+
+import ocmBaseName from './common/getBaseName';
+import getNavClickParams from './common/getNavClickParams';
+import App from './components/App/App';
+import { detectFeatures } from './redux/actions/featureActions';
+import { userInfoResponse } from './redux/actions/userActions';
+import { store } from './redux/store';
+import type { AppThunkDispatch } from './redux/types';
+import { authInterceptor } from './services/apiRequest';
+import { Chrome } from './types/types';
 import config from './config';
 
-import getNavClickParams from './common/getNavClickParams';
-import ocmBaseName from './common/getBaseName';
-
-import { userInfoResponse } from './redux/actions/userActions';
-import { detectFeatures } from './redux/actions/featureActions';
-
-import { store } from './redux/store';
-import { authInterceptor } from './services/apiRequest';
-
-import App from './components/App/App';
-import type { AppThunkDispatch } from './redux/types';
-
 import './styles/main.scss';
-import { Chrome } from './types/types';
+
+import './i18n';
 
 const { Api, Config } = OCM;
 

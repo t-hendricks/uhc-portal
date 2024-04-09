@@ -1,9 +1,10 @@
 import type { AxiosError } from 'axios';
 import { action, ActionType } from 'typesafe-actions';
-import { clustersConstants } from '../constants';
-import { clusterService } from '../../services';
-import { REJECTED_ACTION } from '../reduxHelpers';
+
 import { POST_UPGRADE_SCHEDULE } from '../../components/clusters/common/Upgrades/clusterUpgradeActions';
+import { clusterService } from '../../services';
+import { clustersConstants } from '../constants';
+import { REJECTED_ACTION } from '../reduxHelpers';
 
 const fetchUpgradeGateFromAPI = () =>
   clusterService.getUpgradeGates().then((result) => result.data.items);

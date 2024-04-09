@@ -1,8 +1,8 @@
 /* eslint-disable camelcase */
-import React, { useState, useCallback, useEffect, useRef, useMemo } from 'react';
+import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import get from 'lodash/get';
 import { useDispatch, useSelector } from 'react-redux';
-import { GlobalState } from '~/redux/store';
+import { Field } from 'redux-form';
 
 import {
   Button,
@@ -13,24 +13,23 @@ import {
   TextContent,
   TextVariants,
 } from '@patternfly/react-core';
-import { Field } from 'redux-form';
 
-import { clearMachineTypesByRegion } from '~/redux/actions/machineTypesActions';
-
-import { required } from '~/common/validators';
-import { normalizedProducts } from '~/common/subscriptionTypes';
 import { trackEvents } from '~/common/analytics';
-import useAnalytics from '~/hooks/useAnalytics';
-import ErrorBox from '~/components/common/ErrorBox';
-
+import { AWS_ACCOUNT_ROSA_LOCALSTORAGE_KEY } from '~/common/localStorageConstants';
+import { normalizedProducts } from '~/common/subscriptionTypes';
+import { required } from '~/common/validators';
 import { PrerequisitesInfoBox } from '~/components/clusters/wizards/rosa_v1/common/PrerequisitesInfoBox';
 import { WelcomeMessage } from '~/components/clusters/wizards/rosa_v1/common/WelcomeMessage';
-import { AWS_ACCOUNT_ROSA_LOCALSTORAGE_KEY } from '~/common/localStorageConstants';
-import AccountRolesARNsSection from './AccountRolesARNsSection';
-import { AwsRoleErrorAlert } from './AwsRoleErrorAlert';
-import AWSAccountSelection from './AWSAccountSelection';
-import AWSBillingAccount from './AWSBillingAccount/AWSBillingAccount';
+import ErrorBox from '~/components/common/ErrorBox';
+import useAnalytics from '~/hooks/useAnalytics';
+import { clearMachineTypesByRegion } from '~/redux/actions/machineTypesActions';
+import { GlobalState } from '~/redux/store';
+
 import { useAssociateAWSAccountDrawer } from './AssociateAWSAccountDrawer/AssociateAWSAccountDrawer';
+import AWSBillingAccount from './AWSBillingAccount/AWSBillingAccount';
+import AccountRolesARNsSection from './AccountRolesARNsSection';
+import AWSAccountSelection from './AWSAccountSelection';
+import { AwsRoleErrorAlert } from './AwsRoleErrorAlert';
 
 export const isUserRoleForSelectedAWSAccount = (users: any[] | undefined, awsAcctId: any) =>
   users?.some((user: { aws_id: any }) => user.aws_id === awsAcctId);

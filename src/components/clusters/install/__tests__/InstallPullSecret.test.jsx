@@ -1,8 +1,9 @@
 import React from 'react';
-import { screen, checkAccessibility, TestRouter, withState } from '~/testUtils';
 
-import { InstallPullSecret } from '../InstallPullSecret';
+import { checkAccessibility, screen, TestRouter, withState } from '~/testUtils';
+
 import githubReleases from '../githubReleases.mock';
+import { InstallPullSecret } from '../InstallPullSecret';
 
 jest.mock('../../../../redux/actions', () => ({
   __esModule: true,

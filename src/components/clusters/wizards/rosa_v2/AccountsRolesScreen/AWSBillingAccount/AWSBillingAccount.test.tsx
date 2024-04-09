@@ -1,20 +1,23 @@
 import React from 'react';
 import { Formik } from 'formik';
 import * as reactRedux from 'react-redux';
+
 import * as helpers from '~/common/helpers';
-import { HCP_AWS_BILLING_SHOW, HCP_AWS_BILLING_REQUIRED } from '~/redux/constants/featureConstants';
+import { HCP_AWS_BILLING_REQUIRED, HCP_AWS_BILLING_SHOW } from '~/redux/constants/featureConstants';
 import {
-  withState,
+  checkAccessibility,
+  mockUseFeatureGate,
   render,
   screen,
-  checkAccessibility,
-  within,
-  mockUseFeatureGate,
   waitFor,
+  within,
+  withState,
 } from '~/testUtils';
 import { CloudAccount } from '~/types/accounts_mgmt.v1/models/CloudAccount';
-import AWSBillingAccount from './AWSBillingAccount';
+
 import { initialValues } from '../../constants';
+
+import AWSBillingAccount from './AWSBillingAccount';
 
 const defaultProps = {
   selectedAWSBillingAccountID: '123',

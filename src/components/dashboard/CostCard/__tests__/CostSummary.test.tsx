@@ -1,6 +1,9 @@
 import React from 'react';
+
 import { checkAccessibility, render, screen } from '~/testUtils';
+
 import CostSummary from '../CostSummary';
+
 import { availableState, initialState } from './CostCard.fixtures';
 
 describe('<CostSummary />', () => {

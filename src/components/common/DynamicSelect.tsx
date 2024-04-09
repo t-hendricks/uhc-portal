@@ -1,5 +1,5 @@
 import React from 'react';
-import { WrappedFieldMetaProps, WrappedFieldInputProps } from 'redux-form';
+import { WrappedFieldInputProps, WrappedFieldMetaProps } from 'redux-form';
 
 import {
   Alert,
@@ -13,6 +13,7 @@ import {
 
 import { FormGroupHelperText } from '~/components/common/FormGroupHelperText';
 import { PromiseReducerState } from '~/redux/types';
+
 import ErrorBox from './ErrorBox';
 
 type Props = {

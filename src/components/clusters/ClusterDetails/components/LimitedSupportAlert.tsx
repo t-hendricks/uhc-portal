@@ -1,3 +1,5 @@
+import React from 'react';
+
 import {
   Alert,
   DescriptionList,
@@ -5,8 +7,9 @@ import {
   DescriptionListGroup,
   DescriptionListTerm,
 } from '@patternfly/react-core';
-import React from 'react';
+
 import MarkdownParser from '~/common/MarkdownParser';
+
 import links from '../../../../common/installLinks.mjs';
 import ExternalLink from '../../../common/ExternalLink';
 

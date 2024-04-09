@@ -1,23 +1,26 @@
 import React from 'react';
+import get from 'lodash/get';
 import PropTypes from 'prop-types';
 import { useDispatch } from 'react-redux';
-import { useGlobalState } from '~/redux/hooks';
-import { reduxForm, formValueSelector, getFormSyncErrors } from 'redux-form';
 import { useParams } from 'react-router-dom-v5-compat';
-import get from 'lodash/get';
-import IdentityProvidersPage from './IdentityProvidersPage';
+import { formValueSelector, getFormSyncErrors, reduxForm } from 'redux-form';
+
+import { useGlobalState } from '~/redux/hooks';
+
+import { scrollToFirstField } from '../../../../../common/helpers';
+
 import {
   createClusterIdentityProvider,
   editClusterIdentityProvider,
 } from './IdentityProvidersActions';
 import {
-  getCreateIDPRequestData,
   generateIDPName,
+  getCreateIDPRequestData,
+  getInitialValuesForEditing,
   IDPformValues,
   IDPObjectNames,
-  getInitialValuesForEditing,
 } from './IdentityProvidersHelper';
-import { scrollToFirstField } from '../../../../../common/helpers';
+import IdentityProvidersPage from './IdentityProvidersPage';
 
 export const reduxFormConfig = {
   form: 'CreateIdentityProvider',

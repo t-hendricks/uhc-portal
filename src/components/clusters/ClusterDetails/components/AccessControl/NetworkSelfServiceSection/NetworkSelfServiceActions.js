@@ -1,11 +1,12 @@
+import { clusterService } from '../../../../../../services';
+
 import {
-  GET_ROLES,
   ADD_GRANT,
-  GET_GRANTS,
   CLEAR_ADD_GRANT_RESPONSE,
   DELETE_GRANT,
+  GET_GRANTS,
+  GET_ROLES,
 } from './NetworkSelfServiceConstants';
-import { clusterService } from '../../../../../../services';
 
 const getRoles = () => (dispatch) =>
   dispatch({

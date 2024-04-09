@@ -1,6 +1,7 @@
 import { splitVersion } from '~/common/versionHelpers';
-import { getFromVersionFromState } from '../UpgradeAcknowledge/UpgradeAcknowledgeSelectors';
+
 import { normalizedProducts } from '../../../../../common/subscriptionTypes';
+import { getFromVersionFromState } from '../UpgradeAcknowledge/UpgradeAcknowledgeSelectors';
 
 export const getEnableMinorVersionUpgrades = (state) => {
   const automatic = state.clusterUpgrades.schedules.items.find(

@@ -1,14 +1,16 @@
 import React from 'react';
 import * as reactRedux from 'react-redux';
-import { render, screen, checkAccessibility } from '~/testUtils';
-import { useGlobalState } from '~/redux/hooks';
-import { selfTermsReview } from '~/redux/actions/userActions';
-import { defaultSubscription } from '~/components/clusters/common/__tests__/defaultClusterFromSubscription.fixtures';
 
-import TermsAlert from '../TermsAlert';
-import * as Fixtures from './fixtures/TermsAlert.fixtures';
+import { defaultSubscription } from '~/components/clusters/common/__tests__/defaultClusterFromSubscription.fixtures';
+import { selfTermsReview } from '~/redux/actions/userActions';
+import { useGlobalState } from '~/redux/hooks';
+import { checkAccessibility, render, screen } from '~/testUtils';
+
 import { buildUrlParams } from '../../../../../common/queryHelpers';
 import { normalizedProducts } from '../../../../../common/subscriptionTypes';
+import TermsAlert from '../TermsAlert';
+
+import * as Fixtures from './fixtures/TermsAlert.fixtures';
 
 jest.mock('~/redux/hooks', () => ({
   useGlobalState: jest.fn(),

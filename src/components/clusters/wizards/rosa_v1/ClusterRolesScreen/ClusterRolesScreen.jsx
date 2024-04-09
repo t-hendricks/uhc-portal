@@ -1,7 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { Field } from 'redux-form';
-import { Spinner } from '@redhat-cloud-services/frontend-components/Spinner';
 
 import {
   Alert,
@@ -17,25 +16,28 @@ import {
   ToggleGroup,
   ToggleGroupItem,
 } from '@patternfly/react-core';
+import { Spinner } from '@redhat-cloud-services/frontend-components/Spinner';
 
-import useAnalytics from '~/hooks/useAnalytics';
 import { trackEvents } from '~/common/analytics';
-import ReduxHiddenCheckbox from '~/components/common/ReduxFormComponents/ReduxHiddenCheckbox';
 import {
   getForcedByoOidcReason,
   getOperatorRolesCommand,
 } from '~/components/clusters/wizards/rosa_v1/ClusterRolesScreen/clusterRolesHelper';
-import ExternalLink from '../../../../common/ExternalLink';
-import ErrorBox from '../../../../common/ErrorBox';
-import InstructionCommand from '../../../../common/InstructionCommand';
-import RadioButtons from '../../../../common/ReduxFormComponents/RadioButtons';
-import PopoverHint from '../../../../common/PopoverHint';
+import ReduxHiddenCheckbox from '~/components/common/ReduxFormComponents/ReduxHiddenCheckbox';
+import useAnalytics from '~/hooks/useAnalytics';
+
+import { secureRandomValueInRange } from '../../../../../common/helpers';
 import links from '../../../../../common/installLinks.mjs';
 import { required } from '../../../../../common/validators';
-import { secureRandomValueInRange } from '../../../../../common/helpers';
+import ErrorBox from '../../../../common/ErrorBox';
+import ExternalLink from '../../../../common/ExternalLink';
+import InstructionCommand from '../../../../common/InstructionCommand';
+import PopoverHint from '../../../../common/PopoverHint';
+import RadioButtons from '../../../../common/ReduxFormComponents/RadioButtons';
 import { BackToAssociateAwsAccountLink } from '../common/BackToAssociateAwsAccountLink';
-import CustomOperatorRoleNames from './CustomOperatorRoleNames';
+
 import CustomerOIDCConfiguration from './CustomerOIDCConfiguration';
+import CustomOperatorRoleNames from './CustomOperatorRoleNames';
 
 export const createOperatorRolesHashPrefix = () => {
   const alphabet = 'abcdefghijklmnopqrstuvwxyz';

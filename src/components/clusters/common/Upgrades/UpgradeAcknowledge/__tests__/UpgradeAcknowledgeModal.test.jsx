@@ -1,6 +1,8 @@
 import React from 'react';
-import { render, screen, userEvent, waitFor } from '~/testUtils';
+
 import apiRequest from '~/services/apiRequest';
+import { render, screen, userEvent, waitFor } from '~/testUtils';
+
 import UpgradeAcknowledgeModal from '../UpgradeAcknowledgeModal/UpgradeAcknowledgeModal';
 
 const ackWord = 'Acknowledge';

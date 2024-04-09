@@ -1,5 +1,7 @@
 import { connect } from 'react-redux';
+
 import supportActions from '../../SupportActions';
+
 import SupportCasesCard from './SupportCasesCard';
 
 const mapStateToProps = (state) => {

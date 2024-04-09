@@ -1,6 +1,8 @@
 import React from 'react';
-import { render, screen, checkAccessibility, TestRouter } from '~/testUtils';
 import { CompatRouter } from 'react-router-dom-v5-compat';
+
+import { checkAccessibility, render, screen, TestRouter } from '~/testUtils';
+
 import ClusterListFilterDropdown from './ClusterListFilterDropdown';
 
 describe('<ClusterListFilterDropdown />', () => {

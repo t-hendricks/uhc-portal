@@ -1,24 +1,25 @@
-import PropTypes from 'prop-types';
 import React from 'react';
 import { Field } from 'formik';
-import { GridItem, Alert, List, ListItem, Text, TextVariants } from '@patternfly/react-core';
+import PropTypes from 'prop-types';
 
-import links from '~/common/installLinks.mjs';
-import ExternalLink from '~/components/common/ExternalLink';
-import { ReduxCheckbox } from '~/components/common/ReduxFormComponents';
-import validators, { required } from '~/common/validators';
+import { Alert, GridItem, List, ListItem, Text, TextVariants } from '@patternfly/react-core';
+
 import { constructSelectedSubnets } from '~/common/helpers';
+import links from '~/common/installLinks.mjs';
+import validators, { required } from '~/common/validators';
 import { useFormState } from '~/components/clusters/wizards/hooks';
 import { FieldId } from '~/components/clusters/wizards/rosa_v2/constants';
-import {
-  MACHINE_CIDR_DEFAULT,
-  SERVICE_CIDR_DEFAULT,
-  HOST_PREFIX_DEFAULT,
-  POD_CIDR_DEFAULT,
-} from '../../../common/networkingConstants';
-import { constants } from '../../../common/CreateOSDFormConstants';
+import ExternalLink from '~/components/common/ExternalLink';
+import { ReduxCheckbox } from '~/components/common/ReduxFormComponents';
 
 import ReduxVerticalFormGroup from '../../../../common/ReduxFormComponents/ReduxVerticalFormGroup';
+import { constants } from '../../../common/CreateOSDFormConstants';
+import {
+  HOST_PREFIX_DEFAULT,
+  MACHINE_CIDR_DEFAULT,
+  POD_CIDR_DEFAULT,
+  SERVICE_CIDR_DEFAULT,
+} from '../../../common/networkingConstants';
 
 const machineDisjointSubnets = validators.disjointSubnets('network_machine_cidr');
 const serviceDisjointSubnets = validators.disjointSubnets('network_service_cidr');

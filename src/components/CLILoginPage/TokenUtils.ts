@@ -24,9 +24,10 @@
  * This time it will succeed, and the iframe child sends the token to the parent
  * Once the parent receives the token, it executes a function callback to pass the token
  */
+import axios, { AxiosError } from 'axios';
 import Keycloak, { KeycloakConfig, KeycloakInitOptions } from 'keycloak-js';
 import urijs from 'urijs';
-import axios, { AxiosError } from 'axios';
+
 import type { Chrome } from '~/types/types';
 
 const defaultOptions = {

@@ -1,5 +1,6 @@
-import { machineTypesActions, groupByCloudProvider } from './machineTypesActions';
 import { clusterService } from '../../services';
+
+import { groupByCloudProvider, machineTypesActions } from './machineTypesActions';
 
 jest.mock('../../services/clusterService');
 

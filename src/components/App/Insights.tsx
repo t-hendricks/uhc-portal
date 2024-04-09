@@ -1,9 +1,12 @@
 import React from 'react';
 import { Location, matchPath, useLocation, useNavigate } from 'react-router-dom-v5-compat';
+
 import useChrome from '@redhat-cloud-services/frontend-components/useChrome';
+
 import { Chrome } from '~/types/types';
-import getNavClickParams from '../../common/getNavClickParams';
+
 import { ocmAppPath, removeOcmBaseName } from '../../common/getBaseName';
+import getNavClickParams from '../../common/getNavClickParams';
 
 const Insights = () => {
   const location = useLocation();

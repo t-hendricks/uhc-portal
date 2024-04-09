@@ -1,20 +1,22 @@
 import { LDAPAttributes, OpenIDClaims } from '~/types/clusters_mgmt.v1';
+
 import {
-  IDPNeedsOAuthURL,
-  IDPTypeNames,
-  IDPformValues,
   generateIDPName,
   getCreateIDPRequestData,
   getGitHubTeamsAndOrgsData,
-  getOauthCallbackURL,
-  getOpenIdClaims,
+  getInitialValuesForEditing,
   getldapAttributes,
   getldapca,
-  isEmptyReduxArray,
-  getInitialValuesForEditing,
+  getOauthCallbackURL,
+  getOpenIdClaims,
+  IDPformValues,
+  IDPNeedsOAuthURL,
   IDPObjectNames,
+  IDPTypeNames,
+  isEmptyReduxArray,
 } from '../IdentityProvidersHelper';
 import { IDPFormDataType } from '../model/IDPFormDataType';
+
 import {
   bindPassFormData,
   bindPassFormDataExpected,
@@ -23,14 +25,14 @@ import {
   clientSecretFormDataExpected,
   emailClaimsExpected,
   emailLdapAttributesExpected,
-  gitHubOnlyOrgsData,
-  gitHubOnlyOrgsDataExpected,
-  gitHubTeamsAndOrgsData,
-  gitHubTeamsAndOrgsDataExpected,
   githubFormDataOrganizations,
   githubFormDataOrganizationsExpected,
   githubFormDataTeams,
   githubFormDataTeamsExpected,
+  gitHubOnlyOrgsData,
+  gitHubOnlyOrgsDataExpected,
+  gitHubTeamsAndOrgsData,
+  gitHubTeamsAndOrgsDataExpected,
   githubTrimFormDataTeams,
   githubTrimFormDataTeamsExpected,
   gitlabFormData,
@@ -53,8 +55,8 @@ import {
   openIdTrimFormDataExpected,
   preferredUsernameClaimsExpected,
   preferredUsernameLdapAttributesExpected,
-  providersFixtures,
   providersExpectedFormData,
+  providersFixtures,
 } from './IdentityProvidersHelper.fixtures';
 
 describe('generateIDPName()', () => {

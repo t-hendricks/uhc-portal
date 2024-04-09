@@ -1,8 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Form, Grid, GridItem, Title } from '@patternfly/react-core';
-import { getAllSubnetFieldNames } from '~/common/vpcHelpers';
 
+import { Form, Grid, GridItem, Title } from '@patternfly/react-core';
+
+import { getAllSubnetFieldNames } from '~/common/vpcHelpers';
 import { emptyAWSSubnet } from '~/components/clusters/wizards/common/createOSDInitialValues';
 
 import InstallToVPC from './InstallToVPC';

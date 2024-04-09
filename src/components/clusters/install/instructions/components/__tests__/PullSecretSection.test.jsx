@@ -1,5 +1,7 @@
 import React from 'react';
-import { withState, screen, checkAccessibility, TestRouter } from '~/testUtils';
+
+import { checkAccessibility, screen, TestRouter, withState } from '~/testUtils';
+
 import githubReleasesMock from '../../../githubReleases.mock';
 import PullSecretSection from '../PullSecretSection';
 

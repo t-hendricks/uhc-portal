@@ -1,6 +1,7 @@
 import * as React from 'react';
 
 import { mockRestrictedEnv, render, screen } from '~/testUtils';
+
 import NetworkScreen from '.';
 
 describe('<NetworkScreen />', () => {

@@ -1,6 +1,9 @@
 import { connect } from 'react-redux';
+
 import { addNotification } from '@redhat-cloud-services/frontend-components-notifications/redux';
+
 import supportActions from '../../SupportActions';
+
 import NotificationContactsCard from './NotificationContactsCard';
 
 const mapStateToProps = (state) => {

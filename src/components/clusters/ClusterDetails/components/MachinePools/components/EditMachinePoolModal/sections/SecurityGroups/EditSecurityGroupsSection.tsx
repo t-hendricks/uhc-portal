@@ -1,12 +1,13 @@
 import React from 'react';
+
 import { ExpandableSection } from '@patternfly/react-core';
 
-import { SECURITY_GROUPS_FEATURE } from '~/redux/constants/featureConstants';
-
-import { Cluster } from '~/types/clusters_mgmt.v1';
-import WithTooltip from '~/components/common/WithTooltip';
 import { isCompatibleFeature, SupportedFeature } from '~/common/featureCompatibility';
+import WithTooltip from '~/components/common/WithTooltip';
 import { useFeatureGate } from '~/hooks/useFeatureGate';
+import { SECURITY_GROUPS_FEATURE } from '~/redux/constants/featureConstants';
+import { Cluster } from '~/types/clusters_mgmt.v1';
+
 import EditSecurityGroupsField from './EditSecurityGroupsField';
 
 export interface EditSecurityGroupsSectionProps {

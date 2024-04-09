@@ -1,34 +1,35 @@
 import React, { Component } from 'react';
+import { findIndex, get, isEqual } from 'lodash';
 import PropTypes from 'prop-types';
-import { get, findIndex, isEqual } from 'lodash';
 
 import {
   Alert,
   FormGroup,
+  Icon,
   NumberInput,
-  Tooltip,
   Text,
   TextContent,
   TextVariants,
-  Icon,
+  Tooltip,
 } from '@patternfly/react-core';
 import { ExternalLinkAltIcon } from '@patternfly/react-icons/dist/esm/icons/external-link-alt-icon';
 
 import { FormGroupHelperText } from '~/components/common/FormGroupHelperText';
-import { ReduxFormRadioGroup } from '../../../common/ReduxFormComponents';
+
 import links from '../../../../common/installLinks.mjs';
 import {
-  subscriptionSettings,
-  subscriptionSupportLevels,
-  subscriptionServiceLevels,
-  subscriptionUsages,
-  subscriptionProductBundles,
-  subscriptionSystemUnits,
   billingModels,
+  subscriptionProductBundles,
+  subscriptionServiceLevels,
+  subscriptionSettings,
   subscriptionStatuses,
+  subscriptionSupportLevels,
+  subscriptionSystemUnits,
+  subscriptionUsages,
 } from '../../../../common/subscriptionTypes';
-import PopoverHint from '../../../common/PopoverHint';
 import ExternalLink from '../../../common/ExternalLink';
+import PopoverHint from '../../../common/PopoverHint';
+import { ReduxFormRadioGroup } from '../../../common/ReduxFormComponents';
 
 const {
   SUPPORT_LEVEL,

@@ -1,43 +1,45 @@
-import { AWSCredentials } from '~/types/types';
-import apiRequest from '~/services/apiRequest';
 import { AxiosResponse } from 'axios';
+
+import apiRequest from '~/services/apiRequest';
+import { AWSCredentials } from '~/types/types';
+
+import type { Subscription } from '../types/accounts_mgmt.v1';
 import type {
   AddOn,
   AddOnInstallation,
-  Version,
   AWSInfrastructureAccessRole,
   AWSInfrastructureAccessRoleGrant,
-  Ingress,
-  UpgradePolicy,
-  UpgradePolicyState,
-  MachinePool,
-  NodePool,
+  CloudProvider,
+  CloudRegion,
   CloudVPC,
+  Cluster,
+  ClusterAutoscaler,
+  ClusterStatus,
+  DNSDomain,
+  EncryptionKey,
+  Flavour,
+  GCP,
+  Group,
+  IdentityProvider,
+  InflightCheck,
+  Ingress,
   KeyRing,
   KubeletConfig,
-  EncryptionKey,
-  CloudRegion,
+  LimitedSupportReason,
+  Log,
+  MachinePool,
+  MachineType,
+  NodePool,
+  NodePoolUpgradePolicy,
+  OidcConfig,
+  ProductTechnologyPreview,
+  UpgradePolicy,
+  UpgradePolicyState,
+  User,
+  Version,
   VersionGate,
   VersionGateAgreement,
-  User,
-  MachineType,
-  Cluster,
-  ClusterStatus,
-  Log,
-  CloudProvider,
-  IdentityProvider,
-  Group,
-  GCP,
-  Flavour,
-  LimitedSupportReason,
-  OidcConfig,
-  InflightCheck,
-  ClusterAutoscaler,
-  DNSDomain,
-  NodePoolUpgradePolicy,
-  ProductTechnologyPreview,
 } from '../types/clusters_mgmt.v1';
-import type { Subscription } from '../types/accounts_mgmt.v1';
 
 const getClusters = (search: string, size: number = -1) =>
   apiRequest.post<{

@@ -1,10 +1,11 @@
 import { connect } from 'react-redux';
-import { getIsManual, getClusterAcks } from '../UpgradeAcknowledge/UpgradeAcknowledgeSelectors';
 
 import {
   getEnableMinorVersionUpgrades,
   isNextMinorVersionAvailable,
 } from '../MinorVersionUpgradeAlert/MinorVersionUpgradeSelectors';
+import { getClusterAcks, getIsManual } from '../UpgradeAcknowledge/UpgradeAcknowledgeSelectors';
+
 import MinorVersionUpgradeConfirm from './MinorVersionUpgradeConfirm';
 
 const mapStateToProps = (state) => ({

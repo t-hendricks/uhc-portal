@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
-import { fetchClusterDetails } from '../../../redux/actions/clustersActions';
 
+import { fetchClusterDetails } from '../../../redux/actions/clustersActions';
 import { setGlobalError } from '../../../redux/actions/globalErrorActions';
 
 import InsightsAdvisorRedirector from './InsightsAdvisorRedirector';

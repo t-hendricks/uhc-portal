@@ -1,9 +1,6 @@
-import React, { useState, useEffect } from 'react';
-import PropTypes from 'prop-types';
+import React, { useEffect, useState } from 'react';
 import { Field } from 'formik';
-import { Spinner } from '@redhat-cloud-services/frontend-components/Spinner';
-import { useFormState } from '~/components/clusters/wizards/hooks';
-import { FieldId } from '~/components/clusters/wizards/rosa_v2/constants';
+import PropTypes from 'prop-types';
 
 import {
   Alert,
@@ -19,25 +16,30 @@ import {
   ToggleGroup,
   ToggleGroupItem,
 } from '@patternfly/react-core';
+import { Spinner } from '@redhat-cloud-services/frontend-components/Spinner';
 
-import useAnalytics from '~/hooks/useAnalytics';
 import { trackEvents } from '~/common/analytics';
-import ReduxHiddenCheckbox from '~/components/common/FormikFormComponents/HiddenCheckbox';
+import { useFormState } from '~/components/clusters/wizards/hooks';
 import {
   getForcedByoOidcReason,
   getOperatorRolesCommand,
 } from '~/components/clusters/wizards/rosa_v2/ClusterRolesScreen/clusterRolesHelper';
-import ExternalLink from '../../../../common/ExternalLink';
-import ErrorBox from '../../../../common/ErrorBox';
-import InstructionCommand from '../../../../common/InstructionCommand';
-import RadioButtons from '../../../../common/ReduxFormComponents/RadioButtons';
-import PopoverHint from '../../../../common/PopoverHint';
+import { FieldId } from '~/components/clusters/wizards/rosa_v2/constants';
+import ReduxHiddenCheckbox from '~/components/common/FormikFormComponents/HiddenCheckbox';
+import useAnalytics from '~/hooks/useAnalytics';
+
+import { secureRandomValueInRange } from '../../../../../common/helpers';
 import links from '../../../../../common/installLinks.mjs';
 import { required } from '../../../../../common/validators';
-import { secureRandomValueInRange } from '../../../../../common/helpers';
+import ErrorBox from '../../../../common/ErrorBox';
+import ExternalLink from '../../../../common/ExternalLink';
+import InstructionCommand from '../../../../common/InstructionCommand';
+import PopoverHint from '../../../../common/PopoverHint';
+import RadioButtons from '../../../../common/ReduxFormComponents/RadioButtons';
 import { BackToAssociateAwsAccountLink } from '../common/BackToAssociateAwsAccountLink';
-import CustomOperatorRoleNames from './CustomOperatorRoleNames';
+
 import CustomerOIDCConfiguration from './CustomerOIDCConfiguration';
+import CustomOperatorRoleNames from './CustomOperatorRoleNames';
 
 export const createOperatorRolesHashPrefix = () => {
   // random 4 alphanumeric hash

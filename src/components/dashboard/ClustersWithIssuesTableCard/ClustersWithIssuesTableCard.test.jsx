@@ -1,8 +1,11 @@
 import React from 'react';
-import { render, screen, checkAccessibility, TestRouter } from '~/testUtils';
 import { CompatRouter } from 'react-router-dom-v5-compat';
-import ClustersWithIssuesTableCard from './ClustersWithIssuesTableCard';
+
+import { checkAccessibility, render, screen, TestRouter } from '~/testUtils';
+
 import { clustersWithIssues } from '../Dashboard.fixtures';
+
+import ClustersWithIssuesTableCard from './ClustersWithIssuesTableCard';
 
 const unhealthyClusters = {
   error: false,
