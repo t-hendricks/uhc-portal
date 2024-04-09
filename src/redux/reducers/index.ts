@@ -17,7 +17,6 @@ import machinePools from '../../components/clusters/ClusterDetails/components/Ma
 import { MonitoringReducer } from '../../components/clusters/ClusterDetails/components/Monitoring/MonitoringReducer';
 import { NetworkingReducer } from '../../components/clusters/ClusterDetails/components/Networking/NetworkingReducer';
 import { InstallationLogReducer } from '../../components/clusters/ClusterDetails/components/Overview/InstallationLogView/InstallationLogReducer';
-import clustersSupportReducer from '../../components/clusters/ClusterDetails/components/Support/SupportReducer';
 import { deleteClusterDialogReducer } from '../../components/clusters/common/DeleteClusterDialog/DeleteClusterDialogReducer';
 import { subscriptionReleasedReducer } from '../../components/clusters/common/TransferClusterOwnershipDialog/subscriptionReleasedReducer';
 import clusterUpgrades from '../../components/clusters/common/Upgrades/clusterUpgradeReducer';
@@ -43,6 +42,7 @@ import { persistentStorageReducer } from './persistentStorageReducer';
 import rosaReducer from './rosaReducer';
 import { subscriptionSettingsReducer } from './subscriptionSettingsReducer';
 import { subscriptionsReducer } from './subscriptionsReducer';
+import { supportReducer } from './supportReducer';
 import supportStatusReducer from './supportStatusReducer';
 import tollboothReducer from './tollbooth';
 import userReducer from './userReducer';
@@ -61,7 +61,7 @@ const reducers = {
   identityProviders: IdentityProvidersReducer,
   clusterAutoscaler: clusterAutoscalerReducer,
   clusterUsers: clusterUsersReducer,
-  clusterSupport: clustersSupportReducer,
+  clusterSupport: supportReducer,
   dnsDomains: dnsDomainsReducer,
   addOns: addOnsReducer,
   globalError: globalErrorReducer,
@@ -99,6 +99,6 @@ const reduxReducers = (history: Parameters<typeof connectRouter>[0]) =>
     router: connectRouter(history),
   });
 
-export { reduxReducers, reducers };
+export { reducers, reduxReducers };
 
 export default reduxReducers;
