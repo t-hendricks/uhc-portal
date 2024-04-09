@@ -10,7 +10,6 @@ describe('createClusterRequest', () => {
   const baseFormData = {
     name: 'test-name',
     nodes_compute: '9',
-    dns_base_domain: '',
     aws_access_key_id: '',
     aws_secret_access_key: '',
     region: 'somewhere', // GCP defaults 'us-east1', AWS 'us-east-1', not important here.

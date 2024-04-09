@@ -2,6 +2,7 @@
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { Field } from 'formik';
 import get from 'lodash/get';
+import { useDispatch, useSelector } from 'react-redux';
 
 import {
   Button,
@@ -22,6 +23,8 @@ import { PrerequisitesInfoBox } from '~/components/clusters/wizards/rosa_v2/comm
 import { WelcomeMessage } from '~/components/clusters/wizards/rosa_v2/common/WelcomeMessage';
 import ErrorBox from '~/components/common/ErrorBox';
 import useAnalytics from '~/hooks/useAnalytics';
+import { clearMachineTypesByRegion } from '~/redux/actions/machineTypesActions';
+import { GlobalState } from '~/redux/store';
 
 import { FieldId } from '../constants';
 
@@ -88,6 +91,16 @@ function AccountsRolesScreen({
   const hasAWSAccounts = AWSAccountIDs.length > 0;
   const track = useAnalytics();
   const { openDrawer } = useAssociateAWSAccountDrawer(isHypershiftSelected);
+
+  const machineTypesByRegion = useSelector((state: GlobalState) => state.machineTypesByRegion);
+  const dispatch = useDispatch();
+
+  // clear machineTypeByRegion cache when credentials change
+  React.useEffect(() => {
+    if (machineTypesByRegion.region) {
+      dispatch(clearMachineTypesByRegion());
+    }
+  });
 
   const resetAWSAccountFields = () => {
     // clear certain responses; causes refetch of AWS acct info.

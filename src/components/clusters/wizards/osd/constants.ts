@@ -10,11 +10,11 @@ import {
 } from '~/components/clusters/common/networkingConstants';
 import {
   CloudProviderType,
+  emptyAWSSubnet,
   FieldId as CommonFieldId,
   IMDSType,
   UpgradePolicyType,
 } from '~/components/clusters/wizards/common/constants';
-import { emptyAWSSubnet } from '~/components/clusters/wizards/common/createOSDInitialValues';
 import { BreadcrumbPath } from '~/components/common/Breadcrumbs';
 
 import { ApplicationIngressType, ClusterPrivacyType } from './Networking/constants';

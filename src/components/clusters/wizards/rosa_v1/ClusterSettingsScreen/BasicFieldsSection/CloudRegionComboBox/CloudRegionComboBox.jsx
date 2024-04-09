@@ -10,7 +10,7 @@ import { Spinner } from '@redhat-cloud-services/frontend-components/Spinner';
 import {
   AWS_DEFAULT_REGION,
   GCP_DEFAULT_REGION,
-} from '~/components/clusters/wizards/common/createOSDInitialValues';
+} from '~/components/clusters/wizards/rosa_v1/createOSDInitialValues';
 
 import ErrorBox from '../../../../../../common/ErrorBox';
 

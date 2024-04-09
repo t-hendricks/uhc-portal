@@ -5,8 +5,11 @@ import { Tile, Tooltip } from '@patternfly/react-core';
 
 import { noQuotaTooltip } from '~/common/helpers';
 import { billingModels } from '~/common/subscriptionTypes';
-import { CloudProviderType } from '~/components/clusters/wizards/common/constants';
-import * as osdInitialValues from '~/components/clusters/wizards/common/createOSDInitialValues';
+import {
+  AWS_DEFAULT_REGION,
+  CloudProviderType,
+  GCP_DEFAULT_REGION,
+} from '~/components/clusters/wizards/common/constants';
 import { useFormState } from '~/components/clusters/wizards/hooks';
 import { useGetBillingQuotas } from '~/components/clusters/wizards/osd/BillingModel/useGetBillingQuotas';
 import { FieldId } from '~/components/clusters/wizards/osd/constants';
@@ -42,9 +45,7 @@ export const CloudProviderTileField = () => {
     // Silently reset some user choices that are now meaningless.
     setFieldValue(
       FieldId.Region,
-      value === CloudProviderType.Aws
-        ? osdInitialValues.AWS_DEFAULT_REGION
-        : osdInitialValues.GCP_DEFAULT_REGION,
+      value === CloudProviderType.Aws ? AWS_DEFAULT_REGION : GCP_DEFAULT_REGION,
     );
 
     // Allow MachineTypeSelection to pick a new default.

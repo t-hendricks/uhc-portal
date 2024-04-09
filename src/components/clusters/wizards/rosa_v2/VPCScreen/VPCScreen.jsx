@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import { Form, Grid, GridItem, Title } from '@patternfly/react-core';
 
 import { getAllSubnetFieldNames } from '~/common/vpcHelpers';
-import { emptyAWSSubnet } from '~/components/clusters/wizards/common/createOSDInitialValues';
+import { emptyAWSSubnet } from '~/components/clusters/wizards/common/constants';
 import { useFormState } from '~/components/clusters/wizards/hooks';
 
 import { FieldId } from '../constants';

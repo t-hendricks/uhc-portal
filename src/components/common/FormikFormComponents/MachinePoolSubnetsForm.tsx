@@ -7,7 +7,7 @@ import { PlusCircleIcon } from '@patternfly/react-icons/dist/esm/icons/plus-circ
 
 import { FormSubnet, validateMultipleMachinePoolsSubnets } from '~/common/validators';
 import { SubnetSelectField } from '~/components/clusters/common/SubnetSelectField';
-import { emptyAWSSubnet } from '~/components/clusters/wizards/common/createOSDInitialValues';
+import { emptyAWSSubnet } from '~/components/clusters/wizards/common/constants';
 import { useFormState } from '~/components/clusters/wizards/hooks';
 import { FieldId } from '~/components/clusters/wizards/rosa_v2/constants';
 import { CloudVPC } from '~/types/clusters_mgmt.v1';

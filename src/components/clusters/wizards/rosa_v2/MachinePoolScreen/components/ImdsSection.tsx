@@ -38,7 +38,7 @@ const ImdsSection = ({ isDisabled, onChangeImds, imds }: ImdsSectionProps) => {
       ) : (
         <Field
           component={RadioButtons}
-          name={FieldId.Imds}
+          name={FieldId.IMDS}
           ariaLabel="Instance Metadata Service"
           props={{
             value: imds,
@@ -49,10 +49,10 @@ const ImdsSection = ({ isDisabled, onChangeImds, imds }: ImdsSectionProps) => {
           options={imdsOptions}
           disableDefaultValueHandling
           input={{
-            ...getFieldProps(FieldId.Imds),
-            onChange: (value: ImdsOptionType) => setFieldValue(FieldId.Imds, value, false),
+            ...getFieldProps(FieldId.IMDS),
+            onChange: (value: ImdsOptionType) => setFieldValue(FieldId.IMDS, value, false),
           }}
-          meta={getFieldMeta(FieldId.Imds)}
+          meta={getFieldMeta(FieldId.IMDS)}
         />
       )}
     </FormGroup>

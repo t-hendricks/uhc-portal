@@ -3,7 +3,7 @@ import { formValueSelector } from 'redux-form';
 
 import wizardConnector from '~/components/clusters/wizards/common/WizardConnector';
 
-import createOSDInitialValues from '../../common/createOSDInitialValues';
+import createOSDInitialValues from '../createOSDInitialValues';
 
 import UpdatesScreen from './UpdatesScreen';
 

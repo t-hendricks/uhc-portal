@@ -8,7 +8,7 @@ import { PlusCircleIcon } from '@patternfly/react-icons/dist/esm/icons/plus-circ
 
 import { validateMultipleMachinePoolsSubnets } from '~/common/validators';
 import { SubnetSelectField } from '~/components/clusters/common/SubnetSelectField';
-import { emptyAWSSubnet } from '~/components/clusters/wizards/common/createOSDInitialValues';
+import { emptyAWSSubnet } from '~/components/clusters/wizards/common/constants';
 
 import './ReduxFormMachinePoolSubnets.scss';
 
