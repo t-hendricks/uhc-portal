@@ -34,6 +34,9 @@ describe('<Details />', () => {
       (clusterService.getInstallableVersions as jest.Mock).mockResolvedValue({
         data: { items: [version] },
       });
+      (clusterService.getMachineTypesByRegionARN as jest.Mock).mockResolvedValue({
+        data: { items: [] },
+      });
       (getOCPLifeCycleStatus as jest.Mock).mockResolvedValue(ocpLifeCycleStatuses);
     });
 

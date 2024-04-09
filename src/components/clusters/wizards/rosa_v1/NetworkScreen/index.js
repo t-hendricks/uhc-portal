@@ -4,7 +4,7 @@ import { formValueSelector, getFormValues } from 'redux-form';
 import wizardConnector from '~/components/clusters/wizards/common/WizardConnector';
 import { openModal } from '~/components/common/Modal/ModalActions';
 
-import createOSDInitialValues from '../../common/createOSDInitialValues';
+import createOSDInitialValues from '../createOSDInitialValues';
 
 import NetworkScreen from './NetworkScreen';
 

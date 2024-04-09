@@ -5,10 +5,10 @@ import { ChangeAction, Field } from 'redux-form';
 import { Form, Grid, GridItem, Text, TextVariants, Title } from '@patternfly/react-core';
 
 import links from '~/common/installLinks.mjs';
-import { emptyAWSSubnet } from '~/components/clusters/wizards/common/createOSDInitialValues';
 import { ApplicationIngressType } from '~/components/clusters/wizards/osd/Networking/constants';
 import { PrerequisitesInfoBox } from '~/components/clusters/wizards/rosa_v1/common/PrerequisitesInfoBox';
 import { WelcomeMessage } from '~/components/clusters/wizards/rosa_v1/common/WelcomeMessage';
+import { emptyAWSSubnet } from '~/components/clusters/wizards/rosa_v1/createOSDInitialValues';
 import ExternalLink from '~/components/common/ExternalLink';
 import AWSLogo from '~/styles/images/AWS.png';
 import RedHat from '~/styles/images/Logo-Red_Hat-B-Standard-RGB.png';

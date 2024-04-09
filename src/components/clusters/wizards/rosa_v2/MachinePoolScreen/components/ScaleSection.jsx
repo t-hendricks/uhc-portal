@@ -43,7 +43,7 @@ function ScaleSection() {
       [FieldId.ClusterVersion]: clusterVersion,
       [FieldId.MachinePoolsSubnets]: machinePoolsSubnets,
       [FieldId.BillingModel]: billingModelFieldValue,
-      [FieldId.Imds]: imds,
+      [FieldId.IMDS]: imds,
     },
     setFieldValue,
     getFieldProps,
@@ -130,7 +130,7 @@ function ScaleSection() {
             <ImdsSection
               isDisabled={!canSelectImds(clusterVersionRawId)}
               imds={imds}
-              onChangeImds={(value) => setFieldValue(FieldId.Imds, value)}
+              onChangeImds={(value) => setFieldValue(FieldId.IMDS, value)}
             />
           </GridItem>
           <GridItem md={4} />

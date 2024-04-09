@@ -4,16 +4,15 @@ import { Field } from 'formik';
 import { Form, Grid, GridItem, Text, TextVariants, Title } from '@patternfly/react-core';
 
 import links from '~/common/installLinks.mjs';
-import { emptyAWSSubnet } from '~/components/clusters/wizards/common/createOSDInitialValues';
+import { emptyAWSSubnet } from '~/components/clusters/wizards/common/constants';
 import { useFormState } from '~/components/clusters/wizards/hooks';
-import { ApplicationIngressType } from '~/components/clusters/wizards/osd/Networking/constants';
 import { PrerequisitesInfoBox } from '~/components/clusters/wizards/rosa_v1/common/PrerequisitesInfoBox';
 import { WelcomeMessage } from '~/components/clusters/wizards/rosa_v1/common/WelcomeMessage';
 import ExternalLink from '~/components/common/ExternalLink';
 import AWSLogo from '~/styles/images/AWS.png';
 import RedHat from '~/styles/images/Logo-Red_Hat-B-Standard-RGB.png';
 
-import { FieldId } from '../constants';
+import { FieldId, initialValuesHypershift } from '../constants';
 
 import { hypershiftValue } from './ControlPlaneCommon';
 import HostedTile from './HostedTile';
@@ -33,7 +32,7 @@ const ControlPlaneField = ({
   input: { value, onChange },
   hasHostedProductQuota,
 }: ControlPlaneFieldProps) => {
-  const { values: formValues, setFieldValue } = useFormState();
+  const { values: formValues, setValues } = useFormState();
   const isHostedDisabled = !hasHostedProductQuota;
 
   React.useEffect(() => {
@@ -49,37 +48,26 @@ const ControlPlaneField = ({
 
   const handleChange = (isHypershift: hypershiftValue) => {
     onChange(isHypershift);
-    // Uncheck the following Network checkboxes when switching Control plane selection
-    setFieldValue('install_to_vpc', false);
-    setFieldValue('shared_vpc', {
-      is_allowed: !isHypershift,
-      is_selected: false,
-      base_dns_domain: '',
-      hosted_zone_id: '',
-      hosted_zone_role_arn: '',
+
+    setValues({
+      ...formValues,
+      ...initialValuesHypershift(isHypershift === 'true'),
+      [FieldId.Hypershift]: isHypershift,
+      // Uncheck the following Network checkboxes when switching Control plane selection
+      [FieldId.InstallToVpc]: false,
+      [FieldId.SharedVpc]: {
+        is_allowed: isHypershift === 'false',
+        is_selected: false,
+        base_dns_domain: '',
+        hosted_zone_id: '',
+        hosted_zone_role_arn: '',
+      },
+      [FieldId.ConfigureProxy]: false,
+      // Reset VPC settings in case they were configured and then came back to the Control plane step
+      [FieldId.MachinePoolsSubnets]: [emptyAWSSubnet()],
+      // Uncheck fips selection checkbox when switching Control plane selection
+      [FieldId.FipsCryptography]: false,
     });
-    setFieldValue('configure_proxy', false);
-
-    // Reset VPC settings in case they were configured and then came back to the Control plane step
-    setFieldValue('machinePoolsSubnets', [emptyAWSSubnet()]);
-
-    // Uncheck fips selection checkbox when switching Control plane selection
-    setFieldValue('fips', false);
-
-    if (isHypershift === 'true') {
-      setFieldValue('node_labels', [{}]);
-      if (formValues.multi_az === 'true') {
-        setFieldValue('multi_az', 'false');
-      }
-      if (formValues.applicationIngress === ApplicationIngressType.Custom) {
-        setFieldValue('applicationIngress', ApplicationIngressType.Default);
-      }
-    }
-
-    // Reset the cluster privacy public subnet when Standalone is chosen.
-    if (isHypershift === 'false' && formValues.cluster_privacy_public_subnet_id) {
-      setFieldValue('cluster_privacy_public_subnet_id', '');
-    }
   };
 
   return (

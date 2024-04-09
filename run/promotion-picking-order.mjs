@@ -6,12 +6,12 @@
 
 import chalk from 'chalk';
 import { execSync } from 'child_process';
+import fs from 'fs';
 import _ from 'lodash';
 import ora from 'ora';
 // Takes `DEBUG=simple-git` env var: https://github.com/steveukx/git-js/blob/main/docs/DEBUG-LOGGING-GUIDE.md
 import { simpleGit } from 'simple-git';
 import yargs from 'yargs';
-import fs from 'fs';
 
 import { getUpstreamRemoteName } from './upstream-name.mjs';
 

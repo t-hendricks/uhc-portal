@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Field } from 'formik';
+import { useDispatch, useSelector } from 'react-redux';
 
 import {
   Alert,
@@ -39,7 +40,7 @@ import { CloudProviderType } from '~/components/clusters/wizards/common';
 import { ClassicEtcdFipsSection } from '~/components/clusters/wizards/common/ClusterSettings/Details/ClassicEtcdFipsSection';
 import CloudRegionSelectField from '~/components/clusters/wizards/common/ClusterSettings/Details/CloudRegionSelectField';
 import { VersionSelectField } from '~/components/clusters/wizards/common/ClusterSettings/Details/VersionSelectField';
-import { emptyAWSSubnet } from '~/components/clusters/wizards/common/createOSDInitialValues';
+import { emptyAWSSubnet } from '~/components/clusters/wizards/common/constants';
 import { RadioGroupField, RichInputField } from '~/components/clusters/wizards/form';
 import { CheckboxField } from '~/components/clusters/wizards/form/CheckboxField';
 import { useFormState } from '~/components/clusters/wizards/hooks';
@@ -50,6 +51,7 @@ import { FieldId } from '~/components/clusters/wizards/rosa_v2/constants';
 import ExternalLink from '~/components/common/ExternalLink';
 import PopoverHint from '~/components/common/PopoverHint';
 import { useFeatureGate } from '~/hooks/useFeatureGate';
+import { getMachineTypesByRegionARN } from '~/redux/actions/machineTypesActions';
 import { LONGER_CLUSTER_NAME_UI } from '~/redux/constants/featureConstants';
 import { useGlobalState } from '~/redux/hooks';
 import { QuotaCostList } from '~/types/accounts_mgmt.v1';
@@ -65,6 +67,7 @@ function Details() {
       [FieldId.MachinePoolsSubnets]: machinePoolsSubnets,
       [FieldId.ClusterPrivacy]: clusterPrivacy,
       [FieldId.HasDomainPrefix]: hasDomainPrefix,
+      [FieldId.InstallerRoleArn]: installerRoleArn,
     },
     errors,
     getFieldProps,
@@ -72,6 +75,20 @@ function Details() {
     setFieldTouched,
     validateForm,
   } = useFormState();
+
+  const machineTypesByRegion = useSelector((state: any) => state.machineTypesByRegion);
+  const dispatch = useDispatch();
+
+  React.useEffect(() => {
+    // if machineTypeByRegion.region cache does not exist or if the region is new, load new machines
+    if (
+      region &&
+      (!machineTypesByRegion.region ||
+        (machineTypesByRegion.region && machineTypesByRegion.region.id !== region))
+    ) {
+      dispatch(getMachineTypesByRegionARN(installerRoleArn, region));
+    }
+  }, [region, installerRoleArn, machineTypesByRegion.region, dispatch]);
 
   const isHypershiftSelected = hypershiftValue === 'true';
   const isMultiAz = multiAz === 'true';

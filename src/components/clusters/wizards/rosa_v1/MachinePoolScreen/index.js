@@ -12,7 +12,7 @@ import { openModal } from '~/components/common/Modal/ModalActions';
 import modals from '~/components/common/Modal/modals';
 
 import { canAutoScaleOnCreateSelector } from '../../../ClusterDetails/components/MachinePools/machinePoolsSelectors';
-import createOSDInitialValues from '../../common/createOSDInitialValues';
+import createOSDInitialValues from '../createOSDInitialValues';
 
 import MachinePoolScreen from './MachinePoolScreen';
 

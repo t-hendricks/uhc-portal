@@ -3,7 +3,11 @@ import isEqual from 'lodash/isEqual';
 import { Dispatch } from 'redux';
 
 import { normalizedProducts } from '~/common/subscriptionTypes';
-import { CloudProviderType, FieldId } from '~/components/clusters/wizards/common/constants';
+import {
+  CloudProviderType,
+  FieldId,
+  GCP_DEFAULT_REGION,
+} from '~/components/clusters/wizards/common/constants';
 import {
   getAWSCloudProviderRegions,
   getGCPCloudProviderVPCs,
@@ -11,8 +15,6 @@ import {
 } from '~/redux/actions/ccsInquiriesActions';
 import { GlobalState } from '~/redux/store';
 import { AWSCredentials } from '~/types/types';
-
-import { GCP_DEFAULT_REGION } from '../createOSDInitialValues';
 
 /**
  * Gets AWS CCS credentials from form state, in form suitable for actions.

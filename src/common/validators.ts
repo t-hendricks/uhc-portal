@@ -766,17 +766,6 @@ const checkClusterConsoleURL = (value?: string, isRequired?: boolean): string | 
   return undefined;
 };
 
-// Function to validate that a field contains a correct base DNS domain
-const checkBaseDNSDomain = (value?: string): string | undefined => {
-  if (!value) {
-    return 'Base DNS domain is required.';
-  }
-  if (!BASE_DOMAIN_REGEXP.test(value)) {
-    return `Base DNS domain '${value}' isn't valid, must contain at least two valid lower-case DNS labels separated by dots, for example 'mydomain.com'.`;
-  }
-  return undefined;
-};
-
 const checkNoProxyDomains = (value?: string[]) => {
   if (value && value.length > 0) {
     const invalidDomains = value.filter(
@@ -1730,7 +1719,6 @@ const validators = {
   checkClusterDisplayName,
   checkUserID,
   validateRHITUsername,
-  checkBaseDNSDomain,
   cidr,
   subnetCidrs,
   awsMachineCidr,

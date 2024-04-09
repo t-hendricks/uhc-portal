@@ -6,9 +6,7 @@ import { useSelector } from 'react-redux';
 import { Title } from '@patternfly/react-core';
 
 import { hasSelectedSecurityGroups } from '~/common/securityGroupsHelpers';
-import { normalizedProducts } from '~/common/subscriptionTypes';
 import { canAutoScaleOnCreateSelector } from '~/components/clusters/ClusterDetails/components/MachinePools/machinePoolsSelectors';
-import { stepId, stepNameById } from '~/components/clusters/wizards/common/osdWizardConstants';
 import { useFormState } from '~/components/clusters/wizards/hooks';
 import { canSelectImds } from '~/components/clusters/wizards/rosa/constants';
 import { getUserRoleForSelectedAWSAccount } from '~/components/clusters/wizards/rosa_v2/AccountsRolesScreen/AccountsRolesScreen';
@@ -25,7 +23,9 @@ import {
 } from '~/redux/constants/featureConstants';
 
 import { DebugClusterRequest } from '../../common/DebugClusterRequest';
-import ReviewSection, { ReviewItem } from '../../common/ReviewCluster/ReviewSection';
+import ReviewSection, {
+  FormikReviewItem as ReviewItem,
+} from '../../common/ReviewCluster/ReviewSection';
 import { FieldId } from '../constants';
 
 import ReviewRoleItem from './ReviewRoleItem';
@@ -43,13 +43,31 @@ const ReviewClusterScreen = ({
 }) => {
   const {
     values: {
-      [FieldId.Product]: product,
-      [FieldId.InstallToVpc]: installToVPCSelected,
-      [FieldId.ConfigureProxy]: configureProxySelected,
-      [FieldId.Hypershift]: hypershiftValue,
+      [FieldId.ApplicationIngress]: applicationIngress,
+      [FieldId.AssociatedAwsId]: associatedAwsId,
       [FieldId.AutoscalingEnabled]: autoscalingEnabledValue,
+      [FieldId.ByoOidcConfigId]: byoOidcConfigId,
       [FieldId.CloudProvider]: cloudProvider,
       [FieldId.HasDomainPrefix]: hasDomainPrefix,
+      [FieldId.ClusterPrivacy]: clusterPrivacy,
+      [FieldId.ClusterPrivacyPublicSubnetId]: clusterPrivacyPublicSubnetId,
+      [FieldId.ClusterVersion]: clusterVersion,
+      [FieldId.ConfigureProxy]: configureProxySelected,
+      [FieldId.EtcdKeyArn]: etcdKeyArn,
+      [FieldId.Hypershift]: hypershiftValue,
+      [FieldId.InstallToVpc]: installToVPCSelected,
+      [FieldId.KmsKeyArn]: hasCustomKeyARN,
+      [FieldId.MachinePoolsSubnets]: machinePoolsSubnets,
+      [FieldId.MaxReplicas]: maxReplicas,
+      [FieldId.MultiAz]: multiAz,
+      [FieldId.NodeLabels]: nodeLabels,
+      [FieldId.Product]: product,
+      [FieldId.SecurityGroups]: securityGroups,
+      [FieldId.SelectedVpc]: selectedVpc,
+      [FieldId.SharedVpc]: sharedVpc,
+      [FieldId.UpgradePolicy]: upgradePolicy,
+      [FieldId.UsePrivateLink]: usePrivateLink,
+      [FieldId.WorkerVolumeSizeGib]: workerVolumeSizeGib,
     },
     values: formValues,
     setFieldValue,
@@ -59,34 +77,23 @@ const ReviewClusterScreen = ({
   const autoscalingEnabled = canAutoScale && !!autoscalingEnabledValue;
   const isHypershiftSelected = hypershiftValue === 'true';
 
-  const isByoc = formValues.byoc === 'true';
-  const isAWS = formValues.cloud_provider === 'aws';
-  const isGCP = formValues.cloud_provider === 'gcp';
-  const isROSA = formValues.product === normalizedProducts.ROSA;
-  const hasEtcdEncryption = isHypershiftSelected && !!formValues.etcd_key_arn;
-  const hasCustomKeyARN = isByoc && formValues.kms_key_arn;
-  const showVPCCheckbox = isROSA || isByoc;
-  const hasAWSVPCSettings = showVPCCheckbox && formValues.install_to_vpc && isAWS;
-  const clusterVersionRawId = formValues.cluster_version?.raw_id;
+  const hasEtcdEncryption = isHypershiftSelected && !!etcdKeyArn;
+  const clusterVersionRawId = clusterVersion?.raw_id;
 
-  const hasSecurityGroups = isByoc && hasSelectedSecurityGroups(formValues.securityGroups);
+  const hasSecurityGroups = hasSelectedSecurityGroups(securityGroups);
 
   const clusterSettingsFields = [
-    ...(!isROSA ? ['cloud_provider'] : []),
-    'name',
+    FieldId.ClusterName,
     ...(hasDomainPrefix ? [FieldId.DomainPrefix] : []),
-    'cluster_version',
-    'region',
-    'multi_az',
-    ...(!isByoc && !isROSA ? ['persistent_storage'] : []),
-    ...(!isByoc && isROSA ? ['load_balancers'] : []),
-    ...(isByoc && isAWS && !isROSA ? ['disable_scp_checks'] : []),
-    ...(!isHypershiftSelected ? ['enable_user_workload_monitoring'] : []),
-    ...(isByoc ? ['customer_managed_key'] : []),
-    ...(hasCustomKeyARN ? ['kms_key_arn'] : []),
-    'etcd_encryption',
-    ...(!isHypershiftSelected ? ['fips'] : []),
-    ...(hasEtcdEncryption ? ['etcd_key_arn'] : []),
+    FieldId.ClusterVersion,
+    FieldId.Region,
+    FieldId.MultiAz,
+    ...(!isHypershiftSelected ? [FieldId.EnableUserWorkloadMonitoring] : []),
+    FieldId.CustomerManagedKey,
+    ...(hasCustomKeyARN ? [FieldId.KmsKeyArn] : []),
+    FieldId.EtcdEncryption,
+    ...(!isHypershiftSelected ? [FieldId.FipsCryptography] : []),
+    ...(hasEtcdEncryption ? [FieldId.EtcdKeyArn] : []),
   ];
 
   const [userRole, setUserRole] = useState('');
@@ -99,18 +106,15 @@ const ReviewClusterScreen = ({
     clearGetUserRoleResponse();
     clearGetOcmRoleResponse();
     // reset hidden form field to false
-    setFieldValue('detected_ocm_and_user_roles', false);
+    setFieldValue(FieldId.DetectedOcmAndUserRoles, false);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
-    if (!isROSA) {
-      return;
-    }
     if (getUserRoleResponse.fulfilled) {
       const userRoleForAWSAccount = getUserRoleForSelectedAWSAccount(
         getUserRoleResponse.data,
-        formValues.associated_aws_id,
+        associatedAwsId,
       );
       setUserRole(userRoleForAWSAccount?.sts_user);
     }
@@ -125,14 +129,11 @@ const ReviewClusterScreen = ({
   }, [getUserRoleResponse]);
 
   useEffect(() => {
-    if (!isROSA) {
-      return;
-    }
     if (getOCMRoleResponse.fulfilled) {
       setOcmRole(getOCMRoleResponse.data?.arn);
     }
     if (!getOCMRoleResponse.fulfilled && !getOCMRoleResponse.pending && !getOCMRoleResponse.error) {
-      getOCMRole(formValues.associated_aws_id);
+      getOCMRole(associatedAwsId);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [getOCMRoleResponse]);
@@ -143,7 +144,7 @@ const ReviewClusterScreen = ({
     if (hasError !== errorWithAWSAccountRoles) {
       setErrorWithAWSAccountRoles(hasError);
       // setting hidden form field for field level validation
-      setFieldValue('detected_ocm_and_user_roles', !hasError);
+      setFieldValue(FieldId.DetectedOcmAndUserRoles, !hasError);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [getUserRoleResponse, getOCMRoleResponse, userRole, ocmRole, errorWithAWSAccountRoles]);
@@ -151,208 +152,152 @@ const ReviewClusterScreen = ({
   const getStepId = (stepKey) => {
     let step = stepKey;
     if (stepKey === 'CLUSTER_SETTINGS') {
-      // choose a different sub-step for ROSA and OSD
-      if (isROSA) {
-        step = 'CLUSTER_SETTINGS__DETAILS';
-      } else {
-        step = 'CLUSTER_SETTINGS__CLOUD_PROVIDER';
-      }
+      step = 'CLUSTER_SETTINGS__DETAILS';
     }
-    return isROSA ? rosaStepId[step] : stepId[step];
+    return rosaStepId[step];
   };
 
-  const getStepName = (stepKey) =>
-    isROSA ? rosaStepNameById[rosaStepId[stepKey]] : stepNameById[stepId[stepKey]];
+  const getStepName = (stepKey) => rosaStepNameById[rosaStepId[stepKey]];
 
-  let accountStepId = 'ACCOUNTS_AND_ROLES';
-  if (isROSA) {
-    accountStepId = isHypershiftEnabled
-      ? 'ACCOUNTS_AND_ROLES_AS_SECOND_STEP'
-      : 'ACCOUNTS_AND_ROLES_AS_FIRST_STEP';
-  }
+  const accountStepId = isHypershiftEnabled
+    ? 'ACCOUNTS_AND_ROLES_AS_SECOND_STEP'
+    : 'ACCOUNTS_AND_ROLES_AS_FIRST_STEP';
 
   return (
     <div className="ocm-create-osd-review-screen">
       <Title headingLevel="h2" className="pf-v5-u-pb-md">
-        Review your {isROSA ? 'ROSA' : 'dedicated'} cluster
+        Review your ROSA cluster
       </Title>
-      {isROSA && (
-        <>
-          <HiddenCheckbox name={FieldId.DetectedOcmAndUserRoles} />
-          {isHypershiftEnabled && (
-            <ReviewSection
-              title={getStepName('CONTROL_PLANE')}
-              onGoToStep={() => goToStepById(getStepId('CONTROL_PLANE'))}
-            >
-              {ReviewItem({ name: 'hypershift', formValues })}
-            </ReviewSection>
-          )}
-          <ReviewSection
-            title={getStepName(accountStepId)}
-            onGoToStep={() => goToStepById(getStepId(accountStepId))}
-            initiallyExpanded={errorWithAWSAccountRoles}
-          >
-            {ReviewItem({ name: FieldId.AssociatedAwsId, formValues })}
-            {isHypershiftSelected &&
-              viewAWSBillingAcct &&
-              ReviewItem({ name: FieldId.BillingAccountId, formValues })}
-            {ReviewRoleItem({
-              name: 'ocm-role',
-              getRoleResponse: getOCMRoleResponse,
-              content: ocmRole,
-            })}
-            {ReviewRoleItem({
-              name: 'user-role',
-              getRoleResponse: getUserRoleResponse,
-              content: userRole,
-            })}
-            {ReviewItem({ name: FieldId.InstallerRoleArn, formValues })}
-            {ReviewItem({ name: FieldId.SupportRoleArn, formValues })}
-            {!isHypershiftSelected && ReviewItem({ name: FieldId.ControlPlaneRoleArn, formValues })}
-            {ReviewItem({ name: FieldId.WorkerRoleArn, formValues })}
-          </ReviewSection>
-        </>
-      )}
-      {!isROSA && (
+      <HiddenCheckbox name={FieldId.DetectedOcmAndUserRoles} />
+      {isHypershiftEnabled && (
         <ReviewSection
-          title={getStepName('BILLING_MODEL')}
-          onGoToStep={() => goToStepById(getStepId('BILLING_MODEL'))}
+          title={getStepName('CONTROL_PLANE')}
+          onGoToStep={() => goToStepById(getStepId('CONTROL_PLANE'))}
         >
-          {ReviewItem({ name: FieldId.BillingModel, formValues })}
-          {ReviewItem({ name: FieldId.Byoc, formValues })}
+          {ReviewItem(FieldId.Hypershift)}
         </ReviewSection>
       )}
+      <ReviewSection
+        title={getStepName(accountStepId)}
+        onGoToStep={() => goToStepById(getStepId(accountStepId))}
+        initiallyExpanded={errorWithAWSAccountRoles}
+      >
+        {ReviewItem(FieldId.AssociatedAwsId)}
+        {isHypershiftSelected && viewAWSBillingAcct && ReviewItem(FieldId.BillingAccountId)}
+        {ReviewRoleItem({
+          name: 'ocm-role',
+          getRoleResponse: getOCMRoleResponse,
+          content: ocmRole,
+        })}
+        {ReviewRoleItem({
+          name: 'user-role',
+          getRoleResponse: getUserRoleResponse,
+          content: userRole,
+        })}
+        {ReviewItem(FieldId.InstallerRoleArn)}
+        {ReviewItem(FieldId.SupportRoleArn)}
+        {!isHypershiftSelected && ReviewItem(FieldId.ControlPlaneRoleArn)}
+        {ReviewItem(FieldId.WorkerRoleArn)}
+      </ReviewSection>
       <ReviewSection
         title={getStepName('CLUSTER_SETTINGS')}
         onGoToStep={() => goToStepById(getStepId('CLUSTER_SETTINGS'))}
       >
-        {clusterSettingsFields.map((name) => ReviewItem({ name, formValues }))}
+        {clusterSettingsFields.map((fieldName) => ReviewItem(fieldName))}
       </ReviewSection>
       <ReviewSection
         title="Default machine pool"
         onGoToStep={() => goToStepById(getStepId('CLUSTER_SETTINGS__MACHINE_POOL'))}
       >
-        {ReviewItem({ name: 'machine_type', formValues })}
-        {canAutoScale && ReviewItem({ name: 'autoscalingEnabled', formValues })}
+        {ReviewItem(FieldId.MachineType)}
+        {canAutoScale && ReviewItem(FieldId.AutoscalingEnabled)}
         {autoscalingEnabled
-          ? ReviewItem({ name: 'min_replicas', formValues })
-          : ReviewItem({ name: 'nodes_compute', formValues })}
-        {showVPCCheckbox &&
-          ReviewItem({
-            name: isHypershiftSelected ? 'selected_vpc' : 'install_to_vpc',
-            formValues,
-          })}
-        {hasAWSVPCSettings &&
+          ? ReviewItem(FieldId.MinReplicas, {
+              [FieldId.MultiAz]: multiAz,
+              [FieldId.Hypershift]: hypershiftValue,
+              [FieldId.MaxReplicas]: maxReplicas,
+            })
+          : ReviewItem(FieldId.NodesCompute, {
+              [FieldId.MultiAz]: multiAz,
+              [FieldId.Hypershift]: hypershiftValue,
+            })}
+        {ReviewItem(isHypershiftSelected ? FieldId.SelectedVpc : FieldId.InstallToVpc)}
+        {installToVPCSelected &&
           isHypershiftSelected &&
-          ReviewItem({
-            name: 'aws_hosted_machine_pools',
-            formValues,
+          ReviewItem('aws_hosted_machine_pools', {
+            [FieldId.MachinePoolsSubnets]: machinePoolsSubnets,
+            [FieldId.SelectedVpc]: selectedVpc,
           })}
-        {!(formValues.node_labels?.length === 1 && isEmpty(formValues.node_labels?.[0])) &&
-          ReviewItem({ name: 'node_labels', formValues })}
-        {isAWS &&
-          !isHypershiftSelected &&
-          isByoc &&
-          canSelectImds(clusterVersionRawId) &&
-          ReviewItem({ name: 'imds', formValues })}
-        {formValues.worker_volume_size_gib &&
-          ReviewItem({ name: 'worker_volume_size_gib', formValues })}
+        {!(nodeLabels?.length === 1 && isEmpty(nodeLabels?.[0])) && ReviewItem(FieldId.NodeLabels)}
+        {!isHypershiftSelected && canSelectImds(clusterVersionRawId) && ReviewItem(FieldId.IMDS)}
+        {workerVolumeSizeGib && ReviewItem(FieldId.WorkerVolumeSizeGib)}
       </ReviewSection>
       <ReviewSection
         title={getStepName('NETWORKING')}
-        onGoToStep={() =>
-          goToStepById(getStepId(`NETWORKING__${isAWS ? 'CONFIGURATION' : 'CIDR_RANGES'}`))
-        }
+        onGoToStep={() => goToStepById(getStepId('NETWORKING__CONFIGURATION'))}
       >
-        {ReviewItem({ name: 'cluster_privacy', formValues })}
-        {formValues.cluster_privacy_public_subnet_id &&
+        {ReviewItem(FieldId.ClusterPrivacy)}
+        {clusterPrivacyPublicSubnetId &&
           isHypershiftSelected &&
-          ReviewItem({
-            name: 'cluster_privacy_public_subnet_id',
-            formValues,
+          ReviewItem(FieldId.ClusterPrivacyPublicSubnetId, {
+            [FieldId.SelectedVpc]: selectedVpc,
           })}
-        {showVPCCheckbox &&
-          formValues.cluster_privacy === 'internal' &&
-          formValues.install_to_vpc &&
-          ReviewItem({ name: 'use_privatelink', formValues })}
-        {hasAWSVPCSettings &&
+        {clusterPrivacy === 'internal' &&
+          installToVPCSelected &&
+          ReviewItem(FieldId.UsePrivateLink)}
+        {installToVPCSelected &&
           !isHypershiftSelected &&
-          ReviewItem({
-            name: 'aws_standalone_vpc',
-            formValues,
+          ReviewItem('aws_standalone_vpc', {
+            [FieldId.SelectedVpc]: selectedVpc,
+            [FieldId.MachinePoolsSubnets]: machinePoolsSubnets,
+            [FieldId.UsePrivateLink]: usePrivateLink,
           })}
-        {hasAWSVPCSettings &&
+        {installToVPCSelected &&
           !isHypershiftSelected &&
           hasSecurityGroups &&
-          ReviewItem({
-            name: 'securityGroups',
-            formValues,
+          ReviewItem(FieldId.SecurityGroups, {
+            [FieldId.SelectedVpc]: selectedVpc,
           })}
-        {formValues.shared_vpc?.is_selected &&
-          !isHypershiftSelected &&
-          ReviewItem({
-            name: 'shared_vpc',
-            formValues,
-          })}
-        {showVPCCheckbox &&
-          formValues.install_to_vpc &&
-          isGCP &&
-          ReviewItem({ name: 'gpc_vpc', formValues })}
-        {installToVPCSelected && ReviewItem({ name: 'configure_proxy', formValues })}
+        {sharedVpc?.is_selected && !isHypershiftSelected && ReviewItem(FieldId.SharedVpc)}
+        {installToVPCSelected && ReviewItem(FieldId.ConfigureProxy)}
+        {installToVPCSelected && configureProxySelected && ReviewItem(FieldId.HttpProxyUrl)}
+        {installToVPCSelected && configureProxySelected && ReviewItem(FieldId.HttpsProxyUrl)}
+        {installToVPCSelected && configureProxySelected && ReviewItem(FieldId.NoProxyDomains)}
         {installToVPCSelected &&
           configureProxySelected &&
-          ReviewItem({ name: 'http_proxy_url', formValues })}
-        {installToVPCSelected &&
-          configureProxySelected &&
-          ReviewItem({ name: 'https_proxy_url', formValues })}
-        {installToVPCSelected &&
-          configureProxySelected &&
-          ReviewItem({ name: 'no_proxy_domains', formValues })}
-        {installToVPCSelected &&
-          configureProxySelected &&
-          ReviewItem({ name: 'additional_trust_bundle', formValues })}
-        {ReviewItem({ name: 'network_machine_cidr', formValues })}
-        {ReviewItem({ name: 'network_service_cidr', formValues })}
-        {ReviewItem({ name: 'network_pod_cidr', formValues })}
-        {ReviewItem({ name: 'network_host_prefix', formValues })}
+          ReviewItem(FieldId.AdditionalTrustBundle)}
+        {ReviewItem(FieldId.NetworkMachineCidr)}
+        {ReviewItem(FieldId.NetworkServiceCidr)}
+        {ReviewItem(FieldId.NetworkPodCidr)}
+        {ReviewItem(FieldId.NetworkHostPrefix)}
 
-        {isAWS &&
-          !isHypershiftSelected &&
-          isByoc &&
-          ReviewItem({ name: 'applicationIngress', formValues })}
-        {formValues.applicationIngress !== 'default' &&
-          isAWS &&
-          !isHypershiftSelected &&
-          isByoc && (
-            <>
-              {ReviewItem({ name: 'defaultRouterSelectors', formValues })}
-              {ReviewItem({ name: 'defaultRouterExcludedNamespacesFlag', formValues })}
-              {ReviewItem({ name: 'isDefaultRouterWildcardPolicyAllowed', formValues })}
-              {ReviewItem({ name: 'isDefaultRouterNamespaceOwnershipPolicyStrict', formValues })}
-            </>
-          )}
+        {!isHypershiftSelected && ReviewItem(FieldId.ApplicationIngress)}
+        {applicationIngress !== 'default' && !isHypershiftSelected && (
+          <>
+            {ReviewItem(FieldId.DefaultRouterSelectors)}
+            {ReviewItem(FieldId.DefaultRouterExcludedNamespacesFlag)}
+            {ReviewItem(FieldId.IsDefaultRouterWildcardPolicyAllowed)}
+            {ReviewItem(FieldId.IsDefaultRouterNamespaceOwnershipPolicyStrict)}
+          </>
+        )}
       </ReviewSection>
-      {isROSA && (
-        <ReviewSection
-          title={getStepName('CLUSTER_ROLES_AND_POLICIES')}
-          onGoToStep={() => goToStepById(getStepId('CLUSTER_ROLES_AND_POLICIES'))}
-        >
-          {!isHypershiftSelected &&
-            ReviewItem({ name: FieldId.RosaRolesProviderCreationMode, formValues })}
-          {formValues.byo_oidc_config_id && (
-            <>
-              {ReviewItem({ name: FieldId.ByoOidcConfigIdManaged, formValues })}
-              {ReviewItem({ name: FieldId.ByoOidcConfigId, formValues })}
-            </>
-          )}
-          {ReviewItem({ name: FieldId.CustomOperatorRolesPrefix, formValues })}
-        </ReviewSection>
-      )}
+      <ReviewSection
+        title={getStepName('CLUSTER_ROLES_AND_POLICIES')}
+        onGoToStep={() => goToStepById(getStepId('CLUSTER_ROLES_AND_POLICIES'))}
+      >
+        {!isHypershiftSelected && ReviewItem(FieldId.RosaRolesProviderCreationMode)}
+        {byoOidcConfigId && (
+          <>
+            {ReviewItem(FieldId.ByoOidcConfigIdManaged)}
+            {ReviewItem(FieldId.ByoOidcConfigId)}
+          </>
+        )}
+        {ReviewItem(FieldId.CustomOperatorRolesPrefix)}
+      </ReviewSection>
       <ReviewSection title="Updates" onGoToStep={() => goToStepById(getStepId('CLUSTER_UPDATES'))}>
-        {ReviewItem({ name: 'upgrade_policy', formValues })}
-        {formValues.upgrade_policy === 'automatic' &&
-          ReviewItem({ name: 'automatic_upgrade_schedule', formValues })}
-        {!isHypershiftSelected && ReviewItem({ name: 'node_drain_grace_period', formValues })}
+        {ReviewItem(FieldId.UpgradePolicy)}
+        {upgradePolicy === 'automatic' && ReviewItem(FieldId.AutomaticUpgradeSchedule)}
+        {!isHypershiftSelected && ReviewItem(FieldId.NodeDrainGracePeriod)}
       </ReviewSection>
 
       {config.fakeOSD && (
