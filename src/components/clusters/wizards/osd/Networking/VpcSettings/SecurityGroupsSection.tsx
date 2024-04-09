@@ -1,23 +1,26 @@
 import React, { useState } from 'react';
-import { ExpandableSection } from '@patternfly/react-core';
 import { Field } from 'formik';
 
-import { CloudVPC } from '~/types/clusters_mgmt.v1';
-import { useFeatureGate } from '~/hooks/useFeatureGate';
-import { validateSecurityGroups } from '~/common/validators';
+import { Alert, AlertActionLink, ExpandableSection } from '@patternfly/react-core';
+
 import { SupportedFeature } from '~/common/featureCompatibility';
+import links from '~/common/installLinks.mjs';
+import { validateSecurityGroups } from '~/common/validators';
 import { getIncompatibleVersionReason } from '~/common/versionCompatibility';
-import { SECURITY_GROUPS_FEATURE_DAY1 } from '~/redux/constants/featureConstants';
 import EditSecurityGroups from '~/components/clusters/ClusterDetails/components/SecurityGroups/EditSecurityGroups';
 import SecurityGroupsEmptyAlert from '~/components/clusters/ClusterDetails/components/SecurityGroups/SecurityGroupsEmptyAlert';
 import { CheckboxField } from '~/components/clusters/wizards/form';
 import { useFormState } from '~/components/clusters/wizards/hooks';
 import { FieldId } from '~/components/clusters/wizards/osd/constants';
+import { useFeatureGate } from '~/hooks/useFeatureGate';
+import { SECURITY_GROUPS_FEATURE_DAY1 } from '~/redux/constants/featureConstants';
+import { CloudVPC } from '~/types/clusters_mgmt.v1';
 
 type SecurityGroupFieldProps = {
   selectedVPC: CloudVPC;
   label?: string;
   input: { onChange: (selectedGroupIds: string[]) => void; value: string[] };
+  isHypershift: boolean;
 };
 
 const fieldId = 'securityGroups';
@@ -26,6 +29,7 @@ const SecurityGroupField = ({
   input: { onChange, value: selectedGroupIds },
   label,
   selectedVPC,
+  isHypershift,
 }: SecurityGroupFieldProps) => (
   <EditSecurityGroups
     label={label}
@@ -33,6 +37,7 @@ const SecurityGroupField = ({
     selectedGroupIds={selectedGroupIds}
     isReadOnly={false}
     onChange={onChange}
+    isHypershift={isHypershift}
   />
 );
 
@@ -81,6 +86,26 @@ const SecurityGroupsSection = () => {
       {showEmptyAlert && <SecurityGroupsEmptyAlert />}
       {!incompatibleReason && !showEmptyAlert && (
         <>
+          <Alert
+            variant="info"
+            isInline
+            title="You cannot add or edit security groups to the machine pools created by default after you create the cluster."
+            actionLinks={
+              <>
+                <AlertActionLink component="a" href={links.OSD_SECURITY_GROUPS} target="_blank">
+                  View more information
+                </AlertActionLink>
+                <AlertActionLink
+                  component="a"
+                  href={links.AWS_CONSOLE_SECURITY_GROUPS}
+                  target="_blank"
+                >
+                  AWS security groups console
+                </AlertActionLink>
+              </>
+            }
+          />
+          <br />
           <Field
             component={CheckboxField}
             name={`${fieldId}.applyControlPlaneToAll`}
@@ -96,7 +121,9 @@ const SecurityGroupsSection = () => {
             name={`${fieldId}.controlPlane`}
             label={applyControlPlaneToAll ? '' : 'Control plane nodes'}
             selectedVPC={selectedVPC}
-            validate={validateSecurityGroups}
+            validate={(securityGroupIds: string[]) =>
+              validateSecurityGroups(securityGroupIds, false)
+            }
             input={{
               ...getFieldProps(`${fieldId}.controlPlane`),
               onChange: setValue(`${fieldId}.controlPlane`),
@@ -109,7 +136,9 @@ const SecurityGroupsSection = () => {
                 name={`${fieldId}.infra`}
                 label="Infrastructure nodes"
                 selectedVPC={selectedVPC}
-                validate={validateSecurityGroups}
+                validate={(securityGroupIds: string[]) =>
+                  validateSecurityGroups(securityGroupIds, false)
+                }
                 input={{
                   ...getFieldProps(`${fieldId}.infra`),
                   onChange: setValue(`${fieldId}.infra`),
@@ -120,7 +149,9 @@ const SecurityGroupsSection = () => {
                 name={`${fieldId}.worker`}
                 label="Worker nodes"
                 selectedVPC={selectedVPC}
-                validate={validateSecurityGroups}
+                validate={(securityGroupIds: string[]) =>
+                  validateSecurityGroups(securityGroupIds, false)
+                }
                 input={{
                   ...getFieldProps(`${fieldId}.worker`),
                   onChange: setValue(`${fieldId}.worker`),

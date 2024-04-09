@@ -1,14 +1,18 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+
 import { Button, Popover } from '@patternfly/react-core';
 import { InfoCircleIcon } from '@patternfly/react-icons/dist/esm/icons/info-circle-icon';
 import { OutlinedArrowAltCircleUpIcon } from '@patternfly/react-icons/dist/esm/icons/outlined-arrow-alt-circle-up-icon';
+
 import getClusterVersion from '~/components/clusters/common/getClusterVersion';
-import { isHibernating, isHypershiftCluster } from './clusterStates';
-import links from '../../../common/installLinks.mjs';
+
 import getClusterName from '../../../common/getClusterName';
-import modals from '../../common/Modal/modals';
+import links from '../../../common/installLinks.mjs';
 import { subscriptionStatuses } from '../../../common/subscriptionTypes';
+import modals from '../../common/Modal/modals';
+
+import { isHibernating, isHypershiftCluster } from './clusterStates';
 
 const ClusterUpdateLink = ({ cluster, openModal, hideOSDUpdates }) => {
   const clusterVersion = getClusterVersion(cluster);
@@ -52,7 +56,7 @@ const ClusterUpdateLink = ({ cluster, openModal, hideOSDUpdates }) => {
   if (cluster.managed) {
     return (
       <Button
-        className="cluster-update-link pf-v5-u-mt-0"
+        className="cluster-inline-link pf-v5-u-mt-0"
         variant="link"
         onClick={() =>
           openModal(modals.UPGRADE_WIZARD, {
@@ -72,7 +76,7 @@ const ClusterUpdateLink = ({ cluster, openModal, hideOSDUpdates }) => {
     return (
       <a href={`${cluster.console.url}/settings/cluster`} target="_blank" rel="noopener noreferrer">
         <Button
-          className="cluster-update-link pf-v5-u-mt-0"
+          className="cluster-inline-link pf-v5-u-mt-0"
           variant="link"
           icon={<OutlinedArrowAltCircleUpIcon />}
         >
@@ -97,7 +101,7 @@ const ClusterUpdateLink = ({ cluster, openModal, hideOSDUpdates }) => {
         </div>
       }
     >
-      <Button className="cluster-update-link pf-v5-u-mt-0" variant="link" icon={<InfoCircleIcon />}>
+      <Button className="cluster-inline-link pf-v5-u-mt-0" variant="link" icon={<InfoCircleIcon />}>
         Update
       </Button>
     </Popover>

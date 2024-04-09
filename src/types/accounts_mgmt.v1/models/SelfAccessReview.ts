@@ -1,7 +1,7 @@
+/* generated using openapi-typescript-codegen -- do not edit */
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-
 export type SelfAccessReview = {
   action: SelfAccessReview.action;
   cluster_id?: string;
@@ -10,7 +10,6 @@ export type SelfAccessReview = {
   resource_type: SelfAccessReview.resource_type;
   subscription_id?: string;
 };
-
 export namespace SelfAccessReview {
   export enum action {
     GET = 'get',
@@ -19,7 +18,6 @@ export namespace SelfAccessReview {
     DELETE = 'delete',
     UPDATE = 'update',
   }
-
   export enum resource_type {
     ADD_ON = 'AddOn',
     FLAVOUR = 'Flavour',
@@ -69,5 +67,6 @@ export namespace SelfAccessReview {
     CLUSTER_SELF_MANAGED_STATUS = 'ClusterSelfManagedStatus',
     CLUSTER_KUBELET_CONFIG = 'ClusterKubeletConfig',
     MACHINE_POOL = 'MachinePool',
+    CLUSTER_BREAK_GLASS_CREDENTIAL = 'ClusterBreakGlassCredential',
   }
 }

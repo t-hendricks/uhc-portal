@@ -1,17 +1,11 @@
 import React from 'react';
-import { shallow } from 'enzyme';
 
-import { render, checkAccessibility } from '~/testUtils';
+import { checkAccessibility, render, screen } from '~/testUtils';
+
 import AddOnsRequirementContent from '../AddOnsDrawerRequirementContent';
 
 describe('<AddOnsRequirementContent />', () => {
-  let wrapper;
-
   const props = { activeCardRequirements: ['first requirement', 'second requirement'] };
-
-  beforeEach(() => {
-    wrapper = shallow(<AddOnsRequirementContent {...props} />);
-  });
 
   it('is accessible', async () => {
     const { container } = render(<AddOnsRequirementContent {...props} />);
@@ -19,14 +13,21 @@ describe('<AddOnsRequirementContent />', () => {
   });
 
   it('expect to render all requirements', () => {
-    expect(wrapper.find('ListItem').at(0).props().children).toEqual('first requirement');
-    expect(wrapper.find('ListItem').at(1).props().children).toEqual('second requirement');
+    render(<AddOnsRequirementContent {...props} />);
+
+    const listItems = screen.getAllByRole('listitem');
+    expect(listItems).toHaveLength(2);
+
+    props.activeCardRequirements.forEach((requirement, index) => {
+      expect(listItems[index]).toHaveTextContent(requirement);
+    });
   });
 
   it('expect to not render and ListItems if not requirements are passed', () => {
-    wrapper.setProps({
-      activeCardRequirements: null,
-    });
-    expect(wrapper.find('List').props().children).toEqual(undefined);
+    const newProps = { ...props, activeCardRequirements: null };
+    render(<AddOnsRequirementContent {...newProps} />);
+
+    const listItems = screen.queryAllByRole('listitem');
+    expect(listItems).toHaveLength(0);
   });
 });

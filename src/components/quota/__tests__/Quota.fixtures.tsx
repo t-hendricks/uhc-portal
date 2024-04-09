@@ -1,14 +1,15 @@
 import React from 'react';
 import type { AxiosResponse } from 'axios';
+
+import { subscriptionsConstants } from '../../../redux/constants';
+import { subscriptionsReducer } from '../../../redux/reducers/subscriptionsReducer';
+import { FULFILLED_ACTION } from '../../../redux/reduxHelpers';
+import type { QuotaCost, QuotaCostList } from '../../../types/accounts_mgmt.v1';
 import {
+  dbaAddon,
   dedicatedRhInfra,
   unlimitedROSA,
-  dbaAddon,
 } from '../../clusters/common/__tests__/quota_cost.fixtures';
-import { subscriptionsReducer } from '../../../redux/reducers/subscriptionsReducer';
-import type { QuotaCost, QuotaCostList } from '../../../types/accounts_mgmt.v1';
-import { subscriptionsConstants } from '../../../redux/constants';
-import { FULFILLED_ACTION } from '../../../redux/reduxHelpers';
 import Quota from '../Quota';
 
 const fetchAccount = jest.fn();

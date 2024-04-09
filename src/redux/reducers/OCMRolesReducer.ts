@@ -1,14 +1,15 @@
 import { produce } from 'immer';
-import {
-  REJECTED_ACTION,
-  PENDING_ACTION,
-  FULFILLED_ACTION,
-  baseRequestState,
-} from '../reduxHelpers';
+
 import { getErrorState } from '../../common/errors';
-import { PromiseActionType, PromiseReducerState } from '../types';
-import OCMRolesConstants from '../constants/OCMRolesConstants';
 import { OCMRoleAction } from '../actions/OCMRolesActions';
+import OCMRolesConstants from '../constants/OCMRolesConstants';
+import {
+  baseRequestState,
+  FULFILLED_ACTION,
+  PENDING_ACTION,
+  REJECTED_ACTION,
+} from '../reduxHelpers';
+import { PromiseActionType, PromiseReducerState } from '../types';
 
 type State = {
   getOCMRolesResponse: PromiseReducerState<{ data: any }>;

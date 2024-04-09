@@ -24,9 +24,11 @@
  * This time it will succeed, and the iframe child sends the token to the parent
  * Once the parent receives the token, it executes a function callback to pass the token
  */
+import axios, { AxiosError } from 'axios';
 import Keycloak, { KeycloakConfig, KeycloakInitOptions } from 'keycloak-js';
 import urijs from 'urijs';
-import axios, { AxiosError } from 'axios';
+
+import type { Chrome } from '~/types/types';
 
 const defaultOptions = {
   realm: 'redhat-external',
@@ -49,15 +51,6 @@ const DEFAULT_ROUTES = {
     url: ['ci.foo.redhat.com', 'ci.cloud.redhat.com', 'ci.console.redhat.com'],
     sso: 'https://sso.qa.redhat.com/auth',
     portal: 'https://access.qa.redhat.com',
-  },
-  qaprodauth: {
-    url: [
-      'qaprodauth.foo.redhat.com',
-      'qaprodauth.cloud.redhat.com',
-      'qaprodauth.console.redhat.com',
-    ],
-    sso: 'https://sso.redhat.com/auth',
-    portal: 'https://access.redhat.com',
   },
   stage: {
     url: [
@@ -187,8 +180,9 @@ export const doOffline = (onDone: (tokenOrError: string, errorReason?: string) =
 export const loadOfflineToken = (
   callback: (tokenOrError: string, errorReason?: string) => void,
   targetOrigin: string,
+  chrome: Chrome,
 ) => {
-  insights.chrome.auth
+  chrome.auth
     .getOfflineToken()
     .then((response: any) => {
       // eslint-disable-next-line no-console

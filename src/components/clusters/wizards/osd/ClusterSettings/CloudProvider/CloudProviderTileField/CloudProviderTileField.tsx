@@ -3,17 +3,20 @@ import classNames from 'classnames';
 
 import { Tile, Tooltip } from '@patternfly/react-core';
 
+import { noQuotaTooltip } from '~/common/helpers';
+import { billingModels } from '~/common/subscriptionTypes';
+import {
+  AWS_DEFAULT_REGION,
+  CloudProviderType,
+  GCP_DEFAULT_REGION,
+} from '~/components/clusters/wizards/common/constants';
+import { useFormState } from '~/components/clusters/wizards/hooks';
+import { useGetBillingQuotas } from '~/components/clusters/wizards/osd/BillingModel/useGetBillingQuotas';
+import { FieldId } from '~/components/clusters/wizards/osd/constants';
 import AWSLogo from '~/styles/images/AWSLogo';
 import GCPLogo from '~/styles/images/GCPLogo';
-import { useFormState } from '~/components/clusters/wizards/hooks';
-import { CloudProviderType } from '~/components/clusters/wizards/common/constants';
-import * as osdInitialValues from '~/components/clusters/wizards/common/createOSDInitialValues';
-import { noQuotaTooltip } from '~/common/helpers';
-import { FieldId } from '~/components/clusters/wizards/osd/constants';
-import { useGetBillingQuotas } from '~/components/clusters/wizards/osd/BillingModel/useGetBillingQuotas';
 
 import './cloudProviderTileField.scss';
-import { billingModels } from '~/common/subscriptionTypes';
 
 export const CloudProviderTileField = () => {
   const {
@@ -42,9 +45,7 @@ export const CloudProviderTileField = () => {
     // Silently reset some user choices that are now meaningless.
     setFieldValue(
       FieldId.Region,
-      value === CloudProviderType.Aws
-        ? osdInitialValues.AWS_DEFAULT_REGION
-        : osdInitialValues.GCP_DEFAULT_REGION,
+      value === CloudProviderType.Aws ? AWS_DEFAULT_REGION : GCP_DEFAULT_REGION,
     );
 
     // Allow MachineTypeSelection to pick a new default.
@@ -55,10 +56,19 @@ export const CloudProviderTileField = () => {
     setFieldValue(FieldId.CloudProvider, value);
   };
 
+  const handleKeyDown = (event: React.KeyboardEvent) => {
+    if (event.key === ' ' || event.key === 'Enter') {
+      event.preventDefault();
+      handleChange(event.currentTarget.id);
+    }
+  };
+
   const gcpTile = (
     <Tile
+      id={CloudProviderType.Gcp}
       className={classNames('ocm-tile-create-cluster', !hasGcpResources && 'tile-disabled')}
       onClick={() => hasGcpResources && handleChange(CloudProviderType.Gcp)}
+      onKeyDown={handleKeyDown}
       isDisabled={!hasGcpResources}
       data-testid="gcp-provider-card"
       title="Run on Google Cloud Platform"
@@ -71,8 +81,10 @@ export const CloudProviderTileField = () => {
 
   const awsTile = (
     <Tile
+      id={CloudProviderType.Aws}
       className={classNames('ocm-tile-create-cluster', !hasAwsResources && 'tile-disabled')}
       onClick={() => hasAwsResources && handleChange(CloudProviderType.Aws)}
+      onKeyDown={handleKeyDown}
       isDisabled={!hasAwsResources}
       data-testid="aws-provider-card"
       title="Run on Amazon Web Services"
@@ -84,7 +96,7 @@ export const CloudProviderTileField = () => {
   );
 
   return (
-    <div>
+    <div role="listbox" aria-label="Providers options">
       {hasAwsResources ? awsTile : <Tooltip content={notAvailableTooltip}>{awsTile}</Tooltip>}
       {hasGcpResources ? gcpTile : <Tooltip content={noQuotaTooltip}>{gcpTile}</Tooltip>}
     </div>

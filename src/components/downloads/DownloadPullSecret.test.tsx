@@ -1,9 +1,10 @@
 import React from 'react';
 import * as FileSaver from 'file-saver';
 
+import { eventNames, ocmResourceType } from '~/common/analytics';
 import * as useAnalytics from '~/hooks/useAnalytics';
 import { render, screen } from '~/testUtils';
-import { eventNames, ocmResourceType } from '~/common/analytics';
+
 import DownloadPullSecret from './DownloadPullSecret';
 
 jest.mock('~/hooks/useAnalytics');

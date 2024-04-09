@@ -14,17 +14,18 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 import sortBy from 'lodash/sortBy';
+
+import { getErrorState } from '~/common/errors';
 import { DnsDomainsAction } from '~/redux/actions/dnsDomainsActions';
 import { DNSDomain } from '~/types/clusters_mgmt.v1';
-import { getErrorState } from '~/common/errors';
-import {
-  REJECTED_ACTION,
-  FULFILLED_ACTION,
-  PENDING_ACTION,
-  baseRequestState,
-} from '../reduxHelpers';
 
 import { dnsDomainsConstants } from '../constants';
+import {
+  baseRequestState,
+  FULFILLED_ACTION,
+  PENDING_ACTION,
+  REJECTED_ACTION,
+} from '../reduxHelpers';
 import { PromiseActionType, PromiseReducerState } from '../types';
 
 export type State = PromiseReducerState<{

@@ -1,13 +1,16 @@
 import React from 'react';
+import pullAt from 'lodash/pullAt';
 import { PropTypes } from 'prop-types';
 import { Field } from 'redux-form';
-import pullAt from 'lodash/pullAt';
+
 import { Button, GridItem } from '@patternfly/react-core';
-import { PlusCircleIcon } from '@patternfly/react-icons/dist/esm/icons/plus-circle-icon';
 import { MinusCircleIcon } from '@patternfly/react-icons/dist/esm/icons/minus-circle-icon';
-import ReduxVerticalFormGroup from './ReduxVerticalFormGroup';
+import { PlusCircleIcon } from '@patternfly/react-icons/dist/esm/icons/plus-circle-icon';
+
 import { getRandomID } from '../../../common/helpers';
 import ButtonWithTooltip from '../ButtonWithTooltip';
+
+import ReduxVerticalFormGroup from './ReduxVerticalFormGroup';
 
 import './RenderArrayFields.scss';
 
@@ -32,9 +35,14 @@ LabelGridItem.propTypes = {
   helpText: PropTypes.string,
 };
 
-const AddMoreButtonGridItem = ({ addNewField, areFieldsFilled, title = 'Add more' }) => {
-  const isDisabled = !areFieldsFilled.length || areFieldsFilled.includes(false);
-
+const AddMoreButtonGridItem = ({
+  addNewField,
+  areFieldsFilled,
+  title = 'Add more',
+  addMoreButtonDisabled = false,
+}) => {
+  const isDisabled =
+    !areFieldsFilled.length || areFieldsFilled.includes(false) || addMoreButtonDisabled;
   return (
     <GridItem className="field-grid-item">
       <Button
@@ -53,6 +61,7 @@ AddMoreButtonGridItem.propTypes = {
   addNewField: PropTypes.func.isRequired,
   areFieldsFilled: PropTypes.arrayOf(PropTypes.bool).isRequired,
   title: PropTypes.string,
+  addMoreButtonDisabled: PropTypes.bool,
 };
 
 const FieldArrayErrorGridItem = ({ isLast, errorMessage, touched, isGroupError }) => {
@@ -153,6 +162,7 @@ const RenderArrayFields = (props) => {
     FieldGridItemComponent = FieldGridItem,
     isFieldFilled = (field) => !!field.name,
     addMoreTitle,
+    addMoreButtonDisabled,
   } = props;
 
   const [touched, setTouched] = React.useState(false);
@@ -221,6 +231,7 @@ const RenderArrayFields = (props) => {
         addNewField={addNewField}
         areFieldsFilled={areFieldsFilled}
         title={addMoreTitle}
+        addMoreButtonDisabled={addMoreButtonDisabled}
       />
       {fields.map((item, index) => (
         <React.Fragment key={`${fields.get(index).id}`}>
@@ -257,6 +268,7 @@ RenderArrayFields.propTypes = {
   FieldGridItemComponent: PropTypes.func,
   addMoreTitle: PropTypes.string,
   isFieldFilled: PropTypes.func,
+  addMoreButtonDisabled: PropTypes.bool,
 };
 
 export default RenderArrayFields;

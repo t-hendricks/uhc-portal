@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+
 import { FormGroup } from '@patternfly/react-core';
 import {
   Select as SelectDeprecated,

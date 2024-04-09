@@ -1,11 +1,10 @@
+/* generated using openapi-typescript-codegen -- do not edit */
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-
 import type { Label } from './Label';
 import type { Manifest } from './Manifest';
 import type { Syncset } from './Syncset';
-
 /**
  * Representation of cluster external configuration.
  */

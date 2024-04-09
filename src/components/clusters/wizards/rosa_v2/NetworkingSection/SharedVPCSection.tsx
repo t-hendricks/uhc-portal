@@ -1,32 +1,36 @@
 import React from 'react';
-import { Alert, Title, Text } from '@patternfly/react-core';
 import { Field } from 'formik';
-import { useFormState } from '~/components/clusters/wizards/hooks';
-import { getIncompatibleVersionReason } from '~/common/versionCompatibility';
-import { SupportedFeature } from '~/common/featureCompatibility';
-import { ReduxCheckbox } from '~/components/common/ReduxFormComponents';
-import ExternalLink from '~/components/common/ExternalLink';
 
+import { Alert, Text, Title } from '@patternfly/react-core';
+
+import { SupportedFeature } from '~/common/featureCompatibility';
 import links from '~/common/installLinks.mjs';
+import { getIncompatibleVersionReason } from '~/common/versionCompatibility';
+import { useFormState } from '~/components/clusters/wizards/hooks';
+import ExternalLink from '~/components/common/ExternalLink';
+import { ReduxCheckbox } from '~/components/common/ReduxFormComponents';
+import { isRestrictedEnv } from '~/restrictedEnv';
+
+import SharedVPCField from './SharedVPCField';
 
 import './SharedVPCSection.scss';
-import { isRestrictedEnv } from '~/restrictedEnv';
-import SharedVPCField from './SharedVPCField';
 
 const SharedVPCSection = ({
   hostedZoneDomainName,
   isSelected,
   openshiftVersion,
+  isHypershiftSelected,
 }: {
   hostedZoneDomainName: string;
   isSelected: boolean;
   openshiftVersion: string;
+  isHypershiftSelected: boolean;
 }) => {
   const { getFieldProps, getFieldMeta } = useFormState();
   const incompatibleReason = getIncompatibleVersionReason(
     SupportedFeature.AWS_SHARED_VPC,
     openshiftVersion,
-    { day1: true },
+    { day1: true, isHypershift: isHypershiftSelected },
   );
   if (incompatibleReason) {
     return (

@@ -1,15 +1,16 @@
 // ClusterListEmptyState is the empty state (no clusters) for ClusterList
 import React from 'react';
 import { Link } from 'react-router-dom-v5-compat';
+
 import {
-  EmptyState,
-  EmptyStateVariant,
-  EmptyStateIcon,
-  EmptyStateBody,
   Button,
+  EmptyState,
   EmptyStateActions,
-  EmptyStateHeader,
+  EmptyStateBody,
   EmptyStateFooter,
+  EmptyStateHeader,
+  EmptyStateIcon,
+  EmptyStateVariant,
 } from '@patternfly/react-core';
 import { PlusCircleIcon } from '@patternfly/react-icons/dist/esm/icons/plus-circle-icon';
 
@@ -46,7 +47,9 @@ function ClusterListEmptyState() {
         </Link>
         <EmptyStateActions>
           <Link to="/register">
-            <Button variant="link">Register cluster</Button>
+            <Button variant="link" data-testid="register-cluster-item">
+              Register cluster
+            </Button>
           </Link>
           <Link to="/archived">
             <Button variant="link">View cluster archives</Button>

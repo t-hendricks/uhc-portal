@@ -1,14 +1,16 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+
 import { Form } from '@patternfly/react-core';
 
+import ErrorBox from '../../../common/ErrorBox';
 import Modal from '../../../common/Modal/Modal';
 import modals from '../../../common/Modal/modals';
-import ErrorBox from '../../../common/ErrorBox';
+
 import HibernateClusterContent from './HibernateClusterContent';
-import HibernateClusterUpgradeScheduled from './HibernateClusterUpgradeScheduled';
-import HibernateClusterUpgradeInProgress from './HibernateClusterUpgradeInProgress';
 import HibernateClusterModalTitle from './HibernateClusterModalTitle';
+import HibernateClusterUpgradeInProgress from './HibernateClusterUpgradeInProgress';
+import HibernateClusterUpgradeScheduled from './HibernateClusterUpgradeScheduled';
 
 class HibernateClusterModal extends Component {
   componentDidMount() {

@@ -1,6 +1,8 @@
 import React from 'react';
 import { CompatRouter } from 'react-router-dom-v5-compat';
-import { screen, render, userEvent, checkAccessibility, TestRouter } from '../../../testUtils';
+
+import { checkAccessibility, render, screen, TestRouter, userEvent } from '../../../testUtils';
+
 import CreateClusterPage from './CreateClusterPage';
 
 describe('<CreateClusterPage />', () => {
@@ -67,7 +69,7 @@ describe('<CreateClusterPage />', () => {
   });
 
   describe('User with no quota', () => {
-    it('should render', () => {
+    it('should render', async () => {
       render(
         <TestRouter>
           <CompatRouter>
@@ -83,7 +85,9 @@ describe('<CreateClusterPage />', () => {
           </CompatRouter>
         </TestRouter>,
       );
-      expect(screen.getByText('Select an OpenShift cluster type to create')).toBeInTheDocument();
+      expect(
+        await screen.findByText('Select an OpenShift cluster type to create'),
+      ).toBeInTheDocument();
     });
   });
 

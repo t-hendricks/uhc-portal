@@ -1,17 +1,24 @@
-import { renderHook } from '@testing-library/react';
 import axios from 'axios';
-import apiRequest from '~/services/apiRequest';
 import * as reactRedux from 'react-redux';
-import { useGetTechPreviewStatus, techPreviewStatusSelector } from './clusterHooks';
+
+import { renderHook } from '@testing-library/react';
+
+import apiRequest from '~/services/apiRequest';
+
 import { GlobalState } from '../store';
+
+import { techPreviewStatusSelector, useGetTechPreviewStatus } from './clusterHooks';
 
 type MockedJest = jest.Mocked<typeof axios> & jest.Mock;
 const apiRequestMock = apiRequest as unknown as MockedJest;
 
-jest.mock('react-redux', () => ({
-  ...jest.requireActual('react-redux'),
-  useDispatch: jest.fn(),
-}));
+jest.mock('react-redux', () => {
+  const config = {
+    __esModule: true,
+    ...jest.requireActual('react-redux'),
+  };
+  return config;
+});
 
 describe('useGetTechPreviewStatus hook', () => {
   const useSelectorSpy = jest.spyOn(reactRedux, 'useSelector');

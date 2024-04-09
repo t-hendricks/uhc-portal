@@ -1,10 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Form, Grid, GridItem, Title } from '@patternfly/react-core';
-import { useFormState } from '~/components/clusters/wizards/hooks';
-import { getAllSubnetFieldNames } from '~/common/vpcHelpers';
 
-import { emptyAWSSubnet } from '~/components/clusters/wizards/common/createOSDInitialValues';
+import { Form, Grid, GridItem, Title } from '@patternfly/react-core';
+
+import { getAllSubnetFieldNames } from '~/common/vpcHelpers';
+import { emptyAWSSubnet } from '~/components/clusters/wizards/common/constants';
+import { useFormState } from '~/components/clusters/wizards/hooks';
+
 import { FieldId } from '../constants';
 
 import InstallToVPC from './InstallToVPC';
@@ -22,6 +24,7 @@ function VPCScreen({ privateLinkSelected }) {
       [FieldId.MultiAz]: multiAzField,
       [FieldId.Region]: selectedRegion,
       [FieldId.CloudProvider]: cloudProviderID,
+      [FieldId.Hypershift]: isHypershift,
     },
   } = useFormState();
   const isSharedVpcSelected = sharedVpcSettings?.is_selected || false;
@@ -31,6 +34,7 @@ function VPCScreen({ privateLinkSelected }) {
   const selectedAZs = machinePoolsSubnets?.map((subnet) => subnet.availabilityZone);
   const isMultiAz = multiAzField === 'true';
   const openshiftVersion = version.raw_id;
+  const isHypershiftSelected = isHypershift === 'true';
 
   React.useEffect(() => {
     if (!selectedVPC.id) {
@@ -73,6 +77,7 @@ function VPCScreen({ privateLinkSelected }) {
           privateLinkSelected={privateLinkSelected}
           hostedZoneDomainName={hostedZoneDomainName}
           cloudProviderID={cloudProviderID}
+          isHypershiftSelected={isHypershiftSelected}
         />
       </Grid>
     </Form>

@@ -1,36 +1,38 @@
 import React from 'react';
+
 import {
+  ActionList,
   Card,
   CardBody,
-  CardTitle,
   CardFooter,
-  ActionList,
+  CardTitle,
   Form,
-  TextInput,
   FormGroup,
   Switch,
-  TextContent,
   Text,
+  TextContent,
+  TextInput,
   TextVariants,
 } from '@patternfly/react-core';
 
-import { LoadBalancerFlavor } from '~/types/clusters_mgmt.v1';
 import { isRestrictedEnv } from '~/restrictedEnv';
+import { LoadBalancerFlavor } from '~/types/clusters_mgmt.v1';
 
-import EditApplicationIngressDialog from '../EditApplicationIngressDialog';
 import ButtonWithTooltip from '../../../../../../common/ButtonWithTooltip';
-import LoadBalancerPopover from '../LoadBalancerPopover';
 import modals from '../../../../../../common/Modal/modals';
-import { LoadBalancerFlavorLabel } from '../constants';
 import {
   ClusterRouter,
   excludedNamespacesAsString,
   routeSelectorsAsString,
 } from '../../NetworkingSelector';
-import { NamespaceOwnerPolicyPopover } from './NamespaceOwnerPolicyPopover';
-import { WildcardPolicyPopover } from './WildcardsPolicyPopover';
+import { LoadBalancerFlavorLabel } from '../constants';
+import EditApplicationIngressDialog from '../EditApplicationIngressDialog';
+import LoadBalancerPopover from '../LoadBalancerPopover';
+
 import { ExcludedNamespacesPopover } from './ExcludedNamespacesPopover';
+import { NamespaceOwnerPolicyPopover } from './NamespaceOwnerPolicyPopover';
 import { RouteSelectorsPopover } from './RouteSelectorsPopover';
+import { WildcardPolicyPopover } from './WildcardsPolicyPopover';
 
 import './ApplicationIngressCard.scss';
 

@@ -1,8 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { GridItem, Alert, HelperText, HelperTextItem } from '@patternfly/react-core';
+
+import { Alert, GridItem, HelperText, HelperTextItem } from '@patternfly/react-core';
 import { CheckCircleIcon } from '@patternfly/react-icons/dist/esm/icons/check-circle-icon';
 import { ExclamationCircleIcon } from '@patternfly/react-icons/dist/esm/icons/exclamation-circle-icon';
+
+import { useGlobalState } from '~/redux/hooks/useGlobalState';
+
 import {
   atLeastOneRequired,
   required,
@@ -137,6 +141,8 @@ const HTPasswdForm = ({ isPending, HTPasswdErrors, change }) => {
     return <HelpTextPassword passwordErrors={passwordErrors} />;
   };
 
+  const isError = !!useGlobalState((state) => state.form?.CreateIdentityProvider?.syncErrors);
+
   const getAutocompleteText = (value) => (
     <div>
       Use suggested password:
@@ -193,6 +199,7 @@ const HTPasswdForm = ({ isPending, HTPasswdErrors, change }) => {
           atLeastOneRequired('users', (field) => !field?.username || field.username.trim() === ''),
           validateUniqueHTPasswdUsername,
         ]}
+        addMoreButtonDisabled={isError}
       />
       <GridItem span={11}>
         <Alert isInline variant="info" title="Securely store your usernames and passwords">

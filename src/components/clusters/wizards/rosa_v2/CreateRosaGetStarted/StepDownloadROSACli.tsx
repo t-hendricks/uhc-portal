@@ -1,9 +1,10 @@
 import React from 'react';
+
 import { Text, TextContent, TextList, TextListItem, TextVariants } from '@patternfly/react-core';
 
-import ExternalLink from '~/components/common/ExternalLink';
-import DownloadAndOSSelection from '~/components/clusters/install/instructions/components/DownloadAndOSSelection';
 import links, { channels, tools } from '~/common/installLinks.mjs';
+import DownloadAndOSSelection from '~/components/clusters/install/instructions/components/DownloadAndOSSelection';
+import ExternalLink from '~/components/common/ExternalLink';
 
 const StepDownloadROSACli = () => (
   <TextContent>
@@ -14,9 +15,9 @@ const StepDownloadROSACli = () => (
     <TextList component="ol">
       <TextListItem className="pf-v5-u-mb-lg">
         <Text component={TextVariants.p}>Download the latest version of the ROSA CLI</Text>
-        <Text component={TextVariants.p} className="pf-v5-u-mt-md">
+        <div className="pf-v5-u-mt-md">
           <DownloadAndOSSelection tool={tools.ROSA} channel={channels.STABLE} />
-        </Text>
+        </div>
         <Text component="p">
           <ExternalLink href={links.ROSA_CLI_DOCS}>Help with ROSA CLI setup</ExternalLink>
         </Text>

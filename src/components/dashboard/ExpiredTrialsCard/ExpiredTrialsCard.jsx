@@ -4,26 +4,25 @@ import { Link } from 'react-router-dom-v5-compat';
 
 import {
   Card,
-  CardTitle,
   CardBody,
+  CardTitle,
   EmptyState,
   EmptyStateBody,
   EmptyStateHeader,
 } from '@patternfly/react-core';
-
 import { TableVariant } from '@patternfly/react-table';
 import {
   Table as TableDeprecated,
-  TableHeader as TableHeaderDeprecated,
   TableBody as TableBodyDeprecated,
+  TableHeader as TableHeaderDeprecated,
 } from '@patternfly/react-table/deprecated';
 
-import ViewPaginationRow from '../../clusters/common/ViewPaginationRow/viewPaginationRow';
+import { createOverviewQueryObject, viewPropsChanged } from '../../../common/queryHelpers';
 import { viewConstants } from '../../../redux/constants';
-import { viewPropsChanged, createOverviewQueryObject } from '../../../common/queryHelpers';
+import ViewPaginationRow from '../../clusters/common/ViewPaginationRow/viewPaginationRow';
 import modals from '../../common/Modal/modals';
-
 import skeletonRows from '../../common/SkeletonRows';
+
 import { expiredTrialsFilter } from './expiredTrialsHelpers';
 
 class ExpiredTrialsCard extends React.Component {

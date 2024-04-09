@@ -1,9 +1,8 @@
+/* generated using openapi-typescript-codegen -- do not edit */
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-
 import type { ObjectReference } from './ObjectReference';
-
 export type ExcessResource = ObjectReference & {
   availability_zone_type?: string;
   billing_model?: ExcessResource.billing_model;
@@ -12,7 +11,6 @@ export type ExcessResource = ObjectReference & {
   resource_name?: string;
   resource_type?: string;
 };
-
 export namespace ExcessResource {
   export enum billing_model {
     STANDARD = 'standard',

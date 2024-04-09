@@ -65,6 +65,8 @@ class ClusterDetails extends Page {
 
   clusterRegionLabelValue = () => cy.getByTestId('region').should('exist');
 
+  clusterPersistentStorageLabelValue = () => cy.getByTestId('persistent-storage').should('exist');
+
   clusterAvailabilityLabelValue = () => cy.getByTestId('availability').should('exist');
 
   clusterAutoScalingStatus = () => cy.getByTestId('clusterAutoscalingStatus').should('exist');
@@ -87,6 +89,21 @@ class ClusterDetails extends Page {
   clusterHostPrefixLabelValue = () => cy.getByTestId('hostPrefix').should('exist');
 
   clusterMachinePoolTable = () => cy.get('table[aria-label="Machine pools"]');
+
+  clusterInfrastructureBillingModelValue = () =>
+    cy.getByTestId('infrastructure-billing-model').find('div');
+
+  clusterSubscriptionBillingModelValue = () =>
+    cy.getByTestId('subscription-billing-model').find('div');
+
+  clusterSecureBootSupportForShieldedVMsValue = () =>
+    cy.getByTestId('secureBootSupportForShieldedVMs');
+
+  clusterInstallationHeader = () => cy.getByTestId('installation-header');
+
+  clusterInstallationExpectedText = () => cy.getByTestId('expected-cluster-installation-msg');
+
+  downloadOcCliLink = () => cy.getByTestId('download-oc-cli');
 
   waitForEditUrlModalToLoad = () => {
     cy.getByTestId('edit-console-url-dialog', { timeout: 30000 }).should('be.visible');

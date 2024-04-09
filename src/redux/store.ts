@@ -1,41 +1,31 @@
-import { applyMiddleware, compose, createStore } from 'redux';
-import thunkMiddleware from 'redux-thunk';
-import promiseMiddleware from 'redux-promise-middleware';
 import { routerMiddleware } from 'connected-react-router';
 import { createBrowserHistory } from 'history';
-// TODO'@redhat-cloud-services' modules implicitly have an 'any' type.
-// @ts-ignore
-import { notificationsMiddleware } from '@redhat-cloud-services/frontend-components-notifications/notificationsMiddleware';
+import promiseMiddleware from 'redux-promise-middleware';
 
+import notificationsMiddleware from '@redhat-cloud-services/frontend-components-notifications/notificationsMiddleware';
+import { configureStore, Middleware } from '@reduxjs/toolkit';
+
+import promiseRejectionMiddleware from './promiseRejectionMiddleware';
 import { reduxReducers } from './reducers';
 import sentryMiddleware from './sentryMiddleware';
-import promiseRejectionMiddleware from './promiseRejectionMiddleware';
-
-declare global {
-  interface Window {
-    __REDUX_DEVTOOLS_EXTENSION_COMPOSE__?: typeof compose;
-  }
-}
 
 const defaultOptions = {
   dispatchDefaultFailure: false, // automatic error notifications
 };
 const history = createBrowserHistory();
-const composeEnhancer = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
-const store = createStore(
-  reduxReducers(history),
-  composeEnhancer(
-    applyMiddleware(
-      routerMiddleware(history),
-      thunkMiddleware,
-      promiseRejectionMiddleware,
-      promiseMiddleware,
-      notificationsMiddleware({ ...defaultOptions }),
-      sentryMiddleware,
-    ),
-  ),
-);
+const store = configureStore({
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware({
+      serializableCheck: false,
+    })
+      .concat(routerMiddleware(history))
+      .concat(promiseRejectionMiddleware as Middleware)
+      .concat(promiseMiddleware)
+      .concat(notificationsMiddleware({ ...defaultOptions }) as Middleware) // TODO: remove type convertion as soon as @redhat-cloud-services incorporates RTK
+      .concat(sentryMiddleware as Middleware),
+  reducer: reduxReducers(history),
+});
 
 export type GlobalState = Omit<ReturnType<typeof store.getState>, 'rosaReducer'> & {
   // TODO temporary overrides for reducers that aren't written in typescript
@@ -49,5 +39,5 @@ export type GlobalState = Omit<ReturnType<typeof store.getState>, 'rosaReducer'>
   };
 };
 
-export { store, history };
+export { history, store };
 export default store;

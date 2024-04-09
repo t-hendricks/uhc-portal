@@ -1,11 +1,15 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { FormGroup, Grid, GridItem } from '@patternfly/react-core';
 import { Field } from 'redux-form';
-import RadioButtons from '~/components/common/ReduxFormComponents/RadioButtons';
+
+import { FormGroup, Grid, GridItem } from '@patternfly/react-core';
+
 import ExternalLink from '~/components/common/ExternalLink';
-import GCPClusterEncryption from './GCPEncryptionSection';
+import RadioButtons from '~/components/common/ReduxFormComponents/RadioButtons';
+
 import AWSCustomerManagedEncryption from './AWSCustomerManagedEncryption';
+import GCPClusterEncryption from './GCPEncryptionSection';
+
 import './encryptionSection.scss';
 
 function CustomerManagedEncryption({

@@ -4,17 +4,17 @@ import { formValueSelector } from 'redux-form';
 import {
   getMinNodesRequired,
   getNodeIncrement,
-  getMinNodesRequiredHypershift,
   getNodeIncrementHypershift,
 } from '~/components/clusters/ClusterDetails/components/MachinePools/machinePoolsHelper';
+import wizardConnector from '~/components/clusters/wizards/common/WizardConnector';
 import { getWorkerNodeVolumeSizeMaxGiB } from '~/components/clusters/wizards/rosa/constants';
 import { openModal } from '~/components/common/Modal/ModalActions';
 import modals from '~/components/common/Modal/modals';
-import wizardConnector from '~/components/clusters/wizards/common/WizardConnector';
-import { canAutoScaleOnCreateSelector } from '../../../ClusterDetails/components/MachinePools/MachinePoolsSelectors';
+
+import { canAutoScaleOnCreateSelector } from '../../../ClusterDetails/components/MachinePools/machinePoolsSelectors';
+import createOSDInitialValues from '../createOSDInitialValues';
 
 import MachinePoolScreen from './MachinePoolScreen';
-import createOSDInitialValues from '../../common/createOSDInitialValues';
 
 const mapStateToProps = (state, ownProps) => {
   const valueSelector = formValueSelector('CreateCluster');
@@ -43,15 +43,17 @@ const mapStateToProps = (state, ownProps) => {
     selectedVPC,
     imds,
     clusterVersionRawId,
-    minNodesRequired: isHypershiftSelected
-      ? getMinNodesRequiredHypershift(machinePoolsSubnets?.length)
-      : getMinNodesRequired(true, isByoc, isMultiAz),
+    minNodesRequired: getMinNodesRequired(
+      isHypershiftSelected,
+      { numMachinePools: machinePoolsSubnets?.length },
+      { isDefaultMachinePool: true, isByoc, isMultiAz },
+    ),
     nodeIncrement: isHypershiftSelected
       ? getNodeIncrementHypershift(machinePoolsSubnets?.length)
       : getNodeIncrement(isMultiAz),
     isHypershiftCluster: isHypershiftSelected,
     maxWorkerVolumeSizeGiB,
-    canAutoScale: canAutoScaleOnCreateSelector(state, product),
+    canAutoScale: canAutoScaleOnCreateSelector(state.userProfile.organization?.details, product),
     autoscalingEnabled: !!valueSelector(state, 'autoscalingEnabled'),
     autoScaleMinNodesValue: valueSelector(state, 'min_replicas'),
     autoScaleMaxNodesValue: valueSelector(state, 'max_replicas'),

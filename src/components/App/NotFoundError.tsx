@@ -1,8 +1,11 @@
 import React from 'react';
+
 import { EmptyState, EmptyStateBody } from '@patternfly/react-core';
 import { InvalidObject } from '@redhat-cloud-services/frontend-components/InvalidObject';
-import './NotFoundError.scss';
+
 import { AppPage } from './AppPage';
+
+import './NotFoundError.scss';
 
 const NotFoundError = () => (
   <AppPage>

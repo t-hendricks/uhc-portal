@@ -13,32 +13,33 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
-import merge from 'lodash/merge';
-import { produce } from 'immer';
 import axios from 'axios';
-import {
-  REJECTED_ACTION,
-  PENDING_ACTION,
-  FULFILLED_ACTION,
-  INVALIDATE_ACTION,
-  baseRequestState,
-} from '../reduxHelpers';
+import { produce } from 'immer';
+import merge from 'lodash/merge';
+
 import { getErrorState } from '../../common/errors';
 import { versionComparator } from '../../common/versionComparator';
-import { clustersConstants } from '../constants';
-import type { PromiseActionType, PromiseReducerState } from '../types';
-import type { ClusterAction } from '../actions/clustersActions';
-import type { UpgradeGateAction } from '../actions/upgradeGateActions';
-import type { TechPreviewActions } from '../actions/techPreviewActions';
 import type {
   Cluster,
   ClusterStatus,
-  VersionGate,
-  Version,
   InflightCheck,
   ProductTechnologyPreview,
+  Version,
+  VersionGate,
 } from '../../types/clusters_mgmt.v1';
-import type { ErrorState, AugmentedCluster, ClusterWithPermissions } from '../../types/types';
+import type { AugmentedCluster, ClusterWithPermissions, ErrorState } from '../../types/types';
+import type { ClusterAction } from '../actions/clustersActions';
+import type { TechPreviewActions } from '../actions/techPreviewActions';
+import type { UpgradeGateAction } from '../actions/upgradeGateActions';
+import { clustersConstants } from '../constants';
+import {
+  baseRequestState,
+  FULFILLED_ACTION,
+  INVALIDATE_ACTION,
+  PENDING_ACTION,
+  REJECTED_ACTION,
+} from '../reduxHelpers';
+import type { PromiseActionType, PromiseReducerState } from '../types';
 
 type State = {
   clusters: PromiseReducerState & {

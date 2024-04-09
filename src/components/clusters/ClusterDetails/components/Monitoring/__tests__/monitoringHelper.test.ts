@@ -1,6 +1,20 @@
 import { defaultClusterFromSubscription } from '~/components/clusters/common/__tests__/defaultClusterFromSubscription.fixtures';
-import { ClusterConsole } from '~/types/clusters_mgmt.v1';
 import { ClusterResource } from '~/types/accounts_mgmt.v1';
+import { ClusterConsole } from '~/types/clusters_mgmt.v1';
+
+import config from '../../../../../../config';
+import {
+  alertsSeverity,
+  getIssuesAndWarnings,
+  hasData,
+  hasResourceUsageMetrics,
+  monitoringItemLinkProps,
+  monitoringItemLinkType,
+  monitoringItemTypes,
+  resourceUsageIssuesHelper,
+  thresholds,
+} from '../monitoringHelper';
+
 import {
   archivedCluster,
   cpuAndMemoryCluster,
@@ -17,18 +31,6 @@ import {
   resourceUsageWithIssues,
   resourceUsageWithoutIssues,
 } from './Monitoring.fixtures';
-import {
-  resourceUsageIssuesHelper,
-  thresholds,
-  hasData,
-  getIssuesAndWarnings,
-  alertsSeverity,
-  hasResourceUsageMetrics,
-  monitoringItemLinkProps,
-  monitoringItemTypes,
-  monitoringItemLinkType,
-} from '../monitoringHelper';
-import config from '../../../../../../config';
 
 describe('getIssuesAndWarnings', () => {
   it('should count issues and warnings', () => {
@@ -116,6 +118,7 @@ describe('hasResourceUsageMetrics', () => {
   ])('%p', (title, cluster, showOldMetrics, expected) => {
     // Arrange
     config.configData = {
+      ...config.configData,
       showOldMetrics,
       apiGateway: '',
     };

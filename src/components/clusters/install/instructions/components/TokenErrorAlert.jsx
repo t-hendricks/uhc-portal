@@ -1,9 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+
 import { Alert } from '@patternfly/react-core';
 import * as Sentry from '@sentry/browser';
 
 import ExternalLink from '~/components/common/ExternalLink';
+
 import { BANNED_USER_CODE } from '../../../../../common/errors';
 
 class TokenErrorAlert extends React.Component {

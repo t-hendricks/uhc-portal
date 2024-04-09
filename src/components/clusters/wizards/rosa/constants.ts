@@ -1,17 +1,17 @@
 import { FormikValues } from 'formik';
 
 import { billingModels, normalizedProducts } from '~/common/subscriptionTypes';
-import { BreadcrumbPath } from '~/components/common/Breadcrumbs';
-import {
-  FieldId as CommonFieldId,
-  CloudProviderType,
-  IMDSType,
-} from '~/components/clusters/wizards/common/constants';
 import {
   isExactMajorMinor,
   isMajorMinorEqualOrGreater,
   splitVersion,
 } from '~/common/versionHelpers';
+import {
+  CloudProviderType,
+  FieldId as CommonFieldId,
+  IMDSType,
+} from '~/components/clusters/wizards/common/constants';
+import { BreadcrumbPath } from '~/components/common/Breadcrumbs';
 
 export enum RosaFieldId {}
 
@@ -74,6 +74,7 @@ export const canSelectImds = (clusterVersionRawId: string): boolean => {
 };
 
 export const maxAdditionalSecurityGroups = 5;
+export const maxAdditionalSecurityGroupsHypershift = 10;
 
 export const defaultWorkerNodeVolumeSizeGiB = 300;
 

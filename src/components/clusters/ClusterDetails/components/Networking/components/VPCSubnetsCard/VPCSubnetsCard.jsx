@@ -5,12 +5,12 @@ import {
   Card,
   CardBody,
   CardTitle,
-  List,
-  ListItem,
   DescriptionList,
+  DescriptionListDescription,
   DescriptionListGroup,
   DescriptionListTerm,
-  DescriptionListDescription,
+  List,
+  ListItem,
 } from '@patternfly/react-core';
 
 const subnetCount = (awsSubnetsLength, gcpNetwork) => (gcpNetwork ? 2 : awsSubnetsLength);

@@ -1,13 +1,12 @@
 import axios from 'axios';
+
 import apiRequest from '~/services/apiRequest';
-import { insightsMock } from '~/testUtils';
 import { ScheduleType, UpgradeType } from '~/types/clusters_mgmt.v1';
+
 import clusterService from './clusterService';
 
 type MockedJest = jest.Mocked<typeof axios> & jest.Mock;
 const apiRequestMock = apiRequest as unknown as MockedJest;
-
-insightsMock();
 
 const getApiGetParams = () => apiRequestMock.get.mock.calls[0][1]?.params;
 

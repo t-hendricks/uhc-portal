@@ -1,18 +1,21 @@
 import React from 'react';
+
+import { Alert, Card, CardBody, CardTitle, PageSection, Title } from '@patternfly/react-core';
 import PageHeader, { PageHeaderTitle } from '@redhat-cloud-services/frontend-components/PageHeader';
 import { Spinner } from '@redhat-cloud-services/frontend-components/Spinner';
 import useChrome from '@redhat-cloud-services/frontend-components/useChrome';
-import type { ChromeAPI } from '@redhat-cloud-services/types';
-import { PageSection, Alert, Card, CardBody, CardTitle, Title } from '@patternfly/react-core';
-import { Capability, Error } from '~/types/accounts_mgmt.v1';
+
+import { defaultToOfflineTokens, hasRestrictTokensCapability } from '~/common/restrictTokensHelper';
 import { isRestrictedEnv } from '~/restrictedEnv';
-import useOrganization from './useOrganization';
+import { Error } from '~/types/accounts_mgmt.v1';
+import { Chrome } from '~/types/types';
+
+import { AppPage } from '../App/AppPage';
+import Breadcrumbs from '../common/Breadcrumbs';
+
 import InstructionsOCM from './Instructions';
 import InstructionsROSA from './InstructionsROSA';
-import Breadcrumbs from '../common/Breadcrumbs';
-import { AppPage } from '../App/AppPage';
-
-const defaultToOfflineTokens = true;
+import useOrganization from './useOrganization';
 
 const ErrorOrLoadingWrapper = ({ children }: { children: React.ReactElement }) => (
   <AppPage title="OpenShift Cluster Manager">
@@ -30,14 +33,6 @@ const ErrorOrLoadingWrapper = ({ children }: { children: React.ReactElement }) =
   </AppPage>
 );
 
-export const hasRestrictTokensCapability = (capabilities: Array<Capability>) =>
-  !!capabilities?.length &&
-  capabilities.some(
-    (capability) =>
-      capability.name === 'capability.account.restrict_new_offline_tokens' &&
-      capability.value === 'true',
-  );
-
 type CLILoginPageProps = {
   showToken?: boolean;
   showPath?: string;
@@ -45,10 +40,10 @@ type CLILoginPageProps = {
 };
 
 const CLILoginPage = ({ showToken = false, showPath, isRosa = false }: CLILoginPageProps) => {
-  const chrome = useChrome();
+  const chrome = useChrome() as Chrome;
   const { organization, isLoading, error } = useOrganization();
 
-  const restrictedEnv = isRestrictedEnv(chrome as unknown as ChromeAPI);
+  const restrictedEnv = isRestrictedEnv(chrome);
   let restrictTokens = false;
 
   if (!restrictedEnv) {

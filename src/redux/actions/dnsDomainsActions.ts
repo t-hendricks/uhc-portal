@@ -1,5 +1,7 @@
 import { action, ActionType } from 'typesafe-actions';
+
 import { dnsDomainsConstants } from '~/redux/constants';
+
 import { clusterService } from '../../services';
 
 // Gets available DNS domains that can be used for sharing VPCs

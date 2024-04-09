@@ -1,4 +1,5 @@
 import { AWSMachinePool, MachinePool, NodePool } from '~/types/clusters_mgmt.v1';
+
 import { EditMachinePoolValues } from './hooks/useMachinePoolFormik';
 
 const getLabels = (labels: EditMachinePoolValues['labels']) =>
@@ -114,6 +115,7 @@ export const buildNodePoolRequest = (
     nodePool.subnet = values.privateSubnetId;
     nodePool.aws_node_pool = {
       instance_type: values.instanceType,
+      additional_security_group_ids: values.securityGroupIds,
     };
   }
   return nodePool;

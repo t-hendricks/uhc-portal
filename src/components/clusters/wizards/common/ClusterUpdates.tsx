@@ -4,16 +4,16 @@ import { Field } from 'formik';
 import { Flex, Form, Grid, GridItem, Text, TextVariants, Title } from '@patternfly/react-core';
 
 import links from '~/common/installLinks.mjs';
-import ExternalLink from '~/components/common/ExternalLink';
+import PodDistruptionBudgetGraceSelect from '~/components/clusters/common/Upgrades/PodDistruptionBudgetGraceSelect';
+import UpgradeScheduleSelection from '~/components/clusters/common/Upgrades/UpgradeScheduleSelection';
 import {
   FieldId,
   initialValues,
   UpgradePolicyType,
 } from '~/components/clusters/wizards/common/constants';
-import { useFormState } from '~/components/clusters/wizards/hooks';
 import { RadioGroupField } from '~/components/clusters/wizards/form/RadioGroupField';
-import UpgradeScheduleSelection from '~/components/clusters/common/Upgrades/UpgradeScheduleSelection';
-import PodDistruptionBudgetGraceSelect from '~/components/clusters/common/Upgrades/PodDistruptionBudgetGraceSelect';
+import { useFormState } from '~/components/clusters/wizards/hooks';
+import ExternalLink from '~/components/common/ExternalLink';
 
 export const ClusterUpdates = () => {
   const {
@@ -102,7 +102,9 @@ export const ClusterUpdates = () => {
         <Title headingLevel="h4" className="ocm-c-upgrade-node-draining-title">
           Node draining
         </Title>
-
+        <Text component={TextVariants.p}>
+          Note: You cannot change the node drain grace period after you start the upgrade process.
+        </Text>
         <Text component={TextVariants.p}>
           You may set a grace period for how long pod disruption budget-protected workloads will be
           respected during updates. After this grace period, any workloads protected by pod

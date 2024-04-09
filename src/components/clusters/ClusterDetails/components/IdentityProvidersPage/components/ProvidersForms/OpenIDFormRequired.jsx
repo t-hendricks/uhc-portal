@@ -1,14 +1,15 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Field } from 'redux-form';
+
 import { GridItem } from '@patternfly/react-core';
 
-import IDPBasicFields from './IDPBasicFields';
-
-import ReduxVerticalFormGroup from '../../../../../../common/ReduxFormComponents/ReduxVerticalFormGroup';
 import { checkOpenIDIssuer } from '../../../../../../../common/validators';
 import ReduxFieldArray from '../../../../../../common/ReduxFormComponents/ReduxFieldArray';
+import ReduxVerticalFormGroup from '../../../../../../common/ReduxFormComponents/ReduxVerticalFormGroup';
 import { isEmptyReduxArray } from '../../IdentityProvidersHelper';
+
+import IDPBasicFields from './IDPBasicFields';
 
 class OpenIDFormRequired extends React.Component {
   state = {
@@ -58,7 +59,7 @@ class OpenIDFormRequired extends React.Component {
           placeholderText="e.g. email"
           disabled={isPending}
           helpText="The list of attributes whose values should be used as the email address."
-          validate={this.validate}
+          validate={OpenIDFormRequired.validate}
           isGroupError={isGroupError}
           onFormChange={this.onValueChange}
           isRequired
@@ -69,7 +70,7 @@ class OpenIDFormRequired extends React.Component {
           type="text"
           placeholderText="e.g. name"
           disabled={isPending}
-          validate={this.validate}
+          validate={OpenIDFormRequired.validate}
           isGroupError={isGroupError}
           onFormChange={this.onValueChange}
           helpText="The end user's full name including all name parts, ordered according to the end user's locale and preferences."
@@ -81,7 +82,7 @@ class OpenIDFormRequired extends React.Component {
           type="text"
           placeholderText="e.g. preferred_username"
           disabled={isPending}
-          validate={this.validate}
+          validate={OpenIDFormRequired.validate}
           isGroupError={isGroupError}
           onFormChange={this.onValueChange}
           helpText="Shorthand name by which the end user wishes to be referred to at the RP, such as janedone or j.doe."

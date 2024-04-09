@@ -1,9 +1,10 @@
-import React, { useState, useEffect, useCallback } from 'react';
-import { useHistory } from 'react-router-dom';
+import React, { useCallback, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
-import { Modal, ModalVariant, Button } from '@patternfly/react-core';
+import { useHistory } from 'react-router-dom';
 
-import { trackEvents, ocmResourceTypeByProduct } from '~/common/analytics';
+import { Button, Modal, ModalVariant } from '@patternfly/react-core';
+
+import { ocmResourceTypeByProduct, trackEvents } from '~/common/analytics';
 import { normalizedProducts } from '~/common/subscriptionTypes';
 import useAnalytics from '~/hooks/useAnalytics';
 

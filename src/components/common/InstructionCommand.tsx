@@ -1,7 +1,9 @@
 import React from 'react';
+
 import { ClipboardCopy, clipboardCopyFunc, Text } from '@patternfly/react-core';
-import useAnalytics from '~/hooks/useAnalytics';
+
 import { TrackEvent } from '~/common/analytics';
+import useAnalytics from '~/hooks/useAnalytics';
 
 import './InstructionCommand.scss';
 
@@ -19,6 +21,7 @@ const InstructionCommand = ({
   trackEvent,
   className,
   outerClassName,
+  ...props
 }: Props) => {
   const track = useAnalytics();
   return (
@@ -33,6 +36,7 @@ const InstructionCommand = ({
           clipboardCopyFunc(event, text);
         }}
         className={className}
+        {...props}
       >
         {children}
       </ClipboardCopy>

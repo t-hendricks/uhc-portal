@@ -1,7 +1,9 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
+
 import { onListFilterSet } from '~/redux/actions/viewOptionsActions';
 import { fireEvent, screen, withState } from '~/testUtils';
+
 import ClusterListFilter from '../ClusterListFilter';
 
 jest.mock('react-redux', () => ({
@@ -19,7 +21,7 @@ const dispatchMock = jest.fn();
 describe('<ClusterListFilter />', () => {
   beforeEach(() => {
     jest.clearAllMocks();
-    (useDispatch as jest.Mock).mockReturnValue(dispatchMock);
+    (useDispatch as any as jest.Mock).mockReturnValue(dispatchMock);
   });
 
   it('renders conrrectly without current filter', () => {

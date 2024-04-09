@@ -1,5 +1,6 @@
-import { Cluster } from '~/types/clusters_mgmt.v1';
 import apiRequest from '~/services/apiRequest';
+import { Cluster } from '~/types/clusters_mgmt.v1';
+
 import type { ClusterLogList } from '../types/service_logs.v1';
 
 export type GetClusterHistoryParams = {

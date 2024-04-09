@@ -1,9 +1,8 @@
 import React from 'react';
-import * as subscriptionFixture from '~/components/clusters/ClusterDetails/components/Overview/SubscriptionSettings/SubscriptionSettings.fixtures';
-import { subscriptionStatuses } from '../../../../common/subscriptionTypes';
-import Overview from '../components/Overview/Overview';
-import fixtures from './ClusterDetails.fixtures';
 
+import * as subscriptionFixture from '~/components/clusters/ClusterDetails/components/Overview/SubscriptionSettings/SubscriptionSettings.fixtures';
+
+import { subscriptionStatuses } from '../../../../common/subscriptionTypes';
 import {
   checkAccessibility,
   mockRestrictedEnv,
@@ -11,6 +10,11 @@ import {
   screen,
   withState,
 } from '../../../../testUtils';
+import Overview from '../components/Overview/Overview';
+
+import fixtures from './ClusterDetails.fixtures';
+
+jest.mock('../components/Overview/SupportStatusLabel');
 
 describe('<Overview />', () => {
   describe('for an OSD cluster', () => {

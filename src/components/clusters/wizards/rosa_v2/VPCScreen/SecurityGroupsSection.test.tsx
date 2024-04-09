@@ -1,8 +1,11 @@
 import React from 'react';
 import { Formik } from 'formik';
-import { render, screen, mockUseFeatureGate, waitFor } from '~/testUtils';
+
 import { SECURITY_GROUPS_FEATURE_DAY1 } from '~/redux/constants/featureConstants';
+import { mockUseFeatureGate, render, screen, waitFor } from '~/testUtils';
+
 import { FieldId, initialValues } from '../constants';
+
 import SecurityGroupsSection from './SecurityGroupsSection';
 
 const mockState = {
@@ -54,39 +57,68 @@ describe('<SecurityGroupsSection />', () => {
   });
 
   describe('is displayed when', () => {
-    it('the VPC has been selected', async () => {
-      render(buildTestComponent(<SecurityGroupsSection {...defaultProps} />));
-      await waitFor(() => {
-        expect(screen.getByText('Additional security groups')).toBeInTheDocument();
-      });
-    });
+    it.each([[false], [true]])(
+      'the VPC has been selected. Is hypershift: %s',
+      async (isHypershift: boolean) => {
+        render(
+          buildTestComponent(
+            <SecurityGroupsSection {...defaultProps} isHypershiftSelected={isHypershift} />,
+          ),
+        );
+        await waitFor(() => {
+          expect(screen.getByText('Additional security groups')).toBeInTheDocument();
+        });
+      },
+    );
 
-    it('the feature gate is enabled', async () => {
-      render(buildTestComponent(<SecurityGroupsSection {...defaultProps} />));
-      await waitFor(() => {
-        expect(screen.getByText('Additional security groups')).toBeInTheDocument();
-      });
-    });
+    it.each([[false], [true]])(
+      'the feature gate is enabled. Is hypershift: %s',
+      async (isHypershift: boolean) => {
+        render(
+          buildTestComponent(
+            <SecurityGroupsSection {...defaultProps} isHypershiftSelected={isHypershift} />,
+          ),
+        );
+        await waitFor(() => {
+          expect(screen.getByText('Additional security groups')).toBeInTheDocument();
+        });
+      },
+    );
   });
 
   describe('is hidden when', () => {
-    it('the VPC has not been selected', async () => {
-      render(
-        buildTestComponent(
-          <SecurityGroupsSection openshiftVersion="4.14.0" selectedVPC={{ id: '', name: '' }} />,
-        ),
-      );
-      await waitFor(() => {
-        expect(screen.queryByText('Additional security groups')).not.toBeInTheDocument();
-      });
-    });
+    it.each([[false], [true]])(
+      'the VPC has not been selected. Is hypershift: %s',
+      async (isHypershift: boolean) => {
+        mockUseFeatureGate([[SECURITY_GROUPS_FEATURE_DAY1, false]]);
+        render(
+          buildTestComponent(
+            <SecurityGroupsSection
+              openshiftVersion="4.14.0"
+              selectedVPC={{ id: '', name: '' }}
+              isHypershiftSelected={isHypershift}
+            />,
+          ),
+        );
+        await waitFor(() => {
+          expect(screen.queryByText('Additional security groups')).not.toBeInTheDocument();
+        });
+      },
+    );
 
-    it('the feature gate is not enabled', async () => {
-      mockUseFeatureGate([[SECURITY_GROUPS_FEATURE_DAY1, false]]);
-      render(buildTestComponent(<SecurityGroupsSection {...defaultProps} />));
-      await waitFor(() => {
-        expect(screen.queryByText('Additional security groups')).not.toBeInTheDocument();
-      });
-    });
+    it.each([[false], [true]])(
+      'the feature gate is not enabled. Is hypershift: %s',
+      async (isHypershift: boolean) => {
+        mockUseFeatureGate([[SECURITY_GROUPS_FEATURE_DAY1, false]]);
+        render(
+          buildTestComponent(
+            <SecurityGroupsSection {...defaultProps} isHypershiftSelected={isHypershift} />,
+          ),
+        );
+        await waitFor(() => {
+          expect(screen.queryByText('Additional security groups')).not.toBeInTheDocument();
+        });
+      },
+    );
   });
 });

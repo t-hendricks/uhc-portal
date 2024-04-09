@@ -1,4 +1,5 @@
 import React from 'react';
+
 import useAnalytics from '~/hooks/useAnalytics';
 
 type WithAnalyticsProps = ReturnType<typeof useAnalytics>;

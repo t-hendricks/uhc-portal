@@ -15,20 +15,20 @@ limitations under the License.
 */
 
 import { produce } from 'immer';
-import {
-  REJECTED_ACTION,
-  PENDING_ACTION,
-  FULFILLED_ACTION,
-  baseRequestState,
-} from '../reduxHelpers';
-import { getErrorState } from '../../common/errors';
 
-import { dashboardsConstants } from '../constants';
-import type { PromiseActionType, PromiseReducerState } from '../types';
-import type { DashboardsAction } from '../actions/dashboardsActions';
-import type { Subscription } from '../../types/accounts_mgmt.v1/models/Subscription';
+import { getErrorState } from '../../common/errors';
 import type { OneMetric } from '../../types/accounts_mgmt.v1/models/OneMetric';
+import type { Subscription } from '../../types/accounts_mgmt.v1/models/Subscription';
 import type { SummaryVector } from '../../types/accounts_mgmt.v1/models/SummaryVector';
+import type { DashboardsAction } from '../actions/dashboardsActions';
+import { dashboardsConstants } from '../constants';
+import {
+  baseRequestState,
+  FULFILLED_ACTION,
+  PENDING_ACTION,
+  REJECTED_ACTION,
+} from '../reduxHelpers';
+import type { PromiseActionType, PromiseReducerState } from '../types';
 
 // not an ideal union type for metrics
 type ModifiedSubscription = Omit<Subscription, 'metrics'> & { metrics: Partial<OneMetric> };

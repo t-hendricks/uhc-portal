@@ -1,21 +1,24 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import get from 'lodash/get';
+import PropTypes from 'prop-types';
+
 import {
   DescriptionList,
-  DescriptionListTerm,
-  DescriptionListGroup,
   DescriptionListDescription,
+  DescriptionListGroup,
+  DescriptionListTerm,
 } from '@patternfly/react-core';
 
-import getBillingModelLabel from '~/components/clusters/common/getBillingModelLabel';
 import { isHypershiftCluster } from '~/components/clusters/common/clusterStates';
-import Timestamp from '../../../../common/Timestamp';
+import getBillingModelLabel from '~/components/clusters/common/getBillingModelLabel';
+
+import { normalizedProducts } from '../../../../../common/subscriptionTypes';
 import PopoverHint from '../../../../common/PopoverHint';
+import Timestamp from '../../../../common/Timestamp';
 import ClusterTypeLabel from '../../../common/ClusterTypeLabel';
 import InfrastructureModelLabel from '../../../common/InfrastructureModelLabel';
+
 import ClusterVersionInfo from './ClusterVersionInfo';
-import { normalizedProducts } from '../../../../../common/subscriptionTypes';
 
 const getIdFields = (cluster, showAssistedId) => {
   let label = 'Cluster ID';
@@ -156,11 +159,13 @@ function DetailsLeft({ cluster, cloudProviders, showAssistedId }) {
         <>
           <DescriptionListGroup>
             <DescriptionListTerm>Subscription billing model</DescriptionListTerm>
-            <DescriptionListDescription>{getBillingModelLabel(cluster)}</DescriptionListDescription>
+            <DescriptionListDescription data-testid="subscription-billing-model">
+              {getBillingModelLabel(cluster)}
+            </DescriptionListDescription>
           </DescriptionListGroup>
           <DescriptionListGroup>
             <DescriptionListTerm>Infrastructure billing model</DescriptionListTerm>
-            <DescriptionListDescription>
+            <DescriptionListDescription data-testid="infrastructure-billing-model">
               <InfrastructureModelLabel cluster={cluster} />
             </DescriptionListDescription>
           </DescriptionListGroup>

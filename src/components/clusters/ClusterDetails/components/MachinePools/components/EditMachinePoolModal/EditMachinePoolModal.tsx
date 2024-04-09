@@ -1,38 +1,43 @@
 import * as React from 'react';
 import { AxiosError } from 'axios';
-import { Button, ExpandableSection, Form, Stack, StackItem } from '@patternfly/react-core';
 import { Formik } from 'formik';
-import { useDispatch } from 'react-redux';
 import isEqual from 'lodash/isEqual';
-import Modal from '~/components/common/Modal/Modal';
-import { clusterService } from '~/services';
-import { isMPoolAz } from '~/components/clusters/ClusterDetails/clusterDetailsHelper';
-import ErrorBox from '~/components/common/ErrorBox';
-import { getErrorMessage } from '~/common/errors';
-import { Cluster, MachinePool } from '~/types/clusters_mgmt.v1';
-import { GlobalState } from '~/redux/store';
-import { ErrorState } from '~/types/types';
-import modals from '~/components/common/Modal/modals';
-import { useGlobalState } from '~/redux/hooks';
-import { closeModal } from '~/components/common/Modal/ModalActions';
-import { isHypershiftCluster, isROSA } from '~/components/clusters/common/clusterStates';
-import { PromiseReducerState } from '~/redux/types';
+import { useDispatch } from 'react-redux';
 
-import { HCP_USE_NODE_UPGRADE_POLICIES } from '~/redux/constants/featureConstants';
+import { Button, ExpandableSection, Form, Stack, StackItem, Tooltip } from '@patternfly/react-core';
+
+import { getErrorMessage } from '~/common/errors';
+import { isMPoolAz } from '~/components/clusters/ClusterDetails/clusterDetailsHelper';
+import { isHypershiftCluster, isROSA } from '~/components/clusters/common/clusterStates';
+import { MAX_NODES_HCP } from '~/components/clusters/common/machinePools/constants';
+import { getNodeCount } from '~/components/clusters/common/machinePools/utils';
+import ErrorBox from '~/components/common/ErrorBox';
+import Modal from '~/components/common/Modal/Modal';
+import { closeModal } from '~/components/common/Modal/ModalActions';
+import modals from '~/components/common/Modal/modals';
 import { useFeatureGate } from '~/hooks/useFeatureGate';
-import EditNodeCountSection from './sections/EditNodeCountSection';
+import { HCP_USE_NODE_UPGRADE_POLICIES } from '~/redux/constants/featureConstants';
+import { useGlobalState } from '~/redux/hooks';
+import { GlobalState } from '~/redux/store';
+import { PromiseReducerState } from '~/redux/types';
+import { clusterService } from '~/services';
+import { Cluster, MachinePool } from '~/types/clusters_mgmt.v1';
+import { ErrorState } from '~/types/types';
+
+import { clearGetMachinePoolsResponse, getMachineOrNodePools } from '../../MachinePoolsActions';
 import { canUseSpotInstances, normalizeNodePool } from '../../machinePoolsHelper';
-import SpotInstancesSection from './sections/SpotInstancesSection';
-import useMachinePoolFormik, { EditMachinePoolValues } from './hooks/useMachinePoolFormik';
+
 import DiskSizeField from './fields/DiskSizeField';
-import EditLabelsSection from './sections/EditLabelsSection';
-import EditTaintsSection from './sections/EditTaintsSection';
-import EditDetailsSection from './sections/EditDetailsSection';
-import EditSecurityGroupsSection from './sections/EditSecurityGroupsSection';
-import { buildNodePoolRequest, buildMachinePoolRequest } from './utils';
+import useMachinePoolFormik, { EditMachinePoolValues } from './hooks/useMachinePoolFormik';
 import useMachinePools from './hooks/useMachinePools';
 import useMachineTypes from './hooks/useMachineTypes';
-import { clearGetMachinePoolsResponse, getMachineOrNodePools } from '../../MachinePoolsActions';
+import EditDetailsSection from './sections/EditDetailsSection';
+import EditLabelsSection from './sections/EditLabelsSection';
+import EditNodeCountSection from './sections/EditNodeCountSection';
+import EditTaintsSection from './sections/EditTaintsSection';
+import EditSecurityGroupsSection from './sections/SecurityGroups/EditSecurityGroupsSection';
+import SpotInstancesSection from './sections/SpotInstancesSection';
+import { buildMachinePoolRequest, buildNodePoolRequest } from './utils';
 
 const modalDescription =
   'A machine pool is a group of machines that are all clones of the same configuration, that can be used on demand by an application running on a pod.';
@@ -84,6 +89,7 @@ type EditMachinePoolModalProps = {
     data: MachinePool[];
   }>;
   machineTypesResponse: GlobalState['machineTypes'];
+  isHypershift?: boolean;
 };
 
 const EditMachinePoolModal = ({
@@ -95,6 +101,7 @@ const EditMachinePoolModal = ({
   machinePoolsResponse,
   machineTypesResponse,
   shouldDisplayClusterName,
+  isHypershift,
 }: EditMachinePoolModalProps) => {
   const getIsEditValue = React.useCallback(
     () => !!isInitEdit || !!machinePoolId,
@@ -137,6 +144,17 @@ const EditMachinePoolModal = ({
   React.useEffect(() => {
     setIsEdit(getIsEditValue());
   }, [getIsEditValue]);
+
+  // Checks if max nodes amount is reached for add machine pool nodes
+  const isMaxReached =
+    isHypershift &&
+    machinePoolsResponse.data &&
+    getNodeCount(
+      machinePoolsResponse?.data,
+      isHypershift,
+      currentMachinePool?.id,
+      currentMachinePool?.instance_type,
+    ) === MAX_NODES_HCP;
 
   return (
     <Formik<EditMachinePoolValues>
@@ -191,22 +209,44 @@ const EditMachinePoolModal = ({
                   />
                 </StackItem>
               )}
+
               <StackItem>
-                <Button
-                  isDisabled={
-                    !isValid ||
-                    isSubmitting ||
-                    !machinePoolsResponse.fulfilled ||
-                    !machineTypesResponse.fulfilled ||
-                    isEqual(initialValues, values)
-                  }
-                  onClick={submitForm}
-                  isLoading={isSubmitting}
-                  className="pf-v5-u-mr-md"
-                  data-testid="submit-btn"
-                >
-                  {isEdit ? 'Save' : 'Add machine pool'}
-                </Button>
+                {isMaxReached ? (
+                  <Tooltip content="Maximum cluster node count limit reached">
+                    <Button
+                      isAriaDisabled={isMaxReached || !isValid}
+                      isDisabled={
+                        isSubmitting ||
+                        !machinePoolsResponse.fulfilled ||
+                        !machineTypesResponse.fulfilled ||
+                        isEqual(initialValues, values)
+                      }
+                      onClick={submitForm}
+                      isLoading={isSubmitting}
+                      className="pf-v5-u-mr-md"
+                      data-testid="submit-btn"
+                    >
+                      {isEdit ? 'Save' : 'Add machine pool'}
+                    </Button>
+                  </Tooltip>
+                ) : (
+                  <Button
+                    isAriaDisabled={isMaxReached}
+                    isDisabled={
+                      !isValid ||
+                      isSubmitting ||
+                      !machinePoolsResponse.fulfilled ||
+                      !machineTypesResponse.fulfilled ||
+                      isEqual(initialValues, values)
+                    }
+                    onClick={submitForm}
+                    isLoading={isSubmitting}
+                    className="pf-v5-u-mr-md"
+                    data-testid="submit-btn"
+                  >
+                    {isEdit ? 'Save' : 'Add machine pool'}
+                  </Button>
+                )}
                 <Button
                   variant="secondary"
                   isDisabled={isSubmitting}
@@ -294,6 +334,7 @@ export const ConnectedEditMachinePoolModal = ({
 
   return cluster ? (
     <EditMachinePoolModal
+      isHypershift={isHypershift}
       shouldDisplayClusterName={shouldDisplayClusterName}
       cluster={cluster}
       onClose={onModalClose}

@@ -1,10 +1,12 @@
 import * as React from 'react';
 import { Formik } from 'formik';
 
-import { render, screen } from '~/testUtils';
 import { billingModels } from '~/common/subscriptionTypes';
-import { GcpByocFields } from './GcpByocFields';
+import { render, screen } from '~/testUtils';
+
 import { FieldId, initialValues } from '../../constants';
+
+import { GcpByocFields } from './GcpByocFields';
 
 describe('<GcpByocFields />', () => {
   it('should not show the Google terms prerequisite if the billing model is not marketplace-gcp', async () => {

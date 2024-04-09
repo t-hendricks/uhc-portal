@@ -1,17 +1,20 @@
 import { produce } from 'immer';
-import { PromiseActionType, PromiseReducerState } from '~/redux/types';
-import { ClusterLog } from '~/types/service_logs.v1';
+
 import { ViewOptionsAction } from '~/redux/actions/viewOptionsActions';
 import { viewPaginationConstants } from '~/redux/constants';
+import { PromiseActionType, PromiseReducerState } from '~/redux/types';
+import { ClusterLog } from '~/types/service_logs.v1';
+
 import { getErrorState } from '../../../../../common/errors';
 import {
+  baseRequestState,
   FULFILLED_ACTION,
   PENDING_ACTION,
   REJECTED_ACTION,
-  baseRequestState,
 } from '../../../../../redux/reduxHelpers';
-import { GET_CLUSTER_LOGS, RESET_CLUSTER_HISTORY } from './clusterLogConstants';
+
 import { ClusterLogAction } from './clusterLogActions';
+import { GET_CLUSTER_LOGS, RESET_CLUSTER_HISTORY } from './clusterLogConstants';
 
 export type State = {
   requestState: PromiseReducerState<{}>;

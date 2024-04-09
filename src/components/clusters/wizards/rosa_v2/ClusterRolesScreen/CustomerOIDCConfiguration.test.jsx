@@ -1,7 +1,9 @@
 import React from 'react';
+import { Formik } from 'formik';
 
-import { waitFor, render, screen } from '~/testUtils';
-import wizardConnector from '~/components/clusters/wizards/common/WizardConnector';
+import { render, screen, waitFor } from '~/testUtils';
+
+import { initialValues } from '../constants';
 
 import CustomerOIDCConfiguration from './CustomerOIDCConfiguration';
 
@@ -17,6 +19,18 @@ const defaultProps = {
   meta: { error: undefined, touched: false },
 };
 
+const buildTestComponent = (children, formValues = {}) => (
+  <Formik
+    initialValues={{
+      ...initialValues,
+      ...formValues,
+    }}
+    onSubmit={() => {}}
+  >
+    {children}
+  </Formik>
+);
+
 describe('<CustomerOIDCConfiguration />', () => {
   jest.useFakeTimers({
     legacyFakeTimers: true, // TODO 'modern'
@@ -31,8 +45,7 @@ describe('<CustomerOIDCConfiguration />', () => {
 
   describe('Show spinner when refreshing/loading OIDC configurations', () => {
     it('shows spinner initially', async () => {
-      const ConnectedCustomerOIDCConfiguration = wizardConnector(CustomerOIDCConfiguration);
-      render(<ConnectedCustomerOIDCConfiguration {...defaultProps} />);
+      render(buildTestComponent(<CustomerOIDCConfiguration {...defaultProps} />));
 
       expect(screen.getByRole('button', { name: 'Loading... Refresh' })).toBeDisabled();
       expect(screen.getByRole('progressbar')).toBeInTheDocument();
@@ -46,8 +59,7 @@ describe('<CustomerOIDCConfiguration />', () => {
     });
 
     it('hides spinner after OIDC refresh is done', async () => {
-      const ConnectedCustomerOIDCConfiguration = wizardConnector(CustomerOIDCConfiguration);
-      render(<ConnectedCustomerOIDCConfiguration {...defaultProps} />);
+      render(buildTestComponent(<CustomerOIDCConfiguration {...defaultProps} />));
       await waitFor(() => {
         expect(screen.getByRole('button', { name: /Refresh/ })).toHaveAttribute(
           'aria-disabled',
@@ -61,8 +73,7 @@ describe('<CustomerOIDCConfiguration />', () => {
 
   describe('OIDC config select ', () => {
     it('shows with no options in dropdown', async () => {
-      const ConnectedCustomerOIDCConfiguration = wizardConnector(CustomerOIDCConfiguration);
-      render(<ConnectedCustomerOIDCConfiguration {...defaultProps} />);
+      render(buildTestComponent(<CustomerOIDCConfiguration {...defaultProps} />));
 
       // Check while data is still loading
       expect(await screen.findByText(/No OIDC configurations found/i)).toBeInTheDocument();
@@ -76,8 +87,7 @@ describe('<CustomerOIDCConfiguration />', () => {
     });
 
     it('shows search in select oidc config id dropdown', async () => {
-      const ConnectedCustomerOIDCConfiguration = wizardConnector(CustomerOIDCConfiguration);
-      const { user } = render(<ConnectedCustomerOIDCConfiguration {...defaultProps} />);
+      const { user } = render(buildTestComponent(<CustomerOIDCConfiguration {...defaultProps} />));
       await waitFor(() => {
         expect(screen.getByRole('button', { name: /Refresh/ })).toHaveAttribute(
           'aria-disabled',

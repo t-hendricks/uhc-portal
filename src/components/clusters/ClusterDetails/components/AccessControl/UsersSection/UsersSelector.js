@@ -1,7 +1,7 @@
 import get from 'lodash/get';
 
-import clusterStates from '../../../../common/clusterStates';
 import { normalizedProducts } from '../../../../../../common/subscriptionTypes';
+import clusterStates from '../../../../common/clusterStates';
 
 const canAllowAdminSelector = (state) => {
   const product = get(

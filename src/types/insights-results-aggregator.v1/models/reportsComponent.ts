@@ -1,10 +1,10 @@
+/* generated using openapi-typescript-codegen -- do not edit */
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-
 export type reportsComponent = {
   component?: string;
-  details?: any;
+  details?: Record<string, any>;
   info_id?: string;
   key?: string;
   links?: Record<string, Array<string>>;

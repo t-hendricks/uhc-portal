@@ -1,3 +1,9 @@
+import React from 'react';
+import isEmpty from 'lodash/isEmpty';
+import size from 'lodash/size';
+import { useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom-v5-compat';
+
 import {
   Card,
   CardBody,
@@ -10,12 +16,7 @@ import {
   Title,
 } from '@patternfly/react-core';
 import SearchIcon from '@patternfly/react-icons/dist/esm/icons/search-icon';
-import isEmpty from 'lodash/isEmpty';
-import size from 'lodash/size';
-import React from 'react';
-import { useHistory } from 'react-router-dom';
 
-import { useDispatch } from 'react-redux';
 import { viewActions } from '~/redux/actions/viewOptionsActions';
 import { useGlobalState } from '~/redux/hooks';
 import { ViewSorting } from '~/types/types';
@@ -30,16 +31,17 @@ import { viewConstants } from '../../../../../redux/constants';
 import ErrorBox from '../../../../common/ErrorBox';
 import LiveDateFormat from '../../../../common/LiveDateFormat/LiveDateFormat';
 import ViewPaginationRow from '../../../common/ViewPaginationRow/viewPaginationRow';
-import LogTable from './LogTable';
-import { clusterLogActions } from './clusterLogActions';
-import { LOG_TYPES, SEVERITY_TYPES } from './clusterLogConstants';
-import ClusterLogsToolbar from './toolbar';
+
 import {
   dateFormat,
   dateParse,
   getTimestampFrom,
   onDateChangeFromFilter,
 } from './toolbar/ClusterLogsDatePicker';
+import { clusterLogActions } from './clusterLogActions';
+import { LOG_TYPES, SEVERITY_TYPES } from './clusterLogConstants';
+import LogTable from './LogTable';
+import ClusterLogsToolbar from './toolbar';
 
 type ClusterLogsProps = {
   refreshEvent: {
@@ -59,7 +61,7 @@ const ClusterLogs = ({
   refreshEvent,
   isVisible,
 }: ClusterLogsProps) => {
-  const history = useHistory();
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const viewType = viewConstants.CLUSTER_LOGS_VIEW;
 
@@ -155,16 +157,18 @@ const ClusterLogs = ({
       } = Object.entries(viewOptions.filter)
         .filter((e) => ['description', 'loggedBy'].includes(e[0]) && e[1])
         .reduce((acc, curr) => ({ ...acc, [`${curr[0]}`]: [curr[1]] }), {});
-
-      history.push({
-        ...history.location,
-        search: buildFilterURLParams({
-          ...filters,
-          ...(viewOptions.flags.conditionalFilterFlags || {}),
-        }),
-      });
+      navigate(
+        {
+          hash: '#clusterHistory',
+          search: buildFilterURLParams({
+            ...filters,
+            ...(viewOptions.flags.conditionalFilterFlags || {}),
+          }),
+        },
+        { replace: true },
+      );
     }
-  }, [isVisible, viewOptions.flags.conditionalFilterFlags, viewOptions.filter, history]);
+  }, [isVisible, viewOptions.flags.conditionalFilterFlags, viewOptions.filter, navigate]);
 
   return (
     <Card className="ocm-c-overview-cluster-history__card">
@@ -200,7 +204,6 @@ const ClusterLogs = ({
         )}
         <ClusterLogsToolbar
           view={viewType}
-          history={history}
           externalClusterID={externalClusterID}
           isPendingNoData={isPendingNoData}
           clusterID={clusterID}

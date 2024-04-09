@@ -1,7 +1,7 @@
+/* generated using openapi-typescript-codegen -- do not edit */
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-
 import type { GithubIdentityProvider } from './GithubIdentityProvider';
 import type { GitlabIdentityProvider } from './GitlabIdentityProvider';
 import type { GoogleIdentityProvider } from './GoogleIdentityProvider';
@@ -10,7 +10,6 @@ import type { IdentityProviderMappingMethod } from './IdentityProviderMappingMet
 import type { IdentityProviderType } from './IdentityProviderType';
 import type { LDAPIdentityProvider } from './LDAPIdentityProvider';
 import type { OpenIDIdentityProvider } from './OpenIDIdentityProvider';
-
 /**
  * Representation of an identity provider.
  */

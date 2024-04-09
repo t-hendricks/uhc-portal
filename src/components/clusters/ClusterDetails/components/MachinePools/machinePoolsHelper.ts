@@ -3,6 +3,7 @@ import { normalizedProducts } from '~/common/subscriptionTypes';
 import { isHypershiftCluster } from '~/components/clusters/common/clusterStates';
 import { GlobalState } from '~/redux/store';
 import { Cluster, MachinePool, NodePool } from '~/types/clusters_mgmt.v1';
+
 import { asArray } from '../../../../../common/helpers';
 import { isMultiAZ } from '../../clusterDetailsHelper';
 
@@ -39,10 +40,10 @@ const isDeleteDisabled = (
  * @param {boolean} isMultiAz True if multi-zone
  * @returns number | undefined
  */
-const getMinNodesRequired = (
-  isDefaultMachinePool: boolean,
-  isByoc: boolean,
-  isMultiAz: boolean,
+const getMinNodesRequiredNonHypershift = (
+  isDefaultMachinePool?: boolean,
+  isByoc?: boolean,
+  isMultiAz?: boolean,
 ) => {
   if (isDefaultMachinePool) {
     // Default machine pool
@@ -55,6 +56,44 @@ const getMinNodesRequired = (
   // Custom machine pool
   return 0;
 };
+
+/**
+ * Minimum is 2, and if more than 1 node pool, then minimum is num of pools
+ * @param {number | undefined=} numMachinePools
+ * @returns number
+ */
+const getMinNodesRequiredHypershift = (numMachinePools?: number) => {
+  if (numMachinePools === undefined) {
+    // day 2 operation (Add/Edit)
+    return 1;
+  }
+  if (numMachinePools === 1) {
+    return 2;
+  }
+  return numMachinePools || 0;
+};
+
+/**
+ * getMinNodesRequired hypershift agnostic
+ *
+ * @param isHypershiftCluster
+ *
+ * @param hypershiftProps
+ * @param nonHypershiftProps
+ * @returns
+ */
+const getMinNodesRequired = (
+  isHypershiftCluster: boolean,
+  hypershiftProps?: { numMachinePools?: number },
+  nonHypershiftProps?: { isDefaultMachinePool: boolean; isByoc: boolean; isMultiAz: boolean },
+) =>
+  isHypershiftCluster
+    ? getMinNodesRequiredHypershift(hypershiftProps?.numMachinePools)
+    : getMinNodesRequiredNonHypershift(
+        nonHypershiftProps?.isDefaultMachinePool,
+        nonHypershiftProps?.isByoc,
+        nonHypershiftProps?.isMultiAz,
+      );
 
 const isEnforcedDefaultMachinePool = (
   currentMachinePoolId: string | undefined,
@@ -70,7 +109,11 @@ const isEnforcedDefaultMachinePool = (
     return currentMachinePoolId === NON_CCS_DEFAULT_POOL;
   }
   const minimalMachineType = machineTypes.types?.aws?.find((mt) => mt.id === 'm5.xlarge');
-  const minReplicas = getMinNodesRequired(true, cluster?.ccs?.enabled, isMultiAZ(cluster));
+  const minReplicas = getMinNodesRequiredNonHypershift(
+    true,
+    cluster?.ccs?.enabled,
+    isMultiAZ(cluster),
+  );
 
   const providerMachineTypes =
     cluster.cloud_provider?.id === 'aws' ? machineTypes.types?.aws : machineTypes.types?.gcp;
@@ -244,7 +287,7 @@ const getClusterMinNodes = ({
     !!machinePool &&
     isEnforcedDefaultMachinePool(machinePool.id, machinePools, machineTypesResponse, cluster);
 
-  return getMinNodesRequired(isEnforcedDefaultMP, !!cluster?.ccs?.enabled, isMultiAz);
+  return getMinNodesRequiredNonHypershift(isEnforcedDefaultMP, !!cluster?.ccs?.enabled, isMultiAz);
 };
 
 /**
@@ -254,22 +297,6 @@ const getClusterMinNodes = ({
  * @returns number
  */
 const getNodeIncrement = (isMultiAz: boolean) => (isMultiAz ? 3 : 1);
-
-/**
- * Minimum is 2, and if more than 1 node pool, then minimum is num of pools
- * @param {number | undefined=} numMachinePools
- * @returns number
- */
-const getMinNodesRequiredHypershift = (numMachinePools?: number) => {
-  if (numMachinePools === undefined) {
-    // day 2 operation (Add/Edit)
-    return 1;
-  }
-  if (numMachinePools === 1) {
-    return 2;
-  }
-  return numMachinePools || 0;
-};
 
 /**
  * Node increment for Hypershift machine pools
@@ -307,7 +334,6 @@ export {
   hasSubnets,
   getMinNodesRequired,
   getNodeIncrement,
-  getMinNodesRequiredHypershift,
   getNodeIncrementHypershift,
   hasExplicitAutoscalingMachinePool,
   hasDefaultOrExplicitAutoscalingMachinePool,

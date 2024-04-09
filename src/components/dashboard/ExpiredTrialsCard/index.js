@@ -1,8 +1,10 @@
 import { connect } from 'react-redux';
-import ExpiredTrialsCard from './ExpiredTrialsCard';
+
 import { getSubscriptions } from '../../../redux/actions/subscriptionsActions';
 import { viewConstants } from '../../../redux/constants';
 import { openModal } from '../../common/Modal/ModalActions';
+
+import ExpiredTrialsCard from './ExpiredTrialsCard';
 
 const mapDispatchToProps = {
   getSubscriptions,

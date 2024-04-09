@@ -1,27 +1,28 @@
-import * as clusterStates from '~/components/clusters/common/clusterStates';
 import * as normalize from '~/common/normalize';
+import * as clusterStates from '~/components/clusters/common/clusterStates';
+
 import { normalizedProducts } from '../../../../../../common/subscriptionTypes';
 import {
   actionResolver,
-  normalizeNodePool,
-  isMinimumCountWithoutTaints,
-  isEnforcedDefaultMachinePool,
-  getSubnetIds,
-  hasSubnets,
-  getMinNodesRequired,
-  getMinNodesRequiredHypershift,
-  getNodeIncrementHypershift,
-  hasExplicitAutoscalingMachinePool,
-  hasDefaultOrExplicitAutoscalingMachinePool,
   canUseSpotInstances,
   getClusterMinNodes,
+  getMinNodesRequired,
+  getNodeIncrementHypershift,
+  getSubnetIds,
+  hasDefaultOrExplicitAutoscalingMachinePool,
+  hasExplicitAutoscalingMachinePool,
+  hasSubnets,
+  isEnforcedDefaultMachinePool,
+  isMinimumCountWithoutTaints,
+  normalizeNodePool,
 } from '../machinePoolsHelper';
+
 import {
+  machinePoolsWithAutoscaling,
+  machinePoolsWithoutAutoscaling,
   machinePoolWithBothSubnetAndSubnets,
   machinePoolWithSubnet,
   machinePoolWithSubnets,
-  machinePoolsWithAutoscaling,
-  machinePoolsWithoutAutoscaling,
 } from './MachinePools.fixtures';
 
 const isHypershiftClusterMock = jest.spyOn(clusterStates, 'isHypershiftCluster');
@@ -677,7 +678,9 @@ describe('isEnforcedDefaultMachinePool', () => {
       ['isDefaultMachinePool and isByoc true, isMultiAz false', true, true, false, 2],
       ['all true', true, true, true, 3],
     ])('%p', (title, isDefaultMachinePool, isByoc, isMultiAz, expected) =>
-      expect(getMinNodesRequired(isDefaultMachinePool, isByoc, isMultiAz)).toBe(expected),
+      expect(
+        getMinNodesRequired(false, undefined, { isDefaultMachinePool, isByoc, isMultiAz }),
+      ).toBe(expected),
     );
   });
 
@@ -728,7 +731,7 @@ describe('isEnforcedDefaultMachinePool', () => {
       ['numMachinePools any number', 100, 100],
       ['numMachinePools NaN', NaN, 0],
     ])('%p', (title, numMachinePools, expected) =>
-      expect(getMinNodesRequiredHypershift(numMachinePools)).toBe(expected),
+      expect(getMinNodesRequired(true, { numMachinePools })).toBe(expected),
     );
   });
 

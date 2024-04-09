@@ -1,7 +1,7 @@
 import React from 'react';
-import { useDispatch } from 'react-redux';
 import { FieldInputProps, FieldMetaProps } from 'formik';
 import isEqual from 'lodash/isEqual';
+import { useDispatch } from 'react-redux';
 
 import {
   Alert,
@@ -11,14 +11,14 @@ import {
   FormSelectProps,
 } from '@patternfly/react-core';
 
+import { CloudProviderType } from '~/components/clusters/wizards/common/constants';
+import { getGcpCcsCredentials } from '~/components/clusters/wizards/common/utils/ccsCredentials';
+import { useFormState } from '~/components/clusters/wizards/hooks';
+import { FieldId } from '~/components/clusters/wizards/osd/constants';
+import { FormGroupHelperText } from '~/components/common/FormGroupHelperText';
 import { getGCPCloudProviderVPCs, LIST_VPCS } from '~/redux/actions/ccsInquiriesActions';
 import { useGlobalState } from '~/redux/hooks/useGlobalState';
-import { useFormState } from '~/components/clusters/wizards/hooks';
-import { CloudProviderType } from '~/components/clusters/wizards/common/constants';
-import { FieldId } from '~/components/clusters/wizards/osd/constants';
-import { getGcpCcsCredentials } from '~/components/clusters/wizards/common/utils/ccsCredentials';
 import { CloudVPC } from '~/types/clusters_mgmt.v1';
-import { FormGroupHelperText } from '~/components/common/FormGroupHelperText';
 
 interface GcpVpcNameSelectFieldProps {
   input: FieldInputProps<FormSelectProps>;

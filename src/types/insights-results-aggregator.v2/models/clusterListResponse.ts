@@ -1,9 +1,8 @@
+/* generated using openapi-typescript-codegen -- do not edit */
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-
 import type { clusterList } from './clusterList';
-
 /**
  * Response data type for GET /clusters endpoint
  */

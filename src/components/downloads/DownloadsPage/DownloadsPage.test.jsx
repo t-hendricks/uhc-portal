@@ -1,24 +1,30 @@
 import React from 'react';
 import { MemoryRouter } from 'react-router-dom';
 import { CompatRouter } from 'react-router-dom-v5-compat';
-import { mockRestrictedEnv, render, screen, checkAccessibility } from '~/testUtils';
+
+import accountsService from '~/services/accountsService';
+import { checkAccessibility, mockRestrictedEnv, render, screen, waitFor } from '~/testUtils';
+
+import {
+  architectures,
+  channels,
+  operatingSystems,
+  tools,
+  urls,
+} from '../../../common/installLinks.mjs';
+
 import DownloadsPage, {
   allArchitecturesForTool,
   allOperatingSystemsForTool,
   architecturesForToolOS,
-  initialSelection,
   downloadChoice,
+  initialSelection,
 } from './DownloadsPage';
-import {
-  tools,
-  channels,
-  operatingSystems,
-  architectures,
-  urls,
-} from '../../../common/installLinks.mjs';
 
 const { linux, mac, windows } = operatingSystems;
 const { arm, ppc, s390x, x86 } = architectures;
+
+jest.mock('~/services/accountsService');
 
 // These tests depend on installLinks.mjs data.
 describe('allOperatingSystemsForTool', () => {
@@ -170,12 +176,63 @@ describe('<DownloadsPage>', () => {
     });
   });
 
+  it('Fetches organization data', async () => {
+    render(
+      <MemoryRouter>
+        <CompatRouter>
+          <DownloadsPage {...props} />
+        </CompatRouter>
+      </MemoryRouter>,
+    );
+    await waitFor(() => {
+      expect(accountsService.getCurrentAccount).toHaveBeenCalled();
+    });
+    expect(accountsService.getOrganization).toHaveBeenCalled();
+  });
+
+  it('Hides api token section if using offline tokens is restricted', async () => {
+    accountsService.getOrganization.mockResolvedValue({
+      data: {
+        organization: {
+          capabilities: [
+            {
+              inherited: false,
+              name: 'capability.organization.enable_data_sovereign_regions',
+              value: 'true',
+            },
+            {
+              inherited: false,
+              name: 'capability.account.restrict_new_offline_tokens',
+              value: 'true',
+            },
+            {
+              inherited: false,
+              name: 'capability.cluster.subscribed_ocp',
+              value: 'true',
+            },
+          ],
+        },
+      },
+    });
+    render(
+      <MemoryRouter>
+        <CompatRouter>
+          <DownloadsPage {...props} />
+        </CompatRouter>
+      </MemoryRouter>,
+    );
+
+    await waitFor(() => {
+      expect(screen.queryByText('OpenShift Cluster Manager API Token')).not.toBeInTheDocument();
+    });
+  });
+
   describe('in restricted env', () => {
     const isRestrictedEnv = mockRestrictedEnv();
     afterEach(() => {
       isRestrictedEnv.mockReturnValue(false);
     });
-    it('renders only OC/ROSA CLI and tokens', () => {
+    it('renders only OC/ROSA CLI and tokens', async () => {
       const props = {
         location: { hash: '' },
         token: { auths: { foo: 'bar' } },
@@ -202,7 +259,7 @@ describe('<DownloadsPage>', () => {
           </CompatRouter>
         </MemoryRouter>,
       );
-      expect(screen.getAllByTestId(/downloads-section-.*/)).toHaveLength(2);
+      expect(await screen.findAllByTestId(/downloads-section-.*/)).toHaveLength(2);
 
       expect(screen.getByTestId('downloads-section-CLI')).toBeInTheDocument();
       expect(screen.getByTestId('downloads-section-TOKENS')).toBeInTheDocument();

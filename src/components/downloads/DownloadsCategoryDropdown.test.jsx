@@ -1,8 +1,9 @@
 import React from 'react';
-import { screen, render, checkAccessibility } from '~/testUtils';
-import { downloadsCategories } from './downloadsStructure';
+
+import { checkAccessibility, render, screen } from '~/testUtils';
 
 import DownloadsCategoryDropdown from './DownloadsCategoryDropdown';
+import { downloadsCategories } from './downloadsStructure';
 
 describe('<DownloadsCategoryDropdown />', () => {
   const setCategory = jest.fn();
@@ -20,6 +21,6 @@ describe('<DownloadsCategoryDropdown />', () => {
   it('has expected number of options', () => {
     render(<DownloadsCategoryDropdown selectedCategory="DEV" setCategory={setCategory} />);
 
-    expect(screen.getAllByRole('option')).toHaveLength(downloadsCategories.length);
+    expect(screen.getAllByRole('option')).toHaveLength(downloadsCategories().length);
   });
 });

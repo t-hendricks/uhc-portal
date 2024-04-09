@@ -1,9 +1,8 @@
+/* generated using openapi-typescript-codegen -- do not edit */
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-
 import type { NodeInfo } from './NodeInfo';
-
 /**
  * Provides information about the nodes in the cluster.
  */

@@ -1,21 +1,18 @@
 import React from 'react';
-import { shallow } from 'enzyme';
-// TODO: Remove this import when PF team fixes the issue causing tests to break without it
-import { Button } from '@patternfly/react-core';
 import { CompatRouter } from 'react-router-dom-v5-compat';
-import { render, checkAccessibility, TestRouter, screen, mockUseFeatureGate } from '~/testUtils';
-import { GCP_SECURE_BOOT_ENHANCEMENTS } from '~/redux/constants/featureConstants';
-import ClusterDetailsTop from '../components/ClusterDetailsTop';
-import fixtures, { funcs } from './ClusterDetails.fixtures';
+
+import { checkAccessibility, render, screen, TestRouter, waitFor, within } from '~/testUtils';
+
 import clusterStates from '../../common/clusterStates';
-import ButtonWithTooltip from '../../../common/ButtonWithTooltip';
+import ClusterDetailsTop from '../components/ClusterDetailsTop';
+
+import fixtures, { funcs } from './ClusterDetails.fixtures';
 
 describe('<ClusterDetailsTop />', () => {
   afterAll(() => {
     jest.resetAllMocks();
   });
 
-  let wrapper;
   const functions = funcs();
 
   const props = {
@@ -32,12 +29,6 @@ describe('<ClusterDetailsTop />', () => {
     showPreviewLabel: true,
   };
 
-  beforeEach(() => {
-    wrapper = shallow(<ClusterDetailsTop {...props} />);
-  });
-
-  mockUseFeatureGate([[GCP_SECURE_BOOT_ENHANCEMENTS, false]]);
-
   it('is accessible', async () => {
     const { container } = render(
       <TestRouter>
@@ -51,57 +42,109 @@ describe('<ClusterDetailsTop />', () => {
     await checkAccessibility(container);
   });
 
-  it('should show refresh button', () => {
-    expect(wrapper.find('RefreshBtn').length).toEqual(1);
+  it('should show refresh button', async () => {
+    render(
+      <TestRouter>
+        <CompatRouter>
+          <ClusterDetailsTop {...props} />
+        </CompatRouter>
+      </TestRouter>,
+    );
+
+    expect(await screen.findByRole('button', { name: 'Refresh' })).toBeInTheDocument();
   });
 
-  it('should enable open console button when cluster has console url and cluster is not uninstalling', () => {
-    const launchConsoleDisabled = wrapper.find(Button).at(0).props().isDisabled;
-    expect(launchConsoleDisabled).toBeFalsy();
+  it('should enable open console button when cluster has console url and cluster is not uninstalling', async () => {
+    render(
+      <TestRouter>
+        <CompatRouter>
+          <ClusterDetailsTop {...props} />
+        </CompatRouter>
+      </TestRouter>,
+    );
+    expect(await screen.findByRole('button', { name: 'Open console' })).toHaveAttribute(
+      'aria-disabled',
+      'false',
+    );
   });
 
-  it('should disable open console button when console url is missing', () => {
+  it('should disable open console button when console url is missing', async () => {
     const cluster = { ...fixtures.clusterDetails.cluster, console: { url: '' } };
-    wrapper.setProps({ cluster }, () => {
-      const launchConsoleDisabled = wrapper.find(Button).at(0).props().isDisabled;
-      expect(launchConsoleDisabled).toEqual(true);
-    });
+
+    const newProps = { ...props, cluster };
+
+    render(
+      <TestRouter>
+        <CompatRouter>
+          <ClusterDetailsTop {...newProps} />
+        </CompatRouter>
+      </TestRouter>,
+    );
+    expect(await screen.findByRole('button', { name: 'Open console' })).toHaveAttribute(
+      'aria-disabled',
+      'true',
+    );
   });
 
-  it('should disable open console button when cluster is unistalling', () => {
+  it('should disable open console button when cluster is unistalling', async () => {
     const cluster = { ...fixtures.clusterDetails.cluster, state: clusterStates.UNINSTALLING };
-    wrapper.setProps({ cluster }, () => {
-      const launchConsoleDisabled = wrapper.find(Button).at(0).props().isDisabled;
-      expect(launchConsoleDisabled).toEqual(true);
-    });
+    const newProps = { ...props, cluster };
+
+    render(
+      <TestRouter>
+        <CompatRouter>
+          <ClusterDetailsTop {...newProps} />
+        </CompatRouter>
+      </TestRouter>,
+    );
+    expect(await screen.findByRole('button', { name: 'Open console' })).toHaveAttribute(
+      'aria-disabled',
+      'true',
+    );
   });
 
-  it('should show error triangle if an error occured', () => {
-    wrapper.setProps({ error: true }, () => {
-      expect(wrapper.find('ErrorTriangle').length).toEqual(1);
-    });
+  it('should show error icon if an error occurred', async () => {
+    const newProps = { ...props, error: true, errorMessage: 'I am an error message' };
+
+    render(
+      <TestRouter>
+        <CompatRouter>
+          <ClusterDetailsTop {...newProps} />
+        </CompatRouter>
+      </TestRouter>,
+    );
+
+    expect(await screen.findByLabelText('Warning')).toBeInTheDocument();
   });
 
-  it('should show only Unarchive button if the cluster is archived', () => {
+  it('should show only Unarchive button if the cluster is archived', async () => {
     const cluster = {
       ...fixtures.clusterDetails.cluster,
       subscription: { status: 'Archived', id: 'fake' },
     };
-    wrapper.setProps({ cluster }, () => {
-      const unarchiveButton = wrapper.find(ButtonWithTooltip).at(0);
-      expect(unarchiveButton.props().variant).toEqual('secondary');
-      expect(unarchiveButton.props().children).toEqual('Unarchive');
-      expect(wrapper.find('ClusterActionsDropdown').length).toEqual(0); // no cluster actions dropdown
-      expect(wrapper.find('RefreshBtn').length).toEqual(0); // no refresh button
-      unarchiveButton.simulate('click');
-      expect(functions.openModal).toBeCalledWith('unarchive-cluster', {
-        subscriptionID: 'fake',
-        name: cluster.name,
-      });
-    });
+
+    const newProps = { ...props, cluster };
+
+    const { user } = render(
+      <TestRouter>
+        <CompatRouter>
+          <ClusterDetailsTop {...newProps} />
+        </CompatRouter>
+      </TestRouter>,
+    );
+
+    const unArchiveButton = await screen.findByRole('button', { name: 'Unarchive' });
+
+    expect(unArchiveButton).toBeInTheDocument();
+    expect(unArchiveButton).toHaveClass('pf-m-secondary');
+    expect(screen.queryByRole('button', { name: 'Refresh' })).not.toBeInTheDocument();
+    expect(screen.queryByRole('tooltip')).not.toBeInTheDocument();
+    await user.click(unArchiveButton);
+
+    expect(await screen.findByRole('tooltip')).toBeInTheDocument();
   });
 
-  it('should show expiration alert based on expiration_time', () => {
+  it('should show expiration alert based on expiration_time', async () => {
     const { cluster } = fixtures.OSDTrialClusterDetails;
     const expDate = new Date();
     expDate.setDate(expDate.getDate() - (365 * 2 + 1)); // should have expired 2 years ago
@@ -110,53 +153,135 @@ describe('<ClusterDetailsTop />', () => {
     cluster.subscription.trial_end_date = '';
     cluster.subscription.billing_expiration_date = '';
     cluster.expiration_timestamp = expirationTimestamp;
-    wrapper.setProps({ cluster }, () => {
-      const alert = wrapper.find('ExpirationAlert');
-      expect(alert.length).toEqual(1);
-      expect(alert.props()).toBeTruthy();
-      expect(alert.props().expirationTimestamp).toBe(expirationTimestamp);
-    });
+
+    const newProps = { ...props, cluster };
+
+    render(
+      <TestRouter>
+        <CompatRouter>
+          <ClusterDetailsTop {...newProps} />
+        </CompatRouter>
+      </TestRouter>,
+    );
+
+    expect(await screen.findByRole('alert')).toBeInTheDocument();
+    expect(
+      within(screen.getByRole('alert')).getByText('Warning alert', {
+        exact: false,
+      }),
+    ).toBeInTheDocument();
+    expect(
+      within(screen.getByRole('alert')).getByText('This cluster should have been deleted', {
+        exact: false,
+      }),
+    ).toBeInTheDocument();
   });
 
-  it('should show expiration alert for OSDTrial', () => {
+  it('should show expiration alert for OSDTrial', async () => {
     const { cluster } = fixtures.OSDTrialClusterDetails;
     const expDate = new Date();
     expDate.setDate(expDate.getDate() + 1); // now + 1 day
     cluster.subscription.trial_end_date = expDate.toISOString();
     cluster.subscription.billing_expiration_date = '';
     cluster.expiration_timestamp = '';
-    wrapper.setProps({ cluster }, () => {
-      const alert = wrapper.find('ExpirationAlert');
-      expect(alert.length).toEqual(1);
-    });
+
+    const newProps = { ...props, cluster };
+
+    render(
+      <TestRouter>
+        <CompatRouter>
+          <ClusterDetailsTop {...newProps} />
+        </CompatRouter>
+      </TestRouter>,
+    );
+
+    expect(await screen.findByRole('alert')).toBeInTheDocument();
+    expect(
+      within(screen.getByRole('alert')).getByText('Danger alert', {
+        exact: false,
+      }),
+    ).toBeInTheDocument();
+    expect(
+      within(screen.getByRole('alert')).getByText('This cluster will be deleted in a day', {
+        exact: false,
+      }),
+    ).toBeInTheDocument();
   });
 
-  it('should show expiration alert for OSD RHM', () => {
+  it('should show expiration alert for OSD RHM', async () => {
     const { cluster } = fixtures.OSDRHMClusterDetails;
     const expDate = new Date();
     expDate.setDate(expDate.getDate() + 1); // now + 1 day
     cluster.subscription.trial_end_date = '';
     cluster.subscription.billing_expiration_date = expDate.toISOString();
     cluster.expiration_timestamp = '';
-    wrapper.setProps({ cluster }, () => {
-      const alert = wrapper.find('ExpirationAlert');
-      expect(alert.length).toEqual(1);
-    });
+
+    const newProps = { ...props, cluster };
+
+    render(
+      <TestRouter>
+        <CompatRouter>
+          <ClusterDetailsTop {...newProps} />
+        </CompatRouter>
+      </TestRouter>,
+    );
+
+    expect(await screen.findByRole('alert')).toBeInTheDocument();
+    expect(
+      within(screen.getByRole('alert')).getByText('Danger alert', {
+        exact: false,
+      }),
+    ).toBeInTheDocument();
+    expect(
+      within(screen.getByRole('alert')).getByText('This cluster will be deleted in a day', {
+        exact: false,
+      }),
+    ).toBeInTheDocument();
   });
 
-  it('should show non-editable alert for AI clusters', () => {
+  it('should show non-editable alert for AI clusters', async () => {
     const { cluster } = fixtures.AIClusterDetails;
-    wrapper.setProps({ cluster }, () => {
-      const alert = wrapper.find('ClusterNonEditableAlert');
-      expect(alert.length).toEqual(1);
-    });
+    const newProps = { ...props, cluster };
+
+    render(
+      <TestRouter>
+        <CompatRouter>
+          <ClusterDetailsTop {...newProps} />
+        </CompatRouter>
+      </TestRouter>,
+    );
+
+    expect(await screen.findByRole('alert')).toBeInTheDocument();
+    expect(
+      within(screen.getByRole('alert')).getByText('Info alert', {
+        exact: false,
+      }),
+    ).toBeInTheDocument();
+    expect(
+      within(screen.getByRole('alert')).getByText(
+        'To get permission to edit, contact the Cluster Owner or Organization Admin',
+        {
+          exact: false,
+        },
+      ),
+    ).toBeInTheDocument();
   });
 
-  it('should not show non-editable alert for non-AI clusters', () => {
+  it('should not show non-editable alert for non-AI clusters', async () => {
     const { cluster } = fixtures.clusterDetails;
-    wrapper.setProps({ cluster }, () => {
-      const alert = wrapper.find('ClusterNonEditableAlert');
-      expect(alert.length).toEqual(0);
+
+    const newProps = { ...props, cluster };
+
+    render(
+      <TestRouter>
+        <CompatRouter>
+          <ClusterDetailsTop {...newProps} />
+        </CompatRouter>
+      </TestRouter>,
+    );
+
+    await waitFor(() => {
+      expect(screen.queryByRole('alert')).not.toBeInTheDocument();
     });
   });
 });

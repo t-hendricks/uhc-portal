@@ -1,6 +1,8 @@
+import React from 'react';
+
 import { Icon, List, ListItem, Text } from '@patternfly/react-core';
 import { ExternalLinkAltIcon } from '@patternfly/react-icons/dist/esm/icons/external-link-alt-icon';
-import React from 'react';
+
 import links from '../../../../common/installLinks.mjs';
 
 const AdditionalInstructionsS390x = () => (

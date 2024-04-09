@@ -1,7 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Navigate } from 'react-router-dom-v5-compat';
+
 import { Spinner } from '@redhat-cloud-services/frontend-components/Spinner';
+
 import Unavailable from '../../common/Unavailable';
 
 const ClusterDetailsRedirector = (props) => {

@@ -1,6 +1,8 @@
 import { connect } from 'react-redux';
-import { getMachineTypes } from '~/redux/actions/machineTypesActions';
+
 import { getDefaultFlavour } from '~/redux/actions/flavourActions';
+import { getMachineTypes } from '~/redux/actions/machineTypesActions';
+
 import MachineTypeSelection from './MachineTypeSelection';
 
 const mapStateToProps = (state) => ({

@@ -1,7 +1,9 @@
 import React from 'react';
+
 import { Alert } from '@patternfly/react-core';
-import ExternalLink from '~/components/common/ExternalLink';
+
 import links from '~/common/installLinks.mjs';
+import ExternalLink from '~/components/common/ExternalLink';
 
 const SecurityGroupsEmptyAlert = () => (
   <Alert

@@ -1,19 +1,21 @@
 import React from 'react';
+import { createBrowserHistory } from 'history';
+import { axe, toHaveNoViolations } from 'jest-axe';
 import { Provider } from 'react-redux';
+import { MemoryRouter } from 'react-router-dom';
 import { AnyAction, createStore } from 'redux';
+
+import * as useChromeHook from '@redhat-cloud-services/frontend-components/useChrome';
 import { act, render, RenderOptions } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import '@testing-library/jest-dom';
-import { MemoryRouter } from 'react-router-dom';
-import { toHaveNoViolations, axe } from 'jest-axe';
 
-import useChrome from '@redhat-cloud-services/frontend-components/useChrome';
 import * as featureGates from '~/hooks/useFeatureGate';
-import { createBrowserHistory } from 'history';
 
-import { GlobalState, store as globalStore } from './redux/store';
 import { reduxReducers } from './redux/reducers';
+import { GlobalState, store as globalStore } from './redux/store';
 import * as restrictedEnv from './restrictedEnv';
+
+import '@testing-library/jest-dom';
 
 // Type not exported in the library
 export type UserEventType = ReturnType<typeof userEvent.setup>;
@@ -25,7 +27,7 @@ const reducer = reduxReducers(history);
 
 interface TestState {
   store: typeof globalStore;
-  /** Wrapper can be used as component independently of render(), notably for Enzyme. */
+  /** Wrapper can be used as component independently of render() */
   Wrapper: (props: { children: React.ReactNode }) => React.ReactNode;
   /** Convenience accessor to redux state. */
   getState: () => GlobalState;
@@ -101,13 +103,14 @@ export { withState, renderWithState as render };
 /* ***** Items outside of React Test Library ************ */
 expect.extend(toHaveNoViolations);
 
-export const checkAccessibility = async (container: HTMLElement | string, options?: any) => {
-  const results = await axe(container, options);
-  expect(results).toHaveNoViolations();
-};
+export const checkAccessibility = async (container: HTMLElement | string, options?: any) =>
+  // Needs to be wrapped in "act" to prevent the "not wrapped in act" warnings
+  // See https://www.benmvp.com/blog/avoiding-react-act-warning-when-accessibility-testing-next-link-jest-axe/
+  act(async () => {
+    expect(await axe(container)).toHaveNoViolations();
+  });
 
-const stubbedChrome = {
-  ...global.insights.chrome,
+export const stubbedChrome = {
   on: () => () => {},
   appNavClick: () => {},
   auth: {
@@ -116,14 +119,9 @@ const stubbedChrome = {
     getOfflineToken: () => Promise.resolve({ data: { refresh_token: 'hello' } }),
   },
   getEnvironment: () => 'prod',
-};
-
-export const insightsMock = () => {
-  global.insights = {
-    chrome: {
-      ...stubbedChrome,
-    },
-  };
+  segment: {
+    setPageMetadata: () => {},
+  },
 };
 
 export const mockRestrictedEnv = () => {
@@ -138,9 +136,13 @@ export const mockRefreshToken = () => {
   return mock;
 };
 
-export const mockUseChrome = () => {
-  const useChromeMock = useChrome as jest.Mock;
-  useChromeMock.mockReturnValue(stubbedChrome);
+export const mockUseChrome = (mockImpl?: any) => {
+  const useChromeSpy = jest.spyOn(useChromeHook, 'default');
+  useChromeSpy.mockImplementation(() => ({
+    ...stubbedChrome,
+    ...mockImpl,
+  }));
+  return useChromeSpy;
 };
 
 export const TestRouter = ({ children }: { children: React.ReactNode }) => (

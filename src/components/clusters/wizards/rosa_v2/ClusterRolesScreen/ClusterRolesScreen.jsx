@@ -1,7 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
+import { Field } from 'formik';
 import PropTypes from 'prop-types';
-import { Field } from 'redux-form';
-import { Spinner } from '@redhat-cloud-services/frontend-components/Spinner';
 
 import {
   Alert,
@@ -17,31 +16,39 @@ import {
   ToggleGroup,
   ToggleGroupItem,
 } from '@patternfly/react-core';
+import { Spinner } from '@redhat-cloud-services/frontend-components/Spinner';
 
-import useAnalytics from '~/hooks/useAnalytics';
 import { trackEvents } from '~/common/analytics';
-import ReduxHiddenCheckbox from '~/components/common/ReduxFormComponents/ReduxHiddenCheckbox';
+import { useFormState } from '~/components/clusters/wizards/hooks';
 import {
   getForcedByoOidcReason,
   getOperatorRolesCommand,
 } from '~/components/clusters/wizards/rosa_v2/ClusterRolesScreen/clusterRolesHelper';
-import ExternalLink from '../../../../common/ExternalLink';
-import ErrorBox from '../../../../common/ErrorBox';
-import InstructionCommand from '../../../../common/InstructionCommand';
-import RadioButtons from '../../../../common/ReduxFormComponents/RadioButtons';
-import PopoverHint from '../../../../common/PopoverHint';
+import { FieldId } from '~/components/clusters/wizards/rosa_v2/constants';
+import ReduxHiddenCheckbox from '~/components/common/FormikFormComponents/HiddenCheckbox';
+import useAnalytics from '~/hooks/useAnalytics';
+
+import { secureRandomValueInRange } from '../../../../../common/helpers';
 import links from '../../../../../common/installLinks.mjs';
 import { required } from '../../../../../common/validators';
+import ErrorBox from '../../../../common/ErrorBox';
+import ExternalLink from '../../../../common/ExternalLink';
+import InstructionCommand from '../../../../common/InstructionCommand';
+import PopoverHint from '../../../../common/PopoverHint';
+import RadioButtons from '../../../../common/ReduxFormComponents/RadioButtons';
 import { BackToAssociateAwsAccountLink } from '../common/BackToAssociateAwsAccountLink';
-import CustomOperatorRoleNames from './CustomOperatorRoleNames';
+
 import CustomerOIDCConfiguration from './CustomerOIDCConfiguration';
+import CustomOperatorRoleNames from './CustomOperatorRoleNames';
 
 export const createOperatorRolesHashPrefix = () => {
   // random 4 alphanumeric hash
-  const prefixArray = Math.random().toString(36).substr(2, 4).split('');
+  const prefixArray = Array.from(crypto.getRandomValues(new Uint8Array(4))).map((value) =>
+    (value % 36).toString(36),
+  );
   // cannot start with a number
   const alphabet = 'abcdefghijklmnopqrstuvwxyz';
-  const randomCharacter = alphabet[Math.floor(Math.random() * alphabet.length)];
+  const randomCharacter = alphabet[secureRandomValueInRange(0, 25)];
   prefixArray[0] = randomCharacter;
   return prefixArray.join('');
 };
@@ -51,49 +58,72 @@ const roleModes = {
   AUTO: 'auto',
 };
 
-function ClusterRolesScreen({
-  clusterName,
-  change,
-  awsAccountID,
-  rosaCreationMode,
-  byoOidcConfigID,
-  installerRoleArn,
-  sharedVpcRoleArn,
-  customOperatorRolesPrefix,
+const ClusterRolesScreen = ({
   getOCMRole,
   getOCMRoleResponse,
   clearGetOcmRoleResponse,
   getUserOidcConfigurations,
-  forcedByoOidcType,
-}) {
+}) => {
+  const {
+    setFieldValue,
+    getFieldProps,
+    getFieldMeta,
+    values: {
+      [FieldId.ClusterName]: clusterName,
+      [FieldId.Hypershift]: hypershiftValue,
+      [FieldId.SharedVpc]: sharedVpcSettings,
+      [FieldId.AssociatedAwsId]: awsAccountID,
+      [FieldId.RosaRolesProviderCreationMode]: rosaCreationMode,
+      [FieldId.CustomOperatorRolesPrefix]: customOperatorRolesPrefix,
+      [FieldId.ByoOidcConfigId]: byoOidcConfigID,
+      [FieldId.InstallerRoleArn]: installerRoleArn,
+    },
+  } = useFormState();
+  const sharedVpcRoleArn = sharedVpcSettings?.hosted_zone_role_arn;
+  const isSharedVpcSelected = sharedVpcSettings.is_selected;
+  const isHypershiftSelected = hypershiftValue === 'true';
+  let forcedByoOidcType;
+  if (isHypershiftSelected) {
+    forcedByoOidcType = 'Hypershift';
+  } else if (isSharedVpcSelected) {
+    forcedByoOidcType = 'SharedVPC';
+  }
+
   const [isAutoModeAvailable, setIsAutoModeAvailable] = useState(false);
   const [hasByoOidcConfig, setHasByoOidcConfig] = useState(
     !!(forcedByoOidcType || byoOidcConfigID),
   );
+
   const [getOCMRoleErrorBox, setGetOCMRoleErrorBox] = useState(null);
   const track = useAnalytics();
 
   const toggleByoOidcConfig = (isChecked) => () => {
     if (isChecked) {
-      change(
-        'rosa_roles_provider_creation_mode',
+      setFieldValue(
+        FieldId.RosaRolesProviderCreationMode,
         isAutoModeAvailable ? roleModes.AUTO : roleModes.MANUAL,
       );
     } else {
-      change('byo_oidc_config_id', '');
-      change('byo_oidc_config_id_managed', '');
+      setFieldValue(FieldId.ByoOidcConfigId, '');
+      setFieldValue(FieldId.ByoOidcConfigIdManaged, '');
     }
     setHasByoOidcConfig(isChecked);
   };
 
   const onSelectOIDCConfig = (oidcConfig) => {
-    change('byo_oidc_config_id', oidcConfig ? oidcConfig.id : '');
-    change('byo_oidc_config_id_managed', !oidcConfig || oidcConfig.managed ? 'true' : 'false');
+    setFieldValue(FieldId.ByoOidcConfigId, oidcConfig ? oidcConfig.id : '');
+    setFieldValue(
+      FieldId.ByoOidcConfigIdManaged,
+      !oidcConfig || oidcConfig.managed ? 'true' : 'false',
+    );
   };
 
   useEffect(() => {
     if (!customOperatorRolesPrefix) {
-      change('custom_operator_roles_prefix', `${clusterName}-${createOperatorRolesHashPrefix()}`);
+      setFieldValue(
+        FieldId.CustomOperatorRolesPrefix,
+        `${clusterName}-${createOperatorRolesHashPrefix()}`,
+      );
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [customOperatorRolesPrefix, clusterName]);
@@ -101,14 +131,14 @@ function ClusterRolesScreen({
   useEffect(() => {
     // clearing the ocm_role_response results in ocm role being re-fetched
     // when navigating to this step (from Next or Back)
-    change('detected_ocm_role', false);
+    setFieldValue(FieldId.DetectedOcmRole, false);
     clearGetOcmRoleResponse();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   if (!rosaCreationMode && getOCMRoleResponse.fulfilled) {
-    change(
-      'rosa_roles_provider_creation_mode',
+    setFieldValue(
+      FieldId.RosaRolesProviderCreationMode,
       getOCMRoleResponse.data?.isAdmin ? roleModes.AUTO : roleModes.MANUAL,
     );
   }
@@ -117,8 +147,8 @@ function ClusterRolesScreen({
     if (getOCMRoleResponse.pending) {
       setGetOCMRoleErrorBox(null);
     } else if (getOCMRoleResponse.fulfilled) {
-      change('rosa_creator_arn', getOCMRoleResponse.data?.arn);
-      change('detected_ocm_role', true);
+      setFieldValue(FieldId.RosaCreatorArn, getOCMRoleResponse.data?.arn);
+      setFieldValue(FieldId.DetectedOcmRole, true);
       const isAdmin = getOCMRoleResponse.data?.isAdmin;
       setIsAutoModeAvailable(isAdmin);
       setGetOCMRoleErrorBox(null);
@@ -141,14 +171,14 @@ function ClusterRolesScreen({
 
   const handleRefresh = () => {
     clearGetOcmRoleResponse();
-    change('rosa_roles_provider_creation_mode', undefined);
+    setFieldValue(FieldId.RosaRolesProviderCreationMode, undefined);
     track(trackEvents.OCMRoleRefreshed);
   };
 
   const handleCreationModeChange = (_, value) => {
     // Going to Next step and Back, triggers this onChange with value undefined?!
     if (value) {
-      change('rosa_roles_provider_creation_mode', value);
+      setFieldValue(FieldId.RosaRolesProviderCreationMode, value);
       track(trackEvents.RosaCreationMode, {
         customProperties: {
           value,
@@ -291,22 +321,28 @@ function ClusterRolesScreen({
               <FormGroup isRequired fieldId="role_mode">
                 <Field
                   component={RadioButtons}
-                  name="rosa_roles_provider_creation_mode"
+                  name={FieldId.RosaRolesProviderCreationMode}
                   className="radio-button"
                   disabled={getOCMRoleResponse.pending}
                   options={roleModeOptions}
                   onChange={handleCreationModeChange}
                   disableDefaultValueHandling
+                  input={{
+                    ...getFieldProps(FieldId.RosaRolesProviderCreationMode),
+                    onChange: (value) => {
+                      setFieldValue(FieldId.RosaRolesProviderCreationMode, value, false);
+                    },
+                  }}
+                  meta={getFieldMeta(FieldId.RosaRolesProviderCreationMode)}
                 />
               </FormGroup>
             </GridItem>
           </>
         )}
-
         {hasByoOidcConfig ? (
           <Field
             component={CustomerOIDCConfiguration}
-            name="byo_oidc_config_id"
+            name={FieldId.ByoOidcConfigId}
             label="Config ID"
             awsAccountID={awsAccountID}
             getUserOidcConfigurations={getUserOidcConfigurations}
@@ -321,22 +357,13 @@ function ClusterRolesScreen({
       </Grid>
     </Form>
   );
-}
+};
 
 ClusterRolesScreen.propTypes = {
-  change: PropTypes.func,
-  awsAccountID: PropTypes.string,
-  rosaCreationMode: PropTypes.string,
-  byoOidcConfigID: PropTypes.string,
-  installerRoleArn: PropTypes.string,
-  sharedVpcRoleArn: PropTypes.string,
-  customOperatorRolesPrefix: PropTypes.string,
   getOCMRole: PropTypes.func.isRequired,
   getOCMRoleResponse: PropTypes.func.isRequired,
   getUserOidcConfigurations: PropTypes.func.isRequired,
   clearGetOcmRoleResponse: PropTypes.func.isRequired,
-  clusterName: PropTypes.string,
-  forcedByoOidcType: PropTypes.oneOf(['Hypershift', 'SharedVPC']),
 };
 
 export default ClusterRolesScreen;

@@ -1,18 +1,19 @@
 import React from 'react';
+import get from 'lodash/get';
 import PropTypes from 'prop-types';
+
 import { DataList } from '@patternfly/react-core';
 
-import get from 'lodash/get';
-
-import MonitoringListItem from './MonitoringListItem';
-import AlertsTable from './AlertsTable';
-import NodesTable from './NodesTable';
-import ClusterOperators from './ClusterOperators';
-import ResourceUsage from '../../../../common/ResourceUsage/ResourceUsage';
-import MonitoringEmptyState from './MonitoringEmptyState';
-import { metricsStatusMessages } from '../../../../common/ResourceUsage/ResourceUsage.consts';
-import { hasResourceUsageMetrics } from '../monitoringHelper';
 import { subscriptionStatuses } from '../../../../../../common/subscriptionTypes';
+import { metricsStatusMessages } from '../../../../common/ResourceUsage/constants';
+import ResourceUsage from '../../../../common/ResourceUsage/ResourceUsage';
+import { hasResourceUsageMetrics } from '../monitoringHelper';
+
+import AlertsTable from './AlertsTable';
+import ClusterOperators from './ClusterOperators';
+import MonitoringEmptyState from './MonitoringEmptyState';
+import MonitoringListItem from './MonitoringListItem';
+import NodesTable from './NodesTable';
 
 class MonitoringList extends React.Component {
   state = {

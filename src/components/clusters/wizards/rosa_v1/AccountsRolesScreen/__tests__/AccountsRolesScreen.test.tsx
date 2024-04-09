@@ -1,8 +1,10 @@
 import React from 'react';
-import { withState, checkAccessibility, insightsMock, screen, TestRouter } from '~/testUtils';
 import { CompatRouter } from 'react-router-dom-v5-compat';
+
 import wizardConnector from '~/components/clusters/wizards/common/WizardConnector';
 import { normalizeSTSUsersByAWSAccounts } from '~/redux/actions/rosaActions';
+import { checkAccessibility, mockUseChrome, screen, TestRouter, withState } from '~/testUtils';
+
 import AccountsRolesScreen, {
   AccountsRolesScreenProps,
   isUserRoleForSelectedAWSAccount,
@@ -10,7 +12,7 @@ import AccountsRolesScreen, {
 
 const useAnalyticsMock = jest.fn();
 jest.mock('~/hooks/useAnalytics', () => jest.fn(() => useAnalyticsMock));
-insightsMock();
+mockUseChrome();
 
 const accountRolesScreenProps: AccountsRolesScreenProps = {
   getAWSAccountIDs: () => {},

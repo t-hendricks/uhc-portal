@@ -1,5 +1,7 @@
 import React from 'react';
-import { PageHeader, PageHeaderTitle } from '@redhat-cloud-services/frontend-components/PageHeader';
+import { Link } from 'react-router-dom-v5-compat';
+import semver from 'semver';
+
 import {
   Button,
   Card,
@@ -14,17 +16,18 @@ import {
   StackItem,
 } from '@patternfly/react-core';
 import { OutlinedQuestionCircleIcon } from '@patternfly/react-icons/dist/esm/icons/outlined-question-circle-icon';
-import { Link } from 'react-router-dom-v5-compat';
-import semver from 'semver';
+import { PageHeader, PageHeaderTitle } from '@redhat-cloud-services/frontend-components/PageHeader';
 
 import { isRestrictedEnv } from '~/restrictedEnv';
-import getReleaseNotesLink from './getReleaseNotesLink';
-import ExternalLink from '../common/ExternalLink';
-import ReleaseChannel from './ReleaseChannel';
-import ReleaseChannelName from './ReleaseChannelName';
-import ReleaseChannelDescription from './ReleaseChannelDescription';
-import { useOCPLifeCycleStatusData } from './hooks';
+
 import { AppPage } from '../App/AppPage';
+import ExternalLink from '../common/ExternalLink';
+
+import getReleaseNotesLink from './getReleaseNotesLink';
+import { useOCPLifeCycleStatusData } from './hooks';
+import ReleaseChannel from './ReleaseChannel';
+import ReleaseChannelDescription from './ReleaseChannelDescription';
+import ReleaseChannelName from './ReleaseChannelName';
 
 import './Releases.scss';
 

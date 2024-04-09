@@ -59,6 +59,9 @@ COMMIT_DATE="$(git log --pretty=format:'%ci' -n 1)"
 # sentry
 SENTRY_STAGE_PROJECT="ocm-uhc-portal-stage"
 SENTRY_STAGE_VERSION="$SENTRY_STAGE_PROJECT-$VERSION"
+SENTRY_PROD_PROJECT="ocm-uhc-portal"
+SENTRY_PROD_VERSION="$SENTRY_PROD_PROJECT-$VERSION"
+
 
 function cleanup_secrets() {
   rm --force key ssh
@@ -166,18 +169,18 @@ yarn install
 
 if [ "$1" == "staging" ] || [ "$1" == "beta" ]; then
     echo "running staging push"
-    echo "staging branch is available on https://qaprodauth.console.redhat.com/openshift"
     rm -rf dist
     yarn build --mode=production --env api-env=staging sentry-version="$SENTRY_STAGE_VERSION"
     yarn sentry:sourcemaps
-    yarn sentry:release --auth-token $GLITCHTIP_TOKEN --project="$SENTRY_STAGE_PROJECT" files "$SENTRY_STAGE_VERSION" upload-sourcemaps dist/
     push_build "qa-stable"
+    echo "staging branch is available on https://console.dev.redhat.com/openshift"
+    yarn sentry:release --auth-token $GLITCHTIP_TOKEN --project="$SENTRY_STAGE_PROJECT" files "$SENTRY_STAGE_VERSION" upload-sourcemaps dist/ --url-prefix "/apps"
 
     echo "running staging (qa-beta) push"
-    echo "staging branch is available on https://qaprodauth.console.redhat.com/preview/openshift"
     rm -rf dist
     yarn build --mode=production --env api-env=staging beta="true"
     push_build "qa-beta"
+    echo "staging branch is available on https://console.dev.redhat.com/preview/openshift"
 
     echo "running push to secondary environment - ci-beta (not supported)"
     rm -rf dist
@@ -192,10 +195,13 @@ elif [ "$1" == "candidate" ]; then
     push_build "prod-beta"
 elif [ "$1" == "stable" ]; then
     echo "running stable push"
-    echo "stable branch is available on https://console.redhat.com/openshift"
     rm -rf dist
-    yarn build --mode=production --env api-env=production beta="false"
+    yarn build --mode=production --env api-env=production beta="false" sentry-version="$SENTRY_PROD_VERSION"
+    yarn sentry:sourcemaps
     push_build "prod-stable"
+    echo "stable branch is available on https://console.redhat.com/openshift"
+    yarn sentry:release --auth-token $GLITCHTIP_TOKEN --project="$SENTRY_PROD_PROJECT" files "$SENTRY_PROD_VERSION" upload-sourcemaps dist/ --url-prefix "/apps"
+
 else
     echo "mode (first param) must be one of: staging / candidate / stable"
     exit 1

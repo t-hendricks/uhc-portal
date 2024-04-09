@@ -1,7 +1,10 @@
 import React from 'react';
+
 import { render } from '~/testUtils';
-import withFeatureGate from './with-feature-gate';
+
 import { store } from '../../redux/store';
+
+import withFeatureGate from './with-feature-gate';
 
 jest.mock('../../redux/store', () => {
   const actualStore = jest.requireActual('../../redux/store');

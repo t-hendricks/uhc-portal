@@ -1,19 +1,22 @@
 import React from 'react';
-import { FormGroup } from '@patternfly/react-core';
 import { Field } from 'redux-form';
 
-import { workerNodeVolumeSizeMinGiB } from '~/components/clusters/wizards/rosa/constants';
-import ReduxFormNumberInput from '~/components/common/ReduxFormComponents/ReduxFormNumberInput';
+import { FormGroup } from '@patternfly/react-core';
+
 import { validateWorkerVolumeSize } from '~/common/validators';
+import { workerNodeVolumeSizeMinGiB } from '~/components/clusters/wizards/rosa/constants';
+import FormNumberInput from '~/components/common/FormComponents/FormNumberInput';
 import PopoverHint from '~/components/common/PopoverHint';
 
 import './WorkerNodeVolumeSizeSection.scss';
 
+type WorkerNodeVolumeSizeSectionProps = {
+  maxWorkerVolumeSizeGiB: number;
+};
+
 const WorkerNodeVolumeSizeSection = ({
   maxWorkerVolumeSizeGiB,
-}: {
-  maxWorkerVolumeSizeGiB: number;
-}) => (
+}: WorkerNodeVolumeSizeSectionProps) => (
   <FormGroup
     className="worker-node-volume-size-section"
     label="Root disk size"
@@ -26,7 +29,7 @@ const WorkerNodeVolumeSizeSection = ({
     }
   >
     <Field
-      component={ReduxFormNumberInput}
+      component={FormNumberInput}
       name="worker_volume_size_gib"
       inputName="worker_volume_size_gib"
       inputAriaLabel="Worker root disk size"

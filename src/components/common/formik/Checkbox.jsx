@@ -1,7 +1,8 @@
 import React from 'react';
-import PropTypes from 'prop-types';
-import { Checkbox as PfCheckbox, FormGroup, Split, SplitItem } from '@patternfly/react-core';
 import { useField } from 'formik';
+import PropTypes from 'prop-types';
+
+import { Checkbox as PfCheckbox, FormGroup, Split, SplitItem } from '@patternfly/react-core';
 
 import { FormGroupHelperText } from '~/components/common/FormGroupHelperText';
 

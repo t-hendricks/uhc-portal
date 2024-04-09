@@ -1,9 +1,9 @@
 import React from 'react';
 
-import { render, screen } from '~/testUtils';
-import { CloudVPC } from '~/types/clusters_mgmt.v1';
 import * as vpcHelpers from '~/common/vpcHelpers';
 import { useAWSVPCInquiry } from '~/components/clusters/common/useVPCInquiry';
+import { render, screen } from '~/testUtils';
+import { CloudVPC } from '~/types/clusters_mgmt.v1';
 
 import VPCDropdown from './VPCDropdown';
 
@@ -194,9 +194,9 @@ describe('<VPCDropdown />', () => {
         const selectDropdown = screen.getByRole('button', { name: 'Options menu' });
         await user.click(selectDropdown);
 
-        expect(screen.getByText('lz-p2-318-z6fst-vpc').nextElementSibling).toHaveTextContent(
-          'This VPC does not have all necessary subnets',
-        );
+        expect(
+          screen.getByText('lz-p2-318-z6fst-vpc').parentElement?.nextElementSibling,
+        ).toHaveTextContent('This VPC does not have all necessary subnets');
       });
     });
   });

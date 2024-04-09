@@ -1,19 +1,24 @@
-import './Overview.scss';
 import React, { useCallback } from 'react';
-import { Button, Title, Label, Flex, FlexItem, PageSection } from '@patternfly/react-core';
 import { Link } from 'react-router-dom-v5-compat';
+
+import { Button, Flex, FlexItem, Label, PageSection, Title } from '@patternfly/react-core';
+
+import { trackEvents } from '~/common/analytics';
 import ExternalLink from '~/components/common/ExternalLink';
 import useAnalytics from '~/hooks/useAnalytics';
-import { trackEvents } from '~/common/analytics';
-import { ProductBanner, ProductBannerProps } from '../common/ProductBanner';
+
 import docLinks from '../../common/installLinks.mjs';
+import OpenShiftProductIcon from '../../styles/images/OpenShiftProductIcon.svg';
+import { AppPage } from '../App/AppPage';
 import {
   ListTextLabelLinkCard,
   ListTextLabelLinkCardProps,
 } from '../common/ListTextLabelLinkCard/ListTextLabelLinkCard';
-import OpenShiftProductIcon from '../../styles/images/OpenShiftProductIcon.svg';
+import { ProductBanner, ProductBannerProps } from '../common/ProductBanner';
+
 import { OfferingCard } from './OfferingCard/OfferingCard';
-import { AppPage } from '../App/AppPage';
+
+import './Overview.scss';
 
 const linkTextLabelLinkCardContents: ListTextLabelLinkCardProps = {
   cardClassName: 'pf-v5-u-mb-lg',
@@ -64,6 +69,8 @@ const openshiftBannerContents: ProductBannerProps = {
   dataTestId: 'OverviewHeader',
 };
 
+const PAGE_TITLE = 'Overview | Red Hat OpenShift Cluster Manager';
+
 function OverviewEmptyState() {
   const track = useAnalytics();
   const createClusterURL = '/create';
@@ -85,7 +92,7 @@ function OverviewEmptyState() {
   );
 
   return (
-    <AppPage>
+    <AppPage title={PAGE_TITLE}>
       <ProductBanner
         icon={openshiftBannerContents.icon}
         learnMoreLink={openshiftBannerContents.learnMoreLink}

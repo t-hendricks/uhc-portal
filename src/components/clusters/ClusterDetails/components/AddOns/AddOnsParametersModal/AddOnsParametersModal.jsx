@@ -1,18 +1,21 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Button, Form, FormGroup } from '@patternfly/react-core';
-
 import { Field } from 'redux-form';
+
+import { Button, Form, FormGroup } from '@patternfly/react-core';
 import { LevelUpAltIcon } from '@patternfly/react-icons/dist/esm/icons/level-up-alt-icon';
-import Modal from '../../../../../common/Modal/Modal';
-import { getParameterValue, getParameters, quotaCostOptions } from '../AddOnsHelper';
+
+import { required, requiredTrue, validateNumericInput } from '~/common/validators';
+import { CheckboxDescription } from '~/components/common/CheckboxDescription';
+import ErrorBox from '~/components/common/ErrorBox';
+import Modal from '~/components/common/Modal/Modal';
 import {
   ReduxCheckbox,
   ReduxFormDropdown,
   ReduxVerticalFormGroup,
-} from '../../../../../common/ReduxFormComponents';
-import { required, requiredTrue, validateNumericInput } from '../../../../../../common/validators';
-import ErrorBox from '../../../../../common/ErrorBox';
+} from '~/components/common/ReduxFormComponents';
+
+import { getParameters, getParameterValue, quotaCostOptions } from '../AddOnsHelper';
 
 import '../AddOns.scss';
 
@@ -155,7 +158,7 @@ class AddOnsParametersModal extends Component {
             isDisabled={this.isFieldDisabled(param)}
             validate={AddOnsParametersModal.validationsForParameterField(param)}
           />
-          <div className="ocm-c--reduxcheckbox-description">{this.getHelpText(param)}</div>
+          <CheckboxDescription>{this.getHelpText(param)}</CheckboxDescription>
         </>
       );
     }

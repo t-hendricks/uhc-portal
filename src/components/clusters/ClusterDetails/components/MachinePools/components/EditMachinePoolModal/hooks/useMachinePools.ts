@@ -1,11 +1,12 @@
 import * as React from 'react';
 import { useDispatch } from 'react-redux';
-import { Cluster } from '~/types/clusters_mgmt.v1';
-import { useGlobalState } from '~/redux/hooks';
 
 import { isHypershiftCluster } from '~/components/clusters/common/clusterStates';
 import { useFeatureGate } from '~/hooks/useFeatureGate';
 import { HCP_USE_NODE_UPGRADE_POLICIES } from '~/redux/constants/featureConstants';
+import { useGlobalState } from '~/redux/hooks';
+import { Cluster } from '~/types/clusters_mgmt.v1';
+
 import { getMachineOrNodePools } from '../../../MachinePoolsActions';
 
 const useMachinePools = (cluster?: Cluster) => {

@@ -1,12 +1,15 @@
 import React from 'react';
-import { Title, Text } from '@patternfly/react-core';
+import { useDispatch } from 'react-redux';
+
+import { Text, Title } from '@patternfly/react-core';
 import { ExclamationCircleIcon } from '@patternfly/react-icons/dist/esm/icons/exclamation-circle-icon';
 import { global_danger_color_100 as dangerColor } from '@patternfly/react-tokens/dist/esm/global_danger_color_100';
-import { ErrorState } from '~/types/types';
-import { useDispatch } from 'react-redux';
-import Modal from '~/components/common/Modal/Modal';
+
 import links from '~/common/installLinks.mjs';
 import ExternalLink from '~/components/common/ExternalLink';
+import Modal from '~/components/common/Modal/Modal';
+import { ErrorState } from '~/types/types';
+
 import { formatErrorDetails } from '../../../common/errors';
 import { closeModal } from '../../common/Modal/ModalActions';
 

@@ -4,15 +4,17 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
-import { FormSelect, FormSelectOption, Tooltip } from '@patternfly/react-core';
 
+import { FormSelect, FormSelectOption, Tooltip } from '@patternfly/react-core';
 import { Spinner } from '@redhat-cloud-services/frontend-components/Spinner';
-import ErrorBox from '../../../common/ErrorBox';
-import { humanizeValueWithUnitGiB } from '../../../../common/units';
-import { availableQuota } from '../quotaSelectors';
-import { filterPersistentStorageValuesByQuota } from './PersistentStorageDropDownHelper';
+
 import { noQuotaTooltip } from '../../../../common/helpers';
+import { humanizeValueWithUnitGiB } from '../../../../common/units';
+import ErrorBox from '../../../common/ErrorBox';
 import { QuotaTypes } from '../quotaModel';
+import { availableQuota } from '../quotaSelectors';
+
+import { filterPersistentStorageValuesByQuota } from './PersistentStorageDropDownHelper';
 
 class PersistentStorageDropdown extends React.Component {
   componentDidMount() {

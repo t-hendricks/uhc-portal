@@ -1,39 +1,35 @@
 import { FormikValues } from 'formik';
 
+import { getDefaultSecurityGroupsSettings } from '~/common/securityGroupsHelpers';
 import { billingModels, normalizedProducts } from '~/common/subscriptionTypes';
+import { getDefaultClusterAutoScaling } from '~/components/clusters/common/clusterAutoScalingValues';
 import {
   HOST_PREFIX_DEFAULT,
   MACHINE_CIDR_DEFAULT,
   SERVICE_CIDR_DEFAULT,
 } from '~/components/clusters/common/networkingConstants';
 import {
-  FieldId as CommonFieldId,
   CloudProviderType,
-  UpgradePolicyType,
+  emptyAWSSubnet,
+  FieldId as CommonFieldId,
   IMDSType,
+  UpgradePolicyType,
 } from '~/components/clusters/wizards/common/constants';
 import { BreadcrumbPath } from '~/components/common/Breadcrumbs';
-import { emptyAWSSubnet } from '~/components/clusters/wizards/common/createOSDInitialValues';
-import { getDefaultSecurityGroupsSettings } from '~/common/securityGroupsHelpers';
-import { getDefaultClusterAutoScaling } from '~/components/clusters/common/clusterAutoScalingValues';
+
 import { ApplicationIngressType, ClusterPrivacyType } from './Networking/constants';
 
 export enum OsdFieldId {
   // TODO: many fields here should move to common/constants.
-  CustomerManagedKey = 'customer_managed_key',
-  CustomerOperatorRolesPrefix = 'custom_operator_roles_prefix',
   PersistentStorage = 'persistent_storage',
   LoadBalancers = 'load_balancers',
   SecureBoot = 'secure_boot',
-  EnableUserWorkloadMonitoring = 'enable_user_workload_monitoring',
-  EtcdEncryption = 'etcd_encryption',
   ClusterPrivacy = 'cluster_privacy',
   InstallToSharedVpc = 'install_to_shared_vpc',
   SharedHostProjectID = 'shared_host_project_id',
   KeyLocation = 'key_location',
   KeyRing = 'key_ring',
   KeyName = 'key_name',
-  KmsKeyArn = 'kms_key_arn',
   KmsServiceAccount = 'kms_service_account',
   DisableScpChecks = 'disable_scp_checks',
   NetworkMachineCidr = 'network_machine_cidr',

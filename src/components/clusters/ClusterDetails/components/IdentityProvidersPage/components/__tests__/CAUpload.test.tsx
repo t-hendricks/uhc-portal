@@ -1,12 +1,14 @@
 /* eslint-disable testing-library/prefer-user-event */
 /* eslint-disable testing-library/no-wait-for-side-effects */
 import React from 'react';
-import { WrappedFieldInputProps, reduxForm } from 'redux-form';
-import { render, screen, fireEvent, waitFor } from '~/testUtils';
 import fs from 'fs';
 import path from 'path';
-import CAUpload, { CAUploadProps } from '../CAUpload';
+import { reduxForm, WrappedFieldInputProps } from 'redux-form';
+
+import { fireEvent, render, screen, waitFor } from '~/testUtils';
+
 import { IDPFormDataType } from '../../model/IDPFormDataType';
+import CAUpload, { CAUploadProps } from '../CAUpload';
 
 describe('<CAUpload />', () => {
   const ConnectedCAUpload = reduxForm<IDPFormDataType, CAUploadProps, string>({

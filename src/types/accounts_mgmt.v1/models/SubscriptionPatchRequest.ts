@@ -1,7 +1,7 @@
+/* generated using openapi-typescript-codegen -- do not edit */
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-
 export type SubscriptionPatchRequest = {
   billing_expiration_date?: string;
   cloud_account_id?: string;
@@ -29,7 +29,6 @@ export type SubscriptionPatchRequest = {
   trial_end_date?: string;
   usage?: SubscriptionPatchRequest.usage;
 };
-
 export namespace SubscriptionPatchRequest {
   export enum cluster_billing_model {
     STANDARD = 'standard',
@@ -39,31 +38,27 @@ export namespace SubscriptionPatchRequest {
     MARKETPLACE_RHM = 'marketplace-rhm',
     MARKETPLACE_GCP = 'marketplace-gcp',
   }
-
   export enum product_bundle {
     OPENSHIFT = 'Openshift',
     JBOSS_MIDDLEWARE = 'JBoss-Middleware',
     IBM_CLOUD_PAK = 'IBM-CloudPak',
   }
-
   export enum service_level {
     L1_L3 = 'L1-L3',
     L3_ONLY = 'L3-only',
   }
-
   export enum support_level {
     EVAL = 'Eval',
     STANDARD = 'Standard',
     PREMIUM = 'Premium',
     SELF_SUPPORT = 'Self-Support',
     NONE = 'None',
+    SUPPORTED_BY_IBM = 'SupportedByIBM',
   }
-
   export enum system_units {
     CORES_V_CPU = 'Cores/vCPU',
     SOCKETS = 'Sockets',
   }
-
   export enum usage {
     PRODUCTION = 'Production',
     DEVELOPMENT_TEST = 'Development/Test',

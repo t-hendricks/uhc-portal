@@ -1,15 +1,21 @@
 import React from 'react';
-import { Alert, Title, List, ListItem, ListComponent, OrderType } from '@patternfly/react-core';
-import TokenBox from '~/components/CLILoginPage/TokenBox';
-import { trackEvents } from '~/common/analytics';
-import { loadOfflineToken } from '~/components/CLILoginPage/TokenUtils';
-import InstructionCommand from '~/components/common/InstructionCommand';
-import ExternalLink from '~/components/common/ExternalLink';
-import links from '~/common/installLinks.mjs';
-import { RosaCliCommand } from '~/components/clusters/wizards/rosa_v2/AccountsRolesScreen/constants/cliCommands';
-import { isRestrictedEnv, getRefreshToken } from '~/restrictedEnv';
+
+import { Alert, List, ListComponent, ListItem, OrderType, Title } from '@patternfly/react-core';
 import useChrome from '@redhat-cloud-services/frontend-components/useChrome';
-import type { ChromeAPI } from '@redhat-cloud-services/types';
+
+import { trackEvents } from '~/common/analytics';
+import links from '~/common/installLinks.mjs';
+import { defaultToOfflineTokens, hasRestrictTokensCapability } from '~/common/restrictTokensHelper';
+import { loadOfflineToken } from '~/components/CLILoginPage/TokenUtils';
+import useOrganization from '~/components/CLILoginPage/useOrganization';
+import { RosaCliCommand } from '~/components/clusters/wizards/rosa_v2/AccountsRolesScreen/constants/cliCommands';
+import ExternalLink from '~/components/common/ExternalLink';
+import InstructionCommand from '~/components/common/InstructionCommand';
+import { getRefreshToken, isRestrictedEnv } from '~/restrictedEnv';
+import { Error } from '~/types/accounts_mgmt.v1';
+import type { Chrome } from '~/types/types';
+
+import ROSALoginCommand from './ROSALoginCommand';
 
 type StepCreateAWSAccountRolesProps = {
   offlineToken?: string;
@@ -20,37 +26,43 @@ const StepCreateAWSAccountRoles = ({
   offlineToken,
   setOfflineToken,
 }: StepCreateAWSAccountRolesProps) => {
-  const chrome = useChrome();
-  const restrictedEnv = isRestrictedEnv(chrome as unknown as ChromeAPI);
+  const chrome = useChrome() as Chrome;
+  const restrictedEnv = isRestrictedEnv(chrome);
+  const { organization, isLoading, error } = useOrganization();
   const [token, setToken] = React.useState<string>('');
+  const [restrictTokens, setRestrictTokens] = React.useState<boolean | undefined>(undefined);
+  const errorData = error as Error;
   React.useEffect(() => {
     if (restrictedEnv) {
-      getRefreshToken(chrome as unknown as ChromeAPI).then((refreshToken) =>
-        setToken(refreshToken),
-      );
+      getRefreshToken(chrome).then((refreshToken) => setToken(refreshToken));
     } else if (offlineToken) {
       setToken(offlineToken as string);
     }
   }, [chrome, restrictedEnv, offlineToken]);
-  const getEnv = () => {
-    const env = chrome.getEnvironment();
-    if (env === 'int') {
-      return ' --env=integration';
-    }
-    return '';
-  };
-  const loginCommand = `rosa login${
-    restrictedEnv ? ' --govcloud' : ''
-  }${getEnv()} --token="${token}"`;
 
   React.useEffect(() => {
-    if (!restrictedEnv && !offlineToken) {
-      loadOfflineToken((tokenOrError, errorReason) => {
-        setOfflineToken(errorReason || tokenOrError);
-      }, window.location.origin);
+    if (!restrictedEnv && restrictTokens !== undefined && !restrictTokens && !offlineToken) {
+      loadOfflineToken(
+        (tokenOrError, errorReason) => {
+          setOfflineToken(errorReason || tokenOrError);
+        },
+        window.location.origin,
+        chrome,
+      );
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [restrictTokens]);
+
+  React.useEffect(() => {
+    // check if using offline tokens is restricted
+    if (!restrictedEnv && !isLoading && !error && !!organization?.capabilities) {
+      if (hasRestrictTokensCapability(organization.capabilities)) {
+        setRestrictTokens(true);
+      } else {
+        setRestrictTokens(false);
+      }
+    }
+  }, [organization, isLoading, error, restrictedEnv]);
 
   return (
     <>
@@ -62,11 +74,12 @@ const StepCreateAWSAccountRoles = ({
         <ListItem className="pf-v5-u-mb-lg">
           To authenticate, run this command:
           <div className="pf-v5-u-mt-md">
-            <TokenBox
+            <ROSALoginCommand
+              restrictTokens={restrictTokens}
+              isLoading={isLoading}
+              error={errorData}
               token={token}
-              command={loginCommand}
-              textAriaLabel="Copyable ROSA login command"
-              trackEvent={trackEvents.ROSALogin}
+              defaultToOfflineTokens={defaultToOfflineTokens}
             />
           </div>
         </ListItem>

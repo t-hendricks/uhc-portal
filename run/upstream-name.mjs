@@ -1,15 +1,15 @@
 #!/usr/bin/env node
 
 import { realpathSync } from 'fs';
-import { fileURLToPath } from 'url';
 import { simpleGit } from 'simple-git';
+import { fileURLToPath } from 'url';
 
 const upstreamRepoPattern = /.*gitlab\.cee\.redhat\.com[:/]service\/uhc-portal.*/;
 
 export async function getUpstreamRemoteName(git) {
   const verbose = true;
   const remotes = await git.getRemotes(verbose);
-  const remote = remotes.find(r => r.refs.fetch.match(upstreamRepoPattern));
+  const remote = remotes.find((r) => r.refs.fetch.match(upstreamRepoPattern));
   if (remote) {
     return remote.name;
   }

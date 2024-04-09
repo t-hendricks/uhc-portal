@@ -171,6 +171,11 @@ const selectedSubnets = [
     subnet_id: 'subnet-0d7e4b5ad15f8967b',
   },
   {
+    cidr_block: '10.0.32.0/22',
+    name: 'test-subnet-private-5',
+    subnet_id: 'subnet-0d7e4b5ad123563',
+  },
+  {
     cidr_block: '10.0.128.0/20',
     name: 'test-subnet-public-1',
     subnet_id: 'subnet-0ff6fbcf60020b712',

@@ -1,4 +1,5 @@
 import * as React from 'react';
+
 import { authorizationsService } from '~/services';
 
 export const useTCSigned = (): [boolean, string, boolean, string | undefined] => {

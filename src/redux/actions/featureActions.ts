@@ -1,27 +1,27 @@
 import { action, ActionType } from 'typesafe-actions';
+
 import { SelfAccessReview } from '~/types/accounts_mgmt.v1';
+
+import authorizationsService from '../../services/authorizationsService';
 import {
-  SET_FEATURE,
   ASSISTED_INSTALLER_FEATURE,
   ASSISTED_INSTALLER_MERGE_LISTS_FEATURE,
-  HYPERSHIFT_WIZARD_FEATURE,
-  ROSA_WIZARD_V2_ENABLED,
-  OSD_GOOGLE_MARKETPLACE_FEATURE,
-  OSD_GCP_SHARED_VPC_FEATURE,
-  NETWORK_VALIDATOR_ONDEMAND_FEATURE,
-  HCP_ROSA_GETTING_STARTED_PAGE,
-  HCP_AWS_BILLING_SHOW,
+  CLI_SSO_AUTHORIZATION,
+  ENABLE_MACHINE_CONFIGURATION,
   HCP_AWS_BILLING_REQUIRED,
+  HCP_AWS_BILLING_SHOW,
+  HCP_ROSA_GETTING_STARTED_PAGE,
+  HCP_USE_NODE_UPGRADE_POLICIES,
   HCP_USE_UNMANAGED,
+  HYPERSHIFT_WIZARD_FEATURE,
+  NETWORK_VALIDATOR_ONDEMAND_FEATURE,
+  OSD_GCP_SHARED_VPC_FEATURE,
+  OSD_GOOGLE_MARKETPLACE_FEATURE,
+  ROSA_WIZARD_V2_ENABLED,
   SECURITY_GROUPS_FEATURE,
   SECURITY_GROUPS_FEATURE_DAY1,
-  HCP_USE_NODE_UPGRADE_POLICIES,
-  ENABLE_MACHINE_CONFIGURATION,
-  GCP_SECURE_BOOT_UI,
-  GCP_SECURE_BOOT_ENHANCEMENTS,
-  CLI_SSO_AUTHORIZATION,
+  SET_FEATURE,
 } from '../constants/featureConstants';
-import authorizationsService from '../../services/authorizationsService';
 import type { AppThunk } from '../types';
 
 export const setFeatureAction = (feature: string, enabled: boolean) =>
@@ -51,8 +51,6 @@ export const features = [
   getSimpleUnleashFeature('security-groups-feature-day1', SECURITY_GROUPS_FEATURE_DAY1), // Handles only Day1
   getSimpleUnleashFeature('security-groups-feature', SECURITY_GROUPS_FEATURE), // Handles only Day2
   getSimpleUnleashFeature('enable-machine-configuration', ENABLE_MACHINE_CONFIGURATION),
-  getSimpleUnleashFeature('gcp-secure-boot-ui', GCP_SECURE_BOOT_UI),
-  getSimpleUnleashFeature('gcp-secure-boot-enhancements', GCP_SECURE_BOOT_ENHANCEMENTS),
   getSimpleUnleashFeature('cli-sso-authorization', CLI_SSO_AUTHORIZATION),
   {
     name: ASSISTED_INSTALLER_FEATURE,

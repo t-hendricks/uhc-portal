@@ -1,9 +1,8 @@
+/* generated using openapi-typescript-codegen -- do not edit */
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-
 import type { ImageOverrides } from './ImageOverrides';
-
 /**
  * Representation of an _OpenShift_ version.
  */
@@ -52,6 +51,11 @@ export type Version = {
    * format defined in https://www.ietf.org/rfc/rfc3339.txt[RC3339].
    */
   end_of_life_timestamp?: string;
+  /**
+   * HostedControlPlaneDefault is a flag that indicates if this should be selected as the default version when a
+   * HCP cluster is created without specifying explicitly the version.
+   */
+  hosted_control_plane_default?: boolean;
   /**
    * HostedControlPlaneEnabled indicates whether this version can be used to create HCP clusters.
    */

@@ -15,8 +15,11 @@ limitations under the License.
 */
 
 import React, { ReactNode, useState } from 'react';
+
 import useResizeObserver from '@react-hook/resize-observer';
+
 import Router from './Router';
+
 import './App.scss';
 
 type Props = {

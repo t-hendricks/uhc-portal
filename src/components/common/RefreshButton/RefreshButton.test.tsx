@@ -1,5 +1,6 @@
 import React from 'react';
-import { render, screen, checkAccessibility, act } from '~/testUtils';
+
+import { act, checkAccessibility, render, screen } from '~/testUtils';
 
 import RefreshButton from './RefreshButton';
 

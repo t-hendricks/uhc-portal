@@ -1,6 +1,6 @@
-import reducer, { initialState } from '../InstallationLogReducer';
-import { GET_LOGS, CLEAR_LOGS } from '../InstallationLogConstants';
 import { FULFILLED_ACTION } from '../../../../../../../redux/reduxHelpers';
+import { CLEAR_LOGS, GET_LOGS } from '../InstallationLogConstants';
+import reducer, { initialState } from '../InstallationLogReducer';
 
 describe('installation logs Redcuer', () => {
   const mockPayload = {

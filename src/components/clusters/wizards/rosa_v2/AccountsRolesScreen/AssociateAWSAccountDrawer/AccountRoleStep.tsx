@@ -1,12 +1,15 @@
 import React from 'react';
+
 import { Alert, AlertVariant, Text, TextVariants } from '@patternfly/react-core';
-import InstructionCommand from '~/components/common/InstructionCommand';
 
 import { trackEvents } from '~/common/analytics';
-import ExternalLink from '~/components/common/ExternalLink';
 import links from '~/common/installLinks.mjs';
+import ExternalLink from '~/components/common/ExternalLink';
+import InstructionCommand from '~/components/common/InstructionCommand';
 import { useGlobalState } from '~/redux/hooks';
+
 import { RosaCliCommand } from '../constants/cliCommands';
+
 import AssociateAWSAccountStep, {
   AssociateAWSAccountStepProps,
 } from './common/AssociateAWSAccountStep';

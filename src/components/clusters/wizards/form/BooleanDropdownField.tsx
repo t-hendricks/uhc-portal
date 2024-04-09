@@ -1,11 +1,13 @@
 import React from 'react';
+import { FormikValues, useField, useFormikContext } from 'formik';
+
 import { FormGroup } from '@patternfly/react-core';
 import {
   Select as SelectDeprecated,
   SelectOption as SelectOptionDeprecated,
   SelectOptionObject as SelectOptionObjectDeprecated,
 } from '@patternfly/react-core/deprecated';
-import { FormikValues, useField, useFormikContext } from 'formik';
+
 import { FormGroupHelperText } from '~/components/common/FormGroupHelperText';
 
 interface BooleanDropdownFieldProps {

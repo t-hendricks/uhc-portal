@@ -1,10 +1,9 @@
+/* generated using openapi-typescript-codegen -- do not edit */
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-
 import type { AutoscalerResourceLimitsGPULimit } from './AutoscalerResourceLimitsGPULimit';
 import type { ResourceRange } from './ResourceRange';
-
 export type AutoscalerResourceLimits = {
   /**
    * Minimum and maximum number of different GPUs in cluster, in the format <gpu_type>:<min>:<max>.

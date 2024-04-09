@@ -1,11 +1,11 @@
 import React from 'react';
-
 import get from 'lodash/get';
 import startCase from 'lodash/startCase';
 
 import { Tooltip } from '@patternfly/react-core';
-import Skeleton from '@redhat-cloud-services/frontend-components/Skeleton';
 import { IRow } from '@patternfly/react-table';
+import Skeleton from '@redhat-cloud-services/frontend-components/Skeleton';
+
 import { ocmRoles } from '~/common/subscriptionTypes';
 
 const skeletonRow: IRow['cells'] = [

@@ -1,4 +1,5 @@
 import React from 'react';
+
 import { Alert, AlertVariant } from '@patternfly/react-core';
 
 export const ImdsSectionAlert = () => (

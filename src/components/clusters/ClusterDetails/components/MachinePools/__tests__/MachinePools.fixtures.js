@@ -1,5 +1,8 @@
+import { defaultClusterFromSubscription } from '~/components/clusters/common/__tests__/defaultClusterFromSubscription.fixtures';
+import { baseRequestState } from '~/redux/reduxHelpers';
+
 import { normalizedProducts } from '../../../../../../common/subscriptionTypes';
-import { rhQuotaList, emptyQuotaList } from '../../../../common/__tests__/quota.fixtures';
+import { emptyQuotaList, rhQuotaList } from '../../../../common/__tests__/quota.fixtures';
 
 const baseState = {
   clusters: {
@@ -11,6 +14,7 @@ const baseState = {
       fulfilled: true,
       valid: true,
       cluster: {
+        ...defaultClusterFromSubscription,
         kind: 'Cluster',
         id: '1ibe928bp9ojdqkqobpp3ig1a1r5i0rb',
         href: '/api/clusters_mgmt/v1/clusters/1ibe928bp9ojdqkqobpp3ig1a1r5i0rb',
@@ -1245,7 +1249,7 @@ const stateWithNoQuota = {
 
 const stateWithQuota = {
   ...baseState,
-  userProfile: { organization: { fulfilled: true, quotaList: rhQuotaList } },
+  userProfile: { organization: { ...baseRequestState, fulfilled: true, quotaList: rhQuotaList } },
 };
 
 const machinePoolWithSubnet = {
@@ -1286,6 +1290,7 @@ const machinePoolsWithAutoscaling = [
 ];
 
 export {
+  baseState,
   stateWithQuota,
   stateWithNoQuota,
   machinePoolWithSubnet,

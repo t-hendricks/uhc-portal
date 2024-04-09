@@ -1,13 +1,14 @@
-import { connect } from 'react-redux';
 import get from 'lodash/get';
+import { connect } from 'react-redux';
 
-import ClusterLogsToolbar from './ClusterLogsToolbar';
 import {
   onClearFiltersAndFlags,
   onListFilterSet,
   onListFlagsSet,
 } from '../../../../../../redux/actions/viewOptionsActions';
 import { viewConstants } from '../../../../../../redux/constants';
+
+import ClusterLogsToolbar from './ClusterLogsToolbar';
 
 const mapStateToProps = (state, ownProps) => {
   const cluster = get(state, 'clusters.details.cluster', {});

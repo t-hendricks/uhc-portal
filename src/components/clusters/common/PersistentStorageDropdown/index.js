@@ -1,6 +1,7 @@
 import { connect } from 'react-redux';
 
 import getPersistentStorage from '../../../../redux/actions/persistentStorageActions';
+
 import PersistentStorageDropdown from './PersistentStorageDropdown';
 
 const mapStateToProps = (state) => ({

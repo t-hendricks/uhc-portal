@@ -1,34 +1,35 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Field } from 'redux-form';
+
 import {
   Alert,
   Form,
-  Grid,
-  GridItem,
-  Title,
-  Text,
   FormFieldGroup,
   FormGroup,
+  Grid,
+  GridItem,
+  Text,
+  Title,
   Tooltip,
 } from '@patternfly/react-core';
-import { Field } from 'redux-form';
 
+import { ocmResourceType, trackEvents } from '~/common/analytics';
+import { getDefaultSecurityGroupsSettings } from '~/common/securityGroupsHelpers';
 import { normalizedProducts } from '~/common/subscriptionTypes';
 import { validateRequiredPublicSubnetId } from '~/common/validators';
-import useAnalytics from '~/hooks/useAnalytics';
-import { ocmResourceType, trackEvents } from '~/common/analytics';
-import { isRestrictedEnv } from '~/restrictedEnv';
-import { canConfigureDayOneManagedIngress } from '~/components/clusters/wizards/rosa/constants';
 import { isExactMajorMinor } from '~/common/versionHelpers';
 import { getSelectedAvailabilityZones } from '~/common/vpcHelpers';
-import { getDefaultSecurityGroupsSettings } from '~/common/securityGroupsHelpers';
-
 import { constants } from '~/components/clusters/common/CreateOSDFormConstants';
-import ExternalLink from '~/components/common/ExternalLink';
-import { SubnetSelectField } from '~/components/clusters/common/SubnetSelectField';
 import { DefaultIngressFields } from '~/components/clusters/common/DefaultIngressFields';
-import { ReduxCheckbox } from '../../../../common/ReduxFormComponents';
-import RadioButtons from '../../../../common/ReduxFormComponents/RadioButtons';
+import { SubnetSelectField } from '~/components/clusters/common/SubnetSelectField';
+import { canConfigureDayOneManagedIngress } from '~/components/clusters/wizards/rosa/constants';
+import { CheckboxDescription } from '~/components/common/CheckboxDescription';
+import ExternalLink from '~/components/common/ExternalLink';
+import { RadioButtons, ReduxCheckbox } from '~/components/common/ReduxFormComponents';
+import useAnalytics from '~/hooks/useAnalytics';
+import { isRestrictedEnv } from '~/restrictedEnv';
+
 import links from '../../../../../common/installLinks.mjs';
 
 function NetworkScreen(props) {
@@ -84,6 +85,10 @@ function NetworkScreen(props) {
 
     if (hasEmptyByoVpcInfo) {
       change('install_to_vpc', false);
+
+      if (formValues.configure_proxy) {
+        change('configure_proxy', false);
+      }
 
       // Clear also associated security groups when the wizard has this option
       if (formValues.securityGroups) {
@@ -168,9 +173,7 @@ function NetworkScreen(props) {
       name="configure_proxy"
       label="Configure a cluster-wide proxy"
       onChange={onClusterProxyChange}
-      helpText={
-        <div className="ocm-c--reduxcheckbox-description">{constants.clusterProxyHint}</div>
-      }
+      helpText={<CheckboxDescription>{constants.clusterProxyHint}</CheckboxDescription>}
     />
   );
 
@@ -317,9 +320,7 @@ function NetworkScreen(props) {
                         onChange={onPrivateLinkChange}
                         isDisabled={forcePrivateLink && privateClusterSelected}
                         helpText={
-                          <div className="ocm-c--reduxcheckbox-description">
-                            {constants.privateLinkHint}
-                          </div>
+                          <CheckboxDescription>{constants.privateLinkHint}</CheckboxDescription>
                         }
                       />
                     </FormGroup>

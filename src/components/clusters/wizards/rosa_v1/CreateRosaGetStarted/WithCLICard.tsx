@@ -1,18 +1,21 @@
 import React from 'react';
+
 import {
   Card,
   CardBody,
   CardFooter,
   CardTitle,
-  Title,
   Text,
   TextVariants,
+  Title,
 } from '@patternfly/react-core';
 import { CodeIcon } from '@patternfly/react-icons/dist/esm/icons/code-icon';
-import InstructionCommand from '~/components/common/InstructionCommand';
+
 import { trackEvents } from '~/common/analytics';
-import ExternalLink from '~/components/common/ExternalLink';
 import links from '~/common/installLinks.mjs';
+import ExternalLink from '~/components/common/ExternalLink';
+import InstructionCommand from '~/components/common/InstructionCommand';
+
 import { RosaCliCommand } from '../AccountsRolesScreen/constants/cliCommands';
 
 const WithCLICard = () => (

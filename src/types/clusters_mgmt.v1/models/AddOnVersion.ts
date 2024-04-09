@@ -1,13 +1,12 @@
+/* generated using openapi-typescript-codegen -- do not edit */
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-
 import type { AdditionalCatalogSource } from './AdditionalCatalogSource';
 import type { AddOnConfig } from './AddOnConfig';
 import type { AddOnParameter } from './AddOnParameter';
 import type { AddOnRequirement } from './AddOnRequirement';
 import type { AddOnSubOperator } from './AddOnSubOperator';
-
 /**
  * Representation of an add-on version.
  */
@@ -44,6 +43,10 @@ export type AddOnVersion = {
    * Indicates if this add-on version can be added to clusters.
    */
   enabled?: boolean;
+  /**
+   * The package image for this addon version
+   */
+  package_image?: string;
   /**
    * List of parameters for this add-on version.
    */

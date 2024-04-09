@@ -1,6 +1,7 @@
-import { detectFeatures, features } from './featureActions';
-import { SET_FEATURE } from '../constants/featureConstants';
 import authorizationsService from '../../services/authorizationsService';
+import { SET_FEATURE } from '../constants/featureConstants';
+
+import { detectFeatures, features } from './featureActions';
 
 jest.mock('../../services/authorizationsService');
 

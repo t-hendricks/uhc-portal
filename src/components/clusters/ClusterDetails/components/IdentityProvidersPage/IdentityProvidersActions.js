@@ -1,7 +1,8 @@
 import get from 'lodash/get';
 
-import { identityProvidersConstants } from './IdentityProvidersConstants';
 import { clusterService } from '../../../../../services';
+
+import { identityProvidersConstants } from './IdentityProvidersConstants';
 
 const getClusterIdentityProviders = (clusterID) => (dispatch) =>
   dispatch({

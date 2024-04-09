@@ -1,12 +1,11 @@
 import React from 'react';
 
-import { render, screen, checkAccessibility, within, insightsMock } from '~/testUtils';
-import apiRequest from '~/services/apiRequest';
-import wizardConnector from '~/components/clusters/wizards/common/WizardConnector';
 import { constants } from '~/components/clusters/common/CreateOSDFormConstants';
-import ScaleSection from './ScaleSection';
+import wizardConnector from '~/components/clusters/wizards/common/WizardConnector';
+import apiRequest from '~/services/apiRequest';
+import { checkAccessibility, render, screen, within } from '~/testUtils';
 
-insightsMock();
+import ScaleSection from './ScaleSection';
 
 const defaultProps = {
   isBYOC: false,
@@ -27,8 +26,6 @@ describe('<ScaleSection />', () => {
   it('is accessible', async () => {
     const { container } = render(<ConnectedScaleSection {...defaultProps} />);
     await checkAccessibility(container);
-
-    // select aria-label: Compute nodes
   });
   describe('non autoscaling node count hint text', () => {
     apiRequest.get.mockResolvedValue('success');
@@ -111,8 +108,11 @@ describe('<ScaleSection />', () => {
       };
       render(<ConnectedScaleSection {...newProps} />);
       // Assert
-      const sectionToggle = screen.getByRole('button', { name: 'Add node labels' });
-      expect(sectionToggle).toHaveAttribute('aria-expanded', 'true');
+
+      expect(await screen.findByRole('button', { name: 'Add node labels' })).toHaveAttribute(
+        'aria-expanded',
+        'true',
+      );
     });
   });
 });

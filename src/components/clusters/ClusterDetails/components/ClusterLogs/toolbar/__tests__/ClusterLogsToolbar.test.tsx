@@ -1,5 +1,8 @@
 import React from 'react';
-import { screen, render, userEvent, checkAccessibility } from '~/testUtils';
+import { CompatRouter } from 'react-router-dom-v5-compat';
+
+import { checkAccessibility, render, screen, TestRouter, userEvent } from '~/testUtils';
+
 import ClusterLogsToolbar from '../ClusterLogsToolbar';
 
 const mockSetFilter = jest.fn();
@@ -34,10 +37,41 @@ describe('<ClusterLogsToolbar />', () => {
   });
 
   it('is accessible', async () => {
-    const { container } = render(<ClusterLogsToolbar {...defaultProps} />);
+    const { container } = render(
+      <TestRouter>
+        <CompatRouter>
+          <ClusterLogsToolbar {...defaultProps} />
+        </CompatRouter>
+      </TestRouter>,
+    );
 
     expect(screen.getByTestId('cluster-history-toolbar')).toBeInTheDocument();
+
     await checkAccessibility(container);
+  });
+
+  it('displays and removes invalid format message', async () => {
+    render(
+      <TestRouter>
+        <CompatRouter>
+          <ClusterLogsToolbar {...defaultProps} />
+        </CompatRouter>
+      </TestRouter>,
+    );
+
+    const datePicker = screen.getAllByLabelText('Date picker');
+
+    await userEvent.clear(datePicker[0]);
+    await userEvent.type(datePicker[0], '2024-qq');
+    await userEvent.type(datePicker[0], '{enter}');
+
+    expect(screen.getByText('Invalid: YYYY-MM-DD')).toBeInTheDocument();
+
+    await userEvent.clear(datePicker[0]);
+    await userEvent.type(datePicker[0], '2024-01-12');
+    await userEvent.type(datePicker[0], '{enter}');
+
+    expect(screen.queryByText('Invalid: YYYY-MM-DD')).toBe(null);
   });
 
   it.each([
@@ -47,7 +81,13 @@ describe('<ClusterLogsToolbar />', () => {
   ])(
     'validates min/max and date range for datepicker',
     async (startDate: string, endDate: string, validationMessage: string) => {
-      render(<ClusterLogsToolbar {...defaultProps} />);
+      render(
+        <TestRouter>
+          <CompatRouter>
+            <ClusterLogsToolbar {...defaultProps} />
+          </CompatRouter>
+        </TestRouter>,
+      );
 
       const datePicker = screen.getAllByLabelText('Date picker');
 

@@ -1,7 +1,7 @@
+import { subscriptionStatuses } from '~/common/subscriptionTypes';
+import { isHibernating, isHypershiftCluster } from '~/components/clusters/common/clusterStates';
 import { ClusterResource, Subscription } from '~/types/accounts_mgmt.v1';
 import { Cluster, ClusterState } from '~/types/clusters_mgmt.v1';
-import { isHypershiftCluster, isHibernating } from '~/components/clusters/common/clusterStates';
-import { subscriptionStatuses } from '~/common/subscriptionTypes';
 import { ClusterFromSubscription } from '~/types/types';
 
 import {
@@ -17,6 +17,7 @@ import {
   isReadyForIdpActions,
   isReadyForRoleAccessActions,
 } from '../clusterDetailsHelper';
+
 import { defaultMetric } from './clusterDetailsDefaultMetric.fixtures';
 
 jest.mock('~/components/clusters/common/clusterStates');

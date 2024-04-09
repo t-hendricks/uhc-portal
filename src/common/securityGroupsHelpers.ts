@@ -1,4 +1,5 @@
-import { Cluster, MachinePool } from '~/types/clusters_mgmt.v1';
+import { Cluster, MachinePool, NodePool } from '~/types/clusters_mgmt.v1';
+
 import { ClusterFromSubscription } from '../types/types';
 
 type SecurityGroupForm = {
@@ -34,7 +35,7 @@ const hasSelectedSecurityGroups = (securityGroups?: SecurityGroupForm) => {
 
 const hasSecurityGroupIds = (
   cluster: ClusterFromSubscription | Cluster = {},
-  machinePools: MachinePool[] = [],
+  machinePools: MachinePool[] | NodePool[] = [],
 ) => {
   if (
     (cluster?.aws?.additional_control_plane_security_group_ids ?? []).length > 0 ||
@@ -43,10 +44,11 @@ const hasSecurityGroupIds = (
     return true;
   }
   return machinePools?.some((pool) => {
-    if ((pool?.aws?.additional_security_group_ids ?? []).length > 0) {
-      return true;
-    }
-    return false;
+    const additionalSecurityGroupIds =
+      (pool as MachinePool)?.aws?.additional_security_group_ids ||
+      (pool as NodePool)?.aws_node_pool?.additional_security_group_ids ||
+      [];
+    return additionalSecurityGroupIds.length > 0;
   });
 };
 

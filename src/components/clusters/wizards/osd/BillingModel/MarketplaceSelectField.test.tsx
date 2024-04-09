@@ -2,8 +2,10 @@ import * as React from 'react';
 import { Formik } from 'formik';
 
 import { render, screen } from '~/testUtils';
-import { MarketplaceSelectField } from './MarketplaceSelectField';
+
 import { initialValues } from '../constants';
+
+import { MarketplaceSelectField } from './MarketplaceSelectField';
 
 describe('<MarketplaceSelectField />', () => {
   it('should show a placeholder', async () => {

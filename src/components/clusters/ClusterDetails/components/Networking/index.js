@@ -1,7 +1,8 @@
-import { connect } from 'react-redux';
 import get from 'lodash/get';
-import { resetClusterRouters } from './NetworkingActions';
+import { connect } from 'react-redux';
+
 import Networking from './Networking';
+import { resetClusterRouters } from './NetworkingActions';
 
 const mapStateToProps = (state) => {
   const { clusterRouters } = state;

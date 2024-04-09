@@ -1,11 +1,13 @@
 import { useSelector } from 'react-redux';
 import semver from 'semver';
-import { NodePool } from '~/types/clusters_mgmt.v1/models/NodePool';
-import clusterService from '~/services/clusterService';
-import { GlobalState } from '~/redux/store';
-import { updateStartedSelector } from '~/components/clusters/common/Upgrades/upgradeHelpers';
+
 import { isHypershiftCluster } from '~/components/clusters/common/clusterStates';
+import { updateStartedSelector } from '~/components/clusters/common/Upgrades/upgradeHelpers';
+import { GlobalState } from '~/redux/store';
+import clusterService from '~/services/clusterService';
 import { ScheduleType, UpgradeType } from '~/types/clusters_mgmt.v1';
+import { NodePool } from '~/types/clusters_mgmt.v1/models/NodePool';
+
 import { NodePoolWithUpgradePolicies } from '../machinePoolCustomTypes';
 
 export const controlPlaneIdSelector = (state: GlobalState) =>

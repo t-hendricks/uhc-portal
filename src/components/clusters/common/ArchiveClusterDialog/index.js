@@ -1,11 +1,12 @@
 import { connect } from 'react-redux';
 
 import {
-  clearClusterArchiveResponse,
   archiveCluster,
+  clearClusterArchiveResponse,
 } from '../../../../redux/actions/clustersActions';
-import ArchiveClusterDialog from './ArchiveClusterDialog';
 import { closeModal } from '../../../common/Modal/ModalActions';
+
+import ArchiveClusterDialog from './ArchiveClusterDialog';
 
 const mapStateToProps = (state) => {
   const modalData = state.modal.data;

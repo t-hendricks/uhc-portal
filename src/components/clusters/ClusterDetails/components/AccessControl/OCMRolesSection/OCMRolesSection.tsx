@@ -1,39 +1,40 @@
-import React, { ReactNode, useState, useEffect } from 'react';
-
-import map from 'lodash/map';
+import React, { ReactNode, useEffect, useState } from 'react';
 import get from 'lodash/get';
-import { HelpIcon } from '@patternfly/react-icons/dist/esm/icons/help-icon';
+import map from 'lodash/map';
+import { useDispatch } from 'react-redux';
+
 import {
-  Title,
   Button,
-  Popover,
-  PopoverPosition,
   Card,
-  CardTitle,
   CardBody,
   CardFooter,
+  CardTitle,
   Icon,
+  Popover,
+  PopoverPosition,
+  Title,
 } from '@patternfly/react-core';
+import { HelpIcon } from '@patternfly/react-icons/dist/esm/icons/help-icon';
 import { IRowData, TableVariant } from '@patternfly/react-table';
 import {
   Table as TableDeprecated,
-  TableHeader as TableHeaderDeprecated,
   TableBody as TableBodyDeprecated,
+  TableHeader as TableHeaderDeprecated,
 } from '@patternfly/react-table/deprecated';
-
 import Skeleton from '@redhat-cloud-services/frontend-components/Skeleton';
 
-import { useDispatch } from 'react-redux';
 import { useGlobalState } from '~/redux/hooks';
 import { Subscription } from '~/types/accounts_mgmt.v1';
-import { eventTypes } from '../../../clusterDetailsHelper';
-import modals from '../../../../../common/Modal/modals';
-import ErrorBox from '../../../../../common/ErrorBox';
-import ButtonWithTooltip from '../../../../../common/ButtonWithTooltip';
-import { OCMRolesRow } from './OCMRolesRow';
-import { OCMRolesDialog, OCMRolesDialogProps } from './OCMRolesDialog';
+
 import OCMRolesActions from '../../../../../../redux/actions/OCMRolesActions';
+import ButtonWithTooltip from '../../../../../common/ButtonWithTooltip';
+import ErrorBox from '../../../../../common/ErrorBox';
 import { openModal } from '../../../../../common/Modal/ModalActions';
+import modals from '../../../../../common/Modal/modals';
+import { eventTypes } from '../../../clusterDetailsHelper';
+
+import { OCMRolesDialog, OCMRolesDialogProps } from './OCMRolesDialog';
+import { OCMRolesRow } from './OCMRolesRow';
 
 type OCMRolesSectionProps = {
   subscription: Subscription;

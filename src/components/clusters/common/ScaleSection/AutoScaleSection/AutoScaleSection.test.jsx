@@ -1,9 +1,10 @@
 import React from 'react';
 
-import { render, screen, checkAccessibility, within } from '~/testUtils';
-import wizardConnector from '~/components/clusters/wizards/common/WizardConnector';
-import { MAX_NODES_HCP } from '~/components/clusters/common/machinePools/constants';
 import { constants } from '~/components/clusters/common/CreateOSDFormConstants';
+import { MAX_NODES_HCP } from '~/components/clusters/common/machinePools/constants';
+import wizardConnector from '~/components/clusters/wizards/common/WizardConnector';
+import { checkAccessibility, render, screen, within } from '~/testUtils';
+
 import AutoScaleSection from './AutoScaleSection';
 
 const defaultProps = {

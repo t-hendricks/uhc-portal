@@ -1,12 +1,12 @@
 import * as React from 'react';
-import { insightsMock, render, screen, within } from '~/testUtils';
-import EditMachinePoolModal from './EditMachinePoolModal';
 
-insightsMock();
+import { render, screen, within } from '~/testUtils';
+
+import EditMachinePoolModal from './EditMachinePoolModal';
 
 describe('<EditMachinePoolModal />', () => {
   describe('error state', () => {
-    it('Shows alert if machine pools failed to load', () => {
+    it('Shows alert if machine pools failed to load', async () => {
       render(
         <EditMachinePoolModal
           cluster={{}}
@@ -27,13 +27,16 @@ describe('<EditMachinePoolModal />', () => {
           }}
         />,
       );
-      expect(screen.getByTestId('alert-error')).toBeInTheDocument();
 
-      expect(screen.getByTestId('submit-btn')).toBeDisabled();
-      expect(screen.getByTestId('cancel-btn')).toBeEnabled();
+      expect(
+        within(await screen.findByRole('alert')).getByText(/Failed to fetch resources/),
+      ).toBeInTheDocument();
+
+      expect(screen.getByRole('button', { name: 'Add machine pool' })).toBeDisabled();
+      expect(screen.getByRole('button', { name: 'Cancel' })).toBeEnabled();
     });
 
-    it('Shows alert if machine types failed to load', () => {
+    it('Shows alert if machine types failed to load', async () => {
       render(
         <EditMachinePoolModal
           cluster={{}}
@@ -54,21 +57,24 @@ describe('<EditMachinePoolModal />', () => {
           }}
         />,
       );
-      expect(screen.getByTestId('alert-error')).toBeInTheDocument();
 
-      expect(screen.getByTestId('submit-btn')).toBeDisabled();
-      expect(screen.getByTestId('cancel-btn')).toBeEnabled();
+      expect(
+        within(await screen.findByRole('alert')).getByText(/Failed to fetch resources/),
+      ).toBeInTheDocument();
+
+      expect(screen.getByRole('button', { name: 'Add machine pool' })).toBeDisabled();
+      expect(screen.getByRole('button', { name: 'Cancel' })).toBeEnabled();
     });
   });
 
   describe('loading state', () => {
-    const check = () => {
-      expect(screen.getByText('Loading...')).toBeInTheDocument();
+    const check = async () => {
+      expect(await screen.findByText('Loading...')).toBeInTheDocument();
       expect(screen.getByTestId('submit-btn')).toBeDisabled();
       expect(screen.getByTestId('cancel-btn')).toBeEnabled();
     };
 
-    it('Shows loading if machine pools are loading', () => {
+    it('Shows loading if machine pools are loading', async () => {
       render(
         <EditMachinePoolModal
           cluster={{}}
@@ -87,10 +93,10 @@ describe('<EditMachinePoolModal />', () => {
           }}
         />,
       );
-      check();
+      await check();
     });
 
-    it('Shows loading if machine types are loading', () => {
+    it('Shows loading if machine types are loading', async () => {
       render(
         <EditMachinePoolModal
           cluster={{}}
@@ -108,12 +114,12 @@ describe('<EditMachinePoolModal />', () => {
           }}
         />,
       );
-      check();
+      await check();
     });
   });
 
   describe('add machine pool', () => {
-    it('Submit button shows `Add machine pool`', () => {
+    it('Submit button shows `Add machine pool`', async () => {
       render(
         <EditMachinePoolModal
           cluster={{}}
@@ -133,13 +139,13 @@ describe('<EditMachinePoolModal />', () => {
           }}
         />,
       );
-      const { getByText } = within(screen.getByTestId('submit-btn'));
-      expect(getByText('Add machine pool')).toBeInTheDocument();
+
+      expect(await screen.findByRole('button', { name: 'Add machine pool' })).toBeInTheDocument();
     });
   });
 
   describe('edit machine pool', () => {
-    it('Submit button shows `Save`', () => {
+    it('Submit button shows `Save`', async () => {
       const { rerender } = render(
         <EditMachinePoolModal
           cluster={{}}
@@ -160,8 +166,8 @@ describe('<EditMachinePoolModal />', () => {
           isEdit
         />,
       );
-      const { getByText } = within(screen.getByTestId('submit-btn'));
-      expect(getByText('Save')).toBeInTheDocument();
+
+      expect(await screen.findByRole('button', { name: 'Save' })).toBeInTheDocument();
 
       rerender(
         <EditMachinePoolModal
@@ -184,8 +190,7 @@ describe('<EditMachinePoolModal />', () => {
         />,
       );
 
-      const { getByText: getByText2 } = within(screen.getByTestId('submit-btn'));
-      expect(getByText2('Save')).toBeInTheDocument();
+      expect(await screen.findByRole('button', { name: 'Save' })).toBeInTheDocument();
     });
 
     describe('Singlezone and multizone machine pool in multizone cluster', () => {
@@ -260,6 +265,67 @@ describe('<EditMachinePoolModal />', () => {
         expect(await screen.findByText('Compute node count (per zone)')).toBeInTheDocument();
         expect(await screen.findByText('7')).toBeInTheDocument();
       });
+    });
+  });
+
+  describe('ROSA Hypershift cluster machine pool', () => {
+    it('Disabled Add Machine Pool button on max replicas', async () => {
+      // Render
+      const { user } = render(
+        <EditMachinePoolModal
+          cluster={{ multi_az: false, hypershift: { enabled: true }, product: { id: 'ROSA' } }}
+          onClose={() => {}}
+          isHypershift
+          machinePoolsResponse={{
+            error: false,
+            fulfilled: true,
+            pending: false,
+            data: [
+              {
+                availability_zones: ['us-east-1a'],
+                href: '/api/clusters_mgmt/v1/clusters/282fg0gt74jjb9558ge1poe8m4dlvb07/machine_pools/daznauro-mp',
+                id: 'fooId',
+                instance_type: 'm5.xlarge',
+                kind: 'MachinePool',
+                replicas: 48,
+                root_volume: { aws: { size: 300 } },
+              },
+              {
+                availability_zones: ['us-east-1a'],
+                href: '/api/clusters_mgmt/v1/clusters/282fg0gt74jjb9558ge1poe8m4dlvb07/machine_pools/daznauro-mp',
+                id: 'fooId2',
+                instance_type: 'm5.xlarge',
+                kind: 'MachinePool',
+                autoscaling: {
+                  min_replicas: 1,
+                  max_replicas: 2,
+                },
+                root_volume: { aws: { size: 300 } },
+              },
+            ],
+          }}
+          machineTypesResponse={{
+            error: false,
+            pending: false,
+            fulfilled: true,
+            types: {},
+            typesByID: {},
+          }}
+        />,
+      );
+
+      // Act
+      const inputField = await screen.findByRole('textbox');
+      await user.type(inputField, 'test');
+
+      const autoScalingCheckbox = await screen.findByRole('checkbox', {
+        name: 'Enable autoscaling',
+      });
+      await user.click(autoScalingCheckbox);
+
+      // Assert
+      expect(screen.getAllByRole('button', { name: 'Plus' })[1]).toBeDisabled();
+      expect(await screen.findByTestId('submit-btn')).toBeDisabled();
     });
   });
 });

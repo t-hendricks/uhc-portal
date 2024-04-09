@@ -1,7 +1,7 @@
 import { produce } from 'immer';
-import { ModalActions } from './ModalActions';
 
-import { OPEN_MODAL, CLOSE_MODAL } from './ModalConstants';
+import { ModalActions } from './ModalActions';
+import { CLOSE_MODAL, OPEN_MODAL } from './ModalConstants';
 
 export type State = {
   modalName: string | null;

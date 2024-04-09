@@ -1,5 +1,6 @@
-import { Tooltip } from '@patternfly/react-core';
 import * as React from 'react';
+
+import { Tooltip } from '@patternfly/react-core';
 
 type WithTooltipProps = {
   showTooltip: boolean;

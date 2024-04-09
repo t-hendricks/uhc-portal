@@ -1,11 +1,10 @@
 import React from 'react';
-import { shallow } from 'enzyme';
 
-import { render, checkAccessibility, screen, fireEvent } from '~/testUtils';
+import { checkAccessibility, render, screen } from '~/testUtils';
+
 import AddOnsDeleteModal from '../AddOnsDeleteModal';
 
 describe('<AddOnsDeleteModal />', () => {
-  let wrapper;
   const closeModal = jest.fn();
   const deleteClusterAddOn = jest.fn();
   const clearClusterAddOnsResponses = jest.fn();
@@ -23,10 +22,6 @@ describe('<AddOnsDeleteModal />', () => {
     deleteClusterAddOnResponse: { fulfilled: false, pending: false, error: false },
   };
 
-  beforeEach(() => {
-    wrapper = shallow(<AddOnsDeleteModal {...props} />);
-  });
-
   afterEach(() => {
     closeModal.mockClear();
     deleteClusterAddOn.mockClear();
@@ -39,42 +34,60 @@ describe('<AddOnsDeleteModal />', () => {
   });
 
   it('delete button should be enabled only after inputting the add on name', async () => {
-    const { getByTestId } = render(<AddOnsDeleteModal {...props} />);
+    const { user } = render(<AddOnsDeleteModal {...props} />);
+
+    expect(screen.getByRole('button', { name: 'Uninstall' })).toHaveAttribute(
+      'aria-disabled',
+      'true',
+    );
+
     const input = screen.getByPlaceholderText(/Enter name/i);
+    await user.clear(input);
+    await user.type(input, 'fake');
 
-    expect(getByTestId('btn-primary')).toBeDisabled(); // disabled at first
+    expect(screen.getByRole('button', { name: 'Uninstall' })).toHaveAttribute(
+      'aria-disabled',
+      'true',
+    );
 
-    // eslint-disable-next-line testing-library/prefer-user-event
-    fireEvent.change(input, { target: { value: 'fake' } });
-    expect(getByTestId('btn-primary')).toBeDisabled(); // disabled when unrelated input
+    await user.clear(input);
+    await user.type(input, 'fake-addon-name');
 
-    // eslint-disable-next-line testing-library/prefer-user-event
-    fireEvent.change(input, { target: { value: 'fake-addon-name' } });
-    expect(getByTestId('btn-primary')).toBeEnabled(); // enabled when correct
+    expect(screen.getByRole('button', { name: 'Uninstall' })).toHaveAttribute(
+      'aria-disabled',
+      'false',
+    );
   });
 
-  it('should close modal on cancel', () => {
-    const modal = wrapper.find('Modal');
-    modal.props().onSecondaryClick();
-    expect(closeModal).toBeCalled();
+  it('should close modal on cancel', async () => {
+    const { user } = render(<AddOnsDeleteModal {...props} />);
+    expect(closeModal).not.toHaveBeenCalled();
+    expect(clearClusterAddOnsResponses).not.toHaveBeenCalled();
+
+    await user.click(screen.getByRole('button', { name: 'Cancel' }));
+    expect(closeModal).toHaveBeenCalled();
+    expect(clearClusterAddOnsResponses).toHaveBeenCalled();
   });
 
-  it('should call deleteClusterAddOn correctly', () => {
-    const modal = wrapper.find('Modal');
-    modal.props().onPrimaryClick();
-    expect(deleteClusterAddOn).toBeCalledWith('fake-cluster-id', 'fake-addon-id');
+  it('should call deleteClusterAddOn correctly', async () => {
+    const { user } = render(<AddOnsDeleteModal {...props} />);
+
+    await user.clear(screen.getByPlaceholderText('Enter name'));
+    await user.type(screen.getByPlaceholderText('Enter name'), 'fake-addon-name');
+    await user.click(screen.getByRole('button', { name: 'Uninstall' }));
+
+    expect(deleteClusterAddOn).toHaveBeenCalledWith('fake-cluster-id', 'fake-addon-id');
   });
 
-  it('should close correctly on succeess', () => {
-    wrapper.setProps({
+  it('should close correctly on success', () => {
+    const { rerender } = render(<AddOnsDeleteModal {...props} />);
+    expect(closeModal).not.toHaveBeenCalled();
+    const newProps = {
+      ...props,
       deleteClusterAddOnResponse: { fulfilled: true, pending: false, error: false },
-    });
-    expect(closeModal).toBeCalled();
-  });
+    };
 
-  it('should clear response when modal is closed', () => {
-    const modal = wrapper.find('Modal');
-    modal.props().onSecondaryClick();
-    expect(clearClusterAddOnsResponses).toBeCalled();
+    rerender(<AddOnsDeleteModal {...newProps} />);
+    expect(closeModal).toHaveBeenCalled();
   });
 });

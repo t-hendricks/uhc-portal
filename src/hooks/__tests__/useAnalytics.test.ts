@@ -1,7 +1,8 @@
-import { renderHook } from '@testing-library/react';
 import useChrome from '@redhat-cloud-services/frontend-components/useChrome';
-import useAnalytics from '../useAnalytics';
+import { renderHook } from '@testing-library/react';
+
 import { getTrackEvent } from '../../common/analytics';
+import useAnalytics from '../useAnalytics';
 
 jest.mock('@redhat-cloud-services/frontend-components/useChrome', () => jest.fn());
 jest.mock('../../common/analytics', () => ({

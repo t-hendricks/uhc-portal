@@ -1,4 +1,5 @@
 import React from 'react';
+
 import { Text, TextContent, TextVariants } from '@patternfly/react-core';
 
 export const WelcomeMessage: React.FC = () => (

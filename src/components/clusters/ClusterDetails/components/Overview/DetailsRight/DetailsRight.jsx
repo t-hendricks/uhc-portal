@@ -1,38 +1,39 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import get from 'lodash/get';
+import PropTypes from 'prop-types';
+
+import * as OCM from '@openshift-assisted/ui-lib/ocm';
 import {
   DescriptionList,
-  DescriptionListTerm,
-  DescriptionListGroup,
   DescriptionListDescription,
+  DescriptionListGroup,
+  DescriptionListTerm,
   Flex,
 } from '@patternfly/react-core';
-import * as OCM from '@openshift-assisted/ui-lib/ocm';
+
+import { getQueryParam } from '~/common/queryHelpers';
+import { hasSecurityGroupIds } from '~/common/securityGroupsHelpers';
 import {
   canViewMachinePoolTab,
   isHypershiftCluster,
   isROSA,
 } from '~/components/clusters/common/clusterStates';
+import { useAWSVPCFromCluster } from '~/components/clusters/common/useAWSVPCFromCluster';
 import { IMDSType } from '~/components/clusters/wizards/common';
 import { isRestrictedEnv } from '~/restrictedEnv';
-import { hasSecurityGroupIds } from '~/common/securityGroupsHelpers';
-import { useAWSVPCFromCluster } from '~/components/clusters/common/useAWSVPCFromCluster';
 
-import { GCP_SECURE_BOOT_UI } from '~/redux/constants/featureConstants';
-import { useFeatureGate } from '~/hooks/useFeatureGate';
-import { getQueryParam } from '~/common/queryHelpers';
-import Timestamp from '../../../../../common/Timestamp';
 import links from '../../../../../../common/installLinks.mjs';
 import { isAISubscriptionWithoutMetrics } from '../../../../../../common/isAssistedInstallerCluster';
-import ClusterNetwork from '../ClusterNetwork';
-import { constants } from '../../../../common/CreateOSDFormConstants';
-import { humanizeValueWithUnit, humanizeValueWithUnitGiB } from '../../../../../../common/units';
 import { subscriptionStatuses } from '../../../../../../common/subscriptionTypes';
-import PopoverHint from '../../../../../common/PopoverHint';
+import { humanizeValueWithUnit, humanizeValueWithUnitGiB } from '../../../../../../common/units';
 import ExternalLink from '../../../../../common/ExternalLink';
-import { ClusterStatus } from './ClusterStatus';
+import PopoverHint from '../../../../../common/PopoverHint';
+import Timestamp from '../../../../../common/Timestamp';
+import { constants } from '../../../../common/CreateOSDFormConstants';
 import SecurityGroupsDisplayByNode from '../../SecurityGroups/SecurityGroupsDetailDisplay';
+import ClusterNetwork from '../ClusterNetwork';
+
+import { ClusterStatus } from './ClusterStatus';
 
 const { ClusterStatus: AIClusterStatus } = OCM;
 function DetailsRight({
@@ -92,8 +93,7 @@ function DetailsRight({
   const oidcConfig = cluster.aws?.sts?.oidc_config;
   const imdsConfig = cluster.aws?.ec2_metadata_http_tokens || IMDSType.V1AndV2;
 
-  const isSecureBootFeatureEnabled = useFeatureGate(GCP_SECURE_BOOT_UI);
-  const showSecureBoot = isGCP && isSecureBootFeatureEnabled && !isDeprovisioned;
+  const showSecureBoot = isGCP && !isDeprovisioned;
   const secureBoot = isGCP && cluster.gcp?.security?.secure_boot;
 
   return (
@@ -189,7 +189,7 @@ function DetailsRight({
           </DescriptionListGroup>
           <DescriptionListGroup>
             <DescriptionListTerm>Persistent storage</DescriptionListTerm>
-            <DescriptionListDescription>
+            <DescriptionListDescription data-testid="persistent-storage">
               {humanizedPersistentStorage
                 ? `${humanizedPersistentStorage.value}  ${humanizedPersistentStorage.unit}`
                 : 'N/A'}
@@ -360,7 +360,9 @@ function DetailsRight({
         <DescriptionListGroup>
           <DescriptionListTerm>Secure Boot support for Shielded VMs</DescriptionListTerm>
           <DescriptionListDescription>
-            <span>{secureBoot ? 'Enabled' : 'Disabled'}</span>
+            <span data-testid="secureBootSupportForShieldedVMs">
+              {secureBoot ? 'Enabled' : 'Disabled'}
+            </span>
           </DescriptionListDescription>
         </DescriptionListGroup>
       )}

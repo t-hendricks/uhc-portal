@@ -1,52 +1,54 @@
+import React from 'react';
 import get from 'lodash/get';
 import PropTypes from 'prop-types';
-import React from 'react';
+import { Link } from 'react-router-dom-v5-compat';
+
+import * as OCM from '@openshift-assisted/ui-lib/ocm';
 import {
-  Popover,
-  PopoverPosition,
   Button,
   EmptyState,
-  EmptyStateIcon,
   EmptyStateBody,
-  Label,
   EmptyStateHeader,
+  EmptyStateIcon,
+  Label,
+  Popover,
+  PopoverPosition,
 } from '@patternfly/react-core';
+import ExclamationTriangleIcon from '@patternfly/react-icons/dist/esm/icons/exclamation-triangle-icon';
+import SearchIcon from '@patternfly/react-icons/dist/esm/icons/search-icon';
 import {
-  sortable,
-  classNames,
-  Visibility,
-  SortByDirection,
   cellWidth,
+  classNames,
+  sortable,
+  SortByDirection,
+  Visibility,
 } from '@patternfly/react-table';
 import {
   Table as TableDeprecated,
-  TableHeader as TableHeaderDeprecated,
   TableBody as TableBodyDeprecated,
+  TableHeader as TableHeaderDeprecated,
 } from '@patternfly/react-table/deprecated';
-import ExclamationTriangleIcon from '@patternfly/react-icons/dist/esm/icons/exclamation-triangle-icon';
 import { global_warning_color_100 as warningColor } from '@patternfly/react-tokens/dist/esm/global_warning_color_100';
 
-import { Link } from 'react-router-dom-v5-compat';
-import * as OCM from '@openshift-assisted/ui-lib/ocm';
-import SearchIcon from '@patternfly/react-icons/dist/esm/icons/search-icon';
-import ClusterStateIcon from '../../common/ClusterStateIcon/ClusterStateIcon';
+import getClusterName from '../../../../common/getClusterName';
+import { isAISubscriptionWithoutMetrics } from '../../../../common/isAssistedInstallerCluster';
+import skeletonRows from '../../../common/SkeletonRows';
+import { actionResolver } from '../../common/ClusterActionsDropdown/ClusterActionsDropdownItems';
 import ClusterLocationLabel from '../../common/ClusterLocationLabel';
+import ClusterStateIcon from '../../common/ClusterStateIcon';
 import clusterStates, {
   getClusterStateAndDescription,
-  isWaitingROSAManualMode,
-  isWaitingForOIDCProviderOrOperatorRolesMode,
   isOSDGCPWaitingForRolesOnHostProject,
+  isWaitingForOIDCProviderOrOperatorRolesMode,
+  isWaitingROSAManualMode,
 } from '../../common/clusterStates';
-import ClusterUpdateLink from '../../common/ClusterUpdateLink';
-import ClusterCreatedIndicator from './ClusterCreatedIndicator';
-import getClusterName from '../../../../common/getClusterName';
-import { actionResolver } from '../../common/ClusterActionsDropdown/ClusterActionsDropdownItems';
-import skeletonRows from '../../../common/SkeletonRows';
 import ClusterTypeLabel from '../../common/ClusterTypeLabel';
-import ProgressList from '../../common/InstallProgress/ProgressList';
-import ActionRequiredLink from '../../common/InstallProgress/ActionRequiredLink';
-import { isAISubscriptionWithoutMetrics } from '../../../../common/isAssistedInstallerCluster';
+import ClusterUpdateLink from '../../common/ClusterUpdateLink';
 import getClusterVersion from '../../common/getClusterVersion';
+import ActionRequiredLink from '../../common/InstallProgress/ActionRequiredLink';
+import ProgressList from '../../common/InstallProgress/ProgressList';
+
+import ClusterCreatedIndicator from './ClusterCreatedIndicator';
 
 const { ClusterStatus: AIClusterStatus } = OCM;
 function ClusterListTable(props) {

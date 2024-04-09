@@ -1,11 +1,10 @@
+/* generated using openapi-typescript-codegen -- do not edit */
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-
 import type { CloudAccount } from './CloudAccount';
 import type { ObjectReference } from './ObjectReference';
 import type { RelatedResource } from './RelatedResource';
-
 export type QuotaCost = ObjectReference & {
   allowed: number;
   cloud_accounts?: Array<CloudAccount>;

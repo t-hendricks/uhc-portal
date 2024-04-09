@@ -1,12 +1,15 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+
 import { Toolbar, ToolbarContent, ToolbarGroup, ToolbarItem } from '@patternfly/react-core';
+
 import { viewConstants } from '../../../../../../redux/constants';
-import ClusterLogsFilterChipGroup from './ClusterLogsFilterChipGroup';
-import ClusterLogsDownload from './ClusterLogsDownload';
+import ViewPaginationRow from '../../../../common/ViewPaginationRow/viewPaginationRow';
+
 import ClusterLogsConditionalFilter from './ClusterLogsConditionalFilter';
 import ClusterLogsDatePicker from './ClusterLogsDatePicker';
-import ViewPaginationRow from '../../../../common/ViewPaginationRow/viewPaginationRow';
+import ClusterLogsDownload from './ClusterLogsDownload';
+import ClusterLogsFilterChipGroup from './ClusterLogsFilterChipGroup';
 
 class ClusterLogsToolbar extends React.PureComponent {
   render() {
@@ -71,7 +74,6 @@ class ClusterLogsToolbar extends React.PureComponent {
         </Toolbar>
         <ClusterLogsFilterChipGroup
           view={viewConstants.CLUSTER_LOGS_VIEW}
-          history={history}
           currentFilter={currentFilter}
           currentFlags={currentFlags}
           setFilter={setFilter}

@@ -2,11 +2,13 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
+
 import { FormGroup } from '@patternfly/react-core';
 import {
   Select as SelectDeprecated,
   SelectOption as SelectOptionDeprecated,
 } from '@patternfly/react-core/deprecated';
+
 import { FormGroupHelperText } from '~/components/common/FormGroupHelperText';
 
 // AWS availability zones are comprised from the region name

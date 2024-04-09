@@ -1,7 +1,7 @@
 import { MachinePool, NodePool } from '~/types/clusters_mgmt.v1';
 
 import { EditMachinePoolValues } from './hooks/useMachinePoolFormik';
-import { buildNodePoolRequest, buildMachinePoolRequest } from './utils';
+import { buildMachinePoolRequest, buildNodePoolRequest } from './utils';
 
 const defaultValues: EditMachinePoolValues = {
   name: 'my-mp',
@@ -133,6 +133,7 @@ describe('buildNodePoolRequest', () => {
       expect(nodePool.taints).toEqual([]);
       expect(nodePool.subnet).toEqual('subnet-id');
       expect(nodePool.aws_node_pool?.instance_type).toEqual('some-instance-type');
+      expect(nodePool.aws_node_pool?.additional_security_group_ids).toStrictEqual(['sg-1']);
     });
 
     it('does not add specific ROSA classic fields', () => {
@@ -156,6 +157,7 @@ describe('buildNodePoolRequest', () => {
       expect(nodePool.id).toEqual('my-mp');
       expect(nodePool.labels).toEqual({});
       expect(nodePool.taints).toEqual([]);
+      expect(nodePool.aws_node_pool?.additional_security_group_ids).toBe(undefined);
     });
 
     it('does not add Hypershift values that can be only set at creation time', () => {

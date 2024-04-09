@@ -142,6 +142,7 @@ const links = {
   ROSA_CIDR_HOST: `${ROSA_DOCS_BASE}/networking/cidr-range-definitions.html#host-prefix-description`,
   OSD_CLUSTER_AUTOSCALING: `${OSD_DOCS_BASE}/osd_cluster_admin/osd-cluster-autoscaling.html`,
   ROSA_CLUSTER_AUTOSCALING: `${ROSA_DOCS_BASE}/rosa_cluster_admin/rosa-cluster-autoscaling.html`,
+  OSD_SECURITY_GROUPS: `${OSD_DOCS_BASE}/osd_planning/aws-ccs.html#osd-security-groups-custom_aws-ccs `,
 
   CLI_TOOLS_OCP_GETTING_STARTED: `${DOCS_BASE}/cli_reference/openshift_cli/getting-started-cli.html`,
 
@@ -213,6 +214,7 @@ const links = {
   INSTALL_IBMZ_RHCOS_LEARN_MORE_RHEL_KVM: `${DOCS_BASE}/installing/installing_ibm_z/installing-ibm-z-kvm.html#installation-user-infra-machines-iso-ibm-z_kvm_installing-ibm-z-kvm`,
   INSTALL_IBMZ_LEARN_MORE_ZVM: `${DOCS_BASE}/installing/installing_ibm_z/installing-ibm-z.html#installation-user-infra-machines-iso-ibm-z_installing-ibm-z`,
   INSTALL_IBMZ_UPI_GETTING_STARTED: `${DOCS_BASE}/installing/installing_ibm_z/preparing-to-install-on-ibm-z.html`,
+  INSTALL_IBMZ_AGENTS_GETTING_STARTED: `${DOCS_BASE}/installing/installing_with_agent_based_installer/prepare-pxe-assets-agent.html#installing-ocp-agent-ibm-z_prepare-pxe-assets-agent`,
   INSTALL_IBMPOWERVS_GETTING_STARTED: `${DOCS_BASE}/installing/installing_ibm_powervs/preparing-to-install-on-ibm-power-vs.html`,
   INSTALL_IBMPOWERVS_PREREQUISITES: `${DOCS_BASE}/installing/installing_ibm_powervs/preparing-to-install-on-ibm-power-vs.html`,
   RHCOS_IBMZ_ISO: `${MIRROR_RHCOS_LATEST_IBMZ}/rhcos-live.s390x.iso`,
@@ -285,6 +287,7 @@ const links = {
   ROSA_DOCS_ENTRY: `${ROSA_DOCS_BASE}/welcome/index.html`,
   ROSA_MONITORING: `${ROSA_DOCS_BASE}/monitoring/monitoring-overview.html#understanding-the-monitoring-stack_monitoring-overview`,
   ROSA_AUTOSCALING: `${ROSA_DOCS_BASE}/rosa_cluster_admin/rosa_nodes/rosa-nodes-about-autoscaling-nodes.html`,
+  ROSA_SECURITY_GROUPS: `${ROSA_DOCS_BASE}/rosa_planning/rosa-sts-aws-prereqs.html#rosa-security-groups-custom_rosa-sts-aws-prereqs `,
   ROSA_CLI_DOCS: `${ROSA_CP_DOCS_BASE}/rosa_cli/rosa-get-started-cli`,
   ROSA_AWS_PREREQUISITES: `${ROSA_DOCS_BASE}/rosa_install_access_delete_clusters/rosa_getting_started_iam/rosa-aws-prereqs.html`,
   ROSA_INSTALLING: `${ROSA_DOCS_BASE}/rosa_install_access_delete_clusters/rosa_getting_started_iam/rosa-installing-rosa.html`,
@@ -319,6 +322,7 @@ const links = {
   AWS_CLI_GETTING_STARTED_MANUAL:
     'https://docs.aws.amazon.com/ROSA/latest/userguide/getting-started-sts-manual.html',
   AWS_ROSA_GET_STARTED: 'https://docs.aws.amazon.com/ROSA/latest/userguide/getting-started.html',
+  AWS_FINDING_KEY_ARN: 'https://docs.aws.amazon.com/kms/latest/developerguide/find-cmk-id-arn.html',
   AWS_IMDS:
     'https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/configuring-instance-metadata-options.html',
   AWS_LOAD_BALANCER_FEATURES:

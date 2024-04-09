@@ -1,9 +1,9 @@
 import React from 'react';
 
-import { Grid, GridItem, Alert, FormGroup } from '@patternfly/react-core';
+import { Alert, FormGroup, Grid, GridItem } from '@patternfly/react-core';
 
+import links from '~/common/installLinks.mjs';
 import { validateAWSKMSKeyARN } from '~/common/validators';
-import ExternalLink from '~/components/common/ExternalLink';
 import { constants } from '~/components/clusters/common/CreateOSDFormConstants';
 import { CloudProviderType } from '~/components/clusters/wizards/common/constants';
 import {
@@ -13,10 +13,13 @@ import {
 } from '~/components/clusters/wizards/form';
 import { useFormState } from '~/components/clusters/wizards/hooks';
 import { FieldId } from '~/components/clusters/wizards/osd/constants';
+import ExternalLink from '~/components/common/ExternalLink';
+
 import { GcpEncryption } from './GcpEncryption';
 
 interface CustomerManagedEncryptionProps {
-  hasCustomerManagedKey: string;
+  // TODO: name sounds like a bool but is actually string
+  hasCustomerManagedKey: 'true' | 'false';
   region: string;
   cloudProvider: string;
   kmsKeyArn: string;
@@ -83,6 +86,9 @@ export const CustomerManagedEncryption = ({
       </GridItem>
 
       {hasCustomerManagedKey === 'true' &&
+        // TODO: The AWS case is shared with rosa_v2/ClusterSettings/Details/AWSCustomerManagedEncryption.tsx
+        //   To reduce duplication can make this component GCP-only, lift isGCP check to parent.
+        //   (but check decision on OCMUI-1593 wrt. `isRequired`)
         (isGCP ? (
           <GcpEncryption region={region} />
         ) : (
@@ -95,7 +101,7 @@ export const CustomerManagedEncryption = ({
               tooltip={
                 <>
                   <p className="pf-v5-u-mb-sm">{constants.awsKeyARN}</p>
-                  <ExternalLink href="https://docs.aws.amazon.com/kms/latest/developerguide/find-cmk-id-arn.html">
+                  <ExternalLink href={links.AWS_FINDING_KEY_ARN}>
                     Finding the key ID and ARN
                   </ExternalLink>
                 </>

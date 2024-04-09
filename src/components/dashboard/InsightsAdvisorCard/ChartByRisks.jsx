@@ -1,10 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Title, Flex, FlexItem } from '@patternfly/react-core';
+
+import { Flex, FlexItem, Title } from '@patternfly/react-core';
 
 import { advisorBaseName } from '~/common/getBaseName';
-import InfoPopover from './InfoPopover';
+
 import { getSeverityName } from '../overviewHelpers';
+
+import InfoPopover from './InfoPopover';
 
 function ChartByRisks({ riskHits }) {
   return (

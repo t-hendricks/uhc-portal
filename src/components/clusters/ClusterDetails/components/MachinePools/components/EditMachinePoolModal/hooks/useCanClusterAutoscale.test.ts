@@ -1,5 +1,6 @@
-import * as reduxHooks from '~/redux/hooks';
 import { normalizedProducts } from '~/common/subscriptionTypes';
+import * as reduxHooks from '~/redux/hooks';
+
 import useCanClusterAutoscale from './useCanClusterAutoscale';
 
 const useGlobalStateMock = jest.spyOn(reduxHooks, 'useGlobalState');

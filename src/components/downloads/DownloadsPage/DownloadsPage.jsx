@@ -1,47 +1,48 @@
 import React from 'react';
+import { produce } from 'immer';
+import { get, has } from 'lodash';
 import PropTypes from 'prop-types';
+import { Link, useLocation, useNavigate } from 'react-router-dom-v5-compat';
+
+import * as OCM from '@openshift-assisted/ui-lib/ocm';
 import {
-  Button,
   ExpandableSectionToggle,
+  FormSelect,
+  FormSelectOption,
   PageSection,
   Split,
   SplitItem,
-  FormSelect,
-  FormSelectOption,
   Text,
   TextContent,
 } from '@patternfly/react-core';
-import { PageHeader, PageHeaderTitle } from '@redhat-cloud-services/frontend-components/PageHeader';
-import { Thead, Tbody, Tr, Th, Td, ExpandableRowContent } from '@patternfly/react-table';
+import { Td, Th, Thead, Tr } from '@patternfly/react-table';
 import { Table as TableDeprecated } from '@patternfly/react-table/deprecated';
-import { ArrowRightIcon } from '@patternfly/react-icons/dist/esm/icons/arrow-right-icon';
-import { useNavigate, useLocation, Link } from 'react-router-dom-v5-compat';
-import * as OCM from '@openshift-assisted/ui-lib/ocm';
+import { PageHeader, PageHeaderTitle } from '@redhat-cloud-services/frontend-components/PageHeader';
 
-import { produce } from 'immer';
-import { has, get } from 'lodash';
+import { hasRestrictTokensCapability } from '~/common/restrictTokensHelper';
 import { AppPage } from '~/components/App/AppPage';
 import { isRestrictedEnv } from '~/restrictedEnv';
 
-import ExternalLink from '../../common/ExternalLink';
 import links, {
-  tools,
-  channels,
-  operatingSystems,
-  operatingSystemOptions,
   architectureOptions,
+  channels,
   githubReleasesToFetch,
+  operatingSystemOptions,
+  operatingSystems,
+  tools,
   urlsSelector,
 } from '../../../common/installLinks.mjs';
-import SupportLevelBadge, { SupportLevelType } from '../../common/SupportLevelBadge';
-
+import useOrganization from '../../CLILoginPage/useOrganization';
 import DownloadButton from '../../clusters/install/instructions/components/DownloadButton';
 import AlignRight from '../../common/AlignRight';
+import ExternalLink from '../../common/ExternalLink';
+import SupportLevelBadge, { SupportLevelType } from '../../common/SupportLevelBadge';
 import DownloadsCategoryDropdown from '../DownloadsCategoryDropdown';
-import { expandKeys, downloadsCategories } from '../downloadsStructure';
 import DownloadsSection from '../DownloadsSection';
-import DownloadPullSecret from '../DownloadPullSecret';
-import CopyPullSecret from '../CopyPullSecret';
+import { downloadsCategories, expandKeys } from '../downloadsStructure';
+
+import ExpandableRowPair from './ExpandableRowPair';
+import TokenRows from './TokenRows';
 
 import './DownloadsPage.scss';
 
@@ -213,45 +214,6 @@ export const downloadChoice = (
 
 const rowId = (expandKey) => `tool-${expandKey}`;
 
-/** An expandable pair of table rows. */
-const ExpandableRowPair = ({ expanded, setExpanded, expandKey, cells, description, toolRefs }) => {
-  const isExpanded = !!expanded[expandKey];
-  const onToggle = (event, rowIndex, newOpen) => {
-    setExpanded({ ...expanded, [expandKey]: newOpen });
-  };
-  return (
-    <Tbody
-      isExpanded={isExpanded}
-      ref={get(toolRefs, expandKey)}
-      data-testid={`expandable-row-${expandKey}`}
-    >
-      <Tr>
-        <Td expand={{ isExpanded, onToggle, rowIndex: 0 }} />
-        {cells}
-      </Tr>
-      <Tr isExpanded={isExpanded} data-testid={`expanded-row-${expandKey}`}>
-        <Td colSpan={1 + cells.length}>
-          <ExpandableRowContent>{description}</ExpandableRowContent>
-        </Td>
-      </Tr>
-    </Tbody>
-  );
-};
-ExpandableRowPair.propTypes = {
-  // { [expandKey]: boolean }
-  expanded: PropTypes.object,
-  // callback to replace whole `expanded` map
-  setExpanded: PropTypes.func,
-  // { [expandKey]: ref } - to allow referring to specific row pairs
-  toolRefs: PropTypes.object,
-  // tool or other key for `expanded` array
-  expandKey: PropTypes.oneOf(Object.values(expandKeys)),
-  // array of `<Td>` cells for first row
-  cells: PropTypes.arrayOf(PropTypes.node),
-  // content for full-width description cell
-  description: PropTypes.node,
-};
-
 /** Row pair for a tool. */
 const ToolAndDescriptionRows = ({
   expanded,
@@ -276,16 +238,16 @@ const ToolAndDescriptionRows = ({
       toolRefs={toolRefs}
       expandKey={tool}
       cells={[
-        <Td dataLabel="Name" key="Name">
+        <Td dataLabel="Name" key={`${tool}-name`}>
           <span>{name}</span>
         </Td>,
-        <Td dataLabel="OS" key="OS">
+        <Td dataLabel="OS" key={`${tool}-os`}>
           {chooser.osDropdown}
         </Td>,
-        <Td dataLabel="Architecture" key="Arch">
+        <Td dataLabel="Architecture" key={`${tool}-arch`}>
           {chooser.archDropdown}
         </Td>,
-        <Td dataLabel="" key="downloadBtn">
+        <Td dataLabel="" key={`${tool}-download`}>
           <AlignRight>{chooser.downloadButton} </AlignRight>
         </Td>,
       ]}
@@ -830,81 +792,12 @@ const TokensHeadings = () => (
   </Thead>
 );
 
-const tokenRows = (expanded, setExpanded, toolRefs, token) => (
-  <>
-    <ExpandableRowPair
-      expanded={expanded}
-      setExpanded={setExpanded}
-      toolRefs={toolRefs}
-      expandKey={expandKeys.PULL_SECRET}
-      cells={[
-        <Td key="pullSecret">Pull secret</Td>,
-        <Td key="download">
-          <AlignRight>
-            <Split hasGutter>
-              <SplitItem>
-                <CopyPullSecret token={token} text="Copy" variant="link-inplace" />
-              </SplitItem>
-              <SplitItem>
-                <DownloadPullSecret token={token} text="Download" />
-              </SplitItem>
-            </Split>
-          </AlignRight>
-        </Td>,
-      ]}
-      description={
-        <TextContent>
-          <Text>
-            An image pull secret provides authentication for the cluster to access services and
-            registries which serve the container images for OpenShift components. Every individual
-            user gets a single pull secret generated. The pull secret can be used when installing
-            clusters, based on the required infrastructure.
-          </Text>
-          <Text>
-            Learn how to <Link to="/create">create a cluster</Link> or{' '}
-            <ExternalLink href={links.OCM_DOCS_PULL_SECRETS}>
-              learn more about pull secrets
-            </ExternalLink>
-            .
-          </Text>
-        </TextContent>
-      }
-    />
-
-    <ExpandableRowPair
-      expanded={expanded}
-      setExpanded={setExpanded}
-      toolRefs={toolRefs}
-      expandKey={expandKeys.TOKEN_OCM}
-      cells={[
-        <Td key="name">OpenShift Cluster Manager API Token</Td>,
-        <Td key="viewAPI">
-          <AlignRight>
-            <Link to="/token">
-              <Button
-                variant="secondary"
-                icon={<ArrowRightIcon />}
-                data-testid="view-api-token-btn"
-                iconPosition="right"
-              >
-                View API token
-              </Button>
-            </Link>
-          </AlignRight>
-        </Td>,
-      ]}
-      description={
-        <Text>
-          Use your API token to authenticate against your OpenShift Cluster Manager account.
-        </Text>
-      }
-    />
-  </>
-);
-
 const DownloadsPage = ({ token, githubReleases, getLatestRelease, getAuthToken }) => {
+  const restrictedEnv = isRestrictedEnv();
   const location = useLocation();
   const navigate = useNavigate();
+  const { organization, isLoading, error } = useOrganization();
+  const [restrictTokens, setRestrictTokens] = React.useState();
 
   const initialExpanded = () => {
     const initial = {};
@@ -934,7 +827,7 @@ const DownloadsPage = ({ token, githubReleases, getLatestRelease, getAuthToken }
    */
   const updateURL = (selectedCategory, expanded) => {
     let lastExpanded = null;
-    const shownKeys = downloadsCategories.find((c) => c.key === selectedCategory)?.tools;
+    const shownKeys = downloadsCategories().find((c) => c.key === selectedCategory)?.tools;
     shownKeys.forEach((key) => {
       if (expanded[key]) {
         lastExpanded = key;
@@ -977,6 +870,19 @@ const DownloadsPage = ({ token, githubReleases, getLatestRelease, getAuthToken }
   };
 
   React.useEffect(() => {
+    // check if using offline tokens is restricted
+    if (
+      !restrictedEnv &&
+      !isLoading &&
+      !error &&
+      !!organization &&
+      hasRestrictTokensCapability(organization.capabilities)
+    ) {
+      setRestrictTokens(true);
+    }
+  }, [organization, isLoading, error, restrictedEnv]);
+
+  React.useEffect(() => {
     getAuthToken();
     githubReleasesToFetch.forEach((repo) => {
       if (!githubReleases[repo].fulfilled) {
@@ -1005,7 +911,7 @@ const DownloadsPage = ({ token, githubReleases, getLatestRelease, getAuthToken }
 
   const urls = urlsSelector(githubReleases);
 
-  const shownKeys = downloadsCategories.find((c) => c.key === selectedCategory)?.tools;
+  const shownKeys = downloadsCategories().find((c) => c.key === selectedCategory)?.tools;
   const allExpanded = shownKeys?.every((key) => expanded[key]);
   const willExpandAll = !allExpanded;
 
@@ -1074,7 +980,7 @@ const DownloadsPage = ({ token, githubReleases, getLatestRelease, getAuthToken }
             </TableDeprecated>
           </DownloadsSection>
 
-          {!isRestrictedEnv() && (
+          {!restrictedEnv && (
             <>
               <DownloadsSection
                 selectedCategory={selectedCategory}
@@ -1173,11 +1079,18 @@ const DownloadsPage = ({ token, githubReleases, getLatestRelease, getAuthToken }
               </DownloadsSection>
             </>
           )}
-
           <DownloadsSection category="TOKENS" selectedCategory={selectedCategory}>
             <TableDeprecated aria-label="Tokens table">
               <TokensHeadings />
-              {tokenRows(expanded, setExpandedState, toolRefs, token)}
+              <TokenRows
+                expanded={expanded}
+                setExpanded={setExpandedState}
+                toolRefs={toolRefs}
+                token={token}
+                restrictTokens={restrictTokens}
+                orgRequest={{ isLoading, error }}
+                restrictedEnv={restrictedEnv}
+              />
             </TableDeprecated>
           </DownloadsSection>
         </PageSection>

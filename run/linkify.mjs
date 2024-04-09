@@ -1,10 +1,9 @@
 #!/usr/bin/env node
 
-import { realpathSync } from 'fs';
-import { fileURLToPath } from 'url';
-
-import fetch from 'node-fetch';
 import { Chalk } from 'chalk';
+import { realpathSync } from 'fs';
+import fetch from 'node-fetch';
+import { fileURLToPath } from 'url';
 
 // See here about hyperlink escape sequence and which terminals support it:
 // https://gist.github.com/egmontkob/eb114294efbcd5adb1944c9f3cb5feda
@@ -42,11 +41,12 @@ export const getJiraStatuses = async () => {
   try {
     // HAC & OCMUI boards allow unauthenticated requests :-)
     // Note: Even mentioning a closed board e.g. `project in (OCMUI, OCM)` results in 400 error.
-    const params = new URLSearchParams({ jql: jiraQuery, maxResults: 100 });
+    const fields = 'key,priority,status,resolution,summary';
+    const params = new URLSearchParams({ jql: jiraQuery, maxResults: 100, fields });
     const url = `https://issues.redhat.com/rest/api/2/search?${params}`;
     const response = await fetch(url);
     const body = await response.text();
-    if (response.status != 200) {
+    if (response.status !== 200) {
       console.error(
         `WARN: failed to fetch jira info, URL: ${url}\n` +
           `  -> ${response.status} ${response.statusText}\n` +
@@ -64,6 +64,7 @@ export const getJiraStatuses = async () => {
 };
 
 export const linkify = (text, linkFunction, jiraByKey = {}) => {
+  /* eslint-disable no-param-reassign */
   // Jira cards.  lowercase `ocmui-nnn` form allowed as some folk put it in branch names.
   text = text.replace(
     /(OCMUI|HAC|RHBKAAS|MGMT|RHCLOUD|OCM|SDA|SDB)[- ](\d+)/gi,
@@ -94,10 +95,10 @@ export const linkify = (text, linkFunction, jiraByKey = {}) => {
   );
 
   // Git commits. Shorten on output so it's painless to feed full 40-char hashes into this script.
-  text = text.replace(/[0-9a-f]{7,}/g, (match) =>
+  text = text.replace(/[0-9a-f]{6,}/g, (match) =>
     linkFunction(
       `https://gitlab.cee.redhat.com/service/${REPO}/-/commit/${match}`,
-      match.slice(0, 7),
+      match.slice(0, 9),
     ),
   );
 
@@ -116,6 +117,7 @@ export const linkify = (text, linkFunction, jiraByKey = {}) => {
   );
 
   return text;
+  /* eslint-enable no-param-reassign */
 };
 
 if (realpathSync(process.argv[1]) === fileURLToPath(import.meta.url)) {
@@ -123,6 +125,7 @@ if (realpathSync(process.argv[1]) === fileURLToPath(import.meta.url)) {
   const jiraPromise = getJiraStatuses();
   // Line-by-line is weirdly painful in NodeJS, so slurp whole input.
   const chunks = [];
+  // eslint-disable-next-line no-restricted-syntax
   for await (const chunk of process.stdin) {
     chunks.push(chunk);
   }

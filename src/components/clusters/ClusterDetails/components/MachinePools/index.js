@@ -1,44 +1,50 @@
-import { connect } from 'react-redux';
 import get from 'lodash/get';
-import modals from '~/components/common/Modal/modals';
-import { isHypershiftCluster } from '~/components/clusters/common/clusterStates';
+import { connect } from 'react-redux';
 
+import { isHypershiftCluster } from '~/components/clusters/common/clusterStates';
+import modals from '~/components/common/Modal/modals';
+import { featureGateSelector } from '~/hooks/useFeatureGate';
 import {
   ENABLE_MACHINE_CONFIGURATION,
   HCP_USE_NODE_UPGRADE_POLICIES,
 } from '~/redux/constants/featureConstants';
-import { featureGateSelector } from '~/hooks/useFeatureGate';
-import MachinePools from './MachinePools';
-import {
-  getMachineOrNodePools,
-  deleteMachinePool,
-  clearGetMachinePoolsResponse,
-  clearDeleteMachinePoolResponse,
-} from './MachinePoolsActions';
 
-import { canMachinePoolBeUpgradedSelector } from './UpdateMachinePools/updateMachinePoolsHelpers';
-import {
-  hasOrgLevelBypassPIDsLimitCapability,
-  hasMachinePoolsQuotaSelector,
-} from './MachinePoolsSelectors';
-import { normalizeNodePool } from './machinePoolsHelper';
-
-import { getOrganizationAndQuota } from '../../../../../redux/actions/userActions';
 import { clusterAutoscalerActions } from '../../../../../redux/actions/clusterAutoscalerActions';
 import { getMachineTypes } from '../../../../../redux/actions/machineTypesActions';
-import { openModal, closeModal } from '../../../../common/Modal/ModalActions';
+import { getOrganizationAndQuota } from '../../../../../redux/actions/userActions';
+import { closeModal, openModal } from '../../../../common/Modal/ModalActions';
 import shouldShowModal from '../../../../common/Modal/ModalSelectors';
+
+import { canMachinePoolBeUpgradedSelector } from './UpdateMachinePools/updateMachinePoolsHelpers';
+import MachinePools from './MachinePools';
+import {
+  clearDeleteMachinePoolResponse,
+  clearGetMachinePoolsResponse,
+  deleteMachinePool,
+  getMachineOrNodePools,
+} from './MachinePoolsActions';
+import { normalizeNodePool } from './machinePoolsHelper';
+import {
+  hasMachinePoolsQuotaSelector,
+  hasOrgLevelBypassPIDsLimitCapability,
+} from './machinePoolsSelectors';
 
 const mapStateToProps = (state) => {
   const cluster = get(state, 'clusters.details.cluster', {});
-  const canBypassPIDsLimit = hasOrgLevelBypassPIDsLimitCapability(state);
+  const canBypassPIDsLimit = hasOrgLevelBypassPIDsLimitCapability(
+    state.userProfile.organization?.details,
+  );
 
   const props = {
     isDeleteMachinePoolModalOpen: shouldShowModal(state, modals.DELETE_MACHINE_POOL),
     isClusterAutoscalingModalOpen: shouldShowModal(state, modals.EDIT_CLUSTER_AUTOSCALING_V1),
     machinePoolsList: state.machinePools.getMachinePools,
     deleteMachinePoolResponse: state.machinePools.deleteMachinePoolResponse,
-    hasMachinePoolsQuota: hasMachinePoolsQuotaSelector(state),
+    hasMachinePoolsQuota: hasMachinePoolsQuotaSelector(
+      state.userProfile.organization,
+      state.clusters.details.cluster,
+      state.machineTypes.types,
+    ),
     machineTypes: state.machineTypes,
     organization: state.userProfile.organization,
     canMachinePoolBeUpdated: (machinePool) => canMachinePoolBeUpgradedSelector(state, machinePool),

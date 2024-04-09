@@ -1,9 +1,8 @@
+/* generated using openapi-typescript-codegen -- do not edit */
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-
 import type { ObjectReference } from './ObjectReference';
-
 export type ReservedResource = ObjectReference & {
   availability_zone_type?: string;
   billing_marketplace_account?: string;
@@ -18,7 +17,6 @@ export type ReservedResource = ObjectReference & {
   subscription?: ObjectReference;
   updated_at?: string;
 };
-
 export namespace ReservedResource {
   export enum billing_model {
     STANDARD = 'standard',
@@ -28,7 +26,6 @@ export namespace ReservedResource {
     MARKETPLACE_AZURE = 'marketplace-azure',
     MARKETPLACE_GCP = 'marketplace-gcp',
   }
-
   export enum resource_type {
     COMPUTE_NODE_AWS = 'compute.node.aws',
     PV_STORAGE_AWS = 'pv.storage.aws',

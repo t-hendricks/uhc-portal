@@ -1,12 +1,14 @@
-import { GridItem } from '@patternfly/react-core';
-import { useField } from 'formik';
 import * as React from 'react';
+import { useField } from 'formik';
+
+import { GridItem } from '@patternfly/react-core';
+
 import { normalizeProductID } from '~/common/normalize';
 import { billingModels } from '~/common/subscriptionTypes';
 import { isMultiAZ } from '~/components/clusters/ClusterDetails/clusterDetailsHelper';
 import MachineTypeSelection from '~/components/clusters/common/ScaleSection/MachineTypeSelection';
-import { Cluster } from '~/types/clusters_mgmt.v1';
 import useFormikOnChange from '~/hooks/useFormikOnChange';
+import { Cluster } from '~/types/clusters_mgmt.v1';
 
 const fieldId = 'instanceType';
 

@@ -1,8 +1,10 @@
 import React from 'react';
 import { Formik } from 'formik';
-import { render, screen } from '~/testUtils';
-import InstallToVPC from '~/components/clusters/wizards/rosa_v2/VPCScreen/InstallToVPC';
+
 import links from '~/common/installLinks.mjs';
+import InstallToVPC from '~/components/clusters/wizards/rosa_v2/VPCScreen/InstallToVPC';
+import { render, screen } from '~/testUtils';
+
 import { initialValues } from '../constants';
 
 const defaultProps = {
@@ -35,14 +37,18 @@ const buildTestComponent = (children, formValues = {}) => (
 );
 
 describe('<InstallToVPC> (AWS)', () => {
-  it('should have a Shared VPC section', async () => {
-    render(buildTestComponent(<InstallToVPC {...defaultProps} />));
+  it.each([[false], [true]])('should have a Shared VPC section', async (isHypershift) => {
+    render(
+      buildTestComponent(<InstallToVPC {...defaultProps} isHypershiftSelected={isHypershift} />),
+    );
 
     expect(await screen.findByText('AWS shared VPC')).toBeInTheDocument();
   });
 
-  it('should show a link to AWS VPC requirements', async () => {
-    render(buildTestComponent(<InstallToVPC {...defaultProps} />));
+  it.each([[false], [true]])('should show a link to AWS VPC requirements', async (isHypershift) => {
+    render(
+      buildTestComponent(<InstallToVPC {...defaultProps} isHypershiftSelected={isHypershift} />),
+    );
 
     expect(await screen.findByRole('link', { name: /Learn more about VPC/ })).toHaveAttribute(
       'href',

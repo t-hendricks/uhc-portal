@@ -1,4 +1,5 @@
 import React from 'react';
+
 import { FormGroup, GridItem } from '@patternfly/react-core';
 import {
   Select as SelectDeprecated,
@@ -6,12 +7,12 @@ import {
   SelectOptionObject as SelectOptionObjectDeprecated,
 } from '@patternfly/react-core/deprecated';
 
-import { CloudVPC } from '~/types/clusters_mgmt.v1';
 import { truncateTextWithEllipsis } from '~/common/helpers';
-import { securityGroupsSort } from '~/redux/reducers/ccsInquiriesReducer';
 import { validateSecurityGroups } from '~/common/validators';
-
 import { FormGroupHelperText } from '~/components/common/FormGroupHelperText';
+import { securityGroupsSort } from '~/redux/reducers/ccsInquiriesReducer';
+import { CloudVPC } from '~/types/clusters_mgmt.v1';
+
 import SecurityGroupsViewList from './SecurityGroupsViewList';
 
 export interface EditSecurityGroupsProps {
@@ -19,6 +20,7 @@ export interface EditSecurityGroupsProps {
   selectedGroupIds: string[];
   selectedVPC: CloudVPC;
   isReadOnly: boolean;
+  isHypershift: boolean;
   onChange: (securityGroupIds: string[]) => void;
 }
 
@@ -37,6 +39,7 @@ const EditSecurityGroups = ({
   selectedGroupIds,
   onChange,
   isReadOnly,
+  isHypershift,
 }: EditSecurityGroupsProps) => {
   const [isOpen, setIsOpen] = React.useState<boolean>(false);
 
@@ -89,7 +92,7 @@ const EditSecurityGroups = ({
     }
   };
 
-  const validationError = validateSecurityGroups(selectedGroupIds);
+  const validationError = validateSecurityGroups(selectedGroupIds, isHypershift);
 
   return (
     <GridItem>

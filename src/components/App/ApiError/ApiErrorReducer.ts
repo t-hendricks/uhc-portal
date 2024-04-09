@@ -1,6 +1,6 @@
 import { AxiosResponse } from 'axios';
 
-import { SHOW_API_ERROR, CLEAR_API_ERROR, ApiErrorAction } from './ApiErrorActions';
+import { ApiErrorAction, CLEAR_API_ERROR, SHOW_API_ERROR } from './ApiErrorActions';
 
 type State = AxiosResponse | null;
 

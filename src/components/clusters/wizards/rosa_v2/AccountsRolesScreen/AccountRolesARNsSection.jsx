@@ -1,46 +1,50 @@
-import React, { useState, useEffect } from 'react';
-import PropTypes from 'prop-types';
-import get from 'lodash/get';
+import React, { useEffect, useState } from 'react';
 import { Field } from 'formik';
+import get from 'lodash/get';
+import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom-v5-compat';
+
 import {
   Alert,
   Button,
   ExpandableSection,
   Grid,
   GridItem,
-  TextContent,
+  Label,
   Text,
-  TextVariants,
+  TextContent,
   TextList,
   TextListItem,
   TextListVariants,
+  TextVariants,
   Title,
-  Label,
 } from '@patternfly/react-core';
-import { useFormState } from '~/components/clusters/wizards/hooks';
 import { Spinner } from '@redhat-cloud-services/frontend-components/Spinner';
-import links from '~/common/installLinks.mjs';
+
 import { trackEvents } from '~/common/analytics';
-import useAnalytics from '~/hooks/useAnalytics';
-import { useOCPLatestVersion } from '~/components/releases/hooks';
-import { isSupportedMinorVersion, formatMinorVersion } from '~/common/helpers';
-import { useFeatureGate } from '~/hooks/useFeatureGate';
-import { HCP_USE_UNMANAGED } from '~/redux/constants/featureConstants';
+import { formatMinorVersion, isSupportedMinorVersion } from '~/common/helpers';
+import links from '~/common/installLinks.mjs';
+import { useFormState } from '~/components/clusters/wizards/hooks';
+import {
+  MIN_MANAGED_POLICY_VERSION,
+  ROSA_HOSTED_CLI_MIN_VERSION,
+} from '~/components/clusters/wizards/rosa_v2/rosaConstants';
 import ErrorBox from '~/components/common/ErrorBox';
 import ExternalLink from '~/components/common/ExternalLink';
 import InstructionCommand from '~/components/common/InstructionCommand';
 import { ReduxSelectDropdown } from '~/components/common/ReduxFormComponents';
 import ReduxVerticalFormGroup from '~/components/common/ReduxFormComponents/ReduxVerticalFormGroup';
-import {
-  MIN_MANAGED_POLICY_VERSION,
-  ROSA_HOSTED_CLI_MIN_VERSION,
-} from '~/components/clusters/wizards/rosa_v2/rosaConstants';
-import { AwsRoleErrorAlert } from './AwsRoleErrorAlert';
+import { useOCPLatestVersion } from '~/components/releases/hooks';
+import useAnalytics from '~/hooks/useAnalytics';
+import { useFeatureGate } from '~/hooks/useFeatureGate';
+import { HCP_USE_UNMANAGED } from '~/redux/constants/featureConstants';
+
+import { FieldId } from '../constants';
+
 import { RosaCliCommand } from './constants/cliCommands';
+import { AwsRoleErrorAlert } from './AwsRoleErrorAlert';
 
 import './AccountsRolesScreen.scss';
-import { FieldId } from '../constants';
 
 const NO_ROLE_DETECTED = 'No role detected';
 
@@ -108,33 +112,34 @@ function AccountRolesARNsSection({
     getAWSAccountRolesARNsResponse,
   );
 
-  const touchARNsFields = React.useCallback(() => {
-    setFieldTouched(FieldId.InstallerRoleArn);
-    setFieldTouched(FieldId.SupportRoleArn);
-    setFieldTouched(FieldId.WorkerRoleArn);
-    if (!isHypershiftSelected) {
-      setFieldTouched(FieldId.ControlPlaneRoleArn);
-    }
-  }, [isHypershiftSelected, setFieldTouched]);
-
-  const updateRoleArns = (role) => {
-    setFieldValue(FieldId.InstallerRoleArn, role?.Installer || NO_ROLE_DETECTED);
-    setFieldValue(FieldId.SupportRoleArn, role?.Support || NO_ROLE_DETECTED);
-    setFieldValue(FieldId.WorkerRoleArn, role?.Worker || NO_ROLE_DETECTED);
-    if (!isHypershiftSelected) {
-      setFieldValue(FieldId.ControlPlaneRoleArn, role?.ControlPlane || NO_ROLE_DETECTED);
-    }
-  };
-
   useEffect(() => {
     // this is required to show any validation error messages for the 4 disabled ARNs fields
-    touchARNsFields();
-  }, [touchARNsFields]);
-
-  useEffect(() => {
-    validateForm();
+    setFieldTouched(FieldId.InstallerRoleArn, true, false);
+    setFieldTouched(FieldId.SupportRoleArn, true, false);
+    setFieldTouched(FieldId.WorkerRoleArn, true, false);
+    if (!isHypershiftSelected) {
+      setFieldTouched(FieldId.ControlPlaneRoleArn, true, false);
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [showMissingArnsError]);
+  }, [isHypershiftSelected]);
+
+  const updateRoleArns = (role) => {
+    const promiseArr = [
+      setFieldValue(FieldId.InstallerRoleArn, role?.Installer || NO_ROLE_DETECTED, false),
+      setFieldValue(FieldId.SupportRoleArn, role?.Support || NO_ROLE_DETECTED, false),
+      setFieldValue(FieldId.WorkerRoleArn, role?.Worker || NO_ROLE_DETECTED, false),
+    ];
+    if (!isHypershiftSelected) {
+      promiseArr.push(
+        setFieldValue(FieldId.ControlPlaneRoleArn, role?.ControlPlane || NO_ROLE_DETECTED, false),
+      );
+    }
+    Promise.all(promiseArr).then(() => {
+      setTimeout(() => {
+        validateForm();
+      }, 10);
+    });
+  };
 
   useEffect(() => {
     setSelectedInstallerRole(NO_ROLE_DETECTED);
@@ -193,7 +198,9 @@ function AccountRolesARNsSection({
       setFieldValue(FieldId.RosaMaxOsVersion, undefined);
       setShowMissingArnsError(true);
     } else {
-      setInstallerRoleOptions(installerOptions);
+      setInstallerRoleOptions(
+        installerOptions.filter((installerRole) => installerRole.value !== undefined),
+      );
       setShowMissingArnsError(false);
     }
     setAccountRoles(accountRolesARNs);
@@ -279,7 +286,7 @@ function AccountRolesARNsSection({
 
     // Clear the installer role/version if the latest fetched roles do not possess the previously selected one.
     if (!accountRoles.some((role) => role.Installer === selectedInstallerRole)) {
-      setFieldValue(FieldId.InstallerRoleArn, '');
+      setFieldValue(FieldId.InstallerRoleArn, '', false);
       setSelectedInstallerRole('');
       setFieldValue(FieldId.ClusterVersion, undefined);
     }

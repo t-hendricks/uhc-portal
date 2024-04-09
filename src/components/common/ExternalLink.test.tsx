@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { render, screen, checkAccessibility, within } from '~/testUtils';
+import { checkAccessibility, render, screen, within } from '~/testUtils';
 
 import ExternalLink from './ExternalLink';
 

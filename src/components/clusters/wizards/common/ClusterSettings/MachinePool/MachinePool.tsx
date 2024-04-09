@@ -1,32 +1,34 @@
 import React from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { GlobalState } from '~/redux/store';
 import { Field } from 'formik';
+import { useDispatch, useSelector } from 'react-redux';
 
-import { Form, Grid, GridItem, Title, Text, ExpandableSection } from '@patternfly/react-core';
+import { ExpandableSection, Form, Grid, GridItem, Text, Title } from '@patternfly/react-core';
 
+import links from '~/common/installLinks.mjs';
+import { normalizedProducts } from '~/common/subscriptionTypes';
 import { required } from '~/common/validators';
+import useCanClusterAutoscale from '~/components/clusters/ClusterDetails/components/MachinePools/components/EditMachinePoolModal/hooks/useCanClusterAutoscale';
+import { getMinNodesRequired } from '~/components/clusters/ClusterDetails/components/MachinePools/machinePoolsHelper';
+import { constants } from '~/components/clusters/common/CreateOSDFormConstants';
+import NodeCountInput from '~/components/clusters/common/NodeCountInput';
+import { getNodesCount } from '~/components/clusters/common/ScaleSection/AutoScaleSection/AutoScaleHelper';
 import MachineTypeSelection from '~/components/clusters/common/ScaleSection/MachineTypeSelection';
-import {
-  getMachineTypesByRegion,
-  getMachineTypes,
-  clearMachineTypesByRegion,
-} from '~/redux/actions/machineTypesActions';
 import { CloudProviderType, FieldId } from '~/components/clusters/wizards/common/constants';
 import { useFormState } from '~/components/clusters/wizards/hooks';
 import ExternalLink from '~/components/common/ExternalLink';
-import { constants } from '~/components/clusters/common/CreateOSDFormConstants';
-import links from '~/common/installLinks.mjs';
-import NodeCountInput from '~/components/clusters/common/NodeCountInput';
-import { normalizedProducts } from '~/common/subscriptionTypes';
-import { getNodesCount } from '~/components/clusters/common/ScaleSection/AutoScaleSection/AutoScaleHelper';
-import { getMinNodesRequired } from '~/components/clusters/ClusterDetails/components/MachinePools/machinePoolsHelper';
-import useCanClusterAutoscale from '~/components/clusters/ClusterDetails/components/MachinePools/components/EditMachinePoolModal/hooks/useCanClusterAutoscale';
+import {
+  clearMachineTypesByRegion,
+  getMachineTypes,
+  getMachineTypesByRegion,
+} from '~/redux/actions/machineTypesActions';
+import { GlobalState } from '~/redux/store';
 import { AWSCredentials } from '~/types/types';
-import { NodeLabelsFieldArray } from './NodeLabelsFieldArray';
-import { ImdsSectionField } from './ImdsSectionField/ImdsSectionField';
-import { AutoScale } from './AutoScale/AutoScale';
+
 import { getAwsCcsCredentials } from '../../utils/ccsCredentials';
+
+import { AutoScale } from './AutoScale/AutoScale';
+import { ImdsSectionField } from './ImdsSectionField/ImdsSectionField';
+import { NodeLabelsFieldArray } from './NodeLabelsFieldArray';
 
 export const MachinePool = () => {
   const dispatch = useDispatch();
@@ -214,7 +216,7 @@ export const MachinePool = () => {
         {canAutoScale && (
           <>
             <GridItem>
-              <AutoScale isDefaultMachinePool />
+              <AutoScale />
             </GridItem>
             {autoscalingEnabled && imdsSection}
             {autoscalingEnabled && nodeLabelsExpandableSection}
@@ -253,7 +255,11 @@ export const MachinePool = () => {
                   ...getFieldProps(FieldId.NodesCompute),
                   onChange: (value: string) => setFieldValue(FieldId.NodesCompute, value),
                 }}
-                minNodes={getMinNodesRequired(true, isByoc, isMultiAz)}
+                minNodes={getMinNodesRequired(
+                  false,
+                  {},
+                  { isDefaultMachinePool: true, isByoc, isMultiAz },
+                )}
               />
             </GridItem>
             {imdsSection}

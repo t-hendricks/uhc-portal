@@ -1,4 +1,5 @@
 import React from 'react';
+
 import { DateFormat } from '@redhat-cloud-services/frontend-components/DateFormat';
 
 type Props = {

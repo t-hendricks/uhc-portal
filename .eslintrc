@@ -5,12 +5,12 @@
     "plugin:import/typescript",
     "prettier",
     "plugin:react-hooks/recommended",
-    "plugin:testing-library/react"
+    "plugin:testing-library/react",
   ],
-  "plugins": ["@typescript-eslint", "no-snapshot-testing"],
+  "plugins": ["@typescript-eslint", "no-snapshot-testing", "simple-import-sort"],
   "env": {
     "browser": true,
-    "jest": true
+    "jest": true,
   },
   "rules": {
     "no-restricted-imports": [
@@ -19,47 +19,30 @@
         "patterns": [
           {
             "group": ["./apiRequest", "../**/apiRequest", "../**/services/apiRequest"],
-            "message": "Use ~/services/apiRequest that provides mocks in unit tests"
+            "message": "Use ~/services/apiRequest that provides mocks in unit tests",
           },
           {
             "group": ["@patternfly/react-icons/dist/js**"],
-            "message": "Import using the full esm path `@patternfly/react-icons/dist/esm/icons/<icon>` instead"
+            "message": "Import using the full esm path `@patternfly/react-icons/dist/esm/icons/<icon>` instead",
           },
           {
             "group": ["@patternfly/react-tokens/dist/js**"],
-            "message": "Import using the full esm path `@patternfly/react-tokens/dist/esm/icons/<icon>` instead"
-          }
+            "message": "Import using the full esm path `@patternfly/react-tokens/dist/esm/icons/<icon>` instead",
+          },
         ],
         "paths": [
           {
             "name": "@patternfly/react-icons",
-            "message": "Import using full path `@patternfly/react-icons/dist/esm/icons/<icon>` instead"
+            "message": "Import using full path `@patternfly/react-icons/dist/esm/icons/<icon>` instead",
           },
           {
             "name": "@patternfly/react-tokens",
-            "message": "Import using full path `@patternfly/react-tokens/dist/esm/<token>` instead"
-          }
-        ]
-      }
+            "message": "Import using full path `@patternfly/react-tokens/dist/esm/<token>` instead",
+          },
+        ],
+      },
     ],
-    "import/no-extraneous-dependencies": [
-      "error",
-      {
-        "devDependencies": [
-          "**/*setupTests.ts",
-          "**/*.test.js*",
-          "**/*test.js*",
-          "**/*.spec.js*",
-          "**/*.test.ts*",
-          "**/*test.ts*",
-          "**/*.spec.ts*",
-          "webpack.config.js",
-          "src/testUtils.tsx",
-          "deploy_info.mjs",
-          "scripts/**/*"
-        ]
-      }
-    ],
+    "import/no-extraneous-dependencies": "error",
     "react/forbid-prop-types": [0],
     "react/require-default-props": [0],
     "react/jsx-no-target-blank": [2],
@@ -71,14 +54,15 @@
       2,
       {
         "namedComponents": ["function-declaration", "arrow-function"],
-        "unnamedComponents": ["function-expression", "arrow-function"]
-      }
+        "unnamedComponents": ["function-expression", "arrow-function"],
+      },
     ],
     "no-param-reassign": [
       "error",
-      { "props": true, "ignorePropertyModificationsFor": ["draft", "response", "acc"] }
+      { "props": true, "ignorePropertyModificationsFor": ["draft", "response", "acc"] },
     ],
     "no-use-before-define": "off",
+    "no-underscore-dangle": ["error", { "allow": ["__dirname", "__filename"] }],
     "@typescript-eslint/no-use-before-define": "error",
     "import/prefer-default-export": 0,
     "no-shadow": "off",
@@ -87,12 +71,12 @@
       "error",
       "ignorePackages",
       {
-        "mjs": "never",
+        "mjs": "always", // currently both Node and Webpack only resolve with ".mjs"
         "js": "never",
         "jsx": "never",
         "ts": "never",
-        "tsx": "never"
-      }
+        "tsx": "never",
+      },
     ],
     "react/jsx-filename-extension": [1, { "extensions": [".tsx", ".jsx"] }],
     "testing-library/prefer-screen-queries": "off", // can be automatically fixed if preferred
@@ -105,9 +89,52 @@
     "testing-library/no-wait-for-multiple-assertions": "error",
     "testing-library/render-result-naming-convention": "error",
     "testing-library/no-debugging-utils": "error",
-    "no-snapshot-testing/no-snapshot-testing": "error"
+    "no-snapshot-testing/no-snapshot-testing": "error",
+    "simple-import-sort/imports": [
+      "error",
+      {
+        "groups": [
+          // `react` first, `next` second, then packages starting with a character
+          ["^react$", "^next", "^[a-z]"],
+          // Packages starting with `@`
+          ["^@"],
+          // Packages starting with `~`
+          ["^~"],
+          // Imports starting with `../`
+          ["^\\.\\.(?!/?$)", "^\\.\\./?$"],
+          // Imports starting with `./`
+          ["^\\./(?=.*/)(?!/?$)", "^\\.(?!/?$)", "^\\./?$"],
+          // Style imports
+          ["^.+\\.s?css$"],
+          // Side effect imports
+          ["^\\u0000"],
+        ],
+      },
+    ],
   },
   "overrides": [
+    {
+      "files": [
+        // Tests & scripts - run in NodeJS not browser
+        "**/*setupTests.ts",
+        "**/*.test.js*",
+        "**/*test.js*",
+        "**/*.spec.js*",
+        "**/*.test.ts*",
+        "**/*test.ts*",
+        "**/*.spec.ts*",
+        "src/testUtils.tsx",
+        "cypress.config.js",
+        "webpack.config.js",
+        "*.mjs",
+        "run/**/*",
+        "scripts/**/*",
+      ],
+      "rules": {
+        "import/no-extraneous-dependencies": ["error", { "devDependencies": true }],
+        "no-console": "off",
+      },
+    },
     {
       "files": ["**/*.ts", "**/*.tsx"],
       "rules": {
@@ -121,21 +148,21 @@
         "object-curly-newline": 0,
         "no-confusing-arrow": 0,
         "function-paren-newline": 0,
-        "react/jsx-one-expression-per-line": 0
-      }
-    }
+        "react/jsx-one-expression-per-line": 0,
+      },
+    },
   ],
   "parser": "@typescript-eslint/parser",
   "parserOptions": {
     "project": "./tsconfig.lint.json",
     "comment": true,
     "ecmaFeatures": {
-      "jsx": true
+      "jsx": true,
     },
     "ecmaVersion": 2017,
     "extraFileExtensions": [".json"],
     "sourceType": "module",
-    "tsconfigRootDir": "./"
+    "tsconfigRootDir": "./",
   },
   "globals": {
     "insights": "readonly",
@@ -144,14 +171,14 @@
     "APP_API_ENV": "readonly",
     "APP_DEV_SERVER": "readonly",
     "APP_SENTRY_RELEASE_VERSION": "readonly",
-    "OCM_SHOW_OLD_METRICS": "readonly"
+    "OCM_SHOW_OLD_METRICS": "readonly",
   },
   "settings": {
     "import/resolver": {
       "alias": {
-        "extensions": [".js", ".jsx", ".ts", ".tsx"],
-        "map": [["~", "./src"]]
-      }
-    }
-  }
+        "extensions": [".js", ".jsx", ".ts", ".tsx", ".mjs"],
+        "map": [["~", "./src"]],
+      },
+    },
+  },
 }

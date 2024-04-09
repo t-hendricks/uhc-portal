@@ -1,7 +1,6 @@
 import React from 'react';
-import { shallow } from 'enzyme';
 
-import { screen, render, checkAccessibility } from '~/testUtils';
+import { checkAccessibility, render, screen } from '~/testUtils';
 
 import NetworkSelfServiceSection from '../NetworkSelfServiceSection';
 
@@ -38,8 +37,6 @@ const fakeGrants = [
 ];
 
 describe('<NetworkSelfServiceSection />', () => {
-  let wrapper;
-
   const getRoles = jest.fn();
   const getGrants = jest.fn();
   const deleteGrant = jest.fn();
@@ -60,9 +57,6 @@ describe('<NetworkSelfServiceSection />', () => {
     isReadOnly: false,
   };
 
-  beforeEach(() => {
-    wrapper = shallow(<NetworkSelfServiceSection {...props} />);
-  });
   afterEach(() => {
     getRoles.mockClear();
     getGrants.mockClear();
@@ -74,42 +68,67 @@ describe('<NetworkSelfServiceSection />', () => {
   it.skip('is accessible with no data', async () => {
     // This test throws an Async callback was not invoked within the 5000 ms timeout specified by jest.setTimeout.Timeout
     // error when trying to check accessibility
+    // This is most likely an issue with the internal timers
 
     const { container } = render(<NetworkSelfServiceSection {...props} />);
     await checkAccessibility(container);
   });
 
   it('should call getGrants and getRoles on mount', () => {
-    expect(getRoles).toBeCalled();
-    expect(getGrants).toBeCalled();
+    expect(getRoles).not.toHaveBeenCalled();
+    expect(getGrants).not.toHaveBeenCalled();
+
+    render(<NetworkSelfServiceSection {...props} />);
+
+    expect(getRoles).toHaveBeenCalled();
+    expect(getGrants).toHaveBeenCalled();
   });
 
-  it('should open modal when needed', () => {
-    wrapper.find('.access-control-add').simulate('click');
-    expect(setTimeout).toBeCalledTimes(1);
+  it('should open modal when needed', async () => {
+    const { user } = render(<NetworkSelfServiceSection {...props} />);
+    expect(openAddGrantModal).not.toHaveBeenCalled();
+    await user.click(screen.getByRole('button', { name: 'Grant role' }));
+
     jest.runAllTimers();
-    expect(openAddGrantModal).toBeCalled();
+    expect(openAddGrantModal).toHaveBeenCalled();
   });
 
   it('should call getGrants() when a grant is added', () => {
-    wrapper.setProps({ addGrantResponse: { ...baseResponse, pending: true } });
-    wrapper.setProps({ addGrantResponse: { ...baseResponse, fulfilled: true } });
-    expect(getGrants).toHaveBeenCalledTimes(2); // one on mount, one on refresh
+    expect(getGrants).not.toHaveBeenCalled();
+    const pendingProps = { ...props, addGrantResponse: { ...baseResponse, pending: true } };
+
+    const { rerender } = render(<NetworkSelfServiceSection {...pendingProps} />);
+    expect(getGrants).toHaveBeenCalledTimes(1);
+
+    const fulfilledProps = { ...props, addGrantResponse: { ...baseResponse, fulfilled: true } };
+
+    rerender(<NetworkSelfServiceSection {...fulfilledProps} />);
+
+    expect(getGrants).toHaveBeenCalledTimes(2);
   });
 
   it('should call getGrants() when a grant is removed', () => {
-    wrapper.setProps({ deleteGrantResponse: { ...baseResponse, pending: true } });
-    wrapper.setProps({ deleteGrantResponse: { ...baseResponse, fulfilled: true } });
-    expect(getGrants).toHaveBeenCalledTimes(2); // one on mount, one now
+    expect(getGrants).not.toHaveBeenCalled();
+    const pendingProps = { ...props, deleteGrantResponse: { ...baseResponse, pending: true } };
+
+    const { rerender } = render(<NetworkSelfServiceSection {...pendingProps} />);
+    expect(getGrants).toHaveBeenCalledTimes(1);
+
+    const fulfilledProps = { ...props, deleteGrantResponse: { ...baseResponse, fulfilled: true } };
+
+    rerender(<NetworkSelfServiceSection {...fulfilledProps} />);
+
+    expect(getGrants).toHaveBeenCalledTimes(2);
   });
 
   it('should render skeleton when pending and no grants are set', () => {
     const newProps = { ...props, grants: { ...baseResponse, pending: true, data: [] } };
     const { container } = render(<NetworkSelfServiceSection {...newProps} />);
+    // There isn't an easy besides class to find skeletons
     expect(container.querySelectorAll('.pf-v5-c-skeleton').length).toBeGreaterThan(0);
   });
 
-  it('is accessible with grants', () => {
+  it('displays grant arns in table cells', async () => {
     const newProps = {
       ...props,
       grants: {
@@ -124,8 +143,16 @@ describe('<NetworkSelfServiceSection />', () => {
   });
 
   it('should notify when a grant fails', () => {
-    wrapper.setProps({ grants: { ...baseResponse, pending: true, data: fakeGrants } });
-    wrapper.setProps({
+    const pendingProps = {
+      ...props,
+      grants: { ...baseResponse, pending: true, data: fakeGrants },
+    };
+    const { rerender } = render(<NetworkSelfServiceSection {...pendingProps} />);
+
+    expect(addNotification).not.toHaveBeenCalled();
+
+    const fulfilledProps = {
+      ...props,
       grants: {
         ...baseResponse,
         fulfilled: true,
@@ -138,8 +165,10 @@ describe('<NetworkSelfServiceSection />', () => {
           fakeGrants[1],
         ],
       },
-    });
-    expect(addNotification).toBeCalledWith({
+    };
+    rerender(<NetworkSelfServiceSection {...fulfilledProps} />);
+
+    expect(addNotification).toHaveBeenCalledWith({
       variant: 'danger',
       title: 'Role creation failed for fake-arn',
       description: 'some failure',
@@ -147,9 +176,18 @@ describe('<NetworkSelfServiceSection />', () => {
       dismissable: false,
     });
   });
+
   it('should notify when a grant succeeds', () => {
-    wrapper.setProps({ grants: { ...baseResponse, pending: true, data: fakeGrants } });
-    wrapper.setProps({
+    const pendingProps = {
+      ...props,
+      grants: { ...baseResponse, pending: true, data: fakeGrants },
+    };
+    const { rerender } = render(<NetworkSelfServiceSection {...pendingProps} />);
+
+    expect(addNotification).not.toHaveBeenCalled();
+
+    const fulfilledProps = {
+      ...props,
       grants: {
         ...baseResponse,
         fulfilled: true,
@@ -161,8 +199,9 @@ describe('<NetworkSelfServiceSection />', () => {
           },
         ],
       },
-    });
-    expect(addNotification).toBeCalledWith({
+    };
+    rerender(<NetworkSelfServiceSection {...fulfilledProps} />);
+    expect(addNotification).toHaveBeenCalledWith({
       variant: 'success',
       title: 'Read Only role successfully created for fake-arn2',
       dismissDelay: 8000,
@@ -171,7 +210,7 @@ describe('<NetworkSelfServiceSection />', () => {
   });
 
   it('should disable add button when canEdit is false', () => {
-    wrapper = shallow(
+    render(
       <NetworkSelfServiceSection
         canEdit={false}
         getRoles={getRoles}
@@ -186,11 +225,15 @@ describe('<NetworkSelfServiceSection />', () => {
         isReadOnly={false}
       />,
     );
-    expect(wrapper.find('.access-control-add').props().disableReason).toBeTruthy();
+
+    expect(screen.getByRole('button', { name: 'Grant role' })).toHaveAttribute(
+      'aria-disabled',
+      'true',
+    );
   });
 
   it('should disable add button when hibernating', () => {
-    wrapper = shallow(
+    render(
       <NetworkSelfServiceSection
         canEdit
         getRoles={getRoles}
@@ -205,11 +248,14 @@ describe('<NetworkSelfServiceSection />', () => {
         isReadOnly={false}
       />,
     );
-    expect(wrapper.find('.access-control-add').props().disableReason).toBeTruthy();
+    expect(screen.getByRole('button', { name: 'Grant role' })).toHaveAttribute(
+      'aria-disabled',
+      'true',
+    );
   });
 
   it('should disable add button when read_only', () => {
-    wrapper = shallow(
+    render(
       <NetworkSelfServiceSection
         canEdit
         getRoles={getRoles}
@@ -224,6 +270,9 @@ describe('<NetworkSelfServiceSection />', () => {
         isReadOnly
       />,
     );
-    expect(wrapper.find('.access-control-add').props().disableReason).toBeTruthy();
+    expect(screen.getByRole('button', { name: 'Grant role' })).toHaveAttribute(
+      'aria-disabled',
+      'true',
+    );
   });
 });

@@ -14,47 +14,45 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import size from 'lodash/size';
-import isEmpty from 'lodash/isEmpty';
-import PropTypes from 'prop-types';
 import React, { Component } from 'react';
+import isEmpty from 'lodash/isEmpty';
+import size from 'lodash/size';
+import PropTypes from 'prop-types';
 
+import { Card, PageSection, Toolbar, ToolbarContent, ToolbarItem } from '@patternfly/react-core';
+import { PageHeaderTools as PageHeaderToolsDeprecated } from '@patternfly/react-core/deprecated';
 import { PageHeader, PageHeaderTitle } from '@redhat-cloud-services/frontend-components/PageHeader';
 import Spinner from '@redhat-cloud-services/frontend-components/Spinner';
-import { Card, PageSection, Toolbar, ToolbarItem, ToolbarContent } from '@patternfly/react-core';
-import { PageHeaderTools as PageHeaderToolsDeprecated } from '@patternfly/react-core/deprecated';
+
+import { ONLY_MY_CLUSTERS_TOGGLE_CLUSTERS_LIST } from '~/common/localStorageConstants';
 import { AppPage } from '~/components/App/AppPage';
 import { isRestrictedEnv } from '~/restrictedEnv';
-import { ONLY_MY_CLUSTERS_TOGGLE_CLUSTERS_LIST } from '~/common/localStorageConstants';
-
-import ReadOnlyBanner from '../common/ReadOnlyBanner';
-import ClusterListFilter from '../common/ClusterListFilter';
-import ClusterListActions from './components/ClusterListActions';
-import ClusterListFilterDropdown from './components/ClusterListFilterDropdown';
-import ClusterListFilterChipGroup from './components/ClusterListFilterChipGroup';
-import ViewOnlyMyClustersToggle from './components/ViewOnlyMyClustersToggle';
-
-import ClusterListEmptyState from './components/ClusterListEmptyState';
-import ClusterListTable from './components/ClusterListTable';
-import RefreshBtn from '../../common/RefreshButton/RefreshButton';
-import ErrorTriangle from '../common/ErrorTriangle';
-import ErrorBox from '../../common/ErrorBox';
-import GlobalErrorBox from '../common/GlobalErrorBox/GlobalErrorBox';
-import Unavailable from '../../common/Unavailable';
-import CommonClusterModals from '../common/CommonClusterModals';
-
-import ViewPaginationRow from '../common/ViewPaginationRow/viewPaginationRow';
 
 import helpers from '../../../common/helpers';
-import { normalizedProducts, productFilterOptions } from '../../../common/subscriptionTypes';
-
 import {
-  viewPropsChanged,
   createViewQueryObject,
   getQueryParam,
+  viewPropsChanged,
 } from '../../../common/queryHelpers';
+import { normalizedProducts, productFilterOptions } from '../../../common/subscriptionTypes';
 import { viewConstants } from '../../../redux/constants';
 import { ASSISTED_INSTALLER_MERGE_LISTS_FEATURE } from '../../../redux/constants/featureConstants';
+import ErrorBox from '../../common/ErrorBox';
+import RefreshBtn from '../../common/RefreshButton/RefreshButton';
+import Unavailable from '../../common/Unavailable';
+import ClusterListFilter from '../common/ClusterListFilter';
+import CommonClusterModals from '../common/CommonClusterModals';
+import ErrorTriangle from '../common/ErrorTriangle';
+import GlobalErrorBox from '../common/GlobalErrorBox/GlobalErrorBox';
+import ReadOnlyBanner from '../common/ReadOnlyBanner';
+import ViewPaginationRow from '../common/ViewPaginationRow/viewPaginationRow';
+
+import ClusterListActions from './components/ClusterListActions';
+import ClusterListEmptyState from './components/ClusterListEmptyState';
+import ClusterListFilterChipGroup from './components/ClusterListFilterChipGroup';
+import ClusterListFilterDropdown from './components/ClusterListFilterDropdown';
+import ClusterListTable from './components/ClusterListTable';
+import ViewOnlyMyClustersToggle from './components/ViewOnlyMyClustersToggle';
 
 import './ClusterList.scss';
 
@@ -265,7 +263,6 @@ class ClusterList extends Component {
                       <ClusterListFilterDropdown
                         view={viewConstants.CLUSTERS_VIEW}
                         isDisabled={pending}
-                        className="cluster-filter-dropdown"
                       />
                     </ToolbarItem>
                   )}

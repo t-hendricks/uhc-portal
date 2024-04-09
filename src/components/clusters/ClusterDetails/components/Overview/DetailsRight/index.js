@@ -1,13 +1,19 @@
 import { connect } from 'react-redux';
-import { canAutoScaleOnCreateSelector } from '~/components/clusters/ClusterDetails/components/MachinePools/MachinePoolsSelectors';
-import DetailsRight from './DetailsRight';
+
+import { canAutoScaleOnCreateSelector } from '~/components/clusters/ClusterDetails/components/MachinePools/machinePoolsSelectors';
+
 import totalNodesDataSelector from '../../../../common/totalNodesDataSelector';
+
+import DetailsRight from './DetailsRight';
 
 const mapStateToProps = (state) => {
   const { cluster } = state.clusters.details;
   const machinePools = state.machinePools.getMachinePools.data;
   const nodesSectionData = totalNodesDataSelector(cluster, machinePools);
-  const canAutoscaleCluster = canAutoScaleOnCreateSelector(state, cluster?.subscription?.plan?.id);
+  const canAutoscaleCluster = canAutoScaleOnCreateSelector(
+    state.userProfile.organization?.details,
+    cluster?.subscription?.plan?.id,
+  );
   const hasAutoscaleCluster = !!cluster?.autoscaler;
 
   const {

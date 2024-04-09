@@ -2,25 +2,26 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import {
-  FormGroup,
-  TextInput,
-  TextArea,
-  InputGroup,
-  InputGroupText,
   Button,
+  FormGroup,
+  InputGroup,
+  InputGroupItem,
+  InputGroupText,
   Menu,
   MenuContent,
-  MenuList,
   MenuItem,
   MenuItemAction,
+  MenuList,
   Popper,
-  InputGroupItem,
+  TextArea,
+  TextInput,
 } from '@patternfly/react-core';
 import { EyeIcon } from '@patternfly/react-icons/dist/esm/icons/eye-icon';
 import { EyeSlashIcon } from '@patternfly/react-icons/dist/esm/icons/eye-slash-icon';
 import { RedoIcon } from '@patternfly/react-icons/dist/esm/icons/redo-icon';
 
 import { FormGroupHelperText } from '~/components/common/FormGroupHelperText';
+
 import PopoverHint from '../PopoverHint';
 
 // To be used inside redux-form Field component.

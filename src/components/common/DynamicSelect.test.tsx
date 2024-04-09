@@ -1,5 +1,7 @@
 import React from 'react';
-import { render, screen, checkAccessibility, within } from '~/testUtils';
+
+import { checkAccessibility, render, screen, within } from '~/testUtils';
+
 import DynamicSelect from './DynamicSelect';
 
 type DynamicSelectProps = React.ComponentProps<typeof DynamicSelect>;

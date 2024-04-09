@@ -1,15 +1,17 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
+
 import { Button, Flex, FlexItem, FormGroup, Tooltip } from '@patternfly/react-core';
 import { SelectOptionObject as SelectOptionObjectDeprecated } from '@patternfly/react-core/deprecated';
+
+import { filterOutRedHatManagedVPCs, vpcHasRequiredSubnets } from '~/common/vpcHelpers';
+import { useAWSVPCInquiry } from '~/components/clusters/common/useVPCInquiry';
 import ErrorBox from '~/components/common/ErrorBox';
 import FuzzySelect, { FuzzyEntryType } from '~/components/common/FuzzySelect';
+import { getAWSCloudProviderVPCs } from '~/redux/actions/ccsInquiriesActions';
 import { VPCResponse } from '~/redux/reducers/ccsInquiriesReducer';
 import { CloudVPC } from '~/types/clusters_mgmt.v1';
 import { AWSCredentials, ErrorState } from '~/types/types';
-import { useAWSVPCInquiry } from '~/components/clusters/common/useVPCInquiry';
-import { filterOutRedHatManagedVPCs, vpcHasRequiredSubnets } from '~/common/vpcHelpers';
-import { getAWSCloudProviderVPCs } from '~/redux/actions/ccsInquiriesActions';
 
 interface VCPDropdownProps {
   selectedVPC: CloudVPC;
@@ -180,10 +182,14 @@ const VPCDropdown = ({
             </Tooltip>
           </FlexItem>
         )}
-        {vpcResponse.error && (
-          <ErrorBox message="Error retrieving VPCs" response={vpcResponse as ErrorState} />
-        )}
       </Flex>
+      {vpcResponse.error && (
+        <Flex>
+          <FlexItem flex={{ default: 'flex_1' }} style={{ minWidth: 0, marginTop: 10 }}>
+            <ErrorBox message="Error retrieving VPCs" response={vpcResponse as ErrorState} />
+          </FlexItem>
+        </Flex>
+      )}
     </FormGroup>
   );
 };

@@ -1,5 +1,7 @@
 import React from 'react';
+
 import { render, screen } from '~/testUtils';
+
 import ClusterUpdateLink from '../ClusterUpdateLink';
 
 describe('<ClusterUpdateLink />', () => {

@@ -1,11 +1,22 @@
 /* eslint-disable no-unused-vars */
 import createMockStore from 'redux-mock-store';
-import thunk from 'redux-thunk';
+
+import {
+  deleteControlPlaneUpgradeSchedule,
+  deleteUpgradeSchedule,
+  getControlPlaneUpgradeSchedules,
+  getUpgradeSchedules,
+  getUpgradeScheduleState,
+  patchControlPlaneUpgradeSchedule,
+  patchUpgradeSchedule,
+  postControlPlaneUpgradeSchedule,
+  postUpgradeSchedule,
+} from '../../../../services/clusterService';
+
 import {
   CLEAR_DELETE_UPGRADE_SCHEDULE,
   CLEAR_GET_UPGRADE_SCHEDULE,
   CLEAR_POST_UPGRADE_SCHEDULE,
-  SET_CLUSTER_UPGRADE_POLICY,
   clearDeleteScheduleResponse,
   clearPostedUpgradeScheduleResponse,
   clearSchedulesResponse,
@@ -14,21 +25,10 @@ import {
   getSchedules,
   postSchedule,
   replaceSchedule,
+  SET_CLUSTER_UPGRADE_POLICY,
   setAutomaticUpgradePolicy,
 } from './clusterUpgradeActions';
 import { initialState } from './clusterUpgradeReducer';
-
-import {
-  deleteControlPlaneUpgradeSchedule,
-  deleteUpgradeSchedule,
-  getControlPlaneUpgradeSchedules,
-  getUpgradeScheduleState,
-  getUpgradeSchedules,
-  patchControlPlaneUpgradeSchedule,
-  patchUpgradeSchedule,
-  postControlPlaneUpgradeSchedule,
-  postUpgradeSchedule,
-} from '../../../../services/clusterService';
 
 jest.mock('../../../../services/clusterService', () => ({
   getControlPlaneUpgradeSchedules: jest.fn(),
@@ -78,8 +78,7 @@ describe('clusterUpgradeActions', () => {
   });
 
   describe('schedules', () => {
-    const middlewares = [thunk];
-    const mockStore = createMockStore(middlewares);
+    const mockStore = createMockStore();
     const store = mockStore(initialState);
     const schedule = {
       cluster_id: 'cluster_id',

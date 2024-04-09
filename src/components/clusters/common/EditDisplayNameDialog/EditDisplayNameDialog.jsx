@@ -1,13 +1,14 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
-import { Form, TextInput, FormGroup } from '@patternfly/react-core';
+import { Form, FormGroup, TextInput } from '@patternfly/react-core';
 
 import { FormGroupHelperText } from '~/components/common/FormGroupHelperText';
-import Modal from '../../../common/Modal/Modal';
-import ErrorBox from '../../../common/ErrorBox';
-import modals from '../../../common/Modal/modals';
+
 import { checkClusterDisplayName } from '../../../../common/validators';
+import ErrorBox from '../../../common/ErrorBox';
+import Modal from '../../../common/Modal/Modal';
+import modals from '../../../common/Modal/modals';
 
 class EditDisplayNameDialog extends Component {
   state = {

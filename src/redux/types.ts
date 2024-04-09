@@ -3,7 +3,9 @@ import type { AnyAction } from 'redux';
 import type { ActionType as PActionType } from 'redux-promise-middleware';
 import type { ThunkAction, ThunkDispatch } from 'redux-thunk';
 import type { Action, TypeConstant } from 'typesafe-actions';
+
 import type { ErrorState } from '../types/types';
+
 import type { GlobalState } from './store';
 
 export type AppThunk<ReturnType = void> = ThunkAction<ReturnType, GlobalState, unknown, AnyAction>;

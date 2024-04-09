@@ -24,5 +24,6 @@ const modals = {
   DELETE_MACHINE_POOL: 'delete-machine-pool',
   OCM_ROLES: 'ocm-roles',
   UPDATE_MACHINE_POOL_VERSION: 'update-machine-pool-version',
+  ADD_NOTIFICATION_CONTACT: 'add-notification-contact',
 };
 export default modals;

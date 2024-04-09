@@ -1,8 +1,10 @@
 import range from 'lodash/range';
+
 import { isMPoolAz, isMultiAZ } from '~/components/clusters/ClusterDetails/clusterDetailsHelper';
 import { isHypershiftCluster } from '~/components/clusters/common/clusterStates';
 import { availableNodesFromQuota } from '~/components/clusters/common/quotaSelectors';
 import { GlobalState } from '~/redux/store';
+import { QuotaCostList } from '~/types/accounts_mgmt.v1';
 import {
   CloudProvider,
   Cluster,
@@ -10,10 +12,11 @@ import {
   MachineType,
   Product,
 } from '~/types/clusters_mgmt.v1';
-import { QuotaCostList } from '~/types/accounts_mgmt.v1';
-import { MAX_NODES, MAX_NODES_HCP } from './constants';
-import { QuotaParams } from '../quotaModel';
+
 import { clusterBillingModelToRelatedResource } from '../billingModelMapper';
+import { QuotaParams } from '../quotaModel';
+
+import { MAX_NODES, MAX_NODES_HCP } from './constants';
 
 export const getIncludedNodes = ({
   isMultiAz,
@@ -100,6 +103,33 @@ export const getAvailableQuota = ({
   return availableNodesFromQuota(quota as QuotaCostList, quotaParams);
 };
 
+/**
+ * Function to calculate the amount of all the
+ * nodes on machine pools for the cluster
+ * @param machinePools List of machine pools
+ * @param isHypershift Boolean if it is a hypershift cluster
+ * @param editMachinePoolId Id of the machine pool being edited
+ * @param machineTypeId Id of the machine pool type
+ * @returns Total node count on machine pools for the cluster
+ */
+export const getNodeCount = (
+  machinePools: MachinePool[],
+  isHypershift: boolean,
+  editMachinePoolId: string | undefined,
+  machineTypeId: string | undefined,
+): number =>
+  machinePools.reduce((totalCount: number, mp: MachinePool) => {
+    const mpReplicas = (mp.autoscaling ? mp.autoscaling.max_replicas : mp.replicas) || 0;
+
+    if (
+      (isHypershift && mp.id !== editMachinePoolId) ||
+      (!isHypershift && mp.instance_type === machineTypeId)
+    ) {
+      return totalCount + mpReplicas;
+    }
+    return totalCount;
+  }, 0);
+
 export type getNodeOptionsType = {
   cluster: Cluster;
   quota: GlobalState['userProfile']['organization']['quotaList'];
@@ -134,6 +164,7 @@ export const getNodeOptions = ({
     billingModel: cluster.billing_model,
     product: cluster.product?.id,
   });
+
   const isHypershift = isHypershiftCluster(cluster);
 
   const included = getIncludedNodes({
@@ -141,17 +172,12 @@ export const getNodeOptions = ({
     isMultiAz,
   });
 
-  const currentNodeCount = machinePools.reduce((totalCount, mp) => {
-    const mpReplicas = (mp.autoscaling ? mp.autoscaling.max_replicas : mp.replicas) || 0;
-
-    if (
-      (isHypershift && mp.id !== editMachinePoolId) ||
-      (!isHypershift && mp.instance_type === machineTypeId)
-    ) {
-      return totalCount + mpReplicas;
-    }
-    return totalCount;
-  }, 0);
+  const currentNodeCount = getNodeCount(
+    machinePools,
+    isHypershift,
+    editMachinePoolId,
+    machineTypeId,
+  );
 
   return buildOptions({
     available,

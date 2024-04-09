@@ -1,4 +1,5 @@
 import React from 'react';
+
 import {
   Card,
   CardBody,
@@ -10,19 +11,20 @@ import {
 } from '@patternfly/react-core';
 import ExclamationCircleIcon from '@patternfly/react-icons/dist/esm/icons/exclamation-circle-icon';
 import { global_danger_color_100 as dangerColor } from '@patternfly/react-tokens/dist/esm/global_danger_color_100';
-import { useFeatureGate } from '~/hooks/useFeatureGate';
-import { NETWORK_VALIDATOR_ONDEMAND_FEATURE } from '~/redux/constants/featureConstants';
 
-import DownloadOcCliButton from '~/components/clusters/common/InstallProgress/DownloadOcCliButton';
-import InstallProgress from '~/components/clusters/common/InstallProgress/InstallProgress';
-import UninstallProgress from '~/components/clusters/common/UninstallProgress';
 import clusterStates, {
+  hasInflightEgressErrors,
   isHypershiftCluster,
   isWaitingHypershiftCluster,
   isWaitingROSAManualMode,
-  hasInflightEgressErrors,
 } from '~/components/clusters/common/clusterStates';
+import DownloadOcCliButton from '~/components/clusters/common/InstallProgress/DownloadOcCliButton';
+import InstallProgress from '~/components/clusters/common/InstallProgress/InstallProgress';
+import UninstallProgress from '~/components/clusters/common/UninstallProgress';
+import { useFeatureGate } from '~/hooks/useFeatureGate';
+import { NETWORK_VALIDATOR_ONDEMAND_FEATURE } from '~/redux/constants/featureConstants';
 import { ClusterFromSubscription } from '~/types/types';
+
 import InstallationLogView from './InstallationLogView';
 
 interface ClusterProgressCardProps {
@@ -64,6 +66,7 @@ const ClusterProgressCard = ({ cluster }: ClusterProgressCardProps) => {
             headingLevel="h2"
             size="lg"
             className="card-title pf-v5-u-display-inline-block pf-v5-u-mr-md"
+            data-testid="installation-header"
           >
             {inProgress && <Spinner size="sm" className="progressing-icon pf-v5-u-mr-md" />}
             {isError && (
@@ -77,7 +80,11 @@ const ClusterProgressCard = ({ cluster }: ClusterProgressCardProps) => {
             <DownloadOcCliButton />
           )}
           {installationInProgress && !isUninstalling && (
-            <Text component={TextVariants.p} className="expected-cluster-installation-text">
+            <Text
+              component={TextVariants.p}
+              data-testid="expected-cluster-installation-msg"
+              className="expected-cluster-installation-text"
+            >
               Cluster creation usually takes {estCompletionTime} minutes to complete.
             </Text>
           )}

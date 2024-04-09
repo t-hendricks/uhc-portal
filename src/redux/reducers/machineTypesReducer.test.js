@@ -1,5 +1,6 @@
-import machineTypesReducer, { initialState } from './machineTypesReducer';
 import { GET_MACHINE_TYPES } from '../constants/machineTypesConstants';
+
+import machineTypesReducer, { initialState } from './machineTypesReducer';
 
 describe('clusterMachineTypesReducer', () => {
   const type = GET_MACHINE_TYPES;

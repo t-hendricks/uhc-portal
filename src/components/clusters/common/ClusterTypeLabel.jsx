@@ -1,10 +1,11 @@
 import React from 'react';
+import get from 'lodash/get';
 import PropTypes from 'prop-types';
+
 import { Tooltip } from '@patternfly/react-core';
 
-import get from 'lodash/get';
-
 import { PreviewLabel } from '~/components/clusters/common/PreviewLabel';
+
 import { normalizedProducts } from '../../../common/subscriptionTypes';
 
 function ClusterTypeLabel({ cluster }) {

@@ -1,13 +1,13 @@
 import React from 'react';
 
-import { render, screen, waitFor, within, checkAccessibility } from '~/testUtils';
-
 import {
-  rhQuotaList,
-  CCSQuotaList,
   CCSOneNodeRemainingQuotaList,
+  CCSQuotaList,
+  rhQuotaList,
 } from '~/components/clusters/common/__tests__/quota.fixtures';
 import { mapMachineTypesById } from '~/redux/reducers/machineTypesReducer';
+import { checkAccessibility, render, screen, waitFor, within } from '~/testUtils';
+
 import MachineTypeSelection from './MachineTypeSelection';
 
 const baseFlavoursState = {
@@ -146,6 +146,80 @@ const machineTypes = {
   ],
 };
 
+const machineTypesByRegion = {
+  aws: [
+    {
+      kind: 'MachineType',
+      name: 'm5.xlarge - General Purpose',
+      category: 'general_purpose',
+      size: 'small',
+      id: 'm5.xlarge',
+      href: '/api/clusters_mgmt/v1/machine_types/m5.xlarge',
+      memory: {
+        value: 17179869184,
+        unit: 'B',
+      },
+      cpu: {
+        value: 4,
+        unit: 'vCPU',
+      },
+      cloud_provider: {
+        kind: 'CloudProviderLink',
+        id: 'aws',
+        href: '/api/clusters_mgmt/v1/cloud_providers/aws',
+      },
+      ccs_only: false,
+      generic_name: 'standard-4',
+    },
+    {
+      kind: 'MachineType',
+      name: 'm5.4xlarge - General Purpose',
+      category: 'general_purpose',
+      size: 'large',
+      id: 'm5.4xlarge',
+      href: '/api/clusters_mgmt/v1/machine_types/m5.4xlarge',
+      memory: {
+        value: 68719476736,
+        unit: 'B',
+      },
+      cpu: {
+        value: 16,
+        unit: 'vCPU',
+      },
+      cloud_provider: {
+        kind: 'CloudProviderLink',
+        id: 'aws',
+        href: '/api/clusters_mgmt/v1/cloud_providers/aws',
+      },
+      ccs_only: false,
+      generic_name: 'standard-16',
+    },
+    {
+      kind: 'MachineType',
+      name: 'm6id.xlarge - Accelerated Computing (1 GPU)',
+      category: 'accelerated_computing',
+      size: 'medium',
+      id: 'm6id.xlarge',
+      href: '/api/clusters_mgmt/v1/machine_types/m6id.xlarge',
+      memory: {
+        value: 34359738368,
+        unit: 'B',
+      },
+      cpu: {
+        value: 8,
+        unit: 'vCPU',
+      },
+      cloud_provider: {
+        kind: 'CloudProviderLink',
+        id: 'aws',
+        href: '/api/clusters_mgmt/v1/cloud_providers/aws',
+      },
+      ccs_only: true,
+      generic_name: 't4-gpu-8',
+    },
+  ],
+};
+
 const fulfilledMachineState = {
   ...baseState,
   fulfilled: true,
@@ -153,6 +227,12 @@ const fulfilledMachineState = {
   typesByID: mapMachineTypesById(machineTypes),
 };
 
+const fulfilledMachineByRegionState = {
+  ...baseState,
+  fulfilled: true,
+  types: machineTypes,
+  typesByID: mapMachineTypesById(machineTypesByRegion),
+};
 const unknownCategoryMachineTypes = [
   {
     kind: 'MachineType',
@@ -264,7 +344,7 @@ describe('MachineTypeSelection', () => {
 
   it('flavours are fetched on render', () => {
     render(<MachineTypeSelection {...defaultProps} />);
-    expect(getDefaultFlavour).toBeCalled();
+    expect(getDefaultFlavour).toHaveBeenCalled();
   });
 
   describe('with an error loading machineTypes', () => {
@@ -453,12 +533,12 @@ describe('MachineTypeSelection', () => {
 
     describe('byoc with sufficient byoc quota available', () => {
       const quota = CCSQuotaList;
-
+      const field = fieldProps('m6id.xlarge');
       const byocProps = {
         ...defaultProps,
         flavours: fulfilledFlavoursState,
         machineTypes: fulfilledMachineState,
-        machineTypesByRegion: fulfilledMachineState,
+        machineTypesByRegion: fulfilledMachineByRegionState,
         quota,
         isMultiAz: true,
         isBYOC: true,
@@ -467,16 +547,21 @@ describe('MachineTypeSelection', () => {
       it('selects default according to flavours API', async () => {
         render(<MachineTypeSelection {...byocProps} />);
 
-        await waitFor(() => expect(fieldOnChange).toBeCalledWith('m5.xlarge'));
+        await waitFor(() => expect(fieldOnChange).toHaveBeenCalledWith('m5.xlarge'));
       });
 
       it('displays only machine types with quota', async () => {
         const { user } = render(<MachineTypeSelection {...byocProps} />);
 
         const optionsMenu = screen.getByLabelText('Machine type select toggle');
-        user.click(optionsMenu);
+        await user.click(optionsMenu);
 
         expect(await screen.findByText('m5.xlarge', { exact: false })).toBeInTheDocument();
+      });
+
+      it('keeps selection from machineTypesByRegion', async () => {
+        render(<MachineTypeSelection {...byocProps} machine_type={field} />);
+        expect(forceChoiceFieldOnChange).toHaveBeenCalledWith(true);
       });
     });
 
@@ -537,7 +622,7 @@ describe('MachineTypeSelection', () => {
       it('selects default according to flavours API', async () => {
         render(<MachineTypeSelection {...unknownCategoryProps} />);
 
-        await waitFor(() => expect(fieldOnChange).toBeCalledWith('m5.xlarge'));
+        await waitFor(() => expect(fieldOnChange).toHaveBeenCalledWith('m5.xlarge'));
       });
 
       it('displays only machine types with quota from known categories', async () => {

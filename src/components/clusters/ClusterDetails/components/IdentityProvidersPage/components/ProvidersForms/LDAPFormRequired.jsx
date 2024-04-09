@@ -1,11 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { GridItem, Divider, Title } from '@patternfly/react-core';
 import { Field } from 'redux-form';
 
-import ReduxVerticalFormGroup from '../../../../../../common/ReduxFormComponents/ReduxVerticalFormGroup';
+import { Divider, GridItem, Title } from '@patternfly/react-core';
+
 import { required } from '../../../../../../../common/validators';
 import ReduxFieldArray from '../../../../../../common/ReduxFormComponents/ReduxFieldArray';
+import ReduxVerticalFormGroup from '../../../../../../common/ReduxFormComponents/ReduxVerticalFormGroup';
 
 class LDAPFormRequired extends React.Component {
   state = {

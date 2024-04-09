@@ -1,9 +1,8 @@
+/* generated using openapi-typescript-codegen -- do not edit */
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-
 import type { AlertSeverity } from './AlertSeverity';
-
 /**
  * Provides information about a single alert firing on the cluster.
  */

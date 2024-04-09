@@ -1,6 +1,7 @@
 import React from 'react';
-import { GridItem } from '@patternfly/react-core';
 import { Field } from 'redux-form';
+
+import { GridItem } from '@patternfly/react-core';
 
 import { required } from '../../../../../../../common/validators';
 import ReduxVerticalFormGroup from '../../../../../../common/ReduxFormComponents/ReduxVerticalFormGroup';

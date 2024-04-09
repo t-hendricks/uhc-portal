@@ -1,7 +1,7 @@
+/* generated using openapi-typescript-codegen -- do not edit */
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-
 export type AccessReviewResponse = {
   account_id?: string;
   action?: AccessReviewResponse.action;
@@ -14,7 +14,6 @@ export type AccessReviewResponse = {
   resource_type?: AccessReviewResponse.resource_type;
   subscription_id?: string;
 };
-
 export namespace AccessReviewResponse {
   export enum action {
     GET = 'get',
@@ -23,7 +22,6 @@ export namespace AccessReviewResponse {
     DELETE = 'delete',
     UPDATE = 'update',
   }
-
   export enum resource_type {
     ADD_ON = 'AddOn',
     FLAVOUR = 'Flavour',

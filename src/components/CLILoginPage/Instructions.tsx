@@ -19,10 +19,10 @@ limitations under the License.
 
 import React from 'react';
 import { useDispatch } from 'react-redux';
-import { useGlobalState } from '~/redux/hooks/useGlobalState';
 import { Link } from 'react-router-dom';
-import Skeleton from '@redhat-cloud-services/frontend-components/Skeleton';
+
 import {
+  Alert,
   Button,
   Card,
   CardBody,
@@ -34,22 +34,27 @@ import {
   Text,
   TextContent,
   Title,
-  Alert,
 } from '@patternfly/react-core';
+import Skeleton from '@redhat-cloud-services/frontend-components/Skeleton';
 import useChrome from '@redhat-cloud-services/frontend-components/useChrome';
-import type { ChromeAPI } from '@redhat-cloud-services/types';
-import { isRestrictedEnv, getRefreshToken } from '~/restrictedEnv';
+
 import { useFeatureGate } from '~/hooks/useFeatureGate';
 import { setOfflineToken } from '~/redux/actions/rosaActions';
 import { CLI_SSO_AUTHORIZATION } from '~/redux/constants/featureConstants';
-import { loadOfflineToken } from './TokenUtils';
-import TokenBox from './TokenBox';
+import { useGlobalState } from '~/redux/hooks/useGlobalState';
+import { getRefreshToken, isRestrictedEnv } from '~/restrictedEnv';
+import { Chrome } from '~/types/types';
+
+import links, { channels, tools } from '../../common/installLinks.mjs';
+import DownloadAndOSSelection from '../clusters/install/instructions/components/DownloadAndOSSelection';
+import ExternalLink from '../common/ExternalLink';
+
 import LeadingInfo from './LeadingInfo';
 import RevokeTokensInstructions from './RevokeTokensInstructions';
-import links, { tools, channels } from '../../common/installLinks.mjs';
-import ExternalLink from '../common/ExternalLink';
-import DownloadAndOSSelection from '../clusters/install/instructions/components/DownloadAndOSSelection';
 import SSOLoginInstructions from './SSOLogin';
+import TokenBox from './TokenBox';
+import { loadOfflineToken } from './TokenUtils';
+
 import './Instructions.scss';
 
 const defaultDocsLink = (
@@ -83,16 +88,14 @@ const Instructions = (props: Props) => {
   const offlineToken = useGlobalState((state) => state.rosaReducer.offlineToken);
   const dispatch = useDispatch();
   const showDeprecationMessage = useFeatureGate(CLI_SSO_AUTHORIZATION);
-  const chrome = useChrome();
-  const restrictedEnv = isRestrictedEnv(chrome as unknown as ChromeAPI);
+  const chrome = useChrome() as Chrome;
+  const restrictedEnv = isRestrictedEnv(chrome);
   const [token, setToken] = React.useState<string>('');
 
   React.useEffect(() => {
     if (!SSOLogin) {
       if (restrictedEnv) {
-        getRefreshToken(chrome as unknown as ChromeAPI).then((refreshToken) =>
-          setToken(refreshToken),
-        );
+        getRefreshToken(chrome).then((refreshToken) => setToken(refreshToken));
       } else if (offlineToken) {
         setToken(offlineToken as string);
       }
@@ -105,9 +108,13 @@ const Instructions = (props: Props) => {
       if (!blockedByTerms && show && !offlineToken) {
         // eslint-disable-next-line no-console
         console.log('Tokens: componentDidMount, props =', props);
-        loadOfflineToken((tokenOrError, errorReason) => {
-          dispatch(setOfflineToken(errorReason || tokenOrError));
-        }, window.location.origin);
+        loadOfflineToken(
+          (tokenOrError, errorReason) => {
+            dispatch(setOfflineToken(errorReason || tokenOrError));
+          },
+          window.location.origin,
+          chrome,
+        );
       }
     }
     // No dependencies because this effect should only be run once on mount
@@ -191,9 +198,13 @@ const Instructions = (props: Props) => {
                   className="pf-v5-u-mt-md"
                   data-testid="load-token-btn"
                   onClick={() =>
-                    loadOfflineToken((tokenOrError, errorReason) => {
-                      dispatch(setOfflineToken(errorReason || tokenOrError));
-                    }, window.location.origin)
+                    loadOfflineToken(
+                      (tokenOrError, errorReason) => {
+                        dispatch(setOfflineToken(errorReason || tokenOrError));
+                      },
+                      window.location.origin,
+                      chrome,
+                    )
                   }
                 >
                   Load token

@@ -1,8 +1,9 @@
 import React from 'react';
+
 import { render } from '~/testUtils';
 
-import InfrastructureModelLabel from '../InfrastructureModelLabel';
 import fixtures from '../../ClusterDetails/__tests__/ClusterDetails.fixtures';
+import InfrastructureModelLabel from '../InfrastructureModelLabel';
 
 describe('InfrastructureModelLabel', () => {
   it('for OSD rhInfra cluster', () => {

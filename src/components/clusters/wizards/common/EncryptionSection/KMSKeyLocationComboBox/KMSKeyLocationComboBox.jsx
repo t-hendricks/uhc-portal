@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+
 import { FormSelect, FormSelectOption } from '@patternfly/react-core';
 
 class KMSKeyLocationComboBox extends React.Component {

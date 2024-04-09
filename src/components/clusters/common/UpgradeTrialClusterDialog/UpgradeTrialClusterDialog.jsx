@@ -1,17 +1,19 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
-import { Form, Alert, Button } from '@patternfly/react-core';
-import { Link } from 'react-router-dom-v5-compat';
 import get from 'lodash/get';
-import MechTraining from '../../../../styles/images/RH_BRAND_7764_01_MECH_Training.svg';
+import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom-v5-compat';
 
+import { Alert, Button, Form } from '@patternfly/react-core';
+
+import links from '../../../../common/installLinks.mjs';
+import { billingModels, normalizedProducts } from '../../../../common/subscriptionTypes';
+import MechTraining from '../../../../styles/images/RH_BRAND_7764_01_MECH_Training.svg';
+import ErrorBox from '../../../common/ErrorBox';
 import ExternalLink from '../../../common/ExternalLink';
 import Modal from '../../../common/Modal/Modal';
 import modals from '../../../common/Modal/modals';
-import ErrorBox from '../../../common/ErrorBox';
-import links from '../../../../common/installLinks.mjs';
-import { normalizedProducts, billingModels } from '../../../../common/subscriptionTypes';
 import { availableClustersFromQuota, availableNodesFromQuota } from '../quotaSelectors';
+
 import './UpgradeTrialClusterDialog.scss';
 
 class UpgradeTrialClusterDialog extends Component {
@@ -101,7 +103,9 @@ class UpgradeTrialClusterDialog extends Component {
     const button = {
       primaryText: 'Contact sales',
       onPrimaryClick: () =>
-        this.buttonLinkClick('https://cloud.redhat.com/products/dedicated/contact/'),
+        UpgradeTrialClusterDialog.buttonLinkClick(
+          'https://cloud.redhat.com/products/dedicated/contact/',
+        ),
     };
 
     if (availableQuota.STANDARD && !availableQuota.MARKETPLACE) {
@@ -131,7 +135,7 @@ class UpgradeTrialClusterDialog extends Component {
     button.secondaryText = 'Enable Marketplace billing';
     button.showSecondary = true;
     button.onSecondaryClick = () =>
-      this.buttonLinkClick(
+      UpgradeTrialClusterDialog.buttonLinkClick(
         'https://marketplace.redhat.com/en-us/products/red-hat-openshift-dedicated',
       );
 
@@ -196,9 +200,9 @@ class UpgradeTrialClusterDialog extends Component {
         {...tertiaryButton}
         isPending={upgradeTrialClusterResponse.pending}
       >
-        <p>{error}</p>
+        {error}
         <Form onSubmit={() => submit(clusterID)}>
-          <p>
+          <div>
             {!noQuota && <img className="upgrade-trial-logo" src={MechTraining} alt="Red Hat" />}
             Convert this trial cluster to a fully supported OpenShift Dedicated cluster.
             <br />
@@ -219,7 +223,7 @@ class UpgradeTrialClusterDialog extends Component {
                 </Link>
               </Alert>
             )}
-          </p>
+          </div>
         </Form>
       </Modal>
     );

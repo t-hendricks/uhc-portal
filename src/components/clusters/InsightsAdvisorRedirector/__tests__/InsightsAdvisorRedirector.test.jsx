@@ -1,5 +1,7 @@
 import React from 'react';
+
 import { render, screen, within } from '~/testUtils';
+
 import InsightsAdvisorRedirector, { composeRuleId } from '../InsightsAdvisorRedirector';
 
 // Instead of mocking window.location, mocking  whole components

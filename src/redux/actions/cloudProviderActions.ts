@@ -1,7 +1,8 @@
 import { action, ActionType } from 'typesafe-actions';
-import { cloudProviderConstants } from '../constants';
+
 import { clusterService } from '../../services';
 import type { CloudProvider, CloudRegion } from '../../types/clusters_mgmt.v1';
+import { cloudProviderConstants } from '../constants';
 
 const getCloudProvidersAndRegions = () =>
   clusterService.getCloudProviders().then((cloudProvidersResponse) => {

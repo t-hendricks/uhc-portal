@@ -15,6 +15,7 @@ limitations under the License.
 */
 
 const path = require('path');
+const fs = require('fs');
 const webpack = require('webpack');
 const axios = require('axios').default;
 const HtmlWebpackPlugin = require('html-webpack-plugin');
@@ -36,6 +37,7 @@ const outDir = path.resolve(__dirname, 'dist', insights.appname);
 
 module.exports = async (_env, argv) => {
   const devMode = argv.mode !== 'production';
+  process.env.DEV_MODE = devMode;
   const betaMode = argv.env.beta === 'true';
   const sentryReleaseVersion = argv.env['sentry-version'];
   const isDevServer = process.argv.includes('serve');
@@ -47,10 +49,8 @@ module.exports = async (_env, argv) => {
   // eslint-disable-next-line no-console
   console.log(`Building with apiEnv=${apiEnv}, beta=${betaMode}, isDevServer=${isDevServer}`);
 
-  // While user-visible URLs are moving /beta/openshift -> /preview/openshift,
-  // the compiled assets will remain at /beta/apps/openshift.
-  // (Well, in qaprodauth /beta/apps was hacked as a redirect -> /preview/apps
-  //  but that's implementation detail; browser always requests /beta/apps.)
+  // On "beta" name: user-visible URLs moved /beta/openshift -> /preview/openshift,
+  // however the compiled assets remained at /beta/apps/openshift.
   const appDeployment = betaMode ? 'beta/apps' : 'apps';
   const publicPath = `/${appDeployment}/${insights.appname}/`;
 
@@ -230,6 +230,10 @@ module.exports = async (_env, argv) => {
     devServer: {
       historyApiFallback: {
         index: `${publicPath}index.html`,
+        rewrites: [
+          { from: /^\/src\/.*\.[a-zA-Z0-9]+$/, to: (context) => context.parsedUrl.pathname },
+          // Add other rewrites or leave existing rewrites here
+        ],
       },
       setupMiddlewares: (middlewares, devServer) => {
         if (!devServer) {
@@ -245,6 +249,43 @@ module.exports = async (_env, argv) => {
             },
           });
         }
+
+        // Custom middleware for logging request URLs
+        middlewares.unshift({
+          name: 'log-requests',
+          middleware: (req, res, next) => {
+            console.log('---> Request URL:', req.url); // Log the request URL
+            next(); // Continue to the next middleware
+          },
+        });
+
+        if (devMode) {
+          middlewares.unshift({
+            name: 'local-source-code-loader-middleware',
+            middleware: (req, res, next) => {
+              console.log('Adding local-source-code-loader-middleware', req.url);
+              if (req.url.startsWith('/src/')) {
+                const relativePath = req.url.substring('/src/'.length);
+                const filePath = path.join(srcDir, relativePath);
+
+                try {
+                  if (fs.existsSync(filePath)) {
+                    const fileContent = fs.readFileSync(filePath, 'utf8');
+                    res.setHeader('Content-Type', 'text/plain');
+                    res.send(fileContent);
+                  } else {
+                    res.status(404).send('File not found');
+                  }
+                } catch (error) {
+                  console.error('Error reading source code file:', error);
+                  res.status(500).send('Internal Server Error');
+                }
+              } else {
+                next();
+              }
+            },
+          });
+        }
         return middlewares;
       },
       proxy: noInsightsProxy
@@ -253,7 +294,7 @@ module.exports = async (_env, argv) => {
               context: ['/mockdata'],
               pathRewrite: { '^/mockdata': '' },
               target: 'http://127.0.0.1:8010',
-              onProxyReq(request) {
+              onProxyReq(/*request*/) {
                 if (verboseLogging) {
                   // Redundant with mockserver's own logging.
                   // console.log('  proxying localhost:8010:', request.path);
@@ -266,6 +307,7 @@ module.exports = async (_env, argv) => {
               context: [
                 '**',
                 '!/mockdata/**',
+                '!/src/**',
                 `!/apps/${insights.appname}/**`,
                 `!/beta/apps/${insights.appname}/**`,
                 `!/preview/apps/${insights.appname}/**`, // not expected to be used

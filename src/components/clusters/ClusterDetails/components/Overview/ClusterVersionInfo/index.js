@@ -1,9 +1,10 @@
 import { connect } from 'react-redux';
-import {
-  getSchedules,
-  clearSchedulesResponse,
-} from '../../../../common/Upgrades/clusterUpgradeActions';
+
 import { openModal } from '../../../../../common/Modal/ModalActions';
+import {
+  clearSchedulesResponse,
+  getSchedules,
+} from '../../../../common/Upgrades/clusterUpgradeActions';
 
 import ClusterVersionInfo from './ClusterVersionInfo';
 

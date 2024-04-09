@@ -1,38 +1,39 @@
 import validators, {
-  required,
-  checkIdentityProviderName,
-  checkClusterUUID,
+  awsNumericAccountID,
   checkClusterConsoleURL,
-  checkUserID,
-  validateRHITUsername,
-  checkOpenIDIssuer,
-  checkGithubTeams,
+  checkClusterUUID,
+  checkCustomOperatorRolesPrefix,
   checkDisconnectedConsoleURL,
-  checkDisconnectedSockets,
-  checkDisconnectedvCPU,
   checkDisconnectedMemCapacity,
   checkDisconnectedNodeCount,
-  validateUserOrGroupARN,
+  checkDisconnectedSockets,
+  checkDisconnectedvCPU,
+  checkGithubTeams,
+  checkIdentityProviderName,
   checkLabels,
-  awsNumericAccountID,
-  validateServiceAccountObject,
-  validateNumericInput,
-  validateGCPSubnet,
+  checkOpenIDIssuer,
+  checkUserID,
+  clusterAutoScalingValidators,
+  clusterNameAsyncValidation,
+  clusterNameValidation,
+  createPessimisticValidator,
+  required,
+  validateAWSKMSKeyARN,
   validateGCPKMSServiceAccount,
+  validateGCPSubnet,
   validateHTPasswdPassword,
   validateHTPasswdUsername,
-  clusterNameValidation,
-  clusterNameAsyncValidation,
-  checkCustomOperatorRolesPrefix,
-  createPessimisticValidator,
-  validateAWSKMSKeyARN,
-  clusterAutoScalingValidators,
-  validateRoleARN,
+  validateMultipleMachinePoolsSubnets,
+  validateNumericInput,
   validatePrivateHostedZoneId,
   validateRequiredPublicSubnetId,
+  validateRHITUsername,
+  validateRoleARN,
+  validateServiceAccountObject,
   validateUniqueAZ,
-  validateMultipleMachinePoolsSubnets,
+  validateUserOrGroupARN,
 } from '../validators';
+
 import fixtures from './validators.fixtures';
 
 describe('Field is required', () => {
@@ -150,24 +151,6 @@ describe('Username conforms RHIT pattern', () => {
   });
 });
 
-describe('Field is a valid DNS domain', () => {
-  it.each([
-    [undefined, 'Base DNS domain is required.'],
-    [
-      '123.ABC!',
-      "Base DNS domain '123.ABC!' isn't valid, must contain at least two valid lower-case DNS labels separated by dots, for example 'mydomain.com'.",
-    ],
-    [
-      'foo',
-      "Base DNS domain 'foo' isn't valid, must contain at least two valid lower-case DNS labels separated by dots, for example 'mydomain.com'.",
-    ],
-    ['foo.bar', undefined],
-    ['foo.bar.baz', undefined],
-  ])('value %p to be %p', (value: string | undefined, expected: string | undefined) => {
-    expect(validators.checkBaseDNSDomain(value)).toBe(expected);
-  });
-});
-
 describe('Field is valid CIDR range', () => {
   it.each([
     [undefined, undefined],
@@ -218,6 +201,39 @@ describe('Field is valid Machine CIDR for AWS', () => {
       expected: string | undefined,
     ) => {
       expect(validators.awsMachineCidr(value, formData)).toBe(expected);
+    },
+  );
+});
+
+describe('Field is valid Machine CIDR for GCP', () => {
+  it.each([
+    [undefined, undefined, undefined],
+    [
+      '192.168.0.0/25',
+      { multi_az: 'false', hypershift: 'true' },
+      "The subnet mask can't be smaller than '/23', which provides up to 23 nodes.",
+    ],
+    ['192.168.0.0/23', { multi_az: 'false', hypershift: 'true' }, undefined],
+    [
+      '192.168.0.0/25',
+      { multi_az: 'false' },
+      "The subnet mask can't be smaller than '/23', which provides up to 23 nodes.",
+    ],
+    ['192.168.0.0/23', { multi_az: 'false' }, undefined],
+    [
+      '192.168.0.0/25',
+      { multi_az: 'true' },
+      "The subnet mask can't be smaller than '/23', which provides up to 69 nodes.",
+    ],
+    ['192.168.0.0/23', { multi_az: 'true' }, undefined],
+  ])(
+    'value %p and formData %o to be %p',
+    (
+      value: string | undefined,
+      formData: Record<string, string> | undefined,
+      expected: string | undefined,
+    ) => {
+      expect(validators.gcpMachineCidr(value, formData)).toBe(expected);
     },
   );
 });
@@ -390,6 +406,11 @@ describe('Subnet cidrs are valid against machine, network and pod cidr ranges', 
     [
       '10.0.0.0/19',
       { network_machine_cidr: '10.0.0.0/16', network_pod_cidr: '10.128.0.0/16' },
+      'string',
+    ],
+    [
+      '10.0.34.0/24',
+      { network_machine_cidr: '10.0.32.0/24', network_pod_cidr: '10.128.0.0/16' },
       'string',
     ],
   ])(

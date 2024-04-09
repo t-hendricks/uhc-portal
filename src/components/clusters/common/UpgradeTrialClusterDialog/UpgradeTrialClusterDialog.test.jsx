@@ -1,10 +1,12 @@
 import React from 'react';
-import { MemoryRouter } from 'react-router-dom';
+import { MemoryRouter } from 'react-router';
 import { CompatRouter } from 'react-router-dom-v5-compat';
+
+import { render, screen } from '../../../../testUtils';
 import fixtures from '../../ClusterDetails/__tests__/ClusterDetails.fixtures';
 import { emptyQuotaList, mockQuotaList } from '../__tests__/quota.fixtures';
+
 import UpgradeTrialClusterDialog from './UpgradeTrialClusterDialog';
-import { render, screen } from '../../../../testUtils';
 
 describe('<UpgradeTrialClusterDialog />', () => {
   const organizationState = {
@@ -134,7 +136,7 @@ describe('<UpgradeTrialClusterDialog />', () => {
     expect(screen.getByText('Upgrade using quota')).toBeInTheDocument();
   });
 
-  it('renders error box when an erorr occurs', () => {
+  it('renders error box when an error occurs', () => {
     render(
       <MemoryRouter>
         <CompatRouter>

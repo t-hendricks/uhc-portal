@@ -1,31 +1,32 @@
-import React, { useEffect, useState, useCallback } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { Field } from 'redux-form';
-import { Form, Grid, GridItem, Text, Alert, Button } from '@patternfly/react-core';
 
+import { Alert, Button, Form, Grid, GridItem, Text } from '@patternfly/react-core';
+
+import { stringToArray } from '~/common/helpers';
 import links from '~/common/installLinks.mjs';
-import { validateUrl, validateCA, checkNoProxyDomains } from '~/common/validators';
-
-import Modal from '~/components/common/Modal/Modal';
+import { checkNoProxyDomains, validateCA, validateUrl } from '~/common/validators';
+import {
+  DISABLED_NO_PROXY_PLACEHOLDER,
+  HTTP_PROXY_PLACEHOLDER,
+  HTTPS_PROXY_PLACEHOLDER,
+  NO_PROXY_HELPER_TEXT,
+  NO_PROXY_PLACEHOLDER,
+  TRUST_BUNDLE_HELPER_TEXT,
+  TRUST_BUNDLE_PLACEHOLDER,
+} from '~/components/clusters/common/networkingConstants';
 import ErrorBox from '~/components/common/ErrorBox';
-import PopoverHint from '~/components/common/PopoverHint';
 import ExternalLink from '~/components/common/ExternalLink';
+import Modal from '~/components/common/Modal/Modal';
+import PopoverHint from '~/components/common/PopoverHint';
 import ReduxFileUpload from '~/components/common/ReduxFormComponents/ReduxFileUpload';
 import ReduxVerticalFormGroup from '~/components/common/ReduxFormComponents/ReduxVerticalFormGroup';
-import { stringToArray } from '~/common/helpers';
-import {
-  HTTPS_PROXY_PLACEHOLDER,
-  HTTP_PROXY_PLACEHOLDER,
-  TRUST_BUNDLE_PLACEHOLDER,
-  TRUST_BUNDLE_HELPER_TEXT,
-  DISABLED_NO_PROXY_PLACEHOLDER,
-  NO_PROXY_PLACEHOLDER,
-  NO_PROXY_HELPER_TEXT,
-} from '~/components/clusters/common/networkingConstants';
-import { MAX_FILE_SIZE, ACCEPT } from '../../../IdentityProvidersPage/components/CAUpload';
+
+import { ACCEPT, MAX_FILE_SIZE } from '../../../IdentityProvidersPage/components/CAUpload';
 
 const validateUrlHttp = (value) => validateUrl(value, 'http');
-const validateUrlHttps = (value) => validateUrl(value, 'https');
+const validateUrlHttpsAndHttp = (value) => validateUrl(value, ['http', 'https']);
 
 const validateAtLeastOne = (value, allValues) => {
   if (
@@ -149,7 +150,7 @@ const EditClusterWideProxyDialog = (props) => {
                 label="HTTPS Proxy URL"
                 placeholder={HTTPS_PROXY_PLACEHOLDER}
                 type="text"
-                validate={[validateUrlHttps, validateAtLeastOne]}
+                validate={[validateUrlHttpsAndHttp, validateAtLeastOne]}
                 helpText="Specify a proxy URL to use for HTTPS connections outside the cluster."
                 showHelpTextOnError={false}
               />

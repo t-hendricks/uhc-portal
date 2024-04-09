@@ -1,10 +1,9 @@
+/* generated using openapi-typescript-codegen -- do not edit */
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-
 import type { CloudRegion } from './CloudRegion';
 import type { Product } from './Product';
-
 /**
  * AMIOverride specifies what Amazon Machine Image should be used for a particular product and region.
  */

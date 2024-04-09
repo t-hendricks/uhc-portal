@@ -1,15 +1,17 @@
 import { connect } from 'react-redux';
-import UpgradeAcknowledgeWarning from './UpgradeAcknowledgeWarning';
+
 import { modalActions } from '../../../../../common/Modal/ModalActions';
 import {
-  getClusterIdFromState,
-  getFromVersionFromState,
-  getToVersionFromState,
   getClusterAcks,
-  getIsManual,
+  getClusterIdFromState,
   getClusterOpenShiftVersion,
+  getFromVersionFromState,
   getHasScheduledManual,
+  getIsManual,
+  getToVersionFromState,
 } from '../UpgradeAcknowledgeSelectors';
+
+import UpgradeAcknowledgeWarning from './UpgradeAcknowledgeWarning';
 
 const mapStateToProps = (state) => ({
   clusterId: getClusterIdFromState(state),

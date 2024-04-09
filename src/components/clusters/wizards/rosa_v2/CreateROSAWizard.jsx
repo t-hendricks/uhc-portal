@@ -1,39 +1,29 @@
-import { Spinner } from '@redhat-cloud-services/frontend-components';
+import React, { useMemo, useState } from 'react';
+import { Formik } from 'formik';
 import { isMatch } from 'lodash';
 import PropTypes from 'prop-types';
-import React, { useMemo, useState } from 'react';
 import { Navigate } from 'react-router-dom-v5-compat';
+
 import { Banner, Bullseye, PageSection, Stack, StackItem } from '@patternfly/react-core';
 import {
   Wizard as WizardDeprecated,
   WizardContext as WizardContextDeprecated,
 } from '@patternfly/react-core/deprecated';
-import { Formik } from 'formik';
+import { Spinner } from '@redhat-cloud-services/frontend-components';
+import useChrome from '@redhat-cloud-services/frontend-components/useChrome';
 
-import { useFormState } from '~/components/clusters/wizards/hooks';
 import { ocmResourceType, trackEvents } from '~/common/analytics';
 import { shouldRefetchQuota } from '~/common/helpers';
 import { normalizedProducts } from '~/common/subscriptionTypes';
+import { AppDrawerContext } from '~/components/App/AppDrawer';
+import { AppPage } from '~/components/App/AppPage';
+import { useFormState } from '~/components/clusters/wizards/hooks';
 import config from '~/config';
 import withAnalytics from '~/hoc/withAnalytics';
 import { useFeatureGate } from '~/hooks/useFeatureGate';
 import usePreventBrowserNav from '~/hooks/usePreventBrowserNav';
 import { HYPERSHIFT_WIZARD_FEATURE } from '~/redux/constants/featureConstants';
-import { AppPage } from '~/components/App/AppPage';
-import { AppDrawerContext } from '~/components/App/AppDrawer';
 import { isRestrictedEnv } from '~/restrictedEnv';
-import { getAccountAndRolesStepId, stepId, stepNameById } from './rosaWizardConstants';
-import { initialValues, initialTouched, FieldId } from './constants';
-
-import CIDRScreen from './CIDRScreen/CIDRScreen';
-import ClusterProxyScreen from './ClusterProxyScreen';
-import ClusterSettingsScreen from './ClusterSettingsScreen';
-import MachinePoolScreen from './MachinePoolScreen';
-import NetworkScreen from './NetworkScreen/NetworkScreen';
-import ReviewClusterScreen from './ReviewClusterScreen';
-import UpdatesScreen from './UpdatesScreen/UpdatesScreen';
-import VPCScreen from './VPCScreen/VPCScreen';
-import ControlPlaneScreen from './ControlPlaneScreen';
 
 import ErrorBoundary from '../../../App/ErrorBoundary';
 import Breadcrumbs from '../../../common/Breadcrumbs';
@@ -41,12 +31,23 @@ import PageTitle from '../../../common/PageTitle';
 import Unavailable from '../../../common/Unavailable';
 import CreateClusterErrorModal from '../../common/CreateClusterErrorModal';
 import LeaveCreateClusterPrompt from '../common/LeaveCreateClusterPrompt';
+
+import CIDRScreen from './CIDRScreen/CIDRScreen';
+import Details from './ClusterSettings/Details/Details';
+import NetworkScreen from './NetworkScreen/NetworkScreen';
+import UpdatesScreen from './UpdatesScreen/UpdatesScreen';
+import VPCScreen from './VPCScreen/VPCScreen';
 import AccountsRolesScreen from './AccountsRolesScreen';
+import ClusterProxyScreen from './ClusterProxyScreen';
 import ClusterRolesScreen from './ClusterRolesScreen';
+import { FieldId, initialTouched, initialValues, initialValuesRestrictedEnv } from './constants';
+import ControlPlaneScreen from './ControlPlaneScreen';
+import CreateRosaWizardFooter from './CreateRosaWizardFooter';
+import MachinePoolScreen from './MachinePoolScreen';
+import ReviewClusterScreen from './ReviewClusterScreen';
+import { getAccountAndRolesStepId, stepId, stepNameById } from './rosaWizardConstants';
 import { ROSAWizardContext } from './ROSAWizardContext';
 import { ValuesPanel } from './ValuesPanel';
-
-import CreateRosaWizardFooter from './CreateRosaWizardFooter';
 
 import './createROSAWizard.scss';
 
@@ -254,7 +255,7 @@ class CreateROSAWizardInternal extends React.Component {
             name: stepNameById[stepId.CLUSTER_SETTINGS__DETAILS],
             component: (
               <ErrorBoundary>
-                <ClusterSettingsScreen />
+                <Details />
               </ErrorBoundary>
             ),
             canJumpTo: this.canJumpTo(stepId.CLUSTER_SETTINGS__DETAILS),
@@ -607,9 +608,11 @@ CreateROSAWizardInternal.propTypes = {
 
 const CreateROSAWizardFormik = (props) => {
   const { onSubmit, track } = props;
+  const chrome = useChrome();
+  const restrictedEnv = isRestrictedEnv(chrome);
   return (
     <Formik
-      initialValues={initialValues}
+      initialValues={restrictedEnv ? initialValuesRestrictedEnv : initialValues}
       initialTouched={initialTouched}
       validateOnChange
       onSubmit={(formikValues) => {

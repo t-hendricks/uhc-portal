@@ -14,35 +14,33 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 import React from 'react';
-import './i18n';
+import { Provider } from 'react-redux';
 import { BrowserRouter } from 'react-router-dom';
 import { CompatRouter } from 'react-router-dom-v5-compat';
-import { Provider } from 'react-redux';
 
+import * as OCM from '@openshift-assisted/ui-lib/ocm';
+import { GenerateId } from '@patternfly/react-core';
+import useChrome from '@redhat-cloud-services/frontend-components/useChrome';
 // No type definitions
 // @ts-ignore
 import NotificationPortal from '@redhat-cloud-services/frontend-components-notifications/NotificationPortal';
-
 import * as Sentry from '@sentry/browser';
-import { SessionTiming } from '@sentry/integrations';
+import { sessionTimingIntegration } from '@sentry/integrations';
 
-import * as OCM from '@openshift-assisted/ui-lib/ocm';
-
-import { authInterceptor } from '~/services/apiRequest';
-
-import getNavClickParams from './common/getNavClickParams';
 import ocmBaseName from './common/getBaseName';
-
-import { userInfoResponse } from './redux/actions/userActions';
+import getNavClickParams from './common/getNavClickParams';
+import App from './components/App/App';
 import { detectFeatures } from './redux/actions/featureActions';
+import { userInfoResponse } from './redux/actions/userActions';
 import { store } from './redux/store';
-
+import type { AppThunkDispatch } from './redux/types';
+import { authInterceptor } from './services/apiRequest';
+import { Chrome } from './types/types';
 import config from './config';
 
-import App from './components/App/App';
-import type { AppThunkDispatch } from './redux/types';
-
 import './styles/main.scss';
+
+import './i18n';
 
 const { Api, Config } = OCM;
 
@@ -56,30 +54,32 @@ const { Api, Config } = OCM;
 Api.setAuthInterceptor(authInterceptor);
 Config.setRouteBasePath('/assisted-installer');
 
-// Chrome 2.0 renders this
-class AppEntry extends React.Component {
+type Props = {
+  chrome: Chrome;
+};
+
+class AppEntry extends React.Component<Props> {
   state = { ready: false };
 
   componentDidMount() {
-    insights.chrome.init();
-    insights.chrome.identifyApp('').then(() => {
-      insights.chrome.appNavClick(getNavClickParams(window.location.pathname));
-    });
+    const { chrome } = this.props;
+    chrome.appNavClick(getNavClickParams(window.location.pathname));
     config.dateConfig();
-    insights.chrome.auth.getUser().then((data) => {
+    chrome.auth.getUser().then((data: any) => {
       if (data?.identity?.user) {
         store.dispatch(userInfoResponse(data.identity.user));
       }
-      config.fetchConfig().then(() => {
+      config.fetchConfig(chrome).then(() => {
         (store.dispatch as AppThunkDispatch)(detectFeatures());
         this.setState({ ready: true });
-        if (!config.envOverride && config.configData.sentryDSN) {
+        if (!APP_DEV_SERVER && !config.envOverride && config.configData.sentryDSN) {
           Sentry.init({
             dsn: config.configData.sentryDSN,
             ...(APP_SENTRY_RELEASE_VERSION ? { release: APP_SENTRY_RELEASE_VERSION } : {}),
+            autoSessionTracking: false,
             integrations: [
-              new SessionTiming(),
-              new Sentry.Integrations.GlobalHandlers({
+              sessionTimingIntegration(),
+              Sentry.globalHandlersIntegration({
                 onerror: true,
                 onunhandledrejection: false,
               }),
@@ -88,12 +88,15 @@ class AppEntry extends React.Component {
           if (data?.identity?.user) {
             const { email, username } = data.identity.user;
             // add user info to Sentry
-            Sentry.configureScope((scope) => {
-              scope.setUser({ email, username });
-            });
+            Sentry.getCurrentScope().setUser({ email, username });
           }
         }
       });
+      // avoid collisions with generated PF IDs in masthead
+      // workaround for:
+      //   https://issues.redhat.com/browse/RHCLOUD-31437
+      //   https://github.com/patternfly/patternfly-react/issues/10160
+      GenerateId.defaultProps = { prefix: 'pf-random-ocmui-id-' };
     });
 
     if (
@@ -104,7 +107,7 @@ class AppEntry extends React.Component {
       // build is not deployed in a production environment
       APP_API_ENV !== 'production'
     ) {
-      insights.chrome.enable.segmentDev();
+      chrome.enable.segmentDev();
     }
   }
 
@@ -134,4 +137,15 @@ class AppEntry extends React.Component {
     return null;
   }
 }
-export default AppEntry;
+
+/**
+ * Entry point for Chrome 2.0
+ *
+ * This wrapper exists to call the useChrome hook
+ */
+const AppEntryWrapper = () => {
+  const chrome = useChrome() as Chrome;
+  return chrome.initialized ? <AppEntry chrome={chrome} /> : null;
+};
+
+export default AppEntryWrapper;

@@ -3,4 +3,4 @@
 import { getFlatUrls } from '../src/common/installLinks.mjs';
 
 const flatUrls = await getFlatUrls();
-flatUrls.forEach(url => console.log(url));
+flatUrls.forEach((url) => console.log(url));

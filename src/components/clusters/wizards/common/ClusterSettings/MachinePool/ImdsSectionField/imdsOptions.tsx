@@ -1,7 +1,14 @@
 import React from 'react';
+
 import { IMDSType } from '../../../constants';
 
-export const imdsOptions = [
+export type ImdsOptionType = {
+  value: IMDSType;
+  ariaLabel: string;
+  label: React.ReactNode;
+};
+
+export const imdsOptions: ImdsOptionType[] = [
   {
     value: IMDSType.V1AndV2,
     ariaLabel: 'Both IMDSv1 and IMDSv2',

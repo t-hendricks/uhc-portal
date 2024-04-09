@@ -1,21 +1,22 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Field } from 'redux-form';
+
 import { Alert, Button, Grid, GridItem } from '@patternfly/react-core';
-import { PlusCircleIcon } from '@patternfly/react-icons/dist/esm/icons/plus-circle-icon';
 import { MinusCircleIcon } from '@patternfly/react-icons/dist/esm/icons/minus-circle-icon';
+import { PlusCircleIcon } from '@patternfly/react-icons/dist/esm/icons/plus-circle-icon';
 
 import { validateMultipleMachinePoolsSubnets } from '~/common/validators';
 import { SubnetSelectField } from '~/components/clusters/common/SubnetSelectField';
-import { emptyAWSSubnet } from '~/components/clusters/wizards/common/createOSDInitialValues';
+import { emptyAWSSubnet } from '~/components/clusters/wizards/common/constants';
 
 import './ReduxFormMachinePoolSubnets.scss';
 
-const ReduxFormMachinePoolSubnets = ({ fields, selectedVPC, meta: { warning } }) => (
+const ReduxFormMachinePoolSubnets = ({ fields, selectedVPC, meta }) => (
   <Grid hasGutter>
-    {warning && (
+    {meta?.warning && (
       <GridItem>
-        <Alert variant="warning" isPlain isInline title={warning} />
+        <Alert variant="warning" isPlain isInline title={meta?.warning} />
       </GridItem>
     )}
     <GridItem span={2} className="pf-v5-c-form__label pf-v5-c-form__label-text">
@@ -80,9 +81,7 @@ const ReduxFormMachinePoolSubnets = ({ fields, selectedVPC, meta: { warning } })
 ReduxFormMachinePoolSubnets.propTypes = {
   fields: PropTypes.array.isRequired,
   selectedVPC: PropTypes.object,
-  meta: PropTypes.shape({
-    warning: PropTypes.string,
-  }),
+  meta: PropTypes.object.isRequired,
 };
 
 export default ReduxFormMachinePoolSubnets;

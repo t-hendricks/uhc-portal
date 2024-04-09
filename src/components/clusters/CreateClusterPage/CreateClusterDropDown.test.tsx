@@ -1,17 +1,17 @@
 import React from 'react';
+import { createMemoryHistory } from 'history';
 import { MemoryRouter, Router } from 'react-router-dom';
 import { CompatRouter } from 'react-router-dom-v5-compat';
-import { createMemoryHistory } from 'history';
-
-import {
-  render,
-  checkAccessibility,
-  screen,
-  mockRestrictedEnv,
-  mockUseFeatureGate,
-} from '~/testUtils';
 
 import { HCP_ROSA_GETTING_STARTED_PAGE } from '~/redux/constants/featureConstants';
+import {
+  checkAccessibility,
+  mockRestrictedEnv,
+  mockUseFeatureGate,
+  render,
+  screen,
+} from '~/testUtils';
+
 import CreateClusterDropDown from './CreateClusterDropDown';
 
 const getStartedPath = '/create/rosa/getstarted';

@@ -1,26 +1,12 @@
 import { Cluster } from '~/types/clusters_mgmt.v1';
-import { isHypershiftCluster } from '~/components/clusters/ClusterDetails/clusterDetailsHelper';
 
 enum SupportedFeature {
   SECURITY_GROUPS = 'securityGroups',
   AWS_SHARED_VPC = 'sharedVPC',
 }
-type CompatibilityOptions = { day1?: boolean; day2?: boolean };
-
 type ClusterParams = Partial<Cluster>;
 
-const checkAWSSecurityGroupsCompatibility = (
-  clusterParams: ClusterParams,
-  options: CompatibilityOptions,
-) => {
-  if (options.day1) {
-    // This function only validates Day2, for Day1, the Security Groups section is only displayed when the cluster type allows so
-    return false;
-  }
-  if (isHypershiftCluster(clusterParams)) {
-    return false;
-  }
-
+const checkAWSSecurityGroupsCompatibility = (clusterParams: ClusterParams) => {
   const cloudProvider = clusterParams?.cloud_provider?.id;
   if (cloudProvider !== 'aws') {
     return false;
@@ -40,17 +26,13 @@ const checkAWSSecurityGroupsCompatibility = (
  * @param clusterParams cluster features necessary to determine compatibility
  * @param options when not provided an option, it's assumed it doesn't affect the compatibility status
  */
-const isCompatibleFeature = (
-  feature: SupportedFeature,
-  clusterParams: ClusterParams,
-  options: CompatibilityOptions,
-) => {
+const isCompatibleFeature = (feature: SupportedFeature, clusterParams: ClusterParams) => {
   switch (feature) {
     case SupportedFeature.SECURITY_GROUPS:
-      return checkAWSSecurityGroupsCompatibility(clusterParams, options);
+      return checkAWSSecurityGroupsCompatibility(clusterParams);
     default:
       return false;
   }
 };
 
-export { isCompatibleFeature, SupportedFeature, CompatibilityOptions };
+export { isCompatibleFeature, SupportedFeature };

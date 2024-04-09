@@ -1,5 +1,7 @@
 import React from 'react';
+
 import { Button, Popover } from '@patternfly/react-core';
+
 import { MachinePool } from '~/types/clusters_mgmt.v1';
 
 const MachinePoolNodesSummary = ({

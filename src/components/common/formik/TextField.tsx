@@ -1,6 +1,8 @@
-import { FormGroup, TextInput } from '@patternfly/react-core';
-import { useField } from 'formik';
 import * as React from 'react';
+import { useField } from 'formik';
+
+import { FormGroup, TextInput } from '@patternfly/react-core';
+
 import { FormGroupHelperText } from '../FormGroupHelperText';
 
 type TextFieldProps = {

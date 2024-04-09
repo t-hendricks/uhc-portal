@@ -1,5 +1,7 @@
 import React from 'react';
+
 import { render, screen } from '~/testUtils';
+
 import instructionsMapping from './instructionsMapping';
 
 jest.mock('./AdditionalInstructionsS390x', () => () => (

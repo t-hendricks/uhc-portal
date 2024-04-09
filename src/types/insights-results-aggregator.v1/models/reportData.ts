@@ -1,7 +1,7 @@
+/* generated using openapi-typescript-codegen -- do not edit */
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-
 /**
  * Array of ruleHit instances
  */
@@ -24,7 +24,7 @@ export type reportData = {
   /**
    * Used as templating data for other content (details, resolution, etc.), has varying structure depending on the rules in the report.
    */
-  extra_data?: any;
+  extra_data?: Record<string, any>;
   internal?: boolean;
   more_info?: string;
   /**
@@ -52,7 +52,6 @@ export type reportData = {
    */
   user_vote?: reportData.user_vote;
 };
-
 export namespace reportData {
   /**
    * Total risk - calculated from rule impact and likelihood.
@@ -63,7 +62,6 @@ export namespace reportData {
     '_3' = 3,
     '_4' = 4,
   }
-
   /**
    * User vote - value of user voting. -1 is dislike vote, 0 is no vote, 1 is like vote.
    */

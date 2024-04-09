@@ -1,6 +1,7 @@
 import React from 'react';
 
-import { render, screen, checkAccessibility } from '~/testUtils';
+import { checkAccessibility, render, screen } from '~/testUtils';
+
 import UpgradeAcknowledgeWarning from '../UpgradeAcknowledgeWarning/UpgradeAcknowledgeWarning';
 
 const unMetAcks = [{ title: 'myUnmetAcks' }];

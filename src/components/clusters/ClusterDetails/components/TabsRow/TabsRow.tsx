@@ -1,6 +1,8 @@
 import React from 'react';
-import { Tab, TabTitleText, Tabs } from '@patternfly/react-core';
 import { useLocation, useNavigate } from 'react-router-dom-v5-compat';
+
+import { Tab, Tabs, TabTitleText } from '@patternfly/react-core';
+
 import { getInitTab, getTabs } from './TabsRow.helper';
 import { TabsRowInfoType, TabsRowTabType } from './TabsRow.model';
 

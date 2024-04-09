@@ -1,43 +1,45 @@
-import { AWSCredentials } from '~/types/types';
-import apiRequest from '~/services/apiRequest';
 import { AxiosResponse } from 'axios';
+
+import apiRequest from '~/services/apiRequest';
+import { AWSCredentials } from '~/types/types';
+
+import type { Subscription } from '../types/accounts_mgmt.v1';
 import type {
   AddOn,
   AddOnInstallation,
-  Version,
   AWSInfrastructureAccessRole,
   AWSInfrastructureAccessRoleGrant,
-  Ingress,
-  UpgradePolicy,
-  UpgradePolicyState,
-  MachinePool,
-  NodePool,
+  CloudProvider,
+  CloudRegion,
   CloudVPC,
+  Cluster,
+  ClusterAutoscaler,
+  ClusterStatus,
+  DNSDomain,
+  EncryptionKey,
+  Flavour,
+  GCP,
+  Group,
+  IdentityProvider,
+  InflightCheck,
+  Ingress,
   KeyRing,
   KubeletConfig,
-  EncryptionKey,
-  CloudRegion,
+  LimitedSupportReason,
+  Log,
+  MachinePool,
+  MachineType,
+  NodePool,
+  NodePoolUpgradePolicy,
+  OidcConfig,
+  ProductTechnologyPreview,
+  UpgradePolicy,
+  UpgradePolicyState,
+  User,
+  Version,
   VersionGate,
   VersionGateAgreement,
-  User,
-  MachineType,
-  Cluster,
-  ClusterStatus,
-  Log,
-  CloudProvider,
-  IdentityProvider,
-  Group,
-  GCP,
-  Flavour,
-  LimitedSupportReason,
-  OidcConfig,
-  InflightCheck,
-  ClusterAutoscaler,
-  DNSDomain,
-  NodePoolUpgradePolicy,
-  ProductTechnologyPreview,
 } from '../types/clusters_mgmt.v1';
-import type { Subscription } from '../types/accounts_mgmt.v1';
 
 const getClusters = (search: string, size: number = -1) =>
   apiRequest.post<{
@@ -264,6 +266,44 @@ const getMachineTypesByRegion = (
         access_key_id: accessKeyId,
         account_id: accountId,
         secret_access_key: secretAccessKey,
+      },
+      region: {
+        id: region,
+      },
+    },
+    {
+      params: {
+        size: -1,
+      },
+    },
+  );
+
+const getMachineTypesByRegionARN = (roleARN: string, region: string) =>
+  apiRequest.post<{
+    /**
+     * Retrieved list of cloud providers.
+     */
+    items?: Array<MachineType>;
+    /**
+     * Index of the requested page, where one corresponds to the first page.
+     */
+    page?: number;
+    /**
+     * Maximum number of items that will be contained in the returned page.
+     */
+    size?: number;
+    /**
+     * Total number of items of the collection that match the search criteria,
+     * regardless of the size of the page.
+     */
+    total?: number;
+  }>(
+    '/api/clusters_mgmt/v1/aws_inquiries/machine_types',
+    {
+      aws: {
+        sts: {
+          role_arn: roleARN,
+        },
       },
       region: {
         id: region,
@@ -1046,6 +1086,7 @@ const clusterService = {
   getFlavour,
   getMachineTypes,
   getMachineTypesByRegion,
+  getMachineTypesByRegionARN,
   archiveCluster,
   hibernateCluster,
   resumeCluster,

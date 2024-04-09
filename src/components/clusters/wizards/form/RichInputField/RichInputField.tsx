@@ -1,19 +1,20 @@
-import React, { createRef, useState, useEffect, useReducer } from 'react';
+import React, { createRef, useEffect, useReducer, useState } from 'react';
 import { FormikErrors } from 'formik';
 import { WrappedFieldInputProps } from 'redux-form';
+
 import {
   FormGroup,
-  TextInput,
-  InputGroup,
-  Popover,
   HelperText,
+  InputGroup,
   InputGroupItem,
+  Popover,
+  TextInput,
 } from '@patternfly/react-core';
 
+import { ValidationIconButton, ValidationItem } from '~/components/clusters/wizards/common';
 import { useFormState } from '~/components/clusters/wizards/hooks';
-import PopoverHint from '~/components/common/PopoverHint';
-import { ValidationItem, ValidationIconButton } from '~/components/clusters/wizards/common';
 import { FormGroupHelperText } from '~/components/common/FormGroupHelperText';
+import PopoverHint from '~/components/common/PopoverHint';
 
 import './RichInputField.scss';
 

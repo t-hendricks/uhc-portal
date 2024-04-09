@@ -1,8 +1,11 @@
 import React from 'react';
-import PropTypes from 'prop-types';
-import { Grid, GridItem, Title, Divider } from '@patternfly/react-core';
 import last from 'lodash/last';
+import PropTypes from 'prop-types';
+
+import { Divider, Grid, GridItem, Title } from '@patternfly/react-core';
+
 import { versionRegEx } from '../../../../../../common/versionComparator';
+
 import VersionCard from './VersionCard';
 
 class VersionSelectionGrid extends React.Component {

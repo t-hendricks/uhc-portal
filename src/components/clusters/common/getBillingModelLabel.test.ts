@@ -1,10 +1,11 @@
 import { billingModels, normalizedProducts } from '~/common/subscriptionTypes';
 import { ClusterFromSubscription } from '~/types/types';
-import getBillingModelLabel from './getBillingModelLabel';
+
 import {
   defaultClusterFromSubscription,
   defaultSubscription,
 } from './__tests__/defaultClusterFromSubscription.fixtures';
+import getBillingModelLabel from './getBillingModelLabel';
 
 describe('getBillingModelLabel', () => {
   it.each([

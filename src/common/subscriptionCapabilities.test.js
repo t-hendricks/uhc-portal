@@ -1,15 +1,13 @@
 import forOwn from 'lodash/forOwn';
 import times from 'lodash/times';
 
+import { getRandomID } from './helpers';
 import {
-  subscriptionCapabilities,
   hasCapability,
   haveCapabilities,
+  subscriptionCapabilities,
 } from './subscriptionCapabilities';
-
 import { subscriptionStatuses } from './subscriptionTypes';
-
-import { getRandomID } from './helpers';
 
 const { SUBSCRIBED_OCP_MARKETPLACE } = subscriptionCapabilities;
 
