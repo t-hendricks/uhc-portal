@@ -247,6 +247,12 @@ const instructionsMapping = {
       },
     },
     arm: {
+      abi: {
+        title: 'Install OpenShift on ARM Bare Metal locally with Agent',
+        installer: tools.ARMINSTALLER,
+        channel: channels.STABLE,
+        docURL: links.INSTALL_AGENT_LEARN_MORE,
+      },
       ipi: {
         title: 'Install OpenShift on ARM Bare Metal with installer-provisioned infrastructure',
         installer: tools.ARMINSTALLER,
@@ -290,6 +296,12 @@ const instructionsMapping = {
       },
     },
     ppc: {
+      abi: {
+        title: 'Install OpenShift on IBM Power Systems Virtual Server locally with Agent',
+        installer: tools.PPCINSTALLER,
+        channel: channels.STABLE,
+        docURL: links.INSTALL_AGENT_LEARN_MORE,
+      },
       upi: {
         title: 'Install OpenShift on IBM Power (ppc64le) with user-provisioned infrastructure',
         installer: tools.PPCINSTALLER,
@@ -326,6 +338,13 @@ const instructionsMapping = {
       },
     },
     s390x: {
+      customizations: links.INSTALL_IBMZ_AGENTS_GETTING_STARTED,
+      abi: {
+        title: 'Install OpenShift on IBM Z (s390x) locally with Agent',
+        installer: tools.IBMZINSTALLER,
+        channel: channels.STABLE,
+        docURL: links.INSTALL_AGENT_LEARN_MORE,
+      },
       upi: {
         title: 'Install OpenShift on IBM Z (s390x) with user-provisioned infrastructure',
         rhcos: {

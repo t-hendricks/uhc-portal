@@ -30,6 +30,8 @@ const InstallIBMZ = () => {
           aiLearnMoreLink={links.INSTALL_ASSISTED_LEARN_MORE}
           upiPageLink="/install/ibmz/user-provisioned"
           upiLearnMoreLink={links.INSTALL_IBMZ_UPI_GETTING_STARTED}
+          agentBasedPageLink="/install/ibmz/agent-based"
+          agentBasedLearnMoreLink={links.INSTALL_AGENT_LEARN_MORE}
           hideIPI
           providerSpecificFeatures={{
             abi: ['For connected or air-gapped/restricted networks'],
