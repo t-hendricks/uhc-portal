@@ -1,11 +1,12 @@
 import React from 'react';
-
 import { CompatRouter } from 'react-router-dom-v5-compat';
-import { render, checkAccessibility, TestRouter, screen, within, waitFor } from '~/testUtils';
 
-import ClusterDetailsTop from '../components/ClusterDetailsTop';
-import fixtures, { funcs } from './ClusterDetails.fixtures';
+import { checkAccessibility, render, screen, TestRouter, waitFor, within } from '~/testUtils';
+
 import clusterStates from '../../common/clusterStates';
+import ClusterDetailsTop from '../components/ClusterDetailsTop';
+
+import fixtures, { funcs } from './ClusterDetails.fixtures';
 
 describe('<ClusterDetailsTop />', () => {
   afterAll(() => {

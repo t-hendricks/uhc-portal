@@ -1,6 +1,7 @@
 import { connect } from 'react-redux';
-import InstallationLogView from './InstallationLogView';
+
 import { clearLogs, getLogs } from './InstallationLogActions';
+import InstallationLogView from './InstallationLogView';
 import shouldShowLogs from './shouldShowLogs';
 
 const mapStateToProps = (state) => ({

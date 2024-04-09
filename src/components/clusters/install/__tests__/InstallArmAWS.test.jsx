@@ -1,8 +1,9 @@
 import React from 'react';
 import { CompatRouter } from 'react-router-dom-v5-compat';
-import { render, screen, checkAccessibility, TestRouter } from '~/testUtils';
-import InstallArmAWS from '../InstallArmAWS';
 
+import { checkAccessibility, render, screen, TestRouter } from '~/testUtils';
+
+import InstallArmAWS from '../InstallArmAWS';
 import { version } from '../InstallTestConstants';
 
 describe('InstallArmAWS', () => {

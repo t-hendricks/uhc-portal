@@ -1,13 +1,12 @@
-import {
-  REJECTED_ACTION,
-  PENDING_ACTION,
-  FULFILLED_ACTION,
-  baseRequestState,
-} from '../reduxHelpers';
 import { getErrorState } from '../../common/errors';
-
-import { persistentStorageConstants } from '../constants';
 import { PersistentStorageAction } from '../actions/persistentStorageActions';
+import { persistentStorageConstants } from '../constants';
+import {
+  baseRequestState,
+  FULFILLED_ACTION,
+  PENDING_ACTION,
+  REJECTED_ACTION,
+} from '../reduxHelpers';
 import { PromiseActionType, PromiseReducerState } from '../types';
 
 type State = PromiseReducerState<{

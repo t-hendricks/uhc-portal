@@ -14,15 +14,17 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 import React from 'react';
-import { PageHeader, PageHeaderTitle } from '@redhat-cloud-services/frontend-components/PageHeader';
+
 import { PageSection, Stack, StackItem } from '@patternfly/react-core';
+import { PageHeader, PageHeaderTitle } from '@redhat-cloud-services/frontend-components/PageHeader';
+
+import type { State as SubscriptionState } from '../../redux/reducers/subscriptionsReducer';
+import { AppPage } from '../App/AppPage';
 
 import OSDSubscriptionCard from './OSDSubscriptionCard';
 import SubscriptionNotFulfilled from './SubscriptionNotFulfilled';
-import type { State as SubscriptionState } from '../../redux/reducers/subscriptionsReducer';
 
 import './Quota.scss';
-import { AppPage } from '../App/AppPage';
 
 type Props = {
   fetchAccount: () => void;

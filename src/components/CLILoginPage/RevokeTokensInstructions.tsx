@@ -1,6 +1,9 @@
 import React from 'react';
-import { TextContent, Text, List, ListItem } from '@patternfly/react-core';
+
+import { List, ListItem, Text, TextContent } from '@patternfly/react-core';
+
 import ExternalLink from '../common/ExternalLink';
+
 import './RevokeTokensInstructions.scss';
 
 type Props = {

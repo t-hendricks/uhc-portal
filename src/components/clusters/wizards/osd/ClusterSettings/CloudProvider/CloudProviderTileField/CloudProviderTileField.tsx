@@ -3,17 +3,17 @@ import classNames from 'classnames';
 
 import { Tile, Tooltip } from '@patternfly/react-core';
 
-import AWSLogo from '~/styles/images/AWSLogo';
-import GCPLogo from '~/styles/images/GCPLogo';
-import { useFormState } from '~/components/clusters/wizards/hooks';
+import { noQuotaTooltip } from '~/common/helpers';
+import { billingModels } from '~/common/subscriptionTypes';
 import { CloudProviderType } from '~/components/clusters/wizards/common/constants';
 import * as osdInitialValues from '~/components/clusters/wizards/common/createOSDInitialValues';
-import { noQuotaTooltip } from '~/common/helpers';
-import { FieldId } from '~/components/clusters/wizards/osd/constants';
+import { useFormState } from '~/components/clusters/wizards/hooks';
 import { useGetBillingQuotas } from '~/components/clusters/wizards/osd/BillingModel/useGetBillingQuotas';
+import { FieldId } from '~/components/clusters/wizards/osd/constants';
+import AWSLogo from '~/styles/images/AWSLogo';
+import GCPLogo from '~/styles/images/GCPLogo';
 
 import './cloudProviderTileField.scss';
-import { billingModels } from '~/common/subscriptionTypes';
 
 export const CloudProviderTileField = () => {
   const {

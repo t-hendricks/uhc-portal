@@ -13,53 +13,55 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
-import * as Sentry from '@sentry/browser';
+import axios, { AxiosResponse } from 'axios';
 import isEmpty from 'lodash/isEmpty';
 import { action, ActionType } from 'typesafe-actions';
-import axios, { AxiosResponse } from 'axios';
+
 import type { Cluster as AICluster } from '@openshift-assisted/types/assisted-installer-service';
+import * as Sentry from '@sentry/browser';
 
 import { isHypershiftCluster } from '~/components/clusters/common/clusterStates';
-
-import type { Cluster, UpgradePolicy } from '~/types/clusters_mgmt.v1';
-import {
-  SelfResourceReview,
-  SelfAccessReview,
-  SelfResourceReviewRequest,
-} from '~/types/accounts_mgmt.v1';
 import type {
   Subscription,
   SubscriptionCreateRequest,
   SubscriptionPatchRequest,
 } from '~/types/accounts_mgmt.v1';
+import {
+  SelfAccessReview,
+  SelfResourceReview,
+  SelfResourceReviewRequest,
+} from '~/types/accounts_mgmt.v1';
+import type { Cluster, UpgradePolicy } from '~/types/clusters_mgmt.v1';
 import type {
   AugmentedCluster,
   AugmentedClusterResponse,
   ClusterWithPermissions,
 } from '~/types/types';
-import type { AppThunk, AppThunkDispatch } from '../types';
-import { techPreviewStatusSelector, dispatchTechPreviewStatus } from '../hooks/clusterHooks';
-import { clustersConstants } from '../constants';
+
+import isAssistedInstallSubscription from '../../common/isAssistedInstallerCluster';
+import {
+  fakeClusterFromAISubscription,
+  fakeClusterFromSubscription,
+  mapListResponse,
+  normalizeCluster,
+  normalizeMetrics,
+  normalizeSubscription,
+} from '../../common/normalize';
+import { knownProducts, subscriptionStatuses } from '../../common/subscriptionTypes';
+import { postSchedule } from '../../components/clusters/common/Upgrades/clusterUpgradeActions';
 import {
   accountsService,
   assistedService,
   authorizationsService,
   clusterService,
 } from '../../services';
-import { INVALIDATE_ACTION, buildPermissionDict } from '../reduxHelpers';
-import { subscriptionStatuses, knownProducts } from '../../common/subscriptionTypes';
-import {
-  normalizeCluster,
-  fakeClusterFromSubscription,
-  fakeClusterFromAISubscription,
-  normalizeSubscription,
-  mapListResponse,
-  normalizeMetrics,
-} from '../../common/normalize';
-import { postSchedule } from '../../components/clusters/common/Upgrades/clusterUpgradeActions';
-import { editSubscriptionSettings } from './subscriptionSettingsActions';
-import isAssistedInstallSubscription from '../../common/isAssistedInstallerCluster';
+import { clustersConstants } from '../constants';
 import { ASSISTED_INSTALLER_MERGE_LISTS_FEATURE } from '../constants/featureConstants';
+import { dispatchTechPreviewStatus, techPreviewStatusSelector } from '../hooks/clusterHooks';
+import { buildPermissionDict, INVALIDATE_ACTION } from '../reduxHelpers';
+import type { AppThunk, AppThunkDispatch } from '../types';
+
+import { editSubscriptionSettings } from './subscriptionSettingsActions';
 
 const ROSA_PRODUCTS = [knownProducts.ROSA, knownProducts.ROSA_HyperShift];
 const OSD_PRODUCTS = [knownProducts.OSD, knownProducts.OSDTrial];

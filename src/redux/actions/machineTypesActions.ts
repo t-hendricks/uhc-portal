@@ -1,7 +1,8 @@
 import { action, ActionType } from 'typesafe-actions';
-import { machineTypesConstants } from '../constants';
+
 import { clusterService } from '../../services';
 import type { MachineType } from '../../types/clusters_mgmt.v1';
+import { machineTypesConstants } from '../constants';
 
 // Group machine types by cloud provider
 const groupByCloudProvider = (machineTypes?: MachineType[]): { [id: string]: MachineType[] } => {

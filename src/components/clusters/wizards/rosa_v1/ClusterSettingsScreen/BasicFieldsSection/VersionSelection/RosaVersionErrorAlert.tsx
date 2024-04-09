@@ -1,4 +1,5 @@
 import React from 'react';
+
 import {
   Alert,
   Text,
@@ -7,7 +8,9 @@ import {
   TextListVariants,
   TextVariants,
 } from '@patternfly/react-core';
+
 import { RosaCliCommand } from '~/components/clusters/wizards/rosa_v2/AccountsRolesScreen/constants/cliCommands';
+
 import InstructionCommand from '../../../../../../common/InstructionCommand';
 
 type RosaVersionErrorAlertProps = {

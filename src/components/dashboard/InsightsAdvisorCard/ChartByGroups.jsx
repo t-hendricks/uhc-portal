@@ -1,9 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Title, Flex, FlexItem } from '@patternfly/react-core';
-import { ChartPie, ChartLegend } from '@patternfly/react-charts';
+
+import { ChartLegend, ChartPie } from '@patternfly/react-charts';
+import { Flex, FlexItem, Title } from '@patternfly/react-core';
 
 import { advisorBaseName } from '~/common/getBaseName';
+
 import { groupTagHitsByGroups } from '../overviewHelpers';
 
 export const categoryMapping = {

@@ -1,9 +1,11 @@
 import React from 'react';
 import { PropTypes } from 'prop-types';
+
 import { Flex, FlexItem, Title } from '@patternfly/react-core';
 
 import InfoPopover from '../../../../../dashboard/InsightsAdvisorCard/InfoPopover';
 import { groupRulesByRisk } from '../../Insights/InsightsSelectors';
+
 import Chart from './Chart';
 
 import './InsightsAdvisor.scss';

@@ -1,5 +1,6 @@
-import tollboothReducer from './tollbooth';
 import { ACTION_TYPE as tollboothActionType } from '../actions/tollbooth';
+
+import tollboothReducer from './tollbooth';
 
 describe('tollboothReducer', () => {
   const initialState = {};

@@ -1,7 +1,10 @@
 import React from 'react';
-import { screen, render, checkAccessibility, within } from '~/testUtils';
-import DetailsLeft from './DetailsLeft';
+
+import { checkAccessibility, render, screen, within } from '~/testUtils';
+
 import fixtures from '../../__tests__/ClusterDetails.fixtures';
+
+import DetailsLeft from './DetailsLeft';
 
 const defaultProps = {
   cluster: fixtures.clusterDetails.cluster,

@@ -15,16 +15,18 @@ limitations under the License.
 */
 
 import React from 'react';
+import { CompatRouter } from 'react-router-dom-v5-compat';
+
 import {
-  mockRestrictedEnv,
+  checkAccessibility,
   mockRefreshToken,
+  mockRestrictedEnv,
+  mockUseChrome,
   render,
   screen,
   TestRouter,
-  checkAccessibility,
-  mockUseChrome,
 } from '~/testUtils';
-import { CompatRouter } from 'react-router-dom-v5-compat';
+
 import Tokens from '../Instructions';
 
 describe('<Tokens />', () => {

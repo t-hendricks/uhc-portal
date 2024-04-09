@@ -1,4 +1,5 @@
 import React from 'react';
+
 import {
   Grid,
   GridItem,
@@ -10,13 +11,14 @@ import {
   Title,
 } from '@patternfly/react-core';
 import Skeleton from '@redhat-cloud-services/frontend-components/Skeleton';
+
 import { PromiseReducerState } from '~/redux/types';
 
+import { Report } from './models/Report';
 import CostSummaryClusters from './CostSummaryClusters';
 import { getTotal } from './CostSummaryHelper';
 
 import './CostCard.scss';
-import { Report } from './models/Report';
 
 type CostSummaryProps = {
   report: PromiseReducerState<Report>;

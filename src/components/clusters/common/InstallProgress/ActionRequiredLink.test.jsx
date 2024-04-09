@@ -1,7 +1,10 @@
 import React from 'react';
-import { screen, render, checkAccessibility } from '~/testUtils';
-import ActionRequiredLink from './ActionRequiredLink';
+
+import { checkAccessibility, render, screen } from '~/testUtils';
+
 import fixtures from '../../ClusterDetails/__tests__/ClusterDetails.fixtures';
+
+import ActionRequiredLink from './ActionRequiredLink';
 
 describe('<ActionRequiredLink />', () => {
   it('does not render modal when initiallyOpen is set to false', async () => {

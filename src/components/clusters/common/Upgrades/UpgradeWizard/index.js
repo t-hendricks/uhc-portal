@@ -1,14 +1,15 @@
 import { connect } from 'react-redux';
 
-import { closeModal } from '../../../../common/Modal/ModalActions';
 import { fetchClusterDetails } from '../../../../../redux/actions/clustersActions';
-import { postSchedule, clearPostedUpgradeScheduleResponse } from '../clusterUpgradeActions';
-import UpgradeWizard from './UpgradeWizard';
-import { getClusterUnMetClusterAcks } from '../UpgradeAcknowledge/UpgradeAcknowledgeSelectors';
 import {
-  setClusterUpgradeGate,
   rejectGateAction,
+  setClusterUpgradeGate,
 } from '../../../../../redux/actions/upgradeGateActions';
+import { closeModal } from '../../../../common/Modal/ModalActions';
+import { clearPostedUpgradeScheduleResponse, postSchedule } from '../clusterUpgradeActions';
+import { getClusterUnMetClusterAcks } from '../UpgradeAcknowledge/UpgradeAcknowledgeSelectors';
+
+import UpgradeWizard from './UpgradeWizard';
 
 const mapStateToProps = (state) => ({
   subscriptionID: state.modal.data.subscriptionID,

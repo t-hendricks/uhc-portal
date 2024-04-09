@@ -1,7 +1,8 @@
 import { connect } from 'react-redux';
-import { change, untouch, formValueSelector } from 'redux-form';
+import { change, formValueSelector, untouch } from 'redux-form';
 
 import wizardConnector from '~/components/clusters/wizards/common/WizardConnector';
+
 import VPCScreen from './VPCScreen';
 
 const mapStateToProps = (state) => {

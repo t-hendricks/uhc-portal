@@ -1,7 +1,9 @@
 import React from 'react';
+
 import { ClipboardCopy, clipboardCopyFunc, Text } from '@patternfly/react-core';
-import useAnalytics from '~/hooks/useAnalytics';
+
 import { TrackEvent } from '~/common/analytics';
+import useAnalytics from '~/hooks/useAnalytics';
 
 import './InstructionCommand.scss';
 

@@ -1,7 +1,8 @@
 import React from 'react';
 import { useLocation, useParams } from 'react-router-dom-v5-compat';
-import InsightsAdvisorRedirector from '../InsightsAdvisorRedirector';
+
 import ClusterDetailsRedirector from '../ClusterDetailsRedirector';
+import InsightsAdvisorRedirector from '../InsightsAdvisorRedirector';
 
 const ClusterDetailsClusterOrExternalId = (props) => {
   const params = useParams();

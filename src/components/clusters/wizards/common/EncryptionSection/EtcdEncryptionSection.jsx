@@ -1,12 +1,16 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { FormGroup, GridItem } from '@patternfly/react-core';
 import { Field } from 'redux-form';
-import ExternalLink from '~/components/common/ExternalLink';
+
+import { FormGroup, GridItem } from '@patternfly/react-core';
+
 import links from '~/common/installLinks.mjs';
-import ReduxCheckbox from '~/components/common/ReduxFormComponents/ReduxCheckbox';
 import { CheckboxDescription } from '~/components/common/CheckboxDescription';
+import ExternalLink from '~/components/common/ExternalLink';
+import ReduxCheckbox from '~/components/common/ReduxFormComponents/ReduxCheckbox';
+
 import { constants } from '../../../common/CreateOSDFormConstants';
+
 import AWSCustomerManagedEncryption from './AWSCustomerManagedEncryption';
 
 import './encryptionSection.scss';

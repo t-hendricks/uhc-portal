@@ -1,15 +1,17 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Form, TextContent, Text, TextVariants } from '@patternfly/react-core';
 
-import Modal from '../../../common/Modal/Modal';
-import modals from '../../../common/Modal/modals';
-import EditSubscriptionSettingsRequestState from './EditSubscriptionSettingsRequestState';
-import EditSubscriptionSettingsFields from './EditSubscriptionSettingsFields';
+import { Form, Text, TextContent, TextVariants } from '@patternfly/react-core';
+
 import {
   hasCapability,
   subscriptionCapabilities,
 } from '../../../../common/subscriptionCapabilities';
+import Modal from '../../../common/Modal/Modal';
+import modals from '../../../common/Modal/modals';
+
+import EditSubscriptionSettingsFields from './EditSubscriptionSettingsFields';
+import EditSubscriptionSettingsRequestState from './EditSubscriptionSettingsRequestState';
 
 const { SUBSCRIBED_OCP, SUBSCRIBED_OCP_MARKETPLACE } = subscriptionCapabilities;
 

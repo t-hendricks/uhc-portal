@@ -1,4 +1,5 @@
 import React from 'react';
+
 import './AWSLogo.scss';
 
 const AWSLogo = (props: { height?: string; width?: string; className?: string }) => {

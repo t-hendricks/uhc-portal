@@ -14,37 +14,35 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import size from 'lodash/size';
-import isEmpty from 'lodash/isEmpty';
-import PropTypes from 'prop-types';
 import React, { Component } from 'react';
-
-import { PageHeader, PageHeaderTitle } from '@redhat-cloud-services/frontend-components/PageHeader';
-import Spinner from '@redhat-cloud-services/frontend-components/Spinner';
+import isEmpty from 'lodash/isEmpty';
+import size from 'lodash/size';
+import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom-v5-compat';
 
-import { Card, Toolbar, ToolbarItem, ToolbarContent, PageSection } from '@patternfly/react-core';
+import { Card, PageSection, Toolbar, ToolbarContent, ToolbarItem } from '@patternfly/react-core';
+import { PageHeader, PageHeaderTitle } from '@redhat-cloud-services/frontend-components/PageHeader';
+import Spinner from '@redhat-cloud-services/frontend-components/Spinner';
 
-import { AppPage } from '~/components/App/AppPage';
 import { ONLY_MY_CLUSTERS_TOGGLE_CLUSTER_ARCHIVES_LIST } from '~/common/localStorageConstants';
-import ClusterListFilter from '../common/ClusterListFilter';
-import ClusterListFilterDropDown from '../ClusterList/components/ClusterListFilterDropdown';
-import ClusterListFilterChipGroup from '../ClusterList/components/ClusterListFilterChipGroup';
-import ViewOnlyMyClustersToggle from '../ClusterList/components/ViewOnlyMyClustersToggle';
+import { AppPage } from '~/components/App/AppPage';
 
-import ArchivedClusterListTable from './components/ArchiveClusterListTable/ArchivedClusterListTable';
+import { createViewQueryObject, viewPropsChanged } from '../../../common/queryHelpers';
+import { viewConstants } from '../../../redux/constants';
+import Breadcrumbs from '../../common/Breadcrumbs';
+import ConnectedModal from '../../common/Modal/ConnectedModal';
 import RefreshBtn from '../../common/RefreshButton/RefreshButton';
+import Unavailable from '../../common/Unavailable';
+import ClusterListFilterChipGroup from '../ClusterList/components/ClusterListFilterChipGroup';
+import ClusterListFilterDropDown from '../ClusterList/components/ClusterListFilterDropdown';
+import ViewOnlyMyClustersToggle from '../ClusterList/components/ViewOnlyMyClustersToggle';
+import ClusterListFilter from '../common/ClusterListFilter';
 import ErrorTriangle from '../common/ErrorTriangle';
 import GlobalErrorBox from '../common/GlobalErrorBox/GlobalErrorBox';
-import Breadcrumbs from '../../common/Breadcrumbs';
-
-import Unavailable from '../../common/Unavailable';
-import ConnectedModal from '../../common/Modal/ConnectedModal';
 import UnarchiveClusterDialog from '../common/UnarchiveClusterDialog';
-
 import ViewPaginationRow from '../common/ViewPaginationRow/viewPaginationRow';
-import { viewPropsChanged, createViewQueryObject } from '../../../common/queryHelpers';
-import { viewConstants } from '../../../redux/constants';
+
+import ArchivedClusterListTable from './components/ArchiveClusterListTable/ArchivedClusterListTable';
 
 import './ArchivedClusterList.scss';
 

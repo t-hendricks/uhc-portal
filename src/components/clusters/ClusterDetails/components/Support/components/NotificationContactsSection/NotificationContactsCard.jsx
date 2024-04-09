@@ -1,12 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+
+import { EmptyState } from '@patternfly/react-core';
 import { TableVariant } from '@patternfly/react-table';
 import {
   Table as TableDeprecated,
-  TableHeader as TableHeaderDeprecated,
   TableBody as TableBodyDeprecated,
+  TableHeader as TableHeaderDeprecated,
 } from '@patternfly/react-table/deprecated';
-import { EmptyState } from '@patternfly/react-core';
+
 import ErrorBox from '../../../../../../common/ErrorBox';
 
 class NotificationContactsCard extends React.Component {

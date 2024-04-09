@@ -1,18 +1,21 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+
 import {
   Button,
   EmptyState,
   EmptyStateBody,
-  EmptyStateVariant,
   EmptyStateHeader,
+  EmptyStateVariant,
 } from '@patternfly/react-core';
-import { OutlinedArrowAltCircleUpIcon } from '@patternfly/react-icons/dist/esm/icons/outlined-arrow-alt-circle-up-icon';
 import { CheckCircleIcon } from '@patternfly/react-icons/dist/esm/icons/check-circle-icon';
 import { InProgressIcon } from '@patternfly/react-icons/dist/esm/icons/in-progress-icon';
+import { OutlinedArrowAltCircleUpIcon } from '@patternfly/react-icons/dist/esm/icons/outlined-arrow-alt-circle-up-icon';
 import { DateFormat } from '@redhat-cloud-services/frontend-components/DateFormat';
-import './UpgradeStatus.scss';
+
 import UpdateGraph from './UpdateGraph/UpdateGraph';
+
+import './UpgradeStatus.scss';
 
 function UpgradeStatus({
   clusterID,

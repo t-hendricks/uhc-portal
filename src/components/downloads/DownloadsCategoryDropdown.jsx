@@ -1,8 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+
 import { FormSelect, FormSelectOption } from '@patternfly/react-core';
 
-import { downloadsCategories, allCategories } from './downloadsStructure';
+import { allCategories, downloadsCategories } from './downloadsStructure';
 
 const DownloadsCategoryDropdown = ({ selectedCategory, setCategory }) => (
   <FormSelect

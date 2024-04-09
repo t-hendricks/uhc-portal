@@ -1,8 +1,9 @@
 import React from 'react';
+
 import { List, ListItem, Text, TextContent } from '@patternfly/react-core';
 
-import ExternalLink from '~/components/common/ExternalLink';
 import links from '~/common/installLinks.mjs';
+import ExternalLink from '~/components/common/ExternalLink';
 
 const HibernateInfoLink = () => (
   <ExternalLink href={links.HIBERNATING_CLUSTER}>Learn more about cluster hibernation</ExternalLink>

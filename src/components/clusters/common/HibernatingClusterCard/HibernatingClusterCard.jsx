@@ -1,22 +1,23 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+
 import {
   Card,
   CardBody,
   EmptyState,
+  EmptyStateActions,
+  EmptyStateBody,
+  EmptyStateFooter,
+  EmptyStateHeader,
   EmptyStateIcon,
   EmptyStateVariant,
-  EmptyStateBody,
-  EmptyStateActions,
-  EmptyStateHeader,
-  EmptyStateFooter,
 } from '@patternfly/react-core';
 import { AsleepIcon } from '@patternfly/react-icons/dist/esm/icons/asleep-icon';
 import { InProgressIcon } from '@patternfly/react-icons/dist/esm/icons/in-progress-icon';
 
-import clusterStates from '../clusterStates';
-import modals from '../../../common/Modal/modals';
 import ButtonWithTooltip from '../../../common/ButtonWithTooltip';
+import modals from '../../../common/Modal/modals';
+import clusterStates from '../clusterStates';
 
 function HibernatingClusterCard({ cluster, openModal }) {
   let icon;

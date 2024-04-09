@@ -1,9 +1,10 @@
 import React from 'react';
+
 import * as Sentry from '@sentry/browser';
 
-import demoExperienceService from './demoExperienceService';
-import { DemoExperienceStatusEnum } from './DemoExperienceModels';
 import { AugmentedDemoExperience } from './augmentedModelTypes';
+import { DemoExperienceStatusEnum } from './DemoExperienceModels';
+import demoExperienceService from './demoExperienceService';
 
 const LONG_POLLING_INTERVAL = 30000;
 const SHORT_POLLING_INTERVAL = 5000;

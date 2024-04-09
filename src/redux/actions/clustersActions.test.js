@@ -1,7 +1,8 @@
-import { clustersActions } from './clustersActions';
-import { clusterService, accountsService } from '../../services';
+import { accountsService, clusterService } from '../../services';
 import { clustersConstants } from '../constants';
 import { INVALIDATE_ACTION } from '../reduxHelpers';
+
+import { clustersActions } from './clustersActions';
 
 jest.mock('../../services/accountsService');
 jest.mock('../../services/authorizationsService');

@@ -1,5 +1,7 @@
 import React from 'react';
-import { screen, render } from '~/testUtils';
+
+import { render, screen } from '~/testUtils';
+
 import ClusterDetailsRedirector from './ClusterDetailsRedirector';
 
 jest.mock('react-router-dom-v5-compat', () => ({

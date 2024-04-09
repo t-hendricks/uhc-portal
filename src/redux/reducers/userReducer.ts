@@ -1,15 +1,17 @@
 import { produce } from 'immer';
+
 import { Organization, QuotaCost, TermsReviewResponse } from '~/types/accounts_mgmt.v1';
 import { UserInfo } from '~/types/types';
-import { userConstants } from '../constants';
-import {
-  REJECTED_ACTION,
-  PENDING_ACTION,
-  FULFILLED_ACTION,
-  baseRequestState,
-} from '../reduxHelpers';
+
 import { getErrorState } from '../../common/errors';
 import { UserAction } from '../actions/userActions';
+import { userConstants } from '../constants';
+import {
+  baseRequestState,
+  FULFILLED_ACTION,
+  PENDING_ACTION,
+  REJECTED_ACTION,
+} from '../reduxHelpers';
 import { PromiseActionType, PromiseReducerState } from '../types';
 
 export type OrganizationState = {

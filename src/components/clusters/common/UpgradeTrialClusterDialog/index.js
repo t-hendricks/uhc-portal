@@ -1,13 +1,14 @@
 import { connect } from 'react-redux';
 
+import getClusterName from '../../../../common/getClusterName';
 import {
   clearUpgradeTrialClusterResponse,
   upgradeTrialCluster,
 } from '../../../../redux/actions/clustersActions';
 import { getOrganizationAndQuota } from '../../../../redux/actions/userActions';
-import UpgradeTrialClusterDialog from './UpgradeTrialClusterDialog';
 import { closeModal } from '../../../common/Modal/ModalActions';
-import getClusterName from '../../../../common/getClusterName';
+
+import UpgradeTrialClusterDialog from './UpgradeTrialClusterDialog';
 
 const mapStateToProps = (state) => {
   const modalData = state.modal.data;

@@ -1,14 +1,18 @@
 import { connect } from 'react-redux';
+
 import { addNotification } from '@redhat-cloud-services/frontend-components-notifications/redux';
+
 import { featureGateSelector } from '~/hooks/useFeatureGate';
 import { NETWORK_VALIDATOR_ONDEMAND_FEATURE } from '~/redux/constants/featureConstants';
+
 import {
+  clearInflightChecks,
   getClusterStatus,
   getInflightChecks,
-  rerunInflightChecks,
-  clearInflightChecks,
   getRerunInflightChecks,
+  rerunInflightChecks,
 } from '../../../../../../redux/actions/clustersActions';
+
 import ClusterStatusMonitor from './ClusterStatusMonitor';
 
 const mapStateToProps = (state) => ({

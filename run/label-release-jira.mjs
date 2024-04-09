@@ -6,13 +6,13 @@
 /* eslint-disable import/no-extraneous-dependencies */
 /* eslint-disable camelcase */
 
-import { execSync } from 'child_process';
-import _ from 'lodash';
 import chalk from 'chalk';
+import { execSync } from 'child_process';
+import cliProgress from 'cli-progress';
+import inquirer from 'inquirer';
+import _ from 'lodash';
 import { simpleGit } from 'simple-git';
 import yargs from 'yargs';
-import inquirer from 'inquirer';
-import cliProgress from 'cli-progress';
 
 import { getUpstreamRemoteName } from './upstream-name.mjs';
 

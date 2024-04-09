@@ -1,5 +1,6 @@
-import { AxiosError } from 'axios';
 import * as React from 'react';
+import { AxiosError } from 'axios';
+
 import { accountsService } from '~/services';
 
 const govAddresses = /\.(gov|mil)$/;

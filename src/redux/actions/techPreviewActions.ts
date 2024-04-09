@@ -1,7 +1,8 @@
 import { action, ActionType } from 'typesafe-actions';
+
 import type { ProductTechnologyPreview } from '../../types/clusters_mgmt.v1';
-import { REJECTED_ACTION, PENDING_ACTION, FULFILLED_ACTION } from '../reduxHelpers';
 import { clustersConstants } from '../constants';
+import { FULFILLED_ACTION, PENDING_ACTION, REJECTED_ACTION } from '../reduxHelpers';
 
 export type TechPreviewActions = ActionType<
   | typeof getTechPreviewStatusPending

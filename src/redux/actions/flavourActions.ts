@@ -1,6 +1,7 @@
 import { action, ActionType } from 'typesafe-actions';
-import { flavourConstants } from '../constants';
+
 import { clusterService } from '../../services';
+import { flavourConstants } from '../constants';
 
 // Backend API supports multiple flavours but presently all managed clusters
 // use same flavour 'osd-4'.  Save a bit of traffic by fetching only it.

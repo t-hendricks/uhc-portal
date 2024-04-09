@@ -1,5 +1,6 @@
-import { ClusterFromSubscription } from '~/types/types';
 import { InsightsRuleCategories } from '~/components/clusters/ClusterDetails/components/Insights/InsightsConstants';
+import { ClusterFromSubscription } from '~/types/types';
+
 import { hasCpuAndMemory } from '../../clusters/ClusterDetails/clusterDetailsHelper';
 import {
   hasResourceUsageMetrics,

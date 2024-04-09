@@ -1,6 +1,7 @@
 import { action, ActionType } from 'typesafe-actions';
-import { loadBalancerConstants } from '../constants';
+
 import { clusterService } from '../../services';
+import { loadBalancerConstants } from '../constants';
 
 const getLoadBalancers = () =>
   clusterService

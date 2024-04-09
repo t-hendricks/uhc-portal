@@ -1,7 +1,10 @@
-import { Button } from '@patternfly/react-core';
 import React from 'react';
+
+import { Button } from '@patternfly/react-core';
+
 import { trackEvents } from '~/common/analytics';
 import useAnalytics from '~/hooks/useAnalytics';
+
 import { tools } from '../../../../../common/installLinks.mjs';
 
 const texts = {

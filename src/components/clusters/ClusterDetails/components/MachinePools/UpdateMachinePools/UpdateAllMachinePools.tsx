@@ -1,26 +1,29 @@
 import React from 'react';
-import { Alert, AlertActionLink, AlertVariant, Spinner } from '@patternfly/react-core';
-import { useSelector, useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom-v5-compat';
 import semver from 'semver';
-import { GlobalState } from '~/redux/store';
-import ExternalLink from '~/components/common/ExternalLink';
-import { NodePool } from '~/types/clusters_mgmt.v1/models/NodePool';
+
+import { Alert, AlertActionLink, AlertVariant, Spinner } from '@patternfly/react-core';
+
 import links from '~/common/installLinks.mjs';
+import ExternalLink from '~/components/common/ExternalLink';
 import { useFeatureGate } from '~/hooks/useFeatureGate';
 import { HCP_USE_NODE_UPGRADE_POLICIES } from '~/redux/constants/featureConstants';
+import { GlobalState } from '~/redux/store';
+import { NodePool } from '~/types/clusters_mgmt.v1/models/NodePool';
+
 import { isHypershiftCluster } from '../../../clusterDetailsHelper';
 import { getMachineOrNodePools } from '../MachinePoolsActions';
 
 import {
+  compareIsMachinePoolBehindControlPlane,
+  controlPlaneIdSelector,
+  controlPlaneVersionSelector,
+  isControlPlaneValidForMachinePool,
+  isMachinePoolScheduleError,
+  isMachinePoolUpgrading,
   updateAllMachinePools as updateAllPools,
   useHCPControlPlaneUpdating,
-  controlPlaneVersionSelector,
-  controlPlaneIdSelector,
-  compareIsMachinePoolBehindControlPlane,
-  isControlPlaneValidForMachinePool,
-  isMachinePoolUpgrading,
-  isMachinePoolScheduleError,
 } from './updateMachinePoolsHelpers';
 
 const UpdateAllMachinePools = ({

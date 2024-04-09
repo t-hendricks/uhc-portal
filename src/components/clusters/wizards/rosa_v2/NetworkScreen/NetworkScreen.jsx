@@ -1,37 +1,37 @@
 import React from 'react';
+import { Field } from 'formik';
 import PropTypes from 'prop-types';
+
 import {
   Alert,
   Form,
-  Grid,
-  GridItem,
-  Title,
-  Text,
   FormFieldGroup,
   FormGroup,
+  Grid,
+  GridItem,
+  Text,
+  Title,
   Tooltip,
 } from '@patternfly/react-core';
-import { Field } from 'formik';
 
+import { ocmResourceType, trackEvents } from '~/common/analytics';
+import { getDefaultSecurityGroupsSettings } from '~/common/securityGroupsHelpers';
 import { normalizedProducts } from '~/common/subscriptionTypes';
 import { validateRequiredPublicSubnetId } from '~/common/validators';
-import useAnalytics from '~/hooks/useAnalytics';
-import { ocmResourceType, trackEvents } from '~/common/analytics';
-import { isRestrictedEnv } from '~/restrictedEnv';
-import { canConfigureDayOneManagedIngress } from '~/components/clusters/wizards/rosa/constants';
 import { isExactMajorMinor } from '~/common/versionHelpers';
 import { getSelectedAvailabilityZones } from '~/common/vpcHelpers';
-import { getDefaultSecurityGroupsSettings } from '~/common/securityGroupsHelpers';
-
 import { constants } from '~/components/clusters/common/CreateOSDFormConstants';
-import ExternalLink from '~/components/common/ExternalLink';
 import { SubnetSelectField } from '~/components/clusters/common/SubnetSelectField';
-
-import { FieldId } from '~/components/clusters/wizards/rosa_v2/constants';
 import { useFormState } from '~/components/clusters/wizards/hooks';
+import { canConfigureDayOneManagedIngress } from '~/components/clusters/wizards/rosa/constants';
+import { FieldId } from '~/components/clusters/wizards/rosa_v2/constants';
 import { DefaultIngressFieldsFormik } from '~/components/clusters/wizards/rosa_v2/NetworkScreen/DefaultIngressFieldsFormik';
-import { ReduxCheckbox, RadioButtons } from '~/components/common/ReduxFormComponents';
 import { CheckboxDescription } from '~/components/common/CheckboxDescription';
+import ExternalLink from '~/components/common/ExternalLink';
+import { RadioButtons, ReduxCheckbox } from '~/components/common/ReduxFormComponents';
+import useAnalytics from '~/hooks/useAnalytics';
+import { isRestrictedEnv } from '~/restrictedEnv';
+
 import links from '../../../../../common/installLinks.mjs';
 
 function NetworkScreen(props) {

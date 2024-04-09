@@ -1,10 +1,11 @@
 import React from 'react';
-import { FormGroup } from '@patternfly/react-core';
 import { Field } from 'redux-form';
 
+import { FormGroup } from '@patternfly/react-core';
+
+import { validateWorkerVolumeSize } from '~/common/validators';
 import { workerNodeVolumeSizeMinGiB } from '~/components/clusters/wizards/rosa/constants';
 import FormNumberInput from '~/components/common/FormComponents/FormNumberInput';
-import { validateWorkerVolumeSize } from '~/common/validators';
 import PopoverHint from '~/components/common/PopoverHint';
 
 import './WorkerNodeVolumeSizeSection.scss';

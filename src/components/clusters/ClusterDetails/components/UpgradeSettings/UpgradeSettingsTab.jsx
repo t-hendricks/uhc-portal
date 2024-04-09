@@ -1,32 +1,36 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+
 import {
+  Alert,
   Button,
   Card,
   CardBody,
   CardFooter,
   CardTitle,
-  Form,
   Flex,
   FlexItem,
+  Form,
   Grid,
   GridItem,
   Modal,
-  Alert,
 } from '@patternfly/react-core';
+
 import getClusterVersion from '~/components/clusters/common/getClusterVersion';
-import UpgradeStatus from '../../../common/Upgrades/UpgradeStatus';
+
 import getClusterName from '../../../../../common/getClusterName';
-import UpgradeSettingsFields from '../../../common/Upgrades/UpgradeSettingsFields';
+import ButtonWithTooltip from '../../../../common/ButtonWithTooltip';
 import ErrorBox from '../../../../common/ErrorBox';
 import modals from '../../../../common/Modal/modals';
-import UserWorkloadMonitoringSection from '../../../common/UserWorkloadMonitoringSection';
-import '../../../common/Upgrades/UpgradeSettingsFields.scss';
 import clusterStates, { isHypershiftCluster } from '../../../common/clusterStates';
-import ButtonWithTooltip from '../../../../common/ButtonWithTooltip';
 import MinorVersionUpgradeAlert from '../../../common/Upgrades/MinorVersionUpgradeAlert';
 import UpgradeAcknowledgeWarning from '../../../common/Upgrades/UpgradeAcknowledge/UpgradeAcknowledgeWarning';
+import UpgradeSettingsFields from '../../../common/Upgrades/UpgradeSettingsFields';
+import UpgradeStatus from '../../../common/Upgrades/UpgradeStatus';
+import UserWorkloadMonitoringSection from '../../../common/UserWorkloadMonitoringSection';
 import { UpdateAllMachinePools } from '../MachinePools/UpdateMachinePools';
+
+import '../../../common/Upgrades/UpgradeSettingsFields.scss';
 
 class UpgradeSettingsTab extends React.Component {
   state = { confirmationModalOpen: false };

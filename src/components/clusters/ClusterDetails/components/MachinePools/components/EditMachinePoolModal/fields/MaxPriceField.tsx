@@ -1,9 +1,12 @@
-import { FormGroup, NumberInput } from '@patternfly/react-core';
-import { useField } from 'formik';
 import * as React from 'react';
+import { useField } from 'formik';
+
+import { FormGroup, NumberInput } from '@patternfly/react-core';
+
 import { SPOT_MIN_PRICE } from '~/components/clusters/common/machinePools/constants';
 import { FormGroupHelperText } from '~/components/common/FormGroupHelperText';
 import useFormikOnChange from '~/hooks/useFormikOnChange';
+
 import { EditMachinePoolValues } from '../hooks/useMachinePoolFormik';
 
 import './MaxPriceField.scss';

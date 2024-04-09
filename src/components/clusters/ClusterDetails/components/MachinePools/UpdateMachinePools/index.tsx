@@ -1,5 +1,4 @@
 import UpdateAllMachinePools from './UpdateAllMachinePools';
-
-import { UpdatePoolButton, UpdateMachinePoolModal } from './UpdateMachinePoolModal';
+import { UpdateMachinePoolModal, UpdatePoolButton } from './UpdateMachinePoolModal';
 
 export { UpdateAllMachinePools, UpdatePoolButton, UpdateMachinePoolModal };

@@ -1,13 +1,14 @@
+import * as React from 'react';
+
 import {
   EmptyState,
   EmptyStateBody,
-  EmptyStateIcon,
   EmptyStateHeader,
+  EmptyStateIcon,
   Icon,
 } from '@patternfly/react-core';
-import * as React from 'react';
-import { global_palette_green_500 as okColor } from '@patternfly/react-tokens/dist/esm/global_palette_green_500';
 import { CheckCircleIcon } from '@patternfly/react-icons/dist/esm/icons/check-circle-icon';
+import { global_palette_green_500 as okColor } from '@patternfly/react-tokens/dist/esm/global_palette_green_500';
 
 const EmptyIcon = (props: any) => (
   <Icon {...props}>

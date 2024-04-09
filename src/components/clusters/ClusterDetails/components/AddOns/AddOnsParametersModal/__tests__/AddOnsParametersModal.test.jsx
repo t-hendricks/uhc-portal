@@ -1,12 +1,11 @@
 import React from 'react';
-
-import { render, checkAccessibility, screen, within } from '~/testUtils';
-
 import { reduxForm } from 'redux-form';
-import { reduxFormConfig } from '../index';
 
-import AddOnsParametersModal from '../AddOnsParametersModal';
+import { checkAccessibility, render, screen, within } from '~/testUtils';
+
 import fixtures from '../../../../__tests__/ClusterDetails.fixtures';
+import AddOnsParametersModal from '../AddOnsParametersModal';
+import { reduxFormConfig } from '../index';
 
 const dummyValue = 'dummy value';
 

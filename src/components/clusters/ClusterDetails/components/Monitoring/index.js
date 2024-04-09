@@ -2,13 +2,12 @@ import { connect } from 'react-redux';
 
 import Monitoring from './Monitoring';
 import { clearMonitoringState } from './MonitoringActions';
-
+import { hasData, hasResourceUsageMetrics } from './monitoringHelper';
 import {
-  lastCheckInSelector,
   clusterHealthSelector,
   issuesAndWarningsSelector,
+  lastCheckInSelector,
 } from './MonitoringSelectors';
-import { hasData, hasResourceUsageMetrics } from './monitoringHelper';
 
 const mapDispatchToProps = {
   clearMonitoringState,

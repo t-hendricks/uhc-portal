@@ -1,7 +1,9 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
+
 import { onListFilterSet } from '~/redux/actions/viewOptionsActions';
 import { fireEvent, screen, withState } from '~/testUtils';
+
 import ClusterListFilter from '../ClusterListFilter';
 
 jest.mock('react-redux', () => ({

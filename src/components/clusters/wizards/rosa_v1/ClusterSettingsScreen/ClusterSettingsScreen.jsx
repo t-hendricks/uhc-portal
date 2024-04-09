@@ -1,22 +1,23 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import { Title, Grid, GridItem, FormGroup, Form, ExpandableSection } from '@patternfly/react-core';
-import { Field } from 'redux-form';
 import { useDispatch, useSelector } from 'react-redux';
-import { getMachineTypesByRegionARN } from '~/redux/actions/machineTypesActions';
+import { Field } from 'redux-form';
 
-import ReduxCheckbox from '~/components/common/ReduxFormComponents/ReduxCheckbox';
-import { CheckboxDescription } from '~/components/common/CheckboxDescription';
-import { validateAWSKMSKeyARN } from '~/common/validators';
-import { isRestrictedEnv } from '~/restrictedEnv';
-import { constants } from '~/components/clusters/common/CreateOSDFormConstants';
+import { ExpandableSection, Form, FormGroup, Grid, GridItem, Title } from '@patternfly/react-core';
+
 import { normalizedProducts } from '~/common/subscriptionTypes';
-import PopoverHint from '../../../../common/PopoverHint';
-import PersistentStorageDropdown from '../../../common/PersistentStorageDropdown';
-import LoadBalancersDropdown from '../../../common/LoadBalancersDropdown';
+import { validateAWSKMSKeyARN } from '~/common/validators';
+import { constants } from '~/components/clusters/common/CreateOSDFormConstants';
+import { CheckboxDescription } from '~/components/common/CheckboxDescription';
+import ReduxCheckbox from '~/components/common/ReduxFormComponents/ReduxCheckbox';
+import { getMachineTypesByRegionARN } from '~/redux/actions/machineTypesActions';
+import { isRestrictedEnv } from '~/restrictedEnv';
 
-import CustomerManagedEncryptionSection from '../../common/EncryptionSection/CustomerManagedKeyEncryption';
+import PopoverHint from '../../../../common/PopoverHint';
+import LoadBalancersDropdown from '../../../common/LoadBalancersDropdown';
+import PersistentStorageDropdown from '../../../common/PersistentStorageDropdown';
 import UserWorkloadMonitoringSection from '../../../common/UserWorkloadMonitoringSection';
+import CustomerManagedEncryptionSection from '../../common/EncryptionSection/CustomerManagedKeyEncryption';
 import EtcdEncryptionSection from '../../common/EncryptionSection/EtcdEncryptionSection';
 
 import BasicFieldsSection from './BasicFieldsSection';

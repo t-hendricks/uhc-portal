@@ -1,11 +1,13 @@
 import { action, ActionType } from 'typesafe-actions';
-import { ClusterAutoscaler } from '~/types/clusters_mgmt.v1';
+
 import {
   getClusterAutoScalingSubmitSettings,
   getDefaultClusterAutoScaling,
 } from '~/components/clusters/common/clusterAutoScalingValues';
-import { clusterAutoscalerConstants } from '../constants';
+import { ClusterAutoscaler } from '~/types/clusters_mgmt.v1';
+
 import { clusterService } from '../../services';
+import { clusterAutoscalerConstants } from '../constants';
 
 const getClusterAutoscaler = (clusterID: string) =>
   action(

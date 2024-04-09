@@ -1,44 +1,46 @@
 import React from 'react';
+import { produce } from 'immer';
+import { get, has } from 'lodash';
 import PropTypes from 'prop-types';
+import { Link, useLocation, useNavigate } from 'react-router-dom-v5-compat';
+
+import * as OCM from '@openshift-assisted/ui-lib/ocm';
 import {
   ExpandableSectionToggle,
+  FormSelect,
+  FormSelectOption,
   PageSection,
   Split,
   SplitItem,
-  FormSelect,
-  FormSelectOption,
   Text,
   TextContent,
 } from '@patternfly/react-core';
-import { PageHeader, PageHeaderTitle } from '@redhat-cloud-services/frontend-components/PageHeader';
-import { Thead, Tr, Th, Td } from '@patternfly/react-table';
+import { Td, Th, Thead, Tr } from '@patternfly/react-table';
 import { Table as TableDeprecated } from '@patternfly/react-table/deprecated';
-import { useNavigate, useLocation, Link } from 'react-router-dom-v5-compat';
-import * as OCM from '@openshift-assisted/ui-lib/ocm';
+import { PageHeader, PageHeaderTitle } from '@redhat-cloud-services/frontend-components/PageHeader';
 
-import { produce } from 'immer';
-import { has, get } from 'lodash';
+import { hasRestrictTokensCapability } from '~/common/restrictTokensHelper';
 import { AppPage } from '~/components/App/AppPage';
 import { isRestrictedEnv } from '~/restrictedEnv';
-import { hasRestrictTokensCapability } from '~/common/restrictTokensHelper';
 
-import ExternalLink from '../../common/ExternalLink';
 import links, {
-  tools,
-  channels,
-  operatingSystems,
-  operatingSystemOptions,
   architectureOptions,
+  channels,
   githubReleasesToFetch,
+  operatingSystemOptions,
+  operatingSystems,
+  tools,
   urlsSelector,
 } from '../../../common/installLinks.mjs';
-import SupportLevelBadge, { SupportLevelType } from '../../common/SupportLevelBadge';
 import useOrganization from '../../CLILoginPage/useOrganization';
 import DownloadButton from '../../clusters/install/instructions/components/DownloadButton';
 import AlignRight from '../../common/AlignRight';
+import ExternalLink from '../../common/ExternalLink';
+import SupportLevelBadge, { SupportLevelType } from '../../common/SupportLevelBadge';
 import DownloadsCategoryDropdown from '../DownloadsCategoryDropdown';
-import { expandKeys, downloadsCategories } from '../downloadsStructure';
 import DownloadsSection from '../DownloadsSection';
+import { downloadsCategories, expandKeys } from '../downloadsStructure';
+
 import ExpandableRowPair from './ExpandableRowPair';
 import TokenRows from './TokenRows';
 

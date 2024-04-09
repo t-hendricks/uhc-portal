@@ -1,18 +1,20 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
-import { Grid, GridItem, Alert, Title, Flex } from '@patternfly/react-core';
-import { useGlobalState } from '~/redux/hooks/useGlobalState';
-import { clearMachineTypesByRegion } from '~/redux/actions/machineTypesActions';
-import { awsNumericAccountID, required } from '~/common/validators';
+
+import { Alert, Flex, Grid, GridItem, Title } from '@patternfly/react-core';
+
 import links from '~/common/installLinks.mjs';
+import { awsNumericAccountID, required } from '~/common/validators';
 import {
   billingModelConstants,
   constants,
 } from '~/components/clusters/common/CreateOSDFormConstants';
-import InstructionCommand from '~/components/common/InstructionCommand';
-import ExternalLink from '~/components/common/ExternalLink';
-import { TextInputField, CheckboxField } from '~/components/clusters/wizards/form';
+import { CheckboxField, TextInputField } from '~/components/clusters/wizards/form';
 import { FieldId } from '~/components/clusters/wizards/osd/constants';
+import ExternalLink from '~/components/common/ExternalLink';
+import InstructionCommand from '~/components/common/InstructionCommand';
+import { clearMachineTypesByRegion } from '~/redux/actions/machineTypesActions';
+import { useGlobalState } from '~/redux/hooks/useGlobalState';
 
 export const AwsAccountDetails = () => {
   const { ccsCredentialsValidity } = useGlobalState((state) => state.ccsInquiries);

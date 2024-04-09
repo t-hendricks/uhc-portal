@@ -1,6 +1,8 @@
 import axios from 'axios';
+
 import apiRequest from '~/services/apiRequest';
 import { ScheduleType, UpgradeType } from '~/types/clusters_mgmt.v1';
+
 import clusterService from './clusterService';
 
 type MockedJest = jest.Mocked<typeof axios> & jest.Mock;

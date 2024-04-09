@@ -1,31 +1,35 @@
 import React, { useEffect, useState } from 'react';
-import PropTypes from 'prop-types';
 import isEmpty from 'lodash/isEmpty';
-import { Title } from '@patternfly/react-core';
+import PropTypes from 'prop-types';
 import { useSelector } from 'react-redux';
 
-import config from '~/config';
-import {
-  HYPERSHIFT_WIZARD_FEATURE,
-  HCP_AWS_BILLING_SHOW,
-} from '~/redux/constants/featureConstants';
-import { normalizedProducts } from '~/common/subscriptionTypes';
+import { Title } from '@patternfly/react-core';
+
 import { hasSelectedSecurityGroups } from '~/common/securityGroupsHelpers';
-import { getUserRoleForSelectedAWSAccount } from '~/components/clusters/wizards/rosa_v2/AccountsRolesScreen/AccountsRolesScreen';
+import { normalizedProducts } from '~/common/subscriptionTypes';
+import { canAutoScaleOnCreateSelector } from '~/components/clusters/ClusterDetails/components/MachinePools/machinePoolsSelectors';
 import { stepId, stepNameById } from '~/components/clusters/wizards/common/osdWizardConstants';
+import { useFormState } from '~/components/clusters/wizards/hooks';
+import { canSelectImds } from '~/components/clusters/wizards/rosa/constants';
+import { getUserRoleForSelectedAWSAccount } from '~/components/clusters/wizards/rosa_v2/AccountsRolesScreen/AccountsRolesScreen';
 import {
   stepId as rosaStepId,
   stepNameById as rosaStepNameById,
 } from '~/components/clusters/wizards/rosa_v2/rosaWizardConstants';
-import { useFeatureGate } from '~/hooks/useFeatureGate';
-import { useFormState } from '~/components/clusters/wizards/hooks';
 import HiddenCheckbox from '~/components/common/FormikFormComponents/HiddenCheckbox';
-import { canSelectImds } from '~/components/clusters/wizards/rosa/constants';
-import { canAutoScaleOnCreateSelector } from '~/components/clusters/ClusterDetails/components/MachinePools/machinePoolsSelectors';
+import config from '~/config';
+import { useFeatureGate } from '~/hooks/useFeatureGate';
+import {
+  HCP_AWS_BILLING_SHOW,
+  HYPERSHIFT_WIZARD_FEATURE,
+} from '~/redux/constants/featureConstants';
+
 import { DebugClusterRequest } from '../../common/DebugClusterRequest';
 import ReviewSection, { ReviewItem } from '../../common/ReviewCluster/ReviewSection';
-import ReviewRoleItem from './ReviewRoleItem';
 import { FieldId } from '../constants';
+
+import ReviewRoleItem from './ReviewRoleItem';
+
 import './ReviewClusterScreen.scss';
 
 const ReviewClusterScreen = ({

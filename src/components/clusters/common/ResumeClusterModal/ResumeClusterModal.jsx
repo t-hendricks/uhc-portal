@@ -1,12 +1,13 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+
 import { Form } from '@patternfly/react-core';
 
+import ErrorBox from '../../../common/ErrorBox';
 import Modal from '../../../common/Modal/Modal';
 import modals from '../../../common/Modal/modals';
-import ErrorBox from '../../../common/ErrorBox';
-import HibernateClusterModalTitle from '../HibernateClusterModal/HibernateClusterModalTitle';
 import HibernateClusterContent from '../HibernateClusterModal/HibernateClusterContent';
+import HibernateClusterModalTitle from '../HibernateClusterModal/HibernateClusterModalTitle';
 
 class ResumeClusterModal extends Component {
   componentDidUpdate() {

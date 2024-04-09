@@ -3,12 +3,12 @@ import PropTypes from 'prop-types';
 import { Field } from 'redux-form';
 
 import { Button, Grid, GridItem, TextInput } from '@patternfly/react-core';
-import { PlusCircleIcon } from '@patternfly/react-icons/dist/esm/icons/plus-circle-icon';
 import { MinusCircleIcon } from '@patternfly/react-icons/dist/esm/icons/minus-circle-icon';
-import ButtonWithTooltip from '../../ButtonWithTooltip';
+import { PlusCircleIcon } from '@patternfly/react-icons/dist/esm/icons/plus-circle-icon';
 
 import { getRandomID, nodeKeyValueTooltipText } from '../../../../common/helpers';
 import { validateLabelKey, validateLabelValue } from '../../../../common/validators';
+import ButtonWithTooltip from '../../ButtonWithTooltip';
 
 import './ReduxFormKeyValueList.scss';
 

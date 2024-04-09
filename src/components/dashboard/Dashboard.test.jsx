@@ -1,5 +1,7 @@
 import React from 'react';
-import { render, screen, checkAccessibility, TestRouter } from '~/testUtils';
+
+import { checkAccessibility, render, screen, TestRouter } from '~/testUtils';
+
 import Dashboard from './Dashboard';
 import { clustersWithIssues } from './Dashboard.fixtures';
 

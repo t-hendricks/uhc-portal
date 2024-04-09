@@ -2,20 +2,22 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import {
-  EmptyState,
-  EmptyStateBody,
-  EmptyStateIcon,
   Button,
+  EmptyState,
   EmptyStateActions,
-  EmptyStateHeader,
+  EmptyStateBody,
   EmptyStateFooter,
+  EmptyStateHeader,
+  EmptyStateIcon,
 } from '@patternfly/react-core';
 import { CubesIcon } from '@patternfly/react-icons/dist/esm/icons/cubes-icon';
 import { PlusCircleIcon } from '@patternfly/react-icons/dist/esm/icons/plus-circle-icon';
 import { Spinner } from '@redhat-cloud-services/frontend-components/Spinner';
+
 import ErrorBox from '../../../../common/ErrorBox';
-import { availableAddOns } from './AddOnsHelper';
+
 import AddOnsDrawer from './AddOnsDrawer';
+import { availableAddOns } from './AddOnsHelper';
 
 class AddOns extends React.Component {
   componentDidMount() {

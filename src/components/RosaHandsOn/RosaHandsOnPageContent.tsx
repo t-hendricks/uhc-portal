@@ -1,28 +1,29 @@
 import React from 'react';
-import {
-  PageSection,
-  Alert,
-  Text,
-  TextContent,
-  Card,
-  CardBody,
-  Skeleton,
-} from '@patternfly/react-core';
 import humanizeDuration from 'humanize-duration';
 
-import RosaHandsOnPageHeader from './RosaHandsOnPageHeader';
-import ErrorBoundary from '../App/ErrorBoundary';
-import RosaHandsOnGetStartedCard from './RosaHandsOnGetStartedCard';
-import RosaHandsOnRecommendedContentTable from './RosaHandsOnRecommendedContentTable';
+import {
+  Alert,
+  Card,
+  CardBody,
+  PageSection,
+  Skeleton,
+  Text,
+  TextContent,
+} from '@patternfly/react-core';
 
+import ErrorBoundary from '../App/ErrorBoundary';
+
+import { AugmentedDemoExperience } from './augmentedModelTypes';
+import { UNAUTHORIZED } from './constants';
+import { DemoExperienceStatusEnum } from './DemoExperienceModels';
 import RosaHandsOnErrorPage from './RosaHandsOnErrorPage';
+import RosaHandsOnGetStartedCard from './RosaHandsOnGetStartedCard';
 import {
   RosaHandsOnContactSupport,
   RosaHandsOnRequestAuthorization,
 } from './RosaHandsOnIntercomButtons';
-import { AugmentedDemoExperience } from './augmentedModelTypes';
-import { DemoExperienceStatusEnum } from './DemoExperienceModels';
-import { UNAUTHORIZED } from './constants';
+import RosaHandsOnPageHeader from './RosaHandsOnPageHeader';
+import RosaHandsOnRecommendedContentTable from './RosaHandsOnRecommendedContentTable';
 
 const getErrorMessage = (error: unknown): string => {
   if (error instanceof Error) {

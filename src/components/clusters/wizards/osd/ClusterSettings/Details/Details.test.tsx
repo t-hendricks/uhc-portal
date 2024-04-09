@@ -4,17 +4,16 @@
 import * as React from 'react';
 import { Formik } from 'formik';
 
-import { screen, withState } from '~/testUtils';
-import { FieldId, initialValues } from '~/components/clusters/wizards/osd/constants';
 import {
+  fulfilledProviders,
   noProviders,
   providersResponse,
-  fulfilledProviders,
 } from '~/common/__test__/regions.fixtures';
+import { FieldId, initialValues } from '~/components/clusters/wizards/osd/constants';
 import ocpLifeCycleStatuses from '~/components/releases/__mocks__/ocpLifeCycleStatuses';
-
 import clusterService from '~/services/clusterService';
 import getOCPLifeCycleStatus from '~/services/productLifeCycleService';
+import { screen, withState } from '~/testUtils';
 
 import Details from './Details';
 

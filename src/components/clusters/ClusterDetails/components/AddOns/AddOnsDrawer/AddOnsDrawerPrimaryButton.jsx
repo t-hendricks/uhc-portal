@@ -1,17 +1,16 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import './AddOnsDrawer.scss';
-
 import { Button, ButtonSize } from '@patternfly/react-core';
-
 import { ExternalLinkAltIcon } from '@patternfly/react-icons/dist/esm/icons/external-link-alt-icon';
-import { hasParameters } from '../AddOnsHelper';
-import clusterStates, { isHibernating } from '../../../../common/clusterStates';
-import { noQuotaTooltip } from '../../../../../../common/helpers';
 
-import AddOnsConstants from '../AddOnsConstants';
+import { noQuotaTooltip } from '../../../../../../common/helpers';
 import ButtonWithTooltip from '../../../../../common/ButtonWithTooltip';
+import clusterStates, { isHibernating } from '../../../../common/clusterStates';
+import AddOnsConstants from '../AddOnsConstants';
+import { hasParameters } from '../AddOnsHelper';
+
+import './AddOnsDrawer.scss';
 
 function AddOnsPrimaryButton(props) {
   const {

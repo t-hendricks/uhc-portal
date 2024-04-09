@@ -1,11 +1,14 @@
 import has from 'lodash/has';
 import isEqual from 'lodash/isEqual';
+
+import { stringToArrayTrimmed, strToKeyValueObject } from '~/common/helpers';
 import { LoadBalancerFlavor } from '~/types/clusters_mgmt.v1';
 import { NamespaceOwnershipPolicy } from '~/types/clusters_mgmt.v1/models/NamespaceOwnershipPolicy';
 import { WildcardPolicy } from '~/types/clusters_mgmt.v1/models/WildcardPolicy';
-import { strToKeyValueObject, stringToArrayTrimmed } from '~/common/helpers';
+
 import { setClusterDetails } from '../../../../../redux/actions/clustersActions';
 import { clusterService } from '../../../../../services';
+
 import { networkingConstants } from './NetworkingConstants';
 
 const getClusterRouters = (clusterID) => (dispatch) =>

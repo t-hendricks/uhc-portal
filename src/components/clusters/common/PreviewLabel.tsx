@@ -1,6 +1,8 @@
 import React from 'react';
+
 import { Label, LabelProps } from '@patternfly/react-core';
 import InfoCircleIcon from '@patternfly/react-icons/dist/esm/icons/info-circle-icon';
+
 import { useGetTechPreviewStatus, useTechPreviewStatus } from '~/redux/hooks';
 
 // Only exported for testing

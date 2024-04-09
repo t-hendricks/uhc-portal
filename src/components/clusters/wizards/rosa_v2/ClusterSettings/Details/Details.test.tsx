@@ -4,13 +4,12 @@
 import * as React from 'react';
 import { Formik } from 'formik';
 
-import { screen, withState } from '~/testUtils';
+import { fulfilledProviders, noProviders } from '~/common/__test__/regions.fixtures';
 import { FieldId, initialValues } from '~/components/clusters/wizards/rosa_v2/constants';
-import { noProviders, fulfilledProviders } from '~/common/__test__/regions.fixtures';
 import ocpLifeCycleStatuses from '~/components/releases/__mocks__/ocpLifeCycleStatuses';
-
 import clusterService from '~/services/clusterService';
 import getOCPLifeCycleStatus from '~/services/productLifeCycleService';
+import { screen, withState } from '~/testUtils';
 
 import Details from './Details';
 

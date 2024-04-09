@@ -1,7 +1,9 @@
 import React from 'react';
-import { useParams, useLocation } from 'react-router-dom-v5-compat';
-import ClusterDetails from '.';
+import { useLocation, useParams } from 'react-router-dom-v5-compat';
+
 import InsightsAdvisorRedirector from '../InsightsAdvisorRedirector';
+
+import ClusterDetails from '.';
 
 const ClusterDetailsSubscriptionId = (props) => {
   const params = useParams();

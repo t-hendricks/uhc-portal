@@ -1,19 +1,22 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Divider, Title, GridItem } from '@patternfly/react-core';
 import { Field } from 'redux-form';
+
+import { Divider, GridItem, Title } from '@patternfly/react-core';
+
 import { noop } from '../../../../../../../common/helpers';
 import {
   atLeastOneRequired,
   checkGithubTeams,
   required,
 } from '../../../../../../../common/validators';
+import RadioButtons from '../../../../../../common/ReduxFormComponents/RadioButtons';
+import ReduxFieldArray from '../../../../../../common/ReduxFormComponents/ReduxFieldArray';
+import ReduxVerticalFormGroup from '../../../../../../common/ReduxFormComponents/ReduxVerticalFormGroup';
+import CAUpload from '../CAUpload';
 
 import IDPBasicFields from './IDPBasicFields';
-import ReduxVerticalFormGroup from '../../../../../../common/ReduxFormComponents/ReduxVerticalFormGroup';
-import ReduxFieldArray from '../../../../../../common/ReduxFormComponents/ReduxFieldArray';
-import RadioButtons from '../../../../../../common/ReduxFormComponents/RadioButtons';
-import CAUpload from '../CAUpload';
+
 import './GithubForm.scss';
 
 class GithubFormRequired extends React.Component {

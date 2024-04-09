@@ -1,17 +1,19 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom-v5-compat';
+
 import {
   Card,
-  CardTitle,
   CardBody,
-  Title,
+  CardFooter,
+  CardTitle,
   Flex,
+  Icon,
   List,
   ListItem,
-  CardFooter,
-  Icon,
+  Title,
 } from '@patternfly/react-core';
 import CheckIcon from '@patternfly/react-icons/dist/esm/icons/check-icon';
+
 import ExternalLink from '~/components/common/ExternalLink';
 
 interface InstructionsChooserCardProps {

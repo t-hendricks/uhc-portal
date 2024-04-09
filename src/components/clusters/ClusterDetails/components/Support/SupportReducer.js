@@ -1,4 +1,6 @@
 import { produce } from 'immer';
+
+import { getErrorState } from '../../../../../common/errors';
 import {
   baseRequestState,
   FULFILLED_ACTION,
@@ -8,7 +10,6 @@ import {
 } from '../../../../../redux/reduxHelpers';
 
 import { SupportConstants } from './SupportActions';
-import { getErrorState } from '../../../../../common/errors';
 
 const initialState = {
   notificationContacts: {

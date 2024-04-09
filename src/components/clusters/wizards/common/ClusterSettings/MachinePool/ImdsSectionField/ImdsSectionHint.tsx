@@ -1,6 +1,8 @@
 import React from 'react';
+
 import { ExternalLink } from '@openshift-assisted/ui-lib/ocm';
 import { Text, TextVariants } from '@patternfly/react-core';
+
 import links from '~/common/installLinks.mjs';
 import PopoverHint from '~/components/common/PopoverHint';
 

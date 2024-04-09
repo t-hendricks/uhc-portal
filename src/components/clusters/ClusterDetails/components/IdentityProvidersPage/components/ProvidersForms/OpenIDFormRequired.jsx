@@ -1,14 +1,15 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Field } from 'redux-form';
+
 import { GridItem } from '@patternfly/react-core';
 
-import IDPBasicFields from './IDPBasicFields';
-
-import ReduxVerticalFormGroup from '../../../../../../common/ReduxFormComponents/ReduxVerticalFormGroup';
 import { checkOpenIDIssuer } from '../../../../../../../common/validators';
 import ReduxFieldArray from '../../../../../../common/ReduxFormComponents/ReduxFieldArray';
+import ReduxVerticalFormGroup from '../../../../../../common/ReduxFormComponents/ReduxVerticalFormGroup';
 import { isEmptyReduxArray } from '../../IdentityProvidersHelper';
+
+import IDPBasicFields from './IDPBasicFields';
 
 class OpenIDFormRequired extends React.Component {
   state = {

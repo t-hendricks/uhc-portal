@@ -1,8 +1,11 @@
 import React from 'react';
-import { Tile, Text, TextVariants, List, Alert } from '@patternfly/react-core';
-import ExternalLink from '~/components/common/ExternalLink';
+
+import { Alert, List, Text, TextVariants, Tile } from '@patternfly/react-core';
+
 import links from '~/common/installLinks.mjs';
-import { defaultMarginBottomSpacing, ListItem, hypershiftValue } from './ControlPlaneCommon';
+import ExternalLink from '~/components/common/ExternalLink';
+
+import { defaultMarginBottomSpacing, hypershiftValue, ListItem } from './ControlPlaneCommon';
 
 type HostedTileProps = {
   handleChange: (string: hypershiftValue) => void;

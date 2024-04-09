@@ -1,13 +1,15 @@
 import React from 'react';
 import { Formik } from 'formik';
-import { withState, checkAccessibility, screen, waitFor, TestRouter } from '~/testUtils';
 import { CompatRouter } from 'react-router-dom-v5-compat';
+
 import { normalizeSTSUsersByAWSAccounts } from '~/redux/actions/rosaActions';
+import { checkAccessibility, screen, TestRouter, waitFor, withState } from '~/testUtils';
+
+import { initialValues } from '../../constants';
 import AccountsRolesScreen, {
   AccountsRolesScreenProps,
   isUserRoleForSelectedAWSAccount,
 } from '../AccountsRolesScreen';
-import { initialValues } from '../../constants';
 
 const useAnalyticsMock = jest.fn();
 jest.mock('~/hooks/useAnalytics', () => jest.fn(() => useAnalyticsMock));

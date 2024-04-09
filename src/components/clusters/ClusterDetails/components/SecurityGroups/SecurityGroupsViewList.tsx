@@ -1,5 +1,7 @@
 import React from 'react';
+
 import { Chip, ChipGroup } from '@patternfly/react-core';
+
 import { SecurityGroup } from '~/types/clusters_mgmt.v1';
 
 // We increase Patternfly's maximum length of 16ch, due to https://github.com/patternfly/patternfly-react/issues/9690.

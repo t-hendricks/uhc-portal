@@ -1,8 +1,10 @@
 import React from 'react';
-import { CompatRouter } from 'react-router-dom-v5-compat';
 import type { AxiosResponse } from 'axios';
-import { TestRouter, screen, render } from '~/testUtils';
+import { CompatRouter } from 'react-router-dom-v5-compat';
+
 import apiRequest from '~/services/apiRequest';
+import { render, screen, TestRouter } from '~/testUtils';
+
 import ApiError from './ApiError';
 
 const defaultProps = {

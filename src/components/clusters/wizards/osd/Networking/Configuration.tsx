@@ -1,28 +1,29 @@
 import React from 'react';
 
-import { Form, Grid, GridItem, Title, Text, FormGroup, Alert } from '@patternfly/react-core';
+import { Alert, Form, FormGroup, Grid, GridItem, Text, Title } from '@patternfly/react-core';
 
-import { ocmResourceType, trackEvents, TrackEvent } from '~/common/analytics';
+import { ocmResourceType, TrackEvent, trackEvents } from '~/common/analytics';
 import links from '~/common/installLinks.mjs';
+import { getDefaultSecurityGroupsSettings } from '~/common/securityGroupsHelpers';
 import { normalizedProducts } from '~/common/subscriptionTypes';
+import { FormSubnet } from '~/common/validators';
+import { isExactMajorMinor } from '~/common/versionHelpers';
 import { constants } from '~/components/clusters/common/CreateOSDFormConstants';
-import ExternalLink from '~/components/common/ExternalLink';
-import useAnalytics from '~/hooks/useAnalytics';
+import { CloudProviderType } from '~/components/clusters/wizards/common/constants';
 import {
   CheckboxField,
   RadioGroupField,
   RadioGroupOption,
 } from '~/components/clusters/wizards/form';
 import { useFormState } from '~/components/clusters/wizards/hooks';
-import { CloudProviderType } from '~/components/clusters/wizards/common/constants';
-import { FormSubnet } from '~/common/validators';
 import { FieldId } from '~/components/clusters/wizards/osd/constants';
-import { isExactMajorMinor } from '~/common/versionHelpers';
-import { getDefaultSecurityGroupsSettings } from '~/common/securityGroupsHelpers';
+import ExternalLink from '~/components/common/ExternalLink';
+import useAnalytics from '~/hooks/useAnalytics';
+
+import { canConfigureDayOneManagedIngress } from '../../rosa/constants';
 
 import { ApplicationIngressType, ClusterPrivacyType } from './constants';
 import { DefaultIngressFields } from './DefaultIngressFields';
-import { canConfigureDayOneManagedIngress } from '../../rosa/constants';
 
 export const Configuration = () => {
   const track = useAnalytics();

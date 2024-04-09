@@ -1,15 +1,17 @@
 import React from 'react';
 import { reduxForm } from 'redux-form';
 
-import { render, checkAccessibility, TestRouter } from '~/testUtils';
-import IdentityProvidersPage from '../components/IdentityProvidersPage/IdentityProvidersPage';
+import { checkAccessibility, render, TestRouter } from '~/testUtils';
+
 import { reduxFormConfig } from '../components/IdentityProvidersPage';
 import { IDPformValues } from '../components/IdentityProvidersPage/IdentityProvidersHelper';
+import IdentityProvidersPage from '../components/IdentityProvidersPage/IdentityProvidersPage';
+
 import {
   clusterDetails,
   clusterIDPs,
-  match,
   funcs,
+  match,
   submitIDPResponse,
 } from './IdentityProvidersPage.fixtures';
 

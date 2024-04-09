@@ -1,7 +1,9 @@
 import React from 'react';
 import { Formik } from 'formik';
-import { screen, render, checkAccessibility, waitFor } from '~/testUtils';
+
 import { useAWSVPCInquiry } from '~/components/clusters/common/useVPCInquiry';
+import { checkAccessibility, render, screen, waitFor } from '~/testUtils';
+
 import { initialValues } from '../constants';
 
 import AWSSubnetFields from './AWSSubnetFields';

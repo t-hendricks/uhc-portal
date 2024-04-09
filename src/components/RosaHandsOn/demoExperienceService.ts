@@ -1,10 +1,10 @@
 import { AxiosResponse } from 'axios';
 
 import config from '~/config';
-
 import apiRequest from '~/services/apiRequest';
+
+import { AugmentedDemoExperience, AugmentedDemoExperienceStatus } from './augmentedModelTypes';
 import { DemoExperience, DemoExperienceStatusEnum } from './DemoExperienceModels';
-import { AugmentedDemoExperienceStatus, AugmentedDemoExperience } from './augmentedModelTypes';
 
 const getAugmentedDemoExperienceStatus = (
   demoExperience: DemoExperience,

@@ -1,23 +1,25 @@
 import React from 'react';
-
-import { Form, Title, Text, TextVariants, Grid, GridItem } from '@patternfly/react-core';
-
-import { useFormState } from '~/components/clusters/wizards/hooks';
 import { Field } from 'formik';
-import links from '~/common/installLinks.mjs';
-import './controlPlaneScreen.scss';
-import ExternalLink from '~/components/common/ExternalLink';
 
-import AWSLogo from '~/styles/images/AWS.png';
-import RedHat from '~/styles/images/Logo-Red_Hat-B-Standard-RGB.png';
+import { Form, Grid, GridItem, Text, TextVariants, Title } from '@patternfly/react-core';
+
+import links from '~/common/installLinks.mjs';
+import { emptyAWSSubnet } from '~/components/clusters/wizards/common/createOSDInitialValues';
+import { useFormState } from '~/components/clusters/wizards/hooks';
 import { ApplicationIngressType } from '~/components/clusters/wizards/osd/Networking/constants';
 import { PrerequisitesInfoBox } from '~/components/clusters/wizards/rosa_v1/common/PrerequisitesInfoBox';
 import { WelcomeMessage } from '~/components/clusters/wizards/rosa_v1/common/WelcomeMessage';
-import { emptyAWSSubnet } from '~/components/clusters/wizards/common/createOSDInitialValues';
-import StandAloneTile from './StandAloneTile';
-import HostedTile from './HostedTile';
-import { hypershiftValue } from './ControlPlaneCommon';
+import ExternalLink from '~/components/common/ExternalLink';
+import AWSLogo from '~/styles/images/AWS.png';
+import RedHat from '~/styles/images/Logo-Red_Hat-B-Standard-RGB.png';
+
 import { FieldId } from '../constants';
+
+import { hypershiftValue } from './ControlPlaneCommon';
+import HostedTile from './HostedTile';
+import StandAloneTile from './StandAloneTile';
+
+import './controlPlaneScreen.scss';
 
 type ControlPlaneFieldProps = {
   input: {

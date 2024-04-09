@@ -1,12 +1,14 @@
 import React, { useCallback, useMemo } from 'react';
-import { Grid, GridItem } from '@patternfly/react-core';
 import { Field, FieldArray } from 'formik';
+
+import { Grid, GridItem } from '@patternfly/react-core';
 
 import { FormSubnet } from '~/common/validators';
 import { useFormState } from '~/components/clusters/wizards/hooks';
 import { FieldId } from '~/components/clusters/wizards/rosa_v2/constants';
 import MachinePoolSubnetsForm from '~/components/common/FormikFormComponents/MachinePoolSubnetsForm';
 import { CloudVPC } from '~/types/clusters_mgmt.v1';
+
 import VPCDropdown from '../../common/VPCDropdown/VPCDropdown';
 
 /**

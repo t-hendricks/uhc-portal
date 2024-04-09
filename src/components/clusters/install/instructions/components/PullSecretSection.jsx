@@ -1,9 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+
 import { Text } from '@patternfly/react-core';
 
-import DownloadPullSecret from '../../../../downloads/DownloadPullSecret';
 import CopyPullSecret from '../../../../downloads/CopyPullSecret';
+import DownloadPullSecret from '../../../../downloads/DownloadPullSecret';
 
 function PullSecretSection({ token, pendoID, text }) {
   return (

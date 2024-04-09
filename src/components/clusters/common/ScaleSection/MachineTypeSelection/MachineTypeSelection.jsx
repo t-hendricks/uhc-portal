@@ -6,22 +6,24 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import { Alert, AlertVariant, FormGroup, Spinner } from '@patternfly/react-core';
-import { FormGroupHelperText } from '~/components/common/FormGroupHelperText';
-import { CloudProviderType } from '~/components/clusters/wizards/common/constants';
-import ErrorBox from '~/components/common/ErrorBox';
-import PopoverHint from '~/components/common/PopoverHint';
-import { humanizeValueWithUnit } from '~/common/units';
+
 import { noMachineTypes } from '~/common/helpers';
-import ExternalLink from '~/components/common/ExternalLink';
+import { billingModels, normalizedProducts } from '~/common/subscriptionTypes';
+import { humanizeValueWithUnit } from '~/common/units';
+import { constants } from '~/components/clusters/common/CreateOSDFormConstants';
 import {
   availableClustersFromQuota,
   availableNodesFromQuota,
 } from '~/components/clusters/common/quotaSelectors';
-import { normalizedProducts, billingModels } from '~/common/subscriptionTypes';
+import { CloudProviderType } from '~/components/clusters/wizards/common/constants';
+import ErrorBox from '~/components/common/ErrorBox';
+import ExternalLink from '~/components/common/ExternalLink';
+import { FormGroupHelperText } from '~/components/common/FormGroupHelperText';
+import PopoverHint from '~/components/common/PopoverHint';
 import { DEFAULT_FLAVOUR_ID } from '~/redux/actions/flavourActions';
-import { constants } from '~/components/clusters/common/CreateOSDFormConstants';
-import sortMachineTypes, { machineCategories } from './sortMachineTypes';
+
 import { TreeViewSelect, TreeViewSelectMenuItem } from './TreeViewSelect/TreeViewSelect';
+import sortMachineTypes, { machineCategories } from './sortMachineTypes';
 
 /** Returns useful info about the machine type - CPUs, RAM, [GPUs]. */
 const machineTypeDescriptionLabel = (machineType) => {

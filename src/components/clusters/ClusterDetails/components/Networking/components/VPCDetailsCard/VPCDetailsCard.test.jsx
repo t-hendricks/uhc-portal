@@ -1,7 +1,8 @@
 import * as React from 'react';
 
-import VPCDetailsCard from './VPCDetailsCard';
 import { mockRestrictedEnv, render, screen } from '../../../../../../../testUtils';
+
+import VPCDetailsCard from './VPCDetailsCard';
 
 describe('<VPCDetailsCard />', () => {
   const defaultProps = {

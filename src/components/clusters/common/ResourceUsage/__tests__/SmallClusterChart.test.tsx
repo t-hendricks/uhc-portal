@@ -1,6 +1,8 @@
 import React from 'react';
-import { render, screen, checkAccessibility } from '~/testUtils';
-import { Unit, ValueWithUnits, parseValueWithUnit } from '../../../../../common/units';
+
+import { checkAccessibility, render, screen } from '~/testUtils';
+
+import { parseValueWithUnit, Unit, ValueWithUnits } from '../../../../../common/units';
 import SmallClusterChart from '../SmallClusterChart';
 
 const getValue = ({ value, unit }: ValueWithUnits) => parseValueWithUnit(value, unit);

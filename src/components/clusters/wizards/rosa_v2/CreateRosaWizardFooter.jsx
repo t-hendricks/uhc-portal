@@ -1,18 +1,21 @@
-import React, { useEffect, useState, useContext } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
+import { setNestedObjectValues } from 'formik';
 import PropTypes from 'prop-types';
 import { useSelector } from 'react-redux';
+
 import { Button } from '@patternfly/react-core';
 import {
-  WizardFooter as WizardFooterDeprecated,
   WizardContext as WizardContextDeprecated,
+  WizardFooter as WizardFooterDeprecated,
 } from '@patternfly/react-core/deprecated';
-import { setNestedObjectValues } from 'formik';
+
 import { scrollToFirstField } from '~/common/helpers';
 import { getScrollErrorIds } from '~/components/clusters/wizards/form/utils';
 import { useFormState } from '~/components/clusters/wizards/hooks';
-import { stepId, hasLoadingState } from './rosaWizardConstants';
+
 import { isUserRoleForSelectedAWSAccount } from './AccountsRolesScreen/AccountsRolesScreen';
 import { FieldId } from './constants';
+import { hasLoadingState, stepId } from './rosaWizardConstants';
 
 // Must return the step in which VPCDropdown is located, as it's in charge of fetching the VPCs
 const getVpcLoadingStep = (isHypershiftSelected) => {

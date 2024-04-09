@@ -1,11 +1,13 @@
 import { FormikTouched, FormikValues } from 'formik';
-import { FieldId as CommonFieldId } from '~/components/clusters/wizards/common/constants';
+
 import {
   HOST_PREFIX_DEFAULT,
   MACHINE_CIDR_DEFAULT,
   POD_CIDR_DEFAULT,
   SERVICE_CIDR_DEFAULT,
 } from '~/components/clusters/common/networkingConstants';
+import { FieldId as CommonFieldId } from '~/components/clusters/wizards/common/constants';
+
 import { emptyAWSSubnet } from '../common/createOSDInitialValues';
 
 export enum RosaFieldId {

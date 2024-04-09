@@ -3,27 +3,28 @@ import React, { forwardRef, useCallback, useContext, useRef } from 'react';
 import {
   Button,
   ButtonVariant,
-  DrawerPanelContent,
-  DrawerHead,
   DrawerActions,
   DrawerCloseButton,
+  DrawerHead,
+  DrawerPanelBody,
+  DrawerPanelContent,
+  PageSection,
+  Stack,
+  StackItem,
   Text,
   TextVariants,
   Title,
-  DrawerPanelBody,
-  Stack,
-  StackItem,
-  PageSection,
 } from '@patternfly/react-core';
 
 import { trackEvents } from '~/common/analytics';
-import useAnalytics from '~/hooks/useAnalytics';
 import { AppDrawerContext, AppDrawerSettings } from '~/components/App/AppDrawer';
 import { ROSA_HOSTED_CLI_MIN_VERSION } from '~/components/clusters/wizards/rosa_v2/rosaConstants';
+import useAnalytics from '~/hooks/useAnalytics';
+
+import { AWSAccountRole } from './common/AssociateAWSAccountStep';
+import AccountRoleStep from './AccountRoleStep';
 import OCMRoleStep from './OCMRoleStep';
 import UserRoleStep from './UserRoleStep';
-import AccountRoleStep from './AccountRoleStep';
-import { AWSAccountRole } from './common/AssociateAWSAccountStep';
 
 type AssociateRolesDrawerProps = {
   targetRole?: AWSAccountRole;

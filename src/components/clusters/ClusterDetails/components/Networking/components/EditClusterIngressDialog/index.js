@@ -1,13 +1,14 @@
 import { connect } from 'react-redux';
 import { formValueSelector, reduxForm } from 'redux-form';
+
 import { canConfigureAdditionalRouter } from '~/components/clusters/wizards/rosa/constants';
 
 import { knownProducts } from '../../../../../../../common/subscriptionTypes';
+import { closeModal } from '../../../../../../common/Modal/ModalActions';
 import modals from '../../../../../../common/Modal/modals';
 import shouldShowModal from '../../../../../../common/Modal/ModalSelectors';
-import { closeModal } from '../../../../../../common/Modal/ModalActions';
-import NetworkingSelector, { routeSelectorsAsString } from '../../NetworkingSelector';
 import { resetEditRoutersResponse, saveNetworkingConfiguration } from '../../NetworkingActions';
+import NetworkingSelector, { routeSelectorsAsString } from '../../NetworkingSelector';
 
 import EditClusterIngressDialog from './EditClusterIngressDialog';
 

@@ -1,14 +1,16 @@
 import { GlobalState } from '~/redux/store';
 import clusterService from '~/services/clusterService';
-import {
-  isHCPControlPlaneUpdating,
-  updateAllMachinePools,
-  isControlPlaneValidForMachinePool,
-  isMachinePoolUpgrading,
-  isMachinePoolScheduleError,
-  canMachinePoolBeUpgradedSelector,
-} from './updateMachinePoolsHelpers';
+
 import { NodePoolWithUpgradePolicies } from '../machinePoolCustomTypes';
+
+import {
+  canMachinePoolBeUpgradedSelector,
+  isControlPlaneValidForMachinePool,
+  isHCPControlPlaneUpdating,
+  isMachinePoolScheduleError,
+  isMachinePoolUpgrading,
+  updateAllMachinePools,
+} from './updateMachinePoolsHelpers';
 
 jest.mock('~/services/clusterService');
 clusterService.patchNodePool = jest.fn();

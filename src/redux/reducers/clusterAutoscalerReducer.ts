@@ -14,18 +14,19 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 import { produce } from 'immer';
-import { ClusterAutoscaler } from '~/types/clusters_mgmt.v1';
-import { ClusterAutoscalerAction } from '~/redux/actions/clusterAutoscalerActions';
-import { getCompleteFormClusterAutoscaling } from '~/components/clusters/common/clusterAutoScalingValues';
+
 import { getErrorState } from '~/common/errors';
-import {
-  REJECTED_ACTION,
-  PENDING_ACTION,
-  FULFILLED_ACTION,
-  baseRequestState,
-} from '../reduxHelpers';
+import { getCompleteFormClusterAutoscaling } from '~/components/clusters/common/clusterAutoScalingValues';
+import { ClusterAutoscalerAction } from '~/redux/actions/clusterAutoscalerActions';
+import { ClusterAutoscaler } from '~/types/clusters_mgmt.v1';
 
 import { clusterAutoscalerConstants } from '../constants';
+import {
+  baseRequestState,
+  FULFILLED_ACTION,
+  PENDING_ACTION,
+  REJECTED_ACTION,
+} from '../reduxHelpers';
 import type { PromiseActionType, PromiseReducerState } from '../types';
 
 export type State = {

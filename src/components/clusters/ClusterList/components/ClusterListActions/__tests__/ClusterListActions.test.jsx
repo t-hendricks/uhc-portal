@@ -1,6 +1,8 @@
 import React from 'react';
 import { CompatRouter } from 'react-router-dom-v5-compat';
-import { screen, render, checkAccessibility, TestRouter } from '~/testUtils';
+
+import { checkAccessibility, render, screen, TestRouter } from '~/testUtils';
+
 import ClusterListActions from '../ClusterListActions';
 
 jest.mock('~/redux/hooks/useGlobalState', () => ({

@@ -1,11 +1,13 @@
 import React from 'react';
 import { Field } from 'formik';
+
 import { Grid, GridItem } from '@patternfly/react-core';
 
-import { CloudVPC } from '~/types/clusters_mgmt.v1';
 import VPCDropdown from '~/components/clusters/wizards/common/VPCDropdown/VPCDropdown';
 import { useFormState } from '~/components/clusters/wizards/hooks';
 import { FieldId } from '~/components/clusters/wizards/osd/constants';
+import { CloudVPC } from '~/types/clusters_mgmt.v1';
+
 import AwsSingleSubnetField from './AwsSingleSubnetField';
 
 const AwsSubnetFields = () => {

@@ -2,12 +2,12 @@ import React from 'react';
 
 import { Alert, GridItem, Title } from '@patternfly/react-core';
 
-import PopoverHint from '~/components/common/PopoverHint';
-import ExternalLink from '~/components/common/ExternalLink';
 import links from '~/common/installLinks.mjs';
-import { FieldId } from '~/components/clusters/wizards/osd/constants';
-import { useFormState } from '~/components/clusters/wizards/hooks';
 import { emptyAWSSubnet } from '~/components/clusters/wizards/common/createOSDInitialValues';
+import { useFormState } from '~/components/clusters/wizards/hooks';
+import { FieldId } from '~/components/clusters/wizards/osd/constants';
+import ExternalLink from '~/components/common/ExternalLink';
+import PopoverHint from '~/components/common/PopoverHint';
 
 import AwsSubnetFields from './AwsSubnetFields';
 import SecurityGroupsSection from './SecurityGroupsSection';

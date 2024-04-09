@@ -1,5 +1,6 @@
 import { MachinePool, NodePool } from '~/types/clusters_mgmt.v1';
 import { ClusterFromSubscription } from '~/types/types';
+
 import { isHypershiftCluster } from './clusterStates';
 
 type totalNodesData = {

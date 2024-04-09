@@ -1,15 +1,17 @@
 import React from 'react';
 import semver from 'semver';
+
 import { Divider, LevelItem } from '@patternfly/react-core';
 
-import { useOCPLatestVersionInChannel } from './hooks';
 import ExternalLink from '../common/ExternalLink';
 import PopoverHint from '../common/PopoverHint';
+import SupportStatus from '../common/SupportStatus';
+
 import getCandidateChannelLink from './getCandidateChannelLink';
 import getReleaseNotesLink from './getReleaseNotesLink';
-import SupportStatus from '../common/SupportStatus';
-import ReleaseChannelName from './ReleaseChannelName';
+import { useOCPLatestVersionInChannel } from './hooks';
 import ReleaseChannelDescription from './ReleaseChannelDescription';
+import ReleaseChannelName from './ReleaseChannelName';
 
 type Props = { channel: string; status?: string };
 

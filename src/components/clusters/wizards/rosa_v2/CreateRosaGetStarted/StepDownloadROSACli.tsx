@@ -1,9 +1,10 @@
 import React from 'react';
+
 import { Text, TextContent, TextList, TextListItem, TextVariants } from '@patternfly/react-core';
 
-import ExternalLink from '~/components/common/ExternalLink';
-import DownloadAndOSSelection from '~/components/clusters/install/instructions/components/DownloadAndOSSelection';
 import links, { channels, tools } from '~/common/installLinks.mjs';
+import DownloadAndOSSelection from '~/components/clusters/install/instructions/components/DownloadAndOSSelection';
+import ExternalLink from '~/components/common/ExternalLink';
 
 const StepDownloadROSACli = () => (
   <TextContent>

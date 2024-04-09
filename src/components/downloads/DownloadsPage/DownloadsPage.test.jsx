@@ -1,22 +1,25 @@
 import React from 'react';
 import { MemoryRouter } from 'react-router-dom';
 import { CompatRouter } from 'react-router-dom-v5-compat';
-import { mockRestrictedEnv, render, screen, checkAccessibility, waitFor } from '~/testUtils';
+
 import accountsService from '~/services/accountsService';
+import { checkAccessibility, mockRestrictedEnv, render, screen, waitFor } from '~/testUtils';
+
+import {
+  architectures,
+  channels,
+  operatingSystems,
+  tools,
+  urls,
+} from '../../../common/installLinks.mjs';
+
 import DownloadsPage, {
   allArchitecturesForTool,
   allOperatingSystemsForTool,
   architecturesForToolOS,
-  initialSelection,
   downloadChoice,
+  initialSelection,
 } from './DownloadsPage';
-import {
-  tools,
-  channels,
-  operatingSystems,
-  architectures,
-  urls,
-} from '../../../common/installLinks.mjs';
 
 const { linux, mac, windows } = operatingSystems;
 const { arm, ppc, s390x, x86 } = architectures;

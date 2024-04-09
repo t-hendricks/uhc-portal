@@ -1,19 +1,20 @@
 import React from 'react';
-import { Alert, Title, List, ListItem, ListComponent, OrderType } from '@patternfly/react-core';
+
+import { Alert, List, ListComponent, ListItem, OrderType, Title } from '@patternfly/react-core';
 import useChrome from '@redhat-cloud-services/frontend-components/useChrome';
 
-import type { Chrome } from '~/types/types';
-import { Error } from '~/types/accounts_mgmt.v1';
-
 import { trackEvents } from '~/common/analytics';
-import { hasRestrictTokensCapability, defaultToOfflineTokens } from '~/common/restrictTokensHelper';
 import links from '~/common/installLinks.mjs';
+import { defaultToOfflineTokens, hasRestrictTokensCapability } from '~/common/restrictTokensHelper';
 import { loadOfflineToken } from '~/components/CLILoginPage/TokenUtils';
-import InstructionCommand from '~/components/common/InstructionCommand';
-import ExternalLink from '~/components/common/ExternalLink';
-import { RosaCliCommand } from '~/components/clusters/wizards/rosa_v2/AccountsRolesScreen/constants/cliCommands';
-import { isRestrictedEnv, getRefreshToken } from '~/restrictedEnv';
 import useOrganization from '~/components/CLILoginPage/useOrganization';
+import { RosaCliCommand } from '~/components/clusters/wizards/rosa_v2/AccountsRolesScreen/constants/cliCommands';
+import ExternalLink from '~/components/common/ExternalLink';
+import InstructionCommand from '~/components/common/InstructionCommand';
+import { getRefreshToken, isRestrictedEnv } from '~/restrictedEnv';
+import { Error } from '~/types/accounts_mgmt.v1';
+import type { Chrome } from '~/types/types';
+
 import ROSALoginCommand from './ROSALoginCommand';
 
 type StepCreateAWSAccountRolesProps = {

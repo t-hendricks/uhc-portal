@@ -1,6 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Tbody, Tr, Td, ExpandableRowContent } from '@patternfly/react-table';
+
+import { ExpandableRowContent, Tbody, Td, Tr } from '@patternfly/react-table';
+
 import { expandKeys } from '../downloadsStructure';
 
 /** An expandable pair of table rows. */

@@ -1,13 +1,14 @@
 import React from 'react';
+import type axios from 'axios';
 import * as reactRedux from 'react-redux';
 import { MemoryRouter } from 'react-router-dom';
 import { CompatRouter } from 'react-router-dom-v5-compat';
-import type axios from 'axios';
 import semver from 'semver';
-import apiRequest from '~/services/apiRequest';
-import { withState, screen, checkAccessibility, within, TestRouter } from '~/testUtils';
 
+import apiRequest from '~/services/apiRequest';
+import { checkAccessibility, screen, TestRouter, within, withState } from '~/testUtils';
 import { NodePoolUpgradePolicy } from '~/types/clusters_mgmt.v1';
+
 import { UpdateAllMachinePools } from './index';
 
 type MockedJest = jest.Mocked<typeof axios> & jest.Mock;

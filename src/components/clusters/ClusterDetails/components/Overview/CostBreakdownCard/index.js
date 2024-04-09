@@ -1,6 +1,8 @@
 import { connect } from 'react-redux';
-import CostBreakdownCard from './CostBreakdownCard';
+
 import { getReport, getSources } from '../../../../../../redux/actions/costActions';
+
+import CostBreakdownCard from './CostBreakdownCard';
 
 const mapDispatchToProps = {
   getReport,

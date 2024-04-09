@@ -1,12 +1,13 @@
 import { connect } from 'react-redux';
 
+import getClusterName from '../../../../common/getClusterName';
+import { closeModal } from '../../../common/Modal/ModalActions';
+
 import {
-  toggleSubscriptionReleased,
   clearToggleSubscriptionReleasedResponse,
+  toggleSubscriptionReleased,
 } from './subscriptionReleasedActions';
 import TransferClusterOwnershipDialog from './TransferClusterOwnershipDialog';
-import { closeModal } from '../../../common/Modal/ModalActions';
-import getClusterName from '../../../../common/getClusterName';
 
 const mapStateToProps = (state) => ({
   subscription: state.modal.data.subscription,

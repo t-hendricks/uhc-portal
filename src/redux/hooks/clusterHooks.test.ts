@@ -1,9 +1,13 @@
-import { renderHook } from '@testing-library/react';
 import axios from 'axios';
-import apiRequest from '~/services/apiRequest';
 import * as reactRedux from 'react-redux';
-import { useGetTechPreviewStatus, techPreviewStatusSelector } from './clusterHooks';
+
+import { renderHook } from '@testing-library/react';
+
+import apiRequest from '~/services/apiRequest';
+
 import { GlobalState } from '../store';
+
+import { techPreviewStatusSelector, useGetTechPreviewStatus } from './clusterHooks';
 
 type MockedJest = jest.Mocked<typeof axios> & jest.Mock;
 const apiRequestMock = apiRequest as unknown as MockedJest;

@@ -1,8 +1,10 @@
 import React from 'react';
-import { checkAccessibility, render, screen, within } from '~/testUtils';
-import { CompatRouter } from 'react-router-dom-v5-compat';
 import { MemoryRouter } from 'react-router-dom';
+import { CompatRouter } from 'react-router-dom-v5-compat';
+
 import { ROSA_HOSTED_CLI_MIN_VERSION } from '~/components/clusters/wizards/rosa_v1/rosaConstants';
+import { checkAccessibility, render, screen, within } from '~/testUtils';
+
 import { PrerequisitesInfoBox } from './PrerequisitesInfoBox';
 
 const rosaCLIMessage = new RegExp(

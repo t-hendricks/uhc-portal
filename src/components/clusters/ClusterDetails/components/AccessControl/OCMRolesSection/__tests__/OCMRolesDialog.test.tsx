@@ -1,11 +1,13 @@
 import React from 'react';
-import { withState, checkAccessibility } from '~/testUtils';
-import modals from '~/components/common/Modal/modals';
+
 import { knownProducts, ocmRoles } from '~/common/subscriptionTypes';
-import { row } from './OCMRolesDialog.fixture';
+import modals from '~/components/common/Modal/modals';
+import { checkAccessibility, withState } from '~/testUtils';
 
 import { OCMRolesDialog } from '../OCMRolesDialog';
 import { OCMRolesRow } from '../OCMRolesRow';
+
+import { row } from './OCMRolesDialog.fixture';
 
 const newCreationRolesRow = () => new OCMRolesRow(null, '0');
 const newEditionRolesRow = () => new OCMRolesRow(row.data, '1');

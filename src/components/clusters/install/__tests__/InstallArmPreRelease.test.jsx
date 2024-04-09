@@ -1,9 +1,9 @@
 import React from 'react';
-import { screen, checkAccessibility, TestRouter, withState } from '~/testUtils';
 
-import { InstallArmPreRelease } from '../InstallArmPreRelease';
+import { checkAccessibility, screen, TestRouter, withState } from '~/testUtils';
 
 import githubReleases from '../githubReleases.mock';
+import { InstallArmPreRelease } from '../InstallArmPreRelease';
 
 jest.mock('../../../../redux/actions', () => ({
   __esModule: true,

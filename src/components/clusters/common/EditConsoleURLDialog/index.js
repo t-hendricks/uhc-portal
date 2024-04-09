@@ -1,13 +1,14 @@
-import { connect } from 'react-redux';
 import get from 'lodash/get';
+import { connect } from 'react-redux';
 
+import getClusterName from '../../../../common/getClusterName';
 import {
   clearClusterResponse,
   editClusterConsoleURL,
 } from '../../../../redux/actions/clustersActions';
-import EditConsoleURLDialog from './EditConsoleURLDialog';
 import { closeModal } from '../../../common/Modal/ModalActions';
-import getClusterName from '../../../../common/getClusterName';
+
+import EditConsoleURLDialog from './EditConsoleURLDialog';
 
 const mapStateToProps = (state) => {
   const cluster = state.modal.data;

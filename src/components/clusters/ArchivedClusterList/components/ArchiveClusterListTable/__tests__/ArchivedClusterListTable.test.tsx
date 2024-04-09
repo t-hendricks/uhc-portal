@@ -1,8 +1,11 @@
 import React from 'react';
 import { CompatRouter } from 'react-router-dom-v5-compat';
-import { render, checkAccessibility, TestRouter, screen, userEvent } from '~/testUtils';
-import { clusters, openModal, setSorting } from './ArchivedClusterListTable.fixtures';
+
+import { checkAccessibility, render, screen, TestRouter, userEvent } from '~/testUtils';
+
 import ArchivedClusterListTable from '../ArchivedClusterListTable';
+
+import { clusters, openModal, setSorting } from './ArchivedClusterListTable.fixtures';
 
 describe('<ArchivedClusterListTable />', () => {
   describe('ArchivedClusterListTable', () => {

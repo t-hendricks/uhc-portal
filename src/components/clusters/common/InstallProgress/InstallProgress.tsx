@@ -1,7 +1,9 @@
 import React from 'react';
 
 import { ClusterFromSubscription } from '~/types/types';
+
 import clusterStates from '../clusterStates';
+
 import ProgressList from './ProgressList';
 
 interface InstallProgressProps {

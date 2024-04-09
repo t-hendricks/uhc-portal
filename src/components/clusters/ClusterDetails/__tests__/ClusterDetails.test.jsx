@@ -1,10 +1,12 @@
 import React from 'react';
 import { MemoryRouter } from 'react-router-dom';
 import { CompatRouter, useParams } from 'react-router-dom-v5-compat';
+
 import { subscriptionStatuses } from '../../../../common/subscriptionTypes';
 import { render, screen, waitFor } from '../../../../testUtils';
 import clusterStates from '../../common/clusterStates';
 import ClusterDetails from '../ClusterDetails';
+
 import fixtures, { funcs } from './ClusterDetails.fixtures';
 
 jest.mock('../components/Overview/ClusterVersionInfo');

@@ -3,12 +3,12 @@ import PropTypes from 'prop-types';
 
 import {
   Card,
-  DescriptionList,
-  DescriptionListTerm,
-  DescriptionListGroup,
-  DescriptionListDescription,
   CardBody,
   CardTitle,
+  DescriptionList,
+  DescriptionListDescription,
+  DescriptionListGroup,
+  DescriptionListTerm,
 } from '@patternfly/react-core';
 
 import './NetworkConfigurationCard.scss';

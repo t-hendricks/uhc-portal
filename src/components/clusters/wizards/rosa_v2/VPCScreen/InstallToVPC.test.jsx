@@ -1,8 +1,10 @@
 import React from 'react';
 import { Formik } from 'formik';
-import { render, screen } from '~/testUtils';
-import InstallToVPC from '~/components/clusters/wizards/rosa_v2/VPCScreen/InstallToVPC';
+
 import links from '~/common/installLinks.mjs';
+import InstallToVPC from '~/components/clusters/wizards/rosa_v2/VPCScreen/InstallToVPC';
+import { render, screen } from '~/testUtils';
+
 import { initialValues } from '../constants';
 
 const defaultProps = {

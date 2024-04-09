@@ -1,26 +1,26 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Field } from 'redux-form';
+
 import {
-  Form,
-  FormGroup,
-  TextInput,
   Alert,
   AlertVariant,
   ClipboardCopy,
   ExpandableSection,
+  Form,
+  FormGroup,
+  TextInput,
 } from '@patternfly/react-core';
 
-import Modal from '../../../../../../common/Modal/Modal';
+import links from '../../../../../../../common/installLinks.mjs';
+import { checkRouteSelectors } from '../../../../../../../common/validators';
 import ErrorBox from '../../../../../../common/ErrorBox';
+import ExternalLink from '../../../../../../common/ExternalLink';
+import Modal from '../../../../../../common/Modal/Modal';
 import {
   ReduxCheckbox,
   ReduxVerticalFormGroup,
 } from '../../../../../../common/ReduxFormComponents';
-import ExternalLink from '../../../../../../common/ExternalLink';
-
-import links from '../../../../../../../common/installLinks.mjs';
-import { checkRouteSelectors } from '../../../../../../../common/validators';
 
 class EditClusterIngressDialog extends React.Component {
   componentDidUpdate(prevProps) {

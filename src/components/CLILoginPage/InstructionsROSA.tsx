@@ -18,9 +18,11 @@ limitations under the License.
 // they can copy it and use it with the rosa command line utitility.
 
 import React from 'react';
-import ExternalLink from '../common/ExternalLink';
-import Tokens from './Instructions';
+
 import links, { tools } from '../../common/installLinks.mjs';
+import ExternalLink from '../common/ExternalLink';
+
+import Tokens from './Instructions';
 
 type Props = Omit<
   React.ComponentProps<typeof Tokens>,

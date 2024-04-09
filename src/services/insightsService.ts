@@ -1,4 +1,5 @@
 import apiRequest from '~/services/apiRequest';
+
 import config from '../config';
 import type { overviewResponse } from '../types/insights-results-aggregator.v1';
 import type { reportData } from '../types/insights-results-aggregator.v2';

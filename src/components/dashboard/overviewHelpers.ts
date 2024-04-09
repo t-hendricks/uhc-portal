@@ -1,4 +1,5 @@
 import { ClusterFromSubscription } from '~/types/types';
+
 import { hasCpuAndMemory } from '../clusters/ClusterDetails/clusterDetailsHelper';
 import { InsightsRuleCategories } from '../clusters/ClusterDetails/components/Insights/InsightsConstants';
 import {

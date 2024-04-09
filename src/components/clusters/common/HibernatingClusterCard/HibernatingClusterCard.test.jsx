@@ -1,8 +1,10 @@
 import React from 'react';
-import { screen, render, checkAccessibility } from '~/testUtils';
+
+import { checkAccessibility, render, screen } from '~/testUtils';
+
+import clusterStates from '../clusterStates';
 
 import HibernatingClusterCard from './HibernatingClusterCard';
-import clusterStates from '../clusterStates';
 
 describe('<HibernateClusterModal />', () => {
   const openModal = jest.fn();

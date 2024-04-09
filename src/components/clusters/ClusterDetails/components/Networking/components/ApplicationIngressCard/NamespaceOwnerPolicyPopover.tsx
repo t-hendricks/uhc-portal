@@ -1,3 +1,5 @@
+import React from 'react';
+
 import {
   DescriptionList,
   DescriptionListDescription,
@@ -5,7 +7,7 @@ import {
   Text,
   TextContent,
 } from '@patternfly/react-core';
-import React from 'react';
+
 import PopoverHint from '~/components/common/PopoverHint';
 
 export const NamespaceOwnerPolicyPopover = () => (

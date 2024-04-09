@@ -15,8 +15,10 @@ limitations under the License.
 */
 
 import get from 'lodash/get';
-import { GET_CLUSTER_INSIGHTS, GET_ORGANIZATION_INSIGHTS } from './InsightsConstants';
+
 import { insightsService } from '../../../../../services';
+
+import { GET_CLUSTER_INSIGHTS, GET_ORGANIZATION_INSIGHTS } from './InsightsConstants';
 
 const fetchSingleClusterInsights = (clusterId) =>
   insightsService.getClusterInsights(clusterId).then((response) => ({

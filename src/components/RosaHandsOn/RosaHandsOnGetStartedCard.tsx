@@ -1,35 +1,36 @@
 import React from 'react';
+import { Link } from 'react-router-dom-v5-compat';
+
 import {
-  List,
-  ListItem,
-  Text,
+  Button,
   Card,
   CardBody,
-  Popover,
+  CardFooter,
+  CardHeader,
+  CardTitle,
   Grid,
   GridItem,
-  Button,
-  CardTitle,
-  CardHeader,
-  CardFooter,
-  Tooltip,
+  Icon,
+  List,
+  ListItem,
+  Popover,
+  Text,
+  Title,
   Toolbar,
   ToolbarContent,
   ToolbarItem,
-  Title,
-  Icon,
+  Tooltip,
 } from '@patternfly/react-core';
-import { Link } from 'react-router-dom-v5-compat';
-
 import { CheckIcon } from '@patternfly/react-icons/dist/esm/icons/check-icon';
 import { HelpIcon } from '@patternfly/react-icons/dist/esm/icons/help-icon';
 import { global_link_Color_dark as darkColor } from '@patternfly/react-tokens/dist/esm/global_link_Color_dark';
-import RosaHandsOnIcon from './RosaHandsOnIcons/RosaHandsOnIcon';
-import ExternalLink from '../common/ExternalLink';
-import { MAX_DURATION, rosaHandsOnLinks } from './constants';
 
-import { DemoExperienceStatusEnum } from './DemoExperienceModels';
+import ExternalLink from '../common/ExternalLink';
+
+import RosaHandsOnIcon from './RosaHandsOnIcons/RosaHandsOnIcon';
 import { AugmentedDemoExperience } from './augmentedModelTypes';
+import { MAX_DURATION, rosaHandsOnLinks } from './constants';
+import { DemoExperienceStatusEnum } from './DemoExperienceModels';
 
 const cardId = 'rosa-handson-main-card';
 

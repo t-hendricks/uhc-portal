@@ -1,6 +1,9 @@
 import React from 'react';
-import { Alert, ExpandableSection, AlertActionCloseButton } from '@patternfly/react-core';
+
+import { Alert, AlertActionCloseButton, ExpandableSection } from '@patternfly/react-core';
+
 import { ErrorState } from '~/types/types';
+
 import { formatErrorDetails } from '../../common/errors';
 
 type Props = {

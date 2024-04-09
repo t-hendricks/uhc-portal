@@ -1,6 +1,8 @@
 import React from 'react';
+
 import { Label } from '@patternfly/react-core';
 import StarIcon from '@patternfly/react-icons/dist/esm/icons/star-icon';
+
 import { InstructionsChooserCard } from './InstructionsChooserCard';
 
 import './InstructionsChooser.scss';

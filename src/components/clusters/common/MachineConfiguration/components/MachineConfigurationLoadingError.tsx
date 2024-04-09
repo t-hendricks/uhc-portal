@@ -1,5 +1,6 @@
 import React from 'react';
-import { EmptyState, EmptyStateIcon, EmptyStateBody, Button, Title } from '@patternfly/react-core';
+
+import { Button, EmptyState, EmptyStateBody, EmptyStateIcon, Title } from '@patternfly/react-core';
 import ExclamationCircleIcon from '@patternfly/react-icons/dist/esm/icons/exclamation-circle-icon';
 
 interface MachineConfigurationLoadingErrorProps {

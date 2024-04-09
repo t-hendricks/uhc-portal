@@ -1,7 +1,10 @@
 import React from 'react';
-import { render, screen, checkAccessibility } from '~/testUtils';
-import TransferClusterOwnershipDialog from './TransferClusterOwnershipDialog';
+
+import { checkAccessibility, render, screen } from '~/testUtils';
+
 import { subscriptionStatuses } from '../../../../common/subscriptionTypes';
+
+import TransferClusterOwnershipDialog from './TransferClusterOwnershipDialog';
 
 describe('<TransferClusterOwnershipDialog />', () => {
   const subscription = {

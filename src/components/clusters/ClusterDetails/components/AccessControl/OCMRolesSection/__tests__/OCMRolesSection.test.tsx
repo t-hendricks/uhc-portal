@@ -1,14 +1,14 @@
 import React from 'react';
 import type axios from 'axios';
 
-import { render, within, waitFor, screen } from '~/testUtils';
-
 import apiRequest from '~/services/apiRequest';
+import { render, screen, waitFor, within } from '~/testUtils';
 import { Subscription } from '~/types/accounts_mgmt.v1';
-import { OCMRoles } from './OCMRolesSection.fixture';
-import OCMRolesSection from '../OCMRolesSection';
 
 import fixtures from '../../../../__tests__/ClusterDetails.fixtures';
+import OCMRolesSection from '../OCMRolesSection';
+
+import { OCMRoles } from './OCMRolesSection.fixture';
 
 type MockedJest = jest.Mocked<typeof axios> & jest.Mock;
 const apiRequestMock = apiRequest as unknown as MockedJest;

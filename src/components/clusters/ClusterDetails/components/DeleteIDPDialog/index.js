@@ -1,11 +1,12 @@
 import { connect } from 'react-redux';
 
+import { closeModal } from '../../../../common/Modal/ModalActions';
+import shouldShowModal from '../../../../common/Modal/ModalSelectors';
 import {
   deleteIDP,
   resetDeletedIDPResponse,
 } from '../IdentityProvidersPage/IdentityProvidersActions';
-import { closeModal } from '../../../../common/Modal/ModalActions';
-import shouldShowModal from '../../../../common/Modal/ModalSelectors';
+
 import DeleteIDPDialog from './DeleteIDPDialog';
 
 const mapStateToProps = (state) => ({

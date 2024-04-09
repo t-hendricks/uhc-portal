@@ -1,6 +1,7 @@
 import React from 'react';
 import { Field } from 'formik';
 import PropTypes from 'prop-types';
+
 import Checkbox from '~/components/common/formik/Checkbox';
 
 /* Hidden/zero-height Checkbox which must be checked/true in order to pass
