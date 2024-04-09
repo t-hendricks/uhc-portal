@@ -1,33 +1,5 @@
-const notificationContactsWithContacts = {
-  contacts: [
-    {
-      userID: '1VW00yfnFuhoybNRBqF86RyS2h6',
-      username: 'lroitman.openshift',
-      email: '***REMOVED***',
-      firstName: 'Liran',
-      lastName: 'Roitman',
-    },
-    {
-      userID: '1NjzrgHzgOHK0pGi6zxPfhC7PQV',
-      username: 'tiwillia.openshift',
-      email: '***REMOVED***',
-      firstName: 'Timothy',
-      lastName: 'Williams',
-    },
-  ],
-  pending: false,
-  subscriptionID: '',
-};
-
 const mockGetNotificationContactsPayload = {
-  config: {
-    url: '/.../notification_contacts',
-  },
   data: {
-    kind: 'AccountList',
-    page: 1,
-    size: 3,
-    total: 3,
     items: [
       {
         id: '1TbDi3BaBKGhDULdcKpXj05nzL4',
@@ -105,54 +77,4 @@ const mockGetNotificationContactsList = [
   },
 ];
 
-const clusterCreator = {
-  id: '1VW00yfnFuhoybNRBqF86RyS2h6',
-  kind: 'Account',
-  href: '/api/accounts_mgmt/v1/accounts/1VW00yfnFuhoybNRBqF86RyS2h6',
-  name: 'Liran Roitman',
-  username: 'lroitman.openshift',
-};
-
-const baseProps = {
-  subscriptionID: '1iGW3xYbKZAEdZLi207rcA1l0ob',
-  canEdit: true,
-  notificationContacts: {
-    contacts: [],
-    pending: false,
-    subscriptionID: '1iGW3xYbKZAEdZLi207rcA1l0ob',
-  },
-  clusterUUID: '1',
-  product: 'OSD',
-  supportCases: {
-    cases: [],
-    pending: false,
-    subscriptionID: '1iGW3xYbKZAEdZLi207rcA1l0ob',
-  },
-  deleteContactResponse: {},
-  addContactResponse: {},
-  getNotificationContacts: jest.fn(),
-  hasContacts: false,
-  deleteNotificationContact: jest.fn(),
-  clearDeleteNotificationContacts: jest.fn(),
-  clearNotificationContacts: jest.fn(),
-  addNotificationToaster: jest.fn(),
-  isAddNotificationContactModalOpen: false,
-  openModal: jest.fn(),
-  closeModal: jest.fn(),
-  clearAddNotificationContacts: jest.fn(),
-  addNotificationContact: jest.fn(),
-  getSupportCases: jest.fn(),
-  clusterCreator,
-  version: {
-    id: 'openshift-v4.12.4',
-    raw_id: '4.12.4',
-  },
-};
-
-export {
-  notificationContactsWithContacts,
-  mockGetNotificationContactsPayload,
-  mockGetNotificationContactsList,
-  clusterCreator,
-  baseProps,
-};
+export { mockGetNotificationContactsList, mockGetNotificationContactsPayload };

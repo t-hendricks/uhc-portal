@@ -19,6 +19,7 @@ import { cloudProviderActions } from '../../../redux/actions/cloudProviderAction
 import { fetchClusterDetails, invalidateClusters } from '../../../redux/actions/clustersActions';
 import { getUserAccess } from '../../../redux/actions/costActions';
 import { clearGlobalError, setGlobalError } from '../../../redux/actions/globalErrorActions';
+import { getNotificationContacts, getSupportCases } from '../../../redux/actions/supportActions';
 import { fetchUpgradeGates } from '../../../redux/actions/upgradeGateActions';
 import { viewConstants } from '../../../redux/constants';
 import { modalActions } from '../../common/Modal/ModalActions';
@@ -45,7 +46,6 @@ import {
 import { getOnDemandMetrics } from './components/Monitoring/MonitoringActions';
 import { issuesAndWarningsSelector } from './components/Monitoring/MonitoringSelectors';
 import { getClusterRouters } from './components/Networking/NetworkingActions';
-import supportActions from './components/Support/SupportActions';
 import ClusterDetails from './ClusterDetails';
 
 const mapStateToProps = (state, { location }) => {
@@ -120,8 +120,8 @@ const mapDispatchToProps = (dispatch) =>
       clearListVpcs,
       getClusterHistory: clusterLogActions.getClusterHistory,
       toggleSubscriptionReleased,
-      getNotificationContacts: supportActions.getNotificationContacts,
-      getSupportCases: supportActions.getSupportCases,
+      getNotificationContacts,
+      getSupportCases,
       getSchedules,
       getUserAccess,
       addNotification,

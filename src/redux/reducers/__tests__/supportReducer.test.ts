@@ -1,17 +1,18 @@
-import { FULFILLED_ACTION } from '../../../../../../redux/reduxHelpers';
-import { SupportConstants } from '../SupportActions';
-import reducer, { initialState } from '../SupportReducer';
+import { GET_NOTIFICATION_CONTACTS } from '~/redux/constants/supportConstants';
+
+import { FULFILLED_ACTION } from '../../reduxHelpers';
+import reducer, { initialState } from '../supportReducer';
 
 import {
   mockGetNotificationContactsList,
   mockGetNotificationContactsPayload,
-} from './Support.fixtures';
+} from './supportReducer.fixtures';
 
-describe('ClusterDetails SupportReducer', () => {
+describe('ClusterDetails supportReducer', () => {
   describe('should not handle unrelated actions', () => {
     it('leaves the state unmodified', () => {
       const action = { type: 'HOLY_GUACAMOLE' };
-      const result = reducer(initialState, action);
+      const result = reducer(initialState, action as any);
 
       expect(result).toEqual(initialState);
     });
@@ -19,10 +20,10 @@ describe('ClusterDetails SupportReducer', () => {
   describe('should handle actions', () => {
     it('handles GET_NOTIFICATION_CONTACTS', () => {
       const action = {
-        type: FULFILLED_ACTION(SupportConstants.GET_NOTIFICATION_CONTACTS),
+        type: FULFILLED_ACTION(GET_NOTIFICATION_CONTACTS),
         payload: mockGetNotificationContactsPayload,
       };
-      const result = reducer(initialState, action);
+      const result = reducer(initialState, action as any);
 
       expect(result).toHaveProperty(
         'notificationContacts.contacts',
