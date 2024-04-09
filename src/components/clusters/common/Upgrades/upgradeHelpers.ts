@@ -1,7 +1,7 @@
 /* eslint-disable camelcase */
 import { GlobalState } from '~/redux/store';
-import { AugmentedCluster } from '~/types/types';
 import { UpgradePolicy, UpgradePolicyState } from '~/types/clusters_mgmt.v1';
+import { AugmentedCluster } from '~/types/types';
 
 export const hasAvailableUpdates = (cluster: AugmentedCluster) => {
   const availableUpdates = cluster?.version?.available_upgrades;

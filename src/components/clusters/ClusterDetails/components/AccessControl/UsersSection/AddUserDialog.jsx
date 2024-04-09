@@ -1,14 +1,15 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
-import { Form, TextInput, FormGroup, Radio } from '@patternfly/react-core';
+import { Form, FormGroup, Radio, TextInput } from '@patternfly/react-core';
 
 import { FormGroupHelperText } from '~/components/common/FormGroupHelperText';
-import Modal from '../../../../../common/Modal/Modal';
-import ErrorBox from '../../../../../common/ErrorBox';
-import ExternalLink from '../../../../../common/ExternalLink';
+
 import links from '../../../../../../common/installLinks.mjs';
 import { checkUserID } from '../../../../../../common/validators';
+import ErrorBox from '../../../../../common/ErrorBox';
+import ExternalLink from '../../../../../common/ExternalLink';
+import Modal from '../../../../../common/Modal/Modal';
 
 const initialState = {
   selectedGroup: 'dedicated-admins',

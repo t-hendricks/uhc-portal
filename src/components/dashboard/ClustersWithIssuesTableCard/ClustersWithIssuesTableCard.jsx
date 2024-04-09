@@ -1,30 +1,33 @@
-import PropTypes from 'prop-types';
 import React from 'react';
+import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom-v5-compat';
+
 import {
-  CardBody,
   Card,
-  EmptyState,
-  EmptyStateIcon,
-  EmptyStateBody,
+  CardBody,
   CardTitle,
+  EmptyState,
+  EmptyStateBody,
   EmptyStateHeader,
+  EmptyStateIcon,
 } from '@patternfly/react-core';
-import { textCenter, TableVariant } from '@patternfly/react-table';
+import { CheckCircleIcon } from '@patternfly/react-icons/dist/esm/icons/check-circle-icon';
+import { TableVariant, textCenter } from '@patternfly/react-table';
 import {
   Table as TableDeprecated,
-  TableHeader as TableHeaderDeprecated,
   TableBody as TableBodyDeprecated,
+  TableHeader as TableHeaderDeprecated,
 } from '@patternfly/react-table/deprecated';
-import { Link } from 'react-router-dom-v5-compat';
-import { CheckCircleIcon } from '@patternfly/react-icons/dist/esm/icons/check-circle-icon';
 import { global_success_color_100 as successColor } from '@patternfly/react-tokens/dist/esm/global_success_color_100';
+
 import getClusterName from '../../../common/getClusterName';
-import { getIssuesCount } from '../overviewHelpers';
-import { actionResolver } from './ClustersWithIssuesActionResolver';
-import skeletonRows from '../../common/SkeletonRows';
-import ViewPaginationRow from '../../clusters/common/ViewPaginationRow/viewPaginationRow';
+import { createOverviewQueryObject, viewPropsChanged } from '../../../common/queryHelpers';
 import { viewConstants } from '../../../redux/constants';
-import { viewPropsChanged, createOverviewQueryObject } from '../../../common/queryHelpers';
+import ViewPaginationRow from '../../clusters/common/ViewPaginationRow/viewPaginationRow';
+import skeletonRows from '../../common/SkeletonRows';
+import { getIssuesCount } from '../overviewHelpers';
+
+import { actionResolver } from './ClustersWithIssuesActionResolver';
 
 class ClustersWithIssuesTableCard extends React.Component {
   componentDidUpdate(prevProps) {

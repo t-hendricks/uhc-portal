@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+
 import { Form } from '@patternfly/react-core';
 
+import ErrorBox from '../../../common/ErrorBox';
 import Modal from '../../../common/Modal/Modal';
 import modals from '../../../common/Modal/modals';
-import ErrorBox from '../../../common/ErrorBox';
 
 class ArchiveClusterDialog extends Component {
   componentDidUpdate() {

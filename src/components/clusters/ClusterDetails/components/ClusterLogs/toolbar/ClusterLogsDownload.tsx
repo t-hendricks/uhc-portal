@@ -1,8 +1,10 @@
 import React from 'react';
 import dayjs from 'dayjs';
+
 import { Alert, Button, FormGroup, Modal, Radio, Stack, StackItem } from '@patternfly/react-core';
-import { serviceLogService } from '~/services';
+
 import { createServiceLogQueryObject } from '~/common/queryHelpers';
+import { serviceLogService } from '~/services';
 import { Cluster } from '~/types/clusters_mgmt.v1';
 import { ViewOptions } from '~/types/types';
 

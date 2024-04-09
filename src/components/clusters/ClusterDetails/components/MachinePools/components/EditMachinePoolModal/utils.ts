@@ -1,4 +1,5 @@
 import { AWSMachinePool, MachinePool, NodePool } from '~/types/clusters_mgmt.v1';
+
 import { EditMachinePoolValues } from './hooks/useMachinePoolFormik';
 
 const getLabels = (labels: EditMachinePoolValues['labels']) =>

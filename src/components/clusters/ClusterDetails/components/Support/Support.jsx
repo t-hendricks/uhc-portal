@@ -1,11 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+
 import { Card, CardBody, CardTitle } from '@patternfly/react-core';
+
 import { normalizedProducts } from '~/common/subscriptionTypes';
 
+import AddNotificationContactSection from './components/AddNotificationContactButton';
 import NotificationContactsCard from './components/NotificationContactsSection';
 import SupportCasesCard from './components/SupportCasesSection';
-import AddNotificationContactSection from './components/AddNotificationContactButton';
+
 import './Support.scss';
 
 const clusterOwnerMsg = (clusterCreator) => {

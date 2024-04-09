@@ -1,9 +1,11 @@
 import React from 'react';
 
-import { render, screen, checkAccessibility } from '~/testUtils';
+import { checkAccessibility, render, screen } from '~/testUtils';
+
+import { normalizedProducts } from '../../../../../../common/subscriptionTypes';
+
 import SubscriptionSettings from './SubscriptionSettings';
 import * as fixtures from './SubscriptionSettings.fixtures';
-import { normalizedProducts } from '../../../../../../common/subscriptionTypes';
 
 describe('<SubscriptionSettings />', () => {
   it('should render for OCP', async () => {

@@ -1,14 +1,17 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import dayjs from 'dayjs';
+import PropTypes from 'prop-types';
+
 import { Button, EmptyState, EmptyStateBody, EmptyStateVariant } from '@patternfly/react-core';
-import { SUPPORT_CASE_URL, isRestrictedEnv } from '~/restrictedEnv';
 import { TableVariant } from '@patternfly/react-table';
 import {
   Table as TableDeprecated,
-  TableHeader as TableHeaderDeprecated,
   TableBody as TableBodyDeprecated,
+  TableHeader as TableHeaderDeprecated,
 } from '@patternfly/react-table/deprecated';
+
+import { isRestrictedEnv, SUPPORT_CASE_URL } from '~/restrictedEnv';
+
 import { normalizedProducts } from '../../../../../../../common/subscriptionTypes';
 
 const productMap = {

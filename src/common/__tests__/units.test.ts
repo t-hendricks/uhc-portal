@@ -1,9 +1,9 @@
 import {
+  humanizeValueWithoutUnit,
   humanizeValueWithUnit,
+  humanizeValueWithUnitGiB,
   parseValueWithUnit,
   roundValueWithUnit,
-  humanizeValueWithUnitGiB,
-  humanizeValueWithoutUnit,
 } from '../units';
 
 test('Parse value with unit works', () => {

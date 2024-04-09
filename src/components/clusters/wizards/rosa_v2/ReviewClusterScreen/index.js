@@ -1,11 +1,12 @@
 import { connect } from 'react-redux';
 
 import {
-  clearGetUserRoleResponse,
-  getUserRole,
-  getOCMRole,
   clearGetOcmRoleResponse,
+  clearGetUserRoleResponse,
+  getOCMRole,
+  getUserRole,
 } from '~/redux/actions/rosaActions';
+
 import ReviewClusterScreen from './ReviewClusterScreen';
 
 const mapStateToProps = (state) => {

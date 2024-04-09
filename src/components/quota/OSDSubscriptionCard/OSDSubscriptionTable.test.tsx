@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { screen, render, checkAccessibility } from '~/testUtils';
+import { checkAccessibility, render, screen } from '~/testUtils';
 
 import * as Fixtures from '../__tests__/Quota.fixtures';
 

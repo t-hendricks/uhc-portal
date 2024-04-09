@@ -5,13 +5,13 @@ import {
   clearHibernateClusterResponse,
   hibernateCluster,
 } from '../../../../redux/actions/clustersActions';
-
-import HibernateClusterModal from './HibernateClusterModal';
 import { closeModal } from '../../../common/Modal/ModalActions';
 import {
-  getSchedules,
   clearPostedUpgradeScheduleResponse,
+  getSchedules,
 } from '../Upgrades/clusterUpgradeActions';
+
+import HibernateClusterModal from './HibernateClusterModal';
 
 const mapStateToProps = (state) => {
   const modalData = state.modal.data;

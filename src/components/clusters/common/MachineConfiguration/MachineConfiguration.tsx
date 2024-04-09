@@ -1,11 +1,12 @@
 import React, { useEffect } from 'react';
-import omit from 'lodash/omit';
 import { AxiosResponse } from 'axios';
-import { MachineConfigurationModal } from '~/components/clusters/common/MachineConfiguration/components/MachineConfigurationModal';
+import omit from 'lodash/omit';
+
 import { MachineConfigurationEditor } from '~/components/clusters/common/MachineConfiguration/components/MachineConfigurationEditor';
+import { MachineConfigurationLoadingError } from '~/components/clusters/common/MachineConfiguration/components/MachineConfigurationLoadingError';
+import { MachineConfigurationModal } from '~/components/clusters/common/MachineConfiguration/components/MachineConfigurationModal';
 import { useGetKubeletConfig } from '~/components/clusters/common/MachineConfiguration/useGetKubeletConfig';
 import { useSaveKubeletConfig } from '~/components/clusters/common/MachineConfiguration/useSaveKubeletConfig';
-import { MachineConfigurationLoadingError } from '~/components/clusters/common/MachineConfiguration/components/MachineConfigurationLoadingError';
 import type { KubeletConfig } from '~/types/clusters_mgmt.v1';
 
 export interface MachineConfigurationProps {

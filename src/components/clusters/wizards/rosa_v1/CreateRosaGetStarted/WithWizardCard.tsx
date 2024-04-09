@@ -1,4 +1,6 @@
 import React, { useCallback } from 'react';
+import { Link } from 'react-router-dom-v5-compat';
+
 import {
   Alert,
   Button,
@@ -7,12 +9,11 @@ import {
   CardBody,
   CardFooter,
   CardTitle,
-  Title,
   Text,
   TextVariants,
+  Title,
 } from '@patternfly/react-core';
 import { DesktopIcon } from '@patternfly/react-icons/dist/esm/icons/desktop-icon';
-import { Link } from 'react-router-dom-v5-compat';
 
 const WithWizard = () => {
   const LinkComponent = useCallback((props) => <Link {...props} to="/create/rosa/wizard" />, []);

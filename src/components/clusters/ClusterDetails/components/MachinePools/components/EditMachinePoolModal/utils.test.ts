@@ -1,7 +1,7 @@
 import { MachinePool, NodePool } from '~/types/clusters_mgmt.v1';
 
 import { EditMachinePoolValues } from './hooks/useMachinePoolFormik';
-import { buildNodePoolRequest, buildMachinePoolRequest } from './utils';
+import { buildMachinePoolRequest, buildNodePoolRequest } from './utils';
 
 const defaultValues: EditMachinePoolValues = {
   name: 'my-mp',

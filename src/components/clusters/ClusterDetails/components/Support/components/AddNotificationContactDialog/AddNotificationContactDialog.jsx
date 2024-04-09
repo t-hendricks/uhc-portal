@@ -4,8 +4,9 @@ import PropTypes from 'prop-types';
 import { Form, FormGroup, TextInput } from '@patternfly/react-core';
 
 import { FormGroupHelperText } from '~/components/common/FormGroupHelperText';
-import Modal from '../../../../../../common/Modal/Modal';
+
 import { validateRHITUsername } from '../../../../../../../common/validators';
+import Modal from '../../../../../../common/Modal/Modal';
 
 const initialState = {
   userName: '',

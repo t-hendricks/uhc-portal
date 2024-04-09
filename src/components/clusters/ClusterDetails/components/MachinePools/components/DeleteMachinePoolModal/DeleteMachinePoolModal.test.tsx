@@ -1,9 +1,10 @@
 import React from 'react';
 import * as reactRedux from 'react-redux';
 
-import { render, screen } from '~/testUtils';
-import { useGlobalState } from '~/redux/hooks';
 import { closeModal } from '~/components/common/Modal/ModalActions';
+import { useGlobalState } from '~/redux/hooks';
+import { render, screen } from '~/testUtils';
+
 import DeleteMachinePoolModal from './DeleteMachinePoolModal';
 
 jest.mock('react-redux', () => ({

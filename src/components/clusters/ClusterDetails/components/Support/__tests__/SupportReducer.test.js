@@ -1,6 +1,7 @@
-import reducer, { initialState } from '../SupportReducer';
-import { SupportConstants } from '../SupportActions';
 import { FULFILLED_ACTION } from '../../../../../../redux/reduxHelpers';
+import { SupportConstants } from '../SupportActions';
+import reducer, { initialState } from '../SupportReducer';
+
 import {
   mockGetNotificationContactsList,
   mockGetNotificationContactsPayload,

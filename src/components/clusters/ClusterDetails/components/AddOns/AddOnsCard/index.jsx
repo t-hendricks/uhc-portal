@@ -1,7 +1,9 @@
 import { connect } from 'react-redux';
-import AddOnsCard from './AddOnsCard';
-import { addClusterAddOn } from '../AddOnsActions';
+
 import { modalActions } from '../../../../../common/Modal/ModalActions';
+import { addClusterAddOn } from '../AddOnsActions';
+
+import AddOnsCard from './AddOnsCard';
 
 const mapStateToProps = (state) => ({
   cluster: state.clusters.details.cluster,

@@ -1,19 +1,21 @@
 import React from 'react';
+import { createBrowserHistory } from 'history';
+import { axe, toHaveNoViolations } from 'jest-axe';
 import { Provider } from 'react-redux';
-import { AnyAction, createStore } from 'redux';
-import { act, render, RenderOptions } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
-import '@testing-library/jest-dom';
 import { MemoryRouter } from 'react-router-dom';
-import { toHaveNoViolations, axe } from 'jest-axe';
+import { AnyAction, createStore } from 'redux';
 
 import * as useChromeHook from '@redhat-cloud-services/frontend-components/useChrome';
-import * as featureGates from '~/hooks/useFeatureGate';
-import { createBrowserHistory } from 'history';
+import { act, render, RenderOptions } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 
-import { GlobalState, store as globalStore } from './redux/store';
+import * as featureGates from '~/hooks/useFeatureGate';
+
 import { reduxReducers } from './redux/reducers';
+import { GlobalState, store as globalStore } from './redux/store';
 import * as restrictedEnv from './restrictedEnv';
+
+import '@testing-library/jest-dom';
 
 // Type not exported in the library
 export type UserEventType = ReturnType<typeof userEvent.setup>;

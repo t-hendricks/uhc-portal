@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
-import { FormGroup } from '@patternfly/react-core';
 import { Field } from 'formik';
+
+import { FormGroup } from '@patternfly/react-core';
 
 import { validateWorkerVolumeSize } from '~/common/validators';
 import { useFormState } from '~/components/clusters/wizards/hooks';

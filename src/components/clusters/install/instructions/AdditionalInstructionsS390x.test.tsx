@@ -1,5 +1,7 @@
 import * as React from 'react';
+
 import { render, screen } from '~/testUtils';
+
 import AdditionalInstructionsS390x from './AdditionalInstructionsS390x';
 
 describe('<AdditionalInstructionsS390x />', () => {

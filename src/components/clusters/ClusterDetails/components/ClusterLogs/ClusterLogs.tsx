@@ -1,3 +1,9 @@
+import React from 'react';
+import isEmpty from 'lodash/isEmpty';
+import size from 'lodash/size';
+import { useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom-v5-compat';
+
 import {
   Card,
   CardBody,
@@ -10,12 +16,7 @@ import {
   Title,
 } from '@patternfly/react-core';
 import SearchIcon from '@patternfly/react-icons/dist/esm/icons/search-icon';
-import isEmpty from 'lodash/isEmpty';
-import size from 'lodash/size';
-import React from 'react';
-import { useNavigate } from 'react-router-dom-v5-compat';
 
-import { useDispatch } from 'react-redux';
 import { viewActions } from '~/redux/actions/viewOptionsActions';
 import { useGlobalState } from '~/redux/hooks';
 import { ViewSorting } from '~/types/types';
@@ -30,16 +31,17 @@ import { viewConstants } from '../../../../../redux/constants';
 import ErrorBox from '../../../../common/ErrorBox';
 import LiveDateFormat from '../../../../common/LiveDateFormat/LiveDateFormat';
 import ViewPaginationRow from '../../../common/ViewPaginationRow/viewPaginationRow';
-import LogTable from './LogTable';
-import { clusterLogActions } from './clusterLogActions';
-import { LOG_TYPES, SEVERITY_TYPES } from './clusterLogConstants';
-import ClusterLogsToolbar from './toolbar';
+
 import {
   dateFormat,
   dateParse,
   getTimestampFrom,
   onDateChangeFromFilter,
 } from './toolbar/ClusterLogsDatePicker';
+import { clusterLogActions } from './clusterLogActions';
+import { LOG_TYPES, SEVERITY_TYPES } from './clusterLogConstants';
+import LogTable from './LogTable';
+import ClusterLogsToolbar from './toolbar';
 
 type ClusterLogsProps = {
   refreshEvent: {

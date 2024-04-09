@@ -1,4 +1,6 @@
 import React from 'react';
+import { Link } from 'react-router-dom-v5-compat';
+
 import {
   Bullseye,
   Card,
@@ -10,8 +12,9 @@ import {
   GridItem,
   Title,
 } from '@patternfly/react-core';
-import { Link } from 'react-router-dom-v5-compat';
+
 import ResourceUsage from '../clusters/common/ResourceUsage/ResourceUsage';
+
 import ClustersWithIssuesCard from './ClustersWithIssuesCard';
 
 type UnitValue = {

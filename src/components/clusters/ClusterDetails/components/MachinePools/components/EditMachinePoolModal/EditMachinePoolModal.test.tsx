@@ -1,5 +1,7 @@
 import * as React from 'react';
+
 import { render, screen, within } from '~/testUtils';
+
 import EditMachinePoolModal from './EditMachinePoolModal';
 
 describe('<EditMachinePoolModal />', () => {

@@ -1,9 +1,9 @@
 import React from 'react';
 import { CompatRouter } from 'react-router-dom-v5-compat';
-import { screen, checkAccessibility, TestRouter, render } from '~/testUtils';
+
+import { checkAccessibility, render, screen, TestRouter } from '~/testUtils';
 
 import InstallAWS from '../InstallAWS';
-
 import { version } from '../InstallTestConstants';
 
 describe('InstallAWS', () => {

@@ -1,9 +1,9 @@
 import { FormikValues } from 'formik';
 
+import { Subnet } from '~/common/helpers';
 import validators, { required } from '~/common/validators';
 import { CloudProviderType } from '~/components/clusters/wizards/common/constants';
 import { FieldId } from '~/components/clusters/wizards/osd/constants';
-import { Subnet } from '~/common/helpers';
 
 const machineDisjointSubnets = validators.disjointSubnets(FieldId.NetworkMachineCidr);
 const serviceDisjointSubnets = validators.disjointSubnets(FieldId.NetworkServiceCidr);

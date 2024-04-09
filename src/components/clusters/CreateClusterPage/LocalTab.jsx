@@ -1,7 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+
 import {
   Divider,
+  Icon,
   Label,
   PageSection,
   Split,
@@ -9,17 +11,18 @@ import {
   Text,
   TextContent,
   Title,
-  Icon,
 } from '@patternfly/react-core';
 import { ExternalLinkAltIcon } from '@patternfly/react-icons/dist/esm/icons/external-link-alt-icon';
-import useAnalytics from '~/hooks/useAnalytics';
+
 import { trackEvents } from '~/common/analytics';
-import TokenErrorAlert from '../install/instructions/components/TokenErrorAlert';
-import DownloadAndOSSelection from '../install/instructions/components/DownloadAndOSSelection';
-import links, { tools, channels } from '../../../common/installLinks.mjs';
+import useAnalytics from '~/hooks/useAnalytics';
+
+import links, { channels, tools } from '../../../common/installLinks.mjs';
 import Instruction from '../../common/Instruction';
 import Instructions from '../../common/Instructions';
+import DownloadAndOSSelection from '../install/instructions/components/DownloadAndOSSelection';
 import PullSecretSection from '../install/instructions/components/PullSecretSection';
+import TokenErrorAlert from '../install/instructions/components/TokenErrorAlert';
 
 const pendoID = window.location.pathname;
 const docURL = links.INSTALL_CRC_GETTING_STARTED;

@@ -1,16 +1,17 @@
 import React, { useEffect } from 'react';
+import { Field } from 'formik';
+
 import { Alert, Button, Grid, GridItem } from '@patternfly/react-core';
 import { MinusCircleIcon } from '@patternfly/react-icons/dist/esm/icons/minus-circle-icon';
 import { PlusCircleIcon } from '@patternfly/react-icons/dist/esm/icons/plus-circle-icon';
 
-import { Field } from 'formik';
 import { FormSubnet, validateMultipleMachinePoolsSubnets } from '~/common/validators';
 import { SubnetSelectField } from '~/components/clusters/common/SubnetSelectField';
 import { emptyAWSSubnet } from '~/components/clusters/wizards/common/createOSDInitialValues';
 import { useFormState } from '~/components/clusters/wizards/hooks';
+import { FieldId } from '~/components/clusters/wizards/rosa_v2/constants';
 import { CloudVPC } from '~/types/clusters_mgmt.v1';
 
-import { FieldId } from '~/components/clusters/wizards/rosa_v2/constants';
 import './MachinePoolSubnetsForm.scss';
 
 type MachinePoolSubnetsFormProps = {

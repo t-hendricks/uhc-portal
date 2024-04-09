@@ -1,18 +1,19 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Field } from 'redux-form';
 import { Link, Navigate } from 'react-router-dom-v5-compat';
+import { Field } from 'redux-form';
+
 import {
+  Button,
   Card,
+  CardBody,
   CardFooter,
+  Form,
   Grid,
   GridItem,
-  Form,
-  CardBody,
-  Button,
   PageSection,
-  TextContent,
   Text,
+  TextContent,
   TextVariants,
   Title,
   Tooltip,
@@ -20,24 +21,26 @@ import {
 } from '@patternfly/react-core';
 import { PageHeader, PageHeaderTitle } from '@redhat-cloud-services/frontend-components/PageHeader';
 import Spinner from '@redhat-cloud-services/frontend-components/Spinner';
-import { AppPage } from '~/components/App/AppPage';
-import ReduxVerticalFormGroup from '../../common/ReduxFormComponents/ReduxVerticalFormGroup';
-import ErrorModal from '../../common/ErrorModal';
-import Breadcrumbs from '../../common/Breadcrumbs';
-import {
-  checkClusterDisplayName,
-  checkClusterUUID,
-  checkDisconnectedConsoleURL,
-} from '../../../common/validators';
-import constants from './RegisterClusterHelper';
 
-import EditSubscriptionFields from '../common/EditSubscriptionSettingsDialog/EditSubscriptionSettingsFields';
-import Unavailable from '../../common/Unavailable';
+import { AppPage } from '~/components/App/AppPage';
+
 import {
   knownProducts,
   subscriptionStatuses,
   subscriptionSupportLevels,
 } from '../../../common/subscriptionTypes';
+import {
+  checkClusterDisplayName,
+  checkClusterUUID,
+  checkDisconnectedConsoleURL,
+} from '../../../common/validators';
+import Breadcrumbs from '../../common/Breadcrumbs';
+import ErrorModal from '../../common/ErrorModal';
+import ReduxVerticalFormGroup from '../../common/ReduxFormComponents/ReduxVerticalFormGroup';
+import Unavailable from '../../common/Unavailable';
+import EditSubscriptionFields from '../common/EditSubscriptionSettingsDialog/EditSubscriptionSettingsFields';
+
+import constants from './RegisterClusterHelper';
 import validateSubscriptionSettings from './validateSubscriptionSettings';
 
 const { EVAL } = subscriptionSupportLevels;

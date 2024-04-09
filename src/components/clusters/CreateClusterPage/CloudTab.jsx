@@ -1,30 +1,33 @@
 /* eslint-disable react/jsx-no-useless-fragment */
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom-v5-compat';
+
+import * as OCM from '@openshift-assisted/ui-lib/ocm';
 import {
-  PageSection,
-  Title,
   Button,
+  ButtonVariant,
+  PageSection,
   Stack,
   StackItem,
-  ButtonVariant,
+  Title,
 } from '@patternfly/react-core';
-import { expandable, cellWidth } from '@patternfly/react-table';
+import { ArrowRightIcon } from '@patternfly/react-icons/dist/esm/icons/arrow-right-icon';
+import { cellWidth, expandable } from '@patternfly/react-table';
 import {
   Table as TableDeprecated,
-  TableHeader as TableHeaderDeprecated,
   TableBody as TableBodyDeprecated,
+  TableHeader as TableHeaderDeprecated,
 } from '@patternfly/react-table/deprecated';
-import { Link } from 'react-router-dom-v5-compat';
-import { ArrowRightIcon } from '@patternfly/react-icons/dist/esm/icons/arrow-right-icon';
-import * as OCM from '@openshift-assisted/ui-lib/ocm';
-import { isRestrictedEnv } from '~/restrictedEnv';
 
 import ExternalLink from '~/components/common/ExternalLink';
-import RedHatLogo from '../../../styles/images/Logo-RedHat-Hat-Color-RGB.png';
-import IBMCloudLogo from '../../../styles/images/ibm_cloud-icon.png';
-import MicrosoftLogo from '../../../styles/images/Microsoft_logo.svg';
+import { isRestrictedEnv } from '~/restrictedEnv';
+
 import AWSLogo from '../../../styles/images/AWS.png';
+import IBMCloudLogo from '../../../styles/images/ibm_cloud-icon.png';
+import RedHatLogo from '../../../styles/images/Logo-RedHat-Hat-Color-RGB.png';
+import MicrosoftLogo from '../../../styles/images/Microsoft_logo.svg';
+
 import links from './CreateClusterConsts';
 import CreateClusterDropDown from './CreateClusterDropDown';
 

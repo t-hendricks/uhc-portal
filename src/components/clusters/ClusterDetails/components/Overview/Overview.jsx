@@ -1,7 +1,8 @@
+import React from 'react';
 import get from 'lodash/get';
 import PropTypes from 'prop-types';
-import React from 'react';
 
+import * as OCM from '@openshift-assisted/ui-lib/ocm';
 import {
   Alert,
   AlertActionCloseButton,
@@ -13,31 +14,32 @@ import {
   Title,
 } from '@patternfly/react-core';
 
-import * as OCM from '@openshift-assisted/ui-lib/ocm';
 import { HAD_INFLIGHT_ERROR_LOCALSTORAGE_KEY } from '~/common/localStorageConstants';
 import { subscriptionStatuses } from '~/common/subscriptionTypes';
 import { ASSISTED_INSTALLER_FEATURE } from '~/redux/constants/featureConstants';
 import { isRestrictedEnv } from '~/restrictedEnv';
+
 import isAssistedInstallSubscription, {
   isAvailableAssistedInstallCluster,
   isUninstalledAICluster,
 } from '../../../../../common/isAssistedInstallerCluster';
 import withFeatureGate from '../../../../features/with-feature-gate';
-import HibernatingClusterCard from '../../../common/HibernatingClusterCard/HibernatingClusterCard';
-import ResourceUsage from '../../../common/ResourceUsage/ResourceUsage';
-import { metricsStatusMessages } from '../../../common/ResourceUsage/constants';
 import clusterStates, {
   getClusterAIPermissions,
   hasInflightEgressErrors,
   isHibernating,
 } from '../../../common/clusterStates';
+import HibernatingClusterCard from '../../../common/HibernatingClusterCard/HibernatingClusterCard';
+import { metricsStatusMessages } from '../../../common/ResourceUsage/constants';
+import ResourceUsage from '../../../common/ResourceUsage/ResourceUsage';
 import { hasResourceUsageMetrics } from '../Monitoring/monitoringHelper';
+
+import InsightsAdvisor from './InsightsAdvisor/InsightsAdvisor';
 import ClusterProgressCard from './ClusterProgressCard';
 import ClusterStatusMonitor from './ClusterStatusMonitor';
 import CostBreakdownCard from './CostBreakdownCard';
 import DetailsLeft from './DetailsLeft';
 import DetailsRight from './DetailsRight';
-import InsightsAdvisor from './InsightsAdvisor/InsightsAdvisor';
 import { shouldShowLogs } from './InstallationLogView';
 import SubscriptionSettings from './SubscriptionSettings';
 

@@ -1,5 +1,6 @@
 // this file uses axios directly because it talks to an unauthenticated public API
 import axios from 'axios';
+
 import { ProductLifeCycles } from '../types/product-life-cycles';
 
 const API_URL = 'https://access.redhat.com/product-life-cycles/api/v1/products';

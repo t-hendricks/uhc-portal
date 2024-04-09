@@ -1,16 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import './AddOnsDrawer.scss';
-
 import { Button, FlexItem, Popover } from '@patternfly/react-core';
-
-import { PencilAltIcon } from '@patternfly/react-icons/dist/esm/icons/pencil-alt-icon';
 import { OutlinedQuestionCircleIcon } from '@patternfly/react-icons/dist/esm/icons/outlined-question-circle-icon';
+import { PencilAltIcon } from '@patternfly/react-icons/dist/esm/icons/pencil-alt-icon';
 
 import { hasParameters, parameterAndValue } from '../AddOnsHelper';
-
 import AddOnsParametersModal from '../AddOnsParametersModal';
+
+import './AddOnsDrawer.scss';
 
 function AddOnsParameterList(props) {
   const { installedAddOn, activeCard, activeCardID, cluster, openModal } = props;

@@ -1,7 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Spinner } from '@redhat-cloud-services/frontend-components/Spinner';
+
 import { Bullseye } from '@patternfly/react-core';
+import { Spinner } from '@redhat-cloud-services/frontend-components/Spinner';
 
 class ExternalRedirect extends React.Component {
   componentDidMount() {

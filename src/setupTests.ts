@@ -1,6 +1,7 @@
 /* eslint-disable no-console */
 import { setAutoFreeze } from 'immer';
 import { sprintf } from 'sprintf-js';
+
 import config from './config';
 
 // Mock apiRequest for all tests

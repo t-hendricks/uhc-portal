@@ -1,11 +1,13 @@
 import React from 'react';
 import { MemoryRouter } from 'react-router';
 import { CompatRouter } from 'react-router-dom-v5-compat';
-import ClusterList from './ClusterList';
-import fixtures from '../ClusterDetails/__tests__/ClusterDetails.fixtures';
+
 import { normalizedProducts } from '../../../common/subscriptionTypes';
 import { viewConstants } from '../../../redux/constants';
 import { mockRestrictedEnv, render, screen } from '../../../testUtils';
+import fixtures from '../ClusterDetails/__tests__/ClusterDetails.fixtures';
+
+import ClusterList from './ClusterList';
 
 describe('<ClusterList />', () => {
   describe('in restricted env', () => {

@@ -1,5 +1,5 @@
-import accountsService from '../../../../../services/accountsService';
 import { INVALIDATE_ACTION } from '../../../../../redux/reduxHelpers';
+import accountsService from '../../../../../services/accountsService';
 
 const GET_NOTIFICATION_CONTACTS = 'GET_NOTIFICATION_CONTACTS';
 const ADD_NOTIFICATION_CONTACT = 'ADD_NOTIFICATION_CONTACT';

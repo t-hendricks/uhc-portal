@@ -1,8 +1,11 @@
 import React from 'react';
 import { Formik } from 'formik';
-import { render, screen, mockUseFeatureGate, waitFor } from '~/testUtils';
+
 import { SECURITY_GROUPS_FEATURE_DAY1 } from '~/redux/constants/featureConstants';
+import { mockUseFeatureGate, render, screen, waitFor } from '~/testUtils';
+
 import { FieldId, initialValues } from '../constants';
+
 import SecurityGroupsSection from './SecurityGroupsSection';
 
 const mockState = {

@@ -1,8 +1,10 @@
 import React from 'react';
 
-import { render, checkAccessibility, TestRouter, screen } from '~/testUtils';
-import * as Fixtures from './ArchivedClusterList.fixtures';
+import { checkAccessibility, render, screen, TestRouter } from '~/testUtils';
+
 import ArchivedClusterList from '../../../ArchivedClusterList';
+
+import * as Fixtures from './ArchivedClusterList.fixtures';
 
 describe('<ArchivedClusterList />', () => {
   describe('ArchivedClusterList', () => {

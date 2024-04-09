@@ -1,7 +1,7 @@
 import { connect } from 'react-redux';
 
-import { isHibernating, isOffline, isHypershiftCluster } from '../../../../../common/clusterStates';
 import { openModal } from '../../../../../../common/Modal/ModalActions';
+import { isHibernating, isHypershiftCluster, isOffline } from '../../../../../common/clusterStates';
 import NetworkingSelector, { routeSelectorPairsAsStrings } from '../../NetworkingSelector';
 
 import ClusterIngressCard from './ClusterIngressCard';

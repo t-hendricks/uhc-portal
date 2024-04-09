@@ -1,10 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+
 import { Title } from '@patternfly/react-core';
 
-import './DownloadsSection.scss';
+import { allCategories, downloadsCategories } from './downloadsStructure';
 
-import { downloadsCategories, allCategories } from './downloadsStructure';
+import './DownloadsSection.scss';
 
 /**
  * Section with title and optional description, shown or hidden according to selectedCategory.

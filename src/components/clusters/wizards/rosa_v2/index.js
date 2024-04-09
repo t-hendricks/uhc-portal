@@ -1,19 +1,22 @@
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
+
+import { normalizedProducts } from '~/common/subscriptionTypes';
+import { getCloudProviders } from '~/redux/actions/cloudProviderActions';
 import {
-  resetCreatedClusterResponse,
   clearInstallableVersions,
+  resetCreatedClusterResponse,
 } from '~/redux/actions/clustersActions';
 import { getMachineTypes } from '~/redux/actions/machineTypesActions';
+import { clearGetUserRoleResponse, getUserRole } from '~/redux/actions/rosaActions';
 import { getOrganizationAndQuota } from '~/redux/actions/userActions';
-import { getCloudProviders } from '~/redux/actions/cloudProviderActions';
-import { normalizedProducts } from '~/common/subscriptionTypes';
-import { getUserRole, clearGetUserRoleResponse } from '~/redux/actions/rosaActions';
-import CreateROSAWizard from './CreateROSAWizard';
+
+import { closeModal, openModal } from '../../../common/Modal/ModalActions';
 import shouldShowModal from '../../../common/Modal/ModalSelectors';
-import { openModal, closeModal } from '../../../common/Modal/ModalActions';
 import { hasManagedQuotaSelector } from '../../common/quotaSelectors';
 import submitOSDRequest from '../common/submitOSDRequest';
+
+import CreateROSAWizard from './CreateROSAWizard';
 
 const mapStateToProps = (state) => {
   const { organization } = state.userProfile;

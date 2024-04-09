@@ -1,4 +1,5 @@
 import React, { RefObject } from 'react';
+
 import { ClusterTabsId } from '../common/ClusterTabIds';
 
 export type TabsRowTabType = {

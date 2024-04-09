@@ -1,5 +1,5 @@
-import UsersActions from '../UsersActions';
 import { clusterService } from '../../../../../../../services';
+import UsersActions from '../UsersActions';
 import UsersConstants from '../UsersConstants';
 
 jest.mock('../../../../../../../services/clusterService');

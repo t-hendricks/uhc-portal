@@ -2,20 +2,21 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import ScaleClusterDialog from './ScaleClusterDialog';
-import ArchiveClusterDialog from './ArchiveClusterDialog';
-import HibernateClusterModal from './HibernateClusterModal';
-import ResumeClusterModal from './ResumeClusterModal';
-import UnarchiveClusterDialog from './UnarchiveClusterDialog';
-import EditDisplayNameDialog from './EditDisplayNameDialog';
-import EditConsoleURLDialog from './EditConsoleURLDialog';
-import EditSubscriptionSettingsDialog from './EditSubscriptionSettingsDialog';
-import TransferClusterOwnershipDialog from './TransferClusterOwnershipDialog';
-import UpgradeTrialClusterDialog from './UpgradeTrialClusterDialog';
-import DeleteClusterDialog from './DeleteClusterDialog';
-import UpgradeWizard from './Upgrades/UpgradeWizard';
 import ConnectedModal from '../../common/Modal/ConnectedModal';
 import { ConnectedEditMachinePoolModal } from '../ClusterDetails/components/MachinePools/components/EditMachinePoolModal/EditMachinePoolModal';
+
+import UpgradeWizard from './Upgrades/UpgradeWizard';
+import ArchiveClusterDialog from './ArchiveClusterDialog';
+import DeleteClusterDialog from './DeleteClusterDialog';
+import EditConsoleURLDialog from './EditConsoleURLDialog';
+import EditDisplayNameDialog from './EditDisplayNameDialog';
+import EditSubscriptionSettingsDialog from './EditSubscriptionSettingsDialog';
+import HibernateClusterModal from './HibernateClusterModal';
+import ResumeClusterModal from './ResumeClusterModal';
+import ScaleClusterDialog from './ScaleClusterDialog';
+import TransferClusterOwnershipDialog from './TransferClusterOwnershipDialog';
+import UnarchiveClusterDialog from './UnarchiveClusterDialog';
+import UpgradeTrialClusterDialog from './UpgradeTrialClusterDialog';
 
 function CommonClusterModals({ onClose, onClusterDeleted, clearMachinePools }) {
   return (

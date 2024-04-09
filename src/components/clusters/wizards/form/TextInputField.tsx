@@ -1,10 +1,10 @@
 import React from 'react';
-
 import { Field, FieldConfig, FieldProps, FieldValidator } from 'formik';
+
 import { FormGroup, FormGroupProps, TextInput, TextInputProps } from '@patternfly/react-core';
 
-import PopoverHint from '~/components/common/PopoverHint';
 import { FormGroupHelperText } from '~/components/common/FormGroupHelperText';
+import PopoverHint from '~/components/common/PopoverHint';
 
 interface TextInputFieldProps {
   name: string;

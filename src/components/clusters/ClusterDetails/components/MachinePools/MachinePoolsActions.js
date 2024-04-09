@@ -1,12 +1,13 @@
 import semver from 'semver';
-import { clusterService } from '../../../../../services';
-import { isControlPlaneValidForMachinePool } from './UpdateMachinePools/updateMachinePoolsHelpers';
 
+import { clusterService } from '../../../../../services';
+
+import { isControlPlaneValidForMachinePool } from './UpdateMachinePools/updateMachinePoolsHelpers';
 import {
-  GET_MACHINE_POOLS,
-  DELETE_MACHINE_POOL,
-  CLEAR_GET_MACHINE_POOLS_RESPONSE,
   CLEAR_DELETE_MACHINE_POOL_RESPONSE,
+  CLEAR_GET_MACHINE_POOLS_RESPONSE,
+  DELETE_MACHINE_POOL,
+  GET_MACHINE_POOLS,
 } from './machinePoolsActionConstants';
 
 const getNodePoolWithUpgradePolicies = async (

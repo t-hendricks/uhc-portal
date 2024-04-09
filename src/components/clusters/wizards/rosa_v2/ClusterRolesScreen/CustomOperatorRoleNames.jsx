@@ -2,12 +2,14 @@ import React from 'react';
 import { Field } from 'formik';
 
 import { GridItem, Text, TextContent, TextVariants, Title } from '@patternfly/react-core';
+
 import { useFormState } from '~/components/clusters/wizards/hooks';
 import { FieldId } from '~/components/clusters/wizards/rosa_v2/constants';
+
+import links from '../../../../../common/installLinks.mjs';
+import validators from '../../../../../common/validators';
 import ExternalLink from '../../../../common/ExternalLink';
 import ReduxVerticalFormGroup from '../../../../common/ReduxFormComponents/ReduxVerticalFormGroup';
-import validators from '../../../../../common/validators';
-import links from '../../../../../common/installLinks.mjs';
 
 function CustomOperatorRoleNames() {
   const { getFieldProps, getFieldMeta } = useFormState();

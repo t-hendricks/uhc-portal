@@ -1,6 +1,7 @@
 import React from 'react';
-import { screen, render, checkAccessibility } from '~/testUtils';
+
 import wizardConnector from '~/components/clusters/wizards/common/WizardConnector';
+import { checkAccessibility, render, screen } from '~/testUtils';
 
 import Prerequisites from './Prerequisites';
 

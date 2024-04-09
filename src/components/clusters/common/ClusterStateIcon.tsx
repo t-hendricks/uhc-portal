@@ -1,6 +1,8 @@
 // ClusterStateIcon matches a cluster state from the API to the matching icon
 
 import React from 'react';
+
+import { Icon, IconComponentProps, Spinner, spinnerSize } from '@patternfly/react-core';
 import { AsleepIcon } from '@patternfly/react-icons/dist/esm/icons/asleep-icon';
 import { BanIcon } from '@patternfly/react-icons/dist/esm/icons/ban-icon';
 import { CheckCircleIcon } from '@patternfly/react-icons/dist/esm/icons/check-circle-icon';
@@ -10,10 +12,9 @@ import { FolderOpenIcon } from '@patternfly/react-icons/dist/esm/icons/folder-op
 import { InProgressIcon } from '@patternfly/react-icons/dist/esm/icons/in-progress-icon';
 import { NotStartedIcon } from '@patternfly/react-icons/dist/esm/icons/not-started-icon';
 import { UnknownIcon } from '@patternfly/react-icons/dist/esm/icons/unknown-icon';
-
 import { global_danger_color_100 as dangerColor } from '@patternfly/react-tokens/dist/esm/global_danger_color_100';
 import { global_success_color_100 as successColor } from '@patternfly/react-tokens/dist/esm/global_success_color_100';
-import { Spinner, spinnerSize, Icon, IconComponentProps } from '@patternfly/react-core';
+
 import clusterStates from './clusterStates';
 
 type ClusterStateIconProps = {

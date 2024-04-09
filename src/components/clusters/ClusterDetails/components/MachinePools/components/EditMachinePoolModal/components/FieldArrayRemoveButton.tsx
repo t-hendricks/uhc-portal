@@ -1,6 +1,7 @@
+import * as React from 'react';
+
 import { Button } from '@patternfly/react-core';
 import { MinusCircleIcon } from '@patternfly/react-icons/dist/esm/icons/minus-circle-icon';
-import * as React from 'react';
 
 type FieldArrayRemoveButtonProps = {
   input: {

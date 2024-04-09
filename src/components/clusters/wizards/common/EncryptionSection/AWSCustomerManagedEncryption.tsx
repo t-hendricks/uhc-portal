@@ -1,11 +1,13 @@
 import React from 'react';
-import { GridItem, Alert } from '@patternfly/react-core';
 import { Field } from 'redux-form';
-import ReduxVerticalFormGroup from '~/components/common/ReduxFormComponents/ReduxVerticalFormGroup';
-import ExternalLink from '~/components/common/ExternalLink';
+
+import { Alert, GridItem } from '@patternfly/react-core';
+
 import links from '~/common/installLinks.mjs';
 import { validateAWSKMSKeyARN } from '~/common/validators';
 import { constants } from '~/components/clusters/common/CreateOSDFormConstants';
+import ExternalLink from '~/components/common/ExternalLink';
+import ReduxVerticalFormGroup from '~/components/common/ReduxFormComponents/ReduxVerticalFormGroup';
 
 interface Props {
   region: string;

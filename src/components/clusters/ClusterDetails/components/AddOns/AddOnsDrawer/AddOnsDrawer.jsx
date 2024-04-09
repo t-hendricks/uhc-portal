@@ -1,45 +1,46 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import './AddOnsDrawer.scss';
-
 import {
   Drawer,
   DrawerActions,
   DrawerCloseButton,
   DrawerContent,
   DrawerContentBody,
+  DrawerHead,
   DrawerPanelBody,
   DrawerPanelContent,
-  DrawerHead,
   Flex,
   FlexItem,
   Gallery,
   Grid,
   GridItem,
-  Tabs,
   Tab,
+  Tabs,
   TabTitleText,
   Title,
 } from '@patternfly/react-core';
 
+import AddOnsCard from '../AddOnsCard';
+import AddOnsConstants from '../AddOnsConstants';
+import AddOnsDeleteModal from '../AddOnsDeleteModal';
 import {
+  getAddOnBillingQuota,
   getInstalled,
   hasQuota,
   validateAddOnRequirements,
-  getAddOnBillingQuota,
 } from '../AddOnsHelper';
-import AddOnsCard from '../AddOnsCard';
-import AddOnStateLabel from '../AddOnStateLabel';
 import AddOnsParametersModal from '../AddOnsParametersModal';
-import AddOnsDeleteModal from '../AddOnsDeleteModal';
+import AddOnStateLabel from '../AddOnStateLabel';
+
+import AddOnsFailedBox from './AddOnsDrawerFailedBox';
+import AddOnsMetaDataItem from './AddOnsDrawerMetadataItem';
 import AddOnsParameterList from './AddOnsDrawerParameterList';
 import AddOnsPrimaryButton from './AddOnsDrawerPrimaryButton';
-import AddOnsMetaDataItem from './AddOnsDrawerMetadataItem';
 import AddOnsRequirementContent from './AddOnsDrawerRequirementContent';
-import AddOnsFailedBox from './AddOnsDrawerFailedBox';
 import AddOnsSubscription from './AddOnsSubscription';
-import AddOnsConstants from '../AddOnsConstants';
+
+import './AddOnsDrawer.scss';
 
 class AddOnsDrawer extends React.Component {
   componentDidUpdate(prevProps) {

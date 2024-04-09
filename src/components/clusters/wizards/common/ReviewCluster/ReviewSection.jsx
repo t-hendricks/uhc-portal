@@ -1,5 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
+
 import {
   Button,
   DescriptionList,
@@ -9,8 +10,9 @@ import {
   ExpandableSection,
   GridItem,
 } from '@patternfly/react-core';
-import reviewValues from './reviewValues';
+
 import { ExpandableReviewItem } from './ExpandableReviewItem';
+import reviewValues from './reviewValues';
 
 export const ReviewItem = ({ name, formValues }) => {
   const reviewValue = reviewValues[name];

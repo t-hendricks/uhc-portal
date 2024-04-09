@@ -1,20 +1,21 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Button, Form, FormGroup } from '@patternfly/react-core';
-
 import { Field } from 'redux-form';
+
+import { Button, Form, FormGroup } from '@patternfly/react-core';
 import { LevelUpAltIcon } from '@patternfly/react-icons/dist/esm/icons/level-up-alt-icon';
 
+import { required, requiredTrue, validateNumericInput } from '~/common/validators';
+import { CheckboxDescription } from '~/components/common/CheckboxDescription';
+import ErrorBox from '~/components/common/ErrorBox';
 import Modal from '~/components/common/Modal/Modal';
 import {
   ReduxCheckbox,
   ReduxFormDropdown,
   ReduxVerticalFormGroup,
 } from '~/components/common/ReduxFormComponents';
-import { CheckboxDescription } from '~/components/common/CheckboxDescription';
-import { required, requiredTrue, validateNumericInput } from '~/common/validators';
-import ErrorBox from '~/components/common/ErrorBox';
-import { getParameterValue, getParameters, quotaCostOptions } from '../AddOnsHelper';
+
+import { getParameters, getParameterValue, quotaCostOptions } from '../AddOnsHelper';
 
 import '../AddOns.scss';
 

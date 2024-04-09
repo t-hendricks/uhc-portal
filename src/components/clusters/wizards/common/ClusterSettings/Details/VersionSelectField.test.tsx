@@ -1,12 +1,12 @@
 import * as React from 'react';
 import { Formik, FormikValues } from 'formik';
 
-import { withState, screen } from '~/testUtils';
-import { Version } from '~/types/clusters_mgmt.v1';
-import clusterService from '~/services/clusterService';
 import { billingModels } from '~/common/subscriptionTypes';
-import { FieldId } from '~/components/clusters/wizards/common/constants';
 import { VersionSelectField } from '~/components/clusters/wizards/common/ClusterSettings/Details/VersionSelectField';
+import { FieldId } from '~/components/clusters/wizards/common/constants';
+import clusterService from '~/services/clusterService';
+import { screen, withState } from '~/testUtils';
+import { Version } from '~/types/clusters_mgmt.v1';
 
 const getInstallableVersionsSpy = jest.spyOn(clusterService, 'getInstallableVersions');
 

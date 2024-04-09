@@ -1,12 +1,12 @@
-import {
-  REJECTED_ACTION,
-  PENDING_ACTION,
-  FULFILLED_ACTION,
-  baseRequestState,
-} from '../reduxHelpers';
-import CREATE_ENTITLEMENT_CONFIG from '../constants/entitlementConfigConstants';
-import type { PromiseActionType, PromiseReducerState } from '../types';
 import type { TokensAction } from '../actions/tokensActions';
+import CREATE_ENTITLEMENT_CONFIG from '../constants/entitlementConfigConstants';
+import {
+  baseRequestState,
+  FULFILLED_ACTION,
+  PENDING_ACTION,
+  REJECTED_ACTION,
+} from '../reduxHelpers';
+import type { PromiseActionType, PromiseReducerState } from '../types';
 
 type State = PromiseReducerState;
 

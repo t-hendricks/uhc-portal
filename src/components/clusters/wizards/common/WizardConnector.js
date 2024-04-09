@@ -7,6 +7,7 @@
  * and to make it easier for each screen to be self-contained.
  */
 import { reduxForm } from 'redux-form';
+
 import { scrollToFirstField } from '~/common/helpers';
 import { asyncValidateClusterName, asyncValidateDomainPrefix } from '~/common/validators';
 

@@ -1,5 +1,6 @@
 import React from 'react';
-import { screen, checkAccessibility, render } from '~/testUtils';
+
+import { checkAccessibility, render, screen } from '~/testUtils';
 
 import { channels } from '../../../../../../common/installLinks.mjs';
 import CLISection from '../CLISection';

@@ -1,15 +1,14 @@
-import {
-  getMachineOrNodePools,
-  deleteMachinePool,
-  clearGetMachinePoolsResponse,
-} from '../MachinePoolsActions';
-
-import {
-  GET_MACHINE_POOLS,
-  DELETE_MACHINE_POOL,
-  CLEAR_GET_MACHINE_POOLS_RESPONSE,
-} from '../machinePoolsActionConstants';
 import clusterService from '../../../../../../services/clusterService';
+import {
+  CLEAR_GET_MACHINE_POOLS_RESPONSE,
+  DELETE_MACHINE_POOL,
+  GET_MACHINE_POOLS,
+} from '../machinePoolsActionConstants';
+import {
+  clearGetMachinePoolsResponse,
+  deleteMachinePool,
+  getMachineOrNodePools,
+} from '../MachinePoolsActions';
 
 jest.mock('../../../../../../services/clusterService');
 clusterService.getNodePoolUpgradePolicies = jest.fn();

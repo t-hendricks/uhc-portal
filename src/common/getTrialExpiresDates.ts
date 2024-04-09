@@ -1,4 +1,5 @@
 import dayjs from 'dayjs';
+
 import { ClusterFromSubscription } from '../types/types';
 
 const getTrialExpiresInDays = (cluster: ClusterFromSubscription, isOSD: boolean): string => {

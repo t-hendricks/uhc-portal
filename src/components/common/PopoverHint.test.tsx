@@ -1,5 +1,7 @@
 import React from 'react';
-import { screen, render, checkAccessibility } from '~/testUtils';
+
+import { checkAccessibility, render, screen } from '~/testUtils';
+
 import PopoverHint from './PopoverHint';
 
 describe('<PopoverHint />', () => {

@@ -1,16 +1,18 @@
+import get from 'lodash/get';
 import { connect } from 'react-redux';
 import { reduxForm, reset } from 'redux-form';
-import get from 'lodash/get';
-import RegisterCluster from './RegisterCluster';
-import { openModal, closeModal } from '../../common/Modal/ModalActions';
-import shouldShowModal from '../../common/Modal/ModalSelectors';
-import { getOrganizationAndQuota } from '../../../redux/actions/userActions';
+
+import { subscriptionSystemUnits } from '../../../common/subscriptionTypes';
 import {
   registerDisconnectedCluster,
   resetCreatedClusterResponse,
 } from '../../../redux/actions/clustersActions';
+import { getOrganizationAndQuota } from '../../../redux/actions/userActions';
+import { closeModal, openModal } from '../../common/Modal/ModalActions';
+import shouldShowModal from '../../common/Modal/ModalSelectors';
+
+import RegisterCluster from './RegisterCluster';
 import hasOrgLevelsubscribeOCPCapability from './RegisterClusterSelectors';
-import { subscriptionSystemUnits } from '../../../common/subscriptionTypes';
 
 const reduxFormConfig = {
   form: 'RegisterCluster',

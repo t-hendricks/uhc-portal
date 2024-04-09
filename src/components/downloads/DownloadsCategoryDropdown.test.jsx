@@ -1,8 +1,9 @@
 import React from 'react';
-import { screen, render, checkAccessibility } from '~/testUtils';
-import { downloadsCategories } from './downloadsStructure';
+
+import { checkAccessibility, render, screen } from '~/testUtils';
 
 import DownloadsCategoryDropdown from './DownloadsCategoryDropdown';
+import { downloadsCategories } from './downloadsStructure';
 
 describe('<DownloadsCategoryDropdown />', () => {
   const setCategory = jest.fn();

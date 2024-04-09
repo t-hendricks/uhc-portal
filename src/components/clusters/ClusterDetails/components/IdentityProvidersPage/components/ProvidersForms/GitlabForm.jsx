@@ -1,13 +1,14 @@
 import React from 'react';
-import { Field } from 'redux-form';
-import { GridItem } from '@patternfly/react-core';
 import PropTypes from 'prop-types';
+import { Field } from 'redux-form';
+
+import { GridItem } from '@patternfly/react-core';
+
+import { required } from '../../../../../../../common/validators';
+import ReduxVerticalFormGroup from '../../../../../../common/ReduxFormComponents/ReduxVerticalFormGroup';
+import CAUpload from '../CAUpload';
 
 import IDPBasicFields from './IDPBasicFields';
-import ReduxVerticalFormGroup from '../../../../../../common/ReduxFormComponents/ReduxVerticalFormGroup';
-import { required } from '../../../../../../../common/validators';
-
-import CAUpload from '../CAUpload';
 
 function GitlabFormRequired({ isPending, isEditForm, idpEdited }) {
   return (

@@ -1,4 +1,5 @@
 import React from 'react';
+
 import { Skeleton, Stack, StackItem } from '@patternfly/react-core';
 
 export const MachineConfigurationSkeleton = () => (

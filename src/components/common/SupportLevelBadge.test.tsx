@@ -1,5 +1,6 @@
 import React from 'react';
-import { screen, render, within } from '~/testUtils';
+
+import { render, screen, within } from '~/testUtils';
 
 import SupportLevelBadge, { SupportLevelType } from './SupportLevelBadge';
 

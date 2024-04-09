@@ -1,14 +1,15 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import Fuse from 'fuse.js';
+
 import {
-  MenuToggle,
   MenuContainer,
+  MenuToggle,
   Panel,
   PanelMain,
   PanelMainBody,
-  Switch,
   Stack,
   StackItem,
+  Switch,
   Text,
   TextContent,
   Toolbar,

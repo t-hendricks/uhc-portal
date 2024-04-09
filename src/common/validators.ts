@@ -1,9 +1,9 @@
 /* eslint-disable camelcase */
-import { get, indexOf, inRange } from 'lodash';
-import { overlapCidr, containsCidr } from 'cidr-tools';
+import { containsCidr, overlapCidr } from 'cidr-tools';
 import IPCIDR from 'ip-cidr';
 import { ValidationError, Validator } from 'jsonschema';
-import { clusterService } from '~/services';
+import { get, indexOf, inRange } from 'lodash';
+
 import { Subnet } from '~/common/helpers';
 import { FieldId } from '~/components/clusters/wizards/osd/constants';
 import {
@@ -11,7 +11,9 @@ import {
   maxAdditionalSecurityGroupsHypershift,
   workerNodeVolumeSizeMinGiB,
 } from '~/components/clusters/wizards/rosa/constants';
+import { clusterService } from '~/services';
 import type { GCP, Taint } from '~/types/clusters_mgmt.v1';
+
 import { sqlString } from './queryHelpers';
 
 type Networks = Parameters<typeof overlapCidr>[0];

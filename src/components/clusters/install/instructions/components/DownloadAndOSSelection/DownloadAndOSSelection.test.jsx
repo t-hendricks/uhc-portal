@@ -1,9 +1,10 @@
 import React from 'react';
 
-import { render, screen, checkAccessibility } from '~/testUtils';
 import * as useAnalyticsHook from '~/hooks/useAnalytics';
+import { checkAccessibility, render, screen } from '~/testUtils';
 
-import { tools, channels } from '../../../../../../common/installLinks.mjs';
+import { channels, tools } from '../../../../../../common/installLinks.mjs';
+
 import DownloadAndOSSelection from './DownloadAndOSSelection';
 
 const props = {

@@ -1,14 +1,18 @@
 import React from 'react';
-import { Alert, Title, Text } from '@patternfly/react-core';
 import { Field } from 'redux-form';
-import { getIncompatibleVersionReason } from '~/common/versionCompatibility';
+
+import { Alert, Text, Title } from '@patternfly/react-core';
+
 import { SupportedFeature } from '~/common/featureCompatibility';
-import { ReduxCheckbox } from '~/components/common/ReduxFormComponents';
-import ExternalLink from '~/components/common/ExternalLink';
 import links from '~/common/installLinks.mjs';
-import './SharedVPCSection.scss';
+import { getIncompatibleVersionReason } from '~/common/versionCompatibility';
+import ExternalLink from '~/components/common/ExternalLink';
+import { ReduxCheckbox } from '~/components/common/ReduxFormComponents';
 import { isRestrictedEnv } from '~/restrictedEnv';
+
 import SharedVPCField from './SharedVPCField';
+
+import './SharedVPCSection.scss';
 
 const SharedVPCSection = ({
   hostedZoneDomainName,

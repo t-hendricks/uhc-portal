@@ -16,9 +16,11 @@ limitations under the License.
 
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Checkbox, FormGroup, Switch, Split, SplitItem } from '@patternfly/react-core';
+
+import { Checkbox, FormGroup, Split, SplitItem, Switch } from '@patternfly/react-core';
 
 import { FormGroupHelperText } from '~/components/common/FormGroupHelperText';
+
 import PopoverHint from '../PopoverHint';
 
 // To be used inside redux-form Field component.

@@ -1,29 +1,31 @@
 import React, { FormEvent } from 'react';
+import { Field } from 'redux-form';
+
 import { Form, FormGroup, FormSection, Grid, GridItem, Switch, Text } from '@patternfly/react-core';
 
-import { ClusterAutoscaler } from '~/types/clusters_mgmt.v1';
 import installLinks from '~/common/installLinks.mjs';
+import { clusterAutoScalingValidators, validateListOfBalancingLabels } from '~/common/validators';
 import { getDefaultClusterAutoScaling } from '~/components/clusters/common/clusterAutoScalingValues';
-import ErrorBox from '~/components/common/ErrorBox';
-import { ErrorState } from '~/types/types';
-import { Field } from 'redux-form';
 import {
   AutoscalerGpuHelpText,
   AutoscalerGpuPopover,
 } from '~/components/clusters/common/EditClusterAutoScalingDialog/AutoscalerGpuTooltip';
-import { clusterAutoScalingValidators, validateListOfBalancingLabels } from '~/common/validators';
 import {
   AutoscalerIgnoredLabelsHelpText,
   AutoscalerIgnoredLabelsPopover,
 } from '~/components/clusters/common/EditClusterAutoScalingDialog/AutoscalerIgnoredLabelsTooltip';
-import MachinePoolsAutoScalingWarning from '../../ClusterDetails/components/MachinePools/MachinePoolAutoscalingWarning';
+import ErrorBox from '~/components/common/ErrorBox';
+import { ClusterAutoscaler } from '~/types/clusters_mgmt.v1';
+import { ErrorState } from '~/types/types';
+
+import ExternalLink from '../../../common/ExternalLink';
 import Modal from '../../../common/Modal/Modal';
 import modals from '../../../common/Modal/modals';
-import ExternalLink from '../../../common/ExternalLink';
+import ReduxVerticalFormGroup from '../../../common/ReduxFormComponents/ReduxVerticalFormGroup';
+import MachinePoolsAutoScalingWarning from '../../ClusterDetails/components/MachinePools/MachinePoolAutoscalingWarning';
 
 import { balancerFields, resourceLimitsFields, scaleDownFields } from './fieldDefinitions';
 import { fieldItemMapper } from './fieldItemMapper';
-import ReduxVerticalFormGroup from '../../../common/ReduxFormComponents/ReduxVerticalFormGroup';
 
 import './EditClusterAutoScalingDialog.scss';
 

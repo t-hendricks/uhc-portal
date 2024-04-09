@@ -1,5 +1,7 @@
 import React from 'react';
-import { screen, render, checkAccessibility, TestRouter } from '~/testUtils';
+
+import { checkAccessibility, render, screen, TestRouter } from '~/testUtils';
+
 import TopOverviewSection from '../TopOverviewSection';
 
 describe('<TopOverviewSection />', () => {

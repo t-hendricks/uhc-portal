@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+
 import { Card, CardBody, CardTitle, Title } from '@patternfly/react-core';
 
 import CostEmptyState from '../../../../../dashboard/CostCard/CostEmptyState';
+
 import CostBreakdownSummary from './CostBreakdownSummary';
 
 import './CostBreakdownCard.scss';

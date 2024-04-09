@@ -1,12 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+
 import { Tooltip } from '@patternfly/react-core';
 import {
   Dropdown as DropdownDeprecated,
+  DropdownPosition as DropdownPositionDeprecated,
   DropdownToggle as DropdownToggleDeprecated,
   KebabToggle as KebabToggleDeprecated,
-  DropdownPosition as DropdownPositionDeprecated,
 } from '@patternfly/react-core/deprecated';
+
 import { dropDownItems } from './ClusterActionsDropdownItems';
 
 class ClusterActionsDropdown extends React.Component {

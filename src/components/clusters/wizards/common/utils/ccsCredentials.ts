@@ -1,16 +1,17 @@
-import { Dispatch } from 'redux';
 import { FormikValues } from 'formik';
 import isEqual from 'lodash/isEqual';
+import { Dispatch } from 'redux';
 
-import { GlobalState } from '~/redux/store';
+import { normalizedProducts } from '~/common/subscriptionTypes';
+import { CloudProviderType, FieldId } from '~/components/clusters/wizards/common/constants';
 import {
   getAWSCloudProviderRegions,
   getGCPCloudProviderVPCs,
   VALIDATE_CLOUD_PROVIDER_CREDENTIALS,
 } from '~/redux/actions/ccsInquiriesActions';
-import { FieldId, CloudProviderType } from '~/components/clusters/wizards/common/constants';
+import { GlobalState } from '~/redux/store';
 import { AWSCredentials } from '~/types/types';
-import { normalizedProducts } from '~/common/subscriptionTypes';
+
 import { GCP_DEFAULT_REGION } from '../createOSDInitialValues';
 
 /**

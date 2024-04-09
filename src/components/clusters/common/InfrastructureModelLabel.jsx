@@ -1,6 +1,5 @@
-import PropTypes from 'prop-types';
-
 import get from 'lodash/get';
+import PropTypes from 'prop-types';
 
 import { normalizedProducts } from '../../../common/subscriptionTypes';
 

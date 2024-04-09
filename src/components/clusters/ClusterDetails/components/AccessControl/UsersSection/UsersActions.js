@@ -1,7 +1,8 @@
 import get from 'lodash/get';
 
-import UsersConstants from './UsersConstants';
 import { clusterService } from '../../../../../../services';
+
+import UsersConstants from './UsersConstants';
 
 const getUsers = (clusterID) => (dispatch) =>
   dispatch({

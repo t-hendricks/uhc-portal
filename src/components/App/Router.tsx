@@ -14,43 +14,38 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import {
-  Routes as AssistedInstallerRoutes,
-  NoPermissionsError as AINoPermissionsError,
-} from '@openshift-assisted/ui-lib/ocm';
-import useChrome from '@redhat-cloud-services/frontend-components/useChrome';
-import { CompatRoute, Navigate, useLocation } from 'react-router-dom-v5-compat';
+import React, { useEffect } from 'react';
 import { ConnectedRouter } from 'connected-react-router';
 import get from 'lodash/get';
-import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { Route, RouteComponentProps, Switch, withRouter } from 'react-router-dom';
-import apiRequest from '~/services/apiRequest';
-import { useFeatureGate } from '~/hooks/useFeatureGate';
+import { CompatRoute, Navigate, useLocation } from 'react-router-dom-v5-compat';
+
+import {
+  NoPermissionsError as AINoPermissionsError,
+  Routes as AssistedInstallerRoutes,
+} from '@openshift-assisted/ui-lib/ocm';
+import useChrome from '@redhat-cloud-services/frontend-components/useChrome';
+
 import config from '~/config';
+import { useFeatureGate } from '~/hooks/useFeatureGate';
+import apiRequest from '~/services/apiRequest';
+
 import { normalizedProducts } from '../../common/subscriptionTypes';
 import {
   ASSISTED_INSTALLER_FEATURE,
   HYPERSHIFT_WIZARD_FEATURE,
   ROSA_WIZARD_V2_ENABLED,
 } from '../../redux/constants/featureConstants';
+import CLILoginPage from '../CLILoginPage/CLILoginPage';
 import ArchivedClusterList from '../clusters/ArchivedClusterList';
 import ClusterDetailsClusterOrExternalId from '../clusters/ClusterDetails/ClusterDetailsClusterOrExternalId';
 import ClusterDetailsSubscriptionId from '../clusters/ClusterDetails/ClusterDetailsSubscriptionId';
 import IdentityProvidersPage from '../clusters/ClusterDetails/components/IdentityProvidersPage';
 import ClustersList from '../clusters/ClusterList';
 import CreateClusterPage from '../clusters/CreateClusterPage';
-import CreateROSAWizard from '../clusters/wizards/rosa_v1';
-import CreateROSAWizardV2 from '../clusters/wizards/rosa_v2';
-import GetStartedWithROSA from '../clusters/wizards/rosa_v1/CreateRosaGetStarted';
+import GovCloudPage from '../clusters/GovCloud/GovCloudPage';
 import InsightsAdvisorRedirector from '../clusters/InsightsAdvisorRedirector';
-import RegisterCluster from '../clusters/RegisterCluster';
-import InstallASH from '../clusters/install/InstallASH';
-import ConnectedInstallASHIPI from '../clusters/install/InstallASHIPI';
-import ConnectedInstallASHUPI from '../clusters/install/InstallASHUPI';
-import InstallAWS from '../clusters/install/InstallAWS';
-import ConnectedInstallAWSIPI from '../clusters/install/InstallAWSIPI';
-import ConnectedInstallAWSUPI from '../clusters/install/InstallAWSUPI';
 import ConnectedInstallAlibaba from '../clusters/install/InstallAlibaba';
 import InstallArmAWS from '../clusters/install/InstallArmAWS';
 import ConnectedInstallArmAWSIPI from '../clusters/install/InstallArmAWSIPI';
@@ -61,6 +56,12 @@ import ConnectedInstallArmBareMetalABI from '../clusters/install/InstallArmBareM
 import InstallArmBMIPI from '../clusters/install/InstallArmBareMetalIPI';
 import InstallArmBMUPI from '../clusters/install/InstallArmBareMetalUPI';
 import ConnectedInstallArmPreRelease from '../clusters/install/InstallArmPreRelease';
+import InstallASH from '../clusters/install/InstallASH';
+import ConnectedInstallASHIPI from '../clusters/install/InstallASHIPI';
+import ConnectedInstallASHUPI from '../clusters/install/InstallASHUPI';
+import InstallAWS from '../clusters/install/InstallAWS';
+import ConnectedInstallAWSIPI from '../clusters/install/InstallAWSIPI';
+import ConnectedInstallAWSUPI from '../clusters/install/InstallAWSUPI';
 import InstallAzure from '../clusters/install/InstallAzure';
 import ConnectedInstallAzureIPI from '../clusters/install/InstallAzureIPI';
 import ConnectedInstallAzureUPI from '../clusters/install/InstallAzureUPI';
@@ -82,6 +83,7 @@ import InstallMultiBMUPI from '../clusters/install/InstallMultiBareMetalUPI';
 import ConnectedInstallMultiPreRelease from '../clusters/install/InstallMultiPreRelease';
 import InstallNutanix from '../clusters/install/InstallNutanix';
 import ConnectedInstallNutanixIPI from '../clusters/install/InstallNutanixIPI';
+import InstallOracleCloud from '../clusters/install/InstallOracleCloud';
 import InstallOSP from '../clusters/install/InstallOSP';
 import ConnectedInstallOSPIPI from '../clusters/install/InstallOSPIPI';
 import ConnectedInstallOSPUPI from '../clusters/install/InstallOSPUPI';
@@ -100,25 +102,27 @@ import InstallVSphere from '../clusters/install/InstallVSphere';
 import ConnectedInstallVSphereABI from '../clusters/install/InstallVSphereABI';
 import ConnectedInstallVSphereIPI from '../clusters/install/InstallVSphereIPI';
 import ConnectedInstallVSphereUPI from '../clusters/install/InstallVSphereUPI';
+import RegisterCluster from '../clusters/RegisterCluster';
 import { CreateOsdWizard } from '../clusters/wizards/osd';
+import CreateROSAWizard from '../clusters/wizards/rosa_v1';
+import GetStartedWithROSA from '../clusters/wizards/rosa_v1/CreateRosaGetStarted';
+import CreateROSAWizardV2 from '../clusters/wizards/rosa_v2';
 import EntitlementConfig from '../common/EntitlementConfig/index';
+import Dashboard from '../dashboard';
 import DownloadsPage from '../downloads/DownloadsPage';
 import withFeatureGate from '../features/with-feature-gate';
-import Dashboard from '../dashboard';
 import Overview from '../overview';
 import Quota from '../quota';
 import Releases from '../releases/index';
+import RosaHandsOnPage from '../RosaHandsOn/RosaHandsOnPage';
+import RosaServicePage from '../services/rosa/RosaServicePage';
+
 import ApiError from './ApiError';
 import { AppPage } from './AppPage';
-import GovCloudPage from '../clusters/GovCloud/GovCloudPage';
-import RosaServicePage from '../services/rosa/RosaServicePage';
 import Insights from './Insights';
 import NotFoundError from './NotFoundError';
-import TermsGuardedRoute from './TermsGuardedRoute';
 import { is404, metadataByRoute } from './routeMetadata';
-import RosaHandsOnPage from '../RosaHandsOn/RosaHandsOnPage';
-import InstallOracleCloud from '../clusters/install/InstallOracleCloud';
-import CLILoginPage from '../CLILoginPage/CLILoginPage';
+import TermsGuardedRoute from './TermsGuardedRoute';
 
 const AssistedUiRouterPage: typeof AssistedInstallerRoutes = (props) => (
   <AppPage>

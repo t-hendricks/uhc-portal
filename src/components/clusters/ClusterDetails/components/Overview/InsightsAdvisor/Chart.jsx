@@ -1,14 +1,15 @@
 import React from 'react';
-import { ChartDonut, ChartLegend } from '@patternfly/react-charts';
 import PropTypes from 'prop-types';
 
+import { ChartDonut, ChartLegend } from '@patternfly/react-charts';
+
 import {
-  riskLabels,
   chartColorScale,
-  InsightsLegendIconComponent,
-  InsightsTitleComponent,
-  InsightsSubtitleComponent,
   InsightsLabelComponent,
+  InsightsLegendIconComponent,
+  InsightsSubtitleComponent,
+  InsightsTitleComponent,
+  riskLabels,
 } from './InsightsAdvisorHelpers';
 
 const Chart = ({ entries, issueCount, externalId }) => (

@@ -1,7 +1,10 @@
 import { connect } from 'react-redux';
+
 import { GlobalState } from '~/redux/store';
+
 import { clustersActions } from '../../redux/actions/clustersActions';
 import { subscriptionsActions } from '../../redux/actions/subscriptionsActions';
+
 import Quota from './Quota';
 
 const mapDispatchToProps = {

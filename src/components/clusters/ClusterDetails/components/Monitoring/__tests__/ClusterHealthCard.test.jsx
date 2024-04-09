@@ -1,7 +1,9 @@
 import React from 'react';
-import { render, checkAccessibility } from '~/testUtils';
-import { monitoringStatuses } from '../monitoringHelper';
+
+import { checkAccessibility, render } from '~/testUtils';
+
 import ClusterHealthCard from '../components/ClusterHealthCard';
+import { monitoringStatuses } from '../monitoringHelper';
 
 describe('<ClusterHealthCard />', () => {
   it.each(Object.keys(monitoringStatuses))(

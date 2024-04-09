@@ -1,6 +1,7 @@
 import React from 'react';
-import { getFormValues, getFormSyncErrors, getFormAsyncErrors, getFormMeta } from 'redux-form';
 import { useSelector } from 'react-redux';
+import { getFormAsyncErrors, getFormMeta, getFormSyncErrors, getFormValues } from 'redux-form';
+
 import { ValuesCodeEditor } from '~/components/clusters/wizards/common/ValuesCodeEditor';
 
 export const ValuesPanel = () => {

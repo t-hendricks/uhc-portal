@@ -1,6 +1,7 @@
 import React from 'react';
-import { render, screen, userEvent, act } from '~/testUtils';
+
 import apiRequest from '~/services/apiRequest';
+import { act, render, screen, userEvent } from '~/testUtils';
 
 import MinorVersionUpgradeAlert from '../MinorVersionUpgradeAlert';
 

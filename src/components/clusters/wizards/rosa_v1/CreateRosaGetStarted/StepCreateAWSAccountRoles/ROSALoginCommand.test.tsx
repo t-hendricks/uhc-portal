@@ -1,6 +1,7 @@
 import * as React from 'react';
 
-import { render, screen, mockRestrictedEnv, mockRefreshToken, mockUseChrome } from '~/testUtils';
+import { mockRefreshToken, mockRestrictedEnv, mockUseChrome, render, screen } from '~/testUtils';
+
 import ROSALoginCommand from './ROSALoginCommand';
 
 describe('<ROSALoginCommand />', () => {

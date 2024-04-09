@@ -1,9 +1,10 @@
 import React from 'react';
 
-import { render, screen, checkAccessibility } from '~/testUtils';
 import { defaultClusterFromSubscription } from '~/components/clusters/common/__tests__/defaultClusterFromSubscription.fixtures';
-import { ClusterFromSubscription } from '~/types/types';
+import { checkAccessibility, render, screen } from '~/testUtils';
 import { ClusterState } from '~/types/clusters_mgmt.v1';
+import { ClusterFromSubscription } from '~/types/types';
+
 import { ClusterStatus } from './ClusterStatus';
 
 const cluster: ClusterFromSubscription = {

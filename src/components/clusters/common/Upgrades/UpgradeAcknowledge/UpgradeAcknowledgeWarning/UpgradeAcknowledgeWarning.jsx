@@ -1,9 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { AlertActionLink, Alert, Button } from '@patternfly/react-core';
+
+import { Alert, AlertActionLink, Button } from '@patternfly/react-core';
 import { InfoCircleIcon } from '@patternfly/react-icons/dist/esm/icons/info-circle-icon';
 
 import UpgradeAcknowledgeModal from '../UpgradeAcknowledgeModal';
+
 import './UpgradeAcknowledgeWarning.scss';
 
 const UpgradeAcknowledgeWarning = (props) => {

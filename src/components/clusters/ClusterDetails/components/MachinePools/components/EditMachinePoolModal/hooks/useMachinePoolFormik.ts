@@ -1,7 +1,6 @@
 import * as React from 'react';
 import * as Yup from 'yup';
-import { Cluster, MachinePool, NodePool } from '~/types/clusters_mgmt.v1';
-import { isMPoolAz } from '~/components/clusters/ClusterDetails/clusterDetailsHelper';
+
 import {
   checkLabelKey,
   checkLabelValue,
@@ -11,18 +10,22 @@ import {
   checkTaintValue,
   validateSecurityGroups,
 } from '~/common/validators';
-import { GlobalState } from '~/redux/store';
+import { isMPoolAz } from '~/components/clusters/ClusterDetails/clusterDetailsHelper';
 import { isHypershiftCluster, isROSA } from '~/components/clusters/common/clusterStates';
+import { SPOT_MIN_PRICE } from '~/components/clusters/common/machinePools/constants';
+import { getNodeOptions } from '~/components/clusters/common/machinePools/utils';
 import {
   defaultWorkerNodeVolumeSizeGiB,
   getWorkerNodeVolumeSizeMaxGiB,
   workerNodeVolumeSizeMinGiB,
 } from '~/components/clusters/wizards/rosa/constants';
-import { SPOT_MIN_PRICE } from '~/components/clusters/common/machinePools/constants';
-import { getNodeOptions } from '~/components/clusters/common/machinePools/utils';
+import { GlobalState } from '~/redux/store';
 import { PromiseReducerState } from '~/redux/types';
-import { TaintEffect } from '../fields/TaintEffectField';
+import { Cluster, MachinePool, NodePool } from '~/types/clusters_mgmt.v1';
+
 import { getClusterMinNodes } from '../../../machinePoolsHelper';
+import { TaintEffect } from '../fields/TaintEffectField';
+
 import useOrganization from './useOrganization';
 
 export type EditMachinePoolValues = {

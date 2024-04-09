@@ -1,5 +1,6 @@
-import techPreviewActions from './techPreviewActions';
 import { clustersConstants } from '../constants';
+
+import techPreviewActions from './techPreviewActions';
 
 describe('getTechPreviewStatus', () => {
   it('getTechPreviewPending returns expected action', () => {

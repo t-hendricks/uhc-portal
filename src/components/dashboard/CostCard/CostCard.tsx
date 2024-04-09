@@ -1,16 +1,18 @@
 import React, { useEffect, useState } from 'react';
+import { useDispatch } from 'react-redux';
+
 import { Card, CardBody, CardFooter, CardTitle, Title } from '@patternfly/react-core';
 
 import ocmBaseName from '~/common/getBaseName';
-
-import { useDispatch } from 'react-redux';
 import { getReport, getSources } from '~/redux/actions/costActions';
 import { useGlobalState } from '~/redux/hooks';
 import { PromiseReducerState } from '~/redux/types';
+
+import { Report } from './models/Report';
 import CostEmptyState from './CostEmptyState';
 import CostSummary from './CostSummary';
+
 import './CostCard.scss';
-import { Report } from './models/Report';
 
 const CostCard = () => {
   const { report, sources } = useGlobalState((state) => state.cost);

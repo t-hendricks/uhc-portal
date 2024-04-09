@@ -1,26 +1,27 @@
-import { MapDispatchToPropsParam, MergeProps, connect } from 'react-redux';
+import { connect, MapDispatchToPropsParam, MergeProps } from 'react-redux';
 import { reduxForm } from 'redux-form';
 import { Action } from 'typesafe-actions';
 
-import { GlobalState } from '~/redux/store';
-import { LoadBalancerFlavor } from '~/types/clusters_mgmt.v1';
+import { CloudProviderType } from '~/components/clusters/wizards/common';
 import {
   canConfigureDayTwoManagedIngress,
   canConfigureLoadBalancer,
 } from '~/components/clusters/wizards/rosa/constants';
-import { CloudProviderType } from '~/components/clusters/wizards/common';
-import { isHypershiftCluster } from '../../../../../common/clusterStates';
+import { GlobalState } from '~/redux/store';
+import { LoadBalancerFlavor } from '~/types/clusters_mgmt.v1';
 
+import { closeModal } from '../../../../../../common/Modal/ModalActions';
 import modals from '../../../../../../common/Modal/modals';
 import shouldShowModal from '../../../../../../common/Modal/ModalSelectors';
-import { closeModal } from '../../../../../../common/Modal/ModalActions';
-import EditApplicationIngressDialog from './EditApplicationIngressDialog';
+import { isHypershiftCluster } from '../../../../../common/clusterStates';
 import { resetEditRoutersResponse, saveNetworkingConfiguration } from '../../NetworkingActions';
 import NetworkingSelector, {
   ClusterRouters,
   excludedNamespacesAsString,
   routeSelectorsAsString,
 } from '../../NetworkingSelector';
+
+import EditApplicationIngressDialog from './EditApplicationIngressDialog';
 
 const FORM_NAME = 'EditApplicationIngress';
 

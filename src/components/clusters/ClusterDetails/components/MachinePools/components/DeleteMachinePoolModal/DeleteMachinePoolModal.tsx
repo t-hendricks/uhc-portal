@@ -1,8 +1,9 @@
 import React from 'react';
-import Modal from '~/components/common/Modal/Modal';
-import { useGlobalState } from '~/redux/hooks';
 import { useDispatch } from 'react-redux';
+
+import Modal from '~/components/common/Modal/Modal';
 import { closeModal } from '~/components/common/Modal/ModalActions';
+import { useGlobalState } from '~/redux/hooks';
 
 const DeleteMachinePoolModal = () => {
   function isModalData(obj: any): obj is {

@@ -1,24 +1,26 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import get from 'lodash/get';
+import PropTypes from 'prop-types';
+
 import {
   DescriptionList,
-  DescriptionListTerm,
-  DescriptionListGroup,
   DescriptionListDescription,
+  DescriptionListGroup,
+  DescriptionListTerm,
 } from '@patternfly/react-core';
 
-import getBillingModelLabel from '~/components/clusters/common/getBillingModelLabel';
 import { isHypershiftCluster } from '~/components/clusters/common/clusterStates';
+import getBillingModelLabel from '~/components/clusters/common/getBillingModelLabel';
 import { useFeatureGate } from '~/hooks/useFeatureGate';
 import { LONGER_CLUSTER_NAME_UI } from '~/redux/constants/featureConstants';
-import Timestamp from '../../../../common/Timestamp';
 
+import { normalizedProducts } from '../../../../../common/subscriptionTypes';
 import PopoverHint from '../../../../common/PopoverHint';
+import Timestamp from '../../../../common/Timestamp';
 import ClusterTypeLabel from '../../../common/ClusterTypeLabel';
 import InfrastructureModelLabel from '../../../common/InfrastructureModelLabel';
+
 import ClusterVersionInfo from './ClusterVersionInfo';
-import { normalizedProducts } from '../../../../../common/subscriptionTypes';
 
 const getIdFields = (cluster, showAssistedId) => {
   let label = 'Cluster ID';

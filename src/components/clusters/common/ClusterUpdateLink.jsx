@@ -1,14 +1,18 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+
 import { Button, Popover } from '@patternfly/react-core';
 import { InfoCircleIcon } from '@patternfly/react-icons/dist/esm/icons/info-circle-icon';
 import { OutlinedArrowAltCircleUpIcon } from '@patternfly/react-icons/dist/esm/icons/outlined-arrow-alt-circle-up-icon';
+
 import getClusterVersion from '~/components/clusters/common/getClusterVersion';
-import { isHibernating, isHypershiftCluster } from './clusterStates';
-import links from '../../../common/installLinks.mjs';
+
 import getClusterName from '../../../common/getClusterName';
-import modals from '../../common/Modal/modals';
+import links from '../../../common/installLinks.mjs';
 import { subscriptionStatuses } from '../../../common/subscriptionTypes';
+import modals from '../../common/Modal/modals';
+
+import { isHibernating, isHypershiftCluster } from './clusterStates';
 
 const ClusterUpdateLink = ({ cluster, openModal, hideOSDUpdates }) => {
   const clusterVersion = getClusterVersion(cluster);

@@ -1,6 +1,9 @@
 import React from 'react';
+
 import { checkAccessibility, render, screen, waitFor } from '~/testUtils';
+
 import AWSAccountSelection from '../AWSAccountSelection';
+
 import { defaultProps } from './AWSAccountSelection.fixtures';
 
 describe('AWSAccountSelection tests', () => {

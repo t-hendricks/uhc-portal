@@ -1,17 +1,19 @@
 import React from 'react';
 import * as reactRedux from 'react-redux';
+
 import * as helpers from '~/common/helpers';
-import { HCP_AWS_BILLING_SHOW, HCP_AWS_BILLING_REQUIRED } from '~/redux/constants/featureConstants';
+import wizardConnector from '~/components/clusters/wizards/common/WizardConnector';
+import { HCP_AWS_BILLING_REQUIRED, HCP_AWS_BILLING_SHOW } from '~/redux/constants/featureConstants';
 import {
-  withState,
+  checkAccessibility,
+  mockUseFeatureGate,
   render,
   screen,
-  checkAccessibility,
   within,
-  mockUseFeatureGate,
+  withState,
 } from '~/testUtils';
-import wizardConnector from '~/components/clusters/wizards/common/WizardConnector';
 import { CloudAccount } from '~/types/accounts_mgmt.v1/models/CloudAccount';
+
 import AWSBillingAccount from './AWSBillingAccount';
 
 const defaultProps = {

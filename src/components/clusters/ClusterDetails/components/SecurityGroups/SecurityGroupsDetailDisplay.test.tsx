@@ -1,6 +1,8 @@
 import * as React from 'react';
 import { CompatRouter } from 'react-router-dom-v5-compat';
+
 import { render, screen, TestRouter } from '~/testUtils';
+
 import SecurityGroupsDisplayByNode from './SecurityGroupsDetailDisplay';
 
 const securityGroups = [

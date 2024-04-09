@@ -1,6 +1,7 @@
 import React from 'react';
 
-import { render, checkAccessibility, screen, within } from '~/testUtils';
+import { checkAccessibility, render, screen, within } from '~/testUtils';
+
 import AddOnsFailedBox from '../AddOnsDrawerFailedBox';
 
 describe('<AddOnsFailedBox />', () => {

@@ -1,5 +1,6 @@
 import React from 'react';
-import { render, screen, checkAccessibility } from '~/testUtils';
+
+import { checkAccessibility, render, screen } from '~/testUtils';
 
 import ViewOnlyMyClustersToggle from '../ViewOnlyMyClustersToggle';
 

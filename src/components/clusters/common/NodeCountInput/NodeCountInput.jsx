@@ -1,21 +1,23 @@
-import { FormGroup, FormSelect, FormSelectOption, Tooltip } from '@patternfly/react-core';
-import PropTypes from 'prop-types';
 import React from 'react';
+import PropTypes from 'prop-types';
+
+import { FormGroup, FormSelect, FormSelectOption, Tooltip } from '@patternfly/react-core';
 
 import {
   getNodeIncrement,
   getNodeIncrementHypershift,
 } from '~/components/clusters/ClusterDetails/components/MachinePools/machinePoolsHelper';
 import { FormGroupHelperText } from '~/components/common/FormGroupHelperText';
+
 import { noQuotaTooltip } from '../../../../common/helpers';
 import { billingModels, normalizedProducts } from '../../../../common/subscriptionTypes';
 import PopoverHint from '../../../common/PopoverHint';
+import { MAX_NODES_HCP } from '../machinePools/constants';
 import {
   buildOptions,
   getAvailableQuota as getAvailableQuotaUtil,
   getIncludedNodes,
 } from '../machinePools/utils';
-import { MAX_NODES_HCP } from '../machinePools/constants';
 
 const incrementValue = ({ isHypershiftWizard, poolNumber, isMultiAz }) =>
   isHypershiftWizard ? getNodeIncrementHypershift(poolNumber) : getNodeIncrement(isMultiAz);

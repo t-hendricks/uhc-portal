@@ -2,12 +2,13 @@ import { connect } from 'react-redux';
 import { formValueSelector, getFormInitialValues, getFormValues } from 'redux-form';
 
 import {
-  MACHINE_CIDR_DEFAULT,
-  SERVICE_CIDR_DEFAULT,
   HOST_PREFIX_DEFAULT,
+  MACHINE_CIDR_DEFAULT,
   POD_CIDR_DEFAULT,
+  SERVICE_CIDR_DEFAULT,
 } from '~/components/clusters/common/networkingConstants';
 import wizardConnector from '~/components/clusters/wizards/common/WizardConnector';
+
 import CIDRScreen from './CIDRScreen';
 
 const mapStateToProps = (state) => {

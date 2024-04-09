@@ -1,12 +1,14 @@
 /* eslint-disable react/destructuring-assignment */
 import React from 'react';
+import cx from 'classnames';
 import PropTypes from 'prop-types';
+import screenfull from 'screenfull';
+
 import { Button, ExpandableSection } from '@patternfly/react-core';
 import { ExpandIcon } from '@patternfly/react-icons/dist/esm/icons/expand-icon';
-import cx from 'classnames';
-import screenfull from 'screenfull';
-import { metricsStatusMessages } from '../../../../common/ResourceUsage/constants';
+
 import clusterStates from '../../../../common/clusterStates';
+import { metricsStatusMessages } from '../../../../common/ResourceUsage/constants';
 
 const AUTOSCROLL_THRESHOLD = 20;
 

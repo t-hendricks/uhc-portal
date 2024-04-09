@@ -1,13 +1,16 @@
 import React from 'react';
+import pullAt from 'lodash/pullAt';
 import { PropTypes } from 'prop-types';
 import { Field } from 'redux-form';
-import pullAt from 'lodash/pullAt';
+
 import { Button, GridItem } from '@patternfly/react-core';
-import { PlusCircleIcon } from '@patternfly/react-icons/dist/esm/icons/plus-circle-icon';
 import { MinusCircleIcon } from '@patternfly/react-icons/dist/esm/icons/minus-circle-icon';
-import ReduxVerticalFormGroup from './ReduxVerticalFormGroup';
+import { PlusCircleIcon } from '@patternfly/react-icons/dist/esm/icons/plus-circle-icon';
+
 import { getRandomID } from '../../../common/helpers';
 import ButtonWithTooltip from '../ButtonWithTooltip';
+
+import ReduxVerticalFormGroup from './ReduxVerticalFormGroup';
 
 import './RenderArrayFields.scss';
 

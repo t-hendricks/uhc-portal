@@ -1,4 +1,5 @@
 import { ClusterFromSubscription } from '~/types/types';
+
 import { billingModels, normalizedProducts } from '../../../common/subscriptionTypes';
 
 const getBillingModelLabel = (cluster: ClusterFromSubscription): string => {

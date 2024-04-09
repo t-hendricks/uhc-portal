@@ -2,18 +2,19 @@ import { connect } from 'react-redux';
 
 // import usersActions from './UsersActions';
 import { addNotification } from '@redhat-cloud-services/frontend-components-notifications/redux/actions/notifications';
-import NetworkSelfServiceSection from './NetworkSelfServiceSection';
+
+import { closeModal, openModal } from '../../../../../common/Modal/ModalActions';
+import shouldShowModal from '../../../../../common/Modal/ModalSelectors';
+
 import {
-  getRoles,
-  getGrants,
   addGrant,
   clearAddGrantResponse,
   deleteGrant,
+  getGrants,
+  getRoles,
 } from './NetworkSelfServiceActions';
+import NetworkSelfServiceSection from './NetworkSelfServiceSection';
 import grantsSelector from './NetworkSelfServiceSelector';
-
-import { openModal, closeModal } from '../../../../../common/Modal/ModalActions';
-import shouldShowModal from '../../../../../common/Modal/ModalSelectors';
 
 const mapStateToProps = (state) => ({
   isModalOpen: shouldShowModal(state, 'grant-modal'),

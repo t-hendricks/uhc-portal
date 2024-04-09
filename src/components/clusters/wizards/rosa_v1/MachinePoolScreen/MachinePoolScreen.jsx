@@ -1,10 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Grid, Form } from '@patternfly/react-core';
 
-import { normalizedProducts, billingModels } from '~/common/subscriptionTypes';
+import { Form, Grid } from '@patternfly/react-core';
 
+import { billingModels, normalizedProducts } from '~/common/subscriptionTypes';
 import ScaleSection from '~/components/clusters/common/ScaleSection/ScaleSection';
+
 import MachinePoolScreenHeader from './MachinePoolScreenHeader';
 import MachinePoolsSubnets from './MachinePoolsSubnets';
 

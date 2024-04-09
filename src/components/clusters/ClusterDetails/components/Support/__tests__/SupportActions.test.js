@@ -1,6 +1,6 @@
+import { INVALIDATE_ACTION } from '../../../../../../redux/reduxHelpers';
 import { accountsService } from '../../../../../../services';
 import SupportActions, { SupportConstants } from '../SupportActions';
-import { INVALIDATE_ACTION } from '../../../../../../redux/reduxHelpers';
 
 jest.mock('../../../../../../services/accountsService');
 

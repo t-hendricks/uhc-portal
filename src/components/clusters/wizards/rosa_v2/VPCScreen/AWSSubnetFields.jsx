@@ -1,13 +1,16 @@
 import React from 'react';
-import PropTypes from 'prop-types';
-import { GridItem } from '@patternfly/react-core';
 import { Field } from 'formik';
-import { useFormState } from '~/components/clusters/wizards/hooks';
-import VPCDropdown from '~/components/clusters/wizards/common/VPCDropdown/VPCDropdown';
-import { SubnetSelectField } from '~/components/clusters/common/SubnetSelectField';
+import PropTypes from 'prop-types';
+
+import { GridItem } from '@patternfly/react-core';
+
 import { getMatchingAvailabilityZones } from '~/common/vpcHelpers';
-import WithTooltip from '~/components/common/WithTooltip';
+import { SubnetSelectField } from '~/components/clusters/common/SubnetSelectField';
 import AvailabilityZoneSelection from '~/components/clusters/wizards/common/NetworkingSection/AvailabilityZoneSelection';
+import VPCDropdown from '~/components/clusters/wizards/common/VPCDropdown/VPCDropdown';
+import { useFormState } from '~/components/clusters/wizards/hooks';
+import WithTooltip from '~/components/common/WithTooltip';
+
 import { required, validateUniqueAZ } from '../../../../../common/validators';
 import { FieldId } from '../constants';
 

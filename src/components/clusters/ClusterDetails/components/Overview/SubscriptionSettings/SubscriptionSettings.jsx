@@ -1,6 +1,7 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import get from 'lodash/get';
+import PropTypes from 'prop-types';
+
 import {
   Alert,
   Button,
@@ -8,27 +9,25 @@ import {
   CardBody,
   CardTitle,
   DescriptionList,
-  DescriptionListTerm,
-  DescriptionListGroup,
   DescriptionListDescription,
+  DescriptionListGroup,
+  DescriptionListTerm,
   Grid,
   GridItem,
   Title,
 } from '@patternfly/react-core';
-
 import { ExclamationCircleIcon } from '@patternfly/react-icons/dist/esm/icons/exclamation-circle-icon';
 import { ExclamationTriangleIcon } from '@patternfly/react-icons/dist/esm/icons/exclamation-triangle-icon';
 
 import {
-  subscriptionSupportLevels,
-  subscriptionServiceLevels,
-  subscriptionSystemUnits,
-  subscriptionStatuses,
-  subscriptionSettings,
-  normalizedProducts,
   billingModels,
+  normalizedProducts,
+  subscriptionServiceLevels,
+  subscriptionSettings,
+  subscriptionStatuses,
+  subscriptionSupportLevels,
+  subscriptionSystemUnits,
 } from '../../../../../../common/subscriptionTypes';
-
 import ExternalLink from '../../../../../common/ExternalLink';
 
 function SubscriptionSettings({

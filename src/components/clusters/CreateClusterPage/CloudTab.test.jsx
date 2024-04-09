@@ -2,7 +2,7 @@ import React from 'react';
 import { MemoryRouter } from 'react-router-dom';
 import { CompatRouter } from 'react-router-dom-v5-compat';
 
-import { render, screen, checkAccessibility, mockRestrictedEnv } from '~/testUtils';
+import { checkAccessibility, mockRestrictedEnv, render, screen } from '~/testUtils';
 
 import CloudTab from './CloudTab';
 

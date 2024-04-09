@@ -2,13 +2,14 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 
 import { useWizardContext } from '@patternfly/react-core';
-import { useFormState } from '~/components/clusters/wizards/hooks';
-import { useGlobalState } from '~/redux/hooks';
+
 import {
   getCloudProverInfo,
   shouldValidateCcsCredentials,
 } from '~/components/clusters/wizards/common/utils/ccsCredentials';
+import { useFormState } from '~/components/clusters/wizards/hooks';
 import { CreateOsdWizardFooter } from '~/components/clusters/wizards/osd/CreateOsdWizardFooter';
+import { useGlobalState } from '~/redux/hooks';
 
 export const CloudProviderStepFooter = () => {
   const dispatch = useDispatch();

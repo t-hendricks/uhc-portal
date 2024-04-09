@@ -1,6 +1,8 @@
 import get from 'lodash/get';
-import AddOnsConstants from './AddOnsConstants';
+
 import { clusterService } from '../../../../../services';
+
+import AddOnsConstants from './AddOnsConstants';
 
 const getAddOns = (clusterID) => (dispatch) =>
   dispatch({

@@ -1,6 +1,7 @@
 import { connect } from 'react-redux';
-import { getClusterIdentityProviders } from '../../IdentityProvidersPage/IdentityProvidersActions';
+
 import { openModal } from '../../../../../common/Modal/ModalActions';
+import { getClusterIdentityProviders } from '../../IdentityProvidersPage/IdentityProvidersActions';
 
 import IDPSection from './IDPSection';
 

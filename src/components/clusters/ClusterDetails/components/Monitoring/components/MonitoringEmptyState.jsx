@@ -4,12 +4,10 @@ import PropTypes from 'prop-types';
 import {
   EmptyState,
   EmptyStateBody,
-  EmptyStateIcon,
   EmptyStateHeader,
+  EmptyStateIcon,
 } from '@patternfly/react-core';
-
 import { ExclamationTriangleIcon } from '@patternfly/react-icons/dist/esm/icons/exclamation-triangle-icon';
-
 import { DateFormat } from '@redhat-cloud-services/frontend-components/DateFormat';
 
 function MonitoringEmptyState({

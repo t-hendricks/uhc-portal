@@ -1,5 +1,9 @@
 import React from 'react';
-import { Button, FormGroup, Spinner, Flex, FlexItem, Tooltip } from '@patternfly/react-core';
+import { CopyToClipboard } from 'react-copy-to-clipboard';
+import { useDispatch } from 'react-redux';
+import { WrappedFieldInputProps, WrappedFieldMetaProps } from 'redux-form';
+
+import { Button, Flex, FlexItem, FormGroup, Spinner, Tooltip } from '@patternfly/react-core';
 import {
   Select as SelectDeprecated,
   SelectOption as SelectOptionDeprecated,
@@ -7,16 +11,13 @@ import {
 } from '@patternfly/react-core/deprecated';
 import { CopyIcon } from '@patternfly/react-icons/dist/esm/icons/copy-icon';
 import { TrashIcon } from '@patternfly/react-icons/dist/esm/icons/trash-icon';
-import { WrappedFieldInputProps, WrappedFieldMetaProps } from 'redux-form';
-import { CopyToClipboard } from 'react-copy-to-clipboard';
-import { useDispatch } from 'react-redux';
 
+import ErrorBox from '~/components/common/ErrorBox';
+import { FormGroupHelperText } from '~/components/common/FormGroupHelperText';
 import { dnsDomainsActions } from '~/redux/actions/dnsDomainsActions';
 import { useGlobalState } from '~/redux/hooks';
-import ErrorBox from '~/components/common/ErrorBox';
 
 import './SharedVPCDomainSelect.scss';
-import { FormGroupHelperText } from '~/components/common/FormGroupHelperText';
 
 const PLACEHOLDER_TEXT = 'Select base DNS domain';
 const CREATE_LOADER_TEXT = 'Reserving new base DNS domain...';

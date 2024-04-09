@@ -1,11 +1,12 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
+import { useDispatch } from 'react-redux';
 
 import {
   Form,
-  TextInput,
   FormGroup,
   Text,
   TextContent,
+  TextInput,
   TextVariants,
 } from '@patternfly/react-core';
 import {
@@ -13,18 +14,18 @@ import {
   SelectOption as SelectOptionDeprecated,
 } from '@patternfly/react-core/deprecated';
 
-import { useGlobalState } from '~/redux/hooks';
-import { useDispatch } from 'react-redux';
-import shouldShowModal from '~/components/common/Modal/ModalSelectors';
 import { FormGroupHelperText } from '~/components/common/FormGroupHelperText';
+import shouldShowModal from '~/components/common/Modal/ModalSelectors';
+import { useGlobalState } from '~/redux/hooks';
 
-import modals from '../../../../../common/Modal/modals';
-import Modal from '../../../../../common/Modal/Modal';
-import PopoverHint from '../../../../../common/PopoverHint';
 import { ocmRoles } from '../../../../../../common/subscriptionTypes';
 import OCMRolesActions from '../../../../../../redux/actions/OCMRolesActions';
-import { OCMRolesRow } from './OCMRolesRow';
+import Modal from '../../../../../common/Modal/Modal';
 import { closeModal } from '../../../../../common/Modal/ModalActions';
+import modals from '../../../../../common/Modal/modals';
+import PopoverHint from '../../../../../common/PopoverHint';
+
+import { OCMRolesRow } from './OCMRolesRow';
 
 export type OCMRolesDialogProps = {
   onSubmit: (row: OCMRolesRow, username: string, roleID: string) => void;

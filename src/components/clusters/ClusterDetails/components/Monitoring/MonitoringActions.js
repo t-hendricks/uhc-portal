@@ -1,5 +1,6 @@
-import monitoringConstants from './MonitoringConstants';
 import { accountsService } from '../../../../../services';
+
+import monitoringConstants from './MonitoringConstants';
 
 const getOnDemandMetrics = (subscriptionID) => (dispatch) =>
   dispatch({

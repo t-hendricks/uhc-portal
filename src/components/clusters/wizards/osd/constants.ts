@@ -1,21 +1,22 @@
 import { FormikValues } from 'formik';
 
+import { getDefaultSecurityGroupsSettings } from '~/common/securityGroupsHelpers';
 import { billingModels, normalizedProducts } from '~/common/subscriptionTypes';
+import { getDefaultClusterAutoScaling } from '~/components/clusters/common/clusterAutoScalingValues';
 import {
   HOST_PREFIX_DEFAULT,
   MACHINE_CIDR_DEFAULT,
   SERVICE_CIDR_DEFAULT,
 } from '~/components/clusters/common/networkingConstants';
 import {
-  FieldId as CommonFieldId,
   CloudProviderType,
-  UpgradePolicyType,
+  FieldId as CommonFieldId,
   IMDSType,
+  UpgradePolicyType,
 } from '~/components/clusters/wizards/common/constants';
-import { BreadcrumbPath } from '~/components/common/Breadcrumbs';
 import { emptyAWSSubnet } from '~/components/clusters/wizards/common/createOSDInitialValues';
-import { getDefaultSecurityGroupsSettings } from '~/common/securityGroupsHelpers';
-import { getDefaultClusterAutoScaling } from '~/components/clusters/common/clusterAutoScalingValues';
+import { BreadcrumbPath } from '~/components/common/Breadcrumbs';
+
 import { ApplicationIngressType, ClusterPrivacyType } from './Networking/constants';
 
 export enum OsdFieldId {

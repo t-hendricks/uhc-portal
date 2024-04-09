@@ -4,7 +4,9 @@
 import React, { RefObject } from 'react';
 import { MemoryRouter } from 'react-router-dom';
 import { CompatRouter } from 'react-router-dom-v5-compat';
+
 import { checkAccessibility, render, screen, waitFor } from '~/testUtils';
+
 import { ClusterTabsId } from '../../common/ClusterTabIds';
 import TabsRow, { TabsRowProps } from '../TabsRow';
 

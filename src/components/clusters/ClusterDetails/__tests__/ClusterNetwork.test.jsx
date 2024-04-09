@@ -1,8 +1,9 @@
 import React from 'react';
 
-import { render, checkAccessibility } from '~/testUtils';
+import { checkAccessibility, render } from '~/testUtils';
 
 import ClusterNetwork from '../components/Overview/ClusterNetwork';
+
 import fixtures from './ClusterDetails.fixtures';
 
 describe('<ClusterNetwork />', () => {

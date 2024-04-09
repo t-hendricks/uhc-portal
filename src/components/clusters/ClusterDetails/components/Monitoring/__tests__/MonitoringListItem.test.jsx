@@ -1,6 +1,9 @@
 import React from 'react';
-import { render, checkAccessibility } from '~/testUtils';
+
+import { checkAccessibility, render } from '~/testUtils';
+
 import MonitoringListItem from '../components/MonitoringListItem';
+
 import { mockOCPActiveClusterDetails } from './Monitoring.fixtures';
 
 describe('<MonitoringListItem />', () => {

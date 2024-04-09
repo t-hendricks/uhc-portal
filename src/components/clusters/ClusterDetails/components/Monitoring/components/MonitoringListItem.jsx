@@ -1,17 +1,18 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+
 import {
-  DataListItem,
-  DataListItemRow,
   DataListCell,
-  DataListToggle,
   DataListContent,
+  DataListItem,
   DataListItemCells,
+  DataListItemRow,
+  DataListToggle,
   Title,
 } from '@patternfly/react-core';
 import { CheckCircleIcon } from '@patternfly/react-icons/dist/esm/icons/check-circle-icon';
-import { ExclamationTriangleIcon } from '@patternfly/react-icons/dist/esm/icons/exclamation-triangle-icon';
 import { ExclamationCircleIcon } from '@patternfly/react-icons/dist/esm/icons/exclamation-circle-icon';
+import { ExclamationTriangleIcon } from '@patternfly/react-icons/dist/esm/icons/exclamation-triangle-icon';
 
 function MonitoringListItem({
   title = '',

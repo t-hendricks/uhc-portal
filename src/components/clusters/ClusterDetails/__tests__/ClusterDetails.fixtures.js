@@ -1,6 +1,7 @@
 import { produce } from 'immer';
+
+import { billingModels, normalizedProducts } from '../../../../common/subscriptionTypes';
 import clusterStates from '../../common/clusterStates';
-import { normalizedProducts, billingModels } from '../../../../common/subscriptionTypes';
 
 const match = { params: { id: '1msoogsgTLQ4PePjrTOt3UqvMzX' } };
 const funcs = () => ({

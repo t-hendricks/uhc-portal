@@ -1,11 +1,14 @@
 import { connect } from 'react-redux';
+
 import { isHypershiftCluster } from '~/components/clusters/common/clusterStates';
-import UpgradeAcknowledgeModal from './UpgradeAcknowledgeModal';
-import shouldShowModal from '../../../../../common/Modal/ModalSelectors';
-import { modalActions } from '../../../../../common/Modal/ModalActions';
-import { getModalDataFromState, getAutomaticUpgradePolicyId } from '../UpgradeAcknowledgeSelectors';
+
 import { setClusterUpgradeGate } from '../../../../../../redux/actions/upgradeGateActions';
+import { modalActions } from '../../../../../common/Modal/ModalActions';
+import shouldShowModal from '../../../../../common/Modal/ModalSelectors';
 import { setAutomaticUpgradePolicy } from '../../clusterUpgradeActions';
+import { getAutomaticUpgradePolicyId, getModalDataFromState } from '../UpgradeAcknowledgeSelectors';
+
+import UpgradeAcknowledgeModal from './UpgradeAcknowledgeModal';
 
 const mapStateToProps = (state) => {
   const { cluster } = state.clusters.details;

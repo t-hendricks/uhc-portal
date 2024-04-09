@@ -1,6 +1,6 @@
-import { ClusterFromSubscription } from '~/types/types';
 import type { OneMetric, Subscription } from '~/types/accounts_mgmt.v1';
 import { Cluster } from '~/types/clusters_mgmt.v1';
+import { ClusterFromSubscription } from '~/types/types';
 
 export const defaultMetric: Readonly<OneMetric> = {
   cloud_provider: '',

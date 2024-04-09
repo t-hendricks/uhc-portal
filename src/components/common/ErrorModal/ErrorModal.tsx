@@ -1,8 +1,11 @@
 import React from 'react';
+
 import { Title } from '@patternfly/react-core';
 import { ExclamationCircleIcon } from '@patternfly/react-icons/dist/esm/icons/exclamation-circle-icon';
 import { global_danger_color_100 as dangerColor } from '@patternfly/react-tokens/dist/esm/global_danger_color_100';
+
 import { ErrorState } from '~/types/types';
+
 import { formatErrorDetails } from '../../../common/errors';
 import Modal from '../Modal/Modal';
 

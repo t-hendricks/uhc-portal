@@ -1,37 +1,39 @@
-import PropTypes from 'prop-types';
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Field } from 'redux-form';
-import { FormGroup, GridItem, Alert } from '@patternfly/react-core';
+
+import { Alert, FormGroup, GridItem } from '@patternfly/react-core';
 
 import { SupportedFeature } from '~/common/featureCompatibility';
-import { getIncompatibleVersionReason } from '~/common/versionCompatibility';
-import { getDefaultSecurityGroupsSettings } from '~/common/securityGroupsHelpers';
-import { constants } from '~/components/clusters/common/CreateOSDFormConstants';
 import { noQuotaTooltip } from '~/common/helpers';
-import {
-  getNodesCount,
-  getMinReplicasCount,
-} from '~/components/clusters/common/ScaleSection/AutoScaleSection/AutoScaleHelper';
+import { getDefaultSecurityGroupsSettings } from '~/common/securityGroupsHelpers';
 import { normalizedProducts } from '~/common/subscriptionTypes';
+import { getIncompatibleVersionReason } from '~/common/versionCompatibility';
+import { constants } from '~/components/clusters/common/CreateOSDFormConstants';
+import {
+  getMinReplicasCount,
+  getNodesCount,
+} from '~/components/clusters/common/ScaleSection/AutoScaleSection/AutoScaleHelper';
 import { emptyAWSSubnet } from '~/components/clusters/wizards/common/createOSDInitialValues';
-
 import ReduxCheckbox from '~/components/common/ReduxFormComponents/ReduxCheckbox';
 import { useFeatureGate } from '~/hooks/useFeatureGate';
 import { LONGER_CLUSTER_NAME_UI } from '~/redux/constants/featureConstants';
-import CloudRegionComboBox from './CloudRegionComboBox';
-import PopoverHint from '../../../../../common/PopoverHint';
-import ReduxVerticalFormGroup from '../../../../../common/ReduxFormComponents/ReduxVerticalFormGroup';
-import ReduxRichInputField from '../../../../../common/ReduxFormComponents/ReduxRichInputField';
+
 import validators, {
-  clusterNameValidation,
   clusterNameAsyncValidation,
+  clusterNameValidation,
   createPessimisticValidator,
   domainPrefixAsyncValidation,
   domainPrefixValidation,
 } from '../../../../../../common/validators';
+import PopoverHint from '../../../../../common/PopoverHint';
 import RadioButtons from '../../../../../common/ReduxFormComponents/RadioButtons';
-import VersionSelection from './VersionSelection';
+import ReduxRichInputField from '../../../../../common/ReduxFormComponents/ReduxRichInputField';
+import ReduxVerticalFormGroup from '../../../../../common/ReduxFormComponents/ReduxVerticalFormGroup';
 import { createOperatorRolesHashPrefix } from '../../ClusterRolesScreen/ClusterRolesScreen';
+
+import CloudRegionComboBox from './CloudRegionComboBox';
+import VersionSelection from './VersionSelection';
 
 function BasicFieldsSection({
   pending,

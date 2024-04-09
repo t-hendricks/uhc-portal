@@ -1,5 +1,7 @@
 import React from 'react';
+
 import { Text } from '@patternfly/react-core';
+
 import ExternalLink from '~/components/common/ExternalLink';
 
 import links from '../../../../../common/installLinks.mjs';

@@ -1,9 +1,11 @@
 import React from 'react';
-import { screen, render, checkAccessibility } from '~/testUtils';
+
+import { checkAccessibility, render, screen } from '~/testUtils';
+
 import fixtures from '../../../__tests__/ClusterDetails.fixtures';
 
-import InsightsAdvisor from './InsightsAdvisor';
 import Chart from './Chart';
+import InsightsAdvisor from './InsightsAdvisor';
 
 // Note: These tests throw a warning that the prop datum is required by the InsightsLabelComponent
 // but when it is called inside the Chart component, it does not contain a datum prop

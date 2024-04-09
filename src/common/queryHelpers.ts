@@ -1,7 +1,10 @@
-import isEqual from 'lodash/isEqual';
 import isEmpty from 'lodash/isEmpty';
+import isEqual from 'lodash/isEqual';
+
 import { GetClusterHistoryParams } from '~/services/serviceLogService';
+
 import { ViewOptions } from '../types/types';
+
 import { omittedProducts, productFilterOptions } from './subscriptionTypes';
 
 type QueryObject = { [key: string]: string | number | boolean };

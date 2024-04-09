@@ -1,7 +1,10 @@
 import React from 'react';
-import { screen, checkAccessibility, withState } from '~/testUtils';
+
+import { checkAccessibility, screen, withState } from '~/testUtils';
+
 import Support from '../Support';
-import { notificationContactsWithContacts, baseProps } from './Support.fixtures';
+
+import { baseProps, notificationContactsWithContacts } from './Support.fixtures';
 
 jest.mock('~/components/clusters/ClusterDetails/components/Support/SupportActions', () => {
   const originalModule = jest.requireActual(

@@ -1,6 +1,7 @@
 import React from 'react';
 
-import { screen, render } from '~/testUtils';
+import { render, screen } from '~/testUtils';
+
 import LiveDateFormat from './LiveDateFormat';
 
 describe('<LiveDateFormat />', () => {

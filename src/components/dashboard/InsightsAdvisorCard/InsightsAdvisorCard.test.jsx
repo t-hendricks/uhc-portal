@@ -1,7 +1,9 @@
 import React from 'react';
-import { screen, render, checkAccessibility, within } from '~/testUtils';
-import InsightsAdvisorCard from './InsightsAdvisorCard';
+
+import { checkAccessibility, render, screen, within } from '~/testUtils';
+
 import { categoryMapping } from './ChartByGroups';
+import InsightsAdvisorCard from './InsightsAdvisorCard';
 
 const initialState = {
   overview: {

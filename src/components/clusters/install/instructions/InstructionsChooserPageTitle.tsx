@@ -1,5 +1,6 @@
 import React from 'react';
-import { TextContent, Text } from '@patternfly/react-core';
+
+import { Text, TextContent } from '@patternfly/react-core';
 
 import PageTitle from '../../../common/PageTitle';
 

@@ -1,10 +1,12 @@
-import { Alert, AlertActionLink } from '@patternfly/react-core';
 import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
+
+import { Alert, AlertActionLink } from '@patternfly/react-core';
 
 import { selfTermsReview } from '~/redux/actions/userActions';
 import { useGlobalState } from '~/redux/hooks';
 import { Subscription } from '~/types/accounts_mgmt.v1';
+
 import getTermsAppLink from '../../../../common/getTermsAppLink';
 import { normalizedProducts, subscriptionStatuses } from '../../../../common/subscriptionTypes';
 

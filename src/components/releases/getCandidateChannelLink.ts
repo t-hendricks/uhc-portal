@@ -1,5 +1,5 @@
-import semver from 'semver';
 import isEmpty from 'lodash/isEmpty';
+import semver from 'semver';
 
 // example link: https://docs.openshift.com/container-platform/4.8/updating/updating-cluster-within-minor.html#candidate-4-8-channel
 const getCandidateChannelLink = (version: string | undefined): string | null => {

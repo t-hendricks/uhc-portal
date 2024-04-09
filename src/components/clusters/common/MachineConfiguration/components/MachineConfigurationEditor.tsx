@@ -1,18 +1,20 @@
 /* eslint-disable camelcase */
 import React, { FormEvent, useEffect, useMemo, useState } from 'react';
 import axios, { AxiosError } from 'axios';
-import { KubeletConfig } from '~/types/clusters_mgmt.v1';
+
 import { ActionGroup, Button, Form, Stack, StackItem } from '@patternfly/react-core';
-import { PIDsLimitInput } from '~/components/clusters/common/MachineConfiguration/components/PIDsLimitInput';
-import { MachineConfigurationSkeleton } from '~/components/clusters/common/MachineConfiguration/components/MachineConfigurationSkeleton';
-import ErrorBox from '~/components/common/ErrorBox';
+
 import { getErrorMessage } from '~/common/errors';
+import { MachineConfigurationSkeleton } from '~/components/clusters/common/MachineConfiguration/components/MachineConfigurationSkeleton';
+import { PIDsLimitInput } from '~/components/clusters/common/MachineConfiguration/components/PIDsLimitInput';
 import { usePIDsLimitValidation } from '~/components/clusters/common/MachineConfiguration/usePIDsLimitValidation';
 import {
   PIDS_LIMIT_MAX,
   PIDS_LIMIT_MAX_OVERRIDE,
   PIDS_LIMIT_MIN,
 } from '~/components/clusters/common/machinePools/constants';
+import ErrorBox from '~/components/common/ErrorBox';
+import { KubeletConfig } from '~/types/clusters_mgmt.v1';
 
 interface MachineConfigurationEditorProps {
   config?: KubeletConfig | null;

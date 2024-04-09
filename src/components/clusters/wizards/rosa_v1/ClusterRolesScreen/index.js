@@ -2,12 +2,14 @@ import { connect } from 'react-redux';
 import { formValueSelector } from 'redux-form';
 
 import wizardConnector from '~/components/clusters/wizards/common/WizardConnector';
-import ClusterRolesScreen from './ClusterRolesScreen';
+
 import {
-  getOCMRole,
   clearGetOcmRoleResponse,
+  getOCMRole,
   getUserOidcConfigurations,
 } from '../../../../../redux/actions/rosaActions';
+
+import ClusterRolesScreen from './ClusterRolesScreen';
 
 const mapStateToProps = (state) => {
   const { getOCMRoleResponse } = state.rosaReducer;

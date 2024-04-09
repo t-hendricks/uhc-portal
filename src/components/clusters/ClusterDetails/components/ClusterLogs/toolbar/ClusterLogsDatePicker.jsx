@@ -1,16 +1,18 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
+
 import {
   DatePicker,
   HelperText,
   HelperTextItem,
-  ToolbarItem,
   isValidDate,
+  ToolbarItem,
 } from '@patternfly/react-core';
 import {
   Select as SelectDeprecated,
   SelectOption as SelectOptionDeprecated,
 } from '@patternfly/react-core/deprecated';
+
 import './ClusterLogsDatePicker.scss';
 
 const dateFormatRegex = /^\d{4}-\d{2}-\d{2}$/;

@@ -1,5 +1,6 @@
-import { createClusterRequest } from './submitOSDRequest';
 import { normalizedProducts } from '../../../../common/subscriptionTypes';
+
+import { createClusterRequest } from './submitOSDRequest';
 
 describe('createClusterRequest', () => {
   // These tests were captured from logging actual arguments passed to submitOSDRequest().

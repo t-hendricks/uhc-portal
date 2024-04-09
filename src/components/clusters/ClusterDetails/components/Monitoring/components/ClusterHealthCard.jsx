@@ -1,15 +1,15 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Card, CardTitle, Split, SplitItem, Title } from '@patternfly/react-core';
 
+import { Card, CardTitle, Split, SplitItem, Title } from '@patternfly/react-core';
 import { CheckCircleIcon } from '@patternfly/react-icons/dist/esm/icons/check-circle-icon';
+import { DisconnectedIcon } from '@patternfly/react-icons/dist/esm/icons/disconnected-icon';
 import { ExclamationCircleIcon } from '@patternfly/react-icons/dist/esm/icons/exclamation-circle-icon';
+import { ExclamationTriangleIcon } from '@patternfly/react-icons/dist/esm/icons/exclamation-triangle-icon';
 import { InProgressIcon } from '@patternfly/react-icons/dist/esm/icons/in-progress-icon';
 import { UnknownIcon } from '@patternfly/react-icons/dist/esm/icons/unknown-icon';
-import { DisconnectedIcon } from '@patternfly/react-icons/dist/esm/icons/disconnected-icon';
-import { ExclamationTriangleIcon } from '@patternfly/react-icons/dist/esm/icons/exclamation-triangle-icon';
-
 import { DateFormat } from '@redhat-cloud-services/frontend-components/DateFormat';
+
 import { monitoringStatuses } from '../monitoringHelper';
 
 function ClusterHealthCard({

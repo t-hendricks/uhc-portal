@@ -4,9 +4,10 @@ import {
   clearClusterUnarchiveResponse,
   unarchiveCluster,
 } from '../../../../redux/actions/clustersActions';
-import UnarchiveClusterDialog from './UnarchiveClusterDialog';
 import { closeModal } from '../../../common/Modal/ModalActions';
 import shouldShowModal from '../../../common/Modal/ModalSelectors';
+
+import UnarchiveClusterDialog from './UnarchiveClusterDialog';
 
 const mapStateToProps = (state) => {
   const modalData = state.modal.data;

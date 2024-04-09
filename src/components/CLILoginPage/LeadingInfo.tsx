@@ -1,4 +1,5 @@
 import React from 'react';
+
 import { Text, Title } from '@patternfly/react-core';
 
 const LeadingInfo = ({ isRosa, SSOLogin }: { isRosa: boolean; SSOLogin: boolean }) => (

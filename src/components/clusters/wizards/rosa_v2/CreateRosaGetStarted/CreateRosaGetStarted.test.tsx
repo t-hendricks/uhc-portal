@@ -2,16 +2,17 @@ import React from 'react';
 import { MemoryRouter } from 'react-router-dom';
 import { CompatRouter } from 'react-router-dom-v5-compat';
 
+import { HCP_ROSA_GETTING_STARTED_PAGE } from '~/redux/constants/featureConstants';
 import {
-  render,
   checkAccessibility,
-  mockUseChrome,
-  screen,
   mockRestrictedEnv,
+  mockUseChrome,
   mockUseFeatureGate,
+  render,
+  screen,
   waitFor,
 } from '~/testUtils';
-import { HCP_ROSA_GETTING_STARTED_PAGE } from '~/redux/constants/featureConstants';
+
 import CreateRosaGetStarted from './CreateRosaGetStarted';
 
 mockUseChrome();

@@ -1,7 +1,7 @@
 import helpers, {
+  goZeroTime2Null,
   parseReduxFormKeyValueList,
   parseReduxFormTaints,
-  goZeroTime2Null,
   strToKeyValueObject,
   truncateTextWithEllipsis,
 } from '../helpers';

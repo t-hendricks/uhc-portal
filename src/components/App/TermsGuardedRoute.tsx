@@ -1,6 +1,7 @@
 import React from 'react';
-import type { RouteProps, RouteComponentProps } from 'react-router-dom';
+import type { RouteComponentProps, RouteProps } from 'react-router-dom';
 import { CompatRoute } from 'react-router-dom-v5-compat';
+
 import TermsGuard from '../common/TermsGuard';
 
 type Props = {

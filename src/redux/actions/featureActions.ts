@@ -1,26 +1,28 @@
 import { action, ActionType } from 'typesafe-actions';
+
 import { SelfAccessReview } from '~/types/accounts_mgmt.v1';
+
+import authorizationsService from '../../services/authorizationsService';
 import {
-  SET_FEATURE,
   ASSISTED_INSTALLER_FEATURE,
   ASSISTED_INSTALLER_MERGE_LISTS_FEATURE,
+  CLI_SSO_AUTHORIZATION,
+  ENABLE_MACHINE_CONFIGURATION,
+  HCP_AWS_BILLING_REQUIRED,
+  HCP_AWS_BILLING_SHOW,
+  HCP_ROSA_GETTING_STARTED_PAGE,
+  HCP_USE_NODE_UPGRADE_POLICIES,
+  HCP_USE_UNMANAGED,
   HYPERSHIFT_WIZARD_FEATURE,
-  ROSA_WIZARD_V2_ENABLED,
-  OSD_GOOGLE_MARKETPLACE_FEATURE,
-  OSD_GCP_SHARED_VPC_FEATURE,
   LONGER_CLUSTER_NAME_UI,
   NETWORK_VALIDATOR_ONDEMAND_FEATURE,
-  HCP_ROSA_GETTING_STARTED_PAGE,
-  HCP_AWS_BILLING_SHOW,
-  HCP_AWS_BILLING_REQUIRED,
-  HCP_USE_UNMANAGED,
+  OSD_GCP_SHARED_VPC_FEATURE,
+  OSD_GOOGLE_MARKETPLACE_FEATURE,
+  ROSA_WIZARD_V2_ENABLED,
   SECURITY_GROUPS_FEATURE,
   SECURITY_GROUPS_FEATURE_DAY1,
-  HCP_USE_NODE_UPGRADE_POLICIES,
-  ENABLE_MACHINE_CONFIGURATION,
-  CLI_SSO_AUTHORIZATION,
+  SET_FEATURE,
 } from '../constants/featureConstants';
-import authorizationsService from '../../services/authorizationsService';
 import type { AppThunk } from '../types';
 
 export const setFeatureAction = (feature: string, enabled: boolean) =>

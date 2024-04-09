@@ -1,8 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import Modal from '../../../../common/Modal/Modal';
 import ErrorBox from '../../../../common/ErrorBox';
+import Modal from '../../../../common/Modal/Modal';
 
 class DeleteIDPDialog extends React.Component {
   componentDidUpdate() {

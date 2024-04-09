@@ -1,10 +1,12 @@
 import React from 'react';
 import { Formik } from 'formik';
-import { render, screen, checkAccessibility, mockUseFeatureGate } from '~/testUtils';
-import { HCP_USE_UNMANAGED } from '~/redux/constants/featureConstants';
+
 import { ROSA_HOSTED_CLI_MIN_VERSION } from '~/components/clusters/wizards/rosa_v2/rosaConstants';
-import AccountRolesARNsSection from '../AccountRolesARNsSection';
+import { HCP_USE_UNMANAGED } from '~/redux/constants/featureConstants';
+import { checkAccessibility, mockUseFeatureGate, render, screen } from '~/testUtils';
+
 import { initialValues } from '../../constants';
+import AccountRolesARNsSection from '../AccountRolesARNsSection';
 
 const latestOCPVersion = '4.13.3';
 const latestVersionLoaded = '4.13.5';

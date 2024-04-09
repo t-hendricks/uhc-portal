@@ -1,9 +1,11 @@
 import React from 'react';
-import { AxiosResponse, AxiosInstance } from 'axios';
+import { AxiosInstance, AxiosResponse } from 'axios';
 import { useLocation } from 'react-router-dom-v5-compat';
-import { TERMS_REQUIRED_CODE, hasOwnErrorPage, getInternalErrorCode } from '../../../common/errors';
-import apiErrorInterceptor from './ApiErrorInterceptor';
+
+import { getInternalErrorCode, hasOwnErrorPage, TERMS_REQUIRED_CODE } from '../../../common/errors';
 import TermsError from '../../common/TermsGuard/TermsError';
+
+import apiErrorInterceptor from './ApiErrorInterceptor';
 
 type Props = {
   children: React.ReactElement;

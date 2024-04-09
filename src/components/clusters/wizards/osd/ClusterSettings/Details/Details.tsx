@@ -1,30 +1,24 @@
 import React, { useCallback } from 'react';
-import { useDispatch } from 'react-redux';
 import { Field } from 'formik';
+import { useDispatch } from 'react-redux';
 
 import {
+  Alert,
+  ExpandableSection,
+  Flex,
   Form,
+  FormGroup,
   Grid,
   GridItem,
-  Title,
-  Flex,
-  FormGroup,
-  SplitItem,
   Split,
-  ExpandableSection,
-  Alert,
+  SplitItem,
+  Title,
 } from '@patternfly/react-core';
 
-import { getCloudProviders } from '~/redux/actions/cloudProviderActions';
-import { useGlobalState } from '~/redux/hooks/useGlobalState';
-import { Version } from '~/types/clusters_mgmt.v1';
+import { SupportedFeature } from '~/common/featureCompatibility';
 import { noQuotaTooltip } from '~/common/helpers';
-import ExternalLink from '~/components/common/ExternalLink';
 import links from '~/common/installLinks.mjs';
-import {
-  getMinReplicasCount,
-  getNodesCount,
-} from '~/components/clusters/common/ScaleSection/AutoScaleSection/AutoScaleHelper';
+import { billingModels } from '~/common/subscriptionTypes';
 import {
   asyncValidateClusterName,
   asyncValidateDomainPrefix,
@@ -35,34 +29,40 @@ import {
   domainPrefixValidation,
   validateAWSKMSKeyARN,
 } from '~/common/validators';
+import { versionComparator } from '~/common/versionComparator';
+import { getIncompatibleVersionReason } from '~/common/versionCompatibility';
 import { constants } from '~/components/clusters/common/CreateOSDFormConstants';
-import { CloudProviderType } from '~/components/clusters/wizards/common/constants';
-import PopoverHint from '~/components/common/PopoverHint';
-import PersistentStorageDropdown from '~/components/clusters/common/PersistentStorageDropdown';
 import LoadBalancersDropdown from '~/components/clusters/common/LoadBalancersDropdown';
+import PersistentStorageDropdown from '~/components/clusters/common/PersistentStorageDropdown';
+import { QuotaParams } from '~/components/clusters/common/quotaModel';
+import {
+  getMinReplicasCount,
+  getNodesCount,
+} from '~/components/clusters/common/ScaleSection/AutoScaleSection/AutoScaleHelper';
+import { ClassicEtcdFipsSection } from '~/components/clusters/wizards/common/ClusterSettings/Details/ClassicEtcdFipsSection';
+import CloudRegionSelectField from '~/components/clusters/wizards/common/ClusterSettings/Details/CloudRegionSelectField';
+import { VersionSelectField } from '~/components/clusters/wizards/common/ClusterSettings/Details/VersionSelectField';
+import { CloudProviderType } from '~/components/clusters/wizards/common/constants';
+import { emptyAWSSubnet } from '~/components/clusters/wizards/common/createOSDInitialValues';
+import { hasAvailableQuota, quotaParams } from '~/components/clusters/wizards/common/utils/quotas';
 import {
   CheckboxField,
   RadioGroupField,
   RadioGroupOption,
   RichInputField,
 } from '~/components/clusters/wizards/form';
-import { CheckboxDescription } from '~/components/common/CheckboxDescription';
-import { getIncompatibleVersionReason } from '~/common/versionCompatibility';
-import { SupportedFeature } from '~/common/featureCompatibility';
 import { useFormState } from '~/components/clusters/wizards/hooks';
-import { hasAvailableQuota, quotaParams } from '~/components/clusters/wizards/common/utils/quotas';
-import { FieldId, MIN_SECURE_BOOT_VERSION } from '~/components/clusters/wizards/osd/constants';
-import { emptyAWSSubnet } from '~/components/clusters/wizards/common/createOSDInitialValues';
-import { useFeatureGate } from '~/hooks/useFeatureGate';
-import { LONGER_CLUSTER_NAME_UI } from '~/redux/constants/featureConstants';
-import { QuotaCostList } from '~/types/accounts_mgmt.v1';
-import { QuotaParams } from '~/components/clusters/common/quotaModel';
-import { versionComparator } from '~/common/versionComparator';
-import { VersionSelectField } from '~/components/clusters/wizards/common/ClusterSettings/Details/VersionSelectField';
-import CloudRegionSelectField from '~/components/clusters/wizards/common/ClusterSettings/Details/CloudRegionSelectField';
 import { CustomerManagedEncryption } from '~/components/clusters/wizards/osd/ClusterSettings/Details/CustomerManagedEncryption';
-import { ClassicEtcdFipsSection } from '~/components/clusters/wizards/common/ClusterSettings/Details/ClassicEtcdFipsSection';
-import { billingModels } from '~/common/subscriptionTypes';
+import { FieldId, MIN_SECURE_BOOT_VERSION } from '~/components/clusters/wizards/osd/constants';
+import { CheckboxDescription } from '~/components/common/CheckboxDescription';
+import ExternalLink from '~/components/common/ExternalLink';
+import PopoverHint from '~/components/common/PopoverHint';
+import { useFeatureGate } from '~/hooks/useFeatureGate';
+import { getCloudProviders } from '~/redux/actions/cloudProviderActions';
+import { LONGER_CLUSTER_NAME_UI } from '~/redux/constants/featureConstants';
+import { useGlobalState } from '~/redux/hooks/useGlobalState';
+import { QuotaCostList } from '~/types/accounts_mgmt.v1';
+import { Version } from '~/types/clusters_mgmt.v1';
 
 function Details() {
   const dispatch = useDispatch();

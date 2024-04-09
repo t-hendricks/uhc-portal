@@ -3,7 +3,6 @@ import { useDispatch } from 'react-redux';
 
 import { Button, Icon, Title } from '@patternfly/react-core';
 import { WizardContext as WizardContextDeprecated } from '@patternfly/react-core/deprecated';
-
 import { ExclamationCircleIcon } from '@patternfly/react-icons/dist/esm/icons/exclamation-circle-icon';
 import { global_danger_color_100 as dangerColor } from '@patternfly/react-tokens/dist/esm/global_danger_color_100';
 

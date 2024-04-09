@@ -1,8 +1,8 @@
-import { createSelector } from 'reselect';
 import { formValueSelector } from 'redux-form';
+import { createSelector } from 'reselect';
 
-import { GlobalState } from '~/redux/store';
 import { VPCResponse } from '~/redux/reducers/ccsInquiriesReducer';
+import { GlobalState } from '~/redux/store';
 import { PromiseReducerState } from '~/redux/types';
 
 // These selectors can only be used for V1, as they use the redux-form state

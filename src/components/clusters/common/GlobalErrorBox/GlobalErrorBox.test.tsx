@@ -1,8 +1,9 @@
 import React from 'react';
+import { useDispatch } from 'react-redux';
+
+import { useGlobalState } from '~/redux/hooks';
 import { checkAccessibility, render, screen, within } from '~/testUtils';
 
-import { useDispatch } from 'react-redux';
-import { useGlobalState } from '~/redux/hooks';
 import GlobalErrorBox from './GlobalErrorBox';
 
 jest.mock('react-redux', () => ({
