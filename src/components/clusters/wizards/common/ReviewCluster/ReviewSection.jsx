@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 
 import {
@@ -8,6 +8,7 @@ import {
   DescriptionListGroup,
   DescriptionListTerm,
   ExpandableSection,
+  ExpandableSectionToggle,
   GridItem,
 } from '@patternfly/react-core';
 
@@ -133,13 +134,9 @@ export const ReviewItem = ({ name, formValues }) => {
 };
 
 const ReviewSection = ({ initiallyExpanded, title, children, onGoToStep }) => {
-  const [isExpanded, setIsExpanded] = useState(true);
+  const [isExpanded, setIsExpanded] = useState(!initiallyExpanded);
 
-  useEffect(() => {
-    setIsExpanded(initiallyExpanded);
-  }, [initiallyExpanded]);
-
-  const onToggle = (_event, toggleValue) => {
+  const onToggle = (toggleValue) => {
     setIsExpanded(toggleValue);
   };
 
@@ -149,34 +146,46 @@ const ReviewSection = ({ initiallyExpanded, title, children, onGoToStep }) => {
       sm: 'horizontal',
     },
   };
+  const titleNoSpaces = title.replaceAll(' ', '');
+
+  const toggleId = `${titleNoSpaces}-toggle`;
+  const contentId = `${titleNoSpaces}-content`;
 
   return (
     <GridItem>
-      <ExpandableSection
-        className="review-screen-expandable-section"
-        isExpanded={isExpanded}
-        onToggle={onToggle}
-        toggleContent={
-          <div>
-            <span>{title}</span>
-            <Button
-              variant="link"
-              isInline
-              className="pf-v5-u-font-size-sm pf-v5-u-ml-sm"
-              onClick={(event) => {
-                event.stopPropagation();
-                onGoToStep();
-              }}
-            >
-              Edit <span className="pf-v5-u-screen-reader">{title}</span> step
-            </Button>
-          </div>
-        }
-      >
-        <DescriptionList isHorizontal {...listOptions}>
-          {children}
-        </DescriptionList>
-      </ExpandableSection>
+      <div className="review-screen-expandable-section">
+        <ExpandableSectionToggle
+          isExpanded={isExpanded}
+          onToggle={onToggle}
+          toggleId={toggleId}
+          contentId={contentId}
+          className="review-screen-expandable-section__toggle-wrapper"
+        >
+          {title}
+        </ExpandableSectionToggle>
+        <Button
+          variant="link"
+          isInline
+          className="pf-v5-u-font-size-sm pf-v5-u-ml-sm"
+          onClick={(event) => {
+            event.stopPropagation();
+            onGoToStep();
+          }}
+        >
+          Edit <span className="pf-v5-u-screen-reader">{title}</span> step
+        </Button>
+
+        <ExpandableSection
+          isExpanded={isExpanded}
+          isDetached
+          toggleId={toggleId}
+          contentId={contentId}
+        >
+          <DescriptionList isHorizontal {...listOptions}>
+            {children}
+          </DescriptionList>
+        </ExpandableSection>
+      </div>
     </GridItem>
   );
 };

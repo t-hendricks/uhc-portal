@@ -26,8 +26,7 @@ const GetStarted = ({
     <Stack hasGutter>
       <StackItem>
         <TextContent>
-          {/* TODO: A p tag cannot be nested inside another p tag */}
-          <Text component="p">
+          <div>
             {!isBMIPI && <>The installer will take about 45 minutes to run. </>}
             {get(instructionsMapping, `${cloudProviderID}.getStartedAdditional`, null) || ''}
             {isBMIPI && (
@@ -37,7 +36,7 @@ const GetStarted = ({
                 for you to use with the <code>oc</code> CLI tools you downloaded.
               </Text>
             )}
-          </Text>
+          </div>
         </TextContent>
       </StackItem>
       <StackItem>
