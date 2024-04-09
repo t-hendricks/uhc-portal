@@ -200,9 +200,9 @@ class UpgradeTrialClusterDialog extends Component {
         {...tertiaryButton}
         isPending={upgradeTrialClusterResponse.pending}
       >
-        <p>{error}</p>
+        {error}
         <Form onSubmit={() => submit(clusterID)}>
-          <p>
+          <div>
             {!noQuota && <img className="upgrade-trial-logo" src={MechTraining} alt="Red Hat" />}
             Convert this trial cluster to a fully supported OpenShift Dedicated cluster.
             <br />
@@ -223,7 +223,7 @@ class UpgradeTrialClusterDialog extends Component {
                 </Link>
               </Alert>
             )}
-          </p>
+          </div>
         </Form>
       </Modal>
     );

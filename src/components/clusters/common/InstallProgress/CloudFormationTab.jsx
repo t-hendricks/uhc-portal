@@ -81,7 +81,7 @@ function CloudFormationTab({ cluster }) {
   return (
     <TextContent>
       <p>Copy and run the following commands:</p>
-      <p>
+      <div>
         <ClipboardCopy isReadOnly>
           {`\
 aws cloudformation create-stack \
@@ -94,8 +94,8 @@ ${getOperatorRoleParameters(cluster)} \
 --region ${cluster.region.id} \
 --capabilities CAPABILITY_NAMED_IAM`}
         </ClipboardCopy>
-      </p>
-      <p>
+      </div>
+      <div>
         <ClipboardCopy isReadOnly>
           {`\
 aws cloudformation create-stack \
@@ -105,7 +105,7 @@ aws cloudformation create-stack \
 ParameterKey=IssuerURL,ParameterValue=${cluster.aws.sts.oidc_endpoint_url} \
 --region ${cluster.region.id}`}
         </ClipboardCopy>
-      </p>
+      </div>
     </TextContent>
   );
 }

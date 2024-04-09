@@ -136,7 +136,7 @@ describe('<UpgradeTrialClusterDialog />', () => {
     expect(screen.getByText('Upgrade using quota')).toBeInTheDocument();
   });
 
-  it('renders error box when an erorr occurs', () => {
+  it('renders error box when an error occurs', () => {
     render(
       <MemoryRouter>
         <CompatRouter>

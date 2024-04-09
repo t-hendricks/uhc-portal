@@ -122,9 +122,9 @@ function CustomerOIDCConfiguration({
     <Instructions wide>
       <Instruction simple>
         <TextContent className="pf-v5-u-pb-md">
-          <Text component={TextVariants.p}>
+          <div>
             Select your existing OIDC config id or <CreateOIDCProviderInstructions />.
-          </Text>
+          </div>
         </TextContent>
 
         <FormGroup
