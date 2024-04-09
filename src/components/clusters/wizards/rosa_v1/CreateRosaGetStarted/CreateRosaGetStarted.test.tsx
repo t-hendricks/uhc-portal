@@ -35,7 +35,7 @@ describe('<CreateRosaGetStarted />', () => {
     await checkAccessibility(container);
   });
 
-  it('shows hypershift info alert if feature flag is enabled and is accessible', async () => {
+  it('shows hypershift info alert if feature flag is enabled', async () => {
     // Arrange
     mockUseFeatureGate([[HCP_ROSA_GETTING_STARTED_PAGE, true]]);
 

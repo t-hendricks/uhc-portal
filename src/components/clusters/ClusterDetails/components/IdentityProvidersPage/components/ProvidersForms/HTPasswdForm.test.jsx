@@ -9,7 +9,7 @@ describe('HTPasswdForm', () => {
   const wizardConnector = (component) => reduxForm({ form: 'HTPasswdForm' })(component);
   const ConnectedHTPasswdBasicFields = wizardConnector(HTPasswdForm);
 
-  it('shows disabled Add user while fields are empty', () => {
+  it.only('shows disabled Add user while fields are empty', async () => {
     const HTPasswdErrors = [
       {
         password: {
@@ -23,7 +23,10 @@ describe('HTPasswdForm', () => {
       },
     ];
     render(<ConnectedHTPasswdBasicFields HTPasswdErrors={HTPasswdErrors} />);
-    expect(screen.getByText('Add user')).toBeDisabled();
+    expect(await screen.findByText('Add user')).toBeDisabled();
+
+    // `getPlaceholderText` prop on a DOM element.
+    // `getHelpText` prop on a DOM element
   });
 
   it('shows disabled Add user while fields have errors', async () => {

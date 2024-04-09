@@ -33,13 +33,13 @@ const RosaVersionErrorAlert = ({ isHypershiftSelected }: RosaVersionErrorAlertPr
         </Text>
       </TextListItem>
       <TextListItem className="pf-v5-u-mb-sm">
-        <Text component={TextVariants.p} className="pf-v5-u-mb-sm">
+        <div className="pf-v5-u-mb-sm">
           <InstructionCommand textAriaLabel="Copyable ROSA create account-roles command">
             {isHypershiftSelected
               ? RosaCliCommand.CreateAccountRolesHCP
               : RosaCliCommand.CreateAccountRoles}
           </InstructionCommand>
-        </Text>
+        </div>
       </TextListItem>
     </TextList>
   </Alert>
