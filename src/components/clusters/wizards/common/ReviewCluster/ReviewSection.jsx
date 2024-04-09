@@ -11,8 +11,71 @@ import {
   GridItem,
 } from '@patternfly/react-core';
 
+import { useFormState } from '~/components/clusters/wizards/hooks';
+import { FieldId } from '~/components/clusters/wizards/rosa_v2/constants';
+
 import { ExpandableReviewItem } from './ExpandableReviewItem';
 import reviewValues from './reviewValues';
+
+export const FormikReviewItem = (field, dependentFields = {}) => {
+  const {
+    values: { [field]: value, [FieldId.Hypershift]: hypershiftValue },
+  } = useFormState();
+  const reviewValue = reviewValues[field];
+  let finalValue = value;
+  const isHypershiftSelected = hypershiftValue === 'true';
+
+  if (!reviewValue) {
+    return (
+      <DescriptionListGroup>
+        <DescriptionListTerm>{field}</DescriptionListTerm>
+        <DescriptionListDescription>{value}</DescriptionListDescription>
+      </DescriptionListGroup>
+    );
+  }
+
+  if (reviewValue.isOptional && !value) {
+    return null;
+  }
+
+  if (reviewValue.isBoolean && value === undefined) {
+    finalValue = 'false';
+  }
+
+  // For hypershift, always display 'Multi-zone' (=value to 'true')
+  // even though up to this point the value was set to 'false'
+  if (reviewValue.title === 'Availability' && isHypershiftSelected) {
+    finalValue = 'true';
+  }
+
+  let displayValue;
+  if (reviewValue.values && reviewValue.values[finalValue]) {
+    displayValue = reviewValue.values[finalValue];
+  } else if (reviewValue.valueTransform) {
+    displayValue = reviewValue.valueTransform(finalValue, dependentFields);
+  } else {
+    displayValue = finalValue;
+  }
+
+  const formattedDisplayValue = reviewValue.isMonospace ? <pre>{displayValue}</pre> : displayValue;
+
+  const description = reviewValue.isExpandable ? (
+    <ExpandableReviewItem initiallyExpanded={reviewValue.initiallyExpanded}>
+      {formattedDisplayValue}
+    </ExpandableReviewItem>
+  ) : (
+    formattedDisplayValue
+  );
+
+  return (
+    <DescriptionListGroup key={field}>
+      <DescriptionListTerm>{reviewValue.title}</DescriptionListTerm>
+      <DescriptionListDescription data-testid={reviewValue.title.replace(/ /g, '-')}>
+        {description}
+      </DescriptionListDescription>
+    </DescriptionListGroup>
+  );
+};
 
 export const ReviewItem = ({ name, formValues }) => {
   const reviewValue = reviewValues[name];

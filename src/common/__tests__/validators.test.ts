@@ -151,24 +151,6 @@ describe('Username conforms RHIT pattern', () => {
   });
 });
 
-describe('Field is a valid DNS domain', () => {
-  it.each([
-    [undefined, 'Base DNS domain is required.'],
-    [
-      '123.ABC!',
-      "Base DNS domain '123.ABC!' isn't valid, must contain at least two valid lower-case DNS labels separated by dots, for example 'mydomain.com'.",
-    ],
-    [
-      'foo',
-      "Base DNS domain 'foo' isn't valid, must contain at least two valid lower-case DNS labels separated by dots, for example 'mydomain.com'.",
-    ],
-    ['foo.bar', undefined],
-    ['foo.bar.baz', undefined],
-  ])('value %p to be %p', (value: string | undefined, expected: string | undefined) => {
-    expect(validators.checkBaseDNSDomain(value)).toBe(expected);
-  });
-});
-
 describe('Field is valid CIDR range', () => {
   it.each([
     [undefined, undefined],

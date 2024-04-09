@@ -4,8 +4,7 @@ import { defaultWorkerNodeVolumeSizeGiB } from '~/components/clusters/wizards/ro
 import { isRestrictedEnv } from '~/restrictedEnv';
 
 import { billingModels, normalizedProducts } from '../../../../common/subscriptionTypes';
-
-import { IMDSType } from './constants';
+import { IMDSType } from '../common/constants';
 
 export const AWS_DEFAULT_REGION = 'us-east-1';
 export const GCP_DEFAULT_REGION = 'us-east1';
@@ -57,9 +56,6 @@ const createOSDInitialValues = ({
     node_labels: [{}],
     byoc: (!!isByoc || !!isTrialDefault).toString(),
     name: '',
-    dns_base_domain: '',
-    aws_access_key_id: '',
-    aws_secret_access_key: '',
     network_configuration_toggle: 'basic',
     cluster_privacy: isRestrictedEnv() ? 'internal' : 'external',
     install_to_vpc: isHypershiftSelected,

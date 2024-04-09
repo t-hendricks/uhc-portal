@@ -39,8 +39,7 @@ import {
 import { ClassicEtcdFipsSection } from '~/components/clusters/wizards/common/ClusterSettings/Details/ClassicEtcdFipsSection';
 import CloudRegionSelectField from '~/components/clusters/wizards/common/ClusterSettings/Details/CloudRegionSelectField';
 import { VersionSelectField } from '~/components/clusters/wizards/common/ClusterSettings/Details/VersionSelectField';
-import { CloudProviderType } from '~/components/clusters/wizards/common/constants';
-import { emptyAWSSubnet } from '~/components/clusters/wizards/common/createOSDInitialValues';
+import { CloudProviderType, emptyAWSSubnet } from '~/components/clusters/wizards/common/constants';
 import { hasAvailableQuota, quotaParams } from '~/components/clusters/wizards/common/utils/quotas';
 import {
   CheckboxField,
