@@ -120,6 +120,7 @@ const MachineTypeSelection = ({
 
   // checks if previous selection was from unfiltered machine set. Will flip filter value.
   const previousSelectionFromUnfilteredSet =
+    machineTypesByRegion.fulfilled &&
     !machineTypesByRegion?.typesByID[machineType.input.value]?.id &&
     machineTypes?.typesByID[machineType.input.value]?.id;
 
