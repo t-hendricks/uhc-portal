@@ -121,6 +121,9 @@ const ReduxVerticalFormGroup = ({
     );
   }
 
+  // Remove non-valid props for Input
+  const { getHelpText, getPlaceholderText, ...cleanedExtraProps } = extraProps;
+
   const inputGroup = (
     <InputGroup className={isValid && 'valid-field'}>
       {inputPrefix ? (
@@ -135,7 +138,7 @@ const ReduxVerticalFormGroup = ({
           validated={isValid ? 'default' : 'error'}
           {...disabledProp}
           {...input}
-          {...extraProps}
+          {...cleanedExtraProps}
           type={isPassword && !inputValueHidden ? 'text' : extraProps.type}
           onFocus={onFocus}
           onBlur={onBlur}

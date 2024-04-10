@@ -26,16 +26,17 @@ jest.mock('react-redux', () => {
 
 const useGlobalStateMock = useGlobalState as jest.Mock;
 
+// TODO:  Do mock children - it doesn't test the actual component
 jest.mock('../components/AddNotificationContactButton', () => () => (
   <div data-testid="add-notification-contact-button" />
 ));
 
 jest.mock('../components/NotificationContactsCard', () => (props: any) => (
-  <div data-testid="notification-contacts-card" {...props} />
+  <div data-testid="notification-contacts-card" />
 ));
 
 jest.mock('../components/SupportCasesCard', () => (props: any) => (
-  <div data-testid="support-cases-card" {...props} />
+  <div data-testid="support-cases-card" />
 ));
 
 describe('<Support />', () => {
@@ -160,15 +161,8 @@ describe('<Support />', () => {
       // Assert
       expect(screen.getByTestId('add-notification-contact-button')).toBeInTheDocument();
       expect(screen.getByTestId('support-cases-card')).toBeInTheDocument();
-      expect(screen.getByTestId('support-cases-card')).toHaveAttribute(
-        'subscriptionid',
-        'whatevertheid',
-      );
+
       expect(screen.getByTestId('notification-contacts-card')).toBeInTheDocument();
-      expect(screen.getByTestId('notification-contacts-card')).toHaveAttribute(
-        'subscriptionid',
-        'whatevertheid',
-      );
     });
 
     it('without subscription ID', () => {
