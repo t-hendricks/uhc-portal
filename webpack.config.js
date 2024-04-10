@@ -33,14 +33,18 @@ const reactCSS = /@patternfly\/react-styles\/css/;
 
 const modDir = 'node_modules';
 const srcDir = path.resolve(__dirname, 'src');
-const outDir = path.resolve(__dirname, 'dist', insights.appname);
 
 module.exports = async (_env, argv) => {
+  const outputPath = argv.outputPath;
   const devMode = argv.mode !== 'production';
   process.env.DEV_MODE = devMode;
   const betaMode = argv.env.beta === 'true';
   const sentryReleaseVersion = argv.env['sentry-version'];
   const isDevServer = process.argv.includes('serve');
+
+  const outDir = outputPath ?
+    path.resolve(__dirname, outputPath) :
+    path.resolve(__dirname, 'dist', insights.appname);
 
   // Select default API env based on argument if specified.
   // Otherwise, default to 'development' for backend-proxy users when running in dev server,
