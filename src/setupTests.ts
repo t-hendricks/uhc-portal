@@ -21,8 +21,18 @@ console.error = (msg, ...args) => {
   const text =
     typeof msg === 'string' ? sprintf(msg, ...args) : [msg, ...args].map(String).join(' ');
 
-  console.log('Following error in test: ', expect.getState().currentTestName);
-  error(msg, ...args); // Even if we going to throw below, it's useful to log *full* args.
+  if (
+    // The following are due to the deprecated PF select option element
+    !text.includes('React does not recognize the `inputId` prop on a DOM element') &&
+    !text.includes('React does not recognize the `keyHandler` prop on a DOM element') &&
+    !text.includes('React does not recognize the `sendRef` prop on a DOM element') &&
+    !text.includes('React does not recognize the `isSelected` prop on a DOM element') &&
+    // The following are due to PF Tab element
+    !text.includes('React does not recognize the `isHidden` prop on a DOM element')
+  ) {
+    console.log('Following error in test: ', expect.getState().currentTestName);
+    error(msg, ...args); // Even if we going to throw below, it's useful to log *full* args.
+  }
 
   if (text.includes('Maximum update depth exceeded')) {
     throw text;

@@ -365,9 +365,12 @@ function dropDownItems({
     refreshFunc,
     inClusterList,
   );
-  const menuItems = actions.map((action) => (
-    <DropdownItemDeprecated {...action}>{action.title}</DropdownItemDeprecated>
-  ));
+  const menuItems = actions.map((action) => {
+    // Remove props that aren't recognized by DropdownItemDeprecated
+    const { isExternalLink, ...cleanedProps } = action;
+
+    return <DropdownItemDeprecated {...cleanedProps}>{action.title}</DropdownItemDeprecated>;
+  });
   return menuItems;
 }
 

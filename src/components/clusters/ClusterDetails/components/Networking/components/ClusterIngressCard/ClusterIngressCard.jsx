@@ -157,7 +157,7 @@ class ClusterIngressCard extends React.Component {
                 onClick={this.handleEditSettings}
                 disableReason={disableEditReason}
                 isAriaDisabled={!!disableEditReason}
-                data-testId="edit-cluster-ingress"
+                data-testid="edit-cluster-ingress"
               >
                 Edit cluster ingress
               </ButtonWithTooltip>
