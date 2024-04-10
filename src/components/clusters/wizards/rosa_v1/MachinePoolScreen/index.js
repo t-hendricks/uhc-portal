@@ -11,9 +11,7 @@ import { getWorkerNodeVolumeSizeMaxGiB } from '~/components/clusters/wizards/ros
 import { openModal } from '~/components/common/Modal/ModalActions';
 import modals from '~/components/common/Modal/modals';
 
-import { canAutoScaleOnCreateSelector } from '../../../ClusterDetails/components/MachinePools/machinePoolsSelectors';
 import createOSDInitialValues from '../createOSDInitialValues';
-import wizardConnector from '~/components/clusters/wizards/common/WizardConnector';
 
 import MachinePoolScreen from './MachinePoolScreen';
 

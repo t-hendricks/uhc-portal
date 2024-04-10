@@ -1,4 +1,4 @@
-import { normalizedProducts, billingModels } from '~/common/subscriptionTypes';
+import { billingModels, normalizedProducts } from '~/common/subscriptionTypes';
 import { useGlobalState } from '~/redux/hooks';
 import { Product } from '~/types/clusters_mgmt.v1';
 

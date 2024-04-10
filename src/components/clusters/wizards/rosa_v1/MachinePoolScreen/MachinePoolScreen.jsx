@@ -4,9 +4,9 @@ import PropTypes from 'prop-types';
 import { Form, Grid } from '@patternfly/react-core';
 
 import { billingModels, normalizedProducts } from '~/common/subscriptionTypes';
+import useCanClusterAutoscale from '~/components/clusters/ClusterDetails/components/MachinePools/components/EditMachinePoolModal/hooks/useCanClusterAutoscale';
 import ScaleSection from '~/components/clusters/common/ScaleSection/ScaleSection';
 
-import useCanClusterAutoscale from '~/components/clusters/ClusterDetails/components/MachinePools/components/EditMachinePoolModal/hooks/useCanClusterAutoscale';
 import MachinePoolScreenHeader from './MachinePoolScreenHeader';
 import MachinePoolsSubnets from './MachinePoolsSubnets';
 
@@ -32,7 +32,7 @@ function MachinePoolScreen({
   maxWorkerVolumeSizeGiB,
   hasNodeLabels,
 }) {
-  const canAutoscaleCluster = useCanClusterAutoscale(product, billingModel);
+  const canAutoScale = useCanClusterAutoscale(product, billingModel);
   return (
     <Form
       onSubmit={(event) => {
@@ -83,7 +83,6 @@ MachinePoolScreen.propTypes = {
   }).isRequired,
   product: PropTypes.oneOf(Object.keys(normalizedProducts)).isRequired,
   billingModel: PropTypes.oneOf(Object.values(billingModels)),
-  canAutoScale: PropTypes.bool,
   autoscalingEnabled: PropTypes.bool,
   change: PropTypes.func.isRequired,
   autoScaleMinNodesValue: PropTypes.string,

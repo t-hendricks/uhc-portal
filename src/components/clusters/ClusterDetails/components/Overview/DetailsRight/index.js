@@ -1,7 +1,5 @@
 import { connect } from 'react-redux';
 
-import { canAutoScaleOnCreateSelector } from '~/components/clusters/ClusterDetails/components/MachinePools/machinePoolsSelectors';
-
 import totalNodesDataSelector from '../../../../common/totalNodesDataSelector';
 
 import DetailsRight from './DetailsRight';

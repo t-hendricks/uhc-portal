@@ -3,13 +3,12 @@ import { useField } from 'formik';
 
 import { Checkbox, FormGroup } from '@patternfly/react-core';
 
-import { Cluster } from '~/types/clusters_mgmt.v1';
-
 import links from '~/common/installLinks.mjs';
 import { isROSA } from '~/components/clusters/common/clusterStates';
 import { constants } from '~/components/clusters/common/CreateOSDFormConstants';
 import ExternalLink from '~/components/common/ExternalLink';
 import PopoverHint from '~/components/common/PopoverHint';
+import { Cluster } from '~/types/clusters_mgmt.v1';
 import { ClusterFromSubscription } from '~/types/types';
 
 import useCanClusterAutoscale from '../hooks/useCanClusterAutoscale';

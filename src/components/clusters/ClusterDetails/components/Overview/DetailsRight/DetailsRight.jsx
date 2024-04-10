@@ -13,6 +13,7 @@ import {
 
 import { getQueryParam } from '~/common/queryHelpers';
 import { hasSecurityGroupIds } from '~/common/securityGroupsHelpers';
+import useCanClusterAutoscale from '~/components/clusters/ClusterDetails/components/MachinePools/components/EditMachinePoolModal/hooks/useCanClusterAutoscale';
 import {
   canViewMachinePoolTab,
   isHypershiftCluster,
@@ -21,7 +22,6 @@ import {
 import { useAWSVPCFromCluster } from '~/components/clusters/common/useAWSVPCFromCluster';
 import { IMDSType } from '~/components/clusters/wizards/common';
 import { isRestrictedEnv } from '~/restrictedEnv';
-import useCanClusterAutoscale from '~/components/clusters/ClusterDetails/components/MachinePools/components/EditMachinePoolModal/hooks/useCanClusterAutoscale';
 
 import links from '../../../../../../common/installLinks.mjs';
 import { isAISubscriptionWithoutMetrics } from '../../../../../../common/isAssistedInstallerCluster';

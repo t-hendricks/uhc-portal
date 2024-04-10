@@ -6,12 +6,12 @@ import { ExpandableSection, GridItem, Text, TextVariants, Title } from '@pattern
 import links from '~/common/installLinks.mjs';
 import { billingModels, normalizedProducts } from '~/common/subscriptionTypes';
 import { required } from '~/common/validators';
+import useCanClusterAutoscale from '~/components/clusters/ClusterDetails/components/MachinePools/components/EditMachinePoolModal/hooks/useCanClusterAutoscale';
 import {
   getMinNodesRequired,
   getNodeIncrement,
   getNodeIncrementHypershift,
 } from '~/components/clusters/ClusterDetails/components/MachinePools/machinePoolsHelper';
-import { canAutoScaleOnCreateSelector } from '~/components/clusters/ClusterDetails/components/MachinePools/machinePoolsSelectors';
 import NodeCountInput from '~/components/clusters/common/NodeCountInput';
 import { computeNodeHintText } from '~/components/clusters/common/ScaleSection/AutoScaleSection/AutoScaleHelper';
 import MachineTypeSelection from '~/components/clusters/common/ScaleSection/MachineTypeSelection';
@@ -24,8 +24,6 @@ import {
 import { FieldId } from '~/components/clusters/wizards/rosa_v2/constants';
 import ExternalLink from '~/components/common/ExternalLink';
 import FormKeyValueList from '~/components/common/FormikFormComponents/FormKeyValueList';
-import { useGlobalState } from '~/redux/hooks';
-import useCanClusterAutoscale from '~/components/clusters/ClusterDetails/components/MachinePools/components/EditMachinePoolModal/hooks/useCanClusterAutoscale';
 
 import WorkerNodeVolumeSizeSection from './WorkerNodeVolumeSizeSection/WorkerNodeVolumeSizeSection';
 import ImdsSection from './ImdsSection';
@@ -51,8 +49,6 @@ function ScaleSection() {
     getFieldMeta,
   } = useFormState();
 
-  const state = useGlobalState((state) => state);
-
   const isByoc = byoc === 'true';
   const poolsLength = machinePoolsSubnets?.length;
   const isMultiAzSelected = isMultiAz === 'true';
@@ -60,10 +56,7 @@ function ScaleSection() {
   const isAutoscalingEnabled = !!autoscalingEnabled;
   const hasNodeLabels = nodeLabels?.[0]?.key ?? false;
   const [isNodeLabelsExpanded, setIsNodeLabelsExpanded] = useState(!!hasNodeLabels);
-  const canAutoScale = useMemo(
-    () => useCanClusterAutoscale(product, billingModelFieldValue) ?? false,
-    [state, product],
-  );
+  const canAutoScale = useCanClusterAutoscale(product, billingModelFieldValue) ?? false;
   const clusterVersionRawId = clusterVersion?.raw_id;
 
   const minNodesRequired = useMemo(

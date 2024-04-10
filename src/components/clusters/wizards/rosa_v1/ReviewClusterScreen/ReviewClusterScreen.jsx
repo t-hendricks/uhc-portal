@@ -6,6 +6,7 @@ import { Title } from '@patternfly/react-core';
 
 import { hasSelectedSecurityGroups } from '~/common/securityGroupsHelpers';
 import { normalizedProducts } from '~/common/subscriptionTypes';
+import useCanClusterAutoscale from '~/components/clusters/ClusterDetails/components/MachinePools/components/EditMachinePoolModal/hooks/useCanClusterAutoscale';
 import { stepId, stepNameById } from '~/components/clusters/wizards/common/osdWizardConstants';
 import { canSelectImds } from '~/components/clusters/wizards/rosa/constants';
 import { getUserRoleForSelectedAWSAccount } from '~/components/clusters/wizards/rosa_v1/AccountsRolesScreen/AccountsRolesScreen';
@@ -21,7 +22,6 @@ import {
   HYPERSHIFT_WIZARD_FEATURE,
 } from '~/redux/constants/featureConstants';
 
-import useCanClusterAutoscale from '~/components/clusters/ClusterDetails/components/MachinePools/components/EditMachinePoolModal/hooks/useCanClusterAutoscale';
 import ReviewSection, { ReviewItem } from '../../common/ReviewCluster/ReviewSection';
 import DebugClusterRequest from '../DebugClusterRequest';
 
@@ -33,7 +33,7 @@ const ReviewClusterScreen = ({
   change,
   clusterRequestParams,
   formValues,
-  autoscalingEnabled,
+  autoscalingEnabledValue,
   installToVPCSelected,
   configureProxySelected,
   getUserRole,
@@ -45,7 +45,6 @@ const ReviewClusterScreen = ({
   goToStepById,
   isHypershiftSelected,
 }) => {
-  const canAutoScale = useCanClusterAutoscale(formValues.product, formValues.billing_model);
   const isByoc = formValues.byoc === 'true';
   const isAWS = formValues.cloud_provider === 'aws';
   const isGCP = formValues.cloud_provider === 'gcp';
@@ -58,6 +57,7 @@ const ReviewClusterScreen = ({
   const hasDomainPrefix = formValues?.has_domain_prefix;
 
   const hasSecurityGroups = isByoc && hasSelectedSecurityGroups(formValues.securityGroups);
+  const canAutoScale = useCanClusterAutoscale(formValues.product, formValues.billing_model);
 
   const clusterSettingsFields = [
     ...(!isROSA ? ['cloud_provider'] : []),
@@ -215,7 +215,7 @@ const ReviewClusterScreen = ({
       >
         {ReviewItem({ name: 'machine_type', formValues })}
         {canAutoScale && ReviewItem({ name: 'autoscalingEnabled', formValues })}
-        {autoscalingEnabled
+        {autoscalingEnabledValue && canAutoScale
           ? ReviewItem({ name: 'min_replicas', formValues })
           : ReviewItem({ name: 'nodes_compute', formValues })}
         {showVPCCheckbox &&
@@ -345,8 +345,7 @@ ReviewClusterScreen.propTypes = {
   change: PropTypes.func,
   clusterRequestParams: PropTypes.object.isRequired,
   formValues: PropTypes.objectOf(PropTypes.oneOfType([PropTypes.any])),
-  canAutoScale: PropTypes.bool,
-  autoscalingEnabled: PropTypes.bool,
+  autoscalingEnabledValue: PropTypes.bool,
   installToVPCSelected: PropTypes.bool,
   configureProxySelected: PropTypes.bool,
   getUserRole: PropTypes.func.isRequired,

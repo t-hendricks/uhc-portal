@@ -1,12 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import isEmpty from 'lodash/isEmpty';
 import PropTypes from 'prop-types';
-import { useSelector } from 'react-redux';
 
 import { Bullseye, Spinner, Stack, StackItem, Title } from '@patternfly/react-core';
 
 import { hasSelectedSecurityGroups } from '~/common/securityGroupsHelpers';
-import { canAutoScaleOnCreateSelector } from '~/components/clusters/ClusterDetails/components/MachinePools/machinePoolsSelectors';
+import useCanClusterAutoscale from '~/components/clusters/ClusterDetails/components/MachinePools/components/EditMachinePoolModal/hooks/useCanClusterAutoscale';
 import { useFormState } from '~/components/clusters/wizards/hooks';
 import { canSelectImds } from '~/components/clusters/wizards/rosa/constants';
 import { getUserRoleForSelectedAWSAccount } from '~/components/clusters/wizards/rosa_v2/AccountsRolesScreen/AccountsRolesScreen';
@@ -22,7 +21,6 @@ import {
   HYPERSHIFT_WIZARD_FEATURE,
 } from '~/redux/constants/featureConstants';
 
-import useCanClusterAutoscale from '~/components/clusters/ClusterDetails/components/MachinePools/components/EditMachinePoolModal/hooks/useCanClusterAutoscale';
 import { DebugClusterRequest } from '../../common/DebugClusterRequest';
 import ReviewSection, {
   FormikReviewItem as ReviewItem,
