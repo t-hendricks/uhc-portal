@@ -45,6 +45,7 @@ export const ReviewAndCreateContent = ({ isPending }: ReviewAndCreateContentProp
       [FieldId.ClusterVersion]: clusterVersion,
       [FieldId.ApplicationIngress]: applicationIngress,
       [FieldId.SecurityGroups]: securityGroups,
+      [FieldId.HasDomainPrefix]: hasDomainPrefix,
     },
     values: formValues,
   } = useFormState();
@@ -60,6 +61,7 @@ export const ReviewAndCreateContent = ({ isPending }: ReviewAndCreateContentProp
   const clusterSettingsFields = [
     FieldId.CloudProvider,
     FieldId.ClusterName,
+    ...(hasDomainPrefix ? [FieldId.DomainPrefix] : []),
     FieldId.ClusterVersion,
     FieldId.Region,
     FieldId.MultiAz,

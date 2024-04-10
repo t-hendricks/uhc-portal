@@ -53,6 +53,7 @@ const ReviewClusterScreen = ({
       [FieldId.ClusterVersion]: clusterVersion,
       [FieldId.ConfigureProxy]: configureProxySelected,
       [FieldId.EtcdKeyArn]: etcdKeyArn,
+      [FieldId.HasDomainPrefix]: hasDomainPrefix,
       [FieldId.Hypershift]: hypershiftValue,
       [FieldId.InstallToVpc]: installToVPCSelected,
       [FieldId.KmsKeyArn]: hasCustomKeyARN,
@@ -83,6 +84,7 @@ const ReviewClusterScreen = ({
 
   const clusterSettingsFields = [
     FieldId.ClusterName,
+    ...(hasDomainPrefix ? [FieldId.DomainPrefix] : []),
     FieldId.ClusterVersion,
     FieldId.Region,
     FieldId.MultiAz,

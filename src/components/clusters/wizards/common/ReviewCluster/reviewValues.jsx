@@ -63,6 +63,9 @@ const reviewValues = {
   name: {
     title: 'Cluster name',
   },
+  domain_prefix: {
+    title: 'Domain prefix',
+  },
   rosa_roles_provider_creation_mode: {
     title: 'Operator roles and OIDC provider mode',
   },

@@ -330,6 +330,32 @@ describe('createClusterRequest', () => {
         expect(request.ccs.enabled).toEqual(true);
         expectGCPVPC(request);
       });
+
+      it('does not include domain prefix if has_domain_prefix is false', () => {
+        const data = {
+          ...baseFormData,
+          product: normalizedProducts.OSD,
+          has_domain_prefix: false,
+          domain_prefix: 'pre-test-1',
+        };
+
+        const request = createClusterRequest({}, data);
+
+        expect(request.domain_prefix).toBeUndefined();
+      });
+
+      it('includes domain prefix if has_domain_prefix is true', () => {
+        const data = {
+          ...baseFormData,
+          product: normalizedProducts.OSD,
+          has_domain_prefix: true,
+          domain_prefix: 'pre-test-1',
+        };
+
+        const request = createClusterRequest({}, data);
+
+        expect(request.domain_prefix).toEqual('pre-test-1');
+      });
     });
 
     describe('OSD Trial button', () => {
@@ -473,6 +499,30 @@ describe('createClusterRequest', () => {
           expect(request.aws.subnet_ids).toEqual(expectedSubnetIds);
         },
       );
+
+      it('does not include domain prefix if has_domain_prefix is false', () => {
+        const data = {
+          ...rosaFormData,
+          cloud_provider: 'aws',
+          has_domain_prefix: false,
+          domain_prefix: 'pre-test-1',
+        };
+        const request = createClusterRequest({}, data);
+
+        expect(request.domain_prefix).toBeUndefined();
+      });
+
+      it('includes domain prefix if has_domain_prefix is true', () => {
+        const data = {
+          ...rosaFormData,
+          cloud_provider: 'aws',
+          has_domain_prefix: true,
+          domain_prefix: 'pre-test-1',
+        };
+        const request = createClusterRequest({}, data);
+
+        expect(request.domain_prefix).toEqual('pre-test-1');
+      });
 
       describe('AWS Security Groups', () => {
         const byoVpcData = {

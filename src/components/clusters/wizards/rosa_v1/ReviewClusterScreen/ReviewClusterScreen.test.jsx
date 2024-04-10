@@ -394,4 +394,42 @@ describe('<ReviewClusterScreen />', () => {
       expect(screen.queryByText('Node draining')).not.toBeInTheDocument();
     });
   });
+
+  describe('Domain prefix', () => {
+    const domainPrefixLabel = 'Domain prefix';
+    const domainPrefixValue = 'pre-test-1';
+    const isHasDomainPrefix = true;
+    const isNotHasDomainPrefix = false;
+
+    it('is shown when has_domain_prefix is true', () => {
+      const ConnectedReviewClusterScreen = wizardConnector(ReviewClusterScreen);
+      const newProps = {
+        ...defaultProps,
+        formValues: {
+          ...defaultProps.formValues,
+          domain_prefix: domainPrefixValue,
+          has_domain_prefix: isHasDomainPrefix,
+        },
+      };
+      render(<ConnectedReviewClusterScreen {...newProps} />);
+
+      expect(screen.getByText(domainPrefixLabel)).toBeInTheDocument();
+      expect(screen.getByText(domainPrefixValue)).toBeInTheDocument();
+    });
+
+    it('is absent when has_domain_prefix is false', () => {
+      const ConnectedReviewClusterScreen = wizardConnector(ReviewClusterScreen);
+      const newProps = {
+        ...defaultProps,
+        formValues: {
+          ...defaultProps.formValues,
+          has_domain_prefix: isNotHasDomainPrefix,
+        },
+      };
+      render(<ConnectedReviewClusterScreen {...newProps} />);
+
+      expect(screen.queryByText(domainPrefixLabel)).not.toBeInTheDocument();
+      expect(screen.queryByText(domainPrefixValue)).not.toBeInTheDocument();
+    });
+  });
 });
