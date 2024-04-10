@@ -220,7 +220,6 @@ function VersionSelection({
           className="pf-v5-c-dropdown__menu-item"
           isSelected={selectedClusterVersion?.raw_id === version.raw_id}
           value={version.raw_id}
-          formValue={version.raw_id}
           key={version.id}
           isDisabled={isIncompatible}
           description={selectOptionDescription(isIncompatible, isHostedDisabled(version))}

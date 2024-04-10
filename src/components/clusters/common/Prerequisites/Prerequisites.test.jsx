@@ -24,7 +24,7 @@ describe('<Prerequisites/>', () => {
     await checkAccessibility(container);
   });
 
-  it('is collapsed when initiallyExpanded is false and displays a checkbox when acknowledgementRequired is set to true', () => {
+  it('is collapsed when initiallyExpanded is false and displays a checkbox when acknowledgementRequired is set to true', async () => {
     const { container } = render(
       <ConnectedPrerequisites initiallyExpanded={false} acknowledgementRequired>
         {Children}
@@ -37,7 +37,7 @@ describe('<Prerequisites/>', () => {
       screen.getByText('Before continuing, confirm that all prerequisites are met'),
     ).not.toBeVisible();
 
-    expect(screen.getByText(inputLabel)).toBeInTheDocument();
+    expect(await screen.findByText(inputLabel)).toBeInTheDocument();
 
     // There is an error where the checkbox is required but is not coded as such
     // expect(screen.getByLabelText(inputLabel)).toBeRequired();

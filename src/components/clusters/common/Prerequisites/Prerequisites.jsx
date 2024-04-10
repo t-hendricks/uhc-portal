@@ -12,7 +12,6 @@ const Prerequisites = ({
   children,
   acknowledgementRequired = false,
   toggleText = 'Prerequisites',
-  ...restProps
 }) => {
   const [isExpanded, setIsExpanded] = useState(false);
 
@@ -33,7 +32,6 @@ const Prerequisites = ({
         onToggle={onToggle}
         contentId="prerequisites-content"
         toggleId="prerequisites-toggle"
-        {...restProps}
       >
         <div className="prerequisites-section">{children}</div>
       </ExpandableSection>
