@@ -17,6 +17,8 @@ import validators, {
   clusterNameAsyncValidation,
   clusterNameValidation,
   createPessimisticValidator,
+  domainPrefixAsyncValidation,
+  domainPrefixValidation,
   required,
   validateAWSKMSKeyARN,
   validateGCPKMSServiceAccount,
@@ -75,6 +77,31 @@ describe('clusterNameAsyncValidation', () => {
 describe('Field is a valid cluster name [len, chars, start, end]', () => {
   const requirements = [
     // expected values will be in same order
+    '1 - 54 characters',
+    'Consist of lower-case alphanumeric characters, or hyphen (-)',
+    'Start with a lower-case alphabetic character',
+    'End with a lower-case alphanumeric character',
+  ];
+  const testCases: [string | undefined, boolean[]][] = [
+    [undefined, [false, false, false, false]],
+    ['', [false, false, false, false]],
+    ['foo.bar', [true, false, true, true]],
+    ['foobarfoobarfoobar', [true, true, true, true]],
+    ['1foobar', [true, true, false, true]],
+    ['foobar-', [true, true, true, false]],
+    ['foo-1bar', [true, true, true, true]],
+    ['foobarfoobarfoobar-foobarfoobarfoobar-foobarfoobarfoobar', [false, true, true, true]],
+  ];
+
+  it.each(testCases)('value %p to be %p', (value: string | undefined, validateds: boolean[]) => {
+    const expected = requirements.map((text, i) => ({ text, validated: validateds[i] }));
+    expect(clusterNameValidation(value)).toEqual(expected);
+  });
+});
+
+describe('Field is a valid domain prefix [len, chars, start, end]', () => {
+  const requirements = [
+    // expected values will be in same order
     '1 - 15 characters',
     'Consist of lower-case alphanumeric characters, or hyphen (-)',
     'Start with a lower-case alphabetic character',
@@ -92,7 +119,20 @@ describe('Field is a valid cluster name [len, chars, start, end]', () => {
 
   it.each(testCases)('value %p to be %p', (value: string | undefined, validateds: boolean[]) => {
     const expected = requirements.map((text, i) => ({ text, validated: validateds[i] }));
-    expect(clusterNameValidation(value)).toEqual(expected);
+    expect(domainPrefixValidation(value)).toEqual(expected);
+  });
+});
+
+describe('domainPrefixAsyncValidation', () => {
+  const result = domainPrefixAsyncValidation(undefined);
+
+  it('is right message', () => {
+    const uniqueMsg = 'Globally unique domain prefix in your organization';
+    expect(result[0].text).toEqual(uniqueMsg);
+  });
+
+  it('is right validator', () => {
+    expect(result[0].validator).toBeInstanceOf(Function);
   });
 });
 

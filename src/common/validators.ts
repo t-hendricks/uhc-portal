@@ -64,7 +64,9 @@ const CONSOLE_URL_REGEXP =
   /^https?:\/\/(([0-9]{1,3}\.){3}[0-9]{1,3}|([a-z0-9-]+\.)+[a-z]{2,})(:[0-9]+)?([a-z0-9_/-]+)?$/i;
 
 // Maximum length for a cluster name
-const MAX_CLUSTER_NAME_LENGTH = 15;
+const MAX_CLUSTER_NAME_LENGTH = 54;
+
+const MAX_DOMAIN_PREFIX_LENGTH = 15;
 
 const MAX_MACHINE_POOL_NAME_LENGTH = 30;
 
@@ -240,8 +242,23 @@ const checkObjectNameAsyncValidation = (value?: string) => [
   },
 ];
 
-const clusterNameValidation = (value?: string) =>
-  checkObjectNameValidation(value, 'Cluster', MAX_CLUSTER_NAME_LENGTH);
+const checkObjectNameDomainPrefixAsyncValidation = (value?: string) => [
+  {
+    text: 'Globally unique domain prefix in your organization',
+    validator: async () => {
+      if (!value?.length) {
+        return false;
+      }
+      const search = `domain_prefix = ${sqlString(value)}`;
+      const { data } = await clusterService.getClusters(search, 1);
+
+      return !data?.items?.some((cluster) => cluster.domain_prefix === value);
+    },
+  },
+];
+
+const clusterNameValidation = (value?: string, maxLen?: number) =>
+  checkObjectNameValidation(value, 'Cluster', maxLen || MAX_CLUSTER_NAME_LENGTH);
 
 const clusterNameAsyncValidation = (value?: string) => checkObjectNameAsyncValidation(value);
 
@@ -250,6 +267,12 @@ const checkMachinePoolName = (value: string | undefined) =>
 
 const checkNodePoolName = (value: string | undefined) =>
   checkObjectName(value, 'Machine pool', MAX_NODE_POOL_NAME_LENGTH);
+
+const domainPrefixValidation = (value?: string) =>
+  checkObjectNameValidation(value, 'Domain Prefix', MAX_DOMAIN_PREFIX_LENGTH);
+
+const domainPrefixAsyncValidation = (value?: string) =>
+  checkObjectNameDomainPrefixAsyncValidation(value);
 
 const createAsyncValidationEvaluator =
   (
@@ -274,6 +297,10 @@ const evaluateClusterNameAsyncValidation = createAsyncValidationEvaluator(
   clusterNameAsyncValidation,
 );
 
+const evaluateDomainPrefixAsyncValidation = createAsyncValidationEvaluator(
+  domainPrefixAsyncValidation,
+);
+
 const findFirstFailureMessage = (populatedValidation: Validations | undefined) =>
   populatedValidation?.find((validation) => validation.validated === false)?.text;
 
@@ -287,6 +314,11 @@ const findFirstFailureMessage = (populatedValidation: Validations | undefined) =
  */
 const asyncValidateClusterName = async (value: string) => {
   const evaluatedAsyncValidation = await evaluateClusterNameAsyncValidation(value);
+  return findFirstFailureMessage(evaluatedAsyncValidation);
+};
+
+const asyncValidateDomainPrefix = async (value: string) => {
+  const evaluatedAsyncValidation = await evaluateDomainPrefixAsyncValidation(value);
   return findFirstFailureMessage(evaluatedAsyncValidation);
 };
 
@@ -1789,6 +1821,9 @@ export {
   clusterNameAsyncValidation,
   evaluateClusterNameAsyncValidation,
   asyncValidateClusterName,
+  domainPrefixValidation,
+  domainPrefixAsyncValidation,
+  asyncValidateDomainPrefix,
   checkLabelKey,
   checkLabelValue,
   checkTaintKey,

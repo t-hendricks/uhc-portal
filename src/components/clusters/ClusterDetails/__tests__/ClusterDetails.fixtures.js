@@ -57,6 +57,7 @@ const clusterDetails = {
     id: '1i4counta3holamvo1g5tp6n8p3a03bq',
     href: '/api/clusters_mgmt/v1/clusters/1i4counta3holamvo1g5tp6n8p3a03bq',
     name: 'test-liza',
+    domain_prefix: 'prefix-value-1',
     external_id: 'bae5b227-2472-4e71-be4d-a18fc60bb48a',
     infra_id: 'test-liza-d7vkd',
     display_name: 'test-liza',

@@ -117,6 +117,8 @@ export const initialValues: FormikValues = {
   [FieldId.IsDefaultRouterNamespaceOwnershipPolicyStrict]: true,
   [FieldId.IsDefaultRouterWildcardPolicyAllowed]: false,
   [FieldId.ClusterAutoscaling]: getDefaultClusterAutoScaling(),
+  [FieldId.DomainPrefix]: '',
+  [FieldId.HasDomainPrefix]: false,
 };
 
 export const initialTouched = {

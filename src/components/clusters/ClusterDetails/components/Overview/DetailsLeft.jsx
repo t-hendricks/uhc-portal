@@ -11,6 +11,8 @@ import {
 
 import { isHypershiftCluster } from '~/components/clusters/common/clusterStates';
 import getBillingModelLabel from '~/components/clusters/common/getBillingModelLabel';
+import { useFeatureGate } from '~/hooks/useFeatureGate';
+import { LONGER_CLUSTER_NAME_UI } from '~/redux/constants/featureConstants';
 
 import { normalizedProducts } from '../../../../../common/subscriptionTypes';
 import PopoverHint from '../../../../common/PopoverHint';
@@ -49,6 +51,8 @@ function DetailsLeft({ cluster, cloudProviders, showAssistedId }) {
   const { id, idLabel } = getIdFields(cluster, showAssistedId);
   const controlPlaneType = isHypershift ? 'Hosted' : 'Classic';
   const sharedVpcZoneId = get(cluster, 'aws.private_hosted_zone_id', false);
+  const domainPrefix = cluster?.domain_prefix;
+  const isLongerClusterNameEnabled = useFeatureGate(LONGER_CLUSTER_NAME_UI);
 
   return (
     <DescriptionList>
@@ -58,6 +62,14 @@ function DetailsLeft({ cluster, cloudProviders, showAssistedId }) {
           <span data-testid="clusterID">{id}</span>
         </DescriptionListDescription>
       </DescriptionListGroup>
+      {isLongerClusterNameEnabled && (
+        <DescriptionListGroup>
+          <DescriptionListTerm>Domain prefix</DescriptionListTerm>
+          <DescriptionListDescription>
+            <span>{domainPrefix}</span>
+          </DescriptionListDescription>
+        </DescriptionListGroup>
+      )}
       <DescriptionListGroup>
         <DescriptionListTerm>Type</DescriptionListTerm>
         <DescriptionListDescription>

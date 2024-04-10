@@ -21,9 +21,12 @@ import links from '~/common/installLinks.mjs';
 import { billingModels } from '~/common/subscriptionTypes';
 import {
   asyncValidateClusterName,
+  asyncValidateDomainPrefix,
   clusterNameAsyncValidation,
   clusterNameValidation,
   createPessimisticValidator,
+  domainPrefixAsyncValidation,
+  domainPrefixValidation,
   validateAWSKMSKeyARN,
 } from '~/common/validators';
 import { versionComparator } from '~/common/versionComparator';
@@ -53,7 +56,9 @@ import { FieldId, MIN_SECURE_BOOT_VERSION } from '~/components/clusters/wizards/
 import { CheckboxDescription } from '~/components/common/CheckboxDescription';
 import ExternalLink from '~/components/common/ExternalLink';
 import PopoverHint from '~/components/common/PopoverHint';
+import { useFeatureGate } from '~/hooks/useFeatureGate';
 import { getCloudProviders } from '~/redux/actions/cloudProviderActions';
+import { LONGER_CLUSTER_NAME_UI } from '~/redux/constants/featureConstants';
 import { useGlobalState } from '~/redux/hooks/useGlobalState';
 import { QuotaCostList } from '~/types/accounts_mgmt.v1';
 import { Version } from '~/types/clusters_mgmt.v1';
@@ -73,13 +78,13 @@ function Details() {
       [FieldId.ClusterVersion]: selectedVersion,
       [FieldId.SecureBoot]: secureBoot,
       [FieldId.MachinePoolsSubnets]: machinePoolsSubnets,
+      [FieldId.HasDomainPrefix]: hasDomainPrefix,
     },
     errors,
     isValidating,
     setFieldValue,
     getFieldProps,
   } = useFormState();
-
   const [isExpanded, setIsExpanded] = React.useState(false);
   const [showSecureBootAlert, setShowSecureBootAlert] = React.useState(false);
 
@@ -105,6 +110,9 @@ function Details() {
 
   const isIncompatibleSecureBootVersion =
     isGCP && versionComparator(selectedVersion?.raw_id, MIN_SECURE_BOOT_VERSION) === -1;
+
+  const isLongerClusterNameEnabled = useFeatureGate(LONGER_CLUSTER_NAME_UI);
+  const clusterNameMaxLength = isLongerClusterNameEnabled ? 54 : 15;
 
   React.useEffect(() => {
     dispatch(getCloudProviders());
@@ -212,7 +220,10 @@ function Details() {
   ];
 
   const validateClusterName = async (value: string) => {
-    const syncError = createPessimisticValidator(clusterNameValidation)(value);
+    const syncError = createPessimisticValidator(clusterNameValidation)(
+      value,
+      clusterNameMaxLength,
+    );
     if (syncError) {
       return syncError;
     }
@@ -220,6 +231,20 @@ function Details() {
     const clusterNameAsyncError = await asyncValidateClusterName(value);
     if (clusterNameAsyncError) {
       return clusterNameAsyncError;
+    }
+
+    return undefined;
+  };
+
+  const validateDomainPrefix = async (value: string) => {
+    const syncError = createPessimisticValidator(domainPrefixValidation)(value);
+    if (syncError) {
+      return syncError;
+    }
+
+    const domainPrefixAsyncError = await asyncValidateDomainPrefix(value);
+    if (domainPrefixAsyncError) {
+      return domainPrefixAsyncError;
     }
 
     return undefined;
@@ -252,7 +277,7 @@ function Details() {
               label="Cluster name"
               type="text"
               validate={validateClusterName}
-              validation={clusterNameValidation}
+              validation={(value: string) => clusterNameValidation(value, clusterNameMaxLength)}
               asyncValidation={clusterNameAsyncValidation}
               isRequired
               extendedHelpText={constants.clusterNameHint}
@@ -262,6 +287,43 @@ function Details() {
               }}
             />
           </GridItem>
+
+          {isLongerClusterNameEnabled && (
+            <>
+              <GridItem>
+                <Split hasGutter className="pf-u-mb-0">
+                  <SplitItem>
+                    <CheckboxField
+                      name={FieldId.HasDomainPrefix}
+                      label="Create custom domain prefix"
+                    />
+                  </SplitItem>
+                  <SplitItem>
+                    <PopoverHint hint={constants.domainPrefixHint} />
+                  </SplitItem>
+                </Split>
+              </GridItem>
+              {hasDomainPrefix && (
+                <GridItem>
+                  <Field
+                    component={RichInputField}
+                    name={FieldId.DomainPrefix}
+                    label="Domain prefix"
+                    type="text"
+                    validate={validateDomainPrefix}
+                    validation={domainPrefixValidation}
+                    asyncValidation={domainPrefixAsyncValidation}
+                    isRequired
+                    input={{
+                      ...getFieldProps(FieldId.DomainPrefix),
+                      onChange: (value: string) =>
+                        setFieldValue(FieldId.DomainPrefix, value, false),
+                    }}
+                  />
+                </GridItem>
+              )}
+            </>
+          )}
 
           <GridItem>
             <VersionSelectField
