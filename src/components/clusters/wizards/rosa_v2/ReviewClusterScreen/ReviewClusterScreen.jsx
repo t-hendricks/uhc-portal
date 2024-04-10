@@ -45,6 +45,7 @@ const ReviewClusterScreen = ({
       [FieldId.Hypershift]: hypershiftValue,
       [FieldId.AutoscalingEnabled]: autoscalingEnabledValue,
       [FieldId.CloudProvider]: cloudProvider,
+      [FieldId.HasDomainPrefix]: hasDomainPrefix,
     },
     values: formValues,
     setFieldValue,
@@ -69,6 +70,7 @@ const ReviewClusterScreen = ({
   const clusterSettingsFields = [
     ...(!isROSA ? ['cloud_provider'] : []),
     'name',
+    ...(hasDomainPrefix ? [FieldId.DomainPrefix] : []),
     'cluster_version',
     'region',
     'multi_az',

@@ -30,9 +30,12 @@ import { constants } from '~/components/clusters/common/CreateOSDFormConstants';
 import { emptyAWSSubnet } from '~/components/clusters/wizards/common/createOSDInitialValues';
 import {
   asyncValidateClusterName,
+  asyncValidateDomainPrefix,
   clusterNameAsyncValidation,
   clusterNameValidation,
   createPessimisticValidator,
+  domainPrefixAsyncValidation,
+  domainPrefixValidation,
 } from '~/common/validators';
 import { CheckboxField } from '~/components/clusters/wizards/form/CheckboxField';
 import { RadioGroupField, RichInputField } from '~/components/clusters/wizards/form';
@@ -47,6 +50,8 @@ import {
 } from '~/components/clusters/common/ScaleSection/AutoScaleSection/AutoScaleHelper';
 import { ClassicEtcdFipsSection } from '~/components/clusters/wizards/common/ClusterSettings/Details/ClassicEtcdFipsSection';
 import { HCPEtcdEncryptionSection } from '~/components/clusters/wizards/rosa_v2/ClusterSettings/Details/HCPEtcdEncryptionSection';
+import { useFeatureGate } from '~/hooks/useFeatureGate';
+import { LONGER_CLUSTER_NAME_UI } from '~/redux/constants/featureConstants';
 import { createOperatorRolesHashPrefix } from '~/components/clusters/wizards/rosa_v2/ClusterRolesScreen/ClusterRolesScreen';
 import { QuotaCostList } from '~/types/accounts_mgmt.v1';
 
@@ -59,6 +64,7 @@ function Details() {
       [FieldId.Region]: region,
       [FieldId.MachinePoolsSubnets]: machinePoolsSubnets,
       [FieldId.ClusterPrivacy]: clusterPrivacy,
+      [FieldId.HasDomainPrefix]: hasDomainPrefix,
     },
     errors,
     getFieldProps,
@@ -97,8 +103,14 @@ function Details() {
     organization: { quotaList },
   } = useGlobalState((state) => state.userProfile);
 
+  const isLongerClusterNameEnabled = useFeatureGate(LONGER_CLUSTER_NAME_UI);
+  const clusterNameMaxLength = isLongerClusterNameEnabled ? 54 : 15;
+
   const validateClusterName = async (value: string) => {
-    const syncError = createPessimisticValidator(clusterNameValidation)(value);
+    const syncError = createPessimisticValidator(clusterNameValidation)(
+      value,
+      clusterNameMaxLength,
+    );
     if (syncError) {
       return syncError;
     }
@@ -106,6 +118,20 @@ function Details() {
     const clusterNameAsyncError = await asyncValidateClusterName(value);
     if (clusterNameAsyncError) {
       return clusterNameAsyncError;
+    }
+
+    return undefined;
+  };
+
+  const validateDomainPrefix = async (value: string) => {
+    const syncError = createPessimisticValidator(domainPrefixValidation)(value);
+    if (syncError) {
+      return syncError;
+    }
+
+    const domainPrefixAsyncError = await asyncValidateDomainPrefix(value);
+    if (domainPrefixAsyncError) {
+      return domainPrefixAsyncError;
     }
 
     return undefined;
@@ -214,7 +240,7 @@ function Details() {
             label="Cluster name"
             type="text"
             validate={validateClusterName}
-            validation={clusterNameValidation}
+            validation={(value: string) => clusterNameValidation(value, clusterNameMaxLength)}
             asyncValidation={clusterNameAsyncValidation}
             isRequired
             extendedHelpText={constants.clusterNameHint}
@@ -224,13 +250,53 @@ function Details() {
                 setFieldValue(FieldId.ClusterName, value, false);
                 setFieldValue(
                   FieldId.CustomOperatorRolesPrefix,
-                  `${value}-${createOperatorRolesHashPrefix()}`,
+                  `${value.slice(0, 27)}-${createOperatorRolesHashPrefix()}`,
                 );
               },
             }}
           />
         </GridItem>
         <GridItem md={6} />
+
+        {isLongerClusterNameEnabled && (
+          <>
+            <GridItem>
+              <Split hasGutter className="pf-u-mb-0">
+                <SplitItem>
+                  <CheckboxField
+                    name={FieldId.HasDomainPrefix}
+                    label="Create custom domain prefix"
+                  />
+                </SplitItem>
+                <SplitItem>
+                  <PopoverHint hint={constants.domainPrefixHint} />
+                </SplitItem>
+              </Split>
+            </GridItem>
+            {hasDomainPrefix && (
+              <>
+                <GridItem md={6}>
+                  <Field
+                    component={RichInputField}
+                    name={FieldId.DomainPrefix}
+                    label="Domain prefix"
+                    type="text"
+                    validate={validateDomainPrefix}
+                    validation={domainPrefixValidation}
+                    asyncValidation={domainPrefixAsyncValidation}
+                    isRequired
+                    input={{
+                      ...getFieldProps(FieldId.DomainPrefix),
+                      onChange: (value: string) =>
+                        setFieldValue(FieldId.DomainPrefix, value, false),
+                    }}
+                  />
+                </GridItem>
+                <GridItem md={6} />
+              </>
+            )}
+          </>
+        )}
 
         <GridItem md={6}>
           <VersionSelectField

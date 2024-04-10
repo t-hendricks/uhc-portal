@@ -13,8 +13,11 @@ import {
   getMinReplicasCount,
 } from '~/components/clusters/common/ScaleSection/AutoScaleSection/AutoScaleHelper';
 import { normalizedProducts } from '~/common/subscriptionTypes';
-import { emptyAWSSubnet } from '~/components/clusters/wizards/common/createOSDInitialValues';
+import { emptyAWSSubnet } from '~/components/clusters/wizards/common/constants';
 
+import ReduxCheckbox from '~/components/common/ReduxFormComponents/ReduxCheckbox';
+import { useFeatureGate } from '~/hooks/useFeatureGate';
+import { LONGER_CLUSTER_NAME_UI } from '~/redux/constants/featureConstants';
 import CloudRegionComboBox from './CloudRegionComboBox';
 import PopoverHint from '../../../../../common/PopoverHint';
 import ReduxVerticalFormGroup from '../../../../../common/ReduxFormComponents/ReduxVerticalFormGroup';
@@ -23,6 +26,8 @@ import validators, {
   clusterNameValidation,
   clusterNameAsyncValidation,
   createPessimisticValidator,
+  domainPrefixAsyncValidation,
+  domainPrefixValidation,
 } from '../../../../../../common/validators';
 import RadioButtons from '../../../../../common/ReduxFormComponents/RadioButtons';
 import VersionSelection from './VersionSelection';
@@ -42,6 +47,7 @@ function BasicFieldsSection({
   isWizard,
   isHypershiftSelected,
   clusterPrivacy,
+  hasDomainPrefix,
 }) {
   const multiAzTooltip = !hasMultiAzQuota && noQuotaTooltip;
   const singleAzTooltip = !hasSingleAzQuota && noQuotaTooltip;
@@ -92,6 +98,9 @@ function BasicFieldsSection({
     }
   };
 
+  const isLongerClusterNameEnabled = useFeatureGate(LONGER_CLUSTER_NAME_UI);
+  const clusterNameMaxLength = isLongerClusterNameEnabled ? 54 : 15;
+
   return (
     <>
       {/* cluster name */}
@@ -101,19 +110,57 @@ function BasicFieldsSection({
           name="name"
           label="Cluster name"
           type="text"
-          validate={createPessimisticValidator(clusterNameValidation)}
-          validation={clusterNameValidation}
+          validate={(value) =>
+            createPessimisticValidator(clusterNameValidation)(value, clusterNameMaxLength)
+          }
+          validation={(value) => clusterNameValidation(value, clusterNameMaxLength)}
           asyncValidation={clusterNameAsyncValidation}
           disabled={pending}
           isRequired
           extendedHelpText={constants.clusterNameHint}
           onChange={(value) =>
             isRosa &&
-            change('custom_operator_roles_prefix', `${value}-${createOperatorRolesHashPrefix()}`)
+            change(
+              'custom_operator_roles_prefix',
+              `${value.slice(0, 27)}-${createOperatorRolesHashPrefix()}`,
+            )
           }
         />
       </GridItem>
       <GridItem md={6} />
+
+      {/* domain prefix */}
+      {isLongerClusterNameEnabled && (
+        <>
+          <GridItem md={6}>
+            <Field
+              component={ReduxCheckbox}
+              name="has_domain_prefix"
+              label="Create custom domain prefix"
+              extendedHelpText={constants.domainPrefixHint}
+              onClick={() => change('domain_prefix', '')}
+            />
+          </GridItem>
+          <GridItem md={6} />
+          {hasDomainPrefix && (
+            <>
+              <GridItem md={6}>
+                <Field
+                  component={ReduxRichInputField}
+                  name="domain_prefix"
+                  label="Domain prefix"
+                  type="text"
+                  validate={createPessimisticValidator(domainPrefixValidation)}
+                  validation={domainPrefixValidation}
+                  asyncValidation={domainPrefixAsyncValidation}
+                  isRequired
+                />
+              </GridItem>
+              <GridItem md={6} />
+            </>
+          )}
+        </>
+      )}
 
       {/* Base DNS domain */}
       {showDNSBaseDomain && (
@@ -230,6 +277,7 @@ BasicFieldsSection.propTypes = {
   isWizard: PropTypes.bool,
   isHypershiftSelected: PropTypes.bool,
   clusterPrivacy: PropTypes.string,
+  hasDomainPrefix: PropTypes.bool,
 };
 
 export default BasicFieldsSection;

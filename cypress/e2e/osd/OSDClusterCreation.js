@@ -24,8 +24,10 @@ describe('OSD cluster tests', { tags: ['ci'] }, () => {
       cy.get(CreateOSDWizardPage.primaryButton).click();
 
       CreateOSDWizardPage.isClusterDetailsScreen();
-      cy.get(CreateOSDWizardPage.clusterNameInput).type('aaaaaaaaaaaaaaaa');
-      cy.get(CreateOSDWizardPage.clusterNameInputError).contains('1 - 15 characters');
+      cy.get(CreateOSDWizardPage.clusterNameInput).type(
+        'aaaaaaaaaaaaaaaa-aaaaaaaaaaaaaaaa-aaaaaaaaaaaaaaaa-aaaaaaaa',
+      );
+      cy.get(CreateOSDWizardPage.clusterNameInputError).contains('1 - 54 characters');
       cy.get(CreateOSDWizardPage.clusterNameInput).clear();
       cy.get(CreateOSDWizardPage.clusterNameInputError).should('have.length', 4);
       cy.get(CreateOSDWizardPage.clusterNameInput).clear().type('a*a');

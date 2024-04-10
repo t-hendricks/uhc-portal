@@ -1,7 +1,11 @@
 import React from 'react';
-import { screen, render, checkAccessibility, within } from '~/testUtils';
-import DetailsLeft from './DetailsLeft';
+
+import { LONGER_CLUSTER_NAME_UI } from '~/redux/constants/featureConstants';
+import { checkAccessibility, mockUseFeatureGate, render, screen, within } from '~/testUtils';
+
 import fixtures from '../../__tests__/ClusterDetails.fixtures';
+
+import DetailsLeft from './DetailsLeft';
 
 const defaultProps = {
   cluster: fixtures.clusterDetails.cluster,
@@ -14,6 +18,9 @@ const componentText = {
   REGION: { label: 'Region', NA: 'N/A' },
   PROVIDER: { label: 'Provider', NA: 'N/A' },
   ID: { label: 'Cluster ID', aiLabel: 'Assisted cluster ID / Cluster ID', NA: 'N/A' },
+  DOMAIN_PREFIX: {
+    label: 'Domain prefix',
+  },
   VERSION: { label: 'Version' },
   OWNER: { label: 'Owner', NA: 'N/A' },
   SUBSCRIPTION: { label: 'Subscription billing model' },
@@ -47,6 +54,10 @@ const checkForValueAbsence = (label, value) => {
 };
 
 describe('<DetailsLeft />', () => {
+  afterAll(() => {
+    jest.resetAllMocks();
+  });
+
   it('is accessible', async () => {
     // Arrange
     const OSDClusterFixture = fixtures.clusterDetails.cluster;
@@ -107,6 +118,31 @@ describe('<DetailsLeft />', () => {
         componentText.ID.aiLabel,
         `${componentText.ID.NA} / bae5b227-2472-4e71-be4d-a18fc60bb48a`,
       );
+    });
+  });
+
+  describe('Domain prefix', () => {
+    it('shows the label and value when feature gate is enabled', () => {
+      mockUseFeatureGate([[LONGER_CLUSTER_NAME_UI, true]]);
+      // Arrange
+      const OSDClusterFixture = fixtures.clusterDetails.cluster;
+      const domainPrefix = 'prefix-value-1';
+      const props = { ...defaultProps, cluster: OSDClusterFixture };
+      render(<DetailsLeft {...props} />);
+
+      // Assert
+      checkForValue(componentText.DOMAIN_PREFIX.label, domainPrefix);
+    });
+
+    it('hides the label and value when feature gate is not enabled', () => {
+      mockUseFeatureGate([[LONGER_CLUSTER_NAME_UI, false]]);
+      // Arrange
+      const OSDClusterFixture = fixtures.clusterDetails.cluster;
+      const props = { ...defaultProps, cluster: OSDClusterFixture };
+      render(<DetailsLeft {...props} />);
+
+      // Assert
+      expect(screen.queryByText(componentText.DOMAIN_PREFIX.label)).toBe(null);
     });
   });
 
