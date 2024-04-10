@@ -173,7 +173,7 @@ const ClusterRolesScreen = ({
     track(trackEvents.OCMRoleRefreshed);
   };
 
-  const handleCreationModeChange = (_, value) => {
+  const handleCreationModeChange = (value) => {
     // Going to Next step and Back, triggers this onChange with value undefined?!
     if (value) {
       setFieldValue(FieldId.RosaRolesProviderCreationMode, value);
@@ -323,13 +323,10 @@ const ClusterRolesScreen = ({
                   className="radio-button"
                   disabled={getOCMRoleResponse.pending}
                   options={roleModeOptions}
-                  onChange={handleCreationModeChange}
                   disableDefaultValueHandling
                   input={{
                     ...getFieldProps(FieldId.RosaRolesProviderCreationMode),
-                    onChange: (value) => {
-                      setFieldValue(FieldId.RosaRolesProviderCreationMode, value, false);
-                    },
+                    onChange: handleCreationModeChange,
                   }}
                   meta={getFieldMeta(FieldId.RosaRolesProviderCreationMode)}
                 />
