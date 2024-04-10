@@ -3,12 +3,14 @@ import { useField } from 'formik';
 
 import { Checkbox, FormGroup } from '@patternfly/react-core';
 
+import { Cluster } from '~/types/clusters_mgmt.v1';
+
 import links from '~/common/installLinks.mjs';
 import { isROSA } from '~/components/clusters/common/clusterStates';
 import { constants } from '~/components/clusters/common/CreateOSDFormConstants';
 import ExternalLink from '~/components/common/ExternalLink';
 import PopoverHint from '~/components/common/PopoverHint';
-import { Cluster } from '~/types/clusters_mgmt.v1';
+import { ClusterFromSubscription } from '~/types/types';
 
 import useCanClusterAutoscale from '../hooks/useCanClusterAutoscale';
 
@@ -19,8 +21,12 @@ type AutoscalingFieldProps = {
 };
 
 const AutoscalingField = ({ cluster }: AutoscalingFieldProps) => {
+  const clusterFromSubscription = cluster as ClusterFromSubscription;
   const [field] = useField(fieldId);
-  const canAutoScale = useCanClusterAutoscale(cluster.product?.id, 'test');
+  const canAutoScale = useCanClusterAutoscale(
+    clusterFromSubscription.product?.id,
+    clusterFromSubscription.subscription?.cluster_billing_model,
+  );
 
   const isRosa = isROSA(cluster);
   const autoScalingUrl = isRosa ? links.ROSA_AUTOSCALING : links.APPLYING_AUTOSCALING;

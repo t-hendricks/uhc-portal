@@ -21,8 +21,6 @@ import {
 import { useAWSVPCFromCluster } from '~/components/clusters/common/useAWSVPCFromCluster';
 import { IMDSType } from '~/components/clusters/wizards/common';
 import { isRestrictedEnv } from '~/restrictedEnv';
-import { hasSecurityGroupIds } from '~/common/securityGroupsHelpers';
-import { useAWSVPCFromCluster } from '~/components/clusters/common/useAWSVPCFromCluster';
 import useCanClusterAutoscale from '~/components/clusters/ClusterDetails/components/MachinePools/components/EditMachinePoolModal/hooks/useCanClusterAutoscale';
 
 import links from '../../../../../../common/installLinks.mjs';

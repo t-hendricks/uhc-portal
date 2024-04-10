@@ -22,8 +22,6 @@ import {
 } from '~/redux/constants/featureConstants';
 
 import useCanClusterAutoscale from '~/components/clusters/ClusterDetails/components/MachinePools/components/EditMachinePoolModal/hooks/useCanClusterAutoscale';
-import { canSelectImds } from '~/components/clusters/wizards/rosa/constants';
-import DebugClusterRequest from '../DebugClusterRequest';
 import ReviewSection, { ReviewItem } from '../../common/ReviewCluster/ReviewSection';
 import DebugClusterRequest from '../DebugClusterRequest';
 
@@ -47,7 +45,7 @@ const ReviewClusterScreen = ({
   goToStepById,
   isHypershiftSelected,
 }) => {
-  const canAutoScale = useCanClusterAutoscale(formValues.product, formValues.billig_model);
+  const canAutoScale = useCanClusterAutoscale(formValues.product, formValues.billing_model);
   const isByoc = formValues.byoc === 'true';
   const isAWS = formValues.cloud_provider === 'aws';
   const isGCP = formValues.cloud_provider === 'gcp';
