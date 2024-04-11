@@ -36,11 +36,12 @@ interface TreeViewSelectProps {
   treeViewSwitchActive: boolean;
   setTreeViewSwitchActive: React.Dispatch<React.SetStateAction<boolean>>;
   includeFilterSwitch?: boolean;
-  selected: string;
+  selected?: TreeViewDataItem;
   setSelected: (
     event: React.MouseEvent<Element, MouseEvent>,
     selection: TreeViewData | TreeViewDataItem,
   ) => void;
+  selectionPlaceholderText?: string;
   placeholder?: string;
   switchLabelOnText?: string;
   switchLabelOffText?: string;
@@ -70,6 +71,7 @@ export function TreeViewSelect(props: TreeViewSelectProps) {
     includeFilterSwitch,
     setSelected,
     selected,
+    selectionPlaceholderText,
     treeViewSelectionMap,
     treeViewSwitchActive,
     setTreeViewSwitchActive,
@@ -85,6 +87,11 @@ export function TreeViewSelect(props: TreeViewSelectProps) {
   const [searchString, setSearchString] = useState('');
   const toggleRef = React.useRef<HTMLButtonElement>(null);
   const menuRef = React.useRef<HTMLDivElement>(null);
+  const [activeItems, setActiveItems] = React.useState<TreeViewData[]>([]);
+
+  useEffect(() => {
+    if (selected) setActiveItems([selected]);
+  }, [selected]);
 
   const searchFn = useCallback(() => {
     if (searchString === '') {
@@ -169,6 +176,16 @@ export function TreeViewSelect(props: TreeViewSelectProps) {
     </Toolbar>
   );
 
+  const getSelectionText = () => {
+    if (selectionPlaceholderText) {
+      return selectionPlaceholderText;
+    }
+    if (selected) {
+      return selected;
+    }
+    return placeholder;
+  };
+
   const toggle = (
     <MenuToggle
       ref={toggleRef}
@@ -179,7 +196,7 @@ export function TreeViewSelect(props: TreeViewSelectProps) {
       }}
       isExpanded={isOpen}
     >
-      {selected ? `${selected}` : `${placeholder}`}
+      {getSelectionText()}
     </MenuToggle>
   );
 
@@ -201,6 +218,7 @@ export function TreeViewSelect(props: TreeViewSelectProps) {
               allExpanded={allExpanded || searchString !== ''}
               data={filteredItems}
               useMemo
+              activeItems={activeItems}
             />
           </PanelMainBody>
         </section>

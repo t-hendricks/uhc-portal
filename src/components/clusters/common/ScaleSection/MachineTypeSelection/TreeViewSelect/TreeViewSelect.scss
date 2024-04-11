@@ -2,12 +2,14 @@
   padding-bottom: 0;
 }
 
+.tree-view-select-panel.pf-v5-c-panel.pf-m-raised.pf-m-scrollable,
 .tree-view-select-panel {
   max-height: 60%;
   height: auto;
   overflow: auto;
   width: min-content;
 }
+
 .tree-view-select-panel .pf-v5-c-panel__main {
   max-height: 100%;
 }
