@@ -38,7 +38,9 @@ function ClusterTypeLabel({ cluster }) {
     [normalizedProducts.ROSA_HyperShift]: {
       name: 'ROSA',
       tooltip: 'Red Hat OpenShift Service on AWS',
-      label: <PreviewLabel creationDateStr={creationDateStr} />, // PreviewLabel will return null if created after creationDate
+      // PreviewLabel will return null if created after creationDate
+      // Shorten text to "Preview" to take less space in table.
+      label: <PreviewLabel creationDateStr={creationDateStr} text="Preview" />,
     },
     [normalizedProducts.ARO]: {
       name: 'ARO',
