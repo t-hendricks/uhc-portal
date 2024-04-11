@@ -82,12 +82,13 @@ FieldArrayErrorGridItem.propTypes = {
   isGroupError: PropTypes.bool,
 };
 
-const MinusButtonGridItem = ({ index, fields, onClick }) => {
+const MinusButtonGridItem = ({ index, fields, onClick, minusButtonDisabledMessage }) => {
   const isOnlyItem = index === 0 && fields.length === 1;
+  const disableReason = minusButtonDisabledMessage || 'To delete the item, add another item first.';
   return (
     <GridItem className="field-grid-item minus-button" span={1}>
       <ButtonWithTooltip
-        disableReason={isOnlyItem && 'You cannot delete the only item'}
+        disableReason={isOnlyItem && disableReason}
         tooltipProps={{ position: 'right', distance: 0 }}
         onClick={onClick}
         icon={<MinusCircleIcon />}
@@ -101,6 +102,7 @@ MinusButtonGridItem.propTypes = {
   index: PropTypes.number.isRequired,
   fields: PropTypes.array.isRequired,
   onClick: PropTypes.func.isRequired,
+  minusButtonDisabledMessage: PropTypes.string,
 };
 
 const FieldGridItem = ({
@@ -163,6 +165,7 @@ const RenderArrayFields = (props) => {
     isFieldFilled = (field) => !!field.name,
     addMoreTitle,
     addMoreButtonDisabled,
+    minusButtonDisabledMessage,
   } = props;
 
   const [touched, setTouched] = React.useState(false);
@@ -243,7 +246,12 @@ const RenderArrayFields = (props) => {
             fieldSpan={fieldSpan}
             {...props}
           />
-          <MinusButtonGridItem index={index} fields={fields} onClick={() => removeField(index)} />
+          <MinusButtonGridItem
+            index={index}
+            fields={fields}
+            onClick={() => removeField(index)}
+            minusButtonDisabledMessage={minusButtonDisabledMessage}
+          />
           <FieldArrayErrorGridItem
             isLast={index === fields.length - 1}
             errorMessage={error}
@@ -269,6 +277,7 @@ RenderArrayFields.propTypes = {
   addMoreTitle: PropTypes.string,
   isFieldFilled: PropTypes.func,
   addMoreButtonDisabled: PropTypes.bool,
+  minusButtonDisabledMessage: PropTypes.string,
 };
 
 export default RenderArrayFields;

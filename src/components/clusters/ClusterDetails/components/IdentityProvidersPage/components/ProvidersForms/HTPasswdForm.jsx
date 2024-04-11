@@ -8,7 +8,6 @@ import { ExclamationCircleIcon } from '@patternfly/react-icons/dist/esm/icons/ex
 import { useGlobalState } from '~/redux/hooks/useGlobalState';
 
 import {
-  atLeastOneRequired,
   required,
   validateHTPasswdPassword,
   validateHTPasswdPasswordConfirm,
@@ -195,11 +194,9 @@ const HTPasswdForm = ({ isPending, HTPasswdErrors, change }) => {
         addMoreTitle="Add user"
         isRequired
         disabled={isPending}
-        validate={[
-          atLeastOneRequired('users', (field) => !field?.username || field.username.trim() === ''),
-          validateUniqueHTPasswdUsername,
-        ]}
+        validate={[validateUniqueHTPasswdUsername]}
         addMoreButtonDisabled={isError}
+        minusButtonDisabledMessage="To delete the static user, add another user first."
       />
       <GridItem span={11}>
         <Alert isInline variant="info" title="Securely store your usernames and passwords">
