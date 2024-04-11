@@ -193,6 +193,7 @@ export function TreeViewSelect(props: TreeViewSelectProps) {
         maxHeight: '60%',
         height: 'auto',
         overflow: 'auto',
+        width: 'min-content',
       }}
     >
       <PanelMain
