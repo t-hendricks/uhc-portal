@@ -1,10 +1,9 @@
+/* generated using openapi-typescript-codegen -- do not edit */
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-
 import type { AutoscalerResourceLimits } from './AutoscalerResourceLimits';
 import type { AutoscalerScaleDownConfig } from './AutoscalerScaleDownConfig';
-
 /**
  * Cluster-wide autoscaling configuration.
  */

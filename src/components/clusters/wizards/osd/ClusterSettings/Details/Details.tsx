@@ -1,7 +1,6 @@
 import React, { useCallback } from 'react';
 import { useDispatch } from 'react-redux';
 import { Field } from 'formik';
-import { CheckboxField } from '~/components/clusters/wizards/form/CheckboxField';
 
 import {
   Form,
@@ -39,10 +38,12 @@ import PopoverHint from '~/components/common/PopoverHint';
 import PersistentStorageDropdown from '~/components/clusters/common/PersistentStorageDropdown';
 import LoadBalancersDropdown from '~/components/clusters/common/LoadBalancersDropdown';
 import {
+  CheckboxField,
   RadioGroupField,
   RadioGroupOption,
   RichInputField,
 } from '~/components/clusters/wizards/form';
+import { CheckboxDescription } from '~/components/common/CheckboxDescription';
 import { getIncompatibleVersionReason } from '~/common/versionCompatibility';
 import { SupportedFeature } from '~/common/featureCompatibility';
 import { useFormState } from '~/components/clusters/wizards/hooks';
@@ -393,25 +394,25 @@ function Details() {
               />
             </SplitItem>
           </Split>
-          <div className="pf-v5-u-font-size-sm pf-v5-u-color-200 pf-v5-u-ml-lg pf-v5-u-mt-xs">
-            {constants.enableUserWorkloadMonitoringHint}
-          </div>
+          <CheckboxDescription>{constants.enableUserWorkloadMonitoringHint}</CheckboxDescription>
 
           <ExpandableSection
             toggleText="Advanced Encryption"
             onToggle={onToggle}
             isExpanded={isExpanded}
           >
-            {isByoc && (
-              <CustomerManagedEncryption
-                hasCustomerManagedKey={hasCustomerManagedKey}
-                region={region}
-                cloudProvider={cloudProvider}
-                kmsKeyArn={kmsKeyArn}
-              />
-            )}
+            <Grid hasGutter>
+              {isByoc && (
+                <CustomerManagedEncryption
+                  hasCustomerManagedKey={hasCustomerManagedKey}
+                  region={region}
+                  cloudProvider={cloudProvider}
+                  kmsKeyArn={kmsKeyArn}
+                />
+              )}
 
-            <ClassicEtcdFipsSection isRosa={false} />
+              <ClassicEtcdFipsSection isRosa={false} />
+            </Grid>
           </ExpandableSection>
         </Flex>
       </Grid>

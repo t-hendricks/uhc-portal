@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { AxiosError } from 'axios';
-import { Button, ExpandableSection, Form, Stack, StackItem } from '@patternfly/react-core';
+import { Button, ExpandableSection, Form, Stack, StackItem, Tooltip } from '@patternfly/react-core';
 import { Formik } from 'formik';
 import { useDispatch } from 'react-redux';
 import isEqual from 'lodash/isEqual';
@@ -20,6 +20,8 @@ import { PromiseReducerState } from '~/redux/types';
 
 import { HCP_USE_NODE_UPGRADE_POLICIES } from '~/redux/constants/featureConstants';
 import { useFeatureGate } from '~/hooks/useFeatureGate';
+import { getNodeCount } from '~/components/clusters/common/machinePools/utils';
+import { MAX_NODES_HCP } from '~/components/clusters/common/machinePools/constants';
 import EditNodeCountSection from './sections/EditNodeCountSection';
 import { canUseSpotInstances, normalizeNodePool } from '../../machinePoolsHelper';
 import SpotInstancesSection from './sections/SpotInstancesSection';
@@ -84,6 +86,7 @@ type EditMachinePoolModalProps = {
     data: MachinePool[];
   }>;
   machineTypesResponse: GlobalState['machineTypes'];
+  isHypershift?: boolean;
 };
 
 const EditMachinePoolModal = ({
@@ -95,6 +98,7 @@ const EditMachinePoolModal = ({
   machinePoolsResponse,
   machineTypesResponse,
   shouldDisplayClusterName,
+  isHypershift,
 }: EditMachinePoolModalProps) => {
   const getIsEditValue = React.useCallback(
     () => !!isInitEdit || !!machinePoolId,
@@ -137,6 +141,17 @@ const EditMachinePoolModal = ({
   React.useEffect(() => {
     setIsEdit(getIsEditValue());
   }, [getIsEditValue]);
+
+  // Checks if max nodes amount is reached for add machine pool nodes
+  const isMaxReached =
+    isHypershift &&
+    machinePoolsResponse.data &&
+    getNodeCount(
+      machinePoolsResponse?.data,
+      isHypershift,
+      currentMachinePool?.id,
+      currentMachinePool?.instance_type,
+    ) === MAX_NODES_HCP;
 
   return (
     <Formik<EditMachinePoolValues>
@@ -191,22 +206,44 @@ const EditMachinePoolModal = ({
                   />
                 </StackItem>
               )}
+
               <StackItem>
-                <Button
-                  isDisabled={
-                    !isValid ||
-                    isSubmitting ||
-                    !machinePoolsResponse.fulfilled ||
-                    !machineTypesResponse.fulfilled ||
-                    isEqual(initialValues, values)
-                  }
-                  onClick={submitForm}
-                  isLoading={isSubmitting}
-                  className="pf-v5-u-mr-md"
-                  data-testid="submit-btn"
-                >
-                  {isEdit ? 'Save' : 'Add machine pool'}
-                </Button>
+                {isMaxReached ? (
+                  <Tooltip content="Maximum cluster node count limit reached">
+                    <Button
+                      isAriaDisabled={isMaxReached || !isValid}
+                      isDisabled={
+                        isSubmitting ||
+                        !machinePoolsResponse.fulfilled ||
+                        !machineTypesResponse.fulfilled ||
+                        isEqual(initialValues, values)
+                      }
+                      onClick={submitForm}
+                      isLoading={isSubmitting}
+                      className="pf-v5-u-mr-md"
+                      data-testid="submit-btn"
+                    >
+                      {isEdit ? 'Save' : 'Add machine pool'}
+                    </Button>
+                  </Tooltip>
+                ) : (
+                  <Button
+                    isAriaDisabled={isMaxReached}
+                    isDisabled={
+                      !isValid ||
+                      isSubmitting ||
+                      !machinePoolsResponse.fulfilled ||
+                      !machineTypesResponse.fulfilled ||
+                      isEqual(initialValues, values)
+                    }
+                    onClick={submitForm}
+                    isLoading={isSubmitting}
+                    className="pf-v5-u-mr-md"
+                    data-testid="submit-btn"
+                  >
+                    {isEdit ? 'Save' : 'Add machine pool'}
+                  </Button>
+                )}
                 <Button
                   variant="secondary"
                   isDisabled={isSubmitting}
@@ -294,6 +331,7 @@ export const ConnectedEditMachinePoolModal = ({
 
   return cluster ? (
     <EditMachinePoolModal
+      isHypershift={isHypershift}
       shouldDisplayClusterName={shouldDisplayClusterName}
       cluster={cluster}
       onClose={onModalClose}

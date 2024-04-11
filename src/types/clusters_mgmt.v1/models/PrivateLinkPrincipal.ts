@@ -1,7 +1,7 @@
+/* generated using openapi-typescript-codegen -- do not edit */
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-
 export type PrivateLinkPrincipal = {
   /**
    * Indicates the type of this object. Will be 'PrivateLinkPrincipal' if this is a complete object or 'PrivateLinkPrincipalLink' if it is just a link.

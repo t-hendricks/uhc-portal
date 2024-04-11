@@ -1,9 +1,8 @@
+/* generated using openapi-typescript-codegen -- do not edit */
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-
 import type { InflightCheckState } from './InflightCheckState';
-
 /**
  * Representation of check running before the cluster is provisioned.
  */
@@ -23,7 +22,7 @@ export type InflightCheck = {
   /**
    * Details regarding the state of the inflight check.
    */
-  details?: any;
+  details?: Record<string, any>;
   /**
    * The time the check finished running.
    */

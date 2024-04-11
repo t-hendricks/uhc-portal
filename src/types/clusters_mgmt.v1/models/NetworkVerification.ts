@@ -1,11 +1,10 @@
+/* generated using openapi-typescript-codegen -- do not edit */
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-
 import type { CloudProviderData } from './CloudProviderData';
 import type { Platform } from './Platform';
 import type { SubnetNetworkVerification } from './SubnetNetworkVerification';
-
 export type NetworkVerification = {
   /**
    * Cloud provider data to execute the network verification.

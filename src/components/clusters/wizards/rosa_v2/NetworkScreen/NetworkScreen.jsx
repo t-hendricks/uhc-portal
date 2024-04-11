@@ -30,8 +30,8 @@ import { SubnetSelectField } from '~/components/clusters/common/SubnetSelectFiel
 import { FieldId } from '~/components/clusters/wizards/rosa_v2/constants';
 import { useFormState } from '~/components/clusters/wizards/hooks';
 import { DefaultIngressFieldsFormik } from '~/components/clusters/wizards/rosa_v2/NetworkScreen/DefaultIngressFieldsFormik';
-import { ReduxCheckbox } from '../../../../common/ReduxFormComponents';
-import RadioButtons from '../../../../common/ReduxFormComponents/RadioButtons';
+import { ReduxCheckbox, RadioButtons } from '~/components/common/ReduxFormComponents';
+import { CheckboxDescription } from '~/components/common/CheckboxDescription';
 import links from '../../../../../common/installLinks.mjs';
 
 function NetworkScreen(props) {
@@ -104,6 +104,11 @@ function NetworkScreen(props) {
 
     if (hasEmptyByoVpcInfo) {
       setFieldValue(FieldId.InstallToVpc, false);
+
+      // Also unset "Configure a cluster-wide proxy" if enabled
+      if (configureProxySelected) {
+        setFieldValue(FieldId.ConfigureProxy, false);
+      }
 
       // Clear also associated security groups when the wizard has this option
       if (securityGroups) {
@@ -191,9 +196,7 @@ function NetworkScreen(props) {
       component={ReduxCheckbox}
       name={FieldId.ConfigureProxy}
       label="Configure a cluster-wide proxy"
-      helpText={
-        <div className="ocm-c--reduxcheckbox-description">{constants.clusterProxyHint}</div>
-      }
+      helpText={<CheckboxDescription>{constants.clusterProxyHint}</CheckboxDescription>}
       input={{
         ...getFieldProps(FieldId.ConfigureProxy),
         onChange: (event, value) => onClusterProxyChange(event, value),
@@ -359,9 +362,7 @@ function NetworkScreen(props) {
                         onChange={onPrivateLinkChange}
                         isDisabled={forcePrivateLink && privateClusterSelected}
                         helpText={
-                          <div className="ocm-c--reduxcheckbox-description">
-                            {constants.privateLinkHint}
-                          </div>
+                          <CheckboxDescription>{constants.privateLinkHint}</CheckboxDescription>
                         }
                         input={{
                           ...getFieldProps(FieldId.UsePrivatelink),

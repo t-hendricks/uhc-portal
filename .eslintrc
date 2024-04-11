@@ -42,24 +42,7 @@
         ]
       }
     ],
-    "import/no-extraneous-dependencies": [
-      "error",
-      {
-        "devDependencies": [
-          "**/*setupTests.ts",
-          "**/*.test.js*",
-          "**/*test.js*",
-          "**/*.spec.js*",
-          "**/*.test.ts*",
-          "**/*test.ts*",
-          "**/*.spec.ts*",
-          "webpack.config.js",
-          "src/testUtils.tsx",
-          "deploy_info.mjs",
-          "scripts/**/*"
-        ]
-      }
-    ],
+    "import/no-extraneous-dependencies": "error",
     "react/forbid-prop-types": [0],
     "react/require-default-props": [0],
     "react/jsx-no-target-blank": [2],
@@ -79,6 +62,7 @@
       { "props": true, "ignorePropertyModificationsFor": ["draft", "response", "acc"] }
     ],
     "no-use-before-define": "off",
+    "no-underscore-dangle": ["error", { "allow": ["__dirname", "__filename"] }],
     "@typescript-eslint/no-use-before-define": "error",
     "import/prefer-default-export": 0,
     "no-shadow": "off",
@@ -87,7 +71,7 @@
       "error",
       "ignorePackages",
       {
-        "mjs": "never",
+        "mjs": "always", // currently both Node and Webpack only resolve with ".mjs"
         "js": "never",
         "jsx": "never",
         "ts": "never",
@@ -108,6 +92,28 @@
     "no-snapshot-testing/no-snapshot-testing": "error"
   },
   "overrides": [
+    {
+      "files": [
+        // Tests & scripts - run in NodeJS not browser
+        "**/*setupTests.ts",
+        "**/*.test.js*",
+        "**/*test.js*",
+        "**/*.spec.js*",
+        "**/*.test.ts*",
+        "**/*test.ts*",
+        "**/*.spec.ts*",
+        "src/testUtils.tsx",
+        "cypress.config.js",
+        "webpack.config.js",
+        "*.mjs",
+        "run/**/*",
+        "scripts/**/*"
+      ],
+      "rules": {
+        "import/no-extraneous-dependencies": ["error", { "devDependencies": true }],
+        "no-console": "off"
+      }
+    },
     {
       "files": ["**/*.ts", "**/*.tsx"],
       "rules": {
@@ -149,7 +155,7 @@
   "settings": {
     "import/resolver": {
       "alias": {
-        "extensions": [".js", ".jsx", ".ts", ".tsx"],
+        "extensions": [".js", ".jsx", ".ts", ".tsx", ".mjs"],
         "map": [["~", "./src"]]
       }
     }

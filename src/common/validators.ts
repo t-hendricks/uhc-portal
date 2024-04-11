@@ -1677,6 +1677,17 @@ const composeValidators =
     return undefined;
   };
 
+// Function to validate that a field contains a correct host domain
+const checkHostDomain = (value?: string): string | undefined => {
+  if (!value) {
+    return 'Host domain is required.';
+  }
+  if (!BASE_DOMAIN_REGEXP.test(value)) {
+    return `Host domain '${value}' isn't valid, must contain at least two valid lower-case host labels separated by dots, for example 'mydomain.com'.`;
+  }
+  return undefined;
+};
+
 const validators = {
   required,
   acknowledgePrerequisites,
@@ -1712,6 +1723,7 @@ const validators = {
   checkDisconnectedMemCapacity,
   checkDisconnectedNodeCount,
   checkCustomOperatorRolesPrefix,
+  checkHostDomain,
   AWS_MACHINE_CIDR_MIN,
   AWS_MACHINE_CIDR_MAX_SINGLE_AZ,
   AWS_MACHINE_CIDR_MAX_MULTI_AZ,
@@ -1789,6 +1801,7 @@ export {
   validateTlsHostname,
   validateNamespacesList,
   composeValidators,
+  checkHostDomain,
 };
 
 export default validators;

@@ -1,10 +1,9 @@
+/* generated using openapi-typescript-codegen -- do not edit */
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-
 import type { AWSVolume } from './AWSVolume';
 import type { GCPVolume } from './GCPVolume';
-
 /**
  * Root volume capabilities.
  */

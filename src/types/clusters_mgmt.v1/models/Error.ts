@@ -1,7 +1,7 @@
+/* generated using openapi-typescript-codegen -- do not edit */
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-
 export type Error = {
   /**
    * Indicates the type of this object. Will always be 'Error'
@@ -26,5 +26,5 @@ export type Error = {
   /**
    * Extra information about the error.
    */
-  details?: any;
+  details?: Record<string, any>;
 };

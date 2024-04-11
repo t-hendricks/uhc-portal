@@ -1,12 +1,11 @@
+/* generated using openapi-typescript-codegen -- do not edit */
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-
 import type { MachinePoolAutoscaling } from './MachinePoolAutoscaling';
 import type { MachinePoolSecurityGroupFilter } from './MachinePoolSecurityGroupFilter';
 import type { MachineType } from './MachineType';
 import type { RootVolume } from './RootVolume';
-
 /**
  * Counts of different classes of nodes inside a cluster.
  */

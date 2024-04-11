@@ -1,7 +1,7 @@
+/* generated using openapi-typescript-codegen -- do not edit */
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-
 /**
  * Representation of an add-on sub operator. A sub operator is an operator
  * who's life cycle is controlled by the add-on umbrella operator.

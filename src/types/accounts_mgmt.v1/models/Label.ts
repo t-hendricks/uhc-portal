@@ -1,9 +1,8 @@
+/* generated using openapi-typescript-codegen -- do not edit */
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-
 import type { ObjectReference } from './ObjectReference';
-
 export type Label = ObjectReference & {
   account_id?: string;
   created_at?: string;
@@ -16,7 +15,6 @@ export type Label = ObjectReference & {
   updated_at?: string;
   value: string;
 };
-
 export namespace Label {
   export enum managed_by {
     CONFIG = 'Config',
