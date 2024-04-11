@@ -1,9 +1,8 @@
+/* generated using openapi-typescript-codegen -- do not edit */
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-
 import type { Source } from './Source';
-
 export type SourceOut = Source & {
   id: number;
   uuid?: string;
@@ -12,11 +11,11 @@ export type SourceOut = Source & {
   /**
    * Dictionary containing resource name.
    */
-  authentication?: any;
+  authentication?: Record<string, any>;
   /**
    * Dictionary containing billing source.
    */
-  billing_source?: any;
+  billing_source?: Record<string, any>;
   /**
    * Flag to indicate if provider is linked to source.
    */
@@ -44,7 +43,7 @@ export type SourceOut = Source & {
   /**
    * Dictionary containing OpenShift foundational infrastructure type and uuid.
    */
-  infrastructure?: any;
+  infrastructure?: Record<string, any>;
   /**
    * List of cost model name and UUIDs associated with this source.
    */
@@ -55,5 +54,5 @@ export type SourceOut = Source & {
   /**
    * Dictionary containing OpenShift foundational infrastructure type and uuid.
    */
-  additional_context?: any;
+  additional_context?: Record<string, any>;
 };

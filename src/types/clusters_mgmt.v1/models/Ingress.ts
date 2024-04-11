@@ -1,13 +1,12 @@
+/* generated using openapi-typescript-codegen -- do not edit */
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-
 import type { ComponentRoute } from './ComponentRoute';
 import type { ListeningMethod } from './ListeningMethod';
 import type { LoadBalancerFlavor } from './LoadBalancerFlavor';
 import type { NamespaceOwnershipPolicy } from './NamespaceOwnershipPolicy';
 import type { WildcardPolicy } from './WildcardPolicy';
-
 /**
  * Representation of an ingress.
  */

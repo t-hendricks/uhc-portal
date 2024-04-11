@@ -44,9 +44,9 @@ node --version
 export COMPONENT="uhc-portal"
 # IMAGE should match the quay repo set by app.yaml in app-interface
 export IMAGE="quay.io/app-sre/uhc-portal"
+export APP_ROOT=$(pwd)
 # if running in jenkins, use the build's workspace
 export WORKSPACE=${WORKSPACE:-$APP_ROOT}
-export APP_ROOT=$(pwd)
 export NODE_BUILD_VERSION=20
 
 COMMON_BUILDER=https://raw.githubusercontent.com/RedHatInsights/insights-frontend-builder-common/master

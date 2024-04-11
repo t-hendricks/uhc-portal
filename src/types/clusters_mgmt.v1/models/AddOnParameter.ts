@@ -1,11 +1,10 @@
+/* generated using openapi-typescript-codegen -- do not edit */
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-
 import type { AddOn } from './AddOn';
 import type { AddOnParameterOption } from './AddOnParameterOption';
 import type { AddOnRequirement } from './AddOnRequirement';
-
 /**
  * Representation of an add-on parameter.
  */

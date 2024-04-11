@@ -1,9 +1,8 @@
+/* generated using openapi-typescript-codegen -- do not edit */
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-
 import type { AddOnRequirementStatus } from './AddOnRequirementStatus';
-
 /**
  * Representation of an add-on requirement.
  */
@@ -15,7 +14,7 @@ export type AddOnRequirement = {
   /**
    * Data for the add-on requirement.
    */
-  data?: Record<string, any>;
+  data?: Record<string, Record<string, any>>;
   /**
    * Indicates if this requirement is enabled for the add-on.
    */

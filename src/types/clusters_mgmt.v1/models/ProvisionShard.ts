@@ -1,11 +1,10 @@
+/* generated using openapi-typescript-codegen -- do not edit */
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-
 import type { CloudProvider } from './CloudProvider';
 import type { CloudRegion } from './CloudRegion';
 import type { ServerConfig } from './ServerConfig';
-
 /**
  * Contains the properties of the provision shard, including AWS and GCP related configurations
  */

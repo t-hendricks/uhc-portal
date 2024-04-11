@@ -47,7 +47,7 @@ export const getJiraStatuses = async () => {
     const url = `https://issues.redhat.com/rest/api/2/search?${params}`;
     const response = await fetch(url);
     const body = await response.text();
-    if (response.status != 200) {
+    if (response.status !== 200) {
       console.error(
         `WARN: failed to fetch jira info, URL: ${url}\n` +
           `  -> ${response.status} ${response.statusText}\n` +
@@ -65,6 +65,7 @@ export const getJiraStatuses = async () => {
 };
 
 export const linkify = (text, linkFunction, jiraByKey = {}) => {
+  /* eslint-disable no-param-reassign */
   // Jira cards.  lowercase `ocmui-nnn` form allowed as some folk put it in branch names.
   text = text.replace(
     /(OCMUI|HAC|RHBKAAS|MGMT|RHCLOUD|OCM|SDA|SDB)[- ](\d+)/gi,
@@ -117,6 +118,7 @@ export const linkify = (text, linkFunction, jiraByKey = {}) => {
   );
 
   return text;
+  /* eslint-enable no-param-reassign */
 };
 
 if (realpathSync(process.argv[1]) === fileURLToPath(import.meta.url)) {
@@ -124,6 +126,7 @@ if (realpathSync(process.argv[1]) === fileURLToPath(import.meta.url)) {
   const jiraPromise = getJiraStatuses();
   // Line-by-line is weirdly painful in NodeJS, so slurp whole input.
   const chunks = [];
+  // eslint-disable-next-line no-restricted-syntax
   for await (const chunk of process.stdin) {
     chunks.push(chunk);
   }

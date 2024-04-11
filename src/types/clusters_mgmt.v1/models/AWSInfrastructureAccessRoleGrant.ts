@@ -1,10 +1,9 @@
+/* generated using openapi-typescript-codegen -- do not edit */
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-
 import type { AWSInfrastructureAccessRole } from './AWSInfrastructureAccessRole';
 import type { AWSInfrastructureAccessRoleGrantState } from './AWSInfrastructureAccessRoleGrantState';
-
 /**
  * Representation of an AWS infrastructure access role grant.
  */

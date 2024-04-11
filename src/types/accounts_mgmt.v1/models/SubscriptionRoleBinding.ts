@@ -1,10 +1,9 @@
+/* generated using openapi-typescript-codegen -- do not edit */
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-
 import type { AccountReference } from './AccountReference';
 import type { ObjectReference } from './ObjectReference';
-
 export type SubscriptionRoleBinding = ObjectReference & {
   account?: AccountReference;
   account_email?: string;

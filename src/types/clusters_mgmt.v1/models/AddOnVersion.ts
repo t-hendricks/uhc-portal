@@ -1,13 +1,12 @@
+/* generated using openapi-typescript-codegen -- do not edit */
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-
 import type { AdditionalCatalogSource } from './AdditionalCatalogSource';
 import type { AddOnConfig } from './AddOnConfig';
 import type { AddOnParameter } from './AddOnParameter';
 import type { AddOnRequirement } from './AddOnRequirement';
 import type { AddOnSubOperator } from './AddOnSubOperator';
-
 /**
  * Representation of an add-on version.
  */

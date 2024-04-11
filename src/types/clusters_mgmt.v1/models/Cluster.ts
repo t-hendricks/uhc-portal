@@ -1,7 +1,7 @@
+/* generated using openapi-typescript-codegen -- do not edit */
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-
 import type { AddOnInstallation } from './AddOnInstallation';
 import type { AWS } from './AWS';
 import type { AWSInfrastructureAccessRoleGrant } from './AWSInfrastructureAccessRoleGrant';
@@ -42,7 +42,6 @@ import type { Proxy } from './Proxy';
 import type { Subscription } from './Subscription';
 import type { Value } from './Value';
 import type { Version } from './Version';
-
 /**
  * Definition of an _OpenShift_ cluster.
  *

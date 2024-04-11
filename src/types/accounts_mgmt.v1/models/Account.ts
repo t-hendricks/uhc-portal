@@ -1,12 +1,11 @@
+/* generated using openapi-typescript-codegen -- do not edit */
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-
 import type { Capability } from './Capability';
 import type { Label } from './Label';
 import type { ObjectReference } from './ObjectReference';
 import type { Organization } from './Organization';
-
 export type Account = ObjectReference & {
   ban_code?: string;
   ban_description?: string;

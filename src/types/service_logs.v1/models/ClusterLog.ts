@@ -1,9 +1,8 @@
+/* generated using openapi-typescript-codegen -- do not edit */
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-
 import type { ObjectReference } from './ObjectReference';
-
 export type ClusterLog = ObjectReference & {
   cluster_id?: string;
   cluster_uuid?: string;
@@ -24,7 +23,6 @@ export type ClusterLog = ObjectReference & {
   timestamp?: string;
   username?: string;
 };
-
 export namespace ClusterLog {
   export enum log_type {
     CLUSTERCREATE_HIGH_LEVEL = 'clustercreate-high-level',
@@ -46,7 +44,6 @@ export namespace ClusterLog {
     CLUSTER_NETWORKING = 'Cluster Networking',
     GENERAL_NOTIFICATION = 'General Notification',
   }
-
   export enum severity {
     DEBUG = 'Debug',
     INFO = 'Info',

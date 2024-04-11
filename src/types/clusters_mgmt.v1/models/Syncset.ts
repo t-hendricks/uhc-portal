@@ -1,7 +1,7 @@
+/* generated using openapi-typescript-codegen -- do not edit */
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-
 /**
  * Representation of a syncset.
  */
@@ -21,5 +21,5 @@ export type Syncset = {
   /**
    * List of k8s objects to configure for the cluster.
    */
-  resources?: Array<any>;
+  resources?: Array<Record<string, any>>;
 };

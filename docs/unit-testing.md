@@ -29,19 +29,13 @@
 
 ## Use React testing library (RTL)
 
-There are numerous libraries to render React components during Jest unit tests including Enzyme, but all future tests shall be written using [React Testing Library (RTL)](https://testing-library.com/docs/react-testing-library/intro/).
+All unit tests shall be written using [React Testing Library (RTL)](https://testing-library.com/docs/react-testing-library/intro/).
 
 ### The RTL approach
 
 When using RTL, the main approach is to test as how users would test. For example, when finding a button, a user would look for a button object with a given text. Users do not identify a button but the CSS class, id, or test id. When writing selectors, we want to select on what the user is seeing (role, text, etc.) instead of items hidden in the HTML.
 
 In addition, since a user sees the entire rendered component, the same should be true when performing unit tests. By default, RTL does this, and mocking whole components should be avoided.
-
-### Using RTL (intro) <br/> When a new component is created new tests should be written in RTL
-
-When an existing component is updated all existing tests should be converted to RTL using the best practices outlined in this document. This update includes adding tests where there are holes in the test coverage. If the updated component is part of time-sensitive urgent bug, at the very least, all the appropriate “todo” tests will be written (see section below). It is expected that this situation is rare.
-
-Migrating from Enzyme to RTL: https://testing-library.com/docs/react-testing-library/migrate-from-enzyme/
 
 ## Testing files in same directory as component file
 

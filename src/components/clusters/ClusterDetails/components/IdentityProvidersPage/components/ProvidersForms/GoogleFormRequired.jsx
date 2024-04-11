@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { Field } from 'redux-form';
 import { GridItem } from '@patternfly/react-core';
 
-import { required } from '../../../../../../../common/validators';
+import { checkHostDomain } from '../../../../../../../common/validators';
 import IDPBasicFields from './IDPBasicFields';
 import ReduxVerticalFormGroup from '../../../../../../common/ReduxFormComponents/ReduxVerticalFormGroup';
 
@@ -20,7 +20,7 @@ function GoogleForm({ isPending, isRequired }) {
           helpText="Restrict users to a Google Apps domain"
           disabled={isPending}
           isRequired={isRequired}
-          validate={isRequired ? required : null}
+          validate={checkHostDomain}
         />
       </GridItem>
     </>

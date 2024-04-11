@@ -1,7 +1,7 @@
+/* generated using openapi-typescript-codegen -- do not edit */
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-
 export type EphemeralResourceQuota = {
   availability_zone_type?: string;
   byoc?: boolean;

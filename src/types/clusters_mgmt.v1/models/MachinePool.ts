@@ -1,13 +1,12 @@
+/* generated using openapi-typescript-codegen -- do not edit */
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-
 import type { AWSMachinePool } from './AWSMachinePool';
 import type { MachinePoolAutoscaling } from './MachinePoolAutoscaling';
 import type { MachinePoolSecurityGroupFilter } from './MachinePoolSecurityGroupFilter';
 import type { RootVolume } from './RootVolume';
 import type { Taint } from './Taint';
-
 /**
  * Representation of a machine pool in a cluster.
  */

@@ -1,9 +1,8 @@
+/* generated using openapi-typescript-codegen -- do not edit */
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-
 import type { ObjectReference } from './ObjectReference';
-
 export type CloudResource = ObjectReference & {
   active?: boolean;
   category?: string;
@@ -20,7 +19,6 @@ export type CloudResource = ObjectReference & {
   size_pretty?: string;
   updated_at?: string;
 };
-
 export namespace CloudResource {
   export enum resource_type {
     ADDON = 'addon',

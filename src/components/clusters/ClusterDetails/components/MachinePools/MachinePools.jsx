@@ -550,6 +550,7 @@ class MachinePools extends React.Component {
                 }),
               )
             }
+            isHypershift={isHypershift}
             machinePoolId={editMachinePoolId}
             machinePoolsResponse={machinePoolsList}
             machineTypesResponse={machineTypes}

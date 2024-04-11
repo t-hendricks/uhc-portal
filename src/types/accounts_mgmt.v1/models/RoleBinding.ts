@@ -1,9 +1,8 @@
+/* generated using openapi-typescript-codegen -- do not edit */
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-
 import type { ObjectReference } from './ObjectReference';
-
 export type RoleBinding = ObjectReference & {
   account?: ObjectReference;
   account_group?: ObjectReference;
@@ -16,14 +15,12 @@ export type RoleBinding = ObjectReference & {
   type?: RoleBinding.type;
   updated_at?: string;
 };
-
 export namespace RoleBinding {
   export enum managed_by {
     CONFIG = 'Config',
     USER = 'User',
     RBAC = 'RBAC',
   }
-
   export enum type {
     APPLICATION = 'Application',
     SUBSCRIPTION = 'Subscription',
