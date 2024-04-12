@@ -32,6 +32,7 @@ describe(
       CreateRosaWizardPage.isAssociateAccountsDrawer();
       cy.getByTestId('close-associate-account-btn').click();
       CreateRosaWizardPage.selectAWSInfrastructureAccount(awsAccountID);
+      CreateRosaWizardPage.waitForARNList();
       CreateRosaWizardPage.refreshInfrastructureAWSAccountButton().click();
       CreateRosaWizardPage.waitForARNList();
       CreateRosaWizardPage.selectInstallerRole(installerARN);
