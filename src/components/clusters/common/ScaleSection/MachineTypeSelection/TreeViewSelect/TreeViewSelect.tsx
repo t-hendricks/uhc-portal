@@ -138,8 +138,8 @@ export function TreeViewSelect(props: TreeViewSelectProps) {
   }, [treeViewSelectionMap, searchFn]);
 
   const toolbar = (
-    <Toolbar style={{ padding: 0 }}>
-      <ToolbarContent style={{ padding: 0 }}>
+    <Toolbar className="tree-view-select-toolbar">
+      <ToolbarContent>
         {includeFilterSwitch && (
           <ToolbarItem
             widths={{ default: '100%' }}
@@ -173,7 +173,7 @@ export function TreeViewSelect(props: TreeViewSelectProps) {
     <MenuToggle
       ref={toggleRef}
       aria-label={ariaLabel && `${ariaLabel} toggle`}
-      style={{ maxWidth: 'none', width: '100%' }}
+      className="tree-view-select-menu-toggle"
       onClick={(e) => {
         setSearchString('');
         setIsOpen(!isOpen);
@@ -185,24 +185,10 @@ export function TreeViewSelect(props: TreeViewSelectProps) {
   );
 
   const menu = (
-    <Panel
-      ref={menuRef}
-      isScrollable
-      variant="raised"
-      style={{
-        maxHeight: '60%',
-        height: 'auto',
-        overflow: 'auto',
-        width: 'min-content',
-      }}
-    >
-      <PanelMain
-        style={{
-          maxHeight: '100%',
-        }}
-      >
+    <Panel ref={menuRef} isScrollable variant="raised" className="tree-view-select-panel">
+      <PanelMain>
         <section>
-          <PanelMainBody style={{ padding: 0 }}>
+          <PanelMainBody>
             <TreeView
               className="tree-view-custom-class"
               onSelect={(event, newItem) => {
