@@ -5,7 +5,6 @@ import PropTypes from 'prop-types';
 import { Bullseye, Spinner, Stack, StackItem, Title } from '@patternfly/react-core';
 
 import { hasSelectedSecurityGroups } from '~/common/securityGroupsHelpers';
-import useCanClusterAutoscale from '~/components/clusters/ClusterDetails/components/MachinePools/components/EditMachinePoolModal/hooks/useCanClusterAutoscale';
 import { useFormState } from '~/components/clusters/wizards/hooks';
 import { canSelectImds } from '~/components/clusters/wizards/rosa/constants';
 import { getUserRoleForSelectedAWSAccount } from '~/components/clusters/wizards/rosa_v2/AccountsRolesScreen/AccountsRolesScreen';
@@ -15,6 +14,7 @@ import {
 } from '~/components/clusters/wizards/rosa_v2/rosaWizardConstants';
 import HiddenCheckbox from '~/components/common/FormikFormComponents/HiddenCheckbox';
 import config from '~/config';
+import useCanClusterAutoscale from '~/hooks/useCanClusterAutoscale';
 import { useFeatureGate } from '~/hooks/useFeatureGate';
 import {
   HCP_AWS_BILLING_SHOW,

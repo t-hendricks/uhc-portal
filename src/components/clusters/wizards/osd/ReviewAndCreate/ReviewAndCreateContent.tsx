@@ -11,7 +11,6 @@ import {
 } from '@patternfly/react-core';
 
 import { hasSelectedSecurityGroups } from '~/common/securityGroupsHelpers';
-import useCanClusterAutoscale from '~/components/clusters/ClusterDetails/components/MachinePools/components/EditMachinePoolModal/hooks/useCanClusterAutoscale';
 import {
   CloudProviderType,
   UpgradePolicyType,
@@ -23,6 +22,7 @@ import ReviewSection, {
 import { useFormState } from '~/components/clusters/wizards/hooks';
 import { FieldId, StepId } from '~/components/clusters/wizards/osd/constants';
 import config from '~/config';
+import useCanClusterAutoscale from '~/hooks/useCanClusterAutoscale';
 
 import { canSelectImds } from '../../rosa/constants';
 

@@ -7,7 +7,6 @@ import { ExpandableSection, Form, Grid, GridItem, Text, Title } from '@patternfl
 import links from '~/common/installLinks.mjs';
 import { normalizedProducts } from '~/common/subscriptionTypes';
 import { required } from '~/common/validators';
-import useCanClusterAutoscale from '~/components/clusters/ClusterDetails/components/MachinePools/components/EditMachinePoolModal/hooks/useCanClusterAutoscale';
 import { getMinNodesRequired } from '~/components/clusters/ClusterDetails/components/MachinePools/machinePoolsHelper';
 import { constants } from '~/components/clusters/common/CreateOSDFormConstants';
 import NodeCountInput from '~/components/clusters/common/NodeCountInput';
@@ -16,6 +15,7 @@ import MachineTypeSelection from '~/components/clusters/common/ScaleSection/Mach
 import { CloudProviderType, FieldId } from '~/components/clusters/wizards/common/constants';
 import { useFormState } from '~/components/clusters/wizards/hooks';
 import ExternalLink from '~/components/common/ExternalLink';
+import useCanClusterAutoscale from '~/hooks/useCanClusterAutoscale';
 import {
   clearMachineTypesByRegion,
   getMachineTypes,

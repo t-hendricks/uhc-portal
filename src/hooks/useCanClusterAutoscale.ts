@@ -2,7 +2,7 @@ import { billingModels, normalizedProducts } from '~/common/subscriptionTypes';
 import { useGlobalState } from '~/redux/hooks';
 import { Product } from '~/types/clusters_mgmt.v1';
 
-import { hasOrgLevelAutoscaleCapability } from '../../../machinePoolsSelectors';
+import { hasOrgLevelAutoscaleCapability } from '../components/clusters/ClusterDetails/components/MachinePools/machinePoolsSelectors';
 
 const useCanClusterAutoscale = (
   product: Product['id'],
@@ -16,8 +16,8 @@ const useCanClusterAutoscale = (
     (product === normalizedProducts.OSD &&
       (billingModel === billingModels.MARKETPLACE ||
         billingModel === billingModels.MARKETPLACE_AWS ||
-        billingModel === billingModels.MARKETPLACE_GCP)) ||
-    (product === normalizedProducts.OSD && hasAutoScaleCapability)
+        billingModel === billingModels.MARKETPLACE_GCP ||
+        hasAutoScaleCapability))
   );
 };
 

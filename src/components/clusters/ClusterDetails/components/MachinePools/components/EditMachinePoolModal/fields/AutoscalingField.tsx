@@ -8,10 +8,9 @@ import { isROSA } from '~/components/clusters/common/clusterStates';
 import { constants } from '~/components/clusters/common/CreateOSDFormConstants';
 import ExternalLink from '~/components/common/ExternalLink';
 import PopoverHint from '~/components/common/PopoverHint';
+import useCanClusterAutoscale from '~/hooks/useCanClusterAutoscale';
 import { Cluster } from '~/types/clusters_mgmt.v1';
 import { ClusterFromSubscription } from '~/types/types';
-
-import useCanClusterAutoscale from '../hooks/useCanClusterAutoscale';
 
 const fieldId = 'autoscaling';
 

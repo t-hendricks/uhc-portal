@@ -1,7 +1,7 @@
 import { billingModels, normalizedProducts } from '~/common/subscriptionTypes';
 import * as reduxHooks from '~/redux/hooks';
 
-import useCanClusterAutoscale from './useCanClusterAutoscale';
+import useCanClusterAutoscale from '../useCanClusterAutoscale';
 
 const useGlobalStateMock = jest.spyOn(reduxHooks, 'useGlobalState');
 
@@ -12,7 +12,7 @@ describe('canAutoScale', () => {
     expect(result).toBe(true);
   });
 
-  it('should allow autoscaling for RHM OSD clusters with Red Hat marketplace billing accouunt', () => {
+  it('should allow autoscaling for OSD clusters with Red Hat marketplace billing accouunt', () => {
     useGlobalStateMock.mockReturnValue(true);
     const resultMarketPlaceRH = useCanClusterAutoscale(
       normalizedProducts.OSD,
@@ -53,7 +53,7 @@ describe('canAutoScale', () => {
     expect(result).toBe(true);
   });
 
-  it('should not allow autoscaling for for non marketplace clusters without autoscale capability', () => {
+  it('should not allow autoscaling for non marketplace clusters without autoscale capability', () => {
     useGlobalStateMock.mockReturnValue(false);
     const result = useCanClusterAutoscale(normalizedProducts.OSD, billingModels.STANDARD);
     expect(result).toBe(false);

@@ -4,8 +4,8 @@ import PropTypes from 'prop-types';
 import { Form, Grid } from '@patternfly/react-core';
 
 import { billingModels, normalizedProducts } from '~/common/subscriptionTypes';
-import useCanClusterAutoscale from '~/components/clusters/ClusterDetails/components/MachinePools/components/EditMachinePoolModal/hooks/useCanClusterAutoscale';
 import ScaleSection from '~/components/clusters/common/ScaleSection/ScaleSection';
+import useCanClusterAutoscale from '~/hooks/useCanClusterAutoscale';
 
 import MachinePoolScreenHeader from './MachinePoolScreenHeader';
 import MachinePoolsSubnets from './MachinePoolsSubnets';

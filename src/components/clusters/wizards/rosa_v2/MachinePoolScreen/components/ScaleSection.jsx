@@ -6,7 +6,6 @@ import { ExpandableSection, GridItem, Text, TextVariants, Title } from '@pattern
 import links from '~/common/installLinks.mjs';
 import { billingModels, normalizedProducts } from '~/common/subscriptionTypes';
 import { required } from '~/common/validators';
-import useCanClusterAutoscale from '~/components/clusters/ClusterDetails/components/MachinePools/components/EditMachinePoolModal/hooks/useCanClusterAutoscale';
 import {
   getMinNodesRequired,
   getNodeIncrement,
@@ -24,6 +23,7 @@ import {
 import { FieldId } from '~/components/clusters/wizards/rosa_v2/constants';
 import ExternalLink from '~/components/common/ExternalLink';
 import FormKeyValueList from '~/components/common/FormikFormComponents/FormKeyValueList';
+import useCanClusterAutoscale from '~/hooks/useCanClusterAutoscale';
 
 import WorkerNodeVolumeSizeSection from './WorkerNodeVolumeSizeSection/WorkerNodeVolumeSizeSection';
 import ImdsSection from './ImdsSection';
