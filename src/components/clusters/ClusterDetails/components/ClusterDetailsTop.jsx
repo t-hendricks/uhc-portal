@@ -180,12 +180,12 @@ function ClusterDetailsTop(props) {
   const unarchiveBtn = (
     <ButtonWithTooltip
       variant="secondary"
-      onClick={() =>
+      onClick={() => {
         openModal(modals.UNARCHIVE_CLUSTER, {
           subscriptionID: cluster.subscription ? cluster.subscription.id : '',
           name: clusterName,
-        })
-      }
+        });
+      }}
       disableReason={canNotEditReason}
     >
       Unarchive

@@ -2,7 +2,7 @@ import React from 'react';
 import { MemoryRouter } from 'react-router-dom';
 import { CompatRouter } from 'react-router-dom-v5-compat';
 
-import { mockRestrictedEnv, mockUseChrome, render, screen } from '~/testUtils';
+import { mockRestrictedEnv, mockUseChrome, render, screen, withState } from '~/testUtils';
 
 import Router from './Router';
 
@@ -49,6 +49,12 @@ const createRoute = [{ path: '/create', metadata: { ocm_resource_type: 'all' } }
 
 const releasesRoute = [{ path: '/releases', metadata: { ocm_resource_type: 'ocp' } }];
 
+const initialState = {
+  userProfile: { keycloakProfile: { username: 'MyUserName' } },
+  clusters: { clusters: { errorMessage: '' } },
+  form: { CreateIdentityProvider: { syncErrors: { users: { _error: 'I am a HTPasswdError' } } } },
+};
+
 describe('Router', () => {
   beforeEach(() => {
     jest.clearAllMocks();
@@ -65,7 +71,7 @@ describe('Router', () => {
   describe('Every route should render: ', () => {
     test.each(routes)('%s', async (route) => {
       const { path, metadata } = route;
-      render(
+      withState(initialState, true).render(
         <MemoryRouter keyLength={0} initialEntries={[{ pathname: path, key: 'testKey' }]}>
           <CompatRouter>
             <Router />

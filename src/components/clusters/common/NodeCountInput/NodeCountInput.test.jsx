@@ -29,6 +29,7 @@ const baseProps = ({ isByoc, isMultiAz }) => ({
   input: {
     name: 'compute-nodes',
     onChange: jest.fn(),
+    onBlur: jest.fn(),
   },
   cloudProviderID: 'aws',
   product: normalizedProducts.OSD,

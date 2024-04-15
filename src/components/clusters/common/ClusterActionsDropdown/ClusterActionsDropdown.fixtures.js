@@ -165,6 +165,12 @@ const rhoicCluster = {
     toggleSubscriptionReleased: jest.fn(),
     refreshFunc: jest.fn(),
   },
+  showConsoleButton: false,
+  openModal: jest.fn(),
+  canSubscribeOCP: false,
+  canHibernateCluster: false,
+  refreshFunc: jest.fn(),
+  toggleSubscriptionReleased: jest.fn(),
 };
 
 const organizationClusterProps = {

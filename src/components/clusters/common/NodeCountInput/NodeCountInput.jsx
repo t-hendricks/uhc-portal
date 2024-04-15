@@ -254,7 +254,7 @@ NodeCountInput.propTypes = {
   minNodes: PropTypes.number,
   label: PropTypes.string,
   helpText: PropTypes.string,
-  extendedHelpText: PropTypes.string,
+  extendedHelpText: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
   quota: PropTypes.object.isRequired,
   isByoc: PropTypes.bool,
   isMachinePool: PropTypes.bool,

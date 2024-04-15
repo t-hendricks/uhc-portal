@@ -4,7 +4,7 @@ import { CompatRouter } from 'react-router-dom-v5-compat';
 
 import { normalizedProducts } from '~/common/subscriptionTypes';
 import clusterStates from '~/components/clusters/common/clusterStates';
-import { render, screen } from '~/testUtils';
+import { screen, withState } from '~/testUtils';
 
 import AccessControl from './AccessControl';
 
@@ -26,6 +26,11 @@ const buildCluster = ({ clusterProps, subscriptionProps, consoleUrl, apiUrl }) =
   ...clusterProps,
 });
 
+// state.clusters.details.cluster.subscription?.id,
+const initialState = {
+  clusters: { details: { cluster: { subscription: { id: 'mySubId' } } } },
+};
+
 describe('<AccessControl />', () => {
   const buildComponent = (cluster) => (
     <MemoryRouter>
@@ -40,9 +45,16 @@ describe('<AccessControl />', () => {
       const singleTabCluster = buildCluster({
         clusterProps: {
           managed: false,
+          idpActions: {
+            get: false,
+            list: false,
+            create: false,
+            update: false,
+            delete: false,
+          },
         },
       });
-      render(buildComponent(singleTabCluster));
+      withState(initialState, true).render(buildComponent(singleTabCluster));
 
       const cardBody = document.querySelector('.pf-v5-c-card__body');
       expect(cardBody.classList).toContain('single-tab');
@@ -53,9 +65,16 @@ describe('<AccessControl />', () => {
       const multipleTabCluster = buildCluster({
         clusterProps: {
           managed: true,
+          idpActions: {
+            get: false,
+            list: false,
+            create: false,
+            update: false,
+            delete: false,
+          },
         },
       });
-      render(buildComponent(multipleTabCluster));
+      withState(initialState, true).render(buildComponent(multipleTabCluster));
 
       const cardBody = document.querySelector('.pf-v5-c-card__body');
       expect(cardBody.classList).not.toContain('single-tab');
@@ -67,14 +86,36 @@ describe('<AccessControl />', () => {
     it('is not shown for OSD/ROSA clusters before they have console URL', () => {
       const osdCluster = buildCluster({
         consoleUrl: '',
+        clusterProps: {
+          idpActions: {
+            get: false,
+            list: false,
+            create: false,
+            update: false,
+            delete: false,
+          },
+        },
       });
-      render(buildComponent(osdCluster));
+      withState(initialState, true).render(buildComponent(osdCluster));
 
       expect(screen.queryByRole('tab', { name: 'Identity providers' })).not.toBeInTheDocument();
     });
 
     it('is shown for OSD/ROSA clusters after they have console URL', () => {
-      render(buildComponent());
+      // render(buildComponent());
+      const osdCluster = buildCluster({
+        consoleUrl: 'https://myConsole.url',
+        clusterProps: {
+          idpActions: {
+            get: false,
+            list: false,
+            create: false,
+            update: false,
+            delete: false,
+          },
+        },
+      });
+      withState(initialState, true).render(buildComponent(osdCluster));
 
       expect(
         screen.getByRole('tab', { name: 'Identity providers', selected: true }),
@@ -85,6 +126,13 @@ describe('<AccessControl />', () => {
       const hypershiftCluster = buildCluster({
         clusterProps: {
           hypershift: { enabled: true },
+          idpActions: {
+            get: false,
+            list: false,
+            create: false,
+            update: false,
+            delete: false,
+          },
         },
         subscriptionProps: {
           plan: { id: normalizedProducts.ROSA_HyperShift },
@@ -92,7 +140,7 @@ describe('<AccessControl />', () => {
         consoleUrl: '',
       });
 
-      render(buildComponent(hypershiftCluster));
+      withState(initialState, true).render(buildComponent(hypershiftCluster));
       expect(
         screen.getByRole('tab', { name: 'Identity providers', selected: true }),
       ).toBeInTheDocument();
@@ -105,13 +153,20 @@ describe('<AccessControl />', () => {
         clusterProps: {
           hypershift: { enabled: true },
           state: clusterStates.INSTALLING,
+          idpActions: {
+            get: false,
+            list: false,
+            create: false,
+            update: false,
+            delete: false,
+          },
         },
         subscriptionProps: {
           plan: { id: normalizedProducts.ROSA_HyperShift },
         },
         consoleUrl: '',
       });
-      render(buildComponent(hypershiftCluster));
+      withState(initialState, true).render(buildComponent(hypershiftCluster));
 
       expect(
         screen.queryByRole('tab', { name: 'Cluster Roles and Access' }),
@@ -122,13 +177,20 @@ describe('<AccessControl />', () => {
       const hypershiftCluster = buildCluster({
         clusterProps: {
           hypershift: { enabled: true },
+          idpActions: {
+            get: false,
+            list: false,
+            create: false,
+            update: false,
+            delete: false,
+          },
         },
         subscriptionProps: {
           plan: { id: normalizedProducts.ROSA_HyperShift },
         },
         consoleUrl: '',
       });
-      render(buildComponent(hypershiftCluster));
+      withState(initialState, true).render(buildComponent(hypershiftCluster));
 
       expect(screen.getByRole('tab', { name: 'Cluster Roles and Access' })).toBeInTheDocument();
     });

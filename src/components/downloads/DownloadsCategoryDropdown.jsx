@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 import { FormSelect, FormSelectOption } from '@patternfly/react-core';
 
-import { allCategories, downloadsCategories } from './downloadsStructure';
+import { downloadsCategories } from './downloadsStructure';
 
 const DownloadsCategoryDropdown = ({ selectedCategory, setCategory }) => (
   <FormSelect
@@ -18,7 +18,7 @@ const DownloadsCategoryDropdown = ({ selectedCategory, setCategory }) => (
   </FormSelect>
 );
 DownloadsCategoryDropdown.propTypes = {
-  selectedCategory: PropTypes.oneOf(allCategories.map((c) => c.key)).isRequired,
+  selectedCategory: PropTypes.oneOf(downloadsCategories().map((c) => c.key)).isRequired,
   setCategory: PropTypes.func.isRequired,
 };
 

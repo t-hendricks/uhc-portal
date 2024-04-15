@@ -90,7 +90,7 @@ ReduxCheckbox.propTypes = {
   // show validation errors immediately, regardless of whether field has been touched or not
   showInitialValidationErrors: PropTypes.bool,
   isHelperTextBeforeField: PropTypes.bool,
-  helpText: PropTypes.string,
+  helpText: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
   onChange: PropTypes.func,
   isFilled: PropTypes.bool,
 };

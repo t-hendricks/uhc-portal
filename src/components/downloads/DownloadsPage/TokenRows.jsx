@@ -176,7 +176,7 @@ const TokenRows = ({
 TokenRows.propTypes = {
   ...commonPropTypes,
   orgRequest: PropTypes.shape({
-    error: PropTypes.bool.isRequired,
+    error: PropTypes.bool,
     isLoading: PropTypes.bool.isRequired,
   }),
   restrictedEnv: PropTypes.bool,
