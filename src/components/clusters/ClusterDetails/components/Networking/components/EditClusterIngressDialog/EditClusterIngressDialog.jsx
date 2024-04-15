@@ -13,7 +13,7 @@ import {
 } from '@patternfly/react-core';
 
 import links from '../../../../../../../common/installLinks.mjs';
-import { checkRouteSelectors } from '../../../../../../../common/validators';
+import { checkLabelsAdditionalRouter } from '../../../../../../../common/validators';
 import ErrorBox from '../../../../../../common/ErrorBox';
 import ExternalLink from '../../../../../../common/ExternalLink';
 import Modal from '../../../../../../common/Modal/Modal';
@@ -116,7 +116,7 @@ class EditClusterIngressDialog extends React.Component {
             label="Label match for additional router (optional)"
             type="text"
             helpText="Comma separated pairs in key=value format. If no label is specified, all routes will be exposed on both routers."
-            validate={checkRouteSelectors}
+            validate={checkLabelsAdditionalRouter}
             key="route_selectors"
             readOnlyVariant={canEditAdditionalRouter ? undefined : 'default'}
           />

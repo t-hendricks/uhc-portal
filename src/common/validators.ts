@@ -636,8 +636,16 @@ const validateDuplicateLabels = (input: string | string[] | undefined) => {
   return undefined;
 };
 
+const checkKeyValueFormat = (value: string): string | undefined =>
+  value.trim() !== '' && value?.match(/((.*=.*),*)+/g) === null
+    ? 'Routes should match comma separated pairs in key=value format'
+    : undefined;
+
 const checkRouteSelectors = (value: string): string | undefined =>
   checkLabels(value) || validateDuplicateLabels(value);
+
+const checkLabelsAdditionalRouter = (value: string): string | undefined =>
+  checkKeyValueFormat(value) || checkRouteSelectors(value);
 
 // Function to validate that the cluster ID field is a UUID:
 const checkClusterUUID = (value?: string): string | undefined => {
@@ -1775,6 +1783,8 @@ export {
   validateNumericInput,
   checkGithubTeams,
   checkRouteSelectors,
+  checkLabelsAdditionalRouter,
+  checkKeyValueFormat,
   checkDisconnectedConsoleURL,
   checkDisconnectedvCPU,
   checkDisconnectedSockets,
