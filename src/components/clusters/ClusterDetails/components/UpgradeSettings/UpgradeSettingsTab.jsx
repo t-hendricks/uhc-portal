@@ -104,6 +104,11 @@ class UpgradeSettingsTab extends React.Component {
         ['manual', 'automatic'].includes(schedule.schedule_type) &&
         schedule.upgrade_type === (isHypershift ? 'ControlPlane' : 'OSD'),
     );
+
+    const upgradeStarted =
+      scheduledUpgrade &&
+      (scheduledUpgrade.state?.value === 'started' || scheduledUpgrade.state?.value === 'delayed');
+
     // eslint-disable-next-line camelcase
     const availableUpgrades = cluster?.version?.available_upgrades;
 
@@ -119,7 +124,7 @@ class UpgradeSettingsTab extends React.Component {
     const saveButton = (
       <ButtonWithTooltip
         disableReason={formDisableReason || pristineReason}
-        isAriaDisabled={isDisabled}
+        isAriaDisabled={isDisabled || upgradeStarted}
         variant="primary"
         onClick={handleSubmit}
         isLoading={isPending}
