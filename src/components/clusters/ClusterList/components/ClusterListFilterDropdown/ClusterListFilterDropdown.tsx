@@ -66,6 +66,7 @@ const ClusterListFilterDropdown = (props: {
                   <MenuItem
                     hasCheckbox
                     itemId={option.key}
+                    key={option.key}
                     isSelected={selected[option.key]}
                     data-testid={'cluster-type-'.concat(option.label)}
                     onClick={() => {

@@ -97,7 +97,7 @@ class RadioButtons extends React.Component {
 }
 
 RadioButtons.propTypes = {
-  defaultValue: PropTypes.string.isRequired,
+  defaultValue: PropTypes.string,
   isDisabled: PropTypes.bool,
   onChangeCallback: PropTypes.func,
   disableDefaultValueHandling: PropTypes.bool,

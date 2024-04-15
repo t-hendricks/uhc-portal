@@ -343,9 +343,7 @@ const ReviewClusterScreen = ({
 ReviewClusterScreen.propTypes = {
   change: PropTypes.func,
   clusterRequestParams: PropTypes.object.isRequired,
-  formValues: PropTypes.objectOf(
-    PropTypes.oneOfType([PropTypes.string, PropTypes.number, PropTypes.bool]),
-  ),
+  formValues: PropTypes.objectOf(PropTypes.oneOfType([PropTypes.any])),
   canAutoScale: PropTypes.bool,
   autoscalingEnabled: PropTypes.bool,
   installToVPCSelected: PropTypes.bool,

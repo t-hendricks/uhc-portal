@@ -10,6 +10,7 @@ import DetailsLeft from './DetailsLeft';
 const defaultProps = {
   cluster: fixtures.clusterDetails.cluster,
   cloudProviders: fixtures.cloudProviders,
+  showAssistedId: false,
 };
 
 const componentText = {

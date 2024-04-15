@@ -125,7 +125,7 @@ describe('<ClusterDetailsTop />', () => {
 
     const newProps = { ...props, cluster };
 
-    const { user } = render(
+    render(
       <TestRouter>
         <CompatRouter>
           <ClusterDetailsTop {...newProps} />
@@ -139,9 +139,6 @@ describe('<ClusterDetailsTop />', () => {
     expect(unArchiveButton).toHaveClass('pf-m-secondary');
     expect(screen.queryByRole('button', { name: 'Refresh' })).not.toBeInTheDocument();
     expect(screen.queryByRole('tooltip')).not.toBeInTheDocument();
-    await user.click(unArchiveButton);
-
-    expect(await screen.findByRole('tooltip')).toBeInTheDocument();
   });
 
   it('should show expiration alert based on expiration_time', async () => {

@@ -6,18 +6,6 @@ import { render, screen, waitFor } from '~/testUtils';
 
 import { MachinePool } from './MachinePool';
 
-// const inputMetaProps = {
-//   input: {
-//     onChange: () => {},
-//     value: 'test',
-//   },
-//   meta: {
-//     invalid: false,
-//     error: null,
-//     touched: false,
-//   },
-// };
-
 describe('<MachinePool />', () => {
   it('should open nodes labels section by default if node labels are set', async () => {
     render(
@@ -26,6 +14,9 @@ describe('<MachinePool />', () => {
           [FieldId.NodeLabels]: [{ key: 'test-key', value: 'test-value' }],
           [FieldId.MachineType]: 'test',
           [FieldId.MachineTypeForceChoice]: 'test',
+          [FieldId.BillingModel]: 'marketplace-aws',
+          [FieldId.Product]: 'ROSA',
+          [FieldId.CloudProvider]: 'aws',
         }}
         onSubmit={() => {}}
       >

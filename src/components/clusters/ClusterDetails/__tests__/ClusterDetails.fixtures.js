@@ -409,6 +409,14 @@ const clusterDetails = {
       cloud_provider_id: 'aws',
       region_id: 'us-east-1',
     },
+    canEdit: true,
+    idpActions: {
+      get: false,
+      list: false,
+      create: false,
+      update: false,
+      delete: false,
+    },
   },
 };
 
@@ -829,6 +837,13 @@ const AROClusterDetails = {
     status: {
       state: 'ready',
       dns_ready: true,
+    },
+    idpActions: {
+      get: false,
+      list: false,
+      create: false,
+      update: false,
+      delete: false,
     },
   },
 };

@@ -30,6 +30,7 @@ describe('<ClusterLogsToolbar />', () => {
     isPendingNoData: false,
     createdAt: '2024-01-01',
     clusterID: '282fg0gt74jjb9558ge1poe8m4dlvb07',
+    logs: 5,
   };
 
   afterEach(() => {

@@ -19,6 +19,7 @@ const defaultProps = {
   showStorageAndLoadBalancers: false,
   inModal: false,
   isHypershift: false,
+  maxWorkerVolumeSizeGiB: 10,
 };
 
 describe('<ScaleSection />', () => {

@@ -5,7 +5,7 @@ import { CompatRouter } from 'react-router-dom-v5-compat';
 import { normalizedProducts } from '../../../common/subscriptionTypes';
 import { viewConstants } from '../../../redux/constants';
 import { mockRestrictedEnv, render, screen } from '../../../testUtils';
-import fixtures from '../ClusterDetails/__tests__/ClusterDetails.fixtures';
+import fixtures, { funcs } from '../ClusterDetails/__tests__/ClusterDetails.fixtures';
 
 import ClusterList from './ClusterList';
 
@@ -31,11 +31,18 @@ describe('<ClusterList />', () => {
       clusters: [fixtures.clusterDetails.cluster],
       meta: {},
       queryParams: {},
-      closeModal: () => {},
-      clearClusterDetails: () => {},
-      clearGlobalError: () => {},
       features: {},
       valid: true,
+      pending: false,
+      errorMessage: '',
+      error: false,
+      username: 'myUserName',
+      ...funcs(),
+      clearClusterDetails: jest.fn(),
+      setClusterDetails: jest.fn(),
+      setListFlag: jest.fn(),
+      setSorting: jest.fn(),
+      getMachineTypes: jest.fn(),
     };
     afterEach(() => {
       isRestrictedEnv.mockReturnValue(false);

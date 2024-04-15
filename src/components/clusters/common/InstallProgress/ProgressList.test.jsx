@@ -95,7 +95,7 @@ describe('<ProgressList />', () => {
   });
 
   it('should render for ROSA manual mode', () => {
-    render(<ProgressList cluster={rosaManualMode} />);
+    render(<ProgressList cluster={rosaManualMode} actionRequiredInitialOpen={false} />);
 
     const steps = screen.getAllByRole('listitem');
     expect(steps).toHaveLength(5);

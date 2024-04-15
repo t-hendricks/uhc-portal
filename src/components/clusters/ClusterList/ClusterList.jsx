@@ -343,8 +343,7 @@ ClusterList.propTypes = {
   valid: PropTypes.bool.isRequired,
   clusters: PropTypes.array.isRequired,
   error: PropTypes.bool.isRequired,
-  errorMessage: PropTypes.oneOfType([PropTypes.string, PropTypes.node, PropTypes.element])
-    .isRequired,
+  errorMessage: PropTypes.oneOfType([PropTypes.string, PropTypes.node, PropTypes.element]),
   meta: PropTypes.shape({
     clustersServiceError: PropTypes.shape({
       errorMessage: PropTypes.oneOfType([PropTypes.string, PropTypes.node, PropTypes.element])
