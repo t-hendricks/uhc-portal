@@ -3,7 +3,7 @@ import isEmpty from 'lodash/isEmpty';
 import PropTypes from 'prop-types';
 import { useSelector } from 'react-redux';
 
-import { Title } from '@patternfly/react-core';
+import { Bullseye, Spinner, Stack, StackItem, Title } from '@patternfly/react-core';
 
 import { hasSelectedSecurityGroups } from '~/common/securityGroupsHelpers';
 import { canAutoScaleOnCreateSelector } from '~/components/clusters/ClusterDetails/components/MachinePools/machinePoolsSelectors';
@@ -40,6 +40,7 @@ const ReviewClusterScreen = ({
   clearGetUserRoleResponse,
   clearGetOcmRoleResponse,
   goToStepById,
+  isSubmitPending,
 }) => {
   const {
     values: {
@@ -162,6 +163,25 @@ const ReviewClusterScreen = ({
   const accountStepId = isHypershiftEnabled
     ? 'ACCOUNTS_AND_ROLES_AS_SECOND_STEP'
     : 'ACCOUNTS_AND_ROLES_AS_FIRST_STEP';
+
+  if (isSubmitPending) {
+    return (
+      <Bullseye>
+        <Stack>
+          <StackItem>
+            <Bullseye>
+              <Spinner size="xl" />
+            </Bullseye>
+          </StackItem>
+          <StackItem>
+            <Bullseye>
+              Creating your cluster. Do not refresh this page. This request may take a moment...
+            </Bullseye>
+          </StackItem>
+        </Stack>
+      </Bullseye>
+    );
+  }
 
   return (
     <div className="ocm-create-osd-review-screen">
@@ -319,6 +339,7 @@ ReviewClusterScreen.propTypes = {
   clearGetUserRoleResponse: PropTypes.func.isRequired,
   clearGetOcmRoleResponse: PropTypes.func.isRequired,
   goToStepById: PropTypes.func.isRequired,
+  isSubmitPending: PropTypes.bool,
 };
 
 export default ReviewClusterScreen;
