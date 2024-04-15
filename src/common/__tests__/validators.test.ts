@@ -10,8 +10,10 @@ import validators, {
   checkDisconnectedvCPU,
   checkGithubTeams,
   checkIdentityProviderName,
+  checkKeyValueFormat,
   checkLabels,
   checkOpenIDIssuer,
+  checkRouteSelectors,
   checkUserID,
   clusterAutoScalingValidators,
   clusterNameAsyncValidation,
@@ -1299,7 +1301,24 @@ describe('k8sGpuParameter', () => {
     ['somevendor.com/gpu:aa:0', 'Invalid params: somevendor.com/gpu:aa:0'],
     ['somevendor.com/gpu:10:0', 'Invalid params: somevendor.com/gpu:10:0'],
     ['somevendor.com/gpu:4:1', 'Invalid params: somevendor.com/gpu:4:1'],
-  ])('value %p to be %p', (value: string, expected: string | undefined) => {
-    expect(clusterAutoScalingValidators.k8sGpuParameter(value)).toBe(expected);
-  });
+  ])('value %p to be %p', (value: string, expected: string | undefined) =>
+    expect(clusterAutoScalingValidators.k8sGpuParameter(value)).toBe(expected),
+  );
+
+  it.each([
+    ['', undefined],
+    ['whatever', 'Routes should match comma separated pairs in key=value format'],
+    ['key=value', undefined],
+    ['key=value,key1=value1', undefined],
+  ])('checkKeyValueFormat value %p to be %p', (value: string, expected: string | undefined) =>
+    expect(checkKeyValueFormat(value)).toBe(expected),
+  );
+
+  it.each([
+    ['key=', undefined],
+    ['key=,key2=', undefined],
+    ['key=a,key=b', 'Each label should have a unique key. "key" already exists.'],
+  ])('checkRouteSelectors value %p to be %p', (value: string, expected: string | undefined) =>
+    expect(checkRouteSelectors(value)).toBe(expected),
+  );
 });
