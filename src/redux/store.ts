@@ -14,10 +14,14 @@ const defaultOptions = {
 };
 const history = createBrowserHistory();
 
+// NOTE: in order to keep testing accurate
+// if you change the store (see below)
+// also make a change to src/testUtils.tsx
 const store = configureStore({
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
       serializableCheck: false,
+      immutableCheck: { warnAfter: 256 }, // We can also set immutableCheck to false to prevent checking (and warnings).  Note it is false in prod builds
     })
       .concat(routerMiddleware(history))
       .concat(promiseRejectionMiddleware as Middleware)

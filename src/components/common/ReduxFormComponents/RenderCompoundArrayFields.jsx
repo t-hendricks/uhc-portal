@@ -56,9 +56,9 @@ const CompoundFieldGridItem = ({
 };
 
 CompoundFieldGridItem.propTypes = {
-  item: PropTypes.object.isRequired,
+  item: PropTypes.string.isRequired,
   index: PropTypes.number.isRequired,
-  fields: PropTypes.array.isRequired,
+  fields: PropTypes.object.isRequired,
   fieldSpan: PropTypes.number,
   compoundFields: PropTypes.array.isRequired,
   disabled: PropTypes.bool,

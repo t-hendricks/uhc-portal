@@ -130,7 +130,7 @@ const ReduxFormKeyValueList = ({ fields, forceTouch }) => (
 
 ReduxFormKeyValueList.propTypes = {
   forceTouch: PropTypes.bool,
-  fields: PropTypes.array.isRequired,
+  fields: PropTypes.oneOfType([PropTypes.object, PropTypes.array]).isRequired, // fields is an array-like object
   meta: PropTypes.shape({
     error: PropTypes.string,
   }),

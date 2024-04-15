@@ -99,7 +99,7 @@ const MinusButtonGridItem = ({ index, fields, onClick }) => {
 
 MinusButtonGridItem.propTypes = {
   index: PropTypes.number.isRequired,
-  fields: PropTypes.array.isRequired,
+  fields: PropTypes.object.isRequired,
   onClick: PropTypes.func.isRequired,
 };
 
@@ -257,11 +257,11 @@ const RenderArrayFields = (props) => {
 };
 
 RenderArrayFields.propTypes = {
-  fields: PropTypes.array.isRequired,
+  fields: PropTypes.object.isRequired,
   label: PropTypes.string,
   helpText: PropTypes.string,
   isRequired: PropTypes.bool,
-  onFormChange: PropTypes.func.isRequired,
+  onFormChange: PropTypes.func,
   fieldSpan: PropTypes.number,
   isGroupError: PropTypes.bool,
   meta: PropTypes.shape({ error: PropTypes.string, submitFailed: PropTypes.bool }),

@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 import { Title } from '@patternfly/react-core';
 
-import { allCategories, downloadsCategories } from './downloadsStructure';
+import { downloadsCategories } from './downloadsStructure';
 
 import './DownloadsSection.scss';
 
@@ -24,7 +24,7 @@ const DownloadsSection = ({ selectedCategory, category, description, children })
     </>
   );
 DownloadsSection.propTypes = {
-  selectedCategory: PropTypes.oneOf(allCategories.map((c) => c.key)).isRequired,
+  selectedCategory: PropTypes.oneOf(downloadsCategories().map((c) => c.key)).isRequired,
   category: PropTypes.string.isRequired,
   description: PropTypes.node,
   children: PropTypes.node,

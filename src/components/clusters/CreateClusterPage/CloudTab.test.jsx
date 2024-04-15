@@ -181,6 +181,10 @@ describe('<CloudTab />', () => {
 
   describe('in Restricted env', () => {
     const isRestrictedEnv = mockRestrictedEnv();
+    const props = {
+      hasOSDQuota: false,
+      trialEnabled: false,
+    };
 
     afterEach(() => {
       isRestrictedEnv.mockReturnValue(false);
@@ -190,7 +194,7 @@ describe('<CloudTab />', () => {
       render(
         <MemoryRouter>
           <CompatRouter>
-            <CloudTab />
+            <CloudTab {...props} />
           </CompatRouter>
         </MemoryRouter>,
       );

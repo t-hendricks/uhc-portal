@@ -52,7 +52,7 @@ const InsightsLabelComponent = ({ style, ...props }) => {
         {...props}
         style={{ ...style, fontSize: 15 }}
         className={
-          externalId && datum.value > 0
+          externalId && datum?.value > 0
             ? 'ocm-c-overview-advisor--enabled-link'
             : 'ocm-c-overview-advisor--disabled-link'
         }
@@ -88,7 +88,7 @@ InsightsSubtitleComponent.propTypes = {
 };
 
 InsightsLabelComponent.propTypes = {
-  datum: PropTypes.shape({ value: PropTypes.number, id: PropTypes.string }).isRequired,
+  datum: PropTypes.shape({ value: PropTypes.number, id: PropTypes.string }),
   externalId: PropTypes.string.isRequired,
   style: PropTypes.object.isRequired,
 };

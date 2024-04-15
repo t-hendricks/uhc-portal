@@ -398,7 +398,7 @@ MachineTypeSelection.propTypes = {
   machineTypesByRegion: PropTypes.object.isRequired,
   isMultiAz: PropTypes.bool.isRequired,
   isBYOC: PropTypes.bool.isRequired,
-  isMachinePool: PropTypes.bool.isRequired,
+  isMachinePool: PropTypes.bool,
   inModal: PropTypes.bool,
   cloudProviderID: PropTypes.string,
   product: PropTypes.oneOf(Object.keys(normalizedProducts)).isRequired,

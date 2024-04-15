@@ -126,13 +126,14 @@ const HelpTextPassword = ({ passwordErrors }) => {
 };
 
 HelpTextPassword.propTypes = {
-  passwordErrors: {
+  passwordErrors: PropTypes.shape({
     emptyPassword: PropTypes.bool,
     baseRequirements: PropTypes.bool,
     uppercase: PropTypes.bool,
     lowercase: PropTypes.bool,
     numbers: PropTypes.bool,
-  },
+    numbersOrTypes: PropTypes.bool,
+  }),
 };
 
 const HTPasswdForm = ({ isPending, HTPasswdErrors, change }) => {
@@ -213,13 +214,18 @@ const HTPasswdForm = ({ isPending, HTPasswdErrors, change }) => {
 HTPasswdForm.propTypes = {
   isPending: PropTypes.bool,
   change: PropTypes.func.isRequired,
-  HTPasswdErrors: PropTypes.arrayOf({
-    emptyPassword: PropTypes.bool,
-    baseRequirements: PropTypes.bool,
-    uppercase: PropTypes.bool,
-    lowercase: PropTypes.bool,
-    numbers: PropTypes.bool,
-  }),
+  HTPasswdErrors: PropTypes.arrayOf(
+    PropTypes.shape({
+      password: PropTypes.shape({
+        emptyPassword: PropTypes.bool,
+        baseRequirements: PropTypes.bool,
+        uppercase: PropTypes.bool,
+        lowercase: PropTypes.bool,
+        numbers: PropTypes.bool,
+        numbersOrSymbols: PropTypes.bool,
+      }),
+    }),
+  ),
 };
 
 HTPasswdForm.defaultProps = {

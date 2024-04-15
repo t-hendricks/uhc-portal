@@ -1,6 +1,6 @@
 import React from 'react';
+import { reduxForm } from 'redux-form';
 
-import wizardConnector from '~/components/clusters/wizards/common/WizardConnector';
 import { render, screen } from '~/testUtils';
 
 import UpgradeSettingsFields from './UpgradeSettingsFields';
@@ -16,7 +16,12 @@ describe('<UpgradeSettingsFields />', () => {
     product: 'ROSA',
     initialScheduleValue: '',
   };
-  const ConnectedUpgradeSettingsFields = wizardConnector(UpgradeSettingsFields);
+
+  const ConnectedUpgradeSettingsFields = reduxForm({
+    form: 'CreateCluster',
+    initialValues: { node_drain_grace_period: 60 },
+  })(UpgradeSettingsFields);
+
   describe('Node draining grace period', () => {
     it('is shown if not hypershift', () => {
       const newProps = {

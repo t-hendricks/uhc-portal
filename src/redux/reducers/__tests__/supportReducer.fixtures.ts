@@ -77,4 +77,50 @@ const mockGetNotificationContactsList = [
   },
 ];
 
-export { mockGetNotificationContactsList, mockGetNotificationContactsPayload };
+const clusterCreator = {
+  id: '1VW00yfnFuhoybNRBqF86RyS2h6',
+  kind: 'Account',
+  href: '/api/accounts_mgmt/v1/accounts/1VW00yfnFuhoybNRBqF86RyS2h6',
+  name: 'Liran Roitman',
+  username: 'lroitman.openshift',
+};
+
+const baseProps = {
+  subscriptionID: '1iGW3xYbKZAEdZLi207rcA1l0ob',
+  canEdit: true,
+  notificationContacts: {
+    contacts: [],
+    pending: false,
+    subscriptionID: '1iGW3xYbKZAEdZLi207rcA1l0ob',
+  },
+  clusterUUID: '1',
+  product: 'OSD',
+  supportCases: {
+    cases: [],
+    pending: false,
+    subscriptionID: '1iGW3xYbKZAEdZLi207rcA1l0ob',
+  },
+  deleteContactResponse: {},
+  addContactResponse: {},
+  getNotificationContacts: jest.fn(),
+  hasContacts: false,
+  deleteNotificationContact: jest.fn(),
+  clearDeleteNotificationContacts: jest.fn(),
+  clearNotificationContacts: jest.fn(),
+  addNotificationToaster: jest.fn(),
+  isAddNotificationContactModalOpen: false,
+  openModal: jest.fn(),
+  closeModal: jest.fn(),
+  clearAddNotificationContacts: jest.fn(),
+  addNotificationContact: jest.fn(),
+  getSupportCases: jest.fn(),
+  clusterCreator,
+  version: 'openshift-v4.12.4',
+};
+
+export {
+  mockGetNotificationContactsPayload,
+  mockGetNotificationContactsList,
+  clusterCreator,
+  baseProps,
+};

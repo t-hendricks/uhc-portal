@@ -15,6 +15,7 @@ const ReduxHiddenCheckbox = ({ name }) => (
     <Field
       component={ReduxCheckbox}
       name={`${name}`}
+      label=""
       validate={(value) => (value ? undefined : ' ')}
     />
   </span>
