@@ -8,10 +8,10 @@ import {
   resetCreatedClusterResponse,
 } from '~/redux/actions/clustersActions';
 import { getMachineTypes } from '~/redux/actions/machineTypesActions';
-import { clearGetUserRoleResponse, getUserRole } from '~/redux/actions/rosaActions';
+import { getUserRole } from '~/redux/actions/rosaActions';
 import { getOrganizationAndQuota } from '~/redux/actions/userActions';
 
-import { closeModal, openModal } from '../../../common/Modal/ModalActions';
+import { openModal } from '../../../common/Modal/ModalActions';
 import shouldShowModal from '../../../common/Modal/ModalSelectors';
 import { hasManagedQuotaSelector } from '../../common/quotaSelectors';
 import submitOSDRequest from '../common/submitOSDRequest';
@@ -49,14 +49,11 @@ const mapDispatchToProps = (dispatch) => ({
   openModal: (modalName) => {
     dispatch(openModal(modalName));
   },
-  closeModal: () => {
-    dispatch(closeModal());
-  },
+
   getOrganizationAndQuota: () => dispatch(getOrganizationAndQuota()),
   getUserRole: () => dispatch(getUserRole()),
   getMachineTypes: () => dispatch(getMachineTypes()),
   getCloudProviders: () => dispatch(getCloudProviders()),
-  clearGetUserRoleResponse: () => dispatch(clearGetUserRoleResponse()),
   clearInstallableVersions: () => dispatch(clearInstallableVersions()),
 });
 
