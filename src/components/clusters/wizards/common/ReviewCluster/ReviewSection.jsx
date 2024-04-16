@@ -167,6 +167,7 @@ const ReviewSection = ({ initiallyExpanded, title, children, onGoToStep }) => {
           variant="link"
           isInline
           className="pf-v5-u-font-size-sm pf-v5-u-ml-sm"
+          data-testid={title}
           onClick={(event) => {
             event.stopPropagation();
             onGoToStep();
