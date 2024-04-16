@@ -13,11 +13,12 @@ import {
   Title,
 } from '@patternfly/react-core';
 
-import links, { channels } from '../../common/installLinks.mjs';
+import links, { channels, tools } from '../../common/installLinks.mjs';
 import DownloadAndOSSelection from '../clusters/install/instructions/components/DownloadAndOSSelection';
 import ExternalLink from '../common/ExternalLink';
 import InstructionCommand from '../common/InstructionCommand';
 import PopoverHint from '../common/PopoverHint';
+import SupportLevelBadge, { SupportLevelType } from '../common/SupportLevelBadge';
 
 import LeadingInfo from './LeadingInfo';
 
@@ -46,6 +47,9 @@ const SSOLogin = ({
             <List component="ol">
               <ListItem>
                 Download and install the <code>{commandName}</code> command-line tool:{' '}
+                {commandTool === tools.OCM && (
+                  <SupportLevelBadge type={SupportLevelType.devPreview} />
+                )}
                 <Text component="p" />
                 <DownloadAndOSSelection tool={commandTool} channel={channels.STABLE} />
                 <Text component="p" />
