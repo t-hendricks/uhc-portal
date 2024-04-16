@@ -4,7 +4,6 @@ import { get, has } from 'lodash';
 import PropTypes from 'prop-types';
 import { Link, useLocation, useNavigate } from 'react-router-dom-v5-compat';
 
-import { PreviewBadgePosition } from '@openshift-assisted/ui-lib/ocm';
 import {
   Bullseye,
   ExpandableSectionToggle,
@@ -504,6 +503,11 @@ const devToolRows = (expanded, setExpanded, selections, setSelections, toolRefs,
   );
 };
 
+const props = {
+  appName: 'assisted-installer-app',
+  className: 'pf-v5-u-display-inline',
+};
+
 const installationRows = (expanded, setExpanded, selections, setSelections, toolRefs, urls) => {
   const commonProps = {
     expanded,
@@ -608,7 +612,7 @@ const installationRows = (expanded, setExpanded, selections, setSelections, tool
           <>
             OpenShift Installer with multi-architecture compute machines{' '}
             <ScalprumComponent
-              position={PreviewBadgePosition.inline}
+              {...props}
               scope="assistedInstallerApp"
               module="./TechnologyPreview"
               fallback={

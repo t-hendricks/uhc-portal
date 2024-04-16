@@ -3,7 +3,6 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom-v5-compat';
 
-import * as OCM from '@openshift-assisted/ui-lib/ocm';
 import {
   Bullseye,
   Button,
@@ -33,8 +32,6 @@ import MicrosoftLogo from '../../../styles/images/Microsoft_logo.svg';
 
 import links from './CreateClusterConsts';
 import CreateClusterDropDown from './CreateClusterDropDown';
-
-const { PreviewBadgePosition } = OCM;
 
 const getColumns = () => [
   {
@@ -358,6 +355,10 @@ const ManagedServices = ({ hasQuota, trialEnabled }) => {
 
 const runItYourself = () => {
   const columns = ['Cloud provider', 'Installation options'];
+  const props = {
+    appName: 'assisted-installer-app',
+    className: 'pf-v5-u-display-inline',
+  };
   const rows = [
     [
       <>
@@ -365,7 +366,7 @@ const runItYourself = () => {
           Alibaba Cloud
         </Link>
         <ScalprumComponent
-          position={PreviewBadgePosition.inline}
+          {...props}
           scope="assistedInstallerApp"
           module="./TechnologyPreview"
           fallback={
@@ -432,7 +433,7 @@ const runItYourself = () => {
       <>
         <Link to="/install/metal/multi"> Baremetal (multi-architecture)</Link>
         <ScalprumComponent
-          position={PreviewBadgePosition.inline}
+          {...props}
           scope="assistedInstallerApp"
           module="./TechnologyPreview"
           fallback={
@@ -448,7 +449,7 @@ const runItYourself = () => {
       <>
         <Link to="/install/powervs/installer-provisioned">IBM PowerVS (ppc64le)</Link>
         <ScalprumComponent
-          position={PreviewBadgePosition.inline}
+          {...props}
           scope="assistedInstallerApp"
           module="./TechnologyPreview"
           fallback={
@@ -470,7 +471,7 @@ const runItYourself = () => {
       <>
         <Link to="/install/oracle-cloud">Oracle Cloud Infrastructure (virtual machines)</Link>
         <ScalprumComponent
-          position={PreviewBadgePosition.inline}
+          {...props}
           scope="assistedInstallerApp"
           module="./TechnologyPreview"
           fallback={
