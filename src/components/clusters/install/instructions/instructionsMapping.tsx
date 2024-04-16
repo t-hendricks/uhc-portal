@@ -297,7 +297,7 @@ const instructionsMapping = {
     },
     ppc: {
       abi: {
-        title: 'Install OpenShift on IBM Power Systems Virtual Server locally with Agent',
+        title: 'Install OpenShift on IBM Power (ppc64le) locally with Agent',
         installer: tools.PPCINSTALLER,
         channel: channels.STABLE,
         docURL: links.INSTALL_AGENT_LEARN_MORE,
