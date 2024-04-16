@@ -2300,7 +2300,7 @@
   dependencies:
     "@openshift/dynamic-plugin-sdk" "^4.0.0"
 
-"@scalprum/react-core@^0.5.4":
+"@scalprum/react-core@0.5.4", "@scalprum/react-core@^0.5.4":
   version "0.5.4"
   resolved "https://registry.yarnpkg.com/@scalprum/react-core/-/react-core-0.5.4.tgz#1efbcb8f2bb2b9500179bc755a958ba1abab45be"
   integrity sha512-tBAUstwEDri7ApIyfAzVfRzVj2MmlKVy29eFL4lOEZf7M96uUCdhmYtSdDPka7CegplgHN+9AtuSLiYR97K2gg==
