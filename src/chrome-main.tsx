@@ -34,25 +34,12 @@ import { detectFeatures } from './redux/actions/featureActions';
 import { userInfoResponse } from './redux/actions/userActions';
 import { store } from './redux/store';
 import type { AppThunkDispatch } from './redux/types';
-import { authInterceptor } from './services/apiRequest';
 import { Chrome } from './types/types';
 import config from './config';
 
 import './styles/main.scss';
 
 import './i18n';
-
-const { Api, Config } = OCM;
-
-/**
- * Assisted Installer configuration
- *
- * We need to pass axios auth interceptor so every request from AI has proper headers.
- *
- * We also need to set the route base path for the internal AI routing to work properly.
- */
-Api.setAuthInterceptor(authInterceptor);
-Config.setRouteBasePath('/assisted-installer');
 
 type Props = {
   chrome: Chrome;
