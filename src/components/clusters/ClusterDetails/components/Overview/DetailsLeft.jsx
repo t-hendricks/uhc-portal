@@ -62,7 +62,7 @@ function DetailsLeft({ cluster, cloudProviders, showAssistedId }) {
           <span data-testid="clusterID">{id}</span>
         </DescriptionListDescription>
       </DescriptionListGroup>
-      {isLongerClusterNameEnabled && (
+      {isLongerClusterNameEnabled && domainPrefix && (
         <DescriptionListGroup>
           <DescriptionListTerm>Domain prefix</DescriptionListTerm>
           <DescriptionListDescription>
