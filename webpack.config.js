@@ -42,9 +42,9 @@ module.exports = async (_env, argv) => {
   const sentryReleaseVersion = argv.env['sentry-version'];
   const isDevServer = process.argv.includes('serve');
 
-  const outDir = outputPath ?
-    path.resolve(__dirname, outputPath) :
-    path.resolve(__dirname, 'dist', insights.appname);
+  const outDir = outputPath
+    ? path.resolve(__dirname, outputPath)
+    : path.resolve(__dirname, 'dist', insights.appname);
 
   // Select default API env based on argument if specified.
   // Otherwise, default to 'development' for backend-proxy users when running in dev server,
@@ -68,14 +68,15 @@ module.exports = async (_env, argv) => {
   }
   const entry = path.resolve(srcDir, 'bootstrap.ts');
 
-  const noInsightsProxy = argv.env.noproxy;
+  const noInsightsProxy = argv.env.noproxy || false;
   // Support `logging=quiet` vs. `logging=verbose`. Default verbose (might change in future).
   const verboseLogging = argv.env.logging !== 'quiet';
 
+  const chromeTemplateUrl = `https://console.redhat.com/${
+    betaMode ? 'preview/' : ''
+  }apps/chrome/index.html`;
   const getChromeTemplate = async () => {
-    const result = await axios.get(
-      `https://console.redhat.com/${betaMode ? 'preview/' : ''}apps/chrome/index.html`,
-    );
+    const result = await axios.get(chromeTemplateUrl);
     return result.data;
   };
   const chromeTemplate = await getChromeTemplate();
@@ -297,13 +298,15 @@ module.exports = async (_env, argv) => {
             {
               context: ['/mockdata'],
               pathRewrite: { '^/mockdata': '' },
-              target: 'http://127.0.0.1:8010',
-              onProxyReq(/*request*/) {
-                if (verboseLogging) {
-                  // Redundant with mockserver's own logging.
-                  // console.log('  proxying localhost:8010:', request.path);
-                }
-              },
+              target: 'http://127.0.0.1:8010',             
+            },
+            {
+              context: ['/beta/apps/assisted-installer-app/**', '/apps/assisted-installer-app/**'],
+              pathRewrite: { '^/beta/': '' },
+              target: 'http://127.0.0.1:8003',
+              logLevel: 'debug',
+              secure: false,
+              changeOrigin: true,
             },
             {
               // docs: https://github.com/chimurai/http-proxy-middleware#http-proxy-options
@@ -327,7 +330,7 @@ module.exports = async (_env, argv) => {
                   console.log('  proxying console.redhat.com:', request.path);
                 }
               },
-            },
+            },            
           ]
         : undefined,
       hot: false,
