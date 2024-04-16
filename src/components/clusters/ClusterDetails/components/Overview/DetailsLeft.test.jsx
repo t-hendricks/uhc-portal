@@ -53,6 +53,9 @@ const checkForValueAbsence = (label, value) => {
   }
 };
 
+const checkIfRendered = async () =>
+  expect(await screen.findByText('OpenShift:')).toBeInTheDocument();
+
 describe('<DetailsLeft />', () => {
   afterAll(() => {
     jest.resetAllMocks();
@@ -122,24 +125,38 @@ describe('<DetailsLeft />', () => {
   });
 
   describe('Domain prefix', () => {
-    it('shows the label and value when feature gate is enabled', () => {
+    it('shows the label and value when feature gate is enabled', async () => {
       mockUseFeatureGate([[LONGER_CLUSTER_NAME_UI, true]]);
       // Arrange
       const OSDClusterFixture = fixtures.clusterDetails.cluster;
       const domainPrefix = 'prefix-value-1';
       const props = { ...defaultProps, cluster: OSDClusterFixture };
       render(<DetailsLeft {...props} />);
+      await checkIfRendered();
 
       // Assert
       checkForValue(componentText.DOMAIN_PREFIX.label, domainPrefix);
     });
 
-    it('hides the label and value when feature gate is not enabled', () => {
+    it('hides the label and value when feature gate is not enabled', async () => {
       mockUseFeatureGate([[LONGER_CLUSTER_NAME_UI, false]]);
       // Arrange
       const OSDClusterFixture = fixtures.clusterDetails.cluster;
       const props = { ...defaultProps, cluster: OSDClusterFixture };
       render(<DetailsLeft {...props} />);
+      await checkIfRendered();
+
+      // Assert
+      expect(screen.queryByText(componentText.DOMAIN_PREFIX.label)).toBe(null);
+    });
+
+    it('hides the label and value when feature gate is enabled but the value is not set', async () => {
+      mockUseFeatureGate([[LONGER_CLUSTER_NAME_UI, true]]);
+      // Arrange
+      const OSDClusterFixture = { ...fixtures.clusterDetails.cluster, domain_prefix: '' };
+      const props = { ...defaultProps, cluster: OSDClusterFixture };
+      render(<DetailsLeft {...props} />);
+      await checkIfRendered();
 
       // Assert
       expect(screen.queryByText(componentText.DOMAIN_PREFIX.label)).toBe(null);

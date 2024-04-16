@@ -13,7 +13,7 @@ import {
   getMinReplicasCount,
 } from '~/components/clusters/common/ScaleSection/AutoScaleSection/AutoScaleHelper';
 import { normalizedProducts } from '~/common/subscriptionTypes';
-import { emptyAWSSubnet } from '~/components/clusters/wizards/common/constants';
+import { emptyAWSSubnet } from '~/components/clusters/wizards/common/createOSDInitialValues';
 
 import ReduxCheckbox from '~/components/common/ReduxFormComponents/ReduxCheckbox';
 import { useFeatureGate } from '~/hooks/useFeatureGate';
