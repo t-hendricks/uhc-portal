@@ -30,6 +30,7 @@ describe('Rosa Classic cluster wizard validations', { tags: ['smoke'] }, () => {
   it('Step - Accounts and roles - widget validations', () => {
     CreateRosaWizardPage.isAccountsAndRolesScreen();
     CreateRosaWizardPage.selectAWSInfrastructureAccount(awsAccountID);
+    CreateRosaWizardPage.waitForARNList();
     CreateRosaWizardPage.refreshInfrastructureAWSAccountButton().click();
     CreateRosaWizardPage.waitForARNList();
     CreateRosaWizardPage.selectInstallerRole(installerARN);
