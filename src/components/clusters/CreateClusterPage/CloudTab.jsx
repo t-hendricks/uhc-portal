@@ -5,9 +5,11 @@ import { Link } from 'react-router-dom-v5-compat';
 
 import * as OCM from '@openshift-assisted/ui-lib/ocm';
 import {
+  Bullseye,
   Button,
   ButtonVariant,
   PageSection,
+  Spinner,
   Stack,
   StackItem,
   Title,
@@ -19,6 +21,7 @@ import {
   TableBody as TableBodyDeprecated,
   TableHeader as TableHeaderDeprecated,
 } from '@patternfly/react-table/deprecated';
+import { ScalprumComponent } from '@scalprum/react-core';
 
 import ExternalLink from '~/components/common/ExternalLink';
 import { isRestrictedEnv } from '~/restrictedEnv';
@@ -31,7 +34,7 @@ import MicrosoftLogo from '../../../styles/images/Microsoft_logo.svg';
 import links from './CreateClusterConsts';
 import CreateClusterDropDown from './CreateClusterDropDown';
 
-const { TechnologyPreview, PreviewBadgePosition } = OCM;
+const { PreviewBadgePosition } = OCM;
 
 const getColumns = () => [
   {
@@ -361,7 +364,16 @@ const runItYourself = () => {
         <Link to="/install/alibaba/installer-provisioned" className="pf-v5-u-mr-xs">
           Alibaba Cloud
         </Link>
-        <TechnologyPreview position={PreviewBadgePosition.inline} />
+        <ScalprumComponent
+          position={PreviewBadgePosition.inline}
+          scope="assistedInstallerApp"
+          module="./TechnologyPreview"
+          fallback={
+            <Bullseye>
+              <Spinner />
+            </Bullseye>
+          }
+        />
       </>,
       'Full stack automation',
     ],
@@ -419,14 +431,32 @@ const runItYourself = () => {
     [
       <>
         <Link to="/install/metal/multi"> Baremetal (multi-architecture)</Link>
-        <TechnologyPreview position={PreviewBadgePosition.inline} />
+        <ScalprumComponent
+          position={PreviewBadgePosition.inline}
+          scope="assistedInstallerApp"
+          module="./TechnologyPreview"
+          fallback={
+            <Bullseye>
+              <Spinner />
+            </Bullseye>
+          }
+        />
       </>,
       'Pre-existing infrastructure',
     ],
     [
       <>
         <Link to="/install/powervs/installer-provisioned">IBM PowerVS (ppc64le)</Link>
-        <TechnologyPreview position={PreviewBadgePosition.inline} />
+        <ScalprumComponent
+          position={PreviewBadgePosition.inline}
+          scope="assistedInstallerApp"
+          module="./TechnologyPreview"
+          fallback={
+            <Bullseye>
+              <Spinner />
+            </Bullseye>
+          }
+        />
       </>,
       'Full stack automation',
     ],
@@ -439,7 +469,16 @@ const runItYourself = () => {
     [
       <>
         <Link to="/install/oracle-cloud">Oracle Cloud Infrastructure (virtual machines)</Link>
-        <TechnologyPreview position={PreviewBadgePosition.inline} />
+        <ScalprumComponent
+          position={PreviewBadgePosition.inline}
+          scope="assistedInstallerApp"
+          module="./TechnologyPreview"
+          fallback={
+            <Bullseye>
+              <Spinner />
+            </Bullseye>
+          }
+        />
       </>,
       'Pre-existing infrastructure',
     ],

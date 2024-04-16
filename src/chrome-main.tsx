@@ -18,7 +18,6 @@ import { Provider } from 'react-redux';
 import { BrowserRouter } from 'react-router-dom';
 import { CompatRouter } from 'react-router-dom-v5-compat';
 
-import * as OCM from '@openshift-assisted/ui-lib/ocm';
 import { GenerateId } from '@patternfly/react-core';
 import useChrome from '@redhat-cloud-services/frontend-components/useChrome';
 // No type definitions

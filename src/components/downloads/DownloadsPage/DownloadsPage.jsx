@@ -4,12 +4,14 @@ import { get, has } from 'lodash';
 import PropTypes from 'prop-types';
 import { Link, useLocation, useNavigate } from 'react-router-dom-v5-compat';
 
-import * as OCM from '@openshift-assisted/ui-lib/ocm';
+import { PreviewBadgePosition } from '@openshift-assisted/ui-lib/ocm';
 import {
+  Bullseye,
   ExpandableSectionToggle,
   FormSelect,
   FormSelectOption,
   PageSection,
+  Spinner,
   Split,
   SplitItem,
   Text,
@@ -18,6 +20,7 @@ import {
 import { Td, Th, Thead, Tr } from '@patternfly/react-table';
 import { Table as TableDeprecated } from '@patternfly/react-table/deprecated';
 import { PageHeader, PageHeaderTitle } from '@redhat-cloud-services/frontend-components/PageHeader';
+import { ScalprumComponent } from '@scalprum/react-core';
 
 import { hasRestrictTokensCapability } from '~/common/restrictTokensHelper';
 import { AppPage } from '~/components/App/AppPage';
@@ -45,8 +48,6 @@ import ExpandableRowPair from './ExpandableRowPair';
 import TokenRows from './TokenRows';
 
 import './DownloadsPage.scss';
-
-const { TechnologyPreview, PreviewBadgePosition } = OCM;
 
 const ColumnHeadings = () => (
   <Thead>
@@ -606,7 +607,16 @@ const installationRows = (expanded, setExpanded, selections, setSelections, tool
         name={
           <>
             OpenShift Installer with multi-architecture compute machines{' '}
-            <TechnologyPreview position={PreviewBadgePosition.inline} />
+            <ScalprumComponent
+              position={PreviewBadgePosition.inline}
+              scope="assistedInstallerApp"
+              module="./TechnologyPreview"
+              fallback={
+                <Bullseye>
+                  <Spinner />
+                </Bullseye>
+              }
+            />
           </>
         }
         description={

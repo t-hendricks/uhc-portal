@@ -1,4 +1,4 @@
-import { TechnologyPreview as MockTechnologyPreview, ClusterStatus as MockClusterStatus } from './assistedUiFakeComponents';
+import { ClusterStatus as MockClusterStatus,TechnologyPreview as MockTechnologyPreview } from './assistedUiFakeComponents';
 
 const plainFnMock = () => 1;
 const promiseFnMock = () => Promise.resolve();
