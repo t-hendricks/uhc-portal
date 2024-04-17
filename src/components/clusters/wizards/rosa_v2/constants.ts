@@ -78,7 +78,7 @@ export const initialValuesHypershift = (isHypershift: boolean) =>
     ? {
         [FieldId.ApplicationIngress]: ApplicationIngressType.Default,
         [FieldId.BillingModel]: billingModels.MARKETPLACE_AWS,
-        [FieldId.ClusterAutoscaling]: {},
+        [FieldId.ClusterAutoscaling]: null,
         [FieldId.ClusterPrivacyPublicSubnetId]: '',
         [FieldId.InstallToVpc]: true,
         [FieldId.MultiAz]: 'false',
