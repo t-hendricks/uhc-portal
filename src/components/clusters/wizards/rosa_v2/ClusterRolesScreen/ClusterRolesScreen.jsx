@@ -68,6 +68,7 @@ const ClusterRolesScreen = ({
     setFieldValue,
     getFieldProps,
     getFieldMeta,
+    validateForm,
     values: {
       [FieldId.ClusterName]: clusterName,
       [FieldId.Hypershift]: hypershiftValue,
@@ -111,11 +112,17 @@ const ClusterRolesScreen = ({
   };
 
   const onSelectOIDCConfig = (oidcConfig) => {
-    setFieldValue(FieldId.ByoOidcConfigId, oidcConfig ? oidcConfig.id : '');
-    setFieldValue(
-      FieldId.ByoOidcConfigIdManaged,
-      !oidcConfig || oidcConfig.managed ? 'true' : 'false',
-    );
+    const promiseArr = [
+      setFieldValue(FieldId.ByoOidcConfigId, oidcConfig ? oidcConfig.id : '', false),
+      setFieldValue(
+        FieldId.ByoOidcConfigIdManaged,
+        !oidcConfig || oidcConfig.managed ? 'true' : 'false',
+        false,
+      ),
+    ];
+    Promise.all(promiseArr).then(() => {
+      setTimeout(validateForm);
+    });
   };
 
   useEffect(() => {
@@ -346,7 +353,11 @@ const ClusterRolesScreen = ({
             byoOidcConfigID={byoOidcConfigID}
             operatorRolesCliCommand={operatorRolesCliCommand}
             validate={required}
-            onSelect={onSelectOIDCConfig}
+            input={{
+              ...getFieldProps(FieldId.ByoOidcConfigId),
+              onChange: onSelectOIDCConfig,
+            }}
+            meta={getFieldMeta(FieldId.ByoOidcConfigId)}
           />
         ) : (
           <CustomOperatorRoleNames />
