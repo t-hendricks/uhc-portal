@@ -1,0 +1,7 @@
+{
+  "kind": "ProductTechnologyPreview",
+  "id": "hcp-billing",
+  "href": "/api/clusters_mgmt/v1/products/rosa/technology_previews/hcp-billing",
+  "end_date": "2023-11-29T00:00:00Z",
+  "additional_text": "HCP billing technology preview"
+}
