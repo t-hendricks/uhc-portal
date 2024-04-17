@@ -1,10 +1,8 @@
-import reducer, { initialState } from '../supportStatusReducer';
-import GET_SUPPORT_STATUS from '../supportStatusConstants';
-import {
-  FULFILLED_ACTION,
-  PENDING_ACTION,
-  REJECTED_ACTION,
-} from '../../../../../../../redux/reduxHelpers';
+import reducer, { initialState } from './supportStatusReducer';
+import { FULFILLED_ACTION, PENDING_ACTION, REJECTED_ACTION } from '../reduxHelpers';
+import { PromiseActionType } from '../types';
+import { SupportStatusAction } from '../actions/supportStatusActions';
+import GET_SUPPORT_STATUS from '../constants/supportStatusConstants';
 
 describe('support status reducer', () => {
   const mockPayload = {
@@ -23,7 +21,7 @@ describe('support status reducer', () => {
 
   describe('should not handle unrelated actions', () => {
     it('leaves the state unmodified', () => {
-      const action = { type: 'HOLY_GUACAMOLE' };
+      const action: PromiseActionType<SupportStatusAction> = { type: 'HOLY_GUACAMOLE' } as any;
       const result = reducer(initialState, action);
 
       expect(result).toEqual(initialState);
@@ -31,21 +29,29 @@ describe('support status reducer', () => {
   });
 
   it('should handle GET_SUPPORT_STATUS, action state pending', () => {
-    const action = { type: PENDING_ACTION(GET_SUPPORT_STATUS) };
+    const action: PromiseActionType<SupportStatusAction> = {
+      type: PENDING_ACTION(GET_SUPPORT_STATUS),
+    } as any;
     const result = reducer(initialState, action);
 
     expect(result).toMatchObject({ fulfilled: false, error: false, pending: true });
   });
 
   it('should handle GET_SUPPORT_STATUS, action state rejected', () => {
-    const action = { type: REJECTED_ACTION(GET_SUPPORT_STATUS), payload: mockPayload };
+    const action: PromiseActionType<SupportStatusAction> = {
+      type: REJECTED_ACTION(GET_SUPPORT_STATUS),
+      payload: mockPayload,
+    } as any;
     const result = reducer(initialState, action);
 
     expect(result).toMatchObject({ fulfilled: false, pending: false, error: true });
   });
 
   it('should handle GET_SUPPORT_STATUS, action state fulfilled', () => {
-    const action = { type: FULFILLED_ACTION(GET_SUPPORT_STATUS), payload: mockPayload };
+    const action: PromiseActionType<SupportStatusAction> = {
+      type: FULFILLED_ACTION(GET_SUPPORT_STATUS),
+      payload: mockPayload,
+    } as any;
     const result = reducer(initialState, action);
 
     expect(result).toHaveProperty('supportStatus', {

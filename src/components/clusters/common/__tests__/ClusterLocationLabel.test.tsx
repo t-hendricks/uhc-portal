@@ -30,7 +30,7 @@ describe('<ClusterLocationLabel />', () => {
   it('fetches cloud providers on render', () => {
     // Arrange
     const dispatchMock = jest.fn();
-    (useDispatch as jest.Mock).mockReturnValue(dispatchMock);
+    (useDispatch as any as jest.Mock).mockReturnValue(dispatchMock);
     (getCloudProviders as jest.Mock).mockReturnValue('cloudProviders');
     const currentState = { cloudProviders: defaultCloudProviders };
 

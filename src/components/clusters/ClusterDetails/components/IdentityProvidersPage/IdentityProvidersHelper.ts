@@ -46,7 +46,7 @@ const singularFormIDP = {
   [IDPformValues.HTPASSWD]: 'an HTPasswd',
 };
 
-const IDPObjectNames = {
+const IDPObjectNames: { [p: string]: keyof IdentityProvider } = {
   [IDPformValues.GITHUB]: 'github',
   [IDPformValues.GOOGLE]: 'google',
   [IDPformValues.OPENID]: 'open_id',
@@ -355,6 +355,89 @@ const isEmptyReduxArray = (arr: any, key: string) =>
     ? arr.map((currentValue: any) => isEmpty(currentValue[key])).every((item: any) => item)
     : false;
 
+type IDPTypeKeys = keyof typeof IDPObjectNames;
+type IDPTypeValues = (typeof IDPObjectNames)[IDPTypeKeys];
+const CLIENT_SECRET = 'CLIENT_SECRET'; // Predefined value
+
+/**
+ * Utility function to prepare IDP edit form initial values.
+ * @param idpEdited the identity provider being edited
+ * @param editedType the type of identity provider
+ */
+const getInitialValuesForEditing = (idpEdited: IdentityProvider, editedType: IDPTypeValues) => {
+  if (!editedType) {
+    return {};
+  }
+  const baseValues = {
+    idpId: idpEdited.id,
+    type: idpEdited.type,
+    name: idpEdited.name,
+    client_secret: CLIENT_SECRET,
+    mappingMethod: idpEdited.mapping_method,
+    selectedIDP: idpEdited.type,
+  };
+
+  switch (editedType) {
+    case 'gitlab':
+      return {
+        ...baseValues,
+        gitlab_url: idpEdited[editedType]?.url,
+        client_id: idpEdited[editedType]?.client_id,
+      };
+    case 'open_id':
+      return {
+        ...baseValues,
+        issuer: idpEdited[editedType]?.issuer,
+        openid_name: getOpenIdClaims(idpEdited[editedType]?.claims, 'name'),
+        openid_email: getOpenIdClaims(idpEdited[editedType]?.claims, 'email'),
+        openid_preferred_username: getOpenIdClaims(
+          idpEdited[editedType]?.claims,
+          'preferred_username',
+        ),
+        openid_extra_scopes: idpEdited[editedType]?.extra_scopes
+          ? idpEdited[editedType]?.extra_scopes?.join()
+          : '',
+        openid_ca: idpEdited[editedType]?.ca,
+        client_id: idpEdited[editedType]?.client_id,
+      };
+    case 'google':
+      return {
+        ...baseValues,
+        hosted_domain: idpEdited[editedType]?.hosted_domain,
+        client_id: idpEdited[editedType]?.client_id,
+      };
+    case 'ldap':
+      return {
+        ...baseValues,
+        ldap_id: getldapAttributes(idpEdited[editedType]?.attributes ?? {}, 'id'),
+        ldap_preferred_username: getldapAttributes(
+          idpEdited[editedType]?.attributes ?? {},
+          'preferred_username',
+        ),
+        ldap_name: getldapAttributes(idpEdited[editedType]?.attributes ?? {}, 'name'),
+        ldap_email: getldapAttributes(idpEdited[editedType]?.attributes ?? {}, 'email'),
+        ldap_url: idpEdited[editedType]?.url,
+        bind_dn: idpEdited[editedType]?.bind_dn,
+        bind_password: idpEdited[editedType]?.bind_dn ? 'BIND_PASSWORD' : '',
+        ldap_ca: idpEdited[editedType]?.ca,
+        ldap_insecure: idpEdited[editedType]?.insecure,
+      };
+    case 'github':
+      return {
+        ...baseValues,
+        hostname: idpEdited[editedType]?.hostname,
+        teams: getGitHubTeamsAndOrgsData(idpEdited[editedType] ?? {}),
+        organizations: getGitHubTeamsAndOrgsData(idpEdited[editedType] ?? {}),
+        github_ca: idpEdited[editedType]?.ca,
+        client_id: idpEdited[editedType]?.client_id,
+      };
+    default:
+      break;
+  }
+
+  return baseValues;
+};
+
 export {
   getCreateIDPRequestData,
   getOauthCallbackURL,
@@ -371,4 +454,5 @@ export {
   getGitHubTeamsAndOrgsData,
   isEmptyReduxArray,
   getldapca,
+  getInitialValuesForEditing,
 };

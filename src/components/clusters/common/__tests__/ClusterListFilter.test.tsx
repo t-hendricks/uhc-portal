@@ -19,7 +19,7 @@ const dispatchMock = jest.fn();
 describe('<ClusterListFilter />', () => {
   beforeEach(() => {
     jest.clearAllMocks();
-    (useDispatch as jest.Mock).mockReturnValue(dispatchMock);
+    (useDispatch as any as jest.Mock).mockReturnValue(dispatchMock);
   });
 
   it('renders conrrectly without current filter', () => {
