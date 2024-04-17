@@ -1,7 +1,8 @@
 import React from 'react';
 
-import MarkdownParser from '~/common/MarkdownParser';
-import SupportLevelBadge from '~/components/common/SupportLevelBadge';
+import { Label, LabelProps } from '@patternfly/react-core';
+import InfoCircleIcon from '@patternfly/react-icons/dist/esm/icons/info-circle-icon';
+
 import { useGetTechPreviewStatus, useTechPreviewStatus } from '~/redux/hooks';
 
 // Only exported for testing
@@ -14,15 +15,14 @@ export const createdPostGa = (creationDateStr: string, gaDateStr: string) => {
   return creationDate >= gaDate;
 };
 
-interface PreviewLabelProps {
+interface PreviewLabelProps extends LabelProps {
   creationDateStr: string;
   product?: string;
   type?: string;
-  text?: string;
 }
 
 export const PreviewLabel = (props: PreviewLabelProps) => {
-  const { creationDateStr, product, type, text } = props;
+  const { creationDateStr, product, type, ...rest } = props;
   const getPreview = useGetTechPreviewStatus(product || 'rosa', type || 'hcp');
 
   const techPreview = useTechPreviewStatus(product || 'rosa', type || 'hcp');
@@ -35,13 +35,24 @@ export const PreviewLabel = (props: PreviewLabelProps) => {
 
   if (techPreview?.fulfilled) {
     const gaDate = techPreview?.end_date || GA_DATE_STR;
-    const popover = <MarkdownParser>{techPreview.additional_text || ''}</MarkdownParser>;
     return createdPostGa(creationDateStr, gaDate) ? null : (
-      <SupportLevelBadge
-        text={text || 'Technology Preview'}
-        popoverContent={popover}
-        className=""
-      />
+      <Label
+        color="green"
+        icon={<InfoCircleIcon />}
+        render={({ className, content }) => (
+          <a
+            className={className}
+            href="https://access.redhat.com/support/offerings/techpreview"
+            target="_blank"
+            rel="noreferrer"
+          >
+            {content}
+          </a>
+        )}
+        {...rest}
+      >
+        Preview
+      </Label>
     );
   }
   return null;
