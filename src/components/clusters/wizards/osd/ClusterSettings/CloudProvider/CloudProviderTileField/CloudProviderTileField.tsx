@@ -55,10 +55,19 @@ export const CloudProviderTileField = () => {
     setFieldValue(FieldId.CloudProvider, value);
   };
 
+  const handleKeyDown = (event: React.KeyboardEvent) => {
+    if (event.key === ' ' || event.key === 'Enter') {
+      event.preventDefault();
+      handleChange(event.currentTarget.id);
+    }
+  };
+
   const gcpTile = (
     <Tile
+      id={CloudProviderType.Gcp}
       className={classNames('ocm-tile-create-cluster', !hasGcpResources && 'tile-disabled')}
       onClick={() => hasGcpResources && handleChange(CloudProviderType.Gcp)}
+      onKeyDown={handleKeyDown}
       isDisabled={!hasGcpResources}
       data-testid="gcp-provider-card"
       title="Run on Google Cloud Platform"
@@ -71,8 +80,10 @@ export const CloudProviderTileField = () => {
 
   const awsTile = (
     <Tile
+      id={CloudProviderType.Aws}
       className={classNames('ocm-tile-create-cluster', !hasAwsResources && 'tile-disabled')}
       onClick={() => hasAwsResources && handleChange(CloudProviderType.Aws)}
+      onKeyDown={handleKeyDown}
       isDisabled={!hasAwsResources}
       data-testid="aws-provider-card"
       title="Run on Amazon Web Services"
@@ -84,7 +95,7 @@ export const CloudProviderTileField = () => {
   );
 
   return (
-    <div>
+    <div role="listbox" aria-label="Providers options">
       {hasAwsResources ? awsTile : <Tooltip content={notAvailableTooltip}>{awsTile}</Tooltip>}
       {hasGcpResources ? gcpTile : <Tooltip content={noQuotaTooltip}>{gcpTile}</Tooltip>}
     </div>

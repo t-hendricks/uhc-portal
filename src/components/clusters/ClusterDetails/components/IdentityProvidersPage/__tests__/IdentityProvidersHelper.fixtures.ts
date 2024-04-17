@@ -1,4 +1,4 @@
-import { OpenIDClaims } from '~/types/clusters_mgmt.v1';
+import { IdentityProvider, OpenIDClaims } from '~/types/clusters_mgmt.v1';
 
 export const githubFormDataTeams = {
   idpId: 'id',
@@ -468,4 +468,193 @@ export const gitHubTeamsAndOrgsDataExpected = [
 export const gitHubOnlyOrgsDataExpected = [
   { id: 0, organizations: 'organization a' },
   { id: 1, organizations: 'organization b' },
+];
+
+export const providersFixtures: IdentityProvider[] = [
+  {
+    kind: 'IdentityProvider',
+    type: 'OpenIDIdentityProvider',
+    href: '/api/clusters_mgmt/v1/clusters/2aa67thu6mdpv0ujtdt71p8ie6jes8ol/identity_providers/2aa97tco0e00oqiuu12a4cv5v4h8hdu2',
+    id: '2aa97tco0e00oqiuu12a4cv5v4h8hdu2',
+    name: 'OpenID',
+    mapping_method: 'claim',
+    open_id: {
+      ca: '-----BEGIN CERTIFICATE-----\ntesttesttesttesttesttesttesttesttesttesttesttest\ntesttesttesttesttesttesttesttesttesttesttesttest\ntesttesttesttesttesttesttesttesttesttesttesttest\n-----END CERTIFICATE-----',
+      claims: {
+        email: ['email1'],
+        name: ['name 1'],
+        preferred_username: ['test122'],
+      },
+      client_id: 'test',
+      issuer: 'https://example.com',
+    },
+  } as IdentityProvider,
+  {
+    kind: 'IdentityProvider',
+    type: 'GitlabIdentityProvider',
+    href: '/api/clusters_mgmt/v1/clusters/2aa67thu6mdpv0ujtdt71p8ie6jes8ol/identity_providers/2aa991al599m3o48udp3qarolp5hi1q7',
+    id: '2aa991al599m3o48udp3qarolp5hi1q7',
+    name: 'GitLab',
+    mapping_method: 'claim',
+    gitlab: {
+      ca: '-----BEGIN CERTIFICATE-----\ntesttesttesttesttesttesttesttesttesttesttesttest\ntesttesttesttesttesttesttesttesttesttesttesttest\ntesttesttesttesttesttesttesttesttesttesttesttest\n-----END CERTIFICATE-----',
+      client_id: 'rewar',
+      url: 'https://gitlab.com/',
+    },
+  } as IdentityProvider,
+  {
+    kind: 'IdentityProvider',
+    type: 'GoogleIdentityProvider',
+    href: '/api/clusters_mgmt/v1/clusters/2aa67thu6mdpv0ujtdt71p8ie6jes8ol/identity_providers/2aaau4rpcgnc08qea4fscfvrp5g1ichd',
+    id: '2aaau4rpcgnc08qea4fscfvrp5g1ichd',
+    name: 'Google',
+    mapping_method: 'claim',
+    google: {
+      client_id: 'test',
+      hosted_domain: 'test',
+    },
+  } as IdentityProvider,
+  {
+    kind: 'IdentityProvider',
+    type: 'GithubIdentityProvider',
+    href: '/api/clusters_mgmt/v1/clusters/2aa67thu6mdpv0ujtdt71p8ie6jes8ol/identity_providers/2aaatta5nt517krk31ftcgu1697iqf9n',
+    id: '2aaatta5nt517krk31ftcgu1697iqf9n',
+    name: 'GitHub',
+    mapping_method: 'claim',
+    github: {
+      ca: '-----BEGIN CERTIFICATE-----\ntesttesttesttesttesttesttesttesttesttesttesttest\ntesttesttesttesttesttesttesttesttesttesttesttest\ntesttesttesttesttesttesttesttesttesttesttesttest\n-----END CERTIFICATE-----',
+      client_id: 'test',
+      hostname: 'test',
+      organizations: ['org1'],
+    },
+  } as IdentityProvider,
+  {
+    kind: 'IdentityProvider',
+    type: 'LDAPIdentityProvider',
+    href: '/api/clusters_mgmt/v1/clusters/2aa67thu6mdpv0ujtdt71p8ie6jes8ol/identity_providers/2aa828nuogqdntjaglps8u9r2pqv9bs6',
+    id: '2aa828nuogqdntjaglps8u9r2pqv9bs6',
+    name: 'LDAP',
+    mapping_method: 'claim',
+    ldap: {
+      attributes: {
+        id: ['dn'],
+        name: ['cn'],
+        preferred_username: ['uid'],
+      },
+      ca: '-----BEGIN CERTIFICATE-----\ntesttesttesttesttesttesttesttesttesttesttesttest\ntesttesttesttesttesttesttesttesttesttesttesttest\ntesttesttesttesttesttesttesttesttesttesttesttest\n-----END CERTIFICATE-----',
+      insecure: false,
+      url: 'ldap://test.com',
+    },
+  } as IdentityProvider,
+];
+
+export const providersExpectedFormData = [
+  {
+    client_id: 'test',
+    client_secret: 'CLIENT_SECRET',
+    idpId: '2aa97tco0e00oqiuu12a4cv5v4h8hdu2',
+    issuer: 'https://example.com',
+    mappingMethod: 'claim',
+    name: 'OpenID',
+    openid_ca:
+      '-----BEGIN CERTIFICATE-----\ntesttesttesttesttesttesttesttesttesttesttesttest\ntesttesttesttesttesttesttesttesttesttesttesttest\ntesttesttesttesttesttesttesttesttesttesttesttest\n-----END CERTIFICATE-----',
+    openid_email: [
+      {
+        id: 0,
+        openid_email: 'email1',
+      },
+    ],
+    openid_extra_scopes: '',
+    openid_name: [
+      {
+        id: 0,
+        openid_name: 'name 1',
+      },
+    ],
+    openid_preferred_username: [
+      {
+        id: 0,
+        openid_preferred_username: 'test122',
+      },
+    ],
+    selectedIDP: 'OpenIDIdentityProvider',
+    type: 'OpenIDIdentityProvider',
+  },
+  {
+    client_id: 'rewar',
+    client_secret: 'CLIENT_SECRET',
+    gitlab_url: 'https://gitlab.com/',
+    idpId: '2aa991al599m3o48udp3qarolp5hi1q7',
+    mappingMethod: 'claim',
+    name: 'GitLab',
+    selectedIDP: 'GitlabIdentityProvider',
+    type: 'GitlabIdentityProvider',
+  },
+  {
+    client_id: 'test',
+    client_secret: 'CLIENT_SECRET',
+    hosted_domain: 'test',
+    idpId: '2aaau4rpcgnc08qea4fscfvrp5g1ichd',
+    mappingMethod: 'claim',
+    name: 'Google',
+    selectedIDP: 'GoogleIdentityProvider',
+    type: 'GoogleIdentityProvider',
+  },
+  {
+    client_id: 'test',
+    client_secret: 'CLIENT_SECRET',
+    github_ca:
+      '-----BEGIN CERTIFICATE-----\ntesttesttesttesttesttesttesttesttesttesttesttest\ntesttesttesttesttesttesttesttesttesttesttesttest\ntesttesttesttesttesttesttesttesttesttesttesttest\n-----END CERTIFICATE-----',
+    hostname: 'test',
+    idpId: '2aaatta5nt517krk31ftcgu1697iqf9n',
+    mappingMethod: 'claim',
+    name: 'GitHub',
+    organizations: [
+      {
+        id: 0,
+        organizations: 'org1',
+      },
+    ],
+    selectedIDP: 'GithubIdentityProvider',
+    teams: [
+      {
+        id: 0,
+        organizations: 'org1',
+      },
+    ],
+    type: 'GithubIdentityProvider',
+  },
+  {
+    bind_dn: undefined,
+    bind_password: '',
+    client_secret: 'CLIENT_SECRET',
+    idpId: '2aa828nuogqdntjaglps8u9r2pqv9bs6',
+    ldap_ca:
+      '-----BEGIN CERTIFICATE-----\ntesttesttesttesttesttesttesttesttesttesttesttest\ntesttesttesttesttesttesttesttesttesttesttesttest\ntesttesttesttesttesttesttesttesttesttesttesttest\n-----END CERTIFICATE-----',
+    ldap_email: [],
+    ldap_id: [
+      {
+        id: 0,
+        ldap_id: 'dn',
+      },
+    ],
+    ldap_insecure: false,
+    ldap_name: [
+      {
+        id: 0,
+        ldap_name: 'cn',
+      },
+    ],
+    ldap_preferred_username: [
+      {
+        id: 0,
+        ldap_preferred_username: 'uid',
+      },
+    ],
+    ldap_url: 'ldap://test.com',
+    mappingMethod: 'claim',
+    name: 'LDAP',
+    selectedIDP: 'LDAPIdentityProvider',
+    type: 'LDAPIdentityProvider',
+  },
 ];
