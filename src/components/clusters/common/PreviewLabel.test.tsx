@@ -1,18 +1,18 @@
 import React from 'react';
 
 import * as hooks from '~/redux/hooks';
-import { checkAccessibility, screen, within, withState } from '~/testUtils';
+import { checkAccessibility, screen, withState } from '~/testUtils';
 
 import { createdPostGa, GA_DATE_STR, PreviewLabel } from './PreviewLabel';
 
 const expectLabelToBePresent = (container: HTMLElement) => {
   expect(container.querySelector('.pf-v5-c-label')).toBeInTheDocument();
-  expect(screen.queryByText(/Preview/)).toBeInTheDocument();
+  expect(screen.getByText('Preview')).toBeInTheDocument();
 };
 
 const expectLabelToBeAbsent = (container: HTMLElement) => {
   expect(container.querySelector('.pf-v5-c-label')).not.toBeInTheDocument();
-  expect(screen.queryByText(/Preview/)).not.toBeInTheDocument();
+  expect(screen.queryByText('Preview')).not.toBeInTheDocument();
 };
 
 describe('PreviewLabel', () => {
@@ -20,17 +20,7 @@ describe('PreviewLabel', () => {
   const gaDate = new Date(gaDateStr);
 
   const defaultState = {
-    clusters: {
-      techPreview: {
-        rosa: {
-          hcp: {
-            fulfilled: true,
-            end_date: gaDateStr,
-            additional_text: 'Foo https://example.com bar',
-          },
-        },
-      },
-    },
+    clusters: { techPreview: { rosa: { hcp: { fulfilled: true, end_date: gaDateStr } } } },
   };
 
   const mockedGetPreview = jest.fn();
@@ -48,16 +38,10 @@ describe('PreviewLabel', () => {
 
     expect(createdPostGa(createdDateStr, gaDateStr)).toBeFalsy();
 
-    const { container, user } = withState(defaultState).render(
+    const { container } = withState(defaultState).render(
       <PreviewLabel creationDateStr={createdDateStr} />,
     );
     expectLabelToBePresent(container);
-
-    // Test popover
-    await user.click(screen.getByText(/Preview/));
-    const badge = screen.getByText(/Foo/);
-    expect(within(badge).getByRole('link')).toHaveAttribute('href', 'https://example.com');
-
     await checkAccessibility(container);
   });
 

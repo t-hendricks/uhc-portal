@@ -2,11 +2,11 @@ import React from 'react';
 
 import { render, screen, within } from '~/testUtils';
 
-import SupportLevelBadge, { COOPERATIVE_COMMUNITY, DEV_PREVIEW } from './SupportLevelBadge';
+import SupportLevelBadge, { SupportLevelType } from './SupportLevelBadge';
 
 describe('<SupportLevelBadge>', () => {
   it('displays "Developer Preview" for devPreview badges', async () => {
-    const { user } = render(<SupportLevelBadge {...DEV_PREVIEW} />);
+    const { user } = render(<SupportLevelBadge type={SupportLevelType.devPreview} />);
     expect(screen.getByText('Developer Preview')).toBeInTheDocument();
 
     await user.click(screen.getByRole('button'));
@@ -26,7 +26,7 @@ describe('<SupportLevelBadge>', () => {
   });
 
   it('displays "Cooperative Community" for cooperative community badges', async () => {
-    const { user } = render(<SupportLevelBadge {...COOPERATIVE_COMMUNITY} />);
+    const { user } = render(<SupportLevelBadge type={SupportLevelType.cooperativeCommunity} />);
     expect(screen.getByText('Cooperative Community')).toBeInTheDocument();
 
     await user.click(screen.getByRole('button'));
@@ -43,20 +43,5 @@ describe('<SupportLevelBadge>', () => {
         { exact: false },
       ),
     ).toBeInTheDocument();
-  });
-
-  it('without externalLink omits "Learn more"', async () => {
-    const content = (
-      <>
-        Foo <b>bar</b> baz
-      </>
-    );
-    const { user } = render(<SupportLevelBadge text="text" popoverContent={content} />);
-
-    await user.click(screen.getByRole('button'));
-
-    expect(await screen.findByRole('dialog')).toBeInTheDocument();
-    expect(within(screen.getByRole('dialog')).getByText('bar')).toBeInTheDocument();
-    expect(within(screen.getByRole('dialog')).queryByText('Learn more')).not.toBeInTheDocument();
   });
 });

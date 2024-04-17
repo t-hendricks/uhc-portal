@@ -36,10 +36,7 @@ import useOrganization from '../../CLILoginPage/useOrganization';
 import DownloadButton from '../../clusters/install/instructions/components/DownloadButton';
 import AlignRight from '../../common/AlignRight';
 import ExternalLink from '../../common/ExternalLink';
-import SupportLevelBadge, {
-  COOPERATIVE_COMMUNITY,
-  DEV_PREVIEW,
-} from '../../common/SupportLevelBadge';
+import SupportLevelBadge, { SupportLevelType } from '../../common/SupportLevelBadge';
 import DownloadsCategoryDropdown from '../DownloadsCategoryDropdown';
 import DownloadsSection from '../DownloadsSection';
 import { downloadsCategories, expandKeys } from '../downloadsStructure';
@@ -418,7 +415,7 @@ const devToolRows = (expanded, setExpanded, selections, setSelections, toolRefs,
         name={
           <>
             Developer-focused CLI for OpenShift (<code>odo</code>)
-            <SupportLevelBadge {...COOPERATIVE_COMMUNITY} />
+            <SupportLevelBadge type={SupportLevelType.cooperativeCommunity} />
           </>
         }
         description={
@@ -488,7 +485,7 @@ const devToolRows = (expanded, setExpanded, selections, setSelections, toolRefs,
         name={
           <>
             Red Hat OpenShift Application Services CLI (<code>rhoas</code>){' '}
-            <SupportLevelBadge {...DEV_PREVIEW} />
+            <SupportLevelBadge type={SupportLevelType.devPreview} />
           </>
         }
         description={
