@@ -319,6 +319,7 @@ const cliToolRows = (expanded, setExpanded, selections, setSelections, toolRefs,
           name={
             <>
               OpenShift Cluster Manager API command-line interface (<code>ocm</code>){' '}
+              <SupportLevelBadge type={SupportLevelType.devPreview} />
             </>
           }
           description={
