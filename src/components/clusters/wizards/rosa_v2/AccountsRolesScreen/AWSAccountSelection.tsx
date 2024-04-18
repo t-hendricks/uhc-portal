@@ -43,6 +43,7 @@ function sortFn(a: FuzzyEntryType, b: FuzzyEntryType) {
 }
 export interface AWSAccountSelectionProps {
   input: {
+    name: string;
     value?: string;
     onChange?: any;
     onBlur: any;
@@ -69,6 +70,7 @@ export interface AWSAccountSelectionProps {
 
 function AWSAccountSelection({
   input: {
+    name,
     // onBlur interferes with Patternfly's Select footer onClick handlers.
     onBlur: _onBlur,
     ...inputProps
@@ -186,6 +188,7 @@ function AWSAccountSelection({
             validated={touched && error ? 'error' : undefined}
             footer={footer}
             aria-describedby="aws-infra-accounts"
+            toggleId={name}
           />
         </FlexItem>
         {onRefresh && (
