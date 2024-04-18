@@ -139,7 +139,7 @@ async function jiraLabeler(jiraToken, total = 1) {
         }
       }
       const d = new Date(release.commit_date);
-      const galabel = `ga-released-${d.getFullYear()}${monthNames[d.getMonth()]}${d.getDay()}`;
+      const galabel = `ga-released-${d.getFullYear()}${monthNames[d.getMonth()]}${d.getDate()}`;
 
       const questions = [
         {
