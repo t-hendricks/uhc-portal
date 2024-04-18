@@ -464,6 +464,14 @@ const reviewValues = {
   control_plane_role_arn: {
     title: 'Control plane role',
   },
+  enable_external_authentication: {
+    title: 'External Authentication',
+    isBoolean: true,
+    values: {
+      true: 'Enabled',
+      false: 'Disabled',
+    },
+  },
 };
 
 export default reviewValues;

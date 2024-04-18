@@ -75,6 +75,7 @@ const ReviewClusterScreen = ({
     'etcd_encryption',
     ...(!isHypershiftSelected ? ['fips'] : []),
     ...(hasEtcdEncryption ? ['etcd_key_arn'] : []),
+    ...(isHypershiftSelected ? ['enable_external_authentication'] : []),
   ];
 
   const [userRole, setUserRole] = useState('');
