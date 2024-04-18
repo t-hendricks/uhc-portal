@@ -68,7 +68,7 @@ module.exports = async (_env, argv) => {
   }
   const entry = path.resolve(srcDir, 'bootstrap.ts');
 
-  const noInsightsProxy = argv.env.noproxy || false;
+  const noInsightsProxy = !!argv.env.noproxy;
   // Support `logging=quiet` vs. `logging=verbose`. Default verbose (might change in future).
   const verboseLogging = argv.env.logging !== 'quiet';
 
