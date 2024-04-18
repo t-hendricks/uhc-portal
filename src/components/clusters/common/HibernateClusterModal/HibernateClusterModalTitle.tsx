@@ -1,13 +1,9 @@
 import React from 'react';
 
-import { Bullseye, Flex, FlexItem, Icon, Spinner, Title } from '@patternfly/react-core';
+import { Flex, FlexItem, Icon, Title } from '@patternfly/react-core';
 import { InfoCircleIcon } from '@patternfly/react-icons/dist/esm/icons/info-circle-icon';
-import { ScalprumComponent } from '@scalprum/react-core';
 
-const props = {
-  appName: 'assisted-installer-app',
-  className: 'pf-u-ml-0',
-};
+import TechnologyPreview from '~/components/common/TechnologyPreview';
 
 const HibernateClusterModalTitle = ({ title }: { title: string }) => (
   <Flex alignItems={{ default: 'alignItemsCenter' }}>
@@ -20,16 +16,7 @@ const HibernateClusterModalTitle = ({ title }: { title: string }) => (
       <Title headingLevel="h2">{title}</Title>
     </FlexItem>
     <FlexItem>
-      <ScalprumComponent
-        {...props}
-        scope="assistedInstallerApp"
-        module="./TechnologyPreview"
-        fallback={
-          <Bullseye>
-            <Spinner />
-          </Bullseye>
-        }
-      />
+      <TechnologyPreview className="pf-u-ml-0" />
     </FlexItem>
   </Flex>
 );

@@ -4,11 +4,9 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom-v5-compat';
 
 import {
-  Bullseye,
   Button,
   ButtonVariant,
   PageSection,
-  Spinner,
   Stack,
   StackItem,
   Title,
@@ -20,9 +18,9 @@ import {
   TableBody as TableBodyDeprecated,
   TableHeader as TableHeaderDeprecated,
 } from '@patternfly/react-table/deprecated';
-import { ScalprumComponent } from '@scalprum/react-core';
 
 import ExternalLink from '~/components/common/ExternalLink';
+import TechnologyPreview from '~/components/common/TechnologyPreview';
 import { isRestrictedEnv } from '~/restrictedEnv';
 
 import AWSLogo from '../../../styles/images/AWS.png';
@@ -355,26 +353,13 @@ const ManagedServices = ({ hasQuota, trialEnabled }) => {
 
 const runItYourself = () => {
   const columns = ['Cloud provider', 'Installation options'];
-  const props = {
-    appName: 'assisted-installer-app',
-    className: 'pf-v5-u-display-inline',
-  };
   const rows = [
     [
       <>
         <Link to="/install/alibaba/installer-provisioned" className="pf-v5-u-mr-xs">
           Alibaba Cloud
         </Link>
-        <ScalprumComponent
-          {...props}
-          scope="assistedInstallerApp"
-          module="./TechnologyPreview"
-          fallback={
-            <Bullseye>
-              <Spinner />
-            </Bullseye>
-          }
-        />
+        <TechnologyPreview className="pf-u-ml-md pf-v5-u-display-inline" />
       </>,
       'Full stack automation',
     ],
@@ -432,32 +417,14 @@ const runItYourself = () => {
     [
       <>
         <Link to="/install/metal/multi"> Baremetal (multi-architecture)</Link>
-        <ScalprumComponent
-          {...props}
-          scope="assistedInstallerApp"
-          module="./TechnologyPreview"
-          fallback={
-            <Bullseye>
-              <Spinner />
-            </Bullseye>
-          }
-        />
+        <TechnologyPreview className="pf-u-ml-md pf-v5-u-display-inline" />
       </>,
       'Pre-existing infrastructure',
     ],
     [
       <>
         <Link to="/install/powervs/installer-provisioned">IBM PowerVS (ppc64le)</Link>
-        <ScalprumComponent
-          {...props}
-          scope="assistedInstallerApp"
-          module="./TechnologyPreview"
-          fallback={
-            <Bullseye>
-              <Spinner />
-            </Bullseye>
-          }
-        />
+        <TechnologyPreview className="pf-u-ml-md pf-v5-u-display-inline" />
       </>,
       'Full stack automation',
     ],
@@ -470,16 +437,7 @@ const runItYourself = () => {
     [
       <>
         <Link to="/install/oracle-cloud">Oracle Cloud Infrastructure (virtual machines)</Link>
-        <ScalprumComponent
-          {...props}
-          scope="assistedInstallerApp"
-          module="./TechnologyPreview"
-          fallback={
-            <Bullseye>
-              <Spinner />
-            </Bullseye>
-          }
-        />
+        <TechnologyPreview className="pf-u-ml-md pf-v5-u-display-inline" />
       </>,
       'Pre-existing infrastructure',
     ],

@@ -5,12 +5,10 @@ import PropTypes from 'prop-types';
 import { Link, useLocation, useNavigate } from 'react-router-dom-v5-compat';
 
 import {
-  Bullseye,
   ExpandableSectionToggle,
   FormSelect,
   FormSelectOption,
   PageSection,
-  Spinner,
   Split,
   SplitItem,
   Text,
@@ -19,10 +17,10 @@ import {
 import { Td, Th, Thead, Tr } from '@patternfly/react-table';
 import { Table as TableDeprecated } from '@patternfly/react-table/deprecated';
 import { PageHeader, PageHeaderTitle } from '@redhat-cloud-services/frontend-components/PageHeader';
-import { ScalprumComponent } from '@scalprum/react-core';
 
 import { hasRestrictTokensCapability } from '~/common/restrictTokensHelper';
 import { AppPage } from '~/components/App/AppPage';
+import TechnologyPreview from '~/components/common/TechnologyPreview';
 import { isRestrictedEnv } from '~/restrictedEnv';
 
 import links, {
@@ -503,11 +501,6 @@ const devToolRows = (expanded, setExpanded, selections, setSelections, toolRefs,
   );
 };
 
-const props = {
-  appName: 'assisted-installer-app',
-  className: 'pf-v5-u-display-inline',
-};
-
 const installationRows = (expanded, setExpanded, selections, setSelections, toolRefs, urls) => {
   const commonProps = {
     expanded,
@@ -611,16 +604,7 @@ const installationRows = (expanded, setExpanded, selections, setSelections, tool
         name={
           <>
             OpenShift Installer with multi-architecture compute machines{' '}
-            <ScalprumComponent
-              {...props}
-              scope="assistedInstallerApp"
-              module="./TechnologyPreview"
-              fallback={
-                <Bullseye>
-                  <Spinner />
-                </Bullseye>
-              }
-            />
+            <TechnologyPreview className="pf-u-ml-md pf-v5-u-display-inline" />
           </>
         }
         description={
