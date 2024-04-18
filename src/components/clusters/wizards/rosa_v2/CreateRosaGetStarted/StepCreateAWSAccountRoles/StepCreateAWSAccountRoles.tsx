@@ -11,6 +11,8 @@ import useOrganization from '~/components/CLILoginPage/useOrganization';
 import { RosaCliCommand } from '~/components/clusters/wizards/rosa_v2/AccountsRolesScreen/constants/cliCommands';
 import ExternalLink from '~/components/common/ExternalLink';
 import InstructionCommand from '~/components/common/InstructionCommand';
+import { useFeatureGate } from '~/hooks/useFeatureGate';
+import { CLI_SSO_AUTHORIZATION } from '~/redux/constants/featureConstants';
 import { getRefreshToken, isRestrictedEnv } from '~/restrictedEnv';
 import { Error } from '~/types/accounts_mgmt.v1';
 import type { Chrome } from '~/types/types';
@@ -32,6 +34,7 @@ const StepCreateAWSAccountRoles = ({
   const [token, setToken] = React.useState<string>('');
   const [restrictTokens, setRestrictTokens] = React.useState<boolean | undefined>(undefined);
   const errorData = error as Error;
+  const showDeprecationMessage = useFeatureGate(CLI_SSO_AUTHORIZATION);
   React.useEffect(() => {
     if (restrictedEnv) {
       getRefreshToken(chrome).then((refreshToken) => setToken(refreshToken));
@@ -70,6 +73,17 @@ const StepCreateAWSAccountRoles = ({
         Log in to the ROSA CLI with your Red Hat account token and create AWS account roles and
         policies
       </Title>
+      {!restrictedEnv && showDeprecationMessage ? (
+        <Alert
+          className="pf-v5-u-mt-md"
+          variant="warning"
+          isInline
+          title="Logging in with offline tokens is deprecated"
+        >
+          Logging in using offline tokens has been deprecated and is no longer getting maintained or
+          enhanced. You can now log in using your Red Hat SSO credentials.
+        </Alert>
+      ) : null}
       <List component={ListComponent.ol} type={OrderType.number}>
         <ListItem className="pf-v5-u-mb-lg">
           To authenticate, run this command:
