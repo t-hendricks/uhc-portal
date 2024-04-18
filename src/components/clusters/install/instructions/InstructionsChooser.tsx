@@ -79,7 +79,7 @@ export const InstructionsChooser = ({
         labels={<Label color="purple">CLI-based</Label>}
         body="Runs Assisted Installer securely and locally to create your cluster."
         featureListItems={[
-          'Installable ISO',
+          name === 'Ibmz' ? 'Installable PXE artifacts' : 'Installable ISO',
           'Preflight validations',
           ...(providerSpecificFeatures.abi || []),
         ]}

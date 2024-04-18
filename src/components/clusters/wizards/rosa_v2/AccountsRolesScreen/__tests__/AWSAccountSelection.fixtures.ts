@@ -18,6 +18,7 @@ export const defaultProps: AWSAccountSelectionProps = {
   isLoading: false,
   isDisabled: false,
   input: {
+    name: '',
     value: undefined,
     onChange: jest.fn(),
     onBlur: jest.fn(),
