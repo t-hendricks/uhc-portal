@@ -2293,7 +2293,7 @@
   resolved "https://registry.yarnpkg.com/@remix-run/router/-/router-1.14.2.tgz#4d58f59908d9197ba3179310077f25c88e49ed17"
   integrity sha512-ACXpdMM9hmKZww21yEqWwiLws/UPLhNKvimN8RrYSqPSvB3ov7sLvAcfvaxePeLvccTQKGdkDIhLYApZVDFuKg==
 
-"@scalprum/core@^0.5.4":
+"@scalprum/core@0.5.4", "@scalprum/core@^0.5.4":
   version "0.5.4"
   resolved "https://registry.yarnpkg.com/@scalprum/core/-/core-0.5.4.tgz#45f480d495702dd4dfc73e56d673066c4bbf190c"
   integrity sha512-Z6/u1J8aRopYEfg5YzmPx+jFEjoeEQCHJPmEABLn44Dr1CmZJJStS4+jANRJXZCcGQhTH3Wsn/hu02hGxMVuCQ==
