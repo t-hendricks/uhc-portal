@@ -18,6 +18,7 @@ import type {
   DeleteProtection,
   DNSDomain,
   EncryptionKey,
+  ExternalAuth,
   Flavour,
   GCP,
   Group,
@@ -1090,6 +1091,49 @@ export function getClusterService(apiRequest: APIRequest = defaultApiRequest) {
       apiRequest.patch<DeleteProtection>(
         `/api/clusters_mgmt/v1/clusters/${clusterID}/delete_protection`,
         { enabled: isProtected },
+      ),
+
+    postExternalAuth: (clusterId: string, data: ExternalAuth) =>
+      apiRequest.post<ExternalAuth>(
+        `/api/clusters_mgmt/v1/clusters/${clusterId}/external_auth_config/external_auths`,
+        data,
+      ),
+
+    patchExternalAuth: (clusterId: string, id: string, data: ExternalAuth) =>
+      apiRequest.patch<ExternalAuth>(
+        `/api/clusters_mgmt/v1/clusters/${clusterId}/external_auth_config/external_auths/${id}`,
+        data,
+      ),
+
+    getExternalAuths: (clusterId: string) =>
+      apiRequest.get<{
+        /**
+         * Retrieved list of ext auths.
+         */
+        items?: ExternalAuth[];
+        /**
+         * Index of the requested page, where one corresponds to the first page.
+         */
+        page?: number;
+        /**
+         * Maximum number of items that will be contained in the returned page.
+         */
+        size?: number;
+        /**
+         * Total number of items of the collection that match the search criteria,
+         * regardless of the size of the page.
+         */
+        total?: number;
+      }>(`/api/clusters_mgmt/v1/clusters/${clusterId}/external_auth_config/external_auths`),
+
+    getExternalAuthDetails: (clusterId: string, id: string) =>
+      apiRequest.get<ExternalAuth>(
+        `/api/clusters_mgmt/v1/clusters/${clusterId}/external_auth_config/external_auths/${id}`,
+      ),
+
+    deleteExternalAuth: (clusterId: string, id: string) =>
+      apiRequest.delete<unknown>(
+        `/api/clusters_mgmt/v1/clusters/${clusterId}/external_auth_config/external_auths/${id}`,
       ),
   };
 }
