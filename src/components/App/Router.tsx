@@ -57,6 +57,7 @@ import ConnectedInstallArmAWSIPI from '../clusters/install/InstallArmAWSIPI';
 import ConnectedInstallArmAWSUPI from '../clusters/install/InstallArmAWSUPI';
 import ConnectedInstallArmAzureIPI from '../clusters/install/InstallArmAzureIPI';
 import InstallArmBareMetal from '../clusters/install/InstallArmBareMetal';
+import ConnectedInstallArmBareMetalABI from '../clusters/install/InstallArmBareMetalABI';
 import InstallArmBMIPI from '../clusters/install/InstallArmBareMetalIPI';
 import InstallArmBMUPI from '../clusters/install/InstallArmBareMetalUPI';
 import ConnectedInstallArmPreRelease from '../clusters/install/InstallArmPreRelease';
@@ -72,6 +73,7 @@ import ConnectedInstallGCPIPI from '../clusters/install/InstallGCPIPI';
 import ConnectedInstallGCPUPI from '../clusters/install/InstallGCPUPI';
 import ConnectedInstallIBMCloud from '../clusters/install/InstallIBMCloud';
 import InstallIBMZ from '../clusters/install/InstallIBMZ';
+import ConnectedInstallIBMZABI from '../clusters/install/InstallIBMZABI';
 import ConnectedInstallIBMZPreRelease from '../clusters/install/InstallIBMZPreRelease';
 import ConnectedInstallIBMZUPI from '../clusters/install/InstallIBMZUPI';
 import ConnectedInstallMultiAWSIPI from '../clusters/install/InstallMultiAWSIPI';
@@ -87,6 +89,7 @@ import InstallPlatformAgnostic from '../clusters/install/InstallPlatformAgnostic
 import ConnectedInstallPlatformAgnosticABI from '../clusters/install/InstallPlatformAgnosticABI';
 import ConnectedInstallPlatformAgnosticUPI from '../clusters/install/InstallPlatformAgnosticUPI';
 import InstallPower from '../clusters/install/InstallPower';
+import ConnectedInstallPowerABI from '../clusters/install/InstallPowerABI';
 import ConnectedInstallPowerPreRelease from '../clusters/install/InstallPowerPreRelease';
 import ConnectedInstallPowerUPI from '../clusters/install/InstallPowerUPI';
 import InstallPowerVSIPI from '../clusters/install/InstallPowerVirtualServerIPI';
@@ -243,6 +246,10 @@ const Router: React.FC<RouterProps> = ({ history, planType, clusterId, externalC
             <CompatRoute path="/install/arm/installer-provisioned" component={InstallArmBMIPI} />
             <CompatRoute path="/install/arm/user-provisioned" component={InstallArmBMUPI} />
             <CompatRoute
+              path="/install/arm/agent-based"
+              component={ConnectedInstallArmBareMetalABI}
+            />
+            <CompatRoute
               path="/install/arm/pre-release"
               component={ConnectedInstallArmPreRelease}
             />
@@ -345,6 +352,8 @@ const Router: React.FC<RouterProps> = ({ history, planType, clusterId, externalC
               path="/install/ibmz/pre-release"
               component={ConnectedInstallIBMZPreRelease}
             />
+            <CompatRoute path="/install/ibmz/agent-based" component={ConnectedInstallIBMZABI} />
+
             <CompatRoute path="/install/ibmz" exact component={InstallIBMZ} />
             <CompatRoute
               path="/install/power/user-provisioned"
@@ -354,6 +363,7 @@ const Router: React.FC<RouterProps> = ({ history, planType, clusterId, externalC
               path="/install/power/pre-release"
               component={ConnectedInstallPowerPreRelease}
             />
+            <CompatRoute path="/install/power/agent-based" component={ConnectedInstallPowerABI} />
             <CompatRoute path="/install/power" exact component={InstallPower} />
             <CompatRoute
               path="/install/powervs/installer-provisioned"
