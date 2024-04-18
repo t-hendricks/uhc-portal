@@ -1,6 +1,6 @@
 import get from 'lodash/get';
 
-import { billingModels, normalizedProducts } from '~/common/subscriptionTypes';
+import { billingModels } from '~/common/subscriptionTypes';
 import { QuotaParams } from '~/components/clusters/common/quotaModel';
 import { OrganizationState } from '~/redux/reducers/userReducer';
 import { PromiseReducerState } from '~/redux/types';
@@ -67,14 +67,8 @@ const hasOrgLevelBypassPIDsLimitCapability = (organization?: Organization) =>
       capability.value === 'true',
   );
 
-// on the OSD creation page don't check cluster level capability for autoscaling
-const canAutoScaleOnCreateSelector = (organization: Organization | undefined, product: string) =>
-  product === normalizedProducts.ROSA ||
-  (product === normalizedProducts.OSD && hasOrgLevelAutoscaleCapability(organization));
-
 export {
   hasMachinePoolsQuotaSelector,
   hasOrgLevelAutoscaleCapability,
-  canAutoScaleOnCreateSelector,
   hasOrgLevelBypassPIDsLimitCapability,
 };

@@ -8,9 +8,9 @@ import { isROSA } from '~/components/clusters/common/clusterStates';
 import { constants } from '~/components/clusters/common/CreateOSDFormConstants';
 import ExternalLink from '~/components/common/ExternalLink';
 import PopoverHint from '~/components/common/PopoverHint';
+import useCanClusterAutoscale from '~/hooks/useCanClusterAutoscale';
 import { Cluster } from '~/types/clusters_mgmt.v1';
-
-import useCanClusterAutoscale from '../hooks/useCanClusterAutoscale';
+import { ClusterFromSubscription } from '~/types/types';
 
 const fieldId = 'autoscaling';
 
@@ -19,8 +19,12 @@ type AutoscalingFieldProps = {
 };
 
 const AutoscalingField = ({ cluster }: AutoscalingFieldProps) => {
+  const clusterFromSubscription = cluster as ClusterFromSubscription;
   const [field] = useField(fieldId);
-  const canAutoScale = useCanClusterAutoscale(cluster.product?.id);
+  const canAutoScale = useCanClusterAutoscale(
+    clusterFromSubscription.product?.id,
+    clusterFromSubscription.subscription?.cluster_billing_model,
+  );
 
   const isRosa = isROSA(cluster);
   const autoScalingUrl = isRosa ? links.ROSA_AUTOSCALING : links.APPLYING_AUTOSCALING;

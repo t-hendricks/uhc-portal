@@ -1,13 +1,10 @@
-import { normalizedProducts } from '~/common/subscriptionTypes';
 import { OrganizationState } from '~/redux/reducers/userReducer';
 import { baseRequestState } from '~/redux/reduxHelpers';
 import { PromiseReducerState } from '~/redux/types';
-import { Organization } from '~/types/accounts_mgmt.v1';
 import { MachineType } from '~/types/clusters_mgmt.v1';
 import { ClusterFromSubscription } from '~/types/types';
 
 import {
-  canAutoScaleOnCreateSelector,
   hasMachinePoolsQuotaSelector,
   hasOrgLevelAutoscaleCapability,
   hasOrgLevelBypassPIDsLimitCapability,
@@ -104,26 +101,5 @@ describe('machinePoolsSelector', () => {
 
     it('returns false if the state is undefined', () =>
       expect(hasOrgLevelBypassPIDsLimitCapability(undefined)).toBe(false));
-  });
-
-  describe('canAutoScaleOnCreateSelector', () => {
-    it.each([
-      [undefined, normalizedProducts.ROSA, true],
-      [stateWithAutoscaleCapability.userProfile.organization.details, normalizedProducts.OSD, true],
-      [
-        stateWithoutAutoscaleCapability.userProfile.organization.details,
-        normalizedProducts.OSD,
-        false,
-      ],
-      [
-        stateWithAutoscaleCapability.userProfile.organization.details,
-        normalizedProducts.UNKNOWN,
-        false,
-      ],
-    ])(
-      'when product %p',
-      (organization: Organization | undefined, product: string, expected: boolean) =>
-        expect(canAutoScaleOnCreateSelector(organization, product)).toBe(expected),
-    );
   });
 });
