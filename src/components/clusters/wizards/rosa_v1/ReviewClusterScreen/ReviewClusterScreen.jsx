@@ -15,6 +15,7 @@ import {
 } from '~/components/clusters/wizards/rosa_v1/rosaWizardConstants';
 import ReduxHiddenCheckbox from '~/components/common/ReduxFormComponents/ReduxHiddenCheckbox';
 import config from '~/config';
+import useCanClusterAutoscale from '~/hooks/useCanClusterAutoscale';
 import { useFeatureGate } from '~/hooks/useFeatureGate';
 import {
   HCP_AWS_BILLING_SHOW,
@@ -32,8 +33,7 @@ const ReviewClusterScreen = ({
   change,
   clusterRequestParams,
   formValues,
-  canAutoScale,
-  autoscalingEnabled,
+  autoscalingEnabledValue,
   installToVPCSelected,
   configureProxySelected,
   getUserRole,
@@ -57,6 +57,7 @@ const ReviewClusterScreen = ({
   const hasDomainPrefix = formValues?.has_domain_prefix;
 
   const hasSecurityGroups = isByoc && hasSelectedSecurityGroups(formValues.securityGroups);
+  const canAutoScale = useCanClusterAutoscale(formValues.product, formValues.billing_model);
 
   const clusterSettingsFields = [
     ...(!isROSA ? ['cloud_provider'] : []),
@@ -214,7 +215,7 @@ const ReviewClusterScreen = ({
       >
         {ReviewItem({ name: 'machine_type', formValues })}
         {canAutoScale && ReviewItem({ name: 'autoscalingEnabled', formValues })}
-        {autoscalingEnabled
+        {autoscalingEnabledValue && canAutoScale
           ? ReviewItem({ name: 'min_replicas', formValues })
           : ReviewItem({ name: 'nodes_compute', formValues })}
         {showVPCCheckbox &&
@@ -344,8 +345,7 @@ ReviewClusterScreen.propTypes = {
   change: PropTypes.func,
   clusterRequestParams: PropTypes.object.isRequired,
   formValues: PropTypes.objectOf(PropTypes.oneOfType([PropTypes.any])),
-  canAutoScale: PropTypes.bool,
-  autoscalingEnabled: PropTypes.bool,
+  autoscalingEnabledValue: PropTypes.bool,
   installToVPCSelected: PropTypes.bool,
   configureProxySelected: PropTypes.bool,
   getUserRole: PropTypes.func.isRequired,

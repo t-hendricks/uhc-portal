@@ -12,7 +12,6 @@ const defaultProps = {
   cloudProviders: fixtures.cloudProviders,
   hasAutoscaleMachinePools: false,
   hasAutoscaleCluster: false,
-  canAutoscaleCluster: false,
 };
 
 const componentText = {

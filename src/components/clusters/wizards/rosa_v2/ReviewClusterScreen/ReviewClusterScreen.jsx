@@ -1,12 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import isEmpty from 'lodash/isEmpty';
 import PropTypes from 'prop-types';
-import { useSelector } from 'react-redux';
 
 import { Bullseye, Spinner, Stack, StackItem, Title } from '@patternfly/react-core';
 
 import { hasSelectedSecurityGroups } from '~/common/securityGroupsHelpers';
-import { canAutoScaleOnCreateSelector } from '~/components/clusters/ClusterDetails/components/MachinePools/machinePoolsSelectors';
 import { useFormState } from '~/components/clusters/wizards/hooks';
 import { canSelectImds } from '~/components/clusters/wizards/rosa/constants';
 import { getUserRoleForSelectedAWSAccount } from '~/components/clusters/wizards/rosa_v2/AccountsRolesScreen/AccountsRolesScreen';
@@ -16,6 +14,7 @@ import {
 } from '~/components/clusters/wizards/rosa_v2/rosaWizardConstants';
 import HiddenCheckbox from '~/components/common/FormikFormComponents/HiddenCheckbox';
 import config from '~/config';
+import useCanClusterAutoscale from '~/hooks/useCanClusterAutoscale';
 import { useFeatureGate } from '~/hooks/useFeatureGate';
 import {
   HCP_AWS_BILLING_SHOW,
@@ -69,12 +68,12 @@ const ReviewClusterScreen = ({
       [FieldId.UpgradePolicy]: upgradePolicy,
       [FieldId.UsePrivateLink]: usePrivateLink,
       [FieldId.WorkerVolumeSizeGib]: workerVolumeSizeGib,
+      [FieldId.BillingModel]: billingModel,
     },
     values: formValues,
     setFieldValue,
   } = useFormState();
-
-  const canAutoScale = useSelector((state) => canAutoScaleOnCreateSelector(state, product));
+  const canAutoScale = useCanClusterAutoscale(product, billingModel);
   const autoscalingEnabled = canAutoScale && !!autoscalingEnabledValue;
   const isHypershiftSelected = hypershiftValue === 'true';
 

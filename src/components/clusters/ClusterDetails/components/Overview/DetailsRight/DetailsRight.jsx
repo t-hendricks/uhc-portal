@@ -20,6 +20,7 @@ import {
 } from '~/components/clusters/common/clusterStates';
 import { useAWSVPCFromCluster } from '~/components/clusters/common/useAWSVPCFromCluster';
 import { IMDSType } from '~/components/clusters/wizards/common';
+import useCanClusterAutoscale from '~/hooks/useCanClusterAutoscale';
 import { isRestrictedEnv } from '~/restrictedEnv';
 
 import links from '../../../../../../common/installLinks.mjs';
@@ -39,7 +40,6 @@ const { ClusterStatus: AIClusterStatus } = OCM;
 function DetailsRight({
   cluster,
   totalDesiredComputeNodes,
-  canAutoscaleCluster,
   hasAutoscaleMachinePools,
   hasAutoscaleCluster,
   totalMinNodesCount,
@@ -49,6 +49,10 @@ function DetailsRight({
   machinePools,
   isDeprovisioned,
 }) {
+  const canAutoscaleCluster = useCanClusterAutoscale(
+    cluster?.subscription?.plan?.type,
+    cluster?.subscription?.cluster_billing_model,
+  );
   const isAWS = cluster.subscription?.cloud_provider_id === 'aws';
   const isGCP = cluster.subscription?.cloud_provider_id === 'gcp';
   const isHypershift = isHypershiftCluster(cluster);
@@ -395,7 +399,6 @@ DetailsRight.propTypes = {
   totalMaxNodesCount: PropTypes.number,
   hasAutoscaleMachinePools: PropTypes.bool.isRequired,
   hasAutoscaleCluster: PropTypes.bool.isRequired,
-  canAutoscaleCluster: PropTypes.bool.isRequired,
   limitedSupport: PropTypes.bool,
   totalActualNodes: PropTypes.oneOfType([PropTypes.number, PropTypes.bool]),
   machinePools: PropTypes.array,

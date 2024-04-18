@@ -1,7 +1,5 @@
 import { connect } from 'react-redux';
 
-import { canAutoScaleOnCreateSelector } from '~/components/clusters/ClusterDetails/components/MachinePools/machinePoolsSelectors';
-
 import totalNodesDataSelector from '../../../../common/totalNodesDataSelector';
 
 import DetailsRight from './DetailsRight';
@@ -10,10 +8,6 @@ const mapStateToProps = (state) => {
   const { cluster } = state.clusters.details;
   const machinePools = state.machinePools.getMachinePools.data;
   const nodesSectionData = totalNodesDataSelector(cluster, machinePools);
-  const canAutoscaleCluster = canAutoScaleOnCreateSelector(
-    state.userProfile.organization?.details,
-    cluster?.subscription?.plan?.id,
-  );
   const hasAutoscaleCluster = !!cluster?.autoscaler;
 
   const {
@@ -26,7 +20,6 @@ const mapStateToProps = (state) => {
 
   if (hasMachinePoolWithAutoscaling) {
     return {
-      canAutoscaleCluster,
       hasAutoscaleMachinePools: true,
       hasAutoscaleCluster,
       totalMinNodesCount,
@@ -36,7 +29,6 @@ const mapStateToProps = (state) => {
     };
   }
   return {
-    canAutoscaleCluster,
     hasAutoscaleMachinePools: false,
     hasAutoscaleCluster,
     totalDesiredComputeNodes,

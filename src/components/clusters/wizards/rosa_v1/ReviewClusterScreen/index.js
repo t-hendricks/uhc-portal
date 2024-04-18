@@ -9,18 +9,11 @@ import {
   getUserRole,
 } from '~/redux/actions/rosaActions';
 
-import { canAutoScaleOnCreateSelector } from '../../../ClusterDetails/components/MachinePools/machinePoolsSelectors';
-
 import ReviewClusterScreen from './ReviewClusterScreen';
 
 const mapStateToProps = (state) => {
   const valueSelector = formValueSelector('CreateCluster');
-  const product = valueSelector(state, 'product');
-  const canAutoScale = canAutoScaleOnCreateSelector(
-    state.userProfile.organization?.details,
-    product,
-  );
-  const autoscalingEnabled = canAutoScale && !!valueSelector(state, 'autoscalingEnabled');
+  const autoscalingEnabledValue = !!valueSelector(state, 'autoscalingEnabled');
   const installToVPCSelected = valueSelector(state, 'install_to_vpc');
   const configureProxySelected = valueSelector(state, 'configure_proxy');
   const { getUserRoleResponse, getOCMRoleResponse } = state.rosaReducer;
@@ -28,8 +21,7 @@ const mapStateToProps = (state) => {
 
   return {
     formValues: getFormValues('CreateCluster')(state),
-    canAutoScale,
-    autoscalingEnabled,
+    autoscalingEnabledValue,
     installToVPCSelected,
     configureProxySelected,
     getUserRoleResponse,
