@@ -71,6 +71,8 @@ module.exports = async (_env, argv) => {
   const noInsightsProxy = !!argv.env.noproxy;
   // Support `logging=quiet` vs. `logging=verbose`. Default verbose (might change in future).
   const verboseLogging = argv.env.logging !== 'quiet';
+  // Variable to run assisted-ui in standalone mode. You need to take a look to README to see instructions when ai_standalone=true
+  const runAIinStandalone = !!argv.env.ai_standalone;
 
   const chromeTemplateUrl = `https://console.redhat.com/${
     betaMode ? 'preview/' : ''
@@ -300,14 +302,14 @@ module.exports = async (_env, argv) => {
               pathRewrite: { '^/mockdata': '' },
               target: 'http://127.0.0.1:8010',             
             },
-            {
+            runAIinStandalone ? {
               context: ['/beta/apps/assisted-installer-app/**', '/apps/assisted-installer-app/**'],
               pathRewrite: { '^/beta/': '' },
               target: 'http://127.0.0.1:8003',
               logLevel: 'debug',
               secure: false,
               changeOrigin: true,
-            },
+            }:{},
             {
               // docs: https://github.com/chimurai/http-proxy-middleware#http-proxy-options
               // proxy everything except our own app, mimicking insights-proxy behaviour
