@@ -2,26 +2,14 @@ import * as React from 'react';
 import { MemoryRouter } from 'react-router-dom';
 import { CompatRouter } from 'react-router-dom-v5-compat';
 
-import * as ScalprumCore from '@scalprum/core';
-
 import { mockRestrictedEnv, render, screen } from '~/testUtils';
 
 import CreateClusterPage from './CreateClusterPage';
 
-const mockInitScalprumConfig: ScalprumCore.AppsConfig = {
-  assistedInstallerApp: {
-    name: 'assistedInstallerApp',
-  },
-};
-
-// Inicializa Scalprum antes de las pruebas
-
 describe('<CreateClusterPage />', () => {
   describe('in Restricted env', () => {
     const isRestrictedEnv = mockRestrictedEnv();
-    beforeAll(() => {
-      ScalprumCore.initialize({ appsConfig: mockInitScalprumConfig });
-    });
+
     afterEach(() => {
       isRestrictedEnv.mockReturnValue(false);
     });
