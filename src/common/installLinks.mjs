@@ -234,6 +234,7 @@ const links = {
   INSTALL_PRE_RELEASE_INSTALLER_DOC: 'https://github.com/openshift/installer/tree/master/docs/user',
   INSTALL_PRE_RELEASE_FEEDBACK: 'https://issues.redhat.com/projects/OCPBUGS/issues',
   INSTALL_PRE_RELEASE_SUPPORT_KCS: 'https://access.redhat.com/support/offerings/devpreview',
+  TECH_PREVIEW_KCS: 'https://access.redhat.com/support/offerings/techpreview',
   COOPERATIVE_COMMUNITY_SUPPORT_KCS: 'https://access.redhat.com/solutions/5893251',
 
   INSTALL_POWER_GETTING_STARTED: `${DOCS_BASE}/installing/installing_ibm_power/installing-ibm-power.html`,

@@ -48,7 +48,7 @@ import { Chrome } from '~/types/types';
 import links, { channels, tools } from '../../common/installLinks.mjs';
 import DownloadAndOSSelection from '../clusters/install/instructions/components/DownloadAndOSSelection';
 import ExternalLink from '../common/ExternalLink';
-import SupportLevelBadge, { SupportLevelType } from '../common/SupportLevelBadge';
+import SupportLevelBadge, { DEV_PREVIEW } from '../common/SupportLevelBadge';
 
 import LeadingInfo from './LeadingInfo';
 import RevokeTokensInstructions from './RevokeTokensInstructions';
@@ -162,9 +162,7 @@ const Instructions = (props: Props) => {
                   <List component="ol">
                     <ListItem>
                       Download and install the <code>{commandName}</code> command-line tool:{' '}
-                      {commandTool === tools.OCM && (
-                        <SupportLevelBadge type={SupportLevelType.devPreview} />
-                      )}
+                      {commandTool === tools.OCM && <SupportLevelBadge {...DEV_PREVIEW} />}
                       <Text component="p" />
                       <DownloadAndOSSelection tool={commandTool} channel={channels.STABLE} />
                       <Text component="p" />
