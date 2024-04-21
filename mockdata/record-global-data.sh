@@ -57,6 +57,14 @@ record "/api/clusters_mgmt/v1/cloud_providers" --parameter=size=-1 --parameter=f
 
 record "/api/clusters_mgmt/v1/limited_support_reason_templates" --parameter=size=-1
 
+record "/api/clusters_mgmt/v1/products"
+for product_href in $(jq '.items[].href' mockdata/api/clusters_mgmt/v1/products.json --raw-output); do
+  LOG_PREFIX+="  " record "$product_href/technology_previews"
+  for preview_href in $(jq '(.items // [])[].href' "mockdata/$product_href/technology_previews.json" --raw-output); do
+    LOG_PREFIX+="    " record "$preview_href"
+  done
+done
+
 echo
 git status --short --untracked-files=all mockdata/
 
