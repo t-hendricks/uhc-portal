@@ -66,7 +66,7 @@ function DetailsLeft({ cluster, cloudProviders, showAssistedId }) {
         <DescriptionListGroup>
           <DescriptionListTerm>Domain prefix</DescriptionListTerm>
           <DescriptionListDescription>
-            <span>{domainPrefix}</span>
+            <span data-testid="domainPrefix">{domainPrefix}</span>
           </DescriptionListDescription>
         </DescriptionListGroup>
       )}

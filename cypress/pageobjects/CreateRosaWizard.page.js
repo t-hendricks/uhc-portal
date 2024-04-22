@@ -19,6 +19,10 @@ class CreateRosaCluster extends Page {
   reviewAndCreateTree = () =>
     cy.get('li.pf-v5-c-wizard__nav-item').find('button').contains('Review and create');
 
+  createCustomDomainPrefixCheckbox = () => cy.get('input[id="has_domain_prefix"]');
+
+  domainPrefixInput = () => cy.get('input[id="domain_prefix"]');
+
   machineCIDRInput = () => cy.get('input[id="network_machine_cidr"]');
 
   serviceCIDRInput = () => cy.get('input[id="network_service_cidr"]');
@@ -62,6 +66,11 @@ class CreateRosaCluster extends Page {
 
   refreshBillingAWSAccountButton = () =>
     cy.get('button[data-testid="refresh-aws-accounts"]').second();
+
+  howToAssociateNewAWSAccountButton = () => cy.getByTestId('launch-associate-account-btn');
+
+  howToAssociateNewAWSAccountDrawerCloseButton = () =>
+    cy.getByTestId('close-associate-account-btn');
 
   supportRoleInput = () => cy.get('input[id="support_role_arn"]');
 
@@ -234,6 +243,18 @@ class CreateRosaCluster extends Page {
       .should('eq', testVersion);
   };
 
+  isTextContainsInPage(text, present = true) {
+    if (present) {
+      cy.get('body').then(($body) => {
+        if ($body.text().includes(text)) {
+          cy.contains(text).scrollIntoView().should('be.visible');
+        }
+      });
+    } else {
+      cy.contains(text).should('not.exist');
+    }
+  }
+
   get clusterNameInput() {
     return 'input#name';
   }
@@ -323,6 +344,14 @@ class CreateRosaCluster extends Page {
           cy.get('ul[id="installer_role_arn"]').find('button').contains(roleName).click();
         }
       });
+  }
+
+  setClusterName(clusterName) {
+    cy.get(this.clusterNameInput).scrollIntoView().type('{selectAll}').type(clusterName);
+  }
+
+  setDomainPrefix(domainPrefix) {
+    this.domainPrefixInput().scrollIntoView().type('{selectAll}').type(domainPrefix);
   }
 
   selectClusterVersion(version) {
@@ -551,6 +580,14 @@ class CreateRosaCluster extends Page {
     // Validation popup on cluster name field create flaky situation on below version field.
     // To remove the validation popup a click action in cluster left tree required.
     this.clusterDetailsTree().click();
+  }
+
+  closePopoverDialogs() {
+    cy.get('body').then(($body) => {
+      if ($body.find('button[aria-label="Close"]').filter(':visible').length > 0) {
+        cy.get('button[aria-label="Close"]').filter(':visible').click();
+      }
+    });
   }
 
   inputNodeLabelKvs(nodeLabelKvs) {

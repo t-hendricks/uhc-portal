@@ -7,7 +7,7 @@ const clusterFieldValidations = require('../../fixtures/rosa/RosaClusterClassicW
 const awsAccountID = Cypress.env('QE_AWS_ID');
 const rolePrefix = Cypress.env('QE_ACCOUNT_ROLE_PREFIX');
 const installerARN = 'arn:aws:iam::' + awsAccountID + ':role/' + rolePrefix + '-Installer-Role';
-const clusterName = `smkrosa-` + (Math.random() + 1).toString(36).substring(7);
+const clusterName = `ocmui-cypress-smoke-rosa-` + (Math.random() + 1).toString(36).substring(7);
 
 describe('Rosa Classic cluster wizard validations', { tags: ['smoke'] }, () => {
   it('Open Rosa cluster wizard', () => {
@@ -38,7 +38,51 @@ describe('Rosa Classic cluster wizard validations', { tags: ['smoke'] }, () => {
   });
 
   it('Step - Cluster Settings - widget validations', () => {
-    cy.get(CreateRosaWizardPage.clusterNameInput).type(clusterName);
+    CreateRosaWizardPage.setClusterName(
+      clusterFieldValidations.ClusterSettings.Details.InvalidClusterNamesValues[0],
+    );
+    CreateRosaWizardPage.closePopoverDialogs();
+    CreateRosaWizardPage.isTextContainsInPage(
+      clusterFieldValidations.ClusterSettings.Details.InvalidClusterNamesErrors[0],
+    );
+    CreateRosaWizardPage.setClusterName(
+      clusterFieldValidations.ClusterSettings.Details.InvalidClusterNamesValues[1],
+    );
+    CreateRosaWizardPage.closePopoverDialogs();
+    CreateRosaWizardPage.isTextContainsInPage(
+      clusterFieldValidations.ClusterSettings.Details.InvalidClusterNamesErrors[1],
+    );
+    CreateRosaWizardPage.setClusterName(
+      clusterFieldValidations.ClusterSettings.Details.InvalidClusterNamesValues[2],
+    );
+    CreateRosaWizardPage.closePopoverDialogs();
+    CreateRosaWizardPage.isTextContainsInPage(
+      clusterFieldValidations.ClusterSettings.Details.InvalidClusterNamesErrors[2],
+    );
+    CreateRosaWizardPage.createCustomDomainPrefixCheckbox().scrollIntoView().check();
+    CreateRosaWizardPage.setDomainPrefix(
+      clusterFieldValidations.ClusterSettings.Details.InvalidDomainPrefixValues[0],
+    );
+    CreateRosaWizardPage.closePopoverDialogs();
+    CreateRosaWizardPage.isTextContainsInPage(
+      clusterFieldValidations.ClusterSettings.Details.InvalidDomainPrefixErrors[0],
+    );
+    CreateRosaWizardPage.setDomainPrefix(
+      clusterFieldValidations.ClusterSettings.Details.InvalidDomainPrefixValues[1],
+    );
+    CreateRosaWizardPage.closePopoverDialogs();
+    CreateRosaWizardPage.isTextContainsInPage(
+      clusterFieldValidations.ClusterSettings.Details.InvalidDomainPrefixErrors[1],
+    );
+    CreateRosaWizardPage.setDomainPrefix(
+      clusterFieldValidations.ClusterSettings.Details.InvalidDomainPrefixValues[2],
+    );
+    CreateRosaWizardPage.closePopoverDialogs();
+    CreateRosaWizardPage.isTextContainsInPage(
+      clusterFieldValidations.ClusterSettings.Details.InvalidDomainPrefixErrors[2],
+    );
+    CreateRosaWizardPage.createCustomDomainPrefixCheckbox().uncheck();
+    CreateRosaWizardPage.setClusterName(clusterName);
     CreateRosaWizardPage.advancedEncryptionLink().click();
     CreateRosaWizardPage.useCustomKMSKeyRadio().check();
     CreateRosaWizardPage.rosaNextButton().click({ force: true });

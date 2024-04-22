@@ -69,6 +69,8 @@ class ClusterDetails extends Page {
 
   clusterAvailabilityLabelValue = () => cy.getByTestId('availability').should('exist');
 
+  clusterDomainPrefixLabelValue = () => cy.getByTestId('domainPrefix').should('exist');
+
   clusterAutoScalingStatus = () => cy.getByTestId('clusterAutoscalingStatus').should('exist');
 
   clusterIMDSValue = () => cy.getByTestId('instanceMetadataService').should('exist');

@@ -1,5 +1,5 @@
 {
-  "ClusterName": "nonccssmk-13",
+  "ClusterName": "ocmui-cypress-smoke-osd-nonccs-gcp",
   "Type": "OSD",
   "CloudProvider": "Google Cloud Platform (GCP)",
   "SubscriptionType": "Annual: Fixed capacity subscription from Red Hat",
