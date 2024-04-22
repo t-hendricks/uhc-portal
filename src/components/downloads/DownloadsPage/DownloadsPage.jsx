@@ -604,7 +604,7 @@ const installationRows = (expanded, setExpanded, selections, setSelections, tool
         name={
           <>
             OpenShift Installer with multi-architecture compute machines{' '}
-            <TechnologyPreview className="pf-u-ml-md pf-v5-u-display-inline" />
+            <TechnologyPreview className="pf-v5-u-ml-md pf-v5-u-display-inline" />
           </>
         }
         description={

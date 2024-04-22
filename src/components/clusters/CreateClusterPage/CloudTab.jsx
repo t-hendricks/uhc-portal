@@ -359,7 +359,7 @@ const runItYourself = () => {
         <Link to="/install/alibaba/installer-provisioned" className="pf-v5-u-mr-xs">
           Alibaba Cloud
         </Link>
-        <TechnologyPreview className="pf-u-ml-md pf-v5-u-display-inline" />
+        <TechnologyPreview className="pf-v5-u-ml-md pf-v5-u-display-inline" />
       </>,
       'Full stack automation',
     ],
@@ -417,14 +417,14 @@ const runItYourself = () => {
     [
       <>
         <Link to="/install/metal/multi"> Baremetal (multi-architecture)</Link>
-        <TechnologyPreview className="pf-u-ml-md pf-v5-u-display-inline" />
+        <TechnologyPreview className="pf-v5-u-ml-md pf-v5-u-display-inline" />
       </>,
       'Pre-existing infrastructure',
     ],
     [
       <>
         <Link to="/install/powervs/installer-provisioned">IBM PowerVS (ppc64le)</Link>
-        <TechnologyPreview className="pf-u-ml-md pf-v5-u-display-inline" />
+        <TechnologyPreview className="pf-v5-u-ml-md pf-v5-u-display-inline" />
       </>,
       'Full stack automation',
     ],
@@ -437,7 +437,7 @@ const runItYourself = () => {
     [
       <>
         <Link to="/install/oracle-cloud">Oracle Cloud Infrastructure (virtual machines)</Link>
-        <TechnologyPreview className="pf-u-ml-md pf-v5-u-display-inline" />
+        <TechnologyPreview className="pf-v5-u-ml-md pf-v5-u-display-inline" />
       </>,
       'Pre-existing infrastructure',
     ],
