@@ -72,6 +72,7 @@ export const DefaultIngressFields: React.FC<DefaultIngressFieldsProps> = ({
         <Field
           component={ReduxVerticalFormGroup}
           name="defaultRouterSelectors"
+          data-testid="router-selectors"
           type="text"
           validate={checkRouteSelectors}
           disabled={areFieldsDisabled}
@@ -90,6 +91,7 @@ export const DefaultIngressFields: React.FC<DefaultIngressFieldsProps> = ({
         <Field
           component={ReduxVerticalFormGroup}
           name="defaultRouterExcludedNamespacesFlag"
+          data-testid="excluded-namespaces"
           type="text"
           validate={validateNamespacesList}
           disabled={areFieldsDisabled}
