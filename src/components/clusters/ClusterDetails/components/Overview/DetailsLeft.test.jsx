@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 import React from 'react';
 
 import { LONGER_CLUSTER_NAME_UI } from '~/redux/constants/featureConstants';
@@ -15,7 +16,7 @@ const defaultProps = {
 
 const componentText = {
   CONTROL_PLANE: { label: 'Control plane type', hosted: 'Hosted' },
-  AVAILABILITY: { label: 'Availability', multi: 'Multi-zone', single: 'Single zone' },
+  AVAILABILITY: { label: 'Availability', multi: 'Multi-zone', single: 'Single zone', NA: 'N/A' },
   REGION: { label: 'Region', NA: 'N/A' },
   PROVIDER: { label: 'Provider', NA: 'N/A' },
   ID: { label: 'Cluster ID', aiLabel: 'Assisted cluster ID / Cluster ID', NA: 'N/A' },
@@ -426,6 +427,21 @@ describe('<DetailsLeft />', () => {
 
       // Assert
       checkForValue(componentText.AVAILABILITY.label, componentText.AVAILABILITY.multi);
+    });
+
+    it('shows N/A for managed archived clusters', async () => {
+      // Arrange
+      const { multi_az, ...archivedCluster } = fixtures.ROSAHypershiftClusterDetails.cluster;
+      const ROSAHypershiftClusterFixture = { ...archivedCluster, state: '' };
+
+      expect(ROSAHypershiftClusterFixture.multi_az).toBeUndefined();
+
+      const props = { ...defaultProps, cluster: ROSAHypershiftClusterFixture };
+      render(<DetailsLeft {...props} />);
+      await checkIfRendered();
+
+      // Assert
+      checkForValue(componentText.AVAILABILITY.label, componentText.AVAILABILITY.NA);
     });
   });
 
