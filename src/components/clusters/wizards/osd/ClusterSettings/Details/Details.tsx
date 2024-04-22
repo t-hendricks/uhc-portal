@@ -27,9 +27,12 @@ import {
 } from '~/components/clusters/common/ScaleSection/AutoScaleSection/AutoScaleHelper';
 import {
   asyncValidateClusterName,
+  asyncValidateDomainPrefix,
   clusterNameAsyncValidation,
   clusterNameValidation,
   createPessimisticValidator,
+  domainPrefixAsyncValidation,
+  domainPrefixValidation,
   validateAWSKMSKeyARN,
 } from '~/common/validators';
 import { constants } from '~/components/clusters/common/CreateOSDFormConstants';
@@ -50,7 +53,8 @@ import { useFormState } from '~/components/clusters/wizards/hooks';
 import { hasAvailableQuota, quotaParams } from '~/components/clusters/wizards/common/utils/quotas';
 import { FieldId, MIN_SECURE_BOOT_VERSION } from '~/components/clusters/wizards/osd/constants';
 import { emptyAWSSubnet } from '~/components/clusters/wizards/common/createOSDInitialValues';
-import { billingModels } from '~/common/subscriptionTypes';
+import { useFeatureGate } from '~/hooks/useFeatureGate';
+import { LONGER_CLUSTER_NAME_UI } from '~/redux/constants/featureConstants';
 import { QuotaCostList } from '~/types/accounts_mgmt.v1';
 import { QuotaParams } from '~/components/clusters/common/quotaModel';
 import { versionComparator } from '~/common/versionComparator';
@@ -58,6 +62,7 @@ import { VersionSelectField } from '~/components/clusters/wizards/common/Cluster
 import CloudRegionSelectField from '~/components/clusters/wizards/common/ClusterSettings/Details/CloudRegionSelectField';
 import { CustomerManagedEncryption } from '~/components/clusters/wizards/osd/ClusterSettings/Details/CustomerManagedEncryption';
 import { ClassicEtcdFipsSection } from '~/components/clusters/wizards/common/ClusterSettings/Details/ClassicEtcdFipsSection';
+import { billingModels } from '~/common/subscriptionTypes';
 
 function Details() {
   const dispatch = useDispatch();
@@ -74,13 +79,13 @@ function Details() {
       [FieldId.ClusterVersion]: selectedVersion,
       [FieldId.SecureBoot]: secureBoot,
       [FieldId.MachinePoolsSubnets]: machinePoolsSubnets,
+      [FieldId.HasDomainPrefix]: hasDomainPrefix,
     },
     errors,
     isValidating,
     setFieldValue,
     getFieldProps,
   } = useFormState();
-
   const [isExpanded, setIsExpanded] = React.useState(false);
   const [showSecureBootAlert, setShowSecureBootAlert] = React.useState(false);
 
@@ -106,6 +111,9 @@ function Details() {
 
   const isIncompatibleSecureBootVersion =
     isGCP && versionComparator(selectedVersion?.raw_id, MIN_SECURE_BOOT_VERSION) === -1;
+
+  const isLongerClusterNameEnabled = useFeatureGate(LONGER_CLUSTER_NAME_UI);
+  const clusterNameMaxLength = isLongerClusterNameEnabled ? 54 : 15;
 
   React.useEffect(() => {
     dispatch(getCloudProviders());
@@ -213,7 +221,10 @@ function Details() {
   ];
 
   const validateClusterName = async (value: string) => {
-    const syncError = createPessimisticValidator(clusterNameValidation)(value);
+    const syncError = createPessimisticValidator(clusterNameValidation)(
+      value,
+      clusterNameMaxLength,
+    );
     if (syncError) {
       return syncError;
     }
@@ -221,6 +232,20 @@ function Details() {
     const clusterNameAsyncError = await asyncValidateClusterName(value);
     if (clusterNameAsyncError) {
       return clusterNameAsyncError;
+    }
+
+    return undefined;
+  };
+
+  const validateDomainPrefix = async (value: string) => {
+    const syncError = createPessimisticValidator(domainPrefixValidation)(value);
+    if (syncError) {
+      return syncError;
+    }
+
+    const domainPrefixAsyncError = await asyncValidateDomainPrefix(value);
+    if (domainPrefixAsyncError) {
+      return domainPrefixAsyncError;
     }
 
     return undefined;
@@ -253,7 +278,7 @@ function Details() {
               label="Cluster name"
               type="text"
               validate={validateClusterName}
-              validation={clusterNameValidation}
+              validation={(value: string) => clusterNameValidation(value, clusterNameMaxLength)}
               asyncValidation={clusterNameAsyncValidation}
               isRequired
               extendedHelpText={constants.clusterNameHint}
@@ -263,6 +288,43 @@ function Details() {
               }}
             />
           </GridItem>
+
+          {isLongerClusterNameEnabled && (
+            <>
+              <GridItem>
+                <Split hasGutter className="pf-u-mb-0">
+                  <SplitItem>
+                    <CheckboxField
+                      name={FieldId.HasDomainPrefix}
+                      label="Create custom domain prefix"
+                    />
+                  </SplitItem>
+                  <SplitItem>
+                    <PopoverHint hint={constants.domainPrefixHint} />
+                  </SplitItem>
+                </Split>
+              </GridItem>
+              {hasDomainPrefix && (
+                <GridItem>
+                  <Field
+                    component={RichInputField}
+                    name={FieldId.DomainPrefix}
+                    label="Domain prefix"
+                    type="text"
+                    validate={validateDomainPrefix}
+                    validation={domainPrefixValidation}
+                    asyncValidation={domainPrefixAsyncValidation}
+                    isRequired
+                    input={{
+                      ...getFieldProps(FieldId.DomainPrefix),
+                      onChange: (value: string) =>
+                        setFieldValue(FieldId.DomainPrefix, value, false),
+                    }}
+                  />
+                </GridItem>
+              )}
+            </>
+          )}
 
           <GridItem>
             <VersionSelectField

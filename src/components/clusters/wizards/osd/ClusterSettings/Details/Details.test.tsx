@@ -4,7 +4,6 @@
 import * as React from 'react';
 import { Formik } from 'formik';
 
-import { screen, withState } from '~/testUtils';
 import { FieldId, initialValues } from '~/components/clusters/wizards/osd/constants';
 import {
   noProviders,
@@ -12,9 +11,10 @@ import {
   fulfilledProviders,
 } from '~/common/__test__/regions.fixtures';
 import ocpLifeCycleStatuses from '~/components/releases/__mocks__/ocpLifeCycleStatuses';
-
+import { LONGER_CLUSTER_NAME_UI } from '~/redux/constants/featureConstants';
 import clusterService from '~/services/clusterService';
 import getOCPLifeCycleStatus from '~/services/productLifeCycleService';
+import { mockUseFeatureGate, render, screen, withState } from '~/testUtils';
 
 import Details from './Details';
 
@@ -28,17 +28,18 @@ describe('<Details />', () => {
     ...initialValues,
     [FieldId.ClusterVersion]: version,
     [FieldId.Region]: 'eu-north-1',
+    [FieldId.HasDomainPrefix]: true,
   };
 
-  beforeEach(() => {
-    jest.resetAllMocks();
-    (clusterService.getInstallableVersions as jest.Mock).mockResolvedValue({
-      data: { items: [version] },
-    });
-    (getOCPLifeCycleStatus as jest.Mock).mockResolvedValue(ocpLifeCycleStatuses);
-  });
-
   describe('Region dropdown', () => {
+    beforeEach(() => {
+      jest.resetAllMocks();
+      (clusterService.getInstallableVersions as jest.Mock).mockResolvedValue({
+        data: { items: [version] },
+      });
+      (getOCPLifeCycleStatus as jest.Mock).mockResolvedValue(ocpLifeCycleStatuses);
+    });
+
     it('displays a spinner while regions are loading', async () => {
       const notLoadedState = {
         cloudProviders: noProviders,
@@ -72,6 +73,46 @@ describe('<Details />', () => {
 
       expect(await screen.findByText('eu-west-0, Avalon')).toBeInTheDocument();
       expect(await screen.findByText('single-az-3, Antarctica')).toBeInTheDocument();
+    });
+  });
+
+  describe('Domain prefix', () => {
+    it('is hidden when feature gate is not enabled', async () => {
+      mockUseFeatureGate([[LONGER_CLUSTER_NAME_UI, false]]);
+
+      render(
+        <Formik initialValues={defaultValues} onSubmit={() => {}}>
+          <Details />
+        </Formik>,
+      );
+
+      expect(screen.queryByText('Domain prefix')).toBe(null);
+    });
+
+    it('displays the field when has_domain_prefix is selected', async () => {
+      mockUseFeatureGate([[LONGER_CLUSTER_NAME_UI, true]]);
+
+      render(
+        <Formik initialValues={defaultValues} onSubmit={() => {}}>
+          <Details />
+        </Formik>,
+      );
+
+      expect(screen.queryByText('Domain prefix')).toBeInTheDocument();
+    });
+
+    it('is hidden when has_domain_prefix is false', async () => {
+      mockUseFeatureGate([[LONGER_CLUSTER_NAME_UI, true]]);
+
+      const newValues = { ...defaultValues, [FieldId.HasDomainPrefix]: false };
+
+      render(
+        <Formik initialValues={newValues} onSubmit={() => {}}>
+          <Details />
+        </Formik>,
+      );
+
+      expect(screen.queryByText('Domain prefix')).toBe(null);
     });
   });
 });

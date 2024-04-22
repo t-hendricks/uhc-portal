@@ -57,6 +57,10 @@ export const createClusterRequest = ({ isWizard = true, cloudProviderID, product
     ...(!isHypershiftSelected && { fips: !!formData.fips }),
   };
 
+  if (formData.has_domain_prefix) {
+    clusterRequest.domain_prefix = formData.domain_prefix;
+  }
+
   if (!isHypershiftSelected) {
     clusterRequest.node_drain_grace_period = {
       value: formData.node_drain_grace_period,
