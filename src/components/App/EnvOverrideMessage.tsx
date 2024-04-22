@@ -14,6 +14,7 @@ const EnvOverrideMessage = ({ env }: Props) => {
     localStorage.removeItem(ENV_OVERRIDE_LOCALSTORAGE_KEY);
     window.location.href = ocmBaseName();
   };
+
   return (
     <Alert
       variant="warning"
@@ -26,7 +27,7 @@ const EnvOverrideMessage = ({ env }: Props) => {
         </Button>
       }
     >
-      You&apos;re now using the <b>{env}</b> environment API.
+      You&apos;re now using the <b>{env}</b> environment API.{' '}
     </Alert>
   );
 };

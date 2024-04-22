@@ -3,7 +3,10 @@ import advancedFormat from 'dayjs/plugin/advancedFormat';
 import relativeTime from 'dayjs/plugin/relativeTime';
 import utc from 'dayjs/plugin/utc';
 
-import { ENV_OVERRIDE_LOCALSTORAGE_KEY } from './common/localStorageConstants';
+import {
+  ENV_OVERRIDE_LOCALSTORAGE_KEY,
+  MULTIREGION_LOCALSTORAGE_KEY,
+} from './common/localStorageConstants';
 import { Chrome } from './types/types';
 import { getRestrictedEnvApi, isRestrictedEnv } from './restrictedEnv';
 
@@ -24,6 +27,8 @@ type EnvConfig = {
   fedrampGateway?: string;
   fedrampS3?: string;
   demoExperience?: string;
+  apiGatewayXCM?: string;
+  apiRegionalGatewayTemplate?: string;
 };
 
 type EnvConfigWithFedRamp = {
@@ -47,6 +52,10 @@ if (APP_DEV_SERVER) {
 
 // select config according to the APP_API_ENV flag (see webpack.config.js)
 configs.default = configs[APP_API_ENV];
+
+const multiRegionConfig = {
+  apiRegionalGatewayTemplate: 'https://api.$REGION$.openshift.com',
+};
 
 const parseEnvQueryParam = (): string | undefined => {
   let ret: string | undefined;
@@ -92,11 +101,26 @@ const parseRosaV2QueryParam = () => {
   return ret;
 };
 
+const parseMultiRegionQueryParam = () => {
+  let ret = false;
+  window.location.search
+    .substring(1)
+    .split('&')
+    .forEach((queryString) => {
+      const [key, val] = queryString.split('=');
+      if (key.toLowerCase() === 'multiregion' && val === 'true') {
+        ret = true;
+      }
+    });
+  return ret;
+};
+
 const config = {
   configData: {} as EnvConfigWithFedRamp,
   envOverride: undefined as string | undefined,
   fakeOSD: false,
   rosaV2: false,
+  multiRegion: false,
 
   loadConfig(data: EnvConfigWithFedRamp) {
     this.configData = {
@@ -125,12 +149,18 @@ const config = {
         restrictedEnv: isRestrictedEnv(chrome),
         restrictedEnvApi: getRestrictedEnvApi(chrome),
       };
+      if (parseMultiRegionQueryParam() || localStorage.getItem(MULTIREGION_LOCALSTORAGE_KEY)) {
+        that.multiRegion = true;
+        localStorage.setItem(MULTIREGION_LOCALSTORAGE_KEY, 'true');
+      }
+
       const queryEnv = parseEnvQueryParam() || localStorage.getItem(ENV_OVERRIDE_LOCALSTORAGE_KEY);
       if (queryEnv && configs[queryEnv]) {
         configs[queryEnv]!.then((data) => {
           this.loadConfig({
             ...data,
             ...fedRampConfig,
+            ...multiRegionConfig,
           });
           // eslint-disable-next-line no-console
           console.info(`Loaded override config: ${queryEnv}`);
@@ -143,6 +173,7 @@ const config = {
           this.loadConfig({
             ...data,
             ...fedRampConfig,
+            ...multiRegionConfig,
           });
           // eslint-disable-next-line no-console
           console.info(`Loaded default config: ${APP_API_ENV}`);

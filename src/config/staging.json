@@ -1,5 +1,6 @@
 {
   "apiGateway": "https://api.stage.openshift.com",
+  "apiRegionalGatewayHardcode": "https://***REMOVED***",
   "insightsGateway": "https://$SELF_PATH$/api",
   "sentryDSN": "https://***REMOVED***/64",
   "fedrampGateway": "https://console.stage.redhat.com/api",
