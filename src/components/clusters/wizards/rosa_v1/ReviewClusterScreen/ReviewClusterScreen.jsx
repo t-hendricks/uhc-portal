@@ -51,12 +51,14 @@ const ReviewClusterScreen = ({
   const showVPCCheckbox = isROSA || isByoc;
   const hasAWSVPCSettings = showVPCCheckbox && formValues.install_to_vpc && isAWS;
   const clusterVersionRawId = formValues.cluster_version?.raw_id;
+  const hasDomainPrefix = formValues?.has_domain_prefix;
 
   const hasSecurityGroups = isByoc && hasSelectedSecurityGroups(formValues.securityGroups);
 
   const clusterSettingsFields = [
     ...(!isROSA ? ['cloud_provider'] : []),
     'name',
+    ...(hasDomainPrefix ? ['domain_prefix'] : []),
     'cluster_version',
     'region',
     'multi_az',

@@ -52,6 +52,8 @@ export enum FieldId {
   InstallerRoleArn = 'installer_role_arn',
   InstallToVpc = 'install_to_vpc',
   GcpServiceAccount = 'gcp_service_account',
+  DomainPrefix = 'domain_prefix',
+  HasDomainPrefix = 'has_domain_prefix',
   AccountId = 'account_id',
   AccessKeyId = 'access_key_id',
   SecretAccessKey = 'secret_access_key',

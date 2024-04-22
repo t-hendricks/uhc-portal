@@ -8,6 +8,7 @@ import {
   ROSA_WIZARD_V2_ENABLED,
   OSD_GOOGLE_MARKETPLACE_FEATURE,
   OSD_GCP_SHARED_VPC_FEATURE,
+  LONGER_CLUSTER_NAME_UI,
   NETWORK_VALIDATOR_ONDEMAND_FEATURE,
   HCP_ROSA_GETTING_STARTED_PAGE,
   HCP_AWS_BILLING_SHOW,
@@ -50,6 +51,7 @@ export const features = [
   getSimpleUnleashFeature('security-groups-feature', SECURITY_GROUPS_FEATURE), // Handles only Day2
   getSimpleUnleashFeature('enable-machine-configuration', ENABLE_MACHINE_CONFIGURATION),
   getSimpleUnleashFeature('cli-sso-authorization', CLI_SSO_AUTHORIZATION),
+  getSimpleUnleashFeature('longer-cluster-name-ui', LONGER_CLUSTER_NAME_UI),
   {
     name: ASSISTED_INSTALLER_FEATURE,
     action: () =>
