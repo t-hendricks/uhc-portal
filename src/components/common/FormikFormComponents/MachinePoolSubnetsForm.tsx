@@ -24,17 +24,21 @@ const MachinePoolSubnetsForm = ({ selectedVPC, warning }: MachinePoolSubnetsForm
     values: { [FieldId.MachinePoolsSubnets]: machinePoolsSubnets },
     getFieldProps,
     setFieldValue,
+    setFieldTouched,
     getFieldMeta,
   } = useFormState();
 
   const addMachinePool = (machinePoolSubnet: FormSubnet) =>
     setFieldValue(FieldId.MachinePoolsSubnets, [...machinePoolsSubnets, machinePoolSubnet], false);
 
-  const removeMachinePool = (machinePoolsSubnetsIndex: number) =>
+  const removeMachinePool = (machinePoolsSubnetsIndex: number) => {
     setFieldValue(
       FieldId.MachinePoolsSubnets,
       (machinePoolsSubnets as FormSubnet[]).filter((e, i) => i !== machinePoolsSubnetsIndex),
     );
+    const fieldNameSubnetId = `${FieldId.MachinePoolsSubnets}[${machinePoolsSubnetsIndex}].privateSubnetId`;
+    setFieldTouched(fieldNameSubnetId, false, false);
+  };
 
   const selectSubnet = (machinePoolIndex: number, subnetId: string) => {
     const newMachinePoolsSubnet = (machinePoolsSubnets as FormSubnet[]).map(
@@ -79,11 +83,7 @@ const MachinePoolSubnetsForm = ({ selectedVPC, warning }: MachinePoolSubnetsForm
                 component={SubnetSelectField}
                 name={fieldNameSubnetId}
                 validate={(subnetId: string) =>
-                  validateMultipleMachinePoolsSubnets(
-                    subnetId,
-                    { machinePoolsSubnets },
-                    { pristine: getFieldMeta(fieldNameSubnetId)?.touched },
-                  )
+                  validateMultipleMachinePoolsSubnets(subnetId, { machinePoolsSubnets })
                 }
                 isRequired
                 privacy="private"

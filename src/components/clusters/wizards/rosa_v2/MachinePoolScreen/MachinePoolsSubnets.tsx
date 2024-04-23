@@ -70,7 +70,7 @@ const MachinePoolsSubnets = () => {
           isRosaV1={false}
           input={{
             ...getFieldProps(FieldId.SelectedVpc),
-            onChange: (value: CloudVPC) => setFieldValue(FieldId.SelectedVpc, value, false),
+            onChange: (value: CloudVPC) => setFieldValue(FieldId.SelectedVpc, value),
           }}
           meta={getFieldMeta(FieldId.SelectedVpc)}
         />

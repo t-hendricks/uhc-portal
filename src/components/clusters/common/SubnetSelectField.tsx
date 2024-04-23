@@ -117,9 +117,8 @@ export const SubnetSelectField = ({
 
   return (
     <FormGroup
-      fieldId={name}
+      fieldId={name || input.name}
       label={label}
-      id={input.name}
       isRequired={isRequired}
       className={className}
     >
@@ -139,6 +138,7 @@ export const SubnetSelectField = ({
             inlineFilterPlaceholderText="Filter by subnet ID / name"
             validated={inputError ? 'error' : undefined}
             isPopover
+            toggleId={name || input.name}
           />
         </FlexItem>
       </Flex>
