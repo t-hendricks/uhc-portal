@@ -72,8 +72,7 @@ const CreateRosaWizardFooter = ({
 
     if (Object.keys(errors || {}).length > 0) {
       setTouched(setNestedObjectValues(errors, true));
-      scrollToFirstField(getScrollErrorIds(errors));
-
+      scrollToFirstField(getScrollErrorIds(errors, true));
       return;
     }
 
