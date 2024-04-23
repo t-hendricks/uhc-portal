@@ -61,7 +61,7 @@ const ClusterListFilter = ({ view, isDisabled }: ClusterListFilterProps) => {
       value={currentValue as any}
       placeholder="Filter by name or ID..."
       data-testid="filterInputClusterList"
-      onChange={(_event, inputVal: string) => updateCurrentValue(inputVal)}
+      onChange={(_event, inputVal: string) => updateCurrentValue(inputVal.trim())}
       isDisabled={isDisabled}
     />
   );
