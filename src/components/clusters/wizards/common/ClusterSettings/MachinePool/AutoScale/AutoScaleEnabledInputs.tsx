@@ -1,14 +1,14 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { Field } from 'formik';
 
-import { Flex, FormGroup, HelperTextItem } from '@patternfly/react-core';
+import { Flex, FormGroup } from '@patternfly/react-core';
 
 import links from '~/common/installLinks.mjs';
 import { normalizedProducts } from '~/common/subscriptionTypes';
 import { required, validateNumericInput } from '~/common/validators';
 import { getMinNodesRequired } from '~/components/clusters/ClusterDetails/components/MachinePools/machinePoolsHelper';
 import { constants } from '~/components/clusters/common/CreateOSDFormConstants';
-import { MAX_NODES } from '~/components/clusters/common/machinePools/constants';
+import { MAX_NODES, MAX_NODES_HCP } from '~/components/clusters/common/machinePools/constants';
 import getMinNodesAllowed from '~/components/clusters/common/ScaleSection/AutoScaleSection/AutoScaleHelper';
 import { useFormState } from '~/components/clusters/wizards/hooks';
 import { FieldId } from '~/components/clusters/wizards/rosa_v2/constants';
@@ -81,9 +81,8 @@ export const AutoScaleEnabledInputs = () => {
   const helperText = (
     message: React.ReactNode,
     variant: 'default' | 'indeterminate' | 'warning' | 'success' | 'error' = 'default',
-    hasIcon = false,
   ) => (
-    <FormGroupHelperText touched variant={variant} hasIcon={hasIcon}>
+    <FormGroupHelperText touched variant={variant} hasIcon={variant === 'error'}>
       {message}
     </FormGroupHelperText>
   );
@@ -97,13 +96,6 @@ export const AutoScaleEnabledInputs = () => {
     },
     [isHypershiftSelected, isMultiAz, poolsLength],
   );
-
-  const validationMessage = (validationErrorMessage: string | undefined) =>
-    validationErrorMessage ? (
-      <HelperTextItem variant="error" hasIcon>
-        {validationErrorMessage}
-      </HelperTextItem>
-    ) : null;
 
   const minNodes = useMemo(() => {
     const minNodesAllowed = getMinNodesAllowed({
@@ -121,6 +113,16 @@ export const AutoScaleEnabledInputs = () => {
     }
     return undefined;
   }, [product, isByoc, isMultiAz, defaultMinAllowed, isHypershiftSelected]);
+
+  const maxNodes = useMemo(() => {
+    if (isHypershiftSelected) {
+      return Math.floor(MAX_NODES_HCP / poolsLength);
+    }
+    if (isMultiAz) {
+      return MAX_NODES / 3;
+    }
+    return MAX_NODES;
+  }, [isMultiAz, isHypershiftSelected, poolsLength]);
 
   useEffect(() => {
     if (autoscalingEnabled && minNodes) {
@@ -152,7 +154,7 @@ export const AutoScaleEnabledInputs = () => {
       allowZero: true,
     });
     const maxNodesError = validateNumericInput(stringValue, {
-      max: isMultiAz ? MAX_NODES / 3 : MAX_NODES,
+      max: maxNodes,
       allowZero: true,
     });
     return requiredError || minNodesError || maxNodesError || undefined;
@@ -185,12 +187,12 @@ export const AutoScaleEnabledInputs = () => {
           name={FieldId.MinReplicas}
           type="text"
           ariaLabel="Minimum nodes"
-          validate={(value: number) => validationMessage(validateNodes(value))}
+          validate={(value: number) => validateNodes(value)}
           displayError={(_: string, error: string) => setMinErrorMessage(error)}
           hideError={() => setMinErrorMessage(undefined)}
           limit="min"
           min={minNodes}
-          max={isMultiAz ? MAX_NODES / 3 : MAX_NODES}
+          max={maxNodes}
           input={{
             ...getFieldProps(FieldId.MinReplicas),
             onChange: (value: number) => {
@@ -201,7 +203,7 @@ export const AutoScaleEnabledInputs = () => {
           meta={getFieldMeta(FieldId.MinReplicas)}
         />
 
-        {!minErrorMessage ? nodesHelpText(minReplicas) : helperText(minErrorMessage, 'error', true)}
+        {!minErrorMessage ? nodesHelpText(minReplicas) : helperText(minErrorMessage, 'error')}
       </FormGroup>
       <FormGroup
         label={maxNodesLabel}
@@ -232,12 +234,12 @@ export const AutoScaleEnabledInputs = () => {
           name={FieldId.MaxReplicas}
           type="text"
           ariaLabel="Maximum nodes"
-          validate={(value: number) => validationMessage(validateMaxNodes(value))}
+          validate={(value: number) => validateMaxNodes(value)}
           displayError={(_: string, error: string) => setMaxErrorMessage(error)}
           hideError={() => setMaxErrorMessage(undefined)}
           limit="max"
           min={minNodes}
-          max={isMultiAz ? MAX_NODES / 3 : MAX_NODES}
+          max={maxNodes}
           input={{
             ...getFieldProps(FieldId.MaxReplicas),
             onChange: (value: number) => {
