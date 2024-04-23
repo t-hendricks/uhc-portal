@@ -9,7 +9,7 @@ import VPCDropdown from './VPCDropdown';
 
 const defaultProps = {
   selectedVPC: { id: '', name: '' },
-  input: { value: '', onBlur: () => {}, onChange: () => {} },
+  input: { name: '', value: '', onBlur: () => {}, onChange: () => {} },
   showRefresh: true,
   meta: { error: '', touched: false },
   usePrivateLink: false,

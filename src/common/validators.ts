@@ -1450,8 +1450,8 @@ const validateUniqueNodeLabel = createUniqueFieldValidator(
 const validateRequiredPublicSubnetId = (
   publicSubnetId: string,
   allValues: unknown,
-  props: { pristine: boolean },
-) => (!props.pristine && !publicSubnetId ? 'Subnet is required' : undefined);
+  props?: { pristine: boolean },
+) => (!props?.pristine && !publicSubnetId ? 'Subnet is required' : undefined);
 
 export type FormSubnet = {
   availabilityZone: string;
@@ -1462,10 +1462,10 @@ export type FormSubnet = {
 const validateMultipleMachinePoolsSubnets = (
   subnetId: string,
   allValues: { machinePoolsSubnets: FormSubnet[] },
-  props: { pristine: boolean },
+  props?: { pristine: boolean },
 ) => {
   if (subnetId === '') {
-    return props.pristine ? undefined : 'Subnet is required';
+    return props?.pristine ? undefined : 'Subnet is required';
   }
 
   // Validating multiple MPs
