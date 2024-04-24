@@ -418,8 +418,8 @@ const k8sMinMaxParameter = (
   const baseField = baseFieldMatch ? baseFieldMatch[1] : ''; // Should always match
 
   // Check the validity of the pair of values
-  const minParamValue = get(allValues, `${baseField}.min`);
-  const maxParamValue = get(allValues, `${baseField}.max`);
+  const minParamValue = get(allValues, `${baseField}.min`, 0);
+  const maxParamValue = get(allValues, `${baseField}.max`, 0);
 
   return minParamValue <= maxParamValue
     ? undefined
@@ -1278,7 +1278,7 @@ const atLeastOneRequired =
         }
       } else {
         const content = get(field, fieldName, null);
-        if (content && content.trim() !== '') {
+        if (content && (content as string).trim() !== '') {
           nonEmptyValues += 1;
         }
       }
