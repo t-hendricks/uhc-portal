@@ -19,6 +19,7 @@ import { normalizedProducts } from '~/common/subscriptionTypes';
 import { AppDrawerContext } from '~/components/App/AppDrawer';
 import { AppPage } from '~/components/App/AppPage';
 import { useFormState } from '~/components/clusters/wizards/hooks';
+import { rosaWizardFormValidator } from '~/components/clusters/wizards/rosa_v2/formValidators';
 import config from '~/config';
 import withAnalytics from '~/hoc/withAnalytics';
 import useAnalytics from '~/hooks/useAnalytics';
@@ -487,6 +488,7 @@ const CreateROSAWizardFormik = (props) => {
     <Formik
       initialValues={initialValues}
       initialTouched={initialTouched}
+      validate={rosaWizardFormValidator}
       validateOnChange
       onSubmit={(formikValues) => {
         trackWizardNavigation(track, trackEvents.WizardSubmit);
