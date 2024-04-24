@@ -268,15 +268,7 @@ function NetworkScreen(props) {
                       label="Public subnet name"
                       className="pf-v5-u-mt-md pf-v5-u-ml-lg"
                       isRequired
-                      validate={(value) =>
-                        validateRequiredPublicSubnetId(
-                          value,
-                          {},
-                          {
-                            pristine: !getFieldMeta(FieldId.ClusterPrivacyPublicSubnetId).touched,
-                          },
-                        )
-                      }
+                      validate={(value) => validateRequiredPublicSubnetId(value, {})}
                       withAutoSelect={false}
                       selectedVPC={selectedVPC}
                       privacy="public"

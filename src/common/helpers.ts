@@ -138,13 +138,20 @@ const shouldRefetchQuota = (organization: any) => {
  * input, select, textarea
  * @return true if a field was found to scroll to, false otherwise.
  */
-const scrollToFirstField = (ids: string[], focusSelector: string = 'input,select,textarea') => {
+const scrollToFirstField = (
+  ids: string[],
+  focusSelector: string = 'input,select,textarea,button',
+) => {
   if (!ids?.length) {
     return false;
   }
 
   // Use all error selectors, where the first matching element in the document is returned.
-  const scrollElement = document.querySelector(ids.map((id) => `[id*="${id}"]`).join(','));
+  // CSS.escape since it's possible for the id to be something like 'machinePoolsSubnets[0].privateSubnetId'
+  // which needs to be escaped to use querySelector on it
+  const scrollElement = document.querySelector(
+    ids.map((id) => `[id*="${CSS.escape(id)}"]`).join(','),
+  );
 
   if (scrollElement instanceof HTMLElement) {
     let focusElement: HTMLElement | null = scrollElement;
@@ -155,7 +162,7 @@ const scrollToFirstField = (ids: string[], focusSelector: string = 'input,select
     }
 
     // Scroll and focus
-    setTimeout(() => scrollElement.scrollIntoView({ behavior: 'smooth', block: 'center' }));
+    setTimeout(() => scrollElement.scrollIntoView({ behavior: 'smooth', block: 'center' }), 500);
     focusElement?.focus({ preventScroll: true });
 
     return true;

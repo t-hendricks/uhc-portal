@@ -65,6 +65,8 @@ class ClusterDetails extends Page {
 
   clusterRegionLabelValue = () => cy.getByTestId('region').should('exist');
 
+  clusterPersistentStorageLabelValue = () => cy.getByTestId('persistent-storage').should('exist');
+
   clusterAvailabilityLabelValue = () => cy.getByTestId('availability').should('exist');
 
   clusterAutoScalingStatus = () => cy.getByTestId('clusterAutoscalingStatus').should('exist');

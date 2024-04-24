@@ -14,6 +14,7 @@ import { getAWSCloudProviderVPCs } from '~/redux/actions/ccsInquiriesActions';
 interface VCPDropdownProps {
   selectedVPC: CloudVPC;
   input: {
+    name: string;
     value: string;
     onChange: (selectedVPC: CloudVPC | SelectOptionObjectDeprecated) => void;
     onBlur: () => void;
@@ -48,6 +49,7 @@ const sortVPCOptions = (vpcA: FuzzyEntryType, vpcB: FuzzyEntryType) => {
 const VPCDropdown = ({
   selectedVPC,
   input: {
+    name,
     // Redux Form's onBlur interferes with Patternfly's Select footer onClick handlers.
     onBlur: _onBlur,
     ...inputProps
@@ -161,6 +163,7 @@ const VPCDropdown = ({
             placeholderText={selectData.placeholder}
             inlineFilterPlaceholderText="Filter by VPC ID / name"
             validated={touched && error ? 'error' : 'default'}
+            toggleId={name}
           />
         </FlexItem>
         {showRefresh && (

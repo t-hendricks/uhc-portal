@@ -34,6 +34,7 @@ import {
 
 function ClusterProxyScreen() {
   const {
+    setFieldTouched,
     setFieldValue, // Set value of form field directly
     getFieldProps, // Access: name, value, onBlur, onChange for a <Field>, useful for mapping to a field that expects the redux-form props
     getFieldMeta, // Access: error, touched for a <Field>, useful for mapping to a field that expects the redux-form props
@@ -150,7 +151,10 @@ function ClusterProxyScreen() {
             showHelpTextOnError={false}
             input={{
               ...httpProxyUrlFieldProps,
-              onChange: (_, value) => setFieldValue(FieldId.HttpProxyUrl, value),
+              onChange: (_, value) => {
+                setFieldValue(FieldId.HttpProxyUrl, value);
+                setTimeout(() => setFieldTouched(FieldId.HttpProxyUrl), 1);
+              },
               onBlur: (event) => {
                 const { onBlur } = httpProxyUrlFieldProps;
                 onTouched();
@@ -173,7 +177,10 @@ function ClusterProxyScreen() {
             showHelpTextOnError={false}
             input={{
               ...httpsProxyUrlFieldProps,
-              onChange: (_, value) => setFieldValue(FieldId.HttpsProxyUrl, value),
+              onChange: (_, value) => {
+                setFieldValue(FieldId.HttpsProxyUrl, value);
+                setTimeout(() => setFieldTouched(FieldId.HttpsProxyUrl), 1);
+              },
               onBlur: (event) => {
                 const { onBlur } = httpsProxyUrlFieldProps;
                 onTouched();
@@ -197,7 +204,10 @@ function ClusterProxyScreen() {
             isDisabled={noUrlValues}
             input={{
               ...getFieldProps(FieldId.NoProxyDomains),
-              onChange: (_, value) => setFieldValue(FieldId.NoProxyDomains, stringToArray(value)),
+              onChange: (_, value) => {
+                setFieldValue(FieldId.NoProxyDomains, stringToArray(value));
+                setTimeout(() => setFieldTouched(FieldId.NoProxyDomains), 1);
+              },
             }}
             meta={getFieldMeta(FieldId.NoProxyDomains)}
           />
@@ -220,7 +230,10 @@ function ClusterProxyScreen() {
             helpText="Upload or paste a PEM encoded X.509 certificate."
             input={{
               ...additionalTrustBundleFieldProps,
-              onChange: (value) => setFieldValue(FieldId.AdditionalTrustBundle, value),
+              onChange: (value) => {
+                setFieldValue(FieldId.AdditionalTrustBundle, value);
+                setTimeout(() => setFieldTouched(FieldId.AdditionalTrustBundle), 1);
+              },
               onBlur: (event) => {
                 const { onBlur } = additionalTrustBundleFieldProps;
                 onTouched();

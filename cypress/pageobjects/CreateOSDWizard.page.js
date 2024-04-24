@@ -88,6 +88,11 @@ class CreateOSDCluster extends Page {
 
   enableAdditionalEtcdEncryptionCheckbox = () => cy.get('input[id="etcd_encryption"]');
 
+  enableUserWorkloadMonitoringCheckbox = () =>
+    cy.get('input[id="enable_user_workload_monitoring"]');
+
+  enableAutoscalingCheckbox = () => cy.get('input[id="autoscalingEnabled"]');
+
   enableFIPSCryptographyCheckbox = () => cy.get('input[id="fips"]');
 
   computeNodeCountSelect = () => cy.get('select[name="nodes_compute"]');
@@ -101,6 +106,12 @@ class CreateOSDCluster extends Page {
 
   clusterPrivacyPrivateRadio = () =>
     cy.get('input[id="form-radiobutton-cluster_privacy-internal-field"]');
+
+  updateStrategyIndividualRadio = () =>
+    cy.get('input[id="form-radiobutton-upgrade_policy-manual-field"]');
+
+  updateStrategyRecurringRadio = () =>
+    cy.get('inputid="form-radiobutton-upgrade_policy-automatic-field"]');
 
   machineCIDRInput = () => cy.get('input[id="network_machine_cidr"]');
 
@@ -212,6 +223,14 @@ class CreateOSDCluster extends Page {
     }
   }
 
+  selectAutoScaling(autoScale) {
+    if (autoScale.toLowerCase() == 'disabled') {
+      this.enableAutoscalingCheckbox().uncheck();
+    } else {
+      this.enableAutoscalingCheckbox().check();
+    }
+  }
+
   selectSubscriptionType(subscriptionType) {
     if (subscriptionType.toLowerCase().includes('on-demand')) {
       this.subscriptionTypeOnDemandFlexibleRadio().check();
@@ -263,6 +282,14 @@ class CreateOSDCluster extends Page {
     }
   }
 
+  selectPersistentStorage(storageType) {
+    cy.get('select[aria-label="Persistent Storage"]').select(storageType);
+  }
+
+  selectLoadBalancers(loadBalancers) {
+    cy.get('select[aria-label="Load Balancers"]').select(loadBalancers);
+  }
+
   enableAdditionalEtcdEncryption(enable, fipsCryptography = false) {
     this.advancedEncryptionLink().click();
 
@@ -295,6 +322,11 @@ class CreateOSDCluster extends Page {
   addNodeLabelKeyAndValue(key, value = '', index = 0) {
     cy.get(`input[id="node_labels.${index}.key"]`).clear().type(key);
     cy.get(`input[id="node_labels.${index}.value"]`).clear().type(value);
+  }
+
+  selectNodeDraining(nodeDrain) {
+    cy.get('button[aria-label="Options menu"]').click();
+    cy.get('ul[role="listbox"]').find('button').contains(nodeDrain).click();
   }
 
   uploadGCPServiceAccountJSON(jsonContent) {
