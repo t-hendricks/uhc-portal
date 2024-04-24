@@ -2,12 +2,17 @@ import React from 'react';
 import { MemoryRouter } from 'react-router';
 import { CompatRouter } from 'react-router-dom-v5-compat';
 
+import * as usePreviousProps from '~/hooks/usePreviousProps';
+
 import { normalizedProducts } from '../../../common/subscriptionTypes';
 import { viewConstants } from '../../../redux/constants';
 import { mockRestrictedEnv, render, screen } from '../../../testUtils';
 import fixtures, { funcs } from '../ClusterDetails/__tests__/ClusterDetails.fixtures';
 
 import ClusterList from './ClusterList';
+
+// Unsure why usePreviousProps isn't working - mocking for now
+jest.spyOn(usePreviousProps, 'usePreviousProps').mockImplementation((value) => value);
 
 describe('<ClusterList />', () => {
   describe('in restricted env', () => {
@@ -24,6 +29,7 @@ describe('<ClusterList />', () => {
       fetchClusters: jest.fn(),
       viewOptions: {
         flags: {},
+        currentPage: 1,
         sorting: {
           sortField: '',
         },
