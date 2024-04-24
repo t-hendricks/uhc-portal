@@ -40,7 +40,14 @@ const hasMachinePoolsQuotaSelector = <E extends ClusterFromSubscription>(
   }
 
   const cloudProviderID = cluster?.cloud_provider?.id;
-  const billingModel = get(cluster, 'subscription.cluster_billing_model', billingModels.STANDARD);
+  const billingModel =
+    RelatedResource.billing_model[
+      get(
+        cluster,
+        'subscription.cluster_billing_model',
+        billingModels.STANDARD,
+      ) as keyof typeof RelatedResource.billing_model
+    ];
 
   if (cloudProviderID && machineTypes) {
     const types: MachineType[] = get(machineTypes, cloudProviderID, []);

@@ -47,7 +47,7 @@ const supportStatusReducer = (
         draft.pending = false;
         draft.fulfilled = true;
         draft.error = false;
-        draft.supportStatus = get(action.payload, 'data.data[0].versions', []).reduce(
+        draft.supportStatus = (get(action.payload, 'data.data[0].versions', []) as []).reduce(
           (
             result: { [id: string]: string },
             versionInfo: ProductLifeCycle['versions'][number],
