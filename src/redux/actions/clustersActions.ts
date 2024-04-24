@@ -656,7 +656,7 @@ const fetchRerunInflightChecks = async (subnetIds: string[]): Promise<any> => {
   const response = await Promise.allSettled(results);
   const items = response
     .filter((res: { status: string }) => res.status !== 'rejected')
-    .map((item: { value: any }) => item?.value?.data);
+    .map((item: any) => item?.value?.data);
   return {
     data: {
       items,
