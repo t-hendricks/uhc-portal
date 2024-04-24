@@ -103,7 +103,10 @@ function DetailsRight({
 
   return (
     <DescriptionList>
-      <DeleteProtection clusterID={cluster?.id} />
+      <DeleteProtection
+        clusterID={cluster.id}
+        protectionEnabled={cluster.delete_protection?.enabled}
+      />
       <DescriptionListGroup>
         <DescriptionListTerm>Status</DescriptionListTerm>
         <DescriptionListDescription style={cluster.state.style}>

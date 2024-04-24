@@ -12,21 +12,17 @@ const deleteProtectionConstants = {
   CLEAR_UPDATE_DELETE_PROTECTION_RESPONSE,
 };
 
-const getDeleteProtection = (clusterID: string) =>
-  action(GET_DELETE_PROTECTION, clusterService.getDeleteProtection(clusterID));
-
 const updateDeleteProtection = (clusterID: string, isProtected: boolean) =>
   action(UPDATE_DELETE_PROTECTION, clusterService.updateDeleteProtection(clusterID, isProtected));
 
 const clearUpdateDeleteProtection = () => action(CLEAR_UPDATE_DELETE_PROTECTION_RESPONSE);
 
-const deleteProtectionActions = { getDeleteProtection, updateDeleteProtection };
+const deleteProtectionActions = { updateDeleteProtection };
 
 type DeleteProtectionActions = ActionType<typeof deleteProtectionActions>;
 
 export {
   deleteProtectionActions,
-  getDeleteProtection,
   updateDeleteProtection,
   DeleteProtectionActions,
   deleteProtectionConstants,

@@ -5,23 +5,21 @@ import { Flex } from '@patternfly/react-core';
 
 import { useGlobalState } from '~/redux/hooks';
 
+import ErrorBox from '../../common/ErrorBox';
 import Modal from '../../common/Modal/Modal';
 import { closeModal } from '../../common/Modal/ModalActions';
 import modals from '../../common/Modal/modals';
 import {
   clearUpdateDeleteProtection,
-  getDeleteProtection,
   updateDeleteProtection as updateDeleteProtectionAction,
 } from '../ClusterDetails/components/Overview/DetailsRight/DeleteProtection/deleteProtectionActions';
 
-const DeleteProtectionModal = () => {
+const DeleteProtectionModal = ({ onClose }: { onClose: () => void }) => {
   const modalData = useGlobalState((state) => state.modal.data) as any;
   const dispatch = useDispatch();
-  const protectionEnabled = useGlobalState(
-    (state) => state.deleteProtection.getDeleteProtection.enabled,
-  );
-
   const { updateDeleteProtection } = useGlobalState((state) => state.deleteProtection);
+
+  const { protectionEnabled } = modalData;
 
   const handleClose = () => {
     dispatch(closeModal());
@@ -33,11 +31,11 @@ const DeleteProtectionModal = () => {
 
   useEffect(() => {
     if (updateDeleteProtection.fulfilled) {
-      dispatch(getDeleteProtection(modalData.clusterID));
+      onClose();
       dispatch(closeModal());
       dispatch(clearUpdateDeleteProtection());
     }
-  }, [updateDeleteProtection, dispatch, modalData.clusterID]);
+  }, [updateDeleteProtection, onClose, dispatch]);
 
   return (
     <Modal
@@ -52,7 +50,12 @@ const DeleteProtectionModal = () => {
       isPending={updateDeleteProtection.pending}
     >
       <Flex direction={{ default: 'column' }}>
-        {updateDeleteProtection.error && 'Error'}
+        {updateDeleteProtection.error ? (
+          <ErrorBox
+            message={`Error ${protectionEnabled ? 'disabling' : 'enabling'} Delete Protection`}
+            response={updateDeleteProtection}
+          />
+        ) : null}
         <p>
           {protectionEnabled
             ? 'Disabling the Deletion Protection will allow you to delete this cluster. Cluster deletion can result in data loss or service disruption.'

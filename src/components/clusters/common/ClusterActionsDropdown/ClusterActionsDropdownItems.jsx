@@ -57,11 +57,11 @@ function actionResolver(
   const isClusterInHibernatingProcess = isHibernating(cluster);
   const hibernatingMessage =
     isClusterInHibernatingProcess &&
-    (cluster.state === clusterStates.RESUMING
-      ? // <>This cluster is resuming; wait for it to be ready in order to perform actions</>
-        'test'
-      : // <>This cluster is hibernating; resume cluster in order to perform actions</>
-        'test2');
+    (cluster.state === clusterStates.RESUMING ? (
+      <>This cluster is resuming; wait for it to be ready in order to perform actions</>
+    ) : (
+      <>This cluster is hibernating; resume cluster in order to perform actions</>
+    ));
 
   const isClusterHibernatingOrPoweringDown =
     cluster.state === clusterStates.HIBERNATING || cluster.state === clusterStates.POWERING_DOWN;

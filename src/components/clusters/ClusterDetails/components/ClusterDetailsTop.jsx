@@ -6,7 +6,6 @@ import { Alert, Button, Flex, Split, SplitItem, Title } from '@patternfly/react-
 import { Spinner } from '@redhat-cloud-services/frontend-components/Spinner';
 
 import { PreviewLabel } from '~/components/clusters/common/PreviewLabel';
-import { useGlobalState } from '~/redux/hooks';
 
 import getClusterName from '../../../../common/getClusterName';
 import { goZeroTime2Null } from '../../../../common/helpers';
@@ -77,8 +76,6 @@ function ClusterDetailsTop(props) {
     showPreviewLabel,
     logs,
   } = props;
-
-  const { getDeleteProtection } = useGlobalState((state) => state.deleteProtection);
 
   const isProductOSDTrial =
     get(cluster, 'subscription.plan.type', '') === normalizedProducts.OSDTrial;
@@ -158,7 +155,7 @@ function ClusterDetailsTop(props) {
       toggleSubscriptionReleased={toggleSubscriptionReleased}
       canHibernateCluster={canHibernateCluster}
       refreshFunc={refreshFunc}
-      deleteProtectionEnabled={getDeleteProtection.enabled}
+      deleteProtectionEnabled={cluster.delete_protection?.enabled}
     />
   );
 
@@ -172,11 +169,7 @@ function ClusterDetailsTop(props) {
     />
   );
 
-  const isRefreshing =
-    pending ||
-    organization.pending ||
-    clusterIdentityProviders.pending ||
-    getDeleteProtection.pending;
+  const isRefreshing = pending || organization.pending || clusterIdentityProviders.pending;
 
   const trialEndDate = isProductOSDTrial && get(cluster, 'subscription.trial_end_date');
   const OSDRHMEndDate =

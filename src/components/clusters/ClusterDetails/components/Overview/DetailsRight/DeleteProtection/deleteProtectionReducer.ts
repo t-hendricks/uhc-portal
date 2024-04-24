@@ -12,15 +12,10 @@ import type { PromiseActionType, PromiseReducerState } from '~/redux/types';
 import { DeleteProtectionActions, deleteProtectionConstants } from './deleteProtectionActions';
 
 export type State = {
-  getDeleteProtection: PromiseReducerState<{ enabled: boolean | undefined }>;
   updateDeleteProtection: PromiseReducerState<{}>;
 };
 
 const initialState: State = {
-  getDeleteProtection: {
-    ...baseRequestState,
-    enabled: undefined,
-  },
   updateDeleteProtection: {
     ...baseRequestState,
   },
@@ -35,23 +30,6 @@ function deleteProtectionReducer(
   return produce(state, (draft) => {
     // eslint-disable-next-line default-case
     switch (action.type) {
-      // GET delete protection
-      case PENDING_ACTION(deleteProtectionConstants.GET_DELETE_PROTECTION):
-        draft.getDeleteProtection.pending = true;
-        break;
-
-      case FULFILLED_ACTION(deleteProtectionConstants.GET_DELETE_PROTECTION):
-        draft.getDeleteProtection.fulfilled = true;
-        draft.getDeleteProtection.pending = false;
-        draft.getDeleteProtection.error = false;
-        draft.getDeleteProtection.enabled = action.payload.data.enabled;
-
-        break;
-
-      case REJECTED_ACTION(deleteProtectionConstants.GET_DELETE_PROTECTION):
-        draft.getDeleteProtection = getErrorState(action);
-        break;
-
       // PATCH delete protection
       case PENDING_ACTION(deleteProtectionConstants.UPDATE_DELETE_PROTECTION):
         draft.updateDeleteProtection.pending = true;

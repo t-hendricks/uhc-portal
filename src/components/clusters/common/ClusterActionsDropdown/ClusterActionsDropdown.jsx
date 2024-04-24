@@ -104,7 +104,7 @@ ClusterActionsDropdown.propTypes = {
   canHibernateCluster: PropTypes.bool.isRequired,
   toggleSubscriptionReleased: PropTypes.func.isRequired,
   refreshFunc: PropTypes.func.isRequired,
-  deleteProtectionEnabled: PropTypes.func.isRequired,
+  deleteProtectionEnabled: PropTypes.bool.isRequired,
 };
 
 export default ClusterActionsDropdown;

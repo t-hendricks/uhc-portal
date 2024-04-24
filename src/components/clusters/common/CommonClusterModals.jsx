@@ -33,7 +33,7 @@ function CommonClusterModals({ onClose, onClusterDeleted, clearMachinePools }) {
       <ConnectedModal ModalComponent={UnarchiveClusterDialog} onClose={onClose} />
       <ConnectedModal ModalComponent={UpgradeTrialClusterDialog} onClose={onClose} />
       <ConnectedModal ModalComponent={UpgradeWizard} />
-      <ConnectedModal ModalComponent={DeleteProtectionModal} />
+      <ConnectedModal ModalComponent={DeleteProtectionModal} onClose={onClose} />
       <ConnectedModal
         ModalComponent={DeleteClusterDialog}
         onClose={(clusterDeleted) => {

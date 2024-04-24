@@ -46,7 +46,6 @@ import {
 import { getOnDemandMetrics } from './components/Monitoring/MonitoringActions';
 import { issuesAndWarningsSelector } from './components/Monitoring/MonitoringSelectors';
 import { getClusterRouters } from './components/Networking/NetworkingActions';
-import { getDeleteProtection } from './components/Overview/DetailsRight/DeleteProtection/deleteProtectionActions';
 import ClusterDetails from './ClusterDetails';
 
 const mapStateToProps = (state, { location }) => {
@@ -106,7 +105,6 @@ const mapDispatchToProps = (dispatch) =>
       closeModal: modalActions.closeModal,
       getClusterIdentityProviders,
       getUsers: usersActions.getUsers,
-      getDeleteProtection,
       resetIdentityProvidersState,
       resetClusterHistory: clusterLogActions.resetClusterHistory,
       clearGlobalError,

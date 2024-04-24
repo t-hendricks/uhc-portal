@@ -15,6 +15,7 @@ import type {
   Cluster,
   ClusterAutoscaler,
   ClusterStatus,
+  DeleteProtection,
   DNSDomain,
   EncryptionKey,
   Flavour,
@@ -39,7 +40,6 @@ import type {
   Version,
   VersionGate,
   VersionGateAgreement,
-  DeleteProtection,
 } from '../types/clusters_mgmt.v1';
 
 const OSDUpgradeType = 'OSD';
