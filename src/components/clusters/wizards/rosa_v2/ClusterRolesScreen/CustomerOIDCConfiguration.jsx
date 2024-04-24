@@ -54,13 +54,13 @@ function CustomerOIDCConfiguration({
   getUserOidcConfigurations,
   byoOidcConfigID,
   operatorRolesCliCommand,
-  onSelect: onParentSelect,
+  input: { onChange },
+  meta: { error, touched },
 }) {
   const { getFieldProps, getFieldMeta } = useFormState();
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [oidcConfigs, setOidcConfigs] = useState([]);
-  const { error, touched } = getFieldMeta(FieldId.ByoOidcConfigId);
 
   const refreshOidcConfigs = React.useCallback(() => {
     setIsLoading(true);
@@ -73,7 +73,7 @@ function CustomerOIDCConfiguration({
           byoOidcConfigID &&
           currentConfigs.find((config) => config.id === byoOidcConfigID) === undefined;
         if (isSelectedConfigDeleted) {
-          onParentSelect(null);
+          onChange(null);
         }
       });
     } finally {
@@ -83,20 +83,20 @@ function CustomerOIDCConfiguration({
       }, 500);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [byoOidcConfigID, onParentSelect]);
+  }, [byoOidcConfigID]);
 
   const onSelect = (_, configId) => {
     const selected = oidcConfigs.find((config) => config.id === configId);
     setIsDropdownOpen(false);
-    onParentSelect(selected);
+    onChange(selected);
   };
 
   useEffect(() => {
     const isValidSelection = oidcConfigs?.some((item) => item?.id === byoOidcConfigID);
     if (oidcConfigs?.length > 0 && byoOidcConfigID && !isValidSelection) {
-      onParentSelect(null);
+      onChange(null);
     }
-  }, [byoOidcConfigID, oidcConfigs, onParentSelect]);
+  }, [byoOidcConfigID, oidcConfigs, onChange]);
 
   useEffect(() => {
     refreshOidcConfigs();
@@ -235,7 +235,8 @@ CustomerOIDCConfiguration.propTypes = {
   getUserOidcConfigurations: PropTypes.func.isRequired,
   byoOidcConfigID: PropTypes.string,
   operatorRolesCliCommand: PropTypes.string,
-  onSelect: PropTypes.func,
+  input: PropTypes.object.isRequired,
+  meta: PropTypes.object.isRequired,
 };
 
 export default CustomerOIDCConfiguration;
