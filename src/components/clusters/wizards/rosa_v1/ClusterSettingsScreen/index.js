@@ -21,7 +21,7 @@ const mapStateToProps = (state, ownProps) => {
   const isEtcdEncryptionSelected = valueSelector(state, 'etcd_encryption');
   const isFipsCryptoSelected = valueSelector(state, 'fips');
   const machinePoolsSubnets = valueSelector(state, 'machinePoolsSubnets');
-
+  const enableExternalAuthentication = valueSelector(state, 'enable_external_authentication');
   const isHypershiftSelected = valueSelector(state, 'hypershift') === 'true';
 
   return {
@@ -35,6 +35,7 @@ const mapStateToProps = (state, ownProps) => {
     selectedRegion,
     kmsKeyArn,
     etcdKeyArn,
+    enableExternalAuthentication,
     isEtcdEncryptionSelected,
     isFipsCryptoSelected,
     isHypershiftSelected,

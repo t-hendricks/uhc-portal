@@ -5,6 +5,7 @@ import { Field } from 'redux-form';
 
 import { ExpandableSection, Form, FormGroup, Grid, GridItem, Title } from '@patternfly/react-core';
 
+import { hasExternalAuthenticationCapability } from '~/common/externalAuthHelper';
 import { normalizedProducts } from '~/common/subscriptionTypes';
 import { validateAWSKMSKeyARN } from '~/common/validators';
 import { constants } from '~/components/clusters/common/CreateOSDFormConstants';
@@ -13,6 +14,7 @@ import ReduxCheckbox from '~/components/common/ReduxFormComponents/ReduxCheckbox
 import { getMachineTypesByRegionARN } from '~/redux/actions/machineTypesActions';
 import { isRestrictedEnv } from '~/restrictedEnv';
 
+import useOrganization from '../../../../CLILoginPage/useOrganization';
 import PopoverHint from '../../../../common/PopoverHint';
 import LoadBalancersDropdown from '../../../common/LoadBalancersDropdown';
 import PersistentStorageDropdown from '../../../common/PersistentStorageDropdown';
@@ -21,6 +23,7 @@ import CustomerManagedEncryptionSection from '../../common/EncryptionSection/Cus
 import EtcdEncryptionSection from '../../common/EncryptionSection/EtcdEncryptionSection';
 
 import BasicFieldsSection from './BasicFieldsSection';
+import { EnableExternalAuthentication } from './EnableExternalAuthentication';
 
 function ClusterSettingsScreen({
   isByoc,
@@ -41,10 +44,15 @@ function ClusterSettingsScreen({
   forceTouch,
 }) {
   const [isExpanded, setIsExpanded] = useState(false);
+  const [isExternalAuthExpanded, setIsExternalAuthExpanded] = useState(false);
+  const { organization } = useOrganization();
   const machineTypesByRegion = useSelector((state) => state.machineTypesByRegion);
   const dispatch = useDispatch();
   const onToggle = () => {
     setIsExpanded(!isExpanded);
+  };
+  const onExternalAuthToggle = () => {
+    setIsExternalAuthExpanded(!isExternalAuthExpanded);
   };
 
   const isRosa = product === normalizedProducts.ROSA;
@@ -202,6 +210,15 @@ function ClusterSettingsScreen({
             </GridItem>
           )}
         </ExpandableSection>
+        {isHypershiftSelected && hasExternalAuthenticationCapability(organization?.capabilities) ? (
+          <ExpandableSection
+            toggleText="External Authentication"
+            onToggle={onExternalAuthToggle}
+            isExpanded={isExternalAuthExpanded}
+          >
+            <EnableExternalAuthentication />
+          </ExpandableSection>
+        ) : null}
         <GridItem md={6} />
       </Grid>
     </Form>
