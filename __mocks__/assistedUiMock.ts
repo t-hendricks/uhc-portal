@@ -1,4 +1,4 @@
-import { TechnologyPreview as MockTechnologyPreview, ClusterStatus as MockClusterStatus } from './assistedUiFakeComponents';
+import { ClusterStatus as MockClusterStatus } from './assistedUiFakeComponents';
 
 const plainFnMock = () => 1;
 const promiseFnMock = () => Promise.resolve();
@@ -8,8 +8,6 @@ export const PreviewBadgePosition = {
     inline: 'inline',
     inlineRight: 'inlineRight',
 }
-
-export const TechnologyPreview = MockTechnologyPreview;
 
 export const ClusterStatus = MockClusterStatus;
 
@@ -34,7 +32,6 @@ export const OCM = {
     getClustervCPUCount: plainFnMock,
     getClusterMemoryAmount: plainFnMock,
     Services,
-    TechnologyPreview,
     PreviewBadgePosition,
     ClusterStatus,
 }
