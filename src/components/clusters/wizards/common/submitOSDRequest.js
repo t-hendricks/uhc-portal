@@ -362,6 +362,12 @@ export const createClusterRequest = ({ isWizard = true, cloudProviderID, product
     clusterRequest.multi_az = true;
   }
 
+  if (formData.enable_external_authentication) {
+    clusterRequest.external_auth_config = {
+      enabled: true,
+    };
+  }
+
   return clusterRequest;
 };
 
