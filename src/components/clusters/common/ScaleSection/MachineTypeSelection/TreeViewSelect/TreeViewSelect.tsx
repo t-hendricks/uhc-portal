@@ -175,7 +175,6 @@ export function TreeViewSelect(props: TreeViewSelectProps) {
       aria-label={ariaLabel && `${ariaLabel} toggle`}
       className="tree-view-select-menu-toggle"
       onClick={(e) => {
-        setSearchString('');
         setIsOpen(!isOpen);
       }}
       isExpanded={isOpen}
@@ -212,7 +211,10 @@ export function TreeViewSelect(props: TreeViewSelectProps) {
   return (
     <MenuContainer
       isOpen={isOpen}
-      onOpenChange={(isOpen) => setIsOpen(isOpen)}
+      onOpenChange={(isOpen) => {
+        setSearchString('');
+        setIsOpen(isOpen);
+      }}
       onOpenChangeKeys={['Escape']}
       menu={menu}
       menuRef={menuRef}
