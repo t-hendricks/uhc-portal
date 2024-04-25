@@ -4,7 +4,6 @@ import { get, has } from 'lodash';
 import PropTypes from 'prop-types';
 import { Link, useLocation, useNavigate } from 'react-router-dom-v5-compat';
 
-import * as OCM from '@openshift-assisted/ui-lib/ocm';
 import {
   ExpandableSectionToggle,
   FormSelect,
@@ -21,6 +20,7 @@ import { PageHeader, PageHeaderTitle } from '@redhat-cloud-services/frontend-com
 
 import { hasRestrictTokensCapability } from '~/common/restrictTokensHelper';
 import { AppPage } from '~/components/App/AppPage';
+import TechnologyPreview from '~/components/common/TechnologyPreview';
 import { isRestrictedEnv } from '~/restrictedEnv';
 
 import links, {
@@ -48,8 +48,6 @@ import ExpandableRowPair from './ExpandableRowPair';
 import TokenRows from './TokenRows';
 
 import './DownloadsPage.scss';
-
-const { TechnologyPreview, PreviewBadgePosition } = OCM;
 
 const ColumnHeadings = () => (
   <Thead>
@@ -610,7 +608,7 @@ const installationRows = (expanded, setExpanded, selections, setSelections, tool
         name={
           <>
             OpenShift Installer with multi-architecture compute machines{' '}
-            <TechnologyPreview position={PreviewBadgePosition.inline} />
+            <TechnologyPreview className="pf-v5-u-ml-md pf-v5-u-display-inline" />
           </>
         }
         description={
