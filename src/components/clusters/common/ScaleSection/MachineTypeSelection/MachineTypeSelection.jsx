@@ -314,9 +314,19 @@ const MachineTypeSelection = ({
     return selectGroups;
   }, [filteredMachineTypes]);
 
+  const findSelectedTreeViewItem = (machineID) => {
+    let selectedTreeViewNode;
+    machineTypeMap.forEach((category) => {
+      category.children.forEach((machineType) => {
+        if (machineType.id === machineID) selectedTreeViewNode = machineType;
+      });
+    });
+    return selectedTreeViewNode;
+  };
+
   // In the dropdown we put the machine type id in separate description row,
   // but the Select toggle doesn't support that, so combine both into one label.
-  const selection = React.useMemo(
+  const selectionText = React.useMemo(
     () =>
       machineTypeFullLabel(
         filteredMachineTypes.find((machineType) => machineType.id === input.value) || null,
@@ -350,7 +360,8 @@ const MachineTypeSelection = ({
           treeViewSelectionMap={machineTypeMap}
           inModal={inModal}
           menuAppendTo={menuAppendTo}
-          selected={selection}
+          selected={findSelectedTreeViewItem(input.value)}
+          selectionPlaceholderText={selectionText}
           setSelected={(event, selection) => {
             changeHandler(event, selection.id);
           }}
