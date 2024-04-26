@@ -15,5 +15,8 @@
       "matchPackagePatterns": ["^@openshift-assisted"],
       "enabled": false
     }
+  ],
+  "ignorePaths": [
+      "babel-plugins/**"
   ]
 }
