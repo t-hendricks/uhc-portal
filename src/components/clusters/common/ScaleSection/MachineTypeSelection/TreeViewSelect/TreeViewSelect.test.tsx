@@ -1,5 +1,7 @@
 import React from 'react';
 
+import { TreeViewDataItem } from '@patternfly/react-core';
+
 import { checkAccessibility, render, screen } from '~/testUtils';
 
 import { TreeViewData, TreeViewSelect, TreeViewSelectMenuItem } from './TreeViewSelect';
@@ -64,7 +66,7 @@ const machineTypeMapFiltered: TreeViewData[] = [
 ];
 
 const TreeViewSelectTestWrapper = () => {
-  const [selected, setSelected] = React.useState('');
+  const [selected, setSelected] = React.useState<TreeViewDataItem>();
   const [filteredByRegion, setFilteredByRegion] = React.useState(true);
   const [activeMachineTypes, setActiveMachineTypes] =
     React.useState<TreeViewData[]>(machineTypeMapFiltered);
@@ -77,10 +79,13 @@ const TreeViewSelectTestWrapper = () => {
     }
   }, [filteredByRegion]);
 
+  const selectionText = selected?.id!;
+
   return (
     <TreeViewSelect
       selected={selected}
-      setSelected={(event, selection) => setSelected(selection.id || '')}
+      setSelected={(_, selection) => setSelected(selection)}
+      selectionPlaceholderText={selectionText}
       treeViewSelectionMap={activeMachineTypes}
       treeViewSwitchActive={filteredByRegion}
       setTreeViewSwitchActive={setFilteredByRegion}
