@@ -11,9 +11,9 @@ import ReduxCheckbox from '~/components/common/ReduxFormComponents/ReduxCheckbox
 export const EnableExternalAuthentication = () => (
   <GridItem md={6}>
     <FormGroup
-      fieldId="enable_external_authentication"
-      id="enable_external_authentication"
-      label="Enable external authentication"
+      fieldId="enable_external_authentication_field"
+      id="enable_external_authentication_field"
+      label="Enable external authentication!"
     >
       <Field
         component={ReduxCheckbox}
