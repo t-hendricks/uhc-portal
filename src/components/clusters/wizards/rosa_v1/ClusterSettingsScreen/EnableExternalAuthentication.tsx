@@ -17,7 +17,7 @@ export const EnableExternalAuthentication = () => (
     >
       <Field
         component={ReduxCheckbox}
-        name="enable_external_authentication_field"
+        name="enable_external_authentication"
         label="Enable external authentication"
         extendedHelpText={
           <ExternalLink href={links.UNDERSTANDING_AUTHENTICATION}>
