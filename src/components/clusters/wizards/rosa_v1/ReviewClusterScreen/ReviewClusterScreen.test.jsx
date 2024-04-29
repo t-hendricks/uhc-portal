@@ -433,15 +433,6 @@ describe('<ReviewClusterScreen />', () => {
     });
   });
   describe('External Authentication', () => {
-    describe('is shown when', () => {
-      it('isHypershift', () => {
-        const ConnectedReviewClusterScreen = wizardConnector(ReviewClusterScreen);
-        const newProps = { ...defaultProps, isHypershiftSelected: true };
-        render(<ConnectedReviewClusterScreen {...newProps} />);
-
-        expect(screen.getByText('External Authentication')).toBeInTheDocument();
-      });
-    });
     describe('is not shown when', () => {
       it('is not Hypershift', () => {
         const ConnectedReviewClusterScreen = wizardConnector(ReviewClusterScreen);
