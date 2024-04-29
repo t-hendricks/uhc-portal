@@ -7,8 +7,10 @@ import {
   getAWSCloudProviderVPCs,
 } from '~/redux/actions/ccsInquiriesActions';
 import { securityGroupsSort } from '~/redux/reducers/ccsInquiriesReducer';
-import { getAWSVPCDetails } from '~/services/clusterService';
+import clusterService from '~/services/clusterService';
 import { CloudVPC, Cluster } from '~/types/clusters_mgmt.v1';
+
+const { getAWSVPCDetails } = clusterService;
 
 /**
  * Reads the response of VPCs associated to a given subnet.

@@ -5,11 +5,10 @@ import { Alert, AlertActionLink, Spinner } from '@patternfly/react-core';
 import ArrowCircleUpIcon from '@patternfly/react-icons/dist/esm/icons/arrow-circle-up-icon';
 
 import links from '../../../../../common/installLinks.mjs';
-import {
-  patchControlPlaneUpgradeSchedule,
-  patchUpgradeSchedule,
-} from '../../../../../services/clusterService';
+import clusterService from '../../../../../services/clusterService';
 import ExternalLink from '../../../../common/ExternalLink';
+
+const { patchControlPlaneUpgradeSchedule, patchUpgradeSchedule } = clusterService;
 
 const actionLink = (onChange, isCurrentlyEnabled) => (
   <AlertActionLink onClick={() => onChange(!isCurrentlyEnabled)}>

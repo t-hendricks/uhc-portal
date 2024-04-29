@@ -53,7 +53,7 @@ if (APP_DEV_SERVER) {
 // select config according to the APP_API_ENV flag (see webpack.config.js)
 configs.default = configs[APP_API_ENV];
 
-const multiRegionConfig = {
+export const multiRegionConfig = {
   apiRegionalGatewayTemplate: 'https://api.$REGION$.openshift.com',
 };
 
