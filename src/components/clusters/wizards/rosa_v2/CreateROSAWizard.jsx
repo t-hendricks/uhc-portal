@@ -130,7 +130,7 @@ const CreateROSAWizardInternal = ({
     }
   }, [createClusterResponse, isErrorModalOpen, openModal]);
 
-  const accountAndRolesStepId = stepId.ACCOUNTS_AND_ROLES_AS_FIRST_STEP;
+  const accountAndRolesStepId = stepId.ACCOUNTS_AND_ROLES_AS_SECOND_STEP;
   const firstStepId = isHypershiftEnabled ? stepId.CONTROL_PLANE : accountAndRolesStepId;
 
   const [currentStepId, setCurrentStepId] = React.useState(firstStepId);
@@ -286,7 +286,7 @@ const CreateROSAWizardInternal = ({
                 </WizardStep>,
 
                 <WizardStep
-                  id={stepId.CLUSTER_SETTINGS__MACHINE_POO}
+                  id={stepId.CLUSTER_SETTINGS__MACHINE_POOL}
                   name={stepNameById[stepId.CLUSTER_SETTINGS__MACHINE_POOL]}
                 >
                   <ErrorBoundary>
