@@ -68,6 +68,7 @@ export const CreateOsdWizardFooter = ({
       {activeStep.id === StepId.Review ? (
         <Button
           variant="primary"
+          data-testid="wizard-create-cluster-button"
           onClick={() => {
             submitForm();
             track();
@@ -80,6 +81,7 @@ export const CreateOsdWizardFooter = ({
       ) : (
         <Button
           variant="primary"
+          data-testid="wizard-next-button"
           onClick={onValidateNext}
           isLoading={isButtonLoading}
           isDisabled={isButtonDisabled}
@@ -89,12 +91,18 @@ export const CreateOsdWizardFooter = ({
       )}
       <Button
         variant="secondary"
+        data-testid="wizard-back-button"
         onClick={goToPrevStep}
         isDisabled={isButtonDisabled || steps.indexOf(activeStep) === 0}
       >
         Back
       </Button>
-      <Button variant="link" onClick={close} isDisabled={isButtonDisabled}>
+      <Button
+        variant="link"
+        data-testid="wizard-cancel-button"
+        onClick={close}
+        isDisabled={isButtonDisabled}
+      >
         Cancel
       </Button>
     </WizardFooterWrapper>
