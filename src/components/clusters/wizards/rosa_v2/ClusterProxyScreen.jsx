@@ -1,8 +1,16 @@
 import React, { useEffect } from 'react';
 import { Field } from 'formik';
 
-import { Alert, AlertActionLink, Form, Grid, GridItem, Text, Title } from '@patternfly/react-core';
-import { WizardContext as WizardContextDeprecated } from '@patternfly/react-core/deprecated';
+import {
+  Alert,
+  AlertActionLink,
+  Form,
+  Grid,
+  GridItem,
+  Text,
+  Title,
+  useWizardContext,
+} from '@patternfly/react-core';
 
 import { stringToArray } from '~/common/helpers';
 import links from '~/common/installLinks.mjs';
@@ -47,6 +55,8 @@ function ClusterProxyScreen() {
     },
   } = useFormState();
   const [anyTouched, setAnyTouched] = React.useState(false);
+  const { goToStepByName } = useWizardContext();
+
   const configureProxyUrl =
     product === normalizedProducts.ROSA
       ? links.ROSA_CLUSTER_WIDE_PROXY
@@ -85,13 +95,9 @@ function ClusterProxyScreen() {
         </span>
       }
       actionLinks={
-        <WizardContextDeprecated.Consumer>
-          {({ goToStepByName }) => (
-            <AlertActionLink onClick={() => goToStepByName('Configuration')}>
-              Back to the networking configuration
-            </AlertActionLink>
-          )}
-        </WizardContextDeprecated.Consumer>
+        <AlertActionLink onClick={() => goToStepByName('Configuration')}>
+          Back to the networking configuration
+        </AlertActionLink>
       }
     />
   );
