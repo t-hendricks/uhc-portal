@@ -4,13 +4,12 @@ import PropTypes from 'prop-types';
 import { ModalVariant } from '@patternfly/react-core';
 
 import { getErrorState } from '../../../../../../common/errors';
-import clusterService, {
-  patchControlPlaneUpgradeSchedule,
-  patchUpgradeSchedule,
-} from '../../../../../../services/clusterService';
+import clusterService from '../../../../../../services/clusterService';
 import ErrorBox from '../../../../../common/ErrorBox';
 import Modal from '../../../../../common/Modal/Modal';
 import UpgradeAcknowledgeStep from '../UpgradeAcknowledgeStep';
+
+const { patchControlPlaneUpgradeSchedule, patchUpgradeSchedule } = clusterService;
 
 const UpgradeAcknowledgeModal = (props) => {
   const [pending, setPending] = useState(false);

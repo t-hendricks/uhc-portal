@@ -3,7 +3,7 @@ import axios, { InternalAxiosRequestConfig, RawAxiosRequestConfig } from 'axios'
 
 import { getRestrictedEnvApi, isRestrictedEnv } from '~/restrictedEnv';
 
-import config from '../config';
+import config, { multiRegionConfig } from '../config';
 
 const getBaseUrl = (baseUrl: string | undefined) => {
   if (isRestrictedEnv()) {
@@ -28,4 +28,22 @@ export const authInterceptor = (client: AxiosInstance): AxiosInstance => {
 
 const apiRequest = authInterceptor(axios.create());
 
+const apiRequestCache: { [baseURL: string]: AxiosInstance } = {};
+
+export function getAPIRequest(baseURL: string) {
+  if (!apiRequestCache[baseURL]) {
+    const apiRequest = authInterceptor(axios.create());
+    apiRequest.defaults.baseURL = baseURL;
+    apiRequestCache[baseURL] = apiRequest;
+  }
+  return apiRequestCache[baseURL];
+}
+
+export function getAPIRequestForRegion(region?: string) {
+  return region
+    ? getAPIRequest(multiRegionConfig.apiRegionalGatewayTemplate?.replace('$REGION$', region) || '')
+    : apiRequest;
+}
+
+export type APIRequest = typeof apiRequest;
 export default apiRequest;

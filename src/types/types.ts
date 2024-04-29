@@ -139,3 +139,11 @@ export type ViewFlags = undefined | null | boolean | string[] | { [key: string]:
 export type UserInfo = {
   username: string;
 };
+
+export type ListAPIParams = {
+  page: number;
+  size: number;
+  search?: string;
+  fields?: string;
+  orderBy?: string;
+};
