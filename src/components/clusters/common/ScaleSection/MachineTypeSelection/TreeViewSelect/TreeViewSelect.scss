@@ -27,3 +27,10 @@
 .pf-v5-c-toolbar.tree-view-select-toolbar .pf-v5-c-toolbar__content {
   padding: 0;
 }
+.tree-view-custom-class {
+  padding-bottom: 0;
+}
+
+.tree-view-custom-class .pf-v5-c-tree-view__node-text {
+  width: 100%;
+}
