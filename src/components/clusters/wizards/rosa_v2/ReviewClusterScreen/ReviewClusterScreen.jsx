@@ -2,7 +2,14 @@ import React, { useEffect, useState } from 'react';
 import isEmpty from 'lodash/isEmpty';
 import PropTypes from 'prop-types';
 
-import { Bullseye, Spinner, Stack, StackItem, Title } from '@patternfly/react-core';
+import {
+  Bullseye,
+  Spinner,
+  Stack,
+  StackItem,
+  Title,
+  useWizardContext,
+} from '@patternfly/react-core';
 
 import { hasSelectedSecurityGroups } from '~/common/securityGroupsHelpers';
 import { useFormState } from '~/components/clusters/wizards/hooks';
@@ -38,7 +45,6 @@ const ReviewClusterScreen = ({
   getOCMRoleResponse,
   clearGetUserRoleResponse,
   clearGetOcmRoleResponse,
-  goToStepById,
   isSubmitPending,
 }) => {
   const {
@@ -73,6 +79,7 @@ const ReviewClusterScreen = ({
     values: formValues,
     setFieldValue,
   } = useFormState();
+  const { goToStepById } = useWizardContext();
   const canAutoScale = useCanClusterAutoscale(product, billingModel);
   const autoscalingEnabled = canAutoScale && !!autoscalingEnabledValue;
   const isHypershiftSelected = hypershiftValue === 'true';
@@ -337,7 +344,6 @@ ReviewClusterScreen.propTypes = {
   getUserRoleResponse: PropTypes.object.isRequired,
   clearGetUserRoleResponse: PropTypes.func.isRequired,
   clearGetOcmRoleResponse: PropTypes.func.isRequired,
-  goToStepById: PropTypes.func.isRequired,
   isSubmitPending: PropTypes.bool,
 };
 
