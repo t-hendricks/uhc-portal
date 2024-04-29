@@ -357,7 +357,7 @@ const fetchClustersAndPermissions = async (
   if (managedSubscriptions.length > 0) {
     const clustersQuery = buildSearchQuery(managedSubscriptions, 'cluster_id');
     try {
-      await clusterService.getClusters(clustersQuery).then((response) => {
+      await clusterService.searchClusters(clustersQuery).then((response) => {
         const clusters = response?.data?.items;
         clusters?.forEach((cluster) => {
           if (cluster.id) {
