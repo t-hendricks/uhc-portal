@@ -35,7 +35,7 @@ const modDir = 'node_modules';
 const srcDir = path.resolve(__dirname, 'src');
 
 module.exports = async (_env, argv) => {
-  const outputPath = argv.outputPath;
+  const { outputPath } = argv;
   const devMode = argv.mode !== 'production';
   process.env.DEV_MODE = devMode;
   const betaMode = argv.env.beta === 'true';
@@ -300,16 +300,21 @@ module.exports = async (_env, argv) => {
             {
               context: ['/mockdata'],
               pathRewrite: { '^/mockdata': '' },
-              target: 'http://127.0.0.1:8010',             
+              target: 'http://127.0.0.1:8010',
             },
-            runAIinStandalone ? {
-              context: ['/beta/apps/assisted-installer-app/**', '/apps/assisted-installer-app/**'],
-              pathRewrite: { '^/beta/': '' },
-              target: 'http://127.0.0.1:8003',
-              logLevel: 'debug',
-              secure: false,
-              changeOrigin: true,
-            }:{},
+            runAIinStandalone
+              ? {
+                  context: [
+                    '/beta/apps/assisted-installer-app/**',
+                    '/apps/assisted-installer-app/**',
+                  ],
+                  pathRewrite: { '^/beta/': '' },
+                  target: 'http://127.0.0.1:8003',
+                  logLevel: 'debug',
+                  secure: false,
+                  changeOrigin: true,
+                }
+              : {},
             {
               // docs: https://github.com/chimurai/http-proxy-middleware#http-proxy-options
               // proxy everything except our own app, mimicking insights-proxy behaviour
@@ -332,12 +337,12 @@ module.exports = async (_env, argv) => {
                   console.log('  proxying console.redhat.com:', request.path);
                 }
               },
-            },            
+            },
           ]
         : undefined,
       hot: false,
       port: noInsightsProxy ? 1337 : 8001,
-      https: !!noInsightsProxy,
+      server: noInsightsProxy ? 'https' : 'http',
       host: '0.0.0.0',
       allowedHosts: 'all',
       client: {
