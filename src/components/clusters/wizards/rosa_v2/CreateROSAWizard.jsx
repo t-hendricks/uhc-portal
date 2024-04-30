@@ -293,7 +293,7 @@ const CreateROSAWizardInternal = ({
                     <MachinePoolScreen />
                   </ErrorBoundary>
                 </WizardStep>,
-              ].filter(Boolean)}
+              ]}
             />
 
             <WizardStep
@@ -316,27 +316,25 @@ const CreateROSAWizardInternal = ({
                   </ErrorBoundary>
                 </WizardStep>,
 
-                installToVPCSelected && !isHypershiftSelected ? (
-                  <WizardStep
-                    id={stepId.NETWORKING__VPC_SETTINGS}
-                    name={stepNameById[stepId.NETWORKING__VPC_SETTINGS]}
-                  >
-                    <ErrorBoundary>
-                      <VPCScreen privateLinkSelected={privateLinkSelected} />
-                    </ErrorBoundary>
-                  </WizardStep>
-                ) : null,
+                <WizardStep
+                  id={stepId.NETWORKING__VPC_SETTINGS}
+                  name={stepNameById[stepId.NETWORKING__VPC_SETTINGS]}
+                  isHidden={!installToVPCSelected || isHypershiftSelected}
+                >
+                  <ErrorBoundary>
+                    <VPCScreen privateLinkSelected={privateLinkSelected} />
+                  </ErrorBoundary>
+                </WizardStep>,
 
-                configureProxySelected ? (
-                  <WizardStep
-                    id={stepId.NETWORKING__CLUSTER_WIDE_PROXY}
-                    name={stepNameById[stepId.NETWORKING__CLUSTER_WIDE_PROXY]}
-                  >
-                    <ErrorBoundary>
-                      <ClusterProxyScreen />
-                    </ErrorBoundary>
-                  </WizardStep>
-                ) : null,
+                <WizardStep
+                  id={stepId.NETWORKING__CLUSTER_WIDE_PROXY}
+                  name={stepNameById[stepId.NETWORKING__CLUSTER_WIDE_PROXY]}
+                  isHidden={!configureProxySelected}
+                >
+                  <ErrorBoundary>
+                    <ClusterProxyScreen />
+                  </ErrorBoundary>
+                </WizardStep>,
 
                 <WizardStep
                   id={stepId.NETWORKING__CIDR_RANGES}
@@ -346,7 +344,7 @@ const CreateROSAWizardInternal = ({
                     <CIDRScreen isROSA />
                   </ErrorBoundary>
                 </WizardStep>,
-              ].filter(Boolean)}
+              ]}
             />
 
             <WizardStep
