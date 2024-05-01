@@ -5,14 +5,14 @@ import { Flex } from '@patternfly/react-core';
 
 import { useGlobalState } from '~/redux/hooks';
 
-import ErrorBox from '../../common/ErrorBox';
-import Modal from '../../common/Modal/Modal';
-import { closeModal } from '../../common/Modal/ModalActions';
-import modals from '../../common/Modal/modals';
+import ErrorBox from '../../../common/ErrorBox';
+import Modal from '../../../common/Modal/Modal';
+import { closeModal } from '../../../common/Modal/ModalActions';
+import modals from '../../../common/Modal/modals';
 import {
   clearUpdateDeleteProtection,
   updateDeleteProtection as updateDeleteProtectionAction,
-} from '../ClusterDetails/components/Overview/DetailsRight/DeleteProtection/deleteProtectionActions';
+} from '../../ClusterDetails/components/Overview/DetailsRight/DeleteProtection/deleteProtectionActions';
 
 const DeleteProtectionModal = ({ onClose }: { onClose: () => void }) => {
   const modalData = useGlobalState((state) => state.modal.data) as any;
