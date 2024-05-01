@@ -28,9 +28,7 @@ console.error = (msg, ...args) => {
     !text.includes('React does not recognize the `sendRef` prop on a DOM element') &&
     !text.includes('React does not recognize the `isSelected` prop on a DOM element') &&
     // The following are due to PF Tab element
-    !text.includes('React does not recognize the `isHidden` prop on a DOM element') &&
-    // The following is due to PF Th element
-    !text.includes('React does not recognize the `screenReaderText` prop on a DOM element')
+    !text.includes('React does not recognize the `isHidden` prop on a DOM element')
   ) {
     console.log('Following error in test: ', expect.getState().currentTestName);
     error(msg, ...args); // Even if we going to throw below, it's useful to log *full* args.
