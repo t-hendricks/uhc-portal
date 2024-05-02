@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 
 import { Title } from '@patternfly/react-core';
 
+import { hasExternalAuthenticationCapability } from '~/common/externalAuthHelper';
 import { hasSelectedSecurityGroups } from '~/common/securityGroupsHelpers';
 import { normalizedProducts } from '~/common/subscriptionTypes';
 import { stepId, stepNameById } from '~/components/clusters/wizards/common/osdWizardConstants';
@@ -22,6 +23,7 @@ import {
   HYPERSHIFT_WIZARD_FEATURE,
 } from '~/redux/constants/featureConstants';
 
+import useOrganization from '../../../../CLILoginPage/useOrganization';
 import ReviewSection, { ReviewItem } from '../../common/ReviewCluster/ReviewSection';
 import DebugClusterRequest from '../DebugClusterRequest';
 
@@ -58,6 +60,8 @@ const ReviewClusterScreen = ({
 
   const hasSecurityGroups = isByoc && hasSelectedSecurityGroups(formValues.securityGroups);
   const canAutoScale = useCanClusterAutoscale(formValues.product, formValues.billing_model);
+  const { organization } = useOrganization();
+  const hasExternalAuth = hasExternalAuthenticationCapability(organization?.capabilities);
 
   const clusterSettingsFields = [
     ...(!isROSA ? ['cloud_provider'] : []),
@@ -75,7 +79,7 @@ const ReviewClusterScreen = ({
     'etcd_encryption',
     ...(!isHypershiftSelected ? ['fips'] : []),
     ...(hasEtcdEncryption ? ['etcd_key_arn'] : []),
-    ...(isHypershiftSelected ? ['enable_external_authentication'] : []),
+    ...(isHypershiftSelected && hasExternalAuth ? ['enable_external_authentication'] : []),
   ];
 
   const [userRole, setUserRole] = useState('');
