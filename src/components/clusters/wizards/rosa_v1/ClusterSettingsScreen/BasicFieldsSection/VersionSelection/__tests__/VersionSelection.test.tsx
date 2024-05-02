@@ -12,9 +12,7 @@ import { mockOCPLifeCycleStatusData } from './VersionSelection.fixtures';
 const useOCPLifeCycleStatusDataSpy = jest.spyOn(ReleaseHooks, 'useOCPLifeCycleStatusData');
 
 const componentText = {
-  // There is a PatternFly major bug that doesn't allow for the aria-label to be changed
-  // ALL select drop downs will have an accessible label of "Options menu"
-  BUTTON: { label: 'Options menu' },
+  SELECT_TOGGLE: { label: 'Options menu' }, // PF Select's default toggleAriaLabel.
 };
 
 const versions = [
@@ -202,7 +200,7 @@ describe('<VersionSelection />', () => {
       expect(mockGetInstallableVersions.mock.calls).toHaveLength(1);
     });
 
-    it('on mount if control plane switched from classic to HCP', () => {
+    it('on mount if control plane switched from HCP to Classic', () => {
       expect(mockGetInstallableVersions.mock.calls).toHaveLength(0);
       const newProps = {
         ...defaultProps,
@@ -220,7 +218,7 @@ describe('<VersionSelection />', () => {
       expect(mockGetInstallableVersions.mock.calls).toHaveLength(1);
     });
 
-    it('on mount if control plane switched from HCP to classic', () => {
+    it('on mount if control plane switched from Classic to HCP', () => {
       expect(mockGetInstallableVersions.mock.calls).toHaveLength(0);
       const newProps = {
         ...defaultProps,
@@ -258,7 +256,7 @@ describe('<VersionSelection />', () => {
       expect(mockGetInstallableVersions.mock.calls).toHaveLength(1);
 
       // Act
-      await user.click(screen.getByLabelText(componentText.BUTTON.label));
+      await user.click(screen.getByLabelText(componentText.SELECT_TOGGLE.label));
 
       // Assert
       expect(mockGetInstallableVersions.mock.calls).toHaveLength(2);
@@ -431,7 +429,7 @@ describe('<VersionSelection />', () => {
         within(screen.getByTestId('alert-error')).getByText(/Error getting cluster versions/),
       ).toBeInTheDocument();
       expect(screen.getByText('This is a custom error message')).toBeInTheDocument();
-      expect(screen.queryByLabelText(componentText.BUTTON.label)).not.toBeInTheDocument();
+      expect(screen.queryByLabelText(componentText.SELECT_TOGGLE.label)).not.toBeInTheDocument();
       expect(screen.queryByText(/Loading/)).not.toBeInTheDocument();
     });
 
@@ -455,7 +453,7 @@ describe('<VersionSelection />', () => {
       expect(
         screen.getByText('There is no version compatible with the selected ARNs in previous step'),
       ).toBeInTheDocument();
-      expect(screen.queryByLabelText(componentText.BUTTON.label)).not.toBeInTheDocument();
+      expect(screen.queryByLabelText(componentText.SELECT_TOGGLE.label)).not.toBeInTheDocument();
     });
 
     it('displays only spinner while retrieving versions', () => {
@@ -473,7 +471,7 @@ describe('<VersionSelection />', () => {
       // Assert
       // There is no role associated with the loading icon
       expect(screen.getByText(/Loading/)).toBeInTheDocument();
-      expect(screen.queryByLabelText(componentText.BUTTON.label)).not.toBeInTheDocument();
+      expect(screen.queryByLabelText(componentText.SELECT_TOGGLE.label)).not.toBeInTheDocument();
     });
 
     it('displays view compatible version switch if is ROSA and there are incompatible versions', () => {
@@ -690,14 +688,14 @@ describe('<VersionSelection />', () => {
       expect(screen.queryByRole('listbox')).not.toBeInTheDocument();
 
       // Act
-      await user.click(screen.getByLabelText(componentText.BUTTON.label));
+      await user.click(screen.getByLabelText(componentText.SELECT_TOGGLE.label));
 
       // Assert
       expect(screen.getAllByRole('listbox').length).toBeGreaterThan(0);
       expect(screen.getByLabelText('Version select label')).toBeInTheDocument();
 
       // Act
-      await user.click(screen.getByLabelText(componentText.BUTTON.label));
+      await user.click(screen.getByLabelText(componentText.SELECT_TOGGLE.label));
 
       // Assert
       expect(screen.queryByRole('listbox')).not.toBeInTheDocument();
@@ -739,7 +737,7 @@ describe('<VersionSelection />', () => {
       render(<VersionSelection {...newProps} />);
 
       // Assert
-      expect(screen.getByLabelText(componentText.BUTTON.label)).toBeDisabled();
+      expect(screen.getByLabelText(componentText.SELECT_TOGGLE.label)).toBeDisabled();
     });
 
     it('calls input.onChange to set the selected version to "undefined" when selected version is not valid', () => {
