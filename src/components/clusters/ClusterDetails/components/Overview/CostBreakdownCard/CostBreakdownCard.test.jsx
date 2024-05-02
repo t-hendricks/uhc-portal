@@ -1,5 +1,7 @@
 import React from 'react';
-import { render, checkAccessibility } from '~/testUtils';
+
+import { checkAccessibility, render } from '~/testUtils';
+
 import CostBreakdownCard from './CostBreakdownCard';
 
 const initialState = {

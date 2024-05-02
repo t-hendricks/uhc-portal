@@ -1,21 +1,22 @@
+import { isClusterUpgrading } from '../../../../common/clusterStates';
+import { monitoringStatuses } from '../monitoringHelper';
 import {
   clusterHealthSelector,
-  lastCheckInSelector,
   issuesAndWarningsSelector,
+  lastCheckInSelector,
 } from '../MonitoringSelectors';
+
 import {
+  makeFreshCheckIn,
+  makeFutureDate,
+  makeStaleCheckIn,
   mockAlerts,
   mockNodes,
-  mockOperators,
-  resourceUsageWithIssues,
   mockOCPActiveClusterDetails,
   mockOCPDisconnectedClusterDetails,
-  makeFutureDate,
-  makeFreshCheckIn,
-  makeStaleCheckIn,
+  mockOperators,
+  resourceUsageWithIssues,
 } from './Monitoring.fixtures';
-import { monitoringStatuses } from '../monitoringHelper';
-import { isClusterUpgrading } from '../../../../common/clusterStates';
 
 jest.mock('../../../../common/clusterStates');
 

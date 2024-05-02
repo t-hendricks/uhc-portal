@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+
 import { Grid, GridItem, Text, Title } from '@patternfly/react-core';
 
 function HypershiftMachinePoolHeader() {

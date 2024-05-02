@@ -1,22 +1,33 @@
 import React from 'react';
+import { useDispatch } from 'react-redux';
 
-import { Grid, GridItem, Alert, Title, Flex } from '@patternfly/react-core';
+import { Alert, Flex, Grid, GridItem, Title } from '@patternfly/react-core';
 
-import { useGlobalState } from '~/redux/hooks/useGlobalState';
-import { awsNumericAccountID, required } from '~/common/validators';
 import links from '~/common/installLinks.mjs';
+import { awsNumericAccountID, required } from '~/common/validators';
 import {
   billingModelConstants,
   constants,
 } from '~/components/clusters/common/CreateOSDFormConstants';
-import InstructionCommand from '~/components/common/InstructionCommand';
-import ExternalLink from '~/components/common/ExternalLink';
-import { TextInputField, CheckboxField } from '~/components/clusters/wizards/form';
+import { CheckboxField, TextInputField } from '~/components/clusters/wizards/form';
 import { FieldId } from '~/components/clusters/wizards/osd/constants';
+import ExternalLink from '~/components/common/ExternalLink';
+import InstructionCommand from '~/components/common/InstructionCommand';
+import { clearMachineTypesByRegion } from '~/redux/actions/machineTypesActions';
+import { useGlobalState } from '~/redux/hooks/useGlobalState';
 
 export const AwsAccountDetails = () => {
   const { ccsCredentialsValidity } = useGlobalState((state) => state.ccsInquiries);
+  const machineTypesByRegion = useGlobalState((state) => state.machineTypesByRegion);
   const { pending: isValidating } = ccsCredentialsValidity;
+  const dispatch = useDispatch();
+
+  // clear machineTypeByRegion cache when credentials change
+  const clearMachineTypes = React.useCallback(() => {
+    if (machineTypesByRegion.region) {
+      dispatch(clearMachineTypesByRegion());
+    }
+  }, [dispatch, machineTypesByRegion.region]);
 
   return (
     <Grid hasGutter md={6}>
@@ -27,6 +38,7 @@ export const AwsAccountDetails = () => {
             label="AWS account ID"
             validate={awsNumericAccountID}
             isDisabled={isValidating}
+            onChange={clearMachineTypes}
             tooltip={
               <>
                 <p>
@@ -66,6 +78,7 @@ export const AwsAccountDetails = () => {
             validate={required}
             isDisabled={isValidating}
             helperText={isValidating ? 'Validating...' : ''}
+            onChange={clearMachineTypes}
           />
         </GridItem>
 
@@ -77,6 +90,7 @@ export const AwsAccountDetails = () => {
             isDisabled={isValidating}
             helperText={isValidating ? 'Validating...' : ''}
             type="password"
+            onChange={clearMachineTypes}
           />
         </GridItem>
 

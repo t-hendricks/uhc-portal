@@ -1,9 +1,9 @@
-import { TollboothAction, ACTION_TYPE } from '../actions/tollbooth';
 import { getErrorState } from '../../common/errors';
 import type { AccessTokenCfg } from '../../types/accounts_mgmt.v1';
-import { PromiseActionType } from '../types';
-import { FULFILLED_ACTION, REJECTED_ACTION } from '../reduxHelpers';
 import { ErrorState } from '../../types/types';
+import { ACTION_TYPE, TollboothAction } from '../actions/tollbooth';
+import { FULFILLED_ACTION, REJECTED_ACTION } from '../reduxHelpers';
+import { PromiseActionType } from '../types';
 
 // TODO should follow the same pattern as other promise based reducers
 // see https://issues.redhat.com/browse/HAC-485

@@ -1,5 +1,7 @@
 import React from 'react';
+
 import links, { channels, tools } from '../../../../common/installLinks.mjs';
+
 import AdditionalInstructionsS390x from './AdditionalInstructionsS390x';
 
 /**

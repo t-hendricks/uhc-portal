@@ -10,19 +10,20 @@ import {
   useWizardContext,
 } from '@patternfly/react-core';
 
-import config from '~/config';
-import ReviewSection, {
-  ReviewItem,
-} from '~/components/clusters/wizards/common/ReviewCluster/ReviewSection';
-import { useFormState } from '~/components/clusters/wizards/hooks';
 import { hasSelectedSecurityGroups } from '~/common/securityGroupsHelpers';
+import useCanClusterAutoscale from '~/components/clusters/ClusterDetails/components/MachinePools/components/EditMachinePoolModal/hooks/useCanClusterAutoscale';
 import {
   CloudProviderType,
   UpgradePolicyType,
 } from '~/components/clusters/wizards/common/constants';
-import { FieldId, StepId } from '~/components/clusters/wizards/osd/constants';
-import useCanClusterAutoscale from '~/components/clusters/ClusterDetails/components/MachinePools/components/EditMachinePoolModal/hooks/useCanClusterAutoscale';
 import { DebugClusterRequest } from '~/components/clusters/wizards/common/DebugClusterRequest';
+import ReviewSection, {
+  ReviewItem,
+} from '~/components/clusters/wizards/common/ReviewCluster/ReviewSection';
+import { useFormState } from '~/components/clusters/wizards/hooks';
+import { FieldId, StepId } from '~/components/clusters/wizards/osd/constants';
+import config from '~/config';
+
 import { canSelectImds } from '../../rosa/constants';
 
 interface ReviewAndCreateContentProps {

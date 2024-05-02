@@ -1,10 +1,12 @@
 import React from 'react';
 
-import { render, screen, within, checkAccessibility } from '~/testUtils';
-import * as ReleaseHooks from '~/components/releases/hooks';
 import * as helpers from '~/common/helpers';
+import * as ReleaseHooks from '~/components/releases/hooks';
+import { checkAccessibility, render, screen, within } from '~/testUtils';
 import { ProductLifeCycle } from '~/types/product-life-cycles';
+
 import VersionSelection from '../VersionSelection';
+
 import { mockOCPLifeCycleStatusData } from './VersionSelection.fixtures';
 
 const useOCPLifeCycleStatusDataSpy = jest.spyOn(ReleaseHooks, 'useOCPLifeCycleStatusData');

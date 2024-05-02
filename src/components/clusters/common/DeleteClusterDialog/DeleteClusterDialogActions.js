@@ -1,5 +1,6 @@
-import { deleteClusterDialogConstants } from './DeleteClusterDialogConstants';
 import { clusterService } from '../../../../services';
+
+import { deleteClusterDialogConstants } from './DeleteClusterDialogConstants';
 
 const deleteCluster = (clusterID) => ({
   type: deleteClusterDialogConstants.DELETE_CLUSTER,

@@ -1,24 +1,24 @@
 import { produce } from 'immer';
 
-import {
-  REJECTED_ACTION,
-  PENDING_ACTION,
-  FULFILLED_ACTION,
-  baseRequestState,
-} from '../reduxHelpers';
 import { getErrorState } from '../../common/errors';
 import {
-  LIST_ASSOCIATED_AWS_IDS,
-  GET_AWS_ACCOUNT_ROLES_ARNS,
-  GET_OCM_ROLE,
-  GET_USER_ROLE,
   CLEAR_GET_AWS_ACCOUNT_IDS_RESPONSE,
   CLEAR_GET_AWS_ACCOUNT_ROLES_ARNS_RESPONSE,
   CLEAR_GET_OCM_ROLE_RESPONSE,
   CLEAR_GET_USER_ROLE_RESPONSE,
-  SET_OFFLINE_TOKEN,
+  GET_AWS_ACCOUNT_ROLES_ARNS,
   GET_AWS_BILLING_ACCOUNTS,
+  GET_OCM_ROLE,
+  GET_USER_ROLE,
+  LIST_ASSOCIATED_AWS_IDS,
+  SET_OFFLINE_TOKEN,
 } from '../../components/clusters/wizards/rosa_v1/rosaConstants';
+import {
+  baseRequestState,
+  FULFILLED_ACTION,
+  PENDING_ACTION,
+  REJECTED_ACTION,
+} from '../reduxHelpers';
 
 const initialState = {
   getAWSAccountIDsResponse: {

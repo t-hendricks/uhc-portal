@@ -1,13 +1,14 @@
 import React from 'react';
 
-import { render, screen, checkAccessibility } from '~/testUtils';
+import { checkAccessibility, render, screen } from '~/testUtils';
 
-import SubscriptionCompliancy from '../components/SubscriptionCompliancy';
-import fixtures from './ClusterDetails.fixtures';
 import {
   subscriptionSettings,
   subscriptionSupportLevels,
 } from '../../../../common/subscriptionTypes';
+import SubscriptionCompliancy from '../components/SubscriptionCompliancy';
+
+import fixtures from './ClusterDetails.fixtures';
 
 const { SUPPORT_LEVEL } = subscriptionSettings;
 const { EVAL, STANDARD, NONE } = subscriptionSupportLevels;

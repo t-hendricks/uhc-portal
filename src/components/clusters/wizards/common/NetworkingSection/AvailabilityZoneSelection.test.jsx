@@ -1,6 +1,7 @@
 import React from 'react';
 
-import { screen, render, checkAccessibility } from '~/testUtils';
+import { checkAccessibility, render, screen } from '~/testUtils';
+
 import AvailabilityZoneSelection from './AvailabilityZoneSelection';
 
 describe('<AvailabilityZoneSelection />', () => {

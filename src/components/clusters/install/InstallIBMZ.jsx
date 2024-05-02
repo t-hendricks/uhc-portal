@@ -1,9 +1,12 @@
 import React from 'react';
+
 import { PageSection } from '@patternfly/react-core';
 
 import { AppPage } from '~/components/App/AppPage';
-import Breadcrumbs from '../../common/Breadcrumbs';
+
 import links from '../../../common/installLinks.mjs';
+import Breadcrumbs from '../../common/Breadcrumbs';
+
 import { InstructionsChooser } from './instructions/InstructionsChooser';
 import { InstructionsChooserPageTitle } from './instructions/InstructionsChooserPageTitle';
 

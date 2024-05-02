@@ -1,5 +1,7 @@
-import { ActionType, action } from 'typesafe-actions';
+import { action, ActionType } from 'typesafe-actions';
+
 import { ViewOptions } from '~/types/types';
+
 import { createServiceLogQueryObject } from '../../../../../common/queryHelpers';
 import { clusterLogConstants } from '../../../../../redux/constants';
 import serviceLogService from '../../../../../services/serviceLogService';

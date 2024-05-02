@@ -1,4 +1,5 @@
 import { ClusterFromSubscription } from '~/types/types';
+
 import { defaultClusterFromSubscription } from './__tests__/defaultClusterFromSubscription.fixtures';
 import { isClusterUpgrading } from './clusterStates';
 import getClusterVersion from './getClusterVersion';

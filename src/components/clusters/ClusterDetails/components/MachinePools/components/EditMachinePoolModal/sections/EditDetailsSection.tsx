@@ -1,13 +1,15 @@
 import * as React from 'react';
+
 import { FormGroup } from '@patternfly/react-core';
 import { SelectOption as SelectOptionDeprecated } from '@patternfly/react-core/deprecated';
 
-import { Cluster, MachinePool } from '~/types/clusters_mgmt.v1';
-import TextField from '~/components/common/formik/TextField';
 import { isHypershiftCluster } from '~/components/clusters/common/clusterStates';
-import SubnetField from '../fields/SubnetField';
+import TextField from '~/components/common/formik/TextField';
+import { Cluster, MachinePool } from '~/types/clusters_mgmt.v1';
+
 import InstanceTypeField from '../fields/InstanceTypeField';
 import SelectField from '../fields/SelectField';
+import SubnetField from '../fields/SubnetField';
 
 type EditDetailsSectionProps = {
   cluster: Cluster;

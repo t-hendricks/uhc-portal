@@ -1,7 +1,7 @@
 import {
-  getToVersionFromState,
-  getClusterAcks,
   getAutomaticUpgradePolicyId,
+  getClusterAcks,
+  getToVersionFromState,
 } from '../UpgradeAcknowledgeSelectors';
 
 describe('Upgrade Acknowledge Selectors', () => {

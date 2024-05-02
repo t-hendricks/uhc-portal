@@ -1,6 +1,7 @@
 import React from 'react';
-import { render, screen, mockUseFeatureGate } from '~/testUtils';
+
 import { SECURITY_GROUPS_FEATURE_DAY1 } from '~/redux/constants/featureConstants';
+import { mockUseFeatureGate, render, screen } from '~/testUtils';
 
 import SecurityGroupsSection from './SecurityGroupsSection';
 

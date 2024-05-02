@@ -1,13 +1,17 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { GridItem, Title } from '@patternfly/react-core';
 import { Field } from 'redux-form';
-import { normalizedProducts } from '~/common/subscriptionTypes';
+
+import { GridItem, Title } from '@patternfly/react-core';
+
 import links from '~/common/installLinks.mjs';
-import ReduxCheckbox from '~/components/common/ReduxFormComponents/ReduxCheckbox';
+import { normalizedProducts } from '~/common/subscriptionTypes';
 import { CheckboxDescription } from '~/components/common/CheckboxDescription';
-import { constants } from './CreateOSDFormConstants';
+import ReduxCheckbox from '~/components/common/ReduxFormComponents/ReduxCheckbox';
+
 import ExternalLink from '../../common/ExternalLink';
+
+import { constants } from './CreateOSDFormConstants';
 
 function UserWorkloadMonitoringSection({ parent, disableUVM, planType }) {
   const title = <Title headingLevel="h4"> Monitoring </Title>;

@@ -1,9 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Title, Flex, FlexItem } from '@patternfly/react-core';
-import { ChartPie, ChartLegend } from '@patternfly/react-charts';
+
+import { ChartLegend, ChartPie } from '@patternfly/react-charts';
+import { Flex, FlexItem, Title } from '@patternfly/react-core';
 
 import { advisorBaseName } from '~/common/getBaseName';
+
 import { groupTagHitsByGroups } from '../overviewHelpers';
 
 export const categoryMapping = {
@@ -35,12 +37,13 @@ const TitleComponent = ({ data, index, x, y, style }) => {
   );
 };
 
+// NOTE this data is automatically passed in by the PF labelComponent prop
 TitleComponent.propTypes = {
-  data: PropTypes.array.isRequired,
-  index: PropTypes.number.isRequired,
-  x: PropTypes.number.isRequired,
-  y: PropTypes.number.isRequired,
-  style: PropTypes.object.isRequired,
+  data: PropTypes.array,
+  index: PropTypes.number,
+  x: PropTypes.number,
+  y: PropTypes.number,
+  style: PropTypes.object,
 };
 
 const ChartByGroups = ({ tagHits, groups }) => {

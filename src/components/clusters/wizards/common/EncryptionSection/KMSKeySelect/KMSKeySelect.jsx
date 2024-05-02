@@ -3,8 +3,8 @@ import PropTypes from 'prop-types';
 
 import { FormGroup, FormSelect, FormSelectOption } from '@patternfly/react-core';
 
-import { FormGroupHelperText } from '~/components/common/FormGroupHelperText';
 import ErrorBox from '~/components/common/ErrorBox';
+import { FormGroupHelperText } from '~/components/common/FormGroupHelperText';
 
 class KMSKeySelect extends React.Component {
   componentDidMount() {

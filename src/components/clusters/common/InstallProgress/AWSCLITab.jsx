@@ -1,7 +1,8 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import FileSaver from 'file-saver';
 import JSZip from 'jszip';
+import PropTypes from 'prop-types';
+
 import {
   Alert,
   Button,
@@ -14,6 +15,7 @@ import {
 } from '@patternfly/react-core';
 
 import { accountsService, clusterService } from '../../../../services';
+
 import { getAWSAccountID, getOIDCEndpointNoScheme, getOIDCProviderARN } from './rosaUtils';
 
 function AWSCLITab({ cluster }) {

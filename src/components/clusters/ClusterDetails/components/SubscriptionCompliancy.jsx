@@ -1,16 +1,18 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import get from 'lodash/get';
+import PropTypes from 'prop-types';
+
 import { Alert, Button } from '@patternfly/react-core';
 import { DateFormat } from '@redhat-cloud-services/frontend-components/DateFormat';
+
+import getClusterName from '../../../../common/getClusterName';
 import {
   normalizedProducts,
-  subscriptionSupportLevels,
   subscriptionStatuses,
+  subscriptionSupportLevels,
 } from '../../../../common/subscriptionTypes';
-import getClusterName from '../../../../common/getClusterName';
-import { getSubscriptionLastReconciledDate } from '../clusterDetailsHelper';
 import modals from '../../../common/Modal/modals';
+import { getSubscriptionLastReconciledDate } from '../clusterDetailsHelper';
 
 function SubscriptionCompliancy({ cluster, openModal, canSubscribeOCP = false }) {
   const subscription = get(cluster, 'subscription');

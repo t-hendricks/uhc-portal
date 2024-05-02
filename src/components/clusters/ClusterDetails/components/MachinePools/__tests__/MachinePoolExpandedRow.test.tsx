@@ -1,6 +1,6 @@
 import React from 'react';
-import { screen, render } from '~/testUtils';
 
+import { render, screen } from '~/testUtils';
 import { Cluster, MachinePool } from '~/types/clusters_mgmt.v1';
 
 import MachinePoolExpandedRow from '../components/MachinePoolExpandedRow';

@@ -4,9 +4,11 @@ import { ANY, match, matchCaseInsensitively } from '~/common/matchUtils';
 import { ConsumedQuota, QuotaCost, QuotaCostList, RelatedResource } from '~/types/accounts_mgmt.v1';
 import { BillingModel } from '~/types/clusters_mgmt.v1';
 import { ClusterFromSubscription } from '~/types/types';
+
 import { billingModels, normalizedProducts } from '../../../common/subscriptionTypes';
-import { BillingQuota, QuotaParams, QuotaQuery, QuotaTypes, defaultQuotaQuery } from './quotaModel';
+
 import { clusterBillingModelToRelatedResource } from './billingModelMapper';
+import { BillingQuota, defaultQuotaQuery, QuotaParams, QuotaQuery, QuotaTypes } from './quotaModel';
 
 /**
  * Performs an explicit mapping from a given billingModel to the billingModel which should be used to check quotas for

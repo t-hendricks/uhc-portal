@@ -3,8 +3,9 @@
  * Adjusted ability to target a radio button
  */
 import React from 'react';
-import { Radio, FormGroupProps } from '@patternfly/react-core';
-import { useField, useFormikContext, FormikValues } from 'formik';
+import { FormikValues, useField, useFormikContext } from 'formik';
+
+import { FormGroupProps, Radio } from '@patternfly/react-core';
 
 type FieldProps = {
   name: string;

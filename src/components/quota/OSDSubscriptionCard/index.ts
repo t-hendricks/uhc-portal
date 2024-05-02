@@ -1,7 +1,9 @@
 import { connect } from 'react-redux';
+
 import { GlobalState } from '~/redux/store';
 
 import { subscriptionsActions } from '../../../redux/actions/subscriptionsActions';
+
 import OSDSubscriptionCard from './OSDSubscriptionCard';
 
 const mapDispatchToProps = {

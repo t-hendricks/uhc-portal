@@ -1,10 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+
 import { Title } from '@patternfly/react-core';
 
-import './DownloadsSection.scss';
+import { downloadsCategories } from './downloadsStructure';
 
-import { downloadsCategories, allCategories } from './downloadsStructure';
+import './DownloadsSection.scss';
 
 /**
  * Section with title and optional description, shown or hidden according to selectedCategory.
@@ -23,7 +24,7 @@ const DownloadsSection = ({ selectedCategory, category, description, children })
     </>
   );
 DownloadsSection.propTypes = {
-  selectedCategory: PropTypes.oneOf(allCategories.map((c) => c.key)).isRequired,
+  selectedCategory: PropTypes.oneOf(downloadsCategories().map((c) => c.key)).isRequired,
   category: PropTypes.string.isRequired,
   description: PropTypes.node,
   children: PropTypes.node,

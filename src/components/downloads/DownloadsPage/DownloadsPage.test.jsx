@@ -1,22 +1,25 @@
 import React from 'react';
 import { MemoryRouter } from 'react-router-dom';
 import { CompatRouter } from 'react-router-dom-v5-compat';
-import { mockRestrictedEnv, render, screen, checkAccessibility, waitFor } from '~/testUtils';
+
 import accountsService from '~/services/accountsService';
+import { checkAccessibility, mockRestrictedEnv, render, screen, waitFor } from '~/testUtils';
+
+import {
+  architectures,
+  channels,
+  operatingSystems,
+  tools,
+  urls,
+} from '../../../common/installLinks.mjs';
+
 import DownloadsPage, {
   allArchitecturesForTool,
   allOperatingSystemsForTool,
   architecturesForToolOS,
-  initialSelection,
   downloadChoice,
+  initialSelection,
 } from './DownloadsPage';
-import {
-  tools,
-  channels,
-  operatingSystems,
-  architectures,
-  urls,
-} from '../../../common/installLinks.mjs';
 
 const { linux, mac, windows } = operatingSystems;
 const { arm, ppc, s390x, x86 } = architectures;
@@ -181,7 +184,9 @@ describe('<DownloadsPage>', () => {
         </CompatRouter>
       </MemoryRouter>,
     );
-    expect(await accountsService.getCurrentAccount).toHaveBeenCalled();
+    await waitFor(() => {
+      expect(accountsService.getCurrentAccount).toHaveBeenCalled();
+    });
     expect(accountsService.getOrganization).toHaveBeenCalled();
   });
 
@@ -227,7 +232,7 @@ describe('<DownloadsPage>', () => {
     afterEach(() => {
       isRestrictedEnv.mockReturnValue(false);
     });
-    it('renders only OC/ROSA CLI and tokens', () => {
+    it('renders only OC/ROSA CLI and tokens', async () => {
       const props = {
         location: { hash: '' },
         token: { auths: { foo: 'bar' } },
@@ -254,7 +259,7 @@ describe('<DownloadsPage>', () => {
           </CompatRouter>
         </MemoryRouter>,
       );
-      expect(screen.getAllByTestId(/downloads-section-.*/)).toHaveLength(2);
+      expect(await screen.findAllByTestId(/downloads-section-.*/)).toHaveLength(2);
 
       expect(screen.getByTestId('downloads-section-CLI')).toBeInTheDocument();
       expect(screen.getByTestId('downloads-section-TOKENS')).toBeInTheDocument();

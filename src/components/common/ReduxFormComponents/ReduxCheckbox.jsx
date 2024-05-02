@@ -16,9 +16,11 @@ limitations under the License.
 
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Checkbox, FormGroup, Switch, Split, SplitItem } from '@patternfly/react-core';
+
+import { Checkbox, FormGroup, Split, SplitItem, Switch } from '@patternfly/react-core';
 
 import { FormGroupHelperText } from '~/components/common/FormGroupHelperText';
+
 import PopoverHint from '../PopoverHint';
 
 // To be used inside redux-form Field component.
@@ -88,7 +90,7 @@ ReduxCheckbox.propTypes = {
   // show validation errors immediately, regardless of whether field has been touched or not
   showInitialValidationErrors: PropTypes.bool,
   isHelperTextBeforeField: PropTypes.bool,
-  helpText: PropTypes.string,
+  helpText: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
   onChange: PropTypes.func,
   isFilled: PropTypes.bool,
 };

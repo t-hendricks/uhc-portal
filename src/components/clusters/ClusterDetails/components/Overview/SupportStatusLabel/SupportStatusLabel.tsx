@@ -1,10 +1,13 @@
 import React, { useEffect, useMemo } from 'react';
+import { useDispatch } from 'react-redux';
+
 import Skeleton from '@redhat-cloud-services/frontend-components/Skeleton';
 
-import { useDispatch } from 'react-redux';
-import { useGlobalState } from '~/redux/hooks';
 import { getSupportStatus } from '~/redux/actions/supportStatusActions';
+import { useGlobalState } from '~/redux/hooks';
+
 import SupportStatus from '../../../../../common/SupportStatus';
+
 import './SupportStatusLabel.scss';
 
 type SupportStatusLabelProps = {

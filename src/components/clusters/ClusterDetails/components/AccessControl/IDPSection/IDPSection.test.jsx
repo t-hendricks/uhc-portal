@@ -1,7 +1,8 @@
 import React from 'react';
-
-import { screen, render, checkAccessibility, TestRouter } from '~/testUtils';
 import { CompatRouter } from 'react-router-dom-v5-compat';
+
+import { checkAccessibility, render, screen, TestRouter } from '~/testUtils';
+
 import IDPSection from './IDPSection';
 
 const baseIDPs = {
@@ -91,10 +92,11 @@ describe('<IDPSection />', () => {
           </CompatRouter>
         </TestRouter>,
       );
-      expect(screen.getByRole('grid')).toBeInTheDocument();
-      expect(screen.getByRole('cell', { name: 'hi' })).toBeInTheDocument();
-      expect(screen.getByRole('cell', { name: 'hello' })).toBeInTheDocument();
+      expect(await screen.findByRole('grid')).toBeInTheDocument();
+      expect(await screen.findByRole('cell', { name: 'hi' })).toBeInTheDocument();
+      expect(await screen.findByRole('cell', { name: 'hello' })).toBeInTheDocument();
       expect(container.querySelectorAll('.pf-v5-c-skeleton').length).toBe(0);
+
       await checkAccessibility(container);
     });
 
@@ -107,9 +109,9 @@ describe('<IDPSection />', () => {
           </CompatRouter>
         </TestRouter>,
       );
-      expect(screen.getByRole('grid')).toBeInTheDocument();
-      expect(screen.getByRole('cell', { name: 'hi' })).toBeInTheDocument();
-      expect(screen.getByRole('cell', { name: 'hello' })).toBeInTheDocument();
+      expect(await screen.findByRole('grid')).toBeInTheDocument();
+      expect(await screen.findByRole('cell', { name: 'hi' })).toBeInTheDocument();
+      expect(await screen.findByRole('cell', { name: 'hello' })).toBeInTheDocument();
       expect(container.querySelectorAll('.pf-v5-c-skeleton').length).toBe(0);
       await checkAccessibility(container);
     });

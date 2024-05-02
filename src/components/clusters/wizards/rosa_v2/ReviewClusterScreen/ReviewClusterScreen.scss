@@ -23,6 +23,10 @@
     margin-top: var(--pf-v5-c-expandable-section__content--MarginTop);
   }
 
+  .review-screen-expandable-section__toggle-wrapper {
+    display: inline-block;
+  }
+
   .review-screen-expandable-section .pf-v5-c-expandable-section__content {
     padding-left: 29px;
   }
@@ -54,5 +58,9 @@
   }
   .pf-v5-c-description-list__text .popover-with-title-div {
     padding-top: 0;
+  }
+  .pf-v5-c-expandable-section.pf-m-detached {
+    // --pf-v5-c-expandable-section__content--MarginTop: var(--pf-v5-c-expandable-section__content--MarginTop)}  // Note vars are not showing in the browser
+    margin-top: 1rem;
   }
 }

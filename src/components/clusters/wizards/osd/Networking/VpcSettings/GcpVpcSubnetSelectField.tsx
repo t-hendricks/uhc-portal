@@ -10,12 +10,12 @@ import {
   FormSelectProps,
 } from '@patternfly/react-core';
 
-import { useGlobalState } from '~/redux/hooks/useGlobalState';
+import { getGcpCcsCredentials } from '~/components/clusters/wizards/common/utils/ccsCredentials';
 import { useFormState } from '~/components/clusters/wizards/hooks';
 import { FieldId } from '~/components/clusters/wizards/osd/constants';
-import { getGcpCcsCredentials } from '~/components/clusters/wizards/common/utils/ccsCredentials';
-import { CloudVPC } from '~/types/clusters_mgmt.v1';
 import { FormGroupHelperText } from '~/components/common/FormGroupHelperText';
+import { useGlobalState } from '~/redux/hooks/useGlobalState';
+import { CloudVPC } from '~/types/clusters_mgmt.v1';
 
 interface GcpVpcSubnetSelectFieldProps {
   input: FieldInputProps<FormSelectProps>;

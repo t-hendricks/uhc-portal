@@ -15,8 +15,13 @@ limitations under the License.
 */
 
 import React, { ReactNode, useState } from 'react';
+
 import useResizeObserver from '@react-hook/resize-observer';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
+
 import Router from './Router';
+
 import './App.scss';
 
 type Props = {
@@ -34,9 +39,14 @@ const App = ({ children }: Props) => {
     }
   });
 
+  const queryClient = new QueryClient();
+
   return (
     <div id="app-outer-div" style={{ height: `calc(100vh - ${headerHeight}px` }}>
-      <Router />
+      <QueryClientProvider client={queryClient}>
+        <Router />
+        <ReactQueryDevtools initialIsOpen={false} position="bottom" buttonPosition="bottom-right" />
+      </QueryClientProvider>
     </div>
   );
 };

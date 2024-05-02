@@ -1,0 +1,19 @@
+{
+  "kind": "ProductTechnologyPreviewList",
+  "href": "/api/clusters_mgmt/v1/products/rosa/technology_previews",
+  "page": 1,
+  "size": 2,
+  "total": 2,
+  "items": [
+    {
+      "kind": "ProductTechnologyPreviewLink",
+      "id": "hcp",
+      "href": "/api/clusters_mgmt/v1/products/rosa/technology_previews/hcp"
+    },
+    {
+      "kind": "ProductTechnologyPreviewLink",
+      "id": "hcp-billing",
+      "href": "/api/clusters_mgmt/v1/products/rosa/technology_previews/hcp-billing"
+    }
+  ]
+}

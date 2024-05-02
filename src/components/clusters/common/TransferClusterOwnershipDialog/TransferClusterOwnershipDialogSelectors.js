@@ -1,8 +1,8 @@
 import get from 'lodash/get';
 
 import {
-  subscriptionCapabilities,
   hasCapability,
+  subscriptionCapabilities,
 } from '../../../../common/subscriptionCapabilities';
 
 const canTransferClusterOwnershipSelector = (state) => {

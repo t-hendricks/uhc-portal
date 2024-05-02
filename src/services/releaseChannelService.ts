@@ -1,6 +1,7 @@
 import axios from 'axios';
-import { Graph } from '../types/upgrades_info.v1';
+
 import config from '../config';
+import { Graph } from '../types/upgrades_info.v1';
 
 const getOCPReleaseChannel = (channel: string) =>
   axios.get<Graph>('/api/upgrades_info/v1/graph', {

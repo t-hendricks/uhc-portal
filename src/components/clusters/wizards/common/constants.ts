@@ -56,18 +56,19 @@ export enum FieldId {
   HasDomainPrefix = 'has_domain_prefix',
   AccountId = 'account_id',
   AccessKeyId = 'access_key_id',
-  SecretAccessKey = 'secret_access_key',
-  SecurityGroups = 'securityGroups',
-  HttpProxyUrl = 'http_proxy_url',
-  HttpsProxyUrl = 'https_proxy_url',
   AdditionalTrustBundle = 'additional_trust_bundle',
-  NoProxyDomains = 'no_proxy_domains',
-  CustomOperatorRolesPrefix = 'custom_operator_roles_prefix',
-  RosaRolesProviderCreationMode = 'rosa_roles_provider_creation_mode',
   ByoOidcConfigId = 'byo_oidc_config_id',
   ByoOidcConfigIdManaged = 'byo_oidc_config_id_managed',
+  CustomOperatorRolesPrefix = 'custom_operator_roles_prefix',
   DetectedOcmRole = 'detected_ocm_role',
+  DisableScpChecks = 'disable_scp_checks',
+  HttpProxyUrl = 'http_proxy_url',
+  HttpsProxyUrl = 'https_proxy_url',
+  NoProxyDomains = 'no_proxy_domains',
   RosaCreatorArn = 'rosa_creator_arn',
+  RosaRolesProviderCreationMode = 'rosa_roles_provider_creation_mode',
+  SecretAccessKey = 'secret_access_key',
+  SecurityGroups = 'securityGroups',
 }
 
 export const initialValues: FormikValues = {
@@ -88,3 +89,12 @@ export enum IMDSType {
   V1AndV2 = 'optional',
   V2Only = 'required',
 }
+
+export const AWS_DEFAULT_REGION = 'us-east-1';
+export const GCP_DEFAULT_REGION = 'us-east1';
+
+export const emptyAWSSubnet = () => ({
+  availabilityZone: '',
+  privateSubnetId: '',
+  publicSubnetId: '',
+});

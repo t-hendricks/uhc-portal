@@ -1,7 +1,9 @@
 import React, { MouseEventHandler, useCallback } from 'react';
-import { Alert, Text, TextContent, TextVariants, Button, AlertProps } from '@patternfly/react-core';
-import { AWSAccountRole } from './AssociateAWSAccountDrawer/common/AssociateAWSAccountStep';
+
+import { Alert, AlertProps, Button, Text, TextContent, TextVariants } from '@patternfly/react-core';
+
 import { useAssociateAWSAccountDrawer } from './AssociateAWSAccountDrawer/AssociateAWSAccountDrawer';
+import { AWSAccountRole } from './AssociateAWSAccountDrawer/common/AssociateAWSAccountStep';
 
 type AwsRoleErrorAlertProps = Pick<AlertProps, 'title'> & {
   targetRole?: AWSAccountRole;

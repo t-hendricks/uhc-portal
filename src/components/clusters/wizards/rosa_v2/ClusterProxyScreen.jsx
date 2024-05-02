@@ -1,36 +1,45 @@
 import React, { useEffect } from 'react';
 import { Field } from 'formik';
-import { Form, Grid, GridItem, Title, Text, Alert, AlertActionLink } from '@patternfly/react-core';
-import { WizardContext as WizardContextDeprecated } from '@patternfly/react-core/deprecated';
+
+import {
+  Alert,
+  AlertActionLink,
+  Form,
+  Grid,
+  GridItem,
+  Text,
+  Title,
+  useWizardContext,
+} from '@patternfly/react-core';
 
 import { stringToArray } from '~/common/helpers';
-import { constants } from '~/components/clusters/common/CreateOSDFormConstants';
-import {
-  validateUrl,
-  validateCA,
-  checkNoProxyDomains,
-  composeValidators,
-} from '~/common/validators';
+import links from '~/common/installLinks.mjs';
 import { normalizedProducts } from '~/common/subscriptionTypes';
 import {
+  checkNoProxyDomains,
+  composeValidators,
+  validateCA,
+  validateUrl,
+} from '~/common/validators';
+import {
+  ACCEPT,
+  MAX_FILE_SIZE,
+} from '~/components/clusters/ClusterDetails/components/IdentityProvidersPage/components/CAUpload';
+import { constants } from '~/components/clusters/common/CreateOSDFormConstants';
+import {
+  DISABLED_NO_PROXY_PLACEHOLDER,
   HTTP_PROXY_PLACEHOLDER,
   HTTPS_PROXY_PLACEHOLDER,
-  DISABLED_NO_PROXY_PLACEHOLDER,
-  NO_PROXY_PLACEHOLDER,
   NO_PROXY_HELPER_TEXT,
-  TRUST_BUNDLE_PLACEHOLDER,
+  NO_PROXY_PLACEHOLDER,
   TRUST_BUNDLE_HELPER_TEXT,
+  TRUST_BUNDLE_PLACEHOLDER,
 } from '~/components/clusters/common/networkingConstants';
-import { FieldId } from '~/components/clusters/wizards/rosa_v2/constants';
 import { useFormState } from '~/components/clusters/wizards/hooks';
-import ReduxVerticalFormGroup from '~/components/common/ReduxFormComponents/ReduxVerticalFormGroup';
-import ReduxFileUpload from '~/components/common/ReduxFormComponents/ReduxFileUpload';
+import { FieldId } from '~/components/clusters/wizards/rosa_v2/constants';
 import ExternalLink from '~/components/common/ExternalLink';
-import links from '~/common/installLinks.mjs';
-import {
-  MAX_FILE_SIZE,
-  ACCEPT,
-} from '~/components/clusters/ClusterDetails/components/IdentityProvidersPage/components/CAUpload';
+import ReduxFileUpload from '~/components/common/ReduxFormComponents/ReduxFileUpload';
+import ReduxVerticalFormGroup from '~/components/common/ReduxFormComponents/ReduxVerticalFormGroup';
 
 function ClusterProxyScreen() {
   const {
@@ -46,6 +55,8 @@ function ClusterProxyScreen() {
     },
   } = useFormState();
   const [anyTouched, setAnyTouched] = React.useState(false);
+  const { goToStepByName } = useWizardContext();
+
   const configureProxyUrl =
     product === normalizedProducts.ROSA
       ? links.ROSA_CLUSTER_WIDE_PROXY
@@ -84,13 +95,9 @@ function ClusterProxyScreen() {
         </span>
       }
       actionLinks={
-        <WizardContextDeprecated.Consumer>
-          {({ goToStepByName }) => (
-            <AlertActionLink onClick={() => goToStepByName('Configuration')}>
-              Back to the networking configuration
-            </AlertActionLink>
-          )}
-        </WizardContextDeprecated.Consumer>
+        <AlertActionLink onClick={() => goToStepByName('Configuration')}>
+          Back to the networking configuration
+        </AlertActionLink>
       }
     />
   );

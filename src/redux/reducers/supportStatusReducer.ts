@@ -1,15 +1,17 @@
 import { produce } from 'immer';
 import { get } from 'lodash';
+
 import { ProductLifeCycle } from '~/types/product-life-cycles';
+
 import { SupportStatusAction } from '../actions/supportStatusActions';
+import GET_SUPPORT_STATUS from '../constants/supportStatusConstants';
 import {
+  baseRequestState,
   FULFILLED_ACTION,
   PENDING_ACTION,
   REJECTED_ACTION,
-  baseRequestState,
 } from '../reduxHelpers';
 import type { PromiseActionType, PromiseReducerState } from '../types';
-import GET_SUPPORT_STATUS from '../constants/supportStatusConstants';
 
 type SupportStatusState = PromiseReducerState & {
   supportStatus: { [index: string]: string };

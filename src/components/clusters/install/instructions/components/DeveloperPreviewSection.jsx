@@ -1,7 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom-v5-compat';
+
 import { CodeIcon } from '@patternfly/react-icons/dist/esm/icons/code-icon';
+
 import './DeveloperPreviewSection.scss';
 
 const DeveloperPreviewSection = ({

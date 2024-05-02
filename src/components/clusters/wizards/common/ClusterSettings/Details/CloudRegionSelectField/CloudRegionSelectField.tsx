@@ -4,10 +4,11 @@ import { FieldInputProps } from 'formik';
 import { FormSelect, FormSelectOption } from '@patternfly/react-core';
 import { Spinner } from '@redhat-cloud-services/frontend-components/Spinner';
 
-import { GlobalState } from '~/redux/store';
-import ErrorBox from '~/components/common/ErrorBox';
 import { useFormState } from '~/components/clusters/wizards/hooks';
-import { defaultRegionID, CheckedRegion } from './validRegions';
+import ErrorBox from '~/components/common/ErrorBox';
+import { GlobalState } from '~/redux/store';
+
+import { CheckedRegion, defaultRegionID } from './validRegions';
 
 interface CloudRegionSelectFieldProps {
   field: FieldInputProps<string>;

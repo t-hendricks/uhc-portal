@@ -1,5 +1,7 @@
 import React from 'react';
+
 import { Split, SplitItem, Title } from '@patternfly/react-core';
+
 import { MachinePoolAutoscaling } from '~/types/clusters_mgmt.v1';
 
 const getReplicas = (replicas: number | undefined, isMultiZone: boolean) => {

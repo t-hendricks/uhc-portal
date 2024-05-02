@@ -6,14 +6,15 @@ import {
   getNodeIncrement,
   getNodeIncrementHypershift,
 } from '~/components/clusters/ClusterDetails/components/MachinePools/machinePoolsHelper';
+import wizardConnector from '~/components/clusters/wizards/common/WizardConnector';
 import { getWorkerNodeVolumeSizeMaxGiB } from '~/components/clusters/wizards/rosa/constants';
 import { openModal } from '~/components/common/Modal/ModalActions';
 import modals from '~/components/common/Modal/modals';
-import wizardConnector from '~/components/clusters/wizards/common/WizardConnector';
+
 import { canAutoScaleOnCreateSelector } from '../../../ClusterDetails/components/MachinePools/machinePoolsSelectors';
+import createOSDInitialValues from '../createOSDInitialValues';
 
 import MachinePoolScreen from './MachinePoolScreen';
-import createOSDInitialValues from '../../common/createOSDInitialValues';
 
 const mapStateToProps = (state, ownProps) => {
   const valueSelector = formValueSelector('CreateCluster');

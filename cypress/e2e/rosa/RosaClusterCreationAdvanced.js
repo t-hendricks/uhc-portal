@@ -28,6 +28,7 @@ describe(
     it('Step - Accounts and roles - Select Account roles, ARN definitions', () => {
       CreateRosaWizardPage.isAccountsAndRolesScreen();
       CreateRosaWizardPage.selectAWSInfrastructureAccount(awsAccountID);
+      CreateRosaWizardPage.waitForARNList();
       CreateRosaWizardPage.refreshInfrastructureAWSAccountButton().click();
       CreateRosaWizardPage.waitForARNList();
       CreateRosaWizardPage.selectInstallerRole(installerARN);
@@ -86,7 +87,7 @@ describe(
     });
 
     it('Cluster wizard revisit - Step - Accounts and roles', () => {
-      cy.get('span').contains('Accounts and roles').next().click();
+      CreateRosaWizardPage.clickEditStepOfSection('Accounts and roles');
       CreateRosaWizardPage.isAccountsAndRolesScreen();
       CreateRosaWizardPage.waitForARNList();
       // Inline block fails due to HAC-4514.

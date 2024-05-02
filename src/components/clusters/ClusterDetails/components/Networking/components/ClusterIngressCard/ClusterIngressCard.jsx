@@ -1,27 +1,28 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+
 import {
+  ActionList,
   Card,
   CardBody,
-  CardTitle,
   CardFooter,
-  ActionList,
+  CardTitle,
+  ClipboardCopy,
   Form,
-  Label,
   FormGroup,
+  Label,
   LabelGroup,
   Text,
-  TextInput,
   TextContent,
+  TextInput,
   TextVariants,
-  ClipboardCopy,
 } from '@patternfly/react-core';
 
 import { isRestrictedEnv } from '~/restrictedEnv';
-import EditClusterIngressDialog from '../EditClusterIngressDialog';
-import ButtonWithTooltip from '../../../../../../common/ButtonWithTooltip';
 
+import ButtonWithTooltip from '../../../../../../common/ButtonWithTooltip';
 import modals from '../../../../../../common/Modal/modals';
+import EditClusterIngressDialog from '../EditClusterIngressDialog';
 
 import './ClusterIngressCard.scss';
 
@@ -156,7 +157,7 @@ class ClusterIngressCard extends React.Component {
                 onClick={this.handleEditSettings}
                 disableReason={disableEditReason}
                 isAriaDisabled={!!disableEditReason}
-                data-testId="edit-cluster-ingress"
+                data-testid="edit-cluster-ingress"
               >
                 Edit cluster ingress
               </ButtonWithTooltip>

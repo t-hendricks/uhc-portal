@@ -1,50 +1,52 @@
+import { connectRouter } from 'connected-react-router';
 import { combineReducers } from 'redux';
 import { reducer as formReducer } from 'redux-form';
-import { connectRouter } from 'connected-react-router';
 
 // TODO remove ignore statement once frontend-components-notifications has types
 // @ts-ignore
 import { notificationsReducer } from '@redhat-cloud-services/frontend-components-notifications/redux';
-import rosaReducer from './rosaReducer';
-import { clustersReducer } from './clustersReducer';
-import { clusterLogReducer } from '../../components/clusters/ClusterDetails/components/ClusterLogs/clusterLogReducer';
-import { deleteClusterDialogReducer } from '../../components/clusters/common/DeleteClusterDialog/DeleteClusterDialogReducer';
-import { viewOptionsReducer } from './viewOptionsReducer';
-import userReducer from './userReducer';
-import tollboothReducer from './tollbooth';
-import { dashboardsReducer } from './dashboardsReducer';
-import { cloudProvidersReducer } from './cloudProvidersReducer';
-import { costReducer } from './costReducer';
-import modalReducer from '../../components/common/Modal/ModalReducer';
-import { InstallationLogReducer } from '../../components/clusters/ClusterDetails/components/Overview/InstallationLogView/InstallationLogReducer';
-import { IdentityProvidersReducer } from '../../components/clusters/ClusterDetails/components/IdentityProvidersPage/IdentityProvidersReducer';
-import NetworkSelfServiceReducer from '../../components/clusters/ClusterDetails/components/AccessControl/NetworkSelfServiceSection/NetworkSelfServiceReducer';
-import { MonitoringReducer } from '../../components/clusters/ClusterDetails/components/Monitoring/MonitoringReducer';
-import clusterUsersReducer from '../../components/clusters/ClusterDetails/components/AccessControl/UsersSection/UsersReducer';
-import clustersSupportReducer from '../../components/clusters/ClusterDetails/components/Support/SupportReducer';
-import addOnsReducer from '../../components/clusters/ClusterDetails/components/AddOns/AddOnsReducer';
-import globalErrorReducer from './globalErrorReducer';
-import flavoursReducer from './flavoursReducer';
-import machineTypesReducer from './machineTypesReducer';
-import dnsDomainsReducer from './dnsDomainsReducer';
-import insightsReducer from '../../components/clusters/ClusterDetails/components/Insights/InsightsReducer';
-import { clusterAutoscalerReducer } from './clusterAutoscalerReducer';
-import { subscriptionsReducer } from './subscriptionsReducer';
-import { loadBalancersReducer } from './loadBalancersReducer';
-import { persistentStorageReducer } from './persistentStorageReducer';
-import { subscriptionSettingsReducer } from './subscriptionSettingsReducer';
-import { subscriptionReleasedReducer } from '../../components/clusters/common/TransferClusterOwnershipDialog/subscriptionReleasedReducer';
-import { NetworkingReducer } from '../../components/clusters/ClusterDetails/components/Networking/NetworkingReducer';
-import entitlementConfigReducer from './entitlementConfigReducer';
-import clusterUpgrades from '../../components/clusters/common/Upgrades/clusterUpgradeReducer';
-import machinePools from '../../components/clusters/ClusterDetails/components/MachinePools/MachinePoolsReducer';
-import githubReducer from './githubReducer';
-import ccsInquiriesReducer from './ccsInquiriesReducer';
-import ocmRolesReducer from './OCMRolesReducer';
-import supportStatusReducer from './supportStatusReducer';
 
-import featuresReducer from './featuresReducer';
 import apiErrorReducer from '../../components/App/ApiError/ApiErrorReducer';
+import NetworkSelfServiceReducer from '../../components/clusters/ClusterDetails/components/AccessControl/NetworkSelfServiceSection/NetworkSelfServiceReducer';
+import clusterUsersReducer from '../../components/clusters/ClusterDetails/components/AccessControl/UsersSection/UsersReducer';
+import addOnsReducer from '../../components/clusters/ClusterDetails/components/AddOns/AddOnsReducer';
+import { clusterLogReducer } from '../../components/clusters/ClusterDetails/components/ClusterLogs/clusterLogReducer';
+import { IdentityProvidersReducer } from '../../components/clusters/ClusterDetails/components/IdentityProvidersPage/IdentityProvidersReducer';
+import insightsReducer from '../../components/clusters/ClusterDetails/components/Insights/InsightsReducer';
+import machinePools from '../../components/clusters/ClusterDetails/components/MachinePools/MachinePoolsReducer';
+import { MonitoringReducer } from '../../components/clusters/ClusterDetails/components/Monitoring/MonitoringReducer';
+import { NetworkingReducer } from '../../components/clusters/ClusterDetails/components/Networking/NetworkingReducer';
+import { InstallationLogReducer } from '../../components/clusters/ClusterDetails/components/Overview/InstallationLogView/InstallationLogReducer';
+import { deleteClusterDialogReducer } from '../../components/clusters/common/DeleteClusterDialog/DeleteClusterDialogReducer';
+import { subscriptionReleasedReducer } from '../../components/clusters/common/TransferClusterOwnershipDialog/subscriptionReleasedReducer';
+import clusterUpgrades from '../../components/clusters/common/Upgrades/clusterUpgradeReducer';
+import modalReducer from '../../components/common/Modal/ModalReducer';
+
+import ccsInquiriesReducer from './ccsInquiriesReducer';
+import { cloudProvidersReducer } from './cloudProvidersReducer';
+import { clusterAutoscalerReducer } from './clusterAutoscalerReducer';
+import { clustersReducer } from './clustersReducer';
+import { costReducer } from './costReducer';
+import { dashboardsReducer } from './dashboardsReducer';
+import dnsDomainsReducer from './dnsDomainsReducer';
+import entitlementConfigReducer from './entitlementConfigReducer';
+import featuresReducer from './featuresReducer';
+import flavoursReducer from './flavoursReducer';
+import githubReducer from './githubReducer';
+import globalErrorReducer from './globalErrorReducer';
+import { loadBalancersReducer } from './loadBalancersReducer';
+import machineTypesByRegionReducer from './machineTypesByRegionReducer';
+import machineTypesReducer from './machineTypesReducer';
+import ocmRolesReducer from './OCMRolesReducer';
+import { persistentStorageReducer } from './persistentStorageReducer';
+import rosaReducer from './rosaReducer';
+import { subscriptionSettingsReducer } from './subscriptionSettingsReducer';
+import { subscriptionsReducer } from './subscriptionsReducer';
+import { supportReducer } from './supportReducer';
+import supportStatusReducer from './supportStatusReducer';
+import tollboothReducer from './tollbooth';
+import userReducer from './userReducer';
+import { viewOptionsReducer } from './viewOptionsReducer';
 
 const reducers = {
   clusters: clustersReducer,
@@ -59,12 +61,13 @@ const reducers = {
   identityProviders: IdentityProvidersReducer,
   clusterAutoscaler: clusterAutoscalerReducer,
   clusterUsers: clusterUsersReducer,
-  clusterSupport: clustersSupportReducer,
+  clusterSupport: supportReducer,
   dnsDomains: dnsDomainsReducer,
   addOns: addOnsReducer,
   globalError: globalErrorReducer,
   flavours: flavoursReducer,
   machineTypes: machineTypesReducer,
+  machineTypesByRegion: machineTypesByRegionReducer,
   monitoring: MonitoringReducer,
   subscriptions: subscriptionsReducer,
   persistentStorageValues: persistentStorageReducer,
@@ -96,6 +99,6 @@ const reduxReducers = (history: Parameters<typeof connectRouter>[0]) =>
     router: connectRouter(history),
   });
 
-export { reduxReducers, reducers };
+export { reducers, reduxReducers };
 
 export default reduxReducers;

@@ -1,4 +1,5 @@
 import React from 'react';
+
 import { List, ListItem, Text, TextContent } from '@patternfly/react-core';
 
 const SubscriptionAndSupport = () => {

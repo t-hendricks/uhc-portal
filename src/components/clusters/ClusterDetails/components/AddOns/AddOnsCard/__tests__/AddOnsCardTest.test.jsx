@@ -1,9 +1,9 @@
 import React from 'react';
 
-import { render, checkAccessibility, screen } from '~/testUtils';
+import { checkAccessibility, render, screen } from '~/testUtils';
 
-import AddOnsCard from '../AddOnsCard';
 import AddOnsConstants from '../../AddOnsConstants';
+import AddOnsCard from '../AddOnsCard';
 
 describe('<AddOnsCard />', () => {
   const onClick = jest.fn();

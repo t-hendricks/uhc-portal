@@ -1,8 +1,10 @@
 import React from 'react';
-import { render, screen, checkAccessibility } from '~/testUtils';
+
+import { checkAccessibility, render, screen } from '~/testUtils';
 import { ClusterResource } from '~/types/accounts_mgmt.v1';
-import ResourceUsage from '../ResourceUsage';
+
 import { metricsStatusMessages } from '../constants';
+import ResourceUsage from '../ResourceUsage';
 
 const cpu: ClusterResource = {
   used: {

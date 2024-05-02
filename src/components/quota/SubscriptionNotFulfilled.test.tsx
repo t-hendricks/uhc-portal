@@ -1,5 +1,7 @@
 import React from 'react';
-import { screen, render, within } from '~/testUtils';
+
+import { render, screen, within } from '~/testUtils';
+
 import * as Fixtures from './__tests__/Quota.fixtures';
 import SubscriptionNotFulfilled from './SubscriptionNotFulfilled';
 

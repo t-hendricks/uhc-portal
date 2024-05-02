@@ -1,9 +1,10 @@
 import React from 'react';
-import { render, checkAccessibility, screen } from '~/testUtils';
 
-import InstallationLogView from '../InstallationLogView';
-import fixtures from '../../../../__tests__/ClusterDetails.fixtures';
+import { checkAccessibility, render, screen } from '~/testUtils';
+
 import clusterStates from '../../../../../common/clusterStates';
+import fixtures from '../../../../__tests__/ClusterDetails.fixtures';
+import InstallationLogView from '../InstallationLogView';
 
 jest.useFakeTimers({
   legacyFakeTimers: true, // TODO 'modern'

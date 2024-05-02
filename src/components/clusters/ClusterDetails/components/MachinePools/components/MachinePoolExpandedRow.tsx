@@ -1,15 +1,16 @@
 import React from 'react';
-import { Label, Title, Grid, GridItem } from '@patternfly/react-core';
 import isEmpty from 'lodash/isEmpty';
 
-import { MachinePool } from '~/types/clusters_mgmt.v1/models/MachinePool';
-import { Cluster, NodePool, SecurityGroup } from '~/types/clusters_mgmt.v1';
+import { Grid, GridItem, Label, Title } from '@patternfly/react-core';
+
 import { truncateTextWithEllipsis } from '~/common/helpers';
 import { useAWSVPCFromCluster } from '~/components/clusters/common/useAWSVPCFromCluster';
+import { Cluster, NodePool, SecurityGroup } from '~/types/clusters_mgmt.v1';
+import { MachinePool } from '~/types/clusters_mgmt.v1/models/MachinePool';
 
-import { hasSubnets, getSubnetIds } from '../machinePoolsHelper';
-import MachinePoolAutoScalingDetail from '../MachinePoolAutoscalingDetail';
 import { isMPoolAz } from '../../../clusterDetailsHelper';
+import MachinePoolAutoScalingDetail from '../MachinePoolAutoscalingDetail';
+import { getSubnetIds, hasSubnets } from '../machinePoolsHelper';
 
 const LABEL_MAX_LENGTH = 50;
 

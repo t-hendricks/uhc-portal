@@ -1,10 +1,11 @@
 import React from 'react';
 import * as reactRedux from 'react-redux';
-import { render, checkAccessibility, screen } from '~/testUtils';
 
-import { useGlobalState } from '~/redux/hooks';
 import { getSupportStatus } from '~/redux/actions/supportStatusActions';
+import { useGlobalState } from '~/redux/hooks';
 import { SupportStatusState } from '~/redux/reducers/supportStatusReducer';
+import { checkAccessibility, render, screen } from '~/testUtils';
+
 import SupportStatusLabel from '../SupportStatusLabel';
 
 jest.mock('~/redux/hooks', () => ({

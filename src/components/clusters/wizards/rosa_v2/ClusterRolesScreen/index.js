@@ -1,11 +1,12 @@
 import { connect } from 'react-redux';
 
-import ClusterRolesScreen from './ClusterRolesScreen';
 import {
-  getOCMRole,
   clearGetOcmRoleResponse,
+  getOCMRole,
   getUserOidcConfigurations,
 } from '../../../../../redux/actions/rosaActions';
+
+import ClusterRolesScreen from './ClusterRolesScreen';
 
 const mapDispatchToProps = (dispatch) => ({
   getOCMRole: (awsAccountID) => dispatch(getOCMRole(awsAccountID)),

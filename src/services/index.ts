@@ -1,11 +1,11 @@
+import accountManager from './accountManager';
+import accountsService from './accountsService';
+import assistedService from './assistedService';
+import authorizationsService from './authorizationsService';
 import clusterService from './clusterService';
 import costService from './costService';
-import accountManager from './accountManager';
-import authorizationsService from './authorizationsService';
-import accountsService from './accountsService';
-import serviceLogService from './serviceLogService';
 import insightsService from './insightsService';
-import assistedService from './assistedService';
+import serviceLogService from './serviceLogService';
 
 const services = {
   clusterService,

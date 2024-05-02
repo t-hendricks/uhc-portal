@@ -1,5 +1,6 @@
 import React, { ReactElement } from 'react';
-import { Tabs, Tab, TabTitleText, TabContentBody } from '@patternfly/react-core';
+
+import { Tab, TabContentBody, Tabs, TabTitleText } from '@patternfly/react-core';
 
 import './toggleGroupTabs.scss';
 

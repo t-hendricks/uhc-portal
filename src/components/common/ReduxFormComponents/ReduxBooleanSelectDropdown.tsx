@@ -7,8 +7,9 @@ import {
   SelectOption as SelectOptionDeprecated,
   SelectOptionObject as SelectOptionObjectDeprecated,
 } from '@patternfly/react-core/deprecated';
-import PopoverHint from '../PopoverHint';
+
 import { FormGroupHelperText } from '../FormGroupHelperText';
+import PopoverHint from '../PopoverHint';
 
 interface ReduxSelectOption {
   name: string;

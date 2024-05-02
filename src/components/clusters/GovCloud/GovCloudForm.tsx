@@ -1,3 +1,6 @@
+import * as React from 'react';
+import { AxiosError } from 'axios';
+
 import {
   Alert,
   Brand,
@@ -19,11 +22,11 @@ import {
   TextInput,
   TextVariants,
 } from '@patternfly/react-core';
-import * as React from 'react';
-import { AxiosError } from 'axios';
+
 import { humanizeValueWithUnit } from '~/common/units';
-import fedrampService from '~/services/fedrampService';
 import config from '~/config';
+import fedrampService from '~/services/fedrampService';
+
 import redhatLogoImg from '../../../styles/images/Logo-RedHat-Hat-Color-RGB.png';
 
 const maxFileSize = 10 * 1024 * 1024; // 10 MB

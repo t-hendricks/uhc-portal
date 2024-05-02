@@ -1,12 +1,12 @@
 import apiRequest from '~/services/apiRequest';
 import type {
-  SelfResourceReview,
   AccessReviewResponse,
   FeatureReviewResponse,
-  TermsReviewResponse,
   SelfAccessReview,
+  SelfResourceReview,
   SelfResourceReviewRequest,
   SelfTermsReview,
+  TermsReviewResponse,
 } from '~/types/accounts_mgmt.v1';
 
 const selfResourceReview = (params: SelfResourceReviewRequest) =>

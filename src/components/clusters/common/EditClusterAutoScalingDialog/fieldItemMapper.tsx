@@ -1,9 +1,8 @@
 import React from 'react';
 import { Field } from 'redux-form';
 
-import { FieldDefinition } from '~/components/clusters/common/EditClusterAutoScalingDialog/fieldDefinitions';
 import { clusterAutoScalingValidators } from '~/common/validators';
-
+import { FieldDefinition } from '~/components/clusters/common/EditClusterAutoScalingDialog/fieldDefinitions';
 import ReduxBooleanField from '~/components/common/ReduxFormComponents/ReduxBooleanField';
 import ReduxVerticalFormGroup from '~/components/common/ReduxFormComponents/ReduxVerticalFormGroup';
 

@@ -1,13 +1,13 @@
 import React from 'react';
 
-import { render, screen, waitFor, within, checkAccessibility } from '~/testUtils';
-
 import {
-  rhQuotaList,
-  CCSQuotaList,
   CCSOneNodeRemainingQuotaList,
+  CCSQuotaList,
+  rhQuotaList,
 } from '~/components/clusters/common/__tests__/quota.fixtures';
 import { mapMachineTypesById } from '~/redux/reducers/machineTypesReducer';
+import { checkAccessibility, render, screen, waitFor, within } from '~/testUtils';
+
 import MachineTypeSelection from './MachineTypeSelection';
 
 const baseFlavoursState = {
@@ -146,6 +146,80 @@ const machineTypes = {
   ],
 };
 
+const machineTypesByRegion = {
+  aws: [
+    {
+      kind: 'MachineType',
+      name: 'm5.xlarge - General Purpose',
+      category: 'general_purpose',
+      size: 'small',
+      id: 'm5.xlarge',
+      href: '/api/clusters_mgmt/v1/machine_types/m5.xlarge',
+      memory: {
+        value: 17179869184,
+        unit: 'B',
+      },
+      cpu: {
+        value: 4,
+        unit: 'vCPU',
+      },
+      cloud_provider: {
+        kind: 'CloudProviderLink',
+        id: 'aws',
+        href: '/api/clusters_mgmt/v1/cloud_providers/aws',
+      },
+      ccs_only: false,
+      generic_name: 'standard-4',
+    },
+    {
+      kind: 'MachineType',
+      name: 'm5.4xlarge - General Purpose',
+      category: 'general_purpose',
+      size: 'large',
+      id: 'm5.4xlarge',
+      href: '/api/clusters_mgmt/v1/machine_types/m5.4xlarge',
+      memory: {
+        value: 68719476736,
+        unit: 'B',
+      },
+      cpu: {
+        value: 16,
+        unit: 'vCPU',
+      },
+      cloud_provider: {
+        kind: 'CloudProviderLink',
+        id: 'aws',
+        href: '/api/clusters_mgmt/v1/cloud_providers/aws',
+      },
+      ccs_only: false,
+      generic_name: 'standard-16',
+    },
+    {
+      kind: 'MachineType',
+      name: 'm6id.xlarge - Accelerated Computing (1 GPU)',
+      category: 'accelerated_computing',
+      size: 'medium',
+      id: 'm6id.xlarge',
+      href: '/api/clusters_mgmt/v1/machine_types/m6id.xlarge',
+      memory: {
+        value: 34359738368,
+        unit: 'B',
+      },
+      cpu: {
+        value: 8,
+        unit: 'vCPU',
+      },
+      cloud_provider: {
+        kind: 'CloudProviderLink',
+        id: 'aws',
+        href: '/api/clusters_mgmt/v1/cloud_providers/aws',
+      },
+      ccs_only: true,
+      generic_name: 't4-gpu-8',
+    },
+  ],
+};
+
 const fulfilledMachineState = {
   ...baseState,
   fulfilled: true,
@@ -153,6 +227,12 @@ const fulfilledMachineState = {
   typesByID: mapMachineTypesById(machineTypes),
 };
 
+const fulfilledMachineByRegionState = {
+  ...baseState,
+  fulfilled: true,
+  types: machineTypes,
+  typesByID: mapMachineTypesById(machineTypesByRegion),
+};
 const unknownCategoryMachineTypes = [
   {
     kind: 'MachineType',
@@ -242,6 +322,7 @@ describe('MachineTypeSelection', () => {
   const defaultProps = {
     flavours: baseFlavoursState,
     machineTypes: baseState,
+    machineTypesByRegion: baseState,
     machine_type: field,
     machine_type_force_choice: forceChoiceField,
     isMultiAz: false,
@@ -254,6 +335,7 @@ describe('MachineTypeSelection', () => {
     isMachinePool: false,
     product: 'OSD',
     billingModel: 'standard',
+    allExpanded: true,
   };
 
   afterEach(() => {
@@ -262,7 +344,7 @@ describe('MachineTypeSelection', () => {
 
   it('flavours are fetched on render', () => {
     render(<MachineTypeSelection {...defaultProps} />);
-    expect(getDefaultFlavour).toBeCalled();
+    expect(getDefaultFlavour).toHaveBeenCalled();
   });
 
   describe('with an error loading machineTypes', () => {
@@ -322,6 +404,7 @@ describe('MachineTypeSelection', () => {
         ...defaultProps,
         flavours: errorFlavoursState,
         machineTypes: fulfilledMachineState,
+        machineTypesByRegion: fulfilledMachineState,
       };
 
       it('displays an error', async () => {
@@ -349,6 +432,7 @@ describe('MachineTypeSelection', () => {
         ...defaultProps,
         flavours: fulfilledFlavoursState,
         machineTypes: fulfilledMachineState,
+        machineTypesByRegion: fulfilledMachineState,
         quota,
         isMultiAz: true,
       };
@@ -362,14 +446,12 @@ describe('MachineTypeSelection', () => {
       it('does not display ccs_only machine types, only machines with quota', async () => {
         const { user } = render(<MachineTypeSelection {...quotaAvailableProps} />);
 
-        const optionsMenu = screen.getByLabelText('Options menu');
+        const optionsMenu = screen.getByLabelText('Machine type select toggle');
         await user.click(optionsMenu);
 
         const options = screen
-          .getAllByRole('option')
-          .map(
-            (option) => option.querySelector('.pf-v5-c-select__menu-item-description').textContent,
-          );
+          .getAllByRole('treeitem')
+          .map((option) => option.querySelector('.pf-v5-l-stack__item').textContent);
 
         expect(options).not.toContain('m5.12xlarge');
         expect(options).not.toContain('g4dn.2xlarge');
@@ -384,8 +466,8 @@ describe('MachineTypeSelection', () => {
         ...defaultProps,
         flavours: fulfilledFlavoursState,
         machineTypes: fulfilledMachineState,
+        machineTypesByRegion: fulfilledMachineState,
         machine_type: field,
-
         quota,
         isMultiAz: true,
       };
@@ -404,7 +486,7 @@ describe('MachineTypeSelection', () => {
         const { user } = render(<MachineTypeSelection {...previousSelectionProps} />);
         expect(screen.queryByText('m5.xlarge', { exact: false })).not.toBeInTheDocument();
 
-        await user.click(screen.getByRole('button', { name: 'Options menu' }));
+        await user.click(screen.getByLabelText('Machine type select toggle'));
 
         expect(screen.getByText('m5.xlarge')).toBeInTheDocument();
         expect(screen.getByText('m5.4xlarge')).toBeInTheDocument();
@@ -420,6 +502,7 @@ describe('MachineTypeSelection', () => {
         ...defaultProps,
         flavours: fulfilledFlavoursState,
         machineTypes: fulfilledMachineState,
+        machineTypesByRegion: fulfilledMachineState,
         machine_type: field,
         quota,
         isMultiAz: true,
@@ -436,14 +519,12 @@ describe('MachineTypeSelection', () => {
       it('does not display ccs_only machine types, only machines with quota', async () => {
         const { user } = render(<MachineTypeSelection {...previousSelectionProps} />);
 
-        const optionsMenu = screen.getByLabelText('Options menu');
+        const optionsMenu = screen.getByLabelText('Machine type select toggle');
         await user.click(optionsMenu);
 
         const options = screen
-          .getAllByRole('option')
-          .map(
-            (option) => option.querySelector('.pf-v5-c-select__menu-item-description').textContent,
-          );
+          .getAllByRole('treeitem')
+          .map((option) => option.querySelector('.pf-v5-l-stack__item').textContent);
 
         expect(options).not.toContain('m5.12xlarge');
         expect(options).not.toContain('g4dn.2xlarge');
@@ -452,11 +533,12 @@ describe('MachineTypeSelection', () => {
 
     describe('byoc with sufficient byoc quota available', () => {
       const quota = CCSQuotaList;
-
+      const field = fieldProps('m6id.xlarge');
       const byocProps = {
         ...defaultProps,
         flavours: fulfilledFlavoursState,
         machineTypes: fulfilledMachineState,
+        machineTypesByRegion: fulfilledMachineByRegionState,
         quota,
         isMultiAz: true,
         isBYOC: true,
@@ -465,16 +547,21 @@ describe('MachineTypeSelection', () => {
       it('selects default according to flavours API', async () => {
         render(<MachineTypeSelection {...byocProps} />);
 
-        await waitFor(() => expect(fieldOnChange).toBeCalledWith('m5.xlarge'));
+        await waitFor(() => expect(fieldOnChange).toHaveBeenCalledWith('m5.xlarge'));
       });
 
       it('displays only machine types with quota', async () => {
         const { user } = render(<MachineTypeSelection {...byocProps} />);
 
-        const optionsMenu = screen.getByLabelText('Options menu');
-        user.click(optionsMenu);
+        const optionsMenu = screen.getByLabelText('Machine type select toggle');
+        await user.click(optionsMenu);
 
         expect(await screen.findByText('m5.xlarge', { exact: false })).toBeInTheDocument();
+      });
+
+      it('keeps selection from machineTypesByRegion', async () => {
+        render(<MachineTypeSelection {...byocProps} machine_type={field} />);
+        expect(forceChoiceFieldOnChange).toHaveBeenCalledWith(true);
       });
     });
 
@@ -485,6 +572,7 @@ describe('MachineTypeSelection', () => {
         ...defaultProps,
         flavours: fulfilledFlavoursState,
         machineTypes: fulfilledMachineState,
+        machineTypesByRegion: fulfilledMachineState,
         quota,
         isMultiAz: true,
         isBYOC: true,
@@ -523,6 +611,7 @@ describe('MachineTypeSelection', () => {
     const unknownCategoryProps = {
       ...defaultProps,
       machineTypes: state,
+      machineTypesByRegion: state,
       flavours: fulfilledFlavoursState,
       isMultiAz: true,
       isBYOC: true,
@@ -533,20 +622,18 @@ describe('MachineTypeSelection', () => {
       it('selects default according to flavours API', async () => {
         render(<MachineTypeSelection {...unknownCategoryProps} />);
 
-        await waitFor(() => expect(fieldOnChange).toBeCalledWith('m5.xlarge'));
+        await waitFor(() => expect(fieldOnChange).toHaveBeenCalledWith('m5.xlarge'));
       });
 
       it('displays only machine types with quota from known categories', async () => {
         const { user } = render(<MachineTypeSelection {...unknownCategoryProps} />);
 
-        const optionsMenu = screen.getByLabelText('Options menu');
+        const optionsMenu = screen.getByLabelText('Machine type select toggle');
         await user.click(optionsMenu);
 
         const options = screen
-          .getAllByRole('option')
-          .map(
-            (option) => option.querySelector('.pf-v5-c-select__menu-item-description').textContent,
-          );
+          .getAllByRole('treeitem')
+          .map((option) => option.querySelector('.pf-v5-l-stack__item').textContent);
 
         expect(options).toContain('m5.xlarge');
         expect(options).not.toContain('foo.2xbar');

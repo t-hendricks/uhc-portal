@@ -1,9 +1,11 @@
 import React from 'react';
-import { render, screen, checkAccessibility } from '~/testUtils';
 import axios from 'axios';
+
 import apiRequest from '~/services/apiRequest';
-import ReleaseChannel from './ReleaseChannel';
+import { checkAccessibility, render, screen } from '~/testUtils';
+
 import ocpReleases from './__mocks__/ocpReleases';
+import ReleaseChannel from './ReleaseChannel';
 
 type MockedJest = jest.Mocked<typeof axios> & jest.Mock;
 const apiRequestMock = apiRequest as unknown as MockedJest;

@@ -1,15 +1,16 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Field } from 'redux-form';
+
 import { Button, Grid, GridItem } from '@patternfly/react-core';
-import { PlusCircleIcon } from '@patternfly/react-icons/dist/esm/icons/plus-circle-icon';
 import { MinusCircleIcon } from '@patternfly/react-icons/dist/esm/icons/minus-circle-icon';
+import { PlusCircleIcon } from '@patternfly/react-icons/dist/esm/icons/plus-circle-icon';
 
 import { getRandomID } from '~/common/helpers';
 import { checkTaintKey, checkTaintValue } from '~/common/validators';
 
-import ReduxVerticalFormGroup from '../ReduxVerticalFormGroup';
 import ReduxFormDropdown from '../ReduxFormDropdown';
+import ReduxVerticalFormGroup from '../ReduxVerticalFormGroup';
 
 import '../ReduxFormKeyValueList/ReduxFormKeyValueList.scss';
 

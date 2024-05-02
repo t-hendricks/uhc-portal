@@ -1,5 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
+
 import { ExpandableSection } from '@patternfly/react-core';
 
 export const ExpandableReviewItem = ({ children, initiallyExpanded }) => {

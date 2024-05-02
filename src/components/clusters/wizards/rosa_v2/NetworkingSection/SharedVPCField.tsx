@@ -1,15 +1,19 @@
 import React from 'react';
-import { Grid, GridItem, Text, TextContent, TextVariants } from '@patternfly/react-core';
 import { Field } from 'formik';
-import Instructions from '~/components/common/Instructions';
-import Instruction from '~/components/common/Instruction';
-import ExternalLink from '~/components/common/ExternalLink';
+
+import { Grid, GridItem, Text, TextContent, TextVariants } from '@patternfly/react-core';
+
 import links from '~/common/installLinks.mjs';
-import { ReduxVerticalFormGroup } from '~/components/common/ReduxFormComponents';
 import { required, validatePrivateHostedZoneId, validateRoleARN } from '~/common/validators';
 import { useFormState } from '~/components/clusters/wizards/hooks';
-import SharedVPCDomainSelect from './SharedVPCDomainSelect';
+import ExternalLink from '~/components/common/ExternalLink';
+import Instruction from '~/components/common/Instruction';
+import Instructions from '~/components/common/Instructions';
+import { ReduxVerticalFormGroup } from '~/components/common/ReduxFormComponents';
+
 import { FieldId } from '../constants';
+
+import SharedVPCDomainSelect from './SharedVPCDomainSelect';
 
 function HostedZoneHelpText({ domainName }: { domainName: string }) {
   return (

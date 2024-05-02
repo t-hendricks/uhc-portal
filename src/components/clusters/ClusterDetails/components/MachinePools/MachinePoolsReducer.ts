@@ -14,20 +14,23 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 import { produce } from 'immer';
+
 import { PromiseReducerState } from '~/redux/types';
 import { MachinePool, NodePool } from '~/types/clusters_mgmt.v1';
-import {
-  REJECTED_ACTION,
-  PENDING_ACTION,
-  FULFILLED_ACTION,
-  baseRequestState,
-} from '../../../../../redux/reduxHelpers';
+
 import { getErrorState } from '../../../../../common/errors';
 import {
-  GET_MACHINE_POOLS,
-  DELETE_MACHINE_POOL,
-  CLEAR_GET_MACHINE_POOLS_RESPONSE,
+  baseRequestState,
+  FULFILLED_ACTION,
+  PENDING_ACTION,
+  REJECTED_ACTION,
+} from '../../../../../redux/reduxHelpers';
+
+import {
   CLEAR_DELETE_MACHINE_POOL_RESPONSE,
+  CLEAR_GET_MACHINE_POOLS_RESPONSE,
+  DELETE_MACHINE_POOL,
+  GET_MACHINE_POOLS,
 } from './machinePoolsActionConstants';
 
 type MachinePoolsState = {

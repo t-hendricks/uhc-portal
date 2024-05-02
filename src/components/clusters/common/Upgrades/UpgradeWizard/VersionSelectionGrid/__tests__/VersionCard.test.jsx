@@ -1,5 +1,7 @@
 import React from 'react';
-import { render, screen, checkAccessibility } from '~/testUtils';
+
+import { checkAccessibility, render, screen } from '~/testUtils';
+
 import VersionCard from '../VersionCard';
 
 describe('<VersionCard>', () => {

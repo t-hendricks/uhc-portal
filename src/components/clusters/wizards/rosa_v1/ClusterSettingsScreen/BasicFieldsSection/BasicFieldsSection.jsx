@@ -1,41 +1,41 @@
-import PropTypes from 'prop-types';
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Field } from 'redux-form';
-import { FormGroup, GridItem, Alert } from '@patternfly/react-core';
+
+import { Alert, FormGroup, GridItem } from '@patternfly/react-core';
 
 import { SupportedFeature } from '~/common/featureCompatibility';
-import { getIncompatibleVersionReason } from '~/common/versionCompatibility';
-import { getDefaultSecurityGroupsSettings } from '~/common/securityGroupsHelpers';
-import { constants } from '~/components/clusters/common/CreateOSDFormConstants';
 import { noQuotaTooltip } from '~/common/helpers';
-import {
-  getNodesCount,
-  getMinReplicasCount,
-} from '~/components/clusters/common/ScaleSection/AutoScaleSection/AutoScaleHelper';
+import { getDefaultSecurityGroupsSettings } from '~/common/securityGroupsHelpers';
 import { normalizedProducts } from '~/common/subscriptionTypes';
-import { emptyAWSSubnet } from '~/components/clusters/wizards/common/createOSDInitialValues';
-
+import { getIncompatibleVersionReason } from '~/common/versionCompatibility';
+import { constants } from '~/components/clusters/common/CreateOSDFormConstants';
+import {
+  getMinReplicasCount,
+  getNodesCount,
+} from '~/components/clusters/common/ScaleSection/AutoScaleSection/AutoScaleHelper';
+import { emptyAWSSubnet } from '~/components/clusters/wizards/common/constants';
 import ReduxCheckbox from '~/components/common/ReduxFormComponents/ReduxCheckbox';
 import { useFeatureGate } from '~/hooks/useFeatureGate';
 import { LONGER_CLUSTER_NAME_UI } from '~/redux/constants/featureConstants';
-import CloudRegionComboBox from './CloudRegionComboBox';
-import PopoverHint from '../../../../../common/PopoverHint';
-import ReduxVerticalFormGroup from '../../../../../common/ReduxFormComponents/ReduxVerticalFormGroup';
-import ReduxRichInputField from '../../../../../common/ReduxFormComponents/ReduxRichInputField';
-import validators, {
-  clusterNameValidation,
+
+import {
   clusterNameAsyncValidation,
+  clusterNameValidation,
   createPessimisticValidator,
   domainPrefixAsyncValidation,
   domainPrefixValidation,
 } from '../../../../../../common/validators';
+import PopoverHint from '../../../../../common/PopoverHint';
 import RadioButtons from '../../../../../common/ReduxFormComponents/RadioButtons';
-import VersionSelection from './VersionSelection';
+import ReduxRichInputField from '../../../../../common/ReduxFormComponents/ReduxRichInputField';
 import { createOperatorRolesHashPrefix } from '../../ClusterRolesScreen/ClusterRolesScreen';
+
+import CloudRegionComboBox from './CloudRegionComboBox';
+import VersionSelection from './VersionSelection';
 
 function BasicFieldsSection({
   pending,
-  showDNSBaseDomain,
   showAvailability,
   product,
   cloudProviderID,
@@ -162,24 +162,6 @@ function BasicFieldsSection({
         </>
       )}
 
-      {/* Base DNS domain */}
-      {showDNSBaseDomain && (
-        <>
-          <GridItem md={6}>
-            <Field
-              component={ReduxVerticalFormGroup}
-              name="dns_base_domain"
-              label="Base DNS domain"
-              type="text"
-              validate={validators.checkBaseDNSDomain}
-              disabled={pending}
-              normalize={(value) => value.toLowerCase()}
-            />
-          </GridItem>
-          <GridItem md={6} />
-        </>
-      )}
-
       {/* Cluster Versions */}
       <>
         <GridItem md={6}>
@@ -267,7 +249,6 @@ BasicFieldsSection.propTypes = {
   pending: PropTypes.bool,
   product: PropTypes.string.isRequired,
   isMultiAz: PropTypes.bool.isRequired,
-  showDNSBaseDomain: PropTypes.bool,
   showAvailability: PropTypes.bool,
   change: PropTypes.func.isRequired,
   cloudProviderID: PropTypes.string.isRequired,

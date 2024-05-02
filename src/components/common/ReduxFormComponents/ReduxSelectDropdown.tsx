@@ -2,14 +2,14 @@ import React from 'react';
 import { WrappedFieldInputProps, WrappedFieldMetaProps } from 'redux-form';
 
 import { Flex, FormGroup, LabelProps } from '@patternfly/react-core';
-
 import {
   Select as SelectDeprecated,
   SelectOption as SelectOptionDeprecated,
   SelectOptionObject as SelectOptionObjectDeprecated,
 } from '@patternfly/react-core/deprecated';
-import PopoverHint from '../PopoverHint';
+
 import { FormGroupHelperText } from '../FormGroupHelperText';
+import PopoverHint from '../PopoverHint';
 
 interface ReduxSelectOption {
   name: string;

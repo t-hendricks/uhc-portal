@@ -2,10 +2,9 @@ import isEqual from 'lodash/isEqual';
 import { connect } from 'react-redux';
 import { formValueSelector } from 'redux-form';
 
-import { getGCPKeys } from '~/redux/actions/ccsInquiriesActions';
 import ccsCredentialsSelector from '~/components/clusters/wizards/common/credentialsSelector';
-
 import DynamicSelect from '~/components/common/DynamicSelect';
+import { getGCPKeys } from '~/redux/actions/ccsInquiriesActions';
 
 const mapStateToProps = (state) => {
   const { gcpKeys } = state.ccsInquiries;

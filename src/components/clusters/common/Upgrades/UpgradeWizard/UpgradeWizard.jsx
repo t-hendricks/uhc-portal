@@ -1,19 +1,21 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+
 import { Title } from '@patternfly/react-core';
 import { Wizard as WizardDeprecated } from '@patternfly/react-core/deprecated';
-import { Spinner } from '@redhat-cloud-services/frontend-components/Spinner';
 import { DateFormat } from '@redhat-cloud-services/frontend-components/DateFormat';
-
-import modals from '../../../../common/Modal/modals';
-import VersionSelectionGrid from './VersionSelectionGrid';
-import UpgradeTimeSelection from './UpgradeTimeSelection';
-import UpgradeAcknowledgeStep from '../UpgradeAcknowledge/UpgradeAcknowledgeStep';
-import FinishedStep from './FinishedStep';
-import './UpgradeWizard.scss';
+import { Spinner } from '@redhat-cloud-services/frontend-components/Spinner';
 
 import clusterService from '../../../../../services/clusterService';
+import modals from '../../../../common/Modal/modals';
 import { isHypershiftCluster } from '../../clusterStates';
+import UpgradeAcknowledgeStep from '../UpgradeAcknowledge/UpgradeAcknowledgeStep';
+
+import FinishedStep from './FinishedStep';
+import UpgradeTimeSelection from './UpgradeTimeSelection';
+import VersionSelectionGrid from './VersionSelectionGrid';
+
+import './UpgradeWizard.scss';
 
 class UpgradeWizard extends React.Component {
   state = {

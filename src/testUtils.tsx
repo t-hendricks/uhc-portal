@@ -1,19 +1,28 @@
 import React from 'react';
+import { routerMiddleware } from 'connected-react-router';
+import { createBrowserHistory } from 'history';
+import { axe, toHaveNoViolations } from 'jest-axe';
+import merge from 'lodash/merge';
 import { Provider } from 'react-redux';
-import { AnyAction, createStore } from 'redux';
-import { act, render, RenderOptions } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
-import '@testing-library/jest-dom';
 import { MemoryRouter } from 'react-router-dom';
-import { toHaveNoViolations, axe } from 'jest-axe';
+import { AnyAction } from 'redux';
+import promiseMiddleware from 'redux-promise-middleware';
 
 import * as useChromeHook from '@redhat-cloud-services/frontend-components/useChrome';
-import * as featureGates from '~/hooks/useFeatureGate';
-import { createBrowserHistory } from 'history';
+import notificationsMiddleware from '@redhat-cloud-services/frontend-components-notifications/notificationsMiddleware';
+import { configureStore, Middleware } from '@reduxjs/toolkit';
+import { act, render, RenderOptions } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 
-import { GlobalState, store as globalStore } from './redux/store';
+import * as featureGates from '~/hooks/useFeatureGate';
+
+import promiseRejectionMiddleware from './redux/promiseRejectionMiddleware';
 import { reduxReducers } from './redux/reducers';
+import sentryMiddleware from './redux/sentryMiddleware';
+import { GlobalState, store as globalStore } from './redux/store';
 import * as restrictedEnv from './restrictedEnv';
+
+import '@testing-library/jest-dom';
 
 // Type not exported in the library
 export type UserEventType = ReturnType<typeof userEvent.setup>;
@@ -47,11 +56,40 @@ interface TestState {
  * Accepts any subset of state, rest gets filled by reducers initial values.
  * If not passed a state, uses the global `store` and tries to block dispatch().
  */
-const withState = (initialState?: any): TestState => {
+const withState = (initialState?: any, mergeWithGlobalState?: boolean): TestState => {
   // This could be a class with bound methods but didn't want to require `new withState()`,
   // and old-school constructor function got too annoying to TypeScript, so plain Object it is.
 
-  const store = initialState ? createStore(reducer, initialState) : globalStore;
+  let newState = initialState;
+
+  // console.log(globalStore.getState());
+
+  if (newState && mergeWithGlobalState) {
+    newState = merge({ ...globalStore.getState() }, initialState);
+  }
+
+  const defaultOptions = {
+    dispatchDefaultFailure: false, // automatic error notifications
+  };
+
+  // NOTE: This should match what is set in src/redux/store.ts
+  // BUT also includes an preloadedState key
+  const store = initialState
+    ? configureStore({
+        reducer,
+        preloadedState: newState,
+        middleware: (getDefaultMiddleware) =>
+          getDefaultMiddleware({
+            serializableCheck: false,
+            immutableCheck: { warnAfter: 256 }, // We can also set immutableCheck to false to prevent checking (and warnings)
+          })
+            .concat(routerMiddleware(history))
+            .concat(promiseRejectionMiddleware as Middleware)
+            .concat(promiseMiddleware)
+            .concat(notificationsMiddleware({ ...defaultOptions }) as Middleware) // TODO: remove type convertion as soon as @redhat-cloud-services incorporates RTK
+            .concat(sentryMiddleware as Middleware),
+      })
+    : globalStore;
   // TODO: should we enable promiseMiddleware, thunkMiddleware on these stores?
 
   const Wrapper = ({ children }: { children: React.ReactNode }) => (
@@ -101,10 +139,12 @@ export { withState, renderWithState as render };
 /* ***** Items outside of React Test Library ************ */
 expect.extend(toHaveNoViolations);
 
-export const checkAccessibility = async (container: HTMLElement | string, options?: any) => {
-  const results = await axe(container, options);
-  expect(results).toHaveNoViolations();
-};
+export const checkAccessibility = async (container: HTMLElement | string, options?: any) =>
+  // Needs to be wrapped in "act" to prevent the "not wrapped in act" warnings
+  // See https://www.benmvp.com/blog/avoiding-react-act-warning-when-accessibility-testing-next-link-jest-axe/
+  act(async () => {
+    expect(await axe(container)).toHaveNoViolations();
+  });
 
 export const stubbedChrome = {
   on: () => () => {},

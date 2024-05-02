@@ -4,9 +4,9 @@ import {
   clearResumeClusterResponse,
   resumeCluster,
 } from '../../../../redux/actions/clustersActions';
+import { closeModal } from '../../../common/Modal/ModalActions';
 
 import ResumeClusterModal from './ResumeClusterModal';
-import { closeModal } from '../../../common/Modal/ModalActions';
 
 const mapStateToProps = (state) => {
   const modalData = state.modal.data;

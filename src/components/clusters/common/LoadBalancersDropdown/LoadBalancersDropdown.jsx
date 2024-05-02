@@ -4,14 +4,16 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
-import { FormSelect, FormSelectOption, Tooltip } from '@patternfly/react-core';
 
+import { FormSelect, FormSelectOption, Tooltip } from '@patternfly/react-core';
 import { Spinner } from '@redhat-cloud-services/frontend-components/Spinner';
-import ErrorBox from '../../../common/ErrorBox';
-import { availableQuota } from '../quotaSelectors';
-import { filterLoadBalancerValuesByQuota } from './LoadBalancersDropdownHelper';
+
 import { noQuotaTooltip } from '../../../../common/helpers';
+import ErrorBox from '../../../common/ErrorBox';
 import { QuotaTypes } from '../quotaModel';
+import { availableQuota } from '../quotaSelectors';
+
+import { filterLoadBalancerValuesByQuota } from './LoadBalancersDropdownHelper';
 
 class LoadBalancersDropdown extends React.Component {
   componentDidMount() {

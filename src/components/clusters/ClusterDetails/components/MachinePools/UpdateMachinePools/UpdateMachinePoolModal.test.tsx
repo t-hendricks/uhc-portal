@@ -1,11 +1,12 @@
 import React from 'react';
 import * as reactRedux from 'react-redux';
 
-import { withState, checkAccessibility, screen, within, waitFor } from '~/testUtils';
-import * as updateMachinePoolsHelpers from './updateMachinePoolsHelpers';
+import { checkAccessibility, screen, waitFor, within, withState } from '~/testUtils';
 
-import { UpdatePoolButton, UpdateMachinePoolModal } from './UpdateMachinePoolModal';
 import { NodePoolWithUpgradePolicies } from '../machinePoolCustomTypes';
+
+import { UpdateMachinePoolModal, UpdatePoolButton } from './UpdateMachinePoolModal';
+import * as updateMachinePoolsHelpers from './updateMachinePoolsHelpers';
 
 const defaultMachinePool = {
   id: 'my-machine-pool',

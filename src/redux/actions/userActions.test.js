@@ -1,5 +1,6 @@
-import { userActions } from './userActions';
 import { userConstants } from '../constants';
+
+import { userActions } from './userActions';
 
 jest.mock('../../services/accountsService');
 

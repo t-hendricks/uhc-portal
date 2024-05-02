@@ -1,12 +1,15 @@
-import { Checkbox, FormGroup } from '@patternfly/react-core';
-import { useField } from 'formik';
 import * as React from 'react';
+import { useField } from 'formik';
+
+import { Checkbox, FormGroup } from '@patternfly/react-core';
+
 import links from '~/common/installLinks.mjs';
+import { isROSA } from '~/components/clusters/common/clusterStates';
 import { constants } from '~/components/clusters/common/CreateOSDFormConstants';
 import ExternalLink from '~/components/common/ExternalLink';
 import PopoverHint from '~/components/common/PopoverHint';
 import { Cluster } from '~/types/clusters_mgmt.v1';
-import { isROSA } from '~/components/clusters/common/clusterStates';
+
 import useCanClusterAutoscale from '../hooks/useCanClusterAutoscale';
 
 const fieldId = 'autoscaling';

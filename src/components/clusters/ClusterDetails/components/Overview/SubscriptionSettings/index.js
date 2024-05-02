@@ -1,9 +1,10 @@
-import { connect } from 'react-redux';
 import get from 'lodash/get';
+import { connect } from 'react-redux';
 
 import { modalActions } from '../../../../../common/Modal/ModalActions';
-import SubscriptionSettings from './SubscriptionSettings';
 import canSubscribeOCPSelector from '../../../../common/EditSubscriptionSettingsDialog/CanSubscribeOCPSelector';
+
+import SubscriptionSettings from './SubscriptionSettings';
 
 const mapStateToProps = (state) => ({
   canEdit: get(state, 'clusters.details.cluster.canEdit', false),

@@ -1,17 +1,20 @@
 import React, { useEffect } from 'react';
+import { ArrayHelpers, Field } from 'formik';
+
 import { Button, Grid, GridItem } from '@patternfly/react-core';
 import { MinusCircleIcon } from '@patternfly/react-icons/dist/esm/icons/minus-circle-icon';
 import { PlusCircleIcon } from '@patternfly/react-icons/dist/esm/icons/plus-circle-icon';
 
-import { ArrayHelpers, Field } from 'formik';
-import { useFormState } from '~/components/clusters/wizards/hooks';
-
 import { nodeKeyValueTooltipText } from '~/common/helpers';
 import { validateLabelKey, validateLabelValue } from '~/common/validators';
+import { useFormState } from '~/components/clusters/wizards/hooks';
 import { FieldId } from '~/components/clusters/wizards/rosa_v2/constants';
+
 import ButtonWithTooltip from '../../ButtonWithTooltip';
+
 import FormKeyLabelKey from './FormKeyLabelKey';
 import FormKeyLabelValue from './FormKeyLabelValue';
+
 import './FormKeyValueList.scss';
 
 const FormKeyValueList = ({ push, remove }: ArrayHelpers) => {

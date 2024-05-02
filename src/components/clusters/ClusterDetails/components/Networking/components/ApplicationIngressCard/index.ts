@@ -1,18 +1,19 @@
 import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
 
-import { GlobalState } from '~/redux/store';
-import { LoadBalancerFlavor } from '~/types/clusters_mgmt.v1';
-
+import { isHibernating, isHypershiftCluster } from '~/components/clusters/common/clusterStates';
 import { CloudProviderType } from '~/components/clusters/wizards/common';
 import {
   canConfigureDayTwoManagedIngress,
   canConfigureLoadBalancer,
 } from '~/components/clusters/wizards/rosa/constants';
-import { isHibernating, isHypershiftCluster } from '~/components/clusters/common/clusterStates';
+import { GlobalState } from '~/redux/store';
+import { LoadBalancerFlavor } from '~/types/clusters_mgmt.v1';
+
 import { openModal } from '../../../../../../common/Modal/ModalActions';
-import ApplicationIngressCard from './ApplicationIngressCard';
 import NetworkingSelector from '../../NetworkingSelector';
+
+import ApplicationIngressCard from './ApplicationIngressCard';
 
 const mapStateToProps = (state: GlobalState) => {
   const { cluster } = state.clusters.details;

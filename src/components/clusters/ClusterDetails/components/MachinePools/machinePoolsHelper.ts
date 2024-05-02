@@ -3,6 +3,7 @@ import { normalizedProducts } from '~/common/subscriptionTypes';
 import { isHypershiftCluster } from '~/components/clusters/common/clusterStates';
 import { GlobalState } from '~/redux/store';
 import { Cluster, MachinePool, NodePool } from '~/types/clusters_mgmt.v1';
+
 import { asArray } from '../../../../../common/helpers';
 import { isMultiAZ } from '../../clusterDetailsHelper';
 

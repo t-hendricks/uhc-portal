@@ -2,19 +2,21 @@ import React, { ReactElement, useMemo } from 'react';
 import { Field } from 'formik';
 
 import { Alert, AlertActionLink, GridItem, Title, useWizardContext } from '@patternfly/react-core';
-import { useFeatureGate } from '~/hooks/useFeatureGate';
 
-import PopoverHint from '~/components/common/PopoverHint';
-import ExternalLink from '~/components/common/ExternalLink';
-import { required, validateGCPHostProjectId, validateGCPSubnet } from '~/common/validators';
 import links from '~/common/installLinks.mjs';
+import { required, validateGCPHostProjectId, validateGCPSubnet } from '~/common/validators';
+import { versionComparator } from '~/common/versionComparator';
 import { useFormState } from '~/components/clusters/wizards/hooks';
 import { FieldId, StepId } from '~/components/clusters/wizards/osd/constants';
-import { versionComparator } from '~/common/versionComparator';
+import ExternalLink from '~/components/common/ExternalLink';
+import PopoverHint from '~/components/common/PopoverHint';
+import { useFeatureGate } from '~/hooks/useFeatureGate';
 import { OSD_GCP_SHARED_VPC_FEATURE } from '~/redux/constants/featureConstants';
+
+import { CheckboxField, TextInputField } from '../../../form';
+
 import { GcpVpcNameSelectField } from './GcpVpcNameSelectField';
 import { GcpVpcSubnetSelectField } from './GcpVpcSubnetSelectField';
-import { CheckboxField, TextInputField } from '../../../form';
 
 export const GcpVpcSettings = () => {
   const {

@@ -1,6 +1,8 @@
 import React from 'react';
+
 import { Alert, Icon } from '@patternfly/react-core';
 import { ExternalLinkAltIcon } from '@patternfly/react-icons/dist/esm/icons/external-link-alt-icon';
+
 import links from '../../../../../common/installLinks.mjs';
 
 function EvaluationAlert() {

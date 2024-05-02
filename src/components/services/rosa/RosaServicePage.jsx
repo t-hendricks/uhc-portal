@@ -1,40 +1,43 @@
 import React, { useCallback } from 'react';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom-v5-compat';
+
 import {
   Button,
+  Card,
   CardBody,
   CardFooter,
+  CardHeader,
   CardTitle,
-  Card,
+  Divider,
   ExpandableSection,
+  Flex,
+  FlexItem,
+  Icon,
   Label,
   List,
   ListItem,
-  Text,
-  Title,
-  Flex,
-  FlexItem,
   PageSection,
-  CardHeader,
+  Stack,
+  Text,
   TextContent,
   TextVariants,
-  Divider,
-  Stack,
-  Icon,
+  Title,
 } from '@patternfly/react-core';
 import { CubeIcon } from '@patternfly/react-icons/dist/esm/icons/cube-icon';
-import { Link } from 'react-router-dom-v5-compat';
+
+import { trackEvents } from '~/common/analytics';
+import { AppPage } from '~/components/App/AppPage';
+import Breadcrumbs from '~/components/common/Breadcrumbs';
 import ExternalLink from '~/components/common/ExternalLink';
 import useAnalytics from '~/hooks/useAnalytics';
-import { trackEvents } from '~/common/analytics';
-import Breadcrumbs from '~/components/common/Breadcrumbs';
-import RedHatLogo from '~/styles/images/Logo-Red_Hat-B-Standard-RGB.png';
 import AWSLogo from '~/styles/images/AWSLogo';
-import { AppPage } from '~/components/App/AppPage';
-import { ListTextLabelLinkCard } from '../../common/ListTextLabelLinkCard/ListTextLabelLinkCard';
-import { ProductBanner } from '../../common/ProductBanner';
+import RedHatLogo from '~/styles/images/Logo-Red_Hat-B-Standard-RGB.png';
+
 import docLinks from '../../../common/installLinks.mjs';
 import OpenShiftProductIcon from '../../../styles/images/OpenShiftProductIcon.svg';
+import { ListTextLabelLinkCard } from '../../common/ListTextLabelLinkCard/ListTextLabelLinkCard';
+import { ProductBanner } from '../../common/ProductBanner';
 
 import './RosaServicePage.scss';
 

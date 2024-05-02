@@ -17,8 +17,8 @@ import { produce } from 'immer';
 
 import {
   FULFILLED_ACTION,
-  REJECTED_ACTION,
   PENDING_ACTION,
+  REJECTED_ACTION,
 } from '../../../../../redux/reduxHelpers';
 
 import { GET_CLUSTER_INSIGHTS, GET_ORGANIZATION_INSIGHTS } from './InsightsConstants';

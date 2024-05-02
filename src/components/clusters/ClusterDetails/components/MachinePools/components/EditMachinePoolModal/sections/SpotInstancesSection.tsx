@@ -1,11 +1,13 @@
 import * as React from 'react';
-import { Form, FormGroup, GridItem, Radio } from '@patternfly/react-core';
 import { useField } from 'formik';
+
+import { Form, FormGroup, GridItem, Radio } from '@patternfly/react-core';
+
 import PopoverHint from '~/components/common/PopoverHint';
 
-import { EditMachinePoolValues } from '../hooks/useMachinePoolFormik';
-import UseSpotInstancesField from '../fields/UseSpotInstancesField';
 import MaxPriceField from '../fields/MaxPriceField';
+import UseSpotInstancesField from '../fields/UseSpotInstancesField';
+import { EditMachinePoolValues } from '../hooks/useMachinePoolFormik';
 
 type SpotInstancesSectionProps = {
   isEdit: boolean;

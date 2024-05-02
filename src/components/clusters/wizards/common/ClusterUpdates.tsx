@@ -4,16 +4,16 @@ import { Field } from 'formik';
 import { Flex, Form, Grid, GridItem, Text, TextVariants, Title } from '@patternfly/react-core';
 
 import links from '~/common/installLinks.mjs';
-import ExternalLink from '~/components/common/ExternalLink';
+import PodDistruptionBudgetGraceSelect from '~/components/clusters/common/Upgrades/PodDistruptionBudgetGraceSelect';
+import UpgradeScheduleSelection from '~/components/clusters/common/Upgrades/UpgradeScheduleSelection';
 import {
   FieldId,
   initialValues,
   UpgradePolicyType,
 } from '~/components/clusters/wizards/common/constants';
-import { useFormState } from '~/components/clusters/wizards/hooks';
 import { RadioGroupField } from '~/components/clusters/wizards/form/RadioGroupField';
-import UpgradeScheduleSelection from '~/components/clusters/common/Upgrades/UpgradeScheduleSelection';
-import PodDistruptionBudgetGraceSelect from '~/components/clusters/common/Upgrades/PodDistruptionBudgetGraceSelect';
+import { useFormState } from '~/components/clusters/wizards/hooks';
+import ExternalLink from '~/components/common/ExternalLink';
 
 export const ClusterUpdates = () => {
   const {

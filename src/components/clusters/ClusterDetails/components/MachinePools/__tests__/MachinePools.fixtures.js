@@ -1,7 +1,8 @@
-import { baseRequestState } from '~/redux/reduxHelpers';
 import { defaultClusterFromSubscription } from '~/components/clusters/common/__tests__/defaultClusterFromSubscription.fixtures';
+import { baseRequestState } from '~/redux/reduxHelpers';
+
 import { normalizedProducts } from '../../../../../../common/subscriptionTypes';
-import { rhQuotaList, emptyQuotaList } from '../../../../common/__tests__/quota.fixtures';
+import { emptyQuotaList, rhQuotaList } from '../../../../common/__tests__/quota.fixtures';
 
 const baseState = {
   clusters: {

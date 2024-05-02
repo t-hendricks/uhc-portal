@@ -1,4 +1,5 @@
 import React from 'react';
+
 import {
   Card,
   CardBody,
@@ -11,13 +12,16 @@ import {
   TextContent,
   Title,
 } from '@patternfly/react-core';
-import LeadingInfo from './LeadingInfo';
+
 import links, { channels, tools } from '../../common/installLinks.mjs';
-import InstructionCommand from '../common/InstructionCommand';
-import ExternalLink from '../common/ExternalLink';
-import PopoverHint from '../common/PopoverHint';
-import SupportLevelBadge, { SupportLevelType } from '../common/SupportLevelBadge';
 import DownloadAndOSSelection from '../clusters/install/instructions/components/DownloadAndOSSelection';
+import ExternalLink from '../common/ExternalLink';
+import InstructionCommand from '../common/InstructionCommand';
+import PopoverHint from '../common/PopoverHint';
+import SupportLevelBadge, { DEV_PREVIEW } from '../common/SupportLevelBadge';
+
+import LeadingInfo from './LeadingInfo';
+
 import './Instructions.scss';
 
 const SSOLogin = ({
@@ -43,9 +47,7 @@ const SSOLogin = ({
             <List component="ol">
               <ListItem>
                 Download and install the <code>{commandName}</code> command-line tool:{' '}
-                {commandTool === tools.OCM && (
-                  <SupportLevelBadge type={SupportLevelType.devPreview} />
-                )}
+                {commandTool === tools.OCM && <SupportLevelBadge {...DEV_PREVIEW} />}
                 <Text component="p" />
                 <DownloadAndOSSelection tool={commandTool} channel={channels.STABLE} />
                 <Text component="p" />

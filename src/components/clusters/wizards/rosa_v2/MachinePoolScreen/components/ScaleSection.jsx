@@ -1,35 +1,33 @@
 import React, { useCallback, useMemo, useState } from 'react';
-
 import { Field, FieldArray } from 'formik';
 
 import { ExpandableSection, GridItem, Text, TextVariants, Title } from '@patternfly/react-core';
+
+import links from '~/common/installLinks.mjs';
+import { billingModels, normalizedProducts } from '~/common/subscriptionTypes';
+import { required } from '~/common/validators';
 import {
   getMinNodesRequired,
   getNodeIncrement,
   getNodeIncrementHypershift,
 } from '~/components/clusters/ClusterDetails/components/MachinePools/machinePoolsHelper';
+import { canAutoScaleOnCreateSelector } from '~/components/clusters/ClusterDetails/components/MachinePools/machinePoolsSelectors';
+import NodeCountInput from '~/components/clusters/common/NodeCountInput';
+import { computeNodeHintText } from '~/components/clusters/common/ScaleSection/AutoScaleSection/AutoScaleHelper';
+import MachineTypeSelection from '~/components/clusters/common/ScaleSection/MachineTypeSelection';
+import { AutoScale } from '~/components/clusters/wizards/common/ClusterSettings/MachinePool/AutoScale/AutoScale';
+import { useFormState } from '~/components/clusters/wizards/hooks';
 import {
   canSelectImds,
   getWorkerNodeVolumeSizeMaxGiB,
 } from '~/components/clusters/wizards/rosa/constants';
-import { useGlobalState } from '~/redux/hooks';
-
-import links from '~/common/installLinks.mjs';
-import { billingModels, normalizedProducts } from '~/common/subscriptionTypes';
-import NodeCountInput from '~/components/clusters/common/NodeCountInput';
-
-import { required } from '~/common/validators';
-import { computeNodeHintText } from '~/components/clusters/common/ScaleSection/AutoScaleSection/AutoScaleHelper';
-import { AutoScale } from '~/components/clusters/wizards/common/ClusterSettings/MachinePool/AutoScale/AutoScale';
-import { useFormState } from '~/components/clusters/wizards/hooks';
 import { FieldId } from '~/components/clusters/wizards/rosa_v2/constants';
 import ExternalLink from '~/components/common/ExternalLink';
 import FormKeyValueList from '~/components/common/FormikFormComponents/FormKeyValueList';
-import MachineTypeSelection from '~/components/clusters/common/ScaleSection/MachineTypeSelection';
-import { canAutoScaleOnCreateSelector } from '~/components/clusters/ClusterDetails/components/MachinePools/machinePoolsSelectors';
+import { useGlobalState } from '~/redux/hooks';
 
-import ImdsSection from './ImdsSection';
 import WorkerNodeVolumeSizeSection from './WorkerNodeVolumeSizeSection/WorkerNodeVolumeSizeSection';
+import ImdsSection from './ImdsSection';
 
 function ScaleSection() {
   const {
@@ -45,7 +43,7 @@ function ScaleSection() {
       [FieldId.ClusterVersion]: clusterVersion,
       [FieldId.MachinePoolsSubnets]: machinePoolsSubnets,
       [FieldId.BillingModel]: billingModelFieldValue,
-      [FieldId.Imds]: imds,
+      [FieldId.IMDS]: imds,
     },
     setFieldValue,
     getFieldProps,
@@ -132,7 +130,7 @@ function ScaleSection() {
             <ImdsSection
               isDisabled={!canSelectImds(clusterVersionRawId)}
               imds={imds}
-              onChangeImds={(value) => setFieldValue(FieldId.Imds, value)}
+              onChangeImds={(value) => setFieldValue(FieldId.IMDS, value)}
             />
           </GridItem>
           <GridItem md={4} />

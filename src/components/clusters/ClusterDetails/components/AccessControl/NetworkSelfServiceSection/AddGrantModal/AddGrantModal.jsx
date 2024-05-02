@@ -1,13 +1,15 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
-import { Form, TextInput, FormGroup, Radio } from '@patternfly/react-core';
+import { Form, FormGroup, Radio, TextInput } from '@patternfly/react-core';
 
 import { FormGroupHelperText } from '~/components/common/FormGroupHelperText';
-import Modal from '../../../../../../common/Modal/Modal';
-import ErrorBox from '../../../../../../common/ErrorBox';
-import PopoverHint from '../../../../../../common/PopoverHint';
+
 import { validateUserOrGroupARN } from '../../../../../../../common/validators';
+import ErrorBox from '../../../../../../common/ErrorBox';
+import Modal from '../../../../../../common/Modal/Modal';
+import PopoverHint from '../../../../../../common/PopoverHint';
+
 import './AddGrantModal.scss';
 
 const initialState = {

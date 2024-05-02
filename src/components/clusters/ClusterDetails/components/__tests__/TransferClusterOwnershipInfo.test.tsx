@@ -1,9 +1,11 @@
 import React from 'react';
 import { CompatRouter } from 'react-router-dom-v5-compat';
-import { render, screen, checkAccessibility, TestRouter } from '~/testUtils';
+
 import { defaultSubscription } from '~/components/clusters/common/__tests__/clusterStates.fixtures';
-import TransferClusterOwnershipInfo from '../TransferClusterOwnershipInfo';
+import { checkAccessibility, render, screen, TestRouter } from '~/testUtils';
+
 import { normalizedProducts, subscriptionStatuses } from '../../../../../common/subscriptionTypes';
+import TransferClusterOwnershipInfo from '../TransferClusterOwnershipInfo';
 
 describe('<TransferClusterOwnershipInfo />', () => {
   it.each([

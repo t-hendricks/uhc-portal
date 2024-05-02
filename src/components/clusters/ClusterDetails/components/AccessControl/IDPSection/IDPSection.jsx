@@ -1,16 +1,16 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import get from 'lodash/get';
-import { useNavigate, Link } from 'react-router-dom-v5-compat';
+import PropTypes from 'prop-types';
+import { Link, useNavigate } from 'react-router-dom-v5-compat';
 
 import {
   Card,
-  Title,
   CardBody,
   CardFooter,
   CardTitle,
   Stack,
   StackItem,
+  Title,
   Tooltip,
 } from '@patternfly/react-core';
 import {
@@ -18,21 +18,21 @@ import {
   DropdownItem as DropdownItemDeprecated,
   DropdownToggle as DropdownToggleDeprecated,
 } from '@patternfly/react-core/deprecated';
-import { TableVariant, cellWidth } from '@patternfly/react-table';
+import { cellWidth, TableVariant } from '@patternfly/react-table';
 import {
   Table as TableDeprecated,
-  TableHeader as TableHeaderDeprecated,
   TableBody as TableBodyDeprecated,
+  TableHeader as TableHeaderDeprecated,
 } from '@patternfly/react-table/deprecated';
 import Skeleton from '@redhat-cloud-services/frontend-components/Skeleton';
-import ClipboardCopyLinkButton from '../../../../../common/ClipboardCopyLinkButton';
 
 import links from '../../../../../../common/installLinks.mjs';
+import ClipboardCopyLinkButton from '../../../../../common/ClipboardCopyLinkButton';
 import {
-  IDPTypeNames,
   getOauthCallbackURL,
-  IDPNeedsOAuthURL,
   IDPformValues,
+  IDPNeedsOAuthURL,
+  IDPTypeNames,
 } from '../../IdentityProvidersPage/IdentityProvidersHelper';
 
 const IDPSection = ({

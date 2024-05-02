@@ -1,9 +1,11 @@
 import React from 'react';
+import PropTypes from 'prop-types';
+
 import { Text } from '@patternfly/react-core';
 
-import PropTypes from 'prop-types';
+import { channels, tools } from '../../../../../common/installLinks.mjs';
+
 import DownloadAndOSSelection from './DownloadAndOSSelection';
-import { tools, channels } from '../../../../../common/installLinks.mjs';
 
 const CLISection = ({ pendoID, channel, isBMIPI = false }) => (
   <>

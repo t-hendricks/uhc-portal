@@ -1,18 +1,20 @@
 import React, { useState } from 'react';
-import { Alert, AlertActionLink, ExpandableSection } from '@patternfly/react-core';
 import { Field } from 'formik';
 
-import { CloudVPC } from '~/types/clusters_mgmt.v1';
-import { useFeatureGate } from '~/hooks/useFeatureGate';
+import { Alert, AlertActionLink, ExpandableSection } from '@patternfly/react-core';
+
 import { SupportedFeature } from '~/common/featureCompatibility';
-import ReduxCheckbox from '~/components/common/ReduxFormComponents/ReduxCheckbox';
-import { getIncompatibleVersionReason } from '~/common/versionCompatibility';
+import links from '~/common/installLinks.mjs';
 import { validateSecurityGroups } from '~/common/validators';
-import { SECURITY_GROUPS_FEATURE_DAY1 } from '~/redux/constants/featureConstants';
+import { getIncompatibleVersionReason } from '~/common/versionCompatibility';
 import EditSecurityGroups from '~/components/clusters/ClusterDetails/components/SecurityGroups/EditSecurityGroups';
 import SecurityGroupsEmptyAlert from '~/components/clusters/ClusterDetails/components/SecurityGroups/SecurityGroupsEmptyAlert';
 import { useFormState } from '~/components/clusters/wizards/hooks';
-import links from '~/common/installLinks.mjs';
+import ReduxCheckbox from '~/components/common/ReduxFormComponents/ReduxCheckbox';
+import { useFeatureGate } from '~/hooks/useFeatureGate';
+import { SECURITY_GROUPS_FEATURE_DAY1 } from '~/redux/constants/featureConstants';
+import { CloudVPC } from '~/types/clusters_mgmt.v1';
+
 import { FieldId } from '../constants';
 
 type SecurityGroupFieldProps = {

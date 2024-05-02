@@ -1,8 +1,10 @@
 import { connect } from 'react-redux';
-import shouldShowModal from '../../../../../common/Modal/ModalSelectors';
+
 import { closeModal } from '../../../../../common/Modal/ModalActions';
-import AddOnsDeleteModal from './AddOnsDeleteModal';
+import shouldShowModal from '../../../../../common/Modal/ModalSelectors';
 import { addOnsActions, clearClusterAddOnsResponses } from '../AddOnsActions';
+
+import AddOnsDeleteModal from './AddOnsDeleteModal';
 
 const mapStateToProps = (state) => ({
   isOpen: shouldShowModal(state, 'add-ons-delete-modal'),

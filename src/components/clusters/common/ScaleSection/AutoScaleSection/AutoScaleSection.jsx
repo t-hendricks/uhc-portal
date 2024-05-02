@@ -1,28 +1,30 @@
 // eslint-disable-next-line max-classes-per-file
 import React from 'react';
 import PropTypes from 'prop-types';
-import {
-  Button,
-  NumberInput,
-  FormGroup,
-  GridItem,
-  Split,
-  SplitItem,
-  HelperText,
-  HelperTextItem,
-} from '@patternfly/react-core';
 import { Field } from 'redux-form';
 
-import { FormGroupHelperText } from '~/components/common/FormGroupHelperText';
+import {
+  Button,
+  FormGroup,
+  GridItem,
+  HelperText,
+  HelperTextItem,
+  NumberInput,
+  Split,
+  SplitItem,
+} from '@patternfly/react-core';
+
+import links from '~/common/installLinks.mjs';
+import { normalizedProducts } from '~/common/subscriptionTypes';
+import { required, validateNumericInput } from '~/common/validators';
+import { constants } from '~/components/clusters/common/CreateOSDFormConstants';
 import EditClusterAutoScalingDialog from '~/components/clusters/common/EditClusterAutoScalingDialog';
 import { MAX_NODES, MAX_NODES_HCP } from '~/components/clusters/common/machinePools/constants';
-import ReduxCheckbox from '~/components/common/ReduxFormComponents/ReduxCheckbox';
 import ExternalLink from '~/components/common/ExternalLink';
+import { FormGroupHelperText } from '~/components/common/FormGroupHelperText';
 import PopoverHint from '~/components/common/PopoverHint';
-import links from '~/common/installLinks.mjs';
-import { validateNumericInput, required } from '~/common/validators';
-import { constants } from '~/components/clusters/common/CreateOSDFormConstants';
-import { normalizedProducts } from '~/common/subscriptionTypes';
+import ReduxCheckbox from '~/components/common/ReduxFormComponents/ReduxCheckbox';
+
 import getMinNodesAllowed, { computeNodeHintText } from './AutoScaleHelper';
 
 import './AutoScale.scss';

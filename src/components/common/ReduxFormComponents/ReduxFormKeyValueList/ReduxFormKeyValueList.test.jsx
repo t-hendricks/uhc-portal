@@ -1,6 +1,8 @@
 import React from 'react';
-import { render, screen, checkAccessibility } from '~/testUtils';
+
 import wizardConnector from '~/components/clusters/wizards/common/WizardConnector';
+import { checkAccessibility, render, screen } from '~/testUtils';
+
 import ReduxFormKeyValueList from './ReduxFormKeyValueList';
 
 const push = jest.fn();

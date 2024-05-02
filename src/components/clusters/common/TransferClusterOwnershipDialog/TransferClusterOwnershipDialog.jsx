@@ -1,21 +1,22 @@
-import get from 'lodash/get';
 import React, { Component } from 'react';
+import get from 'lodash/get';
 import PropTypes from 'prop-types';
+
 import {
-  TextContent,
   Text,
-  TextVariants,
+  TextContent,
   TextList,
-  TextListVariants,
   TextListItem,
+  TextListVariants,
+  TextVariants,
 } from '@patternfly/react-core';
 
-import Modal from '../../../common/Modal/Modal';
-import modals from '../../../common/Modal/modals';
-import ErrorBox from '../../../common/ErrorBox';
 import ocmBaseName from '../../../../common/getBaseName';
 import { subscriptionStatuses } from '../../../../common/subscriptionTypes';
+import ErrorBox from '../../../common/ErrorBox';
 import ExternalLink from '../../../common/ExternalLink';
+import Modal from '../../../common/Modal/Modal';
+import modals from '../../../common/Modal/modals';
 
 class TransferClusterOwnershipDialog extends Component {
   componentDidUpdate() {

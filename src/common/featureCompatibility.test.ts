@@ -1,5 +1,5 @@
-import { Cluster } from '~/types/clusters_mgmt.v1';
 import { normalizedProducts } from '~/common/subscriptionTypes';
+import { Cluster } from '~/types/clusters_mgmt.v1';
 
 import { isCompatibleFeature, SupportedFeature } from './featureCompatibility';
 

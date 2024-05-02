@@ -1,8 +1,10 @@
 import React from 'react';
 
-import { checkAccessibility, render, screen, within, mockRestrictedEnv } from '~/testUtils';
 import { subscriptionStatuses } from '~/common/subscriptionTypes';
+import { checkAccessibility, mockRestrictedEnv, render, screen, within } from '~/testUtils';
+
 import fixtures from '../../../__tests__/ClusterDetails.fixtures';
+
 import DetailsRight from './DetailsRight';
 
 const defaultProps = {

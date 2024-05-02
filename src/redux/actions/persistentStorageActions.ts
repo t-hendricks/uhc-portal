@@ -1,6 +1,7 @@
 import { action, ActionType } from 'typesafe-actions';
-import { persistentStorageConstants } from '../constants';
+
 import { clusterService } from '../../services';
+import { persistentStorageConstants } from '../constants';
 
 const getPersistentStorage = () =>
   clusterService

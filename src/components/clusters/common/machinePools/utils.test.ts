@@ -1,5 +1,5 @@
-import * as utils from './utils';
 import { MAX_NODES, MAX_NODES_HCP } from './constants';
+import * as utils from './utils';
 
 describe('machinePools utils', () => {
   describe('getNodeOptions', () => {

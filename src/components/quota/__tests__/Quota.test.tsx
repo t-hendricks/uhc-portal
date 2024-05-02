@@ -1,9 +1,11 @@
 import React from 'react';
-
-import { screen, render, checkAccessibility, TestRouter } from '~/testUtils';
 import { CompatRouter } from 'react-router-dom-v5-compat';
-import * as Fixtures from './Quota.fixtures';
+
+import { checkAccessibility, render, screen, TestRouter } from '~/testUtils';
+
 import Quota from '../Quota';
+
+import * as Fixtures from './Quota.fixtures';
 
 describe('<Quota />', () => {
   describe('Quota', () => {

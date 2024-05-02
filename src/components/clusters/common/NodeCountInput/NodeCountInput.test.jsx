@@ -1,10 +1,13 @@
 import React from 'react';
-import { render, screen, checkAccessibility } from '~/testUtils';
+
 import { getMinNodesRequired } from '~/components/clusters/ClusterDetails/components/MachinePools/machinePoolsHelper';
-import NodeCountInput from './NodeCountInput';
-import * as quotaSelectors from '../quotaSelectors';
-import { normalizedProducts, billingModels } from '../../../../common/subscriptionTypes';
+import { checkAccessibility, render, screen } from '~/testUtils';
+
+import { billingModels, normalizedProducts } from '../../../../common/subscriptionTypes';
 import { MAX_NODES, MAX_NODES_HCP } from '../machinePools/constants';
+import * as quotaSelectors from '../quotaSelectors';
+
+import NodeCountInput from './NodeCountInput';
 
 const includedNodes = ({ isByoc, isMultiAz, isMachinePool }) => {
   if (isByoc || isMachinePool) {
@@ -26,6 +29,7 @@ const baseProps = ({ isByoc, isMultiAz }) => ({
   input: {
     name: 'compute-nodes',
     onChange: jest.fn(),
+    onBlur: jest.fn(),
   },
   cloudProviderID: 'aws',
   product: normalizedProducts.OSD,

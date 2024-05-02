@@ -1,8 +1,10 @@
 import React from 'react';
 import { CompatRouter } from 'react-router-dom-v5-compat';
-import { screen, render, TestRouter } from '~/testUtils';
-import ClusterLogs from '../ClusterLogs';
+
+import { render, screen, TestRouter } from '~/testUtils';
+
 import fixtures from '../../../__tests__/ClusterDetails.fixtures';
+import ClusterLogs from '../ClusterLogs';
 
 jest.mock('../toolbar', () => () => <div data-testid="toolbar">ClusterLogsToolbar</div>);
 

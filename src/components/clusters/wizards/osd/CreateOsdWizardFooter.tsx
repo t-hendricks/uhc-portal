@@ -2,11 +2,12 @@ import React, { useEffect, useState } from 'react';
 import { setNestedObjectValues } from 'formik';
 
 import { Button, useWizardContext, WizardFooterWrapper } from '@patternfly/react-core';
+
 import { scrollToFirstField } from '~/common/helpers';
 import { getScrollErrorIds } from '~/components/clusters/wizards/form/utils';
 import { useFormState } from '~/components/clusters/wizards/hooks';
-import { useGlobalState } from '~/redux/hooks/useGlobalState';
 import { StepId } from '~/components/clusters/wizards/osd/constants';
+import { useGlobalState } from '~/redux/hooks/useGlobalState';
 
 interface CreateOsdWizardFooterProps {
   isLoading?: boolean;
@@ -67,6 +68,7 @@ export const CreateOsdWizardFooter = ({
       {activeStep.id === StepId.Review ? (
         <Button
           variant="primary"
+          data-testid="wizard-create-cluster-button"
           onClick={() => {
             submitForm();
             track();
@@ -79,6 +81,7 @@ export const CreateOsdWizardFooter = ({
       ) : (
         <Button
           variant="primary"
+          data-testid="wizard-next-button"
           onClick={onValidateNext}
           isLoading={isButtonLoading}
           isDisabled={isButtonDisabled}
@@ -88,12 +91,18 @@ export const CreateOsdWizardFooter = ({
       )}
       <Button
         variant="secondary"
+        data-testid="wizard-back-button"
         onClick={goToPrevStep}
         isDisabled={isButtonDisabled || steps.indexOf(activeStep) === 0}
       >
         Back
       </Button>
-      <Button variant="link" onClick={close} isDisabled={isButtonDisabled}>
+      <Button
+        variant="link"
+        data-testid="wizard-cancel-button"
+        onClick={close}
+        isDisabled={isButtonDisabled}
+      >
         Cancel
       </Button>
     </WizardFooterWrapper>

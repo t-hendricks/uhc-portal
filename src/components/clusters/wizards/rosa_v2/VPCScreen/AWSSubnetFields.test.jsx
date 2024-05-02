@@ -1,7 +1,9 @@
 import React from 'react';
 import { Formik } from 'formik';
-import { screen, render, checkAccessibility, waitFor, act } from '~/testUtils';
+
 import { useAWSVPCInquiry } from '~/components/clusters/common/useVPCInquiry';
+import { checkAccessibility, render, screen, waitFor } from '~/testUtils';
+
 import { initialValues } from '../constants';
 
 import AWSSubnetFields from './AWSSubnetFields';
@@ -108,18 +110,17 @@ describe('<AWSSubnetFields />', () => {
     const { container } = render(
       buildTestComponent(<AWSSubnetFields {...defaultProps} />, initialValues),
     );
-    await act(() => Promise.resolve());
 
     // Assert - the correct fields titles are shown
     await waitFor(() => {
       expect(screen.getByText('Select availability zone')).toBeInTheDocument();
     });
-    expect(screen.getByText('Private subnet')).toBeInTheDocument();
-    expect(screen.getByText('Public subnet')).toBeInTheDocument();
+    expect(await screen.findByText('Private subnet')).toBeInTheDocument();
+    expect(await screen.findByText('Public subnet')).toBeInTheDocument();
 
     // Assert - 2 subnet dropdowns are shown (private and public subnet)
-    expect(screen.getAllByText('Select private subnet')).toHaveLength(1);
-    expect(screen.getAllByText('Select public subnet')).toHaveLength(1);
+    expect(await screen.findAllByText('Select private subnet')).toHaveLength(1);
+    expect(await screen.findAllByText('Select public subnet')).toHaveLength(1);
 
     await checkAccessibility(container);
   });
@@ -150,8 +151,8 @@ describe('<AWSSubnetFields />', () => {
     // Assert - the correct fields titles are shown
     expect(await screen.findAllByText('Select availability zone')).toHaveLength(3);
 
-    expect(screen.getByText('Private subnet')).toBeInTheDocument();
-    expect(screen.getByText('Public subnet')).toBeInTheDocument();
+    expect(await screen.findByText('Private subnet')).toBeInTheDocument();
+    expect(await screen.findByText('Public subnet')).toBeInTheDocument();
 
     // Assert - 6 subnet dropdowns are shown (3 private subnets and 3 for public subnets)
     expect(screen.getAllByText('Select private subnet')).toHaveLength(3);

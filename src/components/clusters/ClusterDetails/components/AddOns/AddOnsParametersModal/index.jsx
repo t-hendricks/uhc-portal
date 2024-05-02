@@ -1,10 +1,12 @@
 import { connect } from 'react-redux';
 import { reduxForm, reset } from 'redux-form';
-import shouldShowModal from '../../../../../common/Modal/ModalSelectors';
+
 import { closeModal } from '../../../../../common/Modal/ModalActions';
-import AddOnsParametersModal from './AddOnsParametersModal';
-import { addClusterAddOn, updateClusterAddOn, clearClusterAddOnsResponses } from '../AddOnsActions';
+import shouldShowModal from '../../../../../common/Modal/ModalSelectors';
+import { addClusterAddOn, clearClusterAddOnsResponses, updateClusterAddOn } from '../AddOnsActions';
 import { parameterValuesForEditing } from '../AddOnsHelper';
+
+import AddOnsParametersModal from './AddOnsParametersModal';
 
 export const reduxFormConfig = {
   form: 'AddOnsParameters',

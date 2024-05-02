@@ -1,9 +1,10 @@
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
-import UninstallProgress from './UninstallProgress';
 import { getClusterAddOns } from '../../ClusterDetails/components/AddOns/AddOnsActions';
 import { getLogs } from '../../ClusterDetails/components/Overview/InstallationLogView/InstallationLogActions';
+
+import UninstallProgress from './UninstallProgress';
 
 const mapStateToProps = (state) => ({
   clusterAddOns: state.addOns.clusterAddOns,

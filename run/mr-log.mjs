@@ -4,8 +4,8 @@
 // Takes `DEBUG=simple-git` env var: https://github.com/steveukx/git-js/blob/main/docs/DEBUG-LOGGING-GUIDE.md
 import { simpleGit } from 'simple-git';
 
-import { getUpstreamRemoteName } from './upstream-name.mjs';
 import { getJiraStatuses, linkify, terminalLink } from './linkify.mjs';
+import { getUpstreamRemoteName } from './upstream-name.mjs';
 
 const HELP = `USAGE: run/mr-log.mjs [git log FLAGS] [--] PATH...
 

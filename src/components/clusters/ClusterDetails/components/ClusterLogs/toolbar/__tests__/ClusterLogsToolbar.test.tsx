@@ -1,6 +1,8 @@
 import React from 'react';
 import { CompatRouter } from 'react-router-dom-v5-compat';
-import { screen, render, userEvent, checkAccessibility, TestRouter } from '~/testUtils';
+
+import { checkAccessibility, render, screen, TestRouter, userEvent } from '~/testUtils';
+
 import ClusterLogsToolbar from '../ClusterLogsToolbar';
 
 const mockSetFilter = jest.fn();
@@ -28,6 +30,7 @@ describe('<ClusterLogsToolbar />', () => {
     isPendingNoData: false,
     createdAt: '2024-01-01',
     clusterID: '282fg0gt74jjb9558ge1poe8m4dlvb07',
+    logs: 5,
   };
 
   afterEach(() => {
@@ -44,6 +47,7 @@ describe('<ClusterLogsToolbar />', () => {
     );
 
     expect(screen.getByTestId('cluster-history-toolbar')).toBeInTheDocument();
+
     await checkAccessibility(container);
   });
 

@@ -1,10 +1,9 @@
 import React from 'react';
 
-import { Grid, GridItem, Alert, FormGroup } from '@patternfly/react-core';
+import { Alert, FormGroup, Grid, GridItem } from '@patternfly/react-core';
 
-import { validateAWSKMSKeyARN } from '~/common/validators';
-import ExternalLink from '~/components/common/ExternalLink';
 import links from '~/common/installLinks.mjs';
+import { validateAWSKMSKeyARN } from '~/common/validators';
 import { constants } from '~/components/clusters/common/CreateOSDFormConstants';
 import { FieldId } from '~/components/clusters/wizards/common/constants';
 import {
@@ -13,6 +12,7 @@ import {
   TextInputField,
 } from '~/components/clusters/wizards/form';
 import { useFormState } from '~/components/clusters/wizards/hooks';
+import ExternalLink from '~/components/common/ExternalLink';
 
 export const AWSCustomerManagedEncryption = () => {
   const {

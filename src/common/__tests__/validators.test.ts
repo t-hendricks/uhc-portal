@@ -1,40 +1,43 @@
 import validators, {
-  required,
-  checkIdentityProviderName,
-  checkClusterUUID,
+  awsNumericAccountID,
   checkClusterConsoleURL,
-  checkUserID,
-  validateRHITUsername,
-  checkOpenIDIssuer,
-  checkGithubTeams,
+  checkClusterUUID,
+  checkCustomOperatorRolesPrefix,
   checkDisconnectedConsoleURL,
-  checkDisconnectedSockets,
-  checkDisconnectedvCPU,
   checkDisconnectedMemCapacity,
   checkDisconnectedNodeCount,
-  validateUserOrGroupARN,
+  checkDisconnectedSockets,
+  checkDisconnectedvCPU,
+  checkGithubTeams,
+  checkIdentityProviderName,
+  checkKeyValueFormat,
   checkLabels,
-  awsNumericAccountID,
-  validateServiceAccountObject,
-  validateNumericInput,
-  validateGCPSubnet,
-  validateGCPKMSServiceAccount,
-  validateHTPasswdPassword,
-  validateHTPasswdUsername,
-  clusterNameValidation,
+  checkOpenIDIssuer,
+  checkRouteSelectors,
+  checkUserID,
+  clusterAutoScalingValidators,
   clusterNameAsyncValidation,
+  clusterNameValidation,
+  createPessimisticValidator,
   domainPrefixAsyncValidation,
   domainPrefixValidation,
-  checkCustomOperatorRolesPrefix,
-  createPessimisticValidator,
+  required,
   validateAWSKMSKeyARN,
-  clusterAutoScalingValidators,
-  validateRoleARN,
+  validateGCPKMSServiceAccount,
+  validateGCPSubnet,
+  validateHTPasswdPassword,
+  validateHTPasswdUsername,
+  validateMultipleMachinePoolsSubnets,
+  validateNumericInput,
   validatePrivateHostedZoneId,
   validateRequiredPublicSubnetId,
+  validateRHITUsername,
+  validateRoleARN,
+  validateServiceAccountObject,
   validateUniqueAZ,
-  validateMultipleMachinePoolsSubnets,
+  validateUserOrGroupARN,
 } from '../validators';
+
 import fixtures from './validators.fixtures';
 
 describe('Field is required', () => {
@@ -187,24 +190,6 @@ describe('Username conforms RHIT pattern', () => {
     ['$$$', 'Username includes illegal symbols'],
   ])('value %p to be %p', (value: string, expected: string | undefined) => {
     expect(validateRHITUsername(value)).toBe(expected);
-  });
-});
-
-describe('Field is a valid DNS domain', () => {
-  it.each([
-    [undefined, 'Base DNS domain is required.'],
-    [
-      '123.ABC!',
-      "Base DNS domain '123.ABC!' isn't valid, must contain at least two valid lower-case DNS labels separated by dots, for example 'mydomain.com'.",
-    ],
-    [
-      'foo',
-      "Base DNS domain 'foo' isn't valid, must contain at least two valid lower-case DNS labels separated by dots, for example 'mydomain.com'.",
-    ],
-    ['foo.bar', undefined],
-    ['foo.bar.baz', undefined],
-  ])('value %p to be %p', (value: string | undefined, expected: string | undefined) => {
-    expect(validators.checkBaseDNSDomain(value)).toBe(expected);
   });
 });
 
@@ -1356,7 +1341,24 @@ describe('k8sGpuParameter', () => {
     ['somevendor.com/gpu:aa:0', 'Invalid params: somevendor.com/gpu:aa:0'],
     ['somevendor.com/gpu:10:0', 'Invalid params: somevendor.com/gpu:10:0'],
     ['somevendor.com/gpu:4:1', 'Invalid params: somevendor.com/gpu:4:1'],
-  ])('value %p to be %p', (value: string, expected: string | undefined) => {
-    expect(clusterAutoScalingValidators.k8sGpuParameter(value)).toBe(expected);
-  });
+  ])('value %p to be %p', (value: string, expected: string | undefined) =>
+    expect(clusterAutoScalingValidators.k8sGpuParameter(value)).toBe(expected),
+  );
+
+  it.each([
+    ['', undefined],
+    ['whatever', 'Routes should match comma separated pairs in key=value format'],
+    ['key=value', undefined],
+    ['key=value,key1=value1', undefined],
+  ])('checkKeyValueFormat value %p to be %p', (value: string, expected: string | undefined) =>
+    expect(checkKeyValueFormat(value)).toBe(expected),
+  );
+
+  it.each([
+    ['key=', undefined],
+    ['key=,key2=', undefined],
+    ['key=a,key=b', 'Each label should have a unique key. "key" already exists.'],
+  ])('checkRouteSelectors value %p to be %p', (value: string, expected: string | undefined) =>
+    expect(checkRouteSelectors(value)).toBe(expected),
+  );
 });

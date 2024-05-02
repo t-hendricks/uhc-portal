@@ -1,11 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { FormGroup, Grid, GridItem, Button, Alert } from '@patternfly/react-core';
+
+import { Alert, Button, FormGroup, Grid, GridItem } from '@patternfly/react-core';
 import {
   Select as SelectDeprecated,
   SelectOption as SelectOptionDeprecated,
 } from '@patternfly/react-core/deprecated';
+
 import parseUpdateSchedule from './parseUpdateSchedule';
+
 import './UpgradeSettingsFields.scss';
 
 const VALID_SCHEDULE_REGEX = /00? [0-9][0-9]? \* \* ([0-6]|SUN|MON|TUE|WED|THU|FRI|SAT)/i;

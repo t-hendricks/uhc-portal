@@ -1,22 +1,26 @@
 import React from 'react';
+import { useLocation, useNavigate } from 'react-router-dom-v5-compat';
+
 import {
   Button,
-  TextContent,
-  Text,
-  TextVariants,
   EmptyState,
   EmptyStateBody,
+  Text,
+  TextContent,
+  TextVariants,
 } from '@patternfly/react-core';
 import { Spinner } from '@redhat-cloud-services/frontend-components/Spinner';
-import { useNavigate, useLocation } from 'react-router-dom-v5-compat';
-import type { TermsReviewResponse } from '~/types/accounts_mgmt.v1';
+
 import type { PromiseReducerState } from '~/redux/types';
+import type { TermsReviewResponse } from '~/types/accounts_mgmt.v1';
+
+import getTermsAppLink from '../../../common/getTermsAppLink';
 import Modal from '../Modal/Modal';
 import Unavailable from '../Unavailable';
-import getTermsAppLink from '../../../common/getTermsAppLink';
+
+import { ViewTermsButton } from './ViewTermsButton';
 
 import './TermsGuard.scss';
-import { ViewTermsButton } from './ViewTermsButton';
 
 type Props = {
   children: React.ReactElement;

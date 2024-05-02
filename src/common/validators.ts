@@ -1,9 +1,9 @@
 /* eslint-disable camelcase */
-import { get, indexOf, inRange } from 'lodash';
-import { overlapCidr, containsCidr } from 'cidr-tools';
+import { containsCidr, overlapCidr } from 'cidr-tools';
 import IPCIDR from 'ip-cidr';
 import { ValidationError, Validator } from 'jsonschema';
-import { clusterService } from '~/services';
+import { get, indexOf, inRange } from 'lodash';
+
 import { Subnet } from '~/common/helpers';
 import { FieldId } from '~/components/clusters/wizards/osd/constants';
 import {
@@ -11,7 +11,9 @@ import {
   maxAdditionalSecurityGroupsHypershift,
   workerNodeVolumeSizeMinGiB,
 } from '~/components/clusters/wizards/rosa/constants';
+import { clusterService } from '~/services';
 import type { GCP, Taint } from '~/types/clusters_mgmt.v1';
+
 import { sqlString } from './queryHelpers';
 
 type Networks = Parameters<typeof overlapCidr>[0];
@@ -634,8 +636,16 @@ const validateDuplicateLabels = (input: string | string[] | undefined) => {
   return undefined;
 };
 
+const checkKeyValueFormat = (value: string): string | undefined =>
+  value.trim() !== '' && value?.match(/((.*=.*),*)+/g) === null
+    ? 'Routes should match comma separated pairs in key=value format'
+    : undefined;
+
 const checkRouteSelectors = (value: string): string | undefined =>
   checkLabels(value) || validateDuplicateLabels(value);
+
+const checkLabelsAdditionalRouter = (value: string): string | undefined =>
+  checkKeyValueFormat(value) || checkRouteSelectors(value);
 
 // Function to validate that the cluster ID field is a UUID:
 const checkClusterUUID = (value?: string): string | undefined => {
@@ -760,17 +770,6 @@ const checkClusterConsoleURL = (value?: string, isRequired?: boolean): string | 
       return 'The URL must not include a query string (?) or fragment (#)';
     }
     return 'Invalid URL';
-  }
-  return undefined;
-};
-
-// Function to validate that a field contains a correct base DNS domain
-const checkBaseDNSDomain = (value?: string): string | undefined => {
-  if (!value) {
-    return 'Base DNS domain is required.';
-  }
-  if (!BASE_DOMAIN_REGEXP.test(value)) {
-    return `Base DNS domain '${value}' isn't valid, must contain at least two valid lower-case DNS labels separated by dots, for example 'mydomain.com'.`;
   }
   return undefined;
 };
@@ -1728,7 +1727,6 @@ const validators = {
   checkClusterDisplayName,
   checkUserID,
   validateRHITUsername,
-  checkBaseDNSDomain,
   cidr,
   subnetCidrs,
   awsMachineCidr,
@@ -1785,6 +1783,8 @@ export {
   validateNumericInput,
   checkGithubTeams,
   checkRouteSelectors,
+  checkLabelsAdditionalRouter,
+  checkKeyValueFormat,
   checkDisconnectedConsoleURL,
   checkDisconnectedvCPU,
   checkDisconnectedSockets,

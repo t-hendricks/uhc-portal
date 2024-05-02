@@ -1,14 +1,17 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+
 import { Card, CardBody, Text } from '@patternfly/react-core';
-import DownloadsAndPullSecretSection from './components/DownloadsAndPullSecretSection';
-import SubscriptionAndSupport from './components/SubscriptionAndSupport';
-import GetStarted from './components/GetStarted';
+
+import { channels, tools } from '../../../../common/installLinks.mjs';
 import Instruction from '../../../common/Instruction';
 import Instructions from '../../../common/Instructions';
+
+import DownloadsAndPullSecretSection from './components/DownloadsAndPullSecretSection';
+import GetStarted from './components/GetStarted';
+import SubscriptionAndSupport from './components/SubscriptionAndSupport';
 import TokenErrorAlert from './components/TokenErrorAlert';
 import instructionsMapping from './instructionsMapping';
-import { tools, channels } from '../../../../common/installLinks.mjs';
 
 const OCPInstructions = (props) => {
   const {

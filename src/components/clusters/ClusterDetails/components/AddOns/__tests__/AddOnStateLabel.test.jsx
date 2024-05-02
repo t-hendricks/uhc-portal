@@ -1,8 +1,9 @@
 import React from 'react';
 
-import { render, checkAccessibility, screen } from '~/testUtils';
-import AddOnStateLabel from '../AddOnStateLabel';
+import { checkAccessibility, render, screen } from '~/testUtils';
+
 import AddOnsConstants from '../AddOnsConstants';
+import AddOnStateLabel from '../AddOnStateLabel';
 
 describe('<AddOnsStateLabel />', () => {
   it('is accessible', async () => {

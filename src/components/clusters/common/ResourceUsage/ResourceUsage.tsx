@@ -1,7 +1,9 @@
 import React from 'react';
 
 import { ClusterResource } from '~/types/accounts_mgmt.v1';
-import { Unit, parseValueWithUnit } from '../../../../common/units';
+
+import { parseValueWithUnit, Unit } from '../../../../common/units';
+
 import ClusterUtilizationChart from './ClusterUtilizationChart';
 
 type ResourceUsageProps = {

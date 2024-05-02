@@ -1,5 +1,6 @@
-import { installationLogConstants } from './InstallationLogConstants';
 import { clusterService } from '../../../../../../services';
+
+import { installationLogConstants } from './InstallationLogConstants';
 
 const getLogs =
   (clusterID, offset = 0, logType = 'install') =>

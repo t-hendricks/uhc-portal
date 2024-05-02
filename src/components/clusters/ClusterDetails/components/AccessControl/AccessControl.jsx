@@ -1,18 +1,20 @@
-import React, { useState, useEffect } from 'react';
-import PropTypes from 'prop-types';
+import React, { useEffect, useState } from 'react';
 import get from 'lodash/get';
-import { Tabs, Tab, TabTitleText, Card, CardBody } from '@patternfly/react-core';
+import PropTypes from 'prop-types';
 
-import OCMRolesSection from './OCMRolesSection';
-import UsersSection from './UsersSection';
-import IDPSection from './IDPSection';
-import NetworkSelfServiceSection from './NetworkSelfServiceSection';
+import { Card, CardBody, Tab, Tabs, TabTitleText } from '@patternfly/react-core';
+
 import { isHibernating, isHypershiftCluster } from '../../../common/clusterStates';
 import {
   isReadyForAwsAccessActions,
   isReadyForIdpActions,
   isReadyForRoleAccessActions,
 } from '../../clusterDetailsHelper';
+
+import IDPSection from './IDPSection';
+import NetworkSelfServiceSection from './NetworkSelfServiceSection';
+import OCMRolesSection from './OCMRolesSection';
+import UsersSection from './UsersSection';
 
 function AccessControl({ cluster, refreshEvent = null }) {
   const [activeKey, setActiveKey] = React.useState(0);

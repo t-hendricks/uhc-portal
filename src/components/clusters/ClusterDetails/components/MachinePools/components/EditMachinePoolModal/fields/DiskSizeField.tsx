@@ -1,19 +1,20 @@
-import { FormGroup, NumberInput } from '@patternfly/react-core';
-import { useField } from 'formik';
 import * as React from 'react';
+import { useField } from 'formik';
+
+import { FormGroup, NumberInput } from '@patternfly/react-core';
+
+import { normalizeProductID } from '~/common/normalize';
+import { normalizedProducts } from '~/common/subscriptionTypes';
+import { isHypershiftCluster } from '~/components/clusters/common/clusterStates';
 import {
   getWorkerNodeVolumeSizeMaxGiB,
   workerNodeVolumeSizeMinGiB,
 } from '~/components/clusters/wizards/rosa/constants';
-import PopoverHint from '~/components/common/PopoverHint';
-import { Cluster } from '~/types/clusters_mgmt.v1';
-
-import WithTooltip from '~/components/common/WithTooltip';
-import { normalizeProductID } from '~/common/normalize';
-import { normalizedProducts } from '~/common/subscriptionTypes';
-import { isHypershiftCluster } from '~/components/clusters/common/clusterStates';
 import { FormGroupHelperText } from '~/components/common/FormGroupHelperText';
+import PopoverHint from '~/components/common/PopoverHint';
+import WithTooltip from '~/components/common/WithTooltip';
 import useFormikOnChange from '~/hooks/useFormikOnChange';
+import { Cluster } from '~/types/clusters_mgmt.v1';
 
 import './DiskSizeField.scss';
 

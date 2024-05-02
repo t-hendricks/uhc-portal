@@ -1,20 +1,25 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { ProgressStepper, ProgressStep, Spinner } from '@patternfly/react-core';
+
+import { ProgressStep, ProgressStepper, Spinner } from '@patternfly/react-core';
 import UnknownIcon from '@patternfly/react-icons/dist/esm/icons/unknown-icon';
+
 import { InflightCheckState } from '~/types/clusters_mgmt.v1';
-import './ProgressList.scss';
-import ActionRequiredLink from './ActionRequiredLink';
+
 import clusterStates, {
-  isROSA,
-  isOSD,
-  isWaitingROSAManualMode,
-  isWaitingForOIDCProviderOrOperatorRolesMode,
-  isOSDGCPWaitingForRolesOnHostProject,
-  isOSDGCPPendingOnHostProject,
-  hasInflightEgressErrors,
   getInflightChecks,
+  hasInflightEgressErrors,
+  isOSD,
+  isOSDGCPPendingOnHostProject,
+  isOSDGCPWaitingForRolesOnHostProject,
+  isROSA,
+  isWaitingForOIDCProviderOrOperatorRolesMode,
+  isWaitingROSAManualMode,
 } from '../clusterStates';
+
+import ActionRequiredLink from './ActionRequiredLink';
+
+import './ProgressList.scss';
 
 function ProgressList({ cluster, actionRequiredInitialOpen, hasNetworkOndemand }) {
   const isROSACluster = isROSA(cluster);

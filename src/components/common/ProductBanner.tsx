@@ -1,3 +1,5 @@
+import React from 'react';
+
 import {
   CardBody,
   CardFooter,
@@ -10,7 +12,6 @@ import {
   Text,
   Title,
 } from '@patternfly/react-core';
-import React from 'react';
 import { PageHeader } from '@redhat-cloud-services/frontend-components/PageHeader';
 
 export type ProductBannerProps = {

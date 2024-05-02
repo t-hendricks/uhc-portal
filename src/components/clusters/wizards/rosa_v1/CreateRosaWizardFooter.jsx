@@ -5,11 +5,11 @@ import { isAsyncValidating } from 'redux-form';
 
 import { Button } from '@patternfly/react-core';
 import {
-  WizardFooter as WizardFooterDeprecated,
   WizardContext as WizardContextDeprecated,
+  WizardFooter as WizardFooterDeprecated,
 } from '@patternfly/react-core/deprecated';
 
-import { stepId, hasLoadingState } from './rosaWizardConstants';
+import { hasLoadingState, stepId } from './rosaWizardConstants';
 
 // Must return the step in which VPCDropdown is located, as it's in charge of fetching the VPCs
 const getVpcLoadingStep = (isHypershiftSelected) => {

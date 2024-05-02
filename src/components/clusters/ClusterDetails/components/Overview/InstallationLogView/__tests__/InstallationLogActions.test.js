@@ -1,5 +1,5 @@
-import { installationLogActions } from '../InstallationLogActions';
 import { clusterService } from '../../../../../../../services';
+import { installationLogActions } from '../InstallationLogActions';
 import { installationLogConstants } from '../InstallationLogConstants';
 
 jest.mock('../../../../../../../services/clusterService');
