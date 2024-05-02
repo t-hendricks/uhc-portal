@@ -1,5 +1,7 @@
 import React from 'react';
+
 import { TextInput } from '@patternfly/react-core';
+
 import LabelKeyValueProps from './LabelKeyValueProps';
 
 const FormKeyLabelKey = ({ input, meta: { touched, error } }: LabelKeyValueProps) => (

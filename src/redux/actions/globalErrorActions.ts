@@ -1,5 +1,6 @@
 import { action, ActionType } from 'typesafe-actions';
-import { SET_GLOBAL_ERROR, CLEAR_GLOBAL_ERROR } from '../constants/globalErrorConstants';
+
+import { CLEAR_GLOBAL_ERROR, SET_GLOBAL_ERROR } from '../constants/globalErrorConstants';
 
 const setGlobalError = (errorTitle: string, sourceComponent: string, errorMessage: string) =>
   action(SET_GLOBAL_ERROR, { errorTitle, errorMessage, sourceComponent });

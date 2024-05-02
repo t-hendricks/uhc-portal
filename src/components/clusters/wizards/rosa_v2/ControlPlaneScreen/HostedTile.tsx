@@ -1,8 +1,11 @@
 import React from 'react';
-import { Tile, Text, TextVariants, List, Alert } from '@patternfly/react-core';
-import ExternalLink from '~/components/common/ExternalLink';
+
+import { Alert, List, Text, TextVariants, Tile } from '@patternfly/react-core';
+
 import links from '~/common/installLinks.mjs';
-import { defaultMarginBottomSpacing, ListItem, hypershiftValue } from './ControlPlaneCommon';
+import ExternalLink from '~/components/common/ExternalLink';
+
+import { defaultMarginBottomSpacing, hypershiftValue, ListItem } from './ControlPlaneCommon';
 
 type HostedTileProps = {
   handleChange: (string: hypershiftValue) => void;
@@ -44,15 +47,9 @@ const HostedTile = ({ handleChange, isSelected, isHostedDisabled }: HostedTilePr
       <ListItem>Control plane resources are hosted in a Red Hat-owned AWS account</ListItem>
       <ListItem>Better resource utilization with faster cluster creation</ListItem>
       <ListItem>Lower AWS infrastructure costs</ListItem>
+      <ListItem>Full compliance certifications</ListItem>
       <ListItem>Red Hat SRE managed</ListItem>
     </List>
-    <Alert
-      variant="warning"
-      isInline
-      isPlain
-      title="Compliance certifications available soon"
-      className={defaultMarginBottomSpacing}
-    />
     <Alert
       variant="warning"
       isInline

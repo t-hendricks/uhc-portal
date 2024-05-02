@@ -1,17 +1,19 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
-import { Form, Alert, Button } from '@patternfly/react-core';
-import { Link } from 'react-router-dom-v5-compat';
 import get from 'lodash/get';
-import MechTraining from '../../../../styles/images/RH_BRAND_7764_01_MECH_Training.svg';
+import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom-v5-compat';
 
+import { Alert, Button, Form } from '@patternfly/react-core';
+
+import links from '../../../../common/installLinks.mjs';
+import { billingModels, normalizedProducts } from '../../../../common/subscriptionTypes';
+import MechTraining from '../../../../styles/images/RH_BRAND_7764_01_MECH_Training.svg';
+import ErrorBox from '../../../common/ErrorBox';
 import ExternalLink from '../../../common/ExternalLink';
 import Modal from '../../../common/Modal/Modal';
 import modals from '../../../common/Modal/modals';
-import ErrorBox from '../../../common/ErrorBox';
-import links from '../../../../common/installLinks.mjs';
-import { normalizedProducts, billingModels } from '../../../../common/subscriptionTypes';
 import { availableClustersFromQuota, availableNodesFromQuota } from '../quotaSelectors';
+
 import './UpgradeTrialClusterDialog.scss';
 
 class UpgradeTrialClusterDialog extends Component {
@@ -198,9 +200,9 @@ class UpgradeTrialClusterDialog extends Component {
         {...tertiaryButton}
         isPending={upgradeTrialClusterResponse.pending}
       >
-        <p>{error}</p>
+        {error}
         <Form onSubmit={() => submit(clusterID)}>
-          <p>
+          <div>
             {!noQuota && <img className="upgrade-trial-logo" src={MechTraining} alt="Red Hat" />}
             Convert this trial cluster to a fully supported OpenShift Dedicated cluster.
             <br />
@@ -221,7 +223,7 @@ class UpgradeTrialClusterDialog extends Component {
                 </Link>
               </Alert>
             )}
-          </p>
+          </div>
         </Form>
       </Modal>
     );

@@ -1,17 +1,19 @@
 import get from 'lodash/get';
 
 import { isClusterUpgrading } from '~/components/clusters/common/clusterStates';
-import config from '../../../../../config';
-import {
-  getIssuesAndWarnings,
-  monitoringStatuses,
-  alertsSeverity,
-  operatorsStatuses,
-  thresholds,
-  resourceUsageIssuesHelper,
-  maxMetricsTimeDelta,
-} from './monitoringHelper';
+
 import { subscriptionStatuses } from '../../../../../common/subscriptionTypes';
+import config from '../../../../../config';
+
+import {
+  alertsSeverity,
+  getIssuesAndWarnings,
+  maxMetricsTimeDelta,
+  monitoringStatuses,
+  operatorsStatuses,
+  resourceUsageIssuesHelper,
+  thresholds,
+} from './monitoringHelper';
 
 // returns a Date.
 const lastCheckInSelector = (state) => {

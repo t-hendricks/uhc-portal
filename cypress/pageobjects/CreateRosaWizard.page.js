@@ -285,12 +285,7 @@ class CreateRosaCluster extends Page {
   }
 
   selectAWSInfrastructureAccount(accountID) {
-    cy.get('button')
-      .contains('How to associate a new AWS account')
-      .siblings()
-      .find('div')
-      .find('button.pf-v5-c-select__toggle')
-      .click();
+    cy.get('button[aria-describedby="aws-infra-accounts"]').first().click();
     cy.get('input[placeholder*="Filter by account ID"]', { timeout: 50000 })
       .clear()
       .type(accountID);
@@ -630,6 +625,9 @@ class CreateRosaCluster extends Page {
     });
   }
 
+  clickEditStepOfSection(stepSection) {
+    cy.getByTestId(`"${stepSection}"`).click();
+  }
   get clusterNameInputError() {
     return 'ul#rich-input-popover-name li.pf-c-helper-text__item.pf-m-error.pf-m-dynamic';
   }

@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+
 import { Banner, ExpandableSection, GridItem } from '@patternfly/react-core';
 
 import {

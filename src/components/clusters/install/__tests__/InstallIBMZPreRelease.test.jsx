@@ -1,8 +1,9 @@
 import React from 'react';
-import { screen, checkAccessibility, TestRouter, withState } from '~/testUtils';
 
-import { InstallIBMZPreRelease } from '../InstallIBMZPreRelease';
+import { checkAccessibility, screen, TestRouter, withState } from '~/testUtils';
+
 import githubReleases from '../githubReleases.mock';
+import { InstallIBMZPreRelease } from '../InstallIBMZPreRelease';
 
 jest.mock('../../../../redux/actions', () => ({
   __esModule: true,

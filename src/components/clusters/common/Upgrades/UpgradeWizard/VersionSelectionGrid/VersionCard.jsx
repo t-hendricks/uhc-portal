@@ -1,18 +1,20 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+
 import {
+  Button,
   Card,
-  CardTitle,
   CardBody,
   CardFooter,
+  CardTitle,
   Label,
   Split,
   SplitItem,
-  Button,
   Tooltip,
 } from '@patternfly/react-core';
-import { StarIcon } from '@patternfly/react-icons/dist/esm/icons/star-icon';
 import { InfoCircleIcon } from '@patternfly/react-icons/dist/esm/icons/info-circle-icon';
+import { StarIcon } from '@patternfly/react-icons/dist/esm/icons/star-icon';
+
 import { versionRegEx } from '../../../../../../common/versionComparator';
 import ExternalLink from '../../../../../common/ExternalLink';
 

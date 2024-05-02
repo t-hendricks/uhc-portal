@@ -1,44 +1,43 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-
 import { Field } from 'redux-form';
+
 import {
+  ClipboardCopy,
+  ExpandableSection,
   Form,
   Grid,
   GridItem,
-  ExpandableSection,
   Title,
-  ClipboardCopy,
 } from '@patternfly/react-core';
-import ErrorBox from '../../../../../common/ErrorBox';
 
-import {
-  ReduxVerticalFormGroup,
-  ReduxFormDropdown,
-} from '../../../../../common/ReduxFormComponents';
 import links from '../../../../../../common/installLinks.mjs';
 import { checkIdentityProviderName } from '../../../../../../common/validators';
+import ErrorBox from '../../../../../common/ErrorBox';
+import ExternalLink from '../../../../../common/ExternalLink';
+import {
+  ReduxFormDropdown,
+  ReduxVerticalFormGroup,
+} from '../../../../../common/ReduxFormComponents';
+import {
+  generateIDPName,
+  getOauthCallbackURL,
+  IDPformValues,
+  IDPNeedsOAuthURL,
+  mappingMethods,
+  mappingMethodsformValues,
+} from '../IdentityProvidersHelper';
 
 import {
   GithubForm,
-  LDAPForm,
-  OpenIDForm,
-  GoogleFormRequired,
-  LDAPFormRequired,
-  OpenIDFormRequired,
   GitlabForm,
+  GoogleFormRequired,
   HTPasswdForm,
+  LDAPForm,
+  LDAPFormRequired,
+  OpenIDForm,
+  OpenIDFormRequired,
 } from './ProvidersForms';
-
-import {
-  mappingMethods,
-  IDPformValues,
-  mappingMethodsformValues,
-  getOauthCallbackURL,
-  IDPNeedsOAuthURL,
-  generateIDPName,
-} from '../IdentityProvidersHelper';
-import ExternalLink from '../../../../../common/ExternalLink';
 
 class IDPForm extends React.Component {
   state = {

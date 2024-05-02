@@ -1,5 +1,6 @@
 import React from 'react';
 import { Field } from 'redux-form';
+
 import { acknowledgePrerequisites } from '../../../../common/validators';
 import ReduxCheckbox from '../../../common/ReduxFormComponents/ReduxCheckbox';
 

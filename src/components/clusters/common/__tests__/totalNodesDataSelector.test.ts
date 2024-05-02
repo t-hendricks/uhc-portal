@@ -1,8 +1,10 @@
-import { ClusterFromSubscription } from '~/types/types';
 import { MachinePool, NodePool } from '~/types/clusters_mgmt.v1';
+import { ClusterFromSubscription } from '~/types/types';
+
 import totalNodesDataSelector from '../totalNodesDataSelector';
+
+import { defaultClusterFromSubscription } from './defaultClusterFromSubscription.fixtures';
 import {
-  TotalNodesDataSelectorExpected,
   autoScalingAdditionalMachinePool,
   autoScalingAdditionalMachinePoolHypershift,
   clusterAndMachinePoolsDefaultExpected,
@@ -19,10 +21,10 @@ import {
   reportsTotalActualComputeNodesExpected,
   reportsTotalActualComputeNodesHypershiftExpected,
   shouldCountTotalDesiredComputeNodesExpected,
+  TotalNodesDataSelectorExpected,
   workerAndRepeatedNotAutoscalingList,
   workerMachinePool,
 } from './totalNodesDataSelector.fixtures';
-import { defaultClusterFromSubscription } from './defaultClusterFromSubscription.fixtures';
 
 describe('TotalNodeDataSelector', () => {
   it.each([

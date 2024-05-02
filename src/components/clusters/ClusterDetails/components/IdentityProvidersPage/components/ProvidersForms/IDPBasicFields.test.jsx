@@ -1,6 +1,8 @@
 import React from 'react';
 import { reduxForm } from 'redux-form';
+
 import { render, screen } from '~/testUtils';
+
 import IDPBasicFields from './IDPBasicFields';
 
 describe('IDPBasicFields', () => {

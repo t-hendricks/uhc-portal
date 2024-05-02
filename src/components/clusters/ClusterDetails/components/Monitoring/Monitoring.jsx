@@ -1,11 +1,15 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Card, CardBody, Title, CardTitle } from '@patternfly/react-core';
-import ClusterHealthCard from './components/ClusterHealthCard';
-import MonitoringList from './components/MonitoringList';
-import MonitoringEmptyState from './components/MonitoringEmptyState';
-import { monitoringStatuses } from './monitoringHelper';
+
+import { Card, CardBody, CardTitle, Title } from '@patternfly/react-core';
+
 import { noop } from '../../../../../common/helpers';
+
+import ClusterHealthCard from './components/ClusterHealthCard';
+import MonitoringEmptyState from './components/MonitoringEmptyState';
+import MonitoringList from './components/MonitoringList';
+import { monitoringStatuses } from './monitoringHelper';
+
 import './Monitoring.scss';
 
 class Monitoring extends React.Component {

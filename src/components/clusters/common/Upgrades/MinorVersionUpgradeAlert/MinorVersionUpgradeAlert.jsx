@@ -1,13 +1,15 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+
 import { Alert, AlertActionLink, Spinner } from '@patternfly/react-core';
 import ArrowCircleUpIcon from '@patternfly/react-icons/dist/esm/icons/arrow-circle-up-icon';
+
 import links from '../../../../../common/installLinks.mjs';
-import ExternalLink from '../../../../common/ExternalLink';
 import {
-  patchUpgradeSchedule,
   patchControlPlaneUpgradeSchedule,
+  patchUpgradeSchedule,
 } from '../../../../../services/clusterService';
+import ExternalLink from '../../../../common/ExternalLink';
 
 const actionLink = (onChange, isCurrentlyEnabled) => (
   <AlertActionLink onClick={() => onChange(!isCurrentlyEnabled)}>

@@ -1,4 +1,5 @@
 import { action, ActionType } from 'typesafe-actions';
+
 import githubService from '../../services/githubService';
 
 export const GITHUB_GET_LATEST_RELEASE = 'GITHUB_GET_LATEST_RELEASE';

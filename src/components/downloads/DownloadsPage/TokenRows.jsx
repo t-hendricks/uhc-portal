@@ -1,18 +1,22 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom-v5-compat';
-import { Spinner } from '@redhat-cloud-services/frontend-components/Spinner';
-import { Button, Split, SplitItem, Text, TextContent, Alert } from '@patternfly/react-core';
+
+import { Alert, Button, Split, SplitItem, Text, TextContent } from '@patternfly/react-core';
 import { ArrowRightIcon } from '@patternfly/react-icons/dist/esm/icons/arrow-right-icon';
-import { Tbody, Tr, Td } from '@patternfly/react-table';
+import { Tbody, Td, Tr } from '@patternfly/react-table';
+import { Spinner } from '@redhat-cloud-services/frontend-components/Spinner';
+
 import { defaultToOfflineTokens } from '~/common/restrictTokensHelper';
+
 import links from '../../../common/installLinks.mjs';
 import AlignRight from '../../common/AlignRight';
 import ExternalLink from '../../common/ExternalLink';
-import DownloadPullSecret from '../DownloadPullSecret';
 import CopyPullSecret from '../CopyPullSecret';
-import ExpandableRowPair from './ExpandableRowPair';
+import DownloadPullSecret from '../DownloadPullSecret';
 import { expandKeys } from '../downloadsStructure';
+
+import ExpandableRowPair from './ExpandableRowPair';
 
 const commonPropTypes = {
   // { [expandKey]: boolean }
@@ -172,7 +176,7 @@ const TokenRows = ({
 TokenRows.propTypes = {
   ...commonPropTypes,
   orgRequest: PropTypes.shape({
-    error: PropTypes.bool.isRequired,
+    error: PropTypes.bool,
     isLoading: PropTypes.bool.isRequired,
   }),
   restrictedEnv: PropTypes.bool,

@@ -1,8 +1,9 @@
 import React, { useEffect } from 'react';
-import { useSelector, useDispatch, connect } from 'react-redux';
+import { connect, useDispatch, useSelector } from 'react-redux';
 import { Dispatch } from 'redux';
 
-import { withState, render, screen } from '~/testUtils';
+import { render, screen, withState } from '~/testUtils';
+
 import { GlobalState } from './redux/store';
 
 // Small components to exercise rendering, redux connection and re-rendering.

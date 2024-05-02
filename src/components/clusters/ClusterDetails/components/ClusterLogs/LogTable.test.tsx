@@ -1,6 +1,7 @@
 import React from 'react';
 
 import { render, screen } from '~/testUtils';
+
 import LogTable from './LogTable';
 
 const standardLog = {

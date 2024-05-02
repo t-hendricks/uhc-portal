@@ -1,16 +1,18 @@
 import React from 'react';
-import { FormGroup } from '@patternfly/react-core';
 import { Field } from 'formik';
-import RadioButtons from '~/components/common/ReduxFormComponents/RadioButtons';
+
+import { FormGroup } from '@patternfly/react-core';
+
 import { IMDSType } from '~/components/clusters/wizards/common';
 import {
-  ImdsOptionType,
   imdsOptions,
+  ImdsOptionType,
 } from '~/components/clusters/wizards/common/ClusterSettings/MachinePool/ImdsSectionField/imdsOptions';
-import { ImdsSectionHint } from '~/components/clusters/wizards/common/ClusterSettings/MachinePool/ImdsSectionField/ImdsSectionHint';
 import { ImdsSectionAlert } from '~/components/clusters/wizards/common/ClusterSettings/MachinePool/ImdsSectionField/ImdsSectionAlert';
-import { FieldId } from '~/components/clusters/wizards/rosa_v2/constants';
+import { ImdsSectionHint } from '~/components/clusters/wizards/common/ClusterSettings/MachinePool/ImdsSectionField/ImdsSectionHint';
 import { useFormState } from '~/components/clusters/wizards/hooks';
+import { FieldId } from '~/components/clusters/wizards/rosa_v2/constants';
+import RadioButtons from '~/components/common/ReduxFormComponents/RadioButtons';
 
 type ImdsSectionProps = {
   isDisabled: boolean;
@@ -36,7 +38,7 @@ const ImdsSection = ({ isDisabled, onChangeImds, imds }: ImdsSectionProps) => {
       ) : (
         <Field
           component={RadioButtons}
-          name={FieldId.Imds}
+          name={FieldId.IMDS}
           ariaLabel="Instance Metadata Service"
           props={{
             value: imds,
@@ -47,10 +49,10 @@ const ImdsSection = ({ isDisabled, onChangeImds, imds }: ImdsSectionProps) => {
           options={imdsOptions}
           disableDefaultValueHandling
           input={{
-            ...getFieldProps(FieldId.Imds),
-            onChange: (value: ImdsOptionType) => setFieldValue(FieldId.Imds, value, false),
+            ...getFieldProps(FieldId.IMDS),
+            onChange: (value: ImdsOptionType) => setFieldValue(FieldId.IMDS, value, false),
           }}
-          meta={getFieldMeta(FieldId.Imds)}
+          meta={getFieldMeta(FieldId.IMDS)}
         />
       )}
     </FormGroup>

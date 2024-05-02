@@ -1,8 +1,9 @@
 import React from 'react';
-import { CompatRouter } from 'react-router-dom-v5-compat';
 import { BrowserRouter } from 'react-router-dom';
+import { CompatRouter } from 'react-router-dom-v5-compat';
 
-import { render, screen, checkAccessibility } from '~/testUtils';
+import { checkAccessibility, render, screen } from '~/testUtils';
+
 import RosaServicePage from './RosaServicePage';
 
 describe('<RosaServicePage />', () => {

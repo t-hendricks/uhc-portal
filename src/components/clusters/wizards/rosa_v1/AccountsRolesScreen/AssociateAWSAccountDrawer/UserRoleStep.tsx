@@ -1,9 +1,13 @@
 import React from 'react';
+
 import { Alert, AlertVariant, Title } from '@patternfly/react-core';
+
+import { trackEvents } from '~/common/analytics';
 import InstructionCommand from '~/components/common/InstructionCommand';
 import PopoverHint from '~/components/common/PopoverHint';
-import { trackEvents } from '~/common/analytics';
+
 import { RosaCliCommand } from '../constants/cliCommands';
+
 import AssociateAWSAccountStep, {
   AssociateAWSAccountStepProps,
 } from './common/AssociateAWSAccountStep';

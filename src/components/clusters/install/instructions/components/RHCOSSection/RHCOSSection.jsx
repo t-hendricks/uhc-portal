@@ -1,10 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+
+import { Icon, Stack, StackItem, Text } from '@patternfly/react-core';
 import { ExternalLinkAltIcon } from '@patternfly/react-icons/dist/esm/icons/external-link-alt-icon';
-import { Stack, StackItem, Text, Icon } from '@patternfly/react-core';
+
 import { tools } from '../../../../../../common/installLinks.mjs';
-import RHCOSDownloadAndSelect from './RHCOSDownloadAndSelect';
 import DownloadButton from '../DownloadButton';
+
+import RHCOSDownloadAndSelect from './RHCOSDownloadAndSelect';
 
 const RHCOSSection = (props) => {
   const { token, pendoID, rhcos } = props;

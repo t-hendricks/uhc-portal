@@ -1,11 +1,12 @@
 import get from 'lodash/get';
 
 import { QuotaTypes } from '~/components/clusters/common/quotaModel';
+
 import {
+  addOnBillingQuota,
   availableQuota,
   hasPotentialQuota,
   queryFromCluster,
-  addOnBillingQuota,
 } from '../../../common/quotaSelectors';
 
 // An add-on is only visible if it has an entry in the quota summary

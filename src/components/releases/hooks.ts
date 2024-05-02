@@ -1,5 +1,6 @@
 import * as React from 'react';
 import semver from 'semver';
+
 import getOCPLifeCycleStatus from '~/services/productLifeCycleService';
 import getOCPReleaseChannel from '~/services/releaseChannelService';
 import { ProductLifeCycle } from '~/types/product-life-cycles';

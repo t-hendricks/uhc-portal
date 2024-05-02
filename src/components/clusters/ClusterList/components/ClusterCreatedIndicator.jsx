@@ -1,19 +1,21 @@
 import React from 'react';
-import PropTypes from 'prop-types';
-import get from 'lodash/get';
 import dayjs from 'dayjs';
-import { Popover, PopoverPosition, Button, Icon } from '@patternfly/react-core';
-import { ExclamationTriangleIcon } from '@patternfly/react-icons/dist/esm/icons/exclamation-triangle-icon';
+import get from 'lodash/get';
+import PropTypes from 'prop-types';
+
+import { Button, Icon, Popover, PopoverPosition } from '@patternfly/react-core';
 import { ExclamationCircleIcon } from '@patternfly/react-icons/dist/esm/icons/exclamation-circle-icon';
-import { DateFormat } from '@redhat-cloud-services/frontend-components/DateFormat';
-import { global_warning_color_100 as warningColor } from '@patternfly/react-tokens/dist/esm/global_warning_color_100';
+import { ExclamationTriangleIcon } from '@patternfly/react-icons/dist/esm/icons/exclamation-triangle-icon';
 import { global_danger_color_100 as dangerColor } from '@patternfly/react-tokens/dist/esm/global_danger_color_100';
-import ExternalLink from '../../../common/ExternalLink';
+import { global_warning_color_100 as warningColor } from '@patternfly/react-tokens/dist/esm/global_warning_color_100';
+import { DateFormat } from '@redhat-cloud-services/frontend-components/DateFormat';
+
+import { getTrialEndDate, getTrialExpiresInDays } from '../../../../common/getTrialExpiresDates';
 import {
-  subscriptionSupportLevels,
   normalizedProducts,
+  subscriptionSupportLevels,
 } from '../../../../common/subscriptionTypes';
-import { getTrialExpiresInDays, getTrialEndDate } from '../../../../common/getTrialExpiresDates';
+import ExternalLink from '../../../common/ExternalLink';
 
 function ClusterCreatedIndicator({ cluster }) {
   const osdtrial = get(cluster, 'product.id') === normalizedProducts.OSDTrial;

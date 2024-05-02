@@ -1,9 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import './AddOnsDrawer.scss';
-
 import { List, ListItem } from '@patternfly/react-core';
+
+import './AddOnsDrawer.scss';
 
 function AddOnsRequirementContent(props) {
   const { activeCardRequirements } = props;

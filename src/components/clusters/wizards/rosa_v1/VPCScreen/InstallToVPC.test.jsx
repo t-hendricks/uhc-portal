@@ -1,9 +1,10 @@
-import wizardConnector from '~/components/clusters/wizards/common/WizardConnector';
-import { render, screen } from '~/testUtils';
 import React from 'react';
-import InstallToVPC from '~/components/clusters/wizards/rosa_v1/VPCScreen/InstallToVPC';
+
 import links from '~/common/installLinks.mjs';
+import wizardConnector from '~/components/clusters/wizards/common/WizardConnector';
+import InstallToVPC from '~/components/clusters/wizards/rosa_v1/VPCScreen/InstallToVPC';
 import { useGlobalState } from '~/redux/hooks';
+import { render, screen } from '~/testUtils';
 
 const defaultProps = {
   selectedRegion: 'us-east-1',

@@ -1,12 +1,13 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
-import { ChartDonutUtilization, ChartDonutThreshold } from '@patternfly/react-charts';
+
+import { ChartDonutThreshold, ChartDonutUtilization } from '@patternfly/react-charts';
 import { Title } from '@patternfly/react-core';
 
 import {
-  Unit,
-  ValueWithUnits,
   humanizeValueWithUnit,
   roundValueWithUnit,
+  Unit,
+  ValueWithUnits,
 } from '../../../../common/units';
 
 type ClusterUtilizationChartProps = {

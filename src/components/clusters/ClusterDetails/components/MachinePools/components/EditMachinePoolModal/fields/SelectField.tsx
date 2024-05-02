@@ -1,8 +1,9 @@
+import * as React from 'react';
+
 import {
   Select as SelectDeprecated,
   SelectProps as SelectPropsDeprecated,
 } from '@patternfly/react-core/deprecated';
-import * as React from 'react';
 
 type SelectFieldProps = {
   value: string | undefined;

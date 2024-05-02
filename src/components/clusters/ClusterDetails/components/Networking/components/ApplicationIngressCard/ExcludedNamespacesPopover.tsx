@@ -1,5 +1,7 @@
-import { Text, TextContent } from '@patternfly/react-core';
 import React from 'react';
+
+import { Text, TextContent } from '@patternfly/react-core';
+
 import PopoverHint from '~/components/common/PopoverHint';
 
 export const ExcludedNamespacesHelpText =

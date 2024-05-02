@@ -1,10 +1,12 @@
 import React from 'react';
 
-import { render, screen, checkAccessibility } from '~/testUtils';
-import ProgressList from './ProgressList';
-import clusterStates from '../clusterStates';
+import { checkAccessibility, render, screen } from '~/testUtils';
+
 import { normalizedProducts } from '../../../../common/subscriptionTypes';
 import fixtures from '../../ClusterDetails/__tests__/ClusterDetails.fixtures';
+import clusterStates from '../clusterStates';
+
+import ProgressList from './ProgressList';
 
 describe('<ProgressList />', () => {
   const firstStepPending = {
@@ -93,7 +95,7 @@ describe('<ProgressList />', () => {
   });
 
   it('should render for ROSA manual mode', () => {
-    render(<ProgressList cluster={rosaManualMode} />);
+    render(<ProgressList cluster={rosaManualMode} actionRequiredInitialOpen={false} />);
 
     const steps = screen.getAllByRole('listitem');
     expect(steps).toHaveLength(5);

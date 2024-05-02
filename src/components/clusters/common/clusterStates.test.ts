@@ -1,6 +1,7 @@
-import { ClusterFromSubscription } from '~/types/types';
-import { Cluster, ClusterState } from '~/types/clusters_mgmt.v1';
 import { normalizedProducts, subscriptionStatuses } from '~/common/subscriptionTypes';
+import { Cluster, ClusterState } from '~/types/clusters_mgmt.v1';
+import { ClusterFromSubscription } from '~/types/types';
+
 import {
   defaultClusterFromSubscription,
   defaultMetric,
@@ -9,18 +10,18 @@ import {
 import clusterStates, {
   getClusterStateAndDescription,
   getInflightChecks,
+  isAWS,
+  isAWSPrivateCluster,
+  isCCS,
   isClusterUpgrading,
   isHibernating,
   isHypershiftCluster,
-  isOSD,
   isOffline,
+  isOSD,
   isROSA,
   isWaitingForOIDCProviderOrOperatorRolesMode,
   isWaitingHypershiftCluster,
   isWaitingROSAManualMode,
-  isCCS,
-  isAWS,
-  isAWSPrivateCluster,
 } from './clusterStates';
 
 describe('getClusterStateAndDescription', () => {

@@ -1,9 +1,10 @@
 import React from 'react';
 import { CompatRouter } from 'react-router-dom-v5-compat';
-import { withState, screen, checkAccessibility, TestRouter } from '~/testUtils';
-import githubReleasesMock from '../../../githubReleases.mock';
 
-import { tools, channels } from '../../../../../../common/installLinks.mjs';
+import { checkAccessibility, screen, TestRouter, withState } from '~/testUtils';
+
+import { channels, tools } from '../../../../../../common/installLinks.mjs';
+import githubReleasesMock from '../../../githubReleases.mock';
 import DownloadsAndPullSecretSection from '../DownloadsAndPullSecretSection';
 
 jest.mock('~/redux/actions', () => ({

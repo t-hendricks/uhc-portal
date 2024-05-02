@@ -1,11 +1,13 @@
-import { FormGroup, NumberInput } from '@patternfly/react-core';
-import { useField } from 'formik';
 import * as React from 'react';
+import { useField } from 'formik';
+
+import { FormGroup, NumberInput } from '@patternfly/react-core';
+
 import { isMPoolAz } from '~/components/clusters/ClusterDetails/clusterDetailsHelper';
 import { MAX_NODES } from '~/components/clusters/common/machinePools/constants';
 import { FormGroupHelperText } from '~/components/common/FormGroupHelperText';
-import { Cluster } from '~/types/clusters_mgmt.v1';
 import useFormikOnChange from '~/hooks/useFormikOnChange';
+import { Cluster } from '~/types/clusters_mgmt.v1';
 
 type AutoscaleMinReplicasFieldProps = {
   cluster: Cluster;

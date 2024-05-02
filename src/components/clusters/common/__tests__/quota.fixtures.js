@@ -1,12 +1,12 @@
 import { normalizedProducts } from '~/common/subscriptionTypes';
 import { RelatedResource } from '~/types/accounts_mgmt.v1';
-import { userActions } from '../../../../redux/actions/userActions';
-
-import * as quotaCostFixtures from './quota_cost.fixtures';
 
 // This is the quota we use in mockdata mode, pretty much everything is allowed.
 import * as mockQuotaCost from '../../../../../mockdata/api/accounts_mgmt/v1/organizations/1HAXGgCYqHpednsRDiwWsZBmDlA/quota_cost.json';
+import { userActions } from '../../../../redux/actions/userActions';
 import { QuotaTypes } from '../quotaModel';
+
+import * as quotaCostFixtures from './quota_cost.fixtures';
 
 // Fragments of processed quotaList state
 

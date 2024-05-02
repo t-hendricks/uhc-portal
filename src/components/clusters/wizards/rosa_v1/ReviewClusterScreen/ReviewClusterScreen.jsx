@@ -1,28 +1,31 @@
 import React, { useEffect, useState } from 'react';
-import PropTypes from 'prop-types';
 import isEmpty from 'lodash/isEmpty';
+import PropTypes from 'prop-types';
+
 import { Title } from '@patternfly/react-core';
 
-import config from '~/config';
-import {
-  HYPERSHIFT_WIZARD_FEATURE,
-  HCP_AWS_BILLING_SHOW,
-} from '~/redux/constants/featureConstants';
-import { normalizedProducts } from '~/common/subscriptionTypes';
 import { hasSelectedSecurityGroups } from '~/common/securityGroupsHelpers';
-import { getUserRoleForSelectedAWSAccount } from '~/components/clusters/wizards/rosa_v1/AccountsRolesScreen/AccountsRolesScreen';
+import { normalizedProducts } from '~/common/subscriptionTypes';
 import { stepId, stepNameById } from '~/components/clusters/wizards/common/osdWizardConstants';
+import { canSelectImds } from '~/components/clusters/wizards/rosa/constants';
+import { getUserRoleForSelectedAWSAccount } from '~/components/clusters/wizards/rosa_v1/AccountsRolesScreen/AccountsRolesScreen';
 import {
   stepId as rosaStepId,
   stepNameById as rosaStepNameById,
 } from '~/components/clusters/wizards/rosa_v1/rosaWizardConstants';
-import { useFeatureGate } from '~/hooks/useFeatureGate';
-
 import ReduxHiddenCheckbox from '~/components/common/ReduxFormComponents/ReduxHiddenCheckbox';
-import { canSelectImds } from '~/components/clusters/wizards/rosa/constants';
-import DebugClusterRequest from '../DebugClusterRequest';
+import config from '~/config';
+import { useFeatureGate } from '~/hooks/useFeatureGate';
+import {
+  HCP_AWS_BILLING_SHOW,
+  HYPERSHIFT_WIZARD_FEATURE,
+} from '~/redux/constants/featureConstants';
+
 import ReviewSection, { ReviewItem } from '../../common/ReviewCluster/ReviewSection';
+import DebugClusterRequest from '../DebugClusterRequest';
+
 import ReviewRoleItem from './ReviewRoleItem';
+
 import './ReviewClusterScreen.scss';
 
 const ReviewClusterScreen = ({
@@ -340,9 +343,7 @@ const ReviewClusterScreen = ({
 ReviewClusterScreen.propTypes = {
   change: PropTypes.func,
   clusterRequestParams: PropTypes.object.isRequired,
-  formValues: PropTypes.objectOf(
-    PropTypes.oneOfType([PropTypes.string, PropTypes.number, PropTypes.bool]),
-  ),
+  formValues: PropTypes.objectOf(PropTypes.oneOfType([PropTypes.any])),
   canAutoScale: PropTypes.bool,
   autoscalingEnabled: PropTypes.bool,
   installToVPCSelected: PropTypes.bool,

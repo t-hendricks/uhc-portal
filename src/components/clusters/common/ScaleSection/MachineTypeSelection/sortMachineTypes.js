@@ -1,6 +1,7 @@
 // This is a helper function to sort a MachineType structure according to size and category.
 import get from 'lodash/get';
 import map from 'lodash/map';
+
 import { parseValueWithUnit } from '~/common/units';
 
 /**

@@ -1,8 +1,10 @@
 import React from 'react';
 
-import './AddOnsDrawer.scss';
 import { FlexItem } from '@patternfly/react-core';
+
 import ExternalLink from '../../../../../common/ExternalLink';
+
+import './AddOnsDrawer.scss';
 
 interface AddOnsMetaDataItemProps {
   activeCardDocsLink?: string;

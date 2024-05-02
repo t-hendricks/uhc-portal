@@ -1,9 +1,9 @@
 import {
-  buildUrlParams,
   buildFilterURLParams,
-  sqlString,
+  buildUrlParams,
   createViewQueryObject,
   getQueryParam,
+  sqlString,
 } from '../queryHelpers';
 
 test('Test buildUrlParams', () => {

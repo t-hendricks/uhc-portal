@@ -1,13 +1,15 @@
 import React from 'react';
 import { Formik } from 'formik';
-import { withState, checkAccessibility, screen, act, TestRouter } from '~/testUtils';
 import { CompatRouter } from 'react-router-dom-v5-compat';
+
 import { normalizeSTSUsersByAWSAccounts } from '~/redux/actions/rosaActions';
+import { checkAccessibility, screen, TestRouter, waitFor, withState } from '~/testUtils';
+
+import { initialValues } from '../../constants';
 import AccountsRolesScreen, {
   AccountsRolesScreenProps,
   isUserRoleForSelectedAWSAccount,
 } from '../AccountsRolesScreen';
-import { initialValues } from '../../constants';
 
 const useAnalyticsMock = jest.fn();
 jest.mock('~/hooks/useAnalytics', () => jest.fn(() => useAnalyticsMock));
@@ -49,7 +51,7 @@ describe('<AccountsRolesScreen />', () => {
         </TestRouter>,
       ),
     );
-    await act(() => Promise.resolve());
+
     await checkAccessibility(container);
   });
 
@@ -63,11 +65,13 @@ describe('<AccountsRolesScreen />', () => {
         </TestRouter>,
       ),
     );
-    await act(() => Promise.resolve());
 
-    expect(
-      screen.queryByText('Welcome to Red Hat OpenShift Service on AWS (ROSA)'),
-    ).not.toBeInTheDocument();
+    await waitFor(() => {
+      expect(
+        screen.queryByText('Welcome to Red Hat OpenShift Service on AWS (ROSA)'),
+      ).not.toBeInTheDocument();
+    });
+
     expect(screen.queryByText('Did you complete your prerequisites?')).not.toBeInTheDocument();
   });
 
@@ -82,10 +86,9 @@ describe('<AccountsRolesScreen />', () => {
         </TestRouter>,
       ),
     );
-    await act(() => Promise.resolve());
 
     expect(
-      screen.getByText('Welcome to Red Hat OpenShift Service on AWS (ROSA)'),
+      await screen.findByText('Welcome to Red Hat OpenShift Service on AWS (ROSA)'),
     ).toBeInTheDocument();
     expect(screen.getByText('Did you complete your prerequisites?')).toBeInTheDocument();
     expect(screen.queryByText(/Make sure you are using ROSA CLI version/)).not.toBeInTheDocument();

@@ -1,10 +1,11 @@
 import React from 'react';
+import get from 'lodash/get';
 import PropTypes from 'prop-types';
+
 import { Tooltip } from '@patternfly/react-core';
 
-import get from 'lodash/get';
-
 import { PreviewLabel } from '~/components/clusters/common/PreviewLabel';
+
 import { normalizedProducts } from '../../../common/subscriptionTypes';
 
 function ClusterTypeLabel({ cluster }) {
@@ -37,7 +38,10 @@ function ClusterTypeLabel({ cluster }) {
     [normalizedProducts.ROSA_HyperShift]: {
       name: 'ROSA',
       tooltip: 'Red Hat OpenShift Service on AWS',
-      label: <PreviewLabel creationDateStr={creationDateStr} />, // PreviewLabel will return null if created after creationDate
+      // PreviewLabel will return null if created after creationDate.
+      // Shorten text to "Preview" to take less space in table.
+      // Supress default margin-left CSS class, since we render it on its own line.
+      label: <PreviewLabel creationDateStr={creationDateStr} text="Preview" className="" />,
     },
     [normalizedProducts.ARO]: {
       name: 'ARO',

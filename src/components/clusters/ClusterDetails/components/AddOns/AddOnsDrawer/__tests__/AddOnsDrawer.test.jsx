@@ -1,11 +1,11 @@
 import React from 'react';
 
-import { render, checkAccessibility, screen } from '~/testUtils';
-import AddOnsDrawer from '../AddOnsDrawer';
-import { mockAddOns, mockClusterAddOns } from '../../__tests__/AddOns.fixtures';
+import { checkAccessibility, render, screen } from '~/testUtils';
 
-import fixtures from '../../../../__tests__/ClusterDetails.fixtures';
 import { addonsQuotaList } from '../../../../../common/__tests__/quota.fixtures';
+import fixtures from '../../../../__tests__/ClusterDetails.fixtures';
+import { mockAddOns, mockClusterAddOns } from '../../__tests__/AddOns.fixtures';
+import AddOnsDrawer from '../AddOnsDrawer';
 
 describe('<AddOnsDrawer />', () => {
   const openModal = jest.fn();

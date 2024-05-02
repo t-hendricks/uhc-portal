@@ -1,7 +1,9 @@
 import React from 'react';
 import { PropTypes } from 'prop-types';
 import { Field } from 'redux-form';
+
 import { GridItem } from '@patternfly/react-core';
+
 import ReduxVerticalFormGroup from './ReduxVerticalFormGroup';
 import RenderArrayFields from './RenderArrayFields';
 
@@ -54,9 +56,9 @@ const CompoundFieldGridItem = ({
 };
 
 CompoundFieldGridItem.propTypes = {
-  item: PropTypes.object.isRequired,
+  item: PropTypes.string.isRequired,
   index: PropTypes.number.isRequired,
-  fields: PropTypes.array.isRequired,
+  fields: PropTypes.object.isRequired,
   fieldSpan: PropTypes.number,
   compoundFields: PropTypes.array.isRequired,
   disabled: PropTypes.bool,

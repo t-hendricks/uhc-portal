@@ -1,9 +1,9 @@
 import React from 'react';
+
 import { TextListItem, TextListItemVariants } from '@patternfly/react-core';
 
-import { formatCurrency, formatPercentage } from './CostSummaryHelper';
-
 import { Report } from './models/Report';
+import { formatCurrency, formatPercentage } from './CostSummaryHelper';
 
 type CostSummaryClustersProps = {
   report: Report;

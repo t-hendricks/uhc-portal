@@ -1,4 +1,5 @@
 import { GlobalState } from '~/redux/store';
+
 import reducer from '../ModalReducer';
 import shouldShowModal from '../ModalSelectors';
 

@@ -1,22 +1,22 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+
+import { CheckCircleIcon } from '@patternfly/react-icons/dist/esm/icons/check-circle-icon';
+import { ExclamationCircleIcon } from '@patternfly/react-icons/dist/esm/icons/exclamation-circle-icon';
+import { ExclamationTriangleIcon } from '@patternfly/react-icons/dist/esm/icons/exclamation-triangle-icon';
+import { InProgressIcon } from '@patternfly/react-icons/dist/esm/icons/in-progress-icon';
+import { UnknownIcon } from '@patternfly/react-icons/dist/esm/icons/unknown-icon';
 import { TableVariant } from '@patternfly/react-table';
 import {
   Table as TableDeprecated,
-  TableHeader as TableHeaderDeprecated,
   TableBody as TableBodyDeprecated,
+  TableHeader as TableHeaderDeprecated,
 } from '@patternfly/react-table/deprecated';
 
-import { ExclamationCircleIcon } from '@patternfly/react-icons/dist/esm/icons/exclamation-circle-icon';
-import { InProgressIcon } from '@patternfly/react-icons/dist/esm/icons/in-progress-icon';
-import { UnknownIcon } from '@patternfly/react-icons/dist/esm/icons/unknown-icon';
-import { CheckCircleIcon } from '@patternfly/react-icons/dist/esm/icons/check-circle-icon';
-import { ExclamationTriangleIcon } from '@patternfly/react-icons/dist/esm/icons/exclamation-triangle-icon';
-
 import {
-  operatorsStatuses,
   monitoringItemLinkProps,
   monitoringItemTypes,
+  operatorsStatuses,
 } from '../monitoringHelper';
 
 function ClusterOperatorsTable({ operators = [], clusterConsole }) {

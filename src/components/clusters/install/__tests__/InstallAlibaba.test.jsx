@@ -1,8 +1,10 @@
 import React from 'react';
 import { CompatRouter } from 'react-router-dom-v5-compat';
-import { screen, checkAccessibility, TestRouter, withState } from '~/testUtils';
-import { InstallAlibaba } from '../InstallAlibaba';
+
+import { checkAccessibility, screen, TestRouter, withState } from '~/testUtils';
+
 import githubReleases from '../githubReleases.mock';
+import { InstallAlibaba } from '../InstallAlibaba';
 
 jest.mock('../../../../redux/actions', () => ({
   __esModule: true,

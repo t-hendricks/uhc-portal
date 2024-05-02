@@ -16,7 +16,9 @@ limitations under the License.
 
 import React from 'react';
 import { CompatRouter } from 'react-router-dom-v5-compat';
-import { screen, render, checkAccessibility, mockUseChrome, TestRouter } from '~/testUtils';
+
+import { checkAccessibility, mockUseChrome, render, screen, TestRouter } from '~/testUtils';
+
 import TokensROSA from '../InstructionsROSA';
 
 describe('<TokensROSA />', () => {

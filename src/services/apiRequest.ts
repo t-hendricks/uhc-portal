@@ -1,5 +1,6 @@
 import type { AxiosInstance } from 'axios';
 import axios, { InternalAxiosRequestConfig, RawAxiosRequestConfig } from 'axios';
+
 import { getRestrictedEnvApi, isRestrictedEnv } from '~/restrictedEnv';
 
 import config from '../config';

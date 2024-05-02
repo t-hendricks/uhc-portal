@@ -14,9 +14,10 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 import { action, ActionType } from 'typesafe-actions';
-import { dashboardsConstants } from '../constants';
+
 import { accountManager, accountsService } from '../../services';
 import type { SummaryVector } from '../../types/accounts_mgmt.v1/models/SummaryVector';
+import { dashboardsConstants } from '../constants';
 
 const getDashboard = () =>
   accountsService

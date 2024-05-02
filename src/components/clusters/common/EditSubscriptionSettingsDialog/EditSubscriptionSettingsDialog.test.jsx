@@ -1,17 +1,19 @@
 import React from 'react';
-import { screen, render, waitFor, within } from '~/testUtils';
-import EditSubscriptionSettingsDialog from './EditSubscriptionSettingsDialog';
 
-import {
-  subscriptionSettings,
-  subscriptionSupportLevels,
-  subscriptionServiceLevels,
-  subscriptionUsages,
-  subscriptionProductBundles,
-  subscriptionSystemUnits,
-  subscriptionStatuses,
-} from '../../../../common/subscriptionTypes';
+import { render, screen, waitFor, within } from '~/testUtils';
+
 import { subscriptionCapabilities } from '../../../../common/subscriptionCapabilities';
+import {
+  subscriptionProductBundles,
+  subscriptionServiceLevels,
+  subscriptionSettings,
+  subscriptionStatuses,
+  subscriptionSupportLevels,
+  subscriptionSystemUnits,
+  subscriptionUsages,
+} from '../../../../common/subscriptionTypes';
+
+import EditSubscriptionSettingsDialog from './EditSubscriptionSettingsDialog';
 
 // TODO: either add back or remove PRODUCT_BUNDLE
 const {

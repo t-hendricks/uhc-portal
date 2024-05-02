@@ -1,11 +1,13 @@
 import React from 'react';
 import { MemoryRouter } from 'react-router';
 import { CompatRouter } from 'react-router-dom-v5-compat';
-import ClusterList from './ClusterList';
-import fixtures from '../ClusterDetails/__tests__/ClusterDetails.fixtures';
+
 import { normalizedProducts } from '../../../common/subscriptionTypes';
 import { viewConstants } from '../../../redux/constants';
 import { mockRestrictedEnv, render, screen } from '../../../testUtils';
+import fixtures, { funcs } from '../ClusterDetails/__tests__/ClusterDetails.fixtures';
+
+import ClusterList from './ClusterList';
 
 describe('<ClusterList />', () => {
   describe('in restricted env', () => {
@@ -29,17 +31,24 @@ describe('<ClusterList />', () => {
       clusters: [fixtures.clusterDetails.cluster],
       meta: {},
       queryParams: {},
-      closeModal: () => {},
-      clearClusterDetails: () => {},
-      clearGlobalError: () => {},
       features: {},
       valid: true,
+      pending: false,
+      errorMessage: '',
+      error: false,
+      username: 'myUserName',
+      ...funcs(),
+      clearClusterDetails: jest.fn(),
+      setClusterDetails: jest.fn(),
+      setListFlag: jest.fn(),
+      setSorting: jest.fn(),
+      getMachineTypes: jest.fn(),
     };
     afterEach(() => {
       isRestrictedEnv.mockReturnValue(false);
     });
 
-    it('should call onListFlagsSet with ROSA filter', () => {
+    it('should call onListFlagsSet with ROSA filter', async () => {
       isRestrictedEnv.mockReturnValue(true);
       render(
         <MemoryRouter>
@@ -53,9 +62,11 @@ describe('<ClusterList />', () => {
       expect(args[0]).toBe('subscriptionFilter');
       expect(args[1]).toStrictEqual({ plan_id: [normalizedProducts.ROSA] });
       expect(args[2]).toBe(viewConstants.CLUSTERS_VIEW);
+
+      expect(await screen.findByRole('button', { name: 'Create cluster' })).toBeInTheDocument();
     });
 
-    it('does not render filtering', () => {
+    it('does not render filtering', async () => {
       const { rerender } = render(
         <MemoryRouter>
           <CompatRouter>
@@ -74,6 +85,8 @@ describe('<ClusterList />', () => {
         </MemoryRouter>,
       );
       expect(screen.queryByTestId('cluster-list-filter-dropdown')).not.toBeInTheDocument();
+
+      expect(await screen.findByRole('button', { name: 'Create cluster' })).toBeInTheDocument();
     });
   });
 });

@@ -1,37 +1,41 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import get from 'lodash/get';
-import { useParams, Navigate, Link } from 'react-router-dom-v5-compat';
+import PropTypes from 'prop-types';
 import { useDispatch } from 'react-redux';
+import { Link, Navigate, useParams } from 'react-router-dom-v5-compat';
 import { reset } from 'redux-form';
+
 import {
-  PageSection,
+  Button,
   Card,
-  Grid,
-  GridItem,
   CardBody,
   CardFooter,
-  Button,
+  Grid,
+  GridItem,
+  PageSection,
   Split,
   SplitItem,
 } from '@patternfly/react-core';
-import { Spinner } from '@redhat-cloud-services/frontend-components/Spinner';
 import { PageHeader, PageHeaderTitle } from '@redhat-cloud-services/frontend-components/PageHeader';
+import { Spinner } from '@redhat-cloud-services/frontend-components/Spinner';
+
 import { AppPage } from '~/components/App/AppPage';
 import { isHypershiftCluster } from '~/components/clusters/common/clusterStates';
-import { isValid } from '../../../../../common/helpers';
-import Breadcrumbs from '../../../../common/Breadcrumbs';
-import IDPForm from './components/IDPForm';
-import Unavailable from '../../../../common/Unavailable';
+
 import getClusterName from '../../../../../common/getClusterName';
+import { isValid } from '../../../../../common/helpers';
 import { subscriptionStatuses } from '../../../../../common/subscriptionTypes';
 import { fetchClusterDetails } from '../../../../../redux/actions/clustersActions';
-import { IDPTypeNames, singularFormIDP } from './IdentityProvidersHelper';
 import { setGlobalError } from '../../../../../redux/actions/globalErrorActions';
+import Breadcrumbs from '../../../../common/Breadcrumbs';
+import Unavailable from '../../../../common/Unavailable';
+
+import IDPForm from './components/IDPForm';
 import {
-  resetCreatedClusterIDPResponse,
   getClusterIdentityProviders,
+  resetCreatedClusterIDPResponse,
 } from './IdentityProvidersActions';
+import { IDPTypeNames, singularFormIDP } from './IdentityProvidersHelper';
 
 const PAGE_TITLE = 'Red Hat OpenShift Cluster Manager';
 

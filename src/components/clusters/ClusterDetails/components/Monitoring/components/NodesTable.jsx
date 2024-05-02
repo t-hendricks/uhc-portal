@@ -1,14 +1,15 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { TableVariant } from '@patternfly/react-table';
-import {
-  Table as TableDeprecated,
-  TableHeader as TableHeaderDeprecated,
-  TableBody as TableBodyDeprecated,
-} from '@patternfly/react-table/deprecated';
 
 import { CheckCircleIcon } from '@patternfly/react-icons/dist/esm/icons/check-circle-icon';
 import { ExclamationCircleIcon } from '@patternfly/react-icons/dist/esm/icons/exclamation-circle-icon';
+import { TableVariant } from '@patternfly/react-table';
+import {
+  Table as TableDeprecated,
+  TableBody as TableBodyDeprecated,
+  TableHeader as TableHeaderDeprecated,
+} from '@patternfly/react-table/deprecated';
+
 import { monitoringItemLinkProps, monitoringItemTypes } from '../monitoringHelper';
 
 function NodesTable({ nodes = [], clusterConsole }) {

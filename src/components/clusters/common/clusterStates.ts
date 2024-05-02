@@ -1,6 +1,6 @@
+import { normalizedProducts, subscriptionStatuses } from '~/common/subscriptionTypes';
 import { Cluster, ClusterState, InflightCheck, InflightCheckState } from '~/types/clusters_mgmt.v1';
 import { ClusterFromSubscription, ClusterWithPermissions } from '~/types/types';
-import { normalizedProducts, subscriptionStatuses } from '~/common/subscriptionTypes';
 
 enum SubscriptionDerivedStates {
   UPDATING = 'updating',

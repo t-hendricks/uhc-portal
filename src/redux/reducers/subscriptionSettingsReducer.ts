@@ -15,18 +15,18 @@ limitations under the License.
 */
 
 import { produce } from 'immer';
-import {
-  REJECTED_ACTION,
-  PENDING_ACTION,
-  FULFILLED_ACTION,
-  baseRequestState,
-} from '../reduxHelpers';
-import { getErrorState } from '../../common/errors';
 
-import { subscriptionSettingsConstants } from '../constants';
-import { PromiseActionType, PromiseReducerState } from '../types';
-import { SubscriptionSettingsAction } from '../actions/subscriptionSettingsActions';
+import { getErrorState } from '../../common/errors';
 import { Subscription } from '../../types/clusters_mgmt.v1/models/Subscription';
+import { SubscriptionSettingsAction } from '../actions/subscriptionSettingsActions';
+import { subscriptionSettingsConstants } from '../constants';
+import {
+  baseRequestState,
+  FULFILLED_ACTION,
+  PENDING_ACTION,
+  REJECTED_ACTION,
+} from '../reduxHelpers';
+import { PromiseActionType, PromiseReducerState } from '../types';
 
 // TODO requestState separated from data is inconsistent with other reducers
 // although the separation is a better pattern

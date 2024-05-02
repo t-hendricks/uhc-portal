@@ -1,6 +1,7 @@
 import * as React from 'react';
-import { Alert, Checkbox, Stack, StackItem } from '@patternfly/react-core';
 import { useField } from 'formik';
+
+import { Alert, Checkbox, Stack, StackItem } from '@patternfly/react-core';
 
 import links from '~/common/installLinks.mjs';
 import ExternalLink from '~/components/common/ExternalLink';

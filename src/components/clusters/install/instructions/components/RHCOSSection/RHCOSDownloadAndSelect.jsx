@@ -1,6 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+
 import { FormSelect, FormSelectOption, Split, SplitItem } from '@patternfly/react-core';
+
 import { architectureOptions, tools } from '../../../../../../common/installLinks.mjs';
 import DownloadButton from '../DownloadButton';
 

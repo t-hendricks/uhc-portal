@@ -1,28 +1,31 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+
 import {
+  ClipboardCopy,
+  ClipboardCopyVariant,
   Modal,
   ModalVariant,
   Stack,
   StackItem,
   Tab,
   TabContent,
-  TabTitleText,
   Tabs,
-  TextContent,
+  TabTitleText,
   Text,
+  TextContent,
   TextList,
   TextListItem,
   TextVariants,
-  ClipboardCopy,
-  ClipboardCopyVariant,
 } from '@patternfly/react-core';
+
 import {
-  isHypershiftCluster,
-  isWaitingROSAManualMode,
   isErrorSharedGCPVPCValues,
+  isHypershiftCluster,
   isWaitingForOIDCProviderOrOperatorRolesMode,
+  isWaitingROSAManualMode,
 } from '../clusterStates';
+
 // import CloudFormationTab from './CloudFormationTab';
 import AWSCLITab from './AWSCLITab';
 import ROSACLITab from './ROSACLITab';

@@ -1,5 +1,7 @@
 import React from 'react';
+
 import { Tooltip } from '@patternfly/react-core';
+
 import { ClusterTabsId } from '../../common/ClusterTabIds';
 import { TabsRowInfoType, TabsRowTabType } from '../TabsRow.model';
 

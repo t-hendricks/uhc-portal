@@ -1,8 +1,10 @@
 import React from 'react';
 import { connect } from 'react-redux';
+
 import { GlobalState } from '~/redux/store';
 
 import shouldShowModal from '../ModalSelectors';
+
 import ConnectedModal from './ConnectedModal';
 
 const mapStateToProps = (

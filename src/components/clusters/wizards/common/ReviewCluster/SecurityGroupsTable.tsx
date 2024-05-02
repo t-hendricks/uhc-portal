@@ -1,8 +1,9 @@
 import React from 'react';
+
 import { Flex, FlexItem } from '@patternfly/react-core';
-import { SecurityGroup } from '~/types/clusters_mgmt.v1';
 
 import SecurityGroupsViewList from '~/components/clusters/ClusterDetails/components/SecurityGroups/SecurityGroupsViewList';
+import { SecurityGroup } from '~/types/clusters_mgmt.v1';
 
 type SecurityGroupsTableProps = {
   vpcGroups: SecurityGroup[];

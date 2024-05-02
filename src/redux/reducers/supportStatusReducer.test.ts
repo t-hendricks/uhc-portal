@@ -1,8 +1,9 @@
-import reducer, { initialState } from './supportStatusReducer';
-import { FULFILLED_ACTION, PENDING_ACTION, REJECTED_ACTION } from '../reduxHelpers';
-import { PromiseActionType } from '../types';
 import { SupportStatusAction } from '../actions/supportStatusActions';
 import GET_SUPPORT_STATUS from '../constants/supportStatusConstants';
+import { FULFILLED_ACTION, PENDING_ACTION, REJECTED_ACTION } from '../reduxHelpers';
+import { PromiseActionType } from '../types';
+
+import reducer, { initialState } from './supportStatusReducer';
 
 describe('support status reducer', () => {
   const mockPayload = {

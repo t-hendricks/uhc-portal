@@ -1,12 +1,16 @@
 import React from 'react';
-import PropTypes from 'prop-types';
-import { Stack, StackItem, Text, TextContent, Button, ClipboardCopy } from '@patternfly/react-core';
 import { get } from 'lodash';
-import useAnalytics from '~/hooks/useAnalytics';
+import PropTypes from 'prop-types';
+
+import { Button, ClipboardCopy, Stack, StackItem, Text, TextContent } from '@patternfly/react-core';
+
 import { trackEvents } from '~/common/analytics';
+import useAnalytics from '~/hooks/useAnalytics';
+
 import ExternalLink from '../../../../common/ExternalLink';
-import TelemetryDisclaimer from './TelemetryDisclaimer';
 import instructionsMapping from '../instructionsMapping';
+
+import TelemetryDisclaimer from './TelemetryDisclaimer';
 
 const GetStarted = ({
   docURL,
@@ -22,8 +26,7 @@ const GetStarted = ({
     <Stack hasGutter>
       <StackItem>
         <TextContent>
-          {/* TODO: A p tag cannot be nested inside another p tag */}
-          <Text component="p">
+          <div>
             {!isBMIPI && <>The installer will take about 45 minutes to run. </>}
             {get(instructionsMapping, `${cloudProviderID}.getStartedAdditional`, null) || ''}
             {isBMIPI && (
@@ -33,7 +36,7 @@ const GetStarted = ({
                 for you to use with the <code>oc</code> CLI tools you downloaded.
               </Text>
             )}
-          </Text>
+          </div>
         </TextContent>
       </StackItem>
       <StackItem>

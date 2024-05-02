@@ -1,8 +1,10 @@
 import React from 'react';
-import { render, screen, checkAccessibility } from '~/testUtils';
+
+import { checkAccessibility, render, screen } from '~/testUtils';
 
 import AlertsTable from '../components/AlertsTable';
-import { mockWatchdog, mockAlerts } from './Monitoring.fixtures';
+
+import { mockAlerts, mockWatchdog } from './Monitoring.fixtures';
 
 describe('<AlertsTable />', () => {
   it('should render empty state when there are no alerts', async () => {

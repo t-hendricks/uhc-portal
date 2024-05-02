@@ -1,5 +1,6 @@
-import { Button } from '@patternfly/react-core';
 import React from 'react';
+
+import { Button } from '@patternfly/react-core';
 
 const INTERCOM_OPEN_AUTH_CHAT_ID = 'qualify-rosa-he';
 const INTERCOM_OPEN_CHAT_ID = 'contact-support';

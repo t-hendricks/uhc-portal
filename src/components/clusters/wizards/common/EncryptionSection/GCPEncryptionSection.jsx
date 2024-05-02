@@ -1,13 +1,16 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Grid, GridItem, FormGroup, Text } from '@patternfly/react-core';
 import { Field } from 'redux-form';
-import ReduxVerticalFormGroup from '~/components/common/ReduxFormComponents/ReduxVerticalFormGroup';
-import { required, validateGCPKMSServiceAccount } from '~/common/validators';
 
+import { FormGroup, Grid, GridItem, Text } from '@patternfly/react-core';
+
+import { required, validateGCPKMSServiceAccount } from '~/common/validators';
 import ExternalLink from '~/components/common/ExternalLink';
 import PopoverHint from '~/components/common/PopoverHint';
+import ReduxVerticalFormGroup from '~/components/common/ReduxFormComponents/ReduxVerticalFormGroup';
+
 import { constants } from '../../../common/CreateOSDFormConstants';
+
 import KMSKeyLocationComboBox from './KMSKeyLocationComboBox';
 import KMSKeyRingSelect from './KMSKeyRingSelect';
 import KMSKeySelect from './KMSKeySelect';

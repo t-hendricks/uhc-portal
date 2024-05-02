@@ -1,6 +1,7 @@
 import { action, ActionType } from 'typesafe-actions';
-import OCMRolesConstants from '../constants/OCMRolesConstants';
+
 import { accountsService } from '../../services';
+import OCMRolesConstants from '../constants/OCMRolesConstants';
 
 const getOCMRoles = (subID: string) =>
   action(OCMRolesConstants.GET_OCM_ROLES, accountsService.getSubscriptionRoleBindings(subID));

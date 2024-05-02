@@ -1,8 +1,11 @@
 import React from 'react';
-import { screen, render, checkAccessibility, TestRouter } from '~/testUtils';
 import { CompatRouter } from 'react-router-dom-v5-compat';
-import ExpiredTrialsCard from './ExpiredTrialsCard';
+
+import { checkAccessibility, render, screen, TestRouter } from '~/testUtils';
+
 import { expiredTrials } from '../Dashboard.fixtures';
+
+import ExpiredTrialsCard from './ExpiredTrialsCard';
 import { expiredTrialsFilter } from './expiredTrialsHelpers';
 
 const initialState = {

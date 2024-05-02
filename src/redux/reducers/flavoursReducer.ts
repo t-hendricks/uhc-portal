@@ -1,15 +1,14 @@
-import {
-  REJECTED_ACTION,
-  FULFILLED_ACTION,
-  PENDING_ACTION,
-  baseRequestState,
-} from '../reduxHelpers';
 import { getErrorState } from '../../common/errors';
-
+import type { Flavour } from '../../types/clusters_mgmt.v1/models/Flavour';
 import { DEFAULT_FLAVOUR_ID, FlavourAction } from '../actions/flavourActions';
 import { GET_DEFAULT_FLAVOUR } from '../constants/flavourConstants';
+import {
+  baseRequestState,
+  FULFILLED_ACTION,
+  PENDING_ACTION,
+  REJECTED_ACTION,
+} from '../reduxHelpers';
 import type { PromiseActionType, PromiseReducerState } from '../types';
-import type { Flavour } from '../../types/clusters_mgmt.v1/models/Flavour';
 
 type State = PromiseReducerState<{
   byID: { [id: string]: Flavour };

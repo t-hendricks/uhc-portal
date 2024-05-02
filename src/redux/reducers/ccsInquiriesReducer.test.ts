@@ -1,7 +1,8 @@
-import { processAWSVPCs, indexRegions } from '~/redux/reducers/ccsInquiriesReducer';
+import { indexRegions, processAWSVPCs } from '~/redux/reducers/ccsInquiriesReducer';
 import { CloudRegion, CloudVPC } from '~/types/clusters_mgmt.v1';
-import vpcResponse from '../../../mockdata/api/clusters_mgmt/v1/aws_inquiries/vpcs.json';
+
 import awsRegions from '../../../mockdata/api/clusters_mgmt/v1/aws_inquiries/regions.json';
+import vpcResponse from '../../../mockdata/api/clusters_mgmt/v1/aws_inquiries/vpcs.json';
 
 const vpcItems = vpcResponse.items as CloudVPC[];
 

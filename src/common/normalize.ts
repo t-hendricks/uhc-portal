@@ -1,19 +1,22 @@
-import { produce, Draft } from 'immer';
-import * as OCM from '@openshift-assisted/ui-lib/ocm';
-import type { Cluster as AICluster } from '@openshift-assisted/types/assisted-installer-service';
 import type { AxiosResponse } from 'axios';
-import { versionComparator } from './versionComparator';
-import { normalizedProducts, clustersServiceProducts } from './subscriptionTypes';
-import { isAISubscriptionWithoutMetrics } from './isAssistedInstallerCluster';
+import { Draft, produce } from 'immer';
+
+import type { Cluster as AICluster } from '@openshift-assisted/types/assisted-installer-service';
+import * as OCM from '@openshift-assisted/ui-lib/ocm';
+
 import type {
-  QuotaCost,
-  Subscription,
-  OneMetric,
   ClusterMetricsNodes,
   ClusterResource,
+  OneMetric,
+  QuotaCost,
+  Subscription,
 } from '../types/accounts_mgmt.v1';
 import type { Cluster } from '../types/clusters_mgmt.v1';
 import type { FakeCluster } from '../types/types';
+
+import { isAISubscriptionWithoutMetrics } from './isAssistedInstallerCluster';
+import { clustersServiceProducts, normalizedProducts } from './subscriptionTypes';
+import { versionComparator } from './versionComparator';
 
 const {
   getClustervCPUCount: getAIClusterCPUCount,

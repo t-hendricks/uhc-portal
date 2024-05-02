@@ -4,12 +4,12 @@
 import * as React from 'react';
 import { Formik } from 'formik';
 
-import { FieldId, initialValues } from '~/components/clusters/wizards/osd/constants';
 import {
+  fulfilledProviders,
   noProviders,
   providersResponse,
-  fulfilledProviders,
 } from '~/common/__test__/regions.fixtures';
+import { FieldId, initialValues } from '~/components/clusters/wizards/osd/constants';
 import ocpLifeCycleStatuses from '~/components/releases/__mocks__/ocpLifeCycleStatuses';
 import { LONGER_CLUSTER_NAME_UI } from '~/redux/constants/featureConstants';
 import clusterService from '~/services/clusterService';

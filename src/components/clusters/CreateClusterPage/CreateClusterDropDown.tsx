@@ -1,12 +1,14 @@
 import React from 'react';
+import { Link } from 'react-router-dom-v5-compat';
+
 import { Button, ButtonVariant, HelperText, HelperTextItem } from '@patternfly/react-core';
 import {
   Dropdown as DropdownDeprecated,
+  DropdownItem as DropdownItemDeprecated,
   DropdownPosition as DropdownPositionDeprecated,
   DropdownToggle as DropdownToggleDeprecated,
-  DropdownItem as DropdownItemDeprecated,
 } from '@patternfly/react-core/deprecated';
-import { Link } from 'react-router-dom-v5-compat';
+
 import { useFeatureGate } from '~/hooks/useFeatureGate';
 import { HCP_ROSA_GETTING_STARTED_PAGE } from '~/redux/constants/featureConstants';
 import { isRestrictedEnv } from '~/restrictedEnv';

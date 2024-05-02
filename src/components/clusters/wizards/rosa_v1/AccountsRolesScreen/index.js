@@ -2,17 +2,18 @@ import { connect } from 'react-redux';
 import { formValueSelector } from 'redux-form';
 
 import wizardConnector from '~/components/clusters/wizards/common/WizardConnector';
-import AccountsRolesScreen from './AccountsRolesScreen';
-import { closeModal } from '../../../../common/Modal/ModalActions';
 
 import {
-  getAWSAccountIDs,
   clearGetAWSAccountIDsResponse,
-  getAWSAccountRolesARNs,
   clearGetAWSAccountRolesARNsResponse,
   clearGetUserRoleResponse,
+  getAWSAccountIDs,
+  getAWSAccountRolesARNs,
   getUserRole,
 } from '../../../../../redux/actions/rosaActions';
+import { closeModal } from '../../../../common/Modal/ModalActions';
+
+import AccountsRolesScreen from './AccountsRolesScreen';
 
 const mapDispatchToProps = (dispatch) => ({
   closeModal: () => dispatch(closeModal()),

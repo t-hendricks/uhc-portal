@@ -1,8 +1,8 @@
 #!/usr/bin/env node
 
 import { realpathSync } from 'fs';
-import { fileURLToPath } from 'url';
 import { simpleGit } from 'simple-git';
+import { fileURLToPath } from 'url';
 
 const upstreamRepoPattern = /.*gitlab\.cee\.redhat\.com[:/]service\/uhc-portal.*/;
 

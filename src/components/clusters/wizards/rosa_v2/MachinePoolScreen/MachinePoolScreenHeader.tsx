@@ -1,5 +1,6 @@
-import { Grid, GridItem, Text, Title } from '@patternfly/react-core';
 import React from 'react';
+
+import { Grid, GridItem, Text, Title } from '@patternfly/react-core';
 
 const HypershiftMachinePoolHeader = () => (
   <Grid>

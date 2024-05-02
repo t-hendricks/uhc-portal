@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import Skeleton from '@redhat-cloud-services/frontend-components/Skeleton';
-import { Title } from '@patternfly/react-core';
+
 import { ChartLabel, ChartLegend, ChartPie } from '@patternfly/react-charts';
+import { Title } from '@patternfly/react-core';
+import Skeleton from '@redhat-cloud-services/frontend-components/Skeleton';
 
 import './CostBreakdownCard.scss';
 

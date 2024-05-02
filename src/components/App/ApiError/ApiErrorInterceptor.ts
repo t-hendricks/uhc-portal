@@ -1,4 +1,5 @@
-import axios, { AxiosResponse, AxiosInstance } from 'axios';
+import axios, { AxiosInstance, AxiosResponse } from 'axios';
+
 import { hasOwnErrorPage } from '../../../common/errors';
 
 const apiErrorInterceptor = (

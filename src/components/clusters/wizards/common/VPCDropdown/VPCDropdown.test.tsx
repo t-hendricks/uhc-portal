@@ -1,9 +1,9 @@
 import React from 'react';
 
-import { render, screen } from '~/testUtils';
-import { CloudVPC } from '~/types/clusters_mgmt.v1';
 import * as vpcHelpers from '~/common/vpcHelpers';
 import { useAWSVPCInquiry } from '~/components/clusters/common/useVPCInquiry';
+import { render, screen } from '~/testUtils';
+import { CloudVPC } from '~/types/clusters_mgmt.v1';
 
 import VPCDropdown from './VPCDropdown';
 

@@ -1,22 +1,24 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+
 import {
+  Button,
   Card,
-  CardTitle,
-  Title,
   CardBody,
   CardFooter,
+  CardTitle,
   DescriptionList,
   DescriptionListDescription,
   DescriptionListGroup,
   DescriptionListTerm,
-  Button,
-  LabelGroup,
   Label,
+  LabelGroup,
+  Title,
 } from '@patternfly/react-core';
 
 import modals from '~/components/common/Modal/modals';
 import { isRestrictedEnv } from '~/restrictedEnv';
+
 import EditClusterWideProxyDialog from '../EditClusterWideProxyDialog';
 
 import './VPCDetailsCard.scss';

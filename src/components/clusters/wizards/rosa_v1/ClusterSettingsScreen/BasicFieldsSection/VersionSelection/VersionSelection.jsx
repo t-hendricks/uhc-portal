@@ -1,5 +1,9 @@
 // a redux-form Field-compatible component for selecting a cluster version
 
+import React, { useEffect, useState } from 'react';
+import classNames from 'classnames';
+import PropTypes from 'prop-types';
+
 import { Button, FormGroup, Grid, GridItem, Popover, Switch } from '@patternfly/react-core';
 import {
   Select as SelectDeprecated,
@@ -8,14 +12,14 @@ import {
 } from '@patternfly/react-core/deprecated';
 import { OutlinedQuestionCircleIcon } from '@patternfly/react-icons/dist/esm/icons/outlined-question-circle-icon';
 import { Spinner } from '@redhat-cloud-services/frontend-components/Spinner';
-import classNames from 'classnames';
-import PropTypes from 'prop-types';
-import React, { useEffect, useState } from 'react';
+
 import { isSupportedMinorVersion } from '~/common/helpers';
 import { MIN_MANAGED_POLICY_VERSION } from '~/components/clusters/wizards/rosa_v1/rosaConstants';
 import { FormGroupHelperText } from '~/components/common/FormGroupHelperText';
 import { useOCPLifeCycleStatusData } from '~/components/releases/hooks';
+
 import ErrorBox from '../../../../../../common/ErrorBox';
+
 import RosaVersionErrorAlert from './RosaVersionErrorAlert';
 
 const SupportStatusType = {
@@ -216,7 +220,6 @@ function VersionSelection({
           className="pf-v5-c-dropdown__menu-item"
           isSelected={selectedClusterVersion?.raw_id === version.raw_id}
           value={version.raw_id}
-          formValue={version.raw_id}
           key={version.id}
           isDisabled={isIncompatible}
           description={selectOptionDescription(isIncompatible, isHostedDisabled(version))}

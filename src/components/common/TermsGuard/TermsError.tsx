@@ -1,19 +1,21 @@
 import React from 'react';
 import { AxiosResponse } from 'axios';
+
 import {
   Button,
   EmptyState,
-  EmptyStateVariant,
-  EmptyStateIcon,
-  EmptyStateBody,
   EmptyStateActions,
-  EmptyStateHeader,
+  EmptyStateBody,
   EmptyStateFooter,
+  EmptyStateHeader,
+  EmptyStateIcon,
+  EmptyStateVariant,
 } from '@patternfly/react-core';
 import { ExclamationCircleIcon } from '@patternfly/react-icons/dist/esm/icons/exclamation-circle-icon';
 import { global_danger_color_100 as dangerColor } from '@patternfly/react-tokens/dist/esm/global_danger_color_100';
 
 import getTermsAppLink from '../../../common/getTermsAppLink';
+
 import { ViewTermsButton } from './ViewTermsButton';
 
 type Props = {

@@ -1,6 +1,8 @@
-import { TextInput } from '@patternfly/react-core';
 import React from 'react';
 import { useDispatch } from 'react-redux';
+
+import { TextInput } from '@patternfly/react-core';
+
 import { onListFilterSet } from '~/redux/actions/viewOptionsActions';
 import { useGlobalState } from '~/redux/hooks';
 

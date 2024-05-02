@@ -3,23 +3,26 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Field } from 'redux-form';
+
 import {
   Divider,
-  Title,
   Grid,
   GridItem,
+  Text,
   TextContent,
   TextVariants,
-  Text,
+  Title,
 } from '@patternfly/react-core';
 
-import ExternalLink from '../../../common/ExternalLink';
-import RadioButtons from '../../../common/ReduxFormComponents/RadioButtons';
-import UpgradeScheduleSelection from './UpgradeScheduleSelection';
-import PodDistruptionBudgetGraceSelect from './PodDistruptionBudgetGraceSelect';
-import './UpgradeSettingsFields.scss';
 import links from '../../../../common/installLinks.mjs';
 import { normalizedProducts } from '../../../../common/subscriptionTypes';
+import ExternalLink from '../../../common/ExternalLink';
+import RadioButtons from '../../../common/ReduxFormComponents/RadioButtons';
+
+import PodDistruptionBudgetGraceSelect from './PodDistruptionBudgetGraceSelect';
+import UpgradeScheduleSelection from './UpgradeScheduleSelection';
+
+import './UpgradeSettingsFields.scss';
 
 function UpgradeSettingsFields({
   isDisabled,

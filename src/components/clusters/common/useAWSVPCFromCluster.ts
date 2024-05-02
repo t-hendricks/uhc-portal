@@ -1,14 +1,14 @@
 import React from 'react';
 import { AxiosError, AxiosResponse } from 'axios';
 
-import { getAWSVPCDetails } from '~/services/clusterService';
-import { CloudVPC, Cluster } from '~/types/clusters_mgmt.v1';
+import { isHypershiftCluster } from '~/components/clusters/common/clusterStates';
 import {
   CloudProviderVPCRequest,
   getAWSCloudProviderVPCs,
 } from '~/redux/actions/ccsInquiriesActions';
 import { securityGroupsSort } from '~/redux/reducers/ccsInquiriesReducer';
-import { isHypershiftCluster } from '~/components/clusters/common/clusterStates';
+import { getAWSVPCDetails } from '~/services/clusterService';
+import { CloudVPC, Cluster } from '~/types/clusters_mgmt.v1';
 
 /**
  * Reads the response of VPCs associated to a given subnet.

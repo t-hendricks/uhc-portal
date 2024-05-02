@@ -1,8 +1,9 @@
+import get from 'lodash/get';
 import { connect } from 'react-redux';
 import { formValueSelector } from 'redux-form';
-import get from 'lodash/get';
 
 import { clustersActions } from '~/redux/actions/clustersActions';
+
 import VersionSelection from './VersionSelection';
 
 const mapDispatchToProps = (dispatch) => ({

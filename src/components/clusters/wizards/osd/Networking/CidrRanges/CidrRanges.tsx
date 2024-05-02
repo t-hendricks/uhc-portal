@@ -1,18 +1,19 @@
 import React from 'react';
 
 import {
-  Form,
   Alert,
   Flex,
+  Form,
   Grid,
   GridItem,
   List,
   ListItem,
-  Title,
   Text,
   TextVariants,
+  Title,
 } from '@patternfly/react-core';
 
+import { constructSelectedSubnets } from '~/common/helpers';
 import links from '~/common/installLinks.mjs';
 import validators, { required } from '~/common/validators';
 import { constants } from '~/components/clusters/common/CreateOSDFormConstants';
@@ -22,12 +23,12 @@ import {
   POD_CIDR_DEFAULT,
   SERVICE_CIDR_DEFAULT,
 } from '~/components/clusters/common/networkingConstants';
-import ExternalLink from '~/components/common/ExternalLink';
 import { CloudProviderType } from '~/components/clusters/wizards/common/constants';
 import { CheckboxField, TextInputField } from '~/components/clusters/wizards/form';
 import { useFormState } from '~/components/clusters/wizards/hooks';
 import { FieldId } from '~/components/clusters/wizards/osd/constants';
-import { constructSelectedSubnets } from '~/common/helpers';
+import ExternalLink from '~/components/common/ExternalLink';
+
 import {
   formatHostPrefix,
   validateMachineCidr,

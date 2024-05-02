@@ -1,10 +1,12 @@
 import * as React from 'react';
+
 import { render, screen, within } from '~/testUtils';
+
 import EditMachinePoolModal from './EditMachinePoolModal';
 
 describe('<EditMachinePoolModal />', () => {
   describe('error state', () => {
-    it('Shows alert if machine pools failed to load', () => {
+    it('Shows alert if machine pools failed to load', async () => {
       render(
         <EditMachinePoolModal
           cluster={{}}
@@ -25,13 +27,16 @@ describe('<EditMachinePoolModal />', () => {
           }}
         />,
       );
-      expect(screen.getByTestId('alert-error')).toBeInTheDocument();
 
-      expect(screen.getByTestId('submit-btn')).toBeDisabled();
-      expect(screen.getByTestId('cancel-btn')).toBeEnabled();
+      expect(
+        within(await screen.findByRole('alert')).getByText(/Failed to fetch resources/),
+      ).toBeInTheDocument();
+
+      expect(screen.getByRole('button', { name: 'Add machine pool' })).toBeDisabled();
+      expect(screen.getByRole('button', { name: 'Cancel' })).toBeEnabled();
     });
 
-    it('Shows alert if machine types failed to load', () => {
+    it('Shows alert if machine types failed to load', async () => {
       render(
         <EditMachinePoolModal
           cluster={{}}
@@ -52,21 +57,24 @@ describe('<EditMachinePoolModal />', () => {
           }}
         />,
       );
-      expect(screen.getByTestId('alert-error')).toBeInTheDocument();
 
-      expect(screen.getByTestId('submit-btn')).toBeDisabled();
-      expect(screen.getByTestId('cancel-btn')).toBeEnabled();
+      expect(
+        within(await screen.findByRole('alert')).getByText(/Failed to fetch resources/),
+      ).toBeInTheDocument();
+
+      expect(screen.getByRole('button', { name: 'Add machine pool' })).toBeDisabled();
+      expect(screen.getByRole('button', { name: 'Cancel' })).toBeEnabled();
     });
   });
 
   describe('loading state', () => {
-    const check = () => {
-      expect(screen.getByText('Loading...')).toBeInTheDocument();
+    const check = async () => {
+      expect(await screen.findByText('Loading...')).toBeInTheDocument();
       expect(screen.getByTestId('submit-btn')).toBeDisabled();
       expect(screen.getByTestId('cancel-btn')).toBeEnabled();
     };
 
-    it('Shows loading if machine pools are loading', () => {
+    it('Shows loading if machine pools are loading', async () => {
       render(
         <EditMachinePoolModal
           cluster={{}}
@@ -85,10 +93,10 @@ describe('<EditMachinePoolModal />', () => {
           }}
         />,
       );
-      check();
+      await check();
     });
 
-    it('Shows loading if machine types are loading', () => {
+    it('Shows loading if machine types are loading', async () => {
       render(
         <EditMachinePoolModal
           cluster={{}}
@@ -106,12 +114,12 @@ describe('<EditMachinePoolModal />', () => {
           }}
         />,
       );
-      check();
+      await check();
     });
   });
 
   describe('add machine pool', () => {
-    it('Submit button shows `Add machine pool`', () => {
+    it('Submit button shows `Add machine pool`', async () => {
       render(
         <EditMachinePoolModal
           cluster={{}}
@@ -131,13 +139,13 @@ describe('<EditMachinePoolModal />', () => {
           }}
         />,
       );
-      const { getByText } = within(screen.getByTestId('submit-btn'));
-      expect(getByText('Add machine pool')).toBeInTheDocument();
+
+      expect(await screen.findByRole('button', { name: 'Add machine pool' })).toBeInTheDocument();
     });
   });
 
   describe('edit machine pool', () => {
-    it('Submit button shows `Save`', () => {
+    it('Submit button shows `Save`', async () => {
       const { rerender } = render(
         <EditMachinePoolModal
           cluster={{}}
@@ -158,8 +166,8 @@ describe('<EditMachinePoolModal />', () => {
           isEdit
         />,
       );
-      const { getByText } = within(screen.getByTestId('submit-btn'));
-      expect(getByText('Save')).toBeInTheDocument();
+
+      expect(await screen.findByRole('button', { name: 'Save' })).toBeInTheDocument();
 
       rerender(
         <EditMachinePoolModal
@@ -182,8 +190,7 @@ describe('<EditMachinePoolModal />', () => {
         />,
       );
 
-      const { getByText: getByText2 } = within(screen.getByTestId('submit-btn'));
-      expect(getByText2('Save')).toBeInTheDocument();
+      expect(await screen.findByRole('button', { name: 'Save' })).toBeInTheDocument();
     });
 
     describe('Singlezone and multizone machine pool in multizone cluster', () => {

@@ -1,6 +1,9 @@
 import React from 'react';
+
 import { render, screen } from '~/testUtils';
+
 import MarkdownParser from '../MarkdownParser';
+
 import {
   expectedMultipleHtmlElements,
   limitedSupportHtmlWithLinks,

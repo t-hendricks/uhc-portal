@@ -1,14 +1,16 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Stack, StackItem, Text, TextContent, Icon } from '@patternfly/react-core';
+
+import { Icon, Stack, StackItem, Text, TextContent } from '@patternfly/react-core';
 import { ExternalLinkAltIcon } from '@patternfly/react-icons/dist/esm/icons/external-link-alt-icon';
 
-import PullSecretSection from './PullSecretSection';
-import DownloadAndOSSelection from './DownloadAndOSSelection';
-import CLISection from './CLISection';
+import links, { channels, tools } from '../../../../../common/installLinks.mjs';
+
 import RHCOSSection from './RHCOSSection/RHCOSSection';
+import CLISection from './CLISection';
 import DeveloperPreviewSection from './DeveloperPreviewSection';
-import links, { tools, channels } from '../../../../../common/installLinks.mjs';
+import DownloadAndOSSelection from './DownloadAndOSSelection';
+import PullSecretSection from './PullSecretSection';
 
 function DownloadsAndPullSecretSection({
   token,

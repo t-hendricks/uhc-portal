@@ -1,9 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Grid, GridItem, EmptyState, EmptyStateBody } from '@patternfly/react-core';
+
+import { EmptyState, EmptyStateBody, Grid, GridItem } from '@patternfly/react-core';
 import { Spinner } from '@redhat-cloud-services/frontend-components/Spinner';
-import ClusterIngressCard from './components/ClusterIngressCard';
+
 import ApplicationIngressCard from './components/ApplicationIngressCard';
+import ClusterIngressCard from './components/ClusterIngressCard';
 import NetworkConfigurationCard from './components/NetworkConfigurationCard';
 import VPCDetailsCard from './components/VPCDetailsCard';
 import VPCSubnetsCard from './components/VPCSubnetsCard';

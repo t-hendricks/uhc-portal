@@ -1,7 +1,8 @@
 import React from 'react';
+
+import { TechnologyPreview } from '@openshift-assisted/ui-lib/ocm';
 import { Flex, FlexItem, Icon, Title } from '@patternfly/react-core';
 import { InfoCircleIcon } from '@patternfly/react-icons/dist/esm/icons/info-circle-icon';
-import { TechnologyPreview } from '@openshift-assisted/ui-lib/ocm';
 
 const HibernateClusterModalTitle = ({ title }: { title: string }) => (
   <Flex alignItems={{ default: 'alignItemsCenter' }}>

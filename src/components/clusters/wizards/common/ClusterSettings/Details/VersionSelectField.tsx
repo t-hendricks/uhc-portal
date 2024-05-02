@@ -1,23 +1,22 @@
-import React, { useState, useEffect } from 'react';
-import { useDispatch } from 'react-redux';
+import React, { useEffect, useState } from 'react';
 import { useField } from 'formik';
+import { useDispatch } from 'react-redux';
 
 import { FormGroup } from '@patternfly/react-core';
 import { SelectOptionObject as SelectOptionObjectDeprecated } from '@patternfly/react-core/deprecated';
 import { Spinner } from '@redhat-cloud-services/frontend-components/Spinner';
 
-import ErrorBox from '~/components/common/ErrorBox';
-import { useOCPLifeCycleStatusData } from '~/components/releases/hooks';
+import { billingModels } from '~/common/subscriptionTypes';
+import { versionComparator } from '~/common/versionComparator';
+import { FieldId } from '~/components/clusters/wizards/common/constants';
 import { useFormState } from '~/components/clusters/wizards/hooks';
+import ErrorBox from '~/components/common/ErrorBox';
+import { FormGroupHelperText } from '~/components/common/FormGroupHelperText';
+import FuzzySelect, { FuzzyEntryType } from '~/components/common/FuzzySelect';
+import { useOCPLifeCycleStatusData } from '~/components/releases/hooks';
 import { clustersActions } from '~/redux/actions';
 import { useGlobalState } from '~/redux/hooks';
 import { Version } from '~/types/clusters_mgmt.v1';
-import { FieldId } from '~/components/clusters/wizards/common/constants';
-import { billingModels } from '~/common/subscriptionTypes';
-import FuzzySelect, { FuzzyEntryType } from '~/components/common/FuzzySelect';
-import { FormGroupHelperText } from '~/components/common/FormGroupHelperText';
-
-import { versionComparator } from '~/common/versionComparator';
 
 const sortFn = (a: FuzzyEntryType, b: FuzzyEntryType) => versionComparator(b.label, a.label);
 

@@ -1,5 +1,5 @@
-import { openModal, closeModal } from '../ModalActions';
-import { OPEN_MODAL, CLOSE_MODAL } from '../ModalConstants';
+import { closeModal, openModal } from '../ModalActions';
+import { CLOSE_MODAL, OPEN_MODAL } from '../ModalConstants';
 
 describe('Modal actions', () => {
   it('should open modal', () => {

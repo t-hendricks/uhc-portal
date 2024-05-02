@@ -1,6 +1,6 @@
-import flavoursReducer, { initialState } from './flavoursReducer';
-
 import mockdata from '../../../mockdata/api/clusters_mgmt/v1/flavours/osd-4.json';
+
+import flavoursReducer, { initialState } from './flavoursReducer';
 
 describe('flavoursReducer', () => {
   it('initial value', () => {

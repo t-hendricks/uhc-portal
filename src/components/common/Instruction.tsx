@@ -1,4 +1,5 @@
 import React from 'react';
+
 import { TextListItem } from '@patternfly/react-core';
 
 import './Instruction.scss';

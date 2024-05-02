@@ -1,8 +1,9 @@
 import { connect } from 'react-redux';
 
-import { deleteClusterDialogActions } from './DeleteClusterDialogActions';
 import { closeModal } from '../../../common/Modal/ModalActions';
+
 import DeleteClusterDialog from './DeleteClusterDialog';
+import { deleteClusterDialogActions } from './DeleteClusterDialogActions';
 
 const mapStateToProps = (state) => ({
   modalData: state.modal.data,

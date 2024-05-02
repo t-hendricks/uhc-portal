@@ -1,19 +1,22 @@
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
+
+import { normalizedProducts } from '~/common/subscriptionTypes';
+import { getCloudProviders } from '~/redux/actions/cloudProviderActions';
 import {
-  resetCreatedClusterResponse,
   clearInstallableVersions,
+  resetCreatedClusterResponse,
 } from '~/redux/actions/clustersActions';
 import { getMachineTypes } from '~/redux/actions/machineTypesActions';
+import { getUserRole } from '~/redux/actions/rosaActions';
 import { getOrganizationAndQuota } from '~/redux/actions/userActions';
-import { getCloudProviders } from '~/redux/actions/cloudProviderActions';
-import { normalizedProducts } from '~/common/subscriptionTypes';
-import { getUserRole, clearGetUserRoleResponse } from '~/redux/actions/rosaActions';
-import CreateROSAWizard from './CreateROSAWizard';
+
+import { openModal } from '../../../common/Modal/ModalActions';
 import shouldShowModal from '../../../common/Modal/ModalSelectors';
-import { openModal, closeModal } from '../../../common/Modal/ModalActions';
 import { hasManagedQuotaSelector } from '../../common/quotaSelectors';
 import submitOSDRequest from '../common/submitOSDRequest';
+
+import CreateROSAWizard from './CreateROSAWizard';
 
 const mapStateToProps = (state) => {
   const { organization } = state.userProfile;
@@ -46,14 +49,11 @@ const mapDispatchToProps = (dispatch) => ({
   openModal: (modalName) => {
     dispatch(openModal(modalName));
   },
-  closeModal: () => {
-    dispatch(closeModal());
-  },
+
   getOrganizationAndQuota: () => dispatch(getOrganizationAndQuota()),
   getUserRole: () => dispatch(getUserRole()),
   getMachineTypes: () => dispatch(getMachineTypes()),
   getCloudProviders: () => dispatch(getCloudProviders()),
-  clearGetUserRoleResponse: () => dispatch(clearGetUserRoleResponse()),
   clearInstallableVersions: () => dispatch(clearInstallableVersions()),
 });
 

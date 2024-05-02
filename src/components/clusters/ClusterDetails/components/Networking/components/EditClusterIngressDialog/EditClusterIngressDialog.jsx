@@ -1,26 +1,26 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Field } from 'redux-form';
+
 import {
-  Form,
-  FormGroup,
-  TextInput,
   Alert,
   AlertVariant,
   ClipboardCopy,
   ExpandableSection,
+  Form,
+  FormGroup,
+  TextInput,
 } from '@patternfly/react-core';
 
-import Modal from '../../../../../../common/Modal/Modal';
+import links from '../../../../../../../common/installLinks.mjs';
+import { checkLabelsAdditionalRouter } from '../../../../../../../common/validators';
 import ErrorBox from '../../../../../../common/ErrorBox';
+import ExternalLink from '../../../../../../common/ExternalLink';
+import Modal from '../../../../../../common/Modal/Modal';
 import {
   ReduxCheckbox,
   ReduxVerticalFormGroup,
 } from '../../../../../../common/ReduxFormComponents';
-import ExternalLink from '../../../../../../common/ExternalLink';
-
-import links from '../../../../../../../common/installLinks.mjs';
-import { checkRouteSelectors } from '../../../../../../../common/validators';
 
 class EditClusterIngressDialog extends React.Component {
   componentDidUpdate(prevProps) {
@@ -116,7 +116,7 @@ class EditClusterIngressDialog extends React.Component {
             label="Label match for additional router (optional)"
             type="text"
             helpText="Comma separated pairs in key=value format. If no label is specified, all routes will be exposed on both routers."
-            validate={checkRouteSelectors}
+            validate={checkLabelsAdditionalRouter}
             key="route_selectors"
             readOnlyVariant={canEditAdditionalRouter ? undefined : 'default'}
           />

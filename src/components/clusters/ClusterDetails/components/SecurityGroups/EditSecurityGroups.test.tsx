@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import { UserEventType, render, screen, within } from '~/testUtils';
+import { render, screen, UserEventType, within } from '~/testUtils';
 
 import EditSecurityGroups from './EditSecurityGroups';
 

@@ -14,8 +14,9 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 import React from 'react';
-import { createRoot } from 'react-dom/client';
 import fromEntries from 'object.fromentries';
+import { createRoot } from 'react-dom/client';
+
 import AppEntry from './chrome-main';
 
 if (!Object.fromEntries) {

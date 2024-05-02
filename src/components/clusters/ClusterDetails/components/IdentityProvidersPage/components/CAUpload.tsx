@@ -1,3 +1,6 @@
+import React from 'react';
+import { WrappedFieldInputProps } from 'redux-form';
+
 import {
   Button,
   FormGroup,
@@ -6,10 +9,10 @@ import {
   TextArea,
   TextInput,
 } from '@patternfly/react-core';
-import React from 'react';
-import { WrappedFieldInputProps } from 'redux-form';
+
 import { humanizeValueWithoutUnit } from '~/common/units';
 import { FormGroupHelperText } from '~/components/common/FormGroupHelperText';
+
 import './CAUpload.scss';
 
 export const MAX_FILE_SIZE = 4000000; // 4MB

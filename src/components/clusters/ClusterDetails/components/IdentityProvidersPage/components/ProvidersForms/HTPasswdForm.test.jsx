@@ -1,13 +1,15 @@
 import React from 'react';
 import { reduxForm } from 'redux-form';
+
 import { render, screen, userEvent } from '~/testUtils';
+
 import HTPasswdForm from './HTPasswdForm';
 
 describe('HTPasswdForm', () => {
   const wizardConnector = (component) => reduxForm({ form: 'HTPasswdForm' })(component);
   const ConnectedHTPasswdBasicFields = wizardConnector(HTPasswdForm);
 
-  it('shows disabled Add user while fields are empty', () => {
+  it('shows disabled Add user while fields are empty', async () => {
     const HTPasswdErrors = [
       {
         password: {
@@ -21,7 +23,10 @@ describe('HTPasswdForm', () => {
       },
     ];
     render(<ConnectedHTPasswdBasicFields HTPasswdErrors={HTPasswdErrors} />);
-    expect(screen.getByText('Add user')).toBeDisabled();
+
+    expect(await screen.findByPlaceholderText('Unique username 1')).toBeInTheDocument();
+
+    expect(await screen.findByRole('button', { name: 'Add user' })).toBeDisabled();
   });
 
   it('shows disabled Add user while fields have errors', async () => {

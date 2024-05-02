@@ -1,4 +1,5 @@
 import { action, ActionType } from 'typesafe-actions';
+
 import { CLOSE_MODAL, OPEN_MODAL } from './ModalConstants';
 
 const openModal = (modalName: string, data?: unknown) =>

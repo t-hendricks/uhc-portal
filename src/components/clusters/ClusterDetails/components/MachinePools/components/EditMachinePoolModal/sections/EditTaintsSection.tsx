@@ -1,19 +1,21 @@
 import * as React from 'react';
 import { FieldArray, useField } from 'formik';
+
 import { Button, FormGroup, Grid, GridItem, Text, TextVariants } from '@patternfly/react-core';
 import { PlusCircleIcon } from '@patternfly/react-icons/dist/esm/icons/plus-circle-icon';
 
-import { Cluster, MachinePool } from '~/types/clusters_mgmt.v1';
-import { GlobalState } from '~/redux/store';
-import WithTooltip from '~/components/common/WithTooltip';
 import TextField from '~/components/common/formik/TextField';
-import TaintEffectField from '../fields/TaintEffectField';
-import { EditMachinePoolValues } from '../hooks/useMachinePoolFormik';
+import WithTooltip from '~/components/common/WithTooltip';
+import { GlobalState } from '~/redux/store';
+import { Cluster, MachinePool } from '~/types/clusters_mgmt.v1';
+
 import {
   isEnforcedDefaultMachinePool,
   isMinimumCountWithoutTaints,
 } from '../../../machinePoolsHelper';
 import FieldArrayRemoveButton from '../components/FieldArrayRemoveButton';
+import TaintEffectField from '../fields/TaintEffectField';
+import { EditMachinePoolValues } from '../hooks/useMachinePoolFormik';
 
 type EditTaintsSectionProps = {
   cluster: Cluster;

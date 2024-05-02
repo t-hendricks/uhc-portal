@@ -1,46 +1,56 @@
 import React from 'react';
-import { Popover, PopoverPosition, Label, Icon } from '@patternfly/react-core';
+
+import { Icon, Label, Popover, PopoverPosition } from '@patternfly/react-core';
 import { InfoCircleIcon } from '@patternfly/react-icons/dist/esm/icons/info-circle-icon';
 
 import links from '../../common/installLinks.mjs';
+
 import ExternalLink from './ExternalLink';
 
-export enum SupportLevelType {
-  devPreview = 'DEV_PREVIEW',
-  cooperativeCommunity = 'COOPERATIVE_COMMUNITY',
-}
+// TODO: Merge with @openshift-assisted/ui-lib's <PreviewBadge>?
 
-type BadgeSupportData = {
-  [key in SupportLevelType]: {
-    title: string;
-    link: string;
-    text: string;
-  };
+type SupportLevelProps = {
+  text: string;
+  popoverContent: React.ReactNode;
+  externalLink?: string;
+  className?: string;
 };
 
-const badgeLevels: BadgeSupportData = {
-  [SupportLevelType.devPreview]: {
-    title: 'Developer Preview',
-    link: links.INSTALL_PRE_RELEASE_SUPPORT_KCS,
-    text:
-      'Developer preview features provide early access to upcoming product innovations, enabling\n' +
-      'you to test functionality and provide feedback during the development process.',
-  },
-  [SupportLevelType.cooperativeCommunity]: {
-    title: 'Cooperative Community',
-    link: links.COOPERATIVE_COMMUNITY_SUPPORT_KCS,
-    text:
-      'Cooperative Community Support provides assistance to Red Hat customers that have questions\n' +
-      'about community-provided software that is often used with our Red Hat products',
-  },
+// Same as @openshift-assisted/ui-lib's <TechnologyPreview>
+export const TECH_PREVIEW: SupportLevelProps = {
+  text: 'Technology Preview',
+  externalLink: links.TECH_PREVIEW_KCS,
+  popoverContent:
+    'Technology preview features provide early access to upcoming product innovations, enabling you to test functionality and provide feedback during the development process.',
 };
 
-const SupportLevelBadge = ({ type }: { type: SupportLevelType }) => {
-  const badgeInfo = badgeLevels[type];
+export const DEV_PREVIEW: SupportLevelProps = {
+  // TODO: this differs from @openshift-assisted/ui-lib's <DeveloperPreview>
+  text: 'Developer Preview',
+  externalLink: links.INSTALL_PRE_RELEASE_SUPPORT_KCS,
+  popoverContent:
+    'Developer preview features provide early access to upcoming product innovations, enabling\n' +
+    'you to test functionality and provide feedback during the development process.',
+};
+
+export const COOPERATIVE_COMMUNITY: SupportLevelProps = {
+  text: 'Cooperative Community',
+  externalLink: links.COOPERATIVE_COMMUNITY_SUPPORT_KCS,
+  popoverContent:
+    'Cooperative Community Support provides assistance to Red Hat customers that have questions\n' +
+    'about community-provided software that is often used with our Red Hat products',
+};
+
+const SupportLevelBadge = ({
+  text,
+  popoverContent,
+  externalLink,
+  className = 'pf-v5-u-ml-md',
+}: SupportLevelProps) => {
   const infoElem = (
     <>
-      <div className="pf-v5-u-mb-sm">{badgeInfo.text}</div>
-      <ExternalLink href={badgeInfo.link}>Learn more</ExternalLink>
+      <div className="pf-v5-u-mb-sm">{popoverContent}</div>
+      {externalLink && <ExternalLink href={externalLink}>Learn more</ExternalLink>}
     </>
   );
   return (
@@ -56,9 +66,9 @@ const SupportLevelBadge = ({ type }: { type: SupportLevelType }) => {
             <InfoCircleIcon color="var(--pf-v5-c-label__content--Color)" />
           </Icon>
         }
-        className="pf-v5-u-ml-md pf-v5-u-display-inline"
+        className={`${className} pf-v5-u-display-inline`}
       >
-        {badgeInfo.title}
+        {text}
       </Label>
     </Popover>
   );

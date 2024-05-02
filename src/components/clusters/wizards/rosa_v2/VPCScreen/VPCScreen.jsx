@@ -1,10 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Form, Grid, GridItem, Title } from '@patternfly/react-core';
-import { useFormState } from '~/components/clusters/wizards/hooks';
-import { getAllSubnetFieldNames } from '~/common/vpcHelpers';
 
-import { emptyAWSSubnet } from '~/components/clusters/wizards/common/createOSDInitialValues';
+import { Form, Grid, GridItem, Title } from '@patternfly/react-core';
+
+import { getAllSubnetFieldNames } from '~/common/vpcHelpers';
+import { emptyAWSSubnet } from '~/components/clusters/wizards/common/constants';
+import { useFormState } from '~/components/clusters/wizards/hooks';
+
 import { FieldId } from '../constants';
 
 import InstallToVPC from './InstallToVPC';

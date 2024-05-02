@@ -7,25 +7,27 @@
 // Form fields for upgrade settings, used in Upgrade Settings tab and in cluster creation
 import React from 'react';
 import { Field } from 'formik';
+
 import {
   Divider,
-  Title,
   Grid,
   GridItem,
+  Text,
   TextContent,
   TextVariants,
-  Text,
+  Title,
 } from '@patternfly/react-core';
 
+import links from '~/common/installLinks.mjs';
+import { normalizedProducts } from '~/common/subscriptionTypes';
+import PodDistruptionBudgetGraceSelect from '~/components/clusters/common/Upgrades/PodDistruptionBudgetGraceSelect';
+import UpgradeScheduleSelection from '~/components/clusters/common/Upgrades/UpgradeScheduleSelection';
 import { useFormState } from '~/components/clusters/wizards/hooks';
 import { FieldId } from '~/components/clusters/wizards/rosa_v2/constants';
 import ExternalLink from '~/components/common/ExternalLink';
 import RadioButtons from '~/components/common/ReduxFormComponents/RadioButtons';
-import UpgradeScheduleSelection from '~/components/clusters/common/Upgrades/UpgradeScheduleSelection';
-import PodDistruptionBudgetGraceSelect from '~/components/clusters/common/Upgrades/PodDistruptionBudgetGraceSelect';
+
 import './UpgradeSettingsFields.scss';
-import links from '~/common/installLinks.mjs';
-import { normalizedProducts } from '~/common/subscriptionTypes';
 
 function UpgradeSettingsFields() {
   const {

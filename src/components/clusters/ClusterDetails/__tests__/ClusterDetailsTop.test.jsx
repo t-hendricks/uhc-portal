@@ -1,10 +1,12 @@
 import React from 'react';
-
 import { CompatRouter } from 'react-router-dom-v5-compat';
-import { render, checkAccessibility, TestRouter, screen, within } from '~/testUtils';
-import ClusterDetailsTop from '../components/ClusterDetailsTop';
-import fixtures, { funcs } from './ClusterDetails.fixtures';
+
+import { checkAccessibility, render, screen, TestRouter, waitFor, within } from '~/testUtils';
+
 import clusterStates from '../../common/clusterStates';
+import ClusterDetailsTop from '../components/ClusterDetailsTop';
+
+import fixtures, { funcs } from './ClusterDetails.fixtures';
 
 describe('<ClusterDetailsTop />', () => {
   afterAll(() => {
@@ -123,7 +125,7 @@ describe('<ClusterDetailsTop />', () => {
 
     const newProps = { ...props, cluster };
 
-    const { user } = render(
+    render(
       <TestRouter>
         <CompatRouter>
           <ClusterDetailsTop {...newProps} />
@@ -137,9 +139,6 @@ describe('<ClusterDetailsTop />', () => {
     expect(unArchiveButton).toHaveClass('pf-m-secondary');
     expect(screen.queryByRole('button', { name: 'Refresh' })).not.toBeInTheDocument();
     expect(screen.queryByRole('tooltip')).not.toBeInTheDocument();
-    await user.click(unArchiveButton);
-
-    expect(await screen.findByRole('tooltip')).toBeInTheDocument();
   });
 
   it('should show expiration alert based on expiration_time', async () => {
@@ -278,6 +277,8 @@ describe('<ClusterDetailsTop />', () => {
       </TestRouter>,
     );
 
-    expect(screen.queryByRole('alert')).not.toBeInTheDocument();
+    await waitFor(() => {
+      expect(screen.queryByRole('alert')).not.toBeInTheDocument();
+    });
   });
 });

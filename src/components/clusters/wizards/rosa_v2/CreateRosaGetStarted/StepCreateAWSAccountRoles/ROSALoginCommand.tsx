@@ -1,12 +1,13 @@
 import React from 'react';
-import useChrome from '@redhat-cloud-services/frontend-components/useChrome';
+
 import { Alert, Skeleton } from '@patternfly/react-core';
+import useChrome from '@redhat-cloud-services/frontend-components/useChrome';
 import type { ChromeAPI } from '@redhat-cloud-services/types';
-import { isRestrictedEnv } from '~/restrictedEnv';
+
 import { trackEvents } from '~/common/analytics';
 import TokenBox from '~/components/CLILoginPage/TokenBox';
 import InstructionCommand from '~/components/common/InstructionCommand';
-
+import { isRestrictedEnv } from '~/restrictedEnv';
 import { Error } from '~/types/accounts_mgmt.v1';
 
 type ROSALoginCommandProps = {

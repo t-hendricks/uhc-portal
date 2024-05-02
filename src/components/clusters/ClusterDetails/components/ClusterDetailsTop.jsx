@@ -1,36 +1,38 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import get from 'lodash/get';
+import PropTypes from 'prop-types';
 
+import { Alert, Button, Flex, Split, SplitItem, Title } from '@patternfly/react-core';
 import { Spinner } from '@redhat-cloud-services/frontend-components/Spinner';
-import { Button, Alert, Split, SplitItem, Title, Flex } from '@patternfly/react-core';
 
 import { PreviewLabel } from '~/components/clusters/common/PreviewLabel';
-import clusterStates, { isOffline } from '../../common/clusterStates';
-import modals from '../../../common/Modal/modals';
-import ClusterActionsDropdown from '../../common/ClusterActionsDropdown';
-import RefreshButton from '../../../common/RefreshButton/RefreshButton';
-import ErrorTriangle from '../../common/ErrorTriangle';
+
 import getClusterName from '../../../../common/getClusterName';
-import {
-  subscriptionStatuses,
-  normalizedProducts,
-  billingModels,
-} from '../../../../common/subscriptionTypes';
+import { goZeroTime2Null } from '../../../../common/helpers';
 import {
   isAvailableAssistedInstallCluster,
   isUninstalledAICluster,
 } from '../../../../common/isAssistedInstallerCluster';
-import ExpirationAlert from './ExpirationAlert';
-import LimitedSupportAlert from './LimitedSupportAlert';
+import {
+  billingModels,
+  normalizedProducts,
+  subscriptionStatuses,
+} from '../../../../common/subscriptionTypes';
 import Breadcrumbs from '../../../common/Breadcrumbs';
-import SubscriptionCompliancy from './SubscriptionCompliancy';
-import ClusterNonEditableAlert from './ClusterNonEditableAlert';
-import TransferClusterOwnershipInfo from './TransferClusterOwnershipInfo';
-import TermsAlert from './TermsAlert';
 import ButtonWithTooltip from '../../../common/ButtonWithTooltip';
-import { goZeroTime2Null } from '../../../../common/helpers';
+import modals from '../../../common/Modal/modals';
+import RefreshButton from '../../../common/RefreshButton/RefreshButton';
+import ClusterActionsDropdown from '../../common/ClusterActionsDropdown';
+import clusterStates, { isOffline } from '../../common/clusterStates';
+import ErrorTriangle from '../../common/ErrorTriangle';
+
+import ClusterNonEditableAlert from './ClusterNonEditableAlert';
+import ExpirationAlert from './ExpirationAlert';
 import GcpOrgPolicyAlert from './GcpOrgPolicyAlert';
+import LimitedSupportAlert from './LimitedSupportAlert';
+import SubscriptionCompliancy from './SubscriptionCompliancy';
+import TermsAlert from './TermsAlert';
+import TransferClusterOwnershipInfo from './TransferClusterOwnershipInfo';
 
 const IdentityProvidersHint = () => (
   <Alert
@@ -178,12 +180,12 @@ function ClusterDetailsTop(props) {
   const unarchiveBtn = (
     <ButtonWithTooltip
       variant="secondary"
-      onClick={() =>
+      onClick={() => {
         openModal(modals.UNARCHIVE_CLUSTER, {
           subscriptionID: cluster.subscription ? cluster.subscription.id : '',
           name: clusterName,
-        })
-      }
+        });
+      }}
       disableReason={canNotEditReason}
     >
       Unarchive

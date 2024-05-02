@@ -1,5 +1,6 @@
-import { Button } from '@patternfly/react-core';
 import React from 'react';
+
+import { Button } from '@patternfly/react-core';
 
 interface ViewTermsButtonProps {
   href: string;

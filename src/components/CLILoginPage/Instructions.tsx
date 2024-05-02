@@ -19,10 +19,10 @@ limitations under the License.
 
 import React from 'react';
 import { useDispatch } from 'react-redux';
-import { useGlobalState } from '~/redux/hooks/useGlobalState';
 import { Link } from 'react-router-dom';
-import Skeleton from '@redhat-cloud-services/frontend-components/Skeleton';
+
 import {
+  Alert,
   Button,
   Card,
   CardBody,
@@ -34,23 +34,28 @@ import {
   Text,
   TextContent,
   Title,
-  Alert,
 } from '@patternfly/react-core';
+import Skeleton from '@redhat-cloud-services/frontend-components/Skeleton';
 import useChrome from '@redhat-cloud-services/frontend-components/useChrome';
-import { isRestrictedEnv, getRefreshToken } from '~/restrictedEnv';
+
 import { useFeatureGate } from '~/hooks/useFeatureGate';
 import { setOfflineToken } from '~/redux/actions/rosaActions';
 import { CLI_SSO_AUTHORIZATION } from '~/redux/constants/featureConstants';
+import { useGlobalState } from '~/redux/hooks/useGlobalState';
+import { getRefreshToken, isRestrictedEnv } from '~/restrictedEnv';
 import { Chrome } from '~/types/types';
-import { loadOfflineToken } from './TokenUtils';
-import TokenBox from './TokenBox';
+
+import links, { channels, tools } from '../../common/installLinks.mjs';
+import DownloadAndOSSelection from '../clusters/install/instructions/components/DownloadAndOSSelection';
+import ExternalLink from '../common/ExternalLink';
+import SupportLevelBadge, { DEV_PREVIEW } from '../common/SupportLevelBadge';
+
 import LeadingInfo from './LeadingInfo';
 import RevokeTokensInstructions from './RevokeTokensInstructions';
-import links, { tools, channels } from '../../common/installLinks.mjs';
-import ExternalLink from '../common/ExternalLink';
-import SupportLevelBadge, { SupportLevelType } from '../common/SupportLevelBadge';
-import DownloadAndOSSelection from '../clusters/install/instructions/components/DownloadAndOSSelection';
 import SSOLoginInstructions from './SSOLogin';
+import TokenBox from './TokenBox';
+import { loadOfflineToken } from './TokenUtils';
+
 import './Instructions.scss';
 
 const defaultDocsLink = (
@@ -157,9 +162,7 @@ const Instructions = (props: Props) => {
                   <List component="ol">
                     <ListItem>
                       Download and install the <code>{commandName}</code> command-line tool:{' '}
-                      {commandTool === tools.OCM && (
-                        <SupportLevelBadge type={SupportLevelType.devPreview} />
-                      )}
+                      {commandTool === tools.OCM && <SupportLevelBadge {...DEV_PREVIEW} />}
                       <Text component="p" />
                       <DownloadAndOSSelection tool={commandTool} channel={channels.STABLE} />
                       <Text component="p" />

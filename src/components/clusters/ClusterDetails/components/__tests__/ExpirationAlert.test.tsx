@@ -1,8 +1,10 @@
 import React from 'react';
 import dayjs from 'dayjs';
+
 import { render, screen } from '~/testUtils';
-import ExpirationAlert from '../ExpirationAlert';
+
 import modals from '../../../../common/Modal/modals';
+import ExpirationAlert from '../ExpirationAlert';
 
 describe('<ExpirationAlert />', () => {
   it('expiration has passed', () => {

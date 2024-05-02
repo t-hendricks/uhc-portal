@@ -1,14 +1,14 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Field } from 'redux-form';
-import { Form, FormGroup, Alert, Grid, GridItem } from '@patternfly/react-core';
 
-import Modal from '../../../common/Modal/Modal';
+import { Alert, Form, FormGroup, Grid, GridItem } from '@patternfly/react-core';
 
 import ErrorBox from '../../../common/ErrorBox';
-import PersistentStorageDropdown from '../PersistentStorageDropdown';
-import LoadBalancersDropdown from '../LoadBalancersDropdown';
+import Modal from '../../../common/Modal/Modal';
 import modals from '../../../common/Modal/modals';
+import LoadBalancersDropdown from '../LoadBalancersDropdown';
+import PersistentStorageDropdown from '../PersistentStorageDropdown';
 
 class ScaleClusterDialog extends Component {
   componentDidMount() {

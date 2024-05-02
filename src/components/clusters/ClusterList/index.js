@@ -1,18 +1,19 @@
 import { connect } from 'react-redux';
-import ClusterList from './ClusterList';
 
-import { clustersActions } from '../../../redux/actions/clustersActions';
 import { cloudProviderActions } from '../../../redux/actions/cloudProviderActions';
+import { clustersActions } from '../../../redux/actions/clustersActions';
+import { clearGlobalError } from '../../../redux/actions/globalErrorActions';
 import { machineTypesActions } from '../../../redux/actions/machineTypesActions';
-import { viewConstants } from '../../../redux/constants';
-import { onListFlagsSet, viewActions } from '../../../redux/actions/viewOptionsActions';
 import { userActions } from '../../../redux/actions/userActions';
+import { onListFlagsSet, viewActions } from '../../../redux/actions/viewOptionsActions';
+import { viewConstants } from '../../../redux/constants';
 import { modalActions } from '../../common/Modal/ModalActions';
 import canSubscribeOCPListSelector from '../common/EditSubscriptionSettingsDialog/CanSubscribeOCPListSelector';
-import { canTransferClusterOwnershipListSelector } from '../common/TransferClusterOwnershipDialog/TransferClusterOwnershipDialogSelectors';
 import { canHibernateClusterListSelector } from '../common/HibernateClusterModal/HibernateClusterModalSelectors';
 import { toggleSubscriptionReleased } from '../common/TransferClusterOwnershipDialog/subscriptionReleasedActions';
-import { clearGlobalError } from '../../../redux/actions/globalErrorActions';
+import { canTransferClusterOwnershipListSelector } from '../common/TransferClusterOwnershipDialog/TransferClusterOwnershipDialogSelectors';
+
+import ClusterList from './ClusterList';
 
 const mapDispatchToProps = {
   invalidateClusters: () => clustersActions.invalidateClusters(),

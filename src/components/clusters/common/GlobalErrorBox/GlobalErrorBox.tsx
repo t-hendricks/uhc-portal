@@ -1,6 +1,8 @@
-import { Alert, AlertActionCloseButton } from '@patternfly/react-core';
 import React from 'react';
 import { useDispatch } from 'react-redux';
+
+import { Alert, AlertActionCloseButton } from '@patternfly/react-core';
+
 import { clearGlobalError } from '~/redux/actions/globalErrorActions';
 import { useGlobalState } from '~/redux/hooks';
 

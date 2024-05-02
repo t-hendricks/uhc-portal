@@ -1,12 +1,13 @@
 import { connect } from 'react-redux';
-import ArchivedClusterList from './ArchivedClusterList';
 
-import { clustersActions } from '../../../redux/actions/clustersActions';
 import { cloudProviderActions } from '../../../redux/actions/cloudProviderActions';
-import { viewConstants } from '../../../redux/constants';
-import { viewActions } from '../../../redux/actions/viewOptionsActions';
-import { modalActions } from '../../common/Modal/ModalActions';
+import { clustersActions } from '../../../redux/actions/clustersActions';
 import { clearGlobalError } from '../../../redux/actions/globalErrorActions';
+import { viewActions } from '../../../redux/actions/viewOptionsActions';
+import { viewConstants } from '../../../redux/constants';
+import { modalActions } from '../../common/Modal/ModalActions';
+
+import ArchivedClusterList from './ArchivedClusterList';
 
 const mapDispatchToProps = {
   invalidateClusters: () => clustersActions.invalidateClusters(),

@@ -1,6 +1,7 @@
-import reducer, { initialState } from '../UsersReducer';
-import UsersConstants from '../UsersConstants';
 import { FULFILLED_ACTION } from '../../../../../../../redux/reduxHelpers';
+import UsersConstants from '../UsersConstants';
+import reducer, { initialState } from '../UsersReducer';
+
 import { mockGetUsersPayload } from './Users.fixtures';
 
 describe('ClusterDetails UsersReducer', () => {

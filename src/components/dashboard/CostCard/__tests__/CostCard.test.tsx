@@ -1,9 +1,12 @@
 import React from 'react';
 import * as reactRedux from 'react-redux';
+
 import { getReport, getSources } from '~/redux/actions/costActions';
 import { useGlobalState } from '~/redux/hooks';
 import { checkAccessibility, render, screen } from '~/testUtils';
+
 import CostCard from '../CostCard';
+
 import {
   availableState,
   initialState,

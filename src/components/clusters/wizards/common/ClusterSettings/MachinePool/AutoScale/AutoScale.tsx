@@ -1,6 +1,7 @@
 import React, { useMemo } from 'react';
-import { Button, FormGroup, GridItem } from '@patternfly/react-core';
 import { useDispatch } from 'react-redux';
+
+import { Button, FormGroup, GridItem } from '@patternfly/react-core';
 
 import links from '~/common/installLinks.mjs';
 import { normalizedProducts } from '~/common/subscriptionTypes';
@@ -12,6 +13,7 @@ import ExternalLink from '~/components/common/ExternalLink';
 import { openModal } from '~/components/common/Modal/ModalActions';
 import modals from '~/components/common/Modal/modals';
 import PopoverHint from '~/components/common/PopoverHint';
+
 import { AutoScaleEnabledInputs } from './AutoScaleEnabledInputs';
 import ClusterAutoScaleSettingsDialog from './ClusterAutoScaleSettingsDialog';
 

@@ -1,9 +1,9 @@
 import React from 'react';
 import { CompatRouter } from 'react-router-dom-v5-compat';
-import { screen, render, checkAccessibility, TestRouter } from '~/testUtils';
+
+import { checkAccessibility, render, screen, TestRouter } from '~/testUtils';
 
 import InstallArmBareMetal from '../InstallArmBareMetal';
-
 import { version } from '../InstallTestConstants';
 
 describe('ARM Bare Metal install', () => {

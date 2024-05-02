@@ -1,12 +1,13 @@
 import { connect } from 'react-redux';
 
-import {
-  editSubscriptionSettings,
-  clearEditSubscriptionSettingsResponse,
-} from '../../../../redux/actions/subscriptionSettingsActions';
-import EditSubscriptionSettingsDialog from './EditSubscriptionSettingsDialog';
-import { closeModal } from '../../../common/Modal/ModalActions';
 import getClusterName from '../../../../common/getClusterName';
+import {
+  clearEditSubscriptionSettingsResponse,
+  editSubscriptionSettings,
+} from '../../../../redux/actions/subscriptionSettingsActions';
+import { closeModal } from '../../../common/Modal/ModalActions';
+
+import EditSubscriptionSettingsDialog from './EditSubscriptionSettingsDialog';
 
 const mapStateToProps = (state) => ({
   subscription: state.modal.data.subscription,

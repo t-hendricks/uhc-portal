@@ -1,12 +1,13 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import isEmpty from 'lodash/isEmpty';
+import PropTypes from 'prop-types';
 import { useLocation, useNavigate } from 'react-router-dom-v5-compat';
+
 import { Button, Chip, ChipGroup, Split, SplitItem } from '@patternfly/react-core';
 
-import { SEVERITY_TYPES, LOG_TYPES } from '../clusterLogConstants';
-import { buildFilterURLParams } from '../../../../../../common/queryHelpers';
 import helpers from '../../../../../../common/helpers';
+import { buildFilterURLParams } from '../../../../../../common/queryHelpers';
+import { LOG_TYPES, SEVERITY_TYPES } from '../clusterLogConstants';
 
 const mapFilterGroup = (group, currentFilter, setFilter, navigate, location) => {
   const setFilterAndQueryParams = (key, value) => {

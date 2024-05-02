@@ -1,5 +1,5 @@
-import { SET_FEATURE } from '../constants/featureConstants';
 import { FeatureAction, features } from '../actions/featureActions';
+import { SET_FEATURE } from '../constants/featureConstants';
 
 type State = {
   [feature: string]: boolean | undefined;

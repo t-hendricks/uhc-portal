@@ -1,5 +1,6 @@
 import React from 'react';
-import { screen, render, checkAccessibility, within } from '~/testUtils';
+
+import { checkAccessibility, render, screen, within } from '~/testUtils';
 
 import DisconnectedCloudRegionComboBox from './CloudRegionComboBox';
 

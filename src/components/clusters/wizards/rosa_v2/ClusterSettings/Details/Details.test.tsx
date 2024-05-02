@@ -4,13 +4,13 @@
 import * as React from 'react';
 import { Formik } from 'formik';
 
-import { mockUseFeatureGate, render, screen, withState } from '~/testUtils';
+import { fulfilledProviders, noProviders } from '~/common/__test__/regions.fixtures';
 import { FieldId, initialValues } from '~/components/clusters/wizards/rosa_v2/constants';
-import { noProviders, fulfilledProviders } from '~/common/__test__/regions.fixtures';
 import ocpLifeCycleStatuses from '~/components/releases/__mocks__/ocpLifeCycleStatuses';
 import { LONGER_CLUSTER_NAME_UI } from '~/redux/constants/featureConstants';
 import clusterService from '~/services/clusterService';
 import getOCPLifeCycleStatus from '~/services/productLifeCycleService';
+import { mockUseFeatureGate, render, screen, withState } from '~/testUtils';
 
 import Details from './Details';
 
@@ -33,6 +33,9 @@ describe('<Details />', () => {
       jest.resetAllMocks();
       (clusterService.getInstallableVersions as jest.Mock).mockResolvedValue({
         data: { items: [version] },
+      });
+      (clusterService.getMachineTypesByRegionARN as jest.Mock).mockResolvedValue({
+        data: { items: [] },
       });
       (getOCPLifeCycleStatus as jest.Mock).mockResolvedValue(ocpLifeCycleStatuses);
     });

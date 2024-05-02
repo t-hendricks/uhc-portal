@@ -1,17 +1,21 @@
 import React from 'react';
+
+import { Alert, Card, CardBody, CardTitle, PageSection, Title } from '@patternfly/react-core';
 import PageHeader, { PageHeaderTitle } from '@redhat-cloud-services/frontend-components/PageHeader';
 import { Spinner } from '@redhat-cloud-services/frontend-components/Spinner';
 import useChrome from '@redhat-cloud-services/frontend-components/useChrome';
-import { PageSection, Alert, Card, CardBody, CardTitle, Title } from '@patternfly/react-core';
-import { Error } from '~/types/accounts_mgmt.v1';
+
+import { defaultToOfflineTokens, hasRestrictTokensCapability } from '~/common/restrictTokensHelper';
 import { isRestrictedEnv } from '~/restrictedEnv';
-import { hasRestrictTokensCapability, defaultToOfflineTokens } from '~/common/restrictTokensHelper';
+import { Error } from '~/types/accounts_mgmt.v1';
 import { Chrome } from '~/types/types';
-import useOrganization from './useOrganization';
+
+import { AppPage } from '../App/AppPage';
+import Breadcrumbs from '../common/Breadcrumbs';
+
 import InstructionsOCM from './Instructions';
 import InstructionsROSA from './InstructionsROSA';
-import Breadcrumbs from '../common/Breadcrumbs';
-import { AppPage } from '../App/AppPage';
+import useOrganization from './useOrganization';
 
 const ErrorOrLoadingWrapper = ({ children }: { children: React.ReactElement }) => (
   <AppPage title="OpenShift Cluster Manager">

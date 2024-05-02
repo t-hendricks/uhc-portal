@@ -1,13 +1,15 @@
+import { AxiosResponse } from 'axios';
 import { Dispatch } from 'redux';
 import { action } from 'typesafe-actions';
+
 import { UpgradePolicy, UpgradePolicyState } from '~/types/clusters_mgmt.v1';
-import { AxiosResponse } from 'axios';
+
 import {
   deleteControlPlaneUpgradeSchedule,
   deleteUpgradeSchedule,
   getControlPlaneUpgradeSchedules,
-  getUpgradeScheduleState,
   getUpgradeSchedules,
+  getUpgradeScheduleState,
   patchControlPlaneUpgradeSchedule,
   patchUpgradeSchedule,
   postControlPlaneUpgradeSchedule,

@@ -1,30 +1,31 @@
 // Duplication of `~/components/clusters/common/DefaultIngressFields` needed to convert it to formik
 import React from 'react';
-import { Field } from 'formik';
-import { FormGroup } from '@patternfly/react-core';
 import classNames from 'classnames';
+import { Field } from 'formik';
 
-import { ReduxCheckbox, ReduxVerticalFormGroup } from '~/components/common/ReduxFormComponents';
-import LoadBalancerPopover from '~/components/clusters/ClusterDetails/components/Networking/components/LoadBalancerPopover';
-import { LoadBalancerFlavorLabel } from '~/components/clusters/ClusterDetails/components/Networking/components/constants';
-import { LoadBalancerFlavor } from '~/types/clusters_mgmt.v1';
-import { WildcardPolicyPopover } from '~/components/clusters/ClusterDetails/components/Networking/components/ApplicationIngressCard/WildcardsPolicyPopover';
-import { NamespaceOwnerPolicyPopover } from '~/components/clusters/ClusterDetails/components/Networking/components/ApplicationIngressCard/NamespaceOwnerPolicyPopover';
+import { FormGroup } from '@patternfly/react-core';
+
 import {
   checkRouteSelectors,
-  validateTlsHostname,
   validateNamespacesList,
+  validateTlsHostname,
   validateTlsSecretName,
 } from '~/common/validators';
 import {
   ExcludedNamespacesHelpText,
   ExcludedNamespacesPopover,
 } from '~/components/clusters/ClusterDetails/components/Networking/components/ApplicationIngressCard/ExcludedNamespacesPopover';
+import { NamespaceOwnerPolicyPopover } from '~/components/clusters/ClusterDetails/components/Networking/components/ApplicationIngressCard/NamespaceOwnerPolicyPopover';
 import {
   RouteSelectorsHelpText,
   RouteSelectorsPopover,
 } from '~/components/clusters/ClusterDetails/components/Networking/components/ApplicationIngressCard/RouteSelectorsPopover';
+import { WildcardPolicyPopover } from '~/components/clusters/ClusterDetails/components/Networking/components/ApplicationIngressCard/WildcardsPolicyPopover';
+import { LoadBalancerFlavorLabel } from '~/components/clusters/ClusterDetails/components/Networking/components/constants';
+import LoadBalancerPopover from '~/components/clusters/ClusterDetails/components/Networking/components/LoadBalancerPopover';
 import { useFormState } from '~/components/clusters/wizards/hooks';
+import { ReduxCheckbox, ReduxVerticalFormGroup } from '~/components/common/ReduxFormComponents';
+import { LoadBalancerFlavor } from '~/types/clusters_mgmt.v1';
 
 type DefaultIngressFieldsFormikProps = {
   className?: string;

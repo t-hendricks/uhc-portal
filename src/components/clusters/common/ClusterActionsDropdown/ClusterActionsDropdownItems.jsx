@@ -1,11 +1,13 @@
-import get from 'lodash/get';
 import React from 'react';
+import get from 'lodash/get';
+
 import { DropdownItem as DropdownItemDeprecated } from '@patternfly/react-core/deprecated';
-import clusterStates, { isHibernating, isHypershiftCluster } from '../clusterStates';
-import { subscriptionStatuses, normalizedProducts } from '../../../../common/subscriptionTypes';
+
 import getClusterName from '../../../../common/getClusterName';
-import modals from '../../../common/Modal/modals';
 import { isAssistedInstallCluster } from '../../../../common/isAssistedInstallerCluster';
+import { normalizedProducts, subscriptionStatuses } from '../../../../common/subscriptionTypes';
+import modals from '../../../common/Modal/modals';
+import clusterStates, { isHibernating, isHypershiftCluster } from '../clusterStates';
 
 /**
  * Helper using reason message why it's disabled as source-of-truth
@@ -363,9 +365,12 @@ function dropDownItems({
     refreshFunc,
     inClusterList,
   );
-  const menuItems = actions.map((action) => (
-    <DropdownItemDeprecated {...action}>{action.title}</DropdownItemDeprecated>
-  ));
+  const menuItems = actions.map((action) => {
+    // Remove props that aren't recognized by DropdownItemDeprecated
+    const { isExternalLink, ...cleanedProps } = action;
+
+    return <DropdownItemDeprecated {...cleanedProps}>{action.title}</DropdownItemDeprecated>;
+  });
   return menuItems;
 }
 

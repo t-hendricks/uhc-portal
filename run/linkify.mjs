@@ -1,10 +1,9 @@
 #!/usr/bin/env node
 
-import { realpathSync } from 'fs';
-import { fileURLToPath } from 'url';
-
-import fetch from 'node-fetch';
 import { Chalk } from 'chalk';
+import { realpathSync } from 'fs';
+import fetch from 'node-fetch';
+import { fileURLToPath } from 'url';
 
 // See here about hyperlink escape sequence and which terminals support it:
 // https://gist.github.com/egmontkob/eb114294efbcd5adb1944c9f3cb5feda

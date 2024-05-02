@@ -1,9 +1,10 @@
 import { connect } from 'react-redux';
-import AddGrantModal from './AddGrantModal';
-import { addGrant, clearAddGrantResponse } from '../NetworkSelfServiceActions';
 
 import { closeModal } from '../../../../../../common/Modal/ModalActions';
 import shouldShowModal from '../../../../../../common/Modal/ModalSelectors';
+import { addGrant, clearAddGrantResponse } from '../NetworkSelfServiceActions';
+
+import AddGrantModal from './AddGrantModal';
 
 const mapStateToProps = (state) => ({
   isOpen: shouldShowModal(state, 'grant-modal'),

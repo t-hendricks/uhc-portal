@@ -1,11 +1,12 @@
 import React from 'react';
 import { SubmitHandler } from 'redux-form';
+
 import { Form, ModalVariant } from '@patternfly/react-core';
 
 import { DefaultIngressFields } from '~/components/clusters/common/DefaultIngressFields';
+import ErrorBox from '~/components/common/ErrorBox';
 import Modal from '~/components/common/Modal/Modal';
 import { BaseRequestState } from '~/redux/types';
-import ErrorBox from '~/components/common/ErrorBox';
 import { ErrorState } from '~/types/types';
 
 type EditApplicationIngressDialogProps = {

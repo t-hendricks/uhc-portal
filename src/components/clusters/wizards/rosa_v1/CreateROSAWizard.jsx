@@ -1,36 +1,26 @@
-import { Spinner } from '@redhat-cloud-services/frontend-components';
+import React, { useMemo, useState } from 'react';
 import { isMatch } from 'lodash';
 import PropTypes from 'prop-types';
-import React, { useMemo, useState } from 'react';
 import { Navigate } from 'react-router-dom-v5-compat';
+
 import { Banner, Bullseye, PageSection, Stack, StackItem } from '@patternfly/react-core';
 import {
   Wizard as WizardDeprecated,
   WizardContext as WizardContextDeprecated,
 } from '@patternfly/react-core/deprecated';
+import { Spinner } from '@redhat-cloud-services/frontend-components';
 
 import { ocmResourceType, trackEvents } from '~/common/analytics';
 import { scrollToFirstField, shouldRefetchQuota } from '~/common/helpers';
 import { normalizedProducts } from '~/common/subscriptionTypes';
+import { AppDrawerContext } from '~/components/App/AppDrawer';
+import { AppPage } from '~/components/App/AppPage';
 import config from '~/config';
 import withAnalytics from '~/hoc/withAnalytics';
 import { useFeatureGate } from '~/hooks/useFeatureGate';
 import usePreventBrowserNav from '~/hooks/usePreventBrowserNav';
 import { HYPERSHIFT_WIZARD_FEATURE } from '~/redux/constants/featureConstants';
-import { AppPage } from '~/components/App/AppPage';
-import { AppDrawerContext } from '~/components/App/AppDrawer';
 import { isRestrictedEnv } from '~/restrictedEnv';
-import { getAccountAndRolesStepId, stepId, stepNameById } from './rosaWizardConstants';
-
-import CIDRScreen from './CIDRScreen';
-import ClusterProxyScreen from './ClusterProxyScreen';
-import ClusterSettingsScreen from './ClusterSettingsScreen';
-import MachinePoolScreen from './MachinePoolScreen';
-import NetworkScreen from './NetworkScreen';
-import ReviewClusterScreen from './ReviewClusterScreen';
-import UpdatesScreen from './UpdatesScreen';
-import VPCScreen from './VPCScreen';
-import ControlPlaneScreen from './ControlPlaneScreen';
 
 import ErrorBoundary from '../../../App/ErrorBoundary';
 import Breadcrumbs from '../../../common/Breadcrumbs';
@@ -38,13 +28,23 @@ import PageTitle from '../../../common/PageTitle';
 import Unavailable from '../../../common/Unavailable';
 import CreateClusterErrorModal from '../../common/CreateClusterErrorModal';
 import LeaveCreateClusterPrompt from '../common/LeaveCreateClusterPrompt';
-import AccountsRolesScreen from './AccountsRolesScreen';
-import { isUserRoleForSelectedAWSAccount } from './AccountsRolesScreen/AccountsRolesScreen';
-import ClusterRolesScreen from './ClusterRolesScreen';
-import { ROSAWizardContext } from './ROSAWizardContext';
-import { ValuesPanel } from './ValuesPanel';
 
+import { isUserRoleForSelectedAWSAccount } from './AccountsRolesScreen/AccountsRolesScreen';
+import AccountsRolesScreen from './AccountsRolesScreen';
+import CIDRScreen from './CIDRScreen';
+import ClusterProxyScreen from './ClusterProxyScreen';
+import ClusterRolesScreen from './ClusterRolesScreen';
+import ClusterSettingsScreen from './ClusterSettingsScreen';
+import ControlPlaneScreen from './ControlPlaneScreen';
 import CreateRosaWizardFooter from './CreateRosaWizardFooter';
+import MachinePoolScreen from './MachinePoolScreen';
+import NetworkScreen from './NetworkScreen';
+import ReviewClusterScreen from './ReviewClusterScreen';
+import { getAccountAndRolesStepId, stepId, stepNameById } from './rosaWizardConstants';
+import { ROSAWizardContext } from './ROSAWizardContext';
+import UpdatesScreen from './UpdatesScreen';
+import { ValuesPanel } from './ValuesPanel';
+import VPCScreen from './VPCScreen';
 
 import './createROSAWizard.scss';
 

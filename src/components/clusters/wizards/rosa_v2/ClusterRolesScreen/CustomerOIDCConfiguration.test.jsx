@@ -1,9 +1,11 @@
 import React from 'react';
 import { Formik } from 'formik';
-import { waitFor, render, screen } from '~/testUtils';
+
+import { render, screen, waitFor } from '~/testUtils';
+
+import { initialValues } from '../constants';
 
 import CustomerOIDCConfiguration from './CustomerOIDCConfiguration';
-import { initialValues } from '../constants';
 
 const oidcConfigs = [{ id: 'config1' }, { id: 'config2' }, { id: 'config3' }];
 const defaultProps = {

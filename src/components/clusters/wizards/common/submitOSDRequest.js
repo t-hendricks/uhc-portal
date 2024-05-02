@@ -1,22 +1,23 @@
-import pick from 'lodash/pick';
 import isEmpty from 'lodash/isEmpty';
+import pick from 'lodash/pick';
 
-import config from '~/config';
-
-import { store } from '~/redux/store';
-import { DEFAULT_FLAVOUR_ID } from '~/redux/actions/flavourActions';
-import { createCluster } from '~/redux/actions/clustersActions';
 import {
   parseReduxFormKeyValueList,
-  strToKeyValueObject,
   stringToArrayTrimmed,
+  strToKeyValueObject,
 } from '~/common/helpers';
 import { billingModels } from '~/common/subscriptionTypes';
-import { WildcardPolicy } from '~/types/clusters_mgmt.v1/models/WildcardPolicy';
-import { NamespaceOwnershipPolicy } from '~/types/clusters_mgmt.v1/models/NamespaceOwnershipPolicy';
-import { ApplicationIngressType } from '~/components/clusters/wizards/osd/Networking/constants';
 import { getClusterAutoScalingSubmitSettings } from '~/components/clusters/common/clusterAutoScalingValues';
+import { ApplicationIngressType } from '~/components/clusters/wizards/osd/Networking/constants';
+import config from '~/config';
+import { createCluster } from '~/redux/actions/clustersActions';
+import { DEFAULT_FLAVOUR_ID } from '~/redux/actions/flavourActions';
+import { store } from '~/redux/store';
+import { NamespaceOwnershipPolicy } from '~/types/clusters_mgmt.v1/models/NamespaceOwnershipPolicy';
+import { WildcardPolicy } from '~/types/clusters_mgmt.v1/models/WildcardPolicy';
+
 import { canConfigureDayOneManagedIngress } from '../rosa/constants';
+
 import * as submitRequestHelpers from './submitOSDRequestHelper';
 
 export const createClusterRequest = ({ isWizard = true, cloudProviderID, product }, formData) => {

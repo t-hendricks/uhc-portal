@@ -1,6 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Radio, Tooltip, Split, SplitItem } from '@patternfly/react-core';
+
+import { Radio, Split, SplitItem, Tooltip } from '@patternfly/react-core';
+
 import PopoverHint from '../PopoverHint';
 
 class RadioButtons extends React.Component {
@@ -95,7 +97,7 @@ class RadioButtons extends React.Component {
 }
 
 RadioButtons.propTypes = {
-  defaultValue: PropTypes.string.isRequired,
+  defaultValue: PropTypes.string,
   isDisabled: PropTypes.bool,
   onChangeCallback: PropTypes.func,
   disableDefaultValueHandling: PropTypes.bool,
