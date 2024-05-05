@@ -42,7 +42,6 @@ class ClusterActionsDropdown extends React.Component {
       toggleSubscriptionReleased,
       canHibernateCluster,
       refreshFunc,
-      deleteProtectionEnabled,
     } = this.props;
     const { isOpen } = this.state;
 
@@ -64,7 +63,6 @@ class ClusterActionsDropdown extends React.Component {
       toggleSubscriptionReleased,
       refreshFunc,
       inClusterList: false,
-      deleteProtectionEnabled,
     });
 
     const dropdown = (
@@ -104,7 +102,6 @@ ClusterActionsDropdown.propTypes = {
   canHibernateCluster: PropTypes.bool.isRequired,
   toggleSubscriptionReleased: PropTypes.func.isRequired,
   refreshFunc: PropTypes.func.isRequired,
-  deleteProtectionEnabled: PropTypes.bool.isRequired,
 };
 
 export default ClusterActionsDropdown;

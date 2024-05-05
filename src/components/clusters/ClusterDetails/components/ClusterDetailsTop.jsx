@@ -155,7 +155,6 @@ function ClusterDetailsTop(props) {
       toggleSubscriptionReleased={toggleSubscriptionReleased}
       canHibernateCluster={canHibernateCluster}
       refreshFunc={refreshFunc}
-      deleteProtectionEnabled={cluster.delete_protection?.enabled}
     />
   );
 

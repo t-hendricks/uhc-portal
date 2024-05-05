@@ -42,7 +42,6 @@ function actionResolver(
   toggleSubscriptionReleased,
   refreshFunc,
   inClusterList,
-  deleteProtectionEnabled,
 ) {
   const baseProps = {
     component: 'button',
@@ -76,7 +75,8 @@ function actionResolver(
   const readOnlyMessage = isReadOnly && (
     <span>This operation is not available during maintenance</span>
   );
-  const deleteProtectionMessage = deleteProtectionEnabled && (
+
+  const deleteProtectionMessage = cluster.delete_protection?.enabled && (
     <span>
       Cluster is locked and cannot be deleted. To unlock, go to cluster details and disable deletion
       protection.
@@ -363,7 +363,6 @@ function dropDownItems({
   toggleSubscriptionReleased,
   refreshFunc,
   inClusterList,
-  deleteProtectionEnabled,
 }) {
   const actions = actionResolver(
     cluster,
@@ -375,7 +374,6 @@ function dropDownItems({
     toggleSubscriptionReleased,
     refreshFunc,
     inClusterList,
-    deleteProtectionEnabled,
   );
   const menuItems = actions.map((action) => {
     // Remove props that aren't recognized by DropdownItemDeprecated
