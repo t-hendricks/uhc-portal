@@ -106,6 +106,11 @@ function VersionSelection({
     setShowOnlyCompatibleVersions(showCompatible);
   };
 
+  // HACK: This relies on parseFloat of '4.11.3' to return 4.11 ignoring trailing '.3'.
+  // BUG(OCMUI-1736): Comparisons may be wrong e.g. 4.9 > 4.11!
+  // BUG(OCMUI-1736): We later rely on converting float back to exactly '4.11'
+  //   for indexing `supportVersionMap`.  Float round-tripping is fragile.
+  //   Will break when parseFloat('4.20.0').toString() returns '4.2' not '4.20'!
   const versionName = (version: Version) => parseFloat(version.raw_id || '');
 
   const isHostedDisabled = (version: Version) =>
