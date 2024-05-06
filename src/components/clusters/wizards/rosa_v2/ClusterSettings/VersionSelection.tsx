@@ -34,9 +34,14 @@ const SupportStatusType = {
 type VersionSelectionProps = {
   label: string;
   onChange: (version: Version) => void;
+  isOpen?: boolean;
 };
 
-function VersionSelection({ label, onChange }: VersionSelectionProps) {
+function VersionSelection({
+  label,
+  onChange,
+  isOpen: isInitiallyOpen = false, // for testing
+}: VersionSelectionProps) {
   const [input, { touched, error }, { setValue }] = useField(FieldId.ClusterVersion);
   const {
     values: {
@@ -67,7 +72,7 @@ function VersionSelection({ label, onChange }: VersionSelectionProps) {
         roleGroup.Worker === workerRoleArn),
   );
 
-  const [isOpen, setIsOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState(isInitiallyOpen);
   const [versions, setVersions] = useState<Version[]>([]);
   const [rosaVersionError, setRosaVersionError] = useState(false);
   const [showOnlyCompatibleVersions, setShowOnlyCompatibleVersions] = useState(true);
