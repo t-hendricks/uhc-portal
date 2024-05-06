@@ -64,7 +64,7 @@ function VersionSelection({
     (state) => state.rosaReducer.getAWSAccountRolesARNsResponse,
   );
 
-  const hasManagedArnsSelected = awsAccountRoleArns?.data?.some(
+  const hasManagedArnsSelected = (awsAccountRoleArns?.data || []).some(
     (roleGroup) =>
       (roleGroup.managedPolicies || roleGroup.hcpManagedPolicies) &&
       (roleGroup.Installer === installerRoleArn ||
