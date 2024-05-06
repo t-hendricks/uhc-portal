@@ -3,7 +3,7 @@ import classNames from 'classnames';
 import { useField } from 'formik';
 import { useDispatch } from 'react-redux';
 
-import { Button, FormGroup, Grid, GridItem, Popover, Switch } from '@patternfly/react-core';
+import { Button, FormGroup, Popover, Switch } from '@patternfly/react-core';
 import {
   Select as SelectDeprecated,
   SelectGroup as SelectGroupDeprecated,
@@ -303,61 +303,55 @@ function VersionSelection({
         </div>
       )}
       {getInstallableVersionsResponse.fulfilled && !rosaVersionError && (
-        <Grid>
-          <GridItem>
-            <SelectDeprecated
-              label={label}
-              aria-label={label}
-              isOpen={isOpen}
-              selections={selectedClusterVersion?.raw_id || getSelection()}
-              onToggle={onToggle}
-              onSelect={onSelect}
-              onBlur={(event) => event.stopPropagation()}
-            >
-              {selectOptions.hasIncompatibleVersions ? (
-                <Switch
-                  className="pf-v5-u-align-items-center pf-v5-u-mx-md pf-v5-u-mb-sm pf-v5-u-font-size-sm"
-                  id="view-only-compatible-versions"
-                  aria-label="View only compatible versions"
-                  key={`compatible-switch-${showOnlyCompatibleVersions}`}
-                  label={
-                    <>
-                      <span>View only compatible versions</span>
-                      <Popover
-                        bodyContent={
-                          isHypershiftSelected
-                            ? 'View only versions that are compatible with a Hosted control plane'
-                            : 'View only versions that are compatible with the selected ARNs in previous step'
-                        }
-                        enableFlip={false}
-                      >
-                        <Button variant="plain" className="pf-v5-u-p-0 pf-v5-u-ml-md">
-                          <OutlinedQuestionCircleIcon />
-                        </Button>
-                      </Popover>
-                    </>
-                  }
-                  hasCheckIcon
-                  isChecked={showOnlyCompatibleVersions}
-                  onChange={toggleCompatibleVersions}
-                />
-              ) : (
-                <span className="pf-v5-u-display-none">&nbsp;</span>
-              )}
-              <SelectGroupDeprecated label="Full support">
-                {selectOptions.fullSupport}
-              </SelectGroupDeprecated>
-              <SelectGroupDeprecated
-                label="Maintenance support"
-                className={classNames(
-                  !selectOptions.maintenanceSupport?.length && 'pf-v5-u-hidden',
-                )}
-              >
-                {selectOptions.maintenanceSupport}
-              </SelectGroupDeprecated>
-            </SelectDeprecated>
-          </GridItem>
-        </Grid>
+        <SelectDeprecated
+          label={label}
+          aria-label={label}
+          isOpen={isOpen}
+          selections={selectedClusterVersion?.raw_id || getSelection()}
+          onToggle={onToggle}
+          onSelect={onSelect}
+          onBlur={(event) => event.stopPropagation()}
+        >
+          {selectOptions.hasIncompatibleVersions ? (
+            <Switch
+              className="pf-v5-u-align-items-center pf-v5-u-mx-md pf-v5-u-mb-sm pf-v5-u-font-size-sm"
+              id="view-only-compatible-versions"
+              aria-label="View only compatible versions"
+              key={`compatible-switch-${showOnlyCompatibleVersions}`}
+              label={
+                <>
+                  <span>View only compatible versions</span>
+                  <Popover
+                    bodyContent={
+                      isHypershiftSelected
+                        ? 'View only versions that are compatible with a Hosted control plane'
+                        : 'View only versions that are compatible with the selected ARNs in previous step'
+                    }
+                    enableFlip={false}
+                  >
+                    <Button variant="plain" className="pf-v5-u-p-0 pf-v5-u-ml-md">
+                      <OutlinedQuestionCircleIcon />
+                    </Button>
+                  </Popover>
+                </>
+              }
+              hasCheckIcon
+              isChecked={showOnlyCompatibleVersions}
+              onChange={toggleCompatibleVersions}
+            />
+          ) : (
+            <span className="pf-v5-u-display-none">&nbsp;</span>
+          )}
+          <SelectGroupDeprecated label="Full support">
+            {selectOptions.fullSupport}
+          </SelectGroupDeprecated>
+          <SelectGroupDeprecated
+            label="Maintenance support"
+            className={classNames(!selectOptions.maintenanceSupport?.length && 'pf-v5-u-hidden')}
+          >
+            {selectOptions.maintenanceSupport}
+          </SelectGroupDeprecated>
+        </SelectDeprecated>
       )}
 
       <FormGroupHelperText touched={touched} error={error} />
