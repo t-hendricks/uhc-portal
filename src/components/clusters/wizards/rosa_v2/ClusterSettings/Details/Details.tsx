@@ -154,7 +154,10 @@ function Details() {
     return undefined;
   };
 
-  const handleVersionChange = (clusterVersion: Version) => {
+  const handleVersionChange = (clusterVersion: Version | undefined) => {
+    if (!clusterVersion) {
+      return;
+    }
     // If features become incompatible with the new version, clear their settings
     const canDefineSecurityGroups = !getIncompatibleVersionReason(
       SupportedFeature.SECURITY_GROUPS,

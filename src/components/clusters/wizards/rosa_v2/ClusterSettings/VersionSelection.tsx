@@ -33,7 +33,7 @@ const SupportStatusType = {
 
 type VersionSelectionProps = {
   label: string;
-  onChange: (version: Version) => void;
+  onChange: (version?: Version) => void;
   isOpen?: boolean;
 };
 
@@ -168,6 +168,7 @@ function VersionSelection({
         ) {
           // The previously selected version is no longer compatible
           setValue(undefined);
+          onChange(undefined);
         }
         setVersions(versions);
       } else if (getInstallableVersionsResponse.error) {
@@ -218,9 +219,7 @@ function VersionSelection({
     setIsOpen(false);
     const selectedVersion = versions.find((version) => version.raw_id === selection);
     setValue(selectedVersion);
-    if (selectedVersion) {
-      onChange(selectedVersion);
-    }
+    onChange(selectedVersion);
   };
 
   const getSelection = () => {
