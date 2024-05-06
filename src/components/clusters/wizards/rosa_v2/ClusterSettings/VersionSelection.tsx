@@ -114,29 +114,40 @@ function VersionSelection({
   //   Will break when parseFloat('4.20.0').toString() returns '4.2' not '4.20'!
   const versionName = (version: Version) => parseFloat(version.raw_id || '');
 
-  const isHostedDisabled = (version: Version) =>
-    isHypershiftSelected && !version.hosted_control_plane_enabled;
+  const isHostedDisabled = React.useCallback(
+    (version: Version) => isHypershiftSelected && !version.hosted_control_plane_enabled,
+    [isHypershiftSelected],
+  );
 
-  const isIncompatibleVersion = (version: Version) => {
-    if (!version?.raw_id) {
-      return false;
-    }
-    const minManagedPolicyVersionName = parseFloat(MIN_MANAGED_POLICY_VERSION);
+  const incompatibleVersionReason = React.useCallback(
+    (version: Version): string | undefined => {
+      if (!version?.raw_id) {
+        return undefined;
+      }
 
-    const versionPatch = Number(version.raw_id.split('.')[2]);
+      if (isHostedDisabled(version)) {
+        return 'This version is not compatible with a Hosted control plane';
+      }
 
-    const minManagedPolicyVersionPatch = Number(MIN_MANAGED_POLICY_VERSION.split('.')[2]);
+      const minManagedPolicyVersionName = parseFloat(MIN_MANAGED_POLICY_VERSION);
 
-    const isIncompatibleManagedVersion =
-      hasManagedArnsSelected &&
-      (versionName(version) < minManagedPolicyVersionName ||
-        (versionName(version) === minManagedPolicyVersionName &&
-          versionPatch < minManagedPolicyVersionPatch));
+      const versionPatch = Number(version.raw_id.split('.')[2]);
 
-    return (
-      !isValidRosaVersion(version) || isIncompatibleManagedVersion || isHostedDisabled(version)
-    );
-  };
+      const minManagedPolicyVersionPatch = Number(MIN_MANAGED_POLICY_VERSION.split('.')[2]);
+
+      const isIncompatibleManagedVersion =
+        hasManagedArnsSelected &&
+        (versionName(version) < minManagedPolicyVersionName ||
+          (versionName(version) === minManagedPolicyVersionName &&
+            versionPatch < minManagedPolicyVersionPatch));
+
+      if (!isValidRosaVersion(version) || isIncompatibleManagedVersion) {
+        return 'This version is not compatible with the selected ARNs in previous step';
+      }
+      return undefined;
+    },
+    [hasManagedArnsSelected, isHostedDisabled, isValidRosaVersion],
+  );
 
   useEffect(() => {
     // Get version list if first time or if control plane selection has changed
@@ -165,7 +176,7 @@ function VersionSelection({
 
         if (
           selectedClusterVersion?.raw_id &&
-          (!selectedVersionInVersionList || isIncompatibleVersion(selectedVersionInVersionList))
+          (!selectedVersionInVersionList || incompatibleVersionReason(selectedVersionInVersionList))
         ) {
           // The previously selected version is no longer compatible
           setValue(undefined);
@@ -228,25 +239,17 @@ function VersionSelection({
     return selectedVersion ? selectedVersion.raw_id : '';
   };
 
-  const selectOptionDescription = (isIncompatibleVersion: boolean, isHostedDisabled: boolean) => {
-    if (isHostedDisabled) return 'This version is not compatible with a Hosted control plane';
-    if (isIncompatibleVersion)
-      return 'This version is not compatible with the selected ARNs in previous step';
-
-    return '';
-  };
-
   const selectOptions = React.useMemo(() => {
     const fullSupport: ReactElement[] = [];
     const maintenanceSupport: ReactElement[] = [];
     let hasIncompatibleVersions = false;
 
     versions.forEach((version) => {
-      const isIncompatible = isIncompatibleVersion(version);
+      const disableReason = incompatibleVersionReason(version);
 
-      hasIncompatibleVersions = hasIncompatibleVersions || isIncompatible;
+      hasIncompatibleVersions ||= !!disableReason;
 
-      if (isIncompatible && showOnlyCompatibleVersions) {
+      if (disableReason && showOnlyCompatibleVersions) {
         return;
       }
 
@@ -256,8 +259,8 @@ function VersionSelection({
           isSelected={selectedClusterVersion?.raw_id === version.raw_id}
           value={version.raw_id}
           key={version.id}
-          isDisabled={isIncompatible}
-          description={selectOptionDescription(isIncompatible, isHostedDisabled(version))}
+          isDisabled={!!disableReason}
+          description={disableReason || ''}
         >
           {`${version.raw_id}`}
         </SelectOptionDeprecated>
@@ -277,9 +280,8 @@ function VersionSelection({
       maintenanceSupport,
       hasIncompatibleVersions,
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [
-    isValidRosaVersion,
+    incompatibleVersionReason,
     selectedClusterVersion?.raw_id,
     supportVersionMap,
     versions,
