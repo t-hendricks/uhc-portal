@@ -77,11 +77,12 @@ function VersionSelection({
   const [rosaVersionError, setRosaVersionError] = useState(false);
   const [showOnlyCompatibleVersions, setShowOnlyCompatibleVersions] = useState(true);
   const [statusData] = useOCPLifeCycleStatusData();
-  const statusVersions = statusData?.[0]?.versions;
-  const supportVersionMap = statusVersions?.reduce((acc: Record<string, string>, version) => {
-    acc[version.name] = version.type;
-    return acc;
-  }, {});
+  const statusVersions = statusData?.[0]?.versions || [];
+
+  const supportVersionMap = Object.fromEntries(
+    // version.name is 'major.minor' string e.g. '4.11'.
+    statusVersions.map((version) => [version.name, version.type]),
+  );
   const isValidRosaVersion = React.useCallback(
     (version) => isSupportedMinorVersion(version.raw_id, rosaMaxOSVersion) && version.rosa_enabled,
     [rosaMaxOSVersion],
