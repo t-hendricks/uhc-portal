@@ -380,7 +380,7 @@ function CreateROSAWizard(props) {
   const {
     values: {
       [FieldId.InstallToVpc]: installToVPCSelected,
-      [FieldId.UsePrivatelink]: privateLinkSelected,
+      [FieldId.UsePrivateLink]: privateLinkSelected,
       [FieldId.ConfigureProxy]: configureProxySelected,
       [FieldId.AssociatedAwsId]: selectedAWSAccountID,
       [FieldId.Hypershift]: hypershiftValue,
