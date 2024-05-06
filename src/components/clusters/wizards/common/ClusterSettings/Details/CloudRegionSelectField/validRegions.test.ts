@@ -1,4 +1,4 @@
-import { awsRegions } from '~/common/__test__/regions.fixtures';
+import { awsRegions } from '~/common/__tests__/regions.fixtures';
 import type { CloudRegion } from '~/types/clusters_mgmt.v1';
 
 import { checkRegion, defaultRegionID } from './validRegions';
