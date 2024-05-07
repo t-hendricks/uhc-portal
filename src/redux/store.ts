@@ -5,9 +5,11 @@ import promiseMiddleware from 'redux-promise-middleware';
 import notificationsMiddleware from '@redhat-cloud-services/frontend-components-notifications/notificationsMiddleware';
 import { configureStore, Middleware } from '@reduxjs/toolkit';
 
+import { NormalizedAWSAccountRole } from './model/NormalizedAWSAccountRole';
 import promiseRejectionMiddleware from './promiseRejectionMiddleware';
 import { reduxReducers } from './reducers';
 import sentryMiddleware from './sentryMiddleware';
+import { PromiseReducerState } from './types';
 
 const defaultOptions = {
   dispatchDefaultFailure: false, // automatic error notifications
@@ -35,6 +37,9 @@ export type GlobalState = Omit<ReturnType<typeof store.getState>, 'rosaReducer'>
   // TODO temporary overrides for reducers that aren't written in typescript
   rosaReducer: {
     getAWSBillingAccountsResponse: any;
+    getAWSAccountRolesARNsResponse: PromiseReducerState<{
+      data: NormalizedAWSAccountRole[];
+    }>;
     getAWSAccountIDsResponse: {
       data: any[];
       pending: boolean;

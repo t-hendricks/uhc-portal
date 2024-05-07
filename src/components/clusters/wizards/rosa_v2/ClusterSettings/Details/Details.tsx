@@ -39,7 +39,6 @@ import {
 import { CloudProviderType } from '~/components/clusters/wizards/common';
 import { ClassicEtcdFipsSection } from '~/components/clusters/wizards/common/ClusterSettings/Details/ClassicEtcdFipsSection';
 import CloudRegionSelectField from '~/components/clusters/wizards/common/ClusterSettings/Details/CloudRegionSelectField';
-import { VersionSelectField } from '~/components/clusters/wizards/common/ClusterSettings/Details/VersionSelectField';
 import { emptyAWSSubnet } from '~/components/clusters/wizards/common/constants';
 import { RadioGroupField, RichInputField } from '~/components/clusters/wizards/form';
 import { CheckboxField } from '~/components/clusters/wizards/form/CheckboxField';
@@ -47,6 +46,7 @@ import { useFormState } from '~/components/clusters/wizards/hooks';
 import { createOperatorRolesHashPrefix } from '~/components/clusters/wizards/rosa_v2/ClusterRolesScreen/ClusterRolesScreen';
 import { AWSCustomerManagedEncryption } from '~/components/clusters/wizards/rosa_v2/ClusterSettings/Details/AWSCustomerManagedEncryption';
 import { HCPEtcdEncryptionSection } from '~/components/clusters/wizards/rosa_v2/ClusterSettings/Details/HCPEtcdEncryptionSection';
+import VersionSelection from '~/components/clusters/wizards/rosa_v2/ClusterSettings/VersionSelection';
 import { FieldId } from '~/components/clusters/wizards/rosa_v2/constants';
 import ExternalLink from '~/components/common/ExternalLink';
 import PopoverHint from '~/components/common/PopoverHint';
@@ -154,7 +154,10 @@ function Details() {
     return undefined;
   };
 
-  const handleVersionChange = (clusterVersion: Version) => {
+  const handleVersionChange = (clusterVersion: Version | undefined) => {
+    if (!clusterVersion) {
+      return;
+    }
     // If features become incompatible with the new version, clear their settings
     const canDefineSecurityGroups = !getIncompatibleVersionReason(
       SupportedFeature.SECURITY_GROUPS,
@@ -316,11 +319,7 @@ function Details() {
         )}
 
         <GridItem md={6}>
-          <VersionSelectField
-            name={FieldId.ClusterVersion}
-            label="Version"
-            onChange={handleVersionChange}
-          />
+          <VersionSelection label="Version" onChange={handleVersionChange} />
         </GridItem>
         <GridItem md={6} />
 
