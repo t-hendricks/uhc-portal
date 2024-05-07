@@ -1,5 +1,6 @@
 import React from 'react';
 
+import { subscriptionStatuses } from '~/common/subscriptionTypes';
 import { render } from '~/testUtils';
 
 import fixtures from '../../ClusterDetails/__tests__/ClusterDetails.fixtures';
@@ -22,5 +23,15 @@ describe('InfrastructureModelLabel', () => {
     const { cluster } = fixtures.OSDTrialClusterDetails;
     const { container } = render(<InfrastructureModelLabel cluster={cluster} />);
     expect(container).toHaveTextContent('Customer cloud subscription');
+  });
+
+  it('for OSD GCP CCS archived cluster', () => {
+    const cluster = {
+      ...fixtures.OSDGCPClusterDetails.cluster,
+      state: subscriptionStatuses.DEPROVISIONED,
+      ccs: undefined,
+    };
+    const { container } = render(<InfrastructureModelLabel cluster={cluster} />);
+    expect(container).toHaveTextContent('N/A');
   });
 });
