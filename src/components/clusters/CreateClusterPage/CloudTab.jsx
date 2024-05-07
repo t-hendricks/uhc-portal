@@ -417,14 +417,12 @@ const runItYourself = () => {
     [
       <>
         <Link to="/install/metal/multi"> Baremetal (multi-architecture)</Link>
-        <TechnologyPreview className="pf-v5-u-ml-md pf-v5-u-display-inline" />
       </>,
       'Pre-existing infrastructure',
     ],
     [
       <>
         <Link to="/install/powervs/installer-provisioned">IBM PowerVS (ppc64le)</Link>
-        <TechnologyPreview className="pf-v5-u-ml-md pf-v5-u-display-inline" />
       </>,
       'Full stack automation',
     ],
