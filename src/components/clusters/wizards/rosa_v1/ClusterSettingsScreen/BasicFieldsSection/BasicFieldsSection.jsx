@@ -87,6 +87,9 @@ function BasicFieldsSection({
   };
 
   const handleVersionChange = (clusterVersion) => {
+    if (!clusterVersion) {
+      return;
+    }
     // If features become incompatible with the new version, clear their settings
     const canDefineSecurityGroups = !getIncompatibleVersionReason(
       SupportedFeature.SECURITY_GROUPS,
