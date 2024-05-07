@@ -58,7 +58,7 @@ describe('rosaActions', () => {
       expect(myRoles).not.toBeUndefined();
       if (isManaged) {
         expect(myRoles.managedPolicies).toBeTruthy();
-        expect(myRoles.managedPolicies).toBeTruthy();
+        expect(myRoles.hcpManagedPolicies).toBeTruthy();
         expect(myRoles.Installer).toEqual(
           `arn:aws:iam::123456789012:role/${expectedPrefix}-HCP-ROSA-Installer-Role`,
         );
@@ -72,7 +72,7 @@ describe('rosaActions', () => {
       } else {
         // not managed
         expect(myRoles.managedPolicies).toBeFalsy();
-        expect(myRoles.managedPolicies).toBeFalsy();
+        expect(myRoles.hcpManagedPolicies).toBeFalsy();
         expect(myRoles.Installer).toEqual(
           `arn:aws:iam::123456789012:role/${expectedPrefix}-Installer-Role`,
         );
