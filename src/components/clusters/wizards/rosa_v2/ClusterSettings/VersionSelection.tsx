@@ -215,8 +215,16 @@ function VersionSelection({
       setValue(version);
       onChange(version);
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [versions, selectedClusterVersion?.raw_id, rosaMaxOSVersion, input, isValidRosaVersion]);
+  }, [
+    versions,
+    selectedClusterVersion?.raw_id,
+    rosaMaxOSVersion,
+    setValue,
+    onChange,
+    isHypershiftSelected,
+    isValidRosaVersion,
+    isValidHypershiftVersion,
+  ]);
 
   const onToggle = (_event: any, toggleOpenValue: boolean) => {
     setIsOpen(toggleOpenValue);
