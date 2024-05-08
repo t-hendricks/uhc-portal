@@ -44,7 +44,7 @@ import { emptyAWSSubnet } from '~/components/clusters/wizards/common/constants';
 import { RadioGroupField, RichInputField } from '~/components/clusters/wizards/form';
 import { CheckboxField } from '~/components/clusters/wizards/form/CheckboxField';
 import { useFormState } from '~/components/clusters/wizards/hooks';
-import { createOperatorRolesHashPrefix } from '~/components/clusters/wizards/rosa_v2/ClusterRolesScreen/ClusterRolesScreen';
+import { createOperatorRolesPrefix } from '~/components/clusters/wizards/rosa_v2/ClusterRolesScreen/clusterRolesHelper';
 import { AWSCustomerManagedEncryption } from '~/components/clusters/wizards/rosa_v2/ClusterSettings/Details/AWSCustomerManagedEncryption';
 import { HCPEtcdEncryptionSection } from '~/components/clusters/wizards/rosa_v2/ClusterSettings/Details/HCPEtcdEncryptionSection';
 import { FieldId } from '~/components/clusters/wizards/rosa_v2/constants';
@@ -265,10 +265,7 @@ function Details() {
               ...getFieldProps(FieldId.ClusterName),
               onChange: (value: string) => {
                 setFieldValue(FieldId.ClusterName, value, false);
-                setFieldValue(
-                  FieldId.CustomOperatorRolesPrefix,
-                  `${value.slice(0, 27)}-${createOperatorRolesHashPrefix()}`,
-                );
+                setFieldValue(FieldId.CustomOperatorRolesPrefix, createOperatorRolesPrefix(value));
               },
             }}
           />

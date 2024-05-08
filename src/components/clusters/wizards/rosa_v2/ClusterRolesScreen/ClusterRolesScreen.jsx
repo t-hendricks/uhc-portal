@@ -21,6 +21,7 @@ import { Spinner } from '@redhat-cloud-services/frontend-components/Spinner';
 import { trackEvents } from '~/common/analytics';
 import { useFormState } from '~/components/clusters/wizards/hooks';
 import {
+  createOperatorRolesPrefix,
   getForcedByoOidcReason,
   getOperatorRolesCommand,
 } from '~/components/clusters/wizards/rosa_v2/ClusterRolesScreen/clusterRolesHelper';
@@ -28,7 +29,6 @@ import { FieldId } from '~/components/clusters/wizards/rosa_v2/constants';
 import ReduxHiddenCheckbox from '~/components/common/FormikFormComponents/HiddenCheckbox';
 import useAnalytics from '~/hooks/useAnalytics';
 
-import { secureRandomValueInRange } from '../../../../../common/helpers';
 import links from '../../../../../common/installLinks.mjs';
 import { required } from '../../../../../common/validators';
 import ErrorBox from '../../../../common/ErrorBox';
@@ -40,18 +40,6 @@ import { BackToAssociateAwsAccountLink } from '../common/BackToAssociateAwsAccou
 
 import CustomerOIDCConfiguration from './CustomerOIDCConfiguration';
 import CustomOperatorRoleNames from './CustomOperatorRoleNames';
-
-export const createOperatorRolesHashPrefix = () => {
-  // random 4 alphanumeric hash
-  const prefixArray = Array.from(crypto.getRandomValues(new Uint8Array(4))).map((value) =>
-    (value % 36).toString(36),
-  );
-  // cannot start with a number
-  const alphabet = 'abcdefghijklmnopqrstuvwxyz';
-  const randomCharacter = alphabet[secureRandomValueInRange(0, 25)];
-  prefixArray[0] = randomCharacter;
-  return prefixArray.join('');
-};
 
 const roleModes = {
   MANUAL: 'manual',
@@ -127,10 +115,7 @@ const ClusterRolesScreen = ({
 
   useEffect(() => {
     if (!customOperatorRolesPrefix) {
-      setFieldValue(
-        FieldId.CustomOperatorRolesPrefix,
-        `${clusterName}-${createOperatorRolesHashPrefix()}`,
-      );
+      setFieldValue(FieldId.CustomOperatorRolesPrefix, createOperatorRolesPrefix(clusterName));
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [customOperatorRolesPrefix, clusterName]);

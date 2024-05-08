@@ -29,7 +29,7 @@ import {
 import PopoverHint from '../../../../../common/PopoverHint';
 import RadioButtons from '../../../../../common/ReduxFormComponents/RadioButtons';
 import ReduxRichInputField from '../../../../../common/ReduxFormComponents/ReduxRichInputField';
-import { createOperatorRolesHashPrefix } from '../../ClusterRolesScreen/ClusterRolesScreen';
+import { createOperatorRolesPrefix } from '../../ClusterRolesScreen/clusterRolesHelper';
 
 import CloudRegionComboBox from './CloudRegionComboBox';
 import VersionSelection from './VersionSelection';
@@ -119,11 +119,7 @@ function BasicFieldsSection({
           isRequired
           extendedHelpText={constants.clusterNameHint}
           onChange={(value) =>
-            isRosa &&
-            change(
-              'custom_operator_roles_prefix',
-              `${value.slice(0, 27)}-${createOperatorRolesHashPrefix()}`,
-            )
+            isRosa && change('custom_operator_roles_prefix', createOperatorRolesPrefix(value))
           }
         />
       </GridItem>
