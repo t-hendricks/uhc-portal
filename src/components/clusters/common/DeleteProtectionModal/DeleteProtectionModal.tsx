@@ -23,6 +23,7 @@ const DeleteProtectionModal = ({ onClose }: { onClose: () => void }) => {
 
   const handleClose = () => {
     dispatch(closeModal());
+    dispatch(clearUpdateDeleteProtection());
   };
 
   const handlePrimaryClick = () => {
@@ -32,10 +33,9 @@ const DeleteProtectionModal = ({ onClose }: { onClose: () => void }) => {
   useEffect(() => {
     if (updateDeleteProtection.fulfilled) {
       onClose();
-      dispatch(closeModal());
-      dispatch(clearUpdateDeleteProtection());
+      handleClose();
     }
-  }, [updateDeleteProtection, onClose, dispatch]);
+  }, [updateDeleteProtection, onClose, handleClose]);
 
   return (
     <Modal
