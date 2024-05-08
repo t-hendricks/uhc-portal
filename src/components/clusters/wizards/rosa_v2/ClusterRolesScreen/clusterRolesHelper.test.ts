@@ -1,4 +1,9 @@
-import { getOperatorRolesCommand } from './clusterRolesHelper';
+import {
+  MAX_CLUSTER_NAME_LENGTH,
+  MAX_CUSTOM_OPERATOR_ROLES_PREFIX_LENGTH,
+} from '~/common/validators';
+
+import { createOperatorRolesPrefix, getOperatorRolesCommand } from './clusterRolesHelper';
 
 const defaultOptions = {
   forcedByoOidcType: 'Hypershift' as const,
@@ -55,5 +60,14 @@ describe('getOperatorRolesCommand', () => {
     const command = getOperatorRolesCommand(noOperatorPrefix);
 
     expect(command).toBe('');
+  });
+});
+
+describe('createOperatorRolesPrefix', () => {
+  test('should not exceed max character limit', () => {
+    const clusterName = 'a'.repeat(MAX_CLUSTER_NAME_LENGTH);
+    const command = createOperatorRolesPrefix(clusterName);
+
+    expect(command.length).toBeLessThanOrEqual(MAX_CUSTOM_OPERATOR_ROLES_PREFIX_LENGTH);
   });
 });

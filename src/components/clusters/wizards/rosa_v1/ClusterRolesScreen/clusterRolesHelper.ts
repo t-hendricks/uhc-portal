@@ -1,4 +1,9 @@
-import { checkCustomOperatorRolesPrefix } from '~/common/validators';
+import {
+  checkCustomOperatorRolesPrefix,
+  MAX_CUSTOM_OPERATOR_ROLES_PREFIX_LENGTH,
+} from '~/common/validators';
+
+import { secureRandomValueInRange } from '../../../../../common/helpers';
 
 type ForcedByoOidcType = 'Hypershift' | 'SharedVPC' | undefined;
 
@@ -51,4 +56,32 @@ const getForcedByoOidcReason = (forcedByoOidcType: ForcedByoOidcType) => {
   return mandatoryByoOidcReason;
 };
 
-export { getOperatorRolesCommand, getForcedByoOidcReason };
+const OPERATOR_ROLES_HASH_LENGTH = 4;
+
+const createOperatorRolesHash = () => {
+  const alphabet = 'abcdefghijklmnopqrstuvwxyz';
+  const alphaNumeric = '0123456789abcdefghijklmnopqrstuvwxyz';
+  let prefixArray: string | string[] = '';
+
+  // random 4 alphanumeric hash
+  for (let i = 0; i < OPERATOR_ROLES_HASH_LENGTH; i += 1) {
+    const randIndex = secureRandomValueInRange(0, 35);
+    prefixArray += alphaNumeric[randIndex];
+  }
+  // cannot start with a number
+  const randomCharacter = alphabet[secureRandomValueInRange(0, 25)];
+  prefixArray = prefixArray.split('');
+  prefixArray[0] = randomCharacter;
+
+  return prefixArray.join('');
+};
+
+const createOperatorRolesPrefix = (clusterName: string) => {
+  // increment allowedLength by 1 due to '-' character prepended to hash
+  const allowedLength = MAX_CUSTOM_OPERATOR_ROLES_PREFIX_LENGTH - (OPERATOR_ROLES_HASH_LENGTH + 1);
+  const operatorRolesClusterName = clusterName.slice(0, allowedLength);
+
+  return `${operatorRolesClusterName}-${createOperatorRolesHash()}`;
+};
+
+export { getOperatorRolesCommand, getForcedByoOidcReason, createOperatorRolesPrefix };

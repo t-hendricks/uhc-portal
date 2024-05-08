@@ -1837,6 +1837,8 @@ export {
   validateNamespacesList,
   composeValidators,
   checkHostDomain,
+  MAX_CUSTOM_OPERATOR_ROLES_PREFIX_LENGTH,
+  MAX_CLUSTER_NAME_LENGTH,
 };
 
 export default validators;
