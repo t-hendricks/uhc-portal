@@ -23,7 +23,9 @@ import Instructions from '~/components/common/Instructions';
 import PopoverHint from '~/components/common/PopoverHint';
 
 import links from '../../../../../common/installLinks.mjs';
-import validators from '../../../../../common/validators';
+import validators, {
+  MAX_CUSTOM_OPERATOR_ROLES_PREFIX_LENGTH,
+} from '../../../../../common/validators';
 import ReduxVerticalFormGroup from '../../../../common/ReduxFormComponents/ReduxVerticalFormGroup';
 
 function CreateOIDCProviderInstructions() {
@@ -189,7 +191,7 @@ function CustomerOIDCConfiguration({
           isRequired
           // eslint-disable-next-line import/no-named-as-default-member
           validate={validators.checkCustomOperatorRolesPrefix}
-          helpText={`Maximum ${validators.MAX_CUSTOM_OPERATOR_ROLES_PREFIX_LENGTH} characters.  Changing the cluster name will regenerate this value.`}
+          helpText={`Maximum ${MAX_CUSTOM_OPERATOR_ROLES_PREFIX_LENGTH} characters.  Changing the cluster name will regenerate this value.`}
           extendedHelpText={
             <TextContent>
               <Text component={TextVariants.p}>
