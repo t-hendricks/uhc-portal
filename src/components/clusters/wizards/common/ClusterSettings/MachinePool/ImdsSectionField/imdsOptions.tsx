@@ -1,5 +1,7 @@
 import React from 'react';
 
+import { RadioDescription } from '~/components/common/RadioDescription';
+
 import { IMDSType } from '../../../constants';
 
 export type ImdsOptionType = {
@@ -15,8 +17,10 @@ export const imdsOptions: ImdsOptionType[] = [
     label: (
       <>
         Use both IMDSv1 and IMDSv2
-        <div className="ocm-c--reduxradiobutton-description pf-v5-u-mb-sm">
-          Allows use of both IMDS versions for backward compatibility
+        <div className="pf-v5-u-mb-sm">
+          <RadioDescription>
+            Allows use of both IMDS versions for backward compatibility
+          </RadioDescription>
         </div>
       </>
     ),
@@ -27,8 +31,8 @@ export const imdsOptions: ImdsOptionType[] = [
     label: (
       <>
         Use IMDSv2 only
-        <div className="ocm-c--reduxradiobutton-description pf-v5-u-mb-sm">
-          A session-oriented method with enhanced security
+        <div className="pf-v5-u-mb-sm">
+          <RadioDescription>A session-oriented method with enhanced security</RadioDescription>
         </div>
       </>
     ),

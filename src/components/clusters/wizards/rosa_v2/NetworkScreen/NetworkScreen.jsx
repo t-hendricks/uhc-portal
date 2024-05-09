@@ -28,6 +28,7 @@ import { FieldId } from '~/components/clusters/wizards/rosa_v2/constants';
 import { DefaultIngressFieldsFormik } from '~/components/clusters/wizards/rosa_v2/NetworkScreen/DefaultIngressFieldsFormik';
 import { CheckboxDescription } from '~/components/common/CheckboxDescription';
 import ExternalLink from '~/components/common/ExternalLink';
+import { RadioDescription } from '~/components/common/RadioDescription';
 import { RadioButtons, ReduxCheckbox } from '~/components/common/ReduxFormComponents';
 import useAnalytics from '~/hooks/useAnalytics';
 import { isRestrictedEnv } from '~/restrictedEnv';
@@ -250,9 +251,9 @@ function NetworkScreen(props) {
                   label: (
                     <>
                       Public
-                      <div className="ocm-c--reduxradiobutton-description">
+                      <RadioDescription>
                         Access Kubernetes API endpoint and application routes from the internet.
-                      </div>
+                      </RadioDescription>
                     </>
                   ),
                   extraField: isHypershiftSelected && !privateClusterSelected && (
@@ -282,10 +283,10 @@ function NetworkScreen(props) {
                   label: (
                     <>
                       Private
-                      <div className="ocm-c--reduxradiobutton-description">
+                      <RadioDescription>
                         Access Kubernetes API endpoint and application routes from direct private
                         connections only.
-                      </div>
+                      </RadioDescription>
                     </>
                   ),
                 },
