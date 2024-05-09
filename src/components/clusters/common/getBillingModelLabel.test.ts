@@ -12,8 +12,8 @@ describe('getBillingModelLabel', () => {
     [normalizedProducts.OSDTrial, undefined, undefined, 'Free trial, upgradeable'],
     [normalizedProducts.OSD, undefined, undefined, 'Standard'],
     [normalizedProducts.OSD, billingModels.STANDARD, undefined, 'Annual Red Hat subscriptions'],
-    [normalizedProducts.OSD, billingModels.MARKETPLACE, undefined, 'Standard'],
-    [normalizedProducts.OSD, billingModels.MARKETPLACE_AWS, undefined, 'Standard'],
+    [normalizedProducts.OSD, billingModels.MARKETPLACE, undefined, 'N/A'],
+    [normalizedProducts.OSD, billingModels.MARKETPLACE_AWS, undefined, 'N/A'],
     [normalizedProducts.OSD, billingModels.MARKETPLACE_GCP, undefined, 'N/A'],
     [normalizedProducts.OSD, billingModels.MARKETPLACE, true, 'On-demand via Red Hat Marketplace'],
     [
