@@ -87,9 +87,7 @@ async function jiraLabeler(jiraToken, total = 1) {
           // update parent to the previous commit in this chain of commits
           [parent] = commit.parents;
           // remember the sha of the cherry picked MR to get the original commit
-          if (commit.picked_hash) {
-            releaseCommits.push(commit);
-          }
+          releaseCommits.push(commit);
           commit = candidateCommitsMap[parent];
         } while (commit && !releasesMap[parent] && candidateCommitsMap[parent]);
       }
