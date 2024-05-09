@@ -24,6 +24,27 @@ describe('<ClusterActionsDropdown />', () => {
         expect(screen.getByRole('menuitem', { name: option })).toBeEnabled();
       });
     });
+
+    it('disabled Delete cluster option', async () => {
+      const props = {
+        ...Fixtures.managedReadyProps,
+        cluster: {
+          ...Fixtures.managedReadyProps.cluster,
+          delete_protection: { enabled: true },
+        },
+      };
+      const { user } = render(<ClusterActionsDropdown {...props} />);
+      await user.click(screen.getByRole('button'));
+      expect(await screen.findByRole('menu')).toBeInTheDocument();
+      menuOptions.forEach((option) => {
+        if (option === 'Delete cluster') {
+          expect(screen.getByRole('menuitem', { name: option })).toHaveAttribute(
+            'aria-disabled',
+            'true',
+          );
+        }
+      });
+    });
   });
 
   describe('cluster with state uninstalling', () => {
