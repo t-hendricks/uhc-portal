@@ -69,6 +69,7 @@ export enum FieldId {
   RosaRolesProviderCreationMode = 'rosa_roles_provider_creation_mode',
   SecretAccessKey = 'secret_access_key',
   SecurityGroups = 'securityGroups',
+  EnableExteranlAuthentication = 'enable_external_authentication',
 }
 
 export const initialValues: FormikValues = {
