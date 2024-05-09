@@ -355,6 +355,7 @@ describe('<ReviewClusterScreen />', () => {
       render(
         buildTestComponent(<ReviewClusterScreen {...defaultProps} />, {
           kms_key_arn: keyARN,
+          customer_managed_key: 'true',
         }),
       );
 
