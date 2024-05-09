@@ -3,7 +3,7 @@ import axios, { InternalAxiosRequestConfig, RawAxiosRequestConfig } from 'axios'
 
 import { getRestrictedEnvApi, isRestrictedEnv } from '~/restrictedEnv';
 
-import config, { multiRegionConfig } from '../config';
+import config from '../config';
 
 const getBaseUrl = (baseUrl: string | undefined) => {
   if (isRestrictedEnv()) {
@@ -39,9 +39,13 @@ export function getAPIRequest(baseURL: string) {
   return apiRequestCache[baseURL];
 }
 
-export function getAPIRequestForRegion(region?: string) {
+export function getAPIRequestForRegion(region?: string, provider: string = 'aws') {
   return region
-    ? getAPIRequest(multiRegionConfig.apiRegionalGatewayTemplate?.replace('$REGION$', region) || '')
+    ? getAPIRequest(
+        config.configData.apiRegionalGatewayTemplate
+          ?.replace('$REGION$', region)
+          .replace('$PROVIDER$', provider) || '',
+      )
     : apiRequest;
 }
 
