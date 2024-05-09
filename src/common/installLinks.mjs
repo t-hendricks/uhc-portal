@@ -302,6 +302,7 @@ const links = {
   ROSA_UPGRADES: `${ROSA_DOCS_BASE}/upgrading/rosa-upgrading-sts.html`,
   ROSA_LIMITED_SUPPORT_DEFINITION: `${ROSA_DOCS_BASE}/rosa_architecture/rosa_policy_service_definition/rosa-service-definition.html#rosa-limited-support_rosa-service-definition`,
   ROSA_SHARED_VPC: `${ROSA_DOCS_BASE}/rosa_install_access_delete_clusters/rosa-shared-vpc-config.html`,
+  ROSA_PRIVATE_CONNECTIONS: `${ROSA_DOCS_BASE}/rosa_cluster_admin/cloud_infrastructure_access/rosa-configuring-private-connections.html`,
 
   ROSA_AWS_STS_PREREQUISITES: `${ROSA_DOCS_BASE}/rosa_planning/rosa-sts-aws-prereqs.html`,
   ROSA_AWS_ACCOUNT_ASSOCIATION: `${ROSA_DOCS_BASE}/rosa_planning/rosa-sts-aws-prereqs.html#rosa-associating-account_rosa-sts-aws-prereqs`,
