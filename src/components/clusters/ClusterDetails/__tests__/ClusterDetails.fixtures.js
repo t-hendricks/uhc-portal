@@ -70,6 +70,9 @@ const clusterDetails = {
       href: '/api/clusters_mgmt/v1/cloud_providers/aws',
     },
     billing_model: 'standard',
+    delete_protection: {
+      enabled: false,
+    },
     openshift_version: '4.6.8',
     region: {
       kind: 'CloudRegionLink',

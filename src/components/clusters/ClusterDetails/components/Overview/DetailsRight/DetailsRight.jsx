@@ -31,6 +31,7 @@ import ExternalLink from '../../../../../common/ExternalLink';
 import PopoverHint from '../../../../../common/PopoverHint';
 import Timestamp from '../../../../../common/Timestamp';
 import { constants } from '../../../../common/CreateOSDFormConstants';
+import { isArchivedSubscription } from '../../../clusterDetailsHelper';
 import SecurityGroupsDisplayByNode from '../../SecurityGroups/SecurityGroupsDetailDisplay';
 import ClusterNetwork from '../ClusterNetwork';
 
@@ -101,12 +102,16 @@ function DetailsRight({
   const showSecureBoot = isGCP && !isDeprovisioned;
   const secureBoot = isGCP && cluster.gcp?.security?.secure_boot;
 
+  const showDeleteProtection = cluster.managed && !isArchivedSubscription(cluster);
+
   return (
     <DescriptionList>
-      <DeleteProtection
-        clusterID={cluster.id}
-        protectionEnabled={cluster.delete_protection?.enabled}
-      />
+      {showDeleteProtection ? (
+        <DeleteProtection
+          clusterID={cluster.id}
+          protectionEnabled={cluster.delete_protection?.enabled}
+        />
+      ) : null}
       <DescriptionListGroup>
         <DescriptionListTerm>Status</DescriptionListTerm>
         <DescriptionListDescription style={cluster.state.style}>

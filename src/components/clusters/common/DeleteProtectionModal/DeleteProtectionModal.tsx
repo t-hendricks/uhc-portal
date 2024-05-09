@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useCallback } from 'react';
 import { useDispatch } from 'react-redux';
 
 import { Flex } from '@patternfly/react-core';
@@ -21,10 +21,10 @@ const DeleteProtectionModal = ({ onClose }: { onClose: () => void }) => {
 
   const { protectionEnabled } = modalData;
 
-  const handleClose = () => {
+  const handleClose = useCallback(() => {
     dispatch(closeModal());
     dispatch(clearUpdateDeleteProtection());
-  };
+  }, [dispatch, closeModal, clearUpdateDeleteProtection]);
 
   const handlePrimaryClick = () => {
     dispatch(updateDeleteProtectionAction(modalData.clusterID, !protectionEnabled));
