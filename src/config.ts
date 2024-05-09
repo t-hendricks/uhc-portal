@@ -53,10 +53,6 @@ if (APP_DEV_SERVER) {
 // select config according to the APP_API_ENV flag (see webpack.config.js)
 configs.default = configs[APP_API_ENV];
 
-export const multiRegionConfig = {
-  apiRegionalGatewayTemplate: 'https://api.$REGION$.openshift.com',
-};
-
 const parseEnvQueryParam = (): string | undefined => {
   let ret: string | undefined;
   window.location.search
@@ -128,6 +124,14 @@ const config = {
       // replace $SELF_PATH$ with the current host
       // to avoid CORS issues when not using prod.foo
       apiGateway: data.apiGateway.replace('$SELF_PATH$', window.location.host),
+      ...(data.apiRegionalGatewayTemplate
+        ? {
+            apiRegionalGatewayTemplate: data.apiRegionalGatewayTemplate.replace(
+              '$SELF_PATH$',
+              window.location.host,
+            ),
+          }
+        : {}),
       insightsGateway:
         data.insightsGateway?.replace('$SELF_PATH$', window.location.host) || undefined,
     };
@@ -160,7 +164,6 @@ const config = {
           this.loadConfig({
             ...data,
             ...fedRampConfig,
-            ...multiRegionConfig,
           });
           // eslint-disable-next-line no-console
           console.info(`Loaded override config: ${queryEnv}`);
@@ -173,7 +176,6 @@ const config = {
           this.loadConfig({
             ...data,
             ...fedRampConfig,
-            ...multiRegionConfig,
           });
           // eslint-disable-next-line no-console
           console.info(`Loaded default config: ${APP_API_ENV}`);
