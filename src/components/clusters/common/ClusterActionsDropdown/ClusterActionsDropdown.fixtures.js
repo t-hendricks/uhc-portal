@@ -20,6 +20,7 @@ const cluster = {
   subscription: {
     id: 'subscription-id',
   },
+  delete_protection: { enabled: false },
 };
 
 const osdTrialCluster = {

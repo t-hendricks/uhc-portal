@@ -294,6 +294,7 @@ function ClusterListTable(props) {
                 toggleSubscriptionReleased,
                 refreshFunc,
                 true,
+                cluster.delete_protection?.enabled,
               )}
             />
           ) : null}
