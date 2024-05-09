@@ -301,7 +301,7 @@ function NetworkScreen(props) {
                   title="You will not be able to access your cluster until you edit network settings in your cloud provider."
                 >
                   {cloudProviderID === 'aws' && (
-                    <ExternalLink href={links.OSD_AWS_PRIVATE_CONNECTIONS}>
+                    <ExternalLink href={links.ROSA_PRIVATE_CONNECTIONS}>
                       Learn more about configuring network settings
                     </ExternalLink>
                   )}
