@@ -159,12 +159,13 @@ async function reportOrder(jiraToken, branch, verbose) {
               : chalk.yellowBright(jiraKey),
           );
         } else if (!qeApproved.includes(status.name) && !commit.noQE) {
+          const stats = status.name.toUpperCase();
           commit.jira.relatedJiraStatuses.push(
             chalk.redBright(
               `${
                 relatedJiraKeys.length === 1
-                  ? chalk.redBright(status.name.toUpperCase())
-                  : chalk.redBright(jiraKey)
+                  ? chalk.redBright(stats)
+                  : chalk.redBright(`${jiraKey} ${stats}`)
               }: ${jira.qacontact}`,
             ),
           );
@@ -188,9 +189,9 @@ async function reportOrder(jiraToken, branch, verbose) {
             if (type.name === 'Depend' && outwardIssue && jiraTicketRegex.test(outwardIssue.key)) {
               if (!qeApproved.includes(outwardIssue.fields.status.name)) {
                 commit.jira.relatedJiraStatuses.push(
-                  relatedJiraKeys.length === 1
-                    ? chalk.redBright('DEPENDENT JIRAS NOT CLOSED')
-                    : chalk.redBright(jiraKey),
+                  chalk.redBright(
+                    `DEPENDS ON ${outwardIssue.key} ${outwardIssue.fields.status.name.toUpperCase()}`,
+                  ),
                 );
                 jira.allDependentJirasClosed = false;
                 isClosed = false;
@@ -452,7 +453,7 @@ async function reportOrder(jiraToken, branch, verbose) {
     let picks = ready;
     const note = `| ${sash} | ${
       commit.jira.relatedJiraKeys.length ? commit.jira.relatedJiraKeys.join(', ') : '-'
-    } | ${commit.description} | ${commit.mrID} ${commit.author_email}|`;
+    } | ${commit.description.replaceAll('|', '\\|')} | ${commit.mrID} ${commit.author_email}|`;
     if (isAIPromotion) {
       picks = AICommits;
     } else if (blockingCommits.length) {
@@ -502,7 +503,7 @@ async function reportOrder(jiraToken, branch, verbose) {
     //  |_|   |_|_| |_|\__,_|  \___\___/|_| |_|_| |_|_|\___|\__|___/
     // /////////////////////////////////////////////////////////////
     console.log(
-      '\n=============================FINDING CONFLICTS WITH CANDIDATE================================',
+      '\n=============================FINDING CONFLICTS WITH CANDIDATE================================\n',
     );
     let hasAnyConflicts = false;
     const otherSha = branch || condidateSha;
@@ -595,6 +596,9 @@ async function reportOrder(jiraToken, branch, verbose) {
       fs.unlinkSync('run/tmp.current');
     } catch {
       // nothing
+    }
+    if (!hasAnyConflicts) {
+      console.log(chalk.grey('\n\n~~no conflicts with CANDIDATE~~'));
     }
 
     // /////////////////////////////////////////////////////////////
@@ -869,20 +873,25 @@ async function logConflicts(
         // eslint-disable-next-line prefer-destructuring
         lg = lg[0];
         const match = /![0-9]{4}/.exec(lg.body);
-        let description;
+        let description = '';
+        if (new Date(lg.date) - new Date(commit.date) > 0) {
+          description += chalk.magenta('(NEWER) ');
+        } else if ((Date.now() - new Date(lg.date)) / 8.64e7 > 90) {
+          description += chalk.yellow('(OLD) ');
+        }
         if (match) {
-          description = chalk.blue(
+          description += chalk.blue(
             `https://gitlab.cee.redhat.com/service/uhc-portal/-/merge_requests/${match[0].slice(1)}`,
           );
         } else {
-          description = `${chalk.yellow('(OLD)')} ${lg.message}`;
+          description += `${chalk.blue(lg.hash.substring(0, 9))} ${lg.date} ${lg.message}`;
         }
 
         log.push(
           chalk.white(
             `   ${
               oneConflict ? '' : chalk.cyanBright(String.fromCharCode('\u2460'.charCodeAt(0) + j))
-            }  ${chalk.green(`${lg.author_email} ${lg.date}`)}  ${description}`,
+            }  ${chalk.green(`${lg.author_email} ${lg.date}`)} ${description}`,
           ),
         );
       }
