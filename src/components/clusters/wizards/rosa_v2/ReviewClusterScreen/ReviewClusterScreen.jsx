@@ -11,7 +11,9 @@ import {
   useWizardContext,
 } from '@patternfly/react-core';
 
+import { hasExternalAuthenticationCapability } from '~/common/externalAuthHelper';
 import { hasSelectedSecurityGroups } from '~/common/securityGroupsHelpers';
+import useOrganization from '~/components/CLILoginPage/useOrganization';
 import { useFormState } from '~/components/clusters/wizards/hooks';
 import { canSelectImds } from '~/components/clusters/wizards/rosa/constants';
 import { getUserRoleForSelectedAWSAccount } from '~/components/clusters/wizards/rosa_v2/AccountsRolesScreen/AccountsRolesScreen';
@@ -89,6 +91,8 @@ const ReviewClusterScreen = ({
   const clusterVersionRawId = clusterVersion?.raw_id;
   const showKMSKey = customerManagedKey === 'true' && !!hasCustomKeyARN;
   const hasSecurityGroups = hasSelectedSecurityGroups(securityGroups);
+  const { organization } = useOrganization();
+  const hasExternalAuth = hasExternalAuthenticationCapability(organization?.capabilities);
 
   const clusterSettingsFields = [
     FieldId.ClusterName,
@@ -102,6 +106,7 @@ const ReviewClusterScreen = ({
     FieldId.EtcdEncryption,
     ...(!isHypershiftSelected ? [FieldId.FipsCryptography] : []),
     ...(hasEtcdEncryption ? [FieldId.EtcdKeyArn] : []),
+    ...(isHypershiftSelected && hasExternalAuth ? [FieldId.EnableExteranlAuthentication] : []),
   ];
 
   const [userRole, setUserRole] = useState('');
