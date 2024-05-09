@@ -78,6 +78,7 @@ const ReviewClusterScreen = ({
       [FieldId.UsePrivateLink]: usePrivateLink,
       [FieldId.WorkerVolumeSizeGib]: workerVolumeSizeGib,
       [FieldId.BillingModel]: billingModel,
+      [FieldId.CustomerManagedKey]: customerManagedKey,
     },
     values: formValues,
     setFieldValue,
@@ -89,7 +90,7 @@ const ReviewClusterScreen = ({
 
   const hasEtcdEncryption = isHypershiftSelected && !!etcdKeyArn;
   const clusterVersionRawId = clusterVersion?.raw_id;
-
+  const showKMSKey = customerManagedKey === 'true' && !!hasCustomKeyARN;
   const hasSecurityGroups = hasSelectedSecurityGroups(securityGroups);
   const { organization } = useOrganization();
   const hasExternalAuth = hasExternalAuthenticationCapability(organization?.capabilities);
@@ -102,7 +103,7 @@ const ReviewClusterScreen = ({
     FieldId.MultiAz,
     ...(!isHypershiftSelected ? [FieldId.EnableUserWorkloadMonitoring] : []),
     FieldId.CustomerManagedKey,
-    ...(hasCustomKeyARN ? [FieldId.KmsKeyArn] : []),
+    ...(showKMSKey ? [FieldId.KmsKeyArn] : []),
     FieldId.EtcdEncryption,
     ...(!isHypershiftSelected ? [FieldId.FipsCryptography] : []),
     ...(hasEtcdEncryption ? [FieldId.EtcdKeyArn] : []),
