@@ -60,23 +60,31 @@ describe('<DeleteProtectionModal />', () => {
     expect(screen.getByText('Error disabling Delete Protection')).toBeInTheDocument();
   });
 
-  it('closes the modal', async () => {
+  describe('Close modal action', () => {
     const useDispatchMock = jest.spyOn(reactRedux, 'useDispatch');
     const mockedDispatch = jest.fn();
     useDispatchMock.mockReturnValue(mockedDispatch);
-    const closeModalMock = closeModal as jest.Mock;
-    const defaultState = {
-      modal: {
-        data: { clusterID: 'fale-id', protectionEnabled: false },
-      },
-      deleteProtection: {
-        updateDeleteProtection: { error: false, fulfilled: false, pending: false },
-      },
-    };
 
-    const { user } = withState(defaultState).render(<DeleteProtectionModal onClose={jest.fn()} />);
-    await user.click(screen.getByRole('button', { name: /cancel/i }));
+    afterEach(() => {
+      useDispatchMock.mockClear();
+      mockedDispatch.mockClear();
+    });
 
-    expect(closeModalMock).toHaveBeenCalled();
+    it('closes the modal', async () => {
+      const closeModalMock = closeModal as jest.Mock;
+      const defaultState = {
+        modal: {
+          data: { clusterID: 'fake-id', protectionEnabled: false },
+        },
+        deleteProtection: {
+          updateDeleteProtection: { error: false, fulfilled: false, pending: false },
+        },
+      };
+      const { user } = withState(defaultState).render(
+        <DeleteProtectionModal onClose={jest.fn()} />,
+      );
+      await user.click(screen.getByRole('button', { name: /cancel/i }));
+      expect(closeModalMock).toHaveBeenCalled();
+    });
   });
 });

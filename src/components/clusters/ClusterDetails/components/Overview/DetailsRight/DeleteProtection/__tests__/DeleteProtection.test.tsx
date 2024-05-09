@@ -36,11 +36,19 @@ describe('<DeleteProtection />', () => {
     render(<DeleteProtection {...props} />);
     expect(screen.getByText('Delete Protection: Disabled')).toBeInTheDocument();
   });
+});
+
+describe('Delete protection - modal action', () => {
+  const useDispatchMock = jest.spyOn(reactRedux, 'useDispatch');
+  const mockedDispatch = jest.fn();
+  useDispatchMock.mockReturnValue(mockedDispatch);
+
+  afterEach(() => {
+    useDispatchMock.mockClear();
+    mockedDispatch.mockClear();
+  });
 
   it('Opens the modal', async () => {
-    const useDispatchMock = jest.spyOn(reactRedux, 'useDispatch');
-    const mockedDispatch = jest.fn();
-    useDispatchMock.mockReturnValue(mockedDispatch);
     const props = {
       protectionEnabled: false,
       clusterID: 'fake-cluster',
