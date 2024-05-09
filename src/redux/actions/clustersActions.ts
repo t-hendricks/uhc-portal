@@ -415,6 +415,7 @@ const fetchSingleClusterAndPermissions = async (
   let canEditOCMRoles = false;
   let canEditClusterAutoscaler = false;
   let canViewOCMRoles = false;
+  let canUpdateClusterResource = false;
 
   const buildPermissionsByActionObj = (obj: any, action: SelfAccessReview.action) => {
     // eslint-disable-next-line no-param-reassign
@@ -488,6 +489,15 @@ const fetchSingleClusterAndPermissions = async (
       })
       .then((response) => {
         canViewOCMRoles = response.data.allowed;
+      });
+    await authorizationsService
+      .selfAccessReview({
+        action: SelfAccessReview.action.UPDATE,
+        resource_type: SelfAccessReview.resource_type.CLUSTER,
+        subscription_id: subscriptionID,
+      })
+      .then((response) => {
+        canUpdateClusterResource = response.data.allowed;
       });
 
     actions.forEach(async (action) => {
@@ -566,6 +576,7 @@ const fetchSingleClusterAndPermissions = async (
     cluster.data.machinePoolsActions = machinePoolsActions;
     cluster.data.kubeletConfigActions = kubeletConfigActions;
     cluster.data.canDelete = !!canDeleteAccessReviewResponse?.data?.allowed;
+    cluster.data.canUpdateClusterResource = canUpdateClusterResource;
 
     return cluster;
   }
