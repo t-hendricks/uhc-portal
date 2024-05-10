@@ -23,6 +23,7 @@ describe('<DeleteProtection />', () => {
     const props = {
       protectionEnabled: true,
       clusterID: 'fake-cluster',
+      canToggle: true,
     };
     render(<DeleteProtection {...props} />);
     expect(screen.getByText('Delete Protection: Enabled')).toBeInTheDocument();
@@ -32,9 +33,35 @@ describe('<DeleteProtection />', () => {
     const props = {
       protectionEnabled: false,
       clusterID: 'fake-cluster',
+      canToggle: true,
     };
     render(<DeleteProtection {...props} />);
     expect(screen.getByText('Delete Protection: Disabled')).toBeInTheDocument();
+  });
+
+  it('Disables the "Enable" button if not enough permission', () => {
+    const props = {
+      protectionEnabled: false,
+      clusterID: 'fake-cluster',
+      canToggle: false,
+    };
+    render(<DeleteProtection {...props} />);
+
+    expect(screen.getByRole('button', { name: 'Enable' })).toHaveAttribute('aria-disabled', 'true');
+  });
+
+  it('Disables the "Disable" button if not enough permission', () => {
+    const props = {
+      protectionEnabled: true,
+      clusterID: 'fake-cluster',
+      canToggle: false,
+    };
+    render(<DeleteProtection {...props} />);
+
+    expect(screen.getByRole('button', { name: 'Disable' })).toHaveAttribute(
+      'aria-disabled',
+      'true',
+    );
   });
 });
 
@@ -52,9 +79,13 @@ describe('Delete protection - modal action', () => {
     const props = {
       protectionEnabled: false,
       clusterID: 'fake-cluster',
+      canToggle: true,
     };
     const { user } = render(<DeleteProtection {...props} />);
     await user.click(screen.getByRole('button'));
-    expect(openModal).toHaveBeenCalledWith(modals.DELETE_PROTECTION, { ...props });
+    expect(openModal).toHaveBeenCalledWith(modals.DELETE_PROTECTION, {
+      clusterID: 'fake-cluster',
+      protectionEnabled: false,
+    });
   });
 });
