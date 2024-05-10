@@ -106,6 +106,7 @@ function DetailsRight({
         <DeleteProtection
           clusterID={cluster.id}
           protectionEnabled={cluster.delete_protection?.enabled}
+          canToggle={cluster.canUpdateClusterResource}
         />
       ) : null}
       <DescriptionListGroup>
