@@ -40,20 +40,24 @@ const DownloadButton = ({
 }: DownloadButtonProps) => {
   const track = useAnalytics();
 
+  const handleClick = () => {
+    if (name) {
+      track(name, pendoID);
+    } else if (trackEvents[tool]) {
+      track(trackEvents[tool], {
+        url,
+        path: pendoID,
+      });
+    }
+  };
+
   return (
     <Button
       component="a"
       href={url}
       variant="secondary"
       className={`download-button tool-${tool.toLowerCase()}`}
-      onClick={() =>
-        name
-          ? track(name, pendoID)
-          : track(trackEvents[tool], {
-              url,
-              path: pendoID,
-            })
-      }
+      onClick={handleClick}
       disabled={!url || disabled === true}
       data-testid={`download-btn-${tool}`}
       {...(download === true
