@@ -36,12 +36,8 @@ const ControlPlaneField = ({
   const isHostedDisabled = !hasHostedProductQuota;
 
   React.useEffect(() => {
-    if (!value) {
-      if (isHostedDisabled) {
-        onChange('false');
-      } else {
-        onChange('true');
-      }
+    if (isHostedDisabled) {
+      onChange('false');
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
