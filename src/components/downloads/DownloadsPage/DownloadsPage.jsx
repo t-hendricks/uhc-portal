@@ -705,6 +705,7 @@ const disconnectedInstallationRows = (
                 Learn more
               </ExternalLink>
             </Text>
+            <Text>RHEL 9 is FIPS compatible; RHEL 8 is non-FIPS compatible.</Text>
           </TextContent>
         }
       />
