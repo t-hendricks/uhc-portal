@@ -28,7 +28,6 @@ import { FieldId } from '~/components/clusters/wizards/rosa_v2/constants';
 import { DefaultIngressFieldsFormik } from '~/components/clusters/wizards/rosa_v2/NetworkScreen/DefaultIngressFieldsFormik';
 import { CheckboxDescription } from '~/components/common/CheckboxDescription';
 import ExternalLink from '~/components/common/ExternalLink';
-import { RadioDescription } from '~/components/common/RadioDescription';
 import { RadioButtons, ReduxCheckbox } from '~/components/common/ReduxFormComponents';
 import useAnalytics from '~/hooks/useAnalytics';
 import { isRestrictedEnv } from '~/restrictedEnv';
@@ -247,15 +246,9 @@ function NetworkScreen(props) {
               options={[
                 {
                   value: 'external',
-                  ariaLabel: 'Public',
-                  label: (
-                    <>
-                      Public
-                      <RadioDescription>
-                        Access Kubernetes API endpoint and application routes from the internet.
-                      </RadioDescription>
-                    </>
-                  ),
+                  label: 'Public',
+                  description:
+                    'Access Kubernetes API endpoint and application routes from the internet.',
                   extraField: isHypershiftSelected && !privateClusterSelected && (
                     <Field
                       component={SubnetSelectField}
@@ -279,16 +272,9 @@ function NetworkScreen(props) {
                 },
                 {
                   value: 'internal',
-                  ariaLabel: 'Private',
-                  label: (
-                    <>
-                      Private
-                      <RadioDescription>
-                        Access Kubernetes API endpoint and application routes from direct private
-                        connections only.
-                      </RadioDescription>
-                    </>
-                  ),
+                  label: 'Private',
+                  description:
+                    'Access Kubernetes API endpoint and application routes from direct private connections only.',
                 },
               ]}
               disableDefaultValueHandling
