@@ -90,6 +90,7 @@ async function reportOrder(jiraToken, branch, verbose) {
     commit.blameHash = `${commit.hash}^`;
     commit.sash = commit.hash.substring(0, 9);
     commit.isAIPromotion = assistedInstallerRegex.test(commit.body);
+    assistedInstallerRegex.lastIndex = 0;
     const split = commit.body.split('\n');
     // eslint-disable-next-line no-param-reassign
     commit.description = split.length > 4 ? split[2] : commit.message;
