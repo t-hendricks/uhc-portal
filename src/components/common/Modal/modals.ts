@@ -25,6 +25,7 @@ const modals = {
   OCM_ROLES: 'ocm-roles',
   UPDATE_MACHINE_POOL_VERSION: 'update-machine-pool-version',
   ADD_NOTIFICATION_CONTACT: 'add-notification-contact',
+  REGISTER_CLUSTER_ERROR: 'register-cluster-error',
   DELETE_PROTECTION: 'delete-protection',
 };
 export default modals;

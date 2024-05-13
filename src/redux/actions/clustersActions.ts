@@ -96,7 +96,7 @@ const createCluster =
 
 const registerClusterAndUpdateSubscription = async (
   registrationRequest: SubscriptionCreateRequest,
-  subscriptionRequest: SubscriptionPatchRequest,
+  subscriptionRequest: SubscriptionPatchRequest | null,
   dispatch: AppThunkDispatch,
 ) => {
   const registerClusterResponse = await accountsService.registerDisconnected(registrationRequest);
@@ -115,7 +115,7 @@ const registerClusterAndUpdateSubscription = async (
 const registerDisconnectedCluster =
   (
     registrationRequest: SubscriptionCreateRequest,
-    subscriptionRequest: SubscriptionPatchRequest,
+    subscriptionRequest: SubscriptionPatchRequest | null,
   ): AppThunk =>
   (dispatch) =>
     dispatch(
