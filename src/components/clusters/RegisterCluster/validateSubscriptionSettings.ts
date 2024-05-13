@@ -1,3 +1,5 @@
+import { SubscriptionPatchRequest } from '~/types/accounts_mgmt.v1';
+
 import {
   subscriptionSettings,
   subscriptionSupportLevels,
@@ -10,7 +12,9 @@ const { SUPPORT_LEVEL, SYSTEM_UNITS, CPU_TOTAL, SOCKET_TOTAL } = subscriptionSet
 
 const { CORES_VCPU, SOCKETS } = subscriptionSystemUnits;
 
-const validateSubscriptionSettings = (settings) => {
+const validateSubscriptionSettings = (settings: {
+  [index: string]: any;
+}): { request: SubscriptionPatchRequest | null; isValid: boolean } => {
   const {
     [SUPPORT_LEVEL]: supportLevel,
     [SYSTEM_UNITS]: systemUnits,
