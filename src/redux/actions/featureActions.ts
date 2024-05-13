@@ -15,6 +15,7 @@ import {
   HCP_USE_UNMANAGED,
   HYPERSHIFT_WIZARD_FEATURE,
   LONGER_CLUSTER_NAME_UI,
+  MULTIREGION_PREVIEW_ENABLED,
   NETWORK_VALIDATOR_ONDEMAND_FEATURE,
   OSD_GCP_SHARED_VPC_FEATURE,
   OSD_GOOGLE_MARKETPLACE_FEATURE,
@@ -53,6 +54,7 @@ export const features = [
   getSimpleUnleashFeature('security-groups-feature', SECURITY_GROUPS_FEATURE), // Handles only Day2
   getSimpleUnleashFeature('enable-machine-configuration', ENABLE_MACHINE_CONFIGURATION),
   getSimpleUnleashFeature('cli-sso-authorization', CLI_SSO_AUTHORIZATION),
+  getSimpleUnleashFeature('multi-region-support', MULTIREGION_PREVIEW_ENABLED),
   getSimpleUnleashFeature('longer-cluster-name-ui', LONGER_CLUSTER_NAME_UI),
   {
     name: ASSISTED_INSTALLER_FEATURE,

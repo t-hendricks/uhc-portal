@@ -194,6 +194,7 @@ class UpgradeTrialClusterDialog extends Component {
         secondaryTitle={shouldDisplayClusterName ? clusterDisplayName : undefined}
         data-testid="upgrade-trial-cluster-dialog"
         modalSize={modalSize}
+        isSmall={false}
         {...primaryButton}
         className="upgrade-trial-cluster-dialog"
         {...secondaryButton}

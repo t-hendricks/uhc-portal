@@ -15,7 +15,11 @@ import type { Cluster } from '../types/clusters_mgmt.v1';
 import type { FakeCluster } from '../types/types';
 
 import { isAISubscriptionWithoutMetrics } from './isAssistedInstallerCluster';
-import { clustersServiceProducts, normalizedProducts } from './subscriptionTypes';
+import {
+  clustersServiceProducts,
+  normalizedProducts,
+  subscriptionStatuses,
+} from './subscriptionTypes';
 import { versionComparator } from './versionComparator';
 
 const {
@@ -229,7 +233,8 @@ const fakeClusterFromSubscription = (subscription: Subscription): FakeCluster =>
     },
     managed: clustersServiceProducts.includes(normalizeProductID(subscription.plan?.type)),
     ccs: {
-      enabled: false,
+      // deprovisioned clusters do not have CCS info, so leaving it as 'undefined'
+      enabled: subscription.status !== subscriptionStatuses.DEPROVISIONED ? false : undefined,
     },
     metrics,
   };

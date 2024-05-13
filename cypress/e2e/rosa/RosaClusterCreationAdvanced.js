@@ -5,7 +5,8 @@ import ClusterDetailsPage from '../../pageobjects/ClusterDetails.page';
 const awsAccountID = Cypress.env('QE_AWS_ID');
 const rolePrefix = Cypress.env('QE_ACCOUNT_ROLE_PREFIX');
 const installerARN = 'arn:aws:iam::' + awsAccountID + ':role/' + rolePrefix + '-Installer-Role';
-const clusterName = `smkrosa-` + (Math.random() + 1).toString(36).substring(7);
+const clusterName = `ocmui-cypress-smoke-rosa-` + (Math.random() + 1).toString(36).substring(7);
+const clusterDomainPrefix = `rosa` + (Math.random() + 1).toString(36).substring(2);
 
 describe(
   'Rosa cluster wizard advanced settings with cluster creation tests(OCP-36105)',
@@ -37,8 +38,11 @@ describe(
 
     it('Step - Cluster Settings - Select advanced options', () => {
       CreateRosaWizardPage.isClusterDetailsScreen();
-      cy.get(CreateRosaWizardPage.clusterNameInput).type(clusterName);
-      CreateRosaWizardPage.clusterDetailsTree().click();
+      CreateRosaWizardPage.setClusterName(clusterName);
+      CreateRosaWizardPage.closePopoverDialogs();
+      CreateRosaWizardPage.createCustomDomainPrefixCheckbox().check();
+      CreateRosaWizardPage.setDomainPrefix(clusterDomainPrefix);
+      CreateRosaWizardPage.closePopoverDialogs();
       CreateRosaWizardPage.selectAvailabilityZone('Multi-zone');
       CreateRosaWizardPage.advancedEncryptionLink().click();
       CreateRosaWizardPage.enableAdditionalEtcdEncryptionCheckbox().check();
@@ -76,8 +80,12 @@ describe(
     it('Step - Cluster roles and policies - advanced  options', () => {
       CreateRosaWizardPage.selectRoleProviderMode('Auto');
       CreateRosaWizardPage.customOperatorPrefixInput().should('be.visible');
-      CreateRosaWizardPage.customOperatorPrefixInput().invoke('val').should('include', clusterName);
-      CreateRosaWizardPage.customOperatorPrefixInput().type('{selectAll}').type(clusterName);
+      CreateRosaWizardPage.customOperatorPrefixInput()
+        .invoke('val')
+        .should('include', clusterName.substring(0, 27));
+      CreateRosaWizardPage.customOperatorPrefixInput()
+        .type('{selectAll}')
+        .type(clusterName.substring(0, 27));
       CreateRosaWizardPage.rosaNextButton().click();
     });
 
@@ -99,6 +107,8 @@ describe(
     });
     it('Cluster wizard revisit - Step - cluster details', () => {
       cy.get(CreateRosaWizardPage.clusterNameInput).should('have.value', clusterName);
+      CreateRosaWizardPage.createCustomDomainPrefixCheckbox().should('be.checked');
+      CreateRosaWizardPage.domainPrefixInput().should('have.value', clusterDomainPrefix);
       CreateRosaWizardPage.multiZoneAvilabilityRadio().should('be.checked');
       CreateRosaWizardPage.advancedEncryptionLink().click();
       CreateRosaWizardPage.enableAdditionalEtcdEncryptionCheckbox().should('be.checked');
@@ -129,7 +139,10 @@ describe(
     });
     it('Cluster wizard revisit - Step - Cluster roles and policies', () => {
       CreateRosaWizardPage.createModeAutoRadio().should('be.checked');
-      CreateRosaWizardPage.customOperatorPrefixInput().should('have.value', clusterName);
+      CreateRosaWizardPage.customOperatorPrefixInput().should(
+        'have.value',
+        clusterName.substring(0, 27),
+      );
       CreateRosaWizardPage.rosaNextButton().click();
     });
     it('Cluster wizard revisit - Step - cluster update strategies', () => {
@@ -143,6 +156,7 @@ describe(
       cy.get('.pf-v5-c-spinner', { timeout: 30000 }).should('not.exist');
       CreateRosaWizardPage.isClusterPropertyMatchesValue('Control plane', 'Classic');
       CreateRosaWizardPage.isClusterPropertyMatchesValue('Availability', 'Multi-zone');
+      CreateRosaWizardPage.isClusterPropertyMatchesValue('Domain prefix', clusterDomainPrefix);
       CreateRosaWizardPage.isClusterPropertyMatchesValue('User workload monitoring', 'Enabled');
       CreateRosaWizardPage.isClusterPropertyMatchesValue(
         'Encrypt volumes with customer keys',
@@ -190,6 +204,7 @@ describe(
       ClusterDetailsPage.checkInstallationStepStatus('Cluster installation');
       ClusterDetailsPage.clusterTypeLabelValue().contains('ROSA');
       ClusterDetailsPage.clusterAvailabilityLabelValue().contains('Multi-zone');
+      ClusterDetailsPage.clusterDomainPrefixLabelValue().contains(clusterDomainPrefix);
       ClusterDetailsPage.clusterInfrastructureAWSaccountLabelValue().contains(awsAccountID);
       ClusterDetailsPage.clusterFipsCryptographyStatus().contains('FIPS Cryptography enabled');
       ClusterDetailsPage.clusterIMDSValue().contains('IMDSv2 only');

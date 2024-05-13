@@ -40,16 +40,6 @@ const MachinePoolSubnetsForm = ({ selectedVPC, warning }: MachinePoolSubnetsForm
     setFieldTouched(fieldNameSubnetId, false, false);
   };
 
-  const selectSubnet = (machinePoolIndex: number, subnetId: string) => {
-    const newMachinePoolsSubnet = (machinePoolsSubnets as FormSubnet[]).map(
-      (machinePoolSubnet, index) =>
-        index === machinePoolIndex
-          ? { ...machinePoolSubnet, privateSubnetId: subnetId }
-          : machinePoolSubnet,
-    );
-    setFieldValue(FieldId.MachinePoolsSubnets, newMachinePoolsSubnet, false);
-  };
-
   useEffect(() => {
     if (machinePoolsSubnets === undefined) {
       setFieldValue(FieldId.MachinePoolsSubnets, [emptyAWSSubnet()]);
@@ -94,7 +84,6 @@ const MachinePoolSubnetsForm = ({ selectedVPC, warning }: MachinePoolSubnetsForm
                   ...getFieldProps(fieldNameSubnetId),
                   onChange: (subnetId: string) => {
                     setFieldValue(fieldNameSubnetId, subnetId);
-                    selectSubnet(index, subnetId);
                   },
                 }}
                 meta={getFieldMeta(fieldNameSubnetId)}

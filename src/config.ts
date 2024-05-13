@@ -3,7 +3,10 @@ import advancedFormat from 'dayjs/plugin/advancedFormat';
 import relativeTime from 'dayjs/plugin/relativeTime';
 import utc from 'dayjs/plugin/utc';
 
-import { ENV_OVERRIDE_LOCALSTORAGE_KEY } from './common/localStorageConstants';
+import {
+  ENV_OVERRIDE_LOCALSTORAGE_KEY,
+  MULTIREGION_LOCALSTORAGE_KEY,
+} from './common/localStorageConstants';
 import { Chrome } from './types/types';
 import { getRestrictedEnvApi, isRestrictedEnv } from './restrictedEnv';
 
@@ -24,6 +27,8 @@ type EnvConfig = {
   fedrampGateway?: string;
   fedrampS3?: string;
   demoExperience?: string;
+  apiGatewayXCM?: string;
+  apiRegionalGatewayTemplate?: string;
 };
 
 type EnvConfigWithFedRamp = {
@@ -92,11 +97,26 @@ const parseRosaV2QueryParam = () => {
   return ret;
 };
 
+const parseMultiRegionQueryParam = () => {
+  let ret = false;
+  window.location.search
+    .substring(1)
+    .split('&')
+    .forEach((queryString) => {
+      const [key, val] = queryString.split('=');
+      if (key.toLowerCase() === 'multiregion' && val === 'true') {
+        ret = true;
+      }
+    });
+  return ret;
+};
+
 const config = {
   configData: {} as EnvConfigWithFedRamp,
   envOverride: undefined as string | undefined,
   fakeOSD: false,
   rosaV2: false,
+  multiRegion: false,
 
   loadConfig(data: EnvConfigWithFedRamp) {
     this.configData = {
@@ -104,6 +124,14 @@ const config = {
       // replace $SELF_PATH$ with the current host
       // to avoid CORS issues when not using prod.foo
       apiGateway: data.apiGateway.replace('$SELF_PATH$', window.location.host),
+      ...(data.apiRegionalGatewayTemplate
+        ? {
+            apiRegionalGatewayTemplate: data.apiRegionalGatewayTemplate.replace(
+              '$SELF_PATH$',
+              window.location.host,
+            ),
+          }
+        : {}),
       insightsGateway:
         data.insightsGateway?.replace('$SELF_PATH$', window.location.host) || undefined,
     };
@@ -125,6 +153,11 @@ const config = {
         restrictedEnv: isRestrictedEnv(chrome),
         restrictedEnvApi: getRestrictedEnvApi(chrome),
       };
+      if (parseMultiRegionQueryParam() || localStorage.getItem(MULTIREGION_LOCALSTORAGE_KEY)) {
+        that.multiRegion = true;
+        localStorage.setItem(MULTIREGION_LOCALSTORAGE_KEY, 'true');
+      }
+
       const queryEnv = parseEnvQueryParam() || localStorage.getItem(ENV_OVERRIDE_LOCALSTORAGE_KEY);
       if (queryEnv && configs[queryEnv]) {
         configs[queryEnv]!.then((data) => {

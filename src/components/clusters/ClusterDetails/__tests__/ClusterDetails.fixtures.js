@@ -441,6 +441,15 @@ const OSDRHMClusterDetails = produce(CCSClusterDetails, (draft) => {
   draft.cluster.subscription.cluster_billing_model = billingModels.MARKETPLACE;
 });
 
+const OSDGCPClusterDetails = produce(CCSClusterDetails, (draft) => {
+  draft.cluster.product = { id: normalizedProducts.OSD };
+  draft.cluster.subscription.plan = {
+    id: normalizedProducts.OSD,
+    type: normalizedProducts.OSD,
+  };
+  draft.cluster.subscription.cluster_billing_model = billingModels.MARKETPLACE_GCP;
+});
+
 const ROSAClusterDetails = produce(CCSClusterDetails, (draft) => {
   draft.cluster.product = { id: normalizedProducts.ROSA };
   draft.cluster.subscription.plan = {
@@ -1069,6 +1078,7 @@ const fixtures = {
   CCSClusterDetails,
   OSDTrialClusterDetails,
   OSDRHMClusterDetails,
+  OSDGCPClusterDetails,
   ROSAClusterDetails,
   ROSAManualClusterDetails,
   ROSAHypershiftClusterDetails,
