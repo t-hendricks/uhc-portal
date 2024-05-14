@@ -1748,6 +1748,15 @@ const checkHostDomain = (value?: string): string | undefined => {
   return undefined;
 };
 
+const validateSecureURL = (url: string): boolean => {
+  try {
+    const parsed = new URL(url);
+    return parsed.protocol === 'https:';
+  } catch {
+    return false;
+  }
+};
+
 const validators = {
   required,
   acknowledgePrerequisites,
@@ -1868,6 +1877,7 @@ export {
   checkHostDomain,
   MAX_CUSTOM_OPERATOR_ROLES_PREFIX_LENGTH,
   MAX_CLUSTER_NAME_LENGTH,
+  validateSecureURL,
 };
 
 export default validators;
