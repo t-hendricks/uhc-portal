@@ -25,6 +25,7 @@ import RefreshButton from '../../../common/RefreshButton/RefreshButton';
 import ClusterActionsDropdown from '../../common/ClusterActionsDropdown';
 import clusterStates, { isOffline } from '../../common/clusterStates';
 import ErrorTriangle from '../../common/ErrorTriangle';
+import { isExtenalAuthenicationActive } from '../clusterDetailsHelper';
 
 import ClusterNonEditableAlert from './ClusterNonEditableAlert';
 import ExpirationAlert from './ExpirationAlert';
@@ -94,7 +95,8 @@ function ClusterDetailsTop(props) {
     cluster.idpActions?.create &&
     cluster.state === clusterStates.READY &&
     clusterIdentityProviders.fulfilled &&
-    !hasIdentityProviders;
+    !hasIdentityProviders &&
+    !isExtenalAuthenicationActive(cluster);
 
   const isArchived = get(cluster, 'subscription.status', false) === subscriptionStatuses.ARCHIVED;
 
