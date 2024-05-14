@@ -1,7 +1,7 @@
 {
   "Clusters": [
     {
-      "ClusterName": "smkosdtrailaws",
+      "ClusterName": "ocmui-cypress-smoke-osd-trail-aws",
       "Type": "OSD Trial",
       "CloudProvider": "AWS",
       "SubscriptionType": "Free trial (upgradeable)",
@@ -56,7 +56,7 @@
       }
     },
     {
-      "ClusterName": "smkosdtrailgcp",
+      "ClusterName": "ocmui-cypress-smoke-osd-trail-gcp",
       "Type": "OSD",
       "CloudProvider": "Google Cloud Platform (GCP)",
       "SubscriptionType": "Free trial (upgradeable)",

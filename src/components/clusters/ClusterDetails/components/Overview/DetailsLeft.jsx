@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import get from 'lodash/get';
 import PropTypes from 'prop-types';
 
@@ -53,6 +53,12 @@ function DetailsLeft({ cluster, cloudProviders, showAssistedId }) {
   const sharedVpcZoneId = get(cluster, 'aws.private_hosted_zone_id', false);
   const domainPrefix = cluster?.domain_prefix;
   const isLongerClusterNameEnabled = useFeatureGate(LONGER_CLUSTER_NAME_UI);
+  const availabilityLabel = useMemo(() => {
+    if (typeof cluster.multi_az === 'boolean') {
+      return cluster.multi_az ? 'Multi-zone' : 'Single zone';
+    }
+    return 'N/A';
+  }, [cluster.multi_az]);
 
   return (
     <DescriptionList>
@@ -66,7 +72,7 @@ function DetailsLeft({ cluster, cloudProviders, showAssistedId }) {
         <DescriptionListGroup>
           <DescriptionListTerm>Domain prefix</DescriptionListTerm>
           <DescriptionListDescription>
-            <span>{domainPrefix}</span>
+            <span data-testid="domainPrefix">{domainPrefix}</span>
           </DescriptionListDescription>
         </DescriptionListGroup>
       )}
@@ -104,9 +110,7 @@ function DetailsLeft({ cluster, cloudProviders, showAssistedId }) {
         <DescriptionListGroup>
           <DescriptionListTerm>Availability</DescriptionListTerm>
           <DescriptionListDescription>
-            <span data-testid="availability">
-              {cluster.multi_az ? 'Multi-zone' : 'Single zone'}
-            </span>
+            <span data-testid="availability">{availabilityLabel}</span>
           </DescriptionListDescription>
         </DescriptionListGroup>
       )}

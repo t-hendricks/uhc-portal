@@ -20,13 +20,13 @@ import { Spinner } from '@redhat-cloud-services/frontend-components/Spinner';
 
 import { trackEvents } from '~/common/analytics';
 import {
+  createOperatorRolesPrefix,
   getForcedByoOidcReason,
   getOperatorRolesCommand,
 } from '~/components/clusters/wizards/rosa_v1/ClusterRolesScreen/clusterRolesHelper';
 import ReduxHiddenCheckbox from '~/components/common/ReduxFormComponents/ReduxHiddenCheckbox';
 import useAnalytics from '~/hooks/useAnalytics';
 
-import { secureRandomValueInRange } from '../../../../../common/helpers';
 import links from '../../../../../common/installLinks.mjs';
 import { required } from '../../../../../common/validators';
 import ErrorBox from '../../../../common/ErrorBox';
@@ -38,24 +38,6 @@ import { BackToAssociateAwsAccountLink } from '../common/BackToAssociateAwsAccou
 
 import CustomerOIDCConfiguration from './CustomerOIDCConfiguration';
 import CustomOperatorRoleNames from './CustomOperatorRoleNames';
-
-export const createOperatorRolesHashPrefix = () => {
-  const alphabet = 'abcdefghijklmnopqrstuvwxyz';
-  const alphaNumeric = '0123456789abcdefghijklmnopqrstuvwxyz';
-  let prefixArray = '';
-
-  // random 4 alphanumeric hash
-  for (let i = 0; i < 4; i += 1) {
-    const randIndex = secureRandomValueInRange(0, 35);
-    prefixArray += alphaNumeric[randIndex];
-  }
-  // cannot start with a number
-  const randomCharacter = alphabet[secureRandomValueInRange(0, 25)];
-  prefixArray = prefixArray.split('');
-  prefixArray[0] = randomCharacter;
-
-  return prefixArray.join('');
-};
 
 const roleModes = {
   MANUAL: 'manual',
@@ -104,7 +86,7 @@ function ClusterRolesScreen({
 
   useEffect(() => {
     if (!customOperatorRolesPrefix) {
-      change('custom_operator_roles_prefix', `${clusterName}-${createOperatorRolesHashPrefix()}`);
+      change('custom_operator_roles_prefix', createOperatorRolesPrefix(clusterName));
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [customOperatorRolesPrefix, clusterName]);
