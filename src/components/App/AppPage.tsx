@@ -5,7 +5,7 @@ import config from '../../config';
 import { AppDrawer } from './AppDrawer';
 import EnvOverrideMessage from './EnvOverrideMessage';
 import ErrorBoundary from './ErrorBoundary';
-import MultiregionOvverideMessage from './MultiregionOverrideMessage';
+import MultiRegionOverrideMessage from './MultiregionOverrideMessage';
 
 export const AppPage: React.FC<PropsWithChildren<{ title?: string }>> = ({ children, title }) => {
   useEffect(() => {
@@ -17,7 +17,7 @@ export const AppPage: React.FC<PropsWithChildren<{ title?: string }>> = ({ child
   return (
     <AppDrawer>
       {config.envOverride && <EnvOverrideMessage env={config.envOverride} />}
-      {config.multiRegion && <MultiregionOvverideMessage />}
+      {config.multiRegion && <MultiRegionOverrideMessage />}
       <ErrorBoundary>{children}</ErrorBoundary>
     </AppDrawer>
   );
