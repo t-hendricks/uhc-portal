@@ -13,6 +13,9 @@ const securityGroups = [
 ];
 const securityGroupIdsForControl = ['sg-a'];
 const securityGroupIdsForInfra = ['sg-b', 'sg-without-name'];
+
+const emptySecurityGroups: string[] = [];
+
 const machinePoolData = [
   { id: 'worker', aws: { additional_security_group_ids: ['sg-mp-1'] } },
   { id: 'test-worker', aws: { additional_security_group_ids: ['sg-mp-2'] } },
@@ -119,6 +122,25 @@ describe('<SecurityGroupsDetailDisplayByNode />', () => {
       );
       const moreInfoMessage = 'See more information in the';
       expect(screen.queryByText(moreInfoMessage)).not.toBeInTheDocument();
+    });
+  });
+  describe('With partial data provided', () => {
+    it('renders with all data, but hides infrastructure node in case security groups are missing', () => {
+      render(
+        <TestRouter>
+          <CompatRouter>
+            <SecurityGroupsDisplayByNode
+              securityGroups={securityGroups}
+              securityGroupIdsForControl={securityGroupIdsForControl}
+              securityGroupIdsForInfra={emptySecurityGroups}
+            />
+          </CompatRouter>
+        </TestRouter>,
+      );
+
+      expect(screen.getByText('Control plane nodes')).toBeInTheDocument();
+      expect(screen.queryByText('Infrastructure nodes')).not.toBeInTheDocument();
+      expect(screen.getByText('sg-a-name')).toBeInTheDocument();
     });
   });
 });
