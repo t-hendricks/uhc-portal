@@ -281,10 +281,7 @@ function Details() {
               asyncValidation={clusterNameAsyncValidation}
               isRequired
               extendedHelpText={constants.clusterNameHint}
-              input={{
-                ...getFieldProps(FieldId.ClusterName),
-                onChange: (value: string) => setFieldValue(FieldId.ClusterName, value, false),
-              }}
+              input={getFieldProps(FieldId.ClusterName)}
             />
           </GridItem>
 
@@ -314,11 +311,7 @@ function Details() {
                     validation={domainPrefixValidation}
                     asyncValidation={domainPrefixAsyncValidation}
                     isRequired
-                    input={{
-                      ...getFieldProps(FieldId.DomainPrefix),
-                      onChange: (value: string) =>
-                        setFieldValue(FieldId.DomainPrefix, value, false),
-                    }}
+                    input={getFieldProps(FieldId.DomainPrefix)}
                   />
                 </GridItem>
               )}
