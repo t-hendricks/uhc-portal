@@ -96,7 +96,7 @@ class AppEntry extends React.Component<Props> {
       // workaround for:
       //   https://issues.redhat.com/browse/RHCLOUD-31437
       //   https://github.com/patternfly/patternfly-react/issues/10160
-      GenerateId.defaultProps = { prefix: 'pf-random-ocmui-id-' };
+      GenerateId.defaultProps = { prefix: 'pf-random-ocmui-id-', isRandom: true };
     });
 
     if (
