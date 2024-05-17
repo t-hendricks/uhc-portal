@@ -142,6 +142,8 @@ class CreateOSDCluster extends Page {
 
   availabilityValue = () => cy.getByTestId('Availability').find('div');
 
+  clusterDomainPrefixLabelValue = () => cy.getByTestId('Domain-prefix').should('exist');
+
   userWorkloadMonitoringValue = () => cy.getByTestId('User-workload-monitoring').find('div');
 
   advancedEncryptionLink = () => cy.get('span').contains('Advanced Encryption');
@@ -221,6 +223,12 @@ class CreateOSDCluster extends Page {
   applicationIngressCustomSettingsRadio = () =>
     cy.get('input[id="form-radiobutton-applicationIngress-custom-field"]');
 
+  updateStrategyIndividualRadio = () =>
+    cy.get('input[id="form-radiobutton-upgrade_policy-manual-field"]');
+
+  updateStrategyRecurringRadio = () =>
+    cy.get('inputid="form-radiobutton-upgrade_policy-automatic-field"]');
+
   applicationIngressRouterSelectorsInput = () => cy.get('input[name="defaultRouterSelectors"]');
 
   applicationIngressExcludedNamespacesInput = () =>
@@ -262,6 +270,14 @@ class CreateOSDCluster extends Page {
         cy.get('button[aria-label="Close"]').filter(':visible').click();
       }
     });
+  }
+
+  setClusterName(clusterName) {
+    cy.get(this.clusterNameInput).scrollIntoView().type('{selectAll}').type(clusterName);
+  }
+
+  setDomainPrefix(domainPrefix) {
+    this.domainPrefixInput().scrollIntoView().type('{selectAll}').type(domainPrefix);
   }
 
   enableAutoScaling() {
