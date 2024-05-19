@@ -13,9 +13,6 @@ const securityGroups = [
 ];
 const securityGroupIdsForControl = ['sg-a'];
 const securityGroupIdsForInfra = ['sg-b', 'sg-without-name'];
-
-const emptySecurityGroups: string[] = [];
-
 const machinePoolData = [
   { id: 'worker', aws: { additional_security_group_ids: ['sg-mp-1'] } },
   { id: 'test-worker', aws: { additional_security_group_ids: ['sg-mp-2'] } },
