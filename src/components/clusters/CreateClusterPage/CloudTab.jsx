@@ -435,7 +435,6 @@ const runItYourself = () => {
     [
       <>
         <Link to="/install/oracle-cloud">Oracle Cloud Infrastructure (virtual machines)</Link>
-        <TechnologyPreview className="pf-v5-u-ml-md pf-v5-u-display-inline" />
       </>,
       'Pre-existing infrastructure',
     ],
