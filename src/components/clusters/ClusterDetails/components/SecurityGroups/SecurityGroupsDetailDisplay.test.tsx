@@ -129,7 +129,7 @@ describe('<SecurityGroupsDetailDisplayByNode />', () => {
             <SecurityGroupsDisplayByNode
               securityGroups={securityGroups}
               securityGroupIdsForControl={securityGroupIdsForControl}
-              securityGroupIdsForInfra={emptySecurityGroups}
+              securityGroupIdsForInfra={[]}
             />
           </CompatRouter>
         </TestRouter>,
