@@ -121,4 +121,23 @@ describe('<SecurityGroupsDetailDisplayByNode />', () => {
       expect(screen.queryByText(moreInfoMessage)).not.toBeInTheDocument();
     });
   });
+  describe('With partial data provided', () => {
+    it('renders with all data, but hides infrastructure node in case security groups are missing', () => {
+      render(
+        <TestRouter>
+          <CompatRouter>
+            <SecurityGroupsDisplayByNode
+              securityGroups={securityGroups}
+              securityGroupIdsForControl={securityGroupIdsForControl}
+              securityGroupIdsForInfra={[]}
+            />
+          </CompatRouter>
+        </TestRouter>,
+      );
+
+      expect(screen.getByText('Control plane nodes')).toBeInTheDocument();
+      expect(screen.queryByText('Infrastructure nodes')).not.toBeInTheDocument();
+      expect(screen.getByText('sg-a-name')).toBeInTheDocument();
+    });
+  });
 });
