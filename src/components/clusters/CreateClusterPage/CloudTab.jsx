@@ -437,7 +437,6 @@ const runItYourself = () => {
     [
       <>
         <Link to="/install/oracle-cloud">Oracle Cloud Infrastructure (virtual machines)</Link>
-        <TechnologyPreview position={PreviewBadgePosition.inline} />
       </>,
       'Pre-existing infrastructure',
     ],
