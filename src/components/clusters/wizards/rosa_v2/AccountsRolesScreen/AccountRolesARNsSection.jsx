@@ -97,8 +97,14 @@ function AccountRolesARNsSection({
   isHypershiftSelected,
   onAccountChanged,
 }) {
-  const { setFieldValue, getFieldProps, getFieldMeta, setFieldTouched, validateForm } =
-    useFormState();
+  const {
+    setFieldValue,
+    getFieldProps,
+    getFieldMeta,
+    setFieldTouched,
+    validateForm,
+    values: { [FieldId.AssociatedAwsId]: previouslySelectedAWSAccountID },
+  } = useFormState();
   const track = useAnalytics();
   const [isExpanded, setIsExpanded] = useState(true);
   const [accountRoles, setAccountRoles] = useState([]);
@@ -142,13 +148,15 @@ function AccountRolesARNsSection({
   };
 
   useEffect(() => {
-    setSelectedInstallerRole(NO_ROLE_DETECTED);
-    setAccountRoles([]);
-    setInstallerRoleOptions([]);
-    updateRoleArns(null);
-    setShowMissingArnsError(false);
+    if (selectedAWSAccountID !== previouslySelectedAWSAccountID) {
+      setSelectedInstallerRole(NO_ROLE_DETECTED);
+      setAccountRoles([]);
+      setInstallerRoleOptions([]);
+      updateRoleArns(null);
+      setShowMissingArnsError(false);
+      onAccountChanged();
+    }
     clearGetAWSAccountRolesARNsResponse();
-    onAccountChanged();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedAWSAccountID]);
 
