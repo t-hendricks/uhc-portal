@@ -105,6 +105,11 @@ class ClusterDetails extends Page {
 
   clusterInstallationExpectedText = () => cy.getByTestId('expected-cluster-installation-msg');
 
+  clusterBillingMarketplaceAccountLabelValue = () =>
+    cy.getByTestId('billingMarketplaceAccount').should('exist');
+
+  clusterControlPlaneTypeLabelValue = () => cy.getByTestId('controlPlaneType').should('exist');
+
   downloadOcCliLink = () => cy.getByTestId('download-oc-cli');
 
   waitForEditUrlModalToLoad = () => {

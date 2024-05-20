@@ -14,6 +14,7 @@ import {
   Title,
 } from '@patternfly/react-core';
 
+import { hasExternalAuthenticationCapability } from '~/common/externalAuthHelper';
 import { SupportedFeature } from '~/common/featureCompatibility';
 import { noQuotaTooltip } from '~/common/helpers';
 import links from '~/common/installLinks.mjs';
@@ -57,6 +58,8 @@ import { useGlobalState } from '~/redux/hooks';
 import { QuotaCostList } from '~/types/accounts_mgmt.v1';
 import { Version } from '~/types/clusters_mgmt.v1';
 
+import { EnableExternalAuthentication } from './EnableExternalAuthentication';
+
 function Details() {
   const {
     values: {
@@ -98,6 +101,12 @@ function Details() {
     setIsExpanded(!isExpanded);
   };
 
+  const [isExternalAuthExpanded, setIsExternalAuthExpanded] = useState(false);
+
+  const onExternalAuthToggle = () => {
+    setIsExternalAuthExpanded(!isExternalAuthExpanded);
+  };
+
   // Region change may invalidate various fields.
   React.useEffect(() => {
     validateForm();
@@ -117,7 +126,7 @@ function Details() {
   }, [errors, setFieldTouched]);
 
   const {
-    organization: { quotaList },
+    organization: { quotaList, details: organizationDetails },
   } = useGlobalState((state) => state.userProfile);
 
   const isLongerClusterNameEnabled = useFeatureGate(LONGER_CLUSTER_NAME_UI);
@@ -409,6 +418,16 @@ function Details() {
             )}
           </Grid>
         </ExpandableSection>
+        {isHypershiftSelected &&
+        hasExternalAuthenticationCapability(organizationDetails?.capabilities) ? (
+          <ExpandableSection
+            toggleText="External Authentication"
+            onToggle={onExternalAuthToggle}
+            isExpanded={isExternalAuthExpanded}
+          >
+            <EnableExternalAuthentication />
+          </ExpandableSection>
+        ) : null}
       </Grid>
     </Form>
   );

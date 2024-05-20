@@ -405,12 +405,16 @@ const architectureOptions = [
 
 const operatingSystems = {
   linux: 'linux',
+  rhel9: 'rhel-9',
+  rhel8: 'rhel-8',
   mac: 'mac',
   windows: 'windows',
 };
 
 const operatingSystemOptions = [
   { value: operatingSystems.linux, label: 'Linux' },
+  { value: operatingSystems.rhel9, label: 'Linux - RHEL 9' },
+  { value: operatingSystems.rhel8, label: 'Linux - RHEL 8' },
   { value: operatingSystems.mac, label: 'MacOS' },
   { value: operatingSystems.windows, label: 'Windows' },
 ];
@@ -829,16 +833,20 @@ const urls = {
   [tools.OC_MIRROR_PLUGIN]: {
     [channels.STABLE]: {
       [architectures.x86]: {
-        [operatingSystems.linux]: `${MIRROR_CLIENTS_LATEST_X86}oc-mirror.tar.gz`,
+        [operatingSystems.rhel9]: `${MIRROR_CLIENTS_LATEST_X86}oc-mirror.rhel9.tar.gz`,
+        [operatingSystems.rhel8]: `${MIRROR_CLIENTS_LATEST_X86}oc-mirror.tar.gz`,
       },
       [architectures.arm]: {
-        [operatingSystems.linux]: `${MIRROR_CLIENTS_LATEST_ARM}oc-mirror.tar.gz`,
+        [operatingSystems.rhel9]: `${MIRROR_CLIENTS_LATEST_ARM}oc-mirror.rhel9.tar.gz`,
+        [operatingSystems.rhel8]: `${MIRROR_CLIENTS_LATEST_ARM}oc-mirror.tar.gz`,
       },
       [architectures.s390x]: {
-        [operatingSystems.linux]: `${MIRROR_CLIENTS_LATEST_IBMZ}oc-mirror.tar.gz`,
+        [operatingSystems.rhel9]: `${MIRROR_CLIENTS_LATEST_IBMZ}oc-mirror.rhel9.tar.gz`,
+        [operatingSystems.rhel8]: `${MIRROR_CLIENTS_LATEST_IBMZ}oc-mirror.tar.gz`,
       },
       [architectures.ppc]: {
-        [operatingSystems.linux]: `${MIRROR_CLIENTS_LATEST_PPC}oc-mirror.tar.gz`,
+        [operatingSystems.rhel9]: `${MIRROR_CLIENTS_LATEST_PPC}oc-mirror.rhel9.tar.gz`,
+        [operatingSystems.rhel8]: `${MIRROR_CLIENTS_LATEST_PPC}oc-mirror.tar.gz`,
       },
     },
   },

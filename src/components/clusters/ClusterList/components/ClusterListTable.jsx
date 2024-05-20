@@ -13,26 +13,24 @@ import {
   Label,
   Popover,
   PopoverPosition,
+  Skeleton,
 } from '@patternfly/react-core';
 import ExclamationTriangleIcon from '@patternfly/react-icons/dist/esm/icons/exclamation-triangle-icon';
 import SearchIcon from '@patternfly/react-icons/dist/esm/icons/search-icon';
 import {
-  cellWidth,
-  classNames,
-  sortable,
+  ActionsColumn,
   SortByDirection,
-  Visibility,
+  Table,
+  Tbody,
+  Td,
+  Th,
+  Thead,
+  Tr,
 } from '@patternfly/react-table';
-import {
-  Table as TableDeprecated,
-  TableBody as TableBodyDeprecated,
-  TableHeader as TableHeaderDeprecated,
-} from '@patternfly/react-table/deprecated';
 import { global_warning_color_100 as warningColor } from '@patternfly/react-tokens/dist/esm/global_warning_color_100';
 
 import getClusterName from '../../../../common/getClusterName';
 import { isAISubscriptionWithoutMetrics } from '../../../../common/isAssistedInstallerCluster';
-import skeletonRows from '../../../common/SkeletonRows';
 import { actionResolver } from '../../common/ClusterActionsDropdown/ClusterActionsDropdownItems';
 import ClusterLocationLabel from '../../common/ClusterLocationLabel';
 import ClusterStateIcon from '../../common/ClusterStateIcon';
@@ -51,6 +49,16 @@ import ProgressList from '../../common/InstallProgress/ProgressList';
 import ClusterCreatedIndicator from './ClusterCreatedIndicator';
 
 const { ClusterStatus: AIClusterStatus } = OCM;
+
+const skeletonRows = () =>
+  new Array(10).fill(
+    <Tr>
+      <Td colSpan={7}>
+        <Skeleton />
+      </Td>
+    </Tr>,
+  );
+
 function ClusterListTable(props) {
   const {
     viewOptions,
@@ -82,39 +90,52 @@ function ClusterListTable(props) {
     );
   }
 
-  const sortBy = {
-    index: viewOptions.sorting.sortIndex,
-    direction: viewOptions.sorting.isAscending ? SortByDirection.asc : SortByDirection.desc,
-  };
-
   const sortColumns = {
     Name: 'display_name',
     Created: 'created_at',
   };
 
-  const hiddenOnMdOrSmaller = classNames(
-    Visibility.visibleOnLg,
-    Visibility.hiddenOnMd,
-    Visibility.hiddenOnSm,
-  );
+  const getSortParams = (columnIndex, sortColumnIndex) => ({
+    sortBy: {
+      index: viewOptions.sorting.sortIndex,
+      direction: viewOptions.sorting.isAscending ? SortByDirection.asc : SortByDirection.desc,
+    },
+    onSort: (_event, index, direction) => {
+      const sorting = { ...viewOptions.sorting };
+      sorting.isAscending = direction === SortByDirection.asc;
+      sorting.sortField = sortColumnIndex;
+      sorting.sortIndex = index;
+      setSorting(sorting);
+    },
+    columnIndex,
+  });
 
-  const columns = [
-    { title: 'Name', transforms: [sortable, cellWidth(30)] },
-    { title: 'Status', transforms: [cellWidth(15)] },
-    { title: 'Type', transforms: [cellWidth(10)] },
-    { title: 'Created', transforms: [sortable], columnTransforms: [hiddenOnMdOrSmaller] },
-    { title: 'Version', columnTransforms: [hiddenOnMdOrSmaller] },
-    { title: 'Provider (Region)', columnTransforms: [hiddenOnMdOrSmaller] },
-    '', // TODO: to avoid TypeError: headerData[(cellIndex + additionalColsIndexShift)] is undefined from penshift-assisted_ui-lib
-  ];
+  const hiddenOnMdOrSmaller = ['visibleOnLg', 'hiddenOnMd', 'hiddenOnSm'];
 
-  const onSortToggle = (_event, index, direction) => {
-    const sorting = { ...viewOptions.sorting };
-    sorting.isAscending = direction === SortByDirection.asc;
-    sorting.sortField = sortColumns[columns[index].title];
-    sorting.sortIndex = index;
-    setSorting(sorting);
+  const columns = {
+    name: { title: 'Name', width: 30, sortIndex: sortColumns.Name },
+    status: { title: 'Status', width: 15 },
+    type: { title: 'Type', width: 10 },
+    created: { title: 'Created', visibility: hiddenOnMdOrSmaller, sortIndex: sortColumns.Created },
+    version: { title: 'Version', visibility: hiddenOnMdOrSmaller },
+    provider: { title: 'Provider (Region)', visibility: hiddenOnMdOrSmaller },
+    actions: { title: '', screenReaderText: 'cluster actions' },
   };
+
+  const columnCells = Object.keys(columns).map((column, index) => (
+    <Th
+      width={columns[column].width}
+      visibility={columns[column].visibility}
+      sort={columns[column].sortIndex ? getSortParams(index, columns[column].sortIndex) : undefined}
+      // eslint-disable-next-line react/no-array-index-key
+      key={index}
+    >
+      {columns[column].screenReaderText ? (
+        <span className="pf-v5-screen-reader">{columns[column].screenReaderText}</span>
+      ) : null}
+      {columns[column].title}
+    </Th>
+  ));
 
   const linkToClusterDetails = (cluster, children) => (
     <Link
@@ -237,55 +258,57 @@ function ClusterListTable(props) {
       </span>
     );
 
-    return {
-      cells: [
-        { title: clusterName },
-        { title: clusterStatus() },
-        { title: <ClusterTypeLabel cluster={cluster} /> },
-        { title: <ClusterCreatedIndicator cluster={cluster} /> },
-        { title: clusterVersion },
-        {
-          title: (
-            <ClusterLocationLabel
-              regionID={get(cluster, 'region.id', 'N/A')}
-              cloudProviderID={provider}
+    return (
+      <Tr key={cluster.id}>
+        <Td dataLabel={columns.name.title} visibility={columns.name.visibility}>
+          {clusterName}
+        </Td>
+        <Td dataLabel={columns.status.title} visibility={columns.status.visibility}>
+          {clusterStatus()}
+        </Td>
+        <Td dataLabel={columns.type.title} visibility={columns.type.visibility}>
+          <ClusterTypeLabel cluster={cluster} />
+        </Td>
+        <Td dataLabel={columns.created.title} visibility={columns.created.visibility}>
+          <ClusterCreatedIndicator cluster={cluster} />
+        </Td>
+        <Td dataLabel={columns.version.title} visibility={columns.version.visibility}>
+          {clusterVersion}
+        </Td>
+        <Td dataLabel={columns.provider.title} visibility={columns.provider.visibility}>
+          <ClusterLocationLabel
+            regionID={get(cluster, 'region.id', 'N/A')}
+            cloudProviderID={provider}
+          />
+        </Td>
+        <Td isActionCell>
+          {!isPending && cluster ? (
+            <ActionsColumn
+              items={actionResolver(
+                cluster,
+                true,
+                openModal,
+                canSubscribeOCPList[cluster.id] || false,
+                canTransferClusterOwnershipList[cluster.id] || false,
+                canHibernateClusterList[cluster.id] || false,
+                toggleSubscriptionReleased,
+                refreshFunc,
+                true,
+              )}
             />
-          ),
-        },
-      ],
-      cluster,
-    };
+          ) : null}
+        </Td>
+      </Tr>
+    );
   };
 
-  const rows = isPending ? skeletonRows() : clusters.map((cluster) => clusterRow(cluster));
-  const resolver = isPending
-    ? undefined
-    : (rowData) =>
-        actionResolver(
-          rowData.cluster,
-          true,
-          openModal,
-          canSubscribeOCPList[get(rowData, 'cluster.id')] || false,
-          canTransferClusterOwnershipList[get(rowData, 'cluster.id')] || false,
-          canHibernateClusterList[get(rowData, 'cluster.id')] || false,
-          toggleSubscriptionReleased,
-          refreshFunc,
-          true,
-        );
-
   return (
-    <TableDeprecated
-      aria-label="Cluster List"
-      cells={columns}
-      rows={rows}
-      actionResolver={resolver}
-      onSort={onSortToggle}
-      sortBy={sortBy}
-      ouiaId="clusterList"
-    >
-      <TableHeaderDeprecated />
-      <TableBodyDeprecated />
-    </TableDeprecated>
+    <Table aria-label="Cluster List">
+      <Thead>
+        <Tr>{columnCells}</Tr>
+      </Thead>
+      <Tbody>{isPending ? skeletonRows() : clusters.map((cluster) => clusterRow(cluster))}</Tbody>
+    </Table>
   );
 }
 

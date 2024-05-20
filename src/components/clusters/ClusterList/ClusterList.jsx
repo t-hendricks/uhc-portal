@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { Component } from 'react';
+import React from 'react';
 import isEmpty from 'lodash/isEmpty';
 import size from 'lodash/size';
 import PropTypes from 'prop-types';
@@ -26,6 +26,7 @@ import Spinner from '@redhat-cloud-services/frontend-components/Spinner';
 
 import { ONLY_MY_CLUSTERS_TOGGLE_CLUSTERS_LIST } from '~/common/localStorageConstants';
 import { AppPage } from '~/components/App/AppPage';
+import { usePreviousProps } from '~/hooks/usePreviousProps';
 import { isRestrictedEnv } from '~/restrictedEnv';
 
 import helpers from '../../../common/helpers';
@@ -58,23 +59,86 @@ import './ClusterList.scss';
 
 const PAGE_TITLE = 'Clusters | Red Hat OpenShift Cluster Manager';
 
-class ClusterList extends Component {
-  state = {
-    loadingChangedView: false,
-  };
+const ClusterListPageHeader = ({
+  someReadOnly,
+  showSpinner,
+  error,
+  errorMessage,
+  anyModalOpen,
+  isPendingNoData,
+  refresh,
+}) => (
+  <>
+    <ReadOnlyBanner someReadOnly={someReadOnly} />
+    <PageHeader id="cluster-list-header">
+      <PageHeaderTitle title="Clusters" className="page-title" />
+      <PageHeaderToolsDeprecated>
+        {showSpinner && <Spinner size="lg" className="cluster-list-spinner" />}
+        {error && <ErrorTriangle errorMessage={errorMessage} className="cluster-list-warning" />}
+      </PageHeaderToolsDeprecated>
+      <RefreshBtn
+        autoRefresh={!anyModalOpen}
+        isDisabled={isPendingNoData}
+        refreshFunc={refresh}
+        classOptions="cluster-list-top"
+      />
+    </PageHeader>
+  </>
+);
+ClusterListPageHeader.propTypes = {
+  someReadOnly: PropTypes.bool,
+  showSpinner: PropTypes.bool,
+  error: PropTypes.bool,
+  errorMessage: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
+  anyModalOpen: PropTypes.bool,
+  isPendingNoData: PropTypes.bool,
+  refresh: PropTypes.func,
+};
 
-  componentDidMount() {
-    const {
-      getCloudProviders,
-      cloudProviders,
-      setListFlag,
-      getOrganizationAndQuota,
-      organization,
-      getMachineTypes,
-      machineTypes,
-      onListFlagsSet,
-    } = this.props;
+const ClusterList = ({
+  getCloudProviders,
+  cloudProviders,
+  setListFlag,
+  getOrganizationAndQuota,
+  organization,
+  getMachineTypes,
+  machineTypes,
+  onListFlagsSet,
+  closeModal,
+  clearGlobalError,
+  clearClusterDetails,
+  fetchClusters,
+  viewOptions,
+  username,
+  error,
+  errorCode,
+  errorDetails,
+  valid,
+  pending,
+  clusters,
+  setSorting,
+  openModal,
+  invalidateClusters,
+  errorMessage,
+  operationID,
+  setClusterDetails,
+  anyModalOpen,
+  queryParams,
+  canSubscribeOCPList,
+  canTransferClusterOwnershipList,
+  canHibernateClusterList,
+  toggleSubscriptionReleased,
+  meta: { clustersServiceError },
+  features,
+}) => {
+  const [loadingChangedView, setLoadingChangedView] = React.useState(false);
 
+  const refresh = React.useCallback(() => {
+    fetchClusters(createViewQueryObject(viewOptions, username));
+  }, [fetchClusters, username, viewOptions]);
+
+  // onMount and willUnmount
+  React.useEffect(() => {
     if (isRestrictedEnv()) {
       onListFlagsSet(
         'subscriptionFilter',
@@ -98,7 +162,7 @@ class ClusterList extends Component {
     } else {
       // only call refresh if we're not setting the filter flag. When the flag is set, refresh
       // will be called via componentDidUpdate() after the redux state transition
-      this.refresh();
+      refresh();
     }
 
     if (!cloudProviders.fulfilled && !cloudProviders.pending) {
@@ -112,228 +176,183 @@ class ClusterList extends Component {
     if (!organization.fulfilled && !organization.pending) {
       getOrganizationAndQuota();
     }
-  }
 
-  componentDidUpdate(prevProps) {
-    // Check for changes resulting in a fetch
-    const { viewOptions, valid, pending, features } = this.props;
-    // List only selected features here to avoid request-flooding.
+    // componentWillUnmount
+    return () => {
+      closeModal();
+      clearClusterDetails();
+      clearGlobalError('clusterList');
+    };
+    // Run only on mount and unmount
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  const prevFeatures = usePreviousProps(features);
+  const prevViewOptions = usePreviousProps(viewOptions) || viewOptions;
+  const prevPending = usePreviousProps(pending);
+
+  React.useEffect(() => {
     const isFeatureChange =
+      prevFeatures &&
       features[ASSISTED_INSTALLER_MERGE_LISTS_FEATURE] !==
-      prevProps.features[ASSISTED_INSTALLER_MERGE_LISTS_FEATURE];
-
-    if (
-      (!valid && !pending) ||
-      isFeatureChange ||
-      viewPropsChanged(viewOptions, prevProps.viewOptions)
-    ) {
-      // eslint-disable-next-line react/no-did-update-set-state
-      this.setState({ loadingChangedView: true });
-      this.refresh();
+        prevFeatures[ASSISTED_INSTALLER_MERGE_LISTS_FEATURE];
+    if ((!valid && !pending) || isFeatureChange || viewPropsChanged(viewOptions, prevViewOptions)) {
+      setLoadingChangedView(true);
+      refresh();
     }
-    if (prevProps.pending && !pending) {
-      // eslint-disable-next-line react/no-did-update-set-state
-      this.setState({ loadingChangedView: false });
+  }, [features, pending, prevFeatures, prevViewOptions, refresh, valid, viewOptions]);
+
+  React.useEffect(() => {
+    if (prevPending && !pending) {
+      setLoadingChangedView(false);
     }
-  }
+  }, [pending, prevPending]);
 
-  componentWillUnmount() {
-    const { closeModal, clearGlobalError, clearClusterDetails } = this.props;
-    closeModal();
-    clearClusterDetails();
-    clearGlobalError('clusterList');
-  }
+  const { showMyClustersOnly, subscriptionFilter } = viewOptions.flags;
+  const hasNoFilters = !queryParams.has_filters && helpers.nestedIsEmpty(subscriptionFilter);
 
-  refresh = () => {
-    const { fetchClusters, viewOptions, username } = this.props;
-    fetchClusters(createViewQueryObject(viewOptions, username));
-  };
-
-  render() {
-    const {
-      error,
-      errorCode,
-      errorDetails,
-      valid,
-      pending,
-      clusters,
-      viewOptions,
-      setSorting,
-      openModal,
-      invalidateClusters,
-      errorMessage,
-      operationID,
-      setClusterDetails,
-      anyModalOpen,
-      queryParams,
-      canSubscribeOCPList,
-      canTransferClusterOwnershipList,
-      canHibernateClusterList,
-      toggleSubscriptionReleased,
-      meta: { clustersServiceError },
-    } = this.props;
-
-    const { loadingChangedView } = this.state;
-
-    const { showMyClustersOnly, subscriptionFilter } = viewOptions.flags;
-    const hasNoFilters = !queryParams.has_filters && helpers.nestedIsEmpty(subscriptionFilter);
-
-    /* isPendingNoData - we're waiting for the cluster list response,
+  /* isPendingNoData - we're waiting for the cluster list response,
       and we have no valid data to show. In this case we probably want to show a "Skeleton".
     */
-    const isPendingNoData = !size(clusters) && pending && (hasNoFilters || !valid);
+  const isPendingNoData = !size(clusters) && pending && (hasNoFilters || !valid);
 
-    const showSpinner = !isPendingNoData && pending && !loadingChangedView;
-    const showSkeleton = isPendingNoData || (pending && loadingChangedView);
-    // The empty state asserts as a fact that you have no clusters;
-    // not appropriate when results are indeterminate or empty due to filtering.
-    const showEmptyState =
-      !isPendingNoData && !error && !size(clusters) && hasNoFilters && !showMyClustersOnly;
+  const showSpinner = !isPendingNoData && pending && !loadingChangedView;
+  const showSkeleton = isPendingNoData || (pending && loadingChangedView);
+  // The empty state asserts as a fact that you have no clusters;
+  // not appropriate when results are indeterminate or empty due to filtering.
+  const showEmptyState =
+    !isPendingNoData && !error && !size(clusters) && hasNoFilters && !showMyClustersOnly;
 
-    const someReadOnly = clusters.map((c) => c?.status?.configuration_mode).includes('read_only');
+  const someReadOnly = clusters.map((c) => c?.status?.configuration_mode).includes('read_only');
 
-    const pageHeader = (
-      <>
-        <ReadOnlyBanner someReadOnly={someReadOnly} />
-        <PageHeader id="cluster-list-header">
-          <PageHeaderTitle title="Clusters" className="page-title" />
-          <PageHeaderToolsDeprecated>
-            {showSpinner && <Spinner size="lg" className="cluster-list-spinner" />}
-            {error && (
-              <ErrorTriangle errorMessage={errorMessage} className="cluster-list-warning" />
-            )}
-          </PageHeaderToolsDeprecated>
-          <RefreshBtn
-            autoRefresh={!anyModalOpen}
-            isDisabled={isPendingNoData}
-            refreshFunc={this.refresh}
-            classOptions="cluster-list-top"
-          />
-        </PageHeader>
-      </>
-    );
+  // This signals to end-to-end tests that page has completed loading.
+  // For now deliberately ignoring in-place reloads with a spinner;
+  // tests that modify clusters (e.g. create or scale a cluster) should wait
+  // for concrete data they expect to see.
+  const dataReady = !showSkeleton;
 
-    // This signals to end-to-end tests that page has completed loading.
-    // For now deliberately ignoring in-place reloads with a spinner;
-    // tests that modify clusters (e.g. create or scale a cluster) should wait
-    // for concrete data they expect to see.
-    const dataReady = !showSkeleton;
-
-    if (showEmptyState) {
-      return (
-        <AppPage title={PAGE_TITLE}>
-          <PageSection>
-            <GlobalErrorBox />
-            <div data-ready>
-              <ClusterListEmptyState />
-            </div>
-          </PageSection>
-        </AppPage>
-      );
-    }
-
+  if (showEmptyState) {
     return (
       <AppPage title={PAGE_TITLE}>
-        {pageHeader}
         <PageSection>
-          <Card>
-            <div className="cluster-list" data-ready={dataReady}>
-              <GlobalErrorBox />
-              {clustersServiceError && (
-                <ErrorBox
-                  variant="warning"
-                  message="Some operations are unavailable, try again later"
-                  response={clustersServiceError}
-                  isExpandable
-                />
-              )}
-              <Toolbar id="cluster-list-toolbar">
-                <ToolbarContent>
-                  <ToolbarItem className="ocm-c-toolbar__item-cluster-filter-list">
-                    <ClusterListFilter
-                      isDisabled={isPendingNoData}
-                      view={viewConstants.CLUSTERS_VIEW}
-                    />
-                  </ToolbarItem>
-                  {!isRestrictedEnv() && (
-                    <ToolbarItem
-                      className="ocm-c-toolbar__item-cluster-list-filter-dropdown"
-                      data-testid="cluster-list-filter-dropdown"
-                    >
-                      <ClusterListFilterDropdown
-                        view={viewConstants.CLUSTERS_VIEW}
-                        isDisabled={pending}
-                      />
-                    </ToolbarItem>
-                  )}
-                  <ClusterListActions />
-                  <ViewOnlyMyClustersToggle
-                    view={viewConstants.CLUSTERS_VIEW}
-                    bodyContent="Show only the clusters you previously created, or all clusters in your organization."
-                    localStorageKey={ONLY_MY_CLUSTERS_TOGGLE_CLUSTERS_LIST}
-                  />
-                  <ToolbarItem
-                    align={{ default: 'alignRight' }}
-                    variant="pagination"
-                    className="pf-m-hidden visible-on-lgplus"
-                  >
-                    <ViewPaginationRow
-                      viewType={viewConstants.CLUSTERS_VIEW}
-                      currentPage={viewOptions.currentPage}
-                      pageSize={viewOptions.pageSize}
-                      totalCount={viewOptions.totalCount}
-                      totalPages={viewOptions.totalPages}
-                      variant="top"
-                      isDisabled={isPendingNoData}
-                    />
-                  </ToolbarItem>
-                </ToolbarContent>
-              </Toolbar>
-              {!isRestrictedEnv() && (
-                <ClusterListFilterChipGroup view={viewConstants.CLUSTERS_VIEW} />
-              )}
-              {error && !size(clusters) ? (
-                <Unavailable
-                  message="Error retrieving clusters"
-                  response={{
-                    errorMessage,
-                    operationID,
-                    errorCode,
-                    errorDetails,
-                  }}
-                />
-              ) : (
-                <ClusterListTable
-                  openModal={openModal}
-                  clusters={clusters || []}
-                  viewOptions={viewOptions}
-                  setSorting={setSorting}
-                  isPending={showSkeleton}
-                  setClusterDetails={setClusterDetails}
-                  canSubscribeOCPList={canSubscribeOCPList}
-                  canHibernateClusterList={canHibernateClusterList}
-                  canTransferClusterOwnershipList={canTransferClusterOwnershipList}
-                  toggleSubscriptionReleased={toggleSubscriptionReleased}
-                  refreshFunc={this.refresh}
-                />
-              )}
-              <ViewPaginationRow
-                viewType={viewConstants.CLUSTERS_VIEW}
-                currentPage={viewOptions.currentPage}
-                pageSize={viewOptions.pageSize}
-                totalCount={viewOptions.totalCount}
-                totalPages={viewOptions.totalPages}
-                variant="bottom"
-                isDisabled={isPendingNoData}
-              />
-              <CommonClusterModals onClose={invalidateClusters} clearMachinePools />
-            </div>
-          </Card>
+          <GlobalErrorBox />
+          <div data-ready>
+            <ClusterListEmptyState />
+          </div>
         </PageSection>
       </AppPage>
     );
   }
-}
+
+  return (
+    <AppPage title={PAGE_TITLE}>
+      <ClusterListPageHeader
+        someReadOnly={someReadOnly}
+        showSpinner={showSpinner}
+        error={error}
+        errorMessage={errorMessage}
+        anyModalOpen={anyModalOpen}
+        isPendingNoData={isPendingNoData}
+        refresh={refresh}
+      />
+      <PageSection>
+        <Card>
+          <div className="cluster-list" data-ready={dataReady}>
+            <GlobalErrorBox />
+            {clustersServiceError && (
+              <ErrorBox
+                variant="warning"
+                message="Some operations are unavailable, try again later"
+                response={clustersServiceError}
+                isExpandable
+              />
+            )}
+            <Toolbar id="cluster-list-toolbar">
+              <ToolbarContent>
+                <ToolbarItem className="ocm-c-toolbar__item-cluster-filter-list">
+                  <ClusterListFilter
+                    isDisabled={isPendingNoData}
+                    view={viewConstants.CLUSTERS_VIEW}
+                  />
+                </ToolbarItem>
+                {!isRestrictedEnv() && (
+                  <ToolbarItem
+                    className="ocm-c-toolbar__item-cluster-list-filter-dropdown"
+                    data-testid="cluster-list-filter-dropdown"
+                  >
+                    <ClusterListFilterDropdown
+                      view={viewConstants.CLUSTERS_VIEW}
+                      isDisabled={pending}
+                    />
+                  </ToolbarItem>
+                )}
+                <ClusterListActions />
+                <ViewOnlyMyClustersToggle
+                  view={viewConstants.CLUSTERS_VIEW}
+                  bodyContent="Show only the clusters you previously created, or all clusters in your organization."
+                  localStorageKey={ONLY_MY_CLUSTERS_TOGGLE_CLUSTERS_LIST}
+                />
+                <ToolbarItem
+                  align={{ default: 'alignRight' }}
+                  variant="pagination"
+                  className="pf-m-hidden visible-on-lgplus"
+                >
+                  <ViewPaginationRow
+                    viewType={viewConstants.CLUSTERS_VIEW}
+                    currentPage={viewOptions.currentPage}
+                    pageSize={viewOptions.pageSize}
+                    totalCount={viewOptions.totalCount}
+                    totalPages={viewOptions.totalPages}
+                    variant="top"
+                    isDisabled={isPendingNoData}
+                  />
+                </ToolbarItem>
+              </ToolbarContent>
+            </Toolbar>
+            {!isRestrictedEnv() && (
+              <ClusterListFilterChipGroup view={viewConstants.CLUSTERS_VIEW} />
+            )}
+            {error && !size(clusters) ? (
+              <Unavailable
+                message="Error retrieving clusters"
+                response={{
+                  errorMessage,
+                  operationID,
+                  errorCode,
+                  errorDetails,
+                }}
+              />
+            ) : (
+              <ClusterListTable
+                openModal={openModal}
+                clusters={clusters || []}
+                viewOptions={viewOptions}
+                setSorting={setSorting}
+                isPending={showSkeleton}
+                setClusterDetails={setClusterDetails}
+                canSubscribeOCPList={canSubscribeOCPList}
+                canHibernateClusterList={canHibernateClusterList}
+                canTransferClusterOwnershipList={canTransferClusterOwnershipList}
+                toggleSubscriptionReleased={toggleSubscriptionReleased}
+                refreshFunc={refresh}
+              />
+            )}
+            <ViewPaginationRow
+              viewType={viewConstants.CLUSTERS_VIEW}
+              currentPage={viewOptions.currentPage}
+              pageSize={viewOptions.pageSize}
+              totalCount={viewOptions.totalCount}
+              totalPages={viewOptions.totalPages}
+              variant="bottom"
+              isDisabled={isPendingNoData}
+            />
+            <CommonClusterModals onClose={invalidateClusters} clearMachinePools />
+          </div>
+        </Card>
+      </PageSection>
+    </AppPage>
+  );
+};
 
 ClusterList.propTypes = {
   username: PropTypes.string.isRequired,

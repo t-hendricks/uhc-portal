@@ -246,15 +246,9 @@ function NetworkScreen(props) {
               options={[
                 {
                   value: 'external',
-                  ariaLabel: 'Public',
-                  label: (
-                    <>
-                      Public
-                      <div className="ocm-c--reduxradiobutton-description">
-                        Access Kubernetes API endpoint and application routes from the internet.
-                      </div>
-                    </>
-                  ),
+                  label: 'Public',
+                  description:
+                    'Access Kubernetes API endpoint and application routes from the internet.',
                   extraField: isHypershiftSelected && !privateClusterSelected && (
                     <Field
                       component={SubnetSelectField}
@@ -278,16 +272,9 @@ function NetworkScreen(props) {
                 },
                 {
                   value: 'internal',
-                  ariaLabel: 'Private',
-                  label: (
-                    <>
-                      Private
-                      <div className="ocm-c--reduxradiobutton-description">
-                        Access Kubernetes API endpoint and application routes from direct private
-                        connections only.
-                      </div>
-                    </>
-                  ),
+                  label: 'Private',
+                  description:
+                    'Access Kubernetes API endpoint and application routes from direct private connections only.',
                 },
               ]}
               disableDefaultValueHandling
