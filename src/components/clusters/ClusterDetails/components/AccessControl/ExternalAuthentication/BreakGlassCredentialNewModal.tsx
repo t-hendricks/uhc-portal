@@ -85,7 +85,6 @@ export function BreakGlassCredentialNewModal(props: BreakGlassCredentialNewModal
           onClose={handleClose}
           modalSize="small"
           description="Add a break glass credential to access the cluster."
-          isPending={isPending}
           footer={
             <Stack hasGutter>
               {error && (
@@ -106,6 +105,7 @@ export function BreakGlassCredentialNewModal(props: BreakGlassCredentialNewModal
                   className="pf-v5-u-mr-md"
                   data-testid="submit-btn"
                   isDisabled={!formik.isValid || !formik.dirty || formik.isSubmitting || isPending}
+                  isLoading={isPending}
                 >
                   Add
                 </Button>

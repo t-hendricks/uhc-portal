@@ -8,6 +8,7 @@ import {
   ClipboardCopyVariant,
   ExpandableSection,
   Form,
+  Modal,
   Stack,
   StackItem,
 } from '@patternfly/react-core';
@@ -16,7 +17,6 @@ import { getErrorMessage } from '~/common/errors';
 import { validateSecureURL } from '~/common/validators';
 import ErrorBox from '~/components/common/ErrorBox';
 import TextField from '~/components/common/formik/TextField';
-import Modal from '~/components/common/Modal/Modal';
 import { clusterService } from '~/services';
 import { ExternalAuth } from '~/types/clusters_mgmt.v1';
 
@@ -29,6 +29,7 @@ type ExternalAuthProviderModalProps = {
   onClose: () => void;
   externalAuthProvider?: ExternalAuth;
   isEdit?: boolean;
+  isOpen?: boolean;
 };
 type ExternalAuthenticationProvider = {
   id: string;
@@ -82,7 +83,7 @@ const buildExternalAuthProvider = (values: ExternalAuthenticationProvider): Exte
 });
 
 export function ExternalAuthProviderModal(props: ExternalAuthProviderModalProps) {
-  const { clusterID, onClose, externalAuthProvider, isEdit } = props;
+  const { clusterID, onClose, externalAuthProvider, isEdit, isOpen = true } = props;
   const [submitError, setSubmitError] = React.useState<any>();
   const [isExternalAuthExpanded, setIsExternalAuthExpanded] = React.useState(false);
   const [isPending, setIsPending] = React.useState(false);
@@ -110,17 +111,25 @@ export function ExternalAuthProviderModal(props: ExternalAuthProviderModalProps)
         groups: externalAuthProvider?.claim?.mappings?.groups?.claim || 'groups',
         username: externalAuthProvider?.claim?.mappings?.username?.claim || 'email',
         audiences: externalAuthProvider?.issuer?.audiences?.join(', ') || '',
-        provider_ca: externalAuthProvider?.issuer?.ca || '',
+        provider_ca:
+          externalAuthProvider?.issuer?.ca?.trim() !== '' ? externalAuthProvider?.issuer?.ca : '',
       }}
       validationSchema={Yup.object({
-        id: Yup.string().max(255, 'Must be 255 characters or less').required('Required'),
+        id: Yup.string()
+          .matches(/^[a-zA-Z0-9-]+$/, 'Only alphanumeric characters and hyphens are allowed')
+          .max(255, 'Must be 255 characters or less')
+          .required('Required'),
         issuer: Yup.string()
           .max(255, 'Must be 255 characters or less')
           .required('Required')
           .url('Invalid URL: example https://redhat.com')
           .test('secure-url', 'URL must be https', (value) => validateSecureURL(value)),
-        groups: Yup.string().required('Required'),
-        username: Yup.string().required('Required'),
+        groups: Yup.string()
+          .matches(/^[a-zA-Z0-9-]+$/, 'Only alphanumeric characters and hyphens are allowed')
+          .required('Required'),
+        username: Yup.string()
+          .matches(/^[a-zA-Z0-9-]+$/, 'Only alphanumeric characters and hyphens are allowed')
+          .required('Required'),
         audiences: Yup.string().required('Required'),
       })}
       onSubmit={async (values) => {
@@ -143,49 +152,24 @@ export function ExternalAuthProviderModal(props: ExternalAuthProviderModalProps)
     >
       {(formik) => (
         <Modal
-          id="edit-mp-modal"
+          id="edit-ext-auth-provider-modal"
           title={
-            isEdit ? `Edit provider ${formik.values.id}` : 'Add external authentication provider'
+            isEdit
+              ? `Edit provider ${externalAuthProvider?.id}`
+              : 'Add external authentication provider'
           }
           onClose={onClose}
-          modalSize="large"
+          isOpen={isOpen}
+          variant="medium"
           description={!isEdit && modalDescription}
-          isPending={isPending}
-          footer={
-            <Stack hasGutter>
-              {submitError && (
-                <StackItem>
-                  <ErrorBox
-                    message={isEdit ? 'Error editing provider' : 'Error adding provider'}
-                    response={{
-                      errorDetails: submitError.response?.data?.details,
-                      errorMessage: getErrorMessage({ payload: submitError }),
-                      operationID: submitError.response?.data.operation_id,
-                    }}
-                  />
-                </StackItem>
-              )}
-
-              <StackItem>
-                <Button
-                  isDisabled={isPending}
-                  onClick={formik.submitForm}
-                  className="pf-v5-u-mr-md"
-                  data-testid="submit-btn"
-                >
-                  {isEdit ? 'Save' : 'Add'}
-                </Button>
-                <Button
-                  variant="secondary"
-                  isDisabled={false}
-                  onClick={onClose}
-                  data-testid="cancel-btn"
-                >
-                  Cancel
-                </Button>
-              </StackItem>
-            </Stack>
-          }
+          actions={[
+            <Button isDisabled={isPending} isLoading={isPending} onClick={formik.submitForm}>
+              {isEdit ? 'Save' : 'Add'}
+            </Button>,
+            <Button key="cancel" variant="secondary" onClick={onClose}>
+              Cancel
+            </Button>,
+          ]}
         >
           <Form innerRef={formRef}>
             {!isEdit && <TextField fieldId="id" label="Name" isRequired />}
@@ -213,6 +197,20 @@ export function ExternalAuthProviderModal(props: ExternalAuthProviderModalProps)
               certValue={isEdit ? formik.values.provider_ca : ''}
             />
           </Form>
+          {submitError && (
+            <Stack hasGutter>
+              <StackItem>
+                <ErrorBox
+                  message={isEdit ? 'Error editing provider' : 'Error adding provider'}
+                  response={{
+                    errorDetails: submitError.response?.data?.details,
+                    errorMessage: getErrorMessage({ payload: submitError }),
+                    operationID: submitError.response?.data.operation_id,
+                  }}
+                />
+              </StackItem>
+            </Stack>
+          )}
           {extAuthProviderCliCommand ? (
             <Stack hasGutter>
               <StackItem>

@@ -1,19 +1,19 @@
 import React from 'react';
 import { AxiosError } from 'axios';
 
-import { Flex } from '@patternfly/react-core';
+import { Button, Flex, Modal } from '@patternfly/react-core';
 
 import ErrorBox from '~/components/common/ErrorBox';
-import Modal from '~/components/common/Modal/Modal';
 import { clusterService } from '~/services';
 
 type RevokeBreakGlassCredentialsModalProps = {
   clusterId: string;
   onClose: () => void;
+  isOpen?: boolean;
 };
 
 export const RevokeBreakGlassCredentialsModal = (props: RevokeBreakGlassCredentialsModalProps) => {
-  const { clusterId, onClose } = props;
+  const { clusterId, onClose, isOpen = true } = props;
   const [error, setError] = React.useState<AxiosError>();
   const [isPending, setIsPending] = React.useState(false);
 
@@ -40,13 +40,22 @@ export const RevokeBreakGlassCredentialsModal = (props: RevokeBreakGlassCredenti
     <Modal
       title="Revoke all credentials for cluster"
       onClose={handleClose}
-      primaryText="Revoke All"
-      isPrimaryDisabled={isPending}
-      isSecondaryDisabled={isPending}
-      onPrimaryClick={() => deleteBreakGlassCredential(clusterId)}
-      onSecondaryClick={handleClose}
-      primaryVariant="danger"
-      isPending={isPending}
+      isOpen={isOpen}
+      variant="medium"
+      actions={[
+        <Button
+          key="revoke"
+          variant="primary"
+          isDisabled={isPending}
+          isLoading={isPending}
+          onClick={() => deleteBreakGlassCredential(clusterId)}
+        >
+          Revoke all
+        </Button>,
+        <Button key="cancel" variant="secondary" onClick={handleClose}>
+          Cancel
+        </Button>,
+      ]}
     >
       {error ? (
         <ErrorBox
