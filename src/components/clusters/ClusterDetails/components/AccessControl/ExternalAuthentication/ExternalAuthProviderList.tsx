@@ -1,7 +1,17 @@
 import React from 'react';
 import { AxiosError } from 'axios';
 
-import { ActionsColumn, IAction, Table, Tbody, Td, Th, Thead, Tr } from '@patternfly/react-table';
+import {
+  ActionsColumn,
+  Caption,
+  IAction,
+  Table,
+  Tbody,
+  Td,
+  Th,
+  Thead,
+  Tr,
+} from '@patternfly/react-table';
 
 import ErrorBox from '~/components/common/ErrorBox';
 import { useGlobalState } from '~/redux/hooks';
@@ -91,6 +101,7 @@ export function ExternalAuthProviderList() {
       ) : null}
       {items.length ? (
         <Table aria-label="External authentication providers table" variant="compact">
+          <Caption>External authentication provider</Caption>
           <Thead>
             <Tr>
               <Th>{columns.name}</Th>
