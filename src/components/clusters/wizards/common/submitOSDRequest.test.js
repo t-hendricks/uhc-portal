@@ -480,6 +480,32 @@ describe('createClusterRequest', () => {
         expect(request.node_drain_grace_period).toEqual({ unit: 'minutes', value: 60 });
       });
 
+      it('leaves out auto_mode if Hypershift', () => {
+        const data = {
+          ...rosaFormData,
+          byoc: 'true',
+          cloud_provider: 'aws',
+          hypershift: 'true',
+          rosa_roles_provider_creation_mode: 'auto',
+          cluster_privacy: 'external',
+          ...hcpSubnetDetails,
+        };
+        const request = createClusterRequest({}, data);
+        expect(request.aws.sts.auto_mode).toBeUndefined();
+      });
+
+      it('includes auto_mode if is selected and byo_oidc_config_id_managed is false', () => {
+        const data = {
+          ...rosaFormData,
+          byoc: 'true',
+          cloud_provider: 'aws',
+          rosa_roles_provider_creation_mode: 'auto',
+          byo_oidc_config_id_managed: 'false',
+        };
+        const request = createClusterRequest({}, data);
+        expect(request.aws.sts.auto_mode).toBeTruthy();
+      });
+
       it.each([
         ['external', ['subnet-0703ec90283d1fd6b', 'subnet-00b3753ab2dd892ac']],
         ['internal', ['subnet-00b3753ab2dd892ac']],
