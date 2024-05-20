@@ -5,6 +5,7 @@ import { Card, CardBody, Title } from '@patternfly/react-core';
 import links from '../../../../../../common/installLinks.mjs';
 import ExternalLink from '../../../../../common/ExternalLink';
 
+import { BreakGlassCredentialList } from './BreakGlassCredentialList';
 import { ExternalAuthProviderList } from './ExternalAuthProviderList';
 
 export function ExternalAuthenticationSection() {
@@ -20,6 +21,9 @@ export function ExternalAuthenticationSection() {
         </p>
 
         <ExternalAuthProviderList />
+      </CardBody>
+      <CardBody>
+        <BreakGlassCredentialList />
       </CardBody>
     </Card>
   );
