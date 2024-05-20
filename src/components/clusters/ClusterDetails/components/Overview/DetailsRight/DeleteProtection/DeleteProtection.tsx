@@ -11,15 +11,19 @@ import ButtonWithTooltip from '~/components/common/ButtonWithTooltip';
 import { openModal } from '~/components/common/Modal/ModalActions';
 import modals from '~/components/common/Modal/modals';
 
+type DelteProtectionProps = {
+  protectionEnabled: boolean;
+  clusterID: string;
+  canToggle: boolean;
+  pending: boolean;
+};
+
 const DeleteProtection = ({
   protectionEnabled,
   clusterID,
   canToggle,
-}: {
-  protectionEnabled: boolean;
-  clusterID: string;
-  canToggle: boolean;
-}) => {
+  pending,
+}: DelteProtectionProps) => {
   const dispatch = useDispatch();
   const disableToggleReason =
     !canToggle &&
@@ -30,6 +34,7 @@ const DeleteProtection = ({
       <DescriptionListTerm>{`Delete Protection: ${protectionEnabled ? 'Enabled' : 'Disabled'}`}</DescriptionListTerm>
       <DescriptionListDescription>
         <ButtonWithTooltip
+          isDisabled={pending}
           variant="link"
           isInline
           onClick={() =>
