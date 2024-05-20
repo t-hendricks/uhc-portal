@@ -140,6 +140,7 @@ export const initialValues: FormikValues = {
   [FieldId.Region]: AWS_DEFAULT_REGION,
   [FieldId.SelectedVpc]: { id: '', name: '' },
   [FieldId.UsePrivateLink]: false,
+  [FieldId.EnableExteranlAuthentication]: false,
 
   // Optional fields based on whether Hypershift is selected or not
   ...initialValuesHypershift(hypershiftDefaultSelected),
