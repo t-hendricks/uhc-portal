@@ -1,9 +1,9 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
+import { resetCreatedClusterResponse } from '~/redux/actions/clustersActions';
 import { GlobalState } from '~/redux/store';
 
-import { resetCreatedClusterResponse } from '../../../../redux/actions/clustersActions';
 import ErrorModal from '../../../common/ErrorModal';
 import MissingPrereqErrorModal from '../MissingPrereqErrorModal';
 import ShieldedVmErrorModal from '../ShieldedVmErrorModal';
@@ -36,7 +36,7 @@ const CreateClusterErrorModal = ({ onRetry }: CreateClusterErrorModalProps) => {
         <ShieldedVmErrorModal
           title="Error creating cluster"
           errorResponse={createClusterResponse}
-          onClose={resetResponse}
+          resetResponse={resetResponse}
         />
       );
     }
