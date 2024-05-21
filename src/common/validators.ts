@@ -1459,22 +1459,44 @@ export type FormSubnet = {
   publicSubnetId: string;
 };
 
+// Validating multiple MPs
+const hasRepeatedSubnets = (
+  subnetId: string,
+  allValues: { machinePoolsSubnets: FormSubnet[] },
+): boolean =>
+  allValues.machinePoolsSubnets.filter((mpSubnet) => mpSubnet.privateSubnetId === subnetId).length >
+  1;
+
+const hasRepeatedAvailabilityZones = (
+  subnetId: string,
+  machinePoolsSubnets: FormSubnet[],
+): boolean => {
+  const availabilityZoneFromSubnet = machinePoolsSubnets.find(
+    (e) => e.privateSubnetId === subnetId,
+  )?.availabilityZone;
+  const availabilityZones = machinePoolsSubnets
+    .filter((e) => e.availabilityZone === availabilityZoneFromSubnet)
+    .map((e) => e.availabilityZone);
+
+  return availabilityZones.length !== new Set(availabilityZones).size;
+};
+
 const validateMultipleMachinePoolsSubnets = (
   subnetId: string,
   allValues: { machinePoolsSubnets: FormSubnet[] },
-  props?: { pristine: boolean },
+  props?: { pristine: boolean; isHypershift?: boolean },
 ) => {
-  if (subnetId === '') {
-    return props?.pristine ? undefined : 'Subnet is required';
+  switch (true) {
+    case subnetId === '':
+      return props?.pristine ? undefined : 'Subnet is required';
+    case hasRepeatedSubnets(subnetId, allValues):
+      return 'Every machine pool must be associated to a different subnet';
+    case props?.isHypershift &&
+      hasRepeatedAvailabilityZones(subnetId, allValues.machinePoolsSubnets):
+      return 'Every machine pool subnet should belong to a different availability zone';
+    default:
+      return undefined;
   }
-
-  // Validating multiple MPs
-  const hasRepeatedSubnets =
-    allValues.machinePoolsSubnets.filter((mpSubnet) => mpSubnet.privateSubnetId === subnetId)
-      .length > 1;
-  return hasRepeatedSubnets
-    ? 'Every machine pool must be associated to a different subnet'
-    : undefined;
 };
 
 const validateGCPSubnet = (value?: string): string | undefined => {

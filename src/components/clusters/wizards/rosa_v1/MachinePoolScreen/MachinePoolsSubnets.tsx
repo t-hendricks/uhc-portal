@@ -1,5 +1,5 @@
 import React from 'react';
-import { Field, FieldArray } from 'redux-form';
+import { ChangeAction, Field, FieldArray } from 'redux-form';
 
 import { Grid, GridItem } from '@patternfly/react-core';
 
@@ -29,6 +29,7 @@ const subnetWarnings = (
 
 type MachinePoolsSubnetsProps = {
   selectedVPC?: CloudVPC;
+  change: ChangeAction;
 };
 
 /**
@@ -39,7 +40,7 @@ type MachinePoolsSubnetsProps = {
  * @param selectedVPC vpc details
  * @returns {Element}
  */
-const MachinePoolsSubnets = ({ selectedVPC }: MachinePoolsSubnetsProps) => (
+const MachinePoolsSubnets = ({ selectedVPC, change }: MachinePoolsSubnetsProps) => (
   <Grid hasGutter>
     <GridItem span={6}>
       <Field
@@ -58,6 +59,7 @@ const MachinePoolsSubnets = ({ selectedVPC }: MachinePoolsSubnetsProps) => (
         component={ReduxFormMachinePoolSubnets}
         selectedVPC={selectedVPC}
         warn={subnetWarnings}
+        change={change}
       />
     )}
   </Grid>
