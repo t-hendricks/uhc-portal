@@ -57,7 +57,7 @@ describe('<RevokeBreakGlassCredentialsModal />', () => {
     );
 
     await user.click(screen.getByRole('button', { name: 'Cancel' }));
-    expect(mockModalData.onClose).toBeCalled();
+    expect(mockModalData.onClose).toHaveBeenCalled();
   });
 
   it('calls delete function on confirm', async () => {

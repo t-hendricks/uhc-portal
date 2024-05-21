@@ -57,7 +57,7 @@ describe('<ExternalAuthProviderModal />', () => {
     );
 
     await user.click(screen.getByRole('button', { name: 'Cancel' }));
-    expect(mockModalData.onClose).toBeCalled();
+    expect(mockModalData.onClose).toHaveBeenCalled();
   });
 
   it('calls post api on Add', async () => {
