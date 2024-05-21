@@ -3,6 +3,9 @@ import PropTypes from 'prop-types';
 
 import { Grid, GridItem, Text } from '@patternfly/react-core';
 
+import { downloadChoice } from '~/components/downloads/downloadChoice';
+import { detectOS } from '~/components/downloads/downloadUtils';
+
 import {
   channels,
   githubReleasesToFetch,
@@ -10,7 +13,6 @@ import {
   tools,
   urlsSelector,
 } from '../../../../../../common/installLinks.mjs';
-import { detectOS, downloadChoice } from '../../../../../downloads/DownloadsPage/DownloadsPage';
 
 const crcInstructionsMapping = {
   [operatingSystems.linux]: (

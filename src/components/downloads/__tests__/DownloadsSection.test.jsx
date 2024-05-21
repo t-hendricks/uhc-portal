@@ -2,7 +2,7 @@ import React from 'react';
 
 import { checkAccessibility, render, screen } from '~/testUtils';
 
-import DownloadsSection from './DownloadsSection';
+import DownloadsSection from '../DownloadsSection';
 
 describe('<DownloadsSection />', () => {
   describe('with same category selected', () => {

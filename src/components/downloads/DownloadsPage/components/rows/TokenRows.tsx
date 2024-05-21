@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom-v5-compat';
 
 import { Alert, Button, Split, SplitItem, Text, TextContent } from '@patternfly/react-core';
@@ -8,26 +7,28 @@ import { Tbody, Td, Tr } from '@patternfly/react-table';
 import { Spinner } from '@redhat-cloud-services/frontend-components/Spinner';
 
 import { defaultToOfflineTokens } from '~/common/restrictTokensHelper';
+import { AccessTokenCfg } from '~/types/accounts_mgmt.v1';
+import { ErrorState } from '~/types/types';
 
-import links from '../../../common/installLinks.mjs';
-import AlignRight from '../../common/AlignRight';
-import ExternalLink from '../../common/ExternalLink';
-import CopyPullSecret from '../CopyPullSecret';
-import DownloadPullSecret from '../DownloadPullSecret';
-import { expandKeys } from '../downloadsStructure';
+import links from '../../../../../common/installLinks.mjs';
+import AlignRight from '../../../../common/AlignRight';
+import ExternalLink from '../../../../common/ExternalLink';
+import CopyPullSecret from '../../../CopyPullSecret';
+import DownloadPullSecret from '../../../DownloadPullSecret';
+import { expandKeys } from '../../../downloadsStructure';
+import ExpandableRowPair from '../ExpandableRowPair';
 
-import ExpandableRowPair from './ExpandableRowPair';
-
-const commonPropTypes = {
-  // { [expandKey]: boolean }
-  expanded: PropTypes.object,
-  // callback to replace whole `expanded` map
-  setExpanded: PropTypes.func,
-  // { [expandKey]: ref } - to allow referring to specific row pairs
-  toolRefs: PropTypes.object,
+type CommonProps = {
+  expanded: { [index: string]: boolean };
+  setExpanded: (param: { [index: string]: boolean }) => void;
+  toolRefs: { [index: string]: React.RefObject<any> };
 };
 
-const PullSecretRow = ({ expanded, setExpanded, toolRefs, token }) => (
+type PullSecretRowProps = CommonProps & {
+  token: ErrorState | AccessTokenCfg;
+};
+
+const PullSecretRow = ({ expanded, setExpanded, toolRefs, token }: PullSecretRowProps) => (
   <ExpandableRowPair
     expanded={expanded}
     setExpanded={setExpanded}
@@ -68,9 +69,7 @@ const PullSecretRow = ({ expanded, setExpanded, toolRefs, token }) => (
   />
 );
 
-PullSecretRow.propTypes = { ...commonPropTypes };
-
-const ApiTokenRow = ({ expanded, setExpanded, toolRefs }) => (
+const ApiTokenRow = ({ expanded, setExpanded, toolRefs }: CommonProps) => (
   <ExpandableRowPair
     expanded={expanded}
     setExpanded={setExpanded}
@@ -101,7 +100,15 @@ const ApiTokenRow = ({ expanded, setExpanded, toolRefs }) => (
   />
 );
 
-ApiTokenRow.propTypes = { ...commonPropTypes };
+type TokenRowsProps = CommonProps & {
+  token: ErrorState | AccessTokenCfg;
+  orgRequest: {
+    error: { reason: string; operation_id: string };
+    isLoading: boolean;
+  };
+  restrictedEnv: boolean;
+  restrictTokens?: boolean;
+};
 
 const TokenRows = ({
   expanded,
@@ -111,7 +118,7 @@ const TokenRows = ({
   restrictTokens,
   orgRequest,
   restrictedEnv,
-}) => {
+}: TokenRowsProps) => {
   const commonProps = { expanded, setExpanded, toolRefs };
   const pullSecretRowProps = { ...commonProps, token };
 
@@ -171,15 +178,6 @@ const TokenRows = ({
       <ApiTokenRow {...commonProps} />
     </>
   );
-};
-
-TokenRows.propTypes = {
-  ...commonPropTypes,
-  orgRequest: PropTypes.shape({
-    error: PropTypes.bool,
-    isLoading: PropTypes.bool.isRequired,
-  }),
-  restrictedEnv: PropTypes.bool,
 };
 
 export default TokenRows;
