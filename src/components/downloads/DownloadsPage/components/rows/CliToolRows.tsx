@@ -1,0 +1,135 @@
+import React from 'react';
+
+import { Text, TextContent } from '@patternfly/react-core';
+
+import links, { channels, tools } from '~/common/installLinks.mjs';
+import ExternalLink from '~/components/common/ExternalLink';
+import SupportLevelBadge, { DEV_PREVIEW } from '~/components/common/SupportLevelBadge';
+import { isRestrictedEnv } from '~/restrictedEnv';
+
+import { DownloadsPageRowsType } from './DownloadsPageRowsType';
+import ToolAndDescriptionRows from './ToolAndDescriptionRows';
+
+type CliToolRowsProps = DownloadsPageRowsType;
+
+const CliToolRows = ({
+  expanded,
+  setExpanded,
+  selections,
+  setSelections,
+  toolRefs,
+  urls,
+}: CliToolRowsProps) => {
+  const commonProps = {
+    expanded,
+    setExpanded,
+    selections,
+    setSelections,
+    toolRefs,
+    urls,
+  };
+  return (
+    <>
+      <ToolAndDescriptionRows
+        {...commonProps}
+        tool={tools.OC}
+        channel={channels.STABLE}
+        name={
+          <>
+            OpenShift command-line interface (<code>oc</code>)
+          </>
+        }
+        description={
+          <Text>
+            Create applications and manage OpenShift projects from the command line using the
+            OpenShift client <code>oc</code>. {/* TODO: @beni <ExternalLink ExternalLink */}
+            <ExternalLink href={links.CLI_TOOLS_OCP_GETTING_STARTED}>Get started</ExternalLink>
+          </Text>
+        }
+      />
+
+      {!isRestrictedEnv() && (
+        <ToolAndDescriptionRows
+          {...commonProps}
+          tool={tools.OCM}
+          channel={channels.STABLE}
+          name={
+            <>
+              OpenShift Cluster Manager API command-line interface (<code>ocm</code>){' '}
+              <SupportLevelBadge {...DEV_PREVIEW} />
+            </>
+          }
+          description={
+            <TextContent>
+              <Text>
+                Manage your OpenShift clusters from the command line using the OpenShift Cluster
+                Manager API client <code>ocm</code>.{' '}
+                <ExternalLink href={links.OCM_CLI_DOCS}>Get started</ExternalLink>
+              </Text>
+            </TextContent>
+          }
+        />
+      )}
+
+      <ToolAndDescriptionRows
+        {...commonProps}
+        tool={tools.ROSA}
+        channel={channels.STABLE}
+        name={
+          <>
+            Red Hat OpenShift Service on AWS command-line interface (<code>rosa</code>)
+          </>
+        }
+        description={
+          <Text>
+            Manage your Red Hat OpenShift Service on AWS (ROSA) clusters from the command line using
+            the ROSA client for OCM and AWS APIs.{' '}
+            <ExternalLink href={links.ROSA_CLI_DOCS}>Get started</ExternalLink>
+          </Text>
+        }
+      />
+
+      {!isRestrictedEnv() && (
+        <>
+          <ToolAndDescriptionRows
+            {...commonProps}
+            tool={tools.KN}
+            channel={channels.STABLE}
+            name={
+              <>
+                Knative command-line interface for OpenShift Serverless (<code>kn</code>)
+              </>
+            }
+            description={
+              <Text>
+                Interact with Knative components on OpenShift Container Platform with the Knative
+                client for OpenShift Serverless <code>kn</code>.{' '}
+                <ExternalLink href={links.KN_DOCS}>Learn more</ExternalLink>
+              </Text>
+            }
+          />
+
+          <ToolAndDescriptionRows
+            {...commonProps}
+            tool={tools.TKN}
+            channel={channels.STABLE}
+            name={
+              <>
+                Tekton command-line interface for OpenShift Pipelines (<code>tkn</code>)
+              </>
+            }
+            description={
+              <Text>
+                Manage and interact with CI pipelines on OpenShift Container Platform with the
+                Tekton CLI for OpenShift Pipelines.{' '}
+                <ExternalLink href={links.TKN_DOCS}>Get started</ExternalLink>
+              </Text>
+            }
+          />
+        </>
+      )}
+    </>
+  );
+};
+
+export default CliToolRows;

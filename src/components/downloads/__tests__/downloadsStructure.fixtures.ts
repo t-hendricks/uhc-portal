@@ -1,0 +1,164 @@
+export const allCategories = [
+  {
+    key: 'CLI',
+    title: 'Command-line interface (CLI) tools',
+    tools: ['oc', 'ocm', 'rosa', 'kn', 'tkn'],
+  },
+  {
+    key: 'DEV',
+    title: 'Developer tools',
+    tools: ['odo', 'helm', 'opm', 'operator-sdk', 'rhoas'],
+  },
+  {
+    key: 'INSTALLATION',
+    title: 'OpenShift installation',
+    tools: [
+      'x86_64-openshift-install',
+      's390x-openshift-install',
+      'ppc64le-openshift-install',
+      'aarch64-openshift-install',
+      'multi-openshift-install',
+      'crc',
+    ],
+  },
+  {
+    key: 'DISCONNECTED_INSTALLATION',
+    title: 'OpenShift disconnected installation tools',
+    tools: ['mirror-registry', 'oc-mirror-plugin'],
+  },
+  {
+    key: 'CUSTOM_INSTALLATION',
+    title: 'OpenShift installation customization tools',
+    tools: ['butane', 'coreos-installer', 'ccoctl'],
+  },
+  {
+    key: 'TOKENS',
+    title: 'Tokens',
+    tools: ['pull-secret', 'ocm-api-token'],
+  },
+  {
+    key: 'CLI',
+    title: 'Command-line interface (CLI) tools',
+    tools: ['oc', 'rosa'],
+  },
+  {
+    key: 'TOKENS',
+    title: 'Tokens',
+    tools: ['pull-secret', 'ocm-api-token'],
+  },
+];
+
+export const isRestrictedEnvTrueExpected = [
+  {
+    key: 'ALL',
+    title: 'All categories',
+    tools: ['oc', 'rosa', 'pull-secret', 'ocm-api-token'],
+  },
+  {
+    key: 'CLI',
+    title: 'Command-line interface (CLI) tools',
+    tools: ['oc', 'rosa'],
+  },
+  {
+    key: 'TOKENS',
+    title: 'Tokens',
+    tools: ['pull-secret', 'ocm-api-token'],
+  },
+];
+
+export const isRestrictedEnvFalseExpected = [
+  {
+    key: 'ALL',
+    title: 'All categories',
+    tools: [
+      'oc',
+      'ocm',
+      'rosa',
+      'kn',
+      'tkn',
+      'odo',
+      'helm',
+      'opm',
+      'operator-sdk',
+      'rhoas',
+      'x86_64-openshift-install',
+      's390x-openshift-install',
+      'ppc64le-openshift-install',
+      'aarch64-openshift-install',
+      'multi-openshift-install',
+      'crc',
+      'mirror-registry',
+      'oc-mirror-plugin',
+      'butane',
+      'coreos-installer',
+      'ccoctl',
+      'pull-secret',
+      'ocm-api-token',
+    ],
+  },
+  {
+    key: 'CLI',
+    title: 'Command-line interface (CLI) tools',
+    tools: ['oc', 'ocm', 'rosa', 'kn', 'tkn'],
+  },
+  {
+    key: 'DEV',
+    title: 'Developer tools',
+    tools: ['odo', 'helm', 'opm', 'operator-sdk', 'rhoas'],
+  },
+  {
+    key: 'INSTALLATION',
+    title: 'OpenShift installation',
+    tools: [
+      'x86_64-openshift-install',
+      's390x-openshift-install',
+      'ppc64le-openshift-install',
+      'aarch64-openshift-install',
+      'multi-openshift-install',
+      'crc',
+    ],
+  },
+  {
+    key: 'DISCONNECTED_INSTALLATION',
+    title: 'OpenShift disconnected installation tools',
+    tools: ['mirror-registry', 'oc-mirror-plugin'],
+  },
+  {
+    key: 'CUSTOM_INSTALLATION',
+    title: 'OpenShift installation customization tools',
+    tools: ['butane', 'coreos-installer', 'ccoctl'],
+  },
+  {
+    key: 'TOKENS',
+    title: 'Tokens',
+    tools: ['pull-secret', 'ocm-api-token'],
+  },
+];
+
+export const expectedExpandedKeys = {
+  OC: 'oc',
+  BUTANE: 'butane',
+  CCOCTL: 'ccoctl',
+  COREOS_INSTALLER: 'coreos-installer',
+  CRC: 'crc',
+  HELM: 'helm',
+  X86INSTALLER: 'x86_64-openshift-install',
+  IBMZINSTALLER: 's390x-openshift-install',
+  PPCINSTALLER: 'ppc64le-openshift-install',
+  ARMINSTALLER: 'aarch64-openshift-install',
+  MULTIINSTALLER: 'multi-openshift-install',
+  KN: 'kn',
+  OCM: 'ocm',
+  ODO: 'odo',
+  OPM: 'opm',
+  OPERATOR_SDK: 'operator-sdk',
+  RHCOS: 'rhcos',
+  RHOAS: 'rhoas',
+  ROSA: 'rosa',
+  MIRROR_REGISTRY: 'mirror-registry',
+  OC_MIRROR_PLUGIN: 'oc-mirror-plugin',
+  TKN: 'tkn',
+  COPY_PULLREQUEST: 'copy-pull-secret',
+  PULL_SECRET: 'pull-secret',
+  TOKEN_OCM: 'ocm-api-token',
+};
