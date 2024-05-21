@@ -1,14 +1,19 @@
 import React from 'react';
 
 import { checkAccessibility, render, screen } from '~/testUtils';
+import { ErrorState } from '~/types/types';
 
-import CopyPullSecret from './CopyPullSecret';
+import CopyPullSecret from '../CopyPullSecret';
 
-const variants = ['link-tooltip', 'link-inplace'];
+const variants: ('link-tooltip' | 'link-inplace')[] = ['link-tooltip', 'link-inplace'];
 
 describe('<CopyPullSecret />', () => {
   const token = { auths: { foo: 'bar' } };
-  const errorToken = { error: 'my error' };
+  const errorToken: ErrorState = {
+    error: true,
+    pending: false,
+    fulfilled: false,
+  };
 
   describe.each(variants)('with token and variant %s', (variant) => {
     it('is accessible', async () => {

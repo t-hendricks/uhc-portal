@@ -2,8 +2,14 @@ import { isRestrictedEnv } from '~/restrictedEnv';
 
 import { tools } from '../../common/installLinks.mjs';
 
+export type Categories = {
+  key: string;
+  title: string;
+  tools: string[];
+};
+
 /** Used to track row collapsed/expanded state, and also for URLs linking to specific row. */
-export const expandKeys = {
+export const expandKeys: { [index: string]: string } = {
   ...tools,
   // the rest should be distinct from `tools` keys.
   PULL_SECRET: 'pull-secret',
@@ -13,7 +19,7 @@ export const expandKeys = {
 /**
  * Represents the sections and entries of downloads page.
  */
-const categories = [
+const categories: Categories[] = [
   // 'ALL' will be inserted here, see below.
   {
     key: 'CLI',
@@ -53,7 +59,7 @@ const categories = [
     tools: [expandKeys.PULL_SECRET, expandKeys.TOKEN_OCM],
   },
 ];
-const restrictedCategories = [
+const restrictedCategories: Categories[] = [
   {
     key: 'CLI',
     title: 'Command-line interface (CLI) tools',
@@ -66,15 +72,16 @@ const restrictedCategories = [
   },
 ];
 
-export const allCategories = categories.concat(restrictedCategories);
+export const allCategories: Categories[] = categories.concat(restrictedCategories);
 
-export const downloadsCategories = () =>
+export const downloadsCategories: () => Categories[] = () =>
   [
     {
       key: 'ALL',
       title: 'All categories',
-      tools: [].concat(
-        ...(isRestrictedEnv() ? restrictedCategories : categories).map((c) => c.tools),
+      tools: (isRestrictedEnv() ? restrictedCategories : categories).reduce(
+        (acc: string[], curr) => acc.concat(curr.tools),
+        [],
       ),
     },
   ].concat(isRestrictedEnv() ? restrictedCategories : categories);

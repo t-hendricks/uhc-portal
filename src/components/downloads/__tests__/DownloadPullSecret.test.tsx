@@ -5,7 +5,7 @@ import { eventNames, ocmResourceType } from '~/common/analytics';
 import * as useAnalytics from '~/hooks/useAnalytics';
 import { render, screen } from '~/testUtils';
 
-import DownloadPullSecret from './DownloadPullSecret';
+import DownloadPullSecret from '../DownloadPullSecret';
 
 jest.mock('~/hooks/useAnalytics');
 const useAnalyticsTrackMock = jest.fn();
