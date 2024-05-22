@@ -4,9 +4,10 @@ import { Alert, AlertVariant, Text, TextVariants } from '@patternfly/react-core'
 
 import { trackEvents } from '~/common/analytics';
 import links from '~/common/installLinks.mjs';
+import { useFormState } from '~/components/clusters/wizards/hooks';
+import { FieldId } from '~/components/clusters/wizards/rosa_v2/constants';
 import ExternalLink from '~/components/common/ExternalLink';
 import InstructionCommand from '~/components/common/InstructionCommand';
-import { useGlobalState } from '~/redux/hooks';
 
 import { RosaCliCommand } from '../constants/cliCommands';
 
@@ -15,8 +16,10 @@ import AssociateAWSAccountStep, {
 } from './common/AssociateAWSAccountStep';
 
 const AccountRoleStep = (props: AssociateAWSAccountStepProps) => {
-  const isHypershiftSelected =
-    useGlobalState((state) => state.form.CreateCluster?.values?.hypershift) === 'true';
+  const {
+    values: { [FieldId.Hypershift]: hypershift },
+  } = useFormState();
+  const isHypershiftSelected = hypershift === 'true';
   const accountRolesCommand = isHypershiftSelected
     ? RosaCliCommand.CreateAccountRolesHCP
     : RosaCliCommand.CreateAccountRoles;
