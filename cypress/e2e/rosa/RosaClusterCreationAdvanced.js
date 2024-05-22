@@ -79,7 +79,7 @@ describe(
 
     it('Step - Cluster roles and policies - advanced  options', () => {
       CreateRosaWizardPage.selectRoleProviderMode('Auto');
-      CreateRosaWizardPage.customOperatorPrefixInput().should('be.visible');
+      CreateRosaWizardPage.customOperatorPrefixInput().scrollIntoView().should('be.visible');
       CreateRosaWizardPage.customOperatorPrefixInput()
         .invoke('val')
         .should('include', clusterName.substring(0, 27));
@@ -98,11 +98,18 @@ describe(
       CreateRosaWizardPage.clickEditStepOfSection('Accounts and roles');
       CreateRosaWizardPage.isAccountsAndRolesScreen();
       CreateRosaWizardPage.waitForARNList();
-      // Inline block fails due to HAC-4514.
-      // CreateRosaWizardPage.supportRoleInput().should('have.value', 'arn:aws:iam::' + awsAccountID + ':role/' + rolePrefix + '-Support-Role');
-      // CreateRosaWizardPage.workerRoleInput().should('have.value', 'arn:aws:iam::' + awsAccountID + ':role/' + rolePrefix + '-Worker-Role');
-      // CreateRosaWizardPage.controlPlaneRoleInput().should('have.value', 'arn:aws:iam::' + awsAccountID + ':role/' + rolePrefix + '-ControlPlane-Role');
-      CreateRosaWizardPage.selectInstallerRole(installerARN);
+      CreateRosaWizardPage.supportRoleInput().should(
+        'have.value',
+        'arn:aws:iam::' + awsAccountID + ':role/' + rolePrefix + '-Support-Role',
+      );
+      CreateRosaWizardPage.workerRoleInput().should(
+        'have.value',
+        'arn:aws:iam::' + awsAccountID + ':role/' + rolePrefix + '-Worker-Role',
+      );
+      CreateRosaWizardPage.controlPlaneRoleInput().should(
+        'have.value',
+        'arn:aws:iam::' + awsAccountID + ':role/' + rolePrefix + '-ControlPlane-Role',
+      );
       CreateRosaWizardPage.rosaNextButton().click();
     });
     it('Cluster wizard revisit - Step - cluster details', () => {
@@ -121,13 +128,11 @@ describe(
       CreateRosaWizardPage.maximumNodeInput().should('have.value', '3');
       CreateRosaWizardPage.rootDiskSizeInput().should('have.value', '555');
       CreateRosaWizardPage.useIMDSv2Radio().should('be.checked');
-      CreateRosaWizardPage.editNodeLabelLink().click();
       CreateRosaWizardPage.isNodeLabelKeyAndValue('smoke', 'tests', 0);
       CreateRosaWizardPage.isNodeLabelKeyAndValue('rosa', 'advanced', 1);
       CreateRosaWizardPage.rosaNextButton().click();
     });
     it('Cluster wizard revisit - Step - Networking', () => {
-      // CreateRosaWizardPage.applicationIngressDefaultSettingsRadio().should('be.checked');
       CreateRosaWizardPage.clusterPrivacyPublicRadio().should('be.checked');
       CreateRosaWizardPage.rosaNextButton().click();
       CreateRosaWizardPage.cidrDefaultValuesCheckBox().should('not.be.checked');

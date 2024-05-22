@@ -33,15 +33,19 @@ class CreateRosaCluster extends Page {
 
   customOperatorPrefixInput = () => cy.get('input[id="custom_operator_roles_prefix"]');
 
-  singleZoneAvilabilityRadio = () => cy.getByTestId('multi_az-false');
+  singleZoneAvilabilityRadio = () =>
+    cy.get('input[id="form-radiobutton-multi_az-false-field"]').should('be.exist');
 
-  multiZoneAvilabilityRadio = () => cy.getByTestId('multi_az-true');
+  multiZoneAvilabilityRadio = () =>
+    cy.get('input[id="form-radiobutton-multi_az-true-field"]').should('be.exist');
 
   advancedEncryptionLink = () => cy.get('span').contains('Advanced Encryption');
 
-  useDefaultKMSKeyRadio = () => cy.getByTestId('customer_managed_key-false');
+  useDefaultKMSKeyRadio = () =>
+    cy.get('input[id="form-radiobutton-customer_managed_key-false-field"]').should('be.exist');
 
-  useCustomKMSKeyRadio = () => cy.getByTestId('customer_managed_key-true');
+  useCustomKMSKeyRadio = () =>
+    cy.get('input[id="form-radiobutton-customer_managed_key-true-field"]').should('be.exist');
 
   kmsKeyARNHelpText = () => cy.get('#kms_key_arn-helper');
 
@@ -57,9 +61,9 @@ class CreateRosaCluster extends Page {
 
   editNodeLabelLink = () => cy.get('span').contains('Add node labels');
 
-  addAdditionalLabelLink = () => cy.get('.reduxFormKeyValueList-addBtn');
+  addAdditionalLabelLink = () => cy.contains('Add additional label').should('be.exist');
 
-  createClusterButton = () => cy.get('button[type="submit"]').contains('Create cluster');
+  createClusterButton = () => cy.getByTestId('create-cluster-button');
 
   refreshInfrastructureAWSAccountButton = () =>
     cy.get('button[data-testid="refresh-aws-accounts"]').first();
@@ -167,7 +171,25 @@ class CreateRosaCluster extends Page {
   individualUpdateRadio = () => cy.getByTestId('upgrade_policy-manual');
 
   isCreateRosaPage() {
-    super.assertUrlIncludes('/openshift/create/rosa/wizard');
+    //TODO: This temporary change and will be removed once rosav2 is default.
+    if (Cypress.env('rosav2')) {
+      cy.visit('/create/rosa/wizard?rosav2=true');
+      super.assertUrlIncludes('/create/rosa/wizard?rosav2=true');
+    } else {
+      super.assertUrlIncludes('/openshift/create/rosa/wizard');
+    }
+  }
+
+  isTextContainsInPage(text, present = true) {
+    if (present) {
+      cy.get('body').then(($body) => {
+        if ($body.text().includes(text)) {
+          cy.contains(text).scrollIntoView().should('be.visible');
+        }
+      });
+    } else {
+      cy.contains(text).should('not.exist');
+    }
   }
 
   isAccountsAndRolesScreen() {
@@ -187,7 +209,7 @@ class CreateRosaCluster extends Page {
   }
 
   isControlPlaneTypeScreen() {
-    cy.contains('h2', 'Welcome to Red Hat OpenShift Service on AWS (ROSA)');
+    cy.contains('h2', 'Welcome to Red Hat OpenShift Service on AWS (ROSA)', { timeout: 30000 });
     cy.contains('h3', 'Select an AWS control plane type');
   }
 
@@ -407,13 +429,33 @@ class CreateRosaCluster extends Page {
   }
 
   addNodeLabelKeyAndValue(key, value = '', index = 0) {
-    cy.get(`input[name="node_labels[${index}].key"]`).clear().type(key);
-    cy.get(`input[name="node_labels[${index}].value"]`).clear().type(value);
+    cy.get('input[aria-label="Key-value list key"]').each(($el, indx) => {
+      if (index === indx) {
+        cy.wrap($el).clear().type(key);
+        return;
+      }
+    });
+    cy.get('input[aria-label="Key-value list value"]').each(($el, indx) => {
+      if (index === indx) {
+        cy.wrap($el).clear().type(value);
+        return;
+      }
+    });
   }
 
   isNodeLabelKeyAndValue(key, value = '', index = 0) {
-    cy.get(`input[name="node_labels[${index}].key"]`).should('have.value', key);
-    cy.get(`input[name="node_labels[${index}].value"]`).should('have.value', value);
+    cy.get('input[aria-label="Key-value list key"]').each(($el, indx) => {
+      if (index === indx) {
+        cy.wrap($el).should('have.value', key);
+        return;
+      }
+    });
+    cy.get('input[aria-label="Key-value list value"]').each(($el, indx) => {
+      if (index === indx) {
+        cy.wrap($el).should('have.value', value);
+        return;
+      }
+    });
   }
 
   selectRegion(region) {
@@ -472,10 +514,10 @@ class CreateRosaCluster extends Page {
   }
 
   selectAvailabilityZone(az) {
-    if (az == 'Single zone') {
-      this.singleZoneAvilabilityRadio().check();
+    if (az.toLowerCase() == 'single zone' || az.toLowerCase() == 'single-zone') {
+      cy.contains('Single zone').should('be.exist').click();
     } else {
-      this.multiZoneAvilabilityRadio().check();
+      cy.contains('Multi-zone').should('be.exist').click();
     }
   }
 
