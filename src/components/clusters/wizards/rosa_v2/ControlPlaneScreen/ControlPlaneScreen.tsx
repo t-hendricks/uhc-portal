@@ -6,8 +6,8 @@ import { Form, Grid, GridItem, Text, TextVariants, Title } from '@patternfly/rea
 import links from '~/common/installLinks.mjs';
 import { emptyAWSSubnet } from '~/components/clusters/wizards/common/constants';
 import { useFormState } from '~/components/clusters/wizards/hooks';
-import { PrerequisitesInfoBox } from '~/components/clusters/wizards/rosa_v1/common/PrerequisitesInfoBox';
-import { WelcomeMessage } from '~/components/clusters/wizards/rosa_v1/common/WelcomeMessage';
+import { PrerequisitesInfoBox } from '~/components/clusters/wizards/rosa_v2/common/PrerequisitesInfoBox';
+import { WelcomeMessage } from '~/components/clusters/wizards/rosa_v2/common/WelcomeMessage';
 import ExternalLink from '~/components/common/ExternalLink';
 import AWSLogo from '~/styles/images/AWS.png';
 import RedHat from '~/styles/images/Logo-Red_Hat-B-Standard-RGB.png';
