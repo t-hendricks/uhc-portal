@@ -17,9 +17,10 @@ limitations under the License.
 import React, { ReactNode, useState } from 'react';
 
 import useResizeObserver from '@react-hook/resize-observer';
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { QueryClientProvider } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 
+import { queryClient } from './queryClient';
 import Router from './Router';
 
 import './App.scss';
@@ -38,8 +39,6 @@ const App = ({ children }: Props) => {
       setHeaderHeight(contentRect.height);
     }
   });
-
-  const queryClient = new QueryClient();
 
   return (
     <div id="app-outer-div" style={{ height: `calc(100vh - ${headerHeight}px` }}>
