@@ -46,7 +46,7 @@ import { AwsRoleErrorAlert } from './AwsRoleErrorAlert';
 
 import './AccountsRolesScreen.scss';
 
-const NO_ROLE_DETECTED = 'No role detected';
+export const NO_ROLE_DETECTED = 'No role detected';
 
 const hasNoTrustedRelationshipOnClusterRoleError = ({ errorDetails }) =>
   errorDetails?.some((error) => error?.Error_Key === 'NoTrustedRelationshipOnClusterRole');
@@ -149,14 +149,14 @@ function AccountRolesARNsSection({
 
   useEffect(() => {
     if (selectedAWSAccountID !== previouslySelectedAWSAccountID) {
-      setSelectedInstallerRole(NO_ROLE_DETECTED);
-      setAccountRoles([]);
-      setInstallerRoleOptions([]);
       updateRoleArns(null);
-      setShowMissingArnsError(false);
-      onAccountChanged();
     }
+    setSelectedInstallerRole(NO_ROLE_DETECTED);
+    setAccountRoles([]);
+    setInstallerRoleOptions([]);
+    setShowMissingArnsError(false);
     clearGetAWSAccountRolesARNsResponse();
+    onAccountChanged();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedAWSAccountID]);
 
