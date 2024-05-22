@@ -18,7 +18,8 @@
     "paths": {
       "~/*": ["src/*"]
     },
-    "resolveJsonModule": true
+    "resolveJsonModule": true,
+    "lib": ["dom", "dom.iterable", "esnext"]
   },
   "include": ["@types", "src/**/*.ts", "src/**/*.tsx"]
 }
