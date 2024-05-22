@@ -2,16 +2,7 @@ import React from 'react';
 import { Field, Formik } from 'formik';
 import * as Yup from 'yup';
 
-import {
-  Button,
-  ClipboardCopy,
-  ClipboardCopyVariant,
-  ExpandableSection,
-  Form,
-  Modal,
-  Stack,
-  StackItem,
-} from '@patternfly/react-core';
+import { Button, Form, Modal, Stack, StackItem } from '@patternfly/react-core';
 
 import { getErrorMessage } from '~/common/errors';
 import { validateSecureURL } from '~/common/validators';
@@ -21,8 +12,6 @@ import { clusterService } from '~/services';
 import { ExternalAuth } from '~/types/clusters_mgmt.v1';
 
 import CAUpload from '../../IdentityProvidersPage/components/CAUpload';
-
-import { getExternalAuthenticationProviderCommand } from './externalAuthHelper';
 
 type ExternalAuthProviderModalProps = {
   clusterID: string;
@@ -85,23 +74,8 @@ const buildExternalAuthProvider = (values: ExternalAuthenticationProvider): Exte
 export function ExternalAuthProviderModal(props: ExternalAuthProviderModalProps) {
   const { clusterID, onClose, externalAuthProvider, isEdit, isOpen = true } = props;
   const [submitError, setSubmitError] = React.useState<any>();
-  const [isExternalAuthExpanded, setIsExternalAuthExpanded] = React.useState(false);
   const [isPending, setIsPending] = React.useState(false);
   const formRef = React.useRef();
-  const onExternalAuthToggle = () => {
-    setIsExternalAuthExpanded(!isExternalAuthExpanded);
-  };
-
-  const extAuthProviderCliCommand = getExternalAuthenticationProviderCommand({
-    clusterName: clusterID || '',
-    providerName: (formRef?.current as any)?.id?.value || externalAuthProvider?.id || '',
-    issuerUrl: (formRef?.current as any)?.issuer?.value || '',
-    issuerAudiences: (formRef?.current as any)?.audiences?.value || '',
-    groupsClaim: (formRef?.current as any)?.groups?.value || '',
-    usernameClaim: (formRef?.current as any)?.username?.value || '',
-    providerCA:
-      (formRef?.current as any)?.file_input?.value || externalAuthProvider?.issuer?.ca || '',
-  });
 
   return (
     <Formik
@@ -181,7 +155,7 @@ export function ExternalAuthProviderModal(props: ExternalAuthProviderModalProps)
               fieldId="audiences"
               label="Audiences"
               isRequired
-              helpText="Use commas to separate multiple audiences"
+              helpText="The audience IDs that this authentication provider issues tokens for. Use commas to separate multiple audiences."
             />
             <TextField fieldId="groups" label="Groups mapping" isRequired />
             <TextField fieldId="username" label="Username mapping" isRequired />
@@ -214,30 +188,6 @@ export function ExternalAuthProviderModal(props: ExternalAuthProviderModalProps)
               </StackItem>
             </Stack>
           )}
-          {extAuthProviderCliCommand ? (
-            <Stack hasGutter>
-              <StackItem>
-                <br />
-                <ExpandableSection
-                  toggleText="Advanced CLI command"
-                  onToggle={onExternalAuthToggle}
-                  isExpanded={isExternalAuthExpanded}
-                >
-                  <p>
-                    The web form is limited and does not support all options. Use the CLI command to
-                    configure additional options.
-                  </p>
-                  <ClipboardCopy
-                    textAriaLabel="Copyable ROSA create operator-roles"
-                    variant={ClipboardCopyVariant.expansion}
-                    isReadOnly
-                  >
-                    {extAuthProviderCliCommand}
-                  </ClipboardCopy>
-                </ExpandableSection>
-              </StackItem>
-            </Stack>
-          ) : null}
         </Modal>
       )}
     </Formik>
