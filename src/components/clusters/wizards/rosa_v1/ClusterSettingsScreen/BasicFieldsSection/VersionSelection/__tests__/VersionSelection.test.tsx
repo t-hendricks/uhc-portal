@@ -758,7 +758,7 @@ describe('<VersionSelection />', () => {
       ];
       const mockOnChange = jest.fn();
 
-      const newProps = {
+      let newProps: any = {
         ...defaultProps,
         input: { onChange: mockOnChange },
         selectedClusterVersion: { raw_id: '4.10.2' },
@@ -773,17 +773,32 @@ describe('<VersionSelection />', () => {
         },
       };
 
-      render(<VersionSelection {...newProps} />);
-      expect(mockOnChange).toBeCalled();
-      expect(mockOnChange).toBeCalledWith(undefined);
+      const { rerender } = render(<VersionSelection {...newProps} />);
+
+      // Assert
+      expect(mockOnChange.mock.calls).toHaveLength(1);
+      expect(mockOnChange).toHaveBeenCalledWith(undefined);
+
+      // We're testing the inner component without connect() — but here closing the loop reveals
+      // what happens afterwards.
+      // Once it sees no value, it picks a new default. (Was that the intent?)
+      newProps = { ...newProps, selectedClusterVersion: undefined };
+      rerender(<VersionSelection {...newProps} />);
+
+      expect(mockOnChange.mock.calls).toHaveLength(2);
+      expect(mockOnChange.mock.lastCall[0]).toMatchObject({ raw_id: '4.12.1' });
+
+      newProps = { ...newProps, selectedClusterVersion: mockOnChange.mock.lastCall[0] };
+      rerender(<VersionSelection {...newProps} />);
+
+      expect(screen.getAllByRole('option', { selected: true, name: '4.12.1' })).toHaveLength(1);
     });
 
     it('calls input.onChange to set the selected version to "undefined" when selected version does not exist', () => {
       // In this case, the selected version isn't in the version list at all
 
       const mockOnChange = jest.fn();
-
-      const newProps = {
+      let newProps: any = {
         ...defaultProps,
         input: { onChange: mockOnChange },
         selectedClusterVersion: { raw_id: '4.10.9999' },
@@ -791,9 +806,25 @@ describe('<VersionSelection />', () => {
 
       expect(versions.some((ver) => ver.raw_id === '4.10.999')).toBeFalsy();
 
-      render(<VersionSelection {...newProps} />);
-      expect(mockOnChange).toBeCalled();
-      expect(mockOnChange).toBeCalledWith(undefined);
+      const { rerender } = render(<VersionSelection {...newProps} />);
+
+      // Assert
+      expect(mockOnChange.mock.calls).toHaveLength(1);
+      expect(mockOnChange).toHaveBeenCalledWith(undefined);
+
+      // We're testing the inner component without connect() — but here closing the loop reveals
+      // what happens afterwards.
+      // Once it sees no value, it picks a new default. (Was that the intent?)
+      newProps = { ...newProps, selectedClusterVersion: undefined };
+      rerender(<VersionSelection {...newProps} />);
+
+      expect(mockOnChange.mock.calls).toHaveLength(2);
+      expect(mockOnChange.mock.lastCall[0]).toMatchObject({ raw_id: '4.12.1' });
+
+      newProps = { ...newProps, selectedClusterVersion: mockOnChange.mock.lastCall[0] };
+      rerender(<VersionSelection {...newProps} />);
+
+      expect(screen.getAllByRole('option', { selected: true, name: '4.12.1' })).toHaveLength(1);
     });
   });
 });

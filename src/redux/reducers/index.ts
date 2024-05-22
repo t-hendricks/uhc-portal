@@ -16,6 +16,7 @@ import insightsReducer from '../../components/clusters/ClusterDetails/components
 import machinePools from '../../components/clusters/ClusterDetails/components/MachinePools/MachinePoolsReducer';
 import { MonitoringReducer } from '../../components/clusters/ClusterDetails/components/Monitoring/MonitoringReducer';
 import { NetworkingReducer } from '../../components/clusters/ClusterDetails/components/Networking/NetworkingReducer';
+import { deleteProtectionReducer } from '../../components/clusters/ClusterDetails/components/Overview/DetailsRight/DeleteProtection/deleteProtectionReducer';
 import { InstallationLogReducer } from '../../components/clusters/ClusterDetails/components/Overview/InstallationLogView/InstallationLogReducer';
 import { deleteClusterDialogReducer } from '../../components/clusters/common/DeleteClusterDialog/DeleteClusterDialogReducer';
 import { subscriptionReleasedReducer } from '../../components/clusters/common/TransferClusterOwnershipDialog/subscriptionReleasedReducer';
@@ -91,6 +92,7 @@ const reducers = {
   ccsInquiries: ccsInquiriesReducer,
   ocmRoles: ocmRolesReducer,
   rosaReducer,
+  deleteProtection: deleteProtectionReducer,
 };
 
 const reduxReducers = (history: Parameters<typeof connectRouter>[0]) =>

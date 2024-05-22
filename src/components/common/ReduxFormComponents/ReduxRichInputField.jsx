@@ -187,6 +187,7 @@ const ReduxRichInputField = (props) => {
 
   const populateAsyncValidation = (term) => {
     const populatedValidation = asyncValidation(term);
+
     validationDispatch({
       type: 'set-async-validation',
       payload: populatedValidation,
