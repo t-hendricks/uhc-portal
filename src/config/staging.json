@@ -1,7 +1,7 @@
 {
   "apiGateway": "https://api.stage.openshift.com",
   "apiRegionalGatewayHardcode": "https://***REMOVED***",
-  "apiRegionalGatewayTemplate": "https://api.$PROVIDER$.$REGION$.stage.openshift.com",
+  "apiRegionalGatewayTemplate": "https://api.$REGION$.openshift.com",
   "insightsGateway": "https://$SELF_PATH$/api",
   "sentryDSN": "https://***REMOVED***/64",
   "fedrampGateway": "https://console.stage.redhat.com/api",
