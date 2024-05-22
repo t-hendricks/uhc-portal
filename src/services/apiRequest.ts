@@ -39,13 +39,9 @@ export function getAPIRequest(baseURL: string) {
   return apiRequestCache[baseURL];
 }
 
-export function getAPIRequestForRegion(region?: string, provider: string = 'aws') {
-  return region
-    ? getAPIRequest(
-        config.configData.apiRegionalGatewayTemplate
-          ?.replace('$REGION$', region)
-          .replace('$PROVIDER$', provider) || '',
-      )
+export function getAPIRequestForRegion(region?: string) {
+  return region && config.configData.apiRegionalGatewayTemplate
+    ? getAPIRequest(config.configData.apiRegionalGatewayTemplate.replace('$REGION$', region))
     : apiRequest;
 }
 
