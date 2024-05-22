@@ -135,6 +135,9 @@ export const RichInputField = ({
 
   const {
     validateField,
+    setFieldTouched,
+    setFieldError,
+    setFieldValue,
     isValidating: isFormValidating,
     errors: { [inputName]: error },
   } = useFormState();
@@ -302,11 +305,14 @@ export const RichInputField = ({
                 setIsFocused(true);
                 setShowPopover(true);
               }}
-              onChange={(_event, val) => {
-                inputOnChange(val);
+              onChange={async (_event, val) => {
                 if (!touched && val?.length) {
+                  setFieldTouched(inputName, true, false);
+                  setFieldError(inputName, '');
                   setTouched(true);
                 }
+                await setFieldValue(inputName, val, false);
+                inputOnChange(val);
               }}
               ref={textInputRef}
               aria-describedby={`rich-input-popover-${inputName}`}

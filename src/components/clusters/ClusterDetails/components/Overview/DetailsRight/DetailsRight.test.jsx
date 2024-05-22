@@ -41,6 +41,7 @@ const componentText = {
     SELF: 'Self-managed',
     ID: 'ID:',
   },
+  DELETE_PROTECTION: { label: 'Delete Protection: Disabled' },
 };
 
 const checkForValue = (label, value, testId) => {
@@ -147,6 +148,27 @@ describe('<DetailsRight />', () => {
 
       // Assert
       checkForValueAbsence(componentText.STATUS_ERROR.label);
+    });
+
+    it('shows delete protection', () => {
+      // Arrange
+      render(<DetailsRight {...defaultProps} />);
+
+      // Assert
+      checkForValue(componentText.DELETE_PROTECTION.label);
+    });
+
+    it('hides delete protection if cluster is archived', () => {
+      // Arrange
+      const cluster = {
+        ...fixtures.clusterDetails.cluster,
+        subscription: { status: 'Archived', id: 'fake' },
+      };
+      const props = { ...defaultProps, cluster };
+      render(<DetailsRight {...props} />);
+
+      // Assert
+      checkForValueAbsence(componentText.DELETE_PROTECTION.label);
     });
   });
 

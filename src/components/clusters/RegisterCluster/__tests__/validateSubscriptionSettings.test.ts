@@ -1,13 +1,12 @@
-import { secureRandomValueInRange } from '../../../common/helpers';
+import { secureRandomValueInRange } from '../../../../common/helpers';
 import {
   subscriptionServiceLevels,
   subscriptionSettings,
   subscriptionSupportLevels,
   subscriptionSystemUnits,
   subscriptionUsages,
-} from '../../../common/subscriptionTypes';
-
-import validateSubscriptionSettings from './validateSubscriptionSettings';
+} from '../../../../common/subscriptionTypes';
+import validateSubscriptionSettings from '../validateSubscriptionSettings';
 
 const { SUPPORT_LEVEL, SERVICE_LEVEL, USAGE, SYSTEM_UNITS, CPU_TOTAL, SOCKET_TOTAL } =
   subscriptionSettings;
@@ -20,13 +19,13 @@ const { PRODUCTION, DEV_TEST, DISASTER_RECOVERY } = subscriptionUsages;
 
 const { CORES_VCPU, SOCKETS } = subscriptionSystemUnits;
 
-const expectedCpuTotal = (settings) =>
+const expectedCpuTotal = (settings: { [index: string]: any }) =>
   settings[SYSTEM_UNITS] === CORES_VCPU
     ? settings[CPU_TOTAL]
     : // default cpu_total is socket_total
       settings[SOCKET_TOTAL];
 
-const expectedSocketTotal = (settings) =>
+const expectedSocketTotal = (settings: { [index: string]: any }) =>
   settings[SYSTEM_UNITS] === SOCKETS
     ? settings[SOCKET_TOTAL]
     : // default socket_total is 1
@@ -62,12 +61,12 @@ describe('validateSubscriptionSettings()', () => {
     };
     const { isValid, request } = validateSubscriptionSettings(settings);
     expect(isValid).toBeTruthy();
-    expect(request[SUPPORT_LEVEL]).toEqual(settings[SUPPORT_LEVEL]);
-    expect(request[SERVICE_LEVEL]).toEqual(settings[SERVICE_LEVEL]);
-    expect(request[USAGE]).toEqual(settings[USAGE]);
-    expect(request[SYSTEM_UNITS]).toEqual(settings[SYSTEM_UNITS]);
-    expect(request[CPU_TOTAL]).toEqual(expectedCpuTotal(settings));
-    expect(request[SOCKET_TOTAL]).toEqual(expectedSocketTotal(settings));
+    expect(request?.support_level).toEqual(settings[SUPPORT_LEVEL]);
+    expect(request?.service_level).toEqual(settings[SERVICE_LEVEL]);
+    expect(request?.usage).toEqual(settings[USAGE]);
+    expect(request?.system_units).toEqual(settings[SYSTEM_UNITS]);
+    expect(request?.cpu_total).toEqual(expectedCpuTotal(settings));
+    expect(request?.socket_total).toEqual(expectedSocketTotal(settings));
   });
 
   it('it should be valid when configured Standard', () => {
@@ -82,12 +81,12 @@ describe('validateSubscriptionSettings()', () => {
     };
     const { isValid, request } = validateSubscriptionSettings(settings);
     expect(isValid).toBeTruthy();
-    expect(request[SUPPORT_LEVEL]).toEqual(settings[SUPPORT_LEVEL]);
-    expect(request[SERVICE_LEVEL]).toEqual(settings[SERVICE_LEVEL]);
-    expect(request[USAGE]).toEqual(settings[USAGE]);
-    expect(request[SYSTEM_UNITS]).toEqual(settings[SYSTEM_UNITS]);
-    expect(request[CPU_TOTAL]).toEqual(expectedCpuTotal(settings));
-    expect(request[SOCKET_TOTAL]).toEqual(expectedSocketTotal(settings));
+    expect(request?.support_level).toEqual(settings[SUPPORT_LEVEL]);
+    expect(request?.service_level).toEqual(settings[SERVICE_LEVEL]);
+    expect(request?.usage).toEqual(settings[USAGE]);
+    expect(request?.system_units).toEqual(settings[SYSTEM_UNITS]);
+    expect(request?.cpu_total).toEqual(expectedCpuTotal(settings));
+    expect(request?.socket_total).toEqual(expectedSocketTotal(settings));
   });
 
   it('it should be valid when configured Standard, Sockets', () => {
@@ -102,12 +101,12 @@ describe('validateSubscriptionSettings()', () => {
     };
     const { isValid, request } = validateSubscriptionSettings(settings);
     expect(isValid).toBeTruthy();
-    expect(request[SUPPORT_LEVEL]).toEqual(settings[SUPPORT_LEVEL]);
-    expect(request[SERVICE_LEVEL]).toEqual(settings[SERVICE_LEVEL]);
-    expect(request[USAGE]).toEqual(settings[USAGE]);
-    expect(request[SYSTEM_UNITS]).toEqual(settings[SYSTEM_UNITS]);
-    expect(request[CPU_TOTAL]).toEqual(expectedCpuTotal(settings));
-    expect(request[SOCKET_TOTAL]).toEqual(expectedSocketTotal(settings));
+    expect(request?.support_level).toEqual(settings[SUPPORT_LEVEL]);
+    expect(request?.service_level).toEqual(settings[SERVICE_LEVEL]);
+    expect(request?.usage).toEqual(settings[USAGE]);
+    expect(request?.system_units).toEqual(settings[SYSTEM_UNITS]);
+    expect(request?.cpu_total).toEqual(expectedCpuTotal(settings));
+    expect(request?.socket_total).toEqual(expectedSocketTotal(settings));
   });
 
   it('it should be valid when configured Self-Support, Sockets', () => {
@@ -122,12 +121,12 @@ describe('validateSubscriptionSettings()', () => {
     };
     const { isValid, request } = validateSubscriptionSettings(settings);
     expect(isValid).toBeTruthy();
-    expect(request[SUPPORT_LEVEL]).toEqual(settings[SUPPORT_LEVEL]);
-    expect(request[SERVICE_LEVEL]).toEqual(settings[SERVICE_LEVEL]);
-    expect(request[USAGE]).toEqual(settings[USAGE]);
-    expect(request[SYSTEM_UNITS]).toEqual(settings[SYSTEM_UNITS]);
-    expect(request[CPU_TOTAL]).toEqual(expectedCpuTotal(settings));
-    expect(request[SOCKET_TOTAL]).toEqual(expectedSocketTotal(settings));
+    expect(request?.support_level).toEqual(settings[SUPPORT_LEVEL]);
+    expect(request?.service_level).toEqual(settings[SERVICE_LEVEL]);
+    expect(request?.usage).toEqual(settings[USAGE]);
+    expect(request?.system_units).toEqual(settings[SYSTEM_UNITS]);
+    expect(request?.cpu_total).toEqual(expectedCpuTotal(settings));
+    expect(request?.socket_total).toEqual(expectedSocketTotal(settings));
   });
 
   it('it should not be valid when child form is invalid', () => {

@@ -52,6 +52,9 @@ getInstallableVersions.mockResolvedValue([]);
 const getMachineTypesByRegionARN = jest.fn();
 getMachineTypesByRegionARN.mockResolvedValue([]);
 
+const updateDeleteProtection = jest.fn();
+updateDeleteProtection.mockResolvedValue({});
+
 const clusterService = {
   getClusters,
   postNewCluster,

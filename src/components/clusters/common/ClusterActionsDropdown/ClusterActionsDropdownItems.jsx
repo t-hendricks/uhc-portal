@@ -76,6 +76,13 @@ function actionResolver(
     <span>This operation is not available during maintenance</span>
   );
 
+  const deleteProtectionMessage = cluster.delete_protection?.enabled && (
+    <span>
+      Cluster is locked and cannot be deleted. To unlock, go to cluster details and disable deletion
+      protection.
+    </span>
+  );
+
   const consoleURL = get(cluster, 'console.url', false);
   const consoleDisabledMessage = !consoleURL && (
     <span>Admin console is not yet available for this cluster</span>
@@ -227,14 +234,17 @@ function actionResolver(
     ...baseProps,
     title: 'Delete cluster',
     key: getKey('deletecluster'),
-    ...disableIfTooltip(uninstallingMessage || readOnlyMessage || hibernatingMessage, {
-      onClick: () =>
-        openModal(modals.DELETE_CLUSTER, {
-          clusterID: cluster.id,
-          clusterName,
-          shouldDisplayClusterName: inClusterList,
-        }),
-    }),
+    ...disableIfTooltip(
+      uninstallingMessage || readOnlyMessage || hibernatingMessage || deleteProtectionMessage,
+      {
+        onClick: () =>
+          openModal(modals.DELETE_CLUSTER, {
+            clusterID: cluster.id,
+            clusterName,
+            shouldDisplayClusterName: inClusterList,
+          }),
+      },
+    ),
   });
 
   const getEditSubscriptionSettingsProps = () => {
