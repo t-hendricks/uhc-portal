@@ -83,7 +83,7 @@ const ReviewClusterScreen = ({
     values: formValues,
     setFieldValue,
   } = useFormState();
-  const { goToStepById } = useWizardContext();
+  const { goToStepByIndex, getStep } = useWizardContext();
   const canAutoScale = useCanClusterAutoscale(product, billingModel);
   const autoscalingEnabled = canAutoScale && !!autoscalingEnabledValue;
   const isHypershiftSelected = hypershiftValue === 'true';
@@ -163,12 +163,13 @@ const ReviewClusterScreen = ({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [getUserRoleResponse, getOCMRoleResponse, userRole, ocmRole, errorWithAWSAccountRoles]);
 
-  const getStepId = (stepKey) => {
+  const getStepIndex = (stepKey) => {
     let step = stepKey;
     if (stepKey === 'CLUSTER_SETTINGS') {
       step = 'CLUSTER_SETTINGS__DETAILS';
     }
-    return rosaStepId[step];
+    const stepById = getStep(rosaStepId[step]);
+    return stepById.index;
   };
 
   const getStepName = (stepKey) => rosaStepNameById[rosaStepId[stepKey]];
@@ -205,14 +206,14 @@ const ReviewClusterScreen = ({
       {isHypershiftEnabled && (
         <ReviewSection
           title={getStepName('CONTROL_PLANE')}
-          onGoToStep={() => goToStepById(getStepId('CONTROL_PLANE'))}
+          onGoToStep={() => goToStepByIndex(getStepIndex('CONTROL_PLANE'))}
         >
           {ReviewItem(FieldId.Hypershift)}
         </ReviewSection>
       )}
       <ReviewSection
         title={getStepName(accountStepId)}
-        onGoToStep={() => goToStepById(getStepId(accountStepId))}
+        onGoToStep={() => goToStepByIndex(getStepIndex(accountStepId))}
         initiallyExpanded={errorWithAWSAccountRoles}
       >
         {ReviewItem(FieldId.AssociatedAwsId)}
@@ -234,13 +235,13 @@ const ReviewClusterScreen = ({
       </ReviewSection>
       <ReviewSection
         title={getStepName('CLUSTER_SETTINGS')}
-        onGoToStep={() => goToStepById(getStepId('CLUSTER_SETTINGS'))}
+        onGoToStep={() => goToStepByIndex(getStepIndex('CLUSTER_SETTINGS'))}
       >
         {clusterSettingsFields.map((fieldName) => ReviewItem(fieldName))}
       </ReviewSection>
       <ReviewSection
         title="Default machine pool"
-        onGoToStep={() => goToStepById(getStepId('CLUSTER_SETTINGS__MACHINE_POOL'))}
+        onGoToStep={() => goToStepByIndex(getStepIndex('CLUSTER_SETTINGS__MACHINE_POOL'))}
       >
         {ReviewItem(FieldId.MachineType)}
         {canAutoScale && ReviewItem(FieldId.AutoscalingEnabled)}
@@ -267,7 +268,7 @@ const ReviewClusterScreen = ({
       </ReviewSection>
       <ReviewSection
         title={getStepName('NETWORKING')}
-        onGoToStep={() => goToStepById(getStepId('NETWORKING__CONFIGURATION'))}
+        onGoToStep={() => goToStepByIndex(getStepIndex('NETWORKING__CONFIGURATION'))}
       >
         {ReviewItem(FieldId.ClusterPrivacy)}
         {clusterPrivacyPublicSubnetId &&
@@ -316,7 +317,7 @@ const ReviewClusterScreen = ({
       </ReviewSection>
       <ReviewSection
         title={getStepName('CLUSTER_ROLES_AND_POLICIES')}
-        onGoToStep={() => goToStepById(getStepId('CLUSTER_ROLES_AND_POLICIES'))}
+        onGoToStep={() => goToStepByIndex(getStepIndex('CLUSTER_ROLES_AND_POLICIES'))}
       >
         {!isHypershiftSelected && ReviewItem(FieldId.RosaRolesProviderCreationMode)}
         {byoOidcConfigId && (
@@ -327,7 +328,10 @@ const ReviewClusterScreen = ({
         )}
         {ReviewItem(FieldId.CustomOperatorRolesPrefix)}
       </ReviewSection>
-      <ReviewSection title="Updates" onGoToStep={() => goToStepById(getStepId('CLUSTER_UPDATES'))}>
+      <ReviewSection
+        title="Updates"
+        onGoToStep={() => goToStepByIndex(getStepIndex('CLUSTER_UPDATES'))}
+      >
         {ReviewItem(FieldId.UpgradePolicy)}
         {upgradePolicy === 'automatic' && ReviewItem(FieldId.AutomaticUpgradeSchedule)}
         {!isHypershiftSelected && ReviewItem(FieldId.NodeDrainGracePeriod)}
