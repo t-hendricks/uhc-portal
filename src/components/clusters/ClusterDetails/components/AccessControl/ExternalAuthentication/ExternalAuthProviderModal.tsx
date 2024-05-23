@@ -116,8 +116,11 @@ export function ExternalAuthProviderModal(props: ExternalAuthProviderModalProps)
       }}
       validationSchema={Yup.object({
         id: Yup.string()
-          .matches(/^[a-zA-Z0-9-]+$/, 'Only alphanumeric characters and hyphens are allowed')
-          .max(255, 'Must be 255 characters or less')
+          .matches(
+            /^[a-z]([-a-z0-9]*[a-z0-9])?$/,
+            'Only lowercase alphanumeric characters and hyphens are allowed. Value must start with a letter and end with an alphanumeric.',
+          )
+          .max(15, 'Must be 15 characters or less')
           .required('Required'),
         issuer: Yup.string()
           .max(255, 'Must be 255 characters or less')
