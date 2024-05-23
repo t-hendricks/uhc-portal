@@ -63,14 +63,14 @@ export function BreakGlassCredentialList() {
     expiration_timestamp: 'Expires',
     status: 'Status',
   };
-  const defaultActions = (item: BreakGlassCredential): IAction[] => [
+  const defaultActions = (cred: BreakGlassCredential): IAction[] => [
     {
       title: 'View Credentials',
-      onClick: () => getCredentials(item),
+      onClick: () => getCredentials(cred),
     },
     {
       title: 'Revoke All Credentials',
-      onClick: () => handleDelete(item),
+      onClick: () => handleDelete(cred),
     },
   ];
 
@@ -88,7 +88,7 @@ export function BreakGlassCredentialList() {
         New Credentials
       </ButtonWithTooltip>
 
-      {isModalOpen && (
+      {isModalOpen ? (
         <BreakGlassCredentialDetailsModal
           clusterID={clusterID || ''}
           onClose={() => {
@@ -96,7 +96,7 @@ export function BreakGlassCredentialList() {
           }}
           credential={credential}
         />
-      )}
+      ) : null}
       <BreakGlassCredentialNewModal
         clusterId={clusterID || ''}
         isNewModalOpen={isNewModalOpen}

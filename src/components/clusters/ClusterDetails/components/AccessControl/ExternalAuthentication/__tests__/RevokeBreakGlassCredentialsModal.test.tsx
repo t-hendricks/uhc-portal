@@ -42,7 +42,7 @@ describe('<RevokeBreakGlassCredentialsModal />', () => {
         onClose={mockModalData.onClose}
       />,
     );
-    expect(screen.getByRole('button', { name: 'Revoke All' })).toHaveAttribute(
+    expect(screen.getByRole('button', { name: 'Revoke all' })).toHaveAttribute(
       'aria-disabled',
       'false',
     );
@@ -57,7 +57,7 @@ describe('<RevokeBreakGlassCredentialsModal />', () => {
     );
 
     await user.click(screen.getByRole('button', { name: 'Cancel' }));
-    expect(mockModalData.onClose).toBeCalled();
+    expect(mockModalData.onClose).toHaveBeenCalled();
   });
 
   it('calls delete function on confirm', async () => {
@@ -68,7 +68,7 @@ describe('<RevokeBreakGlassCredentialsModal />', () => {
       />,
     );
 
-    await user.click(screen.getByRole('button', { name: 'Revoke All' }));
+    await user.click(screen.getByRole('button', { name: 'Revoke all' }));
     apiRequestMock.delete.mockResolvedValue({
       kind: 'BreakGlassCredential',
       id: mockModalData.credential.id,

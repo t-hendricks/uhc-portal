@@ -57,7 +57,7 @@ describe('<DeleteExternalAuthProviderModal />', () => {
     );
 
     await user.click(screen.getByRole('button', { name: 'Cancel' }));
-    expect(mockModalData.onClose).toBeCalled();
+    expect(mockModalData.onClose).toHaveBeenCalled();
   });
 
   it('enables delete button on text input', async () => {
