@@ -5,23 +5,44 @@ import {
   Button,
   ClipboardCopy,
   ClipboardCopyVariant,
-  Stack,
+  Modal,
   StackItem,
 } from '@patternfly/react-core';
 
 import ErrorBox from '~/components/common/ErrorBox';
-import Modal from '~/components/common/Modal/Modal';
 import { clusterService } from '~/services';
 import { BreakGlassCredential } from '~/types/clusters_mgmt.v1';
+
+const DownloadButton = ({ textOutput, disabled }: { textOutput: string; disabled: boolean }) => {
+  const file = new Blob([textOutput], { type: 'text/plain' });
+
+  return (
+    <Button variant="primary" isDisabled={disabled}>
+      <a
+        download="kubeConfig.txt"
+        target="_blank"
+        rel="noreferrer"
+        href={URL.createObjectURL(file)}
+        style={{
+          textDecoration: 'inherit',
+          color: 'inherit',
+        }}
+      >
+        Download
+      </a>
+    </Button>
+  );
+};
 
 type BreakGlassCredentialDetailsModalProps = {
   clusterID: string;
   onClose: () => void;
   credential?: BreakGlassCredential;
+  isOpen?: boolean;
 };
 
 export function BreakGlassCredentialDetailsModal(props: BreakGlassCredentialDetailsModalProps) {
-  const { clusterID, onClose, credential } = props;
+  const { clusterID, onClose, credential, isOpen = true } = props;
   const [credentialData, setCredentialData] = React.useState<BreakGlassCredential>();
   const [error, setError] = React.useState<AxiosError>();
   const [isPending, setIsPending] = React.useState(false);
@@ -65,22 +86,18 @@ export function BreakGlassCredentialDetailsModal(props: BreakGlassCredentialDeta
       id="edit-mp-modal"
       title={`${credential?.username} credentials`}
       onClose={handleClose}
-      modalSize="large"
+      variant="medium"
       description="Use these temporary credentials to access your cluster."
-      footer={
-        <Stack hasGutter>
-          <StackItem>
-            <Button
-              variant="secondary"
-              isDisabled={false}
-              onClick={handleClose}
-              data-testid="cancel-btn"
-            >
-              Close
-            </Button>
-          </StackItem>
-        </Stack>
-      }
+      isOpen={isOpen}
+      actions={[
+        <DownloadButton
+          textOutput={credentialData?.kubeconfig || ''}
+          disabled={isPending || !credentialData?.kubeconfig}
+        />,
+        <Button key="cancel" variant="secondary" onClick={handleClose}>
+          Cancel
+        </Button>,
+      ]}
     >
       {statusMessage()}
       {error && (

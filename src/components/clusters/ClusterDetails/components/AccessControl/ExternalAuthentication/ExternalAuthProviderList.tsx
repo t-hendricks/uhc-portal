@@ -53,14 +53,14 @@ export function ExternalAuthProviderList() {
     setEditProvider(provider);
   };
   const columns = { name: 'Name', issuer: 'Issuer URL', audiences: 'Audiences' };
-  const defaultActions = (item: ExternalAuth): IAction[] => [
+  const defaultActions = (provider: ExternalAuth): IAction[] => [
     {
       title: 'Edit',
-      onClick: () => handleEdit(item),
+      onClick: () => handleEdit(provider),
     },
     {
       title: 'Delete',
-      onClick: () => handleDelete(item),
+      onClick: () => handleDelete(provider),
     },
   ];
 
@@ -107,6 +107,7 @@ export function ExternalAuthProviderList() {
               <Th>{columns.name}</Th>
               <Th>{columns.issuer}</Th>
               <Th>{columns.audiences}</Th>
+              <Th screenReaderText="Action Menu" aria-label="Action Menu" />
             </Tr>
           </Thead>
           <Tbody>
@@ -125,16 +126,15 @@ export function ExternalAuthProviderList() {
           </Tbody>
         </Table>
       ) : null}
-      {isDeleteModalOpen ? (
-        <DeleteExternalAuthProviderModal
-          externalAuthProvider={editProvider ?? undefined}
-          clusterId={clusterID || ''}
-          onClose={() => {
-            setIsDeleteModalOpen(false);
-            setEditProvider(undefined);
-          }}
-        />
-      ) : null}
+      <DeleteExternalAuthProviderModal
+        externalAuthProvider={editProvider ?? undefined}
+        clusterId={clusterID || ''}
+        onClose={() => {
+          setIsDeleteModalOpen(false);
+          setEditProvider(undefined);
+        }}
+        isOpen={isDeleteModalOpen}
+      />
     </>
   );
 }
