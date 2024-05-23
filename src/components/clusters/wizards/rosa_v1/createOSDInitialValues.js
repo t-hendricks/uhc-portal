@@ -7,7 +7,6 @@ import { billingModels, normalizedProducts } from '../../../../common/subscripti
 import { IMDSType } from '../common/constants';
 
 export const AWS_DEFAULT_REGION = 'us-east-1';
-export const GCP_DEFAULT_REGION = 'us-east1';
 
 export const emptyAWSSubnet = () => ({
   availabilityZone: '',
@@ -102,7 +101,7 @@ const createOSDInitialValues = ({
   };
 
   if (cloudProviderID) {
-    initialValues.region = cloudProviderID === 'aws' ? AWS_DEFAULT_REGION : GCP_DEFAULT_REGION;
+    initialValues.region = AWS_DEFAULT_REGION;
   }
 
   return initialValues;

@@ -22,7 +22,6 @@ const testValues = {
     rosa_enabled: true,
     hosted_control_plane_enabled: true,
     hosted_control_plane_default: true,
-    gcp_marketplace_enabled: true,
     end_of_life_timestamp: '2025-02-28T00:00:00Z',
     image_overrides: {},
     release_image:
