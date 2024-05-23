@@ -49,7 +49,6 @@ const ReviewClusterScreen = ({
 }) => {
   const isByoc = formValues.byoc === 'true';
   const isAWS = formValues.cloud_provider === 'aws';
-  const isGCP = formValues.cloud_provider === 'gcp';
   const isROSA = formValues.product === normalizedProducts.ROSA;
   const hasEtcdEncryption = isHypershiftSelected && !!formValues.etcd_key_arn;
   const hasCustomKeyARN = isByoc && formValues.kms_key_arn;
@@ -280,10 +279,6 @@ const ReviewClusterScreen = ({
             name: 'shared_vpc',
             formValues,
           })}
-        {showVPCCheckbox &&
-          formValues.install_to_vpc &&
-          isGCP &&
-          ReviewItem({ name: 'gpc_vpc', formValues })}
         {installToVPCSelected && ReviewItem({ name: 'configure_proxy', formValues })}
         {installToVPCSelected &&
           configureProxySelected &&
