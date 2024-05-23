@@ -19,7 +19,17 @@ const ErrorDetailsDisplay = ({
     <>
       {showErrorCode && <ItemWrapper>{`Error code: ${response.errorCode}`}</ItemWrapper>}
       {response.errorMessage && <ItemWrapper>{response.errorMessage}</ItemWrapper>}
-      {errorDetails && <ItemWrapper>{errorDetails}</ItemWrapper>}
+      {errorDetails?.map((detail) =>
+        Array.isArray(detail) ? (
+          <ul key={`${detail}`}>
+            {detail.map((detailItem) => (
+              <li key={`${detail}-${detailItem}`}>{detailItem}</li>
+            ))}
+          </ul>
+        ) : (
+          <pre key={`${detail}`}>{detail}</pre>
+        ),
+      )}
       <ItemWrapper>{`Operation ID: ${response.operationID || 'N/A'}`}</ItemWrapper>
     </>
   );

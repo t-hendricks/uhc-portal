@@ -54,4 +54,83 @@ describe('<ErrorDetailsDisplay />', () => {
       expect(screen.getByText('Error code: 400')).toBeInTheDocument();
     });
   });
+
+  it('properly renders ExcessResources kind items with addon resource_type', () => {
+    const newProps = {
+      ...defaultProps,
+      response: {
+        ...baseResponse,
+        errorDetails: [
+          {
+            kind: 'ExcessResources',
+            items: [
+              {
+                resource_type: 'addon',
+                resource_name: 'addon-prow-operator',
+                availability_zone_type: 'single',
+                count: 5,
+                billing_model: 'standard',
+              },
+            ],
+          },
+        ],
+      },
+    };
+
+    render(<ErrorDetailsDisplay {...newProps} />);
+    expect(screen.getByRole('listitem')).toHaveTextContent('addon: addon-prow-operator');
+  });
+
+  it('properly renders AddOnParameterOptionList kind', () => {
+    const newProps = {
+      ...defaultProps,
+      response: {
+        ...baseResponse,
+        errorDetails: [
+          {
+            kind: 'AddOnParameterOptionList',
+            items: [
+              {
+                name: 'Option 1',
+                value: 'option 1',
+              },
+              {
+                name: 'Option 2',
+                value: 'option 2',
+              },
+            ],
+          },
+        ],
+      },
+    };
+
+    const { container } = render(<ErrorDetailsDisplay {...newProps} />);
+
+    const expected =
+      '[ { "name": "Option 1", "value": "option 1" }, { "name": "Option 2", "value": "option 2" } ]';
+    expect(container.querySelector('pre')).toHaveTextContent(expected);
+  });
+
+  it('properly renders AddOnRequirementData kind', () => {
+    const newProps = {
+      ...defaultProps,
+      response: {
+        ...baseResponse,
+        errorDetails: [
+          {
+            kind: 'AddOnRequirementData',
+            items: {
+              'cloud_provider.id': 'gcp',
+              'region.id': ['us-east-1', 'eu-west-1'],
+            },
+          },
+        ],
+      },
+    };
+
+    const { container } = render(<ErrorDetailsDisplay {...newProps} />);
+
+    const expected = '{ "cloud_provider.id": "gcp", "region.id": [ "us-east-1", "eu-west-1" ] }';
+    expect(container.querySelector('pre')).toHaveTextContent(expected);
+  });
 });
