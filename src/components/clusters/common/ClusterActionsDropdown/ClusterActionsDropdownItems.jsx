@@ -1,6 +1,7 @@
 import React from 'react';
 import get from 'lodash/get';
 
+import { Tooltip } from '@patternfly/react-core';
 import { DropdownItem as DropdownItemDeprecated } from '@patternfly/react-core/deprecated';
 
 import getClusterName from '../../../../common/getClusterName';
@@ -375,13 +376,17 @@ function dropDownItems({
     refreshFunc,
     inClusterList,
   );
-  const menuItems = actions.map((action) => {
-    // Remove props that aren't recognized by DropdownItemDeprecated
-    const { isExternalLink, ...cleanedProps } = action;
+  // cleanedProps - Remove props that aren't recognized by DropdownItemDeprecated
+  const renderMenuItem = ({ isExternalLink, tooltipProps, title, ...cleanedProps }) =>
+    tooltipProps ? (
+      <Tooltip {...tooltipProps}>
+        <DropdownItemDeprecated {...cleanedProps}>{title}</DropdownItemDeprecated>
+      </Tooltip>
+    ) : (
+      <DropdownItemDeprecated {...cleanedProps}>{title}</DropdownItemDeprecated>
+    );
 
-    return <DropdownItemDeprecated {...cleanedProps}>{action.title}</DropdownItemDeprecated>;
-  });
-  return menuItems;
+  return actions.map(renderMenuItem);
 }
 
 export { actionResolver, dropDownItems };
