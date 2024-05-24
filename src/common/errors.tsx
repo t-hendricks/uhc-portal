@@ -1,19 +1,23 @@
-import React from 'react';
 import { AxiosError, AxiosResponse } from 'axios';
 
+import { ExcessResource } from '~/types/accounts_mgmt.v1';
+import { Error as CMSError } from '~/types/clusters_mgmt.v1';
+import { ErrorDetail, ErrorState } from '~/types/types';
+
 import { clustersConstants } from '../redux/constants';
-import { ExcessResource } from '../types/accounts_mgmt.v1';
-import { ErrorDetail, ErrorState } from '../types/types';
 
 const BANNED_USER_CODE = 'ACCT-MGMT-22';
 const TERMS_REQUIRED_CODE = 'CLUSTERS-MGMT-451';
 
-const overrideErrorMessage = (payload: any, actionType?: string) => {
+const overrideErrorMessage = (
+  payload: Partial<CMSError & ErrorState>,
+  actionType?: string,
+): string => {
   if (!payload) {
     return '';
   }
 
-  let message: string | React.ReactElement = '';
+  let message = '';
 
   // override error by its kind
   const errorKind = payload?.details?.[0]?.kind || payload?.errorDetails?.[0]?.kind;
@@ -40,24 +44,10 @@ const overrideErrorMessage = (payload: any, actionType?: string) => {
   const errorCode = payload?.code;
   switch (errorCode) {
     case BANNED_USER_CODE: // ErrorBanned
-      message = (
-        <span>
-          Your account has been placed on{' '}
-          <a
-            href="https://access.redhat.com/articles/1340183"
-            target="_blank"
-            rel="noreferrer noopener"
-          >
-            Export Hold
-          </a>{' '}
-          based on export control screening.
-          <br />
-          The Export Compliance Team has been notified that your account is on hold, and must
-          conduct additional due diligence to resolve the Export Hold.
-          <br />
-          Try again in 24-48 hours.
-        </span>
-      );
+      message = `Your account has been placed on Export Hold based on export control screening.
+The Export Compliance Team has been notified that your account is on hold, and must conduct additional due diligence to resolve the Export Hold.
+Try again in 24-48 hours.
+Learn more: https://access.redhat.com/articles/1340183`;
       break;
     default:
   }
@@ -65,7 +55,7 @@ const overrideErrorMessage = (payload: any, actionType?: string) => {
   return message;
 };
 
-const getErrorMessage = (action: { type?: string; payload?: AxiosError<any> }) => {
+const getErrorMessage = (action: { type?: string; payload?: AxiosError<any> }): string => {
   if (typeof action.payload?.response === 'undefined') {
     // Handle edge cases in which `payload` might be an Error type
     return String(action.payload);

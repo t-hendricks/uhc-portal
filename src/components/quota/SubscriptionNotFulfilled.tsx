@@ -46,10 +46,18 @@ const SubscriptionNotFulfilled = ({ data, refresh, marketplace }: Props) => {
 
   const getErrorText = () => {
     const { internalErrorCode, errorMessage, operationID } = data;
-    const payload = { code: internalErrorCode };
     const text =
-      BANNED_USER_CODE === payload.code ? (
-        overrideErrorMessage(payload)
+      BANNED_USER_CODE === internalErrorCode ? (
+        <span>
+          {overrideErrorMessage({ code: internalErrorCode })
+            ?.split(/\n/)
+            .map((line) => (
+              <>
+                {line}
+                <br />
+              </>
+            ))}
+        </span>
       ) : (
         <>
           <p>
