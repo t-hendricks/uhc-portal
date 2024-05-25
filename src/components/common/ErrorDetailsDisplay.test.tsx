@@ -55,6 +55,84 @@ describe('<ErrorDetailsDisplay />', () => {
     });
   });
 
+  describe('links embedded in error strings', () => {
+    const errorMessage = "that's a bummer :/  visit http://example.com to learn more.";
+    const errorMessageProps = {
+      ...defaultProps,
+      response: { ...baseResponse, errorMessage },
+    };
+    const errorDetailsProps = {
+      ...defaultProps,
+      response: {
+        ...baseResponse,
+        errorDetails: [{ kind: 'wat', items: ['foo', errorMessage] }],
+      },
+    };
+    const arbitraryErrorDetailsProps = {
+      ...defaultProps,
+      response: {
+        ...baseResponse,
+        errorDetails: [
+          {
+            kind: 'wat',
+            items: [
+              {
+                foo: ['bar', 'foo http://example.com bar'],
+                wat: false,
+              },
+            ],
+          },
+        ],
+      },
+    };
+
+    it('are rendered accessibly', () => {
+      render(<ErrorDetailsDisplay {...errorMessageProps} renderLinks />);
+      expect(screen.getByText(/that's a bummer.*/)).toBeInTheDocument();
+      expect(screen.getByText('http://example.com')).toHaveRole('link');
+    });
+
+    describe('are rendered when renderLinks is switched ON', () => {
+      it('within errorMessage', () => {
+        render(<ErrorDetailsDisplay {...errorMessageProps} renderLinks />);
+        expect(screen.getByText(/that's a bummer.*/)).toBeInTheDocument();
+        expect(screen.getByText('http://example.com')).toHaveAttribute('href');
+      });
+
+      it('within errorDetails', () => {
+        render(<ErrorDetailsDisplay {...errorDetailsProps} renderLinks />);
+        expect(screen.getByText(/that's a bummer.*/)).toBeInTheDocument();
+        expect(screen.getByText('http://example.com')).toHaveAttribute('href');
+      });
+
+      it('within arbitrary errorDetails items', () => {
+        render(<ErrorDetailsDisplay {...arbitraryErrorDetailsProps} renderLinks />);
+        expect(screen.getByText(/.*"wat": false.*/)).toBeInTheDocument();
+        expect(screen.getByText('http://example.com')).toHaveAttribute('href');
+      });
+    });
+
+    describe('are NOT rendered when renderLinks is switched OFF', () => {
+      it('within errorMessage', () => {
+        render(<ErrorDetailsDisplay {...errorMessageProps} />);
+        expect(screen.getByText(/that's a bummer.*/)).toBeInTheDocument();
+        expect(screen.queryByText(/http:\/\/example\.com/)).not.toHaveAttribute('href');
+      });
+
+      it('within errorDetails', () => {
+        render(<ErrorDetailsDisplay {...errorDetailsProps} />);
+        expect(screen.getByText(/that's a bummer.*/)).toBeInTheDocument();
+        expect(screen.queryByText(/http:\/\/example\.com/)).not.toHaveAttribute('href');
+      });
+
+      it('within arbitrary errorDetails items', () => {
+        render(<ErrorDetailsDisplay {...arbitraryErrorDetailsProps} />);
+        expect(screen.getByText(/.*"wat": false.*/)).toBeInTheDocument();
+        expect(screen.queryByText(/http:\/\/example\.com/)).not.toHaveAttribute('href');
+      });
+    });
+  });
+
   it('properly renders ExcessResources kind items with addon resource_type', () => {
     const newProps = {
       ...defaultProps,
