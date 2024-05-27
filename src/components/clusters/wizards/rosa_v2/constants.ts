@@ -11,6 +11,7 @@ import {
 } from '~/components/clusters/common/networkingConstants';
 import {
   AWS_DEFAULT_REGION,
+  CloudProviderType,
   emptyAWSSubnet,
   FieldId as CommonFieldId,
   IMDSType,
@@ -108,7 +109,7 @@ export const initialValuesHypershift = (isHypershift: boolean) =>
 export const initialValues: FormikValues = {
   // static for ROSA, shouldn't change
   [FieldId.Byoc]: 'true',
-  [FieldId.CloudProvider]: 'aws',
+  [FieldId.CloudProvider]: CloudProviderType.Aws,
   [FieldId.Product]: normalizedProducts.ROSA,
 
   // other fields

@@ -19,7 +19,6 @@ import {
 } from '@patternfly/react-core';
 
 import links from '~/common/installLinks.mjs';
-import { normalizedProducts } from '~/common/subscriptionTypes';
 import PodDistruptionBudgetGraceSelect from '~/components/clusters/common/Upgrades/PodDistruptionBudgetGraceSelect';
 import UpgradeScheduleSelection from '~/components/clusters/common/Upgrades/UpgradeScheduleSelection';
 import { useFormState } from '~/components/clusters/wizards/hooks';
@@ -35,11 +34,7 @@ function UpgradeSettingsFields() {
     setFieldTouched, // Set whether field has been touched directly
     getFieldProps, // Access: name, value, onBlur, onChange for a <Field>, useful for mapping to a field that expects the redux-form props
     // getFieldMeta, // Access: error, touched for a <Field>, useful for mapping to a field that expects the redux-form props
-    values: {
-      [FieldId.UpgradePolicy]: upgradePolicy,
-      [FieldId.Product]: product,
-      [FieldId.Hypershift]: hypershift,
-    },
+    values: { [FieldId.UpgradePolicy]: upgradePolicy, [FieldId.Hypershift]: hypershift },
   } = useFormState();
 
   const isAutomatic = upgradePolicy === 'automatic';
@@ -48,22 +43,19 @@ function UpgradeSettingsFields() {
   const isDisabled = false;
   const showDivider = false;
 
-  const isRosa = product === normalizedProducts.ROSA;
   const recurringUpdateMessage = (
     <>
       The cluster will be automatically updated based on your preferred day and start time when new
-      patch updates (
-      <ExternalLink href={isRosa ? links.ROSA_Z_STREAM : links.OSD_Z_STREAM}>z-stream</ExternalLink>
-      ) are available. When a new minor version is available, you'll be notified and must manually
-      allow the cluster to update to the next minor version.
+      patch updates (<ExternalLink href={links.ROSA_Z_STREAM}>z-stream</ExternalLink>) are
+      available. When a new minor version is available, you'll be notified and must manually allow
+      the cluster to update to the next minor version.
     </>
   );
   const recurringUpdateHypershift = (
     <>
       The cluster control plane will be automatically updated based on your preferred day and start
-      time when new patch updates (
-      <ExternalLink href={isRosa ? links.ROSA_Z_STREAM : links.OSD_Z_STREAM}>z-stream</ExternalLink>
-      ) are available. When a new minor version is available, you'll be notified and must manually
+      time when new patch updates (<ExternalLink href={links.ROSA_Z_STREAM}>z-stream</ExternalLink>)
+      are available. When a new minor version is available, you'll be notified and must manually
       allow the cluster to update to the next minor version. The worker nodes will need to be
       manually updated.
     </>
@@ -99,10 +91,8 @@ function UpgradeSettingsFields() {
     description: (
       <>
         Schedule each update individually. Take into consideration end of life dates from the{' '}
-        <ExternalLink href={isRosa ? links.ROSA_LIFE_CYCLE : links.OSD_LIFE_CYCLE}>
-          lifecycle policy
-        </ExternalLink>{' '}
-        when planning updates.
+        <ExternalLink href={links.ROSA_LIFE_CYCLE}>lifecycle policy</ExternalLink> when planning
+        updates.
       </>
     ),
   };
