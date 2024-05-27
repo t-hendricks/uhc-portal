@@ -58,7 +58,7 @@ const Unavailable = ({ errors, message = '', response }: Props) => {
             <Title headingLevel="h6">{m}</Title>
           </StackItem>
         )}
-        <ErrorDetailsDisplay response={r} itemWrapper={StackItem} showErrorCode />
+        <ErrorDetailsDisplay response={r} itemWrapper={StackItem} showErrorCode renderLinks />
       </Stack>
     </StackItem>
   );

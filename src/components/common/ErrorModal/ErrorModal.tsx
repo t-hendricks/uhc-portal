@@ -42,7 +42,7 @@ const ErrorModal = ({
       showSecondary={false}
       aria-label={title}
     >
-      <ErrorDetailsDisplay response={errorResponse} />
+      <ErrorDetailsDisplay response={errorResponse} renderLinks />
       {children}
     </Modal>
   );
