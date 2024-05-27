@@ -14,7 +14,6 @@ import {
 import { hasExternalAuthenticationCapability } from '~/common/externalAuthHelper';
 import { hasSelectedSecurityGroups } from '~/common/securityGroupsHelpers';
 import useOrganization from '~/components/CLILoginPage/useOrganization';
-import { canAutoScaleOnCreateSelector } from '~/components/clusters/ClusterDetails/components/MachinePools/machinePoolsSelectors';
 import { useFormState } from '~/components/clusters/wizards/hooks';
 import { canSelectImds } from '~/components/clusters/wizards/rosa/constants';
 import { getUserRoleForSelectedAWSAccount } from '~/components/clusters/wizards/rosa_v2/AccountsRolesScreen/AccountsRolesScreen';
