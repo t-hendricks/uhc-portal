@@ -1,9 +1,8 @@
 import React from 'react';
 import * as ReactRedux from 'react-redux';
 
+import * as DownloadUtils from '~/components/downloads/downloadUtils';
 import { checkAccessibility, render, screen } from '~/testUtils';
-
-import * as DownloadUtils from '../../../downloads/DownloadsPage/DownloadsPage';
 
 import DownloadOcCliButton from './DownloadOcCliButton';
 

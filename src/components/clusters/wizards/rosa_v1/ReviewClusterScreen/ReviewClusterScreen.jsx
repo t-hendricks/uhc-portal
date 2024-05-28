@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 
 import { Title } from '@patternfly/react-core';
 
+import { hasExternalAuthenticationCapability } from '~/common/externalAuthHelper';
 import { hasSelectedSecurityGroups } from '~/common/securityGroupsHelpers';
 import { normalizedProducts } from '~/common/subscriptionTypes';
 import { stepId, stepNameById } from '~/components/clusters/wizards/common/osdWizardConstants';
@@ -22,6 +23,7 @@ import {
   HYPERSHIFT_WIZARD_FEATURE,
 } from '~/redux/constants/featureConstants';
 
+import useOrganization from '../../../../CLILoginPage/useOrganization';
 import ReviewSection, { ReviewItem } from '../../common/ReviewCluster/ReviewSection';
 import DebugClusterRequest from '../DebugClusterRequest';
 
@@ -47,7 +49,6 @@ const ReviewClusterScreen = ({
 }) => {
   const isByoc = formValues.byoc === 'true';
   const isAWS = formValues.cloud_provider === 'aws';
-  const isGCP = formValues.cloud_provider === 'gcp';
   const isROSA = formValues.product === normalizedProducts.ROSA;
   const hasEtcdEncryption = isHypershiftSelected && !!formValues.etcd_key_arn;
   const hasCustomKeyARN = isByoc && formValues.kms_key_arn;
@@ -58,6 +59,8 @@ const ReviewClusterScreen = ({
 
   const hasSecurityGroups = isByoc && hasSelectedSecurityGroups(formValues.securityGroups);
   const canAutoScale = useCanClusterAutoscale(formValues.product, formValues.billing_model);
+  const { organization } = useOrganization();
+  const hasExternalAuth = hasExternalAuthenticationCapability(organization?.capabilities);
 
   const clusterSettingsFields = [
     ...(!isROSA ? ['cloud_provider'] : []),
@@ -75,6 +78,7 @@ const ReviewClusterScreen = ({
     'etcd_encryption',
     ...(!isHypershiftSelected ? ['fips'] : []),
     ...(hasEtcdEncryption ? ['etcd_key_arn'] : []),
+    ...(isHypershiftSelected && hasExternalAuth ? ['enable_external_authentication'] : []),
   ];
 
   const [userRole, setUserRole] = useState('');
@@ -275,10 +279,6 @@ const ReviewClusterScreen = ({
             name: 'shared_vpc',
             formValues,
           })}
-        {showVPCCheckbox &&
-          formValues.install_to_vpc &&
-          isGCP &&
-          ReviewItem({ name: 'gpc_vpc', formValues })}
         {installToVPCSelected && ReviewItem({ name: 'configure_proxy', formValues })}
         {installToVPCSelected &&
           configureProxySelected &&

@@ -10,6 +10,7 @@ import AvailabilityZoneSelection from '~/components/clusters/wizards/common/Netw
 import VPCDropdown from '~/components/clusters/wizards/common/VPCDropdown/VPCDropdown';
 import { useFormState } from '~/components/clusters/wizards/hooks';
 import WithTooltip from '~/components/common/WithTooltip';
+import useFormikOnChange from '~/hooks/useFormikOnChange';
 
 import { required, validateUniqueAZ } from '../../../../../common/validators';
 import { FieldId } from '../constants';
@@ -33,7 +34,7 @@ const SingleSubnetFieldsRow = ({
   const publicSubnetIdName = `${FieldId.MachinePoolsSubnets}[${index}].publicSubnetId`;
 
   const azValidations = (value) =>
-    required(value) || (isMultiAz && validateUniqueAZ(value, machinePoolsSubnets));
+    required(value) || (isMultiAz && validateUniqueAZ(value, { machinePoolsSubnets }));
 
   const showLabels = index === 0;
   let disabledSubnetReason;
@@ -68,7 +69,7 @@ const SingleSubnetFieldsRow = ({
             region={selectedRegion}
             input={{
               ...getFieldProps(azFieldName),
-              onChange: (value) => setFieldValue(azFieldName, value),
+              onChange: useFormikOnChange(azFieldName),
             }}
             meta={getFieldMeta(azFieldName)}
           />

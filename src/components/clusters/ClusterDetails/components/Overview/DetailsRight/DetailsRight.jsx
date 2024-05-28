@@ -21,6 +21,7 @@ import {
 import { useAWSVPCFromCluster } from '~/components/clusters/common/useAWSVPCFromCluster';
 import { IMDSType } from '~/components/clusters/wizards/common';
 import useCanClusterAutoscale from '~/hooks/useCanClusterAutoscale';
+import { useGlobalState } from '~/redux/hooks';
 import { isRestrictedEnv } from '~/restrictedEnv';
 
 import links from '../../../../../../common/installLinks.mjs';
@@ -31,9 +32,11 @@ import ExternalLink from '../../../../../common/ExternalLink';
 import PopoverHint from '../../../../../common/PopoverHint';
 import Timestamp from '../../../../../common/Timestamp';
 import { constants } from '../../../../common/CreateOSDFormConstants';
+import { isArchivedSubscription } from '../../../clusterDetailsHelper';
 import SecurityGroupsDisplayByNode from '../../SecurityGroups/SecurityGroupsDetailDisplay';
 import ClusterNetwork from '../ClusterNetwork';
 
+import DeleteProtection from './DeleteProtection/DeleteProtection';
 import { ClusterStatus } from './ClusterStatus';
 
 const { ClusterStatus: AIClusterStatus } = OCM;
@@ -100,8 +103,20 @@ function DetailsRight({
   const showSecureBoot = isGCP && !isDeprovisioned;
   const secureBoot = isGCP && cluster.gcp?.security?.secure_boot;
 
+  const showDeleteProtection = cluster.managed && !isArchivedSubscription(cluster);
+
+  const clusterDetails = useGlobalState((state) => state.clusters.details);
+
   return (
     <DescriptionList>
+      {showDeleteProtection ? (
+        <DeleteProtection
+          clusterID={cluster.id}
+          protectionEnabled={cluster.delete_protection?.enabled}
+          canToggle={cluster.canUpdateClusterResource}
+          pending={clusterDetails.pending}
+        />
+      ) : null}
       <DescriptionListGroup>
         <DescriptionListTerm>Status</DescriptionListTerm>
         <DescriptionListDescription style={cluster.state.style}>

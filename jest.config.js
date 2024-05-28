@@ -27,6 +27,8 @@ const config = {
       '<rootDir>/__mocks__/fileMock.js',
     '\\.(css|less|scss)$': '<rootDir>/__mocks__/styleMock.js',
     '^~/(.*)$': '<rootDir>/src/$1',
+    '^src/components/common/TechnologyPreview$': '<rootDir>/__mocks__/technologyPreviewFake.tsx',
+    '@scalprum/react-core':'<rootDir>/__mocks__/scalprumComponentMock.tsx'
   },
   globals: {
     APP_DEVMODE: false,

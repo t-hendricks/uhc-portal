@@ -5,7 +5,16 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { Alert, AlertVariant, FormGroup, Spinner } from '@patternfly/react-core';
+import {
+  Alert,
+  AlertVariant,
+  FormGroup,
+  HelperText,
+  HelperTextItem,
+  Icon,
+  Spinner,
+} from '@patternfly/react-core';
+import ExclamationTriangleIcon from '@patternfly/react-icons/dist/esm/icons/exclamation-triangle-icon';
 
 import { noMachineTypes } from '~/common/helpers';
 import { billingModels, normalizedProducts } from '~/common/subscriptionTypes';
@@ -139,6 +148,9 @@ const MachineTypeSelection = ({
     (isBYOC || product === normalizedProducts.ROSA) &&
     cloudProviderID === CloudProviderType.Aws &&
     !inModal;
+
+  const isMachineTypeIncludedInFilteredSet = (machineTypeID, filteredMachineTypes) =>
+    !!filteredMachineTypes?.typesByID[machineTypeID];
 
   const [isMachineTypeFilteredByRegion, setIsMachineTypeFilteredByRegion] = React.useState(
     !previousSelectionFromUnfilteredSet,
@@ -286,6 +298,18 @@ const MachineTypeSelection = ({
     () => sortedMachineTypes.filter((type) => isTypeAvailable(type.id)),
     [isTypeAvailable, sortedMachineTypes],
   );
+
+  const machineTypeUnavailableWarning =
+    'OCM does not have access to all AWS account details. Machine node type cannot be verified to be accessible for this AWS user.';
+  const possiblyUnavailableWarnIcon = React.useMemo(
+    () => (
+      <Icon status="warning" size="md">
+        <ExclamationTriangleIcon />
+      </Icon>
+    ),
+    [],
+  );
+
   const machineTypeMap = React.useMemo(() => {
     const machineGroups = groupedMachineTypes(filteredMachineTypes);
     const selectGroups = machineGroups
@@ -294,29 +318,53 @@ const MachineTypeSelection = ({
           return {
             name: categoryLabel,
             category: categoryLabel,
-            children: categoryMachines.map((machineType) => ({
-              name: (
-                <TreeViewSelectMenuItem
-                  name={machineTypeLabel(machineType)}
-                  description={machineTypeDescriptionLabel(machineType)}
-                />
-              ),
-              category: categoryLabel,
-              nameLabel: machineTypeLabel(machineType),
-              descriptionLabel: machineTypeDescriptionLabel(machineType),
-              id: machineType.id,
-            })),
+            children: categoryMachines.map((machineType) => {
+              const possiblyUnavailable =
+                useRegionFilteredData &&
+                !isMachineTypeFilteredByRegion &&
+                !isMachineTypeIncludedInFilteredSet(machineType.id, machineTypesByRegion);
+              return {
+                name: (
+                  <TreeViewSelectMenuItem
+                    name={machineTypeLabel(machineType)}
+                    description={machineTypeDescriptionLabel(machineType)}
+                    popoverText={possiblyUnavailable && machineTypeUnavailableWarning}
+                    icon={possiblyUnavailable && possiblyUnavailableWarnIcon}
+                  />
+                ),
+                category: categoryLabel,
+                nameLabel: machineTypeLabel(machineType),
+                descriptionLabel: machineTypeDescriptionLabel(machineType),
+                id: machineType.id,
+              };
+            }),
           };
         }
         return undefined;
       })
       .filter(Boolean);
     return selectGroups;
-  }, [filteredMachineTypes]);
+  }, [
+    filteredMachineTypes,
+    isMachineTypeFilteredByRegion,
+    machineTypesByRegion,
+    useRegionFilteredData,
+    possiblyUnavailableWarnIcon,
+  ]);
+
+  const findSelectedTreeViewItem = (machineID) => {
+    let selectedTreeViewNode;
+    machineTypeMap.forEach((category) => {
+      category.children.forEach((machineType) => {
+        if (machineType.id === machineID) selectedTreeViewNode = machineType;
+      });
+    });
+    return selectedTreeViewNode;
+  };
 
   // In the dropdown we put the machine type id in separate description row,
   // but the Select toggle doesn't support that, so combine both into one label.
-  const selection = React.useMemo(
+  const selectionText = React.useMemo(
     () =>
       machineTypeFullLabel(
         filteredMachineTypes.find((machineType) => machineType.id === input.value) || null,
@@ -339,6 +387,10 @@ const MachineTypeSelection = ({
       );
     }
 
+    const currentSelectionPossiblyUnavailable =
+      useRegionFilteredData &&
+      input.value &&
+      !isMachineTypeIncludedInFilteredSet(input.value, machineTypesByRegion);
     return (
       <FormGroup
         label="Compute node instance type"
@@ -350,15 +402,26 @@ const MachineTypeSelection = ({
           treeViewSelectionMap={machineTypeMap}
           inModal={inModal}
           menuAppendTo={menuAppendTo}
-          selected={selection}
+          selected={findSelectedTreeViewItem(input.value)}
+          selectionPlaceholderText={selectionText}
           setSelected={(event, selection) => {
             changeHandler(event, selection.id);
           }}
+          menuToggleBadge={currentSelectionPossiblyUnavailable && possiblyUnavailableWarnIcon}
           treeViewSwitchActive={!isMachineTypeFilteredByRegion}
           setTreeViewSwitchActive={(switchValue) => {
             forceChoiceInput.onChange(false);
             setIsMachineTypeFilteredByRegion(!switchValue);
           }}
+          helperText={
+            currentSelectionPossiblyUnavailable && (
+              <HelperText>
+                <HelperTextItem variant="warning" hasIcon>
+                  {machineTypeUnavailableWarning}
+                </HelperTextItem>
+              </HelperText>
+            )
+          }
           placeholder="Select instance type"
           searchPlaceholder="Find an instance size"
           includeFilterSwitch={useRegionFilteredData}

@@ -69,6 +69,8 @@ class ClusterDetails extends Page {
 
   clusterAvailabilityLabelValue = () => cy.getByTestId('availability').should('exist');
 
+  clusterDomainPrefixLabelValue = () => cy.getByTestId('domainPrefix').should('exist');
+
   clusterAutoScalingStatus = () => cy.getByTestId('clusterAutoscalingStatus').should('exist');
 
   clusterIMDSValue = () => cy.getByTestId('instanceMetadataService').should('exist');
@@ -102,6 +104,11 @@ class ClusterDetails extends Page {
   clusterInstallationHeader = () => cy.getByTestId('installation-header');
 
   clusterInstallationExpectedText = () => cy.getByTestId('expected-cluster-installation-msg');
+
+  clusterBillingMarketplaceAccountLabelValue = () =>
+    cy.getByTestId('billingMarketplaceAccount').should('exist');
+
+  clusterControlPlaneTypeLabelValue = () => cy.getByTestId('controlPlaneType').should('exist');
 
   downloadOcCliLink = () => cy.getByTestId('download-oc-cli');
 

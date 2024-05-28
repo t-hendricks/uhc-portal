@@ -37,8 +37,8 @@ describe(
 
     it('Step - Cluster Settings - Select Cluster name, version, regions', () => {
       CreateRosaWizardPage.isClusterDetailsScreen();
-      cy.get(CreateRosaWizardPage.clusterNameInput).type(clusterName);
-      CreateRosaWizardPage.hideClusterNameValidation();
+      CreateRosaWizardPage.setClusterName(clusterName);
+      CreateRosaWizardPage.closePopoverDialogs();
       CreateRosaWizardPage.selectClusterVersion(clusterPropertiesFile.Version);
       CreateRosaWizardPage.selectRegion(clusterPropertiesFile.Region);
       CreateRosaWizardPage.selectAvailabilityZone(clusterPropertiesFile.Availability);
@@ -80,8 +80,11 @@ describe(
 
     it('Step - Cluster roles and policies - role provider mode and its definitions', () => {
       CreateRosaWizardPage.selectRoleProviderMode(clusterPropertiesFile.RoleProviderMode);
-      CreateRosaWizardPage.customOperatorPrefixInput().should('be.visible');
-      CreateRosaWizardPage.customOperatorPrefixInput().invoke('val').should('include', clusterName);
+      CreateRosaWizardPage.customOperatorPrefixInput().scrollIntoView().should('be.visible');
+      CreateRosaWizardPage.customOperatorPrefixInput()
+        .scrollIntoView()
+        .invoke('val')
+        .should('include', clusterName);
       CreateRosaWizardPage.rosaNextButton().click();
     });
 

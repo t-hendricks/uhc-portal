@@ -14,13 +14,25 @@ const getBillingModelLabel = (cluster: ClusterFromSubscription): string => {
           return 'Annual Red Hat subscriptions';
         case billingModels.MARKETPLACE:
         case billingModels.MARKETPLACE_AWS:
-          return cluster.ccs?.enabled === true
-            ? 'On-demand via Red Hat Marketplace'
-            : standardLabel;
+          switch (cluster.ccs?.enabled) {
+            case true:
+              return 'On-demand via Red Hat Marketplace';
+            case false:
+              return standardLabel;
+            default:
+              // CCS is undefined for archived clusters. Showing N/A in this case
+              return 'N/A';
+          }
         case billingModels.MARKETPLACE_GCP:
-          return cluster.ccs?.enabled === true
-            ? 'On-demand via Google Cloud Marketplace'
-            : standardLabel;
+          switch (cluster.ccs?.enabled) {
+            case true:
+              return 'On-demand via Google Cloud Marketplace';
+            case false:
+              return standardLabel;
+            default:
+              // CCS is undefined for archived clusters. Showing N/A in this case
+              return 'N/A';
+          }
         default:
           return standardLabel;
       }

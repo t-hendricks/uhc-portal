@@ -233,7 +233,7 @@ const checkObjectNameAsyncValidation = (value?: string) => [
         return false;
       }
       const search = `name = ${sqlString(value)}`;
-      const { data } = await clusterService.getClusters(search, 1);
+      const { data } = await clusterService.searchClusters(search, 1);
       // Normally, we get 0 or 1 items, 1 meaning a cluster of that name already exists.
       // But dumb mockserver ignores `search` and `size`, always returns full static list;
       // checking the returned name(s) allows this validation to work in ?env=mockdata UI.
@@ -250,7 +250,7 @@ const checkObjectNameDomainPrefixAsyncValidation = (value?: string) => [
         return false;
       }
       const search = `domain_prefix = ${sqlString(value)}`;
-      const { data } = await clusterService.getClusters(search, 1);
+      const { data } = await clusterService.searchClusters(search, 1);
 
       return !data?.items?.some((cluster) => cluster.domain_prefix === value);
     },
@@ -1459,22 +1459,44 @@ export type FormSubnet = {
   publicSubnetId: string;
 };
 
+// Validating multiple MPs
+const hasRepeatedSubnets = (
+  subnetId: string,
+  allValues: { machinePoolsSubnets: FormSubnet[] },
+): boolean =>
+  allValues.machinePoolsSubnets.filter((mpSubnet) => mpSubnet.privateSubnetId === subnetId).length >
+  1;
+
+const hasRepeatedAvailabilityZones = (
+  subnetId: string,
+  machinePoolsSubnets: FormSubnet[],
+): boolean => {
+  const availabilityZoneFromSubnet = machinePoolsSubnets.find(
+    (e) => e.privateSubnetId === subnetId,
+  )?.availabilityZone;
+  const availabilityZones = machinePoolsSubnets
+    .filter((e) => e.availabilityZone === availabilityZoneFromSubnet)
+    .map((e) => e.availabilityZone);
+
+  return availabilityZones.length !== new Set(availabilityZones).size;
+};
+
 const validateMultipleMachinePoolsSubnets = (
   subnetId: string,
   allValues: { machinePoolsSubnets: FormSubnet[] },
-  props?: { pristine: boolean },
+  props?: { pristine: boolean; isHypershift?: boolean },
 ) => {
-  if (subnetId === '') {
-    return props?.pristine ? undefined : 'Subnet is required';
+  switch (true) {
+    case subnetId === '':
+      return props?.pristine ? undefined : 'Subnet is required';
+    case hasRepeatedSubnets(subnetId, allValues):
+      return 'Every machine pool must be associated to a different subnet';
+    case props?.isHypershift &&
+      hasRepeatedAvailabilityZones(subnetId, allValues.machinePoolsSubnets):
+      return 'Every machine pool subnet should belong to a different availability zone';
+    default:
+      return undefined;
   }
-
-  // Validating multiple MPs
-  const hasRepeatedSubnets =
-    allValues.machinePoolsSubnets.filter((mpSubnet) => mpSubnet.privateSubnetId === subnetId)
-      .length > 1;
-  return hasRepeatedSubnets
-    ? 'Every machine pool must be associated to a different subnet'
-    : undefined;
 };
 
 const validateGCPSubnet = (value?: string): string | undefined => {
@@ -1726,6 +1748,15 @@ const checkHostDomain = (value?: string): string | undefined => {
   return undefined;
 };
 
+const validateSecureURL = (url: string): boolean => {
+  try {
+    const parsed = new URL(url);
+    return parsed.protocol === 'https:';
+  } catch {
+    return false;
+  }
+};
+
 const validators = {
   required,
   acknowledgePrerequisites,
@@ -1844,6 +1875,9 @@ export {
   validateNamespacesList,
   composeValidators,
   checkHostDomain,
+  MAX_CUSTOM_OPERATOR_ROLES_PREFIX_LENGTH,
+  MAX_CLUSTER_NAME_LENGTH,
+  validateSecureURL,
 };
 
 export default validators;

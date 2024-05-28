@@ -44,7 +44,7 @@ class CreateOSDCluster extends Page {
   showsFakeClusterBanner = () =>
     cy.contains('div', 'On submit, a fake OSD cluster will be created.');
 
-  osdCreateClusterButton = () => cy.getByTestId('osd-create-cluster-button', { timeout: 20000 });
+  osdCreateClusterButton = () => cy.getByTestId('osd-create-cluster-button', { timeout: 50000 });
 
   osdTrialCreateClusterButton = () =>
     cy.getByTestId('osd-create-trial-cluster', { timeout: 20000 });
@@ -62,7 +62,7 @@ class CreateOSDCluster extends Page {
     cy.get('input[id="form-radiobutton-byoc-false-field"]');
 
   infrastructureTypeClusterCloudSubscriptionRadio = () =>
-    cy.get('input[id="form-radiobutton-byoc-true-field"]');
+    cy.get('input[id="form-radiobutton-byoc-true-field"]', { timeout: 10000 });
 
   awsCloudProviderCard = () => cy.getByTestId('aws-provider-card');
 
@@ -77,6 +77,10 @@ class CreateOSDCluster extends Page {
   clusterDetailsTree = () => cy.get('button[id="cluster-settings-details"]').contains('Details');
 
   acknowlegePrerequisitesCheckbox = () => cy.get('input[id="acknowledge_prerequisites"]');
+
+  createCustomDomainPrefixCheckbox = () => cy.get('input[id="has_domain_prefix"]');
+
+  domainPrefixInput = () => cy.get('input[id="domain_prefix"]');
 
   singleZoneAvilabilityRadio = () => cy.get('input[id="form-radiobutton-multi_az-false-field"]');
 
@@ -98,8 +102,6 @@ class CreateOSDCluster extends Page {
   computeNodeCountSelect = () => cy.get('select[name="nodes_compute"]');
 
   computeNodeCountDetailsText = () => cy.getByTestId('compute-node-multizone-details');
-
-  addNodeLabelLink = () => cy.get('span').contains('Add node labels');
 
   clusterPrivacyPublicRadio = () =>
     cy.get('input[id="form-radiobutton-cluster_privacy-external-field"]');
@@ -140,7 +142,19 @@ class CreateOSDCluster extends Page {
 
   availabilityValue = () => cy.getByTestId('Availability').find('div');
 
+  clusterDomainPrefixLabelValue = () => cy.getByTestId('Domain-prefix').should('exist');
+
   userWorkloadMonitoringValue = () => cy.getByTestId('User-workload-monitoring').find('div');
+
+  advancedEncryptionLink = () => cy.get('span').contains('Advanced Encryption');
+
+  useCustomKMSKeyRadio = () =>
+    cy.get('input[id="form-radiobutton-customer_managed_key-true-field"]');
+
+  keyArnInput = () => cy.get('input[id="kms_key_arn"]');
+
+  useDefaultKMSKeyRadio = () =>
+    cy.get('input[id="form-radiobutton-customer_managed_key-false-field"]');
 
   persistentStorageValue = () => cy.getByTestId('Persistent-storage').find('div');
 
@@ -183,6 +197,49 @@ class CreateOSDCluster extends Page {
 
   createClusterButton = () => cy.get('button').contains('Create cluster');
 
+  minimumNodeInput = () => cy.get('input[aria-label="Minimum nodes"]');
+
+  maximumNodeInput = () => cy.get('input[aria-label="Maximum nodes"]');
+
+  minimumNodeCountMinusButton = () => cy.get('button[aria-label="Minimum nodes minus"]');
+
+  minimumNodeCountPlusButton = () => cy.get('button[aria-label="Minimum nodes plus"]');
+
+  maximumNodeCountMinusButton = () => cy.get('button[aria-label="Maximum nodes minus"]');
+
+  maximumNodeCountPlusButton = () => cy.get('button[aria-label="Maximum nodes plus"]');
+
+  popOverCloseButton = () => cy.get('button[aria-label="Close"]').filter(':visible');
+
+  wizardCreateClusterButton = () => cy.getByTestId('rosa-create-cluster-button');
+
+  rootDiskSizeInput = () => cy.get('input[name="worker_volume_size_gib"]');
+
+  addNodeLabelLink = () => cy.get('span').contains('Add node labels');
+
+  applicationIngressDefaultSettingsRadio = () =>
+    cy.get('input[id="form-radiobutton-applicationIngress-default-field"]');
+
+  applicationIngressCustomSettingsRadio = () =>
+    cy.get('input[id="form-radiobutton-applicationIngress-custom-field"]');
+
+  updateStrategyIndividualRadio = () =>
+    cy.get('input[id="form-radiobutton-upgrade_policy-manual-field"]');
+
+  updateStrategyRecurringRadio = () =>
+    cy.get('inputid="form-radiobutton-upgrade_policy-automatic-field"]');
+
+  applicationIngressRouterSelectorsInput = () => cy.get('input[name="defaultRouterSelectors"]');
+
+  applicationIngressExcludedNamespacesInput = () =>
+    cy.get('input[name="defaultRouterExcludedNamespacesFlag"]');
+
+  wizardNextButton = () => cy.getByTestId('wizard-next-button');
+
+  wizardBackButton = () => cy.getByTestId('wizard-back-button');
+
+  wizardCancelButton = () => cy.getByTestId('wizard-cancel-button');
+
   get clusterNameInput() {
     return 'input#name';
   }
@@ -207,6 +264,33 @@ class CreateOSDCluster extends Page {
     return 'input[id="form-radiobutton-byoc-false-field"]';
   }
 
+  closePopoverDialogs() {
+    cy.get('body').then(($body) => {
+      if ($body.find('button[aria-label="Close"]').filter(':visible').length > 0) {
+        cy.get('button[aria-label="Close"]').filter(':visible').click();
+      }
+    });
+  }
+
+  setClusterName(clusterName) {
+    cy.get(this.clusterNameInput).scrollIntoView().type('{selectAll}').type(clusterName);
+  }
+
+  setDomainPrefix(domainPrefix) {
+    this.domainPrefixInput().scrollIntoView().type('{selectAll}').type(domainPrefix);
+  }
+
+  enableAutoScaling() {
+    cy.get('input[id="autoscalingEnabled"]').check();
+  }
+
+  setMinimumNodeCount(nodeCount) {
+    this.minimumNodeInput().type('{selectAll}').type(nodeCount);
+  }
+
+  setMaximumNodeCount(nodeCount) {
+    this.maximumNodeInput().type('{selectAll}').type(nodeCount);
+  }
   useCIDRDefaultValues(value = true) {
     if (value) {
       this.cidrDefaultValuesCheckBox().check();
@@ -243,7 +327,7 @@ class CreateOSDCluster extends Page {
 
   selectInfrastructureType(infrastructureType) {
     if (infrastructureType.toLowerCase().includes('customer cloud')) {
-      this.infrastructureTypeClusterCloudSubscriptionRadio().check();
+      this.infrastructureTypeClusterCloudSubscriptionRadio().check({ force: true });
     } else {
       this.infrastructureTypeRedHatCloudAccountRadio().check();
     }
@@ -267,7 +351,7 @@ class CreateOSDCluster extends Page {
   }
 
   selectAvailabilityZone(az) {
-    if (az == 'Single zone') {
+    if (az.toLowerCase() == 'single zone' || az.toLowerCase() == 'single-zone') {
       this.singleZoneAvilabilityRadio().check();
     } else {
       this.multiZoneAvilabilityRadio().check();
@@ -329,6 +413,17 @@ class CreateOSDCluster extends Page {
     cy.get('ul[role="listbox"]').find('button').contains(nodeDrain).click();
   }
 
+  isTextContainsInPage(text, present = true) {
+    if (present) {
+      cy.get('body').then(($body) => {
+        if ($body.text().includes(text)) {
+          cy.contains(text).scrollIntoView().should('be.visible');
+        }
+      });
+    } else {
+      cy.contains(text).should('not.exist');
+    }
+  }
   uploadGCPServiceAccountJSON(jsonContent) {
     cy.get('textarea[aria-label="File upload"]')
       .clear()

@@ -1,13 +1,15 @@
 import React, { useEffect } from 'react';
-import { Field } from 'formik';
+import { Field, setNestedObjectValues } from 'formik';
 
 import { Alert, Button, Grid, GridItem } from '@patternfly/react-core';
 import { MinusCircleIcon } from '@patternfly/react-icons/dist/esm/icons/minus-circle-icon';
 import { PlusCircleIcon } from '@patternfly/react-icons/dist/esm/icons/plus-circle-icon';
 
+import { scrollToFirstField } from '~/common/helpers';
 import { FormSubnet, validateMultipleMachinePoolsSubnets } from '~/common/validators';
 import { SubnetSelectField } from '~/components/clusters/common/SubnetSelectField';
 import { emptyAWSSubnet } from '~/components/clusters/wizards/common/constants';
+import { getScrollErrorIds } from '~/components/clusters/wizards/form/utils';
 import { useFormState } from '~/components/clusters/wizards/hooks';
 import { FieldId } from '~/components/clusters/wizards/rosa_v2/constants';
 import { CloudVPC } from '~/types/clusters_mgmt.v1';
@@ -22,11 +24,32 @@ type MachinePoolSubnetsFormProps = {
 const MachinePoolSubnetsForm = ({ selectedVPC, warning }: MachinePoolSubnetsFormProps) => {
   const {
     values: { [FieldId.MachinePoolsSubnets]: machinePoolsSubnets },
+    values,
     getFieldProps,
     setFieldValue,
     setFieldTouched,
     getFieldMeta,
+    validateForm,
+    setTouched,
   } = useFormState();
+
+  useEffect(
+    () => {
+      const updateFormErrors = async () => {
+        const errors = await validateForm(values);
+        if (Object.keys(errors || {}).length > 0) {
+          setTouched(setNestedObjectValues(errors, true));
+          scrollToFirstField(getScrollErrorIds(errors));
+        }
+      };
+
+      if (machinePoolsSubnets?.length) {
+        updateFormErrors();
+      }
+    },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [machinePoolsSubnets, setTouched, validateForm],
+  );
 
   const addMachinePool = (machinePoolSubnet: FormSubnet) =>
     setFieldValue(FieldId.MachinePoolsSubnets, [...machinePoolsSubnets, machinePoolSubnet], false);
@@ -38,16 +61,6 @@ const MachinePoolSubnetsForm = ({ selectedVPC, warning }: MachinePoolSubnetsForm
     );
     const fieldNameSubnetId = `${FieldId.MachinePoolsSubnets}[${machinePoolsSubnetsIndex}].privateSubnetId`;
     setFieldTouched(fieldNameSubnetId, false, false);
-  };
-
-  const selectSubnet = (machinePoolIndex: number, subnetId: string) => {
-    const newMachinePoolsSubnet = (machinePoolsSubnets as FormSubnet[]).map(
-      (machinePoolSubnet, index) =>
-        index === machinePoolIndex
-          ? { ...machinePoolSubnet, privateSubnetId: subnetId }
-          : machinePoolSubnet,
-    );
-    setFieldValue(FieldId.MachinePoolsSubnets, newMachinePoolsSubnet, false);
   };
 
   useEffect(() => {
@@ -93,8 +106,7 @@ const MachinePoolSubnetsForm = ({ selectedVPC, warning }: MachinePoolSubnetsForm
                 input={{
                   ...getFieldProps(fieldNameSubnetId),
                   onChange: (subnetId: string) => {
-                    setFieldValue(fieldNameSubnetId, subnetId);
-                    selectSubnet(index, subnetId);
+                    setFieldValue(fieldNameSubnetId, subnetId, false);
                   },
                 }}
                 meta={getFieldMeta(fieldNameSubnetId)}
@@ -111,6 +123,8 @@ const MachinePoolSubnetsForm = ({ selectedVPC, warning }: MachinePoolSubnetsForm
                     ? 'machinePoolSubnetsForm-removeBtn-disabled'
                     : 'machinePoolSubnetsForm-removeBtn'
                 }
+                aria-label="Remove machine pool"
+                data-testid={`remove-machine-pool-${index}`}
               />
             </GridItem>
             <GridItem span={5} />

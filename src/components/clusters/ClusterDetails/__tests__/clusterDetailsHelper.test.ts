@@ -240,4 +240,83 @@ describe('clusterDetailsHelper', () => {
       },
     );
   });
+
+  describe('isReadyForExternalActions', () => {
+    beforeEach(() => {
+      jest.clearAllMocks();
+    });
+
+    it.each([
+      [true, undefined, ClusterState.READY, true, false, true],
+      [true, undefined, ClusterState.READY, false, false, false],
+    ])(
+      'managed: %p, consoleUrl: %p, clusterState: %p, isHypershiftClusterResult: %p, isArchivedSubscription: %p. It returns %p',
+      (
+        managed: boolean | undefined,
+        url: string | undefined,
+        state: string | ClusterState | undefined,
+        isHypershiftClusterResult: boolean,
+        isArchivedSubscription: boolean,
+        expectedResult: boolean,
+      ) => {
+        const defaultCluster: Readonly<ClusterFromSubscription> = {
+          ...defaultClusterFromSubscription,
+          managed,
+          console: {
+            url,
+          },
+          state,
+          subscription: {
+            ...defaultSubscription,
+            status: isArchivedSubscription ? subscriptionStatuses.ARCHIVED : undefined,
+          },
+          external_auth_config: {
+            enabled: true,
+          },
+        };
+        isHypershiftClusterMock.mockReturnValue(isHypershiftClusterResult);
+        expect(isReadyForIdpActions(defaultCluster)).toBe(expectedResult);
+      },
+    );
+  });
+  describe('isExtenalAuthenicationActive', () => {
+    beforeEach(() => {
+      jest.clearAllMocks();
+    });
+
+    it.each([
+      [true, undefined, ClusterState.READY, true, false, true, true],
+      [true, undefined, ClusterState.READY, false, false, true, false],
+      [true, undefined, ClusterState.READY, false, false, false, false],
+    ])(
+      'managed: %p, consoleUrl: %p, clusterState: %p, isHypershiftClusterResult: %p, isArchivedSubscription: %p, isExtAuthEnabled : %p. It returns %p',
+      (
+        managed: boolean | undefined,
+        url: string | undefined,
+        state: string | ClusterState | undefined,
+        isHypershiftClusterResult: boolean,
+        isArchivedSubscription: boolean,
+        isExtAuth: boolean,
+        expectedResult: boolean,
+      ) => {
+        const defaultCluster: Readonly<ClusterFromSubscription> = {
+          ...defaultClusterFromSubscription,
+          managed,
+          console: {
+            url,
+          },
+          state,
+          subscription: {
+            ...defaultSubscription,
+            status: isArchivedSubscription ? subscriptionStatuses.ARCHIVED : undefined,
+          },
+          external_auth_config: {
+            enabled: isExtAuth,
+          },
+        };
+        isHypershiftClusterMock.mockReturnValue(isHypershiftClusterResult);
+        expect(isReadyForIdpActions(defaultCluster)).toBe(expectedResult);
+      },
+    );
+  });
 });

@@ -1,6 +1,7 @@
 import React from 'react';
 import get from 'lodash/get';
 
+import { Tooltip } from '@patternfly/react-core';
 import { DropdownItem as DropdownItemDeprecated } from '@patternfly/react-core/deprecated';
 
 import getClusterName from '../../../../common/getClusterName';
@@ -74,6 +75,13 @@ function actionResolver(
   const isReadOnly = cluster?.status?.configuration_mode === 'read_only';
   const readOnlyMessage = isReadOnly && (
     <span>This operation is not available during maintenance</span>
+  );
+
+  const deleteProtectionMessage = cluster.delete_protection?.enabled && (
+    <span>
+      Cluster is locked and cannot be deleted. To unlock, go to cluster details and disable deletion
+      protection.
+    </span>
   );
 
   const consoleURL = get(cluster, 'console.url', false);
@@ -227,14 +235,17 @@ function actionResolver(
     ...baseProps,
     title: 'Delete cluster',
     key: getKey('deletecluster'),
-    ...disableIfTooltip(uninstallingMessage || readOnlyMessage || hibernatingMessage, {
-      onClick: () =>
-        openModal(modals.DELETE_CLUSTER, {
-          clusterID: cluster.id,
-          clusterName,
-          shouldDisplayClusterName: inClusterList,
-        }),
-    }),
+    ...disableIfTooltip(
+      uninstallingMessage || readOnlyMessage || hibernatingMessage || deleteProtectionMessage,
+      {
+        onClick: () =>
+          openModal(modals.DELETE_CLUSTER, {
+            clusterID: cluster.id,
+            clusterName,
+            shouldDisplayClusterName: inClusterList,
+          }),
+      },
+    ),
   });
 
   const getEditSubscriptionSettingsProps = () => {
@@ -365,13 +376,17 @@ function dropDownItems({
     refreshFunc,
     inClusterList,
   );
-  const menuItems = actions.map((action) => {
-    // Remove props that aren't recognized by DropdownItemDeprecated
-    const { isExternalLink, ...cleanedProps } = action;
+  // cleanedProps - Remove props that aren't recognized by DropdownItemDeprecated
+  const renderMenuItem = ({ isExternalLink, tooltipProps, title, ...cleanedProps }) =>
+    tooltipProps ? (
+      <Tooltip {...tooltipProps}>
+        <DropdownItemDeprecated {...cleanedProps}>{title}</DropdownItemDeprecated>
+      </Tooltip>
+    ) : (
+      <DropdownItemDeprecated {...cleanedProps}>{title}</DropdownItemDeprecated>
+    );
 
-    return <DropdownItemDeprecated {...cleanedProps}>{action.title}</DropdownItemDeprecated>;
-  });
-  return menuItems;
+  return actions.map(renderMenuItem);
 }
 
 export { actionResolver, dropDownItems };

@@ -52,7 +52,7 @@ function VersionSelection({
     return acc;
   }, {});
   const isValidRosaVersion = React.useCallback(
-    (version) => isSupportedMinorVersion(version.raw_id, rosaMaxOSVersion) && version.rosa_enabled,
+    (version) => isSupportedMinorVersion(version?.raw_id, rosaMaxOSVersion) && version.rosa_enabled,
     [rosaMaxOSVersion],
   );
 
@@ -61,7 +61,7 @@ function VersionSelection({
     // if Hypershift is used outside of ROSA, the logic to determine the max version (aka rosaMaxOSVersion)
     // may need to change
     (version) =>
-      isSupportedMinorVersion(version.raw_id, rosaMaxOSVersion) &&
+      isSupportedMinorVersion(version?.raw_id, rosaMaxOSVersion) &&
       version.hosted_control_plane_enabled,
     [rosaMaxOSVersion],
   );
@@ -72,7 +72,12 @@ function VersionSelection({
     setShowOnlyCompatibleVersions(showCompatible);
   };
 
-  const versionName = (version) => parseFloat(version.raw_id);
+  // HACK: This relies on parseFloat of '4.11.3' to return 4.11 ignoring trailing '.3'.
+  // BUG(OCMUI-1736): Comparisons may be wrong e.g. 4.9 > 4.11!
+  // BUG(OCMUI-1736): We later rely on converting float back to exactly '4.11'
+  //   for indexing `supportVersionMap`.  Float round-tripping is fragile.
+  //   Will break when parseFloat('4.20.0').toString() returns '4.2' not '4.20'!
+  const versionName = (version) => parseFloat(version?.raw_id);
 
   const isHostedDisabled = (version) =>
     isHypershiftSelected && !version.hosted_control_plane_enabled;

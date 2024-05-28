@@ -1,5 +1,7 @@
 import React from 'react';
 
+import { HelperText, HelperTextItem, TreeViewDataItem } from '@patternfly/react-core';
+
 import { checkAccessibility, render, screen } from '~/testUtils';
 
 import { TreeViewData, TreeViewSelect, TreeViewSelectMenuItem } from './TreeViewSelect';
@@ -34,7 +36,13 @@ const machineTypeMap: TreeViewData[] = [
         id: 'nk9.4xlarge',
         descriptionLabel: '4 vCPU 8 GiB RAM',
         nameLabel: 'nk9.4xlarge',
-        name: <TreeViewSelectMenuItem name="nk9.4xlarge" description="4 vCPU 8 GiB RAM" />,
+        name: (
+          <TreeViewSelectMenuItem
+            name="nk9.4xlarge"
+            description="4 vCPU 8 GiB RAM"
+            popoverText="This option is from part of a filtered set of machine types"
+          />
+        ),
       },
     ],
   },
@@ -48,23 +56,20 @@ const machineTypeMapFiltered: TreeViewData[] = [
       {
         category: 'Compute optimized',
         id: 'c5a.xlarge',
-        descriptionLabel: '4 vCPU 8 GiB RAM',
-        nameLabel: 'c5a.xlarge',
         name: <TreeViewSelectMenuItem name="c5a.xlarge" description="4 vCPU 8 GiB RAM" />,
       },
       {
         category: 'Compute optimized',
         id: 'm24.xlarge',
-        descriptionLabel: '4 vCPU 8 GiB RAM',
-        nameLabel: 'm24.xlarge',
         name: <TreeViewSelectMenuItem name="m24.xlarge" description="4 vCPU 8 GiB RAM" />,
       },
     ],
   },
 ];
 
-const TreeViewSelectTestWrapper = () => {
-  const [selected, setSelected] = React.useState('');
+const TreeViewSelectTestWrapper = (props: { allExpanded?: boolean }) => {
+  const { allExpanded } = props;
+  const [selected, setSelected] = React.useState<TreeViewDataItem>();
   const [filteredByRegion, setFilteredByRegion] = React.useState(true);
   const [activeMachineTypes, setActiveMachineTypes] =
     React.useState<TreeViewData[]>(machineTypeMapFiltered);
@@ -77,19 +82,32 @@ const TreeViewSelectTestWrapper = () => {
     }
   }, [filteredByRegion]);
 
+  const selectionText = selected?.id!;
+
   return (
     <TreeViewSelect
       selected={selected}
-      setSelected={(event, selection) => setSelected(selection.id || '')}
+      setSelected={(_, selection) => setSelected(selection)}
+      selectionPlaceholderText={selectionText}
       treeViewSelectionMap={activeMachineTypes}
       treeViewSwitchActive={filteredByRegion}
       setTreeViewSwitchActive={setFilteredByRegion}
       includeFilterSwitch
+      helperText={
+        !filteredByRegion && (
+          <HelperText>
+            <HelperTextItem variant="warning" hasIcon>
+              Selection is from a filtered set
+            </HelperTextItem>
+          </HelperText>
+        )
+      }
       placeholder="Select instance type"
       searchPlaceholder="Find an instance size"
       switchLabelOnText="Show compatible instances only"
       switchLabelOffText="Show compatible instances only"
       ariaLabel="TreeViewSelect"
+      allExpanded={allExpanded}
     />
   );
 };
@@ -156,6 +174,18 @@ describe('TreeViewSelect ', () => {
     await user.type(input, 'c5a.false');
     expect(screen.queryAllByText(machineTypeMapFiltered[0].category!).length).toBeFalsy();
     expect(screen.queryAllByText(machineTypeMapFiltered[0].children![0].id!).length).toBeFalsy();
+    await checkAccessibility(container);
+  });
+
+  it('renders helpertext', async () => {
+    const { container, user } = render(<TreeViewSelectTestWrapper allExpanded />);
+
+    expect(screen.getByText('Select instance type')).toBeInTheDocument();
+    await user.click(screen.getByLabelText('TreeViewSelect toggle'));
+    expect(container.querySelector('.pf-v5-c-tree-view')).toBeInTheDocument();
+    await user.click(screen.getByTestId('display-switch'));
+    expect(screen.getByText('Selection is from a filtered set')).toBeInTheDocument();
+
     await checkAccessibility(container);
   });
 });

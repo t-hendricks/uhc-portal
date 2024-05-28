@@ -28,4 +28,22 @@ export const authInterceptor = (client: AxiosInstance): AxiosInstance => {
 
 const apiRequest = authInterceptor(axios.create());
 
+const apiRequestCache: { [baseURL: string]: AxiosInstance } = {};
+
+export function getAPIRequest(baseURL: string) {
+  if (!apiRequestCache[baseURL]) {
+    const apiRequest = authInterceptor(axios.create());
+    apiRequest.defaults.baseURL = baseURL;
+    apiRequestCache[baseURL] = apiRequest;
+  }
+  return apiRequestCache[baseURL];
+}
+
+export function getAPIRequestForRegion(region?: string) {
+  return region && config.configData.apiRegionalGatewayTemplate
+    ? getAPIRequest(config.configData.apiRegionalGatewayTemplate.replace('$REGION$', region))
+    : apiRequest;
+}
+
+export type APIRequest = typeof apiRequest;
 export default apiRequest;

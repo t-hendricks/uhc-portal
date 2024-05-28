@@ -1,17 +1,7 @@
 /* eslint-disable no-unused-vars */
 import createMockStore from 'redux-mock-store';
 
-import {
-  deleteControlPlaneUpgradeSchedule,
-  deleteUpgradeSchedule,
-  getControlPlaneUpgradeSchedules,
-  getUpgradeSchedules,
-  getUpgradeScheduleState,
-  patchControlPlaneUpgradeSchedule,
-  patchUpgradeSchedule,
-  postControlPlaneUpgradeSchedule,
-  postUpgradeSchedule,
-} from '../../../../services/clusterService';
+import clusterService from '../../../../services/clusterService';
 
 import {
   CLEAR_DELETE_UPGRADE_SCHEDULE,
@@ -29,6 +19,18 @@ import {
   setAutomaticUpgradePolicy,
 } from './clusterUpgradeActions';
 import { initialState } from './clusterUpgradeReducer';
+
+const {
+  deleteControlPlaneUpgradeSchedule,
+  deleteUpgradeSchedule,
+  getControlPlaneUpgradeSchedules,
+  getUpgradeSchedules,
+  getUpgradeScheduleState,
+  patchControlPlaneUpgradeSchedule,
+  patchUpgradeSchedule,
+  postControlPlaneUpgradeSchedule,
+  postUpgradeSchedule,
+} = clusterService;
 
 jest.mock('../../../../services/clusterService', () => ({
   getControlPlaneUpgradeSchedules: jest.fn(),

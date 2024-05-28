@@ -14,6 +14,7 @@ import {
   Title,
 } from '@patternfly/react-core';
 
+import { hasExternalAuthenticationCapability } from '~/common/externalAuthHelper';
 import { SupportedFeature } from '~/common/featureCompatibility';
 import { noQuotaTooltip } from '~/common/helpers';
 import links from '~/common/installLinks.mjs';
@@ -39,14 +40,14 @@ import {
 import { CloudProviderType } from '~/components/clusters/wizards/common';
 import { ClassicEtcdFipsSection } from '~/components/clusters/wizards/common/ClusterSettings/Details/ClassicEtcdFipsSection';
 import CloudRegionSelectField from '~/components/clusters/wizards/common/ClusterSettings/Details/CloudRegionSelectField';
-import { VersionSelectField } from '~/components/clusters/wizards/common/ClusterSettings/Details/VersionSelectField';
 import { emptyAWSSubnet } from '~/components/clusters/wizards/common/constants';
 import { RadioGroupField, RichInputField } from '~/components/clusters/wizards/form';
 import { CheckboxField } from '~/components/clusters/wizards/form/CheckboxField';
 import { useFormState } from '~/components/clusters/wizards/hooks';
-import { createOperatorRolesHashPrefix } from '~/components/clusters/wizards/rosa_v2/ClusterRolesScreen/ClusterRolesScreen';
+import { createOperatorRolesPrefix } from '~/components/clusters/wizards/rosa_v2/ClusterRolesScreen/clusterRolesHelper';
 import { AWSCustomerManagedEncryption } from '~/components/clusters/wizards/rosa_v2/ClusterSettings/Details/AWSCustomerManagedEncryption';
 import { HCPEtcdEncryptionSection } from '~/components/clusters/wizards/rosa_v2/ClusterSettings/Details/HCPEtcdEncryptionSection';
+import VersionSelection from '~/components/clusters/wizards/rosa_v2/ClusterSettings/VersionSelection';
 import { FieldId } from '~/components/clusters/wizards/rosa_v2/constants';
 import ExternalLink from '~/components/common/ExternalLink';
 import PopoverHint from '~/components/common/PopoverHint';
@@ -56,6 +57,8 @@ import { LONGER_CLUSTER_NAME_UI } from '~/redux/constants/featureConstants';
 import { useGlobalState } from '~/redux/hooks';
 import { QuotaCostList } from '~/types/accounts_mgmt.v1';
 import { Version } from '~/types/clusters_mgmt.v1';
+
+import { EnableExternalAuthentication } from './EnableExternalAuthentication';
 
 function Details() {
   const {
@@ -98,6 +101,12 @@ function Details() {
     setIsExpanded(!isExpanded);
   };
 
+  const [isExternalAuthExpanded, setIsExternalAuthExpanded] = useState(false);
+
+  const onExternalAuthToggle = () => {
+    setIsExternalAuthExpanded(!isExternalAuthExpanded);
+  };
+
   // Region change may invalidate various fields.
   React.useEffect(() => {
     validateForm();
@@ -117,7 +126,7 @@ function Details() {
   }, [errors, setFieldTouched]);
 
   const {
-    organization: { quotaList },
+    organization: { quotaList, details: organizationDetails },
   } = useGlobalState((state) => state.userProfile);
 
   const isLongerClusterNameEnabled = useFeatureGate(LONGER_CLUSTER_NAME_UI);
@@ -154,7 +163,10 @@ function Details() {
     return undefined;
   };
 
-  const handleVersionChange = (clusterVersion: Version) => {
+  const handleVersionChange = (clusterVersion: Version | undefined) => {
+    if (!clusterVersion) {
+      return;
+    }
     // If features become incompatible with the new version, clear their settings
     const canDefineSecurityGroups = !getIncompatibleVersionReason(
       SupportedFeature.SECURITY_GROUPS,
@@ -263,11 +275,11 @@ function Details() {
             extendedHelpText={constants.clusterNameHint}
             input={{
               ...getFieldProps(FieldId.ClusterName),
-              onChange: (value: string) => {
-                setFieldValue(FieldId.ClusterName, value, false);
+              onChange: async (value: string) => {
                 setFieldValue(
                   FieldId.CustomOperatorRolesPrefix,
-                  `${value.slice(0, 27)}-${createOperatorRolesHashPrefix()}`,
+                  createOperatorRolesPrefix(value),
+                  false,
                 );
               },
             }}
@@ -302,11 +314,7 @@ function Details() {
                     validation={domainPrefixValidation}
                     asyncValidation={domainPrefixAsyncValidation}
                     isRequired
-                    input={{
-                      ...getFieldProps(FieldId.DomainPrefix),
-                      onChange: (value: string) =>
-                        setFieldValue(FieldId.DomainPrefix, value, false),
-                    }}
+                    input={getFieldProps(FieldId.DomainPrefix)}
                   />
                 </GridItem>
                 <GridItem md={6} />
@@ -316,11 +324,7 @@ function Details() {
         )}
 
         <GridItem md={6}>
-          <VersionSelectField
-            name={FieldId.ClusterVersion}
-            label="Version"
-            onChange={handleVersionChange}
-          />
+          <VersionSelection label="Version" onChange={handleVersionChange} />
         </GridItem>
         <GridItem md={6} />
 
@@ -413,6 +417,16 @@ function Details() {
             )}
           </Grid>
         </ExpandableSection>
+        {isHypershiftSelected &&
+        hasExternalAuthenticationCapability(organizationDetails?.capabilities) ? (
+          <ExpandableSection
+            toggleText="External Authentication"
+            onToggle={onExternalAuthToggle}
+            isExpanded={isExternalAuthExpanded}
+          >
+            <EnableExternalAuthentication />
+          </ExpandableSection>
+        ) : null}
       </Grid>
     </Form>
   );

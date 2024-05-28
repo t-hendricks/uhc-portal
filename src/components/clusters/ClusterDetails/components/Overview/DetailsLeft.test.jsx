@@ -1,6 +1,7 @@
 /* eslint-disable camelcase */
 import React from 'react';
 
+import { subscriptionStatuses } from '~/common/subscriptionTypes';
 import { LONGER_CLUSTER_NAME_UI } from '~/redux/constants/featureConstants';
 import { checkAccessibility, mockUseFeatureGate, render, screen, within } from '~/testUtils';
 
@@ -25,8 +26,8 @@ const componentText = {
   },
   VERSION: { label: 'Version' },
   OWNER: { label: 'Owner', NA: 'N/A' },
-  SUBSCRIPTION: { label: 'Subscription billing model' },
-  INFRASTRUCTURE: { label: 'Infrastructure billing model' },
+  SUBSCRIPTION: { label: 'Subscription billing model', NA: 'N/A' },
+  INFRASTRUCTURE: { label: 'Infrastructure billing model', NA: 'N/A' },
   ENCRYPT_WITH_CUSTOM_KEYS: {
     label: 'Encrypt volumes with custom keys',
   },
@@ -39,7 +40,9 @@ jest.mock('./SupportStatusLabel');
 const checkForValue = (label, value) => {
   expect(screen.getByText(label)).toBeInTheDocument();
   if (value) {
-    expect(screen.getByText(value)).toBeInTheDocument();
+    // There could be more than one element for a certain value.
+    // Checking here that at least one exist.
+    expect(screen.getAllByText(value)[0]).toBeInTheDocument();
 
     // Verify that the value is below the label
     // Cannot use roles of "term" and "definition" because there are children elements
@@ -634,6 +637,23 @@ describe('<DetailsLeft />', () => {
       // Assert
       checkForValueAbsence(componentText.SUBSCRIPTION.label);
       checkForValueAbsence(componentText.INFRASTRUCTURE.label);
+    });
+
+    it('shows "N/A" subscription type and infrastructure headings if archived OSD GCP CCS', async () => {
+      // Arrange
+      const OSDClusterFixture = {
+        ...fixtures.OSDGCPClusterDetails.cluster,
+        state: subscriptionStatuses.DEPROVISIONED,
+        ccs: undefined,
+      };
+
+      const props = { ...defaultProps, cluster: OSDClusterFixture };
+      render(<DetailsLeft {...props} />);
+      await checkIfRendered();
+
+      // Assert
+      checkForValue(componentText.SUBSCRIPTION.label, componentText.SUBSCRIPTION.NA);
+      checkForValue(componentText.INFRASTRUCTURE.label, componentText.INFRASTRUCTURE.NA);
     });
   });
 });

@@ -1069,23 +1069,16 @@ describe('AWS Subnet ROSA / OSD', () => {
         { availabilityZone: 'us-west-2f', privateSubnetId: 'subnet-3', publicSubnetId: '' },
         { availabilityZone: 'us-west-2b', privateSubnetId: 'subnet-2', publicSubnetId: '' },
         { availabilityZone: 'us-west-2b', privateSubnetId: 'subnet-2', publicSubnetId: '' },
+        { availabilityZone: 'us-west-2b', privateSubnetId: 'subnet-2b', publicSubnetId: '' },
       ],
     };
     it.each([
-      ['', { pristine: true }, undefined],
-      ['', { pristine: false }, 'Subnet is required'],
-      [
-        'subnet-2',
-        { pristine: false },
-        'Every machine pool must be associated to a different subnet',
-      ],
-      ['subnet-3', { pristine: false }, undefined],
-    ])(
-      'validates %p, %p to be "%s"',
-      (subnetId: string, formProps: { pristine: boolean }, expected: string | undefined) => {
-        expect(validateMultipleMachinePoolsSubnets(subnetId, allValues, formProps)).toBe(expected);
-      },
-    );
+      ['', 'Subnet is required'],
+      ['subnet-2', 'Every machine pool must be associated to a different subnet'],
+      ['subnet-3', undefined],
+    ])('validates %p, %p to be "%s"', (subnetId: string, expected: string | undefined) => {
+      expect(validateMultipleMachinePoolsSubnets(subnetId, allValues)).toBe(expected);
+    });
   });
 });
 

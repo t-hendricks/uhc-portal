@@ -29,12 +29,20 @@ const CreateRosaWizardFooter = ({
   getUserRoleResponse,
   getUserRoleInfo,
   isSubmitting = false,
+  onWizardContextChange,
 }) => {
-  const { goToNextStep, goToPrevStep, close, activeStep, steps } = useWizardContext();
+  const { goToNextStep, goToPrevStep, close, activeStep, steps, setStep } = useWizardContext();
+
   const { values, validateForm, setTouched, isValidating, submitForm } = useFormState();
   // used to determine the actions' disabled state.
   // (as a more exclusive rule than isValidating, which relying upon would block progress to the next step)
   const [isNextDeferred, setIsNextDeferred] = useState(false);
+
+  useEffect(() => {
+    // callback to pass updated context back up
+    onWizardContextChange(steps, setStep);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [steps, setStep]);
 
   const awsRequests = useSelector((state) => ({
     accountIDsLoading: state.rosaReducer.getAWSAccountIDsResponse.pending || false,
@@ -144,6 +152,7 @@ CreateRosaWizardFooter.propTypes = {
   getUserRoleResponse: PropTypes.object.isRequired,
   getUserRoleInfo: PropTypes.func.isRequired,
   isSubmitting: PropTypes.bool,
+  onWizardContextChange: PropTypes.func.isRequired,
 };
 
 export default CreateRosaWizardFooter;

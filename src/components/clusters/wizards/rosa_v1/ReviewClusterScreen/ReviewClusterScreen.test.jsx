@@ -4,8 +4,14 @@ import wizardConnector from '~/components/clusters/wizards/common/WizardConnecto
 import { HCP_AWS_BILLING_SHOW } from '~/redux/constants/featureConstants';
 import { mockUseFeatureGate, render, screen } from '~/testUtils';
 
+import useOrganization from '../../../../CLILoginPage/useOrganization';
+
 import sampleFormData from './mockHCPCluster';
 import ReviewClusterScreen from './ReviewClusterScreen';
+
+jest.mock('../../../../CLILoginPage/useOrganization');
+
+const mockUseOrganization = jest.mocked(useOrganization);
 
 const defaultProps = {
   formValues: sampleFormData.values,
@@ -21,6 +27,9 @@ const defaultProps = {
 };
 
 describe('<ReviewClusterScreen />', () => {
+  beforeEach(() => {
+    mockUseOrganization.mockReturnValue({ organization: {}, isLoading: false, error: null });
+  });
   afterAll(() => {
     jest.resetAllMocks();
   });
@@ -430,6 +439,47 @@ describe('<ReviewClusterScreen />', () => {
 
       expect(screen.queryByText(domainPrefixLabel)).not.toBeInTheDocument();
       expect(screen.queryByText(domainPrefixValue)).not.toBeInTheDocument();
+    });
+  });
+  describe('External Authentication', () => {
+    describe('is not shown when', () => {
+      it('is not Hypershift', () => {
+        const ConnectedReviewClusterScreen = wizardConnector(ReviewClusterScreen);
+        const newProps = { ...defaultProps, isHypershiftSelected: false };
+        render(<ConnectedReviewClusterScreen {...newProps} />);
+
+        expect(screen.queryByText('External Authentication')).toBeNull();
+      });
+      it('is not enabled', () => {
+        const ConnectedReviewClusterScreen = wizardConnector(ReviewClusterScreen);
+        const newProps = { ...defaultProps, isHypershiftSelected: true };
+
+        render(<ConnectedReviewClusterScreen {...newProps} />);
+
+        expect(screen.queryByText('External Authentication')).not.toBeInTheDocument();
+      });
+    });
+    describe('is shown when', () => {
+      it('isHypershift and is enabled', () => {
+        const ConnectedReviewClusterScreen = wizardConnector(ReviewClusterScreen);
+        const newProps = { ...defaultProps, isHypershiftSelected: true };
+        mockUseOrganization.mockReturnValue({
+          organization: {
+            capabilities: [
+              {
+                name: 'capability.organization.hcp_allow_external_authentication',
+                value: 'true',
+                inherited: false,
+              },
+            ],
+          },
+          isLoading: false,
+          error: null,
+        });
+        render(<ConnectedReviewClusterScreen {...newProps} />);
+
+        expect(screen.getByText('External Authentication')).toBeInTheDocument();
+      });
     });
   });
 });

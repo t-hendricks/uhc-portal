@@ -96,11 +96,54 @@ const CreateROSAWizardInternal = ({
   hasProductQuota,
   isErrorModalOpen,
   openModal,
+  selectedAWSAccountID,
 }) => {
   const navigate = useNavigate();
   const history = useHistory();
   const track = useAnalytics();
-  const { resetForm } = useFormState();
+  const { resetForm, values } = useFormState();
+
+  const accountAndRolesStepId = stepId.ACCOUNTS_AND_ROLES_AS_SECOND_STEP;
+  const firstStepId = isHypershiftEnabled ? stepId.CONTROL_PLANE : accountAndRolesStepId;
+
+  const [currentStepId, setCurrentStepId] = React.useState(firstStepId);
+  const [currentStep, setCurrentStep] = React.useState();
+
+  const stepsRef = React.useRef();
+  const setStepRef = React.useRef();
+
+  const onWizardContextChange = (steps, setStep) => {
+    stepsRef.current = steps;
+    setStepRef.current = setStep;
+  };
+
+  React.useEffect(() => {
+    if (!currentStep) {
+      return;
+    }
+
+    // eslint-disable-next-line no-plusplus
+    for (let i = currentStep.index; i < stepsRef.current.length; i++) {
+      const nextStep = stepsRef.current[i];
+      const isParentStep = nextStep.subStepIds !== undefined;
+      if (!isParentStep && !nextStep.isHidden) {
+        if (!nextStep.isVisited) {
+          // can break out early if isVisited is not true for the remainder
+          break;
+        }
+        // unvisit if step is past account roles step and has no assoc. aws acct. selected
+        const noAssocAwsAcct = nextStep.id > accountAndRolesStepId && !selectedAWSAccountID;
+        // unvisit if step is past the current step that has had a form change
+        const afterChangedStep = nextStep.id > currentStepId;
+        // TODO: Not all form changes should cause following steps to be unvisited
+        setStepRef.current({
+          ...nextStep,
+          isVisited: !afterChangedStep && !noAssocAwsAcct,
+        });
+      }
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [values]);
 
   React.useEffect(() => {
     // On component mount
@@ -130,11 +173,6 @@ const CreateROSAWizardInternal = ({
     }
   }, [createClusterResponse, isErrorModalOpen, openModal]);
 
-  const accountAndRolesStepId = stepId.ACCOUNTS_AND_ROLES_AS_FIRST_STEP;
-  const firstStepId = isHypershiftEnabled ? stepId.CONTROL_PLANE : accountAndRolesStepId;
-
-  const [currentStepId, setCurrentStepId] = React.useState(firstStepId);
-
   const ariaTitle = 'Create ROSA cluster wizard';
   const onClose = () => navigate('/create/cloud');
 
@@ -147,6 +185,7 @@ const CreateROSAWizardInternal = ({
     });
 
   const onStepChange = (_event, currentStep, _prevStep, scope) => {
+    setCurrentStep(currentStep);
     setCurrentStepId(currentStep.id);
 
     let trackEvent;
@@ -248,6 +287,7 @@ const CreateROSAWizardInternal = ({
                 getUserRoleResponse={getUserRoleResponse}
                 getUserRoleInfo={() => getUserRole()}
                 isSubmitting={createClusterResponse.pending}
+                onWizardContextChange={onWizardContextChange}
               />
             }
             nav={{ 'aria-label': `${ariaTitle} steps` }}
@@ -286,14 +326,14 @@ const CreateROSAWizardInternal = ({
                 </WizardStep>,
 
                 <WizardStep
-                  id={stepId.CLUSTER_SETTINGS__MACHINE_POO}
+                  id={stepId.CLUSTER_SETTINGS__MACHINE_POOL}
                   name={stepNameById[stepId.CLUSTER_SETTINGS__MACHINE_POOL]}
                 >
                   <ErrorBoundary>
                     <MachinePoolScreen />
                   </ErrorBoundary>
                 </WizardStep>,
-              ].filter(Boolean)}
+              ]}
             />
 
             <WizardStep
@@ -316,27 +356,25 @@ const CreateROSAWizardInternal = ({
                   </ErrorBoundary>
                 </WizardStep>,
 
-                installToVPCSelected && !isHypershiftSelected ? (
-                  <WizardStep
-                    id={stepId.NETWORKING__VPC_SETTINGS}
-                    name={stepNameById[stepId.NETWORKING__VPC_SETTINGS]}
-                  >
-                    <ErrorBoundary>
-                      <VPCScreen privateLinkSelected={privateLinkSelected} />
-                    </ErrorBoundary>
-                  </WizardStep>
-                ) : null,
+                <WizardStep
+                  id={stepId.NETWORKING__VPC_SETTINGS}
+                  name={stepNameById[stepId.NETWORKING__VPC_SETTINGS]}
+                  isHidden={!installToVPCSelected || isHypershiftSelected}
+                >
+                  <ErrorBoundary>
+                    <VPCScreen privateLinkSelected={privateLinkSelected} />
+                  </ErrorBoundary>
+                </WizardStep>,
 
-                configureProxySelected ? (
-                  <WizardStep
-                    id={stepId.NETWORKING__CLUSTER_WIDE_PROXY}
-                    name={stepNameById[stepId.NETWORKING__CLUSTER_WIDE_PROXY]}
-                  >
-                    <ErrorBoundary>
-                      <ClusterProxyScreen />
-                    </ErrorBoundary>
-                  </WizardStep>
-                ) : null,
+                <WizardStep
+                  id={stepId.NETWORKING__CLUSTER_WIDE_PROXY}
+                  name={stepNameById[stepId.NETWORKING__CLUSTER_WIDE_PROXY]}
+                  isHidden={!configureProxySelected}
+                >
+                  <ErrorBoundary>
+                    <ClusterProxyScreen />
+                  </ErrorBoundary>
+                </WizardStep>,
 
                 <WizardStep
                   id={stepId.NETWORKING__CIDR_RANGES}
@@ -346,7 +384,7 @@ const CreateROSAWizardInternal = ({
                     <CIDRScreen isROSA />
                   </ErrorBoundary>
                 </WizardStep>,
-              ].filter(Boolean)}
+              ]}
             />
 
             <WizardStep
@@ -380,7 +418,7 @@ function CreateROSAWizard(props) {
   const {
     values: {
       [FieldId.InstallToVpc]: installToVPCSelected,
-      [FieldId.UsePrivatelink]: privateLinkSelected,
+      [FieldId.UsePrivateLink]: privateLinkSelected,
       [FieldId.ConfigureProxy]: configureProxySelected,
       [FieldId.AssociatedAwsId]: selectedAWSAccountID,
       [FieldId.Hypershift]: hypershiftValue,

@@ -50,6 +50,16 @@ const getSubscriptions = (params: {
     },
   });
 
+const searchSubscriptions = (search: string, size: number = -1) =>
+  apiRequest.get<SubscriptionList>('/api/accounts_mgmt/v1/subscriptions', {
+    params: {
+      size,
+      search,
+      fetchAccounts: true,
+      fetchCapabilities: true,
+    },
+  });
+
 const getSubscription = (subscriptionID: string) =>
   apiRequest.get<Subscription>(`/api/accounts_mgmt/v1/subscriptions/${subscriptionID}`, {
     params: {
@@ -250,6 +260,7 @@ const accountsService = {
   getUserRole,
   getPolicies,
   getCredentialRequests,
+  searchSubscriptions,
 };
 
 export default accountsService;

@@ -119,18 +119,20 @@ function ClusterListTable(props) {
     created: { title: 'Created', visibility: hiddenOnMdOrSmaller, sortIndex: sortColumns.Created },
     version: { title: 'Version', visibility: hiddenOnMdOrSmaller },
     provider: { title: 'Provider (Region)', visibility: hiddenOnMdOrSmaller },
-    actions: { title: 'Actions', screenReaderText: 'cluster actions' },
+    actions: { title: '', screenReaderText: 'cluster actions' },
   };
 
   const columnCells = Object.keys(columns).map((column, index) => (
     <Th
-      screenReaderText={columns[column].screenReaderText}
       width={columns[column].width}
       visibility={columns[column].visibility}
       sort={columns[column].sortIndex ? getSortParams(index, columns[column].sortIndex) : undefined}
       // eslint-disable-next-line react/no-array-index-key
       key={index}
     >
+      {columns[column].screenReaderText ? (
+        <span className="pf-v5-screen-reader">{columns[column].screenReaderText}</span>
+      ) : null}
       {columns[column].title}
     </Th>
   ));
@@ -292,6 +294,7 @@ function ClusterListTable(props) {
                 toggleSubscriptionReleased,
                 refreshFunc,
                 true,
+                cluster.delete_protection?.enabled,
               )}
             />
           ) : null}

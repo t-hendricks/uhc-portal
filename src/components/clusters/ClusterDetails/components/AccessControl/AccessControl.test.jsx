@@ -195,4 +195,58 @@ describe('<AccessControl />', () => {
       expect(screen.getByRole('tab', { name: 'Cluster Roles and Access' })).toBeInTheDocument();
     });
   });
+  describe('External Authentcation Section', () => {
+    it('is hidden for clusters before they are ready', () => {
+      const hypershiftCluster = buildCluster({
+        clusterProps: {
+          hypershift: { enabled: true },
+          state: clusterStates.INSTALLING,
+          idpActions: {
+            get: false,
+            list: false,
+            create: false,
+            update: false,
+            delete: false,
+          },
+          external_auth_config: {
+            enabled: true,
+          },
+        },
+        subscriptionProps: {
+          plan: { id: normalizedProducts.ROSA_HyperShift },
+        },
+        consoleUrl: '',
+      });
+      withState(initialState, true).render(buildComponent(hypershiftCluster));
+
+      expect(
+        screen.queryByRole('tab', { name: 'External authentication' }),
+      ).not.toBeInTheDocument();
+    });
+
+    it('is shown for ready clusters regardless if they have a console URL', () => {
+      const hypershiftCluster = buildCluster({
+        clusterProps: {
+          hypershift: { enabled: true },
+          idpActions: {
+            get: false,
+            list: false,
+            create: false,
+            update: false,
+            delete: false,
+          },
+          external_auth_config: {
+            enabled: true,
+          },
+        },
+        subscriptionProps: {
+          plan: { id: normalizedProducts.ROSA_HyperShift },
+        },
+        consoleUrl: '',
+      });
+      withState(initialState, true).render(buildComponent(hypershiftCluster));
+
+      expect(screen.getByRole('tab', { name: 'External authentication' })).toBeInTheDocument();
+    });
+  });
 });

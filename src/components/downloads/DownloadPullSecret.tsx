@@ -11,7 +11,7 @@ import { ErrorState } from '~/types/types';
 
 export type DownloadPullSecretProps = {
   token: ErrorState | AccessTokenCfg;
-  pendoID: string;
+  pendoID?: string;
   text?: string;
 };
 

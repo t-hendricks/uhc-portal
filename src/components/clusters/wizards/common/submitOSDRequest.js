@@ -33,6 +33,8 @@ export const createClusterRequest = ({ isWizard = true, cloudProviderID, product
       ? state.features?.HCP_AWS_BILLING_SHOW
       : true;
 
+  const isRedHatOIDCManaged = formData?.byo_oidc_config_id_managed === 'true';
+
   const clusterRequest = {
     name: formData.name,
     region: {
@@ -155,7 +157,11 @@ export const createClusterRequest = ({ isWizard = true, cloudProviderID, product
           },
         };
         // auto mode
-        if (formData.rosa_roles_provider_creation_mode === 'auto') {
+        if (
+          formData.rosa_roles_provider_creation_mode === 'auto' &&
+          !isHypershiftSelected &&
+          !isRedHatOIDCManaged
+        ) {
           clusterRequest.aws.sts = {
             ...clusterRequest.aws.sts,
             auto_mode: true,
@@ -360,6 +366,12 @@ export const createClusterRequest = ({ isWizard = true, cloudProviderID, product
 
   if (isHypershiftSelected) {
     clusterRequest.multi_az = true;
+  }
+
+  if (formData.enable_external_authentication) {
+    clusterRequest.external_auth_config = {
+      enabled: true,
+    };
   }
 
   return clusterRequest;

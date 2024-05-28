@@ -60,7 +60,8 @@ cat > cypress.env.json << EOF
 "QE_ENV_AUT" : "${ENV_AUT}",
 "QE_ACCOUNT_ROLE_PREFIX" : "cypress-account-roles",
 "QE_OCM_ROLE_PREFIX" : "cypress-ocm-role",
-"QE_USER_ROLE_PREFIX" : "cypress-user-role"
+"QE_USER_ROLE_PREFIX" : "cypress-user-role",
+"rosav2": true
 }
 EOF
 
@@ -80,10 +81,14 @@ if [ -z "${build_number}" ]; then
 fi
 
 rosacli_container_name="rosacli-${build_number}";
+cloudutil_container_name="cloudutil-${build_number}";
 
 # Cypress images with browser for containerized runs
 browser_image="quay.io/openshifttest/cypress-included:13.6.4"
+# ROSA CLI images for pre-requisits containerized runs
 rosacli_image="registry.ci.openshift.org/ci/rosa-aws-cli:latest"
+# QCMQE image for setting up cloud resources for the runs
+cloudutil_image="quay.io/openshifttest/ocmqeaws:updated"
 
 mkdir -p "${PWD}/cypress/videos"
 mkdir -p "${PWD}/cypress/screenshots"
@@ -132,6 +137,46 @@ function collect_logs(){
     fi
 }
 
+function cloudutil_container_run(){
+  cloudutil_container_name=$1
+  pod_id=$2
+  is_create_resource_action=$3
+  cloud_command="bash cypress-qe-prerun.sh"
+  if [[ "$is_create_resource_action" = true ]]; then
+    cloud_command+=" -a cypress.env.json -v 1 -r ${TEST_QE_AWS_REGION}"
+  else
+    cloud_command+=" -d cypress.env.json"
+  fi
+  # Cloudutil container for creating cloud resources for test runs.
+  echo "Creating cloud util container with command : ${cloud_command}"
+  cloudutil_container_id=$(
+    podman run \
+      --pod "${pod_id}" \
+      --security-opt label="disable" \
+      --user root \
+      --volume "${PWD}/cypress.env.json:/usr/bin/cypress.env.json" \
+      --volume "${PWD}/cypress-qe-prerun.sh:/usr/bin/cypress-qe-prerun.sh" \
+      --env AWS_ACCESS_KEY_ID="${TEST_QE_AWS_ACCESS_KEY_ID}"  \
+      --env AWS_SECRET_ACCESS_KEY="${TEST_QE_AWS_ACCESS_KEY_SECRET}" \
+      --name "${cloudutil_container_name}" \
+      "${cloudutil_image}" \
+      ${cloud_command}
+  )
+  cloudutil_container_id=$(podman ps -a -q -f name=$cloudutil_container_name)
+  echo "Cloud util container id - $cloudutil_container_id"
+
+  if [ ! -z "${cloudutil_container_name}" ]; then
+      podman logs "${cloudutil_container_name}"
+      if [[ "$is_create_resource_action" = true ]]; then
+        echo "Copying cloudutil prerun logs..."
+        podman logs "${cloudutil_container_name}" &> cloudutil-prerun-logs.log
+        podman cp "${cloudutil_container_name}:vpc.json" ${PWD}"/vpc.json"
+      else
+        echo "Copying cloudutil cleanup logs..."
+        podman logs "${cloudutil_container_name}" &> cloudutil-cleanup-logs.log
+      fi
+  fi
+}
 # Create the initially empty pod for cypress runs.
 pod_id=$(
   podman pod create \
@@ -156,7 +201,7 @@ rosacli_container_id=$(
     --volume "${PWD}/cypress-qe-prerun.sh:/rosa/cypress-qe-prerun.sh" \
     --name "${rosacli_container_name}" \
     "${rosacli_image}" \
-    sh cypress-qe-prerun.sh cypress.env.json
+    sh cypress-qe-prerun.sh -c cypress.env.json
 )
 rosacli_container_id=$(podman ps -a -q -f name=$rosacli_container_name)
 echo "ROSA CLI container id - $rosacli_container_id"
@@ -165,6 +210,21 @@ if [ ! -z "${rosacli_container_name}" ]; then
     echo "Copying rosacli prerun logs..."
     podman logs "${rosacli_container_name}"
     podman logs "${rosacli_container_name}" &> rosacli-prerun-logs.log
+fi
+
+
+# Cloudutil container for creating cloud resources for test runs.
+cloudutil_container_run $cloudutil_container_name $pod_id true
+
+# Check the if the vpc.json created and pushed by container valid or not
+# if valid parse the definition to cypress.env.json else do not parse to cypress.env.json.
+IS_VALID_JSON=$(cat vpc.json | jq -e . >/dev/null 2>&1 ; echo ${PIPESTATUS[1]})
+if [[ $IS_VALID_JSON -eq 0 ]]
+then
+  jq -s add cypress.env.json vpc.json >> "tmp" && mv "tmp" cypress.env.json
+else
+  echo "The VPC JSON content is invalid- it could be due to the issue that cloud resources failed to create.."
+  echo "Please review the logs!"
 fi
 
 # Add to the pod the Cypress runner & start the runs.
@@ -207,6 +267,9 @@ if [ $pass_execution_counts -ne $browser_logfile_counts ]; then
     EXECUTION_EXIT_STATUS=1
 fi
 echo "** $browser_logfile_counts out of $pass_execution_counts executions are passed ! **"
+
+# echo "Starting cleanup cloud resources!"
+cloudutil_container_run "${cloudutil_container_name}-cleanup" $pod_id false
 
 if [ ! -z "${pod_id}" ]; then
   echo "Cleaning and deleting all pods."

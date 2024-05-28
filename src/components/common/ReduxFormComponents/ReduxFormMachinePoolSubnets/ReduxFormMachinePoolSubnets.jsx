@@ -12,7 +12,7 @@ import { emptyAWSSubnet } from '~/components/clusters/wizards/common/constants';
 
 import './ReduxFormMachinePoolSubnets.scss';
 
-const ReduxFormMachinePoolSubnets = ({ fields, selectedVPC, meta }) => (
+const ReduxFormMachinePoolSubnets = ({ fields, selectedVPC, meta, change }) => (
   <Grid hasGutter>
     {meta?.warning && (
       <GridItem>
@@ -42,6 +42,12 @@ const ReduxFormMachinePoolSubnets = ({ fields, selectedVPC, meta }) => (
               isRequired
               privacy="private"
               selectedVPC={selectedVPC}
+              onChange={(input, value) =>
+                change(
+                  `${fieldName}.availabilityZone`,
+                  selectedVPC.aws_subnets?.find((e) => e.subnet_id === value)?.availability_zone,
+                )
+              }
               withAutoSelect={false}
               isNewCluster
             />
@@ -82,6 +88,7 @@ ReduxFormMachinePoolSubnets.propTypes = {
   fields: PropTypes.array.isRequired,
   selectedVPC: PropTypes.object,
   meta: PropTypes.object.isRequired,
+  change: PropTypes.func.isRequired,
 };
 
 export default ReduxFormMachinePoolSubnets;

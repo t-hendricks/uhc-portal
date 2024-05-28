@@ -4,7 +4,9 @@ import { Field } from 'redux-form';
 import { GridItem, Text, TextContent, TextVariants, Title } from '@patternfly/react-core';
 
 import links from '../../../../../common/installLinks.mjs';
-import validators from '../../../../../common/validators';
+import validators, {
+  MAX_CUSTOM_OPERATOR_ROLES_PREFIX_LENGTH,
+} from '../../../../../common/validators';
 import ExternalLink from '../../../../common/ExternalLink';
 import ReduxVerticalFormGroup from '../../../../common/ReduxFormComponents/ReduxVerticalFormGroup';
 
@@ -29,7 +31,7 @@ function CustomOperatorRoleNames() {
           type="text"
           // eslint-disable-next-line import/no-named-as-default-member
           validate={validators.checkCustomOperatorRolesPrefix}
-          helpText={`Maximum ${validators.MAX_CUSTOM_OPERATOR_ROLES_PREFIX_LENGTH} characters.  Changing the cluster name will regenerate this value.`}
+          helpText={`Maximum ${MAX_CUSTOM_OPERATOR_ROLES_PREFIX_LENGTH} characters.  Changing the cluster name will regenerate this value.`}
           extendedHelpText={
             <TextContent>
               <Text component={TextVariants.p}>

@@ -1,8 +1,6 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
-  "extends": [
-    "config:recommended"
-  ],
+  "extends": ["config:recommended"],
   "labels": ["dependency update"],
   "packageRules": [
     {
@@ -15,5 +13,7 @@
       "matchPackagePatterns": ["^@openshift-assisted"],
       "enabled": false
     }
-  ]
+  ],
+  "ignorePaths": ["babel-plugins/**"],
+  "ignoreDeps": ["monaco-editor", "react-monaco-editor", "@types/react"]
 }

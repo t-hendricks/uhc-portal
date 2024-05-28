@@ -50,6 +50,7 @@ export type FakeCluster = // AICluster &
     | 'managed'
     | 'ccs'
     | 'external_id'
+    | 'external_auth_config'
     | 'inflight_checks'
     | 'name'
     | 'version'
@@ -87,6 +88,7 @@ export type SubscriptionWithPermissionsList = List & {
 export type AugmentedCluster = ClusterWithPermissions & {
   canEditOCMRoles?: boolean;
   canViewOCMRoles?: boolean;
+  canUpdateClusterResource?: boolean;
   canEditClusterAutoscaler?: boolean;
   idpActions?: {
     [action: string]: boolean;
@@ -136,4 +138,12 @@ export type ViewFlags = undefined | null | boolean | string[] | { [key: string]:
 
 export type UserInfo = {
   username: string;
+};
+
+export type ListAPIParams = {
+  page: number;
+  size: number;
+  search?: string;
+  fields?: string;
+  orderBy?: string;
 };

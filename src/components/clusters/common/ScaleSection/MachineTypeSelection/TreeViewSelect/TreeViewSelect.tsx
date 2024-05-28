@@ -7,6 +7,9 @@ import {
   Panel,
   PanelMain,
   PanelMainBody,
+  Popover,
+  Split,
+  SplitItem,
   Stack,
   StackItem,
   Switch,
@@ -35,12 +38,15 @@ interface TreeViewSelectProps {
   treeViewSelectionMap: TreeViewData[];
   treeViewSwitchActive: boolean;
   setTreeViewSwitchActive: React.Dispatch<React.SetStateAction<boolean>>;
+  helperText?: React.ReactNode;
   includeFilterSwitch?: boolean;
-  selected: string;
+  selected?: TreeViewDataItem;
+  menuToggleBadge?: React.ReactNode;
   setSelected: (
     event: React.MouseEvent<Element, MouseEvent>,
     selection: TreeViewData | TreeViewDataItem,
   ) => void;
+  selectionPlaceholderText?: string;
   placeholder?: string;
   switchLabelOnText?: string;
   switchLabelOffText?: string;
@@ -49,27 +55,51 @@ interface TreeViewSelectProps {
   ariaLabel?: string;
 }
 
-export function TreeViewSelectMenuItem(props: { name: string; description: string }) {
-  const { name, description } = props;
-  return (
-    <div>
-      <Stack>
-        <StackItem>{name}</StackItem>
-        <StackItem>
-          <TextContent>
-            <Text component="small">{description}</Text>
-          </TextContent>
-        </StackItem>
-      </Stack>
-    </div>
+interface TreeViewSelectMenuItemProps {
+  name: React.ReactNode;
+  description: string;
+  popoverText?: string;
+  icon?: React.ReactNode;
+}
+
+export function TreeViewSelectMenuItem(props: TreeViewSelectMenuItemProps) {
+  const { name, description, popoverText, icon } = props;
+  const menuItem = (
+    <Split hasGutter>
+      <SplitItem>
+        <Stack>
+          <StackItem>{name}</StackItem>
+          <StackItem>
+            <TextContent>
+              <Text component="small">{description}</Text>
+            </TextContent>
+          </StackItem>
+        </Stack>
+      </SplitItem>
+      <SplitItem isFilled />
+      {icon && <SplitItem>{icon}</SplitItem>}
+      <SplitItem />
+    </Split>
   );
+
+  if (popoverText) {
+    return (
+      <Popover triggerAction="hover" position="right" bodyContent={<div>{popoverText}</div>}>
+        {menuItem}
+      </Popover>
+    );
+  }
+  return menuItem;
 }
 
 export function TreeViewSelect(props: TreeViewSelectProps) {
   const {
+    helperText,
     includeFilterSwitch,
     setSelected,
     selected,
+    selectionPlaceholderText,
+    menuToggleBadge,
     treeViewSelectionMap,
     treeViewSwitchActive,
     setTreeViewSwitchActive,
@@ -85,6 +115,11 @@ export function TreeViewSelect(props: TreeViewSelectProps) {
   const [searchString, setSearchString] = useState('');
   const toggleRef = React.useRef<HTMLButtonElement>(null);
   const menuRef = React.useRef<HTMLDivElement>(null);
+  const [activeItems, setActiveItems] = React.useState<TreeViewData[]>([]);
+
+  useEffect(() => {
+    if (selected) setActiveItems([selected]);
+  }, [selected]);
 
   const searchFn = useCallback(() => {
     if (searchString === '') {
@@ -169,18 +204,28 @@ export function TreeViewSelect(props: TreeViewSelectProps) {
     </Toolbar>
   );
 
+  const getSelectionText = () => {
+    if (selectionPlaceholderText) {
+      return selectionPlaceholderText;
+    }
+    if (selected) {
+      return selected;
+    }
+    return placeholder;
+  };
+
   const toggle = (
     <MenuToggle
       ref={toggleRef}
       aria-label={ariaLabel && `${ariaLabel} toggle`}
       className="tree-view-select-menu-toggle"
       onClick={(e) => {
-        setSearchString('');
         setIsOpen(!isOpen);
       }}
       isExpanded={isOpen}
+      badge={menuToggleBadge}
     >
-      {selected ? `${selected}` : `${placeholder}`}
+      {getSelectionText()}
     </MenuToggle>
   );
 
@@ -202,6 +247,7 @@ export function TreeViewSelect(props: TreeViewSelectProps) {
               allExpanded={allExpanded || searchString !== ''}
               data={filteredItems}
               useMemo
+              activeItems={activeItems}
             />
           </PanelMainBody>
         </section>
@@ -210,14 +256,20 @@ export function TreeViewSelect(props: TreeViewSelectProps) {
   );
 
   return (
-    <MenuContainer
-      isOpen={isOpen}
-      onOpenChange={(isOpen) => setIsOpen(isOpen)}
-      onOpenChangeKeys={['Escape']}
-      menu={menu}
-      menuRef={menuRef}
-      toggle={toggle}
-      toggleRef={toggleRef}
-    />
+    <>
+      <MenuContainer
+        isOpen={isOpen}
+        onOpenChange={(isOpen) => {
+          setSearchString('');
+          setIsOpen(isOpen);
+        }}
+        onOpenChangeKeys={['Escape']}
+        menu={menu}
+        menuRef={menuRef}
+        toggle={toggle}
+        toggleRef={toggleRef}
+      />
+      {helperText}
+    </>
   );
 }

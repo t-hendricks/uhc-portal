@@ -302,6 +302,7 @@ const links = {
   ROSA_UPGRADES: `${ROSA_DOCS_BASE}/upgrading/rosa-upgrading-sts.html`,
   ROSA_LIMITED_SUPPORT_DEFINITION: `${ROSA_DOCS_BASE}/rosa_architecture/rosa_policy_service_definition/rosa-service-definition.html#rosa-limited-support_rosa-service-definition`,
   ROSA_SHARED_VPC: `${ROSA_DOCS_BASE}/rosa_install_access_delete_clusters/rosa-shared-vpc-config.html`,
+  ROSA_PRIVATE_CONNECTIONS: `${ROSA_DOCS_BASE}/rosa_cluster_admin/cloud_infrastructure_access/rosa-configuring-private-connections.html`,
 
   ROSA_AWS_STS_PREREQUISITES: `${ROSA_DOCS_BASE}/rosa_planning/rosa-sts-aws-prereqs.html`,
   ROSA_AWS_ACCOUNT_ASSOCIATION: `${ROSA_DOCS_BASE}/rosa_planning/rosa-sts-aws-prereqs.html#rosa-associating-account_rosa-sts-aws-prereqs`,
@@ -380,6 +381,7 @@ const tools = {
   MIRROR_REGISTRY: 'mirror-registry',
   OC_MIRROR_PLUGIN: 'oc-mirror-plugin',
   TKN: 'tkn',
+  COPY_PULLREQUEST: 'copy-pull-secret',
 };
 
 const channels = {
@@ -404,12 +406,16 @@ const architectureOptions = [
 
 const operatingSystems = {
   linux: 'linux',
+  rhel9: 'rhel-9',
+  rhel8: 'rhel-8',
   mac: 'mac',
   windows: 'windows',
 };
 
 const operatingSystemOptions = [
   { value: operatingSystems.linux, label: 'Linux' },
+  { value: operatingSystems.rhel9, label: 'Linux - RHEL 9' },
+  { value: operatingSystems.rhel8, label: 'Linux - RHEL 8' },
   { value: operatingSystems.mac, label: 'MacOS' },
   { value: operatingSystems.windows, label: 'Windows' },
 ];
@@ -828,16 +834,20 @@ const urls = {
   [tools.OC_MIRROR_PLUGIN]: {
     [channels.STABLE]: {
       [architectures.x86]: {
-        [operatingSystems.linux]: `${MIRROR_CLIENTS_LATEST_X86}oc-mirror.tar.gz`,
+        [operatingSystems.rhel9]: `${MIRROR_CLIENTS_LATEST_X86}oc-mirror.rhel9.tar.gz`,
+        [operatingSystems.rhel8]: `${MIRROR_CLIENTS_LATEST_X86}oc-mirror.tar.gz`,
       },
       [architectures.arm]: {
-        [operatingSystems.linux]: `${MIRROR_CLIENTS_LATEST_ARM}oc-mirror.tar.gz`,
+        [operatingSystems.rhel9]: `${MIRROR_CLIENTS_LATEST_ARM}oc-mirror.rhel9.tar.gz`,
+        [operatingSystems.rhel8]: `${MIRROR_CLIENTS_LATEST_ARM}oc-mirror.tar.gz`,
       },
       [architectures.s390x]: {
-        [operatingSystems.linux]: `${MIRROR_CLIENTS_LATEST_IBMZ}oc-mirror.tar.gz`,
+        [operatingSystems.rhel9]: `${MIRROR_CLIENTS_LATEST_IBMZ}oc-mirror.rhel9.tar.gz`,
+        [operatingSystems.rhel8]: `${MIRROR_CLIENTS_LATEST_IBMZ}oc-mirror.tar.gz`,
       },
       [architectures.ppc]: {
-        [operatingSystems.linux]: `${MIRROR_CLIENTS_LATEST_PPC}oc-mirror.tar.gz`,
+        [operatingSystems.rhel9]: `${MIRROR_CLIENTS_LATEST_PPC}oc-mirror.rhel9.tar.gz`,
+        [operatingSystems.rhel8]: `${MIRROR_CLIENTS_LATEST_PPC}oc-mirror.tar.gz`,
       },
     },
   },

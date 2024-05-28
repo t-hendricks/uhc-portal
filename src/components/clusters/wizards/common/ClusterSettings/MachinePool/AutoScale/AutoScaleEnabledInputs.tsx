@@ -214,7 +214,9 @@ export const AutoScaleEnabledInputs = () => {
           <PopoverHint
             hint={
               <>
-                {constants.computeNodeCountHint}
+                {isHypershiftSelected
+                  ? constants.hcpComputeNodeCountHintWizard
+                  : constants.computeNodeCountHint}
                 <br />
                 {isRosa ? (
                   <>

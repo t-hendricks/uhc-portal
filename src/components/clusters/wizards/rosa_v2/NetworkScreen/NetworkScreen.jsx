@@ -120,7 +120,7 @@ function NetworkScreen(props) {
   const onClusterPrivacyChange = (_, value) => {
     setFieldValue(FieldId.ClusterPrivacy, value);
     if (value === 'external') {
-      setFieldValue(FieldId.UsePrivatelink, false);
+      setFieldValue(FieldId.UsePrivateLink, false);
 
       if (!isHypershiftSelected) {
         shouldUncheckInstallToVPC();
@@ -138,7 +138,7 @@ function NetworkScreen(props) {
   };
 
   const onPrivateLinkChange = (_event, checked) => {
-    setFieldValue(FieldId.UsePrivatelink, checked);
+    setFieldValue(FieldId.UsePrivateLink, checked);
     if (checked) {
       setFieldValue(FieldId.InstallToVpc, true);
     }
@@ -146,7 +146,7 @@ function NetworkScreen(props) {
 
   if (forcePrivateLink && privateClusterSelected && !privateLinkSelected) {
     setFieldValue(FieldId.InstallToVpc, true);
-    setFieldValue(FieldId.UsePrivatelink, true);
+    setFieldValue(FieldId.UsePrivateLink, true);
   }
 
   const onClusterProxyChange = (_event, checked) => {
@@ -246,15 +246,9 @@ function NetworkScreen(props) {
               options={[
                 {
                   value: 'external',
-                  ariaLabel: 'Public',
-                  label: (
-                    <>
-                      Public
-                      <div className="ocm-c--reduxradiobutton-description">
-                        Access Kubernetes API endpoint and application routes from the internet.
-                      </div>
-                    </>
-                  ),
+                  label: 'Public',
+                  description:
+                    'Access Kubernetes API endpoint and application routes from the internet.',
                   extraField: isHypershiftSelected && !privateClusterSelected && (
                     <Field
                       component={SubnetSelectField}
@@ -278,16 +272,9 @@ function NetworkScreen(props) {
                 },
                 {
                   value: 'internal',
-                  ariaLabel: 'Private',
-                  label: (
-                    <>
-                      Private
-                      <div className="ocm-c--reduxradiobutton-description">
-                        Access Kubernetes API endpoint and application routes from direct private
-                        connections only.
-                      </div>
-                    </>
-                  ),
+                  label: 'Private',
+                  description:
+                    'Access Kubernetes API endpoint and application routes from direct private connections only.',
                 },
               ]}
               disableDefaultValueHandling
@@ -301,7 +288,7 @@ function NetworkScreen(props) {
                   title="You will not be able to access your cluster until you edit network settings in your cloud provider."
                 >
                   {cloudProviderID === 'aws' && (
-                    <ExternalLink href={links.OSD_AWS_PRIVATE_CONNECTIONS}>
+                    <ExternalLink href={links.ROSA_PRIVATE_CONNECTIONS}>
                       Learn more about configuring network settings
                     </ExternalLink>
                   )}
@@ -349,7 +336,7 @@ function NetworkScreen(props) {
                     <FormGroup>
                       <Field
                         component={ReduxCheckbox}
-                        name={FieldId.UsePrivatelink}
+                        name={FieldId.UsePrivateLink}
                         label="Use a PrivateLink"
                         onChange={onPrivateLinkChange}
                         isDisabled={forcePrivateLink && privateClusterSelected}
@@ -357,10 +344,10 @@ function NetworkScreen(props) {
                           <CheckboxDescription>{constants.privateLinkHint}</CheckboxDescription>
                         }
                         input={{
-                          ...getFieldProps(FieldId.UsePrivatelink),
+                          ...getFieldProps(FieldId.UsePrivateLink),
                           onChange: (event, value) => onPrivateLinkChange(event, value),
                         }}
-                        meta={getFieldMeta(FieldId.UsePrivatelink)}
+                        meta={getFieldMeta(FieldId.UsePrivateLink)}
                       />
                     </FormGroup>
                   )}
