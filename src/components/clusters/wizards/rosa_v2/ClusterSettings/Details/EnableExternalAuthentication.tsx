@@ -14,7 +14,7 @@ export const EnableExternalAuthentication = () => (
       name={FieldId.EnableExteranlAuthentication}
       label="External authentication"
       tooltip={
-        <ExternalLink href={links.UNDERSTANDING_AUTHENTICATION}>
+        <ExternalLink href={links.ROSA_HCP_EXT_AUTH}>
           Learn more about external authentication
         </ExternalLink>
       }

@@ -57,7 +57,11 @@ export function BreakGlassCredentialNewModal(props: BreakGlassCredentialNewModal
           .max(64, 'Must be 64 characters or less')
           .required('Required')
           .notOneOf(credentialList || [], 'Username already exists'),
-        expiration: Yup.number().integer().required('Required').min(1).max(24),
+        expiration: Yup.number()
+          .integer('Only integer numbers allowed')
+          .min(1)
+          .max(24)
+          .test('is-integer', 'expiration must be an integer', (value) => Number.isInteger(value)),
       })}
       onSubmit={async (values) => {
         setError(undefined);
