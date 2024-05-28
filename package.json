@@ -8,9 +8,9 @@
   },
   "license": "Apache-2.0",
   "dependencies": {
-    "@openshift-assisted/locales": "2.31.8",
-    "@openshift-assisted/types": "2.31.8",
-    "@openshift-assisted/ui-lib": "2.31.8",
+    "@openshift-assisted/locales": "2.32.0",
+    "@openshift-assisted/types": "2.32.0",
+    "@openshift-assisted/ui-lib": "2.32.0",
     "@patternfly/patternfly": "5.3.1",
     "@patternfly/react-charts": "7.3.0",
     "@patternfly/react-code-editor": "5.3.3",
