@@ -17,12 +17,19 @@ export function ExternalAuthenticationSection() {
         </Title>
         <p>
           Allow authentication to be handled by an external provider.
-          <ExternalLink href={links.IDP_OPENID}> Learn more.</ExternalLink>
+          <ExternalLink href={links.ROSA_HCP_EXT_AUTH}> Learn more.</ExternalLink>
         </p>
 
         <ExternalAuthProviderList />
       </CardBody>
       <CardBody>
+        <Title className="card-title" headingLevel="h3" size="lg">
+          Credentials
+        </Title>
+        <p>
+          Allows temporary admin access to the cluster using kubeconfig file.
+          <ExternalLink href={links.ROSA_HCP_BREAK_GLASS}> Learn more.</ExternalLink>
+        </p>
         <BreakGlassCredentialList />
       </CardBody>
     </Card>

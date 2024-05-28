@@ -17,19 +17,16 @@ const DownloadButton = ({ textOutput, disabled }: { textOutput: string; disabled
   const file = new Blob([textOutput], { type: 'text/plain' });
 
   return (
-    <Button variant="primary" isDisabled={disabled}>
-      <a
-        download="kubeConfig.txt"
-        target="_blank"
-        rel="noreferrer"
-        href={URL.createObjectURL(file)}
-        style={{
-          textDecoration: 'inherit',
-          color: 'inherit',
-        }}
-      >
-        Download
-      </a>
+    <Button
+      component="a"
+      variant="primary"
+      download="kubeConfig.txt"
+      target="_blank"
+      rel="noreferrer"
+      href={URL.createObjectURL(file)}
+      isDisabled={disabled}
+    >
+      Download
     </Button>
   );
 };
@@ -53,7 +50,7 @@ export function BreakGlassCredentialDetailsModal(props: BreakGlassCredentialDeta
     (async () => {
       const request = clusterService.getBreakGlassCredentialDetails;
       try {
-        const creds: BreakGlassCredential | any = await request(
+        const creds: BreakGlassCredential = await request(
           clusterID || '',
           credential?.id || '',
         ).then((response) => response.data);

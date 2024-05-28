@@ -17,7 +17,7 @@ export const EnableExternalAuthentication = () => (
         id="enable_external_authentication"
         label="Enable external authentication provider"
         extendedHelpText={
-          <ExternalLink href={links.UNDERSTANDING_AUTHENTICATION}>
+          <ExternalLink href={links.ROSA_HCP_EXT_AUTH}>
             Learn more about external authentication
           </ExternalLink>
         }
