@@ -49,7 +49,7 @@ const SecurityGroupsDisplayByNode = ({
         />
       </dd>
     )}
-    {securityGroupIdsForControl.length > 0 && (
+    {securityGroupIdsForInfra.length > 0 && (
       <dd key="sg-detail-display-infra-nodes">
         <MachinePoolItemList
           title="Infrastructure nodes"

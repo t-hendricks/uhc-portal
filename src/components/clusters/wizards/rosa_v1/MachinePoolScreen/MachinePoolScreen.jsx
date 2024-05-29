@@ -5,6 +5,7 @@ import { Form, Grid } from '@patternfly/react-core';
 
 import { billingModels, normalizedProducts } from '~/common/subscriptionTypes';
 import ScaleSection from '~/components/clusters/common/ScaleSection/ScaleSection';
+import useCanClusterAutoscale from '~/hooks/useCanClusterAutoscale';
 
 import MachinePoolScreenHeader from './MachinePoolScreenHeader';
 import MachinePoolsSubnets from './MachinePoolsSubnets';
@@ -15,7 +16,6 @@ function MachinePoolScreen({
   machineType,
   cloudProviderID,
   product,
-  canAutoScale,
   autoscalingEnabled,
   autoScaleMinNodesValue,
   autoScaleMaxNodesValue,
@@ -32,6 +32,7 @@ function MachinePoolScreen({
   maxWorkerVolumeSizeGiB,
   hasNodeLabels,
 }) {
+  const canAutoScale = useCanClusterAutoscale(product, billingModel);
   return (
     <Form
       onSubmit={(event) => {
@@ -42,7 +43,7 @@ function MachinePoolScreen({
       <Grid hasGutter>
         <MachinePoolScreenHeader isHypershiftSelected={isHypershift} />
 
-        {isHypershift && <MachinePoolsSubnets selectedVPC={selectedVPC} />}
+        {isHypershift && <MachinePoolsSubnets selectedVPC={selectedVPC} change={change} />}
 
         <ScaleSection
           isBYOC={isByoc}
@@ -82,7 +83,6 @@ MachinePoolScreen.propTypes = {
   }).isRequired,
   product: PropTypes.oneOf(Object.keys(normalizedProducts)).isRequired,
   billingModel: PropTypes.oneOf(Object.values(billingModels)),
-  canAutoScale: PropTypes.bool,
   autoscalingEnabled: PropTypes.bool,
   change: PropTypes.func.isRequired,
   autoScaleMinNodesValue: PropTypes.string,

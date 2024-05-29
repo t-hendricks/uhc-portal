@@ -15,7 +15,7 @@ type TransferClusterOwnershipInfoProps = {
 
 const TransferClusterOwnershipInfo = ({ subscription }: TransferClusterOwnershipInfoProps) => {
   const isAllowedProducts = [normalizedProducts.OCP, normalizedProducts.ARO].includes(
-    get(subscription, 'plan.type', false),
+    get(subscription, 'plan.type', ''),
   );
   if (!isAllowedProducts || !subscription?.released) {
     return null;

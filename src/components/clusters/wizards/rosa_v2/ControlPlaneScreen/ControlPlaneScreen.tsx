@@ -6,12 +6,13 @@ import { Form, Grid, GridItem, Text, TextVariants, Title } from '@patternfly/rea
 import links from '~/common/installLinks.mjs';
 import { emptyAWSSubnet } from '~/components/clusters/wizards/common/constants';
 import { useFormState } from '~/components/clusters/wizards/hooks';
-import { PrerequisitesInfoBox } from '~/components/clusters/wizards/rosa_v1/common/PrerequisitesInfoBox';
-import { WelcomeMessage } from '~/components/clusters/wizards/rosa_v1/common/WelcomeMessage';
+import { PrerequisitesInfoBox } from '~/components/clusters/wizards/rosa_v2/common/PrerequisitesInfoBox';
+import { WelcomeMessage } from '~/components/clusters/wizards/rosa_v2/common/WelcomeMessage';
 import ExternalLink from '~/components/common/ExternalLink';
 import AWSLogo from '~/styles/images/AWS.png';
 import RedHat from '~/styles/images/Logo-Red_Hat-B-Standard-RGB.png';
 
+import { NO_ROLE_DETECTED } from '../AccountsRolesScreen/AccountRolesARNsSection';
 import { FieldId, initialValuesHypershift } from '../constants';
 
 import { hypershiftValue } from './ControlPlaneCommon';
@@ -63,6 +64,11 @@ const ControlPlaneField = ({
       [FieldId.MachinePoolsSubnets]: [emptyAWSSubnet()],
       // Uncheck fips selection checkbox when switching Control plane selection
       [FieldId.FipsCryptography]: false,
+      // Accounts and roles
+      [FieldId.InstallerRoleArn]: NO_ROLE_DETECTED,
+      [FieldId.SupportRoleArn]: NO_ROLE_DETECTED,
+      [FieldId.WorkerRoleArn]: NO_ROLE_DETECTED,
+      ...(isHypershift === 'false' ? { [FieldId.ControlPlaneRoleArn]: NO_ROLE_DETECTED } : {}),
     });
   };
 

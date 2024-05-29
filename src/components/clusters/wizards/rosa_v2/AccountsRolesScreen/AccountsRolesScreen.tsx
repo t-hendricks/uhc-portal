@@ -16,7 +16,6 @@ import {
 
 import { trackEvents } from '~/common/analytics';
 import { AWS_ACCOUNT_ROSA_LOCALSTORAGE_KEY } from '~/common/localStorageConstants';
-import { normalizedProducts } from '~/common/subscriptionTypes';
 import { required } from '~/common/validators';
 import { useFormState } from '~/components/clusters/wizards/hooks';
 import { PrerequisitesInfoBox } from '~/components/clusters/wizards/rosa_v2/common/PrerequisitesInfoBox';
@@ -116,10 +115,6 @@ function AccountsRolesScreen({
 
   // default product and cloud_provider form values
   useEffect(() => {
-    // default product and cloud_provider form values
-    setFieldValue(FieldId.CloudProvider, 'aws');
-    setFieldValue(FieldId.Product, normalizedProducts.ROSA);
-    setFieldValue(FieldId.Byoc, 'true');
     resetAWSAccountFields();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);

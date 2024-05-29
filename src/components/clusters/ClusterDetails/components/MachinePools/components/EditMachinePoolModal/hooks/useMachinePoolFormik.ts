@@ -57,8 +57,6 @@ type UseMachinePoolFormikArgs = {
 const isMachinePool = (pool?: MachinePool | NodePool): pool is MachinePool =>
   pool?.kind === 'MachinePool';
 
-const noDecimalTest = (value: number) => value === Math.floor(value);
-
 const useMachinePoolFormik = ({
   machinePool,
   cluster,
@@ -140,7 +138,7 @@ const useMachinePoolFormik = ({
 
   const validationSchema = React.useMemo(
     () =>
-      Yup.lazy<EditMachinePoolValues>((values) => {
+      Yup.lazy((values) => {
         const minNodes = isMachinePoolMz ? minNodesRequired / 3 : minNodesRequired;
         const secGroupValidation = validateSecurityGroups(values.securityGroupIds, isHypershift);
         const nodeOptions = getNodeOptions({
@@ -165,27 +163,27 @@ const useMachinePoolFormik = ({
             if (!hasMachinePool && machinePools.data?.some((mp) => mp.id === value)) {
               return new Yup.ValidationError('Name has to be unique.', value, 'name');
             }
-            return false;
+            return true;
           }),
           labels: Yup.array().of(
-            Yup.object<{ key: string; value: string }>().shape({
+            Yup.object().shape({
               key: Yup.string().test('label-key', '', function test(value) {
                 if (values.labels.length === 1 && (!value || value.length === 0)) {
-                  return false;
+                  return true;
                 }
                 const err = checkLabelKey(value);
                 if (err) {
                   return new Yup.ValidationError(err, value, this.path);
                 }
 
-                if (values.labels.filter(({ key }) => key === value).length > 1) {
+                if (values.labels.filter(({ key }: { key: any }) => key === value).length > 1) {
                   return new Yup.ValidationError(
                     'Each label must have a different key.',
                     value,
                     this.path,
                   );
                 }
-                return false;
+                return true;
               }),
               value: Yup.string().test('label-value', '', function test(value) {
                 const err = checkLabelValue(value);
@@ -197,7 +195,7 @@ const useMachinePoolFormik = ({
                 if (value && !labelKey) {
                   return new Yup.ValidationError('Label key has to be defined', value, this.path);
                 }
-                return false;
+                return true;
               }),
             }),
           ),
@@ -205,10 +203,10 @@ const useMachinePoolFormik = ({
             Yup.object().shape({
               key: Yup.string().test('taint-key', '', function test(value) {
                 if (values.taints.length === 1 && (!value || value.length === 0)) {
-                  return false;
+                  return true;
                 }
                 const err = checkTaintKey(value);
-                return err ? new Yup.ValidationError(err, value, this.path) : false;
+                return err ? new Yup.ValidationError(err, value, this.path) : true;
               }),
               value: Yup.string().test('taint-value', '', function test(value) {
                 const err = checkTaintValue(value);
@@ -220,7 +218,7 @@ const useMachinePoolFormik = ({
                 if (value && !taintKey) {
                   return new Yup.ValidationError('Taint key has to be defined', value, this.path);
                 }
-                return false;
+                return true;
               }),
             }) as any,
           ),
@@ -229,7 +227,7 @@ const useMachinePoolFormik = ({
                 .test(
                   'whole-number',
                   'Decimals are not allowed. Enter a whole number.',
-                  noDecimalTest,
+                  Number.isInteger,
                 )
                 .min(minNodes, `Input cannot be less than ${minNodes}.`)
                 .max(values.autoscaleMax, 'Min nodes cannot be more than max nodes.')
@@ -237,21 +235,21 @@ const useMachinePoolFormik = ({
           autoscaleMax: values.autoscaling
             ? Yup.number()
                 .test('autoscale-max', '', (value) => {
-                  if (!noDecimalTest(value)) {
+                  if (!Number.isInteger) {
                     return new Yup.ValidationError(
                       'Decimals are not allowed. Enter a whole number.',
                       value,
                       'autoscaleMax',
                     );
                   }
-                  if (value < 1) {
+                  if (value !== undefined && value < 1) {
                     return new Yup.ValidationError(
                       'Max nodes must be greater than 0.',
                       value,
                       'autoscaleMax',
                     );
                   }
-                  return false;
+                  return true;
                 })
                 .min(values.autoscaleMin, 'Max nodes cannot be less than min nodes.')
                 .max(
@@ -270,7 +268,7 @@ const useMachinePoolFormik = ({
                 .test(
                   'whole-number',
                   'Decimals are not allowed. Enter a whole number.',
-                  noDecimalTest,
+                  Number.isInteger,
                 )
             : Yup.number(),
           spotInstanceType: Yup.mixed(),
@@ -299,17 +297,17 @@ const useMachinePoolFormik = ({
         });
       }),
     [
-      isHypershift,
-      minNodesRequired,
       isMachinePoolMz,
+      minNodesRequired,
+      cluster,
+      machinePools.data,
+      machinePool,
+      machineTypes,
+      organization.quotaList,
       rosa,
       maxDiskSize,
       hasMachinePool,
-      machinePool,
-      machinePools.data,
-      organization,
-      cluster,
-      machineTypes,
+      isHypershift,
     ],
   );
 

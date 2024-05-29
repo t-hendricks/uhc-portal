@@ -43,6 +43,6 @@ console.error = (msg, ...args) => {
   }
 };
 
-global.insights = {};
+(global as any).insights = {};
 
 config.dateConfig();

@@ -46,7 +46,7 @@ import { AwsRoleErrorAlert } from './AwsRoleErrorAlert';
 
 import './AccountsRolesScreen.scss';
 
-const NO_ROLE_DETECTED = 'No role detected';
+export const NO_ROLE_DETECTED = 'No role detected';
 
 const hasNoTrustedRelationshipOnClusterRoleError = ({ errorDetails }) =>
   errorDetails?.some((error) => error?.Error_Key === 'NoTrustedRelationshipOnClusterRole');
@@ -97,8 +97,14 @@ function AccountRolesARNsSection({
   isHypershiftSelected,
   onAccountChanged,
 }) {
-  const { setFieldValue, getFieldProps, getFieldMeta, setFieldTouched, validateForm } =
-    useFormState();
+  const {
+    setFieldValue,
+    getFieldProps,
+    getFieldMeta,
+    setFieldTouched,
+    validateForm,
+    values: { [FieldId.AssociatedAwsId]: previouslySelectedAWSAccountID },
+  } = useFormState();
   const track = useAnalytics();
   const [isExpanded, setIsExpanded] = useState(true);
   const [accountRoles, setAccountRoles] = useState([]);
@@ -142,10 +148,12 @@ function AccountRolesARNsSection({
   };
 
   useEffect(() => {
+    if (selectedAWSAccountID !== previouslySelectedAWSAccountID) {
+      updateRoleArns(null);
+    }
     setSelectedInstallerRole(NO_ROLE_DETECTED);
     setAccountRoles([]);
     setInstallerRoleOptions([]);
-    updateRoleArns(null);
     setShowMissingArnsError(false);
     clearGetAWSAccountRolesARNsResponse();
     onAccountChanged();

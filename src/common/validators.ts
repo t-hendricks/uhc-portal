@@ -185,7 +185,11 @@ const checkOpenIDIssuer = (value?: string): string | undefined => {
 };
 
 // Function to validate that the object name contains a valid DNS label:
-const checkObjectName = (value: string, objectName: string, maxLen: number): string | undefined => {
+const checkObjectName = (
+  value: string | undefined,
+  objectName: string,
+  maxLen: number,
+): string | undefined => {
   if (!value) {
     return `${objectName} name is required.`;
   }
@@ -258,10 +262,10 @@ const clusterNameValidation = (value?: string, maxLen?: number) =>
 
 const clusterNameAsyncValidation = (value?: string) => checkObjectNameAsyncValidation(value);
 
-const checkMachinePoolName = (value: string) =>
+const checkMachinePoolName = (value: string | undefined) =>
   checkObjectName(value, 'Machine pool', MAX_MACHINE_POOL_NAME_LENGTH);
 
-const checkNodePoolName = (value: string) =>
+const checkNodePoolName = (value: string | undefined) =>
   checkObjectName(value, 'Machine pool', MAX_NODE_POOL_NAME_LENGTH);
 
 const domainPrefixValidation = (value?: string) =>
@@ -414,8 +418,8 @@ const k8sMinMaxParameter = (
   const baseField = baseFieldMatch ? baseFieldMatch[1] : ''; // Should always match
 
   // Check the validity of the pair of values
-  const minParamValue = get(allValues, `${baseField}.min`);
-  const maxParamValue = get(allValues, `${baseField}.max`);
+  const minParamValue = get(allValues, `${baseField}.min`, 0);
+  const maxParamValue = get(allValues, `${baseField}.max`, 0);
 
   return minParamValue <= maxParamValue
     ? undefined
@@ -445,13 +449,13 @@ const clusterAutoScalingValidators = {
 const createPessimisticValidator =
   <V>(
     validationProvider: (
-      value: V,
+      value?: V,
       allValues?: any,
       props?: any,
       name?: any,
     ) => Validations | undefined = () => undefined,
   ) =>
-  (value: V, allValues?: any, props?: any, name?: any) =>
+  (value?: V, allValues?: any, props?: any, name?: any) =>
     findFirstFailureMessage(validationProvider(value, allValues, props, name));
 
 const checkCustomOperatorRolesPrefix = (value: string): string | undefined => {
@@ -500,7 +504,7 @@ const checkGithubTeams = (value?: string): string | undefined => {
 };
 
 const parseNodeLabelKey = (
-  labelKey: string,
+  labelKey: string | undefined,
 ): { name: string | undefined; prefix: string | undefined } => {
   const [name, prefix] =
     labelKey
@@ -529,7 +533,7 @@ const parseNodeLabels = (input: string | string[] | undefined) => {
 };
 
 const labelAndTaintKeyValidations = (
-  value: string,
+  value: string | undefined,
   items: { key?: string; value?: string }[],
   keyType?: string,
 ): Validations => {
@@ -559,7 +563,7 @@ const labelAndTaintKeyValidations = (
       text: `A valid key name must be ${LABEL_KEY_NAME_MAX_LENGTH} characters or less`,
     },
     {
-      validated: isEmptyValid || value?.length > 0,
+      validated: isEmptyValid || (value !== undefined && value.length > 0),
       text:
         keyType === 'label'
           ? "A valid key name must consist of alphanumeric characters, '-', '.' , '_'  or '/' and must start and end with an alphanumeric character"
@@ -568,7 +572,7 @@ const labelAndTaintKeyValidations = (
   ];
 };
 
-const labelAndTaintValueValidations = (value: string): Validations => [
+const labelAndTaintValueValidations = (value: string | undefined): Validations => [
   {
     validated:
       typeof value === 'undefined' || value === null || value.length <= LABEL_VALUE_MAX_LENGTH,
@@ -580,13 +584,16 @@ const labelAndTaintValueValidations = (value: string): Validations => [
   },
 ];
 
-const taintKeyValidations = (value: string, allValues: { taints?: Taint[] }): Validations => {
+const taintKeyValidations = (
+  value: string | undefined,
+  allValues: { taints?: Taint[] },
+): Validations => {
   const items = allValues?.taints || [];
   return labelAndTaintKeyValidations(value, items, 'taint');
 };
 
 const nodeLabelKeyValidations = (
-  value: string,
+  value: string | undefined,
   allValues: { node_labels?: Taint[] },
 ): Validations => {
   const items = allValues?.node_labels || [];
@@ -1271,7 +1278,7 @@ const atLeastOneRequired =
         }
       } else {
         const content = get(field, fieldName, null);
-        if (content && content.trim() !== '') {
+        if (content && (content as string).trim() !== '') {
           nonEmptyValues += 1;
         }
       }
@@ -1452,22 +1459,44 @@ export type FormSubnet = {
   publicSubnetId: string;
 };
 
+// Validating multiple MPs
+const hasRepeatedSubnets = (
+  subnetId: string,
+  allValues: { machinePoolsSubnets: FormSubnet[] },
+): boolean =>
+  allValues.machinePoolsSubnets.filter((mpSubnet) => mpSubnet.privateSubnetId === subnetId).length >
+  1;
+
+const hasRepeatedAvailabilityZones = (
+  subnetId: string,
+  machinePoolsSubnets: FormSubnet[],
+): boolean => {
+  const availabilityZoneFromSubnet = machinePoolsSubnets.find(
+    (e) => e.privateSubnetId === subnetId,
+  )?.availabilityZone;
+  const availabilityZones = machinePoolsSubnets
+    .filter((e) => e.availabilityZone === availabilityZoneFromSubnet)
+    .map((e) => e.availabilityZone);
+
+  return availabilityZones.length !== new Set(availabilityZones).size;
+};
+
 const validateMultipleMachinePoolsSubnets = (
   subnetId: string,
   allValues: { machinePoolsSubnets: FormSubnet[] },
-  props?: { pristine: boolean },
+  props?: { pristine: boolean; isHypershift?: boolean },
 ) => {
-  if (subnetId === '') {
-    return props?.pristine ? undefined : 'Subnet is required';
+  switch (true) {
+    case subnetId === '':
+      return props?.pristine ? undefined : 'Subnet is required';
+    case hasRepeatedSubnets(subnetId, allValues):
+      return 'Every machine pool must be associated to a different subnet';
+    case props?.isHypershift &&
+      hasRepeatedAvailabilityZones(subnetId, allValues.machinePoolsSubnets):
+      return 'Every machine pool subnet should belong to a different availability zone';
+    default:
+      return undefined;
   }
-
-  // Validating multiple MPs
-  const hasRepeatedSubnets =
-    allValues.machinePoolsSubnets.filter((mpSubnet) => mpSubnet.privateSubnetId === subnetId)
-      .length > 1;
-  return hasRepeatedSubnets
-    ? 'Every machine pool must be associated to a different subnet'
-    : undefined;
 };
 
 const validateGCPSubnet = (value?: string): string | undefined => {
