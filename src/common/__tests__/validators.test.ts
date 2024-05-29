@@ -1069,6 +1069,7 @@ describe('AWS Subnet ROSA / OSD', () => {
         { availabilityZone: 'us-west-2f', privateSubnetId: 'subnet-3', publicSubnetId: '' },
         { availabilityZone: 'us-west-2b', privateSubnetId: 'subnet-2', publicSubnetId: '' },
         { availabilityZone: 'us-west-2b', privateSubnetId: 'subnet-2', publicSubnetId: '' },
+        { availabilityZone: 'us-west-2b', privateSubnetId: 'subnet-2b', publicSubnetId: '' },
       ],
     };
     it.each([

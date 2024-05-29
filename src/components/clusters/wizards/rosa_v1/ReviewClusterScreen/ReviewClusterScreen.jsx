@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 
 import { Title } from '@patternfly/react-core';
 
+import { hasExternalAuthenticationCapability } from '~/common/externalAuthHelper';
 import { hasSelectedSecurityGroups } from '~/common/securityGroupsHelpers';
 import { normalizedProducts } from '~/common/subscriptionTypes';
 import { stepId, stepNameById } from '~/components/clusters/wizards/common/osdWizardConstants';
@@ -15,12 +16,14 @@ import {
 } from '~/components/clusters/wizards/rosa_v1/rosaWizardConstants';
 import ReduxHiddenCheckbox from '~/components/common/ReduxFormComponents/ReduxHiddenCheckbox';
 import config from '~/config';
+import useCanClusterAutoscale from '~/hooks/useCanClusterAutoscale';
 import { useFeatureGate } from '~/hooks/useFeatureGate';
 import {
   HCP_AWS_BILLING_SHOW,
   HYPERSHIFT_WIZARD_FEATURE,
 } from '~/redux/constants/featureConstants';
 
+import useOrganization from '../../../../CLILoginPage/useOrganization';
 import ReviewSection, { ReviewItem } from '../../common/ReviewCluster/ReviewSection';
 import DebugClusterRequest from '../DebugClusterRequest';
 
@@ -32,8 +35,7 @@ const ReviewClusterScreen = ({
   change,
   clusterRequestParams,
   formValues,
-  canAutoScale,
-  autoscalingEnabled,
+  autoscalingEnabledValue,
   installToVPCSelected,
   configureProxySelected,
   getUserRole,
@@ -57,6 +59,9 @@ const ReviewClusterScreen = ({
   const hasDomainPrefix = formValues?.has_domain_prefix;
 
   const hasSecurityGroups = isByoc && hasSelectedSecurityGroups(formValues.securityGroups);
+  const canAutoScale = useCanClusterAutoscale(formValues.product, formValues.billing_model);
+  const { organization } = useOrganization();
+  const hasExternalAuth = hasExternalAuthenticationCapability(organization?.capabilities);
 
   const clusterSettingsFields = [
     ...(!isROSA ? ['cloud_provider'] : []),
@@ -74,7 +79,7 @@ const ReviewClusterScreen = ({
     'etcd_encryption',
     ...(!isHypershiftSelected ? ['fips'] : []),
     ...(hasEtcdEncryption ? ['etcd_key_arn'] : []),
-    ...(isHypershiftSelected ? ['enable_external_authentication'] : []),
+    ...(isHypershiftSelected && hasExternalAuth ? ['enable_external_authentication'] : []),
   ];
 
   const [userRole, setUserRole] = useState('');
@@ -215,7 +220,7 @@ const ReviewClusterScreen = ({
       >
         {ReviewItem({ name: 'machine_type', formValues })}
         {canAutoScale && ReviewItem({ name: 'autoscalingEnabled', formValues })}
-        {autoscalingEnabled
+        {autoscalingEnabledValue && canAutoScale
           ? ReviewItem({ name: 'min_replicas', formValues })
           : ReviewItem({ name: 'nodes_compute', formValues })}
         {showVPCCheckbox &&
@@ -345,8 +350,7 @@ ReviewClusterScreen.propTypes = {
   change: PropTypes.func,
   clusterRequestParams: PropTypes.object.isRequired,
   formValues: PropTypes.objectOf(PropTypes.oneOfType([PropTypes.any])),
-  canAutoScale: PropTypes.bool,
-  autoscalingEnabled: PropTypes.bool,
+  autoscalingEnabledValue: PropTypes.bool,
   installToVPCSelected: PropTypes.bool,
   configureProxySelected: PropTypes.bool,
   getUserRole: PropTypes.func.isRequired,

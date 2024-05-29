@@ -1,6 +1,6 @@
 import get from 'lodash/get';
 
-import { billingModels, normalizedProducts } from '~/common/subscriptionTypes';
+import { billingModels } from '~/common/subscriptionTypes';
 import { QuotaParams } from '~/components/clusters/common/quotaModel';
 import { OrganizationState } from '~/redux/reducers/userReducer';
 import { PromiseReducerState } from '~/redux/types';
@@ -40,7 +40,14 @@ const hasMachinePoolsQuotaSelector = <E extends ClusterFromSubscription>(
   }
 
   const cloudProviderID = cluster?.cloud_provider?.id;
-  const billingModel = get(cluster, 'subscription.cluster_billing_model', billingModels.STANDARD);
+  const billingModel =
+    RelatedResource.billing_model[
+      get(
+        cluster,
+        'subscription.cluster_billing_model',
+        billingModels.STANDARD,
+      ) as keyof typeof RelatedResource.billing_model
+    ];
 
   if (cloudProviderID && machineTypes) {
     const types: MachineType[] = get(machineTypes, cloudProviderID, []);
@@ -67,14 +74,8 @@ const hasOrgLevelBypassPIDsLimitCapability = (organization?: Organization) =>
       capability.value === 'true',
   );
 
-// on the OSD creation page don't check cluster level capability for autoscaling
-const canAutoScaleOnCreateSelector = (organization: Organization | undefined, product: string) =>
-  product === normalizedProducts.ROSA ||
-  (product === normalizedProducts.OSD && hasOrgLevelAutoscaleCapability(organization));
-
 export {
   hasMachinePoolsQuotaSelector,
   hasOrgLevelAutoscaleCapability,
-  canAutoScaleOnCreateSelector,
   hasOrgLevelBypassPIDsLimitCapability,
 };

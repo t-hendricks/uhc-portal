@@ -50,7 +50,7 @@ describe('<MachinePoolSubnetsForm />', () => {
   });
 
   describe('check validation', () => {
-    it.skip('changes machine pools subnets on removal', async () => {
+    it('changes machine pools subnets on removal', async () => {
       // Arrange
       const setNestedObjectValuesSpy = jest.spyOn(formik, 'setNestedObjectValues');
       const getScrollErrorIdsSpy = jest.spyOn(utils, 'getScrollErrorIds');
@@ -68,8 +68,12 @@ describe('<MachinePoolSubnetsForm />', () => {
         },
         {
           machinePoolsSubnets: [
-            undefined,
-            undefined,
+            {
+              privateSubnetId: 'Subnet is required',
+            },
+            {
+              privateSubnetId: 'Subnet is required',
+            },
             {
               privateSubnetId: 'Subnet is required',
             },
@@ -92,11 +96,11 @@ describe('<MachinePoolSubnetsForm />', () => {
       await user.click(screen.getByTestId('remove-machine-pool-2'));
 
       // Assert
-      expect(setNestedObjectValuesSpy).toHaveBeenCalledTimes(2);
+      expect(setNestedObjectValuesSpy).toHaveBeenCalledTimes(3);
       expect(setNestedObjectValuesSpy).toHaveBeenCalledWith(expectedErrors[0], true);
       expect(setNestedObjectValuesSpy).toHaveBeenCalledWith(expectedErrors[1], true);
 
-      expect(getScrollErrorIdsSpy).toHaveBeenCalledTimes(2);
+      expect(getScrollErrorIdsSpy).toHaveBeenCalledTimes(3);
       expect(getScrollErrorIdsSpy).toHaveBeenCalledWith(expectedErrors[0]);
       expect(getScrollErrorIdsSpy).toHaveBeenCalledWith(expectedErrors[1]);
     });

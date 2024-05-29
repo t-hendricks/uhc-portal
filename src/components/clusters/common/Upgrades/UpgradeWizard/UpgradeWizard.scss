@@ -17,23 +17,17 @@
   }
 }
 
-.upgrade-schedule-datepicker {
-  .react-datepicker-wrapper,
-  .react-datepicker__tab-loop,
-  .pf-v5-c-select {
-    display: inline-block;
-  }
-  .react-datepicker-wrapper,
-  .pf-v5-c-select {
-    width: 20%;
-  }
-  .pf-v5-c-select {
-    margin-left: var(--pf-v5-global--spacer--xl);
-    > ul {
-      max-height: 300px;
-      overflow-y: auto;
-    }
-  }
+.upgrade-schedule-datepicker-input {
+  width: 10em;
+  margin-right: 5em;
+  height: 4em;
+}
+.upgrade-schedule-time-input{
+  width: 10em;
+}
+.pf-v5-c-select.pf-m-expanded.upgrade-schedule-time-input .pf-v5-c-select__menu{
+  max-height: 15em;
+  overflow-y: auto;
 }
 
 .ocm-upgrade-wizard {
