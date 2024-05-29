@@ -1,0 +1,43 @@
+import { useQuery } from '@tanstack/react-query';
+
+import { subscriptionStatuses } from '~/common/subscriptionTypes';
+import { clusterService } from '~/services';
+import { getClusterServiceForRegion } from '~/services/clusterService';
+
+import { queryConstants } from '../queriesConstants';
+import { SubscriptionResponseType } from '../types';
+
+/**
+ * Query for fetching feature gates based on region
+ * @param clusterID id of the cluster
+ * @param subscription axios subscription response, needed for query enablement
+ * @param mainQueryKey used for refetch
+ * @returns array of feature gates
+ */
+export const useFetchUpgradeGates = (
+  clusterID: string,
+  subscription: SubscriptionResponseType | undefined,
+  mainQueryKey: string,
+) => {
+  const { isLoading, data } = useQuery({
+    queryKey: [mainQueryKey, 'upgradeGates', 'clusterService', clusterID, subscription],
+    queryFn: async () => {
+      if (subscription?.subscription.xcm_id) {
+        const clusterService = getClusterServiceForRegion(subscription?.subscription.xcm_id);
+        const response = await clusterService.getClusterGateAgreements(clusterID);
+        return response;
+      }
+      const response = await clusterService.getClusterGateAgreements(clusterID);
+      return response;
+    },
+    staleTime: queryConstants.STALE_TIME,
+    enabled:
+      !!subscription &&
+      subscription.subscription.status !== subscriptionStatuses.DEPROVISIONED &&
+      (subscription.subscription.managed || subscription.isAROCluster),
+  });
+  return {
+    isLoading,
+    data,
+  };
+};
