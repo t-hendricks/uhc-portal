@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { useDispatch } from 'react-redux';
 
 import {
   Card,
@@ -15,11 +16,14 @@ import {
 import { AsleepIcon } from '@patternfly/react-icons/dist/esm/icons/asleep-icon';
 import { InProgressIcon } from '@patternfly/react-icons/dist/esm/icons/in-progress-icon';
 
+import { modalActions } from '~/components/common/Modal/ModalActions';
+
 import ButtonWithTooltip from '../../../common/ButtonWithTooltip';
 import modals from '../../../common/Modal/modals';
 import clusterStates from '../clusterStates';
 
-function HibernatingClusterCard({ cluster, openModal }) {
+function HibernatingClusterCard({ cluster }) {
+  const dispatch = useDispatch();
   let icon;
   let title;
   let body;
@@ -32,7 +36,7 @@ function HibernatingClusterCard({ cluster, openModal }) {
       clusterName: cluster.name,
       subscriptionID: cluster.subscription.id,
     };
-    openModal(modals.RESUME_CLUSTER, clusterData);
+    dispatch(modalActions.openModal(modals.RESUME_CLUSTER, clusterData));
   };
 
   const isReadOnly = cluster?.status?.configuration_mode === 'read_only';
@@ -94,7 +98,6 @@ function HibernatingClusterCard({ cluster, openModal }) {
 
 HibernatingClusterCard.propTypes = {
   cluster: PropTypes.object.isRequired,
-  openModal: PropTypes.func.isRequired,
 };
 
 export default HibernatingClusterCard;

@@ -11,6 +11,9 @@ import MachinePoolSubnetsForm from '../MachinePoolSubnetsForm';
 import { repeatedSubnets } from './MachinePoolSubnetsForm.fixtures';
 
 describe('<MachinePoolSubnetsForm />', () => {
+  beforeEach(() => {
+    jest.clearAllMocks();
+  });
   const defaultProps = { selectedVPC: {} };
 
   describe('it is accessible', () => {
