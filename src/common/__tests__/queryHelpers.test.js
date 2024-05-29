@@ -57,7 +57,7 @@ describe('createViewQueryObject()', () => {
     page: 3,
     page_size: 50,
     filter:
-      "(cluster_id!='') AND (plan.id NOT IN ('RHACS', 'RHACSTrial', 'RHOSR', 'RHOSRTrial', 'RHOSAK', 'RHOSAKTrial', 'RHOSE', 'RHOSETrial')) AND (status NOT IN ('Deprovisioned', 'Archived'))",
+      "(cluster_id!='') AND (plan.id IN ('OSD', 'OSDTrial', 'OCP', 'RHMI', 'ROSA', 'RHOIC', 'MOA', 'MOA-HostedControlPlane', 'ROSA-HyperShift', 'ARO', 'OCP-AssistedInstall')) AND (status NOT IN ('Deprovisioned', 'Archived'))",
   };
 
   it('properly creates the query object when no filter is defined', () => {
@@ -129,7 +129,7 @@ describe('createViewQueryObject()', () => {
     expect(createViewQueryObject(viewOptions)).toEqual({
       ...baseResult,
       filter:
-        "(cluster_id!='') AND (plan.id NOT IN ('RHACS', 'RHACSTrial', 'RHOSR', 'RHOSRTrial', 'RHOSAK', 'RHOSAKTrial', 'RHOSE', 'RHOSETrial')) AND (status IN ('Deprovisioned', 'Archived'))",
+        "(cluster_id!='') AND (plan.id IN ('OSD', 'OSDTrial', 'OCP', 'RHMI', 'ROSA', 'RHOIC', 'MOA', 'MOA-HostedControlPlane', 'ROSA-HyperShift', 'ARO', 'OCP-AssistedInstall')) AND (status IN ('Deprovisioned', 'Archived'))",
     });
   });
 

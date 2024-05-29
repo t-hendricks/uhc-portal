@@ -5,7 +5,7 @@ import { GetClusterHistoryParams } from '~/services/serviceLogService';
 
 import { ViewOptions } from '../types/types';
 
-import { omittedProducts, productFilterOptions } from './subscriptionTypes';
+import { allowedProducts, productFilterOptions } from './subscriptionTypes';
 
 type QueryObject = { [key: string]: string | number | boolean };
 
@@ -60,7 +60,7 @@ const createViewQueryObject = (viewOptions?: ViewOptions, username?: string): Qu
     clauses.push("cluster_id!=''");
 
     // Filter out subscription plans that do not represent clusters.
-    clauses.push(`plan.id NOT IN (${omittedProducts.map(sqlString).join(', ')})`);
+    clauses.push(`plan.id IN (${allowedProducts.map(sqlString).join(', ')})`);
 
     // handle archived flag
     if (viewOptions.flags.showArchived) {
