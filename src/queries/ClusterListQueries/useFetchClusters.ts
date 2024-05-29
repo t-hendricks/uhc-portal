@@ -4,7 +4,7 @@ import isEmpty from 'lodash/isEmpty';
 import type { Cluster as AICluster } from '@openshift-assisted/types/assisted-installer-service';
 import { useQueries, UseQueryResult } from '@tanstack/react-query';
 
-import { omittedProducts, subscriptionStatuses } from '~/common/subscriptionTypes';
+import { allowedProducts, subscriptionStatuses } from '~/common/subscriptionTypes';
 import { queryClient } from '~/components/App/queryClient';
 import { useFeatureGate } from '~/hooks/useFeatureGate';
 import { ASSISTED_INSTALLER_MERGE_LISTS_FEATURE } from '~/redux/constants/featureConstants';
@@ -139,7 +139,7 @@ const fetchGlobalSubscriptions = async (page: number, aiMergeListsFeatureFlag: b
   };
 
   const params = {
-    filter: `(xcm_id='' OR xcm_id IS NULL) AND (cluster_id!='') AND (plan.id NOT IN (${omittedProducts.map(sqlString).join(', ')})) AND (status NOT IN ('Deprovisioned', 'Archived'))`,
+    filter: `(xcm_id='' OR xcm_id IS NULL) AND (cluster_id!='') AND (plan.id IN (${allowedProducts.map(sqlString).join(', ')})) AND (status NOT IN ('Deprovisioned', 'Archived'))`,
     order: 'created_at desc',
     page,
     page_size: pageSize,
