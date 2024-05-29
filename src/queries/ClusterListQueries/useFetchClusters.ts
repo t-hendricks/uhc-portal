@@ -265,7 +265,10 @@ const fetchPageOfRegionalClusters = async (page: number, region: Region) => {
     .map((key) => `'${key}'`)
     .join(',')})`;
 
-  const subscriptionResponse = await accountsService.searchSubscriptions(subscriptionsQuery);
+  const subscriptionResponse = await accountsService.searchSubscriptions(
+    subscriptionsQuery,
+    queryConstants.PAGE_SIZE,
+  );
   const subscriptions = subscriptionResponse?.data?.items;
   subscriptions?.forEach((subscription) => {
     if (subscription.id) {
