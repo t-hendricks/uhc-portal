@@ -1,29 +1,31 @@
-import React from 'react';
-import get from 'lodash/get';
+import React, { useRef } from 'react';
 import PropTypes from 'prop-types';
-import { Link, useNavigate } from 'react-router-dom-v5-compat';
+import { useNavigate } from 'react-router-dom-v5-compat';
 
 import {
   Card,
   CardBody,
   CardFooter,
   CardTitle,
+  Dropdown,
+  DropdownItem,
+  DropdownList,
+  MenuToggle,
   Stack,
   StackItem,
   Title,
   Tooltip,
 } from '@patternfly/react-core';
 import {
-  Dropdown as DropdownDeprecated,
-  DropdownItem as DropdownItemDeprecated,
-  DropdownToggle as DropdownToggleDeprecated,
-} from '@patternfly/react-core/deprecated';
-import { cellWidth, TableVariant } from '@patternfly/react-table';
-import {
-  Table as TableDeprecated,
-  TableBody as TableBodyDeprecated,
-  TableHeader as TableHeaderDeprecated,
-} from '@patternfly/react-table/deprecated';
+  ActionsColumn,
+  Table,
+  TableVariant,
+  Tbody,
+  Td,
+  Th,
+  Thead,
+  Tr,
+} from '@patternfly/react-table';
 import Skeleton from '@redhat-cloud-services/frontend-components/Skeleton';
 
 import links from '../../../../../../common/installLinks.mjs';
@@ -49,61 +51,6 @@ const IDPSection = ({
   const navigate = useNavigate();
   const [dropdownOpen, setDropdownOpen] = React.useState(false);
 
-  const columns = [
-    { title: 'Name', transforms: [cellWidth(30)] },
-    { title: 'Type', transforms: [cellWidth(30)] },
-    { title: 'Auth callback URL', transforms: [cellWidth(30)] },
-  ];
-
-  const idpRow = (idp) => ({
-    cells: [
-      idp.name,
-      get(IDPTypeNames, idp.type, idp.type),
-      {
-        title: IDPNeedsOAuthURL(idp.type) ? (
-          <ClipboardCopyLinkButton
-            className="access-control-tables-copy"
-            text={getOauthCallbackURL(clusterUrls, idp.name, isHypershift)}
-          >
-            Copy URL to clipboard
-          </ClipboardCopyLinkButton>
-        ) : (
-          'N/A'
-        ),
-      },
-    ],
-    idpID: idp.id,
-    idpName: idp.name,
-    idpTypeName: idp.type,
-  });
-
-  const idpActionResolver = (rowData) => {
-    const editIDPAction = {
-      title: 'Edit',
-      isDisabled: !idpActions.update,
-      onClick: (_, rowId, row) => {
-        navigate(`/details/s/${subscriptionID}/edit-idp/${row.idpName}`);
-      },
-      className: 'hand-pointer',
-    };
-    const deleteIDPAction = {
-      title: 'Delete',
-      isDisabled: !idpActions.delete,
-      onClick: (_, __, row) =>
-        openModal('delete-idp', {
-          clusterID,
-          idpID: row.idpID,
-          idpName: row.name.title,
-          idpType: row.type.title,
-        }),
-      className: 'hand-pointer',
-    };
-    if (rowData.type.title === IDPTypeNames[IDPformValues.HTPASSWD]) {
-      return [deleteIDPAction];
-    }
-    return [editIDPAction, deleteIDPAction];
-  };
-
   const learnMoreLink = (
     <a rel="noopener noreferrer" href={links.UNDERSTANDING_IDENTITY_PROVIDER} target="_blank">
       Learn more.
@@ -123,40 +70,105 @@ const IDPSection = ({
   const disableReason = readOnlyReason || hibernatingReason;
   const cannotCreateReason = disableReason || (!idpActions.create && notAllowedReason('add'));
 
-  const IDPDropdownOptions = Object.values(IDPTypeNames).map((idpName) => (
-    <DropdownItemDeprecated
-      key={idpName}
-      component={
-        <Link
-          to={`/details/s/${subscriptionID}/add-idp/${idpName.toLowerCase()}`}
-          state={{ allLoaded: true }}
+  const IDPDropdownOptions = (
+    <DropdownList>
+      {Object.values(IDPTypeNames).map((idpName) => (
+        <DropdownItem
+          key={idpName}
+          onClick={() => navigate(`/details/s/${subscriptionID}/add-idp/${idpName.toLowerCase()}`)}
         >
           {idpName}
-        </Link>
-      }
-    />
-  ));
+        </DropdownItem>
+      ))}
+    </DropdownList>
+  );
+
+  const toggleRef = useRef();
 
   let addIDPDropdown = (
-    <DropdownDeprecated
-      toggle={
-        <DropdownToggleDeprecated
-          id="add-identity-provider"
-          isDisabled={cannotCreateReason}
-          onToggle={(_event, isOpen) => {
-            setDropdownOpen(isOpen);
-          }}
-        >
-          Add identity provider
-        </DropdownToggleDeprecated>
-      }
+    <Dropdown
       isOpen={dropdownOpen}
-      dropdownItems={IDPDropdownOptions}
-    />
+      onOpenChange={(isOpen) => setDropdownOpen(isOpen)}
+      toggle={{
+        toggleRef,
+        toggleNode: (
+          <MenuToggle
+            id="add-identity-provider"
+            ref={toggleRef}
+            isDisabled={cannotCreateReason}
+            isExpanded={dropdownOpen}
+            onClick={() => {
+              setDropdownOpen(!dropdownOpen);
+            }}
+          >
+            Add identity provider
+          </MenuToggle>
+        ),
+      }}
+    >
+      {IDPDropdownOptions}
+    </Dropdown>
   );
   if (cannotCreateReason) {
     addIDPDropdown = <Tooltip content={cannotCreateReason}>{addIDPDropdown}</Tooltip>;
   }
+
+  const columnNames = {
+    name: 'Name',
+    type: 'Type',
+    callbackUrl: 'Auth callback URL',
+  };
+
+  const idpActionResolver = (idp) => {
+    const editIDPAction = {
+      title: 'Edit',
+      isAriaDisabled: !idpActions.update,
+      onClick: () => {
+        navigate(`/details/s/${subscriptionID}/edit-idp/${idp.name}`);
+      },
+    };
+    const deleteIDPAction = {
+      title: 'Delete',
+      isAriaDisabled: !idpActions.delete,
+      onClick: () => {
+        openModal('delete-idp', {
+          clusterID,
+          idpID: idp.id,
+          idpName: idp.name,
+          idpType: IDPTypeNames[idp.type],
+        });
+      },
+    };
+    if (IDPTypeNames[idp.type] === IDPTypeNames[IDPformValues.HTPASSWD]) {
+      return [deleteIDPAction];
+    }
+    return [editIDPAction, deleteIDPAction];
+  };
+
+  const idpRow = (idp) => {
+    const actions = idpActionResolver(idp);
+    return (
+      <Tr key={idp.id}>
+        <Td dataLabel={columnNames.name}>{idp.name}</Td>
+        <Td dataLabel={columnNames.type}>{IDPTypeNames[idp.type] ?? idp.type}</Td>
+        <Td dataLabel={columnNames.callbackUrl}>
+          {IDPNeedsOAuthURL(idp.type) ? (
+            <ClipboardCopyLinkButton
+              className="access-control-tables-copy"
+              text={getOauthCallbackURL(clusterUrls, idp.name, isHypershift)}
+            >
+              Copy URL to clipboard
+            </ClipboardCopyLinkButton>
+          ) : (
+            'N/A'
+          )}
+        </Td>
+        <Td isActionCell>
+          <ActionsColumn items={actions} isDisabled={!!disableReason} />
+        </Td>
+      </Tr>
+    );
+  };
 
   return pending ? (
     <Card>
@@ -185,17 +197,17 @@ const IDPSection = ({
           <StackItem>{addIDPDropdown}</StackItem>
           <StackItem>
             {hasIDPs && idpActions.list && (
-              <TableDeprecated
-                aria-label="Identity Providers"
-                actionResolver={idpActionResolver}
-                variant={TableVariant.compact}
-                cells={columns}
-                rows={identityProviders.clusterIDPList.map(idpRow)}
-                areActionsDisabled={() => !!disableReason}
-              >
-                <TableHeaderDeprecated />
-                <TableBodyDeprecated />
-              </TableDeprecated>
+              <Table aria-label="Identity Providers" variant={TableVariant.compact}>
+                <Thead>
+                  <Tr>
+                    <Th width={30}>{columnNames.name}</Th>
+                    <Th width={30}>{columnNames.type}</Th>
+                    <Th width={30}>{columnNames.callbackUrl}</Th>
+                    <Th screenReaderText="Action" />
+                  </Tr>
+                </Thead>
+                <Tbody>{identityProviders.clusterIDPList.map(idpRow)}</Tbody>
+              </Table>
             )}
           </StackItem>
         </Stack>
