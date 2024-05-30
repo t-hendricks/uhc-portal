@@ -49,18 +49,6 @@ type FetchClusterQueryResults = UseQueryResult & {
   errors?: Error[];
 };
 
-/* ************** Sort by date  **************** */
-
-const sortClusterByDate = (clusters: ClusterWithPermissions[], sortAscending = false) =>
-  clusters?.sort((a, b) => {
-    if (!a.creation_timestamp || !b.creation_timestamp) {
-      return 0;
-    }
-    const dateA = new Date(a.creation_timestamp).getTime();
-    const dateB = new Date(b.creation_timestamp).getTime();
-    return sortAscending ? dateA - dateB : dateB - dateA;
-  });
-
 /* ************** Finalize list of clusters  **************** */
 // This transforms list of subscriptions to include canEdit and canDelete information
 // NOTE: this is a copy from src/redux/actions
@@ -540,7 +528,7 @@ export const useFetchClusters = () => {
       (data.clusters === undefined && !isError && !isCanUpdateDeleteError && !isRegionsError),
 
     // Until sorting/pagination is enabled -  sort by creation date
-    data: { items: data?.clusters ? sortClusterByDate(data?.clusters) : [] },
+    data: { items: data?.clusters || [] },
 
     isError: isError || isCanUpdateDeleteError || isRegionsError,
     errors,
