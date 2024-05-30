@@ -9,8 +9,7 @@ import { clusters, openModal, setSorting } from './ArchivedClusterListTable.fixt
 
 describe('<ArchivedClusterListTable />', () => {
   describe('ArchivedClusterListTable', () => {
-    it.skip('is accessible', async () => {
-      // TODO: due to empty column needed by openshift-assisted_ui-lib/PF4
+    it('is accessible', async () => {
       const { container } = render(
         <TestRouter>
           <CompatRouter>
