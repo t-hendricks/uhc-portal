@@ -9,7 +9,6 @@ const testValues = {
   cloud_provider: 'aws',
   configure_proxy: false,
   product: 'ROSA',
-  byoc: 'true',
   cluster_privacy: 'internal',
   cluster_version: {
     kind: 'Version',
