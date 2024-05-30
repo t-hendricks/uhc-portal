@@ -10,11 +10,11 @@ import ClusterTypeLabel from './ClusterTypeLabel';
 describe('ClusterTypeLabel', () => {
   jest.spyOn(PreviewLabelFile, 'PreviewLabel').mockImplementation(() => <span>PREVIEW LABEL</span>);
 
-  it('shows preview label for ROSA hypershift', async () => {
+  it('does not show preview label for ROSA hypershift', async () => {
     const { cluster } = fixtures.ROSAHypershiftClusterDetails;
 
     const { container } = render(<ClusterTypeLabel cluster={cluster} />);
-    expect(screen.getByText('PREVIEW LABEL')).toBeInTheDocument();
+    expect(screen.queryByText('PREVIEW LABEL')).not.toBeInTheDocument();
     await checkAccessibility(container);
   });
 
