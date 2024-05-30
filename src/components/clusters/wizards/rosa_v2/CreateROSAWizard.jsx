@@ -381,7 +381,7 @@ const CreateROSAWizardInternal = ({
                   name={stepNameById[stepId.NETWORKING__CIDR_RANGES]}
                 >
                   <ErrorBoundary>
-                    <CIDRScreen isROSA />
+                    <CIDRScreen />
                   </ErrorBoundary>
                 </WizardStep>,
               ]}

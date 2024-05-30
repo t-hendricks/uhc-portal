@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 
 import { Form, Grid, GridItem, Title } from '@patternfly/react-core';
 
@@ -8,7 +7,7 @@ import { FieldId } from '~/components/clusters/wizards/rosa_v2/constants';
 
 import CIDRFields from './CIDRFields';
 
-function CIDRScreen({ isROSA }) {
+function CIDRScreen() {
   const {
     values: {
       [FieldId.CloudProvider]: cloudProviderID,
@@ -38,16 +37,11 @@ function CIDRScreen({ isROSA }) {
           isMultiAz={isMultiAz}
           installToVpcSelected={installToVPC}
           isDefaultValuesChecked={cidrDefaultValuesToggle}
-          isROSA={isROSA}
           formValues={values}
         />
       </Grid>
     </Form>
   );
 }
-
-CIDRScreen.propTypes = {
-  isROSA: PropTypes.bool,
-};
 
 export default CIDRScreen;

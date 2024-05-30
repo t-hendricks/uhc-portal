@@ -4,7 +4,7 @@ import { Field, FieldArray } from 'formik';
 import { ExpandableSection, GridItem, Text, TextVariants, Title } from '@patternfly/react-core';
 
 import links from '~/common/installLinks.mjs';
-import { billingModels, normalizedProducts } from '~/common/subscriptionTypes';
+import { billingModels } from '~/common/subscriptionTypes';
 import { required } from '~/common/validators';
 import {
   getMinNodesRequired,
@@ -32,7 +32,6 @@ function ScaleSection() {
   const {
     values: {
       [FieldId.Hypershift]: isHypershift,
-      [FieldId.Byoc]: byoc,
       [FieldId.MultiAz]: isMultiAz,
       [FieldId.MachineType]: machineType,
       [FieldId.CloudProviderId]: cloudProviderID,
@@ -49,7 +48,7 @@ function ScaleSection() {
     getFieldMeta,
   } = useFormState();
 
-  const isByoc = byoc === 'true';
+  const isByoc = true;
   const poolsLength = machinePoolsSubnets?.length;
   const isMultiAzSelected = isMultiAz === 'true';
   const isHypershiftSelected = isHypershift === 'true';
@@ -73,11 +72,7 @@ function ScaleSection() {
     () => getWorkerNodeVolumeSizeMaxGiB(clusterVersionRawId),
     [clusterVersionRawId],
   );
-  const isRosaClassicOrOsdCcs = useMemo(
-    () => cloudProviderID === 'aws' && !isHypershiftSelected && isByoc,
-    [cloudProviderID, isByoc, isHypershiftSelected],
-  );
-  const isRosa = useMemo(() => product === normalizedProducts.ROSA, [product]);
+
   const billingModel = useMemo(
     () => billingModelFieldValue ?? billingModels.STANDARD,
     [billingModelFieldValue],
@@ -118,7 +113,7 @@ function ScaleSection() {
 
   const ImdsSectionComponent = useCallback(
     () =>
-      isRosaClassicOrOsdCcs && imds ? (
+      !isHypershiftSelected && imds ? (
         <>
           <GridItem md={8}>
             <ImdsSection
@@ -130,12 +125,12 @@ function ScaleSection() {
           <GridItem md={4} />
         </>
       ) : null,
-    [clusterVersionRawId, imds, isRosaClassicOrOsdCcs, setFieldValue],
+    [clusterVersionRawId, imds, isHypershiftSelected, setFieldValue],
   );
 
   const WorkerNodeVolumeSizeSectionComponent = useCallback(
     () =>
-      isRosa && !isHypershiftSelected ? (
+      !isHypershiftSelected ? (
         <>
           <GridItem md={6}>
             <WorkerNodeVolumeSizeSection maxWorkerVolumeSizeGiB={maxWorkerVolumeSizeGiB} />
@@ -143,7 +138,7 @@ function ScaleSection() {
           <GridItem md={6} />
         </>
       ) : null,
-    [isHypershiftSelected, isRosa, maxWorkerVolumeSizeGiB],
+    [isHypershiftSelected, maxWorkerVolumeSizeGiB],
   );
 
   return (
@@ -211,13 +206,7 @@ function ScaleSection() {
               extendedHelpText={
                 <>
                   {computeNodeHintText(isHypershiftSelected, false)}{' '}
-                  <ExternalLink
-                    href={
-                      isRosa
-                        ? links.ROSA_SERVICE_DEFINITION_COMPUTE
-                        : links.OSD_SERVICE_DEFINITION_COMPUTE
-                    }
-                  >
+                  <ExternalLink href={links.ROSA_SERVICE_DEFINITION_COMPUTE}>
                     Learn more about compute node count
                   </ExternalLink>
                 </>
