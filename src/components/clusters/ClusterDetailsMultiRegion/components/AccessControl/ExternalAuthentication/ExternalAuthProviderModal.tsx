@@ -1,4 +1,5 @@
 import React from 'react';
+import { AxiosError } from 'axios';
 import { Field, Formik } from 'formik';
 import * as Yup from 'yup';
 
@@ -27,6 +28,8 @@ type ExternalAuthenticationProvider = {
   username: string;
   provider_ca?: string;
   audiences?: string;
+  consoleClientID?: string;
+  consoleClientSecret?: string;
 };
 
 const modalDescription =
@@ -52,31 +55,51 @@ const submitProvider = ({
   return request(clusterID || '', values);
 };
 
-const buildExternalAuthProvider = (values: ExternalAuthenticationProvider): ExternalAuth => ({
-  id: values.id,
-  issuer: {
-    url: values.issuer,
-    audiences: values?.audiences?.split(',').map((audience) => audience.trim()),
-    ca: values.provider_ca,
-  },
-  claim: {
-    mappings: {
-      username: {
-        claim: values.username,
+const buildExternalAuthProvider = (values: ExternalAuthenticationProvider): ExternalAuth => {
+  const consoleCLient = {
+    clients: [
+      {
+        component: {
+          name: 'console',
+          namespace: 'openshift-console',
+        },
+        id: values.consoleClientID,
+        secret: values.consoleClientSecret,
       },
-      groups: {
-        claim: values.groups,
+    ],
+  };
+  const provider = {
+    id: values.id,
+    issuer: {
+      url: values.issuer,
+      audiences: values?.audiences?.split(',').map((audience) => audience.trim()),
+      ca: values.provider_ca,
+    },
+    claim: {
+      mappings: {
+        username: {
+          claim: values.username,
+        },
+        groups: {
+          claim: values.groups,
+        },
       },
     },
-  },
-});
+  };
+  return values.consoleClientID && values.consoleClientSecret
+    ? { ...provider, ...consoleCLient }
+    : provider;
+};
 
 export function ExternalAuthProviderModal(props: ExternalAuthProviderModalProps) {
   const { clusterID, onClose, externalAuthProvider, isEdit, isOpen = true } = props;
-  const [submitError, setSubmitError] = React.useState<any>();
+  const [submitError, setSubmitError] = React.useState<AxiosError<any>>();
   const [isPending, setIsPending] = React.useState(false);
-  const formRef = React.useRef();
 
+  // find the first client with component name console
+  const consoleClient = externalAuthProvider?.clients?.find(
+    (client) => client.component?.name === 'console',
+  );
   return (
     <Formik
       initialValues={{
@@ -87,28 +110,64 @@ export function ExternalAuthProviderModal(props: ExternalAuthProviderModalProps)
         audiences: externalAuthProvider?.issuer?.audiences?.join(', ') || '',
         provider_ca:
           externalAuthProvider?.issuer?.ca?.trim() !== '' ? externalAuthProvider?.issuer?.ca : '',
+        consoleClientID: consoleClient?.id || '',
+        consoleClientSecret: '',
       }}
-      validationSchema={Yup.object({
-        id: Yup.string()
-          .matches(
-            /^[a-z]([-a-z0-9]*[a-z0-9])?$/,
-            'Only lowercase alphanumeric characters and hyphens are allowed. Value must start with a letter and end with an alphanumeric.',
-          )
-          .max(15, 'Must be 15 characters or less')
-          .required('Required'),
-        issuer: Yup.string()
-          .max(255, 'Must be 255 characters or less')
-          .required('Required')
-          .url('Invalid URL: example https://redhat.com')
-          .test('secure-url', 'URL must be https', (value) => validateSecureURL(value)),
-        groups: Yup.string()
-          .matches(/^[a-zA-Z0-9-]+$/, 'Only alphanumeric characters and hyphens are allowed')
-          .required('Required'),
-        username: Yup.string()
-          .matches(/^[a-zA-Z0-9-]+$/, 'Only alphanumeric characters and hyphens are allowed')
-          .required('Required'),
-        audiences: Yup.string().required('Required'),
-      })}
+      validationSchema={Yup.object().shape(
+        {
+          id: Yup.string()
+            .matches(
+              /^[a-z]([-a-z0-9]*[a-z0-9])?$/,
+              'Only lowercase alphanumeric characters and hyphens are allowed. Value must start with a letter and end with an alphanumeric.',
+            )
+            .max(15, 'Must be 15 characters or less')
+            .required('Required'),
+          issuer: Yup.string()
+            .max(255, 'Must be 255 characters or less')
+            .required('Required')
+            .url('Invalid URL: example https://redhat.com')
+            .test('secure-url', 'URL must be https', (value) => validateSecureURL(value)),
+          groups: Yup.string()
+            .matches(/^[a-zA-Z0-9-]+$/, 'Only alphanumeric characters and hyphens are allowed')
+            .required('Required'),
+          username: Yup.string()
+            .matches(/^[a-zA-Z0-9-]+$/, 'Only alphanumeric characters and hyphens are allowed')
+            .required('Required'),
+          audiences: Yup.string().required('Required'),
+          consoleClientID: Yup.string()
+            .when('consoleClientSecret', {
+              is: (consoleClientSecret: string) => consoleClientSecret,
+              then(schema) {
+                return schema.required('Client ID is required when client secret is provided');
+              },
+              otherwise(schema) {
+                return schema;
+              },
+            })
+            .test(
+              'is-member-of-audience',
+              'Client ID must be a member of the audiences',
+              (value, context) =>
+                value
+                  ? context.parent.audiences
+                      ?.split(',')
+                      .map((aud: string) => aud.trim())
+                      .includes(value || '')
+                  : true,
+            ),
+          consoleClientSecret: Yup.string().when('consoleClientID', {
+            is: (consoleClientID: string) =>
+              consoleClientID && consoleClient?.id !== consoleClientID,
+            then(schema) {
+              return schema.required('Client secret is required when client ID is provided');
+            },
+            otherwise(schema) {
+              return schema;
+            },
+          }),
+        },
+        [['consoleClientID', 'consoleClientSecret']],
+      )}
       onSubmit={async (values) => {
         setSubmitError(undefined);
         setIsPending(true);
@@ -140,7 +199,12 @@ export function ExternalAuthProviderModal(props: ExternalAuthProviderModalProps)
           variant="medium"
           description={!isEdit && modalDescription}
           actions={[
-            <Button isDisabled={isPending} isLoading={isPending} onClick={formik.submitForm}>
+            <Button
+              key="add-ext-auth-provider"
+              isDisabled={isPending}
+              isLoading={isPending}
+              onClick={formik.submitForm}
+            >
               {isEdit ? 'Save' : 'Add'}
             </Button>,
             <Button key="cancel" variant="secondary" onClick={onClose}>
@@ -148,7 +212,7 @@ export function ExternalAuthProviderModal(props: ExternalAuthProviderModalProps)
             </Button>,
           ]}
         >
-          <Form innerRef={formRef}>
+          <Form>
             {!isEdit && <TextField fieldId="id" label="Name" isRequired />}
             <TextField fieldId="issuer" label="Issuer URL" isRequired />
             <TextField
@@ -159,6 +223,21 @@ export function ExternalAuthProviderModal(props: ExternalAuthProviderModalProps)
             />
             <TextField fieldId="groups" label="Groups mapping" isRequired />
             <TextField fieldId="username" label="Username mapping" isRequired />
+            <TextField
+              fieldId="consoleClientID"
+              label="Console client ID"
+              helpText="The console identifier of the OIDC client from the OIDC provider. Once set, a client ID can be modified by not removed."
+            />
+            <TextField
+              fieldId="consoleClientSecret"
+              label="Console client secret"
+              helpText="The console secret of the OIDC client from the OIDC provider."
+              placeHolderText={
+                consoleClient?.id && formik.values.consoleClientID === consoleClient?.id
+                  ? 'Secret not displayed'
+                  : ''
+              }
+            />
             <Field
               component={CAUpload}
               onChange={(value: string) => formik.setFieldValue('provider_ca', value)}
