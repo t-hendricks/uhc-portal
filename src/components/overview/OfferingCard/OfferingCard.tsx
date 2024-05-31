@@ -22,9 +22,8 @@ import {
   Title,
 } from '@patternfly/react-core';
 
-import { trackEvents } from '~/common/analytics';
 import ExternalLink from '~/components/common/ExternalLink';
-import useAnalytics from '~/hooks/useAnalytics';
+import InternalTrackingLink from '~/components/common/InternalTrackingLink';
 
 import docLinks from '../../../common/installLinks.mjs';
 import AWSLogo from '../../../styles/images/AWSLogo';
@@ -64,7 +63,6 @@ const DEVSNBXOfferingCardDocLinkComponent = () => (
 );
 
 export function OfferingCard(props: OfferingCardProps) {
-  const track = useAnalytics();
   const { offeringType } = props;
 
   let offeringCardTitle: string | undefined;
@@ -78,37 +76,13 @@ export function OfferingCard(props: OfferingCardProps) {
   let cardLogo: React.ReactNode | undefined;
 
   const RHOCPOfferingCardDocLinkComponent = useCallback(
-    (props) => (
-      <Link
-        onClick={() => {
-          track(trackEvents.RegisterCluster, {
-            url: registerClusterURL,
-            path: window.location.pathname,
-          });
-        }}
-        to={registerClusterURL}
-      >
-        Register cluster
-      </Link>
-    ),
-    [track],
+    (props) => <Link to={registerClusterURL}>Register cluster</Link>,
+    [],
   );
 
   const AWSOfferingCardDocLinkComponent = useCallback(
-    (props) => (
-      <Link
-        onClick={() => {
-          track(trackEvents.RosaOverview, {
-            url: rosaServicePageURL,
-            path: window.location.pathname,
-          });
-        }}
-        to={rosaServicePageURL}
-      >
-        View details
-      </Link>
-    ),
-    [track],
+    (props) => <Link to={rosaServicePageURL}>View details</Link>,
+    [],
   );
 
   switch (offeringType) {
@@ -123,21 +97,22 @@ export function OfferingCard(props: OfferingCardProps) {
         { descriptionListTerm: 'Billing type', descriptionListDescription: 'Flexible hourly' },
       ];
       offeringCardCreationLink = (
-        <Button
+        <InternalTrackingLink
+          isButton
           variant="secondary"
-          onClick={() => {
-            track(trackEvents.CreateClusterROSA, {
-              url: createRosaClusterURL,
-              path: window.location.pathname,
-            });
-          }}
+          to={createRosaClusterURL}
           component={CreateRosaClusterLink}
         >
           Create cluster
-        </Button>
+        </InternalTrackingLink>
       );
       offeringCardDocLink = (
-        <Button variant={ButtonVariant.link} component={AWSOfferingCardDocLinkComponent} />
+        <InternalTrackingLink
+          isButton
+          variant={ButtonVariant.link}
+          to={rosaServicePageURL}
+          component={AWSOfferingCardDocLinkComponent}
+        />
       );
       cardLogo = <AWSLogo className="offering-logo" />;
       break;
@@ -162,18 +137,14 @@ export function OfferingCard(props: OfferingCardProps) {
         { descriptionListTerm: 'Billing type', descriptionListDescription: 'Flexible or fixed' },
       ];
       offeringCardCreationLink = (
-        <Button
+        <InternalTrackingLink
+          isButton
           variant="secondary"
-          onClick={() => {
-            track(trackEvents.CreateClusterOSD, {
-              url: createOSDClusterURL,
-              path: window.location.pathname,
-            });
-          }}
+          to={createOSDClusterURL}
           component={CreateOSDCluterLink}
         >
           Create cluster
-        </Button>
+        </InternalTrackingLink>
       );
       offeringCardDocLink = (
         <ExternalLink href={docLinks.OPENSHIFT_DEDICATED_LEARN_MORE}>Learn more</ExternalLink>
@@ -190,21 +161,23 @@ export function OfferingCard(props: OfferingCardProps) {
         { descriptionListTerm: 'Billing type', descriptionListDescription: 'Annual subscription' },
       ];
       offeringCardCreationLink = (
-        <Button
+        <InternalTrackingLink
+          isButton
           variant="secondary"
-          onClick={() => {
-            track(trackEvents.CreateClusterRHOCP, {
-              url: createClusterURL,
-              path: window.location.pathname,
-            });
-          }}
+          to={createClusterURL}
           component={CreateRHOCPCluterLink}
         >
           Create cluster
-        </Button>
+        </InternalTrackingLink>
       );
       offeringCardDocLink = (
-        <Button variant={ButtonVariant.link} component={RHOCPOfferingCardDocLinkComponent} />
+        <InternalTrackingLink
+          variant={ButtonVariant.link}
+          component={RHOCPOfferingCardDocLinkComponent}
+          to={registerClusterURL}
+        >
+          Register cluster
+        </InternalTrackingLink>
       );
       cardLogo = (
         <img className="offering-logo" src={OpenShiftProductIcon} alt="OpenShift product logo" />
