@@ -26,9 +26,13 @@ const credentialStatus = (status: BreakGlassCredentialStatus | undefined) => {
       helpText = 'Credentials issued';
       break;
     case BreakGlassCredentialStatus.REVOKED:
-    case BreakGlassCredentialStatus.AWAITING_REVOCATION:
       message = 'Revoked';
       helpText = 'Credentials have been manually revoked and are no longer valid.';
+      break;
+    case BreakGlassCredentialStatus.AWAITING_REVOCATION:
+      message = 'Awaiting Revocation';
+      helpText =
+        'Credentials are awaiting revocation. No other revocation can occur until this completes.';
       break;
     case BreakGlassCredentialStatus.EXPIRED:
       message = 'Expired';
@@ -102,7 +106,17 @@ export function BreakGlassCredentialList() {
     !canEdit && 'You do not have permission to create new credentials for this cluster.';
 
   const isValidCred = () =>
-    credentialData.some((cred) => cred.status === BreakGlassCredentialStatus.ISSUED);
+    credentialData.some(
+      (cred) =>
+        cred.status === BreakGlassCredentialStatus.ISSUED &&
+        !credentialData.some(
+          (cred) => cred.status === BreakGlassCredentialStatus.AWAITING_REVOCATION,
+        ),
+    );
+
+  const disableRevokeAllCredReason =
+    (isPending || !isValidCred()) &&
+    'There must be at least one issued credential without a pending revocation.';
 
   return (
     <>
@@ -139,7 +153,7 @@ export function BreakGlassCredentialList() {
                 className="access-control-add"
                 variant="danger"
                 onClick={handleDelete}
-                isDisabled={isPending || !isValidCred()}
+                disableReason={disableRevokeAllCredReason}
               >
                 Revoke all credentials
               </ButtonWithTooltip>
