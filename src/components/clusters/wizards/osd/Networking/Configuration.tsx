@@ -9,7 +9,10 @@ import { normalizedProducts } from '~/common/subscriptionTypes';
 import { FormSubnet } from '~/common/validators';
 import { isExactMajorMinor } from '~/common/versionHelpers';
 import { constants } from '~/components/clusters/common/CreateOSDFormConstants';
-import { CloudProviderType } from '~/components/clusters/wizards/common/constants';
+import {
+  canConfigureDayOneManagedIngress,
+  CloudProviderType,
+} from '~/components/clusters/wizards/common/constants';
 import {
   CheckboxField,
   RadioGroupField,
@@ -19,8 +22,6 @@ import { useFormState } from '~/components/clusters/wizards/hooks';
 import { FieldId } from '~/components/clusters/wizards/osd/constants';
 import ExternalLink from '~/components/common/ExternalLink';
 import useAnalytics from '~/hooks/useAnalytics';
-
-import { canConfigureDayOneManagedIngress } from '../../rosa/constants';
 
 import { ApplicationIngressType, ClusterPrivacyType } from './constants';
 import { DefaultIngressFields } from './DefaultIngressFields';

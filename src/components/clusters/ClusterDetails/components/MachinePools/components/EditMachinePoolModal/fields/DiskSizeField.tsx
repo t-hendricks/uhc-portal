@@ -9,7 +9,7 @@ import { isHypershiftCluster } from '~/components/clusters/common/clusterStates'
 import {
   getWorkerNodeVolumeSizeMaxGiB,
   workerNodeVolumeSizeMinGiB,
-} from '~/components/clusters/wizards/rosa/constants';
+} from '~/components/clusters/common/machinePools/constants';
 import { FormGroupHelperText } from '~/components/common/FormGroupHelperText';
 import PopoverHint from '~/components/common/PopoverHint';
 import WithTooltip from '~/components/common/WithTooltip';

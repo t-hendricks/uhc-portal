@@ -11,15 +11,13 @@ import {
   getNodeIncrement,
   getNodeIncrementHypershift,
 } from '~/components/clusters/ClusterDetails/components/MachinePools/machinePoolsHelper';
+import { getWorkerNodeVolumeSizeMaxGiB } from '~/components/clusters/common/machinePools/constants';
 import NodeCountInput from '~/components/clusters/common/NodeCountInput';
 import { computeNodeHintText } from '~/components/clusters/common/ScaleSection/AutoScaleSection/AutoScaleHelper';
 import MachineTypeSelection from '~/components/clusters/common/ScaleSection/MachineTypeSelection';
 import { AutoScale } from '~/components/clusters/wizards/common/ClusterSettings/MachinePool/AutoScale/AutoScale';
+import { canSelectImds } from '~/components/clusters/wizards/common/constants';
 import { useFormState } from '~/components/clusters/wizards/hooks';
-import {
-  canSelectImds,
-  getWorkerNodeVolumeSizeMaxGiB,
-} from '~/components/clusters/wizards/rosa/constants';
 import { FieldId } from '~/components/clusters/wizards/rosa_v2/constants';
 import ExternalLink from '~/components/common/ExternalLink';
 import FormKeyValueList from '~/components/common/FormikFormComponents/FormKeyValueList';

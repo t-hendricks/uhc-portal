@@ -5,18 +5,17 @@ import { ValidationError, Validator } from 'jsonschema';
 import { get, indexOf, inRange } from 'lodash';
 
 import { Subnet } from '~/common/helpers';
+import { workerNodeVolumeSizeMinGiB } from '~/components/clusters/common/machinePools/constants';
 import { FieldId } from '~/components/clusters/wizards/osd/constants';
-import {
-  maxAdditionalSecurityGroups,
-  maxAdditionalSecurityGroupsHypershift,
-  workerNodeVolumeSizeMinGiB,
-} from '~/components/clusters/wizards/rosa/constants';
 import { clusterService } from '~/services';
 import type { GCP, Taint } from '~/types/clusters_mgmt.v1';
 
 import { sqlString } from './queryHelpers';
 
 type Networks = Parameters<typeof overlapCidr>[0];
+
+export const maxAdditionalSecurityGroups = 5;
+export const maxAdditionalSecurityGroupsHypershift = 10;
 
 // Valid RFC-1035 labels must consist of lower case alphanumeric characters or '-', start with an
 // alphabetic character, and end with an alphanumeric character (e.g. 'my-name',  or 'abc-123').

@@ -1,11 +1,7 @@
 import { FormikValues } from 'formik';
 
 import { billingModels, normalizedProducts } from '~/common/subscriptionTypes';
-import {
-  isExactMajorMinor,
-  isMajorMinorEqualOrGreater,
-  splitVersion,
-} from '~/common/versionHelpers';
+import { isMajorMinorEqualOrGreater, splitVersion } from '~/common/versionHelpers';
 import {
   CloudProviderType,
   FieldId as CommonFieldId,
@@ -73,33 +69,5 @@ export const canSelectImds = (clusterVersionRawId: string): boolean => {
   return major > 4 || (major === 4 && minor >= 11);
 };
 
-export const maxAdditionalSecurityGroups = 5;
-export const maxAdditionalSecurityGroupsHypershift = 10;
-
-export const defaultWorkerNodeVolumeSizeGiB = 300;
-
-export const workerNodeVolumeSizeMinGiB = 128;
-
-/**
- * Returns ROSA/AWS OSD max worker node volume size, varies per cluster version.
- * In GiB.
- */
-export const getWorkerNodeVolumeSizeMaxGiB = (clusterVersionRawId: string): number => {
-  const [major, minor] = splitVersion(clusterVersionRawId);
-  return (major > 4 || (major === 4 && minor >= 14) ? 16 : 1) * 1024;
-};
-
 export const canConfigureDayOneManagedIngress = (clusterVersionRawId: string): boolean =>
   isMajorMinorEqualOrGreater(clusterVersionRawId, 4, 14);
-
-/* When changing, consider updating the COnfiguration and NetworkScreen components as well (they contain 4.13-specific logic */
-export const canConfigureDayTwoManagedIngress = (clusterVersionRawId: string): boolean =>
-  isMajorMinorEqualOrGreater(clusterVersionRawId, 4, 13);
-
-export const canConfigureLoadBalancer = (
-  clusterVersionRawId: string,
-  isSTSEnabled: boolean,
-): boolean => !isSTSEnabled || canConfigureDayTwoManagedIngress(clusterVersionRawId);
-
-export const canConfigureAdditionalRouter = (clusterVersionRawId: string): boolean =>
-  isExactMajorMinor(clusterVersionRawId, 4, 11) || isExactMajorMinor(clusterVersionRawId, 4, 12);

@@ -1,7 +1,7 @@
 import { connect } from 'react-redux';
 import { formValueSelector, reduxForm } from 'redux-form';
 
-import { canConfigureAdditionalRouter } from '~/components/clusters/wizards/rosa/constants';
+import { isExactMajorMinor } from '~/common/versionHelpers';
 
 import { knownProducts } from '../../../../../../../common/subscriptionTypes';
 import { closeModal } from '../../../../../../common/Modal/ModalActions';
@@ -18,6 +18,9 @@ const reduxFormConfig = {
 };
 
 const reduxFormEditIngress = reduxForm(reduxFormConfig)(EditClusterIngressDialog);
+
+const canConfigureAdditionalRouter = (clusterVersionRawId) =>
+  isExactMajorMinor(clusterVersionRawId, 4, 11) || isExactMajorMinor(clusterVersionRawId, 4, 12);
 
 const mapStateToProps = (state) => {
   const { cluster } = state.clusters.details;
