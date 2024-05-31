@@ -4,11 +4,11 @@ import { Field } from 'formik';
 import { FormGroup } from '@patternfly/react-core';
 
 import { validateWorkerVolumeSize } from '~/common/validators';
-import { useFormState } from '~/components/clusters/wizards/hooks';
 import {
   defaultWorkerNodeVolumeSizeGiB,
   workerNodeVolumeSizeMinGiB,
-} from '~/components/clusters/wizards/rosa/constants';
+} from '~/components/clusters/common/machinePools/constants';
+import { useFormState } from '~/components/clusters/wizards/hooks';
 import { FieldId } from '~/components/clusters/wizards/rosa_v2/constants';
 import FormNumberInput from '~/components/common/FormComponents/FormNumberInput';
 import PopoverHint from '~/components/common/PopoverHint';

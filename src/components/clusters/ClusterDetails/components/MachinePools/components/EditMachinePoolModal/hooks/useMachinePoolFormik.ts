@@ -12,13 +12,13 @@ import {
 } from '~/common/validators';
 import { isMPoolAz } from '~/components/clusters/ClusterDetails/clusterDetailsHelper';
 import { isHypershiftCluster, isROSA } from '~/components/clusters/common/clusterStates';
-import { SPOT_MIN_PRICE } from '~/components/clusters/common/machinePools/constants';
-import { getNodeOptions } from '~/components/clusters/common/machinePools/utils';
 import {
   defaultWorkerNodeVolumeSizeGiB,
   getWorkerNodeVolumeSizeMaxGiB,
+  SPOT_MIN_PRICE,
   workerNodeVolumeSizeMinGiB,
-} from '~/components/clusters/wizards/rosa/constants';
+} from '~/components/clusters/common/machinePools/constants';
+import { getNodeOptions } from '~/components/clusters/common/machinePools/utils';
 import { GlobalState } from '~/redux/store';
 import { PromiseReducerState } from '~/redux/types';
 import { Cluster, MachinePool, NodePool } from '~/types/clusters_mgmt.v1';

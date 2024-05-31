@@ -8,8 +8,8 @@ import { hasExternalAuthenticationCapability } from '~/common/externalAuthHelper
 import { hasSelectedSecurityGroups } from '~/common/securityGroupsHelpers';
 import { normalizedProducts } from '~/common/subscriptionTypes';
 import { stepId, stepNameById } from '~/components/clusters/wizards/common/osdWizardConstants';
-import { canSelectImds } from '~/components/clusters/wizards/rosa/constants';
 import { getUserRoleForSelectedAWSAccount } from '~/components/clusters/wizards/rosa_v1/AccountsRolesScreen/AccountsRolesScreen';
+import { canSelectImds } from '~/components/clusters/wizards/rosa_v1/constants';
 import {
   stepId as rosaStepId,
   stepNameById as rosaStepNameById,

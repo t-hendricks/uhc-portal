@@ -16,8 +16,7 @@ import { store } from '~/redux/store';
 import { NamespaceOwnershipPolicy } from '~/types/clusters_mgmt.v1/models/NamespaceOwnershipPolicy';
 import { WildcardPolicy } from '~/types/clusters_mgmt.v1/models/WildcardPolicy';
 
-import { canConfigureDayOneManagedIngress } from '../rosa/constants';
-
+import { canConfigureDayOneManagedIngress } from './constants';
 import * as submitRequestHelpers from './submitOSDRequestHelper';
 
 export const createClusterRequest = ({ isWizard = true, cloudProviderID, product }, formData) => {

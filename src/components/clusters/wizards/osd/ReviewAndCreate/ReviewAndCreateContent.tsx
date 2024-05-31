@@ -12,6 +12,7 @@ import {
 
 import { hasSelectedSecurityGroups } from '~/common/securityGroupsHelpers';
 import {
+  canSelectImds,
   CloudProviderType,
   UpgradePolicyType,
 } from '~/components/clusters/wizards/common/constants';
@@ -23,8 +24,6 @@ import { useFormState } from '~/components/clusters/wizards/hooks';
 import { FieldId, StepId } from '~/components/clusters/wizards/osd/constants';
 import config from '~/config';
 import useCanClusterAutoscale from '~/hooks/useCanClusterAutoscale';
-
-import { canSelectImds } from '../../rosa/constants';
 
 interface ReviewAndCreateContentProps {
   isPending: boolean;

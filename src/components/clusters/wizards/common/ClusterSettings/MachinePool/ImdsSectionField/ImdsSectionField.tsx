@@ -3,11 +3,10 @@ import { Field } from 'formik';
 
 import { FormGroup } from '@patternfly/react-core';
 
-import { FieldId, IMDSType } from '~/components/clusters/wizards/common/constants';
+import { canSelectImds, FieldId, IMDSType } from '~/components/clusters/wizards/common/constants';
 import RadioButtons from '~/components/common/ReduxFormComponents/RadioButtons';
 
 import { useFormState } from '../../../../hooks';
-import { canSelectImds } from '../../../../rosa/constants';
 
 import { imdsOptions } from './imdsOptions';
 import { ImdsSectionAlert } from './ImdsSectionAlert';
