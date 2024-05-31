@@ -3,10 +3,6 @@ import { reduxForm } from 'redux-form';
 import { Action } from 'typesafe-actions';
 
 import { CloudProviderType } from '~/components/clusters/wizards/common';
-import {
-  canConfigureDayTwoManagedIngress,
-  canConfigureLoadBalancer,
-} from '~/components/clusters/wizards/rosa/constants';
 import { GlobalState } from '~/redux/store';
 import { LoadBalancerFlavor } from '~/types/clusters_mgmt.v1';
 
@@ -15,6 +11,10 @@ import modals from '../../../../../../common/Modal/modals';
 import shouldShowModal from '../../../../../../common/Modal/ModalSelectors';
 import { isHypershiftCluster } from '../../../../../common/clusterStates';
 import { resetEditRoutersResponse, saveNetworkingConfiguration } from '../../NetworkingActions';
+import {
+  canConfigureDayTwoManagedIngress,
+  canConfigureLoadBalancer,
+} from '../../NetworkingHelpers';
 import NetworkingSelector, {
   ClusterRouters,
   excludedNamespacesAsString,

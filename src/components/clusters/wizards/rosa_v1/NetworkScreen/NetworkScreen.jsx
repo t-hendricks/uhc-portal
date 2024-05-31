@@ -23,7 +23,7 @@ import { getSelectedAvailabilityZones } from '~/common/vpcHelpers';
 import { constants } from '~/components/clusters/common/CreateOSDFormConstants';
 import { DefaultIngressFields } from '~/components/clusters/common/DefaultIngressFields';
 import { SubnetSelectField } from '~/components/clusters/common/SubnetSelectField';
-import { canConfigureDayOneManagedIngress } from '~/components/clusters/wizards/rosa/constants';
+import { canConfigureDayOneManagedIngress } from '~/components/clusters/wizards/rosa_v1/constants';
 import { CheckboxDescription } from '~/components/common/CheckboxDescription';
 import ExternalLink from '~/components/common/ExternalLink';
 import { RadioButtons, ReduxCheckbox } from '~/components/common/ReduxFormComponents';

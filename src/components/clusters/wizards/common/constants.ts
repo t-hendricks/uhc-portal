@@ -1,5 +1,7 @@
 import { FormikValues } from 'formik';
 
+import { isMajorMinorEqualOrGreater, splitVersion } from '~/common/versionHelpers';
+
 // Fields that are used in both OSD and ROSA wizards.
 export enum FieldId {
   AccessKeyId = 'access_key_id',
@@ -97,3 +99,11 @@ export const emptyAWSSubnet = () => ({
   privateSubnetId: '',
   publicSubnetId: '',
 });
+
+export const canSelectImds = (clusterVersionRawId: string): boolean => {
+  const [major, minor] = splitVersion(clusterVersionRawId);
+  return major > 4 || (major === 4 && minor >= 11);
+};
+
+export const canConfigureDayOneManagedIngress = (clusterVersionRawId: string): boolean =>
+  isMajorMinorEqualOrGreater(clusterVersionRawId, 4, 14);

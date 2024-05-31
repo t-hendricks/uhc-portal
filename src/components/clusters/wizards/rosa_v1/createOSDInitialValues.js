@@ -1,6 +1,6 @@
 import { getDefaultSecurityGroupsSettings } from '~/common/securityGroupsHelpers';
 import { getDefaultClusterAutoScaling } from '~/components/clusters/common/clusterAutoScalingValues';
-import { defaultWorkerNodeVolumeSizeGiB } from '~/components/clusters/wizards/rosa/constants';
+import { defaultWorkerNodeVolumeSizeGiB } from '~/components/clusters/common/machinePools/constants';
 import { isRestrictedEnv } from '~/restrictedEnv';
 
 import { billingModels, normalizedProducts } from '../../../../common/subscriptionTypes';

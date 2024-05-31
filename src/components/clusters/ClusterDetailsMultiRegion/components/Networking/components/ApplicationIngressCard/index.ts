@@ -3,14 +3,14 @@ import { Dispatch } from 'redux';
 
 import { isHibernating, isHypershiftCluster } from '~/components/clusters/common/clusterStates';
 import { CloudProviderType } from '~/components/clusters/wizards/common';
-import {
-  canConfigureDayTwoManagedIngress,
-  canConfigureLoadBalancer,
-} from '~/components/clusters/wizards/rosa/constants';
 import { GlobalState } from '~/redux/store';
 import { LoadBalancerFlavor } from '~/types/clusters_mgmt.v1';
 
 import { openModal } from '../../../../../../common/Modal/ModalActions';
+import {
+  canConfigureDayTwoManagedIngress,
+  canConfigureLoadBalancer,
+} from '../../NetworkingHelpers';
 import NetworkingSelector from '../../NetworkingSelector';
 
 import ApplicationIngressCard from './ApplicationIngressCard';

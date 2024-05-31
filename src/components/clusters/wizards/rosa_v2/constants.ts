@@ -3,6 +3,7 @@ import { FormikTouched, FormikValues } from 'formik';
 import { getDefaultSecurityGroupsSettings } from '~/common/securityGroupsHelpers';
 import { billingModels, normalizedProducts } from '~/common/subscriptionTypes';
 import { getDefaultClusterAutoScaling } from '~/components/clusters/common/clusterAutoScalingValues';
+import { defaultWorkerNodeVolumeSizeGiB } from '~/components/clusters/common/machinePools/constants';
 import {
   HOST_PREFIX_DEFAULT,
   MACHINE_CIDR_DEFAULT,
@@ -20,8 +21,6 @@ import {
   ApplicationIngressType,
   ClusterPrivacyType,
 } from '~/components/clusters/wizards/osd/Networking/constants';
-
-export const defaultWorkerNodeVolumeSizeGiB = 300;
 
 export enum RosaFieldId {
   AssociatedAwsId = 'associated_aws_id',
