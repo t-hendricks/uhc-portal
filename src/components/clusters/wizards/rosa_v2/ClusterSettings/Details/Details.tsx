@@ -244,7 +244,7 @@ function Details() {
 
     // Make "machinePoolsSubnets" of the correct length
     const mpSubnetsReset = [machinePoolsSubnets?.[0] || emptyAWSSubnet()];
-    if (isMultiAz) {
+    if (isValueMultiAz) {
       mpSubnetsReset.push(emptyAWSSubnet());
       mpSubnetsReset.push(emptyAWSSubnet());
     }
