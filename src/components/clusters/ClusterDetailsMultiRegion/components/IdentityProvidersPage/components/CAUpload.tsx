@@ -62,6 +62,11 @@ const CAUpload = ({
     setShouldShowCAText(!isDisabled && certValueState !== '' && showCAText);
   }, [isDisabled, certValueState, showCAText]);
 
+  const onClearClick = () => {
+    setFileName('');
+    setCertValueState('');
+  };
+
   const fileUpload = (event: React.FormEvent<HTMLInputElement>) => {
     const file = (event.target as HTMLInputElement).files?.[0];
     if (file) {
@@ -81,6 +86,8 @@ const CAUpload = ({
         reader.readAsText(file, 'UTF-8');
       }
     }
+    // eslint-disable-next-line no-param-reassign
+    event.currentTarget.value = ''; // fixes chrome specific bug where onChange is not triggered on same file input
   };
 
   // This method updates the value to space if the user removes the CA value
@@ -118,6 +125,7 @@ const CAUpload = ({
           <span className={buttonClass}>
             <input
               type="file"
+              name="file_input"
               onChange={fileUpload}
               disabled={isDisabled}
               accept={ACCEPT}
@@ -125,6 +133,7 @@ const CAUpload = ({
             />
             Browse&hellip;
           </span>
+          <Button onClick={onClearClick}>Clear</Button>
         </InputGroupItem>
       </InputGroup>
 
@@ -140,6 +149,7 @@ const CAUpload = ({
             name={`${input.name}_text`}
             onChange={(_event, value) => updateCertificateValue(value)}
             className="ca-textarea"
+            readOnly
           />
         </>
       ) : (
