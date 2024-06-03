@@ -21,6 +21,9 @@ type MockedJest = jest.Mocked<typeof axios> & jest.Mock;
 const apiRequestMock = apiRequest as unknown as MockedJest;
 
 describe('<ExternalAuthProviderModal />', () => {
+  afterEach(() => {
+    jest.clearAllMocks();
+  });
   it('should show correct title and content', async () => {
     render(
       <ExternalAuthProviderModal
@@ -81,6 +84,57 @@ describe('<ExternalAuthProviderModal />', () => {
     await user.type(screen.getByRole('textbox', { name: 'Audiences' }), 'abc');
     await user.type(screen.getByRole('textbox', { name: 'Groups mapping' }), 'groups');
     await user.type(screen.getByRole('textbox', { name: 'Username mapping' }), 'email');
+
+    await user.click(screen.getByRole('button', { name: 'Add' }));
+
+    expect(apiRequest.post).toHaveBeenCalledTimes(1);
+    const mockPostBreakGlassCallParams = apiRequestMock.post.mock.calls[0];
+    expect(mockPostBreakGlassCallParams[0]).toBe(
+      '/api/clusters_mgmt/v1/clusters/cluster1/external_auth_config/external_auths',
+    );
+  });
+
+  it('Adding console client, client ID must be in audience', async () => {
+    const { user } = render(
+      <ExternalAuthProviderModal
+        clusterID={mockModalData.clusterId}
+        onClose={mockModalData.onClose}
+      />,
+    );
+    await user.type(screen.getByRole('textbox', { name: 'Name' }), 'myprovider1');
+    await user.type(screen.getByRole('textbox', { name: 'Issuer URL' }), 'https://redhat.com');
+    await user.type(screen.getByRole('textbox', { name: 'Audiences' }), 'abc,def');
+    await user.type(screen.getByRole('textbox', { name: 'Groups mapping' }), 'groups');
+    await user.type(screen.getByRole('textbox', { name: 'Username mapping' }), 'email');
+    await user.type(screen.getByRole('textbox', { name: 'Console client ID' }), 'notthere');
+    await user.type(screen.getByRole('textbox', { name: 'Console client secret' }), 'thissecret');
+
+    expect(screen.queryByText(/Client ID must be a member of the audiences/i)).toBeInTheDocument();
+  });
+
+  it('calls post api on Add including console client', async () => {
+    const apiReturnValue = {
+      data: {
+        id: 'myprovider1',
+        issuer: { url: 'https://redhat.com', audiences: ['abc'] },
+        claim: { mappings: { username: { claim: 'email' }, groups: { claim: 'groups' } } },
+      },
+    };
+    apiRequestMock.post.mockResolvedValue(apiReturnValue);
+
+    const { user } = render(
+      <ExternalAuthProviderModal
+        clusterID={mockModalData.clusterId}
+        onClose={mockModalData.onClose}
+      />,
+    );
+    await user.type(screen.getByRole('textbox', { name: 'Name' }), 'myprovider1');
+    await user.type(screen.getByRole('textbox', { name: 'Issuer URL' }), 'https://redhat.com');
+    await user.type(screen.getByRole('textbox', { name: 'Audiences' }), 'abc,def');
+    await user.type(screen.getByRole('textbox', { name: 'Groups mapping' }), 'groups');
+    await user.type(screen.getByRole('textbox', { name: 'Username mapping' }), 'email');
+    await user.type(screen.getByRole('textbox', { name: 'Console client ID' }), 'def');
+    await user.type(screen.getByRole('textbox', { name: 'Console client secret' }), 'thissecret');
 
     await user.click(screen.getByRole('button', { name: 'Add' }));
 
