@@ -39,19 +39,19 @@ if [[ $ENV_AUT == "production" && $GOV_CLOUD == false ]]; then
   rosa login --token=$QE_ORGADMIN_OFFLINE_TOKEN
 elif [[ $ENV_AUT == "production" && $GOV_CLOUD == true ]]; then
   #Its production and govcloud
-  rosa login --govcloud --token=$QE_ORGADMIN_OFFLINE_TOKEN
+  rosa login --govcloud --token=$QE_ORGADMIN_OFFLINE_TOKEN --region=$TEST_QE_AWS_REGION
 elif [[ $ENV_AUT == "integration" && $GOV_CLOUD == false ]]; then
   # Its integration and not govcloud
   rosa login --env=$ENV_AUT --token=$QE_ORGADMIN_OFFLINE_TOKEN
 elif [[ $ENV_AUT == "integration" && $GOV_CLOUD == true ]]; then
   # Its integration and govcloud
-  rosa login --govcloud --env=$ENV_AUT --token=$QE_ORGADMIN_OFFLINE_TOKEN
+  rosa login --govcloud --env=$ENV_AUT --token=$QE_ORGADMIN_OFFLINE_TOKEN --region=$TEST_QE_AWS_REGION
 elif [[ $ENV_AUT == "staging" && $GOV_CLOUD == false ]]; then
   # Its staging and not govcloud
   rosa login --env=$ENV_AUT --token=$QE_ORGADMIN_OFFLINE_TOKEN
 elif [[ $ENV_AUT == "staging" && $GOV_CLOUD == true ]]; then
   # Its staging and govcloud
-  rosa login --govcloud --env=$ENV_AUT --token=$QE_ORGADMIN_OFFLINE_TOKEN
+  rosa login --govcloud --env=$ENV_AUT --token=$QE_ORGADMIN_OFFLINE_TOKEN --region=$TEST_QE_AWS_REGION
 fi
 
 linked_ocmrole=$(rosa list ocm-roles | awk '$3 == "Yes" { print $2 }')
