@@ -1,11 +1,14 @@
 import semver from 'semver';
 
-import { CompatibilityOptions, SupportedFeature } from './featureCompatibility';
+import { SupportedFeature } from './featureCompatibility';
+
+type CompatibilityOptions = { day1?: boolean; day2?: boolean; isHypershift?: boolean };
 
 type FeatureCompatibility = {
   label: string;
   day1?: string;
   day2?: string;
+  hypershift?: { day1?: string; day2?: string };
 };
 
 const featureCompatibilityMap: Record<SupportedFeature, FeatureCompatibility> = {
@@ -13,11 +16,19 @@ const featureCompatibilityMap: Record<SupportedFeature, FeatureCompatibility> = 
     label: 'security groups',
     day1: '4.14.0',
     day2: '4.11.0',
+    hypershift: {
+      day1: '4.14.0',
+      day2: '4.15.0',
+    },
   },
   [SupportedFeature.AWS_SHARED_VPC]: {
     label: 'shared VPCs',
     day1: '4.13.9',
     day2: '4.13.9',
+    hypershift: {
+      day1: '4.13.9',
+      day2: '4.13.9',
+    },
   },
 };
 
@@ -26,7 +37,14 @@ const incompatibilityReason = (
   versionToCheck: string,
   options: CompatibilityOptions,
 ) => {
-  const minimumVersion = options.day1 ? featureCompatibility.day1 : featureCompatibility.day2;
+  let minimumVersion;
+  if (options.isHypershift) {
+    minimumVersion = options.day1
+      ? featureCompatibility.hypershift?.day1
+      : featureCompatibility.hypershift?.day2;
+  } else {
+    minimumVersion = options.day1 ? featureCompatibility.day1 : featureCompatibility.day2;
+  }
 
   const isCompatible =
     !minimumVersion ||
@@ -57,4 +75,4 @@ const getIncompatibleVersionReason = (
   return incompatibilityReason(featureCompatibility, versionRawId, options);
 };
 
-export { getIncompatibleVersionReason };
+export { getIncompatibleVersionReason, CompatibilityOptions };

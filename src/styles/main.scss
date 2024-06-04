@@ -7,8 +7,6 @@ $pf-v5-global--enable-reset: false;
 $pf-v5-global--disable-fontawesome: true;
 $pf-v5-global--font-path: '~@patternfly/patternfly/assets/fonts/';
 
-@import '~react-datepicker/dist/react-datepicker.css';
-
 body {
   margin: 0;
   padding: 0;
@@ -17,6 +15,15 @@ body {
 
 #root {
   height: 100%;
+}
+
+/* Style override for react query devtools */
+.tsqd-main-panel{
+  width: 70% !important;
+ left: 25% !important;
+}
+.tsqd-open-btn-container{
+  margin-right: 4% !important;
 }
 
 @import './app';

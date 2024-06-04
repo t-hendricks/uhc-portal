@@ -1,40 +1,41 @@
 import React, { useCallback } from 'react';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom-v5-compat';
+
 import {
-  Button,
+  Card,
   CardBody,
   CardFooter,
+  CardHeader,
   CardTitle,
-  Card,
+  Divider,
   ExpandableSection,
+  Flex,
+  FlexItem,
+  Icon,
   Label,
   List,
   ListItem,
-  Text,
-  Title,
-  Flex,
-  FlexItem,
   PageSection,
-  CardHeader,
+  Stack,
+  Text,
   TextContent,
   TextVariants,
-  Divider,
-  Stack,
-  Icon,
+  Title,
 } from '@patternfly/react-core';
 import { CubeIcon } from '@patternfly/react-icons/dist/esm/icons/cube-icon';
-import { Link } from 'react-router-dom-v5-compat';
-import ExternalLink from '~/components/common/ExternalLink';
-import useAnalytics from '~/hooks/useAnalytics';
-import { trackEvents } from '~/common/analytics';
-import Breadcrumbs from '~/components/common/Breadcrumbs';
-import RedHatLogo from '~/styles/images/Logo-Red_Hat-B-Standard-RGB.png';
-import AWSLogo from '~/styles/images/AWSLogo';
+
 import { AppPage } from '~/components/App/AppPage';
-import { ListTextLabelLinkCard } from '../../common/ListTextLabelLinkCard/ListTextLabelLinkCard';
-import { ProductBanner } from '../../common/ProductBanner';
+import Breadcrumbs from '~/components/common/Breadcrumbs';
+import ExternalLink from '~/components/common/ExternalLink';
+import InternalTrackingLink from '~/components/common/InternalTrackingLink';
+import AWSLogo from '~/styles/images/AWSLogo';
+import RedHatLogo from '~/styles/images/Logo-Red_Hat-B-Standard-RGB.png';
+
 import docLinks from '../../../common/installLinks.mjs';
 import OpenShiftProductIcon from '../../../styles/images/OpenShiftProductIcon.svg';
+import { ListTextLabelLinkCard } from '../../common/ListTextLabelLinkCard/ListTextLabelLinkCard';
+import { ProductBanner } from '../../common/ProductBanner';
 
 import './RosaServicePage.scss';
 
@@ -47,7 +48,6 @@ const rosaBannerContents = {
 };
 
 const TryRosaCard = () => {
-  const track = useAnalytics();
   const rosaHandsOnURL = '/overview/rosa/hands-on';
   const LinkComponent = useCallback((props) => <Link {...props} to={rosaHandsOnURL} />, []);
 
@@ -60,19 +60,15 @@ const TryRosaCard = () => {
       </CardHeader>
       <CardBody>Access a no-cost, hands-on Red Hat OpenShift Service on AWS experience.</CardBody>
       <CardFooter>
-        <Button
+        <InternalTrackingLink
+          isButton
           variant="secondary"
-          onClick={() => {
-            track(trackEvents.TryRosaHandsOnExperience, {
-              url: rosaHandsOnURL,
-              path: window.location.pathname,
-            });
-          }}
           component={LinkComponent}
           size="lg"
+          to={rosaHandsOnURL}
         >
           Try it
-        </Button>
+        </InternalTrackingLink>
       </CardFooter>
     </Card>
   );
@@ -179,24 +175,11 @@ const linkTextLabelLinkCardContents = {
 };
 
 function RosaServicePage() {
-  const track = useAnalytics();
   const createRosaClusterURL = '/create/rosa/getstarted';
 
   const LinkComponent = useCallback(
-    (props) => (
-      <Link
-        {...props}
-        data-testid="register-cluster"
-        to={createRosaClusterURL}
-        onClick={() => {
-          track(trackEvents.CreateClusterROSA, {
-            url: createRosaClusterURL,
-            path: window.location.pathname,
-          });
-        }}
-      />
-    ),
-    [track],
+    (props) => <Link data-testid="register-cluster" to={createRosaClusterURL} {...props} />,
+    [],
   );
 
   return (
@@ -244,9 +227,16 @@ function RosaServicePage() {
                   <CardFooter>
                     <Flex>
                       <FlexItem>
-                        <Button variant="primary" component={LinkComponent} size="lg">
+                        <InternalTrackingLink
+                          isButton
+                          data-testid="register-cluster"
+                          variant="primary"
+                          to={createRosaClusterURL}
+                          size="lg"
+                          component={LinkComponent}
+                        >
                           Begin setup
-                        </Button>
+                        </InternalTrackingLink>
                       </FlexItem>
                     </Flex>
                   </CardFooter>

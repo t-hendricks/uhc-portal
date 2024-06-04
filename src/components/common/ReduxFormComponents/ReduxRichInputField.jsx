@@ -1,21 +1,24 @@
-import React, { createRef, useState, useEffect, useReducer } from 'react';
+import React, { createRef, useEffect, useReducer, useState } from 'react';
 import PropTypes from 'prop-types';
+
 import {
+  Button,
   FormGroup,
-  TextInput,
-  InputGroup,
-  Popover,
   HelperText,
   HelperTextItem,
-  Button,
+  InputGroup,
   InputGroupItem,
+  Popover,
+  TextInput,
 } from '@patternfly/react-core';
-import { SpinnerIcon } from '@patternfly/react-icons/dist/esm/icons/spinner-icon';
-import { InfoCircleIcon } from '@patternfly/react-icons/dist/esm/icons/info-circle-icon';
 import { CheckCircleIcon } from '@patternfly/react-icons/dist/esm/icons/check-circle-icon';
 import { ExclamationCircleIcon } from '@patternfly/react-icons/dist/esm/icons/exclamation-circle-icon';
+import { InfoCircleIcon } from '@patternfly/react-icons/dist/esm/icons/info-circle-icon';
+import { SpinnerIcon } from '@patternfly/react-icons/dist/esm/icons/spinner-icon';
 import IconStatusColor from '@patternfly/react-tokens/dist/esm/c_form_control__icon_m_status_Color';
+
 import { FormGroupHelperText } from '~/components/common/FormGroupHelperText';
+
 import PopoverHint from '../PopoverHint';
 
 import './ReduxRichInputField.scss';
@@ -184,6 +187,7 @@ const ReduxRichInputField = (props) => {
 
   const populateAsyncValidation = (term) => {
     const populatedValidation = asyncValidation(term);
+
     validationDispatch({
       type: 'set-async-validation',
       payload: populatedValidation,

@@ -1,19 +1,23 @@
-import './Overview.scss';
 import React, { useCallback } from 'react';
-import { Button, Title, Label, Flex, FlexItem, PageSection } from '@patternfly/react-core';
-import { Link } from 'react-router-dom';
+import { Link } from 'react-router-dom-v5-compat';
+
+import { Flex, FlexItem, Label, PageSection, Title } from '@patternfly/react-core';
+
 import ExternalLink from '~/components/common/ExternalLink';
-import useAnalytics from '~/hooks/useAnalytics';
-import { trackEvents } from '~/common/analytics';
-import { ProductBanner, ProductBannerProps } from '../common/ProductBanner';
+import InternalTrackingLink from '~/components/common/InternalTrackingLink';
+
 import docLinks from '../../common/installLinks.mjs';
+import OpenShiftProductIcon from '../../styles/images/OpenShiftProductIcon.svg';
+import { AppPage } from '../App/AppPage';
 import {
   ListTextLabelLinkCard,
   ListTextLabelLinkCardProps,
 } from '../common/ListTextLabelLinkCard/ListTextLabelLinkCard';
-import OpenShiftProductIcon from '../../styles/images/OpenShiftProductIcon.svg';
+import { ProductBanner, ProductBannerProps } from '../common/ProductBanner';
+
 import { OfferingCard } from './OfferingCard/OfferingCard';
-import { AppPage } from '../App/AppPage';
+
+import './Overview.scss';
 
 const linkTextLabelLinkCardContents: ListTextLabelLinkCardProps = {
   cardClassName: 'pf-v5-u-mb-lg',
@@ -64,28 +68,17 @@ const openshiftBannerContents: ProductBannerProps = {
   dataTestId: 'OverviewHeader',
 };
 
+const PAGE_TITLE = 'Overview | Red Hat OpenShift Cluster Manager';
+
 function OverviewEmptyState() {
-  const track = useAnalytics();
   const createClusterURL = '/create';
   const CreateClusterLink = useCallback(
-    (props) => (
-      <Link
-        {...props}
-        onClick={() => {
-          track(trackEvents.CreateCluster, {
-            url: createClusterURL,
-            path: window.location.pathname,
-          });
-        }}
-        data-testid="create-cluster"
-        to={createClusterURL}
-      />
-    ),
-    [track],
+    (props) => <Link {...props} data-testid="create-cluster" to={createClusterURL} />,
+    [],
   );
 
   return (
-    <AppPage>
+    <AppPage title={PAGE_TITLE}>
       <ProductBanner
         icon={openshiftBannerContents.icon}
         learnMoreLink={openshiftBannerContents.learnMoreLink}
@@ -117,9 +110,15 @@ function OverviewEmptyState() {
             <OfferingCard offeringType="DEVSNBX" />
           </FlexItem>
         </Flex>
-        <Button variant="link" component={CreateClusterLink}>
+        <InternalTrackingLink
+          isButton
+          to={createClusterURL}
+          variant="link"
+          data-testid="create-cluster"
+          component={CreateClusterLink}
+        >
           View all OpenShift cluster types
-        </Button>
+        </InternalTrackingLink>
         <Title size="xl" headingLevel="h2" className="pf-v5-u-mt-lg pf-v5-u-mb-lg">
           Recommended Content
         </Title>

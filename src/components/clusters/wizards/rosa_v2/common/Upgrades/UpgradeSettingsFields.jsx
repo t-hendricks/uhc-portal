@@ -1,0 +1,171 @@
+/* eslint-disable react/no-unescaped-entities */
+
+// dup of this in order to convert to formik src/components/clusters/common/Upgrades/UpgradeSettingsFields.jsx
+// redux-form version still used by src/components/clusters/ClusterDetails/components/UpgradeSettings/UpgradeSettingsTab.jsx
+// in Details page of Cluster Details TODO convert cluster details page to formik
+
+// Form fields for upgrade settings, used in Upgrade Settings tab and in cluster creation
+import React from 'react';
+import { Field } from 'formik';
+
+import {
+  Divider,
+  Grid,
+  GridItem,
+  Text,
+  TextContent,
+  TextVariants,
+  Title,
+} from '@patternfly/react-core';
+
+import links from '~/common/installLinks.mjs';
+import PodDistruptionBudgetGraceSelect from '~/components/clusters/common/Upgrades/PodDistruptionBudgetGraceSelect';
+import UpgradeScheduleSelection from '~/components/clusters/common/Upgrades/UpgradeScheduleSelection';
+import { useFormState } from '~/components/clusters/wizards/hooks';
+import { FieldId } from '~/components/clusters/wizards/rosa_v2/constants';
+import ExternalLink from '~/components/common/ExternalLink';
+import RadioButtons from '~/components/common/ReduxFormComponents/RadioButtons';
+
+import './UpgradeSettingsFields.scss';
+
+function UpgradeSettingsFields() {
+  const {
+    setFieldValue, // Set value of form field directly
+    setFieldTouched, // Set whether field has been touched directly
+    getFieldProps, // Access: name, value, onBlur, onChange for a <Field>, useful for mapping to a field that expects the redux-form props
+    // getFieldMeta, // Access: error, touched for a <Field>, useful for mapping to a field that expects the redux-form props
+    values: { [FieldId.UpgradePolicy]: upgradePolicy, [FieldId.Hypershift]: hypershift },
+  } = useFormState();
+
+  const isAutomatic = upgradePolicy === 'automatic';
+  const isHypershift = hypershift === 'true';
+  const initialScheduleValue = '0 0 * * 0';
+  const isDisabled = false;
+  const showDivider = false;
+
+  const recurringUpdateMessage = (
+    <>
+      The cluster will be automatically updated based on your preferred day and start time when new
+      patch updates (<ExternalLink href={links.ROSA_Z_STREAM}>z-stream</ExternalLink>) are
+      available. When a new minor version is available, you'll be notified and must manually allow
+      the cluster to update to the next minor version.
+    </>
+  );
+  const recurringUpdateHypershift = (
+    <>
+      The cluster control plane will be automatically updated based on your preferred day and start
+      time when new patch updates (<ExternalLink href={links.ROSA_Z_STREAM}>z-stream</ExternalLink>)
+      are available. When a new minor version is available, you'll be notified and must manually
+      allow the cluster to update to the next minor version. The worker nodes will need to be
+      manually updated.
+    </>
+  );
+
+  const automatic = {
+    value: 'automatic',
+    label: 'Recurring updates',
+    description: isHypershift ? recurringUpdateHypershift : recurringUpdateMessage,
+    extraField: isAutomatic && (
+      <Grid>
+        <GridItem md={6}>
+          <Field
+            component={UpgradeScheduleSelection}
+            name={FieldId.AutomaticUpgradeSchedule}
+            input={{
+              ...getFieldProps(FieldId.AutomaticUpgradeSchedule),
+              onChange: (value) => {
+                setFieldTouched(FieldId.AutomaticUpgradeSchedule);
+                setFieldValue(FieldId.AutomaticUpgradeSchedule, value);
+              },
+            }}
+            isDisabled={isDisabled}
+            isHypershift={isHypershift}
+          />
+        </GridItem>
+      </Grid>
+    ),
+  };
+  const manual = {
+    value: 'manual',
+    label: 'Individual updates',
+    description: (
+      <>
+        Schedule each update individually. Take into consideration end of life dates from the{' '}
+        <ExternalLink href={links.ROSA_LIFE_CYCLE}>lifecycle policy</ExternalLink> when planning
+        updates.
+      </>
+    ),
+  };
+
+  const options = isHypershift ? [automatic, manual] : [manual, automatic];
+
+  return (
+    <>
+      <GridItem>
+        <Text component="p">
+          Note: In the event of{' '}
+          <ExternalLink href="https://access.redhat.com/security/updates/classification/#critical">
+            Critical security concerns
+          </ExternalLink>{' '}
+          (CVEs) that significantly impact the security or stability of the cluster, updates may be{' '}
+          automatically scheduled by Red Hat SRE to the latest z-stream version not impacted by the{' '}
+          CVE within 2 business days after customer notifications.
+        </Text>
+      </GridItem>
+      <GridItem className="ocm-c-upgrade-policy-radios">
+        <Field
+          component={RadioButtons}
+          name={FieldId.UpgradePolicy}
+          isDisabled={isDisabled}
+          input={{
+            ...getFieldProps(FieldId.UpgradePolicy),
+            onChange: (value) => {
+              setFieldTouched(FieldId.UpgradePolicy);
+              setFieldValue(FieldId.UpgradePolicy, value);
+              if (value === 'manual') {
+                setFieldValue(FieldId.AutomaticUpgradeSchedule, initialScheduleValue);
+              }
+            },
+          }}
+          options={options}
+          defaultValue="manual"
+          disableDefaultValueHandling // interferes with enableReinitialize.
+        />
+      </GridItem>
+      {showDivider && !isHypershift ? <Divider /> : null}
+      {!isHypershift ? (
+        <GridItem>
+          <Title headingLevel="h4" className="ocm-c-upgrade-node-draining-title">
+            Node draining
+          </Title>
+          <TextContent>
+            <Text component={TextVariants.p}>
+              Note: You cannot change the node drain grace period after you start the upgrade
+              process.
+            </Text>
+            <Text component={TextVariants.p}>
+              You may set a grace period for how long pod disruption budget-protected workloads will{' '}
+              be respected during updates. After this grace period, any workloads protected by pod
+              disruption budgets that have not been successfully drained from a node will be
+              forcibly evicted.
+            </Text>
+          </TextContent>
+          <Field
+            name={FieldId.NodeDrainGracePeriod}
+            component={PodDistruptionBudgetGraceSelect}
+            isDisabled={isDisabled}
+            input={{
+              ...getFieldProps(FieldId.NodeDrainGracePeriod),
+              onChange: (value) => {
+                setFieldTouched(FieldId.NodeDrainGracePeriod);
+                setFieldValue(FieldId.NodeDrainGracePeriod, value);
+              },
+            }}
+          />
+        </GridItem>
+      ) : null}
+    </>
+  );
+}
+
+export default UpgradeSettingsFields;

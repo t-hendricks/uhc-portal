@@ -1,4 +1,5 @@
 import apiRequest from '~/services/apiRequest';
+
 import type {
   Account,
   AccountList,
@@ -6,18 +7,18 @@ import type {
   LabelList,
   Organization,
   QuotaCostList,
+  SelfEntitlementStatus,
   Subscription,
   SubscriptionCreateRequest,
   SubscriptionList,
   SubscriptionPatchRequest,
   SubscriptionRoleBindingList,
   SupportCasesCreatedResponse,
-  SelfEntitlementStatus,
 } from '../types/accounts_mgmt.v1';
 import type {
+  AWSSTSAccountRole,
   AWSSTSPolicy,
   AWSSTSRole,
-  AWSSTSAccountRole,
   STSCredentialRequest,
 } from '../types/clusters_mgmt.v1';
 
@@ -44,6 +45,16 @@ const getSubscriptions = (params: {
       orderBy: params.order,
       search: params.filter,
       fields: params.fields,
+      fetchAccounts: true,
+      fetchCapabilities: true,
+    },
+  });
+
+const searchSubscriptions = (search: string, size: number = -1) =>
+  apiRequest.get<SubscriptionList>('/api/accounts_mgmt/v1/subscriptions', {
+    params: {
+      size,
+      search,
       fetchAccounts: true,
       fetchCapabilities: true,
     },
@@ -249,6 +260,7 @@ const accountsService = {
   getUserRole,
   getPolicies,
   getCredentialRequests,
+  searchSubscriptions,
 };
 
 export default accountsService;

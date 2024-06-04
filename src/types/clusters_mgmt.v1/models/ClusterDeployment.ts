@@ -1,7 +1,7 @@
+/* generated using openapi-typescript-codegen -- do not edit */
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-
 /**
  * Representation of a clusterdeployment.
  */
@@ -21,5 +21,5 @@ export type ClusterDeployment = {
   /**
    * Content of the clusterdeployment.
    */
-  content?: any;
+  content?: Record<string, any>;
 };

@@ -1,8 +1,9 @@
 import React from 'react';
-import { screen, render, checkAccessibility } from '~/testUtils';
 
-import { dropDownItems } from './ClusterActionsDropdownItems';
+import { checkAccessibility, render, screen } from '~/testUtils';
+
 import * as Fixtures from './ClusterActionsDropdown.fixtures';
+import { dropDownItems } from './ClusterActionsDropdownItems';
 
 function DropDownItemsRenderHelper(props) {
   return <ul role="menu">{dropDownItems(props).map((item) => item)}</ul>;

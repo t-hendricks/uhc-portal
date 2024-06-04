@@ -1,6 +1,8 @@
 /* eslint-disable camelcase */
-import React, { useState, useCallback, useEffect, useRef } from 'react';
+import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import get from 'lodash/get';
+import { useDispatch, useSelector } from 'react-redux';
+import { Field } from 'redux-form';
 
 import {
   Button,
@@ -11,22 +13,23 @@ import {
   TextContent,
   TextVariants,
 } from '@patternfly/react-core';
-import { Field } from 'redux-form';
 
-import { required } from '~/common/validators';
-import { normalizedProducts } from '~/common/subscriptionTypes';
 import { trackEvents } from '~/common/analytics';
-import useAnalytics from '~/hooks/useAnalytics';
-import ErrorBox from '~/components/common/ErrorBox';
-
+import { AWS_ACCOUNT_ROSA_LOCALSTORAGE_KEY } from '~/common/localStorageConstants';
+import { normalizedProducts } from '~/common/subscriptionTypes';
+import { required } from '~/common/validators';
 import { PrerequisitesInfoBox } from '~/components/clusters/wizards/rosa_v1/common/PrerequisitesInfoBox';
 import { WelcomeMessage } from '~/components/clusters/wizards/rosa_v1/common/WelcomeMessage';
-import { AWS_ACCOUNT_ROSA_LOCALSTORAGE_KEY } from '~/common/localStorageConstants';
-import AccountRolesARNsSection from './AccountRolesARNsSection';
-import { AwsRoleErrorAlert } from './AwsRoleErrorAlert';
-import AWSAccountSelection from './AWSAccountSelection';
-import AWSBillingAccount from './AWSBillingAccount/AWSBillingAccount';
+import ErrorBox from '~/components/common/ErrorBox';
+import useAnalytics from '~/hooks/useAnalytics';
+import { clearMachineTypesByRegion } from '~/redux/actions/machineTypesActions';
+import { GlobalState } from '~/redux/store';
+
 import { useAssociateAWSAccountDrawer } from './AssociateAWSAccountDrawer/AssociateAWSAccountDrawer';
+import AWSBillingAccount from './AWSBillingAccount/AWSBillingAccount';
+import AccountRolesARNsSection from './AccountRolesARNsSection';
+import AWSAccountSelection from './AWSAccountSelection';
+import { AwsRoleErrorAlert } from './AwsRoleErrorAlert';
 
 export const isUserRoleForSelectedAWSAccount = (users: any[] | undefined, awsAcctId: any) =>
   users?.some((user: { aws_id: any }) => user.aws_id === awsAcctId);
@@ -77,10 +80,24 @@ function AccountsRolesScreen({
   const [hasFinishedLoading, setHasFinishedLoading] = useState<boolean>(false);
   const [noUserForSelectedAWSAcct, setNoUserForSelectedAWSAcct] = useState(false);
   const [refreshButtonClicked, setRefreshButtonClicked] = useState(false);
+  const isAWSDataPending = useMemo(
+    () => getAWSAccountIDsResponse.pending || getAWSAccountRolesARNsResponse.pending,
+    [getAWSAccountIDsResponse.pending, getAWSAccountRolesARNsResponse.pending],
+  );
+
   const openDrawerButtonRef = useRef(null);
   const hasAWSAccounts = AWSAccountIDs.length > 0;
   const track = useAnalytics();
   const { openDrawer } = useAssociateAWSAccountDrawer(isHypershiftSelected);
+  const machineTypesByRegion = useSelector((state: GlobalState) => state.machineTypesByRegion);
+  const dispatch = useDispatch();
+
+  // clear machineTypeByRegion cache when credentials change
+  React.useEffect(() => {
+    if (machineTypesByRegion.region) {
+      dispatch(clearMachineTypesByRegion());
+    }
+  });
 
   const resetAWSAccountFields = () => {
     // clear certain responses; causes refetch of AWS acct info.
@@ -208,8 +225,8 @@ function AccountsRolesScreen({
             }
             accounts={AWSAccountIDs.map((account) => ({ cloud_account_id: account }))}
             selectedAWSAccountID={selectedAWSAccountID}
-            isLoading={refreshButtonClicked && getAWSAccountIDsResponse.pending}
-            isDisabled={getAWSAccountIDsResponse.pending}
+            isLoading={refreshButtonClicked && isAWSDataPending}
+            isDisabled={isAWSDataPending}
             clearGetAWSAccountIDsResponse={clearGetAWSAccountIDsResponse}
           />
           <Button

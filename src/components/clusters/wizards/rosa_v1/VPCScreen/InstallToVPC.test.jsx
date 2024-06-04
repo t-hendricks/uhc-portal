@@ -1,9 +1,10 @@
-import wizardConnector from '~/components/clusters/wizards/common/WizardConnector';
-import { render, screen } from '~/testUtils';
 import React from 'react';
-import InstallToVPC from '~/components/clusters/wizards/rosa_v1/VPCScreen/InstallToVPC';
+
 import links from '~/common/installLinks.mjs';
+import wizardConnector from '~/components/clusters/wizards/common/WizardConnector';
+import InstallToVPC from '~/components/clusters/wizards/rosa_v1/VPCScreen/InstallToVPC';
 import { useGlobalState } from '~/redux/hooks';
+import { render, screen } from '~/testUtils';
 
 const defaultProps = {
   selectedRegion: 'us-east-1',
@@ -30,16 +31,16 @@ describe('<InstallToVPC> (AWS)', () => {
     });
   });
 
-  it('should have a Shared VPC section', () => {
+  it.each([[false], [true]])('should have a Shared VPC section', (isHypershift) => {
     const ConnectedInstallToVPC = wizardConnector(InstallToVPC);
-    render(<ConnectedInstallToVPC {...defaultProps} />);
+    render(<ConnectedInstallToVPC {...defaultProps} isHypershiftSelected={isHypershift} />);
 
     expect(screen.getByText('AWS shared VPC')).toBeInTheDocument();
   });
 
-  it('should show a link to AWS VPC requirements', () => {
+  it.each([[false], [true]])('should show a link to AWS VPC requirements', (isHypershift) => {
     const ConnectedInstallToVPC = wizardConnector(InstallToVPC);
-    render(<ConnectedInstallToVPC {...defaultProps} />);
+    render(<ConnectedInstallToVPC {...defaultProps} isHypershiftSelected={isHypershift} />);
 
     expect(screen.getByRole('link', { name: /Learn more about VPC/ })).toHaveAttribute(
       'href',

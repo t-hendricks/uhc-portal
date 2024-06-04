@@ -1,9 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+
 import { Form, Grid, GridItem, Title } from '@patternfly/react-core';
+
 import { getAllSubnetFieldNames } from '~/common/vpcHelpers';
 
-import { emptyAWSSubnet } from '~/components/clusters/wizards/common/createOSDInitialValues';
+import { emptyAWSSubnet } from '../createOSDInitialValues';
 
 import InstallToVPC from './InstallToVPC';
 
@@ -19,6 +21,7 @@ function VPCScreen({
   hostedZoneDomainName,
   change,
   untouch,
+  isHypershiftSelected,
 }) {
   React.useEffect(() => {
     if (!selectedVPC.id) {
@@ -58,6 +61,7 @@ function VPCScreen({
           isSharedVpcSelected={isSharedVpcSelected}
           privateLinkSelected={privateLinkSelected}
           hostedZoneDomainName={hostedZoneDomainName}
+          isHypershiftSelected={isHypershiftSelected}
         />
       </Grid>
     </Form>
@@ -76,6 +80,7 @@ VPCScreen.propTypes = {
   privateLinkSelected: PropTypes.bool,
   isSharedVpcSelected: PropTypes.bool,
   hostedZoneDomainName: PropTypes.string,
+  isHypershiftSelected: PropTypes.bool,
 };
 
 export default VPCScreen;

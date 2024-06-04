@@ -1,20 +1,21 @@
 /* eslint-disable camelcase */
-import { get, indexOf, inRange } from 'lodash';
-import cidrTools from 'cidr-tools';
-/* eslint-disable-next-line import/no-extraneous-dependencies */
+import { containsCidr, overlapCidr } from 'cidr-tools';
 import IPCIDR from 'ip-cidr';
 import { ValidationError, Validator } from 'jsonschema';
-import { clusterService } from '~/services';
+import { get, indexOf, inRange } from 'lodash';
+
 import { Subnet } from '~/common/helpers';
+import { workerNodeVolumeSizeMinGiB } from '~/components/clusters/common/machinePools/constants';
 import { FieldId } from '~/components/clusters/wizards/osd/constants';
-import {
-  maxAdditionalSecurityGroups,
-  workerNodeVolumeSizeMinGiB,
-} from '~/components/clusters/wizards/rosa/constants';
-import type { GCP, Taint } from '../types/clusters_mgmt.v1';
+import { clusterService } from '~/services';
+import type { GCP, Taint } from '~/types/clusters_mgmt.v1';
+
 import { sqlString } from './queryHelpers';
 
-type Networks = Parameters<(typeof cidrTools)['overlap']>[0];
+type Networks = Parameters<typeof overlapCidr>[0];
+
+export const maxAdditionalSecurityGroups = 5;
+export const maxAdditionalSecurityGroupsHypershift = 10;
 
 // Valid RFC-1035 labels must consist of lower case alphanumeric characters or '-', start with an
 // alphabetic character, and end with an alphanumeric character (e.g. 'my-name',  or 'abc-123').
@@ -62,7 +63,9 @@ const CONSOLE_URL_REGEXP =
   /^https?:\/\/(([0-9]{1,3}\.){3}[0-9]{1,3}|([a-z0-9-]+\.)+[a-z]{2,})(:[0-9]+)?([a-z0-9_/-]+)?$/i;
 
 // Maximum length for a cluster name
-const MAX_CLUSTER_NAME_LENGTH = 15;
+const MAX_CLUSTER_NAME_LENGTH = 54;
+
+const MAX_DOMAIN_PREFIX_LENGTH = 15;
 
 const MAX_MACHINE_POOL_NAME_LENGTH = 30;
 
@@ -181,7 +184,11 @@ const checkOpenIDIssuer = (value?: string): string | undefined => {
 };
 
 // Function to validate that the object name contains a valid DNS label:
-const checkObjectName = (value: string, objectName: string, maxLen: number): string | undefined => {
+const checkObjectName = (
+  value: string | undefined,
+  objectName: string,
+  maxLen: number,
+): string | undefined => {
   if (!value) {
     return `${objectName} name is required.`;
   }
@@ -225,7 +232,7 @@ const checkObjectNameAsyncValidation = (value?: string) => [
         return false;
       }
       const search = `name = ${sqlString(value)}`;
-      const { data } = await clusterService.getClusters(search, 1);
+      const { data } = await clusterService.searchClusters(search, 1);
       // Normally, we get 0 or 1 items, 1 meaning a cluster of that name already exists.
       // But dumb mockserver ignores `search` and `size`, always returns full static list;
       // checking the returned name(s) allows this validation to work in ?env=mockdata UI.
@@ -234,16 +241,37 @@ const checkObjectNameAsyncValidation = (value?: string) => [
   },
 ];
 
-const clusterNameValidation = (value?: string) =>
-  checkObjectNameValidation(value, 'Cluster', MAX_CLUSTER_NAME_LENGTH);
+const checkObjectNameDomainPrefixAsyncValidation = (value?: string) => [
+  {
+    text: 'Globally unique domain prefix in your organization',
+    validator: async () => {
+      if (!value?.length) {
+        return false;
+      }
+      const search = `domain_prefix = ${sqlString(value)}`;
+      const { data } = await clusterService.searchClusters(search, 1);
+
+      return !data?.items?.some((cluster) => cluster.domain_prefix === value);
+    },
+  },
+];
+
+const clusterNameValidation = (value?: string, maxLen?: number) =>
+  checkObjectNameValidation(value, 'Cluster', maxLen || MAX_CLUSTER_NAME_LENGTH);
 
 const clusterNameAsyncValidation = (value?: string) => checkObjectNameAsyncValidation(value);
 
-const checkMachinePoolName = (value: string) =>
+const checkMachinePoolName = (value: string | undefined) =>
   checkObjectName(value, 'Machine pool', MAX_MACHINE_POOL_NAME_LENGTH);
 
-const checkNodePoolName = (value: string) =>
+const checkNodePoolName = (value: string | undefined) =>
   checkObjectName(value, 'Machine pool', MAX_NODE_POOL_NAME_LENGTH);
+
+const domainPrefixValidation = (value?: string) =>
+  checkObjectNameValidation(value, 'Domain Prefix', MAX_DOMAIN_PREFIX_LENGTH);
+
+const domainPrefixAsyncValidation = (value?: string) =>
+  checkObjectNameDomainPrefixAsyncValidation(value);
 
 const createAsyncValidationEvaluator =
   (
@@ -268,6 +296,10 @@ const evaluateClusterNameAsyncValidation = createAsyncValidationEvaluator(
   clusterNameAsyncValidation,
 );
 
+const evaluateDomainPrefixAsyncValidation = createAsyncValidationEvaluator(
+  domainPrefixAsyncValidation,
+);
+
 const findFirstFailureMessage = (populatedValidation: Validations | undefined) =>
   populatedValidation?.find((validation) => validation.validated === false)?.text;
 
@@ -281,6 +313,11 @@ const findFirstFailureMessage = (populatedValidation: Validations | undefined) =
  */
 const asyncValidateClusterName = async (value: string) => {
   const evaluatedAsyncValidation = await evaluateClusterNameAsyncValidation(value);
+  return findFirstFailureMessage(evaluatedAsyncValidation);
+};
+
+const asyncValidateDomainPrefix = async (value: string) => {
+  const evaluatedAsyncValidation = await evaluateDomainPrefixAsyncValidation(value);
   return findFirstFailureMessage(evaluatedAsyncValidation);
 };
 
@@ -380,8 +417,8 @@ const k8sMinMaxParameter = (
   const baseField = baseFieldMatch ? baseFieldMatch[1] : ''; // Should always match
 
   // Check the validity of the pair of values
-  const minParamValue = get(allValues, `${baseField}.min`);
-  const maxParamValue = get(allValues, `${baseField}.max`);
+  const minParamValue = get(allValues, `${baseField}.min`, 0);
+  const maxParamValue = get(allValues, `${baseField}.max`, 0);
 
   return minParamValue <= maxParamValue
     ? undefined
@@ -411,13 +448,13 @@ const clusterAutoScalingValidators = {
 const createPessimisticValidator =
   <V>(
     validationProvider: (
-      value: V,
+      value?: V,
       allValues?: any,
       props?: any,
       name?: any,
     ) => Validations | undefined = () => undefined,
   ) =>
-  (value: V, allValues?: any, props?: any, name?: any) =>
+  (value?: V, allValues?: any, props?: any, name?: any) =>
     findFirstFailureMessage(validationProvider(value, allValues, props, name));
 
 const checkCustomOperatorRolesPrefix = (value: string): string | undefined => {
@@ -466,7 +503,7 @@ const checkGithubTeams = (value?: string): string | undefined => {
 };
 
 const parseNodeLabelKey = (
-  labelKey: string,
+  labelKey: string | undefined,
 ): { name: string | undefined; prefix: string | undefined } => {
   const [name, prefix] =
     labelKey
@@ -495,7 +532,7 @@ const parseNodeLabels = (input: string | string[] | undefined) => {
 };
 
 const labelAndTaintKeyValidations = (
-  value: string,
+  value: string | undefined,
   items: { key?: string; value?: string }[],
   keyType?: string,
 ): Validations => {
@@ -525,7 +562,7 @@ const labelAndTaintKeyValidations = (
       text: `A valid key name must be ${LABEL_KEY_NAME_MAX_LENGTH} characters or less`,
     },
     {
-      validated: isEmptyValid || value?.length > 0,
+      validated: isEmptyValid || (value !== undefined && value.length > 0),
       text:
         keyType === 'label'
           ? "A valid key name must consist of alphanumeric characters, '-', '.' , '_'  or '/' and must start and end with an alphanumeric character"
@@ -534,7 +571,7 @@ const labelAndTaintKeyValidations = (
   ];
 };
 
-const labelAndTaintValueValidations = (value: string): Validations => [
+const labelAndTaintValueValidations = (value: string | undefined): Validations => [
   {
     validated:
       typeof value === 'undefined' || value === null || value.length <= LABEL_VALUE_MAX_LENGTH,
@@ -546,13 +583,16 @@ const labelAndTaintValueValidations = (value: string): Validations => [
   },
 ];
 
-const taintKeyValidations = (value: string, allValues: { taints?: Taint[] }): Validations => {
+const taintKeyValidations = (
+  value: string | undefined,
+  allValues: { taints?: Taint[] },
+): Validations => {
   const items = allValues?.taints || [];
   return labelAndTaintKeyValidations(value, items, 'taint');
 };
 
 const nodeLabelKeyValidations = (
-  value: string,
+  value: string | undefined,
   allValues: { node_labels?: Taint[] },
 ): Validations => {
   const items = allValues?.node_labels || [];
@@ -602,8 +642,16 @@ const validateDuplicateLabels = (input: string | string[] | undefined) => {
   return undefined;
 };
 
+const checkKeyValueFormat = (value: string): string | undefined =>
+  value.trim() !== '' && value?.match(/((.*=.*),*)+/g) === null
+    ? 'Routes should match comma separated pairs in key=value format'
+    : undefined;
+
 const checkRouteSelectors = (value: string): string | undefined =>
   checkLabels(value) || validateDuplicateLabels(value);
+
+const checkLabelsAdditionalRouter = (value: string): string | undefined =>
+  checkKeyValueFormat(value) || checkRouteSelectors(value);
 
 // Function to validate that the cluster ID field is a UUID:
 const checkClusterUUID = (value?: string): string | undefined => {
@@ -732,17 +780,6 @@ const checkClusterConsoleURL = (value?: string, isRequired?: boolean): string | 
   return undefined;
 };
 
-// Function to validate that a field contains a correct base DNS domain
-const checkBaseDNSDomain = (value?: string): string | undefined => {
-  if (!value) {
-    return 'Base DNS domain is required.';
-  }
-  if (!BASE_DOMAIN_REGEXP.test(value)) {
-    return `Base DNS domain '${value}' isn't valid, must contain at least two valid lower-case DNS labels separated by dots, for example 'mydomain.com'.`;
-  }
-  return undefined;
-};
-
 const checkNoProxyDomains = (value?: string[]) => {
   if (value && value.length > 0) {
     const invalidDomains = value.filter(
@@ -782,41 +819,49 @@ const subnetCidrs = (
   fieldName?: string,
   selectedSubnets?: Subnet[],
 ): string | undefined => {
+  type ErroredSubnet = {
+    cidr_block: string;
+    name: string;
+    subnet_id: string;
+    overlaps?: boolean;
+  };
+
   if (!value || selectedSubnets?.length === 0) {
     return undefined;
   }
 
-  const erroredSubnets: Subnet[] = [];
+  const erroredSubnets: ErroredSubnet[] = [];
 
   const startingIP = (cidr: string) => {
     const ip = new IPCIDR(cidr);
     return ip.start().toString();
   };
 
-  const compareCidrs = (shouldContain: boolean) => {
-    if (shouldContain) {
+  const compareCidrs = (shouldInclude: boolean) => {
+    if (shouldInclude) {
       selectedSubnets?.forEach((subnet: Subnet) => {
         if (
           CIDR_REGEXP.test(subnet.cidr_block) &&
-          !cidrTools.contains(value, startingIP(subnet.cidr_block))
+          !containsCidr(value, startingIP(subnet.cidr_block))
         ) {
           erroredSubnets.push(subnet);
         }
       });
     } else {
       selectedSubnets?.forEach((subnet: Subnet) => {
-        if (
-          CIDR_REGEXP.test(subnet.cidr_block) &&
-          cidrTools.contains(value, startingIP(subnet.cidr_block))
-        ) {
-          erroredSubnets.push(subnet);
+        if (CIDR_REGEXP.test(subnet.cidr_block)) {
+          if (containsCidr(value, startingIP(subnet.cidr_block))) {
+            erroredSubnets.push(subnet);
+          } else if (overlapCidr(value, subnet.cidr_block)) {
+            const overlappedSubnet = { ...subnet, overlaps: true };
+            erroredSubnets.push(overlappedSubnet);
+          }
         }
       });
     }
   };
 
-  const subnetName = () =>
-    formData?.hypershift === 'true' ? erroredSubnets[0]?.name : erroredSubnets[0]?.subnet_id;
+  const subnetName = () => erroredSubnets[0]?.name || erroredSubnets[0]?.subnet_id;
 
   if (fieldName === FieldId.NetworkMachineCidr) {
     compareCidrs(true);
@@ -829,6 +874,10 @@ const subnetCidrs = (
   if (fieldName === FieldId.NetworkServiceCidr) {
     compareCidrs(false);
     if (erroredSubnets.length > 0) {
+      if (erroredSubnets[0]?.overlaps) {
+        return `The Service CIDR overlaps with ${subnetName()} CIDR 
+        '${erroredSubnets[0].cidr_block}'`;
+      }
       return `The Service CIDR includes the starting IP (${startingIP(
         erroredSubnets[0].cidr_block,
       )}) of ${subnetName()}`;
@@ -837,6 +886,10 @@ const subnetCidrs = (
   if (fieldName === FieldId.NetworkPodCidr) {
     compareCidrs(false);
     if (erroredSubnets.length > 0) {
+      if (erroredSubnets[0]?.overlaps) {
+        return `The Pod CIDR overlaps with ${subnetName()} CIDR 
+        '${erroredSubnets[0].cidr_block}'`;
+      }
       return `The Pod CIDR includes the starting IP (${startingIP(
         erroredSubnets[0].cidr_block,
       )}) of ${subnetName()}`;
@@ -874,15 +927,12 @@ const awsMachineCidr = (value?: string, formData?: Record<string, string>): stri
   return undefined;
 };
 
-// Temporarily removed until messaging can be vetted according to https://issues.redhat.com/browse/HAC-2118.
-/* eslint-disable max-len */
-/*
-const gcpMachineCidr = (value: string, formData: { ['multi_az']: string }): string | undefined => {
+const gcpMachineCidr = (value?: string, formData?: Record<string, string>): string | undefined => {
   if (!value) {
     return undefined;
   }
 
-  const isMultiAz = formData.multi_az === 'true';
+  const isMultiAz = formData?.multi_az === 'true';
   const prefixLength = getCIDRSubnetLength(value);
 
   if (prefixLength != null) {
@@ -901,8 +951,6 @@ const gcpMachineCidr = (value: string, formData: { ['multi_az']: string }): stri
 
   return undefined;
 };
-*/
-/* eslint-enable max-len */
 
 const serviceCidr = (value?: string): string | undefined => {
   if (!value) {
@@ -975,16 +1023,20 @@ const disjointSubnets =
     };
     delete networkingFields[fieldName];
     const overlappingFields: string[] = [];
-    try {
+
+    if (CIDR_REGEXP.test(value)) {
       Object.keys(networkingFields).forEach((name) => {
         const fieldValue = get(formData, name, null);
-        if (fieldValue && cidrTools.overlap(value, fieldValue)) {
-          overlappingFields.push(networkingFields[name]);
+        try {
+          if (fieldValue && overlapCidr(value, fieldValue)) {
+            overlappingFields.push(networkingFields[name]);
+          }
+        } catch {
+          // parse error for fieldValue; ignore
         }
       });
-    } catch (e) {
-      return `Failed to parse CIDR: ${e}`;
     }
+
     const plural = overlappingFields.length > 1;
     if (overlappingFields.length > 0) {
       return `This subnet overlaps with the subnet${
@@ -1225,7 +1277,7 @@ const atLeastOneRequired =
         }
       } else {
         const content = get(field, fieldName, null);
-        if (content && content.trim() !== '') {
+        if (content && (content as string).trim() !== '') {
           nonEmptyValues += 1;
         }
       }
@@ -1359,10 +1411,14 @@ const createUniqueFieldValidator =
     return undefined;
   };
 
-const validateSecurityGroups = (securityGroups: string[]) =>
-  securityGroups.length > maxAdditionalSecurityGroups
-    ? `A maximum of ${maxAdditionalSecurityGroups} security groups can be selected.`
+const validateSecurityGroups = (securityGroups: string[], isHypershift: boolean) => {
+  const maxSecurityGroups = isHypershift
+    ? maxAdditionalSecurityGroupsHypershift
+    : maxAdditionalSecurityGroups;
+  return securityGroups.length > maxSecurityGroups
+    ? `A maximum of ${maxSecurityGroups} security groups can be selected.`
     : undefined;
+};
 
 const validateUniqueAZ = (
   currentAZ: string | undefined,
@@ -1393,8 +1449,8 @@ const validateUniqueNodeLabel = createUniqueFieldValidator(
 const validateRequiredPublicSubnetId = (
   publicSubnetId: string,
   allValues: unknown,
-  props: { pristine: boolean },
-) => (!props.pristine && !publicSubnetId ? 'Subnet is required' : undefined);
+  props?: { pristine: boolean },
+) => (!props?.pristine && !publicSubnetId ? 'Subnet is required' : undefined);
 
 export type FormSubnet = {
   availabilityZone: string;
@@ -1402,22 +1458,44 @@ export type FormSubnet = {
   publicSubnetId: string;
 };
 
+// Validating multiple MPs
+const hasRepeatedSubnets = (
+  subnetId: string,
+  allValues: { machinePoolsSubnets: FormSubnet[] },
+): boolean =>
+  allValues.machinePoolsSubnets.filter((mpSubnet) => mpSubnet.privateSubnetId === subnetId).length >
+  1;
+
+const hasRepeatedAvailabilityZones = (
+  subnetId: string,
+  machinePoolsSubnets: FormSubnet[],
+): boolean => {
+  const availabilityZoneFromSubnet = machinePoolsSubnets.find(
+    (e) => e.privateSubnetId === subnetId,
+  )?.availabilityZone;
+  const availabilityZones = machinePoolsSubnets
+    .filter((e) => e.availabilityZone === availabilityZoneFromSubnet)
+    .map((e) => e.availabilityZone);
+
+  return availabilityZones.length !== new Set(availabilityZones).size;
+};
+
 const validateMultipleMachinePoolsSubnets = (
   subnetId: string,
   allValues: { machinePoolsSubnets: FormSubnet[] },
-  props: { pristine: boolean },
+  props?: { pristine: boolean; isHypershift?: boolean },
 ) => {
-  if (subnetId === '') {
-    return props.pristine ? undefined : 'Subnet is required';
+  switch (true) {
+    case subnetId === '':
+      return props?.pristine ? undefined : 'Subnet is required';
+    case hasRepeatedSubnets(subnetId, allValues):
+      return 'Every machine pool must be associated to a different subnet';
+    case props?.isHypershift &&
+      hasRepeatedAvailabilityZones(subnetId, allValues.machinePoolsSubnets):
+      return 'Every machine pool subnet should belong to a different availability zone';
+    default:
+      return undefined;
   }
-
-  // Validating multiple MPs
-  const hasRepeatedSubnets =
-    allValues.machinePoolsSubnets.filter((mpSubnet) => mpSubnet.privateSubnetId === subnetId)
-      .length > 1;
-  return hasRepeatedSubnets
-    ? 'Every machine pool must be associated to a different subnet'
-    : undefined;
 };
 
 const validateGCPSubnet = (value?: string): string | undefined => {
@@ -1643,6 +1721,41 @@ const validateWorkerVolumeSize = (
     : 'Decimals are not allowed for the worker root disk size. Enter a whole number.';
 };
 
+const composeValidators =
+  (...args: Array<(value: any) => string | undefined>) =>
+  (value: any) => {
+    for (let i = 0; i < args.length; i += 1) {
+      const validator = args[i];
+      const error = validator(value);
+
+      if (error) {
+        return error;
+      }
+    }
+
+    return undefined;
+  };
+
+// Function to validate that a field contains a correct host domain
+const checkHostDomain = (value?: string): string | undefined => {
+  if (!value) {
+    return 'Host domain is required.';
+  }
+  if (!BASE_DOMAIN_REGEXP.test(value)) {
+    return `Host domain '${value}' isn't valid, must contain at least two valid lower-case host labels separated by dots, for example 'mydomain.com'.`;
+  }
+  return undefined;
+};
+
+const validateSecureURL = (url: string): boolean => {
+  try {
+    const parsed = new URL(url);
+    return parsed.protocol === 'https:';
+  } catch {
+    return false;
+  }
+};
+
 const validators = {
   required,
   acknowledgePrerequisites,
@@ -1651,11 +1764,10 @@ const validators = {
   checkClusterDisplayName,
   checkUserID,
   validateRHITUsername,
-  checkBaseDNSDomain,
   cidr,
   subnetCidrs,
   awsMachineCidr,
-  // gcpMachineCidr, https://issues.redhat.com/browse/HAC-2118
+  gcpMachineCidr,
   serviceCidr,
   podCidr,
   disjointSubnets,
@@ -1678,6 +1790,7 @@ const validators = {
   checkDisconnectedMemCapacity,
   checkDisconnectedNodeCount,
   checkCustomOperatorRolesPrefix,
+  checkHostDomain,
   AWS_MACHINE_CIDR_MIN,
   AWS_MACHINE_CIDR_MAX_SINGLE_AZ,
   AWS_MACHINE_CIDR_MAX_MULTI_AZ,
@@ -1707,6 +1820,8 @@ export {
   validateNumericInput,
   checkGithubTeams,
   checkRouteSelectors,
+  checkLabelsAdditionalRouter,
+  checkKeyValueFormat,
   checkDisconnectedConsoleURL,
   checkDisconnectedvCPU,
   checkDisconnectedSockets,
@@ -1746,6 +1861,9 @@ export {
   clusterNameAsyncValidation,
   evaluateClusterNameAsyncValidation,
   asyncValidateClusterName,
+  domainPrefixValidation,
+  domainPrefixAsyncValidation,
+  asyncValidateDomainPrefix,
   checkLabelKey,
   checkLabelValue,
   checkTaintKey,
@@ -1754,6 +1872,11 @@ export {
   validateTlsSecretName,
   validateTlsHostname,
   validateNamespacesList,
+  composeValidators,
+  checkHostDomain,
+  MAX_CUSTOM_OPERATOR_ROLES_PREFIX_LENGTH,
+  MAX_CLUSTER_NAME_LENGTH,
+  validateSecureURL,
 };
 
 export default validators;

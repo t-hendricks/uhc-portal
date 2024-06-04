@@ -3,14 +3,14 @@ import { Field } from 'formik';
 
 import { GridItem } from '@patternfly/react-core';
 
-import useFormikOnChange from '~/hooks/useFormikOnChange';
 import { required, validateUniqueAZ } from '~/common/validators';
-import WithTooltip from '~/components/common/WithTooltip';
+import { getMatchingAvailabilityZones, SubnetPrivacy } from '~/common/vpcHelpers';
+import { SubnetSelectField } from '~/components/clusters/common/SubnetSelectField';
 import AvailabilityZoneSelection from '~/components/clusters/wizards/common/NetworkingSection/AvailabilityZoneSelection';
 import { useFormState } from '~/components/clusters/wizards/hooks';
-import { getMatchingAvailabilityZones, SubnetPrivacy } from '~/common/vpcHelpers';
 import { FieldId } from '~/components/clusters/wizards/osd/constants';
-import { SubnetSelectField } from '~/components/clusters/common/SubnetSelectField';
+import WithTooltip from '~/components/common/WithTooltip';
+import useFormikOnChange from '~/hooks/useFormikOnChange';
 
 const AwsSingleSubnetField = ({ index }: { index: number }) => {
   const {
@@ -75,6 +75,7 @@ const AwsSingleSubnetField = ({ index }: { index: number }) => {
             label={showLabels ? 'Availability zone' : undefined}
             validate={validateAvailabilityZone}
             enabledAvailabilityZones={enabledAvailabilityZones}
+            vpcId={selectedVPC?.id}
             isDisabled={isDisabled}
             region={selectedRegion}
             input={{

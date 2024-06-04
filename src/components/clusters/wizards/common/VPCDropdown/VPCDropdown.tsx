@@ -1,19 +1,22 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
+
 import { Button, Flex, FlexItem, FormGroup, Tooltip } from '@patternfly/react-core';
 import { SelectOptionObject as SelectOptionObjectDeprecated } from '@patternfly/react-core/deprecated';
+
+import { filterOutRedHatManagedVPCs, vpcHasRequiredSubnets } from '~/common/vpcHelpers';
+import { useAWSVPCInquiry } from '~/components/clusters/common/useVPCInquiry';
 import ErrorBox from '~/components/common/ErrorBox';
 import FuzzySelect, { FuzzyEntryType } from '~/components/common/FuzzySelect';
+import { getAWSCloudProviderVPCs } from '~/redux/actions/ccsInquiriesActions';
 import { VPCResponse } from '~/redux/reducers/ccsInquiriesReducer';
 import { CloudVPC } from '~/types/clusters_mgmt.v1';
 import { AWSCredentials, ErrorState } from '~/types/types';
-import { useAWSVPCInquiry } from '~/components/clusters/common/useVPCInquiry';
-import { filterOutRedHatManagedVPCs, vpcHasRequiredSubnets } from '~/common/vpcHelpers';
-import { getAWSCloudProviderVPCs } from '~/redux/actions/ccsInquiriesActions';
 
 interface VCPDropdownProps {
   selectedVPC: CloudVPC;
   input: {
+    name: string;
     value: string;
     onChange: (selectedVPC: CloudVPC | SelectOptionObjectDeprecated) => void;
     onBlur: () => void;
@@ -26,6 +29,7 @@ interface VCPDropdownProps {
   isHypershift?: boolean;
   usePrivateLink?: boolean;
   isOSD?: boolean;
+  isRosaV1?: boolean;
 }
 
 interface UseAWSVPCInquiry {
@@ -47,6 +51,7 @@ const sortVPCOptions = (vpcA: FuzzyEntryType, vpcB: FuzzyEntryType) => {
 const VPCDropdown = ({
   selectedVPC,
   input: {
+    name,
     // Redux Form's onBlur interferes with Patternfly's Select footer onClick handlers.
     onBlur: _onBlur,
     ...inputProps
@@ -55,12 +60,16 @@ const VPCDropdown = ({
   showRefresh = false,
   isHypershift = false,
   isOSD = false,
+  isRosaV1 = true,
   usePrivateLink,
 }: VCPDropdownProps) => {
   const dispatch = useDispatch();
   const [isOpen, setIsOpen] = React.useState<boolean>(false);
 
-  const { vpcs: vpcResponse, requestParams } = useAWSVPCInquiry(isOSD) as UseAWSVPCInquiry;
+  const { vpcs: vpcResponse, requestParams } = useAWSVPCInquiry(
+    isOSD,
+    isRosaV1,
+  ) as UseAWSVPCInquiry;
   const originalVPCs = React.useMemo<CloudVPC[]>(
     () => filterOutRedHatManagedVPCs(vpcResponse.data?.items || []),
     [vpcResponse.data?.items],
@@ -156,6 +165,7 @@ const VPCDropdown = ({
             placeholderText={selectData.placeholder}
             inlineFilterPlaceholderText="Filter by VPC ID / name"
             validated={touched && error ? 'error' : 'default'}
+            toggleId={name}
           />
         </FlexItem>
         {showRefresh && (
@@ -175,10 +185,14 @@ const VPCDropdown = ({
             </Tooltip>
           </FlexItem>
         )}
-        {vpcResponse.error && (
-          <ErrorBox message="Error retrieving VPCs" response={vpcResponse as ErrorState} />
-        )}
       </Flex>
+      {vpcResponse.error && (
+        <Flex>
+          <FlexItem flex={{ default: 'flex_1' }} style={{ minWidth: 0, marginTop: 10 }}>
+            <ErrorBox message="Error retrieving VPCs" response={vpcResponse as ErrorState} />
+          </FlexItem>
+        </Flex>
+      )}
     </FormGroup>
   );
 };

@@ -1,9 +1,11 @@
 import React from 'react';
-import { render, screen, checkAccessibility, within } from '~/testUtils';
+
+import { checkAccessibility, render, screen, within } from '~/testUtils';
+
+import fixtures from '../../ClusterDetails/__tests__/ClusterDetails.fixtures';
+import { loadBalancerQuotaList } from '../__tests__/quota.fixtures';
 
 import LoadBalancersDropdown from './LoadBalancersDropdown';
-import fixtures from '../../ClusterDetails/__test__/ClusterDetails.fixtures';
-import { loadBalancerQuotaList } from '../__test__/quota.fixtures';
 
 const baseState = {
   error: false,

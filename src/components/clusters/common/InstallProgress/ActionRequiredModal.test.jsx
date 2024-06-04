@@ -1,9 +1,12 @@
 import React from 'react';
-import { render, checkAccessibility, screen } from '~/testUtils';
-import clusterService from '~/services/clusterService';
+
 import accountsService from '~/services/accountsService';
+import clusterService from '~/services/clusterService';
+import { checkAccessibility, render, screen } from '~/testUtils';
+
+import fixtures from '../../ClusterDetails/__tests__/ClusterDetails.fixtures';
+
 import ActionRequiredModal from './ActionRequiredModal';
-import fixtures from '../../ClusterDetails/__test__/ClusterDetails.fixtures';
 
 // Service mocks are needed for child components
 jest.mock('~/services/clusterService');

@@ -1,5 +1,7 @@
 import React, { createContext, PropsWithChildren, useCallback, useMemo, useState } from 'react';
+
 import { Drawer, DrawerContent, DrawerContentBody, DrawerProps } from '@patternfly/react-core';
+
 import './AppDrawer.scss';
 
 export type AppDrawerSettings = {

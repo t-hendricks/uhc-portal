@@ -1,6 +1,8 @@
-import { TextInput } from '@patternfly/react-core';
 import React from 'react';
 import { useDispatch } from 'react-redux';
+
+import { TextInput } from '@patternfly/react-core';
+
 import { onListFilterSet } from '~/redux/actions/viewOptionsActions';
 import { useGlobalState } from '~/redux/hooks';
 
@@ -10,6 +12,7 @@ type ClusterListFilterProps = {
 };
 
 const ClusterListFilter = ({ view, isDisabled }: ClusterListFilterProps) => {
+  const selectRef = React.useRef<HTMLInputElement>(null);
   const dispatch = useDispatch();
 
   // The current input value is in the local state, while the currently
@@ -31,6 +34,12 @@ const ClusterListFilter = ({ view, isDisabled }: ClusterListFilterProps) => {
     setCurrentValue(value);
   };
 
+  // setting focus on the TextInput after the value is updated
+  React.useLayoutEffect(() => {
+    if (!isDisabled && currentFilter) selectRef.current?.focus();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isDisabled, currentFilter]);
+
   React.useEffect(() => {
     if (currentFilter) {
       setCurrentValue(currentFilter);
@@ -48,10 +57,11 @@ const ClusterListFilter = ({ view, isDisabled }: ClusterListFilterProps) => {
       type="text"
       aria-label="Filter"
       className="cluster-list-filter"
+      ref={selectRef}
       value={currentValue as any}
       placeholder="Filter by name or ID..."
       data-testid="filterInputClusterList"
-      onChange={(_event, inputVal: string) => updateCurrentValue(inputVal)}
+      onChange={(_event, inputVal: string) => updateCurrentValue(inputVal.trim())}
       isDisabled={isDisabled}
     />
   );

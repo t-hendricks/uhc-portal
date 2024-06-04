@@ -1,5 +1,7 @@
 import React from 'react';
+
 import { checkAccessibility, render, screen } from '~/testUtils';
+
 import { WelcomeMessage } from './WelcomeMessage';
 
 describe('<WelcomeMessage />', () => {

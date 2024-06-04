@@ -15,10 +15,11 @@ limitations under the License.
 */
 
 import { action, ActionType } from 'typesafe-actions';
-import { costConstants } from '../constants';
-import { costService } from '../../services';
 
-const getReport = (params: Parameters<typeof costService.getReport>[0]) =>
+import { costService } from '../../services';
+import { costConstants } from '../constants';
+
+const getReport = (params?: Parameters<typeof costService.getReport>[0]) =>
   action(costConstants.GET_REPORT, costService.getReport(params));
 
 const getSources = (params: Parameters<typeof costService.getSources>[0]) =>

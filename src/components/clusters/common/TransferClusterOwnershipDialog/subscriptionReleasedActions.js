@@ -1,8 +1,9 @@
-import {
-  TOGGLE_SUBSCRIPTION_RELEASED,
-  CLEAR_TOGGLE_SUBSCRIPTION_RELEASED_RESPONSE,
-} from './subscriptionReleasedConstants';
 import { accountsService } from '../../../../services';
+
+import {
+  CLEAR_TOGGLE_SUBSCRIPTION_RELEASED_RESPONSE,
+  TOGGLE_SUBSCRIPTION_RELEASED,
+} from './subscriptionReleasedConstants';
 
 function toggleSubscriptionReleased(subscriptionID, released) {
   // show notfication when it's cancel

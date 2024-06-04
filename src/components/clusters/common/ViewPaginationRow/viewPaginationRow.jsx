@@ -1,8 +1,8 @@
-import PropTypes from 'prop-types';
 import React from 'react';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 
 import { Pagination } from '@patternfly/react-core';
-import { connect } from 'react-redux';
 
 import * as actions from '../../../../redux/actions/viewOptionsActions';
 

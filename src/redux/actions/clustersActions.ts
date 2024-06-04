@@ -13,53 +13,55 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
-import * as Sentry from '@sentry/browser';
+import axios, { AxiosResponse } from 'axios';
 import isEmpty from 'lodash/isEmpty';
 import { action, ActionType } from 'typesafe-actions';
-import axios, { AxiosResponse } from 'axios';
+
 import type { Cluster as AICluster } from '@openshift-assisted/types/assisted-installer-service';
+import * as Sentry from '@sentry/browser';
 
 import { isHypershiftCluster } from '~/components/clusters/common/clusterStates';
-
-import type { Cluster, UpgradePolicy } from '~/types/clusters_mgmt.v1';
-import {
-  SelfResourceReview,
-  SelfAccessReview,
-  SelfResourceReviewRequest,
-} from '~/types/accounts_mgmt.v1';
 import type {
   Subscription,
   SubscriptionCreateRequest,
   SubscriptionPatchRequest,
 } from '~/types/accounts_mgmt.v1';
+import {
+  SelfAccessReview,
+  SelfResourceReview,
+  SelfResourceReviewRequest,
+} from '~/types/accounts_mgmt.v1';
+import type { Cluster, UpgradePolicy } from '~/types/clusters_mgmt.v1';
 import type {
   AugmentedCluster,
   AugmentedClusterResponse,
   ClusterWithPermissions,
 } from '~/types/types';
-import type { AppThunk, AppThunkDispatch } from '../types';
-import { techPreviewStatusSelector, dispatchTechPreviewStatus } from '../hooks/clusterHooks';
-import { clustersConstants } from '../constants';
+
+import isAssistedInstallSubscription from '../../common/isAssistedInstallerCluster';
+import {
+  fakeClusterFromAISubscription,
+  fakeClusterFromSubscription,
+  mapListResponse,
+  normalizeCluster,
+  normalizeMetrics,
+  normalizeSubscription,
+} from '../../common/normalize';
+import { knownProducts, subscriptionStatuses } from '../../common/subscriptionTypes';
+import { postSchedule } from '../../components/clusters/common/Upgrades/clusterUpgradeActions';
 import {
   accountsService,
   assistedService,
   authorizationsService,
   clusterService,
 } from '../../services';
-import { INVALIDATE_ACTION, buildPermissionDict } from '../reduxHelpers';
-import { subscriptionStatuses, knownProducts } from '../../common/subscriptionTypes';
-import {
-  normalizeCluster,
-  fakeClusterFromSubscription,
-  fakeClusterFromAISubscription,
-  normalizeSubscription,
-  mapListResponse,
-  normalizeMetrics,
-} from '../../common/normalize';
-import { postSchedule } from '../../components/clusters/common/Upgrades/clusterUpgradeActions';
-import { editSubscriptionSettings } from './subscriptionSettingsActions';
-import isAssistedInstallSubscription from '../../common/isAssistedInstallerCluster';
+import { clustersConstants } from '../constants';
 import { ASSISTED_INSTALLER_MERGE_LISTS_FEATURE } from '../constants/featureConstants';
+import { dispatchTechPreviewStatus, techPreviewStatusSelector } from '../hooks/clusterHooks';
+import { buildPermissionDict, INVALIDATE_ACTION } from '../reduxHelpers';
+import type { AppThunk, AppThunkDispatch } from '../types';
+
+import { editSubscriptionSettings } from './subscriptionSettingsActions';
 
 const ROSA_PRODUCTS = [knownProducts.ROSA, knownProducts.ROSA_HyperShift];
 const OSD_PRODUCTS = [knownProducts.OSD, knownProducts.OSDTrial];
@@ -94,7 +96,7 @@ const createCluster =
 
 const registerClusterAndUpdateSubscription = async (
   registrationRequest: SubscriptionCreateRequest,
-  subscriptionRequest: SubscriptionPatchRequest,
+  subscriptionRequest: SubscriptionPatchRequest | null,
   dispatch: AppThunkDispatch,
 ) => {
   const registerClusterResponse = await accountsService.registerDisconnected(registrationRequest);
@@ -113,7 +115,7 @@ const registerClusterAndUpdateSubscription = async (
 const registerDisconnectedCluster =
   (
     registrationRequest: SubscriptionCreateRequest,
-    subscriptionRequest: SubscriptionPatchRequest,
+    subscriptionRequest: SubscriptionPatchRequest | null,
   ): AppThunk =>
   (dispatch) =>
     dispatch(
@@ -355,7 +357,7 @@ const fetchClustersAndPermissions = async (
   if (managedSubscriptions.length > 0) {
     const clustersQuery = buildSearchQuery(managedSubscriptions, 'cluster_id');
     try {
-      await clusterService.getClusters(clustersQuery).then((response) => {
+      await clusterService.searchClusters(clustersQuery).then((response) => {
         const clusters = response?.data?.items;
         clusters?.forEach((cluster) => {
           if (cluster.id) {
@@ -413,6 +415,7 @@ const fetchSingleClusterAndPermissions = async (
   let canEditOCMRoles = false;
   let canEditClusterAutoscaler = false;
   let canViewOCMRoles = false;
+  let canUpdateClusterResource = false;
 
   const buildPermissionsByActionObj = (obj: any, action: SelfAccessReview.action) => {
     // eslint-disable-next-line no-param-reassign
@@ -486,6 +489,15 @@ const fetchSingleClusterAndPermissions = async (
       })
       .then((response) => {
         canViewOCMRoles = response.data.allowed;
+      });
+    await authorizationsService
+      .selfAccessReview({
+        action: SelfAccessReview.action.UPDATE,
+        resource_type: SelfAccessReview.resource_type.CLUSTER,
+        subscription_id: subscriptionID,
+      })
+      .then((response) => {
+        canUpdateClusterResource = response.data.allowed;
       });
 
     actions.forEach(async (action) => {
@@ -564,6 +576,7 @@ const fetchSingleClusterAndPermissions = async (
     cluster.data.machinePoolsActions = machinePoolsActions;
     cluster.data.kubeletConfigActions = kubeletConfigActions;
     cluster.data.canDelete = !!canDeleteAccessReviewResponse?.data?.allowed;
+    cluster.data.canUpdateClusterResource = canUpdateClusterResource;
 
     return cluster;
   }
@@ -643,7 +656,7 @@ const fetchRerunInflightChecks = async (subnetIds: string[]): Promise<any> => {
   const response = await Promise.allSettled(results);
   const items = response
     .filter((res: { status: string }) => res.status !== 'rejected')
-    .map((item: { value: any }) => item?.value?.data);
+    .map((item: any) => item?.value?.data);
   return {
     data: {
       items,

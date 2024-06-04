@@ -1,14 +1,16 @@
-import ReduxCheckbox from './ReduxCheckbox';
-import ReduxFormDropdown from './ReduxFormDropdown';
-import ReduxVerticalFormGroup from './ReduxVerticalFormGroup';
-import ReduxFormRadioGroup from './ReduxFormRadioGroup';
 import ReduxFormKeyValueList from './ReduxFormKeyValueList/ReduxFormKeyValueList';
 import ReduxFormTaints from './ReduxFormTaints/ReduxFormTaints';
-import { ReduxSelectDropdown } from './ReduxSelectDropdown';
+import RadioButtons from './RadioButtons';
+import ReduxCheckbox from './ReduxCheckbox';
 import ReduxFieldArray from './ReduxFieldArray';
+import ReduxFormDropdown from './ReduxFormDropdown';
+import ReduxFormRadioGroup from './ReduxFormRadioGroup';
+import { ReduxSelectDropdown } from './ReduxSelectDropdown';
+import ReduxVerticalFormGroup from './ReduxVerticalFormGroup';
 import RenderCompoundArrayFields from './RenderCompoundArrayFields';
 
 export {
+  RadioButtons,
   ReduxCheckbox,
   ReduxFormDropdown,
   ReduxSelectDropdown,

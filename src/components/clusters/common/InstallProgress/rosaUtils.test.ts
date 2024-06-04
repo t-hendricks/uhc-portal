@@ -1,4 +1,5 @@
-import fixtures from '../../ClusterDetails/__test__/ClusterDetails.fixtures';
+import fixtures from '../../ClusterDetails/__tests__/ClusterDetails.fixtures';
+
 import { getAWSAccountID, getOIDCEndpointNoScheme, getOIDCProviderARN } from './rosaUtils';
 
 describe('ROSA utils', () => {

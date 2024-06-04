@@ -1,12 +1,22 @@
 import get from 'lodash/get';
 
 import {
-  subscriptionCapabilities,
   hasCapability,
+  subscriptionCapabilities,
 } from '../../../../common/subscriptionCapabilities';
 
 const canTransferClusterOwnershipSelector = (state) => {
   const subscription = get(state, 'clusters.details.cluster.subscription', {});
+  return hasCapability(subscription, subscriptionCapabilities.RELEASE_OCP_CLUSTERS);
+};
+
+/**
+ * Different approach of getting data requires similar function
+ * @param cluster Accepts cluster as parameter instead of redux state
+ * @returns list of capabbilities
+ */
+const canTransferClusterOwnershipMultiRegion = (cluster) => {
+  const subscription = cluster?.subscription || {};
   return hasCapability(subscription, subscriptionCapabilities.RELEASE_OCP_CLUSTERS);
 };
 
@@ -25,4 +35,8 @@ const canTransferClusterOwnershipListSelector = (state) => {
   return results;
 };
 
-export { canTransferClusterOwnershipListSelector, canTransferClusterOwnershipSelector };
+export {
+  canTransferClusterOwnershipListSelector,
+  canTransferClusterOwnershipSelector,
+  canTransferClusterOwnershipMultiRegion,
+};

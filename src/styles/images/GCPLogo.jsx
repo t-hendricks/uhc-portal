@@ -1,4 +1,5 @@
 import React from 'react';
+
 import './GCPLogo.scss';
 
 const GCPLogo = () => (

@@ -1,36 +1,41 @@
-import PropTypes from 'prop-types';
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Field } from 'redux-form';
-import { FormGroup, GridItem, Alert } from '@patternfly/react-core';
+
+import { Alert, FormGroup, GridItem } from '@patternfly/react-core';
 
 import { SupportedFeature } from '~/common/featureCompatibility';
-import { getIncompatibleVersionReason } from '~/common/versionCompatibility';
-import { getDefaultSecurityGroupsSettings } from '~/common/securityGroupsHelpers';
-import { constants } from '~/components/clusters/common/CreateOSDFormConstants';
 import { noQuotaTooltip } from '~/common/helpers';
-import {
-  getNodesCount,
-  getMinReplicasCount,
-} from '~/components/clusters/common/ScaleSection/AutoScaleSection/AutoScaleHelper';
+import { getDefaultSecurityGroupsSettings } from '~/common/securityGroupsHelpers';
 import { normalizedProducts } from '~/common/subscriptionTypes';
-import { emptyAWSSubnet } from '~/components/clusters/wizards/common/createOSDInitialValues';
+import { getIncompatibleVersionReason } from '~/common/versionCompatibility';
+import { constants } from '~/components/clusters/common/CreateOSDFormConstants';
+import {
+  getMinReplicasCount,
+  getNodesCount,
+} from '~/components/clusters/common/ScaleSection/AutoScaleSection/AutoScaleHelper';
+import { emptyAWSSubnet } from '~/components/clusters/wizards/common/constants';
+import ReduxCheckbox from '~/components/common/ReduxFormComponents/ReduxCheckbox';
+import { useFeatureGate } from '~/hooks/useFeatureGate';
+import { LONGER_CLUSTER_NAME_UI } from '~/redux/constants/featureConstants';
+
+import {
+  clusterNameAsyncValidation,
+  clusterNameValidation,
+  createPessimisticValidator,
+  domainPrefixAsyncValidation,
+  domainPrefixValidation,
+} from '../../../../../../common/validators';
+import PopoverHint from '../../../../../common/PopoverHint';
+import RadioButtons from '../../../../../common/ReduxFormComponents/RadioButtons';
+import ReduxRichInputField from '../../../../../common/ReduxFormComponents/ReduxRichInputField';
+import { createOperatorRolesPrefix } from '../../ClusterRolesScreen/clusterRolesHelper';
 
 import CloudRegionComboBox from './CloudRegionComboBox';
-import PopoverHint from '../../../../../common/PopoverHint';
-import ReduxVerticalFormGroup from '../../../../../common/ReduxFormComponents/ReduxVerticalFormGroup';
-import ReduxRichInputField from '../../../../../common/ReduxFormComponents/ReduxRichInputField';
-import validators, {
-  clusterNameValidation,
-  clusterNameAsyncValidation,
-  createPessimisticValidator,
-} from '../../../../../../common/validators';
-import RadioButtons from '../../../../../common/ReduxFormComponents/RadioButtons';
 import VersionSelection from './VersionSelection';
-import { createOperatorRolesHashPrefix } from '../../ClusterRolesScreen/ClusterRolesScreen';
 
 function BasicFieldsSection({
   pending,
-  showDNSBaseDomain,
   showAvailability,
   product,
   cloudProviderID,
@@ -42,6 +47,7 @@ function BasicFieldsSection({
   isWizard,
   isHypershiftSelected,
   clusterPrivacy,
+  hasDomainPrefix,
 }) {
   const multiAzTooltip = !hasMultiAzQuota && noQuotaTooltip;
   const singleAzTooltip = !hasSingleAzQuota && noQuotaTooltip;
@@ -81,16 +87,22 @@ function BasicFieldsSection({
   };
 
   const handleVersionChange = (clusterVersion) => {
+    if (!clusterVersion) {
+      return;
+    }
     // If features become incompatible with the new version, clear their settings
     const canDefineSecurityGroups = !getIncompatibleVersionReason(
       SupportedFeature.SECURITY_GROUPS,
       clusterVersion.raw_id,
-      { day1: true },
+      { day1: true, isHypershift: isHypershiftSelected },
     );
     if (!canDefineSecurityGroups) {
       change('securityGroups', getDefaultSecurityGroupsSettings());
     }
   };
+
+  const isLongerClusterNameEnabled = useFeatureGate(LONGER_CLUSTER_NAME_UI);
+  const clusterNameMaxLength = isLongerClusterNameEnabled ? 54 : 15;
 
   return (
     <>
@@ -101,35 +113,51 @@ function BasicFieldsSection({
           name="name"
           label="Cluster name"
           type="text"
-          validate={createPessimisticValidator(clusterNameValidation)}
-          validation={clusterNameValidation}
+          validate={(value) =>
+            createPessimisticValidator(clusterNameValidation)(value, clusterNameMaxLength)
+          }
+          validation={(value) => clusterNameValidation(value, clusterNameMaxLength)}
           asyncValidation={clusterNameAsyncValidation}
           disabled={pending}
           isRequired
           extendedHelpText={constants.clusterNameHint}
           onChange={(value) =>
-            isRosa &&
-            change('custom_operator_roles_prefix', `${value}-${createOperatorRolesHashPrefix()}`)
+            isRosa && change('custom_operator_roles_prefix', createOperatorRolesPrefix(value))
           }
         />
       </GridItem>
       <GridItem md={6} />
 
-      {/* Base DNS domain */}
-      {showDNSBaseDomain && (
+      {/* domain prefix */}
+      {isLongerClusterNameEnabled && (
         <>
           <GridItem md={6}>
             <Field
-              component={ReduxVerticalFormGroup}
-              name="dns_base_domain"
-              label="Base DNS domain"
-              type="text"
-              validate={validators.checkBaseDNSDomain}
-              disabled={pending}
-              normalize={(value) => value.toLowerCase()}
+              component={ReduxCheckbox}
+              name="has_domain_prefix"
+              label="Create custom domain prefix"
+              extendedHelpText={constants.domainPrefixHint}
+              onClick={() => change('domain_prefix', '')}
             />
           </GridItem>
           <GridItem md={6} />
+          {hasDomainPrefix && (
+            <>
+              <GridItem md={6}>
+                <Field
+                  component={ReduxRichInputField}
+                  name="domain_prefix"
+                  label="Domain prefix"
+                  type="text"
+                  validate={createPessimisticValidator(domainPrefixValidation)}
+                  validation={domainPrefixValidation}
+                  asyncValidation={domainPrefixAsyncValidation}
+                  isRequired
+                />
+              </GridItem>
+              <GridItem md={6} />
+            </>
+          )}
         </>
       )}
 
@@ -220,7 +248,6 @@ BasicFieldsSection.propTypes = {
   pending: PropTypes.bool,
   product: PropTypes.string.isRequired,
   isMultiAz: PropTypes.bool.isRequired,
-  showDNSBaseDomain: PropTypes.bool,
   showAvailability: PropTypes.bool,
   change: PropTypes.func.isRequired,
   cloudProviderID: PropTypes.string.isRequired,
@@ -230,6 +257,7 @@ BasicFieldsSection.propTypes = {
   isWizard: PropTypes.bool,
   isHypershiftSelected: PropTypes.bool,
   clusterPrivacy: PropTypes.string,
+  hasDomainPrefix: PropTypes.bool,
 };
 
 export default BasicFieldsSection;

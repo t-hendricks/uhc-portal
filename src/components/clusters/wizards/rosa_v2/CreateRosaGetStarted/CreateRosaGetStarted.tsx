@@ -1,3 +1,6 @@
+import React from 'react';
+import { useLocation } from 'react-router-dom-v5-compat';
+
 import {
   Alert,
   AlertVariant,
@@ -21,22 +24,18 @@ import {
 } from '@patternfly/react-core';
 import { CheckCircleIcon } from '@patternfly/react-icons/dist/esm/icons/check-circle-icon';
 import { WarningTriangleIcon } from '@patternfly/react-icons/dist/esm/icons/warning-triangle-icon';
-import React from 'react';
 
-import { useLocation } from 'react-router-dom';
 import links from '~/common/installLinks.mjs';
+import { AppPage } from '~/components/App/AppPage';
 import Breadcrumbs from '~/components/common/Breadcrumbs';
 import ExternalLink from '~/components/common/ExternalLink';
-import PageTitle from '~/components/common/PageTitle';
-
 import Instruction from '~/components/common/Instruction';
 import Instructions from '~/components/common/Instructions';
-
+import PageTitle from '~/components/common/PageTitle';
 import { useFeatureGate } from '~/hooks/useFeatureGate';
-import { isRestrictedEnv } from '~/restrictedEnv';
 import { HCP_ROSA_GETTING_STARTED_PAGE } from '~/redux/constants/featureConstants';
+import { isRestrictedEnv } from '~/restrictedEnv';
 
-import { AppPage } from '~/components/App/AppPage';
 import StepCreateAWSAccountRoles from './StepCreateAWSAccountRoles';
 import StepDownloadROSACli from './StepDownloadROSACli';
 import WithCLICard from './WithCLICard';

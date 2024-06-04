@@ -1,23 +1,24 @@
-import PropTypes from 'prop-types';
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Field } from 'redux-form';
-import { GridItem, Alert, List, ListItem, Text, TextVariants } from '@patternfly/react-core';
 
+import { Alert, GridItem, Text, TextVariants } from '@patternfly/react-core';
+
+import { constructSelectedSubnets } from '~/common/helpers';
 import links from '~/common/installLinks.mjs';
-import ExternalLink from '~/components/common/ExternalLink';
-import { ReduxCheckbox } from '~/components/common/ReduxFormComponents';
 import validators, { required } from '~/common/validators';
 import { FieldId } from '~/components/clusters/wizards/osd/constants';
-import { constructSelectedSubnets } from '~/common/helpers';
-import {
-  MACHINE_CIDR_DEFAULT,
-  SERVICE_CIDR_DEFAULT,
-  HOST_PREFIX_DEFAULT,
-  POD_CIDR_DEFAULT,
-} from '../../../common/networkingConstants';
-import { constants } from '../../../common/CreateOSDFormConstants';
+import ExternalLink from '~/components/common/ExternalLink';
+import { ReduxCheckbox } from '~/components/common/ReduxFormComponents';
 
 import ReduxVerticalFormGroup from '../../../../common/ReduxFormComponents/ReduxVerticalFormGroup';
+import { constants } from '../../../common/CreateOSDFormConstants';
+import {
+  HOST_PREFIX_DEFAULT,
+  MACHINE_CIDR_DEFAULT,
+  POD_CIDR_DEFAULT,
+  SERVICE_CIDR_DEFAULT,
+} from '../../../common/networkingConstants';
 
 const machineDisjointSubnets = validators.disjointSubnets('network_machine_cidr');
 const serviceDisjointSubnets = validators.disjointSubnets('network_service_cidr');
@@ -55,22 +56,17 @@ function CIDRFields({
   const selectedSubnets = constructSelectedSubnets(formValues);
 
   const cidrValidators = (value) =>
-    required(value) ||
-    validators.cidr(value) ||
-    validators.validateRange(value) ||
-    (cloudProviderID === 'gcp' && validators.privateAddress(value)) ||
-    undefined;
+    required(value) || validators.cidr(value) || validators.validateRange(value) || undefined;
 
   const machineCidrValidators = (value) =>
     cidrValidators(value) ||
     (cloudProviderID === 'aws' && validators.awsMachineCidr(value, formValues)) ||
-    // cloudProviderID === 'gcp' && validators.gcpMachineCidr, https://issues.redhat.com/browse/HAC-2118
     validators.validateRange(value) ||
+    (cloudProviderID === 'aws' &&
+      validators.subnetCidrs(value, formValues, FieldId.NetworkMachineCidr, selectedSubnets)) ||
     machineDisjointSubnets(value, formValues) ||
     (cloudProviderID === 'aws' && !isMultiAz && awsMachineSingleAZSubnetMask(value)) ||
     (cloudProviderID === 'aws' && isMultiAz && awsMachineMultiAZSubnetMask(value)) ||
-    (cloudProviderID === 'aws' &&
-      validators.subnetCidrs(value, formValues, FieldId.NetworkMachineCidr, selectedSubnets)) ||
     undefined;
 
   const serviceCidrValidators = (value) =>
@@ -94,21 +90,6 @@ function CIDRFields({
     isMultiAz || formValues.hypershift === 'true'
       ? validators.AWS_MACHINE_CIDR_MAX_MULTI_AZ
       : validators.AWS_MACHINE_CIDR_MAX_SINGLE_AZ;
-
-  const privateRangesHint =
-    cloudProviderID === 'gcp' ? (
-      <>
-        <br />
-        <span>
-          The address must be a private IPv4 address, belonging to one of the following ranges:
-          <List>
-            <ListItem>10.0.0.0 – 10.255.255.255</ListItem>
-            <ListItem>172.16.0.0 – 172.31.255.255</ListItem>
-            <ListItem>192.168.0.0 – 192.168.255.255</ListItem>
-          </List>
-        </span>
-      </>
-    ) : null;
 
   const onDefaultValuesToggle = (_event, isChecked) => {
     if (isChecked) {
@@ -160,9 +141,7 @@ function CIDRFields({
           disabled={isFieldDisabled}
           helpText={
             <div className="pf-v5-c-form__helper-text">
-              {cloudProviderID === 'aws'
-                ? `Subnet mask must be between /${validators.AWS_MACHINE_CIDR_MIN} and /${awsMachineCIDRMax}.`
-                : `Range must be private. Subnet mask must be at most /${validators.GCP_MACHINE_CIDR_MAX}.`}
+              {`Subnet mask must be between /${validators.AWS_MACHINE_CIDR_MIN} and /${awsMachineCIDRMax}.`}
               {installToVpcSelected && (
                 <Alert
                   variant="info"
@@ -176,7 +155,6 @@ function CIDRFields({
           extendedHelpText={
             <>
               {constants.machineCIDRHint}
-              {privateRangesHint}
 
               <Text component={TextVariants.p}>
                 <ExternalLink href={isROSA ? links.ROSA_CIDR_MACHINE : links.OSD_CIDR_MACHINE}>
@@ -206,7 +184,6 @@ function CIDRFields({
           extendedHelpText={
             <>
               {constants.serviceCIDRHint}
-              {privateRangesHint}
 
               <Text component={TextVariants.p}>
                 <ExternalLink href={isROSA ? links.ROSA_CIDR_SERVICE : links.OSD_CIDR_SERVICE}>
@@ -236,7 +213,6 @@ function CIDRFields({
           extendedHelpText={
             <>
               {constants.podCIDRHint}
-              {privateRangesHint}
 
               <Text component={TextVariants.p}>
                 <ExternalLink href={isROSA ? links.ROSA_CIDR_POD : links.OSD_CIDR_POD}>

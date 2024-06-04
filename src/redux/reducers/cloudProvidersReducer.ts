@@ -1,16 +1,16 @@
+import { getErrorState } from '../../common/errors';
+import type { CloudProvider, CloudRegion } from '../../types/clusters_mgmt.v1';
 import { CloudProviderAction } from '../actions/cloudProviderActions';
+import { cloudProviderConstants } from '../constants';
 import {
   baseRequestState,
-  REJECTED_ACTION,
-  PENDING_ACTION,
   FULFILLED_ACTION,
+  PENDING_ACTION,
+  REJECTED_ACTION,
 } from '../reduxHelpers';
-import { getErrorState } from '../../common/errors';
 import type { PromiseActionType, PromiseReducerState } from '../types';
-import type { CloudProvider, CloudRegion } from '../../types/clusters_mgmt.v1';
-import { cloudProviderConstants } from '../constants';
 
-type State = PromiseReducerState<{
+export type State = PromiseReducerState<{
   providers: {
     // `regions` is overridden to be a map by id
     [providerId: string]: Omit<CloudProvider, 'regions'> & {

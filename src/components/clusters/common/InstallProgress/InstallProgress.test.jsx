@@ -1,8 +1,11 @@
 import React from 'react';
-import { render, screen, checkAccessibility } from '~/testUtils';
-import InstallProgress from './InstallProgress';
+
+import { checkAccessibility, render, screen } from '~/testUtils';
+
+import fixtures from '../../ClusterDetails/__tests__/ClusterDetails.fixtures';
 import clusterStates from '../clusterStates';
-import fixtures from '../../ClusterDetails/__test__/ClusterDetails.fixtures';
+
+import InstallProgress from './InstallProgress';
 
 describe('<InstallProgress />', () => {
   const clusterInstalling = {

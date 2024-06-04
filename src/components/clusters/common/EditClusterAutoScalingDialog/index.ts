@@ -1,5 +1,5 @@
-import { Dispatch } from 'redux';
 import { connect } from 'react-redux';
+import { Dispatch } from 'redux';
 import {
   FormErrors,
   formValueSelector,
@@ -8,18 +8,19 @@ import {
   reduxForm,
 } from 'redux-form';
 
-import { GlobalState } from '~/redux/store';
-import shouldShowModal from '~/components/common/Modal/ModalSelectors';
-import modals from '~/components/common/Modal/modals';
-
 import {
   ClusterAutoScalingForm,
   getClusterAutoScalingSubmitSettings,
   getDefaultClusterAutoScaling,
 } from '~/components/clusters/common/clusterAutoScalingValues';
+import modals from '~/components/common/Modal/modals';
+import shouldShowModal from '~/components/common/Modal/ModalSelectors';
 import { clusterAutoscalerActions } from '~/redux/actions/clusterAutoscalerActions';
+import { GlobalState } from '~/redux/store';
 import { ClusterAutoscaler } from '~/types/clusters_mgmt.v1';
+
 import { closeModal } from '../../../common/Modal/ModalActions';
+
 import EditClusterAutoScalingDialog, {
   EditClusterAutoScalingDialogProps,
 } from './EditClusterAutoScalingDialog';

@@ -1,21 +1,19 @@
 import { connect } from 'react-redux';
 import { formValueSelector, getFormValues } from 'redux-form';
 
-import {
-  clearGetUserRoleResponse,
-  getUserRole,
-  getOCMRole,
-  clearGetOcmRoleResponse,
-} from '~/redux/actions/rosaActions';
 import wizardConnector from '~/components/clusters/wizards/common/WizardConnector';
+import {
+  clearGetOcmRoleResponse,
+  clearGetUserRoleResponse,
+  getOCMRole,
+  getUserRole,
+} from '~/redux/actions/rosaActions';
+
 import ReviewClusterScreen from './ReviewClusterScreen';
-import { canAutoScaleOnCreateSelector } from '../../../ClusterDetails/components/MachinePools/MachinePoolsSelectors';
 
 const mapStateToProps = (state) => {
   const valueSelector = formValueSelector('CreateCluster');
-  const product = valueSelector(state, 'product');
-  const canAutoScale = canAutoScaleOnCreateSelector(state, product);
-  const autoscalingEnabled = canAutoScale && !!valueSelector(state, 'autoscalingEnabled');
+  const autoscalingEnabledValue = !!valueSelector(state, 'autoscalingEnabled');
   const installToVPCSelected = valueSelector(state, 'install_to_vpc');
   const configureProxySelected = valueSelector(state, 'configure_proxy');
   const { getUserRoleResponse, getOCMRoleResponse } = state.rosaReducer;
@@ -23,8 +21,7 @@ const mapStateToProps = (state) => {
 
   return {
     formValues: getFormValues('CreateCluster')(state),
-    canAutoScale,
-    autoscalingEnabled,
+    autoscalingEnabledValue,
     installToVPCSelected,
     configureProxySelected,
     getUserRoleResponse,

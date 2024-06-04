@@ -1,7 +1,8 @@
-import { ExclamationTriangleIcon } from '@patternfly/react-icons/dist/esm/icons/exclamation-triangle-icon';
-import { ReactElementLike, ReactNodeLike } from 'prop-types';
 import React from 'react';
-import { Tooltip, Icon } from '@patternfly/react-core';
+import { ReactElementLike, ReactNodeLike } from 'prop-types';
+
+import { Icon, Tooltip } from '@patternfly/react-core';
+import { ExclamationTriangleIcon } from '@patternfly/react-icons/dist/esm/icons/exclamation-triangle-icon';
 import { global_warning_color_100 as warningColor } from '@patternfly/react-tokens/dist/esm/global_warning_color_100';
 
 type ErrorTriangleProps = {
@@ -14,7 +15,7 @@ const ErrorTriangle = ({ item = 'clusters', errorMessage }: ErrorTriangleProps) 
     content={`An error occurred when fetching ${item}: ${errorMessage}`}
     data-testid="error-triangle"
   >
-    <Icon size="lg" className="cluster-error-triangle">
+    <Icon size="lg" className="cluster-error-triangle" aria-label="Warning">
       <ExclamationTriangleIcon color={warningColor.value} />
     </Icon>
   </Tooltip>

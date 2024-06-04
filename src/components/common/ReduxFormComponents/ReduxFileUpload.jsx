@@ -1,8 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+
 import { FileUpload, FormGroup } from '@patternfly/react-core';
 
 import { FormGroupHelperText } from '~/components/common/FormGroupHelperText';
+
 import PopoverHint from '../PopoverHint';
 
 class ReduxFileUpload extends React.Component {
@@ -46,9 +48,9 @@ class ReduxFileUpload extends React.Component {
     input.onChange(file);
   };
 
-  handleFileContentChange = (_e, file) => {
+  handleFileContentChange = (_e, value) => {
     const { input } = this.props;
-    input.onChange(file);
+    input.onChange(value);
   };
 
   handleFileRejected = (rejectedFiles, event) => {

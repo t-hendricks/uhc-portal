@@ -1,9 +1,11 @@
-import wizardConnector from '~/components/clusters/wizards/common/WizardConnector';
-import { render, screen } from '~/testUtils';
 import React from 'react';
-import InstallToVPC from '~/components/clusters/wizards/rosa_v2/VPCScreen/InstallToVPC';
+import { Formik } from 'formik';
+
 import links from '~/common/installLinks.mjs';
-import { useGlobalState } from '~/redux/hooks';
+import InstallToVPC from '~/components/clusters/wizards/rosa_v2/VPCScreen/InstallToVPC';
+import { render, screen } from '~/testUtils';
+
+import { initialValues } from '../constants';
 
 const defaultProps = {
   selectedRegion: 'us-east-1',
@@ -16,32 +18,39 @@ const defaultProps = {
   selectedAZs: [],
 };
 
-jest.mock('~/redux/hooks', () => ({
-  useGlobalState: jest.fn(),
-}));
+const buildTestComponent = (children, formValues = {}) => (
+  <Formik
+    initialValues={{
+      ...initialValues,
+      ...formValues,
+      securityGroups: {
+        applyControlPlaneToAll: true,
+        controlPlane: [],
+        infra: [],
+        worker: [],
+      },
+    }}
+    onSubmit={() => {}}
+  >
+    {children}
+  </Formik>
+);
 
 describe('<InstallToVPC> (AWS)', () => {
-  beforeEach(() => {
-    useGlobalState.mockReturnValue({
-      applyControlPlaneToAll: false,
-      controlPlane: [],
-      infra: [],
-      worker: [],
-    });
+  it.each([[false], [true]])('should have a Shared VPC section', async (isHypershift) => {
+    render(
+      buildTestComponent(<InstallToVPC {...defaultProps} isHypershiftSelected={isHypershift} />),
+    );
+
+    expect(await screen.findByText('AWS shared VPC')).toBeInTheDocument();
   });
 
-  it('should have a Shared VPC section', () => {
-    const ConnectedInstallToVPC = wizardConnector(InstallToVPC);
-    render(<ConnectedInstallToVPC {...defaultProps} />);
+  it.each([[false], [true]])('should show a link to AWS VPC requirements', async (isHypershift) => {
+    render(
+      buildTestComponent(<InstallToVPC {...defaultProps} isHypershiftSelected={isHypershift} />),
+    );
 
-    expect(screen.getByText('AWS shared VPC')).toBeInTheDocument();
-  });
-
-  it('should show a link to AWS VPC requirements', () => {
-    const ConnectedInstallToVPC = wizardConnector(InstallToVPC);
-    render(<ConnectedInstallToVPC {...defaultProps} />);
-
-    expect(screen.getByRole('link', { name: /Learn more about VPC/ })).toHaveAttribute(
+    expect(await screen.findByRole('link', { name: /Learn more about VPC/ })).toHaveAttribute(
       'href',
       links.INSTALL_AWS_CUSTOM_VPC_REQUIREMENTS,
     );

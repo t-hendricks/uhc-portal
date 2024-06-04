@@ -1,15 +1,16 @@
 import React from 'react';
+import { useDispatch } from 'react-redux';
+
+import { useGlobalState } from '~/redux/hooks';
 import { checkAccessibility, render, screen, within } from '~/testUtils';
 
-import { useDispatch } from 'react-redux';
-import { useGlobalState } from '~/redux/hooks';
 import GlobalErrorBox from './GlobalErrorBox';
 
 jest.mock('react-redux', () => ({
   ...jest.requireActual('react-redux'),
   useDispatch: jest.fn(),
 }));
-const useDispatchMock = useDispatch as jest.Mock;
+const useDispatchMock = useDispatch as any as jest.Mock;
 
 jest.mock('~/redux/hooks', () => ({
   useGlobalState: jest.fn(),

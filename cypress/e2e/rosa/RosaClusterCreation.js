@@ -5,8 +5,8 @@ import ClusterDetailsPage from '../../pageobjects/ClusterDetails.page';
 const awsAccountID = Cypress.env('QE_AWS_ID');
 const rolePrefix = Cypress.env('QE_ACCOUNT_ROLE_PREFIX');
 const installerARN = `arn:aws:iam::${awsAccountID}:role/${rolePrefix}-Installer-Role`;
-const clusterName = `smkrosa-${(Math.random() + 1).toString(36).substring(7)}`;
-const clusterVersion = '4.12.25';
+const clusterName = `ocmui-cypress-smoke-rosa-${(Math.random() + 1).toString(36).substring(7)}`;
+const clusterDomainPrefix = `rosa` + (Math.random() + 1).toString(36).substring(2);
 
 describe(
   'Rosa cluster wizard checks and cluster creation tests(OCP-50261)',
@@ -28,10 +28,11 @@ describe(
 
     it('Step - Accounts and roles - Select Account roles, ARN definitions', () => {
       CreateRosaWizardPage.isAccountsAndRolesScreen();
-      cy.getByTestId('launch-associate-account-btn').click();
+      CreateRosaWizardPage.howToAssociateNewAWSAccountButton().click();
       CreateRosaWizardPage.isAssociateAccountsDrawer();
-      cy.getByTestId('close-associate-account-btn').click();
+      CreateRosaWizardPage.howToAssociateNewAWSAccountDrawerCloseButton().click();
       CreateRosaWizardPage.selectAWSInfrastructureAccount(awsAccountID);
+      CreateRosaWizardPage.waitForARNList();
       CreateRosaWizardPage.refreshInfrastructureAWSAccountButton().click();
       CreateRosaWizardPage.waitForARNList();
       CreateRosaWizardPage.selectInstallerRole(installerARN);
@@ -40,9 +41,11 @@ describe(
 
     it('Step - Cluster Settings - Select Cluster name, version, regions', () => {
       CreateRosaWizardPage.isClusterDetailsScreen();
-      cy.get(CreateRosaWizardPage.clusterNameInput).type(clusterName);
-      CreateRosaWizardPage.clusterDetailsTree().click();
-      CreateRosaWizardPage.selectClusterVersion(clusterVersion);
+      CreateRosaWizardPage.setClusterName(clusterName);
+      CreateRosaWizardPage.closePopoverDialogs();
+      CreateRosaWizardPage.createCustomDomainPrefixCheckbox().check();
+      CreateRosaWizardPage.setDomainPrefix(clusterDomainPrefix);
+      CreateRosaWizardPage.closePopoverDialogs();
       CreateRosaWizardPage.selectRegion('us-west-2, US West, Oregon');
       CreateRosaWizardPage.rosaNextButton().click();
     });
@@ -81,7 +84,9 @@ describe(
       CreateRosaWizardPage.selectRoleProviderMode('Manual');
       CreateRosaWizardPage.selectRoleProviderMode('Auto');
       CreateRosaWizardPage.customOperatorPrefixInput().should('be.visible');
-      CreateRosaWizardPage.customOperatorPrefixInput().invoke('val').should('include', clusterName);
+      CreateRosaWizardPage.customOperatorPrefixInput()
+        .invoke('val')
+        .should('include', clusterName.slice(0, 27));
       CreateRosaWizardPage.rosaNextButton().click();
     });
 
@@ -103,7 +108,7 @@ describe(
 
     it('Step - Review and create : Cluster Settings definitions', () => {
       CreateRosaWizardPage.isClusterPropertyMatchesValue('Cluster name', clusterName);
-      CreateRosaWizardPage.isClusterPropertyMatchesValue('Version', clusterVersion);
+      CreateRosaWizardPage.isClusterPropertyMatchesValue('Domain prefix', clusterDomainPrefix);
       CreateRosaWizardPage.isClusterPropertyMatchesValue('Region', 'us-west-2');
       CreateRosaWizardPage.isClusterPropertyMatchesValue('Availability', 'Single zone');
       CreateRosaWizardPage.isClusterPropertyMatchesValue(
@@ -153,6 +158,7 @@ describe(
       ClusterDetailsPage.checkInstallationStepStatus('DNS setup');
       ClusterDetailsPage.checkInstallationStepStatus('Cluster installation');
       ClusterDetailsPage.clusterTypeLabelValue().contains('ROSA');
+      ClusterDetailsPage.clusterDomainPrefixLabelValue().contains(clusterDomainPrefix);
       ClusterDetailsPage.clusterRegionLabelValue().contains('us-west-2');
       ClusterDetailsPage.clusterAvailabilityLabelValue().contains('Single zone');
       ClusterDetailsPage.clusterInfrastructureAWSaccountLabelValue().contains(awsAccountID);

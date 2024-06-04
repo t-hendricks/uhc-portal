@@ -1,7 +1,9 @@
 import get from 'lodash/get';
+
 import type { Subscription } from '../types/accounts_mgmt.v1';
-import { normalizedProducts, subscriptionStatuses } from './subscriptionTypes';
 import { AugmentedCluster, ClusterFromSubscription } from '../types/types';
+
+import { normalizedProducts, subscriptionStatuses } from './subscriptionTypes';
 
 const isAssistedInstallSubscription = (subscription?: Subscription): boolean =>
   subscription?.plan?.id === normalizedProducts.OCP_Assisted_Install;

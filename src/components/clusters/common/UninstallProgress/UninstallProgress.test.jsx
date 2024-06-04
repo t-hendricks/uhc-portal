@@ -1,13 +1,15 @@
 import React from 'react';
-import { render, screen, checkAccessibility, within } from '~/testUtils';
-import UninstallProgress from './UninstallProgress';
 
-import fixtures from '../../ClusterDetails/__test__/ClusterDetails.fixtures';
+import { checkAccessibility, render, screen, within } from '~/testUtils';
+
+import fixtures from '../../ClusterDetails/__tests__/ClusterDetails.fixtures';
 import {
   mockAddOns,
   mockClusterAddOnsWithExternalResources,
-} from '../../ClusterDetails/components/AddOns/__test__/AddOns.fixtures';
+} from '../../ClusterDetails/components/AddOns/__tests__/AddOns.fixtures';
 import AddOnsConstants from '../../ClusterDetails/components/AddOns/AddOnsConstants';
+
+import UninstallProgress from './UninstallProgress';
 
 describe('<UninstallProgress />', () => {
   const getClusterAddOns = jest.fn();

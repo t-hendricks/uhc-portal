@@ -3,31 +3,31 @@ import React from 'react';
 import {
   Alert,
   AlertActionLink,
-  Form,
   Flex,
+  Form,
   Grid,
   GridItem,
-  Title,
   Text,
+  Title,
   useWizardContext,
 } from '@patternfly/react-core';
 
+import { stringToArray } from '~/common/helpers';
 import links from '~/common/installLinks.mjs';
 import { checkNoProxyDomains, validateCA, validateUrl } from '~/common/validators';
-import { stringToArray } from '~/common/helpers';
 import { constants } from '~/components/clusters/common/CreateOSDFormConstants';
 import {
   DISABLED_NO_PROXY_PLACEHOLDER,
-  HTTPS_PROXY_PLACEHOLDER,
   HTTP_PROXY_PLACEHOLDER,
+  HTTPS_PROXY_PLACEHOLDER,
   NO_PROXY_HELPER_TEXT,
   NO_PROXY_PLACEHOLDER,
   TRUST_BUNDLE_PLACEHOLDER,
 } from '~/components/clusters/common/networkingConstants';
-import ExternalLink from '~/components/common/ExternalLink';
-import { useFormState } from '~/components/clusters/wizards/hooks';
 import { FileUploadField, TextInputField } from '~/components/clusters/wizards/form';
+import { useFormState } from '~/components/clusters/wizards/hooks';
 import { FieldId, StepName } from '~/components/clusters/wizards/osd/constants';
+import ExternalLink from '~/components/common/ExternalLink';
 
 export const MAX_FILE_SIZE = 4000000; // 4MB
 export const ACCEPT = {

@@ -1,9 +1,8 @@
+/* generated using openapi-typescript-codegen -- do not edit */
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-
 import type { ObjectReference } from './ObjectReference';
-
 export type ClusterTransfer = ObjectReference & {
   cluster_uuid?: string;
   created_at?: string;
@@ -15,7 +14,6 @@ export type ClusterTransfer = ObjectReference & {
   status?: ClusterTransfer.status;
   updated_at?: string;
 };
-
 export namespace ClusterTransfer {
   export enum status {
     PENDING = 'Pending',

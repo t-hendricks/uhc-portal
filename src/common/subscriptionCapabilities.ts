@@ -1,5 +1,6 @@
-import { ClusterFromSubscription } from '../types/types';
 import type { Subscription } from '../types/accounts_mgmt.v1/models/Subscription';
+import { ClusterFromSubscription } from '../types/types';
+
 import { subscriptionStatuses } from './subscriptionTypes';
 
 /**

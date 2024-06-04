@@ -1,13 +1,14 @@
-import { connect } from 'react-redux';
 import get from 'lodash/get';
+import { connect } from 'react-redux';
 
+import getClusterName from '../../../../common/getClusterName';
 import {
   clearClusterResponse,
   editClusterDisplayName,
 } from '../../../../redux/actions/clustersActions';
-import EditDisplayNameDialog from './EditDisplayNameDialog';
 import { closeModal } from '../../../common/Modal/ModalActions';
-import getClusterName from '../../../../common/getClusterName';
+
+import EditDisplayNameDialog from './EditDisplayNameDialog';
 
 const mapStateToProps = (state) => {
   const modalData = state.modal.data;

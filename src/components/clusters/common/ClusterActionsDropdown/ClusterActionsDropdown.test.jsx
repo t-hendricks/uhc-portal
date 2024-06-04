@@ -1,4 +1,5 @@
 import React from 'react';
+
 import { render, screen } from '~/testUtils';
 
 import ClusterActionsDropdown from './ClusterActionsDropdown';
@@ -21,6 +22,27 @@ describe('<ClusterActionsDropdown />', () => {
       expect(await screen.findByRole('menu')).toBeInTheDocument();
       menuOptions.forEach((option) => {
         expect(screen.getByRole('menuitem', { name: option })).toBeEnabled();
+      });
+    });
+
+    it('disabled Delete cluster option', async () => {
+      const props = {
+        ...Fixtures.managedReadyProps,
+        cluster: {
+          ...Fixtures.managedReadyProps.cluster,
+          delete_protection: { enabled: true },
+        },
+      };
+      const { user } = render(<ClusterActionsDropdown {...props} />);
+      await user.click(screen.getByRole('button'));
+      expect(await screen.findByRole('menu')).toBeInTheDocument();
+      menuOptions.forEach((option) => {
+        if (option === 'Delete cluster') {
+          expect(screen.getByRole('menuitem', { name: option })).toHaveAttribute(
+            'aria-disabled',
+            'true',
+          );
+        }
       });
     });
   });
@@ -84,6 +106,18 @@ describe('<ClusterActionsDropdown />', () => {
       expect(await screen.findByRole('menu')).toBeInTheDocument();
 
       expect(screen.getByRole('menuitem', { name: 'Open console' })).toBeEnabled();
+    });
+  });
+
+  describe('rhoic cluster', () => {
+    it('shows expected options (rhoic)', async () => {
+      const { user } = render(
+        <ClusterActionsDropdown {...Fixtures.rhoicCluster} canTransferClusterOwnership />,
+      );
+      await user.click(screen.getByRole('button'));
+      expect(await screen.findByRole('menu')).toBeInTheDocument();
+
+      expect(screen.getByRole('menuitem', { name: 'Transfer cluster ownership' })).toBeEnabled();
     });
   });
 });

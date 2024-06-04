@@ -1,18 +1,10 @@
+import { AxiosResponse } from 'axios';
 import { Dispatch } from 'redux';
 import { action } from 'typesafe-actions';
+
 import { UpgradePolicy, UpgradePolicyState } from '~/types/clusters_mgmt.v1';
-import { AxiosResponse } from 'axios';
-import {
-  deleteControlPlaneUpgradeSchedule,
-  deleteUpgradeSchedule,
-  getControlPlaneUpgradeSchedules,
-  getUpgradeScheduleState,
-  getUpgradeSchedules,
-  patchControlPlaneUpgradeSchedule,
-  patchUpgradeSchedule,
-  postControlPlaneUpgradeSchedule,
-  postUpgradeSchedule,
-} from '../../../../services/clusterService';
+
+import clusterService from '../../../../services/clusterService';
 
 const POST_UPGRADE_SCHEDULE = 'POST_UPGRADE_SCHEDULE';
 const CLEAR_POST_UPGRADE_SCHEDULE = 'CLEAR_UPGRADE_SCHEDULE';
@@ -21,6 +13,18 @@ const DELETE_UPGRADE_SCHEDULE = 'DELETE_UPGRADE_SCHEDULE';
 const CLEAR_DELETE_UPGRADE_SCHEDULE = 'CLEAR_DELETE_UPGRADE_SCHEDULE';
 const CLEAR_GET_UPGRADE_SCHEDULE = 'CLEAR_GET_UPGRADE_SCHEDULE';
 const SET_CLUSTER_UPGRADE_POLICY = 'SET_CLUSTER_UPGRADE_POLICY';
+
+const {
+  patchUpgradeSchedule,
+  patchControlPlaneUpgradeSchedule,
+  getUpgradeScheduleState,
+  getControlPlaneUpgradeSchedules,
+  getUpgradeSchedules,
+  postControlPlaneUpgradeSchedule,
+  postUpgradeSchedule,
+  deleteControlPlaneUpgradeSchedule,
+  deleteUpgradeSchedule,
+} = clusterService;
 
 const getSchedules = (clusterID: string, isHypershift: boolean) =>
   action(

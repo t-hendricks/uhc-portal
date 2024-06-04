@@ -1,9 +1,9 @@
 import React from 'react';
 import * as ReactRedux from 'react-redux';
 
-import { render, screen, checkAccessibility } from '~/testUtils';
+import * as DownloadUtils from '~/components/downloads/downloadUtils';
+import { checkAccessibility, render, screen } from '~/testUtils';
 
-import * as DownloadUtils from '../../../downloads/DownloadsPage/DownloadsPage';
 import DownloadOcCliButton from './DownloadOcCliButton';
 
 const downloadButtonText = 'Download OC CLI';

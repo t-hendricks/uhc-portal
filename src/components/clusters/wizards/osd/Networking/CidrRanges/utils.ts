@@ -1,9 +1,9 @@
 import { FormikValues } from 'formik';
 
+import { Subnet } from '~/common/helpers';
 import validators, { required } from '~/common/validators';
 import { CloudProviderType } from '~/components/clusters/wizards/common/constants';
 import { FieldId } from '~/components/clusters/wizards/osd/constants';
-import { Subnet } from '~/common/helpers';
 
 const machineDisjointSubnets = validators.disjointSubnets(FieldId.NetworkMachineCidr);
 const serviceDisjointSubnets = validators.disjointSubnets(FieldId.NetworkServiceCidr);
@@ -27,7 +27,10 @@ export const validateMachineCidr =
     return (
       validateCidr(value)(cloudProvider) ||
       (cloudProvider === CloudProviderType.Aws && validators.awsMachineCidr(value, values)) ||
+      (cloudProvider === CloudProviderType.Gcp && validators.gcpMachineCidr(value, values)) ||
       validators.validateRange(value) ||
+      (cloudProvider === CloudProviderType.Aws &&
+        validators.subnetCidrs(value, values, FieldId.NetworkMachineCidr, selectedSubnets)) ||
       machineDisjointSubnets(value, values) ||
       (cloudProvider === CloudProviderType.Aws &&
         !isMultiAz &&
@@ -35,8 +38,6 @@ export const validateMachineCidr =
       (cloudProvider === CloudProviderType.Aws &&
         isMultiAz &&
         awsMachineMultiAZSubnetMask(value)) ||
-      (cloudProvider === CloudProviderType.Aws &&
-        validators.subnetCidrs(value, values, FieldId.NetworkMachineCidr, selectedSubnets)) ||
       undefined
     );
   };

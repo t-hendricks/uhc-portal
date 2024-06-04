@@ -1,22 +1,22 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
-import { Field, Fields, FieldArray } from 'redux-form';
-import { GridItem, ExpandableSection, Title, Text, TextVariants } from '@patternfly/react-core';
+import { Field, FieldArray, Fields } from 'redux-form';
 
-import { canSelectImds } from '~/components/clusters/wizards/rosa/constants';
+import { ExpandableSection, GridItem, Text, TextVariants, Title } from '@patternfly/react-core';
 
-import { ReduxFormKeyValueList } from '~/components/common/ReduxFormComponents';
-import NodeCountInput from '~/components/clusters/common/NodeCountInput';
 import links from '~/common/installLinks.mjs';
-import { normalizedProducts, billingModels } from '~/common/subscriptionTypes';
-
+import { billingModels, normalizedProducts } from '~/common/subscriptionTypes';
 import { required } from '~/common/validators';
+import NodeCountInput from '~/components/clusters/common/NodeCountInput';
+import { canSelectImds } from '~/components/clusters/wizards/common/constants';
 import ExternalLink from '~/components/common/ExternalLink';
-import ImdsSection from './ImdsSection';
-import MachineTypeSelection from './MachineTypeSelection';
+import { ReduxFormKeyValueList } from '~/components/common/ReduxFormComponents';
+
+import { computeNodeHintText } from './AutoScaleSection/AutoScaleHelper';
 import AutoScaleSection from './AutoScaleSection/AutoScaleSection';
 import WorkerNodeVolumeSizeSection from './WorkerNodeVolumeSizeSection/WorkerNodeVolumeSizeSection';
-import { computeNodeHintText } from './AutoScaleSection/AutoScaleHelper';
+import ImdsSection from './ImdsSection';
+import MachineTypeSelection from './MachineTypeSelection';
 
 function ScaleSection({
   isBYOC,

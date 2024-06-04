@@ -1,15 +1,16 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
 
-import { Title, Form, Alert } from '@patternfly/react-core';
+import { Alert, Form, Title } from '@patternfly/react-core';
 
-import { useGlobalState } from '~/redux/hooks/useGlobalState';
-import { clearCcsCredientialsInquiry } from '~/redux/actions/ccsInquiriesActions';
-import { FieldId } from '~/components/clusters/wizards/osd/constants';
-import { useFormState } from '~/components/clusters/wizards/hooks';
 import { CloudProviderType } from '~/components/clusters/wizards/common/constants';
-import { CloudProviderTileField } from './CloudProviderTileField';
+import { useFormState } from '~/components/clusters/wizards/hooks';
+import { FieldId } from '~/components/clusters/wizards/osd/constants';
+import { clearCcsCredientialsInquiry } from '~/redux/actions/ccsInquiriesActions';
+import { useGlobalState } from '~/redux/hooks/useGlobalState';
+
 import { AwsByocFields } from './AwsByocFields';
+import { CloudProviderTileField } from './CloudProviderTileField';
 import { GcpByocFields } from './GcpByocFields';
 
 export const CloudProvider = () => {
@@ -25,28 +26,11 @@ export const CloudProvider = () => {
     },
   } = useFormState();
   const { ccsCredentialsValidity } = useGlobalState((state) => state.ccsInquiries);
-  const [showValidationAlert, setShowValidationAlert] = React.useState(false);
   const isByoc = byoc === 'true';
 
   React.useEffect(() => {
     dispatch(clearCcsCredientialsInquiry());
-
-    if (!showValidationAlert && ccsCredentialsValidity.fulfilled) {
-      setShowValidationAlert(true);
-    }
-
-    if (showValidationAlert) {
-      setShowValidationAlert(false);
-    }
-  }, [
-    accountId,
-    accessKeyId,
-    secretAccessKey,
-    gcpServiceAccount,
-    ccsCredentialsValidity.fulfilled,
-    dispatch,
-    showValidationAlert,
-  ]);
+  }, [accountId, accessKeyId, secretAccessKey, gcpServiceAccount, dispatch]);
 
   return (
     <Form>
@@ -56,7 +40,7 @@ export const CloudProvider = () => {
         <>
           {cloudProvider === CloudProviderType.Aws ? <AwsByocFields /> : <GcpByocFields />}
 
-          {(ccsCredentialsValidity.error || showValidationAlert) && (
+          {ccsCredentialsValidity.error && (
             <Alert
               variant="danger"
               isInline

@@ -1,6 +1,7 @@
 import React from 'react';
-import { CodeEditor, Language } from '@patternfly/react-code-editor';
 import { editor } from 'monaco-editor/esm/vs/editor/editor.api';
+
+import { CodeEditor, Language } from '@patternfly/react-code-editor';
 
 export const ValuesCodeEditor = ({ code }: { code: string }) => {
   const onEditorDidMount = (editor: editor.IStandaloneCodeEditor) => {

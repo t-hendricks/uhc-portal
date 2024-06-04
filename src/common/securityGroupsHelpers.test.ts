@@ -1,4 +1,4 @@
-import { hasSelectedSecurityGroups, hasSecurityGroupIds } from './securityGroupsHelpers';
+import { hasSecurityGroupIds, hasSelectedSecurityGroups } from './securityGroupsHelpers';
 
 describe('hasSelectedSecurityGroups', () => {
   describe('when controlPlane groups apply to all node types', () => {

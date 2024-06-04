@@ -1,4 +1,5 @@
 import React from 'react';
+
 import { Text, TextList, TextListItem } from '@patternfly/react-core';
 
 import links from '../../../../../common/installLinks.mjs';

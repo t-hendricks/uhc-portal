@@ -1,7 +1,7 @@
+/* generated using openapi-typescript-codegen -- do not edit */
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-
 export type SupportCasesRequest = {
   account_number?: string;
   case_language?: string;
@@ -17,7 +17,6 @@ export type SupportCasesRequest = {
   summary: string;
   version?: string;
 };
-
 export namespace SupportCasesRequest {
   export enum severity {
     _1_URGENT_ = '1 (Urgent)',

@@ -1,15 +1,18 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+
 import { Grid, GridItem, Text } from '@patternfly/react-core';
 
+import { downloadChoice } from '~/components/downloads/downloadChoice';
+import { detectOS } from '~/components/downloads/downloadUtils';
+
 import {
-  tools,
   channels,
-  operatingSystems,
-  urlsSelector,
   githubReleasesToFetch,
+  operatingSystems,
+  tools,
+  urlsSelector,
 } from '../../../../../../common/installLinks.mjs';
-import { detectOS, downloadChoice } from '../../../../../downloads/DownloadsPage/DownloadsPage';
 
 const crcInstructionsMapping = {
   [operatingSystems.linux]: (

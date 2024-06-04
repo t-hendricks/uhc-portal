@@ -1,9 +1,8 @@
+/* generated using openapi-typescript-codegen -- do not edit */
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-
 import type { Cluster } from './Cluster';
-
 /**
  * Represents a pending delete entry for a specific cluster.
  */

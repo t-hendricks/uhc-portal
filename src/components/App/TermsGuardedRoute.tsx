@@ -1,10 +1,10 @@
 import React from 'react';
-import type { RouteProps, RouteComponentProps } from 'react-router-dom';
-import { Route } from 'react-router-dom';
+import type { RouteComponentProps, RouteProps } from 'react-router-dom';
+import { CompatRoute } from 'react-router-dom-v5-compat';
+
 import TermsGuard from '../common/TermsGuard';
 
 type Props = {
-  history: RouteComponentProps['history'];
   gobackPath?: string;
   render?: (props: RouteComponentProps) => React.ReactElement;
 } & Omit<RouteProps, 'render'>;
@@ -12,26 +12,23 @@ type Props = {
 const TermsGuardedRoute = ({
   component: WrappedComponent,
   render: WrappedRender,
-  history,
   gobackPath = '/',
   ...restProps
 }: Props) => {
   let render;
   if (WrappedComponent) {
     render = (props: RouteComponentProps) => (
-      <TermsGuard history={history} gobackPath={gobackPath}>
+      <TermsGuard gobackPath={gobackPath}>
         <WrappedComponent {...props} />
       </TermsGuard>
     );
   }
   if (WrappedRender) {
     render = (props: RouteComponentProps) => (
-      <TermsGuard history={history} gobackPath={gobackPath}>
-        {WrappedRender(props)}
-      </TermsGuard>
+      <TermsGuard gobackPath={gobackPath}>{WrappedRender(props)}</TermsGuard>
     );
   }
-  return <Route {...restProps} render={render} />;
+  return <CompatRoute {...restProps} render={render} />;
 };
 
 export default TermsGuardedRoute;

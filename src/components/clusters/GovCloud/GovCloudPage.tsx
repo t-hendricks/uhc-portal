@@ -1,12 +1,15 @@
-import { PageSection, Spinner } from '@patternfly/react-core';
 import * as React from 'react';
+
+import { PageSection, Spinner } from '@patternfly/react-core';
+
 import { AppPage } from '~/components/App/AppPage';
-import { useTCSigned } from './use-tc-signed';
-import GovCloudForm from './GovCloudForm';
+
 import GovCloudConfirm from './GovCloudConfirm';
-import GovCloudTCPage from './GovCloudTCPage';
+import GovCloudForm from './GovCloudForm';
 import GovCloudPrereqErrorPage from './GovCloudPrereqErrorPage';
+import GovCloudTCPage from './GovCloudTCPage';
 import { useHasGovEmail } from './use-gov-email';
+import { useTCSigned } from './use-tc-signed';
 
 import './GovCloudPage.css';
 

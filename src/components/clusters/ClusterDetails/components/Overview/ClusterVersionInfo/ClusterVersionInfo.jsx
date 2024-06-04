@@ -1,18 +1,20 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import get from 'lodash/get';
-import { Button, Flex, Popover } from '@patternfly/react-core';
+import PropTypes from 'prop-types';
 
+import { Button, Flex, Popover } from '@patternfly/react-core';
 import { OutlinedQuestionCircleIcon } from '@patternfly/react-icons/dist/esm/icons/outlined-question-circle-icon';
-import getClusterVersion from '~/components/clusters/common/getClusterVersion';
+
 import {
   isClusterUpgrading,
   isHypershiftCluster,
 } from '~/components/clusters/common/clusterStates';
-import SupportStatusLabel from '../SupportStatusLabel';
+import getClusterVersion from '~/components/clusters/common/getClusterVersion';
+
 import ClusterUpdateLink from '../../../../common/ClusterUpdateLink';
-import UpgradeStatus from '../../../../common/Upgrades/UpgradeStatus';
 import UpgradeAcknowledgeLink from '../../../../common/Upgrades/UpgradeAcknowledge/UpgradeAcknowledgeLink';
+import UpgradeStatus from '../../../../common/Upgrades/UpgradeStatus';
+import SupportStatusLabel from '../SupportStatusLabel';
 
 class ClusterVersionInfo extends React.Component {
   state = {
@@ -80,8 +82,7 @@ class ClusterVersionInfo extends React.Component {
                       <UpgradeStatus
                         clusterID={cluster.id}
                         canEdit={cluster.canEdit}
-                        clusterVersion={cluster.openshift_version}
-                        clusterVersionRawID={cluster.version?.raw_id}
+                        clusterVersion={clusterVersion}
                         scheduledUpgrade={scheduledUpdate}
                         openModal={openModal}
                         // eslint-disable-next-line camelcase
@@ -90,7 +91,7 @@ class ClusterVersionInfo extends React.Component {
                       />
                     }
                   >
-                    <Button variant="link">
+                    <Button variant="link" className="cluster-inline-link pf-v5-u-mt-0">
                       View details <OutlinedQuestionCircleIcon />
                     </Button>
                   </Popover>

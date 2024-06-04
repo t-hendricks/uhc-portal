@@ -1,10 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Navigate, matchPath } from 'react-router-dom-v5-compat';
-import { Spinner } from '@redhat-cloud-services/frontend-components/Spinner';
-import { Bullseye } from '@patternfly/react-core';
+import { matchPath, Navigate } from 'react-router-dom-v5-compat';
 import { validate as isUuid } from 'uuid';
+
+import { Bullseye } from '@patternfly/react-core';
+import { Spinner } from '@redhat-cloud-services/frontend-components/Spinner';
+
 import { advisorBaseName } from '~/common/getBaseName';
+
 import ExternalRedirect from './ExternalRedirect';
 
 // expects the pluginName and errorKey to construct the ruleId recognized by OCP Advisor
@@ -81,7 +84,7 @@ const InsightsAdvisorRedirector = (props) => {
       'clusterDetails',
       clusterDetails?.errorMessage,
     );
-    return <Navigate to="/" />;
+    return <Navigate replace to="/" />;
   }
 
   if (clusterDetails.fulfilled && !externalId) {
@@ -93,7 +96,7 @@ const InsightsAdvisorRedirector = (props) => {
       'clusterDetails',
       clusterDetails?.errorMessage,
     );
-    return <Navigate to="/" />;
+    return <Navigate replace to="/" />;
   }
 
   return (

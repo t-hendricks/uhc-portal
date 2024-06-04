@@ -1,10 +1,17 @@
 import React from 'react';
-import { render, screen, mockUseFeatureGate } from '~/testUtils';
 
-import { HCP_AWS_BILLING_SHOW } from '~/redux/constants/featureConstants';
 import wizardConnector from '~/components/clusters/wizards/common/WizardConnector';
+import { HCP_AWS_BILLING_SHOW } from '~/redux/constants/featureConstants';
+import { mockUseFeatureGate, render, screen } from '~/testUtils';
+
+import useOrganization from '../../../../CLILoginPage/useOrganization';
+
 import sampleFormData from './mockHCPCluster';
 import ReviewClusterScreen from './ReviewClusterScreen';
+
+jest.mock('../../../../CLILoginPage/useOrganization');
+
+const mockUseOrganization = jest.mocked(useOrganization);
 
 const defaultProps = {
   formValues: sampleFormData.values,
@@ -20,6 +27,9 @@ const defaultProps = {
 };
 
 describe('<ReviewClusterScreen />', () => {
+  beforeEach(() => {
+    mockUseOrganization.mockReturnValue({ organization: {}, isLoading: false, error: null });
+  });
   afterAll(() => {
     jest.resetAllMocks();
   });
@@ -391,6 +401,85 @@ describe('<ReviewClusterScreen />', () => {
       render(<ConnectedReviewClusterScreen {...newProps} />);
 
       expect(screen.queryByText('Node draining')).not.toBeInTheDocument();
+    });
+  });
+
+  describe('Domain prefix', () => {
+    const domainPrefixLabel = 'Domain prefix';
+    const domainPrefixValue = 'pre-test-1';
+    const isHasDomainPrefix = true;
+    const isNotHasDomainPrefix = false;
+
+    it('is shown when has_domain_prefix is true', () => {
+      const ConnectedReviewClusterScreen = wizardConnector(ReviewClusterScreen);
+      const newProps = {
+        ...defaultProps,
+        formValues: {
+          ...defaultProps.formValues,
+          domain_prefix: domainPrefixValue,
+          has_domain_prefix: isHasDomainPrefix,
+        },
+      };
+      render(<ConnectedReviewClusterScreen {...newProps} />);
+
+      expect(screen.getByText(domainPrefixLabel)).toBeInTheDocument();
+      expect(screen.getByText(domainPrefixValue)).toBeInTheDocument();
+    });
+
+    it('is absent when has_domain_prefix is false', () => {
+      const ConnectedReviewClusterScreen = wizardConnector(ReviewClusterScreen);
+      const newProps = {
+        ...defaultProps,
+        formValues: {
+          ...defaultProps.formValues,
+          has_domain_prefix: isNotHasDomainPrefix,
+        },
+      };
+      render(<ConnectedReviewClusterScreen {...newProps} />);
+
+      expect(screen.queryByText(domainPrefixLabel)).not.toBeInTheDocument();
+      expect(screen.queryByText(domainPrefixValue)).not.toBeInTheDocument();
+    });
+  });
+  describe('External Authentication', () => {
+    describe('is not shown when', () => {
+      it('is not Hypershift', () => {
+        const ConnectedReviewClusterScreen = wizardConnector(ReviewClusterScreen);
+        const newProps = { ...defaultProps, isHypershiftSelected: false };
+        render(<ConnectedReviewClusterScreen {...newProps} />);
+
+        expect(screen.queryByText('External Authentication')).toBeNull();
+      });
+      it('is not enabled', () => {
+        const ConnectedReviewClusterScreen = wizardConnector(ReviewClusterScreen);
+        const newProps = { ...defaultProps, isHypershiftSelected: true };
+
+        render(<ConnectedReviewClusterScreen {...newProps} />);
+
+        expect(screen.queryByText('External Authentication')).not.toBeInTheDocument();
+      });
+    });
+    describe('is shown when', () => {
+      it('isHypershift and is enabled', () => {
+        const ConnectedReviewClusterScreen = wizardConnector(ReviewClusterScreen);
+        const newProps = { ...defaultProps, isHypershiftSelected: true };
+        mockUseOrganization.mockReturnValue({
+          organization: {
+            capabilities: [
+              {
+                name: 'capability.organization.hcp_allow_external_authentication',
+                value: 'true',
+                inherited: false,
+              },
+            ],
+          },
+          isLoading: false,
+          error: null,
+        });
+        render(<ConnectedReviewClusterScreen {...newProps} />);
+
+        expect(screen.getByText('External Authentication')).toBeInTheDocument();
+      });
     });
   });
 });

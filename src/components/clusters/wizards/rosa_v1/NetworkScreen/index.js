@@ -1,9 +1,10 @@
 import { connect } from 'react-redux';
 import { formValueSelector, getFormValues } from 'redux-form';
 
-import { openModal } from '~/components/common/Modal/ModalActions';
 import wizardConnector from '~/components/clusters/wizards/common/WizardConnector';
-import createOSDInitialValues from '../../common/createOSDInitialValues';
+import { openModal } from '~/components/common/Modal/ModalActions';
+
+import createOSDInitialValues from '../createOSDInitialValues';
 
 import NetworkScreen from './NetworkScreen';
 

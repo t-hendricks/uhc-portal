@@ -1,22 +1,26 @@
 import React, { ChangeEvent, MouseEvent, useCallback, useEffect, useMemo, useState } from 'react';
-import { Flex, FlexItem, FormGroup } from '@patternfly/react-core';
-import { SelectOptionObject as SelectOptionObjectDeprecated } from '@patternfly/react-core/deprecated';
+import { FieldInputProps, FieldMetaProps } from 'formik';
 import { WrappedFieldInputProps, WrappedFieldMetaProps } from 'redux-form';
 
+import { Flex, FlexItem, FormGroup, FormSelectProps } from '@patternfly/react-core';
+import { SelectOptionObject as SelectOptionObjectDeprecated } from '@patternfly/react-core/deprecated';
+
 import { isSubnetMatchingPrivacy } from '~/common/vpcHelpers';
-import { CloudVPC, Subnetwork } from '~/types/clusters_mgmt.v1';
-import FuzzySelect, { FuzzyDataType, FuzzyEntryType } from '~/components/common/FuzzySelect';
 import { FormGroupHelperText } from '~/components/common/FormGroupHelperText';
+import FuzzySelect, { FuzzyDataType, FuzzyEntryType } from '~/components/common/FuzzySelect';
+import { CloudVPC, Subnetwork } from '~/types/clusters_mgmt.v1';
 
 const TRUNCATE_THRESHOLD = 40;
 
 export interface SubnetSelectFieldProps {
   name: string;
   label: string;
-  input: Pick<WrappedFieldInputProps, 'value' | 'name'> & {
-    onChange: (subnetId: string | undefined) => void;
-  };
-  meta: Pick<WrappedFieldMetaProps, 'error' | 'touched'>;
+  input:
+    | (Pick<WrappedFieldInputProps, 'value' | 'name'> & {
+        onChange: (subnetId: string | undefined) => void;
+      })
+    | FieldInputProps<FormSelectProps>;
+  meta: Pick<WrappedFieldMetaProps, 'error' | 'touched'> | FieldMetaProps<FormSelectProps>;
   isRequired?: boolean;
   className?: string;
   privacy?: 'public' | 'private';
@@ -113,9 +117,8 @@ export const SubnetSelectField = ({
 
   return (
     <FormGroup
-      fieldId={name}
+      fieldId={name || input.name}
       label={label}
-      id={input.name}
       isRequired={isRequired}
       className={className}
     >
@@ -134,6 +137,8 @@ export const SubnetSelectField = ({
             truncation={TRUNCATE_THRESHOLD}
             inlineFilterPlaceholderText="Filter by subnet ID / name"
             validated={inputError ? 'error' : undefined}
+            isPopover
+            toggleId={name || input.name}
           />
         </FlexItem>
       </Flex>

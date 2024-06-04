@@ -1,16 +1,16 @@
 import { produce } from 'immer';
 
-import {
-  REJECTED_ACTION,
-  PENDING_ACTION,
-  FULFILLED_ACTION,
-  baseRequestState,
-} from '../../../../redux/reduxHelpers';
 import { getErrorState } from '../../../../common/errors';
+import {
+  baseRequestState,
+  FULFILLED_ACTION,
+  PENDING_ACTION,
+  REJECTED_ACTION,
+} from '../../../../redux/reduxHelpers';
 
 import {
-  TOGGLE_SUBSCRIPTION_RELEASED,
   CLEAR_TOGGLE_SUBSCRIPTION_RELEASED_RESPONSE,
+  TOGGLE_SUBSCRIPTION_RELEASED,
 } from './subscriptionReleasedConstants';
 
 const initialState = {

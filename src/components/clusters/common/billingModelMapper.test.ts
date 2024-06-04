@@ -1,6 +1,7 @@
 /* eslint-disable camelcase */
-import { BillingModel } from '~/types/clusters_mgmt.v1';
 import { RelatedResource } from '~/types/accounts_mgmt.v1';
+import { BillingModel } from '~/types/clusters_mgmt.v1';
+
 import { clusterBillingModelToRelatedResource } from './billingModelMapper';
 
 describe('billingModelMapper', () => {

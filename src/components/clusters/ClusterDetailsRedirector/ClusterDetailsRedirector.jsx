@@ -1,7 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Navigate } from 'react-router-dom-v5-compat';
+
 import { Spinner } from '@redhat-cloud-services/frontend-components/Spinner';
+
 import Unavailable from '../../common/Unavailable';
 
 const ClusterDetailsRedirector = (props) => {
@@ -33,7 +35,7 @@ const ClusterDetailsRedirector = (props) => {
         'clusterDetails',
         subscriptionIDResponse.errorMessage,
       );
-      return <Navigate to="/" />;
+      return <Navigate replace to="/" />;
     }
     // other errors = Unavailable
     return (
@@ -41,7 +43,7 @@ const ClusterDetailsRedirector = (props) => {
     );
   }
   if (subscriptionIDResponse.fulfilled) {
-    return <Navigate to={`/details/s/${subscriptionIDResponse.id}${location.hash}`} />;
+    return <Navigate replace to={`/details/s/${subscriptionIDResponse.id}${location.hash}`} />;
   }
 
   return <Spinner centered />;

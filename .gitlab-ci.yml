@@ -1,6 +1,6 @@
 image:
-    # node:18.12.1
-    name: $REGISTRY/node@sha256:53f699f1e6171e725e854cd5a75a6968acaf0a8010630ea430de0d3058a491fb
+  # node:18.12.1
+  name: $REGISTRY/node@sha256:53f699f1e6171e725e854cd5a75a6968acaf0a8010630ea430de0d3058a491fb
 
 # Grants access to the shared gitlab runners
 default:
@@ -109,7 +109,7 @@ stages:
   script:
     - echo "Linting code..."
     - node --version
-    - yarn lint
+    - yarn lint-prettier
 
 🌎 Cypress testing:
   <<: *store-note

@@ -1,36 +1,41 @@
 import React, { useEffect, useState } from 'react';
-import PropTypes from 'prop-types';
 import isEmpty from 'lodash/isEmpty';
+import PropTypes from 'prop-types';
+
 import { Title } from '@patternfly/react-core';
 
-import config from '~/config';
-import {
-  HYPERSHIFT_WIZARD_FEATURE,
-  HCP_AWS_BILLING_SHOW,
-} from '~/redux/constants/featureConstants';
-import { normalizedProducts } from '~/common/subscriptionTypes';
+import { hasExternalAuthenticationCapability } from '~/common/externalAuthHelper';
 import { hasSelectedSecurityGroups } from '~/common/securityGroupsHelpers';
-import { getUserRoleForSelectedAWSAccount } from '~/components/clusters/wizards/rosa_v1/AccountsRolesScreen/AccountsRolesScreen';
+import { normalizedProducts } from '~/common/subscriptionTypes';
 import { stepId, stepNameById } from '~/components/clusters/wizards/common/osdWizardConstants';
+import { getUserRoleForSelectedAWSAccount } from '~/components/clusters/wizards/rosa_v1/AccountsRolesScreen/AccountsRolesScreen';
+import { canSelectImds } from '~/components/clusters/wizards/rosa_v1/constants';
 import {
   stepId as rosaStepId,
   stepNameById as rosaStepNameById,
 } from '~/components/clusters/wizards/rosa_v1/rosaWizardConstants';
-import { useFeatureGate } from '~/hooks/useFeatureGate';
-
 import ReduxHiddenCheckbox from '~/components/common/ReduxFormComponents/ReduxHiddenCheckbox';
-import { canSelectImds } from '~/components/clusters/wizards/rosa/constants';
-import DebugClusterRequest from '../DebugClusterRequest';
+import config from '~/config';
+import useCanClusterAutoscale from '~/hooks/useCanClusterAutoscale';
+import { useFeatureGate } from '~/hooks/useFeatureGate';
+import {
+  HCP_AWS_BILLING_SHOW,
+  HYPERSHIFT_WIZARD_FEATURE,
+} from '~/redux/constants/featureConstants';
+
+import useOrganization from '../../../../CLILoginPage/useOrganization';
 import ReviewSection, { ReviewItem } from '../../common/ReviewCluster/ReviewSection';
+import DebugClusterRequest from '../DebugClusterRequest';
+
 import ReviewRoleItem from './ReviewRoleItem';
+
 import './ReviewClusterScreen.scss';
 
 const ReviewClusterScreen = ({
   change,
   clusterRequestParams,
   formValues,
-  canAutoScale,
-  autoscalingEnabled,
+  autoscalingEnabledValue,
   installToVPCSelected,
   configureProxySelected,
   getUserRole,
@@ -44,19 +49,23 @@ const ReviewClusterScreen = ({
 }) => {
   const isByoc = formValues.byoc === 'true';
   const isAWS = formValues.cloud_provider === 'aws';
-  const isGCP = formValues.cloud_provider === 'gcp';
   const isROSA = formValues.product === normalizedProducts.ROSA;
   const hasEtcdEncryption = isHypershiftSelected && !!formValues.etcd_key_arn;
   const hasCustomKeyARN = isByoc && formValues.kms_key_arn;
   const showVPCCheckbox = isROSA || isByoc;
   const hasAWSVPCSettings = showVPCCheckbox && formValues.install_to_vpc && isAWS;
   const clusterVersionRawId = formValues.cluster_version?.raw_id;
+  const hasDomainPrefix = formValues?.has_domain_prefix;
 
   const hasSecurityGroups = isByoc && hasSelectedSecurityGroups(formValues.securityGroups);
+  const canAutoScale = useCanClusterAutoscale(formValues.product, formValues.billing_model);
+  const { organization } = useOrganization();
+  const hasExternalAuth = hasExternalAuthenticationCapability(organization?.capabilities);
 
   const clusterSettingsFields = [
     ...(!isROSA ? ['cloud_provider'] : []),
     'name',
+    ...(hasDomainPrefix ? ['domain_prefix'] : []),
     'cluster_version',
     'region',
     'multi_az',
@@ -69,6 +78,7 @@ const ReviewClusterScreen = ({
     'etcd_encryption',
     ...(!isHypershiftSelected ? ['fips'] : []),
     ...(hasEtcdEncryption ? ['etcd_key_arn'] : []),
+    ...(isHypershiftSelected && hasExternalAuth ? ['enable_external_authentication'] : []),
   ];
 
   const [userRole, setUserRole] = useState('');
@@ -209,7 +219,7 @@ const ReviewClusterScreen = ({
       >
         {ReviewItem({ name: 'machine_type', formValues })}
         {canAutoScale && ReviewItem({ name: 'autoscalingEnabled', formValues })}
-        {autoscalingEnabled
+        {autoscalingEnabledValue && canAutoScale
           ? ReviewItem({ name: 'min_replicas', formValues })
           : ReviewItem({ name: 'nodes_compute', formValues })}
         {showVPCCheckbox &&
@@ -269,10 +279,6 @@ const ReviewClusterScreen = ({
             name: 'shared_vpc',
             formValues,
           })}
-        {showVPCCheckbox &&
-          formValues.install_to_vpc &&
-          isGCP &&
-          ReviewItem({ name: 'gpc_vpc', formValues })}
         {installToVPCSelected && ReviewItem({ name: 'configure_proxy', formValues })}
         {installToVPCSelected &&
           configureProxySelected &&
@@ -338,11 +344,8 @@ const ReviewClusterScreen = ({
 ReviewClusterScreen.propTypes = {
   change: PropTypes.func,
   clusterRequestParams: PropTypes.object.isRequired,
-  formValues: PropTypes.objectOf(
-    PropTypes.oneOfType([PropTypes.string, PropTypes.number, PropTypes.bool]),
-  ),
-  canAutoScale: PropTypes.bool,
-  autoscalingEnabled: PropTypes.bool,
+  formValues: PropTypes.objectOf(PropTypes.oneOfType([PropTypes.any])),
+  autoscalingEnabledValue: PropTypes.bool,
   installToVPCSelected: PropTypes.bool,
   configureProxySelected: PropTypes.bool,
   getUserRole: PropTypes.func.isRequired,

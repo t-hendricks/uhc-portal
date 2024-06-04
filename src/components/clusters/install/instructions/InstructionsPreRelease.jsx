@@ -1,25 +1,28 @@
 /* eslint-disable max-len */
 import React from 'react';
 import PropTypes from 'prop-types';
+
 import {
   Card,
   CardBody,
   CardFooter,
   CardTitle,
+  Stack,
+  StackItem,
   Text,
   TextContent,
   Title,
-  Stack,
-  StackItem,
 } from '@patternfly/react-core';
 import { CodeIcon } from '@patternfly/react-icons/dist/esm/icons/code-icon';
 
-import links, { tools, channels } from '../../../../common/installLinks.mjs';
+import links, { channels, tools } from '../../../../common/installLinks.mjs';
 import ExternalLink from '../../../common/ExternalLink';
+
+import DeveloperPreviewStatements from './components/DeveloperPreviewStatements';
+import DownloadsAndPullSecretSection from './components/DownloadsAndPullSecretSection';
 import TelemetryDisclaimer from './components/TelemetryDisclaimer';
 import TokenErrorAlert from './components/TokenErrorAlert';
-import DownloadsAndPullSecretSection from './components/DownloadsAndPullSecretSection';
-import DeveloperPreviewStatements from './components/DeveloperPreviewStatements';
+
 import './InstructionsPreRelease.scss';
 
 function InstructionsPreRelease({ token, installer }) {

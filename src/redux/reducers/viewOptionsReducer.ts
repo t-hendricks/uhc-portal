@@ -1,8 +1,9 @@
-import { ViewOptions } from '~/types/types';
 import {
-  ONLY_MY_CLUSTERS_TOGGLE_CLUSTERS_LIST,
   ONLY_MY_CLUSTERS_TOGGLE_CLUSTER_ARCHIVES_LIST,
+  ONLY_MY_CLUSTERS_TOGGLE_CLUSTERS_LIST,
 } from '~/common/localStorageConstants';
+import { ViewOptions } from '~/types/types';
+
 import { ClusterLogAction } from '../../components/clusters/ClusterDetails/components/ClusterLogs/clusterLogActions';
 import { GET_CLUSTER_LOGS } from '../../components/clusters/ClusterDetails/components/ClusterLogs/clusterLogConstants';
 import type { ClusterAction } from '../actions/clustersActions';

@@ -1,34 +1,35 @@
 /* eslint-disable react/jsx-no-useless-fragment */
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom-v5-compat';
+
 import {
-  PageSection,
-  Title,
   Button,
+  ButtonVariant,
+  PageSection,
   Stack,
   StackItem,
-  ButtonVariant,
+  Title,
 } from '@patternfly/react-core';
-import { expandable, cellWidth } from '@patternfly/react-table';
+import { ArrowRightIcon } from '@patternfly/react-icons/dist/esm/icons/arrow-right-icon';
+import { cellWidth, expandable } from '@patternfly/react-table';
 import {
   Table as TableDeprecated,
-  TableHeader as TableHeaderDeprecated,
   TableBody as TableBodyDeprecated,
+  TableHeader as TableHeaderDeprecated,
 } from '@patternfly/react-table/deprecated';
-import { Link } from 'react-router-dom-v5-compat';
-import { ArrowRightIcon } from '@patternfly/react-icons/dist/esm/icons/arrow-right-icon';
-import * as OCM from '@openshift-assisted/ui-lib/ocm';
-import { isRestrictedEnv } from '~/restrictedEnv';
 
 import ExternalLink from '~/components/common/ExternalLink';
-import RedHatLogo from '../../../styles/images/Logo-RedHat-Hat-Color-RGB.png';
-import IBMCloudLogo from '../../../styles/images/ibm_cloud-icon.png';
-import MicrosoftLogo from '../../../styles/images/Microsoft_logo.svg';
+import TechnologyPreview from '~/components/common/TechnologyPreview';
+import { isRestrictedEnv } from '~/restrictedEnv';
+
 import AWSLogo from '../../../styles/images/AWS.png';
+import IBMCloudLogo from '../../../styles/images/ibm_cloud-icon.png';
+import RedHatLogo from '../../../styles/images/Logo-RedHat-Hat-Color-RGB.png';
+import MicrosoftLogo from '../../../styles/images/Microsoft_logo.svg';
+
 import links from './CreateClusterConsts';
 import CreateClusterDropDown from './CreateClusterDropDown';
-
-const { TechnologyPreview, PreviewBadgePosition } = OCM;
 
 const getColumns = () => [
   {
@@ -358,7 +359,7 @@ const runItYourself = () => {
         <Link to="/install/alibaba/installer-provisioned" className="pf-v5-u-mr-xs">
           Alibaba Cloud
         </Link>
-        <TechnologyPreview position={PreviewBadgePosition.inline} />
+        <TechnologyPreview className="pf-v5-u-ml-md pf-v5-u-display-inline" />
       </>,
       'Full stack automation',
     ],
@@ -416,14 +417,12 @@ const runItYourself = () => {
     [
       <>
         <Link to="/install/metal/multi"> Baremetal (multi-architecture)</Link>
-        <TechnologyPreview position={PreviewBadgePosition.inline} />
       </>,
       'Pre-existing infrastructure',
     ],
     [
       <>
         <Link to="/install/powervs/installer-provisioned">IBM PowerVS (ppc64le)</Link>
-        <TechnologyPreview position={PreviewBadgePosition.inline} />
       </>,
       'Full stack automation',
     ],
@@ -436,7 +435,6 @@ const runItYourself = () => {
     [
       <>
         <Link to="/install/oracle-cloud">Oracle Cloud Infrastructure (virtual machines)</Link>
-        <TechnologyPreview position={PreviewBadgePosition.inline} />
       </>,
       'Pre-existing infrastructure',
     ],

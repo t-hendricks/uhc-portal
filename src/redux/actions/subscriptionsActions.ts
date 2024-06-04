@@ -13,15 +13,16 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
-import { validate as isUuid } from 'uuid';
-import { action, ActionType } from 'typesafe-actions';
 import type { AxiosResponse } from 'axios';
+import { action, ActionType } from 'typesafe-actions';
+import { validate as isUuid } from 'uuid';
 
 import { SelfResourceReviewRequest } from '~/types/accounts_mgmt.v1';
 import type { SubscriptionWithPermissionsList } from '~/types/types';
-import { subscriptionsConstants } from '../constants';
+
 import { accountsService, authorizationsService, clusterService } from '../../services';
-import { INVALIDATE_ACTION, buildPermissionDict } from '../reduxHelpers';
+import { subscriptionsConstants } from '../constants';
+import { buildPermissionDict, INVALIDATE_ACTION } from '../reduxHelpers';
 
 const fetchAccount = () =>
   action(subscriptionsConstants.GET_ACCOUNT, accountsService.getCurrentAccount());

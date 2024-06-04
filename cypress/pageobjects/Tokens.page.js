@@ -4,7 +4,8 @@ import GlobalNav from './GlobalNav.page';
 class TokenPages extends Page {
   navigateToOCMToken() {
     GlobalNav.downloadsNavigation().click();
-    cy.getByTestId('view-api-token-btn').scrollIntoView().click();
+    cy.getByTestId('view-api-token-btn').scrollIntoView();
+    cy.getByTestId('view-api-token-btn').click();
   }
 
   isOCMTokenPage() {
@@ -21,7 +22,7 @@ class TokenPages extends Page {
     cy.get('.pf-v5-c-spinner', { timeout: 30000 }).should('not.exist');
     cy.get('h1', { timeout: 30000 })
       .scrollIntoView()
-      .contains('OpenShift Cluster Manager API Token')
+      .contains('OpenShift Cluster Manager')
       .should('be.visible');
   }
 

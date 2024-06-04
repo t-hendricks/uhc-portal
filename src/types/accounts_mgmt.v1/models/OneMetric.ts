@@ -1,11 +1,10 @@
+/* generated using openapi-typescript-codegen -- do not edit */
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-
 import type { ClusterMetricsNodes } from './ClusterMetricsNodes';
 import type { ClusterResource } from './ClusterResource';
 import type { ClusterUpgrade } from './ClusterUpgrade';
-
 export type OneMetric = {
   arch?: string;
   channel_info?: string;
@@ -36,7 +35,6 @@ export type OneMetric = {
   subscription_socket_total: number;
   upgrade: ClusterUpgrade;
 };
-
 export namespace OneMetric {
   export enum health_state {
     HEALTHY = 'healthy',

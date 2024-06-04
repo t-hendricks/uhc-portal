@@ -1,5 +1,6 @@
-import { cloudProvidersReducer } from './cloudProvidersReducer';
 import { GET_CLOUD_PROVIDERS } from '../constants/cloudProviderConstants';
+
+import { cloudProvidersReducer } from './cloudProvidersReducer';
 
 describe('cloudProvidersReducer', () => {
   const initialState = {};

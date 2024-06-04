@@ -1,14 +1,16 @@
 import React from 'react';
-import { AxiosResponse } from 'axios';
+import { AxiosError, AxiosResponse } from 'axios';
 
-import { getAWSVPCDetails } from '~/services/clusterService';
-import { CloudVPC, Cluster } from '~/types/clusters_mgmt.v1';
+import { isHypershiftCluster } from '~/components/clusters/common/clusterStates';
 import {
   CloudProviderVPCRequest,
   getAWSCloudProviderVPCs,
 } from '~/redux/actions/ccsInquiriesActions';
 import { securityGroupsSort } from '~/redux/reducers/ccsInquiriesReducer';
-import { isHypershiftCluster } from '~/components/clusters/common/clusterStates';
+import clusterService from '~/services/clusterService';
+import { CloudVPC, Cluster } from '~/types/clusters_mgmt.v1';
+
+const { getAWSVPCDetails } = clusterService;
 
 /**
  * Reads the response of VPCs associated to a given subnet.
@@ -60,6 +62,7 @@ export const useAWSVPCFromCluster = (cluster: Cluster) => {
   const [clusterVpc, setClusterVpc] = React.useState<CloudVPC | undefined>();
   const [isLoading, setIsLoading] = React.useState<boolean>(!!cluster.id);
   const [hasError, setHasError] = React.useState<boolean>(false);
+  const [errorReason, setErrorReason] = React.useState<string>();
   const isHypershift = isHypershiftCluster(cluster);
   const clusterId = cluster.id || '';
   const subnetIds = cluster.aws?.subnet_ids || [];
@@ -73,9 +76,12 @@ export const useAWSVPCFromCluster = (cluster: Cluster) => {
       if (vpc) {
         setClusterVpc(adaptVPCDetails(vpc));
       }
-    } catch {
+    } catch (err) {
       setHasError(true);
       setClusterVpc(undefined);
+      const axiosErr = err as any as AxiosError;
+      const axiosResponse = axiosErr.response as any as AxiosResponse;
+      setErrorReason(axiosResponse.data.reason);
     } finally {
       setIsLoading(false);
     }
@@ -101,6 +107,7 @@ export const useAWSVPCFromCluster = (cluster: Cluster) => {
         awsCredentials: { sts: { role_arn: roleArn } },
         region: regionId,
         subnet: subnetId,
+        options: { includeSecurityGroups: isHypershift },
       };
       return manageVpcFetch(fetchVpcByStsCredentials(request));
     };
@@ -109,5 +116,5 @@ export const useAWSVPCFromCluster = (cluster: Cluster) => {
     }
   }, [isHypershift, subnetId, roleArn, regionId]);
 
-  return { clusterVpc, isLoading, hasError };
+  return { clusterVpc, isLoading, hasError, errorReason };
 };

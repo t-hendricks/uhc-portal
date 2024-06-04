@@ -1,10 +1,14 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import FileSaver from 'file-saver';
 import JSZip from 'jszip';
+import PropTypes from 'prop-types';
+
 import {
   Alert,
   Button,
+  ExpandableSection,
+  List,
+  ListItem,
   Stack,
   StackItem,
   TextContent,
@@ -14,6 +18,7 @@ import {
 } from '@patternfly/react-core';
 
 import { accountsService, clusterService } from '../../../../services';
+
 import { getAWSAccountID, getOIDCEndpointNoScheme, getOIDCProviderARN } from './rosaUtils';
 
 function AWSCLITab({ cluster }) {
@@ -21,6 +26,7 @@ function AWSCLITab({ cluster }) {
   const [policies, setPolicies] = React.useState();
   const [credentialRequests, setCredentialRequests] = React.useState();
   const [error, setError] = React.useState('');
+  const [errorReason, setErrorReason] = React.useState();
 
   // We're ready when everything we need loads.
   const ready = commands && policies && credentialRequests;
@@ -34,6 +40,8 @@ function AWSCLITab({ cluster }) {
       })
       .catch((e) => {
         setError(e.message || 'Could not fetch commands.');
+        const errorReason = e.response.data.details?.[0].Error_Key ?? e.response.data.reason;
+        if (errorReason) setErrorReason(errorReason);
       });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -135,11 +143,24 @@ the roles and OIDC provider are available.
       {error && (
         <StackItem>
           <Alert isInline variant="danger" title="Something went wrong">
-            <p>{error}</p>
-            <p>
-              You will need to use {/* either AWS CloudFormation or */} the ROSA CLI to create the
-              operator roles and OIDC provider.
-            </p>
+            <List isPlain>
+              <ListItem>{error}</ListItem>
+              <ListItem>
+                You will need to use {/* either AWS CloudFormation or */} the ROSA CLI to create the
+                operator roles and OIDC provider.
+              </ListItem>
+              {errorReason ? (
+                <ListItem>
+                  <ExpandableSection
+                    toggleTextExpanded="Show less"
+                    toggleTextCollapsed="Show more"
+                    isIndented
+                  >
+                    {errorReason}
+                  </ExpandableSection>
+                </ListItem>
+              ) : null}
+            </List>
           </Alert>
         </StackItem>
       )}

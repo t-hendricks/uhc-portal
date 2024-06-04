@@ -1,7 +1,7 @@
 const config = {
   roots: ['<rootDir>/src'],
   verbose: true,
-  snapshotSerializers: ['enzyme-to-json/serializer'],
+
   setupFiles: ['<rootDir>/src/setupTests.ts'],
   preset: 'ts-jest',
   testEnvironment: 'jsdom',
@@ -12,9 +12,9 @@ const config = {
     '^.+\\.(js|jsx|mjs)$': 'babel-jest',
   },
   transformIgnorePatterns: [
-    '<rootDir>/node_modules/(?!(@patternfly|react-monaco-editor|monaco-editor|lodash-es|screenfull|uuid|@openshift/dynamic-plugin-sdk)/)',
+    '<rootDir>/node_modules/(?!(@patternfly|react-monaco-editor|monaco-editor|lodash-es|screenfull|uuid|@openshift/dynamic-plugin-sdk|cidr-tools|ip-bigint)/)',
   ],
-  testPathIgnorePatterns: ['<rootDir>/cache/Cypress/'],
+  testPathIgnorePatterns: ['<rootDir>/cache/Cypress/', '^.+\\.(fixtures?)\\.[jt]sx?$'],
   moduleNameMapper: {
     /* Map Assisted UI lib to a mock that defines the same API but won't import the actual code */
     '@openshift-assisted/ui-lib/ocm': '<rootDir>/__mocks__/assistedUiMock.ts',
@@ -27,6 +27,8 @@ const config = {
       '<rootDir>/__mocks__/fileMock.js',
     '\\.(css|less|scss)$': '<rootDir>/__mocks__/styleMock.js',
     '^~/(.*)$': '<rootDir>/src/$1',
+    '^src/components/common/TechnologyPreview$': '<rootDir>/__mocks__/technologyPreviewFake.tsx',
+    '@scalprum/react-core':'<rootDir>/__mocks__/scalprumComponentMock.tsx'
   },
   globals: {
     APP_DEVMODE: false,

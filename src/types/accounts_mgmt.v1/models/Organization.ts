@@ -1,11 +1,10 @@
+/* generated using openapi-typescript-codegen -- do not edit */
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-
 import type { Capability } from './Capability';
 import type { Label } from './Label';
 import type { ObjectReference } from './ObjectReference';
-
 export type Organization = ObjectReference & {
   capabilities?: Array<Capability>;
   created_at?: string;

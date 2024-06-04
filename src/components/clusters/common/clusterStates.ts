@@ -1,6 +1,6 @@
+import { normalizedProducts, subscriptionStatuses } from '~/common/subscriptionTypes';
 import { Cluster, ClusterState, InflightCheck, InflightCheckState } from '~/types/clusters_mgmt.v1';
 import { ClusterFromSubscription, ClusterWithPermissions } from '~/types/types';
-import { normalizedProducts, subscriptionStatuses } from '~/common/subscriptionTypes';
 
 enum SubscriptionDerivedStates {
   UPDATING = 'updating',
@@ -152,6 +152,18 @@ const isOSDGCPPendingOnHostProject = <E extends ClusterFromSubscription>(cluster
   !!cluster?.gcp_network?.vpc_project_id;
 
 /**
+ *
+ * @param cluster something extending ClusterFromSubscription since components are using either Cluster or ClusterFromSubscription
+ */
+const isErrorSharedGCPVPCValues = (cluster: ClusterFromSubscription): boolean =>
+  isOSD(cluster) &&
+  cluster.state === ClusterState.WAITING &&
+  !!cluster?.gcp_network?.vpc_project_id &&
+  !!cluster?.status?.description &&
+  cluster.status.description.includes(cluster.gcp_network.vpc_project_id) &&
+  cluster.status.description.includes('Could not validate the shared subnets');
+
+/**
  * Indicates that this is a ROSA cluster
  *
  * @param cluster something extending ClusterFromSubscription since components are using either Cluster or ClusterFromSubscription
@@ -222,6 +234,9 @@ const canViewMachinePoolTab = (cluster: ClusterFromSubscription): boolean => {
   );
 };
 
+const isAWSPrivateCluster = (cluster: ClusterFromSubscription): boolean =>
+  (cluster?.aws && cluster?.ccs?.enabled && cluster?.aws?.private_link) ?? false;
+
 export {
   getClusterStateAndDescription,
   isHibernating,
@@ -241,8 +256,10 @@ export {
   getStateDescription,
   getInflightChecks,
   isWaitingForOIDCProviderOrOperatorRolesMode,
+  isErrorSharedGCPVPCValues,
   isClusterUpgrading,
   canViewMachinePoolTab,
+  isAWSPrivateCluster,
 };
 
 export default clusterStates;

@@ -1,22 +1,29 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import { Title, Grid, GridItem, FormGroup, Form, ExpandableSection } from '@patternfly/react-core';
+import { useDispatch, useSelector } from 'react-redux';
 import { Field } from 'redux-form';
 
-import ReduxCheckbox from '~/components/common/ReduxFormComponents/ReduxCheckbox';
-import { validateAWSKMSKeyARN } from '~/common/validators';
-import { isRestrictedEnv } from '~/restrictedEnv';
-import { constants } from '~/components/clusters/common/CreateOSDFormConstants';
-import { normalizedProducts } from '~/common/subscriptionTypes';
-import PopoverHint from '../../../../common/PopoverHint';
-import PersistentStorageDropdown from '../../../common/PersistentStorageDropdown';
-import LoadBalancersDropdown from '../../../common/LoadBalancersDropdown';
+import { ExpandableSection, Form, FormGroup, Grid, GridItem, Title } from '@patternfly/react-core';
 
-import CustomerManagedEncryptionSection from '../../common/EncryptionSection/CustomerManagedKeyEncryption';
+import { hasExternalAuthenticationCapability } from '~/common/externalAuthHelper';
+import { normalizedProducts } from '~/common/subscriptionTypes';
+import { validateAWSKMSKeyARN } from '~/common/validators';
+import { constants } from '~/components/clusters/common/CreateOSDFormConstants';
+import { CheckboxDescription } from '~/components/common/CheckboxDescription';
+import ReduxCheckbox from '~/components/common/ReduxFormComponents/ReduxCheckbox';
+import { getMachineTypesByRegionARN } from '~/redux/actions/machineTypesActions';
+import { isRestrictedEnv } from '~/restrictedEnv';
+
+import useOrganization from '../../../../CLILoginPage/useOrganization';
+import PopoverHint from '../../../../common/PopoverHint';
+import LoadBalancersDropdown from '../../../common/LoadBalancersDropdown';
+import PersistentStorageDropdown from '../../../common/PersistentStorageDropdown';
 import UserWorkloadMonitoringSection from '../../../common/UserWorkloadMonitoringSection';
+import CustomerManagedEncryptionSection from '../../common/EncryptionSection/CustomerManagedKeyEncryption';
 import EtcdEncryptionSection from '../../common/EncryptionSection/EtcdEncryptionSection';
 
 import BasicFieldsSection from './BasicFieldsSection';
+import { EnableExternalAuthentication } from './EnableExternalAuthentication';
 
 function ClusterSettingsScreen({
   isByoc,
@@ -24,6 +31,7 @@ function ClusterSettingsScreen({
   customerManagedEncryptionSelected,
   selectedRegion,
   cloudProviderID,
+  formValues,
   product,
   billingModel,
   change,
@@ -36,12 +44,29 @@ function ClusterSettingsScreen({
   forceTouch,
 }) {
   const [isExpanded, setIsExpanded] = useState(false);
-
+  const [isExternalAuthExpanded, setIsExternalAuthExpanded] = useState(false);
+  const { organization } = useOrganization();
+  const machineTypesByRegion = useSelector((state) => state.machineTypesByRegion);
+  const dispatch = useDispatch();
   const onToggle = () => {
     setIsExpanded(!isExpanded);
   };
+  const onExternalAuthToggle = () => {
+    setIsExternalAuthExpanded(!isExternalAuthExpanded);
+  };
 
   const isRosa = product === normalizedProducts.ROSA;
+
+  React.useEffect(() => {
+    // if machineTypeByRegion.region cache does not exist or if the region is new, load new machines
+    if (
+      selectedRegion &&
+      (!machineTypesByRegion.region ||
+        (machineTypesByRegion.region && machineTypesByRegion.region.id !== selectedRegion))
+    ) {
+      dispatch(getMachineTypesByRegionARN(formValues.installer_role_arn, selectedRegion));
+    }
+  }, [selectedRegion, formValues.installer_role_arn, machineTypesByRegion.region, dispatch]);
 
   React.useEffect(() => {
     let isAdvancedEncryptionExpanded = false;
@@ -177,14 +202,23 @@ function ClusterSettingsScreen({
                   extendedHelpText="Installs and configures your cluster to use only FIPS validated cryptographic libraries for core components and the node operating system."
                   isDisabled={isRestrictedEnv()}
                 />
-                <div className="ocm-c--reduxcheckbox-description">
+                <CheckboxDescription>
                   Install a cluster that uses FIPS Validated / Modules in Process cryptographic
                   libraries on the x86_64 architecture.
-                </div>
+                </CheckboxDescription>
               </FormGroup>
             </GridItem>
           )}
         </ExpandableSection>
+        {isHypershiftSelected && hasExternalAuthenticationCapability(organization?.capabilities) ? (
+          <ExpandableSection
+            toggleText="External Authentication"
+            onToggle={onExternalAuthToggle}
+            isExpanded={isExternalAuthExpanded}
+          >
+            <EnableExternalAuthentication />
+          </ExpandableSection>
+        ) : null}
         <GridItem md={6} />
       </Grid>
     </Form>
@@ -195,6 +229,9 @@ ClusterSettingsScreen.propTypes = {
   isByoc: PropTypes.bool,
   cloudProviderID: PropTypes.string,
   isMultiAz: PropTypes.bool,
+  formValues: PropTypes.objectOf(
+    PropTypes.oneOfType([PropTypes.string, PropTypes.number, PropTypes.bool]),
+  ),
   customerManagedEncryptionSelected: PropTypes.string,
   product: PropTypes.string,
   billingModel: PropTypes.string,

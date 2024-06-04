@@ -1,13 +1,16 @@
 import React from 'react';
+import pullAt from 'lodash/pullAt';
 import { PropTypes } from 'prop-types';
 import { Field } from 'redux-form';
-import pullAt from 'lodash/pullAt';
+
 import { Button, GridItem } from '@patternfly/react-core';
-import { PlusCircleIcon } from '@patternfly/react-icons/dist/esm/icons/plus-circle-icon';
 import { MinusCircleIcon } from '@patternfly/react-icons/dist/esm/icons/minus-circle-icon';
-import ReduxVerticalFormGroup from './ReduxVerticalFormGroup';
+import { PlusCircleIcon } from '@patternfly/react-icons/dist/esm/icons/plus-circle-icon';
+
 import { getRandomID } from '../../../common/helpers';
 import ButtonWithTooltip from '../ButtonWithTooltip';
+
+import ReduxVerticalFormGroup from './ReduxVerticalFormGroup';
 
 import './RenderArrayFields.scss';
 
@@ -32,9 +35,14 @@ LabelGridItem.propTypes = {
   helpText: PropTypes.string,
 };
 
-const AddMoreButtonGridItem = ({ addNewField, areFieldsFilled, title = 'Add more' }) => {
-  const isDisabled = !areFieldsFilled.length || areFieldsFilled.includes(false);
-
+const AddMoreButtonGridItem = ({
+  addNewField,
+  areFieldsFilled,
+  title = 'Add more',
+  addMoreButtonDisabled = false,
+}) => {
+  const isDisabled =
+    !areFieldsFilled.length || areFieldsFilled.includes(false) || addMoreButtonDisabled;
   return (
     <GridItem className="field-grid-item">
       <Button
@@ -53,6 +61,7 @@ AddMoreButtonGridItem.propTypes = {
   addNewField: PropTypes.func.isRequired,
   areFieldsFilled: PropTypes.arrayOf(PropTypes.bool).isRequired,
   title: PropTypes.string,
+  addMoreButtonDisabled: PropTypes.bool,
 };
 
 const FieldArrayErrorGridItem = ({ isLast, errorMessage, touched, isGroupError }) => {
@@ -73,12 +82,13 @@ FieldArrayErrorGridItem.propTypes = {
   isGroupError: PropTypes.bool,
 };
 
-const MinusButtonGridItem = ({ index, fields, onClick }) => {
+const MinusButtonGridItem = ({ index, fields, onClick, minusButtonDisabledMessage }) => {
   const isOnlyItem = index === 0 && fields.length === 1;
+  const disableReason = minusButtonDisabledMessage || 'To delete the item, add another item first.';
   return (
     <GridItem className="field-grid-item minus-button" span={1}>
       <ButtonWithTooltip
-        disableReason={isOnlyItem && 'You cannot delete the only item'}
+        disableReason={isOnlyItem && disableReason}
         tooltipProps={{ position: 'right', distance: 0 }}
         onClick={onClick}
         icon={<MinusCircleIcon />}
@@ -90,8 +100,9 @@ const MinusButtonGridItem = ({ index, fields, onClick }) => {
 
 MinusButtonGridItem.propTypes = {
   index: PropTypes.number.isRequired,
-  fields: PropTypes.array.isRequired,
+  fields: PropTypes.object.isRequired,
   onClick: PropTypes.func.isRequired,
+  minusButtonDisabledMessage: PropTypes.string,
 };
 
 const FieldGridItem = ({
@@ -153,6 +164,8 @@ const RenderArrayFields = (props) => {
     FieldGridItemComponent = FieldGridItem,
     isFieldFilled = (field) => !!field.name,
     addMoreTitle,
+    addMoreButtonDisabled,
+    minusButtonDisabledMessage,
   } = props;
 
   const [touched, setTouched] = React.useState(false);
@@ -221,6 +234,7 @@ const RenderArrayFields = (props) => {
         addNewField={addNewField}
         areFieldsFilled={areFieldsFilled}
         title={addMoreTitle}
+        addMoreButtonDisabled={addMoreButtonDisabled}
       />
       {fields.map((item, index) => (
         <React.Fragment key={`${fields.get(index).id}`}>
@@ -232,7 +246,12 @@ const RenderArrayFields = (props) => {
             fieldSpan={fieldSpan}
             {...props}
           />
-          <MinusButtonGridItem index={index} fields={fields} onClick={() => removeField(index)} />
+          <MinusButtonGridItem
+            index={index}
+            fields={fields}
+            onClick={() => removeField(index)}
+            minusButtonDisabledMessage={minusButtonDisabledMessage}
+          />
           <FieldArrayErrorGridItem
             isLast={index === fields.length - 1}
             errorMessage={error}
@@ -246,17 +265,19 @@ const RenderArrayFields = (props) => {
 };
 
 RenderArrayFields.propTypes = {
-  fields: PropTypes.array.isRequired,
+  fields: PropTypes.object.isRequired,
   label: PropTypes.string,
   helpText: PropTypes.string,
   isRequired: PropTypes.bool,
-  onFormChange: PropTypes.func.isRequired,
+  onFormChange: PropTypes.func,
   fieldSpan: PropTypes.number,
   isGroupError: PropTypes.bool,
   meta: PropTypes.shape({ error: PropTypes.string, submitFailed: PropTypes.bool }),
   FieldGridItemComponent: PropTypes.func,
   addMoreTitle: PropTypes.string,
   isFieldFilled: PropTypes.func,
+  addMoreButtonDisabled: PropTypes.bool,
+  minusButtonDisabledMessage: PropTypes.string,
 };
 
 export default RenderArrayFields;

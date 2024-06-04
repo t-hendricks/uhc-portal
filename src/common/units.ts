@@ -1,9 +1,10 @@
 import { filesize } from 'filesize';
+
 import round from './math';
 
-type Unit = 'B' | 'KiB' | 'MiB' | 'GiB' | 'TiB' | 'PiB' | 'KB' | 'MB' | 'GB' | 'TB' | 'PB';
+export type Unit = 'B' | 'KiB' | 'MiB' | 'GiB' | 'TiB' | 'PiB' | 'KB' | 'MB' | 'GB' | 'TB' | 'PB';
 
-type ValueWithUnits = {
+export type ValueWithUnits = {
   value: number;
   unit: Unit;
 };
@@ -35,13 +36,7 @@ const parseValueWithUnit = (value: number, unit: Unit): number => {
 // The resulting .value is imprecise, should never be used for further computations.
 // TODO: consider making it a string to prevent such usage?
 
-const humanizeValueWithUnit = (
-  value: number,
-  unit: Unit,
-): {
-  value: number;
-  unit: Unit;
-} => {
+const humanizeValueWithUnit = (value: number, unit: Unit): ValueWithUnits => {
   const result = filesize(parseValueWithUnit(value, unit), { output: 'object', standard: 'iec' });
   return {
     value: +result.value,
@@ -49,7 +44,7 @@ const humanizeValueWithUnit = (
   };
 };
 
-const roundValueWithUnit = (value: number, unit: Unit) => ({
+const roundValueWithUnit = (value: number, unit: Unit): ValueWithUnits => ({
   value: round(value, 2),
   unit,
 });

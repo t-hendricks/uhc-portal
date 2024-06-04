@@ -1,9 +1,11 @@
 import React, { useEffect, useMemo, useState } from 'react';
+
 import { FormGroup, NumberInput, Text, TextContent, TextVariants } from '@patternfly/react-core';
-import PopoverHint from '~/components/common/PopoverHint';
-import { FormGroupHelperText } from '~/components/common/FormGroupHelperText';
-import ExclamationTriangleIcon from '@patternfly/react-icons/dist/esm/icons/exclamation-triangle-icon';
 import ExclamationCircleIcon from '@patternfly/react-icons/dist/esm/icons/exclamation-circle-icon';
+import ExclamationTriangleIcon from '@patternfly/react-icons/dist/esm/icons/exclamation-triangle-icon';
+
+import { FormGroupHelperText } from '~/components/common/FormGroupHelperText';
+import PopoverHint from '~/components/common/PopoverHint';
 
 interface PIDsLimitInputProps {
   value?: number;

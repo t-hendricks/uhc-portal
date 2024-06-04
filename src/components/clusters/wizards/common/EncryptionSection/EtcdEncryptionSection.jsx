@@ -1,11 +1,16 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { FormGroup, GridItem } from '@patternfly/react-core';
 import { Field } from 'redux-form';
-import ExternalLink from '~/components/common/ExternalLink';
+
+import { FormGroup, GridItem } from '@patternfly/react-core';
+
 import links from '~/common/installLinks.mjs';
+import { CheckboxDescription } from '~/components/common/CheckboxDescription';
+import ExternalLink from '~/components/common/ExternalLink';
 import ReduxCheckbox from '~/components/common/ReduxFormComponents/ReduxCheckbox';
+
 import { constants } from '../../../common/CreateOSDFormConstants';
+
 import AWSCustomerManagedEncryption from './AWSCustomerManagedEncryption';
 
 import './encryptionSection.scss';
@@ -45,11 +50,11 @@ function EtcdEncryptionSection({
           }
         />
 
-        <div className="ocm-c--reduxcheckbox-description">
+        <CheckboxDescription>
           {isHypershiftSelected
             ? 'Etcd is always encrypted, but you can specify a custom KMS key if desired.'
             : 'Add more encryption for OpenShift and Kubernetes API resources.'}
-        </div>
+        </CheckboxDescription>
         {needsCustomEtcdKey && (
           <GridItem>
             <AWSCustomerManagedEncryption

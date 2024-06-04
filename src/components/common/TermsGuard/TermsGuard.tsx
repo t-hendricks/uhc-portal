@@ -1,39 +1,38 @@
 import React from 'react';
+import { useLocation, useNavigate } from 'react-router-dom-v5-compat';
+
 import {
   Button,
-  TextContent,
-  Text,
-  TextVariants,
   EmptyState,
   EmptyStateBody,
+  Text,
+  TextContent,
+  TextVariants,
 } from '@patternfly/react-core';
 import { Spinner } from '@redhat-cloud-services/frontend-components/Spinner';
-import { RouteComponentProps } from 'react-router-dom';
 
-import type { TermsReviewResponse } from '~/types/accounts_mgmt.v1';
 import type { PromiseReducerState } from '~/redux/types';
+import type { TermsReviewResponse } from '~/types/accounts_mgmt.v1';
+
+import getTermsAppLink from '../../../common/getTermsAppLink';
 import Modal from '../Modal/Modal';
 import Unavailable from '../Unavailable';
-import getTermsAppLink from '../../../common/getTermsAppLink';
+
+import { ViewTermsButton } from './ViewTermsButton';
 
 import './TermsGuard.scss';
-import { ViewTermsButton } from './ViewTermsButton';
 
 type Props = {
   children: React.ReactElement;
   gobackPath: string;
-  history: RouteComponentProps['history'];
   selfTermsReview: () => void;
   selfTermsReviewResult: PromiseReducerState<TermsReviewResponse>;
 };
 
-const TermsGuard = ({
-  selfTermsReview,
-  selfTermsReviewResult,
-  children,
-  gobackPath,
-  history,
-}: Props) => {
+const TermsGuard = ({ selfTermsReview, selfTermsReviewResult, children, gobackPath }: Props) => {
+  const navigate = useNavigate();
+  const location = useLocation();
+
   React.useEffect(() => {
     selfTermsReview();
     // only run once on mount
@@ -41,19 +40,19 @@ const TermsGuard = ({
   }, []);
 
   const handleCancel = React.useCallback(() => {
-    history.push(gobackPath);
-  }, [history, gobackPath]);
+    navigate(gobackPath);
+  }, [navigate, gobackPath]);
 
   const getTncAppURL = React.useCallback(
     (baseURL: string | undefined) => {
       // as long as user performs some action, he should be redirected to the same page.
-      const redirectURL = window.location.host + history.createHref(history.location);
-      // same as clicking "Cancel" in the dialog.
-      const cancelURL = window.location.host + history.createHref({ pathname: gobackPath });
+      const redirectURL = window.location.host + location.pathname;
+      // same as clicking "Cancel" in the dialog.≈
+      const cancelURL = window.location.host + gobackPath;
 
       return getTermsAppLink(baseURL, redirectURL, cancelURL);
     },
-    [history, gobackPath],
+    [location.pathname, gobackPath],
   );
 
   // block by error page if the terms service is unavailable.

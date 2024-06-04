@@ -13,23 +13,24 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
-import { produce } from 'immer';
 import dayjs from 'dayjs';
+import { produce } from 'immer';
 
-import {
-  REJECTED_ACTION,
-  PENDING_ACTION,
-  FULFILLED_ACTION,
-  baseRequestState,
-} from '../../../../redux/reduxHelpers';
 import { getErrorState } from '../../../../common/errors';
 import {
-  POST_UPGRADE_SCHEDULE,
-  GET_UPGRADE_SCHEDULES,
-  DELETE_UPGRADE_SCHEDULE,
+  baseRequestState,
+  FULFILLED_ACTION,
+  PENDING_ACTION,
+  REJECTED_ACTION,
+} from '../../../../redux/reduxHelpers';
+
+import {
   CLEAR_DELETE_UPGRADE_SCHEDULE,
-  CLEAR_POST_UPGRADE_SCHEDULE,
   CLEAR_GET_UPGRADE_SCHEDULE,
+  CLEAR_POST_UPGRADE_SCHEDULE,
+  DELETE_UPGRADE_SCHEDULE,
+  GET_UPGRADE_SCHEDULES,
+  POST_UPGRADE_SCHEDULE,
   SET_CLUSTER_UPGRADE_POLICY,
 } from './clusterUpgradeActions';
 

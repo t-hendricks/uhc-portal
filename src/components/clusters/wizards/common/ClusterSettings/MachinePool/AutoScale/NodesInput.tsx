@@ -1,5 +1,6 @@
 import React from 'react';
 import { FieldInputProps, FieldMetaProps } from 'formik';
+
 import { NumberInput } from '@patternfly/react-core';
 
 interface NodesInputProps {
@@ -17,19 +18,19 @@ export const NodesInput = ({
   min,
   max,
   input,
-  meta: { touched, error },
+  meta: { error },
   displayError,
   hideError,
   limit,
   ariaLabel,
 }: NodesInputProps) => {
   React.useEffect(() => {
-    if (touched && error) {
+    if (error) {
       displayError(limit, error);
     } else {
       hideError(limit);
     }
-  }, [touched, error, limit, displayError, hideError]);
+  }, [error, limit, displayError, hideError]);
 
   const onButtonPress = (plus: boolean) => () => {
     // base cases

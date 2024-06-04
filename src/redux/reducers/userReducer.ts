@@ -1,15 +1,17 @@
 import { produce } from 'immer';
+
 import { Organization, QuotaCost, TermsReviewResponse } from '~/types/accounts_mgmt.v1';
 import { UserInfo } from '~/types/types';
-import { userConstants } from '../constants';
-import {
-  REJECTED_ACTION,
-  PENDING_ACTION,
-  FULFILLED_ACTION,
-  baseRequestState,
-} from '../reduxHelpers';
+
 import { getErrorState } from '../../common/errors';
 import { UserAction } from '../actions/userActions';
+import { userConstants } from '../constants';
+import {
+  baseRequestState,
+  FULFILLED_ACTION,
+  PENDING_ACTION,
+  REJECTED_ACTION,
+} from '../reduxHelpers';
 import { PromiseActionType, PromiseReducerState } from '../types';
 
 export type OrganizationState = {
@@ -20,13 +22,13 @@ export type OrganizationState = {
   timestamp: number;
 };
 
-export type State = {
+export type UserProfileState = {
   keycloakProfile: Partial<UserInfo>;
   organization: PromiseReducerState<OrganizationState>;
   selfTermsReviewResult: PromiseReducerState<TermsReviewResponse>;
 };
 
-const initialState: State = {
+const initialState: UserProfileState = {
   keycloakProfile: {},
   organization: {
     ...baseRequestState,
@@ -42,7 +44,10 @@ const initialState: State = {
     redirect_url: '',
   },
 };
-const userProfile = (state = initialState, action: PromiseActionType<UserAction>): State =>
+const userProfile = (
+  state = initialState,
+  action: PromiseActionType<UserAction>,
+): UserProfileState =>
   produce(state, (draft) => {
     // eslint-disable-next-line default-case
     switch (action.type) {

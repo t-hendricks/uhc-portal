@@ -1,22 +1,25 @@
 import React, { useState } from 'react';
-import { ExpandableSection } from '@patternfly/react-core';
 import { Field, formValueSelector } from 'redux-form';
 
-import { CloudVPC } from '~/types/clusters_mgmt.v1';
-import { useFeatureGate } from '~/hooks/useFeatureGate';
+import { Alert, AlertActionLink, ExpandableSection } from '@patternfly/react-core';
+
 import { SupportedFeature } from '~/common/featureCompatibility';
-import ReduxCheckbox from '~/components/common/ReduxFormComponents/ReduxCheckbox';
-import { getIncompatibleVersionReason } from '~/common/versionCompatibility';
+import links from '~/common/installLinks.mjs';
 import { validateSecurityGroups } from '~/common/validators';
-import { SECURITY_GROUPS_FEATURE_DAY1 } from '~/redux/constants/featureConstants';
+import { getIncompatibleVersionReason } from '~/common/versionCompatibility';
 import EditSecurityGroups from '~/components/clusters/ClusterDetails/components/SecurityGroups/EditSecurityGroups';
 import SecurityGroupsEmptyAlert from '~/components/clusters/ClusterDetails/components/SecurityGroups/SecurityGroupsEmptyAlert';
+import ReduxCheckbox from '~/components/common/ReduxFormComponents/ReduxCheckbox';
+import { useFeatureGate } from '~/hooks/useFeatureGate';
+import { SECURITY_GROUPS_FEATURE_DAY1 } from '~/redux/constants/featureConstants';
 import { useGlobalState } from '~/redux/hooks';
+import { CloudVPC } from '~/types/clusters_mgmt.v1';
 
 type SecurityGroupFieldProps = {
   selectedVPC: CloudVPC;
   label?: string;
   input: { onChange: (selectedGroupIds: string[]) => void; value: string[] };
+  isHypershift: boolean;
 };
 
 const CREATE_FORM = 'CreateCluster';
@@ -28,6 +31,7 @@ const SecurityGroupField = ({
   input: { onChange, value: selectedGroupIds },
   label,
   selectedVPC,
+  isHypershift,
 }: SecurityGroupFieldProps) => (
   <EditSecurityGroups
     label={label}
@@ -35,15 +39,18 @@ const SecurityGroupField = ({
     selectedGroupIds={selectedGroupIds}
     isReadOnly={false}
     onChange={onChange}
+    isHypershift={isHypershift}
   />
 );
 
 const SecurityGroupsSection = ({
   openshiftVersion,
   selectedVPC,
+  isHypershiftSelected,
 }: {
   openshiftVersion: string;
   selectedVPC: CloudVPC;
+  isHypershiftSelected: boolean;
 }) => {
   const hasFeatureGate = useFeatureGate(SECURITY_GROUPS_FEATURE_DAY1);
   const securityGroups = useGlobalState((state) => valueSelector(state, fieldId));
@@ -63,7 +70,7 @@ const SecurityGroupsSection = ({
   const incompatibleReason = getIncompatibleVersionReason(
     SupportedFeature.SECURITY_GROUPS,
     openshiftVersion,
-    { day1: true },
+    { day1: true, isHypershift: isHypershiftSelected },
   );
 
   const showEmptyAlert =
@@ -79,6 +86,26 @@ const SecurityGroupsSection = ({
       {showEmptyAlert && <SecurityGroupsEmptyAlert />}
       {!incompatibleReason && !showEmptyAlert && (
         <>
+          <Alert
+            variant="info"
+            isInline
+            title="You cannot add or edit security groups associated with the control plane nodes, infrastructure nodes, or machine pools that were created by default during cluster creation."
+            actionLinks={
+              <>
+                <AlertActionLink component="a" href={links.ROSA_SECURITY_GROUPS} target="_blank">
+                  View more information
+                </AlertActionLink>
+                <AlertActionLink
+                  component="a"
+                  href={links.AWS_CONSOLE_SECURITY_GROUPS}
+                  target="_blank"
+                >
+                  AWS security groups console
+                </AlertActionLink>
+              </>
+            }
+          />
+          <br />
           <Field
             component={ReduxCheckbox}
             name={`${fieldId}.applyControlPlaneToAll`}
@@ -90,7 +117,10 @@ const SecurityGroupsSection = ({
             name={`${fieldId}.controlPlane`}
             label={securityGroups.applyControlPlaneToAll ? '' : 'Control plane nodes'}
             selectedVPC={selectedVPC}
-            validate={validateSecurityGroups}
+            validate={(securityGroupIds: string[]) =>
+              validateSecurityGroups(securityGroupIds, isHypershiftSelected)
+            }
+            isHypershift={isHypershiftSelected}
           />
           {!securityGroups.applyControlPlaneToAll && (
             <>
@@ -99,14 +129,20 @@ const SecurityGroupsSection = ({
                 name={`${fieldId}.infra`}
                 label="Infrastructure nodes"
                 selectedVPC={selectedVPC}
-                validate={validateSecurityGroups}
+                validate={(securityGroupIds: string[]) =>
+                  validateSecurityGroups(securityGroupIds, isHypershiftSelected)
+                }
+                isHypershift={isHypershiftSelected}
               />
               <Field
                 component={SecurityGroupField}
                 name={`${fieldId}.worker`}
                 label="Worker nodes"
                 selectedVPC={selectedVPC}
-                validate={validateSecurityGroups}
+                validate={(securityGroupIds: string[]) =>
+                  validateSecurityGroups(securityGroupIds, isHypershiftSelected)
+                }
+                isHypershift={isHypershiftSelected}
               />
             </>
           )}

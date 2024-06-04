@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+
 import { Form, Grid, GridItem, Title } from '@patternfly/react-core';
 
 import CIDRFields from './CIDRFields';

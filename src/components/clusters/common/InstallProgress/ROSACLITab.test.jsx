@@ -1,7 +1,10 @@
 import React from 'react';
-import { render, checkAccessibility, screen } from '~/testUtils';
+
+import { checkAccessibility, render, screen } from '~/testUtils';
+
+import fixtures from '../../ClusterDetails/__tests__/ClusterDetails.fixtures';
+
 import ROSACLITab from './ROSACLITab';
-import fixtures from '../../ClusterDetails/__test__/ClusterDetails.fixtures';
 
 describe('<ROSACLITab />', () => {
   it('is accessible', async () => {

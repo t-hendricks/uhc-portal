@@ -1,5 +1,6 @@
-import { createClusterRequest } from './submitOSDRequest';
 import { normalizedProducts } from '../../../../common/subscriptionTypes';
+
+import { createClusterRequest } from './submitOSDRequest';
 
 describe('createClusterRequest', () => {
   // These tests were captured from logging actual arguments passed to submitOSDRequest().
@@ -9,7 +10,6 @@ describe('createClusterRequest', () => {
   const baseFormData = {
     name: 'test-name',
     nodes_compute: '9',
-    dns_base_domain: '',
     aws_access_key_id: '',
     aws_secret_access_key: '',
     region: 'somewhere', // GCP defaults 'us-east1', AWS 'us-east-1', not important here.
@@ -330,6 +330,32 @@ describe('createClusterRequest', () => {
         expect(request.ccs.enabled).toEqual(true);
         expectGCPVPC(request);
       });
+
+      it('does not include domain prefix if has_domain_prefix is false', () => {
+        const data = {
+          ...baseFormData,
+          product: normalizedProducts.OSD,
+          has_domain_prefix: false,
+          domain_prefix: 'pre-test-1',
+        };
+
+        const request = createClusterRequest({}, data);
+
+        expect(request.domain_prefix).toBeUndefined();
+      });
+
+      it('includes domain prefix if has_domain_prefix is true', () => {
+        const data = {
+          ...baseFormData,
+          product: normalizedProducts.OSD,
+          has_domain_prefix: true,
+          domain_prefix: 'pre-test-1',
+        };
+
+        const request = createClusterRequest({}, data);
+
+        expect(request.domain_prefix).toEqual('pre-test-1');
+      });
     });
 
     describe('OSD Trial button', () => {
@@ -454,6 +480,32 @@ describe('createClusterRequest', () => {
         expect(request.node_drain_grace_period).toEqual({ unit: 'minutes', value: 60 });
       });
 
+      it('leaves out auto_mode if Hypershift', () => {
+        const data = {
+          ...rosaFormData,
+          byoc: 'true',
+          cloud_provider: 'aws',
+          hypershift: 'true',
+          rosa_roles_provider_creation_mode: 'auto',
+          cluster_privacy: 'external',
+          ...hcpSubnetDetails,
+        };
+        const request = createClusterRequest({}, data);
+        expect(request.aws.sts.auto_mode).toBeUndefined();
+      });
+
+      it('includes auto_mode if is selected and byo_oidc_config_id_managed is false', () => {
+        const data = {
+          ...rosaFormData,
+          byoc: 'true',
+          cloud_provider: 'aws',
+          rosa_roles_provider_creation_mode: 'auto',
+          byo_oidc_config_id_managed: 'false',
+        };
+        const request = createClusterRequest({}, data);
+        expect(request.aws.sts.auto_mode).toBeTruthy();
+      });
+
       it.each([
         ['external', ['subnet-0703ec90283d1fd6b', 'subnet-00b3753ab2dd892ac']],
         ['internal', ['subnet-00b3753ab2dd892ac']],
@@ -473,6 +525,30 @@ describe('createClusterRequest', () => {
           expect(request.aws.subnet_ids).toEqual(expectedSubnetIds);
         },
       );
+
+      it('does not include domain prefix if has_domain_prefix is false', () => {
+        const data = {
+          ...rosaFormData,
+          cloud_provider: 'aws',
+          has_domain_prefix: false,
+          domain_prefix: 'pre-test-1',
+        };
+        const request = createClusterRequest({}, data);
+
+        expect(request.domain_prefix).toBeUndefined();
+      });
+
+      it('includes domain prefix if has_domain_prefix is true', () => {
+        const data = {
+          ...rosaFormData,
+          cloud_provider: 'aws',
+          has_domain_prefix: true,
+          domain_prefix: 'pre-test-1',
+        };
+        const request = createClusterRequest({}, data);
+
+        expect(request.domain_prefix).toEqual('pre-test-1');
+      });
 
       describe('AWS Security Groups', () => {
         const byoVpcData = {

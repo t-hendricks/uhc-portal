@@ -1,23 +1,25 @@
-import PropTypes from 'prop-types';
 import React from 'react';
-import { Field } from 'redux-form';
-import { GridItem, Alert, List, ListItem, Text, TextVariants } from '@patternfly/react-core';
+import { Field } from 'formik';
+import PropTypes from 'prop-types';
 
+import { Alert, GridItem, Text, TextVariants } from '@patternfly/react-core';
+
+import { constructSelectedSubnets } from '~/common/helpers';
 import links from '~/common/installLinks.mjs';
+import validators, { required } from '~/common/validators';
+import { useFormState } from '~/components/clusters/wizards/hooks';
+import { FieldId } from '~/components/clusters/wizards/rosa_v2/constants';
 import ExternalLink from '~/components/common/ExternalLink';
 import { ReduxCheckbox } from '~/components/common/ReduxFormComponents';
-import validators, { required } from '~/common/validators';
-import { FieldId } from '~/components/clusters/wizards/osd/constants';
-import { constructSelectedSubnets } from '~/common/helpers';
-import {
-  MACHINE_CIDR_DEFAULT,
-  SERVICE_CIDR_DEFAULT,
-  HOST_PREFIX_DEFAULT,
-  POD_CIDR_DEFAULT,
-} from '../../../common/networkingConstants';
-import { constants } from '../../../common/CreateOSDFormConstants';
 
 import ReduxVerticalFormGroup from '../../../../common/ReduxFormComponents/ReduxVerticalFormGroup';
+import { constants } from '../../../common/CreateOSDFormConstants';
+import {
+  HOST_PREFIX_DEFAULT,
+  MACHINE_CIDR_DEFAULT,
+  POD_CIDR_DEFAULT,
+  SERVICE_CIDR_DEFAULT,
+} from '../../../common/networkingConstants';
 
 const machineDisjointSubnets = validators.disjointSubnets('network_machine_cidr');
 const serviceDisjointSubnets = validators.disjointSubnets('network_service_cidr');
@@ -32,10 +34,10 @@ function CIDRFields({
   isMultiAz,
   installToVpcSelected,
   isDefaultValuesChecked,
-  change,
-  isROSA,
   formValues,
 }) {
+  const { getFieldProps, getFieldMeta, setFieldValue, validateForm } = useFormState();
+
   const isFieldDisabled = isDefaultValuesChecked || disabled;
 
   const formatHostPrefix = (value) => {
@@ -55,22 +57,17 @@ function CIDRFields({
   const selectedSubnets = constructSelectedSubnets(formValues);
 
   const cidrValidators = (value) =>
-    required(value) ||
-    validators.cidr(value) ||
-    validators.validateRange(value) ||
-    (cloudProviderID === 'gcp' && validators.privateAddress(value)) ||
-    undefined;
+    required(value) || validators.cidr(value) || validators.validateRange(value) || undefined;
 
   const machineCidrValidators = (value) =>
     cidrValidators(value) ||
     (cloudProviderID === 'aws' && validators.awsMachineCidr(value, formValues)) ||
-    // cloudProviderID === 'gcp' && validators.gcpMachineCidr, https://issues.redhat.com/browse/HAC-2118
     validators.validateRange(value) ||
+    (cloudProviderID === 'aws' &&
+      validators.subnetCidrs(value, formValues, FieldId.NetworkMachineCidr, selectedSubnets)) ||
     machineDisjointSubnets(value, formValues) ||
     (cloudProviderID === 'aws' && !isMultiAz && awsMachineSingleAZSubnetMask(value)) ||
     (cloudProviderID === 'aws' && isMultiAz && awsMachineMultiAZSubnetMask(value)) ||
-    (cloudProviderID === 'aws' &&
-      validators.subnetCidrs(value, formValues, FieldId.NetworkMachineCidr, selectedSubnets)) ||
     undefined;
 
   const serviceCidrValidators = (value) =>
@@ -95,27 +92,19 @@ function CIDRFields({
       ? validators.AWS_MACHINE_CIDR_MAX_MULTI_AZ
       : validators.AWS_MACHINE_CIDR_MAX_SINGLE_AZ;
 
-  const privateRangesHint =
-    cloudProviderID === 'gcp' ? (
-      <>
-        <br />
-        <span>
-          The address must be a private IPv4 address, belonging to one of the following ranges:
-          <List>
-            <ListItem>10.0.0.0 – 10.255.255.255</ListItem>
-            <ListItem>172.16.0.0 – 172.31.255.255</ListItem>
-            <ListItem>192.168.0.0 – 192.168.255.255</ListItem>
-          </List>
-        </span>
-      </>
-    ) : null;
+  const hostValidators = (value) => required(value) || validators.hostPrefix(value);
 
   const onDefaultValuesToggle = (_event, isChecked) => {
+    setFieldValue(FieldId.CidrDefaultValuesToggle, isChecked);
     if (isChecked) {
-      change('network_machine_cidr', MACHINE_CIDR_DEFAULT);
-      change('network_service_cidr', SERVICE_CIDR_DEFAULT);
-      change('network_pod_cidr', POD_CIDR_DEFAULT);
-      change('network_host_prefix', HOST_PREFIX_DEFAULT);
+      Promise.all([
+        setFieldValue(FieldId.NetworkMachineCidr, MACHINE_CIDR_DEFAULT),
+        setFieldValue(FieldId.NetworkServiceCidr, SERVICE_CIDR_DEFAULT),
+        setFieldValue(FieldId.NetworkPodCidr, POD_CIDR_DEFAULT),
+        setFieldValue(FieldId.NetworkHostPrefix, HOST_PREFIX_DEFAULT),
+      ]).then(() => {
+        validateForm();
+      });
     }
   };
 
@@ -133,9 +122,7 @@ function CIDRFields({
             correspond to the first IP address in their subnet.
           </p>
 
-          <ExternalLink
-            href={isROSA ? links.CIDR_RANGE_DEFINITIONS_ROSA : links.CIDR_RANGE_DEFINITIONS_OSD}
-          >
+          <ExternalLink href={links.CIDR_RANGE_DEFINITIONS_ROSA}>
             Learn more to avoid conflicts
           </ExternalLink>
         </Alert>
@@ -143,26 +130,30 @@ function CIDRFields({
       <GridItem>
         <Field
           component={ReduxCheckbox}
-          name="cidr_default_values_toggle"
+          name={FieldId.CidrDefaultValuesToggle}
           label="Use default values"
           description="The below values are safe defaults. However, you must ensure that the Machine CIDR is valid for your chosen subnet(s)."
-          onChange={onDefaultValuesToggle}
+          input={{
+            ...getFieldProps(FieldId.CidrDefaultValuesToggle),
+            onChange: (event, value) => onDefaultValuesToggle(event, value),
+          }}
+          meta={getFieldMeta(FieldId.CidrDefaultValuesToggle)}
         />
       </GridItem>
       <GridItem md={6}>
         <Field
           component={ReduxVerticalFormGroup}
-          name="network_machine_cidr"
+          name={FieldId.NetworkMachineCidr}
           label="Machine CIDR"
           placeholder={MACHINE_CIDR_DEFAULT}
           type="text"
           validate={machineCidrValidators}
           disabled={isFieldDisabled}
+          input={getFieldProps(FieldId.NetworkMachineCidr)}
+          meta={getFieldMeta(FieldId.NetworkMachineCidr)}
           helpText={
             <div className="pf-v5-c-form__helper-text">
-              {cloudProviderID === 'aws'
-                ? `Subnet mask must be between /${validators.AWS_MACHINE_CIDR_MIN} and /${awsMachineCIDRMax}.`
-                : `Range must be private. Subnet mask must be at most /${validators.GCP_MACHINE_CIDR_MAX}.`}
+              {`Subnet mask must be between /${validators.AWS_MACHINE_CIDR_MIN} and /${awsMachineCIDRMax}.`}
               {installToVpcSelected && (
                 <Alert
                   variant="info"
@@ -176,12 +167,9 @@ function CIDRFields({
           extendedHelpText={
             <>
               {constants.machineCIDRHint}
-              {privateRangesHint}
 
               <Text component={TextVariants.p}>
-                <ExternalLink href={isROSA ? links.ROSA_CIDR_MACHINE : links.OSD_CIDR_MACHINE}>
-                  Learn more
-                </ExternalLink>
+                <ExternalLink href={links.ROSA_CIDR_MACHINE}>Learn more</ExternalLink>
               </Text>
             </>
           }
@@ -192,12 +180,14 @@ function CIDRFields({
       <GridItem md={6}>
         <Field
           component={ReduxVerticalFormGroup}
-          name="network_service_cidr"
+          name={FieldId.NetworkServiceCidr}
           label="Service CIDR"
           placeholder={SERVICE_CIDR_DEFAULT}
           type="text"
           validate={serviceCidrValidators}
           disabled={isFieldDisabled}
+          input={getFieldProps(FieldId.NetworkServiceCidr)}
+          meta={getFieldMeta(FieldId.NetworkServiceCidr)}
           helpText={
             cloudProviderID === 'aws'
               ? `Subnet mask must be at most /${validators.SERVICE_CIDR_MAX}.`
@@ -206,12 +196,9 @@ function CIDRFields({
           extendedHelpText={
             <>
               {constants.serviceCIDRHint}
-              {privateRangesHint}
 
               <Text component={TextVariants.p}>
-                <ExternalLink href={isROSA ? links.ROSA_CIDR_SERVICE : links.OSD_CIDR_SERVICE}>
-                  Learn more
-                </ExternalLink>
+                <ExternalLink href={links.ROSA_CIDR_SERVICE}>Learn more</ExternalLink>
               </Text>
             </>
           }
@@ -222,12 +209,14 @@ function CIDRFields({
       <GridItem md={6}>
         <Field
           component={ReduxVerticalFormGroup}
-          name="network_pod_cidr"
+          name={FieldId.NetworkPodCidr}
           label="Pod CIDR"
           placeholder={POD_CIDR_DEFAULT}
           type="text"
           validate={podCidrValidators}
           disabled={isFieldDisabled}
+          input={getFieldProps(FieldId.NetworkPodCidr)}
+          meta={getFieldMeta(FieldId.NetworkPodCidr)}
           helpText={
             cloudProviderID === 'aws'
               ? `Subnet mask must allow for at least ${validators.POD_NODES_MIN} nodes.`
@@ -236,12 +225,9 @@ function CIDRFields({
           extendedHelpText={
             <>
               {constants.podCIDRHint}
-              {privateRangesHint}
 
               <Text component={TextVariants.p}>
-                <ExternalLink href={isROSA ? links.ROSA_CIDR_POD : links.OSD_CIDR_POD}>
-                  Learn more
-                </ExternalLink>
+                <ExternalLink href={links.ROSA_CIDR_POD}>Learn more</ExternalLink>
               </Text>
             </>
           }
@@ -252,23 +238,23 @@ function CIDRFields({
       <GridItem md={6}>
         <Field
           component={ReduxVerticalFormGroup}
-          name="network_host_prefix"
+          name={FieldId.NetworkHostPrefix}
           label="Host prefix"
           placeholder={HOST_PREFIX_DEFAULT}
           type="text"
           format={formatHostPrefix}
           normalize={normalizeHostPrefix}
-          validate={[required, validators.hostPrefix]}
+          validate={hostValidators}
           disabled={isFieldDisabled}
+          input={getFieldProps(FieldId.NetworkHostPrefix)}
+          meta={getFieldMeta(FieldId.NetworkHostPrefix)}
           helpText={`Must be between /${validators.HOST_PREFIX_MIN} and /${validators.HOST_PREFIX_MAX}.`}
           extendedHelpText={
             <>
               {constants.hostPrefixHint}
 
               <Text component={TextVariants.p}>
-                <ExternalLink href={isROSA ? links.ROSA_CIDR_HOST : links.OSD_CIDR_HOST}>
-                  Learn more
-                </ExternalLink>
+                <ExternalLink href={links.ROSA_CIDR_HOST}>Learn more</ExternalLink>
               </Text>
             </>
           }
@@ -280,13 +266,11 @@ function CIDRFields({
 }
 
 CIDRFields.propTypes = {
-  change: PropTypes.func.isRequired,
   disabled: PropTypes.bool,
   cloudProviderID: PropTypes.string,
   isMultiAz: PropTypes.bool,
   installToVpcSelected: PropTypes.bool,
   isDefaultValuesChecked: PropTypes.bool,
-  isROSA: PropTypes.bool,
   formValues: PropTypes.object,
 };
 

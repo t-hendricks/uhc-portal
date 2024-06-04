@@ -1,9 +1,12 @@
 import React from 'react';
+
 import { PageSection } from '@patternfly/react-core';
 
 import { AppPage } from '~/components/App/AppPage';
-import Breadcrumbs from '../../common/Breadcrumbs';
+
 import links from '../../../common/installLinks.mjs';
+import Breadcrumbs from '../../common/Breadcrumbs';
+
 import { InstructionsChooser } from './instructions/InstructionsChooser';
 import { InstructionsChooserPageTitle } from './instructions/InstructionsChooserPageTitle';
 
@@ -27,6 +30,8 @@ const InstallPower = () => {
           aiLearnMoreLink={links.INSTALL_ASSISTED_LEARN_MORE}
           upiPageLink="/install/power/user-provisioned"
           upiLearnMoreLink={links.INSTALL_POWER_UPI_GETTING_STARTED}
+          agentBasedPageLink="/install/power/agent-based"
+          agentBasedLearnMoreLink={links.INSTALL_AGENT_LEARN_MORE}
           hideIPI
           providerSpecificFeatures={{
             abi: ['For connected or air-gapped/restricted networks'],

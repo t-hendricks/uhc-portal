@@ -1,30 +1,31 @@
 import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { Field } from 'redux-form';
-import { Form, Grid, GridItem, Title, Text, Alert, AlertActionLink } from '@patternfly/react-core';
+
+import { Alert, AlertActionLink, Form, Grid, GridItem, Text, Title } from '@patternfly/react-core';
 import { WizardContext as WizardContextDeprecated } from '@patternfly/react-core/deprecated';
 
 import { stringToArray } from '~/common/helpers';
-import { constants } from '~/components/clusters/common/CreateOSDFormConstants';
-import { validateUrl, validateCA, checkNoProxyDomains } from '~/common/validators';
 import { normalizedProducts } from '~/common/subscriptionTypes';
+import { checkNoProxyDomains, validateCA, validateUrl } from '~/common/validators';
+import { constants } from '~/components/clusters/common/CreateOSDFormConstants';
 import {
+  DISABLED_NO_PROXY_PLACEHOLDER,
   HTTP_PROXY_PLACEHOLDER,
   HTTPS_PROXY_PLACEHOLDER,
-  DISABLED_NO_PROXY_PLACEHOLDER,
-  NO_PROXY_PLACEHOLDER,
   NO_PROXY_HELPER_TEXT,
-  TRUST_BUNDLE_PLACEHOLDER,
+  NO_PROXY_PLACEHOLDER,
   TRUST_BUNDLE_HELPER_TEXT,
+  TRUST_BUNDLE_PLACEHOLDER,
 } from '~/components/clusters/common/networkingConstants';
-import ReduxVerticalFormGroup from '../../../../common/ReduxFormComponents/ReduxVerticalFormGroup';
-import ReduxFileUpload from '../../../../common/ReduxFormComponents/ReduxFileUpload';
-import ExternalLink from '../../../../common/ExternalLink';
-import links from '../../../../../common/installLinks.mjs';
 
+import links from '../../../../../common/installLinks.mjs';
+import ExternalLink from '../../../../common/ExternalLink';
+import ReduxFileUpload from '../../../../common/ReduxFormComponents/ReduxFileUpload';
+import ReduxVerticalFormGroup from '../../../../common/ReduxFormComponents/ReduxVerticalFormGroup';
 import {
-  MAX_FILE_SIZE,
   ACCEPT,
+  MAX_FILE_SIZE,
 } from '../../../ClusterDetails/components/IdentityProvidersPage/components/CAUpload';
 
 function ClusterProxyScreen({

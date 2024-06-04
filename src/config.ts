@@ -1,8 +1,23 @@
 import dayjs from 'dayjs';
-import utc from 'dayjs/plugin/utc';
-import relativeTime from 'dayjs/plugin/relativeTime';
 import advancedFormat from 'dayjs/plugin/advancedFormat';
-import { ENV_OVERRIDE_LOCALSTORAGE_KEY } from './common/localStorageConstants';
+import relativeTime from 'dayjs/plugin/relativeTime';
+import utc from 'dayjs/plugin/utc';
+
+import {
+  ENV_OVERRIDE_LOCALSTORAGE_KEY,
+  MULTIREGION_LOCALSTORAGE_KEY,
+} from './common/localStorageConstants';
+import { Chrome } from './types/types';
+import { getRestrictedEnvApi, isRestrictedEnv } from './restrictedEnv';
+
+export type Config = {
+  configData: EnvConfigWithFedRamp;
+  dateConfig: () => void;
+  envOverride: string | undefined;
+  fakeOSD: boolean;
+  fetchConfig: (chrome: Chrome) => Promise<any>;
+  loadConfig: (data: EnvConfigWithFedRamp) => void;
+};
 
 type EnvConfig = {
   apiGateway: string;
@@ -12,7 +27,14 @@ type EnvConfig = {
   fedrampGateway?: string;
   fedrampS3?: string;
   demoExperience?: string;
+  apiGatewayXCM?: string;
+  apiRegionalGatewayTemplate?: string;
 };
+
+type EnvConfigWithFedRamp = {
+  restrictedEnv: boolean;
+  restrictedEnvApi: string;
+} & EnvConfig;
 
 const configs: { [env: string]: Promise<EnvConfig> | undefined } = {};
 
@@ -20,13 +42,11 @@ const configs: { [env: string]: Promise<EnvConfig> | undefined } = {};
 // get bundled in the main chunk, and not spilt to tiny chunks
 
 configs.production = import(/* webpackMode: "eager" */ './config/production.json');
-configs.stageSSO = import(/* webpackMode: "eager" */ './config/ci.json');
 configs.staging = import(/* webpackMode: "eager" */ './config/staging.json');
 configs.integration = import(/* webpackMode: "eager" */ './config/integration.json');
 
 if (APP_DEV_SERVER) {
-  // running in webpack dev server, add development configs
-  configs.development = import(/* webpackMode: "eager" */ './config/development.json');
+  // running in webpack dev server, add mockdata configs
   configs.mockdata = import(/* webpackMode: "eager" */ './config/mockdata.json');
 }
 
@@ -77,18 +97,41 @@ const parseRosaV2QueryParam = () => {
   return ret;
 };
 
+const parseMultiRegionQueryParam = () => {
+  let ret = false;
+  window.location.search
+    .substring(1)
+    .split('&')
+    .forEach((queryString) => {
+      const [key, val] = queryString.split('=');
+      if (key.toLowerCase() === 'multiregion' && val === 'true') {
+        ret = true;
+      }
+    });
+  return ret;
+};
+
 const config = {
-  configData: {} as EnvConfig,
+  configData: {} as EnvConfigWithFedRamp,
   envOverride: undefined as string | undefined,
   fakeOSD: false,
   rosaV2: false,
+  multiRegion: false,
 
-  loadConfig(data: EnvConfig) {
+  loadConfig(data: EnvConfigWithFedRamp) {
     this.configData = {
       ...data,
       // replace $SELF_PATH$ with the current host
       // to avoid CORS issues when not using prod.foo
       apiGateway: data.apiGateway.replace('$SELF_PATH$', window.location.host),
+      ...(data.apiRegionalGatewayTemplate
+        ? {
+            apiRegionalGatewayTemplate: data.apiRegionalGatewayTemplate.replace(
+              '$SELF_PATH$',
+              window.location.host,
+            ),
+          }
+        : {}),
       insightsGateway:
         data.insightsGateway?.replace('$SELF_PATH$', window.location.host) || undefined,
     };
@@ -97,7 +140,7 @@ const config = {
     (window as any).ocmConfig = this;
   },
 
-  fetchConfig() {
+  fetchConfig(chrome: Chrome) {
     const that = this;
     return new Promise<void>((resolve) => {
       if (parseFakeQueryParam()) {
@@ -106,10 +149,22 @@ const config = {
       if (parseRosaV2QueryParam()) {
         that.rosaV2 = true;
       }
+      const fedRampConfig = {
+        restrictedEnv: isRestrictedEnv(chrome),
+        restrictedEnvApi: getRestrictedEnvApi(chrome),
+      };
+      if (parseMultiRegionQueryParam() || localStorage.getItem(MULTIREGION_LOCALSTORAGE_KEY)) {
+        that.multiRegion = true;
+        localStorage.setItem(MULTIREGION_LOCALSTORAGE_KEY, 'true');
+      }
+
       const queryEnv = parseEnvQueryParam() || localStorage.getItem(ENV_OVERRIDE_LOCALSTORAGE_KEY);
       if (queryEnv && configs[queryEnv]) {
         configs[queryEnv]!.then((data) => {
-          this.loadConfig(data);
+          this.loadConfig({
+            ...data,
+            ...fedRampConfig,
+          });
           // eslint-disable-next-line no-console
           console.info(`Loaded override config: ${queryEnv}`);
           that.envOverride = queryEnv;
@@ -118,7 +173,10 @@ const config = {
         });
       } else {
         configs.default?.then((data) => {
-          this.loadConfig(data);
+          this.loadConfig({
+            ...data,
+            ...fedRampConfig,
+          });
           // eslint-disable-next-line no-console
           console.info(`Loaded default config: ${APP_API_ENV}`);
           resolve();

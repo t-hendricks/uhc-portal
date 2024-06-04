@@ -1,25 +1,29 @@
 // a Field-compatible component for selecting an associated AWS account id
 
-import React, { useState, useEffect, createRef, ReactElement, useCallback, useMemo } from 'react';
+import React, { createRef, ReactElement, useCallback, useEffect, useMemo, useState } from 'react';
+
 import {
   Button,
-  FormGroup,
-  EmptyStateBody,
+  ButtonProps,
   EmptyState,
-  Tooltip,
+  EmptyStateBody,
+  EmptyStateHeader,
   Flex,
   FlexItem,
-  ButtonProps,
-  EmptyStateHeader,
+  FormGroup,
+  Tooltip,
 } from '@patternfly/react-core';
+
 import links from '~/common/installLinks.mjs';
+import { AWS_ACCOUNT_ROSA_LOCALSTORAGE_KEY } from '~/common/localStorageConstants';
 import { FormGroupHelperText } from '~/components/common/FormGroupHelperText';
 import { CloudAccount } from '~/types/accounts_mgmt.v1';
-import { AWS_ACCOUNT_ROSA_LOCALSTORAGE_KEY } from '~/common/localStorageConstants';
+
+import FuzzySelect, { FuzzyDataType, FuzzyEntryType } from '../../../../common/FuzzySelect';
 import PopoverHint from '../../../../common/PopoverHint';
-import { getContract } from './AWSBillingAccount/awsBillingAccountHelper';
+
 import { useAssociateAWSAccountDrawer } from './AssociateAWSAccountDrawer/AssociateAWSAccountDrawer';
-import FuzzySelect, { FuzzyEntryType, FuzzyDataType } from '../../../../common/FuzzySelect';
+import { getContract } from './AWSBillingAccount/awsBillingAccountHelper';
 
 import './AccountsRolesScreen.scss';
 
@@ -43,6 +47,7 @@ function sortFn(a: FuzzyEntryType, b: FuzzyEntryType) {
 }
 export interface AWSAccountSelectionProps {
   input: {
+    name: string;
     value?: string;
     onChange?: any;
     onBlur: any;
@@ -69,6 +74,7 @@ export interface AWSAccountSelectionProps {
 
 function AWSAccountSelection({
   input: {
+    name,
     // onBlur interferes with Patternfly's Select footer onClick handlers.
     onBlur: _onBlur,
     ...inputProps
@@ -186,6 +192,7 @@ function AWSAccountSelection({
             validated={touched && error ? 'error' : undefined}
             footer={footer}
             aria-describedby="aws-infra-accounts"
+            toggleId={name}
           />
         </FlexItem>
         {onRefresh && (

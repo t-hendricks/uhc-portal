@@ -1,11 +1,10 @@
+/* generated using openapi-typescript-codegen -- do not edit */
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-
 import type { InstanceIAMRoles } from './InstanceIAMRoles';
 import type { OidcConfig } from './OidcConfig';
 import type { OperatorIAMRole } from './OperatorIAMRole';
-
 /**
  * Contains the necessary attributes to support role-based authentication on AWS.
  */

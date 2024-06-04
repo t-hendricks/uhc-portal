@@ -19,6 +19,10 @@ class CreateRosaCluster extends Page {
   reviewAndCreateTree = () =>
     cy.get('li.pf-v5-c-wizard__nav-item').find('button').contains('Review and create');
 
+  createCustomDomainPrefixCheckbox = () => cy.get('input[id="has_domain_prefix"]');
+
+  domainPrefixInput = () => cy.get('input[id="domain_prefix"]');
+
   machineCIDRInput = () => cy.get('input[id="network_machine_cidr"]');
 
   serviceCIDRInput = () => cy.get('input[id="network_service_cidr"]');
@@ -29,15 +33,19 @@ class CreateRosaCluster extends Page {
 
   customOperatorPrefixInput = () => cy.get('input[id="custom_operator_roles_prefix"]');
 
-  singleZoneAvilabilityRadio = () => cy.getByTestId('multi_az-false');
+  singleZoneAvilabilityRadio = () =>
+    cy.get('input[id="form-radiobutton-multi_az-false-field"]').should('be.exist');
 
-  multiZoneAvilabilityRadio = () => cy.getByTestId('multi_az-true');
+  multiZoneAvilabilityRadio = () =>
+    cy.get('input[id="form-radiobutton-multi_az-true-field"]').should('be.exist');
 
   advancedEncryptionLink = () => cy.get('span').contains('Advanced Encryption');
 
-  useDefaultKMSKeyRadio = () => cy.getByTestId('customer_managed_key-false');
+  useDefaultKMSKeyRadio = () =>
+    cy.get('input[id="form-radiobutton-customer_managed_key-false-field"]').should('be.exist');
 
-  useCustomKMSKeyRadio = () => cy.getByTestId('customer_managed_key-true');
+  useCustomKMSKeyRadio = () =>
+    cy.get('input[id="form-radiobutton-customer_managed_key-true-field"]').should('be.exist');
 
   kmsKeyARNHelpText = () => cy.get('#kms_key_arn-helper');
 
@@ -53,15 +61,20 @@ class CreateRosaCluster extends Page {
 
   editNodeLabelLink = () => cy.get('span').contains('Add node labels');
 
-  addAdditionalLabelLink = () => cy.get('.reduxFormKeyValueList-addBtn');
+  addAdditionalLabelLink = () => cy.contains('Add additional label').should('be.exist');
 
-  createClusterButton = () => cy.get('button[type="submit"]').contains('Create cluster');
+  createClusterButton = () => cy.getByTestId('create-cluster-button');
 
   refreshInfrastructureAWSAccountButton = () =>
     cy.get('button[data-testid="refresh-aws-accounts"]').first();
 
   refreshBillingAWSAccountButton = () =>
     cy.get('button[data-testid="refresh-aws-accounts"]').second();
+
+  howToAssociateNewAWSAccountButton = () => cy.getByTestId('launch-associate-account-btn');
+
+  howToAssociateNewAWSAccountDrawerCloseButton = () =>
+    cy.getByTestId('close-associate-account-btn');
 
   supportRoleInput = () => cy.get('input[id="support_role_arn"]');
 
@@ -158,7 +171,25 @@ class CreateRosaCluster extends Page {
   individualUpdateRadio = () => cy.getByTestId('upgrade_policy-manual');
 
   isCreateRosaPage() {
-    super.assertUrlIncludes('/openshift/create/rosa/wizard');
+    //TODO: This temporary change and will be removed once rosav2 is default.
+    if (Cypress.env('rosav2')) {
+      cy.visit('/create/rosa/wizard?rosav2=true');
+      super.assertUrlIncludes('/create/rosa/wizard?rosav2=true');
+    } else {
+      super.assertUrlIncludes('/openshift/create/rosa/wizard');
+    }
+  }
+
+  isTextContainsInPage(text, present = true) {
+    if (present) {
+      cy.get('body').then(($body) => {
+        if ($body.text().includes(text)) {
+          cy.contains(text).scrollIntoView().should('be.visible');
+        }
+      });
+    } else {
+      cy.contains(text).should('not.exist');
+    }
   }
 
   isAccountsAndRolesScreen() {
@@ -169,12 +200,16 @@ class CreateRosaCluster extends Page {
     cy.contains('h3', 'Cluster details');
   }
 
-  isClusterMachinepoolsScreen() {
-    cy.contains('h3', 'Default machine pool');
+  isClusterMachinepoolsScreen(hosted = false) {
+    let machinePoolHeaderText = 'Default machine pool';
+    if (hosted) {
+      machinePoolHeaderText = 'Machine pools';
+    }
+    cy.contains('h3', machinePoolHeaderText);
   }
 
   isControlPlaneTypeScreen() {
-    cy.contains('h2', 'Welcome to Red Hat OpenShift Service on AWS (ROSA)');
+    cy.contains('h2', 'Welcome to Red Hat OpenShift Service on AWS (ROSA)', { timeout: 30000 });
     cy.contains('h3', 'Select an AWS control plane type');
   }
 
@@ -234,6 +269,18 @@ class CreateRosaCluster extends Page {
       .should('eq', testVersion);
   };
 
+  isTextContainsInPage(text, present = true) {
+    if (present) {
+      cy.get('body').then(($body) => {
+        if ($body.text().includes(text)) {
+          cy.contains(text).scrollIntoView().should('be.visible');
+        }
+      });
+    } else {
+      cy.contains(text).should('not.exist');
+    }
+  }
+
   get clusterNameInput() {
     return 'input#name';
   }
@@ -285,12 +332,7 @@ class CreateRosaCluster extends Page {
   }
 
   selectAWSInfrastructureAccount(accountID) {
-    cy.get('button')
-      .contains('How to associate a new AWS account')
-      .siblings()
-      .find('div')
-      .find('button.pf-v5-c-select__toggle')
-      .click();
+    cy.get('button[aria-describedby="aws-infra-accounts"]').first().click();
     cy.get('input[placeholder*="Filter by account ID"]', { timeout: 50000 })
       .clear()
       .type(accountID);
@@ -298,6 +340,14 @@ class CreateRosaCluster extends Page {
       .find('button')
       .contains(accountID)
       .click();
+  }
+
+  selectAWSBillingAccount(accountID) {
+    cy.get('button[aria-describedby="aws-infra-accounts"]').last().click();
+    cy.get('input[placeholder*="Filter by account ID"]', { timeout: 50000 })
+      .clear()
+      .type(accountID);
+    cy.get('div[label="AWS billing account"]').find('button').contains(accountID).click();
   }
 
   waitForARNList() {
@@ -330,19 +380,82 @@ class CreateRosaCluster extends Page {
       });
   }
 
+  selectVPC(vpcName) {
+    this.clickButtonContainingText('Select a VPC');
+    cy.get('input[placeholder="Filter by VPC ID / name"]', { timeout: 50000 })
+      .clear()
+      .type(vpcName);
+    cy.contains(vpcName).scrollIntoView().click();
+  }
+
+  selectMachinePoolPrivateSubnet(privateSubnetNameOrId, machinePoolIndex = 1) {
+    let mpIndex = machinePoolIndex - 1;
+    cy.get(`button[id="machinePoolsSubnets[${mpIndex}].privateSubnetId"]`).click();
+    cy.get('input[placeholder="Filter by subnet ID / name"]', { timeout: 50000 })
+      .clear()
+      .type(privateSubnetNameOrId);
+    cy.contains(privateSubnetNameOrId).scrollIntoView().click();
+  }
+  selectMachinePoolPublicSubnet(publicSubnetNameOrId) {
+    this.clickButtonContainingText('Select public subnet');
+    cy.get('input[placeholder="Filter by subnet ID / name"]', { timeout: 50000 })
+      .clear()
+      .type(publicSubnetNameOrId);
+    cy.contains(publicSubnetNameOrId).scrollIntoView().click();
+  }
+
+  waitForVPCList() {
+    cy.get('span.pf-v5-c-button__progress', { timeout: 80000 }).should('not.exist');
+    cy.getByTestId('refresh-vpcs', { timeout: 80000 }).should('not.be.disabled');
+  }
+
+  selectOidcConfigId(configID) {
+    this.clickButtonContainingText('Select a config id');
+    cy.get('input[placeholder="Filter by config ID"]').clear().type(configID);
+    cy.contains(configID).scrollIntoView().click();
+  }
+
+  setClusterName(clusterName) {
+    cy.get(this.clusterNameInput).scrollIntoView().type('{selectAll}').type(clusterName);
+  }
+
+  setDomainPrefix(domainPrefix) {
+    this.domainPrefixInput().scrollIntoView().type('{selectAll}').type(domainPrefix);
+  }
+
   selectClusterVersion(version) {
     cy.get('div[name="cluster_version"]').find('button.pf-v5-c-select__toggle').click();
     cy.get('ul[label="Version"]').find('button').contains(version).click();
   }
 
   addNodeLabelKeyAndValue(key, value = '', index = 0) {
-    cy.get(`input[name="node_labels[${index}].key"]`).clear().type(key);
-    cy.get(`input[name="node_labels[${index}].value"]`).clear().type(value);
+    cy.get('input[aria-label="Key-value list key"]').each(($el, indx) => {
+      if (index === indx) {
+        cy.wrap($el).clear().type(key);
+        return;
+      }
+    });
+    cy.get('input[aria-label="Key-value list value"]').each(($el, indx) => {
+      if (index === indx) {
+        cy.wrap($el).clear().type(value);
+        return;
+      }
+    });
   }
 
   isNodeLabelKeyAndValue(key, value = '', index = 0) {
-    cy.get(`input[name="node_labels[${index}].key"]`).should('have.value', key);
-    cy.get(`input[name="node_labels[${index}].value"]`).should('have.value', value);
+    cy.get('input[aria-label="Key-value list key"]').each(($el, indx) => {
+      if (index === indx) {
+        cy.wrap($el).should('have.value', key);
+        return;
+      }
+    });
+    cy.get('input[aria-label="Key-value list value"]').each(($el, indx) => {
+      if (index === indx) {
+        cy.wrap($el).should('have.value', value);
+        return;
+      }
+    });
   }
 
   selectRegion(region) {
@@ -350,13 +463,9 @@ class CreateRosaCluster extends Page {
   }
 
   selectComputeNodeType(computeNodeType) {
-    cy.get('label[for="node_type"]')
-      .parent()
-      .siblings()
-      .find('div')
-      .find('button.pf-v5-c-select__toggle')
-      .click();
-    cy.get('li').contains(computeNodeType).click();
+    cy.get('button[aria-label="Machine type select toggle"]').click();
+    cy.get('input[aria-label="Machine type select search field"]').clear().type(computeNodeType);
+    cy.get('div').contains(computeNodeType).click();
   }
 
   selectGracePeriod(gracePeriod) {
@@ -405,10 +514,10 @@ class CreateRosaCluster extends Page {
   }
 
   selectAvailabilityZone(az) {
-    if (az == 'Single zone') {
-      this.singleZoneAvilabilityRadio().check();
+    if (az.toLowerCase() == 'single zone' || az.toLowerCase() == 'single-zone') {
+      cy.contains('Single zone').should('be.exist').click();
     } else {
-      this.multiZoneAvilabilityRadio().check();
+      cy.contains('Multi-zone').should('be.exist').click();
     }
   }
 
@@ -439,6 +548,7 @@ class CreateRosaCluster extends Page {
       .parent()
       .siblings()
       .find('div')
+      .scrollIntoView()
       .contains(value);
   }
 
@@ -562,6 +672,14 @@ class CreateRosaCluster extends Page {
     this.clusterDetailsTree().click();
   }
 
+  closePopoverDialogs() {
+    cy.get('body').then(($body) => {
+      if ($body.find('button[aria-label="Close"]').filter(':visible').length > 0) {
+        cy.get('button[aria-label="Close"]').filter(':visible').click();
+      }
+    });
+  }
+
   inputNodeLabelKvs(nodeLabelKvs) {
     cy.wrap(nodeLabelKvs).each((kv, index) => {
       const key = Object.keys(kv)[0];
@@ -634,6 +752,9 @@ class CreateRosaCluster extends Page {
     });
   }
 
+  clickEditStepOfSection(stepSection) {
+    cy.getByTestId(`"${stepSection}"`).click();
+  }
   get clusterNameInputError() {
     return 'ul#rich-input-popover-name li.pf-c-helper-text__item.pf-m-error.pf-m-dynamic';
   }

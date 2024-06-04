@@ -3,23 +3,26 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Field } from 'redux-form';
+
 import {
   Divider,
-  Title,
   Grid,
   GridItem,
+  Text,
   TextContent,
   TextVariants,
-  Text,
+  Title,
 } from '@patternfly/react-core';
 
-import ExternalLink from '../../../common/ExternalLink';
-import RadioButtons from '../../../common/ReduxFormComponents/RadioButtons';
-import UpgradeScheduleSelection from './UpgradeScheduleSelection';
-import PodDistruptionBudgetGraceSelect from './PodDistruptionBudgetGraceSelect';
-import './UpgradeSettingsFields.scss';
 import links from '../../../../common/installLinks.mjs';
 import { normalizedProducts } from '../../../../common/subscriptionTypes';
+import ExternalLink from '../../../common/ExternalLink';
+import RadioButtons from '../../../common/ReduxFormComponents/RadioButtons';
+
+import PodDistruptionBudgetGraceSelect from './PodDistruptionBudgetGraceSelect';
+import UpgradeScheduleSelection from './UpgradeScheduleSelection';
+
+import './UpgradeSettingsFields.scss';
 
 function UpgradeSettingsFields({
   isDisabled,
@@ -42,7 +45,7 @@ function UpgradeSettingsFields({
   );
   const recurringUpdateHypershift = (
     <>
-      The cluster control plan will be automatically updated based on your preferred day and start
+      The cluster control plane will be automatically updated based on your preferred day and start
       time when new patch updates (
       <ExternalLink href={isRosa ? links.ROSA_Z_STREAM : links.OSD_Z_STREAM}>z-stream</ExternalLink>
       ) are available. When a new minor version is available, you'll be notified and must manually
@@ -119,6 +122,10 @@ function UpgradeSettingsFields({
             Node draining
           </Title>
           <TextContent>
+            <Text component={TextVariants.p}>
+              Note: You cannot change the node drain grace period after you start the upgrade
+              process.
+            </Text>
             <Text component={TextVariants.p}>
               You may set a grace period for how long pod disruption budget-protected workloads will{' '}
               be respected during updates. After this grace period, any workloads protected by pod

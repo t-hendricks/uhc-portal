@@ -14,59 +14,57 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import {
-  Routes as AssistedInstallerRoutes,
-  NoPermissionsError as AINoPermissionsError,
-} from '@openshift-assisted/ui-lib/ocm';
-import useChrome from '@redhat-cloud-services/frontend-components/useChrome';
-import { CompatRoute } from 'react-router-dom-v5-compat';
+import React, { useEffect } from 'react';
 import { ConnectedRouter } from 'connected-react-router';
 import get from 'lodash/get';
-import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
+import { Route, RouteComponentProps, Switch, withRouter } from 'react-router-dom';
+import { CompatRoute, Navigate, useLocation } from 'react-router-dom-v5-compat';
+
 import {
-  Redirect,
-  Route,
-  RouteComponentProps,
-  Switch,
-  useLocation,
-  withRouter,
-} from 'react-router-dom';
-import apiRequest from '~/services/apiRequest';
-import { useFeatureGate } from '~/hooks/useFeatureGate';
+  NoPermissionsError as AINoPermissionsError,
+  Routes as AssistedInstallerRoutes,
+} from '@openshift-assisted/ui-lib/ocm';
+import useChrome from '@redhat-cloud-services/frontend-components/useChrome';
+
 import config from '~/config';
+import { useFeatureGate } from '~/hooks/useFeatureGate';
+import apiRequest from '~/services/apiRequest';
+
 import { normalizedProducts } from '../../common/subscriptionTypes';
 import {
   ASSISTED_INSTALLER_FEATURE,
   HYPERSHIFT_WIZARD_FEATURE,
+  MULTIREGION_PREVIEW_ENABLED,
   ROSA_WIZARD_V2_ENABLED,
 } from '../../redux/constants/featureConstants';
+import CLILoginPage from '../CLILoginPage/CLILoginPage';
 import ArchivedClusterList from '../clusters/ArchivedClusterList';
 import ClusterDetailsClusterOrExternalId from '../clusters/ClusterDetails/ClusterDetailsClusterOrExternalId';
 import ClusterDetailsSubscriptionId from '../clusters/ClusterDetails/ClusterDetailsSubscriptionId';
 import IdentityProvidersPage from '../clusters/ClusterDetails/components/IdentityProvidersPage';
+import ClusterDetailsSubscriptionIdMultiRegion from '../clusters/ClusterDetailsMultiRegion/ClusterDetailsSubscriptionIdMultiRegion';
 import ClustersList from '../clusters/ClusterList';
+import ClusterListMultiRegion from '../clusters/ClusterListMultiRegion';
 import CreateClusterPage from '../clusters/CreateClusterPage';
-import CreateROSAWizard from '../clusters/wizards/rosa_v1';
-import CreateROSAWizardV2 from '../clusters/wizards/rosa_v2';
-import GetStartedWithROSA from '../clusters/wizards/rosa_v1/CreateRosaGetStarted';
+import GovCloudPage from '../clusters/GovCloud/GovCloudPage';
 import InsightsAdvisorRedirector from '../clusters/InsightsAdvisorRedirector';
-import RegisterCluster from '../clusters/RegisterCluster';
-import InstallASH from '../clusters/install/InstallASH';
-import ConnectedInstallASHIPI from '../clusters/install/InstallASHIPI';
-import ConnectedInstallASHUPI from '../clusters/install/InstallASHUPI';
-import InstallAWS from '../clusters/install/InstallAWS';
-import ConnectedInstallAWSIPI from '../clusters/install/InstallAWSIPI';
-import ConnectedInstallAWSUPI from '../clusters/install/InstallAWSUPI';
 import ConnectedInstallAlibaba from '../clusters/install/InstallAlibaba';
 import InstallArmAWS from '../clusters/install/InstallArmAWS';
 import ConnectedInstallArmAWSIPI from '../clusters/install/InstallArmAWSIPI';
 import ConnectedInstallArmAWSUPI from '../clusters/install/InstallArmAWSUPI';
 import ConnectedInstallArmAzureIPI from '../clusters/install/InstallArmAzureIPI';
 import InstallArmBareMetal from '../clusters/install/InstallArmBareMetal';
+import ConnectedInstallArmBareMetalABI from '../clusters/install/InstallArmBareMetalABI';
 import InstallArmBMIPI from '../clusters/install/InstallArmBareMetalIPI';
 import InstallArmBMUPI from '../clusters/install/InstallArmBareMetalUPI';
 import ConnectedInstallArmPreRelease from '../clusters/install/InstallArmPreRelease';
+import InstallASH from '../clusters/install/InstallASH';
+import ConnectedInstallASHIPI from '../clusters/install/InstallASHIPI';
+import ConnectedInstallASHUPI from '../clusters/install/InstallASHUPI';
+import InstallAWS from '../clusters/install/InstallAWS';
+import ConnectedInstallAWSIPI from '../clusters/install/InstallAWSIPI';
+import ConnectedInstallAWSUPI from '../clusters/install/InstallAWSUPI';
 import InstallAzure from '../clusters/install/InstallAzure';
 import ConnectedInstallAzureIPI from '../clusters/install/InstallAzureIPI';
 import ConnectedInstallAzureUPI from '../clusters/install/InstallAzureUPI';
@@ -79,6 +77,7 @@ import ConnectedInstallGCPIPI from '../clusters/install/InstallGCPIPI';
 import ConnectedInstallGCPUPI from '../clusters/install/InstallGCPUPI';
 import ConnectedInstallIBMCloud from '../clusters/install/InstallIBMCloud';
 import InstallIBMZ from '../clusters/install/InstallIBMZ';
+import ConnectedInstallIBMZABI from '../clusters/install/InstallIBMZABI';
 import ConnectedInstallIBMZPreRelease from '../clusters/install/InstallIBMZPreRelease';
 import ConnectedInstallIBMZUPI from '../clusters/install/InstallIBMZUPI';
 import ConnectedInstallMultiAWSIPI from '../clusters/install/InstallMultiAWSIPI';
@@ -87,6 +86,7 @@ import InstallMultiBMUPI from '../clusters/install/InstallMultiBareMetalUPI';
 import ConnectedInstallMultiPreRelease from '../clusters/install/InstallMultiPreRelease';
 import InstallNutanix from '../clusters/install/InstallNutanix';
 import ConnectedInstallNutanixIPI from '../clusters/install/InstallNutanixIPI';
+import InstallOracleCloud from '../clusters/install/InstallOracleCloud';
 import InstallOSP from '../clusters/install/InstallOSP';
 import ConnectedInstallOSPIPI from '../clusters/install/InstallOSPIPI';
 import ConnectedInstallOSPUPI from '../clusters/install/InstallOSPUPI';
@@ -94,6 +94,7 @@ import InstallPlatformAgnostic from '../clusters/install/InstallPlatformAgnostic
 import ConnectedInstallPlatformAgnosticABI from '../clusters/install/InstallPlatformAgnosticABI';
 import ConnectedInstallPlatformAgnosticUPI from '../clusters/install/InstallPlatformAgnosticUPI';
 import InstallPower from '../clusters/install/InstallPower';
+import ConnectedInstallPowerABI from '../clusters/install/InstallPowerABI';
 import ConnectedInstallPowerPreRelease from '../clusters/install/InstallPowerPreRelease';
 import ConnectedInstallPowerUPI from '../clusters/install/InstallPowerUPI';
 import InstallPowerVSIPI from '../clusters/install/InstallPowerVirtualServerIPI';
@@ -104,26 +105,27 @@ import InstallVSphere from '../clusters/install/InstallVSphere';
 import ConnectedInstallVSphereABI from '../clusters/install/InstallVSphereABI';
 import ConnectedInstallVSphereIPI from '../clusters/install/InstallVSphereIPI';
 import ConnectedInstallVSphereUPI from '../clusters/install/InstallVSphereUPI';
+import RegisterCluster from '../clusters/RegisterCluster';
 import { CreateOsdWizard } from '../clusters/wizards/osd';
+import CreateROSAWizard from '../clusters/wizards/rosa_v1';
+import GetStartedWithROSA from '../clusters/wizards/rosa_v1/CreateRosaGetStarted';
+import CreateROSAWizardV2 from '../clusters/wizards/rosa_v2';
 import EntitlementConfig from '../common/EntitlementConfig/index';
+import Dashboard from '../dashboard';
 import DownloadsPage from '../downloads/DownloadsPage';
 import withFeatureGate from '../features/with-feature-gate';
-import Dashboard from '../dashboard';
 import Overview from '../overview';
 import Quota from '../quota';
 import Releases from '../releases/index';
-import Tokens from '../tokens';
-import TokensROSA from '../tokens/TokensROSA';
+import RosaHandsOnPage from '../RosaHandsOn/RosaHandsOnPage';
+import RosaServicePage from '../services/rosa/RosaServicePage';
+
 import ApiError from './ApiError';
 import { AppPage } from './AppPage';
-import GovCloudPage from '../clusters/GovCloud/GovCloudPage';
-import RosaServicePage from '../services/rosa/RosaServicePage';
 import Insights from './Insights';
 import NotFoundError from './NotFoundError';
-import TermsGuardedRoute from './TermsGuardedRoute';
 import { is404, metadataByRoute } from './routeMetadata';
-import RosaHandsOnPage from '../RosaHandsOn/RosaHandsOnPage';
-import InstallOracleCloud from '../clusters/install/InstallOracleCloud';
+import TermsGuardedRoute from './TermsGuardedRoute';
 
 const AssistedUiRouterPage: typeof AssistedInstallerRoutes = (props) => (
   <AppPage>
@@ -150,13 +152,11 @@ interface RouterProps extends RouteComponentProps {
   externalClusterId: string;
 }
 
-const TokenShowComponent = () => <Tokens show />;
-const TokenNotShowComponent = () => <Tokens show={false} showPath="/token/show" />;
 const IdentityProvidersPageEditFormComponent = () => <IdentityProvidersPage isEditForm />;
 const CreateClusterPageEmptyTabComponent = () => <CreateClusterPage activeTab="" />;
 
 const Router: React.FC<RouterProps> = ({ history, planType, clusterId, externalClusterId }) => {
-  const { pathname } = useLocation();
+  const { pathname, search } = useLocation();
 
   const {
     segment: { setPageMetadata },
@@ -167,6 +167,9 @@ const Router: React.FC<RouterProps> = ({ history, planType, clusterId, externalC
   // ROSA_WIZARD_V2_ENABLED enabled in staging, disabled in production (via Unleashed)
   const isRosaV2WizardEnabled = useFeatureGate(ROSA_WIZARD_V2_ENABLED);
 
+  // MULTIREGION_PREVIEW_ENABLED enabled in staging, disabled in production (via Unleashed)
+  const isMultiRegionPreviewEnabled = useFeatureGate(MULTIREGION_PREVIEW_ENABLED);
+
   // For testing purposes, show which major features are enabled/disabled
   React.useEffect(() => {
     // eslint-disable-next-line no-console
@@ -176,6 +179,8 @@ const Router: React.FC<RouterProps> = ({ history, planType, clusterId, externalC
       '-------------------------------------',
     );
   }, [isHypershiftWizardEnabled]);
+
+  const isMultiRegionEnabled = useFeatureGate(MULTIREGION_PREVIEW_ENABLED);
 
   useEffect(() => {
     setPageMetadata({
@@ -197,47 +202,63 @@ const Router: React.FC<RouterProps> = ({ history, planType, clusterId, externalC
 
               When adding new top-level entries to left navigation, see also getNavClickParams.js.
             */}
-            <Redirect
-              from="/install/osp/installer-provisioned"
-              to="/install/openstack/installer-provisioned"
+            <CompatRoute
+              end
+              path="/install/osp/installer-provisioned"
+              render={() => <Navigate replace to="/install/openstack/installer-provisioned" />}
             />
-            <Redirect from="/install/crc/installer-provisioned" to="/create/local" />
-            <Redirect from="/token/moa" to="/token/rosa" />
-            <Redirect from="/insights" to="/dashboard" />
-            <Redirect from="/subscriptions" to="/quota" />
+            <CompatRoute
+              end
+              path="/install/crc/installer-provisioned"
+              render={() => <Navigate replace to="/create/local" />}
+            />
+            <CompatRoute
+              end
+              path="/token/moa"
+              render={() => <Navigate replace to="/token/rosa" />}
+            />
+            <CompatRoute end path="/insights" render={() => <Navigate replace to="/dashboard" />} />
+            <CompatRoute
+              end
+              path="/subscriptions"
+              render={() => <Navigate replace to="/quota" />}
+            />
             <CompatRoute path="/downloads" component={DownloadsPage} />
-
             {/* Each token page has 2 routes with distinct paths, to remember that user wanted
                 to see it during page reload that may be needed for elevated auth. */}
             <TermsGuardedRoute
               path="/token/rosa/show"
-              history={history}
               render={() => (
                 <AppPage>
-                  <TokensROSA show />
+                  <CLILoginPage showToken isRosa />
                   <EntitlementConfig />
                 </AppPage>
               )}
             />
             <TermsGuardedRoute
               path="/token/rosa"
-              history={history}
               render={() => (
                 <AppPage>
-                  <TokensROSA show={false} showPath="/token/rosa/show" />
+                  <CLILoginPage showToken={false} showPath="/token/rosa/show" isRosa />
                   <EntitlementConfig />
                 </AppPage>
               )}
             />
-            <CompatRoute path="/token/show" component={TokenShowComponent} />
-            <CompatRoute path="/token" component={TokenNotShowComponent} />
-
+            <CompatRoute path="/token/show" render={() => <CLILoginPage showToken />} />
+            <CompatRoute
+              path="/token"
+              render={() => <CLILoginPage showToken={false} showPath="/token/show" />}
+            />
             <CompatRoute
               path="/install/alibaba/installer-provisioned"
               component={ConnectedInstallAlibaba}
             />
             <CompatRoute path="/install/arm/installer-provisioned" component={InstallArmBMIPI} />
             <CompatRoute path="/install/arm/user-provisioned" component={InstallArmBMUPI} />
+            <CompatRoute
+              path="/install/arm/agent-based"
+              component={ConnectedInstallArmBareMetalABI}
+            />
             <CompatRoute
               path="/install/arm/pre-release"
               component={ConnectedInstallArmPreRelease}
@@ -341,6 +362,7 @@ const Router: React.FC<RouterProps> = ({ history, planType, clusterId, externalC
               path="/install/ibmz/pre-release"
               component={ConnectedInstallIBMZPreRelease}
             />
+            <CompatRoute path="/install/ibmz/agent-based" component={ConnectedInstallIBMZABI} />
             <CompatRoute path="/install/ibmz" exact component={InstallIBMZ} />
             <CompatRoute
               path="/install/power/user-provisioned"
@@ -350,6 +372,7 @@ const Router: React.FC<RouterProps> = ({ history, planType, clusterId, externalC
               path="/install/power/pre-release"
               component={ConnectedInstallPowerPreRelease}
             />
+            <CompatRoute path="/install/power/agent-based" component={ConnectedInstallPowerABI} />
             <CompatRoute path="/install/power" exact component={InstallPower} />
             <CompatRoute
               path="/install/powervs/installer-provisioned"
@@ -371,22 +394,36 @@ const Router: React.FC<RouterProps> = ({ history, planType, clusterId, externalC
               component={ConnectedInstallPullSecretAzure}
             />
             <CompatRoute path="/install/oracle-cloud" component={InstallOracleCloud} />
-            <Redirect from="/install" to="/create" />
-            <Redirect from="/create/osd/aws" to="/create/osd" />
-            <Redirect from="/create/osd/gcp" to="/create/osd" />
-            <Redirect from="/create/osdtrial/aws" to="/create/osdtrial" />
-            <Redirect from="/create/osdtrial/gcp" to="/create/osdtrial" />
+            <CompatRoute end path="/install" render={() => <Navigate replace to="/create" />} />
+            <CompatRoute
+              end
+              path="/create/osd/aws"
+              render={() => <Navigate replace to="/create/osd" />}
+            />
+            <CompatRoute
+              end
+              path="/create/osd/gcp"
+              render={() => <Navigate replace to="/create/osd" />}
+            />
+            <CompatRoute
+              end
+              path="/create/osdtrial/aws"
+              render={() => <Navigate replace to="/create/osdtrial" />}
+            />
+            <CompatRoute
+              end
+              path="/create/osdtrial/gcp"
+              render={() => <Navigate replace to="/create/osdtrial" />}
+            />
             <TermsGuardedRoute
               path="/create/osdtrial"
               gobackPath="/create"
               render={() => <CreateOsdWizard product={normalizedProducts.OSDTrial} />}
-              history={history}
             />
             <TermsGuardedRoute
               path="/create/osd"
               gobackPath="/create"
               component={CreateOsdWizard}
-              history={history}
             />
             <CompatRoute
               path="/create/cloud"
@@ -400,25 +437,20 @@ const Router: React.FC<RouterProps> = ({ history, planType, clusterId, externalC
               path="/create/local"
               render={() => <CreateClusterPage activeTab="local" />}
             />
-
-            <Redirect from="/create/rosa/welcome" to="/create/rosa/getstarted" />
-            <TermsGuardedRoute
-              path="/create/rosa/getstarted"
-              history={history}
-              component={GetStartedWithROSA}
+            <CompatRoute
+              end
+              path="/create/rosa/welcome"
+              render={() => <Navigate replace to="/create/rosa/getstarted" />}
             />
+            <TermsGuardedRoute path="/create/rosa/getstarted" component={GetStartedWithROSA} />
             <CompatRoute path="/create/rosa/govcloud" component={GovCloudPage} />
-
             <TermsGuardedRoute
               path="/create/rosa/wizard"
-              history={history}
               component={
                 config.rosaV2 && isRosaV2WizardEnabled ? CreateROSAWizardV2 : CreateROSAWizard
               }
             />
-
             <CompatRoute path="/create" component={CreateClusterPageEmptyTabComponent} />
-
             <CompatRoute
               path="/details/s/:id/insights/:reportId/:errorKey"
               component={InsightsAdvisorRedirector}
@@ -431,7 +463,14 @@ const Router: React.FC<RouterProps> = ({ history, planType, clusterId, externalC
               path="/details/s/:id/edit-idp/:idpName"
               component={IdentityProvidersPageEditFormComponent}
             />
-            <CompatRoute path="/details/s/:id" component={ClusterDetailsSubscriptionId} />
+            <CompatRoute
+              path="/details/s/:id"
+              component={
+                config.multiRegion && isMultiRegionPreviewEnabled
+                  ? ClusterDetailsSubscriptionIdMultiRegion
+                  : ClusterDetailsSubscriptionId
+              }
+            />
             <CompatRoute
               path="/details/:id/insights/:reportId/:errorKey"
               component={InsightsAdvisorRedirector}
@@ -447,20 +486,24 @@ const Router: React.FC<RouterProps> = ({ history, planType, clusterId, externalC
             <CompatRoute path="/overview" exact component={Overview} />
             <CompatRoute path="/releases" exact component={Releases} />
             <CompatRoute path="/assisted-installer" component={GatedAssistedUiRouter} />
-
             {/* TODO: remove these redirects once links from trials and demo system emails are updated */}
-            <Route
+            <CompatRoute
               path="/services/rosa/demo"
-              render={(props) => (
-                <Redirect to={`/overview/rosa/hands-on/${props.location.search}`} />
-              )}
+              render={() => <Navigate replace to={`/overview/rosa/hands-on/${search}`} />}
             />
-            <Route
+            <CompatRoute
               path="/services/rosa"
-              render={(props) => <Redirect to={`/overview/rosa${props.location.search}`} />}
+              render={() => <Navigate replace to={`/overview/rosa${search}`} />}
             />
 
-            <CompatRoute path="/" exact component={ClustersList} />
+            <CompatRoute
+              path="/"
+              exact
+              component={
+                config.multiRegion && isMultiRegionEnabled ? ClusterListMultiRegion : ClustersList
+              }
+            />
+
             <Route component={NotFoundError} />
           </Switch>
         </ApiError>

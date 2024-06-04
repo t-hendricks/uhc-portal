@@ -1,52 +1,52 @@
+import get from 'lodash/get';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import get from 'lodash/get';
 
 import { addNotification } from '@redhat-cloud-services/frontend-components-notifications/redux';
+
 import { featureGateSelector } from '~/hooks/useFeatureGate';
 import { clearListVpcs } from '~/redux/actions/ccsInquiriesActions';
-import { onClearFiltersAndFlags } from '~/redux/actions/viewOptionsActions';
-
 import { clusterAutoscalerActions } from '~/redux/actions/clusterAutoscalerActions';
+import { onClearFiltersAndFlags } from '~/redux/actions/viewOptionsActions';
 import {
-  HCP_USE_NODE_UPGRADE_POLICIES,
   ASSISTED_INSTALLER_FEATURE,
+  HCP_USE_NODE_UPGRADE_POLICIES,
   NETWORK_VALIDATOR_ONDEMAND_FEATURE,
 } from '~/redux/constants/featureConstants';
-import ClusterDetails from './ClusterDetails';
-import { fetchClusterDetails, invalidateClusters } from '../../../redux/actions/clustersActions';
 
+import { userActions } from '../../../redux/actions';
+import { cloudProviderActions } from '../../../redux/actions/cloudProviderActions';
+import { fetchClusterDetails, invalidateClusters } from '../../../redux/actions/clustersActions';
+import { getUserAccess } from '../../../redux/actions/costActions';
+import { clearGlobalError, setGlobalError } from '../../../redux/actions/globalErrorActions';
+import { getNotificationContacts, getSupportCases } from '../../../redux/actions/supportActions';
+import { fetchUpgradeGates } from '../../../redux/actions/upgradeGateActions';
+import { viewConstants } from '../../../redux/constants';
+import { modalActions } from '../../common/Modal/ModalActions';
+import canSubscribeOCPSelector from '../common/EditSubscriptionSettingsDialog/CanSubscribeOCPSelector';
+import { userCanHibernateClustersSelector } from '../common/HibernateClusterModal/HibernateClusterModalSelectors';
+import { toggleSubscriptionReleased } from '../common/TransferClusterOwnershipDialog/subscriptionReleasedActions';
+import { canTransferClusterOwnershipSelector } from '../common/TransferClusterOwnershipDialog/TransferClusterOwnershipDialogSelectors';
+import { getSchedules } from '../common/Upgrades/clusterUpgradeActions';
+import { getUpgradeGates } from '../common/Upgrades/UpgradeAcknowledge/UpgradeAcknowledgeSelectors';
+
+import { getGrants } from './components/AccessControl/NetworkSelfServiceSection/NetworkSelfServiceActions';
+import usersActions from './components/AccessControl/UsersSection/UsersActions';
+import { getAddOns, getClusterAddOns } from './components/AddOns/AddOnsActions';
+import { clusterLogActions } from './components/ClusterLogs/clusterLogActions';
 import {
   getClusterIdentityProviders,
   resetIdentityProvidersState,
 } from './components/IdentityProvidersPage/IdentityProvidersActions';
-import usersActions from './components/AccessControl/UsersSection/UsersActions';
-import { cloudProviderActions } from '../../../redux/actions/cloudProviderActions';
-import { clearGlobalError, setGlobalError } from '../../../redux/actions/globalErrorActions';
-import { userActions } from '../../../redux/actions';
-import { modalActions } from '../../common/Modal/ModalActions';
-import { getOnDemandMetrics } from './components/Monitoring/MonitoringActions';
-import { getAddOns, getClusterAddOns } from './components/AddOns/AddOnsActions';
-import { getGrants } from './components/AccessControl/NetworkSelfServiceSection/NetworkSelfServiceActions';
-import { clusterLogActions } from './components/ClusterLogs/clusterLogActions';
-import { getClusterRouters } from './components/Networking/NetworkingActions';
-import { getSchedules } from '../common/Upgrades/clusterUpgradeActions';
-import { viewConstants } from '../../../redux/constants';
 import { fetchClusterInsights } from './components/Insights/InsightsActions';
 import {
-  getMachineOrNodePools,
   clearGetMachinePoolsResponse,
+  getMachineOrNodePools,
 } from './components/MachinePools/MachinePoolsActions';
-import canSubscribeOCPSelector from '../common/EditSubscriptionSettingsDialog/CanSubscribeOCPSelector';
-import { canTransferClusterOwnershipSelector } from '../common/TransferClusterOwnershipDialog/TransferClusterOwnershipDialogSelectors';
+import { getOnDemandMetrics } from './components/Monitoring/MonitoringActions';
 import { issuesAndWarningsSelector } from './components/Monitoring/MonitoringSelectors';
-import { userCanHibernateClustersSelector } from '../common/HibernateClusterModal/HibernateClusterModalSelectors';
-import { toggleSubscriptionReleased } from '../common/TransferClusterOwnershipDialog/subscriptionReleasedActions';
-import supportActions from './components/Support/SupportActions';
-import { getUserAccess } from '../../../redux/actions/costActions';
-
-import { getUpgradeGates } from '../common/Upgrades/UpgradeAcknowledge/UpgradeAcknowledgeSelectors';
-import { fetchUpgradeGates } from '../../../redux/actions/upgradeGateActions';
+import { getClusterRouters } from './components/Networking/NetworkingActions';
+import ClusterDetails from './ClusterDetails';
 
 const mapStateToProps = (state, { location }) => {
   const { details } = state.clusters;
@@ -120,8 +120,8 @@ const mapDispatchToProps = (dispatch) =>
       clearListVpcs,
       getClusterHistory: clusterLogActions.getClusterHistory,
       toggleSubscriptionReleased,
-      getNotificationContacts: supportActions.getNotificationContacts,
-      getSupportCases: supportActions.getSupportCases,
+      getNotificationContacts,
+      getSupportCases,
       getSchedules,
       getUserAccess,
       addNotification,

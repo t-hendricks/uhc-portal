@@ -1,10 +1,18 @@
 import React from 'react';
 import { Formik } from 'formik';
-import { render, screen, mockUseFeatureGate, waitFor } from '~/testUtils';
+
+import useOrganization from '~/components/CLILoginPage/useOrganization';
 import { HCP_AWS_BILLING_SHOW } from '~/redux/constants/featureConstants';
+import { mockUseFeatureGate, render, screen, waitFor } from '~/testUtils';
+
 import { initialValues } from '../constants';
+
 import sampleFormData from './mockHCPCluster';
 import ReviewClusterScreen from './ReviewClusterScreen';
+
+jest.mock('~/components/CLILoginPage/useOrganization');
+
+const mockUseOrganization = jest.mocked(useOrganization);
 
 const buildTestComponent = (children, formValues = {}) => (
   <Formik
@@ -31,6 +39,9 @@ const defaultProps = {
 };
 
 describe('<ReviewClusterScreen />', () => {
+  beforeEach(() => {
+    mockUseOrganization.mockReturnValue({ organization: {}, isLoading: false, error: null });
+  });
   afterAll(() => {
     jest.resetAllMocks();
   });
@@ -352,6 +363,7 @@ describe('<ReviewClusterScreen />', () => {
       render(
         buildTestComponent(<ReviewClusterScreen {...defaultProps} />, {
           kms_key_arn: keyARN,
+          customer_managed_key: 'true',
         }),
       );
 
@@ -392,6 +404,43 @@ describe('<ReviewClusterScreen />', () => {
 
       await waitFor(() => {
         expect(screen.queryByText('Node draining')).not.toBeInTheDocument();
+      });
+    });
+  });
+  describe('External Authentication', () => {
+    describe('is not shown when', () => {
+      it('is not Hypershift', () => {
+        const newProps = { ...defaultProps, isHypershiftSelected: false };
+        render(buildTestComponent(<ReviewClusterScreen {...newProps} />));
+
+        expect(screen.queryByText('External Authentication')).toBeNull();
+      });
+      it('is not enabled', () => {
+        const newProps = { ...defaultProps, isHypershiftSelected: true };
+        render(buildTestComponent(<ReviewClusterScreen {...newProps} />));
+
+        expect(screen.queryByText('External Authentication')).not.toBeInTheDocument();
+      });
+    });
+    describe('is shown when', () => {
+      it('isHypershift and is enabled', () => {
+        const newProps = { ...defaultProps, isHypershiftSelected: true };
+        mockUseOrganization.mockReturnValue({
+          organization: {
+            capabilities: [
+              {
+                name: 'capability.organization.hcp_allow_external_authentication',
+                value: 'true',
+                inherited: false,
+              },
+            ],
+          },
+          isLoading: false,
+          error: null,
+        });
+        render(buildTestComponent(<ReviewClusterScreen {...newProps} />));
+
+        expect(screen.getByText('External Authentication')).toBeInTheDocument();
       });
     });
   });

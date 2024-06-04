@@ -1,11 +1,14 @@
 import React from 'react';
-import { Grid, GridItem, LabelGroup, Label } from '@patternfly/react-core';
-import { IMDSType } from '~/components/clusters/wizards/common';
-import { arrayToString, strToKeyValueObject, stringToArrayTrimmed } from '~/common/helpers';
-import { routeSelectorsAsString } from '~/components/clusters/ClusterDetails/components/Networking/NetworkingSelector';
+
+import { Grid, GridItem, Label, LabelGroup } from '@patternfly/react-core';
+
+import { arrayToString, stringToArrayTrimmed, strToKeyValueObject } from '~/common/helpers';
 import { billingModels } from '~/common/subscriptionTypes';
 import { humanizeValueWithUnitGiB } from '~/common/units';
+import { routeSelectorsAsString } from '~/components/clusters/ClusterDetails/components/Networking/NetworkingSelector';
 import parseUpdateSchedule from '~/components/clusters/common/Upgrades/parseUpdateSchedule';
+import { IMDSType } from '~/components/clusters/wizards/common';
+
 import AwsVpcTable from './AwsVpcTable';
 import SecurityGroupsTable from './SecurityGroupsTable';
 
@@ -59,6 +62,9 @@ const reviewValues = {
   },
   name: {
     title: 'Cluster name',
+  },
+  domain_prefix: {
+    title: 'Domain prefix',
   },
   rosa_roles_provider_creation_mode: {
     title: 'Operator roles and OIDC provider mode',
@@ -457,6 +463,14 @@ const reviewValues = {
   },
   control_plane_role_arn: {
     title: 'Control plane role',
+  },
+  enable_external_authentication: {
+    title: 'External Authentication',
+    isBoolean: true,
+    values: {
+      true: 'Enabled',
+      false: 'Disabled',
+    },
   },
 };
 

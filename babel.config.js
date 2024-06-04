@@ -2,30 +2,30 @@ const pfReactIconsMapper = {
   IconSize: '@patternfly/react-icons/dist/esm/createIcon',
 };
 
+// Use the environment variable set in webpack.config.js
+const isDevelopment = process.env.DEV_MODE === 'true';
+
 module.exports = {
   presets: [
     [
       '@babel/preset-env',
       {
         targets: {
-          browsers: '> 0.25%, not dead',
-          // As of Nov 2021, we have Node 12 in CI.  Most people have newer (14-16) locally,
-          // could use 'current' but prefer testing exactly same code locally as on CI.
-          node: '12',
+          browsers: ['chrome >= 67', 'edge >= 79', 'firefox >= 68', 'opera >= 54', 'safari >= 14'],
+          // We have Node 18 in the CI. Could use 'current' but prefer testing exactly same code locally as on CI.
+          node: '18',
         },
       },
     ],
     '@babel/preset-react',
   ],
   plugins: [
-    '@babel/plugin-proposal-class-properties',
-    '@babel/plugin-syntax-dynamic-import',
-    '@babel/plugin-proposal-object-rest-spread',
+    '@babel/plugin-transform-class-properties',
+    '@babel/plugin-transform-object-rest-spread',
     '@babel/plugin-transform-object-assign',
-    '@babel/plugin-proposal-optional-chaining',
+    '@babel/plugin-transform-optional-chaining',
     '@babel/plugin-transform-modules-commonjs',
-    'transform-class-properties',
-    ['istanbul', {}, 'istanbul-unique'],
+    isDevelopment && './babel-plugins/sol-sc-explorer/index.js', // Conditionally include this plugin based on development mode
     [
       'transform-imports',
       {
@@ -47,5 +47,5 @@ module.exports = {
         regenerator: true,
       },
     ],
-  ],
+  ].filter(Boolean), // Filter out false values from the plugins array
 };

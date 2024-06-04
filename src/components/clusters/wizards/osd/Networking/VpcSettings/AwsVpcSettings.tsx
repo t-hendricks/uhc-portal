@@ -2,12 +2,12 @@ import React from 'react';
 
 import { Alert, GridItem, Title } from '@patternfly/react-core';
 
-import PopoverHint from '~/components/common/PopoverHint';
-import ExternalLink from '~/components/common/ExternalLink';
 import links from '~/common/installLinks.mjs';
-import { FieldId } from '~/components/clusters/wizards/osd/constants';
+import { emptyAWSSubnet } from '~/components/clusters/wizards/common/constants';
 import { useFormState } from '~/components/clusters/wizards/hooks';
-import { emptyAWSSubnet } from '~/components/clusters/wizards/common/createOSDInitialValues';
+import { FieldId } from '~/components/clusters/wizards/osd/constants';
+import ExternalLink from '~/components/common/ExternalLink';
+import PopoverHint from '~/components/common/PopoverHint';
 
 import AwsSubnetFields from './AwsSubnetFields';
 import SecurityGroupsSection from './SecurityGroupsSection';
@@ -26,13 +26,15 @@ export const AwsVpcSettings = () => {
   const isMultiAz = multiAz === 'true';
 
   React.useEffect(() => {
-    const azCount = isMultiAz ? 3 : 1;
-    const mpSubnetsReset = [];
+    if (!selectedVPC.id) {
+      const azCount = isMultiAz ? 3 : 1;
+      const mpSubnetsReset = [];
 
-    for (let i = 0; i < azCount; i += 1) {
-      mpSubnetsReset.push(emptyAWSSubnet());
+      for (let i = 0; i < azCount; i += 1) {
+        mpSubnetsReset.push(emptyAWSSubnet());
+      }
+      setFieldValue(FieldId.MachinePoolsSubnets, mpSubnetsReset);
     }
-    setFieldValue(FieldId.MachinePoolsSubnets, mpSubnetsReset);
     setFieldTouched(FieldId.MachinePoolsSubnets, false);
     // "isMultiAz" is needed for the effect, but it can't change while in this step
   }, [setFieldValue, setFieldTouched, isMultiAz, selectedVPC.id]);

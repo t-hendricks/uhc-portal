@@ -66,17 +66,28 @@ const strToCleanObject = (str: string, delimiter: string): { [k: string]: string
 };
 
 /**
- * Generates a random 4B string that can be used as a key.
+ * Generates cryptographically secure number within small range
+ * there's a slight bias towards the lower end of the range.
+ * @param min minimum range including min
+ * @param max maximum range including max
+ * @returns returns a cryptographically secure number within provided small range
  */
-const getRandomID = () => {
-  const id = Math.floor((1 + Math.random()) * 0x10000)
-    .toString(16)
-    .substring(1);
-  return `${id}`;
+const secureRandomValueInRange = (min: number, max: number) => {
+  const uints = new Uint32Array(1);
+  crypto.getRandomValues(uints);
+  const randomNumber = uints[0] / (0xffffffff + 1);
+  const minNum = Math.ceil(min);
+  const maxNum = Math.floor(max);
+  return Math.floor(randomNumber * (maxNum - minNum + 1)) + minNum;
 };
 
-const randAlphanumString = (length: number): string =>
-  btoa(String(Math.random())).substr(5, length);
+/**
+ * Generates a random string (8 hex chars) that can be used as a key.
+ */
+const getRandomID = () => {
+  const id = crypto.getRandomValues(new Uint32Array(1))[0].toString(16);
+  return `${id}`;
+};
 
 const noQuotaTooltip =
   'You do not have enough quota for this option. Contact sales to purchase additional quota.';
@@ -127,13 +138,20 @@ const shouldRefetchQuota = (organization: any) => {
  * input, select, textarea
  * @return true if a field was found to scroll to, false otherwise.
  */
-const scrollToFirstField = (ids: string[], focusSelector: string = 'input,select,textarea') => {
+const scrollToFirstField = (
+  ids: string[],
+  focusSelector: string = 'input,select,textarea,button',
+) => {
   if (!ids?.length) {
     return false;
   }
 
   // Use all error selectors, where the first matching element in the document is returned.
-  const scrollElement = document.querySelector(ids.map((id) => `[id*="${id}"]`).join(','));
+  // CSS.escape since it's possible for the id to be something like 'machinePoolsSubnets[0].privateSubnetId'
+  // which needs to be escaped to use querySelector on it
+  const scrollElement = document.querySelector(
+    ids.map((id) => `[id*="${CSS.escape(id)}"]`).join(','),
+  );
 
   if (scrollElement instanceof HTMLElement) {
     let focusElement: HTMLElement | null = scrollElement;
@@ -144,7 +162,7 @@ const scrollToFirstField = (ids: string[], focusSelector: string = 'input,select
     }
 
     // Scroll and focus
-    setTimeout(() => scrollElement.scrollIntoView({ behavior: 'smooth', block: 'center' }));
+    setTimeout(() => scrollElement.scrollIntoView({ behavior: 'smooth', block: 'center' }), 500);
     focusElement?.focus({ preventScroll: true });
 
     return true;
@@ -319,13 +337,15 @@ const constructSelectedSubnets = (formValues?: Record<string, any>) => {
         .filter((id: string) => id !== undefined && id !== '');
     }
 
-    privateSubnets = formValues?.selected_vpc?.aws_subnets.filter((obj: Subnet) =>
-      privateSubnetIds.includes(obj.subnet_id),
-    );
+    if (formValues?.selected_vpc?.aws_subnets) {
+      privateSubnets = formValues?.selected_vpc?.aws_subnets.filter((obj: Subnet) =>
+        privateSubnetIds.includes(obj.subnet_id),
+      );
 
-    publicSubnets = formValues?.selected_vpc?.aws_subnets.filter((obj: Subnet) =>
-      publicSubnetIds.includes(obj.subnet_id),
-    );
+      publicSubnets = formValues?.selected_vpc?.aws_subnets.filter((obj: Subnet) =>
+        publicSubnetIds.includes(obj.subnet_id),
+      );
+    }
 
     if (usePrivateLink) {
       selectedSubnets = privateSubnets;
@@ -344,7 +364,7 @@ export {
   asArray,
   multiInputToCleanArray,
   getRandomID,
-  randAlphanumString,
+  secureRandomValueInRange,
   noQuotaTooltip,
   noMachineTypes,
   nodeKeyValueTooltipText,

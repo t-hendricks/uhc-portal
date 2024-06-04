@@ -1,6 +1,8 @@
 import React from 'react';
-import { screen, render, within } from '~/testUtils';
-import * as Fixtures from './__test__/Quota.fixtures';
+
+import { render, screen, within } from '~/testUtils';
+
+import * as Fixtures from './__tests__/Quota.fixtures';
 import SubscriptionNotFulfilled from './SubscriptionNotFulfilled';
 
 describe('<SubscriptionNotFulfilled />', () => {

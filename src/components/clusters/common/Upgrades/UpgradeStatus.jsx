@@ -1,24 +1,26 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+
 import {
   Button,
   EmptyState,
   EmptyStateBody,
-  EmptyStateVariant,
   EmptyStateHeader,
+  EmptyStateVariant,
 } from '@patternfly/react-core';
-import { OutlinedArrowAltCircleUpIcon } from '@patternfly/react-icons/dist/esm/icons/outlined-arrow-alt-circle-up-icon';
 import { CheckCircleIcon } from '@patternfly/react-icons/dist/esm/icons/check-circle-icon';
 import { InProgressIcon } from '@patternfly/react-icons/dist/esm/icons/in-progress-icon';
+import { OutlinedArrowAltCircleUpIcon } from '@patternfly/react-icons/dist/esm/icons/outlined-arrow-alt-circle-up-icon';
 import { DateFormat } from '@redhat-cloud-services/frontend-components/DateFormat';
-import './UpgradeStatus.scss';
+
 import UpdateGraph from './UpdateGraph/UpdateGraph';
+
+import './UpgradeStatus.scss';
 
 function UpgradeStatus({
   clusterID,
   canEdit,
   clusterVersion,
-  clusterVersionRawID,
   scheduledUpgrade,
   availableUpgrades = [],
   onCancelClick,
@@ -82,7 +84,7 @@ function UpgradeStatus({
       <div>
         {upgradeStateIcon()}
         <UpdateGraph
-          currentVersion={clusterVersionRawID}
+          currentVersion={clusterVersion}
           updateVersion={updateVersion()}
           hasMore={!isManualUpgradeScheduled && availableUpgrades.length > 1}
         />
@@ -116,7 +118,6 @@ UpgradeStatus.propTypes = {
   clusterID: PropTypes.string.isRequired,
   canEdit: PropTypes.bool,
   clusterVersion: PropTypes.string,
-  clusterVersionRawID: PropTypes.string,
   scheduledUpgrade: PropTypes.shape({
     version: PropTypes.string,
     next_run: PropTypes.string,

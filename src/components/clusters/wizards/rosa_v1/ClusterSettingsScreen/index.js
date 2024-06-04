@@ -1,8 +1,8 @@
 import { connect } from 'react-redux';
-import { formValueSelector, touch } from 'redux-form';
+import { formValueSelector, getFormValues, touch } from 'redux-form';
 
 import wizardConnector from '~/components/clusters/wizards/common/WizardConnector';
-import createOSDInitialValues from '~/components/clusters/wizards/common/createOSDInitialValues';
+import createOSDInitialValues from '~/components/clusters/wizards/rosa_v1/createOSDInitialValues';
 
 import ClusterSettingsScreen from './ClusterSettingsScreen';
 
@@ -21,10 +21,11 @@ const mapStateToProps = (state, ownProps) => {
   const isEtcdEncryptionSelected = valueSelector(state, 'etcd_encryption');
   const isFipsCryptoSelected = valueSelector(state, 'fips');
   const machinePoolsSubnets = valueSelector(state, 'machinePoolsSubnets');
-
+  const enableExternalAuthentication = valueSelector(state, 'enable_external_authentication');
   const isHypershiftSelected = valueSelector(state, 'hypershift') === 'true';
 
   return {
+    formValues: getFormValues('CreateCluster')(state),
     cloudProviderID,
     isMultiAz,
     product,
@@ -34,6 +35,7 @@ const mapStateToProps = (state, ownProps) => {
     selectedRegion,
     kmsKeyArn,
     etcdKeyArn,
+    enableExternalAuthentication,
     isEtcdEncryptionSelected,
     isFipsCryptoSelected,
     isHypershiftSelected,

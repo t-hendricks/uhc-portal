@@ -20,6 +20,7 @@ const cluster = {
   subscription: {
     id: 'subscription-id',
   },
+  delete_protection: { enabled: false },
 };
 
 const osdTrialCluster = {
@@ -145,6 +146,34 @@ const selfManagedProps = {
   ...props,
 };
 
+const rhoicCluster = {
+  cluster: {
+    ...cluster,
+    subscription: {
+      plan: {
+        id: 'RHOIC',
+        type: 'RHOIC',
+      },
+    },
+
+    organization: {
+      ebs_account_id: '123456',
+    },
+    showConsoleButton: true,
+    canSubscribeOCP: true,
+    canHibernateCluster: true,
+    openModal: jest.fn(),
+    toggleSubscriptionReleased: jest.fn(),
+    refreshFunc: jest.fn(),
+  },
+  showConsoleButton: false,
+  openModal: jest.fn(),
+  canSubscribeOCP: false,
+  canHibernateCluster: false,
+  refreshFunc: jest.fn(),
+  toggleSubscriptionReleased: jest.fn(),
+};
+
 const organizationClusterProps = {
   cluster: { ...cluster, canEdit: false, canDelete: false },
   ...props,
@@ -164,4 +193,5 @@ export {
   organizationClusterProps,
   hibernateClusterModalData,
   hyperShiftReadyProps,
+  rhoicCluster,
 };

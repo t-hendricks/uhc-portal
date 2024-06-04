@@ -1,13 +1,15 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { GridItem } from '@patternfly/react-core';
 import { Field } from 'redux-form';
 
-import VPCDropdown from '~/components/clusters/wizards/common/VPCDropdown/VPCDropdown';
-import { SubnetSelectField } from '~/components/clusters/common/SubnetSelectField';
+import { GridItem } from '@patternfly/react-core';
+
 import { getMatchingAvailabilityZones } from '~/common/vpcHelpers';
-import WithTooltip from '~/components/common/WithTooltip';
+import { SubnetSelectField } from '~/components/clusters/common/SubnetSelectField';
 import AvailabilityZoneSelection from '~/components/clusters/wizards/common/NetworkingSection/AvailabilityZoneSelection';
+import VPCDropdown from '~/components/clusters/wizards/common/VPCDropdown/VPCDropdown';
+import WithTooltip from '~/components/common/WithTooltip';
+
 import { required, validateUniqueAZ } from '../../../../../common/validators';
 
 const SingleSubnetFieldsRow = ({
@@ -47,6 +49,7 @@ const SingleSubnetFieldsRow = ({
             name={`machinePoolsSubnets[${index}].availabilityZone`}
             label={showLabels ? 'Availability zone' : null}
             enabledAvailabilityZones={enabledAvailabilityZones}
+            vpcId={selectedVPC?.id}
             validate={azValidations}
             isDisabled={!!disabledAzReason}
             region={selectedRegion}
@@ -104,6 +107,7 @@ const AWSSubnetFields = ({
       selectedVPC={selectedVPC}
       showRefresh
       isHypershift={false}
+      isRosaV1
       usePrivateLink={privateLinkSelected}
     />
 

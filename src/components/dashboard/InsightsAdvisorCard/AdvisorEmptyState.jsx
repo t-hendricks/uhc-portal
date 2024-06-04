@@ -1,11 +1,12 @@
 import React from 'react';
-import { SearchIcon } from '@patternfly/react-icons/dist/esm/icons/search-icon';
+
 import {
   EmptyState,
   EmptyStateBody,
-  EmptyStateIcon,
   EmptyStateHeader,
+  EmptyStateIcon,
 } from '@patternfly/react-core';
+import { SearchIcon } from '@patternfly/react-icons/dist/esm/icons/search-icon';
 
 import links from '../../../common/installLinks.mjs';
 import ExternalLink from '../../common/ExternalLink';

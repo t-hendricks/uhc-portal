@@ -1,11 +1,20 @@
 import type { ChromeAPI } from '@redhat-cloud-services/types';
 
+import type { Config } from '~/config';
+
 // 'isRestrictedEnv' is for an internal insights-chrome environment which may change the visibility of certain ocm pages and features.
-export const isRestrictedEnv = (chrome?: ChromeAPI) =>
-  ['int', 'scr', 'frh', 'frhStage'].includes((chrome || insights.chrome).getEnvironment());
+export const isRestrictedEnv = (chrome?: ChromeAPI) => {
+  if (!chrome) {
+    return ((window as any).ocmConfig as Config)?.configData.restrictedEnv;
+  }
+  return ['int', 'scr', 'frh', 'frhStage'].includes(chrome.getEnvironment());
+};
 
 export const getRestrictedEnvApi = (chrome?: ChromeAPI) => {
-  const env = (chrome || insights.chrome).getEnvironment();
+  if (!chrome) {
+    return ((window as any).ocmConfig as Config).configData.restrictedEnvApi;
+  }
+  const env = chrome.getEnvironment();
   if (env === 'frh') {
     return 'https://api.***REMOVED***.com';
   }

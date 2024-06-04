@@ -1,19 +1,20 @@
 import { billingModels, normalizedProducts } from '~/common/subscriptionTypes';
 import { ClusterFromSubscription } from '~/types/types';
-import getBillingModelLabel from './getBillingModelLabel';
+
 import {
   defaultClusterFromSubscription,
   defaultSubscription,
-} from './__test__/defaultClusterFromSubscription.fixtures';
+} from './__tests__/defaultClusterFromSubscription.fixtures';
+import getBillingModelLabel from './getBillingModelLabel';
 
 describe('getBillingModelLabel', () => {
   it.each([
     [normalizedProducts.OSDTrial, undefined, undefined, 'Free trial, upgradeable'],
     [normalizedProducts.OSD, undefined, undefined, 'Standard'],
     [normalizedProducts.OSD, billingModels.STANDARD, undefined, 'Annual Red Hat subscriptions'],
-    [normalizedProducts.OSD, billingModels.MARKETPLACE, undefined, 'Standard'],
-    [normalizedProducts.OSD, billingModels.MARKETPLACE_AWS, undefined, 'Standard'],
-    [normalizedProducts.OSD, billingModels.MARKETPLACE_GCP, undefined, 'Standard'],
+    [normalizedProducts.OSD, billingModels.MARKETPLACE, undefined, 'N/A'],
+    [normalizedProducts.OSD, billingModels.MARKETPLACE_AWS, undefined, 'N/A'],
+    [normalizedProducts.OSD, billingModels.MARKETPLACE_GCP, undefined, 'N/A'],
     [normalizedProducts.OSD, billingModels.MARKETPLACE, true, 'On-demand via Red Hat Marketplace'],
     [
       normalizedProducts.OSD,
@@ -33,7 +34,7 @@ describe('getBillingModelLabel', () => {
     [normalizedProducts.ARO, undefined, undefined, 'Standard'],
     [undefined, undefined, undefined, 'Standard'],
   ])(
-    'when plan type is %p, billing model %p and CCS enabled %p should return %p',
+    'when plan type is %p, billing model %p and CCS enabled is %p should return %p',
     (
       planType: string | undefined,
       billingModel: string | undefined,

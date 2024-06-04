@@ -1,13 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { Form, Flex, TextInput } from '@patternfly/react-core';
+import { Flex, Form, TextInput } from '@patternfly/react-core';
 
+import { noop } from '../../../../common/helpers';
+import ErroBox from '../../../common/ErrorBox';
 import Modal from '../../../common/Modal/Modal';
 import modals from '../../../common/Modal/modals';
-
-import ErroBox from '../../../common/ErrorBox';
-import { noop } from '../../../../common/helpers';
 
 class DeleteClusterDialog extends React.Component {
   state = {

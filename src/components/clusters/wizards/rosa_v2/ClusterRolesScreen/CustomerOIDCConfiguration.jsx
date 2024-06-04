@@ -1,6 +1,7 @@
-import React, { useEffect, useState, useMemo } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
+import { Field } from 'formik';
 import PropTypes from 'prop-types';
-import { Field } from 'redux-form';
+
 import {
   Button,
   ClipboardCopy,
@@ -8,19 +9,25 @@ import {
   FlexItem,
   FormGroup,
   Popover,
+  Skeleton,
   Text,
   TextContent,
   TextVariants,
-  Skeleton,
 } from '@patternfly/react-core';
+
+import { useFormState } from '~/components/clusters/wizards/hooks';
+import { FieldId } from '~/components/clusters/wizards/rosa_v2/constants';
 import ExternalLink from '~/components/common/ExternalLink';
-import PopoverHint from '~/components/common/PopoverHint';
+import { FormGroupHelperText } from '~/components/common/FormGroupHelperText';
+import FuzzySelect from '~/components/common/FuzzySelect';
 import Instruction from '~/components/common/Instruction';
 import Instructions from '~/components/common/Instructions';
-import FuzzySelect from '~/components/common/FuzzySelect';
-import { FormGroupHelperText } from '~/components/common/FormGroupHelperText';
-import validators from '../../../../../common/validators';
+import PopoverHint from '~/components/common/PopoverHint';
+
 import links from '../../../../../common/installLinks.mjs';
+import validators, {
+  MAX_CUSTOM_OPERATOR_ROLES_PREFIX_LENGTH,
+} from '../../../../../common/validators';
 import ReduxVerticalFormGroup from '../../../../common/ReduxFormComponents/ReduxVerticalFormGroup';
 
 function CreateOIDCProviderInstructions() {
@@ -52,14 +59,10 @@ function CustomerOIDCConfiguration({
   getUserOidcConfigurations,
   byoOidcConfigID,
   operatorRolesCliCommand,
-  onSelect: onParentSelect,
-  input: {
-    // Redux Form's onBlur interferes with Patternfly's Select footer onClick handlers.
-    onBlur: _onBlur,
-    ...inputProps
-  },
+  input: { onChange },
   meta: { error, touched },
 }) {
+  const { getFieldProps, getFieldMeta } = useFormState();
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [oidcConfigs, setOidcConfigs] = useState([]);
@@ -75,7 +78,7 @@ function CustomerOIDCConfiguration({
           byoOidcConfigID &&
           currentConfigs.find((config) => config.id === byoOidcConfigID) === undefined;
         if (isSelectedConfigDeleted) {
-          onParentSelect(null);
+          onChange(null);
         }
       });
     } finally {
@@ -85,20 +88,20 @@ function CustomerOIDCConfiguration({
       }, 500);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [byoOidcConfigID, onParentSelect]);
+  }, [byoOidcConfigID]);
 
   const onSelect = (_, configId) => {
     const selected = oidcConfigs.find((config) => config.id === configId);
     setIsDropdownOpen(false);
-    onParentSelect(selected);
+    onChange(selected);
   };
 
   useEffect(() => {
     const isValidSelection = oidcConfigs?.some((item) => item?.id === byoOidcConfigID);
     if (oidcConfigs?.length > 0 && byoOidcConfigID && !isValidSelection) {
-      onParentSelect(null);
+      onChange(null);
     }
-  }, [byoOidcConfigID, oidcConfigs, onParentSelect]);
+  }, [byoOidcConfigID, oidcConfigs, onChange]);
 
   useEffect(() => {
     refreshOidcConfigs();
@@ -119,9 +122,9 @@ function CustomerOIDCConfiguration({
     <Instructions wide>
       <Instruction simple>
         <TextContent className="pf-v5-u-pb-md">
-          <Text component={TextVariants.p}>
+          <div>
             Select your existing OIDC config id or <CreateOIDCProviderInstructions />.
-          </Text>
+          </div>
         </TextContent>
 
         <FormGroup
@@ -141,7 +144,6 @@ function CustomerOIDCConfiguration({
           <Flex>
             <FlexItem grow={{ default: 'grow' }}>
               <FuzzySelect
-                {...inputProps}
                 label="Config ID"
                 aria-label="Config ID"
                 isOpen={isDropdownOpen}
@@ -180,13 +182,13 @@ function CustomerOIDCConfiguration({
 
         <Field
           component={ReduxVerticalFormGroup}
-          name="custom_operator_roles_prefix"
+          name={FieldId.CustomOperatorRolesPrefix}
           label="Operator roles prefix"
           type="text"
           isRequired
           // eslint-disable-next-line import/no-named-as-default-member
           validate={validators.checkCustomOperatorRolesPrefix}
-          helpText={`Maximum ${validators.MAX_CUSTOM_OPERATOR_ROLES_PREFIX_LENGTH} characters.  Changing the cluster name will regenerate this value.`}
+          helpText={`Maximum ${MAX_CUSTOM_OPERATOR_ROLES_PREFIX_LENGTH} characters.  Changing the cluster name will regenerate this value.`}
           extendedHelpText={
             <TextContent>
               <Text component={TextVariants.p}>
@@ -201,12 +203,14 @@ function CustomerOIDCConfiguration({
           }
           showHelpTextOnError={false}
           disabled={!byoOidcConfigID}
+          input={getFieldProps(FieldId.CustomOperatorRolesPrefix)}
+          meta={getFieldMeta(FieldId.CustomOperatorRolesPrefix)}
         />
       </Instruction>
 
       <Instruction simple>
         <TextContent className="pf-v5-u-pb-md">
-          <Text component={TextVariants.p}>Run the command to create a new Operator Roles.</Text>
+          <Text component={TextVariants.p}>Run the command to create new Operator Roles.</Text>
         </TextContent>
         {operatorRolesCliCommand ? (
           <>
@@ -236,15 +240,8 @@ CustomerOIDCConfiguration.propTypes = {
   getUserOidcConfigurations: PropTypes.func.isRequired,
   byoOidcConfigID: PropTypes.string,
   operatorRolesCliCommand: PropTypes.string,
-  onSelect: PropTypes.func,
-  input: PropTypes.shape({
-    value: PropTypes.string,
-    onBlur: PropTypes.func,
-  }),
-  meta: PropTypes.shape({
-    touched: PropTypes.bool,
-    error: PropTypes.string,
-  }),
+  input: PropTypes.object.isRequired,
+  meta: PropTypes.object.isRequired,
 };
 
 export default CustomerOIDCConfiguration;

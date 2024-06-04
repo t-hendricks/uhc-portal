@@ -1,25 +1,24 @@
 import { produce } from 'immer';
 
-import {
-  REJECTED_ACTION,
-  PENDING_ACTION,
-  FULFILLED_ACTION,
-  baseRequestState,
-} from '~/redux/reduxHelpers';
-import type { PromiseActionType, PromiseReducerState } from '~/redux/types';
-
 import { getErrorState } from '~/common/errors';
 import {
-  VALIDATE_CLOUD_PROVIDER_CREDENTIALS,
+  CLEAR_ALL_CLOUD_PROVIDER_INQUIRIES,
+  CLEAR_CCS_CREDENTIALS_INQUIRY,
+  CLEAR_LIST_VPCS,
+  InquiriesAction,
   LIST_GCP_KEY_RINGS,
   LIST_GCP_KEYS,
   LIST_REGIONS,
   LIST_VPCS,
-  CLEAR_LIST_VPCS,
-  CLEAR_ALL_CLOUD_PROVIDER_INQUIRIES,
-  CLEAR_CCS_CREDENTIALS_INQUIRY,
-  InquiriesAction,
+  VALIDATE_CLOUD_PROVIDER_CREDENTIALS,
 } from '~/redux/actions/ccsInquiriesActions';
+import {
+  baseRequestState,
+  FULFILLED_ACTION,
+  PENDING_ACTION,
+  REJECTED_ACTION,
+} from '~/redux/reduxHelpers';
+import type { PromiseActionType, PromiseReducerState } from '~/redux/types';
 import {
   CloudRegion,
   CloudVPC,

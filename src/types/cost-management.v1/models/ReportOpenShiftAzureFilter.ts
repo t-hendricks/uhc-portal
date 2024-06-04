@@ -1,12 +1,11 @@
+/* generated using openapi-typescript-codegen -- do not edit */
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-
 import type { ReportResolution } from './ReportResolution';
 import type { ReportResourceScope } from './ReportResourceScope';
 import type { ReportTimeScopeUnits } from './ReportTimeScopeUnits';
 import type { ReportTimeScopeValue } from './ReportTimeScopeValue';
-
 export type ReportOpenShiftAzureFilter = {
   /**
    * Limits the data points returns and aggregates remaining data.

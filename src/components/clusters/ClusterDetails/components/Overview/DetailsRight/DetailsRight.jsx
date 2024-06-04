@@ -1,44 +1,48 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import get from 'lodash/get';
+import PropTypes from 'prop-types';
+
+import * as OCM from '@openshift-assisted/ui-lib/ocm';
 import {
   DescriptionList,
-  DescriptionListTerm,
-  DescriptionListGroup,
   DescriptionListDescription,
+  DescriptionListGroup,
+  DescriptionListTerm,
   Flex,
 } from '@patternfly/react-core';
-import * as OCM from '@openshift-assisted/ui-lib/ocm';
+
+import { getQueryParam } from '~/common/queryHelpers';
+import { hasSecurityGroupIds } from '~/common/securityGroupsHelpers';
 import {
   canViewMachinePoolTab,
   isHypershiftCluster,
   isROSA,
 } from '~/components/clusters/common/clusterStates';
-import { IMDSType } from '~/components/clusters/wizards/common';
-import { isRestrictedEnv } from '~/restrictedEnv';
-import { hasSecurityGroupIds } from '~/common/securityGroupsHelpers';
 import { useAWSVPCFromCluster } from '~/components/clusters/common/useAWSVPCFromCluster';
+import { IMDSType } from '~/components/clusters/wizards/common';
+import useCanClusterAutoscale from '~/hooks/useCanClusterAutoscale';
+import { useGlobalState } from '~/redux/hooks';
+import { isRestrictedEnv } from '~/restrictedEnv';
 
-import { GCP_SECURE_BOOT_UI } from '~/redux/constants/featureConstants';
-import { useFeatureGate } from '~/hooks/useFeatureGate';
-import { getQueryParam } from '~/common/queryHelpers';
-import Timestamp from '../../../../../common/Timestamp';
 import links from '../../../../../../common/installLinks.mjs';
 import { isAISubscriptionWithoutMetrics } from '../../../../../../common/isAssistedInstallerCluster';
-import ClusterNetwork from '../ClusterNetwork';
-import { constants } from '../../../../common/CreateOSDFormConstants';
-import { humanizeValueWithUnit, humanizeValueWithUnitGiB } from '../../../../../../common/units';
 import { subscriptionStatuses } from '../../../../../../common/subscriptionTypes';
-import PopoverHint from '../../../../../common/PopoverHint';
+import { humanizeValueWithUnit, humanizeValueWithUnitGiB } from '../../../../../../common/units';
 import ExternalLink from '../../../../../common/ExternalLink';
-import { ClusterStatus } from './ClusterStatus';
+import PopoverHint from '../../../../../common/PopoverHint';
+import Timestamp from '../../../../../common/Timestamp';
+import { constants } from '../../../../common/CreateOSDFormConstants';
+import { isArchivedSubscription } from '../../../clusterDetailsHelper';
 import SecurityGroupsDisplayByNode from '../../SecurityGroups/SecurityGroupsDetailDisplay';
+import ClusterNetwork from '../ClusterNetwork';
+
+import DeleteProtection from './DeleteProtection/DeleteProtection';
+import { ClusterStatus } from './ClusterStatus';
 
 const { ClusterStatus: AIClusterStatus } = OCM;
 function DetailsRight({
   cluster,
   totalDesiredComputeNodes,
-  canAutoscaleCluster,
   hasAutoscaleMachinePools,
   hasAutoscaleCluster,
   totalMinNodesCount,
@@ -48,6 +52,10 @@ function DetailsRight({
   machinePools,
   isDeprovisioned,
 }) {
+  const canAutoscaleCluster = useCanClusterAutoscale(
+    cluster?.subscription?.plan?.type,
+    cluster?.subscription?.cluster_billing_model,
+  );
   const isAWS = cluster.subscription?.cloud_provider_id === 'aws';
   const isGCP = cluster.subscription?.cloud_provider_id === 'gcp';
   const isHypershift = isHypershiftCluster(cluster);
@@ -92,12 +100,23 @@ function DetailsRight({
   const oidcConfig = cluster.aws?.sts?.oidc_config;
   const imdsConfig = cluster.aws?.ec2_metadata_http_tokens || IMDSType.V1AndV2;
 
-  const isSecureBootFeatureEnabled = useFeatureGate(GCP_SECURE_BOOT_UI);
-  const showSecureBoot = isGCP && isSecureBootFeatureEnabled && !isDeprovisioned;
+  const showSecureBoot = isGCP && !isDeprovisioned;
   const secureBoot = isGCP && cluster.gcp?.security?.secure_boot;
+
+  const showDeleteProtection = cluster.managed && !isArchivedSubscription(cluster);
+
+  const clusterDetails = useGlobalState((state) => state.clusters.details);
 
   return (
     <DescriptionList>
+      {showDeleteProtection ? (
+        <DeleteProtection
+          clusterID={cluster.id}
+          protectionEnabled={cluster.delete_protection?.enabled}
+          canToggle={cluster.canUpdateClusterResource}
+          pending={clusterDetails.pending}
+        />
+      ) : null}
       <DescriptionListGroup>
         <DescriptionListTerm>Status</DescriptionListTerm>
         <DescriptionListDescription style={cluster.state.style}>
@@ -189,7 +208,7 @@ function DetailsRight({
           </DescriptionListGroup>
           <DescriptionListGroup>
             <DescriptionListTerm>Persistent storage</DescriptionListTerm>
-            <DescriptionListDescription>
+            <DescriptionListDescription data-testid="persistent-storage">
               {humanizedPersistentStorage
                 ? `${humanizedPersistentStorage.value}  ${humanizedPersistentStorage.unit}`
                 : 'N/A'}
@@ -360,7 +379,9 @@ function DetailsRight({
         <DescriptionListGroup>
           <DescriptionListTerm>Secure Boot support for Shielded VMs</DescriptionListTerm>
           <DescriptionListDescription>
-            <span>{secureBoot ? 'Enabled' : 'Disabled'}</span>
+            <span data-testid="secureBootSupportForShieldedVMs">
+              {secureBoot ? 'Enabled' : 'Disabled'}
+            </span>
           </DescriptionListDescription>
         </DescriptionListGroup>
       )}
@@ -393,7 +414,6 @@ DetailsRight.propTypes = {
   totalMaxNodesCount: PropTypes.number,
   hasAutoscaleMachinePools: PropTypes.bool.isRequired,
   hasAutoscaleCluster: PropTypes.bool.isRequired,
-  canAutoscaleCluster: PropTypes.bool.isRequired,
   limitedSupport: PropTypes.bool,
   totalActualNodes: PropTypes.oneOfType([PropTypes.number, PropTypes.bool]),
   machinePools: PropTypes.array,

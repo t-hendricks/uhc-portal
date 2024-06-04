@@ -3,13 +3,12 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
+
 import { FormSelect, FormSelectOption } from '@patternfly/react-core';
 import { Spinner } from '@redhat-cloud-services/frontend-components/Spinner';
 
-import {
-  AWS_DEFAULT_REGION,
-  GCP_DEFAULT_REGION,
-} from '~/components/clusters/wizards/common/createOSDInitialValues';
+import { AWS_DEFAULT_REGION } from '~/components/clusters/wizards/rosa_v1/createOSDInitialValues';
+
 import ErrorBox from '../../../../../../common/ErrorBox';
 
 import './CloudRegionComboBox.scss';
@@ -33,7 +32,7 @@ class CloudRegionComboBox extends React.Component {
     const supportsMultiAz = regionData?.supports_multi_az ?? true;
 
     if (isMultiAz && !prevProps.isMultiAz && !supportsMultiAz) {
-      this.onChange(cloudProviderID === 'aws' ? AWS_DEFAULT_REGION : GCP_DEFAULT_REGION);
+      this.onChange(AWS_DEFAULT_REGION);
     }
   }
 
@@ -42,10 +41,10 @@ class CloudRegionComboBox extends React.Component {
       input: { onChange },
       handleCloudRegionChange,
     } = this.props;
+    onChange(value);
     if (handleCloudRegionChange) {
       handleCloudRegionChange();
     }
-    onChange(value);
   };
 
   render() {

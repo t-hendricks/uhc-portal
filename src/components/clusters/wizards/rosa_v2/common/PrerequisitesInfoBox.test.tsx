@@ -1,8 +1,10 @@
 import React from 'react';
-import { checkAccessibility, render, screen, within } from '~/testUtils';
-import { CompatRouter } from 'react-router-dom-v5-compat';
 import { MemoryRouter } from 'react-router-dom';
+import { CompatRouter } from 'react-router-dom-v5-compat';
+
 import { ROSA_HOSTED_CLI_MIN_VERSION } from '~/components/clusters/wizards/rosa_v2/rosaConstants';
+import { checkAccessibility, render, screen, within } from '~/testUtils';
+
 import { PrerequisitesInfoBox } from './PrerequisitesInfoBox';
 
 const rosaCLIMessage = new RegExp(
@@ -32,7 +34,7 @@ describe('<PrerequisitesInfoBox} />', () => {
 
     expect(screen.getByText('Did you complete your prerequisites?')).toBeInTheDocument();
     expect(within(screen.getByRole('link')).getByText(/Set up ROSA page/)).toBeInTheDocument();
-    expect(screen.getByRole('link').getAttribute('href')).toEqual('/getstarted');
+    expect(screen.getByRole('link').getAttribute('href')).toEqual('/create/rosa/getstarted');
   });
 
   it('shows the ROSA CLI version message by default', () => {

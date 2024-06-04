@@ -1,3 +1,4 @@
+/* generated using openapi-typescript-codegen -- do not edit */
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
@@ -8,7 +9,7 @@ export { CostModel } from './models/CostModel';
 export type { CostModelOut } from './models/CostModelOut';
 export type { CostModelPagination } from './models/CostModelPagination';
 export { CostModelResp } from './models/CostModelResp';
-export type { CostType } from './models/CostType';
+export { CostType } from './models/CostType';
 export type { CostTypePagination } from './models/CostTypePagination';
 export type { Currencies } from './models/Currencies';
 export type { Currency } from './models/Currency';
@@ -36,6 +37,21 @@ export type { OrgUnitId } from './models/OrgUnitId';
 export type { PaginationLinks } from './models/PaginationLinks';
 export type { PaginationMeta } from './models/PaginationMeta';
 export type { PutAccountSettingRequestBody } from './models/PutAccountSettingRequestBody';
+export type { QueryAccount } from './models/QueryAccount';
+export type { QueryDelta } from './models/QueryDelta';
+export type { QueryEndDate } from './models/QueryEndDate';
+export type { QueryFilter } from './models/QueryFilter';
+export type { QueryGroupBy } from './models/QueryGroupBy';
+export type { QueryKey } from './models/QueryKey';
+export type { QueryKeyOnly } from './models/QueryKeyOnly';
+export type { QueryLimit } from './models/QueryLimit';
+export type { QueryOffset } from './models/QueryOffset';
+export { QueryOrder } from './models/QueryOrder';
+export type { QueryOrderBy } from './models/QueryOrderBy';
+export type { QuerySearch } from './models/QuerySearch';
+export type { QueryStartDate } from './models/QueryStartDate';
+export type { QueryType } from './models/QueryType';
+export type { QueryValue } from './models/QueryValue';
 export type { Report } from './models/Report';
 export type { ReportAzureFilter } from './models/ReportAzureFilter';
 export type { ReportAzureGrouping } from './models/ReportAzureGrouping';
@@ -67,6 +83,7 @@ export type { ReportOpenShiftMemory } from './models/ReportOpenShiftMemory';
 export type { ReportOpenShiftVolume } from './models/ReportOpenShiftVolume';
 export { ReportOrdering } from './models/ReportOrdering';
 export type { ReportPaginationMeta } from './models/ReportPaginationMeta';
+export type { ReportQueryLimit } from './models/ReportQueryLimit';
 export { ReportResolution } from './models/ReportResolution';
 export { ReportResourceScope } from './models/ReportResourceScope';
 export type { ReportStorageInventory } from './models/ReportStorageInventory';
@@ -80,6 +97,8 @@ export type { ResourceTypePagination } from './models/ResourceTypePagination';
 export type { SettingIn } from './models/SettingIn';
 export type { SettingOut } from './models/SettingOut';
 export type { SettingsTagsEnabledLimitError } from './models/SettingsTagsEnabledLimitError';
+export type { SettingsTagsMappingsOptionsResponse } from './models/SettingsTagsMappingsOptionsResponse';
+export type { SettingsTagsMappingsResponse } from './models/SettingsTagsMappingsResponse';
 export type { SettingsTagsResponse } from './models/SettingsTagsResponse';
 export type { Source } from './models/Source';
 export type { SourceIn } from './models/SourceIn';

@@ -1,21 +1,26 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React, { useMemo } from 'react';
 import get from 'lodash/get';
+import PropTypes from 'prop-types';
+
 import {
   DescriptionList,
-  DescriptionListTerm,
-  DescriptionListGroup,
   DescriptionListDescription,
+  DescriptionListGroup,
+  DescriptionListTerm,
 } from '@patternfly/react-core';
 
-import getBillingModelLabel from '~/components/clusters/common/getBillingModelLabel';
 import { isHypershiftCluster } from '~/components/clusters/common/clusterStates';
-import Timestamp from '../../../../common/Timestamp';
+import getBillingModelLabel from '~/components/clusters/common/getBillingModelLabel';
+import { useFeatureGate } from '~/hooks/useFeatureGate';
+import { LONGER_CLUSTER_NAME_UI } from '~/redux/constants/featureConstants';
+
+import { normalizedProducts } from '../../../../../common/subscriptionTypes';
 import PopoverHint from '../../../../common/PopoverHint';
+import Timestamp from '../../../../common/Timestamp';
 import ClusterTypeLabel from '../../../common/ClusterTypeLabel';
 import InfrastructureModelLabel from '../../../common/InfrastructureModelLabel';
+
 import ClusterVersionInfo from './ClusterVersionInfo';
-import { normalizedProducts } from '../../../../../common/subscriptionTypes';
 
 const getIdFields = (cluster, showAssistedId) => {
   let label = 'Cluster ID';
@@ -30,10 +35,11 @@ const getIdFields = (cluster, showAssistedId) => {
 };
 function DetailsLeft({ cluster, cloudProviders, showAssistedId }) {
   const cloudProviderId = cluster.cloud_provider ? cluster.cloud_provider.id : null;
-  const region = get(cluster, 'region.id', 'N/A');
+  const region = cluster?.region?.id;
   const planType = get(cluster, 'subscription.plan.type');
   const isROSA = planType === normalizedProducts.ROSA;
   const isHypershift = isHypershiftCluster(cluster);
+  const isRHOIC = cluster?.subscription?.plan?.type === normalizedProducts.RHOIC;
 
   let cloudProvider;
   if (cloudProviderId && cloudProviders.fulfilled && cloudProviders.providers[cloudProviderId]) {
@@ -45,6 +51,14 @@ function DetailsLeft({ cluster, cloudProviders, showAssistedId }) {
   const { id, idLabel } = getIdFields(cluster, showAssistedId);
   const controlPlaneType = isHypershift ? 'Hosted' : 'Classic';
   const sharedVpcZoneId = get(cluster, 'aws.private_hosted_zone_id', false);
+  const domainPrefix = cluster?.domain_prefix;
+  const isLongerClusterNameEnabled = useFeatureGate(LONGER_CLUSTER_NAME_UI);
+  const availabilityLabel = useMemo(() => {
+    if (typeof cluster.multi_az === 'boolean') {
+      return cluster.multi_az ? 'Multi-zone' : 'Single zone';
+    }
+    return 'N/A';
+  }, [cluster.multi_az]);
 
   return (
     <DescriptionList>
@@ -54,6 +68,14 @@ function DetailsLeft({ cluster, cloudProviders, showAssistedId }) {
           <span data-testid="clusterID">{id}</span>
         </DescriptionListDescription>
       </DescriptionListGroup>
+      {isLongerClusterNameEnabled && domainPrefix && (
+        <DescriptionListGroup>
+          <DescriptionListTerm>Domain prefix</DescriptionListTerm>
+          <DescriptionListDescription>
+            <span data-testid="domainPrefix">{domainPrefix}</span>
+          </DescriptionListDescription>
+        </DescriptionListGroup>
+      )}
       <DescriptionListGroup>
         <DescriptionListTerm>Type</DescriptionListTerm>
         <DescriptionListDescription>
@@ -68,12 +90,14 @@ function DetailsLeft({ cluster, cloudProviders, showAssistedId }) {
           </DescriptionListDescription>
         </DescriptionListGroup>
       )}
-      <DescriptionListGroup>
-        <DescriptionListTerm>Region</DescriptionListTerm>
-        <DescriptionListDescription>
-          <span data-testid="region">{region}</span>
-        </DescriptionListDescription>
-      </DescriptionListGroup>
+      {!isRHOIC || (isRHOIC && region) ? (
+        <DescriptionListGroup>
+          <DescriptionListTerm>Region</DescriptionListTerm>
+          <DescriptionListDescription>
+            <span data-testid="region">{region || 'N/A'}</span>
+          </DescriptionListDescription>
+        </DescriptionListGroup>
+      ) : null}
       {!isROSA && (
         <DescriptionListGroup>
           <DescriptionListTerm>Provider</DescriptionListTerm>
@@ -86,9 +110,7 @@ function DetailsLeft({ cluster, cloudProviders, showAssistedId }) {
         <DescriptionListGroup>
           <DescriptionListTerm>Availability</DescriptionListTerm>
           <DescriptionListDescription>
-            <span data-testid="availability">
-              {cluster.multi_az ? 'Multi-zone' : 'Single zone'}
-            </span>
+            <span data-testid="availability">{availabilityLabel}</span>
           </DescriptionListDescription>
         </DescriptionListGroup>
       )}
@@ -153,11 +175,13 @@ function DetailsLeft({ cluster, cloudProviders, showAssistedId }) {
         <>
           <DescriptionListGroup>
             <DescriptionListTerm>Subscription billing model</DescriptionListTerm>
-            <DescriptionListDescription>{getBillingModelLabel(cluster)}</DescriptionListDescription>
+            <DescriptionListDescription data-testid="subscription-billing-model">
+              {getBillingModelLabel(cluster)}
+            </DescriptionListDescription>
           </DescriptionListGroup>
           <DescriptionListGroup>
             <DescriptionListTerm>Infrastructure billing model</DescriptionListTerm>
-            <DescriptionListDescription>
+            <DescriptionListDescription data-testid="infrastructure-billing-model">
               <InfrastructureModelLabel cluster={cluster} />
             </DescriptionListDescription>
           </DescriptionListGroup>

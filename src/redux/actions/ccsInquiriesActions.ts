@@ -1,14 +1,12 @@
 import pick from 'lodash/pick';
 import { action, ActionType } from 'typesafe-actions';
+
 import { GCP } from '~/types/clusters_mgmt.v1';
 import { AWSCredentials } from '~/types/types';
-import {
-  listAWSVPCs,
-  listGCPVPCs,
-  listGCPKeyRings,
-  listGCPKeys,
-  listAWSRegions,
-} from '../../services/clusterService';
+
+import clusterService from '../../services/clusterService';
+
+const { listAWSRegions, listAWSVPCs, listGCPKeyRings, listGCPKeys, listGCPVPCs } = clusterService;
 
 export const VALIDATE_CLOUD_PROVIDER_CREDENTIALS = 'VALIDATE_CLOUD_PROVIDER_CREDENTIALS';
 export const LIST_VPCS = 'LIST_VPCS';

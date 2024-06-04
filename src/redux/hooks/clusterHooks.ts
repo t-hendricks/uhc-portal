@@ -1,7 +1,7 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { AnyAction, Dispatch } from 'redux';
-import { clusterService } from '../../services';
 
+import { clusterService } from '../../services';
 import techPreviewActions from '../actions/techPreviewActions';
 import { GlobalState } from '../store';
 

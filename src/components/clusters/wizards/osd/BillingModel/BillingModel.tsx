@@ -1,36 +1,38 @@
 import React from 'react';
+import { useDispatch } from 'react-redux';
+
 import {
-  Title,
-  Text,
-  Stack,
-  StackItem,
+  Button,
   Flex,
   FlexItem,
   Popover,
   PopoverPosition,
-  Button,
+  Stack,
+  StackItem,
+  Text,
+  Title,
 } from '@patternfly/react-core';
 import OutlinedQuestionCircleIcon from '@patternfly/react-icons/dist/esm/icons/outlined-question-circle-icon';
 
-import CreateOSDWizardIntro from '~/styles/images/CreateOSDWizard-intro.png';
-import { OSD_GOOGLE_MARKETPLACE_FEATURE } from '~/redux/constants/featureConstants';
+import { deleteQueryParam, getQueryParam } from '~/common/queryHelpers';
 import { billingModels, normalizedProducts } from '~/common/subscriptionTypes';
-import { getQueryParam } from '~/common/queryHelpers';
-import ExternalLink from '~/components/common/ExternalLink';
 import {
   getMinReplicasCount,
   getNodesCount,
 } from '~/components/clusters/common/ScaleSection/AutoScaleSection/AutoScaleHelper';
 import { CloudProviderType } from '~/components/clusters/wizards/common/constants';
-import { FieldId } from '~/components/clusters/wizards/osd/constants';
-import { useFormState } from '~/components/clusters/wizards/hooks';
 import { RadioGroupField, RadioGroupOption } from '~/components/clusters/wizards/form';
-import { clustersActions } from '~/redux/actions';
+import { useFormState } from '~/components/clusters/wizards/hooks';
+import { FieldId } from '~/components/clusters/wizards/osd/constants';
+import ExternalLink from '~/components/common/ExternalLink';
 import { useFeatureGate } from '~/hooks/useFeatureGate';
+import { clustersActions } from '~/redux/actions';
+import { OSD_GOOGLE_MARKETPLACE_FEATURE } from '~/redux/constants/featureConstants';
 import { useGlobalState } from '~/redux/hooks';
-import { useDispatch } from 'react-redux';
-import { useGetBillingQuotas } from './useGetBillingQuotas';
+import CreateOSDWizardIntro from '~/styles/images/CreateOSDWizard-intro.png';
+
 import { MarketplaceSelectField } from './MarketplaceSelectField';
+import { useGetBillingQuotas } from './useGetBillingQuotas';
 
 import './BillingModel.scss';
 
@@ -115,7 +117,7 @@ export const BillingModel = () => {
   const marketplaceDisabledDescription = (
     <>
       {marketplaceQuotaDescription}
-      <p>
+      <div>
         <Popover
           position={PopoverPosition.right}
           headerContent="On-Demand subscription"
@@ -145,7 +147,7 @@ export const BillingModel = () => {
               : 'How can I purchase a subscription via Marketplace?'}
           </Button>
         </Popover>
-      </p>
+      </div>
     </>
   );
 
@@ -247,6 +249,7 @@ export const BillingModel = () => {
       setFieldValue(FieldId.BillingModel, billingModels.MARKETPLACE_GCP, false);
       setFieldValue(FieldId.Byoc, 'true', false);
       setFieldValue(FieldId.Product, normalizedProducts.OSD, false);
+      deleteQueryParam('source');
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [sourceIsGCP]);

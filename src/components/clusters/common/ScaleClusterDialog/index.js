@@ -1,19 +1,20 @@
+import get from 'lodash/get';
 import { connect } from 'react-redux';
 import { reduxForm } from 'redux-form';
-import get from 'lodash/get';
 
+import getClusterName from '../../../../common/getClusterName';
 import { clearClusterResponse, editCluster } from '../../../../redux/actions/clustersActions';
-import ScaleClusterDialog from './ScaleClusterDialog';
-import { closeModal } from '../../../common/Modal/ModalActions';
 import getLoadBalancerValues from '../../../../redux/actions/loadBalancerActions';
 import getPersistentStorageValues from '../../../../redux/actions/persistentStorageActions';
+import { getOrganizationAndQuota } from '../../../../redux/actions/userActions';
+import { closeModal } from '../../../common/Modal/ModalActions';
+
+import ScaleClusterDialog from './ScaleClusterDialog';
 import {
   minValueSelector,
-  shouldShowStorageQuotaAlert,
   shouldShowLoadBalancerAlert,
+  shouldShowStorageQuotaAlert,
 } from './ScaleClusterSelectors';
-import { getOrganizationAndQuota } from '../../../../redux/actions/userActions';
-import getClusterName from '../../../../common/getClusterName';
 
 const reduxFormConfig = {
   form: 'ScaleCluster',

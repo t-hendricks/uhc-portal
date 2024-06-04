@@ -1,4 +1,5 @@
 import max from 'lodash/max';
+
 import { normalizedProducts } from '~/common/subscriptionTypes';
 import { constants } from '~/components/clusters/common/CreateOSDFormConstants';
 
@@ -32,33 +33,26 @@ export const getNodesCount = (isBYOC, isMultiAz, asString) => {
   // TODO: if this used for a ROSA wizard/cluster:
   // verify that this is returning correct results ...
   // it is possible to be both isMultiAZ and isHypershfit
-  let computeNodes;
-  if (isBYOC) {
-    computeNodes = isMultiAz ? 3 : 2;
-  } else {
-    computeNodes = isMultiAz ? 9 : 4;
-  }
+  const powExponent = isBYOC ? 1 : 2;
+  const computeNodes = (isMultiAz ? 3 : 2) ** powExponent;
   return asString ? `${computeNodes}` : computeNodes;
 };
 
 export const getMinReplicasCount = (isBYOC, isMultiAz, asString, isHypershiftSelected = false) => {
-  let minReplicas;
-  if (isMultiAz && !isHypershiftSelected) {
-    minReplicas = getNodesCount(isBYOC, isMultiAz) / 3;
-  } else {
-    minReplicas = getNodesCount(isBYOC, isMultiAz);
-  }
+  const nodesCount = getNodesCount(isBYOC, isMultiAz);
+  const minReplicas = isMultiAz && !isHypershiftSelected ? nodesCount / 3 : nodesCount;
   return asString ? `${minReplicas}` : minReplicas;
 };
 
 export const computeNodeHintText = (isHypershiftWizard, isAddEditHypershiftModal) => {
-  if (isHypershiftWizard) {
-    return constants.hcpComputeNodeCountHintWizard;
+  switch (true) {
+    case isHypershiftWizard:
+      return constants.hcpComputeNodeCountHintWizard;
+    case isAddEditHypershiftModal:
+      return constants.hcpComputeNodeCountHint;
+    default:
+      return constants.computeNodeCountHint;
   }
-  if (isAddEditHypershiftModal) {
-    return constants.hcpComputeNodeCountHint;
-  }
-  return constants.computeNodeCountHint;
 };
 
 export default getMinNodesAllowed;

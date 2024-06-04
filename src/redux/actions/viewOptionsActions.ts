@@ -1,4 +1,5 @@
 import { action, ActionType } from 'typesafe-actions';
+
 import type { ViewFlags, ViewSorting } from '../../types/types';
 import { viewPaginationConstants } from '../constants';
 

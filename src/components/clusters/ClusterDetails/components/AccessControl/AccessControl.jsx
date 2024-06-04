@@ -1,18 +1,23 @@
-import React, { useState, useEffect } from 'react';
-import PropTypes from 'prop-types';
+import React, { useEffect, useState } from 'react';
 import get from 'lodash/get';
-import { Tabs, Tab, TabTitleText, Card, CardBody } from '@patternfly/react-core';
+import PropTypes from 'prop-types';
 
-import OCMRolesSection from './OCMRolesSection';
-import UsersSection from './UsersSection';
-import IDPSection from './IDPSection';
-import NetworkSelfServiceSection from './NetworkSelfServiceSection';
+import { Card, CardBody, Tab, Tabs, TabTitleText } from '@patternfly/react-core';
+
 import { isHibernating, isHypershiftCluster } from '../../../common/clusterStates';
 import {
+  isExtenalAuthenicationActive,
   isReadyForAwsAccessActions,
+  isReadyForExternalActions,
   isReadyForIdpActions,
   isReadyForRoleAccessActions,
 } from '../../clusterDetailsHelper';
+
+import { ExternalAuthenticationSection } from './ExternalAuthentication/ExternalAuthenticationSection';
+import IDPSection from './IDPSection';
+import NetworkSelfServiceSection from './NetworkSelfServiceSection';
+import OCMRolesSection from './OCMRolesSection';
+import UsersSection from './UsersSection';
 
 function AccessControl({ cluster, refreshEvent = null }) {
   const [activeKey, setActiveKey] = React.useState(0);
@@ -32,6 +37,7 @@ function AccessControl({ cluster, refreshEvent = null }) {
   const [clusterRolesAndAccessIsHidden, setClusterRolesAndAccessIsHidden] = useState(false);
   const [identityProvidersIsHidden, setIdentityProvidersIsHidden] = useState(false);
   const [AWSInfrastructureAccessIsHidden, setAWSInfrastructureAccessIsHidden] = useState(false);
+  const [externalAuthenicationIsHidden, setExternalAuthenicationIsHidden] = useState(false);
 
   // dynamically adjust the tab to be vertical (wider screen) or on the top
   useEffect(() => {
@@ -59,14 +65,18 @@ function AccessControl({ cluster, refreshEvent = null }) {
   }, []);
 
   useEffect(() => {
-    const hideRolesActions = !isReadyForRoleAccessActions(cluster);
-    const hideIdpActions = !isReadyForIdpActions(cluster);
+    const hideExternalAuthenication =
+      !isReadyForExternalActions(cluster) || !isExtenalAuthenicationActive(cluster);
+    const hideRolesActions =
+      !isReadyForRoleAccessActions(cluster) || isExtenalAuthenicationActive(cluster);
+    const hideIdpActions = !isReadyForIdpActions(cluster) || isExtenalAuthenicationActive(cluster);
     const hideAwsInfrastructureAccess = !isReadyForAwsAccessActions(cluster);
 
     setClusterRolesAndAccessIsHidden(hideRolesActions);
     setIdentityProvidersIsHidden(hideIdpActions);
     setAWSInfrastructureAccessIsHidden(hideAwsInfrastructureAccess);
     setIsReadOnly(cluster?.status?.configuration_mode === 'read_only');
+    setExternalAuthenicationIsHidden(hideExternalAuthenication);
 
     // hide the tab title if there is only one tab ("OCM Roles and Access").
     const isSingleTab = hideRolesActions && hideIdpActions && hideAwsInfrastructureAccess;
@@ -134,6 +144,14 @@ function AccessControl({ cluster, refreshEvent = null }) {
               clusterHibernating={isHibernating(cluster)}
               isReadOnly={isReadOnly}
             />
+          </Tab>
+          <Tab
+            eventKey={4}
+            id="external-authentication"
+            title={<TabTitleText>External authentication</TabTitleText>}
+            isHidden={externalAuthenicationIsHidden}
+          >
+            <ExternalAuthenticationSection />
           </Tab>
         </Tabs>
       </CardBody>

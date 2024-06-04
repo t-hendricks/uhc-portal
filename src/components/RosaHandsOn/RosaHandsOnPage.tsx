@@ -1,15 +1,16 @@
 import React from 'react';
-import * as Sentry from '@sentry/browser';
 
 import { Page } from '@patternfly/react-core';
+import * as Sentry from '@sentry/browser';
 
-import useAnalytics from '~/hooks/useAnalytics';
 import { trackEvents } from '~/common/analytics';
-import RosaHandsOnPageContent from './RosaHandsOnPageContent';
+import useAnalytics from '~/hooks/useAnalytics';
+
+import { AppPage } from '../App/AppPage';
 
 import demoExperienceService from './demoExperienceService';
+import RosaHandsOnPageContent from './RosaHandsOnPageContent';
 import useDemoExperiencePolling from './useDemoExperiencePolling';
-import { AppPage } from '../App/AppPage';
 
 const RosaHandsOnPage = () => {
   const track = useAnalytics();

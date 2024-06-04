@@ -1,8 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+
 import { InfoCircleIcon } from '@patternfly/react-icons/dist/esm/icons/info-circle-icon';
-import UpgradeAcknowledgeWarning from '../UpgradeAcknowledge/UpgradeAcknowledgeWarning';
+
 import MinorVersionUpgradeConfirm from '../MinorVersionUpgradeConfirm';
+import UpgradeAcknowledgeWarning from '../UpgradeAcknowledge/UpgradeAcknowledgeWarning';
+
 import './UpdateGraph.scss';
 
 const GraphContainer = ({ children }) => (

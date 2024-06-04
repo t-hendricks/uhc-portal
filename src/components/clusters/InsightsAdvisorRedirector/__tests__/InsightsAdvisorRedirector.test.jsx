@@ -1,5 +1,7 @@
 import React from 'react';
+
 import { render, screen, within } from '~/testUtils';
+
 import InsightsAdvisorRedirector, { composeRuleId } from '../InsightsAdvisorRedirector';
 
 // Instead of mocking window.location, mocking  whole components
@@ -31,7 +33,7 @@ describe('<InsightsAdvisorRedirector />', () => {
   };
 
   afterAll(() => {
-    jest.unmock('react-router-dom');
+    jest.unmock('react-router-dom-v5-compat');
   });
 
   afterEach(() => {

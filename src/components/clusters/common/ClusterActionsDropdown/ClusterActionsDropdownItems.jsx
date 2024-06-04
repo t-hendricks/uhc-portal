@@ -1,11 +1,14 @@
-import get from 'lodash/get';
 import React from 'react';
+import get from 'lodash/get';
+
+import { Tooltip } from '@patternfly/react-core';
 import { DropdownItem as DropdownItemDeprecated } from '@patternfly/react-core/deprecated';
-import clusterStates, { isHibernating, isHypershiftCluster } from '../clusterStates';
-import { subscriptionStatuses, normalizedProducts } from '../../../../common/subscriptionTypes';
+
 import getClusterName from '../../../../common/getClusterName';
-import modals from '../../../common/Modal/modals';
 import { isAssistedInstallCluster } from '../../../../common/isAssistedInstallerCluster';
+import { normalizedProducts, subscriptionStatuses } from '../../../../common/subscriptionTypes';
+import modals from '../../../common/Modal/modals';
+import clusterStates, { isHibernating, isHypershiftCluster } from '../clusterStates';
 
 /**
  * Helper using reason message why it's disabled as source-of-truth
@@ -72,6 +75,13 @@ function actionResolver(
   const isReadOnly = cluster?.status?.configuration_mode === 'read_only';
   const readOnlyMessage = isReadOnly && (
     <span>This operation is not available during maintenance</span>
+  );
+
+  const deleteProtectionMessage = cluster.delete_protection?.enabled && (
+    <span>
+      Cluster is locked and cannot be deleted. To unlock, go to cluster details and disable deletion
+      protection.
+    </span>
   );
 
   const consoleURL = get(cluster, 'console.url', false);
@@ -225,14 +235,17 @@ function actionResolver(
     ...baseProps,
     title: 'Delete cluster',
     key: getKey('deletecluster'),
-    ...disableIfTooltip(uninstallingMessage || readOnlyMessage || hibernatingMessage, {
-      onClick: () =>
-        openModal(modals.DELETE_CLUSTER, {
-          clusterID: cluster.id,
-          clusterName,
-          shouldDisplayClusterName: inClusterList,
-        }),
-    }),
+    ...disableIfTooltip(
+      uninstallingMessage || readOnlyMessage || hibernatingMessage || deleteProtectionMessage,
+      {
+        onClick: () =>
+          openModal(modals.DELETE_CLUSTER, {
+            clusterID: cluster.id,
+            clusterName,
+            shouldDisplayClusterName: inClusterList,
+          }),
+      },
+    ),
   });
 
   const getEditSubscriptionSettingsProps = () => {
@@ -313,7 +326,11 @@ function actionResolver(
   const product = get(cluster, 'subscription.plan.type', '');
   const showEditSubscriptionSettings =
     product === normalizedProducts.OCP && cluster.canEdit && canSubscribeOCP;
-  const isAllowedProducts = [normalizedProducts.OCP, normalizedProducts.ARO].includes(product);
+  const isAllowedProducts = [
+    normalizedProducts.OCP,
+    normalizedProducts.ARO,
+    normalizedProducts.RHOIC,
+  ].includes(product);
   const showTransferClusterOwnership =
     cluster.canEdit &&
     canTransferClusterOwnership &&
@@ -359,10 +376,17 @@ function dropDownItems({
     refreshFunc,
     inClusterList,
   );
-  const menuItems = actions.map((action) => (
-    <DropdownItemDeprecated {...action}>{action.title}</DropdownItemDeprecated>
-  ));
-  return menuItems;
+  // cleanedProps - Remove props that aren't recognized by DropdownItemDeprecated
+  const renderMenuItem = ({ isExternalLink, tooltipProps, title, ...cleanedProps }) =>
+    tooltipProps ? (
+      <Tooltip {...tooltipProps}>
+        <DropdownItemDeprecated {...cleanedProps}>{title}</DropdownItemDeprecated>
+      </Tooltip>
+    ) : (
+      <DropdownItemDeprecated {...cleanedProps}>{title}</DropdownItemDeprecated>
+    );
+
+  return actions.map(renderMenuItem);
 }
 
 export { actionResolver, dropDownItems };

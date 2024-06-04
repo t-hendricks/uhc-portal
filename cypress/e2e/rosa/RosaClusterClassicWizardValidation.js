@@ -7,7 +7,7 @@ const clusterFieldValidations = require('../../fixtures/rosa/RosaClusterClassicW
 const awsAccountID = Cypress.env('QE_AWS_ID');
 const rolePrefix = Cypress.env('QE_ACCOUNT_ROLE_PREFIX');
 const installerARN = 'arn:aws:iam::' + awsAccountID + ':role/' + rolePrefix + '-Installer-Role';
-const clusterName = `smkrosa-` + (Math.random() + 1).toString(36).substring(7);
+const clusterName = `ocmui-cypress-smoke-rosa-` + (Math.random() + 1).toString(36).substring(7);
 
 describe('Rosa Classic cluster wizard validations', { tags: ['smoke'] }, () => {
   it('Open Rosa cluster wizard', () => {
@@ -30,6 +30,7 @@ describe('Rosa Classic cluster wizard validations', { tags: ['smoke'] }, () => {
   it('Step - Accounts and roles - widget validations', () => {
     CreateRosaWizardPage.isAccountsAndRolesScreen();
     CreateRosaWizardPage.selectAWSInfrastructureAccount(awsAccountID);
+    CreateRosaWizardPage.waitForARNList();
     CreateRosaWizardPage.refreshInfrastructureAWSAccountButton().click();
     CreateRosaWizardPage.waitForARNList();
     CreateRosaWizardPage.selectInstallerRole(installerARN);
@@ -37,25 +38,67 @@ describe('Rosa Classic cluster wizard validations', { tags: ['smoke'] }, () => {
   });
 
   it('Step - Cluster Settings - widget validations', () => {
-    cy.get(CreateRosaWizardPage.clusterNameInput).type(clusterName);
+    CreateRosaWizardPage.setClusterName(
+      clusterFieldValidations.ClusterSettings.Details.InvalidClusterNamesValues[0],
+    );
+    CreateRosaWizardPage.closePopoverDialogs();
+    CreateRosaWizardPage.isTextContainsInPage(
+      clusterFieldValidations.ClusterSettings.Details.InvalidClusterNamesErrors[0],
+    );
+    CreateRosaWizardPage.setClusterName(
+      clusterFieldValidations.ClusterSettings.Details.InvalidClusterNamesValues[1],
+    );
+    CreateRosaWizardPage.closePopoverDialogs();
+    CreateRosaWizardPage.isTextContainsInPage(
+      clusterFieldValidations.ClusterSettings.Details.InvalidClusterNamesErrors[1],
+    );
+    CreateRosaWizardPage.setClusterName(
+      clusterFieldValidations.ClusterSettings.Details.InvalidClusterNamesValues[2],
+    );
+    CreateRosaWizardPage.closePopoverDialogs();
+    CreateRosaWizardPage.isTextContainsInPage(
+      clusterFieldValidations.ClusterSettings.Details.InvalidClusterNamesErrors[2],
+    );
+    CreateRosaWizardPage.createCustomDomainPrefixCheckbox().scrollIntoView().check();
+    CreateRosaWizardPage.setDomainPrefix(
+      clusterFieldValidations.ClusterSettings.Details.InvalidDomainPrefixValues[0],
+    );
+    CreateRosaWizardPage.closePopoverDialogs();
+    CreateRosaWizardPage.isTextContainsInPage(
+      clusterFieldValidations.ClusterSettings.Details.InvalidDomainPrefixErrors[0],
+    );
+    CreateRosaWizardPage.setDomainPrefix(
+      clusterFieldValidations.ClusterSettings.Details.InvalidDomainPrefixValues[1],
+    );
+    CreateRosaWizardPage.closePopoverDialogs();
+    CreateRosaWizardPage.isTextContainsInPage(
+      clusterFieldValidations.ClusterSettings.Details.InvalidDomainPrefixErrors[1],
+    );
+    CreateRosaWizardPage.setDomainPrefix(
+      clusterFieldValidations.ClusterSettings.Details.InvalidDomainPrefixValues[2],
+    );
+    CreateRosaWizardPage.closePopoverDialogs();
+    CreateRosaWizardPage.isTextContainsInPage(
+      clusterFieldValidations.ClusterSettings.Details.InvalidDomainPrefixErrors[2],
+    );
+    CreateRosaWizardPage.createCustomDomainPrefixCheckbox().uncheck();
+    CreateRosaWizardPage.setClusterName(clusterName);
     CreateRosaWizardPage.advancedEncryptionLink().click();
     CreateRosaWizardPage.useCustomKMSKeyRadio().check();
     CreateRosaWizardPage.rosaNextButton().click({ force: true });
-    CreateRosaWizardPage.kmsKeyARNHelpText().should('be.visible').contains('Field is required.');
+    CreateRosaWizardPage.isTextContainsInPage('Field is required.');
     CreateRosaWizardPage.inputCustomerManageKeyARN(
       clusterFieldValidations.ClusterSettings.Details.KeyARNs[0].WrongFormatValue,
     );
-    CreateRosaWizardPage.kmsKeyARNHelpText()
-      .should('be.visible')
-      .contains(clusterFieldValidations.ClusterSettings.Details.KeyARNs[0].WrongFormatError);
+    CreateRosaWizardPage.isTextContainsInPage(
+      clusterFieldValidations.ClusterSettings.Details.KeyARNs[0].WrongFormatError,
+    );
     CreateRosaWizardPage.inputCustomerManageKeyARN(
       clusterFieldValidations.ClusterSettings.Details.KeyARNs[1].WrongFormatWithWhitespace,
     );
-    CreateRosaWizardPage.kmsKeyARNHelpText()
-      .should('be.visible')
-      .contains(
-        clusterFieldValidations.ClusterSettings.Details.KeyARNs[1].WrongFormatWithWhitespaceError,
-      );
+    CreateRosaWizardPage.isTextContainsInPage(
+      clusterFieldValidations.ClusterSettings.Details.KeyARNs[1].WrongFormatWithWhitespaceError,
+    );
     CreateRosaWizardPage.useDefaultKMSKeyRadio().check();
     CreateRosaWizardPage.rosaNextButton().should('not.be.disabled');
     CreateRosaWizardPage.rosaBackButton().should('not.be.disabled');
@@ -67,248 +110,215 @@ describe('Rosa Classic cluster wizard validations', { tags: ['smoke'] }, () => {
     CreateRosaWizardPage.isClusterMachinepoolsScreen();
     CreateRosaWizardPage.enableAutoScaling();
     CreateRosaWizardPage.setMinimumNodeCount('0');
-    cy.get('span')
-      .contains(
-        clusterFieldValidations.ClusterSettings.Machinepool.NodeCount.SingleZone.LowerLimitError,
-      )
-      .should('be.visible');
+    CreateRosaWizardPage.isTextContainsInPage(
+      clusterFieldValidations.ClusterSettings.Machinepool.NodeCount.SingleZone.LowerLimitError,
+    );
     CreateRosaWizardPage.setMinimumNodeCount('200');
-    cy.get('span')
-      .contains(
-        clusterFieldValidations.ClusterSettings.Machinepool.NodeCount.SingleZone.UpperLimitError,
-      )
-      .should('be.visible');
-    cy.get('span')
-      .contains(
-        clusterFieldValidations.ClusterSettings.Machinepool.NodeCount.SingleZone
-          .MinAndMaxLimitDependencyError,
-      )
-      .should('be.visible');
+    CreateRosaWizardPage.isTextContainsInPage(
+      clusterFieldValidations.ClusterSettings.Machinepool.NodeCount.SingleZone.UpperLimitError,
+    );
+    CreateRosaWizardPage.isTextContainsInPage(
+      clusterFieldValidations.ClusterSettings.Machinepool.NodeCount.SingleZone
+        .MinAndMaxLimitDependencyError,
+    );
     CreateRosaWizardPage.setMinimumNodeCount('2');
     CreateRosaWizardPage.setMaximumNodeCount('200');
-    cy.get('span')
-      .contains(
-        clusterFieldValidations.ClusterSettings.Machinepool.NodeCount.SingleZone.UpperLimitError,
-      )
-      .should('be.visible');
+    CreateRosaWizardPage.isTextContainsInPage(
+      clusterFieldValidations.ClusterSettings.Machinepool.NodeCount.SingleZone.UpperLimitError,
+    );
     CreateRosaWizardPage.setMaximumNodeCount('0');
-    cy.get('span')
-      .contains(
-        clusterFieldValidations.ClusterSettings.Machinepool.NodeCount.SingleZone.LowerLimitError,
-      )
-      .should('be.visible');
+    CreateRosaWizardPage.isTextContainsInPage(
+      clusterFieldValidations.ClusterSettings.Machinepool.NodeCount.SingleZone.LowerLimitError,
+    );
     CreateRosaWizardPage.setMaximumNodeCount('2');
     CreateRosaWizardPage.minimumNodeCountPlusButton().click();
-    cy.get('span')
-      .contains(
-        clusterFieldValidations.ClusterSettings.Machinepool.NodeCount.SingleZone
-          .MinAndMaxLimitDependencyError,
-      )
-      .should('be.visible');
+    CreateRosaWizardPage.isTextContainsInPage(
+      clusterFieldValidations.ClusterSettings.Machinepool.NodeCount.SingleZone
+        .MinAndMaxLimitDependencyError,
+    );
     CreateRosaWizardPage.maximumNodeCountPlusButton().click();
-    cy.get('span')
-      .contains(
-        clusterFieldValidations.ClusterSettings.Machinepool.NodeCount.SingleZone
-          .MinAndMaxLimitDependencyError,
-      )
-      .should('not.exist');
+    CreateRosaWizardPage.isTextContainsInPage(
+      clusterFieldValidations.ClusterSettings.Machinepool.NodeCount.SingleZone
+        .MinAndMaxLimitDependencyError,
+      false,
+    );
     CreateRosaWizardPage.maximumNodeCountMinusButton().click();
-    cy.get('span')
-      .contains(
-        clusterFieldValidations.ClusterSettings.Machinepool.NodeCount.SingleZone
-          .MinAndMaxLimitDependencyError,
-      )
-      .should('be.visible');
+    CreateRosaWizardPage.isTextContainsInPage(
+      clusterFieldValidations.ClusterSettings.Machinepool.NodeCount.SingleZone
+        .MinAndMaxLimitDependencyError,
+    );
     CreateRosaWizardPage.minimumNodeCountMinusButton().click();
-    cy.get('span')
-      .contains(
-        clusterFieldValidations.ClusterSettings.Machinepool.NodeCount.SingleZone
-          .MinAndMaxLimitDependencyError,
-      )
-      .should('not.exist');
+    CreateRosaWizardPage.isTextContainsInPage(
+      clusterFieldValidations.ClusterSettings.Machinepool.NodeCount.SingleZone
+        .MinAndMaxLimitDependencyError,
+      false,
+    );
     CreateRosaWizardPage.rosaBackButton().click();
     CreateRosaWizardPage.selectAvailabilityZone('Multi-zone');
     CreateRosaWizardPage.rosaNextButton().click({ force: true });
     CreateRosaWizardPage.setMinimumNodeCount('0');
-    cy.get('span')
-      .contains(
-        clusterFieldValidations.ClusterSettings.Machinepool.NodeCount.MultiZone.LowerLimitError,
-      )
-      .should('be.visible');
+    CreateRosaWizardPage.isTextContainsInPage(
+      clusterFieldValidations.ClusterSettings.Machinepool.NodeCount.MultiZone.LowerLimitError,
+    );
     CreateRosaWizardPage.setMinimumNodeCount('200');
-    cy.get('span')
-      .contains(
-        clusterFieldValidations.ClusterSettings.Machinepool.NodeCount.MultiZone.UpperLimitError,
-      )
-      .should('be.visible');
+    CreateRosaWizardPage.isTextContainsInPage(
+      clusterFieldValidations.ClusterSettings.Machinepool.NodeCount.MultiZone.UpperLimitError,
+    );
     CreateRosaWizardPage.setMaximumNodeCount('2');
-    cy.get('span')
-      .contains(
-        clusterFieldValidations.ClusterSettings.Machinepool.NodeCount.MultiZone
-          .MinAndMaxLimitDependencyError,
-      )
-      .should('be.visible');
+    CreateRosaWizardPage.isTextContainsInPage(
+      clusterFieldValidations.ClusterSettings.Machinepool.NodeCount.MultiZone
+        .MinAndMaxLimitDependencyError,
+    );
     CreateRosaWizardPage.setMinimumNodeCount('2');
     CreateRosaWizardPage.setMaximumNodeCount('200');
-    cy.get('span')
-      .contains(
-        clusterFieldValidations.ClusterSettings.Machinepool.NodeCount.MultiZone.UpperLimitError,
-      )
-      .should('be.visible');
+    CreateRosaWizardPage.isTextContainsInPage(
+      clusterFieldValidations.ClusterSettings.Machinepool.NodeCount.MultiZone.UpperLimitError,
+    );
     CreateRosaWizardPage.setMaximumNodeCount('0');
-    cy.get('span')
-      .contains(
-        clusterFieldValidations.ClusterSettings.Machinepool.NodeCount.MultiZone.LowerLimitError,
-      )
-      .should('be.visible');
+    CreateRosaWizardPage.isTextContainsInPage(
+      clusterFieldValidations.ClusterSettings.Machinepool.NodeCount.MultiZone.LowerLimitError,
+    );
     CreateRosaWizardPage.setMaximumNodeCount('2');
     CreateRosaWizardPage.minimumNodeCountPlusButton().click();
-    cy.get('span')
-      .contains(
-        clusterFieldValidations.ClusterSettings.Machinepool.NodeCount.MultiZone
-          .MinAndMaxLimitDependencyError,
-      )
-      .should('be.visible');
+    CreateRosaWizardPage.isTextContainsInPage(
+      clusterFieldValidations.ClusterSettings.Machinepool.NodeCount.MultiZone
+        .MinAndMaxLimitDependencyError,
+    );
     CreateRosaWizardPage.maximumNodeCountPlusButton().click();
-    cy.get('span')
-      .contains(
-        clusterFieldValidations.ClusterSettings.Machinepool.NodeCount.MultiZone
-          .MinAndMaxLimitDependencyError,
-      )
-      .should('not.exist');
+    CreateRosaWizardPage.isTextContainsInPage(
+      clusterFieldValidations.ClusterSettings.Machinepool.NodeCount.MultiZone
+        .MinAndMaxLimitDependencyError,
+      false,
+    );
     CreateRosaWizardPage.maximumNodeCountMinusButton().click();
-    cy.get('span')
-      .contains(
-        clusterFieldValidations.ClusterSettings.Machinepool.NodeCount.MultiZone
-          .MinAndMaxLimitDependencyError,
-      )
-      .should('be.visible');
+    CreateRosaWizardPage.isTextContainsInPage(
+      clusterFieldValidations.ClusterSettings.Machinepool.NodeCount.MultiZone
+        .MinAndMaxLimitDependencyError,
+    );
     CreateRosaWizardPage.minimumNodeCountMinusButton().click();
-    cy.get('span')
-      .contains(
-        clusterFieldValidations.ClusterSettings.Machinepool.NodeCount.MultiZone
-          .MinAndMaxLimitDependencyError,
-      )
-      .should('not.exist');
+    CreateRosaWizardPage.isTextContainsInPage(
+      clusterFieldValidations.ClusterSettings.Machinepool.NodeCount.MultiZone
+        .MinAndMaxLimitDependencyError,
+      false,
+    );
   });
   it('Step - Cluster Settings - machine pool- Cluster autoscaling section - widget validations', () => {
     CreateRosaWizardPage.editClusterAutoscalingSettingsButton().click();
-    CreateRosaWizardPage.clusterAutoscalingLogVerbosityInput().type('{selectAll}').type('0');
-    cy.get('div')
-      .contains(
-        clusterFieldValidations.ClusterSettings.Machinepool.ClusterAutoscaling
-          .LogVerbosityLimitError,
-      )
-      .should('be.visible');
-    CreateRosaWizardPage.clusterAutoscalingLogVerbosityInput().type('{selectAll}').type('7');
-    cy.get('div')
-      .contains(
-        clusterFieldValidations.ClusterSettings.Machinepool.ClusterAutoscaling
-          .LogVerbosityLimitError,
-      )
-      .should('be.visible');
-    CreateRosaWizardPage.clusterAutoscalingLogVerbosityInput().type('{selectAll}').type('3');
-    cy.get('div')
-      .contains(
-        clusterFieldValidations.ClusterSettings.Machinepool.ClusterAutoscaling
-          .LogVerbosityLimitError,
-      )
-      .should('not.exist');
-    CreateRosaWizardPage.clusterAutoscalingMaxNodeProvisionTimeInput().clear();
-    cy.get('div')
-      .contains(
-        clusterFieldValidations.ClusterSettings.Machinepool.ClusterAutoscaling.RequiredFieldError,
-      )
-      .should('be.visible');
-    CreateRosaWizardPage.clusterAutoscalingMaxNodeProvisionTimeInput().clear().type('8H');
-    cy.get('div')
-      .contains(
-        clusterFieldValidations.ClusterSettings.Machinepool.ClusterAutoscaling
-          .InvalidTimeValueError,
-      )
-      .should('be.visible');
-    CreateRosaWizardPage.clusterAutoscalingMaxNodeProvisionTimeInput().clear().type('90k');
-    cy.get('div')
-      .contains(
-        clusterFieldValidations.ClusterSettings.Machinepool.ClusterAutoscaling
-          .InvalidTimeValueError,
-      )
-      .should('be.visible');
-    CreateRosaWizardPage.clusterAutoscalingMaxNodeProvisionTimeInput().clear().type('8s');
-    cy.get('div')
-      .contains(
-        clusterFieldValidations.ClusterSettings.Machinepool.ClusterAutoscaling
-          .InvalidTimeValueError,
-      )
-      .should('not.exist');
+    CreateRosaWizardPage.clusterAutoscalingLogVerbosityInput().type('{selectAll}').type('0').blur();
+    CreateRosaWizardPage.isTextContainsInPage(
+      clusterFieldValidations.ClusterSettings.Machinepool.ClusterAutoscaling.LogVerbosityLimitError,
+    );
+    CreateRosaWizardPage.clusterAutoscalingLogVerbosityInput().type('{selectAll}').type('7').blur();
+    CreateRosaWizardPage.isTextContainsInPage(
+      clusterFieldValidations.ClusterSettings.Machinepool.ClusterAutoscaling.LogVerbosityLimitError,
+    );
+    CreateRosaWizardPage.clusterAutoscalingLogVerbosityInput().type('{selectAll}').type('3').blur();
+    CreateRosaWizardPage.isTextContainsInPage(
+      clusterFieldValidations.ClusterSettings.Machinepool.ClusterAutoscaling.LogVerbosityLimitError,
+      false,
+    );
+    CreateRosaWizardPage.clusterAutoscalingMaxNodeProvisionTimeInput().clear().blur();
+    CreateRosaWizardPage.isTextContainsInPage(
+      clusterFieldValidations.ClusterSettings.Machinepool.ClusterAutoscaling.RequiredFieldError,
+    );
+    CreateRosaWizardPage.clusterAutoscalingMaxNodeProvisionTimeInput().clear().type('8H').blur();
+    CreateRosaWizardPage.isTextContainsInPage(
+      clusterFieldValidations.ClusterSettings.Machinepool.ClusterAutoscaling.InvalidTimeValueError,
+    );
+    CreateRosaWizardPage.clusterAutoscalingMaxNodeProvisionTimeInput().clear().type('90k').blur();
+    CreateRosaWizardPage.isTextContainsInPage(
+      clusterFieldValidations.ClusterSettings.Machinepool.ClusterAutoscaling.InvalidTimeValueError,
+    );
+    CreateRosaWizardPage.clusterAutoscalingMaxNodeProvisionTimeInput().clear().type('8s').blur();
+    CreateRosaWizardPage.isTextContainsInPage(
+      clusterFieldValidations.ClusterSettings.Machinepool.ClusterAutoscaling.InvalidTimeValueError,
+      false,
+    );
     CreateRosaWizardPage.clusterAutoscalingBalancingIgnoredLabelsInput()
       .clear()
-      .type('test with whitespace,test');
-    cy.get('div')
-      .contains(
-        clusterFieldValidations.ClusterSettings.Machinepool.ClusterAutoscaling
-          .WhitespaceLabelValueError,
-      )
-      .should('be.visible');
-    CreateRosaWizardPage.clusterAutoscalingBalancingIgnoredLabelsInput().clear().type('test,test,');
-    cy.get('div')
-      .contains(
-        clusterFieldValidations.ClusterSettings.Machinepool.ClusterAutoscaling.EmptyLabelValueError,
-      )
-      .should('be.visible');
+      .type('test with whitespace,test')
+      .blur();
+    CreateRosaWizardPage.isTextContainsInPage(
+      clusterFieldValidations.ClusterSettings.Machinepool.ClusterAutoscaling
+        .WhitespaceLabelValueError,
+    );
     CreateRosaWizardPage.clusterAutoscalingBalancingIgnoredLabelsInput()
       .clear()
-      .type('test@434$,123,&test_(t)35435');
-    cy.get('div').contains('Empty labels are not allowed').should('not.exist');
-    CreateRosaWizardPage.clusterAutoscalingCoresTotalMinInput().type('{selectAll}').type('10');
-    CreateRosaWizardPage.clusterAutoscalingCoresTotalMaxInput().type('{selectAll}').type('9');
-    cy.get('div')
-      .contains(
-        clusterFieldValidations.ClusterSettings.Machinepool.ClusterAutoscaling.MinMaxLimitError,
-      )
-      .should('be.visible');
-    CreateRosaWizardPage.clusterAutoscalingCoresTotalMinInput().type('{selectAll}').type('9');
-    CreateRosaWizardPage.clusterAutoscalingCoresTotalMaxInput().type('{selectAll}').type('10');
-    cy.get('div')
-      .contains(
-        clusterFieldValidations.ClusterSettings.Machinepool.ClusterAutoscaling.MinMaxLimitError,
-      )
-      .should('not.exist');
-    CreateRosaWizardPage.clusterAutoscalingMemoryTotalMinInput().type('{selectAll}').type('10');
-    CreateRosaWizardPage.clusterAutoscalingMemoryTotalMaxInput().type('{selectAll}').type('9');
-    cy.get('div')
-      .contains(
-        clusterFieldValidations.ClusterSettings.Machinepool.ClusterAutoscaling.MinMaxLimitError,
-      )
-      .should('be.visible');
-    CreateRosaWizardPage.clusterAutoscalingMemoryTotalMinInput().type('{selectAll}').type('9');
-    CreateRosaWizardPage.clusterAutoscalingMemoryTotalMaxInput().type('{selectAll}').type('10');
-    cy.get('div')
-      .contains(
-        clusterFieldValidations.ClusterSettings.Machinepool.ClusterAutoscaling.MinMaxLimitError,
-      )
-      .should('not.exist');
-    CreateRosaWizardPage.clusterAutoscalingGPUsInput().type('{selectAll}').type('test');
-    cy.get('div')
-      .contains(
-        clusterFieldValidations.ClusterSettings.Machinepool.ClusterAutoscaling.InvalidGPUValueError,
-      )
-      .should('be.visible');
-    CreateRosaWizardPage.clusterAutoscalingGPUsInput().type('{selectAll}').type('test:10:5');
-    cy.get('div')
-      .contains(
-        clusterFieldValidations.ClusterSettings.Machinepool.ClusterAutoscaling.InvalidGPUValueError,
-      )
-      .should('be.visible');
-    CreateRosaWizardPage.clusterAutoscalingGPUsInput().type('{selectAll}').type('test:10:5,');
-    cy.get('div')
-      .contains(
-        clusterFieldValidations.ClusterSettings.Machinepool.ClusterAutoscaling.InvalidGPUValueError,
-      )
-      .should('be.visible');
+      .type('test,test,')
+      .blur();
+    CreateRosaWizardPage.isTextContainsInPage(
+      clusterFieldValidations.ClusterSettings.Machinepool.ClusterAutoscaling.EmptyLabelValueError,
+    );
+    CreateRosaWizardPage.clusterAutoscalingBalancingIgnoredLabelsInput()
+      .clear()
+      .type('test@434$,123,&test_(t)35435')
+      .blur();
+    CreateRosaWizardPage.isTextContainsInPage('Empty labels are not allowed', false);
+    CreateRosaWizardPage.clusterAutoscalingCoresTotalMinInput()
+      .type('{selectAll}')
+      .type('10')
+      .blur();
+    CreateRosaWizardPage.clusterAutoscalingCoresTotalMaxInput()
+      .type('{selectAll}')
+      .type('9')
+      .blur();
+    CreateRosaWizardPage.isTextContainsInPage(
+      clusterFieldValidations.ClusterSettings.Machinepool.ClusterAutoscaling.MinMaxLimitError,
+    );
+    CreateRosaWizardPage.clusterAutoscalingCoresTotalMinInput()
+      .type('{selectAll}')
+      .type('9')
+      .blur();
+    CreateRosaWizardPage.clusterAutoscalingCoresTotalMaxInput()
+      .type('{selectAll}')
+      .type('10')
+      .blur();
+    CreateRosaWizardPage.isTextContainsInPage(
+      clusterFieldValidations.ClusterSettings.Machinepool.ClusterAutoscaling.MinMaxLimitError,
+      false,
+    );
+    CreateRosaWizardPage.clusterAutoscalingMemoryTotalMinInput()
+      .type('{selectAll}')
+      .type('10')
+      .blur();
+    CreateRosaWizardPage.clusterAutoscalingMemoryTotalMaxInput()
+      .type('{selectAll}')
+      .type('9')
+      .blur();
+    CreateRosaWizardPage.isTextContainsInPage(
+      clusterFieldValidations.ClusterSettings.Machinepool.ClusterAutoscaling.MinMaxLimitError,
+    );
+    CreateRosaWizardPage.clusterAutoscalingMemoryTotalMinInput()
+      .type('{selectAll}')
+      .type('9')
+      .blur();
+    CreateRosaWizardPage.clusterAutoscalingMemoryTotalMaxInput()
+      .type('{selectAll}')
+      .type('10')
+      .blur();
+    CreateRosaWizardPage.isTextContainsInPage(
+      clusterFieldValidations.ClusterSettings.Machinepool.ClusterAutoscaling.MinMaxLimitError,
+      false,
+    );
+    CreateRosaWizardPage.clusterAutoscalingGPUsInput().type('{selectAll}').type('test').blur();
+    CreateRosaWizardPage.isTextContainsInPage(
+      clusterFieldValidations.ClusterSettings.Machinepool.ClusterAutoscaling.InvalidGPUValueError,
+    );
+    CreateRosaWizardPage.clusterAutoscalingGPUsInput().type('{selectAll}').type('test:10:5').blur();
+    CreateRosaWizardPage.isTextContainsInPage(
+      clusterFieldValidations.ClusterSettings.Machinepool.ClusterAutoscaling.InvalidGPUValueError,
+    );
     CreateRosaWizardPage.clusterAutoscalingGPUsInput()
       .type('{selectAll}')
-      .type('test:10:12,test:1:5');
+      .type('test:10:5,')
+      .blur();
+    CreateRosaWizardPage.isTextContainsInPage(
+      clusterFieldValidations.ClusterSettings.Machinepool.ClusterAutoscaling.InvalidGPUValueError,
+    );
+    CreateRosaWizardPage.clusterAutoscalingGPUsInput()
+      .type('{selectAll}')
+      .type('test:10:12,test:1:5')
+      .blur();
     cy.get('div')
       .contains(
         clusterFieldValidations.ClusterSettings.Machinepool.ClusterAutoscaling.InvalidGPUValueError,
@@ -317,109 +327,96 @@ describe('Rosa Classic cluster wizard validations', { tags: ['smoke'] }, () => {
     CreateRosaWizardPage.clusterAutoscalingScaleDownUtilizationThresholdInput()
       .type('{selectAll}')
       .type('1.5');
-    cy.get('div')
-      .contains(
-        clusterFieldValidations.ClusterSettings.Machinepool.ClusterAutoscaling.ThreasholdLimitError,
-      )
-      .should('be.visible');
+    CreateRosaWizardPage.isTextContainsInPage(
+      clusterFieldValidations.ClusterSettings.Machinepool.ClusterAutoscaling.ThreasholdLimitError,
+    );
     CreateRosaWizardPage.clusterAutoscalingScaleDownUtilizationThresholdInput()
       .type('{selectAll}')
-      .type('0.5');
+      .type('0.5')
+      .blur();
 
     CreateRosaWizardPage.clusterAutoscalingScaleDownUnneededTimeInput()
       .type('{selectAll}')
-      .type('7H');
-    cy.get('div')
-      .contains(
-        clusterFieldValidations.ClusterSettings.Machinepool.ClusterAutoscaling
-          .InvalidTimeValueError,
-      )
-      .should('be.visible');
+      .type('7H')
+      .blur();
+    CreateRosaWizardPage.isTextContainsInPage(
+      clusterFieldValidations.ClusterSettings.Machinepool.ClusterAutoscaling.InvalidTimeValueError,
+    );
     CreateRosaWizardPage.clusterAutoscalingScaleDownUnneededTimeInput()
       .type('{selectAll}')
-      .type('7h');
-    cy.get('div')
-      .contains(
-        clusterFieldValidations.ClusterSettings.Machinepool.ClusterAutoscaling
-          .InvalidTimeValueError,
-      )
-      .should('not.exist');
+      .type('7h')
+      .blur();
+    CreateRosaWizardPage.isTextContainsInPage(
+      clusterFieldValidations.ClusterSettings.Machinepool.ClusterAutoscaling.InvalidTimeValueError,
+      false,
+    );
 
     CreateRosaWizardPage.clusterAutoscalingScaleDownDelayAfterAddInput()
       .type('{selectAll}')
-      .type('8Sec');
-    cy.get('div')
-      .contains(
-        clusterFieldValidations.ClusterSettings.Machinepool.ClusterAutoscaling
-          .InvalidTimeValueError,
-      )
-      .should('be.visible');
+      .type('8Sec')
+      .blur();
+    CreateRosaWizardPage.isTextContainsInPage(
+      clusterFieldValidations.ClusterSettings.Machinepool.ClusterAutoscaling.InvalidTimeValueError,
+    );
     CreateRosaWizardPage.clusterAutoscalingScaleDownDelayAfterAddInput()
       .type('{selectAll}')
-      .type('8s');
-    cy.get('div')
-      .contains(
-        clusterFieldValidations.ClusterSettings.Machinepool.ClusterAutoscaling
-          .InvalidTimeValueError,
-      )
-      .should('not.exist');
+      .type('8s')
+      .blur();
+    CreateRosaWizardPage.isTextContainsInPage(
+      clusterFieldValidations.ClusterSettings.Machinepool.ClusterAutoscaling.InvalidTimeValueError,
+      false,
+    );
 
     CreateRosaWizardPage.clusterAutoscalingScaleDownDelayAfterDeleteInput()
       .type('{selectAll}')
-      .type('10milli');
-    cy.get('div')
-      .contains(
-        clusterFieldValidations.ClusterSettings.Machinepool.ClusterAutoscaling
-          .InvalidTimeValueError,
-      )
-      .should('be.visible');
+      .type('10milli')
+      .blur();
+    CreateRosaWizardPage.isTextContainsInPage(
+      clusterFieldValidations.ClusterSettings.Machinepool.ClusterAutoscaling.InvalidTimeValueError,
+    );
 
     CreateRosaWizardPage.clusterAutoscalingScaleDownDelayAfterDeleteInput()
       .type('{selectAll}')
-      .type('10s');
-    cy.get('div')
-      .contains(
-        clusterFieldValidations.ClusterSettings.Machinepool.ClusterAutoscaling
-          .InvalidTimeValueError,
-      )
-      .should('not.exist');
+      .type('10s')
+      .blur();
+    CreateRosaWizardPage.isTextContainsInPage(
+      clusterFieldValidations.ClusterSettings.Machinepool.ClusterAutoscaling.InvalidTimeValueError,
+      false,
+    );
 
     CreateRosaWizardPage.clusterAutoscalingScaleDownDelayAfterFailureInput()
       .type('{selectAll}')
-      .type('5M');
-    cy.get('div')
-      .contains(
-        clusterFieldValidations.ClusterSettings.Machinepool.ClusterAutoscaling
-          .InvalidTimeValueError,
-      )
-      .should('be.visible');
+      .type('5M')
+      .blur();
+    CreateRosaWizardPage.isTextContainsInPage(
+      clusterFieldValidations.ClusterSettings.Machinepool.ClusterAutoscaling.InvalidTimeValueError,
+    );
 
     CreateRosaWizardPage.clusterAutoscalingScaleDownDelayAfterFailureInput()
       .type('{selectAll}')
-      .type('5m');
-    cy.get('div')
-      .contains(
-        clusterFieldValidations.ClusterSettings.Machinepool.ClusterAutoscaling
-          .InvalidTimeValueError,
-      )
-      .should('not.exist');
+      .type('5m')
+      .blur();
+    CreateRosaWizardPage.isTextContainsInPage(
+      clusterFieldValidations.ClusterSettings.Machinepool.ClusterAutoscaling.InvalidTimeValueError,
+      false,
+    );
 
     CreateRosaWizardPage.clusterAutoscalingRevertAllToDefaultsButton().click();
     CreateRosaWizardPage.clusterAutoscalingCloseButton().click();
   });
   it('Step - Cluster Settings - machine pool- Root disk size and node labels section - widget validations', () => {
     CreateRosaWizardPage.rootDiskSizeInput().type('{selectAll}').type('125');
-    cy.get('div')
-      .contains(clusterFieldValidations.ClusterSettings.Machinepool.RootDiskSize.LimitError)
-      .should('be.visible');
+    CreateRosaWizardPage.isTextContainsInPage(
+      clusterFieldValidations.ClusterSettings.Machinepool.RootDiskSize.LimitError,
+    );
     CreateRosaWizardPage.rootDiskSizeInput().type('{selectAll}').type('16385');
-    cy.get('div')
-      .contains(clusterFieldValidations.ClusterSettings.Machinepool.RootDiskSize.LimitError)
-      .should('be.visible');
+    CreateRosaWizardPage.isTextContainsInPage(
+      clusterFieldValidations.ClusterSettings.Machinepool.RootDiskSize.LimitError,
+    );
     CreateRosaWizardPage.rootDiskSizeInput().clear().type('{selectAll}').type('test');
-    cy.get('div')
-      .contains(clusterFieldValidations.ClusterSettings.Machinepool.RootDiskSize.NonSupportedValue)
-      .should('be.visible');
+    CreateRosaWizardPage.isTextContainsInPage(
+      clusterFieldValidations.ClusterSettings.Machinepool.RootDiskSize.NonSupportedValue,
+    );
     CreateRosaWizardPage.rootDiskSizeInput().clear().type('{selectAll}').type('555');
     CreateRosaWizardPage.editNodeLabelLink().click();
     CreateRosaWizardPage.addNodeLabelKeyAndValue(
@@ -427,65 +424,72 @@ describe('Rosa Classic cluster wizard validations', { tags: ['smoke'] }, () => {
       'test',
       0,
     );
-    cy.get('span')
-      .contains(clusterFieldValidations.ClusterSettings.Machinepool.NodeLabel[0].KeyError)
-      .should('be.visible');
-    cy.get('span')
-      .contains(clusterFieldValidations.ClusterSettings.Machinepool.NodeLabel[0].LabelError)
-      .should('not.exist');
+    CreateRosaWizardPage.isTextContainsInPage(
+      clusterFieldValidations.ClusterSettings.Machinepool.NodeLabel[0].KeyError,
+    );
+    CreateRosaWizardPage.isTextContainsInPage(
+      clusterFieldValidations.ClusterSettings.Machinepool.NodeLabel[0].LabelError,
+      false,
+    );
     CreateRosaWizardPage.addNodeLabelKeyAndValue(
       'test',
       clusterFieldValidations.ClusterSettings.Machinepool.NodeLabel[0].UpperCharacterLimitValue,
       0,
     );
-    cy.get('span')
-      .contains(clusterFieldValidations.ClusterSettings.Machinepool.NodeLabel[0].KeyError)
-      .should('not.exist');
-    cy.get('span')
-      .contains(clusterFieldValidations.ClusterSettings.Machinepool.NodeLabel[0].LabelError)
-      .should('be.visible');
+    CreateRosaWizardPage.isTextContainsInPage(
+      clusterFieldValidations.ClusterSettings.Machinepool.NodeLabel[0].KeyError,
+      false,
+    );
+    CreateRosaWizardPage.isTextContainsInPage(
+      clusterFieldValidations.ClusterSettings.Machinepool.NodeLabel[0].LabelError,
+    );
     CreateRosaWizardPage.addNodeLabelKeyAndValue('test-t_123.com', 'test-t_123.com', 0);
-    cy.get('span')
-      .contains(clusterFieldValidations.ClusterSettings.Machinepool.NodeLabel[0].KeyError)
-      .should('not.exist');
-    cy.get('span')
-      .contains(clusterFieldValidations.ClusterSettings.Machinepool.NodeLabel[0].LabelError)
-      .should('not.exist');
+    CreateRosaWizardPage.isTextContainsInPage(
+      clusterFieldValidations.ClusterSettings.Machinepool.NodeLabel[0].KeyError,
+      false,
+    );
+    CreateRosaWizardPage.isTextContainsInPage(
+      clusterFieldValidations.ClusterSettings.Machinepool.NodeLabel[0].LabelError,
+      false,
+    );
 
     CreateRosaWizardPage.addNodeLabelKeyAndValue(
       clusterFieldValidations.ClusterSettings.Machinepool.NodeLabel[1].InvalidValue,
       'test',
       0,
     );
-    cy.get('span')
-      .contains(clusterFieldValidations.ClusterSettings.Machinepool.NodeLabel[1].KeyError)
-      .should('be.visible');
+    CreateRosaWizardPage.isTextContainsInPage(
+      clusterFieldValidations.ClusterSettings.Machinepool.NodeLabel[1].KeyError,
+    );
     CreateRosaWizardPage.addNodeLabelKeyAndValue(
       'testing',
       clusterFieldValidations.ClusterSettings.Machinepool.NodeLabel[1].InvalidValue,
       0,
     );
-    cy.get('span')
-      .contains(clusterFieldValidations.ClusterSettings.Machinepool.NodeLabel[1].LabelError)
-      .should('be.visible');
+    CreateRosaWizardPage.isTextContainsInPage(
+      clusterFieldValidations.ClusterSettings.Machinepool.NodeLabel[1].LabelError,
+    );
     CreateRosaWizardPage.addNodeLabelKeyAndValue(
       clusterFieldValidations.ClusterSettings.Machinepool.NodeLabel[2].InvalidValue,
       'test',
       0,
     );
-    cy.get('span')
-      .contains(clusterFieldValidations.ClusterSettings.Machinepool.NodeLabel[2].KeyError)
-      .should('be.visible');
+    CreateRosaWizardPage.isTextContainsInPage(
+      clusterFieldValidations.ClusterSettings.Machinepool.NodeLabel[2].KeyError,
+    );
     CreateRosaWizardPage.addNodeLabelKeyAndValue('example12-ing.com/MyName', 'test-ing_123.com', 0);
-    cy.get('span')
-      .contains(clusterFieldValidations.ClusterSettings.Machinepool.NodeLabel[0].KeyError)
-      .should('not.exist');
-    cy.get('span')
-      .contains(clusterFieldValidations.ClusterSettings.Machinepool.NodeLabel[1].LabelError)
-      .should('not.exist');
-    cy.get('span')
-      .contains(clusterFieldValidations.ClusterSettings.Machinepool.NodeLabel[1].KeyError)
-      .should('not.exist');
+    CreateRosaWizardPage.isTextContainsInPage(
+      clusterFieldValidations.ClusterSettings.Machinepool.NodeLabel[0].KeyError,
+      false,
+    );
+    CreateRosaWizardPage.isTextContainsInPage(
+      clusterFieldValidations.ClusterSettings.Machinepool.NodeLabel[1].LabelError,
+      false,
+    );
+    CreateRosaWizardPage.isTextContainsInPage(
+      clusterFieldValidations.ClusterSettings.Machinepool.NodeLabel[1].KeyError,
+      false,
+    );
     CreateRosaWizardPage.addAdditionalLabelLink().should('be.enabled');
     CreateRosaWizardPage.rosaNextButton().should('be.enabled');
     CreateRosaWizardPage.rosaBackButton().should('be.enabled');
@@ -500,89 +504,82 @@ describe('Rosa Classic cluster wizard validations', { tags: ['smoke'] }, () => {
       .type(
         clusterFieldValidations.Networking.Configuration.IngressSettings.CustomSettings
           .RouteSelector[0].UpperCharacterLimitValue,
-      );
-    cy.get('div')
-      .contains(
-        clusterFieldValidations.Networking.Configuration.IngressSettings.CustomSettings
-          .RouteSelector[0].Error,
       )
-      .should('be.visible');
+      .blur();
+    CreateRosaWizardPage.isTextContainsInPage(
+      clusterFieldValidations.Networking.Configuration.IngressSettings.CustomSettings
+        .RouteSelector[0].Error,
+    );
     CreateRosaWizardPage.applicationIngressRouterSelectorsInput()
       .clear()
       .type(
         clusterFieldValidations.Networking.Configuration.IngressSettings.CustomSettings
           .RouteSelector[1].InvalidValue,
-      );
-    cy.get('div')
-      .contains(
-        clusterFieldValidations.Networking.Configuration.IngressSettings.CustomSettings
-          .RouteSelector[1].Error,
       )
-      .should('be.visible');
+      .blur();
+    CreateRosaWizardPage.isTextContainsInPage(
+      clusterFieldValidations.Networking.Configuration.IngressSettings.CustomSettings
+        .RouteSelector[1].Error,
+    );
     CreateRosaWizardPage.applicationIngressRouterSelectorsInput()
       .clear()
       .type(
         clusterFieldValidations.Networking.Configuration.IngressSettings.CustomSettings
           .RouteSelector[2].InvalidValue,
-      );
-    cy.get('div')
-      .contains(
-        clusterFieldValidations.Networking.Configuration.IngressSettings.CustomSettings
-          .RouteSelector[2].Error,
       )
-      .should('be.visible');
+      .blur();
+    CreateRosaWizardPage.isTextContainsInPage(
+      clusterFieldValidations.Networking.Configuration.IngressSettings.CustomSettings
+        .RouteSelector[2].Error,
+    );
     CreateRosaWizardPage.applicationIngressRouterSelectorsInput()
       .clear()
       .type(
         clusterFieldValidations.Networking.Configuration.IngressSettings.CustomSettings
           .RouteSelector[3].InvalidValue,
-      );
-    cy.get('div')
-      .contains(
-        clusterFieldValidations.Networking.Configuration.IngressSettings.CustomSettings
-          .RouteSelector[3].Error,
       )
-      .should('be.visible');
+      .blur();
+    CreateRosaWizardPage.isTextContainsInPage(
+      clusterFieldValidations.Networking.Configuration.IngressSettings.CustomSettings
+        .RouteSelector[3].Error,
+    );
     CreateRosaWizardPage.applicationIngressRouterSelectorsInput()
       .clear()
-      .type('valid123-k.com/Hello_world2');
-    cy.get('div')
-      .contains(
-        clusterFieldValidations.Networking.Configuration.IngressSettings.CustomSettings
-          .RouteSelector[0].Error,
-      )
-      .should('not.exist');
+      .type('valid123-k.com/Hello_world2')
+      .blur();
+    CreateRosaWizardPage.isTextContainsInPage(
+      clusterFieldValidations.Networking.Configuration.IngressSettings.CustomSettings
+        .RouteSelector[0].Error,
+      false,
+    );
     CreateRosaWizardPage.applicationIngressExcludedNamespacesInput()
       .clear()
       .type(
         clusterFieldValidations.Networking.Configuration.IngressSettings.CustomSettings
           .ExcludedNamespaces[0].UpperCharacterLimitValue,
-      );
-    cy.get('div')
-      .contains(
-        clusterFieldValidations.Networking.Configuration.IngressSettings.CustomSettings
-          .ExcludedNamespaces[0].Error,
       )
-      .should('be.visible');
+      .blur();
+    CreateRosaWizardPage.isTextContainsInPage(
+      clusterFieldValidations.Networking.Configuration.IngressSettings.CustomSettings
+        .ExcludedNamespaces[0].Error,
+    );
     CreateRosaWizardPage.applicationIngressExcludedNamespacesInput()
       .clear()
       .type(
         clusterFieldValidations.Networking.Configuration.IngressSettings.CustomSettings
           .ExcludedNamespaces[1].InvalidValue,
-      );
-    cy.get('div')
-      .contains(
-        clusterFieldValidations.Networking.Configuration.IngressSettings.CustomSettings
-          .ExcludedNamespaces[1].Error,
       )
-      .should('be.visible');
-    CreateRosaWizardPage.applicationIngressExcludedNamespacesInput().clear().type('abc-123');
-    cy.get('div')
-      .contains(
-        clusterFieldValidations.Networking.Configuration.IngressSettings.CustomSettings
-          .ExcludedNamespaces[1].Error,
-      )
-      .should('not.exist');
+      .blur();
+    CreateRosaWizardPage.isTextContainsInPage(
+      clusterFieldValidations.Networking.Configuration.IngressSettings.CustomSettings
+        .ExcludedNamespaces[1].Error,
+    );
+    CreateRosaWizardPage.applicationIngressExcludedNamespacesInput().clear().type('abc-123').blur();
+    CreateRosaWizardPage.isTextContainsInPage(
+      clusterFieldValidations.Networking.Configuration.IngressSettings.CustomSettings
+        .ExcludedNamespaces[1].Error,
+      false,
+    );
     CreateRosaWizardPage.rosaNextButton().click();
   });
 
@@ -592,104 +589,108 @@ describe('Rosa Classic cluster wizard validations', { tags: ['smoke'] }, () => {
       .clear()
       .type(clusterFieldValidations.Networking.CIDRRanges.Common[0].Value);
     CreateRosaWizardPage.rosaNextButton().click();
-    cy.get('div')
-      .contains(clusterFieldValidations.Networking.CIDRRanges.Common[0].Error)
-      .should('be.visible');
+    CreateRosaWizardPage.isTextContainsInPage(
+      clusterFieldValidations.Networking.CIDRRanges.Common[0].Error,
+    );
     CreateRosaWizardPage.machineCIDRInput()
       .clear()
       .type(clusterFieldValidations.Networking.CIDRRanges.Common[1].Value);
     CreateRosaWizardPage.rosaNextButton().click();
-    cy.get('div')
-      .contains(clusterFieldValidations.Networking.CIDRRanges.Common[1].Error)
-      .should('be.visible');
+    CreateRosaWizardPage.isTextContainsInPage(
+      clusterFieldValidations.Networking.CIDRRanges.Common[1].Error,
+    );
     CreateRosaWizardPage.machineCIDRInput()
       .clear()
       .type(clusterFieldValidations.Networking.CIDRRanges.Common[2].Value);
     CreateRosaWizardPage.rosaNextButton().click();
-    cy.get('div')
-      .contains(clusterFieldValidations.Networking.CIDRRanges.Common[2].Error)
-      .should('be.visible');
+    CreateRosaWizardPage.isTextContainsInPage(
+      clusterFieldValidations.Networking.CIDRRanges.Common[2].Error,
+    );
     CreateRosaWizardPage.machineCIDRInput().clear().type('10.0.0.0/16');
-    cy.get('div')
-      .contains(clusterFieldValidations.Networking.CIDRRanges.Common[2].Error)
-      .should('not.exist');
+    CreateRosaWizardPage.isTextContainsInPage(
+      clusterFieldValidations.Networking.CIDRRanges.Common[2].Error,
+      false,
+    );
     CreateRosaWizardPage.serviceCIDRInput()
       .clear()
       .type(clusterFieldValidations.Networking.CIDRRanges.Common[0].Value);
     CreateRosaWizardPage.rosaNextButton().click();
-    cy.get('div')
-      .contains(clusterFieldValidations.Networking.CIDRRanges.Common[0].Error)
-      .should('be.visible');
+    CreateRosaWizardPage.isTextContainsInPage(
+      clusterFieldValidations.Networking.CIDRRanges.Common[0].Error,
+    );
     CreateRosaWizardPage.serviceCIDRInput()
       .clear()
       .type(clusterFieldValidations.Networking.CIDRRanges.Common[1].Value);
     CreateRosaWizardPage.rosaNextButton().click();
-    cy.get('div')
-      .contains(clusterFieldValidations.Networking.CIDRRanges.Common[1].Error)
-      .should('be.visible');
+    CreateRosaWizardPage.isTextContainsInPage(
+      clusterFieldValidations.Networking.CIDRRanges.Common[1].Error,
+    );
     CreateRosaWizardPage.serviceCIDRInput()
       .clear()
       .type(clusterFieldValidations.Networking.CIDRRanges.Common[2].Value);
     CreateRosaWizardPage.rosaNextButton().click();
-    cy.get('div')
-      .contains(clusterFieldValidations.Networking.CIDRRanges.Common[2].Error)
-      .should('be.visible');
+    CreateRosaWizardPage.isTextContainsInPage(
+      clusterFieldValidations.Networking.CIDRRanges.Common[2].Error,
+    );
     CreateRosaWizardPage.serviceCIDRInput().clear().type('172.30.0.0/16');
-    cy.get('div')
-      .contains(clusterFieldValidations.Networking.CIDRRanges.Common[2].Error)
-      .should('not.exist');
+    CreateRosaWizardPage.isTextContainsInPage(
+      clusterFieldValidations.Networking.CIDRRanges.Common[2].Error,
+      false,
+    );
     CreateRosaWizardPage.podCIDRInput()
       .clear()
       .type(clusterFieldValidations.Networking.CIDRRanges.Common[0].Value);
     CreateRosaWizardPage.rosaNextButton().click();
-    cy.get('div')
-      .contains(clusterFieldValidations.Networking.CIDRRanges.Common[0].Error)
-      .should('be.visible');
+    CreateRosaWizardPage.isTextContainsInPage(
+      clusterFieldValidations.Networking.CIDRRanges.Common[0].Error,
+    );
     CreateRosaWizardPage.podCIDRInput()
       .clear()
       .type(clusterFieldValidations.Networking.CIDRRanges.Common[1].Value);
     CreateRosaWizardPage.rosaNextButton().click();
-    cy.get('div')
-      .contains(clusterFieldValidations.Networking.CIDRRanges.Common[1].Error)
-      .should('be.visible');
+    CreateRosaWizardPage.isTextContainsInPage(
+      clusterFieldValidations.Networking.CIDRRanges.Common[1].Error,
+    );
     CreateRosaWizardPage.podCIDRInput()
       .clear()
       .type(clusterFieldValidations.Networking.CIDRRanges.Common[2].Value);
     CreateRosaWizardPage.rosaNextButton().click();
-    cy.get('div')
-      .contains(clusterFieldValidations.Networking.CIDRRanges.Common[2].Error)
-      .should('be.visible');
+    CreateRosaWizardPage.isTextContainsInPage(
+      clusterFieldValidations.Networking.CIDRRanges.Common[2].Error,
+    );
     CreateRosaWizardPage.podCIDRInput().clear().type('10.128.0.0/14');
-    cy.get('div')
-      .contains(clusterFieldValidations.Networking.CIDRRanges.Common[2].Error)
-      .should('not.exist');
-    CreateRosaWizardPage.hostPrefixInput().clear();
-    cy.get('div').contains('Field is required').should('be.visible');
+    CreateRosaWizardPage.isTextContainsInPage(
+      clusterFieldValidations.Networking.CIDRRanges.Common[2].Error,
+      false,
+    );
+    CreateRosaWizardPage.hostPrefixInput().clear().blur();
+    CreateRosaWizardPage.isTextContainsInPage('Field is required');
     CreateRosaWizardPage.hostPrefixInput()
       .clear()
       .type(clusterFieldValidations.Networking.CIDRRanges.HostPrefix[0].Value);
     CreateRosaWizardPage.rosaNextButton().click();
-    cy.get('div')
-      .contains(clusterFieldValidations.Networking.CIDRRanges.HostPrefix[0].Error)
-      .should('be.visible');
+    CreateRosaWizardPage.isTextContainsInPage(
+      clusterFieldValidations.Networking.CIDRRanges.HostPrefix[0].Error,
+    );
     CreateRosaWizardPage.hostPrefixInput()
       .clear()
       .type(clusterFieldValidations.Networking.CIDRRanges.HostPrefix[1].Value);
     CreateRosaWizardPage.rosaNextButton().click();
-    cy.get('div')
-      .contains(clusterFieldValidations.Networking.CIDRRanges.HostPrefix[1].Error)
-      .should('be.visible');
+    CreateRosaWizardPage.isTextContainsInPage(
+      clusterFieldValidations.Networking.CIDRRanges.HostPrefix[1].Error,
+    );
     CreateRosaWizardPage.hostPrefixInput()
       .clear()
       .type(clusterFieldValidations.Networking.CIDRRanges.HostPrefix[2].Value);
     CreateRosaWizardPage.rosaNextButton().click();
-    cy.get('div')
-      .contains(clusterFieldValidations.Networking.CIDRRanges.HostPrefix[2].Error)
-      .should('be.visible');
+    CreateRosaWizardPage.isTextContainsInPage(
+      clusterFieldValidations.Networking.CIDRRanges.HostPrefix[2].Error,
+    );
     CreateRosaWizardPage.hostPrefixInput().clear().type('/23');
-    cy.get('div')
-      .contains(clusterFieldValidations.Networking.CIDRRanges.HostPrefix[2].Error)
-      .should('not.exist');
+    CreateRosaWizardPage.isTextContainsInPage(
+      clusterFieldValidations.Networking.CIDRRanges.HostPrefix[2].Error,
+      false,
+    );
     CreateRosaWizardPage.useCIDRDefaultValues(true);
     CreateRosaWizardPage.rosaNextButton().click();
   });
@@ -702,17 +703,17 @@ describe('Rosa Classic cluster wizard validations', { tags: ['smoke'] }, () => {
         clusterFieldValidations.ClusterRolesAndPolicies.OperatorRoles[0].UpperCharacterLimitValue,
       );
     CreateRosaWizardPage.rosaNextButton().click();
-    cy.get('div')
-      .contains(clusterFieldValidations.ClusterRolesAndPolicies.OperatorRoles[0].Error)
-      .should('be.visible');
+    CreateRosaWizardPage.isTextContainsInPage(
+      clusterFieldValidations.ClusterRolesAndPolicies.OperatorRoles[0].Error,
+    );
     CreateRosaWizardPage.customOperatorPrefixInput()
       .scrollIntoView()
       .type('{selectAll}')
       .type(clusterFieldValidations.ClusterRolesAndPolicies.OperatorRoles[1].InvalidValue);
     CreateRosaWizardPage.rosaNextButton().click();
-    cy.get('div')
-      .contains(clusterFieldValidations.ClusterRolesAndPolicies.OperatorRoles[1].Error)
-      .should('be.visible');
+    CreateRosaWizardPage.isTextContainsInPage(
+      clusterFieldValidations.ClusterRolesAndPolicies.OperatorRoles[1].Error,
+    );
     CreateRosaWizardPage.customOperatorPrefixInput()
       .scrollIntoView()
       .type('{selectAll}')

@@ -1,6 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+
 import { Button } from '@patternfly/react-core';
+
 import ActionRequiredModal from './ActionRequiredModal';
 
 function ActionRequiredLink({ cluster, icon, initiallyOpen }) {

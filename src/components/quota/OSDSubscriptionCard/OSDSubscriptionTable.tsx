@@ -1,11 +1,12 @@
 import React from 'react';
+import orderBy from 'lodash/orderBy';
+
 import { IRowCell } from '@patternfly/react-table';
 import {
   Table as TableDeprecated,
-  TableHeader as TableHeaderDeprecated,
   TableBody as TableBodyDeprecated,
+  TableHeader as TableHeaderDeprecated,
 } from '@patternfly/react-table/deprecated';
-import orderBy from 'lodash/orderBy';
 
 import PopoverHint from '../../common/PopoverHint';
 

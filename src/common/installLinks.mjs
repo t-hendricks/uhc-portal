@@ -60,7 +60,7 @@ const MIRROR_ROSA_LATEST = 'https://mirror.openshift.com/pub/openshift-v4/client
 const MIRROR_MIRROR_REGISTRY_LATEST =
   'https://developers.redhat.com/content-gateway/rest/mirror/pub/openshift-v4/clients/mirror-registry/latest';
 
-const DOCS_BASE = 'https://docs.openshift.com/container-platform/4.14';
+const DOCS_BASE = 'https://docs.openshift.com/container-platform/4.15';
 const OSD_DOCS_BASE = 'https://docs.openshift.com/dedicated';
 const ROSA_DOCS_BASE = 'https://docs.openshift.com/rosa';
 const ROSA_CP_DOCS_BASE =
@@ -142,6 +142,7 @@ const links = {
   ROSA_CIDR_HOST: `${ROSA_DOCS_BASE}/networking/cidr-range-definitions.html#host-prefix-description`,
   OSD_CLUSTER_AUTOSCALING: `${OSD_DOCS_BASE}/osd_cluster_admin/osd-cluster-autoscaling.html`,
   ROSA_CLUSTER_AUTOSCALING: `${ROSA_DOCS_BASE}/rosa_cluster_admin/rosa-cluster-autoscaling.html`,
+  OSD_SECURITY_GROUPS: `${OSD_DOCS_BASE}/osd_planning/aws-ccs.html#osd-security-groups-custom_aws-ccs `,
 
   CLI_TOOLS_OCP_GETTING_STARTED: `${DOCS_BASE}/cli_reference/openshift_cli/getting-started-cli.html`,
 
@@ -202,10 +203,10 @@ const links = {
   RHCOS_OSPUPI_QCOW_X86: `${MIRROR_RHCOS_LATEST_X86}/rhcos-openstack.x86_64.qcow2.gz`,
   RHCOS_OSPUPI_QCOW_PPC: `${MIRROR_RHCOS_LATEST_PPC}/rhcos-openstack.ppc64le.qcow2.gz`,
 
-  INSTALL_VSPHEREUPI_GETTING_STARTED: `${DOCS_BASE}/installing/installing_vsphere/installing-vsphere.html`,
-  INSTALL_VSPHEREIPI_GETTING_STARTED: `${DOCS_BASE}/installing/installing_vsphere/installing-vsphere-installer-provisioned.html`,
-  INSTALL_VSPHERE_RHCOS_LEARN_MORE: `${DOCS_BASE}/installing/installing_vsphere/installing-vsphere.html#installation-vsphere-machines_installing-vsphere`,
-  INSTALL_VSPHERE_CUSTOMIZATIONS: `${DOCS_BASE}/installing/installing_vsphere/installing-vsphere-installer-provisioned-customizations.html`,
+  INSTALL_VSPHEREUPI_GETTING_STARTED: `${DOCS_BASE}/installing/installing_vsphere/upi/installing-vsphere.html`,
+  INSTALL_VSPHEREIPI_GETTING_STARTED: `${DOCS_BASE}/installing/installing_vsphere/ipi/installing-vsphere-installer-provisioned.html`,
+  INSTALL_VSPHERE_RHCOS_LEARN_MORE: `${DOCS_BASE}/installing/installing_vsphere/upi/installing-vsphere.html#installation-vsphere-machines_installing-vsphere`,
+  INSTALL_VSPHERE_CUSTOMIZATIONS: `${DOCS_BASE}/installing/installing_vsphere/ipi/installing-vsphere-installer-provisioned-customizations.html`,
   RHCOS_VSPHERE_OVA_X86: `${MIRROR_RHCOS_LATEST_X86}/rhcos-vmware.x86_64.ova`,
 
   INSTALL_IBM_CLOUD_GETTING_STARTED: `${DOCS_BASE}/installing/installing_ibm_cloud_public/preparing-to-install-on-ibm-cloud.html`,
@@ -213,6 +214,7 @@ const links = {
   INSTALL_IBMZ_RHCOS_LEARN_MORE_RHEL_KVM: `${DOCS_BASE}/installing/installing_ibm_z/installing-ibm-z-kvm.html#installation-user-infra-machines-iso-ibm-z_kvm_installing-ibm-z-kvm`,
   INSTALL_IBMZ_LEARN_MORE_ZVM: `${DOCS_BASE}/installing/installing_ibm_z/installing-ibm-z.html#installation-user-infra-machines-iso-ibm-z_installing-ibm-z`,
   INSTALL_IBMZ_UPI_GETTING_STARTED: `${DOCS_BASE}/installing/installing_ibm_z/preparing-to-install-on-ibm-z.html`,
+  INSTALL_IBMZ_AGENTS_GETTING_STARTED: `${DOCS_BASE}/installing/installing_with_agent_based_installer/prepare-pxe-assets-agent.html#installing-ocp-agent-ibm-z_prepare-pxe-assets-agent`,
   INSTALL_IBMPOWERVS_GETTING_STARTED: `${DOCS_BASE}/installing/installing_ibm_powervs/preparing-to-install-on-ibm-power-vs.html`,
   INSTALL_IBMPOWERVS_PREREQUISITES: `${DOCS_BASE}/installing/installing_ibm_powervs/preparing-to-install-on-ibm-power-vs.html`,
   RHCOS_IBMZ_ISO: `${MIRROR_RHCOS_LATEST_IBMZ}/rhcos-live.s390x.iso`,
@@ -220,10 +222,6 @@ const links = {
   RHCOS_IBMZ_KERNEL: `${MIRROR_RHCOS_LATEST_IBMZ}/rhcos-live-kernel-s390x`,
   RHCOS_IBMZ_ROOTFS: `${MIRROR_RHCOS_LATEST_IBMZ}/rhcos-live-rootfs.s390x.img`,
   RHCOS_IBMZ_QCOW: `${MIRROR_RHCOS_LATEST_IBMZ}/rhcos-qemu.s390x.qcow2.gz`,
-
-  INSTALL_RHVIPI_GETTING_STARTED: `${DOCS_BASE}/installing/installing_rhv/installing-rhv-default.html`,
-  INSTALL_RHV_CUSTOMIZATIONS: `${DOCS_BASE}/installing/installing_rhv/installing-rhv-customizations.html`,
-  INSTALL_RHVUPI_GETTING_STARTED: `${DOCS_BASE}/installing/installing_rhv/installing-rhv-user-infra.html`,
 
   INSTALL_GENERIC_GETTING_STARTED: `${DOCS_BASE}/installing/installing_platform_agnostic/installing-platform-agnostic.html`,
   INSTALL_GENERIC_NON_TESTED_PLATFORMS: 'https://access.redhat.com/articles/4207611',
@@ -236,6 +234,7 @@ const links = {
   INSTALL_PRE_RELEASE_INSTALLER_DOC: 'https://github.com/openshift/installer/tree/master/docs/user',
   INSTALL_PRE_RELEASE_FEEDBACK: 'https://issues.redhat.com/projects/OCPBUGS/issues',
   INSTALL_PRE_RELEASE_SUPPORT_KCS: 'https://access.redhat.com/support/offerings/devpreview',
+  TECH_PREVIEW_KCS: 'https://access.redhat.com/support/offerings/techpreview',
   COOPERATIVE_COMMUNITY_SUPPORT_KCS: 'https://access.redhat.com/solutions/5893251',
 
   INSTALL_POWER_GETTING_STARTED: `${DOCS_BASE}/installing/installing_ibm_power/installing-ibm-power.html`,
@@ -256,7 +255,7 @@ const links = {
   OCM_CLI_RELEASES_LATEST: 'https://github.com/openshift-online/ocm-cli/releases/latest',
 
   RHOAS_CLI_DOCS:
-    'https://access.redhat.com/documentation/en-us/red_hat_openshift_streams_for_apache_kafka/1/guide/88e1487a-2a14-4b35-85b9-a7a2d67a37f3',
+    'https://access.redhat.com/documentation/en-us/red_hat_openshift_application_services/1/guide/bb30ee92-9e0a-4fd6-a67f-aed8910d7da3',
   RHOAS_CLI_RELEASES_LATEST: 'https://github.com/redhat-developer/app-services-cli/releases/latest',
 
   HELM_DOCS: `${DOCS_BASE}/applications/working_with_helm_charts/understanding-helm.html`,
@@ -289,6 +288,7 @@ const links = {
   ROSA_DOCS_ENTRY: `${ROSA_DOCS_BASE}/welcome/index.html`,
   ROSA_MONITORING: `${ROSA_DOCS_BASE}/monitoring/monitoring-overview.html#understanding-the-monitoring-stack_monitoring-overview`,
   ROSA_AUTOSCALING: `${ROSA_DOCS_BASE}/rosa_cluster_admin/rosa_nodes/rosa-nodes-about-autoscaling-nodes.html`,
+  ROSA_SECURITY_GROUPS: `${ROSA_DOCS_BASE}/rosa_planning/rosa-sts-aws-prereqs.html#rosa-security-groups-custom_rosa-sts-aws-prereqs `,
   ROSA_CLI_DOCS: `${ROSA_CP_DOCS_BASE}/rosa_cli/rosa-get-started-cli`,
   ROSA_AWS_PREREQUISITES: `${ROSA_DOCS_BASE}/rosa_install_access_delete_clusters/rosa_getting_started_iam/rosa-aws-prereqs.html`,
   ROSA_INSTALLING: `${ROSA_DOCS_BASE}/rosa_install_access_delete_clusters/rosa_getting_started_iam/rosa-installing-rosa.html`,
@@ -302,6 +302,7 @@ const links = {
   ROSA_UPGRADES: `${ROSA_DOCS_BASE}/upgrading/rosa-upgrading-sts.html`,
   ROSA_LIMITED_SUPPORT_DEFINITION: `${ROSA_DOCS_BASE}/rosa_architecture/rosa_policy_service_definition/rosa-service-definition.html#rosa-limited-support_rosa-service-definition`,
   ROSA_SHARED_VPC: `${ROSA_DOCS_BASE}/rosa_install_access_delete_clusters/rosa-shared-vpc-config.html`,
+  ROSA_PRIVATE_CONNECTIONS: `${ROSA_DOCS_BASE}/rosa_cluster_admin/cloud_infrastructure_access/rosa-configuring-private-connections.html`,
 
   ROSA_AWS_STS_PREREQUISITES: `${ROSA_DOCS_BASE}/rosa_planning/rosa-sts-aws-prereqs.html`,
   ROSA_AWS_ACCOUNT_ASSOCIATION: `${ROSA_DOCS_BASE}/rosa_planning/rosa-sts-aws-prereqs.html#rosa-associating-account_rosa-sts-aws-prereqs`,
@@ -312,6 +313,8 @@ const links = {
   ROSA_AWS_IAM_ROLES: `${ROSA_DOCS_BASE}/rosa_architecture/rosa-sts-about-iam-resources.html#rosa-sts-account-wide-roles-and-policies_rosa-sts-about-iam-resources`,
   ROSA_AWS_ACCOUNT_ROLES: `${ROSA_DOCS_BASE}/rosa_architecture/rosa-sts-about-iam-resources.html#rosa-sts-understanding-ocm-role_rosa-sts-about-iam-resources`,
   ROSA_AWS_OPERATOR_ROLE_PREFIX: `${ROSA_DOCS_BASE}/rosa_architecture/rosa-sts-about-iam-resources.html#rosa-sts-about-operator-role-prefixes_rosa-sts-about-iam-resources`,
+  ROSA_HCP_EXT_AUTH: `${ROSA_CP_DOCS_BASE}/install_rosa_with_hcp_clusters/rosa-hcp-sts-creating-a-cluster-ext-auth`,
+  ROSA_HCP_BREAK_GLASS: `${ROSA_CP_DOCS_BASE}/install_rosa_with_hcp_clusters/rosa-hcp-sts-creating-a-cluster-ext-auth#rosa-hcp-sts-accessing-a-break-glass-cred-cli_rosa-hcp-sts-creating-a-cluster-ext-auth`,
 
   AWS_CONSOLE_ROSA_HOME: 'https://console.aws.amazon.com/rosa/home',
   AWS_CONSOLE_ROSA_HOME_GET_STARTED: 'https://console.aws.amazon.com/rosa/home#/get-started',
@@ -323,6 +326,7 @@ const links = {
   AWS_CLI_GETTING_STARTED_MANUAL:
     'https://docs.aws.amazon.com/ROSA/latest/userguide/getting-started-sts-manual.html',
   AWS_ROSA_GET_STARTED: 'https://docs.aws.amazon.com/ROSA/latest/userguide/getting-started.html',
+  AWS_FINDING_KEY_ARN: 'https://docs.aws.amazon.com/kms/latest/developerguide/find-cmk-id-arn.html',
   AWS_IMDS:
     'https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/configuring-instance-metadata-options.html',
   AWS_LOAD_BALANCER_FEATURES:
@@ -379,6 +383,7 @@ const tools = {
   MIRROR_REGISTRY: 'mirror-registry',
   OC_MIRROR_PLUGIN: 'oc-mirror-plugin',
   TKN: 'tkn',
+  COPY_PULLREQUEST: 'copy-pull-secret',
 };
 
 const channels = {
@@ -403,12 +408,16 @@ const architectureOptions = [
 
 const operatingSystems = {
   linux: 'linux',
+  rhel9: 'rhel-9',
+  rhel8: 'rhel-8',
   mac: 'mac',
   windows: 'windows',
 };
 
 const operatingSystemOptions = [
   { value: operatingSystems.linux, label: 'Linux' },
+  { value: operatingSystems.rhel9, label: 'Linux - RHEL 9' },
+  { value: operatingSystems.rhel8, label: 'Linux - RHEL 8' },
   { value: operatingSystems.mac, label: 'MacOS' },
   { value: operatingSystems.windows, label: 'Windows' },
 ];
@@ -717,7 +726,7 @@ const urls = {
     [channels.STABLE]: {
       [architectures.x86]: {
         [operatingSystems.linux]: `${MIRROR_KN_LATEST}/kn-linux-amd64.tar.gz`,
-        [operatingSystems.mac]: `${MIRROR_KN_LATEST}/kn-macos-amd64.tar.gz`,
+        [operatingSystems.mac]: `${MIRROR_KN_LATEST}/kn-darwin-amd64.tar.gz`,
         [operatingSystems.windows]: `${MIRROR_KN_LATEST}/kn-windows-amd64.zip`,
       },
       [architectures.s390x]: {
@@ -827,16 +836,20 @@ const urls = {
   [tools.OC_MIRROR_PLUGIN]: {
     [channels.STABLE]: {
       [architectures.x86]: {
-        [operatingSystems.linux]: `${MIRROR_CLIENTS_LATEST_X86}oc-mirror.tar.gz`,
+        [operatingSystems.rhel9]: `${MIRROR_CLIENTS_LATEST_X86}oc-mirror.rhel9.tar.gz`,
+        [operatingSystems.rhel8]: `${MIRROR_CLIENTS_LATEST_X86}oc-mirror.tar.gz`,
       },
       [architectures.arm]: {
-        [operatingSystems.linux]: `${MIRROR_CLIENTS_LATEST_ARM}oc-mirror.tar.gz`,
+        [operatingSystems.rhel9]: `${MIRROR_CLIENTS_LATEST_ARM}oc-mirror.rhel9.tar.gz`,
+        [operatingSystems.rhel8]: `${MIRROR_CLIENTS_LATEST_ARM}oc-mirror.tar.gz`,
       },
       [architectures.s390x]: {
-        [operatingSystems.linux]: `${MIRROR_CLIENTS_LATEST_IBMZ}oc-mirror.tar.gz`,
+        [operatingSystems.rhel9]: `${MIRROR_CLIENTS_LATEST_IBMZ}oc-mirror.rhel9.tar.gz`,
+        [operatingSystems.rhel8]: `${MIRROR_CLIENTS_LATEST_IBMZ}oc-mirror.tar.gz`,
       },
       [architectures.ppc]: {
-        [operatingSystems.linux]: `${MIRROR_CLIENTS_LATEST_PPC}oc-mirror.tar.gz`,
+        [operatingSystems.rhel9]: `${MIRROR_CLIENTS_LATEST_PPC}oc-mirror.rhel9.tar.gz`,
+        [operatingSystems.rhel8]: `${MIRROR_CLIENTS_LATEST_PPC}oc-mirror.tar.gz`,
       },
     },
   },

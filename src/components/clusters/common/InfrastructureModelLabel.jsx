@@ -1,6 +1,5 @@
-import PropTypes from 'prop-types';
-
 import get from 'lodash/get';
+import PropTypes from 'prop-types';
 
 import { normalizedProducts } from '../../../common/subscriptionTypes';
 
@@ -13,8 +12,12 @@ function InfrastructureModelLabel({ cluster }) {
     return 'Customer cloud subscription';
   }
 
-  if (planType === OSD && !CCS) {
-    return 'Red Hat cloud account';
+  if (planType === OSD) {
+    // CCS could be 'undefined' for archived clusters
+    if (CCS === false) {
+      return 'Red Hat cloud account';
+    }
+    return 'N/A';
   }
 
   return 'Standard';

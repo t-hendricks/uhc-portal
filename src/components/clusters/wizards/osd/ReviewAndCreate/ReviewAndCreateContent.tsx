@@ -10,22 +10,20 @@ import {
   useWizardContext,
 } from '@patternfly/react-core';
 
-import config from '~/config';
+import { hasSelectedSecurityGroups } from '~/common/securityGroupsHelpers';
+import {
+  canSelectImds,
+  CloudProviderType,
+  UpgradePolicyType,
+} from '~/components/clusters/wizards/common/constants';
+import { DebugClusterRequest } from '~/components/clusters/wizards/common/DebugClusterRequest';
 import ReviewSection, {
   ReviewItem,
 } from '~/components/clusters/wizards/common/ReviewCluster/ReviewSection';
 import { useFormState } from '~/components/clusters/wizards/hooks';
-import { hasSelectedSecurityGroups } from '~/common/securityGroupsHelpers';
-import {
-  CloudProviderType,
-  UpgradePolicyType,
-} from '~/components/clusters/wizards/common/constants';
 import { FieldId, StepId } from '~/components/clusters/wizards/osd/constants';
-import useCanClusterAutoscale from '~/components/clusters/ClusterDetails/components/MachinePools/components/EditMachinePoolModal/hooks/useCanClusterAutoscale';
-import { GCP_SECURE_BOOT_UI } from '~/redux/constants/featureConstants';
-import { useFeatureGate } from '~/hooks/useFeatureGate';
-import { DebugClusterRequest } from '~/components/clusters/wizards/common/DebugClusterRequest';
-import { canSelectImds } from '../../rosa/constants';
+import config from '~/config';
+import useCanClusterAutoscale from '~/hooks/useCanClusterAutoscale';
 
 interface ReviewAndCreateContentProps {
   isPending: boolean;
@@ -36,6 +34,7 @@ export const ReviewAndCreateContent = ({ isPending }: ReviewAndCreateContentProp
   const {
     values: {
       [FieldId.Product]: product,
+      [FieldId.BillingModel]: billingModel,
       [FieldId.InstallToVpc]: installToVpc,
       [FieldId.InstallToSharedVpc]: installToSharedVpc,
       [FieldId.ConfigureProxy]: configureProxy,
@@ -46,10 +45,11 @@ export const ReviewAndCreateContent = ({ isPending }: ReviewAndCreateContentProp
       [FieldId.ClusterVersion]: clusterVersion,
       [FieldId.ApplicationIngress]: applicationIngress,
       [FieldId.SecurityGroups]: securityGroups,
+      [FieldId.HasDomainPrefix]: hasDomainPrefix,
     },
     values: formValues,
   } = useFormState();
-  const canAutoScale = useCanClusterAutoscale(product);
+  const canAutoScale = useCanClusterAutoscale(product, billingModel);
   const autoscalingEnabled = canAutoScale && !!formValues[FieldId.AutoscalingEnabled];
 
   const isByoc = byoc === 'true';
@@ -57,15 +57,15 @@ export const ReviewAndCreateContent = ({ isPending }: ReviewAndCreateContentProp
   const isGCP = cloudProvider === CloudProviderType.Gcp;
 
   const hasSecurityGroups = isByoc && hasSelectedSecurityGroups(securityGroups);
-  const isSecureBootFeatureEnabled = useFeatureGate(GCP_SECURE_BOOT_UI);
 
   const clusterSettingsFields = [
     FieldId.CloudProvider,
     FieldId.ClusterName,
+    ...(hasDomainPrefix ? [FieldId.DomainPrefix] : []),
     FieldId.ClusterVersion,
     FieldId.Region,
     FieldId.MultiAz,
-    ...(isGCP && isSecureBootFeatureEnabled ? [FieldId.SecureBoot] : []),
+    ...(isGCP ? [FieldId.SecureBoot] : []),
     FieldId.EnableUserWorkloadMonitoring,
     ...(isByoc ? [FieldId.CustomerManagedKey] : [FieldId.PersistentStorage]),
     ...(isByoc && isAWS ? [FieldId.DisableScpChecks] : []),

@@ -1,9 +1,8 @@
+/* generated using openapi-typescript-codegen -- do not edit */
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-
 import type { ReservedResource } from './ReservedResource';
-
 export type ClusterAuthorizationRequest = {
   account_username: string;
   availability_zone?: string;
@@ -23,13 +22,11 @@ export type ClusterAuthorizationRequest = {
   scope?: string;
   xcm_id?: string;
 };
-
 export namespace ClusterAuthorizationRequest {
   export enum product_category {
     ASSISTED_INSTALL = 'assistedInstall',
     HOSTED_CONTROL_PLANE = 'HostedControlPlane',
   }
-
   export enum product_id {
     OCP = 'OCP',
     OSD = 'OSD',
@@ -45,5 +42,6 @@ export namespace ClusterAuthorizationRequest {
     RHACS = 'RHACS',
     RHACSTRIAL = 'RHACSTrial',
     ARO = 'ARO',
+    RHOIC = 'RHOIC',
   }
 }

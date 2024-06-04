@@ -1,18 +1,20 @@
-import { Dispatch } from 'redux';
 import { FormikValues } from 'formik';
 import isEqual from 'lodash/isEqual';
+import { Dispatch } from 'redux';
 
-import { GlobalState } from '~/redux/store';
+import { normalizedProducts } from '~/common/subscriptionTypes';
+import {
+  CloudProviderType,
+  FieldId,
+  GCP_DEFAULT_REGION,
+} from '~/components/clusters/wizards/common/constants';
 import {
   getAWSCloudProviderRegions,
   getGCPCloudProviderVPCs,
   VALIDATE_CLOUD_PROVIDER_CREDENTIALS,
 } from '~/redux/actions/ccsInquiriesActions';
-import { CloudProviderType } from '~/components/clusters/wizards/common/constants';
-import { FieldId } from '~/components/clusters/wizards/osd/constants';
+import { GlobalState } from '~/redux/store';
 import { AWSCredentials } from '~/types/types';
-import { normalizedProducts } from '~/common/subscriptionTypes';
-import { GCP_DEFAULT_REGION } from '../createOSDInitialValues';
 
 /**
  * Gets AWS CCS credentials from form state, in form suitable for actions.

@@ -1,9 +1,8 @@
-import { Bullseye, Card, CardBody, CardTitle, Icon, Title } from '@patternfly/react-core';
 import React from 'react';
 
+import { Bullseye, Card, CardBody, CardTitle, Icon, Title } from '@patternfly/react-core';
 import { ExclamationCircleIcon } from '@patternfly/react-icons/dist/esm/icons/exclamation-circle-icon';
 import { OkIcon } from '@patternfly/react-icons/dist/esm/icons/ok-icon';
-
 import { global_danger_color_100 as dangerColor } from '@patternfly/react-tokens/dist/esm/global_danger_color_100';
 import { global_success_color_100 as successColor } from '@patternfly/react-tokens/dist/esm/global_success_color_100';
 

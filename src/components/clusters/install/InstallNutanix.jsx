@@ -1,9 +1,11 @@
-import { PageSection } from '@patternfly/react-core';
 import React from 'react';
+
+import { PageSection } from '@patternfly/react-core';
 
 import { AppPage } from '~/components/App/AppPage';
 import { InstructionsChooser } from '~/components/clusters/install/instructions/InstructionsChooser';
 import { InstructionsChooserPageTitle } from '~/components/clusters/install/instructions/InstructionsChooserPageTitle';
+
 import links from '../../../common/installLinks.mjs';
 import Breadcrumbs from '../../common/Breadcrumbs';
 

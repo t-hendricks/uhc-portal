@@ -118,6 +118,15 @@
           "type": "boolean"
         }
       },
+      "fetchOrganization": {
+        "description": "If true, includes the organization object on a subscription in the output. Could slow request response time.",
+        "in": "query",
+        "name": "fetchOrganization",
+        "required": false,
+        "schema": {
+          "type": "boolean"
+        }
+      },
       "fetchRelatedResources": {
         "description": "If true, includes the related resources in the output. Could slow request response time.",
         "in": "query",
@@ -1198,7 +1207,8 @@
               "RHOSETrial",
               "RHACS",
               "RHACSTrial",
-              "ARO"
+              "ARO",
+              "RHOIC"
             ],
             "type": "string"
           },
@@ -2035,47 +2045,6 @@
         },
         "type": "object"
       },
-      "NotificationRequest": {
-        "properties": {
-          "bcc_address": {
-            "type": "string"
-          },
-          "cluster_id": {
-            "type": "string"
-          },
-          "cluster_uuid": {
-            "type": "string"
-          },
-          "include_red_hat_associates": {
-            "type": "boolean"
-          },
-          "internal_only": {
-            "type": "boolean"
-          },
-          "org_id": {
-            "type": "string"
-          },
-          "subject": {
-            "type": "string"
-          },
-          "subscription_id": {
-            "type": "string"
-          },
-          "template_name": {
-            "type": "string"
-          },
-          "template_parameters": {
-            "items": {
-              "$ref": "#/components/schemas/TemplateParameter"
-            },
-            "type": "array"
-          }
-        },
-        "required": [
-          "template_name"
-        ],
-        "type": "object"
-      },
       "NotifyDetailsRequest": {
         "properties": {
           "bcc_address": {
@@ -2129,34 +2098,27 @@
         ]
       },
       "NotifyDetailsResponseList": {
-        "allOf": [
-          {
-            "$ref": "#/components/schemas/List"
-          },
-          {
-            "properties": {
-              "associates": {
-                "items": {
-                  "type": "string"
-                },
-                "type": "array"
-              },
-              "items": {
-                "items": {
-                  "$ref": "#/components/schemas/NotifyDetailsResponse"
-                },
-                "type": "array"
-              },
-              "recipients": {
-                "items": {
-                  "type": "string"
-                },
-                "type": "array"
-              }
+        "properties": {
+          "associates": {
+            "items": {
+              "type": "string"
             },
-            "type": "object"
+            "type": "array"
+          },
+          "items": {
+            "items": {
+              "$ref": "#/components/schemas/NotifyDetailsResponse"
+            },
+            "type": "array"
+          },
+          "recipients": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
           }
-        ]
+        },
+        "type": "object"
       },
       "ObjectReference": {
         "properties": {
@@ -3517,7 +3479,8 @@
               "ClusterSelfManagedAddon",
               "ClusterSelfManagedLabel",
               "ClusterSelfManagedStatus",
-              "ClusterKubeletConfig"
+              "ClusterKubeletConfig",
+              "ClusterBreakGlassCredential"
             ],
             "type": "string"
           },
@@ -3851,6 +3814,9 @@
               "managed": {
                 "type": "boolean"
               },
+              "organization": {
+                "$ref": "#/components/schemas/Organization"
+              },
               "organization_id": {
                 "type": "string"
               },
@@ -3893,7 +3859,8 @@
                   "Standard",
                   "Premium",
                   "Self-Support",
-                  "None"
+                  "None",
+                  "Supported By IBM"
                 ],
                 "type": "string"
               },
@@ -4097,7 +4064,8 @@
               "Standard",
               "Premium",
               "Self-Support",
-              "None"
+              "None",
+              "SupportedByIBM"
             ],
             "type": "string"
           },
@@ -4337,21 +4305,6 @@
           "summary",
           "description",
           "severity"
-        ],
-        "type": "object"
-      },
-      "TemplateParameter": {
-        "properties": {
-          "content": {
-            "type": "string"
-          },
-          "name": {
-            "type": "string"
-          }
-        },
-        "required": [
-          "name",
-          "content"
         ],
         "type": "object"
       },
@@ -7766,72 +7719,6 @@
           "$ref": "#/components/parameters/search"
         }
       ]
-    },
-    "/api/accounts_mgmt/v1/notify": {
-      "post": {
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/NotificationRequest"
-              }
-            }
-          },
-          "description": "The contents of the notification to send to the owner of a cluster/subscription in addition to the set of template parameters which are sent automatically ACCOUNT_USERNAME, FIRST_NAME, LAST_NAME, ORGANIZATION_NAME, ORGANIZATION_EXTERNAL_ID",
-          "required": true
-        },
-        "responses": {
-          "202": {
-            "description": "Notification created and queued to be sent soon"
-          },
-          "400": {
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            },
-            "description": "Validation errors occurred"
-          },
-          "401": {
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            },
-            "description": "Auth token is invalid"
-          },
-          "403": {
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            },
-            "description": "Unauthorized to perform operation"
-          },
-          "500": {
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            },
-            "description": "Unexpected error occurred"
-          }
-        },
-        "security": [
-          {
-            "Bearer": []
-          }
-        ],
-        "summary": "Notify the owner of cluster/subscription"
-      }
     },
     "/api/accounts_mgmt/v1/notify_details": {
       "post": {
@@ -12327,6 +12214,9 @@
             "$ref": "#/components/parameters/fetchCapabilities"
           },
           {
+            "$ref": "#/components/parameters/fetchOrganization"
+          },
+          {
             "$ref": "#/components/parameters/fields"
           },
           {
@@ -13117,77 +13007,6 @@
           "$ref": "#/components/parameters/fields"
         }
       ]
-    },
-    "/api/accounts_mgmt/v1/subscriptions/{id}/notify": {
-      "parameters": [
-        {
-          "$ref": "#/components/parameters/id"
-        }
-      ],
-      "post": {
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/NotificationRequest"
-              }
-            }
-          },
-          "description": "The contents of the notification to send to the owner of a subscription in addition to the set of template parameters which are sent automatically ACCOUNT_USERNAME, FIRST_NAME, LAST_NAME, ORGANIZATION_NAME, ORGANIZATION_EXTERNAL_ID",
-          "required": true
-        },
-        "responses": {
-          "202": {
-            "description": "Notification created and queued to be sent soon"
-          },
-          "400": {
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            },
-            "description": "Validation errors occurred"
-          },
-          "401": {
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            },
-            "description": "Auth token is invalid"
-          },
-          "403": {
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            },
-            "description": "Unauthorized to perform operation"
-          },
-          "500": {
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            },
-            "description": "Unexpected error occurred"
-          }
-        },
-        "security": [
-          {
-            "Bearer": []
-          }
-        ],
-        "summary": "Notify the owner of a subscription"
-      }
     },
     "/api/accounts_mgmt/v1/subscriptions/{id}/reserved_resources": {
       "get": {

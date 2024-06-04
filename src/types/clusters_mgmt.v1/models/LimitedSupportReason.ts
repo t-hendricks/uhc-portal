@@ -1,10 +1,9 @@
+/* generated using openapi-typescript-codegen -- do not edit */
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-
 import type { DetectionType } from './DetectionType';
 import type { LimitedSupportReasonTemplate } from './LimitedSupportReasonTemplate';
-
 /**
  * A reason that a cluster is in limited support.
  */

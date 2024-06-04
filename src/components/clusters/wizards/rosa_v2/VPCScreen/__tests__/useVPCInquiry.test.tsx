@@ -1,8 +1,8 @@
 import { renderHook } from '@testing-library/react';
-import { VPCResponse } from '~/redux/reducers/ccsInquiriesReducer';
-import { vpcList } from '~/components/clusters/common/__test__/vpcs.fixtures';
 
+import { vpcList } from '~/components/clusters/common/__tests__/vpcs.fixtures';
 import * as vpcInquiries from '~/components/clusters/common/useVPCInquiry';
+import { VPCResponse } from '~/redux/reducers/ccsInquiriesReducer';
 
 jest.mock('react-redux', () => ({
   __esModule: true,

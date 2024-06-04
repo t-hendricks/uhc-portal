@@ -1,22 +1,22 @@
-import pick from 'lodash/pick';
 import isEmpty from 'lodash/isEmpty';
+import pick from 'lodash/pick';
 
-import config from '~/config';
-
-import { store } from '~/redux/store';
-import { DEFAULT_FLAVOUR_ID } from '~/redux/actions/flavourActions';
-import { createCluster } from '~/redux/actions/clustersActions';
 import {
   parseReduxFormKeyValueList,
-  strToKeyValueObject,
   stringToArrayTrimmed,
+  strToKeyValueObject,
 } from '~/common/helpers';
 import { billingModels } from '~/common/subscriptionTypes';
-import { WildcardPolicy } from '~/types/clusters_mgmt.v1/models/WildcardPolicy';
-import { NamespaceOwnershipPolicy } from '~/types/clusters_mgmt.v1/models/NamespaceOwnershipPolicy';
-import { ApplicationIngressType } from '~/components/clusters/wizards/osd/Networking/constants';
 import { getClusterAutoScalingSubmitSettings } from '~/components/clusters/common/clusterAutoScalingValues';
-import { canConfigureDayOneManagedIngress } from '../rosa/constants';
+import { ApplicationIngressType } from '~/components/clusters/wizards/osd/Networking/constants';
+import config from '~/config';
+import { createCluster } from '~/redux/actions/clustersActions';
+import { DEFAULT_FLAVOUR_ID } from '~/redux/actions/flavourActions';
+import { store } from '~/redux/store';
+import { NamespaceOwnershipPolicy } from '~/types/clusters_mgmt.v1/models/NamespaceOwnershipPolicy';
+import { WildcardPolicy } from '~/types/clusters_mgmt.v1/models/WildcardPolicy';
+
+import { canConfigureDayOneManagedIngress } from './constants';
 import * as submitRequestHelpers from './submitOSDRequestHelper';
 
 export const createClusterRequest = ({ isWizard = true, cloudProviderID, product }, formData) => {
@@ -31,6 +31,8 @@ export const createClusterRequest = ({ isWizard = true, cloudProviderID, product
     state.features?.HCP_AWS_BILLING_SHOW !== undefined
       ? state.features?.HCP_AWS_BILLING_SHOW
       : true;
+
+  const isRedHatOIDCManaged = formData?.byo_oidc_config_id_managed === 'true';
 
   const clusterRequest = {
     name: formData.name,
@@ -56,6 +58,10 @@ export const createClusterRequest = ({ isWizard = true, cloudProviderID, product
       isHypershiftSelected || !formData.enable_user_workload_monitoring,
     ...(!isHypershiftSelected && { fips: !!formData.fips }),
   };
+
+  if (formData.has_domain_prefix) {
+    clusterRequest.domain_prefix = formData.domain_prefix;
+  }
 
   if (!isHypershiftSelected) {
     clusterRequest.node_drain_grace_period = {
@@ -150,7 +156,11 @@ export const createClusterRequest = ({ isWizard = true, cloudProviderID, product
           },
         };
         // auto mode
-        if (formData.rosa_roles_provider_creation_mode === 'auto') {
+        if (
+          formData.rosa_roles_provider_creation_mode === 'auto' &&
+          !isHypershiftSelected &&
+          !isRedHatOIDCManaged
+        ) {
           clusterRequest.aws.sts = {
             ...clusterRequest.aws.sts,
             auto_mode: true,
@@ -355,6 +365,12 @@ export const createClusterRequest = ({ isWizard = true, cloudProviderID, product
 
   if (isHypershiftSelected) {
     clusterRequest.multi_az = true;
+  }
+
+  if (formData.enable_external_authentication) {
+    clusterRequest.external_auth_config = {
+      enabled: true,
+    };
   }
 
   return clusterRequest;

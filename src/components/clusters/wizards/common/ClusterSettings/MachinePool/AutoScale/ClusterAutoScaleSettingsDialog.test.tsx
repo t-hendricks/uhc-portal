@@ -2,12 +2,12 @@ import React from 'react';
 import { Formik } from 'formik';
 import merge from 'lodash/merge';
 
-import { withState, checkAccessibility, screen, within, UserEventType, waitFor } from '~/testUtils';
-import modals from '~/components/common/Modal/modals';
-import { ClusterAutoscaler } from '~/types/clusters_mgmt.v1';
-import { FieldId } from '~/components/clusters/wizards/common';
-
 import { getDefaultClusterAutoScaling } from '~/components/clusters/common/clusterAutoScalingValues';
+import { FieldId } from '~/components/clusters/wizards/common';
+import modals from '~/components/common/Modal/modals';
+import { checkAccessibility, screen, UserEventType, waitFor, within, withState } from '~/testUtils';
+import { ClusterAutoscaler } from '~/types/clusters_mgmt.v1';
+
 import ClusterAutoScaleSettingsDialog from './ClusterAutoScaleSettingsDialog';
 
 const defaultState = {

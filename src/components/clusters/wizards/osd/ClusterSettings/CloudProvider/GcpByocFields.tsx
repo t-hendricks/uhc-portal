@@ -2,28 +2,28 @@ import React from 'react';
 
 import {
   Alert,
-  GridItem,
-  Title,
-  Text,
-  TextVariants,
-  TextContent,
   Flex,
   Grid,
+  GridItem,
   Hint,
   HintBody,
   HintFooter,
   HintTitle,
+  Text,
+  TextContent,
+  TextVariants,
+  Title,
 } from '@patternfly/react-core';
 
-import { useGlobalState } from '~/redux/hooks/useGlobalState';
 import links from '~/common/installLinks.mjs';
+import { billingModels } from '~/common/subscriptionTypes';
 import { required, validateGCPServiceAccount } from '~/common/validators';
-import ExternalLink from '~/components/common/ExternalLink';
 import { Prerequisites } from '~/components/clusters/wizards/common/Prerequisites/Prerequisites';
 import { FileUploadField } from '~/components/clusters/wizards/form';
-import { FieldId } from '~/components/clusters/wizards/osd/constants';
 import { useFormState } from '~/components/clusters/wizards/hooks';
-import { billingModels } from '~/common/subscriptionTypes';
+import { FieldId } from '~/components/clusters/wizards/osd/constants';
+import ExternalLink from '~/components/common/ExternalLink';
+import { useGlobalState } from '~/redux/hooks/useGlobalState';
 
 export const GcpByocFields = () => {
   const { ccsCredentialsValidity } = useGlobalState((state) => state.ccsInquiries);
@@ -90,22 +90,37 @@ export const GcpByocFields = () => {
                   <ul>
                     <li>
                       <Text component={TextVariants.p} className="ocm-secondary-text">
+                        Compute Admin
+                      </Text>
+                    </li>
+                    <li>
+                      <Text component={TextVariants.p} className="ocm-secondary-text">
                         DNS Administrator
                       </Text>
                     </li>
                     <li>
                       <Text component={TextVariants.p} className="ocm-secondary-text">
+                        Security Admin
+                      </Text>
+                    </li>
+                    <li>
+                      <Text component={TextVariants.p} className="ocm-secondary-text">
+                        Service Account Admin
+                      </Text>
+                    </li>
+                    <li>
+                      <Text component={TextVariants.p} className="ocm-secondary-text">
+                        Service Account Key Admin
+                      </Text>
+                    </li>
+                    <li>
+                      <Text component={TextVariants.p} className="ocm-secondary-text">
+                        Service Account User
+                      </Text>
+                    </li>
+                    <li>
+                      <Text component={TextVariants.p} className="ocm-secondary-text">
                         Organization Policy Viewer
-                      </Text>
-                    </li>
-                    <li>
-                      <Text component={TextVariants.p} className="ocm-secondary-text">
-                        Owner
-                      </Text>
-                    </li>
-                    <li>
-                      <Text component={TextVariants.p} className="ocm-secondary-text">
-                        Project IAM Admin
                       </Text>
                     </li>
                     <li>
@@ -121,6 +136,21 @@ export const GcpByocFields = () => {
                     <li>
                       <Text component={TextVariants.p} className="ocm-secondary-text">
                         Storage Admin
+                      </Text>
+                    </li>
+                    <li>
+                      <Text component={TextVariants.p} className="ocm-secondary-text">
+                        Compute Load Balancer Admin
+                      </Text>
+                    </li>
+                    <li>
+                      <Text component={TextVariants.p} className="ocm-secondary-text">
+                        Role Viewer
+                      </Text>
+                    </li>
+                    <li>
+                      <Text component={TextVariants.p} className="ocm-secondary-text">
+                        Role Administrator
                       </Text>
                     </li>
                   </ul>

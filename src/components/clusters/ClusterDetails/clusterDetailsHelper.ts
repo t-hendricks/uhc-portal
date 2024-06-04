@@ -1,10 +1,9 @@
+import { goZeroTime } from '~/common/helpers';
+import { subscriptionStatuses } from '~/common/subscriptionTypes';
 import clusterStates, {
   isHibernating,
   isHypershiftCluster,
 } from '~/components/clusters/common/clusterStates';
-
-import { goZeroTime } from '~/common/helpers';
-import { subscriptionStatuses } from '~/common/subscriptionTypes';
 import { ClusterResource, Subscription } from '~/types/accounts_mgmt.v1';
 import { Cluster } from '~/types/clusters_mgmt.v1';
 import { ClusterFromSubscription } from '~/types/types';
@@ -84,6 +83,12 @@ const isReadyForAwsAccessActions = <E extends ClusterFromSubscription>(cluster: 
 const isReadyForIdpActions = <E extends ClusterFromSubscription>(cluster: E): boolean =>
   hasValidStatusForActions(cluster, !isHypershiftCluster(cluster));
 
+const isReadyForExternalActions = <E extends ClusterFromSubscription>(cluster: E): boolean =>
+  hasValidStatusForActions(cluster, false);
+
+const isExtenalAuthenicationActive = <E extends ClusterFromSubscription>(cluster: E): boolean =>
+  (cluster?.external_auth_config?.enabled ?? false) && isHypershiftCluster(cluster);
+
 const eventTypes = {
   CLICKED: 'clicked',
   AUTO: 'auto',
@@ -100,5 +105,7 @@ export {
   isReadyForRoleAccessActions,
   isReadyForAwsAccessActions,
   isReadyForIdpActions,
+  isReadyForExternalActions,
+  isExtenalAuthenicationActive,
   eventTypes,
 };

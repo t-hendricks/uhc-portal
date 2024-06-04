@@ -1,10 +1,12 @@
 import React from 'react';
 import { MemoryRouter } from 'react-router';
 import { CompatRouter } from 'react-router-dom-v5-compat';
-import fixtures from '../../ClusterDetails/__test__/ClusterDetails.fixtures';
-import { emptyQuotaList, mockQuotaList } from '../__test__/quota.fixtures';
-import UpgradeTrialClusterDialog from './UpgradeTrialClusterDialog';
+
 import { render, screen } from '../../../../testUtils';
+import fixtures from '../../ClusterDetails/__tests__/ClusterDetails.fixtures';
+import { emptyQuotaList, mockQuotaList } from '../__tests__/quota.fixtures';
+
+import UpgradeTrialClusterDialog from './UpgradeTrialClusterDialog';
 
 describe('<UpgradeTrialClusterDialog />', () => {
   const organizationState = {
@@ -59,6 +61,8 @@ describe('<UpgradeTrialClusterDialog />', () => {
     );
     expect(screen.getByTestId('no-quota-alert')).toBeInTheDocument();
     expect(screen.getByText('Contact sales')).toBeInTheDocument();
+    // when there's no quota there is only a single action button, so we can use a small PF modal
+    expect(screen.getByRole('dialog')).toHaveClass('pf-m-sm');
   });
 
   it('allows upgrade via marketplace billing', () => {
@@ -96,6 +100,8 @@ describe('<UpgradeTrialClusterDialog />', () => {
     expect(screen.queryByTestId('no-quota-alert')).not.toBeInTheDocument();
     expect(screen.getByText('Upgrade using Marketplace billing')).toBeInTheDocument();
     expect(screen.queryByText('Upgrade using quota')).not.toBeInTheDocument();
+    // when it's possible to upgrade, we have to make room for all the action buttons and use a bigger PF modal
+    expect(screen.getByRole('dialog')).toHaveClass('pf-m-md');
   });
 
   it('allows upgrade via standard or marketplace billing', () => {
@@ -134,7 +140,7 @@ describe('<UpgradeTrialClusterDialog />', () => {
     expect(screen.getByText('Upgrade using quota')).toBeInTheDocument();
   });
 
-  it('renders error box when an erorr occurs', () => {
+  it('renders error box when an error occurs', () => {
     render(
       <MemoryRouter>
         <CompatRouter>

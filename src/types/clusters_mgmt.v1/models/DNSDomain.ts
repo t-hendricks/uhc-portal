@@ -1,10 +1,9 @@
+/* generated using openapi-typescript-codegen -- do not edit */
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-
 import type { ClusterLink } from './ClusterLink';
 import type { OrganizationLink } from './OrganizationLink';
-
 /**
  * Contains the properties of a DNS domain.
  */

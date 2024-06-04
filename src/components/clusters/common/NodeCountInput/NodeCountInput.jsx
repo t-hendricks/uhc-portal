@@ -1,21 +1,23 @@
-import { FormGroup, FormSelect, FormSelectOption, Tooltip } from '@patternfly/react-core';
-import PropTypes from 'prop-types';
 import React from 'react';
+import PropTypes from 'prop-types';
+
+import { FormGroup, FormSelect, FormSelectOption, Tooltip } from '@patternfly/react-core';
 
 import {
   getNodeIncrement,
   getNodeIncrementHypershift,
 } from '~/components/clusters/ClusterDetails/components/MachinePools/machinePoolsHelper';
 import { FormGroupHelperText } from '~/components/common/FormGroupHelperText';
+
 import { noQuotaTooltip } from '../../../../common/helpers';
 import { billingModels, normalizedProducts } from '../../../../common/subscriptionTypes';
 import PopoverHint from '../../../common/PopoverHint';
+import { MAX_NODES_HCP } from '../machinePools/constants';
 import {
   buildOptions,
   getAvailableQuota as getAvailableQuotaUtil,
   getIncludedNodes,
 } from '../machinePools/utils';
-import { MAX_NODES_HCP } from '../machinePools/constants';
 
 const incrementValue = ({ isHypershiftWizard, poolNumber, isMultiAz }) =>
   isHypershiftWizard ? getNodeIncrementHypershift(poolNumber) : getNodeIncrement(isMultiAz);
@@ -210,15 +212,16 @@ class NodeCountInput extends React.Component {
     const showTotalNodes = () => {
       if (isHypershiftWizard) {
         return (
-          <span>
+          <span data-testid="compute-node-hcp-multizone-details">
             x {poolNumber} machine pools = {input.value} compute nodes
           </span>
         );
       }
-      if (isMultiAz) {
-        return <span>× 3 zones = {input.value} compute nodes</span>;
-      }
-      return null;
+      return isMultiAz ? (
+        <span data-testid="compute-node-multizone-details">
+          × 3 zones = {input.value} compute nodes
+        </span>
+      ) : null;
     };
 
     return (
@@ -251,7 +254,7 @@ NodeCountInput.propTypes = {
   minNodes: PropTypes.number,
   label: PropTypes.string,
   helpText: PropTypes.string,
-  extendedHelpText: PropTypes.string,
+  extendedHelpText: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
   quota: PropTypes.object.isRequired,
   isByoc: PropTypes.bool,
   isMachinePool: PropTypes.bool,

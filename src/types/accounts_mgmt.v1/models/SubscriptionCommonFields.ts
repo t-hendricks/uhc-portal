@@ -1,9 +1,9 @@
+/* generated using openapi-typescript-codegen -- do not edit */
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-
 import type { ObjectReference } from './ObjectReference';
-
+import type { Organization } from './Organization';
 export type SubscriptionCommonFields = ObjectReference & {
   /**
    * If set, the date the subscription expires based on the billing model
@@ -33,6 +33,7 @@ export type SubscriptionCommonFields = ObjectReference & {
    */
   last_telemetry_date?: string;
   managed: boolean;
+  organization?: Organization;
   organization_id?: string;
   plan_id?: string;
   product_bundle?: SubscriptionCommonFields.product_bundle;
@@ -51,32 +52,28 @@ export type SubscriptionCommonFields = ObjectReference & {
   usage?: SubscriptionCommonFields.usage;
   xcm_id?: string;
 };
-
 export namespace SubscriptionCommonFields {
   export enum product_bundle {
     OPENSHIFT = 'Openshift',
     JBOSS_MIDDLEWARE = 'JBoss-Middleware',
     IBM_CLOUD_PAK = 'IBM-CloudPak',
   }
-
   export enum service_level {
     L1_L3 = 'L1-L3',
     L3_ONLY = 'L3-only',
   }
-
   export enum support_level {
     EVAL = 'Eval',
     STANDARD = 'Standard',
     PREMIUM = 'Premium',
     SELF_SUPPORT = 'Self-Support',
     NONE = 'None',
+    SUPPORTED_BY_IBM = 'Supported By IBM',
   }
-
   export enum system_units {
     CORES_V_CPU = 'Cores/vCPU',
     SOCKETS = 'Sockets',
   }
-
   export enum usage {
     PRODUCTION = 'Production',
     DEVELOPMENT_TEST = 'Development/Test',

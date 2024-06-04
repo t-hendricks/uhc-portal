@@ -1,7 +1,7 @@
 import React from 'react';
 
-import { waitFor, render, screen } from '~/testUtils';
 import wizardConnector from '~/components/clusters/wizards/common/WizardConnector';
+import { render, screen, waitFor } from '~/testUtils';
 
 import CustomerOIDCConfiguration from './CustomerOIDCConfiguration';
 

@@ -1,15 +1,10 @@
 import React from 'react';
 
-import {
-  checkAccessibility,
-  insightsMock,
-  render,
-  screen,
-  within,
-  mockRestrictedEnv,
-} from '~/testUtils';
 import { subscriptionStatuses } from '~/common/subscriptionTypes';
-import fixtures from '../../../__test__/ClusterDetails.fixtures';
+import { checkAccessibility, mockRestrictedEnv, render, screen, within } from '~/testUtils';
+
+import fixtures from '../../../__tests__/ClusterDetails.fixtures';
+
 import DetailsRight from './DetailsRight';
 
 const defaultProps = {
@@ -17,7 +12,6 @@ const defaultProps = {
   cloudProviders: fixtures.cloudProviders,
   hasAutoscaleMachinePools: false,
   hasAutoscaleCluster: false,
-  canAutoscaleCluster: false,
 };
 
 const componentText = {
@@ -46,6 +40,7 @@ const componentText = {
     SELF: 'Self-managed',
     ID: 'ID:',
   },
+  DELETE_PROTECTION: { label: 'Delete Protection: Disabled' },
 };
 
 const checkForValue = (label, value, testId) => {
@@ -70,8 +65,6 @@ const checkForValueAbsence = (label, value, testId) => {
     expect(container.queryByText(value)).not.toBeInTheDocument();
   }
 };
-
-insightsMock();
 
 describe('<DetailsRight />', () => {
   it('is accessible on initial render', async () => {
@@ -154,6 +147,27 @@ describe('<DetailsRight />', () => {
 
       // Assert
       checkForValueAbsence(componentText.STATUS_ERROR.label);
+    });
+
+    it('shows delete protection', () => {
+      // Arrange
+      render(<DetailsRight {...defaultProps} />);
+
+      // Assert
+      checkForValue(componentText.DELETE_PROTECTION.label);
+    });
+
+    it('hides delete protection if cluster is archived', () => {
+      // Arrange
+      const cluster = {
+        ...fixtures.clusterDetails.cluster,
+        subscription: { status: 'Archived', id: 'fake' },
+      };
+      const props = { ...defaultProps, cluster };
+      render(<DetailsRight {...props} />);
+
+      // Assert
+      checkForValueAbsence(componentText.DELETE_PROTECTION.label);
     });
   });
 

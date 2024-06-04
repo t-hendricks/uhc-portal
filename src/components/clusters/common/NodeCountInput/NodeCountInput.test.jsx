@@ -1,16 +1,13 @@
 import React from 'react';
-import { render, screen, checkAccessibility } from '~/testUtils';
-import {
-  getMinNodesRequired as RealGetMinNodesRequired,
-  getMinNodesRequiredHypershift,
-} from '~/components/clusters/ClusterDetails/components/MachinePools/machinePoolsHelper';
-import NodeCountInput from './NodeCountInput';
-import * as quotaSelectors from '../quotaSelectors';
-import { normalizedProducts, billingModels } from '../../../../common/subscriptionTypes';
-import { MAX_NODES, MAX_NODES_HCP } from '../machinePools/constants';
 
-const getMinNodesRequired = ({ isDefaultMachinePool, isByoc, isMultiAz }) =>
-  RealGetMinNodesRequired(isDefaultMachinePool, isByoc, isMultiAz);
+import { getMinNodesRequired } from '~/components/clusters/ClusterDetails/components/MachinePools/machinePoolsHelper';
+import { checkAccessibility, render, screen } from '~/testUtils';
+
+import { billingModels, normalizedProducts } from '../../../../common/subscriptionTypes';
+import { MAX_NODES, MAX_NODES_HCP } from '../machinePools/constants';
+import * as quotaSelectors from '../quotaSelectors';
+
+import NodeCountInput from './NodeCountInput';
 
 const includedNodes = ({ isByoc, isMultiAz, isMachinePool }) => {
   if (isByoc || isMachinePool) {
@@ -32,12 +29,17 @@ const baseProps = ({ isByoc, isMultiAz }) => ({
   input: {
     name: 'compute-nodes',
     onChange: jest.fn(),
+    onBlur: jest.fn(),
   },
   cloudProviderID: 'aws',
   product: normalizedProducts.OSD,
   billingModel: billingModels.STANDARD,
 
-  minNodes: getMinNodesRequired({ isDefaultMachinePool: true, isByoc, isMultiAz }),
+  minNodes: getMinNodesRequired(false, undefined, {
+    isDefaultMachinePool: true,
+    isByoc,
+    isMultiAz,
+  }),
 });
 
 describe('<NodeCountInput>', () => {
@@ -61,7 +63,7 @@ describe('<NodeCountInput>', () => {
     it('displays select as enabled with one option when no quota', () => {
       // Arrange
       mockAvailableNodes.mockReturnValueOnce(0);
-      const minNodes = getMinNodesRequired({ isDefaultMachinePool: true });
+      const minNodes = getMinNodesRequired(false, undefined, { isDefaultMachinePool: true });
       expect(minNodes).toEqual(4); // validate min value
       render(<NodeCountInput {...baseProps({ isByoc: false, isMultiAz: false })} />);
 
@@ -74,7 +76,7 @@ describe('<NodeCountInput>', () => {
     it('displays select as enabled with expect number of options with some quota', () => {
       // Arrange
       mockAvailableNodes.mockReturnValueOnce(10);
-      const minNodes = getMinNodesRequired({ isDefaultMachinePool: true }); // expected to be 4
+      const minNodes = getMinNodesRequired(false, undefined, { isDefaultMachinePool: true }); // expected to be 4
       expect(minNodes).toEqual(4); // validate min value
       const expectedValues = [4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14];
 
@@ -96,7 +98,7 @@ describe('<NodeCountInput>', () => {
     it('displays select as enabled with last option value of MAX_NODES with extremely high quota', () => {
       // Arrange
       mockAvailableNodes.mockReturnValueOnce(10000);
-      const minNodes = getMinNodesRequired({ isDefaultMachinePool: true }); // expected to be 4
+      const minNodes = getMinNodesRequired(false, undefined, { isDefaultMachinePool: true }); // expected to be 4
       expect(MAX_NODES).toBeLessThan(10000); /// verify MAX_NODES is less than value sent
       render(
         <NodeCountInput {...baseProps({ isByoc: false, isMultiAz: false })} machineType="fake" />,
@@ -117,7 +119,7 @@ describe('<NodeCountInput>', () => {
     it('Changes select to default value when machineType is set to a type if no quota', async () => {
       // Arrange
       mockAvailableNodes.mockReturnValueOnce(10);
-      const minNodes = getMinNodesRequired({ isDefaultMachinePool: true }); // expected to be 4
+      const minNodes = getMinNodesRequired(false, undefined, { isDefaultMachinePool: true }); // expected to be 4
       expect(minNodes).toEqual(4); // validate min value
       const onChange = jest.fn();
       const newProps = { ...baseProps({ isByoc: false, isMultiAz: false }) };
@@ -143,7 +145,10 @@ describe('<NodeCountInput>', () => {
         it('displays select as enabled expected number of options when no quota', () => {
           // Arrange
           mockAvailableNodes.mockReturnValueOnce(0);
-          const minNodes = getMinNodesRequired({ isDefaultMachinePool: true, isByoc: true });
+          const minNodes = getMinNodesRequired(false, undefined, {
+            isDefaultMachinePool: true,
+            isByoc: true,
+          });
           expect(minNodes).toEqual(2);
           const { currentNodeCount } = baseProps({ isByoc: true });
           const expectedValues = [2, 3, 4];
@@ -173,7 +178,10 @@ describe('<NodeCountInput>', () => {
         it('displays select with one option when no quota', () => {
           // Arrange
           mockAvailableNodes.mockReturnValueOnce(0);
-          const minNodes = getMinNodesRequired({ isDefaultMachinePool: true, isByoc: true });
+          const minNodes = getMinNodesRequired(false, undefined, {
+            isDefaultMachinePool: true,
+            isByoc: true,
+          });
           expect(minNodes).toEqual(2);
 
           render(
@@ -198,7 +206,10 @@ describe('<NodeCountInput>', () => {
     it('displays select as enabled with one option when no quota', () => {
       // Arrange
       mockAvailableNodes.mockReturnValueOnce(0);
-      const minNodes = getMinNodesRequired({ isDefaultMachinePool: true, isMultiAz: true });
+      const minNodes = getMinNodesRequired(false, undefined, {
+        isDefaultMachinePool: true,
+        isMultiAz: true,
+      });
       expect(minNodes).toEqual(9);
       render(
         <NodeCountInput
@@ -216,7 +227,10 @@ describe('<NodeCountInput>', () => {
     it('displays select as enabled known number options when some quota', () => {
       // Arrange
       mockAvailableNodes.mockReturnValueOnce(18);
-      const minNodes = getMinNodesRequired({ isDefaultMachinePool: true, isMultiAz: true });
+      const minNodes = getMinNodesRequired(false, undefined, {
+        isDefaultMachinePool: true,
+        isMultiAz: true,
+      });
       expect(minNodes).toEqual(9);
       const included = includedNodes({ isMultiAz: true }); // 9
       const expectedValues = [9, 12, 15, 18, 21, 24, 27];
@@ -239,7 +253,10 @@ describe('<NodeCountInput>', () => {
   it('Changes select to default value when machineType is set to a type if no quota', () => {
     // Arrange
     mockAvailableNodes.mockReturnValueOnce(15);
-    const minNodes = getMinNodesRequired({ isDefaultMachinePool: true, isMultiAz: true });
+    const minNodes = getMinNodesRequired(false, undefined, {
+      isDefaultMachinePool: true,
+      isMultiAz: true,
+    });
     expect(minNodes).toEqual(9);
     const onChange = jest.fn();
     const newProps = { ...baseProps({ isMultiAz: true }) };
@@ -256,7 +273,7 @@ describe('<NodeCountInput>', () => {
       it('renders with no quota above current value', () => {
         // Arrange
         mockAvailableNodes.mockReturnValueOnce(0);
-        const minNodes = getMinNodesRequired({ isDefaultMachinePool: true });
+        const minNodes = getMinNodesRequired(false, undefined, { isDefaultMachinePool: true });
         expect(minNodes).toEqual(4);
         render(<NodeCountInput {...baseProps({})} isEditingCluster currentNodeCount={6} />);
 
@@ -272,7 +289,10 @@ describe('<NodeCountInput>', () => {
       it('renders with no quota above current value', () => {
         // Arrange
         mockAvailableNodes.mockReturnValueOnce(0);
-        const minNodes = getMinNodesRequired({ isDefaultMachinePool: true, isMultiAz: true });
+        const minNodes = getMinNodesRequired(false, undefined, {
+          isDefaultMachinePool: true,
+          isMultiAz: true,
+        });
         expect(minNodes).toEqual(9);
         render(
           <NodeCountInput
@@ -317,7 +337,7 @@ describe('<NodeCountInput>', () => {
     it('sends onchange with minimum nodes when changing machine types with not enough quota ROSA', () => {
       // Arrange
       mockAvailableNodes.mockReturnValue(10);
-      const minNodes = getMinNodesRequired({ isDefaultMachinePool: true }); // expected to be 4
+      const minNodes = getMinNodesRequired(false, undefined, { isDefaultMachinePool: true }); // expected to be 4
       expect(minNodes).toEqual(4); // validate min value
       const onChange = jest.fn();
       const newProps = { ...baseProps({}), product: normalizedProducts.ROSA };
@@ -337,7 +357,7 @@ describe('<NodeCountInput>', () => {
     it('sends onchange with minimum nodes when changing machine types with not enough quota OSD', () => {
       // Arrange
       mockAvailableNodes.mockReturnValue(10);
-      const minNodes = getMinNodesRequired({ isDefaultMachinePool: true }); // expected to be 4
+      const minNodes = getMinNodesRequired(false, undefined, { isDefaultMachinePool: true }); // expected to be 4
       expect(minNodes).toEqual(4); // validate min value
       const onChange = jest.fn();
       const newProps = { ...baseProps({}) };
@@ -371,7 +391,7 @@ describe('<NodeCountInput>', () => {
             {...newProps}
             input={inputProps}
             poolNumber={3}
-            minNodes={getMinNodesRequiredHypershift(3)}
+            minNodes={getMinNodesRequired(true, { numMachinePools: 3 })}
           />,
         );
         // verify initial value
@@ -383,7 +403,7 @@ describe('<NodeCountInput>', () => {
             {...newProps}
             input={inputProps}
             poolNumber={5}
-            minNodes={getMinNodesRequiredHypershift(5)}
+            minNodes={getMinNodesRequired(true, { numMachinePools: 5 })}
           />,
         );
 
@@ -410,7 +430,7 @@ describe('<NodeCountInput>', () => {
             {...newProps}
             input={inputProps}
             poolNumber={3}
-            minNodes={getMinNodesRequiredHypershift(3)}
+            minNodes={getMinNodesRequired(true, { numMachinePools: 3 })}
           />,
         );
         // verify initial value
@@ -422,12 +442,12 @@ describe('<NodeCountInput>', () => {
             {...newProps}
             input={inputProps}
             poolNumber={1}
-            minNodes={getMinNodesRequiredHypershift(1)}
+            minNodes={getMinNodesRequired(true, { numMachinePools: 1 })}
           />,
         );
 
         // Assert
-        const minNodes = getMinNodesRequiredHypershift(1); // min number of nodes for 1 machine pool
+        const minNodes = getMinNodesRequired(true, { numMachinePools: 1 }); // min number of nodes for 1 machine pool
         expect(onChange).toBeCalledTimes(1);
         expect(onChange).toBeCalledWith(minNodes); // Returns min value of 2 vs 1 node * 1 pool (which would fail cluster creation)
       });
@@ -452,7 +472,7 @@ describe('<NodeCountInput>', () => {
             {...newProps}
             input={inputProps}
             poolNumber={maxNodesForThreePools}
-            minNodes={getMinNodesRequiredHypershift(maxNodesForThreePools)}
+            minNodes={getMinNodesRequired(true, { numMachinePools: maxNodesForThreePools })}
           />,
         );
         // verify initial value
@@ -464,14 +484,16 @@ describe('<NodeCountInput>', () => {
             {...newProps}
             input={inputProps}
             poolNumber={maxNodesForThreePools + 5}
-            minNodes={getMinNodesRequiredHypershift(maxNodesForThreePools + 5)}
+            minNodes={getMinNodesRequired(true, { numMachinePools: maxNodesForThreePools + 5 })}
           />,
         );
 
         // Assert
         expect((maxNodesForThreePools + 5) * 3).toBeGreaterThan(maxNodes);
         expect(onChange).toBeCalledTimes(1);
-        expect(onChange).toBeCalledWith(getMinNodesRequiredHypershift(maxNodesForThreePools + 5));
+        expect(onChange).toBeCalledWith(
+          getMinNodesRequired(true, { numMachinePools: maxNodesForThreePools + 5 }),
+        );
       });
     });
   });

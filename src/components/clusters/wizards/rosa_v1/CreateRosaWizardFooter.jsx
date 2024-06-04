@@ -5,11 +5,11 @@ import { isAsyncValidating } from 'redux-form';
 
 import { Button } from '@patternfly/react-core';
 import {
-  WizardFooter as WizardFooterDeprecated,
   WizardContext as WizardContextDeprecated,
+  WizardFooter as WizardFooterDeprecated,
 } from '@patternfly/react-core/deprecated';
 
-import { stepId, hasLoadingState } from './rosaWizardConstants';
+import { hasLoadingState, stepId } from './rosaWizardConstants';
 
 // Must return the step in which VPCDropdown is located, as it's in charge of fetching the VPCs
 const getVpcLoadingStep = (isHypershiftSelected) => {
@@ -28,6 +28,7 @@ const CreateRosaWizardFooter = ({
   isHypershiftSelected,
   isNextDisabled,
   currentStepId,
+  isSubmitting = false,
 }) => {
   const asyncValidating = useSelector(isAsyncValidating('CreateCluster'));
   const awsRequests = useSelector((state) => ({
@@ -48,7 +49,7 @@ const CreateRosaWizardFooter = ({
     awsRequests.oCMRoleLoading ||
     isRefreshingVPCs;
 
-  return (
+  return isSubmitting ? null : (
     <WizardFooterDeprecated>
       <WizardContextDeprecated.Consumer>
         {({ activeStep, onNext, onBack, onClose }) => (
@@ -104,6 +105,7 @@ CreateRosaWizardFooter.propTypes = {
   isHypershiftSelected: PropTypes.bool,
   isNextDisabled: PropTypes.bool,
   currentStepId: PropTypes.string,
+  isSubmitting: PropTypes.bool,
 };
 
 export default CreateRosaWizardFooter;

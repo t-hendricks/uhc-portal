@@ -1,13 +1,17 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { GridItem, Title } from '@patternfly/react-core';
 import { Field } from 'redux-form';
+
+import { GridItem, Title } from '@patternfly/react-core';
+
+import links from '~/common/installLinks.mjs';
 import { normalizedProducts } from '~/common/subscriptionTypes';
-import links from '../../../common/installLinks.mjs';
-import ReduxCheckbox from '../../common/ReduxFormComponents/ReduxCheckbox';
-import { constants } from './CreateOSDFormConstants';
+import { CheckboxDescription } from '~/components/common/CheckboxDescription';
+import ReduxCheckbox from '~/components/common/ReduxFormComponents/ReduxCheckbox';
+
 import ExternalLink from '../../common/ExternalLink';
-import '~/components/clusters/common/CreateOSDForm.scss';
+
+import { constants } from './CreateOSDFormConstants';
 
 function UserWorkloadMonitoringSection({ parent, disableUVM, planType }) {
   const title = <Title headingLevel="h4"> Monitoring </Title>;
@@ -32,9 +36,7 @@ function UserWorkloadMonitoringSection({ parent, disableUVM, planType }) {
           </>
         }
       />
-      <div className="ocm-c--reduxcheckbox-description">
-        {constants.enableUserWorkloadMonitoringHint}
-      </div>
+      <CheckboxDescription>{constants.enableUserWorkloadMonitoringHint}</CheckboxDescription>
     </>
   );
 }

@@ -1,6 +1,9 @@
 import type React from 'react';
-import type { FeaturesSupportsLevel } from '@openshift-assisted/ui-lib/ocm';
+
 import type { Cluster as AICluster } from '@openshift-assisted/types/assisted-installer-service';
+import type { FeaturesSupportsLevel } from '@openshift-assisted/ui-lib/ocm';
+import type { ChromeAPI } from '@redhat-cloud-services/types';
+
 import type { List, OneMetric, Subscription } from './accounts_mgmt.v1';
 import type {
   AWS,
@@ -10,6 +13,13 @@ import type {
   LimitedSupportReason,
   VersionGateAgreement,
 } from './clusters_mgmt.v1';
+
+export type Chrome = ChromeAPI & {
+  enable: {
+    // missing debug function types
+    segmentDev: () => void;
+  };
+};
 
 export type ViewOptions = {
   currentPage: number;
@@ -42,6 +52,7 @@ export type FakeCluster = // AICluster &
     | 'managed'
     | 'ccs'
     | 'external_id'
+    | 'external_auth_config'
     | 'inflight_checks'
     | 'name'
     | 'version'
@@ -49,6 +60,7 @@ export type FakeCluster = // AICluster &
     | 'aws'
     | 'gcp_network'
     | 'status'
+    | 'multi_az'
   > & {
     metrics: OneMetric;
     state?: string | ClusterState;
@@ -78,6 +90,7 @@ export type SubscriptionWithPermissionsList = List & {
 export type AugmentedCluster = ClusterWithPermissions & {
   canEditOCMRoles?: boolean;
   canViewOCMRoles?: boolean;
+  canUpdateClusterResource?: boolean;
   canEditClusterAutoscaler?: boolean;
   idpActions?: {
     [action: string]: boolean;
@@ -127,4 +140,12 @@ export type ViewFlags = undefined | null | boolean | string[] | { [key: string]:
 
 export type UserInfo = {
   username: string;
+};
+
+export type ListAPIParams = {
+  page: number;
+  size: number;
+  search?: string;
+  fields?: string;
+  orderBy?: string;
 };

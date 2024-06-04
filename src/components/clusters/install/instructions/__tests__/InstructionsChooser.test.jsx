@@ -1,6 +1,7 @@
 import React from 'react';
 import { CompatRouter } from 'react-router-dom-v5-compat';
-import { screen, checkAccessibility, render, TestRouter } from '~/testUtils';
+
+import { checkAccessibility, render, screen, TestRouter } from '~/testUtils';
 
 import { InstructionsChooser } from '../InstructionsChooser';
 

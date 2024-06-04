@@ -1,7 +1,8 @@
-import { Button } from '@patternfly/react-core';
+import React from 'react';
 import FileSaver from 'file-saver';
 import isEmpty from 'lodash/isEmpty';
-import React from 'react';
+
+import { Button } from '@patternfly/react-core';
 
 import { trackEvents } from '~/common/analytics';
 import useAnalytics from '~/hooks/useAnalytics';
@@ -10,7 +11,7 @@ import { ErrorState } from '~/types/types';
 
 export type DownloadPullSecretProps = {
   token: ErrorState | AccessTokenCfg;
-  pendoID: string;
+  pendoID?: string;
   text?: string;
 };
 

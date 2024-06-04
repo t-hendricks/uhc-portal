@@ -1,13 +1,12 @@
 import React from 'react';
-
 import type axios from 'axios';
 
 import apiRequest from '~/services/apiRequest';
-import { mockRestrictedEnv, render, screen, checkAccessibility, waitFor } from '~/testUtils';
+import { checkAccessibility, mockRestrictedEnv, render, screen, waitFor } from '~/testUtils';
 
+import ocpLifeCycleStatuses from './__mocks__/ocpLifeCycleStatuses';
 import Releases from './index';
 import ReleaseChannel from './ReleaseChannel';
-import ocpLifeCycleStatuses from './__mocks__/ocpLifeCycleStatuses';
 
 type MockedJest = jest.Mocked<typeof axios> & jest.Mock;
 const apiRequestMock = apiRequest as unknown as MockedJest;

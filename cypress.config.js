@@ -1,3 +1,4 @@
+/* eslint-disable global-require */
 const { defineConfig } = require('cypress');
 
 module.exports = defineConfig({

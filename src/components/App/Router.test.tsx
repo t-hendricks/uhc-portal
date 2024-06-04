@@ -1,30 +1,15 @@
 import React from 'react';
 import { MemoryRouter } from 'react-router-dom';
 import { CompatRouter } from 'react-router-dom-v5-compat';
-import { Provider } from 'react-redux';
-import * as useChromeHook from '@redhat-cloud-services/frontend-components/useChrome';
-import { mockRestrictedEnv, render, screen } from '~/testUtils';
-import Router from './Router';
-import { store } from '../../redux/store';
 
-global.insights = {
-  chrome: {
-    ...global.insights.chrome,
-    on: () => () => {}, // a function that returns a function
-    appNavClick: () => {},
-    auth: {
-      getOfflineToken: () => Promise.resolve({ data: { refresh_token: 'hello' } }),
-    },
-  },
-};
+import { mockRestrictedEnv, mockUseChrome, render, screen, withState } from '~/testUtils';
+
+import Router from './Router';
 
 const routes = [
   { path: '/', metadata: { ocm_resource_type: 'all' } },
   { path: '/token/rosa', metadata: { ocm_resource_type: 'moa' } },
   { path: '/token/rosa/show', metadata: { ocm_resource_type: 'moa' } },
-  { path: '/token', metadata: { ocm_resource_type: 'all' } },
-  { path: '/token/show', metadata: { ocm_resource_type: 'all' } },
-  { path: '/downloads', metadata: { ocm_resource_type: 'all' } },
   { path: '/details/:id', metadata: { ocm_resource_type: 'all' } },
   {
     path: '/details/s/:id',
@@ -49,49 +34,104 @@ const routes = [
   { path: '/create/osd/aws', metadata: { ocm_resource_type: 'osd' } },
   { path: '/create/osd/gcp', metadata: { ocm_resource_type: 'osd' } },
   { path: '/create/osd', metadata: { ocm_resource_type: 'osd' } },
-  { path: '/create', metadata: { ocm_resource_type: 'all' } },
   { path: '/register', metadata: { ocm_resource_type: 'ocp' } },
-  { path: '/quota', metadata: { ocm_resource_type: 'all' } },
   { path: '/archived', metadata: { ocm_resource_type: 'all' } },
-  { path: '/releases', metadata: { ocm_resource_type: 'ocp' } },
-].map((route) =>
-  Object.assign(route, {
-    toString() {
-      return route.path;
-    },
-  }),
-);
+];
+
+const routesWithLoading = [
+  { path: '/token', metadata: { ocm_resource_type: 'all' } },
+  { path: '/token/show', metadata: { ocm_resource_type: 'all' } },
+  { path: '/downloads', metadata: { ocm_resource_type: 'all' } },
+  { path: '/quota', metadata: { ocm_resource_type: 'all' } },
+];
+
+const createRoute = [{ path: '/create', metadata: { ocm_resource_type: 'all' } }];
+
+const releasesRoute = [{ path: '/releases', metadata: { ocm_resource_type: 'ocp' } }];
+
+const initialState = {
+  userProfile: { keycloakProfile: { username: 'MyUserName' } },
+  clusters: { clusters: { errorMessage: '' } },
+  form: { CreateIdentityProvider: { syncErrors: { users: { _error: 'I am a HTPasswdError' } } } },
+};
 
 describe('Router', () => {
-  const useChromeSpy = jest.spyOn(useChromeHook, 'default');
-  const mockSetPageMetadata = jest.fn();
-  beforeAll(() => {
-    useChromeSpy.mockImplementation(() => ({
-      segment: {
-        setPageMetadata: mockSetPageMetadata,
-      },
-    }));
-    mockRestrictedEnv();
+  beforeEach(() => {
+    jest.clearAllMocks();
   });
-  describe('Every route should render: ', () =>
-    test.each(routes)(
-      '%s',
-      async (route) => {
-        const { path, metadata } = route;
-        render(
-          <Provider store={store}>
-            <MemoryRouter keyLength={0} initialEntries={[{ pathname: path, key: 'testKey' }]}>
-              <CompatRouter>
-                <Router />
-              </CompatRouter>
-            </MemoryRouter>
-          </Provider>,
-        );
 
-        expect(screen.queryByText('We lost that page')).not.toBeInTheDocument();
+  mockRestrictedEnv();
+  const mockSetPageMetadata = jest.fn();
+  mockUseChrome({
+    segment: {
+      setPageMetadata: mockSetPageMetadata,
+    },
+  });
 
-        expect(mockSetPageMetadata).lastCalledWith(metadata);
-      },
-      2000,
-    ));
+  describe('Every route should render: ', () => {
+    test.each(routes)('%s', async (route) => {
+      const { path, metadata } = route;
+      withState(initialState, true).render(
+        <MemoryRouter keyLength={0} initialEntries={[{ pathname: path, key: 'testKey' }]}>
+          <CompatRouter>
+            <Router />
+          </CompatRouter>
+        </MemoryRouter>,
+      );
+
+      // These pages can't actually fully render because the state isn't mocked
+      // That's OK - for these tests we want to ensure that the route goes somewhere
+      await screen.findByText('This page is temporarily unavailable');
+      expect(screen.queryByText('We lost that page')).not.toBeInTheDocument();
+
+      expect(mockSetPageMetadata).toHaveBeenLastCalledWith(metadata);
+    });
+
+    test.each(routesWithLoading)('%s', async (route) => {
+      const { path, metadata } = route;
+      render(
+        <MemoryRouter keyLength={0} initialEntries={[{ pathname: path, key: 'testKey' }]}>
+          <CompatRouter>
+            <Router />
+          </CompatRouter>
+        </MemoryRouter>,
+      );
+
+      await screen.findByText('Loading...');
+      expect(screen.queryByText('We lost that page')).not.toBeInTheDocument();
+
+      expect(mockSetPageMetadata).toHaveBeenLastCalledWith(metadata);
+    });
+
+    test.each(createRoute)('%s', async (route) => {
+      const { path, metadata } = route;
+      render(
+        <MemoryRouter keyLength={0} initialEntries={[{ pathname: path, key: 'testKey' }]}>
+          <CompatRouter>
+            <Router />
+          </CompatRouter>
+        </MemoryRouter>,
+      );
+
+      await screen.findByText('Download pull secret');
+      expect(screen.queryByText('We lost that page')).not.toBeInTheDocument();
+
+      expect(mockSetPageMetadata).toHaveBeenLastCalledWith(metadata);
+    });
+
+    test.each(releasesRoute)('%s', async (route) => {
+      const { path, metadata } = route;
+      render(
+        <MemoryRouter keyLength={0} initialEntries={[{ pathname: path, key: 'testKey' }]}>
+          <CompatRouter>
+            <Router />
+          </CompatRouter>
+        </MemoryRouter>,
+      );
+
+      expect(screen.queryByText('We lost that page')).not.toBeInTheDocument();
+
+      expect(mockSetPageMetadata).toHaveBeenLastCalledWith(metadata);
+    });
+  });
 });

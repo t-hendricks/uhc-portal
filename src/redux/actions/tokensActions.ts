@@ -1,4 +1,5 @@
 import { action, ActionType } from 'typesafe-actions';
+
 import { accountsService } from '../../services';
 import CREATE_ENTITLEMENT_CONFIG from '../constants/entitlementConfigConstants';
 

@@ -1,16 +1,18 @@
 import React from 'react';
+
 import {
   Button,
   Modal as PfModal,
   ModalProps,
   ModalVariant,
-  StackItem,
-  Stack,
   Split,
   SplitItem,
+  Stack,
+  StackItem,
   Title,
 } from '@patternfly/react-core';
 import { Spinner } from '@redhat-cloud-services/frontend-components/Spinner';
+
 import './Modal.scss';
 
 type Props = Omit<

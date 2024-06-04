@@ -1,9 +1,12 @@
 import React from 'react';
-import { render, screen, checkAccessibility } from '~/testUtils';
-import clusterService from '~/services/clusterService';
+
 import accountsService from '~/services/accountsService';
+import clusterService from '~/services/clusterService';
+import { checkAccessibility, render, screen } from '~/testUtils';
+
+import fixtures from '../../ClusterDetails/__tests__/ClusterDetails.fixtures';
+
 import AWSCLITab from './AWSCLITab';
-import fixtures from '../../ClusterDetails/__test__/ClusterDetails.fixtures';
 
 jest.mock('~/services/clusterService');
 clusterService.getOperatorRoleCommands = jest.fn();

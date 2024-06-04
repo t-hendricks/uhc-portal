@@ -1,6 +1,8 @@
 import React from 'react';
-import { Tile, Text, TextVariants, List } from '@patternfly/react-core';
-import { defaultMarginBottomSpacing, ListItem, hypershiftValue } from './ControlPlaneCommon';
+
+import { List, Text, TextVariants, Tile } from '@patternfly/react-core';
+
+import { defaultMarginBottomSpacing, hypershiftValue, ListItem } from './ControlPlaneCommon';
 
 type StandAloneTileProps = {
   handleChange: (string: hypershiftValue) => void;

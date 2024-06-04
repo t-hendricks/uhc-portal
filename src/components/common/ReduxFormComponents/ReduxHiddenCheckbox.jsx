@@ -1,6 +1,7 @@
 import React from 'react';
-import { Field } from 'redux-form';
 import PropTypes from 'prop-types';
+import { Field } from 'redux-form';
+
 import ReduxCheckbox from '~/components/common/ReduxFormComponents/ReduxCheckbox';
 
 /* Hidden/zero-height ReduxCheckbox which must be checked/true in order to pass
@@ -14,6 +15,7 @@ const ReduxHiddenCheckbox = ({ name }) => (
     <Field
       component={ReduxCheckbox}
       name={`${name}`}
+      label=""
       validate={(value) => (value ? undefined : ' ')}
     />
   </span>

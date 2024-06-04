@@ -1,13 +1,13 @@
-import { vpcList } from '~/components/clusters/common/__test__/vpcs.fixtures';
+import { vpcList } from '~/components/clusters/common/__tests__/vpcs.fixtures';
 import { CloudVPC, Subnetwork } from '~/types/clusters_mgmt.v1';
 
 import {
-  SubnetPrivacy,
   filterOutRedHatManagedVPCs,
-  isSubnetMatchingPrivacy,
-  vpcHasRequiredSubnets,
   getMatchingAvailabilityZones,
   getSelectedAvailabilityZones,
+  isSubnetMatchingPrivacy,
+  SubnetPrivacy,
+  vpcHasRequiredSubnets,
 } from './vpcHelpers';
 
 const privatePrivacy = 'private' as SubnetPrivacy;

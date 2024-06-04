@@ -1,8 +1,9 @@
-import './marketing-banner.scss';
-
-import { PageSection } from '@patternfly/react-core';
 import React from 'react';
 import classNames from 'classnames';
+
+import { PageSection } from '@patternfly/react-core';
+
+import './marketing-banner.scss';
 
 type Props = {
   children: React.ReactNode;

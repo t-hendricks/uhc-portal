@@ -1,11 +1,10 @@
+/* generated using openapi-typescript-codegen -- do not edit */
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-
 import type { Markup } from './Markup';
 import type { TagRate } from './TagRate';
 import type { TieredRate } from './TieredRate';
-
 export type CostModel = {
   name: string;
   description: string;
@@ -16,7 +15,6 @@ export type CostModel = {
   markup?: Markup;
   distribution?: CostModel.distribution;
 };
-
 export namespace CostModel {
   export enum distribution {
     MEMORY = 'memory',

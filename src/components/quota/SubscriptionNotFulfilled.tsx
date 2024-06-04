@@ -1,15 +1,17 @@
 import React from 'react';
 import { Link } from 'react-router-dom-v5-compat';
-import { Spinner } from '@redhat-cloud-services/frontend-components/Spinner';
+
 import {
+  Button,
   EmptyState,
   EmptyStateBody,
-  Button,
-  PageSection,
-  EmptyStateHeader,
   EmptyStateFooter,
+  EmptyStateHeader,
+  PageSection,
 } from '@patternfly/react-core';
-import { overrideErrorMessage, BANNED_USER_CODE } from '../../common/errors';
+import { Spinner } from '@redhat-cloud-services/frontend-components/Spinner';
+
+import { BANNED_USER_CODE, overrideErrorMessage } from '../../common/errors';
 import links from '../../common/installLinks.mjs';
 import ExternalLink from '../common/ExternalLink';
 

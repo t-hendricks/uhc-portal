@@ -1,13 +1,16 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Title, GridItem, Alert } from '@patternfly/react-core';
 
-import SecurityGroupsSection from '~/components/clusters/wizards/rosa_v1/VPCScreen/SecurityGroupsSection';
+import { Alert, GridItem, Title } from '@patternfly/react-core';
+
 import links from '~/common/installLinks.mjs';
-import PopoverHint from '~/components/common/PopoverHint';
+import SecurityGroupsSection from '~/components/clusters/wizards/rosa_v2/VPCScreen/SecurityGroupsSection';
 import ExternalLink from '~/components/common/ExternalLink';
+import PopoverHint from '~/components/common/PopoverHint';
+
+import SharedVPCSection from '../NetworkingSection/SharedVPCSection';
+
 import AWSSubnetFields from './AWSSubnetFields';
-import SharedVPCSection from '../../common/NetworkingSection/SharedVPCSection';
 
 function InstallToVPC({
   selectedRegion,
@@ -19,6 +22,7 @@ function InstallToVPC({
   cloudProviderID,
   isSharedVpcSelected,
   hostedZoneDomainName,
+  isHypershiftSelected,
 }) {
   return (
     cloudProviderID === 'aws' && (
@@ -61,11 +65,16 @@ function InstallToVPC({
           selectedAZs={selectedAZs}
           privateLinkSelected={privateLinkSelected}
         />
-        <SecurityGroupsSection selectedVPC={selectedVPC} openshiftVersion={openshiftVersion} />
+        <SecurityGroupsSection
+          selectedVPC={selectedVPC}
+          openshiftVersion={openshiftVersion}
+          isHypershiftSelected={isHypershiftSelected}
+        />
         <SharedVPCSection
           hostedZoneDomainName={hostedZoneDomainName}
           isSelected={isSharedVpcSelected}
           openshiftVersion={openshiftVersion}
+          isHypershiftSelected={isHypershiftSelected}
         />
       </>
     )
@@ -82,6 +91,7 @@ InstallToVPC.propTypes = {
   privateLinkSelected: PropTypes.bool,
   isSharedVpcSelected: PropTypes.bool,
   cloudProviderID: PropTypes.string,
+  isHypershiftSelected: PropTypes.bool,
 };
 
 export default InstallToVPC;

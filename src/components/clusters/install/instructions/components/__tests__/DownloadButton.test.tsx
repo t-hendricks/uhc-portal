@@ -1,8 +1,10 @@
 import React from 'react';
+
 import { eventNames, ocmResourceType } from '~/common/analytics';
 import { tools } from '~/common/installLinks.mjs';
 import * as useAnalytics from '~/hooks/useAnalytics';
 import { render, screen } from '~/testUtils';
+
 import DownloadButton from '../DownloadButton';
 
 jest.mock('~/hooks/useAnalytics');

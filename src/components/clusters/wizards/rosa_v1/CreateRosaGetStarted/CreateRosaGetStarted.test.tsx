@@ -1,19 +1,20 @@
 import React from 'react';
 import { MemoryRouter } from 'react-router-dom';
 import { CompatRouter } from 'react-router-dom-v5-compat';
-import {
-  render,
-  checkAccessibility,
-  insightsMock,
-  mockUseChrome,
-  screen,
-  mockRestrictedEnv,
-  mockUseFeatureGate,
-} from '~/testUtils';
+
 import { HCP_ROSA_GETTING_STARTED_PAGE } from '~/redux/constants/featureConstants';
+import {
+  checkAccessibility,
+  mockRestrictedEnv,
+  mockUseChrome,
+  mockUseFeatureGate,
+  render,
+  screen,
+  waitFor,
+} from '~/testUtils';
+
 import CreateRosaGetStarted from './CreateRosaGetStarted';
 
-insightsMock();
 mockUseChrome();
 
 const hypershiftMessage =
@@ -25,14 +26,16 @@ describe('<CreateRosaGetStarted />', () => {
   it('is accessible', async () => {
     const { container } = render(
       <MemoryRouter>
-        <CreateRosaGetStarted />
+        <CompatRouter>
+          <CreateRosaGetStarted />
+        </CompatRouter>
       </MemoryRouter>,
     );
 
     await checkAccessibility(container);
   });
 
-  it('shows hypershift info alert if feature flag is enabled', () => {
+  it('shows hypershift info alert if feature flag is enabled', async () => {
     // Arrange
     mockUseFeatureGate([[HCP_ROSA_GETTING_STARTED_PAGE, true]]);
 
@@ -43,12 +46,13 @@ describe('<CreateRosaGetStarted />', () => {
         </CompatRouter>
       </MemoryRouter>,
     );
+
     // Assert
     // There is no natural role for this message
-    expect(screen.getByText(hypershiftMessage)).toBeInTheDocument();
+    expect(await screen.findByText(hypershiftMessage)).toBeInTheDocument();
   });
 
-  it('hides hypershift info alert if feature flag is not enabled', () => {
+  it('hides hypershift info alert if feature flag is not enabled', async () => {
     // Arrange
     mockUseFeatureGate([[HCP_ROSA_GETTING_STARTED_PAGE, false]]);
 
@@ -59,12 +63,15 @@ describe('<CreateRosaGetStarted />', () => {
         </CompatRouter>
       </MemoryRouter>,
     );
+
     // Assert
     // There is no natural role for this message
-    expect(screen.queryByText(hypershiftMessage)).not.toBeInTheDocument();
+    await waitFor(() => {
+      expect(screen.queryByText(hypershiftMessage)).not.toBeInTheDocument();
+    });
   });
 
-  it('navigated to quick start from aws setup', () => {
+  it('navigated to quick start from aws setup', async () => {
     render(
       <MemoryRouter initialEntries={[{ search: '?source=aws' }]}>
         <CompatRouter>
@@ -72,12 +79,15 @@ describe('<CreateRosaGetStarted />', () => {
         </CompatRouter>
       </MemoryRouter>,
     );
-    expect(
-      screen.getByRole('button', { name: completeAWSMessage }).querySelector('svg.success'),
-    ).toBeInTheDocument();
+
+    await waitFor(() => {
+      expect(
+        screen.getByRole('button', { name: completeAWSMessage }).querySelector('svg.success'),
+      ).toBeInTheDocument();
+    });
   });
 
-  it('navigated to quick start from other site', () => {
+  it('navigated to quick start from other site', async () => {
     render(
       <MemoryRouter>
         <CompatRouter>
@@ -85,9 +95,12 @@ describe('<CreateRosaGetStarted />', () => {
         </CompatRouter>
       </MemoryRouter>,
     );
-    expect(
-      screen.getByRole('button', { name: completeAWSMessage }).querySelector('svg.warning'),
-    ).toBeInTheDocument();
+
+    await waitFor(() => {
+      expect(
+        screen.getByRole('button', { name: completeAWSMessage }).querySelector('svg.warning'),
+      ).toBeInTheDocument();
+    });
   });
 
   describe('in Restricted env', () => {
@@ -97,7 +110,7 @@ describe('<CreateRosaGetStarted />', () => {
       isRestrictedEnv.mockReturnValue(false);
     });
 
-    it('does not show HCP directions', () => {
+    it('does not show HCP directions', async () => {
       mockUseFeatureGate([[HCP_ROSA_GETTING_STARTED_PAGE, true]]);
       const { rerender } = render(
         <MemoryRouter>
@@ -107,7 +120,7 @@ describe('<CreateRosaGetStarted />', () => {
         </MemoryRouter>,
       );
 
-      expect(screen.getByTestId('hcp-directions')).toBeInTheDocument();
+      expect(await screen.findByTestId('hcp-directions')).toBeInTheDocument();
 
       isRestrictedEnv.mockReturnValue(true);
       rerender(
@@ -118,7 +131,9 @@ describe('<CreateRosaGetStarted />', () => {
         </MemoryRouter>,
       );
 
-      expect(screen.queryByTestId('hcp-directions')).not.toBeInTheDocument();
+      await waitFor(() => {
+        expect(screen.queryByTestId('hcp-directions')).not.toBeInTheDocument();
+      });
     });
   });
 });

@@ -1,6 +1,26 @@
 {
   "ClusterSettings": {
     "Details": {
+      "InvalidClusterNamesValues": [
+        "rosalongclusternamesexceeds54characterstestingnamesssssssss",
+        "rosaclusterNAMES",
+        "32423432ddrosa"
+      ],
+      "InvalidClusterNamesErrors": [
+        "1 - 54 characters",
+        "Consist of lower-case alphanumeric characters, or hyphen (-)",
+        "Start with a lower-case alphabetic character"
+      ],
+      "InvalidDomainPrefixValues": [
+        "domainprefixrosalonger",
+        "domainPREFix",
+        "32423432domain"
+      ],
+      "InvalidDomainPrefixErrors": [
+        "1 - 15 characters",
+        "Consist of lower-case alphanumeric characters, or hyphen (-)",
+        "Start with a lower-case alphabetic character"
+      ],
       "KeyARNs": [
         {
           "WrongFormatValue": "wrongformat",

@@ -1,10 +1,11 @@
 import React from 'react';
 import classNames from 'classnames';
 
-import { FormGroup, Flex, Tooltip } from '@patternfly/react-core';
+import { Flex, FormGroup, Tooltip } from '@patternfly/react-core';
 
-import PopoverHint from '~/components/common/PopoverHint';
 import { useFormState } from '~/components/clusters/wizards/hooks';
+import PopoverHint from '~/components/common/PopoverHint';
+
 import { RadioButtonField } from './CustomRadioButtonField';
 
 enum RadioGroupDirection {

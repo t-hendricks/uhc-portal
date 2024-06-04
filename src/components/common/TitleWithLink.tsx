@@ -1,8 +1,10 @@
 import React from 'react';
-import { LinkIcon } from '@patternfly/react-icons/dist/esm/icons/link-icon';
-import { Title, Split, SplitItem } from '@patternfly/react-core';
+import { useLocation } from 'react-router-dom-v5-compat';
 import { HashLink as Link } from 'react-router-hash-link';
-import { useLocation } from 'react-router-dom';
+
+import { Split, SplitItem, Title } from '@patternfly/react-core';
+import { LinkIcon } from '@patternfly/react-icons/dist/esm/icons/link-icon';
+
 import './TitleWithLink.scss';
 
 type Props = {
