@@ -122,9 +122,7 @@ const isExcessResourcesErrorDetail = (
   items?: ExcessResource[];
 } => e.kind === 'ExcessResources';
 
-const formatErrorDetails = (
-  errorDetails?: ErrorDetail[],
-): Array<string | Array<string> | Object> => {
+const formatErrorDetails = (errorDetails?: ErrorDetail[]): Array<string | Array<string>> => {
   const formattedErrors: Array<string | Array<string>> = [];
 
   if (!errorDetails || !errorDetails.length) {

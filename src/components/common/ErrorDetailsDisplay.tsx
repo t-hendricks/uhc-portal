@@ -40,7 +40,7 @@ const ErrorDetailsDisplay = ({
             </ul>
           );
         }
-        if (typeof detail === 'string' && renderLinks) {
+        if (renderLinks) {
           return <MarkdownParser key={`${detail}`}>{detail}</MarkdownParser>;
         }
         return <pre key={`${detail}`}>{detail}</pre>;
