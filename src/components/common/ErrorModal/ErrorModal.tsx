@@ -14,7 +14,7 @@ export type ErrorModalProps = {
   errorResponse: ErrorState;
   resetResponse: () => void;
   closeModal: () => void;
-} & Partial<ComponentProps<typeof Modal>>;
+} & Partial<Pick<ComponentProps<typeof Modal>, 'children'>>;
 
 const ErrorModal = ({
   title,
