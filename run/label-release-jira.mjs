@@ -57,47 +57,40 @@ async function jiraLabeler(jiraToken, total = 1) {
   const condidateSha = await git.revparse(['--short', `${upstreamName}/candidate`]);
 
   // get logs of those branches
-  // let masterCommits = await gitLog(git, masterSha, ['--first-parent', '-n 100']);
   const candidateCommits = await gitLog(git, condidateSha, ['-n 100']);
   const candidateCommitsMap = _.keyBy(candidateCommits, 'hash');
-  // filter master log to just what's in master and not candidate
-  // const candidateMsgMap = _.keyBy(candidateCommits, 'message');
-  // masterCommits = masterCommits.filter((commit) => !candidateMsgMap[commit.message]);
-  // const masterJiraMap = getJiraCommitMap(masterCommits);
   const releases = await gitLog(git, stableSha, ['--first-parent', '-n 100']);
-  // only get the commits that are merges from candidate
-  // (has 2 parents where first is the previous stable commit and the second is the commit from candidate)
-  const releasesMap = _.keyBy(releases, 'hash');
 
   const jiraMap = new Map();
+  // total = number of releases to go back
+  // releases = log of the stable branch with latest first
   for (let i = 0; i < total; i += 1) {
     const release = releases[i];
     const releaseCommits = [];
-    // get the merge commit for candidate into stable
+    // every commit in stable branch will be a merge commit from candidate into stable
+    // therefore the second parent is the candidate commit
     let parent = release.parents[1];
-    // get the merge commit for master into candidate
     let commit = candidateCommitsMap[parent];
     if (commit) {
-      commit = candidateCommitsMap[parent];
-      if (commit) {
-        commit = candidateCommitsMap[commit.parents[1]];
-        // get the first commit in candidate that was cherry picked from master
-        // we will walk the commits by their parents to the top
-        do {
-          // update parent to the previous commit in this chain of commits
-          [parent] = commit.parents;
-          // remember the sha of the cherry picked MR to get the original commit
-          releaseCommits.push(commit);
-          commit = candidateCommitsMap[parent];
-        } while (commit && !releasesMap[parent] && candidateCommitsMap[parent]);
-      }
+      // this commit is a merge commit from master into candidate
+      // therefore the second parent will be the first cherry-picked commit
+      commit = candidateCommitsMap[commit.parents[1]];
+      do {
+        // remember the cherry-picked commit
+        releaseCommits.push(commit);
+        // update parent to the parent of this commit in this daisy chain of commits
+        [parent] = commit.parents;
+        commit = candidateCommitsMap[parent];
+        // until we get to the merge commit in candidate
+        // that preceded this 'master into candidate' merge commit
+      } while (commit.parents.length === 1);
     }
 
     if (releaseCommits.length > 0) {
       // find jira tickets in release commits
-      const promotionJiraMap = getJiraCommitMap(releaseCommits);
+      const { jiraCommitMap, nojiraCommitArr } = getJiraCommitMap(releaseCommits);
       // sort jira tickets lowest to biggest
-      const releasedJiraKeys = Object.keys(promotionJiraMap).sort((a, b) => {
+      const releasedJiraKeys = Object.keys(jiraCommitMap).sort((a, b) => {
         const [al, an] = a.split('-');
         const [bl, bn] = b.split('-');
         const n = al.localeCompare(bl);
@@ -136,18 +129,24 @@ async function jiraLabeler(jiraToken, total = 1) {
           console.log(`${chalk.blue(`${jiraKey}`)} ${chalk.white(summary.slice(0, 120))}`);
         }
       }
+      nojiraCommitArr.forEach((commit) => {
+        console.log(
+          `${chalk.yellow('NO JIRA TO LABEL')} ${chalk.white(commit.message.slice(0, 120))}`,
+        );
+      });
       const d = new Date(release.commit_date);
       const galabel = `ga-released-${d.getFullYear()}${monthNames[d.getMonth()]}${d.getDate()}`;
 
-      const questions = [
+      let questions = [
         {
           type: 'confirm',
           name: 'toBeLabeled',
-          message: `\n\nOk to add '${chalk.white('deployed-production')}' and '${chalk.white(galabel)}' labels to these Jira issues ?`,
-          default: true,
+          message: `Ok to add '${chalk.white('deployed-production')}' and '${chalk.white(galabel)}' labels to these Jira issues ?`,
+          default: false,
         },
       ];
-      const answer = await inquirer.prompt(questions);
+      console.log('\n');
+      let answer = await inquirer.prompt(questions);
       if (answer.toBeLabeled) {
         const total = releasedJiraKeys.length;
         const progressBar = new cliProgress.SingleBar(
@@ -171,16 +170,32 @@ async function jiraLabeler(jiraToken, total = 1) {
           const cmd = `curl -s -X PUT -H "Authorization: Bearer ${jiraToken}" -H "Content-Type: application/json" -d ${addLabels} "https://issues.redhat.com/rest/api/2/issue/${jiraKey}"`;
           const ret = execSync(cmd).toString();
           if (ret) {
-            errors.push(`${jiraKey} ${JSON.parse(execSync(cmd).toString()).errorMessages}`);
+            errors.push(`${jiraKey} Ensure that JIRA token has been provided and has not expired.`);
           }
           progressBar.update(j + 1, { message: chalk.white(summary) });
         }
+
         progressBar.update(total, { message: 'done' });
         progressBar.stop();
         if (errors.length) {
           console.log('\nErrors:');
           errors.forEach((error) => console.log(chalk.red(error)));
+          return;
         }
+      }
+
+      questions = [
+        {
+          type: 'confirm',
+          name: 'toContinue',
+          message: `Continue with the release previous to this one ?`,
+          default: false,
+        },
+      ];
+      console.log('\n');
+      answer = await inquirer.prompt(questions);
+      if (!answer.toContinue) {
+        break;
       }
     }
   }
@@ -191,18 +206,23 @@ async function jiraLabeler(jiraToken, total = 1) {
 // ////////////////////////////////////////////////////////////////////////////
 function getJiraCommitMap(commits) {
   const jiraCommitMap = new Map();
+  const nojiraCommitArr = [];
   commits.forEach((commit) => {
     const relatedJiraKeys = getJiraKeysFromComment(commit.message + commit.body);
-    relatedJiraKeys.forEach((jiraKey) => {
-      let jcommits = jiraCommitMap[jiraKey];
-      if (!jcommits) {
-        jiraCommitMap[jiraKey] = [];
-        jcommits = jiraCommitMap[jiraKey];
-      }
-      jcommits.push(commit);
-    });
+    if (relatedJiraKeys.length) {
+      relatedJiraKeys.forEach((jiraKey) => {
+        let jcommits = jiraCommitMap[jiraKey];
+        if (!jcommits) {
+          jiraCommitMap[jiraKey] = [];
+          jcommits = jiraCommitMap[jiraKey];
+        }
+        jcommits.push(commit);
+      });
+    } else {
+      nojiraCommitArr.push(commit);
+    }
   });
-  return jiraCommitMap;
+  return { jiraCommitMap, nojiraCommitArr };
 }
 
 async function initGit() {
