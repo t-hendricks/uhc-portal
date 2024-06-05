@@ -75,10 +75,20 @@ async function reportOrder(jiraToken, branch, verbose) {
   const candidateCommits = await gitLog(git, condidateSha);
   const candidateCommitMap = _.keyBy(candidateCommits, 'message');
   const masterCommitMap = _.keyBy(masterCommits, 'hash');
-  masterCommits = masterCommits.filter((commit) => {
+  const isFiltered = (commit) => {
+    // if doesn't match a message in candidate, keep it
     const ccommit = candidateCommitMap[commit.message];
-    return !ccommit;
-  });
+    if (!ccommit) return false;
+    // if it matches a message, make sure it wasn't picked from this master commit
+    if (ccommit.picked_hash && ccommit.picked_hash !== commit.hash) {
+      // if this master commit doesn't have a matching candidate commit,
+      // make sure the master commit isn't really old
+      const daysAgo = Math.floor((new Date() - new Date(commit.date)) / 86400000);
+      return daysAgo > 50;
+    }
+    return true;
+  };
+  masterCommits = masterCommits.filter((commit) => !isFiltered(commit));
   const masterCommitsInxMap = masterCommits.reduce((acc, commit, inx) => {
     acc[commit.hash] = inx + 1;
     return acc;
