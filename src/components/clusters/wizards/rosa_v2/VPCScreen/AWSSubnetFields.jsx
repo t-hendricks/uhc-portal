@@ -134,7 +134,7 @@ const AWSSubnetFields = ({
       <Field
         component={VPCDropdown}
         name={FieldId.SelectedVpc}
-        validate={(value) => (!value?.id || !value?.name ? 'error' : undefined)}
+        validate={(value) => (!value?.id && !value?.name ? 'error' : undefined)}
         selectedVPC={selectedVPC}
         showRefresh
         isHypershift={false}
