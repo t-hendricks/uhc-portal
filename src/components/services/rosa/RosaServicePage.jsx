@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom-v5-compat';
 
 import {
-  Button,
   Card,
   CardBody,
   CardFooter,
@@ -26,11 +25,10 @@ import {
 } from '@patternfly/react-core';
 import { CubeIcon } from '@patternfly/react-icons/dist/esm/icons/cube-icon';
 
-import { trackEvents } from '~/common/analytics';
 import { AppPage } from '~/components/App/AppPage';
 import Breadcrumbs from '~/components/common/Breadcrumbs';
 import ExternalLink from '~/components/common/ExternalLink';
-import useAnalytics from '~/hooks/useAnalytics';
+import InternalTrackingLink from '~/components/common/InternalTrackingLink';
 import AWSLogo from '~/styles/images/AWSLogo';
 import RedHatLogo from '~/styles/images/Logo-Red_Hat-B-Standard-RGB.png';
 
@@ -50,7 +48,6 @@ const rosaBannerContents = {
 };
 
 const TryRosaCard = () => {
-  const track = useAnalytics();
   const rosaHandsOnURL = '/overview/rosa/hands-on';
   const LinkComponent = useCallback((props) => <Link {...props} to={rosaHandsOnURL} />, []);
 
@@ -63,19 +60,15 @@ const TryRosaCard = () => {
       </CardHeader>
       <CardBody>Access a no-cost, hands-on Red Hat OpenShift Service on AWS experience.</CardBody>
       <CardFooter>
-        <Button
+        <InternalTrackingLink
+          isButton
           variant="secondary"
-          onClick={() => {
-            track(trackEvents.TryRosaHandsOnExperience, {
-              url: rosaHandsOnURL,
-              path: window.location.pathname,
-            });
-          }}
           component={LinkComponent}
           size="lg"
+          to={rosaHandsOnURL}
         >
           Try it
-        </Button>
+        </InternalTrackingLink>
       </CardFooter>
     </Card>
   );
@@ -182,24 +175,11 @@ const linkTextLabelLinkCardContents = {
 };
 
 function RosaServicePage() {
-  const track = useAnalytics();
   const createRosaClusterURL = '/create/rosa/getstarted';
 
   const LinkComponent = useCallback(
-    (props) => (
-      <Link
-        {...props}
-        data-testid="register-cluster"
-        to={createRosaClusterURL}
-        onClick={() => {
-          track(trackEvents.CreateClusterROSA, {
-            url: createRosaClusterURL,
-            path: window.location.pathname,
-          });
-        }}
-      />
-    ),
-    [track],
+    (props) => <Link data-testid="register-cluster" to={createRosaClusterURL} {...props} />,
+    [],
   );
 
   return (
@@ -247,9 +227,16 @@ function RosaServicePage() {
                   <CardFooter>
                     <Flex>
                       <FlexItem>
-                        <Button variant="primary" component={LinkComponent} size="lg">
+                        <InternalTrackingLink
+                          isButton
+                          data-testid="register-cluster"
+                          variant="primary"
+                          to={createRosaClusterURL}
+                          size="lg"
+                          component={LinkComponent}
+                        >
                           Begin setup
-                        </Button>
+                        </InternalTrackingLink>
                       </FlexItem>
                     </Flex>
                   </CardFooter>

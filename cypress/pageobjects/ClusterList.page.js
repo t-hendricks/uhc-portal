@@ -103,9 +103,7 @@ class ClusterList extends Page {
   }
 
   clickClusterListTableHeader(header) {
-    cy.get('th[data-label="' + header + '"]', { timeout: 20000 })
-      .should('be.visible')
-      .click();
+    cy.get('th').contains(header, { timeout: 20000 }).should('be.visible').click();
   }
 
   scrollClusterListPageTo(direction) {

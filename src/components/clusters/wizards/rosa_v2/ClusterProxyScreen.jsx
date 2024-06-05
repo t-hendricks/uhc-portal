@@ -14,7 +14,6 @@ import {
 
 import { stringToArray } from '~/common/helpers';
 import links from '~/common/installLinks.mjs';
-import { normalizedProducts } from '~/common/subscriptionTypes';
 import {
   checkNoProxyDomains,
   composeValidators,
@@ -48,7 +47,6 @@ function ClusterProxyScreen() {
     getFieldProps, // Access: name, value, onBlur, onChange for a <Field>, useful for mapping to a field that expects the redux-form props
     getFieldMeta, // Access: error, touched for a <Field>, useful for mapping to a field that expects the redux-form props
     values: {
-      [FieldId.Product]: product,
       [FieldId.HttpProxyUrl]: httpProxyUrl,
       [FieldId.HttpsProxyUrl]: httpsProxyUrl,
       [FieldId.AdditionalTrustBundle]: additionalTrustBundle,
@@ -57,10 +55,6 @@ function ClusterProxyScreen() {
   const [anyTouched, setAnyTouched] = React.useState(false);
   const { goToStepByName } = useWizardContext();
 
-  const configureProxyUrl =
-    product === normalizedProducts.ROSA
-      ? links.ROSA_CLUSTER_WIDE_PROXY
-      : links.OSD_CLUSTER_WIDE_PROXY;
   const noUrlValues = !httpProxyUrl && !httpsProxyUrl;
 
   const onTouched = () => {
@@ -133,7 +127,7 @@ function ClusterProxyScreen() {
         <GridItem>
           <Text>{constants.clusterProxyHint}</Text>
           <Text className="pf-v5-u-mt-sm">
-            <ExternalLink href={configureProxyUrl}>
+            <ExternalLink href={links.ROSA_CLUSTER_WIDE_PROXY}>
               Learn more about configuring a cluster-wide proxy
             </ExternalLink>
           </Text>

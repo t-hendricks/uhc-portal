@@ -16,14 +16,13 @@ import {
 
 import { ocmResourceType, trackEvents } from '~/common/analytics';
 import { getDefaultSecurityGroupsSettings } from '~/common/securityGroupsHelpers';
-import { normalizedProducts } from '~/common/subscriptionTypes';
 import { validateRequiredPublicSubnetId } from '~/common/validators';
 import { isExactMajorMinor } from '~/common/versionHelpers';
 import { getSelectedAvailabilityZones } from '~/common/vpcHelpers';
 import { constants } from '~/components/clusters/common/CreateOSDFormConstants';
 import { SubnetSelectField } from '~/components/clusters/common/SubnetSelectField';
+import { canConfigureDayOneManagedIngress } from '~/components/clusters/wizards/common/constants';
 import { useFormState } from '~/components/clusters/wizards/hooks';
-import { canConfigureDayOneManagedIngress } from '~/components/clusters/wizards/rosa/constants';
 import { FieldId } from '~/components/clusters/wizards/rosa_v2/constants';
 import { DefaultIngressFieldsFormik } from '~/components/clusters/wizards/rosa_v2/NetworkScreen/DefaultIngressFieldsFormik';
 import { CheckboxDescription } from '~/components/common/CheckboxDescription';
@@ -50,8 +49,6 @@ function NetworkScreen(props) {
     values: {
       [FieldId.CloudProvider]: cloudProviderID,
       [FieldId.ConfigureProxy]: configureProxySelected,
-      [FieldId.Product]: product,
-      [FieldId.Byoc]: isByoc,
       [FieldId.ClusterPrivacy]: clusterPrivacy,
       [FieldId.ClusterVersion]: clusterVersionValue,
       [FieldId.Hypershift]: hypershiftValue,
@@ -69,28 +66,16 @@ function NetworkScreen(props) {
   const isHypershiftSelected = hypershiftValue === 'true';
   const clusterVersionRawId = clusterVersionValue?.raw_id;
 
-  const { OSD, OSDTrial } = normalizedProducts;
-  const isByocOSD = isByoc && [OSD, OSDTrial].includes(product);
   const publicSubnetIdRef = React.useRef();
-
-  // show only if the product is ROSA with VPC or BYOC/CCS OSD with VPC
-  // Do not need to check for VPC here, since checking the "Configure a cluster-wide proxy" checkbox
-  // automatically checks the "Install into an existing VPC" checkbox in the UI
-  const showConfigureProxy = showClusterWideProxyCheckbox || isByocOSD;
-
-  const showIngressSection = isByoc && !isHypershiftSelected;
 
   const isManagedIngressAllowed = canConfigureDayOneManagedIngress(clusterVersionRawId);
   const isOcp413 = isExactMajorMinor(clusterVersionRawId, 4, 13);
 
   const track = useAnalytics();
 
-  const trackOcmResourceType =
-    product === normalizedProducts.ROSA ? ocmResourceType.MOA : ocmResourceType.OSD;
-
   const trackCheckedState = (trackEvent, checked) =>
     track(trackEvent, {
-      resourceType: trackOcmResourceType,
+      resourceType: ocmResourceType.MOA,
       customProperties: {
         checked,
       },
@@ -351,14 +336,16 @@ function NetworkScreen(props) {
                       />
                     </FormGroup>
                   )}
-                  {showConfigureProxy && <FormGroup>{configureClusterProxyField}</FormGroup>}
+                  {showClusterWideProxyCheckbox && (
+                    <FormGroup>{configureClusterProxyField}</FormGroup>
+                  )}
                 </FormFieldGroup>
               </FormGroup>
             </GridItem>
           </>
         )}
 
-        {showIngressSection && (
+        {!isHypershiftSelected && (
           <>
             <GridItem>
               <Title headingLevel="h4" size="xl">

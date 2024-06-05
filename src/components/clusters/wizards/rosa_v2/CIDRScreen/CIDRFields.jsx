@@ -34,7 +34,6 @@ function CIDRFields({
   isMultiAz,
   installToVpcSelected,
   isDefaultValuesChecked,
-  isROSA,
   formValues,
 }) {
   const { getFieldProps, getFieldMeta, setFieldValue, validateForm } = useFormState();
@@ -123,9 +122,7 @@ function CIDRFields({
             correspond to the first IP address in their subnet.
           </p>
 
-          <ExternalLink
-            href={isROSA ? links.CIDR_RANGE_DEFINITIONS_ROSA : links.CIDR_RANGE_DEFINITIONS_OSD}
-          >
+          <ExternalLink href={links.CIDR_RANGE_DEFINITIONS_ROSA}>
             Learn more to avoid conflicts
           </ExternalLink>
         </Alert>
@@ -172,9 +169,7 @@ function CIDRFields({
               {constants.machineCIDRHint}
 
               <Text component={TextVariants.p}>
-                <ExternalLink href={isROSA ? links.ROSA_CIDR_MACHINE : links.OSD_CIDR_MACHINE}>
-                  Learn more
-                </ExternalLink>
+                <ExternalLink href={links.ROSA_CIDR_MACHINE}>Learn more</ExternalLink>
               </Text>
             </>
           }
@@ -203,9 +198,7 @@ function CIDRFields({
               {constants.serviceCIDRHint}
 
               <Text component={TextVariants.p}>
-                <ExternalLink href={isROSA ? links.ROSA_CIDR_SERVICE : links.OSD_CIDR_SERVICE}>
-                  Learn more
-                </ExternalLink>
+                <ExternalLink href={links.ROSA_CIDR_SERVICE}>Learn more</ExternalLink>
               </Text>
             </>
           }
@@ -234,9 +227,7 @@ function CIDRFields({
               {constants.podCIDRHint}
 
               <Text component={TextVariants.p}>
-                <ExternalLink href={isROSA ? links.ROSA_CIDR_POD : links.OSD_CIDR_POD}>
-                  Learn more
-                </ExternalLink>
+                <ExternalLink href={links.ROSA_CIDR_POD}>Learn more</ExternalLink>
               </Text>
             </>
           }
@@ -263,9 +254,7 @@ function CIDRFields({
               {constants.hostPrefixHint}
 
               <Text component={TextVariants.p}>
-                <ExternalLink href={isROSA ? links.ROSA_CIDR_HOST : links.OSD_CIDR_HOST}>
-                  Learn more
-                </ExternalLink>
+                <ExternalLink href={links.ROSA_CIDR_HOST}>Learn more</ExternalLink>
               </Text>
             </>
           }
@@ -282,7 +271,6 @@ CIDRFields.propTypes = {
   isMultiAz: PropTypes.bool,
   installToVpcSelected: PropTypes.bool,
   isDefaultValuesChecked: PropTypes.bool,
-  isROSA: PropTypes.bool,
   formValues: PropTypes.object,
 };
 

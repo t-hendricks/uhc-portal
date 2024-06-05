@@ -6,8 +6,8 @@ import {
   getNodeIncrement,
   getNodeIncrementHypershift,
 } from '~/components/clusters/ClusterDetails/components/MachinePools/machinePoolsHelper';
+import { getWorkerNodeVolumeSizeMaxGiB } from '~/components/clusters/common/machinePools/constants';
 import wizardConnector from '~/components/clusters/wizards/common/WizardConnector';
-import { getWorkerNodeVolumeSizeMaxGiB } from '~/components/clusters/wizards/rosa/constants';
 import { openModal } from '~/components/common/Modal/ModalActions';
 import modals from '~/components/common/Modal/modals';
 

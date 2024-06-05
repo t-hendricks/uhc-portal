@@ -13,4 +13,12 @@ const canSubscribeOCPSelector = (state) => {
   return hasCapability(sub, SUBSCRIBED_OCP) || hasCapability(sub, SUBSCRIBED_OCP_MARKETPLACE);
 };
 
+// Handles canSubscribeOCP for usecase with React Query
+// Eventually should replace canSubscribeOCPSelector
+export const canSubscribeOCPMultiRegion = (cluster) => {
+  const sub = cluster?.subscription || {};
+
+  return hasCapability(sub, SUBSCRIBED_OCP) || hasCapability(sub, SUBSCRIBED_OCP_MARKETPLACE);
+};
+
 export default canSubscribeOCPSelector;

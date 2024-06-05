@@ -43,6 +43,7 @@ import ArchivedClusterList from '../clusters/ArchivedClusterList';
 import ClusterDetailsClusterOrExternalId from '../clusters/ClusterDetails/ClusterDetailsClusterOrExternalId';
 import ClusterDetailsSubscriptionId from '../clusters/ClusterDetails/ClusterDetailsSubscriptionId';
 import IdentityProvidersPage from '../clusters/ClusterDetails/components/IdentityProvidersPage';
+import ClusterDetailsSubscriptionIdMultiRegion from '../clusters/ClusterDetailsMultiRegion/ClusterDetailsSubscriptionIdMultiRegion';
 import ClustersList from '../clusters/ClusterList';
 import ClusterListMultiRegion from '../clusters/ClusterListMultiRegion';
 import CreateClusterPage from '../clusters/CreateClusterPage';
@@ -165,6 +166,9 @@ const Router: React.FC<RouterProps> = ({ history, planType, clusterId, externalC
 
   // ROSA_WIZARD_V2_ENABLED enabled in staging, disabled in production (via Unleashed)
   const isRosaV2WizardEnabled = useFeatureGate(ROSA_WIZARD_V2_ENABLED);
+
+  // MULTIREGION_PREVIEW_ENABLED enabled in staging, disabled in production (via Unleashed)
+  const isMultiRegionPreviewEnabled = useFeatureGate(MULTIREGION_PREVIEW_ENABLED);
 
   // For testing purposes, show which major features are enabled/disabled
   React.useEffect(() => {
@@ -459,7 +463,14 @@ const Router: React.FC<RouterProps> = ({ history, planType, clusterId, externalC
               path="/details/s/:id/edit-idp/:idpName"
               component={IdentityProvidersPageEditFormComponent}
             />
-            <CompatRoute path="/details/s/:id" component={ClusterDetailsSubscriptionId} />
+            <CompatRoute
+              path="/details/s/:id"
+              component={
+                config.multiRegion && isMultiRegionPreviewEnabled
+                  ? ClusterDetailsSubscriptionIdMultiRegion
+                  : ClusterDetailsSubscriptionId
+              }
+            />
             <CompatRoute
               path="/details/:id/insights/:reportId/:errorKey"
               component={InsightsAdvisorRedirector}

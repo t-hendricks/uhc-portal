@@ -4,7 +4,7 @@ import { Field } from 'redux-form';
 import { FormGroup } from '@patternfly/react-core';
 
 import { validateWorkerVolumeSize } from '~/common/validators';
-import { workerNodeVolumeSizeMinGiB } from '~/components/clusters/wizards/rosa/constants';
+import { workerNodeVolumeSizeMinGiB } from '~/components/clusters/common/machinePools/constants';
 import FormNumberInput from '~/components/common/FormComponents/FormNumberInput';
 import PopoverHint from '~/components/common/PopoverHint';
 

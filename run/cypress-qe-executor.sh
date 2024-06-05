@@ -84,7 +84,7 @@ rosacli_container_name="rosacli-${build_number}";
 cloudutil_container_name="cloudutil-${build_number}";
 
 # Cypress images with browser for containerized runs
-browser_image="quay.io/openshifttest/cypress-included:13.6.4"
+browser_image="quay.io/app-sre/ocmui-cypress-tests:updated"
 # ROSA CLI images for pre-requisits containerized runs
 rosacli_image="registry.ci.openshift.org/ci/rosa-aws-cli:latest"
 # QCMQE image for setting up cloud resources for the runs

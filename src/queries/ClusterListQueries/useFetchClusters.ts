@@ -4,7 +4,7 @@ import isEmpty from 'lodash/isEmpty';
 import type { Cluster as AICluster } from '@openshift-assisted/types/assisted-installer-service';
 import { useQueries, UseQueryResult } from '@tanstack/react-query';
 
-import { omittedProducts, subscriptionStatuses } from '~/common/subscriptionTypes';
+import { allowedProducts, subscriptionStatuses } from '~/common/subscriptionTypes';
 import { queryClient } from '~/components/App/queryClient';
 import { useFeatureGate } from '~/hooks/useFeatureGate';
 import { ASSISTED_INSTALLER_MERGE_LISTS_FEATURE } from '~/redux/constants/featureConstants';
@@ -48,18 +48,6 @@ type FetchClusterQueryResults = UseQueryResult & {
   };
   errors?: Error[];
 };
-
-/* ************** Sort by date  **************** */
-
-const sortClusterByDate = (clusters: ClusterWithPermissions[], sortAscending = false) =>
-  clusters?.sort((a, b) => {
-    if (!a.creation_timestamp || !b.creation_timestamp) {
-      return 0;
-    }
-    const dateA = new Date(a.creation_timestamp).getTime();
-    const dateB = new Date(b.creation_timestamp).getTime();
-    return sortAscending ? dateA - dateB : dateB - dateA;
-  });
 
 /* ************** Finalize list of clusters  **************** */
 // This transforms list of subscriptions to include canEdit and canDelete information
@@ -139,7 +127,7 @@ const fetchGlobalSubscriptions = async (page: number, aiMergeListsFeatureFlag: b
   };
 
   const params = {
-    filter: `(xcm_id='' OR xcm_id IS NULL) AND (cluster_id!='') AND (plan.id NOT IN (${omittedProducts.map(sqlString).join(', ')})) AND (status NOT IN ('Deprovisioned', 'Archived'))`,
+    filter: `(xcm_id='' OR xcm_id IS NULL) AND (cluster_id!='') AND (plan.id IN (${allowedProducts.map(sqlString).join(', ')})) AND (status NOT IN ('Deprovisioned', 'Archived'))`,
     order: 'created_at desc',
     page,
     page_size: pageSize,
@@ -265,7 +253,10 @@ const fetchPageOfRegionalClusters = async (page: number, region: Region) => {
     .map((key) => `'${key}'`)
     .join(',')})`;
 
-  const subscriptionResponse = await accountsService.searchSubscriptions(subscriptionsQuery);
+  const subscriptionResponse = await accountsService.searchSubscriptions(
+    subscriptionsQuery,
+    queryConstants.PAGE_SIZE,
+  );
   const subscriptions = subscriptionResponse?.data?.items;
   subscriptions?.forEach((subscription) => {
     if (subscription.id) {
@@ -537,7 +528,7 @@ export const useFetchClusters = () => {
       (data.clusters === undefined && !isError && !isCanUpdateDeleteError && !isRegionsError),
 
     // Until sorting/pagination is enabled -  sort by creation date
-    data: { items: data?.clusters ? sortClusterByDate(data?.clusters) : [] },
+    data: { items: data?.clusters || [] },
 
     isError: isError || isCanUpdateDeleteError || isRegionsError,
     errors,

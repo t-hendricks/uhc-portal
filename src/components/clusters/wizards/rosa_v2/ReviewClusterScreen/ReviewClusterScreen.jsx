@@ -14,9 +14,10 @@ import {
 import { hasExternalAuthenticationCapability } from '~/common/externalAuthHelper';
 import { hasSelectedSecurityGroups } from '~/common/securityGroupsHelpers';
 import useOrganization from '~/components/CLILoginPage/useOrganization';
+import { canSelectImds } from '~/components/clusters/wizards/common/constants';
 import { useFormState } from '~/components/clusters/wizards/hooks';
-import { canSelectImds } from '~/components/clusters/wizards/rosa/constants';
 import { getUserRoleForSelectedAWSAccount } from '~/components/clusters/wizards/rosa_v2/AccountsRolesScreen/AccountsRolesScreen';
+import { FieldId } from '~/components/clusters/wizards/rosa_v2/constants';
 import {
   stepId as rosaStepId,
   stepNameById as rosaStepNameById,
@@ -34,7 +35,6 @@ import { DebugClusterRequest } from '../../common/DebugClusterRequest';
 import ReviewSection, {
   FormikReviewItem as ReviewItem,
 } from '../../common/ReviewCluster/ReviewSection';
-import { FieldId } from '../constants';
 
 import ReviewRoleItem from './ReviewRoleItem';
 

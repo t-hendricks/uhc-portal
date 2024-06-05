@@ -17,8 +17,10 @@ import {
 } from '@patternfly/react-core';
 import ExclamationTriangleIcon from '@patternfly/react-icons/dist/esm/icons/exclamation-triangle-icon';
 import SearchIcon from '@patternfly/react-icons/dist/esm/icons/search-icon';
-import { Table, Tbody, Td, Th, Thead, Tr } from '@patternfly/react-table';
+import { SortByDirection, Table, Tbody, Td, Th, Thead, Tr } from '@patternfly/react-table';
 import { global_warning_color_100 as warningColor } from '@patternfly/react-tokens/dist/esm/global_warning_color_100';
+
+import { versionComparator } from '~/common/versionComparator';
 
 import getClusterName from '../../../../common/getClusterName';
 import { isAISubscriptionWithoutMetrics } from '../../../../common/isAssistedInstallerCluster';
@@ -29,6 +31,7 @@ import clusterStates, {
   isWaitingForOIDCProviderOrOperatorRolesMode,
   isWaitingROSAManualMode,
 } from '../../common/clusterStates';
+import { clusterType } from '../../common/clusterType';
 import ClusterTypeLabel from '../../common/ClusterTypeLabel';
 import ClusterUpdateLink from '../../common/ClusterUpdateLink';
 import getClusterVersion from '../../common/getClusterVersion';
@@ -49,8 +52,105 @@ const skeletonRows = () =>
     </Tr>
   ));
 
+const sortColumns = {
+  Name: 'display_name',
+  Created: 'created_at',
+  Status: 'status',
+  Type: 'type',
+  Provider: 'provider',
+  Version: 'version',
+};
+
+const hiddenOnMdOrSmaller = ['visibleOnLg', 'hiddenOnMd', 'hiddenOnSm'];
+
+// exported only for testing purposes
+// The order here is the same as the column order
+export const columns = {
+  name: { title: 'Name', width: 30, sortIndex: sortColumns.Name },
+  status: { title: 'Status', width: 15, sortIndex: sortColumns.Status },
+  type: { title: 'Type', width: 10, sortIndex: sortColumns.Type },
+  created: { title: 'Created', visibility: hiddenOnMdOrSmaller, sortIndex: sortColumns.Created },
+  version: { title: 'Version', visibility: hiddenOnMdOrSmaller, sortIndex: sortColumns.Version },
+  provider: {
+    title: 'Provider (Region)',
+    visibility: hiddenOnMdOrSmaller,
+    sortIndex: sortColumns.Provider,
+  },
+  actions: { title: '', screenReaderText: 'cluster actions' },
+};
 function ClusterListTable(props) {
   const { clusters, openModal, isPending } = props;
+  const [activeSortIndex, setActiveSortIndex] = React.useState(sortColumns.Created);
+  const [activeSortDirection, setActiveSortDirection] = React.useState(SortByDirection.desc);
+
+  const getSortParams = (columnIndex) => ({
+    sortBy: {
+      index: activeSortIndex,
+      direction: activeSortDirection,
+      defaultDirection: SortByDirection.asc,
+    },
+    onSort: (_event, index, direction) => {
+      setActiveSortIndex(index);
+      setActiveSortDirection(direction);
+    },
+    columnIndex,
+  });
+
+  const getSortableRowValues = (cluster) => {
+    const sortableValues = {};
+    sortableValues[sortColumns.Name] = getClusterName(cluster);
+    sortableValues[sortColumns.Created] = cluster.creation_timestamp;
+    sortableValues[sortColumns.Status] = isAISubscriptionWithoutMetrics(cluster.subscription)
+      ? cluster.state
+      : getClusterStateAndDescription(cluster).description;
+    sortableValues[sortColumns.Type] = clusterType(cluster).name;
+    sortableValues[sortColumns.Provider] =
+      `${get(cluster, 'cloud_provider.id', 'N/A')} ${get(cluster, 'region.id', 'N/A')}`;
+    sortableValues[sortColumns.Version] = getClusterVersion(cluster);
+    return sortableValues;
+  };
+
+  let sortedClusters = clusters;
+  if (activeSortIndex !== null) {
+    sortedClusters = clusters.sort((a, b) => {
+      const aValue = getSortableRowValues(a)[activeSortIndex];
+      const bValue = getSortableRowValues(b)[activeSortIndex];
+
+      const nameSort = () => {
+        const aNameValue = getSortableRowValues(a)[sortColumns.Name];
+        const bNameValue = getSortableRowValues(b)[sortColumns.Name];
+        return activeSortDirection === SortByDirection.asc
+          ? aNameValue.localeCompare(bNameValue)
+          : bNameValue.localeCompare(aNameValue);
+      };
+
+      let sortValue = 0;
+      if (activeSortIndex === sortColumns.Version) {
+        // Set N/A version to a value that can be sorted against
+        const versionA = aValue === 'N/A' ? '0.0.0' : aValue;
+        const versionB = bValue === 'N/A' ? '0.0.0' : bValue;
+        sortValue =
+          activeSortDirection === SortByDirection.asc
+            ? versionComparator(versionA, versionB)
+            : versionComparator(versionB, versionA);
+      } else if (typeof aValue === 'number') {
+        // Numeric sort
+        sortValue = activeSortDirection === SortByDirection.asc ? aValue - bValue : bValue - aValue;
+      } else {
+        // String sort
+        sortValue =
+          activeSortDirection === SortByDirection.asc
+            ? aValue.localeCompare(bValue)
+            : bValue.localeCompare(aValue);
+      }
+      if (sortValue === 0 && activeSortIndex !== sortColumns.Name) {
+        // Both values are tied - so secondary sort by name
+        return nameSort();
+      }
+      return sortValue;
+    });
+  }
+
   if (!isPending && (!clusters || clusters.length === 0)) {
     return (
       <EmptyState>
@@ -68,28 +168,11 @@ function ClusterListTable(props) {
     );
   }
 
-  const sortColumns = {
-    Name: 'display_name',
-    Created: 'created_at',
-  };
-
-  const hiddenOnMdOrSmaller = ['visibleOnLg', 'hiddenOnMd', 'hiddenOnSm'];
-
-  const columns = {
-    name: { title: 'Name', width: 30, sortIndex: sortColumns.Name },
-    status: { title: 'Status', width: 15 },
-    type: { title: 'Type', width: 10 },
-    created: { title: 'Created', visibility: hiddenOnMdOrSmaller, sortIndex: sortColumns.Created },
-    version: { title: 'Version', visibility: hiddenOnMdOrSmaller },
-    provider: { title: 'Provider (Region)', visibility: hiddenOnMdOrSmaller },
-    actions: { title: '', screenReaderText: 'cluster actions' },
-  };
-
   const columnCells = Object.keys(columns).map((column, index) => (
     <Th
       width={columns[column].width}
       visibility={columns[column].visibility}
-      //  sort={columns[column].sortIndex ? getSortParams(index, columns[column].sortIndex) : undefined}
+      sort={columns[column].sortIndex ? getSortParams(columns[column].sortIndex) : undefined}
       // eslint-disable-next-line react/no-array-index-key
       key={index}
     >
@@ -246,7 +329,9 @@ function ClusterListTable(props) {
       <Thead>
         <Tr>{columnCells}</Tr>
       </Thead>
-      <Tbody>{isPending ? skeletonRows() : clusters.map((cluster) => clusterRow(cluster))}</Tbody>
+      <Tbody data-testid="clusterListTableBody">
+        {isPending ? skeletonRows() : sortedClusters.map((cluster) => clusterRow(cluster))}
+      </Tbody>
     </Table>
   );
 }
