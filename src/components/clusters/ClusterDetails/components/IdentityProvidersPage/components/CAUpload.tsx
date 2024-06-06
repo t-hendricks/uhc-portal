@@ -118,6 +118,7 @@ const CAUpload = ({
           <span className={buttonClass}>
             <input
               type="file"
+              name="file_input"
               onChange={fileUpload}
               disabled={isDisabled}
               accept={ACCEPT}

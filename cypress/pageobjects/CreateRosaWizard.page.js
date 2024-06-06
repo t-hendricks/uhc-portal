@@ -16,6 +16,9 @@ class CreateRosaCluster extends Page {
 
   rosaClusterWithWeb = () => cy.get('a').contains('With web interface');
 
+  backToNetworkingConfigurationLink = () =>
+    cy.get('button').contains('Back to the networking configuration');
+
   reviewAndCreateTree = () =>
     cy.get('li.pf-v5-c-wizard__nav-item').find('button').contains('Review and create');
 
@@ -30,6 +33,12 @@ class CreateRosaCluster extends Page {
   podCIDRInput = () => cy.get('input[id="network_pod_cidr"]');
 
   hostPrefixInput = () => cy.get('input[id="network_host_prefix"]');
+
+  httpProxyInput = () => cy.get('input[id="http_proxy_url"]');
+
+  httpsProxyInput = () => cy.get('input[id="https_proxy_url"]');
+
+  noProxyDomainsInput = () => cy.get('input[id="no_proxy_domains"]');
 
   customOperatorPrefixInput = () => cy.get('input[id="custom_operator_roles_prefix"]');
 
@@ -60,6 +69,8 @@ class CreateRosaCluster extends Page {
   rootDiskSizeInput = () => cy.get('input[name="worker_volume_size_gib"]');
 
   editNodeLabelLink = () => cy.get('span').contains('Add node labels');
+
+  addMachinePoolLink = () => cy.contains('Add machine pool').should('be.exist');
 
   addAdditionalLabelLink = () => cy.contains('Add additional label').should('be.exist');
 
@@ -234,8 +245,15 @@ class CreateRosaCluster extends Page {
     cy.contains('h3', 'Networking configuration');
   }
 
+  isClusterWideProxyScreen() {
+    cy.contains('h3', 'Cluster-wide proxy');
+  }
   isCIDRScreen() {
     cy.contains('h3', 'CIDR ranges');
+  }
+
+  isClusterRolesAndPoliciesScreen() {
+    cy.contains('h3', 'Cluster roles and policies');
   }
 
   isUpdatesScreen() {
@@ -394,7 +412,12 @@ class CreateRosaCluster extends Page {
     cy.get('input[placeholder="Filter by subnet ID / name"]', { timeout: 50000 })
       .clear()
       .type(privateSubnetNameOrId);
-    cy.contains(privateSubnetNameOrId).scrollIntoView().click();
+    cy.get('li').contains(privateSubnetNameOrId).scrollIntoView().click();
+  }
+
+  removeMachinePool(machinePoolIndex = 1) {
+    let mpIndex = machinePoolIndex - 1;
+    cy.getByTestId(`remove-machine-pool-${mpIndex}`).click();
   }
   selectMachinePoolPublicSubnet(publicSubnetNameOrId) {
     this.clickButtonContainingText('Select public subnet');
@@ -626,6 +649,10 @@ class CreateRosaCluster extends Page {
 
   inputCustomerManageKeyARN(kmsCustomKeyARN) {
     cy.get('#kms_key_arn').clear().type(kmsCustomKeyARN).should('have.value', kmsCustomKeyARN);
+  }
+
+  inputEncryptEtcdKeyARN(etcdCustomKeyARN) {
+    cy.get('#etcd_key_arn').clear().type(etcdCustomKeyARN).should('have.value', etcdCustomKeyARN);
   }
 
   enableEtcEncryption() {

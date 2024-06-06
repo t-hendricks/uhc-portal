@@ -6,15 +6,18 @@ import { HelpIcon } from '@patternfly/react-icons/dist/esm/icons/help-icon';
 
 import { FormGroupHelperText } from '../FormGroupHelperText';
 
-type TextFieldProps = {
+type NumberInputFieldProps = {
   fieldId: string;
   label?: string;
   isRequired?: boolean;
   isDisabled?: boolean;
+  min?: number;
+  max?: number;
   helpText?: string;
 };
 
-const TextField = ({ fieldId, label, isRequired, isDisabled, helpText }: TextFieldProps) => {
+export const NumberInputField = (props: NumberInputFieldProps) => {
+  const { fieldId, label, isRequired, isDisabled, min, max, helpText } = props;
   const [field, { error, touched }] = useField(fieldId);
 
   const labelIcon = helpText ? (
@@ -30,6 +33,9 @@ const TextField = ({ fieldId, label, isRequired, isDisabled, helpText }: TextFie
   return (
     <FormGroup fieldId={fieldId} label={label} labelIcon={labelIcon} isRequired={isRequired}>
       <TextInput
+        type="number"
+        min={min}
+        max={max}
         {...field}
         id={fieldId}
         onChange={(event, value) => {
@@ -42,5 +48,3 @@ const TextField = ({ fieldId, label, isRequired, isDisabled, helpText }: TextFie
     </FormGroup>
   );
 };
-
-export default TextField;
