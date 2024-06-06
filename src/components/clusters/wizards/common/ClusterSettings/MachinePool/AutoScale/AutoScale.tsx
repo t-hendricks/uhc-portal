@@ -8,7 +8,7 @@ import { normalizedProducts } from '~/common/subscriptionTypes';
 import { constants } from '~/components/clusters/common/CreateOSDFormConstants';
 import { CheckboxField } from '~/components/clusters/wizards/form/CheckboxField';
 import { useFormState } from '~/components/clusters/wizards/hooks';
-import { FieldId } from '~/components/clusters/wizards/rosa_v2/constants';
+import { FieldId as RosaFieldId } from '~/components/clusters/wizards/rosa/constants';
 import ExternalLink from '~/components/common/ExternalLink';
 import { openModal } from '~/components/common/Modal/ModalActions';
 import modals from '~/components/common/Modal/modals';
@@ -20,11 +20,11 @@ import ClusterAutoScaleSettingsDialog from './ClusterAutoScaleSettingsDialog';
 export const AutoScale = () => {
   const {
     values: {
-      [FieldId.Hypershift]: isHypershift,
-      [FieldId.Byoc]: byoc,
-      [FieldId.AutoscalingEnabled]: autoscalingEnabled,
-      [FieldId.Product]: product,
-      [FieldId.CloudProviderId]: cloudProviderID,
+      [RosaFieldId.Hypershift]: isHypershift,
+      [RosaFieldId.Byoc]: byoc,
+      [RosaFieldId.AutoscalingEnabled]: autoscalingEnabled,
+      [RosaFieldId.Product]: product,
+      [RosaFieldId.CloudProviderId]: cloudProviderID,
     },
   } = useFormState();
 
@@ -61,7 +61,7 @@ export const AutoScale = () => {
       />
 
       <CheckboxField
-        name={FieldId.AutoscalingEnabled}
+        name={RosaFieldId.AutoscalingEnabled}
         label="Enable autoscaling"
         helperText={
           isRosaClassicOrOsdCcs

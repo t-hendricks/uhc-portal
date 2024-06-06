@@ -86,7 +86,7 @@ export const CustomerManagedEncryption = ({
       </GridItem>
 
       {hasCustomerManagedKey === 'true' &&
-        // TODO: The AWS case is shared with rosa_v2/ClusterSettings/Details/AWSCustomerManagedEncryption.tsx
+        // TODO: The AWS case is shared with rosa/ClusterSettings/Details/AWSCustomerManagedEncryption.tsx
         //   To reduce duplication can make this component GCP-only, lift isGCP check to parent.
         //   (but check decision on OCMUI-1593 wrt. `isRequired`)
         (isGCP ? (
