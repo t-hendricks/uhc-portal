@@ -83,20 +83,6 @@ const parseFakeQueryParam = () => {
   return ret;
 };
 
-const parseRosaV2QueryParam = () => {
-  let ret = false;
-  window.location.search
-    .substring(1)
-    .split('&')
-    .forEach((queryString) => {
-      const [key, val] = queryString.split('=');
-      if (key.toLowerCase() === 'rosav2' && val === 'true') {
-        ret = true;
-      }
-    });
-  return ret;
-};
-
 const parseMultiRegionQueryParam = () => {
   let ret = false;
   window.location.search
@@ -115,7 +101,6 @@ const config = {
   configData: {} as EnvConfigWithFedRamp,
   envOverride: undefined as string | undefined,
   fakeOSD: false,
-  rosaV2: false,
   multiRegion: false,
 
   loadConfig(data: EnvConfigWithFedRamp) {
@@ -145,9 +130,6 @@ const config = {
     return new Promise<void>((resolve) => {
       if (parseFakeQueryParam()) {
         that.fakeOSD = true;
-      }
-      if (parseRosaV2QueryParam()) {
-        that.rosaV2 = true;
       }
       const fedRampConfig = {
         restrictedEnv: isRestrictedEnv(chrome),

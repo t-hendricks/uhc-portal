@@ -8,7 +8,7 @@ import {
 } from '~/components/clusters/common/v1VpcSelectors';
 import { useFormState } from '~/components/clusters/wizards/hooks';
 import { FieldId as OsdFieldId } from '~/components/clusters/wizards/osd/constants';
-import { FieldId as RosaFieldId } from '~/components/clusters/wizards/rosa_v2/constants';
+import { FieldId as RosaFieldId } from '~/components/clusters/wizards/rosa/constants';
 import { clearListVpcs, getAWSCloudProviderVPCs } from '~/redux/actions/ccsInquiriesActions';
 
 export const lastVpcRequestIsInEffect = (vpcs, newRequest) => {

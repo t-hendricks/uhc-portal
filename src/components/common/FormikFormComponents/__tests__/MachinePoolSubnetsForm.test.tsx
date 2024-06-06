@@ -2,8 +2,8 @@ import React from 'react';
 import * as formik from 'formik';
 import { Formik } from 'formik';
 
+import { FieldId } from '~/components/clusters/wizards/common/constants';
 import * as utils from '~/components/clusters/wizards/form/utils';
-import { FieldId } from '~/components/clusters/wizards/rosa_v2/constants';
 import { checkAccessibility, screen, waitFor, withState } from '~/testUtils';
 
 import MachinePoolSubnetsForm from '../MachinePoolSubnetsForm';

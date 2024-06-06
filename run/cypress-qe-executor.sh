@@ -60,8 +60,7 @@ cat > cypress.env.json << EOF
 "QE_ENV_AUT" : "${ENV_AUT}",
 "QE_ACCOUNT_ROLE_PREFIX" : "cypress-account-roles",
 "QE_OCM_ROLE_PREFIX" : "cypress-ocm-role",
-"QE_USER_ROLE_PREFIX" : "cypress-user-role",
-"rosav2": true
+"QE_USER_ROLE_PREFIX" : "cypress-user-role"
 }
 EOF
 
