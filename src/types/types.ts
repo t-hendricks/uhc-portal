@@ -52,6 +52,7 @@ export type FakeCluster = // AICluster &
     | 'managed'
     | 'ccs'
     | 'external_id'
+    | 'external_auth_config'
     | 'inflight_checks'
     | 'name'
     | 'version'

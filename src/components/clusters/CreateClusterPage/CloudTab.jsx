@@ -419,14 +419,12 @@ const runItYourself = () => {
     [
       <>
         <Link to="/install/metal/multi"> Baremetal (multi-architecture)</Link>
-        <TechnologyPreview position={PreviewBadgePosition.inline} />
       </>,
       'Pre-existing infrastructure',
     ],
     [
       <>
         <Link to="/install/powervs/installer-provisioned">IBM PowerVS (ppc64le)</Link>
-        <TechnologyPreview position={PreviewBadgePosition.inline} />
       </>,
       'Full stack automation',
     ],
@@ -439,7 +437,6 @@ const runItYourself = () => {
     [
       <>
         <Link to="/install/oracle-cloud">Oracle Cloud Infrastructure (virtual machines)</Link>
-        <TechnologyPreview position={PreviewBadgePosition.inline} />
       </>,
       'Pre-existing infrastructure',
     ],

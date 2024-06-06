@@ -2,7 +2,7 @@ import React from 'react';
 import { Field } from 'formik';
 import PropTypes from 'prop-types';
 
-import { Alert, GridItem, List, ListItem, Text, TextVariants } from '@patternfly/react-core';
+import { Alert, GridItem, Text, TextVariants } from '@patternfly/react-core';
 
 import { constructSelectedSubnets } from '~/common/helpers';
 import links from '~/common/installLinks.mjs';
@@ -34,7 +34,6 @@ function CIDRFields({
   isMultiAz,
   installToVpcSelected,
   isDefaultValuesChecked,
-  isROSA,
   formValues,
 }) {
   const { getFieldProps, getFieldMeta, setFieldValue, validateForm } = useFormState();
@@ -58,11 +57,7 @@ function CIDRFields({
   const selectedSubnets = constructSelectedSubnets(formValues);
 
   const cidrValidators = (value) =>
-    required(value) ||
-    validators.cidr(value) ||
-    validators.validateRange(value) ||
-    (cloudProviderID === 'gcp' && validators.privateAddress(value)) ||
-    undefined;
+    required(value) || validators.cidr(value) || validators.validateRange(value) || undefined;
 
   const machineCidrValidators = (value) =>
     cidrValidators(value) ||
@@ -99,21 +94,6 @@ function CIDRFields({
 
   const hostValidators = (value) => required(value) || validators.hostPrefix(value);
 
-  const privateRangesHint =
-    cloudProviderID === 'gcp' ? (
-      <>
-        <br />
-        <span>
-          The address must be a private IPv4 address, belonging to one of the following ranges:
-          <List>
-            <ListItem>10.0.0.0 – 10.255.255.255</ListItem>
-            <ListItem>172.16.0.0 – 172.31.255.255</ListItem>
-            <ListItem>192.168.0.0 – 192.168.255.255</ListItem>
-          </List>
-        </span>
-      </>
-    ) : null;
-
   const onDefaultValuesToggle = (_event, isChecked) => {
     setFieldValue(FieldId.CidrDefaultValuesToggle, isChecked);
     if (isChecked) {
@@ -142,9 +122,7 @@ function CIDRFields({
             correspond to the first IP address in their subnet.
           </p>
 
-          <ExternalLink
-            href={isROSA ? links.CIDR_RANGE_DEFINITIONS_ROSA : links.CIDR_RANGE_DEFINITIONS_OSD}
-          >
+          <ExternalLink href={links.CIDR_RANGE_DEFINITIONS_ROSA}>
             Learn more to avoid conflicts
           </ExternalLink>
         </Alert>
@@ -175,9 +153,7 @@ function CIDRFields({
           meta={getFieldMeta(FieldId.NetworkMachineCidr)}
           helpText={
             <div className="pf-v5-c-form__helper-text">
-              {cloudProviderID === 'aws'
-                ? `Subnet mask must be between /${validators.AWS_MACHINE_CIDR_MIN} and /${awsMachineCIDRMax}.`
-                : `Range must be private. Subnet mask must be at most /${validators.GCP_MACHINE_CIDR_MAX}.`}
+              {`Subnet mask must be between /${validators.AWS_MACHINE_CIDR_MIN} and /${awsMachineCIDRMax}.`}
               {installToVpcSelected && (
                 <Alert
                   variant="info"
@@ -191,12 +167,9 @@ function CIDRFields({
           extendedHelpText={
             <>
               {constants.machineCIDRHint}
-              {privateRangesHint}
 
               <Text component={TextVariants.p}>
-                <ExternalLink href={isROSA ? links.ROSA_CIDR_MACHINE : links.OSD_CIDR_MACHINE}>
-                  Learn more
-                </ExternalLink>
+                <ExternalLink href={links.ROSA_CIDR_MACHINE}>Learn more</ExternalLink>
               </Text>
             </>
           }
@@ -223,12 +196,9 @@ function CIDRFields({
           extendedHelpText={
             <>
               {constants.serviceCIDRHint}
-              {privateRangesHint}
 
               <Text component={TextVariants.p}>
-                <ExternalLink href={isROSA ? links.ROSA_CIDR_SERVICE : links.OSD_CIDR_SERVICE}>
-                  Learn more
-                </ExternalLink>
+                <ExternalLink href={links.ROSA_CIDR_SERVICE}>Learn more</ExternalLink>
               </Text>
             </>
           }
@@ -255,12 +225,9 @@ function CIDRFields({
           extendedHelpText={
             <>
               {constants.podCIDRHint}
-              {privateRangesHint}
 
               <Text component={TextVariants.p}>
-                <ExternalLink href={isROSA ? links.ROSA_CIDR_POD : links.OSD_CIDR_POD}>
-                  Learn more
-                </ExternalLink>
+                <ExternalLink href={links.ROSA_CIDR_POD}>Learn more</ExternalLink>
               </Text>
             </>
           }
@@ -287,9 +254,7 @@ function CIDRFields({
               {constants.hostPrefixHint}
 
               <Text component={TextVariants.p}>
-                <ExternalLink href={isROSA ? links.ROSA_CIDR_HOST : links.OSD_CIDR_HOST}>
-                  Learn more
-                </ExternalLink>
+                <ExternalLink href={links.ROSA_CIDR_HOST}>Learn more</ExternalLink>
               </Text>
             </>
           }
@@ -306,7 +271,6 @@ CIDRFields.propTypes = {
   isMultiAz: PropTypes.bool,
   installToVpcSelected: PropTypes.bool,
   isDefaultValuesChecked: PropTypes.bool,
-  isROSA: PropTypes.bool,
   formValues: PropTypes.object,
 };
 

@@ -119,4 +119,125 @@ describe('clusterService', () => {
     );
     expect(getApiGetParams().search).toContain("enabled='t'");
   });
+  describe('External Authentication', () => {
+    it('call to get an external authentication prodiver detail', async () => {
+      const clusterId = 'myCluster';
+      const myProvider = 'myProvider';
+
+      apiRequestMock.get.mockResolvedValue({ items: [], page: 1, size: 0, total: 0 });
+
+      await clusterService.getExternalAuthDetails(clusterId, myProvider);
+      expect(apiRequestMock.get).toHaveBeenCalledTimes(1);
+      const mockGetCallParams = apiRequestMock.get.mock.calls[0];
+
+      expect(mockGetCallParams[0]).toEqual(
+        '/api/clusters_mgmt/v1/clusters/myCluster/external_auth_config/external_auths/myProvider',
+      );
+    });
+
+    it('call to delete an external authentication prodiver', async () => {
+      const clusterId = 'myCluster';
+      const myProvider = 'myProvider';
+
+      apiRequestMock.get.mockResolvedValue({ items: [], page: 1, size: 0, total: 0 });
+
+      await clusterService.deleteExternalAuth(clusterId, myProvider);
+      expect(apiRequestMock.delete).toHaveBeenCalledTimes(1);
+      const mockGetCallParams = apiRequestMock.delete.mock.calls[0];
+
+      expect(mockGetCallParams[0]).toEqual(
+        '/api/clusters_mgmt/v1/clusters/myCluster/external_auth_config/external_auths/myProvider',
+      );
+    });
+
+    it('call to post a new external authentication prodiver', async () => {
+      const clusterId = 'myCluster';
+      const myProvider = 'myProvider';
+      const myProviderDetails = {
+        id: myProvider,
+        issuer: {
+          url: 'https:redhat.com',
+          audiences: ['abc'],
+        },
+        claim: {
+          mappings: {
+            username: {
+              claim: 'email',
+            },
+            groups: {
+              claim: 'groups',
+            },
+          },
+        },
+      };
+
+      await clusterService.postExternalAuth(clusterId, myProviderDetails);
+      expect(apiRequestMock.post).toHaveBeenCalledTimes(1);
+      const mockGetCallParams = apiRequestMock.post.mock.calls[0];
+
+      expect(mockGetCallParams[0]).toEqual(
+        '/api/clusters_mgmt/v1/clusters/myCluster/external_auth_config/external_auths',
+      );
+    });
+  });
+  describe('Break Glass Credentials', () => {
+    it('call to get all break glass credentials', async () => {
+      const clusterId = 'myCluster';
+
+      apiRequestMock.get.mockResolvedValue({ items: [], page: 1, size: 0, total: 0 });
+
+      await clusterService.getBreakGlassCredentials(clusterId);
+      expect(apiRequestMock.get).toHaveBeenCalledTimes(1);
+      const mockGetCallParams = apiRequestMock.get.mock.calls[0];
+
+      expect(mockGetCallParams[0]).toEqual(
+        '/api/clusters_mgmt/v1/clusters/myCluster/break_glass_credentials',
+      );
+    });
+    it('call to get detail of break glass credential', async () => {
+      const clusterId = 'myCluster';
+      const credentialId = 'myCredential';
+
+      apiRequestMock.get.mockResolvedValue({ items: [], page: 1, size: 0, total: 0 });
+
+      await clusterService.getBreakGlassCredentialDetails(clusterId, credentialId);
+      expect(apiRequestMock.get).toHaveBeenCalledTimes(1);
+      const mockGetCallParams = apiRequestMock.get.mock.calls[0];
+
+      expect(mockGetCallParams[0]).toEqual(
+        '/api/clusters_mgmt/v1/clusters/myCluster/break_glass_credentials/myCredential',
+      );
+    });
+
+    it('call to delete break glass credential', async () => {
+      const clusterId = 'myCluster';
+
+      apiRequestMock.get.mockResolvedValue({ items: [], page: 1, size: 0, total: 0 });
+
+      await clusterService.revokeBreakGlassCredentials(clusterId);
+      expect(apiRequestMock.delete).toHaveBeenCalledTimes(1);
+      const mockGetCallParams = apiRequestMock.delete.mock.calls[0];
+
+      expect(mockGetCallParams[0]).toEqual(
+        '/api/clusters_mgmt/v1/clusters/myCluster/break_glass_credentials',
+      );
+    });
+
+    it('call to post a new break glass credential', async () => {
+      const clusterId = 'myCluster';
+      const credentialId = 'myCredential';
+
+      const myCredDetails = {
+        username: credentialId,
+      };
+
+      await clusterService.postBreakGlassCredentials(clusterId, myCredDetails);
+      expect(apiRequestMock.post).toHaveBeenCalledTimes(1);
+      const mockGetCallParams = apiRequestMock.post.mock.calls[0];
+
+      expect(mockGetCallParams[0]).toEqual(
+        '/api/clusters_mgmt/v1/clusters/myCluster/break_glass_credentials',
+      );
+    });
+  });
 });
