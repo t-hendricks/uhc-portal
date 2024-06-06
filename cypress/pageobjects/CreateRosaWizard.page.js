@@ -182,13 +182,7 @@ class CreateRosaCluster extends Page {
   individualUpdateRadio = () => cy.getByTestId('upgrade_policy-manual');
 
   isCreateRosaPage() {
-    //TODO: This temporary change and will be removed once rosav2 is default.
-    if (Cypress.env('rosav2')) {
-      cy.visit('/create/rosa/wizard?rosav2=true');
-      super.assertUrlIncludes('/create/rosa/wizard?rosav2=true');
-    } else {
-      super.assertUrlIncludes('/openshift/create/rosa/wizard');
-    }
+    super.assertUrlIncludes('/openshift/create/rosa/wizard');
   }
 
   isTextContainsInPage(text, present = true) {
