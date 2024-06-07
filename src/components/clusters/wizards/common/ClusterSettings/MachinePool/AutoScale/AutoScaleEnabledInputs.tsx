@@ -11,7 +11,7 @@ import { constants } from '~/components/clusters/common/CreateOSDFormConstants';
 import { MAX_NODES, MAX_NODES_HCP } from '~/components/clusters/common/machinePools/constants';
 import getMinNodesAllowed from '~/components/clusters/common/ScaleSection/AutoScaleSection/AutoScaleHelper';
 import { useFormState } from '~/components/clusters/wizards/hooks';
-import { FieldId } from '~/components/clusters/wizards/rosa_v2/constants';
+import { FieldId as RosaFieldId } from '~/components/clusters/wizards/rosa/constants';
 import ExternalLink from '~/components/common/ExternalLink';
 import { FormGroupHelperText } from '~/components/common/FormGroupHelperText';
 import PopoverHint from '~/components/common/PopoverHint';
@@ -25,14 +25,14 @@ export const AutoScaleEnabledInputs = () => {
     getFieldProps,
     getFieldMeta,
     values: {
-      [FieldId.Hypershift]: hypershiftValue,
-      [FieldId.AutoscalingEnabled]: autoscalingEnabled,
-      [FieldId.MachinePoolsSubnets]: machinePoolsSubnets,
-      [FieldId.MultiAz]: multiAz,
-      [FieldId.MinReplicas]: minReplicas,
-      [FieldId.MaxReplicas]: maxReplicas,
-      [FieldId.Product]: product,
-      [FieldId.Byoc]: byoc,
+      [RosaFieldId.Hypershift]: hypershiftValue,
+      [RosaFieldId.AutoscalingEnabled]: autoscalingEnabled,
+      [RosaFieldId.MachinePoolsSubnets]: machinePoolsSubnets,
+      [RosaFieldId.MultiAz]: multiAz,
+      [RosaFieldId.MinReplicas]: minReplicas,
+      [RosaFieldId.MaxReplicas]: maxReplicas,
+      [RosaFieldId.Product]: product,
+      [RosaFieldId.Byoc]: byoc,
     },
   } = useFormState();
 
@@ -129,10 +129,10 @@ export const AutoScaleEnabledInputs = () => {
       const minAutoscaleValue = minReplicas ? parseInt(minReplicas, 10) : 0;
       const min = minAutoscaleValue < minNodes ? minNodes : minAutoscaleValue;
       if (min) {
-        setFieldValue(FieldId.MinReplicas, min);
+        setFieldValue(RosaFieldId.MinReplicas, min);
       }
       if (!maxReplicas) {
-        setFieldValue(FieldId.MaxReplicas, min);
+        setFieldValue(RosaFieldId.MaxReplicas, min);
       }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -141,7 +141,7 @@ export const AutoScaleEnabledInputs = () => {
   useEffect(() => {
     if (maxReplicas) {
       // to trigger MaxReplicas field validation
-      setFieldValue(FieldId.MaxReplicas, maxReplicas, true);
+      setFieldValue(RosaFieldId.MaxReplicas, maxReplicas, true);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [minReplicas]);
@@ -184,7 +184,7 @@ export const AutoScaleEnabledInputs = () => {
       >
         <Field
           component={NodesInput}
-          name={FieldId.MinReplicas}
+          name={RosaFieldId.MinReplicas}
           type="text"
           ariaLabel="Minimum nodes"
           validate={(value: number) => validateNodes(value)}
@@ -194,13 +194,13 @@ export const AutoScaleEnabledInputs = () => {
           min={minNodes}
           max={maxNodes}
           input={{
-            ...getFieldProps(FieldId.MinReplicas),
+            ...getFieldProps(RosaFieldId.MinReplicas),
             onChange: (value: number) => {
-              setFieldValue(FieldId.MinReplicas, value, true);
-              setFieldTouched(FieldId.MinReplicas, true, false);
+              setFieldValue(RosaFieldId.MinReplicas, value, true);
+              setFieldTouched(RosaFieldId.MinReplicas, true, false);
             },
           }}
-          meta={getFieldMeta(FieldId.MinReplicas)}
+          meta={getFieldMeta(RosaFieldId.MinReplicas)}
         />
 
         {!minErrorMessage ? nodesHelpText(minReplicas) : helperText(minErrorMessage, 'error')}
@@ -233,7 +233,7 @@ export const AutoScaleEnabledInputs = () => {
       >
         <Field
           component={NodesInput}
-          name={FieldId.MaxReplicas}
+          name={RosaFieldId.MaxReplicas}
           type="text"
           ariaLabel="Maximum nodes"
           validate={(value: number) => validateMaxNodes(value)}
@@ -243,13 +243,13 @@ export const AutoScaleEnabledInputs = () => {
           min={minNodes}
           max={maxNodes}
           input={{
-            ...getFieldProps(FieldId.MaxReplicas),
+            ...getFieldProps(RosaFieldId.MaxReplicas),
             onChange: (value: number) => {
-              setFieldValue(FieldId.MaxReplicas, value, true);
-              setFieldTouched(FieldId.MaxReplicas, true, false);
+              setFieldValue(RosaFieldId.MaxReplicas, value, true);
+              setFieldTouched(RosaFieldId.MaxReplicas, true, false);
             },
           }}
-          meta={getFieldMeta(FieldId.MaxReplicas)}
+          meta={getFieldMeta(RosaFieldId.MaxReplicas)}
         />
         {!maxErrorMessage ? nodesHelpText(maxReplicas) : helperText(maxErrorMessage, 'error')}
       </FormGroup>

@@ -19,7 +19,6 @@ import {
   NETWORK_VALIDATOR_ONDEMAND_FEATURE,
   OSD_GCP_SHARED_VPC_FEATURE,
   OSD_GOOGLE_MARKETPLACE_FEATURE,
-  ROSA_WIZARD_V2_ENABLED,
   SECURITY_GROUPS_FEATURE,
   SECURITY_GROUPS_FEATURE_DAY1,
   SET_FEATURE,
@@ -40,7 +39,6 @@ const getSimpleUnleashFeature = (unleashFeatureName: string, name: string) => ({
 // list of features to detect upon app startup
 export const features = [
   getSimpleUnleashFeature('hypershift-creation-wizard', HYPERSHIFT_WIZARD_FEATURE),
-  getSimpleUnleashFeature('rosa-v2-creation-wizard', ROSA_WIZARD_V2_ENABLED),
   getSimpleUnleashFeature('hcp-rosa-getting-started-page', HCP_ROSA_GETTING_STARTED_PAGE),
   getSimpleUnleashFeature('hcp-aws-billing-show', HCP_AWS_BILLING_SHOW),
   getSimpleUnleashFeature('hcp-use-unmanaged-policies', HCP_USE_UNMANAGED),

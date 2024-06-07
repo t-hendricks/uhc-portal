@@ -13,14 +13,14 @@ import {
 } from '@patternfly/react-core';
 
 import { useFormState } from '~/components/clusters/wizards/hooks';
-import { FieldId } from '~/components/clusters/wizards/rosa_v2/constants';
+import { FieldId as RosaFieldId } from '~/components/clusters/wizards/rosa/constants';
 
 import { ExpandableReviewItem } from './ExpandableReviewItem';
 import reviewValues from './reviewValues';
 
 export const FormikReviewItem = (field, dependentFields = {}) => {
   const {
-    values: { [field]: value, [FieldId.Hypershift]: hypershiftValue },
+    values: { [field]: value, [RosaFieldId.Hypershift]: hypershiftValue },
   } = useFormState();
   const reviewValue = reviewValues[field];
   let finalValue = value;

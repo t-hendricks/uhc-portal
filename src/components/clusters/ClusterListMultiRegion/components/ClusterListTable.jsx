@@ -20,8 +20,6 @@ import SearchIcon from '@patternfly/react-icons/dist/esm/icons/search-icon';
 import { SortByDirection, Table, Tbody, Td, Th, Thead, Tr } from '@patternfly/react-table';
 import { global_warning_color_100 as warningColor } from '@patternfly/react-tokens/dist/esm/global_warning_color_100';
 
-import { versionComparator } from '~/common/versionComparator';
-
 import getClusterName from '../../../../common/getClusterName';
 import { isAISubscriptionWithoutMetrics } from '../../../../common/isAssistedInstallerCluster';
 import ClusterStateIcon from '../../common/ClusterStateIcon';
@@ -31,7 +29,6 @@ import clusterStates, {
   isWaitingForOIDCProviderOrOperatorRolesMode,
   isWaitingROSAManualMode,
 } from '../../common/clusterStates';
-import { clusterType } from '../../common/clusterType';
 import ClusterTypeLabel from '../../common/ClusterTypeLabel';
 import ClusterUpdateLink from '../../common/ClusterUpdateLink';
 import getClusterVersion from '../../common/getClusterVersion';
@@ -52,7 +49,7 @@ const skeletonRows = () =>
     </Tr>
   ));
 
-const sortColumns = {
+export const sortColumns = {
   Name: 'display_name',
   Created: 'created_at',
   Status: 'status',
@@ -79,9 +76,7 @@ export const columns = {
   actions: { title: '', screenReaderText: 'cluster actions' },
 };
 function ClusterListTable(props) {
-  const { clusters, openModal, isPending } = props;
-  const [activeSortIndex, setActiveSortIndex] = React.useState(sortColumns.Created);
-  const [activeSortDirection, setActiveSortDirection] = React.useState(SortByDirection.desc);
+  const { clusters, openModal, isPending, activeSortIndex, activeSortDirection, setSort } = props;
 
   const getSortParams = (columnIndex) => ({
     sortBy: {
@@ -90,66 +85,10 @@ function ClusterListTable(props) {
       defaultDirection: SortByDirection.asc,
     },
     onSort: (_event, index, direction) => {
-      setActiveSortIndex(index);
-      setActiveSortDirection(direction);
+      setSort(index, direction);
     },
     columnIndex,
   });
-
-  const getSortableRowValues = (cluster) => {
-    const sortableValues = {};
-    sortableValues[sortColumns.Name] = getClusterName(cluster);
-    sortableValues[sortColumns.Created] = cluster.creation_timestamp;
-    sortableValues[sortColumns.Status] = isAISubscriptionWithoutMetrics(cluster.subscription)
-      ? cluster.state
-      : getClusterStateAndDescription(cluster).description;
-    sortableValues[sortColumns.Type] = clusterType(cluster).name;
-    sortableValues[sortColumns.Provider] =
-      `${get(cluster, 'cloud_provider.id', 'N/A')} ${get(cluster, 'region.id', 'N/A')}`;
-    sortableValues[sortColumns.Version] = getClusterVersion(cluster);
-    return sortableValues;
-  };
-
-  let sortedClusters = clusters;
-  if (activeSortIndex !== null) {
-    sortedClusters = clusters.sort((a, b) => {
-      const aValue = getSortableRowValues(a)[activeSortIndex];
-      const bValue = getSortableRowValues(b)[activeSortIndex];
-
-      const nameSort = () => {
-        const aNameValue = getSortableRowValues(a)[sortColumns.Name];
-        const bNameValue = getSortableRowValues(b)[sortColumns.Name];
-        return activeSortDirection === SortByDirection.asc
-          ? aNameValue.localeCompare(bNameValue)
-          : bNameValue.localeCompare(aNameValue);
-      };
-
-      let sortValue = 0;
-      if (activeSortIndex === sortColumns.Version) {
-        // Set N/A version to a value that can be sorted against
-        const versionA = aValue === 'N/A' ? '0.0.0' : aValue;
-        const versionB = bValue === 'N/A' ? '0.0.0' : bValue;
-        sortValue =
-          activeSortDirection === SortByDirection.asc
-            ? versionComparator(versionA, versionB)
-            : versionComparator(versionB, versionA);
-      } else if (typeof aValue === 'number') {
-        // Numeric sort
-        sortValue = activeSortDirection === SortByDirection.asc ? aValue - bValue : bValue - aValue;
-      } else {
-        // String sort
-        sortValue =
-          activeSortDirection === SortByDirection.asc
-            ? aValue.localeCompare(bValue)
-            : bValue.localeCompare(aValue);
-      }
-      if (sortValue === 0 && activeSortIndex !== sortColumns.Name) {
-        // Both values are tied - so secondary sort by name
-        return nameSort();
-      }
-      return sortValue;
-    });
-  }
 
   if (!isPending && (!clusters || clusters.length === 0)) {
     return (
@@ -260,6 +199,7 @@ function ClusterListTable(props) {
             position={PopoverPosition.top}
             bodyContent={<ProgressList cluster={cluster} />}
             aria-label="Status: installing"
+            maxWidth="38rem"
           >
             <Button
               className="cluster-status-string status-installing"
@@ -330,7 +270,7 @@ function ClusterListTable(props) {
         <Tr>{columnCells}</Tr>
       </Thead>
       <Tbody data-testid="clusterListTableBody">
-        {isPending ? skeletonRows() : sortedClusters.map((cluster) => clusterRow(cluster))}
+        {isPending ? skeletonRows() : clusters.map((cluster) => clusterRow(cluster))}
       </Tbody>
     </Table>
   );
@@ -339,7 +279,9 @@ function ClusterListTable(props) {
 ClusterListTable.propTypes = {
   openModal: PropTypes.func.isRequired,
   clusters: PropTypes.array.isRequired,
-
+  activeSortIndex: PropTypes.string,
+  activeSortDirection: PropTypes.string,
+  setSort: PropTypes.func,
   isPending: PropTypes.bool,
 };
 

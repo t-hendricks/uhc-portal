@@ -7,8 +7,8 @@ import { PlusCircleIcon } from '@patternfly/react-icons/dist/esm/icons/plus-circ
 
 import { nodeKeyValueTooltipText } from '~/common/helpers';
 import { validateLabelKey, validateLabelValue } from '~/common/validators';
+import { FieldId } from '~/components/clusters/wizards/common/constants';
 import { useFormState } from '~/components/clusters/wizards/hooks';
-import { FieldId } from '~/components/clusters/wizards/rosa_v2/constants';
 
 import ButtonWithTooltip from '../../ButtonWithTooltip';
 
