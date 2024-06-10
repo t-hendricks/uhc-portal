@@ -13,6 +13,11 @@ describe('Downloads page', { tags: ['ci', 'smoke'] }, () => {
     Downloads.isDownloadsPage();
   });
 
+  after(() => {
+    // cleanup the downloaded secrets at the end of execution.
+    cy.exec(`rm -rf ${Cypress.config('downloadsFolder')}/pull-secret.txt`);
+  });
+
   it('can expand and collapse rows', () => {
     Downloads.isHiddenRowContaining(ROSARowTitle);
 
@@ -119,5 +124,19 @@ describe('Downloads page', { tags: ['ci', 'smoke'] }, () => {
     cy.getByTestId('arch-dropdown-helm').should('have.value', 's390x');
     // OpenShift Local
     cy.getByTestId('os-dropdown-crc').should('have.value', 'windows');
+  });
+
+  it('check the options under Tokens section', () => {
+    Downloads.filterByCategory('Tokens');
+    Downloads.tokenSection().contains('Tokens').should('be.visible');
+    Downloads.pullSecretSection().contains('Pull secret').should('be.visible');
+    Downloads.copyPullSecretButton().should('be.visible');
+    Downloads.downloadPullSecretButton().should('be.visible').click();
+    cy.readFile(`${Cypress.config('downloadsFolder')}/pull-secret.txt`).should('exist');
+    Downloads.pullSecretSection().find('button#expand-toggle0').click();
+    Downloads.pullSecretSection()
+      .find('a')
+      .should('have.attr', 'href')
+      .and('include', '/openshift/create');
   });
 });
