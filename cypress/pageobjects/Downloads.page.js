@@ -16,6 +16,14 @@ class Downloads extends Page {
     cy.contains('h1', 'Downloads');
   }
 
+  pullSecretSection = () => cy.getByTestId('expandable-row-pull-secret');
+
+  tokenSection = () => cy.getByTestId('downloads-section-TOKENS');
+
+  downloadPullSecretButton = () => this.pullSecretSection().find('button').contains('Download');
+
+  copyPullSecretButton = () => this.pullSecretSection().find('button').contains('Copy');
+
   isVisibleRowContaining = (substring) =>
     cy
       .contains(substring)
