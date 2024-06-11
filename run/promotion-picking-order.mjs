@@ -537,7 +537,16 @@ async function reportOrder(jiraToken, branch, verbose) {
         if (filename) {
           const currentFilename = renamed[filename] || filename;
           const ourFile = await git.raw(['show', `${currentSha}:${currentFilename}`]);
-          const base = await git.raw(['show', `${mergeBase}:${filename}`]);
+          let base = null;
+          try {
+            base = await git.raw(['show', `${mergeBase}:${filename}`]);
+          } catch (e) {
+            // empty
+          }
+          if (!base) {
+            // eslint-disable-next-line no-continue
+            continue;
+          }
           let otherFile = mergedFileMap[filename];
           if (!otherFile) {
             try {
