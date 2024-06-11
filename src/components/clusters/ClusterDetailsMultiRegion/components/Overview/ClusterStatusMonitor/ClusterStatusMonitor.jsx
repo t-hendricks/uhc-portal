@@ -4,18 +4,32 @@
 import React from 'react';
 import get from 'lodash/get';
 import PropTypes from 'prop-types';
+import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom-v5-compat';
 
 import { Alert, Button, ButtonVariant, Flex, FlexItem, Spinner } from '@patternfly/react-core';
 import MinusCircleIcon from '@patternfly/react-icons/dist/esm/icons/minus-circle-icon';
 import PlusCircleIcon from '@patternfly/react-icons/dist/esm/icons/plus-circle-icon';
 import { Table, TableVariant, Tbody, Td, Th, Thead, Tr } from '@patternfly/react-table';
+import { addNotification } from '@redhat-cloud-services/frontend-components-notifications/redux';
 
 import { HAD_INFLIGHT_ERROR_LOCALSTORAGE_KEY } from '~/common/localStorageConstants';
+import { useFeatureGate } from '~/hooks/useFeatureGate';
+import {
+  useFetchClusterStatus,
+  useInvalidateFetchClusterStatus,
+} from '~/queries/ClusterDetailsQueries/ClusterStatusMonitor/useFetchClusterStatus';
+import {
+  useFetchInflightChecks,
+  useFetchRerunInflightChecks,
+  useInvalidateFetchInflightChecks,
+  useInvalidateFetchRerunInflightChecks,
+  useMutateRerunInflightChecks,
+} from '~/queries/ClusterDetailsQueries/ClusterStatusMonitor/useFetchInflightChecks';
+import { NETWORK_VALIDATOR_ONDEMAND_FEATURE } from '~/redux/constants/featureConstants';
 import { InflightCheckState } from '~/types/clusters_mgmt.v1';
 
 import getClusterName from '../../../../../../common/getClusterName';
-import { usePreviousProps } from '../../../../../../hooks/usePreviousProps';
 import ErrorModal from '../../../../../common/ErrorModal';
 import ExternalLink from '../../../../../common/ExternalLink';
 import clusterStates, {
@@ -25,129 +39,118 @@ import clusterStates, {
 
 // TODO: Part of the installation story
 const ClusterStatusMonitor = (props) => {
-  const {
-    resetInflightChecks,
-    cluster,
-    getClusterStatus,
-    getInflightChecks,
-    getRerunInflightChecks,
-    hasNetworkOndemand,
-    status,
-    inflightChecks,
-    rerunInflightChecks,
-    rerunInflightCheckReq,
-    rerunInflightCheckRes,
-    addNotification,
-    refresh,
-  } = props;
+  const { cluster, refresh, region } = props;
 
+  const hasNetworkOndemand = useFeatureGate(NETWORK_VALIDATOR_ONDEMAND_FEATURE);
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const [refetchInterval, setRefetchInterval] = React.useState(false);
 
-  const [timerID, setTimerID] = React.useState(null);
+  const {
+    data: clusterStatus,
+    isLoading: isClusterStatusLoading,
+    isError: isClusterStatusError,
+    error: clusterStatusError,
+  } = useFetchClusterStatus(cluster.id, region, refetchInterval);
+  const { checks: inflightChecks, isLoading: isInflightChecksLoading } = useFetchInflightChecks(
+    cluster.id,
+    region,
+    refetchInterval,
+    'fetchClusterStatusMonitorInflightChecks',
+  );
+
+  // eslint-disable-next-line no-unused-vars
+  const { data: rerunInflightChecksData, isLoading: isRerunInflightChecksLoading } =
+    useFetchRerunInflightChecks(cluster?.aws?.subnet_ids, region, refetchInterval);
+  // eslint-disable-next-line no-unused-vars
+  const {
+    data: rerunInflightChecksMutationData,
+    isPending: isRerunInflightChecksMutationPending,
+    isError: isRerunInflightChecksMutationError,
+    error: rerunInflightChecksMutationError,
+    mutateAsync,
+  } = useMutateRerunInflightChecks(cluster.id, region);
 
   const [isExpanded, setIsExpanded] = React.useState(false);
   const [isErrorOpen, setIsErrorOpen] = React.useState(false);
   const [wasRunClicked, setWasRunClicked] = React.useState(false);
   const [isValidatorRunning, setIsValidatorRunning] = React.useState(false);
 
-  const statusRef = usePreviousProps(status);
-  const inflightChecksRef = usePreviousProps(inflightChecks);
-  const rerunInflightCheckReqRef = usePreviousProps(rerunInflightCheckReq);
-  const rerunInflightCheckResRef = usePreviousProps(rerunInflightCheckRes);
-
-  const update = () => {
-    getClusterStatus(cluster.id);
-    getInflightChecks(cluster.id);
-    if (cluster?.aws?.subnet_ids) {
-      getRerunInflightChecks(cluster.aws.subnet_ids);
-    }
-
-    setTimerID(null);
-  };
-
   const toggleExpanded = (isExpanded) => {
     setIsExpanded(isExpanded);
   };
 
   React.useEffect(() => {
-    resetInflightChecks();
-    update();
+    useInvalidateFetchClusterStatus();
+    useInvalidateFetchInflightChecks();
 
+    if (cluster?.aws?.subnet_ids) {
+      useInvalidateFetchRerunInflightChecks();
+    }
     return () => {
-      if (timerID !== null) {
-        clearTimeout(timerID);
-        setTimerID(null);
-      }
+      setRefetchInterval(false);
     };
     // Should run once on mount and once on unmount
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   React.useEffect(() => {
-    if (
-      (statusRef && statusRef.pending && !status.pending) ||
-      (inflightChecksRef && inflightChecksRef.pending && !inflightChecks.pending)
-    ) {
-      if (timerID !== null) {
-        clearTimeout(timerID);
-        setTimerID(null);
-      }
-
+    if (!isClusterStatusLoading && !isInflightChecksLoading && clusterStatus && inflightChecks) {
       // final state is READY
       const isClusterInstalling = (state) =>
         state === clusterStates.INSTALLING ||
         state === clusterStates.PENDING ||
         state === clusterStates.VALIDATING ||
         state === clusterStates.WAITING;
-
+      setRefetchInterval(false);
       // if not running any checks final state is success
       const shouldUpdateInflightChecks = () =>
-        inflightChecks.checks.some(
+        inflightChecks.items?.some(
           (check) =>
             check.state === InflightCheckState.RUNNING || check.state === InflightCheckState.FAILED,
         );
-
-      // inflight checks are asynchronous with installing because they can take awhile
-      if (status.fulfilled && inflightChecks.fulfilled) {
-        const clusterState = status.status.state;
+      if (!isClusterStatusLoading && !isInflightChecksLoading) {
+        const clusterState = clusterStatus.state;
         // refresh main detail page if cluster state changed or if still running inflight checks
-        if (clusterState !== cluster.state || shouldUpdateInflightChecks()) {
+        if (clusterStatus.state !== cluster.state || shouldUpdateInflightChecks()) {
           // (also updates the ProgressList)
           refresh(); // state transition -> refresh main view
         }
-
         // if still installing/uninstalling or running inflight checks, check again in 5s
         if (
           isClusterInstalling(clusterState) ||
           clusterState === clusterStates.UNINSTALLING ||
           shouldUpdateInflightChecks()
         ) {
-          setTimerID(setTimeout(update, 5000));
-          // timerID = setTimeout(update, 5000);
+          setRefetchInterval(true);
         }
-      } else if (status.error) {
+      } else if (isClusterStatusError) {
         if (isClusterInstalling(cluster.state)) {
           // if we failed to get the /status endpoint (and we weren't uninstalling)
           // all we can do is look at the state in cluster object and hope for the best
-          setTimerID(setTimeout(update, 5000));
-          // timerID = setTimeout(update, 5000);
-        } else if (cluster.state === clusterStates.UNINSTALLING && status.errorCode === 404) {
-          addNotification({
-            title: `Successfully uninstalled cluster ${getClusterName(cluster)}`,
-            variant: 'success',
-          });
+          setRefetchInterval(true);
+        } else if (
+          cluster.state === clusterStates.UNINSTALLING &&
+          clusterStatusError.errorCode === 404
+        ) {
+          dispatch(
+            addNotification({
+              title: `Successfully uninstalled cluster ${getClusterName(cluster)}`,
+              variant: 'success',
+            }),
+          );
           navigate('/');
         }
       }
     }
+    // Minified React error #185 if added all dependencies based on linter
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [refetchInterval, inflightChecks, clusterStatus, addNotification]);
 
-    if (
-      rerunInflightCheckReqRef &&
-      rerunInflightCheckReqRef.pending &&
-      !rerunInflightCheckReq.pending
-    ) {
+  React.useEffect(() => {
+    if (!isRerunInflightChecksMutationPending) {
       // rerun button was clicked but error occurred trying  to start the validator
-      if (rerunInflightCheckReq.error) {
+      if (isRerunInflightChecksMutationError) {
         setIsErrorOpen(true);
         setWasRunClicked(true);
       }
@@ -155,7 +158,7 @@ const ClusterStatusMonitor = (props) => {
       // until the validator starts running and we can use that to see if the validator is still
       // running. once clicked, it might take a bit for the validator starts up-- so rather then
       // have the spinner disappear we give it 10 seconds to start up
-      if (rerunInflightCheckReq.fulfilled) {
+      if (rerunInflightChecksMutationData) {
         setTimeout(() => {
           setWasRunClicked(false);
         }, 10000);
@@ -164,43 +167,27 @@ const ClusterStatusMonitor = (props) => {
 
     // user might navigate away from this page so the button click state might be lost
     // so we use this to determine if the validator is running irregardless of when/where the button was clicked
-    if (
-      rerunInflightCheckResRef &&
-      rerunInflightCheckResRef.pending &&
-      !rerunInflightCheckRes.pending
-    ) {
-      if (rerunInflightCheckRes.fulfilled) {
-        const isValidatorRunning = rerunInflightCheckRes.checks.some(
-          (check) =>
-            check.state === InflightCheckState.RUNNING ||
-            check.state === InflightCheckState.PENDING,
-        );
-        setIsValidatorRunning(isValidatorRunning);
-      }
+    if (!isRerunInflightChecksLoading && rerunInflightChecksData) {
+      const isValidatorRunning = rerunInflightChecksData.data.items.some(
+        (check) =>
+          check.state === InflightCheckState.RUNNING || check.state === InflightCheckState.PENDING,
+      );
+      setIsValidatorRunning(isValidatorRunning);
     }
     // Update should not be in the dependency list
     // eslint-disable-next-line  react-hooks/exhaustive-deps
   }, [
-    status,
-    inflightChecks,
-    rerunInflightCheckReq,
-    rerunInflightCheckRes,
-    cluster,
-    refresh,
-    addNotification,
-    inflightChecksRef,
-    rerunInflightCheckReqRef,
-    rerunInflightCheckResRef,
-    statusRef,
-    timerID,
-    navigate,
+    isRerunInflightChecksLoading,
+    isRerunInflightChecksMutationPending,
+    rerunInflightChecksMutationData,
+    rerunInflightChecksData,
   ]);
 
   const showMissingURLList = () => {
     const isClusterValidating =
       cluster.state === clusterStates.VALIDATING || cluster.state === clusterStates.PENDING;
     if (!isClusterValidating) {
-      const inflightError = inflightChecks.checks.find(
+      const inflightError = inflightChecks?.items?.find(
         (check) => check.state === InflightCheckState.FAILED,
       );
       if (hasInflightEgressErrors(cluster) && inflightError) {
@@ -275,7 +262,7 @@ const ClusterStatusMonitor = (props) => {
           );
           rerunValidator = () => {
             setWasRunClicked(true);
-            rerunInflightChecks(cluster.id);
+            mutateAsync(cluster.id);
           };
         }
         // show spinner on rerun button
@@ -319,7 +306,7 @@ const ClusterStatusMonitor = (props) => {
                     {isErrorOpen && (
                       <ErrorModal
                         title="Error Rerunning Validator "
-                        errorResponse={rerunInflightCheckReq}
+                        errorResponse={rerunInflightChecksMutationError}
                         resetResponse={() => setIsErrorOpen(false)}
                       />
                     )}
@@ -365,54 +352,58 @@ const ClusterStatusMonitor = (props) => {
     return null;
   };
 
-  if (status.status.id === cluster.id) {
-    const errorCode = status.status.provision_error_code || '';
-    let reason = '';
-    if (status.status.provision_error_code) {
-      reason = get(status, 'status.provision_error_message', '');
-    }
-    const description = get(status, 'status.description', '');
-    const alerts = [];
+  if (!isClusterStatusLoading && clusterStatus) {
+    if (clusterStatus.id === cluster.id) {
+      const errorCode = clusterStatus.provision_error_code || '';
+      let reason = '';
+      if (clusterStatus.provision_error_code) {
+        reason = get(clusterStatus, 'provision_error_message', '');
+      }
+      const description = get(clusterStatus, 'description', '');
+      const alerts = [];
 
-    // Cluster install failure
-    if (status.status.state === clusterStates.ERROR) {
-      alerts.push(
-        <Alert variant="danger" isInline title={`${errorCode} Cluster installation failed`}>
-          {`This cluster cannot be recovered, however you can use the logs and network validation to diagnose the problem: ${reason} ${description}`}
-        </Alert>,
-      );
-    }
+      // Cluster install failure
+      if (clusterStatus.state === clusterStates.ERROR) {
+        alerts.push(
+          <Alert variant="danger" isInline title={`${errorCode} Cluster installation failed`}>
+            {`This cluster cannot be recovered, however you can use the logs and network validation to diagnose the problem: ${reason} ${description}`}
+          </Alert>,
+        );
+      }
 
-    // Rosa inflight error check found urls missing from byo vpc firewall
-    if (hasNetworkOndemand) {
-      alerts.push(showMissingURLList());
-    }
+      // Rosa inflight error check found urls missing from byo vpc firewall
+      if (hasNetworkOndemand) {
+        alerts.push(showMissingURLList());
+      }
 
-    // OSD GCP is waiting on roles to be added to dynamically generated service account for a shared vpc project
-    alerts.push(showRequiredGCPRoles());
+      // OSD GCP is waiting on roles to be added to dynamically generated service account for a shared vpc project
+      alerts.push(showRequiredGCPRoles());
 
-    // Cluster is taking a lot of time to create
-    if (
-      status.status.state !== clusterStates.ERROR &&
-      (status.status.provision_error_code || status.status.provision_error_message)
-    ) {
-      alerts.push(
-        <Alert
-          variant="warning"
-          isInline
-          title={`${errorCode} Installation is taking longer than expected`}
-          data-testid="alert-long-install"
-        >
-          {reason}
-        </Alert>,
-      );
+      // Cluster is taking a lot of time to create
+      if (
+        clusterStatus.state !== clusterStates.ERROR &&
+        (clusterStatus.provision_error_code || clusterStatus.provision_error_message)
+      ) {
+        alerts.push(
+          <Alert
+            variant="warning"
+            isInline
+            title={`${errorCode} Installation is taking longer than expected`}
+            data-testid="alert-long-install"
+          >
+            {reason}
+          </Alert>,
+        );
+      }
+      return <>{alerts.filter((n) => n)}</>;
     }
-    return <>{alerts.filter((n) => n)}</>;
   }
+
   return null;
 };
 
 ClusterStatusMonitor.propTypes = {
+  region: PropTypes.string,
   cluster: PropTypes.shape({
     id: PropTypes.string,
     state: PropTypes.string,
@@ -427,45 +418,6 @@ ClusterStatusMonitor.propTypes = {
     }),
   }),
   refresh: PropTypes.func,
-  addNotification: PropTypes.func,
-  getClusterStatus: PropTypes.func,
-  getInflightChecks: PropTypes.func,
-  rerunInflightChecks: PropTypes.func,
-  getRerunInflightChecks: PropTypes.func,
-  resetInflightChecks: PropTypes.func,
-  inflightChecks: PropTypes.shape({
-    pending: PropTypes.bool,
-    fulfilled: PropTypes.bool,
-    error: PropTypes.bool,
-    checks: PropTypes.array,
-  }),
-  rerunInflightCheckReq: PropTypes.shape({
-    pending: PropTypes.bool,
-    fulfilled: PropTypes.bool,
-    error: PropTypes.bool,
-    errorMessage: PropTypes.string,
-    operationID: PropTypes.string,
-  }),
-  rerunInflightCheckRes: PropTypes.shape({
-    pending: PropTypes.bool,
-    fulfilled: PropTypes.bool,
-    error: PropTypes.bool,
-    checks: PropTypes.array,
-  }),
-  hasNetworkOndemand: PropTypes.bool,
-  status: PropTypes.shape({
-    pending: PropTypes.bool,
-    fulfilled: PropTypes.bool,
-    error: PropTypes.bool,
-    errorCode: PropTypes.string,
-    status: PropTypes.shape({
-      id: PropTypes.string,
-      description: PropTypes.string,
-      state: PropTypes.string,
-      provision_error_code: PropTypes.string,
-      provision_error_message: PropTypes.string,
-    }),
-  }),
 };
 
 export default ClusterStatusMonitor;

@@ -1,10 +1,18 @@
 import { useQuery } from '@tanstack/react-query';
 
-import { queryConstants } from '~/queries/queriesConstants';
+import { queryClient } from '~/components/App/queryClient';
 import clusterService, { getClusterServiceForRegion } from '~/services/clusterService';
 
-export const useFetchClusterStatus = (clusterID: string, region?: string) => {
-  const { isLoading, data, isError, error, refetch } = useQuery({
+export const useInvalidateFetchClusterStatus = async () => {
+  await queryClient.invalidateQueries({ queryKey: ['clusterStatus'] });
+};
+
+export const useFetchClusterStatus = (
+  clusterID: string,
+  region?: string,
+  refetchInterval?: boolean,
+) => {
+  const { isLoading, data, isError, error } = useQuery({
     queryKey: ['clusterStatus', 'clusterService', clusterID],
     queryFn: async () => {
       if (region) {
@@ -16,14 +24,13 @@ export const useFetchClusterStatus = (clusterID: string, region?: string) => {
       return response;
     },
     retry: false,
-    staleTime: queryConstants.STALE_TIME,
+    refetchInterval: refetchInterval ? 5000 : undefined,
     enabled: !!clusterID,
   });
   return {
     isLoading,
-    status: data?.data,
+    data: data?.data,
     isError,
     error,
-    refetch,
   };
 };
