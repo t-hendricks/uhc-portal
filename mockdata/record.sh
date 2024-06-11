@@ -21,7 +21,7 @@ cd "$(git rev-parse --show-toplevel)"
 
 path="$1"
 shift 1
-mkdir --parents mockdata/"$(dirname "$path")"
+mkdir -p mockdata/"$(dirname "$path")"
 # LOG_PREFIX env var allows parent scripts like record-real-cluster.sh to group requests.
 echo "${LOG_PREFIX-}ocm get $path $*"
 # In case of error, leaving an empty file would result in mockserver returning
