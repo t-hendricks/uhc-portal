@@ -530,6 +530,7 @@ const ClusterDetails = (props) => {
           <ErrorBoundary>
             <Overview
               cluster={cluster}
+              region={cluster.subscription.xcm_id}
               clusterDetailsLoading={isClusterDetailsLoading}
               subscription={cluster.subscription}
               cloudProviders={cloudProviders}

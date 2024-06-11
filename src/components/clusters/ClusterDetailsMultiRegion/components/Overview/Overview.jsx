@@ -91,9 +91,9 @@ class Overview extends React.Component {
       subscription,
       canSubscribeOCP,
       clusterDetailsLoading,
+      region,
     } = this.props;
     let topCard;
-
     const { showInstallSuccessAlert } = this.state;
     const isArchived = get(cluster, 'subscription.status', false) === subscriptionStatuses.ARCHIVED;
     const isDeprovisioned =
@@ -208,7 +208,9 @@ class Overview extends React.Component {
               />
             )}
             {/* TODO: Part of installation story */}
-            {!shouldMonitorStatus && <ClusterStatusMonitor refresh={refresh} cluster={cluster} />}
+            {shouldMonitorStatus && (
+              <ClusterStatusMonitor region={region} refresh={refresh} cluster={cluster} />
+            )}
             {topCard}
             {showAssistedInstallerDetailCard && (
               <GatedAIDetailCard
@@ -300,6 +302,7 @@ Overview.propTypes = {
   refresh: PropTypes.func,
   hasNetworkOndemand: PropTypes.bool,
   insightsData: PropTypes.object,
+  region: PropTypes.string,
   clusterDetailsLoading: PropTypes.bool,
   userAccess: PropTypes.shape({
     data: PropTypes.bool,
