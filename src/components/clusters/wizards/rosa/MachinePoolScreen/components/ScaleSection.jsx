@@ -42,6 +42,7 @@ function ScaleSection() {
       [FieldId.IMDS]: imds,
     },
     setFieldValue,
+    setFieldTouched,
     getFieldProps,
     getFieldMeta,
   } = useFormState();
@@ -161,7 +162,7 @@ function ScaleSection() {
         <Field
           component={MachineTypeSelection}
           name={FieldId.MachineType}
-          validate={{ machine_type: required }}
+          validate={required}
           isMultiAz={isMultiAzSelected}
           isBYOC={isByoc}
           cloudProviderID={cloudProviderID}
@@ -170,7 +171,10 @@ function ScaleSection() {
           machine_type={{
             input: {
               ...getFieldProps(FieldId.MachineType),
-              onChange: (value) => setFieldValue(FieldId.MachineType, value),
+              onChange: (value) => {
+                setFieldValue(FieldId.MachineType, value, true);
+                setTimeout(() => setFieldTouched(FieldId.MachineType), 1);
+              },
             },
             meta: getFieldMeta(FieldId.MachineType),
           }}
