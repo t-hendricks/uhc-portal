@@ -10,7 +10,7 @@ module.exports = defineConfig({
     grepFilterSpecs: true,
   },
   e2e: {
-    baseUrl: "https://prod.foo.redhat.com:1337/openshift",
+    baseUrl: 'https://prod.foo.redhat.com:1337/openshift',
     setupNodeEvents(on, config) {
       // implement node event listeners here
       require('@cypress/grep/src/plugin')(config);
@@ -19,6 +19,7 @@ module.exports = defineConfig({
     },
     specPattern: 'cypress/e2e/**/*.{js,jsx,ts,tsx}',
     testIsolation: false,
+    downloadsFolder: 'cypress/downloads',
   },
   retries: {
     // Configure retry attempts for CI `cypress run`

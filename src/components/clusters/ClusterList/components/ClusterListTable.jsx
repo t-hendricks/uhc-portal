@@ -222,6 +222,7 @@ function ClusterListTable(props) {
             position={PopoverPosition.top}
             bodyContent={<ProgressList cluster={cluster} />}
             aria-label="Status: installing"
+            maxWidth="38rem"
           >
             <Button
               className="cluster-status-string status-installing"

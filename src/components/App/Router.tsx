@@ -35,6 +35,7 @@ import { normalizedProducts } from '../../common/subscriptionTypes';
 import {
   ASSISTED_INSTALLER_FEATURE,
   HYPERSHIFT_WIZARD_FEATURE,
+  MULTIREGION_PREVIEW_ENABLED,
   ROSA_WIZARD_V2_ENABLED,
 } from '../../redux/constants/featureConstants';
 import CLILoginPage from '../CLILoginPage/CLILoginPage';
@@ -43,6 +44,7 @@ import ClusterDetailsClusterOrExternalId from '../clusters/ClusterDetails/Cluste
 import ClusterDetailsSubscriptionId from '../clusters/ClusterDetails/ClusterDetailsSubscriptionId';
 import IdentityProvidersPage from '../clusters/ClusterDetails/components/IdentityProvidersPage';
 import ClustersList from '../clusters/ClusterList';
+import ClusterListMultiRegion from '../clusters/ClusterListMultiRegion';
 import CreateClusterPage from '../clusters/CreateClusterPage';
 import GovCloudPage from '../clusters/GovCloud/GovCloudPage';
 import InsightsAdvisorRedirector from '../clusters/InsightsAdvisorRedirector';
@@ -174,6 +176,8 @@ const Router: React.FC<RouterProps> = ({ history, planType, clusterId, externalC
     );
   }, [isHypershiftWizardEnabled]);
 
+  const isMultiRegionEnabled = useFeatureGate(MULTIREGION_PREVIEW_ENABLED);
+
   useEffect(() => {
     setPageMetadata({
       ...metadataByRoute(pathname, planType, clusterId, externalClusterId),
@@ -215,9 +219,7 @@ const Router: React.FC<RouterProps> = ({ history, planType, clusterId, externalC
               path="/subscriptions"
               render={() => <Navigate replace to="/quota" />}
             />
-
             <CompatRoute path="/downloads" component={DownloadsPage} />
-
             {/* Each token page has 2 routes with distinct paths, to remember that user wanted
                 to see it during page reload that may be needed for elevated auth. */}
             <TermsGuardedRoute
@@ -357,7 +359,6 @@ const Router: React.FC<RouterProps> = ({ history, planType, clusterId, externalC
               component={ConnectedInstallIBMZPreRelease}
             />
             <CompatRoute path="/install/ibmz/agent-based" component={ConnectedInstallIBMZABI} />
-
             <CompatRoute path="/install/ibmz" exact component={InstallIBMZ} />
             <CompatRoute
               path="/install/power/user-provisioned"
@@ -432,25 +433,20 @@ const Router: React.FC<RouterProps> = ({ history, planType, clusterId, externalC
               path="/create/local"
               render={() => <CreateClusterPage activeTab="local" />}
             />
-
             <CompatRoute
               end
               path="/create/rosa/welcome"
               render={() => <Navigate replace to="/create/rosa/getstarted" />}
             />
             <TermsGuardedRoute path="/create/rosa/getstarted" component={GetStartedWithROSA} />
-
             <CompatRoute path="/create/rosa/govcloud" component={GovCloudPage} />
-
             <TermsGuardedRoute
               path="/create/rosa/wizard"
               component={
                 config.rosaV2 && isRosaV2WizardEnabled ? CreateROSAWizardV2 : CreateROSAWizard
               }
             />
-
             <CompatRoute path="/create" component={CreateClusterPageEmptyTabComponent} />
-
             <CompatRoute
               path="/details/s/:id/insights/:reportId/:errorKey"
               component={InsightsAdvisorRedirector}
@@ -479,7 +475,6 @@ const Router: React.FC<RouterProps> = ({ history, planType, clusterId, externalC
             <CompatRoute path="/overview" exact component={Overview} />
             <CompatRoute path="/releases" exact component={Releases} />
             <CompatRoute path="/assisted-installer" component={GatedAssistedUiRouter} />
-
             {/* TODO: remove these redirects once links from trials and demo system emails are updated */}
             <CompatRoute
               path="/services/rosa/demo"
@@ -490,7 +485,14 @@ const Router: React.FC<RouterProps> = ({ history, planType, clusterId, externalC
               render={() => <Navigate replace to={`/overview/rosa${search}`} />}
             />
 
-            <CompatRoute path="/" exact component={ClustersList} />
+            <CompatRoute
+              path="/"
+              exact
+              component={
+                config.multiRegion && isMultiRegionEnabled ? ClusterListMultiRegion : ClustersList
+              }
+            />
+
             <Route component={NotFoundError} />
           </Switch>
         </ApiError>
