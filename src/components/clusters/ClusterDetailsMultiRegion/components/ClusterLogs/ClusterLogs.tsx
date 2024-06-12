@@ -1,9 +1,9 @@
 import React from 'react';
-import isEmpty from 'lodash/isEmpty';
+// import isEmpty from 'lodash/isEmpty';
 import size from 'lodash/size';
 import { useDispatch } from 'react-redux';
-import { useNavigate } from 'react-router-dom-v5-compat';
 
+// import { useNavigate } from 'react-router-dom-v5-compat';
 import {
   Card,
   CardBody,
@@ -17,31 +17,35 @@ import {
 } from '@patternfly/react-core';
 import SearchIcon from '@patternfly/react-icons/dist/esm/icons/search-icon';
 
+import {
+  // invalidateClusterLogsQueries,
+  useFetchClusterLogs,
+} from '~/queries/ClusterLogsQueries/useFetchClusterLogs';
 import { viewActions } from '~/redux/actions/viewOptionsActions';
-import { useGlobalState } from '~/redux/hooks';
+import { ClusterLog } from '~/types/service_logs.v1';
 import { ViewSorting } from '~/types/types';
 
-import helpers from '../../../../../common/helpers';
-import {
-  buildFilterURLParams,
-  getQueryParam,
-  viewPropsChanged,
-} from '../../../../../common/queryHelpers';
+// import helpers from '../../../../../common/helpers';
+// import {
+//   buildFilterURLParams,
+//   getQueryParam,
+//   viewPropsChanged,
+// } from '../../../../../common/queryHelpers';
 import { viewConstants } from '../../../../../redux/constants';
 import ErrorBox from '../../../../common/ErrorBox';
 import LiveDateFormat from '../../../../common/LiveDateFormat/LiveDateFormat';
 import ViewPaginationRow from '../../../common/ViewPaginationRow/viewPaginationRow';
 
-import {
-  dateFormat,
-  dateParse,
-  getTimestampFrom,
-  onDateChangeFromFilter,
-} from './toolbar/ClusterLogsDatePicker';
-import { clusterLogActions } from './clusterLogActions';
-import { LOG_TYPES, SEVERITY_TYPES } from './clusterLogConstants';
+// import {
+//   dateFormat,
+//   dateParse,
+//   getTimestampFrom,
+//   onDateChangeFromFilter,
+// } from './toolbar/ClusterLogsDatePicker';
+import { ClusterLogsErrorType, initialParams } from './cluserLogsHelper';
+// import { LOG_TYPES, SEVERITY_TYPES } from './clusterLogConstants';
 import LogTable from './LogTable';
-import ClusterLogsToolbar from './toolbar';
+// import ClusterLogsToolbar from './toolbar';
 
 type ClusterLogsProps = {
   refreshEvent: {
@@ -50,125 +54,151 @@ type ClusterLogsProps = {
   };
   clusterID?: string;
   externalClusterID?: string;
+  region?: string | undefined;
   createdAt?: string;
   isVisible?: boolean;
+  findGcpOrgPolicyWarning?: (logs?: ClusterLog[]) => void;
 };
 
 const ClusterLogs = ({
   externalClusterID,
   clusterID,
+  region,
   createdAt,
   refreshEvent,
   isVisible,
+  findGcpOrgPolicyWarning,
 }: ClusterLogsProps) => {
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
   const dispatch = useDispatch();
   const viewType = viewConstants.CLUSTER_LOGS_VIEW;
-
-  const { requestState, fetchedClusterLogsAt, logs } = useGlobalState((state) => state.clusterLogs);
-  const viewOptions = useGlobalState((state) => state.viewOptions[viewType]);
-
-  const [hasChanged, setHasChanged] = React.useState(false);
-  const [previousViewOptions, setPreviousViewOptions] = React.useState(viewOptions);
+  // const [hasChanged, setHasChanged] = React.useState(false);
   const [ignoreErrors, setIgnoreErrors] = React.useState(false);
   const [isPendingNoData, setIsPendingNoData] = React.useState(false);
+  const initialView = Object.assign(initialParams);
 
-  React.useEffect(() => {
-    const severityTypes = getQueryParam('severityTypes') || '';
-    const logTypes = getQueryParam('logTypes') || '';
-    if (!isEmpty(severityTypes) || !isEmpty(logTypes)) {
-      setHasChanged(true);
-      dispatch(
-        viewActions.onListFlagsSet(
-          'conditionalFilterFlags',
-          {
-            severityTypes: !isEmpty(severityTypes)
-              ? severityTypes.split(',').filter((type) => SEVERITY_TYPES.includes(type))
-              : [],
-            logTypes: !isEmpty(logTypes)
-              ? logTypes.split(',').filter((type) => LOG_TYPES.includes(type))
-              : [],
-          },
-          viewType,
-        ),
-      );
-    }
+  const {
+    data: logsData,
+    isError,
+    error: clusterLogsError,
+    dataUpdatedAt,
+    isPending,
+  } = useFetchClusterLogs(externalClusterID, clusterID, initialView, region);
 
-    let filter;
+  // placeholder OCMUI-1842
+  const viewOptions = {
+    currentPage: logsData?.page,
+    pageSize: logsData?.size,
+    totalCount: logsData?.total,
+  };
 
-    const loggedBy = getQueryParam('loggedBy') || '';
-    const description = getQueryParam('description') || '';
-    if (!isEmpty(description) || !isEmpty(description)) {
-      filter = { loggedBy, description };
-    }
+  const logs = logsData?.items;
+  const error = clusterLogsError as ClusterLogsErrorType;
+  const fetchedClusterLogsAt = new Date(dataUpdatedAt);
 
-    if (createdAt) {
-      // Apply a timestamp filter by default
-      const minDate = dateParse(createdAt);
-      const { symbol, date } = onDateChangeFromFilter(dateFormat(getTimestampFrom(minDate)));
-      filter = {
-        ...(filter ?? {}),
-        timestampFrom: `${symbol} '${date}'`,
-      };
-    }
+  // TODO OCMUI OCMUI-1842
+  // React.useEffect(() => {
+  //   const severityTypes = getQueryParam('severityTypes') || '';
+  //   const logTypes = getQueryParam('logTypes') || '';
+  //   if (!isEmpty(severityTypes) || !isEmpty(logTypes)) {
+  //     setHasChanged(true);
+  //     dispatch(
+  //       viewActions.onListFlagsSet(
+  //         'conditionalFilterFlags',
+  //         {
+  //           severityTypes: !isEmpty(severityTypes)
+  //             ? severityTypes.split(',').filter((type) => SEVERITY_TYPES.includes(type))
+  //             : [],
+  //           logTypes: !isEmpty(logTypes)
+  //             ? logTypes.split(',').filter((type) => LOG_TYPES.includes(type))
+  //             : [],
+  //         },
+  //         viewType,
+  //       ),
+  //     );
+  //   }
 
-    if (filter) {
-      setHasChanged(true);
-      dispatch(viewActions.onListFilterSet(filter, viewType));
-    }
-  }, [createdAt, dispatch, viewType]);
+  //   let filter;
 
-  React.useEffect(() => {
-    if (
-      viewPropsChanged(viewOptions, previousViewOptions) &&
-      (!requestState.pending || (!hasChanged && (externalClusterID || clusterID)))
-    ) {
-      dispatch(clusterLogActions.getClusterHistory(externalClusterID, clusterID, viewOptions));
-      setPreviousViewOptions(viewOptions);
-    }
-  }, [
-    dispatch,
-    previousViewOptions,
-    requestState.pending,
-    hasChanged,
-    externalClusterID,
-    clusterID,
-    setPreviousViewOptions,
-    viewOptions,
-  ]);
+  //   const loggedBy = getQueryParam('loggedBy') || '';
+  //   const description = getQueryParam('description') || '';
+  //   if (!isEmpty(description) || !isEmpty(description)) {
+  //     filter = { loggedBy, description };
+  //   }
+
+  //   if (createdAt) {
+  //     // Apply a timestamp filter by default
+  //     const minDate = dateParse(createdAt);
+  //     const { symbol, date } = onDateChangeFromFilter(dateFormat(getTimestampFrom(minDate)));
+  //     filter = {
+  //       ...(filter ?? {}),
+  //       timestampFrom: `${symbol} '${date}'`,
+  //     };
+  //   }
+
+  //   if (filter) {
+  //     setHasChanged(true);
+  //     dispatch(viewActions.onListFilterSet(filter, viewType));
+  //   }
+  // }, [createdAt, dispatch, viewType]);
+
+  // React.useEffect(() => {
+  //   if (
+  //     viewPropsChanged(viewOptions, previousViewOptions) &&
+  //     (!isPending || (!hasChanged && (externalClusterID || clusterID)))
+  //   ) {
+  //     invalidateClusterLogsQueries();
+  //     setPreviousViewOptions(viewOptions);
+  //   }
+  // }, [
+  //   dispatch,
+  //   previousViewOptions,
+  //   isPending,
+  //   hasChanged,
+  //   externalClusterID,
+  //   clusterID,
+  //   setPreviousViewOptions,
+  //   viewOptions,
+  // ]);
 
   React.useEffect(() => {
     // These errors are present during cluster install
     // Instead of showing an error, display "No cluster log entries found"
-    if (requestState.error) {
-      setIgnoreErrors([403, 404].includes(requestState.errorCode!));
+    if (error) {
+      if (error?.errorCode === 403 || error?.errorCode === 404) setIgnoreErrors(true);
     }
-  }, [requestState]);
+  }, [error]);
 
   React.useEffect(() => {
-    const hasNoFilters = isEmpty(viewOptions.filter) && helpers.nestedIsEmpty(viewOptions.flags);
-    setIsPendingNoData(!size(logs) && requestState.pending && hasNoFilters);
-  }, [logs, requestState.pending, viewOptions.filter, viewOptions.flags]);
+    setIsPendingNoData(!size(logs) && isPending);
+  }, [logs, isPending]);
+
+  // TODO OCMUI OCMUI-1842
+  // React.useEffect(() => {
+  //   if (isVisible === true) {
+  //     const filters: {
+  //       [flag: string]: string[];
+  //     } = Object.entries(viewOptions.filter)
+  //       .filter((e) => ['description', 'loggedBy'].includes(e[0]) && e[1])
+  //       .reduce((acc, curr) => ({ ...acc, [`${curr[0]}`]: [curr[1]] }), {});
+  //     navigate(
+  //       {
+  //         hash: '#clusterHistory',
+  //         search: buildFilterURLParams({
+  //           ...filters,
+  //           ...(viewOptions.flags.conditionalFilterFlags || {}),
+  //         }),
+  //       },
+  //       { replace: true },
+  //     );
+  //   }
+  // }, [isVisible, viewOptions.flags.conditionalFilterFlags, viewOptions.filter, navigate]);
 
   React.useEffect(() => {
-    if (isVisible === true) {
-      const filters: {
-        [flag: string]: string[];
-      } = Object.entries(viewOptions.filter)
-        .filter((e) => ['description', 'loggedBy'].includes(e[0]) && e[1])
-        .reduce((acc, curr) => ({ ...acc, [`${curr[0]}`]: [curr[1]] }), {});
-      navigate(
-        {
-          hash: '#clusterHistory',
-          search: buildFilterURLParams({
-            ...filters,
-            ...(viewOptions.flags.conditionalFilterFlags || {}),
-          }),
-        },
-        { replace: true },
-      );
+    if (findGcpOrgPolicyWarning) {
+      findGcpOrgPolicyWarning(logs);
     }
-  }, [isVisible, viewOptions.flags.conditionalFilterFlags, viewOptions.filter, navigate]);
+  }, [logs, findGcpOrgPolicyWarning]);
 
   return (
     <Card className="ocm-c-overview-cluster-history__card">
@@ -193,23 +223,24 @@ const ClusterLogs = ({
         </CardTitle>
       </CardHeader>
       <CardBody className="ocm-c-overview-cluster-history__card--body">
-        {requestState.error && !ignoreErrors && (
+        {isError && !ignoreErrors && (
           <ErrorBox
             message="Error retrieving cluster logs"
             response={{
-              errorMessage: requestState.errorMessage,
-              operationID: requestState.operationID,
+              errorMessage: error.errorMessage,
+              operationID: error.operationID,
             }}
           />
         )}
+        {/* TODO OCMUI-1842
         <ClusterLogsToolbar
           view={viewType}
           externalClusterID={externalClusterID}
           isPendingNoData={isPendingNoData}
           clusterID={clusterID}
           logs={logs?.length}
-        />
-        {requestState.error && !size(logs) && ignoreErrors ? (
+        /> */}
+        {isError && !size(logs) && ignoreErrors ? (
           <PageSection>
             <EmptyState>
               <EmptyStateHeader
@@ -222,7 +253,7 @@ const ClusterLogs = ({
         ) : (
           <>
             <LogTable
-              pending={requestState.pending}
+              pending={isPending}
               logs={logs}
               setSorting={(sorting: ViewSorting) =>
                 dispatch(viewActions.onListSortBy(sorting, viewType))
@@ -234,7 +265,6 @@ const ClusterLogs = ({
               currentPage={viewOptions.currentPage}
               pageSize={viewOptions.pageSize}
               totalCount={viewOptions.totalCount}
-              totalPages={viewOptions.totalPages}
               variant="bottom"
               isDisabled={isPendingNoData}
             />
