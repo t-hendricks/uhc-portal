@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 
 import {
@@ -37,21 +37,31 @@ import './Dashboard.scss';
 
 const PAGE_TITLE = 'Overview | Red Hat OpenShift Cluster Manager';
 
-class Dashboard extends Component {
-  componentDidMount() {
-    const {
-      summaryDashboard,
-      getSummaryDashboard,
-      unhealthyClusters,
-      getUnhealthyClusters,
-      getUserAccess,
-      viewOptions,
-      getOrganizationAndQuota,
-      organization,
-      insightsOverview,
-      fetchOrganizationInsights,
-    } = this.props;
-
+const Dashboard = (props) => {
+  const {
+    summaryDashboard,
+    unhealthyClusters,
+    viewOptions,
+    invalidateSubscriptions,
+    totalClusters,
+    totalConnectedClusters,
+    totalUnhealthyClusters,
+    totalCPU,
+    usedCPU,
+    totalMem,
+    usedMem,
+    upToDate,
+    upgradeAvailable,
+    userAccess,
+    getSummaryDashboard,
+    getUnhealthyClusters,
+    getUserAccess,
+    getOrganizationAndQuota,
+    organization,
+    insightsOverview,
+    fetchOrganizationInsights,
+  } = props;
+  React.useEffect(() => {
     if (!summaryDashboard.fulfilled && !summaryDashboard.pending) {
       getSummaryDashboard();
     }
@@ -69,176 +79,167 @@ class Dashboard extends Component {
     }
 
     getUserAccess({ type: 'OCP' });
+  }, [
+    fetchOrganizationInsights,
+    getOrganizationAndQuota,
+    getSummaryDashboard,
+    getUnhealthyClusters,
+    getUserAccess,
+    insightsOverview,
+    organization,
+    summaryDashboard,
+    unhealthyClusters,
+    viewOptions,
+  ]);
+
+  const isError = summaryDashboard.error || unhealthyClusters.error;
+  const isPending =
+    !summaryDashboard.fulfilled ||
+    summaryDashboard.pending ||
+    !unhealthyClusters.fulfilled ||
+    unhealthyClusters.pending;
+  // TODO: should show only when at least one cluster is connected and sends Insights
+  const showInsightsAdvisorWidget = insightsOverview.fulfilled && insightsOverview.overview;
+
+  if (isError) {
+    let errorSource;
+    if (summaryDashboard.error) {
+      errorSource = summaryDashboard;
+    } else {
+      errorSource = unhealthyClusters;
+    }
+    const { errorMessage, errorCode, operationID } = errorSource;
+    const response = { errorMessage, errorCode, operationID };
+    return <Unavailable response={response} />;
   }
 
-  render() {
-    const {
-      summaryDashboard,
-      unhealthyClusters,
-      viewOptions,
-      invalidateSubscriptions,
-      totalClusters,
-      totalConnectedClusters,
-      totalUnhealthyClusters,
-      totalCPU,
-      usedCPU,
-      totalMem,
-      usedMem,
-      upToDate,
-      upgradeAvailable,
-      insightsOverview,
-      userAccess,
-    } = this.props;
-
-    const isError = summaryDashboard.error || unhealthyClusters.error;
-    const isPending =
-      !summaryDashboard.fulfilled ||
-      summaryDashboard.pending ||
-      !unhealthyClusters.fulfilled ||
-      unhealthyClusters.pending;
-    // TODO: should show only when at least one cluster is connected and sends Insights
-    const showInsightsAdvisorWidget = insightsOverview.fulfilled && insightsOverview.overview;
-
-    if (isError) {
-      let errorSource;
-      if (summaryDashboard.error) {
-        errorSource = summaryDashboard;
-      } else {
-        errorSource = unhealthyClusters;
-      }
-      const { errorMessage, errorCode, operationID } = errorSource;
-      const response = { errorMessage, errorCode, operationID };
-      return <Unavailable response={response} />;
-    }
-
-    // Show spinner if while waiting for responses.
-    if (isPending && !isError) {
-      return (
-        <AppPage title={PAGE_TITLE}>
-          <EmptyState>
-            <EmptyStateBody>
-              <Spinner centered />
-            </EmptyStateBody>
-          </EmptyState>
-        </AppPage>
-      );
-    }
-
-    // Revert to an "empty" state if there are no clusters to show.
-    if (summaryDashboard.fulfilled && !totalClusters) {
-      return (
-        <AppPage title={PAGE_TITLE}>
-          <DashboardEmptyState />
-        </AppPage>
-      );
-    }
-
+  // Show spinner if while waiting for responses.
+  if (isPending && !isError) {
     return (
       <AppPage title={PAGE_TITLE}>
-        <PageHeader>
-          <Split hasGutter>
-            <SplitItem>
-              <Title
-                headingLevel="h1"
-                size="2xl"
-                className="page-title"
-                widget-type="InsightsPageHeaderTitle"
-              >
-                Dashboard
-              </Title>
-            </SplitItem>
-            <SplitItem isFilled />
-            <SplitItem>
-              <ClusterListActions isDashboardView />
-            </SplitItem>
-          </Split>
-        </PageHeader>
-        <PageSection>
-          <Grid hasGutter className="ocm-c-overview">
-            <TopOverviewSection
-              isError={summaryDashboard.error}
-              totalClusters={totalClusters}
-              totalUnhealthyClusters={totalUnhealthyClusters}
-              totalConnectedClusters={totalConnectedClusters}
-              totalCPU={totalCPU}
-              usedCPU={usedCPU}
-              totalMem={totalMem}
-              usedMem={usedMem}
-            />
-            {totalConnectedClusters > 0 && (
-              <GridItem md={6}>
-                <ClustersWithIssuesTableCard
-                  unhealthyClusters={unhealthyClusters}
-                  viewOptions={viewOptions}
-                />
-              </GridItem>
-            )}
-            {showInsightsAdvisorWidget && (
-              <GridItem md={6}>
-                <InsightsAdvisorCard overview={insightsOverview.overview} />
-              </GridItem>
-            )}
-            <GridItem md={6}>
-              <Card className="ocm-overview-clusters__card">
-                <CardTitle>Telemetry</CardTitle>
-                <CardBody>
-                  {!totalConnectedClusters && !totalClusters ? (
-                    <EmptyState>
-                      <EmptyStateBody>No data available</EmptyStateBody>
-                    </EmptyState>
-                  ) : (
-                    <SmallClusterChart
-                      donutId="connected_clusters_donut"
-                      used={totalConnectedClusters}
-                      total={totalClusters}
-                      availableTitle="Not checking in"
-                      usedTitle="Connected"
-                      unit="clusters"
-                    />
-                  )}
-                </CardBody>
-              </Card>
-            </GridItem>
-            {userAccess.fulfilled && userAccess.data !== undefined && userAccess.data === true && (
-              <GridItem md={6}>
-                <CostCard />
-              </GridItem>
-            )}
-            <GridItem md={6}>
-              <Card className="ocm-overview-clusters__card">
-                <CardTitle>Update status</CardTitle>
-                <CardBody>
-                  {!upgradeAvailable.value && !upToDate.value ? (
-                    <EmptyState>
-                      <EmptyStateBody>No data available</EmptyStateBody>
-                    </EmptyState>
-                  ) : (
-                    <SmallClusterChart
-                      donutId="update_available_donut"
-                      used={upToDate.value}
-                      total={upgradeAvailable.value + upToDate.value}
-                      unit="clusters"
-                      availableTitle="Update available"
-                      usedTitle="Up-to-date"
-                    />
-                  )}
-                </CardBody>
-              </Card>
-            </GridItem>
-            <GridItem>
-              <ExpiredTrialsCard />
-            </GridItem>
-          </Grid>
-          <ConnectedModal
-            ModalComponent={EditSubscriptionSettingsDialog}
-            onClose={invalidateSubscriptions}
-          />
-          <ConnectedModal ModalComponent={ArchiveClusterDialog} onClose={invalidateSubscriptions} />
-        </PageSection>
+        <EmptyState>
+          <EmptyStateBody>
+            <Spinner centered />
+          </EmptyStateBody>
+        </EmptyState>
       </AppPage>
     );
   }
-}
+
+  // Revert to an "empty" state if there are no clusters to show.
+  if (summaryDashboard.fulfilled && !totalClusters) {
+    return (
+      <AppPage title={PAGE_TITLE}>
+        <DashboardEmptyState />
+      </AppPage>
+    );
+  }
+
+  return (
+    <AppPage title={PAGE_TITLE}>
+      <PageHeader>
+        <Split hasGutter>
+          <SplitItem>
+            <Title
+              headingLevel="h1"
+              size="2xl"
+              className="page-title"
+              widget-type="InsightsPageHeaderTitle"
+            >
+              Dashboard
+            </Title>
+          </SplitItem>
+          <SplitItem isFilled />
+          <SplitItem>
+            <ClusterListActions isDashboardView />
+          </SplitItem>
+        </Split>
+      </PageHeader>
+      <PageSection>
+        <Grid hasGutter className="ocm-c-overview">
+          <TopOverviewSection
+            isError={summaryDashboard.error}
+            totalClusters={totalClusters}
+            totalUnhealthyClusters={totalUnhealthyClusters}
+            totalConnectedClusters={totalConnectedClusters}
+            totalCPU={totalCPU}
+            usedCPU={usedCPU}
+            totalMem={totalMem}
+            usedMem={usedMem}
+          />
+          {totalConnectedClusters > 0 && (
+            <GridItem md={6}>
+              <ClustersWithIssuesTableCard
+                unhealthyClusters={unhealthyClusters}
+                viewOptions={viewOptions}
+              />
+            </GridItem>
+          )}
+          {showInsightsAdvisorWidget && (
+            <GridItem md={6}>
+              <InsightsAdvisorCard overview={insightsOverview.overview} />
+            </GridItem>
+          )}
+          <GridItem md={6}>
+            <Card className="ocm-overview-clusters__card">
+              <CardTitle>Telemetry</CardTitle>
+              <CardBody>
+                {!totalConnectedClusters && !totalClusters ? (
+                  <EmptyState>
+                    <EmptyStateBody>No data available</EmptyStateBody>
+                  </EmptyState>
+                ) : (
+                  <SmallClusterChart
+                    donutId="connected_clusters_donut"
+                    used={totalConnectedClusters}
+                    total={totalClusters}
+                    availableTitle="Not checking in"
+                    usedTitle="Connected"
+                    unit="clusters"
+                  />
+                )}
+              </CardBody>
+            </Card>
+          </GridItem>
+          {userAccess.fulfilled && userAccess.data !== undefined && userAccess.data === true && (
+            <GridItem md={6}>
+              <CostCard />
+            </GridItem>
+          )}
+          <GridItem md={6}>
+            <Card className="ocm-overview-clusters__card">
+              <CardTitle>Update status</CardTitle>
+              <CardBody>
+                {!upgradeAvailable.value && !upToDate.value ? (
+                  <EmptyState>
+                    <EmptyStateBody>No data available</EmptyStateBody>
+                  </EmptyState>
+                ) : (
+                  <SmallClusterChart
+                    donutId="update_available_donut"
+                    used={upToDate.value}
+                    total={upgradeAvailable.value + upToDate.value}
+                    unit="clusters"
+                    availableTitle="Update available"
+                    usedTitle="Up-to-date"
+                  />
+                )}
+              </CardBody>
+            </Card>
+          </GridItem>
+          <GridItem>
+            <ExpiredTrialsCard />
+          </GridItem>
+        </Grid>
+        <ConnectedModal
+          ModalComponent={EditSubscriptionSettingsDialog}
+          onClose={invalidateSubscriptions}
+        />
+        <ConnectedModal ModalComponent={ArchiveClusterDialog} onClose={invalidateSubscriptions} />
+      </PageSection>
+    </AppPage>
+  );
+};
 
 Dashboard.propTypes = {
   getSummaryDashboard: PropTypes.func.isRequired,

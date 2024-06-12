@@ -20,6 +20,8 @@ import {
 } from '@patternfly/react-table/deprecated';
 import { global_success_color_100 as successColor } from '@patternfly/react-tokens/dist/esm/global_success_color_100';
 
+import { usePreviousProps } from '~/hooks/usePreviousProps';
+
 import getClusterName from '../../../common/getClusterName';
 import { createOverviewQueryObject, viewPropsChanged } from '../../../common/queryHelpers';
 import { viewConstants } from '../../../redux/constants';
@@ -29,90 +31,90 @@ import { getIssuesCount } from '../overviewHelpers';
 
 import { actionResolver } from './ClustersWithIssuesActionResolver';
 
-class ClustersWithIssuesTableCard extends React.Component {
-  componentDidUpdate(prevProps) {
-    const { getUnhealthyClusters, viewOptions } = this.props;
-    if (viewPropsChanged(viewOptions, prevProps.viewOptions)) {
+const ClustersWithIssuesTableCard = (props) => {
+  const prevProps = usePreviousProps(props);
+
+  React.useEffect(() => {
+    const { getUnhealthyClusters, viewOptions } = props;
+    if (prevProps && viewPropsChanged(viewOptions, prevProps.viewOptions)) {
       getUnhealthyClusters(createOverviewQueryObject(viewOptions));
     }
-  }
+  }, [props, prevProps]);
 
-  render() {
-    const { unhealthyClusters, viewOptions } = this.props;
-    if (unhealthyClusters.fulfilled && unhealthyClusters.subscriptions.length === 0) {
-      return (
-        <Card className="ocm-overview-clusters__card">
-          <CardTitle>Clusters with issues</CardTitle>
-          <CardBody>
-            <EmptyState>
-              <EmptyStateHeader
-                icon={<EmptyStateIcon icon={CheckCircleIcon} color={successColor.value} />}
-              />
-              <EmptyStateBody>No issues detected</EmptyStateBody>
-            </EmptyState>
-          </CardBody>
-        </Card>
-      );
-    }
-
-    const clusterWithIssuesRow = (subscription) => {
-      const issuesCount = <span>{getIssuesCount(subscription)}</span>;
-
-      const clusterName = (
-        <Link to={`/details/s/${subscription.id}`}>{getClusterName(subscription)}</Link>
-      );
-
-      return {
-        cells: [{ title: clusterName }, { title: issuesCount }],
-        subscription,
-      };
-    };
-
-    const columns = [
-      { title: 'Name' },
-      { title: 'Issues detected', transforms: [textCenter], columnTransforms: [textCenter] },
-    ];
-
-    const showSkeleton =
-      unhealthyClusters.pending &&
-      unhealthyClusters.subscriptions &&
-      unhealthyClusters.subscriptions.length > 0;
-
-    const rows = showSkeleton
-      ? skeletonRows(viewOptions.pageSize)
-      : unhealthyClusters.subscriptions.map((subscription) => clusterWithIssuesRow(subscription));
-    const resolver = unhealthyClusters.pending
-      ? undefined
-      : (rowData) => actionResolver(rowData.subscription);
-
+  const { unhealthyClusters, viewOptions } = props;
+  if (unhealthyClusters.fulfilled && unhealthyClusters.subscriptions.length === 0) {
     return (
       <Card className="ocm-overview-clusters__card">
         <CardTitle>Clusters with issues</CardTitle>
         <CardBody>
-          <TableDeprecated
-            className="clusters-with-issues"
-            aria-label="Clusters with issues"
-            cells={columns}
-            rows={rows}
-            actionResolver={resolver}
-            variant={TableVariant.compact}
-          >
-            <TableHeaderDeprecated />
-            <TableBodyDeprecated />
-          </TableDeprecated>
-          <ViewPaginationRow
-            viewType={viewConstants.OVERVIEW_VIEW}
-            currentPage={viewOptions.currentPage}
-            pageSize={viewOptions.pageSize}
-            totalCount={viewOptions.totalCount}
-            totalPages={viewOptions.totalPages}
-            variant="bottom"
-          />
+          <EmptyState>
+            <EmptyStateHeader
+              icon={<EmptyStateIcon icon={CheckCircleIcon} color={successColor.value} />}
+            />
+            <EmptyStateBody>No issues detected</EmptyStateBody>
+          </EmptyState>
         </CardBody>
       </Card>
     );
   }
-}
+
+  const clusterWithIssuesRow = (subscription) => {
+    const issuesCount = <span>{getIssuesCount(subscription)}</span>;
+
+    const clusterName = (
+      <Link to={`/details/s/${subscription.id}`}>{getClusterName(subscription)}</Link>
+    );
+
+    return {
+      cells: [{ title: clusterName }, { title: issuesCount }],
+      subscription,
+    };
+  };
+
+  const columns = [
+    { title: 'Name' },
+    { title: 'Issues detected', transforms: [textCenter], columnTransforms: [textCenter] },
+  ];
+
+  const showSkeleton =
+    unhealthyClusters.pending &&
+    unhealthyClusters.subscriptions &&
+    unhealthyClusters.subscriptions.length > 0;
+
+  const rows = showSkeleton
+    ? skeletonRows(viewOptions.pageSize)
+    : unhealthyClusters.subscriptions.map((subscription) => clusterWithIssuesRow(subscription));
+  const resolver = unhealthyClusters.pending
+    ? undefined
+    : (rowData) => actionResolver(rowData.subscription);
+
+  return (
+    <Card className="ocm-overview-clusters__card">
+      <CardTitle>Clusters with issues</CardTitle>
+      <CardBody>
+        <TableDeprecated
+          className="clusters-with-issues"
+          aria-label="Clusters with issues"
+          cells={columns}
+          rows={rows}
+          actionResolver={resolver}
+          variant={TableVariant.compact}
+        >
+          <TableHeaderDeprecated />
+          <TableBodyDeprecated />
+        </TableDeprecated>
+        <ViewPaginationRow
+          viewType={viewConstants.OVERVIEW_VIEW}
+          currentPage={viewOptions.currentPage}
+          pageSize={viewOptions.pageSize}
+          totalCount={viewOptions.totalCount}
+          totalPages={viewOptions.totalPages}
+          variant="bottom"
+        />
+      </CardBody>
+    </Card>
+  );
+};
 
 ClustersWithIssuesTableCard.propTypes = {
   unhealthyClusters: PropTypes.shape({
