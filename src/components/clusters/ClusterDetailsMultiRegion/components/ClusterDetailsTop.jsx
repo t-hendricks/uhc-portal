@@ -75,10 +75,10 @@ function ClusterDetailsTop(props) {
     autoRefreshEnabled,
     toggleSubscriptionReleased,
     showPreviewLabel,
-    logs,
     isClusterIdentityProvidersLoading,
     clusterIdentityProvidersError,
     isRefetching,
+    gcpOrgPolicyWarning,
   } = props;
 
   const dispatch = useDispatch();
@@ -208,14 +208,8 @@ function ClusterDetailsTop(props) {
     </ButtonWithTooltip>
   );
 
-  const orgPolicyWarning = logs?.find(
-    (obj) =>
-      obj.summary?.includes('Please enable the Org Policy API for the GCP project') ||
-      obj.summary?.includes('GCP Organization Policy Service'),
-  );
-
   const showGcpOrgPolicyWarning =
-    orgPolicyWarning &&
+    gcpOrgPolicyWarning &&
     !isDeprovisioned &&
     cluster.state !== clusterStates.READY &&
     cluster.state !== clusterStates.UNINSTALLING;
@@ -291,7 +285,7 @@ function ClusterDetailsTop(props) {
       {OSDRHMEndDate && !isDeprovisioned && (
         <ExpirationAlert expirationTimestamp={OSDRHMEndDate} OSDRHMExpiration />
       )}
-      {showGcpOrgPolicyWarning && <GcpOrgPolicyAlert summary={orgPolicyWarning?.summary} />}
+      {showGcpOrgPolicyWarning && <GcpOrgPolicyAlert summary={gcpOrgPolicyWarning} />}
 
       <SubscriptionCompliancy
         cluster={cluster}
@@ -327,12 +321,7 @@ ClusterDetailsTop.propTypes = {
   isClusterIdentityProvidersLoading: PropTypes.bool.isRequired,
   clusterIdentityProvidersError: PropTypes.bool.isRequired,
   isRefetching: PropTypes.bool.isRequired,
-  logs: PropTypes.arrayOf(
-    PropTypes.shape({
-      summary: PropTypes.string,
-      description: PropTypes.string,
-    }),
-  ),
+  gcpOrgPolicyWarning: PropTypes.string,
 };
 
 export default ClusterDetailsTop;

@@ -5,7 +5,7 @@ import { RQApiErrorType } from './types';
 export const formatErrorData = (
   isLoading: boolean,
   isError: boolean,
-  error: Error | (Error | null)[],
+  error: (Error | null) | (Error | null)[],
 ) => {
   if (isError && axios.isAxiosError(error)) {
     const errorData: RQApiErrorType = {};
