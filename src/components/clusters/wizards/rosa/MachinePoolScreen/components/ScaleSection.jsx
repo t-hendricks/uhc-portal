@@ -104,7 +104,11 @@ function ScaleSection() {
           <p className="pf-v5-u-mb-md">
             Configure labels that will apply to all nodes in this machine pool.
           </p>
-          <FieldArray component={FormKeyValueList} name={FieldId.NodeLabels} />
+          <FieldArray
+            component={FormKeyValueList}
+            name={FieldId.NodeLabels}
+            validateOnChange={false}
+          />
         </ExpandableSection>
       ) : null,
     [isHypershiftSelected, isNodeLabelsExpanded],
