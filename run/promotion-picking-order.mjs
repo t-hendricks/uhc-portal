@@ -198,7 +198,10 @@ async function reportOrder(jiraToken, branch, verbose) {
           // or it depends on another jira
           issuelinks.forEach(({ type, outwardIssue }) => {
             if (type.name === 'Depend' && outwardIssue && jiraTicketRegex.test(outwardIssue.key)) {
-              if (!qeApproved.includes(outwardIssue.fields.status.name)) {
+              if (
+                !qeApproved.includes(outwardIssue.fields.status.name) &&
+                outwardIssue.fields.issuetype.name !== 'Epic'
+              ) {
                 commit.jira.relatedJiraStatuses.push(
                   chalk.redBright(
                     `DEPENDS ON ${outwardIssue.key} ${outwardIssue.fields.status.name.toUpperCase()}`,
@@ -534,7 +537,16 @@ async function reportOrder(jiraToken, branch, verbose) {
         if (filename) {
           const currentFilename = renamed[filename] || filename;
           const ourFile = await git.raw(['show', `${currentSha}:${currentFilename}`]);
-          const base = await git.raw(['show', `${mergeBase}:${filename}`]);
+          let base = null;
+          try {
+            base = await git.raw(['show', `${mergeBase}:${filename}`]);
+          } catch (e) {
+            // empty
+          }
+          if (!base) {
+            // eslint-disable-next-line no-continue
+            continue;
+          }
           let otherFile = mergedFileMap[filename];
           if (!otherFile) {
             try {

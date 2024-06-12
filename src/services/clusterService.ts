@@ -1176,8 +1176,8 @@ export function getClusterService(apiRequest: APIRequest = defaultApiRequest) {
   };
 }
 
-export const getClusterServiceForRegion = (region?: string, provider?: string) =>
-  getClusterService(getAPIRequestForRegion(region, provider));
+export const getClusterServiceForRegion = (region?: string) =>
+  getClusterService(getAPIRequestForRegion(region));
 
 const clusterService = getClusterService();
 

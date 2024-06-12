@@ -103,15 +103,26 @@ const knownProducts = {
   RHOIC: 'RHOIC',
 };
 
-const omittedProducts = [
-  knownProducts.RHACS,
-  knownProducts.RHACSTrial,
-  knownProducts.RHOSR,
-  knownProducts.RHOSRTrial,
-  knownProducts.RHOSAK,
-  knownProducts.RHOSAKTrial,
-  knownProducts.RHOSE,
-  knownProducts.RHOSETrial,
+// Extracted separately normalizeProductID() converts MOA into ROSA
+// But for the actual allow list it needs actual values
+const additionalProducts = {
+  MOA: 'MOA',
+  MOA_HOSTEDCONTROLPLANE: 'MOA-HostedControlPlane',
+};
+
+// List of allowed products to display
+const allowedProducts = [
+  knownProducts.OSD,
+  knownProducts.OSDTrial,
+  knownProducts.OCP,
+  knownProducts.RHMI,
+  knownProducts.ROSA,
+  knownProducts.RHOIC,
+  additionalProducts.MOA,
+  additionalProducts.MOA_HOSTEDCONTROLPLANE,
+  knownProducts.ROSA_HyperShift,
+  knownProducts.ARO,
+  knownProducts.OCP_Assisted_Install,
 ];
 
 /**
@@ -225,7 +236,7 @@ export {
   subscriptionProductBundles,
   subscriptionSystemUnits,
   knownProducts,
-  omittedProducts,
+  allowedProducts,
   normalizedProducts,
   clustersServiceProducts,
   productFilterOptions,

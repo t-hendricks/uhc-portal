@@ -19,9 +19,18 @@ import isEmpty from 'lodash/isEmpty';
 import size from 'lodash/size';
 import PropTypes from 'prop-types';
 
-import { Card, PageSection, Toolbar, ToolbarContent, ToolbarItem } from '@patternfly/react-core';
-import { PageHeaderTools as PageHeaderToolsDeprecated } from '@patternfly/react-core/deprecated';
-import { PageHeader, PageHeaderTitle } from '@redhat-cloud-services/frontend-components/PageHeader';
+import {
+  Card,
+  Flex,
+  FlexItem,
+  PageSection,
+  PageSectionVariants,
+  Title,
+  Toolbar,
+  ToolbarContent,
+  ToolbarGroup,
+  ToolbarItem,
+} from '@patternfly/react-core';
 import Spinner from '@redhat-cloud-services/frontend-components/Spinner';
 
 import { ONLY_MY_CLUSTERS_TOGGLE_CLUSTERS_LIST } from '~/common/localStorageConstants';
@@ -70,19 +79,41 @@ const ClusterListPageHeader = ({
 }) => (
   <>
     <ReadOnlyBanner someReadOnly={someReadOnly} />
-    <PageHeader id="cluster-list-header">
-      <PageHeaderTitle title="Clusters" className="page-title" />
-      <PageHeaderToolsDeprecated>
-        {showSpinner && <Spinner size="lg" className="cluster-list-spinner" />}
-        {error && <ErrorTriangle errorMessage={errorMessage} className="cluster-list-warning" />}
-      </PageHeaderToolsDeprecated>
-      <RefreshBtn
-        autoRefresh={!anyModalOpen}
-        isDisabled={isPendingNoData}
-        refreshFunc={refresh}
-        classOptions="cluster-list-top"
-      />
-    </PageHeader>
+    <PageSection variant={PageSectionVariants.light}>
+      <Flex>
+        <FlexItem grow={{ default: 'grow' }}>
+          <Title headingLevel="h1">Clusters</Title>
+        </FlexItem>
+        <Toolbar id="cluster-list-refresh-toolbar" isFullHeight inset={{ default: 'insetNone' }}>
+          <ToolbarContent>
+            <ToolbarGroup
+              variant="icon-button-group"
+              align={{ default: 'alignRight' }}
+              spacer={{ default: 'spacerNone', md: 'spacerNone' }}
+              spaceItems={{ default: 'spaceItemsMd' }}
+            >
+              {showSpinner && (
+                <ToolbarItem>
+                  <Spinner size="lg" className="cluster-list-spinner" />
+                </ToolbarItem>
+              )}
+              {error && (
+                <ToolbarItem>
+                  <ErrorTriangle errorMessage={errorMessage} className="cluster-list-warning" />
+                </ToolbarItem>
+              )}
+              <ToolbarItem spacer={{ default: 'spacerNone' }}>
+                <RefreshBtn
+                  autoRefresh={!anyModalOpen}
+                  isDisabled={isPendingNoData}
+                  refreshFunc={refresh}
+                />
+              </ToolbarItem>
+            </ToolbarGroup>
+          </ToolbarContent>
+        </Toolbar>
+      </Flex>
+    </PageSection>
   </>
 );
 ClusterListPageHeader.propTypes = {
