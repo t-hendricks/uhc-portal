@@ -1,4 +1,4 @@
-import { checkHostDomain, validateSecureURL } from './validators';
+import { checkHostDomain, composeValidators, validateSecureURL } from './validators';
 
 describe('validators', () => {
   describe('checkHostDomain', () => {
@@ -35,6 +35,16 @@ describe('validators', () => {
     });
     it('should return false if subdomain host domain is valid but unsecure', () => {
       expect(validateSecureURL('http://sub.example.com')).toEqual(false);
+    });
+  });
+  describe('composeValidators', () => {
+    const validateFnc1 = () => 'Error 1';
+    const validateFnc2 = () => 'Error 2';
+    const validateFnc3 = () => undefined;
+
+    it('should return the first encountered error string', () => {
+      expect(composeValidators(validateFnc1, validateFnc2, validateFnc3)('')).toEqual('Error 1');
+      expect(composeValidators(validateFnc3, validateFnc2, validateFnc1)('')).toEqual('Error 2');
     });
   });
 });
