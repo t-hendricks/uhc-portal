@@ -36,6 +36,9 @@ const getStateDescription = (state?: clusterStates): string => {
 const isClusterUpgrading = <E extends ClusterFromSubscription>(cluster?: E) =>
   cluster?.metrics.upgrade.state === 'running';
 
+const isClusterUpgradeCompleted = <E extends ClusterFromSubscription>(cluster?: E) =>
+  cluster?.metrics.upgrade.state === 'completed';
+
 /**
  * This function is not meant to return status of uninstalled OCP-AssistedInstall clusters.
  * To display the status for those, use the component <AIClusterStatus />
@@ -258,6 +261,7 @@ export {
   isWaitingForOIDCProviderOrOperatorRolesMode,
   isErrorSharedGCPVPCValues,
   isClusterUpgrading,
+  isClusterUpgradeCompleted,
   canViewMachinePoolTab,
   isAWSPrivateCluster,
 };
