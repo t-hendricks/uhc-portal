@@ -7,7 +7,7 @@ const hasRestrictTokensCapability = (capabilities: Array<Capability>) =>
   !!capabilities?.length &&
   capabilities.some(
     (capability) =>
-      capability.name === 'capability.organization.restrict_new_offline_tokens' &&
+      capability.name === 'capability.organization.restrict_offline_tokens' &&
       capability.value === 'true',
   );
 
