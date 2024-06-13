@@ -33,6 +33,7 @@ import apiRequest from '~/services/apiRequest';
 
 import { normalizedProducts } from '../../common/subscriptionTypes';
 import {
+  ACCESS_REQUEST_ENABLED,
   ASSISTED_INSTALLER_FEATURE,
   HYPERSHIFT_WIZARD_FEATURE,
   MULTIREGION_PREVIEW_ENABLED,
@@ -41,6 +42,7 @@ import CLILoginPage from '../CLILoginPage/CLILoginPage';
 import ArchivedClusterList from '../clusters/ArchivedClusterList';
 import ClusterDetailsClusterOrExternalId from '../clusters/ClusterDetails/ClusterDetailsClusterOrExternalId';
 import ClusterDetailsSubscriptionId from '../clusters/ClusterDetails/ClusterDetailsSubscriptionId';
+import AccessRequestNavigate from '../clusters/ClusterDetails/components/AccessRequest/components/AccessRequestNavigate';
 import IdentityProvidersPage from '../clusters/ClusterDetails/components/IdentityProvidersPage';
 import ClusterDetailsSubscriptionIdMultiRegion from '../clusters/ClusterDetailsMultiRegion/ClusterDetailsSubscriptionIdMultiRegion';
 import ClustersList from '../clusters/ClusterList';
@@ -176,6 +178,7 @@ const Router: React.FC<RouterProps> = ({ history, planType, clusterId, externalC
   }, [isHypershiftWizardEnabled]);
 
   const isMultiRegionEnabled = useFeatureGate(MULTIREGION_PREVIEW_ENABLED);
+  const isAccessRequestEnabled = useFeatureGate(ACCESS_REQUEST_ENABLED);
 
   useEffect(() => {
     setPageMetadata({
@@ -484,6 +487,12 @@ const Router: React.FC<RouterProps> = ({ history, planType, clusterId, externalC
             <CompatRoute
               path="/services/rosa"
               render={() => <Navigate replace to={`/overview/rosa${search}`} />}
+            />
+
+            <CompatRoute
+              path="/access-request/:id"
+              exact
+              component={isAccessRequestEnabled ? AccessRequestNavigate : NotFoundError}
             />
 
             <CompatRoute
