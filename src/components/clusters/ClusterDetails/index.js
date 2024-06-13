@@ -5,10 +5,12 @@ import { bindActionCreators } from 'redux';
 import { addNotification } from '@redhat-cloud-services/frontend-components-notifications/redux';
 
 import { featureGateSelector } from '~/hooks/useFeatureGate';
+import { accessRequestActions } from '~/redux/actions/accessRequestActions';
 import { clearListVpcs } from '~/redux/actions/ccsInquiriesActions';
 import { clusterAutoscalerActions } from '~/redux/actions/clusterAutoscalerActions';
 import { onClearFiltersAndFlags } from '~/redux/actions/viewOptionsActions';
 import {
+  ACCESS_REQUEST_ENABLED,
   ASSISTED_INSTALLER_FEATURE,
   HCP_USE_NODE_UPGRADE_POLICIES,
   NETWORK_VALIDATOR_ONDEMAND_FEATURE,
@@ -74,6 +76,8 @@ const mapStateToProps = (state, { location }) => {
     organization,
     displayClusterLogs: !!externalId || !!details?.cluster?.id,
     clusterLogsViewOptions: state.viewOptions[viewConstants.CLUSTER_LOGS_VIEW],
+    accessRequestsViewOptions: state.viewOptions[viewConstants.ACCESS_REQUESTS_VIEW],
+    pendingAccessRequests: state.accessRequest.pendingAccessRequests,
     insightsData,
     logs,
     canSubscribeOCP: canSubscribeOCPSelector(state),
@@ -90,6 +94,7 @@ const mapStateToProps = (state, { location }) => {
     upgradeGates: getUpgradeGates(state),
     useNodeUpgradePolicies: featureGateSelector(state, HCP_USE_NODE_UPGRADE_POLICIES),
     hasNetworkOndemand: featureGateSelector(state, NETWORK_VALIDATOR_ONDEMAND_FEATURE),
+    isAccessRequestEnabled: featureGateSelector(state, ACCESS_REQUEST_ENABLED),
   };
 };
 
@@ -107,6 +112,8 @@ const mapDispatchToProps = (dispatch) =>
       getUsers: usersActions.getUsers,
       resetIdentityProvidersState,
       resetClusterHistory: clusterLogActions.resetClusterHistory,
+      resetAccessRequests: accessRequestActions.resetAccessRequests,
+      resetAccessRequest: accessRequestActions.resetAccessRequest,
       clearGlobalError,
       setGlobalError,
       getOnDemandMetrics,
@@ -119,6 +126,8 @@ const mapDispatchToProps = (dispatch) =>
       clearGetClusterAutoscalerResponse: clusterAutoscalerActions.clearClusterAutoscalerResponse,
       clearListVpcs,
       getClusterHistory: clusterLogActions.getClusterHistory,
+      getAccessRequests: accessRequestActions.getAccessRequests,
+      getPendingAccessRequests: accessRequestActions.getPendingAccessRequests,
       toggleSubscriptionReleased,
       getNotificationContacts,
       getSupportCases,

@@ -1,0 +1,17 @@
+[
+  {
+    "_meta_": {
+      "inject": {
+        "delay": "2s"
+      }
+    },
+    "id": "string",
+    "kind": "string",
+    "href": "string",
+    "created_at": "2024-05-30T13:11:27.637Z",
+    "updated_at": "2024-05-30T13:11:27.638Z",
+    "decision": "Approved",
+    "justification": "string",
+    "decided_by": "string"
+  }
+]

@@ -23,6 +23,7 @@ import { subscriptionReleasedReducer } from '../../components/clusters/common/Tr
 import clusterUpgrades from '../../components/clusters/common/Upgrades/clusterUpgradeReducer';
 import modalReducer from '../../components/common/Modal/ModalReducer';
 
+import { accessRequestReducer } from './accessRequestReducer';
 import ccsInquiriesReducer from './ccsInquiriesReducer';
 import { cloudProvidersReducer } from './cloudProvidersReducer';
 import { clusterAutoscalerReducer } from './clusterAutoscalerReducer';
@@ -50,6 +51,7 @@ import userReducer from './userReducer';
 import { viewOptionsReducer } from './viewOptionsReducer';
 
 const reducers = {
+  accessRequest: accessRequestReducer,
   clusters: clustersReducer,
   deleteCluster: deleteClusterDialogReducer,
   cloudProviders: cloudProvidersReducer,

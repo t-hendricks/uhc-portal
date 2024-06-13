@@ -25,6 +25,11 @@
       "href": "/api/upgrades_info",
       "id": "upgrades_info",
       "name": "Upgrades information service"
+    },
+    {
+      "href": "/api/access_transparency",
+      "id": "access_transparency",
+      "name": "Access Service API"
     }
   ]
 }
