@@ -10,7 +10,7 @@ describe('restrict tokens capability', () => {
       },
       {
         inherited: false,
-        name: 'capability.organization.restrict_new_offline_tokens',
+        name: 'capability.organization.restrict_offline_tokens',
         value: 'true',
       },
       {
