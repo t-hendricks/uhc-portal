@@ -183,7 +183,7 @@ describe('TreeViewSelect ', () => {
   });
 
   it('search filter resets after menu is reopened', async () => {
-    const { container, user } = render(<TreeViewSelectTestWrapper />);
+    const { container, user } = render(<TreeViewSelectTestWrapper allExpanded />);
 
     expect(screen.getByText('Select instance type')).toBeInTheDocument();
     await user.click(screen.getByLabelText('TreeViewSelect toggle'));
