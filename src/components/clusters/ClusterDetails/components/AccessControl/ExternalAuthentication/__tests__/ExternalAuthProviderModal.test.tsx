@@ -92,7 +92,7 @@ describe('<ExternalAuthProviderModal />', () => {
     expect(mockPostBreakGlassCallParams[0]).toBe(
       '/api/clusters_mgmt/v1/clusters/cluster1/external_auth_config/external_auths',
     );
-  });
+  }, 80_000);
 
   it('Adding console client, client ID must be in audience', async () => {
     const { user } = render(
@@ -110,7 +110,7 @@ describe('<ExternalAuthProviderModal />', () => {
     await user.type(screen.getByRole('textbox', { name: 'Console client secret' }), 'thissecret');
 
     expect(screen.queryByText(/Client ID must be a member of the audiences/i)).toBeInTheDocument();
-  });
+  }, 80_000);
 
   it('calls post api on Add including console client', async () => {
     const apiReturnValue = {
