@@ -222,6 +222,7 @@ export function TreeViewSelect(props: TreeViewSelectProps) {
       onClick={(e) => {
         if (!isOpen) {
           setFilteredItems(treeViewSelectionMap);
+          setSearchString('');
         }
         setIsOpen(!isOpen);
       }}
