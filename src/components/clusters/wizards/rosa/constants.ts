@@ -1,5 +1,6 @@
 import { FormikTouched, FormikValues } from 'formik';
 
+import { getRandomID } from '~/common/helpers';
 import { getDefaultSecurityGroupsSettings } from '~/common/securityGroupsHelpers';
 import { billingModels, normalizedProducts } from '~/common/subscriptionTypes';
 import { getDefaultClusterAutoScaling } from '~/components/clusters/common/clusterAutoScalingValues';
@@ -82,7 +83,7 @@ export const initialValuesHypershift = (isHypershift: boolean) =>
         [FieldId.ClusterPrivacyPublicSubnetId]: '',
         [FieldId.InstallToVpc]: true,
         [FieldId.MultiAz]: 'false',
-        [FieldId.NodeLabels]: [{}],
+        [FieldId.NodeLabels]: [{ id: getRandomID() }],
         [FieldId.SharedVpc]: { is_allowed: false },
         [FieldId.UpgradePolicy]: 'automatic',
         [FieldId.WorkerVolumeSizeGib]: undefined,
@@ -135,7 +136,7 @@ export const initialValues: FormikValues = {
   [FieldId.NetworkPodCidr]: POD_CIDR_DEFAULT,
   [FieldId.NetworkServiceCidr]: SERVICE_CIDR_DEFAULT,
   [FieldId.NodeDrainGracePeriod]: 60,
-  [FieldId.NodeLabels]: [{}],
+  [FieldId.NodeLabels]: [{ id: getRandomID() }],
   [FieldId.NodesCompute]: 2,
   [FieldId.Region]: AWS_DEFAULT_REGION,
   [FieldId.SelectedVpc]: { id: '', name: '' },
