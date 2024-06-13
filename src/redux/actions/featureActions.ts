@@ -4,6 +4,7 @@ import { SelfAccessReview } from '~/types/accounts_mgmt.v1';
 
 import authorizationsService from '../../services/authorizationsService';
 import {
+  ACCESS_REQUEST_ENABLED,
   ASSISTED_INSTALLER_FEATURE,
   ASSISTED_INSTALLER_MERGE_LISTS_FEATURE,
   CLI_SSO_AUTHORIZATION,
@@ -54,6 +55,7 @@ export const features = [
   getSimpleUnleashFeature('cli-sso-authorization', CLI_SSO_AUTHORIZATION),
   getSimpleUnleashFeature('multi-region-support', MULTIREGION_PREVIEW_ENABLED),
   getSimpleUnleashFeature('longer-cluster-name-ui', LONGER_CLUSTER_NAME_UI),
+  getSimpleUnleashFeature('enable-access-request', ACCESS_REQUEST_ENABLED),
   {
     name: ASSISTED_INSTALLER_FEATURE,
     action: () =>

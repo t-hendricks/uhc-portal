@@ -1,4 +1,5 @@
 import React from 'react';
+import { isEqual } from 'lodash';
 import { useLocation, useNavigate } from 'react-router-dom-v5-compat';
 
 import { Tab, Tabs, TabTitleText } from '@patternfly/react-core';
@@ -17,6 +18,7 @@ const TabsRow = ({ tabsInfo, onTabSelected, initTabOpen }: TabsRowProps) => {
   const location = useLocation();
 
   const [tabs, setTabs] = React.useState<TabsRowTabType[]>();
+  const [previousTabsInfo, setPreviousTabsInfo] = React.useState<TabsRowInfoType>();
   const [activeTab, setActiveTab] = React.useState<TabsRowTabType>();
   const [previousTab, setPreviousTab] = React.useState<TabsRowTabType>();
   const [initialTab, setInitialTab] = React.useState<TabsRowTabType | null>();
@@ -51,11 +53,14 @@ const TabsRow = ({ tabsInfo, onTabSelected, initTabOpen }: TabsRowProps) => {
   );
 
   React.useEffect(() => {
-    const newTabs = getTabs(tabsInfo);
-    setTabs(newTabs);
-    setInitialTab(getInitTab(newTabs, initTabOpen));
+    if (!isEqual(tabsInfo, previousTabsInfo)) {
+      const newTabs = getTabs(tabsInfo);
+      setTabs(newTabs);
+      setInitialTab(getInitTab(newTabs, initTabOpen));
+      setPreviousTabsInfo(tabsInfo);
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [initTabOpen]); // TODO: tabsInfo should be added as soon as ClusterDetails is refactored
+  }, [initTabOpen, tabsInfo]);
 
   React.useEffect(() => {
     if (tabs?.length) {

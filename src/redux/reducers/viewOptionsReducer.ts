@@ -6,6 +6,7 @@ import { ViewOptions } from '~/types/types';
 
 import { ClusterLogAction } from '../../components/clusters/ClusterDetails/components/ClusterLogs/clusterLogActions';
 import { GET_CLUSTER_LOGS } from '../../components/clusters/ClusterDetails/components/ClusterLogs/clusterLogConstants';
+import { AccessRequestAction } from '../actions/accessRequestActions';
 import type { ClusterAction } from '../actions/clustersActions';
 import type { DashboardsAction } from '../actions/dashboardsActions';
 import type { SubscriptionsAction } from '../actions/subscriptionsActions';
@@ -18,6 +19,7 @@ import {
   viewOptionsConstants,
   viewPaginationConstants,
 } from '../constants';
+import { GET_ACCESS_REQUESTS } from '../constants/accessRequestConstants';
 import { FULFILLED_ACTION, REJECTED_ACTION } from '../reduxHelpers';
 import type { PromiseActionType } from '../types';
 
@@ -38,6 +40,18 @@ const INITIAL_VIEW_STATE: ViewState = {
   },
   flags: {
     showArchived: false,
+  },
+};
+const INITIAL_ACCESS_REQUESTS_VIEW_STATE: ViewState = {
+  ...INITIAL_VIEW_STATE,
+  currentPage: 1,
+  pageSize: 20,
+  totalCount: 0,
+  totalPages: 0,
+  sorting: {
+    sortIndex: 0,
+    sortField: 'created_at',
+    isAscending: false,
   },
 };
 
@@ -95,6 +109,9 @@ const INITIAL_OVERVIEW_VIEW_STATE: ViewState = {
 
 const initialState: State = {};
 
+initialState[viewConstants.ACCESS_REQUESTS_VIEW] = Object.assign(
+  INITIAL_ACCESS_REQUESTS_VIEW_STATE,
+);
 initialState[viewConstants.CLUSTERS_VIEW] = Object.assign(INITIAL_CLUSTER_LIST_VIEW_STATE);
 initialState[viewConstants.ARCHIVED_CLUSTERS_VIEW] = Object.assign(INITIAL_ARCHIVED_VIEW_STATE);
 initialState[viewConstants.CLUSTER_LOGS_VIEW] = Object.assign(INITIAL_OSL_VIEW_STATE);
@@ -104,6 +121,7 @@ initialState[viewConstants.OVERVIEW_EXPIRED_TRIALS] = Object.assign(INITIAL_OVER
 const viewOptionsReducer = (
   state = initialState,
   action: PromiseActionType<
+    | AccessRequestAction
     | ViewOptionsAction
     | DashboardsAction
     | ClusterAction
@@ -214,6 +232,14 @@ const viewOptionsReducer = (
 
     case FULFILLED_ACTION(subscriptionsConstants.GET_SUBSCRIPTIONS):
       updatePageCounts(viewConstants.OVERVIEW_EXPIRED_TRIALS, action.payload.data.total);
+      return { ...state, ...updateState };
+
+    case FULFILLED_ACTION(GET_ACCESS_REQUESTS):
+      updatePageCounts(viewConstants.ACCESS_REQUESTS_VIEW, action.payload.data.total);
+      return { ...state, ...updateState };
+
+    case REJECTED_ACTION(GET_ACCESS_REQUESTS):
+      updatePageCounts(viewConstants.ACCESS_REQUESTS_VIEW, 0);
       return { ...state, ...updateState };
 
     case FULFILLED_ACTION(GET_CLUSTER_LOGS):
