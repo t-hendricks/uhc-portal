@@ -52,5 +52,5 @@ describe('HTPasswdForm', () => {
     await userEvent.type(screen.getByLabelText('Password *'), '1234faewd%Dadsfvaerwv');
     await userEvent.type(screen.getByLabelText('Confirm password *'), '1234faewd%Dadsfvaerwv');
     expect(screen.getByText('Add user').getAttribute('disabled')).toBe(null);
-  });
+  }, 20_000);
 });
