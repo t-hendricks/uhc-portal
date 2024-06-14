@@ -50,11 +50,13 @@ function setup_rosa_resources()
   TEST_QE_AWS_REGION=`echo "$config_json" | jq '.QE_AWS_REGION'`
   TEST_QE_AWS_ID=`echo "$config_json" | jq -r '.QE_AWS_ID'`
   QE_ORGADMIN_OFFLINE_TOKEN=`echo "$config_json" | jq -r '.QE_ORGADMIN_OFFLINE_TOKEN'`
+  QE_ORGADMIN_CLIENT_ID=`echo "$config_json" | jq -r '.QE_ORGADMIN_CLIENT_ID'`
+  QE_ORGADMIN_CLIENT_SECRET=`echo "$config_json" | jq -r '.QE_ORGADMIN_CLIENT_SECRET'`
   ENV_AUT=`echo "$config_json" | jq -r '.QE_ENV_AUT'`
   QE_ACCOUNT_ROLE_PREFIX=`echo "$config_json" | jq -r '.QE_ACCOUNT_ROLE_PREFIX'`
   QE_OCM_ROLE_PREFIX=`echo "$config_json" | jq -r '.QE_OCM_ROLE_PREFIX'`
   QE_USER_ROLE_PREFIX=`echo "$config_json" | jq -r '.QE_USER_ROLE_PREFIX'`
-
+  QE_USE_OFFLINE_TOKEN=`echo "$config_json" | jq -r '.QE_USE_OFFLINE_TOKEN'`
 
   # Executing ROSA commands for pre-config step.
   echo "Executing ROSA pre-config commands"
@@ -63,7 +65,15 @@ function setup_rosa_resources()
   aws configure set aws_secret_access_key "${TEST_QE_AWS_ACCESS_KEY_SECRET}"
   aws configure set region "${TEST_QE_AWS_REGION}"
   aws configure set output "json"
-  rosa login --token $QE_ORGADMIN_OFFLINE_TOKEN --env $ENV_AUT
+
+  if [ "$QE_USE_OFFLINE_TOKEN" = true ];then
+    echo "Login via Offline token"
+    rosa login --token $QE_ORGADMIN_OFFLINE_TOKEN --env $ENV_AUT
+  else
+    echo "Login via service account client definition"
+    rosa login --client-id $QE_ORGADMIN_CLIENT_ID --client-secret $QE_ORGADMIN_CLIENT_SECRET  --env $ENV_AUT
+  fi
+
   linked_ocmrole=$(rosa list ocm-roles | awk '$3 == "Yes" { print $2 }')
   if [ ! -z $linked_ocmrole ];then
     rosa unlink ocm-role --role-arn $linked_ocmrole  -y
@@ -81,14 +91,18 @@ function setup_rosa_resources()
   fi
   echo $ocmroles_success_msg
 
-  userroles_success_msg=$(rosa create user-role --prefix ${QE_USER_ROLE_PREFIX} --mode auto -y 2>&1)
-  orphen_userroles=$(echo $userroles_success_msg |  grep "unlink" | sed -n "s/.*\(arn:aws:iam::${TEST_QE_AWS_ID}:.*[0-9]\).*/\1/p")
-
-  if [ ! -z $orphen_userroles ];then
-    rosa unlink user-role --role-arn $orphen_userroles  -y
-    userroles_success_msg=$(rosa create user-role --prefix ${QE_USER_ROLE_PREFIX} --mode auto -y)
+  # If QE_USE_OFFLINE_TOKEN = False then Do not create user-roles always the user-role associated to test org preserved.
+  # See https://issues.redhat.com/browse/DPP-14920
+  if [ "$QE_USE_OFFLINE_TOKEN" = true ];then
+    userroles_success_msg=$(rosa create user-role --prefix ${QE_USER_ROLE_PREFIX} --mode auto -y 2>&1)
+    orphen_userroles=$(echo $userroles_success_msg |  grep "unlink" | sed -n "s/.*\(arn:aws:iam::${TEST_QE_AWS_ID}:.*[0-9]\).*/\1/p")
+    if [ ! -z $orphen_userroles ];then
+      rosa unlink user-role --role-arn $orphen_userroles  -y
+      userroles_success_msg=$(rosa create user-role --prefix ${QE_USER_ROLE_PREFIX} --mode auto -y)
+    fi
+    echo $userroles_success_msg
   fi
-  echo $userroles_success_msg
+
   rosa create account-roles --prefix ${QE_ACCOUNT_ROLE_PREFIX} --mode auto -y
   echo "Completed ROSA pre-config commands!"
 }
