@@ -32,6 +32,7 @@ const funcs = () => ({
   getClusterAddOns: jest.fn(),
   getAccessRequests: jest.fn(),
   getPendingAccessRequests: jest.fn(),
+  getAccessProtection: jest.fn(),
   getGrants: jest.fn(),
   getClusterHistory: jest.fn(),
   getClusterRouters: jest.fn(),
@@ -49,6 +50,7 @@ const funcs = () => ({
   fetchUpgradeGates: jest.fn(),
   clearListVpcs: jest.fn(),
   clearFiltersAndFlags: jest.fn(),
+  resetAccessProtection: jest.fn(),
 });
 
 const clusterDetails = {

@@ -36,7 +36,6 @@ import clusterStates, {
   canViewMachinePoolTab,
   isHibernating,
   isHypershiftCluster,
-  isROSA,
 } from '../common/clusterStates';
 import CommonClusterModals from '../common/CommonClusterModals';
 import ReadOnlyBanner from '../common/ReadOnlyBanner';
@@ -79,6 +78,7 @@ const ClusterDetails = (props) => {
     resetClusterHistory,
     resetAccessRequests,
     resetAccessRequest,
+    resetAccessProtection,
     clearGetMachinePoolsResponse,
     clearGetClusterAutoscalerResponse,
     clearFiltersAndFlags,
@@ -99,6 +99,7 @@ const ClusterDetails = (props) => {
     getClusterHistory,
     getAccessRequests,
     getPendingAccessRequests,
+    getAccessProtection,
     getClusterRouters,
     organization,
     getMachineOrNodePools,
@@ -125,6 +126,7 @@ const ClusterDetails = (props) => {
     gotRouters,
     hasNetworkOndemand,
     isAccessRequestEnabled,
+    isAccessProtectionEnabled,
   } = props;
 
   const navigate = useNavigate();
@@ -134,7 +136,10 @@ const ClusterDetails = (props) => {
   const [selectedTab, setSelectedTab] = React.useState('');
   const [refreshEvent, setRefreshEvent] = React.useState({ type: eventTypes.NONE });
   const { cluster } = clusterDetails;
-  const isRosa = React.useMemo(() => isROSA(cluster), [cluster]);
+  const accessRequestsTabVisible = React.useMemo(
+    () => isAccessProtectionEnabled && isAccessRequestEnabled,
+    [isAccessProtectionEnabled, isAccessRequestEnabled],
+  );
   const requestedSubscriptionID = params.id;
 
   const overviewTabRef = React.useRef();
@@ -206,9 +211,10 @@ const ClusterDetails = (props) => {
     if (externalClusterID || clusterID) {
       getClusterHistory(externalClusterID, clusterID, clusterLogsViewOptions);
     }
-    if (isRosa && subscriptionID) {
+    if (subscriptionID) {
       getAccessRequests(subscriptionID, accessRequestsViewOptions);
       getPendingAccessRequests(subscriptionID);
+      getAccessProtection(subscriptionID);
     }
 
     if (isManaged) {
@@ -265,6 +271,7 @@ const ClusterDetails = (props) => {
       closeModal();
       resetClusterHistory();
       resetAccessRequests();
+      resetAccessProtection();
       clearGetMachinePoolsResponse();
       clearGetClusterAutoscalerResponse();
       clearFiltersAndFlags();
@@ -325,6 +332,7 @@ const ClusterDetails = (props) => {
   ) {
     if (clusterDetails.errorCode === 404 || clusterDetails.errorCode === 403) {
       resetAccessRequest();
+      resetAccessProtection();
       setGlobalError(
         <>
           Cluster with subscription ID <b>{requestedSubscriptionID}</b> was not found, it might have
@@ -455,7 +463,7 @@ const ClusterDetails = (props) => {
               },
               accessRequest: {
                 ref: accessRequestsTabRef,
-                show: isAccessRequestEnabled && isRosa,
+                show: accessRequestsTabVisible,
                 tooltip: (
                   <Tooltip
                     content={
@@ -621,7 +629,7 @@ const ClusterDetails = (props) => {
             </ErrorBoundary>
           </TabContent>
         )}
-        {isAccessRequestEnabled && isRosa ? (
+        {accessRequestsTabVisible ? (
           <TabContent
             eventKey={10}
             id="accessRequestsContent"
@@ -668,6 +676,7 @@ ClusterDetails.propTypes = {
   resetClusterHistory: PropTypes.func.isRequired,
   resetAccessRequests: PropTypes.func.isRequired,
   resetAccessRequest: PropTypes.func.isRequired,
+  resetAccessProtection: PropTypes.func.isRequired,
   getClusterIdentityProviders: PropTypes.func.isRequired,
   insightsData: PropTypes.object,
   logs: PropTypes.arrayOf(
@@ -697,6 +706,7 @@ ClusterDetails.propTypes = {
   getClusterHistory: PropTypes.func.isRequired,
   getAccessRequests: PropTypes.func.isRequired,
   getPendingAccessRequests: PropTypes.func.isRequired,
+  getAccessProtection: PropTypes.func.isRequired,
   getMachineOrNodePools: PropTypes.func.isRequired,
   clearGetMachinePoolsResponse: PropTypes.func.isRequired,
   clearGetClusterAutoscalerResponse: PropTypes.func.isRequired,
@@ -724,6 +734,7 @@ ClusterDetails.propTypes = {
   fetchUpgradeGates: PropTypes.func,
   clearFiltersAndFlags: PropTypes.func.isRequired,
   useNodeUpgradePolicies: PropTypes.bool,
+  isAccessProtectionEnabled: PropTypes.bool,
 };
 
 ClusterDetails.defaultProps = {
