@@ -1,13 +1,14 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
 
-import { Button, Icon, Title } from '@patternfly/react-core';
-import { WizardContext as WizardContextDeprecated } from '@patternfly/react-core/deprecated';
+import { Button, Icon, Title, useWizardContext } from '@patternfly/react-core';
 import { ExclamationCircleIcon } from '@patternfly/react-icons/dist/esm/icons/exclamation-circle-icon';
 import { global_danger_color_100 as dangerColor } from '@patternfly/react-tokens/dist/esm/global_danger_color_100';
 
-import Modal from '../../common/Modal/Modal';
-import { closeModal } from '../../common/Modal/ModalActions';
+import Modal from '~/components/common/Modal/Modal';
+import { closeModal } from '~/components/common/Modal/ModalActions';
+
+import { StepId } from '../constants';
 
 type MissingPrereqErrorModalProps = {
   onRetry: (...args: any[]) => any;
@@ -20,7 +21,7 @@ const MissingPrereqErrorModal = ({
   onClose,
   title = 'Missing prerequisite',
 }: MissingPrereqErrorModalProps) => {
-  const { goToStepById } = React.useContext(WizardContextDeprecated);
+  const { goToStepById } = useWizardContext();
   const dispatch = useDispatch();
 
   const close = () => {
@@ -29,7 +30,7 @@ const MissingPrereqErrorModal = ({
   };
 
   const goToClusterProviderStep = () => {
-    goToStepById(21);
+    goToStepById(StepId.ClusterSettingsCloudProvider);
     close();
   };
 
