@@ -1,0 +1,61 @@
+{
+  "billing_expiration_date": "2024-05-14T15:35:04.631933Z",
+  "capabilities": [
+    {
+      "inherited": false,
+      "name": "capability.cluster.autoscale_clusters",
+      "value": "true"
+    },
+    {
+      "inherited": true,
+      "name": "capability.cluster.subscribed_ocp",
+      "value": "true"
+    }
+  ],
+  "cloud_account_id": "ocm-ui-dev",
+  "cloud_provider_id": "gcp",
+  "cluster_billing_model": "marketplace",
+  "cluster_id": "2b3vn4m9rc2pfaa3etm499pq7s7ho18s",
+  "created_at": "2024-05-07T15:32:38.994875Z",
+  "creator": {
+    "email": "***REMOVED***",
+    "first_name": "Roberto",
+    "href": "/api/accounts_mgmt/v1/accounts/2UhkDrWyIOfF0QyC5kWn1noo8q2",
+    "id": "2UhkDrWyIOfF0QyC5kWn1noo8q2",
+    "kind": "Account",
+    "last_name": "Emanuel",
+    "name": "Roberto Emanuel",
+    "username": "remanuel-ocm"
+  },
+  "display_name": "Deprovisioned osd-gcp-ccs",
+  "eval_expiration_date": "0001-01-01T00:00:00Z",
+  "href": "/api/accounts_mgmt/v1/subscriptions/2g93RcBQmAV6gjbrmSOfeAM3HqQ",
+  "id": "2g93RcBQmAV6gjbrmSOfeAM3HqQ",
+  "kind": "Subscription",
+  "last_reconcile_date": "0001-01-01T00:00:00Z",
+  "last_released_at": "0001-01-01T00:00:00Z",
+  "last_telemetry_date": "0001-01-01T00:00:00Z",
+  "managed": true,
+  "organization": {
+    "created_at": "2021-08-18T17:39:22.305773Z",
+    "ebs_account_id": "7321618",
+    "external_id": "15212158",
+    "href": "/api/accounts_mgmt/v1/organizations/1wuVGGV6SCmD8ya6yRGEJzvmVuC",
+    "id": "1wuVGGV6SCmD8ya6yRGEJzvmVuC",
+    "kind": "Organization",
+    "name": "Red Hat, Inc.",
+    "updated_at": "2024-05-08T08:31:03.397503Z"
+  },
+  "organization_id": "1wuVGGV6SCmD8ya6yRGEJzvmVuC",
+  "plan": {
+    "href": "/api/accounts_mgmt/v1/plans/OSD",
+    "id": "OSD",
+    "kind": "Plan",
+    "type": "OSD"
+  },
+  "provenance": "Provisioning",
+  "status": "Deprovisioned",
+  "support_level": "Premium",
+  "trial_end_date": "0001-01-01T00:00:00Z",
+  "updated_at": "2024-05-07T15:46:15.565541Z"
+}
