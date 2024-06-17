@@ -261,7 +261,8 @@ const ReviewClusterScreen = ({
             [FieldId.MachinePoolsSubnets]: machinePoolsSubnets,
             [FieldId.SelectedVpc]: selectedVpc,
           })}
-        {!(nodeLabels?.length === 1 && isEmpty(nodeLabels?.[0])) && ReviewItem(FieldId.NodeLabels)}
+        {!(nodeLabels?.length === 1 && isEmpty(nodeLabels[0].key)) &&
+          ReviewItem(FieldId.NodeLabels)}
         {!isHypershiftSelected && canSelectImds(clusterVersionRawId) && ReviewItem(FieldId.IMDS)}
         {workerVolumeSizeGib && ReviewItem(FieldId.WorkerVolumeSizeGib)}
       </ReviewSection>
