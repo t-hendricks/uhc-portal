@@ -5,6 +5,7 @@ import { bindActionCreators } from 'redux';
 import { addNotification } from '@redhat-cloud-services/frontend-components-notifications/redux';
 
 import { featureGateSelector } from '~/hooks/useFeatureGate';
+import { accessProtectionActions } from '~/redux/actions/accessProtectionActions';
 import { accessRequestActions } from '~/redux/actions/accessRequestActions';
 import { clearListVpcs } from '~/redux/actions/ccsInquiriesActions';
 import { clusterAutoscalerActions } from '~/redux/actions/clusterAutoscalerActions';
@@ -95,6 +96,7 @@ const mapStateToProps = (state, { location }) => {
     useNodeUpgradePolicies: featureGateSelector(state, HCP_USE_NODE_UPGRADE_POLICIES),
     hasNetworkOndemand: featureGateSelector(state, NETWORK_VALIDATOR_ONDEMAND_FEATURE),
     isAccessRequestEnabled: featureGateSelector(state, ACCESS_REQUEST_ENABLED),
+    isAccessProtectionEnabled: state.accessProtection.accessProtection.enabled,
   };
 };
 
@@ -114,6 +116,8 @@ const mapDispatchToProps = (dispatch) =>
       resetClusterHistory: clusterLogActions.resetClusterHistory,
       resetAccessRequests: accessRequestActions.resetAccessRequests,
       resetAccessRequest: accessRequestActions.resetAccessRequest,
+      getAccessProtection: accessProtectionActions.getAccessProtection,
+      resetAccessProtection: accessProtectionActions.resetAccessProtection,
       clearGlobalError,
       setGlobalError,
       getOnDemandMetrics,

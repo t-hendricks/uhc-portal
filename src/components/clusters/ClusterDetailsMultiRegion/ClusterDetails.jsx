@@ -38,6 +38,7 @@ import {
   invalidateCloudProviders,
   useFetchCloudProviders,
 } from '~/queries/common/useFetchCloudProviders';
+import { accessProtectionActions } from '~/redux/actions/accessProtectionActions';
 import { accessRequestActions } from '~/redux/actions/accessRequestActions';
 import { clearListVpcs } from '~/redux/actions/ccsInquiriesActions';
 import { clusterAutoscalerActions } from '~/redux/actions/clusterAutoscalerActions';
@@ -69,7 +70,6 @@ import clusterStates, {
   canViewMachinePoolTab,
   isHibernating,
   isHypershiftCluster,
-  isROSA,
 } from '../common/clusterStates';
 import CommonClusterModals from '../common/CommonClusterModals';
 import { userCanHibernateClustersSelector } from '../common/HibernateClusterModal/HibernateClusterModalSelectors';
@@ -192,8 +192,15 @@ const ClusterDetails = (props) => {
   // TODO: Part of the Tabs stories
   // eslint-disable-next-line no-unused-vars
   const [refreshEvent, setRefreshEvent] = React.useState({ type: eventTypes.NONE });
-  const isRosa = React.useMemo(() => isROSA(cluster), [cluster]);
   const pendingAccessRequests = useSelector((state) => state.accessRequest.pendingAccessRequests);
+  const isAccessProtectionEnabled = useSelector(
+    (state) => state.accessProtection.accessProtection.enabled,
+  );
+
+  const accessRequestsTabVisible = React.useMemo(
+    () => isAccessProtectionEnabled && isAccessRequestEnabled,
+    [isAccessProtectionEnabled, isAccessRequestEnabled],
+  );
 
   const overviewTabRef = React.useRef();
   const monitoringTabRef = React.useRef();
@@ -264,9 +271,10 @@ const ClusterDetails = (props) => {
       invalidateClusterLogsQueries();
     }
 
-    if (isRosa && subscriptionID) {
+    if (subscriptionID) {
       dispatch(accessRequestActions.getAccessRequests(subscriptionID, accessRequestsViewOptions));
       dispatch(accessRequestActions.getPendingAccessRequests(subscriptionID));
+      dispatch(accessProtectionActions.getAccessProtection(subscriptionID));
     }
 
     if (isManaged) {
@@ -322,6 +330,9 @@ const ClusterDetails = (props) => {
       invalidateClusterIdentityProviders();
       dispatch(modalActions.closeModal());
       invalidateClusterLogsQueries();
+
+      dispatch(accessRequestActions.resetAccessRequests());
+      dispatch(accessProtectionActions.resetAccessProtection());
 
       dispatch(clearGetMachinePoolsResponse());
       dispatch(clusterAutoscalerActions.clearClusterAutoscalerResponse());
@@ -382,6 +393,8 @@ const ClusterDetails = (props) => {
   // or when we only have data for a different cluster
   if (isError && (!cluster || get(cluster, 'subscription.id') !== requestedSubscriptionID)) {
     if (error?.errorCode === 404 || error?.errorCode === 403) {
+      dispatch(accessRequestActions.resetAccessRequest());
+      dispatch(accessProtectionActions.resetAccessProtection());
       dispatch(
         setGlobalError(
           <>
@@ -539,7 +552,7 @@ const ClusterDetails = (props) => {
               },
               accessRequest: {
                 ref: accessRequestsTabRef,
-                show: isAccessRequestEnabled && isRosa,
+                show: accessRequestsTabVisible,
                 tooltip: (
                   <Tooltip
                     content={
@@ -699,7 +712,7 @@ const ClusterDetails = (props) => {
             </ErrorBoundary>
           </TabContent>
         )}
-        {isAccessRequestEnabled && isRosa ? (
+        {accessRequestsTabVisible ? (
           <TabContent
             eventKey={10}
             id="accessRequestsContent"
