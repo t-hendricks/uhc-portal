@@ -20,7 +20,7 @@ import {
 } from '@patternfly/react-table/deprecated';
 
 import ExternalLink from '~/components/common/ExternalLink';
-import TechnologyPreview from '~/components/common/TechnologyPreview';
+import SupportLevelBadge, { TECH_PREVIEW } from '~/components/common/SupportLevelBadge';
 import { isRestrictedEnv } from '~/restrictedEnv';
 
 import AWSLogo from '../../../styles/images/AWS.png';
@@ -356,12 +356,12 @@ const runItYourself = () => {
   const rows = [
     [
       <>
-        <Link to="/install/alibaba/installer-provisioned" className="pf-v5-u-mr-xs">
+        <Link to="/install/alibaba" className="pf-v5-u-mr-xs">
           Alibaba Cloud
         </Link>
-        <TechnologyPreview className="pf-v5-u-ml-md pf-v5-u-display-inline" />
+        <SupportLevelBadge {...TECH_PREVIEW} />
       </>,
-      'Full stack automation',
+      'Pre-existing infrastructure',
     ],
     [
       <>
