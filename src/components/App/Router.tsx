@@ -50,7 +50,7 @@ import ClusterListMultiRegion from '../clusters/ClusterListMultiRegion';
 import CreateClusterPage from '../clusters/CreateClusterPage';
 import GovCloudPage from '../clusters/GovCloud/GovCloudPage';
 import InsightsAdvisorRedirector from '../clusters/InsightsAdvisorRedirector';
-import ConnectedInstallAlibaba from '../clusters/install/InstallAlibaba';
+import InstallAlibabaCloud from '../clusters/install/InstallAlibabaCloud';
 import InstallArmAWS from '../clusters/install/InstallArmAWS';
 import ConnectedInstallArmAWSIPI from '../clusters/install/InstallArmAWSIPI';
 import ConnectedInstallArmAWSUPI from '../clusters/install/InstallArmAWSUPI';
@@ -247,10 +247,7 @@ const Router: React.FC<RouterProps> = ({ history, planType, clusterId, externalC
               path="/token"
               render={() => <CLILoginPage showToken={false} showPath="/token/show" />}
             />
-            <CompatRoute
-              path="/install/alibaba/installer-provisioned"
-              component={ConnectedInstallAlibaba}
-            />
+            <CompatRoute path="/install/alibaba" component={InstallAlibabaCloud} />
             <CompatRoute path="/install/arm/installer-provisioned" component={InstallArmBMIPI} />
             <CompatRoute path="/install/arm/user-provisioned" component={InstallArmBMUPI} />
             <CompatRoute
