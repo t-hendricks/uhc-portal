@@ -1,12 +1,12 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
+import ErrorModal from '~/components/common/ErrorModal';
 import { resetCreatedClusterResponse } from '~/redux/actions/clustersActions';
 import { GlobalState } from '~/redux/store';
 
-import ErrorModal from '../../../common/ErrorModal';
-import MissingPrereqErrorModal from '../MissingPrereqErrorModal';
-import ShieldedVmErrorModal from '../ShieldedVmErrorModal';
+import MissingPrereqErrorModal from './MissingPrereqErrorModal';
+import ShieldedVmErrorModal from './ShieldedVmErrorModal';
 
 type CreateClusterErrorModalProps = {
   onRetry: () => Promise<void>;

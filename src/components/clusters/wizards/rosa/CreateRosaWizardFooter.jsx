@@ -31,7 +31,8 @@ const CreateRosaWizardFooter = ({
   isSubmitting = false,
   onWizardContextChange,
 }) => {
-  const { goToNextStep, goToPrevStep, close, activeStep, steps, setStep } = useWizardContext();
+  const { goToNextStep, goToPrevStep, close, activeStep, steps, setStep, goToStepById } =
+    useWizardContext();
 
   const { values, validateForm, setTouched, isValidating, submitForm } = useFormState();
   // used to determine the actions' disabled state.
@@ -40,7 +41,11 @@ const CreateRosaWizardFooter = ({
 
   useEffect(() => {
     // callback to pass updated context back up
-    onWizardContextChange(steps, setStep);
+    onWizardContextChange({
+      steps,
+      setStep,
+      goToStepById,
+    });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [steps, setStep]);
 
