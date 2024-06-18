@@ -1,9 +1,9 @@
 import React from 'react';
 
 import { checkAccessibility, render, screen } from '~/testUtils';
+import { ClusterStatus } from '~/types/clusters_mgmt.v1';
 
 import ClusterStatusErrorDisplay from './ClusterStatusErrorDisplay';
-import { ClusterStatus } from '~/types/clusters_mgmt.v1';
 
 const baseStatus: ClusterStatus = {
   provision_error_code: 'OCM3055',
