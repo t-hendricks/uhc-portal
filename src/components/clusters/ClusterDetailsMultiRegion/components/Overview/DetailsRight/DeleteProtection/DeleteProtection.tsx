@@ -15,10 +15,12 @@ const DeleteProtection = ({
   protectionEnabled,
   clusterID,
   canToggle,
+  isUninstalling,
 }: {
   protectionEnabled: boolean;
   clusterID: string;
   canToggle: boolean;
+  isUninstalling?: boolean;
 }) => {
   const dispatch = useDispatch();
   const disableToggleReason =
@@ -29,17 +31,21 @@ const DeleteProtection = ({
     <DescriptionListGroup>
       <DescriptionListTerm>{`Delete Protection: ${protectionEnabled ? 'Enabled' : 'Disabled'}`}</DescriptionListTerm>
       <DescriptionListDescription>
-        <ButtonWithTooltip
-          variant="link"
-          isInline
-          onClick={() =>
-            dispatch(openModal(modals.DELETE_PROTECTION, { clusterID, protectionEnabled }))
-          }
-          disableReason={disableToggleReason}
-          isAriaDisabled={!!disableToggleReason}
-        >
-          {`${protectionEnabled ? 'Disable' : 'Enable'}`}
-        </ButtonWithTooltip>
+        {!isUninstalling ? (
+          <ButtonWithTooltip
+            variant="link"
+            isInline
+            onClick={() =>
+              dispatch(openModal(modals.DELETE_PROTECTION, { clusterID, protectionEnabled }))
+            }
+            disableReason={disableToggleReason}
+            isAriaDisabled={!!disableToggleReason}
+          >
+            {`${protectionEnabled ? 'Disable' : 'Enable'}`}
+          </ButtonWithTooltip>
+        ) : (
+          <span>N/A</span>
+        )}
       </DescriptionListDescription>
     </DescriptionListGroup>
   );
