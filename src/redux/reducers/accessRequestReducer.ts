@@ -25,6 +25,7 @@ import {
   RESET_ACCESS_REQUEST,
   RESET_ACCESS_REQUESTS,
   RESET_GET_PENDING_ACCESS_REQUESTS,
+  RESET_ORGANIZATION_PENDING_ACCESS_REQUESTS,
   RESET_POST_ACCESS_REQUEST_DECISION,
 } from '../constants/accessRequestConstants';
 import {
@@ -39,6 +40,7 @@ type State = {
   accessRequests: PromiseReducerState<AccessRequestList>;
   accessRequest: PromiseReducerState<AccessRequest>;
   pendingAccessRequests: PromiseReducerState<AccessRequestList>;
+  pendingOrganizationAccessRequests: PromiseReducerState<AccessRequestList>;
   postAccessRequestDecision: PromiseReducerState<Decision>;
 };
 
@@ -50,6 +52,9 @@ const initialState: State = {
     ...baseRequestState,
   },
   pendingAccessRequests: {
+    ...baseRequestState,
+  },
+  pendingOrganizationAccessRequests: {
     ...baseRequestState,
   },
   postAccessRequestDecision: {
@@ -119,6 +124,24 @@ function accessRequestReducer(
         };
         break;
 
+      // GET_ORGANIZATION_PENDING_ACCESS_REQUESTS
+      case REJECTED_ACTION(accessRequestConstants.GET_ORGANIZATION_PENDING_ACCESS_REQUESTS):
+        draft.pendingOrganizationAccessRequests = {
+          ...initialState.pendingOrganizationAccessRequests,
+          ...getErrorState(action),
+        };
+        break;
+      case PENDING_ACTION(accessRequestConstants.GET_ORGANIZATION_PENDING_ACCESS_REQUESTS):
+        draft.pendingOrganizationAccessRequests.pending = true;
+        break;
+      case FULFILLED_ACTION(accessRequestConstants.GET_ORGANIZATION_PENDING_ACCESS_REQUESTS):
+        draft.pendingOrganizationAccessRequests = {
+          ...baseRequestState,
+          fulfilled: true,
+          ...action.payload.data,
+        };
+        break;
+
       // POST_ACCESS_REQUEST_DECISION
       case REJECTED_ACTION(accessRequestConstants.POST_ACCESS_REQUEST_DECISION):
         draft.postAccessRequestDecision = {
@@ -151,6 +174,10 @@ function accessRequestReducer(
 
       case RESET_POST_ACCESS_REQUEST_DECISION:
         draft.postAccessRequestDecision = initialState.postAccessRequestDecision;
+        break;
+
+      case RESET_ORGANIZATION_PENDING_ACCESS_REQUESTS:
+        draft.pendingOrganizationAccessRequests = initialState.pendingOrganizationAccessRequests;
         break;
     }
   });

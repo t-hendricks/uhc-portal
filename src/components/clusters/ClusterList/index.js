@@ -1,5 +1,7 @@
 import { connect } from 'react-redux';
 
+import { accessRequestActions } from '~/redux/actions/accessRequestActions';
+
 import { cloudProviderActions } from '../../../redux/actions/cloudProviderActions';
 import { clustersActions } from '../../../redux/actions/clustersActions';
 import { clearGlobalError } from '../../../redux/actions/globalErrorActions';
@@ -25,6 +27,9 @@ const mapDispatchToProps = {
   getCloudProviders: cloudProviderActions.getCloudProviders,
   getMachineTypes: machineTypesActions.getMachineTypes,
   getOrganizationAndQuota: userActions.getOrganizationAndQuota,
+  getOrganizationPendingAccessRequests: accessRequestActions.getOrganizationPendingAccessRequests,
+  resetOrganizationPendingAccessRequests:
+    accessRequestActions.resetOrganizationPendingAccessRequests,
   openModal: modalActions.openModal,
   closeModal: modalActions.closeModal,
   toggleSubscriptionReleased,
@@ -39,8 +44,10 @@ const mapStateToProps = (state) => ({
   cloudProviders: state.cloudProviders,
   machineTypes: state.machineTypes,
   organization: state.userProfile.organization,
+  organizationId: state.userProfile?.organization?.details?.id,
   anyModalOpen: !!state.modal.modalName,
   features: state.features,
+  pendingOrganizationAccessRequests: state.accessRequest.pendingOrganizationAccessRequests,
   canSubscribeOCPList: canSubscribeOCPListSelector(state),
   canHibernateClusterList: canHibernateClusterListSelector(state),
   canTransferClusterOwnershipList: canTransferClusterOwnershipListSelector(state),
