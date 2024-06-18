@@ -48,6 +48,8 @@ const funcs = () => ({
   fetchUpgradeGates: jest.fn(),
   clearListVpcs: jest.fn(),
   clearFiltersAndFlags: jest.fn(),
+  getOrganizationPendingAccessRequests: jest.fn(),
+  resetOrganizationPendingAccessRequests: jest.fn(),
 });
 
 const clusterDetails = {

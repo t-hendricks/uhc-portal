@@ -16,7 +16,7 @@
       "support_case_id": "support_case_idX",
       "internal_support_case_id": "internal_support_case_idX",
       "organization_id": "organization_idx",
-      "subscription_id": "subscription_idx",
+      "subscription_id": "1mbpBkP1bZSqhiMeIhSdnQbj9sB",
       "status": {
         "state": "Pending",
         "expires_at": "2024-05-16T09:28:44.121Z"
@@ -35,7 +35,7 @@
       "support_case_id": "support_case_idY1",
       "internal_support_case_id": "internal_support_case_idY",
       "organization_id": "organization_idy",
-      "subscription_id": "subscription_idy",
+      "subscription_id": "1mb8AErRROMMc8dWjfnKTnvmIIM",
       "status": {
         "state": "Denied",
         "expires_at": "2024-05-16T09:28:44.121Z"
