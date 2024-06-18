@@ -1,0 +1,12 @@
+{
+  "kind": "ClusterStatus",
+  "id": "2bv7n2aojuu1hlu59pdi29d7oslgaot7",
+  "href": "/api/clusters_mgmt/v1/clusters/2bv7n2aojuu1hlu59pdi29d7oslgaot7/status",
+  "state": "error",
+  "description": "DefaultEbsKmsKeyInsufficientPermissions",
+  "dns_ready": true,
+  "oidc_ready": true,
+  "provision_error_message": "Invalid key. Your cluster's installation role does not have permissions to use the default KMS key in your AWS account. Ensure that the installation role has permissions to use this key and try again. If you're using a custom KMS key, ensure the key exists. Learn more: https://access.redhat.com/solutions/7048553.",
+  "provision_error_code": "OCM3055",
+  "install_attempt_count": 2
+}

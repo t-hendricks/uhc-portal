@@ -1,0 +1,92 @@
+{
+  "capabilities": [
+    {
+      "inherited": false,
+      "name": "capability.cluster.enable_access_protection",
+      "value": "true"
+    },
+    {
+      "inherited": false,
+      "name": "capability.organization.hcp_allow_external_authentication",
+      "value": "true"
+    },
+    {
+      "inherited": false,
+      "name": "capability.organization.enable_data_sovereign_regions",
+      "value": "true"
+    },
+    {
+      "inherited": false,
+      "name": "capability.organization.bypass_pids_limits",
+      "value": "true"
+    },
+    {
+      "inherited": false,
+      "name": "capability.cluster.subscribed_ocp",
+      "value": "true"
+    },
+    {
+      "inherited": false,
+      "name": "capability.cluster.autoscale_clusters",
+      "value": "true"
+    },
+    {
+      "inherited": false,
+      "name": "capability.organization.hibernate_cluster",
+      "value": "true"
+    },
+    {
+      "inherited": false,
+      "name": "capability.organization.resource_review_account_groups",
+      "value": "true"
+    },
+    {
+      "inherited": false,
+      "name": "capability.organization.hypershift",
+      "value": "true"
+    },
+    {
+      "inherited": false,
+      "name": "capability.organization.non_stable_channel_group",
+      "value": "true"
+    },
+    {
+      "inherited": false,
+      "name": "capability.organization.create_gcp_non_ccs_cluster",
+      "value": "true"
+    },
+    {
+      "inherited": false,
+      "name": "capability.organization.autoscale_clusters",
+      "value": "true"
+    },
+    {
+      "inherited": true,
+      "name": "capability.organization.bare_metal_installer_multiarch",
+      "value": "true"
+    },
+    {
+      "inherited": true,
+      "name": "capability.organization.bare_metal_installer_platform_oci",
+      "value": "true"
+    },
+    {
+      "inherited": true,
+      "name": "capability.organization.allow_set_expiration",
+      "value": "true"
+    },
+    {
+      "inherited": true,
+      "name": "capability.organization.bare_metal_installer_platform_external",
+      "value": "true"
+    }
+  ],
+  "created_at": "2021-08-18T17:39:22.305773Z",
+  "ebs_account_id": "7321618",
+  "external_id": "15212158",
+  "href": "/api/accounts_mgmt/v1/organizations/1wuVGGV6SCmD8ya6yRGEJzvmVuC",
+  "id": "1wuVGGV6SCmD8ya6yRGEJzvmVuC",
+  "kind": "Organization",
+  "name": "Red Hat, Inc.",
+  "updated_at": "2024-06-17T23:32:19.037645Z"
+}
