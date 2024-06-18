@@ -22,7 +22,6 @@ import { trackEvents } from '~/common/analytics';
 import { useFormState } from '~/components/clusters/wizards/hooks';
 import {
   createOperatorRolesPrefix,
-  getForcedByoOidcReason,
   getOperatorRolesCommand,
 } from '~/components/clusters/wizards/rosa/ClusterRolesScreen/clusterRolesHelper';
 import { FieldId } from '~/components/clusters/wizards/rosa/constants';
@@ -60,7 +59,6 @@ const ClusterRolesScreen = ({
     values: {
       [FieldId.ClusterName]: clusterName,
       [FieldId.Hypershift]: hypershiftValue,
-      [FieldId.SharedVpc]: sharedVpcSettings,
       [FieldId.AssociatedAwsId]: awsAccountID,
       [FieldId.RosaRolesProviderCreationMode]: rosaCreationMode,
       [FieldId.CustomOperatorRolesPrefix]: customOperatorRolesPrefix,
@@ -68,20 +66,10 @@ const ClusterRolesScreen = ({
       [FieldId.InstallerRoleArn]: installerRoleArn,
     },
   } = useFormState();
-  const sharedVpcRoleArn = sharedVpcSettings?.hosted_zone_role_arn;
-  const isSharedVpcSelected = sharedVpcSettings.is_selected;
-  const isHypershiftSelected = hypershiftValue === 'true';
-  let forcedByoOidcType;
-  if (isHypershiftSelected) {
-    forcedByoOidcType = 'Hypershift';
-  } else if (isSharedVpcSelected) {
-    forcedByoOidcType = 'SharedVPC';
-  }
 
+  const isHypershift = hypershiftValue === 'true';
   const [isAutoModeAvailable, setIsAutoModeAvailable] = useState(false);
-  const [hasByoOidcConfig, setHasByoOidcConfig] = useState(
-    !!(forcedByoOidcType || byoOidcConfigID),
-  );
+  const [hasByoOidcConfig, setHasByoOidcConfig] = useState(!!(isHypershift || byoOidcConfigID));
 
   const [getOCMRoleErrorBox, setGetOCMRoleErrorBox] = useState(null);
   const track = useAnalytics();
@@ -246,14 +234,11 @@ const ClusterRolesScreen = ({
   ];
 
   const operatorRolesCliCommand = getOperatorRolesCommand({
-    forcedByoOidcType,
+    isHypershift,
     byoOidcConfigID,
     customOperatorRolesPrefix,
     installerRoleArn,
-    sharedVpcRoleArn,
   });
-
-  const forcedByoOidcReason = getForcedByoOidcReason(forcedByoOidcType);
 
   return (
     <Form onSubmit={() => false}>
@@ -261,8 +246,13 @@ const ClusterRolesScreen = ({
         <GridItem>
           <Title headingLevel="h3">Cluster roles and policies</Title>
         </GridItem>
-        {forcedByoOidcType ? (
-          <Alert isInline id="rosa-require-byo-oidc" variant="info" title={forcedByoOidcReason} />
+        {isHypershift ? (
+          <Alert
+            isInline
+            id="rosa-require-byo-oidc"
+            variant="info"
+            title="Hosted control plane clusters require a specified OIDC provider."
+          />
         ) : (
           <>
             <GridItem>
