@@ -228,6 +228,7 @@ class UpgradeSettingsTab extends React.Component {
                     initialScheduleValue={initialValues.automatic_upgrade_schedule}
                     showDivider
                     isHypershift={isHypershift}
+                    product={cluster?.product?.id}
                   />
                 </Grid>
               </Form>
@@ -294,6 +295,9 @@ UpgradeSettingsTab.propTypes = {
       id: PropTypes.string,
     }),
     state: PropTypes.string,
+    product: PropTypes.shape({
+      id: PropTypes.string,
+    }),
   }),
   getSchedules: PropTypes.func.isRequired,
   getClusterDetails: PropTypes.func.isRequired,
