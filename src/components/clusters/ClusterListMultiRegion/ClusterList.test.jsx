@@ -27,6 +27,8 @@ describe('<ClusterList />', () => {
       pending: false,
     },
     organization: fixtures.organization,
+    pendingOrganizationAccessRequests: {},
+    organizationId: 'whateverTheOrganizationId',
     closeModal: jest.fn(),
     openModal: jest.fn(),
     clearGlobalError: jest.fn(),

@@ -50,6 +50,7 @@ import { ASSISTED_INSTALLER_MERGE_LISTS_FEATURE } from '../../../redux/constants
 import ErrorBox from '../../common/ErrorBox';
 import RefreshBtn from '../../common/RefreshButton/RefreshButton';
 import Unavailable from '../../common/Unavailable';
+import AccessRequestPendingAlert from '../ClusterDetails/components/AccessRequest/components/AccessRequestPendingAlert';
 import ClusterListFilter from '../common/ClusterListFilter';
 import CommonClusterModals from '../common/CommonClusterModals';
 import ErrorTriangle from '../common/ErrorTriangle';
@@ -132,10 +133,14 @@ const ClusterList = ({
   setListFlag,
   getOrganizationAndQuota,
   organization,
+  organizationId,
+  pendingOrganizationAccessRequests,
   getMachineTypes,
   machineTypes,
   onListFlagsSet,
   closeModal,
+  getOrganizationPendingAccessRequests,
+  resetOrganizationPendingAccessRequests,
   clearGlobalError,
   clearClusterDetails,
   fetchClusters,
@@ -166,7 +171,10 @@ const ClusterList = ({
 
   const refresh = React.useCallback(() => {
     fetchClusters(createViewQueryObject(viewOptions, username));
-  }, [fetchClusters, username, viewOptions]);
+    if (organizationId) {
+      getOrganizationPendingAccessRequests(organizationId);
+    }
+  }, [fetchClusters, getOrganizationPendingAccessRequests, organizationId, username, viewOptions]);
 
   // onMount and willUnmount
   React.useEffect(() => {
@@ -213,10 +221,17 @@ const ClusterList = ({
       closeModal();
       clearClusterDetails();
       clearGlobalError('clusterList');
+      resetOrganizationPendingAccessRequests();
     };
     // Run only on mount and unmount
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  React.useEffect(() => {
+    if (organizationId) {
+      getOrganizationPendingAccessRequests(organizationId);
+    }
+  }, [getOrganizationPendingAccessRequests, organizationId]);
 
   const prevFeatures = usePreviousProps(features);
   const prevViewOptions = usePreviousProps(viewOptions) || viewOptions;
@@ -354,19 +369,25 @@ const ClusterList = ({
                 }}
               />
             ) : (
-              <ClusterListTable
-                openModal={openModal}
-                clusters={clusters || []}
-                viewOptions={viewOptions}
-                setSorting={setSorting}
-                isPending={showSkeleton}
-                setClusterDetails={setClusterDetails}
-                canSubscribeOCPList={canSubscribeOCPList}
-                canHibernateClusterList={canHibernateClusterList}
-                canTransferClusterOwnershipList={canTransferClusterOwnershipList}
-                toggleSubscriptionReleased={toggleSubscriptionReleased}
-                refreshFunc={refresh}
-              />
+              <>
+                <AccessRequestPendingAlert
+                  total={pendingOrganizationAccessRequests.total}
+                  accessRequests={pendingOrganizationAccessRequests.items}
+                />
+                <ClusterListTable
+                  openModal={openModal}
+                  clusters={clusters || []}
+                  viewOptions={viewOptions}
+                  setSorting={setSorting}
+                  isPending={showSkeleton}
+                  setClusterDetails={setClusterDetails}
+                  canSubscribeOCPList={canSubscribeOCPList}
+                  canHibernateClusterList={canHibernateClusterList}
+                  canTransferClusterOwnershipList={canTransferClusterOwnershipList}
+                  toggleSubscriptionReleased={toggleSubscriptionReleased}
+                  refreshFunc={refresh}
+                />
+              </>
             )}
             <ViewPaginationRow
               viewType={viewConstants.CLUSTERS_VIEW}
@@ -411,10 +432,14 @@ ClusterList.propTypes = {
   getMachineTypes: PropTypes.func.isRequired,
   getOrganizationAndQuota: PropTypes.func.isRequired,
   organization: PropTypes.object.isRequired,
+  organizationId: PropTypes.string,
+  pendingOrganizationAccessRequests: PropTypes.object.isRequired,
   cloudProviders: PropTypes.object.isRequired,
   machineTypes: PropTypes.object.isRequired,
   openModal: PropTypes.func.isRequired,
   closeModal: PropTypes.func.isRequired,
+  getOrganizationPendingAccessRequests: PropTypes.func.isRequired,
+  resetOrganizationPendingAccessRequests: PropTypes.func.isRequired,
   setListFlag: PropTypes.func.isRequired,
   operationID: PropTypes.string,
   anyModalOpen: PropTypes.bool,
