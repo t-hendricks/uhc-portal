@@ -25,11 +25,7 @@ import { trackEvents } from '~/common/analytics';
 import { formatMinorVersion, isSupportedMinorVersion } from '~/common/helpers';
 import links from '~/common/installLinks.mjs';
 import { useFormState } from '~/components/clusters/wizards/hooks';
-import {
-  MIN_MANAGED_POLICY_VERSION,
-  ROSA_HOSTED_CLI_MIN_VERSION,
-} from '~/components/clusters/wizards/rosa/rosaConstants';
-import ErrorBox from '~/components/common/ErrorBox';
+import { MIN_MANAGED_POLICY_VERSION } from '~/components/clusters/wizards/rosa/rosaConstants';
 import ExternalLink from '~/components/common/ExternalLink';
 import InstructionCommand from '~/components/common/InstructionCommand';
 import { ReduxSelectDropdown } from '~/components/common/ReduxFormComponents';
@@ -39,12 +35,12 @@ import useAnalytics from '~/hooks/useAnalytics';
 import { useFeatureGate } from '~/hooks/useFeatureGate';
 import { HCP_USE_UNMANAGED } from '~/redux/constants/featureConstants';
 
-import { FieldId } from '../constants';
+import { FieldId } from '../../constants';
+import { RosaCliCommand } from '../constants/cliCommands';
 
-import { RosaCliCommand } from './constants/cliCommands';
-import { AwsRoleErrorAlert } from './AwsRoleErrorAlert';
+import AWSAccountRolesError from './components/AWSAccountRolesError';
 
-import './AccountsRolesScreen.scss';
+import '../AccountsRolesScreen.scss';
 
 export const NO_ROLE_DETECTED = 'No role detected';
 
@@ -177,7 +173,7 @@ function AccountRolesARNsSection({
     isHypershiftSelected ? role.hcpManagedPolicies : role.managedPolicies;
 
   // Determine whether the current selected role has managed policies and set to state managed value
-  React.useEffect(() => {
+  useEffect(() => {
     const selectedRole = accountRoles.find((role) => role.Installer === selectedInstallerRole);
 
     if (getAWSAccountRolesARNsResponse.fulfilled && selectedRole) {
@@ -316,46 +312,24 @@ function AccountRolesARNsSection({
     )} and earlier.`;
   }, [hasStandaloneManagedRole, isHypershiftSelected, rosaMaxOSVersion]);
 
+  const showAccountRolesError =
+    getAWSAccountRolesARNsResponse.error || (showMissingArnsError && hasFinishedLoadingRoles);
+
   return (
     <>
       <GridItem />
       <GridItem>
         <Title headingLevel="h3">Account roles</Title>
       </GridItem>
-      {getAWSAccountRolesARNsResponse.error && (
+      {showAccountRolesError ? (
         <GridItem span={8}>
-          {isMissingOCMRole ? (
-            <AwsRoleErrorAlert title="Cannot detect an OCM role" targetRole="ocm" />
-          ) : (
-            <ErrorBox
-              message="Error getting AWS account ARNs"
-              response={getAWSAccountRolesARNsResponse}
-            />
-          )}
+          <AWSAccountRolesError
+            getAWSAccountRolesARNsResponse={getAWSAccountRolesARNsResponse}
+            isHypershiftSelected={isHypershiftSelected}
+            isMissingOCMRole={isMissingOCMRole}
+          />
         </GridItem>
-      )}
-      {!getAWSAccountRolesARNsResponse.error && hasFinishedLoadingRoles && showMissingArnsError && (
-        <GridItem span={8}>
-          {isHypershiftSelected ? (
-            <Alert isInline variant="danger" title="Some account roles ARNs were not detected.">
-              <br />
-              Create the account roles using the following command in the ROSA CLI
-              <InstructionCommand textAriaLabel="Copyable ROSA login command">
-                {RosaCliCommand.CreateAccountRolesHCP}
-              </InstructionCommand>
-              <br />
-              After running the command, you may need to refresh using the{' '}
-              <strong>Refresh ARNs</strong> button below to populate the ARN fields.
-              <p>You must use ROSA CLI version {ROSA_HOSTED_CLI_MIN_VERSION} or above.</p>
-            </Alert>
-          ) : (
-            <AwsRoleErrorAlert
-              title="Some account roles ARNs were not detected"
-              targetRole="account"
-            />
-          )}
-        </GridItem>
-      )}
+      ) : null}
       {!hasFinishedLoadingRoles && (
         <GridItem>
           <div className="spinner-fit-container">
