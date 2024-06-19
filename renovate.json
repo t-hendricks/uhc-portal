@@ -4,9 +4,10 @@
   "labels": ["dependency update"],
   "packageRules": [
     {
-      "groupName": "all dependencies",
-      "groupSlug": "all-dependencies",
-      "matchPackagePatterns": [".*"]
+      "groupName": "all non-major dependencies",
+      "groupSlug": "all-minor-patch",
+      "matchPackagePatterns": ["*"],
+      "matchUpdateTypes": ["minor", "patch"]
     },
     {
       "groupName": "openshift-assisted dependencies",
