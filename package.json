@@ -172,7 +172,7 @@
     "yargs": "^15.0.0"
   },
   "resolutions": {
-    "@cypress/webpack-preprocessor": "5.17.1",
+    "@cypress/webpack-preprocessor": "6.0.2",
     "@redhat-cloud-services/**/axios": "^1.6.8",
     "@types/react": "17.0.3"
   },
