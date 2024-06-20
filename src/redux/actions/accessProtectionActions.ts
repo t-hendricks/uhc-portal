@@ -10,11 +10,22 @@ const getAccessProtection = (subscriptionId: string) =>
     accessProtectionService.getAccessProtection({ subscriptionId }),
   );
 
+const getOrganizationAccessProtection = (organizationId: string) =>
+  action(
+    accessRequestConstants.GET_ORGANIZATION_ACCESS_PROTECTION,
+    accessProtectionService.getAccessProtection({ organizationId }),
+  );
+
 const resetAccessProtection = () => action(accessRequestConstants.RESET_ACCESS_PROTECTION);
+
+const resetOrganizationAccessProtection = () =>
+  action(accessRequestConstants.RESET_ORGANIZATION_ACCESS_PROTECTION);
 
 const accessProtectionActions = {
   getAccessProtection,
+  getOrganizationAccessProtection,
   resetAccessProtection,
+  resetOrganizationAccessProtection,
 } as const;
 
 type AccessProtectionAction = ActionType<
@@ -25,5 +36,7 @@ export {
   AccessProtectionAction,
   accessProtectionActions,
   getAccessProtection,
+  getOrganizationAccessProtection,
   resetAccessProtection,
+  resetOrganizationAccessProtection,
 };

@@ -29,10 +29,9 @@ describe('AccessRequestDetails', () => {
 
       // Assert
       expect(screen.getByText(/subscription id/i)).toBeInTheDocument();
-      expect(screen.getByText(/requestor/i)).toBeInTheDocument();
       expect(screen.getByText(/service request id/i)).toBeInTheDocument();
       expect(screen.getByText(/created time/i)).toBeInTheDocument();
-      expect(screen.getByText(/expires on/i)).toBeInTheDocument();
+      expect(screen.getByText(/respond by/i)).toBeInTheDocument();
       expect(screen.getByText(/request duration/i)).toBeInTheDocument();
       expect(screen.getByText(/justification/i)).toBeInTheDocument();
       expect(screen.getByTestId('justification-field-value')).toBeInTheDocument();
