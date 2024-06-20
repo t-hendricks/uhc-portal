@@ -2480,12 +2480,22 @@
     "@scalprum/react-core" "^0.5.4"
     sanitize-html "^2.7.2"
 
-"@redhat-cloud-services/rbac-client@^1.2.12":
-  version "1.2.12"
-  resolved "https://registry.yarnpkg.com/@redhat-cloud-services/rbac-client/-/rbac-client-1.2.12.tgz#28604779d7c447d0adb0afa05d2b62c6e18cc594"
-  integrity sha512-wYmYGqQr6UNRFZ7eR0ExGE5f6Ig5Cgj/qbSdGlyxiDxP6ZA04fPFFFf8H+Ie91sjJx4LuQd5NpuSTSznKdxb0g==
+"@redhat-cloud-services/javascript-clients-shared@^1.2.2":
+  version "1.2.3"
+  resolved "https://registry.yarnpkg.com/@redhat-cloud-services/javascript-clients-shared/-/javascript-clients-shared-1.2.3.tgz#6a7599ab071e72d2c7ec03383c6527813241af24"
+  integrity sha512-ymuDBCCj9FSP9NsoOTNFVpNTUEqbkKA+6ouBkL3X3tkM4Wgwg0fCjTl4kznSWeY8r2Kh2bgaPGZmBQGHfIGBcA==
   dependencies:
-    axios "^0.27.2"
+    axios "^1.7.2"
+    tslib "^2.6.2"
+
+"@redhat-cloud-services/rbac-client@^2.0.0":
+  version "2.0.3"
+  resolved "https://registry.yarnpkg.com/@redhat-cloud-services/rbac-client/-/rbac-client-2.0.3.tgz#b4b76b723071ad30cb683c60d4b1b6b6bcd52918"
+  integrity sha512-aBvojrpP5pFjuQVgcF7oo0FqdYVwK2GcVte+Adyxh002Pv9McU60FoZBzGSk+hJ9NztW7aFeyS+HmGau/iqYGg==
+  dependencies:
+    "@redhat-cloud-services/javascript-clients-shared" "^1.2.2"
+    axios "^1.7.2"
+    tslib "^2.6.2"
 
 "@redhat-cloud-services/types@1.0.7":
   version "1.0.7"
@@ -4185,7 +4195,7 @@ axios-case-converter@^0.11.1:
     snake-case "^3.0.3"
     tslib "^2.3.0"
 
-axios@^0.27.2, axios@^1.6.8:
+axios@^0.27.2, axios@^1.6.8, axios@^1.7.2:
   version "1.6.8"
   resolved "https://registry.yarnpkg.com/axios/-/axios-1.6.8.tgz#66d294951f5d988a00e87a0ffb955316a619ea66"
   integrity sha512-v/ZHtJDU39mDpyBoFVkETcd/uNdxrWRrg3bKpOKzXFA6Bvqopts6ALSMU3y6ijYxbw2B+wPrIv46egTzJXCLGQ==
