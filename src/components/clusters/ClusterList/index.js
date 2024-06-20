@@ -1,6 +1,9 @@
 import { connect } from 'react-redux';
 
+import { featureGateSelector } from '~/hooks/useFeatureGate';
+import { accessProtectionActions } from '~/redux/actions/accessProtectionActions';
 import { accessRequestActions } from '~/redux/actions/accessRequestActions';
+import { ACCESS_REQUEST_ENABLED } from '~/redux/constants/featureConstants';
 
 import { cloudProviderActions } from '../../../redux/actions/cloudProviderActions';
 import { clustersActions } from '../../../redux/actions/clustersActions';
@@ -30,6 +33,8 @@ const mapDispatchToProps = {
   getOrganizationPendingAccessRequests: accessRequestActions.getOrganizationPendingAccessRequests,
   resetOrganizationPendingAccessRequests:
     accessRequestActions.resetOrganizationPendingAccessRequests,
+  getOrganizationAccessProtection: accessProtectionActions.getOrganizationAccessProtection,
+  resetOrganizationAccessProtection: accessProtectionActions.resetOrganizationAccessProtection,
   openModal: modalActions.openModal,
   closeModal: modalActions.closeModal,
   toggleSubscriptionReleased,
@@ -48,9 +53,12 @@ const mapStateToProps = (state) => ({
   anyModalOpen: !!state.modal.modalName,
   features: state.features,
   pendingOrganizationAccessRequests: state.accessRequest.pendingOrganizationAccessRequests,
+  isOrganizationAccessProtectionEnabled:
+    state.accessProtection.organizationAccessProtection.enabled,
   canSubscribeOCPList: canSubscribeOCPListSelector(state),
   canHibernateClusterList: canHibernateClusterListSelector(state),
   canTransferClusterOwnershipList: canTransferClusterOwnershipListSelector(state),
+  isAccessRequestEnabled: featureGateSelector(state, ACCESS_REQUEST_ENABLED),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(ClusterList);

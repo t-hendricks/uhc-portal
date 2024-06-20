@@ -45,7 +45,7 @@ describe('AccessRequestTable', () => {
 
       // Assert
       expect(container.querySelectorAll('tbody tr')).toHaveLength(10);
-      expect(container.querySelectorAll('.pf-v5-c-skeleton').length).toBe(50);
+      expect(container.querySelectorAll('.pf-v5-c-skeleton').length).toBe(40);
     });
 
     describe('isPeding false', () => {
@@ -97,14 +97,13 @@ describe('AccessRequestTable', () => {
               {
                 status: { state: AccessRequestState.APPROVED },
                 created_at: 'created_at1',
-                requested_by: 'requested_by1',
+                id: 'id1',
                 support_case_id: 'support_case_id1',
               },
               {
                 status: { state: AccessRequestState.DENIED },
                 created_at: 'created_at2',
-                requested_by: 'requested_by2',
-                support_case_id: 'support_case_id2',
+                id: 'id2',
               },
             ]}
           />,

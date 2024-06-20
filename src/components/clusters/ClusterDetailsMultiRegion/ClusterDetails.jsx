@@ -38,8 +38,15 @@ import {
   invalidateCloudProviders,
   useFetchCloudProviders,
 } from '~/queries/common/useFetchCloudProviders';
-import { accessProtectionActions } from '~/redux/actions/accessProtectionActions';
-import { accessRequestActions } from '~/redux/actions/accessRequestActions';
+import {
+  accessProtectionActions,
+  getAccessProtection,
+} from '~/redux/actions/accessProtectionActions';
+import {
+  accessRequestActions,
+  getAccessRequests,
+  getPendingAccessRequests,
+} from '~/redux/actions/accessRequestActions';
 import { clearListVpcs } from '~/redux/actions/ccsInquiriesActions';
 import { clusterAutoscalerActions } from '~/redux/actions/clusterAutoscalerActions';
 import { onClearFiltersAndFlags } from '~/redux/actions/viewOptionsActions';
@@ -193,13 +200,11 @@ const ClusterDetails = (props) => {
   // eslint-disable-next-line no-unused-vars
   const [refreshEvent, setRefreshEvent] = React.useState({ type: eventTypes.NONE });
   const pendingAccessRequests = useSelector((state) => state.accessRequest.pendingAccessRequests);
-  const isAccessProtectionEnabled = useSelector(
-    (state) => state.accessProtection.accessProtection.enabled,
-  );
+  const accessProtectionState = useSelector((state) => state.accessProtection.accessProtection);
 
   const accessRequestsTabVisible = React.useMemo(
-    () => isAccessProtectionEnabled && isAccessRequestEnabled,
-    [isAccessProtectionEnabled, isAccessRequestEnabled],
+    () => accessProtectionState.enabled && isAccessRequestEnabled,
+    [accessProtectionState.enabled, isAccessRequestEnabled],
   );
 
   const overviewTabRef = React.useRef();
@@ -271,10 +276,8 @@ const ClusterDetails = (props) => {
       invalidateClusterLogsQueries();
     }
 
-    if (subscriptionID) {
-      dispatch(accessRequestActions.getAccessRequests(subscriptionID, accessRequestsViewOptions));
-      dispatch(accessRequestActions.getPendingAccessRequests(subscriptionID));
-      dispatch(accessProtectionActions.getAccessProtection(subscriptionID));
+    if (subscriptionID && isAccessRequestEnabled) {
+      dispatch(getAccessProtection(subscriptionID));
     }
 
     if (isManaged) {
@@ -358,6 +361,19 @@ const ClusterDetails = (props) => {
     // has to be wrapped in useCallback
     // eslint-disable-next-line  react-hooks/exhaustive-deps
   }, [params, cluster, subscriptionID]);
+
+  React.useEffect(() => {
+    if (
+      !accessProtectionState.pending &&
+      accessProtectionState.enabled &&
+      subscriptionID &&
+      accessRequestsViewOptions
+    ) {
+      dispatch(getAccessRequests(subscriptionID, accessRequestsViewOptions));
+      dispatch(getPendingAccessRequests(subscriptionID));
+    }
+    // eslint-disable-next-line  react-hooks/exhaustive-deps
+  }, [accessProtectionState.pending, accessProtectionState.enabled, subscriptionID]);
 
   const requestedSubscriptionID = params.id;
 
