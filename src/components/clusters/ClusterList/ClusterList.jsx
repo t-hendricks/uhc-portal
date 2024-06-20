@@ -135,12 +135,15 @@ const ClusterList = ({
   organization,
   organizationId,
   pendingOrganizationAccessRequests,
+  isOrganizationAccessProtectionEnabled,
   getMachineTypes,
   machineTypes,
   onListFlagsSet,
   closeModal,
   getOrganizationPendingAccessRequests,
   resetOrganizationPendingAccessRequests,
+  getOrganizationAccessProtection,
+  resetOrganizationAccessProtection,
   clearGlobalError,
   clearClusterDetails,
   fetchClusters,
@@ -166,15 +169,25 @@ const ClusterList = ({
   toggleSubscriptionReleased,
   meta: { clustersServiceError },
   features,
+  isAccessRequestEnabled,
 }) => {
   const [loadingChangedView, setLoadingChangedView] = React.useState(false);
 
   const refresh = React.useCallback(() => {
     fetchClusters(createViewQueryObject(viewOptions, username));
-    if (organizationId) {
-      getOrganizationPendingAccessRequests(organizationId);
+    if (organizationId && isAccessRequestEnabled) {
+      resetOrganizationAccessProtection();
+      getOrganizationAccessProtection(organizationId);
     }
-  }, [fetchClusters, getOrganizationPendingAccessRequests, organizationId, username, viewOptions]);
+  }, [
+    fetchClusters,
+    resetOrganizationAccessProtection,
+    getOrganizationAccessProtection,
+    organizationId,
+    username,
+    viewOptions,
+    isAccessRequestEnabled,
+  ]);
 
   // onMount and willUnmount
   React.useEffect(() => {
@@ -222,16 +235,23 @@ const ClusterList = ({
       clearClusterDetails();
       clearGlobalError('clusterList');
       resetOrganizationPendingAccessRequests();
+      resetOrganizationAccessProtection();
     };
     // Run only on mount and unmount
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   React.useEffect(() => {
-    if (organizationId) {
+    if (organizationId && isAccessRequestEnabled) {
+      getOrganizationAccessProtection(organizationId);
+    }
+  }, [getOrganizationAccessProtection, organizationId, isAccessRequestEnabled]);
+
+  React.useEffect(() => {
+    if (isOrganizationAccessProtectionEnabled && organizationId) {
       getOrganizationPendingAccessRequests(organizationId);
     }
-  }, [getOrganizationPendingAccessRequests, organizationId]);
+  }, [getOrganizationPendingAccessRequests, isOrganizationAccessProtectionEnabled, organizationId]);
 
   const prevFeatures = usePreviousProps(features);
   const prevViewOptions = usePreviousProps(viewOptions) || viewOptions;
@@ -434,12 +454,15 @@ ClusterList.propTypes = {
   organization: PropTypes.object.isRequired,
   organizationId: PropTypes.string,
   pendingOrganizationAccessRequests: PropTypes.object.isRequired,
+  isOrganizationAccessProtectionEnabled: PropTypes.object.isRequired,
   cloudProviders: PropTypes.object.isRequired,
   machineTypes: PropTypes.object.isRequired,
   openModal: PropTypes.func.isRequired,
   closeModal: PropTypes.func.isRequired,
   getOrganizationPendingAccessRequests: PropTypes.func.isRequired,
   resetOrganizationPendingAccessRequests: PropTypes.func.isRequired,
+  getOrganizationAccessProtection: PropTypes.func.isRequired,
+  resetOrganizationAccessProtection: PropTypes.func.isRequired,
   setListFlag: PropTypes.func.isRequired,
   operationID: PropTypes.string,
   anyModalOpen: PropTypes.bool,
@@ -454,6 +477,7 @@ ClusterList.propTypes = {
   clearGlobalError: PropTypes.func.isRequired,
   clearClusterDetails: PropTypes.func.isRequired,
   onListFlagsSet: PropTypes.func.isRequired,
+  isAccessRequestEnabled: PropTypes.bool,
 };
 
 export default ClusterList;

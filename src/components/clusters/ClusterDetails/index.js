@@ -96,7 +96,7 @@ const mapStateToProps = (state, { location }) => {
     useNodeUpgradePolicies: featureGateSelector(state, HCP_USE_NODE_UPGRADE_POLICIES),
     hasNetworkOndemand: featureGateSelector(state, NETWORK_VALIDATOR_ONDEMAND_FEATURE),
     isAccessRequestEnabled: featureGateSelector(state, ACCESS_REQUEST_ENABLED),
-    isAccessProtectionEnabled: state.accessProtection.accessProtection.enabled,
+    accessProtectionState: state.accessProtection.accessProtection,
   };
 };
 

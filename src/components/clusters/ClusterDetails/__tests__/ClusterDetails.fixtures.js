@@ -53,6 +53,8 @@ const funcs = () => ({
   getOrganizationPendingAccessRequests: jest.fn(),
   resetOrganizationPendingAccessRequests: jest.fn(),
   resetAccessProtection: jest.fn(),
+  getOrganizationAccessProtection: jest.fn(),
+  resetOrganizationAccessProtection: jest.fn(),
 });
 
 const clusterDetails = {

@@ -36,12 +36,6 @@ const AccessRequestDetails = ({ accessRequest, hideJustification }: AccessReques
             <DescriptionListDescription>{accessRequest.cluster_id}</DescriptionListDescription>
           </DescriptionListGroup>
           <DescriptionListGroup>
-            <DescriptionListTerm>Requestor</DescriptionListTerm>
-            <DescriptionListDescription>
-              {accessRequest.requested_by || 'N/A'}
-            </DescriptionListDescription>
-          </DescriptionListGroup>
-          <DescriptionListGroup>
             <DescriptionListTerm>Service Request ID</DescriptionListTerm>
             <DescriptionListDescription>
               {accessRequest.support_case_id || 'N/A'}
@@ -68,7 +62,7 @@ const AccessRequestDetails = ({ accessRequest, hideJustification }: AccessReques
             </DescriptionListDescription>
           </DescriptionListGroup>
           <DescriptionListGroup>
-            <DescriptionListTerm>Expires on</DescriptionListTerm>
+            <DescriptionListTerm>Respond By</DescriptionListTerm>
             <DescriptionListDescription>
               <Timestamp value={accessRequest.deadlineAt} />
             </DescriptionListDescription>
@@ -76,7 +70,7 @@ const AccessRequestDetails = ({ accessRequest, hideJustification }: AccessReques
           <DescriptionListGroup>
             <DescriptionListTerm>Request Duration</DescriptionListTerm>
             <DescriptionListDescription>
-              <Timestamp value={accessRequest.duration} />
+              {accessRequest.duration || 'N/A'}
             </DescriptionListDescription>
           </DescriptionListGroup>
         </DescriptionList>
