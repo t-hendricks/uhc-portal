@@ -40,6 +40,8 @@ jest.mock('../components/SupportCasesCard', () => (props: any) => (
 ));
 
 describe('<Support />', () => {
+  const isAddNotificationContactSuccessMock = true;
+  const isAddNotificationContactPendingMock = false;
   const useDispatchMock = jest.spyOn(reactRedux, 'useDispatch');
   const mockedDispatch = jest.fn();
   useDispatchMock.mockReturnValue(mockedDispatch);
@@ -48,23 +50,17 @@ describe('<Support />', () => {
     beforeEach(() => {
       jest.clearAllMocks();
     });
-    it('undefined cluster', async () => {
-      // Arrange
-      useGlobalStateMock.mockReturnValue({ cluster: undefined });
-
-      // Act
-      const { container } = render(<Support />);
-
-      // Assert
-      await checkAccessibility(container);
-    });
 
     it('default cluster from subscription', async () => {
-      // Arrange
-      useGlobalStateMock.mockReturnValue({ cluster: defaultClusterFromSubscription });
-
       // Act
-      const { container } = render(<Support />);
+      const { container } = render(
+        <Support
+          cluster={defaultClusterFromSubscription}
+          addNotificationStatus="success"
+          isAddNotificationContactSuccess={isAddNotificationContactSuccessMock}
+          isAddNotificationContactPending={isAddNotificationContactPendingMock}
+        />,
+      );
 
       // Assert
       await checkAccessibility(container);
@@ -72,18 +68,25 @@ describe('<Support />', () => {
 
     it('plan type RHOIC', async () => {
       // Arrange
-      useGlobalStateMock.mockReturnValue({
-        cluster: {
-          ...defaultClusterFromSubscription,
-          subscription: {
-            ...defaultClusterFromSubscription.subscription,
-            plan: { type: normalizedProducts.RHOIC },
-          },
+      useGlobalStateMock.mockReturnValue({});
+      const clusterProp = {
+        ...defaultClusterFromSubscription,
+        subscription: {
+          ...defaultClusterFromSubscription.subscription,
+          managed: false,
+          plan: { type: normalizedProducts.RHOIC },
         },
-      });
+      };
 
       // Act
-      const { container } = render(<Support />);
+      const { container } = render(
+        <Support
+          cluster={clusterProp}
+          addNotificationStatus="success"
+          isAddNotificationContactSuccess={isAddNotificationContactSuccessMock}
+          isAddNotificationContactPending={isAddNotificationContactPendingMock}
+        />,
+      );
 
       // Assert
       await checkAccessibility(container);
@@ -94,27 +97,17 @@ describe('<Support />', () => {
     beforeEach(() => {
       jest.clearAllMocks();
     });
-    it('empty content', () => {
-      // Arrange
-      useGlobalStateMock.mockReturnValue({ cluster: undefined });
-
-      // Act
-      render(
-        <div data-testid="parent-div">
-          <Support />
-        </div>,
-      );
-
-      // Assert
-      expect(screen.getByTestId('parent-div').children.length).toBe(0);
-    });
 
     it('default cluster from subscription', () => {
-      // Arrange
-      useGlobalStateMock.mockReturnValue({ cluster: defaultClusterFromSubscription });
-
       // Act
-      render(<Support />);
+      render(
+        <Support
+          cluster={defaultClusterFromSubscription}
+          addNotificationStatus="success"
+          isAddNotificationContactSuccess={isAddNotificationContactSuccessMock}
+          isAddNotificationContactPending={isAddNotificationContactPendingMock}
+        />,
+      );
 
       // Assert
       expect(screen.getByTestId('add-notification-contact-button')).toBeInTheDocument();
@@ -124,19 +117,25 @@ describe('<Support />', () => {
 
     it('RHOIC and with subscription ID', () => {
       // Arrange
-      useGlobalStateMock.mockReturnValue({
-        cluster: {
-          ...defaultClusterFromSubscription,
-          subscription: {
-            ...defaultClusterFromSubscription.subscription,
-            id: 'whatevertheid',
-            plan: { type: normalizedProducts.RHOIC },
-          },
+      const cluster = {
+        ...defaultClusterFromSubscription,
+        subscription: {
+          ...defaultClusterFromSubscription.subscription,
+          id: 'whatevertheid',
+          managed: true,
+          plan: { type: normalizedProducts.RHOIC },
         },
-      });
+      };
 
       // Act
-      render(<Support />);
+      render(
+        <Support
+          cluster={cluster}
+          addNotificationStatus="success"
+          isAddNotificationContactSuccess={isAddNotificationContactSuccessMock}
+          isAddNotificationContactPending={isAddNotificationContactPendingMock}
+        />,
+      );
 
       // Assert
       expect(screen.getByTestId('add-notification-contact-button')).toBeInTheDocument();
@@ -146,17 +145,23 @@ describe('<Support />', () => {
 
     it('with subscription ID', () => {
       // Arrange
-      useGlobalStateMock.mockReturnValue({
-        cluster: {
-          ...defaultClusterFromSubscription,
-          subscription: {
-            ...defaultClusterFromSubscription.subscription,
-            id: 'whatevertheid',
-          },
+      const cluster = {
+        ...defaultClusterFromSubscription,
+        subscription: {
+          ...defaultClusterFromSubscription.subscription,
+          id: 'whatevertheid',
+          managed: true,
         },
-      });
+      };
       // Act
-      render(<Support />);
+      render(
+        <Support
+          cluster={cluster}
+          addNotificationStatus="success"
+          isAddNotificationContactSuccess={isAddNotificationContactSuccessMock}
+          isAddNotificationContactPending={isAddNotificationContactPendingMock}
+        />,
+      );
 
       // Assert
       expect(screen.getByTestId('add-notification-contact-button')).toBeInTheDocument();
@@ -166,10 +171,15 @@ describe('<Support />', () => {
     });
 
     it('without subscription ID', () => {
-      // Arrange
-      useGlobalStateMock.mockReturnValue({ cluster: defaultClusterFromSubscription });
       // Act
-      render(<Support />);
+      render(
+        <Support
+          cluster={defaultClusterFromSubscription}
+          addNotificationStatus="success"
+          isAddNotificationContactSuccess={isAddNotificationContactSuccessMock}
+          isAddNotificationContactPending={isAddNotificationContactPendingMock}
+        />,
+      );
 
       // Assert
       expect(screen.getByTestId('add-notification-contact-button')).toBeInTheDocument();
@@ -178,11 +188,16 @@ describe('<Support />', () => {
     });
 
     it('is disabled', () => {
-      // Arrange
-      useGlobalStateMock.mockReturnValue({ cluster: defaultClusterFromSubscription });
-
       // Act
-      render(<Support isDisabled />);
+      render(
+        <Support
+          isDisabled
+          cluster={defaultClusterFromSubscription}
+          addNotificationStatus="success"
+          isAddNotificationContactSuccess={isAddNotificationContactSuccessMock}
+          isAddNotificationContactPending={isAddNotificationContactPendingMock}
+        />,
+      );
 
       // Assert
       expect(screen.queryByTestId('add-notification-contact-button')).not.toBeInTheDocument();

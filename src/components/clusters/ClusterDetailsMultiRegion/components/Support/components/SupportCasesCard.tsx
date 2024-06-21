@@ -1,5 +1,4 @@
 import React, { useEffect, useMemo } from 'react';
-import { useDispatch } from 'react-redux';
 
 import { Button, EmptyState, EmptyStateBody, EmptyStateVariant } from '@patternfly/react-core';
 import { TableVariant } from '@patternfly/react-table';
@@ -9,9 +8,9 @@ import {
   TableHeader as TableHeaderDeprecated,
 } from '@patternfly/react-table/deprecated';
 
-import { getSupportCases } from '~/redux/actions/supportActions';
-import { useGlobalState } from '~/redux/hooks';
+import { useFetchSupportCases } from '~/queries/ClusterDetailsQueries/ClusterSupportTab/useFetchSupportCases';
 import { isRestrictedEnv } from '~/restrictedEnv';
+import { AugmentedCluster } from '~/types/types';
 
 import { normalizedProducts } from '../../../../../../common/subscriptionTypes';
 
@@ -20,29 +19,26 @@ import { COLUMNS, getSupportCaseURL, supportCaseRow } from './SupportCasesCardHe
 type SupportCasesCardProps = {
   subscriptionID: string;
   isDisabled?: boolean;
+  cluster: AugmentedCluster;
 };
 
-const SupportCasesCard = ({ subscriptionID, isDisabled = false }: SupportCasesCardProps) => {
-  const cluster = useGlobalState((state) => state.clusters.details.cluster);
-  const product = cluster.subscription?.plan?.type;
-  const {
-    supportCases = {
-      cases: [],
-      pending: false,
-      subscriptionID: '',
-    },
-  } = useGlobalState((state) => state.clusterSupport);
-
-  const dispatch = useDispatch();
+const SupportCasesCard = ({
+  subscriptionID,
+  isDisabled = false,
+  cluster,
+}: SupportCasesCardProps) => {
+  const product = cluster?.subscription?.plan?.type;
+  const isRestricted = isRestrictedEnv();
+  const { supportCases, isLoading, refetch } = useFetchSupportCases(subscriptionID, isRestricted);
 
   useEffect(() => {
     if (!isRestrictedEnv()) {
-      if (supportCases.subscriptionID !== subscriptionID || !supportCases.pending) {
-        dispatch(getSupportCases(subscriptionID));
+      if (supportCases.subscriptionID !== subscriptionID || !isLoading) {
+        refetch();
       }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [dispatch, subscriptionID, supportCases.subscriptionID]);
+  }, [subscriptionID, supportCases.subscriptionID]);
 
   const rows = useMemo(() => supportCases.cases?.map(supportCaseRow), [supportCases.cases]);
   const hasRows = useMemo(() => rows && rows.length > 0, [rows]);
@@ -52,7 +48,7 @@ const SupportCasesCard = ({ subscriptionID, isDisabled = false }: SupportCasesCa
     <>
       {showOpenSupportCaseButton && (
         <a
-          href={getSupportCaseURL(product, cluster.openshift_version, cluster.external_id)}
+          href={getSupportCaseURL(product, cluster?.openshift_version, cluster?.external_id)}
           target="_blank"
           rel="noopener noreferrer"
           data-testid="support-case-btn"

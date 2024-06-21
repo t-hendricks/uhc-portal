@@ -23,7 +23,7 @@ import { INVALIDATE_ACTION } from '../reduxHelpers';
  *
  * @see https://github.com/RedHatInsights/frontend-components/blob/master/packages/notifications/doc/notifications.md
  */
-const buildNotificationsMeta = (title: string, accountID: string) => ({
+export const buildNotificationsMeta = (title: string, accountID: string) => ({
   notifications: {
     fulfilled: {
       variant: 'success',
