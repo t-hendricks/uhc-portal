@@ -31,13 +31,15 @@ const getOrganization = (organizationID: string) =>
     },
   });
 
-const getSubscriptions = (params: {
+export type getSubscriptionQueryType = {
   page: number;
   ['page_size']: number;
   filter?: string;
   fields?: string;
   order?: string;
-}) =>
+};
+
+const getSubscriptions = (params: getSubscriptionQueryType) =>
   apiRequest.get<SubscriptionList>('/api/accounts_mgmt/v1/subscriptions', {
     params: {
       page: params.page,

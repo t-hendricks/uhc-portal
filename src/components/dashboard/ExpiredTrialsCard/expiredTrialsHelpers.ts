@@ -5,5 +5,3 @@ const expiredTrialsFilter = {
 };
 
 export { expiredTrialsFilter };
-
-export default expiredTrialsFilter;
