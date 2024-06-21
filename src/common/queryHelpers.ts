@@ -172,7 +172,10 @@ const createServiceLogQueryObject = (
   return queryObject;
 };
 
-const createOverviewQueryObject = (viewOptions?: ViewOptions, queryObj?: QueryObject) => {
+const createOverviewQueryObject = (
+  viewOptions?: ViewOptions,
+  queryObj?: QueryObject,
+): QueryObject => {
   const queryObject: QueryObject = {
     order: 'display_name asc',
     ...queryObj,
