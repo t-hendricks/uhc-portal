@@ -15,7 +15,7 @@ import { shouldRefetchQuota } from '../../../common/helpers';
 import Breadcrumbs from '../../common/Breadcrumbs';
 import PageTitle from '../../common/PageTitle';
 
-import CloudTab from './CloudTab';
+import CloudTab from './CloudTab/CloudTab';
 import DatacenterTab from './DatacenterTab';
 import LocalTab from './LocalTab';
 
