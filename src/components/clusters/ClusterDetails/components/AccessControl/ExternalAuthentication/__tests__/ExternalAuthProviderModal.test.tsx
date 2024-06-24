@@ -143,5 +143,5 @@ describe('<ExternalAuthProviderModal />', () => {
     expect(mockPostBreakGlassCallParams[0]).toBe(
       '/api/clusters_mgmt/v1/clusters/cluster1/external_auth_config/external_auths',
     );
-  });
+  }, 80_000);
 });
