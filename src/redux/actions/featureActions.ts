@@ -8,6 +8,7 @@ import {
   ASSISTED_INSTALLER_FEATURE,
   ASSISTED_INSTALLER_MERGE_LISTS_FEATURE,
   CLI_SSO_AUTHORIZATION,
+  CLUSTER_OWNERSHIP_TRANSFER,
   ENABLE_MACHINE_CONFIGURATION,
   HCP_AWS_BILLING_REQUIRED,
   HCP_AWS_BILLING_SHOW,
@@ -56,6 +57,7 @@ export const features = [
   getSimpleUnleashFeature('multi-region-support', MULTIREGION_PREVIEW_ENABLED),
   getSimpleUnleashFeature('longer-cluster-name-ui', LONGER_CLUSTER_NAME_UI),
   getSimpleUnleashFeature('enable-access-request', ACCESS_REQUEST_ENABLED),
+  getSimpleUnleashFeature('cluster-ownership-transfer', CLUSTER_OWNERSHIP_TRANSFER),
   {
     name: ASSISTED_INSTALLER_FEATURE,
     action: () =>
