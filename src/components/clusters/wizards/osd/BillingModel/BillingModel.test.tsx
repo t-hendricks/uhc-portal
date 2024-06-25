@@ -3,7 +3,7 @@ import { Formik } from 'formik';
 
 import { render } from '~/testUtils';
 
-import { initialValues } from '../../rosa/constants';
+import { initialValues } from '../constants';
 
 import { BillingModel } from './BillingModel';
 

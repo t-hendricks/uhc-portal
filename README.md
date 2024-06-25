@@ -51,6 +51,11 @@ to the [_OCM Web Portal_ development source on Segment](https://app.segment.com/
 If you see them in the [production source](https://app.segment.com/redhat-devtools/sources/ocm_web_portal/overview) instead, reload the page once
 (this will stick until local storage is cleared).
 
+By default, UI run Assisted Installer without standalone mode. To run with Assisted Installer in standalone mode you need to follow these steps:
+- Download https://github.com/openshift-assisted/assisted-installer-app project
+- Inside assisted-installer-app run `npm install && npm run start:federated`
+- In uhc-portal run `yarn start --env ai_standalone`
+
 ## Environments and Deployments
 
 Each of the consoledot environments has a "beta" version; their original goal

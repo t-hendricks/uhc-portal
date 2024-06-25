@@ -5,10 +5,10 @@ import { Button, Grid, GridItem } from '@patternfly/react-core';
 import { MinusCircleIcon } from '@patternfly/react-icons/dist/esm/icons/minus-circle-icon';
 import { PlusCircleIcon } from '@patternfly/react-icons/dist/esm/icons/plus-circle-icon';
 
-import { nodeKeyValueTooltipText } from '~/common/helpers';
+import { getRandomID, nodeKeyValueTooltipText } from '~/common/helpers';
 import { validateLabelKey, validateLabelValue } from '~/common/validators';
+import { FieldId } from '~/components/clusters/wizards/common/constants';
 import { useFormState } from '~/components/clusters/wizards/hooks';
-import { FieldId } from '~/components/clusters/wizards/rosa_v2/constants';
 
 import ButtonWithTooltip from '../../ButtonWithTooltip';
 
@@ -24,6 +24,7 @@ const FormKeyValueList = ({ push, remove }: ArrayHelpers) => {
     setFieldTouched,
     getFieldProps,
     getFieldMeta,
+    validateForm,
   } = useFormState();
 
   const hasInvalidKeys = (fieldsArray: any[]) =>
@@ -31,8 +32,9 @@ const FormKeyValueList = ({ push, remove }: ArrayHelpers) => {
 
   useEffect(() => {
     if (!nodeLabels?.length) {
-      setFieldValue(FieldId.NodeLabels, [{}]);
+      setFieldValue(FieldId.NodeLabels, [{ id: getRandomID() }]);
     }
+    validateForm();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [nodeLabels, setFieldValue]);
 
@@ -45,7 +47,7 @@ const FormKeyValueList = ({ push, remove }: ArrayHelpers) => {
         Value
       </GridItem>
       <GridItem span={4} />
-      {(nodeLabels as any[])?.map((_, index) => {
+      {(nodeLabels as any[])?.map((label, index) => {
         const isRemoveDisabled = index === 0 && nodeLabels.length === 1;
         const fieldNameLabelKey = `${FieldId.NodeLabels}[${index}].key`;
         const fieldNameLabelValue = `${FieldId.NodeLabels}[${index}].value`;
@@ -53,7 +55,7 @@ const FormKeyValueList = ({ push, remove }: ArrayHelpers) => {
         return (
           /* Adding index to fix issue when machine pool entries with same subnets are removed */
           // eslint-disable-next-line react/no-array-index-key
-          <React.Fragment key={`${nodeLabels.indexOf(index).key}_${index}`}>
+          <React.Fragment key={`${label.id}`}>
             <GridItem span={4}>
               <Field
                 name={fieldNameLabelKey}
@@ -74,7 +76,7 @@ const FormKeyValueList = ({ push, remove }: ArrayHelpers) => {
                 input={{
                   ...getFieldProps(fieldNameLabelKey),
                   onChange: (value: string) => {
-                    setFieldValue(fieldNameLabelKey, value, true);
+                    setFieldValue(fieldNameLabelKey, value, false);
                     setFieldTouched(fieldNameLabelKey, true, false);
                   },
                 }}
@@ -101,7 +103,7 @@ const FormKeyValueList = ({ push, remove }: ArrayHelpers) => {
                 input={{
                   ...getFieldProps(fieldNameLabelValue),
                   onChange: (value: string) => {
-                    setFieldValue(fieldNameLabelValue, value, true);
+                    setFieldValue(fieldNameLabelValue, value, false);
                     setFieldTouched(fieldNameLabelValue, true, false);
                   },
                 }}
@@ -127,7 +129,7 @@ const FormKeyValueList = ({ push, remove }: ArrayHelpers) => {
       })}
       <GridItem>
         <ButtonWithTooltip
-          onClick={() => push({})}
+          onClick={() => push({ id: getRandomID() })}
           icon={<PlusCircleIcon />}
           variant="link"
           isInline

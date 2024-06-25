@@ -1,14 +1,13 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
-  "extends": [
-    "config:recommended"
-  ],
+  "extends": ["config:recommended"],
   "labels": ["dependency update"],
   "packageRules": [
     {
-      "groupName": "all dependencies",
-      "groupSlug": "all-dependencies",
-      "matchPackagePatterns": [".*"]
+      "groupName": "all non-major dependencies",
+      "groupSlug": "all-minor-patch",
+      "matchPackagePatterns": ["*"],
+      "matchUpdateTypes": ["minor", "patch"]
     },
     {
       "groupName": "openshift-assisted dependencies",
@@ -16,7 +15,6 @@
       "enabled": false
     }
   ],
-  "ignorePaths": [
-      "babel-plugins/**"
-  ]
+  "ignorePaths": ["babel-plugins/**"],
+  "ignoreDeps": ["monaco-editor", "react-monaco-editor", "@types/react"]
 }

@@ -12,9 +12,17 @@ type TextFieldProps = {
   isRequired?: boolean;
   isDisabled?: boolean;
   helpText?: string;
+  placeHolderText?: string;
 };
 
-const TextField = ({ fieldId, label, isRequired, isDisabled, helpText }: TextFieldProps) => {
+const TextField = ({
+  fieldId,
+  label,
+  isRequired,
+  isDisabled,
+  helpText,
+  placeHolderText,
+}: TextFieldProps) => {
   const [field, { error, touched }] = useField(fieldId);
 
   const labelIcon = helpText ? (
@@ -36,6 +44,7 @@ const TextField = ({ fieldId, label, isRequired, isDisabled, helpText }: TextFie
           field.onChange(event);
         }}
         isDisabled={isDisabled}
+        placeholder={placeHolderText}
       />
 
       <FormGroupHelperText touched={touched} error={error} />

@@ -2,7 +2,7 @@ import React from 'react';
 
 import useAnalytics from '~/hooks/useAnalytics';
 
-type WithAnalyticsProps = ReturnType<typeof useAnalytics>;
+export type WithAnalyticsProps = ReturnType<typeof useAnalytics>;
 
 /**
  * Provides a helper function for analytics track events.

@@ -383,6 +383,7 @@ const tools = {
   MIRROR_REGISTRY: 'mirror-registry',
   OC_MIRROR_PLUGIN: 'oc-mirror-plugin',
   TKN: 'tkn',
+  COPY_PULLREQUEST: 'copy-pull-secret',
 };
 
 const channels = {

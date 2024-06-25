@@ -220,6 +220,10 @@ export function TreeViewSelect(props: TreeViewSelectProps) {
       aria-label={ariaLabel && `${ariaLabel} toggle`}
       className="tree-view-select-menu-toggle"
       onClick={(e) => {
+        if (!isOpen) {
+          setFilteredItems(treeViewSelectionMap);
+          setSearchString('');
+        }
         setIsOpen(!isOpen);
       }}
       isExpanded={isOpen}

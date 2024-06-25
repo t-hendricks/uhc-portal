@@ -13,7 +13,7 @@ import {
   LIST_ASSOCIATED_AWS_IDS,
   LIST_USER_OIDC_CONFIGURATIONS,
   SET_OFFLINE_TOKEN,
-} from '../../components/clusters/wizards/rosa_v1/rosaConstants';
+} from '../../components/clusters/wizards/rosa/rosaConstants';
 import { accountsService, clusterService } from '../../services';
 
 export const getAWSIDsFromARNs = (arns) => {

@@ -3,7 +3,6 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom-v5-compat';
 
-import * as OCM from '@openshift-assisted/ui-lib/ocm';
 import {
   Button,
   ButtonVariant,
@@ -21,6 +20,7 @@ import {
 } from '@patternfly/react-table/deprecated';
 
 import ExternalLink from '~/components/common/ExternalLink';
+import TechnologyPreview from '~/components/common/TechnologyPreview';
 import { isRestrictedEnv } from '~/restrictedEnv';
 
 import AWSLogo from '../../../styles/images/AWS.png';
@@ -30,8 +30,6 @@ import MicrosoftLogo from '../../../styles/images/Microsoft_logo.svg';
 
 import links from './CreateClusterConsts';
 import CreateClusterDropDown from './CreateClusterDropDown';
-
-const { TechnologyPreview, PreviewBadgePosition } = OCM;
 
 const getColumns = () => [
   {
@@ -361,7 +359,7 @@ const runItYourself = () => {
         <Link to="/install/alibaba/installer-provisioned" className="pf-v5-u-mr-xs">
           Alibaba Cloud
         </Link>
-        <TechnologyPreview position={PreviewBadgePosition.inline} />
+        <TechnologyPreview className="pf-v5-u-ml-md pf-v5-u-display-inline" />
       </>,
       'Full stack automation',
     ],
@@ -419,12 +417,14 @@ const runItYourself = () => {
     [
       <>
         <Link to="/install/metal/multi"> Baremetal (multi-architecture)</Link>
+        <TechnologyPreview className="pf-v5-u-ml-md pf-v5-u-display-inline" />
       </>,
       'Pre-existing infrastructure',
     ],
     [
       <>
         <Link to="/install/powervs/installer-provisioned">IBM PowerVS (ppc64le)</Link>
+        <TechnologyPreview className="pf-v5-u-ml-md pf-v5-u-display-inline" />
       </>,
       'Full stack automation',
     ],
@@ -437,6 +437,7 @@ const runItYourself = () => {
     [
       <>
         <Link to="/install/oracle-cloud">Oracle Cloud Infrastructure (virtual machines)</Link>
+        <TechnologyPreview className="pf-v5-u-ml-md pf-v5-u-display-inline" />
       </>,
       'Pre-existing infrastructure',
     ],

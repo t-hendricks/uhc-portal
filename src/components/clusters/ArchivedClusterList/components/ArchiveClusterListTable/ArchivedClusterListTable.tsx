@@ -1,31 +1,22 @@
 import React from 'react';
-import get from 'lodash/get';
 import { Link } from 'react-router-dom-v5-compat';
 
 import {
+  Bullseye,
   EmptyState,
   EmptyStateBody,
   EmptyStateHeader,
   EmptyStateIcon,
 } from '@patternfly/react-core';
 import SearchIcon from '@patternfly/react-icons/dist/esm/icons/search-icon';
-import {
-  cellWidth,
-  classNames,
-  sortable,
-  SortByDirection,
-  Visibility,
-} from '@patternfly/react-table';
-import {
-  Table as TableDeprecated,
-  TableBody as TableBodyDeprecated,
-  TableHeader as TableHeaderDeprecated,
-} from '@patternfly/react-table/deprecated';
+import { SortByDirection, Table, Tbody, Td, Th, Thead, Tr } from '@patternfly/react-table';
+import { ThSortType } from '@patternfly/react-table/dist/esm/components/Table/base/types';
+import { IVisibility } from '@patternfly/react-table/dist/esm/components/Table/utils/decorators/classNames';
 
+import { subscriptionStatuses } from '~/common/subscriptionTypes';
 import { ClusterWithPermissions, ViewOptions, ViewSorting } from '~/types/types';
 
 import getClusterName from '../../../../../common/getClusterName';
-import { subscriptionStatuses } from '../../../../../common/subscriptionTypes';
 import ButtonWithTooltip from '../../../../common/ButtonWithTooltip';
 import modals from '../../../../common/Modal/modals';
 import ClusterLocationLabel from '../../../common/ClusterLocationLabel';
@@ -45,62 +36,22 @@ const ArchivedClusterListTable = ({
   clusters,
   openModal,
 }: ArchivedClusterListTableProps) => {
-  if (!clusters || clusters.length === 0) {
-    return (
-      <EmptyState>
-        <EmptyStateHeader
-          titleText="No archived clusters found."
-          icon={<EmptyStateIcon icon={SearchIcon} />}
-          headingLevel="h4"
-        />
-        <EmptyStateBody>
-          This filter criteria matches no clusters.
-          <br />
-          Try changing your filter settings.
-        </EmptyStateBody>
-      </EmptyState>
-    );
-  }
-
-  const hiddenOnMdOrSmaller = classNames(
-    Visibility.visibleOnLg || '',
-    Visibility.hiddenOnMd || '',
-    Visibility.hiddenOnSm || '',
-  );
-
-  const columns = [
-    { title: 'Name', transforms: [sortable, cellWidth(30)] },
-    { title: 'Type' },
-    { title: 'Status', transforms: [sortable] },
-    { title: 'Provider (Location)', columnTransforms: [hiddenOnMdOrSmaller] },
-    '', // TODO: to avoid TypeError: headerData[(cellIndex + additionalColsIndexShift)] is undefined from openshift-assisted_ui-lib
-  ];
-
-  const sortBy = {
-    index: viewOptions.sorting.sortIndex,
-    direction: viewOptions.sorting.isAscending ? SortByDirection.asc : SortByDirection.desc,
+  const columnNames = {
+    name: 'Name',
+    type: 'Type',
+    status: 'Status',
+    provider: 'Provider (Location)',
   };
 
-  const onSortToggle = (_event: object, index: number, direction: string) => {
-    type Column = {
-      title: string;
-    };
-
-    const sortColumns = {
-      Name: 'display_name',
-      Status: 'status',
-    };
-
-    const sorting = { ...viewOptions.sorting };
-    sorting.isAscending = direction === SortByDirection.asc;
-    const column = columns[index] as Column;
-    sorting.sortField = sortColumns[column.title as keyof typeof sortColumns];
-    sorting.sortIndex = index;
-    setSorting(sorting);
+  const sortColumns = {
+    name: 'display_name',
+    status: 'status',
   };
+
+  const providerVisibility: (keyof IVisibility)[] = ['visibleOnLg', 'hiddenOnMd', 'hiddenOnSm'];
 
   const clusterRow = (cluster: ClusterWithPermissions) => {
-    const provider = get(cluster, 'cloud_provider.id', 'N/A');
+    const provider = cluster.cloud_provider?.id ?? 'N/A';
     const name = getClusterName(cluster);
 
     const clusterName = <Link to={`/details/s/${cluster.subscription?.id}`}>{name}</Link>;
@@ -127,41 +78,76 @@ const ArchivedClusterListTable = ({
       </ButtonWithTooltip>
     );
     const unarchiveBtnCondition =
-      cluster.subscription?.status !== subscriptionStatuses.DEPROVISIONED && unarchiveBtn;
+      cluster.subscription?.status !== subscriptionStatuses.DEPROVISIONED ? unarchiveBtn : null;
 
-    return [
-      { title: clusterName },
-      { title: <ClusterTypeLabel cluster={cluster} /> },
-      {
-        title: <span className="cluster-status-string">{clusterStatus}</span>,
-      },
-      {
-        title: (
-          <ClusterLocationLabel
-            regionID={get(cluster, 'region.id', 'N/A')}
-            cloudProviderID={provider}
-          />
-        ),
-      },
-      {
-        title: unarchiveBtnCondition,
-      },
-    ];
+    return (
+      <Tr key={cluster.id}>
+        <Td dataLabel={columnNames.name}>{clusterName}</Td>
+        <Td dataLabel={columnNames.type}>
+          <ClusterTypeLabel cluster={cluster} />
+        </Td>
+        <Td dataLabel={columnNames.status}>
+          <span className="cluster-status-string">{clusterStatus}</span>
+        </Td>
+        <Td dataLabel={columnNames.provider} visibility={providerVisibility}>
+          <ClusterLocationLabel regionID={cluster.region?.id ?? 'N/A'} cloudProviderID={provider} />
+        </Td>
+        <Td isActionCell>{unarchiveBtnCondition}</Td>
+      </Tr>
+    );
   };
 
-  const rows = clusters.map(clusterRow);
+  const getSortParams = (columnIndex: number, sortColumnField: string): ThSortType => ({
+    sortBy: {
+      index: viewOptions.sorting.sortIndex,
+      direction: viewOptions.sorting.isAscending ? SortByDirection.asc : SortByDirection.desc,
+    },
+    onSort: (_event, index, direction) => {
+      const sorting = { ...viewOptions.sorting };
+      sorting.isAscending = direction === SortByDirection.asc;
+      sorting.sortField = sortColumnField;
+      sorting.sortIndex = index;
+      setSorting(sorting);
+    },
+    columnIndex,
+  });
 
   return (
-    <TableDeprecated
-      cells={columns}
-      rows={rows}
-      onSort={onSortToggle}
-      sortBy={sortBy}
-      aria-label="Archived clusters"
-    >
-      <TableHeaderDeprecated />
-      <TableBodyDeprecated />
-    </TableDeprecated>
+    <Table aria-label="Archived clusters">
+      <Thead>
+        <Tr>
+          <Th width={30} sort={getSortParams(0, sortColumns.name)}>
+            {columnNames.name}
+          </Th>
+          <Th>{columnNames.type}</Th>
+          <Th sort={getSortParams(2, sortColumns.status)}>{columnNames.status}</Th>
+          <Th visibility={providerVisibility}>{columnNames.provider}</Th>
+          <Th screenReaderText="Cluster action" />
+        </Tr>
+      </Thead>
+      <Tbody>
+        {!clusters || clusters.length === 0 ? (
+          <Tr>
+            <Td colSpan={5}>
+              <Bullseye>
+                <EmptyState>
+                  <EmptyStateHeader
+                    titleText="No archived clusters found."
+                    icon={<EmptyStateIcon icon={SearchIcon} />}
+                    headingLevel="h4"
+                  />
+                  <EmptyStateBody>
+                    This filter criteria matches no clusters. Try changing your filter settings.
+                  </EmptyStateBody>
+                </EmptyState>
+              </Bullseye>
+            </Td>
+          </Tr>
+        ) : (
+          clusters.map((cluster) => clusterRow(cluster))
+        )}
+      </Tbody>
+    </Table>
   );
 };
 

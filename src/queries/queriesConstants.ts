@@ -3,4 +3,6 @@ export const queryConstants = {
   REFETCH_INTERVAL: undefined, // never refetch
   PAGE_SIZE: 500,
   FETCH_CLUSTERS_QUERY_KEY: 'fetchClusters',
+  FETCH_CLUSTER_DETAILS_QUERY_KEY: 'fetchClusterDetails',
+  FETCH_CLUSTER_STATUS_MONITOR_INFLIGHT_CHECKS: 'fetchClusterStatusMonitorInflightChecks',
 };
