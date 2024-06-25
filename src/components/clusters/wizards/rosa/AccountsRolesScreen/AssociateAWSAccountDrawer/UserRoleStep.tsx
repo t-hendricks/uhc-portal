@@ -22,6 +22,7 @@ const UserRoleStep = (props: AssociateAWSAccountStepProps) => {
       </Title>
 
       <InstructionCommand
+        data-testId="copy-rosa-list-user-role"
         textAriaLabel={`Copyable ROSA ${RosaCliCommand.ListUserRole} command`}
         className="pf-v5-u-mb-lg"
       >
@@ -45,12 +46,14 @@ const UserRoleStep = (props: AssociateAWSAccountStepProps) => {
       <ToggleGroupTabs
         tabs={[
           {
+            'data-testid': 'copy-user-role-tab-no',
             title: 'No, create new role',
             body: (
               <>
                 <strong>User role </strong>
                 <PopoverHint bodyContent="The user role is necessary to validate that your Red Hat user account has permissions to install a cluster in the AWS account." />
                 <InstructionCommand
+                  data-testid="copy-rosa-create-user-role"
                   textAriaLabel="Copyable ROSA create user-role"
                   trackEvent={trackEvents.CopyUserRoleCreate}
                 >
@@ -60,9 +63,11 @@ const UserRoleStep = (props: AssociateAWSAccountStepProps) => {
             ),
           },
           {
+            'data-testid': 'copy-user-role-tab-yes',
             title: 'Yes, link existing role',
             body: (
               <InstructionCommand
+                data-testid="copy-rosa-link-user-role"
                 textAriaLabel="Copyable ROSA link user-role --arn"
                 trackEvent={trackEvents.CopyUserRoleLink}
               >
