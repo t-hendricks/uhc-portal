@@ -3,6 +3,6 @@
 /* tslint:disable */
 /* eslint-disable */
 /**
- * Supplies a subscription ID to fetch access protection status
+ * The Subscription id to check Access Protection status for.
  */
 export type subscriptionId = string;

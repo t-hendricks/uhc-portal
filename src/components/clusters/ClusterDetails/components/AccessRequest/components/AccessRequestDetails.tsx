@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 
 import {
   DescriptionList,
@@ -7,19 +7,31 @@ import {
   DescriptionListTerm,
   Grid,
   GridItem,
-  Timestamp,
-  TimestampTooltipVariant,
+  Text,
+  Tooltip,
 } from '@patternfly/react-core';
 
-import { AccessRequest } from '~/types/access_transparency.v1';
+import { AccessRequest, Decision } from '~/types/access_transparency.v1';
 
 type AccessRequestDetailsProps = {
   accessRequest?: AccessRequest;
-  hideJustification?: boolean;
 };
 
-const AccessRequestDetails = ({ accessRequest, hideJustification }: AccessRequestDetailsProps) =>
-  accessRequest ? (
+const AccessRequestDetails = ({ accessRequest }: AccessRequestDetailsProps) => {
+  const decision = useMemo(
+    () =>
+      accessRequest?.decisions?.length
+        ? accessRequest.decisions[accessRequest.decisions.length - 1]
+        : undefined,
+    [accessRequest],
+  );
+  const shouldDisplayDecision = useMemo(
+    () =>
+      decision?.decision &&
+      [Decision.decision.APPROVED, Decision.decision.DENIED].includes(decision.decision),
+    [decision],
+  );
+  return accessRequest ? (
     <Grid hasGutter>
       <GridItem sm={6}>
         <DescriptionList>
@@ -48,23 +60,30 @@ const AccessRequestDetails = ({ accessRequest, hideJustification }: AccessReques
           <DescriptionListGroup>
             <DescriptionListTerm>Created Time</DescriptionListTerm>
             <DescriptionListDescription>
-              <Timestamp
-                value={accessRequest.created_at}
-                tooltip={{
-                  variant: TimestampTooltipVariant.custom,
-                  content: (
-                    <span>
-                      Last updated on <Timestamp value={accessRequest.updated_at} />
-                    </span>
-                  ),
-                }}
-              />
+              <Tooltip
+                content={
+                  <span>
+                    Last updated on{' '}
+                    {accessRequest.updated_at
+                      ? new Date(accessRequest.updated_at).toLocaleDateString()
+                      : 'N/A'}
+                  </span>
+                }
+              >
+                <Text>
+                  {accessRequest.created_at
+                    ? new Date(accessRequest.created_at).toLocaleDateString()
+                    : 'N/A'}
+                </Text>
+              </Tooltip>
             </DescriptionListDescription>
           </DescriptionListGroup>
           <DescriptionListGroup>
             <DescriptionListTerm>Respond By</DescriptionListTerm>
             <DescriptionListDescription>
-              <Timestamp value={accessRequest.deadlineAt} />
+              {accessRequest.deadline_at
+                ? new Date(accessRequest.deadline_at).toLocaleDateString()
+                : 'N/A'}
             </DescriptionListDescription>
           </DescriptionListGroup>
           <DescriptionListGroup>
@@ -75,15 +94,33 @@ const AccessRequestDetails = ({ accessRequest, hideJustification }: AccessReques
           </DescriptionListGroup>
         </DescriptionList>
       </GridItem>
-      {!hideJustification ? (
+      <GridItem sm={12}>
+        <DescriptionList>
+          <DescriptionListGroup>
+            <DescriptionListTerm>Justification</DescriptionListTerm>
+            <DescriptionListDescription>
+              <span data-testid="justification-field-value">
+                {accessRequest.justification || 'N/A'}
+              </span>
+            </DescriptionListDescription>
+          </DescriptionListGroup>
+        </DescriptionList>
+      </GridItem>
+      {shouldDisplayDecision ? (
         <GridItem sm={12}>
           <DescriptionList>
             <DescriptionListGroup>
-              <DescriptionListTerm>Justification</DescriptionListTerm>
+              <DescriptionListTerm>Decision</DescriptionListTerm>
               <DescriptionListDescription>
-                <span data-testid="justification-field-value">
-                  {accessRequest.justification || 'N/A'}
-                </span>
+                <Text data-testid="decision-text">
+                  <b>{decision?.decision}</b> on{' '}
+                  <b>
+                    {decision?.created_at
+                      ? new Date(decision.created_at).toLocaleDateString()
+                      : 'N/A'}
+                  </b>{' '}
+                  by <b>{decision?.decided_by}</b> because: {decision?.justification || 'N/A'}
+                </Text>
               </DescriptionListDescription>
             </DescriptionListGroup>
           </DescriptionList>
@@ -91,5 +128,6 @@ const AccessRequestDetails = ({ accessRequest, hideJustification }: AccessReques
       ) : null}
     </Grid>
   ) : null;
+};
 
 export default AccessRequestDetails;

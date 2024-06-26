@@ -14,7 +14,7 @@
   "cluster_id": "cluster id",
   "duration": "9h",
   "deadline": "9h2m3s",
-  "deadlineAt": "2024-05-24T05:18:37.826Z",
+  "deadline_at": "2024-05-24T05:18:37.826Z",
   "status": {
     "state": "Denied",
     "expires_at": "2024-05-24T05:18:37.826Z"

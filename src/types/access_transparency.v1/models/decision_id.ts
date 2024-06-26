@@ -3,6 +3,6 @@
 /* tslint:disable */
 /* eslint-disable */
 /**
- * The id of record
+ * The decision id of record
  */
-export type id = string;
+export type decision_id = string;
