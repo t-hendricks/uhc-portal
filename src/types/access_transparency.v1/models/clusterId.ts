@@ -3,6 +3,6 @@
 /* tslint:disable */
 /* eslint-disable */
 /**
- * Supplies a cluster ID to fetch access protection status
+ * The Cluster id to check Access Protection status for.
  */
 export type clusterId = string;

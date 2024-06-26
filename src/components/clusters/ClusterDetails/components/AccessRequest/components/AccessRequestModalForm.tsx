@@ -59,8 +59,10 @@ const AccessRequestModalForm = () => {
       validationSchema={Yup.object({
         [AccessRequestFieldId.State]: Yup.string().required('Required'),
         [AccessRequestFieldId.Justification]: Yup.string()
-          .matches(/^[a-zA-Z0-9- ]+$/, 'Only alphanumeric characters and hyphens are allowed')
-          .min(10, 'Must be 10 characters or more')
+          .matches(
+            /^[a-zA-Z0-9-\s.&,;':_!"/$]+$/,
+            'Only alphanumeric characters and punctuation marks are allowed',
+          )
           .max(256, 'Must be 256 characters or less')
           .when([AccessRequestFieldId.State], {
             is: AccessRequestState.DENIED,

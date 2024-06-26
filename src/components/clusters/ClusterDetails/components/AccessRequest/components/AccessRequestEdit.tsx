@@ -63,7 +63,7 @@ const AccessRequestEdit = ({ accessRequest, userDecisionRights }: AccessRequestE
   return (
     <Grid hasGutter>
       <GridItem>
-        <AccessRequestDetails accessRequest={accessRequest} hideJustification />
+        <AccessRequestDetails accessRequest={accessRequest} />
       </GridItem>
       {userDecisionRights ? (
         <Form id="modal-with-form-form">
