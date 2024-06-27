@@ -90,7 +90,7 @@ import clusterStates, {
 import CommonClusterModals from '../common/CommonClusterModals';
 import { userCanHibernateClustersSelector } from '../common/HibernateClusterModal/HibernateClusterModalSelectors';
 import ReadOnlyBanner from '../common/ReadOnlyBanner';
-import { canTransferClusterOwnershipMultiRegion } from '../common/TransferClusterOwnershipDialog/TransferClusterOwnershipDialogSelectors';
+import { canTransferClusterOwnershipMultiRegion } from '../common/TransferClusterOwnershipDialog/utils/transferClusterOwnershipDialogSelectors';
 import CancelUpgradeModal from '../common/Upgrades/CancelUpgradeModal';
 import { getSchedules } from '../common/Upgrades/clusterUpgradeActions';
 

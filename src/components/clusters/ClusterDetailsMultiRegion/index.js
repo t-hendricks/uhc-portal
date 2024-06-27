@@ -1,7 +1,7 @@
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
-import { toggleSubscriptionReleased } from '../common/TransferClusterOwnershipDialog/subscriptionReleasedActions';
+import { toggleSubscriptionReleased } from '../../../redux/actions/subscriptionReleasedActions';
 
 import ClusterDetails from './ClusterDetails';
 
