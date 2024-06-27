@@ -4,14 +4,14 @@ import { cloudProviderActions } from '../../../redux/actions/cloudProviderAction
 import { clustersActions } from '../../../redux/actions/clustersActions';
 import { clearGlobalError } from '../../../redux/actions/globalErrorActions';
 import { machineTypesActions } from '../../../redux/actions/machineTypesActions';
+import { toggleSubscriptionReleased } from '../../../redux/actions/subscriptionReleasedActions';
 import { userActions } from '../../../redux/actions/userActions';
 import { onListFlagsSet, viewActions } from '../../../redux/actions/viewOptionsActions';
 import { viewConstants } from '../../../redux/constants';
 import { modalActions } from '../../common/Modal/ModalActions';
 import canSubscribeOCPListSelector from '../common/EditSubscriptionSettingsDialog/CanSubscribeOCPListSelector';
 import { canHibernateClusterListSelector } from '../common/HibernateClusterModal/HibernateClusterModalSelectors';
-import { toggleSubscriptionReleased } from '../common/TransferClusterOwnershipDialog/subscriptionReleasedActions';
-import { canTransferClusterOwnershipListSelector } from '../common/TransferClusterOwnershipDialog/TransferClusterOwnershipDialogSelectors';
+import { canTransferClusterOwnershipListSelector } from '../common/TransferClusterOwnershipDialog/utils/transferClusterOwnershipDialogSelectors';
 
 import ClusterList from './ClusterList';
 
