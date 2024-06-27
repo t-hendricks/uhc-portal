@@ -13,6 +13,7 @@ import clusterStates, {
   isAWS,
   isAWSPrivateCluster,
   isCCS,
+  isClusterUpgradeCompleted,
   isClusterUpgrading,
   isHibernating,
   isHypershiftCluster,
@@ -362,8 +363,8 @@ describe('getClusterStateAndDescription', () => {
     });
   });
 
-  describe('is cluster upgrading', () => {
-    it('it is running', () => {
+  describe('cluster isClusterUpgrading', () => {
+    it("is upgrading when metrics state is 'running'", () => {
       // Arrange
       const cluster: ClusterFromSubscription = {
         ...defaultClusterFromSubscription,
@@ -382,7 +383,7 @@ describe('getClusterStateAndDescription', () => {
       expect(isUpgrading).toBe(true);
     });
 
-    it('it is not running', () => {
+    it("is not upgrading when metrics state is not 'running'", () => {
       // Arrange
       const cluster: ClusterFromSubscription = {
         ...defaultClusterFromSubscription,
@@ -401,12 +402,52 @@ describe('getClusterStateAndDescription', () => {
       expect(isUpgrading).toBe(false);
     });
 
-    it('cluster undefined', () => {
+    it('is not upgrading when cluster is undefined', () => {
       // Act
       const isUpgrading = isClusterUpgrading();
 
       // Assert
       expect(isUpgrading).toBe(false);
+    });
+  });
+
+  describe('cluster isClusterUpgradeCompleted', () => {
+    it("is complete when metrics state is not 'completed'", () => {
+      // Arrange
+      const cluster: ClusterFromSubscription = {
+        ...defaultClusterFromSubscription,
+        metrics: {
+          ...defaultMetric,
+          upgrade: {
+            state: 'completed',
+          },
+        },
+      };
+
+      // Act
+      const isUpgrading = isClusterUpgrading(cluster);
+      const isComplete = isClusterUpgradeCompleted(cluster);
+      // Assert
+      expect(isUpgrading).toBe(false);
+      expect(isComplete).toBe(true);
+    });
+
+    it("is not complete when metrics state is not 'completed'", () => {
+      // Arrange
+      const cluster: ClusterFromSubscription = {
+        ...defaultClusterFromSubscription,
+        metrics: {
+          ...defaultMetric,
+          upgrade: {
+            state: 'started',
+          },
+        },
+      };
+
+      // Act
+      const isComplete = isClusterUpgradeCompleted(cluster);
+      // Assert
+      expect(isComplete).toBe(false);
     });
   });
 
@@ -439,7 +480,7 @@ describe('getClusterStateAndDescription', () => {
       expect(inflightChecks).toStrictEqual([]);
     });
 
-    it('cluster undefined', () => {
+    it('is undefined when cluster is undefined', () => {
       // Act
       const inflightChecks = getInflightChecks();
 

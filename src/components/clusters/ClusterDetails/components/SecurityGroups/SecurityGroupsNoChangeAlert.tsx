@@ -4,14 +4,18 @@ import { Alert, AlertActionLink } from '@patternfly/react-core';
 
 import links from '~/common/installLinks.mjs';
 
-const SecurityGroupsNoChangeAlert = () => (
+const SecurityGroupsNoChangeAlert = ({ isRosa }: { isRosa?: boolean }) => (
   <Alert
     variant="info"
     isInline
     title="You cannot add or edit security groups associated with the control plane nodes, infrastructure nodes, or machine pools that were created by default during cluster creation."
     actionLinks={
       <>
-        <AlertActionLink component="a" href={links.ROSA_SECURITY_GROUPS} target="_blank">
+        <AlertActionLink
+          component="a"
+          href={isRosa ? links.ROSA_SECURITY_GROUPS : links.OSD_SECURITY_GROUPS}
+          target="_blank"
+        >
           View more information
         </AlertActionLink>
         <AlertActionLink component="a" href={links.AWS_CONSOLE_SECURITY_GROUPS} target="_blank">

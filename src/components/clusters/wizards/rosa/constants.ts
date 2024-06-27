@@ -1,19 +1,44 @@
-import { FormikValues } from 'formik';
+import { FormikTouched, FormikValues } from 'formik';
 
+import { getRandomID } from '~/common/helpers';
+import { getDefaultSecurityGroupsSettings } from '~/common/securityGroupsHelpers';
 import { billingModels, normalizedProducts } from '~/common/subscriptionTypes';
+import { getDefaultClusterAutoScaling } from '~/components/clusters/common/clusterAutoScalingValues';
+import { defaultWorkerNodeVolumeSizeGiB } from '~/components/clusters/common/machinePools/constants';
 import {
-  isExactMajorMinor,
-  isMajorMinorEqualOrGreater,
-  splitVersion,
-} from '~/common/versionHelpers';
+  HOST_PREFIX_DEFAULT,
+  MACHINE_CIDR_DEFAULT,
+  POD_CIDR_DEFAULT,
+  SERVICE_CIDR_DEFAULT,
+} from '~/components/clusters/common/networkingConstants';
 import {
+  AWS_DEFAULT_REGION,
   CloudProviderType,
+  emptyAWSSubnet,
   FieldId as CommonFieldId,
   IMDSType,
 } from '~/components/clusters/wizards/common/constants';
-import { BreadcrumbPath } from '~/components/common/Breadcrumbs';
+import {
+  ApplicationIngressType,
+  ClusterPrivacyType,
+} from '~/components/clusters/wizards/osd/Networking/constants';
 
-export enum RosaFieldId {}
+export enum RosaFieldId {
+  AssociatedAwsId = 'associated_aws_id',
+  BillingAccountId = 'billing_account_id',
+  CloudProviderId = 'cloud_provider',
+  ClusterPrivacy = 'cluster_privacy',
+  ClusterPrivacyPublicSubnetId = 'cluster_privacy_public_subnet_id',
+  ControlPlaneRoleArn = 'control_plane_role_arn',
+  DetectedOcmAndUserRoles = 'detected_ocm_and_user_roles',
+  EtcdKeyArn = 'etcd_key_arn',
+  Hypershift = 'hypershift',
+  RosaMaxOsVersion = 'rosa_max_os_version',
+  SharedVpc = 'shared_vpc',
+  SupportRoleArn = 'support_role_arn',
+  WorkerRoleArn = 'worker_role_arn',
+  WorkerVolumeSizeGib = 'worker_volume_size_gib',
+}
 
 export const FieldId = { ...CommonFieldId, ...RosaFieldId };
 
@@ -47,59 +72,88 @@ export enum StepId {
   Review = 'review',
 }
 
-export enum UrlPath {
-  Create = '/create',
-  CreateGetStarted = '/create/rosa/getstarted',
-}
+const hypershiftDefaultSelected = true;
 
-export const breadcrumbs: BreadcrumbPath[] = [
-  { label: 'Clusters' },
-  { label: 'Cluster Type', path: UrlPath.Create },
-  { label: 'Set up ROSA', path: UrlPath.CreateGetStarted },
-  { label: 'Create a ROSA Cluster' },
-];
+export const initialValuesHypershift = (isHypershift: boolean) =>
+  isHypershift
+    ? {
+        [FieldId.ApplicationIngress]: ApplicationIngressType.Default,
+        [FieldId.BillingModel]: billingModels.MARKETPLACE_AWS,
+        [FieldId.ClusterAutoscaling]: null,
+        [FieldId.ClusterPrivacyPublicSubnetId]: '',
+        [FieldId.InstallToVpc]: true,
+        [FieldId.MultiAz]: 'false',
+        [FieldId.NodeLabels]: [{ id: getRandomID() }],
+        [FieldId.SharedVpc]: { is_allowed: false },
+        [FieldId.UpgradePolicy]: 'automatic',
+        [FieldId.WorkerVolumeSizeGib]: undefined,
+      }
+    : {
+        [FieldId.BillingModel]: billingModels.STANDARD,
+        [FieldId.ClusterAutoscaling]: getDefaultClusterAutoScaling(),
+        [FieldId.ClusterPrivacyPublicSubnetId]: '',
+        [FieldId.EnableUserWorkloadMonitoring]: true,
+        [FieldId.InstallToVpc]: false,
+        [FieldId.SecurityGroups]: getDefaultSecurityGroupsSettings(),
+        [FieldId.SharedVpc]: {
+          is_allowed: true,
+          is_selected: false,
+          base_dns_domain: '',
+          hosted_zone_id: '',
+          hosted_zone_role_arn: '',
+        },
+        [FieldId.UpgradePolicy]: 'manual',
+        [FieldId.WorkerVolumeSizeGib]: defaultWorkerNodeVolumeSizeGiB,
+      };
 
 export const initialValues: FormikValues = {
-  [FieldId.Product]: normalizedProducts.ROSA,
-  [FieldId.CloudProvider]: CloudProviderType.Aws,
+  // static for ROSA, shouldn't change
   [FieldId.Byoc]: 'true',
-  [FieldId.BillingModel]: billingModels.STANDARD,
-  [FieldId.NodeLabels]: [{ key: '', value: '' }],
+  [FieldId.CloudProvider]: CloudProviderType.Aws,
+  [FieldId.Product]: normalizedProducts.ROSA,
+
+  // other fields
+  [FieldId.AutomaticUpgradeSchedule]: '0 0 * * 0',
+  [FieldId.CidrDefaultValuesToggle]: true,
+  [FieldId.ClusterName]: '',
+  [FieldId.ClusterPrivacy]: ClusterPrivacyType.External,
+  [FieldId.ConfigureProxy]: false,
+  [FieldId.CustomerManagedKey]: 'false',
+  [FieldId.DefaultRouterExcludedNamespacesFlag]: '',
+  [FieldId.DefaultRouterSelectors]: '',
+  [FieldId.DisableScpChecks]: false,
+  [FieldId.EtcdEncryption]: false,
+  [FieldId.EtcdKeyArn]: '',
+  [FieldId.FipsCryptography]: false,
+  [FieldId.Hypershift]: `${hypershiftDefaultSelected}`,
   [FieldId.IMDS]: IMDSType.V1AndV2,
+  [FieldId.IsDefaultRouterNamespaceOwnershipPolicyStrict]: true,
+  [FieldId.IsDefaultRouterWildcardPolicyAllowed]: false,
+  [FieldId.KmsKeyArn]: '',
+  [FieldId.MachinePoolsSubnets]: [emptyAWSSubnet()],
+  [FieldId.NetworkHostPrefix]: HOST_PREFIX_DEFAULT,
+  [FieldId.NetworkMachineCidr]: MACHINE_CIDR_DEFAULT,
+  [FieldId.NetworkPodCidr]: POD_CIDR_DEFAULT,
+  [FieldId.NetworkServiceCidr]: SERVICE_CIDR_DEFAULT,
+  [FieldId.NodeDrainGracePeriod]: 60,
+  [FieldId.NodeLabels]: [{ id: getRandomID() }],
+  [FieldId.NodesCompute]: 2,
+  [FieldId.Region]: AWS_DEFAULT_REGION,
+  [FieldId.SelectedVpc]: { id: '', name: '' },
+  [FieldId.UsePrivateLink]: false,
+  [FieldId.EnableExteranlAuthentication]: false,
+
+  // Optional fields based on whether Hypershift is selected or not
+  ...initialValuesHypershift(hypershiftDefaultSelected),
 };
 
-export const canSelectImds = (clusterVersionRawId: string): boolean => {
-  const [major, minor] = splitVersion(clusterVersionRawId);
-  return major > 4 || (major === 4 && minor >= 11);
+export const initialValuesRestrictedEnv: FormikValues = {
+  ...initialValues,
+  [FieldId.ClusterPrivacy]: ClusterPrivacyType.Internal,
+  [FieldId.EtcdEncryption]: true,
+  [FieldId.FipsCryptography]: true,
 };
 
-export const maxAdditionalSecurityGroups = 5;
-export const maxAdditionalSecurityGroupsHypershift = 10;
-
-export const defaultWorkerNodeVolumeSizeGiB = 300;
-
-export const workerNodeVolumeSizeMinGiB = 128;
-
-/**
- * Returns ROSA/AWS OSD max worker node volume size, varies per cluster version.
- * In GiB.
- */
-export const getWorkerNodeVolumeSizeMaxGiB = (clusterVersionRawId: string): number => {
-  const [major, minor] = splitVersion(clusterVersionRawId);
-  return (major > 4 || (major === 4 && minor >= 14) ? 16 : 1) * 1024;
+export const initialTouched: FormikTouched<FormikValues> = {
+  [FieldId.Hypershift]: hypershiftDefaultSelected,
 };
-
-export const canConfigureDayOneManagedIngress = (clusterVersionRawId: string): boolean =>
-  isMajorMinorEqualOrGreater(clusterVersionRawId, 4, 14);
-
-/* When changing, consider updating the COnfiguration and NetworkScreen components as well (they contain 4.13-specific logic */
-export const canConfigureDayTwoManagedIngress = (clusterVersionRawId: string): boolean =>
-  isMajorMinorEqualOrGreater(clusterVersionRawId, 4, 13);
-
-export const canConfigureLoadBalancer = (
-  clusterVersionRawId: string,
-  isSTSEnabled: boolean,
-): boolean => !isSTSEnabled || canConfigureDayTwoManagedIngress(clusterVersionRawId);
-
-export const canConfigureAdditionalRouter = (clusterVersionRawId: string): boolean =>
-  isExactMajorMinor(clusterVersionRawId, 4, 11) || isExactMajorMinor(clusterVersionRawId, 4, 12);

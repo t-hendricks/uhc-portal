@@ -1,11 +1,12 @@
 import { ClusterFromSubscription } from '~/types/types';
 
 import { defaultClusterFromSubscription } from './__tests__/defaultClusterFromSubscription.fixtures';
-import { isClusterUpgrading } from './clusterStates';
+import { isClusterUpgradeCompleted, isClusterUpgrading } from './clusterStates';
 import getClusterVersion from './getClusterVersion';
 
 jest.mock('./clusterStates');
 const mockedIsClusterUpgrading = isClusterUpgrading as jest.Mock;
+const mockedIsClusterUpgradeCompleted = isClusterUpgradeCompleted as jest.Mock;
 
 describe('get cluster version', () => {
   describe('cluster is upgrading', () => {
@@ -93,6 +94,24 @@ describe('get cluster version', () => {
       expect(clusterVersion).toEqual('openshiftVersion');
     });
 
+    it('displays raw_id', () => {
+      mockedIsClusterUpgradeCompleted.mockReturnValue(true);
+      // Arrange
+      const cluster: ClusterFromSubscription = {
+        ...defaultClusterFromSubscription,
+        version: {
+          raw_id: 'rawId',
+        },
+        openshift_version: 'openshiftVersion',
+      };
+
+      // Act
+      const clusterVersion = getClusterVersion(cluster);
+
+      // Assert
+      expect(clusterVersion).toEqual('rawId');
+    });
+
     it('cluster version is present but openshiftVersion on cluster object', () => {
       // Arrange
       const cluster: ClusterFromSubscription = {
@@ -110,6 +129,7 @@ describe('get cluster version', () => {
     });
 
     it('cluster version is not present but openshift version on cluster object', () => {
+      mockedIsClusterUpgradeCompleted.mockReturnValue(false);
       // Arrange
       const cluster: ClusterFromSubscription = {
         ...defaultClusterFromSubscription,

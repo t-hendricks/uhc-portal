@@ -20,7 +20,7 @@ SUBSCRIPTIONS=mockdata/api/accounts_mgmt/v1/subscriptions
 
 # In reality we accountsService.getSubscriptions() in UI sort order - `&orderBy=display_name+asc`
 # and then clusterService.getClusters() for specific list of cluster ids, in no particular order.
-# Sorting clusters by .name here is just for stability, clustersActions doesn't care.
+# Sorting clusters by .name here is just for Git stability, clustersActions doesn't care.
 jq --slurp '{
   kind: "ClusterList",
   page: 1,
@@ -51,12 +51,21 @@ trap 'rm "$DIFF"' EXIT
 
 # During install, clusters-service can know external_id while account-manager still has null.
 # To allow the comparison to pass, those ids were edited to contain `EXPECT-AMS-null`.
+#
+# Similarly, Deprovisioned clusters have no data in CS at all.
+# Condense those to one line so we can show them but ignore in diff.
 if diff --report-identical-files --side-by-side --width=150 \
   --ignore-matching-lines='EXPECT-AMS-null\|null,' \
+  --ignore-matching-lines='Deprovisioned' \
   --ignore-matching-lines='"dn":' \
   --label="from $SUBSCRIPTIONS.json" --label="from $CLUSTERS.json" \
-  <(jq '.items | sort_by(.id)[] | { sid: .id, cid: .cluster_id, eid: .external_cluster_id, dn: .display_name }' "$SUBSCRIPTIONS.json") \
-  <(jq '.items | sort_by(.subscription.id)[] | { sid: .subscription.id, cid: .id, eid: .external_id, dn: "N/A" }' "$CLUSTERS.json") \
+  <(jq <"$SUBSCRIPTIONS.json" '.items | sort_by(.id)[] |
+        if .status == "Deprovisioned" then
+          "\(.status): \(.id) \(.display_name)"
+        else
+          { sid: .id, cid: .cluster_id, eid: .external_cluster_id, dn: .display_name }
+        end') \
+  <(jq <"$CLUSTERS.json" '.items | sort_by(.subscription.id)[] | { sid: .subscription.id, cid: .id, eid: .external_id, dn: "N/A" }') \
   > "$DIFF"
 then
   echo "good."

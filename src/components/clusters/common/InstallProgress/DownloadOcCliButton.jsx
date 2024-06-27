@@ -4,8 +4,9 @@ import { useSelector } from 'react-redux';
 import { Button } from '@patternfly/react-core';
 import { DownloadIcon } from '@patternfly/react-icons/dist/esm/icons/download-icon';
 
+import { architecturesForToolOS, detectOS } from '~/components/downloads/downloadUtils';
+
 import { channels, tools, urlsSelector } from '../../../../common/installLinks.mjs';
-import { architecturesForToolOS, detectOS } from '../../../downloads/DownloadsPage/DownloadsPage';
 
 function DownloadOcCliButton() {
   // Determine the latest stable release URL for the OC CLI.

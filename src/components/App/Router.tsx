@@ -36,13 +36,13 @@ import {
   ASSISTED_INSTALLER_FEATURE,
   HYPERSHIFT_WIZARD_FEATURE,
   MULTIREGION_PREVIEW_ENABLED,
-  ROSA_WIZARD_V2_ENABLED,
 } from '../../redux/constants/featureConstants';
 import CLILoginPage from '../CLILoginPage/CLILoginPage';
 import ArchivedClusterList from '../clusters/ArchivedClusterList';
 import ClusterDetailsClusterOrExternalId from '../clusters/ClusterDetails/ClusterDetailsClusterOrExternalId';
 import ClusterDetailsSubscriptionId from '../clusters/ClusterDetails/ClusterDetailsSubscriptionId';
 import IdentityProvidersPage from '../clusters/ClusterDetails/components/IdentityProvidersPage';
+import ClusterDetailsSubscriptionIdMultiRegion from '../clusters/ClusterDetailsMultiRegion/ClusterDetailsSubscriptionIdMultiRegion';
 import ClustersList from '../clusters/ClusterList';
 import ClusterListMultiRegion from '../clusters/ClusterListMultiRegion';
 import CreateClusterPage from '../clusters/CreateClusterPage';
@@ -106,9 +106,8 @@ import ConnectedInstallVSphereIPI from '../clusters/install/InstallVSphereIPI';
 import ConnectedInstallVSphereUPI from '../clusters/install/InstallVSphereUPI';
 import RegisterCluster from '../clusters/RegisterCluster';
 import { CreateOsdWizard } from '../clusters/wizards/osd';
-import CreateROSAWizard from '../clusters/wizards/rosa_v1';
-import GetStartedWithROSA from '../clusters/wizards/rosa_v1/CreateRosaGetStarted';
-import CreateROSAWizardV2 from '../clusters/wizards/rosa_v2';
+import CreateROSAWizard from '../clusters/wizards/rosa';
+import GetStartedWithROSA from '../clusters/wizards/rosa/CreateRosaGetStarted';
 import EntitlementConfig from '../common/EntitlementConfig/index';
 import Dashboard from '../dashboard';
 import DownloadsPage from '../downloads/DownloadsPage';
@@ -163,8 +162,8 @@ const Router: React.FC<RouterProps> = ({ history, planType, clusterId, externalC
 
   const isHypershiftWizardEnabled = useFeatureGate(HYPERSHIFT_WIZARD_FEATURE);
 
-  // ROSA_WIZARD_V2_ENABLED enabled in staging, disabled in production (via Unleashed)
-  const isRosaV2WizardEnabled = useFeatureGate(ROSA_WIZARD_V2_ENABLED);
+  // MULTIREGION_PREVIEW_ENABLED enabled in staging, disabled in production (via Unleashed)
+  const isMultiRegionPreviewEnabled = useFeatureGate(MULTIREGION_PREVIEW_ENABLED);
 
   // For testing purposes, show which major features are enabled/disabled
   React.useEffect(() => {
@@ -440,12 +439,7 @@ const Router: React.FC<RouterProps> = ({ history, planType, clusterId, externalC
             />
             <TermsGuardedRoute path="/create/rosa/getstarted" component={GetStartedWithROSA} />
             <CompatRoute path="/create/rosa/govcloud" component={GovCloudPage} />
-            <TermsGuardedRoute
-              path="/create/rosa/wizard"
-              component={
-                config.rosaV2 && isRosaV2WizardEnabled ? CreateROSAWizardV2 : CreateROSAWizard
-              }
-            />
+            <TermsGuardedRoute path="/create/rosa/wizard" component={CreateROSAWizard} />
             <CompatRoute path="/create" component={CreateClusterPageEmptyTabComponent} />
             <CompatRoute
               path="/details/s/:id/insights/:reportId/:errorKey"
@@ -459,7 +453,14 @@ const Router: React.FC<RouterProps> = ({ history, planType, clusterId, externalC
               path="/details/s/:id/edit-idp/:idpName"
               component={IdentityProvidersPageEditFormComponent}
             />
-            <CompatRoute path="/details/s/:id" component={ClusterDetailsSubscriptionId} />
+            <CompatRoute
+              path="/details/s/:id"
+              component={
+                config.multiRegion && isMultiRegionPreviewEnabled
+                  ? ClusterDetailsSubscriptionIdMultiRegion
+                  : ClusterDetailsSubscriptionId
+              }
+            />
             <CompatRoute
               path="/details/:id/insights/:reportId/:errorKey"
               component={InsightsAdvisorRedirector}

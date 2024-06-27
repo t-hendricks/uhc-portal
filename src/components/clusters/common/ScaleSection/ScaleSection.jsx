@@ -8,7 +8,7 @@ import links from '~/common/installLinks.mjs';
 import { billingModels, normalizedProducts } from '~/common/subscriptionTypes';
 import { required } from '~/common/validators';
 import NodeCountInput from '~/components/clusters/common/NodeCountInput';
-import { canSelectImds } from '~/components/clusters/wizards/rosa/constants';
+import { canSelectImds } from '~/components/clusters/wizards/common/constants';
 import ExternalLink from '~/components/common/ExternalLink';
 import { ReduxFormKeyValueList } from '~/components/common/ReduxFormComponents';
 

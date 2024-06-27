@@ -60,8 +60,13 @@ const machineTypeMapFiltered: TreeViewData[] = [
       },
       {
         category: 'Compute optimized',
-        id: 'm24.xlarge',
-        name: <TreeViewSelectMenuItem name="m24.xlarge" description="4 vCPU 8 GiB RAM" />,
+        id: 'm24.metal',
+        name: <TreeViewSelectMenuItem name="m24.metal" description="4 vCPU 8 GiB RAM" />,
+      },
+      {
+        category: 'Compute optimized',
+        id: 'u-6tb1.112',
+        name: <TreeViewSelectMenuItem name="u-6tb1.112" description="448 vCPU 6 TiB RAM" />,
       },
     ],
   },
@@ -163,7 +168,7 @@ describe('TreeViewSelect ', () => {
     await checkAccessibility(container);
   });
 
-  it('search can filter does not include distance non-perfect matches', async () => {
+  it('search can filter does not include distant non-perfect matches', async () => {
     const { container, user } = render(<TreeViewSelectTestWrapper />);
 
     expect(screen.getByText('Select instance type')).toBeInTheDocument();
@@ -174,6 +179,28 @@ describe('TreeViewSelect ', () => {
     await user.type(input, 'c5a.false');
     expect(screen.queryAllByText(machineTypeMapFiltered[0].category!).length).toBeFalsy();
     expect(screen.queryAllByText(machineTypeMapFiltered[0].children![0].id!).length).toBeFalsy();
+    await checkAccessibility(container);
+  });
+
+  it('search filter resets after menu is reopened', async () => {
+    const { container, user } = render(<TreeViewSelectTestWrapper allExpanded />);
+
+    expect(screen.getByText('Select instance type')).toBeInTheDocument();
+    await user.click(screen.getByLabelText('TreeViewSelect toggle'));
+
+    const input = await screen.findByLabelText('TreeViewSelect search field');
+    await user.type(input, machineTypeMapFiltered[0].children![0].id!);
+
+    // the two other node options should be filtered out of dropdown
+    expect(screen.queryAllByText(machineTypeMapFiltered[0].children![1].id!).length).toBeFalsy();
+    expect(screen.queryAllByText(machineTypeMapFiltered[0].children![2].id!).length).toBeFalsy();
+    await user.click(screen.getByText(machineTypeMapFiltered[0].children![0].id!));
+
+    // the two other node options should reappear after menu is reopened
+    await user.click(screen.getByLabelText('TreeViewSelect toggle'));
+    expect(screen.queryAllByText(machineTypeMapFiltered[0].children![0].id!).length).toBeTruthy();
+    expect(screen.queryAllByText(machineTypeMapFiltered[0].children![1].id!).length).toBeTruthy();
+    expect(screen.queryAllByText(machineTypeMapFiltered[0].children![2].id!).length).toBeTruthy();
     await checkAccessibility(container);
   });
 

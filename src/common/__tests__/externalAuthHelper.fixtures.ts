@@ -8,7 +8,7 @@ const capabilitiesWithExternalAuthentication: Capability[] = [
   },
   {
     inherited: false,
-    name: 'capability.account.restrict_new_offline_tokens',
+    name: 'capability.organization.restrict_offline_tokens',
     value: 'true',
   },
   {

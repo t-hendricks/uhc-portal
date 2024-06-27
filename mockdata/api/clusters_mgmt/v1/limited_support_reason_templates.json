@@ -1,9 +1,16 @@
 {
   "kind": "LimitedSupportReasonTemplateList",
   "page": 1,
-  "size": 2,
-  "total": 2,
+  "size": 3,
+  "total": 3,
   "items": [
+    {
+      "kind": "LimitedSupportReasonTemplate",
+      "id": "63c3695e-8965-11ee-b9d1-0242ac120002",
+      "href": "/api/clusters_mgmt/v1/limited_support_reason_templates/63c3695e-8965-11ee-b9d1-0242ac120002",
+      "summary": "Arrange New Cluster Owner",
+      "details": "Red Hat has identified that your cluster is no longer owned by a user with an enabled Red Hat account. This will impact the cluster's ability to upgrade to future versions. Please raise a support case with Red Hat to nominate a new owner for the cluster in https://cloud.redhat.com/openshift/"
+    },
     {
       "kind": "LimitedSupportReasonTemplate",
       "id": "7bc43fa6-3014-4da6-b262-e85d093c1117",

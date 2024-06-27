@@ -198,10 +198,7 @@ async function reportOrder(jiraToken, branch, verbose) {
           // or it depends on another jira
           issuelinks.forEach(({ type, outwardIssue }) => {
             if (type.name === 'Depend' && outwardIssue && jiraTicketRegex.test(outwardIssue.key)) {
-              if (
-                !qeApproved.includes(outwardIssue.fields.status.name) &&
-                outwardIssue.fields.issuetype.name !== 'Epic'
-              ) {
+              if (!qeApproved.includes(outwardIssue.fields.status.name)) {
                 commit.jira.relatedJiraStatuses.push(
                   chalk.redBright(
                     `DEPENDS ON ${outwardIssue.key} ${outwardIssue.fields.status.name.toUpperCase()}`,

@@ -1,5 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
 
+import { queryClient } from '~/components/App/queryClient';
 import { clusterService } from '~/services';
 
 import type { CloudProvider, CloudRegion } from '../../types/clusters_mgmt.v1';
@@ -48,4 +49,11 @@ export const useFetchCloudProviders = () => {
   }
 
   return { isError, isLoading, isFetching, data: cloudProviders };
+};
+
+/**
+ * Cloud providers invalidation query
+ */
+export const invalidateCloudProviders = () => {
+  queryClient.invalidateQueries({ queryKey: ['cloudProviders', 'getCloudProviders'] });
 };

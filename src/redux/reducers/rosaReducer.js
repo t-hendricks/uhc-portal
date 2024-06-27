@@ -12,7 +12,7 @@ import {
   GET_USER_ROLE,
   LIST_ASSOCIATED_AWS_IDS,
   SET_OFFLINE_TOKEN,
-} from '../../components/clusters/wizards/rosa_v1/rosaConstants';
+} from '../../components/clusters/wizards/rosa/rosaConstants';
 import {
   baseRequestState,
   FULFILLED_ACTION,

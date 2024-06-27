@@ -153,7 +153,7 @@
           "kms_location_id": "",
           "ccs_only": false,
           "govcloud": false,
-          "supports_hypershift": false
+          "supports_hypershift": true
         },
         {
           "kind": "CloudRegion",
@@ -183,13 +183,13 @@
             "id": "aws",
             "href": "/api/clusters_mgmt/v1/cloud_providers/aws"
           },
-          "enabled": false,
+          "enabled": true,
           "supports_multi_az": true,
           "kms_location_name": "",
           "kms_location_id": "",
           "ccs_only": true,
           "govcloud": false,
-          "supports_hypershift": true
+          "supports_hypershift": false
         },
         {
           "kind": "CloudRegion",
@@ -229,6 +229,24 @@
         },
         {
           "kind": "CloudRegion",
+          "id": "ca-west-1",
+          "href": "/api/clusters_mgmt/v1/cloud_providers/aws/regions/ca-west-1",
+          "display_name": "Canada, West",
+          "cloud_provider": {
+            "kind": "CloudProviderLink",
+            "id": "aws",
+            "href": "/api/clusters_mgmt/v1/cloud_providers/aws"
+          },
+          "enabled": false,
+          "supports_multi_az": true,
+          "kms_location_name": "",
+          "kms_location_id": "",
+          "ccs_only": false,
+          "govcloud": false,
+          "supports_hypershift": false
+        },
+        {
+          "kind": "CloudRegion",
           "id": "eu-central-1",
           "href": "/api/clusters_mgmt/v1/cloud_providers/aws/regions/eu-central-1",
           "display_name": "EU, Frankfurt",
@@ -243,7 +261,7 @@
           "kms_location_id": "",
           "ccs_only": false,
           "govcloud": false,
-          "supports_hypershift": true
+          "supports_hypershift": false
         },
         {
           "kind": "CloudRegion",
@@ -333,7 +351,7 @@
           "kms_location_id": "",
           "ccs_only": false,
           "govcloud": false,
-          "supports_hypershift": true
+          "supports_hypershift": false
         },
         {
           "kind": "CloudRegion",
@@ -368,6 +386,24 @@
           "kms_location_name": "",
           "kms_location_id": "",
           "ccs_only": false,
+          "govcloud": false,
+          "supports_hypershift": false
+        },
+        {
+          "kind": "CloudRegion",
+          "id": "il-central-1",
+          "href": "/api/clusters_mgmt/v1/cloud_providers/aws/regions/il-central-1",
+          "display_name": "Tel Aviv, Israel",
+          "cloud_provider": {
+            "kind": "CloudProviderLink",
+            "id": "aws",
+            "href": "/api/clusters_mgmt/v1/cloud_providers/aws"
+          },
+          "enabled": false,
+          "supports_multi_az": true,
+          "kms_location_name": "",
+          "kms_location_id": "",
+          "ccs_only": true,
           "govcloud": false,
           "supports_hypershift": false
         },
@@ -417,7 +453,7 @@
             "id": "aws",
             "href": "/api/clusters_mgmt/v1/cloud_providers/aws"
           },
-          "enabled": true,
+          "enabled": false,
           "supports_multi_az": true,
           "kms_location_name": "",
           "kms_location_id": "",
@@ -441,7 +477,7 @@
           "kms_location_id": "",
           "ccs_only": false,
           "govcloud": false,
-          "supports_hypershift": true
+          "supports_hypershift": false
         },
         {
           "kind": "CloudRegion",
@@ -459,7 +495,7 @@
           "kms_location_id": "",
           "ccs_only": false,
           "govcloud": false,
-          "supports_hypershift": true
+          "supports_hypershift": false
         },
         {
           "kind": "CloudRegion",
@@ -1238,8 +1274,8 @@
           },
           "enabled": true,
           "supports_multi_az": true,
-          "kms_location_name": "Asia,Global",
-          "kms_location_id": "asia,global",
+          "kms_location_name": "Global,Asia",
+          "kms_location_id": "global,asia",
           "ccs_only": false,
           "govcloud": false,
           "supports_hypershift": false
@@ -1256,8 +1292,8 @@
           },
           "enabled": true,
           "supports_multi_az": true,
-          "kms_location_name": "Asia,Global,asia1 (Tokyo, Osaka, and Seoul)",
-          "kms_location_id": "asia,global,asia1",
+          "kms_location_name": "asia1 (Tokyo, Osaka, and Seoul),Asia,Global",
+          "kms_location_id": "asia1,asia,global",
           "ccs_only": false,
           "govcloud": false,
           "supports_hypershift": false
@@ -1274,8 +1310,8 @@
           },
           "enabled": true,
           "supports_multi_az": true,
-          "kms_location_name": "Global,Asia,asia1 (Tokyo, Osaka, and Seoul)",
-          "kms_location_id": "global,asia,asia1",
+          "kms_location_name": "Global,asia1 (Tokyo, Osaka, and Seoul),Asia",
+          "kms_location_id": "global,asia1,asia",
           "ccs_only": true,
           "govcloud": false,
           "supports_hypershift": false
@@ -1300,6 +1336,24 @@
         },
         {
           "kind": "CloudRegion",
+          "id": "asia-south2",
+          "href": "/api/clusters_mgmt/v1/cloud_providers/gcp/regions/asia-south2",
+          "display_name": "Delhi, India",
+          "cloud_provider": {
+            "kind": "CloudProviderLink",
+            "id": "gcp",
+            "href": "/api/clusters_mgmt/v1/cloud_providers/gcp"
+          },
+          "enabled": true,
+          "supports_multi_az": true,
+          "kms_location_name": "Global,Multiple regions in India,Asia",
+          "kms_location_id": "global,in,asia",
+          "ccs_only": true,
+          "govcloud": false,
+          "supports_hypershift": false
+        },
+        {
+          "kind": "CloudRegion",
           "id": "asia-southeast1",
           "href": "/api/clusters_mgmt/v1/cloud_providers/gcp/regions/asia-southeast1",
           "display_name": "Jurong West, Singapore",
@@ -1310,8 +1364,8 @@
           },
           "enabled": true,
           "supports_multi_az": true,
-          "kms_location_name": "Global,Asia",
-          "kms_location_id": "global,asia",
+          "kms_location_name": "Asia,Global",
+          "kms_location_id": "asia,global",
           "ccs_only": false,
           "govcloud": false,
           "supports_hypershift": false
@@ -1346,8 +1400,8 @@
           },
           "enabled": true,
           "supports_multi_az": true,
-          "kms_location_name": "eur4 (Finland, Netherlands, and Belgium),Global,europe",
-          "kms_location_id": "eur4,global,europe",
+          "kms_location_name": "eur4 (Finland, Netherlands, and Belgium),europe,Global",
+          "kms_location_id": "eur4,europe,global",
           "ccs_only": true,
           "govcloud": false,
           "supports_hypershift": false
@@ -1364,9 +1418,27 @@
           },
           "enabled": true,
           "supports_multi_az": true,
-          "kms_location_name": "Global,europe",
-          "kms_location_id": "global,europe",
+          "kms_location_name": "europe,Global",
+          "kms_location_id": "europe,global",
           "ccs_only": false,
+          "govcloud": false,
+          "supports_hypershift": false
+        },
+        {
+          "kind": "CloudRegion",
+          "id": "europe-west12",
+          "href": "/api/clusters_mgmt/v1/cloud_providers/gcp/regions/europe-west12",
+          "display_name": "Turin, Italy, Europe",
+          "cloud_provider": {
+            "kind": "CloudProviderLink",
+            "id": "gcp",
+            "href": "/api/clusters_mgmt/v1/cloud_providers/gcp"
+          },
+          "enabled": true,
+          "supports_multi_az": true,
+          "kms_location_name": "Global,europe,Turin",
+          "kms_location_id": "global,europe,europe-west12",
+          "ccs_only": true,
           "govcloud": false,
           "supports_hypershift": false
         },
@@ -1400,8 +1472,8 @@
           },
           "enabled": true,
           "supports_multi_az": true,
-          "kms_location_name": "Global,europe",
-          "kms_location_id": "global,europe",
+          "kms_location_name": "europe,Global",
+          "kms_location_id": "europe,global",
           "ccs_only": true,
           "govcloud": false,
           "supports_hypershift": false
@@ -1418,8 +1490,8 @@
           },
           "enabled": true,
           "supports_multi_az": true,
-          "kms_location_name": "eur4 (Finland, Netherlands, and Belgium),eur5 (London, Netherlands, and Belgium),europe,Global",
-          "kms_location_id": "eur4,eur5,europe,global",
+          "kms_location_name": "Global,europe,eur5 (London, Netherlands, and Belgium),eur4 (Finland, Netherlands, and Belgium)",
+          "kms_location_id": "global,europe,eur5,eur4",
           "ccs_only": false,
           "govcloud": false,
           "supports_hypershift": false
@@ -1436,8 +1508,26 @@
           },
           "enabled": true,
           "supports_multi_az": true,
-          "kms_location_name": "europe,Global",
-          "kms_location_id": "europe,global",
+          "kms_location_name": "Global,europe",
+          "kms_location_id": "global,europe",
+          "ccs_only": true,
+          "govcloud": false,
+          "supports_hypershift": false
+        },
+        {
+          "kind": "CloudRegion",
+          "id": "europe-west8",
+          "href": "/api/clusters_mgmt/v1/cloud_providers/gcp/regions/europe-west8",
+          "display_name": "Milan, Italy, Europe",
+          "cloud_provider": {
+            "kind": "CloudProviderLink",
+            "id": "gcp",
+            "href": "/api/clusters_mgmt/v1/cloud_providers/gcp"
+          },
+          "enabled": true,
+          "supports_multi_az": true,
+          "kms_location_name": "Global,Milan,europe",
+          "kms_location_id": "global,europe-west8,europe",
           "ccs_only": true,
           "govcloud": false,
           "supports_hypershift": false
@@ -1472,8 +1562,8 @@
           },
           "enabled": false,
           "supports_multi_az": true,
-          "kms_location_name": "",
-          "kms_location_id": "",
+          "kms_location_name": "Global",
+          "kms_location_id": "global",
           "ccs_only": true,
           "govcloud": false,
           "supports_hypershift": false
@@ -1498,6 +1588,24 @@
         },
         {
           "kind": "CloudRegion",
+          "id": "southamerica-west1",
+          "href": "/api/clusters_mgmt/v1/cloud_providers/gcp/regions/southamerica-west1",
+          "display_name": "Santiago, Chile, South America",
+          "cloud_provider": {
+            "kind": "CloudProviderLink",
+            "id": "gcp",
+            "href": "/api/clusters_mgmt/v1/cloud_providers/gcp"
+          },
+          "enabled": true,
+          "supports_multi_az": true,
+          "kms_location_name": "Santiago,Global",
+          "kms_location_id": "southamerica-west1,global",
+          "ccs_only": false,
+          "govcloud": false,
+          "supports_hypershift": false
+        },
+        {
+          "kind": "CloudRegion",
           "id": "us-central1",
           "href": "/api/clusters_mgmt/v1/cloud_providers/gcp/regions/us-central1",
           "display_name": "Council Bluffs, Iowa, USA",
@@ -1508,8 +1616,8 @@
           },
           "enabled": true,
           "supports_multi_az": true,
-          "kms_location_name": "nam4 (Iowa, South Carolina, and Oklahoma),US,Global",
-          "kms_location_id": "nam4,us,global",
+          "kms_location_name": "Global,nam4 (Iowa, South Carolina, and Oklahoma),US",
+          "kms_location_id": "global,nam4,us",
           "ccs_only": false,
           "govcloud": false,
           "supports_hypershift": false
@@ -1526,8 +1634,8 @@
           },
           "enabled": true,
           "supports_multi_az": true,
-          "kms_location_name": "nam4 (Iowa, South Carolina, and Oklahoma),Global,US",
-          "kms_location_id": "nam4,global,us",
+          "kms_location_name": "US,nam4 (Iowa, South Carolina, and Oklahoma),Global",
+          "kms_location_id": "us,nam4,global",
           "ccs_only": false,
           "govcloud": false,
           "supports_hypershift": false
@@ -1562,8 +1670,8 @@
           },
           "enabled": true,
           "supports_multi_az": true,
-          "kms_location_name": "Global,US",
-          "kms_location_id": "global,us",
+          "kms_location_name": "US,Global",
+          "kms_location_id": "us,global",
           "ccs_only": false,
           "govcloud": false,
           "supports_hypershift": false
@@ -1580,8 +1688,8 @@
           },
           "enabled": true,
           "supports_multi_az": true,
-          "kms_location_name": "US,Global",
-          "kms_location_id": "us,global",
+          "kms_location_name": "Global,US",
+          "kms_location_id": "global,us",
           "ccs_only": false,
           "govcloud": false,
           "supports_hypershift": false
