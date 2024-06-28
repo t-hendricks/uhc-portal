@@ -126,6 +126,9 @@ const ClusterDetails = (props) => {
   const { location, toggleSubscriptionReleased } = props;
 
   const isMultiRegionPreviewEnabled = useFeatureGate(MULTIREGION_PREVIEW_ENABLED);
+  const accessRequestsViewOptions = useSelector(
+    (state) => state.viewOptions[viewConstants.ACCESS_REQUESTS_VIEW],
+  );
 
   const navigate = useNavigate();
   const params = useParams();
