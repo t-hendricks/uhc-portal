@@ -12,7 +12,7 @@ import {
 } from '@patternfly/react-core';
 
 import PopoverHint from '~/components/common/PopoverHint';
-import { AccessRequest, Decision } from '~/types/access_transparency.v1';
+import { AccessRequest } from '~/types/access_transparency.v1';
 
 type AccessRequestDetailsProps = {
   accessRequest?: AccessRequest;
@@ -26,12 +26,7 @@ const AccessRequestDetails = ({ accessRequest }: AccessRequestDetailsProps) => {
         : undefined,
     [accessRequest],
   );
-  const shouldDisplayDecision = useMemo(
-    () =>
-      decision?.decision &&
-      [Decision.decision.APPROVED, Decision.decision.DENIED].includes(decision.decision),
-    [decision],
-  );
+
   return accessRequest ? (
     <Grid hasGutter>
       <GridItem sm={6}>
@@ -121,7 +116,7 @@ const AccessRequestDetails = ({ accessRequest }: AccessRequestDetailsProps) => {
           </DescriptionListGroup>
         </DescriptionList>
       </GridItem>
-      {shouldDisplayDecision ? (
+      {decision?.decision ? (
         <GridItem sm={12}>
           <DescriptionList>
             <DescriptionListGroup>
