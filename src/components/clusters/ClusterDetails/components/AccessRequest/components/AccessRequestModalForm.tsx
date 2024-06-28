@@ -59,6 +59,7 @@ const AccessRequestModalForm = () => {
       validationSchema={Yup.object({
         [AccessRequestFieldId.State]: Yup.string().required('Required'),
         [AccessRequestFieldId.Justification]: Yup.string()
+          .trim()
           .matches(
             /^[a-zA-Z0-9-\s.&,;':_!"/$]+$/,
             'Only alphanumeric characters and punctuation marks are allowed',
@@ -66,7 +67,7 @@ const AccessRequestModalForm = () => {
           .max(256, 'Must be 256 characters or less')
           .when([AccessRequestFieldId.State], {
             is: AccessRequestState.DENIED,
-            then: (schema) => schema.required('Required'),
+            then: (schema) => schema.required('The justification is required in case of denial.'),
           }),
       })}
       onSubmit={async (values) => {
