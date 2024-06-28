@@ -83,6 +83,18 @@
       "href": "https://whatever",
       "created_at": "2024-05-19T09:28:44.121Z",
       "updated_at": "2024-05-19T09:28:44.121Z",
+      "decisions": [
+        {
+          "decision": "Approved",
+          "created_at": "2024-05-18T09:28:44.121Z",
+          "decided_by": "mock_user"
+        },
+        {
+          "decision": "Expired",
+          "created_at": "2024-05-19T09:28:44.121Z",
+          "decided_by": "mock_user"
+        }
+      ],
       "requested_by": "requested_by Y",
       "support_case_id": "support_case_idY3",
       "internal_support_case_id": "internal_support_case_idY",
