@@ -33,7 +33,7 @@ const AccessRequestDetails = ({ accessRequest }: AccessRequestDetailsProps) => {
   );
   return accessRequest ? (
     <Grid hasGutter>
-      <GridItem sm={6}>
+      <GridItem sm={8}>
         <DescriptionList>
           <DescriptionListGroup>
             <DescriptionListTerm>ID</DescriptionListTerm>
@@ -55,7 +55,7 @@ const AccessRequestDetails = ({ accessRequest }: AccessRequestDetailsProps) => {
           </DescriptionListGroup>
         </DescriptionList>
       </GridItem>
-      <GridItem sm={6}>
+      <GridItem sm={4}>
         <DescriptionList>
           <DescriptionListGroup>
             <DescriptionListTerm>Created Time</DescriptionListTerm>
