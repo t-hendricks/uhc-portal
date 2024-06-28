@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom-v5-compat';
 
 import { Table, Tbody, Td, Th, Thead, Tr } from '@patternfly/react-table';
 
-import SupportLevelBadge, { TECH_PREVIEW } from '~/components/common/SupportLevelBadge';
+import TechnologyPreview from '~/components/common/TechnologyPreview';
 
 const RunItYourselfTable = () => {
   const columnNames = { cloudProvider: 'Cloud provider', options: 'Installation options' };
@@ -15,7 +15,7 @@ const RunItYourselfTable = () => {
           <Link to="/install/alibaba" className="pf-v5-u-mr-xs">
             Alibaba Cloud
           </Link>
-          <SupportLevelBadge {...TECH_PREVIEW} />
+          <TechnologyPreview className="pf-v5-u-ml-md pf-v5-u-display-inline" />
         </>
       ),
       options: 'Pre-existing infrastructure',
@@ -66,12 +66,22 @@ const RunItYourselfTable = () => {
     },
     {
       key: 'baremetal',
-      provider: <Link to="/install/metal/multi"> Baremetal (multi-architecture)</Link>,
+      provider: (
+        <>
+          <Link to="/install/metal/multi"> Baremetal (multi-architecture)</Link>
+          <TechnologyPreview className="pf-v5-u-ml-md pf-v5-u-display-inline" />
+        </>
+      ),
       options: 'Pre-existing infrastructure',
     },
     {
       key: 'ibm_powervs',
-      provider: <Link to="/install/powervs/installer-provisioned">IBM PowerVS (ppc64le)</Link>,
+      provider: (
+        <>
+          <Link to="/install/powervs/installer-provisioned">IBM PowerVS (ppc64le)</Link>
+          <TechnologyPreview className="pf-v5-u-ml-md pf-v5-u-display-inline" />
+        </>
+      ),
       options: 'Full stack automation',
     },
     {
@@ -82,7 +92,10 @@ const RunItYourselfTable = () => {
     {
       key: 'oracle',
       provider: (
-        <Link to="/install/oracle-cloud">Oracle Cloud Infrastructure (virtual machines)</Link>
+        <>
+          <Link to="/install/oracle-cloud">Oracle Cloud Infrastructure (virtual machines)</Link>
+          <TechnologyPreview className="pf-v5-u-ml-md pf-v5-u-display-inline" />
+        </>
       ),
       options: 'Pre-existing infrastructure',
     },
