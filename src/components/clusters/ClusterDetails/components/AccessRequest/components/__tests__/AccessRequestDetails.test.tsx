@@ -73,6 +73,7 @@ describe('AccessRequestDetails', () => {
       expect(
         within(screen.getByTestId('decision-text')).getByText(/whatever the user/i),
       ).toBeInTheDocument();
+      expect(screen.getByText(/on by because: whatever/i)).toBeInTheDocument();
     });
 
     it('when multiple decisions', () => {
@@ -112,6 +113,44 @@ describe('AccessRequestDetails', () => {
         within(screen.getByTestId('decision-text')).getByText(/2\/2\/2021/i),
       ).toBeInTheDocument();
       expect(within(screen.getByTestId('decision-text')).getByText(/user1/i)).toBeInTheDocument();
+      expect(screen.getByText(/on by because: just1/i)).toBeInTheDocument();
+    });
+
+    it('when no justification', () => {
+      // Act
+      render(
+        <AccessRequestDetails
+          accessRequest={{
+            decisions: [
+              {
+                decision: Decision.decision.APPROVED,
+                created_at: '2022-06-23T00:04:46.521394Z',
+                decided_by: 'whatever the user',
+              },
+            ],
+          }}
+        />,
+      );
+
+      // Assert
+      expect(screen.getByText(/subscription id/i)).toBeInTheDocument();
+      expect(screen.getByText(/service request id/i)).toBeInTheDocument();
+      expect(screen.getByText(/created time/i)).toBeInTheDocument();
+      expect(screen.getByText(/respond by/i)).toBeInTheDocument();
+      expect(screen.getByText(/request duration/i)).toBeInTheDocument();
+      expect(screen.getByText(/justification/i)).toBeInTheDocument();
+      expect(screen.getByTestId('justification-field-value')).toBeInTheDocument();
+      expect(screen.getByTestId('decision-text')).toBeInTheDocument();
+      expect(
+        within(screen.getByTestId('decision-text')).getByText(/approved/i),
+      ).toBeInTheDocument();
+      expect(
+        within(screen.getByTestId('decision-text')).getByText(/6\/22\/2022/i),
+      ).toBeInTheDocument();
+      expect(
+        within(screen.getByTestId('decision-text')).getByText(/whatever the user/i),
+      ).toBeInTheDocument();
+      expect(screen.queryByText(/because:/i)).not.toBeInTheDocument();
     });
   });
 });

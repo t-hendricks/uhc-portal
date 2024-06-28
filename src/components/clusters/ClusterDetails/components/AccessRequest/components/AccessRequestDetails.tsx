@@ -119,7 +119,8 @@ const AccessRequestDetails = ({ accessRequest }: AccessRequestDetailsProps) => {
                       ? new Date(decision.created_at).toLocaleDateString()
                       : 'N/A'}
                   </b>{' '}
-                  by <b>{decision?.decided_by}</b> because: {decision?.justification || 'N/A'}
+                  by <b>{decision?.decided_by}</b>
+                  {decision?.justification ? ` because: ${decision?.justification}` : ''}
                 </Text>
               </DescriptionListDescription>
             </DescriptionListGroup>
