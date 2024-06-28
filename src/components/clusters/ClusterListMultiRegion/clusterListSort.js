@@ -35,13 +35,10 @@ export const sortClusters = (clusters, activeSortIndex, activeSortDirection) => 
     const aValue = getSortableRowValues(a)[activeSortIndex];
     const bValue = getSortableRowValues(b)[activeSortIndex];
 
-    const nameSort = () => {
-      const aNameValue = getSortableRowValues(a)[sortColumns.Name];
-      const bNameValue = getSortableRowValues(b)[sortColumns.Name];
-      return activeSortDirection === SortByDirection.asc
-        ? aNameValue.localeCompare(bNameValue)
-        : bNameValue.localeCompare(aNameValue);
-    };
+    const stringSort = (a, b) =>
+      activeSortDirection === SortByDirection.asc
+        ? a.localeCompare(b, 'en', { numeric: true, ignorePunctuation: true })
+        : b.localeCompare(a, 'en', { numeric: true, ignorePunctuation: true });
 
     let sortValue = 0;
     if (activeSortIndex === sortColumns.Version) {
@@ -53,18 +50,18 @@ export const sortClusters = (clusters, activeSortIndex, activeSortDirection) => 
           ? versionComparator(versionA, versionB)
           : versionComparator(versionB, versionA);
     } else if (typeof aValue === 'number') {
-      // Numeric sort
+      // Numeric sort (note this isn't currently being used)
       sortValue = activeSortDirection === SortByDirection.asc ? aValue - bValue : bValue - aValue;
     } else {
       // String sort
-      sortValue =
-        activeSortDirection === SortByDirection.asc
-          ? aValue.localeCompare(bValue)
-          : bValue.localeCompare(aValue);
+      sortValue = stringSort(aValue, bValue);
     }
     if (sortValue === 0 && activeSortIndex !== sortColumns.Name) {
       // Both values are tied - so secondary sort by name
-      return nameSort();
+      return stringSort(
+        getSortableRowValues(a)[sortColumns.Name],
+        getSortableRowValues(b)[sortColumns.Name],
+      );
     }
     return sortValue;
   });

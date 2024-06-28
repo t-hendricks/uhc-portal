@@ -31,7 +31,7 @@ export const mockedClusters = [
       plan: { id: 'OSD', type: 'OSD' },
     },
 
-    creation_timestamp: '2024-05-25T20:22:45.089933Z',
+    creation_timestamp: '2024-12-25T20:22:45.089933Z',
     cloud_provider: {
       id: 'gcp',
     },
