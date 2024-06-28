@@ -12,7 +12,7 @@ import ExternalLink from '~/components/common/ExternalLink';
 import AWSLogo from '~/styles/images/AWS.png';
 import RedHat from '~/styles/images/Logo-Red_Hat-B-Standard-RGB.png';
 
-import { NO_ROLE_DETECTED } from '../AccountsRolesScreen/AccountRolesARNsSection';
+import { NO_ROLE_DETECTED } from '../AccountsRolesScreen/AccountRolesARNsSection/AccountRolesARNsSection';
 import { FieldId, initialValuesHypershift } from '../constants';
 
 import { hypershiftValue } from './ControlPlaneCommon';

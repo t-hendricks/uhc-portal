@@ -18,7 +18,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Navigate, useNavigate, useParams } from 'react-router-dom-v5-compat';
 
 import * as OCM from '@openshift-assisted/ui-lib/ocm';
-import { PageSection, TabContent } from '@patternfly/react-core';
+import { PageSection, TabContent, Tooltip } from '@patternfly/react-core';
 import { Spinner } from '@redhat-cloud-services/frontend-components/Spinner';
 
 import { AppPage } from '~/components/App/AppPage';
@@ -38,6 +38,15 @@ import {
   invalidateCloudProviders,
   useFetchCloudProviders,
 } from '~/queries/common/useFetchCloudProviders';
+import {
+  accessProtectionActions,
+  getAccessProtection,
+} from '~/redux/actions/accessProtectionActions';
+import {
+  accessRequestActions,
+  getAccessRequests,
+  getPendingAccessRequests,
+} from '~/redux/actions/accessRequestActions';
 import { clearListVpcs } from '~/redux/actions/ccsInquiriesActions';
 import { clusterAutoscalerActions } from '~/redux/actions/clusterAutoscalerActions';
 import { onClearFiltersAndFlags } from '~/redux/actions/viewOptionsActions';
@@ -55,6 +64,7 @@ import { getNotificationContacts } from '../../../redux/actions/supportActions';
 import { fetchUpgradeGates } from '../../../redux/actions/upgradeGateActions';
 import { viewConstants } from '../../../redux/constants';
 import {
+  ACCESS_REQUEST_ENABLED,
   ASSISTED_INSTALLER_FEATURE,
   HCP_USE_NODE_UPGRADE_POLICIES,
   MULTIREGION_PREVIEW_ENABLED,
@@ -80,7 +90,7 @@ import clusterStates, {
 import CommonClusterModals from '../common/CommonClusterModals';
 import { userCanHibernateClustersSelector } from '../common/HibernateClusterModal/HibernateClusterModalSelectors';
 import ReadOnlyBanner from '../common/ReadOnlyBanner';
-import { canTransferClusterOwnershipMultiRegion } from '../common/TransferClusterOwnershipDialog/TransferClusterOwnershipDialogSelectors';
+import { canTransferClusterOwnershipMultiRegion } from '../common/TransferClusterOwnershipDialog/utils/transferClusterOwnershipDialogSelectors';
 import CancelUpgradeModal from '../common/Upgrades/CancelUpgradeModal';
 import { getSchedules } from '../common/Upgrades/clusterUpgradeActions';
 
@@ -116,6 +126,9 @@ const ClusterDetails = (props) => {
   const { location, toggleSubscriptionReleased } = props;
 
   const isMultiRegionPreviewEnabled = useFeatureGate(MULTIREGION_PREVIEW_ENABLED);
+  const accessRequestsViewOptions = useSelector(
+    (state) => state.viewOptions[viewConstants.ACCESS_REQUESTS_VIEW],
+  );
 
   const navigate = useNavigate();
   const params = useParams();
@@ -181,11 +194,20 @@ const ClusterDetails = (props) => {
   const hasNetworkOndemand = useSelector((state) =>
     featureGateSelector(state, NETWORK_VALIDATOR_ONDEMAND_FEATURE),
   );
+  const isAccessRequestEnabled = useFeatureGate(ACCESS_REQUEST_ENABLED);
+
   const initTabOpen = location.hash.replace('#', '');
   const [selectedTab, setSelectedTab] = React.useState('');
   // TODO: Part of the Tabs stories
   // eslint-disable-next-line no-unused-vars
   const [refreshEvent, setRefreshEvent] = React.useState({ type: eventTypes.NONE });
+  const pendingAccessRequests = useSelector((state) => state.accessRequest.pendingAccessRequests);
+  const accessProtectionState = useSelector((state) => state.accessProtection.accessProtection);
+
+  const accessRequestsTabVisible = React.useMemo(
+    () => accessProtectionState.enabled && isAccessRequestEnabled,
+    [accessProtectionState.enabled, isAccessRequestEnabled],
+  );
 
   const overviewTabRef = React.useRef();
   const monitoringTabRef = React.useRef();
@@ -197,6 +219,7 @@ const ClusterDetails = (props) => {
   const machinePoolsTabRef = React.useRef();
   const upgradeSettingsTabRef = React.useRef();
   const addAssistedTabRef = React.useRef();
+  const accessRequestsTabRef = React.useRef();
 
   // PrevProps replication using refs
   const prevClusterId = React.useRef(cluster?.id);
@@ -257,6 +280,11 @@ const ClusterDetails = (props) => {
         clusterLogActions.getClusterHistory(externalClusterID, clusterID, clusterLogsViewOptions),
       );
     }
+
+    if (subscriptionID && isAccessRequestEnabled) {
+      dispatch(getAccessProtection(subscriptionID));
+    }
+
     if (isManaged) {
       // All managed-cluster-specific requests
       dispatch(getAddOns(clusterID)); // Needs query
@@ -311,6 +339,9 @@ const ClusterDetails = (props) => {
       dispatch(modalActions.closeModal());
       dispatch(clusterLogActions.resetClusterHistory());
 
+      dispatch(accessRequestActions.resetAccessRequests());
+      dispatch(accessProtectionActions.resetAccessProtection());
+
       dispatch(clearGetMachinePoolsResponse());
       dispatch(clusterAutoscalerActions.clearClusterAutoscalerResponse());
       clearFiltersAndFlags();
@@ -335,6 +366,19 @@ const ClusterDetails = (props) => {
     // has to be wrapped in useCallback
     // eslint-disable-next-line  react-hooks/exhaustive-deps
   }, [params, cluster, subscriptionID]);
+
+  React.useEffect(() => {
+    if (
+      !accessProtectionState.pending &&
+      accessProtectionState.enabled &&
+      subscriptionID &&
+      accessRequestsViewOptions
+    ) {
+      dispatch(getAccessRequests(subscriptionID, accessRequestsViewOptions));
+      dispatch(getPendingAccessRequests(subscriptionID));
+    }
+    // eslint-disable-next-line  react-hooks/exhaustive-deps
+  }, [accessProtectionState.pending, accessProtectionState.enabled, subscriptionID]);
 
   const requestedSubscriptionID = params.id;
 
@@ -370,6 +414,8 @@ const ClusterDetails = (props) => {
   // or when we only have data for a different cluster
   if (isError && (!cluster || get(cluster, 'subscription.id') !== requestedSubscriptionID)) {
     if (error?.errorCode === 404 || error?.errorCode === 403) {
+      dispatch(accessRequestActions.resetAccessRequest());
+      dispatch(accessProtectionActions.resetAccessProtection());
       dispatch(
         setGlobalError(
           <>
@@ -515,6 +561,22 @@ const ClusterDetails = (props) => {
                 isDisabled: addHostsTabState.isDisabled,
                 tooltip: addHostsTabState.tabTooltip,
               },
+              accessRequest: {
+                ref: accessRequestsTabRef,
+                show: accessRequestsTabVisible,
+                tooltip: (
+                  <Tooltip
+                    content={
+                      pendingAccessRequests?.total > 0
+                        ? `${pendingAccessRequests.total} pending requests`
+                        : 'No pending requests'
+                    }
+                  />
+                ),
+                hasIssues: pendingAccessRequests?.total > 0,
+                numberOfIssues: pendingAccessRequests?.total,
+                isLoading: pendingAccessRequests?.pending,
+              },
             }}
             initTabOpen={initTabOpen}
             onTabSelected={onTabSelected}
@@ -655,6 +717,19 @@ const ClusterDetails = (props) => {
             </ErrorBoundary>
           </TabContent>
         )}
+        {accessRequestsTabVisible ? (
+          <TabContent
+            eventKey={10}
+            id="accessRequestsContent"
+            ref={accessRequestsTabRef}
+            aria-label="Access Requests"
+            hidden
+          >
+            <ErrorBoundary>
+              <AccessRequest subscriptionId={subscriptionID} />
+            </ErrorBoundary>
+          </TabContent>
+        ) : null}
          */}
         {/* If the tab is shown and disabled, it will have a tooltip and no content */}
         {addHostsTabState.showTab && !addHostsTabState.isDisabled && (

@@ -47,8 +47,11 @@ export const CheckboxField = ({
             }
             isChecked={field.value}
             isDisabled={isDisabled}
-            onBlur={() => form.setFieldTouched(name, true)}
-            onChange={(event, _) => field.onChange(event)}
+            onBlur={() => form.setFieldTouched(name, true, true)}
+            onChange={(event) => {
+              field.onChange(event);
+              setTimeout(() => form.setFieldTouched(name, true, true));
+            }}
             value={field.value || false}
             {...(!formGroup?.label && validate && { isRequired: true })}
             {...input}

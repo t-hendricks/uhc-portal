@@ -30,11 +30,16 @@ const funcs = () => ({
   getOnDemandMetrics: jest.fn(),
   getAddOns: jest.fn(),
   getClusterAddOns: jest.fn(),
+  getAccessRequests: jest.fn(),
+  getPendingAccessRequests: jest.fn(),
+  getAccessProtection: jest.fn(),
   getGrants: jest.fn(),
   getClusterHistory: jest.fn(),
   getClusterRouters: jest.fn(),
   getMachineOrNodePools: jest.fn(),
   resetClusterHistory: jest.fn(),
+  resetAccessRequests: jest.fn(),
+  resetAccessRequest: jest.fn(),
   toggleSubscriptionReleased: jest.fn(),
   clearGetMachinePoolsResponse: jest.fn(),
   clearGetClusterAutoscalerResponse: jest.fn(),
@@ -45,6 +50,11 @@ const funcs = () => ({
   fetchUpgradeGates: jest.fn(),
   clearListVpcs: jest.fn(),
   clearFiltersAndFlags: jest.fn(),
+  getOrganizationPendingAccessRequests: jest.fn(),
+  resetOrganizationPendingAccessRequests: jest.fn(),
+  resetAccessProtection: jest.fn(),
+  getOrganizationAccessProtection: jest.fn(),
+  resetOrganizationAccessProtection: jest.fn(),
 });
 
 const clusterDetails = {

@@ -16,7 +16,7 @@ const getReport = (params?: {
   filter?: any;
   orderBy?: any;
   offset?: number;
-  limit: number;
+  limit?: number;
   startDate?: string;
   endDate?: string;
 }) => {

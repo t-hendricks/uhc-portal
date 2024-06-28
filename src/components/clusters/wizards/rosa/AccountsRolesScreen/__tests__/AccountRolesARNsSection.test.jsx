@@ -6,7 +6,7 @@ import { HCP_USE_UNMANAGED } from '~/redux/constants/featureConstants';
 import { checkAccessibility, mockUseFeatureGate, render, screen } from '~/testUtils';
 
 import { initialValues } from '../../constants';
-import AccountRolesARNsSection from '../AccountRolesARNsSection';
+import AccountRolesARNsSection from '../AccountRolesARNsSection/AccountRolesARNsSection';
 
 const latestOCPVersion = '4.13.3';
 const latestVersionLoaded = '4.13.5';
@@ -415,6 +415,28 @@ describe('<AccountRolesARNsSection />', () => {
 
       expect(screen.queryByText(rosaCLIMessage)).not.toBeInTheDocument();
       expect(screen.getByText('Some account roles ARNs were not detected')).toBeInTheDocument();
+    });
+
+    it('shows "Cannot detect an OCM role" error message', async () => {
+      const newProps = {
+        ...props,
+        getAWSAccountRolesARNsResponse: {
+          fulfilled: false,
+          error: true,
+          pending: false,
+          errorCode: 400,
+          internalErrorCode: 'CLUSTERS-MGMT-400',
+          errorMessage:
+            "CLUSTERS-MGMT-400:\nFailed to assume role with ARN 'arn:aws:iam::000000000002:role/ManagedOpenShift-OCM-Role-15212158': operation error STS: AssumeRole, https response error StatusCode: 403, RequestID: 40314369-b5e1-4d1a-94f1-5014b7419dea, api error AccessDenied: User: arn:aws:sts::644306948063:assumed-role/RH-Managed-OpenShift-Installer/OCM is not authorized to perform: sts:AssumeRole on resource: arn:aws:iam::000000000002:role/ManagedOpenShift-OCM-Role-15212158",
+        },
+        isHypershiftSelected: false,
+      };
+      render(buildTestComponent(<AccountRolesARNsSection {...newProps} />));
+      await isRendered();
+
+      expect(screen.queryByText(rosaCLIMessage)).not.toBeInTheDocument();
+      expect(screen.getByText('Cannot detect an OCM role')).toBeInTheDocument();
+      expect(screen.getByText('create the required role')).toBeInTheDocument();
     });
   });
 });

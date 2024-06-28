@@ -5,10 +5,13 @@ import { bindActionCreators } from 'redux';
 import { addNotification } from '@redhat-cloud-services/frontend-components-notifications/redux';
 
 import { featureGateSelector } from '~/hooks/useFeatureGate';
+import { accessProtectionActions } from '~/redux/actions/accessProtectionActions';
+import { accessRequestActions } from '~/redux/actions/accessRequestActions';
 import { clearListVpcs } from '~/redux/actions/ccsInquiriesActions';
 import { clusterAutoscalerActions } from '~/redux/actions/clusterAutoscalerActions';
 import { onClearFiltersAndFlags } from '~/redux/actions/viewOptionsActions';
 import {
+  ACCESS_REQUEST_ENABLED,
   ASSISTED_INSTALLER_FEATURE,
   HCP_USE_NODE_UPGRADE_POLICIES,
   NETWORK_VALIDATOR_ONDEMAND_FEATURE,
@@ -19,14 +22,14 @@ import { cloudProviderActions } from '../../../redux/actions/cloudProviderAction
 import { fetchClusterDetails, invalidateClusters } from '../../../redux/actions/clustersActions';
 import { getUserAccess } from '../../../redux/actions/costActions';
 import { clearGlobalError, setGlobalError } from '../../../redux/actions/globalErrorActions';
+import { toggleSubscriptionReleased } from '../../../redux/actions/subscriptionReleasedActions';
 import { getNotificationContacts, getSupportCases } from '../../../redux/actions/supportActions';
 import { fetchUpgradeGates } from '../../../redux/actions/upgradeGateActions';
 import { viewConstants } from '../../../redux/constants';
 import { modalActions } from '../../common/Modal/ModalActions';
 import canSubscribeOCPSelector from '../common/EditSubscriptionSettingsDialog/CanSubscribeOCPSelector';
 import { userCanHibernateClustersSelector } from '../common/HibernateClusterModal/HibernateClusterModalSelectors';
-import { toggleSubscriptionReleased } from '../common/TransferClusterOwnershipDialog/subscriptionReleasedActions';
-import { canTransferClusterOwnershipSelector } from '../common/TransferClusterOwnershipDialog/TransferClusterOwnershipDialogSelectors';
+import { canTransferClusterOwnershipSelector } from '../common/TransferClusterOwnershipDialog/utils/transferClusterOwnershipDialogSelectors';
 import { getSchedules } from '../common/Upgrades/clusterUpgradeActions';
 import { getUpgradeGates } from '../common/Upgrades/UpgradeAcknowledge/UpgradeAcknowledgeSelectors';
 
@@ -74,6 +77,8 @@ const mapStateToProps = (state, { location }) => {
     organization,
     displayClusterLogs: !!externalId || !!details?.cluster?.id,
     clusterLogsViewOptions: state.viewOptions[viewConstants.CLUSTER_LOGS_VIEW],
+    accessRequestsViewOptions: state.viewOptions[viewConstants.ACCESS_REQUESTS_VIEW],
+    pendingAccessRequests: state.accessRequest.pendingAccessRequests,
     insightsData,
     logs,
     canSubscribeOCP: canSubscribeOCPSelector(state),
@@ -90,6 +95,8 @@ const mapStateToProps = (state, { location }) => {
     upgradeGates: getUpgradeGates(state),
     useNodeUpgradePolicies: featureGateSelector(state, HCP_USE_NODE_UPGRADE_POLICIES),
     hasNetworkOndemand: featureGateSelector(state, NETWORK_VALIDATOR_ONDEMAND_FEATURE),
+    isAccessRequestEnabled: featureGateSelector(state, ACCESS_REQUEST_ENABLED),
+    accessProtectionState: state.accessProtection.accessProtection,
   };
 };
 
@@ -107,6 +114,10 @@ const mapDispatchToProps = (dispatch) =>
       getUsers: usersActions.getUsers,
       resetIdentityProvidersState,
       resetClusterHistory: clusterLogActions.resetClusterHistory,
+      resetAccessRequests: accessRequestActions.resetAccessRequests,
+      resetAccessRequest: accessRequestActions.resetAccessRequest,
+      getAccessProtection: accessProtectionActions.getAccessProtection,
+      resetAccessProtection: accessProtectionActions.resetAccessProtection,
       clearGlobalError,
       setGlobalError,
       getOnDemandMetrics,
@@ -119,6 +130,8 @@ const mapDispatchToProps = (dispatch) =>
       clearGetClusterAutoscalerResponse: clusterAutoscalerActions.clearClusterAutoscalerResponse,
       clearListVpcs,
       getClusterHistory: clusterLogActions.getClusterHistory,
+      getAccessRequests: accessRequestActions.getAccessRequests,
+      getPendingAccessRequests: accessRequestActions.getPendingAccessRequests,
       toggleSubscriptionReleased,
       getNotificationContacts,
       getSupportCases,

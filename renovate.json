@@ -16,5 +16,7 @@
     }
   ],
   "ignorePaths": ["babel-plugins/**"],
-  "ignoreDeps": ["monaco-editor", "react-monaco-editor", "@types/react"]
+  "ignoreDeps": ["monaco-editor", "react-monaco-editor", "@types/react"],
+  "prConcurrentLimit": 10,
+  "prHourlyLimit": 0
 }
