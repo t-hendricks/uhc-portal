@@ -11,6 +11,7 @@ import {
   Tooltip,
 } from '@patternfly/react-core';
 
+import PopoverHint from '~/components/common/PopoverHint';
 import { AccessRequest, Decision } from '~/types/access_transparency.v1';
 
 type AccessRequestDetailsProps = {
@@ -79,7 +80,14 @@ const AccessRequestDetails = ({ accessRequest }: AccessRequestDetailsProps) => {
             </DescriptionListDescription>
           </DescriptionListGroup>
           <DescriptionListGroup>
-            <DescriptionListTerm>Respond By</DescriptionListTerm>
+            <DescriptionListTerm>
+              Respond By{' '}
+              <PopoverHint
+                id="respond-by-hint"
+                iconClassName="nodes-hint"
+                hint="If not reviewed, the Access Request will expire by this date and the original customer case or incident will be automatically closed without a technical resolution."
+              />
+            </DescriptionListTerm>
             <DescriptionListDescription>
               {accessRequest.deadline_at
                 ? new Date(accessRequest.deadline_at).toLocaleDateString()
@@ -87,7 +95,14 @@ const AccessRequestDetails = ({ accessRequest }: AccessRequestDetailsProps) => {
             </DescriptionListDescription>
           </DescriptionListGroup>
           <DescriptionListGroup>
-            <DescriptionListTerm>Request Duration</DescriptionListTerm>
+            <DescriptionListTerm>
+              Request Duration{' '}
+              <PopoverHint
+                id="request-duration-hint"
+                iconClassName="nodes-hint"
+                hint="Once approved, SRE will have access to customer data in the cluster and in the corresponding cloud account for this amount of time. All access to customer data is audited."
+              />
+            </DescriptionListTerm>
             <DescriptionListDescription>
               {accessRequest.duration || 'N/A'}
             </DescriptionListDescription>

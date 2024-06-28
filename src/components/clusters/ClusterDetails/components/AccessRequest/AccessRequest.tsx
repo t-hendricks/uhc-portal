@@ -1,10 +1,12 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { useDispatch } from 'react-redux';
 
-import { Card, CardBody } from '@patternfly/react-core';
+import { Card, CardBody, CardTitle } from '@patternfly/react-core';
 import { SortByDirection } from '@patternfly/react-table';
 
+import links from '~/common/installLinks.mjs';
 import { viewPropsChanged } from '~/common/queryHelpers';
+import ExternalLink from '~/components/common/ExternalLink';
 import ConnectedModal from '~/components/common/Modal/ConnectedModal';
 import { modalActions } from '~/components/common/Modal/ModalActions';
 import modals from '~/components/common/Modal/modals';
@@ -23,6 +25,8 @@ import { ViewSorting } from '~/types/types';
 import AccessRequestModalForm from './components/AccessRequestModalForm';
 import AccessRequestTable from './components/AccessRequestTable';
 import AccessRequestTablePagination from './components/AccessRequestTablePagination';
+
+import './AccessRequest.scss';
 
 type AccessRequestProps = {
   subscriptionId?: string;
@@ -107,6 +111,20 @@ const AccessRequest = ({ subscriptionId }: AccessRequestProps) => {
 
   return (
     <>
+      <Card className="ocm-c-access-request__card">
+        <CardTitle className="ocm-c-access-request__card--header">Access Requests</CardTitle>
+        <CardBody className="ocm-c-access-request__card--body">
+          <div className="access-request-subtitle">
+            Access requests to customer data on Red Hat OpenShift Service on AWS clusters and the
+            corresponding cloud accounts can be created by SRE either in response to a
+            customer-initiated support ticket or in response to alerts received by SRE, as part of
+            the standard incident response process.
+          </div>
+          <ExternalLink href={links.ACCESS_REQUEST_DOC_LINK}>
+            Read more about Access Requests functionality
+          </ExternalLink>
+        </CardBody>
+      </Card>
       <Card>
         <CardBody>
           <AccessRequestTablePagination
@@ -115,6 +133,7 @@ const AccessRequest = ({ subscriptionId }: AccessRequestProps) => {
             variant="top"
             isDisabled={isPendingNoData}
           />
+
           <AccessRequestTable
             accessRequestItems={accessRequestsState.items}
             setSorting={setSorting}
