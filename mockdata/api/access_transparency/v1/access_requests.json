@@ -6,8 +6,8 @@
   "total": 21,
   "items": [
     {
-      "id": "1",
-      "cluster_id": "clusterID XXXXX1",
+      "id": "21TY8lxJ8BrB7982LNmk0tLdb8f123",
+      "cluster_id": "2iTVfXNiNoNZVSqfEnDMmWdKi4B123",
       "duration": "8h",
       "kind": "AccessRequest",
       "href": "https://whatever",
@@ -17,7 +17,7 @@
       "support_case_id": "support_case_idX",
       "internal_support_case_id": "internal_support_case_idX",
       "organization_id": "organization_idx",
-      "subscription_id": "1mbpBkP1bZSqhiMeIhSdnQbj9sB",
+      "subscription_id": "2c5mg7bsqvecmptjak8eie225nsbqiio",
       "status": {
         "state": "Pending",
         "expires_at": "2024-05-16T09:28:44.121Z"

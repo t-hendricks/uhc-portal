@@ -123,7 +123,7 @@ const AccessRequestEdit = ({ accessRequest, userDecisionRights }: AccessRequestE
         </Form>
       ) : (
         <GridItem sm={12}>
-          <Alert variant={AlertVariant.warning} title="No rights for taking a decision" isInline>
+          <Alert variant={AlertVariant.warning} title="No rights for making a decision" isInline>
             The user has no rights for approving or denying the access request. Please contact
             cluster owner or organization admin.
           </Alert>

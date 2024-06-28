@@ -485,7 +485,7 @@ const ClusterDetails = (props) => {
                   <Tooltip
                     content={
                       pendingAccessRequests?.total > 0
-                        ? `${pendingAccessRequests.total} pending requests`
+                        ? `${pendingAccessRequests.total} pending request${pendingAccessRequests.total > 1 ? 's' : ''}`
                         : 'No pending requests'
                     }
                   />
