@@ -27,5 +27,8 @@ describe('AccessRequest', () => {
     expect(screen.queryAllByText(/access request table pagination/i)).toHaveLength(2);
     expect(screen.getByText(/^access request table$/i)).toBeInTheDocument();
     expect(screen.getByText(/connected modal/i)).toBeInTheDocument();
+    expect(
+      screen.getByText(/access requests to customer data on red hat openshift/i),
+    ).toBeInTheDocument();
   });
 });

@@ -70,10 +70,14 @@ const AccessRequestModalForm = () => {
           }),
       })}
       onSubmit={async (values) => {
+        const decision = values[AccessRequestFieldId.State] as Decision.decision;
         dispatch(
           postAccessRequestDecision(accessRequest.id!!, {
-            decision: values[AccessRequestFieldId.State] as Decision.decision,
-            justification: values[AccessRequestFieldId.Justification],
+            decision,
+            justification:
+              decision === Decision.decision.DENIED
+                ? values[AccessRequestFieldId.Justification]
+                : undefined,
           }),
         );
       }}
