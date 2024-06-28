@@ -19,10 +19,11 @@ import { NetworkingReducer } from '../../components/clusters/ClusterDetails/comp
 import { deleteProtectionReducer } from '../../components/clusters/ClusterDetails/components/Overview/DetailsRight/DeleteProtection/deleteProtectionReducer';
 import { InstallationLogReducer } from '../../components/clusters/ClusterDetails/components/Overview/InstallationLogView/InstallationLogReducer';
 import { deleteClusterDialogReducer } from '../../components/clusters/common/DeleteClusterDialog/DeleteClusterDialogReducer';
-import { subscriptionReleasedReducer } from '../../components/clusters/common/TransferClusterOwnershipDialog/subscriptionReleasedReducer';
 import clusterUpgrades from '../../components/clusters/common/Upgrades/clusterUpgradeReducer';
 import modalReducer from '../../components/common/Modal/ModalReducer';
 
+import { accessProtectionReducer } from './accessProtectionReducer';
+import { accessRequestReducer } from './accessRequestReducer';
 import ccsInquiriesReducer from './ccsInquiriesReducer';
 import { cloudProvidersReducer } from './cloudProvidersReducer';
 import { clusterAutoscalerReducer } from './clusterAutoscalerReducer';
@@ -41,6 +42,7 @@ import machineTypesReducer from './machineTypesReducer';
 import ocmRolesReducer from './OCMRolesReducer';
 import { persistentStorageReducer } from './persistentStorageReducer';
 import rosaReducer from './rosaReducer';
+import { subscriptionReleasedReducer } from './subscriptionReleasedReducer';
 import { subscriptionSettingsReducer } from './subscriptionSettingsReducer';
 import { subscriptionsReducer } from './subscriptionsReducer';
 import { supportReducer } from './supportReducer';
@@ -50,6 +52,8 @@ import userReducer from './userReducer';
 import { viewOptionsReducer } from './viewOptionsReducer';
 
 const reducers = {
+  accessRequest: accessRequestReducer,
+  accessProtection: accessProtectionReducer,
   clusters: clustersReducer,
   deleteCluster: deleteClusterDialogReducer,
   cloudProviders: cloudProvidersReducer,

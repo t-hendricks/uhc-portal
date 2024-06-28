@@ -33,6 +33,7 @@ import apiRequest from '~/services/apiRequest';
 
 import { normalizedProducts } from '../../common/subscriptionTypes';
 import {
+  ACCESS_REQUEST_ENABLED,
   ASSISTED_INSTALLER_FEATURE,
   HYPERSHIFT_WIZARD_FEATURE,
   MULTIREGION_PREVIEW_ENABLED,
@@ -41,6 +42,7 @@ import CLILoginPage from '../CLILoginPage/CLILoginPage';
 import ArchivedClusterList from '../clusters/ArchivedClusterList';
 import ClusterDetailsClusterOrExternalId from '../clusters/ClusterDetails/ClusterDetailsClusterOrExternalId';
 import ClusterDetailsSubscriptionId from '../clusters/ClusterDetails/ClusterDetailsSubscriptionId';
+import AccessRequestNavigate from '../clusters/ClusterDetails/components/AccessRequest/components/AccessRequestNavigate';
 import IdentityProvidersPage from '../clusters/ClusterDetails/components/IdentityProvidersPage';
 import ClusterDetailsSubscriptionIdMultiRegion from '../clusters/ClusterDetailsMultiRegion/ClusterDetailsSubscriptionIdMultiRegion';
 import ClustersList from '../clusters/ClusterList';
@@ -48,7 +50,7 @@ import ClusterListMultiRegion from '../clusters/ClusterListMultiRegion';
 import CreateClusterPage from '../clusters/CreateClusterPage';
 import GovCloudPage from '../clusters/GovCloud/GovCloudPage';
 import InsightsAdvisorRedirector from '../clusters/InsightsAdvisorRedirector';
-import ConnectedInstallAlibaba from '../clusters/install/InstallAlibaba';
+import InstallAlibabaCloud from '../clusters/install/InstallAlibabaCloud';
 import InstallArmAWS from '../clusters/install/InstallArmAWS';
 import ConnectedInstallArmAWSIPI from '../clusters/install/InstallArmAWSIPI';
 import ConnectedInstallArmAWSUPI from '../clusters/install/InstallArmAWSUPI';
@@ -176,6 +178,7 @@ const Router: React.FC<RouterProps> = ({ history, planType, clusterId, externalC
   }, [isHypershiftWizardEnabled]);
 
   const isMultiRegionEnabled = useFeatureGate(MULTIREGION_PREVIEW_ENABLED);
+  const isAccessRequestEnabled = useFeatureGate(ACCESS_REQUEST_ENABLED);
 
   useEffect(() => {
     setPageMetadata({
@@ -244,10 +247,7 @@ const Router: React.FC<RouterProps> = ({ history, planType, clusterId, externalC
               path="/token"
               render={() => <CLILoginPage showToken={false} showPath="/token/show" />}
             />
-            <CompatRoute
-              path="/install/alibaba/installer-provisioned"
-              component={ConnectedInstallAlibaba}
-            />
+            <CompatRoute path="/install/alibaba" component={InstallAlibabaCloud} />
             <CompatRoute path="/install/arm/installer-provisioned" component={InstallArmBMIPI} />
             <CompatRoute path="/install/arm/user-provisioned" component={InstallArmBMUPI} />
             <CompatRoute
@@ -484,6 +484,12 @@ const Router: React.FC<RouterProps> = ({ history, planType, clusterId, externalC
             <CompatRoute
               path="/services/rosa"
               render={() => <Navigate replace to={`/overview/rosa${search}`} />}
+            />
+
+            <CompatRoute
+              path="/access-request/:id"
+              exact
+              component={isAccessRequestEnabled ? AccessRequestNavigate : NotFoundError}
             />
 
             <CompatRoute

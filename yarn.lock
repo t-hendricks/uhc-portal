@@ -1534,10 +1534,10 @@
     tunnel-agent "^0.6.0"
     uuid "^8.3.2"
 
-"@cypress/webpack-preprocessor@5.17.1", "@cypress/webpack-preprocessor@^6.0.0":
-  version "5.17.1"
-  resolved "https://registry.yarnpkg.com/@cypress/webpack-preprocessor/-/webpack-preprocessor-5.17.1.tgz#19c3f6ceb89e156824917b4ec31717ade34592ec"
-  integrity sha512-FE/e8ikPc8z4EVopJCaior3RGy0jd2q9Xcp5NtiwNG4XnLfEnUFTZlAGwXe75sEh4fNMPrBJW1KIz77PX5vGAw==
+"@cypress/webpack-preprocessor@6.0.2", "@cypress/webpack-preprocessor@^6.0.0":
+  version "6.0.2"
+  resolved "https://registry.yarnpkg.com/@cypress/webpack-preprocessor/-/webpack-preprocessor-6.0.2.tgz#58a96aa4dbff7433dd37d24ed47e413aa3d3fabb"
+  integrity sha512-0+1+4iy4W9PE6R5ywBNKAZoFp8Sf//w3UJ+CKTqkcAjA29b+dtsD0iFT70DsYE0BMqUM1PO7HXFGbXllQ+bRAA==
   dependencies:
     bluebird "3.7.1"
     debug "^4.3.4"
@@ -2428,10 +2428,10 @@
   resolved "https://registry.yarnpkg.com/@react-hook/passive-layout-effect/-/passive-layout-effect-1.2.1.tgz#c06dac2d011f36d61259aa1c6df4f0d5e28bc55e"
   integrity sha512-IwEphTD75liO8g+6taS+4oqz+nnroocNfWVHWz7j+N+ZO2vYrc6PV1q7GQhuahL0IOR7JccFTsFKQ/mb6iZWAg==
 
-"@react-hook/resize-observer@^1.2.6":
-  version "1.2.6"
-  resolved "https://registry.yarnpkg.com/@react-hook/resize-observer/-/resize-observer-1.2.6.tgz#9a8cf4c5abb09becd60d1d65f6bf10eec211e291"
-  integrity sha512-DlBXtLSW0DqYYTW3Ft1/GQFZlTdKY5VAFIC4+km6IK5NiPPDFchGbEJm1j6pSgMqPRHbUQgHJX7RaR76ic1LWA==
+"@react-hook/resize-observer@^2.0.0":
+  version "2.0.1"
+  resolved "https://registry.yarnpkg.com/@react-hook/resize-observer/-/resize-observer-2.0.1.tgz#b1b090be25c74d89b371183e5e2bc0d03f94986f"
+  integrity sha512-9PCX9grWfxdPizY8ohr+X4IkV1JhGMWr2Nm4ngbg6IcAIv0WBs7YoJcNBqYl22OqPHr5eOMItGcStZrmj2mbmQ==
   dependencies:
     "@juggle/resize-observer" "^3.3.1"
     "@react-hook/latest" "^1.0.2"
@@ -2480,12 +2480,22 @@
     "@scalprum/react-core" "^0.5.4"
     sanitize-html "^2.7.2"
 
-"@redhat-cloud-services/rbac-client@^1.2.12":
-  version "1.2.12"
-  resolved "https://registry.yarnpkg.com/@redhat-cloud-services/rbac-client/-/rbac-client-1.2.12.tgz#28604779d7c447d0adb0afa05d2b62c6e18cc594"
-  integrity sha512-wYmYGqQr6UNRFZ7eR0ExGE5f6Ig5Cgj/qbSdGlyxiDxP6ZA04fPFFFf8H+Ie91sjJx4LuQd5NpuSTSznKdxb0g==
+"@redhat-cloud-services/javascript-clients-shared@^1.2.2":
+  version "1.2.3"
+  resolved "https://registry.yarnpkg.com/@redhat-cloud-services/javascript-clients-shared/-/javascript-clients-shared-1.2.3.tgz#6a7599ab071e72d2c7ec03383c6527813241af24"
+  integrity sha512-ymuDBCCj9FSP9NsoOTNFVpNTUEqbkKA+6ouBkL3X3tkM4Wgwg0fCjTl4kznSWeY8r2Kh2bgaPGZmBQGHfIGBcA==
   dependencies:
-    axios "^0.27.2"
+    axios "^1.7.2"
+    tslib "^2.6.2"
+
+"@redhat-cloud-services/rbac-client@^2.0.0":
+  version "2.0.3"
+  resolved "https://registry.yarnpkg.com/@redhat-cloud-services/rbac-client/-/rbac-client-2.0.3.tgz#b4b76b723071ad30cb683c60d4b1b6b6bcd52918"
+  integrity sha512-aBvojrpP5pFjuQVgcF7oo0FqdYVwK2GcVte+Adyxh002Pv9McU60FoZBzGSk+hJ9NztW7aFeyS+HmGau/iqYGg==
+  dependencies:
+    "@redhat-cloud-services/javascript-clients-shared" "^1.2.2"
+    axios "^1.7.2"
+    tslib "^2.6.2"
 
 "@redhat-cloud-services/types@1.0.7":
   version "1.0.7"
@@ -4123,6 +4133,13 @@ available-typed-arrays@^1.0.7:
   dependencies:
     possible-typed-array-names "^1.0.0"
 
+available-typed-arrays@^1.0.7:
+  version "1.0.7"
+  resolved "https://registry.yarnpkg.com/available-typed-arrays/-/available-typed-arrays-1.0.7.tgz#a5cc375d6a03c2efc87a553f3e0b1522def14846"
+  integrity sha512-wvUjBtSGN7+7SjNpq/9M2Tg350UZD3q62IFZLbRAR1bSMlCo1ZaeW+BJ+D090e4hIIZLBcTDWe4Mh4jvUDajzQ==
+  dependencies:
+    possible-typed-array-names "^1.0.0"
+
 awesome-debounce-promise@^2.1.0:
   version "2.1.0"
   resolved "https://registry.npmjs.org/awesome-debounce-promise/-/awesome-debounce-promise-2.1.0.tgz"
@@ -4180,7 +4197,7 @@ axios-case-converter@^0.11.1:
     snake-case "^3.0.3"
     tslib "^2.3.0"
 
-axios@^0.27.2, axios@^1.6.8:
+axios@^0.27.2, axios@^1.6.8, axios@^1.7.2:
   version "1.6.8"
   resolved "https://registry.yarnpkg.com/axios/-/axios-1.6.8.tgz#66d294951f5d988a00e87a0ffb955316a619ea66"
   integrity sha512-v/ZHtJDU39mDpyBoFVkETcd/uNdxrWRrg3bKpOKzXFA6Bvqopts6ALSMU3y6ijYxbw2B+wPrIv46egTzJXCLGQ==
@@ -14351,6 +14368,17 @@ which-module@^2.0.0:
   integrity sha1-2e8H3Od7mQK4o6j6SzHD4/fm6Ho=
 
 which-typed-array@^1.1.11, which-typed-array@^1.1.13, which-typed-array@^1.1.14, which-typed-array@^1.1.15:
+  version "1.1.15"
+  resolved "https://registry.yarnpkg.com/which-typed-array/-/which-typed-array-1.1.15.tgz#264859e9b11a649b388bfaaf4f767df1f779b38d"
+  integrity sha512-oV0jmFtUky6CXfkqehVvBP/LSWJ2sy4vWMioiENyJLePrBO/yKyV9OyJySfAKosh+RYkIl5zJCNZ8/4JncrpdA==
+  dependencies:
+    available-typed-arrays "^1.0.7"
+    call-bind "^1.0.7"
+    for-each "^0.3.3"
+    gopd "^1.0.1"
+    has-tostringtag "^1.0.2"
+
+which-typed-array@^1.1.14, which-typed-array@^1.1.15:
   version "1.1.15"
   resolved "https://registry.yarnpkg.com/which-typed-array/-/which-typed-array-1.1.15.tgz#264859e9b11a649b388bfaaf4f767df1f779b38d"
   integrity sha512-oV0jmFtUky6CXfkqehVvBP/LSWJ2sy4vWMioiENyJLePrBO/yKyV9OyJySfAKosh+RYkIl5zJCNZ8/4JncrpdA==

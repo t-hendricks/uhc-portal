@@ -1,0 +1,559 @@
+import React, { useEffect, useState } from 'react';
+import { Field } from 'formik';
+import get from 'lodash/get';
+import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom-v5-compat';
+
+import {
+  Alert,
+  Button,
+  ExpandableSection,
+  Grid,
+  GridItem,
+  Label,
+  Text,
+  TextContent,
+  TextList,
+  TextListItem,
+  TextListVariants,
+  TextVariants,
+  Title,
+} from '@patternfly/react-core';
+import { Spinner } from '@redhat-cloud-services/frontend-components/Spinner';
+
+import { trackEvents } from '~/common/analytics';
+import { formatMinorVersion, isSupportedMinorVersion } from '~/common/helpers';
+import links from '~/common/installLinks.mjs';
+import { useFormState } from '~/components/clusters/wizards/hooks';
+import { MIN_MANAGED_POLICY_VERSION } from '~/components/clusters/wizards/rosa/rosaConstants';
+import ExternalLink from '~/components/common/ExternalLink';
+import InstructionCommand from '~/components/common/InstructionCommand';
+import { ReduxSelectDropdown } from '~/components/common/ReduxFormComponents';
+import ReduxVerticalFormGroup from '~/components/common/ReduxFormComponents/ReduxVerticalFormGroup';
+import { useOCPLatestVersion } from '~/components/releases/hooks';
+import useAnalytics from '~/hooks/useAnalytics';
+import { useFeatureGate } from '~/hooks/useFeatureGate';
+import { HCP_USE_UNMANAGED } from '~/redux/constants/featureConstants';
+
+import { FieldId } from '../../constants';
+import { RosaCliCommand } from '../constants/cliCommands';
+
+import AWSAccountRolesError from './components/AWSAccountRolesError';
+
+import '../AccountsRolesScreen.scss';
+
+export const NO_ROLE_DETECTED = 'No role detected';
+
+const hasNoTrustedRelationshipOnClusterRoleError = ({ errorDetails }) =>
+  errorDetails?.some((error) => error?.Error_Key === 'NoTrustedRelationshipOnClusterRole');
+
+const hasCompleteRoleSet = (role, isHypershiftSelected) =>
+  role.Installer && role.Support && role.Worker && (role.ControlPlane || isHypershiftSelected);
+
+// Order: current selected role > 'ManagedOpenShift'-prefixed role > first managed policy role > first complete role set > first incomplete role set > 'No Role Detected'
+const getDefaultInstallerRole = (
+  selectedInstallerRoleARN,
+  accountRolesARNs,
+  isHypershiftSelected,
+) => {
+  if (selectedInstallerRoleARN && selectedInstallerRoleARN !== NO_ROLE_DETECTED) {
+    return selectedInstallerRoleARN;
+  }
+
+  if (accountRolesARNs.length === 0) {
+    return NO_ROLE_DETECTED;
+  }
+
+  const firstManagedPolicyRole = accountRolesARNs.find(
+    (role) => role.managedPolicies || role.hcpManagedPolicies,
+  );
+
+  const hasManagedOpenshiftPrefix = accountRolesARNs.find(
+    (role) => role.prefix === 'ManagedOpenShift',
+  );
+
+  const firstCompleteRoleSet = accountRolesARNs.find((role) =>
+    hasCompleteRoleSet(role, isHypershiftSelected),
+  );
+  const defaultRole =
+    hasManagedOpenshiftPrefix ||
+    firstManagedPolicyRole ||
+    firstCompleteRoleSet ||
+    accountRolesARNs[0];
+
+  return defaultRole.Installer;
+};
+function AccountRolesARNsSection({
+  selectedAWSAccountID,
+  selectedInstallerRoleARN,
+  rosaMaxOSVersion,
+  getAWSAccountRolesARNs,
+  getAWSAccountRolesARNsResponse,
+  clearGetAWSAccountRolesARNsResponse,
+  isHypershiftSelected,
+  onAccountChanged,
+}) {
+  const {
+    setFieldValue,
+    getFieldProps,
+    getFieldMeta,
+    setFieldTouched,
+    validateForm,
+    values: { [FieldId.AssociatedAwsId]: previouslySelectedAWSAccountID },
+  } = useFormState();
+  const track = useAnalytics();
+  const [isExpanded, setIsExpanded] = useState(true);
+  const [accountRoles, setAccountRoles] = useState([]);
+  const [installerRoleOptions, setInstallerRoleOptions] = useState([]);
+  const [selectedInstallerRole, setSelectedInstallerRole] = useState(NO_ROLE_DETECTED);
+  const [showMissingArnsError, setShowMissingArnsError] = useState(false);
+  const [hasFinishedLoadingRoles, setHasFinishedLoadingRoles] = useState(false);
+  const [hasManagedPolicies, setHasManagedPolicies] = useState(false);
+  const useHCPManagedAndUnmanaged = useFeatureGate(HCP_USE_UNMANAGED);
+  const isMissingOCMRole = hasNoTrustedRelationshipOnClusterRoleError(
+    getAWSAccountRolesARNsResponse,
+  );
+
+  useEffect(() => {
+    // this is required to show any validation error messages for the 4 disabled ARNs fields
+    setFieldTouched(FieldId.InstallerRoleArn, true, false);
+    setFieldTouched(FieldId.SupportRoleArn, true, false);
+    setFieldTouched(FieldId.WorkerRoleArn, true, false);
+    if (!isHypershiftSelected) {
+      setFieldTouched(FieldId.ControlPlaneRoleArn, true, false);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isHypershiftSelected]);
+
+  const updateRoleArns = (role) => {
+    const promiseArr = [
+      setFieldValue(FieldId.InstallerRoleArn, role?.Installer || NO_ROLE_DETECTED, false),
+      setFieldValue(FieldId.SupportRoleArn, role?.Support || NO_ROLE_DETECTED, false),
+      setFieldValue(FieldId.WorkerRoleArn, role?.Worker || NO_ROLE_DETECTED, false),
+    ];
+    if (!isHypershiftSelected) {
+      promiseArr.push(
+        setFieldValue(FieldId.ControlPlaneRoleArn, role?.ControlPlane || NO_ROLE_DETECTED, false),
+      );
+    }
+    Promise.all(promiseArr).then(() => {
+      setTimeout(() => {
+        validateForm();
+      }, 10);
+    });
+  };
+
+  useEffect(() => {
+    if (selectedAWSAccountID !== previouslySelectedAWSAccountID) {
+      updateRoleArns(null);
+    }
+    setSelectedInstallerRole(NO_ROLE_DETECTED);
+    setAccountRoles([]);
+    setInstallerRoleOptions([]);
+    setShowMissingArnsError(false);
+    clearGetAWSAccountRolesARNsResponse();
+    onAccountChanged();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [selectedAWSAccountID]);
+
+  useEffect(() => {
+    let hasMissingArns = true;
+    accountRoles.forEach((role) => {
+      if (role.Installer === selectedInstallerRole) {
+        hasMissingArns = !hasCompleteRoleSet(role, isHypershiftSelected);
+        updateRoleArns(role);
+        setFieldValue(FieldId.RosaMaxOsVersion, role.version, false);
+      }
+    });
+    setShowMissingArnsError(hasMissingArns);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [selectedInstallerRole]);
+
+  const hasManagedPoliciesByRole = (role) =>
+    isHypershiftSelected ? role.hcpManagedPolicies : role.managedPolicies;
+
+  // Determine whether the current selected role has managed policies and set to state managed value
+  useEffect(() => {
+    const selectedRole = accountRoles.find((role) => role.Installer === selectedInstallerRole);
+
+    if (getAWSAccountRolesARNsResponse.fulfilled && selectedRole) {
+      setHasManagedPolicies(hasManagedPoliciesByRole(selectedRole));
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [selectedAWSAccountID, getAWSAccountRolesARNsResponse, selectedInstallerRole]);
+
+  const setSelectedInstallerRoleAndOptions = (accountRolesARNs) => {
+    const installerOptions = accountRolesARNs.map((role) => ({
+      name: role.Installer,
+      value: role.Installer,
+      ...(!isHypershiftSelected &&
+        hasManagedPoliciesByRole(role) && {
+          label: (
+            <Label color="blue" isCompact>
+              Recommended
+            </Label>
+          ),
+        }),
+    }));
+
+    if (installerOptions.length === 0) {
+      updateRoleArns(null);
+      setInstallerRoleOptions([]);
+      setFieldValue(FieldId.RosaMaxOsVersion, undefined);
+      setShowMissingArnsError(true);
+    } else {
+      setInstallerRoleOptions(
+        installerOptions.filter((installerRole) => installerRole.value !== undefined),
+      );
+      setShowMissingArnsError(false);
+    }
+    setAccountRoles(accountRolesARNs);
+    setHasFinishedLoadingRoles(true);
+
+    const defaultInstallerRole = getDefaultInstallerRole(
+      selectedInstallerRoleARN,
+      accountRolesARNs,
+      isHypershiftSelected,
+    );
+    setSelectedInstallerRole(defaultInstallerRole);
+  };
+
+  const trackArnsRefreshed = (response) => {
+    const alertErrorTitle = isMissingOCMRole
+      ? 'Cannot detect an OCM role'
+      : 'Error getting AWS account ARNs';
+    track(trackEvents.ARNsRefreshed, {
+      customProperties: {
+        error: !!response.error,
+        ...(response.error && {
+          error_title: alertErrorTitle,
+          error_message: response.errorMessage || undefined, // omit empty strings
+          error_code: response.errorCode,
+          error_operation_id: response.operationID,
+        }),
+      },
+    });
+  };
+
+  useEffect(() => {
+    if (
+      !getAWSAccountRolesARNsResponse.pending &&
+      !getAWSAccountRolesARNsResponse.fulfilled &&
+      !getAWSAccountRolesARNsResponse.error
+    ) {
+      setHasFinishedLoadingRoles(false);
+      setShowMissingArnsError(false);
+      getAWSAccountRolesARNs(selectedAWSAccountID);
+    } else if (getAWSAccountRolesARNsResponse.fulfilled) {
+      const accountRolesARNs = get(getAWSAccountRolesARNsResponse, 'data', []).filter((arn) => {
+        if (isHypershiftSelected && useHCPManagedAndUnmanaged) {
+          return true;
+        }
+        return isHypershiftSelected
+          ? arn.hcpManagedPolicies && arn.managedPolicies
+          : !arn.hcpManagedPolicies && !arn.managedPolicies;
+      });
+      setSelectedInstallerRoleAndOptions(accountRolesARNs);
+    } else if (getAWSAccountRolesARNsResponse.error) {
+      setSelectedInstallerRoleAndOptions([]);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [selectedAWSAccountID, getAWSAccountRolesARNsResponse]);
+
+  useEffect(() => {
+    if (getAWSAccountRolesARNsResponse.fulfilled || getAWSAccountRolesARNsResponse.error) {
+      trackArnsRefreshed(getAWSAccountRolesARNsResponse);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [getAWSAccountRolesARNsResponse]);
+
+  const onToggle = () => {
+    setIsExpanded(!isExpanded);
+  };
+
+  const onInstallerRoleChange = (_, value) => {
+    // changing to a new set of ARNs, which could have different
+    // rosa_max_os_version, so clear the cluster_version which
+    // will get a new default on next step of the wizard
+    setFieldValue(FieldId.ClusterVersion, undefined);
+    setSelectedInstallerRole(value);
+  };
+
+  const roleARNRequired = (value) =>
+    value && value !== NO_ROLE_DETECTED ? undefined : 'ARN field is required.';
+
+  const refreshARNs = () => {
+    clearGetAWSAccountRolesARNsResponse();
+    getAWSAccountRolesARNs(selectedAWSAccountID);
+    setHasFinishedLoadingRoles(false);
+    setShowMissingArnsError(false);
+
+    // Clear the installer role/version if the latest fetched roles do not possess the previously selected one.
+    if (!accountRoles.some((role) => role.Installer === selectedInstallerRole)) {
+      setFieldValue(FieldId.InstallerRoleArn, '', false);
+      setSelectedInstallerRole('');
+      setFieldValue(FieldId.ClusterVersion, undefined);
+    }
+  };
+
+  const [latestOCPVersion, latestVersionLoaded] = useOCPLatestVersion('stable');
+  const rolesOutOfDate =
+    latestVersionLoaded && !isSupportedMinorVersion(latestOCPVersion, rosaMaxOSVersion);
+  const hasStandaloneManagedRole = !isHypershiftSelected && hasManagedPolicies;
+
+  const arnCompatibilityAlertTitle = React.useMemo(() => {
+    if (isHypershiftSelected)
+      return 'The selected account-wide roles are compatible with all OpenShift versions which support hosted control planes.';
+    if (hasStandaloneManagedRole)
+      return `The selected account-wide roles are preferred and compatible with OpenShift version ${MIN_MANAGED_POLICY_VERSION} and newer.`;
+
+    return `The selected account-wide roles are compatible with OpenShift version ${formatMinorVersion(
+      rosaMaxOSVersion,
+    )} and earlier.`;
+  }, [hasStandaloneManagedRole, isHypershiftSelected, rosaMaxOSVersion]);
+
+  const showAccountRolesError =
+    getAWSAccountRolesARNsResponse.error || (showMissingArnsError && hasFinishedLoadingRoles);
+
+  return (
+    <>
+      <GridItem />
+      <GridItem>
+        <Title headingLevel="h3">Account roles</Title>
+      </GridItem>
+      {showAccountRolesError ? (
+        <GridItem span={8}>
+          <AWSAccountRolesError
+            getAWSAccountRolesARNsResponse={getAWSAccountRolesARNsResponse}
+            isHypershiftSelected={isHypershiftSelected}
+            isMissingOCMRole={isMissingOCMRole}
+          />
+        </GridItem>
+      ) : null}
+      {!hasFinishedLoadingRoles && (
+        <GridItem>
+          <div className="spinner-fit-container">
+            <Spinner />
+          </div>
+          <div className="spinner-loading-text" data-testid="spinner-loading-arn-text">
+            Loading account roles ARNs...
+          </div>
+        </GridItem>
+      )}
+      {hasFinishedLoadingRoles && (
+        <GridItem span={12}>
+          <ExpandableSection
+            isExpanded={isExpanded}
+            onToggle={onToggle}
+            toggleText="Account roles ARNs"
+          >
+            <Text component={TextVariants.p}>
+              The following roles were detected in your AWS account.{' '}
+              <ExternalLink href={links.ROSA_AWS_IAM_RESOURCES}>
+                Learn more about account roles
+              </ExternalLink>
+              .
+            </Text>
+            <br />
+            <Button
+              variant="secondary"
+              data-testid="refresh_arns_btn"
+              onClick={() => {
+                track(trackEvents.RefreshARNs);
+                refreshARNs();
+              }}
+            >
+              Refresh ARNs
+            </Button>
+            <br />
+            <br />
+            <Grid>
+              <GridItem span={8}>
+                <Field
+                  component={ReduxSelectDropdown}
+                  name={FieldId.InstallerRoleArn}
+                  input={{
+                    // name, value, onBlur, onChange
+                    ...getFieldProps(FieldId.InstallerRoleArn),
+                    onChange: (value) => {
+                      setFieldValue(FieldId.InstallerRoleArn, value);
+                      onInstallerRoleChange(null, value);
+                    },
+                  }}
+                  meta={getFieldMeta(FieldId.InstallerRoleArn)}
+                  label="Installer role"
+                  type="text"
+                  options={installerRoleOptions}
+                  isDisabled={installerRoleOptions.length <= 1}
+                  validate={roleARNRequired}
+                  isRequired
+                  helpText=""
+                  extendedHelpText={
+                    <>
+                      An IAM role used by the ROSA installer.
+                      <br />
+                      For more information see{' '}
+                      <ExternalLink href={links.ROSA_AWS_IAM_ROLES}>
+                        Table 1 about the installer role policy
+                      </ExternalLink>
+                      .
+                    </>
+                  }
+                />
+                <br />
+                <Field
+                  component={ReduxVerticalFormGroup}
+                  name={FieldId.SupportRoleArn}
+                  input={{
+                    // name, value, onBlur, onChange
+                    ...getFieldProps(FieldId.SupportRoleArn),
+                    onChange: (value) => setFieldValue(FieldId.SupportRoleArn, value, false),
+                  }}
+                  meta={getFieldMeta(FieldId.SupportRoleArn)}
+                  label="Support role"
+                  type="text"
+                  validate={roleARNRequired}
+                  isRequired
+                  // An IAM role used by the Red Hat Site Reliability Engineering (SRE) support team.
+                  extendedHelpText={
+                    <>
+                      An IAM role used by the Red Hat Site Reliability Engineering (SRE) support
+                      team.
+                      <br />
+                      For more information see{' '}
+                      <ExternalLink href={links.ROSA_AWS_IAM_ROLES}>
+                        Table 4 about the support role policy
+                      </ExternalLink>
+                      .
+                    </>
+                  }
+                  isDisabled
+                />
+                <br />
+                <Field
+                  component={ReduxVerticalFormGroup}
+                  name={FieldId.WorkerRoleArn}
+                  input={{
+                    // name, value, onBlur, onChange
+                    ...getFieldProps(FieldId.WorkerRoleArn),
+                    onChange: (value) => setFieldValue(FieldId.WorkerRoleArn, value, false),
+                  }}
+                  meta={getFieldMeta(FieldId.WorkerRoleArn)}
+                  label="Worker role"
+                  type="text"
+                  validate={roleARNRequired}
+                  isRequired
+                  extendedHelpText={
+                    <>
+                      An IAM role used by the ROSA compute instances.
+                      <br />
+                      For more information see{' '}
+                      <ExternalLink href={links.ROSA_AWS_IAM_ROLES}>
+                        Table 3 about the worker/compute role policy
+                      </ExternalLink>
+                      .
+                    </>
+                  }
+                  isDisabled
+                />
+                {!isHypershiftSelected && (
+                  <>
+                    <br />
+                    <Field
+                      component={ReduxVerticalFormGroup}
+                      name={FieldId.ControlPlaneRoleArn}
+                      input={{
+                        // name, value, onBlur, onChange
+                        ...getFieldProps(FieldId.ControlPlaneRoleArn),
+                        onChange: (value) =>
+                          setFieldValue(FieldId.ControlPlaneRoleArn, value, false),
+                      }}
+                      meta={getFieldMeta(FieldId.ControlPlaneRoleArn)}
+                      label="Control plane role"
+                      type="text"
+                      validate={roleARNRequired}
+                      isRequired
+                      extendedHelpText={
+                        <>
+                          An IAM role used by the ROSA control plane.
+                          <br />
+                          For more information see{' '}
+                          <ExternalLink href={links.ROSA_AWS_IAM_ROLES}>
+                            Table 2 about the control plane role policy
+                          </ExternalLink>
+                          .
+                        </>
+                      }
+                      isDisabled
+                    />
+                  </>
+                )}
+              </GridItem>
+              {(rosaMaxOSVersion || hasStandaloneManagedRole) && (
+                <GridItem>
+                  <br />
+                  <Alert
+                    variant="info"
+                    isInline
+                    isPlain={hasStandaloneManagedRole || !rolesOutOfDate}
+                    title={arnCompatibilityAlertTitle}
+                  >
+                    {rolesOutOfDate && !(hasStandaloneManagedRole || isHypershiftSelected) && (
+                      <TextContent>
+                        <Text component={TextVariants.p} className="pf-v5-u-mt-sm">
+                          <strong>
+                            To update account roles to the latest OpenShift version (
+                            {formatMinorVersion(latestOCPVersion)}):
+                          </strong>
+                        </Text>
+                        <TextList component={TextListVariants.ol}>
+                          <TextListItem>
+                            <Text component={TextVariants.p}>
+                              Download latest ({formatMinorVersion(latestOCPVersion)}){' '}
+                              <Link to="/downloads#tool-ocm">ocm</Link> and{' '}
+                              <Link to="/downloads#tool-rosa">rosa</Link> CLIs
+                            </Text>
+                          </TextListItem>
+                          <TextListItem className="pf-v5-u-mb-sm">
+                            <Text component={TextVariants.p}>Recreate ARNs using</Text>
+                            <Text component={TextVariants.p}>
+                              <InstructionCommand textAriaLabel="Copyable ROSA create account-roles command">
+                                {RosaCliCommand.CreateAccountRoles}
+                              </InstructionCommand>
+                            </Text>
+                          </TextListItem>
+                        </TextList>
+                        {/*
+                        // TODO restore this when we have a doc URL (see https://issues.redhat.com/browse/OSDOCS-4138)
+                        <Text component={TextVariants.p}>
+                          <ExternalLink href="#">
+                            Learn more about account-role version compatibility
+                          </ExternalLink>
+                        </Text>
+                        */}
+                      </TextContent>
+                    )}
+                  </Alert>
+                </GridItem>
+              )}
+            </Grid>
+            <GridItem span={4} />
+          </ExpandableSection>
+        </GridItem>
+      )}
+    </>
+  );
+}
+
+AccountRolesARNsSection.propTypes = {
+  selectedAWSAccountID: PropTypes.string,
+  selectedInstallerRoleARN: PropTypes.string,
+  rosaMaxOSVersion: PropTypes.string,
+  getAWSAccountRolesARNs: PropTypes.func.isRequired,
+  getAWSAccountRolesARNsResponse: PropTypes.object.isRequired,
+  clearGetAWSAccountRolesARNsResponse: PropTypes.func.isRequired,
+  isHypershiftSelected: PropTypes.bool,
+  onAccountChanged: PropTypes.func.isRequired,
+};
+
+export default AccountRolesARNsSection;
