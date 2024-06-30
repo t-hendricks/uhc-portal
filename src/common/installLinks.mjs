@@ -60,7 +60,7 @@ const MIRROR_ROSA_LATEST = 'https://mirror.openshift.com/pub/openshift-v4/client
 const MIRROR_MIRROR_REGISTRY_LATEST =
   'https://developers.redhat.com/content-gateway/rest/mirror/pub/openshift-v4/clients/mirror-registry/latest';
 
-const DOCS_BASE = 'https://docs.openshift.com/container-platform/4.15';
+const DOCS_BASE = 'https://docs.openshift.com/container-platform/4.16';
 const OSD_DOCS_BASE = 'https://docs.openshift.com/dedicated';
 const ROSA_DOCS_BASE = 'https://docs.openshift.com/rosa';
 const ROSA_CP_DOCS_BASE =
@@ -153,16 +153,16 @@ const links = {
   INSTALL_ASSISTED_LEARN_MORE: `${DOCS_BASE}/installing/installing_on_prem_assisted/installing-on-prem-assisted.html`,
   INSTALL_AGENT_LEARN_MORE: `${DOCS_BASE}/installing/installing_with_agent_based_installer/preparing-to-install-with-agent-based-installer.html`,
 
-  INSTALL_ALIBABAIPI_DOCS_LANDING: `${DOCS_BASE}/installing/installing_alibaba/preparing-to-install-on-alibaba.html`,
+  INSTALL_ALIBABAIPI_DOCS_LANDING: `https://docs.redhat.com/en/documentation/openshift_container_platform/4.15/html/installing/installing-on-alibaba`,
   INSTALL_ALIBABA_CUSTOMIZATIONS: `${DOCS_BASE}/installing/installing_alibaba/installing-alibaba-customizations.html`,
 
   INSTALL_AWSIPI_DOCS_LANDING: `${DOCS_BASE}/installing/installing_aws/installing-aws-account.html`,
   INSTALL_AWSIPI_DOCS_ENTRY: `${DOCS_BASE}/welcome/index.html`,
-  INSTALL_AWSIPI_LEARN_MORE: `${DOCS_BASE}/installing/installing_aws/installing-aws-default.html`,
-  INSTALL_AWSUPI_GETTING_STARTED: `${DOCS_BASE}/installing/installing_aws/installing-aws-user-infra.html`,
-  INSTALL_AWS_CUSTOMIZATIONS: `${DOCS_BASE}/installing/installing_aws/installing-aws-customizations.html`,
-  INSTALL_AWS_VPC: `${DOCS_BASE}/installing/installing_aws/installing-aws-vpc.html`,
-  INSTALL_AWS_CUSTOM_VPC_REQUIREMENTS: `${DOCS_BASE}/installing/installing_aws/installing-aws-vpc.html#installation-custom-aws-vpc-requirements_installing-aws-vpc`,
+  INSTALL_AWSIPI_LEARN_MORE: `${DOCS_BASE}/installing/installing_aws/ipi/installing-aws-default.html`,
+  INSTALL_AWSUPI_GETTING_STARTED: `${DOCS_BASE}/installing/installing_aws/upi/installing-aws-user-infra.html`,
+  INSTALL_AWS_CUSTOMIZATIONS: `${DOCS_BASE}/installing/installing_aws/ipi/installing-aws-customizations.html`,
+  INSTALL_AWS_VPC: `${DOCS_BASE}/installing/installing_aws/ipi/installing-aws-vpc.html`,
+  INSTALL_AWS_CUSTOM_VPC_REQUIREMENTS: `${DOCS_BASE}/installing/installing_aws/ipi/installing-aws-vpc.html#installation-custom-aws-vpc-requirements_installing-aws-vpc`,
   INSTALL_AWS_MULTI_ARCH: `${DOCS_BASE}/post_installation_configuration/configuring-multi-arch-compute-machines/creating-multi-arch-compute-nodes-aws.html`,
 
   INSTALL_AZUREUPI_GETTING_STARTED: `${DOCS_BASE}/installing/installing_azure/installing-azure-user-infra.html`,
