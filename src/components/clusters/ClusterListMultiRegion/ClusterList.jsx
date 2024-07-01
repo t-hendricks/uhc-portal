@@ -17,6 +17,7 @@ limitations under the License.
 import React from 'react';
 import size from 'lodash/size';
 import PropTypes from 'prop-types';
+import { useDispatch, useSelector } from 'react-redux';
 
 import {
   Card,
@@ -35,6 +36,8 @@ import Spinner from '@redhat-cloud-services/frontend-components/Spinner';
 
 import { AppPage } from '~/components/App/AppPage';
 import { useFetchClusters } from '~/queries/ClusterListQueries/useFetchClusters';
+import { viewActions } from '~/redux/actions/viewOptionsActions';
+import { viewConstants } from '~/redux/constants';
 
 import ErrorBox from '../../common/ErrorBox';
 import Unavailable from '../../common/Unavailable';
@@ -44,7 +47,7 @@ import GlobalErrorBox from '../common/GlobalErrorBox/GlobalErrorBox';
 import ReadOnlyBanner from '../common/ReadOnlyBanner';
 
 import ClusterListEmptyState from './components/ClusterListEmptyState';
-import ClusterListTable, { sortColumns } from './components/ClusterListTable';
+import ClusterListTable from './components/ClusterListTable';
 import { PaginationRow } from './components/PaginationRow';
 import { RefreshButton } from './components/RefreshButton';
 import { sortClusters } from './clusterListSort';
@@ -116,6 +119,7 @@ const ClusterList = ({
   clearGlobalError,
   openModal,
 }) => {
+  const dispatch = useDispatch();
   const { isLoading, data, refetch, isError, errors, isFetching } = useFetchClusters();
   const clusters = data?.items;
 
@@ -128,9 +132,6 @@ const ClusterList = ({
   const [pageSize, setPageSize] = React.useState(50);
   const [itemsStart, setItemsStart] = React.useState(0);
   const [itemsEnd, setItemsEnd] = React.useState(0);
-
-  const [activeSortIndex, setActiveSortIndex] = React.useState(sortColumns.Created);
-  const [activeSortDirection, setActiveSortDirection] = React.useState(SortByDirection.desc);
 
   const preLoadRedux = React.useCallback(() => {
     // Items not needed for this list, but may be needed elsewhere in the app
@@ -195,7 +196,12 @@ const ClusterList = ({
   };
 
   /* Sorting */
-
+  const sortOptions = useSelector(
+    (state) => state.viewOptions[viewConstants.CLUSTERS_VIEW]?.sorting,
+  );
+  const activeSortIndex = sortOptions.sortField;
+  const activeSortDirection = sortOptions.isAscending ? SortByDirection.asc : SortByDirection.desc;
+  // Note: initial sort order is set in the reducer
   const sortedClusters = sortClusters(clusters, activeSortIndex, activeSortDirection);
 
   // onMount and willUnmount
@@ -308,8 +314,12 @@ const ClusterList = ({
                 activeSortIndex={activeSortIndex}
                 activeSortDirection={activeSortDirection}
                 setSort={(index, direction) => {
-                  setActiveSortIndex(index);
-                  setActiveSortDirection(direction);
+                  const sorting = {
+                    isAscending: direction === SortByDirection.asc,
+                    sortField: index,
+                  };
+
+                  dispatch(viewActions.onListSortBy(sorting, viewConstants.CLUSTERS_VIEW));
                 }}
               />
             )}

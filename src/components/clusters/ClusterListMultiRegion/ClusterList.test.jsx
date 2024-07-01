@@ -4,7 +4,7 @@ import { CompatRouter } from 'react-router-dom-v5-compat';
 
 import * as usePreviousProps from '~/hooks/usePreviousProps';
 import * as useFetchClusters from '~/queries/ClusterListQueries/useFetchClusters';
-import { mockRestrictedEnv, render, screen, waitFor, within } from '~/testUtils';
+import { mockRestrictedEnv, render, screen, waitFor, within, withState } from '~/testUtils';
 
 import { normalizedProducts } from '../../../common/subscriptionTypes';
 import { viewConstants } from '../../../redux/constants';
@@ -219,7 +219,7 @@ describe('<ClusterList />', () => {
         errors: [],
       });
 
-      const { user } = render(
+      const { user } = withState({}, true).render(
         <MemoryRouter>
           <CompatRouter>
             <ClusterList {...props} />
@@ -253,7 +253,7 @@ describe('<ClusterList />', () => {
         errors: [],
       });
 
-      const { user } = render(
+      const { user } = withState({}, true).render(
         <MemoryRouter>
           <CompatRouter>
             <ClusterList {...props} />
@@ -283,7 +283,7 @@ describe('<ClusterList />', () => {
         errors: [],
       });
 
-      const { user } = render(
+      const { user } = withState({}, true).render(
         <MemoryRouter>
           <CompatRouter>
             <ClusterList {...props} />
@@ -317,7 +317,7 @@ describe('<ClusterList />', () => {
         errors: [],
       });
 
-      const { user } = render(
+      const { user } = withState({}, true).render(
         <MemoryRouter>
           <CompatRouter>
             <ClusterList {...props} />
@@ -351,7 +351,7 @@ describe('<ClusterList />', () => {
         errors: [],
       });
 
-      const { user } = render(
+      const { user } = withState({}, true).render(
         <MemoryRouter>
           <CompatRouter>
             <ClusterList {...props} />
@@ -401,7 +401,7 @@ describe('<ClusterList />', () => {
         errors: [],
       });
 
-      const { user } = render(
+      const { user } = withState({}, true).render(
         <MemoryRouter>
           <CompatRouter>
             <ClusterList {...props} />
@@ -441,7 +441,7 @@ describe('<ClusterList />', () => {
         errors: [],
       });
 
-      const { user } = render(
+      const { user } = withState({}, true).render(
         <MemoryRouter>
           <CompatRouter>
             <ClusterList {...props} />
@@ -489,7 +489,7 @@ describe('<ClusterList />', () => {
       });
     }
 
-    it('The correct number of results on a page ', () => {
+    it('The correct number of results on a page', () => {
       mockedGetFetchedClusters.mockReturnValue({
         data: { items: mockClusters },
         errors: [],
