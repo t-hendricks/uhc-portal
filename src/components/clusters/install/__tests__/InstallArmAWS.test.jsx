@@ -33,12 +33,12 @@ describe('InstallArmAWS', () => {
 
     expect(screen.getByRole('link', { name: /Learn more about automated/ })).toHaveAttribute(
       'href',
-      `https://docs.openshift.com/container-platform/${version}/installing/installing_aws/installing-aws-default.html`,
+      `https://docs.openshift.com/container-platform/${version}/installing/installing_aws/ipi/installing-aws-default.html`,
     );
 
     expect(screen.getByRole('link', { name: /Learn more about full control/ })).toHaveAttribute(
       'href',
-      `https://docs.openshift.com/container-platform/${version}/installing/installing_aws/installing-aws-user-infra.html`,
+      `https://docs.openshift.com/container-platform/${version}/installing/installing_aws/upi/installing-aws-user-infra.html`,
     );
   });
 });
