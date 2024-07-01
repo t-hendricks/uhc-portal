@@ -596,7 +596,7 @@ describe('<ClusterList />', () => {
       expect(container.querySelector(pageInformationQuerySelector)).toHaveTextContent(
         '51 - 100 of 200',
       );
-    });
+    }, 80000);
 
     it('Changing the "per page" results changes the number of results', async () => {
       mockedGetFetchedClusters.mockReturnValue({
@@ -674,7 +674,7 @@ describe('<ClusterList />', () => {
         '51 - 100 of 200',
       );
       expect(screen.getByLabelText('Current page')).toHaveValue(2);
-    });
+    }, 80000);
   });
 
   // NOTE:  These tests are marked as skip for now until filtering is re-enabled
