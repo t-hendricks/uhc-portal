@@ -22,7 +22,6 @@ import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 
 import {
-  Alert,
   Button,
   Card,
   CardBody,
@@ -48,6 +47,7 @@ import { Chrome } from '~/types/types';
 import links, { channels, tools } from '../../common/installLinks.mjs';
 import DownloadAndOSSelection from '../clusters/install/instructions/components/DownloadAndOSSelection';
 import ExternalLink from '../common/ExternalLink';
+import OfflineTokensAlert from '../common/OfflineTokensAlert';
 import SupportLevelBadge, { DEV_PREVIEW } from '../common/SupportLevelBadge';
 
 import LeadingInfo from './LeadingInfo';
@@ -88,8 +88,8 @@ const Instructions = (props: Props) => {
   } = props;
   const offlineToken = useGlobalState((state) => state.rosaReducer.offlineToken);
   const dispatch = useDispatch();
-  const showDeprecationMessage = useFeatureGate(CLI_SSO_AUTHORIZATION);
   const chrome = useChrome() as Chrome;
+  const showDeprecationMessage = useFeatureGate(CLI_SSO_AUTHORIZATION) && !SSOLogin;
   const restrictedEnv = isRestrictedEnv(chrome);
   const [token, setToken] = React.useState<string>('');
 
@@ -134,15 +134,7 @@ const Instructions = (props: Props) => {
         <Card className="ocm-c-api-token__card">
           {!restrictedEnv && showDeprecationMessage ? (
             <CardTitle>
-              <Alert
-                className="pf-v5-u-mt-md"
-                variant="warning"
-                isInline
-                title="Logging in with offline tokens is deprecated"
-              >
-                Logging in using offline tokens has been deprecated and is no longer getting
-                maintained or enhanced. You can now log in using your Red Hat SSO credentials.
-              </Alert>
+              <OfflineTokensAlert />
             </CardTitle>
           ) : null}
           <CardTitle>

@@ -1,21 +1,30 @@
 import * as React from 'react';
 
 import { CLI_SSO_AUTHORIZATION } from '~/redux/constants/featureConstants';
-import {
-  mockRefreshToken,
-  mockRestrictedEnv,
-  mockUseChrome,
-  mockUseFeatureGate,
-  render,
-  screen,
-} from '~/testUtils';
+import accountsService from '~/services/accountsService';
+import { mockRestrictedEnv, mockUseChrome, mockUseFeatureGate, render, screen } from '~/testUtils';
 
 import StepCreateAWSAccountRoles from './StepCreateAWSAccountRoles';
+
+jest.mock('~/services/accountsService');
 
 describe('<StepCreateAWSAccountRoles />', () => {
   mockUseChrome();
 
   it('should display offline tokens deprecation message', () => {
+    (accountsService.getOrganization as jest.Mock).mockResolvedValue({
+      data: {
+        organization: {
+          capabilities: [
+            {
+              name: 'capability.organization.restrict_offline_tokens',
+              value: 'false',
+            },
+          ],
+        },
+      },
+    });
+
     mockUseFeatureGate([[CLI_SSO_AUTHORIZATION, true]]);
     const props = {
       offlineToken: 'fake-token',
@@ -41,19 +50,35 @@ describe('<StepCreateAWSAccountRoles />', () => {
 
   describe('in Restricted env', () => {
     const isRestrictedEnv = mockRestrictedEnv();
-    mockRefreshToken();
+
+    const getRefreshTokenMock = jest.fn(() =>
+      Promise.resolve({
+        data: {
+          scope: 'scope',
+          refresh_token: 'refresh_token',
+        },
+      }),
+    );
+
+    mockUseChrome({
+      auth: {
+        getRefreshToken: getRefreshTokenMock,
+        getAuthToken: jest.fn(),
+      },
+    });
 
     afterEach(() => {
-      isRestrictedEnv.mockReturnValue(false);
+      isRestrictedEnv.mockReturnValue(true);
     });
 
     it('should not display offline tokens deprecation message', () => {
+      mockUseFeatureGate([[CLI_SSO_AUTHORIZATION, false]]);
       const props = {
         offlineToken: 'fake-token',
         setOfflineToken: jest.fn(),
       };
 
-      isRestrictedEnv.mockReturnValue(false);
+      isRestrictedEnv.mockReturnValue(true);
       render(<StepCreateAWSAccountRoles {...props} />);
 
       const DeprecationAlert = screen.queryByText('Logging in with offline tokens is deprecated');

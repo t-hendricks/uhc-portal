@@ -59,19 +59,26 @@ const AccessRequestModalForm = () => {
       validationSchema={Yup.object({
         [AccessRequestFieldId.State]: Yup.string().required('Required'),
         [AccessRequestFieldId.Justification]: Yup.string()
-          .matches(/^[a-zA-Z0-9- ]+$/, 'Only alphanumeric characters and hyphens are allowed')
-          .min(10, 'Must be 10 characters or more')
+          .trim()
+          .matches(
+            /^[a-zA-Z0-9-\s.&,;':_!"/$]+$/,
+            'Only alphanumeric characters and punctuation marks are allowed',
+          )
           .max(256, 'Must be 256 characters or less')
           .when([AccessRequestFieldId.State], {
             is: AccessRequestState.DENIED,
-            then: (schema) => schema.required('Required'),
+            then: (schema) => schema.required('The justification is required in case of denial.'),
           }),
       })}
       onSubmit={async (values) => {
+        const decision = values[AccessRequestFieldId.State] as Decision.decision;
         dispatch(
           postAccessRequestDecision(accessRequest.id!!, {
-            decision: values[AccessRequestFieldId.State] as Decision.decision,
-            justification: values[AccessRequestFieldId.Justification],
+            decision,
+            justification:
+              decision === Decision.decision.DENIED
+                ? values[AccessRequestFieldId.Justification]
+                : undefined,
           }),
         );
       }}

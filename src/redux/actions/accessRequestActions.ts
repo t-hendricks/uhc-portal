@@ -33,8 +33,21 @@ const getPendingAccessRequests = (
     accessRequestConstants.GET_PENDING_ACCESS_REQUESTS,
     accessRequestService.getAccessRequests({
       page: params?.page ?? 0,
-      size: params?.size ?? 1,
+      size: params?.size || 1,
       search: `subscription_id='${subscriptionId}' and status.state='Pending'`,
+    }),
+  );
+
+const getOrganizationPendingAccessRequests = (
+  organizationId: string,
+  params?: { page: number; size: number },
+) =>
+  action(
+    accessRequestConstants.GET_ORGANIZATION_PENDING_ACCESS_REQUESTS,
+    accessRequestService.getAccessRequests({
+      page: params?.page ?? 0,
+      size: params?.size || 10,
+      search: `organization_id='${organizationId}' and status.state='Pending'`,
     }),
   );
 
@@ -48,6 +61,8 @@ const resetAccessRequests = () => action(accessRequestConstants.RESET_ACCESS_REQ
 const resetAccessRequest = () => action(accessRequestConstants.RESET_ACCESS_REQUEST);
 const resetGetPendingAccessRequests = () =>
   action(accessRequestConstants.RESET_GET_PENDING_ACCESS_REQUESTS);
+const resetOrganizationPendingAccessRequests = () =>
+  action(accessRequestConstants.RESET_ORGANIZATION_PENDING_ACCESS_REQUESTS);
 const resetPostAccessRequestDecision = () =>
   action(accessRequestConstants.RESET_POST_ACCESS_REQUEST_DECISION);
 
@@ -55,10 +70,12 @@ const accessRequestActions = {
   getAccessRequests,
   getAccessRequest,
   getPendingAccessRequests,
+  getOrganizationPendingAccessRequests,
   postAccessRequestDecision,
   resetAccessRequests,
   resetAccessRequest,
   resetGetPendingAccessRequests,
+  resetOrganizationPendingAccessRequests,
   resetPostAccessRequestDecision,
 } as const;
 

@@ -19,7 +19,6 @@ import { NetworkingReducer } from '../../components/clusters/ClusterDetails/comp
 import { deleteProtectionReducer } from '../../components/clusters/ClusterDetails/components/Overview/DetailsRight/DeleteProtection/deleteProtectionReducer';
 import { InstallationLogReducer } from '../../components/clusters/ClusterDetails/components/Overview/InstallationLogView/InstallationLogReducer';
 import { deleteClusterDialogReducer } from '../../components/clusters/common/DeleteClusterDialog/DeleteClusterDialogReducer';
-import { subscriptionReleasedReducer } from '../../components/clusters/common/TransferClusterOwnershipDialog/subscriptionReleasedReducer';
 import clusterUpgrades from '../../components/clusters/common/Upgrades/clusterUpgradeReducer';
 import modalReducer from '../../components/common/Modal/ModalReducer';
 
@@ -43,6 +42,7 @@ import machineTypesReducer from './machineTypesReducer';
 import ocmRolesReducer from './OCMRolesReducer';
 import { persistentStorageReducer } from './persistentStorageReducer';
 import rosaReducer from './rosaReducer';
+import { subscriptionReleasedReducer } from './subscriptionReleasedReducer';
 import { subscriptionSettingsReducer } from './subscriptionSettingsReducer';
 import { subscriptionsReducer } from './subscriptionsReducer';
 import { supportReducer } from './supportReducer';

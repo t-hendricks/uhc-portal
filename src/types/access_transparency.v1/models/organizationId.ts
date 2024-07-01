@@ -3,6 +3,6 @@
 /* tslint:disable */
 /* eslint-disable */
 /**
- * Supplies an organization ID to fetch access protection status
+ * The OCM Organization id to check Access Protection status for.
  */
 export type organizationId = string;

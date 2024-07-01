@@ -12,9 +12,9 @@
   "organization_id": "organization_idx",
   "subscription_id": "2KBhQVMVQx0CEoXuYZUMBQrQG8y",
   "cluster_id": "cluster id",
-  "duration": "9h2m3s",
+  "duration": "9h",
   "deadline": "9h2m3s",
-  "deadlineAt": "2024-05-24T05:18:37.826Z",
+  "deadline_at": "2024-05-24T05:18:37.826Z",
   "status": {
     "state": "Denied",
     "expires_at": "2024-05-24T05:18:37.826Z"

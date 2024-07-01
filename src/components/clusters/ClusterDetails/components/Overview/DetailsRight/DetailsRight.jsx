@@ -13,7 +13,7 @@ import {
 
 import { getQueryParam } from '~/common/queryHelpers';
 import { hasSecurityGroupIds } from '~/common/securityGroupsHelpers';
-import {
+import clusterStates, {
   canViewMachinePoolTab,
   isHypershiftCluster,
   isROSA,
@@ -107,6 +107,7 @@ function DetailsRight({
   const showDeleteProtection = cluster.managed && !isArchivedSubscription(cluster);
 
   const clusterDetails = useGlobalState((state) => state.clusters.details);
+  const isClusterUninstalling = cluster.state === clusterStates.UNINSTALLING;
 
   return (
     <DescriptionList>
@@ -116,6 +117,7 @@ function DetailsRight({
           protectionEnabled={cluster.delete_protection?.enabled}
           canToggle={cluster.canUpdateClusterResource}
           pending={clusterDetails.pending}
+          isUninstalling={isClusterUninstalling}
         />
       ) : null}
       <DescriptionListGroup>

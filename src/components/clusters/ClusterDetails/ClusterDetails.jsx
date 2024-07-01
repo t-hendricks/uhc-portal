@@ -126,7 +126,7 @@ const ClusterDetails = (props) => {
     gotRouters,
     hasNetworkOndemand,
     isAccessRequestEnabled,
-    isAccessProtectionEnabled,
+    accessProtectionState,
   } = props;
 
   const navigate = useNavigate();
@@ -137,8 +137,8 @@ const ClusterDetails = (props) => {
   const [refreshEvent, setRefreshEvent] = React.useState({ type: eventTypes.NONE });
   const { cluster } = clusterDetails;
   const accessRequestsTabVisible = React.useMemo(
-    () => isAccessProtectionEnabled && isAccessRequestEnabled,
-    [isAccessProtectionEnabled, isAccessRequestEnabled],
+    () => accessProtectionState?.enabled && isAccessRequestEnabled,
+    [accessProtectionState?.enabled, isAccessRequestEnabled],
   );
   const requestedSubscriptionID = params.id;
 
@@ -211,9 +211,7 @@ const ClusterDetails = (props) => {
     if (externalClusterID || clusterID) {
       getClusterHistory(externalClusterID, clusterID, clusterLogsViewOptions);
     }
-    if (subscriptionID) {
-      getAccessRequests(subscriptionID, accessRequestsViewOptions);
-      getPendingAccessRequests(subscriptionID);
+    if (subscriptionID && isAccessRequestEnabled) {
       getAccessProtection(subscriptionID);
     }
 
@@ -296,6 +294,25 @@ const ClusterDetails = (props) => {
     // has to be wrapped in useCallback
     // eslint-disable-next-line  react-hooks/exhaustive-deps
   }, [params, clusterDetails, subscriptionID]);
+
+  React.useEffect(() => {
+    if (
+      !accessProtectionState?.pending &&
+      accessProtectionState?.enabled &&
+      subscriptionID &&
+      accessRequestsViewOptions
+    ) {
+      getAccessRequests(subscriptionID, accessRequestsViewOptions);
+      getPendingAccessRequests(subscriptionID);
+    }
+    // eslint-disable-next-line  react-hooks/exhaustive-deps
+  }, [
+    accessProtectionState?.pending,
+    accessProtectionState?.enabled,
+    getAccessRequests,
+    getPendingAccessRequests,
+    subscriptionID,
+  ]);
 
   // If the ClusterDetails screen is loaded once for one cluster, and then again for another,
   // the redux state will have the data for the previous cluster. We want to ensure we only
@@ -466,7 +483,7 @@ const ClusterDetails = (props) => {
                   <Tooltip
                     content={
                       pendingAccessRequests?.total > 0
-                        ? `${pendingAccessRequests.total} pending requests`
+                        ? `${pendingAccessRequests.total} pending request${pendingAccessRequests.total > 1 ? 's' : ''}`
                         : 'No pending requests'
                     }
                   />
@@ -732,7 +749,11 @@ ClusterDetails.propTypes = {
   fetchUpgradeGates: PropTypes.func,
   clearFiltersAndFlags: PropTypes.func.isRequired,
   useNodeUpgradePolicies: PropTypes.bool,
-  isAccessProtectionEnabled: PropTypes.bool,
+  accessProtectionState: PropTypes.shape({
+    enabled: PropTypes.bool,
+    pending: PropTypes.bool,
+    fulfilled: PropTypes.bool,
+  }).isRequired,
 };
 
 ClusterDetails.defaultProps = {

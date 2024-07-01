@@ -60,7 +60,7 @@ const MIRROR_ROSA_LATEST = 'https://mirror.openshift.com/pub/openshift-v4/client
 const MIRROR_MIRROR_REGISTRY_LATEST =
   'https://developers.redhat.com/content-gateway/rest/mirror/pub/openshift-v4/clients/mirror-registry/latest';
 
-const DOCS_BASE = 'https://docs.openshift.com/container-platform/4.15';
+const DOCS_BASE = 'https://docs.openshift.com/container-platform/4.16';
 const OSD_DOCS_BASE = 'https://docs.openshift.com/dedicated';
 const ROSA_DOCS_BASE = 'https://docs.openshift.com/rosa';
 const ROSA_CP_DOCS_BASE =
@@ -76,6 +76,8 @@ const OCP_DOC_BASE =
 
 const links = {
   ROSA_CP_DOCS: 'https://access.redhat.com/documentation/en-us/red_hat_openshift_service_on_aws/4',
+  ACCESS_REQUEST_DOC_LINK:
+    'https://docs.redhat.com/en/documentation/red_hat_openshift_service_on_aws/4/html/support/approved-access',
   DOCS_ENTRY: `${DOCS_BASE}/welcome/index.html`,
   ROSA_TROUBLESHOOTING_INSTALLATIONS: `${ROSA_CP_DOCS_BASE}/troubleshooting/rosa-troubleshooting-installations`,
   ROSA_DEFINITION_DOC: `${ROSA_CP_DOCS_BASE}/introduction_to_rosa/policies-and-service-definition#rosa-service-definition`,
@@ -151,16 +153,16 @@ const links = {
   INSTALL_ASSISTED_LEARN_MORE: `${DOCS_BASE}/installing/installing_on_prem_assisted/installing-on-prem-assisted.html`,
   INSTALL_AGENT_LEARN_MORE: `${DOCS_BASE}/installing/installing_with_agent_based_installer/preparing-to-install-with-agent-based-installer.html`,
 
-  INSTALL_ALIBABAIPI_DOCS_LANDING: `${DOCS_BASE}/installing/installing_alibaba/preparing-to-install-on-alibaba.html`,
+  INSTALL_ALIBABAIPI_DOCS_LANDING: `https://docs.redhat.com/en/documentation/openshift_container_platform/4.15/html/installing/installing-on-alibaba`,
   INSTALL_ALIBABA_CUSTOMIZATIONS: `${DOCS_BASE}/installing/installing_alibaba/installing-alibaba-customizations.html`,
 
   INSTALL_AWSIPI_DOCS_LANDING: `${DOCS_BASE}/installing/installing_aws/installing-aws-account.html`,
   INSTALL_AWSIPI_DOCS_ENTRY: `${DOCS_BASE}/welcome/index.html`,
-  INSTALL_AWSIPI_LEARN_MORE: `${DOCS_BASE}/installing/installing_aws/installing-aws-default.html`,
-  INSTALL_AWSUPI_GETTING_STARTED: `${DOCS_BASE}/installing/installing_aws/installing-aws-user-infra.html`,
-  INSTALL_AWS_CUSTOMIZATIONS: `${DOCS_BASE}/installing/installing_aws/installing-aws-customizations.html`,
-  INSTALL_AWS_VPC: `${DOCS_BASE}/installing/installing_aws/installing-aws-vpc.html`,
-  INSTALL_AWS_CUSTOM_VPC_REQUIREMENTS: `${DOCS_BASE}/installing/installing_aws/installing-aws-vpc.html#installation-custom-aws-vpc-requirements_installing-aws-vpc`,
+  INSTALL_AWSIPI_LEARN_MORE: `${DOCS_BASE}/installing/installing_aws/ipi/installing-aws-default.html`,
+  INSTALL_AWSUPI_GETTING_STARTED: `${DOCS_BASE}/installing/installing_aws/upi/installing-aws-user-infra.html`,
+  INSTALL_AWS_CUSTOMIZATIONS: `${DOCS_BASE}/installing/installing_aws/ipi/installing-aws-customizations.html`,
+  INSTALL_AWS_VPC: `${DOCS_BASE}/installing/installing_aws/ipi/installing-aws-vpc.html`,
+  INSTALL_AWS_CUSTOM_VPC_REQUIREMENTS: `${DOCS_BASE}/installing/installing_aws/ipi/installing-aws-vpc.html#installation-custom-aws-vpc-requirements_installing-aws-vpc`,
   INSTALL_AWS_MULTI_ARCH: `${DOCS_BASE}/post_installation_configuration/configuring-multi-arch-compute-machines/creating-multi-arch-compute-nodes-aws.html`,
 
   INSTALL_AZUREUPI_GETTING_STARTED: `${DOCS_BASE}/installing/installing_azure/installing-azure-user-infra.html`,
@@ -409,6 +411,7 @@ const architectureOptions = [
 const operatingSystems = {
   linux: 'linux',
   rhel9: 'rhel-9',
+  rhel9_fips: 'rhel-9-fips',
   rhel8: 'rhel-8',
   mac: 'mac',
   windows: 'windows',
@@ -417,6 +420,7 @@ const operatingSystems = {
 const operatingSystemOptions = [
   { value: operatingSystems.linux, label: 'Linux' },
   { value: operatingSystems.rhel9, label: 'Linux - RHEL 9' },
+  { value: operatingSystems.rhel9_fips, label: 'RHEL 9 (FIPS)' },
   { value: operatingSystems.rhel8, label: 'Linux - RHEL 8' },
   { value: operatingSystems.mac, label: 'MacOS' },
   { value: operatingSystems.windows, label: 'Windows' },
@@ -573,6 +577,7 @@ const urls = {
       [architectures.x86]: {
         [operatingSystems.linux]: `${MIRROR_CLIENTS_STABLE_X86}openshift-install-linux.tar.gz`,
         [operatingSystems.mac]: `${MIRROR_CLIENTS_STABLE_X86}openshift-install-mac.tar.gz`,
+        [operatingSystems.rhel9_fips]: `${MIRROR_CLIENTS_STABLE_X86}openshift-install-rhel9-amd64.tar.gz`,
       },
       [architectures.arm]: {
         /* 4.13
@@ -596,6 +601,7 @@ const urls = {
     [channels.PRE_RELEASE]: {
       [architectures.x86]: {
         [operatingSystems.linux]: `${MIRROR_CLIENTS_LATEST_PRE_X86}openshift-install-linux.tar.gz`,
+        [operatingSystems.rhel9_fips]: `${MIRROR_CLIENTS_LATEST_PRE_X86}openshift-install-rhel9-amd64.tar.gz`,
         [operatingSystems.mac]: `${MIRROR_CLIENTS_LATEST_PRE_X86}openshift-install-mac.tar.gz`,
       },
       [architectures.arm]: {
@@ -613,6 +619,7 @@ const urls = {
       },
       [architectures.s390x]: {
         [operatingSystems.linux]: `${MIRROR_CLIENTS_STABLE_IBMZ}openshift-install-linux.tar.gz`,
+        [operatingSystems.rhel9_fips]: `${MIRROR_CLIENTS_STABLE_IBMZ}openshift-install-rhel9-s390x.tar.gz`,
       },
       [architectures.arm]: {
         /* 4.13
@@ -628,6 +635,7 @@ const urls = {
       },
       [architectures.s390x]: {
         [operatingSystems.linux]: `${MIRROR_CLIENTS_LATEST_PRE_IBMZ}openshift-install-linux.tar.gz`,
+        [operatingSystems.rhel9_fips]: `${MIRROR_CLIENTS_LATEST_PRE_IBMZ}openshift-install-rhel9-s390x.tar.gz`,
       },
       [architectures.arm]: {
         [operatingSystems.linux]: `${MIRROR_CLIENTS_LATEST_PRE_IBMZ}openshift-install-linux-arm64.tar.gz`,
@@ -643,6 +651,7 @@ const urls = {
       },
       [architectures.ppc]: {
         [operatingSystems.linux]: `${MIRROR_CLIENTS_STABLE_PPC}openshift-install-linux.tar.gz`,
+        [operatingSystems.rhel9_fips]: `${MIRROR_CLIENTS_STABLE_PPC}openshift-install-rhel9-ppc64le.tar.gz`,
       },
       [architectures.arm]: {
         [operatingSystems.linux]: `${MIRROR_CLIENTS_STABLE_PPC}openshift-install-linux-arm64.tar.gz`,
@@ -656,6 +665,7 @@ const urls = {
       },
       [architectures.ppc]: {
         [operatingSystems.linux]: `${MIRROR_CLIENTS_LATEST_PRE_PPC}openshift-install-linux.tar.gz`,
+        [operatingSystems.rhel9_fips]: `${MIRROR_CLIENTS_LATEST_PRE_PPC}openshift-install-rhel9-ppc64le.tar.gz`,
       },
       [architectures.arm]: {
         [operatingSystems.linux]: `${MIRROR_CLIENTS_LATEST_PRE_PPC}openshift-install-linux-arm64.tar.gz`,

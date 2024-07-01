@@ -1,4 +1,5 @@
 import React, { FormEvent } from 'react';
+import { useDispatch } from 'react-redux';
 import { Field } from 'redux-form';
 
 import { Form, FormGroup, FormSection, Grid, GridItem, Switch, Text } from '@patternfly/react-core';
@@ -15,6 +16,7 @@ import {
   AutoscalerIgnoredLabelsPopover,
 } from '~/components/clusters/common/EditClusterAutoScalingDialog/AutoscalerIgnoredLabelsTooltip';
 import ErrorBox from '~/components/common/ErrorBox';
+import { clusterAutoscalerActions } from '~/redux/actions/clusterAutoscalerActions';
 import { ClusterAutoscaler } from '~/types/clusters_mgmt.v1';
 import { ErrorState } from '~/types/types';
 
@@ -43,6 +45,7 @@ export interface EditClusterAutoScalingDialogProps {
   autoScalingErrors: ClusterAutoscaler | {};
   hasAutoscalingMachinePools: boolean;
   editAction?: ErrorState;
+  clusterId: string;
 }
 
 /**
@@ -67,12 +70,19 @@ function EditClusterAutoScalingDialog({
   autoScalingErrors,
   hasAutoscalingMachinePools,
   editAction,
+  clusterId,
 }: EditClusterAutoScalingDialogProps) {
   const hasAutoScalingErrors = autoScalingErrors && Object.keys(autoScalingErrors).length > 0;
   const isScaleDownDisabled = autoScalingValues.scale_down?.enabled === false;
   const isSaving = !isWizard && editAction?.pending;
   const isScalingSelected = isWizard || autoScalingValues.isSelected;
   const isFormDisabled = !isScalingSelected || isSaving;
+
+  const dispatch = useDispatch();
+
+  React.useEffect(() => {
+    dispatch(clusterAutoscalerActions.getClusterAutoscaler(clusterId));
+  }, [clusterId, dispatch]);
 
   let primaryButtonProps = {
     text: 'Close',

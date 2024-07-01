@@ -63,6 +63,18 @@ describe('<DeleteProtection />', () => {
       'true',
     );
   });
+
+  it('Displays N/A when cluster is uninstalling', () => {
+    const props = {
+      protectionEnabled: false,
+      clusterID: 'fake-cluster',
+      canToggle: true,
+      isUninstalling: true,
+    };
+    render(<DeleteProtection {...props} />);
+
+    expect(screen.getByText('N/A')).toBeInTheDocument();
+  });
 });
 
 describe('Delete protection - modal action', () => {

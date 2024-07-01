@@ -3,6 +3,6 @@
 /* tslint:disable */
 /* eslint-disable */
 /**
- * The access request id of record
+ * The id of the Access Request
  */
 export type access_request_id = string;

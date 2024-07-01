@@ -19,6 +19,8 @@ import {
 import { ExclamationCircleIcon } from '@patternfly/react-icons/dist/esm/icons/exclamation-circle-icon';
 import { ExclamationTriangleIcon } from '@patternfly/react-icons/dist/esm/icons/exclamation-triangle-icon';
 
+import modals from '~/components/common/Modal/modals';
+
 import {
   billingModels,
   normalizedProducts,
@@ -42,7 +44,7 @@ function SubscriptionSettings({
   }
 
   const handleEditSettings = () => {
-    openModal('edit-subscription-settings', { subscription });
+    openModal(modals.EDIT_SUBSCRIPTION_SETTINGS, { subscription });
   };
 
   const status = get(subscription, 'status');

@@ -27,9 +27,9 @@ import { GlobalState } from '~/redux/store';
 
 import { FieldId } from '../constants';
 
+import AccountRolesARNsSection from './AccountRolesARNsSection/AccountRolesARNsSection';
 import { useAssociateAWSAccountDrawer } from './AssociateAWSAccountDrawer/AssociateAWSAccountDrawer';
 import AWSBillingAccount from './AWSBillingAccount/AWSBillingAccount';
-import AccountRolesARNsSection from './AccountRolesARNsSection';
 import AWSAccountSelection from './AWSAccountSelection';
 import { AwsRoleErrorAlert } from './AwsRoleErrorAlert';
 

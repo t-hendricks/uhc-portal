@@ -86,6 +86,7 @@ describe('Rosa hosted(Hypershift) cluster wizard validations', { tags: ['smoke',
     );
     CreateRosaWizardPage.createCustomDomainPrefixCheckbox().uncheck();
     CreateRosaWizardPage.setClusterName(clusterName);
+    CreateRosaWizardPage.closePopoverDialogs();
     CreateRosaWizardPage.advancedEncryptionLink().click();
     CreateRosaWizardPage.useCustomKMSKeyRadio().check();
     CreateRosaWizardPage.rosaNextButton().click({ force: true });

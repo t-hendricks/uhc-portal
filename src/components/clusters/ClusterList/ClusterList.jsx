@@ -50,6 +50,7 @@ import { ASSISTED_INSTALLER_MERGE_LISTS_FEATURE } from '../../../redux/constants
 import ErrorBox from '../../common/ErrorBox';
 import RefreshBtn from '../../common/RefreshButton/RefreshButton';
 import Unavailable from '../../common/Unavailable';
+import AccessRequestPendingAlert from '../ClusterDetails/components/AccessRequest/components/AccessRequestPendingAlert';
 import ClusterListFilter from '../common/ClusterListFilter';
 import CommonClusterModals from '../common/CommonClusterModals';
 import ErrorTriangle from '../common/ErrorTriangle';
@@ -132,10 +133,17 @@ const ClusterList = ({
   setListFlag,
   getOrganizationAndQuota,
   organization,
+  organizationId,
+  pendingOrganizationAccessRequests,
+  isOrganizationAccessProtectionEnabled,
   getMachineTypes,
   machineTypes,
   onListFlagsSet,
   closeModal,
+  getOrganizationPendingAccessRequests,
+  resetOrganizationPendingAccessRequests,
+  getOrganizationAccessProtection,
+  resetOrganizationAccessProtection,
   clearGlobalError,
   clearClusterDetails,
   fetchClusters,
@@ -161,12 +169,25 @@ const ClusterList = ({
   toggleSubscriptionReleased,
   meta: { clustersServiceError },
   features,
+  isAccessRequestEnabled,
 }) => {
   const [loadingChangedView, setLoadingChangedView] = React.useState(false);
 
   const refresh = React.useCallback(() => {
     fetchClusters(createViewQueryObject(viewOptions, username));
-  }, [fetchClusters, username, viewOptions]);
+    if (organizationId && isAccessRequestEnabled) {
+      resetOrganizationAccessProtection();
+      getOrganizationAccessProtection(organizationId);
+    }
+  }, [
+    fetchClusters,
+    resetOrganizationAccessProtection,
+    getOrganizationAccessProtection,
+    organizationId,
+    username,
+    viewOptions,
+    isAccessRequestEnabled,
+  ]);
 
   // onMount and willUnmount
   React.useEffect(() => {
@@ -213,10 +234,24 @@ const ClusterList = ({
       closeModal();
       clearClusterDetails();
       clearGlobalError('clusterList');
+      resetOrganizationPendingAccessRequests();
+      resetOrganizationAccessProtection();
     };
     // Run only on mount and unmount
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  React.useEffect(() => {
+    if (organizationId && isAccessRequestEnabled) {
+      getOrganizationAccessProtection(organizationId);
+    }
+  }, [getOrganizationAccessProtection, organizationId, isAccessRequestEnabled]);
+
+  React.useEffect(() => {
+    if (isOrganizationAccessProtectionEnabled && organizationId) {
+      getOrganizationPendingAccessRequests(organizationId);
+    }
+  }, [getOrganizationPendingAccessRequests, isOrganizationAccessProtectionEnabled, organizationId]);
 
   const prevFeatures = usePreviousProps(features);
   const prevViewOptions = usePreviousProps(viewOptions) || viewOptions;
@@ -354,19 +389,25 @@ const ClusterList = ({
                 }}
               />
             ) : (
-              <ClusterListTable
-                openModal={openModal}
-                clusters={clusters || []}
-                viewOptions={viewOptions}
-                setSorting={setSorting}
-                isPending={showSkeleton}
-                setClusterDetails={setClusterDetails}
-                canSubscribeOCPList={canSubscribeOCPList}
-                canHibernateClusterList={canHibernateClusterList}
-                canTransferClusterOwnershipList={canTransferClusterOwnershipList}
-                toggleSubscriptionReleased={toggleSubscriptionReleased}
-                refreshFunc={refresh}
-              />
+              <>
+                <AccessRequestPendingAlert
+                  total={pendingOrganizationAccessRequests.total}
+                  accessRequests={pendingOrganizationAccessRequests.items}
+                />
+                <ClusterListTable
+                  openModal={openModal}
+                  clusters={clusters || []}
+                  viewOptions={viewOptions}
+                  setSorting={setSorting}
+                  isPending={showSkeleton}
+                  setClusterDetails={setClusterDetails}
+                  canSubscribeOCPList={canSubscribeOCPList}
+                  canHibernateClusterList={canHibernateClusterList}
+                  canTransferClusterOwnershipList={canTransferClusterOwnershipList}
+                  toggleSubscriptionReleased={toggleSubscriptionReleased}
+                  refreshFunc={refresh}
+                />
+              </>
             )}
             <ViewPaginationRow
               viewType={viewConstants.CLUSTERS_VIEW}
@@ -411,10 +452,17 @@ ClusterList.propTypes = {
   getMachineTypes: PropTypes.func.isRequired,
   getOrganizationAndQuota: PropTypes.func.isRequired,
   organization: PropTypes.object.isRequired,
+  organizationId: PropTypes.string,
+  pendingOrganizationAccessRequests: PropTypes.object.isRequired,
+  isOrganizationAccessProtectionEnabled: PropTypes.object.isRequired,
   cloudProviders: PropTypes.object.isRequired,
   machineTypes: PropTypes.object.isRequired,
   openModal: PropTypes.func.isRequired,
   closeModal: PropTypes.func.isRequired,
+  getOrganizationPendingAccessRequests: PropTypes.func.isRequired,
+  resetOrganizationPendingAccessRequests: PropTypes.func.isRequired,
+  getOrganizationAccessProtection: PropTypes.func.isRequired,
+  resetOrganizationAccessProtection: PropTypes.func.isRequired,
   setListFlag: PropTypes.func.isRequired,
   operationID: PropTypes.string,
   anyModalOpen: PropTypes.bool,
@@ -429,6 +477,7 @@ ClusterList.propTypes = {
   clearGlobalError: PropTypes.func.isRequired,
   clearClusterDetails: PropTypes.func.isRequired,
   onListFlagsSet: PropTypes.func.isRequired,
+  isAccessRequestEnabled: PropTypes.bool,
 };
 
 export default ClusterList;

@@ -43,6 +43,8 @@ describe('<ClusterList />', () => {
       errorMessage: '',
       error: false,
       username: 'myUserName',
+      pendingOrganizationAccessRequests: {},
+      organizationId: 'whateverTheOrganizationId',
       ...funcs(),
       clearClusterDetails: jest.fn(),
       setClusterDetails: jest.fn(),

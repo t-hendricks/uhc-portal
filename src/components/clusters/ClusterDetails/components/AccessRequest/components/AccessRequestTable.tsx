@@ -29,18 +29,13 @@ const COLUMNS = [
     transforms: [sortable],
   },
   {
+    title: 'ID',
+    sortTitle: 'id',
+    transforms: [sortable],
+  },
+  {
     title: 'Created Time',
     sortTitle: 'created_at',
-    transforms: [sortable],
-  },
-  {
-    title: 'Requestor',
-    sortTitle: 'requested_by',
-    transforms: [sortable],
-  },
-  {
-    title: 'Service Request ID',
-    sortTitle: 'support_case_id',
     transforms: [sortable],
   },
   {
@@ -77,9 +72,8 @@ const AccessRequestTable = ({
           )
         : accessRequestItems?.map((e) => [
             { title: <AccessRequestStateIcon accessRequest={e} /> },
+            { title: e.id },
             { title: e.created_at },
-            { title: e.requested_by },
-            { title: e.support_case_id },
             {
               title: (
                 <Button

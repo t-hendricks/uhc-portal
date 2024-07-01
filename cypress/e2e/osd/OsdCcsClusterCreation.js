@@ -52,10 +52,9 @@ describe(
       it(`OSD ${clusterProperties.CloudProvider} wizard - Cluster Settings - Cluster details definitions`, () => {
         CreateOSDWizardPage.isClusterDetailsScreen();
         CreateOSDWizardPage.createCustomDomainPrefixCheckbox().scrollIntoView().check();
-
         CreateOSDWizardPage.setClusterName(clusterProperties.ClusterName);
+        CreateOSDWizardPage.closePopoverDialogs();
         CreateOSDWizardPage.setDomainPrefix(clusterProperties.ClusterDomainPrefix);
-
         CreateOSDWizardPage.closePopoverDialogs();
         CreateOSDWizardPage.singleZoneAvilabilityRadio().should('be.checked');
         CreateOSDWizardPage.selectRegion(clusterProperties.Region);

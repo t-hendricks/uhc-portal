@@ -4,5 +4,8 @@
 /* eslint-disable */
 import type { ObjectReference } from './ObjectReference';
 export type AccessProtection = ObjectReference & {
+  /**
+   * Boolean indicating whether Access Protection is enabled. True if enabled, false otherwise.
+   */
   enabled?: boolean;
 };

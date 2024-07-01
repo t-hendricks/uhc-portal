@@ -291,41 +291,44 @@ describe('AccessRequestModalForm', () => {
       ).not.toHaveAttribute('disabled');
     });
 
-    it('save button disabled in case of validation failure', async () => {
-      // Arrange
-      useGlobalStateMock.mockReturnValueOnce({
-        accessRequest: { status: { state: AccessRequestState.PENDING } },
-      });
-      useGlobalStateMock.mockReturnValueOnce({});
-      useGlobalStateMock.mockReturnValueOnce({});
+    it.each([['1234567890abcdef#'], [' ']])(
+      'save button disabled in case of validation failure for text %p',
+      async (justificationValue: string) => {
+        // Arrange
+        useGlobalStateMock.mockReturnValueOnce({
+          accessRequest: { status: { state: AccessRequestState.PENDING } },
+        });
+        useGlobalStateMock.mockReturnValueOnce({});
+        useGlobalStateMock.mockReturnValueOnce({});
 
-      const { user } = render(<AccessRequestModalForm />);
-      await user.click(
-        screen.getByRole('radio', {
-          name: /deny/i,
-        }),
-      );
-      expect(
-        screen.getByRole('button', {
-          name: /save/i,
-        }),
-      ).toHaveAttribute('disabled');
+        const { user } = render(<AccessRequestModalForm />);
+        await user.click(
+          screen.getByRole('radio', {
+            name: /deny/i,
+          }),
+        );
+        expect(
+          screen.getByRole('button', {
+            name: /save/i,
+          }),
+        ).toHaveAttribute('disabled');
 
-      // Act
-      await user.type(
-        screen.getByRole('textbox', {
-          name: /access request justification/i,
-        }),
-        '1234567890abcdef#',
-      );
+        // Act
+        await user.type(
+          screen.getByRole('textbox', {
+            name: /access request justification/i,
+          }),
+          justificationValue,
+        );
 
-      // Assert
-      expect(
-        screen.getByRole('button', {
-          name: /save/i,
-        }),
-      ).toHaveAttribute('disabled');
-    });
+        // Assert
+        expect(
+          screen.getByRole('button', {
+            name: /save/i,
+          }),
+        ).toHaveAttribute('disabled');
+      },
+    );
 
     it('submits', async () => {
       // Arrange

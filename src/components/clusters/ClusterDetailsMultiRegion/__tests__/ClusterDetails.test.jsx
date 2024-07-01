@@ -118,6 +118,7 @@ describe('<ClusterDetailsMultiRegion />', () => {
 
     const mockedUseFetchClusterIdentityProviders = useFetchClusterIdentityProviders;
     const mockedUseFetchCloudProviders = useFetchCloudProviders;
+
     it('should call clearGlobalError on mount', async () => {
       useParams.mockReturnValue({ id: '1msoogsgTLQ4PePjrTOt3UqvMzX' });
       mockedUseFetchClusterDetails.mockReturnValue({
