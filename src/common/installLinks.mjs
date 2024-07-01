@@ -717,7 +717,6 @@ const urls = {
     [channels.PRE_RELEASE]: {
       [architectures.x86]: {
         [operatingSystems.linux]: `${MIRROR_CLIENTS_LATEST_PRE_MULTI}amd64/openshift-install-linux.tar.gz`,
-        [operatingSystems.rhel9_fips]: `${MIRROR_CLIENTS_LATEST_PRE_MULTI}amd64/openshift-install-rhel9-amd64.tar.gz`,
         [operatingSystems.mac]: `${MIRROR_CLIENTS_LATEST_PRE_MULTI}amd64/openshift-install-mac.tar.gz`,
       },
       [architectures.arm]: {
@@ -726,11 +725,9 @@ const urls = {
       },
       [architectures.ppc]: {
         [operatingSystems.linux]: `${MIRROR_CLIENTS_LATEST_PRE_MULTI}ppc64le/openshift-install-linux.tar.gz`,
-        [operatingSystems.rhel9_fips]: `${MIRROR_CLIENTS_LATEST_PRE_MULTI}ppc64le/openshift-install-linux-rhel9-ppc64le.tar.gz`,
       },
       [architectures.s390x]: {
         [operatingSystems.linux]: `${MIRROR_CLIENTS_LATEST_PRE_MULTI}s390x/openshift-install-linux.tar.gz`,
-        [operatingSystems.rhel9_fips]: `${MIRROR_CLIENTS_LATEST_PRE_MULTI}s390x/openshift-install-rhel9-s390x.tar.gz`,
       },
     },
   },
