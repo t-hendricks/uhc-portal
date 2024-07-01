@@ -66,22 +66,12 @@ const RunItYourselfTable = () => {
     },
     {
       key: 'baremetal',
-      provider: (
-        <>
-          <Link to="/install/metal/multi"> Baremetal (multi-architecture)</Link>
-          <TechnologyPreview className="pf-v5-u-ml-md pf-v5-u-display-inline" />
-        </>
-      ),
+      provider: <Link to="/install/metal/multi"> Baremetal (multi-architecture)</Link>,
       options: 'Pre-existing infrastructure',
     },
     {
       key: 'ibm_powervs',
-      provider: (
-        <>
-          <Link to="/install/powervs/installer-provisioned">IBM PowerVS (ppc64le)</Link>
-          <TechnologyPreview className="pf-v5-u-ml-md pf-v5-u-display-inline" />
-        </>
-      ),
+      provider: <Link to="/install/powervs/installer-provisioned">IBM PowerVS (ppc64le)</Link>,
       options: 'Full stack automation',
     },
     {
@@ -92,10 +82,7 @@ const RunItYourselfTable = () => {
     {
       key: 'oracle',
       provider: (
-        <>
-          <Link to="/install/oracle-cloud">Oracle Cloud Infrastructure (virtual machines)</Link>
-          <TechnologyPreview className="pf-v5-u-ml-md pf-v5-u-display-inline" />
-        </>
+        <Link to="/install/oracle-cloud">Oracle Cloud Infrastructure (virtual machines)</Link>
       ),
       options: 'Pre-existing infrastructure',
     },
