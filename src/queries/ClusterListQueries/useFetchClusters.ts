@@ -26,6 +26,7 @@ import { accountsService, assistedService, clusterService } from '../../services
 import { Region, useFetchRegions } from '../common/useFetchRegions';
 import { queryConstants } from '../queriesConstants';
 
+import { formatCluster } from './formatCluster';
 import { useFetchCanEditDelete } from './useFetchCanEditDelete';
 
 /* ************** CONFIGS **************** */
@@ -285,8 +286,9 @@ const fetchPageOfClusters = async (
   const { items, total } = region
     ? await fetchPageOfRegionalClusters(page, region)
     : await fetchPageOfGlobalClusters(page, aiMergeListsFeatureFlag);
+
   return {
-    items,
+    items: items?.map((cluster) => formatCluster(cluster)),
     page,
     total,
     region,
