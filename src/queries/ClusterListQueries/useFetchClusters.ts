@@ -208,17 +208,27 @@ export const useFetchClusters = () => {
   // Add queries for additional pages if they already don't exist
   if (data?.pagesFetched) {
     data.pagesFetched.forEach((pageFetched) => {
+      const numNextPages = Math.ceil(
+        (pageFetched.total - pageFetched.page * queryConstants.PAGE_SIZE) /
+          queryConstants.PAGE_SIZE,
+      );
+
+      const newQueries: CreateQuery[] = [];
+      for (let i = 1; i <= numNextPages; i += 1) {
+        const nextPage = pageFetched.page + i;
+        const doesNextPageExist = isExistingQuery(queries, nextPage, pageFetched.region);
+        if (!doesNextPageExist) {
+          newQueries.push(createQuery(nextPage, aiMergeListsFeatureFlag, pageFetched.region));
+        }
+      }
+      if (newQueries.length > 0) {
+        setQueries((prev) => [...prev, ...newQueries]);
+      }
+
+      // Delete query if next page is no longer needed
       const nextPageExist = isExistingQuery(queries, pageFetched.page + 1, pageFetched.region);
 
-      if (pageFetched.total > pageFetched.page * queryConstants.PAGE_SIZE && !nextPageExist) {
-        // next page needs to be added
-        setQueries((prev) => [
-          ...prev,
-          createQuery(pageFetched.page + 1, aiMergeListsFeatureFlag, pageFetched.region),
-        ]);
-      }
       if (pageFetched.total <= pageFetched.page * queryConstants.PAGE_SIZE && nextPageExist) {
-        // Delete query that is no longer needed
         const fetchedPageType = pageFetched.region ? QUERY_TYPE.REGIONAL : QUERY_TYPE.GLOBAL;
 
         setQueries((prev) =>
