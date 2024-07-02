@@ -4,16 +4,8 @@ import startCase from 'lodash/startCase';
 
 import { Tooltip } from '@patternfly/react-core';
 import { IRow } from '@patternfly/react-table';
-import Skeleton from '@redhat-cloud-services/frontend-components/Skeleton';
 
 import { ocmRoles } from '~/common/subscriptionTypes';
-
-const skeletonRow: IRow['cells'] = [
-  {
-    props: { colSpan: 2 },
-    title: <Skeleton size="md" />,
-  },
-];
 
 // define a row record for easier managing the api data and presenting to the table.
 class OCMRolesRow implements IRow {
@@ -21,17 +13,17 @@ class OCMRolesRow implements IRow {
 
   public isCreating: boolean;
 
+  public isPending: boolean;
+
   public usernameValue: string;
 
   public roleValue: string;
 
+  public cellsData: IRow['cells'];
+
   private data: any;
 
   private email: string;
-
-  private isPending: boolean;
-
-  private cellsData: IRow['cells'];
 
   // eslint-disable-next-line default-param-last
   constructor(data: any = null, rowIdx: string) {
@@ -65,10 +57,6 @@ class OCMRolesRow implements IRow {
 
   // implement the interface property required by PF Table
   get cells() {
-    // return skeleton if it's pending
-    if (this.isPending) {
-      return skeletonRow;
-    }
     return this.cellsData;
   }
 }
