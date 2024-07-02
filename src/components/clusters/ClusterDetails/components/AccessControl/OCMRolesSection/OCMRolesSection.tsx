@@ -15,12 +15,17 @@ import {
   Title,
 } from '@patternfly/react-core';
 import { HelpIcon } from '@patternfly/react-icons/dist/esm/icons/help-icon';
-import { IRowData, TableVariant } from '@patternfly/react-table';
 import {
-  Table as TableDeprecated,
-  TableBody as TableBodyDeprecated,
-  TableHeader as TableHeaderDeprecated,
-} from '@patternfly/react-table/deprecated';
+  ActionsColumn,
+  IRowCell,
+  Table,
+  TableVariant,
+  Tbody,
+  Td,
+  Th,
+  Thead,
+  Tr,
+} from '@patternfly/react-table';
 import Skeleton from '@redhat-cloud-services/frontend-components/Skeleton';
 
 import { useGlobalState } from '~/redux/hooks';
@@ -135,7 +140,7 @@ function OCMRolesSection({
     } else if (getOCMRolesResponse.fulfilled) {
       // update the rows
       setPageLoading(false);
-      const items = get(getOCMRolesResponse, 'data.items', []);
+      const items = getOCMRolesResponse?.data.items ?? [];
       const updatedRows = map(items, (item, rowIdx) => new OCMRolesRow(item, rowIdx));
       setRows(updatedRows);
       setErrorBox(null);
@@ -185,9 +190,29 @@ function OCMRolesSection({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [deleteOCMRoleResponse]);
 
+  const handleGrantRoleButtonClick = () => {
+    const rowIdx = rows.length;
+    const row = new OCMRolesRow(null, rowIdx.toString());
+    setTimeout(() => dispatch(openModal(modals.OCM_ROLES, row)), 0);
+  };
+
+  const handleDialogSubmit: OCMRolesDialogProps['onSubmit'] = (row, username, roleID) => {
+    clearPendingRow();
+    if (row.isCreating && subscription.id) {
+      dispatch(OCMRolesActions.grantOCMRole(subscription.id, username, roleID));
+    } else {
+      // TODO OCM RBAC phase 2: this could be handled by two APIs - delete then add.
+    }
+  };
+
+  const columnNames = {
+    username: 'Username',
+    role: 'Role',
+  };
+
   const usernameHeader = (
     <>
-      Username
+      {columnNames.username}
       <Popover
         position={PopoverPosition.top}
         aria-label="Username"
@@ -208,7 +233,7 @@ function OCMRolesSection({
   // TODO OCM RBAC phase: add the "learn more" link of links.OCM_DOCS_ROLES_AND_ACCESS
   const roleHeader = (
     <>
-      Role
+      {columnNames.role}
       <Popover
         position={PopoverPosition.top}
         aria-label="Role"
@@ -224,36 +249,8 @@ function OCMRolesSection({
     </>
   );
 
-  const columns = [
-    { title: 'Username', transforms: [() => ({ children: usernameHeader })] },
-    { title: 'Role', transforms: [() => ({ children: roleHeader })] },
-  ];
-
-  const handleGrantRoleButtonClick = () => {
-    const rowIdx = rows.length;
-    const row = new OCMRolesRow(null, rowIdx.toString());
-    setTimeout(() => dispatch(openModal(modals.OCM_ROLES, row)), 0);
-  };
-
-  const handleDeleteActionClick = (_: any, rowIdx: number, row: IRowData) => {
-    clearPendingRow();
-    if (subscription.id && row.id) {
-      showPendingRow(rowIdx);
-      dispatch(OCMRolesActions.deleteOCMRole(subscription.id, row.id));
-    }
-  };
-
-  const handleDialogSubmit: OCMRolesDialogProps['onSubmit'] = (row, username, roleID) => {
-    clearPendingRow();
-    if (row.isCreating && subscription.id) {
-      dispatch(OCMRolesActions.grantOCMRole(subscription.id, username, roleID));
-    } else {
-      // TODO OCM RBAC phase 2: this could be handled by two APIs - delete then add.
-    }
-  };
-
-  const actions = [
-    // TODO OCM RBAC phase 2: may rquire an Edit to change between editor or viewer
+  const actions = (role: OCMRolesRow, rowIndex: number) => [
+    // TODO OCM RBAC phase 2: may require an Edit to change between editor or viewer
     /*
     {
       title: 'Edit role',
@@ -265,12 +262,45 @@ function OCMRolesSection({
     */
     {
       title: 'Delete',
-      onClick: handleDeleteActionClick,
-      className: 'hand-pointer',
-      itemKey: 'delete-acton',
-      isSeparator: false,
+      onClick: () => {
+        clearPendingRow();
+        if (subscription.id && role.id) {
+          showPendingRow(rowIndex);
+          dispatch(OCMRolesActions.deleteOCMRole(subscription.id, role.id));
+        }
+      },
     },
   ];
+
+  const isIRowCell = (row: IRowCell | React.ReactNode): row is IRowCell =>
+    (row as IRowCell).title !== undefined;
+
+  const roleRow = (role: OCMRolesRow, index: number) => {
+    const rowActions = actions(role, index);
+    const { cellsData, usernameValue } = role;
+    const username = isIRowCell(cellsData?.[0]) ? cellsData?.[0].title : cellsData?.[0];
+    const roleLabel = isIRowCell(cellsData?.[1]) ? cellsData?.[1].title : cellsData?.[1];
+
+    return role.isCreating || role.isPending ? (
+      <Tr key={usernameValue}>
+        <Td dataLabel={columnNames.username}>
+          <Skeleton size="md" />
+        </Td>
+        <Td dataLabel={columnNames.role}>
+          <Skeleton size="md" />
+        </Td>
+        <Td isActionCell />
+      </Tr>
+    ) : (
+      <Tr key={usernameValue}>
+        <Td dataLabel={columnNames.username}>{username}</Td>
+        <Td dataLabel={columnNames.role}>{roleLabel}</Td>
+        <Td isActionCell>
+          <ActionsColumn items={rowActions} isDisabled={!!disableReason} />
+        </Td>
+      </Tr>
+    );
+  };
 
   return pageLoading ? (
     <Card>
@@ -306,17 +336,16 @@ function OCMRolesSection({
       </CardBody>
       <CardBody>
         {errorBox}
-        <TableDeprecated
-          aria-label="OCM Roles and Access"
-          actions={actions}
-          variant={TableVariant.compact}
-          cells={columns}
-          rows={rows}
-          areActionsDisabled={() => !!disableReason}
-        >
-          <TableHeaderDeprecated />
-          <TableBodyDeprecated />
-        </TableDeprecated>
+        <Table aria-label="OCM Roles and Access" variant={TableVariant.compact}>
+          <Thead>
+            <Tr>
+              <Th>{usernameHeader}</Th>
+              <Th>{roleHeader}</Th>
+              <Th screenReaderText="Role action" />
+            </Tr>
+          </Thead>
+          <Tbody>{rows.map(roleRow)}</Tbody>
+        </Table>
         <OCMRolesDialog
           onSubmit={handleDialogSubmit}
           row={modalData as OCMRolesRow}
