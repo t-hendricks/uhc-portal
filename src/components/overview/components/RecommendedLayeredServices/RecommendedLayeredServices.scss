@@ -1,0 +1,20 @@
+.offering-card {
+  width: 22em;
+  height: 22em;
+}
+
+.offering-card .card-title {
+  max-height: 3em;
+}
+
+.offering-card .card-textlist {
+  color: var(--pf-v5-c-content--small--Color);
+  li::marker {
+    font-size: var(--pf-v5-u-font-size-xs);
+  }
+}
+
+.offering-card .offering-logo {
+  height: 3em;
+  width: 3em;
+}
