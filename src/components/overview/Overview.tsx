@@ -2,6 +2,16 @@ import React, { useCallback } from 'react';
 import { Link } from 'react-router-dom-v5-compat';
 
 import { Flex, FlexItem, Label, PageSection, Title } from '@patternfly/react-core';
+// todo: imports for the subcomponent - RecommendedLayeredServicesCardView
+import {
+  Card,
+  CardHeader,
+  CardTitle,
+  CardBody,
+  CardFooter,
+  Split,
+  SplitItem /*, Label*/,
+} from '@patternfly/react-core';
 
 import ExternalLink from '~/components/common/ExternalLink';
 import InternalTrackingLink from '~/components/common/InternalTrackingLink';
@@ -77,6 +87,76 @@ function OverviewEmptyState() {
     [],
   );
 
+  {
+    /* import pfIcon from './assets/pf-logo-small.svg';
+import activeMQIcon from './assets/activemq-core_200x150.png';
+import avroIcon from './assets/camel-avro_200x150.png';
+import dropBoxIcon from './assets/camel-dropbox_200x150.png';
+import infinispanIcon from './assets/camel-infinispan_200x150.png';
+import saxonIcon from './assets/camel-saxon_200x150.png';
+import sparkIcon from './assets/camel-spark_200x150.png';
+import swaggerIcon from './assets/camel-swagger-java_200x150.png';
+import azureIcon from './assets/FuseConnector_Icons_AzureServices.png';
+import restIcon from './assets/FuseConnector_Icons_REST.png';
+
+const icons = {
+    pfIcon,
+    activeMQIcon,
+    sparkIcon,
+    avroIcon,
+    azureIcon,
+    saxonIcon,
+    dropBoxIcon,
+    infinispanIcon,
+    restIcon,
+    swaggerIcon
+  }; */
+  }
+
+  // todo: This should be in the subcomponent: RecommendedLayeredServicesCardView
+  // Could also be in a constants file
+  const recommendedLayeredServicesCards = [
+    {
+      title: 'Red Hat OpenShift GitOps',
+      // todo: Does this should be a part of the Card? the '...' or is there some more description ?
+      description:
+        'A declarative continuous delivery platform based on Argo CD. It enables teams to adobt GitOps principles for managing cluster configuration and automating secure ...',
+      // todo: check which icon should I put here
+      icon: 'some icon',
+      // todo: check which logo should I put here
+      logo: 'some logo',
+      labelText: 'Free',
+      // todo: change link to the proper learn more link !
+      learnMoreLink: 'https://prod.foo.redhat.com:1337/openshift/',
+    },
+    {
+      title: 'Red Hat OpenShift Pipelines',
+      // todo: Does this should be a part of the Card? the '...' or is there some more description ?
+      description:
+        'A cloud-native continuous integration and delivery (CI/CD) solution for building pipelines using Tekon. Tekon is a flexible Kubernetes-native open-source CI/CD framework ...',
+      // todo: check which icon should I put here
+      icon: 'some icon',
+      // todo: check which logo should I put here
+      logo: 'some logo',
+      labelText: 'Free',
+      // todo: change link to the proper learn more link !
+      learnMoreLink: 'https://prod.foo.redhat.com:1337/openshift/',
+    },
+    {
+      title: 'Red Hat OpenShift Service Mesh',
+      // todo: Does this should be a part of the Card? the '...' or is there some more description ?
+      description:
+        'A platform that provides behavioral insight and operational control over a service mesh, providing a uniform way to connect, secure, and monitor microservices applications.',
+      // todo: check which icon should I put here
+      icon: 'some icon',
+      // todo: check which logo should I put here
+      logo: 'some logo',
+      labelText: 'Free',
+      // todo: change link to the proper learn more link !
+      learnMoreLink: 'https://prod.foo.redhat.com:1337/openshift/',
+    },
+  ];
+
   return (
     <AppPage title={PAGE_TITLE}>
       <ProductBanner
@@ -129,6 +209,53 @@ function OverviewEmptyState() {
         >
           Browse all OpenShift learning resources
         </ExternalLink>
+
+        {/* todo: From here down -> should be in a sub component - RecommendedLayeredServicesCardView */}
+        <Title size="xl" headingLevel="h2" className="pf-v5-u-mt-lg">
+          Recommended layered services
+        </Title>
+        <Flex className="pf-v5-u-mb-lg">
+          {/* todo: This should be an array of cards.map -> every element should be a <Card /> wrapped in a <FlexItem /> */}
+          {recommendedLayeredServicesCards.map(
+            ({ title, description, icon, logo, labelText, learnMoreLink }) => (
+              <FlexItem className="pf-v5-u-pt-md" data-testid={`product-overview-card-${title}`}>
+                {/* prev implementation: <OfferingCard offeringType="RHOSD" /> */}
+                {/* todo: This should be a sub component - Product Overview Card */}
+                <Card className="product-overview-card">
+                  <CardHeader>
+                    <Split hasGutter style={{ width: '100%' }}>
+                      {/* todo: check how this is implemented in the original OfferingCard component */}
+                      {/* todo: Should this be with this logo ? OR should it be an icon -> like down */}
+                      <SplitItem>{logo}</SplitItem>
+                      <SplitItem isFilled />
+                      <SplitItem>
+                        <Label data-testtag="label" color="blue">
+                          {/* todo: check how this is implemented in the original OfferingCard component */}
+                          {
+                            labelText /* should be free for all cards, but I should specify it in the array of card properties to make it more generic */
+                          }
+                        </Label>
+                      </SplitItem>
+                    </Split>
+                    {/* todo: check what is the output on the card -> this should be the appropriate icon for each card */}
+                    <img src={icon} alt={`${title} icon`} style={{ maxWidth: '60px' }} />
+                  </CardHeader>
+
+                  <CardTitle>
+                    {/* todo: check card's title size and positioning */}
+                    <Title headingLevel="h3">{title}</Title>
+                  </CardTitle>
+                  <CardBody>{description}</CardBody>
+                  <CardFooter>
+                    {learnMoreLink ? (
+                      <ExternalLink href={learnMoreLink}>Learn more</ExternalLink>
+                    ) : undefined}
+                  </CardFooter>
+                </Card>
+              </FlexItem>
+            ),
+          )}
+        </Flex>
       </PageSection>
     </AppPage>
   );

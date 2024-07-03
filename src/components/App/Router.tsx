@@ -475,6 +475,7 @@ const Router: React.FC<RouterProps> = ({ history, planType, clusterId, externalC
             <CompatRoute path="/dashboard" exact component={Dashboard} />
             <CompatRoute path="/overview/rosa/hands-on" component={RosaHandsOnPage} />
             <CompatRoute path="/overview/rosa" component={RosaServicePage} />
+            {/* Main component - Overview */}
             <CompatRoute path="/overview" exact component={Overview} />
             <CompatRoute path="/releases" exact component={Releases} />
             <CompatRoute path="/assisted-installer" component={GatedAssistedUiRouter} />
