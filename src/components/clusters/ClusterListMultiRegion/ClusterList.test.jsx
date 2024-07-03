@@ -289,7 +289,7 @@ describe('<ClusterList />', () => {
         errors: [],
       });
 
-      const { user } = render(
+      const { user } = withState({}, true).render(
         <MemoryRouter>
           <CompatRouter>
             <ClusterList {...props} />
@@ -531,7 +531,7 @@ describe('<ClusterList />', () => {
         errors: [],
       });
 
-      const { container } = render(
+      const { container } = withState({}, true).render(
         <MemoryRouter>
           <CompatRouter>
             <ClusterList {...props} />
@@ -554,7 +554,7 @@ describe('<ClusterList />', () => {
         errors: [],
       });
 
-      const { container, user } = render(
+      const { container, user } = withState({}, true).render(
         <MemoryRouter>
           <CompatRouter>
             <ClusterList {...props} />
@@ -597,7 +597,7 @@ describe('<ClusterList />', () => {
         errors: [],
       });
 
-      const { container, user } = render(
+      const { container, user } = withState({}, true).render(
         <MemoryRouter>
           <CompatRouter>
             <ClusterList {...props} />
@@ -640,7 +640,7 @@ describe('<ClusterList />', () => {
         errors: [],
       });
 
-      const { container, user } = render(
+      const { container, user } = withState({}, true).render(
         <MemoryRouter>
           <CompatRouter>
             <ClusterList {...props} />
@@ -663,7 +663,7 @@ describe('<ClusterList />', () => {
         errors: [],
       });
 
-      const { container } = render(
+      const { container } = withState({}, true).render(
         <MemoryRouter>
           <CompatRouter>
             <ClusterList {...props} />
@@ -680,7 +680,7 @@ describe('<ClusterList />', () => {
         errors: [],
       });
 
-      const { container, user } = render(
+      const { container, user } = withState({}, true).render(
         <MemoryRouter>
           <CompatRouter>
             <ClusterList {...props} />
