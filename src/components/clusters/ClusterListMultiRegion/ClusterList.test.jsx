@@ -228,7 +228,7 @@ describe('<ClusterList />', () => {
       );
 
       const expected = [
-        { name: 'aCluster', date: '25 May 2024' },
+        { name: 'aCluster', date: '25 Dec 2024' },
         { name: 'myAWSCluster', date: '20 May 2024' },
         { name: 'zCluster', date: '25 Apr 2024' },
       ];
@@ -267,6 +267,42 @@ describe('<ClusterList />', () => {
       await user.click(screen.getByRole('button', { name: 'Name' }));
 
       const expected = [{ name: 'aCluster' }, { name: 'myAWSCluster' }, { name: 'zCluster' }];
+
+      checkCellValue(expected, 'name', nameColumnIndex);
+
+      // Check that the order has been reversed
+      await user.click(screen.getByRole('button', { name: 'Name' }));
+      expected.reverse();
+      checkCellValue(expected, 'name', nameColumnIndex);
+    });
+
+    it('uses natural sorting for name', async () => {
+      const mockedNames = ['myCluster-10', 'myCluster-5', 'myCluster-1'];
+      const newMockedClusters = mockedClusters.map((cluster, index) => ({
+        ...cluster,
+        subscription: { ...cluster.subscription, display_name: mockedNames[index] },
+      }));
+
+      mockedGetFetchedClusters.mockReturnValue({
+        data: { items: newMockedClusters },
+        isLoading: true,
+        errors: [],
+      });
+
+      const { user } = render(
+        <MemoryRouter>
+          <CompatRouter>
+            <ClusterList {...props} />
+          </CompatRouter>
+        </MemoryRouter>,
+      );
+
+      const nameColumnIndex = Object.keys(columns).findIndex((column) => column === 'name');
+
+      // Sort Ascending
+      await user.click(screen.getByRole('button', { name: 'Name' }));
+
+      const expected = [{ name: 'myCluster-1' }, { name: 'myCluster-5' }, { name: 'myCluster-10' }];
 
       checkCellValue(expected, 'name', nameColumnIndex);
 
