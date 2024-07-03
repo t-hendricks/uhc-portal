@@ -27,6 +27,7 @@ import { ProductBanner, ProductBannerProps } from '../common/ProductBanner';
 
 import { OfferingCard } from './OfferingCard/OfferingCard';
 
+// todo: check the scss for the sizes of the cards!
 import './Overview.scss';
 
 const linkTextLabelLinkCardContents: ListTextLabelLinkCardProps = {
@@ -120,8 +121,9 @@ const icons = {
       title: 'Red Hat OpenShift GitOps',
       // todo: Does this should be a part of the Card? the '...' or is there some more description ?
       description:
-        'A declarative continuous delivery platform based on Argo CD. It enables teams to adobt GitOps principles for managing cluster configuration and automating secure ...',
-      // todo: check which icon should I put here
+        'Integrate git repositories, continuous integration/continuous delivery (CI/CD) tools, and Kubernetes.',
+      // todo: check which icon should I put here - check doc: https://docs.google.com/document/d/1F0aTywHu2kjJlgn6VUbeslWQ-AAuHBmK584ZjkbSAik/edit
+      // All product icons can be found here: https://redhat.brand-portal.adobe.com/mediaportal.html/content/dam/mac/redhat/brand
       icon: 'some icon',
       // todo: check which logo should I put here
       logo: 'some logo',
@@ -133,7 +135,7 @@ const icons = {
       title: 'Red Hat OpenShift Pipelines',
       // todo: Does this should be a part of the Card? the '...' or is there some more description ?
       description:
-        'A cloud-native continuous integration and delivery (CI/CD) solution for building pipelines using Tekon. Tekon is a flexible Kubernetes-native open-source CI/CD framework ...',
+        'Automate your application delivery using a continuous integration and continuous deployment (CI/CD) framework.',
       // todo: check which icon should I put here
       icon: 'some icon',
       // todo: check which logo should I put here
@@ -146,12 +148,23 @@ const icons = {
       title: 'Red Hat OpenShift Service Mesh',
       // todo: Does this should be a part of the Card? the '...' or is there some more description ?
       description:
-        'A platform that provides behavioral insight and operational control over a service mesh, providing a uniform way to connect, secure, and monitor microservices applications.',
+        'Connect, manage, and observe microservices-based applications in a uniform way.',
       // todo: check which icon should I put here
       icon: 'some icon',
       // todo: check which logo should I put here
       logo: 'some logo',
       labelText: 'Free',
+      // todo: change link to the proper learn more link !
+      learnMoreLink: 'https://prod.foo.redhat.com:1337/openshift/',
+    },
+    {
+      title: 'OperatorHub',
+      // todo: Does this should be a part of the Card? the '...' or is there some more description ?
+      description: 'Discover and install Kubernetes operators quickly and easily.',
+      // todo: check which icon should I put here
+      icon: 'some icon',
+      // todo: check which logo should I put here
+      logo: 'some logo',
       // todo: change link to the proper learn more link !
       learnMoreLink: 'https://prod.foo.redhat.com:1337/openshift/',
     },
@@ -212,7 +225,7 @@ const icons = {
 
         {/* todo: From here down -> should be in a sub component - RecommendedLayeredServicesCardView */}
         <Title size="xl" headingLevel="h2" className="pf-v5-u-mt-lg">
-          Recommended layered services
+          Recommended operators
         </Title>
         <Flex className="pf-v5-u-mb-lg">
           {/* todo: This should be an array of cards.map -> every element should be a <Card /> wrapped in a <FlexItem /> */}
@@ -229,12 +242,14 @@ const icons = {
                       <SplitItem>{logo}</SplitItem>
                       <SplitItem isFilled />
                       <SplitItem>
-                        <Label data-testtag="label" color="blue">
-                          {/* todo: check how this is implemented in the original OfferingCard component */}
-                          {
-                            labelText /* should be free for all cards, but I should specify it in the array of card properties to make it more generic */
-                          }
-                        </Label>
+                        {labelText ? (
+                          <Label data-testtag="label" color="blue">
+                            {/* todo: check how this is implemented in the original OfferingCard component */}
+                            {
+                              labelText /* should be free for all cards, but I should specify it in the array of card properties to make it more generic */
+                            }
+                          </Label>
+                        ) : undefined}
                       </SplitItem>
                     </Split>
                     {/* todo: check what is the output on the card -> this should be the appropriate icon for each card */}
@@ -247,6 +262,9 @@ const icons = {
                   </CardTitle>
                   <CardBody>{description}</CardBody>
                   <CardFooter>
+                    {/* todo: Icon should be changed to a different one !! 
+                    check doc: https://docs.google.com/document/d/1F0aTywHu2kjJlgn6VUbeslWQ-AAuHBmK584ZjkbSAik/edit   
+                    Check Prototype: https://www.figma.com/proto/5AOQ544g8dSoV4eOwxnsIg/Increasing-Operator-Visibility-v1-02?page-id=0%3A1&node-id=0-3089&viewport=2384%2C-1017%2C1&t=bkRn1QfIbSrDiVh4-1&scaling=min-zoom&content-scaling=fixed&starting-point-node-id=0%3A3089 */}
                     {learnMoreLink ? (
                       <ExternalLink href={learnMoreLink}>Learn more</ExternalLink>
                     ) : undefined}
