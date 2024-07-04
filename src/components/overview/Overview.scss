@@ -125,6 +125,11 @@ $ocm-c-marketing-banner--breakpoint-map: build-breakpoint-map();
 .product-overview-card {
   width: 22em;
   height: 22em;
+
+  &__icon {
+    height: 3em;
+    width: 3em;
+  }
 }
 
 .product-overview-card .card-title {
@@ -136,9 +141,4 @@ $ocm-c-marketing-banner--breakpoint-map: build-breakpoint-map();
   li::marker {
     font-size: var(--pf-v5-u-font-size-xs);
   }
-}
-
-.product-overview-card .offering-logo {
-  height: 3em;
-  width: 3em;
 }
