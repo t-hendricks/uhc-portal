@@ -12,6 +12,7 @@ import {
   Split,
   SplitItem /*, Label*/,
 } from '@patternfly/react-core';
+import OpenDrawerRightIcon from '@patternfly/react-icons/dist/esm/icons/open-drawer-right-icon';
 
 import ExternalLink from '~/components/common/ExternalLink';
 import InternalTrackingLink from '~/components/common/InternalTrackingLink';
@@ -256,6 +257,9 @@ const icons = {
                   <CardBody>{description}</CardBody>
                   <CardFooter>
                     {/* todo: change to drawer icon */}
+                    <Icon size="md" className="external-link-alt-icon">
+                      <OpenDrawerRightIcon color="#0066cc" data-testid="openInNewWindowIcon" />
+                    </Icon>
                     {learnMoreLink ? (
                       <ExternalLink href={learnMoreLink}>Learn more</ExternalLink>
                     ) : undefined}
