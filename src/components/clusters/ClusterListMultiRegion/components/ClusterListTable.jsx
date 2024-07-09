@@ -17,7 +17,7 @@ import {
 } from '@patternfly/react-core';
 import ExclamationTriangleIcon from '@patternfly/react-icons/dist/esm/icons/exclamation-triangle-icon';
 import SearchIcon from '@patternfly/react-icons/dist/esm/icons/search-icon';
-import { Table, Tbody, Td, Th, Thead, Tr } from '@patternfly/react-table';
+import { SortByDirection, Table, Tbody, Td, Th, Thead, Tr } from '@patternfly/react-table';
 import { global_warning_color_100 as warningColor } from '@patternfly/react-tokens/dist/esm/global_warning_color_100';
 
 import getClusterName from '../../../../common/getClusterName';
@@ -49,8 +49,47 @@ const skeletonRows = () =>
     </Tr>
   ));
 
+export const sortColumns = {
+  Name: 'display_name',
+  Created: 'created_at',
+  Status: 'status',
+  Type: 'type',
+  Provider: 'provider',
+  Version: 'version',
+};
+
+const hiddenOnMdOrSmaller = ['visibleOnLg', 'hiddenOnMd', 'hiddenOnSm'];
+
+// exported only for testing purposes
+// The order here is the same as the column order
+export const columns = {
+  name: { title: 'Name', width: 30, sortIndex: sortColumns.Name },
+  status: { title: 'Status', width: 15, sortIndex: sortColumns.Status },
+  type: { title: 'Type', width: 10, sortIndex: sortColumns.Type },
+  created: { title: 'Created', visibility: hiddenOnMdOrSmaller, sortIndex: sortColumns.Created },
+  version: { title: 'Version', visibility: hiddenOnMdOrSmaller, sortIndex: sortColumns.Version },
+  provider: {
+    title: 'Provider (Region)',
+    visibility: hiddenOnMdOrSmaller,
+    sortIndex: sortColumns.Provider,
+  },
+  actions: { title: '', screenReaderText: 'cluster actions' },
+};
 function ClusterListTable(props) {
-  const { clusters, openModal, isPending } = props;
+  const { clusters, openModal, isPending, activeSortIndex, activeSortDirection, setSort } = props;
+
+  const getSortParams = (columnIndex) => ({
+    sortBy: {
+      index: activeSortIndex,
+      direction: activeSortDirection,
+      defaultDirection: SortByDirection.asc,
+    },
+    onSort: (_event, index, direction) => {
+      setSort(index, direction);
+    },
+    columnIndex,
+  });
+
   if (!isPending && (!clusters || clusters.length === 0)) {
     return (
       <EmptyState>
@@ -68,28 +107,11 @@ function ClusterListTable(props) {
     );
   }
 
-  const sortColumns = {
-    Name: 'display_name',
-    Created: 'created_at',
-  };
-
-  const hiddenOnMdOrSmaller = ['visibleOnLg', 'hiddenOnMd', 'hiddenOnSm'];
-
-  const columns = {
-    name: { title: 'Name', width: 30, sortIndex: sortColumns.Name },
-    status: { title: 'Status', width: 15 },
-    type: { title: 'Type', width: 10 },
-    created: { title: 'Created', visibility: hiddenOnMdOrSmaller, sortIndex: sortColumns.Created },
-    version: { title: 'Version', visibility: hiddenOnMdOrSmaller },
-    provider: { title: 'Provider (Region)', visibility: hiddenOnMdOrSmaller },
-    actions: { title: '', screenReaderText: 'cluster actions' },
-  };
-
   const columnCells = Object.keys(columns).map((column, index) => (
     <Th
       width={columns[column].width}
       visibility={columns[column].visibility}
-      //  sort={columns[column].sortIndex ? getSortParams(index, columns[column].sortIndex) : undefined}
+      sort={columns[column].sortIndex ? getSortParams(columns[column].sortIndex) : undefined}
       // eslint-disable-next-line react/no-array-index-key
       key={index}
     >
@@ -247,7 +269,9 @@ function ClusterListTable(props) {
       <Thead>
         <Tr>{columnCells}</Tr>
       </Thead>
-      <Tbody>{isPending ? skeletonRows() : clusters.map((cluster) => clusterRow(cluster))}</Tbody>
+      <Tbody data-testid="clusterListTableBody">
+        {isPending ? skeletonRows() : clusters.map((cluster) => clusterRow(cluster))}
+      </Tbody>
     </Table>
   );
 }
@@ -255,7 +279,9 @@ function ClusterListTable(props) {
 ClusterListTable.propTypes = {
   openModal: PropTypes.func.isRequired,
   clusters: PropTypes.array.isRequired,
-
+  activeSortIndex: PropTypes.string,
+  activeSortDirection: PropTypes.string,
+  setSort: PropTypes.func,
   isPending: PropTypes.bool,
 };
 

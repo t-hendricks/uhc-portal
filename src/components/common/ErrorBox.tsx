@@ -2,9 +2,8 @@ import React from 'react';
 
 import { Alert, AlertActionCloseButton, ExpandableSection } from '@patternfly/react-core';
 
+import ErrorDetailsDisplay from '~/components/common/ErrorDetailsDisplay';
 import { ErrorState } from '~/types/types';
-
-import { formatErrorDetails } from '../../common/errors';
 
 type Props = {
   message: string;
@@ -25,15 +24,6 @@ const ErrorBox = ({
   showCloseBtn = false,
   onCloseAlert,
 }: Props) => {
-  const errorDetails = formatErrorDetails(response.errorDetails);
-  const detailsDisplay = (
-    <>
-      {response.errorMessage && <span>{response.errorMessage}</span>}
-      {errorDetails}
-      <br />
-      <span>{`Operation ID: ${response.operationID || 'N/A'}`}</span>
-    </>
-  );
   const closeAlertProp = {
     actionClose: <AlertActionCloseButton onClose={onCloseAlert} />,
   };
@@ -55,10 +45,10 @@ const ErrorBox = ({
       )}
       {isExpandable || children ? (
         <ExpandableSection toggleText={children ? 'More details' : 'Error details'}>
-          {detailsDisplay}
+          <ErrorDetailsDisplay response={response} />
         </ExpandableSection>
       ) : (
-        detailsDisplay
+        <ErrorDetailsDisplay response={response} />
       )}
     </Alert>
   );

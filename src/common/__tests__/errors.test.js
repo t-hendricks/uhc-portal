@@ -1,5 +1,3 @@
-import { render, screen } from '~/testUtils';
-
 import AddOnsConstants from '../../components/clusters/ClusterDetails/components/AddOns/AddOnsConstants';
 import { PENDING_ACTION } from '../../redux/reduxHelpers';
 import { formatErrorDetails, getErrorMessage, overrideErrorMessage } from '../errors';
@@ -89,6 +87,32 @@ describe('overrideErrorMessage()', () => {
 });
 
 describe('formatErrorDetails()', () => {
+  it('fails gracefully when getting arbitrary error details', () => {
+    const errDetails = [
+      {
+        kind: 'Wat',
+        items: [
+          'lol',
+          {
+            foo: 'bar',
+            wat: ['wow'],
+          },
+        ],
+      },
+    ];
+    const expected = `{
+  "foo": "bar",
+  "wat": [
+    "wow"
+  ]
+}`;
+
+    const errorDetails = formatErrorDetails(errDetails);
+    expect(errorDetails).toHaveLength(1);
+    expect(errorDetails[0]).toHaveLength(2);
+    expect(errorDetails[0][1]).toBe(expected);
+  });
+
   it('handles ExcessResources kind addon', () => {
     const errDetails = [
       {
@@ -107,12 +131,9 @@ describe('formatErrorDetails()', () => {
 
     const errorDetails = formatErrorDetails(errDetails);
     expect(errorDetails).toHaveLength(1);
-    render(errorDetails[0]);
-    expect(screen.getByRole('listitem')).toHaveTextContent('addon: addon-prow-operator');
+    expect(errorDetails[0][0]).toBe('addon: addon-prow-operator');
   });
-});
 
-describe('formatErrorDetails()', () => {
   it('handles AddOnParameterOptionList kind', () => {
     const errDetails = [
       {
@@ -132,11 +153,18 @@ describe('formatErrorDetails()', () => {
 
     const errorDetails = formatErrorDetails(errDetails);
     expect(errorDetails).toHaveLength(1);
-    const { container } = render(errorDetails[0]);
 
-    const expected =
-      '[ { "name": "Option 1", "value": "option 1" }, { "name": "Option 2", "value": "option 2" } ]';
-    expect(container.querySelector('pre')).toHaveTextContent(expected);
+    const expected = `[
+  {
+    "name": "Option 1",
+    "value": "option 1"
+  },
+  {
+    "name": "Option 2",
+    "value": "option 2"
+  }
+]`;
+    expect(errorDetails[0]).toBe(expected);
   });
 
   it('handles AddOnRequirementData kind', () => {
@@ -152,9 +180,14 @@ describe('formatErrorDetails()', () => {
 
     const errorDetails = formatErrorDetails(errDetails);
     expect(errorDetails).toHaveLength(1);
-    const { container } = render(errorDetails[0]);
 
-    const expected = '{ "cloud_provider.id": "gcp", "region.id": [ "us-east-1", "eu-west-1" ] }';
-    expect(container.querySelector('pre')).toHaveTextContent(expected);
+    const expected = `{
+  "cloud_provider.id": "gcp",
+  "region.id": [
+    "us-east-1",
+    "eu-west-1"
+  ]
+}`;
+    expect(errorDetails[0]).toBe(expected);
   });
 });

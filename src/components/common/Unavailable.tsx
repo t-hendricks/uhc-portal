@@ -11,9 +11,8 @@ import {
 import { Unavailable as FcUnavailable } from '@redhat-cloud-services/frontend-components/Unavailable';
 import * as Sentry from '@sentry/browser';
 
+import ErrorDetailsDisplay from '~/components/common/ErrorDetailsDisplay';
 import { ErrorState } from '~/types/types';
-
-import { formatErrorDetails } from '../../common/errors';
 
 import './Unavailable.scss';
 
@@ -59,10 +58,7 @@ const Unavailable = ({ errors, message = '', response }: Props) => {
             <Title headingLevel="h6">{m}</Title>
           </StackItem>
         )}
-        <StackItem>{`Error code: ${r.errorCode}`}</StackItem>
-        <StackItem>{r.errorMessage}</StackItem>
-        <StackItem>{formatErrorDetails(r.errorDetails)}</StackItem>
-        <StackItem>{`Operation ID: ${r.operationID || 'N/A'}`}</StackItem>
+        <ErrorDetailsDisplay response={r} itemWrapper={StackItem} showErrorCode renderLinks />
       </Stack>
     </StackItem>
   );

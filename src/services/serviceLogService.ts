@@ -1,4 +1,4 @@
-import apiRequest from '~/services/apiRequest';
+import defaultApiRequest, { APIRequest, getAPIRequestForRegion } from '~/services/apiRequest';
 import { Cluster } from '~/types/clusters_mgmt.v1';
 
 import type { ClusterLogList } from '../types/service_logs.v1';
@@ -17,6 +17,7 @@ const getClusterHistory = (
   clusterUUID: Cluster['external_id'],
   clusterID: Cluster['id'],
   params: GetClusterHistoryParams,
+  apiRequest: APIRequest = defaultApiRequest,
 ) =>
   apiRequest.get<ClusterLogList>(`/api/service_logs/v1/clusters/cluster_logs`, {
     params: {
@@ -31,8 +32,16 @@ const getClusterHistory = (
     },
   });
 
+const getClusterHistoryForRegion = (
+  clusterUUID: Cluster['external_id'],
+  clusterID: Cluster['id'],
+  params: GetClusterHistoryParams,
+  region?: string,
+) => getClusterHistory(clusterUUID, clusterID, params, getAPIRequestForRegion(region));
+
 const serviceLogService = {
   getClusterHistory,
+  getClusterHistoryForRegion,
 };
 
 export default serviceLogService;

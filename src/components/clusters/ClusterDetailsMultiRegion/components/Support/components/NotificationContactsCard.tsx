@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useEffect, useMemo } from 'react';
 import { useDispatch } from 'react-redux';
 
 import { EmptyState } from '@patternfly/react-core';
@@ -11,56 +11,60 @@ import {
 import { addNotification } from '@redhat-cloud-services/frontend-components-notifications/redux';
 
 import ErrorBox from '~/components/common/ErrorBox';
+import { usePreviousProps } from '~/hooks/usePreviousProps';
+import { useDeleteNotificationContact } from '~/queries/ClusterDetailsQueries/ClusterSupportTab/useDeleteNotificationContact';
+import { useFetchNotificationContacts } from '~/queries/ClusterDetailsQueries/ClusterSupportTab/useFetchNotificationContacts';
 import {
+  buildNotificationsMeta,
   clearDeleteNotificationContacts,
-  clearNotificationContacts,
-  deleteNotificationContact,
-  getNotificationContacts,
 } from '~/redux/actions/supportActions';
-import { useGlobalState } from '~/redux/hooks';
 import { Contact } from '~/redux/reducers/supportReducer';
+import { ErrorState } from '~/types/types';
 
 type NotificationContactsCardProps = {
   subscriptionID: string;
   isDisabled: boolean;
+  isAddNotificationContactSuccess: boolean;
+  isAddNotificationContactPending: boolean;
+  addNotificationStatus: string;
 };
 
 const NotificationContactsCard = ({
   subscriptionID,
   isDisabled,
+  isAddNotificationContactPending,
+  isAddNotificationContactSuccess,
+  addNotificationStatus,
 }: NotificationContactsCardProps) => {
   const dispatch = useDispatch();
+  const { notificationContacts, refetch } = useFetchNotificationContacts(subscriptionID);
+  const {
+    mutate,
+    isSuccess: isDeleteNotificationSuccess,
+    isPending: isDeleteNotificationPending,
+    isError: isDeleteNotificationError,
+    error: deleteNotificationError,
+  } = useDeleteNotificationContact(subscriptionID);
 
-  const { notificationContacts, addContactResponse, deleteContactResponse } = useGlobalState(
-    (state) => state.clusterSupport,
-  );
-
-  const [previousAddContactResponsePending, setPreviousAddContactResponsePending] =
-    useState<boolean>();
-  const [previousDeleteContactResponsePending, setPreviousDeleteContactResponsePending] =
-    useState<boolean>();
-
-  useEffect(
-    () => () => {
-      dispatch(clearNotificationContacts());
-    },
-    [dispatch],
-  );
+  const previousAddContactResponsePending = usePreviousProps(addNotificationStatus);
+  const previousDeleteContactResponsePending = usePreviousProps(isDeleteNotificationPending);
 
   useEffect(() => {
     if (notificationContacts.subscriptionID !== subscriptionID || !notificationContacts.pending) {
-      dispatch(getNotificationContacts(subscriptionID));
+      refetch();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [notificationContacts.subscriptionID, subscriptionID, dispatch]);
+  }, [notificationContacts.subscriptionID, subscriptionID, refetch]);
 
   useEffect(() => {
-    if (addContactResponse.fulfilled && previousAddContactResponsePending) {
+    if (addNotificationStatus === 'success' && previousAddContactResponsePending === 'pending') {
       // Display notification after successful addition of notification contact
-      const title =
-        addContactResponse.count === 1
-          ? 'Notification contact added successfully'
-          : `${addContactResponse.count} notification contacts added successfully`;
+      const title = 'Notification contact added successfully';
+      // TODO investigate why there even can be several notification contacts
+      // const title =
+      // addNotificationResponse === 1
+      //     ? 'Notification contact added successfully'
+      //     : `${addContactResponse.count} notification contacts added successfully`;
 
       dispatch(
         addNotification({
@@ -73,21 +77,18 @@ const NotificationContactsCard = ({
 
     // fetch contacts again if we just added/deleted one.
     if (
-      ((deleteContactResponse.fulfilled && previousDeleteContactResponsePending) ||
-        (addContactResponse.fulfilled && previousAddContactResponsePending)) &&
+      ((isDeleteNotificationSuccess && previousDeleteContactResponsePending) ||
+        (isAddNotificationContactSuccess && previousAddContactResponsePending)) &&
       !notificationContacts.pending
     ) {
-      dispatch(clearDeleteNotificationContacts());
-      dispatch(getNotificationContacts(subscriptionID));
+      refetch();
     }
-    setPreviousAddContactResponsePending(addContactResponse.pending);
-    setPreviousDeleteContactResponsePending(deleteContactResponse.pending);
   }, [
-    addContactResponse.count,
-    addContactResponse.fulfilled,
-    addContactResponse.pending,
-    deleteContactResponse.fulfilled,
-    deleteContactResponse.pending,
+    refetch,
+    addNotificationStatus,
+    isAddNotificationContactPending,
+    isDeleteNotificationSuccess,
+    isAddNotificationContactSuccess,
     dispatch,
     notificationContacts.pending,
     previousAddContactResponsePending,
@@ -106,12 +107,21 @@ const NotificationContactsCard = ({
           extraData: IExtraData,
         ) => {
           dispatch(clearDeleteNotificationContacts());
-          dispatch(deleteNotificationContact(subscriptionID, rowData.userID));
+          mutate(rowData.userID);
+          const title = 'Notification contact deleted successfully';
+          dispatch(
+            addNotification({
+              variant: 'success',
+              title,
+              dismissable: false,
+            }),
+          );
+          buildNotificationsMeta('Notification contact deleted successfully', rowData.userID);
         },
         className: 'hand-pointer',
       },
     ],
-    [dispatch, subscriptionID],
+    [dispatch, mutate],
   );
 
   const rows = useMemo(
@@ -127,11 +137,11 @@ const NotificationContactsCard = ({
 
   return notificationContacts.contacts && notificationContacts.contacts.length ? (
     <>
-      {deleteContactResponse.error && (
+      {isDeleteNotificationError && (
         <EmptyState>
           <ErrorBox
             message="Error deleting Notification Contact"
-            response={deleteContactResponse}
+            response={deleteNotificationError.error as ErrorState}
           />
         </EmptyState>
       )}

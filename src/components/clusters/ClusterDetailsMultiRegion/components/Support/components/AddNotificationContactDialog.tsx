@@ -5,40 +5,50 @@ import { Form, FormGroup, TextInput } from '@patternfly/react-core';
 
 import { FormGroupHelperText } from '~/components/common/FormGroupHelperText';
 import shouldShowModal from '~/components/common/Modal/ModalSelectors';
-import {
-  addNotificationContact,
-  clearAddNotificationContacts,
-} from '~/redux/actions/supportActions';
+import { invalidateNotificationContacts } from '~/queries/ClusterDetailsQueries/ClusterSupportTab/useFetchNotificationContacts';
 import { useGlobalState } from '~/redux/hooks';
+import { AugmentedCluster } from '~/types/types';
 
 import { validateRHITUsername } from '../../../../../../common/validators';
 import Modal from '../../../../../common/Modal/Modal';
 import { closeModal } from '../../../../../common/Modal/ModalActions';
 
-const AddNotificationContactDialog = () => {
+type AddNotificationContactDialogProps = {
+  cluster: AugmentedCluster;
+  addNotificationMutation: (userName: string) => void;
+  isAddNotificationContactSuccess: boolean;
+  isAddNotificationContactPending: boolean;
+  addNotificationContactError?: string;
+};
+
+const AddNotificationContactDialog = ({
+  cluster,
+  isAddNotificationContactPending,
+  isAddNotificationContactSuccess,
+  addNotificationMutation,
+  addNotificationContactError,
+}: AddNotificationContactDialogProps) => {
   const initialState = {
     userName: '',
     userNameTouched: false,
   };
 
   const isModalOpen = useGlobalState((state) => shouldShowModal(state, 'add-notification-contact'));
-  const { cluster } = useGlobalState((state) => state.clusters.details);
-  const { addContactResponse } = useGlobalState((state) => state.clusterSupport);
   const [userName, setUserName] = useState<string>(initialState.userName);
   const [userNameTouched, setUserNameTouched] = useState<boolean>(initialState.userNameTouched);
   const dispatch = useDispatch();
   const setInitialState = useCallback(() => {
-    dispatch(clearAddNotificationContacts());
     dispatch(closeModal());
     setUserName(initialState.userName);
     setUserNameTouched(initialState.userNameTouched);
   }, [dispatch, initialState.userName, initialState.userNameTouched]);
 
   useEffect(() => {
-    if (addContactResponse.fulfilled) {
+    if (isAddNotificationContactSuccess) {
+      invalidateNotificationContacts();
       setInitialState();
     }
-  }, [addContactResponse.fulfilled, setInitialState]);
+  }, [isAddNotificationContactSuccess, setInitialState]);
 
   const setUserNameValue = (userName: string) => {
     setUserName(userName);
@@ -47,12 +57,12 @@ const AddNotificationContactDialog = () => {
 
   const validationMessage = userNameTouched
     ? validateRHITUsername(userName)
-    : addContactResponse.errorMessage;
+    : addNotificationContactError;
 
-  const handleSubmit = () => {
-    if (!validationMessage && cluster.subscription?.id) {
+  const handleSubmit = async () => {
+    if (!validationMessage && cluster?.subscription?.id) {
       setUserNameTouched(false);
-      dispatch(addNotificationContact(cluster.subscription.id, userName));
+      addNotificationMutation(userName);
     }
   };
 
@@ -64,8 +74,8 @@ const AddNotificationContactDialog = () => {
       secondaryText="Cancel"
       onPrimaryClick={handleSubmit}
       onSecondaryClick={setInitialState}
-      isPrimaryDisabled={!!validationMessage || addContactResponse.pending || userName === ''}
-      isPending={addContactResponse.pending}
+      isPrimaryDisabled={!!validationMessage || isAddNotificationContactPending || userName === ''}
+      isPending={isAddNotificationContactPending}
     >
       <p className="pf-v5-u-mb-xl">
         Identify the user to be added as notification contact. These users will be contacted in the

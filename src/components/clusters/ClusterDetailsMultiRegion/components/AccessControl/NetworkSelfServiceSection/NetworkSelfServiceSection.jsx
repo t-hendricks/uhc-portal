@@ -19,12 +19,16 @@ import { ExternalLinkAltIcon } from '@patternfly/react-icons/dist/esm/icons/exte
 import { HelpIcon } from '@patternfly/react-icons/dist/esm/icons/help-icon';
 import { InProgressIcon } from '@patternfly/react-icons/dist/esm/icons/in-progress-icon';
 import { UnknownIcon } from '@patternfly/react-icons/dist/esm/icons/unknown-icon';
-import { TableVariant } from '@patternfly/react-table';
 import {
-  Table as TableDeprecated,
-  TableBody as TableBodyDeprecated,
-  TableHeader as TableHeaderDeprecated,
-} from '@patternfly/react-table/deprecated';
+  ActionsColumn,
+  Table,
+  TableVariant,
+  Tbody,
+  Td,
+  Th,
+  Thead,
+  Tr,
+} from '@patternfly/react-table';
 import Skeleton from '@redhat-cloud-services/frontend-components/Skeleton';
 
 import ButtonWithTooltip from '../../../../../common/ButtonWithTooltip';
@@ -149,73 +153,6 @@ class NetworkSelfServiceSection extends React.Component {
       );
     };
 
-    const columns = [
-      {
-        title: (
-          <>
-            ARN
-            <Popover
-              position={PopoverPosition.top}
-              aria-label="ARNs"
-              bodyContent={<p>Amazon Resource Names (ARNs) uniquely identify AWS resources.</p>}
-            >
-              <Button variant="plain" isInline>
-                <Icon size="md">
-                  <HelpIcon />
-                </Icon>
-              </Button>
-            </Popover>
-          </>
-        ),
-      },
-      {
-        title: 'Role',
-      },
-      {
-        title: 'Status',
-      },
-      {
-        title: 'AWS OSD console URL',
-      },
-    ];
-
-    const actions = [
-      {
-        title: 'Delete',
-        onClick: (_, rowId, rowData) => {
-          this.setState({ deletedRowIndex: rowId });
-          deleteGrant(rowData.grantId);
-        },
-        className: 'hand-pointer',
-      },
-    ];
-
-    const grantRow = (grant, index) => ({
-      cells: [
-        grant.user_arn,
-        grant.roleName,
-        {
-          title: grantStatus(
-            deletedRowIndex === index ? 'deleting' : grant.state,
-            grant.state_description,
-          ),
-        },
-        {
-          title: (
-            <ClipboardCopyLinkButton
-              className="access-control-tables-copy"
-              text={grant.console_url}
-              isDisabled={!grant.console_url}
-            >
-              Copy URL to clipboard
-            </ClipboardCopyLinkButton>
-          ),
-        },
-      ],
-      grantId: grant.id,
-      state: grant.state,
-    });
-
     if (grants.error) {
       return (
         <EmptyState>
@@ -235,8 +172,6 @@ class NetworkSelfServiceSection extends React.Component {
     );
 
     const hasGrants = !!grants.data.length;
-
-    const rows = hasGrants && grants.data.map(grantRow);
 
     const readOnlyReason = isReadOnly && 'This operation is not available during maintenance';
     const hibernatingReason =
@@ -258,6 +193,54 @@ class NetworkSelfServiceSection extends React.Component {
         Grant role
       </ButtonWithTooltip>
     );
+
+    const columnNames = {
+      arn: 'ARN',
+      role: 'Role',
+      status: 'Status',
+      consoleUrl: 'AWS OSD console URL',
+    };
+
+    const actions = (grant, index) => [
+      {
+        title: 'Delete',
+        onClick: () => {
+          this.setState({ deletedRowIndex: index });
+          deleteGrant(grant.id);
+        },
+      },
+    ];
+
+    const grantRow = (grant, index) => {
+      const rowActions = actions(grant, index);
+      return (
+        <Tr key={grant.id}>
+          <Td dataLabel={columnNames.arn}>{grant.user_arn}</Td>
+          <Td dataLabel={columnNames.role}>{grant.roleName}</Td>
+          <Td dataLabel={columnNames.status}>
+            {grantStatus(
+              deletedRowIndex === index ? 'deleting' : grant.state,
+              grant.state_description,
+            )}
+          </Td>
+          <Td dataLabel={columnNames.consoleUrl}>
+            <ClipboardCopyLinkButton
+              className="access-control-tables-copy"
+              text={grant.console_url}
+              isDisabled={!grant.console_url}
+            >
+              Copy URL to clipboard
+            </ClipboardCopyLinkButton>
+          </Td>
+          <Td isActionCell>
+            <ActionsColumn
+              items={rowActions}
+              isDisabled={grant.state === 'deleting' || !!disableReason}
+            />
+          </Td>
+        </Tr>
+      );
+    };
 
     return grants.pending && !hasGrants ? (
       <Card>
@@ -286,17 +269,35 @@ class NetworkSelfServiceSection extends React.Component {
             <ExternalLinkAltIcon color="#0066cc" size="sm" />
           </p>
           {hasGrants && (
-            <TableDeprecated
-              aria-label="Grants"
-              actions={actions}
-              variant={TableVariant.compact}
-              cells={columns}
-              rows={rows}
-              areActionsDisabled={(rowData) => rowData.state === 'deleting' || !!disableReason}
-            >
-              <TableHeaderDeprecated />
-              <TableBodyDeprecated />
-            </TableDeprecated>
+            <Table aria-label="Grants" variant={TableVariant.compact}>
+              <Thead>
+                <Tr>
+                  <Th>
+                    <>
+                      {columnNames.arn}
+                      <Popover
+                        position={PopoverPosition.top}
+                        aria-label="ARNs"
+                        bodyContent={
+                          <p>Amazon Resource Names (ARNs) uniquely identify AWS resources.</p>
+                        }
+                      >
+                        <Button variant="plain" isInline>
+                          <Icon size="md">
+                            <HelpIcon />
+                          </Icon>
+                        </Button>
+                      </Popover>
+                    </>
+                  </Th>
+                  <Th>{columnNames.role}</Th>
+                  <Th>{columnNames.status}</Th>
+                  <Th>{columnNames.consoleUrl}</Th>
+                  <Th screenReaderText="Grant action" />
+                </Tr>
+              </Thead>
+              <Tbody>{grants.data.map(grantRow)}</Tbody>
+            </Table>
           )}
           {addGrantBtn}
         </CardBody>
