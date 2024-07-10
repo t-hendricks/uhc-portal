@@ -29,3 +29,4 @@ export const AppPage: React.FC<PropsWithChildren<{ title?: string }>> = ({ child
     </AppDrawer>
   );
 };
+0;

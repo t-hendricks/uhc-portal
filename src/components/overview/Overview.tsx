@@ -1,7 +1,16 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useState, ReactNode, useRef, LegacyRef } from 'react';
 import { Link } from 'react-router-dom-v5-compat';
 
-import { Flex, FlexItem, Label, PageSection, Title } from '@patternfly/react-core';
+import {
+  Button,
+  DrawerProps,
+  Flex,
+  FlexItem,
+  Icon,
+  Label,
+  PageSection,
+  Title,
+} from '@patternfly/react-core';
 // todo: imports for the subcomponent - RecommendedLayeredServicesCardView
 import {
   Card,
@@ -11,6 +20,14 @@ import {
   CardFooter,
   Split,
   SplitItem /*, Label*/,
+  // Drawer:
+  Drawer,
+  DrawerPanelContent,
+  DrawerContent,
+  DrawerContentBody,
+  DrawerHead,
+  DrawerActions,
+  DrawerCloseButton,
 } from '@patternfly/react-core';
 import OpenDrawerRightIcon from '@patternfly/react-icons/dist/esm/icons/open-drawer-right-icon';
 
@@ -86,6 +103,17 @@ const openshiftBannerContents: ProductBannerProps = {
 
 const PAGE_TITLE = 'Overview | Red Hat OpenShift Cluster Manager';
 
+// Drawer:
+
+export type OverviewPageDrawerSettings = {
+  drawerProps?: DrawerProps;
+  drawerPanelContent?: React.ReactNode;
+  /** Element to focus after drawer close animation completes (usually button or link that opened drawer) */
+  focusOnClose?: HTMLElement;
+  /** Callback to execute after drawer close animation completes */
+  // onClose?: () => void;
+};
+
 function OverviewEmptyState() {
   const createClusterURL = '/create';
   const CreateClusterLink = useCallback(
@@ -138,8 +166,9 @@ const icons = {
         'Integrate git repositories, continuous integration/continuous delivery (CI/CD) tools, and Kubernetes.',
       icon: RedHatOpenShiftGitOpsIcon,
       labelText: 'Free',
-      // todo: change link to the proper learn more link !
-      learnMoreLink: 'https://prod.foo.redhat.com:1337/openshift/',
+      // todo: Insert this drawer content, I think I should put it as JSX
+      // https://docs.google.com/document/d/12P26OSlRgxZC1sK2BFS30-RTdugp3nfFW39lRu92byc/edit
+      drawerPanelContent: <Button className="drawerPanelContent-GitOps">GitOps</Button>,
     },
     {
       title: 'Red Hat OpenShift Pipelines',
@@ -147,8 +176,9 @@ const icons = {
         'Automate your application delivery using a continuous integration and continuous deployment (CI/CD) framework.',
       icon: RedHatOpenShiftPipelinesIcon,
       labelText: 'Free',
-      // todo: change link to the proper learn more link !
-      learnMoreLink: 'https://prod.foo.redhat.com:1337/openshift/',
+      // todo: Insert this drawer content, I think I should put it as JSX
+      // https://docs.google.com/document/d/1g0UyIt3Yjn36UC4qoRoE351u76o9p1zDRbma7rChUOk/edit
+      drawerPanelContent: <Button className="drawerPanelContent-Pipelines">Pipelines</Button>,
     },
     {
       title: 'Red Hat OpenShift Service Mesh',
@@ -156,20 +186,62 @@ const icons = {
         'Connect, manage, and observe microservices-based applications in a uniform way.',
       icon: RedHatOpenShiftServiceMeshIcon,
       labelText: 'Free',
-      // todo: change link to the proper learn more link !
-      learnMoreLink: 'https://prod.foo.redhat.com:1337/openshift/',
+      // todo: Insert this drawer content, I think I should put it as JSX
+      // https://docs.google.com/document/d/1RZRvRPwjcwb3VxhC5lYVOp4rJeMBEOC64i_f9vUbMTA/edit
+      drawerPanelContent: <Button className="drawerPanelContent-Service Mesh">Service Mesh</Button>,
     },
     {
       title: 'OperatorHub',
       description: 'Discover and install Kubernetes operators quickly and easily.',
       icon: RedHatOperatorHubIcon,
-      // todo: change link to the proper learn more link !
-      learnMoreLink: 'https://prod.foo.redhat.com:1337/openshift/',
+      // todo: Insert this drawer content, I think I should put it as JSX
+      // https://docs.google.com/document/d/1byWr5Z1TxM0l0SeZsBQpPMkAyfhk8K_bLidFwkMKvb8/edit
+      drawerPanelContent: <Button className="drawerPanelContent-OperatorHub">OperatorHub</Button>,
     },
   ];
 
-  return (
-    <AppPage title={PAGE_TITLE}>
+  // Drawer:
+  const [drawerPanelContent, setDrawerPanelContent] = useState<ReactNode>(null);
+  const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+
+  const [isExpanded, setIsExpanded] = useState(false);
+
+  const onClick = () => {
+    setIsExpanded(!isExpanded);
+  };
+
+  const onOpenDrawer = (newDrawerContent: React.ReactNode) => {
+    setDrawerPanelContent(newDrawerContent);
+    onClick();
+  };
+
+  const onCloseClick = () => {
+    setIsExpanded(false);
+    // const { drawerProps, drawerPanelContent, onClose, focusOnClose } = settings;
+    // focusOnClose?.focus();
+  };
+
+  const panelContent = (
+    <DrawerPanelContent>
+      <DrawerContentBody>
+        <span tabIndex={isExpanded ? 0 : -1}>{drawerPanelContent}</span>
+        <DrawerActions>
+          <DrawerCloseButton onClick={onCloseClick} />
+        </DrawerActions>
+      </DrawerContentBody>
+    </DrawerPanelContent>
+  );
+
+  // // todo: implement onOpenDrawer, onClose, onExpand functions -> check Drawer implementation
+  //   // todo: what to do next? -> check implementation
+  // };
+  // const onClose = () => {
+  //   // todo: Should I reset the drawer content? it will get overwritten anyway when the drawer is opened again..
+  // };
+  // const onExpand = () => {};
+
+  const pageBody = (
+    <>
       <ProductBanner
         icon={openshiftBannerContents.icon}
         learnMoreLink={openshiftBannerContents.learnMoreLink}
@@ -227,7 +299,7 @@ const icons = {
         </Title>
         <Flex className="pf-v5-u-mb-lg">
           {recommendedLayeredServicesCards.map(
-            ({ title, description, icon, labelText, learnMoreLink }) => (
+            ({ title, description, icon, labelText, drawerPanelContent }) => (
               <FlexItem className="pf-v5-u-pt-md" data-testid={`product-overview-card-${title}`}>
                 <Card className="product-overview-card">
                   <CardHeader>
@@ -256,13 +328,19 @@ const icons = {
                   </CardTitle>
                   <CardBody>{description}</CardBody>
                   <CardFooter>
-                    {/* todo: change to drawer icon */}
-                    <Icon size="md" className="external-link-alt-icon">
-                      <OpenDrawerRightIcon color="#0066cc" data-testid="openInNewWindowIcon" />
-                    </Icon>
-                    {learnMoreLink ? (
-                      <ExternalLink href={learnMoreLink}>Learn more</ExternalLink>
-                    ) : undefined}
+                    {/* todo: which props should this Button have ? check icon */}
+                    <Button
+                      className="read-more-button"
+                      // todo: This was in the Drawer implementation, do I need this?
+                      aria-expanded={isExpanded}
+                      // onClick={() => onOpenDrawer(drawerPanelContent)}
+                      onClick={() => setIsDrawerOpen(true)}
+                    >
+                      <Icon>
+                        Read more
+                        <OpenDrawerRightIcon />
+                      </Icon>
+                    </Button>
                   </CardFooter>
                 </Card>
               </FlexItem>
@@ -270,6 +348,29 @@ const icons = {
           )}
         </Flex>
       </PageSection>
+    </>
+  );
+
+  // const [drawerDiv, setDrawerDiv] = useState<HTMLDivElement>();
+  // const drawerDivRef = useCallback((div: HTMLDivElement) => setDrawerDiv(div), [setDrawerDiv]);
+
+  return (
+    <AppPage title={PAGE_TITLE}>
+      {/* <div id="app-drawer-div" ref={drawerDivRef}> */}
+      {/* <Drawer isExpanded={isExpanded} onExpand={onExpand}>
+          <DrawerContent className="drawer-panel-content" panelContent={panelContent}>
+            <DrawerContentBody>{pageBody}</DrawerContentBody>
+          </DrawerContent>
+        </Drawer> */}
+      {/* </div> */}
+      {pageBody}
+      <Drawer isExpanded={isDrawerOpen}>
+        <DrawerContent panelContent={<div>Panel</div>}>
+          <DrawerContentBody>
+            <div>Drawer Content</div>
+          </DrawerContentBody>
+        </DrawerContent>
+      </Drawer>
     </AppPage>
   );
 }

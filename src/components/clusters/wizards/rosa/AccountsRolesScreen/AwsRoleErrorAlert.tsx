@@ -2,6 +2,8 @@ import React, { MouseEventHandler, useCallback } from 'react';
 
 import { Alert, AlertProps, Button, Text, TextContent, TextVariants } from '@patternfly/react-core';
 
+// Re-use this hook's logic
+// Send to the hook the title, and by that the hook will create and return the correct openDrawer function for that specific Card
 import { useAssociateAWSAccountDrawer } from './AssociateAWSAccountDrawer/AssociateAWSAccountDrawer';
 import { AWSAccountRole } from './AssociateAWSAccountDrawer/common/AssociateAWSAccountStep';
 
