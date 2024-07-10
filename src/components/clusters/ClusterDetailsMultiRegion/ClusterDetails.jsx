@@ -24,8 +24,8 @@ import { Spinner } from '@redhat-cloud-services/frontend-components/Spinner';
 import { AppPage } from '~/components/App/AppPage';
 import { canSubscribeOCPMultiRegion } from '~/components/clusters/common/EditSubscriptionSettingsDialog/CanSubscribeOCPSelector';
 import { modalActions } from '~/components/common/Modal/ModalActions';
-import config from '~/config';
 import { featureGateSelector, useFeatureGate } from '~/hooks/useFeatureGate';
+import { useAddNotificationContact } from '~/queries/ClusterDetailsQueries/ClusterSupportTab/useAddNotificationContact';
 import {
   invalidateClusterDetailsQueries,
   useFetchClusterDetails,
@@ -34,6 +34,7 @@ import {
   invalidateClusterIdentityProviders,
   useFetchClusterIdentityProviders,
 } from '~/queries/ClusterDetailsQueries/useFetchClusterIdentityProviders';
+import { invalidateClusterLogsQueries } from '~/queries/ClusterLogsQueries/useFetchClusterLogs';
 import {
   invalidateCloudProviders,
   useFetchCloudProviders,
@@ -76,7 +77,6 @@ import withFeatureGate from '../../features/with-feature-gate';
 // TODO: Commented out for respective tabs stories
 // import UpgradeSettingsTab from '../ClusterDetailsMultiRegion/components/UpgradeSettings';
 // import AccessControl from '../ClusterDetailsMultiRegion/components/AccessControl/AccessControl';
-// import Support from '../ClusterDetailsMultiRegion/components/Support';
 // import Networking from '../ClusterDetailsMultiRegion/components/Networking';
 // import Monitoring from '../ClusterDetailsMultiRegion/components/Monitoring';
 // import MachinePools from '../ClusterDetailsMultiRegion/components/MachinePools';
@@ -99,7 +99,15 @@ import { getGrants } from './components/AccessControl/NetworkSelfServiceSection/
 import usersActions from './components/AccessControl/UsersSection/UsersActions';
 import { getAddOns, getClusterAddOns } from './components/AddOns/AddOnsActions';
 import ClusterDetailsTop from './components/ClusterDetailsTop';
-import { clusterLogActions } from './components/ClusterLogs/clusterLogActions';
+// TODO: Commented out for respective tabs stories
+// import UpgradeSettingsTab from '../ClusterDetailsMultiRegion/components/UpgradeSettings';
+// import AccessControl from '../ClusterDetailsMultiRegion/components/AccessControl/AccessControl';
+// import Support from '../ClusterDetailsMultiRegion/components/Support';
+// import Networking from '../ClusterDetailsMultiRegion/components/Networking';
+// import Monitoring from '../ClusterDetailsMultiRegion/components/Monitoring';
+// import MachinePools from '../ClusterDetailsMultiRegion/components/MachinePools';
+// import AddOns from '../ClusterDetailsMultiRegion/components/AddOns';
+import ClusterLogs from './components/ClusterLogs/ClusterLogs';
 import { ClusterTabsId } from './components/common/ClusterTabIds';
 import DeleteIDPDialog from './components/DeleteIDPDialog';
 import { fetchClusterInsights } from './components/Insights/InsightsActions';
@@ -111,6 +119,7 @@ import { getOnDemandMetrics } from './components/Monitoring/MonitoringActions';
 import { issuesAndWarningsMultiRegion } from './components/Monitoring/MonitoringSelectors';
 import { getClusterRouters } from './components/Networking/NetworkingActions';
 import Overview from './components/Overview/Overview';
+import Support from './components/Support';
 import AddNotificationContactDialog from './components/Support/components/AddNotificationContactDialog';
 import TabsRow from './components/TabsRow/TabsRow';
 import { eventTypes } from './clusterDetailsHelper';
@@ -124,11 +133,9 @@ const PAGE_TITLE = 'Red Hat OpenShift Cluster Manager';
 
 const ClusterDetails = (props) => {
   const { location, toggleSubscriptionReleased } = props;
+  const [gcpOrgPolicyWarning, setGcpOrgPolicyWarning] = React.useState('');
 
   const isMultiRegionPreviewEnabled = useFeatureGate(MULTIREGION_PREVIEW_ENABLED);
-  const accessRequestsViewOptions = useSelector(
-    (state) => state.viewOptions[viewConstants.ACCESS_REQUESTS_VIEW],
-  );
 
   const navigate = useNavigate();
   const params = useParams();
@@ -155,31 +162,35 @@ const ClusterDetails = (props) => {
     isError: cloudProvidersError,
   } = useFetchCloudProviders();
 
+  const {
+    mutate: addNotificationMutation,
+    isSuccess: isAddNotificationContactSuccess,
+    isPending: isAddNotificationContactPending,
+    error: addNotificationContactError,
+    status: addNotificationStatus,
+  } = useAddNotificationContact(subscriptionID);
+
+  const externalClusterID = get(cluster, 'external_id');
+
   // Recreation of function, no cluster in the redux.
   const canSubscribeOCP = canSubscribeOCPMultiRegion(cluster);
   const canTransferClusterOwnership = canTransferClusterOwnershipMultiRegion(cluster);
   const hasIssues = useSelector(
     (state) => issuesAndWarningsMultiRegion(state, cluster).issues.totalCount > 0,
   );
-  // const { addOns } = useSelector((state) => state.addOns); NOT USED AT ALL
-  // const upgradeGates = useSelector((state) => getUpgradeGates(state)); NOT USED AT ALL
-  const { logs } = useSelector((state) => state.clusterLogs);
   const { organization } = useSelector((state) => state.userProfile);
   const { insightsData } = useSelector((state) => state.insightsData);
   const {
     notificationContacts = {
       pending: false,
     },
-    // supportCases = {
-    //   pending: false,
-    // }, NOT USED AT ALL
   } = useSelector((state) => state.clusterSupport);
   const { clusterRouters } = useSelector((state) => state.clusterRouters);
   // TODO: Part of tabs stories
   // eslint-disable-next-line no-unused-vars
   const displayClusterLogs = cluster && (!!cluster.external_id || !!cluster.id);
-  const clusterLogsViewOptions = useSelector(
-    (state) => state.viewOptions[viewConstants.CLUSTER_LOGS_VIEW],
+  const accessRequestsViewOptions = useSelector(
+    (state) => state.viewOptions[viewConstants.ACCESS_REQUESTS_VIEW],
   );
   const canHibernateCluster = useSelector((state) => userCanHibernateClustersSelector(state));
   const anyModalOpen = useSelector((state) => !!state.modal.modalName);
@@ -270,15 +281,12 @@ const ClusterDetails = (props) => {
     if (shouldRefetchQuota(organization)) {
       dispatch(userActions.getOrganizationAndQuota());
     }
-    const externalClusterID = get(cluster, 'external_id');
     if (externalClusterID) {
       dispatch(fetchClusterInsights(externalClusterID));
       fetchSupportData();
     }
     if (externalClusterID || clusterID) {
-      dispatch(
-        clusterLogActions.getClusterHistory(externalClusterID, clusterID, clusterLogsViewOptions),
-      );
+      invalidateClusterLogsQueries();
     }
 
     if (subscriptionID && isAccessRequestEnabled) {
@@ -289,7 +297,7 @@ const ClusterDetails = (props) => {
       // All managed-cluster-specific requests
       dispatch(getAddOns(clusterID)); // Needs query
       dispatch(getClusterAddOns(clusterID)); // Needs query
-      dispatch(usersActions.getUsers(clusterID));
+      dispatch(usersActions.getUsers(clusterID)); // TODO needs double check
       dispatch(getClusterRouters(clusterID)); // Needs query
       refreshIDP();
       dispatch(
@@ -337,7 +345,7 @@ const ClusterDetails = (props) => {
     return () => {
       invalidateClusterIdentityProviders();
       dispatch(modalActions.closeModal());
-      dispatch(clusterLogActions.resetClusterHistory());
+      invalidateClusterLogsQueries();
 
       dispatch(accessRequestActions.resetAccessRequests());
       dispatch(accessProtectionActions.resetAccessProtection());
@@ -498,6 +506,16 @@ const ClusterDetails = (props) => {
     addHostsTabState = getAddHostsTabState(cluster);
   }
 
+  const findGcpOrgPolicyWarning = (logs) => {
+    let log = '';
+    log = logs?.find(
+      (obj) =>
+        obj.summary?.includes('Please enable the Org Policy API for the GCP project') ||
+        obj.summary?.includes('GCP Organization Policy Service'),
+    );
+    setGcpOrgPolicyWarning(log?.summary);
+  };
+
   return (
     <AppPage title={PAGE_TITLE}>
       <ReadOnlyBanner isReadOnly={isReadOnly} />
@@ -518,9 +536,9 @@ const ClusterDetails = (props) => {
           autoRefreshEnabled={!anyModalOpen}
           toggleSubscriptionReleased={toggleSubscriptionReleased}
           showPreviewLabel={isHypershift}
-          logs={logs}
           isClusterIdentityProvidersLoading={isClusterIdentityProvidersLoading}
           clusterIdentityProvidersError={clusterIdentityProvidersError}
+          gcpOrgPolicyWarning={gcpOrgPolicyWarning}
         >
           <TabsRow
             tabsInfo={{
@@ -537,7 +555,7 @@ const ClusterDetails = (props) => {
               addOns: { ref: addOnsTabRef, show: !isMultiRegionPreviewEnabled && displayAddOnsTab },
               clusterHistory: {
                 ref: clusterHistoryTabRef,
-                show: !isMultiRegionPreviewEnabled && !config.multiRegion,
+                show: displayClusterLogs,
               },
               networking: {
                 ref: networkingTabRef,
@@ -549,7 +567,7 @@ const ClusterDetails = (props) => {
               },
               support: {
                 ref: supportTabRef,
-                show: !isMultiRegionPreviewEnabled && displaySupportTab,
+                show: displaySupportTab,
               },
               upgradeSettings: {
                 ref: upgradeSettingsTabRef,
@@ -604,6 +622,25 @@ const ClusterDetails = (props) => {
             />
           </ErrorBoundary>
         </TabContent>
+        <TabContent
+          eventKey={7}
+          id="supportTabContent"
+          ref={supportTabRef}
+          aria-label="Support"
+          hidden
+        >
+          <ErrorBoundary>
+            {cluster ? (
+              <Support
+                isDisabled={isArchived}
+                cluster={cluster}
+                addNotificationStatus={addNotificationStatus}
+                isAddNotificationContactSuccess={isAddNotificationContactSuccess}
+                isAddNotificationContactPending={isAddNotificationContactPending}
+              />
+            ) : null}
+          </ErrorBoundary>
+        </TabContent>
         {/* TODO: Commented out for respective tabs stories */}
         {/* 
         {displayMonitoringTab && (
@@ -645,6 +682,7 @@ const ClusterDetails = (props) => {
             </ErrorBoundary>
           </TabContent>
         )}
+        */}
         {displayClusterLogs && (
           <TabContent
             eventKey={4}
@@ -657,16 +695,21 @@ const ClusterDetails = (props) => {
               <ClusterLogs
                 externalClusterID={cluster.external_id}
                 clusterID={cluster.id}
+                region={cluster.subscription?.xcm_id}
                 createdAt={cluster.creation_timestamp}
                 refreshEvent={{
                   type: refreshEvent.type,
                   reset: () => setRefreshEvent({ type: eventTypes.NONE }),
                 }}
                 isVisible={selectedTab === ClusterTabsId.CLUSTER_HISTORY}
+                findGcpOrgPolicyWarning={
+                  cloudProvider === 'gcp' ? findGcpOrgPolicyWarning : undefined
+                }
               />
             </ErrorBoundary>
           </TabContent>
         )}
+        {/* 
         {displayNetworkingTab && (
           <TabContent
             eventKey={5}
@@ -680,17 +723,6 @@ const ClusterDetails = (props) => {
             </ErrorBoundary>
           </TabContent>
         )}
-        <TabContent
-          eventKey={7}
-          id="supportTabContent"
-          ref={supportTabRef}
-          aria-label="Support"
-          hidden
-        >
-          <ErrorBoundary>
-            <Support isDisabled={isArchived} />
-          </ErrorBoundary>
-        </TabContent>
         {canViewMachinePoolTab(cluster) && (
           <TabContent
             eventKey={6}
@@ -757,7 +789,15 @@ const ClusterDetails = (props) => {
           }}
         />
         <DeleteIDPDialog refreshParent={refreshIDP} />
-        <AddNotificationContactDialog />
+        {cluster ? (
+          <AddNotificationContactDialog
+            cluster={cluster}
+            addNotificationMutation={addNotificationMutation}
+            isAddNotificationContactSuccess={isAddNotificationContactSuccess}
+            isAddNotificationContactPending={isAddNotificationContactPending}
+            addNotificationContactError={addNotificationContactError}
+          />
+        ) : null}
         <AddGrantModal clusterID={cluster.id} />
         <CancelUpgradeModal isHypershift={isHypershift} />
       </PageSection>

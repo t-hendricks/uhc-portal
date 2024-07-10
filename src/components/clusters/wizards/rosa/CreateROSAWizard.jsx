@@ -18,8 +18,14 @@ import { shouldRefetchQuota } from '~/common/helpers';
 import { normalizedProducts } from '~/common/subscriptionTypes';
 import { AppDrawerContext } from '~/components/App/AppDrawer';
 import { AppPage } from '~/components/App/AppPage';
+import LeaveCreateClusterPrompt from '~/components/clusters/wizards/common/LeaveCreateClusterPrompt';
 import { useFormState } from '~/components/clusters/wizards/hooks';
 import { rosaWizardFormValidator } from '~/components/clusters/wizards/rosa/formValidators';
+import {
+  getAccountAndRolesStepId,
+  stepId,
+  stepNameById,
+} from '~/components/clusters/wizards/rosa/rosaWizardConstants';
 import config from '~/config';
 import withAnalytics from '~/hoc/withAnalytics';
 import useAnalytics from '~/hooks/useAnalytics';
@@ -32,8 +38,6 @@ import ErrorBoundary from '../../../App/ErrorBoundary';
 import Breadcrumbs from '../../../common/Breadcrumbs';
 import PageTitle from '../../../common/PageTitle';
 import Unavailable from '../../../common/Unavailable';
-import CreateClusterErrorModal from '../../common/CreateClusterErrorModal';
-import LeaveCreateClusterPrompt from '../common/LeaveCreateClusterPrompt';
 
 import CIDRScreen from './CIDRScreen/CIDRScreen';
 import Details from './ClusterSettings/Details/Details';
@@ -45,10 +49,10 @@ import ClusterProxyScreen from './ClusterProxyScreen';
 import ClusterRolesScreen from './ClusterRolesScreen';
 import { FieldId, initialTouched, initialValues } from './constants';
 import ControlPlaneScreen from './ControlPlaneScreen';
+import CreateClusterErrorModal from './CreateClusterErrorModal';
 import CreateRosaWizardFooter from './CreateRosaWizardFooter';
 import MachinePoolScreen from './MachinePoolScreen';
 import ReviewClusterScreen from './ReviewClusterScreen';
-import { stepId, stepNameById } from './rosaWizardConstants';
 import { ROSAWizardContext } from './ROSAWizardContext';
 import { ValuesPanel } from './ValuesPanel';
 
@@ -103,18 +107,20 @@ const CreateROSAWizardInternal = ({
   const track = useAnalytics();
   const { resetForm, values } = useFormState();
 
-  const accountAndRolesStepId = stepId.ACCOUNTS_AND_ROLES_AS_SECOND_STEP;
+  const accountAndRolesStepId = getAccountAndRolesStepId(isHypershiftEnabled);
   const firstStepId = isHypershiftEnabled ? stepId.CONTROL_PLANE : accountAndRolesStepId;
 
   const [currentStepId, setCurrentStepId] = React.useState(firstStepId);
   const [currentStep, setCurrentStep] = React.useState();
 
-  const stepsRef = React.useRef();
-  const setStepRef = React.useRef();
+  const wizardContextRef = React.useRef();
 
-  const onWizardContextChange = (steps, setStep) => {
-    stepsRef.current = steps;
-    setStepRef.current = setStep;
+  const onWizardContextChange = ({ steps, setStep, goToStepById }) => {
+    wizardContextRef.current = {
+      steps,
+      setStep,
+      goToStepById,
+    };
   };
 
   React.useEffect(() => {
@@ -122,9 +128,12 @@ const CreateROSAWizardInternal = ({
       return;
     }
 
+    const steps = wizardContextRef.current?.steps;
+    const setStep = wizardContextRef.current?.setStep;
+
     // eslint-disable-next-line no-plusplus
-    for (let i = currentStep.index; i < stepsRef.current.length; i++) {
-      const nextStep = stepsRef.current[i];
+    for (let i = currentStep.index; i < steps.length; i++) {
+      const nextStep = steps[i];
       const isParentStep = nextStep.subStepIds !== undefined;
       if (!isParentStep && !nextStep.isHidden) {
         if (!nextStep.isVisited) {
@@ -136,7 +145,7 @@ const CreateROSAWizardInternal = ({
         // unvisit if step is past the current step that has had a form change
         const afterChangedStep = nextStep.id > currentStepId;
         // TODO: Not all form changes should cause following steps to be unvisited
-        setStepRef.current({
+        setStep({
           ...nextStep,
           isVisited: !afterChangedStep && !noAssocAwsAcct,
         });
@@ -273,22 +282,24 @@ const CreateROSAWizardInternal = ({
           <Banner variant="gold">On submit, a fake ROSA cluster will be created.</Banner>
         )}
         <div className="ocm-page pf-v5-u-display-flex">
-          {isErrorModalOpen && <CreateClusterErrorModal />}
           <Wizard
             id="rosa-wizard"
             className="rosa-wizard pf-v5-u-flex-1"
             onClose={onClose}
             onStepChange={onStepChange}
             footer={
-              <CreateRosaWizardFooter
-                isHypershiftSelected={isHypershiftSelected}
-                currentStepId={currentStepId}
-                accountAndRolesStepId={accountAndRolesStepId}
-                getUserRoleResponse={getUserRoleResponse}
-                getUserRoleInfo={() => getUserRole()}
-                isSubmitting={createClusterResponse.pending}
-                onWizardContextChange={onWizardContextChange}
-              />
+              <>
+                {isErrorModalOpen && <CreateClusterErrorModal />}
+                <CreateRosaWizardFooter
+                  isHypershiftSelected={isHypershiftSelected}
+                  currentStepId={currentStepId}
+                  accountAndRolesStepId={accountAndRolesStepId}
+                  getUserRoleResponse={getUserRoleResponse}
+                  getUserRoleInfo={() => getUserRole()}
+                  isSubmitting={createClusterResponse.pending}
+                  onWizardContextChange={onWizardContextChange}
+                />
+              </>
             }
             nav={{ 'aria-label': `${ariaTitle} steps` }}
             isVisitRequired

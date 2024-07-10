@@ -1,5 +1,3 @@
-import type React from 'react';
-
 import type { Cluster as AICluster } from '@openshift-assisted/types/assisted-installer-service';
 import type { FeaturesSupportsLevel } from '@openshift-assisted/ui-lib/ocm';
 import type { ChromeAPI } from '@redhat-cloud-services/types';
@@ -120,7 +118,7 @@ export type ErrorState = {
   error: true;
   errorCode?: number;
   internalErrorCode?: string;
-  errorMessage?: string | React.ReactElement;
+  errorMessage?: string;
   errorDetails?: ErrorDetail[];
   operationID?: string;
 };

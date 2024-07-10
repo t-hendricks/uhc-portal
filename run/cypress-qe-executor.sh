@@ -96,6 +96,20 @@ mkdir -p "${PWD}/cypress/videos"
 mkdir -p "${PWD}/cypress/screenshots"
 mkdir -p "${PWD}/run/output/embedded_files"
 
+# Precondition on Quay credentail definition
+if [ -z "${QUAY_USER}" ]; then
+  echo "The 'quay.io' push user name hasn't been provided."
+  echo "Make sure to set the 'QUAY_USER' environment variable."
+  exit 1
+fi
+if [ -z "${QUAY_TOKEN}" ]; then
+  echo "The 'quay.io' push token hasn't been provided."
+  echo "Make sure to set the 'QUAY_TOKEN' environment variable."
+  exit 1
+fi
+# Login to Quay with user
+podman login -u "${QUAY_USER}" --password-stdin <<< "${QUAY_TOKEN}" quay.io
+
 function cypress_container_run(){
   browser_container_name=$1
   pod_id=$2

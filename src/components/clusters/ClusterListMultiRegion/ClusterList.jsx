@@ -17,6 +17,7 @@ limitations under the License.
 import React from 'react';
 import size from 'lodash/size';
 import PropTypes from 'prop-types';
+import { useDispatch, useSelector } from 'react-redux';
 
 import {
   Card,
@@ -30,10 +31,13 @@ import {
   ToolbarGroup,
   ToolbarItem,
 } from '@patternfly/react-core';
+import { SortByDirection } from '@patternfly/react-table';
 import Spinner from '@redhat-cloud-services/frontend-components/Spinner';
 
 import { AppPage } from '~/components/App/AppPage';
 import { useFetchClusters } from '~/queries/ClusterListQueries/useFetchClusters';
+import { viewActions } from '~/redux/actions/viewOptionsActions';
+import { viewConstants } from '~/redux/constants';
 
 import ErrorBox from '../../common/ErrorBox';
 import Unavailable from '../../common/Unavailable';
@@ -44,7 +48,9 @@ import ReadOnlyBanner from '../common/ReadOnlyBanner';
 
 import ClusterListEmptyState from './components/ClusterListEmptyState';
 import ClusterListTable from './components/ClusterListTable';
+import { PaginationRow } from './components/PaginationRow';
 import { RefreshButton } from './components/RefreshButton';
+import { sortClusters } from './clusterListSort';
 
 import './ClusterList.scss';
 
@@ -113,6 +119,7 @@ const ClusterList = ({
   clearGlobalError,
   openModal,
 }) => {
+  const dispatch = useDispatch();
   const { isLoading, data, refetch, isError, errors, isFetching } = useFetchClusters();
   const clusters = data?.items;
 
@@ -121,6 +128,10 @@ const ClusterList = ({
       `${errorsText}${error.response?.data?.reason || error.response?.data?.details || ''}. `,
     '',
   );
+  const [currentPage, setCurrentPage] = React.useState(1);
+  const [pageSize, setPageSize] = React.useState(50);
+  const [itemsStart, setItemsStart] = React.useState(0);
+  const [itemsEnd, setItemsEnd] = React.useState(0);
 
   const preLoadRedux = React.useCallback(() => {
     // Items not needed for this list, but may be needed elsewhere in the app
@@ -148,6 +159,50 @@ const ClusterList = ({
     organization.fulfilled,
     organization.pending,
   ]);
+
+  /* Pagination */
+  const onPageChange = React.useCallback(
+    (_event, page) => {
+      setCurrentPage(page);
+      setItemsStart((page - 1) * pageSize + 1);
+      setItemsEnd(Math.min(page * pageSize, clusters?.length || 0));
+    },
+    [pageSize, clusters],
+  );
+
+  React.useEffect(() => {
+    if (clusters && clusters.length > 0 && currentPage === 1) {
+      setItemsStart(1);
+      setItemsEnd(clusters.length > pageSize ? pageSize : clusters.length);
+    }
+    if (!clusters || clusters.length === 0) {
+      setItemsStart(0);
+      setItemsEnd(0);
+      setCurrentPage(1);
+    }
+
+    if (clusters && clusters.length < itemsStart) {
+      // The user was on a page that no longer exists
+      const newPage = Math.ceil(clusters.length / pageSize);
+      onPageChange(undefined, newPage);
+    }
+  }, [clusters, itemsStart, currentPage, pageSize, onPageChange]);
+
+  const onPerPageSelect = (_event, newPerPage, newPage, startIdx, endIdx) => {
+    setCurrentPage(newPage);
+    setPageSize(newPerPage);
+    setItemsStart(startIdx + 1);
+    setItemsEnd(Math.min(endIdx, clusters.length));
+  };
+
+  /* Sorting */
+  const sortOptions = useSelector(
+    (state) => state.viewOptions[viewConstants.CLUSTERS_VIEW]?.sorting,
+  );
+  const activeSortIndex = sortOptions.sortField;
+  const activeSortDirection = sortOptions.isAscending ? SortByDirection.asc : SortByDirection.desc;
+  // Note: initial sort order is set in the reducer
+  const sortedClusters = sortClusters(clusters, activeSortIndex, activeSortDirection);
 
   // onMount and willUnmount
   React.useEffect(() => {
@@ -218,6 +273,28 @@ const ClusterList = ({
               />
             )}
 
+            <Toolbar id="cluster-list-toolbar">
+              <ToolbarContent>
+                <ToolbarItem
+                  align={{ default: 'alignRight' }}
+                  variant="pagination"
+                  className="pf-m-hidden visible-on-lgplus"
+                >
+                  <PaginationRow
+                    currentPage={currentPage}
+                    pageSize={pageSize}
+                    itemCount={clusters?.length || 0}
+                    variant="top"
+                    isDisabled={isPendingNoData}
+                    itemsStart={itemsStart}
+                    itemsEnd={itemsEnd}
+                    onPerPageSelect={onPerPageSelect}
+                    onPageChange={onPageChange}
+                  />
+                </ToolbarItem>
+              </ToolbarContent>
+            </Toolbar>
+
             {isError && !size(clusters) ? (
               <Unavailable
                 message="Error retrieving clusters"
@@ -231,12 +308,32 @@ const ClusterList = ({
             ) : (
               <ClusterListTable
                 openModal={openModal}
-                clusters={clusters || []}
+                clusters={sortedClusters?.slice(itemsStart - 1, itemsEnd) || []}
                 isPending={isPendingNoData}
                 refreshFunc={refetch}
+                activeSortIndex={activeSortIndex}
+                activeSortDirection={activeSortDirection}
+                setSort={(index, direction) => {
+                  const sorting = {
+                    isAscending: direction === SortByDirection.asc,
+                    sortField: index,
+                  };
+
+                  dispatch(viewActions.onListSortBy(sorting, viewConstants.CLUSTERS_VIEW));
+                }}
               />
             )}
-
+            <PaginationRow
+              currentPage={currentPage}
+              pageSize={pageSize}
+              itemCount={clusters?.length || 0}
+              variant="bottom"
+              isDisabled={isPendingNoData}
+              itemsStart={itemsStart}
+              itemsEnd={itemsEnd}
+              onPerPageSelect={onPerPageSelect}
+              onPageChange={onPageChange}
+            />
             <CommonClusterModals onClose={() => refetch()} clearMachinePools />
           </div>
         </Card>

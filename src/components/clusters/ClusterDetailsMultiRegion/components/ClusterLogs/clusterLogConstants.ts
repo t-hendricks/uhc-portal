@@ -1,7 +1,6 @@
 import { ClusterLog } from '~/types/service_logs.v1';
 
 const GET_CLUSTER_LOGS = 'GET_CLUSTER_LOGS';
-const RESET_CLUSTER_HISTORY = 'RESET_CLUSTER_HISTORY';
 
 const SEVERITY_TYPES: string[] = [
   'Debug',
@@ -20,8 +19,7 @@ const clusterLogConstants = {
   GET_CLUSTER_LOGS,
   SEVERITY_TYPES,
   LOG_TYPES,
-  RESET_CLUSTER_HISTORY,
 };
 
-export { GET_CLUSTER_LOGS, SEVERITY_TYPES, LOG_TYPES, RESET_CLUSTER_HISTORY };
+export { GET_CLUSTER_LOGS, SEVERITY_TYPES, LOG_TYPES };
 export default clusterLogConstants;

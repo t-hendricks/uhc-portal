@@ -1,19 +1,14 @@
 import * as React from 'react';
-import * as reactRedux from 'react-redux';
 
-import { getSupportCases } from '~/redux/actions/supportActions';
-import { useGlobalState } from '~/redux/hooks';
+import { defaultClusterFromSubscription } from '~/components/clusters/common/__tests__/defaultClusterFromSubscription.fixtures';
+import { useFetchSupportCases } from '~/queries/ClusterDetailsQueries/ClusterSupportTab/useFetchSupportCases';
 import { isRestrictedEnv } from '~/restrictedEnv';
 import { checkAccessibility, render, screen } from '~/testUtils';
 
 import SupportCasesCard from '../SupportCasesCard';
 
-jest.mock('~/redux/hooks', () => ({
-  useGlobalState: jest.fn(),
-}));
-
-jest.mock('~/redux/actions/supportActions', () => ({
-  getSupportCases: jest.fn(),
+jest.mock('~/queries/ClusterDetailsQueries/ClusterSupportTab/useFetchSupportCases', () => ({
+  useFetchSupportCases: jest.fn(),
 }));
 
 jest.mock('react-redux', () => {
@@ -29,34 +24,30 @@ jest.mock('~/restrictedEnv', () => ({
   SUPPORT_CASE_URL: 'SUPPORT_CASE_URL_VALUE',
 }));
 
-const useGlobalStateMock = useGlobalState as jest.Mock;
-const getSupportCasesMock = getSupportCases as jest.Mock;
 const isRestrictedEnvMock = isRestrictedEnv as jest.Mock;
+const mockedUseFetchSupportCases = useFetchSupportCases as jest.Mock;
 
 describe('<SupportCasesCard />', () => {
   const defaultProps = {
+    cluster: defaultClusterFromSubscription,
     subscriptionID: '1iGW3xYbKZAEdZLi207rcA1l0ob',
   };
   describe('in default environment', () => {
-    const useDispatchMock = jest.spyOn(reactRedux, 'useDispatch');
-    const mockedDispatch = jest.fn();
-    useDispatchMock.mockReturnValue(mockedDispatch);
-
     beforeEach(() => {
       jest.clearAllMocks();
       isRestrictedEnvMock.mockReturnValue(false);
 
-      // Component is rendered twice
-      for (let i = 0; i < 2; i += 1) {
-        useGlobalStateMock.mockReturnValueOnce({});
-        useGlobalStateMock.mockReturnValueOnce({
-          supportCases: {
-            cases: [],
-            pending: false,
-            subscriptionID: '1iGW3xYbKZAEdZLi207rcA1l0ob',
-          },
-        });
-      }
+      mockedUseFetchSupportCases.mockReturnValue({
+        supportCases: {
+          cases: [],
+          pending: false,
+          subscriptionID: '1iGW3xYbKZAEdZLi207rcA1l0ob',
+        },
+        isLoading: false,
+        isError: false,
+        error: null,
+        refetch: jest.fn(),
+      });
     });
 
     it('is accessible. Emtpy cluster', async () => {
@@ -73,8 +64,8 @@ describe('<SupportCasesCard />', () => {
 
       // Assert
       expect(screen.getByTestId('support-cases-table')).toBeInTheDocument();
-      expect(getSupportCasesMock).toHaveBeenCalledTimes(1);
-      expect(getSupportCasesMock).toHaveBeenCalledWith('1iGW3xYbKZAEdZLi207rcA1l0ob');
+      expect(useFetchSupportCases).toHaveBeenCalledTimes(1);
+      expect(useFetchSupportCases).toHaveBeenCalledWith('1iGW3xYbKZAEdZLi207rcA1l0ob', false);
     });
 
     it('Support case btn links to Red Hat', () => {
@@ -101,7 +92,9 @@ describe('<SupportCasesCard />', () => {
 
       // Assert
       expect(screen.queryByTestId('support-cases-table')).not.toBeInTheDocument();
-      expect(getSupportCasesMock).toHaveBeenCalledTimes(0);
+
+      // The hook function will be called anyway, but it will not make API call
+      expect(mockedUseFetchSupportCases).toHaveBeenCalledWith('1iGW3xYbKZAEdZLi207rcA1l0ob', true);
     });
 
     it('Support case btn links to FedRAMP SNOW instance', () => {

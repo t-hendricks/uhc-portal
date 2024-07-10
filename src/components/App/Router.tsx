@@ -35,6 +35,7 @@ import { normalizedProducts } from '../../common/subscriptionTypes';
 import {
   ACCESS_REQUEST_ENABLED,
   ASSISTED_INSTALLER_FEATURE,
+  CLUSTER_OWNERSHIP_TRANSFER,
   HYPERSHIFT_WIZARD_FEATURE,
   MULTIREGION_PREVIEW_ENABLED,
 } from '../../redux/constants/featureConstants';
@@ -167,6 +168,8 @@ const Router: React.FC<RouterProps> = ({ history, planType, clusterId, externalC
   // MULTIREGION_PREVIEW_ENABLED enabled in staging, disabled in production (via Unleashed)
   const isMultiRegionPreviewEnabled = useFeatureGate(MULTIREGION_PREVIEW_ENABLED);
 
+  const isClusterTransferEnabled = useFeatureGate(CLUSTER_OWNERSHIP_TRANSFER);
+
   // For testing purposes, show which major features are enabled/disabled
   React.useEffect(() => {
     // eslint-disable-next-line no-console
@@ -175,7 +178,7 @@ const Router: React.FC<RouterProps> = ({ history, planType, clusterId, externalC
       `HYPERSHIFT_WIZARD_FEATURE: ${isHypershiftWizardEnabled ? 'Enabled' : 'Disabled'}\n`,
       '-------------------------------------',
     );
-  }, [isHypershiftWizardEnabled]);
+  }, [isHypershiftWizardEnabled, isClusterTransferEnabled]);
 
   const isMultiRegionEnabled = useFeatureGate(MULTIREGION_PREVIEW_ENABLED);
   const isAccessRequestEnabled = useFeatureGate(ACCESS_REQUEST_ENABLED);

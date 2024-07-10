@@ -1,8 +1,9 @@
 import React from 'react';
 
-import CreateClusterErrorModal from '~/components/clusters/common/CreateClusterErrorModal';
 import { useFormState } from '~/components/clusters/wizards/hooks';
 import { useGlobalState } from '~/redux/hooks/useGlobalState';
+
+import CreateClusterErrorModal from '../CreateClusterErrorModal';
 
 import { ReviewAndCreateContent } from './ReviewAndCreateContent';
 
