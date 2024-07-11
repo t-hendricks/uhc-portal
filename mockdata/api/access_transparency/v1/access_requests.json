@@ -60,9 +60,7 @@
       "updated_at": "2024-05-18T09:28:44.121Z",
       "decisions": [
         {
-          "decision": "Approved",
-          "created_at": "2024-05-17T09:28:44.121Z",
-          "decided_by": "mock_user"
+          "decision": "Approved"
         }
       ],
       "requested_by": "requested_by Y",
@@ -91,8 +89,7 @@
         },
         {
           "decision": "Expired",
-          "created_at": "2024-05-19T09:28:44.121Z",
-          "decided_by": "mock_user"
+          "created_at": "2024-05-19T09:28:44.121Z"
         }
       ],
       "requested_by": "requested_by Y",
@@ -122,7 +119,6 @@
         },
         {
           "decision": "Approved",
-          "created_at": "2024-05-18T09:28:44.121Z",
           "decided_by": "mock_user"
         }
       ],
