@@ -48,7 +48,7 @@ describe('AccessRequestDetails', () => {
                 decision: Decision.decision.APPROVED,
                 created_at: '2022-06-23T00:04:46.521394Z',
                 decided_by: 'whatever the user',
-                justification: 'whatever',
+                justification: 'justx',
               },
             ],
           }}
@@ -73,7 +73,8 @@ describe('AccessRequestDetails', () => {
       expect(
         within(screen.getByTestId('decision-text')).getByText(/whatever the user/i),
       ).toBeInTheDocument();
-      expect(screen.getByText(/on by because: whatever/i)).toBeInTheDocument();
+      expect(screen.getByText(/on by because/i)).toBeInTheDocument();
+      expect(screen.getByText(/justx/i)).toBeInTheDocument();
     });
 
     it('when multiple decisions', () => {
@@ -113,7 +114,8 @@ describe('AccessRequestDetails', () => {
         within(screen.getByTestId('decision-text')).getByText(/2\/2\/2021/i),
       ).toBeInTheDocument();
       expect(within(screen.getByTestId('decision-text')).getByText(/user1/i)).toBeInTheDocument();
-      expect(screen.getByText(/on by because: just1/i)).toBeInTheDocument();
+      expect(screen.getByText(/on by because/i)).toBeInTheDocument();
+      expect(screen.getByText(/just1/i)).toBeInTheDocument();
     });
 
     it('when no justification', () => {
@@ -215,6 +217,71 @@ describe('AccessRequestDetails', () => {
       expect(screen.getByText(/justification/i)).toBeInTheDocument();
       expect(screen.getByTestId('justification-field-value')).toBeInTheDocument();
       expect(screen.queryByTestId('decision-text')).not.toBeInTheDocument();
+    });
+
+    describe('hide decision fields when undefined', () => {
+      it('justification undefined', () => {
+        // Act
+        render(
+          <AccessRequestDetails
+            accessRequest={{
+              decisions: [
+                {
+                  decision: Decision.decision.APPROVED,
+                  created_at: '2022-06-23T00:04:46.521394Z',
+                  decided_by: 'whatever the user',
+                },
+              ],
+            }}
+          />,
+        );
+
+        // Assert
+        expect(screen.queryByText(/on by because/i)).not.toBeInTheDocument();
+        expect(screen.getByText(/on by/i)).toBeInTheDocument();
+      });
+
+      it('decided_by undefined', () => {
+        // Act
+        render(
+          <AccessRequestDetails
+            accessRequest={{
+              decisions: [
+                {
+                  decision: Decision.decision.APPROVED,
+                  created_at: '2022-06-23T00:04:46.521394Z',
+                  justification: 'justx',
+                },
+              ],
+            }}
+          />,
+        );
+
+        // Assert
+        expect(screen.queryByText(/on by because/i)).not.toBeInTheDocument();
+        expect(screen.getByText(/on because/i)).toBeInTheDocument();
+      });
+
+      it('created_at undefined', () => {
+        // Act
+        render(
+          <AccessRequestDetails
+            accessRequest={{
+              decisions: [
+                {
+                  decision: Decision.decision.APPROVED,
+                  decided_by: 'mockuser',
+                  justification: 'justx',
+                },
+              ],
+            }}
+          />,
+        );
+
+        // Assert
+        expect(screen.queryByText(/on by because/i)).not.toBeInTheDocument();
+        expect(screen.getByText(/by because/i)).toBeInTheDocument();
+      });
     });
   });
 });
