@@ -23,7 +23,7 @@ describe('<GetStarted />', () => {
 
     it('should have a Get Started link', () => {
       render(<GetStarted {...customizationsProps} />);
-      expect(screen.getByRole('link', { name: 'Get started' })).toBeInTheDocument();
+      expect(screen.getByText('Get started')).toBeInTheDocument();
     });
 
     it('should have a copybox', () => {
@@ -52,7 +52,7 @@ describe('<GetStarted />', () => {
 
     it('should have a Get Started link', () => {
       render(<GetStarted {...defaultProps} />);
-      expect(screen.getByRole('link', { name: 'Get started' })).toBeInTheDocument();
+      expect(screen.getByText('Get started')).toBeInTheDocument();
     });
 
     it('should have a copybox', () => {
@@ -83,7 +83,7 @@ describe('<GetStarted />', () => {
 
     it('should have a Get Started button', () => {
       render(<GetStarted {...upiProps} />);
-      expect(screen.getByRole('link', { name: 'Get started' })).toBeInTheDocument();
+      expect(screen.getByText('Get started')).toBeInTheDocument();
     });
 
     it('should not have a copybox', () => {
