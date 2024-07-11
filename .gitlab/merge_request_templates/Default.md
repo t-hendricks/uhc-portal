@@ -1,3 +1,5 @@
+# [- Master branch will be frozen from Thursday, July 4th until Tuesday, July 9th for full regression testing by QE -]
+
 # summary
 
 <!-- add a summarized description of the MR content -->

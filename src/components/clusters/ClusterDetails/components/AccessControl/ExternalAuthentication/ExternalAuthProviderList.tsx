@@ -107,7 +107,7 @@ export function ExternalAuthProviderList() {
               <Th>{columns.name}</Th>
               <Th>{columns.issuer}</Th>
               <Th>{columns.audiences}</Th>
-              <Th aria-label="Action Menu" />
+              <Th screenReaderText="Action Menu" aria-label="Action Menu" />
             </Tr>
           </Thead>
           <Tbody>

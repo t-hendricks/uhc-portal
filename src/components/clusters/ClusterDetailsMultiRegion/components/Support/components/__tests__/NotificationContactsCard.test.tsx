@@ -1,21 +1,21 @@
 import React from 'react';
 import * as reactRedux from 'react-redux';
 
-import { clearNotificationContacts, getNotificationContacts } from '~/redux/actions/supportActions';
-import { useGlobalState } from '~/redux/hooks';
+import { useDeleteNotificationContact } from '~/queries/ClusterDetailsQueries/ClusterSupportTab/useDeleteNotificationContact';
+import { useFetchNotificationContacts } from '~/queries/ClusterDetailsQueries/ClusterSupportTab/useFetchNotificationContacts';
 import { act, checkAccessibility, render, screen } from '~/testUtils';
 
 import NotificationContactsCard from '../NotificationContactsCard';
 
-jest.mock('~/redux/hooks', () => ({
-  useGlobalState: jest.fn(),
+jest.mock('~/queries/ClusterDetailsQueries/ClusterSupportTab/useFetchNotificationContacts', () => ({
+  useFetchNotificationContacts: jest.fn(),
+}));
+jest.mock('~/queries/ClusterDetailsQueries/ClusterSupportTab/useDeleteNotificationContact', () => ({
+  useDeleteNotificationContact: jest.fn(),
 }));
 
-jest.mock('~/redux/actions/supportActions', () => ({
-  clearDeleteNotificationContacts: jest.fn(),
-  clearNotificationContacts: jest.fn(),
-  deleteNotificationContact: jest.fn(),
-  getNotificationContacts: jest.fn(),
+jest.mock('~/redux/hooks', () => ({
+  useGlobalState: jest.fn(),
 }));
 
 jest.mock('react-redux', () => {
@@ -28,21 +28,24 @@ jest.mock('react-redux', () => {
 
 jest.mock('~/components/common/ErrorBox', () => () => <div data-testid="error-box" />);
 
-const useGlobalStateMock = useGlobalState as jest.Mock;
-
-const clearNotificationContactsMock = clearNotificationContacts as jest.Mock;
-const getNotificationContactsMock = getNotificationContacts as jest.Mock;
+const useFetchNotificationContactsMock = useFetchNotificationContacts as jest.Mock;
+const useDeleteNotificationContactMock = useDeleteNotificationContact as jest.Mock;
+const mutate = jest.fn();
 
 describe('<NotificationContactsCard />', () => {
   const useDispatchMock = jest.spyOn(reactRedux, 'useDispatch');
   const mockedDispatch = jest.fn();
   useDispatchMock.mockReturnValue(mockedDispatch);
 
-  const defaultProps = { subscriptionID: '1iGW3xYbKZAEdZLi207rcA1l0ob', isDisabled: false };
+  const defaultProps = {
+    subscriptionID: '1iGW3xYbKZAEdZLi207rcA1l0ob',
+    isDisabled: false,
+    isAddNotificationContactSuccess: true,
+    isAddNotificationContactPending: false,
+    addNotificationStatus: 'success',
+  };
   const emptyState = {
     notificationContacts: {},
-    addContactResponse: {},
-    deleteContactResponse: {},
   };
 
   const defaultState = {
@@ -65,8 +68,7 @@ describe('<NotificationContactsCard />', () => {
         },
       ],
     },
-    addContactResponse: {},
-    deleteContactResponse: {},
+    refetch: jest.fn(),
   };
 
   beforeEach(() => {
@@ -76,8 +78,13 @@ describe('<NotificationContactsCard />', () => {
   describe('it is accessible', () => {
     it.each([[true], [false]])('isDisabled %p', async (isDisabled: boolean) => {
       // Arrange
-      useGlobalStateMock.mockReturnValue(defaultState);
-
+      useFetchNotificationContactsMock.mockReturnValue(defaultState);
+      useDeleteNotificationContactMock.mockReturnValue({
+        isError: false,
+        mutate,
+        isSuccess: true,
+        isPending: false,
+      });
       // Act
       const { container } = render(
         <NotificationContactsCard {...defaultProps} isDisabled={isDisabled} />,
@@ -90,22 +97,15 @@ describe('<NotificationContactsCard />', () => {
     });
   });
 
-  it('cleans up', () => {
-    // Arrange
-    useGlobalStateMock.mockReturnValue(emptyState);
-
-    // Act
-    const { unmount } = render(<NotificationContactsCard {...defaultProps} />);
-
-    // Assert
-    unmount();
-    expect(clearNotificationContactsMock).toHaveBeenCalledTimes(1);
-  });
-
   it('empty content', () => {
     // Arrange
-    useGlobalStateMock.mockReturnValue(emptyState);
-
+    useFetchNotificationContactsMock.mockReturnValue({ ...emptyState, refetch: jest.fn() });
+    useDeleteNotificationContactMock.mockReturnValue({
+      isError: false,
+      mutate,
+      isSuccess: true,
+      isPending: false,
+    });
     // Act
     render(
       <div data-testid="parent-div">
@@ -118,30 +118,41 @@ describe('<NotificationContactsCard />', () => {
   });
 
   it.each([
-    [defaultProps.subscriptionID, 0],
+    [defaultProps.subscriptionID, 1],
     ['whatever the value', 1],
   ])(
-    'subscriptionID: %p getNotificationContacts is called %p',
+    'subscriptionID: %p useFetchNotificationContactsMock is called %p',
     (subscriptionID, expectedNumberOfCalls) => {
       // Arrange
-      getNotificationContactsMock.mockClear();
-      useGlobalStateMock.mockReturnValue({
+      useFetchNotificationContactsMock.mockReturnValue({
         ...defaultState,
         notificationContacts: { subscriptionID, pending: true },
+        refetch: jest.fn(),
+      });
+      useDeleteNotificationContactMock.mockReturnValue({
+        isError: false,
+        mutate,
+        isSuccess: true,
+        isPending: false,
       });
 
       // Act
       render(<NotificationContactsCard {...defaultProps} />);
 
       // Assert
-      expect(getNotificationContactsMock).toHaveBeenCalledTimes(expectedNumberOfCalls);
+      expect(useFetchNotificationContactsMock).toHaveBeenCalledTimes(expectedNumberOfCalls);
     },
   );
 
   it('renders what it is expected', () => {
     // Arrange
-    useGlobalStateMock.mockReturnValue(defaultState);
-
+    useFetchNotificationContactsMock.mockReturnValue({ ...defaultState });
+    useDeleteNotificationContactMock.mockReturnValue({
+      isError: false,
+      mutate,
+      isSuccess: true,
+      isPending: false,
+    });
     // Act
     render(<NotificationContactsCard {...defaultProps} />);
 
@@ -160,15 +171,35 @@ describe('<NotificationContactsCard />', () => {
     expect(screen.queryByTestId('error-box')).not.toBeInTheDocument();
   });
 
-  it('renders what it is expected with error', () => {
+  it('renders what it is expected with error', async () => {
     // Arrange
-    useGlobalStateMock.mockReturnValue({
-      ...defaultState,
-      deleteContactResponse: { error: 'whatever the error' },
+    // useFetchNotificationContactsMock.mockReturnValue({ ...defaultState,notificationContacts: { error: true },isError:true, refetch: jest.fn() });
+    useDeleteNotificationContactMock.mockReturnValue({
+      isError: true,
+      mutate,
+      isSuccess: false,
+      isPending: false,
+      error: {
+        pending: false,
+        fulfilled: true,
+        error: true,
+        errorCode: 404,
+        internalErrorCode: '404',
+        errorMessage: 'what ever error message',
+        errorDetails: {
+          kind: 'error',
+          items: [],
+        },
+        operationID: 'whatever operation id',
+      },
     });
 
+    const errorProps = {
+      ...defaultProps,
+      isAddNotificationContactSuccess: false,
+    };
     // Act
-    render(<NotificationContactsCard {...defaultProps} />);
+    render(<NotificationContactsCard {...errorProps} />);
 
     // Assert
     expect(screen.getByTestId('error-box')).toBeInTheDocument();
