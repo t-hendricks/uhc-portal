@@ -175,7 +175,7 @@ const ClusterList = ({
 
   const refresh = React.useCallback(() => {
     fetchClusters(createViewQueryObject(viewOptions, username));
-    if (organizationId && isAccessRequestEnabled) {
+    if (organizationId && isAccessRequestEnabled && !isRestrictedEnv()) {
       resetOrganizationAccessProtection();
       getOrganizationAccessProtection(organizationId);
     }
@@ -242,7 +242,7 @@ const ClusterList = ({
   }, []);
 
   React.useEffect(() => {
-    if (organizationId && isAccessRequestEnabled) {
+    if (organizationId && isAccessRequestEnabled && !isRestrictedEnv()) {
       getOrganizationAccessProtection(organizationId);
     }
   }, [getOrganizationAccessProtection, organizationId, isAccessRequestEnabled]);
