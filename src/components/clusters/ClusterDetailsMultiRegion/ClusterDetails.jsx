@@ -289,7 +289,7 @@ const ClusterDetails = (props) => {
       invalidateClusterLogsQueries();
     }
 
-    if (subscriptionID && isAccessRequestEnabled) {
+    if (subscriptionID && isAccessRequestEnabled && !isRestrictedEnv()) {
       dispatch(getAccessProtection(subscriptionID));
     }
 

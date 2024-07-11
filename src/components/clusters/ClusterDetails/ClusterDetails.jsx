@@ -211,7 +211,12 @@ const ClusterDetails = (props) => {
     if (externalClusterID || clusterID) {
       getClusterHistory(externalClusterID, clusterID, clusterLogsViewOptions);
     }
-    if (subscriptionID && isAccessRequestEnabled && !accessProtectionState?.pending) {
+    if (
+      subscriptionID &&
+      isAccessRequestEnabled &&
+      !accessProtectionState?.pending &&
+      !isRestrictedEnv()
+    ) {
       getAccessProtection(subscriptionID);
     }
 

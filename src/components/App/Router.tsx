@@ -29,6 +29,7 @@ import useChrome from '@redhat-cloud-services/frontend-components/useChrome';
 
 import config from '~/config';
 import { useFeatureGate } from '~/hooks/useFeatureGate';
+import { isRestrictedEnv } from '~/restrictedEnv';
 import apiRequest from '~/services/apiRequest';
 
 import { normalizedProducts } from '../../common/subscriptionTypes';
@@ -492,7 +493,9 @@ const Router: React.FC<RouterProps> = ({ history, planType, clusterId, externalC
             <CompatRoute
               path="/access-request/:id"
               exact
-              component={isAccessRequestEnabled ? AccessRequestNavigate : NotFoundError}
+              component={
+                isAccessRequestEnabled && !isRestrictedEnv() ? AccessRequestNavigate : NotFoundError
+              }
             />
 
             <CompatRoute
