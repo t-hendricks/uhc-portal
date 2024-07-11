@@ -4810,6 +4810,13 @@ cidr-regex@^3.1.1:
   dependencies:
     ip-regex "^4.1.0"
 
+cidr-tools@^10.0.0:
+  version "10.0.1"
+  resolved "https://registry.yarnpkg.com/cidr-tools/-/cidr-tools-10.0.1.tgz#4e34224bac746d6398e011bb6ad82390aafa1805"
+  integrity sha512-10wPVOLZG1JhmzymDYzLSRZBMYoTAFnS3M6WS/Lt4lFg25TihvCO4fr0EEU4F4QD8/pPRWAdIFqvinQcXU+E6g==
+  dependencies:
+    ip-bigint "^8.1.0"
+
 cidr-tools@^4.3.0:
   version "4.3.0"
   resolved "https://registry.npmjs.org/cidr-tools/-/cidr-tools-4.3.0.tgz"
@@ -4822,13 +4829,6 @@ cidr-tools@^4.3.0:
     is-ip "^3.1.0"
     jsbn "^1.1.0"
     string-natural-compare "^3.0.1"
-
-cidr-tools@^9.0.0:
-  version "9.0.0"
-  resolved "https://registry.yarnpkg.com/cidr-tools/-/cidr-tools-9.0.0.tgz#d2f0b8e779ec37f8fb0de74effd2b117fd06422f"
-  integrity sha512-wi9ey6uOd1Fsa0qxpAf9DU9A5KhCe4Hw5jg3v2+kJaAtR8iKz8rIxuJWxa08cykUYUOKN8YP/3w3R7AkW7lTfQ==
-  dependencies:
-    ip-bigint "^8.0.2"
 
 cjs-module-lexer@^1.0.0:
   version "1.3.1"
@@ -8057,10 +8057,10 @@ ip-address@^8.1.0:
     jsbn "1.1.0"
     sprintf-js "1.1.2"
 
-ip-bigint@^8.0.2:
-  version "8.0.2"
-  resolved "https://registry.yarnpkg.com/ip-bigint/-/ip-bigint-8.0.2.tgz#deb73a0c0eccc34f64b45ebfcc5187477a7745df"
-  integrity sha512-UMKHGx7+4O2mD/6jnpNtt4UMA0tRQ3XAiNVYlbLssFU1LegKqKwPqbqtLVW7lQU/c6rCWI1hcxxs4TP96Xa+rQ==
+ip-bigint@^8.1.0:
+  version "8.1.1"
+  resolved "https://registry.yarnpkg.com/ip-bigint/-/ip-bigint-8.1.1.tgz#48b29e32a358418578072c3518e7b5db4c97faa8"
+  integrity sha512-+/H/+4CyuwGMXtIcjv6R/c0p8xvKIwp5O8EATl49GDXzwCcVz2q+lST8OXFveQONNcESymSTJ3A3Bsq46e8Y/w==
 
 ip-cidr@3.1.0:
   version "3.1.0"
