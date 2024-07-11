@@ -1,7 +1,9 @@
 import { action, ActionType } from 'typesafe-actions';
 
+import { authorizationsService } from '~/services';
 import accessRequestService from '~/services/accessTransparency/accessRequestService';
 import { Decision } from '~/types/access_transparency.v1';
+import { SelfAccessReview } from '~/types/accounts_mgmt.v1';
 import { ViewOptions } from '~/types/types';
 
 import { accessRequestConstants } from '../constants';
@@ -57,6 +59,17 @@ const postAccessRequestDecision = (id: string, decision: Decision) =>
     accessRequestService.postAccessRequestDecision(id, decision),
   );
 
+const canMakeDecision = (subscriptionId: string, organizationId: string) =>
+  action(
+    accessRequestConstants.CAN_MAKE_ACCESS_REQUEST_DECISION,
+    authorizationsService.selfAccessReview({
+      action: SelfAccessReview.action.CREATE,
+      resource_type: SelfAccessReview.resource_type.ACCESS_REQUEST_DECISION,
+      subscription_id: subscriptionId,
+      organization_id: organizationId,
+    }),
+  );
+
 const resetAccessRequests = () => action(accessRequestConstants.RESET_ACCESS_REQUESTS);
 const resetAccessRequest = () => action(accessRequestConstants.RESET_ACCESS_REQUEST);
 const resetGetPendingAccessRequests = () =>
@@ -65,6 +78,8 @@ const resetOrganizationPendingAccessRequests = () =>
   action(accessRequestConstants.RESET_ORGANIZATION_PENDING_ACCESS_REQUESTS);
 const resetPostAccessRequestDecision = () =>
   action(accessRequestConstants.RESET_POST_ACCESS_REQUEST_DECISION);
+const resetCanMakeDecision = () =>
+  action(accessRequestConstants.RESET_CAN_MAKE_ACCESS_REQUEST_DECISION);
 
 const accessRequestActions = {
   getAccessRequests,
@@ -72,11 +87,13 @@ const accessRequestActions = {
   getPendingAccessRequests,
   getOrganizationPendingAccessRequests,
   postAccessRequestDecision,
+  canMakeDecision,
   resetAccessRequests,
   resetAccessRequest,
   resetGetPendingAccessRequests,
   resetOrganizationPendingAccessRequests,
   resetPostAccessRequestDecision,
+  resetCanMakeDecision,
 } as const;
 
 type AccessRequestAction = ActionType<
@@ -89,9 +106,11 @@ export {
   getAccessRequest,
   getPendingAccessRequests,
   postAccessRequestDecision,
+  canMakeDecision,
   resetAccessRequests,
   resetAccessRequest,
   resetGetPendingAccessRequests,
   resetPostAccessRequestDecision,
+  resetCanMakeDecision,
   AccessRequestAction,
 };
