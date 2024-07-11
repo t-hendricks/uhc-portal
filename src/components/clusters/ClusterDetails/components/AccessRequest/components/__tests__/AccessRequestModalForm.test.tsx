@@ -2,9 +2,16 @@ import React from 'react';
 import * as reactRedux from 'react-redux';
 
 import { closeModal } from '~/components/common/Modal/ModalActions';
-import { postAccessRequestDecision } from '~/redux/actions/accessRequestActions';
+import {
+  canMakeDecision,
+  postAccessRequestDecision,
+  resetCanMakeDecision,
+} from '~/redux/actions/accessRequestActions';
 import { useGlobalState } from '~/redux/hooks';
+import { baseRequestState } from '~/redux/reduxHelpers';
+import { PromiseReducerState } from '~/redux/types';
 import { act, render, screen, within } from '~/testUtils';
+import { AccessRequest, Decision } from '~/types/access_transparency.v1';
 
 import { AccessRequestState } from '../../model/AccessRequestState';
 import AccessRequestModalForm from '../AccessRequestModalForm';
@@ -30,13 +37,18 @@ jest.mock('react-redux', () => {
 
 jest.mock('~/redux/actions/accessRequestActions', () => ({
   postAccessRequestDecision: jest.fn(),
+  canMakeDecision: jest.fn(),
+  resetCanMakeDecision: jest.fn(),
 }));
 
 const useGlobalStateMock = useGlobalState as jest.Mock;
 const closeModalMock = closeModal as jest.Mock;
 const postAccessRequestDecisionMock = postAccessRequestDecision as jest.Mock;
+const canMakeDecisionMock = canMakeDecision as jest.Mock;
+const resetCanMakeDecisionMock = resetCanMakeDecision as jest.Mock;
 
 describe('AccessRequestModalForm', () => {
+  const REFRESH_TIMES = 1;
   const useDispatchMock = jest.spyOn(reactRedux, 'useDispatch');
   const dispatchMock = jest.fn();
 
@@ -45,6 +57,8 @@ describe('AccessRequestModalForm', () => {
     useDispatchMock.mockReturnValue(dispatchMock);
     closeModalMock.mockReturnValue('closeModalValue');
     postAccessRequestDecisionMock.mockReturnValue('postAccessRequestDecisionValue');
+    canMakeDecisionMock.mockReturnValue('canMakeDecisionMockValue');
+    resetCanMakeDecisionMock.mockReturnValue('resetCanMakeDecisionValue');
   });
 
   afterEach(() => {
@@ -68,12 +82,68 @@ describe('AccessRequestModalForm', () => {
     expect(screen.getByTestId('parent-div').children.length).toBe(0);
   });
 
+  describe('is loading', () =>
+    it.each([
+      ['when access request empty', {}, baseRequestState, baseRequestState],
+      [
+        'when postAccessRequestDecision is pending',
+        { id: 'accessRequestId' },
+        { ...baseRequestState, pending: true },
+        baseRequestState,
+      ],
+      [
+        'when canMakeDecision is not pending',
+        { id: 'accessRequestId' },
+        { ...baseRequestState, pending: false },
+        { ...baseRequestState, pending: true },
+      ],
+    ])(
+      '%p',
+      (
+        _title: string,
+        accessRequest: AccessRequest | undefined,
+        postAccessRequestDecisionState: PromiseReducerState<Decision>,
+        canMakeDecisionState: PromiseReducerState<{ allowed: boolean }>,
+      ) => {
+        // Arrange
+        useGlobalStateMock.mockReturnValueOnce({ accessRequest });
+        useGlobalStateMock.mockReturnValueOnce(postAccessRequestDecisionState);
+        useGlobalStateMock.mockReturnValueOnce(canMakeDecisionState);
+        useGlobalStateMock.mockReturnValueOnce('organizationId');
+
+        // Act
+        render(<AccessRequestModalForm />);
+
+        // Assert
+        expect(screen.getByText(/Loading.../i)).toBeInTheDocument();
+      },
+    ));
+
+  it('is not loading', () => {
+    // Arrange
+    for (let i = 0; i <= REFRESH_TIMES; i += 1) {
+      useGlobalStateMock.mockReturnValueOnce({ accessRequest: { id: 'accessRequestId' } });
+      useGlobalStateMock.mockReturnValueOnce({ ...baseRequestState, pending: false });
+      useGlobalStateMock.mockReturnValueOnce({ ...baseRequestState, pending: false });
+      useGlobalStateMock.mockReturnValueOnce('organizationId');
+    }
+
+    // Act
+    render(<AccessRequestModalForm />);
+
+    // Assert
+    expect(screen.queryByText(/Loading.../i)).not.toBeInTheDocument();
+  });
+
   describe('it renders properly', () => {
     it('is not editMode', () => {
       // Arrange
-      useGlobalStateMock.mockReturnValueOnce({ accessRequest: {} });
-      useGlobalStateMock.mockReturnValueOnce({});
-      useGlobalStateMock.mockReturnValueOnce({});
+      for (let i = 0; i <= REFRESH_TIMES; i += 1) {
+        useGlobalStateMock.mockReturnValueOnce({ accessRequest: { id: 'accessRequestId' } });
+        useGlobalStateMock.mockReturnValueOnce({ ...baseRequestState, pending: false });
+        useGlobalStateMock.mockReturnValueOnce({ ...baseRequestState, pending: false });
+        useGlobalStateMock.mockReturnValueOnce('organizationId');
+      }
 
       // Act
       render(<AccessRequestModalForm />);
@@ -87,13 +157,17 @@ describe('AccessRequestModalForm', () => {
         ).getByText(/access request details/i),
       ).toBeInTheDocument();
     });
-    it('is editMode', async () => {
+
+    it('is editMode no rights for making a decision', async () => {
       // Arrange
-      useGlobalStateMock.mockReturnValueOnce({
-        accessRequest: { status: { state: AccessRequestState.PENDING } },
-      });
-      useGlobalStateMock.mockReturnValueOnce({});
-      useGlobalStateMock.mockReturnValueOnce({});
+      for (let i = 0; i <= REFRESH_TIMES; i += 1) {
+        useGlobalStateMock.mockReturnValueOnce({
+          accessRequest: { id: 'accessRequestId', status: { state: AccessRequestState.PENDING } },
+        });
+        useGlobalStateMock.mockReturnValueOnce({ ...baseRequestState, pending: false });
+        useGlobalStateMock.mockReturnValueOnce({ ...baseRequestState, pending: false });
+        useGlobalStateMock.mockReturnValueOnce('organizationId');
+      }
 
       // Act
       // eslint-disable-next-line testing-library/no-unnecessary-act
@@ -108,17 +182,54 @@ describe('AccessRequestModalForm', () => {
         ).getByText(/access request details/i),
       ).toBeInTheDocument();
       expect(screen.getByText(/decision/i)).toBeInTheDocument();
+      expect(screen.getByText(/No rights for making a decision/i)).toBeInTheDocument();
+    });
+
+    it('is editMode with rights for making a decision', async () => {
+      // Arrange
+      for (let i = 0; i <= REFRESH_TIMES; i += 1) {
+        useGlobalStateMock.mockReturnValueOnce({
+          accessRequest: { id: 'accessRequestId', status: { state: AccessRequestState.PENDING } },
+        });
+        useGlobalStateMock.mockReturnValueOnce({ ...baseRequestState, pending: false });
+        useGlobalStateMock.mockReturnValueOnce({
+          ...baseRequestState,
+          pending: false,
+          allowed: true,
+        });
+        useGlobalStateMock.mockReturnValueOnce('organizationId');
+      }
+
+      // Act
+      // eslint-disable-next-line testing-library/no-unnecessary-act
+      await act(() => render(<AccessRequestModalForm />));
+
+      // Assert
+      expect(
+        within(
+          screen.getByRole('heading', {
+            name: /access request details/i,
+          }),
+        ).getByText(/access request details/i),
+      ).toBeInTheDocument();
+      expect(screen.getByText(/decision/i)).toBeInTheDocument();
+      expect(screen.queryByText(/No rights for making a decision/i)).not.toBeInTheDocument();
     });
 
     it('shows error after submit error', async () => {
       // Arrange
       const onCloseMock = jest.fn();
-      useGlobalStateMock.mockReturnValueOnce({
-        accessRequest: { status: { state: AccessRequestState.PENDING } },
-        onClose: onCloseMock,
-      });
-      useGlobalStateMock.mockReturnValueOnce({});
-      useGlobalStateMock.mockReturnValueOnce({});
+
+      for (let i = 0; i <= REFRESH_TIMES; i += 1) {
+        useGlobalStateMock.mockReturnValueOnce({
+          accessRequest: { id: 'accessRequestId', status: { state: AccessRequestState.PENDING } },
+          onClose: onCloseMock,
+        });
+        useGlobalStateMock.mockReturnValueOnce({});
+        useGlobalStateMock.mockReturnValueOnce({ allowed: true });
+        useGlobalStateMock.mockReturnValueOnce('organizationId');
+      }
+
       const { user, rerender } = render(<AccessRequestModalForm />);
       await user.click(
         screen.getByRole('radio', {
@@ -133,13 +244,15 @@ describe('AccessRequestModalForm', () => {
 
       // Act
       useGlobalStateMock.mockReturnValueOnce({
-        accessRequest: { status: { state: AccessRequestState.PENDING } },
+        accessRequest: { id: 'accessRequestId', status: { state: AccessRequestState.PENDING } },
         onClose: onCloseMock,
       });
       useGlobalStateMock.mockReturnValueOnce({
         error: {},
       });
       useGlobalStateMock.mockReturnValueOnce({});
+      useGlobalStateMock.mockReturnValueOnce('organizationId');
+
       rerender(<AccessRequestModalForm />);
 
       // Assert
@@ -153,15 +266,25 @@ describe('AccessRequestModalForm', () => {
     it('closes', async () => {
       // Arrange
       const onCloseMock = jest.fn();
-      useGlobalStateMock.mockReturnValueOnce({ accessRequest: {}, onClose: onCloseMock });
-      useGlobalStateMock.mockReturnValueOnce({});
-      useGlobalStateMock.mockReturnValueOnce({});
+      for (let i = 0; i <= REFRESH_TIMES; i += 1) {
+        useGlobalStateMock.mockReturnValueOnce({
+          accessRequest: { id: 'accessRequestId', status: { state: AccessRequestState.PENDING } },
+          onClose: onCloseMock,
+        });
+        useGlobalStateMock.mockReturnValueOnce({ ...baseRequestState, pending: false });
+        useGlobalStateMock.mockReturnValueOnce({
+          ...baseRequestState,
+          pending: false,
+          allowed: true,
+        });
+        useGlobalStateMock.mockReturnValueOnce('organizationId');
+      }
 
       const { user } = render(<AccessRequestModalForm />);
 
       // Act
       await user.click(
-        within(screen.getByRole('contentinfo')).getByRole('button', {
+        screen.getByRole('button', {
           name: /close/i,
         }),
       );
@@ -174,11 +297,18 @@ describe('AccessRequestModalForm', () => {
 
     it('properly disable save button in case not filling form', async () => {
       // Arrange
-      useGlobalStateMock.mockReturnValueOnce({
-        accessRequest: { status: { state: AccessRequestState.PENDING } },
-      });
-      useGlobalStateMock.mockReturnValueOnce({});
-      useGlobalStateMock.mockReturnValueOnce({});
+      for (let i = 0; i <= REFRESH_TIMES; i += 1) {
+        useGlobalStateMock.mockReturnValueOnce({
+          accessRequest: { id: 'accessRequestId', status: { state: AccessRequestState.PENDING } },
+        });
+        useGlobalStateMock.mockReturnValueOnce({ ...baseRequestState, pending: false });
+        useGlobalStateMock.mockReturnValueOnce({
+          ...baseRequestState,
+          pending: false,
+          allowed: true,
+        });
+        useGlobalStateMock.mockReturnValueOnce('organizationId');
+      }
 
       // Act
       // eslint-disable-next-line testing-library/no-unnecessary-act
@@ -199,11 +329,18 @@ describe('AccessRequestModalForm', () => {
 
     it('properly enable save button in case of approve', async () => {
       // Arrange
-      useGlobalStateMock.mockReturnValueOnce({
-        accessRequest: { status: { state: AccessRequestState.PENDING } },
-      });
-      useGlobalStateMock.mockReturnValueOnce({});
-      useGlobalStateMock.mockReturnValueOnce({});
+      for (let i = 0; i <= REFRESH_TIMES; i += 1) {
+        useGlobalStateMock.mockReturnValueOnce({
+          accessRequest: { id: 'accessRequestId', status: { state: AccessRequestState.PENDING } },
+        });
+        useGlobalStateMock.mockReturnValueOnce({ ...baseRequestState, pending: false });
+        useGlobalStateMock.mockReturnValueOnce({
+          ...baseRequestState,
+          pending: false,
+          allowed: true,
+        });
+        useGlobalStateMock.mockReturnValueOnce('organizationId');
+      }
 
       // Act
       const { user } = render(<AccessRequestModalForm />);
@@ -228,11 +365,18 @@ describe('AccessRequestModalForm', () => {
 
     it('properly disable save button in case of deny', async () => {
       // Arrange
-      useGlobalStateMock.mockReturnValueOnce({
-        accessRequest: { status: { state: AccessRequestState.PENDING } },
-      });
-      useGlobalStateMock.mockReturnValueOnce({});
-      useGlobalStateMock.mockReturnValueOnce({});
+      for (let i = 0; i <= REFRESH_TIMES; i += 1) {
+        useGlobalStateMock.mockReturnValueOnce({
+          accessRequest: { id: 'accessRequestId', status: { state: AccessRequestState.PENDING } },
+        });
+        useGlobalStateMock.mockReturnValueOnce({ ...baseRequestState, pending: false });
+        useGlobalStateMock.mockReturnValueOnce({
+          ...baseRequestState,
+          pending: false,
+          allowed: true,
+        });
+        useGlobalStateMock.mockReturnValueOnce('organizationId');
+      }
 
       // Act
       const { user } = render(<AccessRequestModalForm />);
@@ -257,11 +401,18 @@ describe('AccessRequestModalForm', () => {
 
     it('properly enable save button in case of deny and form fields properly filled', async () => {
       // Arrange
-      useGlobalStateMock.mockReturnValueOnce({
-        accessRequest: { status: { state: AccessRequestState.PENDING } },
-      });
-      useGlobalStateMock.mockReturnValueOnce({});
-      useGlobalStateMock.mockReturnValueOnce({});
+      for (let i = 0; i <= REFRESH_TIMES; i += 1) {
+        useGlobalStateMock.mockReturnValueOnce({
+          accessRequest: { id: 'accessRequestId', status: { state: AccessRequestState.PENDING } },
+        });
+        useGlobalStateMock.mockReturnValueOnce({ ...baseRequestState, pending: false });
+        useGlobalStateMock.mockReturnValueOnce({
+          ...baseRequestState,
+          pending: false,
+          allowed: true,
+        });
+        useGlobalStateMock.mockReturnValueOnce('organizationId');
+      }
 
       const { user } = render(<AccessRequestModalForm />);
       await user.click(
@@ -295,11 +446,18 @@ describe('AccessRequestModalForm', () => {
       'save button disabled in case of validation failure for text %p',
       async (justificationValue: string) => {
         // Arrange
-        useGlobalStateMock.mockReturnValueOnce({
-          accessRequest: { status: { state: AccessRequestState.PENDING } },
-        });
-        useGlobalStateMock.mockReturnValueOnce({});
-        useGlobalStateMock.mockReturnValueOnce({});
+        for (let i = 0; i <= REFRESH_TIMES; i += 1) {
+          useGlobalStateMock.mockReturnValueOnce({
+            accessRequest: { id: 'accessRequestId', status: { state: AccessRequestState.PENDING } },
+          });
+          useGlobalStateMock.mockReturnValueOnce({ ...baseRequestState, pending: false });
+          useGlobalStateMock.mockReturnValueOnce({
+            ...baseRequestState,
+            pending: false,
+            allowed: true,
+          });
+          useGlobalStateMock.mockReturnValueOnce('organizationId');
+        }
 
         const { user } = render(<AccessRequestModalForm />);
         await user.click(
@@ -333,12 +491,19 @@ describe('AccessRequestModalForm', () => {
     it('submits', async () => {
       // Arrange
       const onCloseMock = jest.fn();
-      useGlobalStateMock.mockReturnValueOnce({
-        accessRequest: { status: { state: AccessRequestState.PENDING } },
-        onClose: onCloseMock,
-      });
-      useGlobalStateMock.mockReturnValueOnce({});
-      useGlobalStateMock.mockReturnValueOnce({});
+      for (let i = 0; i <= REFRESH_TIMES; i += 1) {
+        useGlobalStateMock.mockReturnValueOnce({
+          accessRequest: { id: 'accessRequestId', status: { state: AccessRequestState.PENDING } },
+          onClose: onCloseMock,
+        });
+        useGlobalStateMock.mockReturnValueOnce({ ...baseRequestState, pending: false });
+        useGlobalStateMock.mockReturnValueOnce({
+          ...baseRequestState,
+          pending: false,
+          allowed: true,
+        });
+        useGlobalStateMock.mockReturnValueOnce('organizationId');
+      }
 
       const { user } = render(<AccessRequestModalForm />);
       await user.click(
@@ -362,12 +527,20 @@ describe('AccessRequestModalForm', () => {
     it('closes after submit', async () => {
       // Arrange
       const onCloseMock = jest.fn();
-      useGlobalStateMock.mockReturnValueOnce({
-        accessRequest: { status: { state: AccessRequestState.PENDING } },
-        onClose: onCloseMock,
-      });
-      useGlobalStateMock.mockReturnValueOnce({});
-      useGlobalStateMock.mockReturnValueOnce({});
+      for (let i = 0; i <= REFRESH_TIMES; i += 1) {
+        useGlobalStateMock.mockReturnValueOnce({
+          accessRequest: { id: 'accessRequestId', status: { state: AccessRequestState.PENDING } },
+          onClose: onCloseMock,
+        });
+        useGlobalStateMock.mockReturnValueOnce({ ...baseRequestState, pending: false });
+        useGlobalStateMock.mockReturnValueOnce({
+          ...baseRequestState,
+          pending: false,
+          allowed: true,
+        });
+        useGlobalStateMock.mockReturnValueOnce('organizationId');
+      }
+
       const { user, rerender } = render(<AccessRequestModalForm />);
       await user.click(
         screen.getByRole('radio', {
@@ -375,18 +548,28 @@ describe('AccessRequestModalForm', () => {
         }),
       );
       await user.click(
-        within(screen.getByRole('contentinfo')).getByRole('button', {
+        screen.getByRole('button', {
           name: /save/i,
         }),
       );
 
       // Act
       useGlobalStateMock.mockReturnValueOnce({
-        accessRequest: { status: { state: AccessRequestState.PENDING } },
+        accessRequest: { id: 'accessRequestId', status: { state: AccessRequestState.PENDING } },
         onClose: onCloseMock,
       });
-      useGlobalStateMock.mockReturnValueOnce({ fulfilled: true });
-      useGlobalStateMock.mockReturnValueOnce({});
+      useGlobalStateMock.mockReturnValueOnce({
+        ...baseRequestState,
+        pending: false,
+        fulfilled: true,
+      });
+      useGlobalStateMock.mockReturnValueOnce({
+        ...baseRequestState,
+        pending: false,
+        allowed: true,
+      });
+      useGlobalStateMock.mockReturnValueOnce('organizationId');
+
       rerender(<AccessRequestModalForm />);
 
       // Assert
@@ -394,5 +577,134 @@ describe('AccessRequestModalForm', () => {
       expect(dispatchMock).toHaveBeenCalledTimes(2);
       expect(dispatchMock).toHaveBeenCalledWith('closeModalValue');
     });
+
+    it('properly unmounts', async () => {
+      // Arrange
+      for (let i = 0; i <= REFRESH_TIMES; i += 1) {
+        useGlobalStateMock.mockReturnValueOnce({
+          accessRequest: { id: 'accessRequestId', status: { state: AccessRequestState.PENDING } },
+        });
+        useGlobalStateMock.mockReturnValueOnce({ ...baseRequestState, pending: false });
+        useGlobalStateMock.mockReturnValueOnce({
+          ...baseRequestState,
+          pending: false,
+          allowed: true,
+        });
+        useGlobalStateMock.mockReturnValueOnce('organizationId');
+      }
+
+      const { unmount } = render(<AccessRequestModalForm />);
+
+      // Act
+      unmount();
+
+      // Assert
+      expect(dispatchMock).toHaveBeenCalledTimes(1);
+      expect(dispatchMock).toHaveBeenCalledWith('resetCanMakeDecisionValue');
+    });
+  });
+
+  describe('error cases', () => {
+    it('post access request decision error', () => {
+      // Arrange
+      for (let i = 0; i <= REFRESH_TIMES; i += 1) {
+        useGlobalStateMock.mockReturnValueOnce({ accessRequest: { id: 'accessRequestId' } });
+        useGlobalStateMock.mockReturnValueOnce({
+          ...baseRequestState,
+          pending: false,
+          error: 'error',
+        });
+        useGlobalStateMock.mockReturnValueOnce({ ...baseRequestState, pending: false });
+        useGlobalStateMock.mockReturnValueOnce('organizationId');
+      }
+
+      // Act
+      render(<AccessRequestModalForm />);
+
+      // Assert
+      expect(screen.getByText(/error-box/i)).toBeInTheDocument();
+    });
+
+    it('can make decision error', () => {
+      // Arrange
+      for (let i = 0; i <= REFRESH_TIMES; i += 1) {
+        useGlobalStateMock.mockReturnValueOnce({ accessRequest: { id: 'accessRequestId' } });
+        useGlobalStateMock.mockReturnValueOnce({
+          ...baseRequestState,
+          pending: false,
+        });
+        useGlobalStateMock.mockReturnValueOnce({
+          ...baseRequestState,
+          pending: false,
+          error: 'error',
+        });
+        useGlobalStateMock.mockReturnValueOnce('organizationId');
+      }
+
+      // Act
+      render(<AccessRequestModalForm />);
+
+      // Assert
+      expect(screen.getByText(/error-box/i)).toBeInTheDocument();
+    });
+  });
+
+  describe('canMakeDecision is triggered', () => {
+    it('is triggered', () => {
+      // Arrange
+      for (let i = 0; i <= REFRESH_TIMES; i += 1) {
+        useGlobalStateMock.mockReturnValueOnce({
+          accessRequest: {
+            id: 'accessRequestId',
+            subscription_id: 'subscriptionId',
+            status: { state: AccessRequestState.PENDING },
+          },
+        });
+        useGlobalStateMock.mockReturnValueOnce({ ...baseRequestState, pending: false });
+        useGlobalStateMock.mockReturnValueOnce({ ...baseRequestState, pending: false });
+        useGlobalStateMock.mockReturnValueOnce('organizationId');
+      }
+
+      // Act
+      render(<AccessRequestModalForm />);
+
+      // Assert
+      expect(dispatchMock).toHaveBeenCalledTimes(1);
+      expect(canMakeDecisionMock).toHaveBeenCalledWith('subscriptionId', 'organizationId');
+      expect(dispatchMock).toHaveBeenCalledWith('canMakeDecisionMockValue');
+    });
+
+    it.each([
+      [AccessRequestState.APPROVED, 'subscriptionId', 'organizationId'],
+      [AccessRequestState.PENDING, undefined, 'organizationId'],
+      [AccessRequestState.PENDING, 'subscriptionId', undefined],
+    ])(
+      'is not triggered. Status %p, Subscription ID %p, OrganizationID %p',
+      (
+        state: AccessRequestState | undefined,
+        subscriptionId: string | undefined,
+        organizationId: string | undefined,
+      ) => {
+        // Arrange
+        for (let i = 0; i <= REFRESH_TIMES; i += 1) {
+          useGlobalStateMock.mockReturnValueOnce({
+            accessRequest: {
+              id: 'accessRequestId',
+              subscription_id: subscriptionId,
+              status: { state },
+            },
+          });
+          useGlobalStateMock.mockReturnValueOnce({ ...baseRequestState, pending: false });
+          useGlobalStateMock.mockReturnValueOnce({ ...baseRequestState, pending: false });
+          useGlobalStateMock.mockReturnValueOnce(organizationId);
+        }
+
+        // Act
+        render(<AccessRequestModalForm />);
+
+        // Assert
+        expect(canMakeDecisionMock).toHaveBeenCalledTimes(0);
+      },
+    );
   });
 });
