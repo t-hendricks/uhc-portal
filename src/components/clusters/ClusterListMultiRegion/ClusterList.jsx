@@ -25,6 +25,7 @@ import {
   FlexItem,
   PageSection,
   PageSectionVariants,
+  Spinner,
   Title,
   Toolbar,
   ToolbarContent,
@@ -32,7 +33,6 @@ import {
   ToolbarItem,
 } from '@patternfly/react-core';
 import { SortByDirection } from '@patternfly/react-table';
-import Spinner from '@redhat-cloud-services/frontend-components/Spinner';
 
 import { ONLY_MY_CLUSTERS_TOGGLE_CLUSTERS_LIST } from '~/common/localStorageConstants';
 import { AppPage } from '~/components/App/AppPage';
@@ -95,7 +95,11 @@ const ClusterListPageHeader = ({
             >
               {showSpinner && (
                 <ToolbarItem>
-                  <Spinner size="lg" className="cluster-list-spinner" />
+                  <Spinner
+                    size="lg"
+                    className="cluster-list-spinner"
+                    aria-label="Loading cluster list data"
+                  />
                 </ToolbarItem>
               )}
               {error && (
