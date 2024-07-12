@@ -80,7 +80,10 @@ describe('<ClusterList />', () => {
       'true',
     );
 
-    expect(within(screen.getByRole('status')).getByText('Loading...')).toBeInTheDocument(); // loading spinner
+    expect(
+      screen.getByRole('progressbar', { name: 'Loading cluster list data' }),
+    ).toBeInTheDocument(); // loading spinner
+
     expect(screen.queryByText(emptyStateText)).not.toBeInTheDocument();
   });
 
@@ -102,7 +105,9 @@ describe('<ClusterList />', () => {
     expect(screen.queryByTestId('skeleton')).not.toBeInTheDocument();
     expect(screen.queryByRole('table')).not.toBeInTheDocument();
     expect(screen.queryByRole('button', { name: 'Refresh' })).not.toBeInTheDocument();
-    expect(screen.queryByRole('status')).not.toBeInTheDocument(); // loading spinner
+    expect(
+      screen.queryByRole('progressbar', { name: 'Loading cluster list data' }),
+    ).not.toBeInTheDocument(); // loading spinner
     expect(screen.getByText(emptyStateText)).toBeInTheDocument();
   });
 
@@ -125,7 +130,9 @@ describe('<ClusterList />', () => {
       'true',
     );
 
-    expect(within(screen.getByRole('status')).getByText('Loading...')).toBeInTheDocument(); // loading spinner
+    expect(
+      screen.getByRole('progressbar', { name: 'Loading cluster list data' }),
+    ).toBeInTheDocument(); // loading spinner
     expect(screen.queryByTestId('skeleton')).not.toBeInTheDocument();
 
     expect(
@@ -152,7 +159,9 @@ describe('<ClusterList />', () => {
       'true',
     );
 
-    expect(within(screen.getByRole('status')).getByText('Loading...')).toBeInTheDocument(); // loading spinner
+    expect(
+      screen.getByRole('progressbar', { name: 'Loading cluster list data' }),
+    ).toBeInTheDocument(); // loading spinner
     expect(screen.queryByTestId('skeleton')).not.toBeInTheDocument();
 
     expect(
@@ -178,7 +187,9 @@ describe('<ClusterList />', () => {
       'false',
     );
 
-    expect(screen.queryByRole('status')).not.toBeInTheDocument(); // loading spinner
+    expect(
+      screen.queryByRole('progressbar', { name: 'Loading cluster list data' }),
+    ).not.toBeInTheDocument(); // loading spinner
     expect(screen.queryByTestId('skeleton')).not.toBeInTheDocument();
 
     expect(
