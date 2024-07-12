@@ -34,22 +34,36 @@ import {
 import { SortByDirection } from '@patternfly/react-table';
 import Spinner from '@redhat-cloud-services/frontend-components/Spinner';
 
+import { ONLY_MY_CLUSTERS_TOGGLE_CLUSTERS_LIST } from '~/common/localStorageConstants';
 import { AppPage } from '~/components/App/AppPage';
 import { useFetchClusters } from '~/queries/ClusterListQueries/useFetchClusters';
-import { viewActions } from '~/redux/actions/viewOptionsActions';
-import { viewConstants } from '~/redux/constants';
+import { CLUSTERS_VIEW } from '~/redux/constants/viewConstants';
+import { isRestrictedEnv } from '~/restrictedEnv';
 
+import helpers from '../../../common/helpers';
+import { normalizedProducts } from '../../../common/subscriptionTypes';
+import {
+  onListFilterSet,
+  onListFlagsSet,
+  viewActions,
+} from '../../../redux/actions/viewOptionsActions';
+import { viewConstants } from '../../../redux/constants';
 import ErrorBox from '../../common/ErrorBox';
 import Unavailable from '../../common/Unavailable';
+import ClusterListFilter from '../common/ClusterListFilter';
 import CommonClusterModals from '../common/CommonClusterModals';
 import ErrorTriangle from '../common/ErrorTriangle';
 import GlobalErrorBox from '../common/GlobalErrorBox/GlobalErrorBox';
 import ReadOnlyBanner from '../common/ReadOnlyBanner';
 
+import ClusterListActions from './components/ClusterListActions';
 import ClusterListEmptyState from './components/ClusterListEmptyState';
+import ClusterListFilterChipGroup from './components/ClusterListFilterChipGroup/ClusterListFilterChipGroup';
+import ClusterListFilterDropdown from './components/ClusterListFilterDropdown';
 import ClusterListTable from './components/ClusterListTable';
 import { PaginationRow } from './components/PaginationRow';
 import { RefreshButton } from './components/RefreshButton';
+import ViewOnlyMyClustersToggle from './components/ViewOnlyMyClustersToggle';
 import { sortClusters } from './clusterListSort';
 
 import './ClusterList.scss';
@@ -208,23 +222,41 @@ const ClusterList = ({
   React.useEffect(() => {
     preLoadRedux();
 
+    if (isRestrictedEnv()) {
+      dispatch(
+        onListFlagsSet(
+          'subscriptionFilter',
+          {
+            plan_id: [normalizedProducts.ROSA],
+          },
+          viewConstants.CLUSTERS_VIEW,
+        ),
+      );
+    }
+
     // componentWillUnmount
     return () => {
       closeModal();
 
       clearGlobalError('clusterList');
+      dispatch(onListFilterSet('', viewConstants.CLUSTERS_VIEW));
     };
     // Run only on mount and unmount
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const isPendingNoData = !size(clusters) && isLoading;
+  const viewOptions = useSelector((state) => state.viewOptions.CLUSTERS_VIEW);
+  const { showMyClustersOnly, subscriptionFilter } = viewOptions.flags;
+  const hasNoFilters =
+    helpers.nestedIsEmpty(subscriptionFilter) && !showMyClustersOnly && !viewOptions.filter;
+
+  const isPendingNoData = !size(clusters) && isLoading; // Show skeletons
 
   const showSpinner = isFetching || isLoading;
 
   // The empty state asserts as a fact that you have no clusters;
   // not appropriate when results are indeterminate or empty due to filtering.
-  const showEmptyState = !isLoading && !isFetching && !isError && !size(clusters);
+  const showEmptyState = !showSpinner && !isError && !size(clusters) && hasNoFilters;
 
   const someReadOnly =
     clusters && clusters.map((c) => c?.status?.configuration_mode).includes('read_only');
@@ -275,6 +307,28 @@ const ClusterList = ({
 
             <Toolbar id="cluster-list-toolbar">
               <ToolbarContent>
+                <ToolbarItem className="ocm-c-toolbar__item-cluster-filter-list">
+                  <ClusterListFilter isDisabled={isPendingNoData} view={CLUSTERS_VIEW} />
+                </ToolbarItem>
+                {isRestrictedEnv() ? null : (
+                  <ToolbarItem
+                    className="ocm-c-toolbar__item-cluster-list-filter-dropdown"
+                    data-testid="cluster-list-filter-dropdown"
+                  >
+                    {/* Cluster type */}
+                    <ClusterListFilterDropdown
+                      view={CLUSTERS_VIEW}
+                      isDisabled={isLoading || isFetching}
+                    />
+                  </ToolbarItem>
+                )}
+                <ClusterListActions />
+                <ViewOnlyMyClustersToggle
+                  view={CLUSTERS_VIEW}
+                  bodyContent="Show only the clusters you previously created, or all clusters in your organization."
+                  localStorageKey={ONLY_MY_CLUSTERS_TOGGLE_CLUSTERS_LIST}
+                />
+
                 <ToolbarItem
                   align={{ default: 'alignRight' }}
                   variant="pagination"
@@ -294,7 +348,7 @@ const ClusterList = ({
                 </ToolbarItem>
               </ToolbarContent>
             </Toolbar>
-
+            {isRestrictedEnv() ? null : <ClusterListFilterChipGroup />}
             {isError && !size(clusters) ? (
               <Unavailable
                 message="Error retrieving clusters"

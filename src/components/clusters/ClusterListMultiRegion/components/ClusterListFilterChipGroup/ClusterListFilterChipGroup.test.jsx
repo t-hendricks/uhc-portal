@@ -1,16 +1,19 @@
 import React from 'react';
 import { CompatRouter } from 'react-router-dom-v5-compat';
 
-import { checkAccessibility, render, screen, TestRouter } from '~/testUtils';
+import { checkAccessibility, screen, TestRouter, withState } from '~/testUtils';
 
 import ClusterListFilterChipGroup from './ClusterListFilterChipGroup';
 
 describe('<ClusterListFilterChipGroup />', () => {
   it('is accessible', async () => {
-    const { container } = render(
+    const { container } = withState(
+      { viewOptions: { CLUSTERS_VIEW: { flags: { subscriptionFilter: { plan_id: ['OSD'] } } } } },
+      true,
+    ).render(
       <TestRouter>
         <CompatRouter>
-          <ClusterListFilterChipGroup setFilter={jest.fn()} currentFilters={{ plan_id: ['OSD'] }} />
+          <ClusterListFilterChipGroup />
         </CompatRouter>
       </TestRouter>,
     );
