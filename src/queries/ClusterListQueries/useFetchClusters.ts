@@ -19,6 +19,7 @@ import { formatCluster } from './formatCluster';
 import { useFetchCanEditDelete } from './useFetchCanEditDelete';
 
 const QUERY_TYPE = { GLOBAL: 'global', REGIONAL: 'regional' };
+const REFRESH_INTERVAL = 60000; // milliseconds
 
 type FetchClusterQueryResults = UseQueryResult & {
   data?: {
@@ -162,17 +163,49 @@ export const useFetchClusters = () => {
     (state: GlobalState) => state.viewOptions.CLUSTERS_VIEW?.filter || '',
   );
 
+  const [refetchInterval, setRefetchInterval] = React.useState<ReturnType<typeof setInterval>>();
   const [queries, setQueries] = React.useState<CreateQuery[]>([]);
 
-  React.useEffect(() => {
-    setQueries([]);
-    queryClient.removeQueries({
-      queryKey: [queryConstants.FETCH_CLUSTERS_QUERY_KEY, QUERY_TYPE.GLOBAL],
-    });
-    queryClient.removeQueries({
-      queryKey: [queryConstants.FETCH_CLUSTERS_QUERY_KEY, QUERY_TYPE.REGIONAL],
-    });
-  }, [flags, nameFilter]);
+  const getNewData = () => {
+    queryClient.invalidateQueries({ queryKey: [queryConstants.FETCH_CLUSTERS_QUERY_KEY] });
+  };
+
+  const setRefetch = () => {
+    // @ts-ignore
+    clearInterval(refetchInterval);
+    const intervalId = setInterval(() => {
+      getNewData();
+    }, REFRESH_INTERVAL);
+    setRefetchInterval(intervalId);
+  };
+
+  const refetch = () => {
+    getNewData();
+    setRefetch();
+  };
+
+  if (!refetchInterval) {
+    setRefetch();
+  }
+
+  /* Filter */
+  React.useEffect(
+    () => {
+      setQueries([]);
+      // @ts-ignore
+      clearInterval(refetchInterval);
+      setRefetchInterval(undefined);
+      queryClient.removeQueries({
+        queryKey: [queryConstants.FETCH_CLUSTERS_QUERY_KEY, QUERY_TYPE.GLOBAL],
+      });
+      queryClient.removeQueries({
+        queryKey: [queryConstants.FETCH_CLUSTERS_QUERY_KEY, QUERY_TYPE.REGIONAL],
+      });
+    },
+    // We only want to run this on filter change so refetchInterval should not be dependency
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [flags, nameFilter],
+  );
 
   const {
     isLoading: isRegionsLoading,
@@ -381,9 +414,7 @@ export const useFetchClusters = () => {
 
     isError: isError || isCanUpdateDeleteError || isRegionsError,
     errors,
-    refetch: () => {
-      queryClient.invalidateQueries({ queryKey: [queryConstants.FETCH_CLUSTERS_QUERY_KEY] });
-    },
+    refetch,
   };
 };
 
