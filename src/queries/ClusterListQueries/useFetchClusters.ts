@@ -1,4 +1,5 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
 
 import { useQueries, UseQueryResult } from '@tanstack/react-query';
 
@@ -6,6 +7,7 @@ import { subscriptionStatuses } from '~/common/subscriptionTypes';
 import { queryClient } from '~/components/App/queryClient';
 import { useFeatureGate } from '~/hooks/useFeatureGate';
 import { ASSISTED_INSTALLER_MERGE_LISTS_FEATURE } from '~/redux/constants/featureConstants';
+import { GlobalState } from '~/redux/store';
 import { ClusterWithPermissions } from '~/types/types';
 
 import { Region, useFetchRegions } from '../common/useFetchRegions';
@@ -32,11 +34,18 @@ const fetchPageOfClusters = async (
   page: number,
   aiMergeListsFeatureFlag: boolean,
   region?: Region,
+  flags?: { [flag: string]: any },
+  nameFilter?: string,
+  userName?: string,
 ) => {
   const { items, total } = region
-    ? await fetchPageOfRegionalClusters(page, region)
-    : await fetchPageOfGlobalClusters(page, aiMergeListsFeatureFlag);
-
+    ? await fetchPageOfRegionalClusters(page, region, { flags, filter: nameFilter }, userName)
+    : await fetchPageOfGlobalClusters(
+        page,
+        aiMergeListsFeatureFlag,
+        { flags, filter: nameFilter },
+        userName,
+      );
   return {
     items: items?.map((cluster) => formatCluster(cluster)),
     page,
@@ -45,24 +54,67 @@ const fetchPageOfClusters = async (
   };
 };
 
-const queryKey = (page: number, region: Region | undefined) => {
-  if (region) {
-    return [
-      queryConstants.FETCH_CLUSTERS_QUERY_KEY,
-      QUERY_TYPE.REGIONAL,
-      page,
-      region.region,
-      region.provider,
-    ];
+const queryKey = ({
+  page,
+  region,
+  plans,
+  nameFilter,
+  showMyClustersOnly,
+}: {
+  page: number;
+  region?: Region | undefined;
+  plans?: string[] | undefined;
+  nameFilter?: string | undefined;
+  showMyClustersOnly?: boolean;
+}) => {
+  const key = [
+    queryConstants.FETCH_CLUSTERS_QUERY_KEY,
+    region ? QUERY_TYPE.REGIONAL : QUERY_TYPE.GLOBAL,
+    page,
+  ];
+  if (region && region.region && region.provider) {
+    key.push(region.region);
+    key.push(region.provider);
   }
-  return [queryConstants.FETCH_CLUSTERS_QUERY_KEY, QUERY_TYPE.GLOBAL, page];
+
+  if (plans && plans.length > 0) {
+    key.push(...plans);
+  }
+  if (nameFilter) {
+    key.push(nameFilter);
+  }
+  if (showMyClustersOnly) {
+    key.push('showMyClustersOnly');
+  }
+  return key;
 };
 
-const createQuery = (page: number, aiMergeListsFeatureFlag: boolean, region?: Region) => ({
-  queryKey: queryKey(page, region),
+const createQuery = ({
+  page,
+  aiMergeListsFeatureFlag,
+  region,
+  flags,
+  nameFilter,
+  userName,
+}: {
+  page: number;
+  aiMergeListsFeatureFlag: boolean;
+  region?: Region;
+  flags?: { [flag: string]: any };
+  nameFilter?: string;
+  userName?: string;
+}) => ({
+  queryKey: queryKey({
+    page,
+    region,
+    plans: flags?.subscriptionFilter?.plan_id,
+    nameFilter,
+    showMyClustersOnly: flags?.showMyClustersOnly,
+  }),
   staleTime: queryConstants.STALE_TIME,
   refetchInterval: queryConstants.REFETCH_INTERVAL,
-  queryFn: async () => fetchPageOfClusters(page || 1, aiMergeListsFeatureFlag, region),
+  queryFn: async () =>
+    fetchPageOfClusters(page || 1, aiMergeListsFeatureFlag, region, flags, nameFilter, userName),
 });
 
 type CreateQuery = ReturnType<typeof createQuery>;
@@ -104,6 +156,23 @@ export const useFetchClusters = () => {
   });
 
   const aiMergeListsFeatureFlag = useFeatureGate(ASSISTED_INSTALLER_MERGE_LISTS_FEATURE);
+  const userName = useSelector((state: GlobalState) => state.userProfile.keycloakProfile.username);
+  const flags = useSelector((state: GlobalState) => state.viewOptions.CLUSTERS_VIEW?.flags || {});
+  const nameFilter = useSelector(
+    (state: GlobalState) => state.viewOptions.CLUSTERS_VIEW?.filter || '',
+  );
+
+  const [queries, setQueries] = React.useState<CreateQuery[]>([]);
+
+  React.useEffect(() => {
+    setQueries([]);
+    queryClient.removeQueries({
+      queryKey: [queryConstants.FETCH_CLUSTERS_QUERY_KEY, QUERY_TYPE.GLOBAL],
+    });
+    queryClient.removeQueries({
+      queryKey: [queryConstants.FETCH_CLUSTERS_QUERY_KEY, QUERY_TYPE.REGIONAL],
+    });
+  }, [flags, nameFilter]);
 
   const {
     isLoading: isRegionsLoading,
@@ -117,8 +186,6 @@ export const useFetchClusters = () => {
     returnAll: false,
   });
 
-  const [queries, setQueries] = React.useState<CreateQuery[]>([]);
-
   // Start to get initial queries
   if (
     !isCanUpdateDeleteLoading &&
@@ -129,14 +196,34 @@ export const useFetchClusters = () => {
   ) {
     if (!isExistingQuery(queries, 1)) {
       // start to get global (non regional) clusters
-      const globalPage1Query = createQuery(1, aiMergeListsFeatureFlag);
+
+      const globalPage1Query = createQuery({
+        page: 1,
+        aiMergeListsFeatureFlag,
+        flags,
+        // @ts-ignore
+        nameFilter,
+        userName,
+      });
       setQueries((prev) => [...prev, globalPage1Query]);
     }
     if (regions?.length > 0) {
       const initialRegionQueryList: CreateQuery[] = regions.reduce(
         (initialRegionList: CreateQuery[], region) => {
           if (!isExistingQuery(queries, 1, region)) {
-            return [...initialRegionList, createQuery(1, aiMergeListsFeatureFlag, region)];
+            return [
+              ...initialRegionList,
+
+              createQuery({
+                page: 1,
+                aiMergeListsFeatureFlag,
+                region,
+                flags,
+                // @ts-ignore
+                nameFilter,
+                userName,
+              }),
+            ];
           }
           return initialRegionList;
         },
@@ -218,7 +305,9 @@ export const useFetchClusters = () => {
         const nextPage = pageFetched.page + i;
         const doesNextPageExist = isExistingQuery(queries, nextPage, pageFetched.region);
         if (!doesNextPageExist) {
-          newQueries.push(createQuery(nextPage, aiMergeListsFeatureFlag, pageFetched.region));
+          newQueries.push(
+            createQuery({ page: nextPage, aiMergeListsFeatureFlag, region: pageFetched.region }),
+          );
         }
       }
       if (newQueries.length > 0) {
@@ -288,7 +377,6 @@ export const useFetchClusters = () => {
       isRegionsFetching ||
       (data.clusters === undefined && !isError && !isCanUpdateDeleteError && !isRegionsError),
 
-    // Until sorting/pagination is enabled -  sort by creation date
     data: { items: data?.clusters || [] },
 
     isError: isError || isCanUpdateDeleteError || isRegionsError,

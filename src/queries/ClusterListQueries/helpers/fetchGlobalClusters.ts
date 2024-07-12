@@ -1,4 +1,5 @@
-import { allowedProducts, subscriptionStatuses } from '~/common/subscriptionTypes';
+import { createViewQueryObject } from '~/common/queryHelpers';
+import { subscriptionStatuses } from '~/common/subscriptionTypes';
 import type { Subscription } from '~/types/accounts_mgmt.v1';
 
 import isAssistedInstallSubscription from '../../../common/isAssistedInstallerCluster';
@@ -41,20 +42,37 @@ const fetchManagedClusters = async (managedSubscriptions: Subscription[] = []) =
   return { managedClusters: response.data?.items };
 };
 
-const fetchGlobalSubscriptions = async (page: number, aiMergeListsFeatureFlag: boolean) => {
-  const sqlString = (s: string) => {
-    // escape ' characters by doubling
-    const escaped = s.replace(/'/g, "''");
-    return `'${escaped}'`;
-  };
+type ModifiedViewOptions = {
+  filter?: string;
+  flags?: { [flag: string]: any };
+};
 
-  const params = {
-    filter: `(xcm_id='' OR xcm_id IS NULL) AND (cluster_id!='') AND (plan.id IN (${allowedProducts.map(sqlString).join(', ')})) AND (status NOT IN ('Deprovisioned', 'Archived'))`,
-    order: 'created_at desc',
-    page,
-    page_size: queryConstants.PAGE_SIZE,
-  };
+const fetchGlobalSubscriptions = async (
+  page: number,
+  aiMergeListsFeatureFlag: boolean,
+  viewOptions?: ModifiedViewOptions,
+  userName?: string,
+) => {
+  const params = createViewQueryObject(
+    {
+      currentPage: page,
+      pageSize: queryConstants.PAGE_SIZE,
+      totalCount: 0, // isn't used but required by type
+      totalPages: 0, // isn't used but required by type
+      filter: viewOptions?.filter || '',
+      sorting: {
+        sortField: 'created_at',
+        isAscending: false,
+        sortIndex: 1,
+      },
+      flags: viewOptions?.flags || {},
+    },
+    userName,
+  );
 
+  params.filter = `(xcm_id='' OR xcm_id IS NULL) AND ${params.filter}`;
+
+  // @ts-ignore - TODO the types are inconstant due to optional items
   const response = await accountsService.getSubscriptions(params);
   const subscriptions = mapListResponse(response, normalizeSubscription);
 
@@ -96,11 +114,16 @@ const fetchGlobalSubscriptions = async (page: number, aiMergeListsFeatureFlag: b
   };
 };
 
-export const fetchPageOfGlobalClusters = async (page: number, aiMergeListsFeatureFlag: boolean) => {
+export const fetchPageOfGlobalClusters = async (
+  page: number,
+  aiMergeListsFeatureFlag: boolean,
+  viewOptions: ModifiedViewOptions,
+  userName?: string,
+) => {
   // Get global region clusters
   // This gets the subscriptions list first then clusters
   const { subscriptionIds, subscriptionMap, managedSubscriptions, total } =
-    await fetchGlobalSubscriptions(page, aiMergeListsFeatureFlag);
+    await fetchGlobalSubscriptions(page, aiMergeListsFeatureFlag, viewOptions, userName);
 
   const [{ aiClusters }, { managedClusters }] = await Promise.all([
     fetchAIClusters(subscriptionIds),
