@@ -179,8 +179,10 @@
     "@types/react": "17.0.3"
   },
   "scripts": {
-    "build": "webpack $(run/progress-flag-if-tty.sh)",
     "start": "concurrently --kill-others --prefix=name --names=SERVER,MOCK --prefix-colors=cyan,reset --passthrough-arguments 'yarn dev-server --env noproxy api-env=staging {@}' 'mockdata/mockserver.py' --",
+    "build": "webpack $(run/progress-flag-if-tty.sh)",
+    "build:prod": "yarn build --mode=production",
+    "verify": "yarn lint",
     "dev-server": "webpack serve $(run/progress-flag-if-tty.sh)",
     "insights-proxy": "make insights-proxy-check && run/insights-proxy.sh",
     "stop-insights-proxy": "run/podman-or-docker.sh kill insightsproxy; run/podman-or-docker.sh rm --force insightsproxy; true",
@@ -200,7 +202,7 @@
     "cypress-ui": "cypress open",
     "cypress-headless": "cypress run --browser chrome",
     "code-coverage": "nyc report --reporter=text-summary",
-    "analyze": "rm -rf dist && BUNDLE_ANALYZER=true webpack $(run/progress-flag-if-tty.sh) --mode=production",
+    "analyze": "rm -rf dist && env BUNDLE_ANALYZER=true yarn build:prod",
     "sentry:sourcemaps": "sentry-cli sourcemaps inject ./dist/",
     "sentry:release": "sentry-cli --url https://glitchtip.devshift.net/ releases --org ocm"
   },
