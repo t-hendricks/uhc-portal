@@ -182,7 +182,7 @@
     "start": "concurrently --kill-others --prefix=name --names=SERVER,MOCK --prefix-colors=cyan,reset --passthrough-arguments 'yarn dev-server --env noproxy api-env=staging {@}' 'mockdata/mockserver.py' --",
     "build": "webpack $(run/progress-flag-if-tty.sh)",
     "build:prod": "yarn build --mode=production",
-    "verify": "yarn lint",
+    "verify": "concurrently 'yarn build:prod --env api-env=staging --output-path dist' 'yarn lint' 'yarn test'",
     "dev-server": "webpack serve $(run/progress-flag-if-tty.sh)",
     "insights-proxy": "make insights-proxy-check && run/insights-proxy.sh",
     "stop-insights-proxy": "run/podman-or-docker.sh kill insightsproxy; run/podman-or-docker.sh rm --force insightsproxy; true",
