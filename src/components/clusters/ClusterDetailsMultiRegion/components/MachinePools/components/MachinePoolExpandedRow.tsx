@@ -4,7 +4,7 @@ import isEmpty from 'lodash/isEmpty';
 import { Grid, GridItem, Label, Title } from '@patternfly/react-core';
 
 import { truncateTextWithEllipsis } from '~/common/helpers';
-import { useAWSVPCFromCluster } from '~/components/clusters/common/useAWSVPCFromCluster';
+import { useAWSVPCFromCluster } from '~/components/clusters/commonMultiRegion/useAWSVPCFromCluster';
 import { Cluster, NodePool, SecurityGroup } from '~/types/clusters_mgmt.v1';
 import { MachinePool } from '~/types/clusters_mgmt.v1/models/MachinePool';
 
@@ -73,12 +73,14 @@ const MachinePoolExpandedRow = ({
   cluster,
   isMultiZoneCluster,
   machinePool,
+  region,
 }: {
   cluster: Cluster;
   isMultiZoneCluster: boolean;
   machinePool: MachinePool;
+  region?: string;
 }) => {
-  const { clusterVpc } = useAWSVPCFromCluster(cluster);
+  const { clusterVpc } = useAWSVPCFromCluster(cluster, region);
   const spotMarketOptions = machinePool?.aws?.spot_market_options;
   const securityGroupIds =
     machinePool?.aws?.additional_security_group_ids ||

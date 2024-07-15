@@ -37,6 +37,10 @@ describe('useClusterDetails hook', () => {
     jest.clearAllMocks();
   });
 
+  beforeEach(() => {
+    jest.clearAllMocks();
+  });
+
   it('useClusterDetails returns valid response', async () => {
     const subscriptionID = 'mockedSubscriptionID';
 
@@ -92,13 +96,22 @@ describe('useClusterDetails hook', () => {
 
   it('useSubscription error results in useClusterDetails error response', async () => {
     const subscriptionID = 'mockedSubscriptionID';
-
+    const axiosErrorMock = {
+      response: {
+        data: {
+          erroMessage: 'Error message',
+          errorCode: '401',
+        },
+      },
+    };
     // Mock the useFetchSubscription hook
     const useFetchSubscriptionMock = jest.requireMock('../common/useFetchSubscription');
     useFetchSubscriptionMock.useFetchSubscription.mockReturnValue({
       isLoading: false,
       isError: true,
-      error: null,
+      error: {
+        error: axiosErrorMock,
+      },
     });
 
     const { result } = renderHook(() => useFetchClusterDetails(subscriptionID));

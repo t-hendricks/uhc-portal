@@ -99,18 +99,18 @@ import { getGrants } from './components/AccessControl/NetworkSelfServiceSection/
 import usersActions from './components/AccessControl/UsersSection/UsersActions';
 import { getAddOns, getClusterAddOns } from './components/AddOns/AddOnsActions';
 import ClusterDetailsTop from './components/ClusterDetailsTop';
+// import AddOns from '../ClusterDetailsMultiRegion/components/AddOns';
+import ClusterLogs from './components/ClusterLogs/ClusterLogs';
+import { ClusterTabsId } from './components/common/ClusterTabIds';
+import DeleteIDPDialog from './components/DeleteIDPDialog';
+import { fetchClusterInsights } from './components/Insights/InsightsActions';
 // TODO: Commented out for respective tabs stories
 // import UpgradeSettingsTab from '../ClusterDetailsMultiRegion/components/UpgradeSettings';
 // import AccessControl from '../ClusterDetailsMultiRegion/components/AccessControl/AccessControl';
 // import Support from '../ClusterDetailsMultiRegion/components/Support';
 // import Networking from '../ClusterDetailsMultiRegion/components/Networking';
 // import Monitoring from '../ClusterDetailsMultiRegion/components/Monitoring';
-// import MachinePools from '../ClusterDetailsMultiRegion/components/MachinePools';
-// import AddOns from '../ClusterDetailsMultiRegion/components/AddOns';
-import ClusterLogs from './components/ClusterLogs/ClusterLogs';
-import { ClusterTabsId } from './components/common/ClusterTabIds';
-import DeleteIDPDialog from './components/DeleteIDPDialog';
-import { fetchClusterInsights } from './components/Insights/InsightsActions';
+import MachinePools from './components/MachinePools';
 import {
   clearGetMachinePoolsResponse,
   getMachineOrNodePools,
@@ -563,7 +563,7 @@ const ClusterDetails = (props) => {
               },
               machinePools: {
                 ref: machinePoolsTabRef,
-                show: !isMultiRegionPreviewEnabled && canViewMachinePoolTab(cluster),
+                show: canViewMachinePoolTab(cluster),
               },
               support: {
                 ref: supportTabRef,
@@ -709,6 +709,19 @@ const ClusterDetails = (props) => {
             </ErrorBoundary>
           </TabContent>
         )}
+        {canViewMachinePoolTab(cluster) && (
+          <TabContent
+            eventKey={6}
+            id="machinePoolsContent"
+            ref={machinePoolsTabRef}
+            aria-label="Machine pools"
+            hidden
+          >
+            <ErrorBoundary>
+              <MachinePools cluster={cluster} />
+            </ErrorBoundary>
+          </TabContent>
+        )}
         {/* 
         {displayNetworkingTab && (
           <TabContent
@@ -723,19 +736,18 @@ const ClusterDetails = (props) => {
             </ErrorBoundary>
           </TabContent>
         )}
-        {canViewMachinePoolTab(cluster) && (
-          <TabContent
-            eventKey={6}
-            id="machinePoolsContent"
-            ref={machinePoolsTabRef}
-            aria-label="Machine pools"
-            hidden
-          >
-            <ErrorBoundary>
-              <MachinePools cluster={cluster} />
-            </ErrorBoundary>
-          </TabContent>
-        )}
+        <TabContent
+          eventKey={7}
+          id="supportTabContent"
+          ref={supportTabRef}
+          aria-label="Support"
+          hidden
+        >
+          <ErrorBoundary>
+            <Support isDisabled={isArchived} />
+          </ErrorBoundary>
+        </TabContent>
+       
         {displayUpgradeSettingsTab && (
           <TabContent
             eventKey={8}

@@ -1,0 +1,34 @@
+import { useMutation } from '@tanstack/react-query';
+
+import { queryClient } from '~/components/App/queryClient';
+import clusterService, { getClusterServiceForRegion } from '~/services/clusterService';
+import { ClusterAutoscaler } from '~/types/clusters_mgmt.v1';
+
+export const useUpdateClusterAutoscaler = (clusterID: string, region?: string) => {
+  const { data, isPending, isSuccess, isError, error, mutate, mutateAsync } = useMutation({
+    mutationKey: ['clusterAutoscaler', 'updateClusterAutoscaler', clusterID],
+    mutationFn: async (autoscaler: ClusterAutoscaler) => {
+      if (region) {
+        const clusterService = getClusterServiceForRegion(region);
+        const response = clusterService.updateClusterAutoscaler(clusterID, autoscaler);
+        return response;
+      }
+
+      const response = clusterService.updateClusterAutoscaler(clusterID, autoscaler);
+      return response;
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['clusterAutoscaler'] });
+    },
+  });
+
+  return {
+    data,
+    isPending,
+    isSuccess,
+    isError,
+    error,
+    mutate,
+    mutateAsync,
+  };
+};

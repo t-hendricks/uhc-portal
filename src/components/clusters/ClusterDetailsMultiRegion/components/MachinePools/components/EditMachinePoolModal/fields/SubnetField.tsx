@@ -4,14 +4,14 @@ import { useField } from 'formik';
 import { Alert, Spinner } from '@patternfly/react-core';
 
 import { SubnetSelectField } from '~/components/clusters/common/SubnetSelectField';
-import { useAWSVPCFromCluster } from '~/components/clusters/common/useAWSVPCFromCluster';
+import { useAWSVPCFromCluster } from '~/components/clusters/commonMultiRegion/useAWSVPCFromCluster';
 import { Cluster } from '~/types/clusters_mgmt.v1';
 
 const fieldId = 'privateSubnetId';
 
-const SubnetField = ({ cluster }: { cluster: Cluster }) => {
+const SubnetField = ({ cluster, region }: { cluster: Cluster; region?: string }) => {
   const [inputField, metaField, { setValue }] = useField<string | undefined>(fieldId);
-  const { clusterVpc, isLoading, hasError } = useAWSVPCFromCluster(cluster);
+  const { clusterVpc, isLoading, hasError } = useAWSVPCFromCluster(cluster, region);
   const fieldProps = React.useMemo(
     () => ({
       input: {
