@@ -1,45 +1,13 @@
-import React, { useCallback, useState, ReactNode, useRef, LegacyRef } from 'react';
+import React, { useCallback, useState } from 'react';
 import { Link } from 'react-router-dom-v5-compat';
 
-import {
-  Button,
-  DrawerProps,
-  Flex,
-  FlexItem,
-  Icon,
-  Label,
-  PageSection,
-  Title,
-} from '@patternfly/react-core';
-// todo: imports for the subcomponent - RecommendedLayeredServicesCardView
-import {
-  Card,
-  CardHeader,
-  CardTitle,
-  CardBody,
-  CardFooter,
-  Split,
-  SplitItem /*, Label*/,
-  // Drawer:
-  Drawer,
-  DrawerPanelContent,
-  DrawerContent,
-  DrawerContentBody,
-  DrawerHead,
-  DrawerActions,
-  DrawerCloseButton,
-} from '@patternfly/react-core';
-import OpenDrawerRightIcon from '@patternfly/react-icons/dist/esm/icons/open-drawer-right-icon';
+import { Flex, FlexItem, Label, PageSection, Title } from '@patternfly/react-core';
 
 import ExternalLink from '~/components/common/ExternalLink';
 import InternalTrackingLink from '~/components/common/InternalTrackingLink';
 
 import docLinks from '../../common/installLinks.mjs';
 import OpenShiftProductIcon from '../../styles/images/OpenShiftProductIcon.svg';
-import RedHatOpenShiftGitOpsIcon from '../../styles/images/RedHatOpenShiftGitOpsIcon.svg';
-import RedHatOpenShiftPipelinesIcon from '../../styles/images/RedHatOpenShiftPipelinesIcon.svg';
-import RedHatOpenShiftServiceMeshIcon from '../../styles/images/RedHatOpenShiftServiceMeshIcon.svg';
-import RedHatOperatorHubIcon from '../../styles/images/RedHatOperatorHubIcon.svg';
 import { AppPage } from '../App/AppPage';
 import {
   ListTextLabelLinkCard,
@@ -48,6 +16,8 @@ import {
 import { ProductBanner, ProductBannerProps } from '../common/ProductBanner';
 
 import { OfferingCard } from './OfferingCard/OfferingCard';
+import DrawerPanel from './components/RecommendedOperatorsCards/DrawerPanel';
+import RecommendedOperatorsCards from './components/RecommendedOperatorsCards/RecommendedOperatorsCards';
 
 // todo: check the scss for the sizes of the cards!
 import './Overview.scss';
@@ -103,17 +73,6 @@ const openshiftBannerContents: ProductBannerProps = {
 
 const PAGE_TITLE = 'Overview | Red Hat OpenShift Cluster Manager';
 
-// Drawer:
-
-export type OverviewPageDrawerSettings = {
-  drawerProps?: DrawerProps;
-  drawerPanelContent?: React.ReactNode;
-  /** Element to focus after drawer close animation completes (usually button or link that opened drawer) */
-  focusOnClose?: HTMLElement;
-  /** Callback to execute after drawer close animation completes */
-  // onClose?: () => void;
-};
-
 function OverviewEmptyState() {
   const createClusterURL = '/create';
   const CreateClusterLink = useCallback(
@@ -121,256 +80,82 @@ function OverviewEmptyState() {
     [],
   );
 
-  {
-    /* import pfIcon from './assets/pf-logo-small.svg';
-import activeMQIcon from './assets/activemq-core_200x150.png';
-import avroIcon from './assets/camel-avro_200x150.png';
-import dropBoxIcon from './assets/camel-dropbox_200x150.png';
-import infinispanIcon from './assets/camel-infinispan_200x150.png';
-import saxonIcon from './assets/camel-saxon_200x150.png';
-import sparkIcon from './assets/camel-spark_200x150.png';
-import swaggerIcon from './assets/camel-swagger-java_200x150.png';
-import azureIcon from './assets/FuseConnector_Icons_AzureServices.png';
-import restIcon from './assets/FuseConnector_Icons_REST.png';
-
-const icons = {
-    pfIcon,
-    activeMQIcon,
-    sparkIcon,
-    avroIcon,
-    azureIcon,
-    saxonIcon,
-    dropBoxIcon,
-    infinispanIcon,
-    restIcon,
-    swaggerIcon
-  }; */
-  }
-
-  // export type recommendedLayeredServicesCards Props = {
-  //   icon?: React.ReactNode;
-  //   learnMoreLink?: React.ReactNode;
-  //   title?: string;
-  //   text?: string | React.ReactNode;
-  //   iconCardBodyClassName?: string;
-  //   breadcrumbs?: React.ReactNode;
-  //   dataTestId?: string;
-  // };
-
-  // todo: This should be in the subcomponent: RecommendedLayeredServicesCardView
-  // Could also be in a constants file
-  const recommendedLayeredServicesCards = [
-    {
-      title: 'Red Hat OpenShift GitOps',
-      description:
-        'Integrate git repositories, continuous integration/continuous delivery (CI/CD) tools, and Kubernetes.',
-      icon: RedHatOpenShiftGitOpsIcon,
-      labelText: 'Free',
-      // todo: Insert this drawer content, I think I should put it as JSX
-      // https://docs.google.com/document/d/12P26OSlRgxZC1sK2BFS30-RTdugp3nfFW39lRu92byc/edit
-      drawerPanelContent: <Button className="drawerPanelContent-GitOps">GitOps</Button>,
-    },
-    {
-      title: 'Red Hat OpenShift Pipelines',
-      description:
-        'Automate your application delivery using a continuous integration and continuous deployment (CI/CD) framework.',
-      icon: RedHatOpenShiftPipelinesIcon,
-      labelText: 'Free',
-      // todo: Insert this drawer content, I think I should put it as JSX
-      // https://docs.google.com/document/d/1g0UyIt3Yjn36UC4qoRoE351u76o9p1zDRbma7rChUOk/edit
-      drawerPanelContent: <Button className="drawerPanelContent-Pipelines">Pipelines</Button>,
-    },
-    {
-      title: 'Red Hat OpenShift Service Mesh',
-      description:
-        'Connect, manage, and observe microservices-based applications in a uniform way.',
-      icon: RedHatOpenShiftServiceMeshIcon,
-      labelText: 'Free',
-      // todo: Insert this drawer content, I think I should put it as JSX
-      // https://docs.google.com/document/d/1RZRvRPwjcwb3VxhC5lYVOp4rJeMBEOC64i_f9vUbMTA/edit
-      drawerPanelContent: <Button className="drawerPanelContent-Service Mesh">Service Mesh</Button>,
-    },
-    {
-      title: 'OperatorHub',
-      description: 'Discover and install Kubernetes operators quickly and easily.',
-      icon: RedHatOperatorHubIcon,
-      // todo: Insert this drawer content, I think I should put it as JSX
-      // https://docs.google.com/document/d/1byWr5Z1TxM0l0SeZsBQpPMkAyfhk8K_bLidFwkMKvb8/edit
-      drawerPanelContent: <Button className="drawerPanelContent-OperatorHub">OperatorHub</Button>,
-    },
-  ];
-
-  // Drawer:
-  const [drawerPanelContent, setDrawerPanelContent] = useState<ReactNode>(null);
+  // change name
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+  const [drawerInfo, setDrawerInfo] = useState<{ title: string; content: React.ReactNode }>();
 
-  const [isExpanded, setIsExpanded] = useState(false);
-
-  const onClick = () => {
-    setIsExpanded(!isExpanded);
+  const openDrawer = (title: string, content: React.ReactNode) => {
+    setDrawerInfo({ title, content });
+    setIsDrawerOpen(true);
   };
 
-  const onOpenDrawer = (newDrawerContent: React.ReactNode) => {
-    setDrawerPanelContent(newDrawerContent);
-    onClick();
+  const closeDrawer = () => {
+    setDrawerInfo(undefined);
+    setIsDrawerOpen(false);
   };
-
-  const onCloseClick = () => {
-    setIsExpanded(false);
-    // const { drawerProps, drawerPanelContent, onClose, focusOnClose } = settings;
-    // focusOnClose?.focus();
-  };
-
-  const panelContent = (
-    <DrawerPanelContent>
-      <DrawerContentBody>
-        <span tabIndex={isExpanded ? 0 : -1}>{drawerPanelContent}</span>
-        <DrawerActions>
-          <DrawerCloseButton onClick={onCloseClick} />
-        </DrawerActions>
-      </DrawerContentBody>
-    </DrawerPanelContent>
-  );
-
-  // // todo: implement onOpenDrawer, onClose, onExpand functions -> check Drawer implementation
-  //   // todo: what to do next? -> check implementation
-  // };
-  // const onClose = () => {
-  //   // todo: Should I reset the drawer content? it will get overwritten anyway when the drawer is opened again..
-  // };
-  // const onExpand = () => {};
-
-  const pageBody = (
-    <>
-      <ProductBanner
-        icon={openshiftBannerContents.icon}
-        learnMoreLink={openshiftBannerContents.learnMoreLink}
-        title={openshiftBannerContents.title}
-        text={openshiftBannerContents.text}
-        dataTestId={openshiftBannerContents.dataTestId}
-      />
-      <PageSection>
-        <Title size="xl" headingLevel="h2" className="pf-v5-u-mt-lg">
-          Featured OpenShift cluster types
-        </Title>
-        <Flex className="pf-v5-u-mb-lg">
-          <FlexItem className="pf-v5-u-pt-md" data-testid="offering-card_RHOSD">
-            <OfferingCard offeringType="RHOSD" />
-          </FlexItem>
-          <FlexItem className="pf-v5-u-pt-md" data-testid="offering-card_AWS">
-            <OfferingCard offeringType="AWS" />
-          </FlexItem>
-          <FlexItem className="pf-v5-u-pt-md" data-testid="offering-card_Azure">
-            <OfferingCard offeringType="Azure" />
-          </FlexItem>
-          <FlexItem className="pf-v5-u-pt-md" data-testid="offering-card_RHOCP">
-            <OfferingCard offeringType="RHOCP" />
-          </FlexItem>
-          <FlexItem className="pf-v5-u-pt-md" data-testid="offering-card_RHOIBM">
-            <OfferingCard offeringType="RHOIBM" />
-          </FlexItem>
-          <FlexItem className="pf-v5-u-pt-md" data-testid="offering-card_DEVSNBX">
-            <OfferingCard offeringType="DEVSNBX" />
-          </FlexItem>
-        </Flex>
-        <InternalTrackingLink
-          isButton
-          to={createClusterURL}
-          variant="link"
-          data-testid="create-cluster"
-          component={CreateClusterLink}
-        >
-          View all OpenShift cluster types
-        </InternalTrackingLink>
-        <Title size="xl" headingLevel="h2" className="pf-v5-u-mt-lg pf-v5-u-mb-lg">
-          Recommended Content
-        </Title>
-        <ListTextLabelLinkCard {...linkTextLabelLinkCardContents} />
-        <ExternalLink
-          data-testid="recommendedContentFooterLink"
-          href="/openshift/learning-resources"
-        >
-          Browse all OpenShift learning resources
-        </ExternalLink>
-
-        {/* todo: From here down -> should be in a sub component - RecommendedLayeredServicesCardView */}
-        <Title size="xl" headingLevel="h2" className="pf-v5-u-mt-lg">
-          Recommended operators
-        </Title>
-        <Flex className="pf-v5-u-mb-lg">
-          {recommendedLayeredServicesCards.map(
-            ({ title, description, icon, labelText, drawerPanelContent }) => (
-              <FlexItem className="pf-v5-u-pt-md" data-testid={`product-overview-card-${title}`}>
-                <Card className="product-overview-card">
-                  <CardHeader>
-                    <Split hasGutter style={{ width: '100%' }}>
-                      <SplitItem>
-                        <img
-                          src={icon}
-                          alt={`${title} icon`}
-                          className="product-overview-card__icon"
-                        />
-                      </SplitItem>
-                      <SplitItem isFilled />
-                      <SplitItem>
-                        {labelText ? (
-                          <Label data-testtag="label" color="blue">
-                            {labelText}
-                          </Label>
-                        ) : undefined}
-                      </SplitItem>
-                    </Split>
-                  </CardHeader>
-
-                  <CardTitle>
-                    {/* todo: check card's title size and positioning */}
-                    <Title headingLevel="h3">{title}</Title>
-                  </CardTitle>
-                  <CardBody>{description}</CardBody>
-                  <CardFooter>
-                    {/* todo: which props should this Button have ? check icon */}
-                    <Button
-                      className="read-more-button"
-                      // todo: This was in the Drawer implementation, do I need this?
-                      aria-expanded={isExpanded}
-                      // onClick={() => onOpenDrawer(drawerPanelContent)}
-                      onClick={() => setIsDrawerOpen(true)}
-                    >
-                      <Icon>
-                        Read more
-                        <OpenDrawerRightIcon />
-                      </Icon>
-                    </Button>
-                  </CardFooter>
-                </Card>
-              </FlexItem>
-            ),
-          )}
-        </Flex>
-      </PageSection>
-    </>
-  );
-
-  // const [drawerDiv, setDrawerDiv] = useState<HTMLDivElement>();
-  // const drawerDivRef = useCallback((div: HTMLDivElement) => setDrawerDiv(div), [setDrawerDiv]);
 
   return (
     <AppPage title={PAGE_TITLE}>
-      {/* <div id="app-drawer-div" ref={drawerDivRef}> */}
-      {/* <Drawer isExpanded={isExpanded} onExpand={onExpand}>
-          <DrawerContent className="drawer-panel-content" panelContent={panelContent}>
-            <DrawerContentBody>{pageBody}</DrawerContentBody>
-          </DrawerContent>
-        </Drawer> */}
-      {/* </div> */}
-      {pageBody}
-      <Drawer isExpanded={isDrawerOpen}>
-        <DrawerContent panelContent={<div>Panel</div>}>
-          <DrawerContentBody>
-            <div>Drawer Content</div>
-          </DrawerContentBody>
-        </DrawerContent>
-      </Drawer>
+      <DrawerPanel
+        title={drawerInfo?.title}
+        content={drawerInfo?.content}
+        isOpen={isDrawerOpen}
+        onClose={closeDrawer}
+      >
+        <ProductBanner
+          icon={openshiftBannerContents.icon}
+          learnMoreLink={openshiftBannerContents.learnMoreLink}
+          title={openshiftBannerContents.title}
+          text={openshiftBannerContents.text}
+          dataTestId={openshiftBannerContents.dataTestId}
+        />
+        <PageSection>
+          <Title size="xl" headingLevel="h2" className="pf-v5-u-mt-lg">
+            Featured OpenShift cluster types
+          </Title>
+          <Flex className="pf-v5-u-mb-lg">
+            <FlexItem className="pf-v5-u-pt-md" data-testid="offering-card_RHOSD">
+              <OfferingCard offeringType="RHOSD" />
+            </FlexItem>
+            <FlexItem className="pf-v5-u-pt-md" data-testid="offering-card_AWS">
+              <OfferingCard offeringType="AWS" />
+            </FlexItem>
+            <FlexItem className="pf-v5-u-pt-md" data-testid="offering-card_Azure">
+              <OfferingCard offeringType="Azure" />
+            </FlexItem>
+            <FlexItem className="pf-v5-u-pt-md" data-testid="offering-card_RHOCP">
+              <OfferingCard offeringType="RHOCP" />
+            </FlexItem>
+            <FlexItem className="pf-v5-u-pt-md" data-testid="offering-card_RHOIBM">
+              <OfferingCard offeringType="RHOIBM" />
+            </FlexItem>
+            <FlexItem className="pf-v5-u-pt-md" data-testid="offering-card_DEVSNBX">
+              <OfferingCard offeringType="DEVSNBX" />
+            </FlexItem>
+          </Flex>
+          <InternalTrackingLink
+            isButton
+            to={createClusterURL}
+            variant="link"
+            data-testid="create-cluster"
+            component={CreateClusterLink}
+          >
+            View all OpenShift cluster types
+          </InternalTrackingLink>
+          <Title size="xl" headingLevel="h2" className="pf-v5-u-mt-lg pf-v5-u-mb-lg">
+            Recommended Content
+          </Title>
+          <ListTextLabelLinkCard {...linkTextLabelLinkCardContents} />
+          <ExternalLink
+            data-testid="recommendedContentFooterLink"
+            href="/openshift/learning-resources"
+          >
+            Browse all OpenShift learning resources
+          </ExternalLink>
+
+          <RecommendedOperatorsCards openReadMore={openDrawer} />
+        </PageSection>
+      </DrawerPanel>
     </AppPage>
   );
 }

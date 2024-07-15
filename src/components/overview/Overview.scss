@@ -119,26 +119,3 @@ $ocm-c-marketing-banner--breakpoint-map: build-breakpoint-map();
   padding-right: 1em;
   padding-top: 1em;
 }
-
-// todo: This needs to be checked (the sub classNames) & put in the correct file & add the import of the scss in the tsx file
-
-.product-overview-card {
-  width: 22em;
-  height: 22em;
-
-  &__icon {
-    height: 3em;
-    width: 3em;
-  }
-}
-
-.product-overview-card .card-title {
-  max-height: 3em;
-}
-
-.product-overview-card .card-textlist {
-  color: var(--pf-v5-c-content--small--Color);
-  li::marker {
-    font-size: var(--pf-v5-u-font-size-xs);
-  }
-}
