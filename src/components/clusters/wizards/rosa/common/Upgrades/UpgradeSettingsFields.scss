@@ -23,13 +23,8 @@
 
 .ocm-c-upgrades-pdb-select {
   margin-top: var(--pf-v5-global--spacer--md);
-  .pf-v5-c-select {
-    width: auto;
+  &__toggle {
     min-width: 150px;
-    > ul {
-      max-height: 300px;
-      overflow-y: auto;
-    }
   }
 }
 
