@@ -17,7 +17,7 @@ import clusterStates, {
   isHypershiftCluster,
   isROSA,
 } from '~/components/clusters/common/clusterStates';
-import { useAWSVPCFromCluster } from '~/components/clusters/common/useAWSVPCFromCluster';
+import { useAWSVPCFromCluster } from '~/components/clusters/commonMultiRegion/useAWSVPCFromCluster';
 import { IMDSType } from '~/components/clusters/wizards/common';
 import AIClusterStatus from '~/components/common/AIClusterStatus';
 import useCanClusterAutoscale from '~/hooks/useCanClusterAutoscale';

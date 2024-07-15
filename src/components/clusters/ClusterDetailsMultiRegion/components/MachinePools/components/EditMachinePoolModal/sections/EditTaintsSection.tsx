@@ -6,7 +6,7 @@ import { PlusCircleIcon } from '@patternfly/react-icons/dist/esm/icons/plus-circ
 
 import TextField from '~/components/common/formik/TextField';
 import WithTooltip from '~/components/common/WithTooltip';
-import { GlobalState } from '~/redux/store';
+import { MachineTypesResponse } from '~/queries/types';
 import { Cluster, MachinePool } from '~/types/clusters_mgmt.v1';
 
 import {
@@ -21,7 +21,7 @@ type EditTaintsSectionProps = {
   cluster: Cluster;
   machinePoolId?: string;
   machinePools: MachinePool[];
-  machineTypes: GlobalState['machineTypes'];
+  machineTypes: MachineTypesResponse;
 };
 
 const EditTaintsSection = ({

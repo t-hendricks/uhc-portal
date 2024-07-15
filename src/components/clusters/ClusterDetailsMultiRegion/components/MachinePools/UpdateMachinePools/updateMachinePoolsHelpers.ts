@@ -2,10 +2,18 @@ import { useSelector } from 'react-redux';
 import semver from 'semver';
 
 import { isHypershiftCluster } from '~/components/clusters/common/clusterStates';
-import { updateStartedSelector } from '~/components/clusters/common/Upgrades/upgradeHelpers';
+import {
+  updateStartedSelector,
+  updateStartedSelectorMultiRegion,
+} from '~/components/clusters/common/Upgrades/upgradeHelpers';
 import { GlobalState } from '~/redux/store';
-import clusterService from '~/services/clusterService';
-import { ScheduleType, UpgradeType } from '~/types/clusters_mgmt.v1';
+import clusterService, { getClusterServiceForRegion } from '~/services/clusterService';
+import {
+  ScheduleType,
+  UpgradePolicy,
+  UpgradePolicyState,
+  UpgradeType,
+} from '~/types/clusters_mgmt.v1';
 import { NodePool } from '~/types/clusters_mgmt.v1/models/NodePool';
 
 import { NodePoolWithUpgradePolicies } from '../machinePoolCustomTypes';
@@ -34,8 +42,37 @@ export const isHCPControlPlaneUpdating = (state: GlobalState) => {
     machinePools.error
   );
 };
+type UpgradePolicyWithState = UpgradePolicy & { state: UpgradePolicyState };
+type Schedules = {
+  items: UpgradePolicyWithState[];
+  fulfilled: boolean;
+  error: boolean;
+  pending: boolean;
+};
+// Needed due to removal of index file and entire state is no longer being passed
+export const isHCPControlPlaneUpdatingMultiRegion = (
+  clusterUpgradesSchedules: Schedules,
+  controlPlaneVersion: string,
+  isMachinePoolError: boolean,
+  isHypershift: boolean,
+) => {
+  const controlPlaneUpgradeStarted = updateStartedSelectorMultiRegion(clusterUpgradesSchedules);
+  return !isHypershift || !controlPlaneVersion || controlPlaneUpgradeStarted || isMachinePoolError;
+};
 
-export const useHCPControlPlaneUpdating = () => useSelector(isHCPControlPlaneUpdating);
+export const useHCPControlPlaneUpdating = (
+  controlPlaneVersion: string,
+  isMachinePoolError: boolean,
+  isHypershift: boolean,
+) =>
+  useSelector((state: GlobalState) =>
+    isHCPControlPlaneUpdatingMultiRegion(
+      state.clusterUpgrades.schedules,
+      controlPlaneVersion,
+      isMachinePoolError,
+      isHypershift,
+    ),
+  );
 
 export const compareIsMachinePoolBehindControlPlane = (
   controlPlaneVersion?: string,
@@ -62,6 +99,16 @@ export const isMachinePoolBehindControlPlane = (
 
   return compareIsMachinePoolBehindControlPlane(controlPlaneVersion, machinePool.version.id);
 };
+export const isMachinePoolBehindControlPlaneMulti = (
+  controlPlaneVersion: string,
+  machinePool: NodePoolWithUpgradePolicies,
+) => {
+  if (!machinePool || !machinePool.version?.id) {
+    return false;
+  }
+
+  return compareIsMachinePoolBehindControlPlane(controlPlaneVersion, machinePool.version.id);
+};
 
 export const useMachinePoolBehindControlPlane = (machinePool: NodePoolWithUpgradePolicies) =>
   useSelector((state: GlobalState) => isMachinePoolBehindControlPlane(state, machinePool));
@@ -71,6 +118,7 @@ export const updateAllMachinePools = async (
   clusterId: string,
   toBeVersion: string,
   useNodePoolUpgradePolicies: boolean,
+  region?: string,
 ) => {
   // NOTE this results of this helper does NOT put the information into Redux
   // because it isn't needed - we just need to know if the update policy was created
@@ -84,6 +132,12 @@ export const updateAllMachinePools = async (
 
   const promisesArray = machinePools.map((pool: NodePool) => {
     if (!useNodePoolUpgradePolicies) {
+      if (region) {
+        const clusterService = getClusterServiceForRegion(region);
+        return clusterService.patchNodePool(clusterId, pool.id || '', {
+          version: { id: toBeVersion },
+        });
+      }
       return clusterService.patchNodePool(clusterId, pool.id || '', {
         version: { id: toBeVersion },
       });
@@ -99,6 +153,10 @@ export const updateAllMachinePools = async (
       upgrade_type: UpgradeType.NODE_POOL,
     };
 
+    if (region) {
+      const clusterService = getClusterServiceForRegion(region);
+      return clusterService.postNodePoolUpgradeSchedule(clusterId, pool.id || '', schedule);
+    }
     return clusterService.postNodePoolUpgradeSchedule(clusterId, pool.id || '', schedule);
   });
 
@@ -150,16 +208,19 @@ export const isMachinePoolScheduleError = (machinePool: NodePoolWithUpgradePolic
   !!machinePool.upgradePolicies?.errorMessage;
 
 export const canMachinePoolBeUpgradedSelector = (
-  state: GlobalState,
+  clusterUpgradesSchedules: Schedules,
+  controlPlaneVersion: string,
   machinePool: NodePoolWithUpgradePolicies,
-) => {
-  const controlPlaneVersion = controlPlaneVersionSelector(state);
-
-  return (
-    !isHCPControlPlaneUpdating(state) &&
-    isMachinePoolBehindControlPlane(state, machinePool) &&
-    !isMachinePoolScheduleError(machinePool) &&
-    isControlPlaneValidForMachinePool(machinePool, controlPlaneVersion) &&
-    !isMachinePoolUpgrading(machinePool)
-  );
-};
+  isMachinePoolError: boolean,
+  isHypershift: boolean,
+) =>
+  !isHCPControlPlaneUpdatingMultiRegion(
+    clusterUpgradesSchedules,
+    controlPlaneVersion,
+    isMachinePoolError,
+    isHypershift,
+  ) &&
+  isMachinePoolBehindControlPlaneMulti(controlPlaneVersion, machinePool) &&
+  !isMachinePoolScheduleError(machinePool) &&
+  isControlPlaneValidForMachinePool(machinePool, controlPlaneVersion) &&
+  !isMachinePoolUpgrading(machinePool);

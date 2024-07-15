@@ -1,5 +1,5 @@
 import React from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom-v5-compat';
 import semver from 'semver';
 
@@ -8,12 +8,10 @@ import { Alert, AlertActionLink, AlertVariant, Spinner } from '@patternfly/react
 import links from '~/common/installLinks.mjs';
 import ExternalLink from '~/components/common/ExternalLink';
 import { useFeatureGate } from '~/hooks/useFeatureGate';
+import { refetchMachineOrNodePoolsQuery } from '~/queries/ClusterDetailsQueries/MachinePoolTab/useFetchMachineOrNodePools';
 import { HCP_USE_NODE_UPGRADE_POLICIES } from '~/redux/constants/featureConstants';
 import { GlobalState } from '~/redux/store';
 import { NodePool } from '~/types/clusters_mgmt.v1/models/NodePool';
-
-import { isHypershiftCluster } from '../../../clusterDetailsHelper';
-import { getMachineOrNodePools } from '../MachinePoolsActions';
 
 import {
   compareIsMachinePoolBehindControlPlane,
@@ -29,29 +27,34 @@ import {
 const UpdateAllMachinePools = ({
   initialErrorMessage, // introduced for testing purposes
   goToMachinePoolTab,
+  isMachinePoolError,
+  isHypershift,
+  region,
 }: {
   initialErrorMessage?: string;
   goToMachinePoolTab?: boolean;
+  isMachinePoolError: boolean;
+  isHypershift: boolean;
+  region?: string;
 }) => {
-  const dispatch = useDispatch();
   const [pending, setPending] = React.useState(false);
   const [errors, setErrors] = React.useState<string[]>(
     initialErrorMessage ? [initialErrorMessage] : [],
   );
-
-  const useNodeUpdatePolicies = useFeatureGate(HCP_USE_NODE_UPGRADE_POLICIES);
-
-  const controlPlaneUpdating = useHCPControlPlaneUpdating();
-
-  const clusterId = useSelector(controlPlaneIdSelector);
-
   const controlPlaneVersion = useSelector((state: GlobalState) =>
     controlPlaneVersionSelector(state),
   );
-  const machinePools = useSelector((state: GlobalState) => state.machinePools?.getMachinePools);
-  const isHypershift = useSelector((state: GlobalState) =>
-    isHypershiftCluster(state.clusters.details.cluster),
+  const useNodeUpdatePolicies = useFeatureGate(HCP_USE_NODE_UPGRADE_POLICIES);
+
+  const controlPlaneUpdating = useHCPControlPlaneUpdating(
+    controlPlaneVersion,
+    isMachinePoolError,
+    isHypershift,
   );
+
+  const clusterId = useSelector(controlPlaneIdSelector);
+
+  const machinePools = useSelector((state: GlobalState) => state.machinePools?.getMachinePools);
 
   if (controlPlaneUpdating) {
     return null;
@@ -77,16 +80,16 @@ const UpdateAllMachinePools = ({
       clusterId,
       controlPlaneVersion,
       useNodeUpdatePolicies,
+      region,
     );
     setPending(false);
     setErrors(errors);
-    dispatch(
-      getMachineOrNodePools(
-        clusterId,
-        isHypershift,
-        controlPlaneVersion,
-        useNodeUpdatePolicies,
-      ) as any,
+
+    refetchMachineOrNodePoolsQuery(
+      clusterId,
+      isHypershift,
+      controlPlaneVersion,
+      useNodeUpdatePolicies,
     );
   };
 
