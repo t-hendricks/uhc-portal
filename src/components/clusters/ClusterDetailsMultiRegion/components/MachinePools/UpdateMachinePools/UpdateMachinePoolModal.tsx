@@ -12,11 +12,12 @@ import modalIds from '~/components/common/Modal/modals';
 import shouldShowModal from '~/components/common/Modal/ModalSelectors';
 import PopoverHint from '~/components/common/PopoverHint';
 import { useFeatureGate } from '~/hooks/useFeatureGate';
+import { refetchMachineOrNodePoolsQuery } from '~/queries/ClusterDetailsQueries/MachinePoolTab/useFetchMachineOrNodePools';
 import { HCP_USE_NODE_UPGRADE_POLICIES } from '~/redux/constants/featureConstants';
+import { useGlobalState } from '~/redux/hooks';
 import { GlobalState } from '~/redux/store';
 
 import { NodePoolWithUpgradePolicies } from '../machinePoolCustomTypes';
-import { getMachineOrNodePools } from '../MachinePoolsActions';
 
 import {
   canMachinePoolBeUpgradedSelector,
@@ -31,18 +32,33 @@ import {
 
 const updateModalId = modalIds.UPDATE_MACHINE_POOL_VERSION;
 
-export const UpdatePoolButton = ({ machinePool }: { machinePool: NodePoolWithUpgradePolicies }) => {
+export const UpdatePoolButton = ({
+  machinePool,
+  isMachinePoolError,
+  isHypershift,
+}: {
+  machinePool: NodePoolWithUpgradePolicies;
+  isMachinePoolError: boolean;
+  isHypershift: boolean;
+}) => {
   const dispatch = useDispatch();
   const controlPlaneVersion = useSelector((state: GlobalState) =>
     controlPlaneVersionSelector(state),
   );
+  const updateSchedules = useGlobalState((state) => state.clusterUpgrades.schedules);
   const canBeUpdated = useSelector((state: GlobalState) =>
-    canMachinePoolBeUpgradedSelector(state, machinePool),
+    canMachinePoolBeUpgradedSelector(
+      updateSchedules,
+      controlPlaneVersion,
+      machinePool,
+      isMachinePoolError,
+      isHypershift,
+    ),
   );
   const isAvailableVersion = useIsControlPlaneValidForMachinePool(machinePool);
   const machinePoolUpdating = isMachinePoolUpgrading(machinePool);
 
-  if (canBeUpdated) {
+  if (canBeUpdated && !isMachinePoolError) {
     return (
       <Button
         variant={ButtonVariant.link}
@@ -97,7 +113,7 @@ export const UpdatePoolButton = ({ machinePool }: { machinePool: NodePoolWithUpg
   return null;
 };
 
-export const UpdateMachinePoolModal = () => {
+export const UpdateMachinePoolModal = ({ region }: { region?: string }) => {
   const [pending, setPending] = React.useState(false);
   const [error, setError] = React.useState('');
   const isHypershift = useSelector((state: GlobalState) =>
@@ -142,14 +158,17 @@ export const UpdateMachinePoolModal = () => {
       clusterId,
       controlPlaneVersion || '',
       useNodeUpdatePolicies,
+      region,
     );
 
     setPending(false);
     setError(errors[0] || '');
 
-    dispatch(
-      // @ts-ignore -issue with dispatch type
-      getMachineOrNodePools(clusterId, isHypershift, controlPlaneVersion, useNodeUpdatePolicies),
+    refetchMachineOrNodePoolsQuery(
+      clusterId,
+      isHypershift,
+      controlPlaneVersion,
+      useNodeUpdatePolicies,
     );
 
     if (!errors[0]) {

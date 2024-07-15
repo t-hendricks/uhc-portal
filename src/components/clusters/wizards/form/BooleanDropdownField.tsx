@@ -14,6 +14,7 @@ interface BooleanDropdownFieldProps {
   name: string;
   label?: string;
   helperText?: React.ReactNode;
+  isDisabled?: boolean;
 }
 
 const isTrue = (sel: SelectOptionObjectDeprecated) => sel.toString() === 'true';
@@ -31,7 +32,12 @@ const falseOption = {
 
 const options = [trueOption, falseOption];
 
-export const BooleanDropdownField = ({ name, label, helperText }: BooleanDropdownFieldProps) => {
+export const BooleanDropdownField = ({
+  name,
+  label,
+  helperText,
+  isDisabled,
+}: BooleanDropdownFieldProps) => {
   const [field, { touched, error }] = useField<string[]>(name);
   const { setFieldValue, setFieldTouched } = useFormikContext<FormikValues>();
   const [isOpen, setIsOpen] = React.useState<boolean>(false);
@@ -55,6 +61,7 @@ export const BooleanDropdownField = ({ name, label, helperText }: BooleanDropdow
         onToggle={onToggle}
         onSelect={onSelect}
         isOpen={isOpen}
+        isDisabled={isDisabled}
         selections={field.value ? trueOption : falseOption}
       >
         {options.map((opObj) => (

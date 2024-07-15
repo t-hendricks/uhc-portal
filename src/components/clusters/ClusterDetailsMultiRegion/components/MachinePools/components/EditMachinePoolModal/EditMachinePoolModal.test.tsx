@@ -4,28 +4,65 @@ import { render, screen, within } from '~/testUtils';
 
 import EditMachinePoolModal from './EditMachinePoolModal';
 
+const machinePoolsResponse = [
+  {
+    kind: 'NodePool',
+    href: '/api/clusters_mgmt/v1/clusters/21gitfhopbgmmfhlu65v93n4g4n3djde/node_pools/workers',
+    id: 'workers',
+    replicas: 2,
+    auto_repair: true,
+    aws_node_pool: {
+      instance_type: 'm5.xlarge',
+      instance_profile: 'staging-21gitfhopbgmmfhlu65v93n4g4n3djde-jknhystj27-worker',
+      tags: {
+        'api.openshift.com/environment': 'staging',
+      },
+    },
+    availability_zone: 'us-east-1b',
+    subnet: 'subnet-049f90721559000de',
+    status: {
+      current_replicas: 2,
+    },
+    version: {
+      kind: 'VersionLink',
+      id: 'openshift-v4.12.5-candidate',
+      href: '/api/clusters_mgmt/v1/versions/openshift-v4.12.5-candidate',
+    },
+  },
+];
+
+const machineTypesResponse = {
+  types: {
+    aws: [
+      {
+        id: 'm5.xlarge',
+        cpu: {
+          value: 4,
+        },
+        memory: {
+          value: 4,
+        },
+      },
+    ],
+  },
+};
+
+const commonProps = {
+  machinePoolsLoading: false,
+  machinePoolsError: false,
+  machineTypesLoading: false,
+  machineTypesError: false,
+  machineTypesErrorResponse: {},
+  machinePoolsErrorResponse: {},
+  machinePoolsResponse,
+  machineTypesResponse,
+};
+
 describe('<EditMachinePoolModal />', () => {
   describe('error state', () => {
     it('Shows alert if machine pools failed to load', async () => {
       render(
-        <EditMachinePoolModal
-          cluster={{}}
-          onClose={() => {}}
-          machinePoolsResponse={{
-            error: true,
-            fulfilled: false,
-            pending: false,
-            errorCode: 400,
-            errorMessage: 'foo err',
-          }}
-          machineTypesResponse={{
-            error: false,
-            pending: false,
-            fulfilled: true,
-            types: {},
-            typesByID: {},
-          }}
-        />,
+        <EditMachinePoolModal cluster={{}} onClose={() => {}} {...commonProps} machinePoolsError />,
       );
 
       expect(
@@ -38,24 +75,7 @@ describe('<EditMachinePoolModal />', () => {
 
     it('Shows alert if machine types failed to load', async () => {
       render(
-        <EditMachinePoolModal
-          cluster={{}}
-          onClose={() => {}}
-          machinePoolsResponse={{
-            error: true,
-            fulfilled: false,
-            pending: false,
-            errorCode: 400,
-            errorMessage: 'foo err',
-          }}
-          machineTypesResponse={{
-            error: false,
-            pending: false,
-            fulfilled: true,
-            types: {},
-            typesByID: {},
-          }}
-        />,
+        <EditMachinePoolModal cluster={{}} onClose={() => {}} {...commonProps} machineTypesError />,
       );
 
       expect(
@@ -79,18 +99,8 @@ describe('<EditMachinePoolModal />', () => {
         <EditMachinePoolModal
           cluster={{}}
           onClose={() => {}}
-          machinePoolsResponse={{
-            error: false,
-            fulfilled: false,
-            pending: false,
-          }}
-          machineTypesResponse={{
-            error: false,
-            pending: false,
-            fulfilled: true,
-            types: {},
-            typesByID: {},
-          }}
+          {...commonProps}
+          machinePoolsLoading
         />,
       );
       await check();
@@ -101,17 +111,8 @@ describe('<EditMachinePoolModal />', () => {
         <EditMachinePoolModal
           cluster={{}}
           onClose={() => {}}
-          machinePoolsResponse={{
-            error: false,
-            fulfilled: true,
-            pending: false,
-            data: [],
-          }}
-          machineTypesResponse={{
-            error: false,
-            pending: false,
-            fulfilled: false,
-          }}
+          {...commonProps}
+          machineTypesLoading
         />,
       );
       await check();
@@ -120,25 +121,7 @@ describe('<EditMachinePoolModal />', () => {
 
   describe('add machine pool', () => {
     it('Submit button shows `Add machine pool`', async () => {
-      render(
-        <EditMachinePoolModal
-          cluster={{}}
-          onClose={() => {}}
-          machinePoolsResponse={{
-            error: false,
-            fulfilled: true,
-            pending: false,
-            data: [],
-          }}
-          machineTypesResponse={{
-            error: false,
-            pending: false,
-            fulfilled: true,
-            types: {},
-            typesByID: {},
-          }}
-        />,
-      );
+      render(<EditMachinePoolModal cluster={{}} onClose={() => {}} {...commonProps} />);
 
       expect(await screen.findByRole('button', { name: 'Add machine pool' })).toBeInTheDocument();
     });
@@ -147,24 +130,7 @@ describe('<EditMachinePoolModal />', () => {
   describe('edit machine pool', () => {
     it('Submit button shows `Save`', async () => {
       const { rerender } = render(
-        <EditMachinePoolModal
-          cluster={{}}
-          onClose={() => {}}
-          machinePoolsResponse={{
-            error: false,
-            fulfilled: true,
-            pending: false,
-            data: [],
-          }}
-          machineTypesResponse={{
-            error: false,
-            pending: false,
-            fulfilled: true,
-            types: {},
-            typesByID: {},
-          }}
-          isEdit
-        />,
+        <EditMachinePoolModal cluster={{}} onClose={() => {}} {...commonProps} isEdit />,
       );
 
       expect(await screen.findByRole('button', { name: 'Save' })).toBeInTheDocument();
@@ -173,19 +139,7 @@ describe('<EditMachinePoolModal />', () => {
         <EditMachinePoolModal
           cluster={{}}
           onClose={() => {}}
-          machinePoolsResponse={{
-            error: false,
-            fulfilled: true,
-            pending: false,
-            data: [],
-          }}
-          machineTypesResponse={{
-            error: false,
-            pending: false,
-            fulfilled: true,
-            types: {},
-            typesByID: {},
-          }}
+          {...commonProps}
           machinePoolId="foo"
         />,
       );
@@ -199,29 +153,18 @@ describe('<EditMachinePoolModal />', () => {
           <EditMachinePoolModal
             cluster={{ multi_az: true }}
             onClose={() => {}}
-            machinePoolsResponse={{
-              error: false,
-              fulfilled: true,
-              pending: false,
-              data: [
-                {
-                  availability_zones: ['us-east-1a'],
-                  href: '/api/clusters_mgmt/v1/clusters/282fg0gt74jjb9558ge1poe8m4dlvb07/machine_pools/daznauro-mp',
-                  id: 'fooId',
-                  instance_type: 'm5.xlarge',
-                  kind: 'MachinePool',
-                  replicas: 21,
-                  root_volume: { aws: { size: 300 } },
-                },
-              ],
-            }}
-            machineTypesResponse={{
-              error: false,
-              pending: false,
-              fulfilled: true,
-              types: {},
-              typesByID: {},
-            }}
+            {...commonProps}
+            machinePoolsResponse={[
+              {
+                availability_zones: ['us-east-1a'],
+                href: '/api/clusters_mgmt/v1/clusters/282fg0gt74jjb9558ge1poe8m4dlvb07/machine_pools/daznauro-mp',
+                id: 'fooId',
+                instance_type: 'm5.xlarge',
+                kind: 'MachinePool',
+                replicas: 21,
+                root_volume: { aws: { size: 300 } },
+              },
+            ]}
             machinePoolId="fooId"
           />,
         );
@@ -235,29 +178,18 @@ describe('<EditMachinePoolModal />', () => {
           <EditMachinePoolModal
             cluster={{ multi_az: true }}
             onClose={() => {}}
-            machinePoolsResponse={{
-              error: false,
-              fulfilled: true,
-              pending: false,
-              data: [
-                {
-                  availability_zones: ['us-east-1a', 'us-east-1b', 'us-east-1c'],
-                  href: '/api/clusters_mgmt/v1/clusters/282fg0gt74jjb9558ge1poe8m4dlvb07/machine_pools/daznauro-mp',
-                  id: 'fooId',
-                  instance_type: 'm5.xlarge',
-                  kind: 'MachinePool',
-                  replicas: 21,
-                  root_volume: { aws: { size: 300 } },
-                },
-              ],
-            }}
-            machineTypesResponse={{
-              error: false,
-              pending: false,
-              fulfilled: true,
-              types: {},
-              typesByID: {},
-            }}
+            {...commonProps}
+            machinePoolsResponse={[
+              {
+                availability_zones: ['us-east-1a', 'us-east-1b', 'us-east-1c'],
+                href: '/api/clusters_mgmt/v1/clusters/282fg0gt74jjb9558ge1poe8m4dlvb07/machine_pools/daznauro-mp',
+                id: 'fooId',
+                instance_type: 'm5.xlarge',
+                kind: 'MachinePool',
+                replicas: 21,
+                root_volume: { aws: { size: 300 } },
+              },
+            ]}
             machinePoolId="fooId"
           />,
         );
@@ -276,41 +208,30 @@ describe('<EditMachinePoolModal />', () => {
           cluster={{ multi_az: false, hypershift: { enabled: true }, product: { id: 'ROSA' } }}
           onClose={() => {}}
           isHypershift
-          machinePoolsResponse={{
-            error: false,
-            fulfilled: true,
-            pending: false,
-            data: [
-              {
-                availability_zones: ['us-east-1a'],
-                href: '/api/clusters_mgmt/v1/clusters/282fg0gt74jjb9558ge1poe8m4dlvb07/machine_pools/daznauro-mp',
-                id: 'fooId',
-                instance_type: 'm5.xlarge',
-                kind: 'MachinePool',
-                replicas: 48,
-                root_volume: { aws: { size: 300 } },
+          {...commonProps}
+          machinePoolsResponse={[
+            {
+              availability_zones: ['us-east-1a'],
+              href: '/api/clusters_mgmt/v1/clusters/282fg0gt74jjb9558ge1poe8m4dlvb07/machine_pools/daznauro-mp',
+              id: 'fooId',
+              instance_type: 'm5.xlarge',
+              kind: 'MachinePool',
+              replicas: 48,
+              root_volume: { aws: { size: 300 } },
+            },
+            {
+              availability_zones: ['us-east-1a'],
+              href: '/api/clusters_mgmt/v1/clusters/282fg0gt74jjb9558ge1poe8m4dlvb07/machine_pools/daznauro-mp',
+              id: 'fooId2',
+              instance_type: 'm5.xlarge',
+              kind: 'MachinePool',
+              autoscaling: {
+                min_replicas: 1,
+                max_replicas: 2,
               },
-              {
-                availability_zones: ['us-east-1a'],
-                href: '/api/clusters_mgmt/v1/clusters/282fg0gt74jjb9558ge1poe8m4dlvb07/machine_pools/daznauro-mp',
-                id: 'fooId2',
-                instance_type: 'm5.xlarge',
-                kind: 'MachinePool',
-                autoscaling: {
-                  min_replicas: 1,
-                  max_replicas: 2,
-                },
-                root_volume: { aws: { size: 300 } },
-              },
-            ],
-          }}
-          machineTypesResponse={{
-            error: false,
-            pending: false,
-            fulfilled: true,
-            types: {},
-            typesByID: {},
-          }}
+              root_volume: { aws: { size: 300 } },
+            },
+          ]}
         />,
       );
 

@@ -18,7 +18,7 @@ import clusterStates, {
   isHypershiftCluster,
   isROSA,
 } from '~/components/clusters/common/clusterStates';
-import { useAWSVPCFromCluster } from '~/components/clusters/common/useAWSVPCFromCluster';
+import { useAWSVPCFromCluster } from '~/components/clusters/commonMultiRegion/useAWSVPCFromCluster';
 import { IMDSType } from '~/components/clusters/wizards/common';
 import useCanClusterAutoscale from '~/hooks/useCanClusterAutoscale';
 import { useGlobalState } from '~/redux/hooks';

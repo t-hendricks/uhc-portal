@@ -10,17 +10,16 @@ import {
   checkTaintValue,
   validateSecurityGroups,
 } from '~/common/validators';
-import { isMPoolAz } from '~/components/clusters/ClusterDetails/clusterDetailsHelper';
+import { isMPoolAz } from '~/components/clusters/ClusterDetailsMultiRegion/clusterDetailsHelper';
 import { isHypershiftCluster, isROSA } from '~/components/clusters/common/clusterStates';
 import {
   defaultWorkerNodeVolumeSizeGiB,
   getWorkerNodeVolumeSizeMaxGiB,
   SPOT_MIN_PRICE,
   workerNodeVolumeSizeMinGiB,
-} from '~/components/clusters/common/machinePools/constants';
-import { getNodeOptions } from '~/components/clusters/common/machinePools/utils';
-import { GlobalState } from '~/redux/store';
-import { PromiseReducerState } from '~/redux/types';
+} from '~/components/clusters/commonMultiRegion/machinePools/constants';
+import { getNodeOptions } from '~/components/clusters/commonMultiRegion/machinePools/utils';
+import { MachineTypesResponse } from '~/queries/types';
 import { Cluster, MachinePool, NodePool } from '~/types/clusters_mgmt.v1';
 
 import { getClusterMinNodes } from '../../../machinePoolsHelper';
@@ -48,10 +47,8 @@ export type EditMachinePoolValues = {
 type UseMachinePoolFormikArgs = {
   machinePool: MachinePool | undefined;
   cluster: Cluster;
-  machineTypes: GlobalState['machineTypes'];
-  machinePools: PromiseReducerState<{
-    data: MachinePool[];
-  }>;
+  machineTypes: MachineTypesResponse;
+  machinePools: MachinePool[];
 };
 
 const isMachinePool = (pool?: MachinePool | NodePool): pool is MachinePool =>
@@ -70,7 +67,7 @@ const useMachinePoolFormik = ({
     cluster,
     machineTypesResponse: machineTypes,
     machinePool,
-    machinePools: machinePools.data || [],
+    machinePools: machinePools || [],
   });
 
   const initialValues = React.useMemo<EditMachinePoolValues>(() => {
@@ -143,7 +140,7 @@ const useMachinePoolFormik = ({
         const secGroupValidation = validateSecurityGroups(values.securityGroupIds, isHypershift);
         const nodeOptions = getNodeOptions({
           cluster,
-          machinePools: machinePools.data || [],
+          machinePools: machinePools || [],
           machinePool,
           machineTypes,
           quota: organization.quotaList,
@@ -160,7 +157,7 @@ const useMachinePoolFormik = ({
               return new Yup.ValidationError(err, value, 'name');
             }
 
-            if (!hasMachinePool && machinePools.data?.some((mp) => mp.id === value)) {
+            if (!hasMachinePool && machinePools.some((mp) => mp.id === value)) {
               return new Yup.ValidationError('Name has to be unique.', value, 'name');
             }
             return true;
@@ -300,7 +297,7 @@ const useMachinePoolFormik = ({
       isMachinePoolMz,
       minNodesRequired,
       cluster,
-      machinePools.data,
+      machinePools,
       machinePool,
       machineTypes,
       organization.quotaList,

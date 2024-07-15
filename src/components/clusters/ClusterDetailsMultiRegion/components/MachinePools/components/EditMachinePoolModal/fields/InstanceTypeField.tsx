@@ -5,9 +5,10 @@ import { GridItem } from '@patternfly/react-core';
 
 import { normalizeProductID } from '~/common/normalize';
 import { billingModels } from '~/common/subscriptionTypes';
-import { isMultiAZ } from '~/components/clusters/ClusterDetails/clusterDetailsHelper';
-import MachineTypeSelection from '~/components/clusters/common/ScaleSection/MachineTypeSelection';
+import { isMultiAZ } from '~/components/clusters/ClusterDetailsMultiRegion/clusterDetailsHelper';
+import MachineTypeSelection from '~/components/clusters/commonMultiRegion/ScaleSection/MachineTypeSelection';
 import useFormikOnChange from '~/hooks/useFormikOnChange';
+import { MachineTypesResponse } from '~/queries/types';
 import { Cluster } from '~/types/clusters_mgmt.v1';
 
 const fieldId = 'instanceType';
@@ -21,9 +22,10 @@ const forceChoiceInput = {
 
 type InstanceTypeFieldProps = {
   cluster: Cluster;
+  machineTypesResponse: MachineTypesResponse;
 };
 
-const InstanceTypeField = ({ cluster }: InstanceTypeFieldProps) => {
+const InstanceTypeField = ({ cluster, machineTypesResponse }: InstanceTypeFieldProps) => {
   const [input, meta] = useField(fieldId);
   const onChange = useFormikOnChange(fieldId);
 
@@ -45,6 +47,7 @@ const InstanceTypeField = ({ cluster }: InstanceTypeFieldProps) => {
   return (
     <GridItem>
       <MachineTypeSelection
+        machineTypesResponse={machineTypesResponse}
         machine_type={machineTypeField}
         machine_type_force_choice={forceChoiceInput}
         isMultiAz={isMultiAZ(cluster)}
