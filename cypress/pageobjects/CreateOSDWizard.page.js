@@ -409,8 +409,8 @@ class CreateOSDCluster extends Page {
   }
 
   selectNodeDraining(nodeDrain) {
-    cy.get('button[aria-label="Options menu"]').click();
-    cy.get('ul[role="listbox"]').find('button').contains(nodeDrain).click();
+    cy.getByTestId('grace-period-select').click();
+    cy.get('button').contains(nodeDrain).click();
   }
 
   isTextContainsInPage(text, present = true) {
