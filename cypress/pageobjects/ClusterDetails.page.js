@@ -88,6 +88,10 @@ class ClusterDetails extends Page {
 
   clusterPodCIDRLabelValue = () => cy.getByTestId('podCIDR').should('exist');
 
+  clusterComputeNodeCountValue = () => cy.getByTestId('computeNodeCount').should('exist');
+
+  clusterAutoScalingStatusValue = () => cy.getByTestId('clusterAutoscalingStatus');
+
   clusterHostPrefixLabelValue = () => cy.getByTestId('hostPrefix').should('exist');
 
   clusterMachinePoolTable = () => cy.get('table[aria-label="Machine pools"]');
