@@ -91,6 +91,7 @@ class Overview extends React.Component {
       subscription,
       canSubscribeOCP,
       clusterDetailsLoading,
+      isSubscriptionSettingsRequestPending,
       region,
     } = this.props;
     let topCard;
@@ -253,6 +254,7 @@ class Overview extends React.Component {
                 subscription={subscription}
                 canEdit={cluster.canEdit}
                 canSubscribeOCP={canSubscribeOCP}
+                isLoading={isSubscriptionSettingsRequestPending || clusterDetailsLoading}
               />
             )}
           </Grid>
@@ -304,6 +306,7 @@ Overview.propTypes = {
   insightsData: PropTypes.object,
   region: PropTypes.string,
   clusterDetailsLoading: PropTypes.bool,
+  isSubscriptionSettingsRequestPending: PropTypes.bool,
   userAccess: PropTypes.shape({
     data: PropTypes.bool,
     pending: PropTypes.bool,

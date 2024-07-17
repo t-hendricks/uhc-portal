@@ -19,6 +19,7 @@ import {
 } from '@patternfly/react-core';
 import { ExclamationCircleIcon } from '@patternfly/react-icons/dist/esm/icons/exclamation-circle-icon';
 import { ExclamationTriangleIcon } from '@patternfly/react-icons/dist/esm/icons/exclamation-triangle-icon';
+import { Skeleton } from '@redhat-cloud-services/frontend-components';
 
 import { modalActions } from '~/components/common/Modal/ModalActions';
 import modals from '~/components/common/Modal/modals';
@@ -34,7 +35,12 @@ import {
 } from '../../../../../../common/subscriptionTypes';
 import ExternalLink from '../../../../../common/ExternalLink';
 
-function SubscriptionSettings({ subscription, canEdit = false, canSubscribeOCP = false }) {
+function SubscriptionSettings({
+  subscription,
+  canEdit = false,
+  canSubscribeOCP = false,
+  isLoading,
+}) {
   const dispatch = useDispatch();
   const product = get(subscription, 'plan.type');
   if (product !== normalizedProducts.OCP) {
@@ -111,7 +117,7 @@ function SubscriptionSettings({ subscription, canEdit = false, canSubscribeOCP =
   const obligationStr =
     systemUnits === subscriptionSystemUnits.SOCKETS ? socketTotalStr : cpuTotalStr;
 
-  const salesURL = 'https://www.redhat.com/en/contact';
+  const SALES_URL = 'https://www.redhat.com/en/contact';
 
   return (
     <Card className="ocm-c-overview-subscription-settings__card">
@@ -129,59 +135,63 @@ function SubscriptionSettings({ subscription, canEdit = false, canSubscribeOCP =
             isInline
             title="Your organization doesn't have an active subscription. Purchase an OpenShift subscription by contacting sales."
           >
-            <ExternalLink href={salesURL}>Contact sales</ExternalLink>
+            <ExternalLink href={SALES_URL}>Contact sales</ExternalLink>
           </Alert>
         </CardBody>
       )}
       <CardBody className="ocm-c-overview-subscription-settings__card--body">
-        <Grid>
-          <GridItem md={6}>
-            <DescriptionList>
-              <DescriptionListGroup>
-                <DescriptionListTerm>Subscription type</DescriptionListTerm>
-                <DescriptionListDescription>{billingModelStr}</DescriptionListDescription>
-              </DescriptionListGroup>
-              <DescriptionListGroup>
-                <DescriptionListTerm>Service level agreement (SLA)</DescriptionListTerm>
-                <DescriptionListDescription>{supportLevelStr}</DescriptionListDescription>
-              </DescriptionListGroup>
-              <DescriptionListGroup>
-                <DescriptionListTerm>Support type</DescriptionListTerm>
-                <DescriptionListDescription>{serviceLevelStr}</DescriptionListDescription>
-                {isEditViewable && (
-                  <DescriptionListDescription class="pf-v5-u-mt-lg">
-                    <Button
-                      variant="link"
-                      isDisabled={!canSubscribeOCP}
-                      isInline
-                      onClick={handleEditSettings}
-                    >
-                      Edit subscription settings
-                    </Button>
-                  </DescriptionListDescription>
-                )}
-              </DescriptionListGroup>
-            </DescriptionList>
-          </GridItem>
-          <GridItem md={6}>
-            <DescriptionList>
-              <DescriptionListGroup>
-                <DescriptionListTerm>Cluster usage</DescriptionListTerm>
-                <DescriptionListDescription>{usageStr}</DescriptionListDescription>
-              </DescriptionListGroup>
-              <DescriptionListGroup>
-                <DescriptionListTerm>Subscription units</DescriptionListTerm>
-                <DescriptionListDescription>{systemUnitsStr}</DescriptionListDescription>
-              </DescriptionListGroup>
-              {displayObligation && (
+        {isLoading ? (
+          <Skeleton />
+        ) : (
+          <Grid>
+            <GridItem md={6}>
+              <DescriptionList>
                 <DescriptionListGroup>
-                  <DescriptionListTerm>{obligationLabel}</DescriptionListTerm>
-                  <DescriptionListDescription>{obligationStr}</DescriptionListDescription>
+                  <DescriptionListTerm>Subscription type</DescriptionListTerm>
+                  <DescriptionListDescription>{billingModelStr}</DescriptionListDescription>
                 </DescriptionListGroup>
-              )}
-            </DescriptionList>
-          </GridItem>
-        </Grid>
+                <DescriptionListGroup>
+                  <DescriptionListTerm>Service level agreement (SLA)</DescriptionListTerm>
+                  <DescriptionListDescription>{supportLevelStr}</DescriptionListDescription>
+                </DescriptionListGroup>
+                <DescriptionListGroup>
+                  <DescriptionListTerm>Support type</DescriptionListTerm>
+                  <DescriptionListDescription>{serviceLevelStr}</DescriptionListDescription>
+                  {isEditViewable && (
+                    <DescriptionListDescription class="pf-v5-u-mt-lg">
+                      <Button
+                        variant="link"
+                        isDisabled={!canSubscribeOCP}
+                        isInline
+                        onClick={handleEditSettings}
+                      >
+                        Edit subscription settings
+                      </Button>
+                    </DescriptionListDescription>
+                  )}
+                </DescriptionListGroup>
+              </DescriptionList>
+            </GridItem>
+            <GridItem md={6}>
+              <DescriptionList>
+                <DescriptionListGroup>
+                  <DescriptionListTerm>Cluster usage</DescriptionListTerm>
+                  <DescriptionListDescription>{usageStr}</DescriptionListDescription>
+                </DescriptionListGroup>
+                <DescriptionListGroup>
+                  <DescriptionListTerm>Subscription units</DescriptionListTerm>
+                  <DescriptionListDescription>{systemUnitsStr}</DescriptionListDescription>
+                </DescriptionListGroup>
+                {displayObligation && (
+                  <DescriptionListGroup>
+                    <DescriptionListTerm>{obligationLabel}</DescriptionListTerm>
+                    <DescriptionListDescription>{obligationStr}</DescriptionListDescription>
+                  </DescriptionListGroup>
+                )}
+              </DescriptionList>
+            </GridItem>
+          </Grid>
+        )}
       </CardBody>
     </Card>
   );
@@ -191,6 +201,7 @@ SubscriptionSettings.propTypes = {
   subscription: PropTypes.object,
   canEdit: PropTypes.bool,
   canSubscribeOCP: PropTypes.bool,
+  isLoading: PropTypes.bool.isRequired,
 };
 
 export default SubscriptionSettings;

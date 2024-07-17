@@ -220,6 +220,10 @@ const ClusterDetails = (props) => {
     [accessProtectionState.enabled, isAccessRequestEnabled],
   );
 
+  const isSubscriptionSettingsRequestPending = useSelector((state) =>
+    get(state, 'subscriptionSettings.requestState.pending', false),
+  );
+
   const overviewTabRef = React.useRef();
   const monitoringTabRef = React.useRef();
   const accessControlTabRef = React.useRef();
@@ -619,6 +623,7 @@ const ClusterDetails = (props) => {
               hasNetworkOndemand={hasNetworkOndemand}
               userAccess={userAccess}
               canSubscribeOCP={canSubscribeOCP}
+              isSubscriptionSettingsRequestPending={isSubscriptionSettingsRequestPending}
             />
           </ErrorBoundary>
         </TabContent>
