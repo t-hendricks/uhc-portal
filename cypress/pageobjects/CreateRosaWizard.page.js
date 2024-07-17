@@ -499,7 +499,7 @@ class CreateRosaCluster extends Page {
   }
 
   selectGracePeriod(gracePeriod) {
-    cy.get('button[aria-label="Options menu"]').click();
+    cy.getByTestId('grace-period-select').click();
     cy.get('button').contains(gracePeriod).click();
   }
 
