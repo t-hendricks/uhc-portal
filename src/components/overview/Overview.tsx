@@ -96,66 +96,66 @@ function OverviewEmptyState() {
 
   return (
     <AppPage title={PAGE_TITLE}>
-      <DrawerPanel
-        title={drawerInfo?.title}
-        content={drawerInfo?.content}
-        isOpen={isDrawerOpen}
-        onClose={closeDrawer}
-      >
-        <ProductBanner
-          icon={openshiftBannerContents.icon}
-          learnMoreLink={openshiftBannerContents.learnMoreLink}
-          title={openshiftBannerContents.title}
-          text={openshiftBannerContents.text}
-          dataTestId={openshiftBannerContents.dataTestId}
-        />
-        <PageSection>
-          <Title size="xl" headingLevel="h2" className="pf-v5-u-mt-lg">
-            Featured OpenShift cluster types
-          </Title>
-          <Flex className="pf-v5-u-mb-lg">
-            <FlexItem className="pf-v5-u-pt-md" data-testid="offering-card_RHOSD">
-              <OfferingCard offeringType="RHOSD" />
-            </FlexItem>
-            <FlexItem className="pf-v5-u-pt-md" data-testid="offering-card_AWS">
-              <OfferingCard offeringType="AWS" />
-            </FlexItem>
-            <FlexItem className="pf-v5-u-pt-md" data-testid="offering-card_Azure">
-              <OfferingCard offeringType="Azure" />
-            </FlexItem>
-            <FlexItem className="pf-v5-u-pt-md" data-testid="offering-card_RHOCP">
-              <OfferingCard offeringType="RHOCP" />
-            </FlexItem>
-            <FlexItem className="pf-v5-u-pt-md" data-testid="offering-card_RHOIBM">
-              <OfferingCard offeringType="RHOIBM" />
-            </FlexItem>
-            <FlexItem className="pf-v5-u-pt-md" data-testid="offering-card_DEVSNBX">
-              <OfferingCard offeringType="DEVSNBX" />
-            </FlexItem>
-          </Flex>
-          <InternalTrackingLink
-            isButton
-            to={createClusterURL}
-            variant="link"
-            data-testid="create-cluster"
-            component={CreateClusterLink}
-          >
-            View all OpenShift cluster types
-          </InternalTrackingLink>
-          <Title size="xl" headingLevel="h2" className="pf-v5-u-mt-lg pf-v5-u-mb-lg">
-            Recommended Content
-          </Title>
-          <ListTextLabelLinkCard {...linkTextLabelLinkCardContents} />
-          <ExternalLink
-            data-testid="recommendedContentFooterLink"
-            href="/openshift/learning-resources"
-          >
-            Browse all OpenShift learning resources
-          </ExternalLink>
+      <ProductBanner
+        icon={openshiftBannerContents.icon}
+        learnMoreLink={openshiftBannerContents.learnMoreLink}
+        title={openshiftBannerContents.title}
+        text={openshiftBannerContents.text}
+        dataTestId={openshiftBannerContents.dataTestId}
+      />
+      <PageSection>
+        <Title size="xl" headingLevel="h2" className="pf-v5-u-mt-lg">
+          Featured OpenShift cluster types
+        </Title>
+        <Flex className="pf-v5-u-mb-lg">
+          <FlexItem className="pf-v5-u-pt-md" data-testid="offering-card_RHOSD">
+            <OfferingCard offeringType="RHOSD" />
+          </FlexItem>
+          <FlexItem className="pf-v5-u-pt-md" data-testid="offering-card_AWS">
+            <OfferingCard offeringType="AWS" />
+          </FlexItem>
+          <FlexItem className="pf-v5-u-pt-md" data-testid="offering-card_Azure">
+            <OfferingCard offeringType="Azure" />
+          </FlexItem>
+          <FlexItem className="pf-v5-u-pt-md" data-testid="offering-card_RHOCP">
+            <OfferingCard offeringType="RHOCP" />
+          </FlexItem>
+          <FlexItem className="pf-v5-u-pt-md" data-testid="offering-card_RHOIBM">
+            <OfferingCard offeringType="RHOIBM" />
+          </FlexItem>
+          <FlexItem className="pf-v5-u-pt-md" data-testid="offering-card_DEVSNBX">
+            <OfferingCard offeringType="DEVSNBX" />
+          </FlexItem>
+        </Flex>
+        <InternalTrackingLink
+          isButton
+          to={createClusterURL}
+          variant="link"
+          data-testid="create-cluster"
+          component={CreateClusterLink}
+        >
+          View all OpenShift cluster types
+        </InternalTrackingLink>
+        <Title size="xl" headingLevel="h2" className="pf-v5-u-mt-lg pf-v5-u-mb-lg">
+          Recommended Content
+        </Title>
+        <ListTextLabelLinkCard {...linkTextLabelLinkCardContents} />
+        <ExternalLink
+          data-testid="recommendedContentFooterLink"
+          href="/openshift/learning-resources"
+        >
+          Browse all OpenShift learning resources
+        </ExternalLink>
 
+        <DrawerPanel
+          title={drawerInfo?.title}
+          content={drawerInfo?.content}
+          isOpen={isDrawerOpen}
+          onClose={closeDrawer}
+        >
           <RecommendedOperatorsCards openReadMore={openDrawer} />
-        </PageSection>
-      </DrawerPanel>
+        </DrawerPanel>
+      </PageSection>
     </AppPage>
   );
 }
