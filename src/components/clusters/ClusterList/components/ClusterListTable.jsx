@@ -3,7 +3,6 @@ import get from 'lodash/get';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom-v5-compat';
 
-import * as OCM from '@openshift-assisted/ui-lib/ocm';
 import {
   Button,
   EmptyState,
@@ -29,6 +28,8 @@ import {
 } from '@patternfly/react-table';
 import { global_warning_color_100 as warningColor } from '@patternfly/react-tokens/dist/esm/global_warning_color_100';
 
+import AIClusterStatus from '~/components/common/AIClusterStatus';
+
 import getClusterName from '../../../../common/getClusterName';
 import { isAISubscriptionWithoutMetrics } from '../../../../common/isAssistedInstallerCluster';
 import { actionResolver } from '../../common/ClusterActionsDropdown/ClusterActionsDropdownItems';
@@ -47,8 +48,6 @@ import ActionRequiredLink from '../../common/InstallProgress/ActionRequiredLink'
 import ProgressList from '../../common/InstallProgress/ProgressList';
 
 import ClusterCreatedIndicator from './ClusterCreatedIndicator';
-
-const { ClusterStatus: AIClusterStatus } = OCM;
 
 const skeletonRows = () =>
   new Array(10).fill(

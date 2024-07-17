@@ -2,7 +2,6 @@ import React from 'react';
 import get from 'lodash/get';
 import PropTypes from 'prop-types';
 
-import * as OCM from '@openshift-assisted/ui-lib/ocm';
 import {
   DescriptionList,
   DescriptionListDescription,
@@ -20,6 +19,7 @@ import clusterStates, {
 } from '~/components/clusters/common/clusterStates';
 import { useAWSVPCFromCluster } from '~/components/clusters/common/useAWSVPCFromCluster';
 import { IMDSType } from '~/components/clusters/wizards/common';
+import AIClusterStatus from '~/components/common/AIClusterStatus';
 import useCanClusterAutoscale from '~/hooks/useCanClusterAutoscale';
 import { useGlobalState } from '~/redux/hooks';
 import { isRestrictedEnv } from '~/restrictedEnv';
@@ -39,7 +39,6 @@ import ClusterNetwork from '../ClusterNetwork';
 import DeleteProtection from './DeleteProtection/DeleteProtection';
 import { ClusterStatus } from './ClusterStatus';
 
-const { ClusterStatus: AIClusterStatus } = OCM;
 function DetailsRight({
   cluster,
   totalDesiredComputeNodes,
