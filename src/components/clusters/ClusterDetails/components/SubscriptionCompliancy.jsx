@@ -35,7 +35,7 @@ function SubscriptionCompliancy({ cluster, openModal, canSubscribeOCP = false })
     return null;
   }
 
-  const salesURL = 'https://www.redhat.com/en/contact';
+  const SALES_URL = 'https://www.redhat.com/en/contact';
   const lastReconcileDate = getSubscriptionLastReconciledDate(subscription);
   const clusterName = getClusterName(cluster);
 
@@ -69,7 +69,7 @@ function SubscriptionCompliancy({ cluster, openModal, canSubscribeOCP = false })
     </>
   ) : (
     <>
-      <a href={salesURL} target="_blank" rel="noreferrer noopener">
+      <a href={SALES_URL} target="_blank" rel="noreferrer noopener">
         Contact sales
       </a>
       {' to purchase an OpenShift subscription.'}
