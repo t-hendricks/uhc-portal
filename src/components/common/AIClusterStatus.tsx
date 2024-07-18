@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Bullseye, Spinner } from '@patternfly/react-core';
+import { Skeleton } from '@patternfly/react-core';
 import { ScalprumComponent } from '@scalprum/react-core';
 
 const AIClusterStatus = ({ status, className }: { status?: string; className?: string }) => {
@@ -14,11 +14,7 @@ const AIClusterStatus = ({ status, className }: { status?: string; className?: s
       {...clusterStatusProps}
       scope="assistedInstallerApp"
       module="./ClusterStatus"
-      fallback={
-        <Bullseye>
-          <Spinner />
-        </Bullseye>
-      }
+      fallback={<Skeleton fontSize="sm" width="5em" />}
     />
   );
 };
