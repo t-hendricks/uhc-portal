@@ -3,15 +3,15 @@ WORKDIR /usr/bin
 
 FROM quay.io/openshifttest/cypress-included:13.6.4
 
+COPY --from=builder /usr/bin/curl /usr/bin/curl
+COPY --from=builder /usr/bin/unzip /usr/bin/unzip
 COPY --from=builder /usr/bin/ocm /usr/bin/ocm
 COPY --from=builder /usr/bin/rosa /usr/bin/rosa
 
-ENV AWS_ACCESS_KEY_ID=""
-ENV AWS_SECRET_ACCESS_KEY=""
-ENV REGION=""
-
-CMD aws configure set aws_access_key_id ${AWS_ACCESS_KEY_ID}
-CMD aws configure set aws_secret_access_key ${AWS_SECRET_ACCESS_KEY}
-CMD aws configure set region ${REGION}
+RUN curl -s "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip" && \
+    unzip -q awscliv2.zip && \
+    ./aws/install && \
+    rm -rf awscliv2.zip aws &&\
+    aws --version
 
 

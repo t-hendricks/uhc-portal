@@ -1,0 +1,28 @@
+import ClusterDetailsPage from '../../pageobjects/ClusterDetails.page';
+import ClusterListPage from '../../pageobjects/ClusterList.page';
+const clusterDetails = require('../../fixtures/rosa-hosted/RosaHostedClusterCreatePrivate.json');
+const clusterProfiles = ['rosa-hosted-private', 'rosa-hosted-private-advanced'];
+describe(
+  'Rosa hosted cluster (hypershift) - delete private clusters',
+  { tags: ['day3', 'hosted', 'rosa', 'private', 'hcp'] },
+  () => {
+    clusterProfiles.forEach((clusterProfile) => {
+      let clusterName = clusterDetails[clusterProfile]['day1-profile'].ClusterName;
+      it(`Open a cluster ${clusterName}`, () => {
+        ClusterListPage.filterTxtField().should('be.visible').click();
+        ClusterListPage.filterTxtField().clear().type(clusterName);
+        ClusterListPage.waitForDataReady();
+        ClusterListPage.openClusterDefinition(clusterName);
+      });
+
+      it(`Delete the cluster ${clusterName}`, () => {
+        ClusterDetailsPage.isClusterDetailsPage(clusterName);
+        ClusterDetailsPage.actionsDropdownToggle().click();
+        ClusterDetailsPage.deleteClusterDropdownItem().click();
+        ClusterDetailsPage.deleteClusterNameInput().clear().type(clusterName);
+        ClusterDetailsPage.deleteClusterConfirm().click();
+        ClusterDetailsPage.waitForDeleteClusterActionComplete();
+      });
+    });
+  },
+);

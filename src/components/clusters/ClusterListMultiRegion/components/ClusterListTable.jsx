@@ -3,7 +3,6 @@ import get from 'lodash/get';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom-v5-compat';
 
-import * as OCM from '@openshift-assisted/ui-lib/ocm';
 import {
   Button,
   EmptyState,
@@ -19,6 +18,8 @@ import ExclamationTriangleIcon from '@patternfly/react-icons/dist/esm/icons/excl
 import SearchIcon from '@patternfly/react-icons/dist/esm/icons/search-icon';
 import { SortByDirection, Table, Tbody, Td, Th, Thead, Tr } from '@patternfly/react-table';
 import { global_warning_color_100 as warningColor } from '@patternfly/react-tokens/dist/esm/global_warning_color_100';
+
+import AIClusterStatus from '~/components/common/AIClusterStatus';
 
 import getClusterName from '../../../../common/getClusterName';
 import { isAISubscriptionWithoutMetrics } from '../../../../common/isAssistedInstallerCluster';
@@ -37,8 +38,6 @@ import ProgressList from '../../common/InstallProgress/ProgressList';
 import { ClusterLocationLabel } from '../../commonMultiRegion/ClusterLocationLabel';
 
 import ClusterCreatedIndicator from './ClusterCreatedIndicator';
-
-const { ClusterStatus: AIClusterStatus } = OCM;
 
 const skeletonRows = () =>
   [...Array(10).keys()].map((index) => (
