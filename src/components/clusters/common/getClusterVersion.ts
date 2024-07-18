@@ -12,6 +12,7 @@ const getClusterVersion = <E extends ClusterFromSubscription>(cluster: E): strin
     ? cluster.version?.raw_id
     : cluster.openshift_version) ||
   cluster.version?.raw_id ||
+  cluster.metrics.openshift_version ||
   'N/A';
 
 export default getClusterVersion;

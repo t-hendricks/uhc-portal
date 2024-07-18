@@ -150,5 +150,22 @@ describe('get cluster version', () => {
       // Assert
       expect(clusterVersion).toEqual('N/A');
     });
+
+    it('gets cluster version from metrics', () => {
+      // Arrange
+      const cluster: ClusterFromSubscription = {
+        ...defaultClusterFromSubscription,
+        metrics: {
+          ...defaultClusterFromSubscription.metrics,
+          openshift_version: 'openshift-version',
+        },
+      };
+
+      // Act
+      const clusterVersion = getClusterVersion(cluster);
+
+      // Assert
+      expect(clusterVersion).toEqual('openshift-version');
+    });
   });
 });
