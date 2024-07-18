@@ -1,9 +1,9 @@
 .ocm-upgrade-schedule-selection {
   padding-left: var(--pf-v5-global--spacer--lg);
   margin-bottom: var(--pf-v5-global--spacer--lg);
-  .pf-v5-c-select > ul {
-    max-height: 300px;
-    overflow-y: auto;
+
+  button.pf-v5-c-menu-toggle {
+    max-width: 100%;
   }
 }
 .ocm-c-upgrade-policy-radios {
