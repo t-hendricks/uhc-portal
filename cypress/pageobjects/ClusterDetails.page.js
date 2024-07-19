@@ -28,9 +28,14 @@ class ClusterDetails extends Page {
   editDisplayNameInput = () => cy.get('input[id="edit-display-name-input"]');
 
   overviewTab = () => cy.get('button[aria-controls="overviewTabContent"]');
+
   accessControlTab = () => cy.get('button[aria-controls="overviewTabContent"]');
+
   machinePoolsTab = () => cy.get('button[aria-controls="machinePoolsTabContent"]');
+
   networkingTab = () => cy.get('button[aria-controls="networkingTabContent"]');
+
+  settingsTab = () => cy.get('button[aria-controls="upgradeSettingsTabContent"]');
 
   editDisplaynameConfirm = () =>
     cy.get('div[aria-label="Edit display name"]').find('footer').find('button').first();
