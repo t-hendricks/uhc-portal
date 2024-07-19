@@ -152,11 +152,6 @@ const defaultProps = {
   label: 'Version select label',
 };
 
-// NOTE:
-// These tests will create numerous warnings about improper props
-// These are coming from the PatternFly select items
-// For example:  Warning: React does not recognize the `inputId` prop on a DOM element.
-
 describe('<VersionSelection />', () => {
   beforeEach(() => {
     jest.resetAllMocks();
@@ -171,14 +166,7 @@ describe('<VersionSelection />', () => {
     mockGetInstallableVersions.mockReturnValue({ type: 'NOP' });
   });
 
-  it.failing('is accessible when open', async () => {
-    // There are numerous accessibility issues including:
-    // nested listboxes
-    // improper nesting of items in a listbox (missing use of optgroup tag or role=group)
-    // numerous items hidden from users with use of hidden or aria-hidden attributes
-    // use of aria-label and aria-labeledby on the same component
-    // multiple ids listed in the aria-labeledby attribute
-
+  it('is accessible when open', async () => {
     // Arrange
     const state = { clusters: { clusterVersions: fulfilledVersionsState } };
     const { container } = withState(state).render(
@@ -209,7 +197,7 @@ describe('<VersionSelection />', () => {
   });
 
   describe('calls getInstallableVersions', () => {
-    it('is not called when it has already called and control plane has not changed', () => {
+    it('is not called when it has already called and control plane has not changed', async () => {
       expect(mockGetInstallableVersions.mock.calls).toHaveLength(0);
       const state = {
         clusters: { clusterVersions: { ...fulfilledVersionsState, params: { product: 'hcp' } } },
@@ -224,10 +212,11 @@ describe('<VersionSelection />', () => {
         </Formik>,
       );
 
+      expect(await screen.findByText(defaultProps.label)).toBeInTheDocument();
       expect(mockGetInstallableVersions.mock.calls).toHaveLength(0);
     });
 
-    it('when getInstallableVersions on mount has not been called before', () => {
+    it('when getInstallableVersions on mount has not been called before', async () => {
       expect(mockGetInstallableVersions.mock.calls).toHaveLength(0);
       const state = { clusters: { clusterVersions: noVersionsState } };
       withState(state).render(
@@ -236,10 +225,11 @@ describe('<VersionSelection />', () => {
         </Formik>,
       );
 
+      expect(await screen.findByText(defaultProps.label)).toBeInTheDocument();
       expect(mockGetInstallableVersions.mock.calls).toHaveLength(1);
     });
 
-    it('on mount when last call ended in error', () => {
+    it('on mount when last call ended in error', async () => {
       expect(mockGetInstallableVersions.mock.calls).toHaveLength(0);
       const state = { clusters: { clusterVersions: errorState } };
       withState(state).render(
@@ -248,10 +238,11 @@ describe('<VersionSelection />', () => {
         </Formik>,
       );
 
+      expect(await screen.findByText(defaultProps.label)).toBeInTheDocument();
       expect(mockGetInstallableVersions.mock.calls).toHaveLength(1);
     });
 
-    it('on mount if control plane switched from HCP to Classic', () => {
+    it('on mount if control plane switched from HCP to Classic', async () => {
       expect(mockGetInstallableVersions.mock.calls).toHaveLength(0);
 
       const state = {
@@ -263,10 +254,11 @@ describe('<VersionSelection />', () => {
         </Formik>,
       );
 
+      expect(await screen.findByText(defaultProps.label)).toBeInTheDocument();
       expect(mockGetInstallableVersions.mock.calls).toHaveLength(1);
     });
 
-    it('on mount if control plane switched from Classic to HCP', () => {
+    it('on mount if control plane switched from Classic to HCP', async () => {
       expect(mockGetInstallableVersions.mock.calls).toHaveLength(0);
       const state = {
         clusters: { clusterVersions: { ...fulfilledVersionsState, params: {} } },
@@ -281,6 +273,7 @@ describe('<VersionSelection />', () => {
         </Formik>,
       );
 
+      expect(await screen.findByText(defaultProps.label)).toBeInTheDocument();
       expect(mockGetInstallableVersions.mock.calls).toHaveLength(1);
     });
   });
@@ -304,6 +297,7 @@ describe('<VersionSelection />', () => {
       );
 
       // Assert
+      expect(await screen.findByText(defaultProps.label)).toBeInTheDocument();
       expect(screen.getByRole('option', { name: '4.12.1' })).toBeInTheDocument();
       expect(screen.getByRole('option', { name: '4.11.4' })).toBeInTheDocument();
       expect(screen.queryByRole('option', { name: '4.11.3' })).not.toBeInTheDocument();
@@ -326,12 +320,13 @@ describe('<VersionSelection />', () => {
       );
 
       // Assert
+      expect(await screen.findByText(defaultProps.label)).toBeInTheDocument();
       versions.forEach((version) => {
         expect(screen.getByRole('option', { name: version.raw_id })).toBeInTheDocument();
       });
     });
 
-    it('Selects latest version when it is both rosa and hypershift enabled', () => {
+    it('Selects latest version when it is both rosa and hypershift enabled', async () => {
       const newVersions = [...versions];
 
       const latestVersion = {
@@ -369,12 +364,13 @@ describe('<VersionSelection />', () => {
         </Formik>,
       );
 
+      expect(await screen.findByText(defaultProps.label)).toBeInTheDocument();
       // onChange is called on render to set the default version
       expect(onChangeMock).toHaveBeenCalled();
       expect(onChangeMock).toHaveBeenCalledWith(latestVersion);
     });
 
-    it('Selects version that is hypershift enabled when the latest is not hypershift enabled', () => {
+    it('Selects version that is hypershift enabled when the latest is not hypershift enabled', async () => {
       const newVersions = [...versions];
 
       const latestVersion = {
@@ -412,6 +408,8 @@ describe('<VersionSelection />', () => {
         </Formik>,
       );
 
+      expect(await screen.findByText(defaultProps.label)).toBeInTheDocument();
+
       // onChange is called on render to set the default version
       expect(onChangeMock).toHaveBeenCalled();
 
@@ -421,7 +419,7 @@ describe('<VersionSelection />', () => {
       expect(onChangeMock).toHaveBeenCalledWith(newVersions[1]);
     });
 
-    it('Selects version that is hypershift enabled when the latest is neither hypershift nor rosa enabled', () => {
+    it('Selects version that is hypershift enabled when the latest is neither hypershift nor rosa enabled', async () => {
       const newVersions = [...versions];
 
       const latestVersion = {
@@ -459,6 +457,8 @@ describe('<VersionSelection />', () => {
         </Formik>,
       );
 
+      expect(await screen.findByText(defaultProps.label)).toBeInTheDocument();
+
       // onChange is called on render to set the default version
       expect(onChangeMock).toHaveBeenCalled();
 
@@ -491,6 +491,7 @@ describe('<VersionSelection />', () => {
       );
 
       // Assert
+      expect(await screen.findByText(defaultProps.label)).toBeInTheDocument();
       expect(
         within(screen.getByTestId('alert-error')).getByText(/Error getting cluster versions/),
       ).toBeInTheDocument();
@@ -535,7 +536,7 @@ describe('<VersionSelection />', () => {
       expect(screen.queryByLabelText(componentText.SELECT_TOGGLE.label)).not.toBeInTheDocument();
     });
 
-    it('displays View compatible versions switch if there are incompatible versions', () => {
+    it('displays View compatible versions switch if there are incompatible versions', async () => {
       // Arrange
       const state = { clusters: { clusterVersions: fulfilledVersionsState } };
       const newFields = {
@@ -549,10 +550,11 @@ describe('<VersionSelection />', () => {
       );
 
       // Assert
+      expect(await screen.findByText(defaultProps.label)).toBeInTheDocument();
       expect(screen.getByLabelText('View only compatible versions')).toBeInTheDocument();
     });
 
-    it('hides View compatible switch if there are no incompatible versions', () => {
+    it('hides View compatible switch if there are no incompatible versions', async () => {
       // Arrange
       const state = { clusters: { clusterVersions: fulfilledVersionsState } };
       const newFields = {
@@ -566,6 +568,7 @@ describe('<VersionSelection />', () => {
       );
 
       // Assert
+      expect(await screen.findByText(defaultProps.label)).toBeInTheDocument();
       expect(screen.queryByLabelText('View only compatible versions')).not.toBeInTheDocument();
     });
 
@@ -602,14 +605,7 @@ describe('<VersionSelection />', () => {
       expect(screen.queryByRole('option', { name: '4.12.1' })).not.toBeInTheDocument();
     });
 
-    it('shows full support versions grouped together', () => {
-      // The group heading "Full Support" is technically hidden by PatternFly
-      // Would recommend moving away from the custom PF Select Group and move to using an optgroup tag
-
-      // There are 3 listboxes - one that is the parent and two children corresponding to Full Support and Maintenance support
-      // This is an accessibility issue (listboxes cannot be children of other listboxes)
-      // Assuming the first child listbox is the Full Support list
-
+    it('shows full support versions grouped together', async () => {
       // Arrange
       const state = { clusters: { clusterVersions: fulfilledVersionsState } };
       withState(state).render(
@@ -618,24 +614,16 @@ describe('<VersionSelection />', () => {
         </Formik>,
       );
 
-      const inMainListBox = screen.getAllByRole('listbox')[0];
-
-      expect(within(inMainListBox).getAllByRole('listbox')).toHaveLength(2);
+      expect(await screen.findByText(defaultProps.label)).toBeInTheDocument();
+      expect(screen.getAllByRole('listbox')).toHaveLength(2);
 
       // Assert
-      const fullSupportList = within(inMainListBox).getAllByRole('listbox')[0];
+      const fullSupportList = screen.getAllByRole('listbox')[0];
       expect(within(fullSupportList).getAllByRole('option')).toHaveLength(1);
       expect(within(fullSupportList).getByRole('option', { name: '4.12.1' })).toBeInTheDocument();
     });
 
-    it('shows maintenance support versions grouped together', () => {
-      // The group heading "Maintenance Support" is technically hidden by PatternFly
-      // Would recommend moving away from the custom PF Select Group and move to using an optgroup tag
-
-      // There are 3 listboxes - one that is the parent and two children corresponding to Full Support and Maintenance support
-      // This is an accessibility issue (listboxes cannot be children of other listboxes)
-      // Assuming the second child listbox is the Maintenance Support list
-
+    it('shows maintenance support versions grouped together', async () => {
       // Arrange
       const state = { clusters: { clusterVersions: fulfilledVersionsState } };
       withState(state).render(
@@ -643,12 +631,12 @@ describe('<VersionSelection />', () => {
           <VersionSelection {...defaultProps} />
         </Formik>,
       );
-      const inMainListBox = screen.getAllByRole('listbox')[0];
 
-      expect(within(inMainListBox).getAllByRole('listbox')).toHaveLength(2);
+      expect(await screen.findByText(defaultProps.label)).toBeInTheDocument();
+      expect(screen.getAllByRole('listbox')).toHaveLength(2);
 
       // Assert
-      const maintenanceSupportList = within(inMainListBox).getAllByRole('listbox')[1];
+      const maintenanceSupportList = screen.getAllByRole('listbox')[1];
       expect(within(maintenanceSupportList).getAllByRole('option')).toHaveLength(3);
 
       expect(
@@ -688,14 +676,18 @@ describe('<VersionSelection />', () => {
       expect(screen.getByText(version)).toBeInTheDocument();
 
       // Act
-      await user.click(screen.getByLabelText(componentText.SELECT_TOGGLE.label));
+      await user.click(
+        screen.getByRole('button', {
+          name: version,
+        }),
+      );
 
       // Assert
       expect(screen.getAllByRole('option', { selected: true })).toHaveLength(1);
       expect(screen.getByRole('option', { selected: true, name: version })).toBeInTheDocument();
     });
 
-    it('Selects the latest version if it is rosa enabled', () => {
+    it('Selects the latest version if it is rosa enabled', async () => {
       const newVersions = [...versions];
 
       const latestVersion = {
@@ -726,12 +718,14 @@ describe('<VersionSelection />', () => {
         </Formik>,
       );
 
+      expect(await screen.findByText(defaultProps.label)).toBeInTheDocument();
+
       // onChange is called on render to set the default version
       expect(onChangeMock).toHaveBeenCalled();
       expect(onChangeMock).toHaveBeenCalledWith(latestVersion);
     });
 
-    it('Selects the first rosa enabled version when the latest version is not rosa enabled', () => {
+    it('Selects the first rosa enabled version when the latest version is not rosa enabled', async () => {
       const newVersions = [...versions];
 
       const latestVersion = {
@@ -762,6 +756,8 @@ describe('<VersionSelection />', () => {
         </Formik>,
       );
 
+      expect(await screen.findByText(defaultProps.label)).toBeInTheDocument();
+
       // onChange is called on render to set the default version
       expect(onChangeMock).toHaveBeenCalled();
       expect(onChangeMock).not.toHaveBeenCalledWith(latestVersion);
@@ -786,17 +782,27 @@ describe('<VersionSelection />', () => {
       expect(screen.queryByRole('listbox')).not.toBeInTheDocument();
 
       // Act
-      await user.click(screen.getByLabelText(componentText.SELECT_TOGGLE.label));
+      await user.click(
+        screen.getByRole('button', {
+          name: defaultFields[FieldId.ClusterVersion],
+        }),
+      );
 
       // Assert
       expect(screen.getAllByRole('listbox').length).toBeGreaterThan(0);
-      expect(screen.getByLabelText('Version select label')).toBeInTheDocument();
+      expect(screen.getByText(defaultProps.label)).toBeInTheDocument();
 
       // Act
-      await user.click(screen.getByLabelText(componentText.SELECT_TOGGLE.label));
+      await user.click(
+        screen.getByRole('button', {
+          name: defaultFields[FieldId.ClusterVersion],
+        }),
+      );
 
       // Assert
-      expect(screen.queryByRole('listbox')).not.toBeInTheDocument();
+      await waitFor(() => {
+        expect(screen.queryByRole('listbox')).not.toBeInTheDocument();
+      });
     });
 
     it('calls onChange function when an option is selected', async () => {
