@@ -1,15 +1,20 @@
 import React, { ReactElement, useEffect, useState } from 'react';
-import classNames from 'classnames';
 import { useField } from 'formik';
 import { useDispatch } from 'react-redux';
 
-import { Button, FormGroup, Popover, Switch } from '@patternfly/react-core';
 import {
-  Select as SelectDeprecated,
-  SelectGroup as SelectGroupDeprecated,
-  SelectOption as SelectOptionDeprecated,
-  SelectOptionObject,
-} from '@patternfly/react-core/deprecated';
+  Button,
+  FormGroup,
+  MenuToggle,
+  MenuToggleElement,
+  Popover,
+  Select,
+  SelectGroup,
+  SelectList,
+  SelectOption,
+  SelectProps,
+  Switch,
+} from '@patternfly/react-core';
 import { OutlinedQuestionCircleIcon } from '@patternfly/react-icons/dist/esm/icons/outlined-question-circle-icon';
 import { Spinner } from '@redhat-cloud-services/frontend-components/Spinner';
 
@@ -227,16 +232,16 @@ function VersionSelection({
     isValidHypershiftVersion,
   ]);
 
-  const onToggle = (_event: any, toggleOpenValue: boolean) => {
-    setIsOpen(toggleOpenValue);
+  const onToggle = (_event: unknown) => {
+    setIsOpen(!isOpen);
     // In case of backend error, don't want infinite loop reloading,
     // but allow manual reload by opening the dropdown.
-    if (toggleOpenValue && getInstallableVersionsResponse.error) {
+    if (!isOpen && getInstallableVersionsResponse.error) {
       getInstallableVersions(isHypershiftSelected);
     }
   };
 
-  const onSelect = (_event: any, selection: string | SelectOptionObject) => {
+  const onSelect: SelectProps['onSelect'] = (_event, selection) => {
     setIsOpen(false);
     const selectedVersion = versions.find((version) => version.raw_id === selection);
     setValue(selectedVersion);
@@ -247,6 +252,21 @@ function VersionSelection({
     const selectedVersion = versions.find((version) => input.value?.raw_id === version.raw_id);
     return selectedVersion ? selectedVersion.raw_id : '';
   };
+
+  const toggle = (toggleRef: React.Ref<MenuToggleElement>) => (
+    <MenuToggle
+      ref={toggleRef}
+      onClick={onToggle}
+      isExpanded={isOpen}
+      style={{
+        width: '100%',
+        minWidth: '100%',
+      }}
+      id={FieldId.ClusterVersion}
+    >
+      {selectedClusterVersion?.raw_id || getSelection()}
+    </MenuToggle>
+  );
 
   const selectOptions = React.useMemo(() => {
     const fullSupport: ReactElement[] = [];
@@ -263,16 +283,14 @@ function VersionSelection({
       }
 
       const selectOption = (
-        <SelectOptionDeprecated
-          className="pf-v5-c-dropdown__menu-item"
-          isSelected={selectedClusterVersion?.raw_id === version.raw_id}
+        <SelectOption
           value={version.raw_id}
           key={version.id}
           isDisabled={!!disableReason}
           description={disableReason || ''}
         >
           {`${version.raw_id}`}
-        </SelectOptionDeprecated>
+        </SelectOption>
       );
 
       switch (supportVersionMap?.[versionName(version)]) {
@@ -289,13 +307,7 @@ function VersionSelection({
       maintenanceSupport,
       hasIncompatibleVersions,
     };
-  }, [
-    incompatibleVersionReason,
-    selectedClusterVersion?.raw_id,
-    supportVersionMap,
-    versions,
-    showOnlyCompatibleVersions,
-  ]);
+  }, [incompatibleVersionReason, supportVersionMap, versions, showOnlyCompatibleVersions]);
 
   return (
     <FormGroup {...input} label={label} isRequired>
@@ -314,18 +326,18 @@ function VersionSelection({
         </div>
       )}
       {getInstallableVersionsResponse.fulfilled && !rosaVersionError && (
-        <SelectDeprecated
-          label={label}
-          aria-label={label}
+        <Select
           isOpen={isOpen}
-          selections={selectedClusterVersion?.raw_id || getSelection()}
-          onToggle={onToggle}
+          selected={selectedClusterVersion?.raw_id || getSelection()}
+          toggle={toggle}
+          onOpenChange={setIsOpen}
           onSelect={onSelect}
-          onBlur={(event) => event.stopPropagation()}
+          maxMenuHeight="20em"
+          isScrollable
         >
           {selectOptions.hasIncompatibleVersions ? (
             <Switch
-              className="pf-v5-u-align-items-center pf-v5-u-mx-md pf-v5-u-mb-sm pf-v5-u-font-size-sm"
+              className="pf-v5-u-mx-md pf-v5-u-mt-md pf-v5-u-font-size-sm"
               id="view-only-compatible-versions"
               aria-label="View only compatible versions"
               key={`compatible-switch-${showOnlyCompatibleVersions}`}
@@ -350,19 +362,19 @@ function VersionSelection({
               isChecked={showOnlyCompatibleVersions}
               onChange={toggleCompatibleVersions}
             />
-          ) : (
-            <span className="pf-v5-u-display-none">&nbsp;</span>
-          )}
-          <SelectGroupDeprecated label="Full support">
-            {selectOptions.fullSupport}
-          </SelectGroupDeprecated>
-          <SelectGroupDeprecated
-            label="Maintenance support"
-            className={classNames(!selectOptions.maintenanceSupport?.length && 'pf-v5-u-hidden')}
-          >
-            {selectOptions.maintenanceSupport}
-          </SelectGroupDeprecated>
-        </SelectDeprecated>
+          ) : null}
+
+          <SelectGroup label="Full support" id="full-support">
+            <SelectList aria-labelledby="full-support">{selectOptions.fullSupport}</SelectList>
+          </SelectGroup>
+          {selectOptions.maintenanceSupport?.length > 0 ? (
+            <SelectGroup label="Maintenance support" id="maintenance-support">
+              <SelectList aria-labelledby="maintenance-support">
+                {selectOptions.maintenanceSupport}
+              </SelectList>
+            </SelectGroup>
+          ) : null}
+        </Select>
       )}
 
       <FormGroupHelperText touched={touched} error={error} />
