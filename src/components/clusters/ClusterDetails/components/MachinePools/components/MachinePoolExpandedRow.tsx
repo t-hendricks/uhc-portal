@@ -89,12 +89,12 @@ const MachinePoolExpandedRow = ({
   return (
     <Grid hasGutter>
       {!isEmpty(machinePool.labels) && (
-        <GridItem md={6}>
+        <GridItem md={6} data-testid="labels-id">
           <MachinePoolItemList title="Labels" items={labelsRenderer(machinePool.labels || {})} />
         </GridItem>
       )}
       {machinePool.taints && (
-        <GridItem md={6}>
+        <GridItem md={6} data-testid="taintstext-id">
           <MachinePoolItemList title="Taints" items={taintsRenderer(machinePool.taints)} />
         </GridItem>
       )}
@@ -121,7 +121,7 @@ const MachinePoolExpandedRow = ({
         </GridItem>
       )}
       {spotMarketOptions && (
-        <GridItem md={6}>
+        <GridItem md={6} data-testid="spotinstance-id">
           <Title headingLevel="h4">Spot instance pricing</Title>
           {spotMarketOptions.max_price
             ? `Maximum hourly price: ${spotMarketOptions.max_price}`

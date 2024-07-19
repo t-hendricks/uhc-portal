@@ -85,7 +85,7 @@ const EditTaintsSection = ({
                         <GridItem span={4}>
                           <TextField fieldId={valueField} isDisabled={!!taintsDisabledReason} />
                         </GridItem>
-                        <GridItem span={3}>
+                        <GridItem span={3} data-testid="taints-id">
                           <TaintEffectField
                             fieldId={effectField}
                             isDisabled={!!taintsDisabledReason}

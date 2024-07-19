@@ -17,6 +17,7 @@ const SelectField = ({ value, fieldId, onSelect, isDisabled, children }: SelectF
   const [isOpen, setIsOpen] = React.useState(false);
   return (
     <SelectDeprecated
+      toggleId="effect-toggle-id"
       selections={value}
       id={fieldId}
       onSelect={(_, newValue) => {
