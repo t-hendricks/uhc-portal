@@ -101,6 +101,48 @@ class ClusterDetails extends Page {
 
   clusterMachinePoolTable = () => cy.get('table[aria-label="Machine pools"]');
 
+  editSubscriptionSettingsLink = () => cy.get('button').contains('Edit subscription settings');
+
+  serviceLevelAgreementValue = () => cy.getByTestId('service-level-agreement');
+
+  supportTypeValue = () => cy.getByTestId('support-type');
+
+  subscriptionTypeValue = () => cy.getByTestId('subscription-type');
+
+  serviceLevelAgreementValue = () => cy.getByTestId('service-level-agreement');
+
+  clusterUsageValue = () => cy.getByTestId('cluster-usage');
+
+  subscriptionUnitsValue = () => cy.getByTestId('subscription-units');
+
+  coresOrSocketsValue = () => cy.getByTestId('cores-or-sockets');
+
+  serviceLevelAgreementPremiumRadio = () => cy.get('input[value="Premium"]');
+
+  serviceLevelAgreementStandardRadio = () => cy.get('input[value="Standard"]');
+
+  serviceLevelAgreementSelfSupportRadio = () => cy.get('input[value="Self-Support"]');
+
+  supportTypeRedHatSupportL1L3Radio = () => cy.get('input[id="service_level:L1-L3"]');
+
+  supportTypePartnerSupportL3Radio = () => cy.get('input[id="service_level:L3-only"]');
+
+  clusterUsageProductionRadio = () => cy.get('input[value="Production"]');
+
+  clusterUsageDevelopmentTestRadio = () => cy.get('input[value="Development/Test"]');
+
+  clusterUsageDisasterRecoveryRadio = () => cy.get('input[value="Disaster Recovery"]');
+
+  subscriptionUnitsCoreCpusRadio = () => cy.get('input[value="Core/vCPU"]');
+
+  subscriptionUnitsSocketsRadio = () => cy.get('input[value="Sockets"]');
+
+  numberOfSocketsInput = () => cy.get('input[name="socket_total"]');
+
+  numberOfCPUsInput = () => cy.get('input[name="cpu_total"]');
+
+  saveSubscriptionButton = () => cy.getByTestId('btn-primary');
+
   clusterInfrastructureBillingModelValue = () =>
     cy.getByTestId('infrastructure-billing-model').find('div');
 
