@@ -38,7 +38,14 @@ module.exports = async (_env, argv) => {
   const { outputPath } = argv;
   const devMode = argv.mode !== 'production';
   process.env.DEV_MODE = devMode;
-  const betaMode = argv.env.beta === 'true';
+  // the `BETA` env-var is exported during deployment builds by the frontend-build-container's universal-installer
+  // @see https://gitlab.cee.redhat.com/insights-platform/frontend-build-container/-/blob/508d19983a7f78bbe1a66ead1585ffe9f4ba44a0/universal_build.sh#L122
+  const envBetaMode = process.env.BETA === 'true';
+  // the `beta` arg' is used locally in this repo', to serve fakamai/netstorage (i.e. non-containerized) pipelines
+  // @see https://gitlab.cee.redhat.com/service/uhc-portal/-/blob/1a76f8fad8918a302da89ba3f65b6c37b64a6779/push_to_insights.sh#L181
+  const argBetaMode = argv.env.beta === 'true';
+  const betaMode = envBetaMode || argBetaMode;
+
   const sentryReleaseVersion = argv.env['sentry-version'];
   const isDevServer = process.argv.includes('serve');
 
