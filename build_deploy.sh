@@ -39,11 +39,11 @@ export NODE_BUILD_VERSION=20
 # ($GIT_BRANCH is not populated on a manually triggered build).
 # @see https://gitlab.cee.redhat.com/service/app-interface/-/blob/e468a1b9f15352ef56547b9cae3adf99e6c61d5b/resources/jenkins/ocm-ui/job-templates.yaml#L59-79
 if [ "$GIT_BRANCH" == 'origin/stable' ] || [ "$1" == "stable" ]; then
-  API_ENV='production'
+  BUILD_SCRIPT='build:saas:api-prod'
 else
-  API_ENV='staging'
+  BUILD_SCRIPT='build:saas:api-stage'
 fi
-export YARN_BUILD_SCRIPT="build:prod --env api-env=$API_ENV --output-path 'dist'"
+export YARN_BUILD_SCRIPT="$BUILD_SCRIPT"
 
 
 COMMON_BUILDER=https://raw.githubusercontent.com/RedHatInsights/insights-frontend-builder-common/master
