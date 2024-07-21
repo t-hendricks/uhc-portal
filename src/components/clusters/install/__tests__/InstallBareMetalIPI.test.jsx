@@ -40,4 +40,16 @@ describe('InstallBareMetalIPI', () => {
 
     await checkAccessibility(container);
   });
+
+  it('shows installer section', async () => {
+    withState(githubReleases).render(
+      <TestRouter>
+        <CompatRouter>
+          <InstallBareMetalIPI token={{}} dispatch={dispatch} />
+        </CompatRouter>
+      </TestRouter>,
+    );
+
+    expect(await screen.findByText('OpenShift installer')).toBeInTheDocument();
+  });
 });
