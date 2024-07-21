@@ -25,7 +25,6 @@ const OCPInstructions = (props) => {
     customizations = '',
     showPreReleaseDocs,
     preReleasePageLink,
-    isBMIPI,
     isUPI,
     showPreReleasePageLink,
     prerequisites,
@@ -54,7 +53,6 @@ const OCPInstructions = (props) => {
               rhcos={rhcos}
               tool={installer}
               channel={channel}
-              isBMIPI={isBMIPI}
               showPreReleasePageLink={showPreReleasePageLink}
             />
           </Instruction>
@@ -66,7 +64,6 @@ const OCPInstructions = (props) => {
               cloudProviderID={cloudProviderID}
               customizations={customizations}
               prerequisites={prerequisites}
-              isBMIPI={isBMIPI}
               isUPI={isUPI}
             />
           </Instruction>
@@ -91,13 +88,11 @@ OCPInstructions.propTypes = {
   preReleasePageLink: PropTypes.string,
   customizations: PropTypes.string,
   prerequisites: PropTypes.string,
-  isBMIPI: PropTypes.bool,
   isUPI: PropTypes.bool,
   showPreReleasePageLink: PropTypes.bool,
 };
 
 OCPInstructions.defaultProps = {
-  isBMIPI: false,
   isUPI: false,
 };
 
