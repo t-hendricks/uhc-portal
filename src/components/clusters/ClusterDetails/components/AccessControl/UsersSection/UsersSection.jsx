@@ -14,12 +14,16 @@ import {
   Title,
 } from '@patternfly/react-core';
 import { HelpIcon } from '@patternfly/react-icons/dist/esm/icons/help-icon';
-import { TableVariant } from '@patternfly/react-table';
 import {
-  Table as TableDeprecated,
-  TableBody as TableBodyDeprecated,
-  TableHeader as TableHeaderDeprecated,
-} from '@patternfly/react-table/deprecated';
+  ActionsColumn,
+  Table,
+  TableVariant,
+  Tbody,
+  Td,
+  Th,
+  Thead,
+  Tr,
+} from '@patternfly/react-table';
 import Skeleton from '@redhat-cloud-services/frontend-components/Skeleton';
 
 import links from '../../../../../../common/installLinks.mjs';
@@ -87,68 +91,6 @@ class UsersSection extends React.Component {
     } = this.props;
     const { deletedRowIndex } = this.state;
 
-    const columns = [
-      {
-        title: (
-          <>
-            User ID
-            <Popover
-              position={PopoverPosition.top}
-              aria-label="User IDs"
-              bodyContent={<p>User IDs are matched by the cluster&apos;s identity providers.</p>}
-            >
-              <Button variant="plain" isInline aria-label="Help">
-                <Icon size="md">
-                  <HelpIcon />
-                </Icon>
-              </Button>
-            </Popover>
-          </>
-        ),
-      },
-      {
-        title: (
-          <>
-            Group
-            <Popover
-              position={PopoverPosition.top}
-              aria-label="Groups"
-              bodyContent={
-                <p>
-                  Groups are mapped to role bindings on the cluster. For more information check the{' '}
-                  <ExternalLink href={links.UNDERSTANDING_AUTHENTICATION}>
-                    OpenShift 4 documentation
-                  </ExternalLink>
-                </p>
-              }
-            >
-              <Button variant="plain" isInline aria-label="Help">
-                <Icon size="md">
-                  <HelpIcon />
-                </Icon>
-              </Button>
-            </Popover>
-          </>
-        ),
-      },
-    ];
-
-    const actions = [
-      {
-        title: 'Delete',
-        onClick: (_, rowID, rowData) => {
-          this.setState({ deletedRowIndex: rowID });
-          deleteUser(cluster.id, rowData['column-1'].title, rowData.userID);
-        },
-        className: 'hand-pointer',
-      },
-    ];
-
-    const userRow = (user) => ({
-      cells: [user.id, user.group],
-      userID: user.id,
-    });
-
     if (!hasUsers && clusterGroupUsers.error) {
       return (
         <EmptyState>
@@ -157,27 +99,7 @@ class UsersSection extends React.Component {
       );
     }
 
-    const rows = hasUsers && clusterGroupUsers.users.map(userRow);
     const showSkeleton = !hasUsers && clusterGroupUsers.pending;
-    const skeletonRow = {
-      cells: [
-        {
-          props: { colSpan: 2 },
-          title: <Skeleton size="md" />,
-        },
-      ],
-    };
-
-    if (
-      hasUsers &&
-      (clusterGroupUsers.pending || addUserResponse.pending) &&
-      deletedRowIndex === null
-    ) {
-      rows.push(skeletonRow);
-    }
-    if (hasUsers && deletedRowIndex !== null) {
-      rows[deletedRowIndex] = skeletonRow;
-    }
 
     const readOnlyReason = isReadOnly && 'This operation is not available during maintenance';
     const hibernatingReason =
@@ -199,6 +121,84 @@ class UsersSection extends React.Component {
         Add user
       </ButtonWithTooltip>
     );
+
+    const columnNames = {
+      userId: 'User ID',
+      group: 'Group',
+    };
+
+    const userIdHeading = (
+      <>
+        {columnNames.userId}
+        <Popover
+          position={PopoverPosition.top}
+          aria-label="User IDs"
+          bodyContent={<p>User IDs are matched by the cluster&apos;s identity providers.</p>}
+        >
+          <Button variant="plain" isInline aria-label="Help">
+            <Icon size="md">
+              <HelpIcon />
+            </Icon>
+          </Button>
+        </Popover>
+      </>
+    );
+
+    const groupHeading = (
+      <>
+        {columnNames.group}
+        <Popover
+          position={PopoverPosition.top}
+          aria-label="Groups"
+          bodyContent={
+            <p>
+              Groups are mapped to role bindings on the cluster. For more information check the{' '}
+              <ExternalLink href={links.UNDERSTANDING_AUTHENTICATION}>
+                OpenShift 4 documentation
+              </ExternalLink>
+            </p>
+          }
+        >
+          <Button variant="plain" isInline aria-label="Help">
+            <Icon size="md">
+              <HelpIcon />
+            </Icon>
+          </Button>
+        </Popover>
+      </>
+    );
+
+    const userRow = (user, index) =>
+      deletedRowIndex === index ? (
+        <Tr key={user.id}>
+          <Td dataLabel={columnNames.userId}>
+            <Skeleton size="md" />
+          </Td>
+          <Td dataLabel={columnNames.group}>
+            <Skeleton size="md" />
+          </Td>
+          <Td isActionCell />
+        </Tr>
+      ) : (
+        <Tr key={user.id}>
+          <Td dataLabel={columnNames.userId}>{user.id}</Td>
+          <Td dataLabel={columnNames.group}>{user.group}</Td>
+          <Td isActionCell>
+            <ActionsColumn
+              items={[
+                {
+                  title: 'Delete',
+                  onClick: () => {
+                    this.setState({ deletedRowIndex: index });
+                    deleteUser(cluster.id, user.group, user.id);
+                  },
+                },
+              ]}
+              isDisabled={!!disableReason}
+            />
+          </Td>
+        </Tr>
+      );
 
     return showSkeleton ? (
       <Card>
@@ -232,17 +232,16 @@ class UsersSection extends React.Component {
             <ErrorBox message="Error deleting user" response={deleteUserResponse} />
           )}
           {hasUsers && (
-            <TableDeprecated
-              aria-label="Users"
-              actions={actions}
-              variant={TableVariant.compact}
-              cells={columns}
-              rows={rows}
-              areActionsDisabled={() => !!disableReason}
-            >
-              <TableHeaderDeprecated />
-              <TableBodyDeprecated />
-            </TableDeprecated>
+            <Table aria-label="Users" variant={TableVariant.compact}>
+              <Thead>
+                <Tr>
+                  <Th>{userIdHeading}</Th>
+                  <Th>{groupHeading}</Th>
+                  <Th screenReaderText="User action" />
+                </Tr>
+              </Thead>
+              <Tbody>{clusterGroupUsers.users.map(userRow)}</Tbody>
+            </Table>
           )}
           {addUserBtn}
           <AddUserDialog

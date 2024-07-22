@@ -67,6 +67,7 @@ const NodeCountField = ({
   return (
     <FormGroup
       fieldId={fieldId}
+      data-testid="compute-node-count"
       label={isMultizoneMachinePool ? 'Compute node count (per zone)' : 'Compute node count'}
       isRequired
       labelIcon={

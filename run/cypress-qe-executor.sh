@@ -63,7 +63,8 @@ cat > cypress.env.json << EOF
 "QE_ACCOUNT_ROLE_PREFIX" : "cypress-account-roles",
 "QE_OCM_ROLE_PREFIX" : "cypress-ocm-role",
 "QE_USER_ROLE_PREFIX" : "cypress-user-role",
-"QE_USE_OFFLINE_TOKEN" : false
+"QE_USE_OFFLINE_TOKEN" : false,
+"ROSACLI_LOGS": "cli-logs.txt"
 }
 EOF
 
@@ -96,6 +97,20 @@ mkdir -p "${PWD}/cypress/videos"
 mkdir -p "${PWD}/cypress/screenshots"
 mkdir -p "${PWD}/run/output/embedded_files"
 
+# Precondition on Quay credentail definition
+if [ -z "${QUAY_USER}" ]; then
+  echo "The 'quay.io' push user name hasn't been provided."
+  echo "Make sure to set the 'QUAY_USER' environment variable."
+  exit 1
+fi
+if [ -z "${QUAY_TOKEN}" ]; then
+  echo "The 'quay.io' push token hasn't been provided."
+  echo "Make sure to set the 'QUAY_TOKEN' environment variable."
+  exit 1
+fi
+# Login to Quay with user
+podman login -u "${QUAY_USER}" --password-stdin <<< "${QUAY_TOKEN}" quay.io
+
 function cypress_container_run(){
   browser_container_name=$1
   pod_id=$2
@@ -110,6 +125,7 @@ function cypress_container_run(){
       --name "${browser_container_name}" \
       --shm-size "2g" \
       --security-opt label="disable" \
+      --pull newer \
       --volume "${PWD}/cypress.config.js:/e2e/cypress.config.js" \
       --volume "${PWD}/tsconfig.json:/e2e/tsconfig.json" \
       --volume "${PWD}/cypress.env.json:/e2e/cypress.env.json" \
@@ -135,6 +151,7 @@ function collect_logs(){
       echo "copying cypress screenshots & videos to /run/output/embedded_files/..."
       podman cp "${browser_container_name}:/e2e/cypress/screenshots/" ${PWD}"/run/output/embedded_files/"
       podman cp "${browser_container_name}:/e2e/cypress/videos/" "${PWD}/run/output/embedded_files/"
+      podman cp "${browser_container_name}:cli-logs.txt" ${PWD}"/cli-logs.txt"
       echo "Completed log collection from ${browser_container_name}"
     fi
 }

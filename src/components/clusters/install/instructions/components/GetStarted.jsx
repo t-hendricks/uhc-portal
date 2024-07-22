@@ -12,30 +12,20 @@ import instructionsMapping from '../instructionsMapping';
 
 import TelemetryDisclaimer from './TelemetryDisclaimer';
 
-const GetStarted = ({
-  docURL,
-  pendoID,
-  cloudProviderID,
-  customizations,
-  prerequisites,
-  isBMIPI,
-  isUPI,
-}) => {
+const GetStarted = ({ docURL, pendoID, cloudProviderID, customizations, prerequisites, isUPI }) => {
   const track = useAnalytics();
   return (
     <Stack hasGutter>
       <StackItem>
         <TextContent>
           <div>
-            {!isBMIPI && <>The installer will take about 45 minutes to run. </>}
+            The installer will take about 45 minutes to run.
             {get(instructionsMapping, `${cloudProviderID}.getStartedAdditional`, null) || ''}
-            {isBMIPI && (
-              <Text component="p">
-                When the installer is complete you will see the console URL and credentials for
-                accessing your new cluster. A <code>kubeconfig</code> file will also be generated
-                for you to use with the <code>oc</code> CLI tools you downloaded.
-              </Text>
-            )}
+            <Text component="p">
+              When the installer is complete you will see the console URL and credentials for
+              accessing your new cluster. A <code>kubeconfig</code> file will also be generated for
+              you to use with the <code>oc</code> CLI tools you downloaded.
+            </Text>
           </div>
         </TextContent>
       </StackItem>
@@ -56,7 +46,7 @@ const GetStarted = ({
           Get started
         </Button>
       </StackItem>
-      {!isBMIPI && !isUPI && (
+      {!isUPI && (
         <StackItem>
           <Text component="p">
             To quickly create a cluster with the default options, run the following command:
@@ -95,7 +85,6 @@ const GetStarted = ({
 };
 
 GetStarted.defaultProps = {
-  isBMIPI: false,
   isUPI: false,
 };
 
@@ -105,7 +94,6 @@ GetStarted.propTypes = {
   cloudProviderID: PropTypes.string.isRequired,
   customizations: PropTypes.string,
   prerequisites: PropTypes.string,
-  isBMIPI: PropTypes.bool,
   isUPI: PropTypes.bool,
 };
 

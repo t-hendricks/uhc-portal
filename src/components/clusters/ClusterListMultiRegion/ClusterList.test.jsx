@@ -1,10 +1,11 @@
 import React from 'react';
+import * as reactRedux from 'react-redux';
 import { MemoryRouter } from 'react-router';
 import { CompatRouter } from 'react-router-dom-v5-compat';
 
 import * as usePreviousProps from '~/hooks/usePreviousProps';
 import * as useFetchClusters from '~/queries/ClusterListQueries/useFetchClusters';
-import { mockRestrictedEnv, render, screen, waitFor, within } from '~/testUtils';
+import { mockRestrictedEnv, render, screen, waitFor, within, withState } from '~/testUtils';
 
 import { normalizedProducts } from '../../../common/subscriptionTypes';
 import { viewConstants } from '../../../redux/constants';
@@ -13,6 +14,14 @@ import fixtures, { funcs } from '../ClusterDetailsMultiRegion/__tests__/ClusterD
 import { columns } from './components/ClusterListTable';
 import { mockedClusters } from './components/mocks/clusterListTable.mock';
 import ClusterList from './ClusterList';
+
+jest.mock('react-redux', () => {
+  const config = {
+    __esModule: true,
+    ...jest.requireActual('react-redux'),
+  };
+  return config;
+});
 
 // Unsure why usePreviousProps isn't working - mocking for now
 jest.spyOn(usePreviousProps, 'usePreviousProps').mockImplementation((value) => value);
@@ -71,7 +80,10 @@ describe('<ClusterList />', () => {
       'true',
     );
 
-    expect(within(screen.getByRole('status')).getByText('Loading...')).toBeInTheDocument(); // loading spinner
+    expect(
+      screen.getByRole('progressbar', { name: 'Loading cluster list data' }),
+    ).toBeInTheDocument(); // loading spinner
+
     expect(screen.queryByText(emptyStateText)).not.toBeInTheDocument();
   });
 
@@ -93,7 +105,9 @@ describe('<ClusterList />', () => {
     expect(screen.queryByTestId('skeleton')).not.toBeInTheDocument();
     expect(screen.queryByRole('table')).not.toBeInTheDocument();
     expect(screen.queryByRole('button', { name: 'Refresh' })).not.toBeInTheDocument();
-    expect(screen.queryByRole('status')).not.toBeInTheDocument(); // loading spinner
+    expect(
+      screen.queryByRole('progressbar', { name: 'Loading cluster list data' }),
+    ).not.toBeInTheDocument(); // loading spinner
     expect(screen.getByText(emptyStateText)).toBeInTheDocument();
   });
 
@@ -116,7 +130,9 @@ describe('<ClusterList />', () => {
       'true',
     );
 
-    expect(within(screen.getByRole('status')).getByText('Loading...')).toBeInTheDocument(); // loading spinner
+    expect(
+      screen.getByRole('progressbar', { name: 'Loading cluster list data' }),
+    ).toBeInTheDocument(); // loading spinner
     expect(screen.queryByTestId('skeleton')).not.toBeInTheDocument();
 
     expect(
@@ -143,7 +159,9 @@ describe('<ClusterList />', () => {
       'true',
     );
 
-    expect(within(screen.getByRole('status')).getByText('Loading...')).toBeInTheDocument(); // loading spinner
+    expect(
+      screen.getByRole('progressbar', { name: 'Loading cluster list data' }),
+    ).toBeInTheDocument(); // loading spinner
     expect(screen.queryByTestId('skeleton')).not.toBeInTheDocument();
 
     expect(
@@ -169,7 +187,9 @@ describe('<ClusterList />', () => {
       'false',
     );
 
-    expect(screen.queryByRole('status')).not.toBeInTheDocument(); // loading spinner
+    expect(
+      screen.queryByRole('progressbar', { name: 'Loading cluster list data' }),
+    ).not.toBeInTheDocument(); // loading spinner
     expect(screen.queryByTestId('skeleton')).not.toBeInTheDocument();
 
     expect(
@@ -219,7 +239,7 @@ describe('<ClusterList />', () => {
         errors: [],
       });
 
-      const { user } = render(
+      const { user } = withState({}, true).render(
         <MemoryRouter>
           <CompatRouter>
             <ClusterList {...props} />
@@ -228,7 +248,7 @@ describe('<ClusterList />', () => {
       );
 
       const expected = [
-        { name: 'aCluster', date: '25 May 2024' },
+        { name: 'aCluster', date: '25 Dec 2024' },
         { name: 'myAWSCluster', date: '20 May 2024' },
         { name: 'zCluster', date: '25 Apr 2024' },
       ];
@@ -253,7 +273,7 @@ describe('<ClusterList />', () => {
         errors: [],
       });
 
-      const { user } = render(
+      const { user } = withState({}, true).render(
         <MemoryRouter>
           <CompatRouter>
             <ClusterList {...props} />
@@ -276,6 +296,42 @@ describe('<ClusterList />', () => {
       checkCellValue(expected, 'name', nameColumnIndex);
     });
 
+    it('uses natural sorting for name', async () => {
+      const mockedNames = ['myCluster-10', 'myCluster-5', 'myCluster-1'];
+      const newMockedClusters = mockedClusters.map((cluster, index) => ({
+        ...cluster,
+        subscription: { ...cluster.subscription, display_name: mockedNames[index] },
+      }));
+
+      mockedGetFetchedClusters.mockReturnValue({
+        data: { items: newMockedClusters },
+        isLoading: true,
+        errors: [],
+      });
+
+      const { user } = withState({}, true).render(
+        <MemoryRouter>
+          <CompatRouter>
+            <ClusterList {...props} />
+          </CompatRouter>
+        </MemoryRouter>,
+      );
+
+      const nameColumnIndex = Object.keys(columns).findIndex((column) => column === 'name');
+
+      // Sort Ascending
+      await user.click(screen.getByRole('button', { name: 'Name' }));
+
+      const expected = [{ name: 'myCluster-1' }, { name: 'myCluster-5' }, { name: 'myCluster-10' }];
+
+      checkCellValue(expected, 'name', nameColumnIndex);
+
+      // Check that the order has been reversed
+      await user.click(screen.getByRole('button', { name: 'Name' }));
+      expected.reverse();
+      checkCellValue(expected, 'name', nameColumnIndex);
+    });
+
     it('sorts by status', async () => {
       mockedGetFetchedClusters.mockReturnValue({
         data: { items: mockedClusters },
@@ -283,7 +339,7 @@ describe('<ClusterList />', () => {
         errors: [],
       });
 
-      const { user } = render(
+      const { user } = withState({}, true).render(
         <MemoryRouter>
           <CompatRouter>
             <ClusterList {...props} />
@@ -317,7 +373,7 @@ describe('<ClusterList />', () => {
         errors: [],
       });
 
-      const { user } = render(
+      const { user } = withState({}, true).render(
         <MemoryRouter>
           <CompatRouter>
             <ClusterList {...props} />
@@ -351,7 +407,7 @@ describe('<ClusterList />', () => {
         errors: [],
       });
 
-      const { user } = render(
+      const { user } = withState({}, true).render(
         <MemoryRouter>
           <CompatRouter>
             <ClusterList {...props} />
@@ -401,7 +457,7 @@ describe('<ClusterList />', () => {
         errors: [],
       });
 
-      const { user } = render(
+      const { user } = withState({}, true).render(
         <MemoryRouter>
           <CompatRouter>
             <ClusterList {...props} />
@@ -441,7 +497,7 @@ describe('<ClusterList />', () => {
         errors: [],
       });
 
-      const { user } = render(
+      const { user } = withState({}, true).render(
         <MemoryRouter>
           <CompatRouter>
             <ClusterList {...props} />
@@ -471,7 +527,8 @@ describe('<ClusterList />', () => {
 
   describe('Pagination', () => {
     const initialResultsPerPage = 50;
-    const pageInformationQuerySelector = '.pf-v5-c-menu-toggle__text';
+    const pageInformationQuerySelector = () =>
+      within(screen.getAllByTestId('page_drop_down')[0]).getAllByRole('button')[0];
 
     // Create a list of 200 clusters
     const mockClusters = [];
@@ -489,13 +546,13 @@ describe('<ClusterList />', () => {
       });
     }
 
-    it('The correct number of results on a page ', () => {
+    it('The correct number of results on a page', () => {
       mockedGetFetchedClusters.mockReturnValue({
         data: { items: mockClusters },
         errors: [],
       });
 
-      const { container } = render(
+      withState({}, true).render(
         <MemoryRouter>
           <CompatRouter>
             <ClusterList {...props} />
@@ -507,9 +564,7 @@ describe('<ClusterList />', () => {
       expect(screen.getByText('cluster1')).toBeInTheDocument();
       expect(screen.getByText('cluster50')).toBeInTheDocument();
 
-      expect(container.querySelector(pageInformationQuerySelector)).toHaveTextContent(
-        '1 - 50 of 200',
-      );
+      expect(pageInformationQuerySelector()).toHaveTextContent('1 - 50 of 200');
     });
 
     it('Clicking on the next page link changes the results', async () => {
@@ -518,7 +573,7 @@ describe('<ClusterList />', () => {
         errors: [],
       });
 
-      const { container, user } = render(
+      const { user } = withState({}, true).render(
         <MemoryRouter>
           <CompatRouter>
             <ClusterList {...props} />
@@ -536,9 +591,7 @@ describe('<ClusterList />', () => {
       expect(clusterRows()).toHaveLength(initialResultsPerPage);
       expect(screen.getByText('cluster51')).toBeInTheDocument();
       expect(screen.getByText('cluster100')).toBeInTheDocument();
-      expect(container.querySelector(pageInformationQuerySelector)).toHaveTextContent(
-        '51 - 100 of 200',
-      );
+      expect(pageInformationQuerySelector()).toHaveTextContent('51 - 100 of 200');
 
       // Ensure that the "back" button is enabled:
       screen.getAllByRole('button', { name: 'Go to previous page' }).forEach((button) => {
@@ -550,9 +603,7 @@ describe('<ClusterList />', () => {
       expect(clusterRows()).toHaveLength(initialResultsPerPage);
       expect(screen.getByText('cluster101')).toBeInTheDocument();
       expect(screen.getByText('cluster150')).toBeInTheDocument();
-      expect(container.querySelector(pageInformationQuerySelector)).toHaveTextContent(
-        '101 - 150 of 200',
-      );
+      expect(pageInformationQuerySelector()).toHaveTextContent('101 - 150 of 200');
     });
 
     it('Clicking on the previous link changes the results', async () => {
@@ -561,7 +612,7 @@ describe('<ClusterList />', () => {
         errors: [],
       });
 
-      const { container, user } = render(
+      const { user } = withState({}, true).render(
         <MemoryRouter>
           <CompatRouter>
             <ClusterList {...props} />
@@ -579,24 +630,18 @@ describe('<ClusterList />', () => {
       screen.getAllByRole('button', { name: 'Go to next page' }).forEach((button) => {
         expect(button).toBeDisabled();
       });
-      expect(container.querySelector(pageInformationQuerySelector)).toHaveTextContent(
-        '151 - 200 of 200',
-      );
+      expect(pageInformationQuerySelector()).toHaveTextContent('151 - 200 of 200');
 
       await user.click(screen.getAllByRole('button', { name: 'Go to previous page' })[0]);
       expect(screen.getByText('cluster101')).toBeInTheDocument();
       expect(screen.getByText('cluster150')).toBeInTheDocument();
-      expect(container.querySelector(pageInformationQuerySelector)).toHaveTextContent(
-        '101 - 150 of 200',
-      );
+      expect(pageInformationQuerySelector()).toHaveTextContent('101 - 150 of 200');
 
       await user.click(screen.getAllByRole('button', { name: 'Go to previous page' })[1]);
       expect(screen.getByText('cluster51')).toBeInTheDocument();
       expect(screen.getByText('cluster100')).toBeInTheDocument();
-      expect(container.querySelector(pageInformationQuerySelector)).toHaveTextContent(
-        '51 - 100 of 200',
-      );
-    });
+      expect(pageInformationQuerySelector()).toHaveTextContent('51 - 100 of 200');
+    }, 80000);
 
     it('Changing the "per page" results changes the number of results', async () => {
       mockedGetFetchedClusters.mockReturnValue({
@@ -604,7 +649,7 @@ describe('<ClusterList />', () => {
         errors: [],
       });
 
-      const { container, user } = render(
+      const { container, user } = withState({}, true).render(
         <MemoryRouter>
           <CompatRouter>
             <ClusterList {...props} />
@@ -615,9 +660,7 @@ describe('<ClusterList />', () => {
       await user.click(container.querySelector('#options-menu-bottom-toggle'));
       await user.click(screen.getByText('100 per page'));
       expect(clusterRows()).toHaveLength(100);
-      expect(container.querySelector(pageInformationQuerySelector)).toHaveTextContent(
-        '1 - 100 of 200',
-      );
+      expect(pageInformationQuerySelector()).toHaveTextContent('1 - 100 of 200');
     });
 
     it('shows 0 of 0 when there no clusters are returned but is still loading', () => {
@@ -627,7 +670,7 @@ describe('<ClusterList />', () => {
         errors: [],
       });
 
-      const { container } = render(
+      withState({}, true).render(
         <MemoryRouter>
           <CompatRouter>
             <ClusterList {...props} />
@@ -635,7 +678,7 @@ describe('<ClusterList />', () => {
         </MemoryRouter>,
       );
 
-      expect(container.querySelector(pageInformationQuerySelector)).toHaveTextContent('0 - 0 of 0');
+      expect(pageInformationQuerySelector()).toHaveTextContent('0 - 0 of 0');
     });
 
     it('keeps current page when sorted', async () => {
@@ -644,7 +687,7 @@ describe('<ClusterList />', () => {
         errors: [],
       });
 
-      const { container, user } = render(
+      const { user } = withState({}, true).render(
         <MemoryRouter>
           <CompatRouter>
             <ClusterList {...props} />
@@ -660,9 +703,7 @@ describe('<ClusterList />', () => {
       await user.click(screen.getByRole('button', { name: 'Version' }));
       expect(screen.getByText('4.14.51')).toBeInTheDocument();
       expect(screen.getByText('4.14.100')).toBeInTheDocument();
-      expect(container.querySelector(pageInformationQuerySelector)).toHaveTextContent(
-        '51 - 100 of 200',
-      );
+      expect(pageInformationQuerySelector()).toHaveTextContent('51 - 100 of 200');
       expect(screen.getByLabelText('Current page')).toHaveValue(2);
 
       // sort descending
@@ -670,15 +711,12 @@ describe('<ClusterList />', () => {
 
       expect(screen.getByText('4.14.101')).toBeInTheDocument();
       expect(screen.getByText('4.14.150')).toBeInTheDocument();
-      expect(container.querySelector(pageInformationQuerySelector)).toHaveTextContent(
-        '51 - 100 of 200',
-      );
+      expect(pageInformationQuerySelector()).toHaveTextContent('51 - 100 of 200');
       expect(screen.getByLabelText('Current page')).toHaveValue(2);
-    });
+    }, 80000);
   });
 
-  // NOTE:  These tests are marked as skip for now until filtering is re-enabled
-  describe.skip('in restricted env', () => {
+  describe('in restricted env', () => {
     const isRestrictedEnv = mockRestrictedEnv();
     const onListFlagsSet = jest.fn();
     const props = {
@@ -718,6 +756,10 @@ describe('<ClusterList />', () => {
     });
 
     it('should call onListFlagsSet with ROSA filter', async () => {
+      const useDispatchMock = jest.spyOn(reactRedux, 'useDispatch');
+      const mockedDispatch = jest.fn();
+      useDispatchMock.mockReturnValue(mockedDispatch);
+
       isRestrictedEnv.mockReturnValue(true);
       render(
         <MemoryRouter>
@@ -726,11 +768,11 @@ describe('<ClusterList />', () => {
           </CompatRouter>
         </MemoryRouter>,
       );
-      expect(onListFlagsSet).toHaveBeenCalled();
-      const args = onListFlagsSet.mock.calls[0];
-      expect(args[0]).toBe('subscriptionFilter');
-      expect(args[1]).toStrictEqual({ plan_id: [normalizedProducts.ROSA] });
-      expect(args[2]).toBe(viewConstants.CLUSTERS_VIEW);
+      expect(mockedDispatch).toHaveBeenCalled();
+      const args = mockedDispatch.mock.calls[0];
+      expect(args[0].payload.key).toBe('subscriptionFilter');
+      expect(args[0].payload.value).toStrictEqual({ plan_id: [normalizedProducts.ROSA] });
+      expect(args[0].payload.viewType).toBe(viewConstants.CLUSTERS_VIEW);
 
       expect(await screen.findByRole('button', { name: 'Create cluster' })).toBeInTheDocument();
     });

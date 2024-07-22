@@ -17,6 +17,7 @@ limitations under the License.
 import React from 'react';
 import size from 'lodash/size';
 import PropTypes from 'prop-types';
+import { useDispatch, useSelector } from 'react-redux';
 
 import {
   Card,
@@ -24,6 +25,7 @@ import {
   FlexItem,
   PageSection,
   PageSectionVariants,
+  Spinner,
   Title,
   Toolbar,
   ToolbarContent,
@@ -31,22 +33,37 @@ import {
   ToolbarItem,
 } from '@patternfly/react-core';
 import { SortByDirection } from '@patternfly/react-table';
-import Spinner from '@redhat-cloud-services/frontend-components/Spinner';
 
+import { ONLY_MY_CLUSTERS_TOGGLE_CLUSTERS_LIST } from '~/common/localStorageConstants';
 import { AppPage } from '~/components/App/AppPage';
 import { useFetchClusters } from '~/queries/ClusterListQueries/useFetchClusters';
+import { CLUSTERS_VIEW } from '~/redux/constants/viewConstants';
+import { isRestrictedEnv } from '~/restrictedEnv';
 
+import helpers from '../../../common/helpers';
+import { normalizedProducts } from '../../../common/subscriptionTypes';
+import {
+  onListFilterSet,
+  onListFlagsSet,
+  viewActions,
+} from '../../../redux/actions/viewOptionsActions';
+import { viewConstants } from '../../../redux/constants';
 import ErrorBox from '../../common/ErrorBox';
 import Unavailable from '../../common/Unavailable';
+import ClusterListFilter from '../common/ClusterListFilter';
 import CommonClusterModals from '../common/CommonClusterModals';
 import ErrorTriangle from '../common/ErrorTriangle';
 import GlobalErrorBox from '../common/GlobalErrorBox/GlobalErrorBox';
 import ReadOnlyBanner from '../common/ReadOnlyBanner';
 
+import ClusterListActions from './components/ClusterListActions';
 import ClusterListEmptyState from './components/ClusterListEmptyState';
-import ClusterListTable, { sortColumns } from './components/ClusterListTable';
+import ClusterListFilterChipGroup from './components/ClusterListFilterChipGroup/ClusterListFilterChipGroup';
+import ClusterListFilterDropdown from './components/ClusterListFilterDropdown';
+import ClusterListTable from './components/ClusterListTable';
 import { PaginationRow } from './components/PaginationRow';
 import { RefreshButton } from './components/RefreshButton';
+import ViewOnlyMyClustersToggle from './components/ViewOnlyMyClustersToggle';
 import { sortClusters } from './clusterListSort';
 
 import './ClusterList.scss';
@@ -78,7 +95,11 @@ const ClusterListPageHeader = ({
             >
               {showSpinner && (
                 <ToolbarItem>
-                  <Spinner size="lg" className="cluster-list-spinner" />
+                  <Spinner
+                    size="lg"
+                    className="cluster-list-spinner"
+                    aria-label="Loading cluster list data"
+                  />
                 </ToolbarItem>
               )}
               {error && (
@@ -116,6 +137,7 @@ const ClusterList = ({
   clearGlobalError,
   openModal,
 }) => {
+  const dispatch = useDispatch();
   const { isLoading, data, refetch, isError, errors, isFetching } = useFetchClusters();
   const clusters = data?.items;
 
@@ -128,9 +150,6 @@ const ClusterList = ({
   const [pageSize, setPageSize] = React.useState(50);
   const [itemsStart, setItemsStart] = React.useState(0);
   const [itemsEnd, setItemsEnd] = React.useState(0);
-
-  const [activeSortIndex, setActiveSortIndex] = React.useState(sortColumns.Created);
-  const [activeSortDirection, setActiveSortDirection] = React.useState(SortByDirection.desc);
 
   const preLoadRedux = React.useCallback(() => {
     // Items not needed for this list, but may be needed elsewhere in the app
@@ -195,30 +214,53 @@ const ClusterList = ({
   };
 
   /* Sorting */
-
+  const sortOptions = useSelector(
+    (state) => state.viewOptions[viewConstants.CLUSTERS_VIEW]?.sorting,
+  );
+  const activeSortIndex = sortOptions.sortField;
+  const activeSortDirection = sortOptions.isAscending ? SortByDirection.asc : SortByDirection.desc;
+  // Note: initial sort order is set in the reducer
   const sortedClusters = sortClusters(clusters, activeSortIndex, activeSortDirection);
 
   // onMount and willUnmount
   React.useEffect(() => {
     preLoadRedux();
 
+    if (isRestrictedEnv()) {
+      dispatch(
+        onListFlagsSet(
+          'subscriptionFilter',
+          {
+            plan_id: [normalizedProducts.ROSA],
+          },
+          viewConstants.CLUSTERS_VIEW,
+        ),
+      );
+    }
+
     // componentWillUnmount
     return () => {
       closeModal();
 
       clearGlobalError('clusterList');
+      dispatch(onListFilterSet('', viewConstants.CLUSTERS_VIEW));
     };
     // Run only on mount and unmount
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const isPendingNoData = !size(clusters) && isLoading;
+  const viewOptions = useSelector((state) => state.viewOptions.CLUSTERS_VIEW);
+  const { showMyClustersOnly, subscriptionFilter } = viewOptions.flags;
+  const hasNoFilters =
+    helpers.nestedIsEmpty(subscriptionFilter) && !showMyClustersOnly && !viewOptions.filter;
+
+  const isPendingNoData = !size(clusters) && isLoading; // Show skeletons
 
   const showSpinner = isFetching || isLoading;
 
   // The empty state asserts as a fact that you have no clusters;
   // not appropriate when results are indeterminate or empty due to filtering.
-  const showEmptyState = !isLoading && !isFetching && !isError && !size(clusters);
+  const showEmptyState = !showSpinner && !isError && !size(clusters) && hasNoFilters;
 
   const someReadOnly =
     clusters && clusters.map((c) => c?.status?.configuration_mode).includes('read_only');
@@ -269,6 +311,28 @@ const ClusterList = ({
 
             <Toolbar id="cluster-list-toolbar">
               <ToolbarContent>
+                <ToolbarItem className="ocm-c-toolbar__item-cluster-filter-list">
+                  <ClusterListFilter isDisabled={isPendingNoData} view={CLUSTERS_VIEW} />
+                </ToolbarItem>
+                {isRestrictedEnv() ? null : (
+                  <ToolbarItem
+                    className="ocm-c-toolbar__item-cluster-list-filter-dropdown"
+                    data-testid="cluster-list-filter-dropdown"
+                  >
+                    {/* Cluster type */}
+                    <ClusterListFilterDropdown
+                      view={CLUSTERS_VIEW}
+                      isDisabled={isLoading || isFetching}
+                    />
+                  </ToolbarItem>
+                )}
+                <ClusterListActions />
+                <ViewOnlyMyClustersToggle
+                  view={CLUSTERS_VIEW}
+                  bodyContent="Show only the clusters you previously created, or all clusters in your organization."
+                  localStorageKey={ONLY_MY_CLUSTERS_TOGGLE_CLUSTERS_LIST}
+                />
+
                 <ToolbarItem
                   align={{ default: 'alignRight' }}
                   variant="pagination"
@@ -288,7 +352,7 @@ const ClusterList = ({
                 </ToolbarItem>
               </ToolbarContent>
             </Toolbar>
-
+            {isRestrictedEnv() ? null : <ClusterListFilterChipGroup />}
             {isError && !size(clusters) ? (
               <Unavailable
                 message="Error retrieving clusters"
@@ -308,8 +372,12 @@ const ClusterList = ({
                 activeSortIndex={activeSortIndex}
                 activeSortDirection={activeSortDirection}
                 setSort={(index, direction) => {
-                  setActiveSortIndex(index);
-                  setActiveSortDirection(direction);
+                  const sorting = {
+                    isAscending: direction === SortByDirection.asc,
+                    sortField: index,
+                  };
+
+                  dispatch(viewActions.onListSortBy(sorting, viewConstants.CLUSTERS_VIEW));
                 }}
               />
             )}

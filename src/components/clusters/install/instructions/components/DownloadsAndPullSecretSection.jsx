@@ -23,7 +23,6 @@ function DownloadsAndPullSecretSection({
   tool,
   channel,
   rhcos,
-  isBMIPI,
 }) {
   return (
     <div>
@@ -32,40 +31,38 @@ function DownloadsAndPullSecretSection({
         <StackItem key="install">
           <TextContent>
             <Text component="h2">What you need to get started</Text>
-            {!isBMIPI && (
-              <>
-                <Text component="h3">OpenShift installer</Text>
+            <>
+              <Text component="h3">OpenShift installer</Text>
+              <Text component="p">
+                Download and extract the install program for your operating system and place the
+                file in the directory where you will store the installation configuration files.
+                Note: The OpenShift install program is only available for Linux and macOS at this
+                time.
+              </Text>
+              {showPreReleaseDocs && (
                 <Text component="p">
-                  Download and extract the install program for your operating system and place the
-                  file in the directory where you will store the installation configuration files.
-                  Note: The OpenShift install program is only available for Linux and macOS at this
-                  time.
-                </Text>
-                {showPreReleaseDocs && (
-                  <Text component="p">
-                    For pre-release documentation, refer to the{' '}
-                    <Text
-                      component="a"
-                      href={preReleaseDocsLink}
-                      rel="noreferrer noopener"
-                      target="_blank"
-                    >
-                      latest installer documentation{' '}
-                      <Icon size="sm">
-                        <ExternalLinkAltIcon />
-                      </Icon>
-                    </Text>
-                    .
+                  For pre-release documentation, refer to the{' '}
+                  <Text
+                    component="a"
+                    href={preReleaseDocsLink}
+                    rel="noreferrer noopener"
+                    target="_blank"
+                  >
+                    latest installer documentation{' '}
+                    <Icon size="sm">
+                      <ExternalLinkAltIcon />
+                    </Icon>
                   </Text>
-                )}
-                <DownloadAndOSSelection tool={tool} channel={channel} pendoID={pendoID} />
-                {showPreReleasePageLink && (
-                  <div>
-                    <DeveloperPreviewSection devPreviewLink={preReleasePageLink} />
-                  </div>
-                )}
-              </>
-            )}
+                  .
+                </Text>
+              )}
+              <DownloadAndOSSelection tool={tool} channel={channel} pendoID={pendoID} />
+              {showPreReleasePageLink && (
+                <div>
+                  <DeveloperPreviewSection devPreviewLink={preReleasePageLink} />
+                </div>
+              )}
+            </>
           </TextContent>
         </StackItem>
         <StackItem key="pull-secret">
@@ -77,7 +74,7 @@ function DownloadsAndPullSecretSection({
         <StackItem key="cli">
           <TextContent>
             <Text component="h3">Command line interface</Text>
-            <CLISection pendoID={pendoID} channel={channel} isBMIPI={isBMIPI} />
+            <CLISection pendoID={pendoID} channel={channel} />
           </TextContent>
         </StackItem>
         {rhcos && (
@@ -103,12 +100,7 @@ DownloadsAndPullSecretSection.propTypes = {
   pendoID: PropTypes.string,
   tool: PropTypes.oneOf(Object.values(tools)).isRequired,
   channel: PropTypes.oneOf(Object.values(channels)).isRequired,
-  isBMIPI: PropTypes.bool,
   rhcos: PropTypes.object,
-};
-
-DownloadsAndPullSecretSection.defaultProps = {
-  isBMIPI: false,
 };
 
 export default DownloadsAndPullSecretSection;

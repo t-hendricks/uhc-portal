@@ -10,6 +10,12 @@ const mapStateToProps = (state) => ({
   canEdit: get(state, 'clusters.details.cluster.canEdit', false),
   canSubscribeOCP: canSubscribeOCPSelector(state),
   subscription: get(state, 'clusters.details.cluster.subscription', {}),
+  isClusterDetailsPending: get(state, 'clusters.details.pending', false),
+  isSubscriptionSettingsRequestPending: get(
+    state,
+    'subscriptionSettings.requestState.pending',
+    false,
+  ),
 });
 
 const mapDispatchToProps = {

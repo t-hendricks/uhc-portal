@@ -4,7 +4,7 @@ class CreateRosaCluster extends Page {
   clusterDetailsTree = () =>
     cy.get('li.pf-v5-c-wizard__nav-item').find('button').contains('Details');
 
-  rosaCreateClusterButton = () => cy.getByTestId('rosa-create-cluster-button');
+  rosaCreateClusterButton = () => cy.getByTestId('rosa-create-cluster-button', { timeout: 50000 });
 
   rosaNextButton = () => cy.getByTestId('wizard-next-button');
 
@@ -75,6 +75,9 @@ class CreateRosaCluster extends Page {
   addAdditionalLabelLink = () => cy.contains('Add additional label').should('be.exist');
 
   createClusterButton = () => cy.getByTestId('create-cluster-button');
+
+  operatorRoleCommandInput = () =>
+    cy.get('input[aria-label="Copyable ROSA create operator-roles"]');
 
   refreshInfrastructureAWSAccountButton = () =>
     cy.get('button[data-testid="refresh-aws-accounts"]').first();
@@ -180,6 +183,16 @@ class CreateRosaCluster extends Page {
   recurringUpdateRadio = () => cy.getByTestId('upgrade_policy-automatic');
 
   individualUpdateRadio = () => cy.getByTestId('upgrade_policy-manual');
+
+  externalAuthenticationLink = () => cy.get('button').contains('External Authentication');
+
+  externalAuthenticationCheckbox = () => cy.get('input[id="enable_external_authentication"]');
+
+  computeNodeRangeLabelValue = () => cy.getByTestId('Compute-node-range');
+
+  noProxyDomainsLabelValue = () => cy.getByTestId('No-Proxy-domains');
+
+  machinePoolLabelValue = () => cy.getByTestId('Machine-pools');
 
   isCreateRosaPage() {
     super.assertUrlIncludes('/openshift/create/rosa/wizard');
@@ -486,7 +499,7 @@ class CreateRosaCluster extends Page {
   }
 
   selectGracePeriod(gracePeriod) {
-    cy.get('button[aria-label="Options menu"]').click();
+    cy.getByTestId('grace-period-select').click();
     cy.get('button').contains(gracePeriod).click();
   }
 
@@ -515,7 +528,7 @@ class CreateRosaCluster extends Page {
   }
 
   selectClusterPrivacy(privacy) {
-    if (privacy == 'private') {
+    if (privacy.toLowerCase() == 'private') {
       this.clusterPrivacyPrivateRadio().check();
     } else {
       this.clusterPrivacyPublicRadio().check();

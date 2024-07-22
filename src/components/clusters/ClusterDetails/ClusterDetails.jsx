@@ -211,7 +211,12 @@ const ClusterDetails = (props) => {
     if (externalClusterID || clusterID) {
       getClusterHistory(externalClusterID, clusterID, clusterLogsViewOptions);
     }
-    if (subscriptionID && isAccessRequestEnabled) {
+    if (
+      subscriptionID &&
+      isAccessRequestEnabled &&
+      !accessProtectionState?.pending &&
+      !isRestrictedEnv()
+    ) {
       getAccessProtection(subscriptionID);
     }
 
@@ -278,6 +283,14 @@ const ClusterDetails = (props) => {
     // Should run only once on mount and once on unmount
     // eslint-disable-next-line  react-hooks/exhaustive-deps
   }, []);
+
+  React.useEffect(() => {
+    if (subscriptionID && isAccessRequestEnabled && !accessProtectionState?.pending) {
+      getAccessProtection(subscriptionID);
+    }
+    // avoiding accessProtectionState to be in a loop
+    // eslint-disable-next-line  react-hooks/exhaustive-deps
+  }, [subscriptionID, isAccessRequestEnabled]);
 
   React.useEffect(() => {
     const subscriptionID = params.id;

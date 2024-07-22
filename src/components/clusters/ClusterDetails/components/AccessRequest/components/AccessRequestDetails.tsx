@@ -123,14 +123,25 @@ const AccessRequestDetails = ({ accessRequest }: AccessRequestDetailsProps) => {
               <DescriptionListTerm>Decision</DescriptionListTerm>
               <DescriptionListDescription>
                 <Text data-testid="decision-text">
-                  <b>{decision?.decision}</b> on{' '}
-                  <b>
-                    {decision?.created_at
-                      ? new Date(decision.created_at).toLocaleDateString()
-                      : 'N/A'}
-                  </b>{' '}
-                  by <b>{decision?.decided_by}</b>
-                  {decision?.justification ? ` because: ${decision?.justification}` : ''}
+                  <b>{decision?.decision}</b>
+                  {decision?.created_at ? (
+                    <>
+                      {' '}
+                      on <b>{new Date(decision.created_at).toLocaleDateString()}</b>
+                    </>
+                  ) : null}
+                  {decision?.decided_by ? (
+                    <>
+                      {' '}
+                      by <b>{decision.decided_by}</b>
+                    </>
+                  ) : null}
+                  {decision?.justification ? (
+                    <>
+                      {' '}
+                      because <i>{decision.justification}</i>
+                    </>
+                  ) : null}
                 </Text>
               </DescriptionListDescription>
             </DescriptionListGroup>

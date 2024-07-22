@@ -1,4 +1,3 @@
-import get from 'lodash/get';
 import { connect } from 'react-redux';
 
 import { isHypershiftCluster } from '~/components/clusters/common/clusterStates';
@@ -11,8 +10,6 @@ import {
 
 import { clusterAutoscalerActions } from '../../../../../redux/actions/clusterAutoscalerActions';
 import { getMachineTypes } from '../../../../../redux/actions/machineTypesActions';
-import { getOrganizationAndQuota } from '../../../../../redux/actions/userActions';
-import { closeModal, openModal } from '../../../../common/Modal/ModalActions';
 import shouldShowModal from '../../../../common/Modal/ModalSelectors';
 
 import { canMachinePoolBeUpgradedSelector } from './UpdateMachinePools/updateMachinePoolsHelpers';
@@ -23,14 +20,13 @@ import {
   deleteMachinePool,
   getMachineOrNodePools,
 } from './MachinePoolsActions';
-import { normalizeNodePool } from './machinePoolsHelper';
 import {
   hasMachinePoolsQuotaSelector,
   hasOrgLevelBypassPIDsLimitCapability,
 } from './machinePoolsSelectors';
 
 const mapStateToProps = (state) => {
-  const cluster = get(state, 'clusters.details.cluster', {});
+  // const cluster = get(state, 'clusters.details.cluster', {});
   const canBypassPIDsLimit = hasOrgLevelBypassPIDsLimitCapability(
     state.userProfile.organization?.details,
   );
@@ -53,24 +49,23 @@ const mapStateToProps = (state) => {
     canBypassPIDsLimit,
   };
 
-  const machinePoolsList = isHypershiftCluster(cluster)
-    ? {
-        ...props.machinePoolsList,
-        data: props.machinePoolsList.data.map(normalizeNodePool),
-      }
-    : props.machinePoolsList;
+  // const machinePoolsList = isHypershiftCluster(cluster)
+  //   ? {
+  //       ...props.machinePoolsList,
+  //       data: props.machinePoolsList.data.map(normalizeNodePool),
+  //     }
+  //   : props.machinePoolsList;
   return {
     ...props,
     clusterAutoscalerResponse: state.clusterAutoscaler,
-    machinePoolsList,
   };
 };
 
 const mapDispatchToProps = (dispatch, ownProps) => {
   const isHypershift = isHypershiftCluster(ownProps.cluster);
   return {
-    openModal: (modalId, data) => dispatch(openModal(modalId, data)),
-    closeModal: () => dispatch(closeModal()),
+    // openModal: (modalId, data) => dispatch(openModal(modalId, data)),
+    // closeModal: () => dispatch(closeModal()),
     getMachinePools: (skipMachinePoolPolicies) => {
       dispatch(
         getMachineOrNodePools(
@@ -89,7 +84,7 @@ const mapDispatchToProps = (dispatch, ownProps) => {
       dispatch(clearDeleteMachinePoolResponse(ownProps.clusterID)),
     deleteMachinePool: (machinePoolID) =>
       dispatch(deleteMachinePool(ownProps.cluster.id, machinePoolID, isHypershift)),
-    getOrganizationAndQuota: () => dispatch(getOrganizationAndQuota()),
+    // getOrganizationAndQuota: () => dispatch(getOrganizationAndQuota()),
     getMachineTypes: () => dispatch(getMachineTypes()),
     getClusterAutoscaler: () =>
       dispatch(clusterAutoscalerActions.getClusterAutoscaler(ownProps.cluster.id)),

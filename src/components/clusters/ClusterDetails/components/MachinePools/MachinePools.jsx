@@ -529,7 +529,7 @@ class MachinePools extends React.Component {
                     }
                     areActionsDisabled={() => tableActionsDisabled}
                   >
-                    <TableHeaderDeprecated />
+                    <TableHeaderDeprecated data-testid="header-machinepool" />
                     <TableBodyDeprecated />
                   </TableDeprecated>
                 )}

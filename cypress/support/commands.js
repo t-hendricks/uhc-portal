@@ -23,6 +23,32 @@
 //
 // -- This will overwrite an existing command --
 // Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
+
 Cypress.Commands.add('getByTestId', (selector, ...args) => {
   return cy.get(`[data-testid=${selector}]`, ...args);
+});
+
+Cypress.Commands.add('executeRosaCmd', (cmd, ...args) => {
+  cy.executeCustomCmd(cmd, ...args);
+});
+
+Cypress.Commands.add('rosaLoginViaOfflineToken', (token, env, ...args) => {
+  let cmd = `rosa login --env ${env} --token ${token}`;
+  cy.executeCustomCmd(cmd, ...args);
+});
+
+Cypress.Commands.add('rosaLoginViaServiceAccount', (clientId, clientSecret, env, ...args) => {
+  let cmd = `rosa login --env ${env} --client-id ${clientId} --client-secret ${clientSecret}`;
+  cy.executeCustomCmd(cmd, ...args);
+});
+
+Cypress.Commands.add('executeCustomCmd', (cmd, ...args) => {
+  const fileName = Cypress.env('ROSACLI_LOGS');
+  return cy.exec(cmd, ...args).then((result) => {
+    cy.writeFile(fileName, '\n------------------', { flag: 'a+' });
+    cy.writeFile(fileName, `\ncommand : ${cmd}`, { flag: 'a+' });
+    cy.writeFile(fileName, `\nresult : ${result.stdout}`, { flag: 'a+' });
+    cy.writeFile(fileName, `\nerror : ${result.stderr}`, { flag: 'a+' });
+    cy.writeFile(fileName, '\n------------------', { flag: 'a+' });
+  });
 });
