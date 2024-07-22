@@ -28,7 +28,9 @@ const DrawerPanel = ({ children, title, content, isOpen, onClose }: DrawerPanelP
     <Drawer isExpanded={isOpen} onExpand={onOpen} isInline={true}>
       <DrawerContent
         panelContent={
-          <DrawerPanelContent>
+          <DrawerPanelContent
+            isResizable /* todo: Should I add these? defaultSize={'500px'} minSize={'150px'} */
+          >
             <DrawerHead>
               <span tabIndex={isOpen ? 0 : -1} ref={drawerRef}>
                 {title}
