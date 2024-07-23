@@ -1,8 +1,8 @@
 {
   "kind": "MachineType",
-  "name": "r5.xlarge - Memory Optimized",
+  "name": "r5.xlarge - Memory optimized",
   "category": "memory_optimized",
-  "size": "small",
+  "size": "xlarge",
   "id": "r5.xlarge",
   "href": "/api/clusters_mgmt/v1/machine_types/r5.xlarge",
   "memory": {
@@ -19,5 +19,6 @@
     "href": "/api/clusters_mgmt/v1/cloud_providers/aws"
   },
   "ccs_only": false,
-  "generic_name": "highmem-4"
+  "generic_name": "highmem-4",
+  "architecture": ""
 }

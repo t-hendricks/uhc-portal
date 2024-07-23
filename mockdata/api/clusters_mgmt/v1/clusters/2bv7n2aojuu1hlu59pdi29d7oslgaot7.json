@@ -1,0 +1,259 @@
+{
+  "kind": "Cluster",
+  "id": "2bv7n2aojuu1hlu59pdi29d7oslgaot7",
+  "href": "/api/clusters_mgmt/v1/clusters/2bv7n2aojuu1hlu59pdi29d7oslgaot7",
+  "name": "provision-status-failure-test",
+  "domain_prefix": "m6t8n1n2l9p9v1v",
+  "external_id": "11c6350e-4103-45da-ae6f-e52a93c1bea8",
+  "infra_id": "m6t8n1n2l9p9v1v-hksf9",
+  "display_name": "provision-status-failure-test",
+  "creation_timestamp": "2024-06-17T23:41:02.657167Z",
+  "activity_timestamp": "2024-06-17T23:41:02.657167Z",
+  "expiration_timestamp": "2024-06-19T11:40:57.867327Z",
+  "cloud_provider": {
+    "kind": "CloudProviderLink",
+    "id": "aws",
+    "href": "/api/clusters_mgmt/v1/cloud_providers/aws"
+  },
+  "subscription": {
+    "kind": "SubscriptionLink",
+    "id": "2i1otvlHsY2zB4ZY9pvY7ek3Dt3",
+    "href": "/api/accounts_mgmt/v1/subscriptions/2i1otvlHsY2zB4ZY9pvY7ek3Dt3"
+  },
+  "region": {
+    "kind": "CloudRegionLink",
+    "id": "us-west-2",
+    "href": "/api/clusters_mgmt/v1/cloud_providers/aws/regions/us-west-2"
+  },
+  "api": {
+    "listening": "external"
+  },
+  "nodes": {
+    "master": 3,
+    "infra": 2,
+    "compute": 2,
+    "availability_zones": [
+      "us-west-2a"
+    ],
+    "compute_machine_type": {
+      "kind": "MachineTypeLink",
+      "id": "m5.xlarge",
+      "href": "/api/clusters_mgmt/v1/machine_types/m5.xlarge"
+    },
+    "compute_root_volume": {
+      "aws": {
+        "size": 300
+      }
+    },
+    "infra_machine_type": {
+      "kind": "MachineTypeLink",
+      "id": "r5.xlarge",
+      "href": "/api/clusters_mgmt/v1/machine_types/r5.xlarge"
+    }
+  },
+  "state": "error",
+  "flavour": {
+    "kind": "FlavourLink",
+    "id": "osd-4",
+    "href": "/api/clusters_mgmt/v1/flavours/osd-4"
+  },
+  "groups": {
+    "kind": "GroupListLink",
+    "href": "/api/clusters_mgmt/v1/clusters/2bv7n2aojuu1hlu59pdi29d7oslgaot7/groups"
+  },
+  "properties": {
+    "rosa_creator_arn": "arn:aws:iam::000000000006:role/ManagedOpenShift-OCM-Role-15212158"
+  },
+  "aws": {
+    "private_link": false,
+    "private_link_configuration": {
+      "kind": "PrivateLinkConfigurationLink",
+      "href": "/api/clusters_mgmt/v1/clusters/2bv7n2aojuu1hlu59pdi29d7oslgaot7/aws/private_link_configuration"
+    },
+    "sts": {
+      "enabled": true,
+      "role_arn": "arn:aws:iam::000000000006:role/ManagedOpenShift-Installer-Role",
+      "support_role_arn": "arn:aws:iam::000000000006:role/ManagedOpenShift-Support-Role",
+      "oidc_endpoint_url": "https://d3gt1gce2zmg3d.cloudfront.net/22qa79chsq8mand8hvmnr33upj48lmas",
+      "operator_iam_roles": [
+        {
+          "id": "",
+          "name": "ebs-cloud-credentials",
+          "namespace": "openshift-cluster-csi-drivers",
+          "role_arn": "arn:aws:iam::000000000006:role/provision-status-failure-te-d75i-openshift-cluster-csi-drivers-e",
+          "service_account": ""
+        },
+        {
+          "id": "",
+          "name": "cloud-credentials",
+          "namespace": "openshift-cloud-network-config-controller",
+          "role_arn": "arn:aws:iam::000000000006:role/provision-status-failure-te-d75i-openshift-cloud-network-config-",
+          "service_account": ""
+        },
+        {
+          "id": "",
+          "name": "aws-cloud-credentials",
+          "namespace": "openshift-machine-api",
+          "role_arn": "arn:aws:iam::000000000006:role/provision-status-failure-te-d75i-openshift-machine-api-aws-cloud",
+          "service_account": ""
+        },
+        {
+          "id": "",
+          "name": "cloud-credential-operator-iam-ro-creds",
+          "namespace": "openshift-cloud-credential-operator",
+          "role_arn": "arn:aws:iam::000000000006:role/provision-status-failure-te-d75i-openshift-cloud-credential-oper",
+          "service_account": ""
+        },
+        {
+          "id": "",
+          "name": "installer-cloud-credentials",
+          "namespace": "openshift-image-registry",
+          "role_arn": "arn:aws:iam::000000000006:role/provision-status-failure-te-d75i-openshift-image-registry-instal",
+          "service_account": ""
+        },
+        {
+          "id": "",
+          "name": "cloud-credentials",
+          "namespace": "openshift-ingress-operator",
+          "role_arn": "arn:aws:iam::000000000006:role/provision-status-failure-te-d75i-openshift-ingress-operator-clou",
+          "service_account": ""
+        }
+      ],
+      "instance_iam_roles": {
+        "master_role_arn": "arn:aws:iam::000000000006:role/ManagedOpenShift-ControlPlane-Role",
+        "worker_role_arn": "arn:aws:iam::000000000006:role/ManagedOpenShift-Worker-Role"
+      },
+      "auto_mode": false,
+      "operator_role_prefix": "provision-status-failure-te-d75i",
+      "managed_policies": false,
+      "oidc_config": {
+        "href": "/api/clusters_mgmt/v1/oidc_configs/22qa79chsq8mand8hvmnr33upj48lmas",
+        "id": "22qa79chsq8mand8hvmnr33upj48lmas",
+        "organization_id": "1wuVGGV6SCmD8ya6yRGEJzvmVuC",
+        "issuer_url": "https://d3gt1gce2zmg3d.cloudfront.net/22qa79chsq8mand8hvmnr33upj48lmas",
+        "creation_timestamp": "2023-03-31T14:43:49.279231Z",
+        "last_used_timestamp": "2024-06-17T23:41:04.616417Z",
+        "last_update_timestamp": "2024-06-17T23:41:04.616417Z",
+        "managed": true,
+        "reusable": true
+      }
+    },
+    "tags": {
+      "red-hat-clustertype": "rosa",
+      "red-hat-managed": "true"
+    },
+    "kms_key_arn": "arn:aws:kms:us-west-2:000000000006:key/951dc8af-50e3-4902-a611-5b3322b269fb",
+    "audit_log": {
+      "role_arn": ""
+    },
+    "ec2_metadata_http_tokens": "optional"
+  },
+  "dns": {
+    "base_domain": "nqmp.s1.devshift.org"
+  },
+  "network": {
+    "type": "OVNKubernetes",
+    "machine_cidr": "10.0.0.0/16",
+    "service_cidr": "172.30.0.0/16",
+    "pod_cidr": "10.128.0.0/14",
+    "host_prefix": 23
+  },
+  "external_configuration": {
+    "kind": "ExternalConfiguration",
+    "href": "/api/clusters_mgmt/v1/clusters/2bv7n2aojuu1hlu59pdi29d7oslgaot7/external_configuration",
+    "syncsets": {
+      "kind": "SyncsetListLink",
+      "href": "/api/clusters_mgmt/v1/clusters/2bv7n2aojuu1hlu59pdi29d7oslgaot7/external_configuration/syncsets"
+    },
+    "labels": {
+      "kind": "LabelListLink",
+      "href": "/api/clusters_mgmt/v1/clusters/2bv7n2aojuu1hlu59pdi29d7oslgaot7/external_configuration/labels"
+    },
+    "manifests": {
+      "kind": "ManifestListLink",
+      "href": "/api/clusters_mgmt/v1/clusters/2bv7n2aojuu1hlu59pdi29d7oslgaot7/external_configuration/manifests"
+    }
+  },
+  "multi_az": false,
+  "managed": true,
+  "ccs": {
+    "enabled": true,
+    "disable_scp_checks": false
+  },
+  "version": {
+    "kind": "Version",
+    "id": "openshift-v4.15.16",
+    "href": "/api/clusters_mgmt/v1/versions/openshift-v4.15.16",
+    "raw_id": "4.15.16",
+    "channel_group": "stable",
+    "end_of_life_timestamp": "2025-06-30T00:00:00Z"
+  },
+  "identity_providers": {
+    "kind": "IdentityProviderListLink",
+    "href": "/api/clusters_mgmt/v1/clusters/2bv7n2aojuu1hlu59pdi29d7oslgaot7/identity_providers"
+  },
+  "aws_infrastructure_access_role_grants": {
+    "kind": "AWSInfrastructureAccessRoleGrantLink",
+    "href": "/api/clusters_mgmt/v1/clusters/2bv7n2aojuu1hlu59pdi29d7oslgaot7/aws_infrastructure_access_role_grants"
+  },
+  "addons": {
+    "kind": "AddOnInstallationListLink",
+    "href": "/api/clusters_mgmt/v1/clusters/2bv7n2aojuu1hlu59pdi29d7oslgaot7/addons"
+  },
+  "ingresses": {
+    "kind": "IngressListLink",
+    "href": "/api/clusters_mgmt/v1/clusters/2bv7n2aojuu1hlu59pdi29d7oslgaot7/ingresses"
+  },
+  "machine_pools": {
+    "kind": "MachinePoolListLink",
+    "href": "/api/clusters_mgmt/v1/clusters/2bv7n2aojuu1hlu59pdi29d7oslgaot7/machine_pools"
+  },
+  "inflight_checks": {
+    "kind": "InflightCheckListLink",
+    "href": "/api/clusters_mgmt/v1/clusters/2bv7n2aojuu1hlu59pdi29d7oslgaot7/inflight_checks"
+  },
+  "product": {
+    "kind": "ProductLink",
+    "id": "rosa",
+    "href": "/api/clusters_mgmt/v1/products/rosa"
+  },
+  "status": {
+    "state": "error",
+    "description": "DefaultEbsKmsKeyInsufficientPermissions",
+    "dns_ready": true,
+    "oidc_ready": true,
+    "provision_error_message": "Invalid key. Your cluster's installation role does not have permissions to use the default KMS key in your AWS account. Ensure that the installation role has permissions to use this key and try again. If you're using a custom KMS key, ensure the key exists. Learn more: https://access.redhat.com/solutions/7048553.",
+    "provision_error_code": "OCM3055",
+    "configuration_mode": "full",
+    "limited_support_reason_count": 0
+  },
+  "node_drain_grace_period": {
+    "value": 60,
+    "unit": "minutes"
+  },
+  "etcd_encryption": false,
+  "billing_model": "standard",
+  "disable_user_workload_monitoring": false,
+  "managed_service": {
+    "enabled": false,
+    "managed": false
+  },
+  "hypershift": {
+    "enabled": false
+  },
+  "byo_oidc": {
+    "enabled": false
+  },
+  "delete_protection": {
+    "href": "/api/clusters_mgmt/v1/clusters/2bv7n2aojuu1hlu59pdi29d7oslgaot7/delete_protection",
+    "enabled": false
+  },
+  "external_auth_config": {
+    "kind": "ExternalAuthConfig",
+    "href": "/api/clusters_mgmt/v1/clusters/2bv7n2aojuu1hlu59pdi29d7oslgaot7/external_auth_config",
+    "enabled": false,
+    "external_auths": {
+      "href": "/api/clusters_mgmt/v1/clusters/2bv7n2aojuu1hlu59pdi29d7oslgaot7/external_auth_config/external_auths"
+    }
+  }
+}

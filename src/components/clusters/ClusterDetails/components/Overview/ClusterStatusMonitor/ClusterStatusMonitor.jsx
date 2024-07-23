@@ -2,7 +2,6 @@
 // can't access lexical declaration '__WEBPACK_DEFAULT_EXPORT__' before initialization
 /* eslint-disable react-hooks/rules-of-hooks */
 import React from 'react';
-import get from 'lodash/get';
 import PropTypes from 'prop-types';
 import { useNavigate } from 'react-router-dom-v5-compat';
 
@@ -12,6 +11,7 @@ import PlusCircleIcon from '@patternfly/react-icons/dist/esm/icons/plus-circle-i
 import { Table, TableVariant, Tbody, Td, Th, Thead, Tr } from '@patternfly/react-table';
 
 import { HAD_INFLIGHT_ERROR_LOCALSTORAGE_KEY } from '~/common/localStorageConstants';
+import ClusterStatusErrorDisplay from '~/components/clusters/common/ClusterStatusErrorDisplay';
 import { InflightCheckState } from '~/types/clusters_mgmt.v1';
 
 import getClusterName from '../../../../../../common/getClusterName';
@@ -366,18 +366,17 @@ const ClusterStatusMonitor = (props) => {
 
   if (status.status.id === cluster.id) {
     const errorCode = status.status.provision_error_code || '';
-    let reason = '';
-    if (status.status.provision_error_code) {
-      reason = get(status, 'status.provision_error_message', '');
-    }
-    const description = get(status, 'status.description', '');
     const alerts = [];
 
     // Cluster install failure
     if (status.status.state === clusterStates.ERROR) {
       alerts.push(
         <Alert variant="danger" isInline title={`${errorCode} Cluster installation failed`}>
-          {`This cluster cannot be recovered, however you can use the logs and network validation to diagnose the problem: ${reason} ${description}`}
+          <p>
+            This cluster cannot be recovered, however you can use the logs and network validation to
+            diagnose the problem:
+          </p>
+          <ClusterStatusErrorDisplay clusterStatus={status.status} showDescription />
         </Alert>,
       );
     }
@@ -402,7 +401,7 @@ const ClusterStatusMonitor = (props) => {
           title={`${errorCode} Installation is taking longer than expected`}
           data-testid="alert-long-install"
         >
-          {reason}
+          <ClusterStatusErrorDisplay clusterStatus={status.status} />
         </Alert>,
       );
     }
