@@ -1,95 +1,86 @@
-import React from 'react';
+import React, { useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 
-import { Tooltip } from '@patternfly/react-core';
-import {
-  Dropdown as DropdownDeprecated,
-  DropdownPosition as DropdownPositionDeprecated,
-  DropdownToggle as DropdownToggleDeprecated,
-  KebabToggle as KebabToggleDeprecated,
-} from '@patternfly/react-core/deprecated';
+import { Dropdown, MenuToggle, Tooltip } from '@patternfly/react-core';
+import EllipsisVIcon from '@patternfly/react-icons/dist/esm/icons/ellipsis-v-icon';
 
 import { dropDownItems } from './ClusterActionsDropdownItems';
 
-class ClusterActionsDropdown extends React.Component {
-  constructor(props) {
-    super(props);
-    this.onToggle = (_, isOpen) => {
-      this.setState({
-        isOpen,
-      });
-    };
-    this.onSelect = () => {
-      this.setState((state) => ({
-        isOpen: !state.isOpen,
-      }));
-    };
-  }
+const ClusterActionsDropdown = (props) => {
+  const [isOpen, setIsOpen] = useState(false);
 
-  state = {
-    isOpen: false,
+  const {
+    cluster,
+    showConsoleButton,
+    openModal,
+    isKebab,
+    disabled,
+    canSubscribeOCP,
+    canTransferClusterOwnership,
+    toggleSubscriptionReleased,
+    canHibernateCluster,
+    refreshFunc,
+  } = props;
+
+  const onToggle = () => {
+    setIsOpen(!isOpen);
   };
 
-  render() {
-    const {
-      cluster,
-      showConsoleButton,
-      openModal,
-      isKebab,
-      disabled,
-      canSubscribeOCP,
-      canTransferClusterOwnership,
-      toggleSubscriptionReleased,
-      canHibernateCluster,
-      refreshFunc,
-    } = this.props;
-    const { isOpen } = this.state;
+  const onSelect = () => {
+    setIsOpen(false);
+  };
 
-    const toggleComponent = isKebab ? (
-      <KebabToggleDeprecated isDisabled={disabled} onToggle={this.onToggle} />
-    ) : (
-      <DropdownToggleDeprecated isDisabled={disabled} onToggle={this.onToggle}>
-        Actions
-      </DropdownToggleDeprecated>
-    );
+  const menuItems = dropDownItems({
+    cluster,
+    showConsoleButton,
+    openModal,
+    canSubscribeOCP,
+    canTransferClusterOwnership,
+    canHibernateCluster,
+    toggleSubscriptionReleased,
+    refreshFunc,
+    inClusterList: false,
+  });
 
-    const menuItems = dropDownItems({
-      cluster,
-      showConsoleButton,
-      openModal,
-      canSubscribeOCP,
-      canTransferClusterOwnership,
-      canHibernateCluster,
-      toggleSubscriptionReleased,
-      refreshFunc,
-      inClusterList: false,
-    });
+  const toggleRef = useRef();
 
-    const dropdown = (
-      <DropdownDeprecated
-        position={DropdownPositionDeprecated.right}
-        onSelect={this.onSelect}
-        dropdownItems={menuItems}
-        toggle={toggleComponent}
-        isPlain={isKebab}
-        isOpen={isOpen}
-        data-testid="cluster-actions-dropdown"
-      />
-    );
+  const dropdown = (
+    <Dropdown
+      onSelect={onSelect}
+      popperProps={{ position: 'right', appendTo: () => document.body }}
+      toggle={{
+        toggleRef,
+        toggleNode: (
+          <MenuToggle
+            ref={toggleRef}
+            onClick={onToggle}
+            isExpanded={isOpen}
+            isDisabled={disabled}
+            variant={isKebab ? 'plain' : 'default'}
+            data-testid="cluster-actions-dropdown"
+          >
+            {isKebab ? <EllipsisVIcon /> : 'Actions'}
+          </MenuToggle>
+        ),
+      }}
+      isOpen={isOpen}
+      data-testid="cluster-actions-dropdown"
+    >
+      {menuItems}
+    </Dropdown>
+  );
 
-    if (disabled) {
-      return (
-        <Tooltip
-          content="You do not have permission to make changes in this cluster. Only cluster owners, cluster editors, and Organization Administrators can make these changes."
-          position="bottom"
-        >
-          {dropdown}
-        </Tooltip>
-      );
-    }
-    return dropdown;
-  }
-}
+  return disabled ? (
+    <Tooltip
+      content="You do not have permission to make changes in this cluster. Only cluster owners, cluster editors, and Organization Administrators can make these changes."
+      position="bottom"
+    >
+      {dropdown}
+    </Tooltip>
+  ) : (
+    dropdown
+  );
+};
 
 ClusterActionsDropdown.propTypes = {
   cluster: PropTypes.object.isRequired,
