@@ -149,15 +149,21 @@ function SubscriptionSettings({
               <DescriptionList>
                 <DescriptionListGroup>
                   <DescriptionListTerm>Subscription type</DescriptionListTerm>
-                  <DescriptionListDescription>{billingModelStr}</DescriptionListDescription>
+                  <DescriptionListDescription data-testid="subscription-type">
+                    {billingModelStr}
+                  </DescriptionListDescription>
                 </DescriptionListGroup>
                 <DescriptionListGroup>
                   <DescriptionListTerm>Service level agreement (SLA)</DescriptionListTerm>
-                  <DescriptionListDescription>{supportLevelStr}</DescriptionListDescription>
+                  <DescriptionListDescription data-testid="service-level-agreement">
+                    {supportLevelStr}
+                  </DescriptionListDescription>
                 </DescriptionListGroup>
                 <DescriptionListGroup>
                   <DescriptionListTerm>Support type</DescriptionListTerm>
-                  <DescriptionListDescription>{serviceLevelStr}</DescriptionListDescription>
+                  <DescriptionListDescription data-testid="support-type">
+                    {serviceLevelStr}
+                  </DescriptionListDescription>
                   {isEditViewable && (
                     <DescriptionListDescription class="pf-v5-u-mt-lg">
                       <Button
@@ -177,16 +183,22 @@ function SubscriptionSettings({
               <DescriptionList>
                 <DescriptionListGroup>
                   <DescriptionListTerm>Cluster usage</DescriptionListTerm>
-                  <DescriptionListDescription>{usageStr}</DescriptionListDescription>
+                  <DescriptionListDescription data-testid="cluster-usage">
+                    {usageStr}
+                  </DescriptionListDescription>
                 </DescriptionListGroup>
                 <DescriptionListGroup>
                   <DescriptionListTerm>Subscription units</DescriptionListTerm>
-                  <DescriptionListDescription>{systemUnitsStr}</DescriptionListDescription>
+                  <DescriptionListDescription data-testid="subscription-units">
+                    {systemUnitsStr}
+                  </DescriptionListDescription>
                 </DescriptionListGroup>
                 {displayObligation && (
                   <DescriptionListGroup>
                     <DescriptionListTerm>{obligationLabel}</DescriptionListTerm>
-                    <DescriptionListDescription>{obligationStr}</DescriptionListDescription>
+                    <DescriptionListDescription data-testid="cores-or-sockets">
+                      {obligationStr}
+                    </DescriptionListDescription>
                   </DescriptionListGroup>
                 )}
               </DescriptionList>
