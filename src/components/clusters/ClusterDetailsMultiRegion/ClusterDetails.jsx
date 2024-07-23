@@ -51,6 +51,7 @@ import {
 import { clearListVpcs } from '~/redux/actions/ccsInquiriesActions';
 import { clusterAutoscalerActions } from '~/redux/actions/clusterAutoscalerActions';
 import { onClearFiltersAndFlags } from '~/redux/actions/viewOptionsActions';
+import { useGlobalState } from '~/redux/hooks/useGlobalState';
 import { isRestrictedEnv } from '~/restrictedEnv';
 
 import getClusterName from '../../../common/getClusterName';
@@ -74,14 +75,6 @@ import {
 import ErrorBoundary from '../../App/ErrorBoundary';
 import Unavailable from '../../common/Unavailable';
 import withFeatureGate from '../../features/with-feature-gate';
-// TODO: Commented out for respective tabs stories
-// import UpgradeSettingsTab from '../ClusterDetailsMultiRegion/components/UpgradeSettings';
-// import AccessControl from '../ClusterDetailsMultiRegion/components/AccessControl/AccessControl';
-// import Networking from '../ClusterDetailsMultiRegion/components/Networking';
-// import Monitoring from '../ClusterDetailsMultiRegion/components/Monitoring';
-// import MachinePools from '../ClusterDetailsMultiRegion/components/MachinePools';
-// import AddOns from '../ClusterDetailsMultiRegion/components/AddOns';
-// import ClusterLogs from './components/ClusterLogs/ClusterLogs';
 import clusterStates, {
   canViewMachinePoolTab,
   isHibernating,
@@ -109,14 +102,14 @@ import { fetchClusterInsights } from './components/Insights/InsightsActions';
 // import AccessControl from '../ClusterDetailsMultiRegion/components/AccessControl/AccessControl';
 // import Support from '../ClusterDetailsMultiRegion/components/Support';
 // import Networking from '../ClusterDetailsMultiRegion/components/Networking';
-// import Monitoring from '../ClusterDetailsMultiRegion/components/Monitoring';
 import MachinePools from './components/MachinePools';
 import {
   clearGetMachinePoolsResponse,
   getMachineOrNodePools,
 } from './components/MachinePools/MachinePoolsActions';
+import Monitoring from './components/Monitoring';
 import { getOnDemandMetrics } from './components/Monitoring/MonitoringActions';
-import { issuesAndWarningsMultiRegion } from './components/Monitoring/MonitoringSelectors';
+import { issuesAndWarningsSelector } from './components/Monitoring/MonitoringSelectors';
 import { getClusterRouters } from './components/Networking/NetworkingActions';
 import Overview from './components/Overview/Overview';
 import Support from './components/Support';
@@ -134,6 +127,7 @@ const PAGE_TITLE = 'Red Hat OpenShift Cluster Manager';
 const ClusterDetails = (props) => {
   const { location, toggleSubscriptionReleased } = props;
   const [gcpOrgPolicyWarning, setGcpOrgPolicyWarning] = React.useState('');
+  const monitoring = useGlobalState((state) => state.monitoring);
 
   const isMultiRegionPreviewEnabled = useFeatureGate(MULTIREGION_PREVIEW_ENABLED);
 
@@ -175,9 +169,7 @@ const ClusterDetails = (props) => {
   // Recreation of function, no cluster in the redux.
   const canSubscribeOCP = canSubscribeOCPMultiRegion(cluster);
   const canTransferClusterOwnership = canTransferClusterOwnershipMultiRegion(cluster);
-  const hasIssues = useSelector(
-    (state) => issuesAndWarningsMultiRegion(state, cluster).issues.totalCount > 0,
-  );
+  const hasIssues = issuesAndWarningsSelector(monitoring, cluster).issues.totalCount > 0;
   const { organization } = useSelector((state) => state.userProfile);
   const { insightsData } = useSelector((state) => state.insightsData);
   const {
@@ -549,7 +541,7 @@ const ClusterDetails = (props) => {
               overview: { ref: overviewTabRef, hasIssues: false },
               monitoring: {
                 ref: monitoringTabRef,
-                show: !isMultiRegionPreviewEnabled && displayMonitoringTab,
+                show: displayMonitoringTab,
                 hasIssues: cluster.state !== clusterStates.INSTALLING && hasIssues,
               },
               accessControl: {
@@ -646,8 +638,6 @@ const ClusterDetails = (props) => {
             ) : null}
           </ErrorBoundary>
         </TabContent>
-        {/* TODO: Commented out for respective tabs stories */}
-        {/* 
         {displayMonitoringTab && (
           <TabContent
             eventKey={1}
@@ -661,6 +651,9 @@ const ClusterDetails = (props) => {
             </ErrorBoundary>
           </TabContent>
         )}
+        {/* TODO: Commented out for respective tabs stories */}
+        {/* 
+        
         {displayAccessControlTab && (
           <TabContent
             eventKey={2}
