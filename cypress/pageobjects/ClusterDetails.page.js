@@ -21,7 +21,7 @@ class ClusterDetails extends Page {
 
   openConsoleLink = () => cy.getByTestId('console-url-link');
 
-  actionsDropdownToggle = () => cy.getByTestId('cluster-actions-dropdown').find('button').first();
+  actionsDropdownToggle = () => cy.getByTestId('cluster-actions-dropdown');
 
   editDisplayNameDropdownItem = () => cy.contains('button', 'Edit display name');
 
