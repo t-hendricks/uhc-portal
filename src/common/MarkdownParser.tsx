@@ -3,8 +3,6 @@ import ReactMarkdown from 'react-markdown';
 import rehypeRaw from 'rehype-raw';
 import remarkGfm from 'remark-gfm';
 
-import { TextContent } from '@patternfly/react-core';
-
 import ExternalLink from '~/components/common/ExternalLink';
 
 type MarkdownParserProps = {
@@ -23,18 +21,16 @@ const MarkdownParser = ({ children, rehypePlugins }: MarkdownParserProps) => {
   );
 
   return children ? (
-    <TextContent>
-      <ReactMarkdown
-        className="markdown"
-        rehypePlugins={rehypePlugins ?? [remarkGfm, rehypeRaw]}
-        components={{
-          // map a link to ExternalLink
-          a: LinkComponent,
-        }}
-      >
-        {children}
-      </ReactMarkdown>
-    </TextContent>
+    <ReactMarkdown
+      className="markdown"
+      rehypePlugins={rehypePlugins ?? [remarkGfm, rehypeRaw]}
+      components={{
+        // map a link to ExternalLink
+        a: LinkComponent,
+      }}
+    >
+      {children}
+    </ReactMarkdown>
   ) : null;
 };
 

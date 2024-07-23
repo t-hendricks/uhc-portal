@@ -2,5 +2,13 @@
   "kind": "Product",
   "id": "rosa",
   "href": "/api/clusters_mgmt/v1/products/rosa",
-  "name": "Red Hat OpenShift Service on AWS"
+  "name": "Red Hat OpenShift Service on AWS",
+  "technology_previews": {
+    "kind": "ProductTechnologyPreviewListLink",
+    "href": "/api/clusters_mgmt/v1/products/rosa/technology_previews"
+  },
+  "minimal_versions": {
+    "kind": "ProductMinimalVersionListLink",
+    "href": "/api/clusters_mgmt/v1/products/rosa/minimal_versions"
+  }
 }

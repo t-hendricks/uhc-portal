@@ -175,6 +175,32 @@ describe('<DetailsRight />', () => {
       checkForValueAbsence(componentText.STATUS_ERROR.label);
     });
 
+    it('renders URLs embedded in provision errors as links', () => {
+      // Arrange
+      const clusterErrorFixture = {
+        ...fixtures.clusterDetails.cluster,
+        status: {
+          ...fixtures.clusterDetails.cluster.status,
+          provision_error_code: 'OCM3055',
+          provision_error_message:
+            "Your cluster's installation role does not have permissions to use the default KMS key in your AWS account. Ensure that the installation role has permissions to use this key and try again. If you're using a custom KMS key, ensure the key exists. Learn more: https://access.redhat.com/solutions/7048553",
+        },
+      };
+      const newProps = { ...defaultProps, cluster: clusterErrorFixture };
+
+      render(<DetailsRight {...newProps} />);
+
+      // Assert
+      checkForValue(
+        componentText.STATUS_ERROR.label,
+        /OCM3055 Your cluster's installation role does not have permissions/,
+      );
+      expect(screen.getByText('https://access.redhat.com/solutions/7048553')).toHaveRole('link');
+      expect(screen.getByText('https://access.redhat.com/solutions/7048553')).toHaveAttribute(
+        'href',
+      );
+    });
+
     it('shows delete protection', () => {
       // Arrange
       render(<DetailsRight {...defaultProps} />);

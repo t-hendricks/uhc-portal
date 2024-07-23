@@ -379,4 +379,65 @@ describe('<ClusterStatusMonitor />', () => {
     );
     expect(screen.getByText('Danger alert:')).toBeInTheDocument();
   });
+
+  it('renders URLs embedded in alerts as links', () => {
+    useFetchClusterStatusMock.mockReturnValue({
+      isLoading: false,
+      data: {
+        id: clusterDetails.cluster.id,
+        state: 'error',
+        description: 'wut wut.',
+        provision_error_code: 'OCM3055',
+        provision_error_message:
+          "Your cluster's installation role does not have permissions to use the default KMS key in your AWS account. Ensure that the installation role has permissions to use this key and try again. If you're using a custom KMS key, ensure the key exists. Learn more: https://access.redhat.com/solutions/7048553",
+      },
+      isError: false,
+      error: null,
+    });
+    useFetchInflightChecksMock.mockReturnValue({
+      isLoading: false,
+      data: null,
+    });
+    useMutateRerunInflightChecksMock.mockReturnValue({
+      isLoading: false,
+      data: null,
+      isError: false,
+      error: null,
+    });
+    useFetchRerunInflightChecksMock.mockReturnValue({
+      isLoading: false,
+      data: null,
+      isError: false,
+      error: null,
+    });
+
+    render(
+      <TestRouter>
+        <CompatRouter>
+          <ClusterStatusMonitor
+            {...defaultProps}
+            status={{
+              fulfilled: true,
+              pending: false,
+              status: {
+                id: clusterDetails.cluster.id,
+                state: 'error',
+                description: 'wut wut.',
+                provision_error_code: 'OCM3055',
+                provision_error_message:
+                  "Your cluster's installation role does not have permissions to use the default KMS key in your AWS account. Ensure that the installation role has permissions to use this key and try again. If you're using a custom KMS key, ensure the key exists. Learn more: https://access.redhat.com/solutions/7048553",
+              },
+            }}
+          />
+        </CompatRouter>
+      </TestRouter>,
+    );
+    expect(screen.getByText('Danger alert:')).toBeInTheDocument();
+    expect(
+      screen.getByText(/Your cluster's installation role does not have permissions/),
+    ).toBeInTheDocument();
+    expect(screen.getByText(/wut wut./)).toBeInTheDocument();
+    expect(screen.getByText('https://access.redhat.com/solutions/7048553')).toHaveRole('link');
+    expect(screen.getByText('https://access.redhat.com/solutions/7048553')).toHaveAttribute('href');
+  });
 });
