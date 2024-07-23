@@ -26,8 +26,8 @@ export const formatCluster = (cluster: ClusterFromSubscription) => ({
   managed: cluster.managed,
   metrics: {
     upgrade: {
-      state: cluster.metrics.upgrade,
-      version: cluster.metrics.upgrade.version,
+      state: cluster.metrics?.upgrade,
+      version: cluster.metrics?.upgrade.version,
     },
   },
   name: cluster.name,

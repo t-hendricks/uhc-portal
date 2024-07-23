@@ -3,10 +3,14 @@ import { ClusterWithPermissions } from '~/types/types';
 
 import { normalizeSubscription } from '../../../common/normalize';
 import { accountsService } from '../../../services';
-import { Region } from '../../common/useFetchRegions';
 import { queryConstants } from '../../queriesConstants';
+import { Region } from '../types/types';
 
-import { createResponseForFetchClusters } from './createResponseForFetchCluster';
+import {
+  createResponseForFetchClusters,
+  ErrorResponse,
+  formatClusterListError,
+} from './createResponseForFetchCluster';
 
 type ModifiedViewOptions = {
   filter?: string;
@@ -31,18 +35,28 @@ export const fetchPageOfRegionalClusters = async (
     clusterRequestParams.search = `(display_name ILIKE '%${viewOptions.filter}%' OR external_id ILIKE '%${viewOptions.filter}%' OR id ILIKE '%${viewOptions.filter}%')`;
   }
 
-  const clusters = await clusterService.getClusters(clusterRequestParams);
+  let clusters;
+  const errors = [];
+  let isError = false;
+
+  try {
+    clusters = await clusterService.getClusters(clusterRequestParams);
+  } catch (e: unknown) {
+    isError = true;
+    // TODO verify this still works once we are connected to an actual API
+    errors.push(formatClusterListError({ error: e as ErrorResponse }, region));
+  }
 
   const items = clusters?.data?.items;
 
-  if (!items || items.length === 0) {
+  if (!clusters || !items || items.length === 0 || isError) {
     return {
-      data: {
-        items: [] as ClusterWithPermissions[],
-        page: 0,
-        total: 0,
-        region,
-      },
+      items: [] as ClusterWithPermissions[],
+      page: 0,
+      total: 0,
+      region,
+      isError,
+      errors,
     };
   }
 
@@ -59,11 +73,19 @@ export const fetchPageOfRegionalClusters = async (
     .map((key) => `'${key}'`)
     .join(',')})`;
 
-  const subscriptionResponse = await accountsService.searchSubscriptions(
-    subscriptionsQuery,
-    queryConstants.PAGE_SIZE,
-  );
+  let subscriptionResponse;
+  try {
+    subscriptionResponse = await accountsService.searchSubscriptions(
+      subscriptionsQuery,
+      queryConstants.PAGE_SIZE,
+    );
+  } catch (e) {
+    isError = true;
+    errors.push(formatClusterListError({ error: e as ErrorResponse }, region));
+  }
+
   const subscriptions = subscriptionResponse?.data?.items;
+
   subscriptions?.forEach((subscription) => {
     if (subscription.id) {
       const entry = subscriptionMap.get(subscription.id);
@@ -90,6 +112,7 @@ export const fetchPageOfRegionalClusters = async (
   // Because creator is not known to the cluster service, we need to manually filter out manually
   if (viewOptions?.flags?.showMyClustersOnly && userName) {
     returnItems = returnItems.filter(
+      // @ts-ignore  creator is not currently on the subscription type
       (cluster) => cluster.subscription?.creator?.username === userName,
     );
   }
@@ -98,8 +121,10 @@ export const fetchPageOfRegionalClusters = async (
 
   return {
     items: returnItems,
-    page: clusters.data.page,
+    page: clusters?.data.page,
     total: clusters.data.total - numberFilteredOut || 0,
     region,
+    isError,
+    errors,
   };
 };

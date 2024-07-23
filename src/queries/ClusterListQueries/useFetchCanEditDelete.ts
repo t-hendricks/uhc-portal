@@ -7,6 +7,8 @@ import { SelfResourceReview, SelfResourceReviewRequest } from '~/types/accounts_
 
 import { authorizationsService } from '../../services';
 
+import { ErrorResponse, formatClusterListError } from './helpers/createResponseForFetchCluster';
+
 type CanEditDelete = {
   [clusterID: string]: boolean;
 };
@@ -16,7 +18,7 @@ export const useFetchCanEditDelete = ({
   staleTime = 30000,
   refetchInterval = Infinity,
 }) => {
-  const { isLoading, data, isError, isFetching, refetch } = useQueries({
+  const { isLoading, data, isError, isFetching, refetch, errors, isFetched } = useQueries({
     queries: [
       {
         queryKey: [
@@ -58,7 +60,22 @@ export const useFetchCanEditDelete = ({
     combine: React.useCallback((results: UseQueryResult[]) => {
       const [canDelete, canEdit] = results;
 
+      const errors = [];
+
+      const canEditError = formatClusterListError(canEdit as unknown as { error: ErrorResponse });
+      const canDeleteError = formatClusterListError(
+        canDelete as unknown as { error: ErrorResponse },
+      );
+
+      if (canEditError) {
+        errors.push(canEditError);
+      }
+      if (canDeleteError) {
+        errors.push(canDeleteError);
+      }
+
       return {
+        isFetched: results.every((result) => result.isFetched),
         isLoading: results.some((result) => result.isLoading),
         isFetching: results.some((result) => result.isFetching),
         data: {
@@ -67,6 +84,7 @@ export const useFetchCanEditDelete = ({
         },
         isError: results.some((result) => result.isError),
         refetch: () => results.forEach((result) => result.refetch()),
+        errors,
       };
     }, []),
   });
@@ -78,5 +96,7 @@ export const useFetchCanEditDelete = ({
     canDelete: data?.canDelete,
     isError,
     refetch,
+    errors,
+    isFetched,
   };
 };
