@@ -5,7 +5,7 @@ import { Tab, TabContentBody, Tabs, TabTitleText } from '@patternfly/react-core'
 import './toggleGroupTabs.scss';
 
 type ToggleGroupTabsProps = {
-  tabs: { title: string; body: ReactElement }[];
+  tabs: { title: string; body: ReactElement; 'data-testid'?: string }[];
 };
 
 const ToggleGroupTabs = ({ tabs }: ToggleGroupTabsProps) => {
@@ -19,7 +19,11 @@ const ToggleGroupTabs = ({ tabs }: ToggleGroupTabsProps) => {
       className="pf-v5-u-mt-lg associate-roles-drawer__tabs pf-v5-u-mb-sm"
     >
       {tabs.map((tab, index) => (
-        <Tab eventKey={index} title={<TabTitleText>{tab.title}</TabTitleText>}>
+        <Tab
+          eventKey={index}
+          title={<TabTitleText>{tab.title}</TabTitleText>}
+          data-testid={tab['data-testid']}
+        >
           <TabContentBody className="ocm-instruction-block">{tab.body}</TabContentBody>
         </Tab>
       ))}
