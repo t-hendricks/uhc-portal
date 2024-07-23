@@ -90,6 +90,22 @@ describe('Register cluster flow', { tags: ['ci', 'smoke'] }, () => {
     ClusterDetailsPage.clusterNameTitle().should('have.text', `${displayName}-test`);
   });
 
+  it('successfully edit Subscription settings', () => {
+    ClusterDetailsPage.editSubscriptionSettingsLink().click();
+    ClusterDetailsPage.serviceLevelAgreementPremiumRadio().click();
+    ClusterDetailsPage.clusterUsageProductionRadio().click();
+    ClusterDetailsPage.subscriptionUnitsSocketsRadio().click();
+    ClusterDetailsPage.numberOfSocketsInput().type('{selectAll}').type('2');
+    ClusterDetailsPage.saveSubscriptionButton().click();
+    ClusterDetailsPage.waitForClusterDetailsLoad();
+    ClusterDetailsPage.subscriptionTypeValue().contains('Fixed capacity subscription from Red Hat');
+    ClusterDetailsPage.serviceLevelAgreementValue().contains('Premium');
+    ClusterDetailsPage.clusterUsageValue().contains('Production');
+    ClusterDetailsPage.subscriptionUnitsValue().contains('Sockets');
+    ClusterDetailsPage.coresOrSocketsValue().contains('2 sockets');
+    ClusterDetailsPage.supportTypeValue().contains('Red Hat support (L1-L3)');
+  });
+
   it('successfully archives the newly created cluster', () => {
     ClusterDetailsPage.actionsDropdownToggle().click();
     ClusterDetailsPage.archiveClusterDropdownItem().click();
