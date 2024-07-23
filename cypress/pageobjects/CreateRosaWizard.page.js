@@ -76,6 +76,36 @@ class CreateRosaCluster extends Page {
 
   createClusterButton = () => cy.getByTestId('create-cluster-button');
 
+  rosaListOcmField = () => cy.getByTestId('copy-rosa-list-ocm-role');
+
+  rosaCreateOcmTab = () => cy.getByTestId('copy-ocm-role-tab-no');
+
+  rosaLinkOcmTab = () => cy.getByTestId('copy-ocm-role-tab-yes');
+
+  rosaCreateOcmField = () => cy.getByTestId('copy-rosa-create-ocm-role');
+
+  rosaCreateOcmAdminField = () => cy.getByTestId('copy-rosa-create-ocm-admin-role');
+
+  rosaLinkOcmField = () => cy.getByTestId('copy-rosa-link-ocm-role');
+
+  rosaListUserField = () => cy.getByTestId('copy-rosa-list-user-role');
+
+  rosaCreateUserTab = () => cy.getByTestId('copy-user-role-tab-no');
+
+  rosaLinkUserTab = () => cy.getByTestId('copy-user-role-tab-yes');
+
+  rosaCreateUserField = () => cy.getByTestId('copy-rosa-create-user-role');
+
+  rosaLinkUserField = () => cy.getByTestId('copy-rosa-link-user-role');
+
+  rosaAssociateDrawerFirstStepButton = () => cy.contains('Step 1: OCM role');
+
+  rosaAssociateDrawerSecondStepButton = () => cy.contains('Step 2: User role');
+
+  rosaAssociateDrawerThirdStepButton = () => cy.contains('Step 3: Account roles');
+
+  rosaCreateAccountRolesField = () => cy.getByTestId('copy-rosa-create-account-role');
+
   operatorRoleCommandInput = () =>
     cy.get('input[aria-label="Copyable ROSA create operator-roles"]');
 
@@ -89,6 +119,10 @@ class CreateRosaCluster extends Page {
 
   howToAssociateNewAWSAccountDrawerCloseButton = () =>
     cy.getByTestId('close-associate-account-btn');
+
+  howToAssociateNewAWSAccountDrawerXButton = () => cy.get('[aria-label="Close drawer panel"]');
+
+  rosaHelpMeDecideButton = () => cy.get('button').contains('Help me decide');
 
   supportRoleInput = () => cy.get('input[id="support_role_arn"]');
 
@@ -234,6 +268,11 @@ class CreateRosaCluster extends Page {
   isAssociateAccountsDrawer() {
     cy.contains('span', 'How to associate a new AWS account').should('have.focus');
     cy.contains('continue to step');
+  }
+
+  isNotAssociateAccountsDrawer() {
+    cy.contains('span', 'How to associate a new AWS account').should('not.exist');
+    cy.contains('continue to step').should('not.exist');
   }
 
   cancelWizard() {

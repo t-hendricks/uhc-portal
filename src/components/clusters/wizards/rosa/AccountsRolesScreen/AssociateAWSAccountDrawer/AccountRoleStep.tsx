@@ -30,6 +30,7 @@ const AccountRoleStep = (props: AssociateAWSAccountStepProps) => {
         that&apos;s provided by the ROSA CLI.
       </Text>
       <InstructionCommand
+        data-testId="copy-rosa-create-account-role"
         trackEvent={trackEvents.CopyCreateAccountRoles}
         textAriaLabel={`Copyable ROSA ${accountRolesCommand} command`}
         className="pf-v5-u-mb-lg"
