@@ -4,7 +4,6 @@ import { ErrorResponse } from 'react-router-dom';
 
 import { useQueries } from '@tanstack/react-query';
 
-import { useFeatureGate } from '~/hooks/useFeatureGate';
 import { GlobalState } from '~/redux/store';
 
 import { useFetchRegions } from '../common/useFetchRegions';

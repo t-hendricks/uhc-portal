@@ -71,13 +71,11 @@ import { fetchUpgradeGates } from '../../../redux/actions/upgradeGateActions';
 import { viewConstants } from '../../../redux/constants';
 import {
   ACCESS_REQUEST_ENABLED,
-  ASSISTED_INSTALLER_FEATURE,
   MULTIREGION_PREVIEW_ENABLED,
   NETWORK_VALIDATOR_ONDEMAND_FEATURE,
 } from '../../../redux/constants/featureConstants';
 import ErrorBoundary from '../../App/ErrorBoundary';
 import Unavailable from '../../common/Unavailable';
-import withFeatureGate from '../../features/with-feature-gate';
 // import Monitoring from '../ClusterDetailsMultiRegion/components/Monitoring';
 // import MachinePools from '../ClusterDetailsMultiRegion/components/MachinePools';
 // import AddOns from '../ClusterDetailsMultiRegion/components/AddOns';
@@ -134,10 +132,7 @@ import TabsRow from './components/TabsRow/TabsRow';
 import { eventTypes } from './clusterDetailsHelper';
 
 const { HostsClusterDetailTab, getAddHostsTabState } = OCM;
-const GatedAIHostsClusterDetailTab = withFeatureGate(
-  HostsClusterDetailTab,
-  ASSISTED_INSTALLER_FEATURE,
-);
+
 const PAGE_TITLE = 'Red Hat OpenShift Cluster Manager';
 
 const ClusterDetails = (props) => {
@@ -203,9 +198,6 @@ const ClusterDetails = (props) => {
   );
   const canHibernateCluster = useSelector((state) => userCanHibernateClustersSelector(state));
   const anyModalOpen = useSelector((state) => !!state.modal.modalName);
-  const assistedInstallerEnabled = useSelector((state) =>
-    featureGateSelector(state, ASSISTED_INSTALLER_FEATURE),
-  );
   const userAccess = useSelector((state) => state.cost.userAccess);
   const gotRouters = get(clusterRouters, 'getRouters.routers.length', 0) > 0;
   const hasNetworkOndemand = useSelector((state) =>
@@ -508,7 +500,7 @@ const ClusterDetails = (props) => {
     cluster.managed && !isAROCluster && cluster.canEdit && !isArchived;
 
   let addHostsTabState = { showTab: false, isDisabled: false, tabTooltip: '' };
-  if (assistedInstallerEnabled && !isArchived) {
+  if (!isArchived) {
     addHostsTabState = getAddHostsTabState(cluster);
   }
 
@@ -806,7 +798,7 @@ const ClusterDetails = (props) => {
             hidden
           >
             <ErrorBoundary>
-              <GatedAIHostsClusterDetailTab
+              <HostsClusterDetailTab
                 cluster={cluster}
                 isVisible={selectedTab === ClusterTabsId.ADD_ASSISTED_HOSTS}
               />
