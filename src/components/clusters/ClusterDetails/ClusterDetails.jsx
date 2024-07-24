@@ -371,7 +371,7 @@ const ClusterDetails = (props) => {
         'clusterDetails',
         clusterDetails.errorMessage,
       );
-      return <Navigate to="/" />;
+      return <Navigate to="/cluster-list" />;
     }
     return errorState();
   }

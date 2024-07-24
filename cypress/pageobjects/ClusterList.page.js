@@ -5,7 +5,7 @@ import Page from './page';
  */
 class ClusterList extends Page {
   isClusterListUrl() {
-    super.assertUrlIncludes('/openshift/');
+    super.assertUrlIncludes('/openshift/cluster-list');
   }
 
   filterTxtField = () => cy.getByTestId('filterInputClusterList', { timeout: 15000 });

@@ -57,7 +57,7 @@ describe('<ClusterDetailsRedirector />', () => {
         };
 
         render(<ClusterDetailsRedirector {...newProps} />);
-        expect(screen.getByText('Redirected to "/"')).toBeInTheDocument();
+        expect(screen.getByText('Redirected to "/cluster-list"')).toBeInTheDocument();
 
         expect(setGlobalError).toBeCalledWith(
           expect.anything(), // should be a react node/fragment, but I don't know how to check that
