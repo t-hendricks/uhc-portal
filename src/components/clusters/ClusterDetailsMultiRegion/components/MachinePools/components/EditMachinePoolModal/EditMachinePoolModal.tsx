@@ -7,8 +7,7 @@ import { useDispatch } from 'react-redux';
 import { Button, ExpandableSection, Form, Stack, StackItem, Tooltip } from '@patternfly/react-core';
 
 import { getErrorMessage } from '~/common/errors';
-import { isMPoolAz } from '~/components/clusters/ClusterDetails/clusterDetailsHelper';
-import { isHypershiftCluster, isROSA } from '~/components/clusters/common/clusterStates';
+import { isHypershiftCluster } from '~/components/clusters/common/clusterStates';
 import { MAX_NODES_HCP } from '~/components/clusters/common/machinePools/constants';
 import { getNodeCount } from '~/components/clusters/common/machinePools/utils';
 import ErrorBox from '~/components/common/ErrorBox';
@@ -16,84 +15,52 @@ import Modal from '~/components/common/Modal/Modal';
 import { closeModal } from '~/components/common/Modal/ModalActions';
 import modals from '~/components/common/Modal/modals';
 import { useFeatureGate } from '~/hooks/useFeatureGate';
+import { useFetchMachineTypes } from '~/queries/ClusterDetailsQueries/MachinePoolTab/MachineTypes/useFetchMachineTypes';
+import { useEditCreateMachineOrNodePools } from '~/queries/ClusterDetailsQueries/MachinePoolTab/useEditCreateMachineOrNodePools';
+import { useFetchMachineOrNodePools } from '~/queries/ClusterDetailsQueries/MachinePoolTab/useFetchMachineOrNodePools';
+import { MachineTypesResponse } from '~/queries/types';
 import { HCP_USE_NODE_UPGRADE_POLICIES } from '~/redux/constants/featureConstants';
 import { useGlobalState } from '~/redux/hooks';
-import { GlobalState } from '~/redux/store';
-import { PromiseReducerState } from '~/redux/types';
-import { clusterService } from '~/services';
 import { Cluster, MachinePool } from '~/types/clusters_mgmt.v1';
 import { ErrorState } from '~/types/types';
 
-import { clearGetMachinePoolsResponse, getMachineOrNodePools } from '../../MachinePoolsActions';
-import { canUseSpotInstances, normalizeNodePool } from '../../machinePoolsHelper';
+import { clearGetMachinePoolsResponse } from '../../MachinePoolsActions';
+import { canUseSpotInstances } from '../../machinePoolsHelper';
 
 import DiskSizeField from './fields/DiskSizeField';
 import useMachinePoolFormik, { EditMachinePoolValues } from './hooks/useMachinePoolFormik';
-import useMachinePools from './hooks/useMachinePools';
-import useMachineTypes from './hooks/useMachineTypes';
 import EditDetailsSection from './sections/EditDetailsSection';
 import EditLabelsSection from './sections/EditLabelsSection';
 import EditNodeCountSection from './sections/EditNodeCountSection';
 import EditTaintsSection from './sections/EditTaintsSection';
 import EditSecurityGroupsSection from './sections/SecurityGroups/EditSecurityGroupsSection';
 import SpotInstancesSection from './sections/SpotInstancesSection';
-import { buildMachinePoolRequest, buildNodePoolRequest } from './utils';
 
 const modalDescription =
   'A machine pool is a group of machines that are all clones of the same configuration, that can be used on demand by an application running on a pod.';
 
-const submitEdit = ({
-  cluster,
-  values,
-  currentMPId,
-  currentMachinePool,
-}: {
-  cluster: Cluster;
-  values: EditMachinePoolValues;
-  currentMPId?: string;
-  currentMachinePool: MachinePool | undefined;
-}) => {
-  const isHypershift = isHypershiftCluster(cluster);
-  const isMultiZoneMachinePool = isMPoolAz(cluster, currentMachinePool?.availability_zones?.length);
-
-  const pool = isHypershift
-    ? buildNodePoolRequest(values, {
-        isEdit: !!currentMPId,
-        isMultiZoneMachinePool,
-      })
-    : buildMachinePoolRequest(values, {
-        isEdit: !!currentMPId,
-        isMultiZoneMachinePool,
-        isROSACluster: isROSA(cluster),
-      });
-
-  // Edit request
-  if (currentMPId) {
-    const request = isHypershift ? clusterService.patchNodePool : clusterService.patchMachinePool;
-    return request(cluster.id || '', currentMPId, pool);
-  }
-
-  // Creation request
-  const request = isHypershift ? clusterService.addNodePool : clusterService.addMachinePool;
-  return request(cluster.id || '', pool);
-};
-
 type EditMachinePoolModalProps = {
   cluster: Cluster;
+  region?: string;
   onClose: () => void;
   onSave?: () => void;
   machinePoolId?: string;
   isEdit?: boolean;
   shouldDisplayClusterName?: boolean;
-  machinePoolsResponse: PromiseReducerState<{
-    data: MachinePool[];
-  }>;
-  machineTypesResponse: GlobalState['machineTypes'];
+  machinePoolsResponse: MachinePool[];
+  machineTypesResponse: MachineTypesResponse;
   isHypershift?: boolean;
+  machinePoolsLoading: boolean;
+  machinePoolsError: boolean;
+  machineTypesLoading: boolean;
+  machineTypesError: boolean;
+  machinePoolsErrorResponse: Pick<ErrorState, 'errorMessage' | 'errorDetails' | 'operationID'>;
+  machineTypesErrorResponse: Pick<ErrorState, 'errorMessage' | 'errorDetails' | 'operationID'>;
 };
 
 const EditMachinePoolModal = ({
   cluster,
+  region,
   onClose,
   onSave,
   machinePoolId,
@@ -102,12 +69,17 @@ const EditMachinePoolModal = ({
   machineTypesResponse,
   shouldDisplayClusterName,
   isHypershift,
+  machinePoolsLoading,
+  machinePoolsError,
+  machineTypesLoading,
+  machineTypesError,
+  machineTypesErrorResponse,
+  machinePoolsErrorResponse,
 }: EditMachinePoolModalProps) => {
   const getIsEditValue = React.useCallback(
     () => !!isInitEdit || !!machinePoolId,
     [isInitEdit, machinePoolId],
   );
-
   const [submitError, setSubmitError] = React.useState<AxiosError<any>>();
   const [currentMachinePool, setCurrentMachinePool] = React.useState<MachinePool>();
   const [isEdit, setIsEdit] = React.useState<boolean>(getIsEditValue());
@@ -119,27 +91,21 @@ const EditMachinePoolModal = ({
   });
 
   const setCurrentMPId = React.useCallback(
-    (id: string) => setCurrentMachinePool(machinePoolsResponse.data?.find((mp) => mp.id === id)),
-    [setCurrentMachinePool, machinePoolsResponse.data],
+    (id: string) => setCurrentMachinePool(machinePoolsResponse?.find((mp) => mp.id === id)),
+    [setCurrentMachinePool, machinePoolsResponse],
   );
 
   React.useEffect(() => {
-    if (machinePoolsResponse.pending) {
+    if (machinePoolsLoading) {
       setCurrentMachinePool(undefined);
-    } else if (machinePoolsResponse.data?.length) {
+    } else if (machinePoolsResponse?.length) {
       if (machinePoolId) {
         setCurrentMPId(machinePoolId);
       } else if (isEdit) {
-        setCurrentMachinePool(machinePoolsResponse.data[0]);
+        setCurrentMachinePool(machinePoolsResponse[0]);
       }
     }
-  }, [
-    machinePoolsResponse.pending,
-    machinePoolsResponse.data,
-    machinePoolId,
-    isEdit,
-    setCurrentMPId,
-  ]);
+  }, [machinePoolsLoading, machinePoolsResponse, machinePoolId, isEdit, setCurrentMPId]);
 
   React.useEffect(() => {
     setIsEdit(getIsEditValue());
@@ -148,24 +114,29 @@ const EditMachinePoolModal = ({
   // Checks if max nodes amount is reached for add machine pool nodes
   const isMaxReached =
     isHypershift &&
-    machinePoolsResponse.data &&
+    machinePoolsResponse &&
     getNodeCount(
-      machinePoolsResponse?.data,
+      machinePoolsResponse,
       isHypershift,
       currentMachinePool?.id,
       currentMachinePool?.instance_type,
     ) === MAX_NODES_HCP;
+
+  const { mutateAsync: editCreateMachineOrNodePoolMutation } = useEditCreateMachineOrNodePools(
+    isHypershift,
+    cluster,
+    currentMachinePool,
+  );
 
   return (
     <Formik<EditMachinePoolValues>
       onSubmit={async (values) => {
         setSubmitError(undefined);
         try {
-          await submitEdit({
-            cluster,
+          await editCreateMachineOrNodePoolMutation({
+            region,
             values,
             currentMPId: currentMachinePool?.id,
-            currentMachinePool,
           });
           onSave?.();
           onClose();
@@ -185,13 +156,10 @@ const EditMachinePoolModal = ({
           secondaryTitle={shouldDisplayClusterName ? cluster.name : undefined}
           onClose={isSubmitting ? undefined : onClose}
           isPending={
-            machinePoolsResponse.pending ||
-            (!machinePoolsResponse.error && !machinePoolsResponse.fulfilled) ||
-            (!machineTypesResponse.error && !machineTypesResponse.fulfilled) ||
-            (isEdit &&
-              machineTypesResponse.fulfilled &&
-              machinePoolsResponse.fulfilled &&
-              !currentMachinePool)
+            machinePoolsLoading ||
+            (!machinePoolsError && machinePoolsLoading) ||
+            (!machineTypesError && machineTypesLoading) ||
+            (isEdit && machineTypesResponse && machinePoolsResponse && !currentMachinePool)
           }
           modalSize="large"
           description={!isEdit && modalDescription}
@@ -217,8 +185,8 @@ const EditMachinePoolModal = ({
                       isAriaDisabled={isMaxReached || !isValid}
                       isDisabled={
                         isSubmitting ||
-                        !machinePoolsResponse.fulfilled ||
-                        !machineTypesResponse.fulfilled ||
+                        !machinePoolsResponse ||
+                        !machineTypesResponse ||
                         isEqual(initialValues, values)
                       }
                       onClick={submitForm}
@@ -235,8 +203,8 @@ const EditMachinePoolModal = ({
                     isDisabled={
                       !isValid ||
                       isSubmitting ||
-                      !machinePoolsResponse.fulfilled ||
-                      !machineTypesResponse.fulfilled ||
+                      !machinePoolsResponse ||
+                      !machineTypesResponse ||
                       isEqual(initialValues, values)
                     }
                     onClick={submitForm}
@@ -259,28 +227,27 @@ const EditMachinePoolModal = ({
             </Stack>
           }
         >
-          {machinePoolsResponse.error || machineTypesResponse.error ? (
+          {machinePoolsError || machineTypesError ? (
             <ErrorBox
               message="Failed to fetch resources"
-              response={
-                machinePoolsResponse.error
-                  ? machinePoolsResponse
-                  : (machineTypesResponse as ErrorState)
-              }
+              response={machinePoolsError ? machinePoolsErrorResponse : machineTypesErrorResponse}
             />
           ) : (
             <Form>
               <EditDetailsSection
                 cluster={cluster}
-                machinePools={machinePoolsResponse.data || []}
+                machinePools={machinePoolsResponse || []}
                 isEdit={isEdit}
+                region={region}
                 currentMPId={currentMachinePool?.id}
                 setCurrentMPId={setCurrentMPId}
+                machineTypesResponse={machineTypesResponse}
+                machineTypesLoading={machineTypesLoading}
               />
               <EditNodeCountSection
                 cluster={cluster}
                 machinePool={currentMachinePool}
-                machinePools={machinePoolsResponse.data || []}
+                machinePools={machinePoolsResponse || []}
                 machineTypes={machineTypesResponse}
               />
               <DiskSizeField cluster={cluster} isEdit={isEdit} />
@@ -288,7 +255,7 @@ const EditMachinePoolModal = ({
                 <EditLabelsSection />
                 <EditTaintsSection
                   cluster={cluster}
-                  machinePools={machinePoolsResponse.data || []}
+                  machinePools={machinePoolsResponse || []}
                   machinePoolId={currentMachinePool?.id}
                   machineTypes={machineTypesResponse}
                 />
@@ -321,34 +288,52 @@ export const ConnectedEditMachinePoolModal = ({
     }
   };
   const { cluster, shouldDisplayClusterName } = data as any;
-  const machinePoolsResponse = useMachinePools(cluster);
-  const machineTypesResponse = useMachineTypes();
+  const hypershiftCluster = isHypershiftCluster(cluster);
+  const clusterID = cluster?.id;
+  const clusterVersionID = cluster?.version?.id;
+  const region = cluster?.subscription?.xcm_id;
+
+  const {
+    data: machineTypes,
+    isLoading: isMachineTypesLoading,
+    isError: isMachineTypesError,
+    error: machineTypesError,
+  } = useFetchMachineTypes(region);
+
+  const {
+    data: machinePoolData,
+    isLoading: isMachinePoolLoading,
+    isError: isMachinePoolError,
+    error: machinePoolError,
+    refetch: machinePoolOrNodePoolsRefetch,
+  } = useFetchMachineOrNodePools(
+    clusterID,
+    hypershiftCluster,
+    clusterVersionID,
+    useNodeUpgradePolicies,
+    region,
+  );
 
   const isHypershift = isHypershiftCluster(cluster);
-  const machinePoolsList = isHypershift
-    ? {
-        ...machinePoolsResponse,
-        data: machinePoolsResponse.data?.map(normalizeNodePool) || [],
-      }
-    : machinePoolsResponse;
-
   return cluster ? (
     <EditMachinePoolModal
+      region={region}
       isHypershift={isHypershift}
       shouldDisplayClusterName={shouldDisplayClusterName}
       cluster={cluster}
       onClose={onModalClose}
       isEdit
-      machineTypesResponse={machineTypesResponse}
-      machinePoolsResponse={machinePoolsList}
+      machineTypesResponse={machineTypes}
+      machinePoolsResponse={machinePoolData}
+      machinePoolsLoading={isMachinePoolLoading}
+      machinePoolsError={isMachinePoolError}
+      machineTypesLoading={isMachineTypesLoading}
+      machineTypesError={isMachineTypesError}
+      machinePoolsErrorResponse={machinePoolError.error}
+      machineTypesErrorResponse={machineTypesError.error}
       onSave={() => {
-        if (!machinePoolsResponse.pending) {
-          getMachineOrNodePools(
-            cluster.id,
-            isHypershift,
-            cluster.version.raw_id,
-            useNodeUpgradePolicies,
-          )(dispatch);
+        if (!isMachinePoolLoading) {
+          machinePoolOrNodePoolsRefetch();
         }
       }}
     />

@@ -167,10 +167,16 @@ echo "Installing dependencies"
 rm -rf node_modules
 yarn install
 
+# $1 is the 'mode' arg', passed from the calling CI job ('ocm-portal-deploy'),
+# to determine how environments map to branches.
+# the current mapping, in the form mode-->branch, is:
+# staging-->master, candidate-->candidate, stable-->stable
+# @see https://gitlab.cee.redhat.com/service/app-interface/-/blob/master/data/services/ocm/ui/cicd/jobs.yaml#L34-45
+# @see https://gitlab.cee.redhat.com/service/app-interface/-/blob/master/resources/jenkins/ocm-ui/job-templates.yaml?ref_type=heads#L16
 if [ "$1" == "staging" ] || [ "$1" == "beta" ]; then
     echo "running staging push"
     rm -rf dist
-    yarn build --mode=production --env api-env=staging sentry-version="$SENTRY_STAGE_VERSION"
+    yarn build:prod --env api-env=staging sentry-version="$SENTRY_STAGE_VERSION"
     yarn sentry:sourcemaps
     push_build "qa-stable"
     echo "staging branch is available on https://console.dev.redhat.com/openshift"
@@ -178,25 +184,25 @@ if [ "$1" == "staging" ] || [ "$1" == "beta" ]; then
 
     echo "running staging (qa-beta) push"
     rm -rf dist
-    yarn build --mode=production --env api-env=staging beta="true"
+    yarn build:prod --env api-env=staging beta="true"
     push_build "qa-beta"
     echo "staging branch is available on https://console.dev.redhat.com/preview/openshift"
 
     echo "running push to secondary environment - ci-beta (not supported)"
     rm -rf dist
-    yarn build --mode=production --env api-env=disabled beta="true"
+    yarn build:prod --env api-env=disabled beta="true"
     push_build "ci-beta"
 
 elif [ "$1" == "candidate" ]; then
     echo "running candidate push"
     echo "Candidate branch is available on https://console.redhat.com/preview/openshift"
     rm -rf dist
-    yarn build --mode=production --env api-env=production beta="true"
+    yarn build:prod --env api-env=production beta="true"
     push_build "prod-beta"
 elif [ "$1" == "stable" ]; then
     echo "running stable push"
     rm -rf dist
-    yarn build --mode=production --env api-env=production beta="false" sentry-version="$SENTRY_PROD_VERSION"
+    yarn build:prod --env api-env=production beta="false" sentry-version="$SENTRY_PROD_VERSION"
     yarn sentry:sourcemaps
     push_build "prod-stable"
     echo "stable branch is available on https://console.redhat.com/openshift"

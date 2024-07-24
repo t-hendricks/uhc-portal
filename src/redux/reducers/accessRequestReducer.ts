@@ -24,6 +24,7 @@ import { accessRequestConstants } from '../constants';
 import {
   RESET_ACCESS_REQUEST,
   RESET_ACCESS_REQUESTS,
+  RESET_CAN_MAKE_ACCESS_REQUEST_DECISION,
   RESET_GET_PENDING_ACCESS_REQUESTS,
   RESET_ORGANIZATION_PENDING_ACCESS_REQUESTS,
   RESET_POST_ACCESS_REQUEST_DECISION,
@@ -42,6 +43,7 @@ type State = {
   pendingAccessRequests: PromiseReducerState<AccessRequestList>;
   pendingOrganizationAccessRequests: PromiseReducerState<AccessRequestList>;
   postAccessRequestDecision: PromiseReducerState<Decision>;
+  canMakeDecision: PromiseReducerState<{ allowed: boolean }>;
 };
 
 const initialState: State = {
@@ -59,6 +61,10 @@ const initialState: State = {
   },
   postAccessRequestDecision: {
     ...baseRequestState,
+  },
+  canMakeDecision: {
+    ...baseRequestState,
+    allowed: false,
   },
 };
 
@@ -160,6 +166,25 @@ function accessRequestReducer(
         };
         break;
 
+      // CAN_MAKE_ACCESS_REQUEST_DECISION
+      case REJECTED_ACTION(accessRequestConstants.CAN_MAKE_ACCESS_REQUEST_DECISION):
+        draft.canMakeDecision = {
+          ...initialState.pendingAccessRequests,
+          ...getErrorState(action),
+        };
+        break;
+      case PENDING_ACTION(accessRequestConstants.CAN_MAKE_ACCESS_REQUEST_DECISION):
+        draft.canMakeDecision.pending = true;
+        break;
+      case FULFILLED_ACTION(accessRequestConstants.CAN_MAKE_ACCESS_REQUEST_DECISION):
+        draft.canMakeDecision = {
+          ...baseRequestState,
+          fulfilled: true,
+          allowed: action.payload.data.allowed,
+        };
+        break;
+
+      // RESET OPERATIONS
       case RESET_ACCESS_REQUESTS:
         draft.accessRequests = initialState.accessRequests;
         break;
@@ -178,6 +203,10 @@ function accessRequestReducer(
 
       case RESET_ORGANIZATION_PENDING_ACCESS_REQUESTS:
         draft.pendingOrganizationAccessRequests = initialState.pendingOrganizationAccessRequests;
+        break;
+
+      case RESET_CAN_MAKE_ACCESS_REQUEST_DECISION:
+        draft.canMakeDecision = initialState.canMakeDecision;
         break;
     }
   });

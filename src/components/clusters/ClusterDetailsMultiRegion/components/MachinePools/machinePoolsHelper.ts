@@ -1,6 +1,7 @@
 import { normalizeProductID } from '~/common/normalize';
 import { normalizedProducts } from '~/common/subscriptionTypes';
 import { isHypershiftCluster } from '~/components/clusters/common/clusterStates';
+import { MachineTypesResponse } from '~/queries/types';
 import { GlobalState } from '~/redux/store';
 import { Cluster, MachinePool, NodePool } from '~/types/clusters_mgmt.v1';
 
@@ -98,7 +99,7 @@ const getMinNodesRequired = (
 const isEnforcedDefaultMachinePool = (
   currentMachinePoolId: string | undefined,
   machinePools: MachinePool[],
-  machineTypes: GlobalState['machineTypes'],
+  machineTypes: MachineTypesResponse,
   cluster: Cluster,
 ) => {
   if (isHypershiftCluster(cluster)) {
@@ -188,6 +189,7 @@ const actionResolver = ({
   if (!rowData.machinePool) {
     return [];
   }
+
   const isEnforcedDefaultMP = isEnforcedDefaultMachinePool(
     rowData.machinePool.id,
     machinePools,
@@ -268,7 +270,7 @@ const getClusterMinNodes = ({
   machinePools,
 }: {
   cluster: Cluster;
-  machineTypesResponse: GlobalState['machineTypes'];
+  machineTypesResponse: MachineTypesResponse;
   machinePool: MachinePool | undefined;
   machinePools: MachinePool[];
 }) => {

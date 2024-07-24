@@ -19,6 +19,7 @@ export namespace SelfAccessReview {
     UPDATE = 'update',
   }
   export enum resource_type {
+    ACCESS_REQUEST_DECISION = 'AccessRequestDecision',
     ADD_ON = 'AddOn',
     FLAVOUR = 'Flavour',
     ACCOUNT = 'Account',

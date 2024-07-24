@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Bullseye, Spinner } from '@patternfly/react-core';
+import { Skeleton } from '@patternfly/react-core';
 import { ScalprumComponent } from '@scalprum/react-core';
 
 const TechnologyPreview = ({ className }: { className?: string }) => {
@@ -14,9 +14,7 @@ const TechnologyPreview = ({ className }: { className?: string }) => {
       scope="assistedInstallerApp"
       module="./TechnologyPreview"
       fallback={
-        <Bullseye>
-          <Spinner />
-        </Bullseye>
+        <Skeleton fontSize="md" width="8em" className="pf-v5-u-display-inline-flex pf-v5-u-ml-md" />
       }
     />
   );

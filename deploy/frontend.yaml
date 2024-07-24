@@ -5,12 +5,12 @@
 apiVersion: v1
 kind: Template
 metadata:
-  name: uhc-portal
+  name: openshift
 objects:
   - apiVersion: cloud.redhat.com/v1alpha1
     kind: Frontend
     metadata:
-      name: uhc-portal
+      name: openshift
     spec:
       envName: ${ENV_NAME}
       title: OCM UI

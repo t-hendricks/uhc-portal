@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useMemo } from 'react';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { Formik } from 'formik';
 import { useDispatch } from 'react-redux';
 import * as Yup from 'yup';
@@ -9,7 +9,11 @@ import ErrorBox from '~/components/common/ErrorBox';
 import Modal from '~/components/common/Modal/Modal';
 import { closeModal } from '~/components/common/Modal/ModalActions';
 import modals from '~/components/common/Modal/modals';
-import { postAccessRequestDecision } from '~/redux/actions/accessRequestActions';
+import {
+  canMakeDecision,
+  postAccessRequestDecision,
+  resetCanMakeDecision,
+} from '~/redux/actions/accessRequestActions';
 import { useGlobalState } from '~/redux/hooks';
 import { AccessRequest, Decision } from '~/types/access_transparency.v1';
 
@@ -30,9 +34,10 @@ const AccessRequestModalForm = () => {
   const postAccessRequestDecisionState = useGlobalState(
     (state) => state.accessRequest.postAccessRequestDecision,
   );
-  const canUpdateClusterResource = useGlobalState(
-    (state) => state.clusters.details.cluster.canUpdateClusterResource,
-  );
+  const canMakeDecisionState = useGlobalState((state) => state.accessRequest.canMakeDecision);
+  const organizationId = useGlobalState((state) => state.userProfile?.organization?.details?.id);
+
+  const [isLoading, setIsLoading] = useState(true);
 
   const isEditMode = useMemo(
     () => accessRequest?.status?.state === AccessRequestState.PENDING,
@@ -44,6 +49,34 @@ const AccessRequestModalForm = () => {
     onClose();
   }, [dispatch, onClose]);
 
+  useEffect(
+    () => () => {
+      dispatch(resetCanMakeDecision());
+    },
+    [dispatch],
+  );
+
+  useEffect(() => {
+    if (isEditMode && accessRequest?.subscription_id && organizationId) {
+      dispatch(canMakeDecision(accessRequest.subscription_id, organizationId));
+    }
+  }, [accessRequest?.subscription_id, organizationId, isEditMode, dispatch]);
+
+  useEffect(
+    () =>
+      setIsLoading(
+        !accessRequest?.id ||
+          canMakeDecisionState.pending ||
+          postAccessRequestDecisionState.pending,
+      ),
+    [
+      setIsLoading,
+      accessRequest?.id,
+      canMakeDecisionState.pending,
+      postAccessRequestDecisionState.pending,
+    ],
+  );
+
   useEffect(() => {
     if (postAccessRequestDecisionState.fulfilled) {
       handleClose();
@@ -53,7 +86,7 @@ const AccessRequestModalForm = () => {
   return accessRequest ? (
     <Formik
       initialValues={{
-        [AccessRequestFieldId.State]: accessRequest?.status?.state,
+        [AccessRequestFieldId.State]: accessRequest.status?.state,
         [AccessRequestFieldId.Justification]: '',
       }}
       validationSchema={Yup.object({
@@ -100,28 +133,45 @@ const AccessRequestModalForm = () => {
               postAccessRequestDecisionState.pending)
           }
           id="access-request-modal"
-          isPending={accessRequest === undefined || postAccessRequestDecisionState.pending}
+          isPending={isLoading}
           help={<AccessRequestStateIcon accessRequest={accessRequest} />}
           footer={
-            postAccessRequestDecisionState.error ? (
-              <Stack hasGutter>
-                <StackItem>
-                  <ErrorBox
-                    message="A problem occurred while saving access request"
-                    response={{
-                      errorMessage: postAccessRequestDecisionState.errorMessage,
-                      errorDetails: postAccessRequestDecisionState.errorDetails,
-                    }}
-                  />
-                </StackItem>
-              </Stack>
-            ) : null
+            !postAccessRequestDecisionState.error && !canMakeDecisionState.error ? null : (
+              <>
+                {postAccessRequestDecisionState.error ? (
+                  <Stack hasGutter>
+                    <StackItem>
+                      <ErrorBox
+                        message="A problem occurred while saving access request"
+                        response={{
+                          errorMessage: postAccessRequestDecisionState.errorMessage,
+                          errorDetails: postAccessRequestDecisionState.errorDetails,
+                        }}
+                      />
+                    </StackItem>
+                  </Stack>
+                ) : null}
+                {canMakeDecisionState.error ? (
+                  <Stack hasGutter>
+                    <StackItem>
+                      <ErrorBox
+                        message="A problem occurred while retrieving rights for making a decision"
+                        response={{
+                          errorMessage: canMakeDecisionState.errorMessage,
+                          errorDetails: canMakeDecisionState.errorDetails,
+                        }}
+                      />
+                    </StackItem>
+                  </Stack>
+                ) : null}
+              </>
+            )
           }
         >
           {isEditMode && !postAccessRequestDecisionState.error ? (
             <AccessRequestEdit
               accessRequest={accessRequest}
-              userDecisionRights={canUpdateClusterResource}
+              userDecisionRights={canMakeDecisionState.allowed}
             />
           ) : (
             <AccessRequestDetails accessRequest={accessRequest} />
