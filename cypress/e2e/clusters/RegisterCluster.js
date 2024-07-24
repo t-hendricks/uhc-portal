@@ -7,6 +7,12 @@ describe('Register cluster flow', { tags: ['ci', 'smoke'] }, () => {
   const clusterID = v4();
   const displayName = `cypress-${clusterID}`;
 
+  before(() => {
+    cy.visit('/cluster-list');
+    ClusterListPage.waitForDataReady();
+    ClusterListPage.isClusterListScreen();
+  });
+
   it('navigate to register cluster', () => {
     ClusterListPage.registerCluster().should('be.visible').click();
     ClusterListPage.isRegisterClusterUrl();

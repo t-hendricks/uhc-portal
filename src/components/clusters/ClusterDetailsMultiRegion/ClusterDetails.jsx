@@ -438,7 +438,7 @@ const ClusterDetails = (props) => {
           `${error?.errorMessage}`,
         ),
       );
-      return <Navigate to="/" />;
+      return <Navigate to="/cluster-list" />;
     }
     return errorState();
   }

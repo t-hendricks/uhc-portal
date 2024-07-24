@@ -156,7 +156,7 @@ const IdentityProvidersPage = (props) => {
           clusterDetails.errorMessage,
         ),
       );
-      return <Navigate replace to="/" />;
+      return <Navigate replace to="/cluster-list" />;
     }
     return errorState();
   }
@@ -172,7 +172,7 @@ const IdentityProvidersPage = (props) => {
         "Go to the cluster's console to see and edit identity providers.",
       ),
     );
-    return <Navigate replace to="/" />;
+    return <Navigate replace to="/cluster-list" />;
   }
 
   if (

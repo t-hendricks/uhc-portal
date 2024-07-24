@@ -35,7 +35,7 @@ const ClusterDetailsRedirector = (props) => {
         'clusterDetails',
         subscriptionIDResponse.errorMessage,
       );
-      return <Navigate replace to="/" />;
+      return <Navigate replace to="/cluster-list" />;
     }
     // other errors = Unavailable
     return (

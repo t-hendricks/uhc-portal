@@ -4,8 +4,13 @@ describe(
   'Check all cluster lists page items presence and its actions (OCP-21339)',
   { tags: ['smoke'] },
   () => {
-    it('Cluster list page : filters & its actions', () => {
+    before(() => {
+      cy.visit('/cluster-list');
+      ClusterListPage.waitForDataReady();
       ClusterListPage.isClusterListScreen();
+    });
+
+    it('Cluster list page : filters & its actions', () => {
       cy.get('body').then(($body) => {
         if (
           $body.find('h4:contains("Let\'s create your first cluster")').filter(':visible').length >

@@ -84,7 +84,7 @@ const InsightsAdvisorRedirector = (props) => {
       'clusterDetails',
       clusterDetails?.errorMessage,
     );
-    return <Navigate replace to="/" />;
+    return <Navigate replace to="/cluster-list" />;
   }
 
   if (clusterDetails.fulfilled && !externalId) {
@@ -96,7 +96,7 @@ const InsightsAdvisorRedirector = (props) => {
       'clusterDetails',
       clusterDetails?.errorMessage,
     );
-    return <Navigate replace to="/" />;
+    return <Navigate replace to="/cluster-list" />;
   }
 
   return (
