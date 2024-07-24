@@ -1,6 +1,7 @@
-import React, { useRef } from 'react';
+import React, { useRef, ReactNode } from 'react';
 
 import {
+  Divider,
   Drawer,
   DrawerActions,
   DrawerCloseButton,
@@ -10,12 +11,14 @@ import {
   DrawerPanelContent,
 } from '@patternfly/react-core';
 
+import { DrawerPanelContentNode } from './DrawerPanelContent';
+
 type DrawerPanelProps = {
   title?: string;
-  content: React.ReactNode;
+  content?: DrawerPanelContentNode;
   isOpen: boolean;
   onClose: () => void;
-  children: React.ReactNode;
+  children: ReactNode;
 };
 
 const DrawerPanel = ({ children, title, content, isOpen, onClose }: DrawerPanelProps) => {
@@ -28,18 +31,15 @@ const DrawerPanel = ({ children, title, content, isOpen, onClose }: DrawerPanelP
     <Drawer isExpanded={isOpen} onExpand={onOpen} isInline={true}>
       <DrawerContent
         panelContent={
-          <DrawerPanelContent
-            isResizable /* todo: Should I add these? defaultSize={'500px'} minSize={'150px'} */
-          >
+          <DrawerPanelContent isResizable defaultSize={'461px'} minSize={'417px'}>
             <DrawerHead>
-              <span tabIndex={isOpen ? 0 : -1} ref={drawerRef}>
-                {title}
-              </span>
+              {content?.head}
               <DrawerActions>
                 <DrawerCloseButton onClick={onClose} />
               </DrawerActions>
             </DrawerHead>
-            <DrawerContentBody>{content}</DrawerContentBody>
+            <Divider component="div" />
+            <DrawerContentBody>{content?.body}</DrawerContentBody>
           </DrawerPanelContent>
         }
       >

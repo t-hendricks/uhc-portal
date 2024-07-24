@@ -1,4 +1,4 @@
-import React, { ReactNode } from 'react';
+import React from 'react';
 
 import {
   Button,
@@ -14,19 +14,21 @@ import {
 } from '@patternfly/react-core';
 import { OpenDrawerRightIcon } from '@patternfly/react-icons';
 
+import { DrawerPanelContentNode } from '../RecommendedOperatorsCards/DrawerPanelContent';
+
 type ProductCardProps = {
   title: string;
   description: string;
-  icon?: string;
+  logo?: string;
   labelText?: string;
-  drawerPanelContent?: ReactNode;
-  openReadMore: (title: string, content: ReactNode) => void;
+  drawerPanelContent?: DrawerPanelContentNode;
+  openReadMore: (title: string, content?: DrawerPanelContentNode) => void;
 };
 
 const ProductCard = ({
   title,
   description,
-  icon,
+  logo,
   labelText,
   drawerPanelContent,
   openReadMore,
@@ -35,7 +37,7 @@ const ProductCard = ({
     <CardHeader>
       <Split hasGutter style={{ width: '100%' }}>
         <SplitItem>
-          <img src={icon} alt={`${title} icon`} className="product-overview-card__icon" />
+          <img src={logo} alt={`${title} logo`} className="product-overview-card__logo" />
         </SplitItem>
         <SplitItem isFilled />
         <SplitItem>
@@ -48,12 +50,10 @@ const ProductCard = ({
       </Split>
     </CardHeader>
     <CardTitle>
-      {/* todo: check card's title size and positioning */}
       <Title headingLevel="h3">{title}</Title>
     </CardTitle>
     <CardBody>{description}</CardBody>
     <CardFooter>
-      {/* todo: think about the icon size */}
       <Button
         className="read-more-button"
         onClick={() => openReadMore(title, drawerPanelContent)}
