@@ -7,7 +7,7 @@ import { mockRestrictedEnv, mockUseChrome, render, screen, withState } from '~/t
 import Router from './Router';
 
 const routes = [
-  { path: '/', metadata: { ocm_resource_type: 'all' } },
+  { path: '/cluster-list', metadata: { ocm_resource_type: 'all' } },
   { path: '/token/rosa', metadata: { ocm_resource_type: 'moa' } },
   { path: '/token/rosa/show', metadata: { ocm_resource_type: 'moa' } },
   { path: '/details/:id', metadata: { ocm_resource_type: 'all' } },

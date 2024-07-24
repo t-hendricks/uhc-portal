@@ -5,8 +5,13 @@ describe('OCM Cluster archives page', () => {
     'Check all cluster archives page items presence and its actions (OCP-25329)',
     { tags: ['smoke'] },
     () => {
-      it('Cluster archives page : ui options & its actions', () => {
+      before(() => {
+        cy.visit('/cluster-list');
+        ClusterListPage.waitForDataReady();
         ClusterListPage.isClusterListScreen();
+      });
+
+      it('Cluster archives page : ui options & its actions', () => {
         ClusterListPage.viewClusterArchives().click();
         ClusterListPage.isClusterArchivesUrl();
         ClusterListPage.isClusterArchivesScreen();
