@@ -51,6 +51,7 @@ const PodDistruptionBudgetGraceSelect: React.FC<PodDistruptionBudgetGraceSelectP
       isExpanded={isOpen}
       isDisabled={isDisabled}
       className="ocm-c-upgrades-pdb-select__toggle"
+      data-testid="grace-period-select"
     >
       {options[value]}
     </MenuToggle>

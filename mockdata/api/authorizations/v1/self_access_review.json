@@ -34,6 +34,24 @@
     "allowed": true
   },
   {
+    "_meta_": {
+      "match": {
+        "request_body": {
+          "action": "create",
+          "resource_type": "AccessRequestDecision",
+          "subscription_id": "2c5mg7bsqvecmptjak8eie225nsbqiio"
+        }
+      }
+    },
+    "account_id": "string",
+    "organization_id": "string",
+    "cluster_id": "string",
+    "subscription_id": "string",
+    "resource_type": "string",
+    "action": "create",
+    "allowed": false
+  },
+  {
     "account_id": "string",
     "organization_id": "string",
     "cluster_id": "string",

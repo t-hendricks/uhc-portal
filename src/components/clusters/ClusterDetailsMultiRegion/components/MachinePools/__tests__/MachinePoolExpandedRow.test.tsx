@@ -18,7 +18,7 @@ const vpc = {
   ],
 };
 
-jest.mock('~/components/clusters/common/useAWSVPCFromCluster', () => ({
+jest.mock('~/components/clusters/commonMultiRegion/useAWSVPCFromCluster', () => ({
   useAWSVPCFromCluster: () => ({ clusterVpc: vpc }),
 }));
 

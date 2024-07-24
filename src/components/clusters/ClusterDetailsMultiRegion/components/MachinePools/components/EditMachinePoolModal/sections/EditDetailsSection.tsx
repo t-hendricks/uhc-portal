@@ -5,6 +5,7 @@ import { SelectOption as SelectOptionDeprecated } from '@patternfly/react-core/d
 
 import { isHypershiftCluster } from '~/components/clusters/common/clusterStates';
 import TextField from '~/components/common/formik/TextField';
+import { MachineTypesResponse } from '~/queries/types';
 import { Cluster, MachinePool } from '~/types/clusters_mgmt.v1';
 
 import InstanceTypeField from '../fields/InstanceTypeField';
@@ -17,14 +18,20 @@ type EditDetailsSectionProps = {
   machinePools: MachinePool[];
   currentMPId: string | undefined;
   setCurrentMPId: (currentMPId: string) => void;
+  machineTypesResponse: MachineTypesResponse;
+  machineTypesLoading: boolean;
+  region?: string;
 };
 
 const EditDetailsSection = ({
   cluster,
   isEdit,
+  region,
   machinePools,
   setCurrentMPId,
   currentMPId,
+  machineTypesResponse,
+  machineTypesLoading,
 }: EditDetailsSectionProps) =>
   isEdit ? (
     <FormGroup fieldId="machine-pool" label="Machine pool">
@@ -39,8 +46,8 @@ const EditDetailsSection = ({
   ) : (
     <>
       <TextField fieldId="name" label="Machine pool name" isRequired />
-      {isHypershiftCluster(cluster) && <SubnetField cluster={cluster} />}
-      <InstanceTypeField cluster={cluster} />
+      {isHypershiftCluster(cluster) ? <SubnetField cluster={cluster} region={region} /> : null}
+      <InstanceTypeField cluster={cluster} machineTypesResponse={machineTypesResponse} />
     </>
   );
 

@@ -24,6 +24,7 @@ const OCMRoleStep = (props: AssociateAWSAccountStepProps) => {
       </Title>
 
       <InstructionCommand
+        data-testid="copy-rosa-list-ocm-role"
         textAriaLabel={`Copyable ROSA ${RosaCliCommand.ListOcmRole} command`}
         className="pf-v5-u-mb-lg"
       >
@@ -58,11 +59,13 @@ const OCMRoleStep = (props: AssociateAWSAccountStepProps) => {
       <ToggleGroupTabs
         tabs={[
           {
+            'data-testid': 'copy-ocm-role-tab-no',
             title: 'No, create new role',
             body: (
               <>
                 <strong>Basic OCM role</strong>
                 <InstructionCommand
+                  data-testid="copy-rosa-create-ocm-role"
                   textAriaLabel="Copyable ROSA create ocm-role"
                   trackEvent={trackEvents.CopyOCMRoleCreateBasic}
                 >
@@ -71,6 +74,7 @@ const OCMRoleStep = (props: AssociateAWSAccountStepProps) => {
                 <div className="pf-v5-u-mt-md pf-v5-u-mb-md">OR</div>
                 <strong>Admin OCM role</strong>
                 <InstructionCommand
+                  data-testid="copy-rosa-create-ocm-admin-role"
                   textAriaLabel="Copyable ROSA create ocm-role --admin"
                   trackEvent={trackEvents.CopyOCMRoleCreateAdmin}
                 >
@@ -97,11 +101,13 @@ const OCMRoleStep = (props: AssociateAWSAccountStepProps) => {
             ),
           },
           {
+            'data-testid': 'copy-ocm-role-tab-yes',
             title: 'Yes, link existing role',
             body: (
               <>
                 <strong> If a role exists but is not linked, link it with:</strong>
                 <InstructionCommand
+                  data-testid="copy-rosa-link-ocm-role"
                   textAriaLabel={`Copyable ${RosaCliCommand.LinkOcmRole} command`}
                   trackEvent={trackEvents.CopyOCMRoleLink}
                 >

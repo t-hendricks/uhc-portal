@@ -5,6 +5,7 @@ import { MemoryRouter } from 'react-router-dom';
 import { CompatRouter } from 'react-router-dom-v5-compat';
 import semver from 'semver';
 
+import { refetchMachineOrNodePoolsQuery } from '~/queries/ClusterDetailsQueries/MachinePoolTab/useFetchMachineOrNodePools';
 import apiRequest from '~/services/apiRequest';
 import { checkAccessibility, screen, TestRouter, within, withState } from '~/testUtils';
 import { NodePoolUpgradePolicy } from '~/types/clusters_mgmt.v1';
@@ -21,6 +22,10 @@ jest.mock('react-redux', () => {
   };
   return config;
 });
+
+jest.mock('~/queries/ClusterDetailsQueries/MachinePoolTab/useFetchMachineOrNodePools', () => ({
+  refetchMachineOrNodePoolsQuery: jest.fn(),
+}));
 
 // @ts-ignore
 const getApiPatchParams = (index: number) => apiRequestMock.patch.mock.calls[index][1]?.params;
@@ -106,7 +111,7 @@ describe('<UpdateAllMachinePools />', () => {
       const { container } = withState(newState).render(
         <TestRouter>
           <CompatRouter>
-            <UpdateAllMachinePools />
+            <UpdateAllMachinePools isMachinePoolError={false} isHypershift />
           </CompatRouter>
         </TestRouter>,
       );
@@ -129,7 +134,7 @@ describe('<UpdateAllMachinePools />', () => {
       const { container } = withState(newState).render(
         <TestRouter>
           <CompatRouter>
-            <UpdateAllMachinePools />
+            <UpdateAllMachinePools isMachinePoolError={false} isHypershift={false} />
           </CompatRouter>
         </TestRouter>,
       );
@@ -151,7 +156,7 @@ describe('<UpdateAllMachinePools />', () => {
       const { container } = withState(newState).render(
         <TestRouter>
           <CompatRouter>
-            <UpdateAllMachinePools />
+            <UpdateAllMachinePools isMachinePoolError={false} isHypershift />
           </CompatRouter>
         </TestRouter>,
       );
@@ -173,7 +178,7 @@ describe('<UpdateAllMachinePools />', () => {
       const { container } = withState(newState).render(
         <TestRouter>
           <CompatRouter>
-            <UpdateAllMachinePools />
+            <UpdateAllMachinePools isMachinePoolError isHypershift />
           </CompatRouter>
         </TestRouter>,
       );
@@ -197,7 +202,7 @@ describe('<UpdateAllMachinePools />', () => {
       const { container } = withState(newState).render(
         <TestRouter>
           <CompatRouter>
-            <UpdateAllMachinePools />
+            <UpdateAllMachinePools isMachinePoolError={false} isHypershift />
           </CompatRouter>
         </TestRouter>,
       );
@@ -215,7 +220,7 @@ describe('<UpdateAllMachinePools />', () => {
       const { container } = withState(newState).render(
         <TestRouter>
           <CompatRouter>
-            <UpdateAllMachinePools />
+            <UpdateAllMachinePools isMachinePoolError={false} isHypershift />
           </CompatRouter>
         </TestRouter>,
       );
@@ -238,7 +243,7 @@ describe('<UpdateAllMachinePools />', () => {
       const { container } = withState(newState).render(
         <TestRouter>
           <CompatRouter>
-            <UpdateAllMachinePools />
+            <UpdateAllMachinePools isMachinePoolError={false} isHypershift />
           </CompatRouter>
         </TestRouter>,
       );
@@ -279,7 +284,7 @@ describe('<UpdateAllMachinePools />', () => {
       const { container } = withState(newState).render(
         <TestRouter>
           <CompatRouter>
-            <UpdateAllMachinePools />
+            <UpdateAllMachinePools isMachinePoolError={false} isHypershift />
           </CompatRouter>
         </TestRouter>,
       );
@@ -321,7 +326,7 @@ describe('<UpdateAllMachinePools />', () => {
       const { container } = withState(newState).render(
         <TestRouter>
           <CompatRouter>
-            <UpdateAllMachinePools />
+            <UpdateAllMachinePools isMachinePoolError={false} isHypershift />
           </CompatRouter>
         </TestRouter>,
       );
@@ -363,7 +368,7 @@ describe('<UpdateAllMachinePools />', () => {
       const { container } = withState(newState).render(
         <TestRouter>
           <CompatRouter>
-            <UpdateAllMachinePools />
+            <UpdateAllMachinePools isMachinePoolError={false} isHypershift />
           </CompatRouter>
         </TestRouter>,
       );
@@ -391,7 +396,7 @@ describe('<UpdateAllMachinePools />', () => {
         const { container } = withState(newState).render(
           <TestRouter>
             <CompatRouter>
-              <UpdateAllMachinePools />
+              <UpdateAllMachinePools isMachinePoolError={false} isHypershift />
             </CompatRouter>
           </TestRouter>,
         );
@@ -414,7 +419,7 @@ describe('<UpdateAllMachinePools />', () => {
         const { container } = withState(newState).render(
           <TestRouter>
             <CompatRouter>
-              <UpdateAllMachinePools />
+              <UpdateAllMachinePools isMachinePoolError={false} isHypershift />
             </CompatRouter>
           </TestRouter>,
         );
@@ -437,7 +442,7 @@ describe('<UpdateAllMachinePools />', () => {
         const { container } = withState(newState).render(
           <TestRouter>
             <CompatRouter>
-              <UpdateAllMachinePools />
+              <UpdateAllMachinePools isMachinePoolError={false} isHypershift />
             </CompatRouter>
           </TestRouter>,
         );
@@ -460,7 +465,7 @@ describe('<UpdateAllMachinePools />', () => {
         const { container } = withState(newState).render(
           <TestRouter>
             <CompatRouter>
-              <UpdateAllMachinePools />
+              <UpdateAllMachinePools isMachinePoolError={false} isHypershift />
             </CompatRouter>
           </TestRouter>,
         );
@@ -483,7 +488,7 @@ describe('<UpdateAllMachinePools />', () => {
         const { container } = withState(newState).render(
           <TestRouter>
             <CompatRouter>
-              <UpdateAllMachinePools />
+              <UpdateAllMachinePools isMachinePoolError={false} isHypershift />
             </CompatRouter>
           </TestRouter>,
         );
@@ -507,7 +512,7 @@ describe('<UpdateAllMachinePools />', () => {
       const { container } = withState(newState).render(
         <TestRouter>
           <CompatRouter>
-            <UpdateAllMachinePools />
+            <UpdateAllMachinePools isMachinePoolError={false} isHypershift />
           </CompatRouter>
         </TestRouter>,
       );
@@ -532,7 +537,7 @@ describe('<UpdateAllMachinePools />', () => {
       const { user } = withState(newState).render(
         <TestRouter>
           <CompatRouter>
-            <UpdateAllMachinePools />
+            <UpdateAllMachinePools isMachinePoolError={false} isHypershift />
           </CompatRouter>
         </TestRouter>,
       );
@@ -575,7 +580,7 @@ describe('<UpdateAllMachinePools />', () => {
       const { user } = withState(newState).render(
         <TestRouter>
           <CompatRouter>
-            <UpdateAllMachinePools />
+            <UpdateAllMachinePools isMachinePoolError={false} isHypershift />
           </CompatRouter>
         </TestRouter>,
       );
@@ -618,7 +623,7 @@ describe('<UpdateAllMachinePools />', () => {
       const { user } = withState(newState).render(
         <TestRouter>
           <CompatRouter>
-            <UpdateAllMachinePools />
+            <UpdateAllMachinePools isMachinePoolError={false} isHypershift />
           </CompatRouter>
         </TestRouter>,
       );
@@ -664,7 +669,7 @@ describe('<UpdateAllMachinePools />', () => {
       const { user } = withState(newState).render(
         <TestRouter>
           <CompatRouter>
-            <UpdateAllMachinePools />
+            <UpdateAllMachinePools isMachinePoolError={false} isHypershift />
           </CompatRouter>
         </TestRouter>,
       );
@@ -689,7 +694,7 @@ describe('<UpdateAllMachinePools />', () => {
       });
 
       // Ensure dispatch call to get current state of machine pools
-      expect(dummyDispatch).toHaveBeenCalledTimes(1);
+      expect(refetchMachineOrNodePoolsQuery).toHaveBeenCalledTimes(1);
     });
 
     it('create node policy is called  with feature gate', async () => {
@@ -718,7 +723,7 @@ describe('<UpdateAllMachinePools />', () => {
       const { user } = withState(newState).render(
         <TestRouter>
           <CompatRouter>
-            <UpdateAllMachinePools />
+            <UpdateAllMachinePools isMachinePoolError={false} isHypershift />
           </CompatRouter>
         </TestRouter>,
       );
@@ -745,7 +750,7 @@ describe('<UpdateAllMachinePools />', () => {
       expect(payload.upgrade_type).toBe('NodePool');
 
       // Ensure dispatch call to get current state of machine pools
-      expect(dummyDispatch).toHaveBeenCalledTimes(1);
+      expect(refetchMachineOrNodePoolsQuery).toHaveBeenCalledTimes(1);
     });
 
     it('shows errors for all patchNodePool requests that fail and is accessible', async () => {
@@ -777,7 +782,7 @@ describe('<UpdateAllMachinePools />', () => {
       const { container, user } = withState(newState).render(
         <TestRouter>
           <CompatRouter>
-            <UpdateAllMachinePools />
+            <UpdateAllMachinePools isMachinePoolError={false} isHypershift />
           </CompatRouter>
         </TestRouter>,
       );
@@ -806,7 +811,7 @@ describe('<UpdateAllMachinePools />', () => {
       expect(patchMachinePool2[1]).toEqual({ version: { id: controlPlaneVersion } });
 
       // Ensure dispatch call to get current state of machine pools
-      expect(dummyDispatch).toHaveBeenCalledTimes(1);
+      expect(refetchMachineOrNodePoolsQuery).toHaveBeenCalledTimes(1);
 
       // Ensure alert is shown
       expect(
@@ -840,7 +845,11 @@ describe('<UpdateAllMachinePools />', () => {
       };
 
       const { user } = withState(newState).render(
-        <UpdateAllMachinePools initialErrorMessage="This is an error" />,
+        <UpdateAllMachinePools
+          initialErrorMessage="This is an error"
+          isMachinePoolError={false}
+          isHypershift
+        />,
       );
       expectUpdateButtonPresence();
       expect(screen.getByTestId(errorAlertTestId)).toBeInTheDocument();
@@ -875,7 +884,7 @@ describe('<UpdateAllMachinePools />', () => {
       const { user } = withState(newState).render(
         <TestRouter>
           <CompatRouter>
-            <UpdateAllMachinePools />
+            <UpdateAllMachinePools isMachinePoolError={false} isHypershift />
           </CompatRouter>
         </TestRouter>,
       );
@@ -904,7 +913,7 @@ describe('<UpdateAllMachinePools />', () => {
       withState(newState).render(
         <TestRouter>
           <CompatRouter>
-            <UpdateAllMachinePools goToMachinePoolTab />
+            <UpdateAllMachinePools goToMachinePoolTab isMachinePoolError={false} isHypershift />
           </CompatRouter>
         </TestRouter>,
       );
@@ -929,7 +938,7 @@ describe('<UpdateAllMachinePools />', () => {
       };
       withState(newState).render(
         <MemoryRouter>
-          <UpdateAllMachinePools />
+          <UpdateAllMachinePools isMachinePoolError={false} isHypershift />
         </MemoryRouter>,
       );
 

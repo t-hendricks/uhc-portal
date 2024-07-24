@@ -1,17 +1,26 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { Alert, Button, FormGroup, Grid, GridItem } from '@patternfly/react-core';
 import {
-  Select as SelectDeprecated,
-  SelectOption as SelectOptionDeprecated,
-} from '@patternfly/react-core/deprecated';
+  Alert,
+  Button,
+  FormGroup,
+  Grid,
+  GridItem,
+  MenuToggle,
+  Select,
+  SelectList,
+  SelectOption,
+} from '@patternfly/react-core';
 
 import parseUpdateSchedule from './parseUpdateSchedule';
 
 import './UpgradeSettingsFields.scss';
 
 const VALID_SCHEDULE_REGEX = /00? [0-9][0-9]? \* \* ([0-6]|SUN|MON|TUE|WED|THU|FRI|SAT)/i;
+
+const daysOptions = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+const hoursOptions = Array.from(Array(24).keys());
 
 class UpgradeScheduleSelection extends React.Component {
   state = {
@@ -96,18 +105,31 @@ class UpgradeScheduleSelection extends React.Component {
     }
     const [selectedHour, selectedDay] = this.parseCurrentValue();
 
-    const makeHourList = () => {
-      const ret = [];
-      for (let hour = 0; hour < 24; hour += 1) {
-        const value = `${hour.toString().padStart(2, 0)}:00`;
-        ret.push(
-          <SelectOptionDeprecated key={value} value={hour.toString()}>
-            {value} UTC
-          </SelectOptionDeprecated>,
-        );
-      }
-      return ret;
-    };
+    const formatHourLabel = (hour) => `${hour.toString().padStart(2, '0')}:00 UTC`;
+
+    const dayToggle = (toggleRef) => (
+      <MenuToggle
+        ref={toggleRef}
+        onClick={() => this.toggleDaySelect(!daySelectOpen)}
+        isExpanded={daySelectOpen}
+        isDisabled={isDisabled}
+        isFullWidth
+      >
+        {daysOptions[selectedDay] ?? 'Select day'}
+      </MenuToggle>
+    );
+
+    const hourToggle = (toggleRef) => (
+      <MenuToggle
+        ref={toggleRef}
+        onClick={() => this.toggleHourSelect(!timeSelectOpen)}
+        isExpanded={timeSelectOpen}
+        isDisabled={isDisabled}
+        isFullWidth
+      >
+        {selectedHour ? formatHourLabel(selectedHour) : 'Select hour'}
+      </MenuToggle>
+    );
 
     return (
       <>
@@ -122,38 +144,42 @@ class UpgradeScheduleSelection extends React.Component {
         <FormGroup label="Select a day and start time" className="ocm-upgrade-schedule-selection">
           <Grid hasGutter>
             <GridItem sm={6} md={6}>
-              <SelectDeprecated
+              <Select
                 isOpen={daySelectOpen}
-                selections={selectedDay}
-                onToggle={(_event, isOpen) => this.toggleDaySelect(isOpen)}
+                selected={selectedDay}
+                onOpenChange={(isOpen) => this.toggleDaySelect(isOpen)}
                 onSelect={this.onDaySelect}
-                isDisabled={isDisabled}
+                shouldFocusToggleOnSelect
+                toggle={dayToggle}
               >
-                <SelectOptionDeprecated isPlaceholder isDisabled value="">
-                  Select day
-                </SelectOptionDeprecated>
-                {['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'].map(
-                  (day, idx) => (
-                    <SelectOptionDeprecated key={day} value={idx.toString()}>
+                <SelectList>
+                  {daysOptions.map((day, idx) => (
+                    <SelectOption key={day} value={idx.toString()}>
                       {day}
-                    </SelectOptionDeprecated>
-                  ),
-                )}
-              </SelectDeprecated>
+                    </SelectOption>
+                  ))}
+                </SelectList>
+              </Select>
             </GridItem>
             <GridItem sm={6} md={6}>
-              <SelectDeprecated
+              <Select
                 isOpen={timeSelectOpen}
-                selections={selectedHour}
-                onToggle={(_event, isOpen) => this.toggleHourSelect(isOpen)}
+                selected={selectedHour}
+                onOpenChange={(isOpen) => this.toggleHourSelect(isOpen)}
                 onSelect={this.onHourSelect}
-                isDisabled={isDisabled}
+                shouldFocusToggleOnSelect
+                toggle={hourToggle}
+                maxMenuHeight="20em"
+                isScrollable
               >
-                <SelectOptionDeprecated isPlaceholder isDisabled value="">
-                  Select hour
-                </SelectOptionDeprecated>
-                {makeHourList()}
-              </SelectDeprecated>
+                <SelectList>
+                  {hoursOptions.map((hour) => (
+                    <SelectOption key={hour} value={hour.toString()}>
+                      {formatHourLabel(hour)}
+                    </SelectOption>
+                  ))}
+                </SelectList>
+              </Select>
             </GridItem>
           </Grid>
         </FormGroup>

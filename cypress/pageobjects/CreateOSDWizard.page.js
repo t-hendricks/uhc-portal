@@ -113,7 +113,7 @@ class CreateOSDCluster extends Page {
     cy.get('input[id="form-radiobutton-upgrade_policy-manual-field"]');
 
   updateStrategyRecurringRadio = () =>
-    cy.get('inputid="form-radiobutton-upgrade_policy-automatic-field"]');
+    cy.get('input[id="form-radiobutton-upgrade_policy-automatic-field"]');
 
   machineCIDRInput = () => cy.get('input[id="network_machine_cidr"]');
 
@@ -222,12 +222,6 @@ class CreateOSDCluster extends Page {
 
   applicationIngressCustomSettingsRadio = () =>
     cy.get('input[id="form-radiobutton-applicationIngress-custom-field"]');
-
-  updateStrategyIndividualRadio = () =>
-    cy.get('input[id="form-radiobutton-upgrade_policy-manual-field"]');
-
-  updateStrategyRecurringRadio = () =>
-    cy.get('inputid="form-radiobutton-upgrade_policy-automatic-field"]');
 
   applicationIngressRouterSelectorsInput = () => cy.get('input[name="defaultRouterSelectors"]');
 
@@ -409,8 +403,8 @@ class CreateOSDCluster extends Page {
   }
 
   selectNodeDraining(nodeDrain) {
-    cy.get('button[aria-label="Options menu"]').click();
-    cy.get('ul[role="listbox"]').find('button').contains(nodeDrain).click();
+    cy.getByTestId('grace-period-select').click();
+    cy.get('button').contains(nodeDrain).click();
   }
 
   isTextContainsInPage(text, present = true) {
