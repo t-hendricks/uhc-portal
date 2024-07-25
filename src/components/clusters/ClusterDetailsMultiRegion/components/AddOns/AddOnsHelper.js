@@ -210,7 +210,7 @@ const getParameterValue = (addOnInstallation, paramID, defaultValue = undefined)
 const parameterValuesForEditing = (addOnInstallation, addOn) => {
   const vals = { parameters: {} };
   if (hasParameters(addOn)) {
-    vals.parameters = getParameters(addOn).reduce((acc, curr) => {
+    vals.parameters = addOn.parameters.items.reduce((acc, curr) => {
       let paramValue = getParameterValue(addOnInstallation, curr.id);
       if (curr.value_type === 'boolean') {
         // Ensure existing boolean value is returned as a boolean, and always return false otherwise

@@ -1,17 +1,20 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { useDispatch } from 'react-redux';
 
 import { Button, FlexItem, Popover } from '@patternfly/react-core';
 import { OutlinedQuestionCircleIcon } from '@patternfly/react-icons/dist/esm/icons/outlined-question-circle-icon';
 import { PencilAltIcon } from '@patternfly/react-icons/dist/esm/icons/pencil-alt-icon';
 
+import { openModal } from '../../../../../common/Modal/ModalActions';
 import { hasParameters, parameterAndValue } from '../AddOnsHelper';
 import AddOnsParametersModal from '../AddOnsParametersModal';
 
 import './AddOnsDrawer.scss';
 
 function AddOnsParameterList(props) {
-  const { installedAddOn, activeCard, activeCardID, cluster, openModal } = props;
+  const dispatch = useDispatch();
+  const { installedAddOn, activeCard, activeCardID, cluster } = props;
 
   // render addon parameters list and link to configuration of parameters
   if (installedAddOn && activeCard && hasParameters(activeCard)) {
@@ -46,12 +49,14 @@ function AddOnsParameterList(props) {
             isDisabled={!cluster.canEdit}
             icon={<PencilAltIcon className="ocm-addons-tab--configuration-title-icon" />}
             onClick={() =>
-              openModal('add-ons-parameters-modal', {
-                clusterID: cluster.id,
-                addOn: activeCard,
-                addOnInstallation: installedAddOn,
-                isUpdateForm: true,
-              })
+              dispatch(
+                openModal('add-ons-parameters-modal', {
+                  clusterID: cluster.id,
+                  addOn: activeCard,
+                  addOnInstallation: installedAddOn,
+                  isUpdateForm: true,
+                }),
+              )
             }
           />
         </p>
@@ -68,7 +73,6 @@ AddOnsParameterList.propTypes = {
   activeCard: PropTypes.object,
   activeCardID: PropTypes.string,
   cluster: PropTypes.object,
-  openModal: PropTypes.func.isRequired,
 };
 
 export default AddOnsParameterList;

@@ -45,6 +45,7 @@ function AddOnStateLabel(props) {
       );
     case AddOnsConstants.INSTALLATION_STATE.DELETED:
     case AddOnsConstants.INSTALLATION_STATE.DELETING:
+    case AddOnsConstants.INSTALLATION_STATE.DELETE_PENDING:
       return (
         <Label variant="outline" icon={<InProgressIcon data-icon="inProgress" />}>
           Uninstalling

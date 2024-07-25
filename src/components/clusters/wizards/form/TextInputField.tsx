@@ -20,6 +20,8 @@ interface TextInputFieldProps {
   input?: TextInputProps;
   type?: TextInputProps['type'];
   showHelpTextOnError?: boolean;
+  placeHolderText?: string;
+  validateOnSubmit?: boolean;
   onChange?: (event: React.FormEvent<HTMLInputElement>) => void;
 }
 
@@ -70,11 +72,13 @@ export const TextInputField = ({
   validate,
   isDisabled,
   helperText,
+  placeHolderText,
   tooltip,
   field,
   formGroup,
   input,
   type,
+  validateOnSubmit,
   onChange: propOnChange,
 }: TextInputFieldProps) => (
   <Field name={name} validate={validate} {...field}>
@@ -91,7 +95,10 @@ export const TextInputField = ({
           id={field.name}
           className={textInputClassName}
           isDisabled={isDisabled}
-          validated={meta.touched && meta.error ? 'error' : 'default'}
+          placeholder={placeHolderText}
+          validated={
+            (meta.touched && meta.error) || (validateOnSubmit && meta.error) ? 'error' : 'default'
+          }
           onBlur={() => form.setFieldTouched(name, true)}
           onChange={(event, _) => {
             if (propOnChange) propOnChange(event);
@@ -102,7 +109,11 @@ export const TextInputField = ({
           {...input}
         />
 
-        <FormGroupHelperText touched={meta.touched} error={meta.error}>
+        <FormGroupHelperText
+          touched={meta.touched}
+          error={meta.error}
+          validateOnSubmit={validateOnSubmit}
+        >
           {helperText}
         </FormGroupHelperText>
       </FormGroup>
