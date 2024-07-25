@@ -18,7 +18,6 @@ const DeleteProtectionModal = ({ onClose }: { onClose: () => void }) => {
   const modalData = useGlobalState((state) => state.modal.data) as any;
   const dispatch = useDispatch();
   const { updateDeleteProtection } = useGlobalState((state) => state.deleteProtection);
-
   const { protectionEnabled } = modalData;
 
   const handleClose = useCallback(() => {

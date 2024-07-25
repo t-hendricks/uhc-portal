@@ -3,7 +3,7 @@ import * as reactRedux from 'react-redux';
 
 import { openModal } from '~/components/common/Modal/ModalActions';
 import modals from '~/components/common/Modal/modals';
-import { render, screen } from '~/testUtils';
+import { screen, withState } from '~/testUtils';
 
 import DeleteProtection from '../DeleteProtection';
 
@@ -13,16 +13,17 @@ jest.mock('react-redux', () => ({
 }));
 
 jest.mock('~/components/common/Modal/ModalActions');
-
-jest.mock('~/redux/hooks', () => ({
-  useGlobalState: jest.fn(),
-}));
+jest.mock('../deleteProtectionActions');
 
 const props = {
   clusterID: 'fake-cluster',
   canToggle: true,
   protectionEnabled: true,
-  pending: false,
+};
+
+const state = {
+  clusters: { details: { fulfilled: true } },
+  deleteProtection: { updateDeleteProtection: { fulfilled: false } },
 };
 
 describe('<DeleteProtection />', () => {
@@ -30,8 +31,8 @@ describe('<DeleteProtection />', () => {
     ...props,
     canToggle: false,
   };
-  it('Shows cluster delete protection is enabled', () => {
-    render(<DeleteProtection {...props} />);
+  it('Shows cluster delete protection is enabled', async () => {
+    withState(state).render(<DeleteProtection {...props} />);
     expect(screen.getByText('Delete Protection: Enabled')).toBeInTheDocument();
   });
 
@@ -40,7 +41,7 @@ describe('<DeleteProtection />', () => {
       ...props,
       protectionEnabled: false,
     };
-    render(<DeleteProtection {...protectionDisabledprops} />);
+    withState(state).render(<DeleteProtection {...protectionDisabledprops} />);
     expect(screen.getByText('Delete Protection: Disabled')).toBeInTheDocument();
   });
 
@@ -49,13 +50,13 @@ describe('<DeleteProtection />', () => {
       ...noPermissionProps,
       protectionEnabled: false,
     };
-    render(<DeleteProtection {...disabledEnableButtonProps} />);
+    withState(state).render(<DeleteProtection {...disabledEnableButtonProps} />);
 
     expect(screen.getByRole('button', { name: 'Enable' })).toHaveAttribute('aria-disabled', 'true');
   });
 
   it('Disables the "Disable" button if not enough permission', () => {
-    render(<DeleteProtection {...noPermissionProps} />);
+    withState(state).render(<DeleteProtection {...noPermissionProps} />);
 
     expect(screen.getByRole('button', { name: 'Disable' })).toHaveAttribute(
       'aria-disabled',
@@ -64,15 +65,26 @@ describe('<DeleteProtection />', () => {
   });
 
   it('Disables the "Disable" button when refreshing', () => {
-    const refreshingProps = {
-      ...props,
-      pending: true,
+    const refreshingState = {
+      deleteProtection: { updateDeleteProtection: { pending: true } },
     };
-    render(<DeleteProtection {...refreshingProps} />);
+    withState(refreshingState).render(<DeleteProtection {...props} />);
 
     expect(screen.getByRole('button', { name: 'Disable' })).toHaveAttribute(
       'aria-disabled',
       'true',
+    );
+  });
+
+  it('Enables the "Disable" button when refreshing completed', () => {
+    const refreshingState = {
+      clusters: { details: { fulfilled: true } },
+    };
+    withState(refreshingState).render(<DeleteProtection {...props} />);
+
+    expect(screen.getByRole('button', { name: 'Disable' })).toHaveAttribute(
+      'aria-disabled',
+      'false',
     );
   });
 
@@ -81,13 +93,17 @@ describe('<DeleteProtection />', () => {
       ...props,
       isUninstalling: true,
     };
-    render(<DeleteProtection {...newProps} />);
+    withState(state).render(<DeleteProtection {...newProps} />);
 
     expect(screen.getByText('N/A')).toBeInTheDocument();
   });
 });
 
-describe('Delete protection - modal action', () => {
+describe('Delete protection - redux actions', () => {
+  jest.mock('~/redux/hooks', () => ({
+    useGlobalState: jest.fn(),
+  }));
+
   const useDispatchMock = jest.spyOn(reactRedux, 'useDispatch');
   const mockedDispatch = jest.fn();
   useDispatchMock.mockReturnValue(mockedDispatch);
@@ -98,7 +114,7 @@ describe('Delete protection - modal action', () => {
   });
 
   it('Opens the modal', async () => {
-    const { user } = render(<DeleteProtection {...props} />);
+    const { user } = withState(state).render(<DeleteProtection {...props} />);
     await user.click(screen.getByRole('button'));
     expect(openModal).toHaveBeenCalledWith(modals.DELETE_PROTECTION, {
       clusterID: 'fake-cluster',

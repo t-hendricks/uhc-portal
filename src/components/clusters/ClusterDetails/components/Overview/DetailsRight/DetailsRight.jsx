@@ -22,7 +22,6 @@ import { useAWSVPCFromCluster } from '~/components/clusters/common/useAWSVPCFrom
 import { IMDSType } from '~/components/clusters/wizards/common';
 import AIClusterStatus from '~/components/common/AIClusterStatus';
 import useCanClusterAutoscale from '~/hooks/useCanClusterAutoscale';
-import { useGlobalState } from '~/redux/hooks';
 import { isRestrictedEnv } from '~/restrictedEnv';
 
 import links from '../../../../../../common/installLinks.mjs';
@@ -105,7 +104,6 @@ function DetailsRight({
 
   const showDeleteProtection = cluster.managed && !isArchivedSubscription(cluster);
 
-  const clusterDetails = useGlobalState((state) => state.clusters.details);
   const isClusterUninstalling = cluster.state === clusterStates.UNINSTALLING;
 
   return (
@@ -115,7 +113,6 @@ function DetailsRight({
           clusterID={cluster.id}
           protectionEnabled={cluster.delete_protection?.enabled}
           canToggle={cluster.canUpdateClusterResource}
-          pending={clusterDetails.pending}
           isUninstalling={isClusterUninstalling}
         />
       ) : null}
