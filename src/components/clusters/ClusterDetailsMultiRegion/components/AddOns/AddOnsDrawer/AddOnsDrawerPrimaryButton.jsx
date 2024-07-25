@@ -1,11 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { useDispatch } from 'react-redux';
 
 import { Button, ButtonSize } from '@patternfly/react-core';
 import { ExternalLinkAltIcon } from '@patternfly/react-icons/dist/esm/icons/external-link-alt-icon';
 
 import { noQuotaTooltip } from '../../../../../../common/helpers';
 import ButtonWithTooltip from '../../../../../common/ButtonWithTooltip';
+import { openModal } from '../../../../../common/Modal/ModalActions';
 import clusterStates, { isHibernating } from '../../../../common/clusterStates';
 import AddOnsConstants from '../AddOnsConstants';
 import { hasParameters } from '../AddOnsHelper';
@@ -17,25 +19,28 @@ function AddOnsPrimaryButton(props) {
     activeCard,
     activeCardRequirementsFulfilled,
     addClusterAddOn,
-    addClusterAddOnResponse,
+    isAddClusterAddOnPending,
     updateClusterAddOn,
     cluster,
     hasQuota,
     installedAddOn,
-    openModal,
     subscriptionModels,
   } = props;
+
+  const dispatch = useDispatch();
 
   const subscription = subscriptionModels[activeCard.id];
 
   // install an add on or open params modal
-  const installAddOnAction = () => {
+  const installAddOnAction = async () => {
     if (hasParameters(activeCard)) {
-      openModal('add-ons-parameters-modal', {
-        clusterID: cluster.id,
-        addOn: activeCard,
-        isUpdateForm: false,
-      });
+      dispatch(
+        openModal('add-ons-parameters-modal', {
+          clusterID: cluster.id,
+          addOn: activeCard,
+          isUpdateForm: false,
+        }),
+      );
     } else {
       addClusterAddOn(cluster.id, {
         addon: {
@@ -106,11 +111,13 @@ function AddOnsPrimaryButton(props) {
       disableReason={readOnlyReason || hibernatingReason || notReadyReason || canNotEditReason}
       size={ButtonSize.sm}
       onClick={() =>
-        openModal('add-ons-delete-modal', {
-          addOnName: activeCard?.name,
-          addOnID: activeCard?.id,
-          clusterID: cluster.id,
-        })
+        dispatch(
+          openModal('add-ons-delete-modal', {
+            addOnName: activeCard?.name,
+            addOnID: activeCard?.id,
+            clusterID: cluster.id,
+          }),
+        )
       }
       className={hasMarginLeft && 'pf-v5-u-ml-xs'}
     >
@@ -120,7 +127,7 @@ function AddOnsPrimaryButton(props) {
 
   // if addon not installed show install button
   if (!installedAddOn) {
-    const pendingReason = addClusterAddOnResponse.pending && 'installing...';
+    const pendingReason = isAddClusterAddOnPending ? 'installing...' : null;
     return (
       <ButtonWithTooltip
         disableReason={
@@ -199,16 +206,15 @@ function AddOnsPrimaryButton(props) {
 }
 
 AddOnsPrimaryButton.propTypes = {
-  activeCard: PropTypes.object,
-  activeCardRequirementsFulfilled: PropTypes.bool,
+  activeCard: PropTypes.object.isRequired,
+  activeCardRequirementsFulfilled: PropTypes.bool.isRequired,
   addClusterAddOn: PropTypes.func.isRequired,
-  addClusterAddOnResponse: PropTypes.object,
-  cluster: PropTypes.object,
-  hasQuota: PropTypes.bool,
-  installedAddOn: PropTypes.object,
-  openModal: PropTypes.func,
-  updateClusterAddOn: PropTypes.func,
-  subscriptionModels: PropTypes.object,
+  cluster: PropTypes.object.isRequired,
+  hasQuota: PropTypes.bool.isRequired,
+  installedAddOn: PropTypes.object.isRequired,
+  updateClusterAddOn: PropTypes.func.isRequired,
+  subscriptionModels: PropTypes.object.isRequired,
+  isAddClusterAddOnPending: PropTypes.bool.isRequired,
 };
 
 export default AddOnsPrimaryButton;

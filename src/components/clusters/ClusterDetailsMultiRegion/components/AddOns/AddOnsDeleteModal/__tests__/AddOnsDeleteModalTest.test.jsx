@@ -1,39 +1,56 @@
 import React from 'react';
+import * as reactRedux from 'react-redux';
 
+import { useGlobalState } from '~/redux/hooks';
 import { checkAccessibility, render, screen } from '~/testUtils';
 
 import AddOnsDeleteModal from '../AddOnsDeleteModal';
 
+jest.mock('react-redux', () => ({
+  ...jest.requireActual('react-redux'),
+  useDispatch: jest.fn(),
+}));
+
+jest.mock('~/components/common/Modal/ModalActions', () => ({
+  closeModal: jest.fn(),
+}));
+
+jest.mock('~/redux/hooks', () => ({
+  useGlobalState: jest.fn(),
+}));
+
 describe('<AddOnsDeleteModal />', () => {
-  const closeModal = jest.fn();
   const deleteClusterAddOn = jest.fn();
-  const clearClusterAddOnsResponses = jest.fn();
+  const getOrganizationAndQuota = jest.fn();
+  const closeModal = jest.fn();
 
   const props = {
-    isOpen: true,
-    modalData: {
-      addOnName: 'fake-addon-name',
-      addOnID: 'fake-addon-id',
-      clusterID: 'fake-cluster-id',
-    },
-    closeModal,
     deleteClusterAddOn,
-    clearClusterAddOnsResponses,
-    deleteClusterAddOnResponse: { fulfilled: false, pending: false, error: false },
+    isDeleteClusterAddOnError: false,
+    deleteClusterAddOnError: false,
+    isDeleteClusterAddOnPending: false,
   };
 
+  const useDispatchMock = jest.spyOn(reactRedux, 'useDispatch');
+  const mockedDispatch = jest.fn();
+  useDispatchMock.mockReturnValue(mockedDispatch);
+  const mockModalData = {
+    addOnName: 'mockedAddOnName',
+    addOnID: 'mockedAddOnID',
+    clusterID: 'mockedClusterID',
+  };
   afterEach(() => {
-    closeModal.mockClear();
     deleteClusterAddOn.mockClear();
-    clearClusterAddOnsResponses.mockClear();
   });
 
   it('is accessible', async () => {
+    useGlobalState.mockReturnValue(mockModalData);
     const { container } = render(<AddOnsDeleteModal {...props} />);
     await checkAccessibility(container);
   });
 
   it('delete button should be enabled only after inputting the add on name', async () => {
+    useGlobalState.mockReturnValue(mockModalData);
     const { user } = render(<AddOnsDeleteModal {...props} />);
 
     expect(screen.getByRole('button', { name: 'Uninstall' })).toHaveAttribute(
@@ -43,7 +60,7 @@ describe('<AddOnsDeleteModal />', () => {
 
     const input = screen.getByPlaceholderText(/Enter name/i);
     await user.clear(input);
-    await user.type(input, 'fake');
+    await user.type(input, 'fake-addon-name');
 
     expect(screen.getByRole('button', { name: 'Uninstall' })).toHaveAttribute(
       'aria-disabled',
@@ -51,7 +68,7 @@ describe('<AddOnsDeleteModal />', () => {
     );
 
     await user.clear(input);
-    await user.type(input, 'fake-addon-name');
+    await user.type(input, 'mockedAddOnName');
 
     expect(screen.getByRole('button', { name: 'Uninstall' })).toHaveAttribute(
       'aria-disabled',
@@ -61,33 +78,26 @@ describe('<AddOnsDeleteModal />', () => {
 
   it('should close modal on cancel', async () => {
     const { user } = render(<AddOnsDeleteModal {...props} />);
-    expect(closeModal).not.toHaveBeenCalled();
-    expect(clearClusterAddOnsResponses).not.toHaveBeenCalled();
+    expect(mockedDispatch).not.toHaveBeenCalledWith(closeModal());
 
     await user.click(screen.getByRole('button', { name: 'Cancel' }));
-    expect(closeModal).toHaveBeenCalled();
-    expect(clearClusterAddOnsResponses).toHaveBeenCalled();
+    expect(mockedDispatch).toHaveBeenCalled(closeModal());
   });
 
   it('should call deleteClusterAddOn correctly', async () => {
     const { user } = render(<AddOnsDeleteModal {...props} />);
 
     await user.clear(screen.getByPlaceholderText('Enter name'));
-    await user.type(screen.getByPlaceholderText('Enter name'), 'fake-addon-name');
+    await user.type(screen.getByPlaceholderText('Enter name'), 'mockedAddOnName');
     await user.click(screen.getByRole('button', { name: 'Uninstall' }));
 
-    expect(deleteClusterAddOn).toHaveBeenCalledWith('fake-cluster-id', 'fake-addon-id');
-  });
-
-  it('should close correctly on success', () => {
-    const { rerender } = render(<AddOnsDeleteModal {...props} />);
-    expect(closeModal).not.toHaveBeenCalled();
-    const newProps = {
-      ...props,
-      deleteClusterAddOnResponse: { fulfilled: true, pending: false, error: false },
-    };
-
-    rerender(<AddOnsDeleteModal {...newProps} />);
-    expect(closeModal).toHaveBeenCalled();
+    expect(deleteClusterAddOn).toHaveBeenCalledWith(
+      { clusterID: 'mockedClusterID', addOnID: 'mockedAddOnID' },
+      expect.objectContaining({
+        onSuccess: expect.any(Function),
+      }),
+    );
+    expect(mockedDispatch).toHaveBeenCalledWith(closeModal());
+    expect(mockedDispatch).toHaveBeenCalledWith(getOrganizationAndQuota());
   });
 });

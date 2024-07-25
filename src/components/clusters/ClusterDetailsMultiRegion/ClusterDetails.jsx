@@ -90,6 +90,13 @@ import { getSchedules } from '../common/Upgrades/clusterUpgradeActions';
 import AddGrantModal from './components/AccessControl/NetworkSelfServiceSection/AddGrantModal';
 import { getGrants } from './components/AccessControl/NetworkSelfServiceSection/NetworkSelfServiceActions';
 import usersActions from './components/AccessControl/UsersSection/UsersActions';
+// TODO: Commented out for respective tabs stories
+// import UpgradeSettingsTab from '../ClusterDetailsMultiRegion/components/UpgradeSettings';
+// import AccessControl from '../ClusterDetailsMultiRegion/components/AccessControl/AccessControl';
+// import Networking from '../ClusterDetailsMultiRegion/components/Networking';
+// import Monitoring from '../ClusterDetailsMultiRegion/components/Monitoring';
+// import MachinePools from '../ClusterDetailsMultiRegion/components/MachinePools';
+import AddOns from './components/AddOns';
 import { getAddOns, getClusterAddOns } from './components/AddOns/AddOnsActions';
 import ClusterDetailsTop from './components/ClusterDetailsTop';
 // import AddOns from '../ClusterDetailsMultiRegion/components/AddOns';
@@ -548,7 +555,7 @@ const ClusterDetails = (props) => {
                 ref: accessControlTabRef,
                 show: !isMultiRegionPreviewEnabled && displayAccessControlTab,
               },
-              addOns: { ref: addOnsTabRef, show: !isMultiRegionPreviewEnabled && displayAddOnsTab },
+              addOns: { ref: addOnsTabRef, show: displayAddOnsTab },
               clusterHistory: {
                 ref: clusterHistoryTabRef,
                 show: displayClusterLogs,
@@ -667,6 +674,8 @@ const ClusterDetails = (props) => {
             </ErrorBoundary>
           </TabContent>
         )}
+       
+        */}
         {isManaged && (
           <TabContent
             eventKey={3}
@@ -676,11 +685,15 @@ const ClusterDetails = (props) => {
             hidden
           >
             <ErrorBoundary>
-              <AddOns clusterID={cluster.id} isHypershift={isHypershift} />
+              <AddOns
+                clusterID={cluster.id}
+                isHypershift={isHypershift}
+                region={cluster.subscription.xcm_id}
+                cluster={cluster}
+              />
             </ErrorBoundary>
           </TabContent>
         )}
-        */}
         {displayClusterLogs && (
           <TabContent
             eventKey={4}
