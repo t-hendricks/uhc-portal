@@ -23,6 +23,7 @@ type ProductCardProps = {
   labelText?: string;
   drawerPanelContent?: DrawerPanelContentNode;
   openReadMore: (title: string, content?: DrawerPanelContentNode) => void;
+  isSelected: boolean;
 };
 
 const ProductCard = ({
@@ -32,8 +33,9 @@ const ProductCard = ({
   labelText,
   drawerPanelContent,
   openReadMore,
+  isSelected,
 }: ProductCardProps) => (
-  <Card className="product-overview-card">
+  <Card isSelected={isSelected} isSelectableRaised className="product-overview-card">
     <CardHeader>
       <Split hasGutter style={{ width: '100%' }}>
         <SplitItem>

@@ -80,20 +80,25 @@ function OverviewEmptyState() {
     [],
   );
 
-  const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+  const [isDrawerOpen, setIsDrawerOpen] = useState<boolean>(false);
   const [drawerInfo, setDrawerInfo] = useState<{
     title: string;
     content?: DrawerPanelContentNode;
   }>();
+  const [selectedCardTitle, setSelectedCardTitle] = useState<string>('');
 
   const openDrawer = (title: string, content?: DrawerPanelContentNode) => {
     setDrawerInfo({ title, content });
     setIsDrawerOpen(true);
+
+    setSelectedCardTitle(title);
   };
 
   const closeDrawer = () => {
     setDrawerInfo(undefined);
     setIsDrawerOpen(false);
+
+    setSelectedCardTitle('');
   };
 
   return (
@@ -154,7 +159,10 @@ function OverviewEmptyState() {
           >
             Browse all OpenShift learning resources
           </ExternalLink>
-          <RecommendedOperatorsCards openReadMore={openDrawer} />
+          <RecommendedOperatorsCards
+            openReadMore={openDrawer}
+            selectedCardTitle={selectedCardTitle}
+          />
         </PageSection>
       </AppPage>
     </DrawerPanel>

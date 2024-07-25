@@ -45,9 +45,13 @@ const RECOMMENDED_OPERATORS_CARDS: RecommendedOperatorsCardsNode[] = [
 
 type RecommendedOperatorsCardsProps = {
   openReadMore: (title: string, content?: DrawerPanelContentNode) => void;
+  selectedCardTitle: string;
 };
 
-const RecommendedOperatorsCards = ({ openReadMore }: RecommendedOperatorsCardsProps) => (
+const RecommendedOperatorsCards = ({
+  openReadMore,
+  selectedCardTitle,
+}: RecommendedOperatorsCardsProps) => (
   <>
     <Title size="xl" headingLevel="h2" className="pf-v5-u-mt-lg">
       Recommended operators
@@ -55,7 +59,11 @@ const RecommendedOperatorsCards = ({ openReadMore }: RecommendedOperatorsCardsPr
     <Flex className="pf-v5-u-mb-lg">
       {RECOMMENDED_OPERATORS_CARDS.map((card) => (
         <FlexItem className="pf-v5-u-pt-md" data-testid={`product-overview-card-flex-item`}>
-          <ProductCard {...card} openReadMore={openReadMore} />
+          <ProductCard
+            {...card}
+            openReadMore={openReadMore}
+            isSelected={card.title === selectedCardTitle}
+          />
         </FlexItem>
       ))}
     </Flex>
