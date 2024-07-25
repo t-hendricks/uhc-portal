@@ -47,7 +47,9 @@ const TextField = ({
         placeholder={placeHolderText}
       />
 
-      <FormGroupHelperText touched={touched} error={error} />
+      <FormGroupHelperText touched={touched} error={error}>
+        {helpText}
+      </FormGroupHelperText>
     </FormGroup>
   );
 };

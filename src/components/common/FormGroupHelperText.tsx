@@ -16,6 +16,7 @@ interface FormGroupHelperTextProps {
   variant?: HelperTextItemProps['variant'];
   icon?: React.ReactNode;
   hasIcon?: boolean;
+  validateOnSubmit?: boolean;
 }
 
 export const FormGroupHelperText = ({
@@ -25,6 +26,7 @@ export const FormGroupHelperText = ({
   touched,
   variant = 'default',
   icon,
+  validateOnSubmit,
   hasIcon = icon !== undefined,
 }: FormGroupHelperTextProps) => {
   const helpMessage = React.useMemo(
@@ -50,7 +52,7 @@ export const FormGroupHelperText = ({
 
   return (
     <FormHelperText>
-      {touched && error && isValidError ? (
+      {(touched && error && isValidError) || (validateOnSubmit && error) ? (
         <HelperText id={id}>
           <HelperTextItem variant="error" icon={<ExclamationCircleIcon />} hasIcon={hasIcon}>
             {error}

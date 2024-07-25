@@ -1,14 +1,30 @@
 import React from 'react';
+import * as reactRedux from 'react-redux';
 
 import { checkAccessibility, render, screen } from '~/testUtils';
 
+import { openModal } from '../../../../../../common/Modal/ModalActions';
 import { managedIntegration } from '../../__tests__/AddOns.fixtures';
 import AddOnsPrimaryButton from '../AddOnsDrawerPrimaryButton';
 
+jest.mock('react-redux', () => {
+  const config = {
+    __esModule: true,
+    ...jest.requireActual('react-redux'),
+  };
+  return config;
+});
+
+jest.mock('../../../../../../common/Modal/ModalActions', () => ({
+  openModal: jest.fn(),
+}));
+
 describe('<AddOnsPrimaryButton />', () => {
+  const useDispatchMock = jest.spyOn(reactRedux, 'useDispatch');
+  const mockedDispatch = jest.fn();
+
   const addClusterAddOn = jest.fn();
   const addClusterAddOnResponse = {};
-  const openModal = jest.fn();
   const subscriptionModels = {
     [managedIntegration.id]: {
       addOn: managedIntegration.id,
@@ -33,6 +49,10 @@ describe('<AddOnsPrimaryButton />', () => {
     openModal,
     subscriptionModels,
   };
+
+  beforeEach(() => {
+    useDispatchMock.mockReturnValue(mockedDispatch);
+  });
 
   afterEach(() => {
     addClusterAddOn.mockClear();
@@ -69,11 +89,13 @@ describe('<AddOnsPrimaryButton />', () => {
     const { user } = render(<AddOnsPrimaryButton {...props} />);
     await user.click(screen.getByRole('button', { name: 'Uninstall' }));
 
-    expect(openModal).toHaveBeenCalledWith('add-ons-delete-modal', {
-      addOnName: managedIntegration.name,
-      addOnID: managedIntegration.id,
-      clusterID: 'fake id',
-    });
+    expect(mockedDispatch).toHaveBeenCalledWith(
+      openModal('add-ons-delete-modal', {
+        addOnName: managedIntegration.name,
+        addOnID: managedIntegration.id,
+        clusterID: 'fake id',
+      }),
+    );
   });
 
   it('expect contact support button if addon failed', () => {
@@ -133,8 +155,8 @@ describe('<AddOnsPrimaryButton />', () => {
   it('expect install button to be disabled if cluster addon is pending', () => {
     const pendingProps = {
       ...props,
+      isAddClusterAddOnPending: true,
       installedAddOn: null,
-      addClusterAddOnResponse: { pending: true },
       cluster: {
         canEdit: true,
         id: 'fake id',
@@ -195,10 +217,12 @@ describe('<AddOnsPrimaryButton />', () => {
 
     await user.click(screen.getByRole('button', { name: 'Install' }));
 
-    expect(openModal).toHaveBeenCalledWith('add-ons-parameters-modal', {
-      addOn: managedIntegration,
-      isUpdateForm: false,
-      clusterID: 'fake id',
-    });
+    expect(mockedDispatch).toHaveBeenCalledWith(
+      openModal('add-ons-parameters-modal', {
+        addOn: managedIntegration,
+        isUpdateForm: false,
+        clusterID: 'fake id',
+      }),
+    );
   });
 });
