@@ -39,7 +39,7 @@ describe('Releases pages tests', () => {
     cy.get('button')
       .contains("I don't see these versions as upgrade options for my cluster")
       .click();
-    cy.get(`a[href="/openshift/cluster-list/"]`)
+    cy.get(`a[href="/openshift/cluster-list"]`)
       .should('exist')
       .and('contain.text', 'clusters list');
     cy.get('button[aria-label="Close"]').filter(':visible').click();
