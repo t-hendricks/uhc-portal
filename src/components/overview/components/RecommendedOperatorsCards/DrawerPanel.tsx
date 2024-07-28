@@ -1,4 +1,4 @@
-import React, { useRef, ReactNode } from 'react';
+import React, { ReactNode, useRef } from 'react';
 
 import {
   Divider,
@@ -24,14 +24,15 @@ type DrawerPanelProps = {
 const DrawerPanel = ({ children, title, content, isOpen, onClose }: DrawerPanelProps) => {
   const drawerRef = useRef<any>();
   const onOpen = () => {
+    // eslint-disable-next-line no-unused-expressions
     drawerRef.current && drawerRef.current.focus();
   };
 
   return (
-    <Drawer isExpanded={isOpen} onExpand={onOpen} isInline={true}>
+    <Drawer isExpanded={isOpen} onExpand={onOpen} isInline>
       <DrawerContent
         panelContent={
-          <DrawerPanelContent isResizable defaultSize={'461px'} minSize={'417px'}>
+          <DrawerPanelContent isResizable defaultSize="461px" minSize="417px">
             <DrawerHead>
               {content?.head}
               <DrawerActions>

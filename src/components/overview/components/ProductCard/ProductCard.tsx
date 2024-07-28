@@ -12,7 +12,7 @@ import {
   SplitItem,
   Title,
 } from '@patternfly/react-core';
-import { OpenDrawerRightIcon } from '@patternfly/react-icons';
+import { OpenDrawerRightIcon } from '@patternfly/react-icons/dist/esm/icons/open-drawer-right-icon';
 
 import { DrawerPanelContentNode } from '../RecommendedOperatorsCards/DrawerPanelContent';
 

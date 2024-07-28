@@ -1,13 +1,15 @@
 import React from 'react';
-import { Flex, FlexItem, Title, Button } from '@patternfly/react-core';
 import { Link } from 'react-router-dom-v5-compat';
+
+import { Button, Flex, FlexItem, Title } from '@patternfly/react-core';
 
 import RedHatOpenShiftGitOpsLogo from '../../../../styles/images/RedHatOpenShiftGitOpsLogo.svg';
 import RedHatOpenShiftPipelinesLogo from '../../../../styles/images/RedHatOpenShiftPipelinesLogo.svg';
 import RedHatOpenShiftServiceMeshLogo from '../../../../styles/images/RedHatOpenShiftServiceMeshLogo.svg';
-
 import ProductCard from '../ProductCard/ProductCard';
+
 import { DRAWER_PANEL_CONTENT, DrawerPanelContentNode } from './DrawerPanelContent';
+
 import './RecommendedOperatorsCards.scss';
 
 type RecommendedOperatorsCardsNode = {
@@ -70,7 +72,7 @@ const RecommendedOperatorsCards = ({
     </Flex>
     <Flex className="pf-v5-u-mb-lg">
       {RECOMMENDED_OPERATORS_CARDS.map((card) => (
-        <FlexItem className="pf-v5-u-pt-md" data-testid={`product-overview-card-flex-item`}>
+        <FlexItem className="pf-v5-u-pt-md" data-testid="product-overview-card-flex-item">
           <ProductCard
             {...card}
             openReadMore={openReadMore}

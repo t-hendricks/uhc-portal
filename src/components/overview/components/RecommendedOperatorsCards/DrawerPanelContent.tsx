@@ -1,22 +1,23 @@
 import React, { ReactNode } from 'react';
 
 import {
-  TextContent,
-  Text,
-  TextVariants,
-  Title,
-  TextListItem,
-  TextList,
-  GridItem,
   Grid,
+  GridItem,
   Stack,
   StackItem,
+  Text,
+  TextContent,
+  TextList,
+  TextListItem,
+  TextVariants,
+  Title,
 } from '@patternfly/react-core';
+
+import ExternalLink from '~/components/common/ExternalLink';
 
 import RedHatOpenShiftGitOpsLogo from '../../../../styles/images/RedHatOpenShiftGitOpsLogo.svg';
 import RedHatOpenShiftPipelinesLogo from '../../../../styles/images/RedHatOpenShiftPipelinesLogo.svg';
 import RedHatOpenShiftServiceMeshLogo from '../../../../styles/images/RedHatOpenShiftServiceMeshLogo.svg';
-import ExternalLink from '~/components/common/ExternalLink';
 
 import './DrawerPanelContent.scss';
 

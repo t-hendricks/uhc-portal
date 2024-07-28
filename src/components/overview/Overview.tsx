@@ -17,8 +17,8 @@ import { ProductBanner, ProductBannerProps } from '../common/ProductBanner';
 
 import { OfferingCard } from './components/OfferingCard/OfferingCard';
 import DrawerPanel from './components/RecommendedOperatorsCards/DrawerPanel';
-import RecommendedOperatorsCards from './components/RecommendedOperatorsCards/RecommendedOperatorsCards';
 import { DrawerPanelContentNode } from './components/RecommendedOperatorsCards/DrawerPanelContent';
+import RecommendedOperatorsCards from './components/RecommendedOperatorsCards/RecommendedOperatorsCards';
 
 import './Overview.scss';
 
