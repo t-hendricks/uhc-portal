@@ -3,12 +3,13 @@ import { Link } from 'react-router-dom-v5-compat';
 
 import { Button, Flex, FlexItem, Title } from '@patternfly/react-core';
 
-import RedHatOpenShiftGitOpsLogo from '../../../../styles/images/RedHatOpenShiftGitOpsLogo.svg';
-import RedHatOpenShiftPipelinesLogo from '../../../../styles/images/RedHatOpenShiftPipelinesLogo.svg';
-import RedHatOpenShiftServiceMeshLogo from '../../../../styles/images/RedHatOpenShiftServiceMeshLogo.svg';
 import ProductCard from '../ProductCard/ProductCard';
 
-import { DRAWER_PANEL_CONTENT, DrawerPanelContentNode } from './DrawerPanelContent';
+import {
+  DRAWER_PANEL_CONTENT,
+  DrawerPanelContentNode,
+  PRODUCT_CARD_LOGOS,
+} from './DrawerPanelContent';
 
 import './RecommendedOperatorsCards.scss';
 
@@ -22,25 +23,22 @@ type RecommendedOperatorsCardsNode = {
 
 const RECOMMENDED_OPERATORS_CARDS: RecommendedOperatorsCardsNode[] = [
   {
-    title: 'Red Hat OpenShift GitOps',
+    ...PRODUCT_CARD_LOGOS.gitops,
     description:
       'Integrate git repositories, continuous integration/continuous delivery (CI/CD) tools, and Kubernetes.',
-    logo: RedHatOpenShiftGitOpsLogo,
     labelText: 'Free',
     drawerPanelContent: DRAWER_PANEL_CONTENT.gitops,
   },
   {
-    title: 'Red Hat OpenShift Pipelines',
+    ...PRODUCT_CARD_LOGOS.pipelines,
     description:
       'Automate your application delivery using a continuous integration and continuous deployment (CI/CD) framework.',
-    logo: RedHatOpenShiftPipelinesLogo,
     labelText: 'Free',
     drawerPanelContent: DRAWER_PANEL_CONTENT.pipelines,
   },
   {
-    title: 'Red Hat OpenShift Service Mesh',
+    ...PRODUCT_CARD_LOGOS.serviceMesh,
     description: 'Connect, manage, and observe microservices-based applications in a uniform way.',
-    logo: RedHatOpenShiftServiceMeshLogo,
     labelText: 'Free',
     drawerPanelContent: DRAWER_PANEL_CONTENT.serviceMesh,
   },
