@@ -30,7 +30,9 @@ export function ExternalAuthProviderList() {
   const [isDeleteModalOpen, setIsDeleteModalOpen] = React.useState(false);
   const [editProvider, setEditProvider] = React.useState<ExternalAuth | undefined>(undefined);
   const clusterID = useGlobalState((state) => state.clusters.details.cluster.id);
-  const canEdit = useGlobalState((state) => state.clusters.details.cluster.canEdit);
+  const canUpdateClusterResource = useGlobalState(
+    (state) => state.clusters.details.cluster.canUpdateClusterResource,
+  );
 
   React.useEffect(() => {
     (async () => {
@@ -65,7 +67,8 @@ export function ExternalAuthProviderList() {
   ];
 
   const disableNewProviderReason =
-    !canEdit && 'You do not have permission to create a new provider for this cluster.';
+    !canUpdateClusterResource &&
+    'You do not have permission to create a new provider for this cluster.';
 
   return error ? (
     <ErrorBox
@@ -119,7 +122,9 @@ export function ExternalAuthProviderList() {
                   <Td>{provider.id}</Td>
                   <Td>{provider.issuer?.url ?? ''}</Td>
                   <Td>{provider.issuer?.audiences?.join(', ') ?? ''}</Td>
-                  <Td isActionCell>{canEdit && <ActionsColumn items={rowActions} />}</Td>
+                  <Td isActionCell>
+                    {canUpdateClusterResource && <ActionsColumn items={rowActions} />}
+                  </Td>
                 </Tr>
               );
             })}

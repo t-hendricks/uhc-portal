@@ -6,6 +6,8 @@ import RedoIcon from '@patternfly/react-icons/dist/esm/icons/redo-icon';
 import { Caption, Table, Tbody, Td, Th, Thead, Tr } from '@patternfly/react-table';
 
 import ErrorBox from '~/components/common/ErrorBox';
+import { useCanUpdateBreakGlassCredentials } from '~/queries/ClusterDetailsQueries/useFetchActionsPermissions';
+import { queryConstants } from '~/queries/queriesConstants';
 import { useGlobalState } from '~/redux/hooks';
 import { clusterService } from '~/services';
 import type { BreakGlassCredential } from '~/types/clusters_mgmt.v1';
@@ -68,12 +70,19 @@ export function BreakGlassCredentialList() {
   const [refresh, setRefresh] = React.useState(false);
   const [isPending, setIsPending] = React.useState(false);
   const clusterID = useGlobalState((state) => state.clusters.details.cluster.id);
-  const canEdit = useGlobalState((state) => state.clusters.details.cluster.canEdit);
+  const subscriptionID = useGlobalState(
+    (state) => state.clusters.details.cluster?.subscription?.id,
+  );
+  const { canUpdateBreakGlassCredentials } = useCanUpdateBreakGlassCredentials(
+    subscriptionID || '',
+    queryConstants.FETCH_CLUSTER_DETAILS_QUERY_KEY,
+  );
 
   React.useEffect(() => {
     setError(undefined);
     setIsPending(true);
-    if (canEdit) {
+
+    if (canUpdateBreakGlassCredentials) {
       (async () => {
         const request = clusterService.getBreakGlassCredentials;
         try {
@@ -86,7 +95,15 @@ export function BreakGlassCredentialList() {
         }
       })();
     }
-  }, [clusterID, credential?.id, isModalOpen, isDeleteModalOpen, isNewModalOpen, canEdit, refresh]);
+  }, [
+    clusterID,
+    credential?.id,
+    isModalOpen,
+    isDeleteModalOpen,
+    isNewModalOpen,
+    canUpdateBreakGlassCredentials,
+    refresh,
+  ]);
 
   const handleDelete = () => {
     setIsDeleteModalOpen(true);
@@ -103,7 +120,8 @@ export function BreakGlassCredentialList() {
   };
 
   const disableNewCredReason =
-    !canEdit && 'You do not have permission to create new credentials for this cluster.';
+    !canUpdateBreakGlassCredentials &&
+    'You do not have permission to create new credentials for this cluster.';
 
   const isValidCred = () =>
     credentialData.some(
@@ -146,7 +164,7 @@ export function BreakGlassCredentialList() {
             New credentials
           </ButtonWithTooltip>
         </FlexItem>
-        {credentialData.length && canEdit ? (
+        {credentialData.length && canUpdateBreakGlassCredentials ? (
           <>
             <FlexItem align={{ default: 'alignRight' }}>
               <ButtonWithTooltip
