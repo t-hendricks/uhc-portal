@@ -62,7 +62,7 @@ const DEVSNBXOfferingCardDocLinkComponent = () => (
   </ExternalLink>
 );
 
-export function OfferingCard(props: OfferingCardProps) {
+function OfferingCard(props: OfferingCardProps) {
   const { offeringType } = props;
 
   let offeringCardTitle: string | undefined;
@@ -262,3 +262,5 @@ export function OfferingCard(props: OfferingCardProps) {
     </Card>
   );
 }
+
+export default OfferingCard;
