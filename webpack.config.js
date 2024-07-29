@@ -46,7 +46,7 @@ module.exports = async (_env, argv) => {
   const argBetaMode = argv.env.beta === 'true';
   const betaMode = envBetaMode || argBetaMode;
 
-  const sentryReleaseVersion = argv.env['sentry-version'];
+  const sentryReleaseVersion = process.env.SENTRY_VERSION || argv.env['sentry-version'];
   const isDevServer = process.argv.includes('serve');
 
   const outDir = outputPath
