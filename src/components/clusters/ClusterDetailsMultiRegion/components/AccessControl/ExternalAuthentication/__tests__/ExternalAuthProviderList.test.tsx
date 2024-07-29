@@ -16,7 +16,7 @@ const initialState = {
     details: {
       cluster: {
         id: 'myCluster',
-        canEdit: true,
+        canUpdateClusterResource: true,
       },
     },
   },
@@ -27,7 +27,7 @@ const clusterWithExtAuthProvider = {
     details: {
       cluster: {
         id: 'myCluster1',
-        canEdit: true,
+        canUpdateClusterResource: true,
         external_auth_config: {
           enabled: true,
           external_auths: [
