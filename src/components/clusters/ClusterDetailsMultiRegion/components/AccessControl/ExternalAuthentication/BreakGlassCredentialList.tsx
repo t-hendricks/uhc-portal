@@ -6,6 +6,8 @@ import RedoIcon from '@patternfly/react-icons/dist/esm/icons/redo-icon';
 import { Caption, Table, Tbody, Td, Th, Thead, Tr } from '@patternfly/react-table';
 
 import ErrorBox from '~/components/common/ErrorBox';
+import { useCanUpdateBreakGlassCredentials } from '~/queries/ClusterDetailsQueries/useFetchActionsPermissions';
+import { queryConstants } from '~/queries/queriesConstants';
 import { useGlobalState } from '~/redux/hooks';
 import { clusterService } from '~/services';
 import type { BreakGlassCredential } from '~/types/clusters_mgmt.v1';
@@ -26,9 +28,13 @@ const credentialStatus = (status: BreakGlassCredentialStatus | undefined) => {
       helpText = 'Credentials issued';
       break;
     case BreakGlassCredentialStatus.REVOKED:
-    case BreakGlassCredentialStatus.AWAITING_REVOCATION:
       message = 'Revoked';
       helpText = 'Credentials have been manually revoked and are no longer valid.';
+      break;
+    case BreakGlassCredentialStatus.AWAITING_REVOCATION:
+      message = 'Awaiting Revocation';
+      helpText =
+        'Credentials are awaiting revocation. No other revocation can occur until this completes.';
       break;
     case BreakGlassCredentialStatus.EXPIRED:
       message = 'Expired';
@@ -64,12 +70,19 @@ export function BreakGlassCredentialList() {
   const [refresh, setRefresh] = React.useState(false);
   const [isPending, setIsPending] = React.useState(false);
   const clusterID = useGlobalState((state) => state.clusters.details.cluster.id);
-  const canEdit = useGlobalState((state) => state.clusters.details.cluster.canEdit);
+  const subscriptionID = useGlobalState(
+    (state) => state.clusters.details.cluster?.subscription?.id,
+  );
+  const { canUpdateBreakGlassCredentials } = useCanUpdateBreakGlassCredentials(
+    subscriptionID || '',
+    queryConstants.FETCH_CLUSTER_DETAILS_QUERY_KEY,
+  );
 
   React.useEffect(() => {
     setError(undefined);
     setIsPending(true);
-    if (canEdit) {
+
+    if (canUpdateBreakGlassCredentials) {
       (async () => {
         const request = clusterService.getBreakGlassCredentials;
         try {
@@ -82,7 +95,15 @@ export function BreakGlassCredentialList() {
         }
       })();
     }
-  }, [clusterID, credential?.id, isModalOpen, isDeleteModalOpen, isNewModalOpen, canEdit, refresh]);
+  }, [
+    clusterID,
+    credential?.id,
+    isModalOpen,
+    isDeleteModalOpen,
+    isNewModalOpen,
+    canUpdateBreakGlassCredentials,
+    refresh,
+  ]);
 
   const handleDelete = () => {
     setIsDeleteModalOpen(true);
@@ -99,10 +120,21 @@ export function BreakGlassCredentialList() {
   };
 
   const disableNewCredReason =
-    !canEdit && 'You do not have permission to create new credentials for this cluster.';
+    !canUpdateBreakGlassCredentials &&
+    'You do not have permission to create new credentials for this cluster.';
 
   const isValidCred = () =>
-    credentialData.some((cred) => cred.status === BreakGlassCredentialStatus.ISSUED);
+    credentialData.some(
+      (cred) =>
+        cred.status === BreakGlassCredentialStatus.ISSUED &&
+        !credentialData.some(
+          (cred) => cred.status === BreakGlassCredentialStatus.AWAITING_REVOCATION,
+        ),
+    );
+
+  const disableRevokeAllCredReason =
+    (isPending || !isValidCred()) &&
+    'There must be at least one issued credential without a pending revocation.';
 
   return (
     <>
@@ -132,14 +164,14 @@ export function BreakGlassCredentialList() {
             New credentials
           </ButtonWithTooltip>
         </FlexItem>
-        {credentialData.length && canEdit ? (
+        {credentialData.length && canUpdateBreakGlassCredentials ? (
           <>
             <FlexItem align={{ default: 'alignRight' }}>
               <ButtonWithTooltip
                 className="access-control-add"
                 variant="danger"
                 onClick={handleDelete}
-                isDisabled={isPending || !isValidCred()}
+                disableReason={disableRevokeAllCredReason}
               >
                 Revoke all credentials
               </ButtonWithTooltip>
