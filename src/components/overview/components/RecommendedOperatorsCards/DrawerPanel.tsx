@@ -36,10 +36,10 @@ const DrawerPanel = ({ children, title, content, isOpen, onClose }: DrawerPanelP
             <DrawerHead>
               {content?.head}
               <DrawerActions>
-                <DrawerCloseButton onClick={onClose} />
+                <DrawerCloseButton onClick={onClose} data-testid="drawer-close-button" />
               </DrawerActions>
             </DrawerHead>
-            <Divider component="div" />
+            <Divider component="div" data-testid="drawer-panel-divider" />
             <DrawerContentBody>{content?.body}</DrawerContentBody>
           </DrawerPanelContent>
         }
