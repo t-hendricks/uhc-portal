@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom-v5-compat';
 
-import { Button, Flex, FlexItem, Title } from '@patternfly/react-core';
+import { Flex, FlexItem, Title } from '@patternfly/react-core';
 
 import ProductCard from '../ProductCard/ProductCard';
 
@@ -61,11 +61,12 @@ const RecommendedOperatorsCards = ({
         </Title>
       </FlexItem>
       <FlexItem align={{ default: 'alignRight' }}>
-        <Button className="view-all-in-ecosystem-catalog-button" variant="link">
-          <Link to="https://catalog.redhat.com/search?searchType=software&deployed_as=Operator">
-            View all in Ecosystem Catalog
-          </Link>
-        </Button>
+        <Link
+          to="https://catalog.redhat.com/search?searchType=software&deployed_as=Operator"
+          className="view-all-in-ecosystem-catalog-button"
+        >
+          View all in Ecosystem Catalog
+        </Link>
       </FlexItem>
     </Flex>
     <Flex className="pf-v5-u-mb-lg">
