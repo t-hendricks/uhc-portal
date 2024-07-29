@@ -18,7 +18,9 @@ describe('ProductCard', () => {
     expect(screen.getByText(description)).toBeInTheDocument();
     expect(screen.getByText(labelText)).toBeInTheDocument();
 
-    expect(screen.getByTestId(logo)).toBeInTheDocument();
+    const cardLogo = screen.getByTestId(logo);
+    expect(cardLogo).toHaveAttribute('src', `${logo}`);
+
     expect(screen.getByTestId('open-right-drawer-icon')).toBeInTheDocument();
 
     // todo: I cannot check that this content is being presented in this component level !!

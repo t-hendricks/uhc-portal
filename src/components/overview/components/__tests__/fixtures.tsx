@@ -1,4 +1,9 @@
 import React from 'react';
+import { PRODUCT_CARD_LOGOS } from '../RecommendedOperatorsCards/DrawerPanelContent';
+import {
+  DrawerPanelContentNode,
+  DRAWER_PANEL_CONTENT,
+} from '../RecommendedOperatorsCards/DrawerPanelContent';
 
 const BASIC_PRODUCT_CARD_PROPS = {
   title: 'example title',
@@ -43,4 +48,55 @@ const DRAWER_PANEL_TEST_CASES = {
   OPENED: { ...BASIC_DRAWER_PANEL_PROPS },
 };
 
-export { PRODUCT_CARD_TEST_CASES, DRAWER_PANEL_TEST_CASES };
+const BASIC_RECCOMENDED_OPERATORS_CARDS_PROPS = {
+  openReadMore: jest.fn(),
+  selectedCardTitle: '',
+};
+
+const RECOMMENDED_OPERATORS_CARDS_TEST_CASES = {
+  NON_SELECTED: {
+    ...BASIC_RECCOMENDED_OPERATORS_CARDS_PROPS,
+  },
+  GITOPS_SELECTED: {
+    ...BASIC_RECCOMENDED_OPERATORS_CARDS_PROPS,
+    selectedCardTitle: PRODUCT_CARD_LOGOS.gitops.title,
+  },
+};
+
+type RecommendedOperatorsCardsNode = {
+  title: string;
+  description: string;
+  logo: string | undefined;
+  labelText?: string;
+  drawerPanelContent?: DrawerPanelContentNode;
+};
+
+const RECOMMENDED_OPERATORS_CARDS_DATA: RecommendedOperatorsCardsNode[] = [
+  {
+    ...PRODUCT_CARD_LOGOS.gitops,
+    description:
+      'Integrate git repositories, continuous integration/continuous delivery (CI/CD) tools, and Kubernetes.',
+    labelText: 'Free',
+    drawerPanelContent: DRAWER_PANEL_CONTENT.gitops,
+  },
+  {
+    ...PRODUCT_CARD_LOGOS.pipelines,
+    description:
+      'Automate your application delivery using a continuous integration and continuous deployment (CI/CD) framework.',
+    labelText: 'Free',
+    drawerPanelContent: DRAWER_PANEL_CONTENT.pipelines,
+  },
+  {
+    ...PRODUCT_CARD_LOGOS.serviceMesh,
+    description: 'Connect, manage, and observe microservices-based applications in a uniform way.',
+    labelText: 'Free',
+    drawerPanelContent: DRAWER_PANEL_CONTENT.serviceMesh,
+  },
+];
+
+export {
+  PRODUCT_CARD_TEST_CASES,
+  DRAWER_PANEL_TEST_CASES,
+  RECOMMENDED_OPERATORS_CARDS_TEST_CASES,
+  RECOMMENDED_OPERATORS_CARDS_DATA,
+};
