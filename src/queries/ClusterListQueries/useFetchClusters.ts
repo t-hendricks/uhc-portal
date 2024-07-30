@@ -339,7 +339,15 @@ export const useFetchClusters = () => {
         const doesNextPageExist = isExistingQuery(queries, nextPage, pageFetched.region);
         if (!doesNextPageExist) {
           newQueries.push(
-            createQuery({ page: nextPage, aiMergeListsFeatureFlag, region: pageFetched.region }),
+            createQuery({
+              page: nextPage,
+              aiMergeListsFeatureFlag,
+              region: pageFetched.region,
+              flags,
+              // @ts-ignore
+              nameFilter,
+              userName,
+            }),
           );
         }
       }
