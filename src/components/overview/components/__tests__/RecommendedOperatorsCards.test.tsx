@@ -36,7 +36,7 @@ describe('RecommendedOperatorsCards', () => {
     );
 
     // Cards Info:
-    const readMoreBtns = screen.getAllByTestId('product-overview-card__read-more-button');
+    const readMoreBtns = screen.getAllByTestId('product-overview-card__learn-more-button');
 
     const productCardLogos = screen.getAllByTestId('product-overview-card__logo');
     expect(productCardLogos).toHaveLength(3);
@@ -50,7 +50,7 @@ describe('RecommendedOperatorsCards', () => {
 
         expect(productCardLogos[index]).toHaveAttribute('src', `${logo}`);
 
-        // before clicking on 'Read more' the card is not selected:
+        // before clicking on 'Learn more' the card is not selected:
         await waitFor(() =>
           expect(productOverviewCards[index]).not.toHaveClass('pf-m-selected-raised'),
         );

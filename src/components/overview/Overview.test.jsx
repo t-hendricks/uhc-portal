@@ -71,11 +71,11 @@ describe('<Overview />', () => {
 
     // Functionality checks:
 
-    const readMoreBtns = screen.getAllByTestId('product-overview-card__read-more-button');
-    expect(readMoreBtns).toHaveLength(3);
+    const learnMoreBtns = screen.getAllByTestId('product-overview-card__learn-more-button');
+    expect(learnMoreBtns).toHaveLength(3);
 
-    // click on Gitops's Read more button
-    await userEvent.click(readMoreBtns[0]);
+    // click on Gitops's Learn more button
+    await userEvent.click(learnMoreBtns[0]);
 
     // ensure the title and some content is shown
     expect(screen.getByTestId('drawer-panel-content__title')).toHaveTextContent(
@@ -109,8 +109,8 @@ describe('<Overview />', () => {
     ).not.toBeInTheDocument();
     expect(screen.queryByText('by Red Hat')).not.toBeInTheDocument();
 
-    // click on Pipelines's Read more button
-    await userEvent.click(readMoreBtns[1]);
+    // click on Pipelines's Learn more button
+    await userEvent.click(learnMoreBtns[1]);
 
     // ensure the title and some content is shown
     expect(screen.getByTestId('drawer-panel-content__title')).toHaveTextContent(
@@ -131,8 +131,8 @@ describe('<Overview />', () => {
       'https://catalog.redhat.com/software/container-stacks/detail/5ec54a4628834587a6b85ca5',
     );
 
-    // click on Service Mesh's Read more button
-    await userEvent.click(readMoreBtns[2]);
+    // click on Service Mesh's Learn more button
+    await userEvent.click(learnMoreBtns[2]);
 
     // ensure the title and some content is shown
     expect(screen.getByTestId('drawer-panel-content__title')).toHaveTextContent(

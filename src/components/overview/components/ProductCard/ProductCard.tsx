@@ -67,14 +67,14 @@ const ProductCard = ({
     <CardBody>{description}</CardBody>
     <CardFooter>
       <Button
-        className="product-overview-card__read-more-button"
+        className="product-overview-card__learn-more-button"
         onClick={() => openReadMore(title, drawerPanelContent)}
         variant="link"
         icon={<OpenDrawerRightIcon data-testid="open-right-drawer-icon" />}
         iconPosition="end"
-        data-testid="product-overview-card__read-more-button"
+        data-testid="product-overview-card__learn-more-button"
       >
-        Read more
+        Learn more
       </Button>
     </CardFooter>
   </Card>

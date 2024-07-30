@@ -27,7 +27,7 @@ describe('ProductCard', () => {
     // expect(screen.getByText(/example drawer panel content head/i)).toBeInTheDocument();
     // expect(screen.getByText(/example drawer panel content body/i)).toBeInTheDocument();
 
-    const readMoreBtn = screen.getByText(/Read more/i);
+    const readMoreBtn = screen.getByText(/Learn more/i);
     await userEvent.click(readMoreBtn);
     expect(openReadMore).toHaveBeenCalled();
     expect(openReadMore).toHaveBeenCalledWith(title, drawerPanelContent);
