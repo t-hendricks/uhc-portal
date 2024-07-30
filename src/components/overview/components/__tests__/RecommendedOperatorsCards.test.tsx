@@ -36,7 +36,7 @@ describe('RecommendedOperatorsCards', () => {
     );
 
     // Cards Info:
-    const readMoreBtns = screen.getAllByTestId('read-more-button');
+    const readMoreBtns = screen.getAllByTestId('product-overview-card__read-more-button');
 
     const productCardLogos = screen.getAllByTestId('product-overview-card__logo');
     expect(productCardLogos).toHaveLength(3);

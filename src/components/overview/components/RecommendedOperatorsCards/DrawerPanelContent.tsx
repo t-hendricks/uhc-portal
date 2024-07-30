@@ -51,7 +51,7 @@ const DRAWER_PANEL_CONTENT = {
       <Grid hasGutter>
         <GridItem span={2}>{getLogoElement(PRODUCT_CARD_LOGOS.gitops)}</GridItem>
         <GridItem span={10}>
-          <Title headingLevel="h2" className="drawer-panel-content__title">
+          <Title headingLevel="h2" data-testid="drawer-panel-content__title">
             {PRODUCT_CARD_LOGOS.gitops.title}
           </Title>
           <Text component={TextVariants.small}>by Red Hat</Text>
@@ -117,7 +117,9 @@ const DRAWER_PANEL_CONTENT = {
       <Grid hasGutter>
         <GridItem span={2}>{getLogoElement(PRODUCT_CARD_LOGOS.pipelines)}</GridItem>
         <GridItem span={10}>
-          <Title headingLevel="h2">{PRODUCT_CARD_LOGOS.pipelines.title}</Title>
+          <Title headingLevel="h2" data-testid="drawer-panel-content__title">
+            {PRODUCT_CARD_LOGOS.pipelines.title}
+          </Title>
           <Text component={TextVariants.small}>by Red Hat</Text>
         </GridItem>
       </Grid>
@@ -193,7 +195,9 @@ const DRAWER_PANEL_CONTENT = {
       <Grid hasGutter>
         <GridItem span={2}>{getLogoElement(PRODUCT_CARD_LOGOS.serviceMesh)}</GridItem>
         <GridItem span={10}>
-          <Title headingLevel="h2">{PRODUCT_CARD_LOGOS.serviceMesh.title}</Title>
+          <Title headingLevel="h2" data-testid="drawer-panel-content__title">
+            {PRODUCT_CARD_LOGOS.serviceMesh.title}
+          </Title>
           <Text component={TextVariants.small}>by Red Hat</Text>
         </GridItem>
       </Grid>
