@@ -3,15 +3,11 @@ import React from 'react';
 import { Alert, Button, ButtonVariant } from '@patternfly/react-core';
 
 import ocmBaseName from '~/common/getBaseName';
-import { ENV_OVERRIDE_LOCALSTORAGE_KEY } from '~/common/localStorageConstants';
+import { RESTRICTED_ENV_OVERRIDE_LOCALSTORAGE_KEY } from '~/common/localStorageConstants';
 
-type Props = {
-  env: string;
-};
-
-const EnvOverrideMessage = ({ env }: Props) => {
+const RestrictedEnvOverrideMessage = () => {
   const goBackToNormal = () => {
-    localStorage.removeItem(ENV_OVERRIDE_LOCALSTORAGE_KEY);
+    localStorage.removeItem(RESTRICTED_ENV_OVERRIDE_LOCALSTORAGE_KEY);
     window.location.href = ocmBaseName();
   };
 
@@ -22,16 +18,16 @@ const EnvOverrideMessage = ({ env }: Props) => {
       id="env-override-message"
       title={
         <>
-          Using the <em>{env}</em> environment API
+          Simulating a <em>restricted</em> environment
         </>
       }
       className="pf-v5-u-flex-basis-0 pf-v5-u-flex-grow-1"
     >
       <Button variant={ButtonVariant.link} isInline onClick={goBackToNormal}>
-        Go back to <strong>{APP_API_ENV}</strong>
+        Remove <strong>restricted env</strong> override
       </Button>
     </Alert>
   );
 };
 
-export default EnvOverrideMessage;
+export default RestrictedEnvOverrideMessage;

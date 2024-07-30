@@ -1,11 +1,14 @@
 import React, { PropsWithChildren, useEffect } from 'react';
 
+import { RESTRICTED_ENV_OVERRIDE_LOCALSTORAGE_KEY } from '~/common/localStorageConstants';
+
 import config from '../../config';
 
 import { AppDrawer } from './AppDrawer';
 import EnvOverrideMessage from './EnvOverrideMessage';
 import ErrorBoundary from './ErrorBoundary';
 import MultiRegionOverrideMessage from './MultiregionOverrideMessage';
+import RestrictedEnvOverrideMessage from './RestrictedEnvOverrideMessage';
 
 export const AppPage: React.FC<PropsWithChildren<{ title?: string }>> = ({ children, title }) => {
   useEffect(() => {
@@ -14,10 +17,14 @@ export const AppPage: React.FC<PropsWithChildren<{ title?: string }>> = ({ child
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+  const restrictedEnvOverride = !!localStorage.getItem(RESTRICTED_ENV_OVERRIDE_LOCALSTORAGE_KEY);
   return (
     <AppDrawer>
-      {config.envOverride && <EnvOverrideMessage env={config.envOverride} />}
-      {config.multiRegion && <MultiRegionOverrideMessage />}
+      <div className="pf-v5-u-display-flex pf-v5-u-flex-direction-row">
+        {restrictedEnvOverride && <RestrictedEnvOverrideMessage />}
+        {config.envOverride && <EnvOverrideMessage env={config.envOverride} />}
+        {config.multiRegion && <MultiRegionOverrideMessage />}
+      </div>
       <ErrorBoundary>{children}</ErrorBoundary>
     </AppDrawer>
   );

@@ -47,7 +47,7 @@ import VPCScreen from './VPCScreen/VPCScreen';
 import AccountsRolesScreen from './AccountsRolesScreen';
 import ClusterProxyScreen from './ClusterProxyScreen';
 import ClusterRolesScreen from './ClusterRolesScreen';
-import { FieldId, initialTouched, initialValues } from './constants';
+import { FieldId, initialTouched, initialValues, initialValuesRestrictedEnv } from './constants';
 import ControlPlaneScreen from './ControlPlaneScreen';
 import CreateClusterErrorModal from './CreateClusterErrorModal';
 import CreateRosaWizardFooter from './CreateRosaWizardFooter';
@@ -535,7 +535,7 @@ const CreateROSAWizardFormik = (props) => {
   const { onSubmit, track } = props;
   return (
     <Formik
-      initialValues={initialValues}
+      initialValues={isRestrictedEnv() ? initialValuesRestrictedEnv : initialValues()}
       initialTouched={initialTouched}
       validate={rosaWizardFormValidator}
       validateOnChange
