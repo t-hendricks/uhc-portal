@@ -48,6 +48,7 @@ const ClusterActionsDropdown = (props) => {
     <Dropdown
       onSelect={onSelect}
       popperProps={{ position: 'right', appendTo: () => document.body }}
+      onOpenChange={(isOpen) => setIsOpen(isOpen)}
       toggle={{
         toggleRef,
         toggleNode: (
