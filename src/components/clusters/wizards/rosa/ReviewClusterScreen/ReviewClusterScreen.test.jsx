@@ -2,8 +2,7 @@ import React from 'react';
 import { Formik } from 'formik';
 
 import useOrganization from '~/components/CLILoginPage/useOrganization';
-import { HCP_AWS_BILLING_SHOW } from '~/redux/constants/featureConstants';
-import { mockUseFeatureGate, render, screen, waitFor } from '~/testUtils';
+import { render, screen, waitFor } from '~/testUtils';
 
 import { initialValues } from '../constants';
 
@@ -51,8 +50,7 @@ describe('<ReviewClusterScreen />', () => {
     });
 
     describe('is shown when', () => {
-      it('isHypershift, has "show" feature flag, and has value', async () => {
-        mockUseFeatureGate([[HCP_AWS_BILLING_SHOW, true]]);
+      it('isHypershift and has value', async () => {
         render(buildTestComponent(<ReviewClusterScreen {...defaultProps} />));
 
         expect(await screen.findByText('AWS infrastructure account ID')).toBeInTheDocument();
@@ -61,8 +59,7 @@ describe('<ReviewClusterScreen />', () => {
         expect(screen.getByText('123456789012')).toBeInTheDocument();
       });
 
-      it('isHypershift, has "show" feature flag, and has no value', async () => {
-        mockUseFeatureGate([[HCP_AWS_BILLING_SHOW, true]]);
+      it('isHypershift and has no value', async () => {
         render(
           buildTestComponent(<ReviewClusterScreen {...defaultProps} />, {
             billing_account_id: undefined,
@@ -75,18 +72,7 @@ describe('<ReviewClusterScreen />', () => {
       });
     });
     describe('is hidden when', () => {
-      it('isHypershift and "show" feature flag is false', async () => {
-        mockUseFeatureGate([[HCP_AWS_BILLING_SHOW, false]]);
-        render(buildTestComponent(<ReviewClusterScreen {...defaultProps} />));
-
-        expect(await screen.findByText('AWS infrastructure account ID')).toBeInTheDocument();
-        expect(screen.getByText('210987654321')).toBeInTheDocument();
-        expect(screen.queryByText('AWS billing account ID')).not.toBeInTheDocument();
-        expect(screen.queryByText('123456789012')).not.toBeInTheDocument();
-      });
-
       it('is not isHypershift', async () => {
-        mockUseFeatureGate([[HCP_AWS_BILLING_SHOW, true]]);
         render(
           buildTestComponent(<ReviewClusterScreen {...defaultProps} />, { hypershift: 'false' }),
         );

@@ -20,8 +20,6 @@ import { shouldRefetchQuota } from '~/common/helpers';
 import links from '~/common/installLinks.mjs';
 import { getAwsBillingAccountsFromQuota } from '~/components/clusters/common/quotaSelectors';
 import { useFormState } from '~/components/clusters/wizards/hooks';
-import { useFeatureGate } from '~/hooks/useFeatureGate';
-import { HCP_AWS_BILLING_REQUIRED, HCP_AWS_BILLING_SHOW } from '~/redux/constants/featureConstants';
 import { useGlobalState } from '~/redux/hooks/useGlobalState';
 import { CloudAccount } from '~/types/accounts_mgmt.v1/models/CloudAccount';
 
@@ -46,8 +44,6 @@ const AWSBillingAccount = ({
 }: AWSBillingAccountProps) => {
   const { setFieldValue, getFieldProps, getFieldMeta, setFieldTouched } = useFormState();
   const dispatch = useDispatch();
-  const isVisible = useFeatureGate(HCP_AWS_BILLING_SHOW);
-  const isRequired = useFeatureGate(HCP_AWS_BILLING_REQUIRED);
   const organization = useGlobalState((state) => state.userProfile.organization);
   const getAWSBillingAccountsResponse = useGlobalState(
     (state) => state.rosaReducer.getAWSBillingAccountsResponse,
@@ -114,10 +110,6 @@ const AWSBillingAccount = ({
   );
   const selectedContract = selectedAccount ? getContract(selectedAccount) : null;
 
-  if (!isVisible) {
-    return null;
-  }
-
   return (
     <>
       <GridItem span={8}>
@@ -146,8 +138,8 @@ const AWSBillingAccount = ({
           }}
           meta={getFieldMeta(FieldId.BillingAccountId)}
           label="AWS billing account"
-          validate={isRequired ? required : undefined}
-          required={isRequired}
+          validate={required}
+          required
           refresh={{
             onRefresh: refresh,
             text: 'Refresh to view any new AWS billing accounts. It can take up to 5 minutes to sync new accounts.',
