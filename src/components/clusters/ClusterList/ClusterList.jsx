@@ -167,7 +167,6 @@ const ClusterList = ({
   canHibernateClusterList,
   toggleSubscriptionReleased,
   meta: { clustersServiceError },
-  features,
   isAccessRequestEnabled,
 }) => {
   const [loadingChangedView, setLoadingChangedView] = React.useState(false);
@@ -461,7 +460,6 @@ ClusterList.propTypes = {
   setListFlag: PropTypes.func.isRequired,
   operationID: PropTypes.string,
   anyModalOpen: PropTypes.bool,
-  features: PropTypes.object.isRequired,
   queryParams: PropTypes.shape({
     has_filters: PropTypes.bool,
   }),
