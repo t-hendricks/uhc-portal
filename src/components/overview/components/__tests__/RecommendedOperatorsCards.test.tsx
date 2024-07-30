@@ -8,7 +8,7 @@ import RecommendedOperatorsCards from '../RecommendedOperatorsCards/RecommendedO
 import {
   RECOMMENDED_OPERATORS_CARDS_TEST_CASES,
   RECOMMENDED_OPERATORS_CARDS_DATA,
-} from '../__tests__/fixtures';
+} from '../fixtures';
 
 import '@testing-library/jest-dom';
 

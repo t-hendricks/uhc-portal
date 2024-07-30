@@ -3,7 +3,7 @@ import React from 'react';
 import { render, screen, userEvent } from '~/testUtils';
 
 import ProductCard from '../ProductCard/ProductCard';
-import { PRODUCT_CARD_TEST_CASES } from '../__tests__/fixtures';
+import { PRODUCT_CARD_TEST_CASES } from '../fixtures';
 
 import '@testing-library/jest-dom';
 

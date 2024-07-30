@@ -1,9 +1,9 @@
 import React from 'react';
-import { PRODUCT_CARD_LOGOS } from '../RecommendedOperatorsCards/DrawerPanelContent';
+import { PRODUCT_CARD_LOGOS } from './RecommendedOperatorsCards/DrawerPanelContent';
 import {
   DrawerPanelContentNode,
   DRAWER_PANEL_CONTENT,
-} from '../RecommendedOperatorsCards/DrawerPanelContent';
+} from './RecommendedOperatorsCards/DrawerPanelContent';
 
 const BASIC_PRODUCT_CARD_PROPS = {
   title: 'example title',
