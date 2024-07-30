@@ -77,7 +77,6 @@ const hypershiftDefaultSelected = true;
 export const initialValuesHypershift = (isHypershift: boolean) =>
   isHypershift
     ? {
-        [FieldId.ApplicationIngress]: ApplicationIngressType.Default,
         [FieldId.BillingModel]: billingModels.MARKETPLACE_AWS,
         [FieldId.ClusterAutoscaling]: null,
         [FieldId.ClusterPrivacyPublicSubnetId]: '',
@@ -106,13 +105,16 @@ export const initialValuesHypershift = (isHypershift: boolean) =>
         [FieldId.WorkerVolumeSizeGib]: defaultWorkerNodeVolumeSizeGiB,
       };
 
-export const initialValues: FormikValues = {
+export const initialValues: (hypershiftDefault?: boolean) => FormikValues = (
+  hypershiftDefault = hypershiftDefaultSelected,
+) => ({
   // static for ROSA, shouldn't change
   [FieldId.Byoc]: 'true',
   [FieldId.CloudProvider]: CloudProviderType.Aws,
   [FieldId.Product]: normalizedProducts.ROSA,
 
   // other fields
+  [FieldId.ApplicationIngress]: ApplicationIngressType.Default,
   [FieldId.AutomaticUpgradeSchedule]: '0 0 * * 0',
   [FieldId.CidrDefaultValuesToggle]: true,
   [FieldId.ClusterName]: '',
@@ -144,11 +146,12 @@ export const initialValues: FormikValues = {
   [FieldId.EnableExteranlAuthentication]: false,
 
   // Optional fields based on whether Hypershift is selected or not
-  ...initialValuesHypershift(hypershiftDefaultSelected),
-};
+  ...initialValuesHypershift(hypershiftDefault),
+});
 
 export const initialValuesRestrictedEnv: FormikValues = {
-  ...initialValues,
+  ...initialValues(false),
+  [FieldId.Hypershift]: 'false',
   [FieldId.ClusterPrivacy]: ClusterPrivacyType.Internal,
   [FieldId.EtcdEncryption]: true,
   [FieldId.FipsCryptography]: true,

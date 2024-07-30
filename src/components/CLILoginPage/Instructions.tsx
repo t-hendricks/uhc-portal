@@ -90,7 +90,7 @@ const Instructions = (props: Props) => {
   const dispatch = useDispatch();
   const chrome = useChrome() as Chrome;
   const showDeprecationMessage = useFeatureGate(CLI_SSO_AUTHORIZATION) && !SSOLogin;
-  const restrictedEnv = isRestrictedEnv(chrome);
+  const restrictedEnv = isRestrictedEnv();
   const [token, setToken] = React.useState<string>('');
 
   React.useEffect(() => {

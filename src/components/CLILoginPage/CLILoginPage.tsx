@@ -3,12 +3,10 @@ import React from 'react';
 import { Alert, Card, CardBody, CardTitle, PageSection, Title } from '@patternfly/react-core';
 import PageHeader, { PageHeaderTitle } from '@redhat-cloud-services/frontend-components/PageHeader';
 import { Spinner } from '@redhat-cloud-services/frontend-components/Spinner';
-import useChrome from '@redhat-cloud-services/frontend-components/useChrome';
 
 import { defaultToOfflineTokens, hasRestrictTokensCapability } from '~/common/restrictTokensHelper';
 import { isRestrictedEnv } from '~/restrictedEnv';
 import { Error } from '~/types/accounts_mgmt.v1';
-import { Chrome } from '~/types/types';
 
 import { AppPage } from '../App/AppPage';
 import Breadcrumbs from '../common/Breadcrumbs';
@@ -40,10 +38,9 @@ type CLILoginPageProps = {
 };
 
 const CLILoginPage = ({ showToken = false, showPath, isRosa = false }: CLILoginPageProps) => {
-  const chrome = useChrome() as Chrome;
   const { organization, isLoading, error } = useOrganization();
 
-  const restrictedEnv = isRestrictedEnv(chrome);
+  const restrictedEnv = isRestrictedEnv();
   let restrictTokens = false;
 
   if (!restrictedEnv) {
