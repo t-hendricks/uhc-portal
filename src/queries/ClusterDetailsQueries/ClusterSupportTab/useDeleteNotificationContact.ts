@@ -12,11 +12,22 @@ export const useDeleteNotificationContact = (subscriptionID: string) => {
     },
   });
 
+  if (isError) {
+    const formattedError = formatErrorData(isPending, isError, error);
+    return {
+      mutate,
+      isSuccess,
+      isPending,
+      isError,
+      error: formattedError,
+    };
+  }
+
   return {
     mutate,
     isSuccess,
     isPending,
     isError,
-    error: formatErrorData(isPending, isError, error),
+    error,
   };
 };
