@@ -2,13 +2,13 @@ import React from 'react';
 import { BrowserRouter } from 'react-router-dom';
 import { CompatRouter } from 'react-router-dom-v5-compat';
 
-import { render, screen, userEvent, waitFor, checkAccessibility } from '~/testUtils';
+import { checkAccessibility, render, screen, userEvent, waitFor } from '~/testUtils';
 
-import RecommendedOperatorsCards from '../RecommendedOperatorsCards/RecommendedOperatorsCards';
 import {
-  RECOMMENDED_OPERATORS_CARDS_TEST_CASES,
   RECOMMENDED_OPERATORS_CARDS_DATA,
+  RECOMMENDED_OPERATORS_CARDS_TEST_CASES,
 } from '../fixtures';
+import RecommendedOperatorsCards from '../RecommendedOperatorsCards/RecommendedOperatorsCards';
 
 import '@testing-library/jest-dom';
 
@@ -70,7 +70,7 @@ describe('RecommendedOperatorsCards', () => {
     );
 
     // ensure gitops and pipelines cards are NOT selected
-    for (let i = 0; i < 2; i++)
+    for (let i = 0; i < 2; i += 1)
       expect(productOverviewCards[i]).not.toHaveClass('pf-m-selected-raised');
 
     const labelTexts = screen.getAllByText(/Free/i);
@@ -96,7 +96,7 @@ describe('RecommendedOperatorsCards', () => {
     await waitFor(() => expect(gitopsCard).toHaveClass('pf-m-selected-raised'));
     expect(gitopsCard).toHaveClass('pf-m-selected-raised');
 
-    for (let i = 1; i < 3; i++)
+    for (let i = 1; i < 3; i += 1)
       expect(productOverviewCards[i]).not.toHaveClass('pf-m-selected-raised');
   });
 });

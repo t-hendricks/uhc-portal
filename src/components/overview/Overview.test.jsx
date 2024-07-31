@@ -4,8 +4,8 @@ import { CompatRouter } from 'react-router-dom-v5-compat';
 
 import { checkAccessibility, render, screen, userEvent } from '~/testUtils';
 
-import Overview from './Overview';
 import { RECOMMENDED_OPERATORS_CARDS_DATA } from './components/fixtures';
+import Overview from './Overview';
 
 import '@testing-library/jest-dom';
 
