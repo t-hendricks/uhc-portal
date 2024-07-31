@@ -1,8 +1,11 @@
 import React from 'react';
 import * as reactRedux from 'react-redux';
 
+import { addNotification } from '@redhat-cloud-services/frontend-components-notifications/redux';
+
 import { useDeleteNotificationContact } from '~/queries/ClusterDetailsQueries/ClusterSupportTab/useDeleteNotificationContact';
 import { useFetchNotificationContacts } from '~/queries/ClusterDetailsQueries/ClusterSupportTab/useFetchNotificationContacts';
+import { clearDeleteNotificationContacts } from '~/redux/actions/supportActions';
 import { act, checkAccessibility, render, screen } from '~/testUtils';
 
 import NotificationContactsCard from '../NotificationContactsCard';
@@ -25,6 +28,10 @@ jest.mock('react-redux', () => {
   };
   return config;
 });
+
+jest.mock('@redhat-cloud-services/frontend-components-notifications/redux', () => ({
+  addNotification: jest.fn(),
+}));
 
 jest.mock('~/components/common/ErrorBox', () => () => <div data-testid="error-box" />);
 
@@ -144,8 +151,9 @@ describe('<NotificationContactsCard />', () => {
     },
   );
 
-  it('renders what it is expected', () => {
+  it('renders what it is expected', async () => {
     // Arrange
+    const title = 'Notification contact deleted successfully';
     useFetchNotificationContactsMock.mockReturnValue({ ...defaultState });
     useDeleteNotificationContactMock.mockReturnValue({
       isError: false,
@@ -154,10 +162,11 @@ describe('<NotificationContactsCard />', () => {
       isPending: false,
     });
     // Act
-    render(<NotificationContactsCard {...defaultProps} />);
+    const { user } = render(<NotificationContactsCard {...defaultProps} />);
 
+    const kebabBtn = screen.getAllByRole('button', { name: /kebab toggle/i });
     // Assert
-    expect(screen.getAllByRole('button', { name: /kebab toggle/i })).toHaveLength(2);
+    expect(kebabBtn).toHaveLength(2);
     expect(
       screen.getByRole('row', {
         name: /username1 email1 firstname1 lastname1/i,
@@ -169,11 +178,21 @@ describe('<NotificationContactsCard />', () => {
       }),
     ).toBeInTheDocument();
     expect(screen.queryByTestId('error-box')).not.toBeInTheDocument();
+
+    await user.click(kebabBtn[0]);
+
+    const deleteBtn = screen.getByRole('menuitem', { name: /delete/i });
+
+    await user.click(deleteBtn);
+    expect(mockedDispatch).toHaveBeenCalledWith(clearDeleteNotificationContacts());
+    expect(mockedDispatch).toHaveBeenCalledWith(
+      addNotification({ variant: 'success', title, dismissable: false }),
+    );
   });
 
   it('renders what it is expected with error', async () => {
     // Arrange
-    // useFetchNotificationContactsMock.mockReturnValue({ ...defaultState,notificationContacts: { error: true },isError:true, refetch: jest.fn() });
+    const title = 'Notification contact deleted successfully';
     useDeleteNotificationContactMock.mockReturnValue({
       isError: true,
       mutate,
@@ -202,6 +221,9 @@ describe('<NotificationContactsCard />', () => {
     render(<NotificationContactsCard {...errorProps} />);
 
     // Assert
+    expect(useDispatchMock).not.toHaveBeenCalledWith(
+      addNotification({ variant: 'success', title, dismissable: false }),
+    );
     expect(screen.getByTestId('error-box')).toBeInTheDocument();
   });
 });
