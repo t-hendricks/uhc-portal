@@ -1,0 +1,93 @@
+import React from 'react';
+import { FieldInputProps } from 'formik';
+
+import { FormSelect, FormSelectOption } from '@patternfly/react-core';
+import { Spinner } from '@redhat-cloud-services/frontend-components/Spinner';
+
+import { useFormState } from '~/components/clusters/wizards/hooks';
+import ErrorBox from '~/components/common/ErrorBox';
+import { useFetchRegionalizedMultiRegions } from '~/queries/RosaWizardQueries/useFetchRegionalizedMultiRegions';
+
+import { CheckedRegion, defaultRegionID } from './validRegions';
+
+interface MultiRegionCloudRegionSelectFieldProps {
+  field: FieldInputProps<string>;
+  cloudProviderID: string;
+  isDisabled?: boolean;
+  handleCloudRegionChange?(): void;
+}
+
+export const MultiRegionCloudRegionSelectField = ({
+  field,
+  cloudProviderID,
+  isDisabled,
+  handleCloudRegionChange,
+}: MultiRegionCloudRegionSelectFieldProps) => {
+  const { setFieldValue } = useFormState();
+  const [regions, setRegions] = React.useState<CheckedRegion[] | undefined>([]);
+
+  const {
+    data: multiRegions,
+    isFetching,
+    isError,
+    error,
+    isSuccess,
+  } = useFetchRegionalizedMultiRegions();
+
+  React.useEffect(() => {
+    setRegions(multiRegions as CheckedRegion[]);
+  }, [multiRegions]);
+
+  React.useEffect(() => {
+    if (regions) {
+      const selectedRegionData = regions.find((r) => r.id === field.value);
+      if (!selectedRegionData || selectedRegionData.disableReason) {
+        const resetRegion = defaultRegionID(regions, cloudProviderID);
+        if (resetRegion) {
+          setFieldValue(field.name, resetRegion);
+          handleCloudRegionChange?.();
+        }
+      }
+    }
+  }, [regions, cloudProviderID, field.value, field.name, setFieldValue, handleCloudRegionChange]);
+
+  if (isSuccess && !isFetching && regions) {
+    return (
+      <FormSelect
+        name={field.name}
+        className="cloud-region-combo-box"
+        aria-label="Region"
+        isDisabled={isDisabled}
+        value={field.value}
+        onChange={(_event, value) => {
+          setFieldValue(field.name, value);
+          handleCloudRegionChange?.();
+        }}
+      >
+        {regions
+          // Never hide current selection.  If current region is invalid we'll
+          // normally force a different selection — but that affects next render.
+          .filter((region) => !region.hide || region.id === field.value)
+          .map((region) => (
+            <FormSelectOption
+              key={region.id}
+              value={region.id}
+              label={`${region.id}, ${region.display_name}`}
+              isDisabled={!!region.disableReason}
+            />
+          ))}
+      </FormSelect>
+    );
+  }
+
+  return isError ? (
+    <ErrorBox message="Error loading region list" response={error} />
+  ) : (
+    <>
+      <div className="spinner-fit-container">
+        <Spinner />
+      </div>
+      <div className="spinner-loading-text">Loading region list...</div>
+    </>
+  );
+};

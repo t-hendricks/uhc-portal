@@ -35,3 +35,23 @@ export type ClusterAutoscalerResponseType = {
   hasAutoscaler: boolean;
   data: ClusterAutoScalingForm;
 };
+
+export type SearchRegionalCluster = {
+  name?: string;
+  domain_prefix?: string;
+};
+
+export type SearchRegionalClusterItems = {
+  items: SearchRegionalCluster[];
+};
+
+export type RegionalizedCloudRegion = {
+  id?: string;
+  display_name?: string;
+  enabled?: boolean;
+  supports_multi_az?: boolean;
+  kms_location_id?: string;
+  ccs_only?: boolean;
+  supports_hypershift?: boolean;
+  is_regionalized?: boolean;
+};

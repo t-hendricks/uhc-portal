@@ -1,0 +1,11 @@
+{
+  "global": {
+    "url": "api.stage.openshift.com"
+  },
+  "us-east-1": {
+    "url": "api.stage.openshift.com"
+  },
+  "ap-southeast-1": {
+    "url": "***REMOVED***"
+  }
+}

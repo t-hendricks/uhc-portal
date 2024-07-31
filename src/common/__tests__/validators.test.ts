@@ -64,15 +64,22 @@ describe('Field is a valid identity provider name', () => {
 });
 
 describe('clusterNameAsyncValidation', () => {
-  const result = clusterNameAsyncValidation(undefined);
+  const uniqueErrorMessage = 'Globally unique name in your organization';
+  it('it validates with the correct message and validator', () => {
+    const result = clusterNameAsyncValidation(undefined);
 
-  it('is right message', () => {
-    const uniqueMsg = 'Globally unique name in your organization';
-    expect(result[0].text).toEqual(uniqueMsg);
+    expect(result[0].text).toEqual(uniqueErrorMessage);
+    expect(result[0].validator).toBeInstanceOf(Function);
   });
 
-  it('is right validator', () => {
-    expect(result[0].validator).toBeInstanceOf(Function);
+  it('it validates correctly against existing multi region clusters', () => {
+    const apSoutheastClusterName = 'testname1-ap-southeast-1';
+    const usEastClusterName = 'testname1-us-east-1';
+
+    const result = (value: string) => clusterNameAsyncValidation(value, true, true);
+
+    expect(result(apSoutheastClusterName)[0].text).toEqual(uniqueErrorMessage);
+    expect(result(usEastClusterName)[0].text).toEqual(uniqueErrorMessage);
   });
 });
 
@@ -126,15 +133,22 @@ describe('Field is a valid domain prefix [len, chars, start, end]', () => {
 });
 
 describe('domainPrefixAsyncValidation', () => {
-  const result = domainPrefixAsyncValidation(undefined);
+  const uniqueErrorMessage = 'Globally unique domain prefix in your organization';
+  it('it validates with the correct message and validator', () => {
+    const result = domainPrefixAsyncValidation(undefined);
 
-  it('is right message', () => {
-    const uniqueMsg = 'Globally unique domain prefix in your organization';
-    expect(result[0].text).toEqual(uniqueMsg);
+    expect(result[0].text).toEqual(uniqueErrorMessage);
+    expect(result[0].validator).toBeInstanceOf(Function);
   });
 
-  it('is right validator', () => {
-    expect(result[0].validator).toBeInstanceOf(Function);
+  it('it validates the correctly against existing multi region clusters', () => {
+    const apSoutheastPrefix = 'pre1SE';
+    const usEastPrefix = 'pre1US';
+
+    const result = (value: string) => domainPrefixAsyncValidation(value, true, undefined, true);
+
+    expect(result(apSoutheastPrefix)[0].text).toEqual(uniqueErrorMessage);
+    expect(result(usEastPrefix)[0].text).toEqual(uniqueErrorMessage);
   });
 });
 

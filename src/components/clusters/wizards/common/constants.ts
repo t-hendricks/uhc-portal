@@ -60,6 +60,7 @@ export enum FieldId {
   NoProxyDomains = 'no_proxy_domains',
   Product = 'product',
   Region = 'region',
+  RegionalInstance = 'regional_instance',
   RosaCreatorArn = 'rosa_creator_arn',
   RosaRolesProviderCreationMode = 'rosa_roles_provider_creation_mode',
   SecretAccessKey = 'secret_access_key',

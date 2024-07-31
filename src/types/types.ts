@@ -147,3 +147,11 @@ export type ListAPIParams = {
   fields?: string;
   orderBy?: string;
 };
+
+type StaticRegionalItem = {
+  url: string;
+};
+
+export type StaticRegionalItems = {
+  [key: string]: StaticRegionalItem;
+};
