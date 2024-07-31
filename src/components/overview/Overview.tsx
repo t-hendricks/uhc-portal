@@ -1,7 +1,7 @@
 import React, { useCallback, useState } from 'react';
 import { Link } from 'react-router-dom-v5-compat';
 
-import { Flex, FlexItem, Label, PageSection, Title } from '@patternfly/react-core';
+import { Flex, FlexItem, PageSection, Title } from '@patternfly/react-core';
 
 import ExternalLink from '~/components/common/ExternalLink';
 import InternalTrackingLink from '~/components/common/InternalTrackingLink';
@@ -9,10 +9,6 @@ import InternalTrackingLink from '~/components/common/InternalTrackingLink';
 import docLinks from '../../common/installLinks.mjs';
 import OpenShiftProductIcon from '../../styles/images/OpenShiftProductIcon.svg';
 import { AppPage } from '../App/AppPage';
-import {
-  ListTextLabelLinkCard,
-  ListTextLabelLinkCardProps,
-} from '../common/ListTextLabelLinkCard/ListTextLabelLinkCard';
 import { ProductBanner, ProductBannerProps } from '../common/ProductBanner';
 
 import OfferingCard from './components/OfferingCard/OfferingCard';
@@ -21,38 +17,6 @@ import { DrawerPanelContentNode } from './components/RecommendedOperatorsCards/D
 import RecommendedOperatorsCards from './components/RecommendedOperatorsCards/RecommendedOperatorsCards';
 
 import './Overview.scss';
-
-const linkTextLabelLinkCardContents: ListTextLabelLinkCardProps = {
-  cardClassName: 'pf-v5-u-mb-lg',
-  textLabelLinkItems: [
-    {
-      listItemText: 'Using Red Hat OpenShift Cluster Manager to work with your OpenShift clusters',
-      listItemLabel: <Label color="gold">Documentation</Label>,
-      listItemLink: (
-        <ExternalLink href={docLinks.OCM_DOCS_MANAGING_CLUSTERS}>Learn More</ExternalLink>
-      ),
-      dataTestId: 'recommendedContent_OCM',
-    },
-    {
-      listItemText: 'OpenShift Serverless overview',
-      listItemLabel: <Label color="gold">Documentation</Label>,
-      listItemLink: <ExternalLink href={docLinks.SERVERLESS_ABOUT}>Learn More</ExternalLink>,
-      dataTestId: 'recommendedContent_ServerLess',
-    },
-    {
-      listItemText: 'Understanding Service Mesh',
-      listItemLabel: <Label color="gold">Documentation</Label>,
-      listItemLink: <ExternalLink href={docLinks.SERVICE_MESH_ABOUT}>Learn More</ExternalLink>,
-      dataTestId: 'recommendedContent_ServiceMesh',
-    },
-    {
-      listItemText: 'About OpenShift Virtualization',
-      listItemLabel: <Label color="gold">Documentation</Label>,
-      listItemLink: <ExternalLink href={docLinks.VIRT_ABOUT}>Learn More</ExternalLink>,
-      dataTestId: 'recommendedContent_OVIRT',
-    },
-  ],
-};
 
 const openshiftBannerContents: ProductBannerProps = {
   icon: <img src={OpenShiftProductIcon} alt="OpenShift product icon" />,
@@ -155,16 +119,6 @@ function OverviewEmptyState() {
               <OfferingCard offeringType="DEVSNBX" />
             </FlexItem>
           </Flex>
-          <Title size="xl" headingLevel="h2" className="pf-v5-u-mt-lg pf-v5-u-mb-lg">
-            Recommended Content
-          </Title>
-          <ListTextLabelLinkCard {...linkTextLabelLinkCardContents} />
-          <ExternalLink
-            data-testid="recommendedContentFooterLink"
-            href="/openshift/learning-resources"
-          >
-            Browse all OpenShift learning resources
-          </ExternalLink>
           <RecommendedOperatorsCards
             openReadMore={openDrawer}
             selectedCardTitle={selectedCardTitle}

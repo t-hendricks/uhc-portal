@@ -25,10 +25,6 @@ describe('<Overview />', () => {
       }),
     ).toHaveAttribute('href', '/create');
 
-    expect(
-      screen.getByText('Browse all OpenShift learning resources', { selector: 'a' }),
-    ).toHaveAttribute('href', '/openshift/learning-resources');
-
     await checkAccessibility(container);
   });
 
