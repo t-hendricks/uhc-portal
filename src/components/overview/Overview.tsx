@@ -89,7 +89,6 @@ function OverviewEmptyState() {
             </FlexItem>
             <FlexItem align={{ default: 'alignRight' }}>
               <InternalTrackingLink
-                isButton
                 to={createClusterURL}
                 variant="link"
                 data-testid="create-cluster"
