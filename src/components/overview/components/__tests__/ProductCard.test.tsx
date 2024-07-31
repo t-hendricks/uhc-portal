@@ -23,10 +23,6 @@ describe('ProductCard', () => {
 
     expect(screen.getByTestId('open-right-drawer-icon')).toBeInTheDocument();
 
-    // todo: I cannot check that this content is being presented in this component level !!
-    // expect(screen.getByText(/example drawer panel content head/i)).toBeInTheDocument();
-    // expect(screen.getByText(/example drawer panel content body/i)).toBeInTheDocument();
-
     const readMoreBtn = screen.getByText(/Learn more/i);
     await userEvent.click(readMoreBtn);
     expect(openReadMore).toHaveBeenCalled();
