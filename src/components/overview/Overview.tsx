@@ -117,9 +117,24 @@ function OverviewEmptyState() {
           dataTestId={openshiftBannerContents.dataTestId}
         />
         <PageSection>
-          <Title size="xl" headingLevel="h2" className="pf-v5-u-mt-lg">
-            Featured OpenShift cluster types
-          </Title>
+          <Flex>
+            <FlexItem>
+              <Title size="xl" headingLevel="h2" className="pf-v5-u-mt-lg">
+                Featured OpenShift cluster types
+              </Title>
+            </FlexItem>
+            <FlexItem align={{ default: 'alignRight' }}>
+              <InternalTrackingLink
+                isButton
+                to={createClusterURL}
+                variant="link"
+                data-testid="create-cluster"
+                component={CreateClusterLink}
+              >
+                View all OpenShift cluster types
+              </InternalTrackingLink>
+            </FlexItem>
+          </Flex>
           <Flex className="pf-v5-u-mb-lg">
             <FlexItem className="pf-v5-u-pt-md" data-testid="offering-card_RHOSD">
               <OfferingCard offeringType="RHOSD" />
@@ -140,15 +155,6 @@ function OverviewEmptyState() {
               <OfferingCard offeringType="DEVSNBX" />
             </FlexItem>
           </Flex>
-          <InternalTrackingLink
-            isButton
-            to={createClusterURL}
-            variant="link"
-            data-testid="create-cluster"
-            component={CreateClusterLink}
-          >
-            View all OpenShift cluster types
-          </InternalTrackingLink>
           <Title size="xl" headingLevel="h2" className="pf-v5-u-mt-lg pf-v5-u-mb-lg">
             Recommended Content
           </Title>
