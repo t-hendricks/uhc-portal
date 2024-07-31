@@ -144,6 +144,7 @@ export const initialValues: (hypershiftDefault?: boolean) => FormikValues = (
   [FieldId.SelectedVpc]: { id: '', name: '' },
   [FieldId.UsePrivateLink]: false,
   [FieldId.EnableExteranlAuthentication]: false,
+  [FieldId.RegionalInstance]: {},
 
   // Optional fields based on whether Hypershift is selected or not
   ...initialValuesHypershift(hypershiftDefault),

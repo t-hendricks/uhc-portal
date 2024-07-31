@@ -87,6 +87,27 @@ export const awsRegions: CloudRegion[] = [
   // TODO: a region enabled: true for rhInfra but disabled in your AWS account for CCS.
 ];
 
+export const multiRegions: CloudRegion[] = [
+  {
+    id: 'ap-southeast-1',
+    display_name: 'Asia Pacific, Singapore',
+    enabled: true,
+    ccs_only: false,
+    supports_multi_az: true,
+    govcloud: false,
+    supports_hypershift: true,
+  },
+  {
+    id: 'us-west-2',
+    display_name: 'US West, Oregon',
+    enabled: true,
+    ccs_only: false,
+    supports_multi_az: true,
+    govcloud: false,
+    supports_hypershift: true,
+  },
+];
+
 // state.cloudProviders fixtures
 
 export const noProviders: CloudProvidersState = {

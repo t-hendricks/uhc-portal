@@ -52,11 +52,27 @@ import { FieldId } from '~/components/clusters/wizards/rosa/constants';
 import ExternalLink from '~/components/common/ExternalLink';
 import PopoverHint from '~/components/common/PopoverHint';
 import { useFeatureGate } from '~/hooks/useFeatureGate';
+import { formatRegionalInstanceUrl } from '~/queries/helpers';
+import {
+  refetchSearchClusterName,
+  useFetchSearchClusterName,
+} from '~/queries/RosaWizardQueries/useFetchSearchClusterName';
+import {
+  refetchSearchDomainPrefix,
+  useFetchSearchDomainPrefix,
+} from '~/queries/RosaWizardQueries/useFetchSearchDomainPrefix';
 import { getMachineTypesByRegionARN } from '~/redux/actions/machineTypesActions';
-import { LONGER_CLUSTER_NAME_UI } from '~/redux/constants/featureConstants';
+import {
+  LONGER_CLUSTER_NAME_UI,
+  MULTIREGION_PREVIEW_ENABLED,
+} from '~/redux/constants/featureConstants';
 import { useGlobalState } from '~/redux/hooks';
 import { QuotaCostList } from '~/types/accounts_mgmt.v1';
 import { Version } from '~/types/clusters_mgmt.v1';
+import { StaticRegionalItems } from '~/types/types';
+
+import staticRegionalInstances from '../../../../../../../mockdata/api/clusters_mgmt/v1/aws_inquiries/static_regional_instances.json';
+import { MultiRegionCloudRegionSelectField } from '../../../common/ClusterSettings/Details/CloudRegionSelectField/MultiRegionCloudRegionSelectField';
 
 import { EnableExternalAuthentication } from './EnableExternalAuthentication';
 
@@ -67,10 +83,13 @@ function Details() {
       [FieldId.MultiAz]: multiAz,
       [FieldId.BillingModel]: billingModel,
       [FieldId.Region]: region,
+      [FieldId.RegionalInstance]: regionalInstance,
       [FieldId.MachinePoolsSubnets]: machinePoolsSubnets,
       [FieldId.ClusterPrivacy]: clusterPrivacy,
       [FieldId.InstallerRoleArn]: installerRoleArn,
       [FieldId.HasDomainPrefix]: hasDomainPrefix,
+      [FieldId.ClusterName]: clusterName,
+      [FieldId.DomainPrefix]: domainPrefix,
     },
     errors,
     getFieldProps,
@@ -78,6 +97,12 @@ function Details() {
     setFieldTouched,
     validateForm,
   } = useFormState();
+  const [isExistingRegionalClusterName, setIsExistingRegionalClusterName] = React.useState<
+    boolean | undefined
+  >(false);
+  const [isExistingRegionalDomainPrefix, setIsExistingRegionalDomainPrefix] = React.useState<
+    boolean | undefined
+  >(false);
 
   const machineTypesByRegion = useSelector((state: any) => state.machineTypesByRegion);
   const dispatch = useDispatch();
@@ -95,6 +120,7 @@ function Details() {
 
   const isHypershiftSelected = hypershiftValue === 'true';
   const isMultiAz = multiAz === 'true';
+  const isMultiRegionEnabled = useFeatureGate(MULTIREGION_PREVIEW_ENABLED) && isHypershiftSelected;
 
   const [isExpanded, setIsExpanded] = useState(false);
   const onToggle = () => {
@@ -106,6 +132,65 @@ function Details() {
   const onExternalAuthToggle = () => {
     setIsExternalAuthExpanded(!isExternalAuthExpanded);
   };
+
+  const regionalInstances = staticRegionalInstances as StaticRegionalItems;
+
+  const findRegionalInstance = (selectedRegion: string) =>
+    regionalInstances[selectedRegion as keyof StaticRegionalItems] || regionalInstances.global;
+
+  React.useEffect(() => {
+    if (isMultiRegionEnabled) {
+      setFieldValue(FieldId.RegionalInstance, findRegionalInstance(region));
+    }
+    // eslint-disable-next-line  react-hooks/exhaustive-deps
+  }, [isMultiRegionEnabled, region, setFieldValue]);
+
+  const regionSearch = formatRegionalInstanceUrl(regionalInstance?.url);
+
+  const { isFetching: isSearchClusterNameFetching, data: searchClusterNameData } =
+    useFetchSearchClusterName(clusterName, regionSearch, isMultiRegionEnabled);
+
+  const { isFetching: isSearchDomainPrefixFetching, data: searchDomainPrefixData } =
+    useFetchSearchDomainPrefix(domainPrefix, regionSearch, isMultiRegionEnabled);
+
+  React.useEffect(() => {
+    refetchSearchClusterName();
+  }, [clusterName, regionalInstance]);
+
+  React.useEffect(() => {
+    refetchSearchDomainPrefix();
+  }, [domainPrefix, regionalInstance]);
+
+  const hasExistingRegionalClusterName =
+    searchClusterNameData?.items?.some((cluster) => cluster.name === clusterName) || undefined;
+
+  const hasExistingRegionalDomainPrefix =
+    searchDomainPrefixData?.items?.some((cluster) => cluster.domain_prefix === domainPrefix) ||
+    undefined;
+
+  React.useEffect(() => {
+    if (!isSearchClusterNameFetching) {
+      setIsExistingRegionalClusterName(hasExistingRegionalClusterName);
+    }
+  }, [hasExistingRegionalClusterName, isSearchClusterNameFetching]);
+
+  React.useEffect(() => {
+    if (!isSearchDomainPrefixFetching) {
+      setIsExistingRegionalDomainPrefix(hasExistingRegionalDomainPrefix);
+    }
+  }, [hasExistingRegionalDomainPrefix, isSearchDomainPrefixFetching]);
+
+  React.useEffect(() => {
+    if (isMultiRegionEnabled) {
+      setFieldTouched(FieldId.ClusterName);
+      setFieldTouched(FieldId.DomainPrefix);
+    }
+  }, [
+    isMultiRegionEnabled,
+    isExistingRegionalClusterName,
+    isExistingRegionalDomainPrefix,
+    setFieldTouched,
+  ]);
 
   // Region change may invalidate various fields.
   React.useEffect(() => {
@@ -141,7 +226,11 @@ function Details() {
       return syncError;
     }
 
-    const clusterNameAsyncError = await asyncValidateClusterName(value);
+    const clusterNameAsyncError = await asyncValidateClusterName(
+      value,
+      isMultiRegionEnabled,
+      isExistingRegionalClusterName,
+    );
     if (clusterNameAsyncError) {
       return clusterNameAsyncError;
     }
@@ -155,7 +244,12 @@ function Details() {
       return syncError;
     }
 
-    const domainPrefixAsyncError = await asyncValidateDomainPrefix(value);
+    const domainPrefixAsyncError = await asyncValidateDomainPrefix(
+      value,
+      isMultiRegionEnabled,
+      undefined,
+      isExistingRegionalDomainPrefix,
+    );
     if (domainPrefixAsyncError) {
       return domainPrefixAsyncError;
     }
@@ -251,6 +345,39 @@ function Details() {
     setFieldValue(FieldId.MachinePoolsSubnets, mpSubnetsReset);
   };
 
+  const RegionField = (
+    <>
+      <GridItem md={6}>
+        <FormGroup
+          label="Region"
+          isRequired
+          fieldId={FieldId.Region}
+          labelIcon={<PopoverHint hint={constants.regionHint} />}
+        >
+          {isMultiRegionEnabled ? (
+            <Field
+              component={MultiRegionCloudRegionSelectField}
+              name={FieldId.Region}
+              cloudProviderID={CloudProviderType.Aws}
+              handleCloudRegionChange={handleCloudRegionChange}
+            />
+          ) : (
+            <Field
+              component={CloudRegionSelectField}
+              name={FieldId.Region}
+              cloudProviderID={CloudProviderType.Aws}
+              isBYOC
+              isMultiAz={isMultiAz}
+              isHypershiftSelected={isHypershiftSelected}
+              handleCloudRegionChange={handleCloudRegionChange}
+            />
+          )}
+        </FormGroup>
+      </GridItem>
+      <GridItem md={6} />
+    </>
+  );
+
   return (
     <Form
       onSubmit={(event) => {
@@ -262,6 +389,9 @@ function Details() {
         <GridItem>
           <Title headingLevel="h3">Cluster details</Title>
         </GridItem>
+
+        {isMultiRegionEnabled ? RegionField : null}
+
         <GridItem md={6}>
           <Field
             component={RichInputField}
@@ -270,7 +400,9 @@ function Details() {
             type="text"
             validate={validateClusterName}
             validation={(value: string) => clusterNameValidation(value, clusterNameMaxLength)}
-            asyncValidation={clusterNameAsyncValidation}
+            asyncValidation={(value: string) =>
+              clusterNameAsyncValidation(value, isMultiRegionEnabled, isExistingRegionalClusterName)
+            }
             isRequired
             extendedHelpText={constants.clusterNameHint}
             input={{
@@ -312,7 +444,14 @@ function Details() {
                     type="text"
                     validate={validateDomainPrefix}
                     validation={domainPrefixValidation}
-                    asyncValidation={domainPrefixAsyncValidation}
+                    asyncValidation={(value: string) =>
+                      domainPrefixAsyncValidation(
+                        value,
+                        isMultiRegionEnabled,
+                        undefined,
+                        isExistingRegionalDomainPrefix,
+                      )
+                    }
                     isRequired
                     input={getFieldProps(FieldId.DomainPrefix)}
                   />
@@ -328,25 +467,7 @@ function Details() {
         </GridItem>
         <GridItem md={6} />
 
-        <GridItem md={6}>
-          <FormGroup
-            label="Region"
-            isRequired
-            fieldId={FieldId.Region}
-            labelIcon={<PopoverHint hint={constants.regionHint} />}
-          >
-            <Field
-              component={CloudRegionSelectField}
-              name={FieldId.Region}
-              cloudProviderID={CloudProviderType.Aws}
-              isBYOC
-              isMultiAz={isMultiAz}
-              isHypershiftSelected={isHypershiftSelected}
-              handleCloudRegionChange={handleCloudRegionChange}
-            />
-          </FormGroup>
-        </GridItem>
-        <GridItem md={6} />
+        {!isMultiRegionEnabled ? RegionField : null}
 
         {isHypershiftSelected ? (
           <Alert
