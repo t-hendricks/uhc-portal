@@ -1,0 +1,90 @@
+import * as React from 'react';
+import { FieldInputProps, Formik } from 'formik';
+
+import { waitFor } from '@testing-library/react';
+
+import { multiRegions } from '~/common/__tests__/regions.fixtures';
+import { CloudProviderType } from '~/components/clusters/wizards/common';
+import { FieldId, initialValues } from '~/components/clusters/wizards/rosa/constants';
+import { useFetchRegionalizedMultiRegions } from '~/queries/RosaWizardQueries/useFetchRegionalizedMultiRegions';
+import { render, screen } from '~/testUtils';
+
+import { MultiRegionCloudRegionSelectField } from './MultiRegionCloudRegionSelectField';
+
+jest.mock('~/queries/RosaWizardQueries/useFetchRegionalizedMultiRegions', () => ({
+  useFetchRegionalizedMultiRegions: jest.fn(),
+}));
+
+describe('<MultiRegionCloudRegionSeletField />', () => {
+  beforeEach(() => {
+    jest.resetAllMocks();
+  });
+  const defaultValues = {
+    ...initialValues,
+    [FieldId.Hypershift]: 'true',
+  };
+
+  const defaultProps = {
+    field: { name: 'region' } as FieldInputProps<string>,
+    cloudProviderID: CloudProviderType.Aws,
+  };
+
+  const mockedUseFetchRegionalizedMultiRegions = useFetchRegionalizedMultiRegions;
+
+  it('displays a spinner while regions are fetching', async () => {
+    (mockedUseFetchRegionalizedMultiRegions as jest.Mock).mockReturnValue({
+      data: undefined,
+      error: undefined,
+      isError: false,
+      isFetching: true,
+    });
+
+    render(
+      <Formik initialValues={defaultValues} onSubmit={() => {}}>
+        <MultiRegionCloudRegionSelectField {...defaultProps} />
+      </Formik>,
+    );
+
+    expect(await screen.findByText('Loading region list...')).toBeInTheDocument();
+  });
+
+  it('displays the error box when query fails', async () => {
+    (mockedUseFetchRegionalizedMultiRegions as jest.Mock).mockReturnValue({
+      data: undefined,
+      error: true,
+      isError: true,
+      isFetching: false,
+    });
+
+    render(
+      <Formik initialValues={defaultValues} onSubmit={() => {}}>
+        <MultiRegionCloudRegionSelectField {...defaultProps} />
+      </Formik>,
+    );
+
+    expect(await screen.findByText('Error loading region list')).toBeInTheDocument();
+  });
+
+  it('displays the available regions when they are loaded', async () => {
+    (mockedUseFetchRegionalizedMultiRegions as jest.Mock).mockReturnValue({
+      data: multiRegions,
+      error: false,
+      isFetching: false,
+      isError: false,
+      isSuccess: true,
+    });
+
+    render(
+      <Formik initialValues={defaultValues} onSubmit={() => {}}>
+        <MultiRegionCloudRegionSelectField {...defaultProps} />
+      </Formik>,
+    );
+
+    await waitFor(() => {
+      expect(screen.queryByText('Loading region list...')).not.toBeInTheDocument();
+    });
+
+    expect(await screen.findByText('ap-southeast-1, Asia Pacific, Singapore')).toBeInTheDocument();
+    expect(await screen.findByText('us-west-2, US West, Oregon')).toBeInTheDocument();
+  });
+});

@@ -4,10 +4,16 @@
 import * as React from 'react';
 import { Formik } from 'formik';
 
-import { fulfilledProviders, noProviders } from '~/common/__tests__/regions.fixtures';
+import { waitFor } from '@testing-library/react';
+
+import { fulfilledProviders, multiRegions, noProviders } from '~/common/__tests__/regions.fixtures';
 import { FieldId, initialValues } from '~/components/clusters/wizards/rosa/constants';
 import ocpLifeCycleStatuses from '~/components/releases/__mocks__/ocpLifeCycleStatuses';
-import { LONGER_CLUSTER_NAME_UI } from '~/redux/constants/featureConstants';
+import { useFetchRegionalizedMultiRegions } from '~/queries/RosaWizardQueries/useFetchRegionalizedMultiRegions';
+import {
+  LONGER_CLUSTER_NAME_UI,
+  MULTIREGION_PREVIEW_ENABLED,
+} from '~/redux/constants/featureConstants';
 import clusterService from '~/services/clusterService';
 import getOCPLifeCycleStatus from '~/services/productLifeCycleService';
 import { mockUseFeatureGate, render, screen, withState } from '~/testUtils';
@@ -16,6 +22,10 @@ import Details from './Details';
 
 jest.mock('~/services/clusterService');
 jest.mock('~/services/productLifeCycleService');
+
+jest.mock('~/queries/RosaWizardQueries/useFetchRegionalizedMultiRegions', () => ({
+  useFetchRegionalizedMultiRegions: jest.fn(),
+}));
 
 const version = { id: '4.14.0' };
 
@@ -71,6 +81,62 @@ describe('<Details />', () => {
 
       expect(await screen.findByText('eu-west-0, Avalon')).toBeInTheDocument();
       expect(await screen.findByText('single-az-3, Antarctica')).toBeInTheDocument();
+    });
+
+    it('displays multi region dropdown and shows a spinner while fetching', async () => {
+      mockUseFeatureGate([[MULTIREGION_PREVIEW_ENABLED, true]]);
+      const mockedUseFetchRegionalizedMultiRegions = useFetchRegionalizedMultiRegions;
+
+      (mockedUseFetchRegionalizedMultiRegions as jest.Mock).mockReturnValue({
+        data: undefined,
+        error: undefined,
+        isError: false,
+        isFetching: true,
+      });
+
+      const newValues = {
+        ...defaultValues,
+        [FieldId.Hypershift]: 'true',
+      };
+
+      render(
+        <Formik initialValues={newValues} onSubmit={() => {}}>
+          <Details />
+        </Formik>,
+      );
+      expect(await screen.findByText('Loading region list...')).toBeInTheDocument();
+    });
+
+    it('displays the available multi regions when they are fetched', async () => {
+      mockUseFeatureGate([[MULTIREGION_PREVIEW_ENABLED, true]]);
+      const mockedUseFetchRegionalizedMultiRegions = useFetchRegionalizedMultiRegions;
+
+      (mockedUseFetchRegionalizedMultiRegions as jest.Mock).mockReturnValue({
+        data: multiRegions,
+        error: false,
+        isFetching: false,
+        isError: false,
+        isSuccess: true,
+      });
+
+      const newValues = {
+        ...defaultValues,
+        [FieldId.Hypershift]: 'true',
+      };
+
+      render(
+        <Formik initialValues={newValues} onSubmit={() => {}}>
+          <Details />
+        </Formik>,
+      );
+      await waitFor(() => {
+        expect(screen.queryByText('Loading region list...')).not.toBeInTheDocument();
+      });
+
+      expect(
+        await screen.findByText('ap-southeast-1, Asia Pacific, Singapore'),
+      ).toBeInTheDocument();
+      expect(await screen.findByText('us-west-2, US West, Oregon')).toBeInTheDocument();
     });
   });
 

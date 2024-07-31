@@ -231,3 +231,79 @@ export const mockedClusterLogs = {
     },
   ],
 };
+
+export const mockedRegionalClustersApSouthEast = {
+  kind: 'ClusterList',
+  page: 1,
+  size: 3,
+  total: 3,
+  items: [
+    {
+      kind: 'Cluster',
+      id: '2a4tguaod1',
+      name: 'testname1-ap-southeast-1',
+      domain_prefix: 'pre1SE',
+      external_id: '7d72f3d1-17cc',
+      display_name: 'testdisplay1-ap-southeast-1',
+
+      cloud_provider: {
+        kind: 'CloudProviderLink',
+        id: 'aws',
+        href: '/api/clusters_mgmt/v1/cloud_providers/aws',
+      },
+      openshift_version: '4.15.2',
+      region: {
+        kind: 'CloudRegionLink',
+        id: 'ap-southeast-1',
+        href: '/api/clusters_mgmt/v1/cloud_providers/aws/regions/ap-southeast-1',
+      },
+    },
+    {
+      kind: 'Cluster',
+      id: '2a4tguaod170',
+      name: 'testname2-ap-southeast-1',
+      domain_prefix: 'pre2SE',
+      external_id: '7d72f3d1-17cc',
+      display_name: 'testdisplay2-ap-southeast-1',
+      cloud_provider: {
+        kind: 'CloudProviderLink',
+        id: 'aws',
+        href: '/api/clusters_mgmt/v1/cloud_providers/aws',
+      },
+      openshift_version: '4.15.2',
+      region: {
+        kind: 'CloudRegionLink',
+        id: 'ap-southeast-1',
+        href: '/api/clusters_mgmt/v1/cloud_providers/aws/regions/ap-southeast-1',
+      },
+    },
+    {
+      kind: 'Cluster',
+      id: '2a4tguaod1',
+      name: 'testname3-ap-southeast-3',
+      domain_prefix: 'pre3SE',
+      external_id: '7d72f3d1-l',
+      display_name: 'testdisplay3-ap-southeast-1',
+      cloud_provider: {
+        kind: 'CloudProviderLink',
+        id: 'aws',
+        href: '/api/clusters_mgmt/v1/cloud_providers/aws',
+      },
+      openshift_version: '4.15.2',
+      region: {
+        kind: 'CloudRegionLink',
+        id: 'ap-southeast-1',
+        href: '/api/clusters_mgmt/v1/cloud_providers/aws/regions/ap-southeast-1',
+      },
+    },
+  ],
+};
+
+export const mockedExistingSearchedCluster = {
+  items: [
+    {
+      name: 'existing-cluster-name',
+      domain_prefix: 'domain-pre-1',
+    },
+  ],
+};
