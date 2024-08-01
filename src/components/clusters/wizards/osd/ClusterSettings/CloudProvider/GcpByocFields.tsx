@@ -158,7 +158,7 @@ export const GcpByocFields = () => {
               </ul>
 
               <Text component={TextVariants.p} className="ocm-secondary-text">
-                Production Support from GCP is also recommended. To prevent potential conflicts, we
+                Enhanced Support from GCP is also recommended. To prevent potential conflicts, we
                 recommend that you have no other resources provisioned in the project prior to
                 provisioning OpenShift Dedicated. For more guidance, see the{' '}
                 <ExternalLink noIcon href={links.OSD_CCS_GCP}>
