@@ -1,10 +1,7 @@
 import React from 'react';
 
 import { normalizedProducts } from '~/common/subscriptionTypes';
-import {
-  ENABLE_MACHINE_CONFIGURATION,
-  HCP_USE_NODE_UPGRADE_POLICIES,
-} from '~/redux/constants/featureConstants';
+import { ENABLE_MACHINE_CONFIGURATION } from '~/redux/constants/featureConstants';
 import { baseRequestState } from '~/redux/reduxHelpers';
 import { checkAccessibility, mockUseFeatureGate, render, screen } from '~/testUtils';
 
@@ -711,7 +708,6 @@ describe('<MachinePools />', () => {
     });
 
     it('displays option to update machine pool if machine pool can be updated ', async () => {
-      mockUseFeatureGate([[HCP_USE_NODE_UPGRADE_POLICIES, true]]);
       useFetchMachineOrNodePoolsMock.mockReturnValue({
         isLoading: false,
         data: [
@@ -991,7 +987,6 @@ describe('<MachinePools />', () => {
 
   describe('Machine configuration', () => {
     mockUseFeatureGate([[ENABLE_MACHINE_CONFIGURATION, true]]);
-    mockUseFeatureGate([[HCP_USE_NODE_UPGRADE_POLICIES, true]]);
     const machineConfigLabel = 'Edit machine configuration';
     const expectActionButton = ({ toBePresent, toBeEnabled = true }) => {
       if (toBePresent) {
@@ -1005,14 +1000,7 @@ describe('<MachinePools />', () => {
       }
     };
 
-    it('is not present if feature flag is disabled', () => {
-      // mockUseFeatureGate([[ENABLE_MACHINE_CONFIGURATION, false]]);
-      render(<MachinePools {...defaultProps} />);
-
-      expectActionButton({ toBePresent: false });
-    });
-
-    it('is present if feature flag is enabled and cluster is ROSA', () => {
+    it('is present for ROSA cluster', () => {
       mockUseFeatureGate([[ENABLE_MACHINE_CONFIGURATION, true]]);
       const props = { ...defaultProps };
       render(<MachinePools {...props} />);
@@ -1020,7 +1008,7 @@ describe('<MachinePools />', () => {
       expectActionButton({ toBePresent: true });
     });
 
-    it('is present if feature flag is enabled and cluster is OSD with CCS on AWS', () => {
+    it('is present if cluster is OSD with CCS on AWS', () => {
       const props = {
         ...defaultProps,
         hasMachineConfiguration: true,
@@ -1075,7 +1063,7 @@ describe('<MachinePools />', () => {
       expectActionButton({ toBePresent: true, toBeEnabled: false });
     });
 
-    it('is absent if feature flag is enabled and cluster is OSD with CCS on GCP', () => {
+    it('is absent if cluster is OSD with CCS on GCP', () => {
       const props = {
         ...defaultProps,
         hasMachineConfiguration: true,
@@ -1097,7 +1085,7 @@ describe('<MachinePools />', () => {
       expectActionButton({ toBePresent: false });
     });
 
-    it('is absent if feature flag is enabled and cluster is OSD without CCS', () => {
+    it('is absent if cluster is OSD without CCS', () => {
       const props = {
         ...defaultProps,
         hasMachineConfiguration: true,
@@ -1119,7 +1107,7 @@ describe('<MachinePools />', () => {
       expectActionButton({ toBePresent: false });
     });
 
-    it('is absent if feature flag is enabled and cluster is Hypershift', () => {
+    it('is absent if cluster is Hypershift', () => {
       const props = {
         ...defaultProps,
         hasMachineConfiguration: true,

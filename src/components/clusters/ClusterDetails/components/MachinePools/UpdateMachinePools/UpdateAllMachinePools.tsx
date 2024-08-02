@@ -7,8 +7,6 @@ import { Alert, AlertActionLink, AlertVariant, Spinner } from '@patternfly/react
 
 import links from '~/common/installLinks.mjs';
 import ExternalLink from '~/components/common/ExternalLink';
-import { useFeatureGate } from '~/hooks/useFeatureGate';
-import { HCP_USE_NODE_UPGRADE_POLICIES } from '~/redux/constants/featureConstants';
 import { GlobalState } from '~/redux/store';
 import { NodePool } from '~/types/clusters_mgmt.v1/models/NodePool';
 
@@ -38,8 +36,6 @@ const UpdateAllMachinePools = ({
   const [errors, setErrors] = React.useState<string[]>(
     initialErrorMessage ? [initialErrorMessage] : [],
   );
-
-  const useNodeUpdatePolicies = useFeatureGate(HCP_USE_NODE_UPGRADE_POLICIES);
 
   const controlPlaneUpdating = useHCPControlPlaneUpdating();
 
@@ -72,22 +68,10 @@ const UpdateAllMachinePools = ({
 
   const updateNodePools = async () => {
     setPending(true);
-    const errors = await updateAllPools(
-      machinePoolsToUpdate,
-      clusterId,
-      controlPlaneVersion,
-      useNodeUpdatePolicies,
-    );
+    const errors = await updateAllPools(machinePoolsToUpdate, clusterId, controlPlaneVersion);
     setPending(false);
     setErrors(errors);
-    dispatch(
-      getMachineOrNodePools(
-        clusterId,
-        isHypershift,
-        controlPlaneVersion,
-        useNodeUpdatePolicies,
-      ) as any,
-    );
+    dispatch(getMachineOrNodePools(clusterId, isHypershift, controlPlaneVersion) as any);
   };
 
   return (

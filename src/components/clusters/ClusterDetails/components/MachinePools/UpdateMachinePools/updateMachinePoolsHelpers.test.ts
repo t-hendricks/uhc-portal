@@ -129,24 +129,9 @@ describe('updateMachinePoolsHelpers', () => {
     const clusterId = 'myCluster';
     const toBeVersion = '4.14.1';
 
-    it('calls patchNodePool if useNodePoolUpgradePolicies flag is false', async () => {
-      expect(clusterService.patchNodePool).not.toBeCalled();
-      await updateAllMachinePools(machinePools, clusterId, toBeVersion, false);
+    it('calls postNodePoolUpgradeSchedule ', async () => {
       expect(clusterService.postNodePoolUpgradeSchedule).not.toBeCalled();
-      expect(clusterService.patchNodePool).toBeCalledTimes(2);
-
-      const nodePoolPatchMock = clusterService.patchNodePool as jest.Mock;
-
-      const callForPool1 = nodePoolPatchMock.mock.calls[0];
-      const callForPool2 = nodePoolPatchMock.mock.calls[1];
-
-      expect(callForPool1).toEqual(['myCluster', 'myPool1', { version: { id: '4.14.1' } }]);
-      expect(callForPool2).toEqual(['myCluster', 'myPool2', { version: { id: '4.14.1' } }]);
-    });
-
-    it('calls postNodePoolUpgradeSchedule if useNodePoolUpgradePolicies flag is true', async () => {
-      expect(clusterService.postNodePoolUpgradeSchedule).not.toBeCalled();
-      await updateAllMachinePools(machinePools, clusterId, toBeVersion, true);
+      await updateAllMachinePools(machinePools, clusterId, toBeVersion);
 
       expect(clusterService.patchNodePool).not.toBeCalled();
       expect(clusterService.postNodePoolUpgradeSchedule).toBeCalledTimes(2);

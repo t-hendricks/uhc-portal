@@ -12,19 +12,11 @@ import clusterService, { getClusterServiceForRegion } from '~/services/clusterSe
 const useFetchNodePoolWithUpgradePolicies = (
   clusterID: string,
   clusterVersion: string,
-  useMachinePoolPolicies: any,
   isHypershiftCluster: boolean,
   region?: any,
 ) => {
   const { isLoading, data, isError, error, refetch, isRefetching } = useQuery({
-    queryKey: [
-      'nodePoolWithUpgradePolicies',
-      'clusterService',
-      clusterID,
-      clusterVersion,
-      useMachinePoolPolicies,
-      region,
-    ],
+    queryKey: ['nodePoolWithUpgradePolicies', 'clusterService', clusterID, clusterVersion, region],
     queryFn: async () => {
       if (region) {
         const clusterService = getClusterServiceForRegion(region);
@@ -34,7 +26,6 @@ const useFetchNodePoolWithUpgradePolicies = (
           if (
             !clusterVersion ||
             !pool.version ||
-            !useMachinePoolPolicies ||
             !semver.gt(
               semver.coerce(clusterVersion) as SemVer,
               semver.coerce(pool.version.id) as SemVer,
@@ -83,7 +74,6 @@ const useFetchNodePoolWithUpgradePolicies = (
         if (
           !clusterVersion ||
           !pool.version ||
-          !useMachinePoolPolicies ||
           !semver.gt(
             semver.coerce(clusterVersion) as SemVer,
             semver.coerce(pool.version.id) as SemVer,
@@ -176,7 +166,6 @@ export const useFetchMachineOrNodePools = (
   clusterID: string,
   isHypershiftCluster: boolean,
   clusterVersion: any,
-  useMachinePoolPolicies: any,
   region?: string,
 ) => {
   const {
@@ -186,13 +175,7 @@ export const useFetchMachineOrNodePools = (
     error: nodePoolWithUpgradePoliciesError,
     refetch: refetchNodePoolWithUpgradePolicies,
     isRefetching: isNodePoolWithUpgradePoliciesRefetching,
-  } = useFetchNodePoolWithUpgradePolicies(
-    clusterID,
-    clusterVersion,
-    useMachinePoolPolicies,
-    isHypershiftCluster,
-    region,
-  );
+  } = useFetchNodePoolWithUpgradePolicies(clusterID, clusterVersion, isHypershiftCluster, region);
 
   const {
     isLoading: isMachinePoolsLoading,
@@ -239,7 +222,6 @@ export const refetchMachineOrNodePoolsQuery = (
   clusterID: string,
   isHypershiftCluster: boolean,
   clusterVersion?: string,
-  useMachinePoolPolicies?: any,
   region?: string,
 ) => {
   if (isHypershiftCluster) {
@@ -249,7 +231,6 @@ export const refetchMachineOrNodePoolsQuery = (
         'clusterService',
         clusterID,
         clusterVersion,
-        useMachinePoolPolicies,
         region,
       ],
     });
