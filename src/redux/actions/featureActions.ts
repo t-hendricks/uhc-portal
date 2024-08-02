@@ -10,8 +10,6 @@ import {
   CLI_SSO_AUTHORIZATION,
   CLUSTER_OWNERSHIP_TRANSFER,
   ENABLE_MACHINE_CONFIGURATION,
-  HCP_AWS_BILLING_REQUIRED,
-  HCP_AWS_BILLING_SHOW,
   HCP_ROSA_GETTING_STARTED_PAGE,
   HCP_USE_NODE_UPGRADE_POLICIES,
   HCP_USE_UNMANAGED,
@@ -43,9 +41,7 @@ const getSimpleUnleashFeature = (unleashFeatureName: string, name: string) => ({
 export const features = [
   getSimpleUnleashFeature('hypershift-creation-wizard', HYPERSHIFT_WIZARD_FEATURE),
   getSimpleUnleashFeature('hcp-rosa-getting-started-page', HCP_ROSA_GETTING_STARTED_PAGE),
-  getSimpleUnleashFeature('hcp-aws-billing-show', HCP_AWS_BILLING_SHOW),
   getSimpleUnleashFeature('hcp-use-unmanaged-policies', HCP_USE_UNMANAGED),
-  getSimpleUnleashFeature('hcp-aws-billing-required', HCP_AWS_BILLING_REQUIRED),
   getSimpleUnleashFeature('hcp-use-node-upgrade-policies', HCP_USE_NODE_UPGRADE_POLICIES),
   getSimpleUnleashFeature('assisted-installer-merge-lists', ASSISTED_INSTALLER_MERGE_LISTS_FEATURE),
   getSimpleUnleashFeature('osd-google-marketplace', OSD_GOOGLE_MARKETPLACE_FEATURE),

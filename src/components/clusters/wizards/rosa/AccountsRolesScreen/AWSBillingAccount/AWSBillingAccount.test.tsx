@@ -3,16 +3,7 @@ import { Formik } from 'formik';
 import * as reactRedux from 'react-redux';
 
 import * as helpers from '~/common/helpers';
-import { HCP_AWS_BILLING_REQUIRED, HCP_AWS_BILLING_SHOW } from '~/redux/constants/featureConstants';
-import {
-  checkAccessibility,
-  mockUseFeatureGate,
-  render,
-  screen,
-  waitFor,
-  within,
-  withState,
-} from '~/testUtils';
+import { checkAccessibility, render, screen, waitFor, within, withState } from '~/testUtils';
 import { CloudAccount } from '~/types/accounts_mgmt.v1/models/CloudAccount';
 
 import { initialValues } from '../../constants';
@@ -109,7 +100,6 @@ describe('<AWSBillingAccount />', () => {
   it('is accessible', async () => {
     // Arrange
     shouldRefreshQuotaMock.mockReturnValue(false);
-    mockUseFeatureGate([[HCP_AWS_BILLING_SHOW, true]]);
 
     const { container } = withState(defaultState).render(
       buildTestComponent(<AWSBillingAccount {...defaultProps} />),
@@ -150,8 +140,6 @@ describe('<AWSBillingAccount />', () => {
   });
 
   it('populates the billing account id drop down with accounts in Redux state', async () => {
-    // Arrange
-    mockUseFeatureGate([[HCP_AWS_BILLING_SHOW, true]]);
     const accountInState = defaultState.rosaReducer.getAWSBillingAccountsResponse.data;
     const { user } = withState(defaultState).render(
       buildTestComponent(<AWSBillingAccount {...defaultProps} />),
@@ -235,8 +223,6 @@ describe('<AWSBillingAccount />', () => {
   });
 
   it('displays an error if get organization returns an error and is accessible', async () => {
-    // Arrange
-    mockUseFeatureGate([[HCP_AWS_BILLING_SHOW, true]]);
     const newState = {
       ...defaultState,
       userProfile: {
@@ -265,8 +251,6 @@ describe('<AWSBillingAccount />', () => {
   });
 
   it('displays an error if getting billing account returns an error and is accessible', async () => {
-    // Arrange
-    mockUseFeatureGate([[HCP_AWS_BILLING_SHOW, true]]);
     const newState = {
       ...defaultState,
       rosaReducer: {
@@ -293,8 +277,6 @@ describe('<AWSBillingAccount />', () => {
   });
 
   it('displays info alert if the billing and infrastructure account are different and is accessible', async () => {
-    // Arrange
-    mockUseFeatureGate([[HCP_AWS_BILLING_SHOW, true]]);
     const newProps = {
       ...defaultProps,
       selectedAWSBillingAccountID: '123',
@@ -368,77 +350,5 @@ describe('<AWSBillingAccount />', () => {
     await waitFor(() => {
       expect(screen.queryByRole('alert')).not.toBeInTheDocument();
     });
-  });
-
-  it('displays empty dom element if HCP_AWS_BILLING_SHOW is false', async () => {
-    // Arrange
-    shouldRefreshQuotaMock.mockReturnValue(false);
-    mockUseFeatureGate([[HCP_AWS_BILLING_SHOW, false]]);
-    const { container } = withState(defaultState).render(
-      buildTestComponent(<AWSBillingAccount {...defaultProps} />),
-    );
-    // await act(() => Promise.resolve());
-
-    // Assert
-    await waitFor(() => {
-      expect(container).toBeEmptyDOMElement();
-    });
-  });
-
-  it('does not display an empty dom element if HCP_AWS_BILLING_SHOW feature flag is true', async () => {
-    // Arrange
-    shouldRefreshQuotaMock.mockReturnValue(false);
-    mockUseFeatureGate([[HCP_AWS_BILLING_SHOW, true]]);
-    const { container } = withState(defaultState).render(
-      buildTestComponent(<AWSBillingAccount {...defaultProps} />),
-    );
-    // await act(() => Promise.resolve());
-
-    // Assert
-    await waitFor(() => {
-      expect(container).not.toBeEmptyDOMElement();
-    });
-  });
-
-  it('makes field not required if HCP_AWS_BILLING_REQUIRED feature flag is false', async () => {
-    // Arrange
-    shouldRefreshQuotaMock.mockReturnValue(false);
-    mockUseFeatureGate([
-      [HCP_AWS_BILLING_SHOW, true],
-      [HCP_AWS_BILLING_REQUIRED, false],
-    ]);
-    withState(defaultState).render(
-      buildTestComponent(
-        <AWSBillingAccount
-          {...{ ...defaultProps, selectedAWSBillingAccountID: 'notValidChoice' }}
-        />,
-      ),
-    );
-    // await act(() => Promise.resolve());
-
-    // Assert
-    await waitFor(() => {
-      expect(screen.queryByText('Field is required')).not.toBeInTheDocument(); // With the PF 4 select,this is the only way to determine if an element is required
-    });
-  });
-
-  it('makes field required if HCP_AWS_BILLING_REQUIRED feature flag is true', async () => {
-    // Arrange
-    shouldRefreshQuotaMock.mockReturnValue(false);
-    mockUseFeatureGate([
-      [HCP_AWS_BILLING_SHOW, true],
-      [HCP_AWS_BILLING_REQUIRED, true],
-    ]);
-    withState(defaultState).render(
-      buildTestComponent(
-        <AWSBillingAccount
-          {...{ ...defaultProps, selectedAWSBillingAccountID: 'notValidChoice' }}
-        />,
-      ),
-    );
-    // await act(() => Promise.resolve());
-
-    // Assert
-    expect(await screen.findByText('Field is required')).toBeInTheDocument(); // With the PF 4 select,this is the only way to determine if an element is required
   });
 });

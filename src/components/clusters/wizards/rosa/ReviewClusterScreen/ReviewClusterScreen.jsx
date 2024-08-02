@@ -26,10 +26,7 @@ import HiddenCheckbox from '~/components/common/FormikFormComponents/HiddenCheck
 import config from '~/config';
 import useCanClusterAutoscale from '~/hooks/useCanClusterAutoscale';
 import { useFeatureGate } from '~/hooks/useFeatureGate';
-import {
-  HCP_AWS_BILLING_SHOW,
-  HYPERSHIFT_WIZARD_FEATURE,
-} from '~/redux/constants/featureConstants';
+import { HYPERSHIFT_WIZARD_FEATURE } from '~/redux/constants/featureConstants';
 
 import { DebugClusterRequest } from '../../common/DebugClusterRequest';
 import ReviewSection, {
@@ -113,7 +110,6 @@ const ReviewClusterScreen = ({
   const [ocmRole, setOcmRole] = useState('');
   const [errorWithAWSAccountRoles, setErrorWithAWSAccountRoles] = useState(false);
   const isHypershiftEnabled = useFeatureGate(HYPERSHIFT_WIZARD_FEATURE);
-  const viewAWSBillingAcct = useFeatureGate(HCP_AWS_BILLING_SHOW);
 
   useEffect(() => {
     clearGetUserRoleResponse();
@@ -216,7 +212,7 @@ const ReviewClusterScreen = ({
         initiallyExpanded={errorWithAWSAccountRoles}
       >
         {ReviewItem(FieldId.AssociatedAwsId)}
-        {isHypershiftSelected && viewAWSBillingAcct && ReviewItem(FieldId.BillingAccountId)}
+        {isHypershiftSelected && ReviewItem(FieldId.BillingAccountId)}
         {ReviewRoleItem({
           name: 'ocm-role',
           getRoleResponse: getOCMRoleResponse,
