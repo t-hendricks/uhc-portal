@@ -1,3 +1,7 @@
+import pick from 'lodash/pick';
+
+import { GCPAuthType } from '~/components/clusters/wizards/osd/ClusterSettings/CloudProvider/types';
+
 import { normalizedProducts } from '../../../../common/subscriptionTypes';
 
 import { createClusterRequest } from './submitOSDRequest';
@@ -151,6 +155,22 @@ describe('createClusterRequest', () => {
     });
   };
 
+  const gcpServiceAccount = {
+    type: 'service_account',
+    project_id: 'sa-project-id',
+    private_key_id: '13K16EWTCR1NNFU3P5K99CRMFJC6L9TP4HRQDYYY',
+    private_key:
+      '-----BEGIN PRIVATE KEY-----\n***REMOVED***\n-----END PRIVATE KEY-----\n',
+    client_email: 'user@email.iam.gserviceaccount.com',
+    client_id: '22TPSDA33N0FAU3KL2KP5',
+    auth_uri: 'https://accounts.google.com/o/oauth2/auth',
+    token_uri: 'https://oauth2.googleapis.com/token',
+    auth_provider_x509_cert_url: 'https://www.googleapis.com/oauth2/v1/certs',
+    client_x509_cert_url:
+      'https://www.googleapis.com/robot/v1/metadata/x509/***REMOVED***',
+    universe_domain: 'googleapis.com',
+  };
+
   // TODO: this can be removed, but some scenarios tested here e.g. gcpVPCData
   //   are worth moving to wizards tests?
   describe('CreateOSDForm', () => {
@@ -212,6 +232,72 @@ describe('createClusterRequest', () => {
         expect(request.product).toEqual({ id: 'osd' });
         expect(request.cloud_provider.id).toEqual('gcp');
         expect(request.ccs.enabled).toEqual(true);
+      });
+
+      it('handles service account authentication type', () => {
+        const data = {
+          ...baseFormData,
+          billing_model: 'standard',
+          product: normalizedProducts.OSD,
+          cloud_provider: 'gcp',
+          byoc: 'true',
+          gcp_auth_type: GCPAuthType.ServiceAccounts,
+          gcp_service_account: JSON.stringify(gcpServiceAccount),
+          secure_boot: true,
+        };
+
+        const request = createClusterRequest({ isWizard: true }, data);
+        console.log(request);
+        expect(request.billing_model).toEqual(data.billing_model);
+        expect(request.product).toEqual({ id: 'osd' });
+        expect(request.cloud_provider.id).toEqual(data.cloud_provider);
+        expect(request.ccs.enabled).toEqual(true);
+        expect(request.gcp).toStrictEqual({
+          ...pick(gcpServiceAccount, [
+            'type',
+            'project_id',
+            'private_key_id',
+            'private_key',
+            'client_email',
+            'client_id',
+            'auth_uri',
+            'token_uri',
+            'auth_provider_x509_cert_url',
+            'client_x509_cert_url',
+          ]),
+          security: {
+            secure_boot: data.secure_boot,
+          },
+        });
+      });
+
+      it('handles short-lived credentials (wif configs) authentication type', () => {
+        const data = {
+          ...baseFormData,
+          billing_model: 'standard',
+          product: normalizedProducts.OSD,
+          cloud_provider: 'gcp',
+          byoc: 'true',
+          gcp_auth_type: GCPAuthType.ShortLivedCredentials,
+          gcp_wif_config: { id: '324ed23f2d12342d23d' },
+          secure_boot: true,
+        };
+
+        const request = createClusterRequest({ isWizard: true }, data);
+        console.log(request);
+        expect(request.billing_model).toEqual(data.billing_model);
+        expect(request.product).toEqual({ id: 'osd' });
+        expect(request.cloud_provider.id).toEqual(data.cloud_provider);
+        expect(request.ccs.enabled).toEqual(true);
+        expect(request.gcp).toStrictEqual({
+          authentication: {
+            kind: 'wif_config',
+            id: data.gcp_wif_config.id,
+          },
+          security: {
+            secure_boot: data.secure_boot,
+          },
+        });
       });
     });
 
