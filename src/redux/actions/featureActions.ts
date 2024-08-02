@@ -20,6 +20,7 @@ import {
   MULTIREGION_PREVIEW_ENABLED,
   NETWORK_VALIDATOR_ONDEMAND_FEATURE,
   OSD_GCP_SHARED_VPC_FEATURE,
+  OSD_GCP_WIF,
   OSD_GOOGLE_MARKETPLACE_FEATURE,
   SECURITY_GROUPS_FEATURE,
   SECURITY_GROUPS_FEATURE_DAY1,
@@ -58,6 +59,7 @@ export const features = [
   getSimpleUnleashFeature('longer-cluster-name-ui', LONGER_CLUSTER_NAME_UI),
   getSimpleUnleashFeature('enable-access-request', ACCESS_REQUEST_ENABLED),
   getSimpleUnleashFeature('cluster-ownership-transfer', CLUSTER_OWNERSHIP_TRANSFER),
+  getSimpleUnleashFeature('gcp-workload-identity-federation', OSD_GCP_WIF),
   {
     name: ASSISTED_INSTALLER_FEATURE,
     action: () =>

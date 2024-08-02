@@ -8,10 +8,11 @@ import { useFormState } from '~/components/clusters/wizards/hooks';
 import { FieldId } from '~/components/clusters/wizards/osd/constants';
 import { clearCcsCredientialsInquiry } from '~/redux/actions/ccsInquiriesActions';
 import { useGlobalState } from '~/redux/hooks/useGlobalState';
+import { clusterService } from '~/services';
 
+import { GcpByocFields } from './GcpByocFields/GcpByocFields';
 import { AwsByocFields } from './AwsByocFields';
 import { CloudProviderTileField } from './CloudProviderTileField';
-import { GcpByocFields } from './GcpByocFields';
 
 export const CloudProvider = () => {
   const dispatch = useDispatch();
@@ -23,6 +24,7 @@ export const CloudProvider = () => {
       [FieldId.AccessKeyId]: accessKeyId,
       [FieldId.SecretAccessKey]: secretAccessKey,
       [FieldId.GcpServiceAccount]: gcpServiceAccount,
+      [FieldId.GcpAuthType]: gcpAuthType,
     },
   } = useFormState();
   const { ccsCredentialsValidity } = useGlobalState((state) => state.ccsInquiries);
@@ -30,7 +32,15 @@ export const CloudProvider = () => {
 
   React.useEffect(() => {
     dispatch(clearCcsCredientialsInquiry());
-  }, [accountId, accessKeyId, secretAccessKey, gcpServiceAccount, dispatch]);
+  }, [
+    accountId,
+    accessKeyId,
+    secretAccessKey,
+    gcpServiceAccount,
+    cloudProvider,
+    gcpAuthType,
+    dispatch,
+  ]);
 
   return (
     <Form>
@@ -38,7 +48,11 @@ export const CloudProvider = () => {
       <CloudProviderTileField />
       {isByoc && (
         <>
-          {cloudProvider === CloudProviderType.Aws ? <AwsByocFields /> : <GcpByocFields />}
+          {cloudProvider === CloudProviderType.Aws ? (
+            <AwsByocFields />
+          ) : (
+            <GcpByocFields getWifConfigsService={clusterService.getGCPWifConfigs} />
+          )}
 
           {ccsCredentialsValidity.error && (
             <Alert

@@ -8,6 +8,8 @@ import {
 } from '~/common/helpers';
 import { billingModels } from '~/common/subscriptionTypes';
 import { getClusterAutoScalingSubmitSettings } from '~/components/clusters/common/clusterAutoScalingValues';
+import { GCPAuthType } from '~/components/clusters/wizards/osd/ClusterSettings/CloudProvider/types';
+import { FieldId } from '~/components/clusters/wizards/osd/constants';
 import { ApplicationIngressType } from '~/components/clusters/wizards/osd/Networking/constants';
 import config from '~/config';
 import { createCluster } from '~/redux/actions/clustersActions';
@@ -253,22 +255,40 @@ export const createClusterRequest = ({ isWizard = true, cloudProviderID, product
         isInstallExistingVPC,
       });
     } else if (actualCloudProviderID === 'gcp') {
-      const parsed = JSON.parse(formData.gcp_service_account);
-      clusterRequest.gcp = pick(parsed, [
-        'type',
-        'project_id',
-        'private_key_id',
-        'private_key',
-        'client_email',
-        'client_id',
-        'auth_uri',
-        'token_uri',
-        'auth_provider_x509_cert_url',
-        'client_x509_cert_url',
-      ]);
-      clusterRequest.gcp.security = {
-        secure_boot: formData.secure_boot,
+      let gcpAuthConfig = {};
+
+      if (formData[FieldId.GcpAuthType] === GCPAuthType.ServiceAccounts) {
+        const parsed = JSON.parse(formData.gcp_service_account);
+        gcpAuthConfig = pick(parsed, [
+          'type',
+          'project_id',
+          'private_key_id',
+          'private_key',
+          'client_email',
+          'client_id',
+          'auth_uri',
+          'token_uri',
+          'auth_provider_x509_cert_url',
+          'client_x509_cert_url',
+        ]);
+      }
+
+      if (formData[FieldId.GcpAuthType] === GCPAuthType.ShortLivedCredentials) {
+        gcpAuthConfig = {
+          authentication: {
+            kind: 'wif_config',
+            id: formData[FieldId.GcpWifConfig].id,
+          },
+        };
+      }
+
+      clusterRequest.gcp = {
+        ...gcpAuthConfig,
+        security: {
+          secure_boot: formData.secure_boot,
+        },
       };
+
       clusterRequest.cloud_provider.display_name = 'gcp';
       clusterRequest.cloud_provider.name = 'gcp';
       clusterRequest.flavour = {
