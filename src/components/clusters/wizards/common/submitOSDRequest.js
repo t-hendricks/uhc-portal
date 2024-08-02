@@ -14,7 +14,6 @@ import { ApplicationIngressType } from '~/components/clusters/wizards/osd/Networ
 import config from '~/config';
 import { createCluster } from '~/redux/actions/clustersActions';
 import { DEFAULT_FLAVOUR_ID } from '~/redux/actions/flavourActions';
-import { store } from '~/redux/store';
 import { NamespaceOwnershipPolicy } from '~/types/clusters_mgmt.v1/models/NamespaceOwnershipPolicy';
 import { WildcardPolicy } from '~/types/clusters_mgmt.v1/models/WildcardPolicy';
 
@@ -28,11 +27,6 @@ export const createClusterRequest = ({ isWizard = true, cloudProviderID, product
   const actualCloudProviderID = formData.cloud_provider || cloudProviderID;
   const actualProduct = formData.product || product;
   const isHypershiftSelected = formData.hypershift === 'true';
-  const state = store.getState();
-  const isAWSBillingAccountVisible =
-    state.features?.HCP_AWS_BILLING_SHOW !== undefined
-      ? state.features?.HCP_AWS_BILLING_SHOW
-      : true;
 
   const isRedHatOIDCManaged = formData?.byo_oidc_config_id_managed === 'true';
 
@@ -235,7 +229,7 @@ export const createClusterRequest = ({ isWizard = true, cloudProviderID, product
             kms_key_arn: formData.etcd_key_arn,
           };
         }
-        if (isAWSBillingAccountVisible) {
+        if (formData.billing_account_id) {
           clusterRequest.aws.billing_account_id = formData.billing_account_id;
         }
       }
