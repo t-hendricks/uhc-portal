@@ -1,0 +1,14 @@
+export const fakeWifConfigs = [
+  {
+    id: '1RfDs24VfohHqSDf4fSmvtfsaVC',
+    display_name: 'WIF Config 1',
+  },
+  {
+    id: '1MRtmsFtVUgyKlYg125H98kmeLd',
+    display_name: 'WIF Config 2',
+  },
+  {
+    id: 'KlYg125H98kmeLd1MRtmsFtVUgy',
+    display_name: 'WIF Config 3',
+  },
+];

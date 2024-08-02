@@ -1,0 +1,182 @@
+import React from 'react';
+
+import {
+  Alert,
+  Flex,
+  FlexItem,
+  Form,
+  FormAlert,
+  FormGroup,
+  Hint,
+  HintBody,
+  HintFooter,
+  HintTitle,
+  Popover,
+  Title,
+  ToggleGroup,
+  ToggleGroupItem,
+  ToggleGroupItemProps,
+} from '@patternfly/react-core';
+import { HelpIcon } from '@patternfly/react-icons/dist/esm/icons/help-icon';
+import styles from '@patternfly/react-styles/css/components/Form/form';
+
+import links from '~/common/installLinks.mjs';
+import { billingModels } from '~/common/subscriptionTypes';
+import { Prerequisites } from '~/components/clusters/wizards/common/Prerequisites/Prerequisites';
+import { useFormState } from '~/components/clusters/wizards/hooks';
+import { ServiceAccount } from '~/components/clusters/wizards/osd/ClusterSettings/CloudProvider/GcpByocFields/ServiceAccountAuth/ServiceAccount';
+import { ServiceAccountPrerequisites } from '~/components/clusters/wizards/osd/ClusterSettings/CloudProvider/GcpByocFields/ServiceAccountAuth/ServiceAccountPrerequisites';
+import {
+  ShortLivedCredentials,
+  ShortLivedCredentialsProps,
+} from '~/components/clusters/wizards/osd/ClusterSettings/CloudProvider/GcpByocFields/ShortLivedCredentials/ShortLivedCredentials';
+import { ShortLivedCredentialsPrerequisites } from '~/components/clusters/wizards/osd/ClusterSettings/CloudProvider/GcpByocFields/ShortLivedCredentials/ShortLivedCredentialsPrerequisites';
+import { GCPAuthType } from '~/components/clusters/wizards/osd/ClusterSettings/CloudProvider/types';
+import { FieldId } from '~/components/clusters/wizards/osd/constants';
+import ExternalLink from '~/components/common/ExternalLink';
+import { useFeatureGate } from '~/hooks/useFeatureGate';
+import { OSD_GCP_WIF } from '~/redux/constants/featureConstants';
+
+export interface GcpByocFieldsProps extends ShortLivedCredentialsProps {}
+
+export const GcpByocFields = (props: GcpByocFieldsProps) => {
+  const { getWifConfigsService } = props;
+  const {
+    values: { [FieldId.BillingModel]: billingModel },
+  } = useFormState();
+
+  const isWifEnabled = useFeatureGate(OSD_GCP_WIF);
+
+  const gcpTitle = 'Have you prepared your Google account?';
+  const gcpText = `To prepare your account, accept the Google Cloud Terms and Agreements. If you've already accepted the terms, you can continue to complete OSD prerequisites.`;
+
+  const {
+    setFieldValue,
+    values: { [FieldId.GcpAuthType]: authTypeFormValue },
+  } = useFormState();
+
+  const authType = isWifEnabled ? authTypeFormValue : GCPAuthType.ServiceAccounts;
+
+  const handleAuthChange: ToggleGroupItemProps['onChange'] = (event) => {
+    const { id } = event.currentTarget;
+    const selection =
+      id === GCPAuthType.ShortLivedCredentials
+        ? GCPAuthType.ShortLivedCredentials
+        : GCPAuthType.ServiceAccounts;
+
+    setFieldValue(FieldId.GcpAuthType, selection);
+    // when auth type changes, prerequisites change too, so resetting the acknowledgment state
+    setFieldValue(FieldId.AcknowledgePrereq, false);
+  };
+
+  return (
+    <Form isWidthLimited onSubmit={(e) => e.preventDefault()}>
+      {billingModel !== billingModels.MARKETPLACE_GCP && (
+        <FormAlert>
+          <Alert variant="info" isInline title="Customer cloud subscription">
+            Provision your cluster in a Google Cloud Platform account owned by you or your company
+            to leverage your existing relationship and pay Google Cloud Platform directly for public
+            cloud costs.
+          </Alert>
+        </FormAlert>
+      )}
+
+      <Flex direction={{ default: 'column' }} spaceItems={{ default: 'spaceItemsLg' }}>
+        {isWifEnabled && (
+          <FlexItem>
+            <Title headingLevel="h3" className="pf-v5-u-mb-sm">
+              GCP account details
+            </Title>
+            <FormGroup
+              label="Authentication type"
+              labelIcon={
+                <Popover
+                  bodyContent={
+                    <div>
+                      <div>
+                        Short-lived credentials use Workload Identity Federation (WIF) which is more
+                        secure. Use of WIF requires an OSD cluster running OpenShift{' '}
+                        <span className="pf-v5-u-font-family-monospace">4.17</span> or later.
+                      </div>
+                      <br />
+                      <div>
+                        Service Account uses longer-lived credentials, which are less secure.
+                      </div>
+                    </div>
+                  }
+                >
+                  <button
+                    type="button"
+                    aria-label="More info for authentication types"
+                    onClick={(e) => e.preventDefault()}
+                    className={styles.formGroupLabelHelp}
+                  >
+                    <HelpIcon />
+                  </button>
+                </Popover>
+              }
+            >
+              <ToggleGroup aria-label="Authentication type">
+                <ToggleGroupItem
+                  text="Service account"
+                  key={0}
+                  buttonId={GCPAuthType.ServiceAccounts}
+                  isSelected={authType === GCPAuthType.ServiceAccounts}
+                  onChange={handleAuthChange}
+                />
+                <ToggleGroupItem
+                  text="Short-lived credentials"
+                  key={1}
+                  buttonId={GCPAuthType.ShortLivedCredentials}
+                  isSelected={authType === GCPAuthType.ShortLivedCredentials}
+                  onChange={handleAuthChange}
+                />
+              </ToggleGroup>
+            </FormGroup>
+          </FlexItem>
+        )}
+        <FlexItem>
+          {isWifEnabled ? (
+            <Title headingLevel="h4" className="pf-v5-u-mb-sm">
+              {authType === GCPAuthType.ShortLivedCredentials
+                ? 'Short-lived credentials'
+                : 'Service account'}
+            </Title>
+          ) : (
+            <Title headingLevel="h3" className="pf-v5-u-mb-sm">
+              GCP Service account
+            </Title>
+          )}
+
+          <Prerequisites acknowledgementRequired initiallyExpanded>
+            {billingModel === billingModels.MARKETPLACE_GCP && (
+              <Hint className="pf-v5-u-mb-md pf-v5-u-mt-sm">
+                <HintTitle>
+                  <strong>{gcpTitle}</strong>
+                </HintTitle>
+                <HintBody>{gcpText}</HintBody>
+                <HintFooter>
+                  <ExternalLink href={links.GCP_CONSOLE_OSD_HOME}>
+                    Review Google terms and agreements.
+                  </ExternalLink>
+                </HintFooter>
+              </Hint>
+            )}
+            {authType === GCPAuthType.ShortLivedCredentials ? (
+              <ShortLivedCredentialsPrerequisites />
+            ) : (
+              <ServiceAccountPrerequisites />
+            )}
+          </Prerequisites>
+        </FlexItem>
+        <FlexItem>
+          {authType === GCPAuthType.ShortLivedCredentials ? (
+            <ShortLivedCredentials {...{ getWifConfigsService }} />
+          ) : (
+            <ServiceAccount />
+          )}
+        </FlexItem>
+      </Flex>
+    </Form>
+  );
+};

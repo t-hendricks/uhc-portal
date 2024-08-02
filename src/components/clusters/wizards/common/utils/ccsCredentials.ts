@@ -8,6 +8,7 @@ import {
   FieldId,
   GCP_DEFAULT_REGION,
 } from '~/components/clusters/wizards/common/constants';
+import { GCPAuthType } from '~/components/clusters/wizards/osd/ClusterSettings/CloudProvider/types';
 import {
   getAWSCloudProviderRegions,
   getGCPCloudProviderVPCs,
@@ -74,6 +75,12 @@ export const shouldValidateCcsCredentials = (
   values: FormikValues,
   ccsCredentialsValidity: GlobalState['ccsInquiries']['ccsCredentialsValidity'],
 ) => {
+  // GCP should be validated only if service accounts is the auth type
+  const shouldValidateProvider =
+    values[FieldId.CloudProvider] === CloudProviderType.Aws ||
+    (values[FieldId.CloudProvider] === CloudProviderType.Gcp &&
+      values[FieldId.GcpAuthType] === GCPAuthType.ServiceAccounts);
+
   const areCCSCredentialsValid =
     ccsCredentialsValidity.fulfilled &&
     ccsCredentialsValidity.cloudProvider === values[FieldId.CloudProvider] &&
@@ -84,5 +91,5 @@ export const shouldValidateCcsCredentials = (
         : getGcpCcsCredentials(values),
     );
 
-  return values[FieldId.Byoc] === 'true' && !areCCSCredentialsValid;
+  return values[FieldId.Byoc] === 'true' && shouldValidateProvider && !areCCSCredentialsValid;
 };
