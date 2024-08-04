@@ -10,7 +10,6 @@ import {
   CLI_SSO_AUTHORIZATION,
   CLUSTER_OWNERSHIP_TRANSFER,
   ENABLE_MACHINE_CONFIGURATION,
-  HCP_ROSA_GETTING_STARTED_PAGE,
   HCP_USE_NODE_UPGRADE_POLICIES,
   HCP_USE_UNMANAGED,
   HYPERSHIFT_WIZARD_FEATURE,
@@ -40,7 +39,6 @@ const getSimpleUnleashFeature = (unleashFeatureName: string, name: string) => ({
 // list of features to detect upon app startup
 export const features = [
   getSimpleUnleashFeature('hypershift-creation-wizard', HYPERSHIFT_WIZARD_FEATURE),
-  getSimpleUnleashFeature('hcp-rosa-getting-started-page', HCP_ROSA_GETTING_STARTED_PAGE),
   getSimpleUnleashFeature('hcp-use-unmanaged-policies', HCP_USE_UNMANAGED),
   getSimpleUnleashFeature('hcp-use-node-upgrade-policies', HCP_USE_NODE_UPGRADE_POLICIES),
   getSimpleUnleashFeature('assisted-installer-merge-lists', ASSISTED_INSTALLER_MERGE_LISTS_FEATURE),
