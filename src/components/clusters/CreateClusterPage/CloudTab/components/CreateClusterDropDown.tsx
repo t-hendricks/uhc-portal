@@ -7,15 +7,9 @@ import {
   Dropdown,
   DropdownItem,
   DropdownList,
-  HelperText,
-  HelperTextItem,
   MenuItemProps,
   MenuToggle,
 } from '@patternfly/react-core';
-
-import { useFeatureGate } from '~/hooks/useFeatureGate';
-import { HCP_ROSA_GETTING_STARTED_PAGE } from '~/redux/constants/featureConstants';
-import { isRestrictedEnv } from '~/restrictedEnv';
 
 interface CreateClusterDropDownProps {
   toggleId?: string;
@@ -28,32 +22,17 @@ const CreateButtonLink = (props: any) => <Link {...props} to={getStartedPath} />
 const CreateClusterDropDown = ({ toggleId }: CreateClusterDropDownProps) => {
   const [isDropDownOpen, setIsDropDownOpen] = React.useState(false);
   const menuToggleRef = useRef<HTMLButtonElement>(null);
-  const showHCPDirections = useFeatureGate(HCP_ROSA_GETTING_STARTED_PAGE) && !isRestrictedEnv();
   const dropDownRef = React.useRef<HTMLButtonElement>(null);
 
   const cliItem: MenuItemProps['component'] = (props) => (
     <Link {...props} id="with-cli" to={getStartedPath}>
       With CLI
-      {showHCPDirections ? (
-        <HelperText data-testid="cli-helper">
-          <HelperTextItem variant="indeterminate">
-            Supports ROSA with Hosted Control Plane and Classic.
-          </HelperTextItem>
-        </HelperText>
-      ) : null}
     </Link>
   );
 
   const wizardItem: MenuItemProps['component'] = (props) => (
     <Link {...props} id="with-web" to="/create/rosa/wizard">
       With web interface
-      {showHCPDirections ? (
-        <HelperText data-testid="wizard-helper">
-          <HelperTextItem variant="indeterminate">
-            Supports ROSA Classic. ROSA with Hosted Control Plane coming soon.
-          </HelperTextItem>
-        </HelperText>
-      ) : null}
     </Link>
   );
 
