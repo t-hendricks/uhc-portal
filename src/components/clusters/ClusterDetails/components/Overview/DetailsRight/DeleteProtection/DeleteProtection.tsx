@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 
 import {
@@ -10,12 +10,12 @@ import {
 import ButtonWithTooltip from '~/components/common/ButtonWithTooltip';
 import { openModal } from '~/components/common/Modal/ModalActions';
 import modals from '~/components/common/Modal/modals';
+import { useGlobalState } from '~/redux/hooks';
 
 type DelteProtectionProps = {
   protectionEnabled: boolean;
   clusterID: string;
   canToggle: boolean;
-  pending: boolean;
   isUninstalling?: boolean;
 };
 
@@ -23,7 +23,6 @@ const DeleteProtection = ({
   protectionEnabled,
   clusterID,
   canToggle,
-  pending,
   isUninstalling,
 }: DelteProtectionProps) => {
   const dispatch = useDispatch();
@@ -31,13 +30,29 @@ const DeleteProtection = ({
     !canToggle &&
     `You do not have permission to ${protectionEnabled ? 'disable' : 'enable'} Delete Protection. Only cluster owners, cluster editors, and Organization Administrators can ${protectionEnabled ? 'disable' : 'enable'} Delete Protection.`;
 
+  const clusterDetails = useGlobalState((state) => state.clusters.details);
+  const updateDeleteProtection = useGlobalState(
+    (state) => state.deleteProtection.updateDeleteProtection,
+  );
+  const [isDisabled, setIsDisabled] = useState(false);
+
+  // disabling button when update begins
+  useEffect(() => {
+    if (updateDeleteProtection.pending) setIsDisabled(true);
+  }, [updateDeleteProtection.pending]);
+
+  // re-enabling button when refresh ends or in case of an error
+  useEffect(() => {
+    if (clusterDetails.fulfilled || updateDeleteProtection.error) setIsDisabled(false);
+  }, [clusterDetails.fulfilled, updateDeleteProtection.error]);
+
   return (
     <DescriptionListGroup>
       <DescriptionListTerm>{`Delete Protection: ${protectionEnabled ? 'Enabled' : 'Disabled'}`}</DescriptionListTerm>
       <DescriptionListDescription>
         {!isUninstalling ? (
           <ButtonWithTooltip
-            isDisabled={pending}
+            isDisabled={isDisabled}
             variant="link"
             isInline
             onClick={() =>
