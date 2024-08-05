@@ -1,6 +1,11 @@
-.drawer-panel-content__logo {
-	height: 3em;
-	width: 3em;
-	min-height: 3em;
-	min-width: 3em;
+.drawer-panel-content{
+	&__logo {
+		height: 3em;
+		width: 3em;
+		min-height: 3em;
+		min-width: 3em;
+	}
+	&__learn-more {
+		margin-bottom: 20px;
+	}
 }

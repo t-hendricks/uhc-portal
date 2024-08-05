@@ -101,7 +101,7 @@ const DRAWER_PANEL_CONTENT = {
             </TextList>
           </TextContent>
         </StackItem>
-        <StackItem>
+        <StackItem className="drawer-panel-content__learn-more">
           <ExternalLink
             data-testid="learn-more-about-red-hat-openshift-gitops-drawer-panel-content-link"
             href="https://catalog.redhat.com/software/container-stacks/detail/5fb288c70a12d20cbecc6056"
@@ -179,7 +179,7 @@ const DRAWER_PANEL_CONTENT = {
             </TextList>
           </TextContent>
         </StackItem>
-        <StackItem>
+        <StackItem className="drawer-panel-content__learn-more">
           <ExternalLink
             data-testid="learn-more-about-red-hat-openshift-pipelines-drawer-panel-content-link"
             href="https://catalog.redhat.com/software/container-stacks/detail/5ec54a4628834587a6b85ca5"
@@ -286,7 +286,7 @@ const DRAWER_PANEL_CONTENT = {
             </TextList>
           </TextContent>
         </StackItem>
-        <StackItem>
+        <StackItem className="drawer-panel-content__learn-more">
           <ExternalLink
             data-testid="learn-more-about-red-hat-openshift-service-mesh-drawer-panel-content-link"
             href="https://catalog.redhat.com/software/container-stacks/detail/5ec53e8c110f56bd24f2ddc4"
