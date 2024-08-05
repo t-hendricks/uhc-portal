@@ -1,6 +1,10 @@
 import { useQuery } from '@tanstack/react-query';
 
-export type Region = { provider?: string; region?: string; url: string };
+import {
+  ErrorResponse,
+  formatClusterListError,
+} from '../ClusterListQueries/helpers/createResponseForFetchCluster';
+import { Region } from '../ClusterListQueries/types/types';
 
 export const useFetchRegions = ({
   mainQueryKey = 'fetchRegions',
@@ -8,7 +12,7 @@ export const useFetchRegions = ({
   refetchInterval = Infinity,
   returnAll = false,
 }) => {
-  const { isError, data, isLoading, isFetching } = useQuery({
+  const { isError, data, isLoading, isFetching, error, isFetched } = useQuery({
     queryKey: [mainQueryKey, 'getRegions'],
     staleTime,
     refetchInterval,
@@ -54,5 +58,15 @@ export const useFetchRegions = ({
     });
   }
 
-  return { isLoading, data: regionsArray, isError, isFetching };
+  const errorObj = formatClusterListError({ error } as { error: ErrorResponse });
+  const errors = errorObj ? [errorObj] : [];
+
+  return {
+    isLoading,
+    data: regionsArray,
+    isError,
+    isFetching,
+    errors,
+    isFetched,
+  };
 };

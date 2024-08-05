@@ -1,3 +1,4 @@
+import { AxiosError } from 'axios';
 import isEmpty from 'lodash/isEmpty';
 
 import type { Cluster as AICluster } from '@openshift-assisted/types/assisted-installer-service';
@@ -14,14 +15,24 @@ import {
   normalizeCluster,
   normalizeMetrics,
 } from '../../../common/normalize';
+import { Region } from '../types/types';
 
 export type MapEntry = { aiCluster?: AICluster; cluster?: Cluster; subscription: Subscription };
 
 export const createResponseForFetchClusters = (subscriptionMap: Map<string, MapEntry>) => {
-  const result: ClusterWithPermissions[] = [];
+  const result: (ClusterWithPermissions | Cluster)[] = [];
   subscriptionMap.forEach((entry) => {
-    let cluster: ClusterWithPermissions;
+    let cluster: ClusterWithPermissions | Cluster;
+
     if (
+      !!entry.cluster &&
+      !isEmpty(entry?.cluster) &&
+      (!entry.subscription || isEmpty(entry.subscription))
+    ) {
+      cluster = {
+        ...normalizeCluster(entry.cluster),
+      };
+    } else if (
       entry.subscription.managed &&
       entry.subscription.status !== subscriptionStatuses.DEPROVISIONED &&
       !!entry?.cluster &&
@@ -39,13 +50,31 @@ export const createResponseForFetchClusters = (subscriptionMap: Map<string, MapE
       cluster = isAssistedInstallSubscription(entry.subscription)
         ? fakeClusterFromAISubscription(entry.subscription, entry.aiCluster)
         : fakeClusterFromSubscription(entry.subscription);
-    }
 
-    // mark this as a clusters service cluster with partial data (happens when CS is down)
-    cluster.partialCS = cluster.managed && (!entry?.cluster || isEmpty(entry?.cluster));
+      // mark this as a clusters service cluster with partial data (happens when CS is down)
+      cluster.partialCS = cluster.managed && (!entry?.cluster || isEmpty(entry?.cluster));
+    }
 
     cluster.subscription = entry.subscription;
     result.push(cluster);
   });
   return result;
+};
+
+export type ErrorResponse = AxiosError & {
+  response: { data: { reason: string; operation_id: string } };
+};
+
+export const formatClusterListError = (
+  response: { error: ErrorResponse | null },
+  region?: Region,
+) => {
+  if (!response.error || (!response.error?.response?.data?.reason && !response.error?.message)) {
+    return null;
+  }
+  return {
+    reason: response.error?.response?.data?.reason || response.error?.message,
+    operation_id: response.error?.response?.data?.operation_id,
+    region,
+  };
 };

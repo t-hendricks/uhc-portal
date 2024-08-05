@@ -67,4 +67,33 @@ describe('useFetchCanEditDelete', () => {
       'myUpdateClusterId-3': true,
     });
   });
+
+  it('returns errors in expected format', async () => {
+    const errorResp = {
+      kind: 'Error',
+      operation_id: 'abcdef',
+      reason: 'There was a random error',
+    };
+
+    apiRequestMock.post.mockResolvedValueOnce({ data: apiCanDeleteResponse });
+    // mocking canEdit call as an error
+    apiRequestMock.post.mockRejectedValueOnce({ status: 403, response: { data: errorResp } });
+
+    const { result } = renderHook(() => useFetchCanEditDelete({}));
+
+    await waitFor(() => {
+      expect(result.current.canDelete).not.toBeUndefined();
+    });
+    await waitFor(() => {
+      expect(result.current.errors).not.toBeUndefined();
+    });
+
+    expect(result.current.errors).toEqual([
+      {
+        reason: 'There was a random error',
+        operation_id: 'abcdef',
+        region: undefined,
+      },
+    ]);
+  });
 });
