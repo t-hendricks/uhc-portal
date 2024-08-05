@@ -69,19 +69,19 @@ async function reportOrder(jiraToken, branch, verbose) {
   }
 
   const masterSha = await git.revparse([`${upstreamName}/master`]);
-  const condidateSha = branch || (await git.revparse(['--short', `${upstreamName}/candidate`]));
+  const stableSha = branch || (await git.revparse(['--short', `${upstreamName}/stable`]));
   let masterCommits = await gitLog(git, masterSha, ['--first-parent']);
   masterCommits = masterCommits.reverse();
-  const candidateCommits = await gitLog(git, condidateSha);
-  const candidateCommitMap = _.keyBy(candidateCommits, 'message');
+  const stableCommits = await gitLog(git, stableSha);
+  const stableCommitMap = _.keyBy(stableCommits, 'message');
   const masterCommitMap = _.keyBy(masterCommits, 'hash');
   const isFiltered = (commit) => {
-    // if doesn't match a message in candidate, keep it
-    const ccommit = candidateCommitMap[commit.message];
-    if (!ccommit) return false;
+    // if doesn't match a message in stable, keep it
+    const stableCommit = stableCommitMap[commit.message];
+    if (!stableCommit) return false;
     // if it matches a message, make sure it wasn't picked from this master commit
-    if (ccommit.picked_hash && ccommit.picked_hash !== commit.hash) {
-      // if this master commit doesn't have a matching candidate commit,
+    if (stableCommit.picked_hash && stableCommit.picked_hash !== commit.hash) {
+      // if this master commit doesn't have a matching stable commit,
       // make sure the master commit isn't really old
       const daysAgo = Math.floor((new Date() - new Date(commit.date)) / 86400000);
       return daysAgo > 50;
@@ -514,10 +514,10 @@ async function reportOrder(jiraToken, branch, verbose) {
     //  |_|   |_|_| |_|\__,_|  \___\___/|_| |_|_| |_|_|\___|\__|___/
     // /////////////////////////////////////////////////////////////
     console.log(
-      '\n=============================FINDING CONFLICTS WITH CANDIDATE================================\n',
+      '\n=============================FINDING CONFLICTS WITH STABLE================================\n',
     );
     let hasAnyConflicts = false;
-    const otherSha = branch || condidateSha;
+    const otherSha = branch || stableSha;
     const mergedFileMap = {};
     let conflictLog = [];
     for (let i = 0; i < readyCommits.length; i += 1) {
@@ -618,7 +618,7 @@ async function reportOrder(jiraToken, branch, verbose) {
       // nothing
     }
     if (!hasAnyConflicts) {
-      console.log(chalk.grey('\n\n~~no conflicts with CANDIDATE~~'));
+      console.log(chalk.grey('\n\n~~no conflicts with STABLE~~'));
     }
 
     // /////////////////////////////////////////////////////////////
@@ -637,25 +637,25 @@ async function reportOrder(jiraToken, branch, verbose) {
       AICommits.forEach((pick) => console.log(pick));
 
       console.log(
-        "\n\nMaster commit messages not found in candidate, but their jira tickets have 'do-not-promote' label\n",
+        "\n\nMaster commit messages not found in stable, but their jira tickets have 'do-not-promote' label\n",
       );
       doNotPromote.forEach((pick) => console.log(pick));
     }
     if (dependson.length) {
       console.log(
-        '\n\nMaster commit messages not found in candidate, but not all jira tickets they depends on are Closed\n',
+        '\n\nMaster commit messages not found in stable, but not all jira tickets they depends on are Closed\n',
       );
       dependson.forEach((pick) => console.log(pick));
     }
     if (qeNotReady.length) {
       console.log(
-        `\n\nMaster commit messages not found in candidate (${qeNotReady.length}), but not all associated jira tickets are Closed\n`,
+        `\n\nMaster commit messages not found in stable (${qeNotReady.length}), but not all associated jira tickets are Closed\n`,
       );
       qeNotReady.forEach((pick) => console.log(pick));
     }
     if (qeOnRequiredNotReady.length) {
       console.log(
-        '\n\nMaster commit messages not found in candidate, and all associated jira tickets are Closed, but these commits depend on commits whose jira tickets are not Closed\n',
+        '\n\nMaster commit messages not found in stable, and all associated jira tickets are Closed, but these commits depend on commits whose jira tickets are not Closed\n',
       );
       qeOnRequiredNotReady.forEach((pick) => console.log(pick));
     }
@@ -752,8 +752,8 @@ async function reportOrder(jiraToken, branch, verbose) {
     console.log('\n=============================STEPS=================================');
     console.log(`\nRecommended steps:`);
 
-    console.log(`\n${chalk.white('1.')} Create a new CANDIDATE branch with:`);
-    console.log(`${chalk.blueBright(`git checkout -b ${branchName} ${condidateSha}`)}\n`);
+    console.log(`\n${chalk.white('1.')} Create a new STABLE branch with:`);
+    console.log(`${chalk.blueBright(`git checkout -b ${branchName} ${stableSha}`)}\n`);
 
     console.log(`\n${chalk.white('2.')} Cherry-pick these commits into that branch:`);
     if (hasAnyConflicts) {
@@ -781,28 +781,17 @@ async function reportOrder(jiraToken, branch, verbose) {
     console.log(`\n${chalk.white('4.')} When done, push this branch to your fork.\n`);
 
     console.log(
-      `\n${chalk.white('5.')} In GITLAB create an MR between your fork and the CANDIDATE branch.`,
+      `\n${chalk.white('5.')} In GITLAB create an MR between your fork and the STABLE branch.`,
     );
     console.log(
-      `   ${chalk.white('a.')} For template dropdown choose: ${chalk.blue('release-candidate')}`,
+      `   ${chalk.white('a.')} For template dropdown choose: ${chalk.blue('GA-release')}`,
     );
     console.log(`   ${chalk.white('b.')} Do not SQUASH`);
 
     console.log(`   ${chalk.white('c.')} Pander for approvers`);
-    console.log(`   ${chalk.white('d.')} Merge into CANDIDATE`);
+    console.log(`   ${chalk.white('d.')} Merge into STABLE`);
 
-    console.log(
-      `\n${chalk.white('6.')} In GITLAB MR tab, click 'New merge request' in upper right.`,
-    );
-    console.log(`   ${chalk.white('a.')} Source branch = ${chalk.blue('candidate')}`);
-    console.log(`   ${chalk.white('b.')} Target branch = ${chalk.blue('stable')}`);
-    console.log(`   ${chalk.white('c.')} Click ${chalk.blue('Compare branches and continue')}`);
-    console.log(
-      `   ${chalk.white('d.')} For template dropdown choose: ${chalk.blue('GA-release')}`,
-    );
-    console.log(`   ${chalk.white('e.')} Wait for build to be successful then merge, no SQUASHING`);
-
-    console.log(`\n${chalk.white('7.')} Update two tables:`);
+    console.log(`\n${chalk.white('6.')} Update two tables:`);
     console.log(`   ${chalk.white('a.')} Copy Release notes from above and paste into:`);
     console.log(
       `        ${chalk.blue('https://gitlab.cee.redhat.com/service/uhc-portal/-/wikis/Release-Notes')}`,
@@ -813,7 +802,7 @@ async function reportOrder(jiraToken, branch, verbose) {
     );
     console.log(`   ${chalk.white('c.')} Announce the release on: ${chalk.blue(' #ocm-osd-ui')}`);
 
-    console.log(`\n${chalk.white('8.')} Label the released JIRA issues with this:`);
+    console.log(`\n${chalk.white('7.')} Label the released JIRA issues with this:`);
     console.log(`   ./run/label-release-jira.mjs  --jira-token=${jiraToken}`);
     console.log('\n\n');
   } else {
@@ -862,7 +851,7 @@ async function logConflicts(
     } else {
       log.push(chalk.white('      ~~~empty line~~~'));
     }
-    log.push(`    ${chalk.cyanBright('\nVersion in CANDIDATE:\n')}`);
+    log.push(`    ${chalk.cyanBright('\nVersion in STABLE:\n')}`);
     if (part2 !== '\n') {
       const set = new Set();
       part2 = part2.split('\n').slice(1, -1);
