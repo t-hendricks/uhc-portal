@@ -74,4 +74,26 @@ describe('<ErrorBox />', () => {
 
     expect(screen.getByRole('button')).toHaveAttribute('aria-controls');
   });
+
+  it('always displays as an alert  if forceAsAlert prop is sent', () => {
+    const dangerProps = {
+      ...defaultProps,
+      variant: 'warning' as 'danger' | 'warning',
+      forceAsAlert: true,
+    };
+    render(<ErrorBox {...dangerProps} />);
+
+    expect(screen.getByRole('alert')).toBeInTheDocument();
+  });
+
+  it('does not display the operation id if hideOperationID prop is sent', () => {
+    const dangerProps = {
+      ...defaultProps,
+      variant: 'warning' as 'danger' | 'warning',
+      hideOperationID: true,
+    };
+    render(<ErrorBox {...dangerProps} />);
+
+    expect(screen.queryByText('Operation ID:')).not.toBeInTheDocument();
+  });
 });

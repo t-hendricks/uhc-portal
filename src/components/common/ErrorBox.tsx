@@ -13,6 +13,8 @@ type Props = {
   isExpandable?: boolean;
   showCloseBtn?: boolean;
   onCloseAlert?: () => void;
+  hideOperationID?: boolean;
+  forceAsAlert?: boolean;
 };
 
 const ErrorBox = ({
@@ -23,6 +25,8 @@ const ErrorBox = ({
   isExpandable,
   showCloseBtn = false,
   onCloseAlert,
+  hideOperationID,
+  forceAsAlert,
 }: Props) => {
   const closeAlertProp = {
     actionClose: <AlertActionCloseButton onClose={onCloseAlert} />,
@@ -32,7 +36,7 @@ const ErrorBox = ({
       variant={variant}
       isInline
       title={message}
-      role={variant === 'danger' ? 'alert' : undefined}
+      role={variant === 'danger' || forceAsAlert ? 'alert' : undefined}
       className="error-box"
       data-testid="alert-error"
       {...(showCloseBtn && closeAlertProp)}
@@ -45,7 +49,7 @@ const ErrorBox = ({
       )}
       {isExpandable || children ? (
         <ExpandableSection toggleText={children ? 'More details' : 'Error details'}>
-          <ErrorDetailsDisplay response={response} />
+          <ErrorDetailsDisplay response={response} hideOperationID={hideOperationID} />
         </ExpandableSection>
       ) : (
         <ErrorDetailsDisplay response={response} />

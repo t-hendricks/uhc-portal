@@ -1,13 +1,24 @@
+import { AxiosError } from 'axios';
+
+import type { Cluster as AICluster } from '@openshift-assisted/types/assisted-installer-service';
+
 import { createViewQueryObject } from '~/common/queryHelpers';
 import { subscriptionStatuses } from '~/common/subscriptionTypes';
+import { getSubscriptionQueryType } from '~/services/accountsService';
 import type { Subscription } from '~/types/accounts_mgmt.v1';
+import { Cluster } from '~/types/clusters_mgmt.v1';
 
 import isAssistedInstallSubscription from '../../../common/isAssistedInstallerCluster';
 import { mapListResponse, normalizeSubscription } from '../../../common/normalize';
 import { accountsService, assistedService, clusterService } from '../../../services';
 import { queryConstants } from '../../queriesConstants';
 
-import { createResponseForFetchClusters, MapEntry } from './createResponseForFetchCluster';
+import {
+  createResponseForFetchClusters,
+  ErrorResponse,
+  formatClusterListError,
+  MapEntry,
+} from './createResponseForFetchCluster';
 
 const buildSearchClusterQuery = (items: { [field: string]: unknown }[], field: string): string => {
   const IDs = new Set();
@@ -27,8 +38,8 @@ const fetchAIClusters = async (subscriptionIds: string[]) => {
   try {
     const response = await assistedService.getAIClustersBySubscription(subscriptionIds);
     return { aiClusters: response.data };
-  } catch (_error) {
-    return { aiClusters: [] };
+  } catch (e) {
+    return e;
   }
 };
 
@@ -38,8 +49,12 @@ const fetchManagedClusters = async (managedSubscriptions: Subscription[] = []) =
   }
   const clustersSearchQuery = buildSearchClusterQuery(managedSubscriptions, 'cluster_id');
 
-  const response = await clusterService.searchClusters(clustersSearchQuery);
-  return { managedClusters: response.data?.items };
+  try {
+    const response = await clusterService.searchClusters(clustersSearchQuery);
+    return { managedClusters: response.data?.items };
+  } catch (e) {
+    return e;
+  }
 };
 
 type ModifiedViewOptions = {
@@ -72,8 +87,7 @@ const fetchGlobalSubscriptions = async (
 
   params.filter = `(xcm_id='' OR xcm_id IS NULL) AND ${params.filter}`;
 
-  // @ts-ignore - TODO the types are inconstant due to optional items
-  const response = await accountsService.getSubscriptions(params);
+  const response = await accountsService.getSubscriptions(params as getSubscriptionQueryType);
   const subscriptions = mapListResponse(response, normalizeSubscription);
 
   const items =
@@ -122,38 +136,79 @@ export const fetchPageOfGlobalClusters = async (
 ) => {
   // Get global region clusters
   // This gets the subscriptions list first then clusters
-  const { subscriptionIds, subscriptionMap, managedSubscriptions, total } =
-    await fetchGlobalSubscriptions(page, aiMergeListsFeatureFlag, viewOptions, userName);
 
-  const [{ aiClusters }, { managedClusters }] = await Promise.all([
+  let subscriptionResponse = {};
+  let isError = false;
+  const errors = [];
+
+  try {
+    subscriptionResponse = await fetchGlobalSubscriptions(
+      page,
+      aiMergeListsFeatureFlag,
+      viewOptions,
+      userName,
+    );
+  } catch (e) {
+    const error = formatClusterListError({ error: e as ErrorResponse });
+    return {
+      items: [],
+      page,
+      total: 0,
+      isError: true,
+      errors: error ? [error] : [],
+    };
+  }
+
+  const { subscriptionIds, subscriptionMap, managedSubscriptions, total } =
+    subscriptionResponse as Awaited<Promise<ReturnType<typeof fetchGlobalSubscriptions>>>;
+
+  const [aiClustersResponse, managedClustersResponse] = await Promise.all([
     fetchAIClusters(subscriptionIds),
     fetchManagedClusters(managedSubscriptions),
   ]);
 
-  if (aiClusters) {
-    aiClusters.forEach((aiCluster) => {
-      const entry = subscriptionMap.get(aiCluster.id);
-      if (entry) {
-        entry.aiCluster = aiCluster;
-      }
-    });
+  if (managedClustersResponse instanceof AxiosError) {
+    isError = true;
+    errors.push(formatClusterListError({ error: managedClustersResponse as ErrorResponse }));
+  } else {
+    const { managedClusters } = managedClustersResponse as { managedClusters: Cluster[] };
+
+    if (managedClusters) {
+      managedClusters.forEach((cluster) => {
+        if (cluster.id) {
+          const entry = subscriptionMap.get(cluster.id);
+          if (entry !== undefined) {
+            // store cluster into subscription map
+            entry.cluster = cluster;
+          }
+        }
+      });
+    }
   }
 
-  if (managedClusters) {
-    managedClusters.forEach((cluster) => {
-      if (cluster.id) {
-        const entry = subscriptionMap.get(cluster.id);
-        if (entry !== undefined) {
-          // store cluster into subscription map
-          entry.cluster = cluster;
+  if (aiClustersResponse instanceof AxiosError) {
+    isError = true;
+    errors.push(formatClusterListError({ error: aiClustersResponse as ErrorResponse }));
+  } else {
+    const { aiClusters } = aiClustersResponse as { aiClusters: AICluster[] };
+
+    if (aiClusters) {
+      aiClusters.forEach((aiCluster) => {
+        if (aiCluster.id) {
+          const entry = subscriptionMap.get(aiCluster.id);
+          if (entry) {
+            entry.aiCluster = aiCluster;
+          }
         }
-      }
-    });
+      });
+    }
   }
 
   return {
     items: createResponseForFetchClusters(subscriptionMap),
     page,
     total,
+    isError,
+    errors,
   };
 };

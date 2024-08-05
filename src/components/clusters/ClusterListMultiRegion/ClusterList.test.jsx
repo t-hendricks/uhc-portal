@@ -716,6 +716,116 @@ describe('<ClusterList />', () => {
     }, 80000);
   });
 
+  describe('Errors', () => {
+    const alertText = 'Some operations are unavailable, try again later';
+    const errorDetailsToggleText = 'Error details';
+
+    it('Error triangle shows if there is an error fetching clusters', async () => {
+      mockedGetFetchedClusters.mockReturnValue({
+        data: { items: [fixtures.clusterDetails.cluster] },
+        isFetched: true,
+        isError: true,
+        errors: [{ reason: 'There was an error', operation_id: '1234' }],
+      });
+      render(
+        <MemoryRouter>
+          <CompatRouter>
+            <ClusterList {...props} />
+          </CompatRouter>
+        </MemoryRouter>,
+      );
+      expect(screen.getByTestId('error-triangle-icon')).toBeInTheDocument();
+    });
+
+    it('Shows errors when getting global clusters without operation id', async () => {
+      mockedGetFetchedClusters.mockReturnValue({
+        data: { items: [fixtures.clusterDetails.cluster] },
+        isFetched: true,
+        isError: true,
+        errors: [{ reason: 'There was an error' }],
+      });
+      const { user } = render(
+        <MemoryRouter>
+          <CompatRouter>
+            <ClusterList {...props} />
+          </CompatRouter>
+        </MemoryRouter>,
+      );
+      expect(within(screen.getByRole('alert')).getByText(alertText)).toBeInTheDocument();
+
+      await user.click(screen.getByText(errorDetailsToggleText));
+      expect(within(screen.getByRole('alert')).getByText('"There was an error."'));
+    });
+
+    it('Shows errors when getting global clusters', async () => {
+      mockedGetFetchedClusters.mockReturnValue({
+        data: { items: [fixtures.clusterDetails.cluster] },
+        isFetched: true,
+        isError: true,
+        errors: [{ reason: 'There was an error', operation_id: '1234' }],
+      });
+      const { user } = render(
+        <MemoryRouter>
+          <CompatRouter>
+            <ClusterList {...props} />
+          </CompatRouter>
+        </MemoryRouter>,
+      );
+      expect(within(screen.getByRole('alert')).getByText(alertText)).toBeInTheDocument();
+
+      await user.click(screen.getByText(errorDetailsToggleText));
+      expect(
+        within(screen.getByRole('alert')).getByText('"There was an error. (Operation ID: 1234)"'),
+      );
+    });
+
+    it('Shows errors when getting regional clusters', async () => {
+      mockedGetFetchedClusters.mockReturnValue({
+        data: { items: [fixtures.clusterDetails.cluster] },
+        isFetched: true,
+        isError: true,
+        errors: [
+          { reason: 'There was an error', operation_id: '1234', region: { region: 'myRegion' } },
+        ],
+      });
+      const { user } = render(
+        <MemoryRouter>
+          <CompatRouter>
+            <ClusterList {...props} />
+          </CompatRouter>
+        </MemoryRouter>,
+      );
+      expect(within(screen.getByRole('alert')).getByText(alertText)).toBeInTheDocument();
+
+      await user.click(screen.getByText(errorDetailsToggleText));
+      expect(
+        within(screen.getByRole('alert')).getByText(
+          '"There was an error. While getting clusters for myRegion. (Operation ID: 1234)"',
+        ),
+      );
+    });
+
+    it('Shows error page if no clusters are returned', () => {
+      mockedGetFetchedClusters.mockReturnValue({
+        data: { items: [] },
+        isFetched: true,
+        isError: true,
+        errors: [
+          { reason: 'There was an error', operation_id: '1234', region: { region: 'myRegion' } },
+        ],
+      });
+      render(
+        <MemoryRouter>
+          <CompatRouter>
+            <ClusterList {...props} />
+          </CompatRouter>
+        </MemoryRouter>,
+      );
+
+      expect(screen.getByText('This page is temporarily unavailable')).toBeInTheDocument();
+    });
+  });
+
   describe('in restricted env', () => {
     const isRestrictedEnv = mockRestrictedEnv();
     const onListFlagsSet = jest.fn();
