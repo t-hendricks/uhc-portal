@@ -797,9 +797,7 @@ async function reportOrder(jiraToken, branch, verbose) {
     console.log(`   ${chalk.white('a.')} Source branch = ${chalk.blue('candidate')}`);
     console.log(`   ${chalk.white('b.')} Target branch = ${chalk.blue('stable')}`);
     console.log(`   ${chalk.white('c.')} Click ${chalk.blue('Compare branches and continue')}`);
-    console.log(
-      `   ${chalk.white('d.')} For template dropdown choose: ${chalk.blue('GA-release')}`,
-    );
+    console.log(`   ${chalk.white('d.')} For template dropdown choose: ${chalk.blue('Release')}`);
     console.log(`   ${chalk.white('e.')} Wait for build to be successful then merge, no SQUASHING`);
 
     console.log(`\n${chalk.white('7.')} Update two tables:`);
