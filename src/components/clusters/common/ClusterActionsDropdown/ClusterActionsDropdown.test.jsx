@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { render, screen } from '~/testUtils';
+import { render, screen, waitFor } from '~/testUtils';
 
 import ClusterActionsDropdown from './ClusterActionsDropdown';
 import * as Fixtures from './ClusterActionsDropdown.fixtures';
@@ -119,5 +119,26 @@ describe('<ClusterActionsDropdown />', () => {
 
       expect(screen.getByRole('menuitem', { name: 'Transfer cluster ownership' })).toBeEnabled();
     });
+  });
+
+  it('closes automatically when clicking outside of it', async () => {
+    const { user } = render(
+      <>
+        <ClusterActionsDropdown {...Fixtures.managedReadyProps} />
+        <span>another element</span>
+      </>,
+    );
+
+    // click on dropdown
+    await user.click(screen.getByRole('button'));
+
+    // expect dropdown menu is open
+    expect(await screen.findByRole('menu')).toBeInTheDocument();
+
+    // click on another element
+    await user.click(screen.getByText('another element'));
+
+    // expect dropdown menu is not present
+    await waitFor(() => expect(screen.queryByRole('menu')).not.toBeInTheDocument());
   });
 });

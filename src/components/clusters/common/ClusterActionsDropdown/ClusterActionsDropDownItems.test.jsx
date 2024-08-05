@@ -6,7 +6,7 @@ import * as Fixtures from './ClusterActionsDropdown.fixtures';
 import { dropDownItems } from './ClusterActionsDropdownItems';
 
 function DropDownItemsRenderHelper(props) {
-  return <ul role="menu">{dropDownItems(props).map((item) => item)}</ul>;
+  return dropDownItems(props);
 }
 
 const menuItemsText = [
@@ -89,10 +89,7 @@ describe('Cluster Actions Dropdown Items', () => {
     it.each(menuItemsText)('menu button %p is enabled', (menuItem) => {
       render(<DropDownItemsRenderHelper {...Fixtures.managedReadyProps} />);
 
-      expect(screen.getByRole('menuitem', { name: menuItem })).toHaveAttribute(
-        'aria-disabled',
-        'false',
-      );
+      expect(screen.getByRole('menuitem', { name: menuItem })).not.toHaveAttribute('aria-disabled');
     });
 
     describe('and product osdtrial', () => {
@@ -161,10 +158,16 @@ describe('Cluster Actions Dropdown Items', () => {
       ['Delete cluster', 'false'],
     ])('menu button %p  disabled is set to %p', (menuItem, isDisabled) => {
       render(<DropDownItemsRenderHelper {...Fixtures.clusterNotReadyProps} />);
-      expect(screen.getByRole('menuitem', { name: menuItem })).toHaveAttribute(
-        'aria-disabled',
-        isDisabled,
-      );
+      if (isDisabled === 'true') {
+        expect(screen.getByRole('menuitem', { name: menuItem })).toHaveAttribute(
+          'aria-disabled',
+          isDisabled,
+        );
+      } else {
+        expect(screen.getByRole('menuitem', { name: menuItem })).not.toHaveAttribute(
+          'aria-disabled',
+        );
+      }
     });
   });
 
@@ -185,10 +188,16 @@ describe('Cluster Actions Dropdown Items', () => {
       ['Delete cluster', 'true'],
     ])('menu button %p  disabled is set to %p', (menuItem, isDisabled) => {
       render(<DropDownItemsRenderHelper {...Fixtures.clusterHibernatingProps} />);
-      expect(screen.getByRole('menuitem', { name: menuItem })).toHaveAttribute(
-        'aria-disabled',
-        isDisabled,
-      );
+      if (isDisabled === 'true') {
+        expect(screen.getByRole('menuitem', { name: menuItem })).toHaveAttribute(
+          'aria-disabled',
+          isDisabled,
+        );
+      } else {
+        expect(screen.getByRole('menuitem', { name: menuItem })).not.toHaveAttribute(
+          'aria-disabled',
+        );
+      }
     });
   });
 
@@ -209,10 +218,16 @@ describe('Cluster Actions Dropdown Items', () => {
       ['Delete cluster', 'true'],
     ])('menu button %p  disabled is set to %p', (menuItem, isDisabled) => {
       render(<DropDownItemsRenderHelper {...Fixtures.clusterReadOnlyProps} />);
-      expect(screen.getByRole('menuitem', { name: menuItem })).toHaveAttribute(
-        'aria-disabled',
-        isDisabled,
-      );
+      if (isDisabled === 'true') {
+        expect(screen.getByRole('menuitem', { name: menuItem })).toHaveAttribute(
+          'aria-disabled',
+          isDisabled,
+        );
+      } else {
+        expect(screen.getByRole('menuitem', { name: menuItem })).not.toHaveAttribute(
+          'aria-disabled',
+        );
+      }
     });
   });
 
@@ -228,10 +243,16 @@ describe('Cluster Actions Dropdown Items', () => {
       ['Add console URL', 'false'],
     ])('menu button %p  disabled is set to %p', (menuItem, isDisabled) => {
       render(<DropDownItemsRenderHelper {...Fixtures.selfManagedProps} />);
-      expect(screen.getByRole('menuitem', { name: menuItem })).toHaveAttribute(
-        'aria-disabled',
-        isDisabled,
-      );
+      if (isDisabled === 'true') {
+        expect(screen.getByRole('menuitem', { name: menuItem })).toHaveAttribute(
+          'aria-disabled',
+          isDisabled,
+        );
+      } else {
+        expect(screen.getByRole('menuitem', { name: menuItem })).not.toHaveAttribute(
+          'aria-disabled',
+        );
+      }
     });
   });
 
@@ -247,7 +268,7 @@ describe('Cluster Actions Dropdown Items', () => {
       render(<DropDownItemsRenderHelper {...Fixtures.organizationClusterProps} />);
       expect(screen.getByRole('menuitem')).toHaveTextContent('Open console');
 
-      expect(screen.getByRole('menuitem')).toHaveAttribute('aria-disabled', 'false');
+      expect(screen.getByRole('menuitem')).not.toHaveAttribute('aria-disabled');
     });
   });
 
@@ -267,10 +288,16 @@ describe('Cluster Actions Dropdown Items', () => {
       ['Delete cluster', 'false'],
     ])('menu button %p  disabled is set to %p', (menuItem, isDisabled) => {
       render(<DropDownItemsRenderHelper {...Fixtures.hyperShiftReadyProps} />);
-      expect(screen.getByRole('menuitem', { name: menuItem })).toHaveAttribute(
-        'aria-disabled',
-        isDisabled,
-      );
+      if (isDisabled === 'true') {
+        expect(screen.getByRole('menuitem', { name: menuItem })).toHaveAttribute(
+          'aria-disabled',
+          isDisabled,
+        );
+      } else {
+        expect(screen.getByRole('menuitem', { name: menuItem })).not.toHaveAttribute(
+          'aria-disabled',
+        );
+      }
     });
   });
 });

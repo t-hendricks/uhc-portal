@@ -9,6 +9,7 @@
     "type": "OSD"
   },
   "cluster_id": "1ma4fruo1he73a7r3lrgs41eih1bmqhm",
+  "external_cluster_id": "fake-cluster-1fe2a748-0c1f-4a2e-a084-50df81bec7a9-EXPECT-AMS-null",
   "organization_id": "1MKVU4otCIuogoLtgtyU6wajxjW",
   "last_telemetry_date": "0001-01-01T00:00:00Z",
   "created_at": "2021-08-01T12:39:11.30167Z",

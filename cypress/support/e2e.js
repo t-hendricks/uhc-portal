@@ -39,6 +39,7 @@ before(() => {
 
     Login.login();
 
+    // TODO: Will change to /overview page
     ClusterListPage.isClusterListUrl();
     ClusterListPage.waitForDataReady();
     ClusterListPage.isClusterListScreen();

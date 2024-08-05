@@ -30,28 +30,12 @@ describe('lastCheckInSelector', () => {
 
 describe('clusterHealthSelector', () => {
   describe('OCP', () => {
-    const stateWithOCPActive = {
-      clusters: {
-        details: {
-          cluster: {
-            ...mockOCPActiveClusterDetails,
-          },
-        },
-      },
-    };
-
-    const stateWithOCPDisconnected = {
-      clusters: {
-        details: {
-          cluster: {
-            ...mockOCPDisconnectedClusterDetails,
-          },
-        },
-      },
-    };
-
     it('should return DISCONNECTED when subscription Disconnected and metrics are stale', () => {
-      const result = clusterHealthSelector(stateWithOCPDisconnected, makeStaleCheckIn(), null);
+      const result = clusterHealthSelector(
+        mockOCPDisconnectedClusterDetails,
+        makeStaleCheckIn(),
+        null,
+      );
       expect(result).toBe(monitoringStatuses.DISCONNECTED);
     });
 
@@ -60,25 +44,25 @@ describe('clusterHealthSelector', () => {
     );
 
     it('should return NO_METRICS when metrics are stale', () => {
-      const result = clusterHealthSelector(stateWithOCPActive, makeStaleCheckIn(), null);
+      const result = clusterHealthSelector(mockOCPActiveClusterDetails, makeStaleCheckIn(), null);
       expect(result).toBe(monitoringStatuses.NO_METRICS);
     });
 
     it('should return UPGRADING when metrics are running', () => {
       isClusterUpgrading.mockReturnValueOnce(true);
-      const result = clusterHealthSelector(stateWithOCPActive, makeFreshCheckIn(), 0);
+      const result = clusterHealthSelector(mockOCPActiveClusterDetails, makeFreshCheckIn(), 0);
       expect(result).toBe(monitoringStatuses.UPGRADING);
     });
 
     it('should return HEALTHY when metrics are fresh & good', () => {
       isClusterUpgrading.mockReturnValueOnce(false);
-      const result = clusterHealthSelector(stateWithOCPActive, makeFreshCheckIn(), 0);
+      const result = clusterHealthSelector(mockOCPActiveClusterDetails, makeFreshCheckIn(), 0);
       expect(result).toBe(monitoringStatuses.HEALTHY);
     });
 
     it("handles timestamp in future (relative to browser's clock)", () => {
       isClusterUpgrading.mockReturnValueOnce(false);
-      const result = clusterHealthSelector(stateWithOCPActive, makeFutureDate(), 0);
+      const result = clusterHealthSelector(mockOCPActiveClusterDetails, makeFutureDate(), 0);
       expect(result).toBe(monitoringStatuses.HEALTHY);
     });
   });
@@ -99,17 +83,10 @@ describe('clusterHealthSelector', () => {
       },
     };
 
-    const stateWithIssues = {
-      clusters: {
-        details: {
-          cluster,
-        },
-      },
-      monitoring: {
-        alerts: mockAlerts,
-        nodes: { data: [...mockNodes.data.slice(0, 2)] },
-        operators: mockOperators,
-      },
+    const monitoring = {
+      alerts: mockAlerts,
+      nodes: { data: [...mockNodes.data.slice(0, 2)] },
+      operators: mockOperators,
     };
 
     it('should count issues, warnings and total issues', () => {
@@ -128,7 +105,7 @@ describe('clusterHealthSelector', () => {
         },
       };
 
-      expect(issuesAndWarningsSelector(stateWithIssues)).toEqual(expected);
+      expect(issuesAndWarningsSelector(monitoring, cluster)).toEqual(expected);
     });
   });
 });

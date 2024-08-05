@@ -216,7 +216,7 @@ const RegisterCluster = ({ handleSubmit }: RegisterClusterProps) => {
             >
               Register cluster
             </Button>
-            <Link to="/">
+            <Link to="/cluster-list">
               <Button variant="secondary" isDisabled={registerClusterResponse.pending}>
                 Cancel
               </Button>

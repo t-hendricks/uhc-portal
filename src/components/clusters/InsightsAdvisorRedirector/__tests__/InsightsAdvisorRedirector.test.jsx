@@ -203,7 +203,7 @@ describe('<InsightsAdvisorRedirector />', () => {
     it('should render a redirect to /', () => {
       render(<InsightsAdvisorRedirector {...onErrorProps} />);
 
-      expect(screen.getByText('Redirected to "/"')).toBeInTheDocument();
+      expect(screen.getByText('Redirected to "/cluster-list"')).toBeInTheDocument();
     });
 
     it('should call setGlobalError', () => {
@@ -232,7 +232,7 @@ describe('<InsightsAdvisorRedirector />', () => {
     it('should render a redirect to /', () => {
       render(<InsightsAdvisorRedirector {...noExternalIdProps} />);
 
-      expect(screen.getByText('Redirected to "/"')).toBeInTheDocument();
+      expect(screen.getByText('Redirected to "/cluster-list"')).toBeInTheDocument();
     });
 
     it('should call setGlobalError', () => {
