@@ -1,5 +1,4 @@
 import React from 'react';
-import { Link } from 'react-router-dom-v5-compat';
 
 import { Flex, FlexItem, Title } from '@patternfly/react-core';
 
@@ -12,6 +11,7 @@ import {
 } from './DrawerPanelContent';
 
 import './RecommendedOperatorsCards.scss';
+import ExternalLink from '~/components/common/ExternalLink';
 
 type RecommendedOperatorsCardsNode = {
   title: string;
@@ -61,12 +61,12 @@ const RecommendedOperatorsCards = ({
         </Title>
       </FlexItem>
       <FlexItem align={{ default: 'alignRight' }}>
-        <Link
-          to="https://catalog.redhat.com/search?searchType=software&deployed_as=Operator"
+        <ExternalLink
+          href="https://catalog.redhat.com/search?searchType=software&deployed_as=Operator"
           className="view-all-in-ecosystem-catalog-button"
         >
           View all in Ecosystem Catalog
-        </Link>
+        </ExternalLink>
       </FlexItem>
     </Flex>
     <Flex className="pf-v5-u-mb-lg">
