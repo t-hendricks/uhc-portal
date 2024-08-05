@@ -177,7 +177,7 @@ class ArchivedClusterList extends Component {
                   </ToolbarItem>
                   <ToolbarItem className="pf-v5-l-split__item split-margin-left">
                     <div className="show-active-clusters-link">
-                      <Link to="/">Show active clusters</Link>
+                      <Link to="/cluster-list">Show active clusters</Link>
                     </div>
                   </ToolbarItem>
                   <ToolbarItem className="spinner-fit-container">

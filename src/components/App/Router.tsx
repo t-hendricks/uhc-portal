@@ -487,7 +487,6 @@ const Router: React.FC<RouterProps> = ({ history, planType, clusterId, externalC
               path="/services/rosa"
               render={() => <Navigate replace to={`/overview/rosa${search}`} />}
             />
-
             <CompatRoute
               path="/access-request/:id"
               exact
@@ -495,14 +494,16 @@ const Router: React.FC<RouterProps> = ({ history, planType, clusterId, externalC
                 isAccessRequestEnabled && !isRestrictedEnv() ? AccessRequestNavigate : NotFoundError
               }
             />
-
             <CompatRoute
-              path="/"
+              path="/cluster-list"
               exact
               component={
                 config.multiRegion && isMultiRegionEnabled ? ClusterListMultiRegion : ClustersList
               }
             />
+            {/* Change to /overview after https://github.com/RedHatInsights/chrome-service-backend/pull/569 is in prod */}
+            <CompatRoute path="/" render={() => <Navigate replace to="/cluster-list" />} />
+            <CompatRoute path="/overview" exact component={Overview} />
 
             <Route component={NotFoundError} />
           </Switch>

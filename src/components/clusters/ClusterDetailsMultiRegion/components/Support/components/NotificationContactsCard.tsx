@@ -109,19 +109,21 @@ const NotificationContactsCard = ({
           dispatch(clearDeleteNotificationContacts());
           mutate(rowData.userID);
           const title = 'Notification contact deleted successfully';
-          dispatch(
-            addNotification({
-              variant: 'success',
-              title,
-              dismissable: false,
-            }),
-          );
-          buildNotificationsMeta('Notification contact deleted successfully', rowData.userID);
+          if (!isDeleteNotificationError) {
+            dispatch(
+              addNotification({
+                variant: 'success',
+                title,
+                dismissable: false,
+              }),
+            );
+            buildNotificationsMeta('Notification contact deleted successfully', rowData.userID);
+          }
         },
         className: 'hand-pointer',
       },
     ],
-    [dispatch, mutate],
+    [isDeleteNotificationError, dispatch, mutate],
   );
 
   const rows = useMemo(

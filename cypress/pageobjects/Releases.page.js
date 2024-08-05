@@ -18,9 +18,9 @@ class Releases extends Page {
       .should('exist');
     cy.get('@link_to_version')
       .parent()
-      .next('div')
+      .next()
       .within(() => {
-        cy.get('.support-status-label').contains(`${support_type}`).should('exist');
+        cy.contains(`${support_type}`).should('exist');
       });
     cy.get('@link_to_version')
       .parentsUntil('.pf-v5-c-card__body', 'dl')

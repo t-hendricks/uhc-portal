@@ -73,7 +73,7 @@ const Releases = () => {
                           <p className="pf-v5-u-mb-md">
                             The most recent versions aren&apos;t always available for every cluster.
                             To keep your cluster up to date with the recommended version, run
-                            regular updates from the <Link to="/">clusters list</Link>.
+                            regular updates from the <Link to="/cluster-list">clusters list</Link>.
                           </p>
                           <p>
                             <em>Note:</em> Disconnected clusters won&apos;t show available

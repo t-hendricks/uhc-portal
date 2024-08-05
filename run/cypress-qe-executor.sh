@@ -11,10 +11,9 @@ then
     ENVIRONMENT="console.dev.redhat.com"
   elif [ $1 = 'production' ]; then
     ENVIRONMENT="console.redhat.com"
-  elif [ $1 = 'production-preview' ]; then
-    ENVIRONMENT="console.redhat.com/preview"
   else
-    ENVIRONMENT="console.dev.redhat.com/preview"
+    echo "No matching test environment found! Supported environments are staging and production."
+    exit 1
   fi
 fi
 if [ $2 ]; then BROWSER="$2"; fi

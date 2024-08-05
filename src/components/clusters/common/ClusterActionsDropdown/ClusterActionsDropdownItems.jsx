@@ -1,8 +1,7 @@
 import React from 'react';
 import get from 'lodash/get';
 
-import { Tooltip } from '@patternfly/react-core';
-import { DropdownItem as DropdownItemDeprecated } from '@patternfly/react-core/deprecated';
+import { DropdownItem, DropdownList } from '@patternfly/react-core';
 
 import getClusterName from '../../../../common/getClusterName';
 import { isAssistedInstallCluster } from '../../../../common/isAssistedInstallerCluster';
@@ -44,9 +43,7 @@ function actionResolver(
   refreshFunc,
   inClusterList,
 ) {
-  const baseProps = {
-    component: 'button',
-  };
+  const baseProps = {};
   const isClusterUninstalling = cluster.state === clusterStates.UNINSTALLING;
   const uninstallingMessage = isClusterUninstalling && (
     <span>The cluster is being uninstalled</span>
@@ -376,17 +373,12 @@ function dropDownItems({
     refreshFunc,
     inClusterList,
   );
-  // cleanedProps - Remove props that aren't recognized by DropdownItemDeprecated
-  const renderMenuItem = ({ isExternalLink, tooltipProps, title, ...cleanedProps }) =>
-    tooltipProps ? (
-      <Tooltip {...tooltipProps}>
-        <DropdownItemDeprecated {...cleanedProps}>{title}</DropdownItemDeprecated>
-      </Tooltip>
-    ) : (
-      <DropdownItemDeprecated {...cleanedProps}>{title}</DropdownItemDeprecated>
-    );
 
-  return actions.map(renderMenuItem);
+  const renderMenuItem = ({ title, ...restOfProps }) => (
+    <DropdownItem {...restOfProps}>{title}</DropdownItem>
+  );
+
+  return <DropdownList>{actions.map(renderMenuItem)}</DropdownList>;
 }
 
 export { actionResolver, dropDownItems };

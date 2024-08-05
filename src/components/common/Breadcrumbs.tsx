@@ -15,13 +15,20 @@ const Breadcrumbs = ({ path }: Props) => (
       const itemLabel = item.label;
 
       if (i < path.length - 1) {
-        const itemPath = item.path;
+        let itemPath = item.path;
+        if (itemLabel === 'Clusters' && !itemPath) {
+          itemPath = '/cluster-list';
+        }
 
         return (
           <BreadcrumbItem
             key={itemLabel}
             render={({ className, ariaCurrent }) => (
-              <Link to={`${itemPath || '/'}`} className={className} aria-current={ariaCurrent}>
+              <Link
+                to={`${itemPath || '/overview'}`}
+                className={className}
+                aria-current={ariaCurrent}
+              >
                 {itemLabel}
               </Link>
             )}
