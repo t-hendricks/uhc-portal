@@ -2,16 +2,14 @@ import React from 'react';
 
 import { Flex, FlexItem, Title } from '@patternfly/react-core';
 
+import ExternalLink from '~/components/common/ExternalLink';
+
 import ProductCard from '../ProductCard/ProductCard';
 
-import {
-  DRAWER_PANEL_CONTENT,
-  DrawerPanelContentNode,
-  PRODUCT_CARD_LOGOS,
-} from './DrawerPanelContent';
+import { DRAWER_PANEL_CONTENT, DrawerPanelContentNode } from './DrawerPanelContent';
+import PRODUCT_CARD_LOGOS from './PRODUCT_CARD_LOGOS';
 
 import './RecommendedOperatorsCards.scss';
-import ExternalLink from '~/components/common/ExternalLink';
 
 type RecommendedOperatorsCardsNode = {
   title: string;

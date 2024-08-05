@@ -3,8 +3,8 @@ import React from 'react';
 import {
   DRAWER_PANEL_CONTENT,
   DrawerPanelContentNode,
-  PRODUCT_CARD_LOGOS,
 } from './RecommendedOperatorsCards/DrawerPanelContent';
+import PRODUCT_CARD_LOGOS from './RecommendedOperatorsCards/PRODUCT_CARD_LOGOS';
 
 const BASIC_PRODUCT_CARD_PROPS = {
   title: 'example title',
