@@ -12,10 +12,15 @@ type ErrorTriangleProps = {
 
 const ErrorTriangle = ({ item = 'clusters', errorMessage }: ErrorTriangleProps) => (
   <Tooltip
-    content={`An error occurred when fetching ${item}: ${errorMessage}`}
+    content={`An error occurred when fetching ${item}${errorMessage ? `: ${errorMessage}` : '.'}`}
     data-testid="error-triangle"
   >
-    <Icon size="lg" className="cluster-error-triangle" aria-label="Warning">
+    <Icon
+      size="lg"
+      className="cluster-error-triangle"
+      aria-label="Warning"
+      data-testid="error-triangle-icon"
+    >
       <ExclamationTriangleIcon color={warningColor.value} />
     </Icon>
   </Tooltip>

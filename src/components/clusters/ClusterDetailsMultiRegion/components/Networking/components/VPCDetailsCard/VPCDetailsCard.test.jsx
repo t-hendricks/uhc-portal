@@ -6,8 +6,11 @@ import VPCDetailsCard from './VPCDetailsCard';
 
 describe('<VPCDetailsCard />', () => {
   const defaultProps = {
-    isBYOVPC: true,
-    openModal: jest.fn(),
+    cluster: {
+      aws: {
+        subnet_ids: ['subnet-05281fa2678b6d8cd', 'subnet-03f3654ffc25369ac'],
+      },
+    },
   };
 
   describe('in default environment', () => {

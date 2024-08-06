@@ -9,6 +9,7 @@ type Props = {
   itemWrapper?: FunctionComponent | keyof HTMLElementTagNameMap;
   showErrorCode?: boolean;
   renderLinks?: boolean;
+  hideOperationID?: boolean;
 };
 
 const ErrorDetailsDisplay = ({
@@ -16,6 +17,7 @@ const ErrorDetailsDisplay = ({
   itemWrapper: ItemWrapper = 'p',
   showErrorCode,
   renderLinks,
+  hideOperationID,
 }: Props) => {
   const { errorMessage } = response;
   const errorDetails = formatErrorDetails(response.errorDetails);
@@ -45,7 +47,9 @@ const ErrorDetailsDisplay = ({
         }
         return <pre key={`${detail}`}>{detail}</pre>;
       })}
-      <ItemWrapper>{`Operation ID: ${response.operationID || 'N/A'}`}</ItemWrapper>
+      {hideOperationID ? null : (
+        <ItemWrapper>{`Operation ID: ${response.operationID || 'N/A'}`}</ItemWrapper>
+      )}
     </>
   );
 };

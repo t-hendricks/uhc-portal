@@ -1,5 +1,6 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
+import { ErrorResponse } from 'react-router-dom-v5-compat';
 
 import { useQueries, UseQueryResult } from '@tanstack/react-query';
 
@@ -8,13 +9,14 @@ import { queryClient } from '~/components/App/queryClient';
 import { useFeatureGate } from '~/hooks/useFeatureGate';
 import { ASSISTED_INSTALLER_MERGE_LISTS_FEATURE } from '~/redux/constants/featureConstants';
 import { GlobalState } from '~/redux/store';
-import { ClusterWithPermissions } from '~/types/types';
+import { ClusterFromSubscription, ClusterWithPermissions } from '~/types/types';
 
-import { Region, useFetchRegions } from '../common/useFetchRegions';
+import { useFetchRegions } from '../common/useFetchRegions';
 import { queryConstants } from '../queriesConstants';
 
 import { fetchPageOfGlobalClusters } from './helpers/fetchGlobalClusters';
 import { fetchPageOfRegionalClusters } from './helpers/fetchRegionalClusters';
+import { Region } from './types/types';
 import { formatCluster } from './formatCluster';
 import { useFetchCanEditDelete } from './useFetchCanEditDelete';
 
@@ -27,8 +29,10 @@ type FetchClusterQueryResults = UseQueryResult & {
     page: number;
     total: number;
     region: Region;
+    isError: boolean;
+    errors: any[];
   };
-  errors?: Error[];
+  errors?: any[];
 };
 
 const fetchPageOfClusters = async (
@@ -39,7 +43,7 @@ const fetchPageOfClusters = async (
   nameFilter?: string,
   userName?: string,
 ) => {
-  const { items, total } = region
+  const { items, total, isError, errors } = region
     ? await fetchPageOfRegionalClusters(page, region, { flags, filter: nameFilter }, userName)
     : await fetchPageOfGlobalClusters(
         page,
@@ -48,10 +52,12 @@ const fetchPageOfClusters = async (
         userName,
       );
   return {
-    items: items?.map((cluster) => formatCluster(cluster)),
+    items: items?.map((cluster) => formatCluster(cluster as ClusterFromSubscription)),
     page,
     total,
     region,
+    isError,
+    errors,
   };
 };
 
@@ -150,6 +156,8 @@ export const useFetchClusters = () => {
     canEdit,
     canDelete,
     isError: isCanUpdateDeleteError,
+    errors: canEditDeleteErrors,
+    isFetched: isCanUpdateDeleteFetched,
   } = useFetchCanEditDelete({
     mainQueryKey: queryConstants.FETCH_CLUSTERS_QUERY_KEY,
     staleTime: queryConstants.STALE_TIME,
@@ -212,6 +220,8 @@ export const useFetchClusters = () => {
     isFetching: isRegionsFetching,
     data: regions,
     isError: isRegionsError,
+    errors: regionErrors,
+    isFetched: isRegionsFetched,
   } = useFetchRegions({
     mainQueryKey: queryConstants.FETCH_CLUSTERS_QUERY_KEY,
     staleTime: queryConstants.STALE_TIME,
@@ -222,10 +232,8 @@ export const useFetchClusters = () => {
   // Start to get initial queries
   if (
     !isCanUpdateDeleteLoading &&
-    !isCanUpdateDeleteError &&
-    aiMergeListsFeatureFlag !== undefined &&
-    !!canEdit &&
-    !!canDelete
+    isCanUpdateDeleteFetched &&
+    aiMergeListsFeatureFlag !== undefined
   ) {
     if (!isExistingQuery(queries, 1)) {
       // start to get global (non regional) clusters
@@ -234,8 +242,7 @@ export const useFetchClusters = () => {
         page: 1,
         aiMergeListsFeatureFlag,
         flags,
-        // @ts-ignore
-        nameFilter,
+        nameFilter: '',
         userName,
       });
       setQueries((prev) => [...prev, globalPage1Query]);
@@ -252,8 +259,7 @@ export const useFetchClusters = () => {
                 aiMergeListsFeatureFlag,
                 region,
                 flags,
-                // @ts-ignore
-                nameFilter,
+                nameFilter: '',
                 userName,
               }),
             ];
@@ -269,9 +275,16 @@ export const useFetchClusters = () => {
     }
   }
 
-  const { isLoading, data, isError, errors, isFetching } = useQueries({
+  const {
+    isLoading,
+    data,
+    isError,
+    errors,
+    isFetching,
+    isFetched: isClustersFetched,
+  } = useQueries({
     queries,
-    // @ts-ignore Unsure why the type is incorrect for the next line
+    // @ts-ignore TODO unsure why this is throwing a type error
     combine: React.useCallback(
       (results: FetchClusterQueryResults[]) => {
         const pagesFetched: { total: number; page: number; region: Region }[] = [];
@@ -296,11 +309,13 @@ export const useFetchClusters = () => {
 
               modifiedCluster.canEdit =
                 !cluster.partialCS &&
+                !!canEdit &&
                 (canEdit['*'] || (!!cluster.id && !!canEdit[cluster.id])) &&
                 cluster.subscription.status !== subscriptionStatuses.DEPROVISIONED;
 
               modifiedCluster.canDelete =
                 !cluster.partialCS &&
+                !!canDelete &&
                 (canDelete['*'] || (!!cluster.id && !!canDelete[cluster.id!]));
               return modifiedCluster;
             });
@@ -309,19 +324,24 @@ export const useFetchClusters = () => {
           }, [] as ClusterWithPermissions[]);
         }
 
+        const clusterErrors = results?.reduce((errorArray, result) => {
+          const resultErrors = result.data?.errors;
+          if (resultErrors && resultErrors.length > 0) {
+            return [...errorArray, ...resultErrors];
+          }
+          return errorArray;
+        }, [] as ErrorResponse[]);
+
         return {
           isLoading: results.some((result) => result.isLoading),
           isFetching: results.some((result) => result.isFetching),
-          isError: results.some((result) => result.isError),
-          errors: results.reduce(
-            (errors, result) => (result.error ? [...errors, result.error] : errors),
-            [] as Error[],
-          ),
-
+          isFetched: results.every((result) => result.isFetched),
+          isError: results.some((result) => result.isError || result.data?.isError),
+          errors: [...clusterErrors, ...canEditDeleteErrors, ...regionErrors],
           data: { pagesFetched, clusters: data },
         };
       },
-      [canDelete, canEdit],
+      [canDelete, canEdit, canEditDeleteErrors, regionErrors],
     ),
   });
 
@@ -419,6 +439,12 @@ export const useFetchClusters = () => {
       (data.clusters === undefined && !isError && !isCanUpdateDeleteError && !isRegionsError),
 
     data: { items: data?.clusters || [] },
+
+    isFetched:
+      isCanUpdateDeleteFetched &&
+      isRegionsFetched &&
+      isClustersFetched &&
+      data.clusters !== undefined,
 
     isError: isError || isCanUpdateDeleteError || isRegionsError,
     errors,

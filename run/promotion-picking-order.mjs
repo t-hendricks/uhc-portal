@@ -784,7 +784,7 @@ async function reportOrder(jiraToken, branch, verbose) {
       `\n${chalk.white('5.')} In GITLAB create an MR between your fork and the STABLE branch.`,
     );
     console.log(
-      `   ${chalk.white('a.')} For template dropdown choose: ${chalk.blue('GA-release')}`,
+      `   ${chalk.white('a.')} For template dropdown choose: ${chalk.blue('Release')}`,
     );
     console.log(`   ${chalk.white('b.')} Do not SQUASH`);
 

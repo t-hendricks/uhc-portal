@@ -37,16 +37,13 @@ import { SortByDirection } from '@patternfly/react-table';
 import { ONLY_MY_CLUSTERS_TOGGLE_CLUSTERS_LIST } from '~/common/localStorageConstants';
 import { AppPage } from '~/components/App/AppPage';
 import { useFetchClusters } from '~/queries/ClusterListQueries/useFetchClusters';
+import { clustersActions } from '~/redux/actions';
 import { CLUSTERS_VIEW } from '~/redux/constants/viewConstants';
 import { isRestrictedEnv } from '~/restrictedEnv';
 
 import helpers from '../../../common/helpers';
 import { normalizedProducts } from '../../../common/subscriptionTypes';
-import {
-  onListFilterSet,
-  onListFlagsSet,
-  viewActions,
-} from '../../../redux/actions/viewOptionsActions';
+import { onListFlagsSet, viewActions } from '../../../redux/actions/viewOptionsActions';
 import { viewConstants } from '../../../redux/constants';
 import ErrorBox from '../../common/ErrorBox';
 import Unavailable from '../../common/Unavailable';
@@ -70,14 +67,7 @@ import './ClusterList.scss';
 
 const PAGE_TITLE = 'Clusters | Red Hat OpenShift Cluster Manager';
 
-const ClusterListPageHeader = ({
-  someReadOnly,
-  showSpinner,
-  error,
-  errorMessage,
-
-  refresh,
-}) => (
+const ClusterListPageHeader = ({ someReadOnly, showSpinner, error, refresh }) => (
   <>
     <ReadOnlyBanner someReadOnly={someReadOnly} />
     <PageSection variant={PageSectionVariants.light}>
@@ -104,7 +94,7 @@ const ClusterListPageHeader = ({
               )}
               {error && (
                 <ToolbarItem>
-                  <ErrorTriangle errorMessage={errorMessage} className="cluster-list-warning" />
+                  <ErrorTriangle className="cluster-list-warning" item="clusters" />
                 </ToolbarItem>
               )}
               <ToolbarItem spacer={{ default: 'spacerNone' }}>
@@ -121,8 +111,6 @@ ClusterListPageHeader.propTypes = {
   someReadOnly: PropTypes.bool,
   showSpinner: PropTypes.bool,
   error: PropTypes.bool,
-  errorMessage: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
-
   refresh: PropTypes.func,
 };
 
@@ -138,14 +126,19 @@ const ClusterList = ({
   openModal,
 }) => {
   const dispatch = useDispatch();
-  const { isLoading, data, refetch, isError, errors, isFetching } = useFetchClusters();
+  const { isLoading, data, refetch, isError, errors, isFetching, isFetched } = useFetchClusters();
   const clusters = data?.items;
 
-  const errorMessage = errors.reduce(
-    (errorsText, error) =>
-      `${errorsText}${error.response?.data?.reason || error.response?.data?.details || ''}. `,
-    '',
-  );
+  const errorDetails = (errors || []).reduce((errorArray, error) => {
+    if (!error.reason) {
+      return errorArray;
+    }
+    return [
+      ...errorArray,
+      `${error.reason}.${error.region ? ` While getting clusters for ${error.region.region}.` : ''}${error.operation_id ? ` (Operation ID: ${error.operation_id})` : ''}`,
+    ];
+  }, []);
+
   const [currentPage, setCurrentPage] = React.useState(1);
   const [pageSize, setPageSize] = React.useState(50);
   const [itemsStart, setItemsStart] = React.useState(0);
@@ -241,9 +234,8 @@ const ClusterList = ({
     // componentWillUnmount
     return () => {
       closeModal();
-
+      dispatch(clustersActions.clearClusterDetails());
       clearGlobalError('clusterList');
-      dispatch(onListFilterSet('', viewConstants.CLUSTERS_VIEW));
     };
     // Run only on mount and unmount
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -254,7 +246,7 @@ const ClusterList = ({
   const hasNoFilters =
     helpers.nestedIsEmpty(subscriptionFilter) && !showMyClustersOnly && !viewOptions.filter;
 
-  const isPendingNoData = !size(clusters) && isLoading; // Show skeletons
+  const isPendingNoData = !size(clusters) && (isLoading || !isFetched); // Show skeletons
 
   const showSpinner = isFetching || isLoading;
 
@@ -290,7 +282,7 @@ const ClusterList = ({
         someReadOnly={someReadOnly}
         showSpinner={showSpinner}
         error={isError}
-        errorMessage={errorMessage}
+        errorDetails={errorDetails}
         isPendingNoData={isPendingNoData}
         refresh={refetch}
       />
@@ -303,9 +295,11 @@ const ClusterList = ({
                 variant="warning"
                 message="Some operations are unavailable, try again later"
                 response={{
-                  errorMessage,
+                  errorDetails: [{ items: errorDetails }],
                 }}
                 isExpandable
+                hideOperationID
+                forceAsAlert
               />
             )}
 
@@ -353,14 +347,14 @@ const ClusterList = ({
               </ToolbarContent>
             </Toolbar>
             {isRestrictedEnv() ? null : <ClusterListFilterChipGroup />}
-            {isError && !size(clusters) ? (
+            {isError && !size(clusters) && isFetched ? (
               <Unavailable
                 message="Error retrieving clusters"
                 response={{
-                  errorMessage,
+                  errorMessage: '',
                   operationID: '',
                   errorCode: '',
-                  errorDetails: '',
+                  errorDetails,
                 }}
               />
             ) : (

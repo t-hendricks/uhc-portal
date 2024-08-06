@@ -10,7 +10,7 @@ Cypress.config({
 
 describe('Write ROSA Login cmd to file', { tags: ['fedramp'] }, () => {
   it('Writes ROSA Login cmd to file', () => {
-    cy.visit('/create/rosa/getstarted');
+    cy.visit('../create/rosa/getstarted');
     cy.get('[role="status"]').should('not.exist');
     cy.get('[aria-label="Copyable ROSA login command"]').then(($elem) => {
       Cypress.env('TOKEN', $elem.val());

@@ -38,6 +38,17 @@ describe('<ErrorDetailsDisplay />', () => {
     expect(screen.getByText('Operation ID: hello')).toBeInTheDocument();
   });
 
+  it('hides operation ID if hideOperationID prop is set', () => {
+    const newProps = {
+      ...defaultProps,
+      response: { ...baseResponse, operationID: 'hello' },
+      hideOperationID: true,
+    };
+
+    render(<ErrorDetailsDisplay {...newProps} />);
+    expect(screen.queryByText('Operation ID')).not.toBeInTheDocument();
+  });
+
   describe('error code', () => {
     const newProps = {
       ...defaultProps,
