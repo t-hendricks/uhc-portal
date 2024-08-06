@@ -6,7 +6,6 @@ import authorizationsService from '../../services/authorizationsService';
 import {
   ACCESS_REQUEST_ENABLED,
   ASSISTED_INSTALLER_FEATURE,
-  ASSISTED_INSTALLER_MERGE_LISTS_FEATURE,
   CLI_SSO_AUTHORIZATION,
   CLUSTER_OWNERSHIP_TRANSFER,
   ENABLE_MACHINE_CONFIGURATION,
@@ -38,7 +37,6 @@ const getSimpleUnleashFeature = (unleashFeatureName: string, name: string) => ({
 export const features = [
   getSimpleUnleashFeature('hypershift-creation-wizard', HYPERSHIFT_WIZARD_FEATURE),
   getSimpleUnleashFeature('hcp-use-unmanaged-policies', HCP_USE_UNMANAGED),
-  getSimpleUnleashFeature('assisted-installer-merge-lists', ASSISTED_INSTALLER_MERGE_LISTS_FEATURE),
   getSimpleUnleashFeature('osd-google-marketplace', OSD_GOOGLE_MARKETPLACE_FEATURE),
   getSimpleUnleashFeature('osd-gcp-shared-vpc', OSD_GCP_SHARED_VPC_FEATURE),
   getSimpleUnleashFeature('network-validator-ondemand', NETWORK_VALIDATOR_ONDEMAND_FEATURE),

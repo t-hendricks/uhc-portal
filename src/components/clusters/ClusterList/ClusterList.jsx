@@ -46,7 +46,6 @@ import {
 } from '../../../common/queryHelpers';
 import { normalizedProducts, productFilterOptions } from '../../../common/subscriptionTypes';
 import { viewConstants } from '../../../redux/constants';
-import { ASSISTED_INSTALLER_MERGE_LISTS_FEATURE } from '../../../redux/constants/featureConstants';
 import ErrorBox from '../../common/ErrorBox';
 import RefreshBtn from '../../common/RefreshButton/RefreshButton';
 import Unavailable from '../../common/Unavailable';
@@ -258,15 +257,11 @@ const ClusterList = ({
   const prevPending = usePreviousProps(pending);
 
   React.useEffect(() => {
-    const isFeatureChange =
-      prevFeatures &&
-      features[ASSISTED_INSTALLER_MERGE_LISTS_FEATURE] !==
-        prevFeatures[ASSISTED_INSTALLER_MERGE_LISTS_FEATURE];
-    if ((!valid && !pending) || isFeatureChange || viewPropsChanged(viewOptions, prevViewOptions)) {
+    if ((!valid && !pending) || viewPropsChanged(viewOptions, prevViewOptions)) {
       setLoadingChangedView(true);
       refresh();
     }
-  }, [features, pending, prevFeatures, prevViewOptions, refresh, valid, viewOptions]);
+  }, [pending, prevViewOptions, refresh, valid, viewOptions]);
 
   React.useEffect(() => {
     if (prevPending && !pending) {
