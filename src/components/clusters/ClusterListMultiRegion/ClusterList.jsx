@@ -37,16 +37,13 @@ import { SortByDirection } from '@patternfly/react-table';
 import { ONLY_MY_CLUSTERS_TOGGLE_CLUSTERS_LIST } from '~/common/localStorageConstants';
 import { AppPage } from '~/components/App/AppPage';
 import { useFetchClusters } from '~/queries/ClusterListQueries/useFetchClusters';
+import { clustersActions } from '~/redux/actions';
 import { CLUSTERS_VIEW } from '~/redux/constants/viewConstants';
 import { isRestrictedEnv } from '~/restrictedEnv';
 
 import helpers from '../../../common/helpers';
 import { normalizedProducts } from '../../../common/subscriptionTypes';
-import {
-  onListFilterSet,
-  onListFlagsSet,
-  viewActions,
-} from '../../../redux/actions/viewOptionsActions';
+import { onListFlagsSet, viewActions } from '../../../redux/actions/viewOptionsActions';
 import { viewConstants } from '../../../redux/constants';
 import ErrorBox from '../../common/ErrorBox';
 import Unavailable from '../../common/Unavailable';
@@ -237,9 +234,8 @@ const ClusterList = ({
     // componentWillUnmount
     return () => {
       closeModal();
-
+      dispatch(clustersActions.clearClusterDetails());
       clearGlobalError('clusterList');
-      dispatch(onListFilterSet('', viewConstants.CLUSTERS_VIEW));
     };
     // Run only on mount and unmount
     // eslint-disable-next-line react-hooks/exhaustive-deps
