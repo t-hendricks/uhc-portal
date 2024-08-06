@@ -251,7 +251,6 @@ const ClusterList = ({
     }
   }, [getOrganizationPendingAccessRequests, isOrganizationAccessProtectionEnabled, organizationId]);
 
-  const prevFeatures = usePreviousProps(features);
   const prevViewOptions = usePreviousProps(viewOptions) || viewOptions;
   const prevPending = usePreviousProps(pending);
 
