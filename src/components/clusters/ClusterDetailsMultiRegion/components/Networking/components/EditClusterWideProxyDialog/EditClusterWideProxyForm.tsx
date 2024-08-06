@@ -1,0 +1,253 @@
+import React from 'react';
+import { Field } from 'formik';
+
+import { Alert, Form, Grid, GridItem, Text } from '@patternfly/react-core';
+
+import { stringToArray } from '~/common/helpers';
+import links from '~/common/installLinks.mjs';
+import {
+  checkNoProxyDomains,
+  composeValidators,
+  validateCA,
+  validateUrl,
+} from '~/common/validators';
+import {
+  DISABLED_NO_PROXY_PLACEHOLDER,
+  HTTP_PROXY_PLACEHOLDER,
+  HTTPS_PROXY_PLACEHOLDER,
+  NO_PROXY_HELPER_TEXT,
+  NO_PROXY_PLACEHOLDER,
+  TRUST_BUNDLE_PLACEHOLDER,
+} from '~/components/clusters/common/networkingConstants';
+import { useFormState } from '~/components/clusters/wizards/hooks';
+import ErrorBox from '~/components/common/ErrorBox';
+import ExternalLink from '~/components/common/ExternalLink';
+import Modal from '~/components/common/Modal/Modal';
+import ReduxFileUpload from '~/components/common/ReduxFormComponents/ReduxFileUpload';
+import ReduxVerticalFormGroup from '~/components/common/ReduxFormComponents/ReduxVerticalFormGroup';
+import { ErrorState } from '~/types/types';
+
+import { ACCEPT, MAX_FILE_SIZE } from '../../../IdentityProvidersPage/components/CAUpload';
+
+const FormFieldId = {
+  HttpProxyURL: 'http_proxy_url',
+  HttpsProxyURL: 'https_proxy_url',
+  NoProxyDomains: 'no_proxy_domains',
+  AdditionalTrustBundle: 'additional_trust_bundle',
+};
+
+type EditClusterWideProxyFormProps = {
+  isClusterEditError: boolean;
+  clusterEditError: Pick<ErrorState, 'errorDetails' | 'errorMessage' | 'operationID'>;
+  isClusterEditPending: boolean;
+  submitForm: () => void;
+  handleClose: () => void;
+};
+
+const EditClusterWideProxyForm = ({
+  isClusterEditError,
+  clusterEditError,
+  isClusterEditPending,
+  submitForm,
+  handleClose,
+}: EditClusterWideProxyFormProps) => {
+  const {
+    setFieldTouched,
+    setFieldValue, // Set value of form field directly
+    getFieldProps, // Access: name, value, onBlur, onChange for a <Field>, useful for mapping to a field that expects the redux-form props
+    getFieldMeta, // Access: error, touched for a <Field>, useful for mapping to a field that expects the redux-form props
+    values: {
+      [FormFieldId.HttpProxyURL]: httpProxyUrl,
+      [FormFieldId.HttpsProxyURL]: httpsProxyUrl,
+      [FormFieldId.AdditionalTrustBundle]: additionalTrustBundle,
+    },
+  } = useFormState();
+
+  const [anyTouched, setAnyTouched] = React.useState(false);
+
+  React.useEffect(() => () => setAnyTouched(false), []);
+
+  const noUrlValues = !httpProxyUrl && !httpsProxyUrl;
+
+  const onTouched = () => {
+    // this lets us know that one of the fields was touched
+    if (!anyTouched) {
+      setAnyTouched(true);
+    }
+  };
+  const noValues = () => noUrlValues && !additionalTrustBundle;
+  const validateUrlHttp = (value: string) => validateUrl(value, 'http');
+  const validateUrlHttps = (value: string) => validateUrl(value, ['http', 'https']);
+  const validateAtLeastOne = () => {
+    if (!httpProxyUrl && !httpsProxyUrl && !additionalTrustBundle) {
+      return 'Configure at least one of the cluster-wide proxy fields.';
+    }
+    return undefined;
+  };
+
+  const atLeastOneAlert = (
+    <Alert isInline variant="warning" title="Complete at least 1 of the fields above." />
+  );
+
+  React.useEffect(() => {
+    if (noUrlValues) {
+      setFieldValue(FormFieldId.NoProxyDomains, '');
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [noUrlValues]);
+
+  const clusterProxyError = isClusterEditError && (
+    <ErrorBox message="Error editing cluster-wide proxy" response={clusterEditError} />
+  );
+
+  return (
+    <Modal
+      onClose={handleClose}
+      title="Edit cluster-wide Proxy"
+      onPrimaryClick={submitForm}
+      primaryText="Save"
+      onSecondaryClick={handleClose}
+      isPending={isClusterEditPending}
+      width="max(30%, 600px)"
+    >
+      {clusterProxyError}
+      <Form>
+        <Grid hasGutter>
+          <GridItem>
+            <Text>
+              Enable an HTTP or HTTPS proxy to deny direct access to the Internet from your cluster
+            </Text>
+            <Text className="pf-v5-u-mt-sm">
+              <ExternalLink href={links.CONFIGURE_PROXY_URL}>
+                Learn more about configuring a cluster-wide proxy
+              </ExternalLink>
+            </Text>
+          </GridItem>
+
+          <GridItem>
+            <Alert
+              variant="info"
+              isInline
+              isPlain
+              title="Configure at least 1 of the following fields:"
+            />
+          </GridItem>
+
+          <GridItem sm={12} md={10} xl2={11}>
+            <Field
+              component={ReduxVerticalFormGroup}
+              name={FormFieldId.HttpProxyURL}
+              label="HTTP Proxy URL"
+              placeholder={HTTP_PROXY_PLACEHOLDER}
+              type="text"
+              validate={composeValidators(validateUrlHttp, validateAtLeastOne)}
+              helpText="Specify a proxy URL to use for HTTP connections outside the cluster."
+              showHelpTextOnError={false}
+              meta={getFieldMeta(FormFieldId.HttpProxyURL)}
+              input={{
+                ...getFieldProps(FormFieldId.HttpProxyURL),
+                onChange: (_: React.MouseEvent | React.ChangeEvent, value: string) => {
+                  setFieldValue(FormFieldId.HttpProxyURL, value);
+                  setTimeout(() => setFieldTouched(FormFieldId.HttpProxyURL), 1);
+                },
+                onBlur: (event: any) => {
+                  const { onBlur } = getFieldProps(FormFieldId.HttpProxyURL);
+                  onTouched();
+                  onBlur(event);
+                },
+              }}
+            />
+          </GridItem>
+
+          <GridItem sm={12} md={10} xl2={11}>
+            <Field
+              component={ReduxVerticalFormGroup}
+              name={FormFieldId.HttpsProxyURL}
+              label="HTTPS Proxy URL"
+              placeholder={HTTPS_PROXY_PLACEHOLDER}
+              type="text"
+              validate={composeValidators(validateUrlHttps, validateAtLeastOne)}
+              helpText="Specify a proxy URL to use for HTTPS connections outside the cluster."
+              showHelpTextOnError={false}
+              meta={getFieldMeta(FormFieldId.HttpsProxyURL)}
+              input={{
+                ...getFieldProps(FormFieldId.HttpsProxyURL),
+                onChange: (_: React.MouseEvent | React.ChangeEvent, value: string) => {
+                  setFieldValue(FormFieldId.HttpsProxyURL, value);
+                  setTimeout(() => setFieldTouched(FormFieldId.HttpsProxyURL), 1);
+                },
+                onBlur: (event: any) => {
+                  const { onBlur } = getFieldProps(FormFieldId.HttpsProxyURL);
+                  onTouched();
+                  onBlur(event);
+                },
+              }}
+            />
+          </GridItem>
+          <GridItem sm={12} md={10} xl2={11}>
+            <Field
+              component={ReduxVerticalFormGroup}
+              name={FormFieldId.NoProxyDomains}
+              label="No Proxy domains"
+              placeholder={noUrlValues ? DISABLED_NO_PROXY_PLACEHOLDER : NO_PROXY_PLACEHOLDER}
+              type="text"
+              normalize={(value: string) => stringToArray(value)}
+              validate={checkNoProxyDomains}
+              helpText={NO_PROXY_HELPER_TEXT}
+              showHelpTextOnError={false}
+              isDisabled={noUrlValues}
+              meta={getFieldMeta(FormFieldId.NoProxyDomains)}
+              input={{
+                ...getFieldProps(FormFieldId.NoProxyDomains),
+                onChange: (_: React.MouseEvent | React.ChangeEvent, value: string) => {
+                  setFieldValue(FormFieldId.NoProxyDomains, value);
+                  setTimeout(() => setFieldTouched(FormFieldId.NoProxyDomains), 1);
+                },
+                onBlur: (event: any) => {
+                  const { onBlur } = getFieldProps(FormFieldId.NoProxyDomains);
+                  onTouched();
+                  onBlur(event);
+                },
+              }}
+            />
+          </GridItem>
+          <GridItem sm={12} md={10} xl2={11}>
+            <Field
+              component={ReduxFileUpload}
+              name={FormFieldId.AdditionalTrustBundle}
+              label="Additional trust bundle"
+              placeholder={TRUST_BUNDLE_PLACEHOLDER}
+              extendedHelpTitle="Additional trust bundle"
+              extendedHelpText="An additional trust bundle is a PEM encoded X.509 certificate bundle that will be added to the nodes' trusted certificate store."
+              validate={composeValidators(validateCA, validateAtLeastOne)}
+              dropzoneProps={{
+                accept: ACCEPT,
+                maxSize: MAX_FILE_SIZE,
+                onDropRejected: () =>
+                  setFieldValue(FormFieldId.AdditionalTrustBundle, 'Invalid file'),
+              }}
+              meta={getFieldMeta('additional_trust_bundle')}
+              helpText="Upload or paste a PEM encoded X.509 certificate."
+              input={{
+                ...getFieldProps(FormFieldId.AdditionalTrustBundle),
+                onChange: (value: string) => {
+                  setFieldValue(FormFieldId.AdditionalTrustBundle, value);
+                  setTimeout(() => setFieldTouched(FormFieldId.AdditionalTrustBundle), 1);
+                },
+                onBlur: (event: any) => {
+                  const { onBlur } = getFieldProps(FormFieldId.AdditionalTrustBundle);
+                  onTouched();
+                  onBlur(event);
+                },
+              }}
+            />
+          </GridItem>
+          <GridItem md={2} xl2={4} />
+          <GridItem>{anyTouched && noValues() && atLeastOneAlert}</GridItem>
+        </Grid>
+      </Form>
+    </Modal>
+  );
+};
+
+export default EditClusterWideProxyForm;

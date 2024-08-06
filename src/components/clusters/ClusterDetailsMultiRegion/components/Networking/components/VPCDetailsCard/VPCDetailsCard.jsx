@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { useDispatch } from 'react-redux';
 
 import {
   Button,
@@ -16,29 +17,33 @@ import {
   Title,
 } from '@patternfly/react-core';
 
+import { stringToArray } from '~/common/helpers';
 import modals from '~/components/common/Modal/modals';
 import { isRestrictedEnv } from '~/restrictedEnv';
 
+import { modalActions } from '../../../../../../common/Modal/ModalActions';
 import EditClusterWideProxyDialog from '../EditClusterWideProxyDialog';
 
 import './VPCDetailsCard.scss';
 
-const VPCDetailsCard = (props) => {
-  const {
-    privateLink,
-    httpProxyUrl,
-    httpsProxyUrl,
-    noProxyDomains,
-    additionalTrustBundle,
-    openModal,
-    gcpVPCName,
-    isBYOVPC,
-  } = props;
+const VPCDetailsCard = ({ cluster }) => {
+  const dispatch = useDispatch();
+
+  const privateLink = cluster.aws?.private_link;
+
+  const httpProxyUrl = cluster.proxy?.http_proxy;
+  const httpsProxyUrl = cluster.proxy?.https_proxy;
+  const noProxyDomains = stringToArray(cluster.proxy?.no_proxy);
+  const additionalTrustBundle = cluster.additional_trust_bundle;
+  const gcpVPCName = cluster.gcp_network?.vpc_name;
+  const isBYOVPC = cluster.aws?.subnet_ids || cluster.gcp_network;
+
+  const region = cluster.subscription?.xcm_id;
 
   const isPrivateLinkInitialized = typeof privateLink !== 'undefined';
 
   const handleEditClusterProxy = () => {
-    openModal(modals.EDIT_CLUSTER_WIDE_PROXY);
+    dispatch(modalActions.openModal(modals.EDIT_CLUSTER_WIDE_PROXY));
   };
 
   const renderNoProxyDomains = noProxyDomains
@@ -110,7 +115,7 @@ const VPCDetailsCard = (props) => {
             </DescriptionListDescription>
           </DescriptionListGroup>
         </DescriptionList>
-        <EditClusterWideProxyDialog />
+        <EditClusterWideProxyDialog region={region} cluster={cluster} />
       </CardBody>
       {!isRestrictedEnv() && (
         <CardFooter>
@@ -124,14 +129,7 @@ const VPCDetailsCard = (props) => {
 };
 
 VPCDetailsCard.propTypes = {
-  openModal: PropTypes.func.isRequired,
-  privateLink: PropTypes.bool,
-  httpProxyUrl: PropTypes.string,
-  httpsProxyUrl: PropTypes.string,
-  noProxyDomains: PropTypes.string,
-  additionalTrustBundle: PropTypes.string,
-  gcpVPCName: PropTypes.string,
-  isBYOVPC: PropTypes.bool,
+  cluster: PropTypes.object.isRequired,
 };
 
 export default VPCDetailsCard;

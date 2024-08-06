@@ -4,6 +4,8 @@ import PropTypes from 'prop-types';
 import { EmptyState, EmptyStateBody, Grid, GridItem } from '@patternfly/react-core';
 import { Spinner } from '@redhat-cloud-services/frontend-components/Spinner';
 
+import { useGetClusterRouters } from '~/queries/ClusterDetailsQueries/NetworkingTab/useGetClusterRouters';
+
 import ApplicationIngressCard from './components/ApplicationIngressCard';
 import ClusterIngressCard from './components/ClusterIngressCard';
 import NetworkConfigurationCard from './components/NetworkConfigurationCard';
@@ -12,53 +14,63 @@ import VPCSubnetsCard from './components/VPCSubnetsCard';
 
 import './Networking.scss';
 
-class Networking extends React.Component {
-  componentWillUnmount() {
-    const { resetRouters } = this.props;
-    resetRouters();
-  }
+const Networking = ({ cluster, refreshCluster, clusterID, isManaged, region }) => {
+  const {
+    data: clusterRouters,
+    isLoading: isClusterRoutersLoading,
+    isError: isClusterRoutersError,
+  } = useGetClusterRouters(clusterID, isManaged, region);
 
-  render() {
-    const { network, refreshCluster, gotRouters, provider } = this.props;
+  const network = cluster.network || {};
+  const provider = cluster.cloud_provider.id ? cluster.cloud_provider.id : 'N/A';
 
-    if (!gotRouters) {
-      return (
-        <EmptyState>
-          <EmptyStateBody>
-            <Spinner centered />
-          </EmptyStateBody>
-        </EmptyState>
-      );
-    }
-
+  if (isClusterRoutersLoading && !isClusterRoutersError) {
     return (
-      <Grid hasGutter>
-        <GridItem lg={9} md={12} className="networking-grid-item">
-          <ClusterIngressCard refreshCluster={refreshCluster} provider={provider} />
-        </GridItem>
-        <GridItem lg={3} md={12} className="networking-grid-item">
-          <NetworkConfigurationCard network={network} />
-        </GridItem>
-        <GridItem lg={9} md={12} className="networking-grid-item">
-          <ApplicationIngressCard provider={provider} />
-        </GridItem>
-        <GridItem lg={3} md={12} className="networking-grid-item">
-          <VPCSubnetsCard />
-        </GridItem>
-        <GridItem lg={9} md={12} className="networking-grid-item">
-          <VPCDetailsCard />
-        </GridItem>
-      </Grid>
+      <EmptyState>
+        <EmptyStateBody>
+          <Spinner centered />
+        </EmptyStateBody>
+      </EmptyState>
     );
   }
-}
+
+  return (
+    <Grid hasGutter>
+      <GridItem lg={9} md={12} className="networking-grid-item">
+        <ClusterIngressCard
+          refreshCluster={refreshCluster}
+          provider={provider}
+          cluster={cluster}
+          clusterRoutersData={clusterRouters}
+        />
+      </GridItem>
+      <GridItem lg={3} md={12} className="networking-grid-item">
+        <NetworkConfigurationCard network={network} />
+      </GridItem>
+      <GridItem lg={9} md={12} className="networking-grid-item">
+        <ApplicationIngressCard
+          provider={provider}
+          cluster={cluster}
+          refreshCluster={refreshCluster}
+          clusterRoutersData={clusterRouters}
+        />
+      </GridItem>
+      <GridItem lg={3} md={12} className="networking-grid-item">
+        <VPCSubnetsCard awsSubnets={cluster.aws?.subnet_ids} gcpNetwork={cluster.gcp_network} />
+      </GridItem>
+      <GridItem lg={9} md={12} className="networking-grid-item">
+        <VPCDetailsCard cluster={cluster} />
+      </GridItem>
+    </Grid>
+  );
+};
 
 Networking.propTypes = {
-  network: PropTypes.object.isRequired,
-  resetRouters: PropTypes.func.isRequired,
+  cluster: PropTypes.object.isRequired,
+  region: PropTypes.string,
+  isManaged: PropTypes.bool,
+  clusterID: PropTypes.string.isRequired,
   refreshCluster: PropTypes.func.isRequired,
-  gotRouters: PropTypes.bool.isRequired,
-  provider: PropTypes.string,
 };
 
 export default Networking;
