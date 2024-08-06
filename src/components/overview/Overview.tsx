@@ -91,6 +91,7 @@ function OverviewEmptyState() {
               <InternalTrackingLink
                 to={createClusterURL}
                 variant="link"
+                isButton
                 data-testid="create-cluster"
                 component={CreateClusterLink}
               >

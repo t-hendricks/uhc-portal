@@ -14,7 +14,7 @@ import './RecommendedOperatorsCards.scss';
 type RecommendedOperatorsCardsNode = {
   title: string;
   description: string;
-  logo: string | undefined;
+  logo?: string;
   labelText?: string;
   drawerPanelContent?: DrawerPanelContentNode;
 };
