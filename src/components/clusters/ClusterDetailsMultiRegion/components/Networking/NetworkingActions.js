@@ -2,11 +2,11 @@ import has from 'lodash/has';
 import isEqual from 'lodash/isEqual';
 
 import { stringToArrayTrimmed, strToKeyValueObject } from '~/common/helpers';
+import { invalidateClusterDetailsQueries } from '~/queries/ClusterDetailsQueries/useFetchClusterDetails';
 import { LoadBalancerFlavor } from '~/types/clusters_mgmt.v1';
 import { NamespaceOwnershipPolicy } from '~/types/clusters_mgmt.v1/models/NamespaceOwnershipPolicy';
 import { WildcardPolicy } from '~/types/clusters_mgmt.v1/models/WildcardPolicy';
 
-import { setClusterDetails } from '../../../../../redux/actions/clustersActions';
 import { clusterService } from '../../../../../services';
 
 import { networkingConstants } from './NetworkingConstants';
@@ -142,7 +142,7 @@ const createAdditionalRouterRequest = (newData, currentData) => {
   return requestAdditionalRouter;
 };
 
-const sendNetworkConfigRequests = async (newData, currentData, clusterID, dispatch) => {
+const sendNetworkConfigRequests = async (newData, currentData, clusterID, clusterService) => {
   let result;
 
   // API privacy setting changed
@@ -156,7 +156,7 @@ const sendNetworkConfigRequests = async (newData, currentData, clusterID, dispat
     if (result.status === 204) {
       // editing cluster succeeded.
       // modify the details in state now (instead of waiting for a refresh) to avoid flicker
-      dispatch(setClusterDetails(clusterRequest, true));
+      invalidateClusterDetailsQueries();
     }
   }
 
