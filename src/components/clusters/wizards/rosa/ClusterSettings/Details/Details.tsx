@@ -62,10 +62,7 @@ import {
   useFetchSearchDomainPrefix,
 } from '~/queries/RosaWizardQueries/useFetchSearchDomainPrefix';
 import { getMachineTypesByRegionARN } from '~/redux/actions/machineTypesActions';
-import {
-  LONGER_CLUSTER_NAME_UI,
-  MULTIREGION_PREVIEW_ENABLED,
-} from '~/redux/constants/featureConstants';
+import { MULTIREGION_PREVIEW_ENABLED } from '~/redux/constants/featureConstants';
 import { useGlobalState } from '~/redux/hooks';
 import { QuotaCostList } from '~/types/accounts_mgmt.v1';
 import { Version } from '~/types/clusters_mgmt.v1';
@@ -214,8 +211,7 @@ function Details() {
     organization: { quotaList, details: organizationDetails },
   } = useGlobalState((state) => state.userProfile);
 
-  const isLongerClusterNameEnabled = useFeatureGate(LONGER_CLUSTER_NAME_UI);
-  const clusterNameMaxLength = isLongerClusterNameEnabled ? 54 : 15;
+  const clusterNameMaxLength = 54; // After removing feature flag, the max length is always 54
 
   const validateClusterName = async (value: string) => {
     const syncError = createPessimisticValidator(clusterNameValidation)(
@@ -419,46 +415,39 @@ function Details() {
         </GridItem>
         <GridItem md={6} />
 
-        {isLongerClusterNameEnabled && (
+        <GridItem>
+          <Split hasGutter className="pf-u-mb-0">
+            <SplitItem>
+              <CheckboxField name={FieldId.HasDomainPrefix} label="Create custom domain prefix" />
+            </SplitItem>
+            <SplitItem>
+              <PopoverHint hint={constants.domainPrefixHint} />
+            </SplitItem>
+          </Split>
+        </GridItem>
+        {hasDomainPrefix && (
           <>
-            <GridItem>
-              <Split hasGutter className="pf-u-mb-0">
-                <SplitItem>
-                  <CheckboxField
-                    name={FieldId.HasDomainPrefix}
-                    label="Create custom domain prefix"
-                  />
-                </SplitItem>
-                <SplitItem>
-                  <PopoverHint hint={constants.domainPrefixHint} />
-                </SplitItem>
-              </Split>
+            <GridItem md={6}>
+              <Field
+                component={RichInputField}
+                name={FieldId.DomainPrefix}
+                label="Domain prefix"
+                type="text"
+                validate={validateDomainPrefix}
+                validation={domainPrefixValidation}
+                asyncValidation={(value: string) =>
+                  domainPrefixAsyncValidation(
+                    value,
+                    isMultiRegionEnabled,
+                    undefined,
+                    isExistingRegionalDomainPrefix,
+                  )
+                }
+                isRequired
+                input={getFieldProps(FieldId.DomainPrefix)}
+              />
             </GridItem>
-            {hasDomainPrefix && (
-              <>
-                <GridItem md={6}>
-                  <Field
-                    component={RichInputField}
-                    name={FieldId.DomainPrefix}
-                    label="Domain prefix"
-                    type="text"
-                    validate={validateDomainPrefix}
-                    validation={domainPrefixValidation}
-                    asyncValidation={(value: string) =>
-                      domainPrefixAsyncValidation(
-                        value,
-                        isMultiRegionEnabled,
-                        undefined,
-                        isExistingRegionalDomainPrefix,
-                      )
-                    }
-                    isRequired
-                    input={getFieldProps(FieldId.DomainPrefix)}
-                  />
-                </GridItem>
-                <GridItem md={6} />
-              </>
-            )}
+            <GridItem md={6} />
           </>
         )}
 

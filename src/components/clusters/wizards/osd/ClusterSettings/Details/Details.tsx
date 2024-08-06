@@ -56,9 +56,7 @@ import { FieldId, MIN_SECURE_BOOT_VERSION } from '~/components/clusters/wizards/
 import { CheckboxDescription } from '~/components/common/CheckboxDescription';
 import ExternalLink from '~/components/common/ExternalLink';
 import PopoverHint from '~/components/common/PopoverHint';
-import { useFeatureGate } from '~/hooks/useFeatureGate';
 import { getCloudProviders } from '~/redux/actions/cloudProviderActions';
-import { LONGER_CLUSTER_NAME_UI } from '~/redux/constants/featureConstants';
 import { useGlobalState } from '~/redux/hooks/useGlobalState';
 import { QuotaCostList } from '~/types/accounts_mgmt.v1';
 import { Version } from '~/types/clusters_mgmt.v1';
@@ -111,8 +109,7 @@ function Details() {
   const isIncompatibleSecureBootVersion =
     isGCP && versionComparator(selectedVersion?.raw_id, MIN_SECURE_BOOT_VERSION) === -1;
 
-  const isLongerClusterNameEnabled = useFeatureGate(LONGER_CLUSTER_NAME_UI);
-  const clusterNameMaxLength = isLongerClusterNameEnabled ? 54 : 15;
+  const clusterNameMaxLength = 54; // After removing feature flag, the max length is always 54
 
   React.useEffect(() => {
     dispatch(getCloudProviders());
@@ -285,37 +282,30 @@ function Details() {
             />
           </GridItem>
 
-          {isLongerClusterNameEnabled && (
-            <>
-              <GridItem>
-                <Split hasGutter className="pf-u-mb-0">
-                  <SplitItem>
-                    <CheckboxField
-                      name={FieldId.HasDomainPrefix}
-                      label="Create custom domain prefix"
-                    />
-                  </SplitItem>
-                  <SplitItem>
-                    <PopoverHint hint={constants.domainPrefixHint} />
-                  </SplitItem>
-                </Split>
-              </GridItem>
-              {hasDomainPrefix && (
-                <GridItem>
-                  <Field
-                    component={RichInputField}
-                    name={FieldId.DomainPrefix}
-                    label="Domain prefix"
-                    type="text"
-                    validate={validateDomainPrefix}
-                    validation={domainPrefixValidation}
-                    asyncValidation={domainPrefixAsyncValidation}
-                    isRequired
-                    input={getFieldProps(FieldId.DomainPrefix)}
-                  />
-                </GridItem>
-              )}
-            </>
+          <GridItem>
+            <Split hasGutter className="pf-u-mb-0">
+              <SplitItem>
+                <CheckboxField name={FieldId.HasDomainPrefix} label="Create custom domain prefix" />
+              </SplitItem>
+              <SplitItem>
+                <PopoverHint hint={constants.domainPrefixHint} />
+              </SplitItem>
+            </Split>
+          </GridItem>
+          {hasDomainPrefix && (
+            <GridItem>
+              <Field
+                component={RichInputField}
+                name={FieldId.DomainPrefix}
+                label="Domain prefix"
+                type="text"
+                validate={validateDomainPrefix}
+                validation={domainPrefixValidation}
+                asyncValidation={domainPrefixAsyncValidation}
+                isRequired
+                input={getFieldProps(FieldId.DomainPrefix)}
+              />
+            </GridItem>
           )}
 
           <GridItem>

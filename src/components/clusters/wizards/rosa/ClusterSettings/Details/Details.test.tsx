@@ -10,10 +10,7 @@ import { fulfilledProviders, multiRegions, noProviders } from '~/common/__tests_
 import { FieldId, initialValues } from '~/components/clusters/wizards/rosa/constants';
 import ocpLifeCycleStatuses from '~/components/releases/__mocks__/ocpLifeCycleStatuses';
 import { useFetchRegionalizedMultiRegions } from '~/queries/RosaWizardQueries/useFetchRegionalizedMultiRegions';
-import {
-  LONGER_CLUSTER_NAME_UI,
-  MULTIREGION_PREVIEW_ENABLED,
-} from '~/redux/constants/featureConstants';
+import { MULTIREGION_PREVIEW_ENABLED } from '~/redux/constants/featureConstants';
 import clusterService from '~/services/clusterService';
 import getOCPLifeCycleStatus from '~/services/productLifeCycleService';
 import { mockUseFeatureGate, render, screen, withState } from '~/testUtils';
@@ -141,21 +138,7 @@ describe('<Details />', () => {
   });
 
   describe('Domain prefix', () => {
-    it('is hidden when feature gate is not enabled', async () => {
-      mockUseFeatureGate([[LONGER_CLUSTER_NAME_UI, false]]);
-
-      render(
-        <Formik initialValues={defaultValues} onSubmit={() => {}}>
-          <Details />
-        </Formik>,
-      );
-
-      expect(screen.queryByText('Domain prefix')).toBe(null);
-    });
-
     it('displays the field when has_domain_prefix is selected', async () => {
-      mockUseFeatureGate([[LONGER_CLUSTER_NAME_UI, true]]);
-
       render(
         <Formik initialValues={defaultValues} onSubmit={() => {}}>
           <Details />
@@ -166,8 +149,6 @@ describe('<Details />', () => {
     });
 
     it('is hidden when has_domain_prefix is false', async () => {
-      mockUseFeatureGate([[LONGER_CLUSTER_NAME_UI, true]]);
-
       const newValues = { ...defaultValues, [FieldId.HasDomainPrefix]: false };
 
       render(

@@ -1,8 +1,7 @@
 /* eslint-disable camelcase */
 import React from 'react';
 
-import { LONGER_CLUSTER_NAME_UI } from '~/redux/constants/featureConstants';
-import { checkAccessibility, mockUseFeatureGate, render, screen, within } from '~/testUtils';
+import { checkAccessibility, render, screen, within } from '~/testUtils';
 
 import fixtures from '../../__tests__/ClusterDetails.fixtures';
 
@@ -133,7 +132,6 @@ describe('<DetailsLeft />', () => {
 
   describe('Domain prefix', () => {
     it('shows the label and value when feature gate is enabled', async () => {
-      mockUseFeatureGate([[LONGER_CLUSTER_NAME_UI, true]]);
       // Arrange
       const OSDClusterFixture = fixtures.clusterDetails.cluster;
       const domainPrefix = 'prefix-value-1';
@@ -145,20 +143,7 @@ describe('<DetailsLeft />', () => {
       checkForValue(componentText.DOMAIN_PREFIX.label, domainPrefix);
     });
 
-    it('hides the label and value when feature gate is not enabled', async () => {
-      mockUseFeatureGate([[LONGER_CLUSTER_NAME_UI, false]]);
-      // Arrange
-      const OSDClusterFixture = fixtures.clusterDetails.cluster;
-      const props = { ...defaultProps, cluster: OSDClusterFixture };
-      render(<DetailsLeft {...props} />);
-      await checkIfRendered();
-
-      // Assert
-      expect(screen.queryByText(componentText.DOMAIN_PREFIX.label)).toBe(null);
-    });
-
     it('hides the label and value when feature gate is enabled but the value is not set', async () => {
-      mockUseFeatureGate([[LONGER_CLUSTER_NAME_UI, true]]);
       // Arrange
       const OSDClusterFixture = { ...fixtures.clusterDetails.cluster, domain_prefix: '' };
       const props = { ...defaultProps, cluster: OSDClusterFixture };
