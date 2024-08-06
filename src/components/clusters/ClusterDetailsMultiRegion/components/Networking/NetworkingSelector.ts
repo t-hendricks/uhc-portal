@@ -1,7 +1,4 @@
-import get from 'lodash/get';
-
 import { arrayToString } from '~/common/helpers';
-import { GlobalState } from '~/redux/store';
 import { Ingress, LoadBalancerFlavor } from '~/types/clusters_mgmt.v1';
 import { NamespaceOwnershipPolicy } from '~/types/clusters_mgmt.v1/models/NamespaceOwnershipPolicy';
 import { WildcardPolicy } from '~/types/clusters_mgmt.v1/models/WildcardPolicy';
@@ -36,10 +33,9 @@ export type ClusterRouters = {
   additional?: ClusterRouter;
 };
 
-const NetworkingSelector = (state: GlobalState): ClusterRouters => {
-  const { clusterRouters } = state;
+const NetworkingSelector = (clusterRouters: Ingress[]): ClusterRouters => {
   const routers: ClusterRouters = {};
-  get(clusterRouters, 'getRouters.routers', []).forEach((r: Ingress) => {
+  clusterRouters?.forEach((r: Ingress) => {
     const router: ClusterRouter = {
       routerID: r.id,
       isDefault: !!r.default,

@@ -3,7 +3,7 @@ import { Dictionary } from 'lodash';
 
 import { ClusterAutoScalingForm } from '~/components/clusters/common/clusterAutoScalingValues';
 import { Subscription } from '~/types/accounts_mgmt.v1';
-import { MachineType } from '~/types/clusters_mgmt.v1';
+import { Ingress, MachineType } from '~/types/clusters_mgmt.v1';
 import { ErrorDetail } from '~/types/types';
 
 export type SubscriptionResponseType = {
@@ -34,6 +34,25 @@ export type MachineTypesResponse = {
 export type ClusterAutoscalerResponseType = {
   hasAutoscaler: boolean;
   data: ClusterAutoScalingForm;
+};
+
+export type IngresResponseType = {
+  /**
+   * Retrieved list of ingresses.
+   */
+  items?: Array<Ingress>;
+  /**
+   * Index of the requested page, where one corresponds to the first page.
+   */
+  page?: number;
+  /**
+   * Number of items contained in the returned page.
+   */
+  size?: number;
+  /**
+   * Total number of items of the collection.
+   */
+  total?: number;
 };
 
 export type SearchRegionalCluster = {
