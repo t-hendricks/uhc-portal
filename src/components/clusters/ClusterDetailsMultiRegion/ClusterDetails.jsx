@@ -60,7 +60,10 @@ import { SubscriptionCommonFields } from '~/types/accounts_mgmt.v1';
 
 import getClusterName from '../../../common/getClusterName';
 import { isValid, shouldRefetchQuota } from '../../../common/helpers';
-import { isUninstalledAICluster } from '../../../common/isAssistedInstallerCluster';
+import {
+  isAssistedInstallCluster,
+  isUninstalledAICluster,
+} from '../../../common/isAssistedInstallerCluster';
 import { hasCapability, subscriptionCapabilities } from '../../../common/subscriptionCapabilities';
 import { knownProducts } from '../../../common/subscriptionTypes';
 import { userActions } from '../../../redux/actions';
@@ -500,7 +503,7 @@ const ClusterDetails = (props) => {
     cluster.managed && !isAROCluster && cluster.canEdit && !isArchived;
 
   let addHostsTabState = { showTab: false, isDisabled: false, tabTooltip: '' };
-  if (!isArchived) {
+  if (isAssistedInstallCluster(cluster) && !isArchived) {
     addHostsTabState = getAddHostsTabState(cluster);
   }
 
