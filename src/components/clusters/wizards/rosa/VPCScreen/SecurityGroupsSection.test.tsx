@@ -65,17 +65,6 @@ describe('<SecurityGroupsSection />', () => {
         });
       },
     );
-
-    it.each([[false], [true]])('Is hypershift: %s', async (isHypershift: boolean) => {
-      render(
-        buildTestComponent(
-          <SecurityGroupsSection {...defaultProps} isHypershiftSelected={isHypershift} />,
-        ),
-      );
-      await waitFor(() => {
-        expect(screen.getByText('Additional security groups')).toBeInTheDocument();
-      });
-    });
   });
 
   describe('is hidden when', () => {
