@@ -3,16 +3,10 @@ import Subscription from '../../pageobjects/Subscriptions.page';
 import SubscriptionDedicatedAnnual from '../../fixtures/subscription/SubscriptionDedicated.json';
 describe('Subscription page (OCP-25171)', { tags: ['smoke'] }, () => {
   before(() => {
-    GlobalNav.subscriptionsNavigation().scrollIntoView().click();
-  });
-
-  after(() => {
     cy.visit('/quota');
-    Subscription.isDedicatedAnnualPage();
   });
 
   it('Check the Subscription - Dedicated Annual page headers ', () => {
-    GlobalNav.subscriptionsAnnualNavigation().click();
     // Setting the customized quota response from fixture definitions.
     cy.intercept('**/quota_cost*', (req) => {
       req.continue((res) => {
@@ -60,8 +54,7 @@ describe('Subscription page (OCP-25171)', { tags: ['smoke'] }, () => {
   });
 
   it('Check the Subscription - Dedicated Ondemand page headers ', () => {
-    GlobalNav.globalNavigation().click();
-    GlobalNav.subscriptionsOnDemandNavigation().click();
+    Subscription.dedicatedOnDemandLink().click();
     Subscription.isDedicatedOnDemandPage();
     Subscription.isDedicatedSectionHeader();
     Subscription.isSubscriptionTableHeader();
@@ -106,8 +99,7 @@ describe('Subscription page (OCP-25171)', { tags: ['smoke'] }, () => {
     cy.contains('You do not have any quota').should('be.visible');
   });
   it('Check the Subscription - Dedicated Ondemand page when no quota available ', () => {
-    GlobalNav.globalNavigation().click();
-    GlobalNav.subscriptionsOnDemandNavigation().click();
+    Subscription.dedicatedOnDemandLink().click();
     Subscription.isDedicatedOnDemandPage();
     cy.contains('Marketplace On-Demand subscriptions not detected').should('be.visible');
     Subscription.enableMarketplaceLink()
