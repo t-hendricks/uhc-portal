@@ -733,7 +733,7 @@ async function reportOrder(jiraToken, branch, verbose) {
     //                              |___/      |_|
     // /////////////////////////////////////////////////////////////
 
-    console.log('\n=============================CHERRY PICK ORDER================================');
+    console.log('\n=============================CHERRY PICK LIST=================================');
 
     console.log(`\nTo cherry-pick ${ready.length} ready commits in this order:`);
     ready.forEach((pick) => console.log(pick));
@@ -741,21 +741,11 @@ async function reportOrder(jiraToken, branch, verbose) {
     console.log('\n');
 
     // /////////////////////////////////////////////////////////////
-    //     ____  _
-    //  / ___|| |_ ___ _ __  ___
-    //  \___ \| __/ _ \ '_ \/ __|
-    //   ___) | ||  __/ |_) \__ \
-    //  |____/ \__\___| .__/|___/
-    //                |_|
     // /////////////////////////////////////////////////////////////
 
-    console.log('\n=============================STEPS=================================');
-    console.log(`\nRecommended steps:`);
+    console.log('\n=============================CHERRY PICK COMMAND==============================');
 
-    console.log(`\n${chalk.white('1.')} Create a new STABLE branch with:`);
-    console.log(`${chalk.blueBright(`git checkout -b ${branchName} ${stableSha}`)}\n`);
-
-    console.log(`\n${chalk.white('2.')} Cherry-pick these commits into that branch:`);
+    console.log(`\nUse this command to cherry-pick qualified commits:`);
     if (hasAnyConflicts) {
       console.log(
         `   ${chalk.red(`Note: To minimize conflicts use this ${chalk.magenta('--strategy recursive -X ours')}`)}`,
@@ -778,30 +768,6 @@ async function reportOrder(jiraToken, branch, verbose) {
       console.log(`   ${chalk.red('Commit these changes.')}`);
     }
 
-    console.log(`\n${chalk.white('4.')} When done, push this branch to your fork.\n`);
-
-    console.log(
-      `\n${chalk.white('5.')} In GITLAB create an MR between your fork and the STABLE branch.`,
-    );
-    console.log(`   ${chalk.white('a.')} For template dropdown choose: ${chalk.blue('Release')}`);
-    console.log(`   ${chalk.white('b.')} Do not SQUASH`);
-
-    console.log(`   ${chalk.white('c.')} Pander for approvers`);
-    console.log(`   ${chalk.white('d.')} Merge into STABLE`);
-
-    console.log(`\n${chalk.white('6.')} Update two tables:`);
-    console.log(`   ${chalk.white('a.')} Copy Release notes from above and paste into:`);
-    console.log(
-      `        ${chalk.blue('https://gitlab.cee.redhat.com/service/uhc-portal/-/wikis/Release-Notes')}`,
-    );
-    console.log(`   ${chalk.white('b.')} Copy Held back from above and paste into:`);
-    console.log(
-      `        ${chalk.blue('https://gitlab.cee.redhat.com/service/uhc-portal/-/wikis/Held-Back-Notes')}`,
-    );
-    console.log(`   ${chalk.white('c.')} Announce the release on: ${chalk.blue(' #ocm-osd-ui')}`);
-
-    console.log(`\n${chalk.white('7.')} Label the released JIRA issues with this:`);
-    console.log(`   ./run/label-release-jira.mjs  --jira-token=${jiraToken}`);
     console.log('\n\n');
   } else {
     console.log(chalk.grey('\n\n\n~~no squirrels~~'));
