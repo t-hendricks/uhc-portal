@@ -9,6 +9,8 @@ import { useFormState } from '~/components/clusters/wizards/hooks';
 import { PrerequisitesInfoBox } from '~/components/clusters/wizards/rosa/common/PrerequisitesInfoBox';
 import { WelcomeMessage } from '~/components/clusters/wizards/rosa/common/WelcomeMessage';
 import ExternalLink from '~/components/common/ExternalLink';
+import { useFeatureGate } from '~/hooks/useFeatureGate';
+import { MULTIREGION_PREVIEW_ENABLED } from '~/redux/constants/featureConstants';
 import AWSLogo from '~/styles/images/AWS.png';
 import RedHat from '~/styles/images/Logo-Red_Hat-B-Standard-RGB.png';
 
@@ -35,6 +37,7 @@ const ControlPlaneField = ({
 }: ControlPlaneFieldProps) => {
   const { values: formValues, setValues } = useFormState();
   const isHostedDisabled = !hasHostedProductQuota;
+  const isMultiRegionEnabled = useFeatureGate(MULTIREGION_PREVIEW_ENABLED);
 
   React.useEffect(() => {
     if (isHostedDisabled) {
@@ -48,7 +51,7 @@ const ControlPlaneField = ({
 
     setValues({
       ...formValues,
-      ...initialValuesHypershift(isHypershift === 'true'),
+      ...initialValuesHypershift(isHypershift === 'true', isMultiRegionEnabled),
       [FieldId.Hypershift]: isHypershift,
       // Uncheck the following Network checkboxes when switching Control plane selection
       [FieldId.InstallToVpc]: false,

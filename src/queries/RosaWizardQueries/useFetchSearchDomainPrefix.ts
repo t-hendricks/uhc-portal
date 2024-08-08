@@ -5,7 +5,6 @@ import { queryClient } from '~/components/App/queryClient';
 import { getClusterServiceForRegion } from '~/services/clusterService';
 
 import { clusterService } from '../../services';
-import { createResponseForSearchCluster } from '../helpers';
 import { queryConstants } from '../queriesConstants';
 
 export const refetchSearchDomainPrefix = () => {
@@ -28,12 +27,14 @@ export const useFetchSearchDomainPrefix = (
         const searchValue = `domain_prefix = ${sqlString(search)}`;
         const response = await service.searchClusters(searchValue, 1);
 
-        return createResponseForSearchCluster(response?.data?.items);
+        const isExisting = !!response?.data?.items?.length;
+        return isExisting;
       }
-
       const searchValue = `domain_prefix = ${sqlString(search)}`;
       const response = await clusterService.searchClusters(searchValue, 1);
-      return createResponseForSearchCluster(response?.data?.items);
+
+      const isExisting = !!response?.data?.items?.length;
+      return isExisting;
     },
     retry: false,
     enabled: isMultiRegionEnabled,
