@@ -193,6 +193,7 @@ function AWSAccountSelection({
             footer={footer}
             aria-describedby="aws-infra-accounts"
             toggleId={name}
+            menuAppendTo={() => document.body}
           />
         </FlexItem>
         {onRefresh && (

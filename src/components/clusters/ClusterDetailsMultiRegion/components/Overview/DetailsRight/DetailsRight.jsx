@@ -12,6 +12,7 @@ import {
 
 import { getQueryParam } from '~/common/queryHelpers';
 import { hasSecurityGroupIds } from '~/common/securityGroupsHelpers';
+import { OverviewBillingAccount } from '~/components/clusters/ClusterDetailsMultiRegion/components/Overview/BillingAccount/OverviewBillingAccount';
 import clusterStates, {
   canViewMachinePoolTab,
   isHypershiftCluster,
@@ -208,14 +209,7 @@ function DetailsRight({ cluster, hasAutoscaleCluster, isDeprovisioned, clusterDe
           </DescriptionListDescription>
         </DescriptionListGroup>
       )}
-      {billingMarketplaceAccount && (
-        <DescriptionListGroup>
-          <DescriptionListTerm>Billing marketplace account</DescriptionListTerm>
-          <DescriptionListDescription>
-            <span data-testid="billingMarketplaceAccount">{billingMarketplaceAccount}</span>
-          </DescriptionListDescription>
-        </DescriptionListGroup>
-      )}
+      {billingMarketplaceAccount && <OverviewBillingAccount />}
       {cluster.managed && !cluster.ccs?.enabled && (
         <>
           <DescriptionListGroup>
