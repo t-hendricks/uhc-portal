@@ -7,7 +7,7 @@ import ExternalLink from '~/components/common/ExternalLink';
 import ProductCard from '../ProductCard/ProductCard';
 
 import { DRAWER_PANEL_CONTENT, DrawerPanelContentNode } from './DrawerPanelContent';
-import PRODUCT_CARD_LOGOS from './PRODUCT_CARD_LOGOS';
+import PRODUCT_CARD_LOGOS from './ProductCardLogos';
 
 import './RecommendedOperatorsCards.scss';
 

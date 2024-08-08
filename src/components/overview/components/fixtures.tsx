@@ -4,7 +4,7 @@ import {
   DRAWER_PANEL_CONTENT,
   DrawerPanelContentNode,
 } from './RecommendedOperatorsCards/DrawerPanelContent';
-import PRODUCT_CARD_LOGOS from './RecommendedOperatorsCards/PRODUCT_CARD_LOGOS';
+import PRODUCT_CARD_LOGOS from './RecommendedOperatorsCards/ProductCardLogos';
 
 const BASIC_PRODUCT_CARD_PROPS = {
   title: 'example title',
