@@ -120,7 +120,7 @@ function OverviewEmptyState() {
             </FlexItem>
           </Flex>
           <RecommendedOperatorsCards
-            openReadMore={openDrawer}
+            openLearnMore={openDrawer}
             selectedCardTitle={selectedCardTitle}
           />
         </PageSection>

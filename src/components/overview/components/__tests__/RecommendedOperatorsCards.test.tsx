@@ -13,7 +13,7 @@ import RecommendedOperatorsCards from '../RecommendedOperatorsCards/RecommendedO
 import '@testing-library/jest-dom';
 
 describe('RecommendedOperatorsCards', () => {
-  const { openReadMore } = RECOMMENDED_OPERATORS_CARDS_TEST_CASES.NON_SELECTED;
+  const { openLearnMore } = RECOMMENDED_OPERATORS_CARDS_TEST_CASES.NON_SELECTED;
   let index = 0;
 
   it.each(RECOMMENDED_OPERATORS_CARDS_DATA)(
@@ -47,7 +47,7 @@ describe('RecommendedOperatorsCards', () => {
       const readMoreBtn = readMoreBtns[index];
       await userEvent.click(readMoreBtn);
 
-      expect(openReadMore).toHaveBeenCalledWith(title, drawerPanelContent);
+      expect(openLearnMore).toHaveBeenCalledWith(title, drawerPanelContent);
 
       index += 1;
     },

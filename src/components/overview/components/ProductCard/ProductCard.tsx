@@ -22,7 +22,7 @@ type ProductCardProps = {
   logo?: string;
   labelText?: string;
   drawerPanelContent?: DrawerPanelContentNode;
-  openReadMore: (title: string, content?: DrawerPanelContentNode) => void;
+  openLearnMore: (title: string, content?: DrawerPanelContentNode) => void;
   isSelected: boolean;
 };
 
@@ -32,7 +32,7 @@ const ProductCard = ({
   logo,
   labelText,
   drawerPanelContent,
-  openReadMore,
+  openLearnMore,
   isSelected,
 }: ProductCardProps) => (
   <Card
@@ -68,7 +68,7 @@ const ProductCard = ({
     <CardFooter>
       <Button
         className="product-overview-card__learn-more-button"
-        onClick={() => openReadMore(title, drawerPanelContent)}
+        onClick={() => openLearnMore(title, drawerPanelContent)}
         variant="link"
         icon={<OpenDrawerRightIcon data-testid="open-right-drawer-icon" />}
         iconPosition="end"

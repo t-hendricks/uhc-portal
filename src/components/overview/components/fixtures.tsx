@@ -15,7 +15,7 @@ const BASIC_PRODUCT_CARD_PROPS = {
     head: <div data-testid="test-head-div">example drawer panel content head</div>,
     body: <div data-testid="test-body-div">example drawer panel content body</div>,
   },
-  openReadMore: jest.fn(),
+  openLearnMore: jest.fn(),
   isSelected: false,
 };
 
@@ -50,7 +50,7 @@ const DRAWER_PANEL_TEST_CASES = {
 };
 
 const BASIC_RECCOMENDED_OPERATORS_CARDS_PROPS = {
-  openReadMore: jest.fn(),
+  openLearnMore: jest.fn(),
   selectedCardTitle: '',
 };
 

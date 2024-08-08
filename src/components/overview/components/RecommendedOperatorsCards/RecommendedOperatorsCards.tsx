@@ -43,12 +43,12 @@ const RECOMMENDED_OPERATORS_CARDS: RecommendedOperatorsCardsNode[] = [
 ];
 
 type RecommendedOperatorsCardsProps = {
-  openReadMore: (title: string, content?: DrawerPanelContentNode) => void;
+  openLearnMore: (title: string, content?: DrawerPanelContentNode) => void;
   selectedCardTitle: string;
 };
 
 const RecommendedOperatorsCards = ({
-  openReadMore,
+  openLearnMore,
   selectedCardTitle,
 }: RecommendedOperatorsCardsProps) => (
   <div className="recommended-operators-cards">
@@ -72,7 +72,7 @@ const RecommendedOperatorsCards = ({
         <FlexItem className="pf-v5-u-pt-md" data-testid="product-overview-card-flex-item">
           <ProductCard
             {...card}
-            openReadMore={openReadMore}
+            openLearnMore={openLearnMore}
             isSelected={card.title === selectedCardTitle}
           />
         </FlexItem>

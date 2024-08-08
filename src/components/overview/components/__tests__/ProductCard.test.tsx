@@ -11,7 +11,7 @@ describe('ProductCard', () => {
   it('renders an unselected card', async () => {
     render(<ProductCard {...PRODUCT_CARD_TEST_CASES.UNSELECTED} />);
 
-    const { title, description, logo, labelText, drawerPanelContent, openReadMore } =
+    const { title, description, logo, labelText, drawerPanelContent, openLearnMore } =
       PRODUCT_CARD_TEST_CASES.UNSELECTED;
 
     expect(screen.getByText(title)).toBeInTheDocument();
@@ -25,8 +25,8 @@ describe('ProductCard', () => {
 
     const readMoreBtn = screen.getByText(/Learn more/i);
     await userEvent.click(readMoreBtn);
-    expect(openReadMore).toHaveBeenCalled();
-    expect(openReadMore).toHaveBeenCalledWith(title, drawerPanelContent);
+    expect(openLearnMore).toHaveBeenCalled();
+    expect(openLearnMore).toHaveBeenCalledWith(title, drawerPanelContent);
 
     const card = screen.getByTestId('product-overview-card');
     expect(card).not.toHaveClass('pf-m-selected-raised');
