@@ -13,7 +13,47 @@ import RecommendedOperatorsCards from '../RecommendedOperatorsCards/RecommendedO
 import '@testing-library/jest-dom';
 
 describe('RecommendedOperatorsCards', () => {
-  it('renders titel, link and all cards, no card is selected + checks functionality', async () => {
+  const { openReadMore } = RECOMMENDED_OPERATORS_CARDS_TEST_CASES.NON_SELECTED;
+  let index = 0;
+
+  it.each(RECOMMENDED_OPERATORS_CARDS_DATA)(
+    'renders "$title" card, verifies some card details and ensures it is not selected',
+    async ({ title, logo, description, drawerPanelContent }) => {
+      render(
+        <BrowserRouter>
+          <CompatRouter>
+            <RecommendedOperatorsCards {...RECOMMENDED_OPERATORS_CARDS_TEST_CASES.NON_SELECTED} />
+          </CompatRouter>
+        </BrowserRouter>,
+      );
+
+      // Cards Info:
+      const readMoreBtns = screen.getAllByTestId('product-overview-card__learn-more-button');
+
+      const productCardLogos = screen.getAllByTestId('product-overview-card__logo');
+
+      const productOverviewCards = screen.getAllByTestId('product-overview-card');
+
+      expect(screen.getByText(`${title}`)).toBeInTheDocument();
+      expect(screen.getByText(`${description}`)).toBeInTheDocument();
+
+      expect(productCardLogos[index]).toHaveAttribute('src', `${logo}`);
+
+      await waitFor(() =>
+        expect(productOverviewCards[index]).not.toHaveClass('pf-m-selected-raised'),
+      );
+      expect(productOverviewCards[index]).not.toHaveClass('pf-m-selected-raised');
+
+      const readMoreBtn = readMoreBtns[index];
+      await userEvent.click(readMoreBtn);
+
+      expect(openReadMore).toHaveBeenCalledWith(title, drawerPanelContent);
+
+      index += 1;
+    },
+  );
+
+  it('renders title, link and all cards & checks functionality', async () => {
     const { container } = render(
       <BrowserRouter>
         <CompatRouter>
@@ -21,8 +61,6 @@ describe('RecommendedOperatorsCards', () => {
         </CompatRouter>
       </BrowserRouter>,
     );
-
-    const { openReadMore } = RECOMMENDED_OPERATORS_CARDS_TEST_CASES.NON_SELECTED;
 
     // title:
     expect(screen.getByText('Recommended operators')).toBeInTheDocument();
@@ -43,32 +81,11 @@ describe('RecommendedOperatorsCards', () => {
 
     const productOverviewCards = screen.getAllByTestId('product-overview-card');
 
-    RECOMMENDED_OPERATORS_CARDS_DATA.forEach(
-      async ({ title, description, logo, drawerPanelContent }, index) => {
-        expect(screen.getByText(`${title}`)).toBeInTheDocument();
-        expect(screen.getByText(`${description}`)).toBeInTheDocument();
+    // click on learn more button of Service Mesh
+    const readMoreBtn = readMoreBtns[2];
+    await userEvent.click(readMoreBtn);
 
-        expect(productCardLogos[index]).toHaveAttribute('src', `${logo}`);
-
-        // before clicking on 'Learn more' the card is not selected:
-        await waitFor(() =>
-          expect(productOverviewCards[index]).not.toHaveClass('pf-m-selected-raised'),
-        );
-        expect(productOverviewCards[index]).not.toHaveClass('pf-m-selected-raised');
-
-        const readMoreBtn = readMoreBtns[index];
-        await userEvent.click(readMoreBtn);
-
-        expect(openReadMore).toHaveBeenCalledWith(title, drawerPanelContent);
-
-        // after the click the card should be selected:
-        await waitFor(() =>
-          expect(productOverviewCards[index]).toHaveClass('pf-m-selected-raised'),
-        );
-        expect(productOverviewCards[index]).toHaveClass('pf-m-selected-raised');
-      },
-    );
-
+    await waitFor(() => expect(productOverviewCards[0]).not.toHaveClass('pf-m-selected-raised'));
     // ensure gitops and pipelines cards are NOT selected
     for (let i = 0; i < 2; i += 1)
       expect(productOverviewCards[i]).not.toHaveClass('pf-m-selected-raised');
