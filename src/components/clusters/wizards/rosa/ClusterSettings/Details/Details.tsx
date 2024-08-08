@@ -9,6 +9,7 @@ import {
   FormGroup,
   Grid,
   GridItem,
+  Skeleton,
   Split,
   SplitItem,
   Title,
@@ -94,12 +95,6 @@ function Details() {
     setFieldTouched,
     validateForm,
   } = useFormState();
-  const [isExistingRegionalClusterName, setIsExistingRegionalClusterName] = React.useState<
-    boolean | undefined
-  >(false);
-  const [isExistingRegionalDomainPrefix, setIsExistingRegionalDomainPrefix] = React.useState<
-    boolean | undefined
-  >(false);
 
   const machineTypesByRegion = useSelector((state: any) => state.machineTypesByRegion);
   const dispatch = useDispatch();
@@ -144,11 +139,17 @@ function Details() {
 
   const regionSearch = formatRegionalInstanceUrl(regionalInstance?.url);
 
-  const { isFetching: isSearchClusterNameFetching, data: searchClusterNameData } =
-    useFetchSearchClusterName(clusterName, regionSearch, isMultiRegionEnabled);
+  const { data: hasExistingRegionalClusterName } = useFetchSearchClusterName(
+    clusterName,
+    regionSearch,
+    isMultiRegionEnabled,
+  );
 
-  const { isFetching: isSearchDomainPrefixFetching, data: searchDomainPrefixData } =
-    useFetchSearchDomainPrefix(domainPrefix, regionSearch, isMultiRegionEnabled);
+  const { data: hasExistingRegionalDomainPrefix } = useFetchSearchDomainPrefix(
+    domainPrefix,
+    regionSearch,
+    isMultiRegionEnabled,
+  );
 
   React.useEffect(() => {
     refetchSearchClusterName();
@@ -158,25 +159,6 @@ function Details() {
     refetchSearchDomainPrefix();
   }, [domainPrefix, regionalInstance]);
 
-  const hasExistingRegionalClusterName =
-    searchClusterNameData?.items?.some((cluster) => cluster.name === clusterName) || undefined;
-
-  const hasExistingRegionalDomainPrefix =
-    searchDomainPrefixData?.items?.some((cluster) => cluster.domain_prefix === domainPrefix) ||
-    undefined;
-
-  React.useEffect(() => {
-    if (!isSearchClusterNameFetching) {
-      setIsExistingRegionalClusterName(hasExistingRegionalClusterName);
-    }
-  }, [hasExistingRegionalClusterName, isSearchClusterNameFetching]);
-
-  React.useEffect(() => {
-    if (!isSearchDomainPrefixFetching) {
-      setIsExistingRegionalDomainPrefix(hasExistingRegionalDomainPrefix);
-    }
-  }, [hasExistingRegionalDomainPrefix, isSearchDomainPrefixFetching]);
-
   React.useEffect(() => {
     if (isMultiRegionEnabled) {
       setFieldTouched(FieldId.ClusterName);
@@ -184,15 +166,15 @@ function Details() {
     }
   }, [
     isMultiRegionEnabled,
-    isExistingRegionalClusterName,
-    isExistingRegionalDomainPrefix,
+    hasExistingRegionalClusterName,
+    hasExistingRegionalDomainPrefix,
     setFieldTouched,
   ]);
 
   // Region change may invalidate various fields.
   React.useEffect(() => {
     validateForm();
-  }, [region, validateForm]);
+  }, [region, hasExistingRegionalClusterName, hasExistingRegionalDomainPrefix, validateForm]);
 
   // Expand section to reveal validation errors.
   React.useEffect(() => {
@@ -225,7 +207,7 @@ function Details() {
     const clusterNameAsyncError = await asyncValidateClusterName(
       value,
       isMultiRegionEnabled,
-      isExistingRegionalClusterName,
+      hasExistingRegionalClusterName,
     );
     if (clusterNameAsyncError) {
       return clusterNameAsyncError;
@@ -244,7 +226,7 @@ function Details() {
       value,
       isMultiRegionEnabled,
       undefined,
-      isExistingRegionalDomainPrefix,
+      hasExistingRegionalDomainPrefix,
     );
     if (domainPrefixAsyncError) {
       return domainPrefixAsyncError;
@@ -388,31 +370,41 @@ function Details() {
 
         {isMultiRegionEnabled ? RegionField : null}
 
-        <GridItem md={6}>
-          <Field
-            component={RichInputField}
-            name={FieldId.ClusterName}
-            label="Cluster name"
-            type="text"
-            validate={validateClusterName}
-            validation={(value: string) => clusterNameValidation(value, clusterNameMaxLength)}
-            asyncValidation={(value: string) =>
-              clusterNameAsyncValidation(value, isMultiRegionEnabled, isExistingRegionalClusterName)
-            }
-            isRequired
-            extendedHelpText={constants.clusterNameHint}
-            input={{
-              ...getFieldProps(FieldId.ClusterName),
-              onChange: async (value: string) => {
-                setFieldValue(
-                  FieldId.CustomOperatorRolesPrefix,
-                  createOperatorRolesPrefix(value),
-                  false,
-                );
-              },
-            }}
-          />
-        </GridItem>
+        {isMultiRegionEnabled && !region ? (
+          <GridItem md={6}>
+            <Skeleton fontSize="md" />
+          </GridItem>
+        ) : (
+          <GridItem md={6}>
+            <Field
+              component={RichInputField}
+              name={FieldId.ClusterName}
+              label="Cluster name"
+              type="text"
+              validate={validateClusterName}
+              validation={(value: string) => clusterNameValidation(value, clusterNameMaxLength)}
+              asyncValidation={(value: string) =>
+                clusterNameAsyncValidation(
+                  value,
+                  isMultiRegionEnabled,
+                  hasExistingRegionalClusterName,
+                )
+              }
+              isRequired
+              extendedHelpText={constants.clusterNameHint}
+              input={{
+                ...getFieldProps(FieldId.ClusterName),
+                onChange: async (value: string) => {
+                  setFieldValue(
+                    FieldId.CustomOperatorRolesPrefix,
+                    createOperatorRolesPrefix(value),
+                    false,
+                  );
+                },
+              }}
+            />
+          </GridItem>
+        )}
         <GridItem md={6} />
 
         <GridItem>
@@ -440,7 +432,7 @@ function Details() {
                     value,
                     isMultiRegionEnabled,
                     undefined,
-                    isExistingRegionalDomainPrefix,
+                    hasExistingRegionalDomainPrefix,
                   )
                 }
                 isRequired
