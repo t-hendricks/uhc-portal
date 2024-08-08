@@ -22,10 +22,9 @@ import {
   Title,
 } from '@patternfly/react-core';
 
+import docLinks from '~/common/installLinks.mjs';
 import ExternalLink from '~/components/common/ExternalLink';
 import InternalTrackingLink from '~/components/common/InternalTrackingLink';
-
-import docLinks from '~/common/installLinks.mjs';
 import AWSLogo from '~/styles/images/AWSLogo';
 import IBMLogo from '~/styles/images/ibm_cloud-icon.svg';
 import microsoftLogo from '~/styles/images/Microsoft_logo.svg';
