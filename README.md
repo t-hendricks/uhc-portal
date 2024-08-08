@@ -58,15 +58,9 @@ By default, UI run Assisted Installer without standalone mode. To run with Assis
 
 ## Environments and Deployments
 
-Each of the consoledot environments has a "beta" version; their original goal
-was running same app code + beta insights-chrome code.
-For OCM we're somewhat misusing prod-beta to also run different app code:
-
 | uhc-portal branch | deployed env                                            | insights-chrome | default backend |
 | ----------------- | ------------------------------------------------------- | --------------- | --------------- |
-| `master`          | https://console.dev.redhat.com/preview/openshift        | next version    | staging         |
 | `master`          | https://console.dev.redhat.com/openshift                | stable version  | staging         |
-| `candidate`       | https://console.redhat.com/preview/openshift            | next version    | production      |
 | `stable`          | https://console.redhat.com/openshift                    | stable version  | production      |
 
 On every update to the above branches, the code gets deployed into the relevant

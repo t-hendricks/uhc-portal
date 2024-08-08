@@ -1,9 +1,10 @@
 import { AxiosResponse } from 'axios';
 
+import { WifConfigList } from '~/components/clusters/wizards/osd/ClusterSettings/CloudProvider/types';
 import defaultApiRequest, { APIRequest, getAPIRequestForRegion } from '~/services/apiRequest';
+import type { Subscription } from '~/types/accounts_mgmt.v1';
 import { AWSCredentials, ListAPIParams } from '~/types/types';
 
-import type { Subscription } from '../types/accounts_mgmt.v1';
 import type {
   AddOn,
   AddOnInstallation,
@@ -1173,6 +1174,9 @@ export function getClusterService(apiRequest: APIRequest = defaultApiRequest) {
       apiRequest.delete<unknown>(
         `/api/clusters_mgmt/v1/clusters/${clusterId}/break_glass_credentials`,
       ),
+
+    getGCPWifConfigs: (query: string) =>
+      apiRequest.get<WifConfigList>(`/api/clusters_mgmt/v1/wif_configs`),
   };
 }
 

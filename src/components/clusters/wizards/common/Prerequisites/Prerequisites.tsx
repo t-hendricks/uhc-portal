@@ -17,14 +17,14 @@ interface PrerequisitesProps extends ExpandableSectionProps {
 }
 
 export const Prerequisites = ({
-  initiallyExpanded,
+  initiallyExpanded = false,
   children,
   acknowledgementRequired = false,
   toggleText = 'Prerequisites',
   fieldName = 'acknowledge_prerequisites',
   ...expandSectionProps
 }: PrerequisitesProps) => {
-  const [isExpanded, setIsExpanded] = useState(false);
+  const [isExpanded, setIsExpanded] = useState(initiallyExpanded);
 
   useEffect(() => {
     setIsExpanded(initiallyExpanded);

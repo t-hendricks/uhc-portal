@@ -7,6 +7,7 @@ import links from '~/common/installLinks.mjs';
 import SecurityGroupsSection from '~/components/clusters/wizards/rosa/VPCScreen/SecurityGroupsSection';
 import ExternalLink from '~/components/common/ExternalLink';
 import PopoverHint from '~/components/common/PopoverHint';
+import { isRestrictedEnv } from '~/restrictedEnv';
 
 import SharedVPCSection from '../NetworkingSection/SharedVPCSection';
 
@@ -70,12 +71,14 @@ function InstallToVPC({
           openshiftVersion={openshiftVersion}
           isHypershiftSelected={isHypershiftSelected}
         />
-        <SharedVPCSection
-          hostedZoneDomainName={hostedZoneDomainName}
-          isSelected={isSharedVpcSelected}
-          openshiftVersion={openshiftVersion}
-          isHypershiftSelected={isHypershiftSelected}
-        />
+        {!isRestrictedEnv() && (
+          <SharedVPCSection
+            hostedZoneDomainName={hostedZoneDomainName}
+            isSelected={isSharedVpcSelected}
+            openshiftVersion={openshiftVersion}
+            isHypershiftSelected={isHypershiftSelected}
+          />
+        )}
       </>
     )
   );

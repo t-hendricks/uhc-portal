@@ -15,6 +15,7 @@ import {
   IMDSType,
   UpgradePolicyType,
 } from '~/components/clusters/wizards/common/constants';
+import { GCPAuthType } from '~/components/clusters/wizards/osd/ClusterSettings/CloudProvider/types';
 import { BreadcrumbPath } from '~/components/common/Breadcrumbs';
 
 import { ApplicationIngressType, ClusterPrivacyType } from './Networking/constants';
@@ -119,6 +120,8 @@ export const initialValues: FormikValues = {
   [FieldId.ClusterAutoscaling]: getDefaultClusterAutoScaling(),
   [FieldId.DomainPrefix]: '',
   [FieldId.HasDomainPrefix]: false,
+  [FieldId.GcpAuthType]: GCPAuthType.ServiceAccounts,
+  [FieldId.GcpWifConfig]: '',
 };
 
 export const initialTouched = {

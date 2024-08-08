@@ -20,15 +20,17 @@ const MultiRegionOverrideMessage = () => {
         variant="info"
         isInline
         id="env-override-message"
-        title="Environment override not available"
-        actionLinks={
-          <Button variant={ButtonVariant.link} isInline onClick={removeMultiRegionPreviewFlag}>
-            Turn off <b>Multiregion preview</b>
-          </Button>
+        title={
+          <>
+            You do not have access to view the Multiregion Preview. The Multiregion Preview items
+            will <em>not</em> be shown
+          </>
         }
+        className="pf-v5-u-flex-basis-0 pf-v5-u-flex-grow-1"
       >
-        You do not have access to view the Multiregion Preview environment API. The Multiregion
-        Preview items will <strong>not</strong> be shown.
+        <Button variant={ButtonVariant.link} isInline onClick={removeMultiRegionPreviewFlag}>
+          Turn off <strong>Multiregion preview</strong>
+        </Button>
       </Alert>
     );
   }
@@ -38,14 +40,12 @@ const MultiRegionOverrideMessage = () => {
       variant="warning"
       isInline
       id="env-override-message"
-      title="Environment override active"
-      actionLinks={
-        <Button variant={ButtonVariant.link} isInline onClick={removeMultiRegionPreviewFlag}>
-          Turn off <b>Multiregion preview</b>
-        </Button>
-      }
+      title="Multiregion preview active"
+      className="pf-v5-u-flex-basis-0 pf-v5-u-flex-grow-1"
     >
-      You&apos;re now using the <b>Multiregion Preview active</b> environment API.{' '}
+      <Button variant={ButtonVariant.link} isInline onClick={removeMultiRegionPreviewFlag}>
+        Turn off <strong>Multiregion preview</strong>
+      </Button>
     </Alert>
   );
 };

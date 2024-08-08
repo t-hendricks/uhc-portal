@@ -40,4 +40,16 @@ describe('Arm BareMetal IPI install', () => {
 
     await checkAccessibility(container);
   });
+
+  it('shows installer section', async () => {
+    withState(githubReleases).render(
+      <TestRouter>
+        <CompatRouter>
+          <InstallArmBareMetalIPI token={{}} dispatch={dispatch} />
+        </CompatRouter>
+      </TestRouter>,
+    );
+
+    expect(await screen.findByText('OpenShift installer')).toBeInTheDocument();
+  });
 });

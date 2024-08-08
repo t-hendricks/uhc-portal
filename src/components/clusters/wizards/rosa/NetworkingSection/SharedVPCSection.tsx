@@ -9,7 +9,6 @@ import { getIncompatibleVersionReason } from '~/common/versionCompatibility';
 import { useFormState } from '~/components/clusters/wizards/hooks';
 import ExternalLink from '~/components/common/ExternalLink';
 import { ReduxCheckbox } from '~/components/common/ReduxFormComponents';
-import { isRestrictedEnv } from '~/restrictedEnv';
 
 import SharedVPCField from './SharedVPCField';
 
@@ -46,24 +45,20 @@ const SharedVPCSection = ({
   return (
     <>
       <Title headingLevel="h3">AWS shared VPC</Title>
-      {!isRestrictedEnv() && (
-        <Field
-          component={ReduxCheckbox}
-          name="shared_vpc.is_selected"
-          label="Install into AWS shared VPC"
-          extendedHelpText={
-            <>
-              Install into a non-default subnet shared by another account in your AWS organization.
-              <br />
-              <ExternalLink href={links.AWS_SHARED_VPC}>
-                Learn more about AWS shared VPC
-              </ExternalLink>
-            </>
-          }
-          input={getFieldProps('shared_vpc.is_selected')}
-          meta={getFieldMeta('shared_vpc.is_selected')}
-        />
-      )}
+      <Field
+        component={ReduxCheckbox}
+        name="shared_vpc.is_selected"
+        label="Install into AWS shared VPC"
+        extendedHelpText={
+          <>
+            Install into a non-default subnet shared by another account in your AWS organization.
+            <br />
+            <ExternalLink href={links.AWS_SHARED_VPC}>Learn more about AWS shared VPC</ExternalLink>
+          </>
+        }
+        input={getFieldProps('shared_vpc.is_selected')}
+        meta={getFieldMeta('shared_vpc.is_selected')}
+      />
       {isSelected && (
         <section className="shared-vpc-instructions">
           <Alert

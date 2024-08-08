@@ -2,7 +2,6 @@ import React from 'react';
 
 import { Alert, Skeleton } from '@patternfly/react-core';
 import useChrome from '@redhat-cloud-services/frontend-components/useChrome';
-import type { ChromeAPI } from '@redhat-cloud-services/types';
 
 import { trackEvents } from '~/common/analytics';
 import TokenBox from '~/components/CLILoginPage/TokenBox';
@@ -26,7 +25,7 @@ const ROSALoginCommand = ({
   defaultToOfflineTokens,
 }: ROSALoginCommandProps) => {
   const chrome = useChrome();
-  const restrictedEnv = isRestrictedEnv(chrome as unknown as ChromeAPI);
+  const restrictedEnv = isRestrictedEnv();
 
   const getEnv = () => {
     const env = chrome.getEnvironment();

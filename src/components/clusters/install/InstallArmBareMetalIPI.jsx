@@ -41,7 +41,6 @@ export class InstallArmBareMetalIPI extends Component {
             breadcrumbs={breadcrumbs}
             cloudProviderID="baremetal"
             {...instructionsMapping.baremetal.arm.ipi}
-            isBMIPI
           />
         </PageSection>
       </AppPage>

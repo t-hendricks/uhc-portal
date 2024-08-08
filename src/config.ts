@@ -6,6 +6,7 @@ import utc from 'dayjs/plugin/utc';
 import {
   ENV_OVERRIDE_LOCALSTORAGE_KEY,
   MULTIREGION_LOCALSTORAGE_KEY,
+  RESTRICTED_ENV_OVERRIDE_LOCALSTORAGE_KEY,
 } from './common/localStorageConstants';
 import { Chrome } from './types/types';
 import { getRestrictedEnvApi, isRestrictedEnv } from './restrictedEnv';
@@ -97,14 +98,28 @@ const parseMultiRegionQueryParam = () => {
   return ret;
 };
 
+const parseRestrictedQueryParam = () => {
+  let ret = false;
+  window.location.search
+    .substring(1)
+    .split('&')
+    .forEach((queryString) => {
+      const [key, val] = queryString.split('=');
+      if (key.toLowerCase() === 'restricted' && val === 'true') {
+        ret = true;
+      }
+    });
+  return ret;
+};
+
 const config = {
   configData: {} as EnvConfigWithFedRamp,
   envOverride: undefined as string | undefined,
   fakeOSD: false,
   multiRegion: false,
 
-  loadConfig(data: EnvConfigWithFedRamp) {
-    this.configData = {
+  loadConfig(data: EnvConfig, chrome: Chrome) {
+    const configData = {
       ...data,
       // replace $SELF_PATH$ with the current host
       // to avoid CORS issues when not using prod.foo
@@ -121,6 +136,19 @@ const config = {
         data.insightsGateway?.replace('$SELF_PATH$', window.location.host) || undefined,
     };
 
+    const simulatedRestrictedEnv = !!localStorage.getItem(RESTRICTED_ENV_OVERRIDE_LOCALSTORAGE_KEY);
+    const fedRampConfig = {
+      restrictedEnv: simulatedRestrictedEnv || isRestrictedEnv(chrome),
+      restrictedEnvApi: simulatedRestrictedEnv
+        ? configData.apiGateway
+        : getRestrictedEnvApi(chrome),
+    };
+
+    this.configData = {
+      ...configData,
+      ...fedRampConfig,
+    };
+
     // make config available in browser devtools for debugging
     (window as any).ocmConfig = this;
   },
@@ -131,22 +159,20 @@ const config = {
       if (parseFakeQueryParam()) {
         that.fakeOSD = true;
       }
-      const fedRampConfig = {
-        restrictedEnv: isRestrictedEnv(chrome),
-        restrictedEnvApi: getRestrictedEnvApi(chrome),
-      };
+
       if (parseMultiRegionQueryParam() || localStorage.getItem(MULTIREGION_LOCALSTORAGE_KEY)) {
         that.multiRegion = true;
         localStorage.setItem(MULTIREGION_LOCALSTORAGE_KEY, 'true');
       }
 
+      if (parseRestrictedQueryParam()) {
+        localStorage.setItem(RESTRICTED_ENV_OVERRIDE_LOCALSTORAGE_KEY, 'true');
+      }
+
       const queryEnv = parseEnvQueryParam() || localStorage.getItem(ENV_OVERRIDE_LOCALSTORAGE_KEY);
       if (queryEnv && configs[queryEnv]) {
         configs[queryEnv]!.then((data) => {
-          this.loadConfig({
-            ...data,
-            ...fedRampConfig,
-          });
+          this.loadConfig(data, chrome);
           // eslint-disable-next-line no-console
           console.info(`Loaded override config: ${queryEnv}`);
           that.envOverride = queryEnv;
@@ -155,10 +181,7 @@ const config = {
         });
       } else {
         configs.default?.then((data) => {
-          this.loadConfig({
-            ...data,
-            ...fedRampConfig,
-          });
+          this.loadConfig(data, chrome);
           // eslint-disable-next-line no-console
           console.info(`Loaded default config: ${APP_API_ENV}`);
           resolve();

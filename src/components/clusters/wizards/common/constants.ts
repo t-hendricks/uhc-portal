@@ -70,6 +70,8 @@ export enum FieldId {
   UsePrivateLink = 'use_privatelink',
   VpcName = 'vpc_name', // OSD GCP (shared VPC)
   EnableExteranlAuthentication = 'enable_external_authentication',
+  GcpAuthType = 'gcp_auth_type',
+  GcpWifConfig = 'gcp_wif_config',
 }
 
 export const initialValues: FormikValues = {

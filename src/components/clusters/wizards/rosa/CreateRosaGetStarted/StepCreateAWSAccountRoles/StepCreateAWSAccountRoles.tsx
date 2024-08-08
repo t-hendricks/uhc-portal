@@ -30,7 +30,7 @@ const StepCreateAWSAccountRoles = ({
   setOfflineToken,
 }: StepCreateAWSAccountRolesProps) => {
   const chrome = useChrome() as Chrome;
-  const restrictedEnv = isRestrictedEnv(chrome);
+  const restrictedEnv = isRestrictedEnv();
   const { organization, isLoading, error } = useOrganization();
   const [token, setToken] = React.useState<string>('');
   const [restrictTokens, setRestrictTokens] = React.useState<boolean | undefined>(undefined);

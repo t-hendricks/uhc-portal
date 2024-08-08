@@ -20,14 +20,16 @@ const EnvOverrideMessage = ({ env }: Props) => {
       variant="warning"
       isInline
       id="env-override-message"
-      title="Environment override active"
-      actionLinks={
-        <Button variant={ButtonVariant.link} isInline onClick={goBackToNormal}>
-          Go back to <b>{APP_API_ENV}</b>
-        </Button>
+      title={
+        <>
+          Using the <em>{env}</em> environment API
+        </>
       }
+      className="pf-v5-u-flex-basis-0 pf-v5-u-flex-grow-1"
     >
-      You&apos;re now using the <b>{env}</b> environment API.{' '}
+      <Button variant={ButtonVariant.link} isInline onClick={goBackToNormal}>
+        Go back to <strong>{APP_API_ENV}</strong>
+      </Button>
     </Alert>
   );
 };

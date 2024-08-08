@@ -298,3 +298,37 @@ export const useCanDeleteAccessReview = (
     isFetching,
   };
 };
+
+export const useCanUpdateBreakGlassCredentials = (subscriptionID: string, mainQueryKey: string) => {
+  const {
+    isLoading,
+    data: canUpdateBreakGlassCredentials,
+    isError,
+    error,
+  } = useQuery({
+    queryKey: [
+      mainQueryKey,
+      'authorizationService',
+      'selfResourceReview',
+      SelfAccessReview.action.GET,
+      SelfAccessReview.resource_type.CLUSTER_BREAK_GLASS_CREDENTIAL,
+      subscriptionID,
+    ],
+    queryFn: async () => {
+      const response = fetchPermissions(
+        SelfAccessReview.action.GET,
+        SelfAccessReview.resource_type.CLUSTER_BREAK_GLASS_CREDENTIAL,
+        subscriptionID,
+      );
+
+      return response;
+    },
+    staleTime: queryConstants.STALE_TIME_60_SEC,
+  });
+  return {
+    isLoading,
+    canUpdateBreakGlassCredentials,
+    isError,
+    error,
+  };
+};
