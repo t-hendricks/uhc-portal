@@ -219,15 +219,23 @@ const ClusterStatusMonitor = (props) => {
             const egressErrors = [];
             subnets.push({ name: dkey, egressErrors });
             Object.keys(details[dkey]).forEach((skey) => {
+              // ex. skey = 'egress_url_errors-0'
               if (skey.startsWith('egress_url_errors')) {
-                egressErrors.push(details[dkey][skey].split(' ').pop());
+                const urlPattern = /(https?:\/\/[^\s)]+)/;
+                // ex. str = 'egressURL error: https://registry.redhat.io:443 (Proxy CONNECT aborted)'
+                const str = details[dkey][skey];
+                const result = str.match(urlPattern);
+                // ex. result = [https://registry.redhat.io:443]
+                if (result) {
+                  egressErrors.push(result[0]);
+                }
               }
             });
             egressErrors.sort((a, b) => {
               const aArr = a.split(':');
               const bArr = b.split(':');
-              const ret = aArr[1].localeCompare(bArr[1]);
-              return ret === 0 ? aArr[0].localeCompare(bArr[0]) : ret;
+              const ret = aArr[1]?.localeCompare(bArr[1]);
+              return ret === 0 ? aArr[0]?.localeCompare(bArr[0]) : ret;
             });
           }
         });
