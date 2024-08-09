@@ -40,13 +40,13 @@ import PageTitle from '../../../common/PageTitle';
 import Unavailable from '../../../common/Unavailable';
 
 import CIDRScreen from './CIDRScreen/CIDRScreen';
+import ClusterRolesScreen from './ClusterRolesScreen/ClusterRolesScreen';
 import Details from './ClusterSettings/Details/Details';
 import NetworkScreen from './NetworkScreen/NetworkScreen';
 import UpdatesScreen from './UpdatesScreen/UpdatesScreen';
 import VPCScreen from './VPCScreen/VPCScreen';
 import AccountsRolesScreen from './AccountsRolesScreen';
 import ClusterProxyScreen from './ClusterProxyScreen';
-import ClusterRolesScreen from './ClusterRolesScreen';
 import { FieldId, initialTouched, initialValues, initialValuesRestrictedEnv } from './constants';
 import ControlPlaneScreen from './ControlPlaneScreen';
 import CreateClusterErrorModal from './CreateClusterErrorModal';

@@ -3,17 +3,23 @@ import { Formik } from 'formik';
 
 import { render, screen, waitFor } from '~/testUtils';
 
+import { useFetchGetUserOidcConfigurations } from '../../../../../queries/RosaWizardQueries/useFetchGetUserOidcConfigurations';
 import { initialValues } from '../constants';
 
 import CustomerOIDCConfiguration from './CustomerOIDCConfiguration';
 
-const oidcConfigs = [{ id: 'config1' }, { id: 'config2' }, { id: 'config3' }];
+jest.mock('../../../../../queries/RosaWizardQueries/useFetchGetUserOidcConfigurations', () => ({
+  useFetchGetUserOidcConfigurations: jest.fn(),
+  refetchGetUserOidcConfigurations: jest.fn(),
+}));
+
+const oidcData = {
+  data: {
+    items: [{ id: 'config1' }, { id: 'config2' }, { id: 'config3' }],
+  },
+};
+
 const defaultProps = {
-  getUserOidcConfigurations: jest.fn(() =>
-    Promise.resolve({
-      action: { type: 'LIST_USER_OIDC_CONFIGURATIONS_FULFILLED', payload: oidcConfigs },
-    }),
-  ),
   onSelect: () => {},
   input: { value: '', onBlur: () => {} },
   meta: { error: undefined, touched: false },
@@ -43,22 +49,29 @@ describe('<CustomerOIDCConfiguration />', () => {
     jest.useRealTimers();
   });
 
-  describe('Show spinner when refreshing/loading OIDC configurations', () => {
-    it('shows spinner initially', async () => {
+  const mockedUseFetchGetUserOidcConfigurations = useFetchGetUserOidcConfigurations;
+
+  describe('Refresh OIDC data button', () => {
+    it('is disabled and shows spinner when data is being fetched', async () => {
+      mockedUseFetchGetUserOidcConfigurations.mockReturnValue({
+        data: undefined,
+        isFetching: true,
+        isSuccess: null,
+      });
+
       render(buildTestComponent(<CustomerOIDCConfiguration {...defaultProps} />));
 
       expect(screen.getByRole('button', { name: 'Loading... Refresh' })).toBeDisabled();
       expect(screen.getByRole('progressbar')).toBeInTheDocument();
-
-      await waitFor(() => {
-        expect(screen.getByRole('button', { name: /Refresh/ })).toHaveAttribute(
-          'aria-disabled',
-          'false',
-        );
-      });
     });
 
-    it('hides spinner after OIDC refresh is done', async () => {
+    it('hides the spinner after oidc data is fetched and is not disabled', async () => {
+      mockedUseFetchGetUserOidcConfigurations.mockReturnValue({
+        data: oidcData,
+        isFetching: false,
+        isSuccess: true,
+      });
+
       render(buildTestComponent(<CustomerOIDCConfiguration {...defaultProps} />));
       await waitFor(() => {
         expect(screen.getByRole('button', { name: /Refresh/ })).toHaveAttribute(
@@ -72,10 +85,28 @@ describe('<CustomerOIDCConfiguration />', () => {
   });
 
   describe('OIDC config select ', () => {
-    it('shows with no options in dropdown', async () => {
+    it('shows when oidc config data is being fetched', async () => {
+      mockedUseFetchGetUserOidcConfigurations.mockReturnValue({
+        data: undefined,
+        isFetching: true,
+        isSuccess: null,
+      });
+
       render(buildTestComponent(<CustomerOIDCConfiguration {...defaultProps} />));
 
       // Check while data is still loading
+      expect(await screen.findByText(/No OIDC configurations found/i)).toBeInTheDocument();
+    });
+
+    it('is refreshable when no oidc configs are returned', async () => {
+      mockedUseFetchGetUserOidcConfigurations.mockReturnValue({
+        data: undefined,
+        isFetching: false,
+        isSuccess: true,
+      });
+
+      render(buildTestComponent(<CustomerOIDCConfiguration {...defaultProps} />));
+
       expect(await screen.findByText(/No OIDC configurations found/i)).toBeInTheDocument();
 
       await waitFor(() => {
@@ -87,7 +118,14 @@ describe('<CustomerOIDCConfiguration />', () => {
     });
 
     it('shows search in select oidc config id dropdown', async () => {
+      mockedUseFetchGetUserOidcConfigurations.mockReturnValue({
+        data: oidcData,
+        isFetching: false,
+        isSuccess: true,
+      });
+
       const { user } = render(buildTestComponent(<CustomerOIDCConfiguration {...defaultProps} />));
+
       await waitFor(() => {
         expect(screen.getByRole('button', { name: /Refresh/ })).toHaveAttribute(
           'aria-disabled',
