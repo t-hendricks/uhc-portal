@@ -21,7 +21,7 @@ import { connect } from 'react-redux';
 import { Route, RouteComponentProps, Switch, withRouter } from 'react-router-dom';
 import { CompatRoute, Navigate, useLocation } from 'react-router-dom-v5-compat';
 
-import { Routes as AssistedInstallerRoutes } from '@openshift-assisted/ui-lib/ocm';
+import { UILibRoutes as AssistedInstallerRoutes } from '@openshift-assisted/ui-lib/ocm';
 import useChrome from '@redhat-cloud-services/frontend-components/useChrome';
 
 import config from '~/config';
