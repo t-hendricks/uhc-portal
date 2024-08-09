@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import { Field } from 'formik';
-import PropTypes from 'prop-types';
 
 import {
   Alert,
@@ -27,6 +26,13 @@ import {
 import { FieldId } from '~/components/clusters/wizards/rosa/constants';
 import ReduxHiddenCheckbox from '~/components/common/FormikFormComponents/HiddenCheckbox';
 import useAnalytics from '~/hooks/useAnalytics';
+import { useFeatureGate } from '~/hooks/useFeatureGate';
+import { formatRegionalInstanceUrl } from '~/queries/helpers';
+import {
+  refetchGetOCMRole,
+  useFetchGetOCMRole,
+} from '~/queries/RosaWizardQueries/useFetchGetOCMRole';
+import { MULTIREGION_PREVIEW_ENABLED } from '~/redux/constants/featureConstants';
 
 import links from '../../../../../common/installLinks.mjs';
 import { required } from '../../../../../common/validators';
@@ -45,12 +51,7 @@ const roleModes = {
   AUTO: 'auto',
 };
 
-const ClusterRolesScreen = ({
-  getOCMRole,
-  getOCMRoleResponse,
-  clearGetOcmRoleResponse,
-  getUserOidcConfigurations,
-}) => {
+const ClusterRolesScreen = () => {
   const {
     setFieldValue,
     getFieldProps,
@@ -64,15 +65,27 @@ const ClusterRolesScreen = ({
       [FieldId.CustomOperatorRolesPrefix]: customOperatorRolesPrefix,
       [FieldId.ByoOidcConfigId]: byoOidcConfigID,
       [FieldId.InstallerRoleArn]: installerRoleArn,
+      [FieldId.RegionalInstance]: regionalInstance,
     },
   } = useFormState();
-
   const isHypershift = hypershiftValue === 'true';
+  const isMultiRegionEnabled = useFeatureGate(MULTIREGION_PREVIEW_ENABLED) && isHypershift;
+
   const [isAutoModeAvailable, setIsAutoModeAvailable] = useState(false);
   const [hasByoOidcConfig, setHasByoOidcConfig] = useState(!!(isHypershift || byoOidcConfigID));
 
   const [getOCMRoleErrorBox, setGetOCMRoleErrorBox] = useState(null);
   const track = useAnalytics();
+
+  const regionSearch = formatRegionalInstanceUrl(regionalInstance?.url);
+
+  const {
+    data: getOCMRoleData,
+    error: getOCMRoleError,
+    isPending: isGetOCMRolePending,
+    isSuccess: isGetOCMRoleSuccess,
+    status: getOCMRoleStatus,
+  } = useFetchGetOCMRole(awsAccountID);
 
   const toggleByoOidcConfig = (isChecked) => () => {
     if (isChecked) {
@@ -112,45 +125,45 @@ const ClusterRolesScreen = ({
     // clearing the ocm_role_response results in ocm role being re-fetched
     // when navigating to this step (from Next or Back)
     setFieldValue(FieldId.DetectedOcmRole, false);
-    clearGetOcmRoleResponse();
+    refetchGetOCMRole();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  if (!rosaCreationMode && getOCMRoleResponse.fulfilled) {
+  if (!rosaCreationMode && isGetOCMRoleSuccess) {
     setFieldValue(
       FieldId.RosaRolesProviderCreationMode,
-      getOCMRoleResponse.data?.isAdmin ? roleModes.AUTO : roleModes.MANUAL,
+      getOCMRoleData.data?.isAdmin ? roleModes.AUTO : roleModes.MANUAL,
     );
   }
 
   useEffect(() => {
-    if (getOCMRoleResponse.pending) {
+    if (isGetOCMRolePending) {
       setGetOCMRoleErrorBox(null);
-    } else if (getOCMRoleResponse.fulfilled) {
-      setFieldValue(FieldId.RosaCreatorArn, getOCMRoleResponse.data?.arn);
+    } else if (isGetOCMRoleSuccess) {
+      setFieldValue(FieldId.RosaCreatorArn, getOCMRoleData.data?.arn);
       setFieldValue(FieldId.DetectedOcmRole, true);
-      const isAdmin = getOCMRoleResponse.data?.isAdmin;
+      const isAdmin = getOCMRoleData.data?.isAdmin;
       setIsAutoModeAvailable(isAdmin);
       setGetOCMRoleErrorBox(null);
-    } else if (getOCMRoleResponse.error) {
+    } else if (getOCMRoleError) {
       // display error
       setGetOCMRoleErrorBox(
         <ErrorBox
           message="ocm-role is no longer linked to your Red Hat organization"
-          response={getOCMRoleResponse}
+          response={getOCMRoleError?.errorMessage}
           isExpandable
         >
           <BackToAssociateAwsAccountLink />
         </ErrorBox>,
       );
     } else {
-      getOCMRole(awsAccountID);
+      refetchGetOCMRole();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [getOCMRoleResponse]);
+  }, [getOCMRoleStatus]);
 
   const handleRefresh = () => {
-    clearGetOcmRoleResponse();
+    refetchGetOCMRole();
     setFieldValue(FieldId.RosaRolesProviderCreationMode, undefined);
     track(trackEvents.OCMRoleRefreshed);
   };
@@ -229,7 +242,7 @@ const ClusterRolesScreen = ({
       label: 'Auto',
       description:
         'Immediately create the necessary cluster operator roles and OIDC provider. This mode requires an admin privileged OCM role.',
-      extraField: getOCMRoleResponse.fulfilled && !isAutoModeAvailable && EnableAutoModeTip,
+      extraField: isGetOCMRoleSuccess && !isAutoModeAvailable && EnableAutoModeTip,
     },
   ];
 
@@ -281,7 +294,7 @@ const ClusterRolesScreen = ({
         )}
         <ReduxHiddenCheckbox name="detected_ocm_role" />
         {getOCMRoleErrorBox && <GridItem>{getOCMRoleErrorBox}</GridItem>}
-        {getOCMRoleResponse.pending && (
+        {isGetOCMRolePending && (
           <GridItem>
             <div className="spinner-fit-container">
               <Spinner />
@@ -289,7 +302,7 @@ const ClusterRolesScreen = ({
             <div className="spinner-loading-text pf-v5-u-ml-xl">Checking for admin OCM role...</div>
           </GridItem>
         )}
-        {getOCMRoleResponse.fulfilled && !hasByoOidcConfig && (
+        {isGetOCMRoleSuccess && !hasByoOidcConfig && (
           <>
             <GridItem>
               <Text component={TextVariants.p}>
@@ -305,7 +318,7 @@ const ClusterRolesScreen = ({
                   component={RadioButtons}
                   name={FieldId.RosaRolesProviderCreationMode}
                   className="radio-button"
-                  disabled={getOCMRoleResponse.pending}
+                  disabled={isGetOCMRolePending}
                   options={roleModeOptions}
                   disableDefaultValueHandling
                   input={{
@@ -324,9 +337,10 @@ const ClusterRolesScreen = ({
             name={FieldId.ByoOidcConfigId}
             label="Config ID"
             awsAccountID={awsAccountID}
-            getUserOidcConfigurations={getUserOidcConfigurations}
             byoOidcConfigID={byoOidcConfigID}
             operatorRolesCliCommand={operatorRolesCliCommand}
+            regionSearch={regionSearch}
+            isMultiRegionEnabled={isMultiRegionEnabled}
             validate={required}
             input={{
               ...getFieldProps(FieldId.ByoOidcConfigId),
@@ -340,13 +354,6 @@ const ClusterRolesScreen = ({
       </Grid>
     </Form>
   );
-};
-
-ClusterRolesScreen.propTypes = {
-  getOCMRole: PropTypes.func.isRequired,
-  getOCMRoleResponse: PropTypes.func.isRequired,
-  getUserOidcConfigurations: PropTypes.func.isRequired,
-  clearGetOcmRoleResponse: PropTypes.func.isRequired,
 };
 
 export default ClusterRolesScreen;
