@@ -141,5 +141,35 @@ describe('FuzzySelect', () => {
         }),
       ).toBeInTheDocument();
     });
+
+    it('supports no fuzziness while filtering', async () => {
+      const props = { ...defaultProps, fuzziness: 0 };
+      // render dropdown
+      const { user } = render(<FuzzySelect {...props} />);
+
+      // type something close to an existing value but not an exact match
+      const searchBox = screen.getByPlaceholderText('Filter by name or ID');
+      await user.clear(searchBox);
+      await user.type(searchBox, 'diffrent');
+
+      // Assert
+      expect(await screen.findByRole('option')).toBeInTheDocument();
+      expect(
+        await screen.findByRole('option', {
+          name: 'No results found',
+        }),
+      ).toBeInTheDocument();
+
+      // type something exactly matching a value
+      await user.clear(searchBox);
+      await user.type(searchBox, 'different');
+
+      expect(await screen.findAllByRole('option')).toHaveLength(1);
+      expect(
+        screen.getByRole('option', {
+          name: 'I am different',
+        }),
+      ).toBeInTheDocument();
+    });
   });
 });
