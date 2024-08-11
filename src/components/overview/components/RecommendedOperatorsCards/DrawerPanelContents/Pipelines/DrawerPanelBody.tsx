@@ -29,7 +29,9 @@ const PipelinesDrawerPanelBody = (
       </TextContent>
     </StackItem>
     <StackItem>
-      <Title headingLevel="h3">Benefits</Title>
+      <Title headingLevel="h3" data-testid="drawer-panel-content-benefits-title">
+        Benefits
+      </Title>
     </StackItem>
     <StackItem>
       <TextContent>
@@ -54,7 +56,9 @@ const PipelinesDrawerPanelBody = (
       </TextContent>
     </StackItem>
     <StackItem>
-      <Title headingLevel="h3">Platforms</Title>
+      <Title headingLevel="h3" data-testid="drawer-panel-content-platforms-title">
+        Platforms
+      </Title>
     </StackItem>
     <StackItem>
       <TextContent>
@@ -63,7 +67,7 @@ const PipelinesDrawerPanelBody = (
         </Text>
         <TextList>
           {['Kubernetes', 'Serverless', 'Virtual machines'].map((item) => (
-            <TextListItem>{item}</TextListItem>
+            <TextListItem data-testid="platforms-list-item">{item}</TextListItem>
           ))}
         </TextList>
       </TextContent>

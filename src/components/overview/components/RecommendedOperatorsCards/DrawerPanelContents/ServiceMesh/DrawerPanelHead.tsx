@@ -13,6 +13,7 @@ const ServiceMeshDrawerPanelHead = (
         src={RedHatOpenShiftServiceMeshLogo}
         alt={`${TITLE} logo`}
         className="drawer-panel-content__logo"
+        data-testid={`${TITLE}-drawer-panel-content__logo`}
       />
     </GridItem>
     <GridItem span={10}>

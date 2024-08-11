@@ -45,7 +45,9 @@ const ServiceMeshDrawerPanelBody = (
       </TextContent>
     </StackItem>
     <StackItem>
-      <Title headingLevel="h3">Benefits</Title>
+      <Title headingLevel="h3" data-testid="drawer-panel-content-benefits-title">
+        Benefits
+      </Title>
     </StackItem>
     <StackItem>
       <TextContent>
@@ -92,7 +94,7 @@ const ServiceMeshDrawerPanelBody = (
             'Service-to-service authentication',
             'Failure recovery',
           ].map((item) => (
-            <TextListItem>{item}</TextListItem>
+            <TextListItem data-testid="use-cases-list-item">{item}</TextListItem>
           ))}
         </TextList>
       </TextContent>

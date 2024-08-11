@@ -34,7 +34,9 @@ const GitopsDrawerPanelBody = (
       </TextContent>
     </StackItem>
     <StackItem>
-      <Title headingLevel="h3">Benefits</Title>
+      <Title headingLevel="h3" data-testid="drawer-panel-content-benefits-title">
+        Benefits
+      </Title>
     </StackItem>
     <StackItem>
       <TextContent>
