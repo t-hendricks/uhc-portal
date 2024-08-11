@@ -7,8 +7,8 @@ import { checkAccessibility, render, screen, userEvent, waitFor } from '~/testUt
 import {
   RECOMMENDED_OPERATORS_CARDS_DATA,
   RECOMMENDED_OPERATORS_CARDS_TEST_CASES,
-} from '../fixtures';
-import RecommendedOperatorsCards from '../RecommendedOperatorsCards/RecommendedOperatorsCards';
+} from '../components/fixtures';
+import RecommendedOperatorsCards from '../components/RecommendedOperatorsCards/RecommendedOperatorsCards';
 
 import '@testing-library/jest-dom';
 

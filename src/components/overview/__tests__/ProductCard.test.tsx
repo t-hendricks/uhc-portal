@@ -2,8 +2,8 @@ import React from 'react';
 
 import { render, screen, userEvent } from '~/testUtils';
 
-import { PRODUCT_CARD_TEST_CASES } from '../fixtures';
-import ProductCard from '../ProductCard/ProductCard';
+import { PRODUCT_CARD_TEST_CASES } from '../components/fixtures';
+import ProductCard from '../components/ProductCard/ProductCard';
 
 import '@testing-library/jest-dom';
 
