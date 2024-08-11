@@ -148,6 +148,20 @@ describe('createViewQueryObject()', () => {
     expect(createViewQueryObject(viewOptions)).toEqual(expected);
   });
 
+  it('does not contain ILIKE when filter is not set', () => {
+    const viewOptions = {
+      ...baseViewOptions,
+      filter: '',
+    };
+
+    const expected = {
+      ...baseResult,
+      has_filters: !!viewOptions.filter,
+      filter: `${baseResult.filter} AND (display_name is not null OR external_cluster_id is not null OR cluster_id is not null)`,
+    };
+    expect(createViewQueryObject(viewOptions)).toEqual(expected);
+  });
+
   it('correctly formats filter when plan_id filter flags are set', () => {
     const viewOptions = {
       ...baseViewOptions,
