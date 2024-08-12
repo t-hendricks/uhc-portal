@@ -271,14 +271,14 @@ describe('createClusterRequest', () => {
         });
       });
 
-      it('handles short-lived credentials (wif configs) authentication type', () => {
+      it('handles workload identity federation (wif configs) authentication type', () => {
         const data = {
           ...baseFormData,
           billing_model: 'standard',
           product: normalizedProducts.OSD,
           cloud_provider: 'gcp',
           byoc: 'true',
-          gcp_auth_type: GCPAuthType.ShortLivedCredentials,
+          gcp_auth_type: GCPAuthType.WorkloadIdentityFederation,
           gcp_wif_config: { id: '324ed23f2d12342d23d' },
           secure_boot: true,
         };

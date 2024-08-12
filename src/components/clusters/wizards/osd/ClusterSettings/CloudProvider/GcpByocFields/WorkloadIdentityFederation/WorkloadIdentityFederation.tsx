@@ -14,17 +14,17 @@ import {
 
 import { FieldId } from '~/components/clusters/wizards/common/constants';
 import { useFormState } from '~/components/clusters/wizards/hooks';
-import { useGetWifConfigs } from '~/components/clusters/wizards/osd/ClusterSettings/CloudProvider/GcpByocFields/ShortLivedCredentials/useWifConfigs';
-import { WifConfigSelector } from '~/components/clusters/wizards/osd/ClusterSettings/CloudProvider/GcpByocFields/ShortLivedCredentials/WifConfigSelector';
+import { useGetWifConfigs } from '~/components/clusters/wizards/osd/ClusterSettings/CloudProvider/GcpByocFields/WorkloadIdentityFederation/useWifConfigs';
+import { WifConfigSelector } from '~/components/clusters/wizards/osd/ClusterSettings/CloudProvider/GcpByocFields/WorkloadIdentityFederation/WifConfigSelector';
 import { WifConfig } from '~/components/clusters/wizards/osd/ClusterSettings/CloudProvider/tempWifTypes/WifConfig';
 import { WifConfigList } from '~/components/clusters/wizards/osd/ClusterSettings/CloudProvider/types';
 import ExternalLink from '~/components/common/ExternalLink';
 
-export interface ShortLivedCredentialsProps {
+export interface WorkloadIdentityFederationProps {
   getWifConfigsService: (projectId: string) => Promise<AxiosResponse<WifConfigList>>;
 }
 
-const ShortLivedCredentials = (props: ShortLivedCredentialsProps) => {
+const WorkloadIdentityFederation = (props: WorkloadIdentityFederationProps) => {
   const { getWifConfigsService } = props;
   const { isLoading, wifConfigs, getWifConfigs, error } = useGetWifConfigs(getWifConfigsService);
   useEffect(() => {
@@ -52,7 +52,9 @@ const ShortLivedCredentials = (props: ShortLivedCredentialsProps) => {
     <Stack hasGutter>
       <StackItem>
         <TextContent>
-          <Text component="h4">1. Create a Workload Identity Federation configuration.</Text>
+          <Text component="h4">
+            1. Create a new Workload Identity Federation (WIF) configuration
+          </Text>
 
           <Text component={TextVariants.p}>
             Workload Identity Federation is a keyless authentication mechanism for calling Google
@@ -112,4 +114,4 @@ const ShortLivedCredentials = (props: ShortLivedCredentialsProps) => {
   );
 };
 
-export { ShortLivedCredentials };
+export { WorkloadIdentityFederation };
