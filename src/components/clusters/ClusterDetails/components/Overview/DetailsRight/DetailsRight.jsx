@@ -54,6 +54,7 @@ function DetailsRight({
   const canAutoscaleCluster = useCanClusterAutoscale(
     cluster?.subscription?.plan?.type,
     cluster?.subscription?.cluster_billing_model,
+    cluster?.subscription?.capabilities,
   );
   const isAWS = cluster.subscription?.cloud_provider_id === 'aws';
   const isGCP = cluster.subscription?.cloud_provider_id === 'gcp';
