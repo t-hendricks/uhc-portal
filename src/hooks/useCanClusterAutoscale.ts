@@ -1,5 +1,6 @@
 import { billingModels, normalizedProducts } from '~/common/subscriptionTypes';
 import { useGlobalState } from '~/redux/hooks';
+import { Capability } from '~/types/accounts_mgmt.v1';
 import { Product } from '~/types/clusters_mgmt.v1';
 
 import { hasOrgLevelAutoscaleCapability } from '../components/clusters/ClusterDetails/components/MachinePools/machinePoolsSelectors';
@@ -7,10 +8,18 @@ import { hasOrgLevelAutoscaleCapability } from '../components/clusters/ClusterDe
 const useCanClusterAutoscale = (
   product: Product['id'],
   billingModel: string | undefined /* TO-DO: should use type from openAPI once it's updated */,
+  clusterLevelCapabilities?: Array<Capability>,
 ) => {
-  const hasAutoScaleCapability = useGlobalState((state) =>
-    hasOrgLevelAutoscaleCapability(state.userProfile.organization.details),
+  const hasClusterLevelAutoscaleCapability = !!clusterLevelCapabilities?.find(
+    (capability) => capability.name === 'capability.cluster.autoscale_clusters',
   );
+
+  const hasAutoScaleCapability = useGlobalState(
+    (state) =>
+      hasOrgLevelAutoscaleCapability(state.userProfile.organization.details) ||
+      hasClusterLevelAutoscaleCapability,
+  );
+
   return (
     product === normalizedProducts.ROSA ||
     (product === normalizedProducts.OSD &&
