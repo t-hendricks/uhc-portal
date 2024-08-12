@@ -24,6 +24,8 @@ import { useFormState } from '~/components/clusters/wizards/hooks';
 import { FieldId, StepId } from '~/components/clusters/wizards/osd/constants';
 import config from '~/config';
 import useCanClusterAutoscale from '~/hooks/useCanClusterAutoscale';
+import { useFeatureGate } from '~/hooks/useFeatureGate';
+import { OSD_GCP_WIF } from '~/redux/constants/featureConstants';
 
 interface ReviewAndCreateContentProps {
   isPending: boolean;
@@ -51,6 +53,7 @@ export const ReviewAndCreateContent = ({ isPending }: ReviewAndCreateContentProp
   } = useFormState();
   const canAutoScale = useCanClusterAutoscale(product, billingModel);
   const autoscalingEnabled = canAutoScale && !!formValues[FieldId.AutoscalingEnabled];
+  const isWifEnabled = useFeatureGate(OSD_GCP_WIF);
 
   const isByoc = byoc === 'true';
   const isAWS = cloudProvider === CloudProviderType.Aws;
@@ -60,6 +63,7 @@ export const ReviewAndCreateContent = ({ isPending }: ReviewAndCreateContentProp
 
   const clusterSettingsFields = [
     FieldId.CloudProvider,
+    ...(isWifEnabled ? [FieldId.GcpAuthType] : []),
     FieldId.ClusterName,
     ...(hasDomainPrefix ? [FieldId.DomainPrefix] : []),
     FieldId.ClusterVersion,
