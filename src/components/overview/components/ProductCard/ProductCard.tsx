@@ -16,6 +16,8 @@ import { OpenDrawerRightIcon } from '@patternfly/react-icons/dist/esm/icons/open
 
 import { DrawerPanelContentNode } from '../RecommendedOperatorsCards/DrawerPanelContent';
 
+import './ProductCard.scss';
+
 type ProductCardProps = {
   title: string;
   description: string;
