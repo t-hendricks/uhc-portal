@@ -27,17 +27,17 @@ import { useFormState } from '~/components/clusters/wizards/hooks';
 import { ServiceAccount } from '~/components/clusters/wizards/osd/ClusterSettings/CloudProvider/GcpByocFields/ServiceAccountAuth/ServiceAccount';
 import { ServiceAccountPrerequisites } from '~/components/clusters/wizards/osd/ClusterSettings/CloudProvider/GcpByocFields/ServiceAccountAuth/ServiceAccountPrerequisites';
 import {
-  ShortLivedCredentials,
-  ShortLivedCredentialsProps,
-} from '~/components/clusters/wizards/osd/ClusterSettings/CloudProvider/GcpByocFields/ShortLivedCredentials/ShortLivedCredentials';
-import { ShortLivedCredentialsPrerequisites } from '~/components/clusters/wizards/osd/ClusterSettings/CloudProvider/GcpByocFields/ShortLivedCredentials/ShortLivedCredentialsPrerequisites';
+  WorkloadIdentityFederation,
+  WorkloadIdentityFederationProps,
+} from '~/components/clusters/wizards/osd/ClusterSettings/CloudProvider/GcpByocFields/WorkloadIdentityFederation/WorkloadIdentityFederation';
+import { WorkloadIdentityFederationPrerequisites } from '~/components/clusters/wizards/osd/ClusterSettings/CloudProvider/GcpByocFields/WorkloadIdentityFederation/WorkloadIdentityFederationPrerequisites';
 import { GCPAuthType } from '~/components/clusters/wizards/osd/ClusterSettings/CloudProvider/types';
 import { FieldId } from '~/components/clusters/wizards/osd/constants';
 import ExternalLink from '~/components/common/ExternalLink';
 import { useFeatureGate } from '~/hooks/useFeatureGate';
 import { OSD_GCP_WIF } from '~/redux/constants/featureConstants';
 
-export interface GcpByocFieldsProps extends ShortLivedCredentialsProps {}
+export interface GcpByocFieldsProps extends WorkloadIdentityFederationProps {}
 
 export const GcpByocFields = (props: GcpByocFieldsProps) => {
   const { getWifConfigsService } = props;
@@ -60,8 +60,8 @@ export const GcpByocFields = (props: GcpByocFieldsProps) => {
   const handleAuthChange: ToggleGroupItemProps['onChange'] = (event) => {
     const { id } = event.currentTarget;
     const selection =
-      id === GCPAuthType.ShortLivedCredentials
-        ? GCPAuthType.ShortLivedCredentials
+      id === GCPAuthType.WorkloadIdentityFederation
+        ? GCPAuthType.WorkloadIdentityFederation
         : GCPAuthType.ServiceAccounts;
 
     setFieldValue(FieldId.GcpAuthType, selection);
@@ -94,8 +94,8 @@ export const GcpByocFields = (props: GcpByocFieldsProps) => {
                   bodyContent={
                     <div>
                       <div>
-                        Short-lived credentials use Workload Identity Federation (WIF) which is more
-                        secure. Use of WIF requires an OSD cluster running OpenShift{' '}
+                        Workload Identity Federation (WIF) uses short-lived credentials which is
+                        more secure. Use of WIF requires an OSD cluster running OpenShift{' '}
                         <span className="pf-v5-u-font-family-monospace">4.17</span> or later.
                       </div>
                       <br />
@@ -118,17 +118,17 @@ export const GcpByocFields = (props: GcpByocFieldsProps) => {
             >
               <ToggleGroup aria-label="Authentication type">
                 <ToggleGroupItem
-                  text="Service account"
+                  text="Service Account"
                   key={0}
                   buttonId={GCPAuthType.ServiceAccounts}
                   isSelected={authType === GCPAuthType.ServiceAccounts}
                   onChange={handleAuthChange}
                 />
                 <ToggleGroupItem
-                  text="Short-lived credentials"
+                  text="Workload Identity Federation"
                   key={1}
-                  buttonId={GCPAuthType.ShortLivedCredentials}
-                  isSelected={authType === GCPAuthType.ShortLivedCredentials}
+                  buttonId={GCPAuthType.WorkloadIdentityFederation}
+                  isSelected={authType === GCPAuthType.WorkloadIdentityFederation}
                   onChange={handleAuthChange}
                 />
               </ToggleGroup>
@@ -138,9 +138,9 @@ export const GcpByocFields = (props: GcpByocFieldsProps) => {
         <FlexItem>
           {isWifEnabled ? (
             <Title headingLevel="h4" className="pf-v5-u-mb-sm">
-              {authType === GCPAuthType.ShortLivedCredentials
-                ? 'Short-lived credentials'
-                : 'Service account'}
+              {authType === GCPAuthType.WorkloadIdentityFederation
+                ? 'Workload Identity Federation'
+                : 'Service Account'}
             </Title>
           ) : (
             <Title headingLevel="h3" className="pf-v5-u-mb-sm">
@@ -162,16 +162,16 @@ export const GcpByocFields = (props: GcpByocFieldsProps) => {
                 </HintFooter>
               </Hint>
             )}
-            {authType === GCPAuthType.ShortLivedCredentials ? (
-              <ShortLivedCredentialsPrerequisites />
+            {authType === GCPAuthType.WorkloadIdentityFederation ? (
+              <WorkloadIdentityFederationPrerequisites />
             ) : (
               <ServiceAccountPrerequisites />
             )}
           </Prerequisites>
         </FlexItem>
         <FlexItem>
-          {authType === GCPAuthType.ShortLivedCredentials ? (
-            <ShortLivedCredentials {...{ getWifConfigsService }} />
+          {authType === GCPAuthType.WorkloadIdentityFederation ? (
+            <WorkloadIdentityFederation {...{ getWifConfigsService }} />
           ) : (
             <ServiceAccount />
           )}

@@ -8,6 +8,8 @@ import { humanizeValueWithUnitGiB } from '~/common/units';
 import { routeSelectorsAsString } from '~/components/clusters/ClusterDetails/components/Networking/NetworkingSelector';
 import parseUpdateSchedule from '~/components/clusters/common/Upgrades/parseUpdateSchedule';
 import { IMDSType } from '~/components/clusters/wizards/common';
+import { GCPAuthType } from '~/components/clusters/wizards/osd/ClusterSettings/CloudProvider/types';
+import { FieldId } from '~/components/clusters/wizards/osd/constants';
 
 import AwsVpcTable from './AwsVpcTable';
 import SecurityGroupsTable from './SecurityGroupsTable';
@@ -59,6 +61,11 @@ const reviewValues = {
     title: 'Cloud provider',
     valueTransform: (value) =>
       value === 'gcp' ? 'Google Cloud Platform (GCP)' : value?.toUpperCase(),
+  },
+  [FieldId.GcpAuthType]: {
+    title: 'Authentication type',
+    valueTransform: (value) =>
+      value === GCPAuthType.ServiceAccounts ? 'Service Account' : 'Workload Identity Federation',
   },
   name: {
     title: 'Cluster name',
