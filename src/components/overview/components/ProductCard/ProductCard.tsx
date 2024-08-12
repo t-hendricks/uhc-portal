@@ -36,9 +36,7 @@ const ProductCard = ({
   isSelected,
 }: ProductCardProps) => (
   <Card
-    isSelected={isSelected}
-    isSelectableRaised
-    className="product-overview-card"
+    className={`product-overview-card ${isSelected ? 'pf-m-selectable-raised pf-m-selected-raised' : ''}`}
     data-testid="product-overview-card"
   >
     <CardHeader>
