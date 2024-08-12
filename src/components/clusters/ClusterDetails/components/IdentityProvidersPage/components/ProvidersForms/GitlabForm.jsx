@@ -4,13 +4,15 @@ import { Field } from 'redux-form';
 
 import { GridItem } from '@patternfly/react-core';
 
-import { required } from '../../../../../../../common/validators';
+import { required, validateUrl } from '../../../../../../../common/validators';
 import ReduxVerticalFormGroup from '../../../../../../common/ReduxFormComponents/ReduxVerticalFormGroup';
 import CAUpload from '../CAUpload';
 
 import IDPBasicFields from './IDPBasicFields';
 
 function GitlabFormRequired({ isPending, isEditForm, idpEdited }) {
+  const validateUrlHttpsAndHttp = (value) => validateUrl(value, ['http', 'https']);
+
   return (
     <>
       <IDPBasicFields />
@@ -21,7 +23,7 @@ function GitlabFormRequired({ isPending, isEditForm, idpEdited }) {
           name="gitlab_url"
           label="URL"
           type="text"
-          validate={required}
+          validate={[required, validateUrlHttpsAndHttp]}
           isRequired
           disabled={isPending}
           helpText="The URL of your GitLab provider.This would be https://gitlab.com/ if you do not have hosted GitLab."
