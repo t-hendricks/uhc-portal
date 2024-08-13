@@ -1,0 +1,84 @@
+import React from 'react';
+
+import { Flex, FlexItem, Title } from '@patternfly/react-core';
+
+import ExternalLink from '~/components/common/ExternalLink';
+
+import ProductCard from '../ProductCard/ProductCard';
+
+import { DRAWER_PANEL_CONTENT, DrawerPanelContentNode } from './DrawerPanelContent';
+import PRODUCT_CARD_LOGOS from './ProductCardLogos';
+
+import './RecommendedOperatorsCards.scss';
+
+type RecommendedOperatorsCardsNode = {
+  title: string;
+  description: string;
+  logo?: string;
+  labelText?: string;
+  drawerPanelContent?: DrawerPanelContentNode;
+};
+
+const RECOMMENDED_OPERATORS_CARDS: RecommendedOperatorsCardsNode[] = [
+  {
+    ...PRODUCT_CARD_LOGOS.gitops,
+    description:
+      'Integrate git repositories, continuous integration/continuous delivery (CI/CD) tools, and Kubernetes.',
+    labelText: 'Free',
+    drawerPanelContent: DRAWER_PANEL_CONTENT.gitops,
+  },
+  {
+    ...PRODUCT_CARD_LOGOS.pipelines,
+    description:
+      'Automate your application delivery using a continuous integration and continuous deployment (CI/CD) framework.',
+    labelText: 'Free',
+    drawerPanelContent: DRAWER_PANEL_CONTENT.pipelines,
+  },
+  {
+    ...PRODUCT_CARD_LOGOS.serviceMesh,
+    description: 'Connect, manage, and observe microservices-based applications in a uniform way.',
+    labelText: 'Free',
+    drawerPanelContent: DRAWER_PANEL_CONTENT.serviceMesh,
+  },
+];
+
+type RecommendedOperatorsCardsProps = {
+  openLearnMore: (title: string, content?: DrawerPanelContentNode) => void;
+  selectedCardTitle: string;
+};
+
+const RecommendedOperatorsCards = ({
+  openLearnMore,
+  selectedCardTitle,
+}: RecommendedOperatorsCardsProps) => (
+  <div className="recommended-operators-cards">
+    <Flex>
+      <FlexItem>
+        <Title size="xl" headingLevel="h2" className="pf-v5-u-mt-lg">
+          Recommended operators
+        </Title>
+      </FlexItem>
+      <FlexItem align={{ default: 'alignRight' }}>
+        <ExternalLink
+          href="https://catalog.redhat.com/search?searchType=software&deployed_as=Operator"
+          className="view-all-in-ecosystem-catalog-button"
+        >
+          View all in Ecosystem Catalog
+        </ExternalLink>
+      </FlexItem>
+    </Flex>
+    <Flex className="pf-v5-u-mb-lg">
+      {RECOMMENDED_OPERATORS_CARDS.map((card) => (
+        <FlexItem className="pf-v5-u-pt-md" data-testid="product-overview-card-flex-item">
+          <ProductCard
+            {...card}
+            openLearnMore={openLearnMore}
+            isSelected={card.title === selectedCardTitle}
+          />
+        </FlexItem>
+      ))}
+    </Flex>
+  </div>
+);
+
+export default RecommendedOperatorsCards;

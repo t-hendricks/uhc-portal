@@ -22,15 +22,14 @@ import {
   Title,
 } from '@patternfly/react-core';
 
+import docLinks from '~/common/installLinks.mjs';
 import ExternalLink from '~/components/common/ExternalLink';
 import InternalTrackingLink from '~/components/common/InternalTrackingLink';
-
-import docLinks from '../../../common/installLinks.mjs';
-import AWSLogo from '../../../styles/images/AWSLogo';
-import IBMLogo from '../../../styles/images/ibm_cloud-icon.svg';
-import microsoftLogo from '../../../styles/images/Microsoft_logo.svg';
-import OpenShiftProductIcon from '../../../styles/images/OpenShiftProductIcon.svg';
-import RHLogo from '../../../styles/images/RedHatLogo';
+import AWSLogo from '~/styles/images/AWSLogo';
+import IBMLogo from '~/styles/images/ibm_cloud-icon.svg';
+import microsoftLogo from '~/styles/images/Microsoft_logo.svg';
+import OpenShiftProductIcon from '~/styles/images/OpenShiftProductIcon.svg';
+import RHLogo from '~/styles/images/RedHatLogo';
 
 import './OfferingCard.scss';
 
@@ -62,7 +61,7 @@ const DEVSNBXOfferingCardDocLinkComponent = () => (
   </ExternalLink>
 );
 
-export function OfferingCard(props: OfferingCardProps) {
+function OfferingCard(props: OfferingCardProps) {
   const { offeringType } = props;
 
   let offeringCardTitle: string | undefined;
@@ -262,3 +261,5 @@ export function OfferingCard(props: OfferingCardProps) {
     </Card>
   );
 }
+
+export default OfferingCard;
