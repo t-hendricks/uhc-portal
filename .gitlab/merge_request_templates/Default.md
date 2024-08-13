@@ -54,6 +54,7 @@ Check the following before merging:
 - [ ] All above checkboxes for both reviewers have been checked
 - [ ] All CI tests have passed
 - [ ] Has at least 2 approvals, ready to merge
+- [ ] Check 'squash commits' before merging the MR into master
 
 # Ticketing
 
