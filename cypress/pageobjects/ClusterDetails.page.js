@@ -250,7 +250,9 @@ class ClusterDetails extends Page {
   }
 
   checkInstallationStepStatus(step, status = '') {
-    let installStep = cy.get('div.pf-v5-c-progress-stepper__step-title').contains(step);
+    let installStep = cy
+      .get('div.pf-v5-c-progress-stepper__step-title', { timeout: 80000 })
+      .contains(step);
     if (status == '') {
       installStep.should('be.visible');
     } else {
