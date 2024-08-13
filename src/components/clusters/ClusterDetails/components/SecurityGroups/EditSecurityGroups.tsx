@@ -95,7 +95,7 @@ const EditSecurityGroups = ({
   const validationError = validateSecurityGroups(selectedGroupIds, isHypershift);
 
   return (
-    <GridItem>
+    <GridItem data-testtag="text-securitygroups">
       <FormGroup fieldId="securityGroupIds" label={label} className="pf-v5-u-mt-md">
         <>
           <SecurityGroupsViewList
@@ -104,6 +104,7 @@ const EditSecurityGroups = ({
             onClickItem={onDeleteGroup}
           />
           <SelectDeprecated
+            data-testid="securitygroups-id"
             variant="checkbox"
             selections={selectedGroupIds}
             isOpen={isOpen}
