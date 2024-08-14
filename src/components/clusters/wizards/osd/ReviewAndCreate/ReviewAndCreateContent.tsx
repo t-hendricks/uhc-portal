@@ -60,10 +60,11 @@ export const ReviewAndCreateContent = ({ isPending }: ReviewAndCreateContentProp
   const isGCP = cloudProvider === CloudProviderType.Gcp;
 
   const hasSecurityGroups = isByoc && hasSelectedSecurityGroups(securityGroups);
+  const hasGcpAuthType = isWifEnabled && isGCP && isByoc;
 
   const clusterSettingsFields = [
     FieldId.CloudProvider,
-    ...(isWifEnabled ? [FieldId.GcpAuthType] : []),
+    ...(hasGcpAuthType ? [FieldId.GcpAuthType] : []),
     FieldId.ClusterName,
     ...(hasDomainPrefix ? [FieldId.DomainPrefix] : []),
     FieldId.ClusterVersion,
