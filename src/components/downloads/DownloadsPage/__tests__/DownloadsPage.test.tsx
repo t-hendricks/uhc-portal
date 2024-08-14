@@ -15,7 +15,7 @@ import {
 import { architecturesForToolOS } from '../../downloadUtils';
 import DownloadsPage from '../DownloadsPage';
 
-const { linux, windows } = operatingSystems;
+const { linux, windows, mac } = operatingSystems;
 const { arm, ppc, s390x, x86 } = architectures;
 
 jest.mock('~/services/accountsService');
@@ -30,6 +30,13 @@ describe('architecturesForToolOS', () => {
 
   it('has only x86 for odo Windows', () => {
     const values = architecturesForToolOS(urls, tools.ODO, channels.STABLE, windows).map(
+      (o) => o.value,
+    );
+    expect(values).toEqual([x86]);
+  });
+
+  it('has only x86 for crc macOS', () => {
+    const values = architecturesForToolOS(urls, tools.CRC, channels.STABLE, mac).map(
       (o) => o.value,
     );
     expect(values).toEqual([x86]);
