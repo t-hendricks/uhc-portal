@@ -1,7 +1,9 @@
 import React from 'react';
 import { Formik } from 'formik';
 
+import { CloudProviderType } from '~/components/clusters/wizards/common';
 import { GCPAuthType } from '~/components/clusters/wizards/osd/ClusterSettings/CloudProvider/types';
+import { FieldId } from '~/components/clusters/wizards/osd/constants';
 import { ReviewAndCreate } from '~/components/clusters/wizards/osd/ReviewAndCreate/ReviewAndCreate';
 import { OSD_GCP_WIF } from '~/redux/constants/featureConstants';
 import { checkAccessibility, mockUseFeatureGate, render, screen } from '~/testUtils';
@@ -185,6 +187,27 @@ describe('<ReviewAndCreate />', () => {
       expect(screen.queryByText('Authentication type')).not.toBeInTheDocument();
       expect(screen.queryByText('Service Account')).not.toBeInTheDocument();
       expect(screen.queryByText('Workload Identity Federation')).not.toBeInTheDocument();
+    });
+
+    it.each([
+      ["doesn't show authentication type for non-CCS clusters", { [FieldId.Byoc]: 'false' }],
+      [
+        "doesn't show authentication type for AWS clusters",
+        { [FieldId.CloudProvider]: CloudProviderType.Aws },
+      ],
+    ])('%s', (_title: string, additionalValues: any) => {
+      mockUseFeatureGate([[OSD_GCP_WIF, true]]);
+      const values = {
+        ...formValues,
+        ...additionalValues,
+      };
+      render(
+        <Formik initialValues={values} onSubmit={() => {}}>
+          <ReviewAndCreate />
+        </Formik>,
+      );
+
+      expect(screen.queryByText('Authentication type')).not.toBeInTheDocument();
     });
   });
 });
