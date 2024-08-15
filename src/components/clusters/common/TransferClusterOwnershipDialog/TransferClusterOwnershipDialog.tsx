@@ -101,7 +101,7 @@ const TransferClusterOwnershipDialog = ({ onClose }: TransferClusterOwnershipDia
           <TextList component={TextListVariants.ol}>
             <TextListItem>Initiate transfer</TextListItem>
             <TextListItem>
-              <ExternalLink href={`${ocmBaseName()}/register`}>Register the cluster</ExternalLink>{' '}
+              <ExternalLink href={`${ocmBaseName}/register`}>Register the cluster</ExternalLink>{' '}
               within 5 days
             </TextListItem>
           </TextList>

@@ -114,15 +114,11 @@ class AppEntry extends React.Component<Props> {
   render() {
     const { ready } = this.state;
     if (ready) {
-      // HACK: react-router only looks at `basename` prop once on initialization, so this is
-      //    fragile if we later jump between /preview & /beta.
-      const basename = ocmBaseName();
-
       return (
         <Provider store={store}>
           <NotificationPortal />
           <BrowserRouter
-            basename={basename}
+            basename={ocmBaseName}
             getUserConfirmation={() => {
               /* Block the default browser prompt (window.confirm). */
             }}

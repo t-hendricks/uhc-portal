@@ -44,7 +44,7 @@ const InsightsTitleComponent = ({ style, ...props }) => (
 
 const InsightsLabelComponent = ({ style, ...props }) => {
   const { datum, externalId } = props;
-  const link = `${advisorBaseName()}/clusters/${externalId}?total_risk=${datum.id}`;
+  const link = `${advisorBaseName}/clusters/${externalId}?total_risk=${datum.id}`;
 
   return (
     <a href={link}>
@@ -68,7 +68,7 @@ const InsightsLegendIconComponent = ({ x, y, datum }) => {
 };
 
 const InsightsSubtitleComponent = ({ externalId, style, ...props }) => {
-  const link = `${advisorBaseName()}/clusters/${externalId}`;
+  const link = `${advisorBaseName}/clusters/${externalId}`;
 
   return (
     <a href={link}>

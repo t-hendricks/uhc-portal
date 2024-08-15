@@ -5,7 +5,7 @@ import useChrome from '@redhat-cloud-services/frontend-components/useChrome';
 
 import { Chrome } from '~/types/types';
 
-import { ocmAppPath, removeOcmBaseName } from '../../common/getBaseName';
+import ocmBaseName, { removeOcmBaseName } from '../../common/getBaseName';
 import getNavClickParams from '../../common/getNavClickParams';
 
 const Insights = () => {
@@ -23,7 +23,7 @@ const Insights = () => {
     const navigateToApp = (event: any) => {
       // update route only when it's clicked by the user and can have route change
       const path = event.domEvent?.href;
-      if (path && path.startsWith(ocmAppPath)) {
+      if (path && path.startsWith(ocmBaseName)) {
         const targetPathName = removeOcmBaseName(path);
         if (matchPath(targetPathName, location.pathname)) {
           dispatchOcmEvent('APP_REFRESH');

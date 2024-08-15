@@ -57,7 +57,7 @@ const CostCard = () => {
 
       {showFooter ? (
         <CardFooter>
-          <a href={`${ocmBaseName()}/cost-management`}>View more in Cost management</a>
+          <a href={`${ocmBaseName}/cost-management`}>View more in Cost management</a>
         </CardFooter>
       ) : null}
     </Card>
