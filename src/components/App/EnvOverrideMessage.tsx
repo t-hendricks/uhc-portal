@@ -12,7 +12,7 @@ type Props = {
 const EnvOverrideMessage = ({ env }: Props) => {
   const goBackToNormal = () => {
     localStorage.removeItem(ENV_OVERRIDE_LOCALSTORAGE_KEY);
-    window.location.href = ocmBaseName();
+    window.location.href = ocmBaseName;
   };
 
   return (

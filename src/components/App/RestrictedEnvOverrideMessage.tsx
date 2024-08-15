@@ -8,7 +8,7 @@ import { RESTRICTED_ENV_OVERRIDE_LOCALSTORAGE_KEY } from '~/common/localStorageC
 const RestrictedEnvOverrideMessage = () => {
   const goBackToNormal = () => {
     localStorage.removeItem(RESTRICTED_ENV_OVERRIDE_LOCALSTORAGE_KEY);
-    window.location.href = ocmBaseName();
+    window.location.href = ocmBaseName;
   };
 
   return (
