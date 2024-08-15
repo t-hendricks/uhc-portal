@@ -47,7 +47,7 @@ const InsightsAdvisorRedirector = (props) => {
         path,
       )
     ) {
-      return <ExternalRedirect url={`${advisorBaseName()}/clusters/${externalId}`} />;
+      return <ExternalRedirect url={`${advisorBaseName}/clusters/${externalId}`} />;
     }
     if (
       matchPath(
@@ -68,9 +68,7 @@ const InsightsAdvisorRedirector = (props) => {
     ) {
       const { reportId, errorKey } = params;
       const ruleId = composeRuleId(reportId, errorKey);
-      return (
-        <ExternalRedirect url={`${advisorBaseName()}/clusters/${externalId}?first=${ruleId}`} />
-      );
+      return <ExternalRedirect url={`${advisorBaseName}/clusters/${externalId}?first=${ruleId}`} />;
     }
   }
 

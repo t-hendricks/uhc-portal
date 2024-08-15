@@ -26,7 +26,7 @@ const TitleComponent = ({ data, index, x, y, style }) => {
       <tspan x={x} y={y}>
         {name}:{' '}
         <a
-          href={`${advisorBaseName()}/recommendations?category=${categoryMapping[tags]}`}
+          href={`${advisorBaseName}/recommendations?category=${categoryMapping[tags]}`}
           className="enabled-link"
           data-testid={tags}
         >
