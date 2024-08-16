@@ -58,4 +58,18 @@ describe('canAutoScale', () => {
     const result = useCanClusterAutoscale(normalizedProducts.OSD, billingModels.STANDARD);
     expect(result).toBe(false);
   });
+
+  it('should allow autoscaling when there is a cluster level autosacle capability', () => {
+    useGlobalStateMock.mockReturnValue(false);
+    const mockCapabilites = [
+      { name: 'capability.cluster.subscribed_ocp', value: 'true', inherited: true },
+      { name: 'capability.cluster.cluster', value: 'true', inherited: false },
+    ];
+    const result = useCanClusterAutoscale(
+      normalizedProducts.OSD,
+      billingModels.STANDARD,
+      mockCapabilites,
+    );
+    expect(result).toBe(false);
+  });
 });

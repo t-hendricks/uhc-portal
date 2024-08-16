@@ -187,7 +187,7 @@ function FuzzySelect(props: FuzzySelectProps) {
       const filterText = text.toLowerCase();
       const threshold = selectionList.find(({ label }) => label === filterText)
         ? 0
-        : fuzziness || 0.3;
+        : fuzziness ?? 0.3;
       const fuse = new Fuse(selectionList, {
         ignoreLocation: true,
         threshold,

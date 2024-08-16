@@ -2,8 +2,6 @@ import React from 'react';
 import { useLocation } from 'react-router-dom-v5-compat';
 
 import {
-  Alert,
-  AlertVariant,
   ButtonVariant,
   Card,
   CardBody,
@@ -32,9 +30,6 @@ import ExternalLink from '~/components/common/ExternalLink';
 import Instruction from '~/components/common/Instruction';
 import Instructions from '~/components/common/Instructions';
 import PageTitle from '~/components/common/PageTitle';
-import { useFeatureGate } from '~/hooks/useFeatureGate';
-import { HCP_ROSA_GETTING_STARTED_PAGE } from '~/redux/constants/featureConstants';
-import { isRestrictedEnv } from '~/restrictedEnv';
 
 import StepCreateAWSAccountRoles from './StepCreateAWSAccountRoles';
 import StepDownloadROSACli from './StepDownloadROSACli';
@@ -60,7 +55,6 @@ const CreateRosaGetStarted = () => {
   const { search } = useLocation();
   const sourceIsAWS = search.indexOf('source=aws') !== -1;
   const [isAWSPrereqOpen, setIsAWSPrereqOpen] = React.useState(!sourceIsAWS);
-  const showHCPDirections = useFeatureGate(HCP_ROSA_GETTING_STARTED_PAGE) && !isRestrictedEnv();
 
   return (
     <AppPage>
@@ -165,17 +159,6 @@ const CreateRosaGetStarted = () => {
               </CardHeader>
 
               <CardBody>
-                {showHCPDirections ? (
-                  <Alert
-                    variant={AlertVariant.info}
-                    isInline
-                    className="pf-v5-u-mb-md"
-                    component="p"
-                    title="For now, you can only create ROSA with Hosted Control Plane clusters using the CLI.  You'll be able to create ROSA with Hosted Control Plane clusters using the web interface soon."
-                    data-testid="hcp-directions"
-                  />
-                ) : null}
-
                 <Grid hasGutter>
                   <GridItem span={6}>
                     <WithCLICard />

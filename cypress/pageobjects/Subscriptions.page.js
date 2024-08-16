@@ -7,6 +7,8 @@ class Subscription extends Page {
 
   learnMoreLink = () => cy.get('a').contains('Learn more');
 
+  dedicatedOnDemandLink = () => cy.get('a').contains('Dedicated (On-Demand Limits)');
+
   isDedicatedAnnualPage() {
     cy.contains('h1', 'Dedicated (Annual)', { timeout: 50000 });
   }

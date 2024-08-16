@@ -1,113 +1,119 @@
-import React, { Component } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
+import { useDispatch } from 'react-redux';
 
 import { Form, TextInput } from '@patternfly/react-core';
 
+import { getOrganizationAndQuota } from '~/redux/actions/userActions';
+import { useGlobalState } from '~/redux/hooks';
+
 import ErroBox from '../../../../../common/ErrorBox';
 import Modal from '../../../../../common/Modal/Modal';
+import { closeModal } from '../../../../../common/Modal/ModalActions';
+import shouldShowModal from '../../../../../common/Modal/ModalSelectors';
+import { setAddonsDrawer } from '../AddOnsActions';
 
 import '../AddOns.scss';
 
-class AddOnsDeleteModal extends Component {
-  state = {
-    addOnNameInput: '',
+const AddOnsDeleteModal = ({
+  deleteClusterAddOn,
+  isDeleteClusterAddOnError,
+  deleteClusterAddOnError,
+  isDeleteClusterAddOnPending,
+}) => {
+  const dispatch = useDispatch();
+  const isOpen = useGlobalState((state) => shouldShowModal(state, 'add-ons-delete-modal'));
+  const { addOnName, addOnID, clusterID } = useGlobalState((state) => state.modal.data);
+  const [addOnNameInput, setAddOnNameInput] = React.useState('');
+
+  const handleClose = React.useCallback(() => {
+    setAddOnNameInput('');
+    dispatch(closeModal());
+    dispatch(
+      setAddonsDrawer({
+        open: false,
+        activeCard: null,
+      }),
+    );
+  }, [dispatch, setAddOnNameInput]);
+
+  const setValue = (newInput) => {
+    setAddOnNameInput(newInput);
   };
 
-  componentDidUpdate(prevProps) {
-    const { deleteClusterAddOnResponse } = this.props;
-    if (!prevProps.deleteClusterAddOnResponse.fulfilled && deleteClusterAddOnResponse.fulfilled) {
-      this.handleClose();
+  const isValid = addOnNameInput === addOnName;
+
+  const handleSubmit = () => {
+    deleteClusterAddOn(
+      { clusterID, addOnID },
+      {
+        onSuccess: () => {
+          dispatch(getOrganizationAndQuota());
+          handleClose();
+          dispatch(
+            setAddonsDrawer({
+              open: false,
+              activeCard: null,
+            }),
+          );
+        },
+      },
+    );
+  };
+
+  const submitForm = (e) => {
+    e.preventDefault();
+    if (isValid) {
+      handleSubmit();
     }
-  }
-
-  setValue = (newInput) => {
-    this.setState({
-      addOnNameInput: newInput,
-    });
   };
 
-  handleClose = () => {
-    const { closeModal, clearClusterAddOnsResponses } = this.props;
-    clearClusterAddOnsResponses();
-    this.setState({
-      addOnNameInput: '',
-    });
-    closeModal();
-  };
+  const errorContainer = isDeleteClusterAddOnError && (
+    <ErroBox message="Error uninstalling add-on" response={deleteClusterAddOnError} />
+  );
 
-  render() {
-    const { isOpen, modalData, deleteClusterAddOn, deleteClusterAddOnResponse } = this.props;
+  const isPending = isDeleteClusterAddOnPending;
 
-    const { addOnNameInput } = this.state;
-
-    const { addOnName, addOnID, clusterID } = modalData;
-
-    const isValid = addOnNameInput === addOnName;
-
-    const handleSubmit = () => {
-      deleteClusterAddOn(clusterID, addOnID);
-    };
-
-    const submitForm = (e) => {
-      e.preventDefault();
-      if (isValid) {
-        handleSubmit();
-      }
-    };
-
-    const errorContainer = deleteClusterAddOnResponse.error && (
-      <ErroBox message="Error uninstalling add-on" response={deleteClusterAddOnResponse} />
-    );
-
-    const isPending = deleteClusterAddOnResponse.pending;
-
-    return (
-      isOpen && (
-        <Modal
-          title={`Uninstall ${addOnName}`}
-          onClose={this.handleClose}
-          primaryText="Uninstall"
-          primaryVariant="danger"
-          isPrimaryDisabled={!isValid}
-          onPrimaryClick={handleSubmit}
-          onSecondaryClick={this.handleClose}
-          isPending={isPending}
-        >
+  return (
+    isOpen && (
+      <Modal
+        title={`Uninstall ${addOnName}`}
+        onClose={handleClose}
+        primaryText="Uninstall"
+        primaryVariant="danger"
+        isPrimaryDisabled={!isValid}
+        onPrimaryClick={handleSubmit}
+        onSecondaryClick={handleClose}
+        isPending={isPending}
+      >
+        <p>
+          {errorContainer}
+          This action will uninstall the add-on, removing add-on data from cluster can not be
+          undone.
+        </p>
+        <Form onSubmit={submitForm}>
           <p>
-            {errorContainer}
-            This action will uninstall the add-on, removing add-on data from cluster can not be
-            undone.
+            Confirm deletion by typing{' '}
+            <span className="addon-delete-modal-textinput">{addOnName}</span> below:
           </p>
-          <Form onSubmit={submitForm}>
-            <p>
-              Confirm deletion by typing{' '}
-              <span className="addon-delete-modal-textinput">{addOnName}</span> below:
-            </p>
-            <TextInput
-              type="text"
-              value={addOnNameInput}
-              placeholder="Enter name"
-              onChange={(_event, newInput) => this.setValue(newInput)}
-              aria-label="addon name"
-            />
-          </Form>
-        </Modal>
-      )
-    );
-  }
-}
+          <TextInput
+            type="text"
+            value={addOnNameInput}
+            placeholder="Enter name"
+            onChange={(_event, newInput) => setValue(newInput)}
+            aria-label="addon name"
+          />
+        </Form>
+      </Modal>
+    )
+  );
+};
 
 AddOnsDeleteModal.propTypes = {
-  isOpen: PropTypes.bool.isRequired,
-  modalData: PropTypes.shape({
-    addOnName: PropTypes.string,
-    addOnID: PropTypes.string,
-    clusterID: PropTypes.string,
-  }),
-  closeModal: PropTypes.func.isRequired,
+  isDeleteClusterAddOnError: PropTypes.bool.isRequired,
+  isDeleteClusterAddOnPending: PropTypes.bool.isRequired,
   deleteClusterAddOn: PropTypes.func.isRequired,
-  deleteClusterAddOnResponse: PropTypes.object.isRequired,
-  clearClusterAddOnsResponses: PropTypes.func.isRequired,
+  deleteClusterAddOnError: PropTypes.object.isRequired,
 };
 
 export default AddOnsDeleteModal;

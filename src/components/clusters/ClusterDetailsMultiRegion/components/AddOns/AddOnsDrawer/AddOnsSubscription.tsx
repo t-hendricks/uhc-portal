@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { useDispatch } from 'react-redux';
 
 import {
   Card,
@@ -12,6 +13,7 @@ import {
 
 import { BillingQuota } from '~/components/clusters/common/quotaModel';
 
+import { setAddonsDrawer } from '../AddOnsActions';
 import AddOnsConstants from '../AddOnsConstants';
 
 import AddOnsSubscriptionCard from './AddOnsSubscriptionCard';
@@ -22,18 +24,21 @@ const AddOnsSubscription = ({
   billingQuota,
   installedAddOn,
   subscriptionModels,
-  setAddonsDrawer,
 }: {
   activeCardId: string;
   billingQuota: BillingQuota;
   installedAddOn: any;
   subscriptionModels: SubscriptionModels;
-  setAddonsDrawer: (props: any) => void;
 }) => {
+  const dispatch = useDispatch();
+
   const setSubscriptionModel: SetSubscriptionModel = (models) => {
-    setAddonsDrawer({
-      subscriptionModels: models,
-    });
+    dispatch(
+      // @ts-ignore -issue with dispatch type
+      setAddonsDrawer({
+        subscriptionModels: models,
+      }),
+    );
   };
   const activeSubscription = subscriptionModels[activeCardId];
 

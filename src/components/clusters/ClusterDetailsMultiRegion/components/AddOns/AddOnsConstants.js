@@ -19,6 +19,7 @@ const AddOnsConstants = {
     UPDATING: 'updating',
     DELETING: 'deleting',
     DELETED: 'deleted',
+    DELETE_PENDING: 'delete-pending',
     FAILED: 'failed',
     READY: 'ready',
   },
