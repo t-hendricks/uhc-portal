@@ -306,7 +306,10 @@ const ClusterList = ({
             <Toolbar id="cluster-list-toolbar">
               <ToolbarContent>
                 <ToolbarItem className="ocm-c-toolbar__item-cluster-filter-list">
-                  <ClusterListFilter isDisabled={isPendingNoData} view={CLUSTERS_VIEW} />
+                  <ClusterListFilter
+                    isDisabled={isPendingNoData && hasNoFilters}
+                    view={CLUSTERS_VIEW}
+                  />
                 </ToolbarItem>
                 {isRestrictedEnv() ? null : (
                   <ToolbarItem
