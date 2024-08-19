@@ -21,7 +21,7 @@ import { createOverviewQueryObject } from '../../common/queryHelpers';
 import { AppPage } from '../App/AppPage';
 import ClusterListActions from '../clusters/ClusterList/components/ClusterListActions/ClusterListActions';
 import ArchiveClusterDialog from '../clusters/common/ArchiveClusterDialog';
-import EditSubscriptionSettingsDialog from '../clusters/common/EditSubscriptionSettingsDialog';
+import EditSubscriptionSettingsDialog from '../clusters/common/EditSubscriptionSettingsDialog/EditSubscriptionSettingsDialog';
 import SmallClusterChart from '../clusters/common/ResourceUsage/SmallClusterChart';
 import ConnectedModal from '../common/Modal/ConnectedModal';
 import Unavailable from '../common/Unavailable';
