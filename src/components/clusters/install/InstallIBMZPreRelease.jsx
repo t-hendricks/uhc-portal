@@ -24,7 +24,7 @@ export class InstallIBMZPreRelease extends Component {
     const breadcrumbs = (
       <Breadcrumbs
         path={[
-          { label: 'Clusters' },
+          { label: 'Cluster List' },
           { label: 'Cluster Type', path: '/create' },
           { label: 'IBM Z', path: '/install/ibmz/user-provisioned' },
           { label: 'Pre-Release Builds' },

@@ -14,7 +14,7 @@ const InstallArmAWS = () => {
   const breadcrumbs = (
     <Breadcrumbs
       path={[
-        { label: 'Clusters' },
+        { label: 'Cluster List' },
         { label: 'Cluster Type', path: '/create' },
         { label: 'Amazon Web Services (ARM)' },
       ]}

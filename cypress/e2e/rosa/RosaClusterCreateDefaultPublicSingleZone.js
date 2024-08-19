@@ -1,16 +1,24 @@
-import CreateRosaWizardPage from '../../pageobjects/CreateRosaWizard.page';
 import ClusterDetailsPage from '../../pageobjects/ClusterDetails.page';
+import ClusterListPage from '../../pageobjects/ClusterList.page';
+import CreateRosaWizardPage from '../../pageobjects/CreateRosaWizard.page';
+
 const clusterPropertiesFile = require('../../fixtures/rosa/RosaClusterDefaultPublicSingleZoneProperties.json');
 
 const awsAccountID = Cypress.env('QE_AWS_ID');
 const rolePrefix = Cypress.env('QE_ACCOUNT_ROLE_PREFIX');
-const installerARN = 'arn:aws:iam::' + awsAccountID + ':role/' + rolePrefix + '-Installer-Role';
+const installerARN = `arn:aws:iam::${awsAccountID}:role/${rolePrefix}-Installer-Role`;
 const clusterName = clusterPropertiesFile.ClusterName;
 
 describe(
   'Rosa cluster Creation-singlezone-public-default settings',
   { tags: ['day1', 'rosa', 'public', 'single-zone', 'default'] },
   () => {
+    before(() => {
+      cy.visit('/cluster-list');
+      ClusterListPage.waitForDataReady();
+      ClusterListPage.isClusterListScreen();
+    });
+
     it('Open Rosa cluster wizard', () => {
       cy.getByTestId('create_cluster_btn').click();
       CreateRosaWizardPage.rosaCreateClusterButton().click();

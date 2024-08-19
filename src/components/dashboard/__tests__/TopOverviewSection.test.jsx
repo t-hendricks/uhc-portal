@@ -23,7 +23,7 @@ describe('<TopOverviewSection />', () => {
       </TestRouter>,
     );
 
-    expect(screen.getByText('Clusters')).toBeInTheDocument();
+    expect(screen.getByText('Cluster List')).toBeInTheDocument();
     expect(screen.getByText('CPU and Memory utilization')).toBeInTheDocument();
 
     // This fails due to multiple accessibility issues

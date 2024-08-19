@@ -1,5 +1,6 @@
-import CreateRosaWizardPage from '../../pageobjects/CreateRosaWizard.page';
 import ClusterDetailsPage from '../../pageobjects/ClusterDetails.page';
+import ClusterListPage from '../../pageobjects/ClusterList.page';
+import CreateRosaWizardPage from '../../pageobjects/CreateRosaWizard.page';
 
 const clusterProperties = require('../../fixtures/rosa/RosaClusterHostedCreation.json');
 // awsAccountID,rolePrefix and installerARN are set by prerun script for smoke requirements.
@@ -14,6 +15,12 @@ describe(
   'Rosa hosted cluster (hypershift) -wizard checks and cluster creation tests(OCP-57641)',
   { tags: ['smoke', 'hcp'] },
   () => {
+    before(() => {
+      cy.visit('/cluster-list');
+      ClusterListPage.waitForDataReady();
+      ClusterListPage.isClusterListScreen();
+    });
+
     it('Open Rosa cluster wizard', () => {
       cy.getByTestId('create_cluster_btn').click();
       CreateRosaWizardPage.rosaCreateClusterButton().click();

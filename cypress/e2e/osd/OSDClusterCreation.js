@@ -7,6 +7,12 @@ import LeaveCreateClusterPrompt from '../../pageobjects/LeaveCreateClusterPrompt
 const clusterName = `test-${Math.random().toString(36).substr(2, 10)}`;
 
 describe('OSD cluster tests', { tags: ['ci'] }, () => {
+  before(() => {
+    cy.visit('/cluster-list');
+    ClusterListPage.waitForDataReady();
+    ClusterListPage.isClusterListScreen();
+  });
+
   describe('Create OSD cluster on AWS flow', () => {
     it('navigates to create OSD cluster', () => {
       cy.getByTestId('create_cluster_btn').click();
@@ -67,7 +73,7 @@ describe('OSD cluster tests', { tags: ['ci'] }, () => {
 describe('OSD Trial cluster tests', () => {
   describe('View Create OSD Trial cluster page', () => {
     it('navigates to create OSD Trial cluster and CCS is selected', () => {
-      GlobalNav.breadcrumbItem('Clusters').click({ force: true }); // need force=true to get past 'element detached from dom' error
+      GlobalNav.breadcrumbItem('Cluster List').click({ force: true }); // need force=true to get past 'element detached from dom' error
       LeaveCreateClusterPrompt.submit();
 
       ClusterListPage.waitForDataReady();

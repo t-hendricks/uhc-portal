@@ -65,7 +65,7 @@ import { sortClusters } from './clusterListSort';
 
 import './ClusterList.scss';
 
-const PAGE_TITLE = 'Clusters | Red Hat OpenShift Cluster Manager';
+const PAGE_TITLE = 'Cluster List | Red Hat OpenShift Cluster Manager';
 
 const ClusterListPageHeader = ({ someReadOnly, showSpinner, error, refresh }) => (
   <>
@@ -73,7 +73,7 @@ const ClusterListPageHeader = ({ someReadOnly, showSpinner, error, refresh }) =>
     <PageSection variant={PageSectionVariants.light}>
       <Flex>
         <FlexItem grow={{ default: 'grow' }}>
-          <Title headingLevel="h1">Clusters</Title>
+          <Title headingLevel="h1">Cluster List</Title>
         </FlexItem>
         <Toolbar id="cluster-list-refresh-toolbar" isFullHeight inset={{ default: 'insetNone' }}>
           <ToolbarContent>
