@@ -13,7 +13,7 @@ export const clusterType = (cluster: ClusterWithPermissions) => {
       name: 'OCP',
       tooltip: 'Self-managed OpenShift Container Platform (OCP) cluster',
     },
-    [normalizedProducts.OCP_Assisted_Install]: {
+    [normalizedProducts.OCP_ASSISTED_INSTALL]: {
       name: 'OCP',
       tooltip: 'Self-managed OpenShift Container Platform (OCP) cluster',
     },
@@ -21,7 +21,7 @@ export const clusterType = (cluster: ClusterWithPermissions) => {
       name: 'OSD',
       tooltip: 'OpenShift Dedicated (OSD) cluster managed by Red Hat',
     },
-    [normalizedProducts.OSDTrial]: {
+    [normalizedProducts.OSDTRIAL]: {
       name: 'OSD Trial',
       tooltip: 'OpenShift Dedicated (OSD) cluster trial managed by Red Hat',
     },

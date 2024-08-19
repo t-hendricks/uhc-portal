@@ -4,9 +4,13 @@ import { Link } from 'react-router-dom-v5-compat';
 
 import { Alert } from '@patternfly/react-core';
 
-import { Subscription } from '~/types/accounts_mgmt.v1';
+import {
+  ClusterAuthorizationRequest,
+  Subscription,
+  SubscriptionCommonFields,
+} from '~/types/accounts_mgmt.v1';
 
-import { normalizedProducts, subscriptionStatuses } from '../../../../common/subscriptionTypes';
+import { normalizedProducts } from '../../../../common/subscriptionTypes';
 import ExternalLink from '../../../common/ExternalLink';
 
 type TransferClusterOwnershipInfoProps = {
@@ -15,14 +19,14 @@ type TransferClusterOwnershipInfoProps = {
 
 const TransferClusterOwnershipInfo = ({ subscription }: TransferClusterOwnershipInfoProps) => {
   const isAllowedProducts = [normalizedProducts.OCP, normalizedProducts.ARO].includes(
-    get(subscription, 'plan.type', ''),
+    get(subscription, 'plan.type', '') as ClusterAuthorizationRequest.product_id,
   );
   if (!isAllowedProducts || !subscription?.released) {
     return null;
   }
 
   const alertText =
-    subscription.status === subscriptionStatuses.DISCONNECTED ? (
+    subscription.status === SubscriptionCommonFields.status.DISCONNECTED ? (
       <>
         The transfer process will complete after{' '}
         <Link to="/register" data-testid="link">

@@ -1,3 +1,7 @@
+import { Subscription, SubscriptionCommonFields } from '~/types/accounts_mgmt.v1';
+
+import { SubscriptionResponseType } from '../types';
+
 export const mockSubscriptionAxiosResponse = {
   plan: {
     id: 'ROSA',
@@ -6,17 +10,17 @@ export const mockSubscriptionAxiosResponse = {
   cluster_id: '123TEST',
 };
 
-export const mockSubscriptionData = {
+export const mockSubscriptionData: Subscription = {
   plan: {
     id: 'ROSA',
     type: 'ROSA',
   },
-  status: 'ACTIVE',
+  status: SubscriptionCommonFields.status.ACTIVE,
   cluster_id: 'mockedClusterID',
   managed: true,
 };
 
-export const mockedSubscriptionWithClusterType = {
+export const mockedSubscriptionWithClusterType: SubscriptionResponseType = {
   subscription: mockSubscriptionData,
   isROSACluster: true,
   isAROCluster: false,

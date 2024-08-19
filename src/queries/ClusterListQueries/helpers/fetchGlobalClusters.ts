@@ -3,9 +3,8 @@ import { AxiosError } from 'axios';
 import type { Cluster as AICluster } from '@openshift-assisted/types/assisted-installer-service';
 
 import { createViewQueryObject } from '~/common/queryHelpers';
-import { subscriptionStatuses } from '~/common/subscriptionTypes';
 import { getSubscriptionQueryType } from '~/services/accountsService';
-import type { Subscription } from '~/types/accounts_mgmt.v1';
+import { type Subscription, SubscriptionCommonFields } from '~/types/accounts_mgmt.v1';
 import { Cluster } from '~/types/clusters_mgmt.v1';
 
 import isAssistedInstallSubscription from '../../../common/isAssistedInstallerCluster';
@@ -116,7 +115,7 @@ const fetchGlobalSubscriptions = async (
   }
 
   const managedSubscriptions = items.filter(
-    (s) => s.managed && s.status !== subscriptionStatuses.DEPROVISIONED,
+    (s) => s.managed && s.status !== SubscriptionCommonFields.status.DEPROVISIONED,
   );
 
   return {

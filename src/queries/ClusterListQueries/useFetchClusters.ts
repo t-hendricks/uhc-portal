@@ -4,11 +4,11 @@ import { ErrorResponse } from 'react-router-dom-v5-compat';
 
 import { useQueries, UseQueryResult } from '@tanstack/react-query';
 
-import { subscriptionStatuses } from '~/common/subscriptionTypes';
 import { queryClient } from '~/components/App/queryClient';
 import { useFeatureGate } from '~/hooks/useFeatureGate';
 import { ASSISTED_INSTALLER_MERGE_LISTS_FEATURE } from '~/redux/constants/featureConstants';
 import { GlobalState } from '~/redux/store';
+import { SubscriptionCommonFields } from '~/types/accounts_mgmt.v1';
 import { ClusterFromSubscription, ClusterWithPermissions } from '~/types/types';
 
 import { useFetchRegions } from '../common/useFetchRegions';
@@ -318,7 +318,7 @@ export const useFetchClusters = () => {
                 !cluster.partialCS &&
                 !!canEdit &&
                 (canEdit['*'] || (!!cluster.id && !!canEdit[cluster.id])) &&
-                cluster.subscription.status !== subscriptionStatuses.DEPROVISIONED;
+                cluster.subscription.status !== SubscriptionCommonFields.status.DEPROVISIONED;
 
               modifiedCluster.canDelete =
                 !cluster.partialCS &&

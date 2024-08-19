@@ -207,7 +207,7 @@ export const BillingModel = () => {
   ];
 
   React.useEffect(() => {
-    if (product === normalizedProducts.OSDTrial) {
+    if (product === normalizedProducts.OSDTRIAL) {
       if (showOsdTrial) {
         setFieldValue(FieldId.BillingModel, billingModels.STANDARD_TRIAL);
         setFieldValue(FieldId.Byoc, 'true');
@@ -288,7 +288,7 @@ export const BillingModel = () => {
     }
 
     if (value === billingModels.STANDARD_TRIAL) {
-      selectedProduct = normalizedProducts.OSDTrial;
+      selectedProduct = normalizedProducts.OSDTRIAL;
     }
 
     setFieldValue(FieldId.Product, selectedProduct);

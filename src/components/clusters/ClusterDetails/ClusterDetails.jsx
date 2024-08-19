@@ -22,12 +22,13 @@ import { Spinner } from '@redhat-cloud-services/frontend-components/Spinner';
 
 import { AppPage } from '~/components/App/AppPage';
 import { isRestrictedEnv } from '~/restrictedEnv';
+import { SubscriptionCommonFields } from '~/types/accounts_mgmt.v1';
 
 import getClusterName from '../../../common/getClusterName';
 import { isValid, shouldRefetchQuota } from '../../../common/helpers';
 import { isUninstalledAICluster } from '../../../common/isAssistedInstallerCluster';
 import { hasCapability, subscriptionCapabilities } from '../../../common/subscriptionCapabilities';
-import { knownProducts, subscriptionStatuses } from '../../../common/subscriptionTypes';
+import { knownProducts } from '../../../common/subscriptionTypes';
 import { ASSISTED_INSTALLER_FEATURE } from '../../../redux/constants/featureConstants';
 import ErrorBoundary from '../../App/ErrorBoundary';
 import Unavailable from '../../common/Unavailable';
@@ -256,7 +257,10 @@ const ClusterDetails = (props) => {
 
     const clusterID = get(cluster, 'id');
     const subscriptionStatus = get(cluster, 'subscription.status');
-    if (isValid(clusterID) && subscriptionStatus !== subscriptionStatuses.DEPROVISIONED) {
+    if (
+      isValid(clusterID) &&
+      subscriptionStatus !== SubscriptionCommonFields.status.DEPROVISIONED
+    ) {
       refreshRelatedResources(clicked);
     }
   };
@@ -382,10 +386,10 @@ const ClusterDetails = (props) => {
 
   const clusterHibernating = isHibernating(cluster);
   const isArchived =
-    get(cluster, 'subscription.status', false) === subscriptionStatuses.ARCHIVED ||
-    get(cluster, 'subscription.status', false) === subscriptionStatuses.DEPROVISIONED;
+    get(cluster, 'subscription.status', false) === SubscriptionCommonFields.status.ARCHIVED ||
+    get(cluster, 'subscription.status', false) === SubscriptionCommonFields.status.DEPROVISIONED;
   const isAROCluster = get(cluster, 'subscription.plan.type', '') === knownProducts.ARO;
-  const isOSDTrial = get(cluster, 'subscription.plan.type', '') === knownProducts.OSDTrial;
+  const isOSDTrial = get(cluster, 'subscription.plan.type', '') === knownProducts.OSDTRIAL;
   const isRHOIC = get(cluster, 'subscription.plan.type', '') === knownProducts.RHOIC;
 
   const isManaged = cluster.managed;

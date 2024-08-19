@@ -1,9 +1,9 @@
 /* eslint-disable camelcase */
 import React from 'react';
 
-import { subscriptionStatuses } from '~/common/subscriptionTypes';
 import { checkAccessibility, render, screen, within } from '~/testUtils';
 
+import { SubscriptionCommonFields } from '../../../../../types/accounts_mgmt.v1';
 import fixtures from '../../__tests__/ClusterDetails.fixtures';
 
 import DetailsLeft from './DetailsLeft';
@@ -628,7 +628,7 @@ describe('<DetailsLeft />', () => {
       // Arrange
       const OSDClusterFixture = {
         ...fixtures.OSDGCPClusterDetails.cluster,
-        state: subscriptionStatuses.DEPROVISIONED,
+        state: SubscriptionCommonFields.status.DEPROVISIONED,
         ccs: undefined,
       };
 

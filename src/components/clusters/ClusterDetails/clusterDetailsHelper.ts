@@ -1,10 +1,9 @@
 import { goZeroTime } from '~/common/helpers';
-import { subscriptionStatuses } from '~/common/subscriptionTypes';
 import clusterStates, {
   isHibernating,
   isHypershiftCluster,
 } from '~/components/clusters/common/clusterStates';
-import { ClusterResource, Subscription } from '~/types/accounts_mgmt.v1';
+import { ClusterResource, Subscription, SubscriptionCommonFields } from '~/types/accounts_mgmt.v1';
 import { Cluster } from '~/types/clusters_mgmt.v1';
 import { ClusterFromSubscription } from '~/types/types';
 
@@ -43,8 +42,8 @@ const isMPoolAz = (cluster: Cluster, mpAvailZones: number | undefined): boolean 
  * @returns whether subscription is archived or not
  */
 const isArchivedSubscription = <E extends ClusterFromSubscription>(cluster: E): boolean =>
-  cluster.subscription?.status === subscriptionStatuses.ARCHIVED ||
-  cluster.subscription?.status === subscriptionStatuses.DEPROVISIONED;
+  cluster.subscription?.status === SubscriptionCommonFields.status.ARCHIVED ||
+  cluster.subscription?.status === SubscriptionCommonFields.status.DEPROVISIONED;
 
 /**
  *
@@ -96,16 +95,16 @@ const eventTypes = {
 };
 
 export {
-  hasCpuAndMemory,
-  getSubscriptionLastReconciledDate,
-  isHypershiftCluster,
-  isMultiAZ,
-  isMPoolAz,
-  isArchivedSubscription,
-  isReadyForRoleAccessActions,
-  isReadyForAwsAccessActions,
-  isReadyForIdpActions,
-  isReadyForExternalActions,
-  isExtenalAuthenicationActive,
   eventTypes,
+  getSubscriptionLastReconciledDate,
+  hasCpuAndMemory,
+  isArchivedSubscription,
+  isExtenalAuthenicationActive,
+  isHypershiftCluster,
+  isMPoolAz,
+  isMultiAZ,
+  isReadyForAwsAccessActions,
+  isReadyForExternalActions,
+  isReadyForIdpActions,
+  isReadyForRoleAccessActions,
 };

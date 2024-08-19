@@ -52,12 +52,16 @@ import { clusterAutoscalerActions } from '~/redux/actions/clusterAutoscalerActio
 import { onClearFiltersAndFlags } from '~/redux/actions/viewOptionsActions';
 import { useGlobalState } from '~/redux/hooks/useGlobalState';
 import { isRestrictedEnv } from '~/restrictedEnv';
+// TODO: Commented out for respective tabs stories
+// import UpgradeSettingsTab from '../ClusterDetailsMultiRegion/components/UpgradeSettings';
+// import AccessControl from '../ClusterDetailsMultiRegion/components/AccessControl/AccessControl';
+import { SubscriptionCommonFields } from '~/types/accounts_mgmt.v1';
 
 import getClusterName from '../../../common/getClusterName';
 import { isValid, shouldRefetchQuota } from '../../../common/helpers';
 import { isUninstalledAICluster } from '../../../common/isAssistedInstallerCluster';
 import { hasCapability, subscriptionCapabilities } from '../../../common/subscriptionCapabilities';
-import { knownProducts, subscriptionStatuses } from '../../../common/subscriptionTypes';
+import { knownProducts } from '../../../common/subscriptionTypes';
 import { userActions } from '../../../redux/actions';
 import { getUserAccess } from '../../../redux/actions/costActions';
 import { clearGlobalError, setGlobalError } from '../../../redux/actions/globalErrorActions';
@@ -120,9 +124,6 @@ import {
 import Monitoring from './components/Monitoring';
 import { getOnDemandMetrics } from './components/Monitoring/MonitoringActions';
 import { issuesAndWarningsSelector } from './components/Monitoring/MonitoringSelectors';
-// TODO: Commented out for respective tabs stories
-// import UpgradeSettingsTab from '../ClusterDetailsMultiRegion/components/UpgradeSettings';
-// import AccessControl from '../ClusterDetailsMultiRegion/components/AccessControl/AccessControl';
 import Networking from './components/Networking';
 import { getClusterRouters } from './components/Networking/NetworkingActions';
 import Overview from './components/Overview/Overview';
@@ -329,7 +330,10 @@ const ClusterDetails = (props) => {
     }
     const clusterID = get(cluster, 'id');
     const subscriptionStatus = get(cluster, 'subscription.status');
-    if (isValid(clusterID) && subscriptionStatus !== subscriptionStatuses.DEPROVISIONED) {
+    if (
+      isValid(clusterID) &&
+      subscriptionStatus !== SubscriptionCommonFields.status.DEPROVISIONED
+    ) {
       refreshRelatedResources(clicked);
     }
   };
@@ -445,10 +449,10 @@ const ClusterDetails = (props) => {
 
   const clusterHibernating = isHibernating(cluster);
   const isArchived =
-    get(cluster, 'subscription.status', false) === subscriptionStatuses.ARCHIVED ||
-    get(cluster, 'subscription.status', false) === subscriptionStatuses.DEPROVISIONED;
+    get(cluster, 'subscription.status', false) === SubscriptionCommonFields.status.ARCHIVED ||
+    get(cluster, 'subscription.status', false) === SubscriptionCommonFields.status.DEPROVISIONED;
   const isAROCluster = get(cluster, 'subscription.plan.type', '') === knownProducts.ARO;
-  const isOSDTrial = get(cluster, 'subscription.plan.type', '') === knownProducts.OSDTrial;
+  const isOSDTrial = get(cluster, 'subscription.plan.type', '') === knownProducts.OSDTRIAL;
   const isRHOIC = get(cluster, 'subscription.plan.type', '') === knownProducts.RHOIC;
 
   // TODO: Part of tabs stories

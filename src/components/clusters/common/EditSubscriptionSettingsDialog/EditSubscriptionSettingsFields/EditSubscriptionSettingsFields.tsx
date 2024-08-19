@@ -3,12 +3,7 @@ import { isEqual } from 'lodash';
 
 import { FormGroup } from '@patternfly/react-core';
 
-import {
-  billingModels,
-  subscriptionSettings,
-  subscriptionStatuses,
-  subscriptionSystemUnits,
-} from '~/common/subscriptionTypes';
+import { billingModels, subscriptionSettings } from '~/common/subscriptionTypes';
 import { FormGroupHelperText } from '~/components/common/FormGroupHelperText';
 import { ReduxFormRadioGroup } from '~/components/common/ReduxFormComponents';
 import { SubscriptionCommonFields } from '~/types/accounts_mgmt.v1';
@@ -69,16 +64,15 @@ const EditSubscriptionSettingsFields = ({
     [settings.support_level],
   );
   const isDisconnected = useMemo(
-    () => settings.status === subscriptionStatuses.DISCONNECTED || !settings.id,
+    () => settings.status === SubscriptionCommonFields.status.DISCONNECTED || !settings.id,
     [settings.id, settings.status],
   );
   const isBillingModelVisible = useMemo(
     () =>
       canSubscribeStandardOCP &&
       canSubscribeMarketplaceOCP &&
-      ![billingModels.STANDARD, billingModels.MARKETPLACE].includes(
-        initialSettings.cluster_billing_model ?? '',
-      ),
+      billingModels.STANDARD !== initialSettings.cluster_billing_model &&
+      billingModels.MARKETPLACE !== initialSettings.cluster_billing_model,
     [canSubscribeMarketplaceOCP, canSubscribeStandardOCP, initialSettings.cluster_billing_model],
   );
   const systemUnitsNumericErrorMsg = useMemo(
@@ -94,7 +88,10 @@ const EditSubscriptionSettingsFields = ({
     return result ?? 0;
   }, [initialSettings.socket_total, isDisconnected, settings.socket_total]);
   const cpuSocketValue = useMemo(
-    () => (settings.system_units === subscriptionSystemUnits.SOCKETS ? socketTotal : cpuTotal),
+    () =>
+      settings.system_units === SubscriptionCommonFields.system_units.SOCKETS
+        ? socketTotal
+        : cpuTotal,
     [cpuTotal, socketTotal, settings.system_units],
   );
   const cpuSocketLabel = useMemo(() => getFieldLabel(settings), [settings]);
@@ -273,7 +270,7 @@ const EditSubscriptionSettingsFields = ({
       />
       <FormGroup
         label={
-          settings.system_units === subscriptionSystemUnits.SOCKETS
+          settings.system_units === SubscriptionCommonFields.system_units.SOCKETS
             ? 'Number of sockets (excluding control plane nodes)'
             : 'Number of compute cores (excluding control plane nodes)'
         }

@@ -1,4 +1,5 @@
 import { defaultSubscription } from '~/components/clusters/common/__tests__/defaultClusterFromSubscription.fixtures';
+import { SubscriptionCommonFields } from '~/types/accounts_mgmt.v1';
 
 import { normalizedProducts } from '../../../../../../common/subscriptionTypes';
 
@@ -17,7 +18,7 @@ const subscription = {
   ...defaultSubscription,
   id: '1234567890',
   plan: { id: normalizedProducts.ROSA, type: normalizedProducts.ROSA },
-  status: 'Active',
+  status: SubscriptionCommonFields.status.ACTIVE,
 };
 
 export { tncUrl, selfTermsReviewResult, subscription };

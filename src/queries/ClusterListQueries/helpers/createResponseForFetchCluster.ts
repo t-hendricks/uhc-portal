@@ -3,8 +3,7 @@ import isEmpty from 'lodash/isEmpty';
 
 import type { Cluster as AICluster } from '@openshift-assisted/types/assisted-installer-service';
 
-import { subscriptionStatuses } from '~/common/subscriptionTypes';
-import type { Subscription } from '~/types/accounts_mgmt.v1';
+import { type Subscription, SubscriptionCommonFields } from '~/types/accounts_mgmt.v1';
 import type { Cluster } from '~/types/clusters_mgmt.v1';
 import { ClusterWithPermissions } from '~/types/types';
 
@@ -34,7 +33,7 @@ export const createResponseForFetchClusters = (subscriptionMap: Map<string, MapE
       };
     } else if (
       entry.subscription.managed &&
-      entry.subscription.status !== subscriptionStatuses.DEPROVISIONED &&
+      entry.subscription.status !== SubscriptionCommonFields.status.DEPROVISIONED &&
       !!entry?.cluster &&
       !isEmpty(entry?.cluster)
     ) {

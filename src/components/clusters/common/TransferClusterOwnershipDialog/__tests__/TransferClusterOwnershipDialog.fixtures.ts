@@ -1,9 +1,9 @@
-import { subscriptionStatuses } from '../../../../../common/subscriptionTypes';
+import { SubscriptionCommonFields } from '~/types/accounts_mgmt.v1';
 
 export const subscription = {
   id: '0',
   released: false,
-  status: subscriptionStatuses.ACTIVE,
+  status: SubscriptionCommonFields.status.ACTIVE,
 };
 export const requestState = {
   fulfilled: false,

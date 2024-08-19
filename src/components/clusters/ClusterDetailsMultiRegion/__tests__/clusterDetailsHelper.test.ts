@@ -1,6 +1,5 @@
-import { subscriptionStatuses } from '~/common/subscriptionTypes';
 import { isHibernating, isHypershiftCluster } from '~/components/clusters/common/clusterStates';
-import { ClusterResource, Subscription } from '~/types/accounts_mgmt.v1';
+import { ClusterResource, Subscription, SubscriptionCommonFields } from '~/types/accounts_mgmt.v1';
 import { Cluster, ClusterState } from '~/types/clusters_mgmt.v1';
 import { ClusterFromSubscription } from '~/types/types';
 
@@ -25,8 +24,6 @@ const isHypershiftClusterMock = isHypershiftCluster as jest.Mock;
 const isHibernatingMock = isHibernating as jest.Mock;
 
 describe('clusterDetailsHelper', () => {
-  type SubscriptionStatusesType = (typeof subscriptionStatuses)[keyof typeof subscriptionStatuses];
-
   describe('hasCpuAndMemory', () => {
     const defaultCPU = defaultMetric.cpu;
     const defaultMemory = defaultMetric.memory;
@@ -95,16 +92,16 @@ describe('clusterDetailsHelper', () => {
 
   describe('isArchivedSubscription', () => {
     it.each([
-      [subscriptionStatuses.ARCHIVED, true],
-      [subscriptionStatuses.DEPROVISIONED, true],
-      [subscriptionStatuses.ACTIVE, false],
-      [subscriptionStatuses.DISCONNECTED, false],
-      [subscriptionStatuses.RESERVED, false],
-      [subscriptionStatuses.STALE, false],
+      [SubscriptionCommonFields.status.ARCHIVED, true],
+      [SubscriptionCommonFields.status.DEPROVISIONED, true],
+      [SubscriptionCommonFields.status.ACTIVE, false],
+      [SubscriptionCommonFields.status.DISCONNECTED, false],
+      [SubscriptionCommonFields.status.RESERVED, false],
+      [SubscriptionCommonFields.status.STALE, false],
       [undefined, false],
     ])(
       'status: %p. It returns %p',
-      (status: SubscriptionStatusesType | undefined, expectedResult: boolean) => {
+      (status: SubscriptionCommonFields.status | undefined, expectedResult: boolean) => {
         const defaultCluster: Readonly<ClusterFromSubscription> = {
           ...defaultClusterFromSubscription,
           subscription: {
@@ -149,7 +146,7 @@ describe('clusterDetailsHelper', () => {
           state,
           subscription: {
             ...defaultSubscription,
-            status: isArchivedSubscription ? subscriptionStatuses.ARCHIVED : undefined,
+            status: isArchivedSubscription ? SubscriptionCommonFields.status.ARCHIVED : undefined,
           },
         };
         isHibernatingMock.mockReturnValue(isHibernatingResult);
@@ -190,7 +187,7 @@ describe('clusterDetailsHelper', () => {
           state,
           subscription: {
             ...defaultSubscription,
-            status: isArchivedSubscription ? subscriptionStatuses.ARCHIVED : undefined,
+            status: isArchivedSubscription ? SubscriptionCommonFields.status.ARCHIVED : undefined,
           },
           cloud_provider: {
             id: cloudProviderId,
@@ -232,7 +229,7 @@ describe('clusterDetailsHelper', () => {
           state,
           subscription: {
             ...defaultSubscription,
-            status: isArchivedSubscription ? subscriptionStatuses.ARCHIVED : undefined,
+            status: isArchivedSubscription ? SubscriptionCommonFields.status.ARCHIVED : undefined,
           },
         };
         isHypershiftClusterMock.mockReturnValue(isHypershiftClusterResult);

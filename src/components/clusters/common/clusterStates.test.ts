@@ -1,4 +1,5 @@
-import { normalizedProducts, subscriptionStatuses } from '~/common/subscriptionTypes';
+import { normalizedProducts } from '~/common/subscriptionTypes';
+import { SubscriptionCommonFields } from '~/types/accounts_mgmt.v1';
 import { Cluster, ClusterState } from '~/types/clusters_mgmt.v1';
 import { ClusterFromSubscription } from '~/types/types';
 
@@ -32,10 +33,10 @@ describe('getClusterStateAndDescription', () => {
       subscription: {
         ...defaultSubscription,
         plan: {
-          id: normalizedProducts.OCP_Assisted_Install,
+          id: normalizedProducts.OCP_ASSISTED_INSTALL,
           type: 'OCP',
         },
-        status: subscriptionStatuses.DISCONNECTED,
+        status: SubscriptionCommonFields.status.DISCONNECTED,
       },
     };
     const result = getClusterStateAndDescription(cluster);
@@ -58,12 +59,12 @@ describe('getClusterStateAndDescription', () => {
   });
 
   it.each([
-    [{ subStatus: subscriptionStatuses.ACTIVE }, 'Ready'],
-    [{ subStatus: subscriptionStatuses.STALE }, 'Stale'],
-    [{ subStatus: subscriptionStatuses.ARCHIVED }, 'Archived'],
-    [{ subStatus: subscriptionStatuses.DEPROVISIONED }, 'Deleted'],
-    [{ subStatus: subscriptionStatuses.DISCONNECTED }, 'Disconnected'],
-    [{ subStatus: subscriptionStatuses.STALE }, 'Stale'],
+    [{ subStatus: SubscriptionCommonFields.status.ACTIVE }, 'Ready'],
+    [{ subStatus: SubscriptionCommonFields.status.STALE }, 'Stale'],
+    [{ subStatus: SubscriptionCommonFields.status.ARCHIVED }, 'Archived'],
+    [{ subStatus: SubscriptionCommonFields.status.DEPROVISIONED }, 'Deleted'],
+    [{ subStatus: SubscriptionCommonFields.status.DISCONNECTED }, 'Disconnected'],
+    [{ subStatus: SubscriptionCommonFields.status.STALE }, 'Stale'],
     [{ state: clusterStates.WAITING }, 'Waiting'],
     [{ state: clusterStates.INSTALLING }, 'Installing'],
     [{ state: 'validating' }, 'Installing'],
@@ -80,7 +81,11 @@ describe('getClusterStateAndDescription', () => {
   ])(
     'should show descriptions derived from %p expects to be %p',
     (
-      props: { subStatus?: string; state?: clusterStates | string; metricsState?: string },
+      props: {
+        subStatus?: SubscriptionCommonFields.status;
+        state?: clusterStates | string;
+        metricsState?: string;
+      },
       expectedDescription: string,
     ) => {
       const cluster: ClusterFromSubscription = {
@@ -260,7 +265,7 @@ describe('getClusterStateAndDescription', () => {
   describe('isOSD', () => {
     it.each([
       [normalizedProducts.OSD, true],
-      [normalizedProducts.OSDTrial, true],
+      [normalizedProducts.OSDTRIAL, true],
       [normalizedProducts.ANY, false],
     ])('productId: %p. It returns %p', (productId: string, expectedResult: boolean) => {
       const cluster: ClusterFromSubscription = {

@@ -3,7 +3,6 @@ import * as reactRedux from 'react-redux';
 import { MemoryRouter } from 'react-router-dom';
 import { CompatRouter, useParams } from 'react-router-dom-v5-compat';
 
-import { subscriptionStatuses } from '../../../../common/subscriptionTypes';
 import { useFetchClusterDetails } from '../../../../queries/ClusterDetailsQueries/useFetchClusterDetails';
 import { useFetchClusterIdentityProviders } from '../../../../queries/ClusterDetailsQueries/useFetchClusterIdentityProviders';
 import { useFetchCloudProviders } from '../../../../queries/common/useFetchCloudProviders';
@@ -11,6 +10,7 @@ import { clearGlobalError, setGlobalError } from '../../../../redux/actions/glob
 import * as userActions from '../../../../redux/actions/userActions';
 import { MULTIREGION_PREVIEW_ENABLED } from '../../../../redux/constants/featureConstants';
 import { mockUseFeatureGate, render, screen, waitFor, withState } from '../../../../testUtils';
+import { SubscriptionCommonFields } from '../../../../types/accounts_mgmt.v1';
 import clusterStates from '../../common/clusterStates';
 import ClusterDetails from '../ClusterDetails';
 
@@ -607,7 +607,7 @@ describe('<ClusterDetailsMultiRegion />', () => {
           canEdit: true,
           subscription: {
             ...fixtures.clusterDetails.cluster.subscription,
-            status: subscriptionStatuses.ACTIVE,
+            status: SubscriptionCommonFields.status.ACTIVE,
             plan: {
               id: 'OSDTrial',
               kind: 'Plan',
@@ -655,7 +655,7 @@ describe('<ClusterDetailsMultiRegion />', () => {
             canEdit: true,
             subscription: {
               ...fixtures.clusterDetails.cluster.subscription,
-              status: subscriptionStatuses.DEPROVISIONED,
+              status: SubscriptionCommonFields.status.DEPROVISIONED,
             },
           },
         },
@@ -685,7 +685,7 @@ describe('<ClusterDetailsMultiRegion />', () => {
           canEdit: true,
           subscription: {
             ...fixtures.OCPClusterDetails.cluster.subscription,
-            status: subscriptionStatuses.ARCHIVED,
+            status: SubscriptionCommonFields.status.ARCHIVED,
           },
           // together with assistedInstallerEnabled: true,
           // this set displayAddAssistedHosts to true if not Archived
