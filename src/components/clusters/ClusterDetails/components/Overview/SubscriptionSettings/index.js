@@ -2,7 +2,7 @@ import get from 'lodash/get';
 import { connect } from 'react-redux';
 
 import { modalActions } from '../../../../../common/Modal/ModalActions';
-import canSubscribeOCPSelector from '../../../../common/EditSubscriptionSettingsDialog/CanSubscribeOCPSelector';
+import { canSubscribeOCPSelector } from '../../../../common/EditSubscriptionSettingsDialog/canSubscribeOCPSelector';
 
 import SubscriptionSettings from './SubscriptionSettings';
 

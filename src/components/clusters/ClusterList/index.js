@@ -14,7 +14,7 @@ import { userActions } from '../../../redux/actions/userActions';
 import { onListFlagsSet, viewActions } from '../../../redux/actions/viewOptionsActions';
 import { viewConstants } from '../../../redux/constants';
 import { modalActions } from '../../common/Modal/ModalActions';
-import canSubscribeOCPListSelector from '../common/EditSubscriptionSettingsDialog/CanSubscribeOCPListSelector';
+import canSubscribeOCPListSelector from '../common/EditSubscriptionSettingsDialog/canSubscribeOCPListSelector';
 import { canHibernateClusterListSelector } from '../common/HibernateClusterModal/HibernateClusterModalSelectors';
 import { canTransferClusterOwnershipListSelector } from '../common/TransferClusterOwnershipDialog/utils/transferClusterOwnershipDialogSelectors';
 

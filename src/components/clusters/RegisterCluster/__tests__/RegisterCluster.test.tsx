@@ -22,7 +22,7 @@ jest.mock('~/redux/hooks', () => ({
   useGlobalState: jest.fn(),
 }));
 
-// jest.mock('../EditSubscriptionSettings');
+jest.mock('../EditSubscriptionSettings');
 
 describe('<RegisterCluster />', () => {
   const ConnectedRegisterCluster = reduxForm({
@@ -43,10 +43,12 @@ describe('<RegisterCluster />', () => {
 
   it('is accessible', async () => {
     // Arrange
-    (useGlobalState as jest.Mock).mockReturnValueOnce({});
-    (useGlobalState as jest.Mock).mockReturnValueOnce({});
-    (useGlobalState as jest.Mock).mockReturnValueOnce(false);
-    (useGlobalState as jest.Mock).mockReturnValueOnce(false);
+    (useGlobalState as jest.Mock).mockReturnValue({
+      quotaResponse: {},
+      registerClusterResponse: {},
+      isOpen: false,
+      canSubscribeOCP: false,
+    });
 
     // Act
     const { container } = render(
@@ -63,10 +65,12 @@ describe('<RegisterCluster />', () => {
 
   it('shows spinner when quota has not been fulfilled', () => {
     // Arrange
-    (useGlobalState as jest.Mock).mockReturnValueOnce({ fulfilled: false });
-    (useGlobalState as jest.Mock).mockReturnValueOnce({});
-    (useGlobalState as jest.Mock).mockReturnValueOnce(false);
-    (useGlobalState as jest.Mock).mockReturnValueOnce(false);
+    (useGlobalState as jest.Mock).mockReturnValue({
+      quotaResponse: { fulfilled: false },
+      registerClusterResponse: {},
+      isOpen: false,
+      canSubscribeOCP: false,
+    });
 
     // Act
     render(
@@ -85,12 +89,13 @@ describe('<RegisterCluster />', () => {
 
   it('shows form when quota has been fulfilled', () => {
     // Arrange
-    for (let i = 0; i < 3; i += 1) {
-      (useGlobalState as jest.Mock).mockReturnValueOnce({ fulfilled: true });
-      (useGlobalState as jest.Mock).mockReturnValueOnce({});
-      (useGlobalState as jest.Mock).mockReturnValueOnce(false);
-      (useGlobalState as jest.Mock).mockReturnValueOnce(false);
-    }
+
+    (useGlobalState as jest.Mock).mockReturnValue({
+      quotaResponse: { fulfilled: true },
+      registerClusterResponse: {},
+      isOpen: false,
+      canSubscribeOCP: false,
+    });
 
     // Act
     render(
@@ -109,13 +114,15 @@ describe('<RegisterCluster />', () => {
 
   it('redirects to cluster details when the cluster data is fulfilled', () => {
     // Arrange
-    (useGlobalState as jest.Mock).mockReturnValueOnce({ fulfilled: true });
-    (useGlobalState as jest.Mock).mockReturnValueOnce({
-      fulfilled: true,
-      cluster: { id: 'myClusterId' },
+    (useGlobalState as jest.Mock).mockReturnValue({
+      quotaResponse: { fulfilled: true },
+      registerClusterResponse: {
+        fulfilled: true,
+        cluster: { id: 'myClusterId' },
+      },
+      isOpen: false,
+      canSubscribeOCP: false,
     });
-    (useGlobalState as jest.Mock).mockReturnValueOnce(false);
-    (useGlobalState as jest.Mock).mockReturnValueOnce(false);
 
     // Act
     render(

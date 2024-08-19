@@ -22,7 +22,6 @@ import { PageSection, TabContent, Tooltip } from '@patternfly/react-core';
 import { Spinner } from '@redhat-cloud-services/frontend-components/Spinner';
 
 import { AppPage } from '~/components/App/AppPage';
-import { canSubscribeOCPMultiRegion } from '~/components/clusters/common/EditSubscriptionSettingsDialog/CanSubscribeOCPSelector';
 import { modalActions } from '~/components/common/Modal/ModalActions';
 import { featureGateSelector, useFeatureGate } from '~/hooks/useFeatureGate';
 import { useAddNotificationContact } from '~/queries/ClusterDetailsQueries/ClusterSupportTab/useAddNotificationContact';
@@ -85,6 +84,7 @@ import clusterStates, {
   isHypershiftCluster,
 } from '../common/clusterStates';
 import CommonClusterModals from '../common/CommonClusterModals';
+import { canSubscribeOCPMultiRegion } from '../common/EditSubscriptionSettingsDialog/canSubscribeOCPSelector';
 import { userCanHibernateClustersSelector } from '../common/HibernateClusterModal/HibernateClusterModalSelectors';
 import ReadOnlyBanner from '../common/ReadOnlyBanner';
 import { canTransferClusterOwnershipMultiRegion } from '../common/TransferClusterOwnershipDialog/utils/transferClusterOwnershipDialogSelectors';
