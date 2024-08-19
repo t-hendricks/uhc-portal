@@ -199,16 +199,21 @@ export const useFetchClusters = () => {
   /* Filter */
   React.useEffect(
     () => {
-      setQueries([]);
+      setQueries(() => {
+        // Remove the queries from React Queries cache first
+        queryClient.removeQueries({
+          queryKey: [queryConstants.FETCH_CLUSTERS_QUERY_KEY, QUERY_TYPE.GLOBAL],
+        });
+        queryClient.removeQueries({
+          queryKey: [queryConstants.FETCH_CLUSTERS_QUERY_KEY, QUERY_TYPE.REGIONAL],
+        });
+
+        // Now set queries as empty - this will cause the queries to be rebuilt
+        return [];
+      });
       // @ts-ignore
       clearInterval(refetchInterval);
       setRefetchInterval(undefined);
-      queryClient.removeQueries({
-        queryKey: [queryConstants.FETCH_CLUSTERS_QUERY_KEY, QUERY_TYPE.GLOBAL],
-      });
-      queryClient.removeQueries({
-        queryKey: [queryConstants.FETCH_CLUSTERS_QUERY_KEY, QUERY_TYPE.REGIONAL],
-      });
     },
     // We only want to run this on filter change so refetchInterval should not be dependency
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -242,7 +247,8 @@ export const useFetchClusters = () => {
         page: 1,
         aiMergeListsFeatureFlag,
         flags,
-        nameFilter: '',
+        // @ts-ignore
+        nameFilter,
         userName,
       });
       setQueries((prev) => [...prev, globalPage1Query]);
@@ -259,7 +265,8 @@ export const useFetchClusters = () => {
                 aiMergeListsFeatureFlag,
                 region,
                 flags,
-                nameFilter: '',
+                // @ts-ignore
+                nameFilter,
                 userName,
               }),
             ];
