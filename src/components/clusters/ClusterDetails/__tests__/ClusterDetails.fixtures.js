@@ -438,10 +438,10 @@ const CCSClusterDetails = produce(clusterDetails, (draft) => {
 });
 
 const OSDTrialClusterDetails = produce(CCSClusterDetails, (draft) => {
-  draft.cluster.product = { id: normalizedProducts.OSDTrial };
+  draft.cluster.product = { id: normalizedProducts.OSDTRIAL };
   draft.cluster.subscription.plan = {
-    id: normalizedProducts.OSDTrial,
-    type: normalizedProducts.OSDTrial,
+    id: normalizedProducts.OSDTRIAL,
+    type: normalizedProducts.OSDTRIAL,
   };
 });
 
@@ -515,7 +515,7 @@ const AIClusterDetails = produce(CCSClusterDetails, (draft) => {
   draft.cluster.aiCluster = { id: clusterDetails.cluster.id };
   draft.cluster.canEdit = false;
   draft.cluster.subscription.plan = {
-    id: normalizedProducts.OCP_Assisted_Install,
+    id: normalizedProducts.OCP_ASSISTED_INSTALL,
     type: normalizedProducts.OCP,
   };
 });

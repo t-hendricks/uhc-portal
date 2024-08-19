@@ -3,8 +3,9 @@ import { CompatRouter } from 'react-router-dom-v5-compat';
 
 import { defaultSubscription } from '~/components/clusters/common/__tests__/clusterStates.fixtures';
 import { checkAccessibility, render, screen, TestRouter } from '~/testUtils';
+import { SubscriptionCommonFields } from '~/types/accounts_mgmt.v1';
 
-import { normalizedProducts, subscriptionStatuses } from '../../../../../common/subscriptionTypes';
+import { normalizedProducts } from '../../../../../common/subscriptionTypes';
 import TransferClusterOwnershipInfo from '../TransferClusterOwnershipInfo';
 
 describe('<TransferClusterOwnershipInfo />', () => {
@@ -61,7 +62,7 @@ describe('<TransferClusterOwnershipInfo />', () => {
     const subscription = {
       plan: { type: normalizedProducts.OCP },
       released: true,
-      status: subscriptionStatuses.DISCONNECTED,
+      status: SubscriptionCommonFields.status.DISCONNECTED,
     };
 
     // Act

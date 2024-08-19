@@ -3,7 +3,6 @@ import { BrowserRouter } from 'react-router-dom-v5-compat';
 
 import * as subscriptionFixture from '~/components/clusters/ClusterDetails/components/Overview/SubscriptionSettings/SubscriptionSettings.fixtures';
 
-import { subscriptionStatuses } from '../../../../common/subscriptionTypes';
 import {
   checkAccessibility,
   mockRestrictedEnv,
@@ -11,6 +10,7 @@ import {
   screen,
   withState,
 } from '../../../../testUtils';
+import { SubscriptionCommonFields } from '../../../../types/accounts_mgmt.v1';
 import Overview from '../components/Overview/Overview';
 
 import fixtures from './ClusterDetails.fixtures';
@@ -154,7 +154,7 @@ describe('<Overview />', () => {
         ...fixtures.OCPClusterDetails.cluster,
         subscription: {
           ...fixtures.OCPClusterDetails.cluster.subscription,
-          status: subscriptionStatuses.ARCHIVED,
+          status: SubscriptionCommonFields.status.ARCHIVED,
         },
       },
       cloudProviders: fixtures.cloudProviders,

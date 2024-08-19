@@ -4,22 +4,19 @@ import { Draft, produce } from 'immer';
 import type { Cluster as AICluster } from '@openshift-assisted/types/assisted-installer-service';
 import * as OCM from '@openshift-assisted/ui-lib/ocm';
 
-import type {
-  ClusterMetricsNodes,
-  ClusterResource,
-  OneMetric,
-  QuotaCost,
-  Subscription,
+import {
+  type ClusterMetricsNodes,
+  type ClusterResource,
+  type OneMetric,
+  type QuotaCost,
+  type Subscription,
+  SubscriptionCommonFields,
 } from '../types/accounts_mgmt.v1';
 import type { Cluster } from '../types/clusters_mgmt.v1';
 import type { FakeCluster } from '../types/types';
 
 import { isAISubscriptionWithoutMetrics } from './isAssistedInstallerCluster';
-import {
-  clustersServiceProducts,
-  normalizedProducts,
-  subscriptionStatuses,
-} from './subscriptionTypes';
+import { clustersServiceProducts, normalizedProducts } from './subscriptionTypes';
 import { versionComparator } from './versionComparator';
 
 const {
@@ -40,22 +37,22 @@ const normalizeProductID = (id: string | undefined): string => {
   const map: { [key: string]: string } = {
     OCP: normalizedProducts.OCP,
     OSD: normalizedProducts.OSD,
-    OSDTRIAL: normalizedProducts.OSDTrial,
+    OSDTRIAL: normalizedProducts.OSDTRIAL,
     RHMI: normalizedProducts.RHMI,
     MOA: normalizedProducts.ROSA,
     ROSA: normalizedProducts.ROSA,
     ROSA_HYPERSHIFT: normalizedProducts.ROSA_HyperShift,
     MOA_HOSTEDCONTROLPLANE: normalizedProducts.ROSA_HyperShift,
     ARO: normalizedProducts.ARO,
-    OCP_ASSISTEDINSTALL: normalizedProducts.OCP_Assisted_Install,
+    OCP_ASSISTEDINSTALL: normalizedProducts.OCP_ASSISTED_INSTALL,
     RHACS: normalizedProducts.RHACS,
-    RHACSTRIAL: normalizedProducts.RHACSTrial,
+    RHACSTRIAL: normalizedProducts.RHACSTRIAL,
     RHOSR: normalizedProducts.RHOSR,
-    RHOSRTRIAL: normalizedProducts.RHOSRTrial,
+    RHOSRTRIAL: normalizedProducts.RHOSRTRIAL,
     RHOSAK: normalizedProducts.RHOSAK,
-    RHOSAKTRIAL: normalizedProducts.RHOSAKTrial,
+    RHOSAKTRIAL: normalizedProducts.RHOSAKTRIAL,
     RHOSE: normalizedProducts.RHOSE,
-    RHOSETRIAL: normalizedProducts.RHOSETrial,
+    RHOSETRIAL: normalizedProducts.RHOSETRIAL,
     RHOIC: normalizedProducts.RHOIC,
     ANY: normalizedProducts.ANY, // used by account-manager in quota_cost
   };
@@ -234,7 +231,8 @@ const fakeClusterFromSubscription = (subscription: Subscription): FakeCluster =>
     managed: clustersServiceProducts.includes(normalizeProductID(subscription.plan?.type)),
     ccs: {
       // deprovisioned clusters do not have CCS info, so leaving it as 'undefined'
-      enabled: subscription.status !== subscriptionStatuses.DEPROVISIONED ? false : undefined,
+      enabled:
+        subscription.status !== SubscriptionCommonFields.status.DEPROVISIONED ? false : undefined,
     },
     metrics,
   };
@@ -320,12 +318,12 @@ const mapListResponse = <I extends any, T extends { items?: I[] }, D extends Dra
   });
 
 export {
-  normalizeProductID,
-  normalizeCluster,
-  fakeClusterFromSubscription,
   fakeClusterFromAISubscription,
-  normalizeSubscription,
-  normalizeQuotaCost,
+  fakeClusterFromSubscription,
   mapListResponse,
+  normalizeCluster,
   normalizeMetrics,
+  normalizeProductID,
+  normalizeQuotaCost,
+  normalizeSubscription,
 };

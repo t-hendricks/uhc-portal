@@ -2,8 +2,8 @@ import React from 'react';
 import { MemoryRouter } from 'react-router-dom';
 import { CompatRouter, useParams } from 'react-router-dom-v5-compat';
 
-import { subscriptionStatuses } from '../../../../common/subscriptionTypes';
 import { screen, waitFor, withState } from '../../../../testUtils';
+import { SubscriptionCommonFields } from '../../../../types/accounts_mgmt.v1';
 import clusterStates from '../../common/clusterStates';
 import ClusterDetails from '../ClusterDetails';
 
@@ -477,7 +477,7 @@ describe('<ClusterDetails />', () => {
           canEdit: true,
           subscription: {
             ...fixtures.clusterDetails.cluster.subscription,
-            status: subscriptionStatuses.ACTIVE,
+            status: SubscriptionCommonFields.status.ACTIVE,
             plan: {
               id: 'OSDTrial',
               kind: 'Plan',
@@ -524,7 +524,7 @@ describe('<ClusterDetails />', () => {
             canEdit: true,
             subscription: {
               ...fixtures.clusterDetails.cluster.subscription,
-              status: subscriptionStatuses.DEPROVISIONED,
+              status: SubscriptionCommonFields.status.DEPROVISIONED,
             },
           },
         },
@@ -554,7 +554,7 @@ describe('<ClusterDetails />', () => {
           canEdit: true,
           subscription: {
             ...fixtures.OCPClusterDetails.cluster.subscription,
-            status: subscriptionStatuses.ARCHIVED,
+            status: SubscriptionCommonFields.status.ARCHIVED,
           },
           // together with assistedInstallerEnabled: true,
           // this set displayAddAssistedHosts to true if not Archived

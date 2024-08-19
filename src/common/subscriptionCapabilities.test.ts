@@ -3,17 +3,16 @@ import times from 'lodash/times';
 
 import { ClusterFromSubscription } from '~/types/types';
 
+import { SubscriptionCommonFields } from '../types/accounts_mgmt.v1';
+
 import { getRandomID } from './helpers';
 import {
   hasCapability,
   haveCapabilities,
   subscriptionCapabilities,
 } from './subscriptionCapabilities';
-import { subscriptionStatuses } from './subscriptionTypes';
 
 const { SUBSCRIBED_OCP_MARKETPLACE } = subscriptionCapabilities;
-
-const { ACTIVE, DISCONNECTED } = subscriptionStatuses;
 
 const newOCPCluster = () => {
   const clusterID = getRandomID();
@@ -24,7 +23,7 @@ const newOCPCluster = () => {
     subscription: {
       id: subID,
       kind: 'Subscription',
-      status: ACTIVE,
+      status: SubscriptionCommonFields.status.ACTIVE,
       cluster_id: clusterID,
       capabilities: [],
     },
@@ -35,7 +34,7 @@ const newOCPCluster = () => {
 
 const newDisconnectedCluster = () => {
   const cluster = newOCPCluster();
-  cluster.subscription.status = DISCONNECTED;
+  cluster.subscription.status = SubscriptionCommonFields.status.DISCONNECTED;
   return cluster;
 };
 

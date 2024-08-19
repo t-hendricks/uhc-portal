@@ -5,12 +5,10 @@ import PropTypes from 'prop-types';
 import { Alert, Button } from '@patternfly/react-core';
 import { DateFormat } from '@redhat-cloud-services/frontend-components/DateFormat';
 
+import { SubscriptionCommonFields } from '~/types/accounts_mgmt.v1';
+
 import getClusterName from '../../../../common/getClusterName';
-import {
-  normalizedProducts,
-  subscriptionStatuses,
-  subscriptionSupportLevels,
-} from '../../../../common/subscriptionTypes';
+import { normalizedProducts } from '../../../../common/subscriptionTypes';
 import modals from '../../../common/Modal/modals';
 import { getSubscriptionLastReconciledDate } from '../clusterDetailsHelper';
 
@@ -24,14 +22,17 @@ function SubscriptionCompliancy({ cluster, openModal, canSubscribeOCP = false })
 
   const supportLevel = get(subscription, 'support_level');
   if (
-    supportLevel !== subscriptionSupportLevels.EVAL &&
-    supportLevel !== subscriptionSupportLevels.NONE
+    supportLevel !== SubscriptionCommonFields.support_level.EVAL &&
+    supportLevel !== SubscriptionCommonFields.support_level.NONE
   ) {
     return null;
   }
 
   const status = get(subscription, 'status');
-  if (status === subscriptionStatuses.ARCHIVED || status === subscriptionStatuses.DEPROVISIONED) {
+  if (
+    status === SubscriptionCommonFields.status.ARCHIVED ||
+    status === SubscriptionCommonFields.status.DEPROVISIONED
+  ) {
     return null;
   }
 
@@ -83,7 +84,7 @@ function SubscriptionCompliancy({ cluster, openModal, canSubscribeOCP = false })
     </>
   );
 
-  if (supportLevel === subscriptionSupportLevels.NONE) {
+  if (supportLevel === SubscriptionCommonFields.support_level.NONE) {
     return (
       <Alert
         className="subscription-settings compliancy-alert pf-v5-u-mt-md"

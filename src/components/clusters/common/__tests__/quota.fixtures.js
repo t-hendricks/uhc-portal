@@ -183,7 +183,7 @@ export const paramsCCSOnDemand = {
   billingModel: RelatedResource.billing_model.MARKETPLACE,
 };
 export const paramsTrial = {
-  product: normalizedProducts.OSDTrial,
+  product: normalizedProducts.OSDTRIAL,
   cloudProviderID: 'aws',
   resourceName: 'standard-4',
   isMultiAz: true,
