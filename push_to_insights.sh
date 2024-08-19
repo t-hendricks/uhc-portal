@@ -58,9 +58,9 @@ COMMIT_DATE="$(git log --pretty=format:'%ci' -n 1)"
 
 # sentry
 SENTRY_STAGE_PROJECT="ocm-uhc-portal-stage"
-SENTRY_STAGE_VERSION="$SENTRY_STAGE_PROJECT-$VERSION"
+SENTRY_STAGE_VERSION="$SENTRY_STAGE_PROJECT-$VERSION-insights"
 SENTRY_PROD_PROJECT="ocm-uhc-portal"
-SENTRY_PROD_VERSION="$SENTRY_PROD_PROJECT-$VERSION"
+SENTRY_PROD_VERSION="$SENTRY_PROD_PROJECT-$VERSION-insights"
 
 
 function cleanup_secrets() {
@@ -170,45 +170,29 @@ yarn install
 # $1 is the 'mode' arg', passed from the calling CI job ('ocm-portal-deploy'),
 # to determine how environments map to branches.
 # the current mapping, in the form mode-->branch, is:
-# staging-->master, candidate-->candidate, stable-->stable
-# @see https://gitlab.cee.redhat.com/service/app-interface/-/blob/master/data/services/ocm/ui/cicd/jobs.yaml#L34-45
-# @see https://gitlab.cee.redhat.com/service/app-interface/-/blob/master/resources/jenkins/ocm-ui/job-templates.yaml?ref_type=heads#L16
-if [ "$1" == "staging" ] || [ "$1" == "beta" ]; then
+# staging-->master, stable-->stable
+# @see https://gitlab.cee.redhat.com/service/app-interface/-/blob/631986e77d955a5d27d8ee4ecb653b561875b87e/data/services/ocm/ui/cicd/jobs.yaml#L37-44
+# @see https://gitlab.cee.redhat.com/service/app-interface/-/blob/631986e77d955a5d27d8ee4ecb653b561875b87e/resources/jenkins/ocm-ui/job-templates.yaml#L16
+
+if [ "$1" == "staging" ]; then
     echo "running staging push"
     rm -rf dist
     yarn build:prod --env api-env=staging sentry-version="$SENTRY_STAGE_VERSION"
     yarn sentry:sourcemaps
     push_build "qa-stable"
-    echo "staging branch is available on https://console.dev.redhat.com/openshift"
+    echo "staging branch is pushed to RedHatInsights/uhc-portal-frontend-deploy qa-stable branch"
     yarn sentry:release --auth-token $GLITCHTIP_TOKEN --project="$SENTRY_STAGE_PROJECT" files "$SENTRY_STAGE_VERSION" upload-sourcemaps dist/ --url-prefix "/apps"
 
-    echo "running staging (qa-beta) push"
-    rm -rf dist
-    yarn build:prod --env api-env=staging beta="true"
-    push_build "qa-beta"
-    echo "staging branch is available on https://console.dev.redhat.com/preview/openshift"
-
-    echo "running push to secondary environment - ci-beta (not supported)"
-    rm -rf dist
-    yarn build:prod --env api-env=disabled beta="true"
-    push_build "ci-beta"
-
-elif [ "$1" == "candidate" ]; then
-    echo "running candidate push"
-    echo "Candidate branch is available on https://console.redhat.com/preview/openshift"
-    rm -rf dist
-    yarn build:prod --env api-env=production beta="true"
-    push_build "prod-beta"
 elif [ "$1" == "stable" ]; then
     echo "running stable push"
     rm -rf dist
     yarn build:prod --env api-env=production beta="false" sentry-version="$SENTRY_PROD_VERSION"
     yarn sentry:sourcemaps
     push_build "prod-stable"
-    echo "stable branch is available on https://console.redhat.com/openshift"
+    echo "stable branch is  pushed to RedHatInsights/uhc-portal-frontend-deploy prod-stable branch"
     yarn sentry:release --auth-token $GLITCHTIP_TOKEN --project="$SENTRY_PROD_PROJECT" files "$SENTRY_PROD_VERSION" upload-sourcemaps dist/ --url-prefix "/apps"
 
 else
-    echo "mode (first param) must be one of: staging / candidate / stable"
+    echo "mode (first param) must be one of: staging / stable"
     exit 1
 fi
