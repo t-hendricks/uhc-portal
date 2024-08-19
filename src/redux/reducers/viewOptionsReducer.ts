@@ -279,7 +279,15 @@ const viewOptionsReducer = (
       updateState[action.payload.viewType] = {
         ...state[action.payload.viewType],
         flags: INITIAL_OSL_VIEW_STATE.flags,
-        filter: INITIAL_OSL_VIEW_STATE.filter,
+        filter:
+          typeof INITIAL_OSL_VIEW_STATE.filter === 'object'
+            ? {
+                ...INITIAL_OSL_VIEW_STATE.filter,
+                // time from and time to values are always ketps, since the values from the date picker don't change after clearing
+                timestampFrom: (state[action.payload.viewType].filter as any).timestampFrom,
+                timestampTo: (state[action.payload.viewType].filter as any).timestampTo,
+              }
+            : INITIAL_OSL_VIEW_STATE.filter,
       };
       return { ...state, ...updateState };
 

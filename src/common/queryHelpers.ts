@@ -205,23 +205,16 @@ const buildUrlParams = (params: QueryObject): string =>
  * @param {Object} params
  */
 const buildFilterURLParams = (params: { [key: string]: (string | number | boolean)[] }): string =>
-  Object.keys(params)
-    .map((key) => !isEmpty(params[key]) && `${key}=${params[key].join(',')}`)
-    .filter(Boolean)
-    .join('&');
+  encodeURI(
+    Object.keys(params)
+      .map((key) => !isEmpty(params[key]) && `${key}=${params[key].join(',')}`)
+      .filter(Boolean)
+      .join('&'),
+  );
 
 const getQueryParam = (param: string): string | undefined => {
-  let ret: string | undefined;
-  window.location.search
-    .substring(1)
-    .split('&')
-    .forEach((queryString) => {
-      const [key, val] = queryString.split('=');
-      if (key === param) {
-        ret = decodeURI(val);
-      }
-    });
-  return ret;
+  const searchParams = new URLSearchParams(window.location.search);
+  return searchParams.get(param) ?? undefined;
 };
 
 const deleteQueryParam = (param: string): void => {
