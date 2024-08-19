@@ -122,11 +122,18 @@ const ClusterLogs = ({
 
   //   const loggedBy = getQueryParam('loggedBy') || '';
   //   const description = getQueryParam('description') || '';
-  //   if (!isEmpty(description) || !isEmpty(description)) {
-  //     filter = { loggedBy, description };
+  //   const timestampFrom = getQueryParam('timestampFrom') || '';
+  //   const timestampTo = getQueryParam('timestampTo') || '';
+  //   if (
+  //     !isEmpty(loggedBy) ||
+  //     !isEmpty(description) ||
+  //     !isEmpty(timestampFrom) ||
+  //     !isEmpty(timestampTo)
+  //   ) {
+  //     filter = { loggedBy, description, timestampFrom, timestampTo };
   //   }
 
-  //   if (createdAt) {
+  //   if (createdAt && !isEmpty(timestampFrom)) {
   //     // Apply a timestamp filter by default
   //     const minDate = dateParse(createdAt);
   //     const { symbol, date } = onDateChangeFromFilter(dateFormat(getTimestampFrom(minDate)));
@@ -179,7 +186,9 @@ const ClusterLogs = ({
   //     const filters: {
   //       [flag: string]: string[];
   //     } = Object.entries(viewOptions.filter)
-  //       .filter((e) => ['description', 'loggedBy'].includes(e[0]) && e[1])
+  //       .filter(
+  //         (e) => ['description', 'loggedBy', 'timestampFrom', 'timestampTo'].includes(e[0]) && e[1],
+  //       )
   //       .reduce((acc, curr) => ({ ...acc, [`${curr[0]}`]: [curr[1]] }), {});
   //     navigate(
   //       {

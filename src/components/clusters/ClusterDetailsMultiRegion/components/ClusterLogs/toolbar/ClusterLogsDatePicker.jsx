@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import dayjs from 'dayjs';
 import PropTypes from 'prop-types';
 
 import {
@@ -305,6 +306,36 @@ const ClusterLogsDatePicker = ({ setFilter, currentFilter, createdAt }) => {
       ))}
     </SelectDeprecated>
   );
+
+  useEffect(
+    () => onDateChange([onDateChangeFromFilter(startDateStr), onDateChangeToFilter(endDateStr)]),
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [],
+  );
+
+  useEffect(() => {
+    if (currentFilter.timestampFrom) {
+      const dateStr = dayjs(currentFilter.timestampFrom.replaceAll("'", '').split(' ')[1])
+        .utcOffset(0)
+        .format('YYYY-MM-DD');
+      if (dateStr !== startDateStr) {
+        onDateChangeFrom(dateStr);
+        setSelected(options[3].value);
+      }
+    }
+
+    if (currentFilter.timestampTo) {
+      const dateStr = dayjs(currentFilter.timestampTo.replaceAll("'", '').split(' ')[1])
+        .utcOffset(0)
+        .format('YYYY-MM-DD');
+      if (dateStr !== endDateStr) {
+        onDateChangeTo(dateStr);
+        setSelected(options[3].value);
+      }
+    }
+    // since this is changing value for [start|end]DateStr application would be in a loop. This would require refactoring.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [currentFilter.timestampFrom, currentFilter.timestampTo]);
 
   return (
     <>
