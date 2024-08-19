@@ -17,6 +17,10 @@ class Overview extends Page {
     cy.contains('Get started with OpenShift', { timeout: 60000 }).should('be.visible');
   }
 
+  drawerContentTitle = () => cy.getByTestId('drawer-panel-content__title');
+
+  drawerCloseButton = () => cy.getByTestId('drawer-close-button');
+
   header = () => {
     cy.get('[data-testid="OverviewHeader"]').as('header').should('be.visible');
     return {
@@ -66,47 +70,37 @@ class Overview extends Page {
     cy.get('[data-testid^="offering-card"]').should('have.length', numberOfCards);
   }
 
-  centralSectionFooterLinkExists(title, link) {
-    cy.get('[data-testid^="offering-card"]')
-      .parentsUntil('section')
-      .next('a')
-      .contains(title)
-      .as('centralSectionFooterLink')
-      .should('have.attr', 'href', link);
+  centralSectionHeaderLinkExists(title, link) {
+    cy.get('a').contains(title).as('centralSectionHeaderLink').should('have.attr', 'href', link);
     return new ButtonHelper(
-      { name: 'centralSectionFooterLink', isParent: false },
+      { name: 'centralSectionHeaderLink', isParent: false },
       title,
       link,
     ).btnExists();
   }
 
-  recommendedContentsExpected(numberOfContents) {
-    cy.get('[data-testid^="recommendedContent_"]').should('have.length', numberOfContents);
+  isRecommendedOperatorsHeaderVisible(link) {
+    cy.get('h2').contains('Recommended operators').as('header');
+    cy.get('@header')
+      .parent()
+      .next()
+      .within(() => {
+        cy.get('a')
+          .contains('View all in Ecosystem Catalog')
+          .should('have.attr', 'href')
+          .and('include', link);
+      });
   }
 
-  recommendedContent(id) {
-    cy.get(`[data-testid="${id}"]`).as(id);
-    return {
-      shouldHaveLabel: function (labelType) {
-        cy.get(`@${id}`).find('[data-testtag="label"]').should('have.text', labelType);
-        return this;
-      },
-      checkLink: function (title, link) {
-        return new LinkHelper({ name: id, isParent: true }, title, link).linkExists();
-      },
-      get cyObj() {
-        return cy.get(`@${id}`);
-      },
-    };
+  recommendedOperatorsExpected(numberOfContents) {
+    cy.getByTestId('product-overview-card').should('have.length', numberOfContents);
   }
 
-  recommendedContentFooterLinkExists(title, link) {
-    cy.get('[data-testid="recommendedContentFooterLink"]').as('recommendedContentFooterLink');
-    return new LinkHelper(
-      { name: 'recommendedContentFooterLink', isParent: false },
-      title,
-      link,
-    ).linkExists();
+  recommendedOperator(text, description) {
+    cy.get('h3').contains(text).parents('div[data-testid="product-overview-card"]').as('headerObj');
+    cy.get('@headerObj').find('div').contains(description).should('be.exist');
+    cy.get('@headerObj').contains('Learn more').as('learnMore');
+    return cy.get('@learnMore');
   }
 }
 
