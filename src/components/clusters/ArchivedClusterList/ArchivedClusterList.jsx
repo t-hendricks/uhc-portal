@@ -103,7 +103,7 @@ class ArchivedClusterList extends Component {
     } = this.props;
 
     const breadCrumbs = (
-      <Breadcrumbs path={[{ label: 'Clusters' }, { label: 'Cluster Archives' }]} />
+      <Breadcrumbs path={[{ label: 'Cluster List' }, { label: 'Cluster Archives' }]} />
     );
 
     const pageHeader = (

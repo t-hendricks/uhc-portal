@@ -66,7 +66,7 @@ const CreateCluster = ({
   const title = (
     <PageTitle
       title="Select an OpenShift cluster type to create"
-      breadcrumbs={<Breadcrumbs path={[{ label: 'Clusters' }, { label: 'Cluster Type' }]} />}
+      breadcrumbs={<Breadcrumbs path={[{ label: 'Cluster List' }, { label: 'Cluster Type' }]} />}
     />
   );
 

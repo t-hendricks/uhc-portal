@@ -161,7 +161,7 @@ function ClusterDetailsTop(props) {
   const breadcrumbs = (
     <Breadcrumbs
       path={[
-        { label: 'Clusters' },
+        { label: 'Cluster List' },
         (isArchived || isDeprovisioned) && { label: 'Cluster Archives', path: '/archived' },
         { label: clusterName },
       ].filter(Boolean)}

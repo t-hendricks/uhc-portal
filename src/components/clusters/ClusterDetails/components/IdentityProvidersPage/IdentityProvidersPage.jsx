@@ -194,7 +194,7 @@ const IdentityProvidersPage = (props) => {
       <PageHeader>
         <Breadcrumbs
           path={[
-            { label: 'Clusters' },
+            { label: 'Cluster List' },
             { label: clusterName, path: `/details/s/${cluster.subscription.id}` },
             {
               label: 'Access control',

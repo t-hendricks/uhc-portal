@@ -27,7 +27,7 @@ class ClusterList extends Page {
   }
 
   isClusterListScreen() {
-    cy.contains('h1, h4', /Clusters|Let's create your first cluster/);
+    cy.contains('h1, h4', /Cluster List|Let's create your first cluster/);
   }
 
   isRegisterClusterScreen() {

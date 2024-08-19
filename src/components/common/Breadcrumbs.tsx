@@ -16,7 +16,7 @@ const Breadcrumbs = ({ path }: Props) => (
 
       if (i < path.length - 1) {
         let itemPath = item.path;
-        if (itemLabel === 'Clusters' && !itemPath) {
+        if (itemLabel === 'Cluster List' && !itemPath) {
           itemPath = '/cluster-list';
         }
 

@@ -14,7 +14,7 @@ const InstallPower = () => {
   const breadcrumbs = (
     <Breadcrumbs
       path={[
-        { label: 'Clusters' },
+        { label: 'Cluster List' },
         { label: 'Cluster Type', path: '/create' },
         { label: 'IBM Power (ppc64le)' },
       ]}

@@ -1,3 +1,4 @@
+import ClusterListPage from '../../pageobjects/ClusterList.page';
 import CreateRosaWizardPage from '../../pageobjects/CreateRosaWizard.page';
 import LeaveCreateClusterPrompt from '../../pageobjects/LeaveCreateClusterPrompt';
 
@@ -12,6 +13,12 @@ const installerARN = `arn:aws:iam::${awsAccountID}:role/${rolePrefix}-HCP-ROSA-I
 const clusterName = `smoke-cypress-rosa-hypershift-${(Math.random() + 1).toString(36).substring(7)}`;
 
 describe('Rosa hosted(Hypershift) cluster wizard validations', { tags: ['smoke', 'hcp'] }, () => {
+  before(() => {
+    cy.visit('/cluster-list');
+    ClusterListPage.waitForDataReady();
+    ClusterListPage.isClusterListScreen();
+  });
+
   it('Open Rosa cluster wizard', () => {
     cy.getByTestId('create_cluster_btn').click();
     CreateRosaWizardPage.rosaCreateClusterButton().click();

@@ -501,8 +501,12 @@ const Router: React.FC<RouterProps> = ({ history, planType, clusterId, externalC
                 config.multiRegion && isMultiRegionEnabled ? ClusterListMultiRegion : ClustersList
               }
             />
-            {/* Change to /overview after https://github.com/RedHatInsights/chrome-service-backend/pull/569 is in prod */}
-            <CompatRoute path="/" render={() => <Navigate replace to="/cluster-list" />} />
+            <CompatRoute
+              path="/"
+              render={() => (
+                <Navigate replace to={isRestrictedEnv() ? '/cluster-list' : '/overview'} />
+              )}
+            />
             <CompatRoute path="/overview" exact component={Overview} />
 
             <Route component={NotFoundError} />
