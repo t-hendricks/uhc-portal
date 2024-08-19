@@ -1,17 +1,24 @@
-import CreateRosaWizardPage from '../../pageobjects/CreateRosaWizard.page';
 import ClusterDetailsPage from '../../pageobjects/ClusterDetails.page';
+import ClusterListPage from '../../pageobjects/ClusterList.page';
+import CreateRosaWizardPage from '../../pageobjects/CreateRosaWizard.page';
 
 // awsAccountID,rolePrefix and installerARN are set by prerun script for smoke requirements.
 const awsAccountID = Cypress.env('QE_AWS_ID');
 const rolePrefix = Cypress.env('QE_ACCOUNT_ROLE_PREFIX');
-const installerARN = 'arn:aws:iam::' + awsAccountID + ':role/' + rolePrefix + '-Installer-Role';
-const clusterName = `ocmui-cypress-smoke-rosa-` + (Math.random() + 1).toString(36).substring(7);
-const clusterDomainPrefix = `rosa` + (Math.random() + 1).toString(36).substring(2);
+const installerARN = `arn:aws:iam::${awsAccountID}:role/${rolePrefix}-Installer-Role`;
+const clusterName = `ocmui-cypress-smoke-rosa-${(Math.random() + 1).toString(36).substring(7)}`;
+const clusterDomainPrefix = `rosa${(Math.random() + 1).toString(36).substring(2)}`;
 
 describe(
   'Rosa cluster wizard advanced settings with cluster creation tests(OCP-36105)',
   { tags: ['smoke'] },
   () => {
+    before(() => {
+      cy.visit('/cluster-list');
+      ClusterListPage.waitForDataReady();
+      ClusterListPage.isClusterListScreen();
+    });
+
     it('Open Rosa cluster wizard with advanced settings', () => {
       cy.getByTestId('create_cluster_btn').click();
       CreateRosaWizardPage.rosaCreateClusterButton().click();
@@ -100,15 +107,15 @@ describe(
       CreateRosaWizardPage.waitForARNList();
       CreateRosaWizardPage.supportRoleInput().should(
         'have.value',
-        'arn:aws:iam::' + awsAccountID + ':role/' + rolePrefix + '-Support-Role',
+        `arn:aws:iam::${awsAccountID}:role/${rolePrefix}-Support-Role`,
       );
       CreateRosaWizardPage.workerRoleInput().should(
         'have.value',
-        'arn:aws:iam::' + awsAccountID + ':role/' + rolePrefix + '-Worker-Role',
+        `arn:aws:iam::${awsAccountID}:role/${rolePrefix}-Worker-Role`,
       );
       CreateRosaWizardPage.controlPlaneRoleInput().should(
         'have.value',
-        'arn:aws:iam::' + awsAccountID + ':role/' + rolePrefix + '-ControlPlane-Role',
+        `arn:aws:iam::${awsAccountID}:role/${rolePrefix}-ControlPlane-Role`,
       );
       CreateRosaWizardPage.rosaNextButton().click();
     });

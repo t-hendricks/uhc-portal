@@ -24,7 +24,7 @@ export class InstallArmAWSIPI extends Component {
     const breadcrumbs = (
       <Breadcrumbs
         path={[
-          { label: 'Clusters' },
+          { label: 'Cluster List' },
           { label: 'Cluster Type', path: '/create' },
           { label: 'Amazon Web Services (ARM)', path: '/install/aws/arm' },
           { label: 'Installer-provisioned infrastructure' },

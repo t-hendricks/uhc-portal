@@ -24,7 +24,7 @@ export class InstallASHUPI extends Component {
     const breadcrumbs = (
       <Breadcrumbs
         path={[
-          { label: 'Clusters' },
+          { label: 'Cluster List' },
           { label: 'Cluster Type', path: '/create' },
           { label: 'Microsoft Azure Stack Hub', path: '/install/azure-stack-hub' },
           { label: 'User-provisioned infrastructure' },

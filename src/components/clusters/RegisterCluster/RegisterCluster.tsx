@@ -128,7 +128,9 @@ const RegisterCluster = ({ handleSubmit }: RegisterClusterProps) => {
   return (
     <AppPage>
       <PageHeader>
-        <Breadcrumbs path={[{ label: 'Clusters' }, { label: 'Register disconnected cluster' }]} />
+        <Breadcrumbs
+          path={[{ label: 'Cluster List' }, { label: 'Register disconnected cluster' }]}
+        />
         <PageHeaderTitle title="Register disconnected cluster" />
       </PageHeader>
       <PageSection>

@@ -67,7 +67,7 @@ import ViewOnlyMyClustersToggle from './components/ViewOnlyMyClustersToggle';
 
 import './ClusterList.scss';
 
-const PAGE_TITLE = 'Clusters | Red Hat OpenShift Cluster Manager';
+const PAGE_TITLE = 'Cluster List | Red Hat OpenShift Cluster Manager';
 
 const ClusterListPageHeader = ({
   someReadOnly,
@@ -83,7 +83,7 @@ const ClusterListPageHeader = ({
     <PageSection variant={PageSectionVariants.light}>
       <Flex>
         <FlexItem grow={{ default: 'grow' }}>
-          <Title headingLevel="h1">Clusters</Title>
+          <Title headingLevel="h1">Cluster List</Title>
         </FlexItem>
         <Toolbar id="cluster-list-refresh-toolbar" isFullHeight inset={{ default: 'insetNone' }}>
           <ToolbarContent>

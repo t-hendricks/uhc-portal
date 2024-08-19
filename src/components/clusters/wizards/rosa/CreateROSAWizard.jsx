@@ -59,7 +59,7 @@ import { ValuesPanel } from './ValuesPanel';
 import './createROSAWizard.scss';
 
 const breadcrumbs = [
-  { label: 'Clusters' },
+  { label: 'Cluster List' },
   { label: 'Cluster Type', path: '/create' },
   { label: 'Set up ROSA', path: '/create/rosa/getstarted' },
   { label: 'Create a ROSA Cluster' },

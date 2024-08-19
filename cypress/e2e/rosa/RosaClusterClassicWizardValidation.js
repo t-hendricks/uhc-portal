@@ -1,3 +1,4 @@
+import ClusterListPage from '../../pageobjects/ClusterList.page';
 import CreateRosaWizardPage from '../../pageobjects/CreateRosaWizard.page';
 import LeaveCreateClusterPrompt from '../../pageobjects/LeaveCreateClusterPrompt';
 
@@ -6,10 +7,16 @@ const clusterFieldValidations = require('../../fixtures/rosa/RosaClusterClassicW
 // awsAccountID,rolePrefix and installerARN are set by prerun script for smoke requirements.
 const awsAccountID = Cypress.env('QE_AWS_ID');
 const rolePrefix = Cypress.env('QE_ACCOUNT_ROLE_PREFIX');
-const installerARN = 'arn:aws:iam::' + awsAccountID + ':role/' + rolePrefix + '-Installer-Role';
-const clusterName = `ocmui-cypress-smoke-rosa-` + (Math.random() + 1).toString(36).substring(7);
+const installerARN = `arn:aws:iam::${awsAccountID}:role/${rolePrefix}-Installer-Role`;
+const clusterName = `ocmui-cypress-smoke-rosa-${(Math.random() + 1).toString(36).substring(7)}`;
 
 describe('Rosa Classic cluster wizard validations', { tags: ['smoke'] }, () => {
+  before(() => {
+    cy.visit('/cluster-list');
+    ClusterListPage.waitForDataReady();
+    ClusterListPage.isClusterListScreen();
+  });
+
   it('Open Rosa cluster wizard', () => {
     cy.getByTestId('create_cluster_btn').click();
     CreateRosaWizardPage.rosaCreateClusterButton().click();

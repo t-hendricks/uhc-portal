@@ -24,7 +24,7 @@ export class InstallArmBareMetalIPI extends Component {
     const breadcrumbs = (
       <Breadcrumbs
         path={[
-          { label: 'Clusters' },
+          { label: 'Cluster List' },
           { label: 'Cluster Type', path: '/create' },
           { label: 'ARM Bare Metal', path: '/install/arm' },
           { label: 'Installer-provisioned infrastructure' },

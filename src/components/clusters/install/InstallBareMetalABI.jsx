@@ -24,7 +24,7 @@ export class InstallBareMetalABI extends Component {
     const breadcrumbs = (
       <Breadcrumbs
         path={[
-          { label: 'Clusters' },
+          { label: 'Cluster List' },
           { label: 'Cluster Type', path: '/create' },
           { label: 'Bare Metal', path: '/install/metal' },
           { label: 'Local Agent-based' },
