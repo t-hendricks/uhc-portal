@@ -24,7 +24,7 @@ export const hasAvailableQuota = (quotaList: QuotaCostList | undefined, quotaPar
 export const quotaParams = {
   [QuotaType.OsdTrial]: {
     resourceType: QuotaTypes.CLUSTER,
-    product: normalizedProducts.OSDTrial,
+    product: normalizedProducts.OSDTRIAL,
   },
   [QuotaType.StandardOsd]: {
     resourceType: QuotaTypes.CLUSTER,

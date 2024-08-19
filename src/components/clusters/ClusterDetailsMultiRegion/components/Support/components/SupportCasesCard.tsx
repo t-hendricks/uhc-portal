@@ -42,7 +42,7 @@ const SupportCasesCard = ({
 
   const rows = useMemo(() => supportCases.cases?.map(supportCaseRow), [supportCases.cases]);
   const hasRows = useMemo(() => rows && rows.length > 0, [rows]);
-  const showOpenSupportCaseButton = product !== normalizedProducts.OSDTrial && !isDisabled;
+  const showOpenSupportCaseButton = product !== normalizedProducts.OSDTRIAL && !isDisabled;
 
   return (
     <>

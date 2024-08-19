@@ -415,7 +415,7 @@ const Router: React.FC<RouterProps> = ({ history, planType, clusterId, externalC
             <TermsGuardedRoute
               path="/create/osdtrial"
               gobackPath="/create"
-              render={() => <CreateOsdWizard product={normalizedProducts.OSDTrial} />}
+              render={() => <CreateOsdWizard product={normalizedProducts.OSDTRIAL} />}
             />
             <TermsGuardedRoute
               path="/create/osd"

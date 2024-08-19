@@ -18,7 +18,7 @@ const mapStateToProps = (state) => ({
   ),
   hasOSDTrialQuota: hasManagedQuotaSelector(
     state.userProfile.organization.quotaList,
-    normalizedProducts.OSDTrial,
+    normalizedProducts.OSDTRIAL,
   ),
   organization: state.userProfile.organization,
   token: state.tollbooth.token,

@@ -10,15 +10,14 @@ import { global_danger_color_100 as dangerColor } from '@patternfly/react-tokens
 import { global_warning_color_100 as warningColor } from '@patternfly/react-tokens/dist/esm/global_warning_color_100';
 import { DateFormat } from '@redhat-cloud-services/frontend-components/DateFormat';
 
+import { SubscriptionCommonFields } from '~/types/accounts_mgmt.v1';
+
 import { getTrialEndDate, getTrialExpiresInDays } from '../../../../common/getTrialExpiresDates';
-import {
-  normalizedProducts,
-  subscriptionSupportLevels,
-} from '../../../../common/subscriptionTypes';
+import { normalizedProducts } from '../../../../common/subscriptionTypes';
 import ExternalLink from '../../../common/ExternalLink';
 
 function ClusterCreatedIndicator({ cluster }) {
-  const osdtrial = get(cluster, 'product.id') === normalizedProducts.OSDTrial;
+  const osdtrial = get(cluster, 'product.id') === normalizedProducts.OSDTRIAL;
   const managed = get(cluster, 'managed');
   const supportLevel = get(cluster, 'subscription.support_level');
   const subscription = get(cluster, 'subscription');
@@ -63,8 +62,8 @@ function ClusterCreatedIndicator({ cluster }) {
 
   if (
     managed ||
-    (supportLevel !== subscriptionSupportLevels.EVAL &&
-      supportLevel !== subscriptionSupportLevels.NONE)
+    (supportLevel !== SubscriptionCommonFields.support_level.EVAL &&
+      supportLevel !== SubscriptionCommonFields.support_level.NONE)
   ) {
     const clusterCreationTime = get(cluster, 'creation_timestamp', false);
     if (clusterCreationTime) {
@@ -74,7 +73,7 @@ function ClusterCreatedIndicator({ cluster }) {
   }
 
   // display error that it has expired
-  if (supportLevel === subscriptionSupportLevels.NONE) {
+  if (supportLevel === SubscriptionCommonFields.support_level.NONE) {
     return (
       <Popover
         position={PopoverPosition.top}

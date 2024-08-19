@@ -15,9 +15,9 @@ import {
 } from '@patternfly/react-core';
 
 import { HAD_INFLIGHT_ERROR_LOCALSTORAGE_KEY } from '~/common/localStorageConstants';
-import { subscriptionStatuses } from '~/common/subscriptionTypes';
 import { ASSISTED_INSTALLER_FEATURE } from '~/redux/constants/featureConstants';
 import { isRestrictedEnv } from '~/restrictedEnv';
+import { SubscriptionCommonFields } from '~/types/accounts_mgmt.v1';
 
 import isAssistedInstallSubscription, {
   isAvailableAssistedInstallCluster,
@@ -96,9 +96,10 @@ class Overview extends React.Component {
     } = this.props;
     let topCard;
     const { showInstallSuccessAlert } = this.state;
-    const isArchived = get(cluster, 'subscription.status', false) === subscriptionStatuses.ARCHIVED;
+    const isArchived =
+      get(cluster, 'subscription.status', false) === SubscriptionCommonFields.status.ARCHIVED;
     const isDeprovisioned =
-      get(cluster, 'subscription.status', false) === subscriptionStatuses.DEPROVISIONED;
+      get(cluster, 'subscription.status', false) === SubscriptionCommonFields.status.DEPROVISIONED;
     const metricsAvailable =
       hasResourceUsageMetrics(cluster) &&
       (cluster.canEdit ||

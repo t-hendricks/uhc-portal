@@ -21,15 +21,12 @@ import { ExclamationTriangleIcon } from '@patternfly/react-icons/dist/esm/icons/
 import { Skeleton } from '@redhat-cloud-services/frontend-components';
 
 import modals from '~/components/common/Modal/modals';
+import { SubscriptionCommonFields } from '~/types/accounts_mgmt.v1';
 
 import {
   billingModels,
   normalizedProducts,
-  subscriptionServiceLevels,
   subscriptionSettings,
-  subscriptionStatuses,
-  subscriptionSupportLevels,
-  subscriptionSystemUnits,
 } from '../../../../../../common/subscriptionTypes';
 import ExternalLink from '../../../../../common/ExternalLink';
 
@@ -53,19 +50,19 @@ function SubscriptionSettings({
   const status = get(subscription, 'status');
   const isEditViewable =
     canEdit &&
-    status !== subscriptionStatuses.ARCHIVED &&
-    status !== subscriptionStatuses.DEPROVISIONED;
+    status !== SubscriptionCommonFields.status.ARCHIVED &&
+    status !== SubscriptionCommonFields.status.DEPROVISIONED;
 
   // SUPPORT_LEVEL
   const supportLevel = get(subscription, subscriptionSettings.SUPPORT_LEVEL, 'Not set');
   let supportLevelStr = supportLevel;
   let titleIcon = null;
-  if (supportLevel === subscriptionSupportLevels.EVAL) {
+  if (supportLevel === SubscriptionCommonFields.support_level.EVAL) {
     supportLevelStr = 'Self-Support 60-day evaluation';
     if (isEditViewable) {
       titleIcon = <ExclamationTriangleIcon className="subscription-settings warning-title-icon" />;
     }
-  } else if (supportLevel === subscriptionSupportLevels.NONE) {
+  } else if (supportLevel === SubscriptionCommonFields.support_level.NONE) {
     supportLevelStr = 'Evaluation expired';
     if (isEditViewable) {
       titleIcon = <ExclamationCircleIcon className="subscription-settings danger-title-icon" />;
@@ -83,9 +80,9 @@ function SubscriptionSettings({
   const usageStr = get(subscription, subscriptionSettings.USAGE, 'Not set');
   const serviceLevel = get(subscription, subscriptionSettings.SERVICE_LEVEL);
   let serviceLevelStr = 'Not set';
-  if (serviceLevel === subscriptionServiceLevels.L1_L3) {
+  if (serviceLevel === SubscriptionCommonFields.service_level.L1_L3) {
     serviceLevelStr = 'Red Hat support (L1-L3)';
-  } else if (serviceLevel === subscriptionServiceLevels.L3_ONLY) {
+  } else if (serviceLevel === SubscriptionCommonFields.service_level.L3_ONLY) {
     serviceLevelStr = 'Partner support (L3)';
   }
   const cpuTotal = get(subscription, subscriptionSettings.CPU_TOTAL, undefined);
@@ -95,26 +92,29 @@ function SubscriptionSettings({
   let systemUnits = get(subscription, subscriptionSettings.SYSTEM_UNITS, undefined);
   if (systemUnits === undefined) {
     if (cpuTotal !== undefined) {
-      systemUnits = subscriptionSystemUnits.CORES_VCPU;
+      systemUnits = SubscriptionCommonFields.system_units.CORES_V_CPU;
     } else if (socketTotal !== undefined) {
-      systemUnits = subscriptionSystemUnits.SOCKETS;
+      systemUnits = SubscriptionCommonFields.system_units.SOCKETS;
     } else {
       systemUnits = 'Not set';
     }
   }
   let systemUnitsStr = 'Not set';
-  if (systemUnits === subscriptionSystemUnits.SOCKETS && socketTotal !== undefined) {
+  if (systemUnits === SubscriptionCommonFields.system_units.SOCKETS && socketTotal !== undefined) {
     systemUnitsStr = 'Sockets';
-  } else if (systemUnits === subscriptionSystemUnits.CORES_VCPU && cpuTotal !== undefined) {
+  } else if (
+    systemUnits === SubscriptionCommonFields.system_units.CORES_V_CPU &&
+    cpuTotal !== undefined
+  ) {
     systemUnitsStr = 'Cores or vCPUs';
   }
   const displayObligation = cpuTotal !== undefined || socketTotal !== undefined;
   const obligationLabel =
-    systemUnits === subscriptionSystemUnits.SOCKETS
+    systemUnits === SubscriptionCommonFields.system_units.SOCKETS
       ? 'Number of compute sockets'
       : 'Number of compute cores';
   const obligationStr =
-    systemUnits === subscriptionSystemUnits.SOCKETS ? socketTotalStr : cpuTotalStr;
+    systemUnits === SubscriptionCommonFields.system_units.SOCKETS ? socketTotalStr : cpuTotalStr;
 
   const isLoading = isSubscriptionSettingsRequestPending || isClusterDetailsPending;
 

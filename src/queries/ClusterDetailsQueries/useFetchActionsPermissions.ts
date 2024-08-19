@@ -5,9 +5,8 @@ import { useCallback } from 'react';
 
 import { useQueries, useQuery, UseQueryResult } from '@tanstack/react-query';
 
-import { subscriptionStatuses } from '~/common/subscriptionTypes';
 import { authorizationsService } from '~/services';
-import { SelfAccessReview } from '~/types/accounts_mgmt.v1';
+import { SelfAccessReview, SubscriptionCommonFields } from '~/types/accounts_mgmt.v1';
 
 import { queryConstants } from '../queriesConstants';
 import { SubscriptionResponseType } from '../types';
@@ -82,7 +81,7 @@ export const useFetchActionsPermissions = (
           return canEdit;
         },
         staleTime: queryConstants.STALE_TIME,
-        enabled: subscriptionStatus !== subscriptionStatuses.DEPROVISIONED,
+        enabled: subscriptionStatus !== SubscriptionCommonFields.status.DEPROVISIONED,
       },
       {
         queryKey: [
@@ -102,7 +101,7 @@ export const useFetchActionsPermissions = (
           return canEditClusterAutoscaler;
         },
         staleTime: queryConstants.STALE_TIME,
-        enabled: subscriptionStatus !== subscriptionStatuses.DEPROVISIONED,
+        enabled: subscriptionStatus !== SubscriptionCommonFields.status.DEPROVISIONED,
       },
       {
         queryKey: [
@@ -122,7 +121,7 @@ export const useFetchActionsPermissions = (
           return canEditOCMRoles;
         },
         staleTime: queryConstants.STALE_TIME,
-        enabled: subscriptionStatus !== subscriptionStatuses.DEPROVISIONED,
+        enabled: subscriptionStatus !== SubscriptionCommonFields.status.DEPROVISIONED,
       },
       {
         queryKey: [
@@ -142,7 +141,7 @@ export const useFetchActionsPermissions = (
           return canViewOCMRoles;
         },
         staleTime: queryConstants.STALE_TIME,
-        enabled: subscriptionStatus !== subscriptionStatuses.DEPROVISIONED,
+        enabled: subscriptionStatus !== SubscriptionCommonFields.status.DEPROVISIONED,
       },
       {
         queryKey: [
@@ -162,7 +161,7 @@ export const useFetchActionsPermissions = (
           return canUpdateClusterResource;
         },
         staleTime: queryConstants.STALE_TIME,
-        enabled: subscriptionStatus !== subscriptionStatuses.DEPROVISIONED,
+        enabled: subscriptionStatus !== SubscriptionCommonFields.status.DEPROVISIONED,
       },
       {
         queryKey: [mainQueryKey, 'kubeletConfigPermissions', actions, subscriptionID],
@@ -181,7 +180,8 @@ export const useFetchActionsPermissions = (
           return kubeletConfigActions;
         },
         staleTime: queryConstants.STALE_TIME,
-        enabled: !!subscriptionID && subscriptionStatus !== subscriptionStatuses.DEPROVISIONED,
+        enabled:
+          !!subscriptionID && subscriptionStatus !== SubscriptionCommonFields.status.DEPROVISIONED,
       },
       {
         queryKey: [mainQueryKey, 'machinePoolPermissions', actions, subscriptionID],
@@ -200,7 +200,8 @@ export const useFetchActionsPermissions = (
           return machinePoolsActions;
         },
         staleTime: queryConstants.STALE_TIME,
-        enabled: !!subscriptionID && subscriptionStatus !== subscriptionStatuses.DEPROVISIONED,
+        enabled:
+          !!subscriptionID && subscriptionStatus !== SubscriptionCommonFields.status.DEPROVISIONED,
       },
       {
         queryKey: [mainQueryKey, 'idpPermissions', actions, subscriptionID],
@@ -219,7 +220,8 @@ export const useFetchActionsPermissions = (
           return idpActions;
         },
         staleTime: queryConstants.STALE_TIME,
-        enabled: !!subscriptionID && subscriptionStatus !== subscriptionStatuses.DEPROVISIONED,
+        enabled:
+          !!subscriptionID && subscriptionStatus !== SubscriptionCommonFields.status.DEPROVISIONED,
       },
     ],
     combine: useCallback((results: UseQueryResult[]) => {
@@ -287,7 +289,7 @@ export const useCanDeleteAccessReview = (
     staleTime: queryConstants.STALE_TIME,
     enabled:
       !!subscription &&
-      subscription.subscription.status !== subscriptionStatuses.DEPROVISIONED &&
+      subscription.subscription.status !== SubscriptionCommonFields.status.DEPROVISIONED &&
       (subscription.subscription.managed || subscription.isAROCluster),
   });
   return {

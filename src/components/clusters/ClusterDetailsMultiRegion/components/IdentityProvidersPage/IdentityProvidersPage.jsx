@@ -24,9 +24,9 @@ import { isHypershiftCluster } from '~/components/clusters/common/clusterStates'
 
 import getClusterName from '../../../../../common/getClusterName';
 import { isValid } from '../../../../../common/helpers';
-import { subscriptionStatuses } from '../../../../../common/subscriptionTypes';
 import { fetchClusterDetails } from '../../../../../redux/actions/clustersActions';
 import { setGlobalError } from '../../../../../redux/actions/globalErrorActions';
+import { SubscriptionCommonFields } from '../../../../../types/accounts_mgmt.v1';
 import Breadcrumbs from '../../../../common/Breadcrumbs';
 import Unavailable from '../../../../common/Unavailable';
 
@@ -103,7 +103,7 @@ const IdentityProvidersPage = (props) => {
       const subscriptionStatus = get(cluster, 'subscription.status');
       if (
         isValid(clusterID) &&
-        subscriptionStatus !== subscriptionStatuses.DEPROVISIONED &&
+        subscriptionStatus !== SubscriptionCommonFields.status.DEPROVISIONED &&
         isManaged
       ) {
         dispatch(getClusterIdentityProviders(clusterID));

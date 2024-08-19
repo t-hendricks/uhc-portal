@@ -1,7 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
 
-import { subscriptionStatuses } from '~/common/subscriptionTypes';
 import clusterService, { getClusterServiceForRegion } from '~/services/clusterService';
+import { SubscriptionCommonFields } from '~/types/accounts_mgmt.v1';
 
 import { queryConstants } from '../queriesConstants';
 import { SubscriptionResponseType } from '../types';
@@ -33,7 +33,7 @@ export const useFetchInflightChecks = (
     enabled:
       !!subscription &&
       (subscription.isROSACluster || subscription.isOSDCluster) &&
-      subscription.subscription.status !== subscriptionStatuses.DEPROVISIONED &&
+      subscription.subscription.status !== SubscriptionCommonFields.status.DEPROVISIONED &&
       (subscription.subscription.managed || subscription.isAROCluster),
   });
   return {

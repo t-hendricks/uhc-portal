@@ -2,13 +2,13 @@ import React from 'react';
 import * as reactRedux from 'react-redux';
 
 import getClusterName from '~/common/getClusterName';
-import { subscriptionStatuses } from '~/common/subscriptionTypes';
 import {
   clearToggleSubscriptionReleasedResponse,
   toggleSubscriptionReleased,
 } from '~/redux/actions/subscriptionReleasedActions';
 import { useGlobalState } from '~/redux/hooks';
 import { checkAccessibility, render, screen } from '~/testUtils';
+import { SubscriptionCommonFields } from '~/types/accounts_mgmt.v1';
 
 import TransferClusterOwnershipDialog from '../TransferClusterOwnershipDialog';
 
@@ -96,7 +96,11 @@ describe('<TransferClusterOwnershipDialog />', () => {
   it('should show dialog for transferring disconnected clusters', () => {
     // Arrange
     useGlobalStateMock.mockReturnValueOnce({
-      subscription: { ...subscription, released: false, status: subscriptionStatuses.DISCONNECTED },
+      subscription: {
+        ...subscription,
+        released: false,
+        status: SubscriptionCommonFields.status.DISCONNECTED,
+      },
     });
     useGlobalStateMock.mockReturnValueOnce(requestState);
 
@@ -110,7 +114,11 @@ describe('<TransferClusterOwnershipDialog />', () => {
   it('should show error', () => {
     // Arrange
     useGlobalStateMock.mockReturnValueOnce({
-      subscription: { ...subscription, released: false, status: subscriptionStatuses.DISCONNECTED },
+      subscription: {
+        ...subscription,
+        released: false,
+        status: SubscriptionCommonFields.status.DISCONNECTED,
+      },
     });
     useGlobalStateMock.mockReturnValueOnce({ error: true, errorMessage: 'this is an error' });
 
