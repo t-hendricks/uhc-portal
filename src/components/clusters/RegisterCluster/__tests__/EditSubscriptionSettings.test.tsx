@@ -1,7 +1,7 @@
 import React from 'react';
 
-import { subscriptionSupportLevels } from '~/common/subscriptionTypes';
 import { render } from '~/testUtils';
+import { SubscriptionCommonFields } from '~/types/accounts_mgmt.v1';
 
 import EditSubscriptionFields from '../../common/EditSubscriptionSettingsDialog/EditSubscriptionSettingsFields';
 import EditSubscriptionSettings from '../EditSubscriptionSettings';
@@ -27,6 +27,7 @@ describe('EditSubscriptionSettings', () => {
         canSubscribeStandardOCP: true,
         initialSettings: {
           isValid: true,
+          managed: false,
           support_level: 'Eval',
         },
         onSettingsChange: properties.setSettings,
@@ -40,7 +41,7 @@ describe('EditSubscriptionSettings', () => {
       setSettings: jest.fn(),
       canSubscribeOCP: false,
       isValid: false,
-      supportLevel: subscriptionSupportLevels.SUPPORT_BY_IBM,
+      supportLevel: SubscriptionCommonFields.support_level.SUPPORTED_BY_IBM,
       canSubscribeMarketplaceOCP: true,
     };
 
@@ -54,7 +55,8 @@ describe('EditSubscriptionSettings', () => {
         canSubscribeStandardOCP: false,
         initialSettings: {
           isValid: false,
-          support_level: 'Supported by IBM',
+          managed: false,
+          support_level: 'Supported By IBM',
         },
         onSettingsChange: properties.setSettings,
       },

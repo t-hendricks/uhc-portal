@@ -27,7 +27,7 @@ import { getNotificationContacts, getSupportCases } from '../../../redux/actions
 import { fetchUpgradeGates } from '../../../redux/actions/upgradeGateActions';
 import { viewConstants } from '../../../redux/constants';
 import { modalActions } from '../../common/Modal/ModalActions';
-import canSubscribeOCPSelector from '../common/EditSubscriptionSettingsDialog/CanSubscribeOCPSelector';
+import { canSubscribeOCPSelector } from '../common/EditSubscriptionSettingsDialog/canSubscribeOCPSelector';
 import { userCanHibernateClustersSelector } from '../common/HibernateClusterModal/HibernateClusterModalSelectors';
 import { canTransferClusterOwnershipSelector } from '../common/TransferClusterOwnershipDialog/utils/transferClusterOwnershipDialogSelectors';
 import { getSchedules } from '../common/Upgrades/clusterUpgradeActions';
