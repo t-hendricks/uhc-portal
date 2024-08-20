@@ -16,6 +16,7 @@ describe('<AutoScaleSection />', () => {
     isBYOC: false,
     isDefaultMachinePool: false,
     change: mockChange,
+    clusterId: '',
   };
   const autoscaleDisabledProps = {
     ...defaultProps,

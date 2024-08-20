@@ -126,6 +126,7 @@ describe('<ClusterDetailsMultiRegion />', () => {
         isError: false,
         cluster: undefined,
         error: null,
+        isFetching: false,
       });
       mockedUseFetchClusterIdentityProviders.mockReturnValue({
         clusterIdentityProviders: undefined,
@@ -154,9 +155,10 @@ describe('<ClusterDetailsMultiRegion />', () => {
         isLoading: false,
         isError: false,
         error: null,
+        isFetching: false,
       });
       mockedUseFetchClusterIdentityProviders.mockReturnValue({
-        clusterIdentityProviders: fixtures.clusterIdentityProviders.clusterIDPList,
+        clusterIdentityProviders: fixtures.clusterIdentityProviders,
         isLoading: false,
         isError: false,
       });
@@ -184,6 +186,7 @@ describe('<ClusterDetailsMultiRegion />', () => {
           isLoading: true,
           isError: false,
           error: null,
+          isFetching: false,
         });
         mockedUseFetchCloudProviders.mockReturnValue({
           data: undefined,
@@ -214,6 +217,7 @@ describe('<ClusterDetailsMultiRegion />', () => {
           isLoading: false,
           isError: true,
           error: { errorCode: 500, errorMessage: 'Unavailable' },
+          isFetching: false,
         });
         mockedUseFetchCloudProviders.mockReturnValue({
           data: undefined,
@@ -241,6 +245,7 @@ describe('<ClusterDetailsMultiRegion />', () => {
           isLoading: false,
           isError: true,
           error: { errorCode: 404, errorMessage: 'This is an error message' },
+          isFetching: false,
         });
         mockedUseFetchCloudProviders.mockReturnValue({
           data: undefined,

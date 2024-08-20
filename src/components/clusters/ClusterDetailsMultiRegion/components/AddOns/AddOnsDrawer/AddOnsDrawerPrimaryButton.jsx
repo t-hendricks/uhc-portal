@@ -29,7 +29,7 @@ function AddOnsPrimaryButton(props) {
 
   const dispatch = useDispatch();
 
-  const subscription = subscriptionModels[activeCard.id];
+  const subscription = subscriptionModels[activeCard?.id];
 
   // install an add on or open params modal
   const installAddOnAction = async () => {
@@ -57,7 +57,7 @@ function AddOnsPrimaryButton(props) {
   };
 
   const updateAddOnAction = () => {
-    updateClusterAddOn(cluster.id, installedAddOn.id, {
+    updateClusterAddOn(cluster.id, installedAddOn?.id, {
       billing: {
         billing_model: subscription.billingModel,
         ...(subscription.cloudAccount && {
@@ -206,15 +206,15 @@ function AddOnsPrimaryButton(props) {
 }
 
 AddOnsPrimaryButton.propTypes = {
-  activeCard: PropTypes.object.isRequired,
+  activeCard: PropTypes.object,
   activeCardRequirementsFulfilled: PropTypes.bool.isRequired,
   addClusterAddOn: PropTypes.func.isRequired,
   cluster: PropTypes.object.isRequired,
   hasQuota: PropTypes.bool.isRequired,
-  installedAddOn: PropTypes.object.isRequired,
+  installedAddOn: PropTypes.object,
   updateClusterAddOn: PropTypes.func.isRequired,
   subscriptionModels: PropTypes.object.isRequired,
-  isAddClusterAddOnPending: PropTypes.bool.isRequired,
+  isAddClusterAddOnPending: PropTypes.bool,
 };
 
 export default AddOnsPrimaryButton;

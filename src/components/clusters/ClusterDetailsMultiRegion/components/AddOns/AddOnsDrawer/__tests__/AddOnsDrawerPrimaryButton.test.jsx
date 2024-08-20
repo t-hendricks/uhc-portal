@@ -48,6 +48,7 @@ describe('<AddOnsPrimaryButton />', () => {
     installedAddOn: { state: 'ready', operator_version: '0.0.1', csv_name: 'fake-addon.0.0.1' },
     openModal,
     subscriptionModels,
+    updateClusterAddOn: jest.fn(),
   };
 
   beforeEach(() => {

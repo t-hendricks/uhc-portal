@@ -38,6 +38,19 @@ describe('<AddOnsDrawer />', () => {
     submitClusterAddOnResponse,
     setAddonsDrawer,
     drawer,
+    isAddClusterAddOnPending: false,
+    isUpdateClusterAddOnError: false,
+    isUpdateClusterAddOnPending: false,
+    isAddClusterAddOnError: false,
+    isDeleteClusterAddOnError: false,
+    isDeleteClusterAddOnPending: false,
+    addClusterAddOnError: {},
+    updateClusterAddOnError: {},
+    deleteClusterAddOn: jest.fn(),
+    activeCard: {},
+    installedAddOn: {},
+    isOpen: false,
+    deleteClusterAddOnError: {},
   };
 
   afterEach(() => {
