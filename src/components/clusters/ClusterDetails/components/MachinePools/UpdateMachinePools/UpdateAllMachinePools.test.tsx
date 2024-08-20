@@ -31,7 +31,6 @@ const controlPlaneVersion = 'openshift-v4.12.13-candidate';
 const clusterId = 'myClusterId';
 
 const updateAllButtonTestId = 'btn-update-all';
-const errorBannerHeader = 'Some machine pools could not be updated';
 const errorAlertTestId = 'alert-danger';
 const warningAlertTestId = 'alert-warning';
 const goToMachinePoolText = 'Go to Machine pools list';
@@ -549,7 +548,7 @@ describe('<UpdateAllMachinePools />', () => {
       ).toBeInTheDocument();
     });
 
-    it('if feature gate is set and machine pool', async () => {
+    it('with multiple machine pools behind', async () => {
       const newState = {
         ...defaultStore,
         machinePools: {
@@ -569,50 +568,6 @@ describe('<UpdateAllMachinePools />', () => {
             ],
           },
         },
-        features: { HCP_USE_NODE_UPGRADE_POLICIES: true },
-      };
-
-      const { user } = withState(newState).render(
-        <TestRouter>
-          <CompatRouter>
-            <UpdateAllMachinePools />
-          </CompatRouter>
-        </TestRouter>,
-      );
-      expectUpdateButtonPresence();
-
-      // Act
-      await user.click(screen.getByRole('button', { name: 'Warning alert details' }));
-
-      // Assert
-      expect(
-        within(screen.getByTestId('alert-warning')).getByText('4.12.13', {
-          exact: false,
-        }),
-      ).toBeInTheDocument();
-    });
-
-    it('if feature gate is set and machine pool', async () => {
-      const newState = {
-        ...defaultStore,
-        machinePools: {
-          getMachinePools: {
-            ...defaultMachinePools,
-            data: [
-              {
-                ...machinePoolBehind1,
-                version: { id: '4.12.10', available_upgrades: ['4.12.13'] },
-                upgradePolicies: { items: [] },
-              },
-              {
-                ...machinePoolBehind2,
-                version: { id: '4.12.10', available_upgrades: ['4.12.13'] },
-                upgradePolicies: { items: [] },
-              },
-            ],
-          },
-        },
-        features: { HCP_USE_NODE_UPGRADE_POLICIES: true },
       };
 
       const { user } = withState(newState).render(
@@ -645,54 +600,7 @@ describe('<UpdateAllMachinePools />', () => {
       jest.resetAllMocks();
     });
 
-    it('patchNodePool is called for only machine pools with a version that is behind the control plane ', async () => {
-      // ARRANGE
-      apiRequestMock.patch.mockResolvedValue('success');
-      const dummyDispatch = jest.fn();
-      useDispatchMock.mockReturnValue(dummyDispatch);
-
-      const newState = {
-        ...defaultStore,
-        machinePools: {
-          getMachinePools: {
-            ...defaultMachinePools,
-            data: [machinePoolUpToDate1, machinePoolBehind1],
-          },
-        },
-      };
-
-      const { user } = withState(newState).render(
-        <TestRouter>
-          <CompatRouter>
-            <UpdateAllMachinePools />
-          </CompatRouter>
-        </TestRouter>,
-      );
-
-      expect(apiRequestMock.patch).not.toHaveBeenCalled();
-      expect(dummyDispatch).toHaveBeenCalledTimes(0);
-      expectUpdateButtonPresence();
-
-      // ACT
-      await clickUpdateButton(user);
-
-      // ASSERT
-      // Ensure single call to patch machine pool
-      expect(apiRequestMock.patch).toHaveBeenCalledTimes(1);
-      const patchMachinePoolParams = apiRequestMock.patch.mock.calls[0];
-
-      expect(patchMachinePoolParams[0]).toEqual(
-        `/api/clusters_mgmt/v1/clusters/${clusterId}/node_pools/${machinePoolBehind1.id}`,
-      );
-      expect(patchMachinePoolParams[1]).toEqual({
-        version: { id: 'openshift-v4.12.13-candidate' },
-      });
-
-      // Ensure dispatch call to get current state of machine pools
-      expect(dummyDispatch).toHaveBeenCalledTimes(1);
-    });
-
-    it('create node policy is called  with feature gate', async () => {
+    it('create node policy is called ', async () => {
       apiRequestMock.post.mockResolvedValue('success');
       const dummyDispatch = jest.fn();
       useDispatchMock.mockReturnValue(dummyDispatch);
@@ -712,7 +620,6 @@ describe('<UpdateAllMachinePools />', () => {
             ],
           },
         },
-        features: { HCP_USE_NODE_UPGRADE_POLICIES: true },
       };
 
       const { user } = withState(newState).render(
@@ -748,81 +655,6 @@ describe('<UpdateAllMachinePools />', () => {
       expect(dummyDispatch).toHaveBeenCalledTimes(1);
     });
 
-    it('shows errors for all patchNodePool requests that fail and is accessible', async () => {
-      // ARRANGE
-      apiRequestMock.patch
-        .mockRejectedValueOnce({
-          response: {
-            data: {
-              code: '1234',
-              reason: 'I am a bad server',
-            },
-          },
-        })
-        .mockResolvedValue('success');
-
-      const dummyDispatch = jest.fn();
-      useDispatchMock.mockReturnValue(dummyDispatch);
-
-      const newState = {
-        ...defaultStore,
-        machinePools: {
-          getMachinePools: {
-            ...defaultMachinePools,
-            data: [machinePoolUpToDate1, machinePoolBehind1, machinePoolBehind2],
-          },
-        },
-      };
-
-      const { container, user } = withState(newState).render(
-        <TestRouter>
-          <CompatRouter>
-            <UpdateAllMachinePools />
-          </CompatRouter>
-        </TestRouter>,
-      );
-
-      expect(apiRequestMock.patch).not.toHaveBeenCalled();
-      expect(dummyDispatch).not.toHaveBeenCalled();
-      expectUpdateButtonPresence();
-      expect(screen.queryByRole('alert', { name: errorBannerHeader })).not.toBeInTheDocument();
-
-      // ACT
-      await clickUpdateButton(user);
-
-      // ASSERT
-      // Ensure two calls to patch machine pools
-      expect(apiRequestMock.patch).toHaveBeenCalledTimes(2);
-      const patchMachinePool1 = apiRequestMock.patch.mock.calls[0];
-      expect(patchMachinePool1[0]).toEqual(
-        `/api/clusters_mgmt/v1/clusters/${clusterId}/node_pools/${machinePoolBehind1.id}`,
-      );
-      expect(patchMachinePool1[1]).toEqual({ version: { id: controlPlaneVersion } });
-
-      const patchMachinePool2 = apiRequestMock.patch.mock.calls[1];
-      expect(patchMachinePool2[0]).toEqual(
-        `/api/clusters_mgmt/v1/clusters/${clusterId}/node_pools/${machinePoolBehind2.id}`,
-      );
-      expect(patchMachinePool2[1]).toEqual({ version: { id: controlPlaneVersion } });
-
-      // Ensure dispatch call to get current state of machine pools
-      expect(dummyDispatch).toHaveBeenCalledTimes(1);
-
-      // Ensure alert is shown
-      expect(
-        within(screen.getByTestId(errorAlertTestId)).getByText(errorBannerHeader),
-      ).toBeInTheDocument();
-
-      // Make sure error text from api is shown
-      await user.click(screen.getByRole('button', { name: 'Danger alert details' }));
-      expect(screen.getByTestId(errorAlertTestId).querySelector('p')?.textContent).toEqual(
-        '1234 - I am a bad server',
-      );
-
-      // Check for accessibility
-      await checkAccessibility(container);
-    });
-
     it('hides error messages when user clicks on the update machine pool links', async () => {
       // ARRANGE
       apiRequestMock.patch.mockResolvedValue('success');
@@ -851,45 +683,7 @@ describe('<UpdateAllMachinePools />', () => {
       // ASSERT
       expect(screen.queryByTestId(errorAlertTestId)).not.toBeInTheDocument();
     });
-
-    it('hides the update link while the patchNodePool requests are pending', async () => {
-      // ARRANGE - Keep the PATCH unresolved during the test, to capture the pending message
-      apiRequestMock.patch.mockResolvedValue(
-        new Promise((resolve) => {
-          setTimeout(resolve, 3000, 'success');
-        }),
-      );
-
-      const dummyDispatch = jest.fn();
-      useDispatchMock.mockReturnValue(dummyDispatch);
-
-      const newState = {
-        ...defaultStore,
-        machinePools: {
-          getMachinePools: {
-            ...defaultMachinePools,
-            data: [machinePoolBehind1],
-          },
-        },
-      };
-      const { user } = withState(newState).render(
-        <TestRouter>
-          <CompatRouter>
-            <UpdateAllMachinePools />
-          </CompatRouter>
-        </TestRouter>,
-      );
-      expectUpdateButtonPresence();
-
-      // ACT
-      await clickUpdateButton(user);
-
-      // ASSERT - The message is only seen while the PATCH action is pending
-      expect(await screen.findByLabelText('Updating machine pools')).toBeInTheDocument();
-      expectUpdateButtonAbsence();
-    });
   });
-
   describe('link to machine tab', () => {
     it('shows when goToMachinePoolTab prop is set', () => {
       const newState = {

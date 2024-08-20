@@ -10,18 +10,13 @@ import {
   GET_MACHINE_POOLS,
 } from './machinePoolsActionConstants';
 
-const getNodePoolWithUpgradePolicies = async (
-  clusterID,
-  clusterVersion,
-  useMachinePoolPolicies,
-) => {
+const getNodePoolWithUpgradePolicies = async (clusterID, clusterVersion) => {
   const nodePools = await clusterService.getNodePools(clusterID);
 
   const promiseArray = nodePools.data.items.map(async (pool) => {
     if (
       !clusterVersion ||
       !pool.version ||
-      !useMachinePoolPolicies ||
       !semver.gt(semver.coerce(clusterVersion), semver.coerce(pool.version.id)) ||
       !isControlPlaneValidForMachinePool(pool, clusterVersion)
     ) {
@@ -59,14 +54,13 @@ const getNodePoolWithUpgradePolicies = async (
   return newResponse;
 };
 
-const getMachineOrNodePools =
-  (clusterID, isHypershiftCluster, clusterVersion, useMachinePoolPolicies) => (dispatch) =>
-    dispatch({
-      type: GET_MACHINE_POOLS,
-      payload: isHypershiftCluster
-        ? getNodePoolWithUpgradePolicies(clusterID, clusterVersion, useMachinePoolPolicies)
-        : clusterService.getMachinePools(clusterID),
-    });
+const getMachineOrNodePools = (clusterID, isHypershiftCluster, clusterVersion) => (dispatch) =>
+  dispatch({
+    type: GET_MACHINE_POOLS,
+    payload: isHypershiftCluster
+      ? getNodePoolWithUpgradePolicies(clusterID, clusterVersion)
+      : clusterService.getMachinePools(clusterID),
+  });
 
 const deleteMachinePool = (clusterID, machinePoolID, isHypershiftCluster) => (dispatch) =>
   dispatch({

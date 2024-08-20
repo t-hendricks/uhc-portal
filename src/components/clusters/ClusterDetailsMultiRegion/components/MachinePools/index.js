@@ -3,10 +3,7 @@ import { connect } from 'react-redux';
 import { isHypershiftCluster } from '~/components/clusters/common/clusterStates';
 import modals from '~/components/common/Modal/modals';
 import { featureGateSelector } from '~/hooks/useFeatureGate';
-import {
-  ENABLE_MACHINE_CONFIGURATION,
-  HCP_USE_NODE_UPGRADE_POLICIES,
-} from '~/redux/constants/featureConstants';
+import { ENABLE_MACHINE_CONFIGURATION } from '~/redux/constants/featureConstants';
 
 import { clusterAutoscalerActions } from '../../../../../redux/actions/clusterAutoscalerActions';
 import { getMachineTypes } from '../../../../../redux/actions/machineTypesActions';
@@ -44,7 +41,6 @@ const mapStateToProps = (state) => {
     machineTypes: state.machineTypes,
     organization: state.userProfile.organization,
     canMachinePoolBeUpdated: (machinePool) => canMachinePoolBeUpgradedSelector(state, machinePool),
-    useNodeUpgradePolicies: featureGateSelector(state, HCP_USE_NODE_UPGRADE_POLICIES),
     hasMachineConfiguration: featureGateSelector(state, ENABLE_MACHINE_CONFIGURATION),
     canBypassPIDsLimit,
   };

@@ -11,8 +11,6 @@ import { modalActions } from '~/components/common/Modal/ModalActions';
 import modalIds from '~/components/common/Modal/modals';
 import shouldShowModal from '~/components/common/Modal/ModalSelectors';
 import PopoverHint from '~/components/common/PopoverHint';
-import { useFeatureGate } from '~/hooks/useFeatureGate';
-import { HCP_USE_NODE_UPGRADE_POLICIES } from '~/redux/constants/featureConstants';
 import { GlobalState } from '~/redux/store';
 
 import { NodePoolWithUpgradePolicies } from '../machinePoolCustomTypes';
@@ -104,7 +102,6 @@ export const UpdateMachinePoolModal = () => {
     isHypershiftCluster(state.clusters.details.cluster),
   );
 
-  const useNodeUpdatePolicies = useFeatureGate(HCP_USE_NODE_UPGRADE_POLICIES);
   const clusterId = useSelector(controlPlaneIdSelector);
   const controlPlaneVersion = useSelector((state: GlobalState) =>
     controlPlaneVersionSelector(state),
@@ -137,19 +134,14 @@ export const UpdateMachinePoolModal = () => {
 
   const updateNodePool = async () => {
     setPending(true);
-    const errors = await updatePool(
-      [machinePool],
-      clusterId,
-      controlPlaneVersion || '',
-      useNodeUpdatePolicies,
-    );
+    const errors = await updatePool([machinePool], clusterId, controlPlaneVersion || '');
 
     setPending(false);
     setError(errors[0] || '');
 
     dispatch(
       // @ts-ignore -issue with dispatch type
-      getMachineOrNodePools(clusterId, isHypershift, controlPlaneVersion, useNodeUpdatePolicies),
+      getMachineOrNodePools(clusterId, isHypershift, controlPlaneVersion),
     );
 
     if (!errors[0]) {

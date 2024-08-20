@@ -38,10 +38,7 @@ import {
 import { useFetchMachineTypes } from '~/queries/ClusterDetailsQueries/MachinePoolTab/MachineTypes/useFetchMachineTypes';
 import { useDeleteMachinePool } from '~/queries/ClusterDetailsQueries/MachinePoolTab/useDeleteMachinePool';
 import { useFetchMachineOrNodePools } from '~/queries/ClusterDetailsQueries/MachinePoolTab/useFetchMachineOrNodePools';
-import {
-  ENABLE_MACHINE_CONFIGURATION,
-  HCP_USE_NODE_UPGRADE_POLICIES,
-} from '~/redux/constants/featureConstants';
+import { ENABLE_MACHINE_CONFIGURATION } from '~/redux/constants/featureConstants';
 import { useGlobalState } from '~/redux/hooks';
 import { clusterService } from '~/services';
 import { getClusterServiceForRegion } from '~/services/clusterService';
@@ -115,7 +112,6 @@ const MachinePools = ({ cluster }) => {
 
   const clusterUpgradesSchedules = useGlobalState((state) => state.clusterUpgrades.schedules);
 
-  const isNodeUpgradePoliciesEnabled = useFeatureGate(HCP_USE_NODE_UPGRADE_POLICIES);
   const hasMachineConfiguration = useFeatureGate(ENABLE_MACHINE_CONFIGURATION);
   const organization = useGlobalState((state) => state.userProfile.organization);
 
@@ -146,13 +142,7 @@ const MachinePools = ({ cluster }) => {
     isError: isMachinePoolError,
     error: machinePoolError,
     refetch: machinePoolOrNodePoolsRefetch,
-  } = useFetchMachineOrNodePools(
-    clusterID,
-    isHypershift,
-    clusterVersionID,
-    isNodeUpgradePoliciesEnabled,
-    region,
-  );
+  } = useFetchMachineOrNodePools(clusterID, isHypershift, clusterVersionID, region);
 
   const {
     data: clusterAutoscalerData,

@@ -70,7 +70,6 @@ export const updateAllMachinePools = async (
   machinePools: NodePool[],
   clusterId: string,
   toBeVersion: string,
-  useNodePoolUpgradePolicies: boolean,
 ) => {
   // NOTE this results of this helper does NOT put the information into Redux
   // because it isn't needed - we just need to know if the update policy was created
@@ -83,12 +82,6 @@ export const updateAllMachinePools = async (
   }
 
   const promisesArray = machinePools.map((pool: NodePool) => {
-    if (!useNodePoolUpgradePolicies) {
-      return clusterService.patchNodePool(clusterId, pool.id || '', {
-        version: { id: toBeVersion },
-      });
-    }
-
     const MINUTES_IN_MS = 1000 * 60;
 
     const schedule = {
