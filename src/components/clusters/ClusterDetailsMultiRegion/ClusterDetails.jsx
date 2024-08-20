@@ -67,7 +67,6 @@ import { viewConstants } from '../../../redux/constants';
 import {
   ACCESS_REQUEST_ENABLED,
   ASSISTED_INSTALLER_FEATURE,
-  HCP_USE_NODE_UPGRADE_POLICIES,
   MULTIREGION_PREVIEW_ENABLED,
   NETWORK_VALIDATOR_ONDEMAND_FEATURE,
 } from '../../../redux/constants/featureConstants';
@@ -198,9 +197,6 @@ const ClusterDetails = (props) => {
   );
   const userAccess = useSelector((state) => state.cost.userAccess);
   const gotRouters = get(clusterRouters, 'getRouters.routers.length', 0) > 0;
-  const useNodeUpgradePolicies = useSelector((state) =>
-    featureGateSelector(state, HCP_USE_NODE_UPGRADE_POLICIES),
-  );
   const hasNetworkOndemand = useSelector((state) =>
     featureGateSelector(state, NETWORK_VALIDATOR_ONDEMAND_FEATURE),
   );
@@ -303,14 +299,7 @@ const ClusterDetails = (props) => {
       dispatch(usersActions.getUsers(clusterID)); // TODO needs double check
       dispatch(getClusterRouters(clusterID)); // Needs query
       refreshIDP();
-      dispatch(
-        getMachineOrNodePools(
-          clusterID,
-          isHypershiftCluster(cluster),
-          clusterVersion,
-          useNodeUpgradePolicies,
-        ),
-      ); // Needs query
+      dispatch(getMachineOrNodePools(clusterID, isHypershiftCluster(cluster), clusterVersion)); // Needs query
       dispatch(getSchedules(clusterID, isHypershiftCluster(cluster))); // Needs query
       dispatch(fetchUpgradeGates()); // Needs query
       if (get(cluster, 'cloud_provider.id') !== 'gcp') {

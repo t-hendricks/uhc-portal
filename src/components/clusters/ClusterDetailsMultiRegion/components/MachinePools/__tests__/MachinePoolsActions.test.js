@@ -51,16 +51,6 @@ describe('MachinePools actions', () => {
         'myPool',
       );
     });
-
-    it('does not getNodePoolUpgradePolicies when HCP, but no feature flag', async () => {
-      clusterService.getNodePools.mockReturnValue({
-        data: { items: [{ id: 'myPool', version: { id: '4.14.0' } }] },
-      });
-
-      await getMachineOrNodePools('mock-cluster-id', true, '4.14.1', false)(mockDispatch);
-      expect(clusterService.getNodePools).toBeCalledWith('mock-cluster-id');
-      expect(clusterService.getNodePoolUpgradePolicies).not.toHaveBeenCalled();
-    });
   });
 
   describe('deleteMachinePool', () => {

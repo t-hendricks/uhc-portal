@@ -13,7 +13,6 @@ import { onClearFiltersAndFlags } from '~/redux/actions/viewOptionsActions';
 import {
   ACCESS_REQUEST_ENABLED,
   ASSISTED_INSTALLER_FEATURE,
-  HCP_USE_NODE_UPGRADE_POLICIES,
   NETWORK_VALIDATOR_ONDEMAND_FEATURE,
 } from '~/redux/constants/featureConstants';
 
@@ -93,7 +92,6 @@ const mapStateToProps = (state, { location }) => {
     userAccess: state.cost.userAccess,
     gotRouters: get(clusterRouters, 'getRouters.routers.length', 0) > 0,
     upgradeGates: getUpgradeGates(state),
-    useNodeUpgradePolicies: featureGateSelector(state, HCP_USE_NODE_UPGRADE_POLICIES),
     hasNetworkOndemand: featureGateSelector(state, NETWORK_VALIDATOR_ONDEMAND_FEATURE),
     isAccessRequestEnabled: featureGateSelector(state, ACCESS_REQUEST_ENABLED),
     accessProtectionState: state.accessProtection.accessProtection,
