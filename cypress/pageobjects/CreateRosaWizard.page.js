@@ -478,6 +478,11 @@ class CreateRosaCluster extends Page {
     cy.get('ul[label="Version"]').find('button').contains(version).click();
   }
 
+  selectClusterVersionFedRamp(version) {
+    cy.get('div[name="cluster_version"]').click();
+    cy.get('button').contains(version).click();
+  }
+
   addNodeLabelKeyAndValue(key, value = '', index = 0) {
     cy.get('input[aria-label="Key-value list key"]').each(($el, indx) => {
       if (index === indx) {
@@ -660,14 +665,19 @@ class CreateRosaCluster extends Page {
     cy.get('#with-web').click();
   }
 
-  selectAvailabilityZoneRegion(avilabilityZoneRegion) {
+  selectAvailabilityZoneRegion(availabilityZoneRegion) {
     cy.get(".pf-v5-c-select__menu:contains('Select availability zone')").within(() => {
-      cy.get('li').contains(avilabilityZoneRegion).click();
+      cy.get('li').contains(availabilityZoneRegion).click();
     });
   }
 
   inputPrivateSubnetId(subnetId) {
     cy.get('#private_subnet_id_0').type(subnetId);
+  }
+
+  inputPrivateSubnetIdFedRamp(subnetId) {
+    cy.get('button').contains('Select private subnet').click({ force: true });
+    this.clickButtonContainingText(subnetId);
   }
 
   enableCustomerManageKeys() {
