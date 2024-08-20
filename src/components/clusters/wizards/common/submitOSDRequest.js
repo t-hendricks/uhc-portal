@@ -270,7 +270,7 @@ export const createClusterRequest = ({ isWizard = true, cloudProviderID, product
       if (formData[FieldId.GcpAuthType] === GCPAuthType.WorkloadIdentityFederation) {
         gcpAuthConfig = {
           authentication: {
-            kind: 'wif_config',
+            kind: 'WifConfig',
             id: formData[FieldId.GcpWifConfig].id,
           },
         };
