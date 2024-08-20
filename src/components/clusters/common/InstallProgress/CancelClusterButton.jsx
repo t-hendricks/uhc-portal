@@ -34,7 +34,7 @@ function CancelClusterButton({ cluster, defaultOpen }) {
             clusterName: cluster.name,
           }}
           onClose={() => setIsCancelModalOpen(false)}
-          onSuccess={() => navigate('/')}
+          onSuccess={() => navigate('/cluster-list')}
         />
       )}
     </>
