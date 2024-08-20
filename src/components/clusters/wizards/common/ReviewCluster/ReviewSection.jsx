@@ -193,9 +193,7 @@ const ReviewSection = ({ initiallyExpanded, title, children, onGoToStep }) => {
 
 ReviewItem.propTypes = {
   name: PropTypes.string,
-  formValues: PropTypes.objectOf(
-    PropTypes.oneOfType([PropTypes.string, PropTypes.number, PropTypes.bool]),
-  ),
+  formValues: PropTypes.object,
 };
 
 ReviewSection.propTypes = {

@@ -27,7 +27,7 @@ describe('<AddOnsDeleteModal />', () => {
   const props = {
     deleteClusterAddOn,
     isDeleteClusterAddOnError: false,
-    deleteClusterAddOnError: false,
+    deleteClusterAddOnError: {},
     isDeleteClusterAddOnPending: false,
   };
 

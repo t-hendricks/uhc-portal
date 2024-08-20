@@ -27,6 +27,8 @@ describe('<ClusterDetailsTop />', () => {
     canHibernateCluster: fixtures.canHibernateCluster,
     toggleSubscriptionReleased: functions.toggleSubscriptionReleased,
     showPreviewLabel: true,
+    isClusterIdentityProvidersLoading: false,
+    isRefetching: false,
   };
 
   it('is accessible', async () => {

@@ -201,7 +201,7 @@ SubscriptionSettings.propTypes = {
   subscription: PropTypes.object,
   canEdit: PropTypes.bool,
   canSubscribeOCP: PropTypes.bool,
-  isLoading: PropTypes.bool.isRequired,
+  isLoading: PropTypes.bool,
 };
 
 export default SubscriptionSettings;
