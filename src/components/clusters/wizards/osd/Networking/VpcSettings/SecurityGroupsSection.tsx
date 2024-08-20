@@ -12,8 +12,6 @@ import SecurityGroupsEmptyAlert from '~/components/clusters/ClusterDetails/compo
 import { CheckboxField } from '~/components/clusters/wizards/form';
 import { useFormState } from '~/components/clusters/wizards/hooks';
 import { FieldId } from '~/components/clusters/wizards/osd/constants';
-import { useFeatureGate } from '~/hooks/useFeatureGate';
-import { SECURITY_GROUPS_FEATURE_DAY1 } from '~/redux/constants/featureConstants';
 import { CloudVPC } from '~/types/clusters_mgmt.v1';
 
 type SecurityGroupFieldProps = {
@@ -42,7 +40,6 @@ const SecurityGroupField = ({
 );
 
 const SecurityGroupsSection = () => {
-  const hasFeatureGate = useFeatureGate(SECURITY_GROUPS_FEATURE_DAY1);
   const {
     values: {
       [FieldId.SelectedVpc]: selectedVPC,
@@ -59,7 +56,7 @@ const SecurityGroupsSection = () => {
     : securityGroups.controlPlane.concat(securityGroups.infra).concat(securityGroups.worker);
   const [isExpanded, setIsExpanded] = useState<boolean>(selectedGroups.length > 0);
 
-  if (!hasFeatureGate || !selectedVPC.id) {
+  if (!selectedVPC.id) {
     return null;
   }
 

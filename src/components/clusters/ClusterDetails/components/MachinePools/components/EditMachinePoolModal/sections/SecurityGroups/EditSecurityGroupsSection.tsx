@@ -4,8 +4,6 @@ import { ExpandableSection } from '@patternfly/react-core';
 
 import { isCompatibleFeature, SupportedFeature } from '~/common/featureCompatibility';
 import WithTooltip from '~/components/common/WithTooltip';
-import { useFeatureGate } from '~/hooks/useFeatureGate';
-import { SECURITY_GROUPS_FEATURE } from '~/redux/constants/featureConstants';
 import { Cluster } from '~/types/clusters_mgmt.v1';
 
 import EditSecurityGroupsField from './EditSecurityGroupsField';
@@ -16,9 +14,7 @@ export interface EditSecurityGroupsSectionProps {
 }
 
 const EditSecurityGroupsSection = ({ cluster, isReadOnly }: EditSecurityGroupsSectionProps) => {
-  const hasFeatureGate = useFeatureGate(SECURITY_GROUPS_FEATURE);
-  const showSecurityGroupSection =
-    hasFeatureGate && isCompatibleFeature(SupportedFeature.SECURITY_GROUPS, cluster);
+  const showSecurityGroupSection = isCompatibleFeature(SupportedFeature.SECURITY_GROUPS, cluster);
 
   return showSecurityGroupSection ? (
     <ExpandableSection

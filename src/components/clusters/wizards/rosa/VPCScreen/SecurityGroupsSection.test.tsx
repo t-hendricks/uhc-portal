@@ -1,8 +1,7 @@
 import React from 'react';
 import { Formik } from 'formik';
 
-import { SECURITY_GROUPS_FEATURE_DAY1 } from '~/redux/constants/featureConstants';
-import { mockUseFeatureGate, render, screen, waitFor } from '~/testUtils';
+import { render, screen, waitFor } from '~/testUtils';
 
 import { FieldId, initialValues } from '../constants';
 
@@ -44,10 +43,6 @@ const buildTestComponent = (children: React.ReactNode, formValues = {}) => (
 );
 
 describe('<SecurityGroupsSection />', () => {
-  beforeEach(() => {
-    mockUseFeatureGate([[SECURITY_GROUPS_FEATURE_DAY1, true]]);
-  });
-
   afterEach(() => {
     jest.clearAllMocks();
   });
@@ -70,27 +65,12 @@ describe('<SecurityGroupsSection />', () => {
         });
       },
     );
-
-    it.each([[false], [true]])(
-      'the feature gate is enabled. Is hypershift: %s',
-      async (isHypershift: boolean) => {
-        render(
-          buildTestComponent(
-            <SecurityGroupsSection {...defaultProps} isHypershiftSelected={isHypershift} />,
-          ),
-        );
-        await waitFor(() => {
-          expect(screen.getByText('Additional security groups')).toBeInTheDocument();
-        });
-      },
-    );
   });
 
   describe('is hidden when', () => {
     it.each([[false], [true]])(
       'the VPC has not been selected. Is hypershift: %s',
       async (isHypershift: boolean) => {
-        mockUseFeatureGate([[SECURITY_GROUPS_FEATURE_DAY1, false]]);
         render(
           buildTestComponent(
             <SecurityGroupsSection
@@ -98,21 +78,6 @@ describe('<SecurityGroupsSection />', () => {
               selectedVPC={{ id: '', name: '' }}
               isHypershiftSelected={isHypershift}
             />,
-          ),
-        );
-        await waitFor(() => {
-          expect(screen.queryByText('Additional security groups')).not.toBeInTheDocument();
-        });
-      },
-    );
-
-    it.each([[false], [true]])(
-      'the feature gate is not enabled. Is hypershift: %s',
-      async (isHypershift: boolean) => {
-        mockUseFeatureGate([[SECURITY_GROUPS_FEATURE_DAY1, false]]);
-        render(
-          buildTestComponent(
-            <SecurityGroupsSection {...defaultProps} isHypershiftSelected={isHypershift} />,
           ),
         );
         await waitFor(() => {

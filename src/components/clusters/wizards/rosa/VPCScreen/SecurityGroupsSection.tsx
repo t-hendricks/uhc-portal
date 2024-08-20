@@ -11,8 +11,6 @@ import EditSecurityGroups from '~/components/clusters/ClusterDetails/components/
 import SecurityGroupsEmptyAlert from '~/components/clusters/ClusterDetails/components/SecurityGroups/SecurityGroupsEmptyAlert';
 import { useFormState } from '~/components/clusters/wizards/hooks';
 import ReduxCheckbox from '~/components/common/ReduxFormComponents/ReduxCheckbox';
-import { useFeatureGate } from '~/hooks/useFeatureGate';
-import { SECURITY_GROUPS_FEATURE_DAY1 } from '~/redux/constants/featureConstants';
 import { CloudVPC } from '~/types/clusters_mgmt.v1';
 
 import { FieldId } from '../constants';
@@ -60,7 +58,6 @@ const SecurityGroupsSection = ({
   const infraFieldName = `${FieldId.SecurityGroups}.infra`;
   const workerFieldName = `${FieldId.SecurityGroups}.worker`;
 
-  const hasFeatureGate = useFeatureGate(SECURITY_GROUPS_FEATURE_DAY1);
   const selectedGroups = securityGroups.applyControlPlaneToAll
     ? securityGroups.controlPlane
     : securityGroups.controlPlane.concat(securityGroups.infra).concat(securityGroups.worker);
@@ -70,7 +67,7 @@ const SecurityGroupsSection = ({
     setIsExpanded(!isExpanded);
   };
 
-  if (!hasFeatureGate || !selectedVPC.id) {
+  if (!selectedVPC.id) {
     return null;
   }
 
