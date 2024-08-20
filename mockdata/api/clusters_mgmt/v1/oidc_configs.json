@@ -1,46 +1,17 @@
 {
   "href": "/api/clusters_mgmt/v1/oidc_configs",
   "page": 1,
-  "size": 73,
-  "total": 73,
+  "size": 99,
+  "total": 99,
   "items": [
-    {
-      "href": "/api/clusters_mgmt/v1/oidc_configs/2asqv5ugu1oh42fdar37f9jvn782qc3j",
-      "id": "2asqv5ugu1oh42fdar37f9jvn782qc3j",
-      "organization_id": "1wuVGGV6SCmD8ya6yRGEJzvmVuC",
-      "issuer_url": "https://oidc.os1.devshift.org/2asqv5ugu1oh42fdar37f9jvn782qc3j",
-      "creation_timestamp": "2024-04-26T19:16:39.962936Z",
-      "managed": true,
-      "reusable": true
-    },
-    {
-      "href": "/api/clusters_mgmt/v1/oidc_configs/2a9s4b3t07jsfn6lrfv3un8kd8m7c0kl",
-      "id": "2a9s4b3t07jsfn6lrfv3un8kd8m7c0kl",
-      "organization_id": "1wuVGGV6SCmD8ya6yRGEJzvmVuC",
-      "issuer_url": "https://oidc.os1.devshift.org/2a9s4b3t07jsfn6lrfv3un8kd8m7c0kl",
-      "creation_timestamp": "2024-03-29T00:49:48.038959Z",
-      "last_used_timestamp": "2024-03-29T00:50:29.598319Z",
-      "last_update_timestamp": "2024-03-29T00:50:29.598319Z",
-      "managed": true,
-      "reusable": true
-    },
-    {
-      "href": "/api/clusters_mgmt/v1/oidc_configs/2a91mdibvkkcndu59f83jdqnpkv4sugk",
-      "id": "2a91mdibvkkcndu59f83jdqnpkv4sugk",
-      "organization_id": "1wuVGGV6SCmD8ya6yRGEJzvmVuC",
-      "issuer_url": "https://oidc.os1.devshift.org/2a91mdibvkkcndu59f83jdqnpkv4sugk",
-      "creation_timestamp": "2024-03-27T18:45:10.263916Z",
-      "last_used_timestamp": "2024-03-27T18:51:41.173125Z",
-      "last_update_timestamp": "2024-03-27T18:51:41.173125Z",
-      "managed": true,
-      "reusable": true
-    },
     {
       "href": "/api/clusters_mgmt/v1/oidc_configs/2a95b4lvohjfsl6auedd9iufsk5ud3aa",
       "id": "2a95b4lvohjfsl6auedd9iufsk5ud3aa",
       "organization_id": "1wuVGGV6SCmD8ya6yRGEJzvmVuC",
       "issuer_url": "https://oidc.os1.devshift.org/2a95b4lvohjfsl6auedd9iufsk5ud3aa",
       "creation_timestamp": "2024-03-27T22:54:10.94686Z",
+      "last_used_timestamp": "2024-08-06T10:00:16.136254Z",
+      "last_update_timestamp": "2024-08-06T10:00:16.136254Z",
       "managed": true,
       "reusable": true
     },
@@ -103,6 +74,24 @@
       "organization_id": "1wuVGGV6SCmD8ya6yRGEJzvmVuC",
       "issuer_url": "https://oidc.os1.devshift.org/2airg3fn0cj7k1udrkht133jcl4sjh30",
       "creation_timestamp": "2024-04-11T15:47:25.450151Z",
+      "managed": true,
+      "reusable": true
+    },
+    {
+      "href": "/api/clusters_mgmt/v1/oidc_configs/2cncjtqke2ro31tnparq5jj8k56fe2fs",
+      "id": "2cncjtqke2ro31tnparq5jj8k56fe2fs",
+      "organization_id": "1wuVGGV6SCmD8ya6yRGEJzvmVuC",
+      "issuer_url": "https://oidc.os1.devshift.org/2cncjtqke2ro31tnparq5jj8k56fe2fs",
+      "creation_timestamp": "2024-07-24T15:04:23.367484Z",
+      "managed": true,
+      "reusable": true
+    },
+    {
+      "href": "/api/clusters_mgmt/v1/oidc_configs/2cnclbr138nuhdnr275t3678f255dqfm",
+      "id": "2cnclbr138nuhdnr275t3678f255dqfm",
+      "organization_id": "1wuVGGV6SCmD8ya6yRGEJzvmVuC",
+      "issuer_url": "https://oidc.os1.devshift.org/2cnclbr138nuhdnr275t3678f255dqfm",
+      "creation_timestamp": "2024-07-24T15:07:27.393906Z",
       "managed": true,
       "reusable": true
     },
@@ -199,17 +188,6 @@
       "creation_timestamp": "2024-05-06T15:17:08.967172Z",
       "last_used_timestamp": "2024-05-10T15:17:42.233897Z",
       "last_update_timestamp": "2024-05-10T15:17:42.233897Z",
-      "managed": true,
-      "reusable": true
-    },
-    {
-      "href": "/api/clusters_mgmt/v1/oidc_configs/2ahfnoii87o8fkr3jbikbpti9t6ekt8u",
-      "id": "2ahfnoii87o8fkr3jbikbpti9t6ekt8u",
-      "organization_id": "1wuVGGV6SCmD8ya6yRGEJzvmVuC",
-      "issuer_url": "https://oidc.os1.devshift.org/2ahfnoii87o8fkr3jbikbpti9t6ekt8u",
-      "creation_timestamp": "2024-04-09T14:00:02.54884Z",
-      "last_used_timestamp": "2024-04-09T14:05:28.457179Z",
-      "last_update_timestamp": "2024-04-09T14:05:28.457179Z",
       "managed": true,
       "reusable": true
     },
@@ -454,6 +432,15 @@
       "reusable": true
     },
     {
+      "href": "/api/clusters_mgmt/v1/oidc_configs/2cgtpussbbjidmhhckfqvkdm2j94cdip",
+      "id": "2cgtpussbbjidmhhckfqvkdm2j94cdip",
+      "organization_id": "1wuVGGV6SCmD8ya6yRGEJzvmVuC",
+      "issuer_url": "https://d3gt1gce2zmg3d.cloudfront.net/2cgtpussbbjidmhhckfqvkdm2j94cdip",
+      "creation_timestamp": "2024-07-14T19:46:03.049655Z",
+      "managed": true,
+      "reusable": true
+    },
+    {
       "href": "/api/clusters_mgmt/v1/oidc_configs/2bd9tmu4ivnprjinmi40dtabjrfmo6q9",
       "id": "2bd9tmu4ivnprjinmi40dtabjrfmo6q9",
       "organization_id": "1wuVGGV6SCmD8ya6yRGEJzvmVuC",
@@ -510,17 +497,6 @@
       "creation_timestamp": "2024-05-10T15:17:25.154493Z",
       "last_used_timestamp": "2024-05-27T09:09:25.984478Z",
       "last_update_timestamp": "2024-05-27T09:09:25.984478Z",
-      "managed": true,
-      "reusable": true
-    },
-    {
-      "href": "/api/clusters_mgmt/v1/oidc_configs/2bgv2lcvk81r3bfuo627kil71na9itrj",
-      "id": "2bgv2lcvk81r3bfuo627kil71na9itrj",
-      "organization_id": "1wuVGGV6SCmD8ya6yRGEJzvmVuC",
-      "issuer_url": "https://oidc.os1.devshift.org/2bgv2lcvk81r3bfuo627kil71na9itrj",
-      "creation_timestamp": "2024-05-27T08:07:49.546461Z",
-      "last_used_timestamp": "2024-06-06T12:20:03.810433Z",
-      "last_update_timestamp": "2024-06-06T12:20:03.810433Z",
       "managed": true,
       "reusable": true
     },
@@ -598,17 +574,6 @@
       "creation_timestamp": "2024-05-31T20:45:42.118904Z",
       "last_used_timestamp": "2024-05-31T20:46:01.884796Z",
       "last_update_timestamp": "2024-05-31T20:46:01.884796Z",
-      "managed": true,
-      "reusable": true
-    },
-    {
-      "href": "/api/clusters_mgmt/v1/oidc_configs/22qa79chsq8mand8hvmnr33upj48lmas",
-      "id": "22qa79chsq8mand8hvmnr33upj48lmas",
-      "organization_id": "1wuVGGV6SCmD8ya6yRGEJzvmVuC",
-      "issuer_url": "https://d3gt1gce2zmg3d.cloudfront.net/22qa79chsq8mand8hvmnr33upj48lmas",
-      "creation_timestamp": "2023-03-31T14:43:49.279231Z",
-      "last_used_timestamp": "2024-06-17T23:41:04.616417Z",
-      "last_update_timestamp": "2024-06-17T23:41:04.616417Z",
       "managed": true,
       "reusable": true
     },
@@ -741,6 +706,297 @@
       "creation_timestamp": "2024-06-06T14:27:34.520921Z",
       "last_used_timestamp": "2024-06-06T14:27:54.924617Z",
       "last_update_timestamp": "2024-06-06T14:27:54.924617Z",
+      "managed": true,
+      "reusable": true
+    },
+    {
+      "href": "/api/clusters_mgmt/v1/oidc_configs/2cct4nk562b7td9fln6h7jbkpdmcnae1",
+      "id": "2cct4nk562b7td9fln6h7jbkpdmcnae1",
+      "organization_id": "1wuVGGV6SCmD8ya6yRGEJzvmVuC",
+      "issuer_url": "https://d3gt1gce2zmg3d.cloudfront.net/2cct4nk562b7td9fln6h7jbkpdmcnae1",
+      "creation_timestamp": "2024-07-08T17:22:38.73679Z",
+      "managed": true,
+      "reusable": true
+    },
+    {
+      "href": "/api/clusters_mgmt/v1/oidc_configs/2cct94r8kavueqbchn75ieih9snpg9mo",
+      "id": "2cct94r8kavueqbchn75ieih9snpg9mo",
+      "organization_id": "1wuVGGV6SCmD8ya6yRGEJzvmVuC",
+      "issuer_url": "https://d3gt1gce2zmg3d.cloudfront.net/2cct94r8kavueqbchn75ieih9snpg9mo",
+      "creation_timestamp": "2024-07-08T17:32:03.417092Z",
+      "managed": true,
+      "reusable": true
+    },
+    {
+      "href": "/api/clusters_mgmt/v1/oidc_configs/2cctbd3086a3fhcea568auhksaengeus",
+      "id": "2cctbd3086a3fhcea568auhksaengeus",
+      "organization_id": "1wuVGGV6SCmD8ya6yRGEJzvmVuC",
+      "issuer_url": "https://d3gt1gce2zmg3d.cloudfront.net/2cctbd3086a3fhcea568auhksaengeus",
+      "creation_timestamp": "2024-07-08T17:36:52.378229Z",
+      "managed": true,
+      "reusable": true
+    },
+    {
+      "href": "/api/clusters_mgmt/v1/oidc_configs/2cctjtau9m913jsj6c0a2d7fv8qp3tqf",
+      "id": "2cctjtau9m913jsj6c0a2d7fv8qp3tqf",
+      "organization_id": "1wuVGGV6SCmD8ya6yRGEJzvmVuC",
+      "issuer_url": "https://d3gt1gce2zmg3d.cloudfront.net/2cctjtau9m913jsj6c0a2d7fv8qp3tqf",
+      "creation_timestamp": "2024-07-08T17:55:01.941114Z",
+      "managed": true,
+      "reusable": true
+    },
+    {
+      "href": "/api/clusters_mgmt/v1/oidc_configs/2ccv1c9vak7m81l8m5jo5vhjrrauplmt",
+      "id": "2ccv1c9vak7m81l8m5jo5vhjrrauplmt",
+      "organization_id": "1wuVGGV6SCmD8ya6yRGEJzvmVuC",
+      "issuer_url": "https://d3gt1gce2zmg3d.cloudfront.net/2ccv1c9vak7m81l8m5jo5vhjrrauplmt",
+      "creation_timestamp": "2024-07-08T19:32:01.660782Z",
+      "last_used_timestamp": "2024-07-08T19:34:03.188759Z",
+      "last_update_timestamp": "2024-07-08T19:34:03.188759Z",
+      "managed": true,
+      "reusable": true
+    },
+    {
+      "href": "/api/clusters_mgmt/v1/oidc_configs/2ctcpin0unsjk8q7tho13m9be96a7evd",
+      "id": "2ctcpin0unsjk8q7tho13m9be96a7evd",
+      "organization_id": "1wuVGGV6SCmD8ya6yRGEJzvmVuC",
+      "issuer_url": "https://oidc.os1.devshift.org/2ctcpin0unsjk8q7tho13m9be96a7evd",
+      "creation_timestamp": "2024-08-02T17:43:38.911992Z",
+      "managed": true,
+      "reusable": true
+    },
+    {
+      "href": "/api/clusters_mgmt/v1/oidc_configs/2c3npbfijk7odq1ftd17h77cs5mvt9an",
+      "id": "2c3npbfijk7odq1ftd17h77cs5mvt9an",
+      "organization_id": "1wuVGGV6SCmD8ya6yRGEJzvmVuC",
+      "issuer_url": "https://oidc.os1.devshift.org/2c3npbfijk7odq1ftd17h77cs5mvt9an",
+      "creation_timestamp": "2024-06-24T19:36:13.530264Z",
+      "last_used_timestamp": "2024-06-24T19:36:35.484612Z",
+      "last_update_timestamp": "2024-06-24T19:36:35.484612Z",
+      "managed": true,
+      "reusable": true
+    },
+    {
+      "href": "/api/clusters_mgmt/v1/oidc_configs/2cjda3qroicottmtrsnfcpfn12gl9ogd",
+      "id": "2cjda3qroicottmtrsnfcpfn12gl9ogd",
+      "organization_id": "1wuVGGV6SCmD8ya6yRGEJzvmVuC",
+      "issuer_url": "https://d3gt1gce2zmg3d.cloudfront.net/2cjda3qroicottmtrsnfcpfn12gl9ogd",
+      "creation_timestamp": "2024-07-18T14:13:35.305506Z",
+      "last_used_timestamp": "2024-07-31T16:31:27.775932Z",
+      "last_update_timestamp": "2024-07-31T16:31:27.775932Z",
+      "managed": true,
+      "reusable": true
+    },
+    {
+      "href": "/api/clusters_mgmt/v1/oidc_configs/2cqldhoflkq7vps2b6lg5mkdc2acl73s",
+      "id": "2cqldhoflkq7vps2b6lg5mkdc2acl73s",
+      "organization_id": "1wuVGGV6SCmD8ya6yRGEJzvmVuC",
+      "issuer_url": "https://oidc.os1.devshift.org/2cqldhoflkq7vps2b6lg5mkdc2acl73s",
+      "creation_timestamp": "2024-07-29T14:18:47.971212Z",
+      "last_used_timestamp": "2024-07-30T18:37:24.977966Z",
+      "last_update_timestamp": "2024-07-30T18:37:24.977966Z",
+      "managed": true,
+      "reusable": true
+    },
+    {
+      "href": "/api/clusters_mgmt/v1/oidc_configs/2asqv5ugu1oh42fdar37f9jvn782qc3j",
+      "id": "2asqv5ugu1oh42fdar37f9jvn782qc3j",
+      "organization_id": "1wuVGGV6SCmD8ya6yRGEJzvmVuC",
+      "issuer_url": "https://oidc.os1.devshift.org/2asqv5ugu1oh42fdar37f9jvn782qc3j",
+      "creation_timestamp": "2024-04-26T19:16:39.962936Z",
+      "last_used_timestamp": "2024-06-26T09:36:24.903988Z",
+      "last_update_timestamp": "2024-06-26T09:36:24.903988Z",
+      "managed": true,
+      "reusable": true
+    },
+    {
+      "href": "/api/clusters_mgmt/v1/oidc_configs/2a9s4b3t07jsfn6lrfv3un8kd8m7c0kl",
+      "id": "2a9s4b3t07jsfn6lrfv3un8kd8m7c0kl",
+      "organization_id": "1wuVGGV6SCmD8ya6yRGEJzvmVuC",
+      "issuer_url": "https://oidc.os1.devshift.org/2a9s4b3t07jsfn6lrfv3un8kd8m7c0kl",
+      "creation_timestamp": "2024-03-29T00:49:48.038959Z",
+      "last_used_timestamp": "2024-06-26T09:46:04.291679Z",
+      "last_update_timestamp": "2024-06-26T09:46:04.291679Z",
+      "managed": true,
+      "reusable": true
+    },
+    {
+      "href": "/api/clusters_mgmt/v1/oidc_configs/2a91mdibvkkcndu59f83jdqnpkv4sugk",
+      "id": "2a91mdibvkkcndu59f83jdqnpkv4sugk",
+      "organization_id": "1wuVGGV6SCmD8ya6yRGEJzvmVuC",
+      "issuer_url": "https://oidc.os1.devshift.org/2a91mdibvkkcndu59f83jdqnpkv4sugk",
+      "creation_timestamp": "2024-03-27T18:45:10.263916Z",
+      "last_used_timestamp": "2024-06-26T10:30:25.65037Z",
+      "last_update_timestamp": "2024-06-26T10:30:25.65037Z",
+      "managed": true,
+      "reusable": true
+    },
+    {
+      "href": "/api/clusters_mgmt/v1/oidc_configs/2c5htut779vjutepd3h1e2u49fn7jvhg",
+      "id": "2c5htut779vjutepd3h1e2u49fn7jvhg",
+      "organization_id": "1wuVGGV6SCmD8ya6yRGEJzvmVuC",
+      "issuer_url": "https://oidc.os1.devshift.org/2c5htut779vjutepd3h1e2u49fn7jvhg",
+      "creation_timestamp": "2024-06-27T13:45:31.532766Z",
+      "last_used_timestamp": "2024-06-27T13:45:52.864412Z",
+      "last_update_timestamp": "2024-06-27T13:45:52.864412Z",
+      "managed": true,
+      "reusable": true
+    },
+    {
+      "href": "/api/clusters_mgmt/v1/oidc_configs/2c87qk25sho3a5q2v3g2fq6u9hdmbvpe",
+      "id": "2c87qk25sho3a5q2v3g2fq6u9hdmbvpe",
+      "organization_id": "1wuVGGV6SCmD8ya6yRGEJzvmVuC",
+      "issuer_url": "https://oidc.os1.devshift.org/2c87qk25sho3a5q2v3g2fq6u9hdmbvpe",
+      "creation_timestamp": "2024-07-01T15:29:20.035168Z",
+      "last_used_timestamp": "2024-07-18T14:14:02.946084Z",
+      "last_update_timestamp": "2024-07-18T14:14:02.946084Z",
+      "managed": true,
+      "reusable": true
+    },
+    {
+      "href": "/api/clusters_mgmt/v1/oidc_configs/2bgv2lcvk81r3bfuo627kil71na9itrj",
+      "id": "2bgv2lcvk81r3bfuo627kil71na9itrj",
+      "organization_id": "1wuVGGV6SCmD8ya6yRGEJzvmVuC",
+      "issuer_url": "https://oidc.os1.devshift.org/2bgv2lcvk81r3bfuo627kil71na9itrj",
+      "creation_timestamp": "2024-05-27T08:07:49.546461Z",
+      "last_used_timestamp": "2024-08-20T09:36:17.134432Z",
+      "last_update_timestamp": "2024-08-20T09:36:17.134432Z",
+      "managed": true,
+      "reusable": true
+    },
+    {
+      "href": "/api/clusters_mgmt/v1/oidc_configs/2cm1n0diupl3qc0u27i7au62gj316ivl",
+      "id": "2cm1n0diupl3qc0u27i7au62gj316ivl",
+      "organization_id": "1wuVGGV6SCmD8ya6yRGEJzvmVuC",
+      "issuer_url": "https://d3gt1gce2zmg3d.cloudfront.net/2cm1n0diupl3qc0u27i7au62gj316ivl",
+      "creation_timestamp": "2024-07-22T14:15:29.776155Z",
+      "last_used_timestamp": "2024-07-24T15:07:49.203162Z",
+      "last_update_timestamp": "2024-07-24T15:07:49.203162Z",
+      "managed": true,
+      "reusable": true
+    },
+    {
+      "href": "/api/clusters_mgmt/v1/oidc_configs/2cvqgcqvum2qgopshpbatkifroh61sv7",
+      "id": "2cvqgcqvum2qgopshpbatkifroh61sv7",
+      "organization_id": "1wuVGGV6SCmD8ya6yRGEJzvmVuC",
+      "issuer_url": "https://oidc.os1.devshift.org/2cvqgcqvum2qgopshpbatkifroh61sv7",
+      "creation_timestamp": "2024-08-06T10:08:51.2887Z",
+      "managed": true,
+      "reusable": true
+    },
+    {
+      "href": "/api/clusters_mgmt/v1/oidc_configs/2cvqk727mqqikp4im3l259r21gqptkam",
+      "id": "2cvqk727mqqikp4im3l259r21gqptkam",
+      "organization_id": "1wuVGGV6SCmD8ya6yRGEJzvmVuC",
+      "issuer_url": "https://oidc.os1.devshift.org/2cvqk727mqqikp4im3l259r21gqptkam",
+      "creation_timestamp": "2024-08-06T10:17:00.409145Z",
+      "managed": true,
+      "reusable": true
+    },
+    {
+      "href": "/api/clusters_mgmt/v1/oidc_configs/2cvqlkjfbau2rf3s2sbjlq0q299l6qha",
+      "id": "2cvqlkjfbau2rf3s2sbjlq0q299l6qha",
+      "organization_id": "1wuVGGV6SCmD8ya6yRGEJzvmVuC",
+      "issuer_url": "https://oidc.os1.devshift.org/2cvqlkjfbau2rf3s2sbjlq0q299l6qha",
+      "creation_timestamp": "2024-08-06T10:20:02.335806Z",
+      "managed": true,
+      "reusable": true
+    },
+    {
+      "href": "/api/clusters_mgmt/v1/oidc_configs/2cvqn6uao7c17iqrqla538v4pp142k8i",
+      "id": "2cvqn6uao7c17iqrqla538v4pp142k8i",
+      "organization_id": "1wuVGGV6SCmD8ya6yRGEJzvmVuC",
+      "issuer_url": "https://oidc.os1.devshift.org/2cvqn6uao7c17iqrqla538v4pp142k8i",
+      "creation_timestamp": "2024-08-06T10:23:23.647913Z",
+      "managed": true,
+      "reusable": true
+    },
+    {
+      "href": "/api/clusters_mgmt/v1/oidc_configs/2cvqp50t48goagm36qhjvra9qvvivhct",
+      "id": "2cvqp50t48goagm36qhjvra9qvvivhct",
+      "organization_id": "1wuVGGV6SCmD8ya6yRGEJzvmVuC",
+      "issuer_url": "https://oidc.os1.devshift.org/2cvqp50t48goagm36qhjvra9qvvivhct",
+      "creation_timestamp": "2024-08-06T10:27:32.757079Z",
+      "managed": true,
+      "reusable": true
+    },
+    {
+      "href": "/api/clusters_mgmt/v1/oidc_configs/2cvqq94kd7sa8m6vcmrrvduho70t9qf1",
+      "id": "2cvqq94kd7sa8m6vcmrrvduho70t9qf1",
+      "organization_id": "1wuVGGV6SCmD8ya6yRGEJzvmVuC",
+      "issuer_url": "https://oidc.os1.devshift.org/2cvqq94kd7sa8m6vcmrrvduho70t9qf1",
+      "creation_timestamp": "2024-08-06T10:29:56.081628Z",
+      "managed": true,
+      "reusable": true
+    },
+    {
+      "href": "/api/clusters_mgmt/v1/oidc_configs/2cvqsfgvtvhcljlv3ic1r3nf9a49q2ga",
+      "id": "2cvqsfgvtvhcljlv3ic1r3nf9a49q2ga",
+      "organization_id": "1wuVGGV6SCmD8ya6yRGEJzvmVuC",
+      "issuer_url": "https://oidc.os1.devshift.org/2cvqsfgvtvhcljlv3ic1r3nf9a49q2ga",
+      "creation_timestamp": "2024-08-06T10:34:38.716518Z",
+      "managed": true,
+      "reusable": true
+    },
+    {
+      "href": "/api/clusters_mgmt/v1/oidc_configs/2cvqtcs874li9ak3i5nqcakh6tves87e",
+      "id": "2cvqtcs874li9ak3i5nqcakh6tves87e",
+      "organization_id": "1wuVGGV6SCmD8ya6yRGEJzvmVuC",
+      "issuer_url": "https://oidc.os1.devshift.org/2cvqtcs874li9ak3i5nqcakh6tves87e",
+      "creation_timestamp": "2024-08-06T10:36:35.588376Z",
+      "managed": true,
+      "reusable": true
+    },
+    {
+      "href": "/api/clusters_mgmt/v1/oidc_configs/2d19svsvpeue0161lufs9dgceh58kjn3",
+      "id": "2d19svsvpeue0161lufs9dgceh58kjn3",
+      "organization_id": "1wuVGGV6SCmD8ya6yRGEJzvmVuC",
+      "issuer_url": "https://oidc.os1.devshift.org/2d19svsvpeue0161lufs9dgceh58kjn3",
+      "creation_timestamp": "2024-08-08T16:04:15.804829Z",
+      "last_used_timestamp": "2024-08-08T16:04:36.38942Z",
+      "last_update_timestamp": "2024-08-08T16:04:36.38942Z",
+      "managed": true,
+      "reusable": true
+    },
+    {
+      "href": "/api/clusters_mgmt/v1/oidc_configs/22qa79chsq8mand8hvmnr33upj48lmas",
+      "id": "22qa79chsq8mand8hvmnr33upj48lmas",
+      "organization_id": "1wuVGGV6SCmD8ya6yRGEJzvmVuC",
+      "issuer_url": "https://d3gt1gce2zmg3d.cloudfront.net/22qa79chsq8mand8hvmnr33upj48lmas",
+      "creation_timestamp": "2023-03-31T14:43:49.279231Z",
+      "last_used_timestamp": "2024-08-12T08:40:32.363618Z",
+      "last_update_timestamp": "2024-08-12T08:40:32.363618Z",
+      "managed": true,
+      "reusable": true
+    },
+    {
+      "href": "/api/clusters_mgmt/v1/oidc_configs/2d6mokmjmaddmnnntoiroj3119a8j8a4",
+      "id": "2d6mokmjmaddmnnntoiroj3119a8j8a4",
+      "organization_id": "1wuVGGV6SCmD8ya6yRGEJzvmVuC",
+      "issuer_url": "https://oidc.os1.devshift.org/2d6mokmjmaddmnnntoiroj3119a8j8a4",
+      "creation_timestamp": "2024-08-16T20:45:06.182288Z",
+      "managed": true,
+      "reusable": true
+    },
+    {
+      "href": "/api/clusters_mgmt/v1/oidc_configs/2d4n3on8si875qsoebdpmuda4fjg5b9s",
+      "id": "2d4n3on8si875qsoebdpmuda4fjg5b9s",
+      "organization_id": "1wuVGGV6SCmD8ya6yRGEJzvmVuC",
+      "issuer_url": "https://oidc.os1.devshift.org/2d4n3on8si875qsoebdpmuda4fjg5b9s",
+      "creation_timestamp": "2024-08-13T20:19:46.420294Z",
+      "last_used_timestamp": "2024-08-16T20:45:27.357865Z",
+      "last_update_timestamp": "2024-08-16T20:45:27.357865Z",
+      "managed": true,
+      "reusable": true
+    },
+    {
+      "href": "/api/clusters_mgmt/v1/oidc_configs/2ahfnoii87o8fkr3jbikbpti9t6ekt8u",
+      "id": "2ahfnoii87o8fkr3jbikbpti9t6ekt8u",
+      "organization_id": "1wuVGGV6SCmD8ya6yRGEJzvmVuC",
+      "issuer_url": "https://oidc.os1.devshift.org/2ahfnoii87o8fkr3jbikbpti9t6ekt8u",
+      "creation_timestamp": "2024-04-09T14:00:02.54884Z",
+      "last_used_timestamp": "2024-08-19T18:30:39.543307Z",
+      "last_update_timestamp": "2024-08-19T18:30:39.543307Z",
       "managed": true,
       "reusable": true
     }

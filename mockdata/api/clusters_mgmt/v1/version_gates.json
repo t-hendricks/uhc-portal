@@ -1,8 +1,8 @@
 {
   "kind": "VersionGateList",
   "page": 1,
-  "size": 16,
-  "total": 16,
+  "size": 20,
+  "total": 20,
   "items": [
     {
       "kind": "VersionGate",
@@ -16,6 +16,32 @@
       "documentation_url": "https://access.redhat.com/solutions/6988197",
       "sts_only": false,
       "creation_timestamp": "2022-11-29T20:04:20.355223Z"
+    },
+    {
+      "kind": "VersionGate",
+      "id": "06a0fe1d-39e9-11ef-89a5-0a580a8010f1",
+      "href": "/api/clusters_mgmt/v1/version_gates/06a0fe1d-39e9-11ef-89a5-0a580a8010f1",
+      "version_raw_id_prefix": "4.10",
+      "label": "api.openshift.com/gate-label-test-xr76",
+      "value": "value-test",
+      "warning_message": "You have been warned",
+      "description": "test",
+      "documentation_url": "",
+      "sts_only": false,
+      "creation_timestamp": "2024-07-04T09:37:27.315204Z"
+    },
+    {
+      "kind": "VersionGate",
+      "id": "12f0753a-39ed-11ef-a231-0a580a8008ce",
+      "href": "/api/clusters_mgmt/v1/version_gates/12f0753a-39ed-11ef-a231-0a580a8008ce",
+      "version_raw_id_prefix": "4.10",
+      "label": "api.openshift.com/gate-label-test-wbf9",
+      "value": "value-test",
+      "warning_message": "You have been warned",
+      "description": "test",
+      "documentation_url": "",
+      "sts_only": false,
+      "creation_timestamp": "2024-07-04T10:06:25.955565Z"
     },
     {
       "kind": "VersionGate",
@@ -110,6 +136,19 @@
     },
     {
       "kind": "VersionGate",
+      "id": "8a36ce78-37cc-11ef-8417-0a580a830a68",
+      "href": "/api/clusters_mgmt/v1/version_gates/8a36ce78-37cc-11ef-8417-0a580a830a68",
+      "version_raw_id_prefix": "4.10",
+      "label": "api.openshift.com/gate-label-test-rbsh",
+      "value": "value-test",
+      "warning_message": "You have been warned",
+      "description": "test",
+      "documentation_url": "",
+      "sts_only": false,
+      "creation_timestamp": "2024-07-01T17:08:30.34784Z"
+    },
+    {
+      "kind": "VersionGate",
       "id": "8f669a07-1cb4-11ed-a47b-0a580a830836",
       "href": "/api/clusters_mgmt/v1/version_gates/8f669a07-1cb4-11ed-a47b-0a580a830836",
       "version_raw_id_prefix": "4.11",
@@ -136,6 +175,45 @@
     },
     {
       "kind": "VersionGate",
+      "id": "a62ab55b-37ba-11ef-86d1-0a580a820a53",
+      "href": "/api/clusters_mgmt/v1/version_gates/a62ab55b-37ba-11ef-86d1-0a580a820a53",
+      "version_raw_id_prefix": "4.10",
+      "label": "api.openshift.com/gate-label-test-nlc5",
+      "value": "value-test",
+      "warning_message": "You have been warned",
+      "description": "test",
+      "documentation_url": "",
+      "sts_only": false,
+      "creation_timestamp": "2024-07-01T15:00:26.303626Z"
+    },
+    {
+      "kind": "VersionGate",
+      "id": "b0d585ff-39fd-11ef-9ec6-0a580a8008fb",
+      "href": "/api/clusters_mgmt/v1/version_gates/b0d585ff-39fd-11ef-9ec6-0a580a8008fb",
+      "version_raw_id_prefix": "4.10",
+      "label": "api.openshift.com/gate-label-test-6tfl",
+      "value": "value-test",
+      "warning_message": "You have been warned",
+      "description": "test",
+      "documentation_url": "",
+      "sts_only": false,
+      "creation_timestamp": "2024-07-04T12:05:22.806734Z"
+    },
+    {
+      "kind": "VersionGate",
+      "id": "d1c5f7a3-3a14-11ef-b620-0a580a80102f",
+      "href": "/api/clusters_mgmt/v1/version_gates/d1c5f7a3-3a14-11ef-b620-0a580a80102f",
+      "version_raw_id_prefix": "4.10",
+      "label": "api.openshift.com/gate-label-test-krfb",
+      "value": "value-test",
+      "warning_message": "You have been warned",
+      "description": "test",
+      "documentation_url": "",
+      "sts_only": false,
+      "creation_timestamp": "2024-07-04T14:50:56.494379Z"
+    },
+    {
+      "kind": "VersionGate",
       "id": "d6015d79-98a2-11ec-a445-0a580a820d8e",
       "href": "/api/clusters_mgmt/v1/version_gates/d6015d79-98a2-11ec-a445-0a580a820d8e",
       "version_raw_id_prefix": "4.9",
@@ -146,45 +224,6 @@
       "documentation_url": "https://access.redhat.com/solutions/6657541",
       "sts_only": false,
       "creation_timestamp": "2022-02-28T14:29:28.418035Z"
-    },
-    {
-      "kind": "VersionGate",
-      "id": "da65e1c4-2ceb-11ef-9392-0a580a81098a",
-      "href": "/api/clusters_mgmt/v1/version_gates/da65e1c4-2ceb-11ef-9392-0a580a81098a",
-      "version_raw_id_prefix": "5.0",
-      "label": "api.openshift.com/gate-test-only",
-      "value": "test-value",
-      "warning_message": "test warning message",
-      "description": "SDA qe test only",
-      "documentation_url": "",
-      "sts_only": false,
-      "creation_timestamp": "2024-06-17T20:54:56.482145Z"
-    },
-    {
-      "kind": "VersionGate",
-      "id": "da6da356-2ceb-11ef-9392-0a580a81098a",
-      "href": "/api/clusters_mgmt/v1/version_gates/da6da356-2ceb-11ef-9392-0a580a81098a",
-      "version_raw_id_prefix": "5.3",
-      "label": "api.openshift.com/gate-test-only",
-      "value": "test-value",
-      "warning_message": "test warning message",
-      "description": "SDA qe test only",
-      "documentation_url": "",
-      "sts_only": false,
-      "creation_timestamp": "2024-06-17T20:54:56.532976Z"
-    },
-    {
-      "kind": "VersionGate",
-      "id": "da717d55-2ceb-11ef-aebc-0a580a821610",
-      "href": "/api/clusters_mgmt/v1/version_gates/da717d55-2ceb-11ef-aebc-0a580a821610",
-      "version_raw_id_prefix": "5.2",
-      "label": "api.openshift.com/gate-test-only",
-      "value": "test-value",
-      "warning_message": "test warning message",
-      "description": "SDA qe test only",
-      "documentation_url": "",
-      "sts_only": false,
-      "creation_timestamp": "2024-06-17T20:54:56.558217Z"
     },
     {
       "kind": "VersionGate",
@@ -211,6 +250,19 @@
       "documentation_url": "https://access.redhat.com/articles/6955985",
       "sts_only": false,
       "creation_timestamp": "2024-05-31T04:40:23.72334Z"
+    },
+    {
+      "kind": "VersionGate",
+      "id": "eef86fa3-39f6-11ef-9dc9-0a580a801130",
+      "href": "/api/clusters_mgmt/v1/version_gates/eef86fa3-39f6-11ef-9dc9-0a580a801130",
+      "version_raw_id_prefix": "4.10",
+      "label": "api.openshift.com/gate-label-test-b64q",
+      "value": "value-test",
+      "warning_message": "You have been warned",
+      "description": "test",
+      "documentation_url": "",
+      "sts_only": false,
+      "creation_timestamp": "2024-07-04T11:17:00.577169Z"
     }
   ]
 }

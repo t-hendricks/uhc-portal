@@ -153,7 +153,7 @@
           "kms_location_id": "",
           "ccs_only": false,
           "govcloud": false,
-          "supports_hypershift": true
+          "supports_hypershift": false
         },
         {
           "kind": "CloudRegion",
@@ -1364,8 +1364,8 @@
           },
           "enabled": true,
           "supports_multi_az": true,
-          "kms_location_name": "Asia,Global",
-          "kms_location_id": "asia,global",
+          "kms_location_name": "Global,Asia",
+          "kms_location_id": "global,asia",
           "ccs_only": false,
           "govcloud": false,
           "supports_hypershift": false
@@ -1375,6 +1375,24 @@
           "id": "australia-southeast1",
           "href": "/api/clusters_mgmt/v1/cloud_providers/gcp/regions/australia-southeast1",
           "display_name": "Sydney, Australia",
+          "cloud_provider": {
+            "kind": "CloudProviderLink",
+            "id": "gcp",
+            "href": "/api/clusters_mgmt/v1/cloud_providers/gcp"
+          },
+          "enabled": true,
+          "supports_multi_az": true,
+          "kms_location_name": "Global",
+          "kms_location_id": "global",
+          "ccs_only": false,
+          "govcloud": false,
+          "supports_hypershift": false
+        },
+        {
+          "kind": "CloudRegion",
+          "id": "australia-southeast2",
+          "href": "/api/clusters_mgmt/v1/cloud_providers/gcp/regions/australia-southeast2",
+          "display_name": "Melbourne, Australia, APAC",
           "cloud_provider": {
             "kind": "CloudProviderLink",
             "id": "gcp",
@@ -1403,6 +1421,24 @@
           "kms_location_name": "Global,europe,eur4 (Finland, Netherlands, and Belgium)",
           "kms_location_id": "global,europe,eur4",
           "ccs_only": true,
+          "govcloud": false,
+          "supports_hypershift": false
+        },
+        {
+          "kind": "CloudRegion",
+          "id": "europe-southwest1",
+          "href": "/api/clusters_mgmt/v1/cloud_providers/gcp/regions/europe-southwest1",
+          "display_name": "Madrid, Spain, Europe",
+          "cloud_provider": {
+            "kind": "CloudProviderLink",
+            "id": "gcp",
+            "href": "/api/clusters_mgmt/v1/cloud_providers/gcp"
+          },
+          "enabled": true,
+          "supports_multi_az": true,
+          "kms_location_name": "Global",
+          "kms_location_id": "global",
+          "ccs_only": false,
           "govcloud": false,
           "supports_hypershift": false
         },
@@ -1438,7 +1474,7 @@
           "supports_multi_az": true,
           "kms_location_name": "Global,Turin,europe",
           "kms_location_id": "global,europe-west12,europe",
-          "ccs_only": true,
+          "ccs_only": false,
           "govcloud": false,
           "supports_hypershift": false
         },
@@ -1472,8 +1508,8 @@
           },
           "enabled": true,
           "supports_multi_az": true,
-          "kms_location_name": "Global,europe",
-          "kms_location_id": "global,europe",
+          "kms_location_name": "europe,Global",
+          "kms_location_id": "europe,global",
           "ccs_only": true,
           "govcloud": false,
           "supports_hypershift": false
@@ -1490,8 +1526,8 @@
           },
           "enabled": true,
           "supports_multi_az": true,
-          "kms_location_name": "eur5 (London, Netherlands, and Belgium),eur4 (Finland, Netherlands, and Belgium),Global,europe",
-          "kms_location_id": "eur5,eur4,global,europe",
+          "kms_location_name": "eur5 (London, Netherlands, and Belgium),europe,Global,eur4 (Finland, Netherlands, and Belgium)",
+          "kms_location_id": "eur5,europe,global,eur4",
           "ccs_only": false,
           "govcloud": false,
           "supports_hypershift": false
@@ -1526,9 +1562,9 @@
           },
           "enabled": true,
           "supports_multi_az": true,
-          "kms_location_name": "Global,Milan,europe",
-          "kms_location_id": "global,europe-west8,europe",
-          "ccs_only": true,
+          "kms_location_name": "europe,Global,Milan",
+          "kms_location_id": "europe,global,europe-west8",
+          "ccs_only": false,
           "govcloud": false,
           "supports_hypershift": false
         },
@@ -1537,6 +1573,24 @@
           "id": "me-central1",
           "href": "/api/clusters_mgmt/v1/cloud_providers/gcp/regions/me-central1",
           "display_name": "Doha, Qatar, Middle East",
+          "cloud_provider": {
+            "kind": "CloudProviderLink",
+            "id": "gcp",
+            "href": "/api/clusters_mgmt/v1/cloud_providers/gcp"
+          },
+          "enabled": true,
+          "supports_multi_az": true,
+          "kms_location_name": "Global",
+          "kms_location_id": "global",
+          "ccs_only": false,
+          "govcloud": false,
+          "supports_hypershift": false
+        },
+        {
+          "kind": "CloudRegion",
+          "id": "me-central2",
+          "href": "/api/clusters_mgmt/v1/cloud_providers/gcp/regions/me-central2",
+          "display_name": "Dammam, Saudi Arabia, Middle East",
           "cloud_provider": {
             "kind": "CloudProviderLink",
             "id": "gcp",
@@ -1652,8 +1706,8 @@
           },
           "enabled": true,
           "supports_multi_az": true,
-          "kms_location_name": "US,Global,nam4 (Iowa, South Carolina, and Oklahoma)",
-          "kms_location_id": "us,global,nam4",
+          "kms_location_name": "US,nam4 (Iowa, South Carolina, and Oklahoma),Global",
+          "kms_location_id": "us,nam4,global",
           "ccs_only": false,
           "govcloud": false,
           "supports_hypershift": false
@@ -1688,8 +1742,8 @@
           },
           "enabled": true,
           "supports_multi_az": true,
-          "kms_location_name": "Global,US",
-          "kms_location_id": "global,us",
+          "kms_location_name": "US,Global",
+          "kms_location_id": "us,global",
           "ccs_only": false,
           "govcloud": false,
           "supports_hypershift": false
