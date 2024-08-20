@@ -816,7 +816,7 @@ const ClusterDetails = (props) => {
           onClose={onDialogClose}
           onClusterDeleted={() => {
             invalidateClusterDetailsQueries();
-            navigate('/');
+            navigate('/cluster-list');
           }}
         />
         <DeleteIDPDialog refreshParent={refreshIDP} />
