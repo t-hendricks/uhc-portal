@@ -101,6 +101,7 @@ const WifConfigSelector = (props: WifConfigSelectorProps) => {
             placeholderText={placeholder}
             isDisabled={isLoading || !hasWifConfigs}
             validated={touched && error ? 'error' : undefined}
+            inlineFilterPlaceholderText="Filter by name / ID"
           />
         </FlexItem>
         <FlexItem>
