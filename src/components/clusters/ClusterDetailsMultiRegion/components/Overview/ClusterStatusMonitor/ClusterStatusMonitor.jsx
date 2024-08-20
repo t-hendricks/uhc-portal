@@ -139,7 +139,7 @@ const ClusterStatusMonitor = (props) => {
               variant: 'success',
             }),
           );
-          navigate('/');
+          navigate('/cluster-list');
         }
       }
     }
