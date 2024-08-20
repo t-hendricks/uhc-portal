@@ -291,7 +291,7 @@ describe('createClusterRequest', () => {
         expect(request.ccs.enabled).toEqual(true);
         expect(request.gcp).toStrictEqual({
           authentication: {
-            kind: 'wif_config',
+            kind: 'WifConfig',
             id: data.gcp_wif_config.id,
           },
           security: {
