@@ -204,7 +204,7 @@ const EditClusterIngressDialog = ({ provider, cluster, refreshCluster, clusterRo
 
 EditClusterIngressDialog.propTypes = {
   provider: PropTypes.string,
-  clusterRoutersData: PropTypes.object,
+  clusterRoutersData: PropTypes.array,
   cluster: PropTypes.object,
   refreshCluster: PropTypes.func.isRequired,
 };

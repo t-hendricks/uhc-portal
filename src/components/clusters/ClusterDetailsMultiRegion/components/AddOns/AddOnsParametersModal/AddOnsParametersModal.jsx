@@ -292,7 +292,6 @@ const AddOnsParametersModal = ({
 };
 
 AddOnsParametersModal.propTypes = {
-  isOpen: PropTypes.bool.isRequired,
   clusterID: PropTypes.string.isRequired,
   updateClusterAddOn: PropTypes.func.isRequired,
   isUpdateClusterAddOnError: PropTypes.bool.isRequired,
@@ -301,8 +300,6 @@ AddOnsParametersModal.propTypes = {
   isAddClusterAddOnError: PropTypes.bool.isRequired,
   isAddClusterAddOnPending: PropTypes.bool.isRequired,
   updateClusterAddOnError: PropTypes.object.isRequired,
-  closeModal: PropTypes.func.isRequired,
-  handleSubmit: PropTypes.func.isRequired,
   addClusterAddOnError: PropTypes.object.isRequired,
 
   addOn: PropTypes.object,
@@ -311,8 +308,6 @@ AddOnsParametersModal.propTypes = {
   quota: PropTypes.object.isRequired,
   isUpdateForm: PropTypes.bool,
   submitClusterAddOnResponse: PropTypes.object,
-  clearClusterAddOnsResponses: PropTypes.func.isRequired,
-  pristine: PropTypes.bool.isRequired,
   change: PropTypes.func,
 };
 

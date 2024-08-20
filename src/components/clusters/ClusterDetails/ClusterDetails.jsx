@@ -728,7 +728,7 @@ ClusterDetails.propTypes = {
   setGlobalError: PropTypes.func.isRequired,
   clearGlobalError: PropTypes.func.isRequired,
   getGrants: PropTypes.func.isRequired,
-  accessRequestsViewOptions: PropTypes.object.isRequired,
+  accessRequestsViewOptions: PropTypes.object,
   pendingAccessRequests: PropTypes.object.isRequired,
   clusterLogsViewOptions: PropTypes.object.isRequired,
   getClusterHistory: PropTypes.func.isRequired,

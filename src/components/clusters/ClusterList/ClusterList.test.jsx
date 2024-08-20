@@ -45,6 +45,7 @@ describe('<ClusterList />', () => {
       username: 'myUserName',
       pendingOrganizationAccessRequests: {},
       organizationId: 'whateverTheOrganizationId',
+      isOrganizationAccessProtectionEnabled: false,
       ...funcs(),
       clearClusterDetails: jest.fn(),
       setClusterDetails: jest.fn(),

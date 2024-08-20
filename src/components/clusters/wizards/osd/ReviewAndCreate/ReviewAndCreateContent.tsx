@@ -110,7 +110,7 @@ export const ReviewAndCreateContent = ({ isPending }: ReviewAndCreateContentProp
         onGoToStep={() => goToStepById(StepId.ClusterSettingsCloudProvider)}
       >
         {clusterSettingsFields.map((name) => (
-          <ReviewItem name={name} formValues={formValues} />
+          <ReviewItem key={name} name={name} formValues={formValues} />
         ))}
       </ReviewSection>
 

@@ -19,11 +19,9 @@ describe('<AddOnsParametersModal />', () => {
     clusterID: '1i4counta3holamvo1g5tp6n8p3a03bq',
     updateClusterAddOn: jest.fn(),
     isUpdateClusterAddOnError: false,
-    updateClusterAddOnError: null,
     addClusterAddOn: jest.fn(),
     isClusterAddOnError: false,
     isAddClusterAddOnPending: false,
-    addClusterAddOnError: null,
     addOn: {
       description: 'Dummy Desc',
       enabled: true,
@@ -53,6 +51,14 @@ describe('<AddOnsParametersModal />', () => {
     },
     quota,
     cluster: clusterDetails.cluster,
+    pristine: false,
+    clearClusterAddOnsResponses: jest.fn(),
+    addClusterAddOnError: {},
+    updateClusterAddOnError: {},
+    closeModal: jest.fn(),
+    handleSubmit: jest.fn(),
+    isAddClusterAddOnError: false,
+    isUpdateClusterAddOnPending: false,
   };
 
   afterEach(() => {

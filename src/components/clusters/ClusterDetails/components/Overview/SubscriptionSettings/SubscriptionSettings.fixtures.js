@@ -30,6 +30,9 @@ const subscription = {
   last_telemetry_date: '0001-01-01T00:00:00Z',
   created_at: '2019-01-02T18:28:14.851121Z',
   updated_at: '2019-01-02T18:28:14.851121Z',
+  isSubscriptionSettingsRequestPending: false,
+  isClusterDetailsPending: false,
+  isLoading: false,
 };
 
 export { subscription, openModal, canEdit, canSubscribeOCP };

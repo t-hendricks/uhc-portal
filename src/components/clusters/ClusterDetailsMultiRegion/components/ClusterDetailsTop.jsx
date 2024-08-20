@@ -319,7 +319,7 @@ ClusterDetailsTop.propTypes = {
   toggleSubscriptionReleased: PropTypes.func.isRequired,
   showPreviewLabel: PropTypes.bool.isRequired,
   isClusterIdentityProvidersLoading: PropTypes.bool.isRequired,
-  clusterIdentityProvidersError: PropTypes.bool.isRequired,
+  clusterIdentityProvidersError: PropTypes.bool,
   isRefetching: PropTypes.bool.isRequired,
   gcpOrgPolicyWarning: PropTypes.string,
 };

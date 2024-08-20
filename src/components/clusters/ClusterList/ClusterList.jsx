@@ -454,7 +454,7 @@ ClusterList.propTypes = {
   organization: PropTypes.object.isRequired,
   organizationId: PropTypes.string,
   pendingOrganizationAccessRequests: PropTypes.object.isRequired,
-  isOrganizationAccessProtectionEnabled: PropTypes.object.isRequired,
+  isOrganizationAccessProtectionEnabled: PropTypes.bool,
   cloudProviders: PropTypes.object.isRequired,
   machineTypes: PropTypes.object.isRequired,
   openModal: PropTypes.func.isRequired,
