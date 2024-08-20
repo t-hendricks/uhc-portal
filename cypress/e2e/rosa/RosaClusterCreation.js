@@ -1,6 +1,7 @@
 import ClusterDetailsPage from '../../pageobjects/ClusterDetails.page';
-import ClusterListPage from '../../pageobjects/ClusterList.page';
 import CreateRosaWizardPage from '../../pageobjects/CreateRosaWizard.page';
+import CreateClusterPage from '../../pageobjects/CreateCluster.page';
+import OverviewPage from '../../pageobjects/Overview.page';
 
 // awsAccountID,rolePrefix and installerARN are set by prerun script for smoke requirements.
 const awsAccountID = Cypress.env('QE_AWS_ID');
@@ -14,13 +15,11 @@ describe(
   { tags: ['smoke'] },
   () => {
     before(() => {
-      cy.visit('/cluster-list');
-      ClusterListPage.waitForDataReady();
-      ClusterListPage.isClusterListScreen();
+      OverviewPage.viewAllOpenshiftClusterTypesLink().click();
+      CreateClusterPage.isCreateClusterPageHeaderVisible();
     });
 
     it('Open Rosa cluster wizard', () => {
-      cy.getByTestId('create_cluster_btn').click();
       CreateRosaWizardPage.rosaCreateClusterButton().click();
       CreateRosaWizardPage.rosaClusterWithWeb().should('be.visible').click();
       CreateRosaWizardPage.isCreateRosaPage();

@@ -1,6 +1,7 @@
 import ClusterDetailsPage from '../../pageobjects/ClusterDetails.page';
-import ClusterListPage from '../../pageobjects/ClusterList.page';
 import CreateRosaWizardPage from '../../pageobjects/CreateRosaWizard.page';
+import CreateClusterPage from '../../pageobjects/CreateCluster.page';
+import OverviewPage from '../../pageobjects/Overview.page';
 
 const clusterPropertiesFile = require('../../fixtures/rosa/RosaClusterDefaultPublicMultiZoneProperties.json');
 
@@ -14,13 +15,11 @@ describe(
   { tags: ['day1', 'rosa', 'public', 'multi-zone', 'default'] },
   () => {
     before(() => {
-      cy.visit('/cluster-list');
-      ClusterListPage.waitForDataReady();
-      ClusterListPage.isClusterListScreen();
+      OverviewPage.viewAllOpenshiftClusterTypesLink().click();
+      CreateClusterPage.isCreateClusterPageHeaderVisible();
     });
 
     it('Open Rosa cluster wizard', () => {
-      cy.getByTestId('create_cluster_btn').click();
       CreateRosaWizardPage.rosaCreateClusterButton().click();
       CreateRosaWizardPage.rosaClusterWithWeb().should('be.visible').click();
       CreateRosaWizardPage.isCreateRosaPage();

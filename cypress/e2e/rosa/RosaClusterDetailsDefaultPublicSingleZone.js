@@ -9,6 +9,9 @@ describe(
   { tags: ['day2', 'rosa', 'default', 'singlezone'] },
   () => {
     before(() => {
+      cy.visit('/cluster-list');
+      ClusterListPage.waitForDataReady();
+      ClusterListPage.isClusterListScreen();
       ClusterListPage.filterTxtField().should('be.visible').click();
       ClusterListPage.filterTxtField().clear().type(clusterPropertiesFile.ClusterName);
       ClusterListPage.waitForDataReady();

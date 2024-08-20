@@ -1,6 +1,7 @@
-import ClusterListPage from '../../pageobjects/ClusterList.page';
 import CreateRosaWizardPage from '../../pageobjects/CreateRosaWizard.page';
 import LeaveCreateClusterPrompt from '../../pageobjects/LeaveCreateClusterPrompt';
+import CreateClusterPage from '../../pageobjects/CreateCluster.page';
+import OverviewPage from '../../pageobjects/Overview.page';
 
 const clusterFieldValidations = require('../../fixtures/rosa/RosaClusterHostedWizardValidation.json');
 
@@ -14,13 +15,11 @@ const clusterName = `smoke-cypress-rosa-hypershift-${(Math.random() + 1).toStrin
 
 describe('Rosa hosted(Hypershift) cluster wizard validations', { tags: ['smoke', 'hcp'] }, () => {
   before(() => {
-    cy.visit('/cluster-list');
-    ClusterListPage.waitForDataReady();
-    ClusterListPage.isClusterListScreen();
+    OverviewPage.viewAllOpenshiftClusterTypesLink().click();
+    CreateClusterPage.isCreateClusterPageHeaderVisible();
   });
 
   it('Open Rosa cluster wizard', () => {
-    cy.getByTestId('create_cluster_btn').click();
     CreateRosaWizardPage.rosaCreateClusterButton().click();
     CreateRosaWizardPage.rosaClusterWithWeb().should('be.visible').click();
     CreateRosaWizardPage.isCreateRosaPage();

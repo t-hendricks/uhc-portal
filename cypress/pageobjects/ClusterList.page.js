@@ -21,6 +21,7 @@ class ClusterList extends Page {
   goToFirstPageBtn = () => cy.get('button[aria-label="Go to first page"]').last();
   typeColumnsInClusterList = () => cy.get('td[data-label="Type"] span');
   filterdClusterTypesValues = () => cy.get('span.pf-v5-c-chip__text');
+  createClusterButton = () => cy.getByTestId('create_cluster_btn');
 
   isRegisterClusterUrl() {
     super.assertUrlIncludes('/openshift/register');
