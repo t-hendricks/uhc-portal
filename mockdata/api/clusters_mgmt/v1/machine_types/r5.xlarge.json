@@ -20,5 +20,5 @@
   },
   "ccs_only": false,
   "generic_name": "highmem-4",
-  "architecture": ""
+  "architecture": "amd64"
 }

@@ -1,0 +1,9 @@
+{
+  "kind": "PrivateLinkConfiguration",
+  "id": "private_link_configuration",
+  "href": "/api/clusters_mgmt/v1/clusters/2d8fv7jdbj46pivj8bmhcb9ckdmgs88a/aws/private_link_configuration",
+  "link": {
+    "kind": "PrivateLinkPrincipalListLink",
+    "href": "/api/clusters_mgmt/v1/clusters/2d8fv7jdbj46pivj8bmhcb9ckdmgs88a/aws/private_link_configuration/principals"
+  }
+}

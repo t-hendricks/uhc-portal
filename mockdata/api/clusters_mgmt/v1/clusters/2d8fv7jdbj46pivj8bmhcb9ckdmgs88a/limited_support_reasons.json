@@ -1,0 +1,19 @@
+{
+  "kind": "LimitedSupportReasonList",
+  "page": 1,
+  "size": 1,
+  "total": 1,
+  "items": [
+    {
+      "kind": "LimitedSupportReason",
+      "id": "d285b55e-5ec1-11ef-8003-0a580a81031c",
+      "href": "/api/clusters_mgmt/v1/clusters/2d8fv7jdbj46pivj8bmhcb9ckdmgs88a/limited_support_reasons/d285b55e-5ec1-11ef-8003-0a580a81031c",
+      "summary": "Cluster version has reached end of supported life cycle",
+      "details": "This cluster version's supported life cycle has ended and this cluster is in limited support. To restore full support, please upgrade this cluster to a supported minor version, or it will enter a limited support status. To determine supported minor versions or for more information, visit https://docs.openshift.com/dedicated/osd_policy/osd-life-cycle.html",
+      "creation_timestamp": "2024-08-20T07:00:02.545188Z",
+      "override": {
+        "enabled": true
+      }
+    }
+  ]
+}
