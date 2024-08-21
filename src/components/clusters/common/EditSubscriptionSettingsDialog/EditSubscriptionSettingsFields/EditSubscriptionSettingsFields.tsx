@@ -94,6 +94,7 @@ const EditSubscriptionSettingsFields = ({
         : cpuTotal,
     [cpuTotal, socketTotal, settings.system_units],
   );
+  const initialCpuSocketTotalSet = useMemo(() => cpuTotal || socketTotal, [cpuTotal, socketTotal]);
   const cpuSocketLabel = useMemo(() => getFieldLabel(settings), [settings]);
   const billingModelAlertText = useMemo(
     () =>
@@ -206,7 +207,7 @@ const EditSubscriptionSettingsFields = ({
       doInit(initialSettings);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [doInit, initialSettings]);
+  }, [doInit]);
 
   useEffect(() => {
     if (options && Object.keys(options).length) {
@@ -268,31 +269,34 @@ const EditSubscriptionSettingsFields = ({
         isDisabled={isDisabled || isDisabledByBillingModel || isDisabledBySupportLevel}
         isInline
       />
-      <FormGroup
-        label={
-          settings.system_units === SubscriptionCommonFields.system_units.SOCKETS
-            ? 'Number of sockets (excluding control plane nodes)'
-            : 'Number of compute cores (excluding control plane nodes)'
-        }
-        isRequired={isDisconnected}
-      >
-        <CpuSocketNumberField
-          minVal={MIN_VAL}
-          isDisconnected={isDisconnected}
-          subscription={settings}
-          cpuSocketValue={cpuSocketValue}
-          cpuSocketLabel={cpuSocketLabel}
-          isDisabled={isDisabled || isDisabledByBillingModel || isDisabledBySupportLevel}
-          handleChange={(settingName: string, value: any) =>
-            handleChange(options, settingName, value)
+      {(isDisabled || isDisabledByBillingModel || isDisabledBySupportLevel) &&
+      initialCpuSocketTotalSet ? null : (
+        <FormGroup
+          label={
+            settings.system_units === SubscriptionCommonFields.system_units.SOCKETS
+              ? 'Number of sockets (excluding control plane nodes)'
+              : 'Number of compute cores (excluding control plane nodes)'
           }
-        />
-        <FormGroupHelperText touched error={systemUnitsNumericErrorMsg}>
-          {isDisconnected
-            ? `${settings.system_units} value can be any integer larger than ${MIN_VAL}`
-            : ''}
-        </FormGroupHelperText>
-      </FormGroup>
+          isRequired={isDisconnected}
+        >
+          <CpuSocketNumberField
+            minVal={MIN_VAL}
+            isDisconnected={isDisconnected}
+            subscription={settings}
+            cpuSocketValue={cpuSocketValue}
+            cpuSocketLabel={cpuSocketLabel}
+            isDisabled={isDisabled || isDisabledByBillingModel || isDisabledBySupportLevel}
+            handleChange={(settingName: string, value: any) =>
+              handleChange(options, settingName, value)
+            }
+          />
+          <FormGroupHelperText touched error={systemUnitsNumericErrorMsg}>
+            {isDisconnected
+              ? `${settings.system_units} value can be any integer larger than ${MIN_VAL}`
+              : ''}
+          </FormGroupHelperText>
+        </FormGroup>
+      )}
       <Tooltips
         isShown={isDisabledByBillingModel}
         startPosition={isBillingModelVisible ? 1 : 0}
