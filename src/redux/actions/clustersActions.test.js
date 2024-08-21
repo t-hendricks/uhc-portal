@@ -113,7 +113,12 @@ describe('clustersActions', () => {
       const isMarketplaceGcp = true;
       const isHCP = true;
       clustersActions.getInstallableVersions(isRosa, isMarketplaceGcp, isHCP);
-      expect(clusterService.getInstallableVersions).toBeCalledWith(isRosa, isMarketplaceGcp, isHCP);
+      expect(clusterService.getInstallableVersions).toBeCalledWith(
+        isRosa,
+        isMarketplaceGcp,
+        isHCP,
+        false,
+      );
     });
   });
 });
