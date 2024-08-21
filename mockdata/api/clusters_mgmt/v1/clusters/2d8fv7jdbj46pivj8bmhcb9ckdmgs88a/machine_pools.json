@@ -1,0 +1,25 @@
+{
+  "kind": "MachinePoolList",
+  "href": "/api/clusters_mgmt/v1/clusters/2d8fv7jdbj46pivj8bmhcb9ckdmgs88a/machine_pools",
+  "page": 1,
+  "size": 1,
+  "total": 1,
+  "items": [
+    {
+      "kind": "MachinePool",
+      "href": "/api/clusters_mgmt/v1/clusters/2d8fv7jdbj46pivj8bmhcb9ckdmgs88a/machine_pools/worker",
+      "id": "worker",
+      "replicas": 4,
+      "instance_type": "m5.xlarge",
+      "availability_zones": [
+        "us-west-1a"
+      ],
+      "aws": {
+        "tags": {
+          "red-hat-clustertype": "osd",
+          "red-hat-managed": "true"
+        }
+      }
+    }
+  ]
+}
