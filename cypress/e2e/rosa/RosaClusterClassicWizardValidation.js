@@ -1,6 +1,8 @@
 import ClusterListPage from '../../pageobjects/ClusterList.page';
 import CreateRosaWizardPage from '../../pageobjects/CreateRosaWizard.page';
 import LeaveCreateClusterPrompt from '../../pageobjects/LeaveCreateClusterPrompt';
+import CreateClusterPage from '../../pageobjects/CreateCluster.page';
+import OverviewPage from '../../pageobjects/Overview.page';
 
 const clusterFieldValidations = require('../../fixtures/rosa/RosaClusterClassicWizardValidation.json');
 
@@ -12,13 +14,11 @@ const clusterName = `ocmui-cypress-smoke-rosa-${(Math.random() + 1).toString(36)
 
 describe('Rosa Classic cluster wizard validations', { tags: ['smoke'] }, () => {
   before(() => {
-    cy.visit('/cluster-list');
-    ClusterListPage.waitForDataReady();
-    ClusterListPage.isClusterListScreen();
+    OverviewPage.viewAllOpenshiftClusterTypesLink().click();
+    CreateClusterPage.isCreateClusterPageHeaderVisible();
   });
 
   it('Open Rosa cluster wizard', () => {
-    cy.getByTestId('create_cluster_btn').click();
     CreateRosaWizardPage.rosaCreateClusterButton().click();
     CreateRosaWizardPage.rosaClusterWithWeb().should('be.visible').click();
     CreateRosaWizardPage.isCreateRosaPage();
