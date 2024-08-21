@@ -18,7 +18,7 @@ type LimitedSupportAlertProps = {
     id?: string;
     summary?: string;
     details?: string;
-    override: { enabled: boolean };
+    override?: { enabled: boolean };
   }[];
   isROSA?: boolean;
   isOSD?: boolean;
@@ -29,12 +29,12 @@ const LimitedSupportAlert = ({
   isROSA,
   isOSD,
 }: LimitedSupportAlertProps) => {
-  const legitReasons = limitedSupportReasons?.filter((r) => !r.override.enabled) || [];
-  if (!legitReasons.length) {
-    return null;
-  }
+  const legitReasons = React.useMemo(
+    () => limitedSupportReasons?.filter((r) => !r.override?.enabled) || [],
+    [limitedSupportReasons],
+  );
 
-  return (
+  return !legitReasons.length ? null : (
     <Alert
       id="limited-support-alert"
       variant="danger"
