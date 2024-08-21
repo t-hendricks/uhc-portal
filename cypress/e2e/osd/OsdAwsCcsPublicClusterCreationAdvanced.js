@@ -19,8 +19,10 @@ describe(
   'OSD AWS CCS Cluster - Create public advanced AWS CCS cluster - OCP-21100, OCP-42745',
   { tags: ['day1', 'aws', 'public', 'advanced'] },
   () => {
-    it('Launch OSD AWS CCS cluster wizard', () => {
+    before(() => {
       cy.visit('/create');
+    });
+    it('Launch OSD AWS CCS cluster wizard', () => {
       CreateClusterPage.isCreateClusterPage();
       CreateOSDWizardPage.osdCreateClusterButton().click();
       CreateOSDWizardPage.isCreateOSDPage();
