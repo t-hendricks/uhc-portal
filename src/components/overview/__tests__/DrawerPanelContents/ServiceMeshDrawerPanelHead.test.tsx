@@ -1,7 +1,7 @@
 import RedHatOpenShiftServiceMeshLogo from '~/styles/images/RedHatOpenShiftServiceMeshLogo.svg';
 import { checkAccessibility, render, screen } from '~/testUtils';
 
-import ServiceMeshDrawerPanelHead from '../../components/RecommendedOperatorsCards/DrawerPanelContents/ServiceMesh/DrawerPanelHead';
+import ServiceMeshDrawerPanelHead from '../../components/common/DrawerPanelContents/ServiceMesh/DrawerPanelHead';
 
 import '@testing-library/jest-dom';
 

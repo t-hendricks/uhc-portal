@@ -2,12 +2,12 @@ import React from 'react';
 
 import { render, screen, userEvent } from '~/testUtils';
 
+import ProductCard from '../components/common/ProductCard/ProductCard';
 import { PRODUCT_CARD_TEST_CASES } from '../components/fixtures';
-import ProductCard from '../components/ProductCard/ProductCard';
 
 import '@testing-library/jest-dom';
 
-describe('ProductCard', () => {
+describe('<ProductCard />', () => {
   it('renders an unselected card', async () => {
     render(<ProductCard {...PRODUCT_CARD_TEST_CASES.UNSELECTED} />);
 
@@ -23,6 +23,9 @@ describe('ProductCard', () => {
 
     expect(screen.getByTestId('open-right-drawer-icon')).toBeInTheDocument();
 
+    expect(
+      screen.getByTestId('product-overview-card__learn-more-button-some-id'),
+    ).toBeInTheDocument();
     const readMoreBtn = screen.getByText(/Learn more/i);
     await userEvent.click(readMoreBtn);
     expect(openLearnMore).toHaveBeenCalled();

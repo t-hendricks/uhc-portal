@@ -14,7 +14,7 @@ import {
 } from '@patternfly/react-core';
 import { OpenDrawerRightIcon } from '@patternfly/react-icons/dist/esm/icons/open-drawer-right-icon';
 
-import { DrawerPanelContentNode } from '../RecommendedOperatorsCards/DrawerPanelContent';
+import { DrawerPanelContentNode } from '../DrawerPanelContent';
 
 import './ProductCard.scss';
 
@@ -26,6 +26,7 @@ type ProductCardProps = {
   drawerPanelContent?: DrawerPanelContentNode;
   openLearnMore: (title: string, content?: DrawerPanelContentNode) => void;
   isSelected: boolean;
+  dataTestId: string;
 };
 
 const ProductCard = ({
@@ -36,6 +37,7 @@ const ProductCard = ({
   drawerPanelContent,
   openLearnMore,
   isSelected,
+  dataTestId,
 }: ProductCardProps) => (
   <Card
     className={`product-overview-card ${isSelected ? 'pf-m-selectable-raised pf-m-selected-raised' : ''}`}
@@ -72,7 +74,7 @@ const ProductCard = ({
         variant="link"
         icon={<OpenDrawerRightIcon data-testid="open-right-drawer-icon" />}
         iconPosition="end"
-        data-testid="product-overview-card__learn-more-button"
+        data-testid={`product-overview-card__learn-more-button-${dataTestId}`}
       >
         Learn more
       </Button>

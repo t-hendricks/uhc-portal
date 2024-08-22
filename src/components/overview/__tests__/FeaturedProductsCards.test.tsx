@@ -4,32 +4,37 @@ import { CompatRouter } from 'react-router-dom-v5-compat';
 
 import { checkAccessibility, render, screen, userEvent, waitFor } from '~/testUtils';
 
+import { FeaturedProductsCards } from '../components/FeaturedProductsCards/FeaturedProductsCards';
 import {
-  RECOMMENDED_OPERATORS_CARDS_DATA,
-  RECOMMENDED_OPERATORS_CARDS_TEST_CASES,
+  FEATURED_PRODUCTS_CARDS,
+  FEATURED_PRODUCTS_CARDS_TEST_CASES,
 } from '../components/fixtures';
-import RecommendedOperatorsCards from '../components/RecommendedOperatorsCards/RecommendedOperatorsCards';
 
 import '@testing-library/jest-dom';
 
-describe('RecommendedOperatorsCards', () => {
-  const { openLearnMore } = RECOMMENDED_OPERATORS_CARDS_TEST_CASES.NON_SELECTED;
+const TITLE = 'Featured products';
+
+describe('<FeaturedProductsCards />', () => {
+  // Arrange
+  const { openLearnMore } = FEATURED_PRODUCTS_CARDS_TEST_CASES.NON_SELECTED;
   let index = 0;
 
-  it.each(RECOMMENDED_OPERATORS_CARDS_DATA)(
+  it.each(FEATURED_PRODUCTS_CARDS)(
     'renders "$title" card, verifies some card details and ensures it is not selected',
     async ({ title, logo, description, drawerPanelContent }) => {
+      // Arrange
       render(
         <BrowserRouter>
           <CompatRouter>
-            <RecommendedOperatorsCards {...RECOMMENDED_OPERATORS_CARDS_TEST_CASES.NON_SELECTED} />
+            <FeaturedProductsCards {...FEATURED_PRODUCTS_CARDS_TEST_CASES.NON_SELECTED} />
           </CompatRouter>
         </BrowserRouter>,
       );
 
+      // Assert
       // Cards Info:
       const readMoreBtns = screen.getAllByTestId(
-        'product-overview-card__learn-more-button-Recommended operators',
+        `product-overview-card__learn-more-button-${TITLE}`,
       );
 
       const productCardLogos = screen.getAllByTestId('product-overview-card__logo');
@@ -56,68 +61,62 @@ describe('RecommendedOperatorsCards', () => {
   );
 
   it('renders title, link and all cards & checks functionality', async () => {
+    // Arrange
     const { container } = render(
       <BrowserRouter>
         <CompatRouter>
-          <RecommendedOperatorsCards {...RECOMMENDED_OPERATORS_CARDS_TEST_CASES.NON_SELECTED} />
+          <FeaturedProductsCards {...FEATURED_PRODUCTS_CARDS_TEST_CASES.NON_SELECTED} />
         </CompatRouter>
       </BrowserRouter>,
     );
 
+    // Assert
     // title:
-    expect(screen.getByText('Recommended operators')).toBeInTheDocument();
-
-    // link:
-    const viewAllInEcosystemCatalogLink = screen.getByText('View all in Ecosystem Catalog');
-    expect(viewAllInEcosystemCatalogLink).toBeInTheDocument();
-    expect(viewAllInEcosystemCatalogLink).toHaveAttribute(
-      'href',
-      'https://catalog.redhat.com/search?searchType=software&deployed_as=Operator',
-    );
+    expect(screen.getByText(TITLE)).toBeInTheDocument();
 
     // Cards Info:
-    const readMoreBtns = screen.getAllByTestId(
-      'product-overview-card__learn-more-button-Recommended operators',
-    );
+    const readMoreBtns = screen.getAllByTestId(`product-overview-card__learn-more-button-${TITLE}`);
 
     const productCardLogos = screen.getAllByTestId('product-overview-card__logo');
-    expect(productCardLogos).toHaveLength(3);
+    expect(productCardLogos).toHaveLength(2);
 
     const productOverviewCards = screen.getAllByTestId('product-overview-card');
 
-    // click on learn more button of Service Mesh
-    const readMoreBtn = readMoreBtns[2];
+    // click on learn more button of Openshift AI
+    const readMoreBtn = readMoreBtns[1];
     await userEvent.click(readMoreBtn);
 
     await waitFor(() => expect(productOverviewCards[0]).not.toHaveClass('pf-m-selected-raised'));
-    // ensure gitops and pipelines cards are NOT selected
-    for (let i = 0; i < 2; i += 1)
-      expect(productOverviewCards[i]).not.toHaveClass('pf-m-selected-raised');
+    // ensure Advanced Cluster Security card is NOT selected
+    expect(productOverviewCards[0]).not.toHaveClass('pf-m-selected-raised');
 
-    const labelTexts = screen.getAllByText(/Free/i);
-    expect(labelTexts).toHaveLength(3);
+    const labelTexts = screen.getAllByText(/60-day trial/i);
+    expect(labelTexts).toHaveLength(2);
 
     const openRightDrawerIcons = screen.getAllByTestId('open-right-drawer-icon');
-    expect(openRightDrawerIcons).toHaveLength(3);
+    expect(openRightDrawerIcons).toHaveLength(2);
 
     await checkAccessibility(container);
   });
 
-  it('renders gitops as selected card, and the other two cards are not selected', async () => {
+  it('renders advanced cluster security as selected card, and the other card is not selected', async () => {
+    // Arrange
     render(
       <BrowserRouter>
         <CompatRouter>
-          <RecommendedOperatorsCards {...RECOMMENDED_OPERATORS_CARDS_TEST_CASES.GITOPS_SELECTED} />
+          <FeaturedProductsCards
+            {...FEATURED_PRODUCTS_CARDS_TEST_CASES.ADVANCED_CLUSTER_SECURITY_SELECTED}
+          />
         </CompatRouter>
       </BrowserRouter>,
     );
 
+    // Assert
     const productOverviewCards = screen.getAllByTestId('product-overview-card');
-    const gitopsCard = productOverviewCards[0];
-    await waitFor(() => expect(gitopsCard).toHaveClass('pf-m-selected-raised'));
-    expect(gitopsCard).toHaveClass('pf-m-selected-raised');
+    const advancedClusterSecurityCard = productOverviewCards[0];
+    await waitFor(() => expect(advancedClusterSecurityCard).toHaveClass('pf-m-selected-raised'));
+    expect(advancedClusterSecurityCard).toHaveClass('pf-m-selected-raised');
 
-    for (let i = 1; i < 3; i += 1)
-      expect(productOverviewCards[i]).not.toHaveClass('pf-m-selected-raised');
+    expect(productOverviewCards[1]).not.toHaveClass('pf-m-selected-raised');
   });
 });
