@@ -2,8 +2,8 @@ import React from 'react';
 
 import { render, screen, userEvent } from '~/testUtils';
 
+import DrawerPanel from '../components/common/DrawerPanel';
 import { DRAWER_PANEL_TEST_CASES } from '../components/fixtures';
-import DrawerPanel from '../components/RecommendedOperatorsCards/DrawerPanel';
 
 import '@testing-library/jest-dom';
 

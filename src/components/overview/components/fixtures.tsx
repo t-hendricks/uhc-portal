@@ -1,10 +1,10 @@
 import React from 'react';
 
-import {
-  DRAWER_PANEL_CONTENT,
-  DrawerPanelContentNode,
-} from './RecommendedOperatorsCards/DrawerPanelContent';
-import PRODUCT_CARD_LOGOS from './RecommendedOperatorsCards/ProductCardLogos';
+import SomeLogo from '~/styles/images/RedHatOpenShiftGitOpsLogo.svg';
+
+import { DRAWER_PANEL_CONTENT, DrawerPanelContentNode } from './common/DrawerPanelContent';
+import PRODUCT_CARD_LOGOS from './common/ProductCardLogos';
+import { FEATURED_PRODUCTS_CARDS } from './FeaturedProductsCards/FeaturedProductsCards';
 
 const BASIC_PRODUCT_CARD_PROPS = {
   title: 'example title',
@@ -17,6 +17,7 @@ const BASIC_PRODUCT_CARD_PROPS = {
   },
   openLearnMore: jest.fn(),
   isSelected: false,
+  dataTestId: 'some-id',
 };
 
 const PRODUCT_CARD_TEST_CASES = {
@@ -95,9 +96,38 @@ const RECOMMENDED_OPERATORS_CARDS_DATA: RecommendedOperatorsCardsNode[] = [
   },
 ];
 
+const BASIC_FEATURED_PRODUCTS_CARDS_PROPS = {
+  openLearnMore: jest.fn(),
+  selectedCardTitle: '',
+};
+
+const FEATURED_PRODUCTS_CARDS_TEST_CASES = {
+  NON_SELECTED: {
+    ...BASIC_FEATURED_PRODUCTS_CARDS_PROPS,
+  },
+  ADVANCED_CLUSTER_SECURITY_SELECTED: {
+    ...BASIC_FEATURED_PRODUCTS_CARDS_PROPS,
+    selectedCardTitle: PRODUCT_CARD_LOGOS.advancedClusterSecurity.title,
+  },
+};
+
+const GENERAL_DRAWER_PANEL_HEAD_BASIC = {
+  title: 'some title',
+  logo: SomeLogo,
+};
+
+const GENERAL_DRAWER_PANEL_HEAD_WITH_LINK = {
+  ...GENERAL_DRAWER_PANEL_HEAD_BASIC,
+  trialButtonLink: 'https://www.redhat.com/en',
+};
+
 export {
   PRODUCT_CARD_TEST_CASES,
   DRAWER_PANEL_TEST_CASES,
   RECOMMENDED_OPERATORS_CARDS_TEST_CASES,
   RECOMMENDED_OPERATORS_CARDS_DATA,
+  FEATURED_PRODUCTS_CARDS_TEST_CASES,
+  FEATURED_PRODUCTS_CARDS,
+  GENERAL_DRAWER_PANEL_HEAD_BASIC,
+  GENERAL_DRAWER_PANEL_HEAD_WITH_LINK,
 };

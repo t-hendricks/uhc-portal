@@ -1,7 +1,7 @@
 import RedHatOpenShiftPipelinesLogo from '~/styles/images/RedHatOpenShiftPipelinesLogo.svg';
 import { checkAccessibility, render, screen } from '~/testUtils';
 
-import PipelinesDrawerPanelHead from '../../components/RecommendedOperatorsCards/DrawerPanelContents/Pipelines/DrawerPanelHead';
+import PipelinesDrawerPanelHead from '../../components/common/DrawerPanelContents/Pipelines/DrawerPanelHead';
 
 import '@testing-library/jest-dom';
 

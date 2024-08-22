@@ -1,7 +1,7 @@
 import RedHatOpenShiftGitOpsLogo from '~/styles/images/RedHatOpenShiftGitOpsLogo.svg';
 import { checkAccessibility, render, screen } from '~/testUtils';
 
-import GitopsDrawerPanelHead from '../../components/RecommendedOperatorsCards/DrawerPanelContents/Gitops/DrawerPanelHead';
+import GitopsDrawerPanelHead from '../../components/common/DrawerPanelContents/Gitops/DrawerPanelHead';
 
 import '@testing-library/jest-dom';
 

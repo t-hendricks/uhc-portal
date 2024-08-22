@@ -1,6 +1,6 @@
 import { checkAccessibility, render, screen } from '~/testUtils';
 
-import ServiceMeshDrawerPanelBody from '../../components/RecommendedOperatorsCards/DrawerPanelContents/ServiceMesh/DrawerPanelBody';
+import ServiceMeshDrawerPanelBody from '../../components/common/DrawerPanelContents/ServiceMesh/DrawerPanelBody';
 
 import '@testing-library/jest-dom';
 
