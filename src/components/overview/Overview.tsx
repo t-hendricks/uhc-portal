@@ -11,9 +11,10 @@ import OpenShiftProductIcon from '../../styles/images/OpenShiftProductIcon.svg';
 import { AppPage } from '../App/AppPage';
 import { ProductBanner, ProductBannerProps } from '../common/ProductBanner';
 
+import DrawerPanel from './components/common/DrawerPanel';
+import { DrawerPanelContentNode } from './components/common/DrawerPanelContent';
+import { FeaturedProductsCards } from './components/FeaturedProductsCards/FeaturedProductsCards';
 import OfferingCard from './components/OfferingCard/OfferingCard';
-import DrawerPanel from './components/RecommendedOperatorsCards/DrawerPanel';
-import { DrawerPanelContentNode } from './components/RecommendedOperatorsCards/DrawerPanelContent';
 import RecommendedOperatorsCards from './components/RecommendedOperatorsCards/RecommendedOperatorsCards';
 
 import './Overview.scss';
@@ -112,6 +113,7 @@ function OverviewEmptyState() {
           >
             View all OpenShift cluster types
           </InternalTrackingLink>
+          <FeaturedProductsCards openLearnMore={openDrawer} selectedCardTitle={selectedCardTitle} />
           <RecommendedOperatorsCards
             openLearnMore={openDrawer}
             selectedCardTitle={selectedCardTitle}

@@ -86,7 +86,7 @@ const ExternalLink = ({
         // TODO: replace it by <Button component="a" href="..." variant="link" icon={<ExternalLinkSquareAltIcon />} ...
         !noIcon && (
           <Icon size="md" className="external-link-alt-icon">
-            <ExternalLinkAltIcon color="#0066cc" data-testid="openInNewWindowIcon" />
+            <ExternalLinkAltIcon data-testid="openInNewWindowIcon" />
           </Icon>
         )
       }
