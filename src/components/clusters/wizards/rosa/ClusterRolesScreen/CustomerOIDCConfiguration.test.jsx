@@ -140,4 +140,52 @@ describe('<CustomerOIDCConfiguration />', () => {
       expect(await screen.findByPlaceholderText('Filter by config ID')).toBeInTheDocument();
     });
   });
+
+  describe('Create operator roles and rosa login commands', () => {
+    const operatorRolesCommand = `rosa create operator-roles --prefix "hs1-l45w" --oidc-config-id "22qa79chsq8mand8h" --hosted-cp --installer-role-arn arn:aws:iam::269733:role/Installer-Role`;
+
+    it('shows both commands when isMultiRegionEnabled', async () => {
+      mockedUseFetchGetUserOidcConfigurations.mockReturnValue({
+        data: oidcData,
+        isFetching: false,
+        isSuccess: true,
+      });
+
+      const newProps = {
+        ...defaultProps,
+        isMultiRegionEnabled: true,
+        operatorRolesCliCommand: operatorRolesCommand,
+      };
+
+      render(buildTestComponent(<CustomerOIDCConfiguration {...newProps} />));
+
+      expect(
+        await screen.findByText('Run the commands in order to create new Operator Roles.'),
+      ).toBeInTheDocument();
+      expect(screen.getByLabelText('Copyable ROSA region login')).toBeInTheDocument();
+      expect(await screen.findByText(operatorRolesCommand)).toBeInTheDocument();
+    });
+
+    it('shows only create operator roles command when isMultiRegionEnabled is false', async () => {
+      mockedUseFetchGetUserOidcConfigurations.mockReturnValue({
+        data: oidcData,
+        isFetching: false,
+        isSuccess: true,
+      });
+
+      const newProps = {
+        ...defaultProps,
+        isMultiRegionEnabled: false,
+        operatorRolesCliCommand: operatorRolesCommand,
+      };
+
+      render(buildTestComponent(<CustomerOIDCConfiguration {...newProps} />));
+
+      expect(
+        await screen.findByText('Run the command to create new Operator Roles.'),
+      ).toBeInTheDocument();
+      expect(screen.queryByLabelText('Copyable ROSA region login')).not.toBeInTheDocument();
+      expect(await screen.findByText(operatorRolesCommand)).toBeInTheDocument();
+    });
+  });
 });
