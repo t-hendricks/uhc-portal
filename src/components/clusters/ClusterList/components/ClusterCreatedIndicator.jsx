@@ -111,7 +111,6 @@ function ClusterCreatedIndicator({ cluster }) {
         <ExternalLink
           href="https://access.redhat.com/support/policy/updates/openshift/policies"
           noIcon
-          noTarget
         >
           supported
         </ExternalLink>
@@ -119,7 +118,6 @@ function ClusterCreatedIndicator({ cluster }) {
         <ExternalLink
           href="https://www.redhat.com/en/resources/self-managed-openshift-sizing-subscription-guide"
           noIcon
-          noTarget
         >
           OCP subscriptions
         </ExternalLink>
