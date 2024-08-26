@@ -34,7 +34,7 @@ import validators, {
 } from '../../../../../common/validators';
 import ReduxVerticalFormGroup from '../../../../common/ReduxFormComponents/ReduxVerticalFormGroup';
 
-function CreateOIDCProviderInstructions() {
+function CreateOIDCProviderInstructions({ isMultiRegionEnabled, regionLoginCommand }) {
   return (
     <Popover
       aria-label="oidc-creation-instructions"
@@ -44,9 +44,15 @@ function CreateOIDCProviderInstructions() {
       bodyContent={
         <TextContent>
           <p>
-            Create a new OIDC config ID by running the following command in your CLI. Then, refresh
-            and select the new config ID from the dropdown.
+            Create a new OIDC config ID by running the following command
+            {isMultiRegionEnabled ? 's' : ''} in your CLI. Then, refresh and select the new config
+            ID from the dropdown.
           </p>
+          {isMultiRegionEnabled && (
+            <ClipboardCopy className="pf-v5-u-pb-md" isReadOnly>
+              {regionLoginCommand}
+            </ClipboardCopy>
+          )}
           <ClipboardCopy isReadOnly>rosa create oidc-config</ClipboardCopy>
         </TextContent>
       }
@@ -141,7 +147,12 @@ function CustomerOIDCConfiguration({
       <Instruction simple>
         <TextContent className="pf-v5-u-pb-md">
           <div>
-            Select your existing OIDC config id or <CreateOIDCProviderInstructions />.
+            Select your existing OIDC config id or{' '}
+            <CreateOIDCProviderInstructions
+              isMultiRegionEnabled={isMultiRegionEnabled}
+              regionLoginCommand={rosaRegionLoginCommand}
+            />
+            .
           </div>
         </TextContent>
 
@@ -229,7 +240,9 @@ function CustomerOIDCConfiguration({
       <Instruction simple>
         <TextContent className="pf-v5-u-pb-md">
           <Text component={TextVariants.p}>
-            Run the command{isMultiRegionEnabled ? 's' : ''} to create new Operator Roles.
+            {isMultiRegionEnabled
+              ? 'Run the commands in order to create new Operator Roles.'
+              : 'Run the command to create new Operator Roles.'}
           </Text>
         </TextContent>
         {operatorRolesCliCommand ? (
@@ -263,6 +276,11 @@ function CustomerOIDCConfiguration({
     </Instructions>
   );
 }
+
+CreateOIDCProviderInstructions.propTypes = {
+  isMultiRegionEnabled: PropTypes.bool.isRequired,
+  regionLoginCommand: PropTypes.string.isRequired,
+};
 
 CustomerOIDCConfiguration.propTypes = {
   awsAccountID: PropTypes.string,
