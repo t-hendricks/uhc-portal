@@ -39,8 +39,10 @@ before(() => {
 
     Login.login();
 
-    OverviewPage.isOverviewUrl();
-    OverviewPage.isOverviewPage();
+    if (!Cypress.env('GOV_CLOUD')) {
+      OverviewPage.isOverviewUrl();
+      OverviewPage.isOverviewPage();
+    }
   });
 });
 
