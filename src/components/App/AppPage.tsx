@@ -8,6 +8,7 @@ import { AppDrawer } from './AppDrawer';
 import EnvOverrideMessage from './EnvOverrideMessage';
 import ErrorBoundary from './ErrorBoundary';
 import MultiRegionOverrideMessage from './MultiregionOverrideMessage';
+import NewClusterListOverrideMessage from './NewClusterListOverrideMessage';
 import RestrictedEnvOverrideMessage from './RestrictedEnvOverrideMessage';
 
 export const AppPage: React.FC<PropsWithChildren<{ title?: string }>> = ({ children, title }) => {
@@ -24,6 +25,7 @@ export const AppPage: React.FC<PropsWithChildren<{ title?: string }>> = ({ child
         {restrictedEnvOverride && <RestrictedEnvOverrideMessage />}
         {config.envOverride && <EnvOverrideMessage env={config.envOverride} />}
         {config.multiRegion && <MultiRegionOverrideMessage />}
+        {config.newClusterList && <NewClusterListOverrideMessage />}
       </div>
       <ErrorBoundary>{children}</ErrorBoundary>
     </AppDrawer>

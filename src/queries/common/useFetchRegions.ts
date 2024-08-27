@@ -11,6 +11,7 @@ export const useFetchRegions = ({
   staleTime = 30000,
   refetchInterval = Infinity,
   returnAll = false,
+  getMultiRegion = true,
 }) => {
   const { isError, data, isLoading, isFetching, error, isFetched } = useQuery({
     queryKey: [mainQueryKey, 'getRegions'],
@@ -19,15 +20,20 @@ export const useFetchRegions = ({
     // TODO this is currently hard-coded
     // but will be changed to get the information from
     // an api endpoint once that endpoint is ready
-    queryFn: () => ({
-      aws: {
-        'ap-southeast-1': {
-          total: 100,
-          'api.stage.openshift.com': 90,
-          '***REMOVED***': 10,
+    queryFn: () => {
+      if (!getMultiRegion) {
+        return {};
+      }
+      return {
+        aws: {
+          'ap-southeast-1': {
+            total: 100,
+            'api.stage.openshift.com': 90,
+            '***REMOVED***': 10,
+          },
         },
-      },
-    }),
+      };
+    },
   });
 
   // We need to convert the returned data into

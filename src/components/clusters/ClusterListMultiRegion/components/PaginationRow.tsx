@@ -42,6 +42,5 @@ export const PaginationRow = ({
     isDisabled={isDisabled}
     onFirstClick={onPageChange}
     onLastClick={onPageChange}
-    onSetPage={onPageChange}
   />
 );
