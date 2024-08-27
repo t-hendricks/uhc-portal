@@ -494,12 +494,24 @@ const Router: React.FC<RouterProps> = ({ history, planType, clusterId, externalC
                 isAccessRequestEnabled && !isRestrictedEnv() ? AccessRequestNavigate : NotFoundError
               }
             />
+
             <CompatRoute
               path="/cluster-list"
               exact
-              component={
-                config.multiRegion && isMultiRegionEnabled ? ClusterListMultiRegion : ClustersList
-              }
+              render={() => {
+                if (config.newClusterList) {
+                  return (
+                    <ClusterListMultiRegion useClientSortPaging={false} getMultiRegion={false} />
+                  );
+                }
+
+                return config.multiRegion && isMultiRegionEnabled ? (
+                  <ClusterListMultiRegion useClientSortPaging />
+                ) : (
+                  // @ts-ignore
+                  <ClustersList />
+                );
+              }}
             />
             <CompatRoute
               path="/"

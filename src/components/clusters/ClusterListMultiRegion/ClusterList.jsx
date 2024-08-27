@@ -38,12 +38,18 @@ import { ONLY_MY_CLUSTERS_TOGGLE_CLUSTERS_LIST } from '~/common/localStorageCons
 import { AppPage } from '~/components/App/AppPage';
 import { useFetchClusters } from '~/queries/ClusterListQueries/useFetchClusters';
 import { clustersActions } from '~/redux/actions';
+import {
+  onListFlagsSet,
+  onPageInput,
+  onPerPageSelect,
+  onSetTotalClusters,
+  viewActions,
+} from '~/redux/actions/viewOptionsActions';
 import { CLUSTERS_VIEW } from '~/redux/constants/viewConstants';
 import { isRestrictedEnv } from '~/restrictedEnv';
 
 import helpers from '../../../common/helpers';
 import { normalizedProducts } from '../../../common/subscriptionTypes';
-import { onListFlagsSet, viewActions } from '../../../redux/actions/viewOptionsActions';
 import { viewConstants } from '../../../redux/constants';
 import ErrorBox from '../../common/ErrorBox';
 import Unavailable from '../../common/Unavailable';
@@ -124,10 +130,25 @@ const ClusterList = ({
   closeModal,
   clearGlobalError,
   openModal,
+  getMultiRegion,
+  useClientSortPaging,
 }) => {
   const dispatch = useDispatch();
-  const { isLoading, data, refetch, isError, errors, isFetching, isFetched } = useFetchClusters();
+  const viewType = viewConstants.CLUSTERS_VIEW;
+
+  const { isLoading, data, refetch, isError, errors, isFetching, isFetched } = useFetchClusters(
+    getMultiRegion,
+    useClientSortPaging,
+  );
+
   const clusters = data?.items;
+  const clustersTotal = useSelector((state) => state.viewOptions[viewType]?.totalCount);
+
+  React.useEffect(() => {
+    if (!isLoading || data?.itemsCount > 0) {
+      dispatch(onSetTotalClusters(data?.itemsCount, viewType));
+    }
+  }, [data?.itemsCount, dispatch, viewType, isLoading]);
 
   const errorDetails = (errors || []).reduce((errorArray, error) => {
     if (!error.reason) {
@@ -139,10 +160,12 @@ const ClusterList = ({
     ];
   }, []);
 
-  const [currentPage, setCurrentPage] = React.useState(1);
-  const [pageSize, setPageSize] = React.useState(50);
-  const [itemsStart, setItemsStart] = React.useState(0);
-  const [itemsEnd, setItemsEnd] = React.useState(0);
+  const currentPage = useSelector((state) => state.viewOptions[viewType]?.currentPage);
+  const pageSize = useSelector((state) => state.viewOptions[viewType]?.pageSize);
+
+  const itemsStart =
+    currentPage && pageSize && clustersTotal > 0 ? (currentPage - 1) * pageSize + 1 : 0;
+  const itemsEnd = currentPage && pageSize ? Math.min(currentPage * pageSize, clustersTotal) : 0;
 
   const preLoadRedux = React.useCallback(() => {
     // Items not needed for this list, but may be needed elsewhere in the app
@@ -174,47 +197,34 @@ const ClusterList = ({
   /* Pagination */
   const onPageChange = React.useCallback(
     (_event, page) => {
-      setCurrentPage(page);
-      setItemsStart((page - 1) * pageSize + 1);
-      setItemsEnd(Math.min(page * pageSize, clusters?.length || 0));
+      dispatch(onPageInput(page, viewType));
     },
-    [pageSize, clusters],
+    [dispatch, viewType],
   );
 
   React.useEffect(() => {
-    if (clusters && clusters.length > 0 && currentPage === 1) {
-      setItemsStart(1);
-      setItemsEnd(clusters.length > pageSize ? pageSize : clusters.length);
-    }
-    if (!clusters || clusters.length === 0) {
-      setItemsStart(0);
-      setItemsEnd(0);
-      setCurrentPage(1);
-    }
-
-    if (clusters && clusters.length < itemsStart) {
+    if (clusters && clustersTotal < itemsStart && !isLoading) {
       // The user was on a page that no longer exists
-      const newPage = Math.ceil(clusters.length / pageSize);
+      const newPage = Math.ceil(clustersTotal / pageSize);
       onPageChange(undefined, newPage);
     }
-  }, [clusters, itemsStart, currentPage, pageSize, onPageChange]);
+  }, [clusters, itemsStart, currentPage, pageSize, onPageChange, clustersTotal, isLoading]);
 
-  const onPerPageSelect = (_event, newPerPage, newPage, startIdx, endIdx) => {
-    setCurrentPage(newPage);
-    setPageSize(newPerPage);
-    setItemsStart(startIdx + 1);
-    setItemsEnd(Math.min(endIdx, clusters.length));
+  const onPerPageChange = (_event, newPerPage, newPage /* startIdx, endIdx */) => {
+    dispatch(onPageInput(newPage, viewType));
+    dispatch(onPerPageSelect(newPerPage, viewType, true));
   };
 
-  /* Sorting */
-  const sortOptions = useSelector(
-    (state) => state.viewOptions[viewConstants.CLUSTERS_VIEW]?.sorting,
-  );
+  const sortOptions = useSelector((state) => state.viewOptions[viewType]?.sorting);
+  let sortedClusters = clusters;
+
   const activeSortIndex = sortOptions.sortField;
   const activeSortDirection = sortOptions.isAscending ? SortByDirection.asc : SortByDirection.desc;
-  // Note: initial sort order is set in the reducer
-  const sortedClusters = sortClusters(clusters, activeSortIndex, activeSortDirection);
-
+  /* Sorting */
+  if (useClientSortPaging) {
+    // Note: initial sort order is set in the reducer
+    sortedClusters = sortClusters(clusters, activeSortIndex, activeSortDirection);
+  }
   // onMount and willUnmount
   React.useEffect(() => {
     preLoadRedux();
@@ -226,7 +236,7 @@ const ClusterList = ({
           {
             plan_id: [normalizedProducts.ROSA],
           },
-          viewConstants.CLUSTERS_VIEW,
+          viewType,
         ),
       );
     }
@@ -338,12 +348,12 @@ const ClusterList = ({
                   <PaginationRow
                     currentPage={currentPage}
                     pageSize={pageSize}
-                    itemCount={clusters?.length || 0}
+                    itemCount={clustersTotal}
                     variant="top"
                     isDisabled={isPendingNoData}
                     itemsStart={itemsStart}
                     itemsEnd={itemsEnd}
-                    onPerPageSelect={onPerPageSelect}
+                    onPerPageSelect={onPerPageChange}
                     onPageChange={onPageChange}
                   />
                 </ToolbarItem>
@@ -363,9 +373,12 @@ const ClusterList = ({
             ) : (
               <ClusterListTable
                 openModal={openModal}
-                clusters={sortedClusters?.slice(itemsStart - 1, itemsEnd) || []}
+                clusters={
+                  (useClientSortPaging
+                    ? sortedClusters?.slice(itemsStart - 1, itemsEnd)
+                    : clusters) || []
+                }
                 isPending={isPendingNoData}
-                refreshFunc={refetch}
                 activeSortIndex={activeSortIndex}
                 activeSortDirection={activeSortDirection}
                 setSort={(index, direction) => {
@@ -374,19 +387,20 @@ const ClusterList = ({
                     sortField: index,
                   };
 
-                  dispatch(viewActions.onListSortBy(sorting, viewConstants.CLUSTERS_VIEW));
+                  dispatch(viewActions.onListSortBy(sorting, viewType));
                 }}
+                useClientSortPaging={useClientSortPaging}
               />
             )}
             <PaginationRow
               currentPage={currentPage}
               pageSize={pageSize}
-              itemCount={clusters?.length || 0}
+              itemCount={clustersTotal}
               variant="bottom"
               isDisabled={isPendingNoData}
               itemsStart={itemsStart}
               itemsEnd={itemsEnd}
-              onPerPageSelect={onPerPageSelect}
+              onPerPageSelect={onPerPageChange}
               onPageChange={onPageChange}
             />
             <CommonClusterModals onClose={() => refetch()} clearMachinePools />
@@ -412,6 +426,12 @@ ClusterList.propTypes = {
   }),
 
   clearGlobalError: PropTypes.func.isRequired,
+  getMultiRegion: PropTypes.bool,
+  useClientSortPaging: PropTypes.bool,
+};
+ClusterList.defaultProps = {
+  getMultiRegion: true,
+  useClientSortPaging: true,
 };
 
 export default ClusterList;

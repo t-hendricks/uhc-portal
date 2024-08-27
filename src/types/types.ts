@@ -19,14 +19,16 @@ export type Chrome = ChromeAPI & {
   };
 };
 
+export type ViewOptionsFilter =
+  | string
+  | { description?: string; loggedBy?: string; timestampFrom?: string; timestampTo?: string };
+
 export type ViewOptions = {
   currentPage: number;
   pageSize: number;
   totalCount: number;
   totalPages: number;
-  filter:
-    | string
-    | { description?: string; loggedBy?: string; timestampFrom?: string; timestampTo?: string };
+  filter: ViewOptionsFilter;
   sorting: {
     sortField: string;
     isAscending: boolean;

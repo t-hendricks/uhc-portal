@@ -1,5 +1,5 @@
 import { getClusterServiceForRegion } from '~/services/clusterService';
-import { ClusterWithPermissions } from '~/types/types';
+import { ClusterWithPermissions, ViewOptions } from '~/types/types';
 
 import { normalizeSubscription } from '../../../common/normalize';
 import { accountsService } from '../../../services';
@@ -12,15 +12,10 @@ import {
   formatClusterListError,
 } from './createResponseForFetchCluster';
 
-type ModifiedViewOptions = {
-  filter?: string;
-  flags?: { [flag: string]: any };
-};
-
 export const fetchPageOfRegionalClusters = async (
   page: number,
   region: Region,
-  viewOptions?: ModifiedViewOptions,
+  viewOptions?: ViewOptions,
   userName?: string,
 ) => {
   // Get clusters for a region
@@ -75,10 +70,12 @@ export const fetchPageOfRegionalClusters = async (
 
   let subscriptionResponse;
   try {
-    subscriptionResponse = await accountsService.searchSubscriptions(
-      subscriptionsQuery,
-      queryConstants.PAGE_SIZE,
-    );
+    if (subscriptionMap.size > 0) {
+      subscriptionResponse = await accountsService.searchSubscriptions(
+        subscriptionsQuery,
+        queryConstants.PAGE_SIZE,
+      );
+    }
   } catch (e) {
     isError = true;
     errors.push(formatClusterListError({ error: e as ErrorResponse }, region));

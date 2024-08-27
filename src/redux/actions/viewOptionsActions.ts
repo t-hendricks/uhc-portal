@@ -3,6 +3,9 @@ import { action, ActionType } from 'typesafe-actions';
 import type { ViewFlags, ViewSorting } from '../../types/types';
 import { viewPaginationConstants } from '../constants';
 
+const onSetTotalClusters = (totalCount: number | undefined, viewType: string) =>
+  action(viewPaginationConstants.SET_TOTAL_ITEMS, { viewType, totalCount: totalCount || 0 });
+
 const onFirstPage = (viewType: string) =>
   action(viewPaginationConstants.VIEW_FIRST_PAGE, { viewType });
 
@@ -18,8 +21,8 @@ const onNextPage = (viewType: string) =>
 const onPageInput = (pageNumber: number, viewType: string) =>
   action(viewPaginationConstants.VIEW_PAGE_NUMBER, { viewType, pageNumber });
 
-const onPerPageSelect = (pageSize: number, viewType: string) =>
-  action(viewPaginationConstants.SET_PER_PAGE, { viewType, pageSize });
+const onPerPageSelect = (pageSize: number, viewType: string, updatePageCounts?: boolean) =>
+  action(viewPaginationConstants.SET_PER_PAGE, { viewType, pageSize, updatePageCounts });
 
 const onListFilterSet = (filter: string | object, viewType: string) =>
   action(viewPaginationConstants.VIEW_SET_LIST_FILTER, { viewType, filter });
@@ -44,6 +47,7 @@ const viewActions = {
   onListFlagsSet,
   onListSortBy,
   onClearFiltersAndFlags,
+  onSetTotalClusters,
 };
 
 type ViewOptionsAction = ActionType<typeof viewActions>;
@@ -61,4 +65,5 @@ export {
   onListSortBy,
   onClearFiltersAndFlags,
   ViewOptionsAction,
+  onSetTotalClusters,
 };

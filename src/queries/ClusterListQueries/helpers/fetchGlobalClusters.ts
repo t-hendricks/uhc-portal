@@ -6,6 +6,7 @@ import { createViewQueryObject } from '~/common/queryHelpers';
 import { getSubscriptionQueryType } from '~/services/accountsService';
 import { type Subscription, SubscriptionCommonFields } from '~/types/accounts_mgmt.v1';
 import { Cluster } from '~/types/clusters_mgmt.v1';
+import { ViewOptions } from '~/types/types';
 
 import isAssistedInstallSubscription from '../../../common/isAssistedInstallerCluster';
 import { mapListResponse, normalizeSubscription } from '../../../common/normalize';
@@ -56,35 +57,32 @@ const fetchManagedClusters = async (managedSubscriptions: Subscription[] = []) =
   }
 };
 
-type ModifiedViewOptions = {
-  filter?: string;
-  flags?: { [flag: string]: any };
-};
-
 const fetchGlobalSubscriptions = async (
   page: number,
+  pageSize: number | undefined,
   aiMergeListsFeatureFlag: boolean,
-  viewOptions?: ModifiedViewOptions,
+  viewOptions?: ViewOptions,
   userName?: string,
+  getMultiRegion: boolean = true,
 ) => {
   const params = createViewQueryObject(
     {
       currentPage: page,
-      pageSize: queryConstants.PAGE_SIZE,
-      totalCount: 0, // isn't used but required by type
-      totalPages: 0, // isn't used but required by type
+      pageSize: pageSize || queryConstants.PAGE_SIZE,
       filter: viewOptions?.filter || '',
       sorting: {
-        sortField: 'created_at',
-        isAscending: false,
-        sortIndex: 1,
+        sortField: viewOptions?.sorting?.sortField || 'created_at',
+        isAscending: viewOptions?.sorting?.isAscending || false,
+        sortIndex: viewOptions?.sorting?.sortIndex || 1,
       },
       flags: viewOptions?.flags || {},
-    },
+    } as ViewOptions,
     userName,
   );
 
-  params.filter = `(xcm_id='' OR xcm_id IS NULL) AND ${params.filter}`;
+  const multiRegionFilter = getMultiRegion ? "(xcm_id='' OR xcm_id IS NULL) AND " : '';
+
+  params.filter = `${multiRegionFilter}${params.filter}`;
 
   const response = await accountsService.getSubscriptions(params as getSubscriptionQueryType);
   const subscriptions = mapListResponse(response, normalizeSubscription);
@@ -129,9 +127,11 @@ const fetchGlobalSubscriptions = async (
 
 export const fetchPageOfGlobalClusters = async (
   page: number,
+  pageSize: number | undefined,
   aiMergeListsFeatureFlag: boolean,
-  viewOptions: ModifiedViewOptions,
+  viewOptions: ViewOptions,
   userName?: string,
+  getMultiRegion: boolean = true,
 ) => {
   // Get global region clusters
   // This gets the subscriptions list first then clusters
@@ -143,9 +143,11 @@ export const fetchPageOfGlobalClusters = async (
   try {
     subscriptionResponse = await fetchGlobalSubscriptions(
       page,
+      pageSize,
       aiMergeListsFeatureFlag,
       viewOptions,
       userName,
+      getMultiRegion,
     );
   } catch (e) {
     const error = formatClusterListError({ error: e as ErrorResponse });
@@ -162,8 +164,8 @@ export const fetchPageOfGlobalClusters = async (
     subscriptionResponse as Awaited<Promise<ReturnType<typeof fetchGlobalSubscriptions>>>;
 
   const [aiClustersResponse, managedClustersResponse] = await Promise.all([
-    fetchAIClusters(subscriptionIds),
-    fetchManagedClusters(managedSubscriptions),
+    subscriptionIds.length > 0 ? fetchAIClusters(subscriptionIds) : {},
+    managedSubscriptions.length > 0 ? fetchManagedClusters(managedSubscriptions) : {},
   ]);
 
   if (managedClustersResponse instanceof AxiosError) {
