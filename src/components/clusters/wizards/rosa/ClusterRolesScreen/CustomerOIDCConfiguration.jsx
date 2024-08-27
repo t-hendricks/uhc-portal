@@ -90,7 +90,7 @@ function CustomerOIDCConfiguration({
 
   useEffect(() => {
     if (oidcData && isOidcDataSuccess) {
-      const currentConfigs = oidcData?.data?.items;
+      const currentConfigs = oidcData?.data?.items || [];
       setOidcConfigs(currentConfigs);
     }
   }, [oidcData, isOidcDataSuccess]);
@@ -100,7 +100,7 @@ function CustomerOIDCConfiguration({
 
     refetchGetUserOidcConfigurations();
     if (isOidcDataSuccess && !isOidcDataFetching) {
-      const currentConfigs = oidcData?.data?.items;
+      const currentConfigs = oidcData?.data?.items || [];
       setOidcConfigs(currentConfigs);
 
       const isSelectedConfigDeleted =
@@ -125,7 +125,7 @@ function CustomerOIDCConfiguration({
 
   useEffect(() => {
     const isValidSelection = oidcConfigs?.some((item) => item?.id === byoOidcConfigID);
-    if (oidcConfigs?.length > 0 && byoOidcConfigID && !isValidSelection) {
+    if (oidcConfigs.length > 0 && byoOidcConfigID && !isValidSelection) {
       onChange(null);
     }
   }, [byoOidcConfigID, oidcConfigs, onChange]);
@@ -137,6 +137,7 @@ function CustomerOIDCConfiguration({
         label: oidcConfig.id,
         description: oidcConfig.issuer_url ? `Issuer URL: ${oidcConfig.issuer_url}` : undefined,
       })),
+
     [oidcConfigs],
   );
 

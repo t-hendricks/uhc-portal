@@ -98,6 +98,24 @@ describe('<CustomerOIDCConfiguration />', () => {
       expect(await screen.findByText(/No OIDC configurations found/i)).toBeInTheDocument();
     });
 
+    it('is shown and disabled when no oidc configs are returned', async () => {
+      mockedUseFetchGetUserOidcConfigurations.mockReturnValue({
+        data: undefined,
+        isFetching: false,
+        isSuccess: true,
+      });
+
+      render(buildTestComponent(<CustomerOIDCConfiguration {...defaultProps} />));
+
+      expect(await screen.findByText(/No OIDC configurations found/i)).toBeInTheDocument();
+
+      const selectDropdown = screen.getByRole('button', { name: 'Options menu' });
+
+      await waitFor(() => {
+        expect(selectDropdown).toBeDisabled();
+      });
+    });
+
     it('is refreshable when no oidc configs are returned', async () => {
       mockedUseFetchGetUserOidcConfigurations.mockReturnValue({
         data: undefined,
