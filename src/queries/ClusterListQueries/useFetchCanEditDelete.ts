@@ -9,7 +9,7 @@ import { authorizationsService } from '../../services';
 
 import { ErrorResponse, formatClusterListError } from './helpers/createResponseForFetchCluster';
 
-type CanEditDelete = {
+export type CanEditDelete = {
   [clusterID: string]: boolean;
 };
 

@@ -5,7 +5,7 @@ import { CompatRouter } from 'react-router-dom-v5-compat';
 
 import * as usePreviousProps from '~/hooks/usePreviousProps';
 import * as useFetchClusters from '~/queries/ClusterListQueries/useFetchClusters';
-import { mockRestrictedEnv, render, screen, waitFor, within, withState } from '~/testUtils';
+import { mockRestrictedEnv, screen, waitFor, within, withState } from '~/testUtils';
 
 import { normalizedProducts } from '../../../common/subscriptionTypes';
 import { viewConstants } from '../../../redux/constants';
@@ -58,7 +58,7 @@ describe('<ClusterList />', () => {
       isLoading: true,
       errors: [],
     });
-    render(
+    withState({}, true).render(
       <MemoryRouter>
         <CompatRouter>
           <ClusterList {...props} />
@@ -94,7 +94,7 @@ describe('<ClusterList />', () => {
       isFetching: false,
       errors: [],
     });
-    render(
+    withState({}, true).render(
       <MemoryRouter>
         <CompatRouter>
           <ClusterList {...props} />
@@ -113,11 +113,13 @@ describe('<ClusterList />', () => {
 
   it('shows data if still loading but clusters are available', () => {
     mockedGetFetchedClusters.mockReturnValue({
-      data: { items: [fixtures.clusterDetails.cluster] },
+      data: { items: [fixtures.clusterDetails.cluster], itemsCount: 1 },
       isLoading: true,
+      isFetching: true,
+      isFetched: false,
       errors: [],
     });
-    render(
+    withState({}, true).render(
       <MemoryRouter>
         <CompatRouter>
           <ClusterList {...props} />
@@ -146,7 +148,7 @@ describe('<ClusterList />', () => {
       isFetching: true,
       errors: [],
     });
-    render(
+    withState({}, true).render(
       <MemoryRouter>
         <CompatRouter>
           <ClusterList {...props} />
@@ -174,7 +176,7 @@ describe('<ClusterList />', () => {
       data: { items: [fixtures.clusterDetails.cluster] },
       errors: [],
     });
-    render(
+    withState({}, true).render(
       <MemoryRouter>
         <CompatRouter>
           <ClusterList {...props} />
@@ -204,7 +206,7 @@ describe('<ClusterList />', () => {
       refetch,
       errors: [],
     });
-    const { user } = render(
+    const { user } = withState({}, true).render(
       <MemoryRouter>
         <CompatRouter>
           <ClusterList {...props} />
@@ -223,20 +225,24 @@ describe('<ClusterList />', () => {
     const checkCellValue = (expected, keyToTest, cellIndex) => {
       const nameColumnIndex = Object.keys(columns).findIndex((column) => column === 'name');
 
-      within(screen.getByTestId('clusterListTableBody'))
-        .getAllByRole('row')
-        .forEach((row, index) => {
-          const cells = row.querySelectorAll('td');
-          expect(cells[nameColumnIndex]).toHaveTextContent(expected[index].name);
-          expect(cells[cellIndex]).toHaveTextContent(expected[index][keyToTest]);
-        });
+      const rows = within(screen.getByTestId('clusterListTableBody')).getAllByRole('row');
+
+      expect(rows).toHaveLength(expected.length);
+
+      rows.forEach((row, index) => {
+        const cells = row.querySelectorAll('td');
+        expect(cells[nameColumnIndex]).toHaveTextContent(expected[index].name);
+        expect(cells[cellIndex]).toHaveTextContent(expected[index][keyToTest]);
+      });
     };
 
     it('displays clusters sorted by create date', async () => {
       mockedGetFetchedClusters.mockReturnValue({
-        data: { items: mockedClusters },
-        isLoading: true,
+        data: { items: mockedClusters, itemsCount: mockedClusters.length },
+        isLoading: false,
         errors: [],
+        isFetched: true,
+        isFetching: false,
       });
 
       const { user } = withState({}, true).render(
@@ -268,9 +274,11 @@ describe('<ClusterList />', () => {
 
     it('sorts by name', async () => {
       mockedGetFetchedClusters.mockReturnValue({
-        data: { items: mockedClusters },
-        isLoading: true,
+        data: { items: mockedClusters, itemsCount: mockedClusters.length },
+        isLoading: false,
         errors: [],
+        isFetched: true,
+        isFetching: false,
       });
 
       const { user } = withState({}, true).render(
@@ -304,9 +312,11 @@ describe('<ClusterList />', () => {
       }));
 
       mockedGetFetchedClusters.mockReturnValue({
-        data: { items: newMockedClusters },
-        isLoading: true,
+        data: { items: newMockedClusters, itemsCount: newMockedClusters.length },
+        isLoading: false,
         errors: [],
+        isFetched: true,
+        isFetching: false,
       });
 
       const { user } = withState({}, true).render(
@@ -334,9 +344,11 @@ describe('<ClusterList />', () => {
 
     it('sorts by status', async () => {
       mockedGetFetchedClusters.mockReturnValue({
-        data: { items: mockedClusters },
-        isLoading: true,
+        data: { items: mockedClusters, itemsCount: mockedClusters.length },
+        isLoading: false,
         errors: [],
+        isFetched: true,
+        isFetching: false,
       });
 
       const { user } = withState({}, true).render(
@@ -368,9 +380,11 @@ describe('<ClusterList />', () => {
 
     it('sorts by type', async () => {
       mockedGetFetchedClusters.mockReturnValue({
-        data: { items: mockedClusters },
-        isLoading: true,
+        data: { items: mockedClusters, itemsCount: mockedClusters.length },
+        isLoading: false,
         errors: [],
+        isFetched: true,
+        isFetching: false,
       });
 
       const { user } = withState({}, true).render(
@@ -402,9 +416,11 @@ describe('<ClusterList />', () => {
 
     it('sorts by version', async () => {
       mockedGetFetchedClusters.mockReturnValue({
-        data: { items: mockedClusters },
-        isLoading: true,
+        data: { items: mockedClusters, itemsCount: mockedClusters.length },
+        isLoading: false,
         errors: [],
+        isFetched: true,
+        isFetching: false,
       });
 
       const { user } = withState({}, true).render(
@@ -452,9 +468,11 @@ describe('<ClusterList />', () => {
       const newClusters = [noVersionClusterB, ...mockedClusters, noVersionClusterA];
 
       mockedGetFetchedClusters.mockReturnValue({
-        data: { items: newClusters },
-        isLoading: true,
+        data: { items: newClusters, itemsCount: newClusters.length },
+        isLoading: false,
         errors: [],
+        isFetched: true,
+        isFetching: false,
       });
 
       const { user } = withState({}, true).render(
@@ -492,9 +510,11 @@ describe('<ClusterList />', () => {
 
     it('sorts by provider', async () => {
       mockedGetFetchedClusters.mockReturnValue({
-        data: { items: mockedClusters },
-        isLoading: true,
+        data: { items: mockedClusters, itemsCount: mockedClusters.length },
+        isLoading: false,
         errors: [],
+        isFetched: true,
+        isFetching: false,
       });
 
       const { user } = withState({}, true).render(
@@ -546,10 +566,31 @@ describe('<ClusterList />', () => {
       });
     }
 
+    it('shows 0 of 0 when no clusters are returned but is still loading', () => {
+      mockedGetFetchedClusters.mockReturnValue({
+        data: undefined,
+        isLoading: true,
+        errors: [],
+      });
+
+      withState({}, true).render(
+        <MemoryRouter>
+          <CompatRouter>
+            <ClusterList {...props} />
+          </CompatRouter>
+        </MemoryRouter>,
+      );
+
+      expect(pageInformationQuerySelector()).toHaveTextContent('0 - 0 of 0');
+    });
+
     it('The correct number of results on a page', () => {
       mockedGetFetchedClusters.mockReturnValue({
-        data: { items: mockClusters },
+        data: { items: mockClusters, itemsCount: mockClusters.length },
+        isLoading: false,
         errors: [],
+        isFetched: true,
+        isFetching: false,
       });
 
       withState({}, true).render(
@@ -569,8 +610,11 @@ describe('<ClusterList />', () => {
 
     it('Clicking on the next page link changes the results', async () => {
       mockedGetFetchedClusters.mockReturnValue({
-        data: { items: mockClusters },
+        data: { items: mockClusters, itemsCount: mockClusters.length },
+        isLoading: false,
         errors: [],
+        isFetched: true,
+        isFetching: false,
       });
 
       const { user } = withState({}, true).render(
@@ -608,8 +652,11 @@ describe('<ClusterList />', () => {
 
     it('Clicking on the previous link changes the results', async () => {
       mockedGetFetchedClusters.mockReturnValue({
-        data: { items: mockClusters },
+        data: { items: mockClusters, itemsCount: mockClusters.length },
+        isLoading: false,
         errors: [],
+        isFetched: true,
+        isFetching: false,
       });
 
       const { user } = withState({}, true).render(
@@ -645,8 +692,11 @@ describe('<ClusterList />', () => {
 
     it('Changing the "per page" results changes the number of results', async () => {
       mockedGetFetchedClusters.mockReturnValue({
-        data: { items: mockClusters },
+        data: { items: mockClusters, itemsCount: mockClusters.length },
+        isLoading: false,
         errors: [],
+        isFetched: true,
+        isFetching: false,
       });
 
       const { container, user } = withState({}, true).render(
@@ -663,28 +713,13 @@ describe('<ClusterList />', () => {
       expect(pageInformationQuerySelector()).toHaveTextContent('1 - 100 of 200');
     });
 
-    it('shows 0 of 0 when there no clusters are returned but is still loading', () => {
-      mockedGetFetchedClusters.mockReturnValue({
-        data: undefined,
-        isLoading: true,
-        errors: [],
-      });
-
-      withState({}, true).render(
-        <MemoryRouter>
-          <CompatRouter>
-            <ClusterList {...props} />
-          </CompatRouter>
-        </MemoryRouter>,
-      );
-
-      expect(pageInformationQuerySelector()).toHaveTextContent('0 - 0 of 0');
-    });
-
     it('keeps current page when sorted', async () => {
       mockedGetFetchedClusters.mockReturnValue({
-        data: { items: mockClusters },
+        data: { items: mockClusters, itemsCount: mockClusters.length },
+        isLoading: false,
         errors: [],
+        isFetched: true,
+        isFetching: false,
       });
 
       const { user } = withState({}, true).render(
@@ -727,7 +762,7 @@ describe('<ClusterList />', () => {
         isError: true,
         errors: [{ reason: 'There was an error', operation_id: '1234' }],
       });
-      render(
+      withState({}, true).render(
         <MemoryRouter>
           <CompatRouter>
             <ClusterList {...props} />
@@ -744,7 +779,7 @@ describe('<ClusterList />', () => {
         isError: true,
         errors: [{ reason: 'There was an error' }],
       });
-      const { user } = render(
+      const { user } = withState({}, true).render(
         <MemoryRouter>
           <CompatRouter>
             <ClusterList {...props} />
@@ -764,7 +799,7 @@ describe('<ClusterList />', () => {
         isError: true,
         errors: [{ reason: 'There was an error', operation_id: '1234' }],
       });
-      const { user } = render(
+      const { user } = withState({}, true).render(
         <MemoryRouter>
           <CompatRouter>
             <ClusterList {...props} />
@@ -788,7 +823,7 @@ describe('<ClusterList />', () => {
           { reason: 'There was an error', operation_id: '1234', region: { region: 'myRegion' } },
         ],
       });
-      const { user } = render(
+      const { user } = withState({}, true).render(
         <MemoryRouter>
           <CompatRouter>
             <ClusterList {...props} />
@@ -814,7 +849,7 @@ describe('<ClusterList />', () => {
           { reason: 'There was an error', operation_id: '1234', region: { region: 'myRegion' } },
         ],
       });
-      render(
+      withState({}, true).render(
         <MemoryRouter>
           <CompatRouter>
             <ClusterList {...props} />
@@ -871,7 +906,7 @@ describe('<ClusterList />', () => {
       useDispatchMock.mockReturnValue(mockedDispatch);
 
       isRestrictedEnv.mockReturnValue(true);
-      render(
+      withState({}, true).render(
         <MemoryRouter>
           <CompatRouter>
             <ClusterList {...props} />
@@ -879,8 +914,12 @@ describe('<ClusterList />', () => {
         </MemoryRouter>,
       );
       expect(mockedDispatch).toHaveBeenCalled();
-      const args = mockedDispatch.mock.calls[0];
-      expect(args[0].payload.key).toBe('subscriptionFilter');
+      expect(mockedDispatch.mock.calls).toHaveLength(2);
+      const args = mockedDispatch.mock.calls[1];
+
+      expect(args[0].type).toEqual('VIEW_SET_LIST_FLAGS');
+
+      expect(args[0].payload.key).toBe('subscriptionFilter'); // KKD - it fails here (key is undefined)
       expect(args[0].payload.value).toStrictEqual({ plan_id: [normalizedProducts.ROSA] });
       expect(args[0].payload.viewType).toBe(viewConstants.CLUSTERS_VIEW);
 
@@ -888,7 +927,7 @@ describe('<ClusterList />', () => {
     });
 
     it('does not render filtering', async () => {
-      const { rerender } = render(
+      const { rerender } = withState({}, true).render(
         <MemoryRouter>
           <CompatRouter>
             <ClusterList {...props} />
