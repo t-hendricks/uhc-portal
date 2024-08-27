@@ -3,7 +3,8 @@
   // allows hiding the file input in such a way that it'd be visually hidden, but accessible to screen readers / assistive technologies
   overflow: hidden;
   position: relative;
-  input[type=file] {
+  margin-right: var(--pf-v5-global--spacer--sm);
+  input[type='file'] {
     background: white;
     cursor: inherit;
     display: block;

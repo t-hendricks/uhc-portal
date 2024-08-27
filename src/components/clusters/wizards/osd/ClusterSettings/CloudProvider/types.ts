@@ -6,7 +6,7 @@ export enum CloudProviderType {
 }
 
 export enum GCPAuthType {
-  ShortLivedCredentials = 'shortLivedCredentials',
+  WorkloadIdentityFederation = 'workloadIdentityFederation',
   ServiceAccounts = 'serviceAccounts',
 }
 

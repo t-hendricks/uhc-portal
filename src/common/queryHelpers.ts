@@ -74,12 +74,18 @@ const createViewQueryObject = (viewOptions?: ViewOptions, username?: string): Qu
       clauses.push(`creator.username='${username}'`);
     }
 
-    // If we got a search string from the user, format it as a LIKE query.
     if (typeof viewOptions.filter === 'string') {
-      const likePattern = sqlString(`%${viewOptions.filter}%`);
-      clauses.push(
-        `display_name ILIKE ${likePattern} OR external_cluster_id ILIKE ${likePattern} OR cluster_id ILIKE ${likePattern}`,
-      );
+      if (viewOptions.filter.length === 0) {
+        clauses.push(
+          `display_name is not null OR external_cluster_id is not null OR cluster_id is not null`,
+        );
+      } else {
+        // If we got a search string from the user, format it as a LIKE query.
+        const likePattern = sqlString(`%${viewOptions.filter}%`);
+        clauses.push(
+          `display_name ILIKE ${likePattern} OR external_cluster_id ILIKE ${likePattern} OR cluster_id ILIKE ${likePattern}`,
+        );
+      }
     }
 
     if (!isEmpty(viewOptions.flags.subscriptionFilter)) {

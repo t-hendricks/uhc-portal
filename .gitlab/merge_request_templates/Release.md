@@ -1,5 +1,5 @@
 
-move changes from `candidate` to `stable`, to promote content to [`prod-stable`][environment].
+move changes from `master` to `stable`, to promote content to [`production`][environment].
 
 see the [release notes][changelog] for a full change-log.
 

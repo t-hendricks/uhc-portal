@@ -101,66 +101,41 @@ describe('OCM Overview Page tests (OCP-65189)', { tags: ['smoke'] }, () => {
     card.shouldHaveLabel('Managed service');
     card.checkLink('View details', '/openshift/sandbox').opensInRightTab();
 
-    Overview.centralSectionFooterLinkExists(
+    Overview.centralSectionHeaderLinkExists(
       'View all OpenShift cluster types',
       '/openshift/create',
     ).opensExpectedPage('Select an OpenShift cluster type to create');
   });
 
-  it('OCM Overview Page - Recommended content section', () => {
-    const openshiftVersion = currentOcVersion.getVersion();
-
-    Overview.recommendedContentsExpected(4);
-
-    var recommendedContent = Overview.recommendedContent('recommendedContent_OCM');
-    recommendedContent.cyObj.contains(
-      'Using Red Hat OpenShift Cluster Manager to work with your OpenShift clusters',
+  it('OCM Overview Page - Recommended Operators section', () => {
+    Overview.isRecommendedOperatorsHeaderVisible(
+      'https://catalog.redhat.com/search?searchType=software&deployed_as=Operator',
     );
-    recommendedContent.shouldHaveLabel('Documentation');
-    recommendedContent
-      .checkLink(
-        'Learn More',
-        'https://access.redhat.com/documentation/en-us/openshift_cluster_manager/2023/html/managing_clusters/assembly-managing-clusters',
-      )
-      .opensInRightTab()
-      .successfullyOpens();
 
-    recommendedContent = Overview.recommendedContent('recommendedContent_ServerLess');
-    recommendedContent.cyObj.contains('OpenShift Serverless overview');
-    recommendedContent.shouldHaveLabel('Documentation');
-    recommendedContent
-      .checkLink(
-        'Learn More',
-        `https://docs.openshift.com/container-platform/${openshiftVersion}/serverless/about/about-serverless.html`,
-      )
-      .opensInRightTab()
-      .successfullyOpens();
+    Overview.recommendedOperatorsExpected(3);
 
-    recommendedContent = Overview.recommendedContent('recommendedContent_ServiceMesh');
-    recommendedContent.cyObj.contains('Understanding Service Mesh');
-    recommendedContent.shouldHaveLabel('Documentation');
-    recommendedContent
-      .checkLink(
-        'Learn More',
-        `https://docs.openshift.com/container-platform/${openshiftVersion}/service_mesh/v2x/ossm-architecture.html`,
-      )
-      .opensInRightTab()
-      .successfullyOpens();
+    var recommendedOperator = Overview.recommendedOperator(
+      'Red Hat OpenShift GitOps',
+      'Integrate git repositories, continuous integration/continuous delivery (CI/CD) tools, and Kubernetes',
+    );
+    recommendedOperator.click();
+    Overview.drawerContentTitle().should('have.text', 'Red Hat OpenShift GitOps');
+    Overview.drawerCloseButton();
 
-    recommendedContent = Overview.recommendedContent('recommendedContent_OVIRT');
-    recommendedContent.cyObj.contains('About OpenShift Virtualization');
-    recommendedContent.shouldHaveLabel('Documentation');
-    recommendedContent
-      .checkLink(
-        'Learn More',
-        `https://docs.openshift.com/container-platform/${openshiftVersion}/virt/about_virt/about-virt.html`,
-      )
-      .opensInRightTab()
-      .successfullyOpens();
+    recommendedOperator = Overview.recommendedOperator(
+      'Red Hat OpenShift Pipelines',
+      'Automate your application delivery using a continuous integration and continuous deployment (CI/CD) framework',
+    );
+    recommendedOperator.click();
+    Overview.drawerContentTitle().should('have.text', 'Red Hat OpenShift Pipelines');
+    Overview.drawerCloseButton();
 
-    Overview.recommendedContentFooterLinkExists(
-      'Browse all OpenShift learning resources',
-      '/openshift/learning-resources',
-    ).opensInRightTab(false);
+    recommendedOperator = Overview.recommendedOperator(
+      'Red Hat OpenShift Service Mesh',
+      'Connect, manage, and observe microservices-based applications in a uniform way',
+    );
+    recommendedOperator.click();
+    Overview.drawerContentTitle().should('have.text', 'Red Hat OpenShift Service Mesh');
+    Overview.drawerCloseButton();
   });
 });

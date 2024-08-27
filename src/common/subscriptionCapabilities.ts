@@ -44,16 +44,10 @@ const hasCapability = (subscription: Subscription | undefined, name: string): bo
 const haveCapabilities = (
   clusters: ClusterFromSubscription[],
   name: string,
-): { [clusterId: string]: boolean } => {
-  const results: { [clusterId: string]: boolean } = {};
-  clusters.forEach((cluster) => {
-    const clusterId = cluster.id;
-    if (clusterId) {
-      results[clusterId] = hasCapability(cluster.subscription, name);
-    }
-  });
-
-  return results;
-};
+): { [clusterId: string]: boolean } =>
+  clusters.reduce(
+    (acc, cluster) => ({ ...acc, [`${cluster.id}`]: hasCapability(cluster.subscription, name) }),
+    {},
+  );
 
 export { subscriptionCapabilities, hasCapability, haveCapabilities };

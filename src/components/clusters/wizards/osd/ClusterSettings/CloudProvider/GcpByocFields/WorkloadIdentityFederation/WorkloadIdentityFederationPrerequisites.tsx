@@ -6,7 +6,7 @@ import { Text, TextContent, TextVariants } from '@patternfly/react-core';
 import links from '~/common/installLinks.mjs';
 import ExternalLink from '~/components/common/ExternalLink';
 
-const ShortLivedCredentialsPrerequisites = () => (
+const WorkloadIdentityFederationPrerequisites = () => (
   <div>
     <TextContent>
       <Text component={TextVariants.p} className="ocm-secondary-text">
@@ -20,11 +20,7 @@ const ShortLivedCredentialsPrerequisites = () => (
             <Link to="/downloads" target="_blank">
               download
             </Link>{' '}
-            and authenticate to the <code>ocm</code> CLI.{' '}
-            <ExternalLink noIcon href="LINK_TBD">
-              Learn more (link TBD)
-            </ExternalLink>
-            .
+            and authenticate to the <code>ocm</code> CLI.
           </Text>
         </li>
         <li>
@@ -64,4 +60,4 @@ const ShortLivedCredentialsPrerequisites = () => (
   </div>
 );
 
-export { ShortLivedCredentialsPrerequisites };
+export { WorkloadIdentityFederationPrerequisites };

@@ -1176,7 +1176,7 @@ export function getClusterService(apiRequest: APIRequest = defaultApiRequest) {
       ),
 
     getGCPWifConfigs: (query: string) =>
-      apiRequest.get<WifConfigList>(`/api/clusters_mgmt/v1/wif_configs`),
+      apiRequest.get<WifConfigList>(`/api/clusters_mgmt/v1/gcp/wif_configs`),
   };
 }
 

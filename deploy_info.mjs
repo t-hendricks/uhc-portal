@@ -121,45 +121,6 @@ const getEnvs = async (upstream) => {
       info: appInfo('https://console.dev.redhat.com/apps/openshift/app.info.json'),
     },
     {
-      name: 'build_pushed_beta_master',
-      ci_job: 'https://ci.int.devshift.net/job/ocm-portal-deploy-staging/',
-      comment:
-        'Build also pushed to https://github.com/RedHatInsights/uhc-portal-frontend-deploy/commits/qa-beta',
-      info: appInfo(
-        'https://raw.githubusercontent.com/RedHatInsights/uhc-portal-frontend-deploy/qa-beta/app.info.json',
-      ),
-    },
-    {
-      name: 'live_consoledev_beta_master',
-      ci_job:
-        'https://***REMOVED***/job/insights-frontend-deployer/job/uhc-portal-frontend-deploy/job/qa-beta/',
-      comment: 'Live at https://console.dev.redhat.com/preview/openshift/',
-      info: appInfo('https://console.dev.redhat.com/beta/apps/openshift/app.info.json'),
-    },
-
-    {
-      name: `${upstream}/candidate`,
-      comment: 'https://gitlab.cee.redhat.com/service/uhc-portal/commits/candidate',
-      info: gitRev(`${upstream}/candidate`),
-    },
-    {
-      name: 'build_pushed_candidate',
-      ci_job: 'https://ci.int.devshift.net/job/ocm-portal-deploy-candidate/',
-      comment:
-        'Build pushed to https://github.com/RedHatInsights/uhc-portal-frontend-deploy/commits/prod-beta',
-      info: appInfo(
-        'https://raw.githubusercontent.com/RedHatInsights/uhc-portal-frontend-deploy/prod-beta/app.info.json',
-      ),
-    },
-    {
-      name: 'live_candidate',
-      ci_job:
-        'https://***REMOVED***/job/insights-frontend-deployer/job/uhc-portal-frontend-deploy/job/prod-beta/',
-      comment: 'Live at https://console.redhat.com/preview/openshift/',
-      info: appInfo('https://console.redhat.com/beta/apps/openshift/app.info.json'),
-    },
-
-    {
       name: `${upstream}/stable`,
       comment: 'https://gitlab.cee.redhat.com/service/uhc-portal/commits/stable',
       info: gitRev(`${upstream}/stable`),
@@ -289,7 +250,7 @@ const main = async () => {
         'live_stable~2',
         '--graph',
         // TODO: want MR merges, not internal merge commits done while working on MR content.
-        //   `[Mm]erge .* into '?(master|candidate|stable).*` captures most of those.
+        //   `[Mm]erge .* into '?(master|stable).*` captures most of those.
         //   BUT must show all merges FROM master, even if done locally with edited message -
         //   these tell us which content is already deployed.
         // Also include cherry-picks (not using --merges flag which would omit them).

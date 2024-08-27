@@ -59,10 +59,14 @@ const RegisterCluster = ({ handleSubmit }: RegisterClusterProps) => {
   const dispatch = useDispatch();
   const [settings, setSettings] = useState({});
 
-  const quotaResponse = useGlobalState((state) => get(state, 'userProfile.organization', null));
-  const registerClusterResponse = useGlobalState((state) => state.clusters.createdCluster);
-  const isOpen = useGlobalState((state) => shouldShowModal(state, modals.REGISTER_CLUSTER_ERROR));
-  const canSubscribeOCP = useGlobalState((state) => hasOrgLevelsubscribeOCPCapability(state));
+  const { quotaResponse, registerClusterResponse, isOpen, canSubscribeOCP } = useGlobalState(
+    (state) => ({
+      quotaResponse: get(state, 'userProfile.organization', null),
+      registerClusterResponse: state.clusters.createdCluster,
+      isOpen: shouldShowModal(state, modals.REGISTER_CLUSTER_ERROR),
+      canSubscribeOCP: hasOrgLevelsubscribeOCPCapability(state),
+    }),
+  );
 
   const resetResponseAndForm = useCallback(() => {
     dispatch(resetCreatedClusterResponse());

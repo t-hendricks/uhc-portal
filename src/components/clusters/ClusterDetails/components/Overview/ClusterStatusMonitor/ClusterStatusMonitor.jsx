@@ -135,7 +135,7 @@ const ClusterStatusMonitor = (props) => {
             title: `Successfully uninstalled cluster ${getClusterName(cluster)}`,
             variant: 'success',
           });
-          navigate('/');
+          navigate('/cluster-list');
         }
       }
     }

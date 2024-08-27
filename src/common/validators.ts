@@ -744,6 +744,8 @@ const validateUrl = (value: string, protocol: string | string[] = 'http'): strin
   return undefined;
 };
 
+const validateUrlHttpsAndHttp = (value: string) => validateUrl(value, ['http', 'https']);
+
 const validateCA = (value: string): string | undefined => {
   if (!value) {
     return undefined;
@@ -1813,6 +1815,7 @@ export {
   checkUserID,
   validateRHITUsername,
   validateUrl,
+  validateUrlHttpsAndHttp,
   validateCA,
   checkNoProxyDomains,
   checkClusterConsoleURL,

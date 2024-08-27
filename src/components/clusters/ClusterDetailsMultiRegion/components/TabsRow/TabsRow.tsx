@@ -76,7 +76,7 @@ const TabsRow = ({ tabsInfo, onTabSelected, initTabOpen }: TabsRowProps) => {
           in that case we navigate to cluster list page */
       if (!targetTab?.show || targetTab.isDisabled) {
         if (location.hash === '') {
-          navigate('/', { replace: true });
+          navigate('/cluster-list', { replace: true });
         } else {
           setInitialTab(tabs[0]);
           navigate(

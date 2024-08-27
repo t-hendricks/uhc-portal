@@ -11,7 +11,7 @@ const MultiRegionOverrideMessage = () => {
   const multiRegionFeatureGate = useFeatureGate(MULTIREGION_PREVIEW_ENABLED);
   const removeMultiRegionPreviewFlag = () => {
     localStorage.removeItem(MULTIREGION_LOCALSTORAGE_KEY);
-    window.location.href = ocmBaseName();
+    window.location.href = ocmBaseName;
   };
 
   if (!multiRegionFeatureGate) {
