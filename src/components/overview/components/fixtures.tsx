@@ -6,6 +6,30 @@ import { DRAWER_PANEL_CONTENT, DrawerPanelContentNode } from './common/DrawerPan
 import PRODUCT_CARD_LOGOS from './common/ProductCardLogos';
 import { FEATURED_PRODUCTS_CARDS } from './FeaturedProductsCards/FeaturedProductsCards';
 
+const OVERVIEW_PRODUCT_BANNER_BASIC = {
+  title: 'some title',
+  icon: 'some icon',
+  altText: 'some alternative text',
+  learnMoreLink: 'some link',
+  description: 'I would like to play a game',
+};
+
+const OVERVIEW_PRODUCT_BANNER_DESCRIPTION_IS_A_REACT_NODE = {
+  ...OVERVIEW_PRODUCT_BANNER_BASIC,
+  description: (
+    <div role="article">
+      {OVERVIEW_PRODUCT_BANNER_BASIC.description}
+      <br />
+      {OVERVIEW_PRODUCT_BANNER_BASIC.altText}
+    </div>
+  ),
+};
+
+const OVERVIEW_PRODUCT_BANNER_MISSING_OPTIONAL_PROPS = {
+  title: OVERVIEW_PRODUCT_BANNER_BASIC.title,
+  description: OVERVIEW_PRODUCT_BANNER_BASIC.description,
+};
+
 const BASIC_PRODUCT_CARD_PROPS = {
   title: 'example title',
   description: 'example description',
@@ -122,6 +146,9 @@ const GENERAL_DRAWER_PANEL_HEAD_WITH_LINK = {
 };
 
 export {
+  OVERVIEW_PRODUCT_BANNER_BASIC,
+  OVERVIEW_PRODUCT_BANNER_DESCRIPTION_IS_A_REACT_NODE,
+  OVERVIEW_PRODUCT_BANNER_MISSING_OPTIONAL_PROPS,
   PRODUCT_CARD_TEST_CASES,
   DRAWER_PANEL_TEST_CASES,
   RECOMMENDED_OPERATORS_CARDS_TEST_CASES,
