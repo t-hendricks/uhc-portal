@@ -35,7 +35,8 @@ import RedHatLogo from '~/styles/images/Logo-Red_Hat-B-Standard-RGB.png';
 import docLinks from '../../../common/installLinks.mjs';
 import OpenShiftProductIcon from '../../../styles/images/OpenShiftProductIcon.svg';
 import { ListTextLabelLinkCard } from '../../common/ListTextLabelLinkCard/ListTextLabelLinkCard';
-import { ProductBanner } from '../../common/ProductBanner';
+
+import { ProductBanner } from './components/ProductBanner';
 
 import './RosaServicePage.scss';
 
