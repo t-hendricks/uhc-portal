@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import { Field } from 'formik';
 import get from 'lodash/get';
 import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom-v5-compat';
 
 import {
   Alert,
@@ -24,6 +23,7 @@ import { Spinner } from '@redhat-cloud-services/frontend-components/Spinner';
 import { trackEvents } from '~/common/analytics';
 import { formatMinorVersion, isSupportedMinorVersion } from '~/common/helpers';
 import links from '~/common/installLinks.mjs';
+import { Link } from '~/common/routing';
 import { useFormState } from '~/components/clusters/wizards/hooks';
 import { MIN_MANAGED_POLICY_VERSION } from '~/components/clusters/wizards/rosa/rosaConstants';
 import ExternalLink from '~/components/common/ExternalLink';

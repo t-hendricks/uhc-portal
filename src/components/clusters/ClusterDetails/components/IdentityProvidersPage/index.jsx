@@ -2,7 +2,7 @@ import React from 'react';
 import get from 'lodash/get';
 import PropTypes from 'prop-types';
 import { useDispatch } from 'react-redux';
-import { useParams } from 'react-router-dom-v5-compat';
+import { useParams } from 'react-router-dom';
 import { formValueSelector, getFormSyncErrors, reduxForm } from 'redux-form';
 
 import { useGlobalState } from '~/redux/hooks';

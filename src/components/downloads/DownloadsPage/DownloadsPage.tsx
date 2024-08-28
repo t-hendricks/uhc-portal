@@ -1,7 +1,7 @@
 import React, { createRef, RefObject, useEffect, useState } from 'react';
 import { produce } from 'immer';
 import { useDispatch } from 'react-redux';
-import { Link, useLocation, useNavigate } from 'react-router-dom-v5-compat';
+import { useLocation } from 'react-router-dom';
 
 import {
   ExpandableSectionToggle,
@@ -15,6 +15,7 @@ import { Table as TableDeprecated } from '@patternfly/react-table/deprecated';
 import { PageHeader, PageHeaderTitle } from '@redhat-cloud-services/frontend-components/PageHeader';
 
 import { hasRestrictTokensCapability } from '~/common/restrictTokensHelper';
+import { Link, useNavigate } from '~/common/routing';
 import { AppPage } from '~/components/App/AppPage';
 import { githubActions, tollboothActions } from '~/redux/actions';
 import { useGlobalState } from '~/redux/hooks';

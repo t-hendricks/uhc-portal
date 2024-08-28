@@ -50,7 +50,7 @@ import { issuesAndWarningsSelector } from './components/Monitoring/MonitoringSel
 import { getClusterRouters } from './components/Networking/NetworkingActions';
 import ClusterDetails from './ClusterDetails';
 
-const mapStateToProps = (state, { location }) => {
+const mapStateToProps = (state) => {
   const { details } = state.clusters;
   const { cloudProviders, clusterRouters } = state;
   const { addOns } = state.addOns;
@@ -85,7 +85,6 @@ const mapStateToProps = (state, { location }) => {
     canHibernateCluster: userCanHibernateClustersSelector(state),
     anyModalOpen: !!state.modal.modalName,
     hasIssues: issuesAndWarningsSelector(state).issues.totalCount > 0,
-    initTabOpen: location.hash.replace('#', ''),
     notificationContacts,
     supportCases,
     assistedInstallerEnabled: featureGateSelector(state, ASSISTED_INSTALLER_FEATURE),

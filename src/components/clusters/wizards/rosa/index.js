@@ -1,5 +1,4 @@
 import { connect } from 'react-redux';
-import { withRouter } from 'react-router-dom';
 
 import { normalizedProducts } from '~/common/subscriptionTypes';
 import { getCloudProviders } from '~/redux/actions/cloudProviderActions';
@@ -57,4 +56,4 @@ const mapDispatchToProps = (dispatch) => ({
   clearInstallableVersions: () => dispatch(clearInstallableVersions()),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(withRouter(CreateROSAWizard));
+export default connect(mapStateToProps, mapDispatchToProps)(CreateROSAWizard);

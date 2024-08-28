@@ -1,18 +1,21 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Navigate } from 'react-router-dom-v5-compat';
+import { useLocation, useParams } from 'react-router-dom';
 
 import { Spinner } from '@redhat-cloud-services/frontend-components/Spinner';
+
+import { Navigate } from '~/common/routing';
 
 import Unavailable from '../../common/Unavailable';
 
 const ClusterDetailsRedirector = (props) => {
+  const params = useParams();
+  const location = useLocation();
+
   const {
     fetchSubscriptionIDForCluster,
     clearSubscriptionIDForCluster,
     subscriptionIDResponse,
-    params,
-    location,
     setGlobalError,
   } = props;
 
@@ -50,14 +53,6 @@ const ClusterDetailsRedirector = (props) => {
 };
 
 ClusterDetailsRedirector.propTypes = {
-  params: PropTypes.shape({
-    id: PropTypes.string.isRequired,
-    reportId: PropTypes.string, // insights only
-    errorKey: PropTypes.string, // insights only
-  }).isRequired,
-  location: PropTypes.shape({
-    hash: PropTypes.string.isRequired,
-  }).isRequired,
   fetchSubscriptionIDForCluster: PropTypes.func.isRequired,
   clearSubscriptionIDForCluster: PropTypes.func.isRequired,
   setGlobalError: PropTypes.func.isRequired,

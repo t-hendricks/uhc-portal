@@ -1,7 +1,6 @@
 import React from 'react';
-import { CompatRouter } from 'react-router-dom-v5-compat';
 
-import { checkAccessibility, screen, TestRouter, withState } from '~/testUtils';
+import { checkAccessibility, screen, withState } from '~/testUtils';
 
 import githubReleases from '../githubReleases.mock';
 import { InstallIBMZABI } from '../InstallIBMZABI';
@@ -27,11 +26,7 @@ describe('InstallBMZABI', () => {
   it('is accessible', async () => {
     // While this tests passes, it throws a warning: <p> cannot appear as a descendant of <p>
     const { container } = withState(githubReleases).render(
-      <TestRouter>
-        <CompatRouter>
-          <InstallIBMZABI token={{}} dispatch={dispatch} />
-        </CompatRouter>
-      </TestRouter>,
+      <InstallIBMZABI token={{}} dispatch={dispatch} />,
     );
 
     expect(

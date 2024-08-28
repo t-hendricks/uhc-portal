@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { checkAccessibility, screen, TestRouter, withState } from '~/testUtils';
+import { checkAccessibility, screen, withState } from '~/testUtils';
 
 import githubReleases from '../githubReleases.mock';
 import { InstallIBMZPreRelease } from '../InstallIBMZPreRelease';
@@ -24,9 +24,7 @@ describe('InstallIBMZPreRelease', () => {
 
   it.skip('is accessible', async () => {
     const { container } = withState(githubReleases).render(
-      <TestRouter>
-        <InstallIBMZPreRelease token={{}} dispatch={dispatch} />
-      </TestRouter>,
+      <InstallIBMZPreRelease token={{}} dispatch={dispatch} />,
     );
 
     expect(

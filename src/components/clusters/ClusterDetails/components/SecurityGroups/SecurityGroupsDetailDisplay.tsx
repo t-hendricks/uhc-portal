@@ -1,6 +1,6 @@
 import React from 'react';
-import { Link } from 'react-router-dom-v5-compat';
 
+import { Link } from '~/common/routing';
 import {
   MachinePoolItemList,
   securityGroupsRenderer,
@@ -93,7 +93,7 @@ const SecurityGroupsDisplayByNode = ({
     {showLinkToMachinePools &&
       getCombinedMachinePoolSecurityGroupIds(machinePoolData).length > 0 && (
         <dt>
-          See more information in the <Link to="#machinePools">machine pools tab</Link>
+          See more information in the <Link to={{ hash: '#machinePools' }}>machine pools tab</Link>
         </dt>
       )}
   </>

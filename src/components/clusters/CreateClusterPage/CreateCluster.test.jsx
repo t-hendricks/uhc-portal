@@ -1,7 +1,6 @@
 import React from 'react';
-import { CompatRouter } from 'react-router-dom-v5-compat';
 
-import { checkAccessibility, render, screen, TestRouter, userEvent } from '../../../testUtils';
+import { checkAccessibility, render, screen, userEvent } from '../../../testUtils';
 
 import CreateClusterPage from './CreateClusterPage';
 
@@ -33,13 +32,7 @@ describe('<CreateClusterPage />', () => {
   };
 
   it.skip('is accessible', async () => {
-    const { container } = render(
-      <TestRouter>
-        <CompatRouter>
-          <CreateClusterPage {...props} activeTab="" />
-        </CompatRouter>
-      </TestRouter>,
-    );
+    const { container } = render(<CreateClusterPage {...props} activeTab="" />);
     await checkAccessibility(container);
   });
 
@@ -49,21 +42,9 @@ describe('<CreateClusterPage />', () => {
       ['datacenter', 'Datacenter'],
       ['local', 'Local'],
     ])('renders correct tab when %s', async (tabKey, tabValue) => {
-      const { rerender } = render(
-        <TestRouter>
-          <CompatRouter>
-            <CreateClusterPage {...props} activeTab="" />
-          </CompatRouter>
-        </TestRouter>,
-      );
+      const { rerender } = render(<CreateClusterPage {...props} activeTab="" />);
       await userEvent.click(screen.getByRole('tab', { name: tabValue }));
-      rerender(
-        <TestRouter>
-          <CompatRouter>
-            <CreateClusterPage {...props} activeTab={tabKey} />
-          </CompatRouter>
-        </TestRouter>,
-      );
+      rerender(<CreateClusterPage {...props} activeTab={tabKey} />);
       expect(screen.getByRole('tab', { name: tabValue })).toHaveAttribute('aria-selected', 'true');
     });
   });
@@ -71,19 +52,15 @@ describe('<CreateClusterPage />', () => {
   describe('User with no quota', () => {
     it('should render', async () => {
       render(
-        <TestRouter>
-          <CompatRouter>
-            <CreateClusterPage
-              hasOSDQuota={false}
-              hasOSDTrialQuota={false}
-              getOrganizationAndQuota={getOrganizationAndQuota}
-              organization={{ ...organization, fulfilled: true }}
-              token={{}}
-              getAuthToken={getAuthToken}
-              osdTrialFeature={false}
-            />
-          </CompatRouter>
-        </TestRouter>,
+        <CreateClusterPage
+          hasOSDQuota={false}
+          hasOSDTrialQuota={false}
+          getOrganizationAndQuota={getOrganizationAndQuota}
+          organization={{ ...organization, fulfilled: true }}
+          token={{}}
+          getAuthToken={getAuthToken}
+          osdTrialFeature={false}
+        />,
       );
       expect(
         await screen.findByText('Select an OpenShift cluster type to create'),
@@ -94,20 +71,16 @@ describe('<CreateClusterPage />', () => {
   describe('Quota not fetched yet', () => {
     it('should fetch quota', () => {
       render(
-        <TestRouter>
-          <CompatRouter>
-            <CreateClusterPage
-              hasOSDQuota={false}
-              hasOSDTrialQuota={false}
-              getOrganizationAndQuota={getOrganizationAndQuota}
-              organization={{ ...organization, fulfilled: false }}
-              token={{}}
-              activeTab=""
-              getAuthToken={getAuthToken}
-              osdTrialFeature={false}
-            />
-          </CompatRouter>
-        </TestRouter>,
+        <CreateClusterPage
+          hasOSDQuota={false}
+          hasOSDTrialQuota={false}
+          getOrganizationAndQuota={getOrganizationAndQuota}
+          organization={{ ...organization, fulfilled: false }}
+          token={{}}
+          activeTab=""
+          getAuthToken={getAuthToken}
+          osdTrialFeature={false}
+        />,
       );
       expect(getOrganizationAndQuota).toBeCalled();
     });

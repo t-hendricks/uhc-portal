@@ -1,5 +1,4 @@
 import React from 'react';
-import { Link } from 'react-router-dom-v5-compat';
 
 import {
   Button,
@@ -24,6 +23,8 @@ import {
 import { CheckIcon } from '@patternfly/react-icons/dist/esm/icons/check-icon';
 import { HelpIcon } from '@patternfly/react-icons/dist/esm/icons/help-icon';
 import { global_link_Color_dark as darkColor } from '@patternfly/react-tokens/dist/esm/global_link_Color_dark';
+
+import { Link } from '~/common/routing';
 
 import ExternalLink from '../common/ExternalLink';
 

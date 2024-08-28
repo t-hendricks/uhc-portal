@@ -62,6 +62,7 @@ export const metadataByRoute = (
     };
   }
   if (pathname.startsWith('/details/s/')) {
+    // TODO: There's a bug that sends this with planType UNKNOWN
     return {
       ocm_resource_type: getOCMResourceType(planType),
       title: 'View Cluster',

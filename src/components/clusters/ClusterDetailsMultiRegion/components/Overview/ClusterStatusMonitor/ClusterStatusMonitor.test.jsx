@@ -1,5 +1,4 @@
 import React from 'react';
-import { CompatRouter } from 'react-router-dom-v5-compat';
 
 import { useFetchClusterStatus } from '~/queries/ClusterDetailsQueries/ClusterStatusMonitor/useFetchClusterStatus';
 import {
@@ -7,7 +6,7 @@ import {
   useFetchRerunInflightChecks,
   useMutateRerunInflightChecks,
 } from '~/queries/ClusterDetailsQueries/ClusterStatusMonitor/useFetchInflightChecks';
-import { render, screen, TestRouter, within } from '~/testUtils';
+import { render, screen, within } from '~/testUtils';
 
 import fixtures from '../../../__tests__/ClusterDetails.fixtures';
 
@@ -69,13 +68,7 @@ describe('<ClusterStatusMonitor />', () => {
       error: null,
     });
 
-    render(
-      <TestRouter>
-        <CompatRouter>
-          <ClusterStatusMonitor {...defaultProps} />
-        </CompatRouter>
-      </TestRouter>,
-    );
+    render(<ClusterStatusMonitor {...defaultProps} />);
     expect(useFetchClusterStatusMock).toBeCalledWith(clusterDetails.cluster.id, undefined, false);
     expect(useFetchInflightChecksMock).toBeCalledWith(
       clusterDetails.cluster.id,
@@ -109,13 +102,7 @@ describe('<ClusterStatusMonitor />', () => {
       error: null,
     });
 
-    render(
-      <TestRouter>
-        <CompatRouter>
-          <ClusterStatusMonitor {...defaultProps} region="aws.ap-southeast-1.stage" />
-        </CompatRouter>
-      </TestRouter>,
-    );
+    render(<ClusterStatusMonitor {...defaultProps} region="aws.ap-southeast-1.stage" />);
     expect(useFetchClusterStatusMock).toBeCalledWith(
       clusterDetails.cluster.id,
       'aws.ap-southeast-1.stage',
@@ -156,21 +143,9 @@ describe('<ClusterStatusMonitor />', () => {
     });
 
     // set pending: true first since the logic depends on the pending -> fulfilled transition
-    const { rerender } = render(
-      <TestRouter>
-        <CompatRouter>
-          <ClusterStatusMonitor {...defaultProps} />,
-        </CompatRouter>
-      </TestRouter>,
-    );
+    const { rerender } = render(<ClusterStatusMonitor {...defaultProps} />);
 
-    rerender(
-      <TestRouter>
-        <CompatRouter>
-          <ClusterStatusMonitor {...defaultProps} />
-        </CompatRouter>
-      </TestRouter>,
-    );
+    rerender(<ClusterStatusMonitor {...defaultProps} />);
 
     expect(useFetchClusterStatusMock).toHaveBeenLastCalledWith(
       clusterDetails.cluster.id,
@@ -207,13 +182,7 @@ describe('<ClusterStatusMonitor />', () => {
       error: null,
     });
 
-    const { container } = render(
-      <TestRouter>
-        <CompatRouter>
-          <ClusterStatusMonitor {...defaultProps} />
-        </CompatRouter>
-      </TestRouter>,
-    );
+    const { container } = render(<ClusterStatusMonitor {...defaultProps} />);
     expect(container).toBeEmptyDOMElement();
   });
 
@@ -250,13 +219,7 @@ describe('<ClusterStatusMonitor />', () => {
       ...defaultProps,
     };
 
-    render(
-      <TestRouter>
-        <CompatRouter>
-          <ClusterStatusMonitor {...newProps} />
-        </CompatRouter>
-      </TestRouter>,
-    );
+    render(<ClusterStatusMonitor {...newProps} />);
 
     expect(
       within(screen.getByTestId('alert-long-install')).getByText(
@@ -309,22 +272,10 @@ describe('<ClusterStatusMonitor />', () => {
         items: [{ state: 'running' }],
       },
     });
-    const { rerender } = render(
-      <TestRouter>
-        <CompatRouter>
-          <ClusterStatusMonitor {...defaultProps} />
-        </CompatRouter>
-      </TestRouter>,
-    );
+    const { rerender } = render(<ClusterStatusMonitor {...defaultProps} />);
     expect(refresh).not.toHaveBeenCalled();
 
-    rerender(
-      <TestRouter>
-        <CompatRouter>
-          <ClusterStatusMonitor {...defaultProps} />
-        </CompatRouter>
-      </TestRouter>,
-    );
+    rerender(<ClusterStatusMonitor {...defaultProps} />);
 
     expect(refresh).toBeCalled();
   });
@@ -359,23 +310,19 @@ describe('<ClusterStatusMonitor />', () => {
     });
 
     render(
-      <TestRouter>
-        <CompatRouter>
-          <ClusterStatusMonitor
-            {...defaultProps}
-            status={{
-              fulfilled: true,
-              pending: false,
-              status: {
-                id: clusterDetails.cluster.id,
-                state: 'error',
-                provision_error_code: 'OCM1002',
-                provision_error_message: 'Invalid AWS credentials (authentication)',
-              },
-            }}
-          />
-        </CompatRouter>
-      </TestRouter>,
+      <ClusterStatusMonitor
+        {...defaultProps}
+        status={{
+          fulfilled: true,
+          pending: false,
+          status: {
+            id: clusterDetails.cluster.id,
+            state: 'error',
+            provision_error_code: 'OCM1002',
+            provision_error_message: 'Invalid AWS credentials (authentication)',
+          },
+        }}
+      />,
     );
     expect(screen.getByText('Danger alert:')).toBeInTheDocument();
   });
@@ -412,25 +359,21 @@ describe('<ClusterStatusMonitor />', () => {
     });
 
     render(
-      <TestRouter>
-        <CompatRouter>
-          <ClusterStatusMonitor
-            {...defaultProps}
-            status={{
-              fulfilled: true,
-              pending: false,
-              status: {
-                id: clusterDetails.cluster.id,
-                state: 'error',
-                description: 'wut wut.',
-                provision_error_code: 'OCM3055',
-                provision_error_message:
-                  "Your cluster's installation role does not have permissions to use the default KMS key in your AWS account. Ensure that the installation role has permissions to use this key and try again. If you're using a custom KMS key, ensure the key exists. Learn more: https://access.redhat.com/solutions/7048553",
-              },
-            }}
-          />
-        </CompatRouter>
-      </TestRouter>,
+      <ClusterStatusMonitor
+        {...defaultProps}
+        status={{
+          fulfilled: true,
+          pending: false,
+          status: {
+            id: clusterDetails.cluster.id,
+            state: 'error',
+            description: 'wut wut.',
+            provision_error_code: 'OCM3055',
+            provision_error_message:
+              "Your cluster's installation role does not have permissions to use the default KMS key in your AWS account. Ensure that the installation role has permissions to use this key and try again. If you're using a custom KMS key, ensure the key exists. Learn more: https://access.redhat.com/solutions/7048553",
+          },
+        }}
+      />,
     );
     expect(screen.getByText('Danger alert:')).toBeInTheDocument();
     expect(

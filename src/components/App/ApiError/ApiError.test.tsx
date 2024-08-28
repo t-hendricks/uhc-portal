@@ -1,9 +1,8 @@
 import React from 'react';
 import type { AxiosResponse } from 'axios';
-import { CompatRouter } from 'react-router-dom-v5-compat';
 
 import apiRequest from '~/services/apiRequest';
-import { render, screen, TestRouter } from '~/testUtils';
+import { render, screen } from '~/testUtils';
 
 import ApiError from './ApiError';
 
@@ -18,13 +17,9 @@ describe('ApiError', () => {
   it('should render children if no api errors', () => {
     const apiError = null;
     render(
-      <TestRouter>
-        <CompatRouter>
-          <ApiError {...defaultProps} apiError={apiError}>
-            {defaultProps.children}
-          </ApiError>
-        </CompatRouter>
-      </TestRouter>,
+      <ApiError {...defaultProps} apiError={apiError}>
+        {defaultProps.children}
+      </ApiError>,
     );
 
     expect(screen.getByText('ApiErrorChildren')).toBeInTheDocument();
@@ -45,13 +40,9 @@ describe('ApiError', () => {
     } as AxiosResponse;
 
     render(
-      <TestRouter>
-        <CompatRouter>
-          <ApiError {...defaultProps} apiError={apiError}>
-            {defaultProps.children}
-          </ApiError>
-        </CompatRouter>
-      </TestRouter>,
+      <ApiError {...defaultProps} apiError={apiError}>
+        {defaultProps.children}
+      </ApiError>,
     );
 
     expect(screen.getByRole('link', { name: 'View Terms and Conditions' })).toBeInTheDocument();

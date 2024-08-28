@@ -1,7 +1,6 @@
 import React from 'react';
-import { CompatRouter } from 'react-router-dom-v5-compat';
 
-import { checkAccessibility, screen, TestRouter, withState } from '~/testUtils';
+import { checkAccessibility, screen, withState } from '~/testUtils';
 
 import githubReleases from '../githubReleases.mock';
 import { InstallPowerABI } from '../InstallPowerABI';
@@ -27,11 +26,7 @@ describe('InstallPowerABI', () => {
   it('is accessible', async () => {
     // While this tests passes, it throws a warning: <p> cannot appear as a descendant of <p>
     const { container } = withState(githubReleases).render(
-      <TestRouter>
-        <CompatRouter>
-          <InstallPowerABI token={{}} dispatch={dispatch} />
-        </CompatRouter>
-      </TestRouter>,
+      <InstallPowerABI token={{}} dispatch={dispatch} />,
     );
 
     expect(

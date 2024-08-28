@@ -3,7 +3,6 @@ import React from 'react';
 import size from 'lodash/size';
 import { useDispatch } from 'react-redux';
 
-// import { useNavigate } from 'react-router-dom-v5-compat';
 import {
   Card,
   CardBody,
@@ -17,6 +16,7 @@ import {
 } from '@patternfly/react-core';
 import SearchIcon from '@patternfly/react-icons/dist/esm/icons/search-icon';
 
+// import { useNavigate } from '~/common/routing';
 import {
   // invalidateClusterLogsQueries,
   useFetchClusterLogs,

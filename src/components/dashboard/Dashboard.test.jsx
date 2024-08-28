@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { checkAccessibility, render, screen, TestRouter } from '~/testUtils';
+import { checkAccessibility, render, screen } from '~/testUtils';
 
 import Dashboard from './Dashboard';
 import { clustersWithIssues } from './Dashboard.fixtures';
@@ -74,11 +74,7 @@ describe('<Dashboard />', () => {
   });
 
   it.skip('is accessible', async () => {
-    const { container } = render(
-      <TestRouter>
-        <Dashboard {...defaultProps} />
-      </TestRouter>,
-    );
+    const { container } = render(<Dashboard {...defaultProps} />);
 
     expect(await screen.findByText('Dashboard')).toBeInTheDocument();
 

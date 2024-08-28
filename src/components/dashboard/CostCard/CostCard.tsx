@@ -3,7 +3,7 @@ import { useDispatch } from 'react-redux';
 
 import { Card, CardBody, CardFooter, CardTitle, Title } from '@patternfly/react-core';
 
-import ocmBaseName from '~/common/getBaseName';
+import { ocmBaseName } from '~/common/routing';
 import { getReport, getSources } from '~/redux/actions/costActions';
 import { useGlobalState } from '~/redux/hooks';
 import { PromiseReducerState } from '~/redux/types';

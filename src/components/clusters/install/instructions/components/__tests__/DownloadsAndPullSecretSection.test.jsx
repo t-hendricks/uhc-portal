@@ -1,7 +1,6 @@
 import React from 'react';
-import { CompatRouter } from 'react-router-dom-v5-compat';
 
-import { checkAccessibility, screen, TestRouter, withState } from '~/testUtils';
+import { checkAccessibility, screen, withState } from '~/testUtils';
 
 import { channels, tools } from '../../../../../../common/installLinks.mjs';
 import githubReleasesMock from '../../../githubReleases.mock';
@@ -27,11 +26,7 @@ describe('<DownloadsAndPullSecretSection />', () => {
     const token = { auths: { foo: 'bar' } };
     it('is accessible', async () => {
       const { container } = withState(githubReleasesMock).render(
-        <TestRouter>
-          <CompatRouter>
-            <DownloadsAndPullSecretSection {...defaultProps} token={token} />
-          </CompatRouter>
-        </TestRouter>,
+        <DownloadsAndPullSecretSection {...defaultProps} token={token} />,
       );
 
       expect(screen.getByRole('button', { name: 'Download pull secret' })).toHaveAttribute(
@@ -48,11 +43,7 @@ describe('<DownloadsAndPullSecretSection />', () => {
 
     it('is accessible', async () => {
       const { container } = withState(githubReleasesMock).render(
-        <TestRouter>
-          <CompatRouter>
-            <DownloadsAndPullSecretSection {...defaultProps} token={badToken} />
-          </CompatRouter>
-        </TestRouter>,
+        <DownloadsAndPullSecretSection {...defaultProps} token={badToken} />,
       );
 
       expect(screen.getByRole('button', { name: 'Download pull secret' })).toHaveAttribute(

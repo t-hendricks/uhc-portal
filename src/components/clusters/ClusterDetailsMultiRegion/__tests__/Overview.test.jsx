@@ -1,5 +1,4 @@
 import React from 'react';
-import { BrowserRouter } from 'react-router-dom-v5-compat';
 
 import * as subscriptionFixture from '~/components/clusters/ClusterDetails/components/Overview/SubscriptionSettings/SubscriptionSettings.fixtures';
 
@@ -30,11 +29,7 @@ describe('<Overview />', () => {
     };
 
     it('is accessible', async () => {
-      const { container } = render(
-        <BrowserRouter>
-          <Overview {...props} />
-        </BrowserRouter>,
-      );
+      const { container } = render(<Overview {...props} />);
 
       expect(
         await screen.findByText(
@@ -58,11 +53,7 @@ describe('<Overview />', () => {
     };
 
     it.skip('is accessible', async () => {
-      const { container } = render(
-        <BrowserRouter>
-          <Overview {...props} />
-        </BrowserRouter>,
-      );
+      const { container } = render(<Overview {...props} />);
 
       expect(
         await screen.findByText(
@@ -75,11 +66,7 @@ describe('<Overview />', () => {
     });
 
     it('displays items in the side panel', async () => {
-      render(
-        <BrowserRouter>
-          <Overview {...props} />
-        </BrowserRouter>,
-      );
+      render(<Overview {...props} />);
 
       // Resource Usage
       expect(
@@ -102,11 +89,7 @@ describe('<Overview />', () => {
 
       withState({
         clusters: { details: { cluster: { subscription: subscriptionFixture } } },
-      }).render(
-        <BrowserRouter>
-          <Overview {...props} />
-        </BrowserRouter>,
-      );
+      }).render(<Overview {...props} />);
 
       expect(
         await screen.findByText(
@@ -131,11 +114,7 @@ describe('<Overview />', () => {
     };
 
     it.skip('is accessible', async () => {
-      const { container } = render(
-        <BrowserRouter>
-          <Overview {...props} />
-        </BrowserRouter>,
-      );
+      const { container } = render(<Overview {...props} />);
 
       expect(
         await screen.findByText(
@@ -166,11 +145,7 @@ describe('<Overview />', () => {
     };
 
     it('does not display side panel', async () => {
-      render(
-        <BrowserRouter>
-          <Overview {...props} />
-        </BrowserRouter>,
-      );
+      render(<Overview {...props} />);
 
       expect(await screen.findByText('Archived')).toBeInTheDocument();
 
@@ -189,11 +164,7 @@ describe('<Overview />', () => {
     });
 
     it('does not display subscription settings', async () => {
-      render(
-        <BrowserRouter>
-          <Overview {...props} />
-        </BrowserRouter>,
-      );
+      render(<Overview {...props} />);
 
       expect(await screen.findByText('Archived')).toBeInTheDocument();
 
@@ -214,11 +185,7 @@ describe('<Overview />', () => {
     };
 
     it('is accessible', async () => {
-      const { container } = render(
-        <BrowserRouter>
-          <Overview {...props} />
-        </BrowserRouter>,
-      );
+      const { container } = render(<Overview {...props} />);
 
       expect(await screen.findByText('Assisted cluster ID / Cluster ID')).toBeInTheDocument();
 
@@ -247,11 +214,7 @@ describe('<Overview />', () => {
         userAccess: fixtures.userAccess,
       };
 
-      const { rerender } = render(
-        <BrowserRouter>
-          <Overview {...props} />
-        </BrowserRouter>,
-      );
+      const { rerender } = render(<Overview {...props} />);
 
       expect(await screen.findByText('Total issues')).toBeInTheDocument();
 
@@ -259,11 +222,7 @@ describe('<Overview />', () => {
       expect(screen.getByText('Resource usage')).toBeInTheDocument();
 
       isRestrictedEnv.mockReturnValue(true);
-      rerender(
-        <BrowserRouter>
-          <Overview {...props} />
-        </BrowserRouter>,
-      );
+      rerender(<Overview {...props} />);
 
       expect(screen.queryByText('Advisor recommendations')).not.toBeInTheDocument();
       expect(screen.queryByText('Resource usage')).not.toBeInTheDocument();

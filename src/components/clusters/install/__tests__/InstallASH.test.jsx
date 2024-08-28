@@ -1,20 +1,13 @@
 import React from 'react';
-import { CompatRouter } from 'react-router-dom-v5-compat';
 
-import { checkAccessibility, render, screen, TestRouter } from '~/testUtils';
+import { checkAccessibility, render, screen } from '~/testUtils';
 
 import InstallASH from '../InstallASH';
 import { version } from '../InstallTestConstants';
 
 describe('InstallASH', () => {
   it('is accessible', async () => {
-    const { container } = render(
-      <TestRouter>
-        <CompatRouter>
-          <InstallASH />
-        </CompatRouter>
-      </TestRouter>,
-    );
+    const { container } = render(<InstallASH />);
 
     expect(
       await screen.findByText('Create an OpenShift Cluster: Azure Stack Hub'),
@@ -23,13 +16,7 @@ describe('InstallASH', () => {
   });
 
   it('displays expected doc links', () => {
-    render(
-      <TestRouter>
-        <CompatRouter>
-          <InstallASH />
-        </CompatRouter>
-      </TestRouter>,
-    );
+    render(<InstallASH />);
 
     expect(screen.getByRole('link', { name: /Learn more about automated/ })).toHaveAttribute(
       'href',

@@ -1,7 +1,6 @@
 import * as React from 'react';
 import { AxiosResponse } from 'axios';
 import { Formik, FormikValues } from 'formik';
-import { CompatRouter } from 'react-router-dom-v5-compat';
 
 import { waitFor } from '@testing-library/react';
 
@@ -9,7 +8,7 @@ import { billingModels } from '~/common/subscriptionTypes';
 import { fakeWifConfigs } from '~/components/clusters/wizards/osd/ClusterSettings/CloudProvider/GcpByocFields/GcpByocFields.fixtures';
 import { WifConfigList } from '~/components/clusters/wizards/osd/ClusterSettings/CloudProvider/types';
 import { OSD_GCP_WIF } from '~/redux/constants/featureConstants';
-import { checkAccessibility, mockUseFeatureGate, render, screen, TestRouter } from '~/testUtils';
+import { checkAccessibility, mockUseFeatureGate, render, screen } from '~/testUtils';
 
 import { FieldId, initialValues } from '../../../constants';
 
@@ -32,26 +31,22 @@ const prepareComponent = (
   customValues?: FormikValues,
   getWifConfigService?: GcpByocFieldsProps['getWifConfigsService'],
 ) => (
-  <TestRouter>
-    <CompatRouter>
-      <Formik
-        initialValues={{
-          ...initialValues,
-          ...customValues,
-        }}
-        onSubmit={() => {}}
-      >
-        {(props) => (
-          <>
-            <GcpByocFields getWifConfigsService={getWifConfigService ?? getTestWifConfigs} />
-            <button type="submit" onClick={() => props.handleSubmit()}>
-              Submit
-            </button>
-          </>
-        )}
-      </Formik>
-    </CompatRouter>
-  </TestRouter>
+  <Formik
+    initialValues={{
+      ...initialValues,
+      ...customValues,
+    }}
+    onSubmit={() => {}}
+  >
+    {(props) => (
+      <>
+        <GcpByocFields getWifConfigsService={getWifConfigService ?? getTestWifConfigs} />
+        <button type="submit" onClick={() => props.handleSubmit()}>
+          Submit
+        </button>
+      </>
+    )}
+  </Formik>
 );
 
 describe('<GcpByocFields />', () => {

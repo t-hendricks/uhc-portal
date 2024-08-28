@@ -3,6 +3,8 @@ import PropTypes from 'prop-types';
 
 import { Form } from '@patternfly/react-core';
 
+import { ocmBaseName } from '~/common/routing';
+
 import ErrorBox from '../../../common/ErrorBox';
 import Modal from '../../../common/Modal/Modal';
 import modals from '../../../common/Modal/modals';
@@ -38,7 +40,6 @@ class HibernateClusterModal extends Component {
       clusterID,
       clusterName,
       clusterUpgrades,
-      history,
       subscriptionID,
       shouldDisplayClusterName,
     } = this.props;
@@ -89,14 +90,15 @@ class HibernateClusterModal extends Component {
         cancelHibernateCluster();
       }
     };
-    const onSecondaryClick = () => {
+    const onSecondaryClick = ({ location, navigate }) => {
       cancelHibernateCluster();
-
       if (!isHibernateEnabled) {
-        if (history.location.pathname.startsWith('/details/s/')) {
-          window.location.hash = '#updateSettings';
+        if (location.pathname.startsWith(`${ocmBaseName}/details/s/`)) {
+          navigate({
+            hash: '#updateSettings',
+          });
         } else {
-          history.push({
+          navigate({
             pathname: `/details/s/${subscriptionID}`,
             hash: '#updateSettings',
           });
@@ -145,12 +147,6 @@ HibernateClusterModal.propTypes = {
   }),
   submit: PropTypes.func.isRequired,
   onClose: PropTypes.func.isRequired,
-  history: PropTypes.shape({
-    push: PropTypes.func.isRequired,
-    location: PropTypes.shape({
-      pathname: PropTypes.string.isRequired,
-    }),
-  }).isRequired,
   shouldDisplayClusterName: PropTypes.bool,
 };
 

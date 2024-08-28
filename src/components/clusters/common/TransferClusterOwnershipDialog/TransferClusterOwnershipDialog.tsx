@@ -11,6 +11,7 @@ import {
 } from '@patternfly/react-core';
 
 import getClusterName from '~/common/getClusterName';
+import { ocmBaseName } from '~/common/routing';
 import {
   clearToggleSubscriptionReleasedResponse,
   toggleSubscriptionReleased,
@@ -19,7 +20,6 @@ import { useGlobalState } from '~/redux/hooks';
 import { Subscription, SubscriptionCommonFields } from '~/types/accounts_mgmt.v1';
 import { ClusterFromSubscription } from '~/types/types';
 
-import ocmBaseName from '../../../../common/getBaseName';
 import ErrorBox from '../../../common/ErrorBox';
 import ExternalLink from '../../../common/ExternalLink';
 import Modal from '../../../common/Modal/Modal';

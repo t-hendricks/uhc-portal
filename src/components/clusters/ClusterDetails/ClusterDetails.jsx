@@ -14,12 +14,13 @@ limitations under the License.
 import React from 'react';
 import get from 'lodash/get';
 import PropTypes from 'prop-types';
-import { Navigate, useNavigate, useParams } from 'react-router-dom-v5-compat';
+import { useLocation, useParams } from 'react-router-dom';
 
 import * as OCM from '@openshift-assisted/ui-lib/ocm';
 import { PageSection, TabContent, Tooltip } from '@patternfly/react-core';
 import { Spinner } from '@redhat-cloud-services/frontend-components/Spinner';
 
+import { Navigate, useNavigate } from '~/common/routing';
 import { AppPage } from '~/components/App/AppPage';
 import { isRestrictedEnv } from '~/restrictedEnv';
 import { SubscriptionCommonFields } from '~/types/accounts_mgmt.v1';
@@ -121,7 +122,6 @@ const ClusterDetails = (props) => {
     anyModalOpen,
     hasIssues,
     toggleSubscriptionReleased,
-    initTabOpen,
     assistedInstallerEnabled,
     userAccess,
     gotRouters,
@@ -129,6 +129,9 @@ const ClusterDetails = (props) => {
     isAccessRequestEnabled,
     accessProtectionState,
   } = props;
+
+  const location = useLocation();
+  const initTabOpen = location.hash.replace('#', '');
 
   const navigate = useNavigate();
   const params = useParams();
@@ -750,7 +753,6 @@ ClusterDetails.propTypes = {
   anyModalOpen: PropTypes.bool,
   hasIssues: PropTypes.bool.isRequired,
   toggleSubscriptionReleased: PropTypes.func.isRequired,
-  initTabOpen: PropTypes.string.isRequired,
   notificationContacts: PropTypes.object.isRequired,
   getNotificationContacts: PropTypes.func.isRequired,
   hasNetworkOndemand: PropTypes.bool.isRequired,

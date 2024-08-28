@@ -1,7 +1,6 @@
 import React from 'react';
 import get from 'lodash/get';
 import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom-v5-compat';
 
 import {
   Button,
@@ -28,6 +27,7 @@ import {
 } from '@patternfly/react-table';
 import { global_warning_color_100 as warningColor } from '@patternfly/react-tokens/dist/esm/global_warning_color_100';
 
+import { Link } from '~/common/routing';
 import AIClusterStatus from '~/components/common/AIClusterStatus';
 
 import getClusterName from '../../../../common/getClusterName';
@@ -50,13 +50,14 @@ import ProgressList from '../../common/InstallProgress/ProgressList';
 import ClusterCreatedIndicator from './ClusterCreatedIndicator';
 
 const skeletonRows = () =>
-  new Array(10).fill(
-    <Tr>
+  [...Array(10)].map((x, i) => (
+    // eslint-disable-next-line react/no-array-index-key
+    <Tr key={`skeleton-row-${i}`}>
       <Td colSpan={7}>
         <Skeleton />
       </Td>
-    </Tr>,
-  );
+    </Tr>
+  ));
 
 function ClusterListTable(props) {
   const {

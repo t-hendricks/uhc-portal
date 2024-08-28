@@ -1,6 +1,4 @@
 import React from 'react';
-import { MemoryRouter } from 'react-router-dom';
-import { CompatRouter } from 'react-router-dom-v5-compat';
 
 import { checkAccessibility, mockRestrictedEnv, render, screen } from '~/testUtils';
 
@@ -54,13 +52,7 @@ describe('<CloudTab />', () => {
   describe('OSD clusters', () => {
     it('is accessible when both trial and quota are enabled', async () => {
       // Arrange
-      const { container } = render(
-        <MemoryRouter>
-          <CompatRouter>
-            <CloudTab hasOSDQuota trialEnabled />
-          </CompatRouter>
-        </MemoryRouter>,
-      );
+      const { container } = render(<CloudTab hasOSDQuota trialEnabled />);
 
       // Assert
       await checkAccessibility(container);
@@ -68,13 +60,7 @@ describe('<CloudTab />', () => {
 
     it('is accessible when trial is disabled and no quota', async () => {
       // Arrange
-      const { container } = render(
-        <MemoryRouter>
-          <CompatRouter>
-            <CloudTab hasOSDQuota={false} trialEnabled={false} />
-          </CompatRouter>
-        </MemoryRouter>,
-      );
+      const { container } = render(<CloudTab hasOSDQuota={false} trialEnabled={false} />);
 
       // Assert
       await checkAccessibility(container);
@@ -82,13 +68,7 @@ describe('<CloudTab />', () => {
 
     it('shows two sections, create cluster, and quota link when it has OSD quota', () => {
       // Arrange
-      render(
-        <MemoryRouter>
-          <CompatRouter>
-            <CloudTab hasOSDQuota trialEnabled={false} />
-          </CompatRouter>
-        </MemoryRouter>,
-      );
+      render(<CloudTab hasOSDQuota trialEnabled={false} />);
 
       // Assert
       verifyBothSectionsShowing();
@@ -106,13 +86,7 @@ describe('<CloudTab />', () => {
 
     it('shows two sections, learn more link,  and quota link when there is not any OSD quota', () => {
       // Arrange
-      render(
-        <MemoryRouter>
-          <CompatRouter>
-            <CloudTab hasOSDQuota={false} trialEnabled={false} />
-          </CompatRouter>
-        </MemoryRouter>,
-      );
+      render(<CloudTab hasOSDQuota={false} trialEnabled={false} />);
 
       // Assert
       verifyBothSectionsShowing();
@@ -130,13 +104,7 @@ describe('<CloudTab />', () => {
 
     it('shows two sections and create OSD trail button when trial is enabled', () => {
       // Arrange
-      render(
-        <MemoryRouter>
-          <CompatRouter>
-            <CloudTab hasOSDQuota={false} trialEnabled />
-          </CompatRouter>
-        </MemoryRouter>,
-      );
+      render(<CloudTab hasOSDQuota={false} trialEnabled />);
 
       // Assert
       verifyBothSectionsShowing();
@@ -154,13 +122,7 @@ describe('<CloudTab />', () => {
 
     it('shows  two sections, create OSD button, create OSD trial, and quota link when  both trial enabled and OSD quota', () => {
       // Arrange
-      render(
-        <MemoryRouter>
-          <CompatRouter>
-            <CloudTab hasOSDQuota trialEnabled />
-          </CompatRouter>
-        </MemoryRouter>,
-      );
+      render(<CloudTab hasOSDQuota trialEnabled />);
 
       // Assert
       verifyBothSectionsShowing();
@@ -189,13 +151,7 @@ describe('<CloudTab />', () => {
     });
     it('renders only ROSA cluster', () => {
       isRestrictedEnv.mockReturnValue(true);
-      render(
-        <MemoryRouter>
-          <CompatRouter>
-            <CloudTab {...props} />
-          </CompatRouter>
-        </MemoryRouter>,
-      );
+      render(<CloudTab {...props} />);
 
       expect(screen.getAllByRole('row')).toHaveLength(2);
       expect(screen.getByTestId('rosa-create-cluster-button')).toBeInTheDocument();

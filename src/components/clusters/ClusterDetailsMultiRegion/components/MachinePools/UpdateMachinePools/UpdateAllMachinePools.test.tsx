@@ -1,13 +1,11 @@
 import React from 'react';
 import type axios from 'axios';
 import * as reactRedux from 'react-redux';
-import { MemoryRouter } from 'react-router-dom';
-import { CompatRouter } from 'react-router-dom-v5-compat';
 import semver from 'semver';
 
 import { refetchMachineOrNodePoolsQuery } from '~/queries/ClusterDetailsQueries/MachinePoolTab/useFetchMachineOrNodePools';
 import apiRequest from '~/services/apiRequest';
-import { checkAccessibility, screen, TestRouter, within, withState } from '~/testUtils';
+import { checkAccessibility, screen, within, withState } from '~/testUtils';
 import { NodePoolUpgradePolicy } from '~/types/clusters_mgmt.v1';
 
 import { UpdateAllMachinePools } from './index';
@@ -108,11 +106,7 @@ describe('<UpdateAllMachinePools />', () => {
       };
 
       const { container } = withState(newState).render(
-        <TestRouter>
-          <CompatRouter>
-            <UpdateAllMachinePools isMachinePoolError={false} isHypershift />
-          </CompatRouter>
-        </TestRouter>,
+        <UpdateAllMachinePools isMachinePoolError={false} isHypershift />,
       );
 
       expectUpdateButtonAbsence(container);
@@ -131,11 +125,7 @@ describe('<UpdateAllMachinePools />', () => {
       };
 
       const { container } = withState(newState).render(
-        <TestRouter>
-          <CompatRouter>
-            <UpdateAllMachinePools isMachinePoolError={false} isHypershift={false} />
-          </CompatRouter>
-        </TestRouter>,
+        <UpdateAllMachinePools isMachinePoolError={false} isHypershift={false} />,
       );
 
       expectUpdateButtonAbsence(container);
@@ -153,11 +143,7 @@ describe('<UpdateAllMachinePools />', () => {
       };
 
       const { container } = withState(newState).render(
-        <TestRouter>
-          <CompatRouter>
-            <UpdateAllMachinePools isMachinePoolError={false} isHypershift />
-          </CompatRouter>
-        </TestRouter>,
+        <UpdateAllMachinePools isMachinePoolError={false} isHypershift />,
       );
 
       expectUpdateButtonAbsence(container);
@@ -175,11 +161,7 @@ describe('<UpdateAllMachinePools />', () => {
       };
 
       const { container } = withState(newState).render(
-        <TestRouter>
-          <CompatRouter>
-            <UpdateAllMachinePools isMachinePoolError isHypershift />
-          </CompatRouter>
-        </TestRouter>,
+        <UpdateAllMachinePools isMachinePoolError isHypershift />,
       );
 
       expectUpdateButtonAbsence(container);
@@ -199,11 +181,7 @@ describe('<UpdateAllMachinePools />', () => {
       };
 
       const { container } = withState(newState).render(
-        <TestRouter>
-          <CompatRouter>
-            <UpdateAllMachinePools isMachinePoolError={false} isHypershift />
-          </CompatRouter>
-        </TestRouter>,
+        <UpdateAllMachinePools isMachinePoolError={false} isHypershift />,
       );
 
       expectUpdateButtonAbsence(container);
@@ -217,11 +195,7 @@ describe('<UpdateAllMachinePools />', () => {
       };
 
       const { container } = withState(newState).render(
-        <TestRouter>
-          <CompatRouter>
-            <UpdateAllMachinePools isMachinePoolError={false} isHypershift />
-          </CompatRouter>
-        </TestRouter>,
+        <UpdateAllMachinePools isMachinePoolError={false} isHypershift />,
       );
 
       expectUpdateButtonAbsence(container);
@@ -240,11 +214,7 @@ describe('<UpdateAllMachinePools />', () => {
       };
 
       const { container } = withState(newState).render(
-        <TestRouter>
-          <CompatRouter>
-            <UpdateAllMachinePools isMachinePoolError={false} isHypershift />
-          </CompatRouter>
-        </TestRouter>,
+        <UpdateAllMachinePools isMachinePoolError={false} isHypershift />,
       );
 
       expectUpdateButtonAbsence(container);
@@ -281,11 +251,7 @@ describe('<UpdateAllMachinePools />', () => {
       ).not.toContain(rawControlPlaneVersion?.version);
 
       const { container } = withState(newState).render(
-        <TestRouter>
-          <CompatRouter>
-            <UpdateAllMachinePools isMachinePoolError={false} isHypershift />
-          </CompatRouter>
-        </TestRouter>,
+        <UpdateAllMachinePools isMachinePoolError={false} isHypershift />,
       );
 
       expectUpdateButtonAbsence(container);
@@ -323,11 +289,7 @@ describe('<UpdateAllMachinePools />', () => {
       );
 
       const { container } = withState(newState).render(
-        <TestRouter>
-          <CompatRouter>
-            <UpdateAllMachinePools isMachinePoolError={false} isHypershift />
-          </CompatRouter>
-        </TestRouter>,
+        <UpdateAllMachinePools isMachinePoolError={false} isHypershift />,
       );
 
       expectUpdateButtonAbsence(container);
@@ -365,11 +327,7 @@ describe('<UpdateAllMachinePools />', () => {
       );
 
       const { container } = withState(newState).render(
-        <TestRouter>
-          <CompatRouter>
-            <UpdateAllMachinePools isMachinePoolError={false} isHypershift />
-          </CompatRouter>
-        </TestRouter>,
+        <UpdateAllMachinePools isMachinePoolError={false} isHypershift />,
       );
 
       expectUpdateButtonAbsence(container);
@@ -393,11 +351,7 @@ describe('<UpdateAllMachinePools />', () => {
         };
 
         const { container } = withState(newState).render(
-          <TestRouter>
-            <CompatRouter>
-              <UpdateAllMachinePools isMachinePoolError={false} isHypershift />
-            </CompatRouter>
-          </TestRouter>,
+          <UpdateAllMachinePools isMachinePoolError={false} isHypershift />,
         );
 
         expectUpdateButtonAbsence(container);
@@ -416,11 +370,7 @@ describe('<UpdateAllMachinePools />', () => {
         };
 
         const { container } = withState(newState).render(
-          <TestRouter>
-            <CompatRouter>
-              <UpdateAllMachinePools isMachinePoolError={false} isHypershift />
-            </CompatRouter>
-          </TestRouter>,
+          <UpdateAllMachinePools isMachinePoolError={false} isHypershift />,
         );
 
         expectUpdateButtonAbsence(container);
@@ -439,11 +389,7 @@ describe('<UpdateAllMachinePools />', () => {
         };
 
         const { container } = withState(newState).render(
-          <TestRouter>
-            <CompatRouter>
-              <UpdateAllMachinePools isMachinePoolError={false} isHypershift />
-            </CompatRouter>
-          </TestRouter>,
+          <UpdateAllMachinePools isMachinePoolError={false} isHypershift />,
         );
 
         expectUpdateButtonAbsence(container);
@@ -462,11 +408,7 @@ describe('<UpdateAllMachinePools />', () => {
         };
 
         const { container } = withState(newState).render(
-          <TestRouter>
-            <CompatRouter>
-              <UpdateAllMachinePools isMachinePoolError={false} isHypershift />
-            </CompatRouter>
-          </TestRouter>,
+          <UpdateAllMachinePools isMachinePoolError={false} isHypershift />,
         );
 
         expectUpdateButtonAbsence(container);
@@ -485,11 +427,7 @@ describe('<UpdateAllMachinePools />', () => {
         };
 
         const { container } = withState(newState).render(
-          <TestRouter>
-            <CompatRouter>
-              <UpdateAllMachinePools isMachinePoolError={false} isHypershift />
-            </CompatRouter>
-          </TestRouter>,
+          <UpdateAllMachinePools isMachinePoolError={false} isHypershift />,
         );
 
         expectUpdateButtonAbsence(container);
@@ -509,11 +447,7 @@ describe('<UpdateAllMachinePools />', () => {
         },
       };
       const { container } = withState(newState).render(
-        <TestRouter>
-          <CompatRouter>
-            <UpdateAllMachinePools isMachinePoolError={false} isHypershift />
-          </CompatRouter>
-        </TestRouter>,
+        <UpdateAllMachinePools isMachinePoolError={false} isHypershift />,
       );
 
       expectUpdateButtonPresence();
@@ -534,11 +468,7 @@ describe('<UpdateAllMachinePools />', () => {
       };
 
       const { user } = withState(newState).render(
-        <TestRouter>
-          <CompatRouter>
-            <UpdateAllMachinePools isMachinePoolError={false} isHypershift />
-          </CompatRouter>
-        </TestRouter>,
+        <UpdateAllMachinePools isMachinePoolError={false} isHypershift />,
       );
       expectUpdateButtonPresence();
 
@@ -576,11 +506,7 @@ describe('<UpdateAllMachinePools />', () => {
       };
 
       const { user } = withState(newState).render(
-        <TestRouter>
-          <CompatRouter>
-            <UpdateAllMachinePools isMachinePoolError={false} isHypershift />
-          </CompatRouter>
-        </TestRouter>,
+        <UpdateAllMachinePools isMachinePoolError={false} isHypershift />,
       );
       expectUpdateButtonPresence();
 
@@ -628,11 +554,7 @@ describe('<UpdateAllMachinePools />', () => {
       };
 
       const { user } = withState(newState).render(
-        <TestRouter>
-          <CompatRouter>
-            <UpdateAllMachinePools isMachinePoolError={false} isHypershift />
-          </CompatRouter>
-        </TestRouter>,
+        <UpdateAllMachinePools isMachinePoolError={false} isHypershift />,
       );
 
       expect(apiRequestMock.post).not.toHaveBeenCalled();
@@ -706,11 +628,7 @@ describe('<UpdateAllMachinePools />', () => {
         },
       };
       withState(newState).render(
-        <TestRouter>
-          <CompatRouter>
-            <UpdateAllMachinePools goToMachinePoolTab isMachinePoolError={false} isHypershift />
-          </CompatRouter>
-        </TestRouter>,
+        <UpdateAllMachinePools goToMachinePoolTab isMachinePoolError={false} isHypershift />,
       );
 
       expectUpdateButtonAbsence();
@@ -731,11 +649,7 @@ describe('<UpdateAllMachinePools />', () => {
           },
         },
       };
-      withState(newState).render(
-        <MemoryRouter>
-          <UpdateAllMachinePools isMachinePoolError={false} isHypershift />
-        </MemoryRouter>,
-      );
+      withState(newState).render(<UpdateAllMachinePools isMachinePoolError={false} isHypershift />);
 
       expectUpdateButtonPresence();
       expect(

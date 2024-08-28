@@ -18,13 +18,13 @@ import React, { Component } from 'react';
 import isEmpty from 'lodash/isEmpty';
 import size from 'lodash/size';
 import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom-v5-compat';
 
 import { Card, PageSection, Toolbar, ToolbarContent, ToolbarItem } from '@patternfly/react-core';
 import { PageHeader, PageHeaderTitle } from '@redhat-cloud-services/frontend-components/PageHeader';
 import Spinner from '@redhat-cloud-services/frontend-components/Spinner';
 
 import { ONLY_MY_CLUSTERS_TOGGLE_CLUSTER_ARCHIVES_LIST } from '~/common/localStorageConstants';
+import { Link } from '~/common/routing';
 import { AppPage } from '~/components/App/AppPage';
 
 import { createViewQueryObject, viewPropsChanged } from '../../../common/queryHelpers';

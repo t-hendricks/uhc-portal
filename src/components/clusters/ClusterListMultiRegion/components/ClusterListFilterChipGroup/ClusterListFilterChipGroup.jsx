@@ -1,10 +1,10 @@
 import React from 'react';
 import isEmpty from 'lodash/isEmpty';
 import { useDispatch, useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom-v5-compat';
 
 import { Button, Chip, ChipGroup, Split, SplitItem } from '@patternfly/react-core';
 
+import { useNavigate } from '~/common/routing';
 import { onListFlagsSet } from '~/redux/actions/viewOptionsActions';
 import { CLUSTERS_VIEW } from '~/redux/constants/viewConstants';
 

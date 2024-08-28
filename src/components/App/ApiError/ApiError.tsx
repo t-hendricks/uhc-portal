@@ -1,6 +1,6 @@
 import React from 'react';
 import { AxiosInstance, AxiosResponse } from 'axios';
-import { useLocation } from 'react-router-dom-v5-compat';
+import { useLocation } from 'react-router-dom';
 
 import { getInternalErrorCode, hasOwnErrorPage, TERMS_REQUIRED_CODE } from '../../../common/errors';
 import TermsError from '../../common/TermsGuard/TermsError';

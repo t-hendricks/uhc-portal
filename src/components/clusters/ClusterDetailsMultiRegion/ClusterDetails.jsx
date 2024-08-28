@@ -15,12 +15,13 @@ import React from 'react';
 import get from 'lodash/get';
 import PropTypes from 'prop-types';
 import { useDispatch, useSelector } from 'react-redux';
-import { Navigate, useNavigate, useParams } from 'react-router-dom-v5-compat';
+import { useLocation, useParams } from 'react-router-dom';
 
 import * as OCM from '@openshift-assisted/ui-lib/ocm';
 import { PageSection, TabContent, Tooltip } from '@patternfly/react-core';
 import { Spinner } from '@redhat-cloud-services/frontend-components/Spinner';
 
+import { Navigate, useNavigate } from '~/common/routing';
 import { AppPage } from '~/components/App/AppPage';
 import { modalActions } from '~/components/common/Modal/ModalActions';
 import { featureGateSelector, useFeatureGate } from '~/hooks/useFeatureGate';
@@ -140,7 +141,8 @@ const GatedAIHostsClusterDetailTab = withFeatureGate(
 const PAGE_TITLE = 'Red Hat OpenShift Cluster Manager';
 
 const ClusterDetails = (props) => {
-  const { location, toggleSubscriptionReleased } = props;
+  const location = useLocation();
+  const { toggleSubscriptionReleased } = props;
   const [gcpOrgPolicyWarning, setGcpOrgPolicyWarning] = React.useState('');
   const monitoring = useGlobalState((state) => state.monitoring);
 
@@ -838,9 +840,6 @@ const ClusterDetails = (props) => {
 
 ClusterDetails.propTypes = {
   toggleSubscriptionReleased: PropTypes.func.isRequired,
-  location: PropTypes.shape({
-    hash: PropTypes.string.isRequired,
-  }).isRequired,
 };
 
 export default ClusterDetails;

@@ -2,8 +2,8 @@ import React from 'react';
 
 import { Alert, Button, ButtonVariant } from '@patternfly/react-core';
 
-import ocmBaseName from '~/common/getBaseName';
 import { NEW_CLUSTER_LIST_LOCALSTORAGE_KEY } from '~/common/localStorageConstants';
+import { ocmBaseName } from '~/common/routing';
 
 const NewClusterListOverrideMessage = () => {
   const removeNewClusterListFlag = () => {

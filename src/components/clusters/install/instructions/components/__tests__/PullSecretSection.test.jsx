@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { checkAccessibility, screen, TestRouter, withState } from '~/testUtils';
+import { checkAccessibility, screen, withState } from '~/testUtils';
 
 import githubReleasesMock from '../../../githubReleases.mock';
 import PullSecretSection from '../PullSecretSection';
@@ -21,9 +21,7 @@ describe('<PullSecretSection />', () => {
 
     it('is accessible ', async () => {
       const { container } = withState(githubReleasesMock).render(
-        <TestRouter>
-          <PullSecretSection token={token} />
-        </TestRouter>,
+        <PullSecretSection token={token} />,
       );
 
       expect(screen.getByRole('button', { name: 'Download pull secret' })).toHaveAttribute(
@@ -40,9 +38,7 @@ describe('<PullSecretSection />', () => {
 
     it('is accessible', async () => {
       const { container } = withState(githubReleasesMock).render(
-        <TestRouter>
-          <PullSecretSection token={badToken} />
-        </TestRouter>,
+        <PullSecretSection token={badToken} />,
       );
 
       expect(screen.getByRole('button', { name: 'Download pull secret' })).toHaveAttribute(

@@ -1,19 +1,12 @@
 import React from 'react';
-import { CompatRouter } from 'react-router-dom-v5-compat';
 
-import { checkAccessibility, render, screen, TestRouter } from '~/testUtils';
+import { checkAccessibility, render, screen } from '~/testUtils';
 
 import InstallOracleCloud from '../InstallOracleCloud';
 
 describe('InstallOracleCloud', () => {
   it('is accessible', async () => {
-    const { container } = render(
-      <TestRouter>
-        <CompatRouter>
-          <InstallOracleCloud />
-        </CompatRouter>
-      </TestRouter>,
-    );
+    const { container } = render(<InstallOracleCloud />);
     expect(
       await screen.findByText(
         'Create an OpenShift Cluster: Oracle Cloud Infrastructure (virtual machines)',

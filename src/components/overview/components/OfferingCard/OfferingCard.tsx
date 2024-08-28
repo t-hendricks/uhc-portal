@@ -1,5 +1,4 @@
 import React, { useCallback } from 'react';
-import { Link } from 'react-router-dom-v5-compat';
 
 import {
   Button,
@@ -23,6 +22,7 @@ import {
 } from '@patternfly/react-core';
 
 import docLinks from '~/common/installLinks.mjs';
+import { Link } from '~/common/routing';
 import ExternalLink from '~/components/common/ExternalLink';
 import InternalTrackingLink from '~/components/common/InternalTrackingLink';
 import AWSLogo from '~/styles/images/AWSLogo';

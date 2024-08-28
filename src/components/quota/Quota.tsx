@@ -36,23 +36,10 @@ type Props = {
 const PAGE_TITLE = 'Quota | Red Hat OpenShift Cluster Manager';
 
 const Quota = ({ invalidateClusters, fetchAccount, account, marketplace }: Props) => {
-  // store in refs so that we can retrieve the latest value without re-creating the effect
-  const fetchAccountRef = React.useRef(fetchAccount);
-  fetchAccountRef.current = fetchAccount;
-  const invalidateClustersRef = React.useRef(invalidateClusters);
-  invalidateClustersRef.current = invalidateClusters;
-
   React.useEffect(() => {
     fetchAccount();
-    const cleanupOcmListener = window.insights?.ocm?.on('APP_REFRESH', () =>
-      fetchAccountRef.current(),
-    );
     return () => {
-      invalidateClustersRef.current();
-
-      if (cleanupOcmListener) {
-        cleanupOcmListener();
-      }
+      invalidateClusters();
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
