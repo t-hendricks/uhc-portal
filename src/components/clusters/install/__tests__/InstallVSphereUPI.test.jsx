@@ -1,7 +1,6 @@
 import React from 'react';
-import { CompatRouter } from 'react-router-dom-v5-compat';
 
-import { checkAccessibility, screen, TestRouter, withState } from '~/testUtils';
+import { checkAccessibility, screen, withState } from '~/testUtils';
 
 import githubReleases from '../githubReleases.mock';
 import { InstallVSphereUPI } from '../InstallVSphereUPI';
@@ -26,11 +25,7 @@ describe('<InstallVSphereUPI >', () => {
 
   it('is accessible', async () => {
     const { container } = withState(githubReleases).render(
-      <TestRouter>
-        <CompatRouter>
-          <InstallVSphereUPI token={{}} dispatch={dispatch} />
-        </CompatRouter>
-      </TestRouter>,
+      <InstallVSphereUPI token={{}} dispatch={dispatch} />,
     );
 
     expect(await screen.findByText(instructionsMapping.vsphere.upi.title)).toBeInTheDocument();

@@ -1,20 +1,13 @@
 import React from 'react';
-import { CompatRouter } from 'react-router-dom-v5-compat';
 
-import { checkAccessibility, render, screen, TestRouter } from '~/testUtils';
+import { checkAccessibility, render, screen } from '~/testUtils';
 
 import InstallPower from '../InstallPower';
 import { version } from '../InstallTestConstants';
 
 describe('InstallPower', () => {
   it('is accessible', async () => {
-    const { container } = render(
-      <TestRouter>
-        <CompatRouter>
-          <InstallPower />
-        </CompatRouter>
-      </TestRouter>,
-    );
+    const { container } = render(<InstallPower />);
 
     expect(
       await screen.findByText('Create an OpenShift Cluster: IBM Power (ppc64le)'),
@@ -23,13 +16,7 @@ describe('InstallPower', () => {
   });
 
   it('displays expected doc links', () => {
-    render(
-      <TestRouter>
-        <CompatRouter>
-          <InstallPower />
-        </CompatRouter>
-      </TestRouter>,
-    );
+    render(<InstallPower />);
 
     expect(screen.getByRole('link', { name: /Learn more about interactive/ })).toHaveAttribute(
       'href',

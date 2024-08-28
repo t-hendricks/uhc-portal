@@ -1,8 +1,8 @@
 import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
-import { useParams } from 'react-router';
-import { Navigate } from 'react-router-dom-v5-compat';
+import { useParams } from 'react-router-dom';
 
+import { Navigate } from '~/common/routing';
 import LoadingPage from '~/components/App/LoadingPage';
 import NotFoundError from '~/components/App/NotFoundError';
 import { getAccessRequest } from '~/redux/actions/accessRequestActions';
@@ -15,7 +15,7 @@ const AccessRequestNavigate = () => {
   const accessRequestState = useGlobalState((state) => state.accessRequest.accessRequest);
 
   useEffect(() => {
-    if (!accessRequestState.subscription_id) {
+    if (!accessRequestState.subscription_id && accessRequestId) {
       dispatch(getAccessRequest(accessRequestId));
     }
   }, [dispatch, accessRequestId, accessRequestState.subscription_id]);

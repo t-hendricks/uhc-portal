@@ -1,6 +1,6 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
-import { ErrorResponse } from 'react-router-dom-v5-compat';
+import { ErrorResponse } from 'react-router-dom';
 
 import { useQueries } from '@tanstack/react-query';
 

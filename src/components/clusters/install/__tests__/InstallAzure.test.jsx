@@ -1,33 +1,20 @@
 import React from 'react';
-import { CompatRouter } from 'react-router-dom-v5-compat';
 
-import { checkAccessibility, render, screen, TestRouter } from '~/testUtils';
+import { checkAccessibility, render, screen } from '~/testUtils';
 
 import InstallAzure from '../InstallAzure';
 import { version } from '../InstallTestConstants';
 
 describe('InstallAzure', () => {
   it('is accessible', async () => {
-    const { container } = render(
-      <TestRouter>
-        <CompatRouter>
-          <InstallAzure />
-        </CompatRouter>
-      </TestRouter>,
-    );
+    const { container } = render(<InstallAzure />);
 
     expect(await screen.findByText('Create an OpenShift Cluster: Azure')).toBeInTheDocument();
     await checkAccessibility(container);
   });
 
   it('displays expected doc links', () => {
-    render(
-      <TestRouter>
-        <CompatRouter>
-          <InstallAzure />
-        </CompatRouter>
-      </TestRouter>,
-    );
+    render(<InstallAzure />);
 
     expect(screen.getByRole('link', { name: /Learn more about automated/ })).toHaveAttribute(
       'href',

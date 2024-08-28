@@ -1,7 +1,7 @@
 import React from 'react';
 import { reduxForm } from 'redux-form';
 
-import { checkAccessibility, render, TestRouter } from '~/testUtils';
+import { checkAccessibility, render } from '~/testUtils';
 
 import { reduxFormConfig } from '../components/IdentityProvidersPage';
 import { IDPformValues } from '../components/IdentityProvidersPage/IdentityProvidersHelper';
@@ -25,24 +25,22 @@ describe('<IdentityProvidersPage />', () => {
     // HTPasswdErrors is passed unchanged to IDPForm
     // but HTPasswdErrors is expected to be an object
     const { container } = render(
-      <TestRouter>
-        <ReduxFormCreateClusterIDP
-          match={match}
-          clusterDetails={clusterDetails}
-          submitIDPResponse={submitIDPResponse}
-          {...funcs}
-          clusterIDPs={clusterIDPs}
-          IDPList={clusterIDPs.clusterIDPList}
-          selectedIDP={IDPformValues.GOOGLE}
-          initialValues={{
-            isEditForm: false,
-          }}
-          pristine={false}
-          invalid={false}
-          idpEdited={{ mapping_method: 'myMappingMethod' }}
-          HTPasswdErrors={{}}
-        />
-      </TestRouter>,
+      <ReduxFormCreateClusterIDP
+        match={match}
+        clusterDetails={clusterDetails}
+        submitIDPResponse={submitIDPResponse}
+        {...funcs}
+        clusterIDPs={clusterIDPs}
+        IDPList={clusterIDPs.clusterIDPList}
+        selectedIDP={IDPformValues.GOOGLE}
+        initialValues={{
+          isEditForm: false,
+        }}
+        pristine={false}
+        invalid={false}
+        idpEdited={{ mapping_method: 'myMappingMethod' }}
+        HTPasswdErrors={{}}
+      />,
     );
 
     await checkAccessibility(container);

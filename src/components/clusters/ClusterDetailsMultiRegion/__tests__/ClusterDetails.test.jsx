@@ -1,7 +1,6 @@
 import React from 'react';
 import * as reactRedux from 'react-redux';
-import { MemoryRouter } from 'react-router-dom';
-import { CompatRouter, useParams } from 'react-router-dom-v5-compat';
+import { useParams } from 'react-router-dom';
 
 import { useFetchClusterDetails } from '../../../../queries/ClusterDetailsQueries/useFetchClusterDetails';
 import { useFetchClusterIdentityProviders } from '../../../../queries/ClusterDetailsQueries/useFetchClusterIdentityProviders';
@@ -31,8 +30,8 @@ jest.mock('../../../../redux/actions/globalErrorActions', () => ({
 
 jest.mock('../components/Overview/ClusterVersionInfo');
 
-jest.mock('react-router-dom-v5-compat', () => ({
-  ...jest.requireActual('react-router-dom-v5-compat'), // Preserve other exports from react-router-dom
+jest.mock('react-router-dom', () => ({
+  ...jest.requireActual('react-router-dom'), // Preserve other exports from react-router-dom
   useParams: jest.fn(), // Mock useParams
 }));
 
@@ -95,13 +94,6 @@ describe('<ClusterDetailsMultiRegion />', () => {
   //   jest.clearAllMocks();
   // });
 
-  // eslint-disable-next-line react/prop-types
-  const RouterWrapper = ({ children }) => (
-    <MemoryRouter keyLength={0} initialEntries={[{ pathname: '/details/s/:id', key: 'testKey' }]}>
-      <CompatRouter>{children}</CompatRouter>
-    </MemoryRouter>
-  );
-
   // TODO: By testing presentation half ClusterDetails.jsx without index.js redux connect(),
   //   we mostly got away with passing fixtures by props without setting up redux state.
   //   However many sub-components mounted by mount() and render() do connect() to redux,
@@ -139,11 +131,7 @@ describe('<ClusterDetailsMultiRegion />', () => {
         isError: false,
       });
 
-      withState(initialState, true).render(
-        <RouterWrapper>
-          <ClusterDetails {...props} hasIssues />
-        </RouterWrapper>,
-      );
+      withState(initialState, true).render(<ClusterDetails {...props} hasIssues />);
 
       expect(mockedDispatch).toHaveBeenCalledWith(clearGlobalError('clusterDetails'));
     });
@@ -168,11 +156,7 @@ describe('<ClusterDetailsMultiRegion />', () => {
         isError: false,
       });
 
-      withState(initialState, true).render(
-        <RouterWrapper>
-          <ClusterDetails {...props} />
-        </RouterWrapper>,
-      );
+      withState(initialState, true).render(<ClusterDetails {...props} />);
 
       userActions.getOrganizationAndQuota.mockReturnValue(fixtures.organization);
 
@@ -200,11 +184,7 @@ describe('<ClusterDetailsMultiRegion />', () => {
         });
         useParams.mockReturnValue({ id: '1msoogsgTLQ4PePjrTOt3UqvMzX' });
 
-        withState(initialState, true).render(
-          <RouterWrapper>
-            <ClusterDetails {...props} />
-          </RouterWrapper>,
-        );
+        withState(initialState, true).render(<ClusterDetails {...props} />);
 
         expect(screen.getByText('Loading...')).toBeInTheDocument();
       });
@@ -230,11 +210,7 @@ describe('<ClusterDetailsMultiRegion />', () => {
           isError: true,
         });
 
-        render(
-          <RouterWrapper>
-            <ClusterDetails {...props} />
-          </RouterWrapper>,
-        );
+        render(<ClusterDetails {...props} />);
 
         expect(screen.getByText('This page is temporarily unavailable')).toBeInTheDocument();
       });
@@ -258,11 +234,7 @@ describe('<ClusterDetailsMultiRegion />', () => {
           isError: true,
         });
 
-        render(
-          <RouterWrapper>
-            <ClusterDetails {...props} />
-          </RouterWrapper>,
-        );
+        render(<ClusterDetails {...props} />);
 
         expect(mockedDispatch).toHaveBeenCalledWith(
           setGlobalError(
@@ -281,9 +253,7 @@ describe('<ClusterDetailsMultiRegion />', () => {
       const functions = funcs();
       it('should call get grants for aws cluster', async () => {
         withState(initialState, true).render(
-          <RouterWrapper>
-            <ClusterDetails {...fixtures} {...functions} hasIssues />
-          </RouterWrapper>,
+          <ClusterDetails {...fixtures} {...functions} hasIssues />,
         );
 
         await waitForRender();
@@ -292,9 +262,7 @@ describe('<ClusterDetailsMultiRegion />', () => {
 
       it('should get IDPs', async () => {
         withState(initialState, true).render(
-          <RouterWrapper>
-            <ClusterDetails {...fixtures} {...functions} hasIssues />
-          </RouterWrapper>,
+          <ClusterDetails {...fixtures} {...functions} hasIssues />,
         );
 
         await waitForRender();
@@ -305,9 +273,7 @@ describe('<ClusterDetailsMultiRegion />', () => {
 
       it('should get users', async () => {
         withState(initialState, true).render(
-          <RouterWrapper>
-            <ClusterDetails {...fixtures} {...functions} hasIssues />
-          </RouterWrapper>,
+          <ClusterDetails {...fixtures} {...functions} hasIssues />,
         );
 
         await waitForRender();
@@ -316,9 +282,7 @@ describe('<ClusterDetailsMultiRegion />', () => {
 
       it('should get cluster routers', async () => {
         withState(initialState, true).render(
-          <RouterWrapper>
-            <ClusterDetails {...fixtures} {...functions} hasIssues />
-          </RouterWrapper>,
+          <ClusterDetails {...fixtures} {...functions} hasIssues />,
         );
 
         await waitForRender();
@@ -330,9 +294,7 @@ describe('<ClusterDetailsMultiRegion />', () => {
 
       it('should get cluster addons', async () => {
         withState(initialState, true).render(
-          <RouterWrapper>
-            <ClusterDetails {...fixtures} {...functions} hasIssues />
-          </RouterWrapper>,
+          <ClusterDetails {...fixtures} {...functions} hasIssues />,
         );
 
         await waitForRender();
@@ -341,9 +303,7 @@ describe('<ClusterDetailsMultiRegion />', () => {
 
       it('should get machine pools', async () => {
         withState(initialState, true).render(
-          <RouterWrapper>
-            <ClusterDetails {...fixtures} {...functions} hasIssues />
-          </RouterWrapper>,
+          <ClusterDetails {...fixtures} {...functions} hasIssues />,
         );
 
         await waitForRender();
@@ -358,9 +318,7 @@ describe('<ClusterDetailsMultiRegion />', () => {
 
       it('should get schedules', async () => {
         withState(initialState, true).render(
-          <RouterWrapper>
-            <ClusterDetails {...fixtures} {...functions} hasIssues />
-          </RouterWrapper>,
+          <ClusterDetails {...fixtures} {...functions} hasIssues />,
         );
 
         await waitForRender();
@@ -372,9 +330,7 @@ describe('<ClusterDetailsMultiRegion />', () => {
 
       it('should not get on-demand metrics', async () => {
         withState(initialState, true).render(
-          <RouterWrapper>
-            <ClusterDetails {...fixtures} {...functions} hasIssues />
-          </RouterWrapper>,
+          <ClusterDetails {...fixtures} {...functions} hasIssues />,
         );
 
         await waitForRender();
@@ -400,14 +356,12 @@ describe('<ClusterDetailsMultiRegion />', () => {
       };
 
       withState(initialState, true).render(
-        <RouterWrapper>
-          <ClusterDetails
-            {...fixtures}
-            {...functions}
-            hasIssues
-            {...installingClusterWithIssuesProps}
-          />
-        </RouterWrapper>,
+        <ClusterDetails
+          {...fixtures}
+          {...functions}
+          hasIssues
+          {...installingClusterWithIssuesProps}
+        />,
       );
 
       await waitForRender();
@@ -420,11 +374,7 @@ describe('<ClusterDetailsMultiRegion />', () => {
     const functions = funcs();
 
     it('should present', async () => {
-      withState(initialState, true).render(
-        <RouterWrapper>
-          <ClusterDetails {...fixtures} {...functions} />
-        </RouterWrapper>,
-      );
+      withState(initialState, true).render(<ClusterDetails {...fixtures} {...functions} />);
 
       await waitForRender();
       expect(screen.getByRole('tab', { name: 'Support' })).toBeInTheDocument();
@@ -447,11 +397,7 @@ describe('<ClusterDetailsMultiRegion />', () => {
         },
       };
 
-      withState(initialState, true).render(
-        <RouterWrapper>
-          <ClusterDetails {...props} />
-        </RouterWrapper>,
-      );
+      withState(initialState, true).render(<ClusterDetails {...props} />);
 
       await waitForRender();
       expect(screen.queryByRole('tab', { name: 'Support' })).not.toBeInTheDocument();
@@ -467,11 +413,7 @@ describe('<ClusterDetailsMultiRegion />', () => {
     };
 
     it('should get on-demand metrics', async () => {
-      withState(initialState, true).render(
-        <RouterWrapper>
-          <ClusterDetails {...props} />
-        </RouterWrapper>,
-      );
+      withState(initialState, true).render(<ClusterDetails {...props} />);
 
       await waitForRender();
 
@@ -481,11 +423,7 @@ describe('<ClusterDetailsMultiRegion />', () => {
     });
 
     it('it should hide 2 tabs', async () => {
-      withState(initialState, true).render(
-        <RouterWrapper>
-          <ClusterDetails {...props} />
-        </RouterWrapper>,
-      );
+      withState(initialState, true).render(<ClusterDetails {...props} />);
 
       await waitForRender();
       expect(screen.queryByRole('tab', { name: 'Monitoring' })).not.toBeInTheDocument();
@@ -510,11 +448,7 @@ describe('<ClusterDetailsMultiRegion />', () => {
       const useDispatchMock = jest.spyOn(reactRedux, 'useDispatch');
       const mockedDispatch = jest.fn();
       useDispatchMock.mockReturnValue(mockedDispatch);
-      withState(initialState, true).render(
-        <RouterWrapper>
-          <ClusterDetails {...props} />
-        </RouterWrapper>,
-      );
+      withState(initialState, true).render(<ClusterDetails {...props} />);
 
       await waitForRender();
       // Assuming `getMachineOrNodePools` is a function that should have been called on render
@@ -553,11 +487,7 @@ describe('<ClusterDetailsMultiRegion />', () => {
           },
         };
 
-        withState(initialState, true).render(
-          <RouterWrapper>
-            <ClusterDetails {...props} />
-          </RouterWrapper>,
-        );
+        withState(initialState, true).render(<ClusterDetails {...props} />);
 
         await waitForRender();
 
@@ -585,11 +515,7 @@ describe('<ClusterDetailsMultiRegion />', () => {
     };
 
     it('should not call get grants for gcp cluster', () => {
-      withState(initialState, true).render(
-        <RouterWrapper>
-          <ClusterDetails {...props} />
-        </RouterWrapper>,
-      );
+      withState(initialState, true).render(<ClusterDetails {...props} />);
 
       expect(functions.getGrants).not.toHaveBeenCalled();
     });
@@ -621,11 +547,7 @@ describe('<ClusterDetailsMultiRegion />', () => {
     // hide support tab for OSDTrial clusters regardless Deprovisioned/Archived or not
 
     it('should hide the support tab for OSDTrial cluster', () => {
-      withState(initialState, true).render(
-        <RouterWrapper>
-          <ClusterDetails {...props} />
-        </RouterWrapper>,
-      );
+      withState(initialState, true).render(<ClusterDetails {...props} />);
 
       expect(screen.queryByRole('tab', { name: 'Support' })).not.toBeInTheDocument();
     });
@@ -660,11 +582,7 @@ describe('<ClusterDetailsMultiRegion />', () => {
           },
         },
       };
-      withState(initialState, true).render(
-        <RouterWrapper>
-          <ClusterDetails {...osdProps} />
-        </RouterWrapper>,
-      );
+      withState(initialState, true).render(<ClusterDetails {...osdProps} />);
 
       expect(await screen.findByRole('tab', { name: 'Support' })).toBeInTheDocument();
     });
@@ -699,11 +617,7 @@ describe('<ClusterDetailsMultiRegion />', () => {
     };
 
     it('should show support tab for Archived clusters', async () => {
-      withState(initialState, true).render(
-        <RouterWrapper>
-          <ClusterDetails {...ocpProps} />
-        </RouterWrapper>,
-      );
+      withState(initialState, true).render(<ClusterDetails {...ocpProps} />);
       // show support tab with disabled buttons (refer to Support/Support.text.jsx)
       const supportTab = await screen.findByRole('tab', { name: 'Support' });
       expect(supportTab).toBeInTheDocument();
@@ -711,11 +625,7 @@ describe('<ClusterDetailsMultiRegion />', () => {
     });
 
     it('should hide tabs for Archived clusters', async () => {
-      withState(initialState, true).render(
-        <RouterWrapper>
-          <ClusterDetails {...ocpProps} />
-        </RouterWrapper>,
-      );
+      withState(initialState, true).render(<ClusterDetails {...ocpProps} />);
 
       tabs.forEach(async (tab) => {
         await waitFor(() => {

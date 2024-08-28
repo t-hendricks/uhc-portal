@@ -1,5 +1,4 @@
 import React from 'react';
-import { Link } from 'react-router-dom-v5-compat';
 
 import {
   Button,
@@ -10,6 +9,8 @@ import {
   PageSection,
 } from '@patternfly/react-core';
 import { Spinner } from '@redhat-cloud-services/frontend-components/Spinner';
+
+import { Link } from '~/common/routing';
 
 import { BANNED_USER_CODE, overrideErrorMessage } from '../../common/errors';
 import links from '../../common/installLinks.mjs';

@@ -1,6 +1,5 @@
 // ClusterListEmptyState is the empty state (no clusters) for ClusterList
 import React from 'react';
-import { Link } from 'react-router-dom-v5-compat';
 
 import {
   Button,
@@ -13,6 +12,8 @@ import {
   EmptyStateVariant,
 } from '@patternfly/react-core';
 import { PlusCircleIcon } from '@patternfly/react-icons/dist/esm/icons/plus-circle-icon';
+
+import { Link } from '~/common/routing';
 
 import { ASSISTED_INSTALLER_FEATURE } from '../../../../redux/constants/featureConstants';
 import withFeatureGate from '../../../features/with-feature-gate';

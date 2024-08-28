@@ -1,8 +1,8 @@
 import React from 'react';
-import { Link } from 'react-router-dom-v5-compat';
 
 import { Table, Tbody, Td, Th, Thead, Tr } from '@patternfly/react-table';
 
+import { Link } from '~/common/routing';
 import TechnologyPreview from '~/components/common/TechnologyPreview';
 
 const RunItYourselfTable = () => {

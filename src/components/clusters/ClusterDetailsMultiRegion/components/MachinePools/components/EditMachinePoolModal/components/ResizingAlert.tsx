@@ -1,9 +1,9 @@
 import * as React from 'react';
-import { Link } from 'react-router-dom-v5-compat';
 
 import { Alert } from '@patternfly/react-core';
 
 import links from '~/common/installLinks.mjs';
+import { Link } from '~/common/routing';
 import ExternalLink from '~/components/common/ExternalLink';
 import { Cluster, MachinePool } from '~/types/clusters_mgmt.v1';
 

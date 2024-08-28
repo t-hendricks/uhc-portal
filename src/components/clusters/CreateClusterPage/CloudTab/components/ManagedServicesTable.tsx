@@ -1,10 +1,10 @@
 /* eslint-disable react/no-unstable-nested-components */
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom-v5-compat';
 
 import { Button, ButtonVariant, Stack, StackItem } from '@patternfly/react-core';
 import { ExpandableRowContent, Table, Tbody, Td, Th, Thead, Tr } from '@patternfly/react-table';
 
+import { Link } from '~/common/routing';
 import CreateClusterDropDown from '~/components/clusters/CreateClusterPage/CloudTab/components/CreateClusterDropDown';
 import links from '~/components/clusters/CreateClusterPage/CreateClusterConsts';
 import ExternalLink from '~/components/common/ExternalLink';

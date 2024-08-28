@@ -1,6 +1,5 @@
 import React, { useRef } from 'react';
 import PropTypes from 'prop-types';
-import { useNavigate } from 'react-router-dom-v5-compat';
 
 import {
   Card,
@@ -27,6 +26,8 @@ import {
   Tr,
 } from '@patternfly/react-table';
 import Skeleton from '@redhat-cloud-services/frontend-components/Skeleton';
+
+import { useNavigate } from '~/common/routing';
 
 import links from '../../../../../../common/installLinks.mjs';
 import ClipboardCopyLinkButton from '../../../../../common/ClipboardCopyLinkButton';

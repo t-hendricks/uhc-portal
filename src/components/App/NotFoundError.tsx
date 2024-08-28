@@ -9,7 +9,7 @@ import './NotFoundError.scss';
 
 const NotFoundError = () => (
   <AppPage>
-    <EmptyState id="not-found">
+    <EmptyState id="not-found" data-testid="not-found">
       <EmptyStateBody>
         <InvalidObject />
       </EmptyStateBody>

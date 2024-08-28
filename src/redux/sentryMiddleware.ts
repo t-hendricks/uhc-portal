@@ -1,6 +1,5 @@
 /* Sentry middleware for redux, adds "breadcrumbs" logging the redux events in case of an error */
 
-import { LOCATION_CHANGE } from 'connected-react-router';
 import { Dispatch } from 'redux';
 import { actionTypes } from 'redux-form';
 import { PayloadMetaAction } from 'typesafe-actions';
@@ -16,9 +15,6 @@ const sentryMiddleware =
     // for some actions, we want to keep some of the parameters in the breadcrumb
     let data: Breadcrumb['data'] = {};
     switch (action.type) {
-      case LOCATION_CHANGE:
-        data.location = action.payload.location;
-        break;
       case actionTypes.DESTROY:
         data.form = action.meta.form;
         break;

@@ -1,7 +1,6 @@
 import React from 'react';
-import { CompatRouter } from 'react-router-dom-v5-compat';
 
-import { render, screen, TestRouter, within } from '~/testUtils';
+import { render, screen, within } from '~/testUtils';
 
 import fixtures from '../../../__tests__/ClusterDetails.fixtures';
 
@@ -61,13 +60,7 @@ describe('<ClusterStatusMonitor />', () => {
   });
 
   it('calls getClusterStatus on mount', () => {
-    render(
-      <TestRouter>
-        <CompatRouter>
-          <ClusterStatusMonitor {...defaultProps} />
-        </CompatRouter>
-      </TestRouter>,
-    );
+    render(<ClusterStatusMonitor {...defaultProps} />);
     expect(getClusterStatus).toBeCalledWith(clusterDetails.cluster.id);
     expect(getInflightChecks).toBeCalledWith(clusterDetails.cluster.id);
   });
@@ -79,36 +72,27 @@ describe('<ClusterStatusMonitor />', () => {
 
     // set pending: true first since the logic depends on the pending -> fulfilled transition
     const { rerender } = render(
-      <TestRouter>
-        <CompatRouter>
-          <ClusterStatusMonitor
-            {...defaultProps}
-            status={{
-              ...status,
-              pending: true,
-            }}
-          />
-          ,
-        </CompatRouter>
-      </TestRouter>,
+      <ClusterStatusMonitor
+        {...defaultProps}
+        status={{
+          ...status,
+          pending: true,
+        }}
+      />,
     );
 
     rerender(
-      <TestRouter>
-        <CompatRouter>
-          <ClusterStatusMonitor
-            {...defaultProps}
-            status={{
-              fulfilled: true,
-              pending: false,
-              status: {
-                id: clusterDetails.cluster.id,
-                state: 'installing',
-              },
-            }}
-          />
-        </CompatRouter>
-      </TestRouter>,
+      <ClusterStatusMonitor
+        {...defaultProps}
+        status={{
+          fulfilled: true,
+          pending: false,
+          status: {
+            id: clusterDetails.cluster.id,
+            state: 'installing',
+          },
+        }}
+      />,
     );
 
     expect(setTimeout).toBeCalled();
@@ -119,13 +103,7 @@ describe('<ClusterStatusMonitor />', () => {
   });
 
   it('renders null when no error', () => {
-    const { container } = render(
-      <TestRouter>
-        <CompatRouter>
-          <ClusterStatusMonitor {...defaultProps} />
-        </CompatRouter>
-      </TestRouter>,
-    );
+    const { container } = render(<ClusterStatusMonitor {...defaultProps} />);
     expect(container).toBeEmptyDOMElement();
   });
 
@@ -144,13 +122,7 @@ describe('<ClusterStatusMonitor />', () => {
       },
     };
 
-    render(
-      <TestRouter>
-        <CompatRouter>
-          <ClusterStatusMonitor {...newProps} />
-        </CompatRouter>
-      </TestRouter>,
-    );
+    render(<ClusterStatusMonitor {...newProps} />);
 
     expect(
       within(screen.getByTestId('alert-long-install')).getByText(
@@ -161,37 +133,29 @@ describe('<ClusterStatusMonitor />', () => {
 
   it('calls refresh when the status changes', () => {
     const { rerender } = render(
-      <TestRouter>
-        <CompatRouter>
-          <ClusterStatusMonitor
-            {...defaultProps}
-            status={{
-              ...status,
-              pending: true,
-            }}
-          />
-        </CompatRouter>
-      </TestRouter>,
+      <ClusterStatusMonitor
+        {...defaultProps}
+        status={{
+          ...status,
+          pending: true,
+        }}
+      />,
     );
     expect(refresh).not.toHaveBeenCalled();
     rerender(
-      <TestRouter>
-        <CompatRouter>
-          <ClusterStatusMonitor
-            {...defaultProps}
-            status={{
-              fulfilled: true,
-              pending: false,
-              status: {
-                id: clusterDetails.cluster.id,
-                state: 'error',
-                provision_error_code: 'OCM1002',
-                provision_error_message: 'Invalid AWS credentials (authentication)',
-              },
-            }}
-          />
-        </CompatRouter>
-      </TestRouter>,
+      <ClusterStatusMonitor
+        {...defaultProps}
+        status={{
+          fulfilled: true,
+          pending: false,
+          status: {
+            id: clusterDetails.cluster.id,
+            state: 'error',
+            provision_error_code: 'OCM1002',
+            provision_error_message: 'Invalid AWS credentials (authentication)',
+          },
+        }}
+      />,
     );
 
     expect(refresh).toBeCalled();
@@ -199,48 +163,40 @@ describe('<ClusterStatusMonitor />', () => {
 
   it('renders an alert when cluster is errored', () => {
     render(
-      <TestRouter>
-        <CompatRouter>
-          <ClusterStatusMonitor
-            {...defaultProps}
-            status={{
-              fulfilled: true,
-              pending: false,
-              status: {
-                id: clusterDetails.cluster.id,
-                state: 'error',
-                provision_error_code: 'OCM1002',
-                provision_error_message: 'Invalid AWS credentials (authentication)',
-              },
-            }}
-          />
-        </CompatRouter>
-      </TestRouter>,
+      <ClusterStatusMonitor
+        {...defaultProps}
+        status={{
+          fulfilled: true,
+          pending: false,
+          status: {
+            id: clusterDetails.cluster.id,
+            state: 'error',
+            provision_error_code: 'OCM1002',
+            provision_error_message: 'Invalid AWS credentials (authentication)',
+          },
+        }}
+      />,
     );
     expect(screen.getByText('Danger alert:')).toBeInTheDocument();
   });
 
   it('renders URLs embedded in alerts as links', () => {
     render(
-      <TestRouter>
-        <CompatRouter>
-          <ClusterStatusMonitor
-            {...defaultProps}
-            status={{
-              fulfilled: true,
-              pending: false,
-              status: {
-                id: clusterDetails.cluster.id,
-                state: 'error',
-                description: 'wut wut.',
-                provision_error_code: 'OCM3055',
-                provision_error_message:
-                  "Your cluster's installation role does not have permissions to use the default KMS key in your AWS account. Ensure that the installation role has permissions to use this key and try again. If you're using a custom KMS key, ensure the key exists. Learn more: https://access.redhat.com/solutions/7048553",
-              },
-            }}
-          />
-        </CompatRouter>
-      </TestRouter>,
+      <ClusterStatusMonitor
+        {...defaultProps}
+        status={{
+          fulfilled: true,
+          pending: false,
+          status: {
+            id: clusterDetails.cluster.id,
+            state: 'error',
+            description: 'wut wut.',
+            provision_error_code: 'OCM3055',
+            provision_error_message:
+              "Your cluster's installation role does not have permissions to use the default KMS key in your AWS account. Ensure that the installation role has permissions to use this key and try again. If you're using a custom KMS key, ensure the key exists. Learn more: https://access.redhat.com/solutions/7048553",
+          },
+        }}
+      />,
     );
     expect(screen.getByText('Danger alert:')).toBeInTheDocument();
     expect(

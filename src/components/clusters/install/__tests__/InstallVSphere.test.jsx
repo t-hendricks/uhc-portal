@@ -1,33 +1,20 @@
 import React from 'react';
-import { CompatRouter } from 'react-router-dom-v5-compat';
 
-import { checkAccessibility, render, screen, TestRouter } from '~/testUtils';
+import { checkAccessibility, render, screen } from '~/testUtils';
 
 import { version } from '../InstallTestConstants';
 import InstallVSphere from '../InstallVSphere';
 
 describe('<InstallVSphere />', () => {
   it('is accessible', async () => {
-    const { container } = render(
-      <TestRouter>
-        <CompatRouter>
-          <InstallVSphere />
-        </CompatRouter>
-      </TestRouter>,
-    );
+    const { container } = render(<InstallVSphere />);
 
     expect(screen.getByText('Create an OpenShift Cluster: VMware vSphere')).toBeInTheDocument();
     await checkAccessibility(container);
   });
 
   it('displays expected doc links', () => {
-    render(
-      <TestRouter>
-        <CompatRouter>
-          <InstallVSphere />
-        </CompatRouter>
-      </TestRouter>,
-    );
+    render(<InstallVSphere />);
 
     expect(screen.getByRole('link', { name: /Learn more about interactive/ })).toHaveAttribute(
       'href',

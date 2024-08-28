@@ -1,9 +1,9 @@
 import React from 'react';
-import { Link } from 'react-router-dom-v5-compat';
 
 import { Text, TextContent } from '@patternfly/react-core';
 
 import links, { channels, tools } from '~/common/installLinks.mjs';
+import { Link } from '~/common/routing';
 import ExternalLink from '~/components/common/ExternalLink';
 import TechnologyPreview from '~/components/common/TechnologyPreview';
 

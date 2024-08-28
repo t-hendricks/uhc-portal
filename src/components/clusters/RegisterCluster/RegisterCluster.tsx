@@ -1,7 +1,6 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { get } from 'lodash';
 import { useDispatch } from 'react-redux';
-import { Link, Navigate } from 'react-router-dom-v5-compat';
 import { Field, reset } from 'redux-form';
 
 import {
@@ -23,6 +22,7 @@ import {
 import { PageHeader, PageHeaderTitle } from '@redhat-cloud-services/frontend-components/PageHeader';
 import Spinner from '@redhat-cloud-services/frontend-components/Spinner';
 
+import { Link, Navigate } from '~/common/routing';
 import { AppPage } from '~/components/App/AppPage';
 import { openModal } from '~/components/common/Modal/ModalActions';
 import modals from '~/components/common/Modal/modals';

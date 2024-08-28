@@ -1,7 +1,6 @@
 import React from 'react';
-import { CompatRouter } from 'react-router-dom-v5-compat';
 
-import { checkAccessibility, render, screen, TestRouter } from '~/testUtils';
+import { checkAccessibility, render, screen } from '~/testUtils';
 
 import Quota from '../Quota';
 
@@ -14,13 +13,7 @@ describe('<Quota />', () => {
     });
 
     it.skip('is accessible', async () => {
-      const { container } = render(
-        <TestRouter>
-          <CompatRouter>
-            <Quota {...Fixtures} />
-          </CompatRouter>
-        </TestRouter>,
-      );
+      const { container } = render(<Quota {...Fixtures} />);
       expect(await screen.findByText('OpenShift Dedicated')).toBeInTheDocument();
 
       // Throws a "Heading levels should only increase by one (heading-order)" error
@@ -29,26 +22,14 @@ describe('<Quota />', () => {
 
     it('should call fetch method', async () => {
       expect(Fixtures.fetchAccount).not.toHaveBeenCalled();
-      render(
-        <TestRouter>
-          <CompatRouter>
-            <Quota {...Fixtures} />
-          </CompatRouter>
-        </TestRouter>,
-      );
+      render(<Quota {...Fixtures} />);
       expect(await screen.findByText('OpenShift Dedicated')).toBeInTheDocument();
 
       expect(Fixtures.fetchAccount).toHaveBeenCalled();
     });
 
     it('should have Header, OCP and OSD cards', async () => {
-      render(
-        <TestRouter>
-          <CompatRouter>
-            <Quota {...Fixtures} />
-          </CompatRouter>
-        </TestRouter>,
-      );
+      render(<Quota {...Fixtures} />);
 
       expect(await screen.findByText('OpenShift Dedicated')).toBeInTheDocument();
 

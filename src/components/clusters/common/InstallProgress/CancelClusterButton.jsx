@@ -1,9 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { useNavigate } from 'react-router-dom-v5-compat';
 
 import { Button } from '@patternfly/react-core';
 import { TimesCircleIcon } from '@patternfly/react-icons/dist/esm/icons/times-circle-icon';
+
+import { useNavigate } from '~/common/routing';
 
 import DeleteClusterDialog from '../DeleteClusterDialog';
 

@@ -1,7 +1,5 @@
 import React from 'react';
 import * as reactRedux from 'react-redux';
-import { MemoryRouter } from 'react-router';
-import { CompatRouter } from 'react-router-dom-v5-compat';
 
 import * as usePreviousProps from '~/hooks/usePreviousProps';
 import * as useFetchClusters from '~/queries/ClusterListQueries/useFetchClusters';
@@ -58,13 +56,7 @@ describe('<ClusterList />', () => {
       isLoading: true,
       errors: [],
     });
-    withState({}, true).render(
-      <MemoryRouter>
-        <CompatRouter>
-          <ClusterList {...props} />
-        </CompatRouter>
-      </MemoryRouter>,
-    );
+    withState({}, true).render(<ClusterList {...props} />);
 
     const numberOfSkeletonRows = 10;
 
@@ -94,13 +86,7 @@ describe('<ClusterList />', () => {
       isFetching: false,
       errors: [],
     });
-    withState({}, true).render(
-      <MemoryRouter>
-        <CompatRouter>
-          <ClusterList {...props} />
-        </CompatRouter>
-      </MemoryRouter>,
-    );
+    withState({}, true).render(<ClusterList {...props} />);
 
     expect(screen.queryByTestId('skeleton')).not.toBeInTheDocument();
     expect(screen.queryByRole('table')).not.toBeInTheDocument();
@@ -119,13 +105,7 @@ describe('<ClusterList />', () => {
       isFetched: false,
       errors: [],
     });
-    withState({}, true).render(
-      <MemoryRouter>
-        <CompatRouter>
-          <ClusterList {...props} />
-        </CompatRouter>
-      </MemoryRouter>,
-    );
+    withState({}, true).render(<ClusterList {...props} />);
 
     expect(screen.getByRole('button', { name: 'Refresh' })).toHaveAttribute(
       'aria-disabled',
@@ -148,13 +128,7 @@ describe('<ClusterList />', () => {
       isFetching: true,
       errors: [],
     });
-    withState({}, true).render(
-      <MemoryRouter>
-        <CompatRouter>
-          <ClusterList {...props} />
-        </CompatRouter>
-      </MemoryRouter>,
-    );
+    withState({}, true).render(<ClusterList {...props} />);
 
     expect(screen.getByRole('button', { name: 'Refresh' })).toHaveAttribute(
       'aria-disabled',
@@ -176,13 +150,7 @@ describe('<ClusterList />', () => {
       data: { items: [fixtures.clusterDetails.cluster] },
       errors: [],
     });
-    withState({}, true).render(
-      <MemoryRouter>
-        <CompatRouter>
-          <ClusterList {...props} />
-        </CompatRouter>
-      </MemoryRouter>,
-    );
+    withState({}, true).render(<ClusterList {...props} />);
 
     expect(screen.getByRole('button', { name: 'Refresh' })).toHaveAttribute(
       'aria-disabled',
@@ -206,13 +174,7 @@ describe('<ClusterList />', () => {
       refetch,
       errors: [],
     });
-    const { user } = withState({}, true).render(
-      <MemoryRouter>
-        <CompatRouter>
-          <ClusterList {...props} />
-        </CompatRouter>
-      </MemoryRouter>,
-    );
+    const { user } = withState({}, true).render(<ClusterList {...props} />);
 
     expect(refetch).not.toHaveBeenCalled();
 
@@ -245,13 +207,7 @@ describe('<ClusterList />', () => {
         isFetching: false,
       });
 
-      const { user } = withState({}, true).render(
-        <MemoryRouter>
-          <CompatRouter>
-            <ClusterList {...props} />
-          </CompatRouter>
-        </MemoryRouter>,
-      );
+      const { user } = withState({}, true).render(<ClusterList {...props} />);
 
       const expected = [
         { name: 'aCluster', date: '25 Dec 2024' },
@@ -281,13 +237,7 @@ describe('<ClusterList />', () => {
         isFetching: false,
       });
 
-      const { user } = withState({}, true).render(
-        <MemoryRouter>
-          <CompatRouter>
-            <ClusterList {...props} />
-          </CompatRouter>
-        </MemoryRouter>,
-      );
+      const { user } = withState({}, true).render(<ClusterList {...props} />);
 
       const nameColumnIndex = Object.keys(columns).findIndex((column) => column === 'name');
 
@@ -319,13 +269,7 @@ describe('<ClusterList />', () => {
         isFetching: false,
       });
 
-      const { user } = withState({}, true).render(
-        <MemoryRouter>
-          <CompatRouter>
-            <ClusterList {...props} />
-          </CompatRouter>
-        </MemoryRouter>,
-      );
+      const { user } = withState({}, true).render(<ClusterList {...props} />);
 
       const nameColumnIndex = Object.keys(columns).findIndex((column) => column === 'name');
 
@@ -351,13 +295,7 @@ describe('<ClusterList />', () => {
         isFetching: false,
       });
 
-      const { user } = withState({}, true).render(
-        <MemoryRouter>
-          <CompatRouter>
-            <ClusterList {...props} />
-          </CompatRouter>
-        </MemoryRouter>,
-      );
+      const { user } = withState({}, true).render(<ClusterList {...props} />);
 
       const statusColumnIndex = Object.keys(columns).findIndex((column) => column === 'status');
 
@@ -387,13 +325,7 @@ describe('<ClusterList />', () => {
         isFetching: false,
       });
 
-      const { user } = withState({}, true).render(
-        <MemoryRouter>
-          <CompatRouter>
-            <ClusterList {...props} />
-          </CompatRouter>
-        </MemoryRouter>,
-      );
+      const { user } = withState({}, true).render(<ClusterList {...props} />);
 
       const typeColumnIndex = Object.keys(columns).findIndex((column) => column === 'type');
 
@@ -423,13 +355,7 @@ describe('<ClusterList />', () => {
         isFetching: false,
       });
 
-      const { user } = withState({}, true).render(
-        <MemoryRouter>
-          <CompatRouter>
-            <ClusterList {...props} />
-          </CompatRouter>
-        </MemoryRouter>,
-      );
+      const { user } = withState({}, true).render(<ClusterList {...props} />);
 
       const versionColumnIndex = Object.keys(columns).findIndex((column) => column === 'version');
 
@@ -475,13 +401,7 @@ describe('<ClusterList />', () => {
         isFetching: false,
       });
 
-      const { user } = withState({}, true).render(
-        <MemoryRouter>
-          <CompatRouter>
-            <ClusterList {...props} />
-          </CompatRouter>
-        </MemoryRouter>,
-      );
+      const { user } = withState({}, true).render(<ClusterList {...props} />);
 
       const versionColumnIndex = Object.keys(columns).findIndex((column) => column === 'version');
 
@@ -517,13 +437,7 @@ describe('<ClusterList />', () => {
         isFetching: false,
       });
 
-      const { user } = withState({}, true).render(
-        <MemoryRouter>
-          <CompatRouter>
-            <ClusterList {...props} />
-          </CompatRouter>
-        </MemoryRouter>,
-      );
+      const { user } = withState({}, true).render(<ClusterList {...props} />);
 
       const providerColumnIndex = Object.keys(columns).findIndex((column) => column === 'provider');
 
@@ -573,13 +487,7 @@ describe('<ClusterList />', () => {
         errors: [],
       });
 
-      withState({}, true).render(
-        <MemoryRouter>
-          <CompatRouter>
-            <ClusterList {...props} />
-          </CompatRouter>
-        </MemoryRouter>,
-      );
+      withState({}, true).render(<ClusterList {...props} />);
 
       expect(pageInformationQuerySelector()).toHaveTextContent('0 - 0 of 0');
     });
@@ -593,13 +501,7 @@ describe('<ClusterList />', () => {
         isFetching: false,
       });
 
-      withState({}, true).render(
-        <MemoryRouter>
-          <CompatRouter>
-            <ClusterList {...props} />
-          </CompatRouter>
-        </MemoryRouter>,
-      );
+      withState({}, true).render(<ClusterList {...props} />);
 
       expect(clusterRows()).toHaveLength(initialResultsPerPage);
       expect(screen.getByText('cluster1')).toBeInTheDocument();
@@ -617,13 +519,7 @@ describe('<ClusterList />', () => {
         isFetching: false,
       });
 
-      const { user } = withState({}, true).render(
-        <MemoryRouter>
-          <CompatRouter>
-            <ClusterList {...props} />
-          </CompatRouter>
-        </MemoryRouter>,
-      );
+      const { user } = withState({}, true).render(<ClusterList {...props} />);
 
       // Ensure that the "back" button is disabled:
       screen.getAllByRole('button', { name: 'Go to previous page' }).forEach((button) => {
@@ -659,13 +555,7 @@ describe('<ClusterList />', () => {
         isFetching: false,
       });
 
-      const { user } = withState({}, true).render(
-        <MemoryRouter>
-          <CompatRouter>
-            <ClusterList {...props} />
-          </CompatRouter>
-        </MemoryRouter>,
-      );
+      const { user } = withState({}, true).render(<ClusterList {...props} />);
 
       // Go to last page:
       await user.click(screen.getByRole('button', { name: 'Go to last page' }));
@@ -699,13 +589,7 @@ describe('<ClusterList />', () => {
         isFetching: false,
       });
 
-      const { container, user } = withState({}, true).render(
-        <MemoryRouter>
-          <CompatRouter>
-            <ClusterList {...props} />
-          </CompatRouter>
-        </MemoryRouter>,
-      );
+      const { container, user } = withState({}, true).render(<ClusterList {...props} />);
       expect(clusterRows()).toHaveLength(initialResultsPerPage);
       await user.click(container.querySelector('#options-menu-bottom-toggle'));
       await user.click(screen.getByText('100 per page'));
@@ -722,13 +606,7 @@ describe('<ClusterList />', () => {
         isFetching: false,
       });
 
-      const { user } = withState({}, true).render(
-        <MemoryRouter>
-          <CompatRouter>
-            <ClusterList {...props} />
-          </CompatRouter>
-        </MemoryRouter>,
-      );
+      const { user } = withState({}, true).render(<ClusterList {...props} />);
 
       await user.click(screen.getAllByRole('button', { name: 'Go to next page' })[0]);
 
@@ -762,13 +640,7 @@ describe('<ClusterList />', () => {
         isError: true,
         errors: [{ reason: 'There was an error', operation_id: '1234' }],
       });
-      withState({}, true).render(
-        <MemoryRouter>
-          <CompatRouter>
-            <ClusterList {...props} />
-          </CompatRouter>
-        </MemoryRouter>,
-      );
+      withState({}, true).render(<ClusterList {...props} />);
       expect(screen.getByTestId('error-triangle-icon')).toBeInTheDocument();
     });
 
@@ -779,13 +651,7 @@ describe('<ClusterList />', () => {
         isError: true,
         errors: [{ reason: 'There was an error' }],
       });
-      const { user } = withState({}, true).render(
-        <MemoryRouter>
-          <CompatRouter>
-            <ClusterList {...props} />
-          </CompatRouter>
-        </MemoryRouter>,
-      );
+      const { user } = withState({}, true).render(<ClusterList {...props} />);
       expect(within(screen.getByRole('alert')).getByText(alertText)).toBeInTheDocument();
 
       await user.click(screen.getByText(errorDetailsToggleText));
@@ -799,13 +665,7 @@ describe('<ClusterList />', () => {
         isError: true,
         errors: [{ reason: 'There was an error', operation_id: '1234' }],
       });
-      const { user } = withState({}, true).render(
-        <MemoryRouter>
-          <CompatRouter>
-            <ClusterList {...props} />
-          </CompatRouter>
-        </MemoryRouter>,
-      );
+      const { user } = withState({}, true).render(<ClusterList {...props} />);
       expect(within(screen.getByRole('alert')).getByText(alertText)).toBeInTheDocument();
 
       await user.click(screen.getByText(errorDetailsToggleText));
@@ -823,13 +683,7 @@ describe('<ClusterList />', () => {
           { reason: 'There was an error', operation_id: '1234', region: { region: 'myRegion' } },
         ],
       });
-      const { user } = withState({}, true).render(
-        <MemoryRouter>
-          <CompatRouter>
-            <ClusterList {...props} />
-          </CompatRouter>
-        </MemoryRouter>,
-      );
+      const { user } = withState({}, true).render(<ClusterList {...props} />);
       expect(within(screen.getByRole('alert')).getByText(alertText)).toBeInTheDocument();
 
       await user.click(screen.getByText(errorDetailsToggleText));
@@ -849,13 +703,7 @@ describe('<ClusterList />', () => {
           { reason: 'There was an error', operation_id: '1234', region: { region: 'myRegion' } },
         ],
       });
-      withState({}, true).render(
-        <MemoryRouter>
-          <CompatRouter>
-            <ClusterList {...props} />
-          </CompatRouter>
-        </MemoryRouter>,
-      );
+      withState({}, true).render(<ClusterList {...props} />);
 
       expect(screen.getByText('This page is temporarily unavailable')).toBeInTheDocument();
     });
@@ -906,13 +754,7 @@ describe('<ClusterList />', () => {
       useDispatchMock.mockReturnValue(mockedDispatch);
 
       isRestrictedEnv.mockReturnValue(true);
-      withState({}, true).render(
-        <MemoryRouter>
-          <CompatRouter>
-            <ClusterList {...props} />
-          </CompatRouter>
-        </MemoryRouter>,
-      );
+      withState({}, true).render(<ClusterList {...props} />);
       expect(mockedDispatch).toHaveBeenCalled();
       expect(mockedDispatch.mock.calls).toHaveLength(2);
       const args = mockedDispatch.mock.calls[1];
@@ -927,23 +769,11 @@ describe('<ClusterList />', () => {
     });
 
     it('does not render filtering', async () => {
-      const { rerender } = withState({}, true).render(
-        <MemoryRouter>
-          <CompatRouter>
-            <ClusterList {...props} />
-          </CompatRouter>
-        </MemoryRouter>,
-      );
+      const { rerender } = withState({}, true).render(<ClusterList {...props} />);
       expect(screen.queryByTestId('cluster-list-filter-dropdown')).toBeInTheDocument();
 
       isRestrictedEnv.mockReturnValue(true);
-      rerender(
-        <MemoryRouter>
-          <CompatRouter>
-            <ClusterList {...props} />
-          </CompatRouter>
-        </MemoryRouter>,
-      );
+      rerender(<ClusterList {...props} />);
       expect(screen.queryByTestId('cluster-list-filter-dropdown')).not.toBeInTheDocument();
 
       expect(await screen.findByRole('button', { name: 'Create cluster' })).toBeInTheDocument();

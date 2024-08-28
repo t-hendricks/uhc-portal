@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 import { Flex, FlexItem, Title } from '@patternfly/react-core';
 
-import { advisorBaseName } from '~/common/getBaseName';
+import { advisorBaseName } from '~/common/routing';
 
 import { getSeverityName } from '../overviewHelpers';
 

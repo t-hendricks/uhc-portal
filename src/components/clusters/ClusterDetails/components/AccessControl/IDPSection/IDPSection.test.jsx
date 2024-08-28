@@ -1,7 +1,6 @@
 import React from 'react';
-import { CompatRouter } from 'react-router-dom-v5-compat';
 
-import { checkAccessibility, render, screen, TestRouter } from '~/testUtils';
+import { checkAccessibility, render, screen } from '~/testUtils';
 
 import IDPSection from './IDPSection';
 
@@ -34,13 +33,7 @@ const props = {
 
 describe('<IDPSection />', () => {
   it('should render (no IDPs)', async () => {
-    const { container } = render(
-      <TestRouter>
-        <CompatRouter>
-          <IDPSection {...props} />
-        </CompatRouter>
-      </TestRouter>,
-    );
+    const { container } = render(<IDPSection {...props} />);
     expect(screen.queryByRole('grid')).not.toBeInTheDocument();
     expect(container.querySelectorAll('.pf-v5-c-skeleton').length).toBe(0);
     await checkAccessibility(container);
@@ -54,13 +47,7 @@ describe('<IDPSection />', () => {
     };
 
     const newProps = { ...props, identityProviders: IDPs };
-    const { container } = render(
-      <TestRouter>
-        <CompatRouter>
-          <IDPSection {...newProps} />
-        </CompatRouter>
-      </TestRouter>,
-    );
+    const { container } = render(<IDPSection {...newProps} />);
     expect(container.querySelectorAll('.pf-v5-c-skeleton').length).toBeGreaterThan(0);
     await checkAccessibility(container);
   });
@@ -85,13 +72,7 @@ describe('<IDPSection />', () => {
 
     it('non-Hypershift cluster', async () => {
       const newProps = { ...props, identityProviders: IDPs };
-      const { container } = render(
-        <TestRouter>
-          <CompatRouter>
-            <IDPSection {...newProps} />
-          </CompatRouter>
-        </TestRouter>,
-      );
+      const { container } = render(<IDPSection {...newProps} />);
       expect(await screen.findByRole('grid')).toBeInTheDocument();
       expect(await screen.findByRole('cell', { name: 'hi' })).toBeInTheDocument();
       expect(await screen.findByRole('cell', { name: 'hello' })).toBeInTheDocument();
@@ -102,13 +83,7 @@ describe('<IDPSection />', () => {
 
     it('Hypershift cluster', async () => {
       const newProps = { ...props, identityProviders: IDPs, isHypershift: true };
-      const { container } = render(
-        <TestRouter>
-          <CompatRouter>
-            <IDPSection {...newProps} />
-          </CompatRouter>
-        </TestRouter>,
-      );
+      const { container } = render(<IDPSection {...newProps} />);
       expect(await screen.findByRole('grid')).toBeInTheDocument();
       expect(await screen.findByRole('cell', { name: 'hi' })).toBeInTheDocument();
       expect(await screen.findByRole('cell', { name: 'hello' })).toBeInTheDocument();

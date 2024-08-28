@@ -5,6 +5,7 @@ import PropTypes from 'prop-types';
 import { Alert, Button, Flex, Split, SplitItem, Title } from '@patternfly/react-core';
 import { Spinner } from '@redhat-cloud-services/frontend-components/Spinner';
 
+import { useNavigate } from '~/common/routing';
 import { PreviewLabel } from '~/components/clusters/common/PreviewLabel';
 import { SubscriptionCommonFields } from '~/types/accounts_mgmt.v1';
 
@@ -32,27 +33,32 @@ import SubscriptionCompliancy from './SubscriptionCompliancy';
 import TermsAlert from './TermsAlert';
 import TransferClusterOwnershipInfo from './TransferClusterOwnershipInfo';
 
-const IdentityProvidersHint = () => (
-  <Alert
-    id="idpHint"
-    className="pf-v5-u-mt-md"
-    variant="warning"
-    isInline
-    title="Missing identity providers"
-  >
-    Identity providers determine how users log into the cluster.{' '}
-    <Button
-      variant="link"
+const IdentityProvidersHint = () => {
+  const navigate = useNavigate();
+  return (
+    <Alert
+      id="idpHint"
+      className="pf-v5-u-mt-md"
+      variant="warning"
       isInline
-      onClick={() => {
-        window.location.hash = 'accessControl';
-      }}
+      title="Missing identity providers"
     >
-      Add OAuth configuration
-    </Button>{' '}
-    to allow others to log in.
-  </Alert>
-);
+      Identity providers determine how users log into the cluster.{' '}
+      <Button
+        variant="link"
+        isInline
+        onClick={() =>
+          navigate({
+            hash: '#accessControl',
+          })
+        }
+      >
+        Add OAuth configuration
+      </Button>{' '}
+      to allow others to log in.
+    </Alert>
+  );
+};
 
 function ClusterDetailsTop(props) {
   const {

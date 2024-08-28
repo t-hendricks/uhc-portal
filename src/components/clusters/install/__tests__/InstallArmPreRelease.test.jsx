@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { checkAccessibility, screen, TestRouter, withState } from '~/testUtils';
+import { checkAccessibility, screen, withState } from '~/testUtils';
 
 import githubReleases from '../githubReleases.mock';
 import { InstallArmPreRelease } from '../InstallArmPreRelease';
@@ -25,9 +25,7 @@ describe('InstallArmPreRelease', () => {
   it.skip('is accessible', async () => {
     // This test fails because the headers are out of order
     const { container } = withState(githubReleases).render(
-      <TestRouter>
-        <InstallArmPreRelease token={{}} dispatch={dispatch} />
-      </TestRouter>,
+      <InstallArmPreRelease token={{}} dispatch={dispatch} />,
     );
 
     expect(

@@ -1,6 +1,4 @@
 import React from 'react';
-import { MemoryRouter } from 'react-router';
-import { CompatRouter } from 'react-router-dom-v5-compat';
 
 import { render, screen } from '../../../../testUtils';
 import fixtures from '../../ClusterDetails/__tests__/ClusterDetails.fixtures';
@@ -40,24 +38,20 @@ describe('<UpgradeTrialClusterDialog />', () => {
 
   it('renders no-quota alert when there is no quota', () => {
     render(
-      <MemoryRouter>
-        <CompatRouter>
-          <UpgradeTrialClusterDialog
-            isOpen
-            closeModal={closeModal}
-            onClose={onClose}
-            submit={submit}
-            resetResponse={resetResponse}
-            organization={organizationState}
-            getOrganizationAndQuota={getOrganizationAndQuota}
-            clusterID="some-cluster-id"
-            cluster={cluster}
-            machineTypesByID={machineTypesByID}
-            upgradeTrialClusterResponse={{ errorMessage: '', error: false, fulfilled: false }}
-            machinePools={machinePools}
-          />
-        </CompatRouter>
-      </MemoryRouter>,
+      <UpgradeTrialClusterDialog
+        isOpen
+        closeModal={closeModal}
+        onClose={onClose}
+        submit={submit}
+        resetResponse={resetResponse}
+        organization={organizationState}
+        getOrganizationAndQuota={getOrganizationAndQuota}
+        clusterID="some-cluster-id"
+        cluster={cluster}
+        machineTypesByID={machineTypesByID}
+        upgradeTrialClusterResponse={{ errorMessage: '', error: false, fulfilled: false }}
+        machinePools={machinePools}
+      />,
     );
     expect(screen.getByTestId('no-quota-alert')).toBeInTheDocument();
     expect(screen.getByText('Contact sales')).toBeInTheDocument();
@@ -72,29 +66,25 @@ describe('<UpgradeTrialClusterDialog />', () => {
       quotaList: mockQuotaList,
     };
     render(
-      <MemoryRouter>
-        <CompatRouter>
-          <UpgradeTrialClusterDialog
-            isOpen
-            closeModal={closeModal}
-            onClose={onClose}
-            submit={submit}
-            resetResponse={resetResponse}
-            organization={orgState}
-            getOrganizationAndQuota={getOrganizationAndQuota}
-            clusterID="some-cluster-id"
-            cluster={cluster}
-            machineTypesByID={machineTypesByID}
-            upgradeTrialClusterResponse={{ errorMessage: '', error: false, fulfilled: false }}
-            machinePools={[
-              {
-                instance_type: 'm5.xlarge',
-                replicas: 140,
-              },
-            ]}
-          />
-        </CompatRouter>
-      </MemoryRouter>,
+      <UpgradeTrialClusterDialog
+        isOpen
+        closeModal={closeModal}
+        onClose={onClose}
+        submit={submit}
+        resetResponse={resetResponse}
+        organization={orgState}
+        getOrganizationAndQuota={getOrganizationAndQuota}
+        clusterID="some-cluster-id"
+        cluster={cluster}
+        machineTypesByID={machineTypesByID}
+        upgradeTrialClusterResponse={{ errorMessage: '', error: false, fulfilled: false }}
+        machinePools={[
+          {
+            instance_type: 'm5.xlarge',
+            replicas: 140,
+          },
+        ]}
+      />,
     );
 
     expect(screen.queryByTestId('no-quota-alert')).not.toBeInTheDocument();
@@ -111,29 +101,25 @@ describe('<UpgradeTrialClusterDialog />', () => {
       quotaList: mockQuotaList,
     };
     render(
-      <MemoryRouter>
-        <CompatRouter>
-          <UpgradeTrialClusterDialog
-            isOpen
-            closeModal={closeModal}
-            onClose={onClose}
-            submit={submit}
-            resetResponse={resetResponse}
-            organization={orgState}
-            getOrganizationAndQuota={getOrganizationAndQuota}
-            clusterID="some-cluster-id"
-            cluster={cluster}
-            machineTypesByID={machineTypesByID}
-            upgradeTrialClusterResponse={{ errorMessage: '', error: false, fulfilled: false }}
-            machinePools={[
-              {
-                instance_type: 'm5.xlarge',
-                replicas: 130,
-              },
-            ]}
-          />
-        </CompatRouter>
-      </MemoryRouter>,
+      <UpgradeTrialClusterDialog
+        isOpen
+        closeModal={closeModal}
+        onClose={onClose}
+        submit={submit}
+        resetResponse={resetResponse}
+        organization={orgState}
+        getOrganizationAndQuota={getOrganizationAndQuota}
+        clusterID="some-cluster-id"
+        cluster={cluster}
+        machineTypesByID={machineTypesByID}
+        upgradeTrialClusterResponse={{ errorMessage: '', error: false, fulfilled: false }}
+        machinePools={[
+          {
+            instance_type: 'm5.xlarge',
+            replicas: 130,
+          },
+        ]}
+      />,
     );
     expect(screen.queryByTestId('no-quota-alert')).not.toBeInTheDocument();
     expect(screen.getByText('Upgrade using Marketplace billing')).toBeInTheDocument();
@@ -142,24 +128,20 @@ describe('<UpgradeTrialClusterDialog />', () => {
 
   it('renders error box when an error occurs', () => {
     render(
-      <MemoryRouter>
-        <CompatRouter>
-          <UpgradeTrialClusterDialog
-            isOpen
-            closeModal={closeModal}
-            onClose={onClose}
-            submit={submit}
-            resetResponse={resetResponse}
-            organization={organizationState}
-            getOrganizationAndQuota={getOrganizationAndQuota}
-            clusterID="some-cluster-id"
-            cluster={cluster}
-            machineTypesByID={machineTypesByID}
-            upgradeTrialClusterResponse={{ error: true, errorMessage: 'this is an error' }}
-            machinePools={machinePools}
-          />
-        </CompatRouter>
-      </MemoryRouter>,
+      <UpgradeTrialClusterDialog
+        isOpen
+        closeModal={closeModal}
+        onClose={onClose}
+        submit={submit}
+        resetResponse={resetResponse}
+        organization={organizationState}
+        getOrganizationAndQuota={getOrganizationAndQuota}
+        clusterID="some-cluster-id"
+        cluster={cluster}
+        machineTypesByID={machineTypesByID}
+        upgradeTrialClusterResponse={{ error: true, errorMessage: 'this is an error' }}
+        machinePools={machinePools}
+      />,
     );
 
     expect(screen.getByText('Error upgrading cluster')).toBeInTheDocument();

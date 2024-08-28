@@ -1,8 +1,8 @@
 import React, { useCallback, useState } from 'react';
-import { Link } from 'react-router-dom-v5-compat';
 
 import { Flex, FlexItem, PageSection, Title } from '@patternfly/react-core';
 
+import { Link } from '~/common/routing';
 import InternalTrackingLink from '~/components/common/InternalTrackingLink';
 
 import docLinks from '../../common/installLinks.mjs';

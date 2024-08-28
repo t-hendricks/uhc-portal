@@ -1,5 +1,4 @@
 import React from 'react';
-import { useNavigate } from 'react-router-dom-v5-compat';
 
 import {
   Card,
@@ -14,6 +13,7 @@ import {
 } from '@patternfly/react-core';
 import CheckIcon from '@patternfly/react-icons/dist/esm/icons/check-icon';
 
+import { useNavigate } from '~/common/routing';
 import ExternalLink from '~/components/common/ExternalLink';
 
 interface InstructionsChooserCardProps {

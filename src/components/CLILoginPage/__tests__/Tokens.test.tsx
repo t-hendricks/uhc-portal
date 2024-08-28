@@ -15,7 +15,6 @@ limitations under the License.
 */
 
 import React from 'react';
-import { CompatRouter } from 'react-router-dom-v5-compat';
 
 import {
   checkAccessibility,
@@ -24,7 +23,6 @@ import {
   mockUseChrome,
   render,
   screen,
-  TestRouter,
 } from '~/testUtils';
 
 import Tokens from '../Instructions';
@@ -51,11 +49,7 @@ describe('<Tokens />', () => {
 
   it('is accessible with button', async () => {
     const { container } = render(
-      <TestRouter>
-        <CompatRouter>
-          <Tokens show={false} isRosa={false} SSOLogin={false} showPath="/token/show" />
-        </CompatRouter>
-      </TestRouter>,
+      <Tokens show={false} isRosa={false} SSOLogin={false} showPath="/token/show" />,
     );
 
     expect(await screen.findByRole('button', { name: 'Load token' })).toBeInTheDocument();
@@ -65,11 +59,7 @@ describe('<Tokens />', () => {
 
   it('is accessible with token', async () => {
     const { container } = render(
-      <TestRouter>
-        <CompatRouter>
-          <Tokens show showPath="/token/show" isRosa={false} SSOLogin={false} />
-        </CompatRouter>
-      </TestRouter>,
+      <Tokens show showPath="/token/show" isRosa={false} SSOLogin={false} />,
     );
 
     expect(await screen.findByRole('link', { name: 'Download ocm CLI' })).toBeInTheDocument();
@@ -77,13 +67,7 @@ describe('<Tokens />', () => {
   });
 
   it('Renders loading screen', async () => {
-    const { container } = render(
-      <TestRouter>
-        <CompatRouter>
-          <Tokens show isRosa={false} SSOLogin={false} />
-        </CompatRouter>
-      </TestRouter>,
-    );
+    const { container } = render(<Tokens show isRosa={false} SSOLogin={false} />);
 
     expect(
       await screen.findByText('Copy and paste the authentication command in your terminal:'),
@@ -94,13 +78,7 @@ describe('<Tokens />', () => {
   it('Calls getOfflineToken', async () => {
     expect(getOfflineTokenMock).not.toHaveBeenCalled();
 
-    render(
-      <TestRouter>
-        <CompatRouter>
-          <Tokens show isRosa={false} SSOLogin={false} />
-        </CompatRouter>
-      </TestRouter>,
-    );
+    render(<Tokens show isRosa={false} SSOLogin={false} />);
     expect(getOfflineTokenMock).toHaveBeenCalled();
     expect(await screen.findByRole('link', { name: 'Download ocm CLI' })).toBeInTheDocument();
   });
@@ -113,13 +91,7 @@ describe('<Tokens />', () => {
 
     it('Renders screen with refresh token', async () => {
       isRestrictedEnv.mockReturnValue(true);
-      render(
-        <TestRouter>
-          <CompatRouter>
-            <Tokens show isRosa={false} SSOLogin={false} showPath="myshowpath" />
-          </CompatRouter>
-        </TestRouter>,
-      );
+      render(<Tokens show isRosa={false} SSOLogin={false} showPath="myshowpath" />);
 
       expect(await screen.findByText('Your API token')).toBeInTheDocument();
     });

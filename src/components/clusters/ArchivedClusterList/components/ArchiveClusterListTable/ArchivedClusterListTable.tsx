@@ -1,5 +1,4 @@
 import React from 'react';
-import { Link } from 'react-router-dom-v5-compat';
 
 import {
   Bullseye,
@@ -13,6 +12,7 @@ import { SortByDirection, Table, Tbody, Td, Th, Thead, Tr } from '@patternfly/re
 import { ThSortType } from '@patternfly/react-table/dist/esm/components/Table/base/types';
 import { IVisibility } from '@patternfly/react-table/dist/esm/components/Table/utils/decorators/classNames';
 
+import { Link } from '~/common/routing';
 import { SubscriptionCommonFields } from '~/types/accounts_mgmt.v1';
 import { ClusterWithPermissions, ViewOptions, ViewSorting } from '~/types/types';
 

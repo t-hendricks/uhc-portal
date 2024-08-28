@@ -1,7 +1,6 @@
 import React from 'react';
-import { CompatRouter } from 'react-router-dom-v5-compat';
 
-import { checkAccessibility, render, screen, TestRouter } from '~/testUtils';
+import { checkAccessibility, render, screen } from '~/testUtils';
 
 import * as Fixtures from '../__tests__/Quota.fixtures';
 
@@ -12,13 +11,7 @@ describe('OSDSubscriptionCard', () => {
     jest.clearAllMocks();
   });
   it('is accessible', async () => {
-    const { container } = render(
-      <TestRouter>
-        <CompatRouter>
-          <OSDSubscriptionCard {...Fixtures} />
-        </CompatRouter>
-      </TestRouter>,
-    );
+    const { container } = render(<OSDSubscriptionCard {...Fixtures} />);
     expect(await screen.findByText('OpenShift Dedicated')).toBeInTheDocument();
 
     await checkAccessibility(container);
@@ -26,24 +19,12 @@ describe('OSDSubscriptionCard', () => {
 
   it('calls fetch method', () => {
     expect(Fixtures.fetchQuotaCost).not.toHaveBeenCalled();
-    render(
-      <TestRouter>
-        <CompatRouter>
-          <OSDSubscriptionCard {...Fixtures} />
-        </CompatRouter>
-      </TestRouter>,
-    );
+    render(<OSDSubscriptionCard {...Fixtures} />);
     expect(Fixtures.fetchQuotaCost).toHaveBeenCalled();
   });
 
   it('should have OSDSubscriptionTable', () => {
-    render(
-      <TestRouter>
-        <CompatRouter>
-          <OSDSubscriptionCard {...Fixtures} />
-        </CompatRouter>
-      </TestRouter>,
-    );
+    render(<OSDSubscriptionCard {...Fixtures} />);
 
     expect(screen.getByRole('grid', { name: 'Quota Table' })).toBeInTheDocument();
 

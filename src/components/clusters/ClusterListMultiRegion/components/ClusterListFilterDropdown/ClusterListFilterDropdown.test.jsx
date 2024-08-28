@@ -1,7 +1,6 @@
 import React from 'react';
-import { CompatRouter } from 'react-router-dom-v5-compat';
 
-import { checkAccessibility, render, screen, TestRouter } from '~/testUtils';
+import { checkAccessibility, render, screen } from '~/testUtils';
 
 import ClusterListFilterDropdown from './ClusterListFilterDropdown';
 
@@ -18,13 +17,7 @@ describe('<ClusterListFilterDropdown />', () => {
   });
 
   it('is accessible', async () => {
-    const { container, user } = render(
-      <TestRouter>
-        <CompatRouter>
-          <ClusterListFilterDropdown {...defaultProps} />
-        </CompatRouter>
-      </TestRouter>,
-    );
+    const { container, user } = render(<ClusterListFilterDropdown {...defaultProps} />);
 
     await user.click(screen.getByRole('button'));
     expect(await screen.findByRole('menu')).toBeInTheDocument();

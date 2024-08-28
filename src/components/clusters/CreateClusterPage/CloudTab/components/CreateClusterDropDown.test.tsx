@@ -1,14 +1,13 @@
 import React from 'react';
 import { createMemoryHistory } from 'history';
-import { MemoryRouter, Router } from 'react-router-dom';
-import { CompatRouter } from 'react-router-dom-v5-compat';
+import { Router } from 'react-router-dom';
 
 import { checkAccessibility, render, screen } from '~/testUtils';
 
 import CreateClusterDropDown from './CreateClusterDropDown';
 
-const getStartedPath = '/create/rosa/getstarted';
-const rosaWizardPath = '/create/rosa/wizard';
+const getStartedPath = '/openshift/create/rosa/getstarted';
+const rosaWizardPath = '/openshift/create/rosa/wizard';
 
 describe('<CreateClusterDropDown />', () => {
   afterAll(() => {
@@ -17,13 +16,7 @@ describe('<CreateClusterDropDown />', () => {
 
   it('is accessible', async () => {
     // Arrange
-    const { container } = render(
-      <MemoryRouter>
-        <CompatRouter>
-          <CreateClusterDropDown />
-        </CompatRouter>
-      </MemoryRouter>,
-    );
+    const { container } = render(<CreateClusterDropDown />);
 
     // Assert
     await checkAccessibility(container);
@@ -31,13 +24,7 @@ describe('<CreateClusterDropDown />', () => {
 
   it('is accessible expanded', async () => {
     // Arrange
-    const { container, user } = render(
-      <MemoryRouter>
-        <CompatRouter>
-          <CreateClusterDropDown />
-        </CompatRouter>
-      </MemoryRouter>,
-    );
+    const { container, user } = render(<CreateClusterDropDown />);
 
     // Act
     await user.click(screen.getByRole('button', { name: 'Create cluster' }));
@@ -50,14 +37,11 @@ describe('<CreateClusterDropDown />', () => {
   it('With CLI option goes to getting started page', async () => {
     // Arrange
     const history = createMemoryHistory();
-
     const { user } = render(
-      // @ts-ignore
-      <Router history={history}>
-        <CompatRouter>
-          <CreateClusterDropDown />
-        </CompatRouter>
+      <Router location={history.location} navigator={history}>
+        <CreateClusterDropDown />
       </Router>,
+      { withRouter: false }, // set to false so we can wrap with router to check routing
     );
 
     // Act
@@ -74,11 +58,10 @@ describe('<CreateClusterDropDown />', () => {
 
     const { user } = render(
       // @ts-ignore
-      <Router history={history}>
-        <CompatRouter>
-          <CreateClusterDropDown />
-        </CompatRouter>
+      <Router location={history.location} navigator={history}>
+        <CreateClusterDropDown />
       </Router>,
+      { withRouter: false },
     );
 
     // Act
@@ -92,14 +75,11 @@ describe('<CreateClusterDropDown />', () => {
   it('Prerequisites link goes to getting started page', async () => {
     // Arrange
     const history = createMemoryHistory();
-
     const { user } = render(
-      // @ts-ignore
-      <Router history={history}>
-        <CompatRouter>
-          <CreateClusterDropDown />
-        </CompatRouter>
+      <Router location={history.location} navigator={history}>
+        <CreateClusterDropDown />
       </Router>,
+      { withRouter: false }, // set to false so we can wrap with router to check routing
     );
 
     // Act

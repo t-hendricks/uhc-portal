@@ -1,9 +1,9 @@
 import React from 'react';
 
-import { Alert, Button, ButtonVariant } from '@patternfly/react-core';
+import { Alert } from '@patternfly/react-core';
 
-import ocmBaseName from '~/common/getBaseName';
 import { MULTIREGION_LOCALSTORAGE_KEY } from '~/common/localStorageConstants';
+import { Link } from '~/common/routing';
 import { useFeatureGate } from '~/hooks/useFeatureGate';
 import { MULTIREGION_PREVIEW_ENABLED } from '~/redux/constants/featureConstants';
 
@@ -11,7 +11,6 @@ const MultiRegionOverrideMessage = () => {
   const multiRegionFeatureGate = useFeatureGate(MULTIREGION_PREVIEW_ENABLED);
   const removeMultiRegionPreviewFlag = () => {
     localStorage.removeItem(MULTIREGION_LOCALSTORAGE_KEY);
-    window.location.href = ocmBaseName;
   };
 
   if (!multiRegionFeatureGate) {
@@ -28,9 +27,9 @@ const MultiRegionOverrideMessage = () => {
         }
         className="pf-v5-u-flex-basis-0 pf-v5-u-flex-grow-1"
       >
-        <Button variant={ButtonVariant.link} isInline onClick={removeMultiRegionPreviewFlag}>
+        <Link to="/" reloadDocument onClick={removeMultiRegionPreviewFlag}>
           Turn off <strong>Multiregion preview</strong>
-        </Button>
+        </Link>
       </Alert>
     );
   }
@@ -43,9 +42,9 @@ const MultiRegionOverrideMessage = () => {
       title="Multiregion preview active"
       className="pf-v5-u-flex-basis-0 pf-v5-u-flex-grow-1"
     >
-      <Button variant={ButtonVariant.link} isInline onClick={removeMultiRegionPreviewFlag}>
+      <Link to="/" reloadDocument onClick={removeMultiRegionPreviewFlag}>
         Turn off <strong>Multiregion preview</strong>
-      </Button>
+      </Link>
     </Alert>
   );
 };

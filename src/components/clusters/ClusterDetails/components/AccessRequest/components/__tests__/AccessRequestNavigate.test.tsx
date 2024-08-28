@@ -1,5 +1,5 @@
 import React from 'react';
-import { To } from 'react-router-dom-v5-compat';
+import { To } from 'react-router-dom';
 
 import { useGlobalState } from '~/redux/hooks';
 import { checkAccessibility, render, screen } from '~/testUtils';
@@ -8,19 +8,17 @@ import AccessRequestNavigate from '../AccessRequestNavigate';
 
 jest.mock('~/components/App/LoadingPage', () => () => <div data-testid="loading-page-mock" />);
 jest.mock('~/components/App/NotFoundError', () => () => <div data-testid="not-found-error-mock" />);
-jest.mock('react-router-dom-v5-compat', () => ({
+jest.mock('react-router-dom', () => ({
+  ...jest.requireActual('react-router-dom'), // Preserve other exports from react-router-dom
+  useParams: () => ({
+    id: 'id1',
+  }),
   Navigate: ({ to, replace }: { to: To; replace?: boolean }) => (
     <>
       <div>to: {to}</div>
       <div>replace: {replace ? 'true' : 'false'}</div>
     </>
   ),
-}));
-
-jest.mock('react-router', () => ({
-  useParams: () => ({
-    id: 'id1',
-  }),
 }));
 
 jest.mock('~/redux/hooks', () => ({
@@ -89,7 +87,7 @@ describe('AccessRequestNavigate', () => {
 
       // Assert
       expect(
-        screen.getByText(/to: \/details\/s\/subscriptionId1#accessrequest/i),
+        screen.getByText(/to: \/openshift\/details\/s\/subscriptionId1#accessrequest/i),
       ).toBeInTheDocument();
       expect(screen.getByText(/replace: true/i)).toBeInTheDocument();
     });

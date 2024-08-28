@@ -1,6 +1,4 @@
 import React from 'react';
-import { BrowserRouter } from 'react-router-dom';
-import { CompatRouter } from 'react-router-dom-v5-compat';
 
 import { checkAccessibility, render, screen, userEvent } from '~/testUtils';
 
@@ -19,13 +17,7 @@ describe('<Overview />', () => {
 
   it('contains a few elements of the page', async () => {
     // Arrange
-    const { container } = render(
-      <BrowserRouter>
-        <CompatRouter>
-          <Overview />
-        </CompatRouter>
-      </BrowserRouter>,
-    );
+    const { container } = render(<Overview />);
 
     // Assert
     // Featured OpenShift cluster types:
@@ -36,7 +28,7 @@ describe('<Overview />', () => {
       screen.getByText('View all OpenShift cluster types', {
         selector: 'a',
       }),
-    ).toHaveAttribute('href', '/create');
+    ).toHaveAttribute('href', '/openshift/create');
 
     // Recommended Operator Cards:
 
@@ -83,13 +75,7 @@ describe('<Overview />', () => {
     'verifies Recommended Operators Card "$title" content (basic functionality verification of each Card separately)',
     async ({ title, description, index, someDrawerContent, learnMoreLinkDestination }) => {
       // Arrange
-      render(
-        <BrowserRouter>
-          <CompatRouter>
-            <Overview />
-          </CompatRouter>
-        </BrowserRouter>,
-      );
+      render(<Overview />);
 
       // Assert
       // ensure Cards's description is shown:
@@ -159,13 +145,7 @@ describe('<Overview />', () => {
       learnMoreLinkTextContent,
     }) => {
       // Arrange
-      render(
-        <BrowserRouter>
-          <CompatRouter>
-            <Overview />
-          </CompatRouter>
-        </BrowserRouter>,
-      );
+      render(<Overview />);
 
       // Assert
       // ensure Cards's description is shown:
@@ -207,13 +187,7 @@ describe('<Overview />', () => {
 
   it('tests Featured Products Cards Functionality -> Click on the learnMore of each card and verify that the content of the Drawer switches to the appropriate card that was clicked', async () => {
     // Arrange
-    render(
-      <BrowserRouter>
-        <CompatRouter>
-          <Overview />
-        </CompatRouter>
-      </BrowserRouter>,
-    );
+    render(<Overview />);
 
     // Assert
     const learnMoreBtns = screen.getAllByTestId(
@@ -262,13 +236,7 @@ describe('<Overview />', () => {
 
   it('tests Recommended Operators Cards Functionality -> Click on the learnMore of each card and verify that the content of the Drawer switches to the appropriate card that was clicked', async () => {
     // Arrange
-    render(
-      <BrowserRouter>
-        <CompatRouter>
-          <Overview />
-        </CompatRouter>
-      </BrowserRouter>,
-    );
+    render(<Overview />);
 
     // Assert
     const learnMoreBtns = screen.getAllByTestId(
@@ -330,13 +298,7 @@ describe('<Overview />', () => {
 
   it('tests all Product Cards Learn more Functionality -> Click on the learnMore of each card and verify that the content of the Drawer switches to the appropriate card that was clicked', async () => {
     // Arrange
-    render(
-      <BrowserRouter>
-        <CompatRouter>
-          <Overview />
-        </CompatRouter>
-      </BrowserRouter>,
-    );
+    render(<Overview />);
 
     // Assert
     const recommendedOperatorsLearnMoreBtns = screen.getAllByTestId(
