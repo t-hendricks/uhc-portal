@@ -72,6 +72,8 @@ class ClusterDetails extends Page {
 
   clusterPersistentStorageLabelValue = () => cy.getByTestId('persistent-storage').should('exist');
 
+  clusterLoadBalancersValue = () => cy.getByTestId('load-balancers').should('exist');
+
   clusterAvailabilityLabelValue = () => cy.getByTestId('availability').should('exist');
 
   clusterDomainPrefixLabelValue = () => cy.getByTestId('domainPrefix').should('exist');
@@ -148,6 +150,10 @@ class ClusterDetails extends Page {
 
   clusterSubscriptionBillingModelValue = () =>
     cy.getByTestId('subscription-billing-model').find('div');
+
+  clusterTotalvCPUValue = () => cy.getByTestId('total-vcpu');
+
+  clusterTotalMemoryValue = () => cy.getByTestId('total-memory');
 
   clusterSecureBootSupportForShieldedVMsValue = () =>
     cy.getByTestId('secureBootSupportForShieldedVMs');
