@@ -150,7 +150,7 @@ function DetailsRight({
       {showVCPU && (
         <DescriptionListGroup>
           <DescriptionListTerm>Total vCPU</DescriptionListTerm>
-          <DescriptionListDescription>
+          <DescriptionListDescription data-testid="total-vcpu">
             {cluster.metrics.cpu.total.value} vCPU
           </DescriptionListDescription>
         </DescriptionListGroup>
@@ -158,7 +158,7 @@ function DetailsRight({
       {showMemory && (
         <DescriptionListGroup>
           <DescriptionListTerm>Total memory</DescriptionListTerm>
-          <DescriptionListDescription>
+          <DescriptionListDescription data-testid="total-memory">
             {memoryTotalWithUnit.value} {memoryTotalWithUnit.unit}
           </DescriptionListDescription>
         </DescriptionListGroup>
@@ -201,7 +201,7 @@ function DetailsRight({
         <>
           <DescriptionListGroup>
             <DescriptionListTerm>Load balancers</DescriptionListTerm>
-            <DescriptionListDescription>
+            <DescriptionListDescription data-testid="load-balancers">
               {cluster.load_balancer_quota || 'N/A'}
             </DescriptionListDescription>
           </DescriptionListGroup>
