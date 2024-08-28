@@ -3,21 +3,16 @@ import CreateClusterPage from '../../pageobjects/CreateCluster.page';
 import ClusterDetailsPage from '../../pageobjects/ClusterDetails.page';
 
 const clusterProfiles = require('../../fixtures/osd/OsdAwsCcsCreatePublicCluster.json');
-const clusterProperties = clusterProfiles['osdccs-aws-public-advanced']['day1-profile'];
-const region = clusterProperties.Region.split(',')[0];
-const qeInfrastructure = Cypress.env('QE_INFRA_REGIONS')[region][0];
+const clusterProperties = clusterProfiles['osdccs-aws-public']['day1-profile'];
 
 const clusterName = clusterProperties.ClusterName;
 const awsAccountID = Cypress.env('QE_AWS_ID');
 const awsAccessKey = Cypress.env('QE_AWS_ACCESS_KEY_ID');
 const awsSecretKey = Cypress.env('QE_AWS_ACCESS_KEY_SECRET');
 
-const selectZones = clusterProperties.MachinePools.AvailabilityZones;
-const securityGroups = qeInfrastructure.SECURITY_GROUPS_NAME;
-
 describe(
-  'OSD AWS CCS Cluster - Create public advanced AWS CCS cluster - OCP-21100, OCP-42745',
-  { tags: ['day1', 'aws', 'public', 'advanced'] },
+  'OSD AWS CCS Cluster - Create default public cluster with properties OCP-21086, OCP-21090)',
+  { tags: ['day1', 'aws', 'public'] },
   () => {
     before(() => {
       cy.visit('/create');
@@ -44,128 +39,41 @@ describe(
       CreateOSDWizardPage.awsAccessKeyInput().type(awsAccessKey);
       CreateOSDWizardPage.awsSecretKeyInput().type(awsSecretKey);
 
-      cy.get(CreateOSDWizardPage.primaryButton).click();
+      CreateOSDWizardPage.wizardNextButton().click();
     });
 
     it('Step OSD - AWS CCS wizard - Cluster Settings - Select Cluster details definitions', () => {
       CreateOSDWizardPage.isClusterDetailsScreen();
       CreateOSDWizardPage.setClusterName(clusterName);
       CreateOSDWizardPage.closePopoverDialogs();
-
-      CreateOSDWizardPage.multiZoneAvilabilityRadio().check();
+      if (clusterProperties.Availability.includes('Single zone')) {
+        CreateOSDWizardPage.singleZoneAvilabilityRadio().check();
+      } else {
+        CreateOSDWizardPage.multiZoneAvilabilityRadio().check();
+      }
       CreateOSDWizardPage.selectRegion(clusterProperties.Region);
 
       CreateOSDWizardPage.enableUserWorkloadMonitoringCheckbox().should('be.checked');
-      CreateOSDWizardPage.advancedEncryptionLink().click();
-      CreateOSDWizardPage.useDefaultKMSKeyRadio().click();
 
-      CreateOSDWizardPage.enableAdditionalEtcdEncryptionCheckbox().check();
-      CreateOSDWizardPage.enableFIPSCryptographyCheckbox().check();
-      cy.get(CreateOSDWizardPage.primaryButton).click();
+      CreateOSDWizardPage.wizardNextButton().click();
     });
 
-    it('Step OSD - AWS CCS wizard - Cluster Settings - Select machinepool definitions', () => {
+    it('Step OSD - AWS CCS wizard - Cluster Settings - Select default machinepool definitions', () => {
       CreateOSDWizardPage.isMachinePoolScreen();
       CreateOSDWizardPage.selectComputeNodeType(clusterProperties.MachinePools.InstanceType);
-      CreateOSDWizardPage.enableAutoscalingCheckbox().check();
-      CreateOSDWizardPage.setMinimumNodeCount(clusterProperties.MachinePools.MinimumNodeCount);
-      CreateOSDWizardPage.setMaximumNodeCount(clusterProperties.MachinePools.MaximumNodeCount);
       CreateOSDWizardPage.useBothIMDSv1AndIMDSv2Radio().should('be.checked');
-      cy.get(CreateOSDWizardPage.primaryButton).click();
+      CreateOSDWizardPage.wizardNextButton().click();
     });
 
     it('Step OSD - AWS CCS wizard - Networking configuration - Select cluster privacy definitions', () => {
       CreateOSDWizardPage.isNetworkingScreen();
       CreateOSDWizardPage.clusterPrivacyPublicRadio().should('be.checked');
-      CreateOSDWizardPage.installIntoExistingVpcCheckBox().check();
+      CreateOSDWizardPage.applicationIngressDefaultSettingsRadio().should('be.checked');
+
+      CreateOSDWizardPage.wizardNextButton().click();
     });
 
-    it('Step OSD - AWS CCS wizard - Networking configuration - Application ingress definitions', () => {
-      if (clusterProperties.CustomApplicationIngress.includes('Custom settings')) {
-        CreateOSDWizardPage.applicationIngressCustomSettingsRadio().check();
-        CreateOSDWizardPage.applicationIngressRouterSelectorsInput().type(
-          clusterProperties.RouteSelector.KeyValue,
-        );
-        CreateOSDWizardPage.applicationIngressExcludedNamespacesInput().type(
-          clusterProperties.ExcludedNamespaces.Values,
-        );
-
-        CreateOSDWizardPage.applicationIngressNamespaceOwnershipPolicyRadio().should('be.checked');
-        CreateOSDWizardPage.applicationIngressWildcardPolicyDisallowedRadio().should(
-          'not.be.checked',
-        );
-      } else {
-        CreateOSDWizardPage.applicationIngressDefaultSettingsRadio().should('be.checked');
-      }
-      cy.get(CreateOSDWizardPage.primaryButton).click();
-    });
-
-    it('Step OSD - AWS CCS wizard - Networking configuration - Select VPC and subnet definitions', () => {
-      CreateOSDWizardPage.isVPCSubnetScreen();
-      CreateOSDWizardPage.waitForVPCRefresh();
-      CreateOSDWizardPage.selectVPC(qeInfrastructure.VPC_NAME);
-
-      selectZones.forEach((value) => {
-        CreateOSDWizardPage.selectSubnetAvailabilityZone(value);
-      });
-
-      let i = 1;
-
-      for (; i <= clusterProperties.MachinePools.AvailabilityZonesCount; i++) {
-        CreateOSDWizardPage.selectPrivateSubnet(
-          i - 1,
-          qeInfrastructure.SUBNETS.ZONES[clusterProperties.MachinePools.AvailabilityZones[i - 1]]
-            .PRIVATE_SUBNET_NAME,
-        );
-        CreateOSDWizardPage.selectPublicSubnet(
-          i - 1,
-          qeInfrastructure.SUBNETS.ZONES[clusterProperties.MachinePools.AvailabilityZones[i - 1]]
-            .PUBLIC_SUBNET_NAME,
-        );
-      }
-    });
-
-    it('Step OSD - AWS CCS wizard - Networking configuration - Select security group definitions', () => {
-      CreateOSDWizardPage.additionalSecurityGroupsLink().click();
-      if (
-        CreateOSDWizardPage.selectApplySameSecurityGroupsToAllControlPlanesCheckbox(
-          clusterProperties.ApplySameSecurityGroupsToAllNodeTypes.includes('true'),
-        )
-      ) {
-        securityGroups.forEach((value) => {
-          CreateOSDWizardPage.selectAdditionalSecurityGroups(value);
-        });
-      } else {
-        cy.get('span')
-          .contains('Control plane nodes')
-          .parents('div[data-testtag="text-securitygroups"]')
-          .within(() => {
-            CreateOSDWizardPage.selectAdditionalSecurityGroups(
-              qeInfrastructure.SECURITY_GROUPS_NAME[0],
-            );
-          });
-        cy.get('span')
-          .contains('Infrastructure nodes')
-          .parents('div[data-testtag="text-securitygroups"]')
-          .within(() => {
-            CreateOSDWizardPage.selectAdditionalSecurityGroups(
-              qeInfrastructure.SECURITY_GROUPS_NAME[1],
-            );
-          });
-        securityGroups.forEach((value) => {
-          cy.get('span')
-            .contains('Worker nodes')
-            .parents('div[data-testtag="text-securitygroups"]')
-            .within(() => {
-              CreateOSDWizardPage.selectAdditionalSecurityGroups(value);
-            });
-        });
-      }
-
-      cy.get(CreateOSDWizardPage.primaryButton).click();
-    });
-
-    it(`Step OSD - AWS CCS wizard - CIDR Ranges - Select CIDR default values`, () => {
+    it('Step OSD - AWS CCS wizard CIDR Ranges - Select CIDR default values', () => {
       CreateOSDWizardPage.cidrDefaultValuesCheckBox().should('be.checked');
       CreateOSDWizardPage.useCIDRDefaultValues(false);
       CreateOSDWizardPage.useCIDRDefaultValues(true);
@@ -173,19 +81,15 @@ describe(
       CreateOSDWizardPage.serviceCIDRInput().should('have.value', clusterProperties.ServiceCIDR);
       CreateOSDWizardPage.podCIDRInput().should('have.value', clusterProperties.PodCIDR);
       CreateOSDWizardPage.hostPrefixInput().should('have.value', clusterProperties.HostPrefix);
-      cy.get(CreateOSDWizardPage.primaryButton).click();
+      CreateOSDWizardPage.wizardNextButton().click();
     });
 
-    it('Step OSD - AWS CCS wizard - Cluster update - Select update strategies and its definitions', () => {
+    it('Step OSD - AWS CCS wizard Cluster update - Select update strategies and its definitions', () => {
       CreateOSDWizardPage.isUpdatesScreen();
-      if (clusterProperties.UpdateStrategy.includes('Recurring')) {
-        CreateOSDWizardPage.updateStrategyRecurringRadio().check({ force: true });
-      } else {
-        CreateOSDWizardPage.updateStrategyIndividualRadio().check({ force: true });
-      }
+      CreateOSDWizardPage.updateStrategyIndividualRadio().should('be.checked');
       CreateOSDWizardPage.selectNodeDraining(clusterProperties.NodeDraining);
 
-      cy.get(CreateOSDWizardPage.primaryButton).click();
+      CreateOSDWizardPage.wizardNextButton().click();
     });
 
     it('Step OSD - AWS CCS wizard - Review billing definitions', () => {
@@ -215,12 +119,8 @@ describe(
         clusterProperties.MachinePools.InstanceType,
       );
       CreateOSDWizardPage.autoscalingValue().contains(clusterProperties.MachinePools.Autoscaling);
-
-      CreateOSDWizardPage.computeNodeRangeValue().contains(
-        `Minimum nodes per zone: ${clusterProperties.MachinePools.MinimumNodeCount}`,
-      );
-      CreateOSDWizardPage.computeNodeRangeValue().contains(
-        `Maximum nodes per zone: ${clusterProperties.MachinePools.MaximumNodeCount}`,
+      CreateOSDWizardPage.computeNodeCountValue().contains(
+        clusterProperties.MachinePools.NodeCount,
       );
     });
 
@@ -229,57 +129,7 @@ describe(
       CreateOSDWizardPage.installIntoExistingVpcValue().contains(
         clusterProperties.InstallIntoExistingVPC,
       );
-    });
-
-    it('Step OSD - AWS CCS wizard - Review and create : Application ingress definitions', () => {
-      CreateOSDWizardPage.applicationIngressValue().contains(
-        clusterProperties.CustomApplicationIngress,
-      );
-      CreateOSDWizardPage.routeSelectorsValue().contains(clusterProperties.RouteSelector.KeyValue);
-      CreateOSDWizardPage.excludedNamespacesValue().contains(
-        clusterProperties.ExcludedNamespaces.Values,
-      );
-      CreateOSDWizardPage.wildcardPolicyValue().contains(clusterProperties.WildcardPolicy);
-      CreateOSDWizardPage.namespaceOwnershipValue().contains(
-        clusterProperties.NamespaceOwnershipPolicy,
-      );
-    });
-
-    it('Step OSD - AWS CCS wizard - Review and create : VPC and subnet definitions', () => {
-      selectZones.forEach((value) => {
-        CreateOSDWizardPage.vpcSubnetSettingsValue().next().contains(value);
-      });
-      let i = 1;
-      for (; i <= clusterProperties.MachinePools.AvailabilityZonesCount; i++) {
-        CreateOSDWizardPage.vpcSubnetSettingsValue()
-          .next()
-          .contains(
-            qeInfrastructure.SUBNETS.ZONES[clusterProperties.MachinePools.AvailabilityZones[i - 1]]
-              .PRIVATE_SUBNET_NAME,
-          );
-        CreateOSDWizardPage.vpcSubnetSettingsValue()
-          .next()
-          .contains(
-            qeInfrastructure.SUBNETS.ZONES[clusterProperties.MachinePools.AvailabilityZones[i - 1]]
-              .PUBLIC_SUBNET_NAME,
-          );
-      }
-    });
-
-    it('Step OSD - AWS CCS wizard - Review and create : Security group definitions', () => {
-      if (clusterProperties.ApplySameSecurityGroupsToAllNodeTypes.includes('true')) {
-        securityGroups.forEach((value) => {
-          CreateOSDWizardPage.securityGroupsValue().contains(value);
-        });
-      } else {
-        CreateOSDWizardPage.controlPlaneNodesValue(qeInfrastructure.SECURITY_GROUPS_NAME[0]);
-
-        CreateOSDWizardPage.infrastructureNodesValue(qeInfrastructure.SECURITY_GROUPS_NAME[1]);
-        securityGroups.forEach((value) => {
-          CreateOSDWizardPage.workerNodesValue();
-          CreateOSDWizardPage.securityGroupsValue().contains(value);
-        });
-      }
+      CreateOSDWizardPage.applicationIngressValue().contains(clusterProperties.ApplicationIngress);
     });
 
     it('Step OSD - AWS CCS wizard - Review and create : CIDR definitions', () => {

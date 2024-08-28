@@ -1,7 +1,47 @@
 {
+  "osdccs-aws-public": {
+    "day1-profile": {
+      "Description": "aws ccs public cluster with base configuration",
+      "Type": "OSD",
+      "CloudProvider": "AWS",
+      "ClusterName": "cyp-osd-ccs-aws-public",
+      "SubscriptionType": "Annual: Fixed capacity subscription from Red Hat",
+      "SubscriptionBillingModel": "Annual Red Hat subscriptions",
+      "InfrastructureType": "Customer cloud subscription",
+      "Region": "us-east-1, US East, N. Virginia",
+      "UserWorkloadMonitoring": "Enabled",
+      "Availability": "Single zone",
+      "AdditionalEncryption": "Disabled",
+      "FIPSCryptography": "Disabled",
+      "EncryptVolumesWithCustomerKeys": "Disabled",
+      "InstallIntoExistingVPC": "Disabled",
+      "ApplicationIngress": "Use default settings",
+      "Nodes": {
+        "Control plane": "3/3",
+        "Infra": "2/2",
+        "Compute": "3/3"
+      },
+      "ClusterAutoscaling": "Disabled",
+      "ClusterPrivacy": "Public",
+      "ClusterWideProxy": "Disabled",
+      "MachineCIDR": "10.0.0.0/16",
+      "ServiceCIDR": "172.30.0.0/16",
+      "PodCIDR": "10.128.0.0/14",
+      "HostPrefix": "/23",
+      "UpdateStrategy": "Individual updates",
+      "NodeDraining": "1 hour",
+      "MachinePools": {
+        "AvailabilityZones": "us-east-1a",
+        "InstanceType": "m5.xlarge",
+        "Autoscaling": "Disabled",
+        "NodeCount": "2"
+      }
+    },
+    "day2-profile": {}
+  },
   "osdccs-aws-public-advanced": {
     "day1-profile": {
-      "ClusterName": "cyp-osd-ccs-aws-public",
+      "ClusterName": "cyp-osd-ccs-aws-public-advanced",
       "Type": "OSD",
       "CloudProvider": "AWS",
       "SubscriptionType": "Annual: Fixed capacity subscription from Red Hat",
