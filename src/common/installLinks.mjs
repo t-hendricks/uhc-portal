@@ -78,7 +78,7 @@ const links = {
   ROSA_CP_DOCS: 'https://access.redhat.com/documentation/en-us/red_hat_openshift_service_on_aws/4',
   ACCESS_REQUEST_DOC_LINK: `${ROSA_CP_DOCS_BASE}/support/approved-access#approved-access`,
   DOCS_ENTRY: `${DOCS_BASE}/welcome/index.html`,
-  ROSA_TROUBLESHOOTING_INSTALLATIONS: `${ROSA_CP_DOCS_BASE}/troubleshooting/rosa-troubleshooting-installations`,
+  ROSA_TROUBLESHOOTING_INSTALLATIONS: `${ROSA_CP_DOCS_BASE}/support/troubleshooting#rosa-troubleshooting-installations`,
   ROSA_DEFINITION_DOC: `${ROSA_CP_DOCS_BASE}/introduction_to_rosa/policies-and-service-definition#rosa-service-definition`,
   WHAT_IS_OPENSHIFT: 'https://www.redhat.com/en/technologies/cloud-computing/openshift',
   WHAT_IS_ROSA: 'https://www.redhat.com/en/technologies/cloud-computing/openshift/aws',
