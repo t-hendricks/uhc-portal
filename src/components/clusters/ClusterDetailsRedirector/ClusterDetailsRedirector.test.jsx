@@ -1,17 +1,24 @@
 import React from 'react';
+import { useLocation, useParams } from 'react-router-dom';
 
 import { render, screen } from '~/testUtils';
 
 import ClusterDetailsRedirector from './ClusterDetailsRedirector';
 
-jest.mock('react-router-dom-v5-compat', () => ({
+jest.mock('react-router-dom', () => ({
+  ...jest.requireActual('react-router-dom'), // Preserve other exports from react-router-dom
+  useParams: jest.fn(),
+  useLocation: jest.fn(),
   Navigate: jest.fn(({ to }) => `Redirected to "${to}"`),
 }));
 
 describe('<ClusterDetailsRedirector />', () => {
   afterAll(() => {
-    jest.unmock('react-router-dom-v5-compat');
+    jest.unmock('react-router-dom');
   });
+
+  useParams.mockReturnValue({ id: 'foo' });
+  useLocation.mockReturnValue({ hash: '#bar' });
 
   const clearSubscriptionIDForCluster = jest.fn();
   const setGlobalError = jest.fn();
@@ -21,8 +28,6 @@ describe('<ClusterDetailsRedirector />', () => {
     fetchSubscriptionIDForCluster,
     setGlobalError,
     clearSubscriptionIDForCluster,
-    params: { id: 'foo' },
-    location: { hash: '#bar' },
     subscriptionIDResponse: {
       fulfilled: false,
     },
@@ -50,14 +55,14 @@ describe('<ClusterDetailsRedirector />', () => {
       errorMessage: 'some message',
     };
     describe('404 error', () => {
-      it('should render a redirect to /', () => {
+      it('should render a redirect to /openshift/cluster-list', () => {
         const newProps = {
           ...defaultProps,
           subscriptionIDResponse: { ...baseErrorResponse, errorCode: 404 },
         };
 
         render(<ClusterDetailsRedirector {...newProps} />);
-        expect(screen.getByText('Redirected to "/cluster-list"')).toBeInTheDocument();
+        expect(screen.getByText('Redirected to "/openshift/cluster-list"')).toBeInTheDocument();
 
         expect(setGlobalError).toBeCalledWith(
           expect.anything(), // should be a react node/fragment, but I don't know how to check that
@@ -86,7 +91,9 @@ describe('<ClusterDetailsRedirector />', () => {
       };
 
       render(<ClusterDetailsRedirector {...newProps} />);
-      expect(screen.getByText('Redirected to "/details/s/foobar#bar"')).toBeInTheDocument();
+      expect(
+        screen.getByText('Redirected to "/openshift/details/s/foobar#bar"'),
+      ).toBeInTheDocument();
     });
   });
   it('should clear response on unmount', () => {

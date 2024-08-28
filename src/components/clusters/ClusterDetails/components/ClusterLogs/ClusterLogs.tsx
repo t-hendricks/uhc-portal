@@ -2,7 +2,6 @@ import React from 'react';
 import isEmpty from 'lodash/isEmpty';
 import size from 'lodash/size';
 import { useDispatch } from 'react-redux';
-import { useNavigate } from 'react-router-dom-v5-compat';
 
 import {
   Card,
@@ -17,6 +16,7 @@ import {
 } from '@patternfly/react-core';
 import SearchIcon from '@patternfly/react-icons/dist/esm/icons/search-icon';
 
+import { useNavigate } from '~/common/routing';
 import { viewActions } from '~/redux/actions/viewOptionsActions';
 import { useGlobalState } from '~/redux/hooks';
 import { ViewSorting } from '~/types/types';

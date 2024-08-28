@@ -1,6 +1,4 @@
 import React from 'react';
-import { MemoryRouter } from 'react-router';
-import { CompatRouter } from 'react-router-dom-v5-compat';
 
 import * as usePreviousProps from '~/hooks/usePreviousProps';
 
@@ -59,13 +57,7 @@ describe('<ClusterList />', () => {
 
     it('should call onListFlagsSet with ROSA filter', async () => {
       isRestrictedEnv.mockReturnValue(true);
-      render(
-        <MemoryRouter>
-          <CompatRouter>
-            <ClusterList {...props} />
-          </CompatRouter>
-        </MemoryRouter>,
-      );
+      render(<ClusterList {...props} />);
       expect(onListFlagsSet).toHaveBeenCalled();
       const args = onListFlagsSet.mock.calls[0];
       expect(args[0]).toBe('subscriptionFilter');
@@ -76,23 +68,11 @@ describe('<ClusterList />', () => {
     });
 
     it('does not render filtering', async () => {
-      const { rerender } = render(
-        <MemoryRouter>
-          <CompatRouter>
-            <ClusterList {...props} />
-          </CompatRouter>
-        </MemoryRouter>,
-      );
+      const { rerender } = render(<ClusterList {...props} />);
       expect(screen.queryByTestId('cluster-list-filter-dropdown')).toBeInTheDocument();
 
       isRestrictedEnv.mockReturnValue(true);
-      rerender(
-        <MemoryRouter>
-          <CompatRouter>
-            <ClusterList {...props} />
-          </CompatRouter>
-        </MemoryRouter>,
-      );
+      rerender(<ClusterList {...props} />);
       expect(screen.queryByTestId('cluster-list-filter-dropdown')).not.toBeInTheDocument();
 
       expect(await screen.findByRole('button', { name: 'Create cluster' })).toBeInTheDocument();

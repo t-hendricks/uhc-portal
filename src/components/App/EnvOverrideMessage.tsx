@@ -1,9 +1,9 @@
 import React from 'react';
 
-import { Alert, Button, ButtonVariant } from '@patternfly/react-core';
+import { Alert } from '@patternfly/react-core';
 
-import ocmBaseName from '~/common/getBaseName';
 import { ENV_OVERRIDE_LOCALSTORAGE_KEY } from '~/common/localStorageConstants';
+import { Link } from '~/common/routing';
 
 type Props = {
   env: string;
@@ -12,7 +12,6 @@ type Props = {
 const EnvOverrideMessage = ({ env }: Props) => {
   const goBackToNormal = () => {
     localStorage.removeItem(ENV_OVERRIDE_LOCALSTORAGE_KEY);
-    window.location.href = ocmBaseName;
   };
 
   return (
@@ -27,9 +26,9 @@ const EnvOverrideMessage = ({ env }: Props) => {
       }
       className="pf-v5-u-flex-basis-0 pf-v5-u-flex-grow-1"
     >
-      <Button variant={ButtonVariant.link} isInline onClick={goBackToNormal}>
+      <Link to="/" reloadDocument onClick={goBackToNormal}>
         Go back to <strong>{APP_API_ENV}</strong>
-      </Button>
+      </Link>
     </Alert>
   );
 };

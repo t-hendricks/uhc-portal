@@ -15,9 +15,8 @@ limitations under the License.
 */
 
 import React from 'react';
-import { CompatRouter } from 'react-router-dom-v5-compat';
 
-import { checkAccessibility, mockUseChrome, render, screen, TestRouter } from '~/testUtils';
+import { checkAccessibility, mockUseChrome, render, screen } from '~/testUtils';
 
 import TokensROSA from '../InstructionsROSA';
 
@@ -38,11 +37,7 @@ describe('<TokensROSA />', () => {
 
   it('is accessible with button', async () => {
     const { container } = render(
-      <TestRouter>
-        <CompatRouter>
-          <TokensROSA isRosa SSOLogin={false} show={false} showPath="/token/show" />
-        </CompatRouter>
-      </TestRouter>,
+      <TokensROSA isRosa SSOLogin={false} show={false} showPath="/token/show" />,
     );
 
     expect(screen.getByRole('button', { name: 'Load token' })).toBeInTheDocument();
@@ -50,13 +45,7 @@ describe('<TokensROSA />', () => {
   });
 
   it('Renders token', async () => {
-    render(
-      <TestRouter>
-        <CompatRouter>
-          <TokensROSA isRosa SSOLogin={false} show />
-        </CompatRouter>
-      </TestRouter>,
-    );
+    render(<TokensROSA isRosa SSOLogin={false} show />);
     expect(await screen.findByRole('link', { name: 'Download the ROSA CLI' })).toBeInTheDocument();
   });
 });

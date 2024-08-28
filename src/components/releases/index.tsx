@@ -1,5 +1,4 @@
 import React from 'react';
-import { Link } from 'react-router-dom-v5-compat';
 import semver from 'semver';
 
 import {
@@ -18,6 +17,7 @@ import {
 import { OutlinedQuestionCircleIcon } from '@patternfly/react-icons/dist/esm/icons/outlined-question-circle-icon';
 import { PageHeader, PageHeaderTitle } from '@redhat-cloud-services/frontend-components/PageHeader';
 
+import { Link } from '~/common/routing';
 import { isRestrictedEnv } from '~/restrictedEnv';
 
 import { AppPage } from '../App/AppPage';

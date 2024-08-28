@@ -1,7 +1,6 @@
 import React from 'react';
 import get from 'lodash/get';
 import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom-v5-compat';
 
 import {
   Button,
@@ -19,6 +18,7 @@ import SearchIcon from '@patternfly/react-icons/dist/esm/icons/search-icon';
 import { SortByDirection, Table, Tbody, Td, Th, Thead, Tr } from '@patternfly/react-table';
 import { global_warning_color_100 as warningColor } from '@patternfly/react-tokens/dist/esm/global_warning_color_100';
 
+import { Link } from '~/common/routing';
 import AIClusterStatus from '~/components/common/AIClusterStatus';
 
 import getClusterName from '../../../../common/getClusterName';

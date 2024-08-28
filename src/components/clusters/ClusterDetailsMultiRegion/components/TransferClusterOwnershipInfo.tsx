@@ -1,9 +1,9 @@
 import React from 'react';
 import get from 'lodash/get';
-import { Link } from 'react-router-dom-v5-compat';
 
 import { Alert } from '@patternfly/react-core';
 
+import { Link } from '~/common/routing';
 import {
   ClusterAuthorizationRequest,
   Subscription,

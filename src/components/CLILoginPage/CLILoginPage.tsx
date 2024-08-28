@@ -1,4 +1,5 @@
 import React from 'react';
+import { To } from 'react-router-dom';
 
 import { Alert, Card, CardBody, CardTitle, PageSection, Title } from '@patternfly/react-core';
 import PageHeader, { PageHeaderTitle } from '@redhat-cloud-services/frontend-components/PageHeader';
@@ -33,7 +34,7 @@ const ErrorOrLoadingWrapper = ({ children }: { children: React.ReactElement }) =
 
 type CLILoginPageProps = {
   showToken?: boolean;
-  showPath?: string;
+  showPath?: To;
   isRosa?: boolean;
 };
 

@@ -1,7 +1,6 @@
 import React from 'react';
-import { CompatRouter } from 'react-router-dom-v5-compat';
 
-import { checkAccessibility, render, screen, TestRouter } from '~/testUtils';
+import { checkAccessibility, render, screen } from '~/testUtils';
 
 import AccessRequestPendingAlert, {
   AccessRequestPendingAlertProps,
@@ -9,11 +8,7 @@ import AccessRequestPendingAlert, {
 
 describe('AccessRequestPendingAlert', () => {
   const AccessRequestPendingAlertWrapper = (props: AccessRequestPendingAlertProps) => (
-    <TestRouter>
-      <CompatRouter>
-        <AccessRequestPendingAlert {...props} />
-      </CompatRouter>
-    </TestRouter>
+    <AccessRequestPendingAlert {...props} />
   );
 
   it.each([[undefined], [0]])('%p total', (total: undefined | number) => {
@@ -87,7 +82,7 @@ describe('AccessRequestPendingAlert', () => {
         screen.getByRole('link', {
           name: /1mbpBkP1bZSqhiMeIhSdnQbj9sB/i,
         }),
-      ).toHaveAttribute('href', '/details/s/1mbpBkP1bZSqhiMeIhSdnQbj9sB#accessRequest');
+      ).toHaveAttribute('href', '/openshift/details/s/1mbpBkP1bZSqhiMeIhSdnQbj9sB#accessRequest');
     });
 
     it('with multiple accessRequests', () => {
@@ -111,7 +106,7 @@ describe('AccessRequestPendingAlert', () => {
         screen.getByRole('link', {
           name: /1mbpBkP1bZSqhiMeIhSdnQbj9sB/i,
         }),
-      ).toHaveAttribute('href', '/details/s/1mbpBkP1bZSqhiMeIhSdnQbj9sB#accessRequest');
+      ).toHaveAttribute('href', '/openshift/details/s/1mbpBkP1bZSqhiMeIhSdnQbj9sB#accessRequest');
 
       expect(
         screen.getByRole('link', {
@@ -122,7 +117,7 @@ describe('AccessRequestPendingAlert', () => {
         screen.getByRole('link', {
           name: /aws-auto-update-20lqt8CJgwJbU/i,
         }),
-      ).toHaveAttribute('href', '/details/s/aws-auto-update-20lqt8CJgwJbU#accessRequest');
+      ).toHaveAttribute('href', '/openshift/details/s/aws-auto-update-20lqt8CJgwJbU#accessRequest');
     });
   });
 });

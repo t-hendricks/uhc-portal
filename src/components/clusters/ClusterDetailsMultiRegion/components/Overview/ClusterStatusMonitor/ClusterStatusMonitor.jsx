@@ -4,7 +4,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { useDispatch } from 'react-redux';
-import { useNavigate } from 'react-router-dom-v5-compat';
 
 import { Alert, Button, ButtonVariant, Flex, FlexItem, Spinner } from '@patternfly/react-core';
 import MinusCircleIcon from '@patternfly/react-icons/dist/esm/icons/minus-circle-icon';
@@ -13,6 +12,7 @@ import { Table, TableVariant, Tbody, Td, Th, Thead, Tr } from '@patternfly/react
 import { addNotification } from '@redhat-cloud-services/frontend-components-notifications/redux';
 
 import { HAD_INFLIGHT_ERROR_LOCALSTORAGE_KEY } from '~/common/localStorageConstants';
+import { useNavigate } from '~/common/routing';
 import ClusterStatusErrorDisplay from '~/components/clusters/commonMultiRegion/ClusterStatusErrorDisplay';
 import { useFeatureGate } from '~/hooks/useFeatureGate';
 import {

@@ -1,7 +1,6 @@
 import React from 'react';
-import { CompatRouter } from 'react-router-dom-v5-compat';
 
-import { checkAccessibility, screen, TestRouter, withState } from '~/testUtils';
+import { checkAccessibility, screen, withState } from '~/testUtils';
 
 import githubReleases from '../githubReleases.mock';
 import { InstallGCPIPI } from '../InstallGCPIPI';
@@ -26,11 +25,7 @@ describe('InstallGCPIPI', () => {
 
   it('is accessible', async () => {
     const { container } = withState(githubReleases).render(
-      <TestRouter>
-        <CompatRouter>
-          <InstallGCPIPI token={{}} dispatch={dispatch} />
-        </CompatRouter>
-      </TestRouter>,
+      <InstallGCPIPI token={{}} dispatch={dispatch} />,
     );
 
     expect(await screen.findByText(instructionsMapping.gcp.ipi.title)).toBeInTheDocument();

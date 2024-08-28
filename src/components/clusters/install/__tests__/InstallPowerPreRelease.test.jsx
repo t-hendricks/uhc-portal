@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { checkAccessibility, screen, TestRouter, withState } from '~/testUtils';
+import { checkAccessibility, screen, withState } from '~/testUtils';
 
 import githubReleases from '../githubReleases.mock';
 import { InstallPowerPreRelease } from '../InstallPowerPreRelease';
@@ -24,9 +24,7 @@ describe('InstallPowerPreRelease', () => {
 
   it.skip('is accessible', async () => {
     const { container } = withState(githubReleases).render(
-      <TestRouter>
-        <InstallPowerPreRelease token={{}} dispatch={dispatch} />
-      </TestRouter>,
+      <InstallPowerPreRelease token={{}} dispatch={dispatch} />,
     );
 
     expect(

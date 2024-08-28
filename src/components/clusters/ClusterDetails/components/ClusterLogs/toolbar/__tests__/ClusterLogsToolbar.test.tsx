@@ -1,7 +1,6 @@
 import React from 'react';
-import { CompatRouter } from 'react-router-dom-v5-compat';
 
-import { checkAccessibility, render, screen, TestRouter, userEvent } from '~/testUtils';
+import { checkAccessibility, render, screen, userEvent } from '~/testUtils';
 
 import ClusterLogsToolbar from '../ClusterLogsToolbar';
 
@@ -38,13 +37,7 @@ describe('<ClusterLogsToolbar />', () => {
   });
 
   it('is accessible', async () => {
-    const { container } = render(
-      <TestRouter>
-        <CompatRouter>
-          <ClusterLogsToolbar {...defaultProps} />
-        </CompatRouter>
-      </TestRouter>,
-    );
+    const { container } = render(<ClusterLogsToolbar {...defaultProps} />);
 
     expect(screen.getByTestId('cluster-history-toolbar')).toBeInTheDocument();
 
@@ -52,13 +45,7 @@ describe('<ClusterLogsToolbar />', () => {
   });
 
   it('displays and removes invalid format message', async () => {
-    render(
-      <TestRouter>
-        <CompatRouter>
-          <ClusterLogsToolbar {...defaultProps} />
-        </CompatRouter>
-      </TestRouter>,
-    );
+    render(<ClusterLogsToolbar {...defaultProps} />);
 
     const datePicker = screen.getAllByLabelText('Date picker');
 
@@ -82,13 +69,7 @@ describe('<ClusterLogsToolbar />', () => {
   ])(
     'validates min/max and date range for datepicker',
     async (startDate: string, endDate: string, validationMessage: string) => {
-      render(
-        <TestRouter>
-          <CompatRouter>
-            <ClusterLogsToolbar {...defaultProps} />
-          </CompatRouter>
-        </TestRouter>,
-      );
+      render(<ClusterLogsToolbar {...defaultProps} />);
 
       const datePicker = screen.getAllByLabelText('Date picker');
 

@@ -1,7 +1,6 @@
 import React from 'react';
-import { CompatRouter } from 'react-router-dom-v5-compat';
 
-import { checkAccessibility, screen, TestRouter, withState } from '~/testUtils';
+import { checkAccessibility, screen, withState } from '~/testUtils';
 
 import githubReleases from '../githubReleases.mock';
 import { InstallAWSUPI } from '../InstallAWSUPI';
@@ -26,11 +25,7 @@ describe('InstallAWSUPI', () => {
 
   it('is accessible', async () => {
     const { container } = withState(githubReleases).render(
-      <TestRouter>
-        <CompatRouter>
-          <InstallAWSUPI token={{}} dispatch={dispatch} />
-        </CompatRouter>
-      </TestRouter>,
+      <InstallAWSUPI token={{}} dispatch={dispatch} />,
     );
 
     expect(await screen.findByText(instructionsMapping.aws.x86.upi.title)).toBeInTheDocument();

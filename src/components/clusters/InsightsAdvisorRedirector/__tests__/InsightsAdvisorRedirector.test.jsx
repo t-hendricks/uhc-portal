@@ -1,48 +1,53 @@
 import React from 'react';
+import { MemoryRouter, Route, Routes } from 'react-router-dom';
 
 import { render, screen, within } from '~/testUtils';
 
 import InsightsAdvisorRedirector, { composeRuleId } from '../InsightsAdvisorRedirector';
-
-// Instead of mocking window.location, mocking  whole components
-jest.mock('react-router-dom-v5-compat', () => ({
-  ...jest.requireActual('react-router-dom-v5-compat'),
-  Navigate: jest.fn(({ to }) => `Redirected to "${to}"`),
-}));
 
 jest.mock('../ExternalRedirect', () => ({
   __esModule: true,
   default: jest.fn(({ url }) => `Redirected to external path "${url}"`),
 }));
 
+jest.mock('react-router-dom', () => ({
+  ...jest.requireActual('react-router-dom'), // Preserve other exports from react-router-dom
+  Navigate: jest.fn(({ to }) => `Redirected to "${to}"`),
+}));
+
+// eslint-disable-next-line react/prop-types
+const TestComponent = ({ path = '', route = '', ...rest }) => (
+  <MemoryRouter initialEntries={[{ pathname: path }]}>
+    <Routes>
+      <Route path={route} element={<InsightsAdvisorRedirector {...rest} />} />
+      <Route path="/openshift/cluster-list" element={<>Cluster list</>} />
+    </Routes>
+  </MemoryRouter>
+);
+
+const setGlobalError = jest.fn();
+const fetchClusterDetails = jest.fn();
+const defaultProps = {
+  setGlobalError,
+  fetchClusterDetails,
+  clusterDetails: {
+    error: null,
+    fulfilled: false,
+  },
+};
+const defaultRouterProps = {
+  path: '/openshift/details/5d5892d3-1f74-4ccf-91af-548dfc9767aa',
+  route: '/openshift/details/:id',
+};
+
 describe('<InsightsAdvisorRedirector />', () => {
-  const setGlobalError = jest.fn();
-  const fetchClusterDetails = jest.fn();
-  const defaultProps = {
-    params: { id: '5d5892d3-1f74-4ccf-91af-548dfc9767aa' },
-    location: {
-      pathname: '/details/5d5892d3-1f74-4ccf-91af-548dfc9767aa',
-      hash: '#insights',
-    },
-    setGlobalError,
-    fetchClusterDetails,
-    clusterDetails: {
-      error: null,
-      fulfilled: false,
-    },
-  };
-
-  afterAll(() => {
-    jest.unmock('react-router-dom-v5-compat');
-  });
-
   afterEach(() => {
     jest.clearAllMocks();
   });
 
   describe('redirection to Advisor cluster page: with the external ID', () => {
     it('should redirect', async () => {
-      render(<InsightsAdvisorRedirector {...defaultProps} />);
+      render(<TestComponent {...defaultProps} {...defaultRouterProps} />, { withRouter: false });
 
       expect(
         screen.getByText(
@@ -52,28 +57,20 @@ describe('<InsightsAdvisorRedirector />', () => {
     });
 
     it('should not call fetchClusterDetails', () => {
-      render(<InsightsAdvisorRedirector {...defaultProps} />);
+      render(<TestComponent {...defaultProps} {...defaultRouterProps} />, { withRouter: false });
+
       expect(fetchClusterDetails).not.toBeCalled();
     });
   });
 
   describe('redirection to Advisor recommendation page: with the external ID', () => {
-    const redirectionProps = {
-      ...defaultProps,
-      params: {
-        id: '5d5892d3-1f74-4ccf-91af-548dfc9767aa',
-        reportId: 'ccx_rules_ocp|external|rules|master_defined_as_machinesets|report',
-        errorKey: 'MASTER_DEFINED_AS_MACHINESETS',
-      },
-
-      location: {
-        pathname:
-          '/details/5d5892d3-1f74-4ccf-91af-548dfc9767aa/insights/ccx_rules_ocp|external|rules|master_defined_as_machinesets|report/MASTER_DEFINED_AS_MACHINESETS',
-      },
+    const routerParams = {
+      path: '/openshift/details/5d5892d3-1f74-4ccf-91af-548dfc9767aa/insights/ccx_rules_ocp|external|rules|master_defined_as_machinesets|report/MASTER_DEFINED_AS_MACHINESETS',
+      route: '/openshift/details/:id/insights/:reportId/:errorKey',
     };
 
     it('should redirect', () => {
-      render(<InsightsAdvisorRedirector {...redirectionProps} />);
+      render(<TestComponent {...defaultProps} {...routerParams} />, { withRouter: false });
 
       expect(
         screen.getByText(
@@ -83,38 +80,41 @@ describe('<InsightsAdvisorRedirector />', () => {
     });
 
     it('should not call fetchClusterDetails', () => {
-      render(<InsightsAdvisorRedirector {...redirectionProps} />);
+      render(<TestComponent {...defaultProps} {...routerParams} />, { withRouter: false });
+
       expect(fetchClusterDetails).not.toBeCalled();
     });
   });
 
   describe('redirection to Advisor cluster page: with the subscription ID', () => {
-    const redirectionProps = {
-      ...defaultProps,
-      params: { id: '1ZyOzuBzgnXcKa92ZE2E4olYmQa' },
-      location: {
-        pathname: '/details/s/1ZyOzuBzgnXcKa92ZE2E4olYmQa',
-        hash: '#insights',
-      },
+    const routerParams = {
+      path: '/openshift/details/s/1ZyOzuBzgnXcKa92ZE2E4olYmQa',
+      route: '/openshift/details/s/:id',
     };
 
     it('should render spinner and call fetchClusterDetails', () => {
-      render(<InsightsAdvisorRedirector {...redirectionProps} />);
+      render(<TestComponent {...defaultProps} {...routerParams} />, { withRouter: false });
+
       expect(within(screen.getByRole('status')).getByText('Loading...')).toBeInTheDocument();
     });
 
     it('should call fetchClusterDetails', () => {
       expect(fetchClusterDetails).not.toBeCalled();
-      render(<InsightsAdvisorRedirector {...redirectionProps} />);
+
+      render(<TestComponent {...defaultProps} {...routerParams} />, { withRouter: false });
+
       expect(fetchClusterDetails).toBeCalledWith('1ZyOzuBzgnXcKa92ZE2E4olYmQa');
     });
 
     it('should redirect after successful external ID fetch', () => {
-      const { rerender } = render(<InsightsAdvisorRedirector {...redirectionProps} />);
+      const { rerender } = render(<TestComponent {...defaultProps} {...routerParams} />, {
+        withRouter: false,
+      });
+
       expect(fetchClusterDetails).toBeCalledWith('1ZyOzuBzgnXcKa92ZE2E4olYmQa');
 
       const fulfilledProps = {
-        ...redirectionProps,
+        ...defaultProps,
         clusterDetails: {
           error: null,
           fulfilled: true,
@@ -124,7 +124,7 @@ describe('<InsightsAdvisorRedirector />', () => {
         },
       };
 
-      rerender(<InsightsAdvisorRedirector {...fulfilledProps} />);
+      rerender(<TestComponent {...fulfilledProps} {...routerParams} />, { withRouter: false });
 
       expect(
         screen.getByText(
@@ -135,36 +135,37 @@ describe('<InsightsAdvisorRedirector />', () => {
   });
 
   describe('redirection to Advisor recommendation page: with the subscription ID', () => {
-    const redirectionProps = {
-      ...defaultProps,
-      params: {
-        id: '1ZyOzuBzgnXcKa92ZE2E4olYmQa',
-        reportId: 'ccx_rules_ocp|external|rules|master_defined_as_machinesets|report',
-        errorKey: 'MASTER_DEFINED_AS_MACHINESETS',
-      },
-      location: {
-        pathname:
-          '/details/s/1ZyOzuBzgnXcKa92ZE2E4olYmQa/insights/ccx_rules_ocp|external|rules|master_defined_as_machinesets|report/MASTER_DEFINED_AS_MACHINESETS',
-      },
+    const routerParams = {
+      path: '/openshift/details/s/1ZyOzuBzgnXcKa92ZE2E4olYmQa/insights/ccx_rules_ocp|external|rules|master_defined_as_machinesets|report/MASTER_DEFINED_AS_MACHINESETS',
+      route: '/openshift/details/s/:id/insights/:reportId/:errorKey',
     };
 
     it('should render spinner', () => {
-      render(<InsightsAdvisorRedirector {...redirectionProps} />);
+      render(<TestComponent {...defaultProps} {...routerParams} />, {
+        withRouter: false,
+      });
+
       expect(within(screen.getByRole('status')).getByText('Loading...')).toBeInTheDocument();
     });
 
     it('should call fetchClusterDetails', () => {
       expect(fetchClusterDetails).not.toBeCalled();
-      render(<InsightsAdvisorRedirector {...redirectionProps} />);
+
+      render(<TestComponent {...defaultProps} {...routerParams} />, {
+        withRouter: false,
+      });
+
       expect(fetchClusterDetails).toBeCalledWith('1ZyOzuBzgnXcKa92ZE2E4olYmQa');
     });
 
     it('should redirect after successful external ID fetch', () => {
-      const { rerender } = render(<InsightsAdvisorRedirector {...redirectionProps} />);
+      const { rerender } = render(<TestComponent {...defaultProps} {...routerParams} />, {
+        withRouter: false,
+      });
       expect(fetchClusterDetails).toBeCalledWith('1ZyOzuBzgnXcKa92ZE2E4olYmQa');
 
       const fulfilledProps = {
-        ...redirectionProps,
+        ...defaultProps,
         clusterDetails: {
           error: null,
           fulfilled: true,
@@ -174,13 +175,49 @@ describe('<InsightsAdvisorRedirector />', () => {
         },
       };
 
-      rerender(<InsightsAdvisorRedirector {...fulfilledProps} />);
+      rerender(<TestComponent {...fulfilledProps} {...routerParams} />, {
+        withRouter: false,
+      });
 
       expect(
         screen.getByText(
           'Redirected to external path "/openshift/insights/advisor/clusters/5d5892d3-1f74-4ccf-91af-548dfc9767aa?first=ccx_rules_ocp.external.rules.master_defined_as_machinesets%7CMASTER_DEFINED_AS_MACHINESETS"',
         ),
       ).toBeInTheDocument();
+    });
+  });
+
+  describe('no external ID available', () => {
+    const routerParams = {
+      path: '/openshift/details/s/1ZyOzuBzgnXcKa92ZE2E4olYmQa',
+      route: '/openshift/details/s/:id',
+    };
+
+    const noExternalIdProps = {
+      ...defaultProps,
+      clusterDetails: {
+        error: false,
+        fulfilled: true,
+        cluster: { external_id: '' },
+      },
+    };
+
+    it('should render a redirect to /openshift/cluster-list', () => {
+      render(<TestComponent {...noExternalIdProps} {...routerParams} />, {
+        withRouter: false,
+      });
+
+      expect(screen.getByText('Redirected to "/openshift/cluster-list"')).toBeInTheDocument();
+    });
+
+    it('should call setGlobalError', () => {
+      expect(setGlobalError).not.toBeCalled();
+
+      render(<TestComponent {...noExternalIdProps} {...routerParams} />, {
+        withRouter: false,
+      });
+
+      expect(setGlobalError).toBeCalledWith(expect.anything(), 'clusterDetails', undefined);
     });
   });
 
@@ -192,53 +229,25 @@ describe('<InsightsAdvisorRedirector />', () => {
         errorMessage: 'error message',
         fulfilled: false,
       },
-      params: {
-        id: '1ZyOzuBzgnXcKa92ZE2E4olYmQa',
-      },
-      location: {
-        pathname: '/details/s/1ZyOzuBzgnXcKa92ZE2E4olYmQa',
-      },
     };
 
-    it('should render a redirect to /', () => {
-      render(<InsightsAdvisorRedirector {...onErrorProps} />);
+    const routerParams = {
+      path: '/openshift/details/s/1ZyOzuBzgnXcKa92ZE2E4olYmQa',
+      route: '/openshift/details/s/:id',
+    };
 
-      expect(screen.getByText('Redirected to "/cluster-list"')).toBeInTheDocument();
+    it('should render a redirect to /openshift/cluster-list', () => {
+      render(<TestComponent {...onErrorProps} {...routerParams} />, { withRouter: false });
+
+      expect(screen.getByText('Redirected to "/openshift/cluster-list"')).toBeInTheDocument();
     });
 
     it('should call setGlobalError', () => {
       expect(setGlobalError).not.toBeCalled();
-      render(<InsightsAdvisorRedirector {...onErrorProps} />);
+
+      render(<TestComponent {...onErrorProps} {...routerParams} />, { withRouter: false });
+
       expect(setGlobalError).toBeCalledWith(expect.anything(), 'clusterDetails', 'error message');
-    });
-  });
-
-  describe('no external ID available', () => {
-    const noExternalIdProps = {
-      ...defaultProps,
-      params: {
-        id: '1ZyOzuBzgnXcKa92ZE2E4olYmQa',
-      },
-      location: {
-        pathname: '/details/s/1ZyOzuBzgnXcKa92ZE2E4olYmQa',
-      },
-      clusterDetails: {
-        error: false,
-        fulfilled: true,
-        cluster: { external_id: '' },
-      },
-    };
-
-    it('should render a redirect to /', () => {
-      render(<InsightsAdvisorRedirector {...noExternalIdProps} />);
-
-      expect(screen.getByText('Redirected to "/cluster-list"')).toBeInTheDocument();
-    });
-
-    it('should call setGlobalError', () => {
-      expect(setGlobalError).not.toBeCalled();
-      render(<InsightsAdvisorRedirector {...noExternalIdProps} />);
-      expect(setGlobalError).toBeCalledWith(expect.anything(), 'clusterDetails', undefined);
     });
   });
 });

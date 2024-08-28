@@ -1,6 +1,4 @@
 import React from 'react';
-import { MemoryRouter } from 'react-router-dom';
-import { CompatRouter } from 'react-router-dom-v5-compat';
 
 import accountsService from '~/services/accountsService';
 import { checkAccessibility, mockRestrictedEnv, render, screen, waitFor } from '~/testUtils';
@@ -49,25 +47,13 @@ describe('<DownloadsPage>', () => {
   });
 
   it.skip('is accessible', async () => {
-    const { container } = render(
-      <MemoryRouter>
-        <CompatRouter>
-          <DownloadsPage />
-        </CompatRouter>
-      </MemoryRouter>,
-    );
+    const { container } = render(<DownloadsPage />);
     // This fails with a   "IDs used in ARIA and labels must be unique (duplicate-id-aria)" error
     await checkAccessibility(container);
   });
 
   it('expand all', async () => {
-    const { user } = render(
-      <MemoryRouter>
-        <CompatRouter>
-          <DownloadsPage />
-        </CompatRouter>
-      </MemoryRouter>,
-    );
+    const { user } = render(<DownloadsPage />);
 
     const expandBtn = screen.getByRole('button', { name: /expand all/i });
 
@@ -80,13 +66,7 @@ describe('<DownloadsPage>', () => {
   });
 
   it('Fetches organization data', async () => {
-    render(
-      <MemoryRouter>
-        <CompatRouter>
-          <DownloadsPage />
-        </CompatRouter>
-      </MemoryRouter>,
-    );
+    render(<DownloadsPage />);
     await waitFor(() => {
       expect(accountsService.getCurrentAccount).toHaveBeenCalled();
     });
@@ -117,13 +97,7 @@ describe('<DownloadsPage>', () => {
         },
       },
     });
-    render(
-      <MemoryRouter>
-        <CompatRouter>
-          <DownloadsPage />
-        </CompatRouter>
-      </MemoryRouter>,
-    );
+    render(<DownloadsPage />);
 
     await waitFor(() => {
       expect(screen.queryByText('OpenShift Cluster Manager API Token')).not.toBeInTheDocument();
@@ -137,13 +111,7 @@ describe('<DownloadsPage>', () => {
     });
     it('renders only OC/ROSA CLI and tokens', async () => {
       isRestrictedEnv.mockReturnValue(true);
-      render(
-        <MemoryRouter>
-          <CompatRouter>
-            <DownloadsPage />
-          </CompatRouter>
-        </MemoryRouter>,
-      );
+      render(<DownloadsPage />);
       expect(await screen.findAllByTestId(/downloads-section-.*/)).toHaveLength(2);
 
       expect(screen.getByTestId('downloads-section-CLI')).toBeInTheDocument();

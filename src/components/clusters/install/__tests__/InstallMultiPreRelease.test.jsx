@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { checkAccessibility, screen, TestRouter, withState } from '~/testUtils';
+import { checkAccessibility, screen, withState } from '~/testUtils';
 
 import githubReleases from '../githubReleases.mock';
 import { InstallMultiPreRelease } from '../InstallMultiPreRelease';
@@ -24,9 +24,7 @@ describe('InstallMultiPreRelease', () => {
 
   it.skip('is accessible', async () => {
     const { container } = withState(githubReleases).render(
-      <TestRouter>
-        <InstallMultiPreRelease token={{}} dispatch={dispatch} />
-      </TestRouter>,
+      <InstallMultiPreRelease token={{}} dispatch={dispatch} />,
     );
 
     expect(

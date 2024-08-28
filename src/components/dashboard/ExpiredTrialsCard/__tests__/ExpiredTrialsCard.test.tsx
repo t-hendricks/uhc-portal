@@ -1,9 +1,8 @@
 import React from 'react';
 import * as reactRedux from 'react-redux';
-import { CompatRouter } from 'react-router-dom-v5-compat';
 
 import { useGlobalState } from '~/redux/hooks';
-import { checkAccessibility, render, screen, TestRouter, within } from '~/testUtils';
+import { checkAccessibility, render, screen, within } from '~/testUtils';
 
 import { getSubscriptions } from '../../../../redux/actions/subscriptionsActions';
 import { expiredTrials } from '../../Dashboard.fixtures';
@@ -45,13 +44,7 @@ describe('<ExpiredTrialsCard />', () => {
       useGlobalStateMock.mockReturnValueOnce(baseViewOptions);
 
       // Act
-      const { container } = render(
-        <TestRouter>
-          <CompatRouter>
-            <ExpiredTrialsCard />
-          </CompatRouter>
-        </TestRouter>,
-      );
+      const { container } = render(<ExpiredTrialsCard />);
 
       // Assert
       expect(container).toBeEmptyDOMElement();
@@ -81,13 +74,7 @@ describe('<ExpiredTrialsCard />', () => {
       useGlobalStateMock.mockReturnValueOnce(baseViewOptions);
 
       // Act
-      const { container } = render(
-        <TestRouter>
-          <CompatRouter>
-            <ExpiredTrialsCard />
-          </CompatRouter>
-        </TestRouter>,
-      );
+      const { container } = render(<ExpiredTrialsCard />);
 
       // Assert
       expect(await screen.findByText('Expired Trials')).toBeInTheDocument();
@@ -103,13 +90,7 @@ describe('<ExpiredTrialsCard />', () => {
       useGlobalStateMock.mockReturnValueOnce(baseViewOptions);
 
       // Act
-      render(
-        <TestRouter>
-          <CompatRouter>
-            <ExpiredTrialsCard />
-          </CompatRouter>
-        </TestRouter>,
-      );
+      render(<ExpiredTrialsCard />);
 
       // Assert
       expect(

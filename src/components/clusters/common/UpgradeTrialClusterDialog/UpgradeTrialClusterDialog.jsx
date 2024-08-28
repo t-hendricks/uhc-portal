@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
 import get from 'lodash/get';
 import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom-v5-compat';
 
 import { Alert, Button, Form } from '@patternfly/react-core';
+
+import { Link } from '~/common/routing';
 
 import links from '../../../../common/installLinks.mjs';
 import { billingModels, normalizedProducts } from '../../../../common/subscriptionTypes';

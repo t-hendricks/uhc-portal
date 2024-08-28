@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 import { Card, CardBody } from '@patternfly/react-core';
 
-import { advisorBaseName } from '~/common/getBaseName';
+import { advisorBaseName } from '~/common/routing';
 
 import { INSIGHTS_RULE_CATEGORIES } from '../../clusters/ClusterDetails/components/Insights/InsightsConstants';
 

@@ -78,6 +78,7 @@ module.exports = async (_env, argv) => {
   const noInsightsProxy = !!argv.env.noproxy;
   // Support `logging=quiet` vs. `logging=verbose`. Default verbose (might change in future).
   const verboseLogging = argv.env.logging !== 'quiet';
+  console.log(`verboseLogging: ${verboseLogging}`);
   // Variable to run assisted-ui in standalone mode. You need to take a look to README to see instructions when ai_standalone=true
   const runAIinStandalone = !!argv.env.ai_standalone;
 
@@ -144,7 +145,15 @@ module.exports = async (_env, argv) => {
           './RootApp': path.resolve(srcDir, 'chrome-main.tsx'),
         },
         // These have to be excluded until the application migrates to supported versions of webpack configurations
-        exclude: ['react-router-dom', 'react-redux'],
+        exclude: ['react-redux', 'react-router-dom'],
+        shared: [
+          {
+            'react-router-dom': {
+              singleton: true,
+              version: '^6.2.0',
+            },
+          },
+        ],
       }),
       bundleAnalyzer,
     ].filter(Boolean),
@@ -262,22 +271,24 @@ module.exports = async (_env, argv) => {
               next();
             },
           });
-        }
 
-        // Custom middleware for logging request URLs
-        middlewares.unshift({
-          name: 'log-requests',
-          middleware: (req, res, next) => {
-            console.log('---> Request URL:', req.url); // Log the request URL
-            next(); // Continue to the next middleware
-          },
-        });
+          // Custom middleware for logging request URLs
+          middlewares.unshift({
+            name: 'log-requests',
+            middleware: (req, res, next) => {
+              console.log('---> Request URL:', req.url); // Log the request URL
+              next(); // Continue to the next middleware
+            },
+          });
+        }
 
         if (devMode) {
           middlewares.unshift({
             name: 'local-source-code-loader-middleware',
             middleware: (req, res, next) => {
-              console.log('Adding local-source-code-loader-middleware', req.url);
+              if (verboseLogging) {
+                console.log('Adding local-source-code-loader-middleware', req.url);
+              }
               if (req.url.startsWith('/src/')) {
                 const relativePath = req.url.substring('/src/'.length);
                 const filePath = path.join(srcDir, relativePath);

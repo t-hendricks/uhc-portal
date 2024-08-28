@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { checkAccessibility, render, screen, TestRouter } from '~/testUtils';
+import { checkAccessibility, render, screen } from '~/testUtils';
 
 import TopOverviewSection from '../TopOverviewSection';
 
@@ -17,11 +17,7 @@ describe('<TopOverviewSection />', () => {
   };
 
   it.skip('is accessible', async () => {
-    const { container } = render(
-      <TestRouter>
-        <TopOverviewSection {...defaultProps} />
-      </TestRouter>,
-    );
+    const { container } = render(<TopOverviewSection {...defaultProps} />);
 
     expect(screen.getByText('Cluster List')).toBeInTheDocument();
     expect(screen.getByText('CPU and Memory utilization')).toBeInTheDocument();

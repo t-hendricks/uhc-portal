@@ -1,9 +1,10 @@
 import React from 'react';
 import isEmpty from 'lodash/isEmpty';
 import PropTypes from 'prop-types';
-import { useNavigate } from 'react-router-dom-v5-compat';
 
 import { Button, Chip, ChipGroup, Split, SplitItem } from '@patternfly/react-core';
+
+import { useNavigate } from '~/common/routing';
 
 import helpers from '../../../../../common/helpers';
 import { buildFilterURLParams } from '../../../../../common/queryHelpers';

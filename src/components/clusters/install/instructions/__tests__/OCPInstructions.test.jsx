@@ -1,8 +1,7 @@
 import React from 'react';
 import get from 'lodash/get';
-import { CompatRouter } from 'react-router-dom-v5-compat';
 
-import { checkAccessibility, render, screen, TestRouter } from '~/testUtils';
+import { checkAccessibility, render, screen } from '~/testUtils';
 
 import { architectures } from '../../../../../common/installLinks.mjs';
 import instructionsMapping from '../instructionsMapping';
@@ -51,13 +50,7 @@ describe('<OCPInstructions />', () => {
     'is accessible with %s',
     async (provider) => {
       const option = ocpOptions[provider];
-      const { container } = render(
-        <TestRouter>
-          <CompatRouter>
-            <OCPInstructions {...option} token={{}} />
-          </CompatRouter>
-        </TestRouter>,
-      );
+      const { container } = render(<OCPInstructions {...option} token={{}} />);
 
       expect(
         await screen.findByText(

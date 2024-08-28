@@ -1,7 +1,6 @@
 import React from 'react';
-import { CompatRouter } from 'react-router-dom-v5-compat';
 
-import { checkAccessibility, render, screen, TestRouter } from '~/testUtils';
+import { checkAccessibility, render, screen } from '~/testUtils';
 
 import ClusterListActions from '../ClusterListActions';
 
@@ -11,13 +10,7 @@ jest.mock('~/redux/hooks/useGlobalState', () => ({
 
 describe('<ClusterListActions />', () => {
   it('is accessible ', async () => {
-    const { container } = render(
-      <TestRouter>
-        <CompatRouter>
-          <ClusterListActions />
-        </CompatRouter>
-      </TestRouter>,
-    );
+    const { container } = render(<ClusterListActions />);
 
     expect(screen.getByRole('button', { name: 'Create cluster' })).toBeInTheDocument();
     expect(screen.getByRole('button', { name: 'Actions' })).toBeInTheDocument();

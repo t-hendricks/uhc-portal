@@ -1,4 +1,3 @@
-import { connectRouter } from 'connected-react-router';
 import { combineReducers } from 'redux';
 import { reducer as formReducer } from 'redux-form';
 
@@ -99,11 +98,9 @@ const reducers = {
   deleteProtection: deleteProtectionReducer,
 };
 
-const reduxReducers = (history: Parameters<typeof connectRouter>[0]) =>
-  combineReducers({
-    ...reducers,
-    router: connectRouter(history),
-  });
+const reduxReducers = combineReducers({
+  ...reducers,
+});
 
 export { reducers, reduxReducers };
 

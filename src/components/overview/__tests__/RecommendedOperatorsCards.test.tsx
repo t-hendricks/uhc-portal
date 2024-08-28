@@ -1,6 +1,4 @@
 import React from 'react';
-import { BrowserRouter } from 'react-router-dom';
-import { CompatRouter } from 'react-router-dom-v5-compat';
 
 import { checkAccessibility, render, screen, userEvent, waitFor } from '~/testUtils';
 
@@ -20,11 +18,7 @@ describe('RecommendedOperatorsCards', () => {
     'renders "$title" card, verifies some card details and ensures it is not selected',
     async ({ title, logo, description, drawerPanelContent }) => {
       render(
-        <BrowserRouter>
-          <CompatRouter>
-            <RecommendedOperatorsCards {...RECOMMENDED_OPERATORS_CARDS_TEST_CASES.NON_SELECTED} />
-          </CompatRouter>
-        </BrowserRouter>,
+        <RecommendedOperatorsCards {...RECOMMENDED_OPERATORS_CARDS_TEST_CASES.NON_SELECTED} />,
       );
 
       // Cards Info:
@@ -57,11 +51,7 @@ describe('RecommendedOperatorsCards', () => {
 
   it('renders title, link and all cards & checks functionality', async () => {
     const { container } = render(
-      <BrowserRouter>
-        <CompatRouter>
-          <RecommendedOperatorsCards {...RECOMMENDED_OPERATORS_CARDS_TEST_CASES.NON_SELECTED} />
-        </CompatRouter>
-      </BrowserRouter>,
+      <RecommendedOperatorsCards {...RECOMMENDED_OPERATORS_CARDS_TEST_CASES.NON_SELECTED} />,
     );
 
     // title:
@@ -105,11 +95,7 @@ describe('RecommendedOperatorsCards', () => {
 
   it('renders gitops as selected card, and the other two cards are not selected', async () => {
     render(
-      <BrowserRouter>
-        <CompatRouter>
-          <RecommendedOperatorsCards {...RECOMMENDED_OPERATORS_CARDS_TEST_CASES.GITOPS_SELECTED} />
-        </CompatRouter>
-      </BrowserRouter>,
+      <RecommendedOperatorsCards {...RECOMMENDED_OPERATORS_CARDS_TEST_CASES.GITOPS_SELECTED} />,
     );
 
     const productOverviewCards = screen.getAllByTestId('product-overview-card');

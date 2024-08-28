@@ -1,33 +1,20 @@
 import React from 'react';
-import { CompatRouter } from 'react-router-dom-v5-compat';
 
-import { checkAccessibility, render, screen, TestRouter } from '~/testUtils';
+import { checkAccessibility, render, screen } from '~/testUtils';
 
 import InstallNutanix from '../InstallNutanix';
 import { version } from '../InstallTestConstants';
 
 describe('InstallNutanix', () => {
   it('is accessible', async () => {
-    const { container } = render(
-      <TestRouter>
-        <CompatRouter>
-          <InstallNutanix />
-        </CompatRouter>
-      </TestRouter>,
-    );
+    const { container } = render(<InstallNutanix />);
 
     expect(await screen.findByText('Create an OpenShift Cluster: Nutanix AOS')).toBeInTheDocument();
     await checkAccessibility(container);
   });
 
   it('displays expected doc links', () => {
-    render(
-      <TestRouter>
-        <CompatRouter>
-          <InstallNutanix />
-        </CompatRouter>
-      </TestRouter>,
-    );
+    render(<InstallNutanix />);
 
     expect(screen.getByRole('link', { name: /Learn more about interactive/ })).toHaveAttribute(
       'href',
