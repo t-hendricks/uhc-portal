@@ -149,9 +149,10 @@ const scrollToFirstField = (
   // Use all error selectors, where the first matching element in the document is returned.
   // CSS.escape since it's possible for the id to be something like 'machinePoolsSubnets[0].privateSubnetId'
   // which needs to be escaped to use querySelector on it
-  const scrollElement = document.querySelector(
-    ids.map((id) => `[id*="${CSS.escape(id)}"]`).join(','),
-  );
+  const selectorsExact = ids.map((id) => `[id="${CSS.escape(id)}"]`).join(',');
+  const selectorsWildcard = ids.map((id) => `[id*="${CSS.escape(id)}"]`).join(',');
+  const scrollElement =
+    document.querySelector(selectorsExact) || document.querySelector(selectorsWildcard);
 
   if (scrollElement instanceof HTMLElement) {
     let focusElement: HTMLElement | null = scrollElement;
