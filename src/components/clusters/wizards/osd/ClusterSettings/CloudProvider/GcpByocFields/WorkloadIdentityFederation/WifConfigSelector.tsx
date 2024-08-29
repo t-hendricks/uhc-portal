@@ -1,8 +1,6 @@
 import React, { useCallback, useMemo, useState } from 'react';
 
-import { Button, Flex, FlexItem, FormGroup, Popover } from '@patternfly/react-core';
-import { HelpIcon } from '@patternfly/react-icons/dist/esm/icons/help-icon';
-import styles from '@patternfly/react-styles/css/components/Form/form';
+import { Button, Flex, FlexItem, FormGroup } from '@patternfly/react-core';
 
 import { WifConfig } from '~/components/clusters/wizards/osd/ClusterSettings/CloudProvider/tempWifTypes/WifConfig';
 import { FormGroupHelperText } from '~/components/common/FormGroupHelperText';
@@ -65,29 +63,7 @@ const WifConfigSelector = (props: WifConfigSelectorProps) => {
   }, [hasWifConfigs, isLoading]);
 
   return (
-    <FormGroup
-      label="WIF configuration"
-      isRequired
-      labelIcon={
-        <Popover
-          bodyContent={
-            <div>
-              Each WIF configuration can only be used by 1 cluster. To create an additional WIF
-              configuration, run the CLI command in Step 1.
-            </div>
-          }
-        >
-          <button
-            type="button"
-            aria-label="More info on WIF configuration usage"
-            onClick={(e) => e.preventDefault()}
-            className={styles.formGroupLabelHelp}
-          >
-            <HelpIcon />
-          </button>
-        </Popover>
-      }
-    >
+    <FormGroup label="WIF configuration" isRequired>
       <Flex>
         <FlexItem grow={{ default: 'grow' }}>
           <FuzzySelect

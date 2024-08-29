@@ -1178,7 +1178,6 @@ export function getClusterService(apiRequest: APIRequest = defaultApiRequest) {
     getGCPWifConfigs: (query: string) =>
       apiRequest.get<WifConfigList>(`/api/clusters_mgmt/v1/gcp/wif_configs`, {
         params: {
-          search: `cluster.id is null`,
           size: -1,
         },
       }),
