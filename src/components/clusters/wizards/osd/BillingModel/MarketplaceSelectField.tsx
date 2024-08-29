@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { Field, FieldProps, useField } from 'formik';
 
 import { FormGroup } from '@patternfly/react-core';
@@ -35,25 +35,23 @@ export const MarketplaceSelectField = ({
     setFieldTouched,
     validateField,
   } = useFormState();
-  const reset = () => {
+
+  const reset = useCallback(() => {
     setFieldValue(FieldId.MarketplaceSelection, null, false);
-    setFieldValue(FieldId.CloudProvider, CloudProviderType.Aws, false);
-  };
+  }, [setFieldValue]);
 
   useEffect(() => {
     // reset if we select a radio button other than the parent radio
     if (!billingModel.startsWith(billingModels.MARKETPLACE)) {
       reset();
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [billingModel]);
+  }, [billingModel, reset]);
 
   useEffect(() => {
     if (billingModel.startsWith(billingModels.MARKETPLACE)) {
       validateField(FieldId.MarketplaceSelection);
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [billingModel, selectedMarketplace]);
+  }, [billingModel, selectedMarketplace, validateField]);
 
   const [isOpen, setIsOpen] = useState(false);
   const marketplaceOptions = [
