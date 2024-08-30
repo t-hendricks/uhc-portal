@@ -14,12 +14,10 @@ import ErrorBox from '~/components/common/ErrorBox';
 import Modal from '~/components/common/Modal/Modal';
 import { closeModal } from '~/components/common/Modal/ModalActions';
 import modals from '~/components/common/Modal/modals';
-import { useFeatureGate } from '~/hooks/useFeatureGate';
 import { useFetchMachineTypes } from '~/queries/ClusterDetailsQueries/MachinePoolTab/MachineTypes/useFetchMachineTypes';
 import { useEditCreateMachineOrNodePools } from '~/queries/ClusterDetailsQueries/MachinePoolTab/useEditCreateMachineOrNodePools';
 import { useFetchMachineOrNodePools } from '~/queries/ClusterDetailsQueries/MachinePoolTab/useFetchMachineOrNodePools';
 import { MachineTypesResponse } from '~/queries/types';
-import { HCP_USE_NODE_UPGRADE_POLICIES } from '~/redux/constants/featureConstants';
 import { useGlobalState } from '~/redux/hooks';
 import { Cluster, MachinePool } from '~/types/clusters_mgmt.v1';
 import { ErrorState } from '~/types/types';
@@ -279,7 +277,6 @@ export const ConnectedEditMachinePoolModal = ({
 }: ConnectedEditMachinePoolModalProps) => {
   const data = useGlobalState((state) => state.modal.data);
   const dispatch = useDispatch();
-  const useNodeUpgradePolicies = useFeatureGate(HCP_USE_NODE_UPGRADE_POLICIES);
 
   const onModalClose = () => {
     dispatch(closeModal());
@@ -306,13 +303,7 @@ export const ConnectedEditMachinePoolModal = ({
     isError: isMachinePoolError,
     error: machinePoolError,
     refetch: machinePoolOrNodePoolsRefetch,
-  } = useFetchMachineOrNodePools(
-    clusterID,
-    hypershiftCluster,
-    clusterVersionID,
-    useNodeUpgradePolicies,
-    region,
-  );
+  } = useFetchMachineOrNodePools(clusterID, hypershiftCluster, clusterVersionID, region);
 
   const isHypershift = isHypershiftCluster(cluster);
   return cluster ? (

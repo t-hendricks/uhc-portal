@@ -11,9 +11,10 @@ describe(
   () => {
     beforeEach(() => {
       if (Cypress.currentTest.title.match(/Navigate to the ROSA .* Machine pools tab/)) {
-        cy.visit('/');
-        ClusterListPage.filterTxtField().should('be.visible').click();
+        cy.visit('/cluster-list');
         ClusterListPage.waitForDataReady();
+        ClusterListPage.isClusterListScreen();
+        ClusterListPage.filterTxtField().should('be.visible').click();
       }
     });
 

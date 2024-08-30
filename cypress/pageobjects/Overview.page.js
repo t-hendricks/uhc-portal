@@ -17,6 +17,9 @@ class Overview extends Page {
     cy.contains('Get started with OpenShift', { timeout: 60000 }).should('be.visible');
   }
 
+  viewAllOpenshiftClusterTypesLink = () =>
+    cy.contains('a', 'View all OpenShift cluster types').scrollIntoView().should('be.visible');
+
   drawerContentTitle = () => cy.getByTestId('drawer-panel-content__title');
 
   drawerCloseButton = () => cy.getByTestId('drawer-close-button');

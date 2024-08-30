@@ -24,7 +24,7 @@ export class InstallAzureUPI extends Component {
     const breadcrumbs = (
       <Breadcrumbs
         path={[
-          { label: 'Clusters' },
+          { label: 'Cluster List' },
           { label: 'Cluster Type', path: '/create' },
           { label: 'Microsoft Azure', path: '/install/azure' },
           { label: 'User-provisioned infrastructure' },

@@ -1,11 +1,18 @@
 import { v4 } from 'uuid';
+
 import { getAuthConfig } from '../../pageobjects/authConfig';
-import ClusterListPage from '../../pageobjects/ClusterList.page';
 import ClusterDetailsPage from '../../pageobjects/ClusterDetails.page';
-import RegisterClusterPage from '../../pageobjects/RegisterCluster.page';
+import ClusterListPage from '../../pageobjects/ClusterList.page';
 import OCMRolesAndAccessPage from '../../pageobjects/OCMRolesAndAccess.page';
+import RegisterClusterPage from '../../pageobjects/RegisterCluster.page';
 
 describe('OCM Roles And Access', { tags: ['ci'] }, () => {
+  before(() => {
+    cy.visit('/cluster-list');
+    ClusterListPage.waitForDataReady();
+    ClusterListPage.isClusterListScreen();
+  });
+
   const clusterID = v4();
   const displayName = `cypress-${clusterID}`;
   const { username } = getAuthConfig();

@@ -24,7 +24,7 @@ export class InstallArmBareMetalABI extends Component {
     const breadcrumbs = (
       <Breadcrumbs
         path={[
-          { label: 'Clusters' },
+          { label: 'Cluster List' },
           { label: 'Cluster Type', path: '/create' },
           { label: 'ARM Bare Metal', path: '/install/arm' },
           { label: 'Local Agent-based' },

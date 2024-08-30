@@ -26,6 +26,7 @@ export const PaginationRow = ({
   isDisabled,
 }: Props) => (
   <Pagination
+    data-testid="page_drop_down"
     page={currentPage}
     perPage={pageSize}
     itemCount={itemCount}

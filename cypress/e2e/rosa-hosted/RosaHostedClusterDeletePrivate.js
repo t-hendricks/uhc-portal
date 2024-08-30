@@ -6,6 +6,13 @@ describe(
   'Rosa hosted cluster (hypershift) - delete private clusters',
   { tags: ['day3', 'hosted', 'rosa', 'private', 'hcp'] },
   () => {
+    beforeEach(() => {
+      if (Cypress.currentTest.title.match(/Open.*cluster/g)) {
+        cy.visit('/cluster-list');
+        ClusterListPage.waitForDataReady();
+      }
+    });
+
     clusterProfiles.forEach((clusterProfile) => {
       let clusterName = clusterDetails[clusterProfile]['day1-profile'].ClusterName;
       it(`Open a cluster ${clusterName}`, () => {

@@ -422,11 +422,11 @@ class CreateOSDCluster extends Page {
 
   selectSubscriptionType(subscriptionType) {
     if (subscriptionType.toLowerCase().includes('on-demand')) {
-      this.subscriptionTypeOnDemandFlexibleRadio().check();
+      this.subscriptionTypeOnDemandFlexibleRadio().check({ force: true });
     } else if (subscriptionType.toLowerCase().includes('annual')) {
-      this.subscriptionTypeAnnualFixedCapacityRadio().check();
+      this.subscriptionTypeAnnualFixedCapacityRadio().check({ force: true });
     } else {
-      this.subscriptionTypeFreeTrailRadio().check();
+      this.subscriptionTypeFreeTrailRadio().check({ force: true });
     }
   }
 
@@ -434,7 +434,7 @@ class CreateOSDCluster extends Page {
     if (infrastructureType.toLowerCase().includes('customer cloud')) {
       this.infrastructureTypeClusterCloudSubscriptionRadio().check({ force: true });
     } else {
-      this.infrastructureTypeRedHatCloudAccountRadio().check();
+      this.infrastructureTypeRedHatCloudAccountRadio().check({ force: true });
     }
   }
 

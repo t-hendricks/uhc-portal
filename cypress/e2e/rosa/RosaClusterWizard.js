@@ -1,4 +1,3 @@
-import Login from '../../pageobjects/login.page';
 import ClusterListPage from '../../pageobjects/ClusterList.page';
 import CreateRosaWizardPage from '../../pageobjects/CreateRosaWizard.page';
 
@@ -14,6 +13,12 @@ const interceptAndReturnMockARNs = (mockFile) =>
   cy.intercept({ method: 'POST', url: ARNsSelector }, { fixture: mockFile }).as('getMockARNs');
 
 describe.skip('Rosa cluster tests', { tags: ['ci'] }, () => {
+  before(() => {
+    cy.visit('/cluster-list');
+    ClusterListPage.waitForDataReady();
+    ClusterListPage.isClusterListScreen();
+  });
+
   describe('Create Rosa cluster', () => {
     it('navigates to create Rosa cluster wizard', () => {
       cy.getByTestId('create_cluster_btn').click();

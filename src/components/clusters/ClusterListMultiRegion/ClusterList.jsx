@@ -25,6 +25,7 @@ import {
   FlexItem,
   PageSection,
   PageSectionVariants,
+  Spinner,
   Title,
   Toolbar,
   ToolbarContent,
@@ -32,44 +33,47 @@ import {
   ToolbarItem,
 } from '@patternfly/react-core';
 import { SortByDirection } from '@patternfly/react-table';
-import Spinner from '@redhat-cloud-services/frontend-components/Spinner';
 
+import { ONLY_MY_CLUSTERS_TOGGLE_CLUSTERS_LIST } from '~/common/localStorageConstants';
 import { AppPage } from '~/components/App/AppPage';
 import { useFetchClusters } from '~/queries/ClusterListQueries/useFetchClusters';
-import { viewActions } from '~/redux/actions/viewOptionsActions';
-import { viewConstants } from '~/redux/constants';
+import { clustersActions } from '~/redux/actions';
+import { CLUSTERS_VIEW } from '~/redux/constants/viewConstants';
+import { isRestrictedEnv } from '~/restrictedEnv';
 
+import helpers from '../../../common/helpers';
+import { normalizedProducts } from '../../../common/subscriptionTypes';
+import { onListFlagsSet, viewActions } from '../../../redux/actions/viewOptionsActions';
+import { viewConstants } from '../../../redux/constants';
 import ErrorBox from '../../common/ErrorBox';
 import Unavailable from '../../common/Unavailable';
+import ClusterListFilter from '../common/ClusterListFilter';
 import CommonClusterModals from '../common/CommonClusterModals';
 import ErrorTriangle from '../common/ErrorTriangle';
 import GlobalErrorBox from '../common/GlobalErrorBox/GlobalErrorBox';
 import ReadOnlyBanner from '../common/ReadOnlyBanner';
 
+import ClusterListActions from './components/ClusterListActions';
 import ClusterListEmptyState from './components/ClusterListEmptyState';
+import ClusterListFilterChipGroup from './components/ClusterListFilterChipGroup/ClusterListFilterChipGroup';
+import ClusterListFilterDropdown from './components/ClusterListFilterDropdown';
 import ClusterListTable from './components/ClusterListTable';
 import { PaginationRow } from './components/PaginationRow';
 import { RefreshButton } from './components/RefreshButton';
+import ViewOnlyMyClustersToggle from './components/ViewOnlyMyClustersToggle';
 import { sortClusters } from './clusterListSort';
 
 import './ClusterList.scss';
 
-const PAGE_TITLE = 'Clusters | Red Hat OpenShift Cluster Manager';
+const PAGE_TITLE = 'Cluster List | Red Hat OpenShift Cluster Manager';
 
-const ClusterListPageHeader = ({
-  someReadOnly,
-  showSpinner,
-  error,
-  errorMessage,
-
-  refresh,
-}) => (
+const ClusterListPageHeader = ({ someReadOnly, showSpinner, error, refresh }) => (
   <>
     <ReadOnlyBanner someReadOnly={someReadOnly} />
     <PageSection variant={PageSectionVariants.light}>
       <Flex>
         <FlexItem grow={{ default: 'grow' }}>
-          <Title headingLevel="h1">Clusters</Title>
+          <Title headingLevel="h1">Cluster List</Title>
         </FlexItem>
         <Toolbar id="cluster-list-refresh-toolbar" isFullHeight inset={{ default: 'insetNone' }}>
           <ToolbarContent>
@@ -81,12 +85,16 @@ const ClusterListPageHeader = ({
             >
               {showSpinner && (
                 <ToolbarItem>
-                  <Spinner size="lg" className="cluster-list-spinner" />
+                  <Spinner
+                    size="lg"
+                    className="cluster-list-spinner"
+                    aria-label="Loading cluster list data"
+                  />
                 </ToolbarItem>
               )}
               {error && (
                 <ToolbarItem>
-                  <ErrorTriangle errorMessage={errorMessage} className="cluster-list-warning" />
+                  <ErrorTriangle className="cluster-list-warning" item="clusters" />
                 </ToolbarItem>
               )}
               <ToolbarItem spacer={{ default: 'spacerNone' }}>
@@ -103,8 +111,6 @@ ClusterListPageHeader.propTypes = {
   someReadOnly: PropTypes.bool,
   showSpinner: PropTypes.bool,
   error: PropTypes.bool,
-  errorMessage: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
-
   refresh: PropTypes.func,
 };
 
@@ -120,14 +126,19 @@ const ClusterList = ({
   openModal,
 }) => {
   const dispatch = useDispatch();
-  const { isLoading, data, refetch, isError, errors, isFetching } = useFetchClusters();
+  const { isLoading, data, refetch, isError, errors, isFetching, isFetched } = useFetchClusters();
   const clusters = data?.items;
 
-  const errorMessage = errors.reduce(
-    (errorsText, error) =>
-      `${errorsText}${error.response?.data?.reason || error.response?.data?.details || ''}. `,
-    '',
-  );
+  const errorDetails = (errors || []).reduce((errorArray, error) => {
+    if (!error.reason) {
+      return errorArray;
+    }
+    return [
+      ...errorArray,
+      `${error.reason}.${error.region ? ` While getting clusters for ${error.region.region}.` : ''}${error.operation_id ? ` (Operation ID: ${error.operation_id})` : ''}`,
+    ];
+  }, []);
+
   const [currentPage, setCurrentPage] = React.useState(1);
   const [pageSize, setPageSize] = React.useState(50);
   const [itemsStart, setItemsStart] = React.useState(0);
@@ -208,23 +219,40 @@ const ClusterList = ({
   React.useEffect(() => {
     preLoadRedux();
 
+    if (isRestrictedEnv()) {
+      dispatch(
+        onListFlagsSet(
+          'subscriptionFilter',
+          {
+            plan_id: [normalizedProducts.ROSA],
+          },
+          viewConstants.CLUSTERS_VIEW,
+        ),
+      );
+    }
+
     // componentWillUnmount
     return () => {
       closeModal();
-
+      dispatch(clustersActions.clearClusterDetails());
       clearGlobalError('clusterList');
     };
     // Run only on mount and unmount
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const isPendingNoData = !size(clusters) && isLoading;
+  const viewOptions = useSelector((state) => state.viewOptions.CLUSTERS_VIEW);
+  const { showMyClustersOnly, subscriptionFilter } = viewOptions.flags;
+  const hasNoFilters =
+    helpers.nestedIsEmpty(subscriptionFilter) && !showMyClustersOnly && !viewOptions.filter;
+
+  const isPendingNoData = !size(clusters) && (isLoading || !isFetched); // Show skeletons
 
   const showSpinner = isFetching || isLoading;
 
   // The empty state asserts as a fact that you have no clusters;
   // not appropriate when results are indeterminate or empty due to filtering.
-  const showEmptyState = !isLoading && !isFetching && !isError && !size(clusters);
+  const showEmptyState = !showSpinner && !isError && !size(clusters) && hasNoFilters;
 
   const someReadOnly =
     clusters && clusters.map((c) => c?.status?.configuration_mode).includes('read_only');
@@ -254,7 +282,7 @@ const ClusterList = ({
         someReadOnly={someReadOnly}
         showSpinner={showSpinner}
         error={isError}
-        errorMessage={errorMessage}
+        errorDetails={errorDetails}
         isPendingNoData={isPendingNoData}
         refresh={refetch}
       />
@@ -267,14 +295,41 @@ const ClusterList = ({
                 variant="warning"
                 message="Some operations are unavailable, try again later"
                 response={{
-                  errorMessage,
+                  errorDetails: [{ items: errorDetails }],
                 }}
                 isExpandable
+                hideOperationID
+                forceAsAlert
               />
             )}
 
             <Toolbar id="cluster-list-toolbar">
               <ToolbarContent>
+                <ToolbarItem className="ocm-c-toolbar__item-cluster-filter-list">
+                  <ClusterListFilter
+                    isDisabled={isPendingNoData && hasNoFilters}
+                    view={CLUSTERS_VIEW}
+                  />
+                </ToolbarItem>
+                {isRestrictedEnv() ? null : (
+                  <ToolbarItem
+                    className="ocm-c-toolbar__item-cluster-list-filter-dropdown"
+                    data-testid="cluster-list-filter-dropdown"
+                  >
+                    {/* Cluster type */}
+                    <ClusterListFilterDropdown
+                      view={CLUSTERS_VIEW}
+                      isDisabled={isLoading || isFetching}
+                    />
+                  </ToolbarItem>
+                )}
+                <ClusterListActions />
+                <ViewOnlyMyClustersToggle
+                  view={CLUSTERS_VIEW}
+                  bodyContent="Show only the clusters you previously created, or all clusters in your organization."
+                  localStorageKey={ONLY_MY_CLUSTERS_TOGGLE_CLUSTERS_LIST}
+                />
+
                 <ToolbarItem
                   align={{ default: 'alignRight' }}
                   variant="pagination"
@@ -294,15 +349,15 @@ const ClusterList = ({
                 </ToolbarItem>
               </ToolbarContent>
             </Toolbar>
-
-            {isError && !size(clusters) ? (
+            {isRestrictedEnv() ? null : <ClusterListFilterChipGroup />}
+            {isError && !size(clusters) && isFetched ? (
               <Unavailable
                 message="Error retrieving clusters"
                 response={{
-                  errorMessage,
+                  errorMessage: '',
                   operationID: '',
                   errorCode: '',
-                  errorDetails: '',
+                  errorDetails,
                 }}
               />
             ) : (

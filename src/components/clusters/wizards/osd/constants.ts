@@ -81,7 +81,7 @@ export enum UrlPath {
 }
 
 export const breadcrumbs: BreadcrumbPath[] = [
-  { label: 'Clusters' },
+  { label: 'Cluster List' },
   { label: 'Cluster Type', path: UrlPath.Create },
   { label: 'OpenShift Dedicated', path: UrlPath.CreateOsd },
 ];

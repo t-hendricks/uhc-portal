@@ -14,7 +14,7 @@ import { InstructionsChooserPageTitle } from './instructions/InstructionsChooser
 const breadcrumbs = (
   <Breadcrumbs
     path={[
-      { label: 'Clusters' },
+      { label: 'Cluster List' },
       { label: 'Cluster Type', path: '/create' },
       { label: 'Alibaba Cloud' },
     ]}

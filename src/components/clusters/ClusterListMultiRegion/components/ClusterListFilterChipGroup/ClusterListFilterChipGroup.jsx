@@ -1,16 +1,27 @@
 import React from 'react';
 import isEmpty from 'lodash/isEmpty';
-import PropTypes from 'prop-types';
+import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom-v5-compat';
 
 import { Button, Chip, ChipGroup, Split, SplitItem } from '@patternfly/react-core';
+
+import { onListFlagsSet } from '~/redux/actions/viewOptionsActions';
+import { CLUSTERS_VIEW } from '~/redux/constants/viewConstants';
 
 import helpers from '../../../../../common/helpers';
 import { buildFilterURLParams } from '../../../../../common/queryHelpers';
 import { productFilterOptions } from '../../../../../common/subscriptionTypes';
 
-function ClusterListFilterChipGroup({ currentFilters, setFilter }) {
+function ClusterListFilterChipGroup() {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+
+  const currentFilters =
+    useSelector((state) => state.viewOptions[CLUSTERS_VIEW].flags.subscriptionFilter) || {};
+
+  const setFilter = (filter) =>
+    dispatch(onListFlagsSet('subscriptionFilter', filter, CLUSTERS_VIEW));
+
   if (helpers.nestedIsEmpty(currentFilters)) {
     return null;
   }
@@ -74,10 +85,5 @@ function ClusterListFilterChipGroup({ currentFilters, setFilter }) {
     </Split>
   );
 }
-
-ClusterListFilterChipGroup.propTypes = {
-  setFilter: PropTypes.func.isRequired,
-  currentFilters: PropTypes.objectOf(PropTypes.arrayOf(PropTypes.string)),
-};
 
 export default ClusterListFilterChipGroup;

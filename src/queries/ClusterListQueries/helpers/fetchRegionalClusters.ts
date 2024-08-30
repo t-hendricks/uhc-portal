@@ -3,33 +3,60 @@ import { ClusterWithPermissions } from '~/types/types';
 
 import { normalizeSubscription } from '../../../common/normalize';
 import { accountsService } from '../../../services';
-import { Region } from '../../common/useFetchRegions';
 import { queryConstants } from '../../queriesConstants';
+import { Region } from '../types/types';
 
-import { createResponseForFetchClusters } from './createResponseForFetchCluster';
+import {
+  createResponseForFetchClusters,
+  ErrorResponse,
+  formatClusterListError,
+} from './createResponseForFetchCluster';
 
-export const fetchPageOfRegionalClusters = async (page: number, region: Region) => {
+type ModifiedViewOptions = {
+  filter?: string;
+  flags?: { [flag: string]: any };
+};
+
+export const fetchPageOfRegionalClusters = async (
+  page: number,
+  region: Region,
+  viewOptions?: ModifiedViewOptions,
+  userName?: string,
+) => {
   // Get clusters for a region
   // This gets clusters for a region and then subscriptions
   const clusterService = getClusterServiceForRegion(region.url);
-  // NOTE: eventually we may need to filter out the following plan types: RHACS, RHACSTrial, RHOSR, RHOSRTrial, RHOSAK
   const clusterRequestParams = {
     page,
     size: queryConstants.PAGE_SIZE,
+    search: '',
   };
+  if (viewOptions?.filter) {
+    clusterRequestParams.search = `(display_name ILIKE '%${viewOptions.filter}%' OR external_id ILIKE '%${viewOptions.filter}%' OR id ILIKE '%${viewOptions.filter}%')`;
+  }
 
-  const clusters = await clusterService.getClusters(clusterRequestParams);
+  let clusters;
+  const errors = [];
+  let isError = false;
+
+  try {
+    clusters = await clusterService.getClusters(clusterRequestParams);
+  } catch (e: unknown) {
+    isError = true;
+    // TODO verify this still works once we are connected to an actual API
+    errors.push(formatClusterListError({ error: e as ErrorResponse }, region));
+  }
 
   const items = clusters?.data?.items;
 
-  if (!items || items.length === 0) {
+  if (!clusters || !items || items.length === 0 || isError) {
     return {
-      data: {
-        items: [] as ClusterWithPermissions[],
-        page: 0,
-        total: 0,
-        region,
-      },
+      items: [] as ClusterWithPermissions[],
+      page: 0,
+      total: 0,
+      region,
+      isError,
+      errors,
     };
   }
 
@@ -46,11 +73,19 @@ export const fetchPageOfRegionalClusters = async (page: number, region: Region) 
     .map((key) => `'${key}'`)
     .join(',')})`;
 
-  const subscriptionResponse = await accountsService.searchSubscriptions(
-    subscriptionsQuery,
-    queryConstants.PAGE_SIZE,
-  );
+  let subscriptionResponse;
+  try {
+    subscriptionResponse = await accountsService.searchSubscriptions(
+      subscriptionsQuery,
+      queryConstants.PAGE_SIZE,
+    );
+  } catch (e) {
+    isError = true;
+    errors.push(formatClusterListError({ error: e as ErrorResponse }, region));
+  }
+
   const subscriptions = subscriptionResponse?.data?.items;
+
   subscriptions?.forEach((subscription) => {
     if (subscription.id) {
       const entry = subscriptionMap.get(subscription.id);
@@ -60,10 +95,36 @@ export const fetchPageOfRegionalClusters = async (page: number, region: Region) 
       }
     }
   });
+
+  // Because plan is not known to the cluster service, we need to manually filter them out
+  // NOTE: eventually we may need to filter out the following plan types: RHACS, RHACSTrial, RHOSR, RHOSRTrial, RHOSAK
+
+  let returnItems = createResponseForFetchClusters(subscriptionMap);
+
+  const filterPlanIds = viewOptions?.flags?.subscriptionFilter?.plan_id;
+
+  if (filterPlanIds && filterPlanIds.length > 0) {
+    returnItems = returnItems.filter((cluster) =>
+      filterPlanIds.some((plan: string) => plan === cluster.product?.id),
+    );
+  }
+
+  // Because creator is not known to the cluster service, we need to manually filter out manually
+  if (viewOptions?.flags?.showMyClustersOnly && userName) {
+    returnItems = returnItems.filter(
+      // @ts-ignore  creator is not currently on the subscription type
+      (cluster) => cluster.subscription?.creator?.username === userName,
+    );
+  }
+
+  const numberFilteredOut = subscriptionMap.size - returnItems.length;
+
   return {
-    items: createResponseForFetchClusters(subscriptionMap),
-    page: clusters.data.page,
-    total: clusters.data.total || 0,
+    items: returnItems,
+    page: clusters?.data.page,
+    total: clusters.data.total - numberFilteredOut || 0,
     region,
+    isError,
+    errors,
   };
 };

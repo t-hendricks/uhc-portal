@@ -1,4 +1,6 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
+import { ErrorResponse } from 'react-router-dom-v5-compat';
 
 import { useQueries, UseQueryResult } from '@tanstack/react-query';
 
@@ -6,17 +8,20 @@ import { subscriptionStatuses } from '~/common/subscriptionTypes';
 import { queryClient } from '~/components/App/queryClient';
 import { useFeatureGate } from '~/hooks/useFeatureGate';
 import { ASSISTED_INSTALLER_MERGE_LISTS_FEATURE } from '~/redux/constants/featureConstants';
-import { ClusterWithPermissions } from '~/types/types';
+import { GlobalState } from '~/redux/store';
+import { ClusterFromSubscription, ClusterWithPermissions } from '~/types/types';
 
-import { Region, useFetchRegions } from '../common/useFetchRegions';
+import { useFetchRegions } from '../common/useFetchRegions';
 import { queryConstants } from '../queriesConstants';
 
 import { fetchPageOfGlobalClusters } from './helpers/fetchGlobalClusters';
 import { fetchPageOfRegionalClusters } from './helpers/fetchRegionalClusters';
+import { Region } from './types/types';
 import { formatCluster } from './formatCluster';
 import { useFetchCanEditDelete } from './useFetchCanEditDelete';
 
 const QUERY_TYPE = { GLOBAL: 'global', REGIONAL: 'regional' };
+const REFRESH_INTERVAL = 60000; // milliseconds
 
 type FetchClusterQueryResults = UseQueryResult & {
   data?: {
@@ -24,45 +29,99 @@ type FetchClusterQueryResults = UseQueryResult & {
     page: number;
     total: number;
     region: Region;
+    isError: boolean;
+    errors: any[];
   };
-  errors?: Error[];
+  errors?: any[];
 };
 
 const fetchPageOfClusters = async (
   page: number,
   aiMergeListsFeatureFlag: boolean,
   region?: Region,
+  flags?: { [flag: string]: any },
+  nameFilter?: string,
+  userName?: string,
 ) => {
-  const { items, total } = region
-    ? await fetchPageOfRegionalClusters(page, region)
-    : await fetchPageOfGlobalClusters(page, aiMergeListsFeatureFlag);
-
+  const { items, total, isError, errors } = region
+    ? await fetchPageOfRegionalClusters(page, region, { flags, filter: nameFilter }, userName)
+    : await fetchPageOfGlobalClusters(
+        page,
+        aiMergeListsFeatureFlag,
+        { flags, filter: nameFilter },
+        userName,
+      );
   return {
-    items: items?.map((cluster) => formatCluster(cluster)),
+    items: items?.map((cluster) => formatCluster(cluster as ClusterFromSubscription)),
     page,
     total,
     region,
+    isError,
+    errors,
   };
 };
 
-const queryKey = (page: number, region: Region | undefined) => {
-  if (region) {
-    return [
-      queryConstants.FETCH_CLUSTERS_QUERY_KEY,
-      QUERY_TYPE.REGIONAL,
-      page,
-      region.region,
-      region.provider,
-    ];
+const queryKey = ({
+  page,
+  region,
+  plans,
+  nameFilter,
+  showMyClustersOnly,
+}: {
+  page: number;
+  region?: Region | undefined;
+  plans?: string[] | undefined;
+  nameFilter?: string | undefined;
+  showMyClustersOnly?: boolean;
+}) => {
+  const key = [
+    queryConstants.FETCH_CLUSTERS_QUERY_KEY,
+    region ? QUERY_TYPE.REGIONAL : QUERY_TYPE.GLOBAL,
+    page,
+  ];
+  if (region && region.region && region.provider) {
+    key.push(region.region);
+    key.push(region.provider);
   }
-  return [queryConstants.FETCH_CLUSTERS_QUERY_KEY, QUERY_TYPE.GLOBAL, page];
+
+  if (plans && plans.length > 0) {
+    key.push(...plans);
+  }
+  if (nameFilter) {
+    key.push(nameFilter);
+  }
+  if (showMyClustersOnly) {
+    key.push('showMyClustersOnly');
+  }
+  return key;
 };
 
-const createQuery = (page: number, aiMergeListsFeatureFlag: boolean, region?: Region) => ({
-  queryKey: queryKey(page, region),
+const createQuery = ({
+  page,
+  aiMergeListsFeatureFlag,
+  region,
+  flags,
+  nameFilter,
+  userName,
+}: {
+  page: number;
+  aiMergeListsFeatureFlag: boolean;
+  region?: Region;
+  flags?: { [flag: string]: any };
+  nameFilter?: string;
+  userName?: string;
+}) => ({
+  queryKey: queryKey({
+    page,
+    region,
+    plans: flags?.subscriptionFilter?.plan_id,
+    nameFilter,
+    showMyClustersOnly: flags?.showMyClustersOnly,
+  }),
   staleTime: queryConstants.STALE_TIME,
   refetchInterval: queryConstants.REFETCH_INTERVAL,
-  queryFn: async () => fetchPageOfClusters(page || 1, aiMergeListsFeatureFlag, region),
+  queryFn: async () =>
+    fetchPageOfClusters(page || 1, aiMergeListsFeatureFlag, region, flags, nameFilter, userName),
 });
 
 type CreateQuery = ReturnType<typeof createQuery>;
@@ -97,6 +156,8 @@ export const useFetchClusters = () => {
     canEdit,
     canDelete,
     isError: isCanUpdateDeleteError,
+    errors: canEditDeleteErrors,
+    isFetched: isCanUpdateDeleteFetched,
   } = useFetchCanEditDelete({
     mainQueryKey: queryConstants.FETCH_CLUSTERS_QUERY_KEY,
     staleTime: queryConstants.STALE_TIME,
@@ -104,12 +165,68 @@ export const useFetchClusters = () => {
   });
 
   const aiMergeListsFeatureFlag = useFeatureGate(ASSISTED_INSTALLER_MERGE_LISTS_FEATURE);
+  const userName = useSelector((state: GlobalState) => state.userProfile.keycloakProfile.username);
+  const flags = useSelector((state: GlobalState) => state.viewOptions.CLUSTERS_VIEW?.flags || {});
+  const nameFilter = useSelector(
+    (state: GlobalState) => state.viewOptions.CLUSTERS_VIEW?.filter || '',
+  );
+
+  const [refetchInterval, setRefetchInterval] = React.useState<ReturnType<typeof setInterval>>();
+  const [queries, setQueries] = React.useState<CreateQuery[]>([]);
+
+  const getNewData = () => {
+    queryClient.invalidateQueries({ queryKey: [queryConstants.FETCH_CLUSTERS_QUERY_KEY] });
+  };
+
+  const setRefetch = () => {
+    // @ts-ignore
+    clearInterval(refetchInterval);
+    const intervalId = setInterval(() => {
+      getNewData();
+    }, REFRESH_INTERVAL);
+    setRefetchInterval(intervalId);
+  };
+
+  const refetch = () => {
+    getNewData();
+    setRefetch();
+  };
+
+  if (!refetchInterval) {
+    setRefetch();
+  }
+
+  /* Filter */
+  React.useEffect(
+    () => {
+      setQueries(() => {
+        // Remove the queries from React Queries cache first
+        queryClient.removeQueries({
+          queryKey: [queryConstants.FETCH_CLUSTERS_QUERY_KEY, QUERY_TYPE.GLOBAL],
+        });
+        queryClient.removeQueries({
+          queryKey: [queryConstants.FETCH_CLUSTERS_QUERY_KEY, QUERY_TYPE.REGIONAL],
+        });
+
+        // Now set queries as empty - this will cause the queries to be rebuilt
+        return [];
+      });
+      // @ts-ignore
+      clearInterval(refetchInterval);
+      setRefetchInterval(undefined);
+    },
+    // We only want to run this on filter change so refetchInterval should not be dependency
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [flags, nameFilter],
+  );
 
   const {
     isLoading: isRegionsLoading,
     isFetching: isRegionsFetching,
     data: regions,
     isError: isRegionsError,
+    errors: regionErrors,
+    isFetched: isRegionsFetched,
   } = useFetchRegions({
     mainQueryKey: queryConstants.FETCH_CLUSTERS_QUERY_KEY,
     staleTime: queryConstants.STALE_TIME,
@@ -117,26 +234,42 @@ export const useFetchClusters = () => {
     returnAll: false,
   });
 
-  const [queries, setQueries] = React.useState<CreateQuery[]>([]);
-
   // Start to get initial queries
   if (
     !isCanUpdateDeleteLoading &&
-    !isCanUpdateDeleteError &&
-    aiMergeListsFeatureFlag !== undefined &&
-    !!canEdit &&
-    !!canDelete
+    isCanUpdateDeleteFetched &&
+    aiMergeListsFeatureFlag !== undefined
   ) {
     if (!isExistingQuery(queries, 1)) {
       // start to get global (non regional) clusters
-      const globalPage1Query = createQuery(1, aiMergeListsFeatureFlag);
+
+      const globalPage1Query = createQuery({
+        page: 1,
+        aiMergeListsFeatureFlag,
+        flags,
+        // @ts-ignore
+        nameFilter,
+        userName,
+      });
       setQueries((prev) => [...prev, globalPage1Query]);
     }
     if (regions?.length > 0) {
       const initialRegionQueryList: CreateQuery[] = regions.reduce(
         (initialRegionList: CreateQuery[], region) => {
           if (!isExistingQuery(queries, 1, region)) {
-            return [...initialRegionList, createQuery(1, aiMergeListsFeatureFlag, region)];
+            return [
+              ...initialRegionList,
+
+              createQuery({
+                page: 1,
+                aiMergeListsFeatureFlag,
+                region,
+                flags,
+                // @ts-ignore
+                nameFilter,
+                userName,
+              }),
+            ];
           }
           return initialRegionList;
         },
@@ -149,9 +282,16 @@ export const useFetchClusters = () => {
     }
   }
 
-  const { isLoading, data, isError, errors, isFetching } = useQueries({
+  const {
+    isLoading,
+    data,
+    isError,
+    errors,
+    isFetching,
+    isFetched: isClustersFetched,
+  } = useQueries({
     queries,
-    // @ts-ignore Unsure why the type is incorrect for the next line
+    // @ts-ignore TODO unsure why this is throwing a type error
     combine: React.useCallback(
       (results: FetchClusterQueryResults[]) => {
         const pagesFetched: { total: number; page: number; region: Region }[] = [];
@@ -176,11 +316,13 @@ export const useFetchClusters = () => {
 
               modifiedCluster.canEdit =
                 !cluster.partialCS &&
+                !!canEdit &&
                 (canEdit['*'] || (!!cluster.id && !!canEdit[cluster.id])) &&
                 cluster.subscription.status !== subscriptionStatuses.DEPROVISIONED;
 
               modifiedCluster.canDelete =
                 !cluster.partialCS &&
+                !!canDelete &&
                 (canDelete['*'] || (!!cluster.id && !!canDelete[cluster.id!]));
               return modifiedCluster;
             });
@@ -189,19 +331,24 @@ export const useFetchClusters = () => {
           }, [] as ClusterWithPermissions[]);
         }
 
+        const clusterErrors = results?.reduce((errorArray, result) => {
+          const resultErrors = result.data?.errors;
+          if (resultErrors && resultErrors.length > 0) {
+            return [...errorArray, ...resultErrors];
+          }
+          return errorArray;
+        }, [] as ErrorResponse[]);
+
         return {
           isLoading: results.some((result) => result.isLoading),
           isFetching: results.some((result) => result.isFetching),
-          isError: results.some((result) => result.isError),
-          errors: results.reduce(
-            (errors, result) => (result.error ? [...errors, result.error] : errors),
-            [] as Error[],
-          ),
-
+          isFetched: results.every((result) => result.isFetched),
+          isError: results.some((result) => result.isError || result.data?.isError),
+          errors: [...clusterErrors, ...canEditDeleteErrors, ...regionErrors],
           data: { pagesFetched, clusters: data },
         };
       },
-      [canDelete, canEdit],
+      [canDelete, canEdit, canEditDeleteErrors, regionErrors],
     ),
   });
 
@@ -218,7 +365,17 @@ export const useFetchClusters = () => {
         const nextPage = pageFetched.page + i;
         const doesNextPageExist = isExistingQuery(queries, nextPage, pageFetched.region);
         if (!doesNextPageExist) {
-          newQueries.push(createQuery(nextPage, aiMergeListsFeatureFlag, pageFetched.region));
+          newQueries.push(
+            createQuery({
+              page: nextPage,
+              aiMergeListsFeatureFlag,
+              region: pageFetched.region,
+              flags,
+              // @ts-ignore
+              nameFilter,
+              userName,
+            }),
+          );
         }
       }
       if (newQueries.length > 0) {
@@ -288,14 +445,17 @@ export const useFetchClusters = () => {
       isRegionsFetching ||
       (data.clusters === undefined && !isError && !isCanUpdateDeleteError && !isRegionsError),
 
-    // Until sorting/pagination is enabled -  sort by creation date
     data: { items: data?.clusters || [] },
+
+    isFetched:
+      isCanUpdateDeleteFetched &&
+      isRegionsFetched &&
+      isClustersFetched &&
+      data.clusters !== undefined,
 
     isError: isError || isCanUpdateDeleteError || isRegionsError,
     errors,
-    refetch: () => {
-      queryClient.invalidateQueries({ queryKey: [queryConstants.FETCH_CLUSTERS_QUERY_KEY] });
-    },
+    refetch,
   };
 };
 

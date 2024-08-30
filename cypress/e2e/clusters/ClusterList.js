@@ -1,5 +1,5 @@
 import ClusterListPage from '../../pageobjects/ClusterList.page';
-
+import CreateClusterPage from '../../pageobjects/CreateCluster.page';
 describe(
   'Check all cluster lists page items presence and its actions (OCP-21339)',
   { tags: ['smoke'] },
@@ -35,6 +35,10 @@ describe(
           ClusterListPage.clickClusterTypes('ROSA');
           ClusterListPage.clickClusterTypes('ARO');
           ClusterListPage.clickClusterTypes('RHOIC');
+          ClusterListPage.isCreateClusterBtnVisible();
+          ClusterListPage.createClusterButton().click();
+          CreateClusterPage.isCreateClusterPageHeaderVisible();
+          cy.go('back');
         }
       });
     });

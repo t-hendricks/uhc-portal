@@ -45,10 +45,6 @@ const ClusterListFilter = ({ view, isDisabled }: ClusterListFilterProps) => {
       setCurrentValue(currentFilter);
     }
 
-    return () => {
-      setCurrentValue('');
-      dispatch(onListFilterSet('', view));
-    };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 

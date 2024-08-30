@@ -709,10 +709,10 @@ describe('Create ROSA Cluster in FedRamp (OCP-TBD)', { tags: ['fedramp'] }, () =
       );
     });
     it('Post Installation: Cluster List Validations', () => {
-      cy.get('.pf-v5-c-breadcrumb__link').contains('Clusters').click();
-      cy.get('#cluster-list-header').should('contain', 'Clusters');
+      cy.get('.pf-v5-c-breadcrumb__link').contains('Cluster List').click();
+      cy.get('#cluster-list-header').should('contain', 'Cluster List');
       if (Cypress.env('GOV_CLOUD')) {
-        const govCloudNavBarItems = ['Clusters', 'Releases', 'Downloads'];
+        const govCloudNavBarItems = ['Cluster List', 'Releases', 'Downloads'];
         CreateRosaWizardPage.validateItemsInList(govCloudNavBarItems, '.pf-v5-c-nav__list > li');
         cy.getByTestId('filterInputClusterList').should('be.visible');
         cy.getByTestId('create_cluster_btn').should('be.visible');
@@ -723,17 +723,17 @@ describe('Create ROSA Cluster in FedRamp (OCP-TBD)', { tags: ['fedramp'] }, () =
         // cy.get('.pf-v5-c-toolbar__item > a').should('have.attr', 'href', '/openshift/archived')
       } else {
         const commercialCloudNavBarItems = [
-          'Clusters',
+          'Cluster List',
           'Overview',
           'Releases',
           'Developer Sandbox',
           'Downloads',
           'Advisor',
           'Recommendations',
-          'Clusters',
+          'Cluster List',
           'Vulnerability',
           'CVEs',
-          'Clusters',
+          'Cluster List',
           'Subscriptions',
           'Container Platform',
           'Dedicated (Annual)',

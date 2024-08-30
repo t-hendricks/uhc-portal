@@ -19,7 +19,6 @@ describe(
 
     Clusters.forEach((clusterProperties) => {
       it(`Launch OSD - ${clusterProperties.CloudProvider} cluster wizard`, () => {
-        cy.visit('/create');
         CreateOSDWizardPage.osdCreateClusterButton().click();
         CreateOSDWizardPage.isCreateOSDPage();
       });
