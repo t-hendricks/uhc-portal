@@ -1,5 +1,3 @@
-import { Region } from '../types/types';
-
 import { ErrorResponse, formatClusterListError } from './createResponseForFetchCluster';
 
 describe('createResponseForFetchClusters', () => {
@@ -14,12 +12,12 @@ describe('createResponseForFetchClusters', () => {
       } as unknown as ErrorResponse;
       const response = { error };
 
-      const region = { region: 'myRegion' } as Region;
+      const region = 'myRegion';
 
       const expected = {
         operation_id: '1234abc',
         reason: 'This is custom error',
-        region: { region: 'myRegion' },
+        region: 'myRegion',
       };
 
       expect(formatClusterListError(response, region)).toEqual(expected);
@@ -31,12 +29,12 @@ describe('createResponseForFetchClusters', () => {
       } as unknown as ErrorResponse;
       const response = { error };
 
-      const region = { region: 'myRegion' } as Region;
+      const region = 'myRegion';
 
       const expected = {
         operation_id: undefined,
         reason: 'This is custom error',
-        region: { region: 'myRegion' },
+        region: 'myRegion',
       };
 
       expect(formatClusterListError(response, region)).toEqual(expected);
