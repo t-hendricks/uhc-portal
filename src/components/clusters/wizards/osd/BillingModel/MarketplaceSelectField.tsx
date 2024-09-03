@@ -1,18 +1,23 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { Field, FieldProps, useField } from 'formik';
 
-import { FormGroup } from '@patternfly/react-core';
 import {
-  Select as SelectDeprecated,
-  SelectOption as SelectOptionDeprecated,
-  SelectOptionObject as SelectOptionObjectDeprecated,
-} from '@patternfly/react-core/deprecated';
+  FormGroup,
+  MenuToggle,
+  MenuToggleElement,
+  Select,
+  SelectList,
+  SelectOption,
+  SelectProps,
+} from '@patternfly/react-core';
 
 import { billingModels, normalizedProducts } from '~/common/subscriptionTypes';
 import { CloudProviderType } from '~/components/clusters/wizards/common/constants';
 import { useFormState } from '~/components/clusters/wizards/hooks';
 import { FieldId } from '~/components/clusters/wizards/osd/constants';
 import { FormGroupHelperText } from '~/components/common/FormGroupHelperText';
+
+import './MarketplaceSelectField.scss';
 
 export interface MarketplaceSelectFieldProps {
   hasGcpQuota: boolean;
@@ -54,43 +59,57 @@ export const MarketplaceSelectField = ({
   }, [billingModel, selectedMarketplace, validateField]);
 
   const [isOpen, setIsOpen] = useState(false);
+
+  const phLabel = 'Select your marketplace';
+  const gcmLabel = 'Google Cloud Marketplace';
+  const rhmLabel = 'Red Hat Marketplace';
+  const phError = 'A selection is required.';
+  const gcmError = 'You do not currently have a Google Cloud Platform subscription.';
+  const rhmError = 'You do not currently have a Red Hat Marketplace subscription.';
+
   const marketplaceOptions = [
     {
-      label: 'Select your marketplace',
+      label: phLabel,
       value: 'placeholder',
-      isPlaceholder: true,
     },
     {
-      label: 'Google Cloud Marketplace',
+      label: gcmLabel,
       value: billingModels.MARKETPLACE_GCP,
       isDisabled: !hasGcpQuota,
-      description: !hasGcpQuota
-        ? 'You do not currently have a Google Cloud Platform subscription.'
-        : null,
+      description: !hasGcpQuota ? gcmError : null,
     },
     {
-      label: 'Red Hat Marketplace',
+      label: rhmLabel,
       value: billingModels.MARKETPLACE,
       isDisabled: !hasRhmQuota,
-      description: !hasRhmQuota
-        ? 'You do not currently have a Red Hat Marketplace subscription.'
-        : null,
+      description: !hasRhmQuota ? rhmError : null,
     },
   ];
 
-  const onToggle = (isExpanded: boolean) => {
-    setIsOpen(isExpanded);
+  const onToggle = () => {
+    setIsOpen(!isOpen);
   };
 
-  const onSelect = (
-    _event: React.ChangeEvent<Element> | React.MouseEvent<Element, MouseEvent> | any,
-    value: string | SelectOptionObjectDeprecated,
-  ) => {
+  const toggle = (toggleRef: React.Ref<MenuToggleElement>) => (
+    <MenuToggle
+      ref={toggleRef}
+      onClick={onToggle}
+      isExpanded={isOpen}
+      isDisabled={!hasGcpQuota && !hasRhmQuota}
+      isFullWidth
+      className="marketplace-select-menu-toggle"
+    >
+      {marketplaceOptions.find((option) => option.value === selectedMarketplace)?.label ?? phLabel}
+    </MenuToggle>
+  );
+
+  const onSelect: SelectProps['onSelect'] = (_event, value) => {
     setFieldTouched(FieldId.MarketplaceSelection, true, false);
     if (!value || value === 'placeholder') {
       reset();
     } else {
       setFieldValue(FieldId.MarketplaceSelection, value, false);
+
       setFieldValue(
         FieldId.CloudProvider,
         value === billingModels.MARKETPLACE_GCP ? CloudProviderType.Gcp : CloudProviderType.Aws,
@@ -109,7 +128,7 @@ export const MarketplaceSelectField = ({
 
   const validate = (value: string): string | undefined => {
     if ((!value || value === 'placeholder') && billingModel.startsWith(billingModels.MARKETPLACE)) {
-      return 'A selection is required.';
+      return phError;
     }
     return undefined;
   };
@@ -117,29 +136,27 @@ export const MarketplaceSelectField = ({
   return (
     <Field name={FieldId.MarketplaceSelection} validate={validate}>
       {({ field, form, meta }: FieldProps) => (
-        <FormGroup {...input} fieldId={field.name} isRequired isInline className="pf-v5-u-mt-sm">
-          <SelectDeprecated
+        <FormGroup {...input} fieldId={field.name} isRequired className="pf-v5-u-mt-sm">
+          <Select
             isOpen={isOpen}
-            selections={selectedMarketplace}
-            onToggle={(_event, isExpanded: boolean) => onToggle(isExpanded)}
+            selected={selectedMarketplace}
+            toggle={toggle}
             onSelect={onSelect}
-            isDisabled={!hasGcpQuota && !hasRhmQuota}
+            onOpenChange={(isOpen) => setIsOpen(isOpen)}
           >
-            {marketplaceOptions.map(({ label, value, isDisabled, description, isPlaceholder }) => (
-              <SelectOptionDeprecated
-                className="pf-v5-c-dropdown__menu-item"
-                isSelected={selectedMarketplace === value}
-                value={value}
-                key={value}
-                isDisabled={isDisabled}
-                description={description}
-                isPlaceholder={isPlaceholder}
-              >
-                {label}
-              </SelectOptionDeprecated>
-            ))}
-          </SelectDeprecated>
-
+            <SelectList>
+              {marketplaceOptions.map(({ label, value, isDisabled, description }) => (
+                <SelectOption
+                  value={value}
+                  key={value}
+                  isDisabled={isDisabled}
+                  description={description}
+                >
+                  {label}
+                </SelectOption>
+              ))}
+            </SelectList>
+          </Select>
           <FormGroupHelperText touched={meta.touched} error={meta.error} />
         </FormGroup>
       )}
