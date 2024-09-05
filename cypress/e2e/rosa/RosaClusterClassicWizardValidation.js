@@ -728,6 +728,5 @@ describe('Rosa Classic cluster wizard validations', { tags: ['smoke'] }, () => {
       .type('test-123-test');
     CreateRosaWizardPage.rosaNextButton().click();
     CreateRosaWizardPage.rosaCancelButton().click();
-    LeaveCreateClusterPrompt.submit();
   });
 });
