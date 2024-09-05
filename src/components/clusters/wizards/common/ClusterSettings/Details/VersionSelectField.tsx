@@ -14,23 +14,21 @@ import ErrorBox from '~/components/common/ErrorBox';
 import { FormGroupHelperText } from '~/components/common/FormGroupHelperText';
 import FuzzySelect, { FuzzyEntryType } from '~/components/common/FuzzySelect';
 import { useOCPLifeCycleStatusData } from '~/components/releases/hooks';
+import { useFeatureGate } from '~/hooks/useFeatureGate';
 import { clustersActions } from '~/redux/actions';
+import { UNSTABLE_CLUSTER_VERSIONS } from '~/redux/constants/featureConstants';
 import { useGlobalState } from '~/redux/hooks';
 import { Version } from '~/types/clusters_mgmt.v1';
 
-const sortFn = (a: FuzzyEntryType, b: FuzzyEntryType) => versionComparator(b.label, a.label);
+import { getVersionsData, hasUnstableVersionsCapability } from './versionSelectHelper';
 
+const sortFn = (a: FuzzyEntryType, b: FuzzyEntryType) => versionComparator(b.label, a.label);
 interface VersionSelectFieldProps {
   label: string;
   name: string;
   isDisabled?: boolean;
   onChange: (version: Version) => void;
 }
-
-const SupportStatusType = {
-  Full: 'Full Support',
-  Maintenance: 'Maintenance Support',
-};
 
 export const VersionSelectField = ({
   name,
@@ -39,6 +37,9 @@ export const VersionSelectField = ({
   onChange,
 }: VersionSelectFieldProps) => {
   const dispatch = useDispatch();
+  const organization = useGlobalState((state) => state.userProfile.organization.details);
+  const unstableOCPVersionsEnabled =
+    useFeatureGate(UNSTABLE_CLUSTER_VERSIONS) && hasUnstableVersionsCapability(organization);
   const [input, { touched, error }] = useField(name);
   const { clusterVersions: getInstallableVersionsResponse } = useGlobalState(
     (state) => state.clusters,
@@ -62,7 +63,14 @@ export const VersionSelectField = ({
   const isMarketplaceGcp = billingModel === billingModels.MARKETPLACE_GCP;
 
   const getInstallableVersions = () =>
-    dispatch(clustersActions.getInstallableVersions(false, isMarketplaceGcp));
+    dispatch(
+      clustersActions.getInstallableVersions(
+        false,
+        isMarketplaceGcp,
+        false,
+        unstableOCPVersionsEnabled,
+      ),
+    );
 
   useEffect(() => {
     if (getInstallableVersionsResponse.fulfilled) {
@@ -103,48 +111,19 @@ export const VersionSelectField = ({
 
   const onSelect = (
     _event: React.ChangeEvent | React.MouseEvent<Element, MouseEvent>,
-    newVersionRawId: string | SelectOptionObjectDeprecated,
+    newVersionId: string | SelectOptionObjectDeprecated,
   ) => {
     setIsOpen(false);
-    const selectedVersion = versions.find((version) => version.raw_id === newVersionRawId);
+    const selectedVersion = versions.find((version) => version.id === newVersionId);
     setFieldValue(name, selectedVersion);
     if (selectedVersion) {
       onChange(selectedVersion);
     }
   };
-
-  const versionsData = React.useMemo(() => {
-    const fullSupport: FuzzyEntryType[] = [];
-    const maintenanceSupport: FuzzyEntryType[] = [];
-
-    versions.forEach((version: Version) => {
-      const { raw_id: versionRawId, id: versionId } = version;
-      if (versionRawId && versionId) {
-        // HACK: This relies on parseFloat of '4.11.3' to return 4.11 ignoring trailing '.3'.
-        // BUG(OCMUI-1736): We rely on converting float back to exactly '4.11'
-        //   for indexing `supportVersionMap`.  Float round-tripping is fragile.
-        //   Will break when parseFloat('4.20.0').toString() returns '4.2' not '4.20'!
-        const majorMinorVersion = parseFloat(versionRawId);
-
-        const hasFullSupport = supportVersionMap?.[majorMinorVersion] === SupportStatusType.Full;
-        const versionEntry = {
-          entryId: versionRawId,
-          label: versionRawId,
-          groupKey: hasFullSupport ? 'Full support' : 'Maintenance support',
-        };
-
-        if (hasFullSupport) {
-          fullSupport.push(versionEntry);
-        } else {
-          maintenanceSupport.push(versionEntry);
-        }
-      }
-    });
-    return {
-      'Full support': fullSupport,
-      'Maintenance support': maintenanceSupport,
-    };
-  }, [supportVersionMap, versions]);
+  const versionsData = React.useMemo(
+    () => getVersionsData(versions, unstableOCPVersionsEnabled, supportVersionMap),
+    [supportVersionMap, versions, unstableOCPVersionsEnabled],
+  );
 
   return (
     <FormGroup {...input} label={label} fieldId={name} isRequired>
