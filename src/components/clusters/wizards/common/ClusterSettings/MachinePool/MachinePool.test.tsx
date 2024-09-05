@@ -29,4 +29,26 @@ describe('<MachinePool />', () => {
       expect(sectionToggle).toHaveAttribute('aria-expanded', 'true');
     });
   });
+
+  it('should show autoscaling settings button for OSD CCS GCP', async () => {
+    render(
+      <Formik
+        initialValues={{
+          [FieldId.NodeLabels]: [{ key: 'test-key', value: 'test-value' }],
+          [FieldId.MachineType]: 'test',
+          [FieldId.MachineTypeForceChoice]: 'test',
+          [FieldId.BillingModel]: 'marketplace-gcp',
+          [FieldId.Product]: 'OSD',
+          [FieldId.CloudProvider]: 'GCP',
+          [FieldId.Byoc]: 'true',
+        }}
+        onSubmit={() => {}}
+      >
+        <MachinePool />
+      </Formik>,
+    );
+    await waitFor(() => {
+      expect(screen.getByText('Edit cluster autoscaling settings')).toBeInTheDocument();
+    });
+  });
 });
