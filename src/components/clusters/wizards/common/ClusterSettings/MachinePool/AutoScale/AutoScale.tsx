@@ -36,7 +36,7 @@ export const AutoScale = () => {
   const isHypershiftSelected = isHypershift === 'true';
   const isByoc = byoc === 'true';
   const isRosaClassicOrOsdCcs = useMemo(
-    () => cloudProviderID === 'aws' && !isHypershiftSelected && isByoc,
+    () => (cloudProviderID === 'aws' && !isHypershiftSelected) || isByoc,
     [cloudProviderID, isByoc, isHypershiftSelected],
   );
 
