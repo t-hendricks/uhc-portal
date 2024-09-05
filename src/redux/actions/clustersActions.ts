@@ -681,8 +681,14 @@ const getInstallableVersions = (
   isRosa: boolean,
   isMarketplaceGcp: boolean,
   isHCP: boolean = false,
+  fetchUnstableVersions: boolean = false,
 ) => {
-  const versions = clusterService.getInstallableVersions(isRosa, isMarketplaceGcp, isHCP);
+  const versions = clusterService.getInstallableVersions(
+    isRosa,
+    isMarketplaceGcp,
+    isHCP,
+    fetchUnstableVersions,
+  );
   return action(clustersConstants.GET_CLUSTER_VERSIONS, versions);
 };
 

@@ -18,6 +18,7 @@ import {
   OSD_GCP_WIF,
   OSD_GOOGLE_MARKETPLACE_FEATURE,
   SET_FEATURE,
+  UNSTABLE_CLUSTER_VERSIONS,
 } from '../constants/featureConstants';
 import type { AppThunk } from '../types';
 
@@ -40,6 +41,7 @@ export const features = [
   getSimpleUnleashFeature('osd-google-marketplace', OSD_GOOGLE_MARKETPLACE_FEATURE),
   getSimpleUnleashFeature('osd-gcp-shared-vpc', OSD_GCP_SHARED_VPC_FEATURE),
   getSimpleUnleashFeature('network-validator-ondemand', NETWORK_VALIDATOR_ONDEMAND_FEATURE),
+  getSimpleUnleashFeature('ocmui-unstable-cluster-versions', UNSTABLE_CLUSTER_VERSIONS),
   getSimpleUnleashFeature('enable-machine-configuration', ENABLE_MACHINE_CONFIGURATION),
   getSimpleUnleashFeature('cli-sso-authorization', CLI_SSO_AUTHORIZATION),
   getSimpleUnleashFeature('multi-region-support', MULTIREGION_PREVIEW_ENABLED),
