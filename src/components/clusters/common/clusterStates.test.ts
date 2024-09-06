@@ -16,6 +16,7 @@ import clusterStates, {
   isCCS,
   isClusterUpgradeCompleted,
   isClusterUpgrading,
+  isGCP,
   isHibernating,
   isHypershiftCluster,
   isOffline,
@@ -327,6 +328,21 @@ describe('getClusterStateAndDescription', () => {
         },
       };
       expect(isAWS(cluster)).toBe(expectedResult);
+    });
+  });
+
+  describe('isGCP', () => {
+    it.each([
+      ['aws', false],
+      ['gcp', true],
+    ])('cloud provider: %p. It returns %p', (cloudProvider: string, expectedResult: boolean) => {
+      const cluster: ClusterFromSubscription = {
+        ...defaultClusterFromSubscription,
+        cloud_provider: {
+          id: cloudProvider,
+        },
+      };
+      expect(isGCP(cluster)).toBe(expectedResult);
     });
   });
 

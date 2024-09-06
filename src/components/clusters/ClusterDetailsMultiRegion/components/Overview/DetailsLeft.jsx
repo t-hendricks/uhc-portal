@@ -9,8 +9,10 @@ import {
   DescriptionListTerm,
 } from '@patternfly/react-core';
 
-import { isHypershiftCluster } from '~/components/clusters/common/clusterStates';
+import { isCCS, isGCP, isHypershiftCluster } from '~/components/clusters/common/clusterStates';
 import getBillingModelLabel from '~/components/clusters/common/getBillingModelLabel';
+import { useFeatureGate } from '~/hooks/useFeatureGate';
+import { OSD_GCP_WIF } from '~/redux/constants/featureConstants';
 
 import { normalizedProducts } from '../../../../../common/subscriptionTypes';
 import PopoverHint from '../../../../common/PopoverHint';
@@ -38,6 +40,17 @@ function DetailsLeft({ cluster, cloudProviders, showAssistedId }) {
   const isROSA = planType === normalizedProducts.ROSA;
   const isHypershift = isHypershiftCluster(cluster);
   const isRHOIC = cluster?.subscription?.plan?.type === normalizedProducts.RHOIC;
+
+  const isWifEnabled = useFeatureGate(OSD_GCP_WIF);
+  // Only OSD GCP CCS clusters have the authentication type property as they are the only ones that have
+  // more than an option for authentication (service account and WIF)
+  const hasAuthenticationType = isWifEnabled && isGCP(cluster) && isCCS(cluster);
+  // We only have information about the wif configuration, we imply that if a wif config is not used
+  // the user chose the other GCP authentication type, the service account
+  const authenticationType =
+    cluster?.gcp?.authentication?.kind === 'WifConfig'
+      ? 'Workload Identity Federation'
+      : 'Service Account';
 
   let cloudProvider;
   if (cloudProviderId && cloudProviders && cloudProviders[cloudProviderId]) {
@@ -100,6 +113,14 @@ function DetailsLeft({ cluster, cloudProviders, showAssistedId }) {
           <DescriptionListTerm>Provider</DescriptionListTerm>
           <DescriptionListDescription>
             <span data-testid="provider">{cloudProvider}</span>
+          </DescriptionListDescription>
+        </DescriptionListGroup>
+      )}
+      {hasAuthenticationType && (
+        <DescriptionListGroup>
+          <DescriptionListTerm>Authentication type</DescriptionListTerm>
+          <DescriptionListDescription>
+            <span>{authenticationType}</span>
           </DescriptionListDescription>
         </DescriptionListGroup>
       )}
