@@ -183,6 +183,9 @@ const isCCS = <E extends ClusterFromSubscription>(cluster: E): boolean =>
 const isAWS = <E extends ClusterFromSubscription>(cluster: E): boolean =>
   cluster.subscription?.cloud_provider_id === 'aws';
 
+const isGCP = <E extends ClusterFromSubscription>(cluster: E): boolean =>
+  cluster.cloud_provider?.id === 'gcp';
+
 /**
  * Indicates that this is a ROSA cluster with manual mode
  *
@@ -251,6 +254,7 @@ export {
   getStateDescription,
   hasInflightEgressErrors,
   isAWS,
+  isGCP,
   isAWSPrivateCluster,
   isCCS,
   isClusterUpgradeCompleted,
