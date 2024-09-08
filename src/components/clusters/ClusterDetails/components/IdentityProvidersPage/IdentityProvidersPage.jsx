@@ -2,7 +2,7 @@ import React from 'react';
 import get from 'lodash/get';
 import PropTypes from 'prop-types';
 import { useDispatch } from 'react-redux';
-import { Link, Navigate, useParams } from 'react-router-dom-v5-compat';
+import { useParams } from 'react-router-dom';
 import { reset } from 'redux-form';
 
 import {
@@ -19,12 +19,13 @@ import {
 import { PageHeader, PageHeaderTitle } from '@redhat-cloud-services/frontend-components/PageHeader';
 import { Spinner } from '@redhat-cloud-services/frontend-components/Spinner';
 
+import { Link, Navigate } from '~/common/routing';
 import { AppPage } from '~/components/App/AppPage';
 import { isHypershiftCluster } from '~/components/clusters/common/clusterStates';
+import { SubscriptionCommonFields } from '~/types/accounts_mgmt.v1';
 
 import getClusterName from '../../../../../common/getClusterName';
 import { isValid } from '../../../../../common/helpers';
-import { subscriptionStatuses } from '../../../../../common/subscriptionTypes';
 import { fetchClusterDetails } from '../../../../../redux/actions/clustersActions';
 import { setGlobalError } from '../../../../../redux/actions/globalErrorActions';
 import Breadcrumbs from '../../../../common/Breadcrumbs';
@@ -103,7 +104,7 @@ const IdentityProvidersPage = (props) => {
       const subscriptionStatus = get(cluster, 'subscription.status');
       if (
         isValid(clusterID) &&
-        subscriptionStatus !== subscriptionStatuses.DEPROVISIONED &&
+        subscriptionStatus !== SubscriptionCommonFields.status.DEPROVISIONED &&
         isManaged
       ) {
         dispatch(getClusterIdentityProviders(clusterID));
@@ -194,7 +195,7 @@ const IdentityProvidersPage = (props) => {
       <PageHeader>
         <Breadcrumbs
           path={[
-            { label: 'Clusters' },
+            { label: 'Cluster List' },
             { label: clusterName, path: `/details/s/${cluster.subscription.id}` },
             {
               label: 'Access control',

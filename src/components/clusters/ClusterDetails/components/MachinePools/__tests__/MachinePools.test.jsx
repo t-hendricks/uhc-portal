@@ -777,20 +777,14 @@ describe('<MachinePools />', () => {
       }
     };
 
-    it('is not present if feature flag is disabled', () => {
-      render(<MachinePools {...defaultProps} />);
-
-      expectActionButton({ toBePresent: false });
-    });
-
-    it('is present if feature flag is enabled and cluster is ROSA', () => {
+    it('is present for ROSA cluster', () => {
       const props = { ...defaultProps, hasMachineConfiguration: true };
       render(<MachinePools {...props} />);
 
       expectActionButton({ toBePresent: true });
     });
 
-    it('is present if feature flag is enabled and cluster is OSD with CCS on AWS', () => {
+    it('is present for OSD cluster with CCS on AWS', () => {
       const props = {
         ...defaultProps,
         hasMachineConfiguration: true,
@@ -845,7 +839,7 @@ describe('<MachinePools />', () => {
       expectActionButton({ toBePresent: true, toBeEnabled: false });
     });
 
-    it('is absent if feature flag is enabled and cluster is OSD with CCS on GCP', () => {
+    it('is absent for OSD cluster with CCS on GCP', () => {
       const props = {
         ...defaultProps,
         hasMachineConfiguration: true,
@@ -867,7 +861,7 @@ describe('<MachinePools />', () => {
       expectActionButton({ toBePresent: false });
     });
 
-    it('is absent if feature flag is enabled and cluster is OSD without CCS', () => {
+    it('is absent for OSD cluster without CCS', () => {
       const props = {
         ...defaultProps,
         hasMachineConfiguration: true,
@@ -889,7 +883,7 @@ describe('<MachinePools />', () => {
       expectActionButton({ toBePresent: false });
     });
 
-    it('is absent if feature flag is enabled and cluster is Hypershift', () => {
+    it('is absent for HCP cluster', () => {
       const props = {
         ...defaultProps,
         hasMachineConfiguration: true,

@@ -11,7 +11,7 @@ import { global_palette_gold_400 as gold400 } from '@patternfly/react-tokens/dis
 import { global_palette_orange_300 as orange300 } from '@patternfly/react-tokens/dist/esm/global_palette_orange_300';
 import { global_palette_red_200 as red200 } from '@patternfly/react-tokens/dist/esm/global_palette_red_200';
 
-import { advisorBaseName } from '~/common/getBaseName';
+import { advisorBaseName } from '~/common/routing';
 
 import CriticalIcon from './CriticalIcon';
 
@@ -44,7 +44,7 @@ const InsightsTitleComponent = ({ style, ...props }) => (
 
 const InsightsLabelComponent = ({ style, ...props }) => {
   const { datum, externalId } = props;
-  const link = `${advisorBaseName()}/clusters/${externalId}?total_risk=${datum.id}`;
+  const link = `${advisorBaseName}/clusters/${externalId}?total_risk=${datum.id}`;
 
   return (
     <a href={link}>
@@ -68,7 +68,7 @@ const InsightsLegendIconComponent = ({ x, y, datum }) => {
 };
 
 const InsightsSubtitleComponent = ({ externalId, style, ...props }) => {
-  const link = `${advisorBaseName()}/clusters/${externalId}`;
+  const link = `${advisorBaseName}/clusters/${externalId}`;
 
   return (
     <a href={link}>

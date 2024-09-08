@@ -3,17 +3,13 @@ import { FieldInputProps, FieldMetaProps } from 'formik';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 import { useDispatch } from 'react-redux';
 
-import { Button, Flex, FlexItem, FormGroup, Spinner, Tooltip } from '@patternfly/react-core';
-import {
-  Select as SelectDeprecated,
-  SelectOption as SelectOptionDeprecated,
-  SelectOptionObject as SelectOptionObjectDeprecated,
-} from '@patternfly/react-core/deprecated';
+import { Button, Flex, FlexItem, FormGroup, Tooltip } from '@patternfly/react-core';
 import { CopyIcon } from '@patternfly/react-icons/dist/esm/icons/copy-icon';
 import { TrashIcon } from '@patternfly/react-icons/dist/esm/icons/trash-icon';
 
 import ErrorBox from '~/components/common/ErrorBox';
 import { FormGroupHelperText } from '~/components/common/FormGroupHelperText';
+import FuzzySelect, { FuzzySelectProps } from '~/components/common/FuzzySelect';
 import { dnsDomainsActions } from '~/redux/actions/dnsDomainsActions';
 import { useGlobalState } from '~/redux/hooks';
 
@@ -22,8 +18,6 @@ import './SharedVPCDomainSelect.scss';
 const PLACEHOLDER_TEXT = 'Select base DNS domain';
 const CREATE_LOADER_TEXT = 'Reserving new base DNS domain...';
 const DELETE_LOADER_TEXT = 'Deleting a base DNS domain...';
-
-const MAX_SELECT_HEIGHT = 250; // List can be very long. MaxHeight is needed to keep the footer visible
 
 interface SharedVPCDomainSelectProps {
   label: string;
@@ -69,17 +63,14 @@ const SharedVPCDomainSelect = ({ label, input, meta }: SharedVPCDomainSelectProp
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [deletedDnsId]);
 
-  const onSelect = (
-    _: React.MouseEvent | React.ChangeEvent,
-    selection: string | SelectOptionObjectDeprecated,
-  ) => {
+  const onSelect: FuzzySelectProps['onSelect'] = (_, selection) => {
     if (!isDisabled) {
       setIsOpen(false);
       input.onChange(selection);
     }
   };
 
-  const onToggle = (isOpen: boolean) => {
+  const onToggle: FuzzySelectProps['onToggle'] = (_event, isOpen) => {
     if (!isDisabled) {
       setIsOpen(isOpen);
     }
@@ -99,45 +90,27 @@ const SharedVPCDomainSelect = ({ label, input, meta }: SharedVPCDomainSelectProp
     dispatch(dnsDomainsActions.deleteBaseDnsDomain(id));
   };
 
-  const selectOptions = dnsDomains.map((domain) => (
-    <SelectOptionDeprecated key={domain.id} value={domain.id} isDisabled={isDisabled}>
-      {domain.id}
-    </SelectOptionDeprecated>
-  ));
-
-  // A hidden item to display the spinner while a new DNS domain is being created
-  if (isUpdatingDomains) {
-    selectOptions.unshift(
-      <SelectOptionDeprecated key="loader" value={actionText} isPlaceholder>
-        <div className="shared-vpc-loading-content">
-          {actionText} <Spinner size="md" />
-        </div>
-      </SelectOptionDeprecated>,
-    );
-  }
-
-  const onFilter = (_: React.ChangeEvent<HTMLInputElement> | null, filterText: string) => {
-    if (filterText === '') {
-      return selectOptions;
-    }
-    return selectOptions.filter((domainOption) => domainOption.props.value.includes(filterText));
-  };
+  const placeholderLabel = isUpdatingDomains ? actionText : PLACEHOLDER_TEXT;
 
   return (
     <FormGroup label={label} isRequired className="shared-vpc-domain-select">
       <Flex>
         <FlexItem flex={{ default: 'flex_1' }} className="pf-v5-u-m-0">
-          <SelectDeprecated
-            isOpen={isOpen}
-            selections={input.value || (isUpdatingDomains ? actionText : PLACEHOLDER_TEXT)}
-            onToggle={(_event, isOpen: boolean) => onToggle(isOpen)}
+          <FuzzySelect
+            selectionData={
+              dnsDomains.map((domain) => ({
+                entryId: domain.id as string,
+                label: domain.id as string,
+              })) ?? []
+            }
+            fuzziness={0}
             onSelect={onSelect}
-            onFilter={onFilter}
-            maxHeight={MAX_SELECT_HEIGHT}
-            hasInlineFilter={selectOptions.length > 1}
-            inlineFilterPlaceholderText="Filter by domain name"
+            selectedEntryId={input.value}
+            placeholderText={placeholderLabel}
+            onToggle={onToggle}
             isDisabled={isDisabled}
-            validated={input.value ? 'success' : undefined}
+            isOpen={isOpen}
+            validated={input.value ? 'success' : 'default'}
             footer={
               <Button
                 isInline
@@ -149,16 +122,17 @@ const SharedVPCDomainSelect = ({ label, input, meta }: SharedVPCDomainSelectProp
                 Reserve new base DNS domain
               </Button>
             }
-          >
-            {selectOptions}
-          </SelectDeprecated>
+            inlineFilterPlaceholderText="Filter by domain name"
+            menuAppendTo={() => document.body}
+          />
         </FlexItem>
 
         <FlexItem grow={{ default: undefined }} className="dns-domain-action-icon">
           <CopyToClipboard text={input.value || ''}>
             <Button
-              variant="link"
+              variant="control"
               type="button"
+              aria-label="Copy DNS domain to clipboard"
               tabIndex={0}
               isAriaDisabled={!input.value}
               icon={<CopyIcon />}

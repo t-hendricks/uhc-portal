@@ -185,7 +185,7 @@ const ClusterIngressCard = ({ refreshCluster, clusterRoutersData, cluster }) => 
 
 ClusterIngressCard.propTypes = {
   refreshCluster: PropTypes.func.isRequired,
-  clusterRoutersData: PropTypes.object,
+  clusterRoutersData: PropTypes.array,
   cluster: PropTypes.object,
 };
 

@@ -1,155 +1,40 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
-import { ErrorResponse } from 'react-router-dom-v5-compat';
+import { ErrorResponse } from 'react-router-dom';
 
-import { useQueries, UseQueryResult } from '@tanstack/react-query';
+import { useQueries } from '@tanstack/react-query';
 
-import { subscriptionStatuses } from '~/common/subscriptionTypes';
-import { queryClient } from '~/components/App/queryClient';
 import { useFeatureGate } from '~/hooks/useFeatureGate';
 import { ASSISTED_INSTALLER_MERGE_LISTS_FEATURE } from '~/redux/constants/featureConstants';
 import { GlobalState } from '~/redux/store';
-import { ClusterFromSubscription, ClusterWithPermissions } from '~/types/types';
 
 import { useFetchRegions } from '../common/useFetchRegions';
 import { queryConstants } from '../queriesConstants';
 
-import { fetchPageOfGlobalClusters } from './helpers/fetchGlobalClusters';
-import { fetchPageOfRegionalClusters } from './helpers/fetchRegionalClusters';
+import {
+  clearQueries,
+  combineClusterQueries,
+  createQuery,
+  FetchClusterQueryResults,
+  isExistingQuery,
+  nextAPIPageQueries,
+  UseFetchClustersQuery,
+  useRefetchClusterList,
+} from './helpers/useFetchClustersHelpers';
 import { Region } from './types/types';
-import { formatCluster } from './formatCluster';
 import { useFetchCanEditDelete } from './useFetchCanEditDelete';
 
-const QUERY_TYPE = { GLOBAL: 'global', REGIONAL: 'regional' };
-const REFRESH_INTERVAL = 60000; // milliseconds
-
-type FetchClusterQueryResults = UseQueryResult & {
-  data?: {
-    items: any[];
-    page: number;
-    total: number;
-    region: Region;
-    isError: boolean;
-    errors: any[];
-  };
-  errors?: any[];
-};
-
-const fetchPageOfClusters = async (
-  page: number,
-  aiMergeListsFeatureFlag: boolean,
-  region?: Region,
-  flags?: { [flag: string]: any },
-  nameFilter?: string,
-  userName?: string,
+export const useFetchClusters = (
+  getMultiRegion = true, // fetch regions and regional clusters
+  useClientSortPaging = true, // use client side sorting and filtering (and not the API based sorting and filtering)
 ) => {
-  const { items, total, isError, errors } = region
-    ? await fetchPageOfRegionalClusters(page, region, { flags, filter: nameFilter }, userName)
-    : await fetchPageOfGlobalClusters(
-        page,
-        aiMergeListsFeatureFlag,
-        { flags, filter: nameFilter },
-        userName,
-      );
-  return {
-    items: items?.map((cluster) => formatCluster(cluster as ClusterFromSubscription)),
-    page,
-    total,
-    region,
-    isError,
-    errors,
-  };
-};
+  // If using multiRegion, there must be client side sorting and paging
+  const isClientSortPaging = getMultiRegion ? true : useClientSortPaging;
 
-const queryKey = ({
-  page,
-  region,
-  plans,
-  nameFilter,
-  showMyClustersOnly,
-}: {
-  page: number;
-  region?: Region | undefined;
-  plans?: string[] | undefined;
-  nameFilter?: string | undefined;
-  showMyClustersOnly?: boolean;
-}) => {
-  const key = [
-    queryConstants.FETCH_CLUSTERS_QUERY_KEY,
-    region ? QUERY_TYPE.REGIONAL : QUERY_TYPE.GLOBAL,
-    page,
-  ];
-  if (region && region.region && region.provider) {
-    key.push(region.region);
-    key.push(region.provider);
-  }
+  const aiMergeListsFeatureFlag = useFeatureGate(ASSISTED_INSTALLER_MERGE_LISTS_FEATURE);
+  const [queries, setQueries] = React.useState<UseFetchClustersQuery[]>([]);
 
-  if (plans && plans.length > 0) {
-    key.push(...plans);
-  }
-  if (nameFilter) {
-    key.push(nameFilter);
-  }
-  if (showMyClustersOnly) {
-    key.push('showMyClustersOnly');
-  }
-  return key;
-};
-
-const createQuery = ({
-  page,
-  aiMergeListsFeatureFlag,
-  region,
-  flags,
-  nameFilter,
-  userName,
-}: {
-  page: number;
-  aiMergeListsFeatureFlag: boolean;
-  region?: Region;
-  flags?: { [flag: string]: any };
-  nameFilter?: string;
-  userName?: string;
-}) => ({
-  queryKey: queryKey({
-    page,
-    region,
-    plans: flags?.subscriptionFilter?.plan_id,
-    nameFilter,
-    showMyClustersOnly: flags?.showMyClustersOnly,
-  }),
-  staleTime: queryConstants.STALE_TIME,
-  refetchInterval: queryConstants.REFETCH_INTERVAL,
-  queryFn: async () =>
-    fetchPageOfClusters(page || 1, aiMergeListsFeatureFlag, region, flags, nameFilter, userName),
-});
-
-type CreateQuery = ReturnType<typeof createQuery>;
-
-const isExistingQuery = (queries: any[], page: number, region: Region | undefined = undefined) =>
-  (queries || []).some((query: any) => {
-    if (!region) {
-      const [mainKey, queryType, queryPage] = query.queryKey;
-      return (
-        mainKey === queryConstants.FETCH_CLUSTERS_QUERY_KEY &&
-        queryType === QUERY_TYPE.GLOBAL &&
-        queryPage === page
-      );
-    }
-
-    const [mainKey, queryType, queryPage, queryRegion, queryProvider] = query.queryKey;
-    return (
-      mainKey === queryConstants.FETCH_CLUSTERS_QUERY_KEY &&
-      queryType === QUERY_TYPE.REGIONAL &&
-      queryRegion === region.region &&
-      queryProvider === region.provider &&
-      queryPage === page
-    );
-  });
-
-/* ****************** MAIN EXPORT ****************** */
-
-export const useFetchClusters = () => {
+  /* ***** Get Can Update/Delete clusters list **** */
   const {
     isLoading: isCanUpdateDeleteLoading,
     isFetching: isCanUpdateDeleteFetching,
@@ -164,57 +49,7 @@ export const useFetchClusters = () => {
     refetchInterval: queryConstants.REFETCH_INTERVAL,
   });
 
-  const aiMergeListsFeatureFlag = useFeatureGate(ASSISTED_INSTALLER_MERGE_LISTS_FEATURE);
-  const userName = useSelector((state: GlobalState) => state.userProfile.keycloakProfile.username);
-  const flags = useSelector((state: GlobalState) => state.viewOptions.CLUSTERS_VIEW?.flags || {});
-  const nameFilter = useSelector(
-    (state: GlobalState) => state.viewOptions.CLUSTERS_VIEW?.filter || '',
-  );
-
-  const [refetchInterval, setRefetchInterval] = React.useState<ReturnType<typeof setInterval>>();
-  const [queries, setQueries] = React.useState<CreateQuery[]>([]);
-
-  const getNewData = () => {
-    queryClient.invalidateQueries({ queryKey: [queryConstants.FETCH_CLUSTERS_QUERY_KEY] });
-  };
-
-  const setRefetch = () => {
-    // @ts-ignore
-    clearInterval(refetchInterval);
-    const intervalId = setInterval(() => {
-      getNewData();
-    }, REFRESH_INTERVAL);
-    setRefetchInterval(intervalId);
-  };
-
-  const refetch = () => {
-    getNewData();
-    setRefetch();
-  };
-
-  if (!refetchInterval) {
-    setRefetch();
-  }
-
-  /* Filter */
-  React.useEffect(
-    () => {
-      setQueries([]);
-      // @ts-ignore
-      clearInterval(refetchInterval);
-      setRefetchInterval(undefined);
-      queryClient.removeQueries({
-        queryKey: [queryConstants.FETCH_CLUSTERS_QUERY_KEY, QUERY_TYPE.GLOBAL],
-      });
-      queryClient.removeQueries({
-        queryKey: [queryConstants.FETCH_CLUSTERS_QUERY_KEY, QUERY_TYPE.REGIONAL],
-      });
-    },
-    // We only want to run this on filter change so refetchInterval should not be dependency
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [flags, nameFilter],
-  );
-
+  /* ***** Fetch regions (can be removed if multiRegion endpoints are not used) **** */
   const {
     isLoading: isRegionsLoading,
     isFetching: isRegionsFetching,
@@ -227,42 +62,92 @@ export const useFetchClusters = () => {
     staleTime: queryConstants.STALE_TIME,
     refetchInterval: queryConstants.REFETCH_INTERVAL,
     returnAll: false,
+    getMultiRegion,
   });
 
-  // Start to get initial queries
+  /* *****  Refetch data (aka auto refresh) **** */
+  const { refetch, setRefetchSchedule, clearRefetch } = useRefetchClusterList();
+  setRefetchSchedule();
+
+  /* ***** Filtering (always API based) **** */
+  const userName = useSelector((state: GlobalState) => state.userProfile.keycloakProfile.username);
+  const flags = useSelector((state: GlobalState) => state.viewOptions.CLUSTERS_VIEW?.flags || {});
+  const nameFilter = useSelector(
+    (state: GlobalState) => state.viewOptions.CLUSTERS_VIEW?.filter || '',
+  );
+
+  React.useEffect(
+    () => {
+      clearQueries(setQueries, clearRefetch);
+    },
+    // Only run this on filter change
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [flags, nameFilter],
+  );
+
+  /* *****  Sorting **** */
+  const sorting = useSelector((state: GlobalState) => state.viewOptions.CLUSTERS_VIEW.sorting);
+
+  React.useEffect(
+    () => {
+      if (!isClientSortPaging) {
+        clearQueries(setQueries, clearRefetch);
+      }
+    },
+    // Only run on sorting change
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [sorting.isAscending, sorting.sortField, sorting.sortIndex],
+  );
+
+  /* *****  Pagination (note local pagination logic is in ClusterList.jsx) **** */
+  const { currentPage, pageSize: userSelectedPageSize } = useSelector(
+    (state: GlobalState) => state.viewOptions.CLUSTERS_VIEW,
+  );
+
+  const pageSize = useClientSortPaging ? queryConstants.PAGE_SIZE : userSelectedPageSize;
+
+  React.useEffect(
+    () => {
+      if (!isClientSortPaging) {
+        clearQueries(setQueries, clearRefetch);
+      }
+    },
+    // Only run on pagination change
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [currentPage, pageSize],
+  );
+
+  /* **** Get initial queries ( first API page of global and regional clusters) **** */
   if (
     !isCanUpdateDeleteLoading &&
     isCanUpdateDeleteFetched &&
     aiMergeListsFeatureFlag !== undefined
   ) {
-    if (!isExistingQuery(queries, 1)) {
-      // start to get global (non regional) clusters
+    const page = useClientSortPaging ? 1 : currentPage; // If not client side pagination - use page from redux
 
-      const globalPage1Query = createQuery({
-        page: 1,
-        aiMergeListsFeatureFlag,
-        flags,
-        nameFilter: '',
-        userName,
-      });
+    const initialQueryCommonProps = {
+      page,
+      aiMergeListsFeatureFlag,
+      flags,
+      nameFilter,
+      userName,
+      sorting,
+      pageSize,
+      useClientSortPaging,
+    };
+
+    // Set first global query
+    if (!isExistingQuery({ queries, page })) {
+      const globalPage1Query = createQuery({ ...initialQueryCommonProps, getMultiRegion });
       setQueries((prev) => [...prev, globalPage1Query]);
     }
-    if (regions?.length > 0) {
-      const initialRegionQueryList: CreateQuery[] = regions.reduce(
-        (initialRegionList: CreateQuery[], region) => {
-          if (!isExistingQuery(queries, 1, region)) {
-            return [
-              ...initialRegionList,
 
-              createQuery({
-                page: 1,
-                aiMergeListsFeatureFlag,
-                region,
-                flags,
-                nameFilter: '',
-                userName,
-              }),
-            ];
+    // Set first regional query
+    if (regions?.length > 0 && getMultiRegion) {
+      const initialRegionQueryList: UseFetchClustersQuery[] = regions.reduce(
+        (initialRegionList: UseFetchClustersQuery[], region) => {
+          if (!isExistingQuery({ queries, page, region })) {
+            return [...initialRegionList, createQuery({ ...initialQueryCommonProps, region })];
           }
           return initialRegionList;
         },
@@ -275,6 +160,7 @@ export const useFetchClusters = () => {
     }
   }
 
+  /* **** React Redux useQueries **** */
   const {
     isLoading,
     data,
@@ -284,46 +170,33 @@ export const useFetchClusters = () => {
     isFetched: isClustersFetched,
   } = useQueries({
     queries,
-    // @ts-ignore TODO unsure why this is throwing a type error
+
+    // @ts-ignore
     combine: React.useCallback(
       (results: FetchClusterQueryResults[]) => {
+        /* **** Combine results from queries **** */
+
+        // NOTE: all items needing pagesFetched can be removed if multiRegion endpoints are not used
+        // It is used to trace what regions/pages have already been fetched
         const pagesFetched: { total: number; page: number; region: Region }[] = [];
 
-        results.forEach((result) => {
-          if (result.data) {
-            const newPage = {
-              total: result.data.total,
-              page: result.data.page,
-              region: result.data.region,
-            };
-            pagesFetched.push(newPage);
-          }
-        });
-
-        let data;
-        if (results.some((result) => !!result.data)) {
-          data = results.reduce((dataArray, result) => {
-            /* Modify the results based on other React Queries - in this case canEdit and canDelete */
-            const modifiedClusters = (result.data?.items || []).map((cluster) => {
-              const modifiedCluster = { ...cluster };
-
-              modifiedCluster.canEdit =
-                !cluster.partialCS &&
-                !!canEdit &&
-                (canEdit['*'] || (!!cluster.id && !!canEdit[cluster.id])) &&
-                cluster.subscription.status !== subscriptionStatuses.DEPROVISIONED;
-
-              modifiedCluster.canDelete =
-                !cluster.partialCS &&
-                !!canDelete &&
-                (canDelete['*'] || (!!cluster.id && !!canDelete[cluster.id!]));
-              return modifiedCluster;
-            });
-
-            return dataArray.concat(modifiedClusters);
-          }, [] as ClusterWithPermissions[]);
+        if (useClientSortPaging) {
+          results.forEach((result) => {
+            if (result.data) {
+              const newPage = {
+                total: result.data.total,
+                page: result.data.page,
+                region: result.data.region,
+              };
+              pagesFetched.push(newPage);
+            }
+          });
         }
 
+        // Modify cluster data with results from canUpdate/Edit and canDelete
+        const clustersWithEditDelete = combineClusterQueries(results, canEdit, canDelete);
+
+        // Capture any errors returned
         const clusterErrors = results?.reduce((errorArray, result) => {
           const resultErrors = result.data?.errors;
           if (resultErrors && resultErrors.length > 0) {
@@ -332,100 +205,52 @@ export const useFetchClusters = () => {
           return errorArray;
         }, [] as ErrorResponse[]);
 
+        // Calculate total number of clusters the user has (across API pages)
+        let clusterTotal = clustersWithEditDelete?.length;
+
+        if (!useClientSortPaging) {
+          clusterTotal = results.reduce(
+            (total, result) => (result.data?.total ? total + Number(result.data?.total) : total),
+            0,
+          );
+        }
+
         return {
           isLoading: results.some((result) => result.isLoading),
           isFetching: results.some((result) => result.isFetching),
           isFetched: results.every((result) => result.isFetched),
           isError: results.some((result) => result.isError || result.data?.isError),
           errors: [...clusterErrors, ...canEditDeleteErrors, ...regionErrors],
-          data: { pagesFetched, clusters: data },
+          data: { pagesFetched, clusters: clustersWithEditDelete, clusterTotal },
         };
       },
-      [canDelete, canEdit, canEditDeleteErrors, regionErrors],
+      [canDelete, canEdit, canEditDeleteErrors, regionErrors, useClientSortPaging],
     ),
   });
 
-  // Add queries for additional pages if they already don't exist
-  if (data?.pagesFetched) {
-    data.pagesFetched.forEach((pageFetched) => {
-      const numNextPages = Math.ceil(
-        (pageFetched.total - pageFetched.page * queryConstants.PAGE_SIZE) /
-          queryConstants.PAGE_SIZE,
-      );
+  /* **** Set queries to load additional API pages (if needed) **** */
 
-      const newQueries: CreateQuery[] = [];
-      for (let i = 1; i <= numNextPages; i += 1) {
-        const nextPage = pageFetched.page + i;
-        const doesNextPageExist = isExistingQuery(queries, nextPage, pageFetched.region);
-        if (!doesNextPageExist) {
-          newQueries.push(
-            createQuery({
-              page: nextPage,
-              aiMergeListsFeatureFlag,
-              region: pageFetched.region,
-              flags,
-              // @ts-ignore
-              nameFilter,
-              userName,
-            }),
-          );
-        }
-      }
-      if (newQueries.length > 0) {
-        setQueries((prev) => [...prev, ...newQueries]);
-      }
-
-      // Delete query if next page is no longer needed
-      const nextPageExist = isExistingQuery(queries, pageFetched.page + 1, pageFetched.region);
-
-      if (pageFetched.total <= pageFetched.page * queryConstants.PAGE_SIZE && nextPageExist) {
-        const fetchedPageType = pageFetched.region ? QUERY_TYPE.REGIONAL : QUERY_TYPE.GLOBAL;
-
-        setQueries((prev) =>
-          prev.filter((query) => {
-            const [_fetchClustersQueryKey, queryType, page, region, provider] = query.queryKey;
-
-            if (fetchedPageType !== queryType) {
-              return true;
-            }
-            if (pageFetched.region) {
-              return (
-                page !== pageFetched.page + 1 ||
-                region !== pageFetched.region.region ||
-                provider !== pageFetched.region.provider
-              );
-            }
-
-            return page !== pageFetched.page + 1;
-          }),
-        );
-        if (pageFetched.region) {
-          queryClient.removeQueries({
-            queryKey: [
-              queryConstants.FETCH_CLUSTERS_QUERY_KEY,
-              QUERY_TYPE.REGIONAL,
-              pageFetched.page + 1,
-              pageFetched.region.region,
-              pageFetched.region.provider,
-            ],
-          });
-        } else {
-          queryClient.removeQueries({
-            queryKey: [
-              queryConstants.FETCH_CLUSTERS_QUERY_KEY,
-              QUERY_TYPE.REGIONAL,
-              pageFetched.page + 1,
-            ],
-          });
-        }
-      }
+  if (useClientSortPaging) {
+    const nextQueries = nextAPIPageQueries({
+      fetchedPages: data?.pagesFetched,
+      currentQueries: queries,
+      aiMergeListsFeatureFlag,
+      useClientSortPaging,
+      flags,
+      nameFilter,
+      userName,
     });
+    if (nextQueries.length > 0) {
+      setQueries((prev) => [...prev, ...nextQueries]);
+    }
   }
 
+  /* *** Remove any queries that are no longer needed *** */
+  // TODO filter out queries that are no longer needed for multi-cluster work
+
+  /*  **** Items returned from the useFetchClusters hook **** */
+
   return {
-    // The logic for isLoading is neccessary because there is a gap when isCanUpdateDeleteLoading
-    // goes from true to false and when isLoading turns from false to true
-    // This can cause a "flash" in the UI
     isLoading:
       isLoading ||
       isCanUpdateDeleteLoading ||
@@ -438,7 +263,7 @@ export const useFetchClusters = () => {
       isRegionsFetching ||
       (data.clusters === undefined && !isError && !isCanUpdateDeleteError && !isRegionsError),
 
-    data: { items: data?.clusters || [] },
+    data: { items: data?.clusters || [], itemsCount: data?.clusterTotal },
 
     isFetched:
       isCanUpdateDeleteFetched &&

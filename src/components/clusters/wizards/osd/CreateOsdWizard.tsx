@@ -2,8 +2,6 @@ import React from 'react';
 import { Formik, FormikValues } from 'formik';
 import omit from 'lodash/omit';
 import { useDispatch } from 'react-redux';
-import { useHistory } from 'react-router-dom';
-import { Navigate, useNavigate } from 'react-router-dom-v5-compat';
 
 import {
   Banner,
@@ -17,6 +15,7 @@ import { Spinner } from '@redhat-cloud-services/frontend-components';
 
 import { ocmResourceTypeByProduct, TrackEvent, trackEvents } from '~/common/analytics';
 import { shouldRefetchQuota } from '~/common/helpers';
+import { Navigate, useNavigate } from '~/common/routing';
 import { AppPage } from '~/components/App/AppPage';
 import { availableClustersFromQuota } from '~/components/clusters/common/quotaSelectors';
 import {
@@ -24,7 +23,6 @@ import {
   ClusterUpdates,
   NodeLabel,
 } from '~/components/clusters/wizards/common';
-import LeaveCreateClusterPrompt from '~/components/clusters/wizards/common/LeaveCreateClusterPrompt';
 import submitOSDRequest from '~/components/clusters/wizards/common/submitOSDRequest';
 import { useFormState } from '~/components/clusters/wizards/hooks';
 import { osdWizardFormValidator } from '~/components/clusters/wizards/osd/formValidators';
@@ -76,7 +74,6 @@ interface CreateOsdWizardProps {
 const CreateOsdWizardInternal = () => {
   const track = useAnalytics();
   const navigate = useNavigate();
-  const history = useHistory();
   const {
     values: {
       [FieldId.Product]: product,
@@ -168,10 +165,6 @@ const CreateOsdWizardInternal = () => {
   }
 
   if (createClusterResponse.fulfilled) {
-    // When a cluster is successfully created, unblock
-    // history in order to not show a confirmation prompt.
-    // TODO: Should be removed upon migrating to React Router v6
-    history.block(() => {});
     return <Navigate replace to={`/details/s/${createClusterResponse.cluster.subscription?.id}`} />;
   }
 
@@ -188,78 +181,75 @@ const CreateOsdWizardInternal = () => {
   }
 
   return (
-    <>
-      <Wizard
-        id="osd-wizard"
-        onClose={onClose}
-        onStepChange={onStepChange}
-        footer={<CreateOsdWizardFooter track={() => trackStepChange(trackEvents.WizardSubmit)} />}
-        nav={{ 'aria-label': `${ariaLabel} steps` }}
-        isVisitRequired
-      >
-        <WizardStep name={StepName.BillingModel} id={StepId.BillingModel}>
-          <BillingModel />
-        </WizardStep>
-        <WizardStep
-          name={StepName.ClusterSettings}
-          id={StepId.ClusterSettings}
-          isExpandable
-          steps={[
-            <WizardStep
-              name={StepName.CloudProvider}
-              id={StepId.ClusterSettingsCloudProvider}
-              footer={<CloudProviderStepFooter />}
-            >
-              <ClusterSettingsCloudProvider />
-            </WizardStep>,
-            <WizardStep name={StepName.Details} id={StepId.ClusterSettingsDetails}>
-              <ClusterSettingsDetails />
-            </WizardStep>,
-            <WizardStep name={StepName.MachinePool} id={StepId.ClusterSettingsMachinePool}>
-              <ClusterSettingsMachinePool />
-            </WizardStep>,
-          ]}
-        />
-        <WizardStep
-          name={StepName.Networking}
-          id={StepId.Networking}
-          isExpandable
-          steps={[
-            <WizardStep
-              name={StepName.Configuration}
-              id={StepId.NetworkingConfiguration}
-              isHidden={cloudProvider === CloudProviderType.Gcp && byoc !== 'true'}
-            >
-              <NetworkingConfiguration />
-            </WizardStep>,
-            <WizardStep
-              name={StepName.VpcSettings}
-              id={StepId.NetworkingVpcSettings}
-              isHidden={!installToVpc}
-            >
-              <NetworkingVpcSettings />
-            </WizardStep>,
-            <WizardStep
-              name={StepName.ClusterProxy}
-              id={StepId.NetworkingClusterProxy}
-              isHidden={!configureProxy}
-            >
-              <NetworkingClusterProxy />
-            </WizardStep>,
-            <WizardStep name={StepName.CidrRanges} id={StepId.NetworkingCidrRanges}>
-              <NetworkingCidrRanges />
-            </WizardStep>,
-          ]}
-        />
-        <WizardStep name={StepName.ClusterUpdates} id={StepId.ClusterUpdates}>
-          <ClusterUpdates />
-        </WizardStep>
-        <WizardStep name={StepName.Review} id={StepId.Review}>
-          <ReviewAndCreate />
-        </WizardStep>
-      </Wizard>
-      <LeaveCreateClusterPrompt product={product} />
-    </>
+    <Wizard
+      id="osd-wizard"
+      onClose={onClose}
+      onStepChange={onStepChange}
+      footer={<CreateOsdWizardFooter track={() => trackStepChange(trackEvents.WizardSubmit)} />}
+      nav={{ 'aria-label': `${ariaLabel} steps` }}
+      isVisitRequired
+    >
+      <WizardStep name={StepName.BillingModel} id={StepId.BillingModel}>
+        <BillingModel />
+      </WizardStep>
+      <WizardStep
+        name={StepName.ClusterSettings}
+        id={StepId.ClusterSettings}
+        isExpandable
+        steps={[
+          <WizardStep
+            name={StepName.CloudProvider}
+            id={StepId.ClusterSettingsCloudProvider}
+            footer={<CloudProviderStepFooter />}
+          >
+            <ClusterSettingsCloudProvider />
+          </WizardStep>,
+          <WizardStep name={StepName.Details} id={StepId.ClusterSettingsDetails}>
+            <ClusterSettingsDetails />
+          </WizardStep>,
+          <WizardStep name={StepName.MachinePool} id={StepId.ClusterSettingsMachinePool}>
+            <ClusterSettingsMachinePool />
+          </WizardStep>,
+        ]}
+      />
+      <WizardStep
+        name={StepName.Networking}
+        id={StepId.Networking}
+        isExpandable
+        steps={[
+          <WizardStep
+            name={StepName.Configuration}
+            id={StepId.NetworkingConfiguration}
+            isHidden={cloudProvider === CloudProviderType.Gcp && byoc !== 'true'}
+          >
+            <NetworkingConfiguration />
+          </WizardStep>,
+          <WizardStep
+            name={StepName.VpcSettings}
+            id={StepId.NetworkingVpcSettings}
+            isHidden={!installToVpc}
+          >
+            <NetworkingVpcSettings />
+          </WizardStep>,
+          <WizardStep
+            name={StepName.ClusterProxy}
+            id={StepId.NetworkingClusterProxy}
+            isHidden={!configureProxy}
+          >
+            <NetworkingClusterProxy />
+          </WizardStep>,
+          <WizardStep name={StepName.CidrRanges} id={StepId.NetworkingCidrRanges}>
+            <NetworkingCidrRanges />
+          </WizardStep>,
+        ]}
+      />
+      <WizardStep name={StepName.ClusterUpdates} id={StepId.ClusterUpdates}>
+        <ClusterUpdates />
+      </WizardStep>
+      <WizardStep name={StepName.Review} id={StepId.Review}>
+        <ReviewAndCreate />
+      </WizardStep>
+    </Wizard>
   );
 };
 

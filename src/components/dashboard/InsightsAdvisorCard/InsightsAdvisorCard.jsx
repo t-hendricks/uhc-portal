@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 import { Card, CardBody } from '@patternfly/react-core';
 
-import { advisorBaseName } from '~/common/getBaseName';
+import { advisorBaseName } from '~/common/routing';
 
 import { INSIGHTS_RULE_CATEGORIES } from '../../clusters/ClusterDetails/components/Insights/InsightsConstants';
 
@@ -22,7 +22,7 @@ const InsightsAdvisorCard = ({ overview }) => (
         <>
           <ChartByRisks riskHits={overview.hit_by_risk} />
           <ChartByGroups tagHits={overview.hit_by_tag} groups={INSIGHTS_RULE_CATEGORIES} />
-          <a href={advisorBaseName()} style={{ marginTop: '1rem' }}>
+          <a href={advisorBaseName} style={{ marginTop: '1rem' }}>
             View more in Insights Advisor
           </a>
         </>

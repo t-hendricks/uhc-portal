@@ -1,6 +1,6 @@
 import { isClusterUpgrading } from '~/components/clusters/common/clusterStates';
+import { SubscriptionCommonFields } from '~/types/accounts_mgmt.v1';
 
-import { subscriptionStatuses } from '../../../../../common/subscriptionTypes';
 import config from '../../../../../config';
 
 import {
@@ -36,7 +36,7 @@ const clusterHealthSelector = (cluster, lastCheckIn, discoveredIssues) => {
     return monitoringStatuses.UNKNOWN;
   }
 
-  if (cluster.subscription.status === subscriptionStatuses.DISCONNECTED) {
+  if (cluster.subscription.status === SubscriptionCommonFields.status.DISCONNECTED) {
     return monitoringStatuses.DISCONNECTED;
   }
 
@@ -139,8 +139,8 @@ const issuesAndWarningsSelector = (monitoring, cluster) => {
 };
 
 export {
-  lastCheckInSelector,
+  alertsNodesOperatorsSelector,
   clusterHealthSelector,
   issuesAndWarningsSelector,
-  alertsNodesOperatorsSelector,
+  lastCheckInSelector,
 };

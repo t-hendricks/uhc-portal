@@ -74,12 +74,18 @@ const createViewQueryObject = (viewOptions?: ViewOptions, username?: string): Qu
       clauses.push(`creator.username='${username}'`);
     }
 
-    // If we got a search string from the user, format it as a LIKE query.
     if (typeof viewOptions.filter === 'string') {
-      const likePattern = sqlString(`%${viewOptions.filter}%`);
-      clauses.push(
-        `display_name ILIKE ${likePattern} OR external_cluster_id ILIKE ${likePattern} OR cluster_id ILIKE ${likePattern}`,
-      );
+      if (viewOptions.filter.length === 0) {
+        clauses.push(
+          `display_name is not null OR external_cluster_id is not null OR cluster_id is not null`,
+        );
+      } else {
+        // If we got a search string from the user, format it as a LIKE query.
+        const likePattern = sqlString(`%${viewOptions.filter}%`);
+        clauses.push(
+          `display_name ILIKE ${likePattern} OR external_cluster_id ILIKE ${likePattern} OR cluster_id ILIKE ${likePattern}`,
+        );
+      }
     }
 
     if (!isEmpty(viewOptions.flags.subscriptionFilter)) {
@@ -205,23 +211,16 @@ const buildUrlParams = (params: QueryObject): string =>
  * @param {Object} params
  */
 const buildFilterURLParams = (params: { [key: string]: (string | number | boolean)[] }): string =>
-  Object.keys(params)
-    .map((key) => !isEmpty(params[key]) && `${key}=${params[key].join(',')}`)
-    .filter(Boolean)
-    .join('&');
+  encodeURI(
+    Object.keys(params)
+      .map((key) => !isEmpty(params[key]) && `${key}=${params[key].join(',')}`)
+      .filter(Boolean)
+      .join('&'),
+  );
 
 const getQueryParam = (param: string): string | undefined => {
-  let ret: string | undefined;
-  window.location.search
-    .substring(1)
-    .split('&')
-    .forEach((queryString) => {
-      const [key, val] = queryString.split('=');
-      if (key === param) {
-        ret = decodeURI(val);
-      }
-    });
-  return ret;
+  const searchParams = new URLSearchParams(window.location.search);
+  return searchParams.get(param) ?? undefined;
 };
 
 const deleteQueryParam = (param: string): void => {

@@ -1,12 +1,14 @@
 import React from 'react';
 import isEmpty from 'lodash/isEmpty';
 import PropTypes from 'prop-types';
-import { useLocation, useNavigate } from 'react-router-dom-v5-compat';
+import { useLocation } from 'react-router-dom';
 
 import { Button, Chip, ChipGroup, Split, SplitItem } from '@patternfly/react-core';
 
+import { useNavigate } from '~/common/routing';
+
 import helpers from '../../../../../../common/helpers';
-import { buildFilterURLParams } from '../../../../../../common/queryHelpers';
+import { buildFilterURLParams, getQueryParam } from '../../../../../../common/queryHelpers';
 import { LOG_TYPES, SEVERITY_TYPES } from '../clusterLogConstants';
 
 const mapFilterGroup = (group, currentFilter, setFilter, navigate, location) => {
@@ -80,10 +82,13 @@ const mapFlagsGroup = (group, currentFlags, setFlags, navigate, location) => {
 };
 
 const clearFilters = (navigate, clearFiltersAndFlags, location) => {
+  // time from and time to values are always ketps, since the values from the date picker don't change after clearing
+  const timestampFrom = getQueryParam('timestampFrom') || '';
+  const timestampTo = getQueryParam('timestampTo') || '';
   navigate(
     {
       hash: location.hash,
-      search: '',
+      search: buildFilterURLParams({ timestampFrom: [timestampFrom], timestampTo: [timestampTo] }),
     },
     { replace: true },
   );

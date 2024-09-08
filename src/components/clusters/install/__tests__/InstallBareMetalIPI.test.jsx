@@ -1,7 +1,6 @@
 import React from 'react';
-import { CompatRouter } from 'react-router-dom-v5-compat';
 
-import { checkAccessibility, screen, TestRouter, withState } from '~/testUtils';
+import { checkAccessibility, screen, withState } from '~/testUtils';
 
 import githubReleases from '../githubReleases.mock';
 import { InstallBareMetalIPI } from '../InstallBareMetalIPI';
@@ -27,11 +26,7 @@ describe('InstallBareMetalIPI', () => {
   it('is accessible', async () => {
     // While this tests passes, it throws a warning: <p> cannot appear as a descendant of <p>
     const { container } = withState(githubReleases).render(
-      <TestRouter>
-        <CompatRouter>
-          <InstallBareMetalIPI token={{}} dispatch={dispatch} />
-        </CompatRouter>
-      </TestRouter>,
+      <InstallBareMetalIPI token={{}} dispatch={dispatch} />,
     );
 
     expect(
@@ -42,13 +37,7 @@ describe('InstallBareMetalIPI', () => {
   });
 
   it('shows installer section', async () => {
-    withState(githubReleases).render(
-      <TestRouter>
-        <CompatRouter>
-          <InstallBareMetalIPI token={{}} dispatch={dispatch} />
-        </CompatRouter>
-      </TestRouter>,
-    );
+    withState(githubReleases).render(<InstallBareMetalIPI token={{}} dispatch={dispatch} />);
 
     expect(await screen.findByText('OpenShift installer')).toBeInTheDocument();
   });

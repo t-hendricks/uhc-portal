@@ -1,7 +1,6 @@
 import React from 'react';
-import { CompatRouter } from 'react-router-dom-v5-compat';
 
-import { checkAccessibility, render, screen, TestRouter, within } from '~/testUtils';
+import { checkAccessibility, render, screen, within } from '~/testUtils';
 
 import CancelClusterButton from './CancelClusterButton';
 
@@ -12,38 +11,20 @@ const cluster = {
 
 describe('<CancelClusterButton />', () => {
   it('is accessible by default - modal closed', async () => {
-    const { container } = render(
-      <TestRouter>
-        <CompatRouter>
-          <CancelClusterButton cluster={cluster} />
-        </CompatRouter>
-      </TestRouter>,
-    );
+    const { container } = render(<CancelClusterButton cluster={cluster} />);
     expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
     await checkAccessibility(container);
   });
 
   it('is accessible with modal open', async () => {
-    const { container } = render(
-      <TestRouter>
-        <CompatRouter>
-          <CancelClusterButton cluster={cluster} defaultOpen />
-        </CompatRouter>
-      </TestRouter>,
-    );
+    const { container } = render(<CancelClusterButton cluster={cluster} defaultOpen />);
     expect(await screen.findByRole('dialog')).toBeInTheDocument();
     await checkAccessibility(container);
   });
 
   it('hides modal shown by default', () => {
     // Arrange
-    render(
-      <TestRouter>
-        <CompatRouter>
-          <CancelClusterButton cluster={cluster} />
-        </CompatRouter>
-      </TestRouter>,
-    );
+    render(<CancelClusterButton cluster={cluster} />);
 
     // Assert
     expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
@@ -51,13 +32,7 @@ describe('<CancelClusterButton />', () => {
 
   it('shows modal after button click ', async () => {
     // Arrange
-    const { user } = render(
-      <TestRouter>
-        <CompatRouter>
-          <CancelClusterButton cluster={cluster} />
-        </CompatRouter>
-      </TestRouter>,
-    );
+    const { user } = render(<CancelClusterButton cluster={cluster} />);
     expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
 
     // Act
@@ -69,13 +44,7 @@ describe('<CancelClusterButton />', () => {
 
   it('closes the modal on Close button click', async () => {
     // Arrange
-    const { user } = render(
-      <TestRouter>
-        <CompatRouter>
-          <CancelClusterButton cluster={cluster} />
-        </CompatRouter>
-      </TestRouter>,
-    );
+    const { user } = render(<CancelClusterButton cluster={cluster} />);
 
     // Act
     await user.click(screen.getByRole('button', { name: 'Cancel cluster creation' }));
@@ -91,13 +60,7 @@ describe('<CancelClusterButton />', () => {
 
   it('closes the modal on Cancel button click', async () => {
     // Arrange
-    const { user } = render(
-      <TestRouter>
-        <CompatRouter>
-          <CancelClusterButton cluster={cluster} />
-        </CompatRouter>
-      </TestRouter>,
-    );
+    const { user } = render(<CancelClusterButton cluster={cluster} />);
 
     // Act
     await user.click(screen.getByRole('button', { name: 'Cancel cluster creation' }));

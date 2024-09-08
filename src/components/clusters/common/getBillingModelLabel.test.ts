@@ -9,7 +9,7 @@ import getBillingModelLabel from './getBillingModelLabel';
 
 describe('getBillingModelLabel', () => {
   it.each([
-    [normalizedProducts.OSDTrial, undefined, undefined, 'Free trial, upgradeable'],
+    [normalizedProducts.OSDTRIAL, undefined, undefined, 'Free trial, upgradeable'],
     [normalizedProducts.OSD, undefined, undefined, 'Standard'],
     [normalizedProducts.OSD, billingModels.STANDARD, undefined, 'Annual Red Hat subscriptions'],
     [normalizedProducts.OSD, billingModels.MARKETPLACE, undefined, 'N/A'],

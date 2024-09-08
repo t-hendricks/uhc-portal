@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import { ChartLegend, ChartPie } from '@patternfly/react-charts';
 import { Flex, FlexItem, Title } from '@patternfly/react-core';
 
-import { advisorBaseName } from '~/common/getBaseName';
+import { advisorBaseName } from '~/common/routing';
 
 import { groupTagHitsByGroups } from '../overviewHelpers';
 
@@ -26,7 +26,7 @@ const TitleComponent = ({ data, index, x, y, style }) => {
       <tspan x={x} y={y}>
         {name}:{' '}
         <a
-          href={`${advisorBaseName()}/recommendations?category=${categoryMapping[tags]}`}
+          href={`${advisorBaseName}/recommendations?category=${categoryMapping[tags]}`}
           className="enabled-link"
           data-testid={tags}
         >

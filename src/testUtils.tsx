@@ -1,6 +1,5 @@
 import React from 'react';
-import { routerMiddleware } from 'connected-react-router';
-import { createBrowserHistory } from 'history';
+import { InitialEntry } from 'history';
 import { axe, toHaveNoViolations } from 'jest-axe';
 import merge from 'lodash/merge';
 import { Provider } from 'react-redux';
@@ -28,10 +27,21 @@ import '@testing-library/jest-dom';
 // Type not exported in the library
 export type UserEventType = ReturnType<typeof userEvent.setup>;
 
+interface RenderOptionsWithRouter extends RenderOptions {
+  withRouter: boolean;
+}
+
 // An extended version of RTL's "custom render()" pattern.
 
-const history = createBrowserHistory();
-const reducer = reduxReducers(history);
+const reducer = reduxReducers;
+
+export const TestRouter = ({
+  children,
+  initialEntries,
+}: {
+  children: React.ReactNode;
+  initialEntries?: InitialEntry[];
+}) => <MemoryRouter initialEntries={initialEntries}>{children}</MemoryRouter>;
 
 interface TestState {
   store: typeof globalStore;
@@ -43,7 +53,7 @@ interface TestState {
   dispatch: (action: AnyAction) => any;
   render: (
     ui: React.ReactElement,
-    options?: RenderOptions,
+    options?: RenderOptionsWithRouter,
   ) => ReturnType<typeof render> & { user: UserEventType };
 }
 
@@ -84,7 +94,6 @@ const withState = (initialState?: any, mergeWithGlobalState?: boolean): TestStat
             serializableCheck: false,
             immutableCheck: { warnAfter: 256 }, // We can also set immutableCheck to false to prevent checking (and warnings)
           })
-            .concat(routerMiddleware(history))
             .concat(promiseRejectionMiddleware as Middleware)
             .concat(promiseMiddleware)
             .concat(notificationsMiddleware({ ...defaultOptions }) as Middleware) // TODO: remove type convertion as soon as @redhat-cloud-services incorporates RTK
@@ -108,6 +117,22 @@ const withState = (initialState?: any, mergeWithGlobalState?: boolean): TestStat
     );
   };
 
+  const WrapperWithRouter = ({ children }: { children: React.ReactNode }) => {
+    const queryClient = new QueryClient({
+      defaultOptions: {
+        queries: {
+          retry: false,
+        },
+      },
+    });
+    const providers = (
+      <Provider store={store}>
+        <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
+      </Provider>
+    );
+    return <TestRouter>{providers}</TestRouter>;
+  };
+
   return {
     store,
     Wrapper,
@@ -126,8 +151,11 @@ const withState = (initialState?: any, mergeWithGlobalState?: boolean): TestStat
       });
     },
 
-    render: (ui: React.ReactElement, options?: RenderOptions) => ({
-      ...render(ui, { wrapper: Wrapper, ...options }),
+    render: (ui: React.ReactElement, options?: RenderOptionsWithRouter) => ({
+      ...render(ui, {
+        wrapper: options?.withRouter === false ? Wrapper : WrapperWithRouter,
+        ...options,
+      }),
       user: userEvent.setup({ delay: null }),
     }),
   };
@@ -139,7 +167,7 @@ const withState = (initialState?: any, mergeWithGlobalState?: boolean): TestStat
  */
 const renderWithState = (
   ui: React.ReactElement,
-  options?: Omit<RenderOptions, 'queries'>,
+  options?: Omit<RenderOptionsWithRouter, 'queries'>,
   initialState?: any, // setting to any because only a partial state structure may be sent
 ) => withState(initialState).render(ui, options);
 
@@ -213,10 +241,6 @@ export const mockUseChrome = (mockImpl?: any) => {
   }));
   return useChromeSpy;
 };
-
-export const TestRouter = ({ children }: { children: React.ReactNode }) => (
-  <MemoryRouter>{children}</MemoryRouter>
-);
 
 // Mocking Feature Gates
 export type MockedGate = [string, boolean];

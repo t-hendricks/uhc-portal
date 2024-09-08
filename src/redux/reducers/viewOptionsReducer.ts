@@ -140,16 +140,19 @@ const viewOptionsReducer = (
 ): State => {
   const updateState: State = {};
 
-  const updatePageCounts = (viewType: string, itemsCount: number) => {
-    const totalCount = itemsCount;
+  const updatePageCounts = (viewType: string, itemsCount: number, perPageSize?: number) => {
+    const totalCount = itemsCount || 1;
 
-    const totalPages = Math.ceil(totalCount / state[viewType].pageSize);
+    const pageSize = perPageSize || state[viewType].pageSize;
+
+    const totalPages = Math.ceil(totalCount / pageSize);
 
     updateState[viewType] = {
       ...state[viewType],
       totalCount,
       totalPages,
-      currentPage: Math.min(state[viewType].currentPage, totalPages || 1),
+      pageSize,
+      currentPage: Math.min(state[viewType].currentPage, totalPages),
     };
   };
 
@@ -212,13 +215,27 @@ const viewOptionsReducer = (
       return { ...state, ...updateState };
 
     case viewPaginationConstants.SET_PER_PAGE:
-      updateState[action.payload.viewType] = {
-        ...state[action.payload.viewType],
-        pageSize: action.payload.pageSize,
-        // reset current page to 1, as otherwise we might be on a page that could no longer be valid
-        // after changing the page size
-        currentPage: 1,
-      };
+      if (action.payload.updatePageCounts) {
+        updatePageCounts(
+          action.payload.viewType,
+          state[action.payload.viewType].totalCount,
+          action.payload.pageSize,
+        );
+      } else {
+        updateState[action.payload.viewType] = {
+          ...state[action.payload.viewType],
+          pageSize: action.payload.pageSize,
+          // reset current page to 1, as otherwise we might be on a page that could no longer be valid
+          // after changing the page size
+          currentPage: 1,
+        };
+      }
+
+      return { ...state, ...updateState };
+
+    case viewPaginationConstants.SET_TOTAL_ITEMS:
+      updatePageCounts(viewConstants.CLUSTERS_VIEW, action.payload.totalCount);
+
       return { ...state, ...updateState };
 
     case FULFILLED_ACTION(clustersConstants.GET_CLUSTERS):
@@ -279,7 +296,15 @@ const viewOptionsReducer = (
       updateState[action.payload.viewType] = {
         ...state[action.payload.viewType],
         flags: INITIAL_OSL_VIEW_STATE.flags,
-        filter: INITIAL_OSL_VIEW_STATE.filter,
+        filter:
+          typeof INITIAL_OSL_VIEW_STATE.filter === 'object'
+            ? {
+                ...INITIAL_OSL_VIEW_STATE.filter,
+                // time from and time to values are always ketps, since the values from the date picker don't change after clearing
+                timestampFrom: (state[action.payload.viewType].filter as any).timestampFrom,
+                timestampTo: (state[action.payload.viewType].filter as any).timestampTo,
+              }
+            : INITIAL_OSL_VIEW_STATE.filter,
       };
       return { ...state, ...updateState };
 

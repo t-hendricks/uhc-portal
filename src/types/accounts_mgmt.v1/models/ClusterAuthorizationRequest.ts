@@ -32,6 +32,7 @@ export namespace ClusterAuthorizationRequest {
     OSD = 'OSD',
     OSDTRIAL = 'OSDTrial',
     MOA = 'MOA',
+    MOA_HOSTED_CONTROL_PLANE = 'MOA-HostedControlPlane',
     RHMI = 'RHMI',
     RHOSAK = 'RHOSAK',
     RHOSAKTRIAL = 'RHOSAKTrial',
@@ -43,5 +44,6 @@ export namespace ClusterAuthorizationRequest {
     RHACSTRIAL = 'RHACSTrial',
     ARO = 'ARO',
     RHOIC = 'RHOIC',
+    OCP_ASSISTED_INSTALL = 'OCP-AssistedInstall',
   }
 }

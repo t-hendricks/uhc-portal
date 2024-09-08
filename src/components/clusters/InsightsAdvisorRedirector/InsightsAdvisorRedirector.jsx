@@ -1,12 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { matchPath, Navigate } from 'react-router-dom-v5-compat';
+import { matchPath, useLocation, useParams } from 'react-router-dom';
 import { validate as isUuid } from 'uuid';
 
 import { Bullseye } from '@patternfly/react-core';
 import { Spinner } from '@redhat-cloud-services/frontend-components/Spinner';
 
-import { advisorBaseName } from '~/common/getBaseName';
+import { advisorBaseName, Navigate, ocmBaseName } from '~/common/routing';
 
 import ExternalRedirect from './ExternalRedirect';
 
@@ -19,12 +19,15 @@ export const composeRuleId = (pluginName, errorKey) =>
   );
 
 const InsightsAdvisorRedirector = (props) => {
-  const { params, clusterDetails, fetchClusterDetails, location, setGlobalError } = props;
+  const params = useParams();
+  const location = useLocation();
+  const { clusterDetails, fetchClusterDetails, setGlobalError } = props;
   React.useEffect(() => {
     if (!clusterDetails.fulfilled && params.id && !isUuid(params.id)) {
       fetchClusterDetails(params.id);
     }
-  }, [clusterDetails, fetchClusterDetails, params]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [clusterDetails?.fulfilled, params?.id]);
 
   const externalId =
     params?.id && isUuid(params.id) ? params.id : clusterDetails?.cluster?.external_id;
@@ -32,45 +35,24 @@ const InsightsAdvisorRedirector = (props) => {
 
   if (externalId) {
     if (
-      matchPath(
-        {
-          path: '/details/:clusterId',
-          exact: true,
-        },
-        path,
-      ) ||
-      matchPath(
-        {
-          path: '/details/s/:id',
-          exact: true,
-        },
-        path,
-      )
+      matchPath({ path: `${ocmBaseName}/details/:clusterId`, end: true }, path) ||
+      matchPath({ path: `${ocmBaseName}/details/s/:id`, end: true }, path)
     ) {
-      return <ExternalRedirect url={`${advisorBaseName()}/clusters/${externalId}`} />;
+      return <ExternalRedirect url={`${advisorBaseName}/clusters/${externalId}`} />;
     }
     if (
       matchPath(
-        {
-          path: '/details/:id/insights/:reportId/:errorKey',
-          exact: true,
-        },
+        { path: `${ocmBaseName}/details/:id/insights/:reportId/:errorKey`, end: true },
         path,
       ) ||
       matchPath(
-        {
-          path: '/details/s/:id/insights/:reportId/:errorKey',
-          exact: true,
-          strict: true,
-        },
+        { path: `${ocmBaseName}/details/s/:id/insights/:reportId/:errorKey`, end: true },
         path,
       )
     ) {
       const { reportId, errorKey } = params;
       const ruleId = composeRuleId(reportId, errorKey);
-      return (
-        <ExternalRedirect url={`${advisorBaseName()}/clusters/${externalId}?first=${ruleId}`} />
-      );
+      return <ExternalRedirect url={`${advisorBaseName}/clusters/${externalId}?first=${ruleId}`} />;
     }
   }
 
@@ -107,14 +89,6 @@ const InsightsAdvisorRedirector = (props) => {
 };
 
 InsightsAdvisorRedirector.propTypes = {
-  params: PropTypes.shape({
-    id: PropTypes.string,
-    reportId: PropTypes.string,
-    errorKey: PropTypes.string,
-  }).isRequired,
-  location: PropTypes.shape({
-    pathname: PropTypes.string.isRequired,
-  }).isRequired,
   fetchClusterDetails: PropTypes.func.isRequired,
   clusterDetails: PropTypes.shape({
     cluster: PropTypes.object,

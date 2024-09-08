@@ -23,6 +23,10 @@ import FuzzySelect from '~/components/common/FuzzySelect';
 import Instruction from '~/components/common/Instruction';
 import Instructions from '~/components/common/Instructions';
 import PopoverHint from '~/components/common/PopoverHint';
+import {
+  refetchGetUserOidcConfigurations,
+  useFetchGetUserOidcConfigurations,
+} from '~/queries/RosaWizardQueries/useFetchGetUserOidcConfigurations';
 
 import links from '../../../../../common/installLinks.mjs';
 import validators, {
@@ -30,7 +34,7 @@ import validators, {
 } from '../../../../../common/validators';
 import ReduxVerticalFormGroup from '../../../../common/ReduxFormComponents/ReduxVerticalFormGroup';
 
-function CreateOIDCProviderInstructions() {
+function CreateOIDCProviderInstructions({ isMultiRegionEnabled, regionLoginCommand }) {
   return (
     <Popover
       aria-label="oidc-creation-instructions"
@@ -40,9 +44,15 @@ function CreateOIDCProviderInstructions() {
       bodyContent={
         <TextContent>
           <p>
-            Create a new OIDC config ID by running the following command in your CLI. Then, refresh
-            and select the new config ID from the dropdown.
+            Create a new OIDC config ID by running the following command
+            {isMultiRegionEnabled ? 's' : ''} in your CLI. Then, refresh and select the new config
+            ID from the dropdown.
           </p>
+          {isMultiRegionEnabled && (
+            <ClipboardCopy className="pf-v5-u-pb-md" isReadOnly>
+              {regionLoginCommand}
+            </ClipboardCopy>
+          )}
           <ClipboardCopy isReadOnly>rosa create oidc-config</ClipboardCopy>
         </TextContent>
       }
@@ -56,39 +66,56 @@ function CreateOIDCProviderInstructions() {
 
 function CustomerOIDCConfiguration({
   awsAccountID,
-  getUserOidcConfigurations,
   byoOidcConfigID,
   operatorRolesCliCommand,
+  regionSearch,
+  isMultiRegionEnabled,
   input: { onChange },
   meta: { error, touched },
 }) {
-  const { getFieldProps, getFieldMeta } = useFormState();
+  const {
+    getFieldProps,
+    getFieldMeta,
+    values: { [FieldId.RegionalInstance]: regionalInstance },
+  } = useFormState();
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
+  const [isRefreshLoading, setIsRefreshLoading] = useState(false);
   const [oidcConfigs, setOidcConfigs] = useState([]);
 
-  const refreshOidcConfigs = React.useCallback(() => {
-    setIsLoading(true);
-    try {
-      getUserOidcConfigurations(awsAccountID).then(({ action }) => {
-        const currentConfigs = action.payload;
-        setOidcConfigs(currentConfigs);
+  const {
+    data: oidcData,
+    isSuccess: isOidcDataSuccess,
+    isFetching: isOidcDataFetching,
+  } = useFetchGetUserOidcConfigurations(awsAccountID, regionSearch, isMultiRegionEnabled);
 
-        const isSelectedConfigDeleted =
-          byoOidcConfigID &&
-          currentConfigs.find((config) => config.id === byoOidcConfigID) === undefined;
-        if (isSelectedConfigDeleted) {
-          onChange(null);
-        }
-      });
-    } finally {
-      // Because the response can be so quick, this ensures the user will see that something has happened
-      setTimeout(() => {
-        setIsLoading(false);
-      }, 500);
+  useEffect(() => {
+    if (oidcData && isOidcDataSuccess) {
+      const currentConfigs = oidcData?.data?.items || [];
+      setOidcConfigs(currentConfigs);
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [byoOidcConfigID]);
+  }, [oidcData, isOidcDataSuccess]);
+
+  const refreshOidcConfigs = () => {
+    setIsRefreshLoading(true);
+
+    refetchGetUserOidcConfigurations();
+    if (isOidcDataSuccess && !isOidcDataFetching) {
+      const currentConfigs = oidcData?.data?.items || [];
+      setOidcConfigs(currentConfigs);
+
+      const isSelectedConfigDeleted =
+        byoOidcConfigID &&
+        currentConfigs.find((config) => config.id === byoOidcConfigID) === undefined;
+
+      if (isSelectedConfigDeleted) {
+        onChange(null);
+      }
+    }
+    // Because the response can be so quick, this ensures the user will see that something has happened
+    setTimeout(() => {
+      setIsRefreshLoading(false);
+    }, 500);
+  };
 
   const onSelect = (_, configId) => {
     const selected = oidcConfigs.find((config) => config.id === configId);
@@ -98,15 +125,10 @@ function CustomerOIDCConfiguration({
 
   useEffect(() => {
     const isValidSelection = oidcConfigs?.some((item) => item?.id === byoOidcConfigID);
-    if (oidcConfigs?.length > 0 && byoOidcConfigID && !isValidSelection) {
+    if (oidcConfigs.length > 0 && byoOidcConfigID && !isValidSelection) {
       onChange(null);
     }
   }, [byoOidcConfigID, oidcConfigs, onChange]);
-
-  useEffect(() => {
-    refreshOidcConfigs();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
 
   const selectionData = useMemo(
     () =>
@@ -115,15 +137,23 @@ function CustomerOIDCConfiguration({
         label: oidcConfig.id,
         description: oidcConfig.issuer_url ? `Issuer URL: ${oidcConfig.issuer_url}` : undefined,
       })),
+
     [oidcConfigs],
   );
+
+  const rosaRegionLoginCommand = `rosa login --url https://${regionalInstance?.url}`;
 
   return (
     <Instructions wide>
       <Instruction simple>
         <TextContent className="pf-v5-u-pb-md">
           <div>
-            Select your existing OIDC config id or <CreateOIDCProviderInstructions />.
+            Select your existing OIDC config id or{' '}
+            <CreateOIDCProviderInstructions
+              isMultiRegionEnabled={isMultiRegionEnabled}
+              regionLoginCommand={rosaRegionLoginCommand}
+            />
+            .
           </div>
         </TextContent>
 
@@ -151,7 +181,7 @@ function CustomerOIDCConfiguration({
                 onSelect={onSelect}
                 selectedEntryId={byoOidcConfigID}
                 selectionData={selectionData}
-                isDisabled={oidcConfigs.length === 0 || isLoading}
+                isDisabled={oidcConfigs.length === 0 || isOidcDataFetching || isRefreshLoading}
                 placeholderText={
                   oidcConfigs.length > 0 ? 'Select a config id' : 'No OIDC configurations found'
                 }
@@ -163,8 +193,8 @@ function CustomerOIDCConfiguration({
                 variant="secondary"
                 className="pf-v5-u-mt-md"
                 onClick={refreshOidcConfigs}
-                isLoading={isLoading}
-                isDisabled={isLoading}
+                isLoading={isOidcDataFetching || isRefreshLoading}
+                isDisabled={isOidcDataFetching || isRefreshLoading}
               >
                 Refresh
               </Button>
@@ -210,10 +240,23 @@ function CustomerOIDCConfiguration({
 
       <Instruction simple>
         <TextContent className="pf-v5-u-pb-md">
-          <Text component={TextVariants.p}>Run the command to create new Operator Roles.</Text>
+          <Text component={TextVariants.p}>
+            {isMultiRegionEnabled
+              ? 'Run the commands in order to create new Operator Roles.'
+              : 'Run the command to create new Operator Roles.'}
+          </Text>
         </TextContent>
         {operatorRolesCliCommand ? (
           <>
+            {isMultiRegionEnabled && (
+              <ClipboardCopy
+                className="pf-v5-u-pb-md"
+                textAriaLabel="Copyable ROSA region login"
+                isReadOnly
+              >
+                {rosaRegionLoginCommand}
+              </ClipboardCopy>
+            )}
             <ClipboardCopy
               textAriaLabel="Copyable ROSA create operator-roles"
               // variant={ClipboardCopyVariant.expansion} // temporarily disabled due to  https://github.com/patternfly/patternfly-react/issues/9962
@@ -235,11 +278,17 @@ function CustomerOIDCConfiguration({
   );
 }
 
+CreateOIDCProviderInstructions.propTypes = {
+  isMultiRegionEnabled: PropTypes.bool.isRequired,
+  regionLoginCommand: PropTypes.string.isRequired,
+};
+
 CustomerOIDCConfiguration.propTypes = {
   awsAccountID: PropTypes.string,
-  getUserOidcConfigurations: PropTypes.func.isRequired,
   byoOidcConfigID: PropTypes.string,
   operatorRolesCliCommand: PropTypes.string,
+  regionSearch: PropTypes.string,
+  isMultiRegionEnabled: PropTypes.bool,
   input: PropTypes.object.isRequired,
   meta: PropTypes.object.isRequired,
 };

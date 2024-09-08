@@ -1,9 +1,8 @@
 import React from 'react';
 import { Formik } from 'formik';
-import { CompatRouter } from 'react-router-dom-v5-compat';
 
 import { normalizeSTSUsersByAWSAccounts } from '~/redux/actions/rosaActions';
-import { checkAccessibility, screen, TestRouter, waitFor, withState } from '~/testUtils';
+import { checkAccessibility, screen, waitFor, withState } from '~/testUtils';
 
 import { initialValues } from '../../constants';
 import AccountsRolesScreen, {
@@ -43,28 +42,14 @@ const buildTestComponent = (children: React.ReactNode, formValues = {}) => (
 describe('<AccountsRolesScreen />', () => {
   it('is accessible', async () => {
     const { container } = withState({}).render(
-      buildTestComponent(
-        <TestRouter>
-          <CompatRouter>
-            <AccountsRolesScreen {...accountRolesScreenProps} />
-          </CompatRouter>
-        </TestRouter>,
-      ),
+      buildTestComponent(<AccountsRolesScreen {...accountRolesScreenProps} />),
     );
 
     await checkAccessibility(container);
   });
 
   it('does not show the welcome and prerequisites sections for users with HyperShift enabled', async () => {
-    withState({}).render(
-      buildTestComponent(
-        <TestRouter>
-          <CompatRouter>
-            <AccountsRolesScreen {...accountRolesScreenProps} />
-          </CompatRouter>
-        </TestRouter>,
-      ),
-    );
+    withState({}).render(buildTestComponent(<AccountsRolesScreen {...accountRolesScreenProps} />));
 
     await waitFor(() => {
       expect(
@@ -77,15 +62,7 @@ describe('<AccountsRolesScreen />', () => {
 
   it('shows the welcome and prerequisites sections for users with HyperShift disabled without the CLI warning', async () => {
     const props = { ...accountRolesScreenProps, isHypershiftEnabled: false };
-    withState({}).render(
-      buildTestComponent(
-        <TestRouter>
-          <CompatRouter>
-            <AccountsRolesScreen {...props} />
-          </CompatRouter>
-        </TestRouter>,
-      ),
-    );
+    withState({}).render(buildTestComponent(<AccountsRolesScreen {...props} />));
 
     expect(
       await screen.findByText('Welcome to Red Hat OpenShift Service on AWS (ROSA)'),

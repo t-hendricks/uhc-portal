@@ -1,7 +1,9 @@
 import React from 'react';
-import { useLocation, useNavigate } from 'react-router-dom-v5-compat';
+import { useLocation } from 'react-router-dom';
 
 import { Tab, Tabs, TabTitleText } from '@patternfly/react-core';
+
+import { useNavigate } from '~/common/routing';
 
 import { getInitTab, getTabs } from './TabsRow.helper';
 import { TabsRowInfoType, TabsRowTabType } from './TabsRow.model';
@@ -76,7 +78,7 @@ const TabsRow = ({ tabsInfo, onTabSelected, initTabOpen }: TabsRowProps) => {
           in that case we navigate to cluster list page */
       if (!targetTab?.show || targetTab.isDisabled) {
         if (location.hash === '') {
-          navigate('/', { replace: true });
+          navigate('/cluster-list', { replace: true });
         } else {
           setInitialTab(tabs[0]);
           navigate(

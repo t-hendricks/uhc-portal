@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom-v5-compat';
 
 import {
   Button,
@@ -12,6 +11,7 @@ import {
 } from '@patternfly/react-core';
 import { ArrowRightIcon } from '@patternfly/react-icons/dist/esm/icons/arrow-right-icon';
 
+import { Link } from '~/common/routing';
 import { ManagedServicesTable } from '~/components/clusters/CreateClusterPage/CloudTab/components/ManagedServicesTable';
 import { RunItYourselfTable } from '~/components/clusters/CreateClusterPage/CloudTab/components/RunItYourselfTable';
 import { isRestrictedEnv } from '~/restrictedEnv';

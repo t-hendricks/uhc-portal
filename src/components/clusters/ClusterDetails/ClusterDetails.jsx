@@ -14,20 +14,22 @@ limitations under the License.
 import React from 'react';
 import get from 'lodash/get';
 import PropTypes from 'prop-types';
-import { Navigate, useNavigate, useParams } from 'react-router-dom-v5-compat';
+import { useLocation, useParams } from 'react-router-dom';
 
 import * as OCM from '@openshift-assisted/ui-lib/ocm';
 import { PageSection, TabContent, Tooltip } from '@patternfly/react-core';
 import { Spinner } from '@redhat-cloud-services/frontend-components/Spinner';
 
+import { Navigate, useNavigate } from '~/common/routing';
 import { AppPage } from '~/components/App/AppPage';
 import { isRestrictedEnv } from '~/restrictedEnv';
+import { SubscriptionCommonFields } from '~/types/accounts_mgmt.v1';
 
 import getClusterName from '../../../common/getClusterName';
 import { isValid, shouldRefetchQuota } from '../../../common/helpers';
 import { isUninstalledAICluster } from '../../../common/isAssistedInstallerCluster';
 import { hasCapability, subscriptionCapabilities } from '../../../common/subscriptionCapabilities';
-import { knownProducts, subscriptionStatuses } from '../../../common/subscriptionTypes';
+import { knownProducts } from '../../../common/subscriptionTypes';
 import { ASSISTED_INSTALLER_FEATURE } from '../../../redux/constants/featureConstants';
 import ErrorBoundary from '../../App/ErrorBoundary';
 import Unavailable from '../../common/Unavailable';
@@ -120,7 +122,6 @@ const ClusterDetails = (props) => {
     anyModalOpen,
     hasIssues,
     toggleSubscriptionReleased,
-    initTabOpen,
     assistedInstallerEnabled,
     userAccess,
     gotRouters,
@@ -128,6 +129,9 @@ const ClusterDetails = (props) => {
     isAccessRequestEnabled,
     accessProtectionState,
   } = props;
+
+  const location = useLocation();
+  const initTabOpen = location.hash.replace('#', '');
 
   const navigate = useNavigate();
   const params = useParams();
@@ -256,7 +260,10 @@ const ClusterDetails = (props) => {
 
     const clusterID = get(cluster, 'id');
     const subscriptionStatus = get(cluster, 'subscription.status');
-    if (isValid(clusterID) && subscriptionStatus !== subscriptionStatuses.DEPROVISIONED) {
+    if (
+      isValid(clusterID) &&
+      subscriptionStatus !== SubscriptionCommonFields.status.DEPROVISIONED
+    ) {
       refreshRelatedResources(clicked);
     }
   };
@@ -382,10 +389,10 @@ const ClusterDetails = (props) => {
 
   const clusterHibernating = isHibernating(cluster);
   const isArchived =
-    get(cluster, 'subscription.status', false) === subscriptionStatuses.ARCHIVED ||
-    get(cluster, 'subscription.status', false) === subscriptionStatuses.DEPROVISIONED;
+    get(cluster, 'subscription.status', false) === SubscriptionCommonFields.status.ARCHIVED ||
+    get(cluster, 'subscription.status', false) === SubscriptionCommonFields.status.DEPROVISIONED;
   const isAROCluster = get(cluster, 'subscription.plan.type', '') === knownProducts.ARO;
-  const isOSDTrial = get(cluster, 'subscription.plan.type', '') === knownProducts.OSDTrial;
+  const isOSDTrial = get(cluster, 'subscription.plan.type', '') === knownProducts.OSDTRIAL;
   const isRHOIC = get(cluster, 'subscription.plan.type', '') === knownProducts.RHOIC;
 
   const isManaged = cluster.managed;
@@ -674,7 +681,7 @@ const ClusterDetails = (props) => {
           onClose={onDialogClose}
           onClusterDeleted={() => {
             invalidateClusters();
-            navigate('/');
+            navigate('/cluster-list');
           }}
         />
         <DeleteIDPDialog refreshParent={refreshIDP} />
@@ -728,7 +735,7 @@ ClusterDetails.propTypes = {
   setGlobalError: PropTypes.func.isRequired,
   clearGlobalError: PropTypes.func.isRequired,
   getGrants: PropTypes.func.isRequired,
-  accessRequestsViewOptions: PropTypes.object.isRequired,
+  accessRequestsViewOptions: PropTypes.object,
   pendingAccessRequests: PropTypes.object.isRequired,
   clusterLogsViewOptions: PropTypes.object.isRequired,
   getClusterHistory: PropTypes.func.isRequired,
@@ -746,7 +753,6 @@ ClusterDetails.propTypes = {
   anyModalOpen: PropTypes.bool,
   hasIssues: PropTypes.bool.isRequired,
   toggleSubscriptionReleased: PropTypes.func.isRequired,
-  initTabOpen: PropTypes.string.isRequired,
   notificationContacts: PropTypes.object.isRequired,
   getNotificationContacts: PropTypes.func.isRequired,
   hasNetworkOndemand: PropTypes.bool.isRequired,

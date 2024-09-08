@@ -1,7 +1,6 @@
 import * as React from 'react';
 import { AxiosResponse } from 'axios';
 import { Formik, FormikValues } from 'formik';
-import { CompatRouter } from 'react-router-dom-v5-compat';
 
 import { waitFor } from '@testing-library/react';
 
@@ -9,14 +8,14 @@ import { billingModels } from '~/common/subscriptionTypes';
 import { fakeWifConfigs } from '~/components/clusters/wizards/osd/ClusterSettings/CloudProvider/GcpByocFields/GcpByocFields.fixtures';
 import { WifConfigList } from '~/components/clusters/wizards/osd/ClusterSettings/CloudProvider/types';
 import { OSD_GCP_WIF } from '~/redux/constants/featureConstants';
-import { checkAccessibility, mockUseFeatureGate, render, screen, TestRouter } from '~/testUtils';
+import { checkAccessibility, mockUseFeatureGate, render, screen } from '~/testUtils';
 
 import { FieldId, initialValues } from '../../../constants';
 
 import { GcpByocFields, GcpByocFieldsProps } from './GcpByocFields';
 
 const serviceAccountLabel = /service account/i;
-const shortLivedCredentialsLabel = /short-lived credentials/i;
+const workloadIdentityFederationLabel = 'Workload Identity Federation';
 const fetchErrorMessage = 'Error retrieving WIF configurations';
 
 export const getTestWifConfigs = () =>
@@ -32,26 +31,22 @@ const prepareComponent = (
   customValues?: FormikValues,
   getWifConfigService?: GcpByocFieldsProps['getWifConfigsService'],
 ) => (
-  <TestRouter>
-    <CompatRouter>
-      <Formik
-        initialValues={{
-          ...initialValues,
-          ...customValues,
-        }}
-        onSubmit={() => {}}
-      >
-        {(props) => (
-          <>
-            <GcpByocFields getWifConfigsService={getWifConfigService ?? getTestWifConfigs} />
-            <button type="submit" onClick={() => props.handleSubmit()}>
-              Submit
-            </button>
-          </>
-        )}
-      </Formik>
-    </CompatRouter>
-  </TestRouter>
+  <Formik
+    initialValues={{
+      ...initialValues,
+      ...customValues,
+    }}
+    onSubmit={() => {}}
+  >
+    {(props) => (
+      <>
+        <GcpByocFields getWifConfigsService={getWifConfigService ?? getTestWifConfigs} />
+        <button type="submit" onClick={() => props.handleSubmit()}>
+          Submit
+        </button>
+      </>
+    )}
+  </Formik>
 );
 
 describe('<GcpByocFields />', () => {
@@ -80,7 +75,7 @@ describe('<GcpByocFields />', () => {
   });
 
   describe('Test WIF feature flag', () => {
-    it('does not show the short lived credentials authentication if the WIF feature flag is off', async () => {
+    it('does not show the workload identity federation authentication if the WIF feature flag is off', async () => {
       mockUseFeatureGate([[OSD_GCP_WIF, false]]);
       render(prepareComponent());
 
@@ -88,7 +83,7 @@ describe('<GcpByocFields />', () => {
       expect(screen.queryByText('GCP account details')).not.toBeInTheDocument();
       expect(screen.queryByText('Authentication type')).not.toBeInTheDocument();
       expect(
-        screen.queryByRole('button', { name: shortLivedCredentialsLabel }),
+        screen.queryByRole('button', { name: workloadIdentityFederationLabel }),
       ).not.toBeInTheDocument();
       expect(screen.getByText('Service account JSON')).toBeInTheDocument();
     });
@@ -102,10 +97,10 @@ describe('<GcpByocFields />', () => {
       render(prepareComponent());
 
       expect(
-        await screen.findByRole('button', { name: shortLivedCredentialsLabel }),
+        await screen.findByRole('button', { name: workloadIdentityFederationLabel }),
       ).toBeInTheDocument();
       expect(screen.getByRole('button', { name: serviceAccountLabel })).toBeInTheDocument();
-      expect(screen.getByRole('button', { name: shortLivedCredentialsLabel })).toHaveAttribute(
+      expect(screen.getByRole('button', { name: workloadIdentityFederationLabel })).toHaveAttribute(
         'aria-pressed',
         'false',
       );
@@ -119,7 +114,7 @@ describe('<GcpByocFields />', () => {
       const { user } = render(prepareComponent());
 
       expect(
-        screen.getByRole('button', { name: shortLivedCredentialsLabel, pressed: false }),
+        screen.getByRole('button', { name: workloadIdentityFederationLabel, pressed: false }),
       ).toBeInTheDocument();
       expect(
         screen.getByRole('button', { name: serviceAccountLabel, pressed: true }),
@@ -127,24 +122,26 @@ describe('<GcpByocFields />', () => {
 
       expect(screen.getByRole('heading', { name: serviceAccountLabel })).toBeInTheDocument();
       expect(
-        screen.queryByRole('heading', { name: shortLivedCredentialsLabel }),
+        screen.queryByRole('heading', { name: workloadIdentityFederationLabel }),
       ).not.toBeInTheDocument();
 
-      await user.click(screen.getByRole('button', { name: shortLivedCredentialsLabel }));
+      await user.click(screen.getByRole('button', { name: workloadIdentityFederationLabel }));
 
       expect(
         screen.getByRole('button', { name: serviceAccountLabel, pressed: false }),
       ).toBeInTheDocument();
       expect(
-        screen.getByRole('button', { name: shortLivedCredentialsLabel, pressed: true }),
+        screen.getByRole('button', { name: workloadIdentityFederationLabel, pressed: true }),
       ).toBeInTheDocument();
 
-      expect(screen.getByRole('heading', { name: shortLivedCredentialsLabel })).toBeInTheDocument();
+      expect(
+        screen.getByRole('heading', { name: workloadIdentityFederationLabel }),
+      ).toBeInTheDocument();
       expect(screen.queryByRole('heading', { name: serviceAccountLabel })).not.toBeInTheDocument();
     });
   });
 
-  describe('Test short lived credentials (behind feature flag)', () => {
+  describe('Test workload identity federation (behind feature flag)', () => {
     beforeEach(() => {
       mockUseFeatureGate([[OSD_GCP_WIF, true]]);
     });
@@ -154,7 +151,7 @@ describe('<GcpByocFields />', () => {
         prepareComponent({}, () => new Promise<AxiosResponse<WifConfigList>>((_resolve) => {})),
       );
 
-      await user.click(screen.getByRole('button', { name: shortLivedCredentialsLabel }));
+      await user.click(screen.getByRole('button', { name: workloadIdentityFederationLabel }));
 
       expect(screen.queryByRole('button', { name: /refresh/i })).not.toBeInTheDocument();
       expect(screen.getByRole('button', { name: /loading/i })).toBeInTheDocument();
@@ -167,7 +164,7 @@ describe('<GcpByocFields />', () => {
     it('shows a list of wif configs to choose from', async () => {
       const { user } = render(prepareComponent());
 
-      await user.click(screen.getByRole('button', { name: shortLivedCredentialsLabel }));
+      await user.click(screen.getByRole('button', { name: workloadIdentityFederationLabel }));
 
       expect(screen.getByRole('button', { name: 'Options menu' })).toBeInTheDocument();
       expect(screen.queryByText(fetchErrorMessage)).not.toBeInTheDocument();
@@ -214,7 +211,7 @@ describe('<GcpByocFields />', () => {
         ),
       );
 
-      await user.click(screen.getByRole('button', { name: shortLivedCredentialsLabel }));
+      await user.click(screen.getByRole('button', { name: workloadIdentityFederationLabel }));
 
       expect(screen.getByRole('button', { name: 'Options menu' })).toBeInTheDocument();
       expect(screen.getByRole('button', { name: 'Options menu' })).toBeDisabled();
@@ -242,7 +239,7 @@ describe('<GcpByocFields />', () => {
         ),
       );
 
-      await user.click(screen.getByRole('button', { name: shortLivedCredentialsLabel }));
+      await user.click(screen.getByRole('button', { name: workloadIdentityFederationLabel }));
 
       expect(await screen.findByText('No WIF configurations found')).toBeInTheDocument();
       expect(await screen.findByText(fetchErrorMessage)).toBeInTheDocument();
@@ -251,7 +248,7 @@ describe('<GcpByocFields />', () => {
     it('should show validation errors when required information is not provided', async () => {
       const { user } = render(prepareComponent());
 
-      await user.click(screen.getByRole('button', { name: shortLivedCredentialsLabel }));
+      await user.click(screen.getByRole('button', { name: workloadIdentityFederationLabel }));
 
       expect(screen.getByRole('button', { name: 'Options menu' })).toBeInTheDocument();
       expect(await screen.findByText('Select a configuration')).toBeInTheDocument();
@@ -272,7 +269,7 @@ describe('<GcpByocFields />', () => {
     it('should allow to progress when required information is provided', async () => {
       const { user } = render(prepareComponent());
 
-      await user.click(screen.getByRole('button', { name: shortLivedCredentialsLabel }));
+      await user.click(screen.getByRole('button', { name: workloadIdentityFederationLabel }));
 
       expect(screen.getByRole('button', { name: 'Options menu' })).toBeInTheDocument();
       expect(await screen.findByText('Select a configuration')).toBeInTheDocument();

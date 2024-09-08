@@ -25,6 +25,14 @@ class CreateOSDCluster extends Page {
     cy.contains('h3', 'Default machine pool');
   }
 
+  isVPCSubnetScreen() {
+    cy.contains('h3', 'Virtual Private Cloud (VPC) subnet settings');
+  }
+
+  isClusterWideProxyScreen() {
+    cy.contains('h3', 'Cluster-wide proxy');
+  }
+
   isNetworkingScreen() {
     cy.contains('h3', 'Networking configuration');
   }
@@ -88,7 +96,7 @@ class CreateOSDCluster extends Page {
 
   enableSecureBootSupportForSchieldedVMsCheckbox = () => cy.get('input[id="secure_boot"]');
 
-  advancedEncryptionLink = () => cy.get('span').contains('Advanced Encryption');
+  advancedEncryptionLink = () => cy.contains('Advanced Encryption');
 
   enableAdditionalEtcdEncryptionCheckbox = () => cy.get('input[id="etcd_encryption"]');
 
@@ -148,10 +156,12 @@ class CreateOSDCluster extends Page {
 
   advancedEncryptionLink = () => cy.get('span').contains('Advanced Encryption');
 
+  additionalSecurityGroupsLink = () => cy.get('span').contains('Additional security groups');
+
   useCustomKMSKeyRadio = () =>
     cy.get('input[id="form-radiobutton-customer_managed_key-true-field"]');
 
-  keyArnInput = () => cy.get('input[id="kms_key_arn"]');
+  keyArnInput = () => cy.get('span input[id="kms_key_arn"]');
 
   useDefaultKMSKeyRadio = () =>
     cy.get('input[id="form-radiobutton-customer_managed_key-false-field"]');
@@ -175,6 +185,8 @@ class CreateOSDCluster extends Page {
 
   computeNodeCountValue = () => cy.getByTestId('Compute-node-count').find('div');
 
+  computeNodeRangeValue = () => cy.getByTestId('Compute-node-range').find('div');
+
   nodeLabelsValue = () => cy.getByTestId('Node-labels').find('span');
 
   clusterPrivacyValue = () => cy.getByTestId('Cluster-privacy').find('div');
@@ -190,6 +202,16 @@ class CreateOSDCluster extends Page {
   installIntoExistingVpcValue = () => cy.getByTestId('Install-into-existing-VPC').find('div');
 
   applicationIngressValue = () => cy.getByTestId('Application-ingress').find('div');
+
+  routeSelectorsValue = () => cy.getByTestId('Route-selectors').find('div');
+
+  excludedNamespacesValue = () => cy.getByTestId('Excluded-namespaces').find('div');
+
+  wildcardPolicyValue = () => cy.getByTestId('Wildcard-policy').find('div');
+
+  namespaceOwnershipValue = () => cy.getByTestId('Namespace-ownership-policy').find('div');
+
+  vpcSubnetSettingsValue = () => cy.getByTestId('VPC-subnet-settings').find('div');
 
   updateStratergyValue = () => cy.getByTestId('Update-strategy').find('div');
 
@@ -217,6 +239,8 @@ class CreateOSDCluster extends Page {
 
   addNodeLabelLink = () => cy.get('span').contains('Add node labels');
 
+  installIntoExistingVpcCheckBox = () => cy.get('input[id="install_to_vpc"]');
+
   applicationIngressDefaultSettingsRadio = () =>
     cy.get('input[id="form-radiobutton-applicationIngress-default-field"]');
 
@@ -227,6 +251,19 @@ class CreateOSDCluster extends Page {
 
   applicationIngressExcludedNamespacesInput = () =>
     cy.get('input[name="defaultRouterExcludedNamespacesFlag"]');
+
+  applicationIngressNamespaceOwnershipPolicyRadio = () =>
+    cy.get('input[id="isDefaultRouterNamespaceOwnershipPolicyStrict"]');
+
+  applicationIngressWildcardPolicyDisallowedRadio = () =>
+    cy.get('input[id="isDefaultRouterWildcardPolicyAllowed"]');
+
+  applySameSecurityGroupsToAllNodeTypes = () =>
+    cy.get('input[id="securityGroups.applyControlPlaneToAll"]');
+
+  selectRegion(region) {
+    cy.get('select[name="region"]').select(region);
+  }
 
   wizardNextButton = () => cy.getByTestId('wizard-next-button');
 
@@ -257,6 +294,80 @@ class CreateOSDCluster extends Page {
   get billingModelRedHatCloudAccountOption() {
     return 'input[id="form-radiobutton-byoc-false-field"]';
   }
+
+  waitForVPCRefresh() {
+    cy.getByTestId('refresh-vpcs').should('be.disabled');
+    cy.get('span.pf-v5-c-button__progress', { timeout: 80000 }).should('not.exist');
+  }
+
+  selectVPC(vpcName) {
+    cy.getByTestId('refresh-vpcs').should('be.enabled');
+    cy.get('div button[id="selected_vpc"]').click({ force: true });
+    cy.get(`div:contains('Select a VPC')`).should('be.visible');
+    cy.get('input[placeholder="Filter by VPC ID / name"]', { timeout: 50000 })
+      .clear()
+      .type(vpcName);
+    cy.contains(vpcName).scrollIntoView().click();
+  }
+
+  selectPrivateSubnet(index = 0, privateSubnetNameOrId) {
+    cy.get(`button[id="machinePoolsSubnets[${index}].privateSubnetId"]`).click();
+    cy.get('input[placeholder="Filter by subnet ID / name"]', { timeout: 50000 })
+      .clear()
+      .type(privateSubnetNameOrId);
+    cy.get('li').contains(privateSubnetNameOrId).scrollIntoView().click();
+    index = index + 1;
+  }
+
+  selectPublicSubnet(index = 0, publicSubnetNameOrId) {
+    cy.get(`button[id="machinePoolsSubnets[${index}].publicSubnetId"]`).click();
+    cy.get('input[placeholder="Filter by subnet ID / name"]', { timeout: 50000 })
+      .clear()
+      .type(publicSubnetNameOrId);
+    cy.contains(publicSubnetNameOrId).scrollIntoView().click();
+    index = index + 1;
+  }
+  selectSubnetAvailabilityZone(subnetAvailability) {
+    cy.contains('Select availability zone').first().click();
+    cy.get('.pf-v5-c-select__menu').within(() => {
+      cy.contains('li button', subnetAvailability).click();
+    });
+  }
+
+  selectApplySameSecurityGroupsToAllControlPlanesCheckbox(value = true) {
+    if (value) {
+      this.applySameSecurityGroupsToAllNodeTypes().check({ force: true });
+    } else {
+      this.applySameSecurityGroupsToAllNodeTypes().uncheck({ force: true });
+    }
+  }
+
+  selectAdditionalSecurityGroups(securityGroups) {
+    cy.get('button').contains('Select security groups').click({ force: true });
+    //cy.get('div').find('button').contains('Select security groups').click({ force: true });
+    cy.getByTestId('securitygroups-id').contains(securityGroups).click({ force: true });
+    cy.get('button').contains('Select security groups').click({ force: true });
+  }
+
+  controlPlaneNodesValue(controlPlane) {
+    cy.contains('Control plane nodes')
+      .parent()
+      .parent()
+      .find('div ul[aria-label="Chip group category"]')
+      .should('have.text', controlPlane);
+  }
+
+  infrastructureNodesValue(infrastructureNodes) {
+    cy.contains('Infrastructure nodes')
+      .parent()
+      .parent()
+      .find('div ul[aria-label="Chip group category"]')
+      .should('have.text', infrastructureNodes);
+  }
+
+  workerNodesValue = () => cy.contains('strong', 'Worker nodes');
+
+  securityGroupsValue = () => cy.getByTestId('Security-groups').find('div');
 
   closePopoverDialogs() {
     cy.get('body').then(($body) => {
@@ -311,11 +422,11 @@ class CreateOSDCluster extends Page {
 
   selectSubscriptionType(subscriptionType) {
     if (subscriptionType.toLowerCase().includes('on-demand')) {
-      this.subscriptionTypeOnDemandFlexibleRadio().check();
+      this.subscriptionTypeOnDemandFlexibleRadio().check({ force: true });
     } else if (subscriptionType.toLowerCase().includes('annual')) {
-      this.subscriptionTypeAnnualFixedCapacityRadio().check();
+      this.subscriptionTypeAnnualFixedCapacityRadio().check({ force: true });
     } else {
-      this.subscriptionTypeFreeTrailRadio().check();
+      this.subscriptionTypeFreeTrailRadio().check({ force: true });
     }
   }
 
@@ -323,7 +434,7 @@ class CreateOSDCluster extends Page {
     if (infrastructureType.toLowerCase().includes('customer cloud')) {
       this.infrastructureTypeClusterCloudSubscriptionRadio().check({ force: true });
     } else {
-      this.infrastructureTypeRedHatCloudAccountRadio().check();
+      this.infrastructureTypeRedHatCloudAccountRadio().check({ force: true });
     }
   }
 
@@ -338,10 +449,6 @@ class CreateOSDCluster extends Page {
     } else {
       this.gcpCloudProviderCard().click();
     }
-  }
-
-  selectRegion(region) {
-    cy.get('select[name="region"]').select(region);
   }
 
   selectAvailabilityZone(az) {

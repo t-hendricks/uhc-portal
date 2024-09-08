@@ -435,7 +435,12 @@ export function getClusterService(apiRequest: APIRequest = defaultApiRequest) {
     deleteClusterAddOn: (clusterID: string, addOnID: string) =>
       apiRequest.delete<unknown>(`/api/clusters_mgmt/v1/clusters/${clusterID}/addons/${addOnID}`),
 
-    getInstallableVersions: (isRosa: boolean, isMarketplaceGcp: boolean, isHCP: boolean = false) =>
+    getInstallableVersions: (
+      isRosa: boolean,
+      isMarketplaceGcp: boolean,
+      isHCP: boolean = false,
+      fetchUnstableVersions: boolean = false,
+    ) =>
       apiRequest.get<{
         /**
          * Retrieved list of versions.
@@ -462,7 +467,7 @@ export function getClusterService(apiRequest: APIRequest = defaultApiRequest) {
           product: isHCP ? 'hcp' : undefined,
           // Internal users can test other channels via `ocm` CLI, no UI needed.
           // For external users, make sure we only offer stable channel.
-          search: `enabled='t' AND channel_group='stable'${isRosa ? " AND rosa_enabled='t'" : ''}${
+          search: `enabled='t' AND (channel_group='stable'${fetchUnstableVersions ? " OR channel_group='candidate' OR channel_group='fast' OR channel_group='nightly'" : ''})${isRosa ? " AND rosa_enabled='t'" : ''}${
             isMarketplaceGcp ? " AND gcp_marketplace_enabled='t'" : ''
           }`,
           size: -1,
@@ -1176,7 +1181,11 @@ export function getClusterService(apiRequest: APIRequest = defaultApiRequest) {
       ),
 
     getGCPWifConfigs: (query: string) =>
-      apiRequest.get<WifConfigList>(`/api/clusters_mgmt/v1/wif_configs`),
+      apiRequest.get<WifConfigList>(`/api/clusters_mgmt/v1/gcp/wif_configs`, {
+        params: {
+          size: -1,
+        },
+      }),
   };
 }
 

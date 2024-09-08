@@ -1,32 +1,20 @@
+import { SubscriptionCommonFields } from '~/types/accounts_mgmt.v1';
+
 import { secureRandomValueInRange } from '../../../../common/helpers';
-import {
-  subscriptionServiceLevels,
-  subscriptionSettings,
-  subscriptionSupportLevels,
-  subscriptionSystemUnits,
-  subscriptionUsages,
-} from '../../../../common/subscriptionTypes';
+import { subscriptionSettings } from '../../../../common/subscriptionTypes';
 import validateSubscriptionSettings from '../validateSubscriptionSettings';
 
 const { SUPPORT_LEVEL, SERVICE_LEVEL, USAGE, SYSTEM_UNITS, CPU_TOTAL, SOCKET_TOTAL } =
   subscriptionSettings;
 
-const { EVAL, PREMIUM, STANDARD, SELF_SUPPORT } = subscriptionSupportLevels;
-
-const { L1_L3, L3_ONLY } = subscriptionServiceLevels;
-
-const { PRODUCTION, DEV_TEST, DISASTER_RECOVERY } = subscriptionUsages;
-
-const { CORES_VCPU, SOCKETS } = subscriptionSystemUnits;
-
 const expectedCpuTotal = (settings: { [index: string]: any }) =>
-  settings[SYSTEM_UNITS] === CORES_VCPU
+  settings[SYSTEM_UNITS] === SubscriptionCommonFields.system_units.CORES_V_CPU
     ? settings[CPU_TOTAL]
     : // default cpu_total is socket_total
       settings[SOCKET_TOTAL];
 
 const expectedSocketTotal = (settings: { [index: string]: any }) =>
-  settings[SYSTEM_UNITS] === SOCKETS
+  settings[SYSTEM_UNITS] === SubscriptionCommonFields.system_units.SOCKETS
     ? settings[SOCKET_TOTAL]
     : // default socket_total is 1
       1;
@@ -36,7 +24,7 @@ const getRandInt = () => secureRandomValueInRange(1, 1000);
 describe('validateSubscriptionSettings()', () => {
   it('it should be valid without configuring settings', () => {
     const settings = {
-      [SUPPORT_LEVEL]: EVAL,
+      [SUPPORT_LEVEL]: SubscriptionCommonFields.support_level.EVAL,
       [SERVICE_LEVEL]: '',
       [USAGE]: '',
       [SYSTEM_UNITS]: '',
@@ -51,10 +39,10 @@ describe('validateSubscriptionSettings()', () => {
 
   it('it should be valid when configured Premium', () => {
     const settings = {
-      [SUPPORT_LEVEL]: PREMIUM,
-      [SERVICE_LEVEL]: L1_L3,
-      [USAGE]: PRODUCTION,
-      [SYSTEM_UNITS]: CORES_VCPU,
+      [SUPPORT_LEVEL]: SubscriptionCommonFields.support_level.PREMIUM,
+      [SERVICE_LEVEL]: SubscriptionCommonFields.service_level.L1_L3,
+      [USAGE]: SubscriptionCommonFields.usage.PRODUCTION,
+      [SYSTEM_UNITS]: SubscriptionCommonFields.system_units.CORES_V_CPU,
       [CPU_TOTAL]: getRandInt(),
       [SOCKET_TOTAL]: getRandInt(),
       isValid: true,
@@ -71,10 +59,10 @@ describe('validateSubscriptionSettings()', () => {
 
   it('it should be valid when configured Standard', () => {
     const settings = {
-      [SUPPORT_LEVEL]: STANDARD,
-      [SERVICE_LEVEL]: L1_L3,
-      [USAGE]: DISASTER_RECOVERY,
-      [SYSTEM_UNITS]: CORES_VCPU,
+      [SUPPORT_LEVEL]: SubscriptionCommonFields.support_level.STANDARD,
+      [SERVICE_LEVEL]: SubscriptionCommonFields.service_level.L1_L3,
+      [USAGE]: SubscriptionCommonFields.usage.DISASTER_RECOVERY,
+      [SYSTEM_UNITS]: SubscriptionCommonFields.system_units.CORES_V_CPU,
       [CPU_TOTAL]: getRandInt(),
       [SOCKET_TOTAL]: getRandInt(),
       isValid: true,
@@ -91,10 +79,10 @@ describe('validateSubscriptionSettings()', () => {
 
   it('it should be valid when configured Standard, Sockets', () => {
     const settings = {
-      [SUPPORT_LEVEL]: STANDARD,
-      [SERVICE_LEVEL]: L1_L3,
-      [USAGE]: DISASTER_RECOVERY,
-      [SYSTEM_UNITS]: SOCKETS,
+      [SUPPORT_LEVEL]: SubscriptionCommonFields.support_level.STANDARD,
+      [SERVICE_LEVEL]: SubscriptionCommonFields.service_level.L1_L3,
+      [USAGE]: SubscriptionCommonFields.usage.DISASTER_RECOVERY,
+      [SYSTEM_UNITS]: SubscriptionCommonFields.system_units.SOCKETS,
       [CPU_TOTAL]: getRandInt(),
       [SOCKET_TOTAL]: getRandInt(),
       isValid: true,
@@ -111,10 +99,10 @@ describe('validateSubscriptionSettings()', () => {
 
   it('it should be valid when configured Self-Support, Sockets', () => {
     const settings = {
-      [SUPPORT_LEVEL]: SELF_SUPPORT,
-      [SERVICE_LEVEL]: L3_ONLY,
-      [USAGE]: DEV_TEST,
-      [SYSTEM_UNITS]: SOCKETS,
+      [SUPPORT_LEVEL]: SubscriptionCommonFields.support_level.SELF_SUPPORT,
+      [SERVICE_LEVEL]: SubscriptionCommonFields.service_level.L3_ONLY,
+      [USAGE]: SubscriptionCommonFields.usage.DEVELOPMENT_TEST,
+      [SYSTEM_UNITS]: SubscriptionCommonFields.system_units.SOCKETS,
       [CPU_TOTAL]: getRandInt(),
       [SOCKET_TOTAL]: getRandInt(),
       isValid: true,
@@ -131,10 +119,10 @@ describe('validateSubscriptionSettings()', () => {
 
   it('it should not be valid when child form is invalid', () => {
     const settings = {
-      [SUPPORT_LEVEL]: SELF_SUPPORT,
-      [SERVICE_LEVEL]: L3_ONLY,
-      [USAGE]: DEV_TEST,
-      [SYSTEM_UNITS]: SOCKETS,
+      [SUPPORT_LEVEL]: SubscriptionCommonFields.support_level.SELF_SUPPORT,
+      [SERVICE_LEVEL]: SubscriptionCommonFields.service_level.L3_ONLY,
+      [USAGE]: SubscriptionCommonFields.usage.DEVELOPMENT_TEST,
+      [SYSTEM_UNITS]: SubscriptionCommonFields.system_units.SOCKETS,
       [CPU_TOTAL]: getRandInt(),
       [SOCKET_TOTAL]: getRandInt(),
       isValid: false,

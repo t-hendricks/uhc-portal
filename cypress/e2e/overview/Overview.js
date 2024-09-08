@@ -11,10 +11,7 @@ describe('OCM Overview Page tests (OCP-65189)', { tags: ['smoke'] }, () => {
   it('OCM Overview Page - header and central section', () => {
     Overview.header()
       .checkTitle('Get started with OpenShift')
-      .checkLink(
-        'Learn more about OpenShift',
-        'https://www.redhat.com/en/technologies/cloud-computing/openshift',
-      )
+      .checkLink('Learn more', 'https://www.redhat.com/en/technologies/cloud-computing/openshift')
       .opensInRightTab()
       .successfullyOpens();
 
@@ -107,60 +104,55 @@ describe('OCM Overview Page tests (OCP-65189)', { tags: ['smoke'] }, () => {
     ).opensExpectedPage('Select an OpenShift cluster type to create');
   });
 
-  it('OCM Overview Page - Recommended content section', () => {
-    const openshiftVersion = currentOcVersion.getVersion();
+  it('OCM Overview Page - Featured products section', () => {
+    Overview.featuredProductsExpected(2);
 
-    Overview.recommendedContentsExpected(4);
-
-    var recommendedContent = Overview.recommendedContent('recommendedContent_OCM');
-    recommendedContent.cyObj.contains(
-      'Using Red Hat OpenShift Cluster Manager to work with your OpenShift clusters',
+    var recommendedOperator = Overview.productsOrOperatorCards(
+      'Advanced Cluster Security for Kubernetes',
+      'Protect your containerized Kubernetes workloads in all major clouds and hybrid platforms',
     );
-    recommendedContent.shouldHaveLabel('Documentation');
-    recommendedContent
-      .checkLink(
-        'Learn More',
-        'https://access.redhat.com/documentation/en-us/openshift_cluster_manager/2023/html/managing_clusters/assembly-managing-clusters',
-      )
-      .opensInRightTab()
-      .successfullyOpens();
+    recommendedOperator.click();
+    Overview.drawerContentTitle().should('have.text', 'Advanced Cluster Security for Kubernetes');
+    Overview.drawerCloseButton();
 
-    recommendedContent = Overview.recommendedContent('recommendedContent_ServerLess');
-    recommendedContent.cyObj.contains('OpenShift Serverless overview');
-    recommendedContent.shouldHaveLabel('Documentation');
-    recommendedContent
-      .checkLink(
-        'Learn More',
-        `https://docs.openshift.com/container-platform/${openshiftVersion}/serverless/about/about-serverless.html`,
-      )
-      .opensInRightTab()
-      .successfullyOpens();
+    recommendedOperator = Overview.productsOrOperatorCards(
+      'Red Hat OpenShift AI',
+      'Create and deliver generative and predictive AI models at scale across on-premise and public cloud environments',
+    );
+    recommendedOperator.click();
+    Overview.drawerContentTitle().should('have.text', 'Red Hat OpenShift AI');
+    Overview.drawerCloseButton();
+  });
 
-    recommendedContent = Overview.recommendedContent('recommendedContent_ServiceMesh');
-    recommendedContent.cyObj.contains('Understanding Service Mesh');
-    recommendedContent.shouldHaveLabel('Documentation');
-    recommendedContent
-      .checkLink(
-        'Learn More',
-        `https://docs.openshift.com/container-platform/${openshiftVersion}/service_mesh/v2x/ossm-architecture.html`,
-      )
-      .opensInRightTab()
-      .successfullyOpens();
+  it('OCM Overview Page - Recommended Operators section', () => {
+    Overview.isRecommendedOperatorsHeaderVisible(
+      'https://catalog.redhat.com/search?searchType=software&deployed_as=Operator',
+    );
 
-    recommendedContent = Overview.recommendedContent('recommendedContent_OVIRT');
-    recommendedContent.cyObj.contains('About OpenShift Virtualization');
-    recommendedContent.shouldHaveLabel('Documentation');
-    recommendedContent
-      .checkLink(
-        'Learn More',
-        `https://docs.openshift.com/container-platform/${openshiftVersion}/virt/about_virt/about-virt.html`,
-      )
-      .opensInRightTab()
-      .successfullyOpens();
+    Overview.recommendedOperatorsExpected(3);
 
-    Overview.recommendedContentFooterLinkExists(
-      'Browse all OpenShift learning resources',
-      '/openshift/learning-resources',
-    ).opensInRightTab(false);
+    var recommendedOperator = Overview.productsOrOperatorCards(
+      'Red Hat OpenShift GitOps',
+      'Integrate git repositories, continuous integration/continuous delivery (CI/CD) tools, and Kubernetes',
+    );
+    recommendedOperator.click();
+    Overview.drawerContentTitle().should('have.text', 'Red Hat OpenShift GitOps');
+    Overview.drawerCloseButton();
+
+    recommendedOperator = Overview.productsOrOperatorCards(
+      'Red Hat OpenShift Pipelines',
+      'Automate your application delivery using a continuous integration and continuous deployment (CI/CD) framework',
+    );
+    recommendedOperator.click();
+    Overview.drawerContentTitle().should('have.text', 'Red Hat OpenShift Pipelines');
+    Overview.drawerCloseButton();
+
+    recommendedOperator = Overview.productsOrOperatorCards(
+      'Red Hat OpenShift Service Mesh',
+      'Connect, manage, and observe microservices-based applications in a uniform way',
+    );
+    recommendedOperator.click();
+    Overview.drawerContentTitle().should('have.text', 'Red Hat OpenShift Service Mesh');
+    Overview.drawerCloseButton();
   });
 });

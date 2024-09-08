@@ -1,7 +1,6 @@
 /* eslint-disable react/jsx-no-useless-fragment */
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom-v5-compat';
 
 import {
   Button,
@@ -19,6 +18,8 @@ import {
   TableBody as TableBodyDeprecated,
   TableHeader as TableHeaderDeprecated,
 } from '@patternfly/react-table/deprecated';
+
+import { Link } from '~/common/routing';
 
 const ocpTableColumns = ['Infrastructure provider', 'Installation options'];
 const ocpTableRows = [

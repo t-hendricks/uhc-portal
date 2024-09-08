@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom-v5-compat';
 
 import {
   Card,
@@ -20,6 +19,7 @@ import {
 } from '@patternfly/react-table/deprecated';
 import { global_success_color_100 as successColor } from '@patternfly/react-tokens/dist/esm/global_success_color_100';
 
+import { Link } from '~/common/routing';
 import { usePreviousProps } from '~/hooks/usePreviousProps';
 
 import getClusterName from '../../../common/getClusterName';

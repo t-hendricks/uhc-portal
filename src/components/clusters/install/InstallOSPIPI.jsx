@@ -24,7 +24,7 @@ export class InstallOSPIPI extends Component {
     const breadcrumbs = (
       <Breadcrumbs
         path={[
-          { label: 'Clusters' },
+          { label: 'Cluster List' },
           { label: 'Cluster Type', path: '/create' },
           { label: 'Red Hat OpenStack Platform', path: '/install/openstack' },
           { label: 'Installer-provisioned infrastructure' },

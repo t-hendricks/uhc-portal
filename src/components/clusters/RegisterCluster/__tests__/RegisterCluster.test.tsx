@@ -1,15 +1,14 @@
 import React from 'react';
 import * as reactRedux from 'react-redux';
-import { CompatRouter } from 'react-router-dom-v5-compat';
 import { reduxForm } from 'redux-form';
 
 import { useGlobalState } from '~/redux/hooks';
-import { checkAccessibility, render, screen, TestRouter } from '~/testUtils';
+import { checkAccessibility, render, screen } from '~/testUtils';
 
 import RegisterCluster from '../RegisterCluster';
 
-jest.mock('react-router-dom-v5-compat', () => ({
-  ...jest.requireActual('react-router-dom-v5-compat'),
+jest.mock('react-router-dom', () => ({
+  ...jest.requireActual('react-router-dom'), // Preserve other exports from react-router-dom
   Navigate: jest.fn(({ to }) => `Redirected to "${to}"`),
 }));
 
@@ -22,7 +21,7 @@ jest.mock('~/redux/hooks', () => ({
   useGlobalState: jest.fn(),
 }));
 
-// jest.mock('../EditSubscriptionSettings');
+jest.mock('../EditSubscriptionSettings');
 
 describe('<RegisterCluster />', () => {
   const ConnectedRegisterCluster = reduxForm({
@@ -43,19 +42,15 @@ describe('<RegisterCluster />', () => {
 
   it('is accessible', async () => {
     // Arrange
-    (useGlobalState as jest.Mock).mockReturnValueOnce({});
-    (useGlobalState as jest.Mock).mockReturnValueOnce({});
-    (useGlobalState as jest.Mock).mockReturnValueOnce(false);
-    (useGlobalState as jest.Mock).mockReturnValueOnce(false);
+    (useGlobalState as jest.Mock).mockReturnValue({
+      quotaResponse: {},
+      registerClusterResponse: {},
+      isOpen: false,
+      canSubscribeOCP: false,
+    });
 
     // Act
-    const { container } = render(
-      <TestRouter>
-        <CompatRouter>
-          <ConnectedRegisterCluster />
-        </CompatRouter>
-      </TestRouter>,
-    );
+    const { container } = render(<ConnectedRegisterCluster />);
 
     // Assert
     await checkAccessibility(container);
@@ -63,19 +58,15 @@ describe('<RegisterCluster />', () => {
 
   it('shows spinner when quota has not been fulfilled', () => {
     // Arrange
-    (useGlobalState as jest.Mock).mockReturnValueOnce({ fulfilled: false });
-    (useGlobalState as jest.Mock).mockReturnValueOnce({});
-    (useGlobalState as jest.Mock).mockReturnValueOnce(false);
-    (useGlobalState as jest.Mock).mockReturnValueOnce(false);
+    (useGlobalState as jest.Mock).mockReturnValue({
+      quotaResponse: { fulfilled: false },
+      registerClusterResponse: {},
+      isOpen: false,
+      canSubscribeOCP: false,
+    });
 
     // Act
-    render(
-      <TestRouter>
-        <CompatRouter>
-          <ConnectedRegisterCluster />
-        </CompatRouter>
-      </TestRouter>,
-    );
+    render(<ConnectedRegisterCluster />);
 
     // Assert
     expect(screen.getByRole('status')).toHaveTextContent('Loading...');
@@ -85,21 +76,16 @@ describe('<RegisterCluster />', () => {
 
   it('shows form when quota has been fulfilled', () => {
     // Arrange
-    for (let i = 0; i < 3; i += 1) {
-      (useGlobalState as jest.Mock).mockReturnValueOnce({ fulfilled: true });
-      (useGlobalState as jest.Mock).mockReturnValueOnce({});
-      (useGlobalState as jest.Mock).mockReturnValueOnce(false);
-      (useGlobalState as jest.Mock).mockReturnValueOnce(false);
-    }
+
+    (useGlobalState as jest.Mock).mockReturnValue({
+      quotaResponse: { fulfilled: true },
+      registerClusterResponse: {},
+      isOpen: false,
+      canSubscribeOCP: false,
+    });
 
     // Act
-    render(
-      <TestRouter>
-        <CompatRouter>
-          <ConnectedRegisterCluster />
-        </CompatRouter>
-      </TestRouter>,
-    );
+    render(<ConnectedRegisterCluster />);
 
     // Assert
     expect(screen.queryByRole('status')).not.toBeInTheDocument();
@@ -109,24 +95,22 @@ describe('<RegisterCluster />', () => {
 
   it('redirects to cluster details when the cluster data is fulfilled', () => {
     // Arrange
-    (useGlobalState as jest.Mock).mockReturnValueOnce({ fulfilled: true });
-    (useGlobalState as jest.Mock).mockReturnValueOnce({
-      fulfilled: true,
-      cluster: { id: 'myClusterId' },
+    (useGlobalState as jest.Mock).mockReturnValue({
+      quotaResponse: { fulfilled: true },
+      registerClusterResponse: {
+        fulfilled: true,
+        cluster: { id: 'myClusterId' },
+      },
+      isOpen: false,
+      canSubscribeOCP: false,
     });
-    (useGlobalState as jest.Mock).mockReturnValueOnce(false);
-    (useGlobalState as jest.Mock).mockReturnValueOnce(false);
 
     // Act
-    render(
-      <TestRouter>
-        <CompatRouter>
-          <ConnectedRegisterCluster />
-        </CompatRouter>
-      </TestRouter>,
-    );
+    render(<ConnectedRegisterCluster />);
 
     // Assert
-    expect(screen.getByText('Redirected to "/details/s/myClusterId"')).toBeInTheDocument();
+    expect(
+      screen.getByText('Redirected to "/openshift/details/s/myClusterId"'),
+    ).toBeInTheDocument();
   });
 });

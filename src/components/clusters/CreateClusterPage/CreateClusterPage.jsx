@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { useNavigate } from 'react-router-dom-v5-compat';
 
 import { PageSection, Tab, Tabs, TabTitleIcon, TabTitleText } from '@patternfly/react-core';
 import { CloudIcon } from '@patternfly/react-icons/dist/esm/icons/cloud-icon';
@@ -8,6 +7,7 @@ import { LaptopIcon } from '@patternfly/react-icons/dist/esm/icons/laptop-icon';
 import { ServerIcon } from '@patternfly/react-icons/dist/esm/icons/server-icon';
 import { Spinner } from '@redhat-cloud-services/frontend-components/Spinner';
 
+import { useNavigate } from '~/common/routing';
 import { AppPage } from '~/components/App/AppPage';
 import { isRestrictedEnv } from '~/restrictedEnv';
 
@@ -66,7 +66,7 @@ const CreateCluster = ({
   const title = (
     <PageTitle
       title="Select an OpenShift cluster type to create"
-      breadcrumbs={<Breadcrumbs path={[{ label: 'Clusters' }, { label: 'Cluster Type' }]} />}
+      breadcrumbs={<Breadcrumbs path={[{ label: 'Cluster List' }, { label: 'Cluster Type' }]} />}
     />
   );
 

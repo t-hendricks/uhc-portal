@@ -1,6 +1,5 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { Link } from 'react-router-dom-v5-compat';
 
 import {
   Card,
@@ -17,6 +16,7 @@ import {
   TableHeader as TableHeaderDeprecated,
 } from '@patternfly/react-table/deprecated';
 
+import { Link } from '~/common/routing';
 import { useGlobalState } from '~/redux/hooks';
 import { getSubscriptionQueryType } from '~/services/accountsService';
 import { Subscription } from '~/types/accounts_mgmt.v1';

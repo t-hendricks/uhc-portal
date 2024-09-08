@@ -15,8 +15,6 @@ limitations under the License.
 */
 import React from 'react';
 import { Provider } from 'react-redux';
-import { BrowserRouter } from 'react-router-dom';
-import { CompatRouter } from 'react-router-dom-v5-compat';
 
 import * as OCM from '@openshift-assisted/ui-lib/ocm';
 import { GenerateId } from '@patternfly/react-core';
@@ -27,8 +25,6 @@ import NotificationPortal from '@redhat-cloud-services/frontend-components-notif
 import * as Sentry from '@sentry/browser';
 import { sessionTimingIntegration } from '@sentry/integrations';
 
-import ocmBaseName from './common/getBaseName';
-import getNavClickParams from './common/getNavClickParams';
 import App from './components/App/App';
 import { detectFeatures } from './redux/actions/featureActions';
 import { userInfoResponse } from './redux/actions/userActions';
@@ -63,7 +59,6 @@ class AppEntry extends React.Component<Props> {
 
   componentDidMount() {
     const { chrome } = this.props;
-    chrome.appNavClick(getNavClickParams(window.location.pathname));
     config.dateConfig();
     chrome.auth.getUser().then((data: any) => {
       if (data?.identity?.user) {
@@ -114,23 +109,10 @@ class AppEntry extends React.Component<Props> {
   render() {
     const { ready } = this.state;
     if (ready) {
-      // HACK: react-router only looks at `basename` prop once on initialization, so this is
-      //    fragile if we later jump between /preview & /beta.
-      const basename = ocmBaseName();
-
       return (
         <Provider store={store}>
           <NotificationPortal />
-          <BrowserRouter
-            basename={basename}
-            getUserConfirmation={() => {
-              /* Block the default browser prompt (window.confirm). */
-            }}
-          >
-            <CompatRouter>
-              <App />
-            </CompatRouter>
-          </BrowserRouter>
+          <App />
         </Provider>
       );
     }

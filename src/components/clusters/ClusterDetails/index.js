@@ -13,7 +13,6 @@ import { onClearFiltersAndFlags } from '~/redux/actions/viewOptionsActions';
 import {
   ACCESS_REQUEST_ENABLED,
   ASSISTED_INSTALLER_FEATURE,
-  HCP_USE_NODE_UPGRADE_POLICIES,
   NETWORK_VALIDATOR_ONDEMAND_FEATURE,
 } from '~/redux/constants/featureConstants';
 
@@ -27,7 +26,7 @@ import { getNotificationContacts, getSupportCases } from '../../../redux/actions
 import { fetchUpgradeGates } from '../../../redux/actions/upgradeGateActions';
 import { viewConstants } from '../../../redux/constants';
 import { modalActions } from '../../common/Modal/ModalActions';
-import canSubscribeOCPSelector from '../common/EditSubscriptionSettingsDialog/CanSubscribeOCPSelector';
+import { canSubscribeOCPSelector } from '../common/EditSubscriptionSettingsDialog/canSubscribeOCPSelector';
 import { userCanHibernateClustersSelector } from '../common/HibernateClusterModal/HibernateClusterModalSelectors';
 import { canTransferClusterOwnershipSelector } from '../common/TransferClusterOwnershipDialog/utils/transferClusterOwnershipDialogSelectors';
 import { getSchedules } from '../common/Upgrades/clusterUpgradeActions';
@@ -51,7 +50,7 @@ import { issuesAndWarningsSelector } from './components/Monitoring/MonitoringSel
 import { getClusterRouters } from './components/Networking/NetworkingActions';
 import ClusterDetails from './ClusterDetails';
 
-const mapStateToProps = (state, { location }) => {
+const mapStateToProps = (state) => {
   const { details } = state.clusters;
   const { cloudProviders, clusterRouters } = state;
   const { addOns } = state.addOns;
@@ -86,14 +85,12 @@ const mapStateToProps = (state, { location }) => {
     canHibernateCluster: userCanHibernateClustersSelector(state),
     anyModalOpen: !!state.modal.modalName,
     hasIssues: issuesAndWarningsSelector(state).issues.totalCount > 0,
-    initTabOpen: location.hash.replace('#', ''),
     notificationContacts,
     supportCases,
     assistedInstallerEnabled: featureGateSelector(state, ASSISTED_INSTALLER_FEATURE),
     userAccess: state.cost.userAccess,
     gotRouters: get(clusterRouters, 'getRouters.routers.length', 0) > 0,
     upgradeGates: getUpgradeGates(state),
-    useNodeUpgradePolicies: featureGateSelector(state, HCP_USE_NODE_UPGRADE_POLICIES),
     hasNetworkOndemand: featureGateSelector(state, NETWORK_VALIDATOR_ONDEMAND_FEATURE),
     isAccessRequestEnabled: featureGateSelector(state, ACCESS_REQUEST_ENABLED),
     accessProtectionState: state.accessProtection.accessProtection,

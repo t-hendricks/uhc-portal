@@ -1,5 +1,4 @@
 import React, { useRef } from 'react';
-import { Link } from 'react-router-dom-v5-compat';
 
 import {
   Button,
@@ -10,6 +9,8 @@ import {
   MenuItemProps,
   MenuToggle,
 } from '@patternfly/react-core';
+
+import { Link } from '~/common/routing';
 
 interface CreateClusterDropDownProps {
   toggleId?: string;

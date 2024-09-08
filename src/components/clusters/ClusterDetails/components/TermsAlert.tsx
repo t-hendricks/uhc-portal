@@ -5,10 +5,10 @@ import { Alert, AlertActionLink } from '@patternfly/react-core';
 
 import { selfTermsReview } from '~/redux/actions/userActions';
 import { useGlobalState } from '~/redux/hooks';
-import { Subscription } from '~/types/accounts_mgmt.v1';
+import { Subscription, SubscriptionCommonFields } from '~/types/accounts_mgmt.v1';
 
 import getTermsAppLink from '../../../../common/getTermsAppLink';
-import { normalizedProducts, subscriptionStatuses } from '../../../../common/subscriptionTypes';
+import { normalizedProducts } from '../../../../common/subscriptionTypes';
 
 type TermsAlertProps = {
   subscription: Subscription;
@@ -24,7 +24,7 @@ const TermsAlert = ({ subscription }: TermsAlertProps) => {
     getTermsAppLink(baseURL, window.location.href, window.location.href);
 
   const isTermsReviewRequired = (subscription: Subscription) =>
-    subscription.status !== subscriptionStatuses.DEPROVISIONED &&
+    subscription.status !== SubscriptionCommonFields.status.DEPROVISIONED &&
     [normalizedProducts.OSD, normalizedProducts.RHMI, normalizedProducts.ROSA].includes(
       subscription.plan?.type ?? '',
     );

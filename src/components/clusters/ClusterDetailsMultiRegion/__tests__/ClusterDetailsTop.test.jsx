@@ -1,7 +1,6 @@
 import React from 'react';
-import { CompatRouter } from 'react-router-dom-v5-compat';
 
-import { checkAccessibility, render, screen, TestRouter, waitFor, within } from '~/testUtils';
+import { checkAccessibility, render, screen, waitFor, within } from '~/testUtils';
 
 import clusterStates from '../../common/clusterStates';
 import ClusterDetailsTop from '../components/ClusterDetailsTop';
@@ -27,41 +26,25 @@ describe('<ClusterDetailsTop />', () => {
     canHibernateCluster: fixtures.canHibernateCluster,
     toggleSubscriptionReleased: functions.toggleSubscriptionReleased,
     showPreviewLabel: true,
+    isClusterIdentityProvidersLoading: false,
+    isRefetching: false,
   };
 
   it('is accessible', async () => {
-    const { container } = render(
-      <TestRouter>
-        <CompatRouter>
-          <ClusterDetailsTop {...props} />
-        </CompatRouter>
-      </TestRouter>,
-    );
+    const { container } = render(<ClusterDetailsTop {...props} />);
 
     expect(await screen.findByRole('heading', { level: 1 })).toBeInTheDocument();
     await checkAccessibility(container);
   });
 
   it('should show refresh button', async () => {
-    render(
-      <TestRouter>
-        <CompatRouter>
-          <ClusterDetailsTop {...props} />
-        </CompatRouter>
-      </TestRouter>,
-    );
+    render(<ClusterDetailsTop {...props} />);
 
     expect(await screen.findByRole('button', { name: 'Refresh' })).toBeInTheDocument();
   });
 
   it('should enable open console button when cluster has console url and cluster is not uninstalling', async () => {
-    render(
-      <TestRouter>
-        <CompatRouter>
-          <ClusterDetailsTop {...props} />
-        </CompatRouter>
-      </TestRouter>,
-    );
+    render(<ClusterDetailsTop {...props} />);
     expect(await screen.findByRole('button', { name: 'Open console' })).toHaveAttribute(
       'aria-disabled',
       'false',
@@ -73,13 +56,7 @@ describe('<ClusterDetailsTop />', () => {
 
     const newProps = { ...props, cluster };
 
-    render(
-      <TestRouter>
-        <CompatRouter>
-          <ClusterDetailsTop {...newProps} />
-        </CompatRouter>
-      </TestRouter>,
-    );
+    render(<ClusterDetailsTop {...newProps} />);
     expect(await screen.findByRole('button', { name: 'Open console' })).toHaveAttribute(
       'aria-disabled',
       'true',
@@ -90,13 +67,7 @@ describe('<ClusterDetailsTop />', () => {
     const cluster = { ...fixtures.clusterDetails.cluster, state: clusterStates.UNINSTALLING };
     const newProps = { ...props, cluster };
 
-    render(
-      <TestRouter>
-        <CompatRouter>
-          <ClusterDetailsTop {...newProps} />
-        </CompatRouter>
-      </TestRouter>,
-    );
+    render(<ClusterDetailsTop {...newProps} />);
     expect(await screen.findByRole('button', { name: 'Open console' })).toHaveAttribute(
       'aria-disabled',
       'true',
@@ -106,13 +77,7 @@ describe('<ClusterDetailsTop />', () => {
   it('should show error icon if an error occurred', async () => {
     const newProps = { ...props, error: true, errorMessage: 'I am an error message' };
 
-    render(
-      <TestRouter>
-        <CompatRouter>
-          <ClusterDetailsTop {...newProps} />
-        </CompatRouter>
-      </TestRouter>,
-    );
+    render(<ClusterDetailsTop {...newProps} />);
 
     expect(await screen.findByLabelText('Warning')).toBeInTheDocument();
   });
@@ -125,13 +90,7 @@ describe('<ClusterDetailsTop />', () => {
 
     const newProps = { ...props, cluster };
 
-    render(
-      <TestRouter>
-        <CompatRouter>
-          <ClusterDetailsTop {...newProps} />
-        </CompatRouter>
-      </TestRouter>,
-    );
+    render(<ClusterDetailsTop {...newProps} />);
 
     const unArchiveButton = await screen.findByRole('button', { name: 'Unarchive' });
 
@@ -153,13 +112,7 @@ describe('<ClusterDetailsTop />', () => {
 
     const newProps = { ...props, cluster };
 
-    render(
-      <TestRouter>
-        <CompatRouter>
-          <ClusterDetailsTop {...newProps} />
-        </CompatRouter>
-      </TestRouter>,
-    );
+    render(<ClusterDetailsTop {...newProps} />);
 
     expect(await screen.findByRole('alert')).toBeInTheDocument();
     expect(
@@ -184,13 +137,7 @@ describe('<ClusterDetailsTop />', () => {
 
     const newProps = { ...props, cluster };
 
-    render(
-      <TestRouter>
-        <CompatRouter>
-          <ClusterDetailsTop {...newProps} />
-        </CompatRouter>
-      </TestRouter>,
-    );
+    render(<ClusterDetailsTop {...newProps} />);
 
     expect(await screen.findByRole('alert')).toBeInTheDocument();
     expect(
@@ -215,13 +162,7 @@ describe('<ClusterDetailsTop />', () => {
 
     const newProps = { ...props, cluster };
 
-    render(
-      <TestRouter>
-        <CompatRouter>
-          <ClusterDetailsTop {...newProps} />
-        </CompatRouter>
-      </TestRouter>,
-    );
+    render(<ClusterDetailsTop {...newProps} />);
 
     expect(await screen.findByRole('alert')).toBeInTheDocument();
     expect(
@@ -240,13 +181,7 @@ describe('<ClusterDetailsTop />', () => {
     const { cluster } = fixtures.AIClusterDetails;
     const newProps = { ...props, cluster };
 
-    render(
-      <TestRouter>
-        <CompatRouter>
-          <ClusterDetailsTop {...newProps} />
-        </CompatRouter>
-      </TestRouter>,
-    );
+    render(<ClusterDetailsTop {...newProps} />);
 
     expect(await screen.findByRole('alert')).toBeInTheDocument();
     expect(
@@ -269,13 +204,7 @@ describe('<ClusterDetailsTop />', () => {
 
     const newProps = { ...props, cluster };
 
-    render(
-      <TestRouter>
-        <CompatRouter>
-          <ClusterDetailsTop {...newProps} />
-        </CompatRouter>
-      </TestRouter>,
-    );
+    render(<ClusterDetailsTop {...newProps} />);
 
     await waitFor(() => {
       expect(screen.queryByRole('alert')).not.toBeInTheDocument();

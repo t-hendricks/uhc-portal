@@ -1,9 +1,10 @@
 /* eslint-disable camelcase */
 import React from 'react';
 
-import { subscriptionStatuses } from '~/common/subscriptionTypes';
-import { checkAccessibility, render, screen, within } from '~/testUtils';
+import { OSD_GCP_WIF } from '~/redux/constants/featureConstants';
+import { checkAccessibility, mockUseFeatureGate, render, screen, within } from '~/testUtils';
 
+import { SubscriptionCommonFields } from '../../../../../types/accounts_mgmt.v1';
 import fixtures from '../../__tests__/ClusterDetails.fixtures';
 
 import DetailsLeft from './DetailsLeft';
@@ -19,6 +20,7 @@ const componentText = {
   AVAILABILITY: { label: 'Availability', multi: 'Multi-zone', single: 'Single zone', NA: 'N/A' },
   REGION: { label: 'Region', NA: 'N/A' },
   PROVIDER: { label: 'Provider', NA: 'N/A' },
+  AUTHENTICATION_TYPE: { label: 'Authentication type' },
   ID: { label: 'Cluster ID', aiLabel: 'Assisted cluster ID / Cluster ID', NA: 'N/A' },
   DOMAIN_PREFIX: {
     label: 'Domain prefix',
@@ -351,6 +353,108 @@ describe('<DetailsLeft />', () => {
     });
   });
 
+  describe('Authentication type', () => {
+    it('is not present when the WIF feature flag is off', async () => {
+      // Arrange
+      mockUseFeatureGate([[OSD_GCP_WIF, false]]);
+      const cluster = {
+        ...fixtures.clusterDetails.cluster,
+        cloud_provider: {
+          id: 'gcp',
+        },
+        ccs: { enabled: true },
+        gcp: {},
+      };
+
+      const props = {
+        ...defaultProps,
+        cluster,
+      };
+      render(<DetailsLeft {...props} />);
+      await checkIfRendered();
+
+      // Assert
+      checkForValueAbsence(componentText.AUTHENTICATION_TYPE.label);
+    });
+
+    it('shows "Workload Identity Federation" for OSD GCP clusters with a WIF config', async () => {
+      // Arrange
+      mockUseFeatureGate([[OSD_GCP_WIF, true]]);
+      const cluster = {
+        ...fixtures.clusterDetails.cluster,
+        cloud_provider: {
+          id: 'gcp',
+        },
+        ccs: { enabled: true },
+        gcp: {
+          authentication: {
+            href: '/api/clusters_mgmt/v1/gcp/wif_configs/123456789123456789',
+            id: '123456789123456789',
+            kind: 'WifConfig',
+          },
+        },
+      };
+
+      const props = { ...defaultProps, cluster };
+      render(<DetailsLeft {...props} />);
+      await checkIfRendered();
+
+      // Assert
+      checkForValue(componentText.AUTHENTICATION_TYPE.label, 'Workload Identity Federation');
+    });
+
+    it('shows "Service Account" for OSD GCP clusters without a WIF config', async () => {
+      // Arrange
+      mockUseFeatureGate([[OSD_GCP_WIF, true]]);
+      const cluster = {
+        ...fixtures.clusterDetails.cluster,
+        cloud_provider: {
+          id: 'gcp',
+        },
+        ccs: { enabled: true },
+        gcp: {},
+      };
+
+      const props = {
+        ...defaultProps,
+        cluster,
+      };
+      render(<DetailsLeft {...props} />);
+      await checkIfRendered();
+
+      // Assert
+      checkForValue(componentText.AUTHENTICATION_TYPE.label, 'Service Account');
+    });
+
+    it.each([
+      [
+        'OSD AWS cluster',
+        {
+          ...fixtures.clusterDetails.cluster,
+          cloud_provider: 'aws',
+          ccs: { enabled: true },
+        },
+      ],
+      [
+        'OSD non-ccs cluster',
+        {
+          ...fixtures.clusterDetails.cluster,
+          cloud_provider: 'aws',
+        },
+      ],
+      ['ROSA cluster', fixtures.ROSAClusterDetails.cluster],
+      ['ROSA HyperShift cluster', fixtures.ROSAHypershiftClusterDetails.cluster],
+    ])('is not shown for a %s', async (_name, cluster) => {
+      mockUseFeatureGate([[OSD_GCP_WIF, true]]);
+      const props = { ...defaultProps, cluster };
+      render(<DetailsLeft {...props} />);
+      await checkIfRendered();
+
+      // Assert
+      checkForValueAbsence(componentText.AUTHENTICATION_TYPE.label);
+    });
+  });
+
   describe('Availability', () => {
     it('hides availability if not managed', async () => {
       // Arrange
@@ -628,7 +732,7 @@ describe('<DetailsLeft />', () => {
       // Arrange
       const OSDClusterFixture = {
         ...fixtures.OSDGCPClusterDetails.cluster,
-        state: subscriptionStatuses.DEPROVISIONED,
+        state: SubscriptionCommonFields.status.DEPROVISIONED,
         ccs: undefined,
       };
 

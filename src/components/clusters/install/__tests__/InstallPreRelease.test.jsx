@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { checkAccessibility, screen, TestRouter, withState } from '~/testUtils';
+import { checkAccessibility, screen, withState } from '~/testUtils';
 
 import githubReleases from '../githubReleases.mock';
 import { InstallPreRelease } from '../InstallPreRelease';
@@ -24,9 +24,7 @@ describe('InstallPreRelease', () => {
 
   it.skip('is accessible', async () => {
     const { container } = withState(githubReleases).render(
-      <TestRouter>
-        <InstallPreRelease token={{}} dispatch={dispatch} />
-      </TestRouter>,
+      <InstallPreRelease token={{}} dispatch={dispatch} />,
     );
 
     expect(await screen.findByText('Install OpenShift Container Platform 4')).toBeInTheDocument();

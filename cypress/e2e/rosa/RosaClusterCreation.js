@@ -1,19 +1,25 @@
-import CreateRosaWizardPage from '../../pageobjects/CreateRosaWizard.page';
 import ClusterDetailsPage from '../../pageobjects/ClusterDetails.page';
+import CreateRosaWizardPage from '../../pageobjects/CreateRosaWizard.page';
+import CreateClusterPage from '../../pageobjects/CreateCluster.page';
+import OverviewPage from '../../pageobjects/Overview.page';
 
 // awsAccountID,rolePrefix and installerARN are set by prerun script for smoke requirements.
 const awsAccountID = Cypress.env('QE_AWS_ID');
 const rolePrefix = Cypress.env('QE_ACCOUNT_ROLE_PREFIX');
 const installerARN = `arn:aws:iam::${awsAccountID}:role/${rolePrefix}-Installer-Role`;
 const clusterName = `ocmui-cypress-smoke-rosa-${(Math.random() + 1).toString(36).substring(7)}`;
-const clusterDomainPrefix = `rosa` + (Math.random() + 1).toString(36).substring(2);
+const clusterDomainPrefix = `rosa${(Math.random() + 1).toString(36).substring(2)}`;
 
 describe(
   'Rosa cluster wizard checks and cluster creation tests(OCP-50261)',
   { tags: ['smoke'] },
   () => {
+    before(() => {
+      OverviewPage.viewAllOpenshiftClusterTypesLink().click();
+      CreateClusterPage.isCreateClusterPageHeaderVisible();
+    });
+
     it('Open Rosa cluster wizard', () => {
-      cy.getByTestId('create_cluster_btn').click();
       CreateRosaWizardPage.rosaCreateClusterButton().click();
       CreateRosaWizardPage.rosaClusterWithWeb().should('be.visible').click();
       CreateRosaWizardPage.isCreateRosaPage();

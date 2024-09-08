@@ -24,7 +24,7 @@ export class InstallPowerVirtualServerIPI extends Component {
     const breadcrumbs = (
       <Breadcrumbs
         path={[
-          { label: 'Clusters' },
+          { label: 'Cluster List' },
           { label: 'Cluster Type', path: '/create' },
           { label: 'IBM PowerVS (ppc64le)' },
         ]}

@@ -4,7 +4,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { useDispatch } from 'react-redux';
-import { useNavigate } from 'react-router-dom-v5-compat';
 
 import { Alert, Button, ButtonVariant, Flex, FlexItem, Spinner } from '@patternfly/react-core';
 import MinusCircleIcon from '@patternfly/react-icons/dist/esm/icons/minus-circle-icon';
@@ -13,6 +12,7 @@ import { Table, TableVariant, Tbody, Td, Th, Thead, Tr } from '@patternfly/react
 import { addNotification } from '@redhat-cloud-services/frontend-components-notifications/redux';
 
 import { HAD_INFLIGHT_ERROR_LOCALSTORAGE_KEY } from '~/common/localStorageConstants';
+import { useNavigate } from '~/common/routing';
 import ClusterStatusErrorDisplay from '~/components/clusters/commonMultiRegion/ClusterStatusErrorDisplay';
 import { useFeatureGate } from '~/hooks/useFeatureGate';
 import {
@@ -139,7 +139,7 @@ const ClusterStatusMonitor = (props) => {
               variant: 'success',
             }),
           );
-          navigate('/');
+          navigate('/cluster-list');
         }
       }
     }
@@ -207,15 +207,23 @@ const ClusterStatusMonitor = (props) => {
             const egressErrors = [];
             subnets.push({ name: dkey, egressErrors });
             Object.keys(details[dkey]).forEach((skey) => {
+              // ex. skey = 'egress_url_errors-0'
               if (skey.startsWith('egress_url_errors')) {
-                egressErrors.push(details[dkey][skey].split(' ').pop());
+                const urlPattern = /(https?:\/\/[^\s)]+)/;
+                // ex. str = 'egressURL error: https://registry.redhat.io:443 (Proxy CONNECT aborted)'
+                const str = details[dkey][skey];
+                const result = str.match(urlPattern);
+                // ex. result = [https://registry.redhat.io:443]
+                if (result) {
+                  egressErrors.push(result[0]);
+                }
               }
             });
             egressErrors.sort((a, b) => {
               const aArr = a.split(':');
               const bArr = b.split(':');
-              const ret = aArr[1].localeCompare(bArr[1]);
-              return ret === 0 ? aArr[0].localeCompare(bArr[0]) : ret;
+              const ret = aArr[1]?.localeCompare(bArr[1]);
+              return ret === 0 ? aArr[0]?.localeCompare(bArr[0]) : ret;
             });
           }
         });

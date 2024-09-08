@@ -42,6 +42,8 @@ class AddOnsParametersModal extends Component {
       // instead we just do a simple check for '^true$' as the validation string
       if (param.validation !== undefined && param.validation === '^true$') {
         validations.push(requiredTrue);
+      } else if (param.required) {
+        validations.push(requiredTrue);
       }
     } else if (param.required) {
       validations.push(required);

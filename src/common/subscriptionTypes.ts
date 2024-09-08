@@ -1,3 +1,6 @@
+import { ClusterAuthorizationRequest } from '~/types/accounts_mgmt.v1';
+import { BillingModel } from '~/types/clusters_mgmt.v1';
+
 /**
  * names of all subscriptioin settings
  * @enum string
@@ -14,68 +17,14 @@ const subscriptionSettings = {
   EVALUATION_EXPIRATION_DATE: 'evaluation_expiration_date',
 };
 
-/**
- * support_levels
- * @enum string
- */
-const subscriptionSupportLevels = {
-  EVAL: 'Eval',
-  STANDARD: 'Standard',
-  PREMIUM: 'Premium',
-  SELF_SUPPORT: 'Self-Support',
-  SUPPORT_BY_IBM: 'Supported by IBM',
-  NONE: 'None',
+const rosaProducts = {
+  ROSA: 'ROSA',
+  ROSA_HyperShift: 'ROSA-HyperShift',
 };
 
-/**
- * service_levels
- * @enum string
- */
-const subscriptionServiceLevels = {
-  L1_L3: 'L1-L3',
-  L3_ONLY: 'L3-only',
-};
-
-/**
- * usage
- * @enum string
- */
-const subscriptionUsages = {
-  PRODUCTION: 'Production',
-  DEV_TEST: 'Development/Test',
-  DISASTER_RECOVERY: 'Disaster Recovery',
-};
-
-/**
- * product_bundle
- * @enum string
- */
-const subscriptionProductBundles = {
-  OPENSHIFT: 'Openshift',
-  JBOSS_MIDDLEWARE: 'JBoss-Middleware',
-  IBM_CLOUDPAK: 'IBM-CloudPak',
-};
-
-/**
- * system_units
- * @enum string
- */
-const subscriptionSystemUnits = {
-  CORES_VCPU: 'Cores/vCPU',
-  SOCKETS: 'Sockets',
-};
-
-/**
- * status
- * @enum string
- */
-const subscriptionStatuses = {
-  ACTIVE: 'Active',
-  ARCHIVED: 'Archived',
-  DEPROVISIONED: 'Deprovisioned',
-  RESERVED: 'Reserved',
-  STALE: 'Stale',
-  DISCONNECTED: 'Disconnected',
+const anyUnknownProducts = {
+  ANY: 'ANY', // used in quota_cost
+  UNKNOWN: 'UNKNOWN', // normally should not happen except during loading
 };
 
 /**
@@ -83,46 +32,56 @@ const subscriptionStatuses = {
  * See `normalizedProducts` for the other possible results.
  * @enum string
  */
-const knownProducts = {
-  OSD: 'OSD',
-  OSDTrial: 'OSDTrial',
-  OCP: 'OCP',
-  RHMI: 'RHMI',
-  ROSA: 'ROSA',
-  ROSA_HyperShift: 'ROSA-HyperShift',
-  ARO: 'ARO',
-  OCP_Assisted_Install: 'OCP-AssistedInstall',
-  RHACS: 'RHACS',
-  RHACSTrial: 'RHACSTrial',
-  RHOSR: 'RHOSR',
-  RHOSRTrial: 'RHOSRTrial',
-  RHOSAK: 'RHOSAK',
-  RHOSAKTrial: 'RHOSAKTrial',
-  RHOSE: 'RHOSE',
-  RHOSETrial: 'RHOSETrial',
-  RHOIC: 'RHOIC',
-};
+const {
+  OSD,
+  OSDTRIAL,
+  OCP,
+  RHMI,
+  ARO,
+  OCP_ASSISTED_INSTALL,
+  RHACS,
+  RHACSTRIAL,
+  RHOSR,
+  RHOSRTRIAL,
+  RHOSAK,
+  RHOSAKTRIAL,
+  RHOSE,
+  RHOSETRIAL,
+  RHOIC,
+} = ClusterAuthorizationRequest.product_id;
 
-// Extracted separately normalizeProductID() converts MOA into ROSA
-// But for the actual allow list it needs actual values
-const additionalProducts = {
-  MOA: 'MOA',
-  MOA_HOSTEDCONTROLPLANE: 'MOA-HostedControlPlane',
+const knownProducts = {
+  OSD,
+  OSDTRIAL,
+  OCP,
+  RHMI,
+  ARO,
+  OCP_ASSISTED_INSTALL,
+  RHACS,
+  RHACSTRIAL,
+  RHOSR,
+  RHOSRTRIAL,
+  RHOSAK,
+  RHOSAKTRIAL,
+  RHOSE,
+  RHOSETRIAL,
+  RHOIC,
+  ...rosaProducts,
 };
 
 // List of allowed products to display
 const allowedProducts = [
-  knownProducts.OSD,
-  knownProducts.OSDTrial,
-  knownProducts.OCP,
-  knownProducts.RHMI,
-  knownProducts.ROSA,
-  knownProducts.RHOIC,
-  additionalProducts.MOA,
-  additionalProducts.MOA_HOSTEDCONTROLPLANE,
-  knownProducts.ROSA_HyperShift,
-  knownProducts.ARO,
-  knownProducts.OCP_Assisted_Install,
+  ClusterAuthorizationRequest.product_id.OSD,
+  ClusterAuthorizationRequest.product_id.OSDTRIAL,
+  ClusterAuthorizationRequest.product_id.OCP,
+  ClusterAuthorizationRequest.product_id.RHMI,
+  rosaProducts.ROSA,
+  ClusterAuthorizationRequest.product_id.RHOIC,
+  ClusterAuthorizationRequest.product_id.MOA,
+  ClusterAuthorizationRequest.product_id.MOA_HOSTED_CONTROL_PLANE,
+  rosaProducts.ROSA_HyperShift,
+  ClusterAuthorizationRequest.product_id.ARO,
+  ClusterAuthorizationRequest.product_id.OCP_ASSISTED_INSTALL,
 ];
 
 /**
@@ -132,23 +91,19 @@ const allowedProducts = [
  * They should all be passed through normalizeProductID(), should result in one of the values here.
  * @enum string
  */
-const normalizedProducts = {
-  ...knownProducts,
-  ANY: 'ANY', // used in quota_cost
-  UNKNOWN: 'UNKNOWN', // normally should not happen except during loading
-};
+const normalizedProducts = { ...knownProducts, ...anyUnknownProducts };
 
 /**
  * product IDs that are managed by Clusters Service
  *
  */
 const clustersServiceProducts = [
-  normalizedProducts.OSD,
-  normalizedProducts.OSDTrial,
-  normalizedProducts.ROSA,
-  normalizedProducts.ROSA_HyperShift,
-  normalizedProducts.RHMI,
-  normalizedProducts.ARO,
+  ClusterAuthorizationRequest.product_id.OSD,
+  ClusterAuthorizationRequest.product_id.OSDTRIAL,
+  rosaProducts.ROSA,
+  rosaProducts.ROSA_HyperShift,
+  ClusterAuthorizationRequest.product_id.RHMI,
+  ClusterAuthorizationRequest.product_id.ARO,
 ];
 
 /**
@@ -158,15 +113,19 @@ const clustersServiceProducts = [
  * plansToQuery are pre-normalization value to send to account-manager in ?search= query.
  */
 const productFilterOptions = [
-  { key: normalizedProducts.OCP, label: 'OCP', plansToQuery: ['OCP', 'OCP-AssistedInstall'] },
-  { key: normalizedProducts.OSD, label: 'OSD', plansToQuery: ['OSD'] },
   {
-    key: normalizedProducts.ROSA,
+    key: ClusterAuthorizationRequest.product_id.OCP,
+    label: 'OCP',
+    plansToQuery: ['OCP', 'OCP-AssistedInstall'],
+  },
+  { key: ClusterAuthorizationRequest.product_id.OSD, label: 'OSD', plansToQuery: ['OSD'] },
+  {
+    key: rosaProducts.ROSA,
     label: 'ROSA',
     plansToQuery: ['MOA', 'ROSA', 'MOA-HostedControlPlane'],
   },
-  { key: normalizedProducts.ARO, label: 'ARO', plansToQuery: ['ARO'] },
-  { key: normalizedProducts.RHOIC, label: 'RHOIC', plansToQuery: ['RHOIC'] },
+  { key: ClusterAuthorizationRequest.product_id.ARO, label: 'ARO', plansToQuery: ['ARO'] },
+  { key: ClusterAuthorizationRequest.product_id.RHOIC, label: 'RHOIC', plansToQuery: ['RHOIC'] },
 ];
 
 /**
@@ -174,11 +133,7 @@ const productFilterOptions = [
  * of quota this subscription is using.
  */
 const billingModels = {
-  STANDARD: 'standard', // quota from Red Hat Subscriptions
-  MARKETPLACE: 'marketplace', // legacy quota from Red Hat Marketplace
-  MARKETPLACE_RHM: 'marketplace-rhm', // quota from Red Hat Marketplace
-  MARKETPLACE_AWS: 'marketplace-aws',
-  MARKETPLACE_GCP: 'marketplace-gcp',
+  ...BillingModel,
   STANDARD_TRIAL: 'standard-trial',
 };
 
@@ -211,7 +166,7 @@ const ocmRoles: Record<string, OcmRoleItem> = {
     name: 'Cluster autoscaler editor',
     description:
       'Cluster autoscaler editor role will allow users or groups to manage and configure the cluster autoscaler settings.',
-    excludeProductIds: [knownProducts.ROSA_HyperShift],
+    excludeProductIds: [rosaProducts.ROSA_HyperShift],
   },
   IDP_EDITOR: {
     id: 'IdpEditor',
@@ -228,18 +183,12 @@ const ocmRoles: Record<string, OcmRoleItem> = {
 };
 
 export {
-  subscriptionStatuses,
-  subscriptionSettings,
-  subscriptionSupportLevels,
-  subscriptionServiceLevels,
-  subscriptionUsages,
-  subscriptionProductBundles,
-  subscriptionSystemUnits,
-  knownProducts,
   allowedProducts,
-  normalizedProducts,
-  clustersServiceProducts,
-  productFilterOptions,
   billingModels,
+  clustersServiceProducts,
+  knownProducts,
+  normalizedProducts,
   ocmRoles,
+  productFilterOptions,
+  subscriptionSettings,
 };

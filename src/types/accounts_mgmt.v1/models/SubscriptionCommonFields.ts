@@ -42,7 +42,7 @@ export type SubscriptionCommonFields = ObjectReference & {
   released?: boolean;
   service_level?: SubscriptionCommonFields.service_level;
   socket_total?: number;
-  status?: string;
+  status?: SubscriptionCommonFields.status;
   support_level?: SubscriptionCommonFields.support_level;
   system_units?: SubscriptionCommonFields.system_units;
   /**
@@ -61,6 +61,14 @@ export namespace SubscriptionCommonFields {
   export enum service_level {
     L1_L3 = 'L1-L3',
     L3_ONLY = 'L3-only',
+  }
+  export enum status {
+    ACTIVE = 'Active',
+    ARCHIVED = 'Archived',
+    DEPROVISIONED = 'Deprovisioned',
+    DISCONNECTED = 'Disconnected',
+    RESERVED = 'Reserved',
+    STALE = 'Stale',
   }
   export enum support_level {
     EVAL = 'Eval',

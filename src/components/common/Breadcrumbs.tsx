@@ -1,7 +1,8 @@
 import React from 'react';
-import { Link } from 'react-router-dom-v5-compat';
 
 import { Breadcrumb, BreadcrumbItem } from '@patternfly/react-core';
+
+import { Link } from '~/common/routing';
 
 export type BreadcrumbPath = { label: string; path?: string };
 
@@ -16,7 +17,7 @@ const Breadcrumbs = ({ path }: Props) => (
 
       if (i < path.length - 1) {
         let itemPath = item.path;
-        if (itemLabel === 'Clusters' && !itemPath) {
+        if (itemLabel === 'Cluster List' && !itemPath) {
           itemPath = '/cluster-list';
         }
 

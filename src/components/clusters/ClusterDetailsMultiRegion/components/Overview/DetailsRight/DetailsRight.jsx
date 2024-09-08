@@ -24,10 +24,10 @@ import AIClusterStatus from '~/components/common/AIClusterStatus';
 import useCanClusterAutoscale from '~/hooks/useCanClusterAutoscale';
 import { useGlobalState } from '~/redux/hooks';
 import { isRestrictedEnv } from '~/restrictedEnv';
+import { SubscriptionCommonFields } from '~/types/accounts_mgmt.v1';
 
 import links from '../../../../../../common/installLinks.mjs';
 import { isAISubscriptionWithoutMetrics } from '../../../../../../common/isAssistedInstallerCluster';
-import { subscriptionStatuses } from '../../../../../../common/subscriptionTypes';
 import { humanizeValueWithUnit, humanizeValueWithUnitGiB } from '../../../../../../common/units';
 import ExternalLink from '../../../../../common/ExternalLink';
 import PopoverHint from '../../../../../common/PopoverHint';
@@ -73,6 +73,7 @@ function DetailsRight({ cluster, hasAutoscaleCluster, isDeprovisioned, clusterDe
   const canAutoscaleCluster = useCanClusterAutoscale(
     cluster?.subscription?.plan?.type,
     cluster?.subscription?.cluster_billing_model,
+    cluster?.subscription?.capabilities,
   );
   const isAWS = cluster.subscription?.cloud_provider_id === 'aws';
   const isGCP = cluster.subscription?.cloud_provider_id === 'gcp';
@@ -87,7 +88,7 @@ function DetailsRight({ cluster, hasAutoscaleCluster, isDeprovisioned, clusterDe
   );
   const showWorkerNodesTogether = getQueryParam('showWorkerNodesTogether') === 'true';
   const isDisconnected =
-    get(cluster, 'subscription.status', '') === subscriptionStatuses.DISCONNECTED;
+    get(cluster, 'subscription.status', '') === SubscriptionCommonFields.status.DISCONNECTED;
 
   const billingMarketplaceAccount = get(cluster, 'subscription.billing_marketplace_account', '');
 

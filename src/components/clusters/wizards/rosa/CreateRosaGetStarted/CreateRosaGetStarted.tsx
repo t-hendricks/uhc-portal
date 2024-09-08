@@ -1,5 +1,5 @@
 import React from 'react';
-import { useLocation } from 'react-router-dom-v5-compat';
+import { useLocation } from 'react-router-dom';
 
 import {
   ButtonVariant,
@@ -44,7 +44,7 @@ const title = (productName: string = '') => `Set up ${productName} (ROSA)`;
 const breadcrumbs = (
   <Breadcrumbs
     path={[
-      { label: 'Clusters' },
+      { label: 'Cluster List' },
       { label: 'Cluster Type', path: '/create' },
       { label: 'Set up ROSA' },
     ]}

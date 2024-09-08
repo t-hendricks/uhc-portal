@@ -14,7 +14,12 @@ import links from '../../../../common/installLinks.mjs';
 import ExternalLink from '../../../common/ExternalLink';
 
 type LimitedSupportAlertProps = {
-  limitedSupportReasons?: { id?: string; summary?: string; details?: string }[];
+  limitedSupportReasons?: {
+    id?: string;
+    summary?: string;
+    details?: string;
+    override?: { enabled: boolean };
+  }[];
   isROSA?: boolean;
   isOSD?: boolean;
 };
@@ -24,20 +29,21 @@ const LimitedSupportAlert = ({
   isROSA,
   isOSD,
 }: LimitedSupportAlertProps) => {
-  if (!limitedSupportReasons?.length) {
-    return null;
-  }
+  const legitReasons = React.useMemo(
+    () => limitedSupportReasons?.filter((r) => !r.override?.enabled) || [],
+    [limitedSupportReasons],
+  );
 
-  return (
+  return !legitReasons.length ? null : (
     <Alert
       id="limited-support-alert"
       variant="danger"
       className="pf-v5-u-mt-md"
       isInline
       role="alert"
-      isExpandable={limitedSupportReasons.length > 1}
+      isExpandable={legitReasons.length > 1}
       title={`This cluster has limited support${
-        limitedSupportReasons.length > 1 ? ' due to multiple reasons' : ''
+        legitReasons.length > 1 ? ' due to multiple reasons' : ''
       }.`}
       actionLinks={
         isROSA || isOSD ? (
@@ -52,7 +58,7 @@ const LimitedSupportAlert = ({
       }
     >
       <DescriptionList>
-        {limitedSupportReasons.map((reason, index) => (
+        {legitReasons.map((reason, index) => (
           // eslint-disable-next-line react/no-array-index-key
           <DescriptionListGroup key={`reason-${index}`} data-testid="dl-group">
             {reason.summary ? <DescriptionListTerm>{reason.summary}</DescriptionListTerm> : null}

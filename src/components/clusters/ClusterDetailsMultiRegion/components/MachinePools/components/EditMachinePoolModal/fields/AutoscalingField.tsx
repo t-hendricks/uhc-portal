@@ -24,6 +24,7 @@ const AutoscalingField = ({ cluster }: AutoscalingFieldProps) => {
   const canAutoScale = useCanClusterAutoscale(
     clusterFromSubscription.product?.id,
     clusterFromSubscription.subscription?.cluster_billing_model,
+    clusterFromSubscription.subscription?.capabilities,
   );
 
   const isRosa = isROSA(cluster);

@@ -6,12 +6,12 @@ import ConnectedModal from '../../common/Modal/ConnectedModal';
 import { ConnectedEditMachinePoolModal } from '../ClusterDetails/components/MachinePools/components/EditMachinePoolModal/EditMachinePoolModal';
 
 import DeleteProtectionModal from './DeleteProtectionModal/DeleteProtectionModal';
+import EditSubscriptionSettingsDialog from './EditSubscriptionSettingsDialog/EditSubscriptionSettingsDialog';
 import UpgradeWizard from './Upgrades/UpgradeWizard';
 import ArchiveClusterDialog from './ArchiveClusterDialog';
 import DeleteClusterDialog from './DeleteClusterDialog';
 import EditConsoleURLDialog from './EditConsoleURLDialog';
 import EditDisplayNameDialog from './EditDisplayNameDialog';
-import EditSubscriptionSettingsDialog from './EditSubscriptionSettingsDialog';
 import HibernateClusterModal from './HibernateClusterModal';
 import ResumeClusterModal from './ResumeClusterModal';
 import ScaleClusterDialog from './ScaleClusterDialog';

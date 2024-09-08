@@ -24,7 +24,7 @@ export class InstallMultiAzureIPI extends Component {
     const breadcrumbs = (
       <Breadcrumbs
         path={[
-          { label: 'Clusters' },
+          { label: 'Cluster List' },
           { label: 'Cluster Type', path: '/create' },
           { label: 'Microsoft Azure (multi-architecture)' },
         ]}

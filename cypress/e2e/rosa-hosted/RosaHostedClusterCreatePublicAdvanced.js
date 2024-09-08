@@ -1,5 +1,8 @@
 import CreateRosaWizardPage from '../../pageobjects/CreateRosaWizard.page';
 import ClusterDetailsPage from '../../pageobjects/ClusterDetails.page';
+import CreateClusterPage from '../../pageobjects/CreateCluster.page';
+import OverviewPage from '../../pageobjects/Overview.page';
+
 const clusterProfiles = require('../../fixtures/rosa-hosted/RosaHostedClusterCreatePublic.json');
 const clusterProperties = clusterProfiles['rosa-hosted-public-advanced']['day1-profile'];
 const region = clusterProperties.Region.split(',')[0];
@@ -30,10 +33,11 @@ describe(
           Cypress.env('QE_ENV_AUT'),
         );
       }
+      OverviewPage.viewAllOpenshiftClusterTypesLink().click();
+      CreateClusterPage.isCreateClusterPageHeaderVisible();
     });
 
     it(`Open Rosa wizard for public advanced cluster : ${clusterName}`, () => {
-      cy.getByTestId('create_cluster_btn', { timeout: 25000 }).click();
       CreateRosaWizardPage.rosaCreateClusterButton().click();
       CreateRosaWizardPage.rosaClusterWithWeb().should('be.visible').click();
       CreateRosaWizardPage.isCreateRosaPage();

@@ -1,6 +1,5 @@
 import React, { useCallback } from 'react';
 import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom-v5-compat';
 
 import {
   Card,
@@ -25,6 +24,7 @@ import {
 } from '@patternfly/react-core';
 import { CubeIcon } from '@patternfly/react-icons/dist/esm/icons/cube-icon';
 
+import { Link } from '~/common/routing';
 import { AppPage } from '~/components/App/AppPage';
 import Breadcrumbs from '~/components/common/Breadcrumbs';
 import ExternalLink from '~/components/common/ExternalLink';
@@ -35,7 +35,8 @@ import RedHatLogo from '~/styles/images/Logo-Red_Hat-B-Standard-RGB.png';
 import docLinks from '../../../common/installLinks.mjs';
 import OpenShiftProductIcon from '../../../styles/images/OpenShiftProductIcon.svg';
 import { ListTextLabelLinkCard } from '../../common/ListTextLabelLinkCard/ListTextLabelLinkCard';
-import { ProductBanner } from '../../common/ProductBanner';
+
+import { ProductBanner } from './components/ProductBanner';
 
 import './RosaServicePage.scss';
 

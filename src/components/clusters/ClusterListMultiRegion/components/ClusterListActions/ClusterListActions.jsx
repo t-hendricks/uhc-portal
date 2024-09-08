@@ -16,7 +16,6 @@ limitations under the License.
 
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom-v5-compat';
 
 import { Button, Split, SplitItem, ToolbarItem } from '@patternfly/react-core';
 import {
@@ -26,6 +25,7 @@ import {
   KebabToggle as KebabToggleDeprecated,
 } from '@patternfly/react-core/deprecated';
 
+import { Link } from '~/common/routing';
 import { isRestrictedEnv } from '~/restrictedEnv';
 
 const useMediaQuery = (query) => {

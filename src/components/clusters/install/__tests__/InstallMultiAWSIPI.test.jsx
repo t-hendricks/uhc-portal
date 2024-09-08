@@ -1,7 +1,6 @@
 import React from 'react';
-import { CompatRouter } from 'react-router-dom-v5-compat';
 
-import { checkAccessibility, screen, TestRouter, withState } from '~/testUtils';
+import { checkAccessibility, screen, withState } from '~/testUtils';
 
 import githubReleases from '../githubReleases.mock';
 import { InstallMultiAWSIPI } from '../InstallMultiAWSIPI';
@@ -26,11 +25,7 @@ describe('InstallMultiAWSIPI', () => {
 
   it('is accessible', async () => {
     const { container } = withState(githubReleases).render(
-      <TestRouter>
-        <CompatRouter>
-          <InstallMultiAWSIPI token={{}} dispatch={dispatch} />
-        </CompatRouter>
-      </TestRouter>,
+      <InstallMultiAWSIPI token={{}} dispatch={dispatch} />,
     );
 
     expect(await screen.findByText(instructionsMapping.aws.multi.ipi.title)).toBeInTheDocument();

@@ -1,4 +1,5 @@
-import { normalizedProducts, subscriptionStatuses } from '~/common/subscriptionTypes';
+import { normalizedProducts } from '~/common/subscriptionTypes';
+import { ClusterAuthorizationRequest, SubscriptionCommonFields } from '~/types/accounts_mgmt.v1';
 import { Cluster, ClusterState, InflightCheck, InflightCheckState } from '~/types/clusters_mgmt.v1';
 import { ClusterFromSubscription, ClusterWithPermissions } from '~/types/types';
 
@@ -52,11 +53,11 @@ const getClusterStateAndDescription = <E extends ClusterFromSubscription>(
 
   // the state is determined by subscriptions.status or cluster.state.
   // the conditions are not mutually exclusive and are ordered by priority, e.g., STALE and READY.
-  if (cluster.subscription?.status === subscriptionStatuses.DISCONNECTED) {
+  if (cluster.subscription?.status === SubscriptionCommonFields.status.DISCONNECTED) {
     state = clusterStates.DISCONNECTED;
-  } else if (cluster.subscription?.status === subscriptionStatuses.DEPROVISIONED) {
+  } else if (cluster.subscription?.status === SubscriptionCommonFields.status.DEPROVISIONED) {
     state = clusterStates.DEPROVISIONED;
-  } else if (cluster.subscription?.status === subscriptionStatuses.ARCHIVED) {
+  } else if (cluster.subscription?.status === SubscriptionCommonFields.status.ARCHIVED) {
     state = clusterStates.ARCHIVED;
   } else if (
     cluster.state === ClusterState.INSTALLING ||
@@ -76,12 +77,12 @@ const getClusterStateAndDescription = <E extends ClusterFromSubscription>(
     state = clusterStates.POWERING_DOWN;
   } else if (cluster.state === ClusterState.RESUMING) {
     state = clusterStates.RESUMING;
-  } else if (cluster.subscription?.status === subscriptionStatuses.STALE) {
+  } else if (cluster.subscription?.status === SubscriptionCommonFields.status.STALE) {
     state = clusterStates.STALE;
   } else if (isClusterUpgrading(cluster)) {
     state = clusterStates.UPDATING;
   } else if (
-    cluster.subscription?.status === subscriptionStatuses.ACTIVE ||
+    cluster.subscription?.status === SubscriptionCommonFields.status.ACTIVE ||
     cluster.state === ClusterState.READY
   ) {
     state = clusterStates.READY;
@@ -132,7 +133,9 @@ const hasInflightEgressErrors = <E extends ClusterFromSubscription>(cluster: E):
  * @param cluster something extending ClusterFromSubscription since components are using either Cluster or ClusterFromSubscription
  */
 const isOSD = <E extends ClusterFromSubscription>(cluster: E): boolean =>
-  [normalizedProducts.OSD, normalizedProducts.OSDTrial].includes(cluster.product?.id!);
+  [normalizedProducts.OSD, normalizedProducts.OSDTRIAL].includes(
+    cluster.product?.id! as ClusterAuthorizationRequest.product_id,
+  );
 
 /**
  *
@@ -179,6 +182,9 @@ const isCCS = <E extends ClusterFromSubscription>(cluster: E): boolean =>
 
 const isAWS = <E extends ClusterFromSubscription>(cluster: E): boolean =>
   cluster.subscription?.cloud_provider_id === 'aws';
+
+const isGCP = <E extends ClusterFromSubscription>(cluster: E): boolean =>
+  cluster.cloud_provider?.id === 'gcp';
 
 /**
  * Indicates that this is a ROSA cluster with manual mode
@@ -227,8 +233,8 @@ const getClusterAIPermissions = (cluster: ClusterWithPermissions) => ({
  */
 const canViewMachinePoolTab = (cluster: ClusterFromSubscription): boolean => {
   const isArchived =
-    cluster?.subscription?.status === subscriptionStatuses.ARCHIVED ||
-    cluster?.subscription?.status === subscriptionStatuses.DEPROVISIONED;
+    cluster?.subscription?.status === SubscriptionCommonFields.status.ARCHIVED ||
+    cluster?.subscription?.status === SubscriptionCommonFields.status.DEPROVISIONED;
 
   return (
     (cluster?.managed ?? false) &&
@@ -241,29 +247,30 @@ const isAWSPrivateCluster = (cluster: ClusterFromSubscription): boolean =>
   (cluster?.aws && cluster?.ccs?.enabled && cluster?.aws?.private_link) ?? false;
 
 export {
-  getClusterStateAndDescription,
-  isHibernating,
-  isOffline,
-  hasInflightEgressErrors,
-  isROSA,
-  isOSDGCPWaitingForRolesOnHostProject,
-  isOSDGCPPendingOnHostProject,
-  isOSD,
-  isCCS,
-  isAWS,
-  isHypershiftCluster,
-  isROSAManualMode,
-  isWaitingROSAManualMode,
-  isWaitingHypershiftCluster,
-  getClusterAIPermissions,
-  getStateDescription,
-  getInflightChecks,
-  isWaitingForOIDCProviderOrOperatorRolesMode,
-  isErrorSharedGCPVPCValues,
-  isClusterUpgrading,
-  isClusterUpgradeCompleted,
   canViewMachinePoolTab,
+  getClusterAIPermissions,
+  getClusterStateAndDescription,
+  getInflightChecks,
+  getStateDescription,
+  hasInflightEgressErrors,
+  isAWS,
+  isGCP,
   isAWSPrivateCluster,
+  isCCS,
+  isClusterUpgradeCompleted,
+  isClusterUpgrading,
+  isErrorSharedGCPVPCValues,
+  isHibernating,
+  isHypershiftCluster,
+  isOSD,
+  isOSDGCPPendingOnHostProject,
+  isOSDGCPWaitingForRolesOnHostProject,
+  isOffline,
+  isROSA,
+  isROSAManualMode,
+  isWaitingForOIDCProviderOrOperatorRolesMode,
+  isWaitingHypershiftCluster,
+  isWaitingROSAManualMode,
 };
 
 export default clusterStates;

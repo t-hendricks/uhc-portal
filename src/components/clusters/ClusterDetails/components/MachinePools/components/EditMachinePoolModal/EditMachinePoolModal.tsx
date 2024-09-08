@@ -15,8 +15,6 @@ import ErrorBox from '~/components/common/ErrorBox';
 import Modal from '~/components/common/Modal/Modal';
 import { closeModal } from '~/components/common/Modal/ModalActions';
 import modals from '~/components/common/Modal/modals';
-import { useFeatureGate } from '~/hooks/useFeatureGate';
-import { HCP_USE_NODE_UPGRADE_POLICIES } from '~/redux/constants/featureConstants';
 import { useGlobalState } from '~/redux/hooks';
 import { GlobalState } from '~/redux/store';
 import { PromiseReducerState } from '~/redux/types';
@@ -312,7 +310,6 @@ export const ConnectedEditMachinePoolModal = ({
 }: ConnectedEditMachinePoolModalProps) => {
   const data = useGlobalState((state) => state.modal.data);
   const dispatch = useDispatch();
-  const useNodeUpgradePolicies = useFeatureGate(HCP_USE_NODE_UPGRADE_POLICIES);
 
   const onModalClose = () => {
     dispatch(closeModal());
@@ -343,12 +340,7 @@ export const ConnectedEditMachinePoolModal = ({
       machinePoolsResponse={machinePoolsList}
       onSave={() => {
         if (!machinePoolsResponse.pending) {
-          getMachineOrNodePools(
-            cluster.id,
-            isHypershift,
-            cluster.version.raw_id,
-            useNodeUpgradePolicies,
-          )(dispatch);
+          getMachineOrNodePools(cluster.id, isHypershift, cluster.version.raw_id)(dispatch);
         }
       }}
     />

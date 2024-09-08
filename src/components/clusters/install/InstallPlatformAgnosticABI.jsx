@@ -24,7 +24,7 @@ export class InstallPlatformAgnosticABI extends Component {
     const breadcrumbs = (
       <Breadcrumbs
         path={[
-          { label: 'Clusters' },
+          { label: 'Cluster List' },
           { label: 'Cluster Type', path: '/create' },
           { label: 'Platform agnostic (x86_64)', path: '/install/platform-agnostic' },
           { label: 'Local Agent-based' },

@@ -24,7 +24,7 @@ export class InstallGCPUPI extends Component {
     const breadcrumbs = (
       <Breadcrumbs
         path={[
-          { label: 'Clusters' },
+          { label: 'Cluster List' },
           { label: 'Cluster Type', path: '/create' },
           { label: 'Google Cloud Platform', path: '/install/gcp' },
           { label: 'User-provisioned infrastructure' },

@@ -17,7 +17,7 @@
 import './commands';
 import '@cypress/code-coverage/support';
 import Login from '../pageobjects/login.page';
-import ClusterListPage from '../pageobjects/ClusterList.page';
+import OverviewPage from '../pageobjects/Overview.page';
 
 // Alternatively you can use CommonJS syntax:
 // require('./commands')
@@ -39,11 +39,10 @@ before(() => {
 
     Login.login();
 
-    // TODO: Will change to /overview page
-    ClusterListPage.isClusterListUrl();
-    ClusterListPage.waitForDataReady();
-    ClusterListPage.isClusterListScreen();
-    ClusterListPage.isCreateClusterBtnVisible();
+    if (!Cypress.env('GOV_CLOUD')) {
+      OverviewPage.isOverviewUrl();
+      OverviewPage.isOverviewPage();
+    }
   });
 });
 

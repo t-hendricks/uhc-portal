@@ -1,8 +1,6 @@
-import React, { useMemo, useState } from 'react';
+import React from 'react';
 import { Formik } from 'formik';
 import PropTypes from 'prop-types';
-import { useHistory } from 'react-router-dom';
-import { Navigate, useNavigate } from 'react-router-dom-v5-compat';
 
 import {
   Banner,
@@ -15,10 +13,9 @@ import { Spinner } from '@redhat-cloud-services/frontend-components';
 
 import { ocmResourceType, trackEvents } from '~/common/analytics';
 import { shouldRefetchQuota } from '~/common/helpers';
-import { normalizedProducts } from '~/common/subscriptionTypes';
+import { Navigate, useNavigate } from '~/common/routing';
 import { AppDrawerContext } from '~/components/App/AppDrawer';
 import { AppPage } from '~/components/App/AppPage';
-import LeaveCreateClusterPrompt from '~/components/clusters/wizards/common/LeaveCreateClusterPrompt';
 import { useFormState } from '~/components/clusters/wizards/hooks';
 import { rosaWizardFormValidator } from '~/components/clusters/wizards/rosa/formValidators';
 import {
@@ -40,26 +37,25 @@ import PageTitle from '../../../common/PageTitle';
 import Unavailable from '../../../common/Unavailable';
 
 import CIDRScreen from './CIDRScreen/CIDRScreen';
+import ClusterRolesScreen from './ClusterRolesScreen/ClusterRolesScreen';
 import Details from './ClusterSettings/Details/Details';
 import NetworkScreen from './NetworkScreen/NetworkScreen';
 import UpdatesScreen from './UpdatesScreen/UpdatesScreen';
 import VPCScreen from './VPCScreen/VPCScreen';
 import AccountsRolesScreen from './AccountsRolesScreen';
 import ClusterProxyScreen from './ClusterProxyScreen';
-import ClusterRolesScreen from './ClusterRolesScreen';
 import { FieldId, initialTouched, initialValues, initialValuesRestrictedEnv } from './constants';
 import ControlPlaneScreen from './ControlPlaneScreen';
 import CreateClusterErrorModal from './CreateClusterErrorModal';
 import CreateRosaWizardFooter from './CreateRosaWizardFooter';
 import MachinePoolScreen from './MachinePoolScreen';
 import ReviewClusterScreen from './ReviewClusterScreen';
-import { ROSAWizardContext } from './ROSAWizardContext';
 import { ValuesPanel } from './ValuesPanel';
 
 import './createROSAWizard.scss';
 
 const breadcrumbs = [
-  { label: 'Clusters' },
+  { label: 'Cluster List' },
   { label: 'Cluster Type', path: '/create' },
   { label: 'Set up ROSA', path: '/create/rosa/getstarted' },
   { label: 'Create a ROSA Cluster' },
@@ -103,7 +99,6 @@ const CreateROSAWizardInternal = ({
   selectedAWSAccountID,
 }) => {
   const navigate = useNavigate();
-  const history = useHistory();
   const track = useAnalytics();
   const { resetForm, values } = useFormState();
 
@@ -266,10 +261,6 @@ const CreateROSAWizardInternal = ({
 
   // Create cluster request has completed
   if (createClusterResponse.fulfilled) {
-    // When a cluster is successfully created, unblock
-    // history in order to not show a confirmation prompt.
-    // TODO: Should be removed upon migrating to React Router v6
-    history.block(() => {});
     return <Navigate replace to={`/details/s/${createClusterResponse.cluster.subscription?.id}`} />;
   }
 
@@ -449,33 +440,22 @@ function CreateROSAWizard(props) {
     isHypershiftSelected,
   };
   const isHypershiftEnabled = useFeatureGate(HYPERSHIFT_WIZARD_FEATURE) && !isRestrictedEnv();
-  const [forceLeaveWizard, setForceLeaveWizard] = useState(false);
-  const contextValue = useMemo(
-    () => ({ forceLeaveWizard, setForceLeaveWizard }),
-    [forceLeaveWizard, setForceLeaveWizard],
-  );
   return (
-    <ROSAWizardContext.Provider value={contextValue}>
-      <AppPage title="Create OpenShift ROSA Cluster">
-        <AppDrawerContext.Consumer>
-          {({ closeDrawer }) => (
-            <CreateROSAWizardInternal
-              {...combinedProps}
-              closeDrawer={closeDrawer}
-              isHypershiftEnabled={isHypershiftEnabled}
-              formValues={values}
-              isValidating={isValidating}
-              isValid={isValid}
-              resetForm={resetForm}
-            />
-          )}
-        </AppDrawerContext.Consumer>
-        <LeaveCreateClusterPrompt
-          product={normalizedProducts.ROSA}
-          forceLeaveWizard={forceLeaveWizard}
-        />
-      </AppPage>
-    </ROSAWizardContext.Provider>
+    <AppPage title="Create OpenShift ROSA Cluster">
+      <AppDrawerContext.Consumer>
+        {({ closeDrawer }) => (
+          <CreateROSAWizardInternal
+            {...combinedProps}
+            closeDrawer={closeDrawer}
+            isHypershiftEnabled={isHypershiftEnabled}
+            formValues={values}
+            isValidating={isValidating}
+            isValid={isValid}
+            resetForm={resetForm}
+          />
+        )}
+      </AppDrawerContext.Consumer>
+    </AppPage>
   );
 }
 

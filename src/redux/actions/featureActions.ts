@@ -10,7 +10,6 @@ import {
   CLI_SSO_AUTHORIZATION,
   CLUSTER_OWNERSHIP_TRANSFER,
   ENABLE_MACHINE_CONFIGURATION,
-  HCP_USE_NODE_UPGRADE_POLICIES,
   HCP_USE_UNMANAGED,
   HYPERSHIFT_WIZARD_FEATURE,
   MULTIREGION_PREVIEW_ENABLED,
@@ -18,9 +17,8 @@ import {
   OSD_GCP_SHARED_VPC_FEATURE,
   OSD_GCP_WIF,
   OSD_GOOGLE_MARKETPLACE_FEATURE,
-  SECURITY_GROUPS_FEATURE,
-  SECURITY_GROUPS_FEATURE_DAY1,
   SET_FEATURE,
+  UNSTABLE_CLUSTER_VERSIONS,
 } from '../constants/featureConstants';
 import type { AppThunk } from '../types';
 
@@ -39,13 +37,11 @@ const getSimpleUnleashFeature = (unleashFeatureName: string, name: string) => ({
 export const features = [
   getSimpleUnleashFeature('hypershift-creation-wizard', HYPERSHIFT_WIZARD_FEATURE),
   getSimpleUnleashFeature('hcp-use-unmanaged-policies', HCP_USE_UNMANAGED),
-  getSimpleUnleashFeature('hcp-use-node-upgrade-policies', HCP_USE_NODE_UPGRADE_POLICIES),
   getSimpleUnleashFeature('assisted-installer-merge-lists', ASSISTED_INSTALLER_MERGE_LISTS_FEATURE),
   getSimpleUnleashFeature('osd-google-marketplace', OSD_GOOGLE_MARKETPLACE_FEATURE),
   getSimpleUnleashFeature('osd-gcp-shared-vpc', OSD_GCP_SHARED_VPC_FEATURE),
   getSimpleUnleashFeature('network-validator-ondemand', NETWORK_VALIDATOR_ONDEMAND_FEATURE),
-  getSimpleUnleashFeature('security-groups-feature-day1', SECURITY_GROUPS_FEATURE_DAY1), // Handles only Day1
-  getSimpleUnleashFeature('security-groups-feature', SECURITY_GROUPS_FEATURE), // Handles only Day2
+  getSimpleUnleashFeature('ocmui-unstable-cluster-versions', UNSTABLE_CLUSTER_VERSIONS),
   getSimpleUnleashFeature('enable-machine-configuration', ENABLE_MACHINE_CONFIGURATION),
   getSimpleUnleashFeature('cli-sso-authorization', CLI_SSO_AUTHORIZATION),
   getSimpleUnleashFeature('multi-region-support', MULTIREGION_PREVIEW_ENABLED),

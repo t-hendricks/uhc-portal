@@ -1,0 +1,24 @@
+.product-overview-card {
+  width: 22em;
+  height: 22em;
+
+  &__logo {
+    height: 3em;
+    width: 3em;
+  }
+
+  &__learn-more-button {
+    padding-left: 0;
+  }
+}
+
+.product-overview-card .card-title {
+  max-height: 3em;
+}
+
+.product-overview-card .card-textlist {
+  color: var(--pf-v5-c-content--small--Color);
+  li::marker {
+    font-size: var(--pf-v5-u-font-size-xs);
+  }
+}

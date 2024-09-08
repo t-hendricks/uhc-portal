@@ -1,7 +1,6 @@
 import React from 'react';
-import { CompatRouter } from 'react-router-dom-v5-compat';
 
-import { checkAccessibility, screen, TestRouter, withState } from '~/testUtils';
+import { checkAccessibility, screen, withState } from '~/testUtils';
 
 import githubReleases from '../githubReleases.mock';
 import { InstallMultiBareMetalUPI } from '../InstallMultiBareMetalUPI';
@@ -26,11 +25,7 @@ describe('InstallMultiBMUPI', () => {
 
   it('is accessible', async () => {
     const { container } = withState(githubReleases).render(
-      <TestRouter>
-        <CompatRouter>
-          <InstallMultiBareMetalUPI token={{}} dispatch={dispatch} />
-        </CompatRouter>
-      </TestRouter>,
+      <InstallMultiBareMetalUPI token={{}} dispatch={dispatch} />,
     );
 
     expect(

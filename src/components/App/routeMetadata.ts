@@ -31,10 +31,10 @@ export const metadataByRoute = (
     return { ocm_resource_type: ocmResourceType.ALL };
   }
   if (pathname.startsWith('/assisted-installer')) {
-    return { ocm_resource_type: ocmResourceType.OCP_Assisted_Install };
+    return { ocm_resource_type: ocmResourceType.OCP_ASSISTED_INSTALL };
   }
   if (pathname.startsWith('/create/osdtrial')) {
-    return { ocm_resource_type: ocmResourceType.OSDTrial };
+    return { ocm_resource_type: ocmResourceType.OSDTRIAL };
   }
   if (pathname.startsWith('/create/osd')) {
     return { ocm_resource_type: ocmResourceType.OSD };
@@ -62,6 +62,7 @@ export const metadataByRoute = (
     };
   }
   if (pathname.startsWith('/details/s/')) {
+    // TODO: There's a bug that sends this with planType UNKNOWN
     return {
       ocm_resource_type: getOCMResourceType(planType),
       title: 'View Cluster',

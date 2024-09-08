@@ -1,7 +1,6 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { get } from 'lodash';
 import { useDispatch } from 'react-redux';
-import { Link, Navigate } from 'react-router-dom-v5-compat';
 import { Field, reset } from 'redux-form';
 
 import {
@@ -23,6 +22,7 @@ import {
 import { PageHeader, PageHeaderTitle } from '@redhat-cloud-services/frontend-components/PageHeader';
 import Spinner from '@redhat-cloud-services/frontend-components/Spinner';
 
+import { Link, Navigate } from '~/common/routing';
 import { AppPage } from '~/components/App/AppPage';
 import { openModal } from '~/components/common/Modal/ModalActions';
 import modals from '~/components/common/Modal/modals';
@@ -59,10 +59,14 @@ const RegisterCluster = ({ handleSubmit }: RegisterClusterProps) => {
   const dispatch = useDispatch();
   const [settings, setSettings] = useState({});
 
-  const quotaResponse = useGlobalState((state) => get(state, 'userProfile.organization', null));
-  const registerClusterResponse = useGlobalState((state) => state.clusters.createdCluster);
-  const isOpen = useGlobalState((state) => shouldShowModal(state, modals.REGISTER_CLUSTER_ERROR));
-  const canSubscribeOCP = useGlobalState((state) => hasOrgLevelsubscribeOCPCapability(state));
+  const { quotaResponse, registerClusterResponse, isOpen, canSubscribeOCP } = useGlobalState(
+    (state) => ({
+      quotaResponse: get(state, 'userProfile.organization', null),
+      registerClusterResponse: state.clusters.createdCluster,
+      isOpen: shouldShowModal(state, modals.REGISTER_CLUSTER_ERROR),
+      canSubscribeOCP: hasOrgLevelsubscribeOCPCapability(state),
+    }),
+  );
 
   const resetResponseAndForm = useCallback(() => {
     dispatch(resetCreatedClusterResponse());
@@ -128,7 +132,9 @@ const RegisterCluster = ({ handleSubmit }: RegisterClusterProps) => {
   return (
     <AppPage>
       <PageHeader>
-        <Breadcrumbs path={[{ label: 'Clusters' }, { label: 'Register disconnected cluster' }]} />
+        <Breadcrumbs
+          path={[{ label: 'Cluster List' }, { label: 'Register disconnected cluster' }]}
+        />
         <PageHeaderTitle title="Register disconnected cluster" />
       </PageHeader>
       <PageSection>

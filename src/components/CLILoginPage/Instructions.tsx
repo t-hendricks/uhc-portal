@@ -19,7 +19,7 @@ limitations under the License.
 
 import React from 'react';
 import { useDispatch } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { To } from 'react-router-dom';
 
 import {
   Button,
@@ -37,6 +37,7 @@ import {
 import Skeleton from '@redhat-cloud-services/frontend-components/Skeleton';
 import useChrome from '@redhat-cloud-services/frontend-components/useChrome';
 
+import { Link } from '~/common/routing';
 import { useFeatureGate } from '~/hooks/useFeatureGate';
 import { setOfflineToken } from '~/redux/actions/rosaActions';
 import { CLI_SSO_AUTHORIZATION } from '~/redux/constants/featureConstants';
@@ -70,7 +71,7 @@ type Props = {
   commandTool?: string;
   docsLink?: React.ReactNode;
   show?: boolean;
-  showPath?: string | undefined;
+  showPath?: To;
   SSOLogin: boolean;
   isRosa: boolean;
 };
@@ -78,7 +79,7 @@ type Props = {
 const Instructions = (props: Props) => {
   const {
     show,
-    showPath,
+    showPath = '',
     commandName = 'ocm',
     commandTool = tools.OCM,
     docsLink = defaultDocsLink,

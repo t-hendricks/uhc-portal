@@ -1,3 +1,7 @@
+import { Subscription, SubscriptionCommonFields } from '~/types/accounts_mgmt.v1';
+
+import { SubscriptionResponseType } from '../types';
+
 export const mockSubscriptionAxiosResponse = {
   plan: {
     id: 'ROSA',
@@ -6,17 +10,17 @@ export const mockSubscriptionAxiosResponse = {
   cluster_id: '123TEST',
 };
 
-export const mockSubscriptionData = {
+export const mockSubscriptionData: Subscription = {
   plan: {
     id: 'ROSA',
     type: 'ROSA',
   },
-  status: 'ACTIVE',
+  status: SubscriptionCommonFields.status.ACTIVE,
   cluster_id: 'mockedClusterID',
   managed: true,
 };
 
-export const mockedSubscriptionWithClusterType = {
+export const mockedSubscriptionWithClusterType: SubscriptionResponseType = {
   subscription: mockSubscriptionData,
   isROSACluster: true,
   isAROCluster: false,
@@ -306,4 +310,47 @@ export const mockedExistingSearchedCluster = {
       domain_prefix: 'domain-pre-1',
     },
   ],
+};
+
+export const mockedGetOCMRole = {
+  data: {
+    arn: 'arn:aws:iam::000000000006:role/ManagedOpenShiftMock-OCM-Role-1558',
+    type: 'OCMRole',
+    isAdmin: false,
+    roleVersion: '',
+    managedPolicies: true,
+    hcpManagedPolicies: true,
+  },
+};
+
+export const mockedOidcConfigurations = {
+  data: {
+    href: '/api/clusters_mgmt/v1/oidc_configs',
+    items: [
+      {
+        href: '/api/clusters_mgmt/v1/oidc_configs/config1',
+        id: 'test-config-id-1',
+        organization_id: 'orgId1',
+        managed: true,
+        reusable: true,
+      },
+      {
+        href: '/api/clusters_mgmt/v1/oidc_configs/config2',
+        id: 'test-config-id-2',
+        organization_id: 'orgId1',
+        managed: true,
+        reusable: true,
+      },
+      {
+        href: '/api/clusters_mgmt/v1/oidc_configs/config3',
+        id: 'test-config-id-3',
+        organization_id: 'orgId1',
+        managed: true,
+        reusable: true,
+      },
+    ],
+    page: 1,
+    size: 3,
+    total: 3,
+  },
 };

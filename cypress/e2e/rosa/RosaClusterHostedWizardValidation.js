@@ -1,5 +1,7 @@
 import CreateRosaWizardPage from '../../pageobjects/CreateRosaWizard.page';
 import LeaveCreateClusterPrompt from '../../pageobjects/LeaveCreateClusterPrompt';
+import CreateClusterPage from '../../pageobjects/CreateCluster.page';
+import OverviewPage from '../../pageobjects/Overview.page';
 
 const clusterFieldValidations = require('../../fixtures/rosa/RosaClusterHostedWizardValidation.json');
 
@@ -12,8 +14,12 @@ const installerARN = `arn:aws:iam::${awsAccountID}:role/${rolePrefix}-HCP-ROSA-I
 const clusterName = `smoke-cypress-rosa-hypershift-${(Math.random() + 1).toString(36).substring(7)}`;
 
 describe('Rosa hosted(Hypershift) cluster wizard validations', { tags: ['smoke', 'hcp'] }, () => {
+  before(() => {
+    OverviewPage.viewAllOpenshiftClusterTypesLink().click();
+    CreateClusterPage.isCreateClusterPageHeaderVisible();
+  });
+
   it('Open Rosa cluster wizard', () => {
-    cy.getByTestId('create_cluster_btn').click();
     CreateRosaWizardPage.rosaCreateClusterButton().click();
     CreateRosaWizardPage.rosaClusterWithWeb().should('be.visible').click();
     CreateRosaWizardPage.isCreateRosaPage();
@@ -41,6 +47,8 @@ describe('Rosa hosted(Hypershift) cluster wizard validations', { tags: ['smoke',
   });
 
   it('Step - Cluster Settings - Details - widget validations', () => {
+    CreateRosaWizardPage.isClusterDetailsScreen();
+    CreateRosaWizardPage.selectRegion(clusterFieldValidations.Region);
     CreateRosaWizardPage.setClusterName(
       clusterFieldValidations.ClusterSettings.Details.InvalidClusterNamesValues[0],
     );
@@ -120,7 +128,6 @@ describe('Rosa hosted(Hypershift) cluster wizard validations', { tags: ['smoke',
       clusterFieldValidations.ClusterSettings.Details.KeyARNs[1].WrongFormatWithWhitespaceError,
     );
     CreateRosaWizardPage.enableAdditionalEtcdEncryptionCheckbox().uncheck();
-    CreateRosaWizardPage.selectRegion(clusterFieldValidations.Region);
     CreateRosaWizardPage.rosaNextButton().should('not.be.disabled');
     CreateRosaWizardPage.rosaBackButton().should('not.be.disabled');
     CreateRosaWizardPage.rosaCancelButton().should('not.be.disabled');
@@ -463,6 +470,5 @@ describe('Rosa hosted(Hypershift) cluster wizard validations', { tags: ['smoke',
       .type('test-123-test');
     CreateRosaWizardPage.rosaNextButton().click();
     CreateRosaWizardPage.rosaCancelButton().click();
-    LeaveCreateClusterPrompt.submit();
   });
 });

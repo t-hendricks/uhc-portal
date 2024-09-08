@@ -3,9 +3,11 @@ import get from 'lodash/get';
 
 import { DropdownItem, DropdownList } from '@patternfly/react-core';
 
+import { SubscriptionCommonFields } from '~/types/accounts_mgmt.v1';
+
 import getClusterName from '../../../../common/getClusterName';
 import { isAssistedInstallCluster } from '../../../../common/isAssistedInstallerCluster';
-import { normalizedProducts, subscriptionStatuses } from '../../../../common/subscriptionTypes';
+import { normalizedProducts } from '../../../../common/subscriptionTypes';
 import modals from '../../../common/Modal/modals';
 import clusterStates, { isHibernating, isHypershiftCluster } from '../clusterStates';
 
@@ -88,7 +90,7 @@ function actionResolver(
 
   const getKey = (item) => `${cluster.id}.menu.${item}`;
   const clusterName = getClusterName(cluster);
-  const isProductOSDTrial = cluster.product && cluster.product.id === normalizedProducts.OSDTrial;
+  const isProductOSDTrial = cluster.product && cluster.product.id === normalizedProducts.OSDTRIAL;
 
   const getAdminConsoleProps = () => ({
     ...baseProps,
@@ -312,7 +314,8 @@ function actionResolver(
     !isProductOSDTrial &&
     !isHypershiftCluster(cluster);
   const showEditMachinePool = cluster.canEdit && cluster.managed;
-  const isArchived = get(cluster, 'subscription.status', false) === subscriptionStatuses.ARCHIVED;
+  const isArchived =
+    get(cluster, 'subscription.status', false) === SubscriptionCommonFields.status.ARCHIVED;
   const showArchive = cluster.canEdit && !cluster.managed && cluster.subscription && !isArchived;
   const showUnarchive = cluster.canEdit && !cluster.managed && cluster.subscription && isArchived;
   const showEditURL =
@@ -332,7 +335,7 @@ function actionResolver(
     cluster.canEdit &&
     canTransferClusterOwnership &&
     isAllowedProducts &&
-    get(cluster, 'subscription.status') !== subscriptionStatuses.ARCHIVED;
+    get(cluster, 'subscription.status') !== SubscriptionCommonFields.status.ARCHIVED;
   const showUpgradeTrialCluster = isClusterReady && cluster.canEdit && isProductOSDTrial;
 
   return [

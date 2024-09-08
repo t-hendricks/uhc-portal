@@ -1,15 +1,13 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
-import { Link } from 'react-router-dom-v5-compat';
 import semver from 'semver';
 
 import { Alert, AlertActionLink, AlertVariant, Spinner } from '@patternfly/react-core';
 
 import links from '~/common/installLinks.mjs';
+import { Link } from '~/common/routing';
 import ExternalLink from '~/components/common/ExternalLink';
-import { useFeatureGate } from '~/hooks/useFeatureGate';
 import { refetchMachineOrNodePoolsQuery } from '~/queries/ClusterDetailsQueries/MachinePoolTab/useFetchMachineOrNodePools';
-import { HCP_USE_NODE_UPGRADE_POLICIES } from '~/redux/constants/featureConstants';
 import { GlobalState } from '~/redux/store';
 import { NodePool } from '~/types/clusters_mgmt.v1/models/NodePool';
 
@@ -44,7 +42,6 @@ const UpdateAllMachinePools = ({
   const controlPlaneVersion = useSelector((state: GlobalState) =>
     controlPlaneVersionSelector(state),
   );
-  const useNodeUpdatePolicies = useFeatureGate(HCP_USE_NODE_UPGRADE_POLICIES);
 
   const controlPlaneUpdating = useHCPControlPlaneUpdating(
     controlPlaneVersion,
@@ -79,18 +76,12 @@ const UpdateAllMachinePools = ({
       machinePoolsToUpdate,
       clusterId,
       controlPlaneVersion,
-      useNodeUpdatePolicies,
       region,
     );
     setPending(false);
     setErrors(errors);
 
-    refetchMachineOrNodePoolsQuery(
-      clusterId,
-      isHypershift,
-      controlPlaneVersion,
-      useNodeUpdatePolicies,
-    );
+    refetchMachineOrNodePoolsQuery(clusterId, isHypershift, controlPlaneVersion);
   };
 
   return (

@@ -1,5 +1,7 @@
-import CreateRosaWizardPage from '../../pageobjects/CreateRosaWizard.page';
 import ClusterDetailsPage from '../../pageobjects/ClusterDetails.page';
+import CreateRosaWizardPage from '../../pageobjects/CreateRosaWizard.page';
+import CreateClusterPage from '../../pageobjects/CreateCluster.page';
+import OverviewPage from '../../pageobjects/Overview.page';
 
 const clusterProperties = require('../../fixtures/rosa/RosaClusterHostedCreation.json');
 // awsAccountID,rolePrefix and installerARN are set by prerun script for smoke requirements.
@@ -14,8 +16,12 @@ describe(
   'Rosa hosted cluster (hypershift) -wizard checks and cluster creation tests(OCP-57641)',
   { tags: ['smoke', 'hcp'] },
   () => {
+    before(() => {
+      OverviewPage.viewAllOpenshiftClusterTypesLink().click();
+      CreateClusterPage.isCreateClusterPageHeaderVisible();
+    });
+
     it('Open Rosa cluster wizard', () => {
-      cy.getByTestId('create_cluster_btn').click();
       CreateRosaWizardPage.rosaCreateClusterButton().click();
       CreateRosaWizardPage.rosaClusterWithWeb().should('be.visible').click();
       CreateRosaWizardPage.isCreateRosaPage();
@@ -44,12 +50,12 @@ describe(
 
     it('Step - Cluster Settings - Select Cluster name, version, regions', () => {
       CreateRosaWizardPage.isClusterDetailsScreen();
+      CreateRosaWizardPage.selectRegion(clusterProperties.Region);
       CreateRosaWizardPage.setClusterName(clusterName);
       CreateRosaWizardPage.closePopoverDialogs();
       CreateRosaWizardPage.createCustomDomainPrefixCheckbox().check();
       CreateRosaWizardPage.setDomainPrefix(clusterProperties.DomainPrefix);
       CreateRosaWizardPage.closePopoverDialogs();
-      CreateRosaWizardPage.selectRegion(clusterProperties.Region);
       CreateRosaWizardPage.rosaNextButton().click();
     });
 

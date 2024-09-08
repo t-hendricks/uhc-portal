@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 import { Flex, FlexItem, Title } from '@patternfly/react-core';
 
-import { advisorBaseName } from '~/common/getBaseName';
+import { advisorBaseName } from '~/common/routing';
 
 import { getSeverityName } from '../overviewHelpers';
 
@@ -50,7 +50,7 @@ function ChartByRisks({ riskHits }) {
                 >
                   <FlexItem className="ocm-insights--risk-item__count">
                     <Title size="2xl" headingLevel="h1">
-                      <a href={`${advisorBaseName()}/recommendations?total_risk=${riskNumber}`}>
+                      <a href={`${advisorBaseName}/recommendations?total_risk=${riskNumber}`}>
                         {count}
                       </a>
                     </Title>

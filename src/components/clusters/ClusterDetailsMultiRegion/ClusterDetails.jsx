@@ -15,14 +15,14 @@ import React from 'react';
 import get from 'lodash/get';
 import PropTypes from 'prop-types';
 import { useDispatch, useSelector } from 'react-redux';
-import { Navigate, useNavigate, useParams } from 'react-router-dom-v5-compat';
+import { useLocation, useParams } from 'react-router-dom';
 
 import * as OCM from '@openshift-assisted/ui-lib/ocm';
 import { PageSection, TabContent, Tooltip } from '@patternfly/react-core';
 import { Spinner } from '@redhat-cloud-services/frontend-components/Spinner';
 
+import { Navigate, useNavigate } from '~/common/routing';
 import { AppPage } from '~/components/App/AppPage';
-import { canSubscribeOCPMultiRegion } from '~/components/clusters/common/EditSubscriptionSettingsDialog/CanSubscribeOCPSelector';
 import { modalActions } from '~/components/common/Modal/ModalActions';
 import { featureGateSelector, useFeatureGate } from '~/hooks/useFeatureGate';
 import { useAddNotificationContact } from '~/queries/ClusterDetailsQueries/ClusterSupportTab/useAddNotificationContact';
@@ -53,12 +53,16 @@ import { clusterAutoscalerActions } from '~/redux/actions/clusterAutoscalerActio
 import { onClearFiltersAndFlags } from '~/redux/actions/viewOptionsActions';
 import { useGlobalState } from '~/redux/hooks/useGlobalState';
 import { isRestrictedEnv } from '~/restrictedEnv';
+// TODO: Commented out for respective tabs stories
+// import UpgradeSettingsTab from '../ClusterDetailsMultiRegion/components/UpgradeSettings';
+// import AccessControl from '../ClusterDetailsMultiRegion/components/AccessControl/AccessControl';
+import { SubscriptionCommonFields } from '~/types/accounts_mgmt.v1';
 
 import getClusterName from '../../../common/getClusterName';
 import { isValid, shouldRefetchQuota } from '../../../common/helpers';
 import { isUninstalledAICluster } from '../../../common/isAssistedInstallerCluster';
 import { hasCapability, subscriptionCapabilities } from '../../../common/subscriptionCapabilities';
-import { knownProducts, subscriptionStatuses } from '../../../common/subscriptionTypes';
+import { knownProducts } from '../../../common/subscriptionTypes';
 import { userActions } from '../../../redux/actions';
 import { getUserAccess } from '../../../redux/actions/costActions';
 import { clearGlobalError, setGlobalError } from '../../../redux/actions/globalErrorActions';
@@ -68,7 +72,6 @@ import { viewConstants } from '../../../redux/constants';
 import {
   ACCESS_REQUEST_ENABLED,
   ASSISTED_INSTALLER_FEATURE,
-  HCP_USE_NODE_UPGRADE_POLICIES,
   MULTIREGION_PREVIEW_ENABLED,
   NETWORK_VALIDATOR_ONDEMAND_FEATURE,
 } from '../../../redux/constants/featureConstants';
@@ -85,6 +88,7 @@ import clusterStates, {
   isHypershiftCluster,
 } from '../common/clusterStates';
 import CommonClusterModals from '../common/CommonClusterModals';
+import { canSubscribeOCPMultiRegion } from '../common/EditSubscriptionSettingsDialog/canSubscribeOCPSelector';
 import { userCanHibernateClustersSelector } from '../common/HibernateClusterModal/HibernateClusterModalSelectors';
 import ReadOnlyBanner from '../common/ReadOnlyBanner';
 import { canTransferClusterOwnershipMultiRegion } from '../common/TransferClusterOwnershipDialog/utils/transferClusterOwnershipDialogSelectors';
@@ -121,9 +125,6 @@ import {
 import Monitoring from './components/Monitoring';
 import { getOnDemandMetrics } from './components/Monitoring/MonitoringActions';
 import { issuesAndWarningsSelector } from './components/Monitoring/MonitoringSelectors';
-// TODO: Commented out for respective tabs stories
-// import UpgradeSettingsTab from '../ClusterDetailsMultiRegion/components/UpgradeSettings';
-// import AccessControl from '../ClusterDetailsMultiRegion/components/AccessControl/AccessControl';
 import Networking from './components/Networking';
 import { getClusterRouters } from './components/Networking/NetworkingActions';
 import Overview from './components/Overview/Overview';
@@ -140,7 +141,8 @@ const GatedAIHostsClusterDetailTab = withFeatureGate(
 const PAGE_TITLE = 'Red Hat OpenShift Cluster Manager';
 
 const ClusterDetails = (props) => {
-  const { location, toggleSubscriptionReleased } = props;
+  const location = useLocation();
+  const { toggleSubscriptionReleased } = props;
   const [gcpOrgPolicyWarning, setGcpOrgPolicyWarning] = React.useState('');
   const monitoring = useGlobalState((state) => state.monitoring);
 
@@ -206,9 +208,6 @@ const ClusterDetails = (props) => {
   );
   const userAccess = useSelector((state) => state.cost.userAccess);
   const gotRouters = get(clusterRouters, 'getRouters.routers.length', 0) > 0;
-  const useNodeUpgradePolicies = useSelector((state) =>
-    featureGateSelector(state, HCP_USE_NODE_UPGRADE_POLICIES),
-  );
   const hasNetworkOndemand = useSelector((state) =>
     featureGateSelector(state, NETWORK_VALIDATOR_ONDEMAND_FEATURE),
   );
@@ -311,14 +310,7 @@ const ClusterDetails = (props) => {
       dispatch(usersActions.getUsers(clusterID)); // TODO needs double check
       dispatch(getClusterRouters(clusterID)); // Needs query
       refreshIDP();
-      dispatch(
-        getMachineOrNodePools(
-          clusterID,
-          isHypershiftCluster(cluster),
-          clusterVersion,
-          useNodeUpgradePolicies,
-        ),
-      ); // Needs query
+      dispatch(getMachineOrNodePools(clusterID, isHypershiftCluster(cluster), clusterVersion)); // Needs query
       dispatch(getSchedules(clusterID, isHypershiftCluster(cluster))); // Needs query
       dispatch(fetchUpgradeGates()); // Needs query
       if (get(cluster, 'cloud_provider.id') !== 'gcp') {
@@ -340,7 +332,10 @@ const ClusterDetails = (props) => {
     }
     const clusterID = get(cluster, 'id');
     const subscriptionStatus = get(cluster, 'subscription.status');
-    if (isValid(clusterID) && subscriptionStatus !== subscriptionStatuses.DEPROVISIONED) {
+    if (
+      isValid(clusterID) &&
+      subscriptionStatus !== SubscriptionCommonFields.status.DEPROVISIONED
+    ) {
       refreshRelatedResources(clicked);
     }
   };
@@ -456,10 +451,10 @@ const ClusterDetails = (props) => {
 
   const clusterHibernating = isHibernating(cluster);
   const isArchived =
-    get(cluster, 'subscription.status', false) === subscriptionStatuses.ARCHIVED ||
-    get(cluster, 'subscription.status', false) === subscriptionStatuses.DEPROVISIONED;
+    get(cluster, 'subscription.status', false) === SubscriptionCommonFields.status.ARCHIVED ||
+    get(cluster, 'subscription.status', false) === SubscriptionCommonFields.status.DEPROVISIONED;
   const isAROCluster = get(cluster, 'subscription.plan.type', '') === knownProducts.ARO;
-  const isOSDTrial = get(cluster, 'subscription.plan.type', '') === knownProducts.OSDTrial;
+  const isOSDTrial = get(cluster, 'subscription.plan.type', '') === knownProducts.OSDTRIAL;
   const isRHOIC = get(cluster, 'subscription.plan.type', '') === knownProducts.RHOIC;
 
   // TODO: Part of tabs stories
@@ -823,7 +818,7 @@ const ClusterDetails = (props) => {
           onClose={onDialogClose}
           onClusterDeleted={() => {
             invalidateClusterDetailsQueries();
-            navigate('/');
+            navigate('/cluster-list');
           }}
         />
         <DeleteIDPDialog refreshParent={refreshIDP} />
@@ -845,9 +840,6 @@ const ClusterDetails = (props) => {
 
 ClusterDetails.propTypes = {
   toggleSubscriptionReleased: PropTypes.func.isRequired,
-  location: PropTypes.shape({
-    hash: PropTypes.string.isRequired,
-  }).isRequired,
 };
 
 export default ClusterDetails;
