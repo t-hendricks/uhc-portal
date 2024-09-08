@@ -39,24 +39,10 @@ if (flags.jiraToken) {
   yargs.showHelp();
 }
 
-// //////////////////////////////////////////////////////////////
-//   ____                       _      ___          _
-//  |  _ \ ___ _ __   ___  _ __| |_   / _ \ _ __ __| | ___ _ __
-//  | |_) / _ \ '_ \ / _ \| '__| __| | | | | '__/ _` |/ _ \ '__|
-//  |  _ <  __/ |_) | (_) | |  | |_  | |_| | | | (_| |  __/ |
-//  |_| \_\___| .__/ \___/|_|   \__|  \___/|_|  \__,_|\___|_|
-//            |_|
-// //////////////////////////////////////////////////////////////
 
 async function reportOrder(jiraToken, branch, verbose) {
-  // //////////////////////////////////////////////////////////////
-  //              _                                   _ _
-  //    __ _  ___| |_    ___ ___  _ __ ___  _ __ ___ (_) |_ ___
-  //   / _` |/ _ \ __|  / __/ _ \| '_ ` _ \| '_ ` _ \| | __/ __|
-  //  | (_| |  __/ |_  | (_| (_) | | | | | | | | | | | | |_\__ \
-  //   \__, |\___|\__|  \___\___/|_| |_| |_|_| |_| |_|_|\__|___/
-  //   |___/
-  // //////////////////////////////////////////////////////////////
+
+  // --- GET COMMITS ---
 
   console.log('\nFetching commits from git...');
   const git = simpleGit(process.cwd());
@@ -113,14 +99,8 @@ async function reportOrder(jiraToken, branch, verbose) {
   await setTrueAuthors(git, combinedCommits);
   const allCommits = combinedCommits;
 
-  // /////////////////////////////////////////////////////////////
-  //              _       _ _                 _        _
-  //    __ _  ___| |_    (_|_)_ __ __ _   ___| |_ __ _| |_ ___  ___
-  //   / _` |/ _ \ __|   | | | '__/ _` | / __| __/ _` | __/ _ \/ __|
-  //  | (_| |  __/ |_    | | | | | (_| | \__ \ || (_| | ||  __/\__ \
-  //   \__, |\___|\__|  _/ |_|_|  \__,_| |___/\__\__,_|\__\___||___/
-  //   |___/           |__/
-  // /////////////////////////////////////////////////////////////
+
+  // --- GET JIRA STATUSES ---
 
   console.log('\nGetting QE statuses...');
   const jiraMap = new Map();
@@ -245,14 +225,8 @@ async function reportOrder(jiraToken, branch, verbose) {
     );
   });
 
-  // /////////////////////////////////////////////////////////////
-  //              _                          _                               _
-  //    __ _  ___| |_   _ __ ___  __ _ _   _(_)_ __ ___ _ __ ___   ___ _ __ | |_ ___
-  //   / _` |/ _ \ __| | '__/ _ \/ _` | | | | | '__/ _ \ '_ ` _ \ / _ \ '_ \| __/ __|
-  //  | (_| |  __/ |_  | | |  __/ (_| | |_| | | | |  __/ | | | | |  __/ | | | |_\__ \
-  //   \__, |\___|\__| |_|  \___|\__, |\__,_|_|_|  \___|_| |_| |_|\___|_| |_|\__|___/
-  //   |___/                        |_|
-  // /////////////////////////////////////////////////////////////
+
+  // --- GET REQUIREMENTS ---
 
   let i;
   console.log(
@@ -425,14 +399,9 @@ async function reportOrder(jiraToken, branch, verbose) {
     commit.changesFrom = Array.from(commitUponInxSet).sort(sortFn);
   }
 
-  // /////////////////////////////////////////////////////////////
-  //         _      _    _                             _
-  //   _ __ (_) ___| | _(_)_ __   __ _    ___  _ __ __| | ___ _ __
-  //  | '_ \| |/ __| |/ / | '_ \ / _` |  / _ \| '__/ _` |/ _ \ '__|
-  //  | |_) | | (__|   <| | | | | (_| | | (_) | | | (_| |  __/ |
-  //  | .__/|_|\___|_|\_\_|_| |_|\__, |  \___/|_|  \__,_|\___|_|
-  //  |_|                        |___/
-  // /////////////////////////////////////////////////////////////
+
+  // --- PICKING ORDER ---
+
   const ready = [];
   const allHashes = [];
   const readyCommits = [];
@@ -506,16 +475,8 @@ async function reportOrder(jiraToken, branch, verbose) {
       year: 'numeric',
     });
     const branchName = dateName.replaceAll(',', '').replaceAll(' ', '-');
-    // /////////////////////////////////////////////////////////////
-    //   _____ _           _                    __ _ _      _
-    //  |  ___(_)_ __   __| |   ___ ___  _ __  / _| (_) ___| |_ ___
-    //  | |_  | | '_ \ / _` |  / __/ _ \| '_ \| |_| | |/ __| __/ __|
-    //  |  _| | | | | | (_| | | (_| (_) | | | |  _| | | (__| |_\__ \
-    //  |_|   |_|_| |_|\__,_|  \___\___/|_| |_|_| |_|_|\___|\__|___/
-    // /////////////////////////////////////////////////////////////
-    console.log(
-      '\n=============================FINDING CONFLICTS WITH STABLE================================\n',
-    );
+
+    console.log('\n===================FINDING CONFLICTS WITH STABLE===================\n');
     let hasAnyConflicts = false;
     const otherSha = branch || stableSha;
     const mergedFileMap = {};
@@ -621,14 +582,6 @@ async function reportOrder(jiraToken, branch, verbose) {
       console.log(chalk.grey('\n\n~~no conflicts with STABLE~~'));
     }
 
-    // /////////////////////////////////////////////////////////////
-    //   ___  _   _                 _        __                            _   _
-    // / _ \| |_| |__   ___ _ __  (_)_ __  / _| ___  _ __ _ __ ___   __ _| |_(_) ___  _ __
-    // | | | | __| '_ \ / _ \ '__| | | '_ \| |_ / _ \| '__| '_ ` _ \ / _` | __| |/ _ \| '_ \
-    // | |_| | |_| | | |  __/ |    | | | | |  _| (_) | |  | | | | | | (_| | |_| | (_) | | | |
-    // \___/ \__|_| |_|\___|_|    |_|_| |_|_|  \___/|_|  |_| |_| |_|\__,_|\__|_|\___/|_| |_|
-    // /////////////////////////////////////////////////////////////
-
     console.log('\n==============================================================');
     console.log('==============================================================');
     console.log('\n------- Other Information -------\n');
@@ -661,15 +614,7 @@ async function reportOrder(jiraToken, branch, verbose) {
     }
     console.log('\n\n');
 
-    // /////////////////////////////////////////////////////////////
-    //   ____      _                       _   _       _
-    //  |  _ \ ___| | ___  __ _ ___  ___  | \ | | ___ | |_ ___  ___
-    //  | |_) / _ \ |/ _ \/ _` / __|/ _ \ |  \| |/ _ \| __/ _ \/ __|
-    //  |  _ <  __/ |  __/ (_| \__ \  __/ | |\  | (_) | ||  __/\__ \
-    //  |_| \_\___|_|\___|\__,_|___/\___| |_| \_|\___/ \__\___||___/
-    // /////////////////////////////////////////////////////////////
-
-    console.log('\n=============================RELEASE NOTES=================================');
+    console.log('\n===========================RELEASE NOTES===========================');
     console.log(
       '\n\nRelease Notes (copy & paste into  https://gitlab.cee.redhat.com/service/uhc-portal/-/wikis/Release-Notes)\n',
     );
@@ -678,19 +623,8 @@ async function reportOrder(jiraToken, branch, verbose) {
     console.log('| --- | --- | --- | --- |');
     releaseNotes.reverse().forEach((note) => console.log(note));
 
-    // /////////////////////////////////////////////////////////////
-    //   _   _      _     _   ____             _      _   _       _
-    //  | | | | ___| | __| | | __ )  __ _  ___| | __ | \ | | ___ | |_ ___  ___
-    //  | |_| |/ _ \ |/ _` | |  _ \ / _` |/ __| |/ / |  \| |/ _ \| __/ _ \/ __|
-    //  |  _  |  __/ | (_| | | |_) | (_| | (__|   <  | |\  | (_) | ||  __/\__ \
-    //  |_| |_|\___|_|\__,_| |____/ \__,_|\___|_|\_\ |_| \_|\___/ \__\___||___/
-    //
-    // /////////////////////////////////////////////////////////////
-
     if (heldBackNotes.length) {
-      console.log(
-        '\n=============================HELD BACK NOTES=================================',
-      );
+      console.log('\n==========================HELD BACK NOTES==========================');
       console.log(
         '\n\nHeld Back Notes (copy & paste into  https://gitlab.cee.redhat.com/service/uhc-portal/-/wikis/Held-Back-Notes)\n',
       );
@@ -700,15 +634,7 @@ async function reportOrder(jiraToken, branch, verbose) {
       heldBackNotes.reverse().forEach((note) => console.log(note));
     }
 
-    // /////////////////////////////////////////////////////////////
-    //   ____  _            _
-    //  | __ )| | ___   ___| | _____ _ __ ___
-    //  |  _ \| |/ _ \ / __| |/ / _ \ '__/ __|
-    //  | |_) | | (_) | (__|   <  __/ |  \__ \
-    //  |____/|_|\___/ \___|_|\_\___|_|  |___/
-    //
-    // /////////////////////////////////////////////////////////////
-    console.log('\n\n=============================BLOCKERS=================================');
+    console.log('\n\n===========================BLOCKERS==============================');
     if (Object.keys(allBlockingCommits).length) {
       console.log('\nThese commit approvals are holding back these commits.\n');
       Object.entries(allBlockingCommits).forEach(([key, set]) => {
@@ -724,28 +650,18 @@ async function reportOrder(jiraToken, branch, verbose) {
       });
     }
 
-    // /////////////////////////////////////////////////////////////
-    //    ____ _                                      _      _      _ _     _
-    //   / ___| |__   ___ _ __ _ __ _   _       _ __ (_) ___| | __ | (_)___| |_
-    //  | |   | '_ \ / _ \ '__| '__| | | |_____| '_ \| |/ __| |/ / | | / __| __|
-    //  | |___| | | |  __/ |  | |  | |_| |_____| |_) | | (__|   <  | | \__ \ |_
-    //   \____|_| |_|\___|_|  |_|   \__, |     | .__/|_|\___|_|\_\ |_|_|___/\__|
-    //                              |___/      |_|
-    // /////////////////////////////////////////////////////////////
-
-    console.log('\n=============================CHERRY PICK LIST=================================');
-
-    console.log(`\nTo cherry-pick ${ready.length} ready commits in this order:`);
-    ready.forEach((pick) => console.log(pick));
-
+    console.log('\n==========================BRANCH COMMAND===========================');
+    console.log(`\n${chalk.white('1.')} Use this command to create a new branch from STABLE:`);
+    console.log(`${chalk.blueBright(`git checkout -b ${branchName} ${stableSha}`)}`);
     console.log('\n');
 
-    // /////////////////////////////////////////////////////////////
-    // /////////////////////////////////////////////////////////////
+    console.log('\n========================CHERRY PICK ORDER==========================');
+    console.log(`\nUse these commands to cherry-pick ${ready.length} ready commits in this order:`);
+    ready.forEach((pick) => console.log(pick));
+    console.log('\n');
 
-    console.log('\n=============================CHERRY PICK COMMAND==============================');
-
-    console.log(`\nUse this command to cherry-pick qualified commits:`);
+    console.log('\n========================CHERRY PICK COMMAND========================');
+    console.log(`\nUse this command to cherry-pick all qualified commits:`);
     if (hasAnyConflicts) {
       console.log(
         `   ${chalk.red(`Note: To minimize conflicts use this ${chalk.magenta('--strategy recursive -X ours')}`)}`,
