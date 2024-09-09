@@ -94,9 +94,8 @@ class ClusterList extends Page {
   }
 
   openClusterDefinition(clusterName) {
-    cy.get('td[data-label="Name"]')
-      .find('a')
-      .contains(new RegExp('^' + clusterName + '$', 'g'))
+    cy.get('a')
+      .contains(new RegExp('^' + clusterName + '$', 'g'), { timeout: 10000 })
       .click({ force: true });
   }
   clickClusterListExtraActions() {
