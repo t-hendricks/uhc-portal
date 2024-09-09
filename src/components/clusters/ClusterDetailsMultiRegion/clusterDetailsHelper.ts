@@ -5,7 +5,9 @@ import clusterStates, {
 } from '~/components/clusters/common/clusterStates';
 import { ClusterResource, Subscription, SubscriptionCommonFields } from '~/types/accounts_mgmt.v1';
 import { Cluster } from '~/types/clusters_mgmt.v1';
-import { ClusterFromSubscription } from '~/types/types';
+import { ClusterFromSubscription, StaticRegionalItems } from '~/types/types';
+
+import staticRegionalInstances from '../../../../mockdata/api/clusters_mgmt/v1/aws_inquiries/static_regional_instances.json';
 
 const hasCpuAndMemory = (cpu: ClusterResource | undefined, memory: ClusterResource | undefined) =>
   !(
@@ -34,6 +36,14 @@ const isMPoolAz = (cluster: Cluster, mpAvailZones: number | undefined): boolean 
     return true;
   }
   return false;
+};
+
+const regionalInstanceUrl = (region: string) => {
+  const regionalInstances = staticRegionalInstances as StaticRegionalItems;
+  const instance =
+    regionalInstances[region as keyof StaticRegionalItems] || regionalInstances.global;
+
+  return instance?.url;
 };
 
 /**
@@ -96,6 +106,7 @@ export {
   isHypershiftCluster,
   isMPoolAz,
   isMultiAZ,
+  regionalInstanceUrl,
   isReadyForAwsAccessActions,
   isReadyForIdpActions,
   isReadyForRoleAccessActions,

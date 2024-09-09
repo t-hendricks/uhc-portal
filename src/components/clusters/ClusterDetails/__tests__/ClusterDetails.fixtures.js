@@ -483,6 +483,35 @@ const ROSAHypershiftClusterDetails = produce(CCSClusterDetails, (draft) => {
   };
 });
 
+const ROSAHypershiftWaitingClusterDetails = produce(ROSAClusterDetails, (draft) => {
+  draft.cluster.product = { id: normalizedProducts.ROSA };
+  draft.cluster.hypershift = { enabled: true };
+  draft.cluster.subscription.plan = {
+    id: normalizedProducts.ROSA_HyperShift,
+    type: normalizedProducts.ROSA,
+  };
+  draft.cluster.aws = {
+    sts: {
+      auto_mode: false,
+      oidc_endpoint_url:
+        'https://rh-oidc.s3.us-east-1.amazonaws.com/1ricsv5bio0domn5gofgaar07aifjpr0',
+      role_arn: 'arn:aws:iam::123456789012:role/ManagedOpenShift-Installer-Role',
+      operator_iam_roles: [
+        {
+          name: 'myrole',
+          namespace: 'openshift-machine-api',
+          role_arn:
+            'arn:aws:iam::123456789012:role/cluster-test-openshift-machine-api-aws-cloud-credentials',
+        },
+      ],
+      oidc_config: {
+        id: '22qa79chsq8mand8hvmnr',
+      },
+    },
+  };
+  draft.cluster.state = clusterStates.WAITING;
+});
+
 const ROSAManualClusterDetails = produce(ROSAClusterDetails, (draft) => {
   draft.cluster.aws = {
     sts: {
@@ -1095,6 +1124,7 @@ const fixtures = {
   ROSAClusterDetails,
   ROSAManualClusterDetails,
   ROSAHypershiftClusterDetails,
+  ROSAHypershiftWaitingClusterDetails,
   RHMIClusterDetails,
   insightsData,
   OCPClusterDetails,
