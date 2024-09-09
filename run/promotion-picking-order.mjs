@@ -39,9 +39,7 @@ if (flags.jiraToken) {
   yargs.showHelp();
 }
 
-
 async function reportOrder(jiraToken, branch, verbose) {
-
   // --- GET COMMITS ---
 
   console.log('\nFetching commits from git...');
@@ -98,7 +96,6 @@ async function reportOrder(jiraToken, branch, verbose) {
   });
   await setTrueAuthors(git, combinedCommits);
   const allCommits = combinedCommits;
-
 
   // --- GET JIRA STATUSES ---
 
@@ -224,7 +221,6 @@ async function reportOrder(jiraToken, branch, verbose) {
       )} ${chalk.green(commit.author_email)} ${chalk.whiteBright(message)} ${commit.jira.qeStatus}`,
     );
   });
-
 
   // --- GET REQUIREMENTS ---
 
@@ -398,7 +394,6 @@ async function reportOrder(jiraToken, branch, verbose) {
     }
     commit.changesFrom = Array.from(commitUponInxSet).sort(sortFn);
   }
-
 
   // --- PICKING ORDER ---
 
