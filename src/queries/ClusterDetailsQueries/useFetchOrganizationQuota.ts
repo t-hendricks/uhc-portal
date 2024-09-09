@@ -1,0 +1,28 @@
+import { useQuery } from '@tanstack/react-query';
+
+import { accountsService } from '~/services';
+
+import { formatErrorData } from '../helpers';
+import { queryConstants } from '../queriesConstants';
+
+/**
+ * Query for fetching organization quota
+ * @param organizationID this ID comes from user profile in redux
+ * @returns org quota details
+ */
+export const useFetchOrganizationQuota = (organizationID: string) => {
+  const { isLoading, data, isError, error, isFetching, refetch } = useQuery({
+    queryKey: ['accountsService', 'getOrganizationQuota', organizationID],
+    queryFn: async () => {
+      const organizationQuota = await accountsService.getOrganizationQuota(organizationID);
+      return {
+        organizationQuota: organizationQuota.data,
+      };
+    },
+    staleTime: queryConstants.STALE_TIME,
+  });
+
+  return isError
+    ? { isLoading, data, isError, error: formatErrorData(isLoading, isError, error) }
+    : { isLoading, data, isError, error, isFetching, refetch };
+};

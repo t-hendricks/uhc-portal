@@ -31,6 +31,7 @@ import { humanizeValueWithUnit, humanizeValueWithUnitGiB } from '../../../../../
 import ExternalLink from '../../../../../common/ExternalLink';
 import PopoverHint from '../../../../../common/PopoverHint';
 import Timestamp from '../../../../../common/Timestamp';
+import { OverviewBillingAccount } from '../../../../ClusterDetailsMultiRegion/components/Overview/BillingAccount/OverviewBillingAccount';
 import { constants } from '../../../../common/CreateOSDFormConstants';
 import { isArchivedSubscription } from '../../../clusterDetailsHelper';
 import SecurityGroupsDisplayByNode from '../../SecurityGroups/SecurityGroupsDetailDisplay';
@@ -189,14 +190,7 @@ function DetailsRight({
           </DescriptionListDescription>
         </DescriptionListGroup>
       )}
-      {billingMarketplaceAccount && (
-        <DescriptionListGroup>
-          <DescriptionListTerm>Billing marketplace account</DescriptionListTerm>
-          <DescriptionListDescription>
-            <span data-testid="billingMarketplaceAccount">{billingMarketplaceAccount}</span>
-          </DescriptionListDescription>
-        </DescriptionListGroup>
-      )}
+      {billingMarketplaceAccount && <OverviewBillingAccount />}
       {cluster.managed && !cluster.ccs?.enabled && (
         <>
           <DescriptionListGroup>

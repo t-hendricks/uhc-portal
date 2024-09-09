@@ -397,50 +397,6 @@ describe('<DetailsRight />', () => {
     });
   });
 
-  describe('aws billing account', () => {
-    it('shows aws billing account if aws account is known', () => {
-      // Arrange
-      const clusterFixture = defaultProps.cluster;
-
-      const newProps = {
-        ...defaultProps,
-        cluster: {
-          ...clusterFixture,
-          subscription: {
-            ...clusterFixture.subscription,
-            billing_marketplace_account: '1234567890',
-          },
-        },
-      };
-
-      render(<DetailsRight {...newProps} />);
-
-      // Assert
-      checkForValue(componentText.AWS_BILLING_ACCOUNT.label, '1234567890');
-    });
-
-    it('hides aws billing account if aws account is not known', () => {
-      // Arrange
-      const clusterFixture = defaultProps.cluster;
-
-      const newProps = {
-        ...defaultProps,
-        cluster: {
-          ...clusterFixture,
-          subscription: {
-            ...clusterFixture.subscription,
-            billing_marketplace_account: undefined,
-          },
-        },
-      };
-
-      render(<DetailsRight {...newProps} />);
-
-      // Assert
-      checkForValueAbsence(componentText.AWS_BILLING_ACCOUNT.label);
-    });
-  });
-
   describe('Load balancers and storage', () => {
     it('hides load balancers and storage if cluster is not managed', () => {
       // Arrange
