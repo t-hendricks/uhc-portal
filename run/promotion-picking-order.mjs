@@ -646,7 +646,7 @@ async function reportOrder(jiraToken, branch, verbose) {
     }
 
     console.log('\n==========================BRANCH COMMAND===========================');
-    console.log(`\n${chalk.white('1.')} Use this command to create a new branch from STABLE:`);
+    console.log(`\nUse this command to create a new branch from STABLE:`);
     console.log(`${chalk.blueBright(`git checkout -b ${branchName} ${stableSha}`)}`);
     console.log('\n');
 
