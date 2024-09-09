@@ -5,6 +5,7 @@ import PropTypes from 'prop-types';
 import {
   Button,
   ClipboardCopy,
+  ClipboardCopyVariant,
   Flex,
   FlexItem,
   FormGroup,
@@ -39,7 +40,7 @@ function CreateOIDCProviderInstructions({ isMultiRegionEnabled, regionLoginComma
     <Popover
       aria-label="oidc-creation-instructions"
       position="top"
-      maxWidth="22rem"
+      maxWidth="25rem"
       style={{ '--pf-v5-c-popover--c-button--sibling--PaddingRight': '2rem' }}
       bodyContent={
         <TextContent>
@@ -48,11 +49,15 @@ function CreateOIDCProviderInstructions({ isMultiRegionEnabled, regionLoginComma
             {isMultiRegionEnabled ? 's' : ''} in your CLI. Then, refresh and select the new config
             ID from the dropdown.
           </p>
-          {isMultiRegionEnabled && (
-            <ClipboardCopy className="pf-v5-u-pb-md" isReadOnly>
+          {isMultiRegionEnabled ? (
+            <ClipboardCopy
+              className="pf-v5-u-pb-md"
+              variant={ClipboardCopyVariant.expansion}
+              isReadOnly
+            >
               {regionLoginCommand}
             </ClipboardCopy>
-          )}
+          ) : null}
           <ClipboardCopy isReadOnly>rosa create oidc-config</ClipboardCopy>
         </TextContent>
       }
