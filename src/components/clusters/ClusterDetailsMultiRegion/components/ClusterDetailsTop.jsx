@@ -41,7 +41,7 @@ const IdentityProvidersHint = () => (
     isInline
     title="Missing identity providers"
   >
-    Identity providers determine how users log into the cluster.{' '}
+    Identity providers determine how users log into the cluster.
     <Button
       variant="link"
       isInline

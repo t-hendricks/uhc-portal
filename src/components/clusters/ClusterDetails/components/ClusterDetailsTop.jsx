@@ -39,23 +39,24 @@ const IdentityProvidersHint = () => {
     <Alert
       id="idpHint"
       className="pf-v5-u-mt-md"
-      variant="warning"
       isInline
-      title="Missing identity providers"
+      title="Create an identity provider to access cluster"
     >
-      Identity providers determine how users log into the cluster.{' '}
-      <Button
-        variant="link"
-        isInline
-        onClick={() =>
-          navigate({
-            hash: '#accessControl',
-          })
-        }
-      >
-        Add OAuth configuration
-      </Button>{' '}
-      to allow others to log in.
+      Identity providers determine how you can log into the cluster. You&apos;ll need to set this up
+      so you can access your cluster{' '}
+      <p>
+        <Button
+          variant="link"
+          isInline
+          onClick={() =>
+            navigate({
+              hash: '#accessControl',
+            })
+          }
+        >
+          Create identity provider
+        </Button>{' '}
+      </p>
     </Alert>
   );
 };
