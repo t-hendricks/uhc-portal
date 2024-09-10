@@ -390,6 +390,7 @@ const ClusterList = ({
                   dispatch(viewActions.onListSortBy(sorting, viewType));
                 }}
                 useClientSortPaging={useClientSortPaging}
+                refreshFunc={refetch}
               />
             )}
             <PaginationRow
