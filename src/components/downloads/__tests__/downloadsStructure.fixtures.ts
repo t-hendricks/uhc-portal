@@ -2,7 +2,7 @@ export const allCategories = [
   {
     key: 'CLI',
     title: 'Command-line interface (CLI) tools',
-    tools: ['oc', 'ocm', 'rosa', 'kn', 'tkn'],
+    tools: ['oc', 'ocm', 'rosa', 'kn', 'tkn', 'argo-cd'],
   },
   {
     key: 'DEV',
@@ -76,6 +76,7 @@ export const isRestrictedEnvFalseExpected = [
       'rosa',
       'kn',
       'tkn',
+      'argo-cd',
       'odo',
       'helm',
       'opm',
@@ -99,7 +100,7 @@ export const isRestrictedEnvFalseExpected = [
   {
     key: 'CLI',
     title: 'Command-line interface (CLI) tools',
-    tools: ['oc', 'ocm', 'rosa', 'kn', 'tkn'],
+    tools: ['oc', 'ocm', 'rosa', 'kn', 'tkn', 'argo-cd'],
   },
   {
     key: 'DEV',
@@ -161,4 +162,5 @@ export const expectedExpandedKeys = {
   COPY_PULLREQUEST: 'copy-pull-secret',
   PULL_SECRET: 'pull-secret',
   TOKEN_OCM: 'ocm-api-token',
+  ARGO_CD: 'argo-cd',
 };
