@@ -15,6 +15,7 @@ import {
 } from '@patternfly/react-core';
 
 import { HAD_INFLIGHT_ERROR_LOCALSTORAGE_KEY } from '~/common/localStorageConstants';
+import { ocmBaseName } from '~/common/routing';
 import { ASSISTED_INSTALLER_FEATURE } from '~/redux/constants/featureConstants';
 import { isRestrictedEnv } from '~/restrictedEnv';
 import { SubscriptionCommonFields } from '~/types/accounts_mgmt.v1';
@@ -89,6 +90,7 @@ class Overview extends React.Component {
       insightsData,
       userAccess,
       hasNetworkOndemand,
+      chromeHistory,
     } = this.props;
     let topCard;
 
@@ -210,6 +212,9 @@ class Overview extends React.Component {
               <GatedAIDetailCard
                 permissions={getClusterAIPermissions(cluster)}
                 aiClusterId={cluster.aiCluster.id}
+                // @ts-ignore this throws a type error
+                history={chromeHistory}
+                basename={ocmBaseName}
               />
             )}
             {showResourceUsage && !showSidePanel && resourceUsage}
@@ -289,6 +294,7 @@ Overview.propTypes = {
     pending: PropTypes.bool,
     fulfilled: PropTypes.bool,
   }).isRequired,
+  chromeHistory: PropTypes.object,
 };
 
 export default Overview;

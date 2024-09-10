@@ -396,7 +396,9 @@ const Router: React.FC<RouterProps> = ({ planType, clusterId, externalClusterId 
             config.multiRegion && isMultiRegionPreviewEnabled ? (
               <ClusterDetailsSubscriptionIdMultiRegion />
             ) : (
-              <ClusterDetailsSubscriptionId />
+              <ClusterDetailsSubscriptionId
+                chromeHistory={chromeHistory as unknown as HistoryRouterProps['history']}
+              />
             )
           }
         />
