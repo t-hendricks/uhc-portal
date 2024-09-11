@@ -128,6 +128,7 @@ const ClusterDetails = (props) => {
     hasNetworkOndemand,
     isAccessRequestEnabled,
     accessProtectionState,
+    chromeHistory,
   } = props;
 
   const location = useLocation();
@@ -533,6 +534,7 @@ const ClusterDetails = (props) => {
               insightsData={insightsData[cluster.external_id]}
               hasNetworkOndemand={hasNetworkOndemand}
               userAccess={userAccess}
+              chromeHistory={chromeHistory}
             />
           </ErrorBoundary>
         </TabContent>
@@ -773,6 +775,7 @@ ClusterDetails.propTypes = {
     pending: PropTypes.bool,
     fulfilled: PropTypes.bool,
   }).isRequired,
+  chromeHistory: PropTypes.any,
 };
 
 ClusterDetails.defaultProps = {
