@@ -166,7 +166,6 @@
   },
   "globals": {
     "insights": "readonly",
-    "APP_BETA": "readonly",
     "APP_DEVMODE": "readonly",
     "APP_API_ENV": "readonly",
     "APP_DEV_SERVER": "readonly",
