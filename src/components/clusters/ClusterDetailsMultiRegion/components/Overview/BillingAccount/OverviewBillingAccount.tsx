@@ -50,6 +50,7 @@ export function OverviewBillingAccount() {
             <Flex>
               <FlexItem>
                 <ButtonWithTooltip
+                  data-testid="billingMarketplaceAccountLink"
                   isDisabled={!cluster?.canEdit} // This won't show disabled currently, but setting the tooltip anyway
                   variant="link"
                   isInline
