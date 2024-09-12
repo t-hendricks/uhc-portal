@@ -46,7 +46,7 @@ type EditMachinePoolModalProps = {
   machinePoolId?: string;
   isEdit?: boolean;
   shouldDisplayClusterName?: boolean;
-  machinePoolsResponse: MachinePool[];
+  machinePoolsResponse?: MachinePool[];
   machineTypesResponse: MachineTypesResponse;
   isHypershift?: boolean;
   machinePoolsLoading: boolean;
@@ -85,7 +85,7 @@ const EditMachinePoolModal = ({
   const { initialValues, validationSchema } = useMachinePoolFormik({
     machinePool: currentMachinePool,
     cluster,
-    machinePools: machinePoolsResponse,
+    machinePools: machinePoolsResponse || [],
     machineTypes: machineTypesResponse,
   });
 
