@@ -45,6 +45,7 @@ export const GcpVpcNameSelectField = ({
   const { values } = useFormState();
   const { vpcs } = useGlobalState((state) => state.ccsInquiries);
   const ccsCredentials = getGcpCcsCredentials(values);
+  const { [FieldId.GcpAuthType]: gcpAuthType } = values;
   const region = values[FieldId.Region];
   const hasDependencies = !!(ccsCredentials && region);
   const matchesDependencies =
@@ -101,7 +102,7 @@ export const GcpVpcNameSelectField = ({
 
   React.useEffect(() => {
     if (hasDependencies && !matchesDependencies && !vpcs.pending) {
-      dispatch(getGCPCloudProviderVPCs(LIST_VPCS, ccsCredentials, region));
+      dispatch(getGCPCloudProviderVPCs(LIST_VPCS, gcpAuthType, ccsCredentials, region));
     }
 
     if (isCurrentValueIrrelevant) {
@@ -116,6 +117,7 @@ export const GcpVpcNameSelectField = ({
     region,
     dispatch,
     isCurrentValueIrrelevant,
+    gcpAuthType,
   ]);
 
   const { onChange, ...restInput } = input;
