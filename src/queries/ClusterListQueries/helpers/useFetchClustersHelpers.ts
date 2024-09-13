@@ -36,7 +36,6 @@ export type UseFetchClustersQuery = ReturnType<typeof createQuery>;
 
 type FetchPageOfClustersProps = {
   page: number;
-  aiMergeListsFeatureFlag: boolean;
   region?: Region;
   flags?: { [flag: string]: any };
   nameFilter?: ViewOptionsFilter;
@@ -60,7 +59,6 @@ type FetchPage = {
 
 export const fetchPageOfClusters = async ({
   page,
-  aiMergeListsFeatureFlag,
   region,
   flags,
   nameFilter,
@@ -79,7 +77,6 @@ export const fetchPageOfClusters = async ({
     : await fetchPageOfGlobalClusters(
         page,
         pageSize,
-        aiMergeListsFeatureFlag,
         { flags, filter: nameFilter, sorting } as ViewOptions,
         userName,
         getMultiRegion,
@@ -155,7 +152,6 @@ const queryKey = ({
 
 export const createQuery = ({
   page,
-  aiMergeListsFeatureFlag,
   region,
   flags,
   nameFilter,
@@ -166,7 +162,6 @@ export const createQuery = ({
   pageSize,
 }: {
   page: number;
-  aiMergeListsFeatureFlag: boolean;
   region?: Region;
   flags?: { [flag: string]: any };
   nameFilter?: ViewOptionsFilter;
@@ -191,7 +186,6 @@ export const createQuery = ({
   queryFn: async () =>
     fetchPageOfClusters({
       page: page || 1,
-      aiMergeListsFeatureFlag,
       region,
       flags,
       nameFilter,
@@ -354,7 +348,6 @@ export const combineClusterQueries = (
 export const nextAPIPageQueries = ({
   fetchedPages,
   currentQueries,
-  aiMergeListsFeatureFlag,
   useClientSortPaging,
   flags,
   nameFilter,
@@ -362,7 +355,6 @@ export const nextAPIPageQueries = ({
 }: {
   fetchedPages: FetchPage[];
   currentQueries: UseFetchClustersQuery[];
-  aiMergeListsFeatureFlag: boolean;
   useClientSortPaging: boolean;
   flags: {
     [flag: string]: any;
@@ -390,7 +382,6 @@ export const nextAPIPageQueries = ({
         newQueries.push(
           createQuery({
             page: nextPage,
-            aiMergeListsFeatureFlag,
             region: pageFetched.region,
             useClientSortPaging,
             flags,

@@ -31,7 +31,6 @@ import apiRequest from '~/services/apiRequest';
 import { normalizedProducts } from '../../common/subscriptionTypes';
 import {
   ACCESS_REQUEST_ENABLED,
-  ASSISTED_INSTALLER_FEATURE,
   CLUSTER_OWNERSHIP_TRANSFER,
   HYPERSHIFT_WIZARD_FEATURE,
   MULTIREGION_PREVIEW_ENABLED,
@@ -108,12 +107,10 @@ import RegisterCluster from '../clusters/RegisterCluster';
 import { CreateOsdWizard } from '../clusters/wizards/osd';
 import CreateROSAWizard from '../clusters/wizards/rosa';
 import GetStartedWithROSA from '../clusters/wizards/rosa/CreateRosaGetStarted';
-import AINoPermissionsError from '../common/AINoPermissionsError';
 import EntitlementConfig from '../common/EntitlementConfig/index';
 import TermsGuard from '../common/TermsGuard';
 import Dashboard from '../dashboard';
 import DownloadsPage from '../downloads/DownloadsPage';
-import withFeatureGate from '../features/with-feature-gate';
 import Overview from '../overview';
 import Quota from '../quota';
 import Releases from '../releases';
@@ -131,19 +128,6 @@ const AssistedUiRouterPage: typeof AssistedInstallerRoutes = (props: any) => (
   </AppPage>
 );
 
-const GatedAssistedUiRouter = withFeatureGate(
-  AssistedUiRouterPage,
-  ASSISTED_INSTALLER_FEATURE,
-  AINoPermissionsError,
-);
-
-const GatedMetalInstall = withFeatureGate(
-  InstallBareMetal,
-  ASSISTED_INSTALLER_FEATURE,
-  // TODO remove ts-ignore when `withFeatureGate` and InstallBMUPI are converted to typescript
-  // @ts-ignore
-  InstallBMUPI, // InstallBMIPI,
-);
 interface RouterProps {
   planType: string;
   clusterId: string;
@@ -299,7 +283,7 @@ const Router: React.FC<RouterProps> = ({ planType, clusterId, externalClusterId 
         <Route path="/install/metal/installer-provisioned" element={<InstallBMIPI />} />
         <Route path="/install/metal/agent-based" element={<InstallBMABI />} />
         <Route path="/install/metal/multi" element={<InstallMultiBMUPI />} />
-        <Route path="/install/metal" element={<GatedMetalInstall />} />
+        <Route path="/install/metal" element={<InstallBareMetal />} />
         <Route path="/install/multi/pre-release" element={<ConnectedInstallMultiPreRelease />} />
         <Route path="/install/vsphere" element={<InstallVSphere />} />
         <Route path="/install/vsphere/agent-based" element={<ConnectedInstallVSphereABI />} />
@@ -425,7 +409,7 @@ const Router: React.FC<RouterProps> = ({ planType, clusterId, externalClusterId 
         <Route
           path="/assisted-installer/*"
           element={
-            <GatedAssistedUiRouter
+            <AssistedUiRouterPage
               allEnabledFeatures={{}}
               // @ts-ignore this throws a type error
               history={chromeHistory as unknown as HistoryRouterProps['history']}

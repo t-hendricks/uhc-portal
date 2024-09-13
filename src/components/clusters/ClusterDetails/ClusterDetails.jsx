@@ -27,13 +27,14 @@ import { SubscriptionCommonFields } from '~/types/accounts_mgmt.v1';
 
 import getClusterName from '../../../common/getClusterName';
 import { isValid, shouldRefetchQuota } from '../../../common/helpers';
-import { isUninstalledAICluster } from '../../../common/isAssistedInstallerCluster';
+import {
+  isAssistedInstallCluster,
+  isUninstalledAICluster,
+} from '../../../common/isAssistedInstallerCluster';
 import { hasCapability, subscriptionCapabilities } from '../../../common/subscriptionCapabilities';
 import { knownProducts } from '../../../common/subscriptionTypes';
-import { ASSISTED_INSTALLER_FEATURE } from '../../../redux/constants/featureConstants';
 import ErrorBoundary from '../../App/ErrorBoundary';
 import Unavailable from '../../common/Unavailable';
-import withFeatureGate from '../../features/with-feature-gate';
 import clusterStates, {
   canViewMachinePoolTab,
   isHibernating,
@@ -62,10 +63,7 @@ import UpgradeSettingsTab from './components/UpgradeSettings';
 import { eventTypes } from './clusterDetailsHelper';
 
 const { HostsClusterDetailTab, getAddHostsTabState } = OCM;
-const GatedAIHostsClusterDetailTab = withFeatureGate(
-  HostsClusterDetailTab,
-  ASSISTED_INSTALLER_FEATURE,
-);
+
 const PAGE_TITLE = 'Red Hat OpenShift Cluster Manager';
 
 const ClusterDetails = (props) => {
@@ -122,7 +120,6 @@ const ClusterDetails = (props) => {
     anyModalOpen,
     hasIssues,
     toggleSubscriptionReleased,
-    assistedInstallerEnabled,
     userAccess,
     gotRouters,
     hasNetworkOndemand,
@@ -444,7 +441,7 @@ const ClusterDetails = (props) => {
     cluster.managed && !isAROCluster && cluster.canEdit && !isArchived;
 
   let addHostsTabState = { showTab: false, isDisabled: false, tabTooltip: '' };
-  if (assistedInstallerEnabled && !isArchived) {
+  if (isAssistedInstallCluster(cluster) && !isArchived) {
     addHostsTabState = getAddHostsTabState(cluster);
   }
 
@@ -659,7 +656,7 @@ const ClusterDetails = (props) => {
             hidden
           >
             <ErrorBoundary>
-              <GatedAIHostsClusterDetailTab
+              <HostsClusterDetailTab
                 cluster={cluster}
                 isVisible={selectedTab === ClusterTabsId.ADD_ASSISTED_HOSTS}
               />
@@ -759,7 +756,6 @@ ClusterDetails.propTypes = {
   getNotificationContacts: PropTypes.func.isRequired,
   hasNetworkOndemand: PropTypes.bool.isRequired,
   isAccessRequestEnabled: PropTypes.bool.isRequired,
-  assistedInstallerEnabled: PropTypes.bool,
   getSchedules: PropTypes.func,
   getUserAccess: PropTypes.func.isRequired,
   userAccess: PropTypes.shape({

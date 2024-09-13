@@ -470,7 +470,6 @@ describe('<ClusterDetails />', () => {
     const ocpProps = {
       ...fixtures,
       ...functions,
-      assistedInstallerEnabled: true,
       clusterDetails: {
         ...fixtures.OCPClusterDetails,
         cluster: {
@@ -480,7 +479,6 @@ describe('<ClusterDetails />', () => {
             ...fixtures.OCPClusterDetails.cluster.subscription,
             status: SubscriptionCommonFields.status.ARCHIVED,
           },
-          // together with assistedInstallerEnabled: true,
           // this set displayAddAssistedHosts to true if not Archived
           cloud_provider: {
             kind: 'CloudProvider',
