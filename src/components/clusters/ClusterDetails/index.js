@@ -12,7 +12,6 @@ import { clusterAutoscalerActions } from '~/redux/actions/clusterAutoscalerActio
 import { onClearFiltersAndFlags } from '~/redux/actions/viewOptionsActions';
 import {
   ACCESS_REQUEST_ENABLED,
-  ASSISTED_INSTALLER_FEATURE,
   NETWORK_VALIDATOR_ONDEMAND_FEATURE,
 } from '~/redux/constants/featureConstants';
 
@@ -87,7 +86,6 @@ const mapStateToProps = (state) => {
     hasIssues: issuesAndWarningsSelector(state).issues.totalCount > 0,
     notificationContacts,
     supportCases,
-    assistedInstallerEnabled: featureGateSelector(state, ASSISTED_INSTALLER_FEATURE),
     userAccess: state.cost.userAccess,
     gotRouters: get(clusterRouters, 'getRouters.routers.length', 0) > 0,
     upgradeGates: getUpgradeGates(state),

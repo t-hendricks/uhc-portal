@@ -58,7 +58,6 @@ import {
   clusterService,
 } from '../../services';
 import { clustersConstants } from '../constants';
-import { ASSISTED_INSTALLER_MERGE_LISTS_FEATURE } from '../constants/featureConstants';
 import { dispatchTechPreviewStatus, techPreviewStatusSelector } from '../hooks/clusterHooks';
 import { buildPermissionDict, INVALIDATE_ACTION } from '../reduxHelpers';
 import type { AppThunk, AppThunkDispatch } from '../types';
@@ -277,7 +276,6 @@ const createResponseForFetchClusters = (
 
 const fetchClustersAndPermissions = async (
   clusterRequestParams: Parameters<typeof accountsService.getSubscriptions>[0],
-  aiMergeListsFeatureFlag: boolean | undefined,
 ) => {
   const [subscriptions, canDelete, canEdit] = await Promise.all([
     accountsService
@@ -297,9 +295,7 @@ const fetchClustersAndPermissions = async (
       .then((response) => buildPermissionDict(response)),
   ]);
 
-  const items = subscriptions?.data?.items?.filter(
-    (item) => aiMergeListsFeatureFlag || !isAssistedInstallSubscription(item),
-  );
+  const items = subscriptions?.data?.items;
 
   if (!items) {
     return {
@@ -325,13 +321,11 @@ const fetchClustersAndPermissions = async (
   });
 
   const subscriptionIds: string[] = [];
-  if (aiMergeListsFeatureFlag) {
-    subscriptionMap.forEach(({ subscription }) => {
-      if (isAssistedInstallSubscription(subscription) && subscription.id) {
-        subscriptionIds.push(subscription.id);
-      }
-    });
-  }
+  subscriptionMap.forEach(({ subscription }) => {
+    if (isAssistedInstallSubscription(subscription) && subscription.id) {
+      subscriptionIds.push(subscription.id);
+    }
+  });
 
   if (subscriptionIds.length > 0) {
     const aiClusters = await assistedService
@@ -386,10 +380,8 @@ const fetchClustersAndPermissions = async (
   };
 };
 
-const fetchClustersAction = (
-  params: Parameters<typeof fetchClustersAndPermissions>[0],
-  feature: boolean | undefined,
-) => action(clustersConstants.GET_CLUSTERS, fetchClustersAndPermissions(params, feature));
+const fetchClustersAction = (params: Parameters<typeof fetchClustersAndPermissions>[0]) =>
+  action(clustersConstants.GET_CLUSTERS, fetchClustersAndPermissions(params));
 
 const fetchClusters =
   (params: Parameters<typeof fetchClustersAndPermissions>[0]): AppThunk =>
@@ -398,9 +390,7 @@ const fetchClusters =
     if (!techPreviewStatusSelector(getState(), 'rosa', 'hcp')) {
       dispatchTechPreviewStatus(dispatch, 'rosa', 'hcp');
     }
-    dispatch(
-      fetchClustersAction(params, getState().features[ASSISTED_INSTALLER_MERGE_LISTS_FEATURE]),
-    );
+    dispatch(fetchClustersAction(params));
   };
 
 const fetchSingleClusterAndPermissions = async (

@@ -42,7 +42,6 @@ const CreateCluster = ({
   hasOSDTrialQuota,
   rosaCreationWizardFeature,
   token,
-  assistedInstallerFeature,
   activeTab,
 }) => {
   const navigate = useNavigate();
@@ -125,7 +124,7 @@ const CreateCluster = ({
                   ? []
                   : [
                       <Tab eventKey={1} title={tabTitle(1)}>
-                        <DatacenterTab assistedInstallerFeature={assistedInstallerFeature} />
+                        <DatacenterTab />
                       </Tab>,
                       <Tab eventKey={2} title={tabTitle(2)}>
                         <LocalTab token={token} />
@@ -158,7 +157,6 @@ CreateCluster.propTypes = {
   getOrganizationAndQuota: PropTypes.func.isRequired,
   token: PropTypes.object.isRequired,
   getAuthToken: PropTypes.func.isRequired,
-  assistedInstallerFeature: PropTypes.bool,
   activeTab: PropTypes.string,
 };
 

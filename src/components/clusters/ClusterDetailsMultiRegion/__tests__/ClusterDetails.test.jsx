@@ -595,7 +595,6 @@ describe('<ClusterDetailsMultiRegion />', () => {
     const ocpProps = {
       ...fixtures,
       ...functions,
-      assistedInstallerEnabled: true,
       clusterDetails: {
         ...fixtures.OCPClusterDetails,
         cluster: {

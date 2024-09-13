@@ -60,7 +60,6 @@ const fetchManagedClusters = async (managedSubscriptions: Subscription[] = []) =
 const fetchGlobalSubscriptions = async (
   page: number,
   pageSize: number | undefined,
-  aiMergeListsFeatureFlag: boolean,
   viewOptions?: ViewOptions,
   userName?: string,
   getMultiRegion: boolean = true,
@@ -89,7 +88,7 @@ const fetchGlobalSubscriptions = async (
 
   const items =
     subscriptions?.data?.items?.filter(
-      (item: Subscription) => aiMergeListsFeatureFlag || !isAssistedInstallSubscription(item),
+      (item: Subscription) => !isAssistedInstallSubscription(item),
     ) || [];
 
   const subscriptionMap = new Map<string, MapEntry>();
@@ -104,13 +103,11 @@ const fetchGlobalSubscriptions = async (
 
   const subscriptionIds: string[] = [];
 
-  if (aiMergeListsFeatureFlag) {
-    subscriptionMap.forEach(({ subscription }) => {
-      if (isAssistedInstallSubscription(subscription) && subscription.id) {
-        subscriptionIds.push(subscription.id);
-      }
-    });
-  }
+  subscriptionMap.forEach(({ subscription }) => {
+    if (isAssistedInstallSubscription(subscription) && subscription.id) {
+      subscriptionIds.push(subscription.id);
+    }
+  });
 
   const managedSubscriptions = items.filter(
     (s) => s.managed && s.status !== SubscriptionCommonFields.status.DEPROVISIONED,
@@ -128,7 +125,6 @@ const fetchGlobalSubscriptions = async (
 export const fetchPageOfGlobalClusters = async (
   page: number,
   pageSize: number | undefined,
-  aiMergeListsFeatureFlag: boolean,
   viewOptions: ViewOptions,
   userName?: string,
   getMultiRegion: boolean = true,
@@ -144,7 +140,6 @@ export const fetchPageOfGlobalClusters = async (
     subscriptionResponse = await fetchGlobalSubscriptions(
       page,
       pageSize,
-      aiMergeListsFeatureFlag,
       viewOptions,
       userName,
       getMultiRegion,

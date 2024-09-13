@@ -4,8 +4,6 @@ import { ErrorResponse } from 'react-router-dom';
 
 import { useQueries } from '@tanstack/react-query';
 
-import { useFeatureGate } from '~/hooks/useFeatureGate';
-import { ASSISTED_INSTALLER_MERGE_LISTS_FEATURE } from '~/redux/constants/featureConstants';
 import { GlobalState } from '~/redux/store';
 
 import { useFetchRegions } from '../common/useFetchRegions';
@@ -31,7 +29,6 @@ export const useFetchClusters = (
   // If using multiRegion, there must be client side sorting and paging
   const isClientSortPaging = getMultiRegion ? true : useClientSortPaging;
 
-  const aiMergeListsFeatureFlag = useFeatureGate(ASSISTED_INSTALLER_MERGE_LISTS_FEATURE);
   const [queries, setQueries] = React.useState<UseFetchClustersQuery[]>([]);
 
   /* ***** Get Can Update/Delete clusters list **** */
@@ -118,16 +115,11 @@ export const useFetchClusters = (
   );
 
   /* **** Get initial queries ( first API page of global and regional clusters) **** */
-  if (
-    !isCanUpdateDeleteLoading &&
-    isCanUpdateDeleteFetched &&
-    aiMergeListsFeatureFlag !== undefined
-  ) {
+  if (!isCanUpdateDeleteLoading && isCanUpdateDeleteFetched) {
     const page = useClientSortPaging ? 1 : currentPage; // If not client side pagination - use page from redux
 
     const initialQueryCommonProps = {
       page,
-      aiMergeListsFeatureFlag,
       flags,
       nameFilter,
       userName,
@@ -234,7 +226,6 @@ export const useFetchClusters = (
     const nextQueries = nextAPIPageQueries({
       fetchedPages: data?.pagesFetched,
       currentQueries: queries,
-      aiMergeListsFeatureFlag,
       useClientSortPaging,
       flags,
       nameFilter,
