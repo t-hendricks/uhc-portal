@@ -19,6 +19,7 @@ const defaultProps = {
   autoScaleMinNodesValue: '1',
   autoScaleMaxNodesValue: '1',
   numPools: 2,
+  clusterId: '',
 };
 
 describe('<AutoScaleSection />', () => {

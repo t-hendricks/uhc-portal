@@ -1,8 +1,8 @@
 {
   "kind": "VersionGateList",
   "page": 1,
-  "size": 12,
-  "total": 12,
+  "size": 16,
+  "total": 16,
   "items": [
     {
       "kind": "VersionGate",
@@ -149,6 +149,45 @@
     },
     {
       "kind": "VersionGate",
+      "id": "da65e1c4-2ceb-11ef-9392-0a580a81098a",
+      "href": "/api/clusters_mgmt/v1/version_gates/da65e1c4-2ceb-11ef-9392-0a580a81098a",
+      "version_raw_id_prefix": "5.0",
+      "label": "api.openshift.com/gate-test-only",
+      "value": "test-value",
+      "warning_message": "test warning message",
+      "description": "SDA qe test only",
+      "documentation_url": "",
+      "sts_only": false,
+      "creation_timestamp": "2024-06-17T20:54:56.482145Z"
+    },
+    {
+      "kind": "VersionGate",
+      "id": "da6da356-2ceb-11ef-9392-0a580a81098a",
+      "href": "/api/clusters_mgmt/v1/version_gates/da6da356-2ceb-11ef-9392-0a580a81098a",
+      "version_raw_id_prefix": "5.3",
+      "label": "api.openshift.com/gate-test-only",
+      "value": "test-value",
+      "warning_message": "test warning message",
+      "description": "SDA qe test only",
+      "documentation_url": "",
+      "sts_only": false,
+      "creation_timestamp": "2024-06-17T20:54:56.532976Z"
+    },
+    {
+      "kind": "VersionGate",
+      "id": "da717d55-2ceb-11ef-aebc-0a580a821610",
+      "href": "/api/clusters_mgmt/v1/version_gates/da717d55-2ceb-11ef-aebc-0a580a821610",
+      "version_raw_id_prefix": "5.2",
+      "label": "api.openshift.com/gate-test-only",
+      "value": "test-value",
+      "warning_message": "test warning message",
+      "description": "SDA qe test only",
+      "documentation_url": "",
+      "sts_only": false,
+      "creation_timestamp": "2024-06-17T20:54:56.558217Z"
+    },
+    {
+      "kind": "VersionGate",
       "id": "e4dda6cd-7020-11ed-8152-0a580a810441",
       "href": "/api/clusters_mgmt/v1/version_gates/e4dda6cd-7020-11ed-8152-0a580a810441",
       "version_raw_id_prefix": "4.12",
@@ -159,6 +198,19 @@
       "documentation_url": "https://access.redhat.com/solutions/6988198",
       "sts_only": true,
       "creation_timestamp": "2022-11-29T20:03:29.934921Z"
+    },
+    {
+      "kind": "VersionGate",
+      "id": "e4e534f0-1f07-11ef-a973-0a580a81063b",
+      "href": "/api/clusters_mgmt/v1/version_gates/e4e534f0-1f07-11ef-a973-0a580a81063b",
+      "version_raw_id_prefix": "4.16",
+      "label": "api.openshift.com/gate-ocp",
+      "value": "4.16",
+      "warning_message": "To prevent an outage on your cluster, review any APIs in use that will be removed, and migrate them to the appropriate new API version. Failure to evaluate and migrate components affected by this update can cause some types of workloads to stop functioning.",
+      "description": "OpenShift removes several Kubernetes APIs, including flowschemas (flowcontrol.apiserver.k8s.io/v1beta2) and prioritylevelconfigurations (flowcontrol.apiserver.k8s.io/v1beta2) in OpenShift 4.16.",
+      "documentation_url": "https://access.redhat.com/articles/6955985",
+      "sts_only": false,
+      "creation_timestamp": "2024-05-31T04:40:23.72334Z"
     }
   ]
 }

@@ -91,7 +91,7 @@ const insightsUrl = async (env: typeof DEFAULT_ROUTES) => {
 };
 
 const getPartnerScope = (pathname: string) => {
-  // replace beta and leading "/"
+  // replace leading "/"
   const sanitizedPathname = pathname.replace(/^\//, '');
   // check if the pathname is connect/:partner
   if (sanitizedPathname.match(/^connect\/.+/)) {

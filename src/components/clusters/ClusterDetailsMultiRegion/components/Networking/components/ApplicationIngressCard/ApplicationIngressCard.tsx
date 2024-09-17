@@ -1,4 +1,5 @@
 import React from 'react';
+import { useDispatch } from 'react-redux';
 
 import {
   ActionList,
@@ -15,13 +16,20 @@ import {
   TextVariants,
 } from '@patternfly/react-core';
 
+import { isHibernating, isHypershiftCluster } from '~/components/clusters/common/clusterStates';
+import { CloudProviderType } from '~/components/clusters/wizards/common';
+import { modalActions } from '~/components/common/Modal/ModalActions';
 import { isRestrictedEnv } from '~/restrictedEnv';
-import { LoadBalancerFlavor } from '~/types/clusters_mgmt.v1';
+import { Ingress, LoadBalancerFlavor } from '~/types/clusters_mgmt.v1';
+import { ClusterWithPermissions } from '~/types/types';
 
 import ButtonWithTooltip from '../../../../../../common/ButtonWithTooltip';
 import modals from '../../../../../../common/Modal/modals';
 import {
-  ClusterRouter,
+  canConfigureDayTwoManagedIngress,
+  canConfigureLoadBalancer,
+} from '../../NetworkingHelpers';
+import NetworkingSelector, {
   excludedNamespacesAsString,
   routeSelectorsAsString,
 } from '../../NetworkingSelector';
@@ -64,48 +72,51 @@ const resolveDisableEditReason = ({
   return canNotEditDefaultRouterReason || readOnlyReason || hibernatingReason || canNotEditReason;
 };
 
-type ApplicationIngressCardProps = ResolveDisableEditReasonParams & {
-  isNLB?: boolean;
-  canShowLoadBalancer: boolean;
-  hasSufficientIngressEditVersion?: boolean;
-  clusterRoutesTlsSecretRef?: string;
-  clusterRoutesHostname?: string;
-
-  defaultRouterAddress?: string;
-  isDefaultRouterPrivate?: boolean;
-
-  defaultRouterSelectors: ClusterRouter['routeSelectors'];
-  defaultRouterExcludedNamespacesFlag: ClusterRouter['excludedNamespaces'];
-  isDefaultIngressWildcardPolicyAllowed?: ClusterRouter['isWildcardPolicyAllowed'];
-  isDefaultRouterNamespaceOwnershipPolicyStrict: ClusterRouter['isNamespaceOwnershipPolicyStrict'];
-
-  openModal: (modal: string) => void;
+type ApplicationIngressCardProps = {
+  cluster: ClusterWithPermissions;
+  clusterRoutersData: Ingress[];
+  provider: string;
+  refreshCluster: () => void;
 };
 
 const ApplicationIngressCard: React.FC<ApplicationIngressCardProps> = ({
-  canEdit,
-  isReadOnly,
-  clusterHibernating,
-
-  isNLB,
-  canEditLoadBalancer,
-  canShowLoadBalancer,
-  hasSufficientIngressEditVersion,
-  clusterRoutesTlsSecretRef,
-  clusterRoutesHostname,
-
-  defaultRouterAddress,
-  isDefaultRouterPrivate,
-
-  defaultRouterSelectors,
-  defaultRouterExcludedNamespacesFlag,
-  isDefaultIngressWildcardPolicyAllowed,
-  isDefaultRouterNamespaceOwnershipPolicyStrict,
-
-  openModal,
+  provider,
+  cluster,
+  clusterRoutersData,
+  refreshCluster,
 }) => {
+  const clusterRouters = NetworkingSelector(clusterRoutersData);
+  const dispatch = useDispatch();
+
+  const { canEdit } = cluster;
+  const isHypershift = isHypershiftCluster(cluster);
+  const isAWS = provider === CloudProviderType.Aws;
+  const isReadOnly = cluster?.status?.configuration_mode === 'read_only';
+  const isSTSEnabled = cluster?.aws?.sts?.enabled === true;
+  const clusterHibernating = isHibernating(cluster);
+  const clusterVersion = cluster?.openshift_version || cluster?.version?.raw_id || '';
+  const hasSufficientIngressEditVersion =
+    !isHypershift && canConfigureDayTwoManagedIngress(clusterVersion);
+  const canEditLoadBalancer = canConfigureLoadBalancer(clusterVersion, isSTSEnabled);
+  const canShowLoadBalancer = isAWS && !isHypershift;
+  const {
+    routeSelectors: defaultRouterSelectors,
+    excludedNamespaces: defaultRouterExcludedNamespacesFlag,
+    loadBalancer,
+    address: defaultRouterAddress,
+    isPrivate: isDefaultRouterPrivate,
+    tlsSecretRef: clusterRoutesTlsSecretRef,
+    isWildcardPolicyAllowed: isDefaultIngressWildcardPolicyAllowed,
+    isNamespaceOwnershipPolicyStrict: isDefaultRouterNamespaceOwnershipPolicyStrict,
+    hostname: clusterRoutesHostname,
+  } = clusterRouters.default || {};
+  const region = cluster.subscription?.xcm_id;
+  const clusterID = cluster.id;
+
+  const isNLB = loadBalancer === LoadBalancerFlavor.NLB;
+
   const disableEditReason = resolveDisableEditReason({
-    canEdit,
+    canEdit: !!canEdit,
     isReadOnly,
     clusterHibernating,
     hasSufficientIngressEditVersion,
@@ -113,7 +124,7 @@ const ApplicationIngressCard: React.FC<ApplicationIngressCardProps> = ({
   });
 
   const handleEditSettings = () => {
-    openModal(modals.EDIT_APPLICATION_INGRESS);
+    dispatch(modalActions.openModal(modals.EDIT_APPLICATION_INGRESS));
   };
 
   return (
@@ -182,7 +193,7 @@ const ApplicationIngressCard: React.FC<ApplicationIngressCardProps> = ({
                 <Switch
                   label="Strict"
                   labelOff="Inter-namespace ownership"
-                  isChecked={isDefaultRouterNamespaceOwnershipPolicyStrict}
+                  isChecked={!!isDefaultRouterNamespaceOwnershipPolicyStrict}
                   isDisabled
                 />
               </FormGroup>
@@ -209,7 +220,16 @@ const ApplicationIngressCard: React.FC<ApplicationIngressCardProps> = ({
             </FormGroup>
           )}
 
-          <EditApplicationIngressDialog />
+          <EditApplicationIngressDialog
+            clusterID={clusterID}
+            refreshCluster={refreshCluster}
+            region={region}
+            clusterRouters={clusterRouters}
+            canShowLoadBalancer={canShowLoadBalancer}
+            canEditLoadBalancer={canEditLoadBalancer}
+            isHypershiftCluster={isHypershift}
+            hasSufficientIngressEditVersion={hasSufficientIngressEditVersion}
+          />
         </Form>
       </CardBody>
       <CardFooter>

@@ -50,12 +50,12 @@ describe(
 
     it('Step - Cluster Settings - Select Cluster name, version, regions', () => {
       CreateRosaWizardPage.isClusterDetailsScreen();
+      CreateRosaWizardPage.selectRegion(clusterProperties.Region);
       CreateRosaWizardPage.setClusterName(clusterName);
       CreateRosaWizardPage.closePopoverDialogs();
       CreateRosaWizardPage.createCustomDomainPrefixCheckbox().check();
       CreateRosaWizardPage.setDomainPrefix(clusterProperties.DomainPrefix);
       CreateRosaWizardPage.closePopoverDialogs();
-      CreateRosaWizardPage.selectRegion(clusterProperties.Region);
       CreateRosaWizardPage.rosaNextButton().click();
     });
 

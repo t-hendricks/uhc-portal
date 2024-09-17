@@ -60,6 +60,9 @@ const MIRROR_ROSA_LATEST = 'https://mirror.openshift.com/pub/openshift-v4/client
 const MIRROR_MIRROR_REGISTRY_LATEST =
   'https://developers.redhat.com/content-gateway/rest/mirror/pub/openshift-v4/clients/mirror-registry/latest';
 
+const ARGO_CD_CLI_LATEST =
+  'https://developers.redhat.com/content-gateway/rest/browse/pub/openshift-v4/clients/openshift-gitops/latest/';
+
 const DOCS_BASE = 'https://docs.openshift.com/container-platform/4.16';
 const OSD_DOCS_BASE = 'https://docs.openshift.com/dedicated';
 const ROSA_DOCS_BASE = 'https://docs.openshift.com/rosa';
@@ -278,6 +281,8 @@ const links = {
 
   COREOS_INSTALLER_DOCS: `${DOCS_BASE}/installing/installing_platform_agnostic/installing-platform-agnostic.html`,
 
+  ARGO_CD_DOCS: `https://docs.openshift.com/gitops/1.13/installing_gitops/installing-argocd-gitops-cli.html`,
+
   INSTALL_MIRROR_REGISTRY_LEARN_MORE: `${DOCS_BASE}/installing/disconnected_install/installing-mirroring-installation-images.html#installation-about-mirror-registry_installing-mirroring-installation-images`,
   INSTALL_OC_MIRROR_PLUGIN_LEARN_MORE: `${DOCS_BASE}/installing/disconnected_install/installing-mirroring-disconnected.html`,
 
@@ -388,6 +393,7 @@ const tools = {
   OC_MIRROR_PLUGIN: 'oc-mirror-plugin',
   TKN: 'tkn',
   COPY_PULLREQUEST: 'copy-pull-secret',
+  ARGO_CD: 'argo-cd',
 };
 
 const channels = {
@@ -859,6 +865,26 @@ const urls = {
       [architectures.ppc]: {
         [operatingSystems.rhel9]: `${MIRROR_CLIENTS_LATEST_PPC}oc-mirror.rhel9.tar.gz`,
         [operatingSystems.rhel8]: `${MIRROR_CLIENTS_LATEST_PPC}oc-mirror.tar.gz`,
+      },
+    },
+  },
+
+  [tools.ARGO_CD]: {
+    [channels.STABLE]: {
+      [architectures.x86]: {
+        [operatingSystems.linux]: `${ARGO_CD_CLI_LATEST}argocd-linux-amd64.tar.gz`,
+        [operatingSystems.windows]: `${ARGO_CD_CLI_LATEST}argocd-windows-amd64.zip`,
+        [operatingSystems.mac]: `${ARGO_CD_CLI_LATEST}argocd-macos-amd64.tar.gz`,
+      },
+      [architectures.s390x]: {
+        [operatingSystems.linux]: `${ARGO_CD_CLI_LATEST}argocd-linux-s390x.tar.gz`,
+      },
+      [architectures.ppc]: {
+        [operatingSystems.linux]: `${ARGO_CD_CLI_LATEST}argocd-linux-ppc64le.tar.gz`,
+      },
+      [architectures.arm]: {
+        [operatingSystems.linux]: `${ARGO_CD_CLI_LATEST}argocd-linux-arm64.tar.gz`,
+        [operatingSystems.mac]: `${ARGO_CD_CLI_LATEST}argocd-macos-arm64.tar.gz`,
       },
     },
   },

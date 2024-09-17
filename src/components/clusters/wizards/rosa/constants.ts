@@ -74,7 +74,7 @@ export enum StepId {
 
 const hypershiftDefaultSelected = true;
 
-export const initialValuesHypershift = (isHypershift: boolean) =>
+export const initialValuesHypershift = (isHypershift: boolean, isMultiRegionEnabled?: boolean) =>
   isHypershift
     ? {
         [FieldId.BillingModel]: billingModels.MARKETPLACE_AWS,
@@ -85,6 +85,7 @@ export const initialValuesHypershift = (isHypershift: boolean) =>
         [FieldId.SharedVpc]: { is_allowed: false },
         [FieldId.UpgradePolicy]: 'automatic',
         [FieldId.WorkerVolumeSizeGib]: undefined,
+        [FieldId.Region]: isMultiRegionEnabled ? undefined : AWS_DEFAULT_REGION,
       }
     : {
         [FieldId.BillingModel]: billingModels.STANDARD,
@@ -144,6 +145,7 @@ export const initialValues: (hypershiftDefault?: boolean) => FormikValues = (
   [FieldId.SelectedVpc]: { id: '', name: '' },
   [FieldId.UsePrivateLink]: false,
   [FieldId.EnableExteranlAuthentication]: false,
+  [FieldId.RegionalInstance]: {},
 
   // Optional fields based on whether Hypershift is selected or not
   ...initialValuesHypershift(hypershiftDefault),

@@ -1,10 +1,18 @@
+import fs from 'fs';
+import path from 'path';
+
 import helpers, {
   goZeroTime2Null,
   parseReduxFormKeyValueList,
   parseReduxFormTaints,
+  scrollToFirstField,
   strToKeyValueObject,
   truncateTextWithEllipsis,
 } from '../helpers';
+
+global.CSS = {
+  escape: (v) => v,
+};
 
 describe('nestedIsEmpty()', () => {
   it('returns true for an empty object', () => {
@@ -154,5 +162,25 @@ describe('strToKeyValueObject', () => {
     ])('truncates the original text correctly', (text, maxLength, truncatedText) =>
       expect(truncateTextWithEllipsis(text, maxLength)).toBe(truncatedText),
     );
+  });
+});
+
+describe('scrollToFirstField', () => {
+  const htmlContent = fs.readFileSync(path.join(__dirname, './helpers.fixtures.html'), 'utf8');
+  it.each([
+    ['name', 'name'],
+    ['domain_prefix', 'domain_prefix'],
+    ['has_domain_prefix', 'has_domain_prefix'],
+    ['as_domain_prefix', 'has_domain_prefix'],
+    ['omain_prefix', 'has_domain_prefix'],
+  ])('ID: %s', (id, expectedId) => {
+    // Arrange
+    document.body.innerHTML = htmlContent;
+
+    // Act
+    scrollToFirstField([id]);
+
+    // Assert
+    expect(document.activeElement.id).toBe(expectedId);
   });
 });

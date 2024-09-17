@@ -1,8 +1,9 @@
 import axios from 'axios';
 
+import { Cluster } from '~/types/clusters_mgmt.v1';
 import { ErrorState } from '~/types/types';
 
-import { RQApiErrorType } from './types';
+import { RQApiErrorType, SearchRegionalClusterItems } from './types';
 
 export const formatErrorData = (
   isLoading: boolean,
@@ -54,6 +55,28 @@ export const addNotificationErrorFormat = (
       isError,
       error: errorData,
     };
+  }
+  return undefined;
+};
+
+export const formatRegionalInstanceUrl = (regionalInstanceUrl: string) => {
+  if (regionalInstanceUrl) {
+    return regionalInstanceUrl.replace('api.', '').replace('.openshift.com', '');
+  }
+  return '';
+};
+
+export const createResponseForSearchCluster = (responseItems: Cluster[] | undefined) => {
+  const result: SearchRegionalClusterItems = { items: [] };
+  if (responseItems) {
+    responseItems?.forEach((entry: Cluster) => {
+      const cluster = {
+        name: entry.name,
+        domain_prefix: entry.domain_prefix,
+      };
+      result.items.push(cluster);
+    });
+    return result;
   }
   return undefined;
 };

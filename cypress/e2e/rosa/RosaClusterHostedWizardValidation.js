@@ -47,6 +47,8 @@ describe('Rosa hosted(Hypershift) cluster wizard validations', { tags: ['smoke',
   });
 
   it('Step - Cluster Settings - Details - widget validations', () => {
+    CreateRosaWizardPage.isClusterDetailsScreen();
+    CreateRosaWizardPage.selectRegion(clusterFieldValidations.Region);
     CreateRosaWizardPage.setClusterName(
       clusterFieldValidations.ClusterSettings.Details.InvalidClusterNamesValues[0],
     );
@@ -126,7 +128,6 @@ describe('Rosa hosted(Hypershift) cluster wizard validations', { tags: ['smoke',
       clusterFieldValidations.ClusterSettings.Details.KeyARNs[1].WrongFormatWithWhitespaceError,
     );
     CreateRosaWizardPage.enableAdditionalEtcdEncryptionCheckbox().uncheck();
-    CreateRosaWizardPage.selectRegion(clusterFieldValidations.Region);
     CreateRosaWizardPage.rosaNextButton().should('not.be.disabled');
     CreateRosaWizardPage.rosaBackButton().should('not.be.disabled');
     CreateRosaWizardPage.rosaCancelButton().should('not.be.disabled');
@@ -469,6 +470,5 @@ describe('Rosa hosted(Hypershift) cluster wizard validations', { tags: ['smoke',
       .type('test-123-test');
     CreateRosaWizardPage.rosaNextButton().click();
     CreateRosaWizardPage.rosaCancelButton().click();
-    LeaveCreateClusterPrompt.submit();
   });
 });

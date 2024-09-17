@@ -28,7 +28,9 @@ describe('RecommendedOperatorsCards', () => {
       );
 
       // Cards Info:
-      const readMoreBtns = screen.getAllByTestId('product-overview-card__learn-more-button');
+      const readMoreBtns = screen.getAllByTestId(
+        'product-overview-card__learn-more-button-Recommended operators',
+      );
 
       const productCardLogos = screen.getAllByTestId('product-overview-card__logo');
 
@@ -74,7 +76,9 @@ describe('RecommendedOperatorsCards', () => {
     );
 
     // Cards Info:
-    const readMoreBtns = screen.getAllByTestId('product-overview-card__learn-more-button');
+    const readMoreBtns = screen.getAllByTestId(
+      'product-overview-card__learn-more-button-Recommended operators',
+    );
 
     const productCardLogos = screen.getAllByTestId('product-overview-card__logo');
     expect(productCardLogos).toHaveLength(3);

@@ -4,10 +4,9 @@ import { Flex, FlexItem, Title } from '@patternfly/react-core';
 
 import ExternalLink from '~/components/common/ExternalLink';
 
-import ProductCard from '../ProductCard/ProductCard';
-
-import { DRAWER_PANEL_CONTENT, DrawerPanelContentNode } from './DrawerPanelContent';
-import PRODUCT_CARD_LOGOS from './ProductCardLogos';
+import { DRAWER_PANEL_CONTENT, DrawerPanelContentNode } from '../common/DrawerPanelContent';
+import ProductCard from '../common/ProductCard/ProductCard';
+import PRODUCT_CARD_LOGOS from '../common/ProductCardLogos';
 
 import './RecommendedOperatorsCards.scss';
 
@@ -47,26 +46,16 @@ type RecommendedOperatorsCardsProps = {
   selectedCardTitle: string;
 };
 
+const TITLE = 'Recommended operators';
+
 const RecommendedOperatorsCards = ({
   openLearnMore,
   selectedCardTitle,
 }: RecommendedOperatorsCardsProps) => (
   <div className="recommended-operators-cards">
-    <Flex>
-      <FlexItem>
-        <Title size="xl" headingLevel="h2" className="pf-v5-u-mt-lg">
-          Recommended operators
-        </Title>
-      </FlexItem>
-      <FlexItem align={{ default: 'alignRight' }}>
-        <ExternalLink
-          href="https://catalog.redhat.com/search?searchType=software&deployed_as=Operator"
-          className="view-all-in-ecosystem-catalog-button"
-        >
-          View all in Ecosystem Catalog
-        </ExternalLink>
-      </FlexItem>
-    </Flex>
+    <Title size="xl" headingLevel="h2" className="pf-v5-u-mt-lg">
+      {TITLE}
+    </Title>
     <Flex className="pf-v5-u-mb-lg">
       {RECOMMENDED_OPERATORS_CARDS.map((card) => (
         <FlexItem className="pf-v5-u-pt-md" data-testid="product-overview-card-flex-item">
@@ -74,10 +63,14 @@ const RecommendedOperatorsCards = ({
             {...card}
             openLearnMore={openLearnMore}
             isSelected={card.title === selectedCardTitle}
+            dataTestId={TITLE}
           />
         </FlexItem>
       ))}
     </Flex>
+    <ExternalLink href="https://catalog.redhat.com/search?searchType=software&deployed_as=Operator">
+      View all in Ecosystem Catalog
+    </ExternalLink>
   </div>
 );
 

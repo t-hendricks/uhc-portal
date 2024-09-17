@@ -1,8 +1,8 @@
 {
   "kind": "SubscriptionList",
   "page": 1,
-  "size": 20,
-  "total": 20,
+  "size": 21,
+  "total": 21,
   "items": [
     {
       "id": "1KgB0WcVBZBdRGAreuve29yoxUB",
@@ -1805,6 +1805,44 @@
       "support_level": "Premium",
       "trial_end_date": "0001-01-01T00:00:00Z",
       "updated_at": "2023-10-25T11:11:54.17015Z"
+    },
+    {
+      "billing_expiration_date": "0001-01-01T00:00:00Z",
+      "cloud_account_id": "000000000006",
+      "cloud_provider_id": "aws",
+      "cluster_billing_model": "standard",
+      "cluster_id": "2bv7n2aojuu1hlu59pdi29d7oslgaot7",
+      "created_at": "2024-06-17T23:41:02.33716Z",
+      "creator": {
+        "href": "/api/accounts_mgmt/v1/accounts/24wcdm4DTjnO9CmVyJWzCOGm65G",
+        "id": "24wcdm4DTjnO9CmVyJWzCOGm65G",
+        "kind": "Account"
+      },
+      "display_name": "provision-status-failure-test",
+      "eval_expiration_date": "0001-01-01T00:00:00Z",
+      "external_cluster_id": "11c6350e-4103-45da-ae6f-e52a93c1bea8",
+      "href": "/api/accounts_mgmt/v1/subscriptions/2i1otvlHsY2zB4ZY9pvY7ek3Dt3",
+      "id": "2i1otvlHsY2zB4ZY9pvY7ek3Dt3",
+      "kind": "Subscription",
+      "last_reconcile_date": "0001-01-01T00:00:00Z",
+      "last_released_at": "0001-01-01T00:00:00Z",
+      "last_telemetry_date": "0001-01-01T00:00:00Z",
+      "managed": true,
+      "organization": {
+        "id": "1wuVGGV6SCmD8ya6yRGEJzvmVuC"
+      },
+      "organization_id": "1wuVGGV6SCmD8ya6yRGEJzvmVuC",
+      "plan": {
+        "href": "/api/accounts_mgmt/v1/plans/MOA",
+        "id": "MOA",
+        "kind": "Plan",
+        "type": "MOA"
+      },
+      "provenance": "Provisioning",
+      "status": "Reserved",
+      "support_level": "Premium",
+      "trial_end_date": "0001-01-01T00:00:00Z",
+      "updated_at": "2024-06-17T23:41:02.33716Z"
     }
   ]
 }

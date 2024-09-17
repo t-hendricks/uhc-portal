@@ -11,8 +11,6 @@ import {
 
 import { isHypershiftCluster } from '~/components/clusters/common/clusterStates';
 import getBillingModelLabel from '~/components/clusters/common/getBillingModelLabel';
-import { useFeatureGate } from '~/hooks/useFeatureGate';
-import { LONGER_CLUSTER_NAME_UI } from '~/redux/constants/featureConstants';
 
 import { normalizedProducts } from '../../../../../common/subscriptionTypes';
 import PopoverHint from '../../../../common/PopoverHint';
@@ -52,7 +50,6 @@ function DetailsLeft({ cluster, cloudProviders, showAssistedId }) {
   const controlPlaneType = isHypershift ? 'Hosted' : 'Classic';
   const sharedVpcZoneId = get(cluster, 'aws.private_hosted_zone_id', false);
   const domainPrefix = cluster?.domain_prefix;
-  const isLongerClusterNameEnabled = useFeatureGate(LONGER_CLUSTER_NAME_UI);
   const availabilityLabel = useMemo(() => {
     if (typeof cluster.multi_az === 'boolean') {
       return cluster.multi_az ? 'Multi-zone' : 'Single zone';
@@ -68,7 +65,7 @@ function DetailsLeft({ cluster, cloudProviders, showAssistedId }) {
           <span data-testid="clusterID">{id}</span>
         </DescriptionListDescription>
       </DescriptionListGroup>
-      {isLongerClusterNameEnabled && domainPrefix && (
+      {domainPrefix && (
         <DescriptionListGroup>
           <DescriptionListTerm>Domain prefix</DescriptionListTerm>
           <DescriptionListDescription>

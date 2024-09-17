@@ -1,3 +1,4 @@
+import { invalidateClusterDetailsQueries } from '../../../../../queries/ClusterDetailsQueries/useFetchClusterDetails';
 import { clusterService } from '../../../../../services';
 import {
   LoadBalancerFlavor,
@@ -8,6 +9,9 @@ import {
 import { createDefaultRouterRequest, sendNetworkConfigRequests } from './NetworkingActions';
 
 jest.mock('../../../../../services');
+jest.mock('../../../../../queries/ClusterDetailsQueries/useFetchClusterDetails', () => ({
+  invalidateClusterDetailsQueries: jest.fn(),
+}));
 
 describe('createDefaultRouterRequest', () => {
   test('handles empty data', () => {
@@ -413,10 +417,8 @@ const success = {
 };
 
 describe('sendNetworkConfigRequests', () => {
-  let mockDispatch;
   beforeEach(() => {
     clusterService.editIngress.mockResolvedValue(success);
-    mockDispatch = jest.fn();
   });
 
   afterEach(() => {
@@ -428,7 +430,7 @@ describe('sendNetworkConfigRequests', () => {
     const currentData = { default: { routerID: 'router-id' } }; // by the API
 
     newData.isDefaultRouterWildcardPolicyAllowed = true;
-    await sendNetworkConfigRequests(newData, currentData, 'cluster-id', mockDispatch);
+    await sendNetworkConfigRequests(newData, currentData, 'cluster-id', clusterService);
 
     expect(clusterService.editIngress).toHaveBeenCalled();
   });
@@ -437,7 +439,7 @@ describe('sendNetworkConfigRequests', () => {
     const newData = {}; // by the user
     const currentData = { default: { routerID: 'router-id' } }; // by the API
 
-    await sendNetworkConfigRequests(newData, currentData, 'cluster-id', mockDispatch);
+    await sendNetworkConfigRequests(newData, currentData, 'cluster-id', clusterService);
 
     expect(clusterService.editIngress).not.toHaveBeenCalled();
   });
@@ -453,11 +455,10 @@ describe('sendNetworkConfigRequests', () => {
 
     newData.isDefaultRouterWildcardPolicyAllowed = true;
 
-    await sendNetworkConfigRequests(newData, currentData, 'cluster-id', mockDispatch);
+    await sendNetworkConfigRequests(newData, currentData, 'cluster-id', clusterService);
 
     expect(clusterService.editCluster).toHaveBeenCalledTimes(1);
-    expect(mockDispatch).toHaveBeenCalledTimes(1);
-
+    expect(invalidateClusterDetailsQueries).toHaveBeenCalledTimes(1);
     expect(clusterService.editIngress).toHaveBeenCalledTimes(1);
   });
 });

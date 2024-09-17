@@ -224,34 +224,59 @@ const checkObjectNameValidation = (
   },
 ];
 
-const checkObjectNameAsyncValidation = (value?: string) => [
+const checkObjectNameAsyncValidation = (
+  value?: string,
+  isMultiRegionEnabled?: boolean,
+  isExistingRegionalClusterName?: boolean,
+) => [
   {
     text: 'Globally unique name in your organization',
     validator: async () => {
       if (!value?.length) {
         return false;
       }
-      const search = `name = ${sqlString(value)}`;
-      const { data } = await clusterService.searchClusters(search, 1);
-      // Normally, we get 0 or 1 items, 1 meaning a cluster of that name already exists.
-      // But dumb mockserver ignores `search` and `size`, always returns full static list;
-      // checking the returned name(s) allows this validation to work in ?env=mockdata UI.
-      return !data?.items?.some((cluster) => cluster.name === value);
+
+      if (isMultiRegionEnabled) {
+        if (isExistingRegionalClusterName) {
+          return false;
+        }
+      } else {
+        const search = `name = ${sqlString(value)}`;
+        const { data } = await clusterService.searchClusters(search, 1);
+        // Normally, we get 0 or 1 items, 1 meaning a cluster of that name already exists.
+        // But dumb mockserver ignores `search` and `size`, always returns full static list;
+        // checking the returned name(s) allows this validation to work in ?env=mockdata UI.
+        return !data?.items?.some((cluster) => cluster.name === value);
+      }
+      return true;
     },
   },
 ];
 
-const checkObjectNameDomainPrefixAsyncValidation = (value?: string) => [
+const checkObjectNameDomainPrefixAsyncValidation = (
+  value?: string,
+  isMultiRegionEnabled?: boolean,
+  isExistingRegionalClusterName?: boolean,
+  isExistingRegionalDomainPrefix?: boolean,
+) => [
   {
     text: 'Globally unique domain prefix in your organization',
     validator: async () => {
       if (!value?.length) {
         return false;
       }
-      const search = `domain_prefix = ${sqlString(value)}`;
-      const { data } = await clusterService.searchClusters(search, 1);
 
-      return !data?.items?.some((cluster) => cluster.domain_prefix === value);
+      if (isMultiRegionEnabled) {
+        if (isExistingRegionalDomainPrefix) {
+          return false;
+        }
+      } else {
+        const search = `domain_prefix = ${sqlString(value)}`;
+        const { data } = await clusterService.searchClusters(search, 1);
+
+        return !data?.items?.some((cluster) => cluster.domain_prefix === value);
+      }
+      return true;
     },
   },
 ];
@@ -259,7 +284,11 @@ const checkObjectNameDomainPrefixAsyncValidation = (value?: string) => [
 const clusterNameValidation = (value?: string, maxLen?: number) =>
   checkObjectNameValidation(value, 'Cluster', maxLen || MAX_CLUSTER_NAME_LENGTH);
 
-const clusterNameAsyncValidation = (value?: string) => checkObjectNameAsyncValidation(value);
+const clusterNameAsyncValidation = (
+  value?: string,
+  isMultiRegionEnabled?: boolean,
+  isExistingRegionalClusterName?: boolean,
+) => checkObjectNameAsyncValidation(value, isMultiRegionEnabled, isExistingRegionalClusterName);
 
 const checkMachinePoolName = (value: string | undefined) =>
   checkObjectName(value, 'Machine pool', MAX_MACHINE_POOL_NAME_LENGTH);
@@ -270,18 +299,43 @@ const checkNodePoolName = (value: string | undefined) =>
 const domainPrefixValidation = (value?: string) =>
   checkObjectNameValidation(value, 'Domain Prefix', MAX_DOMAIN_PREFIX_LENGTH);
 
-const domainPrefixAsyncValidation = (value?: string) =>
-  checkObjectNameDomainPrefixAsyncValidation(value);
+const domainPrefixAsyncValidation = (
+  value?: string,
+  isMultiRegionEnabled?: boolean,
+  isExistingRegionalClusterName?: boolean,
+  isExistingRegionalDomainPrefix?: boolean,
+) =>
+  checkObjectNameDomainPrefixAsyncValidation(
+    value,
+    isMultiRegionEnabled,
+    isExistingRegionalClusterName,
+    isExistingRegionalDomainPrefix,
+  );
 
 const createAsyncValidationEvaluator =
   (
-    asyncValidation: (value: string) => {
+    asyncValidation: (
+      value: string,
+      isMultiRegionEnabled?: boolean,
+      isExistingRegionalClusterName?: boolean,
+      isExistingRegionalDomainPrefix?: boolean,
+    ) => {
       text: string;
       validator: () => Promise<boolean>;
     }[],
   ) =>
-  async (value: string) => {
-    const populatedValidation = asyncValidation(value);
+  async (
+    value: string,
+    isMultiRegionEnabled?: boolean,
+    isExistingRegionalClusterName?: boolean,
+    isExistingRegionalDomainPrefix?: boolean,
+  ) => {
+    const populatedValidation = asyncValidation(
+      value,
+      isMultiRegionEnabled,
+      isExistingRegionalClusterName,
+      isExistingRegionalDomainPrefix,
+    );
     const validationResults = await Promise.all(
       populatedValidation.map(({ validator }) => validator?.()),
     );
@@ -311,13 +365,31 @@ const findFirstFailureMessage = (populatedValidation: Validations | undefined) =
  * @param value the value to be validated
  * @returns {Promise<void>} a promise which resolves quietly, or rejects with a form errors map.
  */
-const asyncValidateClusterName = async (value: string) => {
-  const evaluatedAsyncValidation = await evaluateClusterNameAsyncValidation(value);
+const asyncValidateClusterName = async (
+  value: string,
+  isMultiRegionEnabled?: boolean,
+  isExistingRegionalClusterName?: boolean,
+) => {
+  const evaluatedAsyncValidation = await evaluateClusterNameAsyncValidation(
+    value,
+    isMultiRegionEnabled,
+    isExistingRegionalClusterName,
+  );
   return findFirstFailureMessage(evaluatedAsyncValidation);
 };
 
-const asyncValidateDomainPrefix = async (value: string) => {
-  const evaluatedAsyncValidation = await evaluateDomainPrefixAsyncValidation(value);
+const asyncValidateDomainPrefix = async (
+  value: string,
+  isMultiRegionEnabled?: boolean,
+  isExistingRegionalClusterName?: boolean,
+  isExistingRegionalDomainPrefix?: boolean,
+) => {
+  const evaluatedAsyncValidation = await evaluateDomainPrefixAsyncValidation(
+    value,
+    isMultiRegionEnabled,
+    isExistingRegionalClusterName,
+    isExistingRegionalDomainPrefix,
+  );
   return findFirstFailureMessage(evaluatedAsyncValidation);
 };
 

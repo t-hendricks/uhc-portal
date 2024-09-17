@@ -1118,6 +1118,9 @@ const fixtures = {
   hasIssues: false,
   userAccess,
   upgradeGates: [],
+  pendingAccessRequests: {},
+  isAccessRequestEnabled: false,
+  accessProtectionState: {},
 };
 
 export { funcs };

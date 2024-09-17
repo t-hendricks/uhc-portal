@@ -39,26 +39,23 @@ const flags = yargs
   .version(false)
   .help(true).argv;
 
-if (flags.jiraToken) {
-  await jiraLabeler(flags.jiraToken, flags.n);
-} else {
-  console.error("Enable at least one flag, or what's the point?");
+if (!flags.jiraToken) {
+  console.error('\nJira token is mandatory.\n');
   yargs.showHelp();
+  process.exit(1);
 }
+
+await jiraLabeler(flags.jiraToken, flags.n);
 
 async function jiraLabeler(jiraToken, total = 1) {
   const data = await initGit();
   if (!data) return;
   const { git, upstreamName } = data;
 
-  //  get sha of master, stable, candidate
-  // const masterSha = await git.revparse([`${upstreamName}/master`]);
   const stableSha = await git.revparse(['--short', `${upstreamName}/stable`]);
-  const condidateSha = await git.revparse(['--short', `${upstreamName}/candidate`]);
 
-  // get logs of those branches
-  const candidateCommits = await gitLog(git, condidateSha, ['-n 100']);
-  const candidateCommitsMap = _.keyBy(candidateCommits, 'hash');
+  const stableCommits = await gitLog(git, stableSha, ['-n 100']);
+  const stableCommitsMap = _.keyBy(stableCommits, 'hash');
   const releases = await gitLog(git, stableSha, ['--first-parent', '-n 100']);
 
   const jiraMap = new Map();
@@ -67,24 +64,20 @@ async function jiraLabeler(jiraToken, total = 1) {
   for (let i = 0; i < total; i += 1) {
     const release = releases[i];
     const releaseCommits = [];
-    // every commit in stable branch will be a merge commit from candidate into stable
-    // therefore the second parent is the candidate commit
-    let parent = release.parents[1];
-    let commit = candidateCommitsMap[parent];
-    if (commit) {
-      // this commit is a merge commit from master into candidate
-      // therefore the second parent will be the first cherry-picked commit
-      commit = candidateCommitsMap[commit.parents[1]];
-      do {
-        // remember the cherry-picked commit
-        releaseCommits.push(commit);
-        // update parent to the parent of this commit in this daisy chain of commits
-        [parent] = commit.parents;
-        commit = candidateCommitsMap[parent];
-        // until we get to the merge commit in candidate
-        // that preceded this 'master into candidate' merge commit
-      } while (commit.parents.length === 1);
-    }
+    let commit;
+    let parent;
+    // each release is a commit in stable branch that is a merge-commit from master into stable
+    // therefore the second parent will be the first cherry-picked commit
+    commit = stableCommitsMap[release.parents[1]];
+    do {
+      // remember the cherry-picked commit
+      releaseCommits.push(commit);
+      // update parent to the parent of this commit in this daisy chain of commits
+      [parent] = commit.parents;
+      commit = stableCommitsMap[parent];
+      // until we get to the merge commit in stable
+      // that preceded this 'master into stable' merge commit
+    } while (commit.parents.length === 1);
 
     if (releaseCommits.length > 0) {
       // find jira tickets in release commits

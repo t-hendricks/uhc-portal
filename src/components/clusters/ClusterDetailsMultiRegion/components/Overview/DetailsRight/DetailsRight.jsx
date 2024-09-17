@@ -17,6 +17,7 @@ import clusterStates, {
   isHypershiftCluster,
   isROSA,
 } from '~/components/clusters/common/clusterStates';
+import ClusterStatusErrorDisplay from '~/components/clusters/commonMultiRegion/ClusterStatusErrorDisplay';
 import { useAWSVPCFromCluster } from '~/components/clusters/commonMultiRegion/useAWSVPCFromCluster';
 import { IMDSType } from '~/components/clusters/wizards/common';
 import AIClusterStatus from '~/components/common/AIClusterStatus';
@@ -156,8 +157,7 @@ function DetailsRight({ cluster, hasAutoscaleCluster, isDeprovisioned, clusterDe
                   <DescriptionListGroup>
                     <DescriptionListTerm>Details:</DescriptionListTerm>
                     <DescriptionListDescription>
-                      {cluster.status.provision_error_code}{' '}
-                      {cluster.status?.provision_error_message}
+                      <ClusterStatusErrorDisplay clusterStatus={cluster.status} showErrorCode />
                     </DescriptionListDescription>
                   </DescriptionListGroup>
                 </DescriptionList>

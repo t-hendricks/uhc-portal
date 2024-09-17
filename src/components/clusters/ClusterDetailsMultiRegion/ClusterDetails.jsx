@@ -73,6 +73,10 @@ import {
 import ErrorBoundary from '../../App/ErrorBoundary';
 import Unavailable from '../../common/Unavailable';
 import withFeatureGate from '../../features/with-feature-gate';
+// import Monitoring from '../ClusterDetailsMultiRegion/components/Monitoring';
+// import MachinePools from '../ClusterDetailsMultiRegion/components/MachinePools';
+// import AddOns from '../ClusterDetailsMultiRegion/components/AddOns';
+// import ClusterLogs from './components/ClusterLogs/ClusterLogs';
 import clusterStates, {
   canViewMachinePoolTab,
   isHibernating,
@@ -116,6 +120,10 @@ import {
 import Monitoring from './components/Monitoring';
 import { getOnDemandMetrics } from './components/Monitoring/MonitoringActions';
 import { issuesAndWarningsSelector } from './components/Monitoring/MonitoringSelectors';
+// TODO: Commented out for respective tabs stories
+// import UpgradeSettingsTab from '../ClusterDetailsMultiRegion/components/UpgradeSettings';
+// import AccessControl from '../ClusterDetailsMultiRegion/components/AccessControl/AccessControl';
+import Networking from './components/Networking';
 import { getClusterRouters } from './components/Networking/NetworkingActions';
 import Overview from './components/Overview/Overview';
 import Support from './components/Support';
@@ -551,7 +559,7 @@ const ClusterDetails = (props) => {
               },
               networking: {
                 ref: networkingTabRef,
-                show: !isMultiRegionPreviewEnabled && displayNetworkingTab,
+                show: displayNetworkingTab,
               },
               machinePools: {
                 ref: machinePoolsTabRef,
@@ -722,7 +730,6 @@ const ClusterDetails = (props) => {
             </ErrorBoundary>
           </TabContent>
         )}
-        {/* 
         {displayNetworkingTab && (
           <TabContent
             eventKey={5}
@@ -732,10 +739,18 @@ const ClusterDetails = (props) => {
             hidden
           >
             <ErrorBoundary>
-              <Networking clusterID={cluster.id} refreshCluster={refresh} />
+              <Networking
+                clusterID={cluster.id}
+                refreshCluster={refresh}
+                cluster={cluster}
+                isManaged={cluster.managed}
+                region={cluster.subscription.xcm_id}
+              />
             </ErrorBoundary>
           </TabContent>
         )}
+        {/* 
+        
         <TabContent
           eventKey={7}
           id="supportTabContent"

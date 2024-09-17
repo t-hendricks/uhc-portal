@@ -214,8 +214,8 @@ SubscriptionSettings.propTypes = {
   subscription: PropTypes.object.isRequired,
   canEdit: PropTypes.bool.isRequired,
   canSubscribeOCP: PropTypes.bool.isRequired,
-  isSubscriptionSettingsRequestPending: PropTypes.bool.isRequired,
-  isClusterDetailsPending: PropTypes.bool.isRequired,
+  isSubscriptionSettingsRequestPending: PropTypes.bool,
+  isClusterDetailsPending: PropTypes.bool,
   openModal: PropTypes.func.isRequired,
 };
 

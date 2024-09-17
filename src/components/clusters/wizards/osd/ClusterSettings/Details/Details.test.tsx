@@ -11,10 +11,9 @@ import {
 } from '~/common/__tests__/regions.fixtures';
 import { FieldId, initialValues } from '~/components/clusters/wizards/osd/constants';
 import ocpLifeCycleStatuses from '~/components/releases/__mocks__/ocpLifeCycleStatuses';
-import { LONGER_CLUSTER_NAME_UI } from '~/redux/constants/featureConstants';
 import clusterService from '~/services/clusterService';
 import getOCPLifeCycleStatus from '~/services/productLifeCycleService';
-import { mockUseFeatureGate, render, screen, withState } from '~/testUtils';
+import { render, screen, withState } from '~/testUtils';
 
 import Details from './Details';
 
@@ -77,21 +76,7 @@ describe('<Details />', () => {
   });
 
   describe('Domain prefix', () => {
-    it('is hidden when feature gate is not enabled', async () => {
-      mockUseFeatureGate([[LONGER_CLUSTER_NAME_UI, false]]);
-
-      render(
-        <Formik initialValues={defaultValues} onSubmit={() => {}}>
-          <Details />
-        </Formik>,
-      );
-
-      expect(screen.queryByText('Domain prefix')).toBe(null);
-    });
-
     it('displays the field when has_domain_prefix is selected', async () => {
-      mockUseFeatureGate([[LONGER_CLUSTER_NAME_UI, true]]);
-
       render(
         <Formik initialValues={defaultValues} onSubmit={() => {}}>
           <Details />
@@ -102,8 +87,6 @@ describe('<Details />', () => {
     });
 
     it('is hidden when has_domain_prefix is false', async () => {
-      mockUseFeatureGate([[LONGER_CLUSTER_NAME_UI, true]]);
-
       const newValues = { ...defaultValues, [FieldId.HasDomainPrefix]: false };
 
       render(

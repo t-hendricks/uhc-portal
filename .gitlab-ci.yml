@@ -118,6 +118,8 @@ stages:
     name: $REGISTRY/cypress/included@sha256:671d7964f757038e4c84b958e1a89bb48dd81fda38110adee22a87bf358654c8
     entrypoint: ['']
   stage: test
+  tags:
+    - old-docker
   cache:
     # inherit all global cache settings
     <<: *global_cache

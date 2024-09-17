@@ -2,7 +2,6 @@
 // can't access lexical declaration '__WEBPACK_DEFAULT_EXPORT__' before initialization
 /* eslint-disable react-hooks/rules-of-hooks */
 import React from 'react';
-import get from 'lodash/get';
 import PropTypes from 'prop-types';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom-v5-compat';
@@ -14,6 +13,7 @@ import { Table, TableVariant, Tbody, Td, Th, Thead, Tr } from '@patternfly/react
 import { addNotification } from '@redhat-cloud-services/frontend-components-notifications/redux';
 
 import { HAD_INFLIGHT_ERROR_LOCALSTORAGE_KEY } from '~/common/localStorageConstants';
+import ClusterStatusErrorDisplay from '~/components/clusters/commonMultiRegion/ClusterStatusErrorDisplay';
 import { useFeatureGate } from '~/hooks/useFeatureGate';
 import {
   useFetchClusterStatus,
@@ -363,18 +363,17 @@ const ClusterStatusMonitor = (props) => {
   if (!isClusterStatusLoading && clusterStatus) {
     if (clusterStatus.id === cluster.id) {
       const errorCode = clusterStatus.provision_error_code || '';
-      let reason = '';
-      if (clusterStatus.provision_error_code) {
-        reason = get(clusterStatus, 'provision_error_message', '');
-      }
-      const description = get(clusterStatus, 'description', '');
       const alerts = [];
 
       // Cluster install failure
       if (clusterStatus.state === clusterStates.ERROR) {
         alerts.push(
           <Alert variant="danger" isInline title={`${errorCode} Cluster installation failed`}>
-            {`This cluster cannot be recovered, however you can use the logs and network validation to diagnose the problem: ${reason} ${description}`}
+            <p>
+              This cluster cannot be recovered, however you can use the logs and network validation
+              to diagnose the problem:
+            </p>
+            <ClusterStatusErrorDisplay clusterStatus={clusterStatus} showDescription />
           </Alert>,
         );
       }
@@ -399,7 +398,7 @@ const ClusterStatusMonitor = (props) => {
             title={`${errorCode} Installation is taking longer than expected`}
             data-testid="alert-long-install"
           >
-            {reason}
+            <ClusterStatusErrorDisplay clusterStatus={clusterStatus} />
           </Alert>,
         );
       }
