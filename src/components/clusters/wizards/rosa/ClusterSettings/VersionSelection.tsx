@@ -64,7 +64,7 @@ function VersionSelection({
   const dispatch = useDispatch();
   const getInstallableVersionsResponse = useGlobalState((state) => state.clusters.clusterVersions);
   const getInstallableVersions = (isHCP: boolean) =>
-    dispatch(clustersActions.getInstallableVersions(true, false, isHCP));
+    dispatch(clustersActions.getInstallableVersions({ isRosa: true, isHCP }));
 
   const awsAccountRoleArns = useGlobalState(
     (state) => state.rosaReducer.getAWSAccountRolesARNsResponse,
