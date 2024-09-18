@@ -19,6 +19,7 @@ describe('<LimitedSupportAlert />', () => {
       details: 'More details about the version being too far behind the supported version',
       creation_time: '2021-07-23T20:19:53.053814Z',
       detection_type: 'auto',
+      override: { enabled: false },
     },
     {
       kind: 'ClusterLimitedSupportReason',
@@ -28,6 +29,7 @@ describe('<LimitedSupportAlert />', () => {
       details: 'This is the detailed information about another sample reason',
       creation_time: '2021-07-23T20:19:53.053814Z',
       detection_type: 'auto',
+      override: { enabled: false },
     },
     {
       kind: 'ClusterLimitedSupportReason',
@@ -37,11 +39,50 @@ describe('<LimitedSupportAlert />', () => {
       details: '<a href="https://redhat.com">redhat</a>',
       creation_time: '2021-07-23T20:19:53.053814Z',
       detection_type: 'auto',
+      override: { enabled: false },
+    },
+    {
+      kind: 'ClusterLimitedSupportReason',
+      href: '/api/clusters_mgmt/v1/limited_support_reasons/reasonId4',
+      id: 'reasonId4',
+      summary: 'This reason is overriden',
+      details: '<a href="https://redhat.com">redhat</a>',
+      creation_time: '2021-07-23T20:19:53.053814Z',
+      detection_type: 'auto',
+      override: { enabled: false },
+    },
+  ];
+
+  const overridenReasons = [
+    {
+      kind: 'ClusterLimitedSupportReason',
+      href: '/api/clusters_mgmt/v1/limited_support_reasons/reasonId1',
+      id: 'reasonId1',
+      summary: 'the version of the cluster id too far behind',
+      details: 'More details about the version being too far behind the supported version',
+      creation_time: '2021-07-23T20:19:53.053814Z',
+      detection_type: 'auto',
+      override: { enabled: true },
+    },
+    {
+      kind: 'ClusterLimitedSupportReason',
+      href: '/api/clusters_mgmt/v1/limited_support_reasons/reasonId4',
+      id: 'reasonId4',
+      summary: 'This reason is overriden',
+      details: '<a href="https://redhat.com">redhat</a>',
+      creation_time: '2021-07-23T20:19:53.053814Z',
+      detection_type: 'auto',
+      override: { enabled: true },
     },
   ];
 
   it('Limited support is not shown if no limited support warnings', () => {
     const { container } = render(<LimitedSupportAlert limitedSupportReasons={[]} />);
+    expect(container).toBeEmptyDOMElement();
+  });
+
+  it('Limited support alert is not shown if all reasons are overriden', () => {
+    const { container } = render(<LimitedSupportAlert limitedSupportReasons={overridenReasons} />);
     expect(container).toBeEmptyDOMElement();
   });
 

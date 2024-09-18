@@ -1,5 +1,4 @@
 import { connect } from 'react-redux';
-import { withRouter } from 'react-router-dom';
 
 import {
   clearHibernateClusterResponse,
@@ -37,4 +36,4 @@ const mapDispatchToProps = (dispatch) => ({
   closeModal: () => dispatch(closeModal()),
 });
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(HibernateClusterModal));
+export default connect(mapStateToProps, mapDispatchToProps)(HibernateClusterModal);

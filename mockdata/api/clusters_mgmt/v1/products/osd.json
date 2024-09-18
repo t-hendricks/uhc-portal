@@ -2,5 +2,13 @@
   "kind": "Product",
   "id": "osd",
   "href": "/api/clusters_mgmt/v1/products/osd",
-  "name": "OpenShift Dedicated"
+  "name": "OpenShift Dedicated",
+  "technology_previews": {
+    "kind": "ProductTechnologyPreviewListLink",
+    "href": "/api/clusters_mgmt/v1/products/osd/technology_previews"
+  },
+  "minimal_versions": {
+    "kind": "ProductMinimalVersionListLink",
+    "href": "/api/clusters_mgmt/v1/products/osd/minimal_versions"
+  }
 }

@@ -1,5 +1,4 @@
 import React from 'react';
-import { Link } from 'react-router-dom-v5-compat';
 
 import {
   Bullseye,
@@ -12,6 +11,8 @@ import {
   GridItem,
   Title,
 } from '@patternfly/react-core';
+
+import { Link } from '~/common/routing';
 
 import ResourceUsage from '../clusters/common/ResourceUsage/ResourceUsage';
 

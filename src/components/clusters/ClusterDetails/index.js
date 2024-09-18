@@ -12,7 +12,6 @@ import { clusterAutoscalerActions } from '~/redux/actions/clusterAutoscalerActio
 import { onClearFiltersAndFlags } from '~/redux/actions/viewOptionsActions';
 import {
   ACCESS_REQUEST_ENABLED,
-  ASSISTED_INSTALLER_FEATURE,
   NETWORK_VALIDATOR_ONDEMAND_FEATURE,
 } from '~/redux/constants/featureConstants';
 
@@ -50,7 +49,7 @@ import { issuesAndWarningsSelector } from './components/Monitoring/MonitoringSel
 import { getClusterRouters } from './components/Networking/NetworkingActions';
 import ClusterDetails from './ClusterDetails';
 
-const mapStateToProps = (state, { location }) => {
+const mapStateToProps = (state) => {
   const { details } = state.clusters;
   const { cloudProviders, clusterRouters } = state;
   const { addOns } = state.addOns;
@@ -85,10 +84,8 @@ const mapStateToProps = (state, { location }) => {
     canHibernateCluster: userCanHibernateClustersSelector(state),
     anyModalOpen: !!state.modal.modalName,
     hasIssues: issuesAndWarningsSelector(state).issues.totalCount > 0,
-    initTabOpen: location.hash.replace('#', ''),
     notificationContacts,
     supportCases,
-    assistedInstallerEnabled: featureGateSelector(state, ASSISTED_INSTALLER_FEATURE),
     userAccess: state.cost.userAccess,
     gotRouters: get(clusterRouters, 'getRouters.routers.length', 0) > 0,
     upgradeGates: getUpgradeGates(state),

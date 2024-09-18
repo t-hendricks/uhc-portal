@@ -1,10 +1,10 @@
 import React from 'react';
-import { CompatRouter } from 'react-router-dom-v5-compat';
 
 import { defaultSubscription } from '~/components/clusters/common/__tests__/clusterStates.fixtures';
-import { checkAccessibility, render, screen, TestRouter } from '~/testUtils';
+import { checkAccessibility, render, screen } from '~/testUtils';
+import { SubscriptionCommonFields } from '~/types/accounts_mgmt.v1';
 
-import { normalizedProducts, subscriptionStatuses } from '../../../../../common/subscriptionTypes';
+import { normalizedProducts } from '../../../../../common/subscriptionTypes';
 import TransferClusterOwnershipInfo from '../TransferClusterOwnershipInfo';
 
 describe('<TransferClusterOwnershipInfo />', () => {
@@ -19,13 +19,7 @@ describe('<TransferClusterOwnershipInfo />', () => {
   ])('%p', async (title, subscription) => {
     // Act
     const { container } = render(
-      <TestRouter>
-        <CompatRouter>
-          <TransferClusterOwnershipInfo
-            subscription={{ ...defaultSubscription, ...subscription }}
-          />
-        </CompatRouter>
-      </TestRouter>,
+      <TransferClusterOwnershipInfo subscription={{ ...defaultSubscription, ...subscription }} />,
     );
 
     // Assert
@@ -39,13 +33,7 @@ describe('<TransferClusterOwnershipInfo />', () => {
 
     // Act
     const { container } = render(
-      <TestRouter>
-        <CompatRouter>
-          <TransferClusterOwnershipInfo
-            subscription={{ ...defaultSubscription, ...subscription }}
-          />
-        </CompatRouter>
-      </TestRouter>,
+      <TransferClusterOwnershipInfo subscription={{ ...defaultSubscription, ...subscription }} />,
     );
 
     // Assert
@@ -61,18 +49,12 @@ describe('<TransferClusterOwnershipInfo />', () => {
     const subscription = {
       plan: { type: normalizedProducts.OCP },
       released: true,
-      status: subscriptionStatuses.DISCONNECTED,
+      status: SubscriptionCommonFields.status.DISCONNECTED,
     };
 
     // Act
     const { container } = render(
-      <TestRouter>
-        <CompatRouter>
-          <TransferClusterOwnershipInfo
-            subscription={{ ...defaultSubscription, ...subscription }}
-          />
-        </CompatRouter>
-      </TestRouter>,
+      <TransferClusterOwnershipInfo subscription={{ ...defaultSubscription, ...subscription }} />,
     );
 
     // Assert

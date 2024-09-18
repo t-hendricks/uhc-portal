@@ -1,5 +1,4 @@
 import React, { useRef, useState } from 'react';
-import { useNavigate } from 'react-router-dom-v5-compat';
 
 import {
   Icon,
@@ -13,6 +12,8 @@ import {
   MenuToggleElement,
 } from '@patternfly/react-core';
 import { FilterIcon } from '@patternfly/react-icons/dist/esm/icons/filter-icon';
+
+import { useNavigate } from '~/common/routing';
 
 import { buildFilterURLParams } from '../../../../../common/queryHelpers';
 import { productFilterOptions } from '../../../../../common/subscriptionTypes';

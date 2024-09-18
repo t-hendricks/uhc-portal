@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { useNavigate } from 'react-router-dom-v5-compat';
 
 import { PageSection, Tab, Tabs, TabTitleIcon, TabTitleText } from '@patternfly/react-core';
 import { CloudIcon } from '@patternfly/react-icons/dist/esm/icons/cloud-icon';
@@ -8,6 +7,7 @@ import { LaptopIcon } from '@patternfly/react-icons/dist/esm/icons/laptop-icon';
 import { ServerIcon } from '@patternfly/react-icons/dist/esm/icons/server-icon';
 import { Spinner } from '@redhat-cloud-services/frontend-components/Spinner';
 
+import { useNavigate } from '~/common/routing';
 import { AppPage } from '~/components/App/AppPage';
 import { isRestrictedEnv } from '~/restrictedEnv';
 
@@ -42,7 +42,6 @@ const CreateCluster = ({
   hasOSDTrialQuota,
   rosaCreationWizardFeature,
   token,
-  assistedInstallerFeature,
   activeTab,
 }) => {
   const navigate = useNavigate();
@@ -125,7 +124,7 @@ const CreateCluster = ({
                   ? []
                   : [
                       <Tab eventKey={1} title={tabTitle(1)}>
-                        <DatacenterTab assistedInstallerFeature={assistedInstallerFeature} />
+                        <DatacenterTab />
                       </Tab>,
                       <Tab eventKey={2} title={tabTitle(2)}>
                         <LocalTab token={token} />
@@ -158,7 +157,6 @@ CreateCluster.propTypes = {
   getOrganizationAndQuota: PropTypes.func.isRequired,
   token: PropTypes.object.isRequired,
   getAuthToken: PropTypes.func.isRequired,
-  assistedInstallerFeature: PropTypes.bool,
   activeTab: PropTypes.string,
 };
 

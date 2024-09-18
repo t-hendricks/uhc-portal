@@ -1,4 +1,5 @@
 import React from 'react';
+import { Location, useLocation } from 'react-router-dom';
 
 import {
   Button,
@@ -12,6 +13,8 @@ import {
   Title,
 } from '@patternfly/react-core';
 import { Spinner } from '@redhat-cloud-services/frontend-components/Spinner';
+
+import { NavigateFunction, useNavigate } from '~/common/routing';
 
 import './Modal.scss';
 
@@ -28,7 +31,13 @@ type Props = Omit<
   showTertiary?: boolean;
   tertiaryText?: string;
   onPrimaryClick?: () => void;
-  onSecondaryClick?: () => void;
+  onSecondaryClick?: ({
+    location,
+    navigate,
+  }: {
+    location: Location;
+    navigate: NavigateFunction;
+  }) => void;
   onTertiaryClick?: () => void;
   isSmall?: boolean;
   modalSize?: ModalProps['variant'];
@@ -64,6 +73,9 @@ const Modal = ({
   secondaryLink,
   ...extraProps
 }: Props) => {
+  const location = useLocation();
+  const navigate = useNavigate();
+
   const header = secondaryTitle ? (
     <Stack>
       <StackItem>
@@ -122,7 +134,15 @@ const Modal = ({
                 <Button
                   key="secondary"
                   variant="secondary"
-                  onClick={onSecondaryClick}
+                  onClick={
+                    onSecondaryClick
+                      ? () =>
+                          onSecondaryClick({
+                            location,
+                            navigate,
+                          })
+                      : undefined
+                  }
                   isDisabled={isSecondaryDisabled}
                   data-testid="btn-secondary"
                 >

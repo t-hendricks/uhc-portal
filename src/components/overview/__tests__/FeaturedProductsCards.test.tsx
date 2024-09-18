@@ -1,6 +1,4 @@
 import React from 'react';
-import { BrowserRouter } from 'react-router-dom';
-import { CompatRouter } from 'react-router-dom-v5-compat';
 
 import { checkAccessibility, render, screen, userEvent, waitFor } from '~/testUtils';
 
@@ -23,13 +21,7 @@ describe('<FeaturedProductsCards />', () => {
     'renders "$title" card, verifies some card details and ensures it is not selected',
     async ({ title, logo, description, drawerPanelContent }) => {
       // Arrange
-      render(
-        <BrowserRouter>
-          <CompatRouter>
-            <FeaturedProductsCards {...FEATURED_PRODUCTS_CARDS_TEST_CASES.NON_SELECTED} />
-          </CompatRouter>
-        </BrowserRouter>,
-      );
+      render(<FeaturedProductsCards {...FEATURED_PRODUCTS_CARDS_TEST_CASES.NON_SELECTED} />);
 
       // Assert
       // Cards Info:
@@ -63,11 +55,7 @@ describe('<FeaturedProductsCards />', () => {
   it('renders title, link and all cards & checks functionality', async () => {
     // Arrange
     const { container } = render(
-      <BrowserRouter>
-        <CompatRouter>
-          <FeaturedProductsCards {...FEATURED_PRODUCTS_CARDS_TEST_CASES.NON_SELECTED} />
-        </CompatRouter>
-      </BrowserRouter>,
+      <FeaturedProductsCards {...FEATURED_PRODUCTS_CARDS_TEST_CASES.NON_SELECTED} />,
     );
 
     // Assert
@@ -102,13 +90,9 @@ describe('<FeaturedProductsCards />', () => {
   it('renders advanced cluster security as selected card, and the other card is not selected', async () => {
     // Arrange
     render(
-      <BrowserRouter>
-        <CompatRouter>
-          <FeaturedProductsCards
-            {...FEATURED_PRODUCTS_CARDS_TEST_CASES.ADVANCED_CLUSTER_SECURITY_SELECTED}
-          />
-        </CompatRouter>
-      </BrowserRouter>,
+      <FeaturedProductsCards
+        {...FEATURED_PRODUCTS_CARDS_TEST_CASES.ADVANCED_CLUSTER_SECURITY_SELECTED}
+      />,
     );
 
     // Assert

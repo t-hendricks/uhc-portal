@@ -1,11 +1,11 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
-import { Link } from 'react-router-dom-v5-compat';
 import semver from 'semver';
 
 import { Alert, AlertActionLink, AlertVariant, Spinner } from '@patternfly/react-core';
 
 import links from '~/common/installLinks.mjs';
+import { Link } from '~/common/routing';
 import ExternalLink from '~/components/common/ExternalLink';
 import { refetchMachineOrNodePoolsQuery } from '~/queries/ClusterDetailsQueries/MachinePoolTab/useFetchMachineOrNodePools';
 import { GlobalState } from '~/redux/store';

@@ -1198,6 +1198,7 @@
               "OSD",
               "OSDTrial",
               "MOA",
+              "MOA-HostedControlPlane",
               "RHMI",
               "RHOSAK",
               "RHOSAKTrial",
@@ -1208,7 +1209,8 @@
               "RHACS",
               "RHACSTrial",
               "ARO",
-              "RHOIC"
+              "RHOIC",
+              "OCP-AssistedInstall"
             ],
             "type": "string"
           },
@@ -3851,6 +3853,14 @@
                 "type": "integer"
               },
               "status": {
+                "enum": [
+                  "Active",
+                  "Archived",
+                  "Deprovisioned",
+                  "Disconnected",
+                  "Reserved",
+                  "Stale"
+                ],
                 "type": "string"
               },
               "support_level": {

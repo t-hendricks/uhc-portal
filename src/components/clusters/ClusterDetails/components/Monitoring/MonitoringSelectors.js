@@ -1,8 +1,8 @@
 import get from 'lodash/get';
 
 import { isClusterUpgrading } from '~/components/clusters/common/clusterStates';
+import { SubscriptionCommonFields } from '~/types/accounts_mgmt.v1';
 
-import { subscriptionStatuses } from '../../../../../common/subscriptionTypes';
 import config from '../../../../../config';
 
 import {
@@ -38,7 +38,7 @@ const clusterHealthSelector = (state, lastCheckIn, discoveredIssues) => {
     return monitoringStatuses.UNKNOWN;
   }
 
-  if (get(cluster, 'subscription.status', false) === subscriptionStatuses.DISCONNECTED) {
+  if (get(cluster, 'subscription.status', false) === SubscriptionCommonFields.status.DISCONNECTED) {
     return monitoringStatuses.DISCONNECTED;
   }
 
@@ -107,4 +107,4 @@ const issuesAndWarningsSelector = (state) => {
   };
 };
 
-export { lastCheckInSelector, clusterHealthSelector, issuesAndWarningsSelector };
+export { clusterHealthSelector, issuesAndWarningsSelector, lastCheckInSelector };

@@ -1,5 +1,5 @@
 import React from 'react';
-import { useLocation, useNavigate } from 'react-router-dom-v5-compat';
+import { useLocation } from 'react-router-dom';
 
 import {
   Button,
@@ -11,6 +11,7 @@ import {
 } from '@patternfly/react-core';
 import { Spinner } from '@redhat-cloud-services/frontend-components/Spinner';
 
+import { useNavigate } from '~/common/routing';
 import type { PromiseReducerState } from '~/redux/types';
 import type { TermsReviewResponse } from '~/types/accounts_mgmt.v1';
 

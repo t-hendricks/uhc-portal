@@ -1,5 +1,4 @@
 import React from 'react';
-import { Link } from 'react-router-dom-v5-compat';
 
 import {
   Button,
@@ -14,18 +13,7 @@ import {
 } from '@patternfly/react-core';
 import PlusCircleIcon from '@patternfly/react-icons/dist/esm/icons/plus-circle-icon';
 
-import { ASSISTED_INSTALLER_FEATURE } from '../../../redux/constants/featureConstants';
-import withFeatureGate from '../../features/with-feature-gate';
-
-const AssistedInstallerLink = withFeatureGate(
-  () => (
-    <Link to="/assisted-installer">
-      <Button variant="link">Assisted Installer clusters</Button>
-    </Link>
-  ),
-  ASSISTED_INSTALLER_FEATURE,
-  () => null,
-);
+import { Link } from '~/common/routing';
 
 function DashboardEmptyState() {
   return (
@@ -53,7 +41,9 @@ function DashboardEmptyState() {
             <Link to="/archived">
               <Button variant="link">View cluster archives</Button>
             </Link>
-            <AssistedInstallerLink />
+            <Link to="/assisted-installer">
+              <Button variant="link">Assisted Installer clusters</Button>
+            </Link>
           </EmptyStateActions>
         </EmptyStateFooter>
       </EmptyState>

@@ -1,20 +1,13 @@
 import React from 'react';
-import { CompatRouter } from 'react-router-dom-v5-compat';
 
-import { checkAccessibility, render, screen, TestRouter } from '~/testUtils';
+import { checkAccessibility, render, screen } from '~/testUtils';
 
 import InstallPlatformAgnostic from '../InstallPlatformAgnostic';
 import { version } from '../InstallTestConstants';
 
 describe('Platform agnostic install', () => {
   it('is accessible', async () => {
-    const { container } = render(
-      <TestRouter>
-        <CompatRouter>
-          <InstallPlatformAgnostic />
-        </CompatRouter>
-      </TestRouter>,
-    );
+    const { container } = render(<InstallPlatformAgnostic />);
 
     expect(
       await screen.findByText('Create an OpenShift Cluster: Platform agnostic (x86_64)'),
@@ -23,13 +16,7 @@ describe('Platform agnostic install', () => {
   });
 
   it('displays expected doc links', () => {
-    render(
-      <TestRouter>
-        <CompatRouter>
-          <InstallPlatformAgnostic />
-        </CompatRouter>
-      </TestRouter>,
-    );
+    render(<InstallPlatformAgnostic />);
 
     expect(screen.getByRole('link', { name: /Learn more about interactive/ })).toHaveAttribute(
       'href',

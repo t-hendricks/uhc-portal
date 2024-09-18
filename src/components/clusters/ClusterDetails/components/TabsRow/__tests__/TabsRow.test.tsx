@@ -2,8 +2,6 @@
 /* eslint-disable testing-library/no-wait-for-multiple-assertions */
 /* eslint-disable testing-library/await-async-queries */
 import React, { RefObject } from 'react';
-import { MemoryRouter } from 'react-router-dom';
-import { CompatRouter } from 'react-router-dom-v5-compat';
 
 import { checkAccessibility, render, screen, waitFor } from '~/testUtils';
 
@@ -54,16 +52,7 @@ describe('<TabsRow />', () => {
       // This throws an error because the tabs are not tied to the content in this component.
       // Arrange
       const tabProps = { ...props, displayAccessControlTab: true, displayAddOnsTab: true };
-      const { container } = render(
-        <MemoryRouter
-          keyLength={0}
-          initialEntries={[{ pathname: '/details/s/:id', key: 'testKey' }]}
-        >
-          <CompatRouter>
-            <TabsRow {...tabProps} />
-          </CompatRouter>
-        </MemoryRouter>,
-      );
+      const { container } = render(<TabsRow {...tabProps} />);
 
       // Assert
       await checkAccessibility(container);
@@ -89,16 +78,7 @@ describe('<TabsRow />', () => {
       };
 
       // Act
-      render(
-        <MemoryRouter
-          keyLength={0}
-          initialEntries={[{ pathname: '/details/s/:id', key: 'testKey' }]}
-        >
-          <CompatRouter>
-            <TabsRow {...tabProps} />
-          </CompatRouter>
-        </MemoryRouter>,
-      );
+      render(<TabsRow {...tabProps} />);
 
       // Assert
       expect(screen.getAllByRole('tab')).toHaveLength(Object.keys(tabNames).length);
@@ -134,16 +114,7 @@ describe('<TabsRow />', () => {
       };
 
       // Act
-      render(
-        <MemoryRouter
-          keyLength={0}
-          initialEntries={[{ pathname: '/details/s/:id', key: 'testKey' }]}
-        >
-          <CompatRouter>
-            <TabsRow {...tabProps} />
-          </CompatRouter>
-        </MemoryRouter>,
-      );
+      render(<TabsRow {...tabProps} />);
 
       // Assert
       expect(screen.getAllByRole('tab')).toHaveLength(Object.keys(tabNames).length);
@@ -166,16 +137,7 @@ describe('<TabsRow />', () => {
       };
 
       // Act
-      render(
-        <MemoryRouter
-          keyLength={0}
-          initialEntries={[{ pathname: '/details/s/:id', key: 'testKey' }]}
-        >
-          <CompatRouter>
-            <TabsRow {...tabProps} />
-          </CompatRouter>
-        </MemoryRouter>,
-      );
+      render(<TabsRow {...tabProps} />);
 
       // Assert
       expect(screen.getAllByRole('tab')).toHaveLength(2);
@@ -208,16 +170,7 @@ describe('<TabsRow />', () => {
       };
 
       // Act
-      render(
-        <MemoryRouter
-          keyLength={0}
-          initialEntries={[{ pathname: '/details/s/:id', key: 'testKey' }]}
-        >
-          <CompatRouter>
-            <TabsRow {...tabProps} />
-          </CompatRouter>
-        </MemoryRouter>,
-      );
+      render(<TabsRow {...tabProps} />);
 
       // Assert
       expect(screen.getAllByRole('tab')).toHaveLength(1);
@@ -245,16 +198,7 @@ describe('<TabsRow />', () => {
       };
 
       // Act
-      render(
-        <MemoryRouter
-          keyLength={0}
-          initialEntries={[{ pathname: '/details/s/:id', key: 'testKey' }]}
-        >
-          <CompatRouter>
-            <TabsRow {...tabProps} />
-          </CompatRouter>
-        </MemoryRouter>,
-      );
+      render(<TabsRow {...tabProps} />);
 
       // Assert
       // There is an accessibility issue with the warning icon.
@@ -283,16 +227,7 @@ describe('<TabsRow />', () => {
       };
 
       // Act
-      render(
-        <MemoryRouter
-          keyLength={0}
-          initialEntries={[{ pathname: '/details/s/:id', key: 'testKey' }]}
-        >
-          <CompatRouter>
-            <TabsRow {...tabProps} />
-          </CompatRouter>
-        </MemoryRouter>,
-      );
+      render(<TabsRow {...tabProps} />);
 
       // Assert
       await waitFor(() =>
@@ -313,16 +248,7 @@ describe('<TabsRow />', () => {
       };
 
       // Act
-      render(
-        <MemoryRouter
-          keyLength={0}
-          initialEntries={[{ pathname: '/details/s/:id', key: 'testKey' }]}
-        >
-          <CompatRouter>
-            <TabsRow {...tabProps} />
-          </CompatRouter>
-        </MemoryRouter>,
-      );
+      render(<TabsRow {...tabProps} />);
 
       // Assert
       expect(onTabSelectedMock).toHaveBeenCalledWith(ClusterTabsId.OVERVIEW);
@@ -341,16 +267,7 @@ describe('<TabsRow />', () => {
       };
 
       // Act
-      render(
-        <MemoryRouter
-          keyLength={0}
-          initialEntries={[{ pathname: '/details/s/:id', key: 'testKey' }]}
-        >
-          <CompatRouter>
-            <TabsRow {...tabProps} />
-          </CompatRouter>
-        </MemoryRouter>,
-      );
+      render(<TabsRow {...tabProps} />);
 
       // Assert
       expect(onTabSelectedMock).toHaveBeenCalledWith(ClusterTabsId.OVERVIEW);
@@ -371,16 +288,7 @@ describe('<TabsRow />', () => {
       };
 
       // Act
-      const { user } = render(
-        <MemoryRouter
-          keyLength={0}
-          initialEntries={[{ pathname: '/details/s/:id', key: 'testKey' }]}
-        >
-          <CompatRouter>
-            <TabsRow {...tabProps} />
-          </CompatRouter>
-        </MemoryRouter>,
-      );
+      const { user } = render(<TabsRow {...tabProps} />);
 
       const targetTab = screen.getByRole('tab', { name: 'Cluster history' });
       await user.click(targetTab);
@@ -402,16 +310,7 @@ describe('<TabsRow />', () => {
       };
 
       // Act
-      render(
-        <MemoryRouter
-          keyLength={0}
-          initialEntries={[{ pathname: '/details/s/:id', key: 'testKey' }]}
-        >
-          <CompatRouter>
-            <TabsRow {...tabProps} />
-          </CompatRouter>
-        </MemoryRouter>,
-      );
+      render(<TabsRow {...tabProps} />);
 
       await waitFor(() => {
         expect(onTabSelectedMock).toHaveBeenCalledTimes(2);
@@ -438,16 +337,7 @@ describe('<TabsRow />', () => {
       };
 
       // Act
-      const { user } = render(
-        <MemoryRouter
-          keyLength={0}
-          initialEntries={[{ pathname: '/details/s/:id', key: 'testKey' }]}
-        >
-          <CompatRouter>
-            <TabsRow {...tabProps} />
-          </CompatRouter>
-        </MemoryRouter>,
-      );
+      const { user } = render(<TabsRow {...tabProps} />);
 
       const initialTab = screen.getByRole('tab', { name: 'Overview' });
       expect(initialTab).toHaveAttribute('aria-selected', 'true');

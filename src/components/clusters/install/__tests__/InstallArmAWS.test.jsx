@@ -1,20 +1,13 @@
 import React from 'react';
-import { CompatRouter } from 'react-router-dom-v5-compat';
 
-import { checkAccessibility, render, screen, TestRouter } from '~/testUtils';
+import { checkAccessibility, render, screen } from '~/testUtils';
 
 import InstallArmAWS from '../InstallArmAWS';
 import { version } from '../InstallTestConstants';
 
 describe('InstallArmAWS', () => {
   it.skip('is accessible', async () => {
-    const { container } = render(
-      <TestRouter>
-        <CompatRouter>
-          <InstallArmAWS />
-        </CompatRouter>
-      </TestRouter>,
-    );
+    const { container } = render(<InstallArmAWS />);
 
     expect(await screen.findByText('Hosts controlled with AWS Provider')).toBeInTheDocument();
 
@@ -23,13 +16,7 @@ describe('InstallArmAWS', () => {
   });
 
   it('displays expected doc links', () => {
-    render(
-      <TestRouter>
-        <CompatRouter>
-          <InstallArmAWS />
-        </CompatRouter>
-      </TestRouter>,
-    );
+    render(<InstallArmAWS />);
 
     expect(screen.getByRole('link', { name: /Learn more about automated/ })).toHaveAttribute(
       'href',

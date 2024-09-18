@@ -1,7 +1,6 @@
 import React from 'react';
-import { CompatRouter } from 'react-router-dom-v5-compat';
 
-import { checkAccessibility, render, screen, TestRouter } from '~/testUtils';
+import { checkAccessibility, render, screen } from '~/testUtils';
 
 import { clustersWithIssues } from '../Dashboard.fixtures';
 
@@ -43,13 +42,7 @@ describe('<ClustersWithIssuesTableCard />', () => {
   });
 
   it('is accessible', async () => {
-    const { container } = render(
-      <TestRouter>
-        <CompatRouter>
-          <ClustersWithIssuesTableCard {...defaultProps} />
-        </CompatRouter>
-      </TestRouter>,
-    );
+    const { container } = render(<ClustersWithIssuesTableCard {...defaultProps} />);
 
     expect(await screen.findByText('Clusters with issues')).toBeInTheDocument();
     await checkAccessibility(container);

@@ -1,10 +1,9 @@
 import dayjs from 'dayjs';
 
-import { ClusterResource } from '~/types/accounts_mgmt.v1';
+import { ClusterResource, SubscriptionCommonFields } from '~/types/accounts_mgmt.v1';
 import { ClusterConsole } from '~/types/clusters_mgmt.v1';
 import { ClusterFromSubscription } from '~/types/types';
 
-import { subscriptionStatuses } from '../../../../../common/subscriptionTypes';
 import config from '../../../../../config';
 import { hasCpuAndMemory } from '../../clusterDetailsHelper';
 
@@ -107,8 +106,9 @@ const maxMetricsTimeDelta = 3;
 const hasResourceUsageMetrics = <E extends ClusterFromSubscription>(cluster: E) => {
   const metricsLastUpdate = dayjs.utc(cluster.metrics?.cpu.updated_timestamp ?? 0); // according to model, metrics can't be undefined, but since OCMUI-1034 was technical refactoring, this is about to keep functionallity as it was
   const now = dayjs.utc();
-  const isArchived = cluster.subscription?.status === subscriptionStatuses.ARCHIVED;
-  const isDisconnected = cluster.subscription?.status === subscriptionStatuses.DISCONNECTED;
+  const isArchived = cluster.subscription?.status === SubscriptionCommonFields.status.ARCHIVED;
+  const isDisconnected =
+    cluster.subscription?.status === SubscriptionCommonFields.status.DISCONNECTED;
   const showOldMetrics = !!config.configData.showOldMetrics;
 
   return (
@@ -178,16 +178,16 @@ function monitoringItemLinkProps(
 }
 
 export {
-  monitoringStatuses,
   alertsSeverity,
-  operatorsStatuses,
-  thresholds,
-  monitoringItemLinkProps,
-  monitoringItemTypes,
-  maxMetricsTimeDelta,
-  monitoringItemLinkType,
-  hasResourceUsageMetrics,
   getIssuesAndWarnings,
   hasData,
+  hasResourceUsageMetrics,
+  maxMetricsTimeDelta,
+  monitoringItemLinkProps,
+  monitoringItemLinkType,
+  monitoringItemTypes,
+  monitoringStatuses,
+  operatorsStatuses,
   resourceUsageIssuesHelper,
+  thresholds,
 };

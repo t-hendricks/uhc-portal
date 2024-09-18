@@ -11,16 +11,15 @@ import {
 } from '@patternfly/react-core';
 
 import getClusterName from '~/common/getClusterName';
+import { ocmBaseName } from '~/common/routing';
 import {
   clearToggleSubscriptionReleasedResponse,
   toggleSubscriptionReleased,
 } from '~/redux/actions/subscriptionReleasedActions';
 import { useGlobalState } from '~/redux/hooks';
-import { Subscription } from '~/types/accounts_mgmt.v1';
+import { Subscription, SubscriptionCommonFields } from '~/types/accounts_mgmt.v1';
 import { ClusterFromSubscription } from '~/types/types';
 
-import ocmBaseName from '../../../../common/getBaseName';
-import { subscriptionStatuses } from '../../../../common/subscriptionTypes';
 import ErrorBox from '../../../common/ErrorBox';
 import ExternalLink from '../../../common/ExternalLink';
 import Modal from '../../../common/Modal/Modal';
@@ -97,7 +96,7 @@ const TransferClusterOwnershipDialog = ({ onClose }: TransferClusterOwnershipDia
           Transferring cluster ownership will allow another individual to manage this cluster. The
           steps for transferring cluster ownership are:
         </Text>
-        {subscription?.status === subscriptionStatuses.DISCONNECTED ? (
+        {subscription?.status === SubscriptionCommonFields.status.DISCONNECTED ? (
           <TextList component={TextListVariants.ol}>
             <TextListItem>Initiate transfer</TextListItem>
             <TextListItem>

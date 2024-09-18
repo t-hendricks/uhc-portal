@@ -1,7 +1,6 @@
 import React from 'react';
-import { CompatRouter } from 'react-router-dom-v5-compat';
 
-import { checkAccessibility, screen, TestRouter, withState } from '~/testUtils';
+import { checkAccessibility, screen, withState } from '~/testUtils';
 
 import githubReleases from '../githubReleases.mock';
 import { InstallPlatformAgnosticUPI } from '../InstallPlatformAgnosticUPI';
@@ -26,11 +25,7 @@ describe('Platform agnostic UPI install', () => {
 
   it('is accessible', async () => {
     const { container } = withState(githubReleases).render(
-      <TestRouter>
-        <CompatRouter>
-          <InstallPlatformAgnosticUPI token={{}} dispatch={dispatch} />
-        </CompatRouter>
-      </TestRouter>,
+      <InstallPlatformAgnosticUPI token={{}} dispatch={dispatch} />,
     );
 
     expect(await screen.findByText(instructionsMapping.generic.upi.title)).toBeInTheDocument();

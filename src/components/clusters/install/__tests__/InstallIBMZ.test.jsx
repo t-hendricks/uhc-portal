@@ -1,20 +1,13 @@
 import React from 'react';
-import { CompatRouter } from 'react-router-dom-v5-compat';
 
-import { checkAccessibility, render, screen, TestRouter } from '~/testUtils';
+import { checkAccessibility, render, screen } from '~/testUtils';
 
 import InstallIBMZ from '../InstallIBMZ';
 import { version } from '../InstallTestConstants';
 
 describe('InstallIBMZ', () => {
   it('is accessible', async () => {
-    const { container } = render(
-      <TestRouter>
-        <CompatRouter>
-          <InstallIBMZ />
-        </CompatRouter>
-      </TestRouter>,
-    );
+    const { container } = render(<InstallIBMZ />);
 
     expect(
       await screen.findByText('Create an OpenShift Cluster: IBM Z (s390x)'),
@@ -23,13 +16,7 @@ describe('InstallIBMZ', () => {
   });
 
   it('displays expected doc links', () => {
-    render(
-      <TestRouter>
-        <CompatRouter>
-          <InstallIBMZ />
-        </CompatRouter>
-      </TestRouter>,
-    );
+    render(<InstallIBMZ />);
 
     expect(screen.getByRole('link', { name: /Learn more about interactive/ })).toHaveAttribute(
       'href',

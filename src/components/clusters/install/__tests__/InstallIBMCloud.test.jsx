@@ -1,7 +1,6 @@
 import React from 'react';
-import { CompatRouter } from 'react-router-dom-v5-compat';
 
-import { checkAccessibility, screen, TestRouter, withState } from '~/testUtils';
+import { checkAccessibility, screen, withState } from '~/testUtils';
 
 import githubReleases from '../githubReleases.mock';
 import { InstallIBMCloud } from '../InstallIBMCloud';
@@ -26,11 +25,7 @@ describe('InstallIBMCloud', () => {
 
   it('is accessible', async () => {
     const { container } = withState(githubReleases).render(
-      <TestRouter>
-        <CompatRouter>
-          <InstallIBMCloud token={{}} dispatch={dispatch} />
-        </CompatRouter>
-      </TestRouter>,
+      <InstallIBMCloud token={{}} dispatch={dispatch} />,
     );
 
     expect(await screen.findByText(instructionsMapping.ibmCloud.title)).toBeInTheDocument();

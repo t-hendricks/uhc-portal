@@ -16,7 +16,7 @@ import { constants } from './CreateOSDFormConstants';
 function UserWorkloadMonitoringSection({ parent, disableUVM, planType }) {
   const title = <Title headingLevel="h4"> Monitoring </Title>;
   const isROSA = planType === normalizedProducts.ROSA;
-  const isOSD = planType === normalizedProducts.OSD || planType === normalizedProducts.OSDTrial;
+  const isOSD = planType === normalizedProducts.OSD || planType === normalizedProducts.OSDTRIAL;
   return (
     <>
       {parent === 'create' ? <GridItem>{title}</GridItem> : title}

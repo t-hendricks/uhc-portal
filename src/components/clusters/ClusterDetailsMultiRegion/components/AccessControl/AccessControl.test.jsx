@@ -1,6 +1,4 @@
 import React from 'react';
-import { MemoryRouter } from 'react-router-dom';
-import { CompatRouter } from 'react-router-dom-v5-compat';
 
 import { normalizedProducts } from '~/common/subscriptionTypes';
 import clusterStates from '~/components/clusters/common/clusterStates';
@@ -32,13 +30,7 @@ const initialState = {
 };
 
 describe('<AccessControl />', () => {
-  const buildComponent = (cluster) => (
-    <MemoryRouter>
-      <CompatRouter>
-        <AccessControl cluster={cluster || buildCluster({})} />
-      </CompatRouter>
-    </MemoryRouter>
-  );
+  const buildComponent = (cluster) => <AccessControl cluster={cluster || buildCluster({})} />;
 
   describe('Tab grouping', () => {
     it('has "single-tab" class if only one section is shown', () => {

@@ -64,11 +64,9 @@ describe('normalizeProductID', () => {
   });
 
   // It's convenient to call normalization in many places, a value may be normalized multiple times.
-  test('Is idempotent', () => {
-    Object.values(normalizedProducts).forEach((v) => {
-      expect(normalizeProductID(v)).toEqual(v);
-    });
-  });
+  test.each([...Object.values(normalizedProducts)])('is idempotent for %p', (product) =>
+    expect(normalizeProductID(product)).toEqual(product),
+  );
 });
 
 describe('normalizeQuotaCost', () => {

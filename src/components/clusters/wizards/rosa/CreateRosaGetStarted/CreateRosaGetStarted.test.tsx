@@ -1,6 +1,5 @@
 import React from 'react';
 import { MemoryRouter } from 'react-router-dom';
-import { CompatRouter } from 'react-router-dom-v5-compat';
 
 import { checkAccessibility, mockUseChrome, render, screen, waitFor } from '~/testUtils';
 
@@ -13,23 +12,16 @@ const completeAWSMessage = /complete aws prerequisites/i;
 describe('<CreateRosaGetStarted />', () => {
   afterAll(() => jest.resetAllMocks());
   it('is accessible', async () => {
-    const { container } = render(
-      <MemoryRouter>
-        <CompatRouter>
-          <CreateRosaGetStarted />
-        </CompatRouter>
-      </MemoryRouter>,
-    );
+    const { container } = render(<CreateRosaGetStarted />);
     await checkAccessibility(container);
   });
 
   it('navigated to quick start from aws setup', async () => {
     render(
       <MemoryRouter initialEntries={[{ search: '?source=aws' }]}>
-        <CompatRouter>
-          <CreateRosaGetStarted />
-        </CompatRouter>
+        <CreateRosaGetStarted />
       </MemoryRouter>,
+      { withRouter: false },
     );
 
     await waitFor(() => {
@@ -40,13 +32,7 @@ describe('<CreateRosaGetStarted />', () => {
   });
 
   it('navigated to quick start from other site', async () => {
-    render(
-      <MemoryRouter>
-        <CompatRouter>
-          <CreateRosaGetStarted />
-        </CompatRouter>
-      </MemoryRouter>,
-    );
+    render(<CreateRosaGetStarted />);
 
     await waitFor(() => {
       expect(

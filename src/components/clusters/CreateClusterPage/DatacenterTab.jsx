@@ -1,7 +1,5 @@
 /* eslint-disable react/jsx-no-useless-fragment */
 import React from 'react';
-import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom-v5-compat';
 
 import {
   Button,
@@ -19,6 +17,8 @@ import {
   TableBody as TableBodyDeprecated,
   TableHeader as TableHeaderDeprecated,
 } from '@patternfly/react-table/deprecated';
+
+import { Link } from '~/common/routing';
 
 const ocpTableColumns = ['Infrastructure provider', 'Installation options'];
 const ocpTableRows = [
@@ -78,47 +78,43 @@ const ocpTableRows = [
   ],
 ];
 
-const DatacenterTab = ({ assistedInstallerFeature }) => (
+const DatacenterTab = () => (
   <>
-    {assistedInstallerFeature && (
-      <PageSection variant="light" className="pf-v5-u-p-lg">
-        <Stack hasGutter>
-          <StackItem>
-            <Title headingLevel="h2" className="ocm-ocp-datacenter-title">
-              Assisted Installer
-            </Title>
-          </StackItem>
-          <StackItem>
-            The easiest way to install OpenShift on your own infrastructure with step-by-step
-            guidance, preflight validations, and smart defaults. This method supports multiple
-            architectures.
-          </StackItem>
-          <StackItem>
-            <Split hasGutter>
-              <SplitItem>
-                <Button component={Link} to="/assisted-installer/clusters/~new">
-                  Create cluster
+    <PageSection variant="light" className="pf-v5-u-p-lg">
+      <Stack hasGutter>
+        <StackItem>
+          <Title headingLevel="h2" className="ocm-ocp-datacenter-title">
+            Assisted Installer
+          </Title>
+        </StackItem>
+        <StackItem>
+          The easiest way to install OpenShift on your own infrastructure with step-by-step
+          guidance, preflight validations, and smart defaults. This method supports multiple
+          architectures.
+        </StackItem>
+        <StackItem>
+          <Split hasGutter>
+            <SplitItem>
+              <Button component={Link} to="/assisted-installer/clusters/~new">
+                Create cluster
+              </Button>
+            </SplitItem>
+            <SplitItem className="pf-v5-u-align-self-center">
+              <Link to="/install/metal/agent-based">Run Agent-based Installer locally</Link>
+              <Popover bodyContent="Runs Assisted Installer securely and locally to create clusters in disconnected or air-gapped environments.">
+                <Button variant="plain" onClick={(e) => e.preventDefault()}>
+                  <OutlinedQuestionCircleIcon />
                 </Button>
-              </SplitItem>
-              <SplitItem className="pf-v5-u-align-self-center">
-                <Link to="/install/metal/agent-based">Run Agent-based Installer locally</Link>
-                <Popover bodyContent="Runs Assisted Installer securely and locally to create clusters in disconnected or air-gapped environments.">
-                  <Button variant="plain" onClick={(e) => e.preventDefault()}>
-                    <OutlinedQuestionCircleIcon />
-                  </Button>
-                </Popover>
-              </SplitItem>
-            </Split>
-          </StackItem>
-        </Stack>
-      </PageSection>
-    )}
+              </Popover>
+            </SplitItem>
+          </Split>
+        </StackItem>
+      </Stack>
+    </PageSection>
     <PageSection>
       <Stack hasGutter>
         <StackItem>
-          <Title headingLevel="h2">
-            {assistedInstallerFeature ? 'Other datacenter options' : 'datacenter options'}
-          </Title>
+          <Title headingLevel="h2">Other datacenter options</Title>
         </StackItem>
         <StackItem>
           Create clusters on supported infrastructure using our extensive documentation and
@@ -139,9 +135,5 @@ const DatacenterTab = ({ assistedInstallerFeature }) => (
     </PageSection>
   </>
 );
-
-DatacenterTab.propTypes = {
-  assistedInstallerFeature: PropTypes.bool,
-};
 
 export default DatacenterTab;

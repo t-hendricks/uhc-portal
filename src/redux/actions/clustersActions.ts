@@ -22,6 +22,7 @@ import * as Sentry from '@sentry/browser';
 
 import { isHypershiftCluster } from '~/components/clusters/common/clusterStates';
 import type {
+  ClusterAuthorizationRequest,
   Subscription,
   SubscriptionCreateRequest,
   SubscriptionPatchRequest,
@@ -30,6 +31,7 @@ import {
   SelfAccessReview,
   SelfResourceReview,
   SelfResourceReviewRequest,
+  SubscriptionCommonFields,
 } from '~/types/accounts_mgmt.v1';
 import type { Cluster, UpgradePolicy } from '~/types/clusters_mgmt.v1';
 import type {
@@ -47,7 +49,7 @@ import {
   normalizeMetrics,
   normalizeSubscription,
 } from '../../common/normalize';
-import { knownProducts, subscriptionStatuses } from '../../common/subscriptionTypes';
+import { knownProducts } from '../../common/subscriptionTypes';
 import { postSchedule } from '../../components/clusters/common/Upgrades/clusterUpgradeActions';
 import {
   accountsService,
@@ -56,7 +58,6 @@ import {
   clusterService,
 } from '../../services';
 import { clustersConstants } from '../constants';
-import { ASSISTED_INSTALLER_MERGE_LISTS_FEATURE } from '../constants/featureConstants';
 import { dispatchTechPreviewStatus, techPreviewStatusSelector } from '../hooks/clusterHooks';
 import { buildPermissionDict, INVALIDATE_ACTION } from '../reduxHelpers';
 import type { AppThunk, AppThunkDispatch } from '../types';
@@ -64,7 +65,7 @@ import type { AppThunk, AppThunkDispatch } from '../types';
 import { editSubscriptionSettings } from './subscriptionSettingsActions';
 
 const ROSA_PRODUCTS = [knownProducts.ROSA, knownProducts.ROSA_HyperShift];
-const OSD_PRODUCTS = [knownProducts.OSD, knownProducts.OSDTrial];
+const OSD_PRODUCTS = [knownProducts.OSD, knownProducts.OSDTRIAL];
 
 const invalidateClusters = () => action(INVALIDATE_ACTION(clustersConstants.GET_CLUSTERS));
 
@@ -240,7 +241,7 @@ const createResponseForFetchClusters = (
     let cluster: ClusterWithPermissions;
     if (
       entry.subscription.managed &&
-      entry.subscription.status !== subscriptionStatuses.DEPROVISIONED &&
+      entry.subscription.status !== SubscriptionCommonFields.status.DEPROVISIONED &&
       !!entry?.cluster &&
       !isEmpty(entry?.cluster)
     ) {
@@ -264,7 +265,7 @@ const createResponseForFetchClusters = (
     cluster.canEdit =
       !cluster.partialCS &&
       (canEdit['*'] || (!!cluster.id && !!canEdit[cluster.id])) &&
-      entry.subscription.status !== subscriptionStatuses.DEPROVISIONED;
+      entry.subscription.status !== SubscriptionCommonFields.status.DEPROVISIONED;
     cluster.canDelete =
       !cluster.partialCS && (canDelete['*'] || (!!cluster.id && !!canDelete[cluster.id!]));
     cluster.subscription = entry.subscription;
@@ -275,7 +276,6 @@ const createResponseForFetchClusters = (
 
 const fetchClustersAndPermissions = async (
   clusterRequestParams: Parameters<typeof accountsService.getSubscriptions>[0],
-  aiMergeListsFeatureFlag: boolean | undefined,
 ) => {
   const [subscriptions, canDelete, canEdit] = await Promise.all([
     accountsService
@@ -295,9 +295,7 @@ const fetchClustersAndPermissions = async (
       .then((response) => buildPermissionDict(response)),
   ]);
 
-  const items = subscriptions?.data?.items?.filter(
-    (item) => aiMergeListsFeatureFlag || !isAssistedInstallSubscription(item),
-  );
+  const items = subscriptions?.data?.items;
 
   if (!items) {
     return {
@@ -323,13 +321,11 @@ const fetchClustersAndPermissions = async (
   });
 
   const subscriptionIds: string[] = [];
-  if (aiMergeListsFeatureFlag) {
-    subscriptionMap.forEach(({ subscription }) => {
-      if (isAssistedInstallSubscription(subscription) && subscription.id) {
-        subscriptionIds.push(subscription.id);
-      }
-    });
-  }
+  subscriptionMap.forEach(({ subscription }) => {
+    if (isAssistedInstallSubscription(subscription) && subscription.id) {
+      subscriptionIds.push(subscription.id);
+    }
+  });
 
   if (subscriptionIds.length > 0) {
     const aiClusters = await assistedService
@@ -349,7 +345,7 @@ const fetchClustersAndPermissions = async (
 
   // clusters-service only needed for managed clusters.
   const managedSubscriptions = items.filter(
-    (s) => s.managed && s.status !== subscriptionStatuses.DEPROVISIONED,
+    (s) => s.managed && s.status !== SubscriptionCommonFields.status.DEPROVISIONED,
   );
 
   // fetch managed clusters by subscription
@@ -384,10 +380,8 @@ const fetchClustersAndPermissions = async (
   };
 };
 
-const fetchClustersAction = (
-  params: Parameters<typeof fetchClustersAndPermissions>[0],
-  feature: boolean | undefined,
-) => action(clustersConstants.GET_CLUSTERS, fetchClustersAndPermissions(params, feature));
+const fetchClustersAction = (params: Parameters<typeof fetchClustersAndPermissions>[0]) =>
+  action(clustersConstants.GET_CLUSTERS, fetchClustersAndPermissions(params));
 
 const fetchClusters =
   (params: Parameters<typeof fetchClustersAndPermissions>[0]): AppThunk =>
@@ -396,9 +390,7 @@ const fetchClusters =
     if (!techPreviewStatusSelector(getState(), 'rosa', 'hcp')) {
       dispatchTechPreviewStatus(dispatch, 'rosa', 'hcp');
     }
-    dispatch(
-      fetchClustersAction(params, getState().features[ASSISTED_INSTALLER_MERGE_LISTS_FEATURE]),
-    );
+    dispatch(fetchClustersAction(params));
   };
 
 const fetchSingleClusterAndPermissions = async (
@@ -440,9 +432,11 @@ const fetchSingleClusterAndPermissions = async (
   subscription.data = normalizeSubscription(subscription.data);
   const isAROCluster = subscription?.data?.plan?.type === knownProducts.ARO;
   const isROSACluster = ROSA_PRODUCTS.includes(subscription?.data?.plan?.type || '');
-  const isOSDCluster = OSD_PRODUCTS.includes(subscription?.data?.plan?.type || '');
+  const isOSDCluster = OSD_PRODUCTS.includes(
+    (subscription?.data?.plan?.type || '') as ClusterAuthorizationRequest.product_id,
+  );
 
-  if (subscription.data.status !== subscriptionStatuses.DEPROVISIONED) {
+  if (subscription.data.status !== SubscriptionCommonFields.status.DEPROVISIONED) {
     await authorizationsService
       .selfAccessReview({
         action: SelfAccessReview.action.UPDATE,
@@ -527,7 +521,7 @@ const fetchSingleClusterAndPermissions = async (
 
   if (
     (subscription.data.managed || isAROCluster) &&
-    subscription.data.status !== subscriptionStatuses.DEPROVISIONED
+    subscription.data.status !== SubscriptionCommonFields.status.DEPROVISIONED
   ) {
     // TODO cluster_id is optional in the schema, remove cast
     const clusterResponse = await clusterService.getClusterDetails(
@@ -677,8 +671,14 @@ const getInstallableVersions = (
   isRosa: boolean,
   isMarketplaceGcp: boolean,
   isHCP: boolean = false,
+  fetchUnstableVersions: boolean = false,
 ) => {
-  const versions = clusterService.getInstallableVersions(isRosa, isMarketplaceGcp, isHCP);
+  const versions = clusterService.getInstallableVersions(
+    isRosa,
+    isMarketplaceGcp,
+    isHCP,
+    fetchUnstableVersions,
+  );
   return action(clustersConstants.GET_CLUSTER_VERSIONS, versions);
 };
 
@@ -738,33 +738,33 @@ const clustersActions = {
 };
 
 export {
-  clustersActions,
-  clearClusterResponse,
-  createCluster,
-  registerDisconnectedCluster,
-  editCluster,
-  fetchClusters,
-  fetchClusterDetails,
-  setClusterDetails,
-  invalidateClusters,
-  resetCreatedClusterResponse,
-  editClusterDisplayName,
-  hibernateCluster,
-  clearHibernateClusterResponse,
-  resumeCluster,
-  clearResumeClusterResponse,
   archiveCluster,
   clearClusterArchiveResponse,
-  unarchiveCluster,
+  clearClusterResponse,
   clearClusterUnarchiveResponse,
+  clearHibernateClusterResponse,
+  clearInflightChecks,
+  clearInstallableVersions,
+  clearResumeClusterResponse,
+  clearUpgradeTrialClusterResponse,
+  ClusterAction,
+  clustersActions,
+  createCluster,
+  editCluster,
   editClusterConsoleURL,
+  editClusterDisplayName,
+  fetchClusterDetails,
+  fetchClusters,
   getClusterStatus,
   getInflightChecks,
-  rerunInflightChecks,
-  clearInflightChecks,
   getRerunInflightChecks,
+  hibernateCluster,
+  invalidateClusters,
+  registerDisconnectedCluster,
+  rerunInflightChecks,
+  resetCreatedClusterResponse,
+  resumeCluster,
+  setClusterDetails,
+  unarchiveCluster,
   upgradeTrialCluster,
-  clearUpgradeTrialClusterResponse,
-  clearInstallableVersions,
-  ClusterAction,
 };

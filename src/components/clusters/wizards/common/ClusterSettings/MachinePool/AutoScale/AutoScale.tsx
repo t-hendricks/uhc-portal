@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React from 'react';
 import { useDispatch } from 'react-redux';
 
 import { Button, FormGroup, GridItem } from '@patternfly/react-core';
@@ -24,7 +24,6 @@ export const AutoScale = () => {
       [RosaFieldId.Byoc]: byoc,
       [RosaFieldId.AutoscalingEnabled]: autoscalingEnabled,
       [RosaFieldId.Product]: product,
-      [RosaFieldId.CloudProviderId]: cloudProviderID,
     },
   } = useFormState();
 
@@ -35,10 +34,7 @@ export const AutoScale = () => {
   const autoScalingUrl = isRosa ? links.ROSA_AUTOSCALING : links.APPLYING_AUTOSCALING;
   const isHypershiftSelected = isHypershift === 'true';
   const isByoc = byoc === 'true';
-  const isRosaClassicOrOsdCcs = useMemo(
-    () => cloudProviderID === 'aws' && !isHypershiftSelected && isByoc,
-    [cloudProviderID, isByoc, isHypershiftSelected],
-  );
+  const isRosaClassicOrOsdCcs = !isHypershiftSelected && isByoc;
 
   return (
     <GridItem id="autoscaling">

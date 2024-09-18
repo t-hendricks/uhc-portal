@@ -1,33 +1,20 @@
 import React from 'react';
-import { CompatRouter } from 'react-router-dom-v5-compat';
 
-import { checkAccessibility, render, screen, TestRouter } from '~/testUtils';
+import { checkAccessibility, render, screen } from '~/testUtils';
 
 import InstallArmBareMetal from '../InstallArmBareMetal';
 import { version } from '../InstallTestConstants';
 
 describe('ARM Bare Metal install', () => {
   it('is accessible', async () => {
-    const { container } = render(
-      <TestRouter>
-        <CompatRouter>
-          <InstallArmBareMetal />
-        </CompatRouter>
-      </TestRouter>,
-    );
+    const { container } = render(<InstallArmBareMetal />);
 
     expect(screen.getByText('ARM Bare Metal')).toBeInTheDocument();
     await checkAccessibility(container);
   });
 
   it('displays expected doc links', () => {
-    render(
-      <TestRouter>
-        <CompatRouter>
-          <InstallArmBareMetal />
-        </CompatRouter>
-      </TestRouter>,
-    );
+    render(<InstallArmBareMetal />);
 
     expect(screen.getByRole('link', { name: /Learn more about interactive/ })).toHaveAttribute(
       'href',

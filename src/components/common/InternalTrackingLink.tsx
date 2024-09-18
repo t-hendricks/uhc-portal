@@ -1,9 +1,9 @@
 import React from 'react';
-import { Link } from 'react-router-dom-v5-compat';
 
 import { Button, ButtonProps } from '@patternfly/react-core';
 
 import { trackEvents } from '~/common/analytics';
+import { Link } from '~/common/routing';
 import useAnalytics from '~/hooks/useAnalytics';
 
 import './ExternalLink.scss';

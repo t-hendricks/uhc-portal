@@ -15,15 +15,13 @@ import {
 } from '@patternfly/react-core';
 
 import { HAD_INFLIGHT_ERROR_LOCALSTORAGE_KEY } from '~/common/localStorageConstants';
-import { subscriptionStatuses } from '~/common/subscriptionTypes';
-import { ASSISTED_INSTALLER_FEATURE } from '~/redux/constants/featureConstants';
 import { isRestrictedEnv } from '~/restrictedEnv';
+import { SubscriptionCommonFields } from '~/types/accounts_mgmt.v1';
 
 import isAssistedInstallSubscription, {
   isAvailableAssistedInstallCluster,
   isUninstalledAICluster,
 } from '../../../../../common/isAssistedInstallerCluster';
-import withFeatureGate from '../../../../features/with-feature-gate';
 import clusterStates, {
   getClusterAIPermissions,
   hasInflightEgressErrors,
@@ -46,16 +44,6 @@ import SubscriptionSettings from './SubscriptionSettings';
 import './Overview.scss';
 
 const { AssistedInstallerDetailCard, AssistedInstallerExtraDetailCard } = OCM;
-const GatedAIDetailCard = withFeatureGate(
-  AssistedInstallerDetailCard,
-  ASSISTED_INSTALLER_FEATURE,
-  () => false,
-);
-const GatedAIExtraDetailCard = withFeatureGate(
-  AssistedInstallerExtraDetailCard,
-  ASSISTED_INSTALLER_FEATURE,
-  () => false,
-);
 
 class Overview extends React.Component {
   state = {
@@ -96,9 +84,10 @@ class Overview extends React.Component {
     } = this.props;
     let topCard;
     const { showInstallSuccessAlert } = this.state;
-    const isArchived = get(cluster, 'subscription.status', false) === subscriptionStatuses.ARCHIVED;
+    const isArchived =
+      get(cluster, 'subscription.status', false) === SubscriptionCommonFields.status.ARCHIVED;
     const isDeprovisioned =
-      get(cluster, 'subscription.status', false) === subscriptionStatuses.DEPROVISIONED;
+      get(cluster, 'subscription.status', false) === SubscriptionCommonFields.status.DEPROVISIONED;
     const metricsAvailable =
       hasResourceUsageMetrics(cluster) &&
       (cluster.canEdit ||
@@ -214,7 +203,7 @@ class Overview extends React.Component {
             )}
             {topCard}
             {showAssistedInstallerDetailCard && (
-              <GatedAIDetailCard
+              <AssistedInstallerDetailCard
                 permissions={getClusterAIPermissions(cluster)}
                 aiClusterId={cluster.aiCluster.id}
               />
@@ -245,7 +234,7 @@ class Overview extends React.Component {
                       />
                     </GridItem>
                   </Grid>
-                  {showAssistedInstallerDetailCard && <GatedAIExtraDetailCard />}
+                  {showAssistedInstallerDetailCard && <AssistedInstallerExtraDetailCard />}
                 </CardBody>
               </Card>
             )}

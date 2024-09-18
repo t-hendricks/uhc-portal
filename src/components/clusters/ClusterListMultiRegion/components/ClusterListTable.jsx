@@ -1,7 +1,6 @@
 import React from 'react';
 import get from 'lodash/get';
 import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom-v5-compat';
 
 import {
   Button,
@@ -19,6 +18,7 @@ import SearchIcon from '@patternfly/react-icons/dist/esm/icons/search-icon';
 import { SortByDirection, Table, Tbody, Td, Th, Thead, Tr } from '@patternfly/react-table';
 import { global_warning_color_100 as warningColor } from '@patternfly/react-tokens/dist/esm/global_warning_color_100';
 
+import { Link } from '~/common/routing';
 import AIClusterStatus from '~/components/common/AIClusterStatus';
 
 import getClusterName from '../../../../common/getClusterName';
@@ -62,10 +62,15 @@ const hiddenOnMdOrSmaller = ['visibleOnLg', 'hiddenOnMd', 'hiddenOnSm'];
 // exported only for testing purposes
 // The order here is the same as the column order
 export const columns = {
-  name: { title: 'Name', width: 30, sortIndex: sortColumns.Name },
+  name: { title: 'Name', width: 30, sortIndex: sortColumns.Name, apiSortOption: true },
   status: { title: 'Status', width: 15, sortIndex: sortColumns.Status },
   type: { title: 'Type', width: 10, sortIndex: sortColumns.Type },
-  created: { title: 'Created', visibility: hiddenOnMdOrSmaller, sortIndex: sortColumns.Created },
+  created: {
+    title: 'Created',
+    visibility: hiddenOnMdOrSmaller,
+    sortIndex: sortColumns.Created,
+    apiSortOption: true,
+  },
   version: { title: 'Version', visibility: hiddenOnMdOrSmaller, sortIndex: sortColumns.Version },
   provider: {
     title: 'Provider (Region)',
@@ -75,7 +80,15 @@ export const columns = {
   actions: { title: '', screenReaderText: 'cluster actions' },
 };
 function ClusterListTable(props) {
-  const { clusters, openModal, isPending, activeSortIndex, activeSortDirection, setSort } = props;
+  const {
+    clusters,
+    openModal,
+    isPending,
+    activeSortIndex,
+    activeSortDirection,
+    setSort,
+    useClientSortPaging,
+  } = props;
 
   const getSortParams = (columnIndex) => ({
     sortBy: {
@@ -106,20 +119,30 @@ function ClusterListTable(props) {
     );
   }
 
-  const columnCells = Object.keys(columns).map((column, index) => (
-    <Th
-      width={columns[column].width}
-      visibility={columns[column].visibility}
-      sort={columns[column].sortIndex ? getSortParams(columns[column].sortIndex) : undefined}
-      // eslint-disable-next-line react/no-array-index-key
-      key={index}
-    >
-      {columns[column].screenReaderText ? (
-        <span className="pf-v5-screen-reader">{columns[column].screenReaderText}</span>
-      ) : null}
-      {columns[column].title}
-    </Th>
-  ));
+  const columnCells = Object.keys(columns).map((column, index) => {
+    const columnOptions = columns[column];
+
+    const sort =
+      columnOptions.sortIndex &&
+      (useClientSortPaging || (!useClientSortPaging && columnOptions.apiSortOption))
+        ? getSortParams(columnOptions.sortIndex)
+        : undefined;
+
+    return (
+      <Th
+        width={columnOptions.width}
+        visibility={columnOptions.visibility}
+        sort={sort}
+        // eslint-disable-next-line react/no-array-index-key
+        key={index}
+      >
+        {columnOptions.screenReaderText ? (
+          <span className="pf-v5-screen-reader">{columnOptions.screenReaderText}</span>
+        ) : null}
+        {columnOptions.title}
+      </Th>
+    );
+  });
 
   const linkToClusterDetails = (cluster, children) => (
     <Link to={`/details/s/${cluster.subscription.id}`}>{children}</Link>
@@ -282,6 +305,7 @@ ClusterListTable.propTypes = {
   activeSortDirection: PropTypes.string,
   setSort: PropTypes.func,
   isPending: PropTypes.bool,
+  useClientSortPaging: PropTypes.bool,
 };
 
 export default ClusterListTable;

@@ -49,7 +49,7 @@ export const Configuration = () => {
   const showClusterPrivacy =
     cloudProvider === CloudProviderType.Aws || (cloudProvider === CloudProviderType.Gcp && isByoc);
   const showConfigureProxy =
-    isByoc && [normalizedProducts.OSD, normalizedProducts.OSDTrial].includes(product);
+    isByoc && [normalizedProducts.OSD, normalizedProducts.OSDTRIAL].includes(product);
   const trackOcmResourceType =
     product === normalizedProducts.ROSA ? ocmResourceType.MOA : ocmResourceType.OSD;
 

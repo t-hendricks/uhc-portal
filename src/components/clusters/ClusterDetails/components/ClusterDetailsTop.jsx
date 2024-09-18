@@ -5,7 +5,9 @@ import PropTypes from 'prop-types';
 import { Alert, Button, Flex, Split, SplitItem, Title } from '@patternfly/react-core';
 import { Spinner } from '@redhat-cloud-services/frontend-components/Spinner';
 
+import { useNavigate } from '~/common/routing';
 import { PreviewLabel } from '~/components/clusters/common/PreviewLabel';
+import { SubscriptionCommonFields } from '~/types/accounts_mgmt.v1';
 
 import getClusterName from '../../../../common/getClusterName';
 import { goZeroTime2Null } from '../../../../common/helpers';
@@ -13,11 +15,7 @@ import {
   isAvailableAssistedInstallCluster,
   isUninstalledAICluster,
 } from '../../../../common/isAssistedInstallerCluster';
-import {
-  billingModels,
-  normalizedProducts,
-  subscriptionStatuses,
-} from '../../../../common/subscriptionTypes';
+import { billingModels, normalizedProducts } from '../../../../common/subscriptionTypes';
 import Breadcrumbs from '../../../common/Breadcrumbs';
 import ButtonWithTooltip from '../../../common/ButtonWithTooltip';
 import modals from '../../../common/Modal/modals';
@@ -35,27 +33,33 @@ import SubscriptionCompliancy from './SubscriptionCompliancy';
 import TermsAlert from './TermsAlert';
 import TransferClusterOwnershipInfo from './TransferClusterOwnershipInfo';
 
-const IdentityProvidersHint = () => (
-  <Alert
-    id="idpHint"
-    className="pf-v5-u-mt-md"
-    variant="warning"
-    isInline
-    title="Missing identity providers"
-  >
-    Identity providers determine how users log into the cluster.{' '}
-    <Button
-      variant="link"
+const IdentityProvidersHint = () => {
+  const navigate = useNavigate();
+  return (
+    <Alert
+      id="idpHint"
+      className="pf-v5-u-mt-md"
       isInline
-      onClick={() => {
-        window.location.hash = 'accessControl';
-      }}
+      title="Create an identity provider to access cluster"
     >
-      Add OAuth configuration
-    </Button>{' '}
-    to allow others to log in.
-  </Alert>
-);
+      Identity providers determine how you can log into the cluster. You&apos;ll need to set this up
+      so you can access your cluster{' '}
+      <p>
+        <Button
+          variant="link"
+          isInline
+          onClick={() =>
+            navigate({
+              hash: '#accessControl',
+            })
+          }
+        >
+          Create identity provider
+        </Button>{' '}
+      </p>
+    </Alert>
+  );
+};
 
 function ClusterDetailsTop(props) {
   const {
@@ -79,7 +83,7 @@ function ClusterDetailsTop(props) {
   } = props;
 
   const isProductOSDTrial =
-    get(cluster, 'subscription.plan.type', '') === normalizedProducts.OSDTrial;
+    get(cluster, 'subscription.plan.type', '') === normalizedProducts.OSDTRIAL;
   const isProductOSDRHM =
     get(cluster, 'subscription.plan.type', '') === normalizedProducts.OSD &&
     get(cluster, 'subscription.cluster_billing_model', '') === billingModels.MARKETPLACE;
@@ -98,10 +102,11 @@ function ClusterDetailsTop(props) {
     !hasIdentityProviders &&
     !isExtenalAuthenicationActive(cluster);
 
-  const isArchived = get(cluster, 'subscription.status', false) === subscriptionStatuses.ARCHIVED;
+  const isArchived =
+    get(cluster, 'subscription.status', false) === SubscriptionCommonFields.status.ARCHIVED;
 
   const isDeprovisioned =
-    get(cluster, 'subscription.status', false) === subscriptionStatuses.DEPROVISIONED;
+    get(cluster, 'subscription.status', false) === SubscriptionCommonFields.status.DEPROVISIONED;
   const canUpgradeTrial = cluster.state === clusterStates.READY && cluster.canEdit;
   const trialExpirationUpgradeProps = canUpgradeTrial
     ? {

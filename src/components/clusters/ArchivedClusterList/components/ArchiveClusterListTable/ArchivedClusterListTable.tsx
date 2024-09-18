@@ -1,5 +1,4 @@
 import React from 'react';
-import { Link } from 'react-router-dom-v5-compat';
 
 import {
   Bullseye,
@@ -13,7 +12,8 @@ import { SortByDirection, Table, Tbody, Td, Th, Thead, Tr } from '@patternfly/re
 import { ThSortType } from '@patternfly/react-table/dist/esm/components/Table/base/types';
 import { IVisibility } from '@patternfly/react-table/dist/esm/components/Table/utils/decorators/classNames';
 
-import { subscriptionStatuses } from '~/common/subscriptionTypes';
+import { Link } from '~/common/routing';
+import { SubscriptionCommonFields } from '~/types/accounts_mgmt.v1';
 import { ClusterWithPermissions, ViewOptions, ViewSorting } from '~/types/types';
 
 import getClusterName from '../../../../../common/getClusterName';
@@ -78,7 +78,9 @@ const ArchivedClusterListTable = ({
       </ButtonWithTooltip>
     );
     const unarchiveBtnCondition =
-      cluster.subscription?.status !== subscriptionStatuses.DEPROVISIONED ? unarchiveBtn : null;
+      cluster.subscription?.status !== SubscriptionCommonFields.status.DEPROVISIONED
+        ? unarchiveBtn
+        : null;
 
     return (
       <Tr key={cluster.id}>

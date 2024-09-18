@@ -1,6 +1,4 @@
 import React from 'react';
-import { BrowserRouter } from 'react-router-dom';
-import { CompatRouter } from 'react-router-dom-v5-compat';
 
 import { checkAccessibility, render, screen } from '~/testUtils';
 
@@ -8,39 +6,21 @@ import RosaServicePage from './RosaServicePage';
 
 describe('<RosaServicePage />', () => {
   it('is accessible', async () => {
-    const { container } = render(
-      <BrowserRouter>
-        <CompatRouter>
-          <RosaServicePage />
-        </CompatRouter>
-      </BrowserRouter>,
-    );
+    const { container } = render(<RosaServicePage />);
     await checkAccessibility(container);
   });
 
   it('has a link for "begin setup"', () => {
-    render(
-      <BrowserRouter>
-        <CompatRouter>
-          <RosaServicePage />
-        </CompatRouter>
-      </BrowserRouter>,
-    );
+    render(<RosaServicePage />);
 
     expect(screen.getByText('Begin setup', { selector: 'a' })).toHaveAttribute(
       'href',
-      '/create/rosa/getstarted',
+      '/openshift/create/rosa/getstarted',
     );
   });
 
   it('has a working link for "self-service deployment"', async () => {
-    const { user } = render(
-      <BrowserRouter>
-        <CompatRouter>
-          <RosaServicePage />
-        </CompatRouter>
-      </BrowserRouter>,
-    );
+    const { user } = render(<RosaServicePage />);
 
     const selfServiceButton = screen.getByText('Self-service deployment');
     await user.click(selfServiceButton);
@@ -52,13 +32,7 @@ describe('<RosaServicePage />', () => {
   });
 
   it('has a working link for "seamless integration"', async () => {
-    const { user } = render(
-      <BrowserRouter>
-        <CompatRouter>
-          <RosaServicePage />
-        </CompatRouter>
-      </BrowserRouter>,
-    );
+    const { user } = render(<RosaServicePage />);
     const seamlessIntegrationButton = screen.getByText(
       'Seamless integration with other AWS services',
     );
@@ -71,13 +45,7 @@ describe('<RosaServicePage />', () => {
   });
 
   it('has a working link for "maximum availability"', async () => {
-    const { user } = render(
-      <BrowserRouter>
-        <CompatRouter>
-          <RosaServicePage />
-        </CompatRouter>
-      </BrowserRouter>,
-    );
+    const { user } = render(<RosaServicePage />);
     const maximumAvailabilityButton = screen.getByText('Maximum availability');
     await user.click(maximumAvailabilityButton);
     expect(
@@ -88,13 +56,7 @@ describe('<RosaServicePage />', () => {
   });
 
   it('has a working link for "deploying applications"', async () => {
-    const { user } = render(
-      <BrowserRouter>
-        <CompatRouter>
-          <RosaServicePage />
-        </CompatRouter>
-      </BrowserRouter>,
-    );
+    const { user } = render(<RosaServicePage />);
 
     const deployApplicationsButton = screen.getByText('Deploy applications where they need to be');
     await user.click(deployApplicationsButton);
@@ -127,13 +89,7 @@ describe('<RosaServicePage />', () => {
   });
 
   it('has a working link for "flexible consumption"', async () => {
-    const { user } = render(
-      <BrowserRouter>
-        <CompatRouter>
-          <RosaServicePage />
-        </CompatRouter>
-      </BrowserRouter>,
-    );
+    const { user } = render(<RosaServicePage />);
 
     const flexibleConsumptionButton = screen.getByText('Flexible consumption-based pricing');
     await user.click(flexibleConsumptionButton);
@@ -145,13 +101,7 @@ describe('<RosaServicePage />', () => {
   });
 
   it('has a working link for "fully-managed service"', async () => {
-    const { user } = render(
-      <BrowserRouter>
-        <CompatRouter>
-          <RosaServicePage />
-        </CompatRouter>
-      </BrowserRouter>,
-    );
+    const { user } = render(<RosaServicePage />);
 
     const fullyManagedButton = screen.getByText('Fully-managed service');
     await user.click(fullyManagedButton);

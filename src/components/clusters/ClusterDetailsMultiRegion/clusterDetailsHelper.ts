@@ -1,12 +1,13 @@
 import { goZeroTime } from '~/common/helpers';
-import { subscriptionStatuses } from '~/common/subscriptionTypes';
 import clusterStates, {
   isHibernating,
   isHypershiftCluster,
 } from '~/components/clusters/common/clusterStates';
-import { ClusterResource, Subscription } from '~/types/accounts_mgmt.v1';
+import { ClusterResource, Subscription, SubscriptionCommonFields } from '~/types/accounts_mgmt.v1';
 import { Cluster } from '~/types/clusters_mgmt.v1';
-import { ClusterFromSubscription } from '~/types/types';
+import { ClusterFromSubscription, StaticRegionalItems } from '~/types/types';
+
+import staticRegionalInstances from '../../../../mockdata/api/clusters_mgmt/v1/aws_inquiries/static_regional_instances.json';
 
 const hasCpuAndMemory = (cpu: ClusterResource | undefined, memory: ClusterResource | undefined) =>
   !(
@@ -37,14 +38,22 @@ const isMPoolAz = (cluster: Cluster, mpAvailZones: number | undefined): boolean 
   return false;
 };
 
+const regionalInstanceUrl = (region: string) => {
+  const regionalInstances = staticRegionalInstances as StaticRegionalItems;
+  const instance =
+    regionalInstances[region as keyof StaticRegionalItems] || regionalInstances.global;
+
+  return instance?.url;
+};
+
 /**
  *
  * @param cluster something extending ClusterFromSubscription since components are using either Cluster or ClusterFromSubscription
  * @returns whether subscription is archived or not
  */
 const isArchivedSubscription = <E extends ClusterFromSubscription>(cluster: E): boolean =>
-  cluster.subscription?.status === subscriptionStatuses.ARCHIVED ||
-  cluster.subscription?.status === subscriptionStatuses.DEPROVISIONED;
+  cluster.subscription?.status === SubscriptionCommonFields.status.ARCHIVED ||
+  cluster.subscription?.status === SubscriptionCommonFields.status.DEPROVISIONED;
 
 /**
  *
@@ -90,14 +99,15 @@ const eventTypes = {
 };
 
 export {
-  hasCpuAndMemory,
+  eventTypes,
   getSubscriptionLastReconciledDate,
-  isHypershiftCluster,
-  isMultiAZ,
-  isMPoolAz,
+  hasCpuAndMemory,
   isArchivedSubscription,
-  isReadyForRoleAccessActions,
+  isHypershiftCluster,
+  isMPoolAz,
+  isMultiAZ,
+  regionalInstanceUrl,
   isReadyForAwsAccessActions,
   isReadyForIdpActions,
-  eventTypes,
+  isReadyForRoleAccessActions,
 };

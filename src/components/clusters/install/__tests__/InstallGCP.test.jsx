@@ -1,33 +1,20 @@
 import React from 'react';
-import { CompatRouter } from 'react-router-dom-v5-compat';
 
-import { checkAccessibility, render, screen, TestRouter } from '~/testUtils';
+import { checkAccessibility, render, screen } from '~/testUtils';
 
 import InstallGCP from '../InstallGCP';
 import { version } from '../InstallTestConstants';
 
 describe('InstallGCP', () => {
   it('is accessible', async () => {
-    const { container } = render(
-      <TestRouter>
-        <CompatRouter>
-          <InstallGCP />
-        </CompatRouter>
-      </TestRouter>,
-    );
+    const { container } = render(<InstallGCP />);
 
     expect(await screen.findByText('Create an OpenShift Cluster: GCP')).toBeInTheDocument();
     await checkAccessibility(container);
   });
 
   it('displays expected doc links', () => {
-    render(
-      <TestRouter>
-        <CompatRouter>
-          <InstallGCP />
-        </CompatRouter>
-      </TestRouter>,
-    );
+    render(<InstallGCP />);
 
     expect(screen.getByRole('link', { name: /Learn more about automated/ })).toHaveAttribute(
       'href',

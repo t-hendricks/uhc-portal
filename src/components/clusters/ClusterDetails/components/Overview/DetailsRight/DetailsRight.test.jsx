@@ -1,8 +1,8 @@
 import React from 'react';
 
-import { subscriptionStatuses } from '~/common/subscriptionTypes';
 import { checkAccessibility, mockRestrictedEnv, render, screen, within } from '~/testUtils';
 
+import { SubscriptionCommonFields } from '../../../../../../types/accounts_mgmt.v1';
 import fixtures from '../../../__tests__/ClusterDetails.fixtures';
 
 import DetailsRight from './DetailsRight';
@@ -201,7 +201,7 @@ describe('<DetailsRight />', () => {
     it('shows total VPC if cluster is not disconnected and does not have sockets', () => {
       // Arrange
       expect(defaultProps.cluster.subscription.status).not.toEqual(
-        subscriptionStatuses.DISCONNECTED,
+        SubscriptionCommonFields.status.DISCONNECTED,
       );
       expect(defaultProps.cluster.metrics.sockets.total.value).toBeFalsy();
 
@@ -225,7 +225,7 @@ describe('<DetailsRight />', () => {
           ...clusterFixture,
           subscription: {
             ...clusterFixture.subscription,
-            status: subscriptionStatuses.DISCONNECTED,
+            status: SubscriptionCommonFields.status.DISCONNECTED,
           },
         },
       };
@@ -239,7 +239,9 @@ describe('<DetailsRight />', () => {
     it('does not show vpc if number of sockets is greater than 0', () => {
       // Arrange
       const clusterFixture = defaultProps.cluster;
-      expect(clusterFixture.subscription.status).not.toEqual(subscriptionStatuses.DISCONNECTED);
+      expect(clusterFixture.subscription.status).not.toEqual(
+        SubscriptionCommonFields.status.DISCONNECTED,
+      );
 
       const newProps = {
         ...defaultProps,
@@ -272,7 +274,7 @@ describe('<DetailsRight />', () => {
           ...clusterFixture,
           subscription: {
             ...clusterFixture.subscription,
-            status: subscriptionStatuses.DISCONNECTED,
+            status: SubscriptionCommonFields.status.DISCONNECTED,
           },
         },
       };
@@ -286,7 +288,7 @@ describe('<DetailsRight />', () => {
     it('shows total memory label if cluster is not disconnected', () => {
       // Arrange
       expect(defaultProps.cluster.subscription.status).not.toEqual(
-        subscriptionStatuses.DISCONNECTED,
+        SubscriptionCommonFields.status.DISCONNECTED,
       );
       const memory = defaultProps.cluster.metrics.memory.total;
       expect(memory.value).toEqual(147469647872);
@@ -366,50 +368,6 @@ describe('<DetailsRight />', () => {
 
       // Assert
       expect(screen.getByText('Infrastructure GCP account')).toBeInTheDocument();
-    });
-  });
-
-  describe('aws billing account', () => {
-    it('shows aws billing account if aws account is known', () => {
-      // Arrange
-      const clusterFixture = defaultProps.cluster;
-
-      const newProps = {
-        ...defaultProps,
-        cluster: {
-          ...clusterFixture,
-          subscription: {
-            ...clusterFixture.subscription,
-            billing_marketplace_account: '1234567890',
-          },
-        },
-      };
-
-      render(<DetailsRight {...newProps} />);
-
-      // Assert
-      checkForValue(componentText.AWS_BILLING_ACCOUNT.label, '1234567890');
-    });
-
-    it('hides aws billing account if aws account is not known', () => {
-      // Arrange
-      const clusterFixture = defaultProps.cluster;
-
-      const newProps = {
-        ...defaultProps,
-        cluster: {
-          ...clusterFixture,
-          subscription: {
-            ...clusterFixture.subscription,
-            billing_marketplace_account: undefined,
-          },
-        },
-      };
-
-      render(<DetailsRight {...newProps} />);
-
-      // Assert
-      checkForValueAbsence(componentText.AWS_BILLING_ACCOUNT.label);
     });
   });
 
