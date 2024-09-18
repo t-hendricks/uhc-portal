@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 
 import ConnectedModal from '../../common/Modal/ConnectedModal';
 import { ConnectedEditMachinePoolModal } from '../ClusterDetails/components/MachinePools/components/EditMachinePoolModal/EditMachinePoolModal';
+import UpgradeWizardMR from '../commonMultiRegion/Upgrades/UpgradeWizard/UpgradeWizard';
 
 import DeleteProtectionModal from './DeleteProtectionModal/DeleteProtectionModal';
 import EditSubscriptionSettingsDialog from './EditSubscriptionSettingsDialog/EditSubscriptionSettingsDialog';
@@ -19,7 +20,12 @@ import TransferClusterOwnershipDialog from './TransferClusterOwnershipDialog';
 import UnarchiveClusterDialog from './UnarchiveClusterDialog';
 import UpgradeTrialClusterDialog from './UpgradeTrialClusterDialog';
 
-function CommonClusterModals({ onClose, onClusterDeleted, clearMachinePools }) {
+function CommonClusterModals({
+  onClose,
+  onClusterDeleted,
+  clearMachinePools,
+  isMultiRegionPreviewEnabled,
+}) {
   return (
     <>
       <ConnectedModal ModalComponent={EditDisplayNameDialog} onClose={onClose} />
@@ -32,7 +38,9 @@ function CommonClusterModals({ onClose, onClusterDeleted, clearMachinePools }) {
       <ConnectedModal ModalComponent={ResumeClusterModal} onClose={onClose} />
       <ConnectedModal ModalComponent={UnarchiveClusterDialog} onClose={onClose} />
       <ConnectedModal ModalComponent={UpgradeTrialClusterDialog} onClose={onClose} />
-      <ConnectedModal ModalComponent={UpgradeWizard} />
+      <ConnectedModal
+        ModalComponent={isMultiRegionPreviewEnabled ? UpgradeWizardMR : UpgradeWizard}
+      />
       <ConnectedModal ModalComponent={DeleteProtectionModal} onClose={onClose} />
       <ConnectedModal
         ModalComponent={DeleteClusterDialog}
@@ -58,6 +66,7 @@ CommonClusterModals.propTypes = {
   onClose: PropTypes.func.isRequired,
   onClusterDeleted: PropTypes.func,
   clearMachinePools: PropTypes.bool,
+  isMultiRegionPreviewEnabled: PropTypes.bool,
 };
 
 export default CommonClusterModals;

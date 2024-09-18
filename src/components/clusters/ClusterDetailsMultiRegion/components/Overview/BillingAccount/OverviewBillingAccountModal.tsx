@@ -95,7 +95,7 @@ export function OverviewBillingAccountModal(props: OverviewBillingAccountModalPr
               <ErrorBox
                 message="A problem occurred updating the billing account."
                 response={{
-                  errorMessage: clusterEditError.error?.errorMessage,
+                  errorMessage: clusterEditError?.errorMessage,
                 }}
               />
             </StackItem>
