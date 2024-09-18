@@ -65,6 +65,7 @@ type State = {
   clusterVersions: PromiseReducerState & {
     versions: Version[];
     params?: { [key: string]: string } | undefined;
+    meta?: { [key: string]: boolean };
   };
   details: PromiseReducerState & {
     cluster: AugmentedCluster;
@@ -570,6 +571,7 @@ const clustersReducer = (
           versions: action.payload.data.items
             ? filterAndSortClusterVersions(action.payload.data.items)
             : [],
+          meta: action.meta,
         };
         break;
 

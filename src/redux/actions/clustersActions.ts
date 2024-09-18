@@ -667,19 +667,15 @@ const clearInflightChecks = () => action(clustersConstants.CLEAR_INFLIGHT_CHECKS
 
 const clearInstallableVersions = () => action(clustersConstants.CLEAR_CLUSTER_VERSIONS_RESPONSE);
 
-const getInstallableVersions = (
-  isRosa: boolean,
-  isMarketplaceGcp: boolean,
-  isHCP: boolean = false,
-  fetchUnstableVersions: boolean = false,
-) => {
-  const versions = clusterService.getInstallableVersions(
-    isRosa,
-    isMarketplaceGcp,
-    isHCP,
-    fetchUnstableVersions,
-  );
-  return action(clustersConstants.GET_CLUSTER_VERSIONS, versions);
+const getInstallableVersions = (params: {
+  isRosa?: boolean;
+  isMarketplaceGcp?: boolean;
+  isWIF?: boolean;
+  isHCP?: boolean;
+  includeUnstableVersions?: boolean;
+}) => {
+  const versions = clusterService.getInstallableVersions(params);
+  return action(clustersConstants.GET_CLUSTER_VERSIONS, versions, params);
 };
 
 type ClusterAction = ActionType<
