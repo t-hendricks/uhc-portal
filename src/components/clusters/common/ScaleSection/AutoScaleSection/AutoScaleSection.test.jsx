@@ -159,7 +159,7 @@ describe('<AutoScaleSection />', () => {
 
   it('Error shows whole number when over the limit', async () => {
     const numPools = 4;
-    const enteredNum = 50;
+    const enteredNum = 65;
 
     const newProps = {
       ...defaultProps,
