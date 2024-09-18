@@ -20,7 +20,7 @@ describe('clusterService', () => {
 
   it('call to get versions includes product=hcp when isHCP param is set', async () => {
     const isHCP = true;
-    await clusterService.getInstallableVersions(true, false, isHCP);
+    await clusterService.getInstallableVersions({ isRosa: true, isHCP });
 
     expect(apiRequestMock.get).toHaveBeenCalledTimes(1);
     expect(getApiGetParams().product).toEqual('hcp');
@@ -28,7 +28,7 @@ describe('clusterService', () => {
 
   it('call to get versions includes rosa_enabled if isRosa is true', async () => {
     const isRosa = true;
-    await clusterService.getInstallableVersions(isRosa, false, false);
+    await clusterService.getInstallableVersions({ isRosa });
 
     expect(apiRequestMock.get).toHaveBeenCalledTimes(1);
     expect(getApiGetParams().search).toContain("rosa_enabled='t'");
@@ -36,26 +36,36 @@ describe('clusterService', () => {
 
   it('call to get versions does not includes rosa_enabled if isRosa is false', async () => {
     const isRosa = false;
-    await clusterService.getInstallableVersions(isRosa, false, false);
+    await clusterService.getInstallableVersions({ isRosa });
 
     expect(apiRequestMock.get).toHaveBeenCalledTimes(1);
     expect(getApiGetParams().search).not.toContain("rosa_enabled='t'");
   });
 
   it('call to get versions includes gcp_marketplace_enabled if isGCP is true', async () => {
-    const isGCP = true;
-    await clusterService.getInstallableVersions(false, isGCP, false);
+    const isMarketplaceGcp = true;
+    await clusterService.getInstallableVersions({ isMarketplaceGcp });
 
     expect(apiRequestMock.get).toHaveBeenCalledTimes(1);
     expect(getApiGetParams().search).toContain("gcp_marketplace_enabled='t'");
   });
 
   it('call to get versions does not includes gcp_marketplace_enabled if isGCP is false', async () => {
-    const isGCP = false;
-    await clusterService.getInstallableVersions(false, isGCP, false);
+    const isMarketplaceGcp = false;
+    await clusterService.getInstallableVersions({ isMarketplaceGcp });
 
     expect(apiRequestMock.get).toHaveBeenCalledTimes(1);
     expect(getApiGetParams().search).not.toContain("gcp_marketplace_enabled='t'");
+  });
+
+  it.each([
+    ['includes', true],
+    ['does not include', false],
+  ])('call to get versions %s wif_enabled param if isWIF is "%s"', async (_title, isWIF) => {
+    await clusterService.getInstallableVersions({ isWIF });
+
+    expect(apiRequestMock.get).toHaveBeenCalledTimes(1);
+    expect(getApiGetParams().search.includes("wif_enabled='t'")).toBe(isWIF);
   });
 
   it('call to post a node pool upgrade policy', async () => {
