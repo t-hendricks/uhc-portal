@@ -47,11 +47,14 @@ describe('useEditCluster hook', () => {
   });
 
   it('Patch useEditCluster error response', async () => {
+    // Mock the network request using axios
+    const formattedError = { error: 'mocked Error message' };
     const mockClusterService = {
       editCluster: jest.fn().mockRejectedValue(new Error('mock error')),
     };
     (clusterService.editCluster as jest.Mock).mockImplementation(mockClusterService.editCluster);
-    (formatErrorData as jest.Mock).mockImplementation(() => 'mocked Error message');
+    (formatErrorData as jest.Mock).mockReturnValue(formattedError);
+
     const { result } = renderHook(() => useEditCluster('mockClusterID'));
 
     await act(async () => {

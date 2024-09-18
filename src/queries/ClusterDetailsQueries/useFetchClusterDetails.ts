@@ -175,10 +175,10 @@ export const useFetchClusterDetails = (subscriptionID: string) => {
       cluster.data.machinePoolsActions = machinePoolsActions;
       cluster.data.kubeletConfigActions = kubeletConfigActions;
       cluster.data.canDelete = !!canDeleteAccessReviewResponse?.data?.allowed;
-
       return {
         isLoading: false,
         cluster: cluster.data,
+        isSuccess: true,
         isError: isClusterDetailsError,
         error: clusterDetailsError,
         isFetching,
