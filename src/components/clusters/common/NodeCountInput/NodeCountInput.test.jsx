@@ -452,6 +452,7 @@ describe('<NodeCountInput>', () => {
         expect(onChange).toBeCalledWith(minNodes); // Returns min value of 2 vs 1 node * 1 pool (which would fail cluster creation)
       });
 
+      // todo: we should investigate the cause for this test's failure - https://issues.redhat.com/browse/OCMUI-2379
       it.skip('sends onchange with minimum nodes when the number the user picked * number of new pools is greater than max nodes', () => {
         const maxNodes = MAX_NODES_HCP;
         const maxNodesForThreePools = MAX_NODES_HCP / 3;
