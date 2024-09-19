@@ -1,70 +1,70 @@
 import React from 'react';
 import get from 'lodash/get';
 import PropTypes from 'prop-types';
+import { useDispatch } from 'react-redux';
 
 import { Alert, Button, Flex, Split, SplitItem, Title } from '@patternfly/react-core';
 import { Spinner } from '@redhat-cloud-services/frontend-components/Spinner';
 
-import { useNavigate } from '~/common/routing';
-import { PreviewLabel } from '~/components/clusters/common/PreviewLabel';
-import { SubscriptionCommonFields } from '~/types/accounts_mgmt.v1';
-
-import getClusterName from '../../../../common/getClusterName';
-import { goZeroTime2Null } from '../../../../common/helpers';
-import {
+import getClusterName from '~/common/getClusterName';
+import { goZeroTime2Null } from '~/common/helpers';
+import isAssistedInstallSubscription, {
   isAvailableAssistedInstallCluster,
   isUninstalledAICluster,
-} from '../../../../common/isAssistedInstallerCluster';
-import { billingModels, normalizedProducts } from '../../../../common/subscriptionTypes';
-import Breadcrumbs from '../../../common/Breadcrumbs';
-import ButtonWithTooltip from '../../../common/ButtonWithTooltip';
-import modals from '../../../common/Modal/modals';
-import RefreshButton from '../../../common/RefreshButton/RefreshButton';
-import ClusterActionsDropdown from '../../common/ClusterActionsDropdown';
-import clusterStates, { isOffline } from '../../common/clusterStates';
-import ErrorTriangle from '../../common/ErrorTriangle';
-import { isExtenalAuthenicationActive } from '../clusterDetailsHelper';
+} from '~/common/isAssistedInstallerCluster';
+import { billingModels, normalizedProducts } from '~/common/subscriptionTypes';
+import { PreviewLabel } from '~/components/clusters/common/PreviewLabel';
+import Breadcrumbs from '~/components/common/Breadcrumbs';
+import ButtonWithTooltip from '~/components/common/ButtonWithTooltip';
+import { modalActions } from '~/components/common/Modal/ModalActions';
+import modals from '~/components/common/Modal/modals';
+import RefreshButton from '~/components/common/RefreshButton/RefreshButton';
+import { SubscriptionCommonFields } from '~/types/accounts_mgmt.v1';
 
-import ClusterNonEditableAlert from './ClusterNonEditableAlert';
-import ExpirationAlert from './ExpirationAlert';
-import GcpOrgPolicyAlert from './GcpOrgPolicyAlert';
-import LimitedSupportAlert from './LimitedSupportAlert';
-import SubscriptionCompliancy from './SubscriptionCompliancy';
-import TermsAlert from './TermsAlert';
-import TransferClusterOwnershipInfo from './TransferClusterOwnershipInfo';
+import ClusterActionsDropdown from '../../../common/ClusterActionsDropdown';
+import clusterStates, {
+  hasInflightEgressErrors,
+  isHibernating,
+  isOffline,
+} from '../../../common/clusterStates';
+import ErrorTriangle from '../../../common/ErrorTriangle';
+import HibernatingClusterCard from '../../../common/HibernatingClusterCard/HibernatingClusterCard';
+import { shouldShowLogs } from '../Overview/InstallationLogView';
 
-const IdentityProvidersHint = () => {
-  const navigate = useNavigate();
-  return (
-    <Alert
-      id="idpHint"
-      className="pf-v5-u-mt-md"
+import ClusterNonEditableAlert from './components/ClusterNonEditableAlert';
+import ClusterProgressCard from './components/ClusterProgressCard';
+import ExpirationAlert from './components/ExpirationAlert';
+import GcpOrgPolicyAlert from './components/GcpOrgPolicyAlert';
+import LimitedSupportAlert from './components/LimitedSupportAlert';
+import SubscriptionCompliancy from './components/SubscriptionCompliancy';
+import TermsAlert from './components/TermsAlert';
+import TransferClusterOwnershipInfo from './components/TransferClusterOwnershipInfo';
+
+const IdentityProvidersHint = () => (
+  <Alert
+    id="idpHint"
+    className="pf-v5-u-mt-md"
+    variant="warning"
+    isInline
+    title="Missing identity providers"
+  >
+    Identity providers determine how users log into the cluster.
+    <Button
+      variant="link"
       isInline
-      title="Create an identity provider to access cluster"
+      onClick={() => {
+        window.location.hash = 'accessControl';
+      }}
     >
-      Identity providers determine how you can log into the cluster. You&apos;ll need to set this up
-      so you can access your cluster{' '}
-      <p>
-        <Button
-          variant="link"
-          isInline
-          onClick={() =>
-            navigate({
-              hash: '#accessControl',
-            })
-          }
-        >
-          Create identity provider
-        </Button>{' '}
-      </p>
-    </Alert>
-  );
-};
+      Add OAuth configuration
+    </Button>{' '}
+    to allow others to log in.
+  </Alert>
+);
 
 function ClusterDetailsTop(props) {
   const {
     cluster,
-    openModal,
     pending,
     refreshFunc,
     clickRefreshFunc,
@@ -79,8 +79,28 @@ function ClusterDetailsTop(props) {
     autoRefreshEnabled,
     toggleSubscriptionReleased,
     showPreviewLabel,
-    logs,
+    isClusterIdentityProvidersLoading,
+    clusterIdentityProvidersError,
+    isRefetching,
+    gcpOrgPolicyWarning,
   } = props;
+
+  let topCard = null;
+
+  // Temporary solution needs update inside the component. (class based into functional) - OCMUI-2357
+  const { openModal } = modalActions;
+
+  if (isHibernating(cluster)) {
+    topCard = <HibernatingClusterCard cluster={cluster} openModal={openModal} />;
+  } else if (
+    cluster &&
+    !isAssistedInstallSubscription(cluster.subscription) &&
+    (shouldShowLogs(cluster) || hasInflightEgressErrors(cluster))
+  ) {
+    topCard = <ClusterProgressCard cluster={cluster} />;
+  }
+
+  const dispatch = useDispatch();
 
   const isProductOSDTrial =
     get(cluster, 'subscription.plan.type', '') === normalizedProducts.OSDTRIAL;
@@ -93,14 +113,14 @@ function ClusterDetailsTop(props) {
   const consoleURL = cluster.console ? cluster.console.url : false;
   const creationDateStr = get(cluster, 'creation_timestamp', '');
 
-  const hasIdentityProviders = clusterIdentityProviders.clusterIDPList.length > 0;
+  const hasIdentityProviders = clusterIdentityProviders?.items?.length > 0;
   const showIDPMessage =
     cluster.managed &&
     cluster.idpActions?.create &&
     cluster.state === clusterStates.READY &&
-    clusterIdentityProviders.fulfilled &&
-    !hasIdentityProviders &&
-    !isExtenalAuthenicationActive(cluster);
+    !isClusterIdentityProvidersLoading &&
+    !clusterIdentityProvidersError &&
+    !hasIdentityProviders;
 
   const isArchived =
     get(cluster, 'subscription.status', false) === SubscriptionCommonFields.status.ARCHIVED;
@@ -115,6 +135,10 @@ function ClusterDetailsTop(props) {
         cluster,
       }
     : {};
+
+  const addConsoleURLModal = () => {
+    dispatch(modalActions.openModal(modals.EDIT_CONSOLE_URL, cluster));
+  };
 
   let launchConsole;
   if (consoleURL && !isOffline(cluster)) {
@@ -145,12 +169,14 @@ function ClusterDetailsTop(props) {
     );
   } else if (cluster.canEdit && !isUninstalledAICluster(cluster)) {
     launchConsole = (
-      <Button variant="primary" onClick={() => openModal(modals.EDIT_CONSOLE_URL, cluster)}>
+      <Button variant="primary" onClick={() => addConsoleURLModal()}>
         Add console URL
       </Button>
     );
   }
 
+  // TODO: Required until actions menu story is done
+  // eslint-disable-next-line no-unused-vars
   const actions = !isUninstalledAICluster(cluster) && (
     <ClusterActionsDropdown
       disabled={!cluster.canEdit && !cluster.canDelete}
@@ -175,7 +201,8 @@ function ClusterDetailsTop(props) {
     />
   );
 
-  const isRefreshing = pending || organization.pending || clusterIdentityProviders.pending;
+  const isRefreshing =
+    pending || organization.pending || isClusterIdentityProvidersLoading || isRefetching;
 
   const trialEndDate = isProductOSDTrial && get(cluster, 'subscription.trial_end_date');
   const OSDRHMEndDate =
@@ -199,14 +226,8 @@ function ClusterDetailsTop(props) {
     </ButtonWithTooltip>
   );
 
-  const orgPolicyWarning = logs?.find(
-    (obj) =>
-      obj.summary?.includes('Please enable the Org Policy API for the GCP project') ||
-      obj.summary?.includes('GCP Organization Policy Service'),
-  );
-
   const showGcpOrgPolicyWarning =
-    orgPolicyWarning &&
+    gcpOrgPolicyWarning &&
     !isDeprovisioned &&
     cluster.state !== clusterStates.READY &&
     cluster.state !== clusterStates.UNINSTALLING;
@@ -242,7 +263,7 @@ function ClusterDetailsTop(props) {
             {!isArchived && !isDeprovisioned ? (
               <>
                 {launchConsole}
-                {actions}
+                {/* {actions} */}
               </>
             ) : (
               !isDeprovisioned && unarchiveBtn
@@ -259,6 +280,8 @@ function ClusterDetailsTop(props) {
           </Flex>
         </SplitItem>
       </Split>
+
+      {topCard}
 
       <LimitedSupportAlert
         limitedSupportReasons={cluster.limitedSupportReasons}
@@ -282,7 +305,7 @@ function ClusterDetailsTop(props) {
       {OSDRHMEndDate && !isDeprovisioned && (
         <ExpirationAlert expirationTimestamp={OSDRHMEndDate} OSDRHMExpiration />
       )}
-      {showGcpOrgPolicyWarning && <GcpOrgPolicyAlert summary={orgPolicyWarning?.summary} />}
+      {showGcpOrgPolicyWarning && <GcpOrgPolicyAlert summary={gcpOrgPolicyWarning} />}
 
       <SubscriptionCompliancy
         cluster={cluster}
@@ -301,11 +324,10 @@ function ClusterDetailsTop(props) {
 
 ClusterDetailsTop.propTypes = {
   cluster: PropTypes.object,
-  openModal: PropTypes.func.isRequired,
   refreshFunc: PropTypes.func.isRequired,
   clickRefreshFunc: PropTypes.func,
   pending: PropTypes.bool.isRequired,
-  clusterIdentityProviders: PropTypes.object.isRequired,
+  clusterIdentityProviders: PropTypes.object,
   organization: PropTypes.object.isRequired,
   error: PropTypes.bool,
   errorMessage: PropTypes.oneOfType([PropTypes.string, PropTypes.node, PropTypes.element]),
@@ -316,12 +338,10 @@ ClusterDetailsTop.propTypes = {
   autoRefreshEnabled: PropTypes.bool,
   toggleSubscriptionReleased: PropTypes.func.isRequired,
   showPreviewLabel: PropTypes.bool.isRequired,
-  logs: PropTypes.arrayOf(
-    PropTypes.shape({
-      summary: PropTypes.string,
-      description: PropTypes.string,
-    }),
-  ),
+  isClusterIdentityProvidersLoading: PropTypes.bool.isRequired,
+  clusterIdentityProvidersError: PropTypes.bool,
+  isRefetching: PropTypes.bool.isRequired,
+  gcpOrgPolicyWarning: PropTypes.string,
 };
 
 export default ClusterDetailsTop;

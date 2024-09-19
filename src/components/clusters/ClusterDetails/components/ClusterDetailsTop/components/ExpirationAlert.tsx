@@ -1,18 +1,16 @@
 import React from 'react';
 import dayjs from 'dayjs';
-import { useDispatch } from 'react-redux';
 
 import { Alert, AlertProps, Button } from '@patternfly/react-core';
 
-import { modalActions } from '~/components/common/Modal/ModalActions';
+import ExternalLink from '~/components/common/ExternalLink';
+import modals from '~/components/common/Modal/modals';
 import { Cluster } from '~/types/clusters_mgmt.v1';
-
-import ExternalLink from '../../../common/ExternalLink';
-import modals from '../../../common/Modal/modals';
 
 type ExpirationAlertProps = {
   expirationTimestamp: string;
   trialExpiration?: boolean;
+  openModal?: (name: string, data?: unknown) => void;
   cluster?: Cluster;
   OSDRHMExpiration?: boolean;
 };
@@ -20,25 +18,15 @@ type ExpirationAlertProps = {
 const ExpirationAlert = ({
   expirationTimestamp,
   trialExpiration,
+  openModal,
   cluster,
   OSDRHMExpiration,
 }: ExpirationAlertProps) => {
-  const dispatch = useDispatch();
   const now = dayjs.utc();
   const expirationTime = dayjs.utc(expirationTimestamp);
   const hours = expirationTime.diff(now, 'hour');
   const timeUntilExpiryString = now.to(expirationTime);
   const expirationTimeString = expirationTime.local().format('dddd, MMMM Do YYYY, h:mm a');
-
-  const upgradeTrialClusterModal = () => {
-    dispatch(
-      modalActions.openModal?.(modals.UPGRADE_TRIAL_CLUSTER, {
-        title: 'Upgrade cluster from Trial',
-        clusterID: cluster?.id,
-        cluster,
-      }),
-    );
-  };
 
   if (hours <= 0) {
     return (
@@ -109,7 +97,13 @@ const ExpirationAlert = ({
           variant="secondary"
           className="pf-v5-u-mt-sm"
           data-testid="trial-button"
-          onClick={() => upgradeTrialClusterModal()}
+          onClick={() =>
+            openModal?.(modals.UPGRADE_TRIAL_CLUSTER, {
+              title: 'Upgrade cluster from Trial',
+              clusterID: cluster?.id,
+              cluster,
+            })
+          }
         >
           Upgrade from trial
         </Button>

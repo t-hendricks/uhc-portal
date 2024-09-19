@@ -4,7 +4,7 @@ import dayjs from 'dayjs';
 import { render, screen } from '~/testUtils';
 
 import modals from '../../../../common/Modal/modals';
-import ExpirationAlert from '../ExpirationAlert';
+import ExpirationAlert from '../ClusterDetailsTop/components/ExpirationAlert';
 
 describe('<ExpirationAlert />', () => {
   it('expiration has passed', () => {

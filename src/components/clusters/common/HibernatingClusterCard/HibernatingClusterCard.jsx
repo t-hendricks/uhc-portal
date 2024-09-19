@@ -68,7 +68,7 @@ function HibernatingClusterCard({ cluster }) {
   }
 
   return (
-    <Card>
+    <Card isFlat>
       <CardBody>
         <EmptyState variant={EmptyStateVariant.sm}>
           <EmptyStateHeader

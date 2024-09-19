@@ -3,12 +3,11 @@ import { useDispatch } from 'react-redux';
 
 import { Alert, AlertActionLink } from '@patternfly/react-core';
 
+import getTermsAppLink from '~/common/getTermsAppLink';
+import { normalizedProducts } from '~/common/subscriptionTypes';
 import { selfTermsReview } from '~/redux/actions/userActions';
 import { useGlobalState } from '~/redux/hooks';
 import { Subscription, SubscriptionCommonFields } from '~/types/accounts_mgmt.v1';
-
-import getTermsAppLink from '../../../../common/getTermsAppLink';
-import { normalizedProducts } from '../../../../common/subscriptionTypes';
 
 type TermsAlertProps = {
   subscription: Subscription;

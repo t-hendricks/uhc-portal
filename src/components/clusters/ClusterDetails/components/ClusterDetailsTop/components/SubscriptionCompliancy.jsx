@@ -5,12 +5,12 @@ import PropTypes from 'prop-types';
 import { Alert, Button } from '@patternfly/react-core';
 import { DateFormat } from '@redhat-cloud-services/frontend-components/DateFormat';
 
+import getClusterName from '~/common/getClusterName';
+import { normalizedProducts } from '~/common/subscriptionTypes';
+import modals from '~/components/common/Modal/modals';
 import { SubscriptionCommonFields } from '~/types/accounts_mgmt.v1';
 
-import getClusterName from '../../../../common/getClusterName';
-import { normalizedProducts } from '../../../../common/subscriptionTypes';
-import modals from '../../../common/Modal/modals';
-import { getSubscriptionLastReconciledDate } from '../clusterDetailsHelper';
+import { getSubscriptionLastReconciledDate } from '../../../clusterDetailsHelper';
 
 function SubscriptionCompliancy({ cluster, openModal, canSubscribeOCP = false }) {
   const subscription = get(cluster, 'subscription');
