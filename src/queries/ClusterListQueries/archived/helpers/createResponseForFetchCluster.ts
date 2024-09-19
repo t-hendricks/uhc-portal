@@ -7,23 +7,18 @@ import { type Subscription, SubscriptionCommonFields } from '~/types/accounts_mg
 import type { Cluster } from '~/types/clusters_mgmt.v1';
 import { ClusterWithPermissions } from '~/types/types';
 
-import isAssistedInstallSubscription from '../../../common/isAssistedInstallerCluster';
+import isAssistedInstallSubscription from '../../../../common/isAssistedInstallerCluster';
 import {
   fakeClusterFromAISubscription,
   fakeClusterFromSubscription,
   normalizeCluster,
   normalizeMetrics,
-} from '../../../common/normalize';
+} from '../../../../common/normalize';
+import { Region } from '../types/types';
 
-export type SubscriptionMapEntry = {
-  aiCluster?: AICluster;
-  cluster?: Cluster;
-  subscription: Subscription;
-};
+export type MapEntry = { aiCluster?: AICluster; cluster?: Cluster; subscription: Subscription };
 
-export const createResponseForFetchClusters = (
-  subscriptionMap: Map<string, SubscriptionMapEntry>,
-) => {
+export const createResponseForFetchClusters = (subscriptionMap: Map<string, MapEntry>) => {
   const result: (ClusterWithPermissions | Cluster)[] = [];
   subscriptionMap.forEach((entry) => {
     let cluster: ClusterWithPermissions | Cluster;
@@ -71,17 +66,14 @@ export type ErrorResponse = AxiosError & {
 
 export const formatClusterListError = (
   response: { error: ErrorResponse | null | undefined },
-  region?: String,
+  region?: Region,
 ) => {
   if (!response.error || (!response.error?.response?.data?.reason && !response.error?.message)) {
     return null;
   }
-  const returnValue = {
+  return {
     reason: response.error?.response?.data?.reason || response.error?.message,
     operation_id: response.error?.response?.data?.operation_id,
+    region,
   };
-  if (region) {
-    return { ...returnValue, region };
-  }
-  return returnValue;
 };

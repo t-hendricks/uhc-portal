@@ -13,8 +13,8 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
-
 import React from 'react';
+import isEmpty from 'lodash/isEmpty';
 import size from 'lodash/size';
 import PropTypes from 'prop-types';
 import { useDispatch, useSelector } from 'react-redux';
@@ -49,7 +49,8 @@ import { CLUSTERS_VIEW } from '~/redux/constants/viewConstants';
 import { isRestrictedEnv } from '~/restrictedEnv';
 
 import helpers from '../../../common/helpers';
-import { normalizedProducts } from '../../../common/subscriptionTypes';
+import { getQueryParam } from '../../../common/queryHelpers';
+import { normalizedProducts, productFilterOptions } from '../../../common/subscriptionTypes';
 import { viewConstants } from '../../../redux/constants';
 import ErrorBox from '../../common/ErrorBox';
 import Unavailable from '../../common/Unavailable';
@@ -67,7 +68,6 @@ import ClusterListTable from './components/ClusterListTable';
 import { PaginationRow } from './components/PaginationRow';
 import { RefreshButton } from './components/RefreshButton';
 import ViewOnlyMyClustersToggle from './components/ViewOnlyMyClustersToggle';
-import { sortClusters } from './clusterListSort';
 
 import './ClusterList.scss';
 
@@ -131,15 +131,12 @@ const ClusterList = ({
   clearGlobalError,
   openModal,
   getMultiRegion,
-  useClientSortPaging,
 }) => {
   const dispatch = useDispatch();
   const viewType = viewConstants.CLUSTERS_VIEW;
 
-  const { isLoading, data, refetch, isError, errors, isFetching, isFetched } = useFetchClusters(
-    getMultiRegion,
-    useClientSortPaging,
-  );
+  const { isLoading, data, refetch, isError, errors, isFetching, isFetched } =
+    useFetchClusters(getMultiRegion);
 
   const clusters = data?.items;
   const clustersTotal = useSelector((state) => state.viewOptions[viewType]?.totalCount);
@@ -148,7 +145,8 @@ const ClusterList = ({
     if (!isLoading || data?.itemsCount > 0) {
       dispatch(onSetTotalClusters(data?.itemsCount, viewType));
     }
-  }, [data?.itemsCount, dispatch, viewType, isLoading]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [data?.itemsCount]);
 
   const errorDetails = (errors || []).reduce((errorArray, error) => {
     if (!error.reason) {
@@ -216,15 +214,10 @@ const ClusterList = ({
   };
 
   const sortOptions = useSelector((state) => state.viewOptions[viewType]?.sorting);
-  let sortedClusters = clusters;
 
   const activeSortIndex = sortOptions.sortField;
   const activeSortDirection = sortOptions.isAscending ? SortByDirection.asc : SortByDirection.desc;
-  /* Sorting */
-  if (useClientSortPaging) {
-    // Note: initial sort order is set in the reducer
-    sortedClusters = sortClusters(clusters, activeSortIndex, activeSortDirection);
-  }
+
   // onMount and willUnmount
   React.useEffect(() => {
     preLoadRedux();
@@ -235,6 +228,26 @@ const ClusterList = ({
           'subscriptionFilter',
           {
             plan_id: [normalizedProducts.ROSA],
+          },
+          viewType,
+        ),
+      );
+    }
+
+    const planIDFilter = getQueryParam('plan_id') || '';
+
+    if (!isEmpty(planIDFilter)) {
+      const allowedProducts = {};
+      productFilterOptions.forEach((option) => {
+        allowedProducts[option.key] = true;
+      });
+      const sanitizedFilter = planIDFilter.split(',').filter((value) => allowedProducts[value]);
+
+      dispatch(
+        onListFlagsSet(
+          'subscriptionFilter',
+          {
+            plan_id: sanitizedFilter,
           },
           viewType,
         ),
@@ -373,11 +386,7 @@ const ClusterList = ({
             ) : (
               <ClusterListTable
                 openModal={openModal}
-                clusters={
-                  (useClientSortPaging
-                    ? sortedClusters?.slice(itemsStart - 1, itemsEnd)
-                    : clusters) || []
-                }
+                clusters={clusters || []}
                 isPending={isPendingNoData}
                 activeSortIndex={activeSortIndex}
                 activeSortDirection={activeSortDirection}
@@ -389,7 +398,6 @@ const ClusterList = ({
 
                   dispatch(viewActions.onListSortBy(sorting, viewType));
                 }}
-                useClientSortPaging={useClientSortPaging}
                 refreshFunc={refetch}
               />
             )}
@@ -428,11 +436,9 @@ ClusterList.propTypes = {
 
   clearGlobalError: PropTypes.func.isRequired,
   getMultiRegion: PropTypes.bool,
-  useClientSortPaging: PropTypes.bool,
 };
 ClusterList.defaultProps = {
   getMultiRegion: true,
-  useClientSortPaging: true,
 };
 
 export default ClusterList;

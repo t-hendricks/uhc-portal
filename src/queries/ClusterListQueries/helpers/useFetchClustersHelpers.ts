@@ -1,235 +1,73 @@
 import React from 'react';
+import { isEqual } from 'lodash';
 
-import { UseQueryResult } from '@tanstack/react-query';
+import { UseQueryOptions, UseQueryResult } from '@tanstack/react-query';
 
 import { queryClient } from '~/components/App/queryClient';
 import { SubscriptionCommonFields } from '~/types/accounts_mgmt.v1';
-import {
-  ClusterFromSubscription,
-  ClusterWithPermissions,
-  ViewOptions,
-  ViewOptionsFilter,
-} from '~/types/types';
+import { ClusterWithPermissions, ViewOptions, ViewOptionsFilter } from '~/types/types';
 
 import { queryConstants } from '../../queriesConstants';
-import { Region } from '../types/types';
-import { CanEditDelete } from '../useFetchCanEditDelete';
 
-import { fetchPageOfGlobalClusters } from './fetchGlobalClusters';
-import { fetchPageOfRegionalClusters } from './fetchRegionalClusters';
-import { formatCluster } from './formatCluster';
-
-/* **** Types **** */
-export type FetchClusterQueryResults = UseQueryResult & {
-  data?: {
-    items: any[];
-    page: number;
-    total: number;
-    region: Region;
-    isError: boolean;
-    errors: any[];
-  };
-  errors?: any[];
-};
-
-export type UseFetchClustersQuery = ReturnType<typeof createQuery>;
-
-type FetchPageOfClustersProps = {
-  page: number;
-  region?: Region;
-  flags?: { [flag: string]: any };
-  nameFilter?: ViewOptionsFilter;
-  userName?: string;
-  getMultiRegion?: boolean;
-  sorting?: { sortField: string; isAscending: boolean; sortIndex: number };
-  pageSize?: number;
-};
-
-type FetchPage = {
-  total: number;
-  page: number;
-  region: Region;
-};
-
-/* **** Helpers **** */
+import { CanEditDelete } from './useFetchCanEditDelete';
 
 /**
- * Fetches either an API page's worth of regional or global clusters
+ * Types
  */
-
-export const fetchPageOfClusters = async ({
-  page,
-  region,
-  flags,
-  nameFilter,
-  userName,
-  sorting,
-  getMultiRegion,
-  pageSize,
-}: FetchPageOfClustersProps) => {
-  const { items, total, isError, errors } = region
-    ? await fetchPageOfRegionalClusters(
-        page,
-        region,
-        { flags, filter: nameFilter } as ViewOptions,
-        userName,
-      )
-    : await fetchPageOfGlobalClusters(
-        page,
-        pageSize,
-        { flags, filter: nameFilter, sorting } as ViewOptions,
-        userName,
-        getMultiRegion,
-      );
-  return {
-    items: items?.map((cluster) => formatCluster(cluster as ClusterFromSubscription)),
-    page,
-    total,
-    region,
-    isError,
-    errors,
+export type FetchClusterQueryResults = UseQueryResult & {
+  data?: {
+    managedClusters?: any[];
+    aiClusters?: any[];
   };
 };
+
+export type QueryKey = (string | number | ViewOptionsFilter)[];
 
 /**
  * Creates the React Query key based on params
  */
-
-const queryKey = ({
-  page,
-  region,
-  plans,
-  nameFilter,
-  showMyClustersOnly,
-  sorting,
-  useClientSortPaging,
-  pageSize,
+export const createQueryKey = ({
+  type,
+  clusterTypeOrRegion,
+  viewOptions,
+  other,
 }: {
-  page: number;
-  region?: Region | undefined;
-  plans?: string[] | undefined;
-  nameFilter?: ViewOptionsFilter;
-  showMyClustersOnly?: boolean;
-  sorting?: { sortField: string; isAscending: boolean; sortIndex: number };
-  useClientSortPaging: boolean;
-  pageSize?: number;
-}) => {
-  const key = [
+  type: 'subscriptions' | 'clusters';
+  clusterTypeOrRegion?: string;
+  viewOptions: ViewOptions;
+  other?: string[];
+}): QueryKey => {
+  const { currentPage, pageSize, sorting, filter, flags } = viewOptions;
+
+  const sortField = sorting?.sortField ? sorting.sortField : 'no_sort_field';
+  const sortDirection = sorting?.isAscending ? 'asc' : 'desc';
+  const nameFilter = filter || 'no_name_filter';
+  const showMyClustersOnly = flags?.showMyClustersOnly ? 'only_my_clusters' : 'all_clusters';
+  const plans: string[] = flags?.subscriptionFilter?.plan_id || [];
+
+  const key: QueryKey = [
     queryConstants.FETCH_CLUSTERS_QUERY_KEY,
-    region
-      ? queryConstants.FETCH_CLUSTERS_QUERY_TYPE.REGIONAL
-      : queryConstants.FETCH_CLUSTERS_QUERY_TYPE.GLOBAL,
-    page,
+    type,
+    clusterTypeOrRegion || '-',
+    `${currentPage}`,
+    `${pageSize}`,
+    sortField,
+    sortDirection,
+    nameFilter,
+    showMyClustersOnly,
+    ...plans,
+    ...(other || []),
   ];
-
-  key.push(!useClientSortPaging ? `${pageSize}` : `500`);
-
-  if (region && region.region && region.provider) {
-    key.push(region.region);
-    key.push(region.provider);
-  }
-
-  if (plans && plans.length > 0) {
-    key.push(...plans);
-  }
-  if (typeof nameFilter === 'string') {
-    key.push(nameFilter);
-  }
-
-  if (showMyClustersOnly) {
-    key.push('showMyClustersOnly');
-  }
-  if (sorting && !useClientSortPaging) {
-    key.push(...[sorting.sortField, sorting.isAscending ? 'asc' : 'desc']);
-  }
-
   return key;
 };
-
-/**
- * Creates a React Query query
- */
-
-export const createQuery = ({
-  page,
-  region,
-  flags,
-  nameFilter,
-  userName,
-  getMultiRegion = true,
-  sorting,
-  useClientSortPaging,
-  pageSize,
-}: {
-  page: number;
-  region?: Region;
-  flags?: { [flag: string]: any };
-  nameFilter?: ViewOptionsFilter;
-  userName?: string;
-  getMultiRegion?: boolean;
-  sorting?: { sortField: string; isAscending: boolean; sortIndex: number };
-  useClientSortPaging: boolean;
-  pageSize?: number;
-}) => ({
-  queryKey: queryKey({
-    page,
-    region,
-    plans: flags?.subscriptionFilter?.plan_id,
-    nameFilter,
-    showMyClustersOnly: flags?.showMyClustersOnly,
-    sorting,
-    useClientSortPaging,
-    pageSize,
-  }),
-  staleTime: queryConstants.STALE_TIME,
-  refetchInterval: queryConstants.REFETCH_INTERVAL,
-  queryFn: async () =>
-    fetchPageOfClusters({
-      page: page || 1,
-      region,
-      flags,
-      nameFilter,
-      userName,
-      getMultiRegion,
-      sorting,
-      pageSize,
-    }),
-});
 
 /**
  * Checks to see if a query already exists based on params
  * Used to determine if a new query needs to be created
  */
 
-export const isExistingQuery = ({
-  queries,
-  page,
-  region,
-}: {
-  queries: any[];
-  page: number;
-  region?: Region;
-}) =>
-  (queries || []).some((query: any) => {
-    if (!region) {
-      const [mainKey, queryType, queryPage, _queryPageSize] = query.queryKey;
-      return (
-        mainKey === queryConstants.FETCH_CLUSTERS_QUERY_KEY &&
-        queryType === queryConstants.FETCH_CLUSTERS_QUERY_TYPE.GLOBAL &&
-        queryPage === page
-      );
-    }
-
-    const [mainKey, queryType, queryPage, _queryPageSize, queryRegion, queryProvider] =
-      query.queryKey;
-    return (
-      mainKey === queryConstants.FETCH_CLUSTERS_QUERY_KEY &&
-      queryType === queryConstants.FETCH_CLUSTERS_QUERY_TYPE.REGIONAL &&
-      queryRegion === region.region &&
-      queryProvider === region.provider &&
-      queryPage === page
-    );
-  });
+export const isExistingQuery = (queries: UseQueryOptions[], queryKey: QueryKey) =>
+  queries.some((query) => isEqual(query.queryKey, queryKey));
 
 /**
  * Sets up the interval scheduled to refetch cluster data in the background
@@ -248,7 +86,7 @@ export const useRefetchClusterList = () => {
     queryClient.invalidateQueries({ queryKey: [queryConstants.FETCH_CLUSTERS_QUERY_KEY] });
   };
 
-  const setRefetch = () => {
+  const setRefetchSchedule = () => {
     // @ts-ignore
     clearInterval(refetchInterval);
     const intervalId = setInterval(() => {
@@ -259,13 +97,7 @@ export const useRefetchClusterList = () => {
 
   const refetch = () => {
     getNewData();
-    setRefetch();
-  };
-
-  const setRefetchSchedule = () => {
-    if (!refetchInterval) {
-      setRefetch();
-    }
+    setRefetchSchedule();
   };
 
   const clearRefetch = () => {
@@ -281,117 +113,64 @@ export const useRefetchClusterList = () => {
  * Removes all queries to fetch cluster data from React Query
  * This forces useFetchClusters to re-render and rebuilds all the queries based on new data
  */
-// export const clearQueries = (setQueries: (array: []) => void, clearRefetch: () => void) => {
-export const clearQueries = (
-  setQueries: (callback: () => []) => void,
-  clearRefetch: () => void,
-) => {
+
+export const clearQueries = (setQueries: (callback: () => []) => void, callback: () => void) => {
+  queryClient.removeQueries({
+    queryKey: [queryConstants.FETCH_CLUSTERS_QUERY_KEY, 'subscriptions'],
+  });
   setQueries(() => {
+    queryClient.removeQueries({ queryKey: [queryConstants.FETCH_CLUSTERS_QUERY_KEY, 'clusters'] });
     queryClient.removeQueries({
-      queryKey: [
-        queryConstants.FETCH_CLUSTERS_QUERY_KEY,
-        queryConstants.FETCH_CLUSTERS_QUERY_TYPE.GLOBAL,
-      ],
-    });
-    queryClient.removeQueries({
-      queryKey: [
-        queryConstants.FETCH_CLUSTERS_QUERY_KEY,
-        queryConstants.FETCH_CLUSTERS_QUERY_TYPE.REGIONAL,
-      ],
+      queryKey: [queryConstants.FETCH_CLUSTERS_QUERY_KEY, 'authorizationsService'],
     });
     return [];
   });
-  clearRefetch();
+  callback();
 };
 
 /**
- * Adds teh canUpdate/Edit and canDelete information
+ * Adds the canUpdate/Edit and canDelete information
  * Into each cluster in the array of clusters
  */
 export const combineClusterQueries = (
-  clusterQueriesResults: FetchClusterQueryResults[],
+  clusters: ClusterWithPermissions[],
   canEditList: CanEditDelete,
   canDeleteList: CanEditDelete,
 ) => {
-  if (clusterQueriesResults.every((result) => !result.data)) {
-    // If no clusterQueryResults then need to return undefined
+  if (!clusters || clusters.length === 0) {
     return undefined;
   }
 
-  return clusterQueriesResults.reduce((dataArray, result) => {
-    /* Modify the results based on other React Queries - in this case canEdit and canDelete */
-    const modifiedClusters = (result.data?.items || []).map((cluster) => {
-      const modifiedCluster = { ...cluster };
+  return clusters.map((cluster) => {
+    const modifiedCluster = { ...cluster };
 
-      modifiedCluster.canEdit =
-        !cluster.partialCS &&
-        !!canEditList &&
-        (canEditList['*'] || (!!cluster.id && !!canEditList[cluster.id])) &&
-        cluster.subscription.status !== SubscriptionCommonFields.status.DEPROVISIONED;
+    modifiedCluster.canEdit =
+      !cluster.partialCS &&
+      !!canEditList &&
+      (canEditList['*'] || (!!cluster.id && !!canEditList[cluster.id])) &&
+      cluster.subscription?.status !== SubscriptionCommonFields.status.DEPROVISIONED;
 
-      modifiedCluster.canDelete =
-        !cluster.partialCS &&
-        !!canDeleteList &&
-        (canDeleteList['*'] || (!!cluster.id && !!canDeleteList[cluster.id!]));
-      return modifiedCluster;
-    });
-
-    return dataArray.concat(modifiedClusters);
-  }, [] as ClusterWithPermissions[]);
+    modifiedCluster.canDelete =
+      !cluster.partialCS &&
+      !!canDeleteList &&
+      (canDeleteList['*'] || (!!cluster.id && !!canDeleteList[cluster.id!]));
+    return modifiedCluster;
+  });
 };
 
 /**
- * If using client side sorting and pagination, returns
- *  an array of queries that need to be fetched next
- * This is an array of queries that are additional API pages
+ * Builds search query for cluster service API calls
  */
-export const nextAPIPageQueries = ({
-  fetchedPages,
-  currentQueries,
-  useClientSortPaging,
-  flags,
-  nameFilter,
-  userName,
-}: {
-  fetchedPages: FetchPage[];
-  currentQueries: UseFetchClustersQuery[];
-  useClientSortPaging: boolean;
-  flags: {
-    [flag: string]: any;
-  };
-  nameFilter: ViewOptionsFilter;
-  userName?: string;
-}): UseFetchClustersQuery[] => {
-  if (!fetchedPages || fetchedPages.length === 0 || !useClientSortPaging) {
-    return [];
-  }
-
-  return fetchedPages.reduce((queriesToAdd, pageFetched) => {
-    const numNextPages = Math.ceil(
-      (pageFetched.total - pageFetched.page * queryConstants.PAGE_SIZE) / queryConstants.PAGE_SIZE,
-    );
-    const newQueries: UseFetchClustersQuery[] = [];
-    for (let i = 1; i <= numNextPages; i += 1) {
-      const nextPage = pageFetched.page + i;
-      const doesNextPageExist = isExistingQuery({
-        queries: currentQueries,
-        page: nextPage,
-        region: pageFetched.region,
-      });
-      if (!doesNextPageExist) {
-        newQueries.push(
-          createQuery({
-            page: nextPage,
-            region: pageFetched.region,
-            useClientSortPaging,
-            flags,
-            nameFilter,
-            userName,
-          }),
-        );
-      }
+export const buildSearchClusterQuery = (
+  items: { [field: string]: unknown }[],
+  field: string,
+): string => {
+  const IDs = new Set();
+  items.forEach((item) => {
+    const objectID = item[field];
+    if (objectID) {
+      IDs.add(`'${objectID}'`);
     }
-
-    return [...queriesToAdd, ...newQueries];
-  }, [] as UseFetchClustersQuery[]);
+  });
+  return `id in (${Array.from(IDs).join(',')})`;
 };

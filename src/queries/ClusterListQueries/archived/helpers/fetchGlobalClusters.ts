@@ -8,10 +8,9 @@ import { type Subscription, SubscriptionCommonFields } from '~/types/accounts_mg
 import { Cluster } from '~/types/clusters_mgmt.v1';
 import { ViewOptions } from '~/types/types';
 
-import isAssistedInstallSubscription from '../../../common/isAssistedInstallerCluster';
-import { mapListResponse, normalizeSubscription } from '../../../common/normalize';
-import { accountsService, assistedService, clusterService } from '../../../services';
-import { queryConstants } from '../../queriesConstants';
+import isAssistedInstallSubscription from '../../../../common/isAssistedInstallerCluster';
+import { mapListResponse, normalizeSubscription } from '../../../../common/normalize';
+import { accountsService, assistedService, clusterService } from '../../../../services';
 
 import {
   createResponseForFetchClusters,
@@ -19,6 +18,8 @@ import {
   formatClusterListError,
   MapEntry,
 } from './createResponseForFetchCluster';
+
+const PAGE_SIZE = 500;
 
 const buildSearchClusterQuery = (items: { [field: string]: unknown }[], field: string): string => {
   const IDs = new Set();
@@ -67,7 +68,7 @@ const fetchGlobalSubscriptions = async (
   const params = createViewQueryObject(
     {
       currentPage: page,
-      pageSize: pageSize || queryConstants.PAGE_SIZE,
+      pageSize: pageSize || PAGE_SIZE,
       filter: viewOptions?.filter || '',
       sorting: {
         sortField: viewOptions?.sorting?.sortField || 'created_at',
