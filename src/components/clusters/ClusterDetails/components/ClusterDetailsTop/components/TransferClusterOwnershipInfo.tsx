@@ -4,14 +4,13 @@ import get from 'lodash/get';
 import { Alert } from '@patternfly/react-core';
 
 import { Link } from '~/common/routing';
+import { normalizedProducts } from '~/common/subscriptionTypes';
+import ExternalLink from '~/components/common/ExternalLink';
 import {
   ClusterAuthorizationRequest,
   Subscription,
   SubscriptionCommonFields,
 } from '~/types/accounts_mgmt.v1';
-
-import { normalizedProducts } from '../../../../common/subscriptionTypes';
-import ExternalLink from '../../../common/ExternalLink';
 
 type TransferClusterOwnershipInfoProps = {
   subscription?: Subscription;

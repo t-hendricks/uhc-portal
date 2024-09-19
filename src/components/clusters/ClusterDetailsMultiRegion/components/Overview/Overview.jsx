@@ -27,13 +27,11 @@ import clusterStates, {
   hasInflightEgressErrors,
   isHibernating,
 } from '../../../common/clusterStates';
-import HibernatingClusterCard from '../../../common/HibernatingClusterCard/HibernatingClusterCard';
 import { metricsStatusMessages } from '../../../common/ResourceUsage/constants';
 import ResourceUsage from '../../../common/ResourceUsage/ResourceUsage';
 import { hasResourceUsageMetrics } from '../Monitoring/monitoringHelper';
 
 import InsightsAdvisor from './InsightsAdvisor/InsightsAdvisor';
-import ClusterProgressCard from './ClusterProgressCard';
 import ClusterStatusMonitor from './ClusterStatusMonitor';
 import CostBreakdownCard from './CostBreakdownCard';
 import DetailsLeft from './DetailsLeft';
@@ -82,7 +80,6 @@ class Overview extends React.Component {
       isSubscriptionSettingsRequestPending,
       region,
     } = this.props;
-    let topCard;
     const { showInstallSuccessAlert } = this.state;
     const isArchived =
       get(cluster, 'subscription.status', false) === SubscriptionCommonFields.status.ARCHIVED;
@@ -140,16 +137,6 @@ class Overview extends React.Component {
     const showDetailsCard = !cluster.aiCluster || !isUninstalledAICluster(cluster);
     const showSubscriptionSettings = !isDeprovisioned && !isArchived;
 
-    if (isHibernating(cluster)) {
-      topCard = <HibernatingClusterCard cluster={cluster} />;
-    } else if (
-      cluster &&
-      !isAssistedInstallSubscription(cluster.subscription) &&
-      (shouldShowLogs(cluster) || hasInflightEgressErrors(cluster))
-    ) {
-      topCard = <ClusterProgressCard cluster={cluster} />;
-    }
-
     const resourceUsage = (
       <Card className="ocm-c-overview-resource-usage__card" data-testid="resource-usage">
         <CardTitle className="ocm-c-overview-resource-usage__card--header">
@@ -201,7 +188,6 @@ class Overview extends React.Component {
             {shouldMonitorStatus && (
               <ClusterStatusMonitor region={region} refresh={refresh} cluster={cluster} />
             )}
-            {topCard}
             {showAssistedInstallerDetailCard && (
               <AssistedInstallerDetailCard
                 permissions={getClusterAIPermissions(cluster)}
