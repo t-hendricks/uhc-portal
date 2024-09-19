@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Formik, FormikValues } from 'formik';
+import { Form, Formik, FormikValues } from 'formik';
 
 import { billingModels } from '~/common/subscriptionTypes';
 import { VersionSelectField } from '~/components/clusters/wizards/common/ClusterSettings/Details/VersionSelectField';
@@ -19,6 +19,13 @@ jest.mock('~/services/clusterService');
 
 const standardValues: FormikValues = {
   [FieldId.BillingModel]: billingModels.STANDARD,
+};
+const clusterVersionValue: FormikValues = {
+  [FieldId.ClusterVersion]: versionsData[0],
+};
+const standardValuesWithVersion: FormikValues = {
+  ...standardValues,
+  ...clusterVersionValue,
 };
 const marketplaceGcpValues = {
   [FieldId.BillingModel]: billingModels.MARKETPLACE_GCP,
@@ -108,10 +115,14 @@ describe('<VersionSelectField />', () => {
     },
   );
 
-  it('re-fetches cluster versions if the ones already available do not match the existing cluster type', async () => {
-    withState(loadedStateUnmatchedVersions).render(
-      <Formik initialValues={standardValues} onSubmit={() => {}}>
-        <VersionSelectField {...defaultProps} />
+  it('re-fetches cluster versions and reset selected version if the versions available do not match the existing cluster type', async () => {
+    const onSubmit = jest.fn();
+    const { user } = withState(loadedStateUnmatchedVersions).render(
+      <Formik initialValues={standardValuesWithVersion} onSubmit={onSubmit}>
+        <Form>
+          <VersionSelectField {...defaultProps} />
+          <button type="submit">Submit</button>
+        </Form>
       </Formik>,
     );
 
@@ -120,6 +131,13 @@ describe('<VersionSelectField />', () => {
       isWIF: false,
       includeUnstableVersions: false,
     });
+
+    await user.click(screen.getByRole('button', { name: 'Submit' }));
+
+    expect(onSubmit).toHaveBeenCalledWith(
+      expect.not.objectContaining(clusterVersionValue),
+      expect.anything(),
+    );
   });
 
   it('is accessible', async () => {

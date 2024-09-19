@@ -84,7 +84,8 @@ export const VersionSelectField = ({
         getInstallableVersionsResponse.meta?.isMarketplaceGcp !== isMarketplaceGcp ||
         getInstallableVersionsResponse.meta?.isWIF !== isWIF
       ) {
-        // parameters changed, refetch
+        // parameters changed, reset version selection and re-fetch versions
+        setFieldValue(name, null);
         getInstallableVersions();
       } else {
         setVersions(getInstallableVersionsResponse.versions);
@@ -96,7 +97,14 @@ export const VersionSelectField = ({
       // First time.
       getInstallableVersions();
     }
-  }, [getInstallableVersions, getInstallableVersionsResponse, isMarketplaceGcp, isWIF]);
+  }, [
+    getInstallableVersions,
+    getInstallableVersionsResponse,
+    isMarketplaceGcp,
+    isWIF,
+    name,
+    setFieldValue,
+  ]);
 
   useEffect(() => {
     if (versions.length && !selectedClusterVersion?.raw_id) {
