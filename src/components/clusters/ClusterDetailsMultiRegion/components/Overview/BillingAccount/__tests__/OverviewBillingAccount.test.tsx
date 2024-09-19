@@ -73,4 +73,31 @@ describe('Overview BillingAccount Component', () => {
     render(<OverviewBillingAccount />);
     expect(await screen.findByRole('button', { name: /123456/i })).toBeInTheDocument();
   });
+
+  it('Returns billing account value when cluster not set but subscription is', async () => {
+    const useParamsMock = jest.requireMock('react-router-dom').useParams;
+    useParamsMock.mockReturnValue({ id: '1msoogsgTLQ4PePjrTOt3UqvMzX' });
+
+    const useFetchClusterDetailsMock = jest.requireMock(
+      '~/queries/ClusterDetailsQueries/useFetchClusterDetails',
+    );
+    useFetchClusterDetailsMock.useFetchClusterDetails.mockReturnValue({
+      cluster: {
+        ...fixtures.clusterDetails.cluster,
+        subscription: {
+          billing_marketplace_account: '123456',
+        },
+        hypershift: {
+          enabled: false,
+        },
+      },
+      isLoading: false,
+      isError: false,
+      error: null,
+      isFetching: false,
+    });
+
+    render(<OverviewBillingAccount />);
+    expect(await screen.findByText('123456')).toBeInTheDocument();
+  });
 });
