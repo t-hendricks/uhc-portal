@@ -1,10 +1,8 @@
 import { useQuery } from '@tanstack/react-query';
 
-import {
-  ErrorResponse,
-  formatClusterListError,
-} from '../ClusterListQueries/helpers/createResponseForFetchCluster';
-import { Region } from '../ClusterListQueries/types/types';
+import { ErrorResponse, formatClusterListError } from '../helpers/createResponseForFetchCluster';
+
+type Region = { provider?: string; region?: string; url: string };
 
 export const useFetchRegions = ({
   mainQueryKey = 'fetchRegions',

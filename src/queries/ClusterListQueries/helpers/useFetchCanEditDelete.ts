@@ -3,26 +3,31 @@ import React from 'react';
 import { useQueries, UseQueryResult } from '@tanstack/react-query';
 
 import { buildPermissionDict } from '~/redux/reduxHelpers';
+import { authorizationsService } from '~/services';
 import { SelfResourceReview, SelfResourceReviewRequest } from '~/types/accounts_mgmt.v1';
 
-import { authorizationsService } from '../../services';
+import { queryConstants } from '../../queriesConstants';
 
-import { ErrorResponse, formatClusterListError } from './helpers/createResponseForFetchCluster';
+import { ErrorResponse, formatClusterListError } from './createResponseForFetchCluster';
 
 export type CanEditDelete = {
   [clusterID: string]: boolean;
 };
 
 export const useFetchCanEditDelete = ({
-  mainQueryKey = 'fetchCanEditDelete',
-  staleTime = 30000,
-  refetchInterval = Infinity,
+  queryKey = [queryConstants.FETCH_CLUSTERS_QUERY_KEY],
+  staleTime = queryConstants.STALE_TIME,
+  refetchInterval = queryConstants.REFETCH_INTERVAL,
+}: {
+  queryKey?: string[];
+  staleTime?: number;
+  refetchInterval?: number;
 }) => {
   const { isLoading, data, isError, isFetching, refetch, errors, isFetched } = useQueries({
     queries: [
       {
         queryKey: [
-          mainQueryKey,
+          ...queryKey,
           'authorizationsService',
           'selfResourceReview',
           SelfResourceReviewRequest.action.DELETE,
@@ -40,7 +45,7 @@ export const useFetchCanEditDelete = ({
       },
       {
         queryKey: [
-          mainQueryKey,
+          ...queryKey,
           'authorizationsService',
           'selfResourceReview',
           SelfResourceReviewRequest.action.UPDATE,

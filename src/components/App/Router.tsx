@@ -159,7 +159,6 @@ const Router: React.FC<RouterProps> = ({ planType, clusterId, externalClusterId 
     );
   }, [isHypershiftWizardEnabled, isClusterTransferEnabled]);
 
-  const isMultiRegionEnabled = useFeatureGate(MULTIREGION_PREVIEW_ENABLED);
   const isAccessRequestEnabled = useFeatureGate(ACCESS_REQUEST_ENABLED);
 
   useEffect(() => {
@@ -171,10 +170,10 @@ const Router: React.FC<RouterProps> = ({ planType, clusterId, externalClusterId 
 
   const getClusterListElement = () => {
     if (config.newClusterList) {
-      return <ClusterListMultiRegion useClientSortPaging={false} getMultiRegion={false} />;
+      return <ClusterListMultiRegion getMultiRegion={false} />;
     }
-    if (config.multiRegion && isMultiRegionEnabled) {
-      return <ClusterListMultiRegion useClientSortPaging />;
+    if (config.multiRegion && isMultiRegionPreviewEnabled) {
+      return <ClusterListMultiRegion getMultiRegion />;
     }
     // @ts-ignore
     return <ClustersList />;

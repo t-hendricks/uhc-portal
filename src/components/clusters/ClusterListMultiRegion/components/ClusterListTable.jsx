@@ -106,7 +106,6 @@ function ClusterListTable(props) {
     activeSortIndex,
     activeSortDirection,
     setSort,
-    useClientSortPaging,
     refreshFunc,
   } = props;
 
@@ -150,8 +149,7 @@ function ClusterListTable(props) {
     const columnOptions = columns[column];
 
     const sort =
-      columnOptions.sortIndex &&
-      (useClientSortPaging || (!useClientSortPaging && columnOptions.apiSortOption))
+      columnOptions.sortIndex && columnOptions.apiSortOption
         ? getSortParams(columnOptions.sortIndex)
         : undefined;
 
@@ -351,7 +349,6 @@ ClusterListTable.propTypes = {
   activeSortDirection: PropTypes.string,
   setSort: PropTypes.func,
   isPending: PropTypes.bool,
-  useClientSortPaging: PropTypes.bool,
   refreshFunc: PropTypes.func.isRequired,
 };
 
