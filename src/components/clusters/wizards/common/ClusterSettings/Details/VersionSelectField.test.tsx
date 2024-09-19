@@ -140,6 +140,31 @@ describe('<VersionSelectField />', () => {
     );
   });
 
+  it('fetches versions and reset selected version when versions data is not present', async () => {
+    const onSubmit = jest.fn();
+    const { user } = withState(notLoadedState).render(
+      <Formik initialValues={standardValuesWithVersion} onSubmit={onSubmit}>
+        <Form>
+          <VersionSelectField {...defaultProps} />
+          <button type="submit">Submit</button>
+        </Form>
+      </Formik>,
+    );
+
+    expect(clusterService.getInstallableVersions).toHaveBeenCalledWith({
+      isMarketplaceGcp: false,
+      isWIF: false,
+      includeUnstableVersions: false,
+    });
+
+    await user.click(screen.getByRole('button', { name: 'Submit' }));
+
+    expect(onSubmit).toHaveBeenCalledWith(
+      expect.not.objectContaining(clusterVersionValue),
+      expect.anything(),
+    );
+  });
+
   it('is accessible', async () => {
     const { container } = withState(loadedState).render(
       <Formik initialValues={standardValues} onSubmit={() => {}}>
