@@ -51,7 +51,7 @@ const MachinePoolsSubnets = () => {
   }, [machinePoolsSubnets, selectedVPC]);
 
   const MachinePoolSubnetsFormComponent = useCallback(
-    (props) => (
+    (props: any) => (
       <MachinePoolSubnetsForm selectedVPC={selectedVPC} {...props} warning={subnetWarnings} />
     ),
     [selectedVPC, subnetWarnings],

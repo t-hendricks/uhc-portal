@@ -18,6 +18,7 @@ import links from '~/common/installLinks.mjs';
 import { AWS_ACCOUNT_ROSA_LOCALSTORAGE_KEY } from '~/common/localStorageConstants';
 import { FormGroupHelperText } from '~/components/common/FormGroupHelperText';
 import { CloudAccount } from '~/types/accounts_mgmt.v1';
+import { ToggleEvent } from '~/types/types';
 
 import FuzzySelect, { FuzzyDataType, FuzzyEntryType } from '../../../../common/FuzzySelect';
 import PopoverHint from '../../../../common/PopoverHint';
@@ -107,7 +108,7 @@ function AWSAccountSelection({
   }, [isOpen, hasAWSAccounts]);
 
   const onToggle = useCallback(
-    (_, toggleOpenValue: boolean | ((prevState: boolean) => boolean)) => {
+    (_: ToggleEvent, toggleOpenValue: boolean | ((prevState: boolean) => boolean)) => {
       setIsOpen(toggleOpenValue);
     },
     [setIsOpen],
