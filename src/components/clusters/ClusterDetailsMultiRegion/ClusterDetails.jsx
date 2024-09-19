@@ -107,7 +107,7 @@ import usersActions from './components/AccessControl/UsersSection/UsersActions';
 // import MachinePools from '../ClusterDetailsMultiRegion/components/MachinePools';
 import AddOns from './components/AddOns';
 import { getAddOns, getClusterAddOns } from './components/AddOns/AddOnsActions';
-import ClusterDetailsTop from './components/ClusterDetailsTop';
+import ClusterDetailsTop from './components/ClusterDetailsTop/ClusterDetailsTop';
 // import AddOns from '../ClusterDetailsMultiRegion/components/AddOns';
 import ClusterLogs from './components/ClusterLogs/ClusterLogs';
 import { ClusterTabsId } from './components/common/ClusterTabIds';

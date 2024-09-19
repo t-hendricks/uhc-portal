@@ -8,10 +8,9 @@ import {
   DescriptionListTerm,
 } from '@patternfly/react-core';
 
+import links from '~/common/installLinks.mjs';
 import MarkdownParser from '~/common/MarkdownParser';
-
-import links from '../../../../common/installLinks.mjs';
-import ExternalLink from '../../../common/ExternalLink';
+import ExternalLink from '~/components/common/ExternalLink';
 
 type LimitedSupportAlertProps = {
   limitedSupportReasons?: {

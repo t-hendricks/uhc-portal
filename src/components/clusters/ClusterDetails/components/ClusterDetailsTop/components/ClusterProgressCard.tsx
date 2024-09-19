@@ -25,7 +25,7 @@ import { useFeatureGate } from '~/hooks/useFeatureGate';
 import { NETWORK_VALIDATOR_ONDEMAND_FEATURE } from '~/redux/constants/featureConstants';
 import { ClusterFromSubscription } from '~/types/types';
 
-import InstallationLogView from './InstallationLogView';
+import InstallationLogView from '../../Overview/InstallationLogView';
 
 interface ClusterProgressCardProps {
   cluster: ClusterFromSubscription;
@@ -59,7 +59,7 @@ const ClusterProgressCard = ({ cluster }: ClusterProgressCardProps) => {
   }
 
   return (
-    <Card>
+    <Card isFlat>
       {!hasInflightErrors && (
         <CardTitle>
           <Title
