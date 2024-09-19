@@ -182,7 +182,7 @@ describe('Rosa hosted(Hypershift) cluster wizard validations', { tags: ['smoke',
     CreateRosaWizardPage.isTextContainsInPage(
       clusterFieldValidations.ClusterSettings.Machinepool.NodeCount.MultiZone.LowerLimitError,
     );
-    CreateRosaWizardPage.setMinimumNodeCount('200');
+    CreateRosaWizardPage.setMinimumNodeCount('600');
     CreateRosaWizardPage.isTextContainsInPage(
       clusterFieldValidations.ClusterSettings.Machinepool.NodeCount.MultiZone.UpperLimitError,
     );
@@ -191,7 +191,7 @@ describe('Rosa hosted(Hypershift) cluster wizard validations', { tags: ['smoke',
         .MinAndMaxLimitDependencyError,
     );
     CreateRosaWizardPage.setMinimumNodeCount('2');
-    CreateRosaWizardPage.setMaximumNodeCount('200');
+    CreateRosaWizardPage.setMaximumNodeCount('600');
     CreateRosaWizardPage.isTextContainsInPage(
       clusterFieldValidations.ClusterSettings.Machinepool.NodeCount.MultiZone.UpperLimitError,
     );

@@ -48,7 +48,7 @@
       "NodeCount": {
         "MultiZone": {
           "LowerLimitError": "Input cannot be less than 2",
-          "UpperLimitError": "Input cannot be more than 51",
+          "UpperLimitError": "Input cannot be more than 250",
           "MinAndMaxLimitDependencyError": "Max nodes cannot be less than min nodes"
         }
       }
