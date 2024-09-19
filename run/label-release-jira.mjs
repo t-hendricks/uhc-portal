@@ -116,9 +116,7 @@ async function jiraLabeler(jiraToken, total = 1) {
             ),
           );
         } else {
-          const {
-            fields: { summary },
-          } = jiraStatus;
+          const { fields: { summary } = {} } = jiraStatus;
           console.log(`${chalk.blue(`${jiraKey}`)} ${chalk.white(summary.slice(0, 120))}`);
         }
       }
@@ -156,9 +154,7 @@ async function jiraLabeler(jiraToken, total = 1) {
         for (let j = 0; j < total; j += 1) {
           const jiraKey = releasedJiraKeys[j];
           const jiraStatus = jiraMap.get(jiraKey);
-          const {
-            fields: { summary },
-          } = jiraStatus;
+          const { fields: { summary } = {} } = jiraStatus;
           const addLabels = `'{ "update": { "labels": [{ "add": "deployed-production" }, { "add": "${galabel}" }] } }'`;
           const cmd = `curl -s -X PUT -H "Authorization: Bearer ${jiraToken}" -H "Content-Type: application/json" -d ${addLabels} "https://issues.redhat.com/rest/api/2/issue/${jiraKey}"`;
           const ret = execSync(cmd).toString();
