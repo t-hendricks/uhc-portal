@@ -95,6 +95,9 @@ export const VersionSelectField = ({
       setIsOpen(false);
     } else if (!getInstallableVersionsResponse.pending) {
       // First time.
+      // Resetting version selection as it could be present even when no versions are available
+      // inside the store
+      setFieldValue(name, null);
       getInstallableVersions();
     }
   }, [
