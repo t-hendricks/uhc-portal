@@ -1,3 +1,5 @@
+import React from 'react';
+
 import type { Cluster as AICluster } from '@openshift-assisted/types/assisted-installer-service';
 import type { FeaturesSupportsLevel } from '@openshift-assisted/ui-lib/ocm';
 import type { ChromeAPI } from '@redhat-cloud-services/types';
@@ -157,3 +159,5 @@ type StaticRegionalItem = {
 export type StaticRegionalItems = {
   [key: string]: StaticRegionalItem;
 };
+
+export type ToggleEvent = React.MouseEvent | React.ChangeEvent | React.KeyboardEvent | Event;

@@ -90,7 +90,8 @@ function VersionSelection({
     statusVersions.map((version) => [version.name, version.type]),
   );
   const isValidRosaVersion = React.useCallback(
-    (version) => isSupportedMinorVersion(version.raw_id, rosaMaxOSVersion) && version.rosa_enabled,
+    (version: Version) =>
+      isSupportedMinorVersion(version?.raw_id || '', rosaMaxOSVersion) && version.rosa_enabled,
     [rosaMaxOSVersion],
   );
 
@@ -98,8 +99,8 @@ function VersionSelection({
     // rosaMaxOSVersion - is actually the max version allowed by the chosen AccountRoles
     // if Hypershift is used outside of ROSA, the logic to determine the max version (aka rosaMaxOSVersion)
     // may need to change
-    (version) =>
-      isSupportedMinorVersion(version.raw_id, rosaMaxOSVersion) &&
+    (version: Version) =>
+      isSupportedMinorVersion(version?.raw_id || '', rosaMaxOSVersion) &&
       version.hosted_control_plane_enabled,
     [rosaMaxOSVersion],
   );
