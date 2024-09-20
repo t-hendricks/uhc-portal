@@ -3,18 +3,11 @@ import PropTypes from 'prop-types';
 
 import { CheckCircleIcon } from '@patternfly/react-icons/dist/esm/icons/check-circle-icon';
 import { ExclamationCircleIcon } from '@patternfly/react-icons/dist/esm/icons/exclamation-circle-icon';
-import { TableVariant } from '@patternfly/react-table';
-import {
-  Table as TableDeprecated,
-  TableBody as TableBodyDeprecated,
-  TableHeader as TableHeaderDeprecated,
-} from '@patternfly/react-table/deprecated';
+import { Table, TableVariant, Tbody, Td, Th, Thead, Tr } from '@patternfly/react-table';
 
 import { monitoringItemLinkProps, monitoringItemTypes } from '../monitoringHelper';
 
 function NodesTable({ nodes = [], clusterConsole }) {
-  const columns = [{ title: 'Name' }, { title: 'Status' }, { title: 'Node address' }];
-
   const nodeStatus = (isUp) => {
     if (isUp) {
       return (
@@ -40,26 +33,37 @@ function NodesTable({ nodes = [], clusterConsole }) {
     );
     const nodeName =
       nodeLinkProps !== null ? <a {...nodeLinkProps}>{node.hostname}</a> : node.hostname;
+    const nodeKey = node.hostname;
+    const nodeUpStatus = nodeStatus(node.up);
+    const nodeIpAddress = `Internal IP: ${node.internal_ip}`;
+
     return {
-      cells: [
-        { title: nodeName },
-        { title: nodeStatus(node.up) },
-        { title: `Internal IP: ${node.internal_ip}` },
-      ],
+      nodeName,
+      nodeUpStatus,
+      nodeIpAddress,
+      nodeKey,
     };
   });
 
   return (
-    <TableDeprecated
-      variant={TableVariant.compact}
-      borders={false}
-      cells={columns}
-      rows={rows}
-      aria-label="nodes"
-    >
-      <TableHeaderDeprecated />
-      <TableBodyDeprecated />
-    </TableDeprecated>
+    <Table variant={TableVariant.compact} borders={false} aria-label="nodes">
+      <Thead>
+        <Tr>
+          <Th>Name</Th>
+          <Th>Status</Th>
+          <Th>Node address</Th>
+        </Tr>
+      </Thead>
+      <Tbody>
+        {rows.map((row) => (
+          <Tr key={row.nodeKey}>
+            <Td>{row.nodeName}</Td>
+            <Td>{row.nodeUpStatus}</Td>
+            <Td>{row.nodeIpAddress}</Td>
+          </Tr>
+        ))}
+      </Tbody>
+    </Table>
   );
 }
 
