@@ -6,12 +6,7 @@ import { CheckCircleIcon } from '@patternfly/react-icons/dist/esm/icons/check-ci
 import { ExclamationCircleIcon } from '@patternfly/react-icons/dist/esm/icons/exclamation-circle-icon';
 import { ExclamationTriangleIcon } from '@patternfly/react-icons/dist/esm/icons/exclamation-triangle-icon';
 import { InfoCircleIcon } from '@patternfly/react-icons/dist/esm/icons/info-circle-icon';
-import { TableVariant } from '@patternfly/react-table';
-import {
-  Table as TableDeprecated,
-  TableBody as TableBodyDeprecated,
-  TableHeader as TableHeaderDeprecated,
-} from '@patternfly/react-table/deprecated';
+import { Table, TableVariant, Tbody, Td, Th, Thead, Tr } from '@patternfly/react-table';
 
 import { alertsSeverity, monitoringItemLinkProps, monitoringItemTypes } from '../monitoringHelper';
 
@@ -35,8 +30,6 @@ function AlertsTable({ alerts = [], clusterConsole }) {
       <span>Info</span>
     </>
   );
-
-  const columns = [{ title: 'Name' }, { title: 'Severity' }];
 
   const isNotRealAlert = (name) => name === 'Watchdog' || name === 'DeadMansSwitch';
 
@@ -75,23 +68,34 @@ function AlertsTable({ alerts = [], clusterConsole }) {
       );
       const alertName =
         alertLinkProps !== null ? <a {...alertLinkProps}>{alert.name}</a> : alert.name;
+
+      const alertKey = alert.name;
+
       return {
-        cells: [{ title: alertName }, { title: severityIcon }],
+        alertName,
+        severityIcon,
+        alertKey,
       };
     })
     .filter(Boolean);
 
   return (
-    <TableDeprecated
-      variant={TableVariant.compact}
-      borders={false}
-      cells={columns}
-      rows={rows}
-      aria-label="alerts"
-    >
-      <TableHeaderDeprecated />
-      <TableBodyDeprecated />
-    </TableDeprecated>
+    <Table aria-label="alerts" variant={TableVariant.compact} borders={false}>
+      <Thead>
+        <Tr>
+          <Th>Name</Th>
+          <Th>Severity</Th>
+        </Tr>
+      </Thead>
+      <Tbody>
+        {rows.map((row) => (
+          <Tr key={row.alertKey}>
+            <Td>{row.alertName}</Td>
+            <Td>{row.severityIcon}</Td>
+          </Tr>
+        ))}
+      </Tbody>
+    </Table>
   );
 }
 
