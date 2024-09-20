@@ -30,7 +30,8 @@ export function OverviewBillingAccount() {
   const showEditableBillingAccount = cluster?.canEdit && hasFeatureGate && isHypershift;
   const disableChangeReason =
     !cluster?.canEdit && 'You do not have permission to change billing account.';
-
+  const billingAccount =
+    cluster?.aws?.billing_account_id || cluster?.subscription?.billing_marketplace_account || '';
   return (
     <>
       {isModalOpen && (
@@ -38,7 +39,7 @@ export function OverviewBillingAccount() {
           onClose={() => {
             setIsModalOpen(false);
           }}
-          billingAccount={cluster?.aws?.billing_account_id || ''}
+          billingAccount={billingAccount}
           cluster={cluster}
         />
       )}
@@ -58,7 +59,7 @@ export function OverviewBillingAccount() {
                   disableReason={disableChangeReason}
                   isAriaDisabled={!!disableChangeReason}
                 >
-                  {cluster?.aws?.billing_account_id || ''}{' '}
+                  {billingAccount}{' '}
                   <Icon>
                     <PencilAltIcon color="blue" />
                   </Icon>
@@ -68,9 +69,7 @@ export function OverviewBillingAccount() {
           ) : (
             <Flex>
               <FlexItem>
-                <span data-testid="billingMarketplaceAccount">
-                  {cluster?.aws?.billing_account_id || ''}
-                </span>
+                <span data-testid="billingMarketplaceAccount">{billingAccount}</span>
               </FlexItem>
             </Flex>
           )}
