@@ -12,7 +12,7 @@ type MarkdownParserProps = {
 
 const MarkdownParser = ({ children, rehypePlugins }: MarkdownParserProps) => {
   const LinkComponent = useCallback(
-    (props) => (
+    (props: any) => (
       <ExternalLink {...props} href={props.href ?? ''}>
         {props.children}
       </ExternalLink>

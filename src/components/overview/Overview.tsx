@@ -42,7 +42,7 @@ const PAGE_TITLE = 'Overview | Red Hat OpenShift Cluster Manager';
 function OverviewEmptyState() {
   const createClusterURL = '/create';
   const CreateClusterLink = useCallback(
-    (props) => <Link {...props} data-testid="create-cluster" to={createClusterURL} />,
+    (props: any) => <Link {...props} data-testid="create-cluster" to={createClusterURL} />,
     [],
   );
 
