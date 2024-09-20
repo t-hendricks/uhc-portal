@@ -373,6 +373,10 @@ const Router: React.FC<RouterProps> = ({ planType, clusterId, externalClusterId 
           path="/details/s/:id/edit-idp/:idpName"
           element={<IdentityProvidersPage isEditForm />}
         />
+        /* WARNING! The "/details/s/:id" route is used by catchpoint tests which determine
+        'Operational' or 'Major Outage' status for "OpenShift Cluster Manager" on the
+        'http:///status.redhat.com' site. If this route is changed, then the related catchpoint
+        tests must be updated. For more info. see: https://issues.redhat.com/browse/OCMUI-2398 */
         <Route
           path="/details/s/:id"
           element={
@@ -435,6 +439,10 @@ const Router: React.FC<RouterProps> = ({ planType, clusterId, externalClusterId 
             )
           }
         />
+        /* WARNING! The "/cluster-list" route is used by catchpoint tests which determine
+        'Operational' or 'Major Outage' status for "OpenShift Cluster Manager" on the
+        'http:///status.redhat.com' site. If this route is changed, then the related catchpoint
+        tests must be updated. For more info. see: https://issues.redhat.com/browse/OCMUI-2398 */
         <Route path="/cluster-list" element={getClusterListElement()} />
         <Route
           path="/"
