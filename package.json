@@ -181,7 +181,7 @@
     "postbuild:saas": "[[ ${BETA} != 'true' ]] && yarn sentry:sourcemaps-release:saas || :",
     "build:saas:staging": ". run/sentry-env.sh && yarn build:saas --env api-env=staging",
     "build:saas:production": ". run/sentry-env.sh --production && yarn build:saas --env api-env=production",
-    "verify": "concurrently --group 'yarn build:prod --output-path dist --env api-env=staging' 'yarn lint' 'yarn test'",
+    "verify": "concurrently --group --names=BUILD,LINT,TEST 'yarn build:prod --output-path dist --env api-env=staging' 'yarn lint-prettier' 'yarn test'",
     "dev-server": "webpack serve $(run/progress-flag-if-tty.sh)",
     "insights-proxy": "make insights-proxy-check && run/insights-proxy.sh",
     "stop-insights-proxy": "run/podman-or-docker.sh kill insightsproxy; run/podman-or-docker.sh rm --force insightsproxy; true",

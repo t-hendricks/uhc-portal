@@ -25,7 +25,10 @@ import NotificationPortal from '@redhat-cloud-services/frontend-components-notif
 import * as Sentry from '@sentry/browser';
 import { sessionTimingIntegration } from '@sentry/integrations';
 
+import { trackEvents } from '~/common/analytics';
+
 import App from './components/App/App';
+import useAnalytics, { Track } from './hooks/useAnalytics';
 import { detectFeatures } from './redux/actions/featureActions';
 import { userInfoResponse } from './redux/actions/userActions';
 import { store } from './redux/store';
@@ -52,14 +55,23 @@ Config.setRouteBasePath('/assisted-installer');
 
 type Props = {
   chrome: Chrome;
+  track: Track;
 };
 
 class AppEntry extends React.Component<Props> {
   state = { ready: false };
 
   componentDidMount() {
-    const { chrome } = this.props;
+    const { chrome, track } = this.props;
     config.dateConfig();
+    chrome.on('APP_NAVIGATION', ({ navId, domEvent: { href } }) => {
+      track(trackEvents.GlobalSideNav, {
+        url: href,
+        customProperties: {
+          navId,
+        },
+      });
+    });
     chrome.auth.getUser().then((data: any) => {
       if (data?.identity?.user) {
         store.dispatch(userInfoResponse(data.identity.user));
@@ -127,7 +139,8 @@ class AppEntry extends React.Component<Props> {
  */
 const AppEntryWrapper = () => {
   const chrome = useChrome() as Chrome;
-  return chrome.initialized ? <AppEntry chrome={chrome} /> : null;
+  const track = useAnalytics();
+  return chrome.initialized ? <AppEntry chrome={chrome} track={track} /> : null;
 };
 
 export default AppEntryWrapper;

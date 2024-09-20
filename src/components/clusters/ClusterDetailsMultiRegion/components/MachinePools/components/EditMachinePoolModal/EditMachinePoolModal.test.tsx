@@ -216,7 +216,7 @@ describe('<EditMachinePoolModal />', () => {
               id: 'fooId',
               instance_type: 'm5.xlarge',
               kind: 'MachinePool',
-              replicas: 48,
+              replicas: 249,
               root_volume: { aws: { size: 300 } },
             },
             {

@@ -344,6 +344,10 @@ const trackEvents: { [key: string]: TrackEvent } = {
     event: eventNames.LINK_CLICKED,
     link_name: 'create-ocp-cluster-internal-link',
   },
+  GlobalSideNav: {
+    event: eventNames.LINK_CLICKED,
+    link_name: 'global-nav-link',
+  },
 };
 
 /**
