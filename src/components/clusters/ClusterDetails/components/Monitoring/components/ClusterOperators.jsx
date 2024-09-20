@@ -6,12 +6,7 @@ import { ExclamationCircleIcon } from '@patternfly/react-icons/dist/esm/icons/ex
 import { ExclamationTriangleIcon } from '@patternfly/react-icons/dist/esm/icons/exclamation-triangle-icon';
 import { InProgressIcon } from '@patternfly/react-icons/dist/esm/icons/in-progress-icon';
 import { UnknownIcon } from '@patternfly/react-icons/dist/esm/icons/unknown-icon';
-import { TableVariant } from '@patternfly/react-table';
-import {
-  Table as TableDeprecated,
-  TableBody as TableBodyDeprecated,
-  TableHeader as TableHeaderDeprecated,
-} from '@patternfly/react-table/deprecated';
+import { Table, TableVariant, Tbody, Td, Th, Thead, Tr } from '@patternfly/react-table';
 
 import {
   monitoringItemLinkProps,
@@ -20,8 +15,6 @@ import {
 } from '../monitoringHelper';
 
 function ClusterOperatorsTable({ operators = [], clusterConsole }) {
-  const columns = [{ title: 'Name' }, { title: 'Status' }, { title: 'Version' }];
-
   const operatorStatus = (status) => {
     let icon;
     let statusStr;
@@ -62,26 +55,37 @@ function ClusterOperatorsTable({ operators = [], clusterConsole }) {
     );
     const operatorName =
       operatorLinkProps !== null ? <a {...operatorLinkProps}>{operator.name}</a> : operator.name;
+    const operatorCondition = operatorStatus(operator.condition);
+    const operatorVersion = operator.version;
+    const operatorKey = operator.name;
+
     return {
-      cells: [
-        { title: operatorName },
-        { title: operatorStatus(operator.condition) },
-        { title: operator.version },
-      ],
+      operatorName,
+      operatorCondition,
+      operatorVersion,
+      operatorKey,
     };
   });
 
   return (
-    <TableDeprecated
-      variant={TableVariant.compact}
-      borders={false}
-      cells={columns}
-      rows={rows}
-      aria-label="operators"
-    >
-      <TableHeaderDeprecated />
-      <TableBodyDeprecated />
-    </TableDeprecated>
+    <Table variant={TableVariant.compact} borders={false} aria-label="operators">
+      <Thead>
+        <Tr>
+          <Th>Name</Th>
+          <Th>Status</Th>
+          <Th>Version</Th>
+        </Tr>
+      </Thead>
+      <Tbody>
+        {rows.map((row) => (
+          <Tr key={row.operatorKey}>
+            <Td>{row.operatorName}</Td>
+            <Td>{row.operatorCondition}</Td>
+            <Td>{row.operatorVersion}</Td>
+          </Tr>
+        ))}
+      </Tbody>
+    </Table>
   );
 }
 
