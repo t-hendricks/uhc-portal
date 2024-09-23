@@ -34,7 +34,7 @@ import {
   invalidateClusterIdentityProviders,
   useFetchClusterIdentityProviders,
 } from '~/queries/ClusterDetailsQueries/useFetchClusterIdentityProviders';
-import { invalidateClusterLogsQueries } from '~/queries/ClusterLogsQueries/useFetchClusterLogs';
+import { refetchClusterLogsQueries } from '~/queries/ClusterLogsQueries/useFetchClusterLogs';
 import {
   invalidateCloudProviders,
   useFetchCloudProviders,
@@ -291,7 +291,7 @@ const ClusterDetails = (props) => {
       fetchSupportData();
     }
     if (externalClusterID || clusterID) {
-      invalidateClusterLogsQueries();
+      refetchClusterLogsQueries();
     }
 
     if (subscriptionID && isAccessRequestEnabled && !isRestrictedEnv()) {
@@ -346,7 +346,7 @@ const ClusterDetails = (props) => {
     return () => {
       invalidateClusterIdentityProviders();
       dispatch(modalActions.closeModal());
-      invalidateClusterLogsQueries();
+      refetchClusterLogsQueries();
 
       dispatch(accessRequestActions.resetAccessRequests());
       dispatch(accessProtectionActions.resetAccessProtection());
