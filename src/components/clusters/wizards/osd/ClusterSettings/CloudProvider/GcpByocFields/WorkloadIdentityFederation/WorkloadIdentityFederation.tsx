@@ -63,7 +63,8 @@ const WorkloadIdentityFederation = (props: WorkloadIdentityFederationProps) => {
           </Text>
           <Text component={TextVariants.p}>
             Run the following <code>ocm</code> CLI command to create a Workload Identity Federation
-            configuration (automatic mode)
+            configuration (automatic mode). Make sure to replace the WIF name and GCP Project ID
+            with your own values.
           </Text>
         </TextContent>
       </StackItem>
