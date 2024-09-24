@@ -1,6 +1,6 @@
-import axios from 'axios';
+import axios, { AxiosResponse } from 'axios';
 
-import { Cluster } from '~/types/clusters_mgmt.v1';
+import { Cluster, Group, User } from '~/types/clusters_mgmt.v1';
 import { ErrorState } from '~/types/types';
 
 import { RQApiErrorType, SearchRegionalClusterItems } from './types';
@@ -18,6 +18,7 @@ export const formatErrorData = (
       errorCode: error?.response?.status,
       errorDetails: error?.response?.data?.details,
       errorMessage: `${error?.response?.data.code}: ${error?.response?.data.reason}`,
+      reason: `${error?.response?.data.reason}`,
       internalErrorCode: error?.response?.data.code,
       operationID: error?.response?.data.operation_id,
     };
@@ -31,7 +32,10 @@ export const formatErrorData = (
   return {
     isLoading,
     isError,
-    error: error as any as Pick<ErrorState, 'errorMessage' | 'errorDetails' | 'operationID'>,
+    error: error as any as Pick<
+      ErrorState,
+      'errorMessage' | 'errorDetails' | 'operationID' | 'errorCode' | 'reason'
+    >,
   };
 };
 
@@ -79,4 +83,30 @@ export const createResponseForSearchCluster = (responseItems: Cluster[] | undefi
     return result;
   }
   return undefined;
+};
+
+export const getFormattedUserData = async (
+  response: Promise<
+    AxiosResponse<
+      {
+        items?: Array<Group>;
+        page?: number;
+        size?: number;
+        total?: number;
+      },
+      any
+    >
+  >,
+) => {
+  const data = response.then((res) => {
+    const items = res.data.items?.map((g: Group) => {
+      const group: any = g;
+      if (group.users) {
+        group.users.items = group.users?.filter((user: User) => user.id !== 'cluster-admin');
+      }
+      return group;
+    });
+    return items || [];
+  });
+  return data || [];
 };

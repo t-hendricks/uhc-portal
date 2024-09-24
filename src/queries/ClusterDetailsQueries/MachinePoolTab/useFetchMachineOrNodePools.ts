@@ -16,7 +16,14 @@ const useFetchNodePoolWithUpgradePolicies = (
   region?: any,
 ) => {
   const { isLoading, data, isError, error, refetch, isRefetching } = useQuery({
-    queryKey: ['nodePoolWithUpgradePolicies', 'clusterService', clusterID, clusterVersion, region],
+    queryKey: [
+      queryConstants.FETCH_CLUSTER_DETAILS_QUERY_KEY,
+      'nodePoolWithUpgradePolicies',
+      'clusterService',
+      clusterID,
+      clusterVersion,
+      region,
+    ],
     queryFn: async () => {
       if (region) {
         const clusterService = getClusterServiceForRegion(region);
@@ -136,7 +143,14 @@ const useFetchNodePoolWithUpgradePolicies = (
 
 const useFetchMachinePools = (clusterID: string, isHypershiftCluster: boolean, region?: string) => {
   const { isLoading, data, isError, error, refetch, isRefetching } = useQuery({
-    queryKey: ['machinePools', 'clusterService', clusterID, isHypershiftCluster, region],
+    queryKey: [
+      queryConstants.FETCH_CLUSTER_DETAILS_QUERY_KEY,
+      'machinePools',
+      'clusterService',
+      clusterID,
+      isHypershiftCluster,
+      region,
+    ],
     queryFn: async () => {
       if (region) {
         const clusterService = getClusterServiceForRegion(region);

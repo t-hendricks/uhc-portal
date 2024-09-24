@@ -1,5 +1,6 @@
 import React, { useRef } from 'react';
 import PropTypes from 'prop-types';
+import { useDispatch } from 'react-redux';
 
 import {
   Card,
@@ -28,9 +29,11 @@ import {
 import Skeleton from '@redhat-cloud-services/frontend-components/Skeleton';
 
 import { useNavigate } from '~/common/routing';
+import { useFetchClusterIdentityProviders } from '~/queries/ClusterDetailsQueries/useFetchClusterIdentityProviders';
 
 import links from '../../../../../../common/installLinks.mjs';
 import ClipboardCopyLinkButton from '../../../../../common/ClipboardCopyLinkButton';
+import { modalActions } from '../../../../../common/Modal/ModalActions';
 import {
   getOauthCallbackURL,
   IDPformValues,
@@ -40,17 +43,22 @@ import {
 
 const IDPSection = ({
   clusterID,
-  subscriptionID,
   clusterUrls,
-  identityProviders,
-  openModal,
   idpActions = {},
   clusterHibernating,
   isReadOnly,
   isHypershift,
+  subscriptionID,
 }) => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const [dropdownOpen, setDropdownOpen] = React.useState(false);
+
+  const {
+    clusterIdentityProviders: identityProviders,
+    isLoading: isIdentityProvidersLoading,
+    isError: isIdentityProvidersError,
+  } = useFetchClusterIdentityProviders(clusterID);
 
   const learnMoreLink = (
     <a rel="noopener noreferrer" href={links.UNDERSTANDING_IDENTITY_PROVIDER} target="_blank">
@@ -58,10 +66,9 @@ const IDPSection = ({
     </a>
   );
 
-  const pending =
-    (!identityProviders.fulfilled && !identityProviders.error) || identityProviders.pending;
+  const pending = (!identityProviders && !isIdentityProvidersError) || isIdentityProvidersLoading;
 
-  const hasIDPs = !!identityProviders.clusterIDPList.length;
+  const hasIDPs = !!identityProviders?.length;
 
   const readOnlyReason = isReadOnly && 'This operation is not available during maintenance';
   const hibernatingReason =
@@ -132,12 +139,14 @@ const IDPSection = ({
       title: 'Delete',
       isAriaDisabled: !idpActions.delete,
       onClick: () => {
-        openModal('delete-idp', {
-          clusterID,
-          idpID: idp.id,
-          idpName: idp.name,
-          idpType: IDPTypeNames[idp.type],
-        });
+        dispatch(
+          modalActions.openModal('delete-idp', {
+            clusterID,
+            idpID: idp.id,
+            idpName: idp.name,
+            idpType: IDPTypeNames[idp.type],
+          }),
+        );
       },
     };
     if (IDPTypeNames[idp.type] === IDPTypeNames[IDPformValues.HTPASSWD]) {
@@ -207,7 +216,7 @@ const IDPSection = ({
                     <Th screenReaderText="Action" />
                   </Tr>
                 </Thead>
-                <Tbody>{identityProviders.clusterIDPList.map(idpRow)}</Tbody>
+                <Tbody>{identityProviders.map(idpRow)}</Tbody>
               </Table>
             )}
           </StackItem>
@@ -219,13 +228,10 @@ const IDPSection = ({
 
 IDPSection.propTypes = {
   clusterID: PropTypes.string.isRequired,
-  subscriptionID: PropTypes.string,
   clusterUrls: PropTypes.shape({
     console: PropTypes.string,
     api: PropTypes.string,
   }).isRequired,
-  identityProviders: PropTypes.object.isRequired,
-  openModal: PropTypes.func.isRequired,
   idpActions: PropTypes.shape({
     get: PropTypes.bool,
     list: PropTypes.bool,
@@ -236,6 +242,7 @@ IDPSection.propTypes = {
   clusterHibernating: PropTypes.bool.isRequired,
   isReadOnly: PropTypes.bool.isRequired,
   isHypershift: PropTypes.bool.isRequired,
+  subscriptionID: PropTypes.string,
 };
 
 export default IDPSection;

@@ -1,15 +1,16 @@
 import React from 'react';
-import { AxiosError } from 'axios';
 
 import { Button, Flex, FlexItem, Icon, Tooltip } from '@patternfly/react-core';
 import RedoIcon from '@patternfly/react-icons/dist/esm/icons/redo-icon';
 import { Caption, Table, Tbody, Td, Th, Thead, Tr } from '@patternfly/react-table';
 
 import ErrorBox from '~/components/common/ErrorBox';
+import {
+  refetchBreakGlassCredentials,
+  useFetchBreakGlassCredentials,
+} from '~/queries/ClusterDetailsQueries/AccessControlTab/ExternalAuthenticationQueries/useFetchBreakGlassCredentials';
 import { useCanUpdateBreakGlassCredentials } from '~/queries/ClusterDetailsQueries/useFetchActionsPermissions';
 import { queryConstants } from '~/queries/queriesConstants';
-import { useGlobalState } from '~/redux/hooks';
-import { clusterService } from '~/services';
 import type { BreakGlassCredential } from '~/types/clusters_mgmt.v1';
 import { BreakGlassCredentialStatus } from '~/types/clusters_mgmt.v1';
 
@@ -60,50 +61,32 @@ const credentialStatus = (status: BreakGlassCredentialStatus | undefined) => {
     </Tooltip>
   );
 };
-export function BreakGlassCredentialList() {
-  const [credentialData, setCredentialData] = React.useState<BreakGlassCredential[]>([]);
+export const BreakGlassCredentialList = ({
+  subscriptionID,
+  clusterID,
+  region,
+}: {
+  subscriptionID: string;
+  clusterID: string;
+  region?: string;
+}) => {
   const [credential, setCredential] = React.useState<BreakGlassCredential | undefined>(undefined);
-  const [error, setError] = React.useState<AxiosError<any>>();
   const [isModalOpen, setIsModalOpen] = React.useState(false);
   const [isNewModalOpen, setIsNewModalOpen] = React.useState(false);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = React.useState(false);
-  const [refresh, setRefresh] = React.useState(false);
-  const [isPending, setIsPending] = React.useState(false);
-  const clusterID = useGlobalState((state) => state.clusters.details.cluster.id);
-  const subscriptionID = useGlobalState(
-    (state) => state.clusters.details.cluster?.subscription?.id,
-  );
+
   const { canUpdateBreakGlassCredentials } = useCanUpdateBreakGlassCredentials(
     subscriptionID || '',
     queryConstants.FETCH_CLUSTER_DETAILS_QUERY_KEY,
   );
 
-  React.useEffect(() => {
-    setError(undefined);
-    setIsPending(true);
-
-    if (canUpdateBreakGlassCredentials) {
-      (async () => {
-        const request = clusterService.getBreakGlassCredentials;
-        try {
-          const creds = await request(clusterID || '').then((response) => response.data);
-          setCredentialData(creds?.items || []);
-        } catch (error) {
-          setError(error as AxiosError);
-        } finally {
-          setIsPending(false);
-        }
-      })();
-    }
-  }, [
-    clusterID,
-    credential?.id,
-    isModalOpen,
-    isDeleteModalOpen,
-    isNewModalOpen,
-    canUpdateBreakGlassCredentials,
-    refresh,
-  ]);
+  const {
+    data: credentialData,
+    isLoading,
+    isError,
+    error,
+    isFetching,
+  } = useFetchBreakGlassCredentials(canUpdateBreakGlassCredentials, region, clusterID);
 
   const handleDelete = () => {
     setIsDeleteModalOpen(true);
@@ -124,7 +107,7 @@ export function BreakGlassCredentialList() {
     'You do not have permission to create new credentials for this cluster.';
 
   const isValidCred = () =>
-    credentialData.some(
+    credentialData?.some(
       (cred) =>
         cred.status === BreakGlassCredentialStatus.ISSUED &&
         !credentialData.some(
@@ -133,14 +116,19 @@ export function BreakGlassCredentialList() {
     );
 
   const disableRevokeAllCredReason =
-    (isPending || !isValidCred()) &&
+    (isLoading || !isValidCred()) &&
     'There must be at least one issued credential without a pending revocation.';
 
+  const handleClose = () => {
+    setIsNewModalOpen(false);
+    refetchBreakGlassCredentials();
+  };
   return (
     <>
       {isModalOpen && (
         <BreakGlassCredentialDetailsModal
           clusterID={clusterID || ''}
+          region={region}
           onClose={() => {
             setIsModalOpen(false);
           }}
@@ -150,8 +138,9 @@ export function BreakGlassCredentialList() {
       <BreakGlassCredentialNewModal
         clusterId={clusterID || ''}
         isNewModalOpen={isNewModalOpen}
-        onClose={() => setIsNewModalOpen(false)}
+        onClose={handleClose}
         credentialList={credentialData?.map((cred) => cred.username || '') || []}
+        region={region}
       />
       <Flex>
         <FlexItem>
@@ -164,7 +153,7 @@ export function BreakGlassCredentialList() {
             New credentials
           </ButtonWithTooltip>
         </FlexItem>
-        {credentialData.length && canUpdateBreakGlassCredentials ? (
+        {credentialData?.length && canUpdateBreakGlassCredentials ? (
           <>
             <FlexItem align={{ default: 'alignRight' }}>
               <ButtonWithTooltip
@@ -180,8 +169,8 @@ export function BreakGlassCredentialList() {
               <ButtonWithTooltip
                 className="access-control-add"
                 variant="plain"
-                onClick={() => setRefresh(!refresh)}
-                isDisabled={isPending}
+                onClick={() => refetchBreakGlassCredentials()}
+                isDisabled={isLoading || isFetching}
               >
                 <Icon>
                   <RedoIcon />
@@ -191,7 +180,7 @@ export function BreakGlassCredentialList() {
           </>
         ) : null}
       </Flex>
-      {credentialData.length ? (
+      {credentialData?.length ? (
         <Table aria-label="break glass credential table" variant="compact">
           <Caption>Assigned credentials</Caption>
           <Thead>
@@ -224,24 +213,29 @@ export function BreakGlassCredentialList() {
           </Tbody>
         </Table>
       ) : null}
-      {error && (
+      {isError && (
         <ErrorBox
           message="A problem occurred while retrieving credentials"
           response={{
-            errorMessage: error.message,
-            operationID: error.response?.data.operation_id,
+            errorMessage: error.error.errorMessage,
+            operationID: error.error.operationID,
           }}
         />
       )}
       {isDeleteModalOpen && (
         <RevokeBreakGlassCredentialsModal
           clusterId={clusterID || ''}
+          region={region}
           onClose={() => {
             setIsDeleteModalOpen(false);
             setCredential(undefined);
+            // wait for 500 ms to allow the mutate to finish before refetching
+            setTimeout(() => {
+              refetchBreakGlassCredentials();
+            }, 500);
           }}
         />
       )}
     </>
   );
-}
+};
