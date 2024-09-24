@@ -2,6 +2,7 @@
 
 <!-- add a summarized description of the MR content -->
 
+
 # Details
 
 <!-- add a detailed list of changes, and link to the relevant commit-revision on each item.
@@ -15,16 +16,19 @@ if you only see {all_commits} here but no text was generated, cancel and re-open
 
 %{all_commits}
 
+
 # How to Test
 
 <!-- add any useful information for local testing, like environment or tooling prerequisites,
 specially used CLI options, the user-flow, and so on -->
+
 
 # Screen Captures
 
 | Before                                              | After                                   |
 | --------------------------------------------------- | --------------------------------------- |
 | <!-- attach a "before" screenshot or video here --> | <!-- attach an "after" capture here --> |
+             
 
 # Reviews
 
@@ -55,6 +59,7 @@ Check the following before merging:
 - [ ] All CI tests have passed
 - [ ] Has at least 2 approvals, ready to merge
 - [ ] Check 'squash commits' before merging the MR into master
+
 
 # Ticketing
 
