@@ -83,6 +83,7 @@ const EditNodeCountSection = ({
                   minNodes={minNodesRequired}
                   cluster={cluster}
                   mpAvailZones={machinePool?.availability_zones?.length}
+                  options={options}
                 />
               </GridItem>
               <GridItem span={5}>
