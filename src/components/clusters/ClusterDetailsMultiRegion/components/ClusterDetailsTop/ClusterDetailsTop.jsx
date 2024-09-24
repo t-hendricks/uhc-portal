@@ -19,6 +19,7 @@ import ButtonWithTooltip from '~/components/common/ButtonWithTooltip';
 import { modalActions } from '~/components/common/Modal/ModalActions';
 import modals from '~/components/common/Modal/modals';
 import RefreshButton from '~/components/common/RefreshButton/RefreshButton';
+import { refreshClusterDetails } from '~/queries/refreshEntireCache';
 import { SubscriptionCommonFields } from '~/types/accounts_mgmt.v1';
 
 import ClusterActionsDropdown from '../../../common/ClusterActionsDropdown';
@@ -66,8 +67,6 @@ function ClusterDetailsTop(props) {
   const {
     cluster,
     pending,
-    refreshFunc,
-    clickRefreshFunc,
     clusterIdentityProviders,
     organization,
     error,
@@ -187,7 +186,7 @@ function ClusterDetailsTop(props) {
       canTransferClusterOwnership={canTransferClusterOwnership}
       toggleSubscriptionReleased={toggleSubscriptionReleased}
       canHibernateCluster={canHibernateCluster}
-      refreshFunc={refreshFunc}
+      refreshFunc={refreshClusterDetails}
     />
   );
 
@@ -272,8 +271,8 @@ function ClusterDetailsTop(props) {
               <RefreshButton
                 id="refresh"
                 autoRefresh={autoRefreshEnabled}
-                refreshFunc={refreshFunc}
-                clickRefreshFunc={clickRefreshFunc}
+                refreshFunc={refreshClusterDetails}
+                clickRefreshFunc={refreshClusterDetails}
                 useShortTimer={!Object.values(clusterStates).includes(cluster.state)}
               />
             )}
@@ -324,8 +323,6 @@ function ClusterDetailsTop(props) {
 
 ClusterDetailsTop.propTypes = {
   cluster: PropTypes.object,
-  refreshFunc: PropTypes.func.isRequired,
-  clickRefreshFunc: PropTypes.func,
   pending: PropTypes.bool.isRequired,
   clusterIdentityProviders: PropTypes.object,
   organization: PropTypes.object.isRequired,

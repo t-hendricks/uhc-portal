@@ -3,6 +3,7 @@ import { useQuery } from '@tanstack/react-query';
 import { queryClient } from '~/components/App/queryClient';
 import clusterService, { getClusterServiceForRegion } from '~/services/clusterService';
 
+import { formatErrorData } from '../helpers';
 import { queryConstants } from '../queriesConstants';
 
 /**
@@ -22,7 +23,13 @@ export const invalidateClusterIdentityProviders = (clusterID?: string) => {
  */
 export const useFetchClusterIdentityProviders = (clusterID: string, region?: string) => {
   const { isLoading, data, isError, error } = useQuery({
-    queryKey: ['clusterIdentityProviders', 'clusterService', clusterID, region],
+    queryKey: [
+      queryConstants.FETCH_CLUSTER_DETAILS_QUERY_KEY,
+      'clusterIdentityProviders',
+      'clusterService',
+      clusterID,
+      region,
+    ],
     queryFn: async () => {
       if (region) {
         const clusterService = getClusterServiceForRegion(region);
@@ -37,9 +44,20 @@ export const useFetchClusterIdentityProviders = (clusterID: string, region?: str
     enabled: !!clusterID,
   });
 
+  if (isError) {
+    const formattedError = formatErrorData(isLoading, isError, error);
+
+    return {
+      clusterIdentityProviders: data?.data,
+      isError,
+      isLoading,
+      error: formattedError,
+    };
+  }
+
   return {
     isLoading,
-    clusterIdentityProviders: data,
+    clusterIdentityProviders: data?.data,
     isError,
     error,
   };

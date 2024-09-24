@@ -120,6 +120,7 @@ export type ErrorState = {
   pending: boolean;
   fulfilled: false;
   error: true;
+  reason?: string;
   errorCode?: number;
   internalErrorCode?: string;
   errorMessage?: string;

@@ -28,10 +28,15 @@ import {
 } from '@patternfly/react-table';
 import Skeleton from '@redhat-cloud-services/frontend-components/Skeleton';
 
+import { useDeleteOCMRole } from '~/queries/ClusterDetailsQueries/AccessControlTab/OCMRolesQueries/useDeleteOCMRole';
+import {
+  refetchOcmRoles,
+  useFetchOCMRoles,
+} from '~/queries/ClusterDetailsQueries/AccessControlTab/OCMRolesQueries/useFetchOCMRoles';
+import { useGrantOCMRole } from '~/queries/ClusterDetailsQueries/AccessControlTab/OCMRolesQueries/useGrantOCMRole';
 import { useGlobalState } from '~/redux/hooks';
 import { Subscription } from '~/types/accounts_mgmt.v1';
 
-import OCMRolesActions from '../../../../../../redux/actions/OCMRolesActions';
 import ButtonWithTooltip from '../../../../../common/ButtonWithTooltip';
 import ErrorBox from '../../../../../common/ErrorBox';
 import { openModal } from '../../../../../common/Modal/ModalActions';
@@ -60,14 +65,34 @@ function OCMRolesSection({
   const [pageLoading, setPageLoading] = useState(false);
   const [disableReason, setDisableReason] = useState('');
   const { data: modalData } = useGlobalState((state) => state.modal);
-  const { getOCMRolesResponse, grantOCMRoleResponse, deleteOCMRoleResponse } = useGlobalState(
-    (state) => state.ocmRoles,
-  );
+
+  const subscriptionID = subscription.id;
+
+  const {
+    data: ocmRoles,
+    isLoading: isOcmRolesLoading,
+    isError: isOcmRolesError,
+    error: ocmRolesError,
+    isSuccess: isFetchOcmRolesSuccess,
+  } = useFetchOCMRoles(canEditOCMRoles, canViewOCMRoles, subscriptionID);
+  const {
+    isPending: isGrantOcmRolePending,
+    isError: isGrantOcmRoleError,
+    error: grantOcmRoleError,
+    isSuccess: isGrantOcmRoleSuccess,
+    mutate: grantOcmRoleMutate,
+  } = useGrantOCMRole(subscriptionID);
+  const {
+    isPending: isDeleteOcmRolePending,
+    isError: isDeleteOcmRoleError,
+    error: deleteOcmRoleError,
+    isSuccess: isDeleteOcmRoleSuccess,
+    mutate: deleteOcmRoleMutate,
+  } = useDeleteOCMRole(subscriptionID);
 
   const productId = subscription?.plan?.id;
 
   const dispatch = useDispatch();
-
   // showPendingRow replaces a row by a skeletonRow.
   // it hints the user the row is being modified.
   const showPendingRow = (rowIdx: number) => {
@@ -101,7 +126,7 @@ function OCMRolesSection({
     // fetch roles when mounted.
     if (canViewOCMRoles && subscription.id) {
       setPageLoading(true);
-      dispatch(OCMRolesActions.getOCMRoles(subscription.id));
+      refetchOcmRoles();
     }
 
     if (!canViewOCMRoles) {
@@ -115,80 +140,79 @@ function OCMRolesSection({
     } else {
       setDisableReason('');
     }
-
-    return () => {
-      // clear all when unmounted.
-      dispatch(OCMRolesActions.clearGetOCMRolesResponse());
-      dispatch(OCMRolesActions.clearGrantOCMRoleResponse());
-      dispatch(OCMRolesActions.clearDeleteOCMRoleResponse());
-    };
-  }, [canViewOCMRoles, canEditOCMRoles, subscription.id, dispatch]);
+  }, [canViewOCMRoles, canEditOCMRoles, subscription.id]);
 
   // handle user clicked refresh
   useEffect(() => {
     if (canViewOCMRoles && get(refreshEvent, 'type') === eventTypes.CLICKED && subscription.id) {
       setPageLoading(true);
-      dispatch(OCMRolesActions.getOCMRoles(subscription.id));
+      refetchOcmRoles();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [refreshEvent]);
 
   // GET_OCM_ROLES
   useEffect(() => {
-    if (getOCMRolesResponse.pending) {
+    if (isOcmRolesLoading) {
       setErrorBox(null);
-    } else if (getOCMRolesResponse.fulfilled) {
+    } else if (isFetchOcmRolesSuccess) {
       // update the rows
       setPageLoading(false);
-      const items = getOCMRolesResponse?.data.items ?? [];
-      const updatedRows = map(items, (item, rowIdx) => new OCMRolesRow(item, rowIdx));
+      const items = ocmRoles?.items ?? [];
+      const updatedRows = map(items, (item, rowIdx) => new OCMRolesRow(item, rowIdx.toString()));
       setRows(updatedRows);
       setErrorBox(null);
-    } else if (getOCMRolesResponse.error) {
+    } else if (isOcmRolesError && ocmRolesError.error) {
       // display error
       setPageLoading(false);
       setErrorBox(
-        <ErrorBox message="Error getting OCM roles and access" response={getOCMRolesResponse} />,
-      );
-      clearPendingRow();
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [getOCMRolesResponse]);
-
-  // GRANT_OCM_ROLE
-  useEffect(() => {
-    if (grantOCMRoleResponse.pending) {
-      setErrorBox(null);
-    } else if (grantOCMRoleResponse.fulfilled && subscription.id) {
-      // fetch roles again when a role has been added
-      dispatch(OCMRolesActions.getOCMRoles(subscription.id));
-      setErrorBox(null);
-    } else if (grantOCMRoleResponse.error) {
-      clearPendingRow();
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [grantOCMRoleResponse]);
-
-  // DELETE_OCM_ROLE
-  useEffect(() => {
-    if (deleteOCMRoleResponse.pending) {
-      setErrorBox(null);
-    } else if (deleteOCMRoleResponse.fulfilled && subscription.id) {
-      // fetch roles again when a role has been deleted
-      dispatch(OCMRolesActions.getOCMRoles(subscription.id));
-      setErrorBox(null);
-    } else if (deleteOCMRoleResponse.error) {
-      // display error
-      setErrorBox(
         <ErrorBox
-          message="Error removing the role from the user"
-          response={deleteOCMRoleResponse}
+          message="Error getting OCM roles and access"
+          response={{
+            errorMessage: ocmRolesError.error.reason,
+            operationID: ocmRolesError.error.errorCode?.toString(),
+          }}
         />,
       );
       clearPendingRow();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [deleteOCMRoleResponse]);
+  }, [isOcmRolesLoading, isOcmRolesError, isFetchOcmRolesSuccess, pageLoading]);
+
+  // GRANT_OCM_ROLE
+  useEffect(() => {
+    if (isGrantOcmRolePending) {
+      setErrorBox(null);
+    } else if (isGrantOcmRoleSuccess && subscription.id) {
+      // fetch roles again when a role has been added
+      refetchOcmRoles();
+      setErrorBox(null);
+    } else if (isGrantOcmRoleError && grantOcmRoleError.error) {
+      clearPendingRow();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isGrantOcmRolePending, isGrantOcmRoleSuccess, isGrantOcmRoleError]);
+
+  // DELETE_OCM_ROLE
+  useEffect(() => {
+    if (isDeleteOcmRolePending) {
+      setErrorBox(null);
+    } else if (isDeleteOcmRoleSuccess && subscription.id) {
+      // fetch roles again when a role has been deleted
+      refetchOcmRoles();
+      setErrorBox(null);
+    } else if (isDeleteOcmRoleError && deleteOcmRoleError) {
+      // display error
+      setErrorBox(
+        <ErrorBox
+          message="Error removing the role from the user"
+          response={deleteOcmRoleError.error}
+        />,
+      );
+      clearPendingRow();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isDeleteOcmRolePending, isDeleteOcmRoleSuccess, isDeleteOcmRoleError, deleteOcmRoleError]);
 
   const handleGrantRoleButtonClick = () => {
     const rowIdx = rows.length;
@@ -199,7 +223,14 @@ function OCMRolesSection({
   const handleDialogSubmit: OCMRolesDialogProps['onSubmit'] = (row, username, roleID) => {
     clearPendingRow();
     if (row.isCreating && subscription.id) {
-      dispatch(OCMRolesActions.grantOCMRole(subscription.id, username, roleID));
+      grantOcmRoleMutate(
+        { username, roleID },
+        {
+          onSuccess: () => {
+            refetchOcmRoles();
+          },
+        },
+      );
     } else {
       // TODO OCM RBAC phase 2: this could be handled by two APIs - delete then add.
     }
@@ -266,7 +297,11 @@ function OCMRolesSection({
         clearPendingRow();
         if (subscription.id && role.id) {
           showPendingRow(rowIndex);
-          dispatch(OCMRolesActions.deleteOCMRole(subscription.id, role.id));
+          deleteOcmRoleMutate(role.id, {
+            onSuccess: () => {
+              refetchOcmRoles();
+            },
+          });
         }
       },
     },
@@ -350,6 +385,10 @@ function OCMRolesSection({
           onSubmit={handleDialogSubmit}
           row={modalData as OCMRolesRow}
           productId={productId}
+          isGrantOcmRolePending={isGrantOcmRolePending}
+          isGrantOcmRoleError={isGrantOcmRoleError}
+          grantOcmRoleError={grantOcmRoleError}
+          isGrantOcmRoleSuccess={isGrantOcmRoleSuccess}
         />
       </CardBody>
     </Card>
