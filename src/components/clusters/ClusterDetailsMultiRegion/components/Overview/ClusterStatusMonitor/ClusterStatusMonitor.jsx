@@ -12,6 +12,7 @@ import { Table, TableVariant, Tbody, Td, Th, Thead, Tr } from '@patternfly/react
 import { addNotification } from '@redhat-cloud-services/frontend-components-notifications/redux';
 
 import { HAD_INFLIGHT_ERROR_LOCALSTORAGE_KEY } from '~/common/localStorageConstants';
+import { emailRegex } from '~/common/regularExpressions';
 import { useNavigate } from '~/common/routing';
 import ClusterStatusErrorDisplay from '~/components/clusters/commonMultiRegion/ClusterStatusErrorDisplay';
 import { useFeatureGate } from '~/hooks/useFeatureGate';
@@ -332,18 +333,29 @@ const ClusterStatusMonitor = (props) => {
   const showRequiredGCPRoles = () => {
     if (isOSDGCPWaitingForRolesOnHostProject(cluster)) {
       const hostProjectId = cluster?.gcp_network?.vpc_project_id;
-      const dynamicServiceAccount =
-        cluster?.status?.description?.split(' ').filter((seg) => seg.endsWith('.com'))?.[0] ||
-        'unknown';
+      const serviceAccountsStrings = cluster?.status?.description?.match(emailRegex);
+      const serviceAccountsLength = serviceAccountsStrings ? serviceAccountsStrings.length : 0;
+      const serviceAccounts = serviceAccountsStrings ? (
+        <>
+          {serviceAccountsStrings.map((account, index) => (
+            <React.Fragment key={account}>
+              <strong>{account}</strong>
+              {index < serviceAccountsStrings.length - 1 && ', '}
+            </React.Fragment>
+          ))}
+        </>
+      ) : (
+        <strong>unknown</strong>
+      );
       const reason = [];
       reason.push('To continue cluster installation, contact the VPC owner of the ');
-      reason.push(<b>{hostProjectId}</b>);
+      reason.push(<strong>{hostProjectId}</strong>);
       reason.push(' host project, who must grant the ');
-      reason.push(<b>{dynamicServiceAccount}</b>);
-      reason.push(' service account the following roles: ');
-      reason.push(<b>Compute Network Administrator, </b>);
-      reason.push(<b>Compute Security Administrator, </b>);
-      reason.push(<b>DNS Administrator.</b>);
+      reason.push(serviceAccounts);
+      reason.push(` service account${serviceAccountsLength > 1 ? 's' : ''} the following roles: `);
+      reason.push(<strong>Compute Network Administrator, </strong>);
+      reason.push(<strong>Compute Security Administrator, </strong>);
+      reason.push(<strong>DNS Administrator.</strong>);
       return (
         <Alert variant="warning" isInline title="Permissions needed:">
           <Flex direction={{ default: 'column' }}>
