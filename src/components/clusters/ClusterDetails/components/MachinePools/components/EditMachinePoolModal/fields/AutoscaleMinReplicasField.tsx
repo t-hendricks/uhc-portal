@@ -3,11 +3,7 @@ import { useField } from 'formik';
 
 import { FormGroup, NumberInput } from '@patternfly/react-core';
 
-import {
-  isHypershiftCluster,
-  isMPoolAz,
-} from '~/components/clusters/ClusterDetails/clusterDetailsHelper';
-import { MAX_NODES, MAX_NODES_HCP } from '~/components/clusters/common/machinePools/constants';
+import { isMPoolAz } from '~/components/clusters/ClusterDetails/clusterDetailsHelper';
 import { FormGroupHelperText } from '~/components/common/FormGroupHelperText';
 import useFormikOnChange from '~/hooks/useFormikOnChange';
 import { Cluster } from '~/types/clusters_mgmt.v1';
@@ -16,6 +12,7 @@ type AutoscaleMinReplicasFieldProps = {
   cluster: Cluster;
   minNodes: number;
   mpAvailZones?: number;
+  options: number[];
 };
 
 const fieldId = 'autoscaleMin';
@@ -24,11 +21,13 @@ const AutoscaleMinReplicasField = ({
   cluster,
   minNodes: initMinNodes,
   mpAvailZones,
+  options,
 }: AutoscaleMinReplicasFieldProps) => {
   const [field, { error, touched }] = useField<number>(fieldId);
   const onChange = useFormikOnChange(fieldId);
   const isMultizoneMachinePool = isMPoolAz(cluster, mpAvailZones);
-  const defaultMaxNodes = isHypershiftCluster(cluster) ? MAX_NODES_HCP : MAX_NODES;
+
+  const defaultMaxNodes = options.length ? options[options.length - 1] : 0;
 
   const minNodes = isMultizoneMachinePool ? initMinNodes / 3 : initMinNodes;
   const maxNodes = isMultizoneMachinePool ? defaultMaxNodes / 3 : defaultMaxNodes;
