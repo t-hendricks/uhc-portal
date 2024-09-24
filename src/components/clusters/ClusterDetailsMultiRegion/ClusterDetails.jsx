@@ -53,11 +53,10 @@ import { clusterAutoscalerActions } from '~/redux/actions/clusterAutoscalerActio
 import { onResetFiltersAndFlags } from '~/redux/actions/viewOptionsActions';
 import { useGlobalState } from '~/redux/hooks/useGlobalState';
 import { isRestrictedEnv } from '~/restrictedEnv';
-// TODO: Commented out for respective tabs stories
-// import UpgradeSettingsTab from '../ClusterDetailsMultiRegion/components/UpgradeSettings';
-// import AccessControl from '../ClusterDetailsMultiRegion/components/AccessControl/AccessControl';
 import { SubscriptionCommonFields } from '~/types/accounts_mgmt.v1';
 
+// TODO: Commented out for respective tabs stories
+// import UpgradeSettingsTab from '../ClusterDetailsMultiRegion/components/UpgradeSettings';
 import getClusterName from '../../../common/getClusterName';
 import { isValid, shouldRefetchQuota } from '../../../common/helpers';
 import {
@@ -95,7 +94,7 @@ import { canTransferClusterOwnershipMultiRegion } from '../common/TransferCluste
 import { getSchedules } from '../common/Upgrades/clusterUpgradeActions';
 import CancelUpgradeModal from '../commonMultiRegion/Upgrades/CancelUpgradeModal';
 
-import AddGrantModal from './components/AccessControl/NetworkSelfServiceSection/AddGrantModal';
+import AccessControl from './components/AccessControl/AccessControl';
 import { getGrants } from './components/AccessControl/NetworkSelfServiceSection/NetworkSelfServiceActions';
 import usersActions from './components/AccessControl/UsersSection/UsersActions';
 // import AccessControl from '../ClusterDetailsMultiRegion/components/AccessControl/AccessControl';
@@ -549,7 +548,7 @@ const ClusterDetails = (props) => {
               },
               accessControl: {
                 ref: accessControlTabRef,
-                show: !isMultiRegionPreviewEnabled && displayAccessControlTab,
+                show: displayAccessControlTab,
               },
               addOns: { ref: addOnsTabRef, show: displayAddOnsTab },
               clusterHistory: {
@@ -654,9 +653,6 @@ const ClusterDetails = (props) => {
             </ErrorBoundary>
           </TabContent>
         )}
-        {/* TODO: Commented out for respective tabs stories */}
-        {/* 
-        
         {displayAccessControlTab && (
           <TabContent
             eventKey={2}
@@ -666,12 +662,14 @@ const ClusterDetails = (props) => {
             hidden
           >
             <ErrorBoundary>
-              <AccessControl cluster={cluster} refreshEvent={refreshEvent} />
+              <AccessControl
+                cluster={cluster}
+                refreshEvent={refreshEvent}
+                region={cluster.subscription.xcm_id}
+              />
             </ErrorBoundary>
           </TabContent>
         )}
-       
-        */}
         {isManaged && (
           <TabContent
             eventKey={3}
@@ -826,12 +824,7 @@ const ClusterDetails = (props) => {
             addNotificationContactError={addNotificationContactError}
           />
         ) : null}
-        <AddGrantModal clusterID={cluster.id} />
-        <CancelUpgradeModal
-          isHypershift={isHypershift}
-          clusterID={cluster.id}
-          region={cluster.subscription?.xcm_id}
-        />
+        <CancelUpgradeModal isHypershift={isHypershift} />
       </PageSection>
     </AppPage>
   );

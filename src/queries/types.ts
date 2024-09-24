@@ -4,7 +4,7 @@ import { Dictionary } from 'lodash';
 import { ClusterAutoScalingForm } from '~/components/clusters/common/clusterAutoScalingValues';
 import { Subscription } from '~/types/accounts_mgmt.v1';
 import { Ingress, MachineType } from '~/types/clusters_mgmt.v1';
-import { ErrorDetail } from '~/types/types';
+import { ErrorDetail, ErrorState } from '~/types/types';
 
 export type SubscriptionResponseType = {
   subscription: Subscription;
@@ -22,6 +22,12 @@ export type RQApiErrorType = {
   operationID?: string;
   errorMessage?: string | React.ReactElement;
   errorDetails?: ErrorDetail[];
+};
+
+export type MutationFormattedErrorType = {
+  isLoading: boolean;
+  isError: boolean;
+  error: Pick<ErrorState, 'errorMessage' | 'errorDetails' | 'operationID' | 'errorCode' | 'reason'>;
 };
 
 export type MachineTypesResponse = {

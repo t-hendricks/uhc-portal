@@ -5,7 +5,12 @@ import { accountsService } from '~/services';
 
 export const useFetchSupportCases = (subscriptionID: string, isRestricted: boolean) => {
   const { data, isLoading, isError, error, refetch } = useQuery({
-    queryKey: ['supportCases', 'accountService', subscriptionID],
+    queryKey: [
+      queryConstants.FETCH_CLUSTER_DETAILS_QUERY_KEY,
+      'supportCases',
+      'accountService',
+      subscriptionID,
+    ],
     queryFn: async () => {
       const response = await accountsService.getSupportCases(subscriptionID);
       return response;

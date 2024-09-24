@@ -19,7 +19,7 @@ const mapMachineTypesById = (types: { [id: string]: MachineType[] }) =>
  */
 export const useFetchMachineTypes = (region?: string) => {
   const { isLoading, data, isError, error, refetch } = useQuery({
-    queryKey: ['machineTypes', 'clusterService'],
+    queryKey: [queryConstants.FETCH_CLUSTER_DETAILS_QUERY_KEY, 'machineTypes', 'clusterService'],
     queryFn: async () => {
       if (region) {
         const clusterService = getClusterServiceForRegion(region);

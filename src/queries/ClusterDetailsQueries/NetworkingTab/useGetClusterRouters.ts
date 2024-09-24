@@ -11,7 +11,7 @@ export const refetchGetClusterRouters = () => {
 
 export const useGetClusterRouters = (clusterID: string, isManaged: boolean, region?: string) => {
   const { data, isLoading, isError, error } = useQuery({
-    queryKey: ['clusterRouters'],
+    queryKey: [queryConstants.FETCH_CLUSTER_DETAILS_QUERY_KEY, 'clusterRouters'],
     queryFn: async () => {
       if (region) {
         const clusterService = getClusterServiceForRegion(region);

@@ -22,7 +22,13 @@ export const useFetchInflightChecks = (
   queryKey: string = queryConstants.FETCH_CLUSTER_STATUS_MONITOR_INFLIGHT_CHECKS,
 ) => {
   const { isLoading, data } = useQuery({
-    queryKey: [queryKey, 'inflightChecks', 'clusterService', clusterID],
+    queryKey: [
+      queryConstants.FETCH_CLUSTER_DETAILS_QUERY_KEY,
+      queryKey,
+      'inflightChecks',
+      'clusterService',
+      clusterID,
+    ],
     queryFn: async () => {
       if (region) {
         const clusterService = getClusterServiceForRegion(region);
@@ -86,7 +92,12 @@ export const useFetchRerunInflightChecks = (
   refetchInterval?: boolean,
 ) => {
   const { isLoading, data } = useQuery({
-    queryKey: ['fetchRerunInflightChecks', 'clusterService', subnetIds],
+    queryKey: [
+      queryConstants.FETCH_CLUSTER_DETAILS_QUERY_KEY,
+      'fetchRerunInflightChecks',
+      'clusterService',
+      subnetIds,
+    ],
     queryFn: () => fetchRerunInflightChecks(subnetIds, region),
     staleTime: queryConstants.STALE_TIME,
     refetchInterval: refetchInterval ? 5000 : undefined,

@@ -92,6 +92,12 @@ const isReadyForAwsAccessActions = <E extends ClusterFromSubscription>(cluster: 
 const isReadyForIdpActions = <E extends ClusterFromSubscription>(cluster: E): boolean =>
   hasValidStatusForActions(cluster, !isHypershiftCluster(cluster));
 
+const isReadyForExternalActions = <E extends ClusterFromSubscription>(cluster: E): boolean =>
+  hasValidStatusForActions(cluster, false);
+
+const isExtenalAuthenicationActive = <E extends ClusterFromSubscription>(cluster: E): boolean =>
+  (cluster?.external_auth_config?.enabled ?? false) && isHypershiftCluster(cluster);
+
 const eventTypes = {
   CLICKED: 'clicked',
   AUTO: 'auto',
@@ -110,4 +116,6 @@ export {
   isReadyForAwsAccessActions,
   isReadyForIdpActions,
   isReadyForRoleAccessActions,
+  isReadyForExternalActions,
+  isExtenalAuthenicationActive,
 };
