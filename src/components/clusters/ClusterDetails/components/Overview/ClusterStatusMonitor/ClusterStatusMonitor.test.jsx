@@ -9,7 +9,7 @@ import ClusterStatusMonitor from './ClusterStatusMonitor';
 jest.useFakeTimers({
   legacyFakeTimers: true, // TODO 'modern'
 });
-const { clusterDetails } = fixtures;
+const { clusterDetails, OSDGCPClusterDetails } = fixtures;
 
 const status = {
   pending: false,
@@ -205,5 +205,71 @@ describe('<ClusterStatusMonitor />', () => {
     expect(screen.getByText(/wut wut./)).toBeInTheDocument();
     expect(screen.getByText('https://access.redhat.com/solutions/7048553')).toHaveRole('link');
     expect(screen.getByText('https://access.redhat.com/solutions/7048553')).toHaveAttribute('href');
+  });
+
+  describe('GCP clusters shared VPC permissions alert', () => {
+    const prepareProps = (stateDescription) => ({
+      ...defaultProps,
+      cluster: {
+        ...OSDGCPClusterDetails.cluster,
+        gcp_network: {
+          vpc_project_id: 'ocm-ui-dev',
+        },
+        state: 'waiting',
+        status: {
+          state: 'waiting',
+          description: stateDescription,
+          dns_ready: false,
+          oidc_ready: false,
+          provision_error_message: '',
+          provision_error_code: '',
+          configuration_mode: 'full',
+          limited_support_reason_count: 0,
+        },
+      },
+    });
+    const alertTitle = 'Permissions needed:';
+
+    it('includes the affected service account', () => {
+      const description =
+        'User action required: Could not validate the shared subnets in the host project ocm-ui-dev. Make sure the following service account(s) [my-account-1@example-proj-4.iam.gserviceaccount.com] defined in the service project ocm-ui-dev, has been granted the Compute Network Admin, Compute Security Admin, and DNS Administrator roles via the host project IAM.';
+      const props = prepareProps(description);
+      render(<ClusterStatusMonitor {...props} />);
+
+      expect(screen.getByText(alertTitle)).toBeInTheDocument();
+      expect(screen.queryByText('unknown')).not.toBeInTheDocument();
+      expect(
+        screen.getByText('my-account-1@example-proj-4.iam.gserviceaccount.com'),
+      ).toBeInTheDocument();
+    });
+
+    it('includes multiple affected service accounts', () => {
+      const description =
+        'User action required: Could not validate the shared subnets in the host project ocm-ui-dev. Make sure the following service account(s) [my-role-1@example-proj-4.gserviceaccount.com my-role-2@example-proj-4.gserviceaccount.com my-role-3@example-proj-4.gserviceaccount.com] defined in the service project ocm-ui-dev, has been granted the Compute Network Admin, Compute Security Admin, and DNS Administrator roles via the host project IAM.';
+      const props = prepareProps(description);
+      render(<ClusterStatusMonitor {...props} />);
+
+      expect(screen.getByText(alertTitle)).toBeInTheDocument();
+      expect(screen.queryByText('unknown')).not.toBeInTheDocument();
+      expect(
+        screen.getByText('my-role-1@example-proj-4.gserviceaccount.com'),
+      ).toBeInTheDocument();
+      expect(
+        screen.getByText('my-role-2@example-proj-4.gserviceaccount.com'),
+      ).toBeInTheDocument();
+      expect(
+        screen.getByText('my-role-3@example-proj-4.gserviceaccount.com'),
+      ).toBeInTheDocument();
+    });
+
+    it('includes "unknown" if no service accounts are found', () => {
+      const description =
+        'User action required: Could not validate the shared subnets in the host project ocm-ui-dev.';
+      const props = prepareProps(description);
+      render(<ClusterStatusMonitor {...props} />);
+
+      expect(screen.getByText(alertTitle)).toBeInTheDocument();
+      expect(screen.getByText('unknown')).toBeInTheDocument();
+    });
   });
 });
