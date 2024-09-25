@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { useField } from 'formik';
 import { useDispatch } from 'react-redux';
 
@@ -10,6 +10,7 @@ import { billingModels } from '~/common/subscriptionTypes';
 import { versionComparator } from '~/common/versionComparator';
 import { FieldId } from '~/components/clusters/wizards/common/constants';
 import { useFormState } from '~/components/clusters/wizards/hooks';
+import { GCPAuthType } from '~/components/clusters/wizards/osd/ClusterSettings/CloudProvider/types';
 import ErrorBox from '~/components/common/ErrorBox';
 import { FormGroupHelperText } from '~/components/common/FormGroupHelperText';
 import FuzzySelect, { FuzzyEntryType } from '~/components/common/FuzzySelect';
@@ -48,6 +49,7 @@ export const VersionSelectField = ({
     values: {
       [FieldId.ClusterVersion]: selectedClusterVersion,
       [FieldId.BillingModel]: billingModel,
+      [FieldId.GcpAuthType]: gcpAuthType,
     },
     setFieldValue,
   } = useFormState();
@@ -61,37 +63,58 @@ export const VersionSelectField = ({
   }, {});
 
   const isMarketplaceGcp = billingModel === billingModels.MARKETPLACE_GCP;
+  const isWIF = gcpAuthType === GCPAuthType.WorkloadIdentityFederation;
 
-  const getInstallableVersions = () =>
-    dispatch(
-      clustersActions.getInstallableVersions(
-        false,
-        isMarketplaceGcp,
-        false,
-        unstableOCPVersionsEnabled,
+  const getInstallableVersions = useCallback(
+    () =>
+      dispatch(
+        clustersActions.getInstallableVersions({
+          isMarketplaceGcp,
+          isWIF,
+          includeUnstableVersions: unstableOCPVersionsEnabled,
+        }),
       ),
-    );
+
+    [dispatch, isMarketplaceGcp, isWIF, unstableOCPVersionsEnabled],
+  );
 
   useEffect(() => {
     if (getInstallableVersionsResponse.fulfilled) {
-      setVersions(getInstallableVersionsResponse.versions);
+      if (
+        getInstallableVersionsResponse.meta?.isMarketplaceGcp !== isMarketplaceGcp ||
+        getInstallableVersionsResponse.meta?.isWIF !== isWIF
+      ) {
+        // parameters changed, reset version selection and re-fetch versions
+        setFieldValue(name, null);
+        getInstallableVersions();
+      } else {
+        setVersions(getInstallableVersionsResponse.versions);
+      }
     } else if (getInstallableVersionsResponse.error) {
       // error, close dropdown
       setIsOpen(false);
     } else if (!getInstallableVersionsResponse.pending) {
       // First time.
+      // Resetting version selection as it could be present even when no versions are available
+      // inside the store
+      setFieldValue(name, null);
       getInstallableVersions();
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [getInstallableVersionsResponse]);
+  }, [
+    getInstallableVersions,
+    getInstallableVersionsResponse,
+    isMarketplaceGcp,
+    isWIF,
+    name,
+    setFieldValue,
+  ]);
 
   useEffect(() => {
     if (versions.length && !selectedClusterVersion?.raw_id) {
       const versionIndex = versions.findIndex((version) => version.default === true);
       setFieldValue(name, versions[versionIndex !== -1 ? versionIndex : 0]);
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [versions, selectedClusterVersion?.raw_id]);
+  }, [versions, selectedClusterVersion?.raw_id, name, setFieldValue]);
 
   const onToggle = (
     _event:

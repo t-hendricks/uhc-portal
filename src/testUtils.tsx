@@ -221,9 +221,9 @@ export const stubbedChrome = {
   },
 };
 
-export const mockRestrictedEnv = () => {
+export const mockRestrictedEnv = (mockValue = false) => {
   const mock = jest.spyOn(restrictedEnv, 'isRestrictedEnv');
-  mock.mockReturnValue(false);
+  mock.mockReturnValue(mockValue);
   return mock;
 };
 

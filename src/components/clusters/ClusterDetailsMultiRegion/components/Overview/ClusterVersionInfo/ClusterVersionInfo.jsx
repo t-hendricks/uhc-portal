@@ -10,119 +10,106 @@ import {
   isHypershiftCluster,
 } from '~/components/clusters/common/clusterStates';
 import getClusterVersion from '~/components/clusters/common/getClusterVersion';
+import { useGetSchedules } from '~/queries/ClusterDetailsQueries/ClusterSettingsTab/useGetSchedules';
+import { useFetchUpgradeGatesFromApi } from '~/queries/ClusterDetailsQueries/useFetchUpgadeGatesFromApi';
 
 import ClusterUpdateLink from '../../../../common/ClusterUpdateLink';
-import UpgradeAcknowledgeLink from '../../../../common/Upgrades/UpgradeAcknowledge/UpgradeAcknowledgeLink';
-import UpgradeStatus from '../../../../common/Upgrades/UpgradeStatus';
+import UpgradeAcknowledgeLink from '../../../../commonMultiRegion/Upgrades/UpgradeAcknowledge/UpgradeAcknowledgeLink';
+import UpgradeStatus from '../../../../commonMultiRegion/Upgrades/UpgradeStatus';
 import SupportStatusLabel from '../SupportStatusLabel';
 
 // TODO: Part of the upgrade tab
-class ClusterVersionInfo extends React.Component {
-  state = {
-    popoverOpen: false,
-  };
+const ClusterVersionInfo = ({ cluster }) => {
+  const isUpgrading = isClusterUpgrading(cluster);
+  const clusterVersion = getClusterVersion(cluster);
+  const channel = get(cluster, 'metrics.channel');
+  const isHypershift = isHypershiftCluster(cluster);
+  const clusterId = cluster?.id;
+  const isClusterManaged = cluster?.managed;
 
-  componentDidMount() {
-    const { cluster, getSchedules } = this.props;
-    if (cluster && cluster.id && cluster.managed) {
-      getSchedules(cluster.id, isHypershiftCluster(cluster));
-    }
-  }
+  const { data: schedules } = useGetSchedules(clusterId, isHypershift);
+  const { data: upgradeGates } = useFetchUpgradeGatesFromApi(isClusterManaged);
 
-  componentDidUpdate(prevProps) {
-    const { cluster, getSchedules } = this.props;
-    if (prevProps.cluster.id !== cluster.id && cluster.managed) {
-      getSchedules(cluster.id, isHypershiftCluster(cluster));
-    }
-  }
+  const [popoverOpen, setPopoverOpen] = React.useState(false);
 
-  componentWillUnmount() {
-    const { clearSchedulesResponse } = this.props;
-    clearSchedulesResponse();
-  }
+  const scheduledUpdate = schedules?.items.find(
+    (schedule) => schedule.version !== cluster.version?.raw_id,
+  );
 
-  render() {
-    const { cluster, openModal, schedules } = this.props;
-    const { popoverOpen } = this.state;
-    const isUpgrading = isClusterUpgrading(cluster);
-    const clusterVersion = getClusterVersion(cluster);
-    const channel = get(cluster, 'metrics.channel');
-
-    const scheduledUpdate = schedules.items.find(
-      (schedule) => schedule.version !== cluster.version?.raw_id,
-    );
-
-    return (
-      <div>
-        <dl className="pf-v5-l-stack">
-          <Flex>
-            <dt>OpenShift: </dt>
-            <dd>
-              {clusterVersion}
-              <ClusterUpdateLink
+  return (
+    <div>
+      <dl className="pf-v5-l-stack">
+        <Flex>
+          <dt>OpenShift: </dt>
+          <dd>
+            {clusterVersion}
+            <ClusterUpdateLink cluster={cluster} hideOSDUpdates={!!scheduledUpdate} />
+            {scheduledUpdate && scheduledUpdate.schedule_type === 'automatic' && !isUpgrading ? (
+              <UpgradeAcknowledgeLink
+                clusterId={cluster.id}
+                isHypershift={isHypershift}
                 cluster={cluster}
-                openModal={openModal}
-                hideOSDUpdates={!!scheduledUpdate}
+                schedules={schedules}
+                upgradeGates={upgradeGates}
               />
-              {scheduledUpdate && scheduledUpdate.schedule_type === 'automatic' && !isUpgrading ? (
-                <UpgradeAcknowledgeLink clusterId={cluster.id} />
-              ) : null}
-            </dd>
-          </Flex>
-          {scheduledUpdate && scheduledUpdate.schedule_type === 'manual' && (
-            <div>
-              <Flex>
-                <dt>Update scheduled: </dt>
-                <dd>
-                  <Popover
-                    headerContent="Update status"
-                    isVisible={popoverOpen}
-                    shouldOpen={() => this.setState({ popoverOpen: true })}
-                    shouldClose={() => this.setState({ popoverOpen: false })}
-                    bodyContent={
-                      <UpgradeStatus
-                        clusterID={cluster.id}
-                        canEdit={cluster.canEdit}
-                        clusterVersion={clusterVersion}
-                        scheduledUpgrade={scheduledUpdate}
-                        openModal={openModal}
-                        // eslint-disable-next-line camelcase
-                        availableUpgrades={cluster.version?.available_upgrades}
-                        onCancelClick={() => this.setState({ popoverOpen: false })}
-                      />
-                    }
-                  >
-                    <Button variant="link" className="cluster-inline-link pf-v5-u-mt-0">
-                      View details <OutlinedQuestionCircleIcon />
-                    </Button>
-                  </Popover>
-                </dd>
-              </Flex>
-            </div>
-          )}
-          {!cluster.managed && !isUpgrading && (
-            <div>
-              <Flex>
-                <dt>Life cycle state: </dt>
-                <dd>
-                  <SupportStatusLabel clusterVersion={clusterVersion} />
-                </dd>
-              </Flex>
-            </div>
-          )}
-          {channel && (
-            <div>
-              <Flex>
-                <dt>Update channel: </dt>
-                <dd>{channel}</dd>
-              </Flex>
-            </div>
-          )}
-        </dl>
-      </div>
-    );
-  }
-}
+            ) : null}
+          </dd>
+        </Flex>
+        {scheduledUpdate && scheduledUpdate.schedule_type === 'manual' && (
+          <div>
+            <Flex>
+              <dt>Update scheduled: </dt>
+              <dd>
+                <Popover
+                  headerContent="Update status"
+                  isVisible={popoverOpen}
+                  shouldOpen={() => setPopoverOpen(true)}
+                  shouldClose={() => setPopoverOpen(false)}
+                  bodyContent={
+                    <UpgradeStatus
+                      schedules={schedules}
+                      upgradeGates={upgradeGates}
+                      cluster={cluster}
+                      clusterID={cluster.id}
+                      canEdit={cluster.canEdit}
+                      clusterVersion={clusterVersion}
+                      scheduledUpgrade={scheduledUpdate}
+                      // eslint-disable-next-line camelcase
+                      availableUpgrades={cluster.version?.available_upgrades}
+                      onCancelClick={() => setPopoverOpen(false)}
+                    />
+                  }
+                >
+                  <Button variant="link" className="cluster-inline-link pf-v5-u-mt-0">
+                    View details <OutlinedQuestionCircleIcon />
+                  </Button>
+                </Popover>
+              </dd>
+            </Flex>
+          </div>
+        )}
+        {!cluster.managed && !isUpgrading && (
+          <div>
+            <Flex>
+              <dt>Life cycle state: </dt>
+              <dd>
+                <SupportStatusLabel clusterVersion={clusterVersion} />
+              </dd>
+            </Flex>
+          </div>
+        )}
+        {channel && (
+          <div>
+            <Flex>
+              <dt>Update channel: </dt>
+              <dd>{channel}</dd>
+            </Flex>
+          </div>
+        )}
+      </dl>
+    </div>
+  );
+};
 
 ClusterVersionInfo.propTypes = {
   cluster: PropTypes.shape({
@@ -136,23 +123,6 @@ ClusterVersionInfo.propTypes = {
     }),
     canEdit: PropTypes.bool,
   }),
-  versionInfo: PropTypes.shape({
-    fulfilled: PropTypes.bool,
-    pending: PropTypes.bool,
-    error: PropTypes.bool,
-    version: PropTypes.string,
-    channelGroup: PropTypes.string,
-    availableUpgrades: PropTypes.arrayOf(PropTypes.string),
-  }).isRequired,
-  schedules: PropTypes.shape({
-    fulfilled: PropTypes.bool,
-    pending: PropTypes.bool,
-    error: PropTypes.bool,
-    items: PropTypes.array,
-  }).isRequired,
-  openModal: PropTypes.func.isRequired,
-  getSchedules: PropTypes.func.isRequired,
-  clearSchedulesResponse: PropTypes.func.isRequired,
 };
 
 export default ClusterVersionInfo;

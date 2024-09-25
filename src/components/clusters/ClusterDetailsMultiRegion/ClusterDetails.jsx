@@ -93,14 +93,12 @@ import { canSubscribeOCPMultiRegion } from '../common/EditSubscriptionSettingsDi
 import { userCanHibernateClustersSelector } from '../common/HibernateClusterModal/HibernateClusterModalSelectors';
 import ReadOnlyBanner from '../common/ReadOnlyBanner';
 import { canTransferClusterOwnershipMultiRegion } from '../common/TransferClusterOwnershipDialog/utils/transferClusterOwnershipDialogSelectors';
-import CancelUpgradeModal from '../common/Upgrades/CancelUpgradeModal';
 import { getSchedules } from '../common/Upgrades/clusterUpgradeActions';
+import CancelUpgradeModal from '../commonMultiRegion/Upgrades/CancelUpgradeModal';
 
 import AddGrantModal from './components/AccessControl/NetworkSelfServiceSection/AddGrantModal';
 import { getGrants } from './components/AccessControl/NetworkSelfServiceSection/NetworkSelfServiceActions';
 import usersActions from './components/AccessControl/UsersSection/UsersActions';
-// TODO: Commented out for respective tabs stories
-// import UpgradeSettingsTab from '../ClusterDetailsMultiRegion/components/UpgradeSettings';
 // import AccessControl from '../ClusterDetailsMultiRegion/components/AccessControl/AccessControl';
 // import Networking from '../ClusterDetailsMultiRegion/components/Networking';
 // import Monitoring from '../ClusterDetailsMultiRegion/components/Monitoring';
@@ -132,6 +130,8 @@ import Overview from './components/Overview/Overview';
 import Support from './components/Support';
 import AddNotificationContactDialog from './components/Support/components/AddNotificationContactDialog';
 import TabsRow from './components/TabsRow/TabsRow';
+// TODO: Commented out for respective tabs stories
+import UpgradeSettingsTab from './components/UpgradeSettings';
 import { eventTypes } from './clusterDetailsHelper';
 
 const { HostsClusterDetailTab, getAddHostsTabState } = OCM;
@@ -572,7 +572,7 @@ const ClusterDetails = (props) => {
               },
               upgradeSettings: {
                 ref: upgradeSettingsTabRef,
-                show: !isMultiRegionPreviewEnabled && displayUpgradeSettingsTab,
+                show: displayUpgradeSettingsTab,
               },
               addAssisted: {
                 ref: addAssistedTabRef,
@@ -731,6 +731,19 @@ const ClusterDetails = (props) => {
             </ErrorBoundary>
           </TabContent>
         )}
+        {displayUpgradeSettingsTab && (
+          <TabContent
+            eventKey={8}
+            id="upgradeSettingsContent"
+            ref={upgradeSettingsTabRef}
+            aria-label="Upgrade settings"
+            hidden
+          >
+            <ErrorBoundary>
+              <UpgradeSettingsTab cluster={cluster} />
+            </ErrorBoundary>
+          </TabContent>
+        )}
         {displayNetworkingTab && (
           <TabContent
             eventKey={5}
@@ -764,19 +777,7 @@ const ClusterDetails = (props) => {
           </ErrorBoundary>
         </TabContent>
        
-        {displayUpgradeSettingsTab && (
-          <TabContent
-            eventKey={8}
-            id="upgradeSettingsContent"
-            ref={upgradeSettingsTabRef}
-            aria-label="Upgrade settings"
-            hidden
-          >
-            <ErrorBoundary>
-              <UpgradeSettingsTab />
-            </ErrorBoundary>
-          </TabContent>
-        )}
+       
         {accessRequestsTabVisible ? (
           <TabContent
             eventKey={10}
@@ -810,6 +811,7 @@ const ClusterDetails = (props) => {
         )}
 
         <CommonClusterModals
+          isMultiRegionPreviewEnabled={isMultiRegionPreviewEnabled}
           onClose={onDialogClose}
           onClusterDeleted={() => {
             invalidateClusterDetailsQueries();
@@ -827,7 +829,11 @@ const ClusterDetails = (props) => {
           />
         ) : null}
         <AddGrantModal clusterID={cluster.id} />
-        <CancelUpgradeModal isHypershift={isHypershift} />
+        <CancelUpgradeModal
+          isHypershift={isHypershift}
+          clusterID={cluster.id}
+          region={cluster.subscription?.xcm_id}
+        />
       </PageSection>
     </AppPage>
   );
