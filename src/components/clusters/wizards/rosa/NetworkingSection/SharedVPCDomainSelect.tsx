@@ -1,6 +1,6 @@
 import React from 'react';
 import { FieldInputProps, FieldMetaProps } from 'formik';
-import { CopyToClipboard } from 'react-copy-to-clipboard';
+import CopyToClipboard from 'react-copy-to-clipboard';
 import { useDispatch } from 'react-redux';
 
 import { Button, Flex, FlexItem, FormGroup, Tooltip } from '@patternfly/react-core';
