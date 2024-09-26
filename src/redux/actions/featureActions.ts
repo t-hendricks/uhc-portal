@@ -13,7 +13,6 @@ import {
   NETWORK_VALIDATOR_ONDEMAND_FEATURE,
   OCMUI_EDIT_BILLING_ACCOUNT,
   OSD_GCP_WIF,
-  OSD_GOOGLE_MARKETPLACE_FEATURE,
   SET_FEATURE,
   UNSTABLE_CLUSTER_VERSIONS,
 } from '../constants/featureConstants';
@@ -34,7 +33,6 @@ const getSimpleUnleashFeature = (unleashFeatureName: string, name: string) => ({
 export const features = [
   getSimpleUnleashFeature('hypershift-creation-wizard', HYPERSHIFT_WIZARD_FEATURE),
   getSimpleUnleashFeature('hcp-use-unmanaged-policies', HCP_USE_UNMANAGED),
-  getSimpleUnleashFeature('osd-google-marketplace', OSD_GOOGLE_MARKETPLACE_FEATURE),
   getSimpleUnleashFeature('network-validator-ondemand', NETWORK_VALIDATOR_ONDEMAND_FEATURE),
   getSimpleUnleashFeature('ocmui-unstable-cluster-versions', UNSTABLE_CLUSTER_VERSIONS),
   getSimpleUnleashFeature('ocmui-edit-billing-account', OCMUI_EDIT_BILLING_ACCOUNT),

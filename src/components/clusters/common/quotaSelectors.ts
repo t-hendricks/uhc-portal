@@ -92,7 +92,6 @@ const availableQuota = (quotaList: QuotaCostList | undefined, quotaParams: Quota
     return 0;
   }
   // remove quota cost checks for marketplace-gcp
-  // this billing-model can currently only be set with OSD_GOOGLE_MARKETPLACE_FEATURE feature enabled
   // ultimately we should filter for quota_id: "cluster|byoc|osd|gcp|marketplace"
   if (quotaParams.billingModel === RelatedResource.billing_model.MARKETPLACE_GCP) {
     return Infinity;
