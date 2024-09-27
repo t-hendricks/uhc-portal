@@ -6,15 +6,12 @@ type Region = { provider?: string; region?: string; url: string };
 
 export const useFetchRegions = ({
   mainQueryKey = 'fetchRegions',
-  staleTime = 30000,
-  refetchInterval = Infinity,
   returnAll = false,
   getMultiRegion = true,
 }) => {
   const { isError, data, isLoading, isFetching, error, isFetched } = useQuery({
     queryKey: [mainQueryKey, 'getRegions'],
-    staleTime,
-    refetchInterval,
+
     // TODO this is currently hard-coded
     // but will be changed to get the information from
     // an api endpoint once that endpoint is ready

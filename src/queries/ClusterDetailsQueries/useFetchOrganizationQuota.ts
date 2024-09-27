@@ -24,7 +24,6 @@ export const useFetchOrganizationQuota = (organizationID: string) => {
         organizationQuota: organizationQuota.data,
       };
     },
-    staleTime: queryConstants.STALE_TIME,
   });
 
   return isError

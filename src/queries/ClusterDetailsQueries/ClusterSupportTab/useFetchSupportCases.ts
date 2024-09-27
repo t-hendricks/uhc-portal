@@ -15,7 +15,6 @@ export const useFetchSupportCases = (subscriptionID: string, isRestricted: boole
       const response = await accountsService.getSupportCases(subscriptionID);
       return response;
     },
-    staleTime: queryConstants.STALE_TIME,
     enabled: isRestricted,
   });
   // TODO: not matching with SupportCasesCreatedResponse object

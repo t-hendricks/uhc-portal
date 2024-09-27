@@ -24,7 +24,6 @@ export const useFetchExternalAuths = (region?: string, clusterID: string = '') =
       const response = await clusterService.getExternalAuths(clusterID);
       return response;
     },
-    staleTime: queryConstants.STALE_TIME,
   });
 
   if (isError) {

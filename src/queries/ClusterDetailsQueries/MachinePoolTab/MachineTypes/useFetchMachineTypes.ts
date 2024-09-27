@@ -35,7 +35,6 @@ export const useFetchMachineTypes = (region?: string) => {
       return { groupedByCloudProvider, typesByID };
     },
     retry: false,
-    staleTime: queryConstants.STALE_TIME,
   });
 
   const formattedError = formatErrorData(isLoading, isError, error);

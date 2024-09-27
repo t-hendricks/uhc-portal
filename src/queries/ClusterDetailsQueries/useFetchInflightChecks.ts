@@ -3,7 +3,6 @@ import { useQuery } from '@tanstack/react-query';
 import clusterService, { getClusterServiceForRegion } from '~/services/clusterService';
 import { SubscriptionCommonFields } from '~/types/accounts_mgmt.v1';
 
-import { queryConstants } from '../queriesConstants';
 import { SubscriptionResponseType } from '../types';
 
 /**
@@ -29,7 +28,6 @@ export const useFetchInflightChecks = (
       const response = await clusterService.getInflightChecks(clusterID);
       return response;
     },
-    staleTime: queryConstants.STALE_TIME,
     enabled:
       !!subscription &&
       (subscription.isROSACluster || subscription.isOSDCluster) &&

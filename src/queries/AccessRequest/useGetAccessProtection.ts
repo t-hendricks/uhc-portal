@@ -24,7 +24,6 @@ export const useGetAccessProtection = (params: {
     queryKey,
     enabled: !!params.subscriptionId || !!params.organizationId || !!params.clusterId,
     queryFn: () => accessProtectionService.getAccessProtection(params),
-    staleTime: queryConstants.STALE_TIME,
   });
 
   return { isLoading, isPending, isFetched, refetch, enabled: data?.data.enabled };

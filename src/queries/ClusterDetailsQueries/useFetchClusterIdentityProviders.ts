@@ -40,7 +40,6 @@ export const useFetchClusterIdentityProviders = (clusterID: string, region?: str
 
       return response;
     },
-    staleTime: queryConstants.STALE_TIME,
     enabled: !!clusterID,
   });
 

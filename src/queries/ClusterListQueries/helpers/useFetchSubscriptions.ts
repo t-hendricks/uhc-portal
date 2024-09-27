@@ -1,7 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
 
 import { createViewQueryObject } from '~/common/queryHelpers';
-import { queryConstants } from '~/queries/queriesConstants';
 import { getSubscriptionQueryType } from '~/services/accountsService';
 import { SubscriptionCommonFields } from '~/types/accounts_mgmt.v1';
 import { ViewOptions } from '~/types/types';
@@ -78,8 +77,6 @@ export const useFetchSubscriptions = ({
     queryKey,
     enabled,
     queryFn: () => fetchGlobalSubscriptions(viewOptions, userName, isArchived),
-    staleTime: queryConstants.STALE_TIME,
-    refetchInterval: queryConstants.REFETCH_INTERVAL,
   });
 
   return {
