@@ -1,7 +1,8 @@
 import React from 'react';
 import * as reactRedux from 'react-redux';
 
-import * as usePreviousProps from '~/hooks/usePreviousProps';
+import * as useGetAccessProtection from '~/queries/AccessRequest/useGetAccessProtection';
+import * as useGetOrganizationalPendingRequests from '~/queries/AccessRequest/useGetOrganizationalPendingRequests';
 import * as useFetchClusters from '~/queries/ClusterListQueries/useFetchClusters';
 import { mockRestrictedEnv, screen, within, withState } from '~/testUtils';
 
@@ -19,12 +20,14 @@ jest.mock('react-redux', () => {
   return config;
 });
 
-// Unsure why usePreviousProps isn't working - mocking for now
-jest.spyOn(usePreviousProps, 'usePreviousProps').mockImplementation((value) => value);
-
-// Mocking useFetchClusters due to the complexity of this custom hook
-// the useFetchClusters hook has its own unit tests to ensure it returns the correct values
+// Mocking hooks due to the complexity of this custom hook
+// Each hook has its own unit tests to ensure it returns the correct values
 const mockedGetFetchedClusters = jest.spyOn(useFetchClusters, 'useFetchClusters');
+const mockedUseGetAccessProtection = jest.spyOn(useGetAccessProtection, 'useGetAccessProtection');
+const mockedUseGetOrganizationalPendingRequests = jest.spyOn(
+  useGetOrganizationalPendingRequests,
+  'useGetOrganizationalPendingRequests',
+);
 
 describe('<ClusterList />', () => {
   const props = {
@@ -179,6 +182,56 @@ describe('<ClusterList />', () => {
     expect(refetch).toHaveBeenCalled();
   });
 
+  describe('Access Request Pending Alert', () => {
+    it('shows access alert if there are pending requests', () => {
+      mockedGetFetchedClusters.mockReturnValue({
+        data: { items: [fixtures.clusterDetails.cluster], itemsCount: 1 },
+        isLoading: false,
+        isFetching: false,
+        errors: [],
+      });
+
+      mockedUseGetAccessProtection.mockReturnValue({
+        enabled: true,
+      });
+
+      mockedUseGetOrganizationalPendingRequests.mockReturnValue({
+        total: 3,
+        items: [
+          { id: 'myRequest1', subscription_id: 'mySubscriptionId1' },
+          { id: 'myRequest2', subscription_id: 'mySubscriptionId2' },
+          { id: 'myRequest3', subscription_id: 'mySubscriptionId3' },
+        ],
+      });
+
+      withState({}, true).render(<ClusterList {...props} />);
+
+      expect(screen.getByText('Pending Access Requests')).toBeInTheDocument();
+    });
+
+    it('hides access alert if no pending requests', () => {
+      mockedGetFetchedClusters.mockReturnValue({
+        data: { items: [fixtures.clusterDetails.cluster], itemsCount: 1 },
+        isLoading: false,
+        isFetching: false,
+        errors: [],
+      });
+
+      mockedUseGetAccessProtection.mockReturnValue({
+        enabled: false,
+      });
+
+      mockedUseGetOrganizationalPendingRequests.mockReturnValue({
+        total: 0,
+        items: [],
+      });
+
+      withState({}, true).render(<ClusterList {...props} />);
+
+      expect(screen.queryByText('Pending Access Requests')).not.toBeInTheDocument();
+    });
+  });
+
   describe('Errors', () => {
     const alertText = 'Some operations are unavailable, try again later';
     const errorDetailsToggleText = 'Error details';
@@ -190,6 +243,7 @@ describe('<ClusterList />', () => {
         isError: true,
         errors: [{ reason: 'There was an error', operation_id: '1234' }],
       });
+
       withState({}, true).render(<ClusterList {...props} />);
       expect(screen.getByTestId('error-triangle-icon')).toBeInTheDocument();
     });

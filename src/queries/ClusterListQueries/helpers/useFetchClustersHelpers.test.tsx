@@ -119,13 +119,18 @@ describe('useFetchClustersHelpers', () => {
   });
 
   describe('clearQueries', () => {
-    it('removes queries', async () => {
+    it('removes cluster fetch queries and invalidates access transparency queries', async () => {
       await queryClient.fetchQuery({
         queryKey: [queryConstants.FETCH_CLUSTERS_QUERY_KEY, 'subscriptions'],
         queryFn: () => 'hello world',
       });
 
-      expect(queryClient.getQueryCache().getAll()).toHaveLength(1);
+      await queryClient.fetchQuery({
+        queryKey: [queryConstants.FETCH_ACCESS_TRANSPARENCY, 'another key'],
+        queryFn: () => 'hello world',
+      });
+
+      expect(queryClient.getQueryCache().getAll()).toHaveLength(2);
 
       const setQueries = (callBack: () => void) => {
         callBack();
@@ -134,7 +139,10 @@ describe('useFetchClustersHelpers', () => {
 
       clearQueries(setQueries, clearRefetch);
 
-      expect(queryClient.getQueryCache().getAll()).toHaveLength(0);
+      const queriesAfterClear = queryClient.getQueryCache().getAll();
+      expect(queriesAfterClear).toHaveLength(1);
+
+      expect(queriesAfterClear[0].state.isInvalidated).toBeTruthy();
     });
   });
 

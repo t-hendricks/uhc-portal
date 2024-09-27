@@ -84,6 +84,7 @@ export const useRefetchClusterList = () => {
 
   const getNewData = () => {
     queryClient.invalidateQueries({ queryKey: [queryConstants.FETCH_CLUSTERS_QUERY_KEY] });
+    queryClient.invalidateQueries({ queryKey: [queryConstants.FETCH_ACCESS_TRANSPARENCY] });
   };
 
   const setRefetchSchedule = () => {
@@ -123,6 +124,8 @@ export const clearQueries = (setQueries: (callback: () => []) => void, callback:
     queryClient.removeQueries({
       queryKey: [queryConstants.FETCH_CLUSTERS_QUERY_KEY, 'authorizationsService'],
     });
+    // we only want to replace the cache - not remove it to prevent a flash of the banners
+    queryClient.invalidateQueries({ queryKey: [queryConstants.FETCH_ACCESS_TRANSPARENCY] });
     return [];
   });
   callback();
