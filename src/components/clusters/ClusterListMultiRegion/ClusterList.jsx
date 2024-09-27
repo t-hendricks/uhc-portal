@@ -36,6 +36,8 @@ import { SortByDirection } from '@patternfly/react-table';
 
 import { ONLY_MY_CLUSTERS_TOGGLE_CLUSTERS_LIST } from '~/common/localStorageConstants';
 import { AppPage } from '~/components/App/AppPage';
+import { useGetAccessProtection } from '~/queries/AccessRequest/useGetAccessProtection';
+import { useGetOrganizationalPendingRequests } from '~/queries/AccessRequest/useGetOrganizationalPendingRequests';
 import { useFetchClusters } from '~/queries/ClusterListQueries/useFetchClusters';
 import { clustersActions } from '~/redux/actions';
 import {
@@ -54,6 +56,7 @@ import { normalizedProducts, productFilterOptions } from '../../../common/subscr
 import { viewConstants } from '../../../redux/constants';
 import ErrorBox from '../../common/ErrorBox';
 import Unavailable from '../../common/Unavailable';
+import AccessRequestPendingAlert from '../ClusterDetailsMultiRegion/components/AccessRequest/components/AccessRequestPendingAlert';
 import ClusterListFilter from '../common/ClusterListFilter';
 import CommonClusterModals from '../common/CommonClusterModals';
 import ErrorTriangle from '../common/ErrorTriangle';
@@ -135,12 +138,27 @@ const ClusterList = ({
   const dispatch = useDispatch();
   const viewType = viewConstants.CLUSTERS_VIEW;
 
+  /* Get Access Request / Protection Data */
+  const { enabled: isOrganizationAccessProtectionEnabled } = useGetAccessProtection({
+    organizationId: organization?.details?.id,
+  });
+
+  /* Get Pending Access Requests */
+
+  const { total: pendingRequestsTotal, items: pendingRequestsItems } =
+    useGetOrganizationalPendingRequests(
+      organization?.details?.id,
+      isOrganizationAccessProtectionEnabled,
+    );
+
+  /* Get Cluster Data */
   const { isLoading, data, refetch, isError, errors, isFetching, isFetched } =
     useFetchClusters(getMultiRegion);
 
   const clusters = data?.items;
   const clustersTotal = useSelector((state) => state.viewOptions[viewType]?.totalCount);
 
+  /* Set total clusters in Redux */
   React.useEffect(() => {
     if (!isLoading || data?.itemsCount > 0) {
       dispatch(onSetTotalClusters(data?.itemsCount, viewType));
@@ -148,6 +166,7 @@ const ClusterList = ({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [data?.itemsCount]);
 
+  /* Format error details */
   const errorDetails = (errors || []).reduce((errorArray, error) => {
     if (!error.reason) {
       return errorArray;
@@ -158,13 +177,7 @@ const ClusterList = ({
     ];
   }, []);
 
-  const currentPage = useSelector((state) => state.viewOptions[viewType]?.currentPage);
-  const pageSize = useSelector((state) => state.viewOptions[viewType]?.pageSize);
-
-  const itemsStart =
-    currentPage && pageSize && clustersTotal > 0 ? (currentPage - 1) * pageSize + 1 : 0;
-  const itemsEnd = currentPage && pageSize ? Math.min(currentPage * pageSize, clustersTotal) : 0;
-
+  /* onMount and willUnmount */
   const preLoadRedux = React.useCallback(() => {
     // Items not needed for this list, but may be needed elsewhere in the app
     // Load these items "in the background" so they can be added to redux
@@ -192,33 +205,6 @@ const ClusterList = ({
     organization.pending,
   ]);
 
-  /* Pagination */
-  const onPageChange = React.useCallback(
-    (_event, page) => {
-      dispatch(onPageInput(page, viewType));
-    },
-    [dispatch, viewType],
-  );
-
-  React.useEffect(() => {
-    if (clusters && clustersTotal < itemsStart && !isLoading) {
-      // The user was on a page that no longer exists
-      const newPage = Math.ceil(clustersTotal / pageSize);
-      onPageChange(undefined, newPage);
-    }
-  }, [clusters, itemsStart, currentPage, pageSize, onPageChange, clustersTotal, isLoading]);
-
-  const onPerPageChange = (_event, newPerPage, newPage /* startIdx, endIdx */) => {
-    dispatch(onPageInput(newPage, viewType));
-    dispatch(onPerPageSelect(newPerPage, viewType, true));
-  };
-
-  const sortOptions = useSelector((state) => state.viewOptions[viewType]?.sorting);
-
-  const activeSortIndex = sortOptions.sortField;
-  const activeSortDirection = sortOptions.isAscending ? SortByDirection.asc : SortByDirection.desc;
-
-  // onMount and willUnmount
   React.useEffect(() => {
     preLoadRedux();
 
@@ -263,6 +249,40 @@ const ClusterList = ({
     // Run only on mount and unmount
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  /* Pagination */
+
+  const currentPage = useSelector((state) => state.viewOptions[viewType]?.currentPage);
+  const pageSize = useSelector((state) => state.viewOptions[viewType]?.pageSize);
+
+  const itemsStart =
+    currentPage && pageSize && clustersTotal > 0 ? (currentPage - 1) * pageSize + 1 : 0;
+  const itemsEnd = currentPage && pageSize ? Math.min(currentPage * pageSize, clustersTotal) : 0;
+
+  const onPageChange = React.useCallback(
+    (_event, page) => {
+      dispatch(onPageInput(page, viewType));
+    },
+    [dispatch, viewType],
+  );
+
+  React.useEffect(() => {
+    if (clusters && clustersTotal < itemsStart && !isLoading) {
+      // The user was on a page that no longer exists
+      const newPage = Math.ceil(clustersTotal / pageSize);
+      onPageChange(undefined, newPage);
+    }
+  }, [clusters, itemsStart, currentPage, pageSize, onPageChange, clustersTotal, isLoading]);
+
+  const onPerPageChange = (_event, newPerPage, newPage /* startIdx, endIdx */) => {
+    dispatch(onPageInput(newPage, viewType));
+    dispatch(onPerPageSelect(newPerPage, viewType, true));
+  };
+
+  const sortOptions = useSelector((state) => state.viewOptions[viewType]?.sorting);
+
+  const activeSortIndex = sortOptions.sortField;
+  const activeSortDirection = sortOptions.isAscending ? SortByDirection.asc : SortByDirection.desc;
 
   const viewOptions = useSelector((state) => state.viewOptions.CLUSTERS_VIEW);
   const { showMyClustersOnly, subscriptionFilter } = viewOptions.flags;
@@ -384,22 +404,28 @@ const ClusterList = ({
                 }}
               />
             ) : (
-              <ClusterListTable
-                openModal={openModal}
-                clusters={clusters || []}
-                isPending={isPendingNoData}
-                activeSortIndex={activeSortIndex}
-                activeSortDirection={activeSortDirection}
-                setSort={(index, direction) => {
-                  const sorting = {
-                    isAscending: direction === SortByDirection.asc,
-                    sortField: index,
-                  };
+              <>
+                <AccessRequestPendingAlert
+                  total={pendingRequestsTotal}
+                  accessRequests={pendingRequestsItems}
+                />
+                <ClusterListTable
+                  openModal={openModal}
+                  clusters={clusters || []}
+                  isPending={isPendingNoData}
+                  activeSortIndex={activeSortIndex}
+                  activeSortDirection={activeSortDirection}
+                  setSort={(index, direction) => {
+                    const sorting = {
+                      isAscending: direction === SortByDirection.asc,
+                      sortField: index,
+                    };
 
-                  dispatch(viewActions.onListSortBy(sorting, viewType));
-                }}
-                refreshFunc={refetch}
-              />
+                    dispatch(viewActions.onListSortBy(sorting, viewType));
+                  }}
+                  refreshFunc={refetch}
+                />
+              </>
             )}
             <PaginationRow
               currentPage={currentPage}
