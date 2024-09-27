@@ -22,7 +22,6 @@ export const useGetClusterRouters = (clusterID: string, isManaged: boolean, regi
       const response = clusterService.getIngresses(clusterID);
       return response;
     },
-    staleTime: queryConstants.STALE_TIME,
     enabled: isManaged,
   });
 

@@ -72,7 +72,7 @@ export const useGetSchedules = (clusterID: string, isHypershift: boolean, region
 
       return response;
     },
-    staleTime: queryConstants.STALE_TIME,
+
     enabled: !!clusterID,
   });
 

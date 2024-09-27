@@ -37,7 +37,6 @@ export const useFetchUpgradeGates = (
       const response = await clusterService.getClusterGateAgreements(clusterID);
       return response;
     },
-    staleTime: queryConstants.STALE_TIME,
     enabled:
       !!subscription &&
       subscription.subscription.status !== SubscriptionCommonFields.status.DEPROVISIONED &&

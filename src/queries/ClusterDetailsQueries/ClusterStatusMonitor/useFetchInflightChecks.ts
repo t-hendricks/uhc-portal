@@ -40,7 +40,6 @@ export const useFetchInflightChecks = (
     },
     retry: false,
     refetchInterval: refetchInterval ? 5000 : undefined,
-    staleTime: queryConstants.STALE_TIME,
     enabled: !!clusterID,
   });
   return {
@@ -99,7 +98,6 @@ export const useFetchRerunInflightChecks = (
       subnetIds,
     ],
     queryFn: () => fetchRerunInflightChecks(subnetIds, region),
-    staleTime: queryConstants.STALE_TIME,
     refetchInterval: refetchInterval ? 5000 : undefined,
     enabled: subnetIds && subnetIds.length > 0,
   });

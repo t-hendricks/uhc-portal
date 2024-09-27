@@ -5,8 +5,6 @@ import { knownProducts } from '~/common/subscriptionTypes';
 import { accountsService } from '~/services';
 import { ClusterAuthorizationRequest } from '~/types/accounts_mgmt.v1';
 
-import { queryConstants } from '../queriesConstants';
-
 const ROSA_PRODUCTS = [knownProducts.ROSA, knownProducts.ROSA_HyperShift];
 const OSD_PRODUCTS = [knownProducts.OSD, knownProducts.OSDTRIAL];
 
@@ -34,7 +32,6 @@ export const useFetchSubscription = (subscriptionID: string, mainQueryKey: strin
         isOSDCluster,
       };
     },
-    staleTime: queryConstants.STALE_TIME,
   });
 
   return {

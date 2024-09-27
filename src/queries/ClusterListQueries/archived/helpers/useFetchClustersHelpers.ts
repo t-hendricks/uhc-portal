@@ -182,8 +182,7 @@ export const createQuery = ({
     useClientSortPaging,
     pageSize,
   }),
-  staleTime: queryConstants.STALE_TIME,
-  refetchInterval: queryConstants.REFETCH_INTERVAL,
+
   queryFn: async () =>
     fetchPageOfClusters({
       page: page || 1,

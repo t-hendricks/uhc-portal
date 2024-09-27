@@ -38,7 +38,6 @@ export const useFetchClusterAddOns = (clusterID: string, region?: string) => {
       return response;
     },
     enabled: !!clusterID,
-    staleTime: queryConstants.STALE_TIME,
   });
 
   if (isError) {
