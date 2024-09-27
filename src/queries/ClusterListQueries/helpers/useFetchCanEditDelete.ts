@@ -16,12 +16,8 @@ export type CanEditDelete = {
 
 export const useFetchCanEditDelete = ({
   queryKey = [queryConstants.FETCH_CLUSTERS_QUERY_KEY],
-  staleTime = queryConstants.STALE_TIME,
-  refetchInterval = queryConstants.REFETCH_INTERVAL,
 }: {
   queryKey?: string[];
-  staleTime?: number;
-  refetchInterval?: number;
 }) => {
   const { isLoading, data, isError, isFetching, refetch, errors, isFetched } = useQueries({
     queries: [
@@ -40,8 +36,6 @@ export const useFetchCanEditDelete = ({
 
           return buildPermissionDict(response);
         },
-        staleTime,
-        refetchInterval,
       },
       {
         queryKey: [
@@ -58,8 +52,6 @@ export const useFetchCanEditDelete = ({
 
           return buildPermissionDict(response);
         },
-        staleTime,
-        refetchInterval,
       },
     ],
     combine: React.useCallback((results: UseQueryResult[]) => {

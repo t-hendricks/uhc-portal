@@ -29,7 +29,6 @@ export const useFetchBreakGlassCredentials = (
       const response = clusterService.getBreakGlassCredentials(clusterId);
       return response;
     },
-    staleTime: queryConstants.STALE_TIME,
     enabled: !!canUpdateBreakGlassCredentials,
   });
 

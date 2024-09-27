@@ -13,7 +13,6 @@ export const useFetchUpgradeGatesFromApi = (isManaged: boolean, region?: string)
       const response = clusterServiceFunc.getUpgradeGates();
       return response;
     },
-    staleTime: queryConstants.STALE_TIME,
     enabled: isManaged,
   });
 

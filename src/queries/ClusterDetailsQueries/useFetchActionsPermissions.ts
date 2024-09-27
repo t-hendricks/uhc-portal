@@ -80,7 +80,6 @@ export const useFetchActionsPermissions = (
           );
           return canEdit;
         },
-        staleTime: queryConstants.STALE_TIME,
         enabled: subscriptionStatus !== SubscriptionCommonFields.status.DEPROVISIONED,
       },
       {
@@ -100,7 +99,6 @@ export const useFetchActionsPermissions = (
           );
           return canEditClusterAutoscaler;
         },
-        staleTime: queryConstants.STALE_TIME,
         enabled: subscriptionStatus !== SubscriptionCommonFields.status.DEPROVISIONED,
       },
       {
@@ -120,7 +118,6 @@ export const useFetchActionsPermissions = (
           );
           return canEditOCMRoles;
         },
-        staleTime: queryConstants.STALE_TIME,
         enabled: subscriptionStatus !== SubscriptionCommonFields.status.DEPROVISIONED,
       },
       {
@@ -140,7 +137,6 @@ export const useFetchActionsPermissions = (
           );
           return canViewOCMRoles;
         },
-        staleTime: queryConstants.STALE_TIME,
         enabled: subscriptionStatus !== SubscriptionCommonFields.status.DEPROVISIONED,
       },
       {
@@ -160,7 +156,6 @@ export const useFetchActionsPermissions = (
           );
           return canUpdateClusterResource;
         },
-        staleTime: queryConstants.STALE_TIME,
         enabled: subscriptionStatus !== SubscriptionCommonFields.status.DEPROVISIONED,
       },
       {
@@ -179,7 +174,6 @@ export const useFetchActionsPermissions = (
           }
           return kubeletConfigActions;
         },
-        staleTime: queryConstants.STALE_TIME,
         enabled:
           !!subscriptionID && subscriptionStatus !== SubscriptionCommonFields.status.DEPROVISIONED,
       },
@@ -199,7 +193,6 @@ export const useFetchActionsPermissions = (
           }
           return machinePoolsActions;
         },
-        staleTime: queryConstants.STALE_TIME,
         enabled:
           !!subscriptionID && subscriptionStatus !== SubscriptionCommonFields.status.DEPROVISIONED,
       },
@@ -219,7 +212,6 @@ export const useFetchActionsPermissions = (
           }
           return idpActions;
         },
-        staleTime: queryConstants.STALE_TIME,
         enabled:
           !!subscriptionID && subscriptionStatus !== SubscriptionCommonFields.status.DEPROVISIONED,
       },
@@ -286,7 +278,6 @@ export const useCanDeleteAccessReview = (
       });
       return response;
     },
-    staleTime: queryConstants.STALE_TIME,
     enabled:
       !!subscription &&
       subscription.subscription.status !== SubscriptionCommonFields.status.DEPROVISIONED &&

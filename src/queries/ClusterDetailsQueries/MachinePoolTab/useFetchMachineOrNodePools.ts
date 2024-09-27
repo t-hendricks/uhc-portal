@@ -124,7 +124,6 @@ const useFetchNodePoolWithUpgradePolicies = (
       return newResponse;
     },
     retry: false,
-    staleTime: queryConstants.STALE_TIME,
     enabled: isHypershiftCluster,
   });
 
@@ -162,7 +161,6 @@ const useFetchMachinePools = (clusterID: string, isHypershiftCluster: boolean, r
       return response;
     },
     retry: false,
-    staleTime: queryConstants.STALE_TIME,
     enabled: !isHypershiftCluster,
   });
 

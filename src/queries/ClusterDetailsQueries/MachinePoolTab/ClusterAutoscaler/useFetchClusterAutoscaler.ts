@@ -33,7 +33,6 @@ export const useFetchClusterAutoscaler = (clusterID: string, region?: string) =>
       };
     },
     retry: false,
-    staleTime: queryConstants.STALE_TIME,
     enabled: !!clusterID,
   });
   if (isError) {

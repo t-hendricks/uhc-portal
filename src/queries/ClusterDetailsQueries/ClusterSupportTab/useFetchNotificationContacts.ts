@@ -21,7 +21,6 @@ export const useFetchNotificationContacts = (subscriptionID: string) => {
 
       return response;
     },
-    staleTime: queryConstants.STALE_TIME,
     enabled: !!subscriptionID,
   });
   return {

@@ -44,8 +44,6 @@ export const useFetchClusters = (
     isFetched: isCanUpdateDeleteFetched,
   } = useFetchCanEditDelete({
     queryKey: [queryConstants.FETCH_CLUSTERS_QUERY_KEY],
-    staleTime: queryConstants.STALE_TIME,
-    refetchInterval: queryConstants.REFETCH_INTERVAL,
   });
 
   /* ***** Fetch regions (can be removed if multiRegion endpoints are not used) **** */
@@ -58,8 +56,6 @@ export const useFetchClusters = (
     isFetched: isRegionsFetched,
   } = useFetchRegions({
     mainQueryKey: queryConstants.FETCH_CLUSTERS_QUERY_KEY,
-    staleTime: queryConstants.STALE_TIME,
-    refetchInterval: queryConstants.REFETCH_INTERVAL,
     returnAll: false,
     getMultiRegion,
   });
