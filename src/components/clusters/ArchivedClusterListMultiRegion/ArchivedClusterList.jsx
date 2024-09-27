@@ -21,25 +21,22 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import {
   Card,
-  Flex,
-  FlexItem,
   PageSection,
   PageSectionVariants,
   Spinner,
+  Split,
+  SplitItem,
   Title,
   Toolbar,
   ToolbarContent,
-  ToolbarGroup,
   ToolbarItem,
 } from '@patternfly/react-core';
 import { SortByDirection } from '@patternfly/react-table';
 
-import { ONLY_MY_CLUSTERS_TOGGLE_CLUSTERS_LIST } from '~/common/localStorageConstants';
+import { ONLY_MY_CLUSTERS_TOGGLE_CLUSTER_ARCHIVES_LIST } from '~/common/localStorageConstants';
+import { Link } from '~/common/routing';
 import { AppPage } from '~/components/App/AppPage';
-import { useGetAccessProtection } from '~/queries/AccessRequest/useGetAccessProtection';
-import { useGetOrganizationalPendingRequests } from '~/queries/AccessRequest/useGetOrganizationalPendingRequests';
 import { useFetchClusters } from '~/queries/ClusterListQueries/useFetchClusters';
-import { clustersActions } from '~/redux/actions';
 import {
   onListFlagsSet,
   onPageInput,
@@ -47,121 +44,73 @@ import {
   onSetTotalClusters,
   viewActions,
 } from '~/redux/actions/viewOptionsActions';
-import { CLUSTERS_VIEW } from '~/redux/constants/viewConstants';
+import { ARCHIVED_CLUSTERS_VIEW } from '~/redux/constants/viewConstants';
 import { isRestrictedEnv } from '~/restrictedEnv';
 
 import helpers from '../../../common/helpers';
 import { getQueryParam } from '../../../common/queryHelpers';
 import { normalizedProducts, productFilterOptions } from '../../../common/subscriptionTypes';
 import { viewConstants } from '../../../redux/constants';
+import Breadcrumbs from '../../common/Breadcrumbs';
 import ErrorBox from '../../common/ErrorBox';
+import ConnectedModal from '../../common/Modal/ConnectedModal';
 import Unavailable from '../../common/Unavailable';
-import AccessRequestPendingAlert from '../ClusterDetailsMultiRegion/components/AccessRequest/components/AccessRequestPendingAlert';
+import ClusterListFilterChipGroup from '../ClusterListMultiRegion/components/ClusterListFilterChipGroup/ClusterListFilterChipGroup';
+import ClusterListFilterDropdown from '../ClusterListMultiRegion/components/ClusterListFilterDropdown';
+import { PaginationRow } from '../ClusterListMultiRegion/components/PaginationRow';
+import { RefreshButton } from '../ClusterListMultiRegion/components/RefreshButton';
+import ViewOnlyMyClustersToggle from '../ClusterListMultiRegion/components/ViewOnlyMyClustersToggle';
 import ClusterListFilter from '../common/ClusterListFilter';
-import CommonClusterModals from '../common/CommonClusterModals';
 import ErrorTriangle from '../common/ErrorTriangle';
 import GlobalErrorBox from '../common/GlobalErrorBox/GlobalErrorBox';
 import ReadOnlyBanner from '../common/ReadOnlyBanner';
+import UnarchiveClusterDialog from '../common/UnarchiveClusterDialog';
 
-import ClusterListActions from './components/ClusterListActions';
-import ClusterListEmptyState from './components/ClusterListEmptyState';
-import ClusterListFilterChipGroup from './components/ClusterListFilterChipGroup/ClusterListFilterChipGroup';
-import ClusterListFilterDropdown from './components/ClusterListFilterDropdown';
-import ClusterListTable from './components/ClusterListTable';
-import { PaginationRow } from './components/PaginationRow';
-import { RefreshButton } from './components/RefreshButton';
-import ViewOnlyMyClustersToggle from './components/ViewOnlyMyClustersToggle';
+import ArchivedClusterListTable from './components/ArchiveClusterListTable/ArchivedClusterListTable';
 
-import './ClusterList.scss';
+import './ArchivedClusterList.scss';
 
-const PAGE_TITLE = 'Cluster List | Red Hat OpenShift Cluster Manager';
+const PAGE_TITLE = 'Cluster Archives | Red Hat OpenShift Cluster Manager';
 
-const ClusterListPageHeader = ({ someReadOnly, showSpinner, error, refresh }) => (
+const breadCrumbs = (
+  <Breadcrumbs path={[{ label: 'Cluster List' }, { label: 'Cluster Archives' }]} />
+);
+
+const ClusterListPageHeader = () => (
   <>
-    <ReadOnlyBanner someReadOnly={someReadOnly} />
+    <ReadOnlyBanner />
     <PageSection variant={PageSectionVariants.light}>
-      <Flex>
-        <FlexItem grow={{ default: 'grow' }}>
-          <Title headingLevel="h1">Cluster List</Title>
-        </FlexItem>
-        <Toolbar id="cluster-list-refresh-toolbar" isFullHeight inset={{ default: 'insetNone' }}>
-          <ToolbarContent>
-            <ToolbarGroup
-              variant="icon-button-group"
-              align={{ default: 'alignRight' }}
-              spacer={{ default: 'spacerNone', md: 'spacerNone' }}
-              spaceItems={{ default: 'spaceItemsMd' }}
-            >
-              {showSpinner && (
-                <ToolbarItem>
-                  <Spinner
-                    size="lg"
-                    className="cluster-list-spinner"
-                    aria-label="Loading cluster list data"
-                  />
-                </ToolbarItem>
-              )}
-              {error && (
-                <ToolbarItem>
-                  <ErrorTriangle className="cluster-list-warning" item="clusters" />
-                </ToolbarItem>
-              )}
-              <ToolbarItem spacer={{ default: 'spacerNone' }}>
-                <RefreshButton isDisabled={showSpinner} refreshFunc={refresh} />
-              </ToolbarItem>
-            </ToolbarGroup>
-          </ToolbarContent>
-        </Toolbar>
-      </Flex>
+      <Split>
+        <SplitItem className="pf-v5-u-pb-md">{breadCrumbs}</SplitItem>
+      </Split>
+      <Split>
+        <SplitItem>
+          <Title headingLevel="h1">Cluster Archives</Title>
+        </SplitItem>
+      </Split>
     </PageSection>
   </>
 );
-ClusterListPageHeader.propTypes = {
-  someReadOnly: PropTypes.bool,
-  showSpinner: PropTypes.bool,
-  error: PropTypes.bool,
-  refresh: PropTypes.func,
-};
+ClusterListPageHeader.propTypes = {};
 
 const ClusterList = ({
   getCloudProviders,
   cloudProviders,
-  getOrganizationAndQuota,
-  organization,
-  getMachineTypes,
-  machineTypes,
   closeModal,
   clearGlobalError,
   openModal,
-  getMultiRegion,
 }) => {
   const dispatch = useDispatch();
-  const viewType = viewConstants.CLUSTERS_VIEW;
-
-  /* Get Access Request / Protection Data */
-  const { enabled: isOrganizationAccessProtectionEnabled } = useGetAccessProtection({
-    organizationId: organization?.details?.id,
-  });
-
-  /* Get Pending Access Requests */
-
-  const { total: pendingRequestsTotal, items: pendingRequestsItems } =
-    useGetOrganizationalPendingRequests(
-      organization?.details?.id,
-      isOrganizationAccessProtectionEnabled,
-    );
-
-  /* Get Cluster Data */
-  const isArchived = false;
+  const viewType = viewConstants.ARCHIVED_CLUSTERS_VIEW;
+  const isArchived = true;
   const { isLoading, data, refetch, isError, errors, isFetching, isFetched } = useFetchClusters(
     isArchived,
-    getMultiRegion,
+    true,
   );
 
   const clusters = data?.items;
   const clustersTotal = useSelector((state) => state.viewOptions[viewType]?.totalCount);
 
-  /* Set total clusters in Redux */
   React.useEffect(() => {
     if (!isLoading || data?.itemsCount > 0) {
       dispatch(onSetTotalClusters(data?.itemsCount, viewType));
@@ -169,7 +118,6 @@ const ClusterList = ({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [data?.itemsCount]);
 
-  /* Format error details */
   const errorDetails = (errors || []).reduce((errorArray, error) => {
     if (!error.reason) {
       return errorArray;
@@ -180,41 +128,55 @@ const ClusterList = ({
     ];
   }, []);
 
-  /* onMount and willUnmount */
-  React.useEffect(() => {
-    // Items not needed for this list except for organization, but may be needed elsewhere in the app
+  const currentPage = useSelector((state) => state.viewOptions[viewType]?.currentPage);
+  const pageSize = useSelector((state) => state.viewOptions[viewType]?.pageSize);
+
+  const itemsStart =
+    currentPage && pageSize && clustersTotal > 0 ? (currentPage - 1) * pageSize + 1 : 0;
+  const itemsEnd = currentPage && pageSize ? Math.min(currentPage * pageSize, clustersTotal) : 0;
+
+  const preLoadRedux = React.useCallback(() => {
+    // Items not needed for this list, but may be needed elsewhere in the app
     // Load these items "in the background" so they can be added to redux
     // Eventually as items are converted to React Query these items can be removed
 
     // Waiting until fetched to prevent immediate rerender causing
     // a double load of subscriptions
-    if (isFetched) {
-      if (!cloudProviders.fulfilled && !cloudProviders.pending) {
-        getCloudProviders();
-      }
-
-      if (!machineTypes.fulfilled && !machineTypes.pending) {
-        getMachineTypes();
-      }
-
-      if (!organization.fulfilled && !organization.pending) {
-        getOrganizationAndQuota();
-      }
+    if (!cloudProviders.fulfilled && !cloudProviders.pending && isFetched) {
+      getCloudProviders();
     }
-  }, [
-    cloudProviders.fulfilled,
-    cloudProviders.pending,
-    getCloudProviders,
-    getMachineTypes,
-    getOrganizationAndQuota,
-    isFetched,
-    machineTypes.fulfilled,
-    machineTypes.pending,
-    organization.fulfilled,
-    organization.pending,
-  ]);
+  }, [cloudProviders.fulfilled, cloudProviders.pending, getCloudProviders, isFetched]);
+
+  /* Pagination */
+  const onPageChange = React.useCallback(
+    (_event, page) => {
+      dispatch(onPageInput(page, viewType));
+    },
+    [dispatch, viewType],
+  );
 
   React.useEffect(() => {
+    if (clusters && clustersTotal < itemsStart && !isLoading) {
+      // The user was on a page that no longer exists
+      const newPage = Math.ceil(clustersTotal / pageSize);
+      onPageChange(undefined, newPage);
+    }
+  }, [clusters, itemsStart, currentPage, pageSize, onPageChange, clustersTotal, isLoading]);
+
+  const onPerPageChange = (_event, newPerPage, newPage /* startIdx, endIdx */) => {
+    dispatch(onPageInput(newPage, viewType));
+    dispatch(onPerPageSelect(newPerPage, viewType, true));
+  };
+
+  const sortOptions = useSelector((state) => state.viewOptions[viewType]?.sorting);
+
+  const activeSortIndex = sortOptions.sortField;
+  const activeSortDirection = sortOptions.isAscending ? SortByDirection.asc : SortByDirection.desc;
+
+  // onMount and willUnmount
+  React.useEffect(() => {
+    preLoadRedux();
+
     if (isRestrictedEnv()) {
       dispatch(
         onListFlagsSet(
@@ -250,46 +212,12 @@ const ClusterList = ({
     // componentWillUnmount
     return () => {
       closeModal();
-      dispatch(clustersActions.clearClusterDetails());
-      clearGlobalError('clusterList');
+      // dispatch(clustersActions.clearClusterDetails());
+      clearGlobalError('archivedClusterList');
     };
     // Run only on mount and unmount
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-
-  /* Pagination */
-
-  const currentPage = useSelector((state) => state.viewOptions[viewType]?.currentPage);
-  const pageSize = useSelector((state) => state.viewOptions[viewType]?.pageSize);
-
-  const itemsStart =
-    currentPage && pageSize && clustersTotal > 0 ? (currentPage - 1) * pageSize + 1 : 0;
-  const itemsEnd = currentPage && pageSize ? Math.min(currentPage * pageSize, clustersTotal) : 0;
-
-  const onPageChange = React.useCallback(
-    (_event, page) => {
-      dispatch(onPageInput(page, viewType));
-    },
-    [dispatch, viewType],
-  );
-
-  React.useEffect(() => {
-    if (clusters && clustersTotal < itemsStart && !isLoading) {
-      // The user was on a page that no longer exists
-      const newPage = Math.ceil(clustersTotal / pageSize);
-      onPageChange(undefined, newPage);
-    }
-  }, [clusters, itemsStart, currentPage, pageSize, onPageChange, clustersTotal, isLoading]);
-
-  const onPerPageChange = (_event, newPerPage, newPage /* startIdx, endIdx */) => {
-    dispatch(onPageInput(newPage, viewType));
-    dispatch(onPerPageSelect(newPerPage, viewType, true));
-  };
-
-  const sortOptions = useSelector((state) => state.viewOptions[viewType]?.sorting);
-
-  const activeSortIndex = sortOptions.sortField;
-  const activeSortDirection = sortOptions.isAscending ? SortByDirection.asc : SortByDirection.desc;
 
   const viewOptions = useSelector((state) => state.viewOptions.CLUSTERS_VIEW);
   const { showMyClustersOnly, subscriptionFilter } = viewOptions.flags;
@@ -300,36 +228,9 @@ const ClusterList = ({
 
   const showSpinner = isFetching || isLoading;
 
-  // The empty state asserts as a fact that you have no clusters;
-  // not appropriate when results are indeterminate or empty due to filtering.
-  const showEmptyState = !showSpinner && !isError && !size(clusters) && hasNoFilters;
-
-  const someReadOnly =
-    clusters && clusters.map((c) => c?.status?.configuration_mode).includes('read_only');
-
-  // This signals to end-to-end tests that page has completed loading.
-  // For now deliberately ignoring in-place reloads with a spinner;
-  // tests that modify clusters (e.g. create or scale a cluster) should wait
-  // for concrete data they expect to see.
-  const dataReady = !isPendingNoData;
-
-  if (showEmptyState) {
-    return (
-      <AppPage title={PAGE_TITLE}>
-        <PageSection>
-          <GlobalErrorBox />
-          <div data-ready>
-            <ClusterListEmptyState />
-          </div>
-        </PageSection>
-      </AppPage>
-    );
-  }
-
   return (
     <AppPage title={PAGE_TITLE}>
       <ClusterListPageHeader
-        someReadOnly={someReadOnly}
         showSpinner={showSpinner}
         error={isError}
         errorDetails={errorDetails}
@@ -338,7 +239,7 @@ const ClusterList = ({
       />
       <PageSection>
         <Card>
-          <div className="cluster-list" data-ready={dataReady}>
+          <div className="cluster-list">
             <GlobalErrorBox />
             {isError && clusters.length > 0 && (
               <ErrorBox
@@ -358,7 +259,7 @@ const ClusterList = ({
                 <ToolbarItem className="ocm-c-toolbar__item-cluster-filter-list">
                   <ClusterListFilter
                     isDisabled={isPendingNoData && hasNoFilters}
-                    view={CLUSTERS_VIEW}
+                    view={ARCHIVED_CLUSTERS_VIEW}
                   />
                 </ToolbarItem>
                 {isRestrictedEnv() ? null : (
@@ -368,17 +269,32 @@ const ClusterList = ({
                   >
                     {/* Cluster type */}
                     <ClusterListFilterDropdown
-                      view={CLUSTERS_VIEW}
+                      view={ARCHIVED_CLUSTERS_VIEW}
                       isDisabled={isLoading || isFetching}
                     />
                   </ToolbarItem>
                 )}
-                <ClusterListActions />
+                {/* <ClusterListActions /> */}
                 <ViewOnlyMyClustersToggle
-                  view={CLUSTERS_VIEW}
+                  view={ARCHIVED_CLUSTERS_VIEW}
                   bodyContent="Show only the clusters you previously created, or all clusters in your organization."
-                  localStorageKey={ONLY_MY_CLUSTERS_TOGGLE_CLUSTERS_LIST}
+                  localStorageKey={ONLY_MY_CLUSTERS_TOGGLE_CLUSTER_ARCHIVES_LIST}
                 />
+                <ToolbarItem className="pf-v5-l-split__item split-margin-left">
+                  <div className="show-active-clusters-link">
+                    <Link to="/cluster-list">Show active clusters</Link>
+                  </div>
+                </ToolbarItem>
+                <ToolbarItem>
+                  {showSpinner && (
+                    <Spinner
+                      size="lg"
+                      className="cluster-list-spinner"
+                      aria-label="Loading cluster list data"
+                    />
+                  )}
+                  {isError && <ErrorTriangle className="cluster-list-warning" item="clusters" />}
+                </ToolbarItem>
 
                 <ToolbarItem
                   align={{ default: 'alignRight' }}
@@ -397,6 +313,10 @@ const ClusterList = ({
                     onPageChange={onPageChange}
                   />
                 </ToolbarItem>
+
+                <ToolbarItem spacer={{ default: 'spacerNone' }}>
+                  <RefreshButton isDisabled={showSpinner} refreshFunc={refetch} />
+                </ToolbarItem>
               </ToolbarContent>
             </Toolbar>
             {isRestrictedEnv() ? null : <ClusterListFilterChipGroup />}
@@ -411,28 +331,21 @@ const ClusterList = ({
                 }}
               />
             ) : (
-              <>
-                <AccessRequestPendingAlert
-                  total={pendingRequestsTotal}
-                  accessRequests={pendingRequestsItems}
-                />
-                <ClusterListTable
-                  openModal={openModal}
-                  clusters={clusters || []}
-                  isPending={isPendingNoData}
-                  activeSortIndex={activeSortIndex}
-                  activeSortDirection={activeSortDirection}
-                  setSort={(index, direction) => {
-                    const sorting = {
-                      isAscending: direction === SortByDirection.asc,
-                      sortField: index,
-                    };
+              <ArchivedClusterListTable
+                openModal={openModal}
+                clusters={clusters || []}
+                isPending={isPendingNoData}
+                activeSortIndex={activeSortIndex}
+                activeSortDirection={activeSortDirection}
+                setSort={(index, direction) => {
+                  const sorting = {
+                    isAscending: direction === SortByDirection.asc,
+                    sortField: index,
+                  };
 
-                    dispatch(viewActions.onListSortBy(sorting, viewType));
-                  }}
-                  refreshFunc={refetch}
-                />
-              </>
+                  dispatch(viewActions.onListSortBy(sorting, viewType));
+                }}
+              />
             )}
             <PaginationRow
               currentPage={currentPage}
@@ -445,7 +358,12 @@ const ClusterList = ({
               onPerPageSelect={onPerPageChange}
               onPageChange={onPageChange}
             />
-            <CommonClusterModals onClose={() => refetch()} clearMachinePools />
+            <ConnectedModal
+              ModalComponent={UnarchiveClusterDialog}
+              onClose={() => {
+                refetch();
+              }}
+            />
           </div>
         </Card>
       </PageSection>
@@ -455,11 +373,7 @@ const ClusterList = ({
 
 ClusterList.propTypes = {
   getCloudProviders: PropTypes.func.isRequired,
-  getMachineTypes: PropTypes.func.isRequired,
-  getOrganizationAndQuota: PropTypes.func.isRequired,
-  organization: PropTypes.object.isRequired,
   cloudProviders: PropTypes.object.isRequired,
-  machineTypes: PropTypes.object.isRequired,
   openModal: PropTypes.func.isRequired,
   closeModal: PropTypes.func.isRequired,
 
@@ -468,10 +382,6 @@ ClusterList.propTypes = {
   }),
 
   clearGlobalError: PropTypes.func.isRequired,
-  getMultiRegion: PropTypes.bool,
-};
-ClusterList.defaultProps = {
-  getMultiRegion: true,
 };
 
 export default ClusterList;

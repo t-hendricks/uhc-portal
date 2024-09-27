@@ -2,6 +2,7 @@ import React from 'react';
 
 import { useQueries, UseQueryOptions } from '@tanstack/react-query';
 
+import { ARCHIVED_CLUSTERS_VIEW, CLUSTERS_VIEW } from '~/redux/constants/viewConstants';
 import { useGlobalState } from '~/redux/hooks/useGlobalState';
 import { type Subscription } from '~/types/accounts_mgmt.v1';
 import { Cluster } from '~/types/clusters_mgmt.v1';
@@ -29,23 +30,25 @@ import { useFetchSubscriptions } from './helpers/useFetchSubscriptions';
 
 const REGION_ID = 'xcm_id';
 
-export const useFetchClusters = (useManagedEndpoints = true) => {
+export const useFetchClusters = (isArchived = false, useManagedEndpoints = true) => {
+  const viewOptionsType = isArchived ? ARCHIVED_CLUSTERS_VIEW : CLUSTERS_VIEW;
+
   const [queries, setQueries] = React.useState<UseQueryOptions[]>([]);
 
   /* *****  Refetch data (aka auto refresh) **** */
-  const { refetch, setRefetchSchedule } = useRefetchClusterList();
+  const { refetch, setRefetchSchedule } = useRefetchClusterList(isArchived);
 
   /* ***** Reset refresh timer on Filtering / Sorting / Pagination Change  **** */
   const userName = useGlobalState((state) => state.userProfile.keycloakProfile.username);
   const viewOptions = useGlobalState((state) => ({
-    ...state.viewOptions.CLUSTERS_VIEW,
+    ...state.viewOptions[viewOptionsType],
     // total is required by the type but isn't used in this code
     totalCount: 0, // Set to 0 in order to prevent a reload when that total is returned with the subscription api call
   }));
 
   const plans = viewOptions.flags?.subscriptionFilter?.plan_id?.toString();
   React.useEffect(() => {
-    clearQueries(setQueries, setRefetchSchedule);
+    clearQueries(setQueries, setRefetchSchedule, isArchived);
     // NOTE: Refetch only on sort/filter/pagination change
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [
@@ -69,6 +72,7 @@ export const useFetchClusters = (useManagedEndpoints = true) => {
     error: rawSubscriptionsError,
   } = useFetchSubscriptions({
     viewOptions,
+    isArchived,
     userName,
   });
 
@@ -92,6 +96,7 @@ export const useFetchClusters = (useManagedEndpoints = true) => {
     clusterTypeOrRegion: 'aiClusters',
     viewOptions,
     other: subscriptionIds || [],
+    isArchived,
   });
 
   const doesAIQueryExist = isExistingQuery(queries, aiQueryKey);
@@ -135,6 +140,7 @@ export const useFetchClusters = (useManagedEndpoints = true) => {
       clusterTypeOrRegion: region,
       viewOptions,
       other: [searchQuery],
+      isArchived,
     });
     if (isExistingQuery(queries, regionQueryKey) || managedClusters[region].length === 0) {
       return managedQueries;
