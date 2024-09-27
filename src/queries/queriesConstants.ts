@@ -13,4 +13,5 @@ export const queryConstants = {
   FETCH_SEARCH_DOMAIN_PREFIX: 'fetchSearchDomainPrefix',
   FETCH_GET_OCM_ROLE: 'fetchGetOCMRole',
   FETCH_GET_USER_OIDC_CONFIGURATIONS: 'fetchGetOidcConfigurations',
+  FETCH_ACCESS_TRANSPARENCY: 'fetchAccessTransparency',
 };
