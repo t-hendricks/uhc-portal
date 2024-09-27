@@ -37,6 +37,7 @@ import {
 } from '../../redux/constants/featureConstants';
 import CLILoginPage from '../CLILoginPage/CLILoginPage';
 import ArchivedClusterList from '../clusters/ArchivedClusterList';
+import ArchivedClusterListMultiRegion from '../clusters/ArchivedClusterListMultiRegion';
 import ClusterDetailsClusterOrExternalId from '../clusters/ClusterDetails/ClusterDetailsClusterOrExternalId';
 import ClusterDetailsSubscriptionId from '../clusters/ClusterDetails/ClusterDetailsSubscriptionId';
 import AccessRequestNavigate from '../clusters/ClusterDetails/components/AccessRequest/components/AccessRequestNavigate';
@@ -400,8 +401,7 @@ const Router: React.FC<RouterProps> = ({ planType, clusterId, externalClusterId 
         <Route
           path="/archived"
           element={
-            // @ts-ignore
-            <ArchivedClusterList />
+            config.newClusterList ? <ArchivedClusterListMultiRegion /> : <ArchivedClusterList />
           }
         />
         <Route path="/dashboard" element={<Dashboard />} />

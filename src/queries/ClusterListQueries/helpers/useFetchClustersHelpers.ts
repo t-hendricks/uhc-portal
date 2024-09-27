@@ -30,11 +30,13 @@ export const createQueryKey = ({
   type,
   clusterTypeOrRegion,
   viewOptions,
+  isArchived,
   other,
 }: {
   type: 'subscriptions' | 'clusters';
   clusterTypeOrRegion?: string;
   viewOptions: ViewOptions;
+  isArchived?: boolean;
   other?: string[];
 }): QueryKey => {
   const { currentPage, pageSize, sorting, filter, flags } = viewOptions;
@@ -47,6 +49,7 @@ export const createQueryKey = ({
 
   const key: QueryKey = [
     queryConstants.FETCH_CLUSTERS_QUERY_KEY,
+    isArchived ? 'Archived' : 'Active',
     type,
     clusterTypeOrRegion || '-',
     `${currentPage}`,
@@ -79,12 +82,21 @@ export const isExistingQuery = (queries: UseQueryOptions[], queryKey: QueryKey) 
 
 const { FETCH_CLUSTERS_REFETCH_INTERVAL } = queryConstants;
 
-export const useRefetchClusterList = () => {
+export const useRefetchClusterList = (isArchived: boolean) => {
   const [refetchInterval, setRefetchInterval] = React.useState<ReturnType<typeof setInterval>>();
 
   const getNewData = () => {
-    queryClient.invalidateQueries({ queryKey: [queryConstants.FETCH_CLUSTERS_QUERY_KEY] });
     queryClient.invalidateQueries({ queryKey: [queryConstants.FETCH_ACCESS_TRANSPARENCY] });
+    queryClient.invalidateQueries({
+      queryKey: [queryConstants.FETCH_CLUSTERS_QUERY_KEY, isArchived ? 'Archived' : 'Active'],
+    });
+    queryClient.invalidateQueries({
+      queryKey: [
+        queryConstants.FETCH_CLUSTERS_QUERY_KEY,
+        'authorizationsService',
+        'selfResourceReview',
+      ],
+    });
   };
 
   const setRefetchSchedule = () => {
@@ -115,14 +127,32 @@ export const useRefetchClusterList = () => {
  * This forces useFetchClusters to re-render and rebuilds all the queries based on new data
  */
 
-export const clearQueries = (setQueries: (callback: () => []) => void, callback: () => void) => {
+export const clearQueries = (
+  setQueries: (callback: () => []) => void,
+  callback: () => void,
+  isArchived: boolean,
+) => {
   queryClient.removeQueries({
-    queryKey: [queryConstants.FETCH_CLUSTERS_QUERY_KEY, 'subscriptions'],
+    queryKey: [
+      queryConstants.FETCH_CLUSTERS_QUERY_KEY,
+      isArchived ? 'Archived' : 'Active',
+      'subscriptions',
+    ],
   });
   setQueries(() => {
-    queryClient.removeQueries({ queryKey: [queryConstants.FETCH_CLUSTERS_QUERY_KEY, 'clusters'] });
     queryClient.removeQueries({
-      queryKey: [queryConstants.FETCH_CLUSTERS_QUERY_KEY, 'authorizationsService'],
+      queryKey: [
+        queryConstants.FETCH_CLUSTERS_QUERY_KEY,
+        isArchived ? 'Archived' : 'Active',
+        'clusters',
+      ],
+    });
+    queryClient.removeQueries({
+      queryKey: [
+        queryConstants.FETCH_CLUSTERS_QUERY_KEY,
+        'authorizationsService',
+        'selfResourceReview',
+      ],
     });
     // we only want to replace the cache - not remove it to prevent a flash of the banners
     queryClient.invalidateQueries({ queryKey: [queryConstants.FETCH_ACCESS_TRANSPARENCY] });
