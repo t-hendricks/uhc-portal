@@ -9,12 +9,13 @@ import { Button, ExpandableSection, Form, Stack, StackItem, Tooltip } from '@pat
 import { getErrorMessage } from '~/common/errors';
 import { isMPoolAz } from '~/components/clusters/ClusterDetails/clusterDetailsHelper';
 import { isHypershiftCluster, isROSA } from '~/components/clusters/common/clusterStates';
-import { MAX_NODES_HCP } from '~/components/clusters/common/machinePools/constants';
-import { getNodeCount } from '~/components/clusters/common/machinePools/utils';
+import { getMaxNodesHCP, getNodeCount } from '~/components/clusters/common/machinePools/utils';
 import ErrorBox from '~/components/common/ErrorBox';
 import Modal from '~/components/common/Modal/Modal';
 import { closeModal } from '~/components/common/Modal/ModalActions';
 import modals from '~/components/common/Modal/modals';
+import { useFeatureGate } from '~/hooks/useFeatureGate';
+import { MAX_COMPUTE_NODES_500 } from '~/redux/constants/featureConstants';
 import { useGlobalState } from '~/redux/hooks';
 import { GlobalState } from '~/redux/store';
 import { PromiseReducerState } from '~/redux/types';
@@ -115,6 +116,7 @@ const EditMachinePoolModal = ({
     machinePools: machinePoolsResponse,
     machineTypes: machineTypesResponse,
   });
+  const allow500Nodes = useFeatureGate(MAX_COMPUTE_NODES_500);
 
   const setCurrentMPId = React.useCallback(
     (id: string) => setCurrentMachinePool(machinePoolsResponse.data?.find((mp) => mp.id === id)),
@@ -152,7 +154,7 @@ const EditMachinePoolModal = ({
       isHypershift,
       currentMachinePool?.id,
       currentMachinePool?.instance_type,
-    ) === MAX_NODES_HCP;
+    ) === getMaxNodesHCP(cluster.version?.raw_id, allow500Nodes);
 
   return (
     <Formik<EditMachinePoolValues>
@@ -280,6 +282,7 @@ const EditMachinePoolModal = ({
                 machinePool={currentMachinePool}
                 machinePools={machinePoolsResponse.data || []}
                 machineTypes={machineTypesResponse}
+                allow500Nodes={allow500Nodes}
               />
               <DiskSizeField cluster={cluster} isEdit={isEdit} />
               <ExpandableSection toggleText="Edit node labels and taints">
