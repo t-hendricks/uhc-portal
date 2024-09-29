@@ -16,7 +16,41 @@ import {
 import { clusterBillingModelToRelatedResource } from '../billingModelMapper';
 import { QuotaParams } from '../quotaModel';
 
-import { MAX_NODES, MAX_NODES_HCP } from './constants';
+import {
+  MAX_NODES,
+  MAX_NODES_HCP as MAX_NODES_HCP_DEFAULT,
+  MAX_NODES_HCP_500,
+  MAX_NODES_HCP_INSUFFICIEN_VERSION,
+} from './constants';
+
+// Minimal versions to allow more then 90 nodes - 4.15.15, 4.14.28
+const isOcpVersionSufficient = (ocpVersion: string) => {
+  const majorMinor = parseFloat(ocpVersion);
+  const versionPatch = Number(ocpVersion.split('.')[2]);
+  if (majorMinor >= 4.16) {
+    return true;
+  }
+  if (majorMinor <= 4.13) {
+    return false;
+  }
+  if (majorMinor === 4.14) {
+    return versionPatch >= 28;
+  }
+  if (majorMinor === 4.15) {
+    return versionPatch >= 15;
+  }
+  return true;
+};
+
+export const getMaxNodesHCP = (ocpVersion?: string, allow500Nodes?: boolean) => {
+  if (ocpVersion && !isOcpVersionSufficient(ocpVersion)) {
+    return MAX_NODES_HCP_INSUFFICIEN_VERSION;
+  }
+  if (allow500Nodes) {
+    return MAX_NODES_HCP_500;
+  }
+  return MAX_NODES_HCP_DEFAULT;
+};
 
 export const getIncludedNodes = ({
   isMultiAz,
@@ -39,6 +73,8 @@ export const buildOptions = ({
   minNodes,
   increment,
   isHypershift,
+  clusterVersion,
+  allow500Nodes,
 }: {
   available: number;
   isEditingCluster: boolean;
@@ -47,18 +83,21 @@ export const buildOptions = ({
   increment: number;
   included: number;
   isHypershift?: boolean;
+  clusterVersion?: string;
+  allow500Nodes?: boolean;
 }) => {
+  const maxNodesHCP = getMaxNodesHCP(clusterVersion, allow500Nodes);
   // no extra node quota = only base cluster size is available
   const optionsAvailable = available > 0 || isEditingCluster;
   let maxValue = isEditingCluster ? available + currentNodeCount : available + included;
 
-  const maxNumberOfNodes = isHypershift ? MAX_NODES_HCP : MAX_NODES;
+  const maxNumberOfNodes = isHypershift ? maxNodesHCP : MAX_NODES;
   if (maxValue > maxNumberOfNodes) {
     maxValue = maxNumberOfNodes;
   }
 
-  if (isHypershift && isEditingCluster && maxValue > MAX_NODES_HCP - currentNodeCount) {
-    maxValue = MAX_NODES_HCP - currentNodeCount;
+  if (isHypershift && isEditingCluster && maxValue > maxNodesHCP - currentNodeCount) {
+    maxValue = maxNodesHCP - currentNodeCount;
   }
 
   return optionsAvailable ? range(minNodes, maxValue + 1, increment) : [minNodes];
@@ -139,6 +178,7 @@ export type getNodeOptionsType = {
   machinePool: MachinePool | undefined;
   minNodes: number;
   editMachinePoolId?: string;
+  allow500Nodes?: boolean;
 };
 export const getNodeOptions = ({
   cluster,
@@ -149,6 +189,7 @@ export const getNodeOptions = ({
   machinePool,
   minNodes,
   editMachinePoolId,
+  allow500Nodes,
 }: getNodeOptionsType) => {
   const isMultiAz = isMultiAZ(cluster);
 
@@ -187,5 +228,7 @@ export const getNodeOptions = ({
     minNodes,
     increment: isMPoolAZ ? 3 : 1,
     isHypershift: isHypershiftCluster(cluster),
+    clusterVersion: cluster.version?.raw_id,
+    allow500Nodes,
   });
 };
