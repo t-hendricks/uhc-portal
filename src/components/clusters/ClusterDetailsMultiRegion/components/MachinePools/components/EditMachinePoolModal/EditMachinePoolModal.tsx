@@ -8,16 +8,17 @@ import { Button, ExpandableSection, Form, Stack, StackItem, Tooltip } from '@pat
 
 import { getErrorMessage } from '~/common/errors';
 import { isHypershiftCluster } from '~/components/clusters/common/clusterStates';
-import { MAX_NODES_HCP } from '~/components/clusters/common/machinePools/constants';
-import { getNodeCount } from '~/components/clusters/common/machinePools/utils';
+import { getMaxNodesHCP, getNodeCount } from '~/components/clusters/common/machinePools/utils';
 import ErrorBox from '~/components/common/ErrorBox';
 import Modal from '~/components/common/Modal/Modal';
 import { closeModal } from '~/components/common/Modal/ModalActions';
 import modals from '~/components/common/Modal/modals';
+import { useFeatureGate } from '~/hooks/useFeatureGate';
 import { useFetchMachineTypes } from '~/queries/ClusterDetailsQueries/MachinePoolTab/MachineTypes/useFetchMachineTypes';
 import { useEditCreateMachineOrNodePools } from '~/queries/ClusterDetailsQueries/MachinePoolTab/useEditCreateMachineOrNodePools';
 import { useFetchMachineOrNodePools } from '~/queries/ClusterDetailsQueries/MachinePoolTab/useFetchMachineOrNodePools';
 import { MachineTypesResponse } from '~/queries/types';
+import { MAX_COMPUTE_NODES_500 } from '~/redux/constants/featureConstants';
 import { useGlobalState } from '~/redux/hooks';
 import { Cluster, MachinePool } from '~/types/clusters_mgmt.v1';
 import { ErrorState } from '~/types/types';
@@ -88,6 +89,8 @@ const EditMachinePoolModal = ({
     machineTypes: machineTypesResponse,
   });
 
+  const allow500Nodes = useFeatureGate(MAX_COMPUTE_NODES_500);
+
   const setCurrentMPId = React.useCallback(
     (id: string) => setCurrentMachinePool(machinePoolsResponse?.find((mp) => mp.id === id)),
     [setCurrentMachinePool, machinePoolsResponse],
@@ -118,7 +121,7 @@ const EditMachinePoolModal = ({
       isHypershift,
       currentMachinePool?.id,
       currentMachinePool?.instance_type,
-    ) === MAX_NODES_HCP;
+    ) === getMaxNodesHCP(cluster.version?.raw_id, allow500Nodes);
 
   const { mutateAsync: editCreateMachineOrNodePoolMutation } = useEditCreateMachineOrNodePools(
     isHypershift,
@@ -247,6 +250,7 @@ const EditMachinePoolModal = ({
                 machinePool={currentMachinePool}
                 machinePools={machinePoolsResponse || []}
                 machineTypes={machineTypesResponse}
+                allow500Nodes={allow500Nodes}
               />
               <DiskSizeField cluster={cluster} isEdit={isEdit} />
               <ExpandableSection toggleText="Edit node labels and taints">

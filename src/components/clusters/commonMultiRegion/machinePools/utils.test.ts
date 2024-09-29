@@ -1,4 +1,4 @@
-import { MAX_NODES, MAX_NODES_HCP } from './constants';
+import { MAX_NODES } from './constants';
 import * as utils from './utils';
 
 describe('machinePools utils', () => {
@@ -14,6 +14,7 @@ describe('machinePools utils', () => {
         cloud_provider: { id: 'aws' },
         billing_model: 'marketplace-aws',
         product: { id: 'ROSA' },
+        version: { raw_id: '4.16.0' },
       },
       machineTypeId: 'm5.xlarge',
       machinePools: [
@@ -37,6 +38,8 @@ describe('machinePools utils', () => {
       editMachinePoolId: 'workers-1',
     } as unknown as utils.getNodeOptionsType;
 
+    const maxNodesHCP = utils.getMaxNodesHCP(defaultArgs.cluster.version?.raw_id, false);
+
     // In order to make  testing a little easier, mocking quota method
     const getAvailableQuotaMock = jest.spyOn(utils, 'getAvailableQuota').mockReturnValue(50990);
     afterAll(() => {
@@ -50,7 +53,7 @@ describe('machinePools utils', () => {
       it('returns expected options if hypershift and all same machine type', () => {
         const options = utils.getNodeOptions(newMachinePoolArgs);
 
-        const expectedLargestOption = MAX_NODES_HCP - existingNodes;
+        const expectedLargestOption = maxNodesHCP - existingNodes;
         expect(options).toHaveLength(expectedLargestOption);
         expect(options[options.length - 1]).toBe(expectedLargestOption);
       });
@@ -69,7 +72,7 @@ describe('machinePools utils', () => {
         };
         const options = utils.getNodeOptions(newMachinePoolArgsPlus);
 
-        const expectedLargestOption = MAX_NODES_HCP - existingNodes - 3; // "3" is from machine pool added in this test
+        const expectedLargestOption = maxNodesHCP - existingNodes - 3; // "3" is from machine pool added in this test
         expect(options).toHaveLength(expectedLargestOption);
         expect(options[options.length - 1]).toBe(expectedLargestOption);
       });
@@ -119,7 +122,7 @@ describe('machinePools utils', () => {
       it('returns expected options if hypershift and all same machine type', () => {
         const options = utils.getNodeOptions(defaultArgs);
 
-        const expectedLargestOption = MAX_NODES_HCP - existingNodes + selectedMPNodes;
+        const expectedLargestOption = maxNodesHCP - existingNodes + selectedMPNodes;
         expect(options).toHaveLength(expectedLargestOption);
         expect(options[options.length - 1]).toBe(expectedLargestOption);
       });
@@ -141,7 +144,7 @@ describe('machinePools utils', () => {
         const options = utils.getNodeOptions(newMachinePoolArgsPlus);
 
         const existingNodesWithNewMP = existingNodes + newMachinePoolReplicas;
-        const expectedLargestOption = MAX_NODES_HCP - existingNodesWithNewMP + selectedMPNodes;
+        const expectedLargestOption = maxNodesHCP - existingNodesWithNewMP + selectedMPNodes;
         expect(options).toHaveLength(expectedLargestOption);
         expect(options[options.length - 1]).toBe(expectedLargestOption);
       });
@@ -185,6 +188,33 @@ describe('machinePools utils', () => {
         expect(options).toHaveLength(expectedLargestOption);
         expect(options[options.length - 1]).toBe(expectedLargestOption);
       });
+    });
+
+    describe('getMaxNodesHCP', () => {
+      it.each([
+        ['returns the default max nodes for HCP', '4.16.0', false, 250],
+        ['version 4.14.19 gets insufficient version', '4.14.19', false, 90],
+        ['version 4.15.14 gets insufficient version', '4.15.14', false, 90],
+        ['version 4.14.19 gets insufficient version and max nodes', '4.14.19', false, 90],
+        ['version 4.15.14 gets insufficient version and max nodes', '4.15.14', false, 90],
+        ['version 4.16.0 allows 500 nodes', '4.16.0', true, 500],
+        ['undefined version and undefined options gets default version', undefined, undefined, 250],
+        ['undefined version and max nodes 500', undefined, true, 500],
+      ])(
+        '%s',
+        (
+          _title: string,
+          version: string | undefined,
+          allow500: boolean | undefined,
+          exptected: number,
+        ) => {
+          // Act
+          const result = utils.getMaxNodesHCP(version, allow500);
+
+          // Assert
+          expect(result).toEqual(exptected);
+        },
+      );
     });
   });
 });

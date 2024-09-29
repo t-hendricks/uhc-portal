@@ -19,6 +19,8 @@ import {
   workerNodeVolumeSizeMinGiB,
 } from '~/components/clusters/common/machinePools/constants';
 import { getNodeOptions } from '~/components/clusters/common/machinePools/utils';
+import { useFeatureGate } from '~/hooks/useFeatureGate';
+import { MAX_COMPUTE_NODES_500 } from '~/redux/constants/featureConstants';
 import { GlobalState } from '~/redux/store';
 import { PromiseReducerState } from '~/redux/types';
 import { Cluster, MachinePool, NodePool } from '~/types/clusters_mgmt.v1';
@@ -136,6 +138,8 @@ const useMachinePoolFormik = ({
 
   const organization = useOrganization();
 
+  const allow500Nodes = useFeatureGate(MAX_COMPUTE_NODES_500);
+
   const validationSchema = React.useMemo(
     () =>
       Yup.lazy((values) => {
@@ -150,6 +154,7 @@ const useMachinePoolFormik = ({
           minNodes: minNodesRequired,
           machineTypeId: values.instanceType,
           editMachinePoolId: values.name,
+          allow500Nodes,
         });
         const maxNodes = nodeOptions.length ? nodeOptions[nodeOptions.length - 1] : 0;
 
@@ -308,6 +313,7 @@ const useMachinePoolFormik = ({
       maxDiskSize,
       hasMachinePool,
       isHypershift,
+      allow500Nodes,
     ],
   );
 
