@@ -22,6 +22,8 @@ import { FieldId } from '~/components/clusters/wizards/rosa/constants';
 import ExternalLink from '~/components/common/ExternalLink';
 import FormKeyValueList from '~/components/common/FormikFormComponents/FormKeyValueList';
 import useCanClusterAutoscale from '~/hooks/useCanClusterAutoscale';
+import { useFeatureGate } from '~/hooks/useFeatureGate';
+import { MAX_COMPUTE_NODES_500 } from '~/redux/constants/featureConstants';
 
 import WorkerNodeVolumeSizeSection from './WorkerNodeVolumeSizeSection/WorkerNodeVolumeSizeSection';
 import ImdsSection from './ImdsSection';
@@ -55,6 +57,7 @@ function ScaleSection() {
   const hasNodeLabels = nodeLabels?.[0]?.key ?? false;
   const [isNodeLabelsExpanded, setIsNodeLabelsExpanded] = useState(!!hasNodeLabels);
   const canAutoScale = useCanClusterAutoscale(product, billingModelFieldValue) ?? false;
+  const allow500Nodes = useFeatureGate(MAX_COMPUTE_NODES_500);
   const clusterVersionRawId = clusterVersion?.raw_id;
 
   const minNodesRequired = useMemo(
@@ -224,6 +227,8 @@ function ScaleSection() {
               billingModel={billingModel}
               isHypershiftWizard={isHypershiftSelected}
               poolNumber={poolsLength}
+              clusterVersion={clusterVersionRawId}
+              allow500Nodes={allow500Nodes}
               input={{
                 ...getFieldProps(FieldId.NodesCompute),
                 onChange: (value) => setFieldValue(FieldId.NodesCompute, value),

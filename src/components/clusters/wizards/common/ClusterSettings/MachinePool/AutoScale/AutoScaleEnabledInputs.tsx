@@ -8,13 +8,16 @@ import { normalizedProducts } from '~/common/subscriptionTypes';
 import { required, validateNumericInput } from '~/common/validators';
 import { getMinNodesRequired } from '~/components/clusters/ClusterDetails/components/MachinePools/machinePoolsHelper';
 import { constants } from '~/components/clusters/common/CreateOSDFormConstants';
-import { MAX_NODES, MAX_NODES_HCP } from '~/components/clusters/common/machinePools/constants';
+import { MAX_NODES } from '~/components/clusters/common/machinePools/constants';
+import { getMaxNodesHCP } from '~/components/clusters/common/machinePools/utils';
 import getMinNodesAllowed from '~/components/clusters/common/ScaleSection/AutoScaleSection/AutoScaleHelper';
 import { useFormState } from '~/components/clusters/wizards/hooks';
 import { FieldId as RosaFieldId } from '~/components/clusters/wizards/rosa/constants';
 import ExternalLink from '~/components/common/ExternalLink';
 import { FormGroupHelperText } from '~/components/common/FormGroupHelperText';
 import PopoverHint from '~/components/common/PopoverHint';
+import { useFeatureGate } from '~/hooks/useFeatureGate';
+import { MAX_COMPUTE_NODES_500 } from '~/redux/constants/featureConstants';
 
 import { NodesInput } from './NodesInput';
 
@@ -33,8 +36,11 @@ export const AutoScaleEnabledInputs = () => {
       [RosaFieldId.MaxReplicas]: maxReplicas,
       [RosaFieldId.Product]: product,
       [RosaFieldId.Byoc]: byoc,
+      [RosaFieldId.ClusterVersion]: clusterVersion,
     },
   } = useFormState();
+
+  const allow500Nodes = useFeatureGate(MAX_COMPUTE_NODES_500);
 
   const poolsLength = useMemo(
     () => machinePoolsSubnets?.length ?? 1,
@@ -116,13 +122,13 @@ export const AutoScaleEnabledInputs = () => {
 
   const maxNodes = useMemo(() => {
     if (isHypershiftSelected) {
-      return Math.floor(MAX_NODES_HCP / poolsLength);
+      return Math.floor(getMaxNodesHCP(clusterVersion?.raw_id, allow500Nodes) / poolsLength);
     }
     if (isMultiAz) {
       return MAX_NODES / 3;
     }
     return MAX_NODES;
-  }, [isMultiAz, isHypershiftSelected, poolsLength]);
+  }, [isMultiAz, isHypershiftSelected, poolsLength, allow500Nodes, clusterVersion?.raw_id]);
 
   useEffect(() => {
     if (autoscalingEnabled && minNodes) {
