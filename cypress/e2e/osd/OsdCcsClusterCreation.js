@@ -18,12 +18,16 @@ describe(
     });
 
     Clusters.forEach((clusterProperties) => {
+      let authType = clusterProperties.CloudProvider.includes('Google Cloud Platform')
+        ? `-${clusterProperties.AuthenticationType} `
+        : '';
+
       it(`Launch OSD - ${clusterProperties.CloudProvider} cluster wizard`, () => {
         CreateOSDWizardPage.osdCreateClusterButton().click();
         CreateOSDWizardPage.isCreateOSDPage();
       });
 
-      it(`OSD ${clusterProperties.CloudProvider} wizard - Billing model and its definitions`, () => {
+      it(`OSD ${clusterProperties.CloudProvider} ${authType} wizard - Billing model and its definitions`, () => {
         CreateOSDWizardPage.isBillingModelScreen();
         CreateOSDWizardPage.subscriptionTypeAnnualFixedCapacityRadio().should('be.checked');
         CreateOSDWizardPage.infrastructureTypeClusterCloudSubscriptionRadio().check({
@@ -32,23 +36,29 @@ describe(
         cy.get(CreateOSDWizardPage.primaryButton).click();
       });
 
-      it(`OSD ${clusterProperties.CloudProvider} wizard - Cluster Settings - Cloud provider definitions`, () => {
+      it(`OSD ${clusterProperties.CloudProvider} ${authType} wizard - Cluster Settings - Cloud provider definitions`, () => {
         CreateOSDWizardPage.isCloudProviderSelectionScreen();
         CreateOSDWizardPage.selectCloudProvider(clusterProperties.CloudProvider);
-        CreateOSDWizardPage.acknowlegePrerequisitesCheckbox().check();
 
         if (clusterProperties.CloudProvider.includes('GCP')) {
-          CreateOSDWizardPage.uploadGCPServiceAccountJSON(JSON.stringify(QE_GCP));
+          if (clusterProperties.AuthenticationType.includes('Service Account')) {
+            CreateOSDWizardPage.uploadGCPServiceAccountJSON(JSON.stringify(QE_GCP));
+          } else {
+            CreateOSDWizardPage.workloadIdentityFederationButton().click();
+            CreateOSDWizardPage.selectWorkloadIdentityConfiguration(
+              Cypress.env('QE_GCP_WIF_CONFIG'),
+            );
+          }
         } else {
           CreateOSDWizardPage.awsAccountIDInput().type(awsAccountID);
           CreateOSDWizardPage.awsAccessKeyInput().type(awsAccessKey);
           CreateOSDWizardPage.awsSecretKeyInput().type(awsSecretKey);
         }
-
+        CreateOSDWizardPage.acknowlegePrerequisitesCheckbox().check();
         cy.get(CreateOSDWizardPage.primaryButton).click();
       });
 
-      it(`OSD ${clusterProperties.CloudProvider} wizard - Cluster Settings - Cluster details definitions`, () => {
+      it(`OSD ${clusterProperties.CloudProvider} ${authType} wizard - Cluster Settings - Cluster details definitions`, () => {
         CreateOSDWizardPage.isClusterDetailsScreen();
         CreateOSDWizardPage.createCustomDomainPrefixCheckbox().scrollIntoView().check();
         CreateOSDWizardPage.setClusterName(clusterProperties.ClusterName);
@@ -64,7 +74,7 @@ describe(
         cy.get(CreateOSDWizardPage.primaryButton).click();
       });
 
-      it(`OSD ${clusterProperties.CloudProvider} wizard - Cluster Settings - Default machinepool definitions`, () => {
+      it(`OSD ${clusterProperties.CloudProvider} ${authType} wizard - Cluster Settings - Default machinepool definitions`, () => {
         CreateOSDWizardPage.isMachinePoolScreen();
         CreateOSDWizardPage.selectComputeNodeType(clusterProperties.MachinePools[0].InstanceType);
 
@@ -76,7 +86,7 @@ describe(
         cy.get(CreateOSDWizardPage.primaryButton).click();
       });
 
-      it(`OSD ${clusterProperties.CloudProvider} wizard - Networking configuration - cluster privacy definitions`, () => {
+      it(`OSD ${clusterProperties.CloudProvider} ${authType}  wizard - Networking configuration - cluster privacy definitions`, () => {
         CreateOSDWizardPage.isNetworkingScreen();
         CreateOSDWizardPage.clusterPrivacyPublicRadio().should('be.checked');
         CreateOSDWizardPage.applicationIngressDefaultSettingsRadio().should('be.checked');
@@ -84,7 +94,7 @@ describe(
         cy.get(CreateOSDWizardPage.primaryButton).click();
       });
 
-      it(`OSD ${clusterProperties.CloudProvider} wizard - CIDR configuration - cidr definitions`, () => {
+      it(`OSD ${clusterProperties.CloudProvider} ${authType} wizard - CIDR configuration - cidr definitions`, () => {
         CreateOSDWizardPage.isCIDRScreen();
         CreateOSDWizardPage.cidrDefaultValuesCheckBox().should('be.checked');
         CreateOSDWizardPage.machineCIDRInput().should('have.value', clusterProperties.MachineCIDR);
@@ -94,20 +104,25 @@ describe(
         cy.get(CreateOSDWizardPage.primaryButton).click();
       });
 
-      it(`OSD ${clusterProperties.CloudProvider} wizard - Cluster updates definitions`, () => {
+      it(`OSD ${clusterProperties.CloudProvider} ${authType} wizard - Cluster updates definitions`, () => {
         CreateOSDWizardPage.isUpdatesScreen();
         CreateOSDWizardPage.updateStrategyIndividualRadio().should('be.checked');
         CreateOSDWizardPage.selectNodeDraining(clusterProperties.NodeDraining);
         cy.get(CreateOSDWizardPage.primaryButton).click();
       });
 
-      it(`OSD ${clusterProperties.CloudProvider} wizard - Review and create page and its definitions`, () => {
+      it(`OSD ${clusterProperties.CloudProvider} ${authType} wizard - Review and create page and its definitions`, () => {
         CreateOSDWizardPage.isReviewScreen();
         CreateOSDWizardPage.subscriptionTypeValue().contains(clusterProperties.SubscriptionType);
         CreateOSDWizardPage.infrastructureTypeValue().contains(
           clusterProperties.InfrastructureType,
         );
         CreateOSDWizardPage.cloudProviderValue().contains(clusterProperties.CloudProvider);
+        if (clusterProperties.CloudProvider.includes('GCP')) {
+          CreateOSDWizardPage.authenticationTypeValue().contains(
+            clusterProperties.AuthenticationType,
+          );
+        }
         CreateOSDWizardPage.clusterDomainPrefixLabelValue().contains(
           clusterProperties.ClusterDomainPrefix,
         );
@@ -161,7 +176,7 @@ describe(
         );
       });
 
-      it(`OSD ${clusterProperties.CloudProvider}  wizard - Cluster submission & overview definitions`, () => {
+      it(`OSD ${clusterProperties.CloudProvider} ${authType} wizard - Cluster submission & overview definitions`, () => {
         CreateOSDWizardPage.createClusterButton().click();
         ClusterDetailsPage.waitForInstallerScreenToLoad();
         ClusterDetailsPage.clusterNameTitle().contains(clusterProperties.ClusterName);
@@ -201,7 +216,7 @@ describe(
         }
       });
 
-      it(`Delete OSD ${clusterProperties.CloudProvider}  cluster`, () => {
+      it(`Delete OSD ${clusterProperties.CloudProvider} ${authType}  cluster`, () => {
         ClusterDetailsPage.actionsDropdownToggle().click();
         ClusterDetailsPage.deleteClusterDropdownItem().click();
         ClusterDetailsPage.deleteClusterNameInput().clear().type(clusterProperties.ClusterName);
