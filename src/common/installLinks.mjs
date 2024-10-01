@@ -63,7 +63,7 @@ const MIRROR_MIRROR_REGISTRY_LATEST =
 const ARGO_CD_CLI_LATEST =
   'https://developers.redhat.com/content-gateway/rest/browse/pub/openshift-v4/clients/openshift-gitops/latest/';
 
-const DOCS_BASE = 'https://docs.openshift.com/container-platform/4.16';
+const DOCS_BASE = 'https://docs.openshift.com/container-platform/4.17';
 const OSD_DOCS_BASE = 'https://docs.openshift.com/dedicated';
 const ROSA_DOCS_BASE = 'https://docs.openshift.com/rosa';
 const ROSA_CP_DOCS_BASE =
