@@ -7,17 +7,17 @@ import {
   getNodeIncrement,
   getNodeIncrementHypershift,
 } from '~/components/clusters/ClusterDetails/components/MachinePools/machinePoolsHelper';
+import {
+  buildOptions,
+  getAvailableQuota as getAvailableQuotaUtil,
+  getIncludedNodes,
+  getMaxNodesHCP,
+} from '~/components/clusters/common/machinePools/utils';
 import { FormGroupHelperText } from '~/components/common/FormGroupHelperText';
 
 import { noQuotaTooltip } from '../../../../common/helpers';
 import { billingModels, normalizedProducts } from '../../../../common/subscriptionTypes';
 import PopoverHint from '../../../common/PopoverHint';
-import { MAX_NODES_HCP } from '../machinePools/constants';
-import {
-  buildOptions,
-  getAvailableQuota as getAvailableQuotaUtil,
-  getIncludedNodes,
-} from '../machinePools/utils';
 
 const incrementValue = ({ isHypershiftWizard, poolNumber, isMultiAz }) =>
   isHypershiftWizard ? getNodeIncrementHypershift(poolNumber) : getNodeIncrement(isMultiAz);
@@ -34,6 +34,8 @@ class NodeCountInput extends React.Component {
       poolNumber,
       isMultiAz,
       isMachinePool,
+      clusterVersion,
+      allow500Nodes,
     } = this.props;
     const included = getIncludedNodes({ isMultiAz, isHypershift: !isMachinePool });
     const available = this.getAvailableQuota();
@@ -49,6 +51,8 @@ class NodeCountInput extends React.Component {
       minNodes,
       optionValueIncrement,
       isHypershift: isHypershiftWizard,
+      clusterVersion,
+      allow500Nodes,
     });
 
     if (!options.includes(Number(input.value))) {
@@ -68,6 +72,8 @@ class NodeCountInput extends React.Component {
       isMultiAz,
       increment,
       isMachinePool,
+      clusterVersion,
+      allow500Nodes,
     } = this.props;
 
     const available = this.getAvailableQuota();
@@ -82,6 +88,8 @@ class NodeCountInput extends React.Component {
       minNodes,
       optionValueIncrement,
       isHypershift: isHypershiftWizard,
+      clusterVersion,
+      allow500Nodes,
     });
 
     if (isHypershiftWizard && poolNumber !== prevProps.poolNumber) {
@@ -89,7 +97,7 @@ class NodeCountInput extends React.Component {
       // is less than the minimum total nodes
       const prevSelected = (prevProps.input?.value ?? 0) / prevProps.poolNumber || minNodes;
       const newValue = prevSelected * poolNumber;
-      if (newValue > minNodes && newValue <= MAX_NODES_HCP) {
+      if (newValue > minNodes && newValue <= getMaxNodesHCP(clusterVersion, allow500Nodes)) {
         input.onChange(newValue);
       } else {
         input.onChange(minNodes);
@@ -148,6 +156,8 @@ class NodeCountInput extends React.Component {
       isHypershiftWizard,
       poolNumber = isMultiAz ? 3 : 1,
       buttonAriaLabel,
+      clusterVersion,
+      allow500Nodes,
     } = this.props;
 
     const optionValueIncrement =
@@ -164,6 +174,8 @@ class NodeCountInput extends React.Component {
       minNodes,
       increment: optionValueIncrement,
       isHypershift: isHypershiftWizard,
+      clusterVersion,
+      allow500Nodes,
     });
 
     let notEnoughQuota = options.length < 1;
@@ -248,6 +260,44 @@ class NodeCountInput extends React.Component {
   }
 }
 
+const validateClusterVersion = (props, propName, componentName) => {
+  const { isHypershiftWizard } = props;
+
+  if (isHypershiftWizard) {
+    if (typeof props[propName] !== 'string') {
+      return new Error(
+        `Prop \`${propName}\` must be a string when \`isHypershiftWizard\` is true in \`${componentName}\`.`,
+      );
+    }
+    if (!props[propName]) {
+      return new Error(
+        `Prop \`${propName}\` is required when \`isHypershiftWizard\` is true in \`${componentName}\`.`,
+      );
+    }
+  }
+
+  return null;
+};
+
+const validateAllow500Nodes = (props, propName, componentName) => {
+  const { isHypershiftWizard } = props;
+
+  if (isHypershiftWizard) {
+    if (typeof props[propName] !== 'boolean') {
+      return new Error(
+        `Prop \`${propName}\` must be a boolean when \`isHypershiftWizard\` is true in \`${componentName}\`.`,
+      );
+    }
+    if (props[propName] === undefined) {
+      return new Error(
+        `Prop \`${propName}\` is required when \`isHypershiftWizard\` is true in \`${componentName}\`.`,
+      );
+    }
+  }
+
+  return null;
+};
+
 NodeCountInput.propTypes = {
   isEditingCluster: PropTypes.bool,
   currentNodeCount: PropTypes.number,
@@ -274,6 +324,8 @@ NodeCountInput.propTypes = {
   isHypershiftWizard: PropTypes.bool,
   poolNumber: PropTypes.number,
   buttonAriaLabel: PropTypes.string,
+  clusterVersion: validateClusterVersion,
+  allow500Nodes: validateAllow500Nodes,
 };
 
 export default NodeCountInput;
