@@ -167,13 +167,12 @@ const ClusterList = ({
   canHibernateClusterList,
   toggleSubscriptionReleased,
   meta: { clustersServiceError },
-  isAccessRequestEnabled,
 }) => {
   const [loadingChangedView, setLoadingChangedView] = React.useState(false);
 
   const refresh = React.useCallback(() => {
     fetchClusters(createViewQueryObject(viewOptions, username));
-    if (organizationId && isAccessRequestEnabled && !isRestrictedEnv()) {
+    if (organizationId && !isRestrictedEnv()) {
       resetOrganizationAccessProtection();
       getOrganizationAccessProtection(organizationId);
     }
@@ -184,7 +183,6 @@ const ClusterList = ({
     organizationId,
     username,
     viewOptions,
-    isAccessRequestEnabled,
   ]);
 
   // onMount and willUnmount
@@ -240,10 +238,10 @@ const ClusterList = ({
   }, []);
 
   React.useEffect(() => {
-    if (organizationId && isAccessRequestEnabled && !isRestrictedEnv()) {
+    if (organizationId && !isRestrictedEnv()) {
       getOrganizationAccessProtection(organizationId);
     }
-  }, [getOrganizationAccessProtection, organizationId, isAccessRequestEnabled]);
+  }, [getOrganizationAccessProtection, organizationId]);
 
   React.useEffect(() => {
     if (isOrganizationAccessProtectionEnabled && organizationId) {
@@ -469,7 +467,6 @@ ClusterList.propTypes = {
   clearGlobalError: PropTypes.func.isRequired,
   clearClusterDetails: PropTypes.func.isRequired,
   onListFlagsSet: PropTypes.func.isRequired,
-  isAccessRequestEnabled: PropTypes.bool,
 };
 
 export default ClusterList;

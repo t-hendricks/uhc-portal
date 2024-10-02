@@ -72,7 +72,6 @@ import { getNotificationContacts } from '../../../redux/actions/supportActions';
 import { fetchUpgradeGates } from '../../../redux/actions/upgradeGateActions';
 import { viewConstants } from '../../../redux/constants';
 import {
-  ACCESS_REQUEST_ENABLED,
   MULTIREGION_PREVIEW_ENABLED,
   NETWORK_VALIDATOR_ONDEMAND_FEATURE,
 } from '../../../redux/constants/featureConstants';
@@ -205,7 +204,6 @@ const ClusterDetails = (props) => {
   const hasNetworkOndemand = useSelector((state) =>
     featureGateSelector(state, NETWORK_VALIDATOR_ONDEMAND_FEATURE),
   );
-  const isAccessRequestEnabled = useFeatureGate(ACCESS_REQUEST_ENABLED);
 
   const initTabOpen = location.hash.replace('#', '');
   const [selectedTab, setSelectedTab] = React.useState('');
@@ -216,8 +214,8 @@ const ClusterDetails = (props) => {
   const accessProtectionState = useSelector((state) => state.accessProtection.accessProtection);
 
   const accessRequestsTabVisible = React.useMemo(
-    () => accessProtectionState.enabled && isAccessRequestEnabled,
-    [accessProtectionState.enabled, isAccessRequestEnabled],
+    () => accessProtectionState.enabled,
+    [accessProtectionState.enabled],
   );
 
   const isSubscriptionSettingsRequestPending = useSelector((state) =>
@@ -293,7 +291,7 @@ const ClusterDetails = (props) => {
       refetchClusterLogsQueries();
     }
 
-    if (subscriptionID && isAccessRequestEnabled && !isRestrictedEnv()) {
+    if (subscriptionID && !isRestrictedEnv()) {
       dispatch(getAccessProtection(subscriptionID));
     }
 

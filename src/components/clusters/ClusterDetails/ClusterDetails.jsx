@@ -123,7 +123,6 @@ const ClusterDetails = (props) => {
     userAccess,
     gotRouters,
     hasNetworkOndemand,
-    isAccessRequestEnabled,
     accessProtectionState,
     chromeHistory,
   } = props;
@@ -139,8 +138,8 @@ const ClusterDetails = (props) => {
   const [refreshEvent, setRefreshEvent] = React.useState({ type: eventTypes.NONE });
   const { cluster } = clusterDetails;
   const accessRequestsTabVisible = React.useMemo(
-    () => accessProtectionState?.enabled && isAccessRequestEnabled,
-    [accessProtectionState?.enabled, isAccessRequestEnabled],
+    () => accessProtectionState?.enabled,
+    [accessProtectionState?.enabled],
   );
   const requestedSubscriptionID = params.id;
 
@@ -213,12 +212,7 @@ const ClusterDetails = (props) => {
     if (externalClusterID || clusterID) {
       getClusterHistory(externalClusterID, clusterID, clusterLogsViewOptions);
     }
-    if (
-      subscriptionID &&
-      isAccessRequestEnabled &&
-      !accessProtectionState?.pending &&
-      !isRestrictedEnv()
-    ) {
+    if (subscriptionID && !accessProtectionState?.pending && !isRestrictedEnv()) {
       getAccessProtection(subscriptionID);
     }
 
@@ -290,12 +284,12 @@ const ClusterDetails = (props) => {
   }, []);
 
   React.useEffect(() => {
-    if (subscriptionID && isAccessRequestEnabled && !accessProtectionState?.pending) {
+    if (subscriptionID && !accessProtectionState?.pending) {
       getAccessProtection(subscriptionID);
     }
     // avoiding accessProtectionState to be in a loop
     // eslint-disable-next-line  react-hooks/exhaustive-deps
-  }, [subscriptionID, isAccessRequestEnabled]);
+  }, [subscriptionID]);
 
   React.useEffect(() => {
     const subscriptionID = params.id;
@@ -755,7 +749,6 @@ ClusterDetails.propTypes = {
   notificationContacts: PropTypes.object.isRequired,
   getNotificationContacts: PropTypes.func.isRequired,
   hasNetworkOndemand: PropTypes.bool.isRequired,
-  isAccessRequestEnabled: PropTypes.bool.isRequired,
   getSchedules: PropTypes.func,
   getUserAccess: PropTypes.func.isRequired,
   userAccess: PropTypes.shape({
