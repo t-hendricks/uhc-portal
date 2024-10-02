@@ -30,7 +30,6 @@ import apiRequest from '~/services/apiRequest';
 
 import { normalizedProducts } from '../../common/subscriptionTypes';
 import {
-  ACCESS_REQUEST_ENABLED,
   CLUSTER_OWNERSHIP_TRANSFER,
   HYPERSHIFT_WIZARD_FEATURE,
   MULTIREGION_PREVIEW_ENABLED,
@@ -158,8 +157,6 @@ const Router: React.FC<RouterProps> = ({ planType, clusterId, externalClusterId 
       '-------------------------------------',
     );
   }, [isHypershiftWizardEnabled, isClusterTransferEnabled]);
-
-  const isAccessRequestEnabled = useFeatureGate(ACCESS_REQUEST_ENABLED);
 
   useEffect(() => {
     setPageMetadata({
@@ -431,13 +428,7 @@ const Router: React.FC<RouterProps> = ({ planType, clusterId, externalClusterId 
         />
         <Route
           path="/access-request/:id"
-          element={
-            isAccessRequestEnabled && !isRestrictedEnv() ? (
-              <AccessRequestNavigate />
-            ) : (
-              <NotFoundError />
-            )
-          }
+          element={!isRestrictedEnv() ? <AccessRequestNavigate /> : <NotFoundError />}
         />
         {/* WARNING! The "/cluster-list" route is used by catchpoint tests which determine
         'Operational' or 'Major Outage' status for "OpenShift Cluster Manager" on the

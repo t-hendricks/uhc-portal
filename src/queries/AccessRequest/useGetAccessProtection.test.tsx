@@ -1,8 +1,7 @@
 import type axios from 'axios';
 
-import { ACCESS_REQUEST_ENABLED } from '~/redux/constants/featureConstants';
 import apiRequest from '~/services/apiRequest';
-import { mockUseFeatureGate, renderHook, waitFor } from '~/testUtils';
+import { renderHook, waitFor } from '~/testUtils';
 
 import { useGetAccessProtection } from './useGetAccessProtection';
 
@@ -19,7 +18,6 @@ describe('useGetAccessProtection', () => {
   });
 
   it('returns expected data', async () => {
-    mockUseFeatureGate([[ACCESS_REQUEST_ENABLED, true]]);
     apiRequestMock.get.mockResolvedValueOnce({ data: apiResponse });
 
     const { result } = renderHook(() =>
@@ -49,7 +47,6 @@ describe('useGetAccessProtection', () => {
   });
 
   it('does not make API call if all params are missing', async () => {
-    mockUseFeatureGate([[ACCESS_REQUEST_ENABLED, true]]);
     apiRequestMock.get.mockResolvedValueOnce({ data: apiResponse });
 
     const { result } = renderHook(() => useGetAccessProtection({ subscriptionId: undefined }));
@@ -65,27 +62,7 @@ describe('useGetAccessProtection', () => {
     expect(apiRequestMock.get).not.toHaveBeenCalled();
   });
 
-  it('does not make API call if feature gate is turned off', async () => {
-    mockUseFeatureGate([[ACCESS_REQUEST_ENABLED, false]]);
-    apiRequestMock.get.mockResolvedValueOnce({ data: apiResponse });
-
-    const { result } = renderHook(() =>
-      useGetAccessProtection({ subscriptionId: 'mySubscriptionId' }),
-    );
-
-    await waitFor(() => {
-      expect(result.current.isLoading).not.toBeUndefined();
-    });
-
-    expect(result.current.isFetched).toBeFalsy();
-    expect(result.current.enabled).toBeUndefined();
-    expect(result.current.isPending).toBeTruthy();
-
-    expect(apiRequestMock.get).not.toHaveBeenCalled();
-  });
-
   it('makes api call with only subscription id', async () => {
-    mockUseFeatureGate([[ACCESS_REQUEST_ENABLED, true]]);
     apiRequestMock.get.mockResolvedValueOnce({ data: apiResponse });
 
     const { result } = renderHook(() =>
@@ -111,7 +88,6 @@ describe('useGetAccessProtection', () => {
   });
 
   it('makes api call with only organization id', async () => {
-    mockUseFeatureGate([[ACCESS_REQUEST_ENABLED, true]]);
     apiRequestMock.get.mockResolvedValueOnce({ data: apiResponse });
 
     const { result } = renderHook(() =>
@@ -137,7 +113,6 @@ describe('useGetAccessProtection', () => {
   });
 
   it('makes api call with only cluster id', async () => {
-    mockUseFeatureGate([[ACCESS_REQUEST_ENABLED, true]]);
     apiRequestMock.get.mockResolvedValueOnce({ data: apiResponse });
 
     const { result } = renderHook(() =>

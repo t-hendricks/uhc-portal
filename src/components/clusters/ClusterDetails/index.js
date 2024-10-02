@@ -10,10 +10,7 @@ import { accessRequestActions } from '~/redux/actions/accessRequestActions';
 import { clearListVpcs } from '~/redux/actions/ccsInquiriesActions';
 import { clusterAutoscalerActions } from '~/redux/actions/clusterAutoscalerActions';
 import { onClearFiltersAndFlags } from '~/redux/actions/viewOptionsActions';
-import {
-  ACCESS_REQUEST_ENABLED,
-  NETWORK_VALIDATOR_ONDEMAND_FEATURE,
-} from '~/redux/constants/featureConstants';
+import { NETWORK_VALIDATOR_ONDEMAND_FEATURE } from '~/redux/constants/featureConstants';
 
 import { userActions } from '../../../redux/actions';
 import { cloudProviderActions } from '../../../redux/actions/cloudProviderActions';
@@ -90,7 +87,6 @@ const mapStateToProps = (state) => {
     gotRouters: get(clusterRouters, 'getRouters.routers.length', 0) > 0,
     upgradeGates: getUpgradeGates(state),
     hasNetworkOndemand: featureGateSelector(state, NETWORK_VALIDATOR_ONDEMAND_FEATURE),
-    isAccessRequestEnabled: featureGateSelector(state, ACCESS_REQUEST_ENABLED),
     accessProtectionState: state.accessProtection.accessProtection,
   };
 };
