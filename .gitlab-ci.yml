@@ -135,7 +135,7 @@ stages:
     entrypoint: ['']
   stage: test
   tags:
-    - old-docker
+    - shared-podman
   cache:
     # inherit all global cache settings
     <<: *global_cache
@@ -143,6 +143,8 @@ stages:
     policy: pull
   only:
     - merge_requests
+  variables:
+    no_proxy: "prod.foo.redhat.com"
   before_script:
     - apt-get update
     - apt-get -y install make
@@ -152,7 +154,7 @@ stages:
     - echo "Running cypress tests"
     - node --version
     - yarn start --env logging=quiet --no-client-overlay &
-    - NODE_TLS_REJECT_UNAUTHORIZED=0 yarn wait-on https://prod.foo.redhat.com:1337/openshift/
+    - NODE_TLS_REJECT_UNAUTHORIZED=0 yarn wait-on -i 5000 https://prod.foo.redhat.com:1337/openshift/
     - TERM=xterm LC_ALL=C.UTF-8 LANG=C.UTF-8 yarn e2e-test
   artifacts:
     when: always
