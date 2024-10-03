@@ -57,20 +57,22 @@ async function reportOrder(jiraToken, branch, verbose) {
   let masterCommits = await gitLog(git, masterSha, ['--first-parent']);
   masterCommits = masterCommits.reverse();
   const stableCommits = await gitLog(git, stableSha);
-  const stableCommitMap = _.keyBy(stableCommits, 'message');
+  const stableCommitGrps = _.groupBy(stableCommits, 'message'); // commit message might be used twice
   const masterCommitMap = _.keyBy(masterCommits, 'hash');
   const isFiltered = (commit) => {
     // if doesn't match a message in stable, keep it
-    const stableCommit = stableCommitMap[commit.message];
-    if (!stableCommit) return false;
+    const stableCommits = stableCommitGrps[commit.message];
+    if (!stableCommits) return false;
     // if it matches a message, make sure it wasn't picked from this master commit
-    if (stableCommit.picked_hash && stableCommit.picked_hash !== commit.hash) {
+    return stableCommits.some((stableCommit) => {
+      if (stableCommit.picked_hash && stableCommit.picked_hash === commit.hash) {
+        return true;
+      }
       // if this master commit doesn't have a matching stable commit,
       // make sure the master commit isn't really old
       const daysAgo = Math.floor((new Date() - new Date(commit.date)) / 86400000);
       return daysAgo > 50;
-    }
-    return true;
+    });
   };
   masterCommits = masterCommits.filter((commit) => !isFiltered(commit));
   const masterCommitsInxMap = masterCommits.reduce((acc, commit, inx) => {
