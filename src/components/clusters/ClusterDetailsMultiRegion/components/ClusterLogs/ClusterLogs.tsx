@@ -269,6 +269,7 @@ const ClusterLogs = ({
           externalClusterID={externalClusterID}
           isPendingNoData={isPendingNoData}
           clusterID={clusterID}
+          createdAt={createdAt}
           logs={logs?.length}
           itemCount={logsData?.total || 0}
           page={page}
