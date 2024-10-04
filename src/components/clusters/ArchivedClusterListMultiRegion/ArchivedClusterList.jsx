@@ -319,7 +319,7 @@ const ClusterList = ({
                 </ToolbarItem>
               </ToolbarContent>
             </Toolbar>
-            {isRestrictedEnv() ? null : <ClusterListFilterChipGroup />}
+            {isRestrictedEnv() ? null : <ClusterListFilterChipGroup archive />}
             {isError && !size(clusters) && isFetched ? (
               <Unavailable
                 message="Error retrieving clusters"
