@@ -4,6 +4,7 @@ import { normalizedProducts } from '~/common/subscriptionTypes';
 import { getCloudProviders } from '~/redux/actions/cloudProviderActions';
 import {
   clearInstallableVersions,
+  createCluster,
   resetCreatedClusterResponse,
 } from '~/redux/actions/clustersActions';
 import { getMachineTypes } from '~/redux/actions/machineTypesActions';
@@ -54,6 +55,8 @@ const mapDispatchToProps = (dispatch) => ({
   getMachineTypes: () => dispatch(getMachineTypes()),
   getCloudProviders: () => dispatch(getCloudProviders()),
   clearInstallableVersions: () => dispatch(clearInstallableVersions()),
+  createCluster: (clusterRequest, upgradeSchedule) =>
+    dispatch(createCluster(clusterRequest, upgradeSchedule)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(CreateROSAWizard);
