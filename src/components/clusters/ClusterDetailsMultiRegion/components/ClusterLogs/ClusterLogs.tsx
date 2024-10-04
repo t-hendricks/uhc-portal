@@ -247,6 +247,7 @@ const ClusterLogs = ({
           externalClusterID={externalClusterID}
           isPendingNoData={isPendingNoData}
           clusterID={clusterID}
+          createdAt={createdAt}
           logs={logs?.length}
         /> */}
         {isError && !size(logs) && ignoreErrors ? (
