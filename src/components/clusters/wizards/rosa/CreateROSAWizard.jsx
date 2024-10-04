@@ -97,6 +97,7 @@ const CreateROSAWizardInternal = ({
   isErrorModalOpen,
   openModal,
   selectedAWSAccountID,
+  createCluster,
 }) => {
   const navigate = useNavigate();
   const track = useAnalytics();
@@ -405,7 +406,10 @@ const CreateROSAWizardInternal = ({
             </WizardStep>
 
             <WizardStep id={stepId.REVIEW_AND_CREATE} name={stepNameById[stepId.REVIEW_AND_CREATE]}>
-              <ReviewClusterScreen isSubmitPending={createClusterResponse?.pending} />
+              <ReviewClusterScreen
+                createCluster={createCluster}
+                isSubmitPending={createClusterResponse?.pending}
+              />
             </WizardStep>
           </Wizard>
           {config.fakeOSD && <ValuesPanel />}
@@ -492,6 +496,7 @@ CreateROSAWizardInternal.propTypes = {
 
   getMachineTypes: PropTypes.func,
   getOrganizationAndQuota: PropTypes.func,
+  createCluster: PropTypes.func,
   getUserRole: PropTypes.func,
   getCloudProviders: PropTypes.func,
 
