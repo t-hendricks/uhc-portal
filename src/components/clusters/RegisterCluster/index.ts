@@ -7,4 +7,4 @@ const reduxFormConfig = {
   form: REGISTER_CLUSTER_FORM_KEY,
 };
 
-export default reduxForm(reduxFormConfig)(RegisterCluster);
+export default reduxForm(reduxFormConfig)(RegisterCluster) as any;

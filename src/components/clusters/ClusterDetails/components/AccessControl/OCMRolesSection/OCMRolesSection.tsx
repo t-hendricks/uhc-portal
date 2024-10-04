@@ -293,8 +293,8 @@ function OCMRolesSection({
       </Tr>
     ) : (
       <Tr key={usernameValue}>
-        <Td dataLabel={columnNames.username}>{username}</Td>
-        <Td dataLabel={columnNames.role}>{roleLabel}</Td>
+        <Td dataLabel={columnNames.username}>{username as React.ReactNode}</Td>
+        <Td dataLabel={columnNames.role}>{roleLabel as React.ReactNode}</Td>
         <Td isActionCell>
           <ActionsColumn items={rowActions} isDisabled={!!disableReason} />
         </Td>
