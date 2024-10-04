@@ -57,8 +57,7 @@ const MIRROR_RHCOS_LATEST_PPC =
 const MIRROR_RHCOS_LATEST_ARM =
   'https://mirror.openshift.com/pub/openshift-v4/aarch64/dependencies/rhcos/latest';
 const MIRROR_ROSA_LATEST = 'https://mirror.openshift.com/pub/openshift-v4/clients/rosa/latest';
-const MIRROR_MIRROR_REGISTRY_LATEST =
-  'https://developers.redhat.com/content-gateway/rest/mirror/pub/openshift-v4/clients/mirror-registry/latest';
+const MIRROR_MIRROR_REGISTRY_LATEST = 'https://mirror.openshift.com/pub/cgw/mirror-registry/latest';
 
 const ARGO_CD_CLI_LATEST =
   'https://developers.redhat.com/content-gateway/rest/browse/pub/openshift-v4/clients/openshift-gitops/latest/';
@@ -844,7 +843,10 @@ const urls = {
   [tools.MIRROR_REGISTRY]: {
     [channels.STABLE]: {
       [architectures.x86]: {
-        [operatingSystems.linux]: `${MIRROR_MIRROR_REGISTRY_LATEST}/mirror-registry.tar.gz`,
+        [operatingSystems.linux]: `${MIRROR_MIRROR_REGISTRY_LATEST}/mirror-registry-amd64.tar.gz`,
+      },
+      [architectures.ppc]: {
+        [operatingSystems.linux]: `${MIRROR_MIRROR_REGISTRY_LATEST}/mirror-registry-ppc64le.tar.gz`,
       },
     },
   },
