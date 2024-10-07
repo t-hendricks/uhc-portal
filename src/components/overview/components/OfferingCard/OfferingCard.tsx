@@ -75,12 +75,12 @@ function OfferingCard(props: OfferingCardProps) {
   let cardLogo: React.ReactNode | undefined;
 
   const RHOCPOfferingCardDocLinkComponent = useCallback(
-    (props) => <Link to={registerClusterURL}>Register cluster</Link>,
+    (props: any) => <Link to={registerClusterURL}>Register cluster</Link>,
     [],
   );
 
   const AWSOfferingCardDocLinkComponent = useCallback(
-    (props) => <Link to={rosaServicePageURL}>View details</Link>,
+    (props: any) => <Link to={rosaServicePageURL}>View details</Link>,
     [],
   );
 

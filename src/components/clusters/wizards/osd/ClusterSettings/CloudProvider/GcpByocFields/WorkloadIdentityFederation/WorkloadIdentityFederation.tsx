@@ -90,11 +90,11 @@ const WorkloadIdentityFederation = (props: WorkloadIdentityFederationProps) => {
           <Text component="h4">2. Select configuration</Text>
         </TextContent>
       </StackItem>
-      {error && (
+      {error ? (
         <StackItem>
           <Alert variant="danger" isInline title="Error retrieving WIF configurations" />
         </StackItem>
-      )}
+      ) : null}
       <StackItem>
         <Field
           component={WifConfigSelector}

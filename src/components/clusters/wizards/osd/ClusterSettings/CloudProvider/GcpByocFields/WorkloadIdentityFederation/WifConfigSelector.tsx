@@ -5,6 +5,7 @@ import { Button, Flex, FlexItem, FormGroup } from '@patternfly/react-core';
 import { WifConfig } from '~/components/clusters/wizards/osd/ClusterSettings/CloudProvider/tempWifTypes/WifConfig';
 import { FormGroupHelperText } from '~/components/common/FormGroupHelperText';
 import FuzzySelect, { FuzzySelectProps } from '~/components/common/FuzzySelect';
+import { ToggleEvent } from '~/types/types';
 
 interface WifConfigSelectorProps {
   wifConfigs: WifConfig[];
@@ -40,7 +41,8 @@ const WifConfigSelector = (props: WifConfigSelectorProps) => {
   }));
 
   const onToggle = useCallback(
-    (_, toggleOpenValue: boolean | ((prevState: boolean) => boolean)) => setIsOpen(toggleOpenValue),
+    (_: ToggleEvent, toggleOpenValue: boolean | ((prevState: boolean) => boolean)) =>
+      setIsOpen(toggleOpenValue),
     [],
   );
 

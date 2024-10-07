@@ -9,6 +9,7 @@ import {
   HCP_ROSA_GETTING_STARTED_PAGE,
   HCP_USE_UNMANAGED,
   HYPERSHIFT_WIZARD_FEATURE,
+  MAX_COMPUTE_NODES_500,
   MULTIREGION_PREVIEW_ENABLED,
   NETWORK_VALIDATOR_ONDEMAND_FEATURE,
   OCMUI_EDIT_BILLING_ACCOUNT,
@@ -47,6 +48,7 @@ export const features = [
   getSimpleUnleashFeature('enable-access-request', ACCESS_REQUEST_ENABLED),
   getSimpleUnleashFeature('cluster-ownership-transfer', CLUSTER_OWNERSHIP_TRANSFER),
   getSimpleUnleashFeature('gcp-workload-identity-federation', OSD_GCP_WIF),
+  getSimpleUnleashFeature('max-compute-nodes-500', MAX_COMPUTE_NODES_500),
 ];
 
 export const detectFeatures = (): AppThunk => (dispatch) => {
