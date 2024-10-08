@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import get from 'lodash/get';
 import PropTypes from 'prop-types';
 
@@ -42,218 +42,219 @@ import SubscriptionSettings from './SubscriptionSettings';
 
 import './Overview.scss';
 
-const { AssistedInstallerDetailCard, AssistedInstallerExtraDetailCard } = OCM;
+const { AssistedInstallerDetailCard } = OCM;
 
-class Overview extends React.Component {
-  state = {
-    showInstallSuccessAlert: false,
-  };
+const Overview = (props) => {
+  const {
+    cluster,
+    cloudProviders,
+    refresh,
+    insightsData,
+    userAccess,
+    hasNetworkOndemand,
+    chromeHistory,
+  } = props;
 
-  componentDidUpdate(prevProps) {
-    const { cluster } = this.props;
+  const [showInstallSuccessAlert, setShowInstallSuccessAlert] = useState(false);
+
+  const prevProps = useRef();
+
+  useEffect(() => {
     if (
-      (prevProps.cluster.state === clusterStates.INSTALLING ||
-        prevProps.cluster.state === clusterStates.PENDING ||
-        prevProps.cluster.state === clusterStates.WAITING) &&
+      prevProps.current &&
+      [clusterStates.INSTALLING, clusterStates.PENDING, clusterStates.WAITING].includes(
+        prevProps.current.cluster.state,
+      ) &&
       cluster.state === clusterStates.READY &&
       cluster.managed &&
-      prevProps.cluster.id === cluster.id
+      prevProps.current.cluster.id === cluster.id
     ) {
       // we only want to show this alert if the cluster transitioned from installing/pending
       // to Ready while the page was open.
 
       // eslint-disable-next-line react/no-did-update-set-state
-      this.setState({ showInstallSuccessAlert: true });
+      setShowInstallSuccessAlert(true);
     }
-  }
 
-  render() {
-    const {
-      cluster,
-      cloudProviders,
-      refresh,
-      insightsData,
-      userAccess,
-      hasNetworkOndemand,
-      chromeHistory,
-    } = this.props;
+    // Update prevProps to the current props after each component update
+    prevProps.current = props;
+  }, [cluster.state, cluster.managed, cluster.id, props]);
 
-    const { showInstallSuccessAlert } = this.state;
-    const isArchived =
-      get(cluster, 'subscription.status', false) === SubscriptionCommonFields.status.ARCHIVED;
-    const isDeprovisioned =
-      get(cluster, 'subscription.status', false) === SubscriptionCommonFields.status.DEPROVISIONED;
-    const metricsAvailable =
-      hasResourceUsageMetrics(cluster) &&
-      (cluster.canEdit ||
-        (cluster.state !== clusterStates.WAITING &&
-          cluster.state !== clusterStates.PENDING &&
-          cluster.state !== clusterStates.INSTALLING));
-    const metricsStatusMessage = isArchived
-      ? metricsStatusMessages.archived
-      : metricsStatusMessages[cluster.state] || metricsStatusMessages.default;
+  const isArchived =
+    get(cluster, 'subscription.status', false) === SubscriptionCommonFields.status.ARCHIVED;
+  const isDeprovisioned =
+    get(cluster, 'subscription.status', false) === SubscriptionCommonFields.status.DEPROVISIONED;
+  const metricsAvailable =
+    hasResourceUsageMetrics(cluster) &&
+    (cluster.canEdit ||
+      ![clusterStates.WAITING, clusterStates.PENDING, clusterStates.INSTALLING].includes(
+        cluster.state,
+      ));
+  const metricsStatusMessage = isArchived
+    ? metricsStatusMessages.archived
+    : metricsStatusMessages[cluster.state] || metricsStatusMessages.default;
 
-    const shouldMonitorStatus =
-      cluster.state === clusterStates.WAITING ||
-      cluster.state === clusterStates.PENDING ||
-      cluster.state === clusterStates.INSTALLING ||
-      cluster.state === clusterStates.ERROR ||
-      cluster.state === clusterStates.UNINSTALLING ||
-      (hasInflightEgressErrors(cluster) && hasNetworkOndemand);
+  const shouldMonitorStatus =
+    [
+      clusterStates.WAITING,
+      clusterStates.PENDING,
+      clusterStates.INSTALLING,
+      clusterStates.ERROR,
+      clusterStates.UNINSTALLING,
+    ].includes(cluster.state) ||
+    (hasInflightEgressErrors(cluster) && hasNetworkOndemand);
 
-    const hadInflightErrorKey = `${HAD_INFLIGHT_ERROR_LOCALSTORAGE_KEY}_${cluster.id}`;
-    const showInflightErrorIsFixed =
-      !hasInflightEgressErrors(cluster) &&
-      cluster.state !== clusterStates.ERROR &&
-      localStorage.getItem(hadInflightErrorKey) === 'true';
+  const hadInflightErrorKey = `${HAD_INFLIGHT_ERROR_LOCALSTORAGE_KEY}_${cluster.id}`;
+  const showInflightErrorIsFixed =
+    !hasInflightEgressErrors(cluster) &&
+    cluster.state !== clusterStates.ERROR &&
+    localStorage.getItem(hadInflightErrorKey) === 'true';
 
-    const showInsightsAdvisor =
-      !isRestrictedEnv() &&
-      insightsData?.status === 200 &&
-      insightsData?.data &&
-      !isDeprovisioned &&
-      !isArchived;
-    const showResourceUsage =
-      !isHibernating(cluster) &&
-      !isAssistedInstallSubscription(cluster.subscription) &&
-      !shouldShowLogs(cluster) &&
-      !isDeprovisioned &&
-      !isArchived &&
-      !isRestrictedEnv() &&
-      !hasInflightEgressErrors(cluster);
-    const showCostBreakdown =
-      !cluster.managed &&
-      userAccess.fulfilled &&
-      userAccess.data !== undefined &&
-      userAccess.data === true &&
-      !isDeprovisioned &&
-      !isArchived;
-    const showSidePanel = showInsightsAdvisor || showCostBreakdown;
-    const showAssistedInstallerDetailCard = isAvailableAssistedInstallCluster(cluster);
-    const showDetailsCard = !cluster.aiCluster || !isUninstalledAICluster(cluster);
-    const showSubscriptionSettings = !isDeprovisioned && !isArchived;
+  const showInsightsAdvisor =
+    !isRestrictedEnv() &&
+    insightsData?.status === 200 &&
+    insightsData?.data &&
+    !isDeprovisioned &&
+    !isArchived;
+  const showResourceUsage =
+    !isHibernating(cluster) &&
+    !isAssistedInstallSubscription(cluster.subscription) &&
+    !shouldShowLogs(cluster) &&
+    !isDeprovisioned &&
+    !isArchived &&
+    !isRestrictedEnv() &&
+    !hasInflightEgressErrors(cluster);
+  const showCostBreakdown =
+    !cluster.managed &&
+    userAccess.fulfilled &&
+    userAccess.data === true &&
+    !isDeprovisioned &&
+    !isArchived;
+  const showSidePanel = showInsightsAdvisor || showCostBreakdown;
+  const showAssistedInstallerDetailCard = isAvailableAssistedInstallCluster(cluster);
+  const showDetailsCard = !cluster.aiCluster || !isUninstalledAICluster(cluster);
+  const showSubscriptionSettings = !isDeprovisioned && !isArchived;
 
-    const resourceUsage = (
-      <Card className="ocm-c-overview-resource-usage__card" data-testid="resource-usage">
-        <CardTitle className="ocm-c-overview-resource-usage__card--header">
-          <Title headingLevel="h2" className="card-title">
-            Resource usage
-          </Title>
-        </CardTitle>
-        <CardBody className="ocm-c-overview-resource-usage__card--body">
-          <ResourceUsage
-            metricsAvailable={metricsAvailable}
-            metricsStatusMessage={metricsStatusMessage}
-            cpu={{
-              used: cluster.metrics.cpu.used,
-              total: cluster.metrics.cpu.total,
-            }}
-            memory={{
-              used: cluster.metrics.memory.used,
-              total: cluster.metrics.memory.total,
-            }}
-            type="threshold"
-          />
-        </CardBody>
-      </Card>
-    );
+  const resourceUsage = (
+    <Card className="ocm-c-overview-resource-usage__card" data-testid="resource-usage">
+      <CardTitle className="ocm-c-overview-resource-usage__card--header">
+        <Title headingLevel="h2" className="card-title">
+          Resource usage
+        </Title>
+      </CardTitle>
+      <CardBody className="ocm-c-overview-resource-usage__card--body">
+        <ResourceUsage
+          metricsAvailable={metricsAvailable}
+          metricsStatusMessage={metricsStatusMessage}
+          cpu={{
+            used: cluster.metrics.cpu.used,
+            total: cluster.metrics.cpu.total,
+          }}
+          memory={{
+            used: cluster.metrics.memory.used,
+            total: cluster.metrics.memory.total,
+          }}
+          type="threshold"
+        />
+      </CardBody>
+    </Card>
+  );
 
-    return (
-      <Grid hasGutter>
-        <GridItem xl2={showSidePanel ? 9 : 12}>
+  return (
+    <Grid hasGutter>
+      <GridItem xl2={showSidePanel ? 9 : 12}>
+        <Grid hasGutter>
+          {showInstallSuccessAlert && (
+            <Alert variant="success" isInline title="Cluster installed successfully" />
+          )}
+          {showInflightErrorIsFixed && (
+            <Alert
+              variant="success"
+              isInline
+              title="This cluster can now be fully-managed"
+              actionClose={
+                <AlertActionCloseButton
+                  onClose={() => {
+                    localStorage.removeItem(hadInflightErrorKey);
+                    refresh();
+                  }}
+                />
+              }
+            />
+          )}
+          {shouldMonitorStatus && <ClusterStatusMonitor refresh={refresh} cluster={cluster} />}
+
+          {showAssistedInstallerDetailCard && (
+            <AssistedInstallerDetailCard
+              permissions={getClusterAIPermissions(cluster)}
+              aiClusterId={cluster.aiCluster.id}
+              history={chromeHistory}
+              basename={ocmBaseName}
+            />
+          )}
+          {showResourceUsage && !showSidePanel && resourceUsage}
+          {showDetailsCard && (
+            <Card className="ocm-c-overview-details__card">
+              <CardTitle className="ocm-c-overview-details__card--header">
+                <Title headingLevel="h2" className="card-title">
+                  Details
+                </Title>
+              </CardTitle>
+              <CardBody className="ocm-c-overview-details__card--body">
+                <Grid>
+                  <GridItem sm={6}>
+                    <DetailsLeft
+                      cluster={cluster}
+                      cloudProviders={cloudProviders}
+                      showAssistedId={showAssistedInstallerDetailCard}
+                    />
+                  </GridItem>
+                  <GridItem sm={6}>
+                    <DetailsRight cluster={{ ...cluster }} isDeprovisioned={isDeprovisioned} />
+                  </GridItem>
+                </Grid>
+                {showAssistedInstallerDetailCard && <AssistedInstallerDetailCard />}
+              </CardBody>
+            </Card>
+          )}
+          {showSubscriptionSettings && <SubscriptionSettings />}
+        </Grid>
+      </GridItem>
+      {showSidePanel && (
+        <GridItem xl2={3}>
           <Grid hasGutter>
-            {showInstallSuccessAlert && (
-              <Alert variant="success" isInline title="Cluster installed successfully" />
+            {showResourceUsage && (
+              <GridItem sm={6} xl2={12}>
+                {resourceUsage}
+              </GridItem>
             )}
-            {showInflightErrorIsFixed && (
-              <Alert
-                variant="success"
-                isInline
-                title="This cluster can now be fully-managed"
-                actionClose={
-                  <AlertActionCloseButton
-                    onClose={() => {
-                      localStorage.removeItem(hadInflightErrorKey);
-                      refresh();
-                    }}
-                  />
-                }
-              />
+            {showInsightsAdvisor && (
+              <GridItem sm={6} xl2={12}>
+                <Card
+                  className="ocm-c-overview-advisor--card"
+                  ouiaId="insightsAdvisor"
+                  data-testid="insights-advisor"
+                >
+                  <CardBody>
+                    <InsightsAdvisor
+                      insightsData={insightsData}
+                      externalId={cluster?.external_id}
+                    />
+                  </CardBody>
+                </Card>
+              </GridItem>
             )}
-            {shouldMonitorStatus && <ClusterStatusMonitor refresh={refresh} cluster={cluster} />}
-            {showAssistedInstallerDetailCard && (
-              <AssistedInstallerDetailCard
-                permissions={getClusterAIPermissions(cluster)}
-                aiClusterId={cluster.aiCluster.id}
-                // @ts-ignore this throws a type error
-                history={chromeHistory}
-                basename={ocmBaseName}
-              />
+            {showCostBreakdown && (
+              <GridItem sm={6} xl2={12}>
+                <CostBreakdownCard clusterId={cluster.external_id} />
+              </GridItem>
             )}
-            {showResourceUsage && !showSidePanel && resourceUsage}
-            {showDetailsCard && (
-              <Card className="ocm-c-overview-details__card">
-                <CardTitle className="ocm-c-overview-details__card--header">
-                  <Title headingLevel="h2" className="card-title">
-                    Details
-                  </Title>
-                </CardTitle>
-                <CardBody className="ocm-c-overview-details__card--body">
-                  <Grid>
-                    <GridItem sm={6}>
-                      <DetailsLeft
-                        cluster={cluster}
-                        cloudProviders={cloudProviders}
-                        showAssistedId={showAssistedInstallerDetailCard}
-                      />
-                    </GridItem>
-                    <GridItem sm={6}>
-                      <DetailsRight cluster={{ ...cluster }} isDeprovisioned={isDeprovisioned} />
-                    </GridItem>
-                  </Grid>
-                  {showAssistedInstallerDetailCard && <AssistedInstallerExtraDetailCard />}
-                </CardBody>
-              </Card>
-            )}
-            {showSubscriptionSettings && <SubscriptionSettings />}
           </Grid>
         </GridItem>
-        {showSidePanel && (
-          <GridItem xl2={3}>
-            <Grid hasGutter>
-              {showResourceUsage && (
-                <GridItem sm={6} xl2={12}>
-                  {resourceUsage}
-                </GridItem>
-              )}
-              {showInsightsAdvisor && (
-                <GridItem sm={6} xl2={12}>
-                  <Card
-                    className="ocm-c-overview-advisor--card"
-                    ouiaId="insightsAdvisor"
-                    data-testid="insights-advisor"
-                  >
-                    <CardBody>
-                      <InsightsAdvisor
-                        insightsData={insightsData}
-                        externalId={cluster?.external_id}
-                      />
-                    </CardBody>
-                  </Card>
-                </GridItem>
-              )}
-              {showCostBreakdown && (
-                <GridItem sm={6} xl2={12}>
-                  <CostBreakdownCard clusterId={cluster.external_id} />
-                </GridItem>
-              )}
-            </Grid>
-          </GridItem>
-        )}
-      </Grid>
-    );
-  }
-}
+      )}
+    </Grid>
+  );
+};
 
 Overview.propTypes = {
   cluster: PropTypes.object,

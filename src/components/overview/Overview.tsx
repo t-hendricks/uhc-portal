@@ -17,7 +17,7 @@ import {
   OverviewProductBanner,
   OverviewProductBannerProps,
 } from './components/OverviewProductBanner';
-import RecommendedOperatorsCards from './components/RecommendedOperatorsCards/RecommendedOperatorsCards';
+import { RecommendedOperatorsCards } from './components/RecommendedOperatorsCards/RecommendedOperatorsCards';
 
 import './Overview.scss';
 
