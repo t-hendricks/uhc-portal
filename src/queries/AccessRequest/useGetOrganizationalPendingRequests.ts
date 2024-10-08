@@ -12,7 +12,7 @@ export const useGetOrganizationalPendingRequests = (
   const queryKey = [
     queryConstants.FETCH_ACCESS_TRANSPARENCY,
     'access request',
-    'pending',
+    'pending requests',
     organizationId,
   ];
   if (params?.page) {

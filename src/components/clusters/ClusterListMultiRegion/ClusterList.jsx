@@ -181,8 +181,8 @@ const ClusterList = ({
   }, []);
 
   /* onMount and willUnmount */
-  const preLoadRedux = React.useCallback(() => {
-    // Items not needed for this list, but may be needed elsewhere in the app
+  React.useEffect(() => {
+    // Items not needed for this list except for organization, but may be needed elsewhere in the app
     // Load these items "in the background" so they can be added to redux
     // Eventually as items are converted to React Query these items can be removed
 
@@ -215,8 +215,6 @@ const ClusterList = ({
   ]);
 
   React.useEffect(() => {
-    preLoadRedux();
-
     if (isRestrictedEnv()) {
       dispatch(
         onListFlagsSet(
