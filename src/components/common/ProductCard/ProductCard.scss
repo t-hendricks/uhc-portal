@@ -1,0 +1,8 @@
+.product-overview-card.pf-m-selectable-raised.pf-m-selected-raised:hover{
+  cursor: auto;
+}
+
+// This style should be removed as soon as App.css drops his '#clusterdetails-content .pf-v5-c-card' rule
+.pf-v5-c-card {
+  margin-top: 0 !important;
+}
