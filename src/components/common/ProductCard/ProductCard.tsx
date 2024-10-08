@@ -14,22 +14,25 @@ import {
 } from '@patternfly/react-core';
 import { OpenDrawerRightIcon } from '@patternfly/react-icons/dist/esm/icons/open-drawer-right-icon';
 
-import { DrawerPanelContentNode } from '../DrawerPanelContent';
+import { DrawerPanelContentNode } from '../../overview/components/common/DrawerPanelContent';
 
 import './ProductCard.scss';
 
-type ProductCardProps = {
+export type ProductCardNode = {
   title: string;
   description: string;
   logo?: string;
   labelText?: string;
   drawerPanelContent?: DrawerPanelContentNode;
+};
+
+type ProductCardProps = ProductCardNode & {
   openLearnMore: (title: string, content?: DrawerPanelContentNode) => void;
   isSelected: boolean;
   dataTestId: string;
 };
 
-const ProductCard = ({
+export const ProductCard = ({
   title,
   description,
   logo,
@@ -81,5 +84,3 @@ const ProductCard = ({
     </CardFooter>
   </Card>
 );
-
-export default ProductCard;
