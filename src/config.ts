@@ -86,28 +86,36 @@ const parseFakeQueryParam = () => {
 };
 
 const parseMultiRegionQueryParam = () => {
-  let ret = false;
+  let ret;
   window.location.search
     .substring(1)
     .split('&')
     .forEach((queryString) => {
       const [key, val] = queryString.split('=');
-      if (key.toLowerCase() === 'multiregion' && val === 'true') {
-        ret = true;
+      if (key.toLowerCase() === 'multiregion') {
+        if (val === 'true') {
+          ret = true;
+        } else if (val === 'false') {
+          ret = false;
+        }
       }
     });
   return ret;
 };
 
 const parseNewClusterListParam = () => {
-  let ret = false;
+  let ret;
   window.location.search
     .substring(1)
     .split('&')
     .forEach((queryString) => {
       const [key, val] = queryString.split('=');
-      if (key.toLowerCase() === 'newclusterlist' && val === 'true') {
-        ret = true;
+      if (key.toLowerCase() === 'newclusterlist') {
+        if (val === 'true') {
+          ret = true;
+        } else if (val === 'false') {
+          ret = false;
+        }
       }
     });
   return ret;
@@ -176,14 +184,30 @@ const config = {
         that.fakeOSD = true;
       }
 
-      if (parseMultiRegionQueryParam() || localStorage.getItem(MULTIREGION_LOCALSTORAGE_KEY)) {
+      if (parseMultiRegionQueryParam()) {
         that.multiRegion = true;
         localStorage.setItem(MULTIREGION_LOCALSTORAGE_KEY, 'true');
+      } else if (parseMultiRegionQueryParam() === false) {
+        that.multiRegion = false;
+        localStorage.removeItem(MULTIREGION_LOCALSTORAGE_KEY);
+      } else if (
+        parseMultiRegionQueryParam() === undefined &&
+        localStorage.getItem(MULTIREGION_LOCALSTORAGE_KEY)
+      ) {
+        that.multiRegion = localStorage.getItem(MULTIREGION_LOCALSTORAGE_KEY) === 'true';
       }
 
-      if (parseNewClusterListParam() || localStorage.getItem(NEW_CLUSTER_LIST_LOCALSTORAGE_KEY)) {
+      if (parseNewClusterListParam()) {
         that.newClusterList = true;
         localStorage.setItem(NEW_CLUSTER_LIST_LOCALSTORAGE_KEY, 'true');
+      } else if (parseNewClusterListParam() === false) {
+        that.newClusterList = false;
+        localStorage.removeItem(NEW_CLUSTER_LIST_LOCALSTORAGE_KEY);
+      } else if (
+        parseNewClusterListParam() === undefined &&
+        localStorage.getItem(NEW_CLUSTER_LIST_LOCALSTORAGE_KEY)
+      ) {
+        that.newClusterList = localStorage.getItem(NEW_CLUSTER_LIST_LOCALSTORAGE_KEY) === 'true';
       }
 
       if (parseRestrictedQueryParam()) {
