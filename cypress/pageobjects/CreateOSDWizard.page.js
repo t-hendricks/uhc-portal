@@ -308,6 +308,11 @@ class CreateOSDCluster extends Page {
     cy.get('span.pf-v5-c-button__progress', { timeout: 80000 }).should('not.exist');
   }
 
+  selectVersion(version) {
+    cy.get('button[id="version-selector"]').click();
+    cy.get('button').contains(version).click();
+  }
+
   selectVPC(vpcName) {
     cy.getByTestId('refresh-vpcs').should('be.enabled');
     cy.get('div button[id="selected_vpc"]').click({ force: true });
