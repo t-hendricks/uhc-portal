@@ -64,7 +64,12 @@ cat > cypress.env.json << EOF
 "QE_USER_ROLE_PREFIX" : "cypress-user-role",
 "QE_GCP_WIF_CONFIG" : "cypress-ocmui-wif",
 "QE_USE_OFFLINE_TOKEN" : false,
-"ROSACLI_LOGS": "cli-logs.txt"
+"ROSACLI_LOGS": "cli-logs.txt",
+"QE_INFRA_GCP": {
+  "VPC_NAME" : "ocmui-cypress-vpc",
+  "CONTROLPLANE_SUBNET" : "ocmui-cypress-first-subnet",
+  "COMPUTE_SUBNET":"ocmui-cypress-second-subnet"
+  }
 }
 EOF
 
