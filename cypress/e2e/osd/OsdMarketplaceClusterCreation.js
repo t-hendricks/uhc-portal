@@ -50,6 +50,9 @@ describe('OSD Marketplace cluster creation tests(OCP-67514)', { tags: ['smoke'] 
       cy.get(CreateOSDWizardPage.clusterNameInput).type(clusterProperties.ClusterName);
       CreateOSDWizardPage.hideClusterNameValidation();
       CreateOSDWizardPage.selectRegion(clusterProperties.Region);
+      if (clusterProperties.hasOwnProperty('Version')) {
+        CreateOSDWizardPage.selectVersion(clusterProperties.Version);
+      }
       CreateOSDWizardPage.singleZoneAvilabilityRadio().check();
       CreateOSDWizardPage.multiZoneAvilabilityRadio().check();
       CreateOSDWizardPage.selectAvailabilityZone(clusterProperties.Availability);
