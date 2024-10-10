@@ -199,7 +199,17 @@ const normalizeCluster = <C extends Cluster>(cluster: C): C => {
 
   // make sure available_upgrades are sorted
   if (cluster.version && cluster.version.available_upgrades) {
-    result.version?.available_upgrades?.sort(versionComparator);
+    // There are rare situations where when a modal is opened on the cluster list and cluster details
+    // pages the sort command below throws an error
+    // the exact cause of this error is not known but this protects the UI from crashing
+    try {
+      result.version?.available_upgrades?.sort(versionComparator);
+    } catch (error) {
+      // code should continue with unsorted items
+
+      // eslint-disable-next-line no-console
+      console.error(error);
+    }
   }
 
   return result;
