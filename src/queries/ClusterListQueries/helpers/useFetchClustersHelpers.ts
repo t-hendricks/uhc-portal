@@ -4,6 +4,7 @@ import { isEqual } from 'lodash';
 import { UseQueryOptions, UseQueryResult } from '@tanstack/react-query';
 
 import { queryClient } from '~/components/App/queryClient';
+import { useGlobalState } from '~/redux/hooks';
 import { SubscriptionCommonFields } from '~/types/accounts_mgmt.v1';
 import { ClusterWithPermissions, ViewOptions, ViewOptionsFilter } from '~/types/types';
 
@@ -82,41 +83,56 @@ export const isExistingQuery = (queries: UseQueryOptions[], queryKey: QueryKey) 
 
 const { FETCH_CLUSTERS_REFETCH_INTERVAL } = queryConstants;
 
+const getNewData = (isArchived: boolean) => {
+  queryClient.invalidateQueries({ queryKey: [queryConstants.FETCH_ACCESS_TRANSPARENCY] });
+  queryClient.invalidateQueries({
+    queryKey: [queryConstants.FETCH_CLUSTERS_QUERY_KEY, isArchived ? 'Archived' : 'Active'],
+  });
+  queryClient.invalidateQueries({
+    queryKey: [
+      queryConstants.FETCH_CLUSTERS_QUERY_KEY,
+      'authorizationsService',
+      'selfResourceReview',
+    ],
+  });
+};
+
 export const useRefetchClusterList = (isArchived: boolean) => {
-  const [refetchInterval, setRefetchInterval] = React.useState<ReturnType<typeof setInterval>>();
+  const currentTimer = React.useRef();
+  const isModalOpen = useGlobalState((state) => !!state.modal.modalName);
+  const savedIsModalOpen = React.useRef(isModalOpen);
 
-  const getNewData = () => {
-    queryClient.invalidateQueries({ queryKey: [queryConstants.FETCH_ACCESS_TRANSPARENCY] });
-    queryClient.invalidateQueries({
-      queryKey: [queryConstants.FETCH_CLUSTERS_QUERY_KEY, isArchived ? 'Archived' : 'Active'],
-    });
-    queryClient.invalidateQueries({
-      queryKey: [
-        queryConstants.FETCH_CLUSTERS_QUERY_KEY,
-        'authorizationsService',
-        'selfResourceReview',
-      ],
-    });
-  };
+  const isVisible = document.visibilityState;
+  const isOnline = navigator.onLine;
 
-  const setRefetchSchedule = () => {
-    // @ts-ignore
-    clearInterval(refetchInterval);
-    const intervalId = setInterval(() => {
-      getNewData();
-    }, FETCH_CLUSTERS_REFETCH_INTERVAL);
-    setRefetchInterval(intervalId);
-  };
+  const isVisibleAndOnline = React.useRef(true);
 
-  const refetch = () => {
-    getNewData();
-    setRefetchSchedule();
-  };
+  React.useEffect(() => {
+    savedIsModalOpen.current = isModalOpen;
+  }, [isModalOpen]);
+
+  React.useEffect(() => {
+    isVisibleAndOnline.current = isVisible === 'visible' && isOnline;
+  }, [isOnline, isVisible]);
 
   const clearRefetch = () => {
     // @ts-ignore
-    clearInterval(refetchInterval);
-    setRefetchInterval(undefined);
+    clearInterval(currentTimer.current);
+  };
+
+  const setRefetchSchedule = () => {
+    clearRefetch();
+    // @ts-ignore
+    currentTimer.current = setInterval(() => {
+      if (!savedIsModalOpen.current && isVisibleAndOnline.current) {
+        getNewData(isArchived);
+      }
+    }, FETCH_CLUSTERS_REFETCH_INTERVAL);
+  };
+
+  const refetch = () => {
+    getNewData(isArchived);
+    setRefetchSchedule();
   };
 
   return { refetch, setRefetchSchedule, clearRefetch };

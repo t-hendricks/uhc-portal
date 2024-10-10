@@ -118,6 +118,8 @@ describe('useFetchClustersHelpers', () => {
 
   describe('useRefetchClusterList', () => {
     it.skip('provides functions that set the refresh schedule', () => {});
+
+    it.skip('does not auto reload data when modal is open', () => {});
   });
 
   describe('clearQueries', () => {
