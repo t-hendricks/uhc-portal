@@ -6,7 +6,10 @@ import { waitFor } from '@testing-library/react';
 
 import { billingModels } from '~/common/subscriptionTypes';
 import { fakeWifConfigs } from '~/components/clusters/wizards/osd/ClusterSettings/CloudProvider/GcpByocFields/GcpByocFields.fixtures';
-import { WifConfigList } from '~/components/clusters/wizards/osd/ClusterSettings/CloudProvider/types';
+import {
+  GCPAuthType,
+  WifConfigList,
+} from '~/components/clusters/wizards/osd/ClusterSettings/CloudProvider/types';
 import { OSD_GCP_WIF } from '~/redux/constants/featureConstants';
 import { checkAccessibility, mockUseFeatureGate, render, screen } from '~/testUtils';
 
@@ -93,7 +96,7 @@ describe('<GcpByocFields />', () => {
     beforeEach(() => {
       mockUseFeatureGate([[OSD_GCP_WIF, true]]);
     });
-    it('should show "service account" as default auth type', async () => {
+    it('shows "service account" as default auth type', async () => {
       render(prepareComponent());
 
       expect(
@@ -110,7 +113,7 @@ describe('<GcpByocFields />', () => {
       );
     });
 
-    it('should allow switching to "service account" auth type', async () => {
+    it('allows switching to "service account" auth type', async () => {
       const { user } = render(prepareComponent());
 
       expect(
@@ -245,7 +248,7 @@ describe('<GcpByocFields />', () => {
       expect(await screen.findByText(fetchErrorMessage)).toBeInTheDocument();
     });
 
-    it('should show validation errors when required information is not provided', async () => {
+    it('shows validation errors when required information is not provided', async () => {
       const { user } = render(prepareComponent());
 
       await user.click(screen.getByRole('button', { name: workloadIdentityFederationLabel }));
@@ -266,7 +269,7 @@ describe('<GcpByocFields />', () => {
       expect(await screen.findByText('Wif configuration is required')).toBeInTheDocument();
     });
 
-    it('should allow to progress when required information is provided', async () => {
+    it('allows to progress when required information is provided', async () => {
       const { user } = render(prepareComponent());
 
       await user.click(screen.getByRole('button', { name: workloadIdentityFederationLabel }));
@@ -295,6 +298,35 @@ describe('<GcpByocFields />', () => {
         screen.queryByText(/acknowledge that you have read and completed all prerequisites\./i),
       ).not.toBeInTheDocument();
       expect(screen.queryByText('Wif configuration is required')).not.toBeInTheDocument();
+    });
+
+    it('shows a pre-selected wif config', async () => {
+      render(
+        prepareComponent({
+          [FieldId.GcpWifConfig]: fakeWifConfigs[0],
+          [FieldId.GcpAuthType]: GCPAuthType.WorkloadIdentityFederation,
+        }),
+      );
+
+      expect(await screen.findByText(`${fakeWifConfigs[0].display_name}`)).toBeInTheDocument();
+      expect(screen.queryByText('Select a configuration')).not.toBeInTheDocument();
+    });
+
+    it('resets the selected WIF config if it has been deleted and it is not in the options list', async () => {
+      const deletedWifConfig = {
+        id: 'deleted-one',
+        display_name: 'deleted-wif',
+      };
+      render(
+        prepareComponent({
+          [FieldId.GcpWifConfig]: deletedWifConfig,
+          [FieldId.GcpAuthType]: GCPAuthType.WorkloadIdentityFederation,
+        }),
+      );
+
+      expect(screen.getByRole('button', { name: 'Options menu' })).toBeInTheDocument();
+      expect(screen.queryByText(`${deletedWifConfig.display_name}`)).not.toBeInTheDocument();
+      expect(await screen.findByText('Select a configuration')).toBeInTheDocument();
     });
   });
 });
