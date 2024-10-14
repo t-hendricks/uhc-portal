@@ -226,7 +226,8 @@ function ClusterListTable(props) {
         isWaitingForOIDCProviderOrOperatorRolesMode(cluster) ||
         isOSDGCPWaitingForRolesOnHostProject(cluster)
       ) {
-        // Show a popover for manual creation of ROSA operator roles and OIDC provider.
+        // Show a popover for manual creation of ROSA operator roles and OIDC provider and for
+        // OSD GCP service accounts roles
         return (
           <ActionRequiredLink
             cluster={cluster}
