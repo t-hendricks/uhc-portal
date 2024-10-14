@@ -143,10 +143,17 @@ const isOSD = <E extends ClusterFromSubscription>(cluster: E): boolean =>
  */
 const isOSDGCPWaitingForRolesOnHostProject = <E extends ClusterFromSubscription>(
   cluster: E,
-): boolean =>
-  isOSD(cluster) &&
-  cluster?.status?.state === 'waiting' &&
-  cluster?.status?.description?.indexOf(cluster?.gcp_network?.vpc_project_id!) !== -1;
+): boolean => {
+  const vpcProjectId = cluster?.gcp_network?.vpc_project_id;
+  const statusDescription = cluster?.status?.description;
+  return (
+    isOSD(cluster) &&
+    vpcProjectId !== undefined &&
+    statusDescription !== undefined &&
+    cluster?.status?.state === ClusterState.WAITING &&
+    statusDescription.indexOf(vpcProjectId) > -1
+  );
+};
 
 /**
  *
