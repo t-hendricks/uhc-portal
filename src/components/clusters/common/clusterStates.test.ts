@@ -21,6 +21,7 @@ import clusterStates, {
   isHypershiftCluster,
   isOffline,
   isOSD,
+  isOSDGCPWaitingForRolesOnHostProject,
   isROSA,
   isWaitingForOIDCProviderOrOperatorRolesMode,
   isWaitingHypershiftCluster,
@@ -507,6 +508,87 @@ describe('getClusterStateAndDescription', () => {
 
       // Assert
       expect(inflightChecks).toStrictEqual([]);
+    });
+  });
+
+  describe('isOSDGCPWaitingForRolesOnHostProject', () => {
+    const gcpProjectID = 'test-project';
+    const defaultCluster = {
+      ...defaultClusterFromSubscription,
+      product: {
+        id: normalizedProducts.OSD,
+      },
+      gcp_network: {
+        vpc_project_id: gcpProjectID,
+      },
+      status: {
+        state: ClusterState.WAITING,
+        description: `a description with ${gcpProjectID}`,
+      },
+    };
+
+    it.each([
+      [
+        'is true if the cluster is OSD, the cluster status is "waiting" and its description contains the gcp project of the shared VPC',
+        defaultCluster,
+        true,
+      ],
+      [
+        'is false if the cluster status is "waiting" but there is no state description',
+        {
+          ...defaultCluster,
+          status: {
+            ...defaultCluster.status,
+            description: undefined,
+          },
+        },
+        false,
+      ],
+      [
+        "is false if there's no shared VPC configured",
+        {
+          ...defaultCluster,
+          gcp_network: {},
+        },
+        false,
+      ],
+      [
+        'is false if the status is "waiting" and the state description doesn\'t include the GCP project ID',
+        {
+          ...defaultCluster,
+          status: {
+            ...defaultCluster.status,
+            description: 'a description without project id',
+          },
+        },
+        false,
+      ],
+      [
+        'is false if the cluster status is not "waiting"',
+        {
+          ...defaultCluster,
+          status: {
+            ...defaultCluster.status,
+            state: ClusterState.INSTALLING,
+          },
+        },
+        false,
+      ],
+      [
+        'is false if the cluster is not OSD',
+        {
+          ...defaultCluster,
+          product: {
+            id: normalizedProducts.ROSA,
+          },
+        },
+        false,
+      ],
+    ])('%s', (_title, cluster, result) => {
+      const showPermissionsWarning = isOSDGCPWaitingForRolesOnHostProject(cluster);
+
+      // Assert
+      expect(showPermissionsWarning).toBe(result);
     });
   });
 });
