@@ -127,6 +127,7 @@ const links = {
   OSD_CCS_GCP_WIF_GCLOUD_CLI: 'https://cloud.google.com/sdk/docs/install',
   OSD_CCS_GCP_WIF_GCLOUD_CREDENTIALS:
     'https://cloud.google.com/docs/authentication/provide-credentials-adc',
+  OSD_CCS_GCP_WIF_CREATION_LEARN_MORE: `${OSD_DOCS_BASE}/osd_install_access_delete_cluster/creating-a-gcp-cluster-with-workload-identity-federation.html#create-wif-configuration_osd-creating-a-cluster-on-gcp-with-workload-identity-federation`,
   OSD_LIFE_CYCLE: `${OSD_DOCS_BASE}/osd_architecture/osd_policy/osd-life-cycle.html`,
   OSD_Z_STREAM: `${OSD_DOCS_BASE}/osd_architecture/osd_policy/osd-life-cycle.html#rosa-patch-versions_osd-life-cycle`,
   OSD_SERVICE_DEFINITION_COMPUTE: `${OSD_DOCS_BASE}/osd_architecture/osd_policy/osd-service-definition.html#instance-types_osd-service-definition`,
