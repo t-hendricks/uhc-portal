@@ -12,6 +12,7 @@ import {
   TextVariants,
 } from '@patternfly/react-core';
 
+import links from '~/common/installLinks.mjs';
 import { FieldId } from '~/components/clusters/wizards/common/constants';
 import { useFormState } from '~/components/clusters/wizards/hooks';
 import { useGetWifConfigs } from '~/components/clusters/wizards/osd/ClusterSettings/CloudProvider/GcpByocFields/WorkloadIdentityFederation/useWifConfigs';
@@ -23,6 +24,8 @@ import ExternalLink from '~/components/common/ExternalLink';
 export interface WorkloadIdentityFederationProps {
   getWifConfigsService: (projectId: string) => Promise<AxiosResponse<WifConfigList>>;
 }
+
+const createCommand = `ocm gcp create wif-config --name <wif_name> --project <gcp_project_id> --tag-enforcement=false`;
 
 const WorkloadIdentityFederation = (props: WorkloadIdentityFederationProps) => {
   const { getWifConfigsService } = props;
@@ -90,7 +93,7 @@ const WorkloadIdentityFederation = (props: WorkloadIdentityFederationProps) => {
           isCode
           isBlock
         >
-          ocm gcp create wif-config --name $WIF_NAME --project $GCP_PROJECT_ID
+          {createCommand}
         </ClipboardCopy>
       </StackItem>
       <StackItem>
@@ -98,8 +101,8 @@ const WorkloadIdentityFederation = (props: WorkloadIdentityFederationProps) => {
           <Text component={TextVariants.small}>
             This command creates all the necessary resources for deploying OSD on GCP using only
             temporary credentials. You can also run the command in manual mode.{' '}
-            <ExternalLink noIcon href="#">
-              Learn more (link TBD)
+            <ExternalLink noIcon href={links.OSD_CCS_GCP_WIF_CREATION_LEARN_MORE}>
+              Learn more
             </ExternalLink>
             .
           </Text>
