@@ -96,7 +96,7 @@ const EditMachinePoolModal = ({
   onClose,
   onSave,
   machinePoolId,
-  isEdit: isInitEdit,
+  isEdit: isInitEdit = true,
   machinePoolsResponse,
   machineTypesResponse,
   shouldDisplayClusterName,
@@ -308,10 +308,10 @@ type ConnectedEditMachinePoolModalProps = {
   clearMachinePools: boolean;
 };
 
-export const ConnectedEditMachinePoolModal = ({
+const ConnectedEditMachinePoolModal = ({
   clearMachinePools,
 }: ConnectedEditMachinePoolModalProps) => {
-  const data = useGlobalState((state) => state.modal.data);
+  const modalData = useGlobalState((state) => state.modal.data) as EditMachinePoolModalProps;
   const dispatch = useDispatch();
 
   const onModalClose = () => {
@@ -320,7 +320,7 @@ export const ConnectedEditMachinePoolModal = ({
       clearGetMachinePoolsResponse()(dispatch);
     }
   };
-  const { cluster, shouldDisplayClusterName } = data as any;
+  const { cluster, shouldDisplayClusterName } = modalData;
   const machinePoolsResponse = useMachinePools(cluster);
   const machineTypesResponse = useMachineTypes();
 
@@ -334,16 +334,18 @@ export const ConnectedEditMachinePoolModal = ({
 
   return cluster ? (
     <EditMachinePoolModal
-      isHypershift={isHypershift}
+      {...modalData}
+      isHypershift={modalData.isHypershift ?? isHypershift}
       shouldDisplayClusterName={shouldDisplayClusterName}
       cluster={cluster}
       onClose={onModalClose}
-      isEdit
-      machineTypesResponse={machineTypesResponse}
-      machinePoolsResponse={machinePoolsList}
+      machineTypesResponse={modalData.machineTypesResponse ?? machineTypesResponse}
+      machinePoolsResponse={modalData.machinePoolsResponse ?? machinePoolsList}
       onSave={() => {
-        if (!machinePoolsResponse.pending) {
-          getMachineOrNodePools(cluster.id, isHypershift, cluster.version.raw_id)(dispatch);
+        if (modalData.onSave) {
+          modalData.onSave();
+        } else if (!machinePoolsResponse.pending) {
+          getMachineOrNodePools(cluster.id, isHypershift, cluster.version?.raw_id)(dispatch);
         }
       }}
     />
@@ -352,4 +354,4 @@ export const ConnectedEditMachinePoolModal = ({
 
 ConnectedEditMachinePoolModal.modalName = modals.EDIT_MACHINE_POOL;
 
-export default EditMachinePoolModal;
+export { EditMachinePoolModal, ConnectedEditMachinePoolModal };

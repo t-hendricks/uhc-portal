@@ -2,7 +2,7 @@ import * as React from 'react';
 
 import { render, screen, within } from '~/testUtils';
 
-import EditMachinePoolModal from './EditMachinePoolModal';
+import { EditMachinePoolModal } from './EditMachinePoolModal';
 
 describe('<EditMachinePoolModal />', () => {
   describe('error state', () => {
@@ -25,6 +25,7 @@ describe('<EditMachinePoolModal />', () => {
             types: {},
             typesByID: {},
           }}
+          isEdit={false}
         />,
       );
 
@@ -55,6 +56,7 @@ describe('<EditMachinePoolModal />', () => {
             types: {},
             typesByID: {},
           }}
+          isEdit={false}
         />,
       );
 
@@ -137,6 +139,7 @@ describe('<EditMachinePoolModal />', () => {
             types: {},
             typesByID: {},
           }}
+          isEdit={false}
         />,
       );
 
@@ -311,6 +314,7 @@ describe('<EditMachinePoolModal />', () => {
             types: {},
             typesByID: {},
           }}
+          isEdit={false}
         />,
       );
 
