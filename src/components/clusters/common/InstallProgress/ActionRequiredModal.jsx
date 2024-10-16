@@ -22,7 +22,6 @@ import {
 import { useFeatureGate } from '~/hooks/useFeatureGate';
 import { MULTIREGION_PREVIEW_ENABLED } from '~/redux/constants/featureConstants';
 
-import { regionalInstanceUrl } from '../../ClusterDetailsMultiRegion/clusterDetailsHelper';
 import {
   isErrorSharedGCPVPCValues,
   isHypershiftCluster,
@@ -37,7 +36,7 @@ import ROSACLITab from './ROSACLITab';
 const ROSA_CLI_TAB_INDEX = 1;
 const AWS_CLI_TAB_INDEX = 2;
 
-function ActionRequiredModal({ cluster, isOpen, onClose }) {
+function ActionRequiredModal({ cluster, isOpen, onClose, regionalInstance }) {
   const isWaitingAndROSAManual = isWaitingROSAManualMode(cluster);
   const isHCPCluster = isHypershiftCluster(cluster);
   const isWaitingForOIDCProviderOrOperatorRoles =
@@ -50,9 +49,7 @@ function ActionRequiredModal({ cluster, isOpen, onClose }) {
     const oidcConfigID = cluster.aws.sts?.oidc_config?.id;
     const operatorRolePrefix = cluster.aws?.sts?.operator_role_prefix;
     const installerRole = cluster.aws?.sts?.role_arn;
-    const regionId = cluster.region?.id;
-
-    const rosaRegionLoginCommand = `rosa login --url https://${regionalInstanceUrl(regionId)}`;
+    const rosaRegionLoginCommand = `rosa login --url ${regionalInstance?.url}`;
     const operatorRolesCliCommand = `rosa create operator-roles ${
       isHCPCluster ? '--hosted-cp' : ''
     } --prefix "${operatorRolePrefix}" --oidc-config-id "${oidcConfigID}"  --installer-role-arn ${installerRole}`;
@@ -222,6 +219,12 @@ ActionRequiredModal.propTypes = {
   cluster: PropTypes.object.isRequired,
   isOpen: PropTypes.bool.isRequired,
   onClose: PropTypes.func.isRequired,
+  regionalInstance: PropTypes.shape({
+    environment: PropTypes.string,
+    id: PropTypes.string,
+    isDefault: PropTypes.bool,
+    url: PropTypes.string,
+  }),
 };
 
 export default ActionRequiredModal;

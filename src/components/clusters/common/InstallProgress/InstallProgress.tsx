@@ -1,5 +1,6 @@
 import React from 'react';
 
+import { AvailableRegionalInstance } from '~/queries/types';
 import { ClusterFromSubscription } from '~/types/types';
 
 import clusterStates from '../clusterStates';
@@ -10,12 +11,14 @@ interface InstallProgressProps {
   cluster: ClusterFromSubscription;
   hasInflightErrors: boolean;
   hasNetworkOndemand: boolean;
+  regionalInstance?: AvailableRegionalInstance;
 }
 
 const InstallProgress = ({
   cluster,
   hasNetworkOndemand,
   hasInflightErrors,
+  regionalInstance,
 }: InstallProgressProps) =>
   hasInflightErrors ||
   cluster.state === clusterStates.INSTALLING ||
@@ -26,6 +29,7 @@ const InstallProgress = ({
       cluster={cluster}
       hasNetworkOndemand={hasNetworkOndemand}
       actionRequiredInitialOpen
+      regionalInstance={regionalInstance}
     />
   ) : null;
 

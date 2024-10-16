@@ -32,6 +32,8 @@ import { Link } from '~/common/routing';
 import AIClusterStatus from '~/components/common/AIClusterStatus';
 import config from '~/config';
 import { useFeatureGate } from '~/hooks/useFeatureGate';
+import { findRegionalInstance } from '~/queries/helpers';
+import { useFetchGetAvailableRegionalInstances } from '~/queries/RosaWizardQueries/useFetchGetAvailableRegionalInstances';
 import { toggleSubscriptionReleased } from '~/redux/actions/subscriptionReleasedActions';
 import { MULTIREGION_PREVIEW_ENABLED } from '~/redux/constants/featureConstants';
 
@@ -116,6 +118,9 @@ function ClusterListTable(props) {
   const canTransferClusterOwnershipList = canTransferClusterOwnershipListFromClusters(clusters);
   const canHibernateClusterList = useCanHibernateClusterListFromClusters(clusters);
 
+  const { data: availableRegionalInstances } =
+    useFetchGetAvailableRegionalInstances(multiRegionFeatureGate);
+
   const getSortParams = (columnIndex) => ({
     sortBy: {
       index: activeSortIndex,
@@ -193,6 +198,12 @@ function ClusterListTable(props) {
           limitedSupport={hasLimitedSupport}
         />
       );
+
+      const regionalInstance = findRegionalInstance(
+        cluster?.region?.id,
+        availableRegionalInstances,
+      );
+
       if (state === clusterStates.ERROR) {
         return (
           <span>
@@ -232,6 +243,7 @@ function ClusterListTable(props) {
           <ActionRequiredLink
             cluster={cluster}
             icon={<ExclamationTriangleIcon color={warningColor.value} />}
+            regionalInstance={regionalInstance}
           />
         );
       }

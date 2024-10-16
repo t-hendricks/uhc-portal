@@ -237,6 +237,8 @@ const getCredentialRequests = () =>
     total?: number;
   }>('/api/clusters_mgmt/v1/aws_inquiries/sts_credential_requests');
 
+const getRegionalInstances = () => apiRequest.get(`/api/accounts_mgmt/v1/regions`);
+
 const accountsService = {
   getCurrentAccount,
   getOrganization,
@@ -263,6 +265,7 @@ const accountsService = {
   getPolicies,
   getCredentialRequests,
   searchSubscriptions,
+  getRegionalInstances,
 };
 
 export default accountsService;

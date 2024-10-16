@@ -153,12 +153,4 @@ export type ListAPIParams = {
   orderBy?: string;
 };
 
-type StaticRegionalItem = {
-  url: string;
-};
-
-export type StaticRegionalItems = {
-  [key: string]: StaticRegionalItem;
-};
-
 export type ToggleEvent = React.MouseEvent | React.ChangeEvent | React.KeyboardEvent | Event;

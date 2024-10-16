@@ -82,6 +82,7 @@ function ClusterDetailsTop(props) {
     clusterIdentityProvidersError,
     isRefetching,
     gcpOrgPolicyWarning,
+    regionalInstance,
   } = props;
 
   let topCard = null;
@@ -96,7 +97,7 @@ function ClusterDetailsTop(props) {
     !isAssistedInstallSubscription(cluster.subscription) &&
     (shouldShowLogs(cluster) || hasInflightEgressErrors(cluster))
   ) {
-    topCard = <ClusterProgressCard cluster={cluster} />;
+    topCard = <ClusterProgressCard cluster={cluster} regionalInstance={regionalInstance} />;
   }
 
   const dispatch = useDispatch();
@@ -339,6 +340,12 @@ ClusterDetailsTop.propTypes = {
   clusterIdentityProvidersError: PropTypes.bool,
   isRefetching: PropTypes.bool.isRequired,
   gcpOrgPolicyWarning: PropTypes.string,
+  regionalInstance: PropTypes.shape({
+    environment: PropTypes.string,
+    id: PropTypes.string,
+    isDefault: PropTypes.bool,
+    url: PropTypes.string,
+  }),
 };
 
 export default ClusterDetailsTop;

@@ -80,3 +80,13 @@ export type RegionalizedCloudRegion = {
   supports_hypershift?: boolean;
   is_regionalized?: boolean;
 };
+
+export type AvailableRegionalInstance = {
+  cloud_provider_id?: string;
+  href?: string;
+  id?: string;
+  kind?: string;
+  url?: string;
+  environment?: string;
+  isDefault?: boolean;
+};
