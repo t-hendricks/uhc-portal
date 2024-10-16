@@ -21,7 +21,12 @@ import ActionRequiredLink from './ActionRequiredLink';
 
 import './ProgressList.scss';
 
-function ProgressList({ cluster, actionRequiredInitialOpen, hasNetworkOndemand }) {
+function ProgressList({
+  cluster,
+  actionRequiredInitialOpen,
+  hasNetworkOndemand,
+  regionalInstance,
+}) {
   const isROSACluster = isROSA(cluster);
   const isOSDCluster = isOSD(cluster);
   const isOSDGCPPending = isOSDGCPPendingOnHostProject(cluster);
@@ -84,7 +89,7 @@ function ProgressList({ cluster, actionRequiredInitialOpen, hasNetworkOndemand }
           awsAccountSetup: completed,
           oidcAndOperatorRolesSetup: {
             variant: 'warning',
-            text: <ActionRequiredLink cluster={cluster} />,
+            text: <ActionRequiredLink cluster={cluster} regionalInstance={regionalInstance} />,
             isCurrent: true,
           },
           networkSettings: pending,
@@ -100,7 +105,11 @@ function ProgressList({ cluster, actionRequiredInitialOpen, hasNetworkOndemand }
           oidcAndOperatorRolesSetup: {
             variant: 'warning',
             text: (
-              <ActionRequiredLink cluster={cluster} initiallyOpen={actionRequiredInitialOpen} />
+              <ActionRequiredLink
+                cluster={cluster}
+                initiallyOpen={actionRequiredInitialOpen}
+                regionalInstance={regionalInstance}
+              />
             ),
             isCurrent: true,
           },
@@ -253,6 +262,12 @@ ProgressList.propTypes = {
   cluster: PropTypes.object.isRequired,
   hasNetworkOndemand: PropTypes.bool,
   actionRequiredInitialOpen: PropTypes.bool,
+  regionalInstance: PropTypes.shape({
+    environment: PropTypes.string,
+    id: PropTypes.string,
+    isDefault: PropTypes.bool,
+    url: PropTypes.string,
+  }),
 };
 
 export default ProgressList;

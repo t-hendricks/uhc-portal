@@ -52,7 +52,8 @@ import { FieldId } from '~/components/clusters/wizards/rosa/constants';
 import ExternalLink from '~/components/common/ExternalLink';
 import PopoverHint from '~/components/common/PopoverHint';
 import { useFeatureGate } from '~/hooks/useFeatureGate';
-import { formatRegionalInstanceUrl } from '~/queries/helpers';
+import { findRegionalInstance } from '~/queries/helpers';
+import { useFetchGetAvailableRegionalInstances } from '~/queries/RosaWizardQueries/useFetchGetAvailableRegionalInstances';
 import {
   refetchSearchClusterName,
   useFetchSearchClusterName,
@@ -66,9 +67,7 @@ import { MULTIREGION_PREVIEW_ENABLED } from '~/redux/constants/featureConstants'
 import { useGlobalState } from '~/redux/hooks';
 import { QuotaCostList } from '~/types/accounts_mgmt.v1';
 import { Version } from '~/types/clusters_mgmt.v1';
-import { StaticRegionalItems } from '~/types/types';
 
-import staticRegionalInstances from '../../../../../../../mockdata/api/clusters_mgmt/v1/aws_inquiries/static_regional_instances.json';
 import { MultiRegionCloudRegionSelectField } from '../../../common/ClusterSettings/Details/CloudRegionSelectField/MultiRegionCloudRegionSelectField';
 
 import { EnableExternalAuthentication } from './EnableExternalAuthentication';
@@ -124,19 +123,34 @@ function Details() {
     setIsExternalAuthExpanded(!isExternalAuthExpanded);
   };
 
-  const regionalInstances = staticRegionalInstances as StaticRegionalItems;
-
-  const findRegionalInstance = (selectedRegion: string) =>
-    regionalInstances[selectedRegion as keyof StaticRegionalItems] || regionalInstances.global;
+  const {
+    data: availableRegionalInstances,
+    isFetching: isAvailableRegionalInstancesFetching,
+    isError: isAvailableRegionalInstancesError,
+  } = useFetchGetAvailableRegionalInstances(isMultiRegionEnabled);
 
   React.useEffect(() => {
-    if (isMultiRegionEnabled) {
-      setFieldValue(FieldId.RegionalInstance, findRegionalInstance(region));
+    if (
+      isMultiRegionEnabled &&
+      availableRegionalInstances &&
+      !isAvailableRegionalInstancesFetching &&
+      !isAvailableRegionalInstancesError
+    ) {
+      setFieldValue(
+        FieldId.RegionalInstance,
+        findRegionalInstance(region, availableRegionalInstances),
+      );
     }
-    // eslint-disable-next-line  react-hooks/exhaustive-deps
-  }, [isMultiRegionEnabled, region, setFieldValue]);
+  }, [
+    isMultiRegionEnabled,
+    region,
+    availableRegionalInstances,
+    isAvailableRegionalInstancesFetching,
+    setFieldValue,
+    isAvailableRegionalInstancesError,
+  ]);
 
-  const regionSearch = formatRegionalInstanceUrl(regionalInstance?.url);
+  const regionSearch = regionalInstance?.id;
 
   const { data: hasExistingRegionalClusterName, isFetching: isSearchClusterNameFetching } =
     useFetchSearchClusterName(clusterName, regionSearch, isMultiRegionEnabled);

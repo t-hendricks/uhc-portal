@@ -6,7 +6,7 @@ import { Spinner } from '@redhat-cloud-services/frontend-components/Spinner';
 
 import { useFormState } from '~/components/clusters/wizards/hooks';
 import ErrorBox from '~/components/common/ErrorBox';
-import { useFetchRegionalizedMultiRegions } from '~/queries/RosaWizardQueries/useFetchRegionalizedMultiRegions';
+import { useFetchGetMultiRegionAvailableRegions } from '~/queries/RosaWizardQueries/useFetchGetMultiRegionAvailableRegions';
 
 import { CheckedRegion, defaultRegionID } from './validRegions';
 
@@ -32,7 +32,7 @@ export const MultiRegionCloudRegionSelectField = ({
     isError,
     error,
     isSuccess,
-  } = useFetchRegionalizedMultiRegions();
+  } = useFetchGetMultiRegionAvailableRegions();
 
   React.useEffect(() => {
     setRegions(multiRegions as CheckedRegion[]);

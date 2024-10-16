@@ -39,6 +39,8 @@ import {
   invalidateCloudProviders,
   useFetchCloudProviders,
 } from '~/queries/common/useFetchCloudProviders';
+import { findRegionalInstance } from '~/queries/helpers';
+import { useFetchGetAvailableRegionalInstances } from '~/queries/RosaWizardQueries/useFetchGetAvailableRegionalInstances';
 import {
   accessProtectionActions,
   getAccessProtection,
@@ -168,6 +170,13 @@ const ClusterDetails = (props) => {
     error: addNotificationContactError,
     status: addNotificationStatus,
   } = useAddNotificationContact(subscriptionID);
+
+  const { data: availableRegionalInstances } = useFetchGetAvailableRegionalInstances(
+    isMultiRegionPreviewEnabled,
+  );
+
+  const regionId = cluster?.region?.id;
+  const regionalInstance = findRegionalInstance(regionId, availableRegionalInstances);
 
   const externalClusterID = get(cluster, 'external_id');
 
@@ -529,6 +538,7 @@ const ClusterDetails = (props) => {
           isClusterIdentityProvidersLoading={isClusterIdentityProvidersLoading}
           clusterIdentityProvidersError={clusterIdentityProvidersError}
           gcpOrgPolicyWarning={gcpOrgPolicyWarning}
+          regionalInstance={regionalInstance}
         >
           <TabsRow
             tabsInfo={{

@@ -27,7 +27,6 @@ import { FieldId } from '~/components/clusters/wizards/rosa/constants';
 import ReduxHiddenCheckbox from '~/components/common/FormikFormComponents/HiddenCheckbox';
 import useAnalytics from '~/hooks/useAnalytics';
 import { useFeatureGate } from '~/hooks/useFeatureGate';
-import { formatRegionalInstanceUrl } from '~/queries/helpers';
 import {
   refetchGetOCMRole,
   useFetchGetOCMRole,
@@ -77,7 +76,7 @@ const ClusterRolesScreen = () => {
   const [getOCMRoleErrorBox, setGetOCMRoleErrorBox] = useState(null);
   const track = useAnalytics();
 
-  const regionSearch = formatRegionalInstanceUrl(regionalInstance?.url);
+  const regionSearch = regionalInstance?.id;
 
   const {
     data: getOCMRoleData,

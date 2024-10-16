@@ -22,6 +22,7 @@ import DownloadOcCliButton from '~/components/clusters/common/InstallProgress/Do
 import InstallProgress from '~/components/clusters/common/InstallProgress/InstallProgress';
 import UninstallProgress from '~/components/clusters/common/UninstallProgress';
 import { useFeatureGate } from '~/hooks/useFeatureGate';
+import { AvailableRegionalInstance } from '~/queries/types';
 import { NETWORK_VALIDATOR_ONDEMAND_FEATURE } from '~/redux/constants/featureConstants';
 import { ClusterFromSubscription } from '~/types/types';
 
@@ -29,9 +30,10 @@ import InstallationLogView from '../../Overview/InstallationLogView';
 
 interface ClusterProgressCardProps {
   cluster: ClusterFromSubscription;
+  regionalInstance?: AvailableRegionalInstance;
 }
 
-const ClusterProgressCard = ({ cluster }: ClusterProgressCardProps) => {
+const ClusterProgressCard = ({ cluster, regionalInstance }: ClusterProgressCardProps) => {
   const isError = cluster.state === clusterStates.ERROR;
   const isPending = cluster.state === clusterStates.PENDING;
   const isValidating = cluster.state === clusterStates.VALIDATING;
@@ -98,6 +100,7 @@ const ClusterProgressCard = ({ cluster }: ClusterProgressCardProps) => {
             cluster={cluster}
             hasNetworkOndemand={hasNetworkOndemand}
             hasInflightErrors={hasInflightErrors}
+            regionalInstance={regionalInstance}
           />
         )}
         <InstallationLogView isExpandable={!isUninstalling} cluster={cluster} />
