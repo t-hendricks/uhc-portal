@@ -4,15 +4,16 @@ import { useDispatch } from 'react-redux';
 import {
   Form,
   FormGroup,
+  MenuToggle,
+  MenuToggleElement,
+  Select,
+  SelectList,
+  SelectOption,
   Text,
   TextContent,
   TextInput,
   TextVariants,
 } from '@patternfly/react-core';
-import {
-  Select as SelectDeprecated,
-  SelectOption as SelectOptionDeprecated,
-} from '@patternfly/react-core/deprecated';
 
 import { FormGroupHelperText } from '~/components/common/FormGroupHelperText';
 import shouldShowModal from '~/components/common/Modal/ModalSelectors';
@@ -26,6 +27,8 @@ import modals from '../../../../../common/Modal/modals';
 import PopoverHint from '../../../../../common/PopoverHint';
 
 import { OCMRolesRow } from './OCMRolesRow';
+
+import './OCMRolesDialog.scss';
 
 export type OCMRolesDialogProps = {
   onSubmit: (row: OCMRolesRow, username: string, roleID: string) => void;
@@ -121,6 +124,10 @@ function OCMRolesDialog({ onSubmit, row, productId }: OCMRolesDialogProps) {
     }
   };
 
+  const onToggle = () => {
+    setIsDropdownOpen(!isDropdownOpen);
+  };
+
   // TODO OCM RBAC phase 2: add the "learn more" link of links.OCM_DOCS_ROLES_AND_ACCESS
   // and add radio selection for roles.
   const title = row.isCreating ? 'Grant role' : 'Edit role';
@@ -132,6 +139,19 @@ function OCMRolesDialog({ onSubmit, row, productId }: OCMRolesDialogProps) {
     }
     return !ocmRole.excludeProductIds.some((excludedId) => excludedId === productId);
   });
+
+  const toggle = (toggleRef: React.Ref<MenuToggleElement>) => (
+    <MenuToggle
+      ref={toggleRef}
+      onClick={onToggle}
+      isExpanded={isDropdownOpen}
+      isFullWidth
+      aria-label="roles menu"
+      className="roles-select-menu-toggle"
+    >
+      {options.find((option) => option.id === roleID)?.name}
+    </MenuToggle>
+  );
 
   return (
     <Modal
@@ -191,26 +211,23 @@ function OCMRolesDialog({ onSubmit, row, productId }: OCMRolesDialogProps) {
           <FormGroupHelperText touched error={usernameValidationMsg || APIErrorMsg} />
         </FormGroup>
         <FormGroup label="Role" isRequired>
-          <SelectDeprecated
-            onToggle={(_event, val) => setIsDropdownOpen(val)}
+          <Select
+            isOpen={isDropdownOpen}
+            selected={roleID}
+            toggle={toggle}
             onSelect={(e, selection) => {
               setRoleID(selection as string);
               setIsDropdownOpen(false);
             }}
-            selections={roleID}
-            isOpen={isDropdownOpen}
-            menuAppendTo={() => document.body}
           >
-            {options.map((option) => (
-              <SelectOptionDeprecated
-                key={option.id}
-                value={option.id}
-                description={option.description}
-              >
-                {option.name}
-              </SelectOptionDeprecated>
-            ))}
-          </SelectDeprecated>
+            <SelectList aria-label="roles">
+              {options.map((option) => (
+                <SelectOption key={option.id} value={option.id} description={option.description}>
+                  {option.name}
+                </SelectOption>
+              ))}
+            </SelectList>
+          </Select>
         </FormGroup>
       </Form>
     </Modal>
