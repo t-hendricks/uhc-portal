@@ -311,15 +311,27 @@ describe('<MachinePools />', () => {
 
   describe('add machine pool', () => {
     it('should open modal', async () => {
-      const { user } = render(<MachinePools {...defaultProps} />);
-      expect(
-        screen.queryByRole('dialog', { name: 'Add machine pool Add machine pool' }),
-      ).not.toBeInTheDocument();
+      // Arrange
+      const openModalMockFn = jest.fn();
+      const { user } = render(<MachinePools {...defaultProps} openModal={openModalMockFn} />);
+
+      expect(openModalMockFn).toHaveBeenCalledTimes(0);
+
+      // Act
       await user.click(screen.getByRole('button', { name: 'Add machine pool' }));
-      // TODO: The name of the modal should be changed - this is an accessibility issues
-      expect(
-        screen.getByRole('dialog', { name: 'Add machine pool Add machine pool' }),
-      ).toBeInTheDocument();
+
+      // Assert
+      expect(openModalMockFn).toHaveBeenCalledTimes(1);
+      expect(openModalMockFn).toHaveBeenCalledWith('edit-machine-pool', {
+        cluster: expect.any(Object),
+        isEdit: false,
+        isHypershift: false,
+        machinePoolId: undefined,
+        machinePoolsResponse: expect.any(Object),
+        machineTypesResponse: {},
+        onClose: expect.any(Function),
+        onSave: expect.any(Function),
+      });
     });
 
     it('should not allow adding machine pools to users without enough quota', async () => {

@@ -45,7 +45,6 @@ import clusterStates, {
 } from '../../../common/clusterStates';
 
 import DeleteMachinePoolModal from './components/DeleteMachinePoolModal/DeleteMachinePoolModal';
-import EditMachinePoolModal from './components/EditMachinePoolModal/EditMachinePoolModal';
 import MachinePoolExpandedRow from './components/MachinePoolExpandedRow';
 import MachinePoolNodesSummary from './MachinePoolNodesSummary';
 import {
@@ -78,8 +77,6 @@ const initialState = {
   deletedRowIndex: null,
   openedRows: [],
   hideDeleteMachinePoolError: false,
-  editMachinePoolId: undefined,
-  addMachinePool: false,
   showMachinePoolsConfigModal: false,
 };
 
@@ -193,14 +190,8 @@ class MachinePools extends React.Component {
       canBypassPIDsLimit,
     } = this.props;
 
-    const {
-      deletedRowIndex,
-      openedRows,
-      hideDeleteMachinePoolError,
-      addMachinePool,
-      editMachinePoolId,
-      showMachinePoolsConfigModal,
-    } = this.state;
+    const { deletedRowIndex, openedRows, hideDeleteMachinePoolError, showMachinePoolsConfigModal } =
+      this.state;
     const machinePoolsActions = cluster?.machinePoolsActions || {}; // Data not defined on the cluster list response
     const hasMachinePools = !!machinePoolsList.data.length;
     const isMultiZoneCluster = isMultiAZ(cluster);
@@ -378,12 +369,19 @@ class MachinePools extends React.Component {
       });
     };
 
-    const onClickEdit = (_, __, rowData) =>
-      this.setState(
-        produce((draft) => {
-          draft.editMachinePoolId = rowData.machinePool.id;
-        }),
-      );
+    const openEditMachinePoolModal = (machinePoolId) =>
+      openModal(modals.EDIT_MACHINE_POOL, {
+        cluster,
+        onSave: refreshMachinePools,
+        onClose: () => {},
+        isHypershift,
+        machinePoolId,
+        isEdit: machinePoolId !== undefined,
+        machinePoolsResponse: machinePoolsList,
+        machineTypesResponse: machineTypes,
+      });
+
+    const onClickEdit = (_, __, rowData) => openEditMachinePoolModal(rowData.machinePool.id);
 
     const onClickUpdateAction = (_, __, rowData) =>
       openModal(modals.UPDATE_MACHINE_POOL_VERSION, {
@@ -447,13 +445,7 @@ class MachinePools extends React.Component {
                           quotaReason
                         }
                         id="add-machine-pool"
-                        onClick={() =>
-                          this.setState(
-                            produce((draft) => {
-                              draft.addMachinePool = true;
-                            }),
-                          )
-                        }
+                        onClick={() => openEditMachinePoolModal(undefined)}
                         variant={ButtonVariant.secondary}
                       >
                         Add machine pool
@@ -538,24 +530,6 @@ class MachinePools extends React.Component {
           </>
         )}
         {isDeleteMachinePoolModalOpen && <DeleteMachinePoolModal />}
-        {(!!editMachinePoolId || addMachinePool) && (
-          <EditMachinePoolModal
-            cluster={cluster}
-            onSave={refreshMachinePools}
-            onClose={() =>
-              this.setState(
-                produce((draft) => {
-                  draft.editMachinePoolId = undefined;
-                  draft.addMachinePool = false;
-                }),
-              )
-            }
-            isHypershift={isHypershift}
-            machinePoolId={editMachinePoolId}
-            machinePoolsResponse={machinePoolsList}
-            machineTypesResponse={machineTypes}
-          />
-        )}
         <UpdateMachinePoolModal />
         {isClusterAutoscalingModalOpen && (
           <EditClusterAutoScalerForDay2
