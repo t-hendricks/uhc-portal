@@ -41,24 +41,30 @@ import {
   IDPTypeNames,
 } from '../../IdentityProvidersPage/IdentityProvidersHelper';
 
-const IDPSection = ({
-  clusterID,
-  clusterUrls,
-  idpActions = {},
-  clusterHibernating,
-  isReadOnly,
-  isHypershift,
-  subscriptionID,
-}) => {
+const IDPSection = (props) => {
+  const {
+    clusterID,
+    clusterUrls,
+    idpActions = {},
+    clusterHibernating,
+    isReadOnly,
+    isHypershift,
+    subscriptionID,
+    cluster,
+  } = props;
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [dropdownOpen, setDropdownOpen] = React.useState(false);
 
+  const region = cluster?.subscription?.xcm_id;
+
   const {
-    clusterIdentityProviders: identityProviders,
+    clusterIdentityProviders: identityProvidersData,
     isLoading: isIdentityProvidersLoading,
     isError: isIdentityProvidersError,
-  } = useFetchClusterIdentityProviders(clusterID);
+  } = useFetchClusterIdentityProviders(clusterID, region);
+
+  const identityProviders = identityProvidersData?.items;
 
   const learnMoreLink = (
     <a rel="noopener noreferrer" href={links.UNDERSTANDING_IDENTITY_PROVIDER} target="_blank">
@@ -66,7 +72,7 @@ const IDPSection = ({
     </a>
   );
 
-  const pending = (!identityProviders && !isIdentityProvidersError) || isIdentityProvidersLoading;
+  const pending = isIdentityProvidersLoading && !isIdentityProvidersError;
 
   const hasIDPs = !!identityProviders?.length;
 
@@ -83,7 +89,15 @@ const IDPSection = ({
       {Object.values(IDPTypeNames).map((idpName) => (
         <DropdownItem
           key={idpName}
-          onClick={() => navigate(`/details/s/${subscriptionID}/add-idp/${idpName.toLowerCase()}`)}
+          onClick={() =>
+            navigate(`/details/s/${subscriptionID}/add-idp/${idpName.toLowerCase()}`, {
+              state: {
+                cluster,
+                clusterIDPs: identityProviders,
+                subscriptionID,
+              },
+            })
+          }
         >
           {idpName}
         </DropdownItem>
@@ -145,6 +159,7 @@ const IDPSection = ({
             idpID: idp.id,
             idpName: idp.name,
             idpType: IDPTypeNames[idp.type],
+            region,
           }),
         );
       },
@@ -227,21 +242,22 @@ const IDPSection = ({
 };
 
 IDPSection.propTypes = {
-  clusterID: PropTypes.string.isRequired,
+  cluster: PropTypes.object,
+  clusterID: PropTypes.string,
   clusterUrls: PropTypes.shape({
     console: PropTypes.string,
     api: PropTypes.string,
-  }).isRequired,
+  }),
   idpActions: PropTypes.shape({
     get: PropTypes.bool,
     list: PropTypes.bool,
     create: PropTypes.bool,
     update: PropTypes.bool,
     delete: PropTypes.bool,
-  }).isRequired,
-  clusterHibernating: PropTypes.bool.isRequired,
-  isReadOnly: PropTypes.bool.isRequired,
-  isHypershift: PropTypes.bool.isRequired,
+  }),
+  clusterHibernating: PropTypes.bool,
+  isReadOnly: PropTypes.bool,
+  isHypershift: PropTypes.bool,
   subscriptionID: PropTypes.string,
 };
 

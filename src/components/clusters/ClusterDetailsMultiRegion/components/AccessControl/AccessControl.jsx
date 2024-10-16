@@ -111,6 +111,8 @@ function AccessControl({ cluster, refreshEvent = null }) {
               idpActions={cluster.idpActions}
               clusterHibernating={isHibernating(cluster)}
               isReadOnly={isReadOnly}
+              subscriptionID={subscriptionID}
+              cluster={cluster}
             />
           </Tab>
           <Tab

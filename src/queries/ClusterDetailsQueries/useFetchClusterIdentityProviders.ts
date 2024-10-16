@@ -1,3 +1,5 @@
+import get from 'lodash/get';
+
 import { useQuery } from '@tanstack/react-query';
 
 import { queryClient } from '~/components/App/queryClient';
@@ -9,9 +11,15 @@ import { queryConstants } from '../queriesConstants';
 /**
  * Query for invalidating cluster IDPs (refetch)
  */
-export const invalidateClusterIdentityProviders = (clusterID?: string) => {
+export const refetchClusterIdentityProviders = (clusterID: string, region?: string) => {
   queryClient.invalidateQueries({
-    queryKey: ['clusterIdentityProviders', 'clusterService', clusterID],
+    queryKey: [
+      queryConstants.FETCH_CLUSTER_DETAILS_QUERY_KEY,
+      'clusterIdentityProviders',
+      'clusterService',
+      clusterID,
+      region,
+    ],
   });
 };
 
@@ -22,7 +30,7 @@ export const invalidateClusterIdentityProviders = (clusterID?: string) => {
  * @returns cluster IDPs list
  */
 export const useFetchClusterIdentityProviders = (clusterID: string, region?: string) => {
-  const { isLoading, data, isError, error } = useQuery({
+  const { isLoading, data, isError, error, isSuccess } = useQuery({
     queryKey: [
       queryConstants.FETCH_CLUSTER_DETAILS_QUERY_KEY,
       'clusterIdentityProviders',
@@ -33,10 +41,18 @@ export const useFetchClusterIdentityProviders = (clusterID: string, region?: str
     queryFn: async () => {
       if (region) {
         const clusterService = getClusterServiceForRegion(region);
-        const response = await clusterService.getIdentityProviders(clusterID);
+        const response = clusterService.getIdentityProviders(clusterID).then((res) => {
+          // eslint-disable-next-line no-param-reassign
+          (res.data as any).items = get(res.data, 'items', []);
+          return res;
+        });
         return response;
       }
-      const response = await clusterService.getIdentityProviders(clusterID);
+      const response = clusterService.getIdentityProviders(clusterID).then((res) => {
+        // eslint-disable-next-line no-param-reassign
+        (res.data as any).items = get(res.data, 'items', []);
+        return res;
+      });
 
       return response;
     },
@@ -51,6 +67,7 @@ export const useFetchClusterIdentityProviders = (clusterID: string, region?: str
       isError,
       isLoading,
       error: formattedError,
+      isSuccess,
     };
   }
 
@@ -59,5 +76,6 @@ export const useFetchClusterIdentityProviders = (clusterID: string, region?: str
     clusterIdentityProviders: data?.data,
     isError,
     error,
+    isSuccess,
   };
 };

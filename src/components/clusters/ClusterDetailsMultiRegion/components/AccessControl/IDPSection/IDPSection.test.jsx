@@ -3,6 +3,8 @@ import React from 'react';
 import { useFetchClusterIdentityProviders } from '~/queries/ClusterDetailsQueries/useFetchClusterIdentityProviders';
 import { checkAccessibility, render, screen } from '~/testUtils';
 
+import fixtures from '../../../__tests__/ClusterDetails.fixtures';
+
 import IDPSection from './IDPSection';
 
 jest.mock('~/queries/ClusterDetailsQueries/useFetchClusterIdentityProviders', () => ({
@@ -23,11 +25,12 @@ const clusterUrls = {
 
 const openModal = jest.fn();
 const props = {
+  cluster: fixtures.clusterDetails.cluster,
   idpActions: {
     list: true,
   },
-  clusterID: 'fake id',
-  subscriptionID: 'fake sub',
+  clusterID: '1i4counta3holamvo1g5tp6n8p3a03bq',
+  subscriptionID: '1msoogsgTLQ4PePjrTOt3UqvMzX',
   identityProviders: baseIDPs,
   clusterHibernating: false,
   isReadOnly: false,
@@ -37,6 +40,9 @@ const props = {
 };
 
 describe('<IDPSection />', () => {
+  beforeEach(() => {
+    jest.clearAllMocks();
+  });
   const useFetchClusterIdentityProvidersMock = useFetchClusterIdentityProviders;
 
   it('should render (no IDPs)', async () => {
@@ -66,18 +72,20 @@ describe('<IDPSection />', () => {
   describe('should render (with IDPs)', () => {
     it('non-Hypershift cluster', async () => {
       useFetchClusterIdentityProvidersMock.mockReturnValue({
-        clusterIdentityProviders: [
-          {
-            name: 'hello',
-            type: 'GithubIdentityProvider',
-            id: 'id1',
-          },
-          {
-            name: 'hi',
-            type: 'GoogleIdentityProvider',
-            id: 'id2',
-          },
-        ],
+        clusterIdentityProviders: {
+          items: [
+            {
+              name: 'hello',
+              type: 'GithubIdentityProvider',
+              id: 'id1',
+            },
+            {
+              name: 'hi',
+              type: 'GoogleIdentityProvider',
+              id: 'id2',
+            },
+          ],
+        },
         isLoading: false,
         isError: false,
       });
@@ -92,18 +100,20 @@ describe('<IDPSection />', () => {
 
     it('Hypershift cluster', async () => {
       useFetchClusterIdentityProvidersMock.mockReturnValue({
-        clusterIdentityProviders: [
-          {
-            name: 'hello',
-            type: 'GithubIdentityProvider',
-            id: 'id1',
-          },
-          {
-            name: 'hi',
-            type: 'GoogleIdentityProvider',
-            id: 'id2',
-          },
-        ],
+        clusterIdentityProviders: {
+          items: [
+            {
+              name: 'hello',
+              type: 'GithubIdentityProvider',
+              id: 'id1',
+            },
+            {
+              name: 'hi',
+              type: 'GoogleIdentityProvider',
+              id: 'id2',
+            },
+          ],
+        },
         isLoading: false,
         isError: false,
       });
