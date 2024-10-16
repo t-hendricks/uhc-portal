@@ -17,7 +17,10 @@ import { useFetchUpgradeGates } from './useFetchUpgradeGates';
  * Function responsible for invalidation of cluster details (refetch)
  */
 export const invalidateClusterDetailsQueries = () => {
-  queryClient.invalidateQueries({ queryKey: [queryConstants.FETCH_CLUSTER_DETAILS_QUERY_KEY] });
+  queryClient.invalidateQueries({
+    predicate: (query) =>
+      query.queryKey.some((key) => key === queryConstants.FETCH_CLUSTER_DETAILS_QUERY_KEY),
+  });
 };
 
 /**
