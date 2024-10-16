@@ -31,7 +31,7 @@ import {
   useFetchClusterDetails,
 } from '~/queries/ClusterDetailsQueries/useFetchClusterDetails';
 import {
-  invalidateClusterIdentityProviders,
+  refetchClusterIdentityProviders,
   useFetchClusterIdentityProviders,
 } from '~/queries/ClusterDetailsQueries/useFetchClusterIdentityProviders';
 import { refetchClusterLogsQueries } from '~/queries/ClusterLogsQueries/useFetchClusterLogs';
@@ -53,6 +53,8 @@ import { clusterAutoscalerActions } from '~/redux/actions/clusterAutoscalerActio
 import { onResetFiltersAndFlags } from '~/redux/actions/viewOptionsActions';
 import { useGlobalState } from '~/redux/hooks/useGlobalState';
 import { isRestrictedEnv } from '~/restrictedEnv';
+// TODO: Commented out for respective tabs stories
+// import UpgradeSettingsTab from '../ClusterDetailsMultiRegion/components/UpgradeSettings';
 import { SubscriptionCommonFields } from '~/types/accounts_mgmt.v1';
 
 // TODO: Commented out for respective tabs stories
@@ -97,23 +99,13 @@ import CancelUpgradeModal from '../commonMultiRegion/Upgrades/CancelUpgradeModal
 import AccessControl from './components/AccessControl/AccessControl';
 import { getGrants } from './components/AccessControl/NetworkSelfServiceSection/NetworkSelfServiceActions';
 import usersActions from './components/AccessControl/UsersSection/UsersActions';
-// import AccessControl from '../ClusterDetailsMultiRegion/components/AccessControl/AccessControl';
-// import Networking from '../ClusterDetailsMultiRegion/components/Networking';
-// import Monitoring from '../ClusterDetailsMultiRegion/components/Monitoring';
-// import MachinePools from '../ClusterDetailsMultiRegion/components/MachinePools';
 import AddOns from './components/AddOns';
 import { getAddOns, getClusterAddOns } from './components/AddOns/AddOnsActions';
 import ClusterDetailsTop from './components/ClusterDetailsTop/ClusterDetailsTop';
-// import AddOns from '../ClusterDetailsMultiRegion/components/AddOns';
 import ClusterLogs from './components/ClusterLogs/ClusterLogs';
 import { ClusterTabsId } from './components/common/ClusterTabIds';
 import DeleteIDPDialog from './components/DeleteIDPDialog';
 import { fetchClusterInsights } from './components/Insights/InsightsActions';
-// TODO: Commented out for respective tabs stories
-// import UpgradeSettingsTab from '../ClusterDetailsMultiRegion/components/UpgradeSettings';
-// import AccessControl from '../ClusterDetailsMultiRegion/components/AccessControl/AccessControl';
-// import Support from '../ClusterDetailsMultiRegion/components/Support';
-// import Networking from '../ClusterDetailsMultiRegion/components/Networking';
 import MachinePools from './components/MachinePools';
 import {
   clearGetMachinePoolsResponse,
@@ -262,7 +254,7 @@ const ClusterDetails = (props) => {
       !isClusterIdentityProvidersLoading &&
       !clusterIdentityProvidersError
     ) {
-      invalidateClusterIdentityProviders(clusterID);
+      refetchClusterIdentityProviders(clusterID);
     }
   };
 
@@ -341,7 +333,7 @@ const ClusterDetails = (props) => {
     dispatch(getUserAccess({ type: 'OCP' }));
 
     return () => {
-      invalidateClusterIdentityProviders();
+      refetchClusterIdentityProviders();
       dispatch(modalActions.closeModal());
       refetchClusterLogsQueries();
 
