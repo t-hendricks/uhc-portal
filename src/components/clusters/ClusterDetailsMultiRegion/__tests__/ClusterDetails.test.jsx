@@ -45,7 +45,7 @@ jest.mock('../../../../queries/common/useFetchCloudProviders', () => ({
 }));
 jest.mock('../../../../queries/ClusterDetailsQueries/useFetchClusterIdentityProviders', () => ({
   useFetchClusterIdentityProviders: jest.fn(),
-  invalidateClusterIdentityProviders: jest.fn(),
+  refetchClusterIdentityProviders: jest.fn(),
 }));
 
 const initialState = {
