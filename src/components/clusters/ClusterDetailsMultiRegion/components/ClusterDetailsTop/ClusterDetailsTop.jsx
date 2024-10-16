@@ -22,7 +22,6 @@ import RefreshButton from '~/components/common/RefreshButton/RefreshButton';
 import { refreshClusterDetails } from '~/queries/refreshEntireCache';
 import { SubscriptionCommonFields } from '~/types/accounts_mgmt.v1';
 
-import ClusterActionsDropdown from '../../../common/ClusterActionsDropdown';
 import clusterStates, {
   hasInflightEgressErrors,
   isHibernating,
@@ -30,6 +29,7 @@ import clusterStates, {
 } from '../../../common/clusterStates';
 import ErrorTriangle from '../../../common/ErrorTriangle';
 import HibernatingClusterCard from '../../../common/HibernatingClusterCard/HibernatingClusterCard';
+import ClusterActionsDropdown from '../../../commonMultiRegion/ClusterActionsDropdown';
 import { shouldShowLogs } from '../Overview/InstallationLogView';
 
 import ClusterNonEditableAlert from './components/ClusterNonEditableAlert';
@@ -262,7 +262,7 @@ function ClusterDetailsTop(props) {
             {!isArchived && !isDeprovisioned ? (
               <>
                 {launchConsole}
-                {/* {actions} */}
+                {actions}
               </>
             ) : (
               !isDeprovisioned && unarchiveBtn
