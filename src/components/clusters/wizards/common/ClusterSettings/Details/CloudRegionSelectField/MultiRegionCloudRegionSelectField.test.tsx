@@ -6,13 +6,13 @@ import { waitFor } from '@testing-library/react';
 import { multiRegions } from '~/common/__tests__/regions.fixtures';
 import { CloudProviderType } from '~/components/clusters/wizards/common';
 import { FieldId, initialValues } from '~/components/clusters/wizards/rosa/constants';
-import { useFetchRegionalizedMultiRegions } from '~/queries/RosaWizardQueries/useFetchRegionalizedMultiRegions';
+import { useFetchGetMultiRegionAvailableRegions } from '~/queries/RosaWizardQueries/useFetchGetMultiRegionAvailableRegions';
 import { render, screen } from '~/testUtils';
 
 import { MultiRegionCloudRegionSelectField } from './MultiRegionCloudRegionSelectField';
 
-jest.mock('~/queries/RosaWizardQueries/useFetchRegionalizedMultiRegions', () => ({
-  useFetchRegionalizedMultiRegions: jest.fn(),
+jest.mock('~/queries/RosaWizardQueries/useFetchGetMultiRegionAvailableRegions', () => ({
+  useFetchGetMultiRegionAvailableRegions: jest.fn(),
 }));
 
 describe('<MultiRegionCloudRegionSeletField />', () => {
@@ -29,10 +29,10 @@ describe('<MultiRegionCloudRegionSeletField />', () => {
     cloudProviderID: CloudProviderType.Aws,
   };
 
-  const mockedUseFetchRegionalizedMultiRegions = useFetchRegionalizedMultiRegions;
+  const mockedUseFetchGetMultiRegionAvailableRegions = useFetchGetMultiRegionAvailableRegions;
 
   it('displays a spinner while regions are fetching', async () => {
-    (mockedUseFetchRegionalizedMultiRegions as jest.Mock).mockReturnValue({
+    (mockedUseFetchGetMultiRegionAvailableRegions as jest.Mock).mockReturnValue({
       data: undefined,
       error: undefined,
       isError: false,
@@ -49,7 +49,7 @@ describe('<MultiRegionCloudRegionSeletField />', () => {
   });
 
   it('displays the error box when query fails', async () => {
-    (mockedUseFetchRegionalizedMultiRegions as jest.Mock).mockReturnValue({
+    (mockedUseFetchGetMultiRegionAvailableRegions as jest.Mock).mockReturnValue({
       data: undefined,
       error: true,
       isError: true,
@@ -66,7 +66,7 @@ describe('<MultiRegionCloudRegionSeletField />', () => {
   });
 
   it('displays the available regions when they are loaded', async () => {
-    (mockedUseFetchRegionalizedMultiRegions as jest.Mock).mockReturnValue({
+    (mockedUseFetchGetMultiRegionAvailableRegions as jest.Mock).mockReturnValue({
       data: multiRegions,
       error: false,
       isFetching: false,
