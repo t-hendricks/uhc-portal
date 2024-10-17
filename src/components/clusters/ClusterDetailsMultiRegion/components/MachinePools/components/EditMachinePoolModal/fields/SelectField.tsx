@@ -1,58 +1,36 @@
 import * as React from 'react';
 
 import {
-  MenuToggle,
-  MenuToggleElement,
-  Select,
-  SelectList,
-  SelectProps,
-} from '@patternfly/react-core';
-
-import './SelectField.scss';
+  Select as SelectDeprecated,
+  SelectProps as SelectPropsDeprecated,
+} from '@patternfly/react-core/deprecated';
 
 type SelectFieldProps = {
   value: string | undefined;
   fieldId: string;
   onSelect: (value: string) => void;
   isDisabled?: boolean;
-  children: SelectProps['children'];
+  children: SelectPropsDeprecated['children'];
 };
 
 const SelectField = ({ value, fieldId, onSelect, isDisabled, children }: SelectFieldProps) => {
   const [isOpen, setIsOpen] = React.useState(false);
-
-  const onToggle = () => {
-    setIsOpen(!isOpen);
-  };
-
-  const toggle = (toggleRef: React.Ref<MenuToggleElement>) => (
-    <MenuToggle
-      isDisabled={isDisabled}
-      ref={toggleRef}
-      onClick={onToggle}
-      isExpanded={isOpen}
-      isFullWidth
-      aria-label="select menu"
-      className="select-field-menu-toggle"
-    >
-      {value}
-    </MenuToggle>
-  );
-
   return (
-    <Select
-      isOpen={isOpen}
-      selected={value}
-      toggle={toggle}
+    <SelectDeprecated
+      selections={value}
+      id={fieldId}
       onSelect={(_, newValue) => {
         onSelect(newValue as string);
         setIsOpen(false);
       }}
-      onOpenChange={(isOpen) => setIsOpen(isOpen)}
-      id={fieldId}
+      isDisabled={isDisabled}
+      isOpen={isOpen}
+      onToggle={(_, isOpen) => setIsOpen(isOpen)}
+      menuAppendTo={document.getElementById('edit-mp-modal') || undefined}
+      maxHeight={300}
     >
-      <SelectList>{children}</SelectList>
-    </Select>
+      {children}
+    </SelectDeprecated>
   );
 };
 
