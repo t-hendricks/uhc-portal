@@ -13,7 +13,6 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
-
 import React, { Component } from 'react';
 import isEmpty from 'lodash/isEmpty';
 import size from 'lodash/size';
@@ -27,7 +26,12 @@ import { ONLY_MY_CLUSTERS_TOGGLE_CLUSTER_ARCHIVES_LIST } from '~/common/localSto
 import { Link } from '~/common/routing';
 import { AppPage } from '~/components/App/AppPage';
 
-import { createViewQueryObject, viewPropsChanged } from '../../../common/queryHelpers';
+import {
+  createViewQueryObject,
+  getQueryParam,
+  viewPropsChanged,
+} from '../../../common/queryHelpers';
+import { productFilterOptions } from '../../../common/subscriptionTypes';
 import { viewConstants } from '../../../redux/constants';
 import Breadcrumbs from '../../common/Breadcrumbs';
 import ConnectedModal from '../../common/Modal/ConnectedModal';
@@ -64,6 +68,20 @@ class ArchivedClusterList extends Component {
 
     if (!cloudProviders.fulfilled && !cloudProviders.pending) {
       getCloudProviders();
+    }
+
+    const planIDFilter = getQueryParam('plan_id') || '';
+
+    if (!isEmpty(planIDFilter)) {
+      const allowedProducts = {};
+      productFilterOptions.forEach((option) => {
+        allowedProducts[option.key] = true;
+      });
+      const sanitizedFilter = planIDFilter.split(',').filter((value) => allowedProducts[value]);
+
+      setListFlag('subscriptionFilter', {
+        plan_id: sanitizedFilter,
+      });
     }
   }
 

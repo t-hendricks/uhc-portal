@@ -99,13 +99,14 @@ const ClusterList = ({
   closeModal,
   clearGlobalError,
   openModal,
+  getMultiRegion,
 }) => {
   const dispatch = useDispatch();
   const viewType = viewConstants.ARCHIVED_CLUSTERS_VIEW;
   const isArchived = true;
   const { isLoading, data, refetch, isError, errors, isFetching, isFetched } = useFetchClusters(
     isArchived,
-    true,
+    getMultiRegion,
   );
 
   const clusters = data?.items;
@@ -376,6 +377,7 @@ ClusterList.propTypes = {
   cloudProviders: PropTypes.object.isRequired,
   openModal: PropTypes.func.isRequired,
   closeModal: PropTypes.func.isRequired,
+  getMultiRegion: PropTypes.bool,
 
   queryParams: PropTypes.shape({
     has_filters: PropTypes.bool,
