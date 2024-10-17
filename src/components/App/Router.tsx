@@ -414,7 +414,13 @@ const Router: React.FC<RouterProps> = ({ planType, clusterId, externalClusterId 
         <Route
           path="/archived"
           element={
-            config.newClusterList ? <ArchivedClusterListMultiRegion /> : <ArchivedClusterList />
+            config.newClusterList || (config.multiRegion && isMultiRegionPreviewEnabled) ? (
+              <ArchivedClusterListMultiRegion
+                getMultiRegion={config.multiRegion && isMultiRegionPreviewEnabled}
+              />
+            ) : (
+              <ArchivedClusterList />
+            )
           }
         />
         <Route path="/dashboard" element={<Dashboard />} />
