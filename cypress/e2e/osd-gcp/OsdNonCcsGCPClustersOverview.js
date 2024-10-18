@@ -1,7 +1,7 @@
 import ClusterListPage from '../../pageobjects/ClusterList.page';
 import ClusterDetailsPage from '../../pageobjects/ClusterDetails.page';
 
-const clusterDetails = require('../../fixtures/osd/OsdNonCcsGCPClusterCreate.json');
+const clusterDetails = require('../../fixtures/osd-gcp/OsdNonCcsGCPClusterCreate.json');
 const clusterProfiles = ['osd-nonccs-gcp-multizone', 'osd-nonccs-gcp-singlezone'];
 
 describe(
