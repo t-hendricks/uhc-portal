@@ -322,6 +322,29 @@ class CreateOSDCluster extends Page {
       .type(vpcName);
     cy.contains(vpcName).scrollIntoView().click();
   }
+  selectGcpVPC(vpcName) {
+    cy.get('select[aria-label="Existing VPC name"]').select(vpcName);
+  }
+
+  selectControlPlaneSubnetName(subnetName) {
+    cy.get('select[aria-label="Control plane subnet name"]').select(subnetName);
+  }
+
+  selectComputeSubnetName(subnetName) {
+    cy.get('select[aria-label="Compute subnet name"]').select(subnetName);
+  }
+
+  selectKeylocation(location) {
+    cy.get('select[aria-label="KMS location"]').select(location);
+  }
+
+  selectKeyRing(keyring) {
+    cy.get('select[aria-label="Key ring"]').select(keyring);
+  }
+
+  selectKeyName(keyname) {
+    cy.get('select[aria-label="Key name"]').select(keyname);
+  }
 
   selectPrivateSubnet(index = 0, privateSubnetNameOrId) {
     cy.get(`button[id="machinePoolsSubnets[${index}].privateSubnetId"]`).click();
@@ -381,6 +404,8 @@ class CreateOSDCluster extends Page {
   workerNodesValue = () => cy.contains('strong', 'Worker nodes');
 
   securityGroupsValue = () => cy.getByTestId('Security-groups').find('div');
+
+  kmsServiceAccountInput = () => cy.get('input[id="kms_service_account"]');
 
   closePopoverDialogs() {
     cy.get('body').then(($body) => {
