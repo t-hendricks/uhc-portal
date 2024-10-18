@@ -1,14 +1,12 @@
 import ClusterDetailsPage from '../../pageobjects/ClusterDetails.page';
 import CreateOSDWizardPage from '../../pageobjects/CreateOSDWizard.page';
 
-const clusterProfiles = require('../../fixtures/osd/OsdCcsGCPClusterCreate.json');
-const clusterProperties =
-  clusterProfiles['osd-ccs-gcp-private-multizone-serviceaccount']['day1-profile'];
-const QE_GCP = Cypress.env('QE_GCP_OSDCCSADMIN_JSON');
+const clusterProfiles = require('../../fixtures/osd-gcp/OsdCcsGCPClusterCreate.json');
+const clusterProperties = clusterProfiles['osd-ccs-gcp-public-multizone-wif']['day1-profile'];
 
 describe(
-  'OSD GCP (service account) private advanced cluster creation tests()',
-  { tags: ['osd', 'ccs', 'gcp', 'private', 'serviceaccount', 'multizone'] },
+  'OSD GCP (Workload identity federation) public advanced cluster creation tests()',
+  { tags: ['osd', 'ccs', 'gcp', 'public', 'wif', 'multizone'] },
   () => {
     before(() => {
       cy.visit('/create');
@@ -31,12 +29,9 @@ describe(
     it(`OSD ${clusterProperties.CloudProvider} wizard - Cluster Settings - Cloud provider definitions`, () => {
       CreateOSDWizardPage.isCloudProviderSelectionScreen();
       CreateOSDWizardPage.selectCloudProvider(clusterProperties.CloudProvider);
-      if (clusterProperties.AuthenticationType.includes('Service Account')) {
-        CreateOSDWizardPage.uploadGCPServiceAccountJSON(JSON.stringify(QE_GCP));
-      } else {
-        CreateOSDWizardPage.workloadIdentityFederationButton().click();
-        CreateOSDWizardPage.selectWorkloadIdentityConfiguration(Cypress.env('QE_GCP_WIF_CONFIG'));
-      }
+      CreateOSDWizardPage.workloadIdentityFederationButton().click();
+      CreateOSDWizardPage.selectWorkloadIdentityConfiguration(Cypress.env('QE_GCP_WIF_CONFIG'));
+
       CreateOSDWizardPage.acknowlegePrerequisitesCheckbox().check();
       CreateOSDWizardPage.wizardNextButton().click();
     });
@@ -50,6 +45,9 @@ describe(
       CreateOSDWizardPage.closePopoverDialogs();
       CreateOSDWizardPage.selectAvailabilityZone(clusterProperties.Availability);
       CreateOSDWizardPage.selectRegion(clusterProperties.Region);
+      if (clusterProperties.hasOwnProperty('Version')) {
+        CreateOSDWizardPage.selectVersion(clusterProperties.Version);
+      }
       if (clusterProperties.CloudProvider.includes('GCP')) {
         CreateOSDWizardPage.enableSecureBootSupportForSchieldedVMs(true);
       }
@@ -99,7 +97,7 @@ describe(
 
     it(`OSD ${clusterProperties.CloudProvider}  wizard - Networking configuration - cluster privacy definitions`, () => {
       CreateOSDWizardPage.isNetworkingScreen();
-      CreateOSDWizardPage.selectClusterPrivacy(clusterProperties.ClusterPrivacy);
+      // CreateOSDWizardPage.selectClusterPrivacy(clusterProperties.ClusterPrivacy);
       CreateOSDWizardPage.installIntoExistingVpcCheckBox().check();
       if (clusterProperties.ApplicationIngress.includes('Custom settings')) {
         CreateOSDWizardPage.applicationIngressCustomSettingsRadio().check();

@@ -1,7 +1,7 @@
 import ClusterDetailsPage from '../../pageobjects/ClusterDetails.page';
 import CreateOSDWizardPage from '../../pageobjects/CreateOSDWizard.page';
 
-const clusterProfiles = require('../../fixtures/osd/OsdCcsGCPClusterCreate.json');
+const clusterProfiles = require('../../fixtures/osd-gcp/OsdCcsGCPClusterCreate.json');
 const clusterProperties =
   clusterProfiles['osd-ccs-gcp-public-multizone-serviceaccount']['day1-profile'];
 const QE_GCP = Cypress.env('QE_GCP_OSDCCSADMIN_JSON');

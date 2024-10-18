@@ -3,7 +3,7 @@ import CreateRosaWizardPage from '../../pageobjects/CreateRosaWizard.page';
 import CreateClusterPage from '../../pageobjects/CreateCluster.page';
 import OverviewPage from '../../pageobjects/Overview.page';
 
-const clusterProperties = require('../../fixtures/rosa/RosaClusterHostedCreation.json');
+const clusterProperties = require('../../fixtures/rosa-hosted/RosaClusterHostedCreation.json');
 // awsAccountID,rolePrefix and installerARN are set by prerun script for smoke requirements.
 const region = clusterProperties.Region.split(',')[0];
 const awsAccountID = Cypress.env('QE_AWS_ID');

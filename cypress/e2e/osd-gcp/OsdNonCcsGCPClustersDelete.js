@@ -1,11 +1,10 @@
 import ClusterDetailsPage from '../../pageobjects/ClusterDetails.page';
 import ClusterListPage from '../../pageobjects/ClusterList.page';
-const clusterDetails = require('../../fixtures/osd/OsdAwsCcsCreatePublicCluster.json');
-const clusterProfiles = ['osdccs-aws-public', 'osdccs-aws-public-advanced'];
-
+const clusterDetails = require('../../fixtures/osd-gcp/OsdNonCcsGCPClusterCreate.json');
+const clusterProfiles = ['osd-nonccs-gcp-multizone', 'osd-nonccs-gcp-singlezone'];
 describe(
-  'OSD AWS CCS Cluster - delete public clusters',
-  { tags: ['day3', 'aws', 'public'] },
+  'OSD nonccs GCP - delete clusters',
+  { tags: ['day3', 'osd', 'nonccs', 'gcp', 'public'] },
   () => {
     beforeEach(() => {
       if (Cypress.currentTest.title.match(/Open.*cluster/g)) {
