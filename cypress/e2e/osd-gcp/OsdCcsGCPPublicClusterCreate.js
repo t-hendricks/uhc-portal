@@ -1,12 +1,14 @@
 import ClusterDetailsPage from '../../pageobjects/ClusterDetails.page';
 import CreateOSDWizardPage from '../../pageobjects/CreateOSDWizard.page';
 
-const clusterProfiles = require('../../fixtures/osd/OsdCcsGCPClusterCreate.json');
-const clusterProperties = clusterProfiles['osd-ccs-gcp-public-multizone-wif']['day1-profile'];
+const clusterProfiles = require('../../fixtures/osd-gcp/OsdCcsGCPClusterCreate.json');
+const clusterProperties =
+  clusterProfiles['osd-ccs-gcp-public-singlezone-serviceaccount']['day1-profile'];
+const QE_GCP = Cypress.env('QE_GCP_OSDCCSADMIN_JSON');
 
 describe(
-  'OSD GCP (Workload identity federation) public advanced cluster creation tests()',
-  { tags: ['osd', 'ccs', 'gcp', 'public', 'wif', 'multizone'] },
+  'OSD GCP (service account) public default cluster creation tests()',
+  { tags: ['osd', 'ccs', 'gcp', 'public', 'serviceaccount', 'singlezone'] },
   () => {
     before(() => {
       cy.visit('/create');
@@ -29,108 +31,50 @@ describe(
     it(`OSD ${clusterProperties.CloudProvider} wizard - Cluster Settings - Cloud provider definitions`, () => {
       CreateOSDWizardPage.isCloudProviderSelectionScreen();
       CreateOSDWizardPage.selectCloudProvider(clusterProperties.CloudProvider);
-      CreateOSDWizardPage.workloadIdentityFederationButton().click();
-      CreateOSDWizardPage.selectWorkloadIdentityConfiguration(Cypress.env('QE_GCP_WIF_CONFIG'));
 
+      if (clusterProperties.AuthenticationType.includes('Service Account')) {
+        CreateOSDWizardPage.uploadGCPServiceAccountJSON(JSON.stringify(QE_GCP));
+      } else {
+        CreateOSDWizardPage.workloadIdentityFederationButton().click();
+        CreateOSDWizardPage.selectWorkloadIdentityConfiguration(Cypress.env('QE_GCP_WIF_CONFIG'));
+      }
       CreateOSDWizardPage.acknowlegePrerequisitesCheckbox().check();
       CreateOSDWizardPage.wizardNextButton().click();
     });
 
     it(`OSD ${clusterProperties.CloudProvider} wizard - Cluster Settings - Cluster details definitions`, () => {
       CreateOSDWizardPage.isClusterDetailsScreen();
-      CreateOSDWizardPage.createCustomDomainPrefixCheckbox().scrollIntoView().check();
       CreateOSDWizardPage.setClusterName(clusterProperties.ClusterName);
       CreateOSDWizardPage.closePopoverDialogs();
-      CreateOSDWizardPage.setDomainPrefix(clusterProperties.DomainPrefix);
-      CreateOSDWizardPage.closePopoverDialogs();
-      CreateOSDWizardPage.selectAvailabilityZone(clusterProperties.Availability);
+      CreateOSDWizardPage.singleZoneAvilabilityRadio().should('be.checked');
       CreateOSDWizardPage.selectRegion(clusterProperties.Region);
-      if (clusterProperties.hasOwnProperty('Version')) {
-        CreateOSDWizardPage.selectVersion(clusterProperties.Version);
-      }
       if (clusterProperties.CloudProvider.includes('GCP')) {
         CreateOSDWizardPage.enableSecureBootSupportForSchieldedVMs(true);
       }
       CreateOSDWizardPage.enableUserWorkloadMonitoringCheckbox().should('be.checked');
-      if (clusterProperties.AdditionalEncryption.includes('Enabled')) {
-        CreateOSDWizardPage.advancedEncryptionLink().click();
-        CreateOSDWizardPage.enableAdditionalEtcdEncryptionCheckbox().check();
-        if (clusterProperties.FIPSCryptography.includes('Enabled')) {
-          CreateOSDWizardPage.enableFIPSCryptographyCheckbox().check();
-        }
-        if (clusterProperties.EncryptVolumesWithCustomKeys.includes('Enabled')) {
-          CreateOSDWizardPage.useCustomKMSKeyRadio().check();
-          CreateOSDWizardPage.selectKeylocation(
-            clusterProperties.EncryptCustomKeys.KeyRingLocation,
-          );
-          CreateOSDWizardPage.selectKeyRing(clusterProperties.EncryptCustomKeys.KeyRing);
-          CreateOSDWizardPage.selectKeyName(clusterProperties.EncryptCustomKeys.KeyName);
-          CreateOSDWizardPage.kmsServiceAccountInput().type(
-            clusterProperties.EncryptCustomKeys.KmsServiceAccount,
-          );
-        }
-      }
       CreateOSDWizardPage.wizardNextButton().click();
     });
 
     it(`OSD ${clusterProperties.CloudProvider} wizard - Cluster Settings - Default machinepool definitions`, () => {
       CreateOSDWizardPage.isMachinePoolScreen();
-      CreateOSDWizardPage.selectComputeNodeType(clusterProperties.MachinePools.InstanceType);
-      if (clusterProperties.MachinePools.Autoscaling.includes('Enabled')) {
-        CreateOSDWizardPage.enableAutoscalingCheckbox().check();
-        CreateOSDWizardPage.setMinimumNodeCount(clusterProperties.MachinePools.MinimumNodeCount);
-        CreateOSDWizardPage.setMaximumNodeCount(clusterProperties.MachinePools.MaximumNodeCount);
-      } else {
-        CreateOSDWizardPage.enableAutoscalingCheckbox().should('not.be.checked');
-        CreateOSDWizardPage.selectComputeNodeCount(clusterProperties.MachinePools.NodeCount);
-      }
-      if (clusterProperties.MachinePools.hasOwnProperty('NodeLabel')) {
-        CreateOSDWizardPage.addNodeLabelLink().click();
-        CreateOSDWizardPage.addNodeLabelKeyAndValue(
-          clusterProperties.MachinePools.NodeLabel[0].Key,
-          clusterProperties.MachinePools.NodeLabel[0].Value,
-          0,
-        );
-      }
+      CreateOSDWizardPage.selectComputeNodeType(clusterProperties.MachinePools[0].InstanceType);
+
+      CreateOSDWizardPage.selectComputeNodeCount(clusterProperties.MachinePools[0].NodeCount);
+      CreateOSDWizardPage.enableAutoscalingCheckbox().should('not.be.checked');
       CreateOSDWizardPage.wizardNextButton().click();
     });
 
     it(`OSD ${clusterProperties.CloudProvider}  wizard - Networking configuration - cluster privacy definitions`, () => {
       CreateOSDWizardPage.isNetworkingScreen();
-      // CreateOSDWizardPage.selectClusterPrivacy(clusterProperties.ClusterPrivacy);
-      CreateOSDWizardPage.installIntoExistingVpcCheckBox().check();
-      if (clusterProperties.ApplicationIngress.includes('Custom settings')) {
-        CreateOSDWizardPage.applicationIngressCustomSettingsRadio().check();
-        CreateOSDWizardPage.applicationIngressRouterSelectorsInput().type(
-          clusterProperties.RouteSelector.KeyValue,
-        );
-        CreateOSDWizardPage.applicationIngressExcludedNamespacesInput().type(
-          clusterProperties.ExcludedNamespaces.Values,
-        );
-        CreateOSDWizardPage.applicationIngressNamespaceOwnershipPolicyRadio().should('be.checked');
-        CreateOSDWizardPage.applicationIngressWildcardPolicyDisallowedRadio().should(
-          'not.be.checked',
-        );
-      } else {
-        CreateOSDWizardPage.applicationIngressDefaultSettingsRadio().should('be.checked');
-      }
-      CreateOSDWizardPage.wizardNextButton().click();
-    });
-
-    it(`OSD ${clusterProperties.CloudProvider}  wizard - Networking configuration- VPC and subnet definitions`, () => {
-      CreateOSDWizardPage.isVPCSubnetScreen();
-      CreateOSDWizardPage.selectGcpVPC(Cypress.env('QE_INFRA_GCP')['VPC_NAME']);
-      CreateOSDWizardPage.selectControlPlaneSubnetName(
-        Cypress.env('QE_INFRA_GCP')['CONTROLPLANE_SUBNET'],
-      );
-      CreateOSDWizardPage.selectComputeSubnetName(Cypress.env('QE_INFRA_GCP')['COMPUTE_SUBNET']);
+      CreateOSDWizardPage.clusterPrivacyPublicRadio().should('be.checked');
+      CreateOSDWizardPage.applicationIngressDefaultSettingsRadio().should('be.checked');
       CreateOSDWizardPage.wizardNextButton().click();
     });
 
     it(`OSD ${clusterProperties.CloudProvider}  wizard - CIDR configuration - cidr definitions`, () => {
       CreateOSDWizardPage.isCIDRScreen();
-      CreateOSDWizardPage.cidrDefaultValuesCheckBox().uncheck();
-      CreateOSDWizardPage.machineCIDRInput().clear().type(clusterProperties.MachineCIDR);
+      CreateOSDWizardPage.cidrDefaultValuesCheckBox().should('be.checked');
+      CreateOSDWizardPage.machineCIDRInput().should('have.value', clusterProperties.MachineCIDR);
       CreateOSDWizardPage.serviceCIDRInput().should('have.value', clusterProperties.ServiceCIDR);
       CreateOSDWizardPage.podCIDRInput().should('have.value', clusterProperties.PodCIDR);
       CreateOSDWizardPage.hostPrefixInput().should('have.value', clusterProperties.HostPrefix);
@@ -161,23 +105,20 @@ describe(
         clusterProperties.UserWorkloadMonitoring,
       );
       CreateOSDWizardPage.encryptVolumesWithCustomerkeysValue().contains(
-        clusterProperties.EncryptVolumesWithCustomKeys,
+        clusterProperties.EncryptVolumesWithCustomerKeys,
       );
       CreateOSDWizardPage.additionalEtcdEncryptionValue().contains(
         clusterProperties.AdditionalEncryption,
       );
       CreateOSDWizardPage.fipsCryptographyValue().contains(clusterProperties.FIPSCryptography);
-
       CreateOSDWizardPage.nodeInstanceTypeValue().contains(
-        clusterProperties.MachinePools.InstanceType,
+        clusterProperties.MachinePools[0].InstanceType,
       );
-      CreateOSDWizardPage.autoscalingValue().contains(clusterProperties.MachinePools.Autoscaling);
-
-      CreateOSDWizardPage.computeNodeRangeValue().contains(
-        `Minimum nodes per zone: ${clusterProperties.MachinePools.MinimumNodeCount}`,
+      CreateOSDWizardPage.autoscalingValue().contains(
+        clusterProperties.MachinePools[0].Autoscaling,
       );
-      CreateOSDWizardPage.computeNodeRangeValue().contains(
-        `Maximum nodes per zone: ${clusterProperties.MachinePools.MaximumNodeCount}`,
+      CreateOSDWizardPage.computeNodeCountValue().contains(
+        clusterProperties.MachinePools[0].NodeCount,
       );
 
       CreateOSDWizardPage.clusterPrivacyValue().contains(clusterProperties.ClusterPrivacy);
@@ -185,14 +126,7 @@ describe(
         clusterProperties.InstallIntoExistingVPC,
       );
       CreateOSDWizardPage.applicationIngressValue().contains(clusterProperties.ApplicationIngress);
-      CreateOSDWizardPage.routeSelectorsValue().contains(clusterProperties.RouteSelector.KeyValue);
-      CreateOSDWizardPage.excludedNamespacesValue().contains(
-        clusterProperties.ExcludedNamespaces.Values,
-      );
-      CreateOSDWizardPage.wildcardPolicyValue().contains(clusterProperties.WildcardPolicy);
-      CreateOSDWizardPage.namespaceOwnershipValue().contains(
-        clusterProperties.NamespaceOwnershipPolicy,
-      );
+
       CreateOSDWizardPage.machineCIDRValue().contains(clusterProperties.MachineCIDR);
       CreateOSDWizardPage.serviceCIDRValue().contains(clusterProperties.ServiceCIDR);
       CreateOSDWizardPage.podCIDRValue().contains(clusterProperties.PodCIDR);

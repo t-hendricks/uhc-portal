@@ -1,12 +1,12 @@
 import ClusterDetailsPage from '../../pageobjects/ClusterDetails.page';
 import CreateOSDWizardPage from '../../pageobjects/CreateOSDWizard.page';
 
-const clusterProfiles = require('../../fixtures/osd/OsdNonCcsGCPClusterCreate.json');
-const clusterProperties = clusterProfiles['osd-nonccs-gcp-multizone']['day1-profile'];
+const clusterProfiles = require('../../fixtures/osd-gcp/OsdNonCcsGCPClusterCreate.json');
+const clusterProperties = clusterProfiles['osd-nonccs-gcp-singlezone']['day1-profile'];
 
 describe(
-  'OSD NonCCS GCP public cluster creation profile',
-  { tags: ['day1', 'aws', 'public', 'multizone', 'osd', 'nonccs'] },
+  'OSD NonCCS GCP singlezone cluster creation profile',
+  { tags: ['day1', 'gcp', 'public', 'singlezone', 'osd', 'nonccs'] },
   () => {
     before(() => {
       cy.visit('/create');
@@ -37,22 +37,24 @@ describe(
       CreateOSDWizardPage.createCustomDomainPrefixCheckbox().check();
       CreateOSDWizardPage.setDomainPrefix(clusterProperties.DomainPrefix);
       CreateOSDWizardPage.closePopoverDialogs();
-      CreateOSDWizardPage.selectAvailabilityZone(clusterProperties.Availability);
-      CreateOSDWizardPage.selectRegion(clusterProperties.Region);
-      CreateOSDWizardPage.selectPersistentStorage(clusterProperties.PersistentStorage);
-      CreateOSDWizardPage.selectLoadBalancers(clusterProperties.LoadBalancers);
       CreateOSDWizardPage.enableUserWorkloadMonitoringCheckbox().should('be.checked');
       if (clusterProperties.EnableSecureBootSupportForSchieldedVMs.includes('Enabled')) {
         CreateOSDWizardPage.enableSecureBootSupportForSchieldedVMs(true);
       } else {
-        CreateOSDWizardPage.enableSecureBootSupportForSchieldedVMs(false);
+        CreateOSDWizardPage.enableSecureBootSupportForSchieldedVMsCheckbox().should(
+          'not.be.checked',
+        );
       }
+      CreateOSDWizardPage.advancedEncryptionLink().click();
       if (clusterProperties.AdditionalEncryption.includes('Enabled')) {
-        CreateOSDWizardPage.advancedEncryptionLink().click();
         CreateOSDWizardPage.enableAdditionalEtcdEncryptionCheckbox().check();
         if (clusterProperties.FIPSCryptography.includes('Enabled')) {
           CreateOSDWizardPage.enableFIPSCryptographyCheckbox().check();
+        } else {
+          CreateOSDWizardPage.enableFIPSCryptographyCheckbox().should('not.be.checked');
         }
+      } else {
+        CreateOSDWizardPage.enableAdditionalEtcdEncryptionCheckbox().should('not.be.checked');
       }
       CreateOSDWizardPage.wizardNextButton().click();
     });
@@ -82,7 +84,6 @@ describe(
     it(`OSD(nonccs) ${clusterProperties.CloudProvider}-${clusterProperties.Availability} - Networking configuration - CIDR `, () => {
       CreateOSDWizardPage.isCIDRScreen();
       CreateOSDWizardPage.cidrDefaultValuesCheckBox().should('be.checked');
-      CreateOSDWizardPage.cidrDefaultValuesCheckBox().uncheck();
       CreateOSDWizardPage.machineCIDRInput().should('have.value', clusterProperties.MachineCIDR);
       CreateOSDWizardPage.serviceCIDRInput().should('have.value', clusterProperties.ServiceCIDR);
       CreateOSDWizardPage.podCIDRInput().should('have.value', clusterProperties.PodCIDR);
@@ -94,12 +95,6 @@ describe(
       CreateOSDWizardPage.isUpdatesScreen();
       CreateOSDWizardPage.updateStrategyIndividualRadio().should('be.checked');
       CreateOSDWizardPage.updateStrategyRecurringRadio().should('not.be.checked');
-      if (clusterProperties.UpdateStrategy.includes('Recurring')) {
-        CreateOSDWizardPage.updateStrategyRecurringRadio().check();
-      } else {
-        CreateOSDWizardPage.updateStrategyIndividualRadio().check();
-      }
-      CreateOSDWizardPage.selectNodeDraining(clusterProperties.NodeDraining);
       CreateOSDWizardPage.wizardNextButton().click();
     });
 

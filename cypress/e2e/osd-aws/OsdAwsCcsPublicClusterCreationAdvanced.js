@@ -2,7 +2,7 @@ import CreateOSDWizardPage from '../../pageobjects/CreateOSDWizard.page';
 import CreateClusterPage from '../../pageobjects/CreateCluster.page';
 import ClusterDetailsPage from '../../pageobjects/ClusterDetails.page';
 
-const clusterProfiles = require('../../fixtures/osd/OsdAwsCcsCreatePublicCluster.json');
+const clusterProfiles = require('../../fixtures/osd-aws/OsdAwsCcsCreatePublicCluster.json');
 const clusterProperties = clusterProfiles['osdccs-aws-public-advanced']['day1-profile'];
 const region = clusterProperties.Region.split(',')[0];
 const qeInfrastructure = Cypress.env('QE_INFRA_REGIONS')[region][0];

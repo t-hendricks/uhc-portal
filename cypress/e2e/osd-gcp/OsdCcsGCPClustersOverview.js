@@ -1,7 +1,7 @@
 import 'cypress-each';
 import ClusterDetailsPage from '../../pageobjects/ClusterDetails.page';
 import ClusterListPage from '../../pageobjects/ClusterList.page';
-const clusterDetails = require('../../fixtures/osd/OsdCcsGCPClusterCreate.json');
+const clusterDetails = require('../../fixtures/osd-gcp/OsdCcsGCPClusterCreate.json');
 const clusterProfiles = [
   'osd-ccs-gcp-public-singlezone-serviceaccount',
   'osd-ccs-gcp-public-multizone-serviceaccount',

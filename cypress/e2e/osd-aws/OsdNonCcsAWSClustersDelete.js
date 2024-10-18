@@ -1,6 +1,6 @@
 import ClusterDetailsPage from '../../pageobjects/ClusterDetails.page';
 import ClusterListPage from '../../pageobjects/ClusterList.page';
-const clusterDetails = require('../../fixtures/osd/OsdNonCcsAWSClusterCreate.json');
+const clusterDetails = require('../../fixtures/osd-aws/OsdNonCcsAWSClusterCreate.json');
 const clusterProfiles = ['osd-nonccs-aws-public', 'osd-nonccs-aws-private'];
 
 describe(

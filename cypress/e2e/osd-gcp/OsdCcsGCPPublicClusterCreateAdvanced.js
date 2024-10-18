@@ -1,14 +1,14 @@
 import ClusterDetailsPage from '../../pageobjects/ClusterDetails.page';
 import CreateOSDWizardPage from '../../pageobjects/CreateOSDWizard.page';
 
-const clusterProfiles = require('../../fixtures/osd/OsdCcsGCPClusterCreate.json');
+const clusterProfiles = require('../../fixtures/osd-gcp/OsdCcsGCPClusterCreate.json');
 const clusterProperties =
-  clusterProfiles['osd-ccs-gcp-private-multizone-serviceaccount']['day1-profile'];
+  clusterProfiles['osd-ccs-gcp-public-multizone-serviceaccount']['day1-profile'];
 const QE_GCP = Cypress.env('QE_GCP_OSDCCSADMIN_JSON');
 
 describe(
-  'OSD GCP (service account) private advanced cluster creation tests()',
-  { tags: ['osd', 'ccs', 'gcp', 'private', 'serviceaccount', 'multizone'] },
+  'OSD GCP (service account) public advanced cluster creation tests()',
+  { tags: ['osd', 'ccs', 'gcp', 'public', 'serviceaccount', 'multizone'] },
   () => {
     before(() => {
       cy.visit('/create');
@@ -99,7 +99,7 @@ describe(
 
     it(`OSD ${clusterProperties.CloudProvider}  wizard - Networking configuration - cluster privacy definitions`, () => {
       CreateOSDWizardPage.isNetworkingScreen();
-      CreateOSDWizardPage.selectClusterPrivacy(clusterProperties.ClusterPrivacy);
+      // CreateOSDWizardPage.selectClusterPrivacy(clusterProperties.ClusterPrivacy);
       CreateOSDWizardPage.installIntoExistingVpcCheckBox().check();
       if (clusterProperties.ApplicationIngress.includes('Custom settings')) {
         CreateOSDWizardPage.applicationIngressCustomSettingsRadio().check();
