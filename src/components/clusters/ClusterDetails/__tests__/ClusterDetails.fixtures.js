@@ -1114,6 +1114,16 @@ const userAccess = {
   pending: false,
 };
 
+const regionalInstance = {
+  cloud_provider_id: 'aws',
+  href: '/api/accounts_mgmt/v1/regions',
+  id: 'stage',
+  kind: 'Region',
+  url: 'https://api.stage.openshift.com',
+  environment: 'stage',
+  isDefault: true,
+};
+
 const fixtures = {
   match,
   clusterDetails,
@@ -1151,6 +1161,7 @@ const fixtures = {
   pendingAccessRequests: {},
   isAccessRequestEnabled: false,
   accessProtectionState: {},
+  regionalInstance,
 };
 
 export { funcs };

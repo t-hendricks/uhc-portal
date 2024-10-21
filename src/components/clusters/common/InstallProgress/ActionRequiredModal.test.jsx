@@ -70,6 +70,7 @@ describe('<ActionRequiredModal />', () => {
     const newProps = {
       ...defaultProps,
       cluster: fixtures.ROSAHypershiftWaitingClusterDetails.cluster,
+      regionalInstance: fixtures.regionalInstance,
     };
 
     const { container } = render(<ActionRequiredModal {...newProps} />);
@@ -86,6 +87,7 @@ describe('<ActionRequiredModal />', () => {
     const newProps = {
       ...defaultProps,
       cluster: fixtures.ROSAHypershiftWaitingClusterDetails.cluster,
+      regionalInstance: fixtures.regionalInstance,
     };
 
     const { container } = render(<ActionRequiredModal {...newProps} />);
