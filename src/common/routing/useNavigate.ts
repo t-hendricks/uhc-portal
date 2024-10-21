@@ -1,3 +1,4 @@
+/* eslint-disable custom-rules/restrict-react-router-imports */
 import { useCallback, useEffect, useRef } from 'react';
 import { NavigateOptions, To, useNavigate as routerUseNavigate } from 'react-router-dom';
 
