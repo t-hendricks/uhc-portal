@@ -13,8 +13,8 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
-
 import React from 'react';
+import isEmpty from 'lodash/isEmpty';
 import size from 'lodash/size';
 import PropTypes from 'prop-types';
 import { useDispatch, useSelector } from 'react-redux';
@@ -36,6 +36,8 @@ import { SortByDirection } from '@patternfly/react-table';
 
 import { ONLY_MY_CLUSTERS_TOGGLE_CLUSTERS_LIST } from '~/common/localStorageConstants';
 import { AppPage } from '~/components/App/AppPage';
+import { useGetAccessProtection } from '~/queries/AccessRequest/useGetAccessProtection';
+import { useGetOrganizationalPendingRequests } from '~/queries/AccessRequest/useGetOrganizationalPendingRequests';
 import { useFetchClusters } from '~/queries/ClusterListQueries/useFetchClusters';
 import { clustersActions } from '~/redux/actions';
 import {
@@ -49,10 +51,12 @@ import { CLUSTERS_VIEW } from '~/redux/constants/viewConstants';
 import { isRestrictedEnv } from '~/restrictedEnv';
 
 import helpers from '../../../common/helpers';
-import { normalizedProducts } from '../../../common/subscriptionTypes';
+import { getQueryParam } from '../../../common/queryHelpers';
+import { normalizedProducts, productFilterOptions } from '../../../common/subscriptionTypes';
 import { viewConstants } from '../../../redux/constants';
 import ErrorBox from '../../common/ErrorBox';
 import Unavailable from '../../common/Unavailable';
+import AccessRequestPendingAlert from '../ClusterDetailsMultiRegion/components/AccessRequest/components/AccessRequestPendingAlert';
 import ClusterListFilter from '../common/ClusterListFilter';
 import CommonClusterModals from '../common/CommonClusterModals';
 import ErrorTriangle from '../common/ErrorTriangle';
@@ -67,7 +71,6 @@ import ClusterListTable from './components/ClusterListTable';
 import { PaginationRow } from './components/PaginationRow';
 import { RefreshButton } from './components/RefreshButton';
 import ViewOnlyMyClustersToggle from './components/ViewOnlyMyClustersToggle';
-import { sortClusters } from './clusterListSort';
 
 import './ClusterList.scss';
 
@@ -131,25 +134,39 @@ const ClusterList = ({
   clearGlobalError,
   openModal,
   getMultiRegion,
-  useClientSortPaging,
 }) => {
   const dispatch = useDispatch();
   const viewType = viewConstants.CLUSTERS_VIEW;
 
-  const { isLoading, data, refetch, isError, errors, isFetching, isFetched } = useFetchClusters(
-    getMultiRegion,
-    useClientSortPaging,
-  );
+  /* Get Access Request / Protection Data */
+  const { enabled: isOrganizationAccessProtectionEnabled } = useGetAccessProtection({
+    organizationId: organization?.details?.id,
+  });
+
+  /* Get Pending Access Requests */
+
+  const { total: pendingRequestsTotal, items: pendingRequestsItems } =
+    useGetOrganizationalPendingRequests(
+      organization?.details?.id,
+      isOrganizationAccessProtectionEnabled,
+    );
+
+  /* Get Cluster Data */
+  const { isLoading, data, refetch, isError, errors, isFetching, isFetched } =
+    useFetchClusters(getMultiRegion);
 
   const clusters = data?.items;
   const clustersTotal = useSelector((state) => state.viewOptions[viewType]?.totalCount);
 
+  /* Set total clusters in Redux */
   React.useEffect(() => {
     if (!isLoading || data?.itemsCount > 0) {
       dispatch(onSetTotalClusters(data?.itemsCount, viewType));
     }
-  }, [data?.itemsCount, dispatch, viewType, isLoading]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [data?.itemsCount]);
 
+  /* Format error details */
   const errorDetails = (errors || []).reduce((errorArray, error) => {
     if (!error.reason) {
       return errorArray;
@@ -160,15 +177,9 @@ const ClusterList = ({
     ];
   }, []);
 
-  const currentPage = useSelector((state) => state.viewOptions[viewType]?.currentPage);
-  const pageSize = useSelector((state) => state.viewOptions[viewType]?.pageSize);
-
-  const itemsStart =
-    currentPage && pageSize && clustersTotal > 0 ? (currentPage - 1) * pageSize + 1 : 0;
-  const itemsEnd = currentPage && pageSize ? Math.min(currentPage * pageSize, clustersTotal) : 0;
-
-  const preLoadRedux = React.useCallback(() => {
-    // Items not needed for this list, but may be needed elsewhere in the app
+  /* onMount and willUnmount */
+  React.useEffect(() => {
+    // Items not needed for this list except for organization, but may be needed elsewhere in the app
     // Load these items "in the background" so they can be added to redux
     // Eventually as items are converted to React Query these items can be removed
     if (!cloudProviders.fulfilled && !cloudProviders.pending) {
@@ -194,7 +205,58 @@ const ClusterList = ({
     organization.pending,
   ]);
 
+  React.useEffect(() => {
+    if (isRestrictedEnv()) {
+      dispatch(
+        onListFlagsSet(
+          'subscriptionFilter',
+          {
+            plan_id: [normalizedProducts.ROSA],
+          },
+          viewType,
+        ),
+      );
+    }
+
+    const planIDFilter = getQueryParam('plan_id') || '';
+
+    if (!isEmpty(planIDFilter)) {
+      const allowedProducts = {};
+      productFilterOptions.forEach((option) => {
+        allowedProducts[option.key] = true;
+      });
+      const sanitizedFilter = planIDFilter.split(',').filter((value) => allowedProducts[value]);
+
+      dispatch(
+        onListFlagsSet(
+          'subscriptionFilter',
+          {
+            plan_id: sanitizedFilter,
+          },
+          viewType,
+        ),
+      );
+    }
+
+    // componentWillUnmount
+    return () => {
+      closeModal();
+      dispatch(clustersActions.clearClusterDetails());
+      clearGlobalError('clusterList');
+    };
+    // Run only on mount and unmount
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   /* Pagination */
+
+  const currentPage = useSelector((state) => state.viewOptions[viewType]?.currentPage);
+  const pageSize = useSelector((state) => state.viewOptions[viewType]?.pageSize);
+
+  const itemsStart =
+    currentPage && pageSize && clustersTotal > 0 ? (currentPage - 1) * pageSize + 1 : 0;
+  const itemsEnd = currentPage && pageSize ? Math.min(currentPage * pageSize, clustersTotal) : 0;
+
   const onPageChange = React.useCallback(
     (_event, page) => {
       dispatch(onPageInput(page, viewType));
@@ -216,40 +278,9 @@ const ClusterList = ({
   };
 
   const sortOptions = useSelector((state) => state.viewOptions[viewType]?.sorting);
-  let sortedClusters = clusters;
 
   const activeSortIndex = sortOptions.sortField;
   const activeSortDirection = sortOptions.isAscending ? SortByDirection.asc : SortByDirection.desc;
-  /* Sorting */
-  if (useClientSortPaging) {
-    // Note: initial sort order is set in the reducer
-    sortedClusters = sortClusters(clusters, activeSortIndex, activeSortDirection);
-  }
-  // onMount and willUnmount
-  React.useEffect(() => {
-    preLoadRedux();
-
-    if (isRestrictedEnv()) {
-      dispatch(
-        onListFlagsSet(
-          'subscriptionFilter',
-          {
-            plan_id: [normalizedProducts.ROSA],
-          },
-          viewType,
-        ),
-      );
-    }
-
-    // componentWillUnmount
-    return () => {
-      closeModal();
-      dispatch(clustersActions.clearClusterDetails());
-      clearGlobalError('clusterList');
-    };
-    // Run only on mount and unmount
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
 
   const viewOptions = useSelector((state) => state.viewOptions.CLUSTERS_VIEW);
   const { showMyClustersOnly, subscriptionFilter } = viewOptions.flags;
@@ -371,26 +402,28 @@ const ClusterList = ({
                 }}
               />
             ) : (
-              <ClusterListTable
-                openModal={openModal}
-                clusters={
-                  (useClientSortPaging
-                    ? sortedClusters?.slice(itemsStart - 1, itemsEnd)
-                    : clusters) || []
-                }
-                isPending={isPendingNoData}
-                activeSortIndex={activeSortIndex}
-                activeSortDirection={activeSortDirection}
-                setSort={(index, direction) => {
-                  const sorting = {
-                    isAscending: direction === SortByDirection.asc,
-                    sortField: index,
-                  };
+              <>
+                <AccessRequestPendingAlert
+                  total={pendingRequestsTotal}
+                  accessRequests={pendingRequestsItems}
+                />
+                <ClusterListTable
+                  openModal={openModal}
+                  clusters={clusters || []}
+                  isPending={isPendingNoData}
+                  activeSortIndex={activeSortIndex}
+                  activeSortDirection={activeSortDirection}
+                  setSort={(index, direction) => {
+                    const sorting = {
+                      isAscending: direction === SortByDirection.asc,
+                      sortField: index,
+                    };
 
-                  dispatch(viewActions.onListSortBy(sorting, viewType));
-                }}
-                useClientSortPaging={useClientSortPaging}
-              />
+                    dispatch(viewActions.onListSortBy(sorting, viewType));
+                  }}
+                  refreshFunc={refetch}
+                />
+              </>
             )}
             <PaginationRow
               currentPage={currentPage}
@@ -427,11 +460,9 @@ ClusterList.propTypes = {
 
   clearGlobalError: PropTypes.func.isRequired,
   getMultiRegion: PropTypes.bool,
-  useClientSortPaging: PropTypes.bool,
 };
 ClusterList.defaultProps = {
   getMultiRegion: true,
-  useClientSortPaging: true,
 };
 
 export default ClusterList;

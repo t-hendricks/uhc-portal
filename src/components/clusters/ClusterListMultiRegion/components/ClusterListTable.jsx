@@ -1,6 +1,7 @@
 import React from 'react';
 import get from 'lodash/get';
 import PropTypes from 'prop-types';
+import { useDispatch } from 'react-redux';
 
 import {
   Button,
@@ -15,14 +16,28 @@ import {
 } from '@patternfly/react-core';
 import ExclamationTriangleIcon from '@patternfly/react-icons/dist/esm/icons/exclamation-triangle-icon';
 import SearchIcon from '@patternfly/react-icons/dist/esm/icons/search-icon';
-import { SortByDirection, Table, Tbody, Td, Th, Thead, Tr } from '@patternfly/react-table';
+import {
+  ActionsColumn,
+  SortByDirection,
+  Table,
+  Tbody,
+  Td,
+  Th,
+  Thead,
+  Tr,
+} from '@patternfly/react-table';
 import { global_warning_color_100 as warningColor } from '@patternfly/react-tokens/dist/esm/global_warning_color_100';
 
 import { Link } from '~/common/routing';
 import AIClusterStatus from '~/components/common/AIClusterStatus';
+import config from '~/config';
+import { useFeatureGate } from '~/hooks/useFeatureGate';
+import { toggleSubscriptionReleased } from '~/redux/actions/subscriptionReleasedActions';
+import { MULTIREGION_PREVIEW_ENABLED } from '~/redux/constants/featureConstants';
 
 import getClusterName from '../../../../common/getClusterName';
 import { isAISubscriptionWithoutMetrics } from '../../../../common/isAssistedInstallerCluster';
+import { actionResolver } from '../../common/ClusterActionsDropdown/ClusterActionsDropdownItems';
 import ClusterStateIcon from '../../common/ClusterStateIcon';
 import clusterStates, {
   getClusterStateAndDescription,
@@ -32,9 +47,12 @@ import clusterStates, {
 } from '../../common/clusterStates';
 import ClusterTypeLabel from '../../common/ClusterTypeLabel';
 import ClusterUpdateLink from '../../common/ClusterUpdateLink';
+import { canSubscribeOCPListFromClusters } from '../../common/EditSubscriptionSettingsDialog/canSubscribeOCPListSelector';
 import getClusterVersion from '../../common/getClusterVersion';
+import { useCanHibernateClusterListFromClusters } from '../../common/HibernateClusterModal/HibernateClusterModalSelectors';
 import ActionRequiredLink from '../../common/InstallProgress/ActionRequiredLink';
 import ProgressList from '../../common/InstallProgress/ProgressList';
+import { canTransferClusterOwnershipListFromClusters } from '../../common/TransferClusterOwnershipDialog/utils/transferClusterOwnershipDialogSelectors';
 import { ClusterLocationLabel } from '../../commonMultiRegion/ClusterLocationLabel';
 
 import ClusterCreatedIndicator from './ClusterCreatedIndicator';
@@ -79,6 +97,7 @@ export const columns = {
   },
   actions: { title: '', screenReaderText: 'cluster actions' },
 };
+
 function ClusterListTable(props) {
   const {
     clusters,
@@ -87,8 +106,15 @@ function ClusterListTable(props) {
     activeSortIndex,
     activeSortDirection,
     setSort,
-    useClientSortPaging,
+    refreshFunc,
   } = props;
+
+  const multiRegionFeatureGate = useFeatureGate(MULTIREGION_PREVIEW_ENABLED);
+
+  const dispatch = useDispatch();
+  const canSubscribeOCPList = canSubscribeOCPListFromClusters(clusters);
+  const canTransferClusterOwnershipList = canTransferClusterOwnershipListFromClusters(clusters);
+  const canHibernateClusterList = useCanHibernateClusterListFromClusters(clusters);
 
   const getSortParams = (columnIndex) => ({
     sortBy: {
@@ -123,8 +149,7 @@ function ClusterListTable(props) {
     const columnOptions = columns[column];
 
     const sort =
-      columnOptions.sortIndex &&
-      (useClientSortPaging || (!useClientSortPaging && columnOptions.apiSortOption))
+      columnOptions.sortIndex && columnOptions.apiSortOption
         ? getSortParams(columnOptions.sortIndex)
         : undefined;
 
@@ -201,7 +226,8 @@ function ClusterListTable(props) {
         isWaitingForOIDCProviderOrOperatorRolesMode(cluster) ||
         isOSDGCPWaitingForRolesOnHostProject(cluster)
       ) {
-        // Show a popover for manual creation of ROSA operator roles and OIDC provider.
+        // Show a popover for manual creation of ROSA operator roles and OIDC provider and for
+        // OSD GCP service accounts roles
         return (
           <ActionRequiredLink
             cluster={cluster}
@@ -281,7 +307,26 @@ function ClusterListTable(props) {
             cloudProviderID={provider}
           />
         </Td>
-        <Td isActionCell />
+        <Td isActionCell>
+          {/* Hide actions column if viewing in multiRegion mode */}
+          {!isPending && cluster && (!multiRegionFeatureGate || !config.multiRegion) ? (
+            <ActionsColumn
+              items={actionResolver(
+                cluster,
+                true,
+                openModal,
+                canSubscribeOCPList[cluster.id] || false,
+                canTransferClusterOwnershipList[cluster.id] || false,
+                canHibernateClusterList[cluster.id] || false,
+                (subscriptionId, released) =>
+                  dispatch(toggleSubscriptionReleased(subscriptionId, released)),
+                refreshFunc,
+                true,
+                cluster.delete_protection?.enabled,
+              )}
+            />
+          ) : null}
+        </Td>
       </Tr>
     );
   };
@@ -305,7 +350,7 @@ ClusterListTable.propTypes = {
   activeSortDirection: PropTypes.string,
   setSort: PropTypes.func,
   isPending: PropTypes.bool,
-  useClientSortPaging: PropTypes.bool,
+  refreshFunc: PropTypes.func.isRequired,
 };
 
 export default ClusterListTable;

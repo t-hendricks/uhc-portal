@@ -25,9 +25,7 @@ import { RadioGroupField, RadioGroupOption } from '~/components/clusters/wizards
 import { useFormState } from '~/components/clusters/wizards/hooks';
 import { FieldId } from '~/components/clusters/wizards/osd/constants';
 import ExternalLink from '~/components/common/ExternalLink';
-import { useFeatureGate } from '~/hooks/useFeatureGate';
 import { clustersActions } from '~/redux/actions';
-import { OSD_GOOGLE_MARKETPLACE_FEATURE } from '~/redux/constants/featureConstants';
 import { useGlobalState } from '~/redux/hooks';
 import CreateOSDWizardIntro from '~/styles/images/CreateOSDWizard-intro.png';
 
@@ -61,7 +59,6 @@ export const BillingModel = () => {
   };
 
   const quotas = useGetBillingQuotas({ product });
-  const osdGoogleMarketplaceFeature = useFeatureGate(OSD_GOOGLE_MARKETPLACE_FEATURE);
   const showOsdTrial = quotas.osdTrial;
 
   const trialDescription = (
@@ -73,7 +70,7 @@ export const BillingModel = () => {
     </p>
   );
 
-  const marketplaceQuotaDescription = osdGoogleMarketplaceFeature ? (
+  const marketplaceQuotaDescription = (
     <>
       {selectedMarketplace === billingModels.MARKETPLACE && (
         <p>Use Red Hat Marketplace to subscribe and pay based on the services you use</p>
@@ -86,14 +83,6 @@ export const BillingModel = () => {
           <p>Use your cloud marketplace to subscribe and pay based on the services you use</p>
         )}
     </>
-  ) : (
-    <p>
-      Use{' '}
-      <ExternalLink href="https://marketplace.redhat.com" noIcon>
-        Red Hat Marketplace
-      </ExternalLink>{' '}
-      to subscribe and pay based on the services you use
-    </p>
   );
 
   const rhmLink = (
@@ -122,29 +111,15 @@ export const BillingModel = () => {
           position={PopoverPosition.right}
           headerContent="On-Demand subscription"
           bodyContent={
-            osdGoogleMarketplaceFeature ? (
-              <p>
-                Billing based on cluster consumption. Purchase a subscription via {rhmLink} or{' '}
-                {gcpLink}
-              </p>
-            ) : (
-              <>
-                <p>Billing based on cluster consumption and charged via Red Hat Marketplace.</p>
-                <p>
-                  <ExternalLink href="https://marketplace.redhat.com/en-us/products/red-hat-openshift-dedicated">
-                    Purchase this option
-                  </ExternalLink>
-                </p>
-              </>
-            )
+            <p>
+              Billing based on cluster consumption. Purchase a subscription via {rhmLink} or{' '}
+              {gcpLink}
+            </p>
           }
           aria-label="help"
         >
           <Button variant="link">
-            <OutlinedQuestionCircleIcon />{' '}
-            {osdGoogleMarketplaceFeature
-              ? 'How can I purchase a subscription?'
-              : 'How can I purchase a subscription via Marketplace?'}
+            <OutlinedQuestionCircleIcon /> How can I purchase a subscription?
           </Button>
         </Popover>
       </div>
@@ -169,41 +144,28 @@ export const BillingModel = () => {
       label: 'Annual: Fixed capacity subscription from Red Hat',
       description: 'Use the quota pre-purchased by your organization',
     },
-    ...(osdGoogleMarketplaceFeature
-      ? [
-          {
-            disabled: !quotas.marketplace && !quotas.gcpResources,
-            value: 'marketplace-select',
-            // check the radio button if billingModel starts with 'marketplace'
-            shouldCheck: (fieldValue: string, radioValue: React.ReactText) =>
-              fieldValue.startsWith('marketplace') && `${radioValue}` === 'marketplace-select',
-            label: (
-              <>
-                <div>
-                  On-Demand: Flexible usage billed through {gcpLink} or {rhmLink}
-                </div>
-                <MarketplaceSelectField
-                  hasGcpQuota={quotas.gcpResources}
-                  hasRhmQuota={quotas.marketplace}
-                />
-              </>
-            ),
-            description:
-              !quotas.marketplace && !quotas.gcpResources
-                ? marketplaceDisabledDescription
-                : marketplaceQuotaDescription,
-          },
-        ]
-      : [
-          {
-            disabled: !quotas.marketplace,
-            value: billingModels.MARKETPLACE,
-            label: 'On-Demand: Flexible usage billed through Red Hat Marketplace',
-            description: !quotas.marketplace
-              ? marketplaceDisabledDescription
-              : marketplaceQuotaDescription,
-          },
-        ]),
+    {
+      disabled: !quotas.marketplace && !quotas.gcpResources,
+      value: 'marketplace-select',
+      // check the radio button if billingModel starts with 'marketplace'
+      shouldCheck: (fieldValue: string, radioValue: React.ReactText) =>
+        fieldValue.startsWith('marketplace') && `${radioValue}` === 'marketplace-select',
+      label: (
+        <>
+          <div>
+            On-Demand: Flexible usage billed through {gcpLink} or {rhmLink}
+          </div>
+          <MarketplaceSelectField
+            hasGcpQuota={quotas.gcpResources}
+            hasRhmQuota={quotas.marketplace}
+          />
+        </>
+      ),
+      description:
+        !quotas.marketplace && !quotas.gcpResources
+          ? marketplaceDisabledDescription
+          : marketplaceQuotaDescription,
+    },
   ];
 
   React.useEffect(() => {

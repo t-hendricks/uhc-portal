@@ -9,6 +9,7 @@ const initialProps = {
   clusters: mockedClusters,
   openModal: () => {},
   isPending: false,
+  refreshFunc: () => {},
 };
 
 describe('<ClusterListTable />', () => {

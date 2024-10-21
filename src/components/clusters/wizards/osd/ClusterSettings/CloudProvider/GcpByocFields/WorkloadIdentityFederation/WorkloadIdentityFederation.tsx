@@ -27,6 +27,7 @@ export interface WorkloadIdentityFederationProps {
 const WorkloadIdentityFederation = (props: WorkloadIdentityFederationProps) => {
   const { getWifConfigsService } = props;
   const { isLoading, wifConfigs, getWifConfigs, error } = useGetWifConfigs(getWifConfigsService);
+
   useEffect(() => {
     getWifConfigs('');
   }, [getWifConfigs]);
@@ -47,6 +48,18 @@ const WorkloadIdentityFederation = (props: WorkloadIdentityFederationProps) => {
 
   const validateWifConfig = (value?: WifConfig) =>
     value?.id ? undefined : 'Wif configuration is required';
+
+  useEffect(() => {
+    // if the selected wif config value is not in the wif config list, reset the selection
+    // this edge case could happen if the user deletes a wif config after he selected it
+    if (
+      wifConfigs &&
+      selectedGcpWifConfig &&
+      !wifConfigs.find((config) => config.id === selectedGcpWifConfig.id)
+    ) {
+      setFieldValue(FieldId.GcpWifConfig, null, true);
+    }
+  }, [wifConfigs, selectedGcpWifConfig, setFieldValue]);
 
   return (
     <Stack hasGutter>

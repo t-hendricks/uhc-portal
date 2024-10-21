@@ -14,11 +14,16 @@ import {
   normalizeCluster,
   normalizeMetrics,
 } from '../../../common/normalize';
-import { Region } from '../types/types';
 
-export type MapEntry = { aiCluster?: AICluster; cluster?: Cluster; subscription: Subscription };
+export type SubscriptionMapEntry = {
+  aiCluster?: AICluster;
+  cluster?: Cluster;
+  subscription: Subscription;
+};
 
-export const createResponseForFetchClusters = (subscriptionMap: Map<string, MapEntry>) => {
+export const createResponseForFetchClusters = (
+  subscriptionMap: Map<string, SubscriptionMapEntry>,
+) => {
   const result: (ClusterWithPermissions | Cluster)[] = [];
   subscriptionMap.forEach((entry) => {
     let cluster: ClusterWithPermissions | Cluster;
@@ -65,15 +70,18 @@ export type ErrorResponse = AxiosError & {
 };
 
 export const formatClusterListError = (
-  response: { error: ErrorResponse | null },
-  region?: Region,
+  response: { error: ErrorResponse | null | undefined },
+  region?: String,
 ) => {
   if (!response.error || (!response.error?.response?.data?.reason && !response.error?.message)) {
     return null;
   }
-  return {
+  const returnValue = {
     reason: response.error?.response?.data?.reason || response.error?.message,
     operation_id: response.error?.response?.data?.operation_id,
-    region,
   };
+  if (region) {
+    return { ...returnValue, region };
+  }
+  return returnValue;
 };

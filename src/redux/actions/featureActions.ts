@@ -2,7 +2,6 @@ import { action, ActionType } from 'typesafe-actions';
 
 import authorizationsService from '../../services/authorizationsService';
 import {
-  ACCESS_REQUEST_ENABLED,
   CLI_SSO_AUTHORIZATION,
   CLUSTER_OWNERSHIP_TRANSFER,
   ENABLE_MACHINE_CONFIGURATION,
@@ -13,9 +12,7 @@ import {
   MULTIREGION_PREVIEW_ENABLED,
   NETWORK_VALIDATOR_ONDEMAND_FEATURE,
   OCMUI_EDIT_BILLING_ACCOUNT,
-  OSD_GCP_SHARED_VPC_FEATURE,
   OSD_GCP_WIF,
-  OSD_GOOGLE_MARKETPLACE_FEATURE,
   SET_FEATURE,
   UNSTABLE_CLUSTER_VERSIONS,
 } from '../constants/featureConstants';
@@ -37,15 +34,12 @@ export const features = [
   getSimpleUnleashFeature('hypershift-creation-wizard', HYPERSHIFT_WIZARD_FEATURE),
   getSimpleUnleashFeature('hcp-rosa-getting-started-page', HCP_ROSA_GETTING_STARTED_PAGE),
   getSimpleUnleashFeature('hcp-use-unmanaged-policies', HCP_USE_UNMANAGED),
-  getSimpleUnleashFeature('osd-google-marketplace', OSD_GOOGLE_MARKETPLACE_FEATURE),
-  getSimpleUnleashFeature('osd-gcp-shared-vpc', OSD_GCP_SHARED_VPC_FEATURE),
   getSimpleUnleashFeature('network-validator-ondemand', NETWORK_VALIDATOR_ONDEMAND_FEATURE),
   getSimpleUnleashFeature('ocmui-unstable-cluster-versions', UNSTABLE_CLUSTER_VERSIONS),
   getSimpleUnleashFeature('ocmui-edit-billing-account', OCMUI_EDIT_BILLING_ACCOUNT),
   getSimpleUnleashFeature('enable-machine-configuration', ENABLE_MACHINE_CONFIGURATION),
   getSimpleUnleashFeature('cli-sso-authorization', CLI_SSO_AUTHORIZATION),
   getSimpleUnleashFeature('multi-region-support', MULTIREGION_PREVIEW_ENABLED),
-  getSimpleUnleashFeature('enable-access-request', ACCESS_REQUEST_ENABLED),
   getSimpleUnleashFeature('cluster-ownership-transfer', CLUSTER_OWNERSHIP_TRANSFER),
   getSimpleUnleashFeature('gcp-workload-identity-federation', OSD_GCP_WIF),
   getSimpleUnleashFeature('max-compute-nodes-500', MAX_COMPUTE_NODES_500),

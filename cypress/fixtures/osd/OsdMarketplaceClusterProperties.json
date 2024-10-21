@@ -8,6 +8,7 @@
       "Marketplace": "Google Cloud Marketplace",
       "InfrastructureType": "Customer cloud subscription",
       "Region": "us-east1, Moncks Corner, South Carolina, USA",
+      "Version": "4.17.0 (candidate)",
       "Availability": "Multi-zone",
       "SecureBootSupportForShieldedVMs": "Enabled",
       "UserWorkloadMonitoring": "Enabled",

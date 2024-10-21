@@ -6,11 +6,10 @@ import { versionComparator } from '~/common/versionComparator';
 
 import getClusterName from '../../../common/getClusterName';
 import { isAISubscriptionWithoutMetrics } from '../../../common/isAssistedInstallerCluster';
-import { getClusterStateAndDescription } from '../common/clusterStates';
-import { clusterType } from '../common/clusterType';
-import getClusterVersion from '../common/getClusterVersion';
-
-import { sortColumns } from './components/ClusterListTable';
+import { sortColumns } from '../../../components/clusters/ClusterListMultiRegion/components/ClusterListTable';
+import { getClusterStateAndDescription } from '../../../components/clusters/common/clusterStates';
+import { clusterType } from '../../../components/clusters/common/clusterType';
+import getClusterVersion from '../../../components/clusters/common/getClusterVersion';
 
 const getSortableRowValues = (cluster) => {
   const sortableValues = {};

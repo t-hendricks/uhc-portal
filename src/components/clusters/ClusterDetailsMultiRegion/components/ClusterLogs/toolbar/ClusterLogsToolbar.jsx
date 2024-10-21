@@ -1,10 +1,16 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { Toolbar, ToolbarContent, ToolbarGroup, ToolbarItem } from '@patternfly/react-core';
+import {
+  PaginationVariant,
+  Toolbar,
+  ToolbarContent,
+  ToolbarGroup,
+  ToolbarItem,
+} from '@patternfly/react-core';
 
 import { viewConstants } from '../../../../../../redux/constants';
-import ViewPaginationRow from '../../../../common/ViewPaginationRow/viewPaginationRow';
+import ClusterLogsPagination from '../ClusterLogsPagination';
 
 import ClusterLogsConditionalFilter from './ClusterLogsConditionalFilter';
 import ClusterLogsDatePicker from './ClusterLogsDatePicker';
@@ -26,6 +32,13 @@ class ClusterLogsToolbar extends React.PureComponent {
       createdAt,
       clusterID,
       logs,
+      itemCount,
+      page,
+      perPage,
+      itemsStart,
+      itemsEnd,
+      onSetPage,
+      onPerPageSelect,
     } = this.props;
 
     return (
@@ -60,14 +73,16 @@ class ClusterLogsToolbar extends React.PureComponent {
               />
             </ToolbarItem>
             <ToolbarItem align={{ default: 'alignRight' }} variant="pagination">
-              <ViewPaginationRow
-                viewType={viewConstants.CLUSTER_LOGS_VIEW}
-                currentPage={viewOptions.currentPage}
-                pageSize={viewOptions.pageSize}
-                totalCount={viewOptions.totalCount}
-                totalPages={viewOptions.totalPages}
-                variant="top"
+              <ClusterLogsPagination
+                itemCount={itemCount}
                 isDisabled={isPendingNoData}
+                page={page}
+                perPage={perPage}
+                itemsStart={itemsStart}
+                itemsEnd={itemsEnd}
+                variant={PaginationVariant.top}
+                onSetPage={onSetPage}
+                onPerPageSelect={onPerPageSelect}
               />
             </ToolbarItem>
           </ToolbarContent>
@@ -107,6 +122,13 @@ ClusterLogsToolbar.propTypes = {
   createdAt: PropTypes.string.isRequired,
   clusterID: PropTypes.string.isRequired,
   logs: PropTypes.number.isRequired,
+  itemCount: PropTypes.number,
+  page: PropTypes.number,
+  perPage: PropTypes.number,
+  itemsStart: PropTypes.number,
+  itemsEnd: PropTypes.number,
+  onSetPage: PropTypes.func,
+  onPerPageSelect: PropTypes.func,
 };
 
 export default ClusterLogsToolbar;
