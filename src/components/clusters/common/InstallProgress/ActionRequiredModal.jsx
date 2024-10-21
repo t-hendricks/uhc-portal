@@ -43,7 +43,8 @@ function ActionRequiredModal({ cluster, isOpen, onClose, regionalInstance }) {
     isWaitingForOIDCProviderOrOperatorRolesMode(cluster);
   const isBadSharedGCPVPCValues = isErrorSharedGCPVPCValues(cluster);
   const [activeTab, setActiveTab] = React.useState(ROSA_CLI_TAB_INDEX);
-  const isMultiRegionEnabled = useFeatureGate(MULTIREGION_PREVIEW_ENABLED) && isHCPCluster;
+  const isMultiRegionEnabled =
+    useFeatureGate(MULTIREGION_PREVIEW_ENABLED) && isHCPCluster && regionalInstance;
 
   const createByOIDCId = (cluster) => {
     const oidcConfigID = cluster.aws.sts?.oidc_config?.id;
