@@ -7,7 +7,12 @@
     "plugin:react-hooks/recommended",
     "plugin:testing-library/react",
   ],
-  "plugins": ["@typescript-eslint", "no-snapshot-testing", "simple-import-sort"],
+  "plugins": [
+    "@typescript-eslint",
+    "no-snapshot-testing",
+    "simple-import-sort",
+    "custom-rules",
+  ],
   "env": {
     "browser": true,
     "jest": true,
@@ -111,6 +116,7 @@
         ],
       },
     ],
+    "custom-rules/restrict-react-router-imports": "error",
   },
   "overrides": [
     {
