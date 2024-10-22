@@ -71,6 +71,7 @@ export function OverviewBillingAccountModal(props: OverviewBillingAccountModalPr
           isOpen={isOpen}
           actions={[
             <Button
+              data-testid="Update"
               key="update"
               variant="primary"
               onClick={formik.submitForm}

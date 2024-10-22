@@ -43,7 +43,9 @@
         }
       }
     },
-    "day2-profile": {}
+    "day2-profile": {
+      "SecondaryAWSBillingAccountId": "463992265265"
+    }
   },
   "rosa-hosted-public-advanced": {
     "day1-profile": {
