@@ -60,7 +60,7 @@ describe(
 
     it('Step OSD - AWS CCS wizard - Cluster Settings - Select default machinepool definitions', () => {
       CreateOSDWizardPage.isMachinePoolScreen();
-      CreateOSDWizardPage.selectComputeNodeType(clusterProperties.MachinePools.InstanceType);
+      CreateOSDWizardPage.selectComputeNodeType(clusterProperties.MachinePools[0].InstanceType);
       CreateOSDWizardPage.useBothIMDSv1AndIMDSv2Radio().should('be.checked');
       CreateOSDWizardPage.wizardNextButton().click();
     });
@@ -116,11 +116,13 @@ describe(
 
     it('Step OSD - AWS CCS wizard - Review and create : Machine pool definitions', () => {
       CreateOSDWizardPage.nodeInstanceTypeValue().contains(
-        clusterProperties.MachinePools.InstanceType,
+        clusterProperties.MachinePools[0].InstanceType,
       );
-      CreateOSDWizardPage.autoscalingValue().contains(clusterProperties.MachinePools.Autoscaling);
+      CreateOSDWizardPage.autoscalingValue().contains(
+        clusterProperties.MachinePools[0].Autoscaling,
+      );
       CreateOSDWizardPage.computeNodeCountValue().contains(
-        clusterProperties.MachinePools.NodeCount,
+        clusterProperties.MachinePools[0].NodeCount,
       );
     });
 
