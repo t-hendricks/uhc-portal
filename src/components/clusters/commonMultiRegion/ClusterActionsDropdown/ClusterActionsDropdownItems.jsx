@@ -4,11 +4,11 @@ import get from 'lodash/get';
 import { DropdownItem, DropdownList } from '@patternfly/react-core';
 
 // import { SubscriptionCommonFields } from '~/types/accounts_mgmt.v1';
-// import getClusterName from '../../../../common/getClusterName';
+import getClusterName from '../../../../common/getClusterName';
 import { isAssistedInstallCluster } from '../../../../common/isAssistedInstallerCluster';
-// import { normalizedProducts } from '../../../../common/subscriptionTypes';
+import { normalizedProducts } from '../../../../common/subscriptionTypes';
 import modals from '../../../common/Modal/modals';
-import clusterStates, { isHibernating /* isHypershiftCluster */ } from '../../common/clusterStates';
+import clusterStates, { isHibernating, isHypershiftCluster } from '../../common/clusterStates';
 
 /**
  * Helper using reason message why it's disabled as source-of-truth
@@ -39,7 +39,7 @@ function actionResolver(
   openModal,
   // canSubscribeOCP,
   // canTransferClusterOwnership,
-  // canHibernateCluster,
+  canHibernateCluster,
   // toggleSubscriptionReleased,
   // refreshFunc,
   inClusterList,
@@ -61,14 +61,14 @@ function actionResolver(
       <>This cluster is hibernating; resume cluster in order to perform actions</>
     ));
 
-  // const isClusterHibernatingOrPoweringDown =
-  //   cluster.state === clusterStates.HIBERNATING || cluster.state === clusterStates.POWERING_DOWN;
-  // const isClusterPoweringDown = cluster.state === clusterStates.POWERING_DOWN;
-  // const poweringDownMessage = isClusterPoweringDown && (
-  //   <span>
-  //     This cluster is powering down; you will be able to resume after it reaches hibernating state.
-  //   </span>
-  // );
+  const isClusterHibernatingOrPoweringDown =
+    cluster.state === clusterStates.HIBERNATING || cluster.state === clusterStates.POWERING_DOWN;
+  const isClusterPoweringDown = cluster.state === clusterStates.POWERING_DOWN;
+  const poweringDownMessage = isClusterPoweringDown && (
+    <span>
+      This cluster is powering down; you will be able to resume after it reaches hibernating state.
+    </span>
+  );
 
   const isReadOnly = cluster?.status?.configuration_mode === 'read_only';
   const readOnlyMessage = isReadOnly && (
@@ -88,8 +88,8 @@ function actionResolver(
   );
 
   const getKey = (item) => `${cluster.id}.menu.${item}`;
-  // const clusterName = getClusterName(cluster);
-  // const isProductOSDTrial = cluster.product && cluster.product.id === normalizedProducts.OSDTRIAL;
+  const clusterName = getClusterName(cluster);
+  const isProductOSDTrial = cluster.product && cluster.product.id === normalizedProducts.OSDTRIAL;
 
   const getAdminConsoleProps = () => ({
     ...baseProps,
@@ -102,37 +102,37 @@ function actionResolver(
     }),
   });
 
-  // const getHibernateClusterProps = () => {
-  //   const hibernateClusterBaseProps = {
-  //     ...baseProps,
-  //     key: getKey('hibernatecluster'),
-  //   };
-  //   const modalData = {
-  //     clusterID: cluster.id,
-  //     clusterName,
-  //     subscriptionID: cluster.subscription ? cluster.subscription.id : '',
-  //     shouldDisplayClusterName: inClusterList,
-  //   };
-  //   const hibernateClusterProps = {
-  //     ...hibernateClusterBaseProps,
-  //     title: 'Hibernate cluster',
-  //     ...disableIfTooltip(uninstallingMessage || readOnlyMessage || notReadyMessage, {
-  //       onClick: () => openModal(modals.HIBERNATE_CLUSTER, modalData),
-  //     }),
-  //   };
-  //   const resumeHibernatingClusterProps = {
-  //     ...hibernateClusterBaseProps,
-  //     title: 'Resume from Hibernation',
-  //     ...disableIfTooltip(poweringDownMessage || readOnlyMessage, {
-  //       onClick: () => openModal(modals.RESUME_CLUSTER, modalData),
-  //     }),
-  //   };
+  const getHibernateClusterProps = () => {
+    const hibernateClusterBaseProps = {
+      ...baseProps,
+      key: getKey('hibernatecluster'),
+    };
+    const modalData = {
+      clusterID: cluster.id,
+      clusterName,
+      subscriptionID: cluster.subscription ? cluster.subscription.id : '',
+      shouldDisplayClusterName: inClusterList,
+    };
+    const hibernateClusterProps = {
+      ...hibernateClusterBaseProps,
+      title: 'Hibernate cluster',
+      ...disableIfTooltip(uninstallingMessage || readOnlyMessage || notReadyMessage, {
+        onClick: () => openModal(modals.HIBERNATE_CLUSTER, modalData),
+      }),
+    };
+    const resumeHibernatingClusterProps = {
+      ...hibernateClusterBaseProps,
+      title: 'Resume from Hibernation',
+      ...disableIfTooltip(poweringDownMessage || readOnlyMessage, {
+        onClick: () => openModal(modals.RESUME_CLUSTER, modalData),
+      }),
+    };
 
-  //   if (isClusterHibernatingOrPoweringDown) {
-  //     return resumeHibernatingClusterProps;
-  //   }
-  //   return hibernateClusterProps;
-  // };
+    if (isClusterHibernatingOrPoweringDown) {
+      return resumeHibernatingClusterProps;
+    }
+    return hibernateClusterProps;
+  };
 
   const getScaleClusterProps = () => ({
     ...baseProps,
@@ -306,12 +306,12 @@ function actionResolver(
 
   // const showDelete = cluster.canDelete && cluster.managed;
   const showScale = cluster.canEdit && cluster.managed && !cluster.ccs?.enabled;
-  // const showHibernateCluster =
-  //   cluster.canEdit &&
-  //   cluster.managed &&
-  //   canHibernateCluster &&
-  //   !isProductOSDTrial &&
-  //   !isHypershiftCluster(cluster);
+  const showHibernateCluster =
+    cluster.canEdit &&
+    cluster.managed &&
+    canHibernateCluster &&
+    !isProductOSDTrial &&
+    !isHypershiftCluster(cluster);
   // const showEditMachinePool = cluster.canEdit && cluster.managed;
   // const isArchived =
   //   get(cluster, 'subscription.status', false) === SubscriptionCommonFields.status.ARCHIVED;
@@ -343,7 +343,7 @@ function actionResolver(
     showEditURL && getEditConsoleURLProps(),
     showScale && getScaleClusterProps(),
     // showEditMachinePool && getEditMachinePoolProps(),
-    // showHibernateCluster && getHibernateClusterProps(),
+    showHibernateCluster && getHibernateClusterProps(),
     // showUpgradeTrialCluster && getUpgradeTrialClusterProps(),
     // showDelete && getDeleteItemProps(),
     // showArchive && getArchiveClusterProps(),
@@ -359,7 +359,7 @@ function dropDownItems({
   openModal,
   // canSubscribeOCP,
   // canTransferClusterOwnership,
-  // canHibernateCluster,
+  canHibernateCluster,
   // toggleSubscriptionReleased,
   // refreshFunc,
   inClusterList,
@@ -370,7 +370,7 @@ function dropDownItems({
     openModal,
     // canSubscribeOCP,
     // canTransferClusterOwnership,
-    // canHibernateCluster,
+    canHibernateCluster,
     // toggleSubscriptionReleased,
     // refreshFunc,
     inClusterList,

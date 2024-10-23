@@ -51,12 +51,12 @@ import ClusterTypeLabel from '../../common/ClusterTypeLabel';
 import ClusterUpdateLink from '../../common/ClusterUpdateLink';
 import { canSubscribeOCPListFromClusters } from '../../common/EditSubscriptionSettingsDialog/canSubscribeOCPListSelector';
 import getClusterVersion from '../../common/getClusterVersion';
-import { useCanHibernateClusterListFromClusters } from '../../common/HibernateClusterModal/HibernateClusterModalSelectors';
 import ActionRequiredLink from '../../common/InstallProgress/ActionRequiredLink';
 import ProgressList from '../../common/InstallProgress/ProgressList';
 import { canTransferClusterOwnershipListFromClusters } from '../../common/TransferClusterOwnershipDialog/utils/transferClusterOwnershipDialogSelectors';
 import { actionResolver as multiRegionActionResolver } from '../../commonMultiRegion/ClusterActionsDropdown/ClusterActionsDropdownItems';
 import { ClusterLocationLabel } from '../../commonMultiRegion/ClusterLocationLabel';
+import { useCanHibernateClusterListFromClusters } from '../../commonMultiRegion/HibernateClusterModal/HibernateClusterModalSelectors';
 
 import ClusterCreatedIndicator from './ClusterCreatedIndicator';
 
@@ -348,7 +348,7 @@ function ClusterListTable(props) {
                 openModal,
                 // canSubscribeOCPList[cluster.id] || false,
                 // canTransferClusterOwnershipList[cluster.id] || false,
-                // canHibernateClusterList[cluster.id] || false,
+                canHibernateClusterList[cluster.id] || false,
                 // (subscriptionId, released) =>
                 //   dispatch(toggleSubscriptionReleased(subscriptionId, released)),
                 // refreshFunc,
