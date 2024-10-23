@@ -49,9 +49,9 @@ function actionResolver(
   const uninstallingMessage = isClusterUninstalling && (
     <span>The cluster is being uninstalled</span>
   );
-  // const isClusterReady = cluster.state === clusterStates.READY;
+  const isClusterReady = cluster.state === clusterStates.READY;
   // Superset of more specific uninstallingMessage.
-  // const notReadyMessage = !isClusterReady && <span>This cluster is not ready</span>;
+  const notReadyMessage = !isClusterReady && <span>This cluster is not ready</span>;
   const isClusterInHibernatingProcess = isHibernating(cluster);
   const hibernatingMessage =
     isClusterInHibernatingProcess &&
@@ -70,10 +70,10 @@ function actionResolver(
   //   </span>
   // );
 
-  // const isReadOnly = cluster?.status?.configuration_mode === 'read_only';
-  // const readOnlyMessage = isReadOnly && (
-  //   <span>This operation is not available during maintenance</span>
-  // );
+  const isReadOnly = cluster?.status?.configuration_mode === 'read_only';
+  const readOnlyMessage = isReadOnly && (
+    <span>This operation is not available during maintenance</span>
+  );
 
   // const deleteProtectionMessage = cluster.delete_protection?.enabled && (
   //   <span>
@@ -134,18 +134,18 @@ function actionResolver(
   //   return hibernateClusterProps;
   // };
 
-  // const getScaleClusterProps = () => ({
-  //   ...baseProps,
-  //   title: 'Edit load balancers and persistent storage',
-  //   key: getKey('scalecluster'),
-  //   ...disableIfTooltip(
-  //     uninstallingMessage || readOnlyMessage || hibernatingMessage || notReadyMessage,
-  //     {
-  //       onClick: () =>
-  //         openModal(modals.SCALE_CLUSTER, { ...cluster, shouldDisplayClusterName: inClusterList }),
-  //     },
-  //   ),
-  // });
+  const getScaleClusterProps = () => ({
+    ...baseProps,
+    title: 'Edit load balancers and persistent storage',
+    key: getKey('scalecluster'),
+    ...disableIfTooltip(
+      uninstallingMessage || readOnlyMessage || hibernatingMessage || notReadyMessage,
+      {
+        onClick: () =>
+          openModal(modals.SCALE_CLUSTER, { ...cluster, shouldDisplayClusterName: inClusterList }),
+      },
+    ),
+  });
 
   // const getEditMachinePoolProps = () => ({
   //   ...baseProps,
@@ -305,7 +305,7 @@ function actionResolver(
   // };
 
   // const showDelete = cluster.canDelete && cluster.managed;
-  // const showScale = cluster.canEdit && cluster.managed && !cluster.ccs?.enabled;
+  const showScale = cluster.canEdit && cluster.managed && !cluster.ccs?.enabled;
   // const showHibernateCluster =
   //   cluster.canEdit &&
   //   cluster.managed &&
@@ -341,7 +341,7 @@ function actionResolver(
     showConsoleButton && getAdminConsoleProps(),
     cluster.canEdit && getEditDisplayNameProps(),
     showEditURL && getEditConsoleURLProps(),
-    // showScale && getScaleClusterProps(),
+    showScale && getScaleClusterProps(),
     // showEditMachinePool && getEditMachinePoolProps(),
     // showHibernateCluster && getHibernateClusterProps(),
     // showUpgradeTrialCluster && getUpgradeTrialClusterProps(),
