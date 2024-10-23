@@ -25,7 +25,7 @@ export interface WorkloadIdentityFederationProps {
   getWifConfigsService: (projectId: string) => Promise<AxiosResponse<WifConfigList>>;
 }
 
-const createCommand = `ocm gcp create wif-config --name <wif_name> --project <gcp_project_id> --tag-enforcement=false`;
+const createCommand = `ocm gcp create wif-config --name <wif_name> --project <gcp_project_id>`;
 
 const WorkloadIdentityFederation = (props: WorkloadIdentityFederationProps) => {
   const { getWifConfigsService } = props;
