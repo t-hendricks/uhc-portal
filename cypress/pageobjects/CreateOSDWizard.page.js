@@ -365,8 +365,8 @@ class CreateOSDCluster extends Page {
   }
   selectSubnetAvailabilityZone(subnetAvailability) {
     cy.contains('Select availability zone').first().click();
-    cy.get('.pf-v5-c-select__menu').within(() => {
-      cy.contains('li button', subnetAvailability).click();
+    cy.get('.pf-v5-c-menu__list').within(() => {
+      cy.contains('li button', subnetAvailability).click({ force: true });
     });
   }
 

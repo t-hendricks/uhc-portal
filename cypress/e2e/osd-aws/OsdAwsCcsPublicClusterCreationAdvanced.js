@@ -12,7 +12,7 @@ const awsAccountID = Cypress.env('QE_AWS_ID');
 const awsAccessKey = Cypress.env('QE_AWS_ACCESS_KEY_ID');
 const awsSecretKey = Cypress.env('QE_AWS_ACCESS_KEY_SECRET');
 
-const selectZones = clusterProperties.MachinePools.AvailabilityZones;
+const selectZones = clusterProperties.MachinePools[0].AvailabilityZones;
 const securityGroups = qeInfrastructure.SECURITY_GROUPS_NAME;
 
 describe(
@@ -66,10 +66,10 @@ describe(
 
     it('Step OSD - AWS CCS wizard - Cluster Settings - Select machinepool definitions', () => {
       CreateOSDWizardPage.isMachinePoolScreen();
-      CreateOSDWizardPage.selectComputeNodeType(clusterProperties.MachinePools.InstanceType);
+      CreateOSDWizardPage.selectComputeNodeType(clusterProperties.MachinePools[0].InstanceType);
       CreateOSDWizardPage.enableAutoscalingCheckbox().check();
-      CreateOSDWizardPage.setMinimumNodeCount(clusterProperties.MachinePools.MinimumNodeCount);
-      CreateOSDWizardPage.setMaximumNodeCount(clusterProperties.MachinePools.MaximumNodeCount);
+      CreateOSDWizardPage.setMinimumNodeCount(clusterProperties.MachinePools[0].MinimumNodeCount);
+      CreateOSDWizardPage.setMaximumNodeCount(clusterProperties.MachinePools[0].MaximumNodeCount);
       CreateOSDWizardPage.useBothIMDSv1AndIMDSv2Radio().should('be.checked');
       cy.get(CreateOSDWizardPage.primaryButton).click();
     });
@@ -111,15 +111,15 @@ describe(
 
       let i = 1;
 
-      for (; i <= clusterProperties.MachinePools.AvailabilityZonesCount; i++) {
+      for (; i <= clusterProperties.MachinePools[0].AvailabilityZonesCount; i++) {
         CreateOSDWizardPage.selectPrivateSubnet(
           i - 1,
-          qeInfrastructure.SUBNETS.ZONES[clusterProperties.MachinePools.AvailabilityZones[i - 1]]
+          qeInfrastructure.SUBNETS.ZONES[clusterProperties.MachinePools[0].AvailabilityZones[i - 1]]
             .PRIVATE_SUBNET_NAME,
         );
         CreateOSDWizardPage.selectPublicSubnet(
           i - 1,
-          qeInfrastructure.SUBNETS.ZONES[clusterProperties.MachinePools.AvailabilityZones[i - 1]]
+          qeInfrastructure.SUBNETS.ZONES[clusterProperties.MachinePools[0].AvailabilityZones[i - 1]]
             .PUBLIC_SUBNET_NAME,
         );
       }
@@ -212,15 +212,17 @@ describe(
 
     it('Step OSD - AWS CCS wizard - Review and create : Machine pool definitions', () => {
       CreateOSDWizardPage.nodeInstanceTypeValue().contains(
-        clusterProperties.MachinePools.InstanceType,
+        clusterProperties.MachinePools[0].InstanceType,
       );
-      CreateOSDWizardPage.autoscalingValue().contains(clusterProperties.MachinePools.Autoscaling);
+      CreateOSDWizardPage.autoscalingValue().contains(
+        clusterProperties.MachinePools[0].Autoscaling,
+      );
 
       CreateOSDWizardPage.computeNodeRangeValue().contains(
-        `Minimum nodes per zone: ${clusterProperties.MachinePools.MinimumNodeCount}`,
+        `Minimum nodes per zone: ${clusterProperties.MachinePools[0].MinimumNodeCount}`,
       );
       CreateOSDWizardPage.computeNodeRangeValue().contains(
-        `Maximum nodes per zone: ${clusterProperties.MachinePools.MaximumNodeCount}`,
+        `Maximum nodes per zone: ${clusterProperties.MachinePools[0].MaximumNodeCount}`,
       );
     });
 
@@ -250,18 +252,20 @@ describe(
         CreateOSDWizardPage.vpcSubnetSettingsValue().next().contains(value);
       });
       let i = 1;
-      for (; i <= clusterProperties.MachinePools.AvailabilityZonesCount; i++) {
+      for (; i <= clusterProperties.MachinePools[0].AvailabilityZonesCount; i++) {
         CreateOSDWizardPage.vpcSubnetSettingsValue()
           .next()
           .contains(
-            qeInfrastructure.SUBNETS.ZONES[clusterProperties.MachinePools.AvailabilityZones[i - 1]]
-              .PRIVATE_SUBNET_NAME,
+            qeInfrastructure.SUBNETS.ZONES[
+              clusterProperties.MachinePools[0].AvailabilityZones[i - 1]
+            ].PRIVATE_SUBNET_NAME,
           );
         CreateOSDWizardPage.vpcSubnetSettingsValue()
           .next()
           .contains(
-            qeInfrastructure.SUBNETS.ZONES[clusterProperties.MachinePools.AvailabilityZones[i - 1]]
-              .PUBLIC_SUBNET_NAME,
+            qeInfrastructure.SUBNETS.ZONES[
+              clusterProperties.MachinePools[0].AvailabilityZones[i - 1]
+            ].PUBLIC_SUBNET_NAME,
           );
       }
     });
