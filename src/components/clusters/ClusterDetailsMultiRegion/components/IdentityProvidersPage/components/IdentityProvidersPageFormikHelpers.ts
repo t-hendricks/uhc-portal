@@ -48,10 +48,10 @@ export const IdentityProvidersPageFormInitialValues = (selectedIDP: string) => {
         [FieldId.NAME]: '',
         [FieldId.LDAP_CA]: '',
         [FieldId.LDAP_EMAIL]: [''],
-        [FieldId.LDAP_ID]: ['dn'],
+        [FieldId.LDAP_ID]: [''],
         [FieldId.LDAP_INSECURE]: '',
-        [FieldId.LDAP_NAME]: ['cn'],
-        [FieldId.LDAP_PREFFERED_USERNAME]: ['uid'],
+        [FieldId.LDAP_NAME]: [''],
+        [FieldId.LDAP_PREFFERED_USERNAME]: [''],
         [FieldId.LDAP_URL]: '',
       };
     case 'GitlabIdentityProvider':
