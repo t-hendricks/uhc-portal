@@ -17,9 +17,9 @@
       "InstallIntoExistingVPC": "Disabled",
       "ApplicationIngress": "Use default settings",
       "Nodes": {
-        "Control plane": "3/3",
-        "Infra": "2/2",
-        "Compute": "3/3"
+        "Control plane": "3",
+        "Infra": "2",
+        "Compute": "2"
       },
       "ClusterAutoscaling": "Disabled",
       "ClusterPrivacy": "Public",
@@ -30,14 +30,45 @@
       "HostPrefix": "/23",
       "UpdateStrategy": "Individual updates",
       "NodeDraining": "1 hour",
-      "MachinePools": {
-        "AvailabilityZones": "us-east-1a",
-        "InstanceType": "m5.xlarge",
-        "Autoscaling": "Disabled",
-        "NodeCount": "2"
-      }
+      "MachinePools": [
+        {
+          "Name": "worker2",
+          "InstanceType": "m5.xlarge",
+          "AvailabilityZones": "us-east-1a",
+          "NodeCount": "2",
+          "MinimumNodeCount": "3",
+          "MaximumNodeCount": "4",
+          "ComputeNodeCount": "4",
+          "Autoscaling": "Disabled",
+          "NodeLabel": [
+            {
+              "Key": "ocmcypress-tests-key",
+              "Value": "ccs-aws-public"
+            },
+            {
+              "Key": "Available-zone",
+              "Value": "Single-zone"
+            }
+          ],
+          "Taints": [
+            {
+              "Key": "ocmcypress-tests-key",
+              "Value": "ccs-default",
+              "Effect": "NoExecute"
+            },
+            {
+              "Key": "ocmcypress-tests-taints",
+              "Value": "single-zone",
+              "Effect": "NoSchedule"
+            }
+          ]
+        }
+      ]
     },
-    "day2-profile": {}
+    "day2-profile": {
+      "SetMaximumPrice": "0.03",
+      "Autoscaling": "Enabled"
+    }
   },
   "osdccs-aws-public-advanced": {
     "day1-profile": {
@@ -55,22 +86,48 @@
       "AWSServiceControlPolicy": "Enabled",
       "EncryptVolumesWithCustomerKeys": "Disabled",
       "Nodes": {
-        "Control plane": "3/3",
-        "Infra": "2/2",
-        "Compute": "3/3"
+        "Control plane": "3",
+        "Infra": "3",
+        "Compute": "9"
       },
       "InstanceMetadataService": "IMDSv1 and IMDSv2",
       "UpdateStrategy": "Individual updates",
       "NodeDraining": "1 hour",
-      "MachinePools": {
-        "Name": "worker",
-        "InstanceType": "m5.xlarge",
-        "AvailabilityZones": ["us-west-2a", "us-west-2b", "us-west-2c"],
-        "AvailabilityZonesCount": "3",
-        "MinimumNodeCount": "3",
-        "MaximumNodeCount": "4",
-        "Autoscaling": "Enabled"
-      },
+      "MachinePools": [
+        {
+          "Name": "worker",
+          "AvailabilityZonesCount": "3",
+          "AvailabilityZones": ["us-west-2a", "us-west-2b", "us-west-2c"],
+          "InstanceType": "m5.xlarge",
+          "Autoscaling": "Enabled",
+          "NodeCount": "2",
+          "ComputeNodeCount": "4",
+          "MinimumNodeCount": "3",
+          "MaximumNodeCount": "4",
+          "NodeLabel": [
+            {
+              "Key": "ocmcypress-tests-key",
+              "Value": "cyp-osd-ccs-aws-pub-adv"
+            },
+            {
+              "Key": "Available-zone",
+              "Value": "Multi-zone"
+            }
+          ],
+          "Taints": [
+            {
+              "Key": "ocmcypress-tests-key",
+              "Value": "ccs-advanced",
+              "Effect": "NoExecute"
+            },
+            {
+              "Key": "ocmcypress-tests-taints",
+              "Value": "multi-zone",
+              "Effect": "NoSchedule"
+            }
+          ]
+        }
+      ],
       "CustomApplicationIngress": "Custom settings",
       "ApplySameSecurityGroupsToAllNodeTypes": "false",
       "RouteSelector": {
@@ -88,6 +145,8 @@
       "PodCIDR": "10.128.0.0/14",
       "HostPrefix": "/23"
     },
-    "day2-profile": {}
+    "day2-profile": {
+      "SetMaximumPrice": "0.03"
+    }
   }
 }
