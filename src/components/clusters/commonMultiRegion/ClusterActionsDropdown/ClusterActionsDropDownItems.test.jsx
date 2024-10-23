@@ -13,8 +13,8 @@ const menuItemsText = [
   'Open console',
   'Edit display name',
   'Edit load balancers and persistent storage',
-  // 'Edit machine pool',
   'Hibernate cluster',
+  'Edit machine pool',
   // 'Delete cluster',
 ];
 
@@ -60,13 +60,14 @@ describe('Cluster Actions Dropdown Items', () => {
       });
     });
 
-    it.skip('should open edit machine pools modal', async () => {
+    it('should open edit machine pools modal', async () => {
       const { user } = render(<DropDownItemsRenderHelper {...Fixtures.managedReadyProps} />);
-      expect(Fixtures.managedReadyProps.openModal).toBeCalledTimes(0);
+      expect(Fixtures.managedReadyProps.openModal).not.toHaveBeenCalled();
       await user.click(screen.getByRole('menuitem', { name: 'Edit machine pool' }));
 
-      expect(Fixtures.managedReadyProps.openModal).toBeCalledWith('edit-machine-pool', {
+      expect(Fixtures.managedReadyProps.openModal).toHaveBeenCalledWith('edit-machine-pool', {
         cluster: Fixtures.cluster,
+        shouldDisplayClusterName: false,
       });
     });
 
@@ -157,8 +158,8 @@ describe('Cluster Actions Dropdown Items', () => {
       ['Open console', 'true'],
       ['Edit display name', 'false'],
       // ['Edit load balancers and persistent storage', 'true'],
-      // ['Edit machine pool', 'true'],
       ['Hibernate cluster', 'true'],
+      ['Edit machine pool', 'true'],
       // ['Delete cluster', 'false'],
     ])('menu button %p  disabled is set to %p', (menuItem, isDisabled) => {
       render(<DropDownItemsRenderHelper {...Fixtures.clusterNotReadyProps} />);
@@ -187,8 +188,8 @@ describe('Cluster Actions Dropdown Items', () => {
       ['Open console', 'true'],
       ['Edit display name', 'false'],
       // ['Edit load balancers and persistent storage', 'true'],
-      // ['Edit machine pool', 'true'],
       ['Resume from Hibernation', 'false'],
+      ['Edit machine pool', 'true'],
       // ['Delete cluster', 'true'],
     ])('menu button %p  disabled is set to %p', (menuItem, isDisabled) => {
       render(<DropDownItemsRenderHelper {...Fixtures.clusterHibernatingProps} />);
@@ -217,8 +218,8 @@ describe('Cluster Actions Dropdown Items', () => {
       ['Open console', 'false'],
       ['Edit display name', 'false'],
       // ['Edit load balancers and persistent storage', 'true'],
-      // ['Edit machine pool', 'true'],
       ['Hibernate cluster', 'true'],
+      ['Edit machine pool', 'true'],
       // ['Delete cluster', 'true'],
     ])('menu button %p  disabled is set to %p', (menuItem, isDisabled) => {
       render(<DropDownItemsRenderHelper {...Fixtures.clusterReadOnlyProps} />);
@@ -288,7 +289,7 @@ describe('Cluster Actions Dropdown Items', () => {
       ['Open console', 'false'],
       ['Edit display name', 'false'],
       // ['Edit load balancers and persistent storage', 'false'],
-      // ['Edit machine pool', 'false'],
+      ['Edit machine pool', 'false'],
       // ['Delete cluster', 'false'],
     ])('menu button %p  disabled is set to %p', (menuItem, isDisabled) => {
       render(<DropDownItemsRenderHelper {...Fixtures.hyperShiftReadyProps} />);
