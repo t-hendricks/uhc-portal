@@ -1,0 +1,121 @@
+// LoadBalancersDropdown shows a selection of load balancer
+// options for setting on the installed a cluster.
+// it is meant to be used in a redux-form <Field> and expects an onChange callback.
+
+import React from 'react';
+
+import { FormSelect, FormSelectOption, Tooltip } from '@patternfly/react-core';
+import { Spinner } from '@redhat-cloud-services/frontend-components/Spinner';
+
+import { useFetchLoadBalancerQuotaValues } from '~/queries/ClusterActionsQueries/useFetchLoadBalancerQuotaValues';
+import { useFetchOrganizationAndQuota } from '~/queries/common/useFetchOrganizationAndQuota';
+
+import { noQuotaTooltip } from '../../../../common/helpers';
+import ErrorBox from '../../../common/ErrorBox';
+import { QuotaTypes } from '../../common/quotaModel';
+import { availableQuota } from '../../common/quotaSelectors';
+
+import { filterLoadBalancerValuesByQuota } from './LoadBalancersDropdownHelper';
+
+const formatError = (errorData: { reason: string; code: string; operation_id: string }) => ({
+  errorMessage: errorData?.reason,
+  errorCode: errorData?.code,
+  operationID: errorData?.operation_id,
+});
+
+type LoadBalancersDropdownProps = {
+  input: any;
+  disabled: boolean;
+  currentValue: string;
+  billingModel: any;
+  product: string;
+  cloudProviderID: string;
+  isBYOC: boolean;
+  isMultiAZ: boolean;
+  region: string;
+};
+
+const LoadBalancersDropdown = ({
+  input,
+  disabled,
+  currentValue,
+  billingModel,
+  product,
+  cloudProviderID,
+  isBYOC,
+  isMultiAZ,
+  region,
+}: LoadBalancersDropdownProps) => {
+  const {
+    data: loadBalancerValues,
+    isFetched: loadBalancerValuesFetched,
+    isError: loadBalancerValuesIsError,
+    error: loadBalancerValuesError,
+  } = useFetchLoadBalancerQuotaValues(region);
+
+  const {
+    quota: quotaList,
+    isError: quotaListIsError,
+    error: quotaListError,
+  } = useFetchOrganizationAndQuota();
+
+  const loadBalancerOption = (value: any) => (
+    <FormSelectOption key={value} value={value} label={value} />
+  );
+
+  if (loadBalancerValuesFetched && !loadBalancerValuesIsError && !!quotaList && !quotaListError) {
+    const query = {
+      resourceType: QuotaTypes.LOAD_BALANCER,
+      billingModel,
+      product,
+      cloudProviderID,
+      isBYOC,
+      isMultiAZ,
+    };
+    // @ts-ignore
+    const quota = availableQuota(quotaList, query);
+
+    const filteredValues = filterLoadBalancerValuesByQuota(currentValue, loadBalancerValues, quota);
+    const notEnoughQuota = filteredValues.values.length <= 1;
+    const isDisabled = disabled || notEnoughQuota;
+    const { onChange, ...restInput } = input;
+    const formSelect = (
+      <FormSelect
+        className="quota-dropdown"
+        aria-label="Load Balancers"
+        isDisabled={isDisabled}
+        onChange={(_event, value) => onChange(value)}
+        {...restInput}
+      >
+        {filteredValues.values.map((value: any) => loadBalancerOption(value.toString()))}
+      </FormSelect>
+    );
+    if (notEnoughQuota) {
+      return (
+        <Tooltip content={noQuotaTooltip} position="right">
+          <div>{formSelect}</div>
+        </Tooltip>
+      );
+    }
+    return formSelect;
+  }
+
+  return loadBalancerValuesIsError || quotaListIsError ? (
+    <ErrorBox
+      message="Error loading load balancers list"
+      response={formatError(
+        // @ts-ignore
+        loadBalancerValuesError?.response?.data || quotaListError?.response?.data,
+      )}
+    />
+  ) : (
+    <>
+      <div className="spinner-fit-container">
+        <Spinner />
+      </div>
+      <div className="spinner-loading-text">Loading load balancers list...</div>
+    </>
+  );
+};
+
+export default LoadBalancersDropdown;

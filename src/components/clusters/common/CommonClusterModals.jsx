@@ -6,6 +6,7 @@ import ConnectedModal from '../../common/Modal/ConnectedModal';
 import { ConnectedEditMachinePoolModal } from '../ClusterDetails/components/MachinePools/components/EditMachinePoolModal/EditMachinePoolModal';
 import EditConsoleURLDialogMR from '../commonMultiRegion/EditConsoleURLDialog';
 import EditDisplayNameDialogMR from '../commonMultiRegion/EditDisplayNameDialog';
+import ScaleClusterDialogMR from '../commonMultiRegion/ScaleClusterDialog';
 import UpgradeWizardMR from '../commonMultiRegion/Upgrades/UpgradeWizard/UpgradeWizard';
 
 import DeleteProtectionModal from './DeleteProtectionModal/DeleteProtectionModal';
@@ -42,7 +43,10 @@ function CommonClusterModals({
       />
       <ConnectedModal ModalComponent={TransferClusterOwnershipDialog} onClose={onClose} />
       <ConnectedModal ModalComponent={EditSubscriptionSettingsDialog} onClose={onClose} isDialog />
-      <ConnectedModal ModalComponent={ScaleClusterDialog} onClose={onClose} />
+      <ConnectedModal
+        ModalComponent={isMultiRegionPreviewEnabled ? ScaleClusterDialogMR : ScaleClusterDialog}
+        onClose={onClose}
+      />
       <ConnectedModal ModalComponent={ArchiveClusterDialog} onClose={onClose} />
       <ConnectedModal ModalComponent={HibernateClusterModal} onClose={onClose} />
       <ConnectedModal ModalComponent={ResumeClusterModal} onClose={onClose} />

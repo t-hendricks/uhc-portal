@@ -12,7 +12,7 @@ function DropDownItemsRenderHelper(props) {
 const menuItemsText = [
   'Open console',
   'Edit display name',
-  // 'Edit load balancers and persistent storage',
+  'Edit load balancers and persistent storage',
   // 'Edit machine pool',
   // 'Hibernate cluster',
   // 'Delete cluster',
@@ -47,14 +47,17 @@ describe('Cluster Actions Dropdown Items', () => {
       });
     });
 
-    it.skip('should open edit cluster modal (load balancers and persistent storage)', async () => {
+    it('should open edit cluster modal (load balancers and persistent storage)', async () => {
       const { user } = render(<DropDownItemsRenderHelper {...Fixtures.managedReadyProps} />);
-      expect(Fixtures.managedReadyProps.openModal).toBeCalledTimes(0);
+      expect(Fixtures.managedReadyProps.openModal).toHaveBeenCalledTimes(0);
       await user.click(
         screen.getByRole('menuitem', { name: 'Edit load balancers and persistent storage' }),
       );
 
-      expect(Fixtures.managedReadyProps.openModal).toBeCalledWith('edit-cluster', Fixtures.cluster);
+      expect(Fixtures.managedReadyProps.openModal).toHaveBeenCalledWith('edit-cluster', {
+        ...Fixtures.cluster,
+        shouldDisplayClusterName: false,
+      });
     });
 
     it.skip('should open edit machine pools modal', async () => {

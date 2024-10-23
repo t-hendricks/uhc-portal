@@ -31,6 +31,7 @@ describe('<PersistentStorageDropdown />', () => {
     isMultiAZ: defaultCluster.multi_az,
     disabled: false,
   };
+
   const errorState = { ...baseState, error: true, errorMessage: 'This is an error message' };
 
   afterEach(() => {
