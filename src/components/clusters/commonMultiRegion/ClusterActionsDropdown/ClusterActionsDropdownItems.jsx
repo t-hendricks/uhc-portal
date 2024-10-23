@@ -147,21 +147,21 @@ function actionResolver(
     ),
   });
 
-  // const getEditMachinePoolProps = () => ({
-  //   ...baseProps,
-  //   title: 'Edit machine pool',
-  //   key: getKey('editmachinepools'),
-  //   ...disableIfTooltip(
-  //     uninstallingMessage || readOnlyMessage || hibernatingMessage || notReadyMessage,
-  //     {
-  //       onClick: () =>
-  //         openModal(modals.EDIT_MACHINE_POOL, {
-  //           cluster,
-  //           shouldDisplayClusterName: inClusterList,
-  //         }),
-  //     },
-  //   ),
-  // });
+  const getEditMachinePoolProps = () => ({
+    ...baseProps,
+    title: 'Edit machine pool',
+    key: getKey('editmachinepools'),
+    ...disableIfTooltip(
+      uninstallingMessage || readOnlyMessage || hibernatingMessage || notReadyMessage,
+      {
+        onClick: () =>
+          openModal(modals.EDIT_MACHINE_POOL, {
+            cluster,
+            shouldDisplayClusterName: inClusterList,
+          }),
+      },
+    ),
+  });
 
   const getEditDisplayNameProps = () => ({
     ...baseProps,
@@ -312,7 +312,7 @@ function actionResolver(
     canHibernateCluster &&
     !isProductOSDTrial &&
     !isHypershiftCluster(cluster);
-  // const showEditMachinePool = cluster.canEdit && cluster.managed;
+  const showEditMachinePool = cluster.canEdit && cluster.managed;
   // const isArchived =
   //   get(cluster, 'subscription.status', false) === SubscriptionCommonFields.status.ARCHIVED;
   // const showArchive = cluster.canEdit && !cluster.managed && cluster.subscription && !isArchived;
@@ -342,8 +342,9 @@ function actionResolver(
     cluster.canEdit && getEditDisplayNameProps(),
     showEditURL && getEditConsoleURLProps(),
     showScale && getScaleClusterProps(),
-    // showEditMachinePool && getEditMachinePoolProps(),
     showHibernateCluster && getHibernateClusterProps(),
+    showEditMachinePool && getEditMachinePoolProps(),
+    // showHibernateCluster && getHibernateClusterProps(),
     // showUpgradeTrialCluster && getUpgradeTrialClusterProps(),
     // showDelete && getDeleteItemProps(),
     // showArchive && getArchiveClusterProps(),

@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 
 import ConnectedModal from '../../common/Modal/ConnectedModal';
 import { ConnectedEditMachinePoolModal } from '../ClusterDetails/components/MachinePools/components/EditMachinePoolModal/EditMachinePoolModal';
+import { ConnectedEditMachinePoolModal as ConnectedEditMachinePoolModalMR } from '../ClusterDetailsMultiRegion/components/MachinePools/components/EditMachinePoolModal/EditMachinePoolModal';
 import EditConsoleURLDialogMR from '../commonMultiRegion/EditConsoleURLDialog';
 import EditDisplayNameDialogMR from '../commonMultiRegion/EditDisplayNameDialog';
 import ScaleClusterDialogMR from '../commonMultiRegion/ScaleClusterDialog';
@@ -69,7 +70,11 @@ function CommonClusterModals({
         }}
       />
       <ConnectedModal
-        ModalComponent={ConnectedEditMachinePoolModal}
+        ModalComponent={
+          isMultiRegionPreviewEnabled
+            ? ConnectedEditMachinePoolModalMR
+            : ConnectedEditMachinePoolModal
+        }
         clearMachinePools={clearMachinePools}
       />
     </>
