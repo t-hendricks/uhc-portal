@@ -189,3 +189,15 @@ export const findRegionalInstance = (
   instances?.find((instance: AvailableRegionalInstance) =>
     instance?.id?.includes(selectedRegion),
   ) || instances?.find((instance: AvailableRegionalInstance) => instance.isDefault);
+
+export const regionalizedClusterId = (formData: {
+  hypershift: string;
+  regional_instance: AvailableRegionalInstance;
+}) => {
+  const isRegionalizedCluster =
+    formData?.hypershift === 'true' &&
+    formData?.regional_instance?.cloud_provider_id === 'aws' &&
+    formData?.regional_instance?.isDefault !== true;
+
+  return isRegionalizedCluster ? formData?.regional_instance?.id : undefined;
+};

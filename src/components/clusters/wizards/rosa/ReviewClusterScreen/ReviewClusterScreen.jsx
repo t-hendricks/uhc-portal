@@ -30,7 +30,10 @@ import { SyncEditorModal } from '~/components/SyncEditor/SyncEditorModal';
 import config from '~/config';
 import useCanClusterAutoscale from '~/hooks/useCanClusterAutoscale';
 import { useFeatureGate } from '~/hooks/useFeatureGate';
-import { HYPERSHIFT_WIZARD_FEATURE } from '~/redux/constants/featureConstants';
+import {
+  HYPERSHIFT_WIZARD_FEATURE,
+  MULTIREGION_PREVIEW_ENABLED,
+} from '~/redux/constants/featureConstants';
 
 import { ClusterRequestTranslatorFactory } from '../../common/ClusterRequestTranslator/ClusterRequestTranslatorFactory';
 import { DebugClusterRequest } from '../../common/DebugClusterRequest';
@@ -97,6 +100,7 @@ const ReviewClusterScreen = ({
   const canAutoScale = useCanClusterAutoscale(product, billingModel);
   const autoscalingEnabled = canAutoScale && !!autoscalingEnabledValue;
   const isHypershiftSelected = hypershiftValue === 'true';
+  const isMultiRegionEnabled = useFeatureGate(MULTIREGION_PREVIEW_ENABLED) && isHypershiftSelected;
 
   const hasEtcdEncryption = isHypershiftSelected && !!etcdKeyArn;
   const clusterVersionRawId = clusterVersion?.raw_id;
@@ -211,6 +215,14 @@ const ReviewClusterScreen = ({
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [getUserRoleResponse, getOCMRoleResponse, userRole, ocmRole, errorWithAWSAccountRoles]);
+
+  // ensure regionalInstance does not exist if !isMultiRegionEnabled
+  useEffect(() => {
+    if (!isMultiRegionEnabled) {
+      setFieldValue(FieldId.RegionalInstance, undefined);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isMultiRegionEnabled]);
 
   const getStepIndex = (stepKey) => {
     let step = stepKey;
