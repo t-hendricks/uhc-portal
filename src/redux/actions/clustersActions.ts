@@ -21,6 +21,7 @@ import type { Cluster as AICluster } from '@openshift-assisted/types/assisted-in
 import * as Sentry from '@sentry/browser';
 
 import { isHypershiftCluster } from '~/components/clusters/common/clusterStates';
+import { getClusterServiceForRegion } from '~/services/clusterService';
 import type {
   ClusterAuthorizationRequest,
   Subscription,
@@ -73,14 +74,21 @@ const createClusterAndUpgradeSchedule = async (
   cluster: Cluster,
   upgradeSchedule: UpgradePolicy,
   dispatch: AppThunkDispatch,
+  regionalId?: string,
 ) => {
-  const clusterResponse = await clusterService.postNewCluster(cluster);
+  const regionalClusterService = regionalId ? getClusterServiceForRegion(regionalId) : undefined;
+
+  const clusterResponse = regionalClusterService
+    ? await regionalClusterService.postNewCluster(cluster)
+    : await clusterService.postNewCluster(cluster);
+
   if (upgradeSchedule) {
     const clusterID = clusterResponse.data.id;
     if (clusterID) {
       dispatch(postSchedule(clusterID, upgradeSchedule, isHypershiftCluster(cluster)));
     }
   }
+
   dispatch(invalidateClusters());
   return clusterResponse;
 };
@@ -89,10 +97,12 @@ const createClusterAction = (clusterResponse: Promise<AxiosResponse<Cluster, any
   action(clustersConstants.CREATE_CLUSTER, clusterResponse);
 
 const createCluster =
-  (params: Cluster, upgradeSchedule: UpgradePolicy): AppThunk =>
+  (params: Cluster, upgradeSchedule: UpgradePolicy, regionalId?: string): AppThunk =>
   (dispatch) =>
     dispatch(
-      createClusterAction(createClusterAndUpgradeSchedule(params, upgradeSchedule, dispatch)),
+      createClusterAction(
+        createClusterAndUpgradeSchedule(params, upgradeSchedule, dispatch, regionalId),
+      ),
     );
 
 const registerClusterAndUpdateSubscription = async (
