@@ -7,6 +7,7 @@ import { ConnectedEditMachinePoolModal } from '../ClusterDetails/components/Mach
 import { ConnectedEditMachinePoolModal as ConnectedEditMachinePoolModalMR } from '../ClusterDetailsMultiRegion/components/MachinePools/components/EditMachinePoolModal/EditMachinePoolModal';
 import EditConsoleURLDialogMR from '../commonMultiRegion/EditConsoleURLDialog';
 import EditDisplayNameDialogMR from '../commonMultiRegion/EditDisplayNameDialog';
+import EditSubscriptionSettingsDialogMR from '../commonMultiRegion/EditSubscriptionSettingsDialog/EditSubscriptionSettingsDialog';
 import ScaleClusterDialogMR from '../commonMultiRegion/ScaleClusterDialog';
 import UpgradeWizardMR from '../commonMultiRegion/Upgrades/UpgradeWizard/UpgradeWizard';
 
@@ -43,7 +44,15 @@ function CommonClusterModals({
         onClose={onClose}
       />
       <ConnectedModal ModalComponent={TransferClusterOwnershipDialog} onClose={onClose} />
-      <ConnectedModal ModalComponent={EditSubscriptionSettingsDialog} onClose={onClose} isDialog />
+      <ConnectedModal
+        ModalComponent={
+          isMultiRegionPreviewEnabled
+            ? EditSubscriptionSettingsDialogMR
+            : EditSubscriptionSettingsDialog
+        }
+        onClose={onClose}
+        isDialog
+      />
       <ConnectedModal
         ModalComponent={isMultiRegionPreviewEnabled ? ScaleClusterDialogMR : ScaleClusterDialog}
         onClose={onClose}

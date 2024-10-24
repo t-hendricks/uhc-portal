@@ -346,7 +346,7 @@ function ClusterListTable(props) {
                 cluster,
                 true, // showConsoleButton
                 openModal,
-                // canSubscribeOCPList[cluster.id] || false,
+                canSubscribeOCPList[cluster.id] || false,
                 // canTransferClusterOwnershipList[cluster.id] || false,
                 canHibernateClusterList[cluster.id] || false,
                 // (subscriptionId, released) =>
