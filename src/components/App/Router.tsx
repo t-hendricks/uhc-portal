@@ -403,6 +403,7 @@ const Router: React.FC<RouterProps> = ({ planType, clusterId, externalClusterId 
                 getMultiRegion={config.multiRegion && isMultiRegionPreviewEnabled}
               />
             ) : (
+              // @ts-ignore
               <ArchivedClusterList />
             )
           }
