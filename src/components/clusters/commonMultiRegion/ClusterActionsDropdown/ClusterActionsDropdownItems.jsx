@@ -37,7 +37,7 @@ function actionResolver(
   cluster,
   showConsoleButton,
   openModal,
-  // canSubscribeOCP,
+  canSubscribeOCP,
   // canTransferClusterOwnership,
   canHibernateCluster,
   // toggleSubscriptionReleased,
@@ -246,19 +246,19 @@ function actionResolver(
   //   ),
   // });
 
-  // const getEditSubscriptionSettingsProps = () => {
-  //   const editSubscriptionSettingsProps = {
-  //     ...baseProps,
-  //     title: 'Edit subscription settings',
-  //     key: getKey('editsubscriptionsettings'),
-  //     onClick: () =>
-  //       openModal(modals.EDIT_SUBSCRIPTION_SETTINGS, {
-  //         subscription: cluster.subscription,
-  //         shouldDisplayClusterName: inClusterList,
-  //       }),
-  //   };
-  //   return editSubscriptionSettingsProps;
-  // };
+  const getEditSubscriptionSettingsProps = () => {
+    const editSubscriptionSettingsProps = {
+      ...baseProps,
+      title: 'Edit subscription settings',
+      key: getKey('editsubscriptionsettings'),
+      onClick: () =>
+        openModal(modals.EDIT_SUBSCRIPTION_SETTINGS, {
+          subscription: cluster.subscription,
+          shouldDisplayClusterName: inClusterList,
+        }),
+    };
+    return editSubscriptionSettingsProps;
+  };
 
   // const getTransferClusterOwnershipProps = () => {
   //   const isReleased = get(cluster, 'subscription.released', false);
@@ -322,9 +322,9 @@ function actionResolver(
     cluster.canEdit &&
     (showConsoleButton || consoleURL) &&
     !isAssistedInstallCluster(cluster);
-  // const product = get(cluster, 'subscription.plan.type', '');
-  // const showEditSubscriptionSettings =
-  //   product === normalizedProducts.OCP && cluster.canEdit && canSubscribeOCP;
+  const product = get(cluster, 'subscription.plan.type', '');
+  const showEditSubscriptionSettings =
+    product === normalizedProducts.OCP && cluster.canEdit && canSubscribeOCP;
   // const isAllowedProducts = [
   //   normalizedProducts.OCP,
   //   normalizedProducts.ARO,
@@ -344,12 +344,11 @@ function actionResolver(
     showScale && getScaleClusterProps(),
     showHibernateCluster && getHibernateClusterProps(),
     showEditMachinePool && getEditMachinePoolProps(),
-    // showHibernateCluster && getHibernateClusterProps(),
     // showUpgradeTrialCluster && getUpgradeTrialClusterProps(),
     // showDelete && getDeleteItemProps(),
     // showArchive && getArchiveClusterProps(),
     // showUnarchive && getUnarchiveClusterProps(),
-    // showEditSubscriptionSettings && getEditSubscriptionSettingsProps(),
+    showEditSubscriptionSettings && getEditSubscriptionSettingsProps(),
     // showTransferClusterOwnership && getTransferClusterOwnershipProps(),
   ].filter(Boolean);
 }
@@ -358,7 +357,7 @@ function dropDownItems({
   cluster,
   showConsoleButton,
   openModal,
-  // canSubscribeOCP,
+  canSubscribeOCP,
   // canTransferClusterOwnership,
   canHibernateCluster,
   // toggleSubscriptionReleased,
@@ -369,7 +368,7 @@ function dropDownItems({
     cluster,
     showConsoleButton,
     openModal,
-    // canSubscribeOCP,
+    canSubscribeOCP,
     // canTransferClusterOwnership,
     canHibernateCluster,
     // toggleSubscriptionReleased,
