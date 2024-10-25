@@ -480,7 +480,7 @@ describe('<ClusterDetailsMultiRegion />', () => {
         const props = {
           ...fixtures,
           ...functions,
-          clearFiltersAndFlags: () => {},
+          resetFiltersAndFlags: () => {},
           clusterDetails: {
             ...fixtures.ROSAClusterDetails,
             cluster: { ...fixtures.ROSAClusterDetails.cluster, cluster },
