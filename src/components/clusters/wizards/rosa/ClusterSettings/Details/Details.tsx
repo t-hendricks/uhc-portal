@@ -9,7 +9,6 @@ import {
   FormGroup,
   Grid,
   GridItem,
-  Skeleton,
   Split,
   SplitItem,
   Title,
@@ -221,7 +220,7 @@ function Details() {
       return clusterNameAsyncError;
     }
 
-    if (isMultiRegionEnabled && isSearchClusterNameFetching) {
+    if (isMultiRegionEnabled && (isSearchClusterNameFetching || !region)) {
       return true;
     }
 
@@ -244,7 +243,7 @@ function Details() {
       return domainPrefixAsyncError;
     }
 
-    if (isMultiRegionEnabled && isSearchDomainPrefixFetching) {
+    if (isMultiRegionEnabled && (isSearchDomainPrefixFetching || !region)) {
       return true;
     }
 
@@ -386,41 +385,35 @@ function Details() {
 
         {isMultiRegionEnabled ? RegionField : null}
 
-        {isMultiRegionEnabled && !region ? (
-          <GridItem md={6}>
-            <Skeleton fontSize="md" />
-          </GridItem>
-        ) : (
-          <GridItem md={6}>
-            <Field
-              component={RichInputField}
-              name={FieldId.ClusterName}
-              label="Cluster name"
-              type="text"
-              validate={validateClusterName}
-              validation={(value: string) => clusterNameValidation(value, clusterNameMaxLength)}
-              asyncValidation={(value: string) =>
-                clusterNameAsyncValidation(
-                  value,
-                  isMultiRegionEnabled,
-                  hasExistingRegionalClusterName,
-                )
-              }
-              isRequired
-              extendedHelpText={constants.clusterNameHint}
-              input={{
-                ...getFieldProps(FieldId.ClusterName),
-                onChange: async (value: string) => {
-                  setFieldValue(
-                    FieldId.CustomOperatorRolesPrefix,
-                    createOperatorRolesPrefix(value),
-                    false,
-                  );
-                },
-              }}
-            />
-          </GridItem>
-        )}
+        <GridItem md={6}>
+          <Field
+            component={RichInputField}
+            name={FieldId.ClusterName}
+            label="Cluster name"
+            type="text"
+            validate={validateClusterName}
+            validation={(value: string) => clusterNameValidation(value, clusterNameMaxLength)}
+            asyncValidation={(value: string) =>
+              clusterNameAsyncValidation(
+                value,
+                isMultiRegionEnabled,
+                hasExistingRegionalClusterName,
+              )
+            }
+            isRequired
+            extendedHelpText={constants.clusterNameHint}
+            input={{
+              ...getFieldProps(FieldId.ClusterName),
+              onChange: async (value: string) => {
+                setFieldValue(
+                  FieldId.CustomOperatorRolesPrefix,
+                  createOperatorRolesPrefix(value),
+                  false,
+                );
+              },
+            }}
+          />
+        </GridItem>
         <GridItem md={6} />
 
         <GridItem>
