@@ -17,6 +17,7 @@ const mapStateToProps = (state) => {
     additionalTrustBundle: cluster.additional_trust_bundle,
     gcpVPCName: cluster.gcp_network?.vpc_name,
     isBYOVPC: cluster.aws?.subnet_ids || cluster.gcp_network,
+    gcpPrivateServiceConnect: cluster.gcp?.private_service_connect?.service_attachment_subnet || '',
   };
 };
 
