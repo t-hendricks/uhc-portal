@@ -3,7 +3,8 @@ import get from 'lodash/get';
 
 import { DropdownItem, DropdownList } from '@patternfly/react-core';
 
-// import { SubscriptionCommonFields } from '~/types/accounts_mgmt.v1';
+import { SubscriptionCommonFields } from '~/types/accounts_mgmt.v1';
+
 import getClusterName from '../../../../common/getClusterName';
 import { isAssistedInstallCluster } from '../../../../common/isAssistedInstallerCluster';
 import { normalizedProducts } from '../../../../common/subscriptionTypes';
@@ -175,27 +176,27 @@ function actionResolver(
         }),
     }),
   });
-  // const getArchiveClusterProps = () => {
-  //   const baseArchiveProps = {
-  //     ...baseProps,
-  //     title: 'Archive cluster',
-  //     key: getKey('archivecluster'),
-  //   };
-  //   const archiveModalData = {
-  //     subscriptionID: cluster.subscription ? cluster.subscription.id : '',
-  //     name: clusterName,
-  //   };
-  //   return {
-  //     ...baseArchiveProps,
-  //     ...disableIfTooltip(readOnlyMessage, {
-  //       onClick: () =>
-  //         openModal(modals.ARCHIVE_CLUSTER, {
-  //           ...archiveModalData,
-  //           shouldDisplayClusterName: inClusterList,
-  //         }),
-  //     }),
-  //   };
-  // };
+  const getArchiveClusterProps = () => {
+    const baseArchiveProps = {
+      ...baseProps,
+      title: 'Archive cluster',
+      key: getKey('archivecluster'),
+    };
+    const archiveModalData = {
+      subscriptionID: cluster.subscription ? cluster.subscription.id : '',
+      name: clusterName,
+    };
+    return {
+      ...baseArchiveProps,
+      ...disableIfTooltip(readOnlyMessage, {
+        onClick: () =>
+          openModal(modals.ARCHIVE_CLUSTER, {
+            ...archiveModalData,
+            shouldDisplayClusterName: inClusterList,
+          }),
+      }),
+    };
+  };
 
   // const getUnarchiveClusterProps = () => {
   //   const baseArchiveProps = {
@@ -313,9 +314,9 @@ function actionResolver(
     !isProductOSDTrial &&
     !isHypershiftCluster(cluster);
   const showEditMachinePool = cluster.canEdit && cluster.managed;
-  // const isArchived =
-  //   get(cluster, 'subscription.status', false) === SubscriptionCommonFields.status.ARCHIVED;
-  // const showArchive = cluster.canEdit && !cluster.managed && cluster.subscription && !isArchived;
+  const isArchived =
+    get(cluster, 'subscription.status', false) === SubscriptionCommonFields.status.ARCHIVED;
+  const showArchive = cluster.canEdit && !cluster.managed && cluster.subscription && !isArchived;
   // const showUnarchive = cluster.canEdit && !cluster.managed && cluster.subscription && isArchived;
   const showEditURL =
     !cluster.managed &&
@@ -346,7 +347,7 @@ function actionResolver(
     showEditMachinePool && getEditMachinePoolProps(),
     // showUpgradeTrialCluster && getUpgradeTrialClusterProps(),
     // showDelete && getDeleteItemProps(),
-    // showArchive && getArchiveClusterProps(),
+    showArchive && getArchiveClusterProps(),
     // showUnarchive && getUnarchiveClusterProps(),
     showEditSubscriptionSettings && getEditSubscriptionSettingsProps(),
     // showTransferClusterOwnership && getTransferClusterOwnershipProps(),
