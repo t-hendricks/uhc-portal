@@ -14,12 +14,16 @@ describe('OSD Marketplace cluster creation tests(OCP-67514)', { tags: ['smoke'] 
     }
   });
   Clusters.forEach((clusterProperties) => {
-    it(`Launch OSD - ${clusterProperties.CloudProvider} - ${clusterProperties.Marketplace} cluster wizard`, () => {
+    let authType = clusterProperties.CloudProvider.includes('Google Cloud Platform')
+      ? `-${clusterProperties.AuthenticationType}`
+      : '';
+
+    it(`Launch OSD - ${clusterProperties.CloudProvider} ${authType}-${clusterProperties.Marketplace} cluster wizard`, () => {
       CreateOSDWizardPage.osdCreateClusterButton().click();
       CreateOSDWizardPage.isCreateOSDPage();
     });
 
-    it(`OSD wizard - ${clusterProperties.CloudProvider} - ${clusterProperties.Marketplace} : Billing model and its definitions`, () => {
+    it(`OSD wizard - ${clusterProperties.CloudProvider} ${authType}-${clusterProperties.Marketplace} : Billing model and its definitions`, () => {
       CreateOSDWizardPage.isBillingModelScreen();
       CreateOSDWizardPage.selectSubscriptionType(clusterProperties.SubscriptionType);
       CreateOSDWizardPage.selectMarketplaceSubscription(clusterProperties.Marketplace);
@@ -27,25 +31,30 @@ describe('OSD Marketplace cluster creation tests(OCP-67514)', { tags: ['smoke'] 
       cy.get(CreateOSDWizardPage.primaryButton).click();
     });
 
-    it(`OSD wizard - ${clusterProperties.CloudProvider} - ${clusterProperties.Marketplace} : Cluster Settings - Cloud provider definitions`, () => {
+    it(`OSD wizard - ${clusterProperties.CloudProvider} ${authType}-${clusterProperties.Marketplace} : Cluster Settings - Cloud provider definitions`, () => {
       CreateOSDWizardPage.isCloudProviderSelectionScreen();
       if (clusterProperties.Marketplace.includes('Google Cloud')) {
         CreateOSDWizardPage.awsCloudProviderCard().should('have.attr', 'aria-disabled', 'true');
       }
       CreateOSDWizardPage.selectCloudProvider(clusterProperties.CloudProvider);
-      CreateOSDWizardPage.acknowlegePrerequisitesCheckbox().check();
 
       if (clusterProperties.CloudProvider.includes('GCP')) {
-        CreateOSDWizardPage.uploadGCPServiceAccountJSON(JSON.stringify(QE_GCP));
+        if (clusterProperties.AuthenticationType.includes('Service Account')) {
+          CreateOSDWizardPage.uploadGCPServiceAccountJSON(JSON.stringify(QE_GCP));
+        } else {
+          CreateOSDWizardPage.workloadIdentityFederationButton().click();
+          CreateOSDWizardPage.selectWorkloadIdentityConfiguration(Cypress.env('QE_GCP_WIF_CONFIG'));
+        }
       } else {
         CreateOSDWizardPage.awsAccountIDInput().type(awsAccountID);
         CreateOSDWizardPage.awsAccessKeyInput().type(awsAccessKey);
         CreateOSDWizardPage.awsSecretKeyInput().type(awsSecretKey);
       }
+      CreateOSDWizardPage.acknowlegePrerequisitesCheckbox().check();
       cy.get(CreateOSDWizardPage.primaryButton).click();
     });
 
-    it(`OSD wizard - ${clusterProperties.CloudProvider} - ${clusterProperties.Marketplace} : Cluster Settings - Cluster details definitions`, () => {
+    it(`OSD wizard - ${clusterProperties.CloudProvider} ${authType}-${clusterProperties.Marketplace} : Cluster Settings - Cluster details definitions`, () => {
       CreateOSDWizardPage.isClusterDetailsScreen();
       cy.get(CreateOSDWizardPage.clusterNameInput).type(clusterProperties.ClusterName);
       CreateOSDWizardPage.hideClusterNameValidation();
@@ -62,7 +71,7 @@ describe('OSD Marketplace cluster creation tests(OCP-67514)', { tags: ['smoke'] 
       CreateOSDWizardPage.enableAdditionalEtcdEncryption(true, true);
       cy.get(CreateOSDWizardPage.primaryButton).click();
     });
-    it(`OSD wizard - ${clusterProperties.CloudProvider} - ${clusterProperties.Marketplace} : Cluster Settings - Default machinepool definitions`, () => {
+    it(`OSD wizard - ${clusterProperties.CloudProvider} ${authType}-${clusterProperties.Marketplace} : Cluster Settings - Default machinepool definitions`, () => {
       CreateOSDWizardPage.isMachinePoolScreen();
       CreateOSDWizardPage.selectComputeNodeType(clusterProperties.MachinePools[0].InstanceType);
       CreateOSDWizardPage.selectComputeNodeCount(clusterProperties.MachinePools[0].NodeCount);
@@ -73,13 +82,13 @@ describe('OSD Marketplace cluster creation tests(OCP-67514)', { tags: ['smoke'] 
       );
       cy.get(CreateOSDWizardPage.primaryButton).click();
     });
-    it(`OSD wizard - ${clusterProperties.CloudProvider} - ${clusterProperties.Marketplace} : Networking configuration - cluster privacy definitions`, () => {
+    it(`OSD wizard - ${clusterProperties.CloudProvider} ${authType}-${clusterProperties.Marketplace} : Networking configuration - cluster privacy definitions`, () => {
       CreateOSDWizardPage.isNetworkingScreen();
       CreateOSDWizardPage.selectClusterPrivacy('private');
       CreateOSDWizardPage.selectClusterPrivacy(clusterProperties.ClusterPrivacy);
       cy.get(CreateOSDWizardPage.primaryButton).click();
     });
-    it(`OSD wizard - ${clusterProperties.CloudProvider} - ${clusterProperties.Marketplace} : Networking configuration - CIDR ranges definitions`, () => {
+    it(`OSD wizard - ${clusterProperties.CloudProvider} ${authType}-${clusterProperties.Marketplace} : Networking configuration - CIDR ranges definitions`, () => {
       CreateOSDWizardPage.isCIDRScreen();
       CreateOSDWizardPage.useCIDRDefaultValues(false);
       CreateOSDWizardPage.useCIDRDefaultValues(true);
@@ -89,15 +98,20 @@ describe('OSD Marketplace cluster creation tests(OCP-67514)', { tags: ['smoke'] 
       CreateOSDWizardPage.hostPrefixInput().should('have.value', clusterProperties.HostPrefix);
       cy.get(CreateOSDWizardPage.primaryButton).click();
     });
-    it(`OSD wizard - ${clusterProperties.CloudProvider} - ${clusterProperties.Marketplace} : Cluster updates definitions`, () => {
+    it(`OSD wizard - ${clusterProperties.CloudProvider} ${authType}-${clusterProperties.Marketplace} : Cluster updates definitions`, () => {
       CreateOSDWizardPage.isUpdatesScreen();
       cy.get(CreateOSDWizardPage.primaryButton).click();
     });
-    it(`OSD wizard - ${clusterProperties.CloudProvider} - ${clusterProperties.Marketplace} : Review and create page definitions`, () => {
+    it(`OSD wizard - ${clusterProperties.CloudProvider} ${authType}-${clusterProperties.Marketplace} : Review and create page definitions`, () => {
       CreateOSDWizardPage.isReviewScreen();
       CreateOSDWizardPage.subscriptionTypeValue().contains(clusterProperties.SubscriptionType);
       CreateOSDWizardPage.infrastructureTypeValue().contains(clusterProperties.InfrastructureType);
       CreateOSDWizardPage.cloudProviderValue().contains(clusterProperties.CloudProvider);
+      if (clusterProperties.CloudProvider.includes('GCP')) {
+        CreateOSDWizardPage.authenticationTypeValue().contains(
+          clusterProperties.AuthenticationType,
+        );
+      }
       CreateOSDWizardPage.clusterNameValue().contains(clusterProperties.ClusterName);
       CreateOSDWizardPage.regionValue().contains(clusterProperties.Region.split(',')[0]);
       CreateOSDWizardPage.availabilityValue().contains(clusterProperties.Availability);
@@ -151,7 +165,7 @@ describe('OSD Marketplace cluster creation tests(OCP-67514)', { tags: ['smoke'] 
       CreateOSDWizardPage.nodeDrainingValue().contains(clusterProperties.NodeDraining);
     });
 
-    it(`OSD wizard -  ${clusterProperties.CloudProvider} - ${clusterProperties.Marketplace} : Cluster submission & overview definitions`, () => {
+    it(`OSD wizard -  ${clusterProperties.CloudProvider} ${authType}-${clusterProperties.Marketplace} : Cluster submission & overview definitions`, () => {
       CreateOSDWizardPage.createClusterButton().click();
       ClusterDetailsPage.waitForInstallerScreenToLoad();
       ClusterDetailsPage.clusterNameTitle().contains(clusterProperties.ClusterName);

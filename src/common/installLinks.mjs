@@ -62,7 +62,7 @@ const MIRROR_MIRROR_REGISTRY_LATEST = 'https://mirror.openshift.com/pub/cgw/mirr
 const ARGO_CD_CLI_LATEST =
   'https://developers.redhat.com/content-gateway/rest/browse/pub/openshift-v4/clients/openshift-gitops/latest/';
 
-const DOCS_BASE = 'https://docs.openshift.com/container-platform/4.16';
+const DOCS_BASE = 'https://docs.openshift.com/container-platform/4.17';
 const OSD_DOCS_BASE = 'https://docs.openshift.com/dedicated';
 const ROSA_DOCS_BASE = 'https://docs.openshift.com/rosa';
 const ROSA_CP_DOCS_BASE =
@@ -127,6 +127,7 @@ const links = {
   OSD_CCS_GCP_WIF_GCLOUD_CLI: 'https://cloud.google.com/sdk/docs/install',
   OSD_CCS_GCP_WIF_GCLOUD_CREDENTIALS:
     'https://cloud.google.com/docs/authentication/provide-credentials-adc',
+  OSD_CCS_GCP_WIF_CREATION_LEARN_MORE: `${OSD_DOCS_BASE}/osd_install_access_delete_cluster/creating-a-gcp-cluster-with-workload-identity-federation.html#create-wif-configuration_osd-creating-a-cluster-on-gcp-with-workload-identity-federation`,
   OSD_LIFE_CYCLE: `${OSD_DOCS_BASE}/osd_architecture/osd_policy/osd-life-cycle.html`,
   OSD_Z_STREAM: `${OSD_DOCS_BASE}/osd_architecture/osd_policy/osd-life-cycle.html#rosa-patch-versions_osd-life-cycle`,
   OSD_SERVICE_DEFINITION_COMPUTE: `${OSD_DOCS_BASE}/osd_architecture/osd_policy/osd-service-definition.html#instance-types_osd-service-definition`,
@@ -152,13 +153,10 @@ const links = {
 
   CLI_TOOLS_OCP_GETTING_STARTED: `${DOCS_BASE}/cli_reference/openshift_cli/getting-started-cli.html`,
 
-  INSTALL_DOCS_ENTRY: `${DOCS_BASE}/installing/index.html`,
+  INSTALL_DOCS_ENTRY: `${DOCS_BASE}/installing/overview/index.html`,
 
   INSTALL_ASSISTED_LEARN_MORE: `${DOCS_BASE}/installing/installing_on_prem_assisted/installing-on-prem-assisted.html`,
   INSTALL_AGENT_LEARN_MORE: `${DOCS_BASE}/installing/installing_with_agent_based_installer/preparing-to-install-with-agent-based-installer.html`,
-
-  INSTALL_ALIBABAIPI_DOCS_LANDING: `https://docs.redhat.com/en/documentation/openshift_container_platform/4.15/html/installing/installing-on-alibaba`,
-  INSTALL_ALIBABA_CUSTOMIZATIONS: `${DOCS_BASE}/installing/installing_alibaba/installing-alibaba-customizations.html`,
 
   INSTALL_AWSIPI_DOCS_LANDING: `${DOCS_BASE}/installing/installing_aws/installing-aws-account.html`,
   INSTALL_AWSIPI_DOCS_ENTRY: `${DOCS_BASE}/welcome/index.html`,
@@ -169,15 +167,15 @@ const links = {
   INSTALL_AWS_CUSTOM_VPC_REQUIREMENTS: `${DOCS_BASE}/installing/installing_aws/ipi/installing-aws-vpc.html#installation-custom-aws-vpc-requirements_installing-aws-vpc`,
   INSTALL_AWS_MULTI_ARCH: `${DOCS_BASE}/post_installation_configuration/configuring-multi-arch-compute-machines/creating-multi-arch-compute-nodes-aws.html`,
 
-  INSTALL_AZUREUPI_GETTING_STARTED: `${DOCS_BASE}/installing/installing_azure/installing-azure-user-infra.html`,
-  INSTALL_AZUREIPI_GETTING_STARTED: `${DOCS_BASE}/installing/installing_azure/installing-azure-default.html`,
-  INSTALL_AZURE_CUSTOMIZATIONS: `${DOCS_BASE}/installing/installing_azure/installing-azure-customizations.html`,
+  INSTALL_AZUREUPI_GETTING_STARTED: `${DOCS_BASE}/installing/installing_azure/upi/installing-azure-user-infra.html`,
+  INSTALL_AZUREIPI_GETTING_STARTED: `${DOCS_BASE}/installing/installing_azure/ipi/installing-azure-default.html`,
+  INSTALL_AZURE_CUSTOMIZATIONS: `${DOCS_BASE}/installing/installing_azure/ipi/installing-azure-customizations.html`,
   INSTALL_AZURE_MULTI_ARCH: `${DOCS_BASE}/post_installation_configuration/configuring-multi-arch-compute-machines/creating-multi-arch-compute-nodes-azure.html`,
 
-  INSTALL_ASHIPI_GETTING_STARTED: `${DOCS_BASE}/installing/installing_azure_stack_hub/installing-azure-stack-hub-default.html`,
-  INSTALL_ASHUPI_GETTING_STARTED: `${DOCS_BASE}/installing/installing_azure_stack_hub/installing-azure-stack-hub-user-infra.html`,
-  INSTALL_ASHUPI_RHCOS_LEARN_MORE: `${DOCS_BASE}/installing/installing_azure_stack_hub/installing-azure-stack-hub-user-infra.html#installation-azure-user-infra-uploading-rhcos_installing-azure-stack-hub-user-infra`,
-  INSTALL_ASH_CUSTOMIZATIONS: `${DOCS_BASE}/installing/installing_azure_stack_hub/installing-azure-stack-hub-network-customizations.html`,
+  INSTALL_ASHIPI_GETTING_STARTED: `${DOCS_BASE}/installing/installing_azure_stack_hub/ipi/ipi-ash-preparing-to-install.html`,
+  INSTALL_ASHUPI_GETTING_STARTED: `${DOCS_BASE}/installing/installing_azure_stack_hub/upi/installing-azure-stack-hub-user-infra.html`,
+  INSTALL_ASHUPI_RHCOS_LEARN_MORE: `${DOCS_BASE}/installing/installing_azure_stack_hub/upi/installing-azure-stack-hub-user-infra.html#installation-azure-user-infra-uploading-rhcos_installing-azure-stack-hub-user-infra`,
+  INSTALL_ASH_CUSTOMIZATIONS: `${DOCS_BASE}/installing/installing_azure_stack_hub/ipi/installing-azure-stack-hub-network-customizations.html`,
   RHCOS_ASHUPI_VHD_X86: `${MIRROR_RHCOS_LATEST_X86}/rhcos-azurestack.x86_64.vhd.gz`,
 
   INSTALL_BAREMETAL_UPI_GETTING_STARTED: `${DOCS_BASE}/installing/installing_bare_metal/installing-bare-metal.html`,
@@ -215,7 +213,7 @@ const links = {
   INSTALL_VSPHERE_CUSTOMIZATIONS: `${DOCS_BASE}/installing/installing_vsphere/ipi/installing-vsphere-installer-provisioned-customizations.html`,
   RHCOS_VSPHERE_OVA_X86: `${MIRROR_RHCOS_LATEST_X86}/rhcos-vmware.x86_64.ova`,
 
-  INSTALL_IBM_CLOUD_GETTING_STARTED: `${DOCS_BASE}/installing/installing_ibm_cloud_public/preparing-to-install-on-ibm-cloud.html`,
+  INSTALL_IBM_CLOUD_GETTING_STARTED: `${DOCS_BASE}/installing/installing_ibm_cloud/preparing-to-install-on-ibm-cloud.html`,
   INSTALL_IBMZ_GETTING_STARTED: `${DOCS_BASE}/installing/installing_ibm_z/installing-ibm-z.html`,
   INSTALL_IBMZ_RHCOS_LEARN_MORE_RHEL_KVM: `${DOCS_BASE}/installing/installing_ibm_z/installing-ibm-z-kvm.html#installation-user-infra-machines-iso-ibm-z_kvm_installing-ibm-z-kvm`,
   INSTALL_IBMZ_LEARN_MORE_ZVM: `${DOCS_BASE}/installing/installing_ibm_z/installing-ibm-z.html#installation-user-infra-machines-iso-ibm-z_installing-ibm-z`,
@@ -282,8 +280,8 @@ const links = {
 
   ARGO_CD_DOCS: `https://docs.openshift.com/gitops/1.13/installing_gitops/installing-argocd-gitops-cli.html`,
 
-  INSTALL_MIRROR_REGISTRY_LEARN_MORE: `${DOCS_BASE}/installing/disconnected_install/installing-mirroring-installation-images.html#installation-about-mirror-registry_installing-mirroring-installation-images`,
-  INSTALL_OC_MIRROR_PLUGIN_LEARN_MORE: `${DOCS_BASE}/installing/disconnected_install/installing-mirroring-disconnected.html`,
+  INSTALL_MIRROR_REGISTRY_LEARN_MORE: `${DOCS_BASE}/disconnected/mirroring/installing-mirroring-installation-images.html#installation-about-mirror-registry_installing-mirroring-installation-images`,
+  INSTALL_OC_MIRROR_PLUGIN_LEARN_MORE: `${DOCS_BASE}/disconnected/mirroring/installing-mirroring-installation-images.html`,
 
   OPENSHIFT_DEDICATED_LEARN_MORE:
     'https://www.redhat.com/en/technologies/cloud-computing/openshift/dedicated',

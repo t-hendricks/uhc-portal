@@ -152,8 +152,11 @@ const ClusterList = ({
     );
 
   /* Get Cluster Data */
-  const { isLoading, data, refetch, isError, errors, isFetching, isFetched } =
-    useFetchClusters(getMultiRegion);
+  const isArchived = false;
+  const { isLoading, data, refetch, isError, errors, isFetching, isFetched } = useFetchClusters(
+    isArchived,
+    getMultiRegion,
+  );
 
   const clusters = data?.items;
   const clustersTotal = useSelector((state) => state.viewOptions[viewType]?.totalCount);
@@ -182,16 +185,21 @@ const ClusterList = ({
     // Items not needed for this list except for organization, but may be needed elsewhere in the app
     // Load these items "in the background" so they can be added to redux
     // Eventually as items are converted to React Query these items can be removed
-    if (!cloudProviders.fulfilled && !cloudProviders.pending) {
-      getCloudProviders();
-    }
 
-    if (!machineTypes.fulfilled && !machineTypes.pending) {
-      getMachineTypes();
-    }
+    // Waiting until fetched to prevent immediate rerender causing
+    // a double load of subscriptions
+    if (isFetched) {
+      if (!cloudProviders.fulfilled && !cloudProviders.pending) {
+        getCloudProviders();
+      }
 
-    if (!organization.fulfilled && !organization.pending) {
-      getOrganizationAndQuota();
+      if (!machineTypes.fulfilled && !machineTypes.pending) {
+        getMachineTypes();
+      }
+
+      if (!organization.fulfilled && !organization.pending) {
+        getOrganizationAndQuota();
+      }
     }
   }, [
     cloudProviders.fulfilled,
@@ -199,6 +207,7 @@ const ClusterList = ({
     getCloudProviders,
     getMachineTypes,
     getOrganizationAndQuota,
+    isFetched,
     machineTypes.fulfilled,
     machineTypes.pending,
     organization.fulfilled,

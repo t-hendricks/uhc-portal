@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 import { Button, Flex, Popover } from '@patternfly/react-core';
 import { OutlinedQuestionCircleIcon } from '@patternfly/react-icons/dist/esm/icons/outlined-question-circle-icon';
 
-import {
+import clusterStates, {
   isClusterUpgrading,
   isHypershiftCluster,
 } from '~/components/clusters/common/clusterStates';
@@ -21,6 +21,8 @@ import SupportStatusLabel from '../SupportStatusLabel';
 // TODO: Part of the upgrade tab
 const ClusterVersionInfo = ({ cluster }) => {
   const isUpgrading = isClusterUpgrading(cluster);
+  const isClusterReady = cluster?.state === clusterStates.READY;
+
   const clusterVersion = getClusterVersion(cluster);
   const channel = get(cluster, 'metrics.channel');
   const isHypershift = isHypershiftCluster(cluster);
@@ -44,7 +46,10 @@ const ClusterVersionInfo = ({ cluster }) => {
           <dd>
             {clusterVersion}
             <ClusterUpdateLink cluster={cluster} hideOSDUpdates={!!scheduledUpdate} />
-            {scheduledUpdate && scheduledUpdate.schedule_type === 'automatic' && !isUpgrading ? (
+            {scheduledUpdate &&
+            scheduledUpdate.schedule_type === 'automatic' &&
+            !isUpgrading &&
+            isClusterReady ? (
               <UpgradeAcknowledgeLink
                 clusterId={cluster.id}
                 isHypershift={isHypershift}
@@ -122,6 +127,7 @@ ClusterVersionInfo.propTypes = {
       raw_id: PropTypes.string,
     }),
     canEdit: PropTypes.bool,
+    state: PropTypes.string,
   }),
 };
 

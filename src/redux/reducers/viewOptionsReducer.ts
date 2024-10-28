@@ -58,7 +58,7 @@ const INITIAL_ACCESS_REQUESTS_VIEW_STATE: ViewState = {
 const INITIAL_ARCHIVED_VIEW_STATE: ViewState = {
   ...INITIAL_VIEW_STATE,
   sorting: {
-    sortField: 'name',
+    sortField: 'display_name',
     isAscending: true,
     sortIndex: 0,
   },
@@ -234,7 +234,7 @@ const viewOptionsReducer = (
       return { ...state, ...updateState };
 
     case viewPaginationConstants.SET_TOTAL_ITEMS:
-      updatePageCounts(viewConstants.CLUSTERS_VIEW, action.payload.totalCount);
+      updatePageCounts(action.payload.viewType, action.payload.totalCount);
 
       return { ...state, ...updateState };
 

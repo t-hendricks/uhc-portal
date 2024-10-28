@@ -13,8 +13,16 @@ import { accountsService } from '../../../services';
 import { SubscriptionMapEntry } from './createResponseForFetchCluster';
 import { createQueryKey } from './useFetchClustersHelpers';
 
-const fetchGlobalSubscriptions = async (viewOptions: ViewOptions, userName?: string) => {
-  const params = createViewQueryObject(viewOptions, userName);
+const fetchGlobalSubscriptions = async (
+  viewOptions: ViewOptions,
+  userName?: string,
+  isArchived?: boolean,
+) => {
+  const modifiedViewOptions = {
+    ...viewOptions,
+    flags: { ...viewOptions.flags, showArchived: isArchived },
+  };
+  const params = createViewQueryObject(modifiedViewOptions, userName);
 
   const response = await accountsService.getSubscriptions(params as getSubscriptionQueryType);
   const subscriptions = mapListResponse(response, normalizeSubscription);
@@ -57,17 +65,19 @@ export const useFetchSubscriptions = ({
   enabled = true,
   viewOptions,
   userName,
+  isArchived,
 }: {
   enabled?: boolean;
   viewOptions: ViewOptions;
   userName?: string;
+  isArchived?: boolean;
 }) => {
-  const queryKey = createQueryKey({ type: 'subscriptions', viewOptions });
+  const queryKey = createQueryKey({ type: 'subscriptions', viewOptions, isArchived });
 
   const { data, isLoading, isFetching, isFetched, isError, error } = useQuery({
     queryKey,
     enabled,
-    queryFn: () => fetchGlobalSubscriptions(viewOptions, userName),
+    queryFn: () => fetchGlobalSubscriptions(viewOptions, userName, isArchived),
     staleTime: queryConstants.STALE_TIME,
     refetchInterval: queryConstants.REFETCH_INTERVAL,
   });

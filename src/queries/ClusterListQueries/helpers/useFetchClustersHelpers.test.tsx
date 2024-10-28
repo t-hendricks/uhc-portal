@@ -38,6 +38,7 @@ describe('useFetchClustersHelpers', () => {
     it('creates key with sort and filtering fields', () => {
       const expects = [
         queryConstants.FETCH_CLUSTERS_QUERY_KEY,
+        'Active',
         'clusters',
         '-',
         '1',
@@ -64,6 +65,7 @@ describe('useFetchClustersHelpers', () => {
 
       const expects = [
         queryConstants.FETCH_CLUSTERS_QUERY_KEY,
+        'Active',
         'subscriptions',
         '-',
         '1',
@@ -84,7 +86,7 @@ describe('useFetchClustersHelpers', () => {
         viewOptions: defaultViewOptions,
         clusterTypeOrRegion: 'myRegion',
       });
-      expect(myKey[2]).toEqual('myRegion');
+      expect(myKey[3]).toEqual('myRegion');
     });
 
     it('creates key without type/region', () => {
@@ -92,7 +94,7 @@ describe('useFetchClustersHelpers', () => {
         type: 'clusters',
         viewOptions: defaultViewOptions,
       });
-      expect(myKey[2]).toEqual('-');
+      expect(myKey[3]).toEqual('-');
     });
   });
 
@@ -116,12 +118,14 @@ describe('useFetchClustersHelpers', () => {
 
   describe('useRefetchClusterList', () => {
     it.skip('provides functions that set the refresh schedule', () => {});
+
+    it.skip('does not auto reload data when modal is open', () => {});
   });
 
   describe('clearQueries', () => {
     it('removes cluster fetch queries and invalidates access transparency queries', async () => {
       await queryClient.fetchQuery({
-        queryKey: [queryConstants.FETCH_CLUSTERS_QUERY_KEY, 'subscriptions'],
+        queryKey: [queryConstants.FETCH_CLUSTERS_QUERY_KEY, 'Active', 'subscriptions'],
         queryFn: () => 'hello world',
       });
 
@@ -137,7 +141,7 @@ describe('useFetchClustersHelpers', () => {
       };
       const clearRefetch = jest.fn();
 
-      clearQueries(setQueries, clearRefetch);
+      clearQueries(setQueries, clearRefetch, false);
 
       const queriesAfterClear = queryClient.getQueryCache().getAll();
       expect(queriesAfterClear).toHaveLength(1);

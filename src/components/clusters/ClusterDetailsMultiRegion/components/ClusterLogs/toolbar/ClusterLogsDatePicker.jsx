@@ -7,12 +7,12 @@ import {
   HelperText,
   HelperTextItem,
   isValidDate,
+  MenuToggle,
+  Select,
+  SelectList,
+  SelectOption,
   ToolbarItem,
 } from '@patternfly/react-core';
-import {
-  Select as SelectDeprecated,
-  SelectOption as SelectOptionDeprecated,
-} from '@patternfly/react-core/deprecated';
 
 import './ClusterLogsDatePicker.scss';
 
@@ -291,20 +291,37 @@ const ClusterLogsDatePicker = ({ setFilter, currentFilter, createdAt }) => {
     ]);
   };
 
+  const toggle = (toggleRef) => (
+    <MenuToggle
+      ref={toggleRef}
+      onClick={() => setSelectorOpen(!selectorOpen)}
+      isExpanded={selectorOpen}
+      isFullWidth
+      aria-label="Date range menu"
+    >
+      {selected}
+    </MenuToggle>
+  );
+
   const dateSelector = (
-    <SelectDeprecated
-      onToggle={(_event, val) => setSelectorOpen(val)}
-      onSelect={onSelectorSelect}
-      selections={selected}
+    <Select
       isOpen={selectorOpen}
+      selected={selected}
+      onOpenChange={(selectorOpen) => setSelectorOpen(selectorOpen)}
+      toggle={toggle}
+      onSelect={onSelectorSelect}
       aria-label="Select a date range"
       aria-labelledby="select-date-range"
     >
-      {options.map((option, index) => (
-        // eslint-disable-next-line react/no-array-index-key
-        <SelectOptionDeprecated key={index} value={option.value} isDisabled={option.isDisabled} />
-      ))}
-    </SelectDeprecated>
+      <SelectList aria-label="date range list">
+        {options.map((option, index) => (
+          // eslint-disable-next-line react/no-array-index-key
+          <SelectOption key={index} value={option.value}>
+            {option.value}
+          </SelectOption>
+        ))}
+      </SelectList>
+    </Select>
   );
 
   useEffect(

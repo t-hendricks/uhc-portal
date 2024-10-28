@@ -20,12 +20,12 @@ describe('InstallASH', () => {
 
     expect(screen.getByRole('link', { name: /Learn more about automated/ })).toHaveAttribute(
       'href',
-      `https://docs.openshift.com/container-platform/${version}/installing/installing_azure_stack_hub/installing-azure-stack-hub-default.html`,
+      `https://docs.openshift.com/container-platform/${version}/installing/installing_azure_stack_hub/ipi/ipi-ash-preparing-to-install.html`,
     );
 
     expect(screen.getByRole('link', { name: /Learn more about full control/ })).toHaveAttribute(
       'href',
-      `https://docs.openshift.com/container-platform/${version}/installing/installing_azure_stack_hub/installing-azure-stack-hub-user-infra.html`,
+      `https://docs.openshift.com/container-platform/${version}/installing/installing_azure_stack_hub/upi/installing-azure-stack-hub-user-infra.html`,
     );
   });
 });

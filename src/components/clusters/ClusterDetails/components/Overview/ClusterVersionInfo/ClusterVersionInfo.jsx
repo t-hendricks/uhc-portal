@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 import { Button, Flex, Popover } from '@patternfly/react-core';
 import { OutlinedQuestionCircleIcon } from '@patternfly/react-icons/dist/esm/icons/outlined-question-circle-icon';
 
-import {
+import clusterStates, {
   isClusterUpgrading,
   isHypershiftCluster,
 } from '~/components/clusters/common/clusterStates';
@@ -44,6 +44,7 @@ class ClusterVersionInfo extends React.Component {
     const { cluster, openModal, schedules } = this.props;
     const { popoverOpen } = this.state;
     const isUpgrading = isClusterUpgrading(cluster);
+    const isClusterReady = cluster?.state === clusterStates.READY;
     const clusterVersion = getClusterVersion(cluster);
     const channel = get(cluster, 'metrics.channel');
 
@@ -63,7 +64,10 @@ class ClusterVersionInfo extends React.Component {
                 openModal={openModal}
                 hideOSDUpdates={!!scheduledUpdate}
               />
-              {scheduledUpdate && scheduledUpdate.schedule_type === 'automatic' && !isUpgrading ? (
+              {scheduledUpdate &&
+              scheduledUpdate.schedule_type === 'automatic' &&
+              !isUpgrading &&
+              isClusterReady ? (
                 <UpgradeAcknowledgeLink clusterId={cluster.id} />
               ) : null}
             </dd>
@@ -134,6 +138,7 @@ ClusterVersionInfo.propTypes = {
       raw_id: PropTypes.string,
     }),
     canEdit: PropTypes.bool,
+    state: PropTypes.string,
   }),
   versionInfo: PropTypes.shape({
     fulfilled: PropTypes.bool,
