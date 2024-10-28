@@ -17,6 +17,7 @@ export type { ErrorList } from './models/ErrorList';
 export type { fields } from './models/fields';
 export type { List } from './models/List';
 export type { ObjectReference } from './models/ObjectReference';
+export type { order } from './models/order';
 export type { orderBy } from './models/orderBy';
 export type { organizationId } from './models/organizationId';
 export type { page } from './models/page';
