@@ -22,4 +22,4 @@
  * parameters aren't provided, or if the values are empty, then no
  * explicit ordering will be applied.
  */
-export type orderBy = string;
+export type order = string;
