@@ -33,6 +33,7 @@ const VPCDetailsCard = (props) => {
     openModal,
     gcpVPCName,
     isBYOVPC,
+    gcpPrivateServiceConnect,
   } = props;
 
   const isPrivateLinkInitialized = typeof privateLink !== 'undefined';
@@ -59,7 +60,7 @@ const VPCDetailsCard = (props) => {
         </Title>
       </CardTitle>
       <CardBody className="ocm-c-networking-vpc-details__card--body pf-v5-l-stack pf-m-gutter">
-        {gcpVPCName || isPrivateLinkInitialized ? (
+        {gcpVPCName || isPrivateLinkInitialized || gcpPrivateServiceConnect ? (
           <>
             <Title headingLevel="h3" className="pf-v5-l-stack__item">
               VPC Details
@@ -79,6 +80,14 @@ const VPCDetailsCard = (props) => {
                   <DescriptionListTerm>PrivateLink</DescriptionListTerm>
                   <DescriptionListDescription>
                     {privateLink ? 'Enabled' : 'Disabled'}
+                  </DescriptionListDescription>
+                </DescriptionListGroup>
+              ) : null}
+              {gcpPrivateServiceConnect ? (
+                <DescriptionListGroup>
+                  <DescriptionListTerm>Private Service Connect Subnet</DescriptionListTerm>
+                  <DescriptionListDescription>
+                    {gcpPrivateServiceConnect}
                   </DescriptionListDescription>
                 </DescriptionListGroup>
               ) : null}
@@ -132,6 +141,7 @@ VPCDetailsCard.propTypes = {
   additionalTrustBundle: PropTypes.string,
   gcpVPCName: PropTypes.string,
   isBYOVPC: PropTypes.bool,
+  gcpPrivateServiceConnect: PropTypes.string,
 };
 
 export default VPCDetailsCard;
