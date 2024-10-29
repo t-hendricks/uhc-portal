@@ -1,7 +1,7 @@
 import React from 'react';
 import { FieldArray } from 'formik';
 
-import { Button, GridItem, Split, SplitItem, Stack, StackItem } from '@patternfly/react-core';
+import { Button, Grid, GridItem, Stack, StackItem } from '@patternfly/react-core';
 import { MinusCircleIcon } from '@patternfly/react-icons/dist/esm/icons/minus-circle-icon';
 import { PlusCircleIcon } from '@patternfly/react-icons/dist/esm/icons/plus-circle-icon';
 
@@ -50,7 +50,7 @@ export const FormikFieldArray = (props: FormikFieldArrayProps) => {
         validateOnChange
         render={({ push, remove }) => (
           <>
-            <StackItem span={6}>
+            <StackItem span={6} className="field-grid-item">
               <Button
                 icon={<PlusCircleIcon />}
                 onClick={() => {
@@ -70,16 +70,17 @@ export const FormikFieldArray = (props: FormikFieldArrayProps) => {
               return (
                 // eslint-disable-next-line react/no-array-index-key
                 <React.Fragment key={name}>
-                  <StackItem>
-                    <Split span={4}>
-                      <SplitItem>
+                  <Grid>
+                    <Grid hasGutter span={6}>
+                      <GridItem span={4}>
                         <FieldArrayTextInput
                           placeHolderText={`${placeHolderText} ${index + 1}`}
                           name={name}
                           formGroup={{ isRequired: false }}
+                          textInputClassName="field-grid-item"
                         />
-                      </SplitItem>
-                      <SplitItem span={4}>
+                      </GridItem>
+                      <GridItem span={2} className="field-grid-item minus-button">
                         <Button
                           onClick={() => remove(index)}
                           icon={<MinusCircleIcon />}
@@ -87,17 +88,17 @@ export const FormikFieldArray = (props: FormikFieldArrayProps) => {
                           isInline
                           isDisabled={isRemoveDisabled}
                         />
-                      </SplitItem>
-                    </Split>
-                  </StackItem>
-                  <StackItem>
+                      </GridItem>
+                    </Grid>
+                  </Grid>
+                  <GridItem>
                     <FieldArrayErrorGridItem
                       isLast={index === fieldData.length - 1}
                       errorMessage={errors[fieldID]}
                       touched={touched}
                       isGroupError={false}
                     />
-                  </StackItem>
+                  </GridItem>
                 </React.Fragment>
               );
             })}
