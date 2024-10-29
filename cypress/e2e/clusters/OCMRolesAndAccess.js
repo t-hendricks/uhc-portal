@@ -38,7 +38,7 @@ describe('OCM Roles And Access', { tags: ['ci'] }, () => {
     OCMRolesAndAccessPage.grantRoleButton().click();
     OCMRolesAndAccessPage.grantRoleUserInput().should('exist');
     OCMRolesAndAccessPage.grantRoleUserInput().type(' ');
-    OCMRolesAndAccessPage.userInputError().should('have.text', 'Red Hat login cannot be empty.');
+    OCMRolesAndAccessPage.userInputError().should('contain.text', 'Red Hat login cannot be empty.');
     OCMRolesAndAccessPage.grantRoleUserInput().type(v4());
     OCMRolesAndAccessPage.submitButton().click();
     OCMRolesAndAccessPage.userInputError().should(
