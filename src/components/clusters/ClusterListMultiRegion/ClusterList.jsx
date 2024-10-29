@@ -139,9 +139,12 @@ const ClusterList = ({
   const viewType = viewConstants.CLUSTERS_VIEW;
 
   /* Get Access Request / Protection Data */
-  const { enabled: isOrganizationAccessProtectionEnabled } = useGetAccessProtection({
-    organizationId: organization?.details?.id,
-  });
+  const { enabled: isOrganizationAccessProtectionEnabled } = useGetAccessProtection(
+    {
+      organizationId: organization?.details?.id,
+    },
+    isRestrictedEnv(),
+  );
 
   /* Get Pending Access Requests */
 
