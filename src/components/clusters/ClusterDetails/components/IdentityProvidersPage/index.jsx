@@ -76,9 +76,9 @@ const ReduxFormCreateClusterIDPWrapper = (props) => {
         mappingMethod: 'claim',
         selectedIDP: selectedIDP || defaultIDP,
         // ldap
-        ldap_id: [{ ldap_id: 'dn', id: 'default' }],
-        ldap_preferred_username: [{ ldap_preferred_username: 'uid', id: 'default' }],
-        ldap_name: [{ ldap_name: 'cn', id: 'default' }],
+        ldap_id: [],
+        ldap_preferred_username: [],
+        ldap_name: [],
       };
 
   // redux-form passthrough props
