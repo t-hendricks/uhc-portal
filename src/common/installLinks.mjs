@@ -256,7 +256,8 @@ const links = {
   RHCOS_ARM_RAW: `${MIRROR_RHCOS_LATEST_ARM}/rhcos-metal.aarch64.raw.gz`,
 
   OCM_CLI_DOCS: 'https://access.redhat.com/articles/6114701',
-  OCM_CLI_RELEASES_LATEST: 'https://github.com/openshift-online/ocm-cli/releases/latest',
+  OCM_CLI_RELEASES_LATEST:
+    'https://developers.redhat.com/content-gateway/rest/browse/pub/cgw/ocm/latest',
 
   RHOAS_CLI_DOCS:
     'https://access.redhat.com/documentation/en-us/red_hat_openshift_application_services/1/guide/bb30ee92-9e0a-4fd6-a67f-aed8910d7da3',
@@ -480,6 +481,15 @@ const urls = {
       [architectures.arm]: {
         [operatingSystems.linux]: `${MIRROR_CLIENTS_LATEST_PRE_ARM}openshift-client-linux.tar.gz`,
         [operatingSystems.mac]: `${MIRROR_CLIENTS_LATEST_PRE_ARM}openshift-client-mac-arm64.tar.gz`,
+      },
+    },
+  },
+  [tools.OCM]: {
+    [channels.STABLE]: {
+      [architectures.x86]: {
+        [operatingSystems.linux]: `${links.OCM_CLI_RELEASES_LATEST}/ocm_linux_amd64.zip`,
+        [operatingSystems.mac]: `${links.OCM_CLI_RELEASES_LATEST}/ocm_darwin_amd64.zip`,
+        [operatingSystems.windows]: `${links.OCM_CLI_RELEASES_LATEST}/ocm_windows_amd64.zip`,
       },
     },
   },
@@ -890,7 +900,7 @@ const urls = {
   },
 };
 
-const githubReleasesToFetch = ['openshift-online/ocm-cli', 'redhat-developer/app-services-cli'];
+const githubReleasesToFetch = ['redhat-developer/app-services-cli'];
 
 /**
  * Computes full urls data.
@@ -905,41 +915,12 @@ const githubReleasesToFetch = ['openshift-online/ocm-cli', 'redhat-developer/app
 const urlsSelector = (githubReleases) => {
   const result = {
     ...urls,
-    [tools.OCM]: {
-      [channels.STABLE]: {
-        fallbackNavigateURL: links.OCM_CLI_RELEASES_LATEST,
-      },
-    },
     [tools.RHOAS]: {
       [channels.STABLE]: {
         fallbackNavigateURL: links.RHOAS_CLI_RELEASES_LATEST,
       },
     },
   };
-
-  const ocmRelease = githubReleases['openshift-online/ocm-cli'];
-  if (ocmRelease?.fulfilled) {
-    const tag = ocmRelease.data.tag_name;
-    const base = `https://github.com/openshift-online/ocm-cli/releases/download/${tag}`;
-    result[tools.OCM] = {
-      [channels.STABLE]: {
-        [architectures.x86]: {
-          [operatingSystems.linux]: `${base}/ocm-linux-amd64`,
-          [operatingSystems.mac]: `${base}/ocm-darwin-amd64`,
-          [operatingSystems.windows]: `${base}/ocm-windows-amd64`,
-        },
-        [architectures.s390x]: {
-          [operatingSystems.linux]: `${base}/ocm-linux-s390x`,
-        },
-        [architectures.ppc]: {
-          [operatingSystems.linux]: `${base}/ocm-linux-ppc64le`,
-        },
-        [architectures.arm]: {
-          [operatingSystems.linux]: `${base}/ocm-linux-arm64`,
-        },
-      },
-    };
-  }
 
   const rhoasRelease = githubReleases['redhat-developer/app-services-cli'];
   if (rhoasRelease?.fulfilled) {
