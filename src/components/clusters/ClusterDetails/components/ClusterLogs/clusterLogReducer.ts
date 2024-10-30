@@ -57,6 +57,7 @@ const clusterLogReducer = (
         break;
 
       case viewPaginationConstants.VIEW_CLEAR_FILTERS_AND_FLAGS:
+      case viewPaginationConstants.VIEW_RESET_FILTERS_AND_FLAGS:
         draft.requestState = baseRequestState;
         break;
 

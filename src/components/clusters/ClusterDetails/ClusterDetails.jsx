@@ -82,7 +82,7 @@ const ClusterDetails = (props) => {
     resetAccessProtection,
     clearGetMachinePoolsResponse,
     clearGetClusterAutoscalerResponse,
-    clearFiltersAndFlags,
+    resetFiltersAndFlags,
     clearListVpcs,
     invalidateClusters,
     getClusterIdentityProviders,
@@ -295,7 +295,7 @@ const ClusterDetails = (props) => {
       resetAccessProtection();
       clearGetMachinePoolsResponse();
       clearGetClusterAutoscalerResponse();
-      clearFiltersAndFlags();
+      resetFiltersAndFlags();
       clearListVpcs();
     };
     // Should run only once on mount and once on unmount
@@ -786,7 +786,7 @@ ClusterDetails.propTypes = {
     fulfilled: PropTypes.bool,
   }).isRequired,
   fetchUpgradeGates: PropTypes.func,
-  clearFiltersAndFlags: PropTypes.func.isRequired,
+  resetFiltersAndFlags: PropTypes.func.isRequired,
   useNodeUpgradePolicies: PropTypes.bool,
   accessProtectionState: PropTypes.shape({
     enabled: PropTypes.bool,
