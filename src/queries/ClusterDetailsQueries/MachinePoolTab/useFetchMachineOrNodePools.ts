@@ -7,7 +7,10 @@ import { isControlPlaneValidForMachinePool } from '~/components/clusters/Cluster
 import { normalizeNodePool } from '~/components/clusters/ClusterDetailsMultiRegion/components/MachinePools/machinePoolsHelper';
 import { formatErrorData } from '~/queries/helpers';
 import { queryConstants } from '~/queries/queriesConstants';
+import { useGlobalState } from '~/redux/hooks';
 import clusterService, { getClusterServiceForRegion } from '~/services/clusterService';
+
+const useIsModalOpen = () => useGlobalState((state) => !!state.modal?.modalName);
 
 const useFetchNodePoolWithUpgradePolicies = (
   clusterID: string,
@@ -15,6 +18,7 @@ const useFetchNodePoolWithUpgradePolicies = (
   isHypershiftCluster: boolean,
   region?: any,
 ) => {
+  const isModalOpen = useIsModalOpen();
   const { isLoading, data, isError, error, refetch, isRefetching } = useQuery({
     queryKey: [
       queryConstants.FETCH_CLUSTER_DETAILS_QUERY_KEY,
@@ -123,6 +127,7 @@ const useFetchNodePoolWithUpgradePolicies = (
       };
       return newResponse;
     },
+    refetchOnWindowFocus: !isModalOpen,
     retry: false,
     enabled: isHypershiftCluster,
   });
@@ -141,6 +146,7 @@ const useFetchNodePoolWithUpgradePolicies = (
 };
 
 const useFetchMachinePools = (clusterID: string, isHypershiftCluster: boolean, region?: string) => {
+  const isModalOpen = useIsModalOpen();
   const { isLoading, data, isError, error, refetch, isRefetching } = useQuery({
     queryKey: [
       queryConstants.FETCH_CLUSTER_DETAILS_QUERY_KEY,
@@ -160,6 +166,7 @@ const useFetchMachinePools = (clusterID: string, isHypershiftCluster: boolean, r
       const response = await clusterService.getMachinePools(clusterID);
       return response;
     },
+    refetchOnWindowFocus: !isModalOpen,
     retry: false,
     enabled: !isHypershiftCluster,
   });

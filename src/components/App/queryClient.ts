@@ -7,6 +7,7 @@ export const queryClient = new QueryClient({
       // gcTime: 5*60*1000, //  default is 5 minutes
       refetchOnMount: 'always', // RQ default is true
       refetchInterval: false, // default is false
+      refetchOnWindowFocus: true, // default is true,
     },
   },
 });
