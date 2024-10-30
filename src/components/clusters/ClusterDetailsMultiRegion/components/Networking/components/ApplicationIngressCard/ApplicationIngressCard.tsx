@@ -110,7 +110,7 @@ const ApplicationIngressCard: React.FC<ApplicationIngressCardProps> = ({
     isNamespaceOwnershipPolicyStrict: isDefaultRouterNamespaceOwnershipPolicyStrict,
     hostname: clusterRoutesHostname,
   } = clusterRouters.default || {};
-  const region = cluster.subscription?.xcm_id;
+  const region = cluster.subscription?.rh_region_id;
   const clusterID = cluster.id;
 
   const isNLB = loadBalancer === LoadBalancerFlavor.NLB;

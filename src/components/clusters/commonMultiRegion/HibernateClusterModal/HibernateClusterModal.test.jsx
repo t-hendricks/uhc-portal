@@ -133,7 +133,7 @@ describe('<HibernateClusterModal />', () => {
         modal: {
           data: {
             ...defaultReduxState.modal.data,
-            xcm_id: 'myRegion',
+            rh_region_id: 'myRegion',
           },
         },
       };

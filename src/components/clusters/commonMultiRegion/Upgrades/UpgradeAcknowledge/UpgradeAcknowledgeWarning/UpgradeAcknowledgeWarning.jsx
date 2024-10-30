@@ -31,7 +31,7 @@ const UpgradeAcknowledgeWarning = (props) => {
 
   const clusterId = cluster?.id;
   const openshiftVersion = cluster?.openshift_version;
-  const region = cluster?.subscription?.xcm_id;
+  const region = cluster?.subscription?.rh_region_id;
   const fromVersion = cluster?.version?.raw_id || null;
   const toVersion = getToVersionFromHelper(schedules, cluster);
   const isManual = !schedules?.items.some((policy) => policy.schedule_type === 'automatic');
