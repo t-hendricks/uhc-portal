@@ -20,7 +20,7 @@ import { useFormState } from '~/components/clusters/wizards/hooks';
 import { FieldId } from '~/components/clusters/wizards/rosa/constants';
 import ExternalLink from '~/components/common/ExternalLink';
 import { FormGroupHelperText } from '~/components/common/FormGroupHelperText';
-import FuzzySelect from '~/components/common/FuzzySelect';
+import { FuzzySelect } from '~/components/common/FuzzySelect/FuzzySelect';
 import Instruction from '~/components/common/Instruction';
 import Instructions from '~/components/common/Instructions';
 import PopoverHint from '~/components/common/PopoverHint';
@@ -34,6 +34,8 @@ import validators, {
   MAX_CUSTOM_OPERATOR_ROLES_PREFIX_LENGTH,
 } from '../../../../../common/validators';
 import ReduxVerticalFormGroup from '../../../../common/ReduxFormComponents/ReduxVerticalFormGroup';
+
+import './CustomerOIDCConfiguration.scss';
 
 function CreateOIDCProviderInstructions({ isMultiRegionEnabled, regionLoginCommand }) {
   return (
@@ -179,10 +181,10 @@ function CustomerOIDCConfiguration({
           <Flex>
             <FlexItem grow={{ default: 'grow' }}>
               <FuzzySelect
-                label="Config ID"
+                className="oidc-config-select"
                 aria-label="Config ID"
                 isOpen={isDropdownOpen}
-                onToggle={(_ev, isOpen) => setIsDropdownOpen(isOpen)}
+                onOpenChange={(isOpen) => setIsDropdownOpen(isOpen)}
                 onSelect={onSelect}
                 selectedEntryId={byoOidcConfigID}
                 selectionData={selectionData}
@@ -191,6 +193,10 @@ function CustomerOIDCConfiguration({
                   oidcConfigs.length > 0 ? 'Select a config id' : 'No OIDC configurations found'
                 }
                 inlineFilterPlaceholderText="Filter by config ID"
+                isScrollable
+                popperProps={{
+                  maxWidth: 'trigger',
+                }}
               />
             </FlexItem>
             <FlexItem>

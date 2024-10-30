@@ -195,7 +195,9 @@ describe('<GcpByocFields />', () => {
         }),
       );
 
-      expect(screen.queryByRole('option')).not.toBeInTheDocument();
+      await waitFor(() => {
+        expect(screen.queryByRole('option')).not.toBeInTheDocument();
+      });
       expect(await screen.findByText(`${fakeWifConfigs[0].display_name}`)).toBeInTheDocument();
     });
 
