@@ -120,7 +120,7 @@ describe('<HibernateClusterModal />', () => {
         <HibernateClusterModal {...defaultProps} />,
       );
       await user.click(screen.getByRole('button', { name: 'Hibernate cluster' }));
-      expect(mutate).toHaveBeenCalledWith('myClusterId', undefined);
+      expect(mutate).toHaveBeenCalledWith({ clusterID: 'myClusterId', region: undefined });
     });
 
     it('submits when user clicks on Hibernate cluster button when region is known', async () => {
@@ -133,14 +133,14 @@ describe('<HibernateClusterModal />', () => {
         modal: {
           data: {
             ...defaultReduxState.modal.data,
-            xcm_id: 'myRegion',
+            rh_region_id: 'myRegion',
           },
         },
       };
 
       const { user } = withState(newReduxState).render(<HibernateClusterModal {...defaultProps} />);
       await user.click(screen.getByRole('button', { name: 'Hibernate cluster' }));
-      expect(mutate).toHaveBeenCalledWith('myClusterId', 'myRegion');
+      expect(mutate).toHaveBeenCalledWith({ clusterID: 'myClusterId', region: 'myRegion' });
     });
 
     it('when fulfilled, closes dialog', () => {
