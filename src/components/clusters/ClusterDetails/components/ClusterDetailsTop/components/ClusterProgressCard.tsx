@@ -21,8 +21,6 @@ import clusterStates, {
 import DownloadOcCliButton from '~/components/clusters/common/InstallProgress/DownloadOcCliButton';
 import InstallProgress from '~/components/clusters/common/InstallProgress/InstallProgress';
 import UninstallProgress from '~/components/clusters/common/UninstallProgress';
-import { useFeatureGate } from '~/hooks/useFeatureGate';
-import { NETWORK_VALIDATOR_ONDEMAND_FEATURE } from '~/redux/constants/featureConstants';
 import { ClusterFromSubscription } from '~/types/types';
 
 import InstallationLogView from '../../Overview/InstallationLogView';
@@ -45,7 +43,6 @@ const ClusterProgressCard = ({ cluster }: ClusterProgressCardProps) => {
   const inProgress = (installationInProgress || isUninstalling) && !isError;
   const estCompletionTime = isHypershiftCluster(cluster) ? '10' : '30 to 60';
   const hasInflightErrors = hasInflightEgressErrors(cluster);
-  const hasNetworkOndemand = useFeatureGate(NETWORK_VALIDATOR_ONDEMAND_FEATURE);
 
   let titleText;
   if (isError) {
@@ -94,11 +91,7 @@ const ClusterProgressCard = ({ cluster }: ClusterProgressCardProps) => {
         {isUninstalling ? (
           <UninstallProgress cluster={cluster} />
         ) : (
-          <InstallProgress
-            cluster={cluster}
-            hasNetworkOndemand={hasNetworkOndemand}
-            hasInflightErrors={hasInflightErrors}
-          />
+          <InstallProgress cluster={cluster} hasInflightErrors={hasInflightErrors} />
         )}
         <InstallationLogView isExpandable={!isUninstalling} cluster={cluster} />
       </CardBody>
