@@ -195,8 +195,8 @@ describe('<VPCDropdown />', () => {
         await user.click(selectDropdown);
 
         expect(
-          screen.getByText('lz-p2-318-z6fst-vpc').parentElement?.nextElementSibling,
-        ).toHaveTextContent('This VPC does not have all necessary subnets');
+          screen.getByText('This VPC does not have all necessary subnets'),
+        ).toBeInTheDocument();
       });
     });
   });

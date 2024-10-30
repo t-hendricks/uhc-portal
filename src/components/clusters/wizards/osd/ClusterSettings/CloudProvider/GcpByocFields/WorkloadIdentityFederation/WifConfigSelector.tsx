@@ -4,8 +4,7 @@ import { Button, Flex, FlexItem, FormGroup } from '@patternfly/react-core';
 
 import { WifConfig } from '~/components/clusters/wizards/osd/ClusterSettings/CloudProvider/tempWifTypes/WifConfig';
 import { FormGroupHelperText } from '~/components/common/FormGroupHelperText';
-import FuzzySelect, { FuzzySelectProps } from '~/components/common/FuzzySelect';
-import { ToggleEvent } from '~/types/types';
+import { FuzzySelect, FuzzySelectProps } from '~/components/common/FuzzySelect/FuzzySelect';
 
 interface WifConfigSelectorProps {
   wifConfigs: WifConfig[];
@@ -41,8 +40,7 @@ const WifConfigSelector = (props: WifConfigSelectorProps) => {
   }));
 
   const onToggle = useCallback(
-    (_: ToggleEvent, toggleOpenValue: boolean | ((prevState: boolean) => boolean)) =>
-      setIsOpen(toggleOpenValue),
+    (toggleOpenValue: boolean | ((prevState: boolean) => boolean)) => setIsOpen(toggleOpenValue),
     [],
   );
 
@@ -72,13 +70,15 @@ const WifConfigSelector = (props: WifConfigSelectorProps) => {
             isOpen={isOpen}
             selectionData={selectOptions}
             selectedEntryId={hasWifConfigs ? selectedWifConfigID ?? '' : ''}
-            onToggle={onToggle}
+            onOpenChange={onToggle}
             onSelect={onSelect}
             toggleId={name}
-            menuAppendTo={document.body}
+            popperProps={{
+              appendTo: document.body,
+            }}
             placeholderText={placeholder}
             isDisabled={isLoading || !hasWifConfigs}
-            validated={touched && error ? 'error' : undefined}
+            validated={touched && error ? 'danger' : undefined}
             inlineFilterPlaceholderText="Filter by name / ID"
           />
         </FlexItem>

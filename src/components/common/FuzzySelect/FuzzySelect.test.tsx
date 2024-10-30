@@ -2,7 +2,7 @@ import React from 'react';
 
 import { checkAccessibility, render, screen } from '~/testUtils';
 
-import FuzzySelect, { FuzzySelectProps } from './FuzzySelect';
+import { FuzzySelect, FuzzySelectProps } from './FuzzySelect';
 
 const selectionData = [
   { entryId: 'x-110', label: 'I am different', disabled: false },
@@ -12,11 +12,10 @@ const selectionData = [
 ];
 
 const defaultProps: FuzzySelectProps = {
-  label: 'myFuzzySelect',
   selectionData,
   isOpen: true,
   isDisabled: false,
-  onToggle: () => null,
+  onOpenChange: () => null,
   placeholderText: 'Fuzzy Select placeholder',
   inlineFilterPlaceholderText: 'Filter by name or ID',
   'aria-describedby': 'for-accessibility',
@@ -34,9 +33,7 @@ describe('FuzzySelect', () => {
   });
 
   describe('when it is open', () => {
-    // Multiple accessibility issues in FuzzySelect, see details in:
-    // https://gitlab.cee.redhat.com/service/uhc-portal/-/merge_requests/4986#note_8745255
-    it.skip('is accessible', async () => {
+    it('is accessible', async () => {
       // render dropdown
       const { container } = render(<FuzzySelect {...defaultProps} />);
 

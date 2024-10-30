@@ -1,4 +1,4 @@
-import { FuzzyEntryType } from '~/components/common/FuzzySelect';
+import { FuzzyEntryType } from '~/components/common/FuzzySelect/types';
 import { Organization } from '~/types/accounts_mgmt.v1';
 import { Version } from '~/types/clusters_mgmt.v1';
 
