@@ -3,7 +3,6 @@ import { useField } from 'formik';
 import { useDispatch } from 'react-redux';
 
 import { FormGroup } from '@patternfly/react-core';
-import { SelectOptionObject as SelectOptionObjectDeprecated } from '@patternfly/react-core/deprecated';
 import { Spinner } from '@redhat-cloud-services/frontend-components/Spinner';
 
 import { billingModels } from '~/common/subscriptionTypes';
@@ -13,7 +12,8 @@ import { useFormState } from '~/components/clusters/wizards/hooks';
 import { GCPAuthType } from '~/components/clusters/wizards/osd/ClusterSettings/CloudProvider/types';
 import ErrorBox from '~/components/common/ErrorBox';
 import { FormGroupHelperText } from '~/components/common/FormGroupHelperText';
-import FuzzySelect, { FuzzyEntryType } from '~/components/common/FuzzySelect';
+import { FuzzySelect, FuzzySelectProps } from '~/components/common/FuzzySelect/FuzzySelect';
+import { FuzzyEntryType } from '~/components/common/FuzzySelect/types';
 import { useOCPLifeCycleStatusData } from '~/components/releases/hooks';
 import { useFeatureGate } from '~/hooks/useFeatureGate';
 import { clustersActions } from '~/redux/actions';
@@ -116,14 +116,7 @@ export const VersionSelectField = ({
     }
   }, [versions, selectedClusterVersion?.raw_id, name, setFieldValue]);
 
-  const onToggle = (
-    _event:
-      | Event
-      | React.MouseEvent<Element, MouseEvent>
-      | React.ChangeEvent<Element>
-      | React.KeyboardEvent<Element>,
-    isExpanded: boolean,
-  ) => {
+  const onToggle: FuzzySelectProps['onOpenChange'] = (isExpanded) => {
     setIsOpen(isExpanded);
     // In case of backend error, don't want infinite loop reloading,
     // but allow manual reload by opening the dropdown.
@@ -132,10 +125,7 @@ export const VersionSelectField = ({
     }
   };
 
-  const onSelect = (
-    _event: React.ChangeEvent | React.MouseEvent<Element, MouseEvent>,
-    newVersionId: string | SelectOptionObjectDeprecated,
-  ) => {
+  const onSelect: FuzzySelectProps['onSelect'] = (_event, newVersionId) => {
     setIsOpen(false);
     const selectedVersion = versions.find((version) => version.id === newVersionId);
     setFieldValue(name, selectedVersion);
@@ -168,10 +158,9 @@ export const VersionSelectField = ({
 
       {getInstallableVersionsResponse.fulfilled && (
         <FuzzySelect
-          label={label}
           aria-label={label}
           isOpen={isOpen}
-          onToggle={onToggle}
+          onOpenChange={onToggle}
           onSelect={onSelect}
           selectedEntryId={selectedClusterVersion?.id}
           selectionData={versionsData}
@@ -185,6 +174,7 @@ export const VersionSelectField = ({
           truncation={100}
           inlineFilterPlaceholderText="Filter by version number"
           toggleId="version-selector"
+          isScrollable
         />
       )}
 

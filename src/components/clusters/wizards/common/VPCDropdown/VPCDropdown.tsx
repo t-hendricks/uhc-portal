@@ -7,7 +7,8 @@ import { SelectOptionObject as SelectOptionObjectDeprecated } from '@patternfly/
 import { filterOutRedHatManagedVPCs, vpcHasRequiredSubnets } from '~/common/vpcHelpers';
 import { useAWSVPCInquiry } from '~/components/clusters/common/useVPCInquiry';
 import ErrorBox from '~/components/common/ErrorBox';
-import FuzzySelect, { FuzzyEntryType } from '~/components/common/FuzzySelect';
+import { FuzzySelect, FuzzySelectProps } from '~/components/common/FuzzySelect/FuzzySelect';
+import { FuzzyEntryType } from '~/components/common/FuzzySelect/types';
 import { getAWSCloudProviderVPCs } from '~/redux/actions/ccsInquiriesActions';
 import { VPCResponse } from '~/redux/reducers/ccsInquiriesReducer';
 import { CloudVPC } from '~/types/clusters_mgmt.v1';
@@ -79,10 +80,7 @@ const VPCDropdown = ({
     setIsOpen(!isOpen);
   };
 
-  const onSelect = (
-    _: React.MouseEvent | React.ChangeEvent,
-    selectedVPCID: string | SelectOptionObjectDeprecated,
-  ) => {
+  const onSelect: FuzzySelectProps['onSelect'] = (_event, selectedVPCID) => {
     // We want the form to store the original VPC object, rather than the option items
     const selectedItem = originalVPCs.find((vpc) => vpc.id === selectedVPCID);
     if (selectedItem) {
@@ -149,14 +147,12 @@ const VPCDropdown = ({
       isRequired
     >
       <Flex>
-        {/* The min-width property is necessary to allow PF Select to truncate overflowing text. See OCMUI-796 for more details.
-           This is likely to be removed when dropping deprecated Select component used by FuzzySelect */}
+        {/* The min-width property is necessary to allow PF Select to truncate overflowing text. See OCMUI-796 for more details. */}
         <FlexItem flex={{ default: 'flex_1' }} style={{ minWidth: 0 }}>
           <FuzzySelect
-            label="Select a VPC"
             aria-label="select VPC"
             isOpen={isOpen}
-            onToggle={onToggle}
+            onOpenChange={onToggle}
             onSelect={onSelect}
             sortFn={sortVPCOptions}
             selectedEntryId={selectedVPC?.id}
@@ -164,8 +160,9 @@ const VPCDropdown = ({
             isDisabled={vpcResponse.pending || selectData.options.length === 0}
             placeholderText={selectData.placeholder}
             inlineFilterPlaceholderText="Filter by VPC ID / name"
-            validated={touched && error ? 'error' : 'default'}
+            validated={touched && error ? 'danger' : undefined}
             toggleId={name}
+            isScrollable
           />
         </FlexItem>
         {showRefresh && (
