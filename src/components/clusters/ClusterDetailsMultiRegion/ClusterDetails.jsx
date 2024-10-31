@@ -24,7 +24,7 @@ import { Spinner } from '@redhat-cloud-services/frontend-components/Spinner';
 import { Navigate, useNavigate } from '~/common/routing';
 import { AppPage } from '~/components/App/AppPage';
 import { modalActions } from '~/components/common/Modal/ModalActions';
-import { featureGateSelector, useFeatureGate } from '~/hooks/useFeatureGate';
+import { useFeatureGate } from '~/hooks/useFeatureGate';
 import { useAddNotificationContact } from '~/queries/ClusterDetailsQueries/ClusterSupportTab/useAddNotificationContact';
 import {
   invalidateClusterDetailsQueries,
@@ -75,10 +75,7 @@ import { clearGlobalError, setGlobalError } from '../../../redux/actions/globalE
 import { getNotificationContacts } from '../../../redux/actions/supportActions';
 import { fetchUpgradeGates } from '../../../redux/actions/upgradeGateActions';
 import { viewConstants } from '../../../redux/constants';
-import {
-  MULTIREGION_PREVIEW_ENABLED,
-  NETWORK_VALIDATOR_ONDEMAND_FEATURE,
-} from '../../../redux/constants/featureConstants';
+import { MULTIREGION_PREVIEW_ENABLED } from '../../../redux/constants/featureConstants';
 import ErrorBoundary from '../../App/ErrorBoundary';
 import Unavailable from '../../common/Unavailable';
 // import Monitoring from '../ClusterDetailsMultiRegion/components/Monitoring';
@@ -202,9 +199,6 @@ const ClusterDetails = (props) => {
   const anyModalOpen = useSelector((state) => !!state.modal.modalName);
   const userAccess = useSelector((state) => state.cost.userAccess);
   const gotRouters = get(clusterRouters, 'getRouters.routers.length', 0) > 0;
-  const hasNetworkOndemand = useSelector((state) =>
-    featureGateSelector(state, NETWORK_VALIDATOR_ONDEMAND_FEATURE),
-  );
 
   const initTabOpen = location.hash.replace('#', '');
   const [selectedTab, setSelectedTab] = React.useState('');
@@ -616,7 +610,6 @@ const ClusterDetails = (props) => {
               cloudProviders={cloudProviders}
               refresh={refresh}
               insightsData={insightsData[cluster.external_id]}
-              hasNetworkOndemand={hasNetworkOndemand}
               userAccess={userAccess}
               canSubscribeOCP={canSubscribeOCP}
               isSubscriptionSettingsRequestPending={isSubscriptionSettingsRequestPending}
