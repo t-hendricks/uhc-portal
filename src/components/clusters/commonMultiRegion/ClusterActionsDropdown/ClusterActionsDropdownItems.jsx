@@ -39,10 +39,10 @@ function actionResolver(
   showConsoleButton,
   openModal,
   canSubscribeOCP,
-  // canTransferClusterOwnership,
   canHibernateCluster,
-  // toggleSubscriptionReleased,
-  // refreshFunc,
+  canTransferClusterOwnership,
+  toggleSubscriptionReleased,
+  refreshFunc,
   inClusterList,
 ) {
   const baseProps = {};
@@ -261,27 +261,28 @@ function actionResolver(
     return editSubscriptionSettingsProps;
   };
 
-  // const getTransferClusterOwnershipProps = () => {
-  //   const isReleased = get(cluster, 'subscription.released', false);
-  //   const title = isReleased ? 'Cancel ownership transfer' : 'Transfer cluster ownership';
-  //   const transferClusterOwnershipProps = {
-  //     ...baseProps,
-  //     title,
-  //     key: getKey('transferclusterownership'),
-  //     onClick: () => {
-  //       if (isReleased) {
-  //         toggleSubscriptionReleased(get(cluster, 'subscription.id'), false);
-  //         refreshFunc();
-  //       } else {
-  //         openModal(modals.TRANSFER_CLUSTER_OWNERSHIP, {
-  //           subscription: cluster.subscription,
-  //           shouldDisplayClusterName: inClusterList,
-  //         });
-  //       }
-  //     },
-  //   };
-  //   return transferClusterOwnershipProps;
-  // };
+  const getTransferClusterOwnershipProps = () => {
+    const isReleased = get(cluster, 'subscription.released', false);
+    const title = isReleased ? 'Cancel ownership transfer' : 'Transfer cluster ownership';
+    const transferClusterOwnershipProps = {
+      ...baseProps,
+      title,
+      key: getKey('transferclusterownership'),
+      onClick: () => {
+        if (isReleased) {
+          toggleSubscriptionReleased({ subscriptionID: cluster.subscription.id, released: false });
+          refreshFunc();
+        } else {
+          openModal(modals.TRANSFER_CLUSTER_OWNERSHIP, {
+            subscription: cluster.subscription,
+            shouldDisplayClusterName: inClusterList,
+            region: cluster.subscription.xcm_id,
+          });
+        }
+      },
+    };
+    return transferClusterOwnershipProps;
+  };
 
   // const getUpgradeTrialClusterProps = () => {
   //   const upgradeTrialClusterData = {
@@ -326,16 +327,18 @@ function actionResolver(
   const product = get(cluster, 'subscription.plan.type', '');
   const showEditSubscriptionSettings =
     product === normalizedProducts.OCP && cluster.canEdit && canSubscribeOCP;
-  // const isAllowedProducts = [
-  //   normalizedProducts.OCP,
-  //   normalizedProducts.ARO,
-  //   normalizedProducts.RHOIC,
-  // ].includes(product);
-  // const showTransferClusterOwnership =
-  //   cluster.canEdit &&
-  //   canTransferClusterOwnership &&
-  //   isAllowedProducts &&
-  //   get(cluster, 'subscription.status') !== SubscriptionCommonFields.status.ARCHIVED;
+  // const showEditSubscriptionSettings =
+  //   product === normalizedProducts.OCP && cluster.canEdit && canSubscribeOCP;
+  const isAllowedProducts = [
+    normalizedProducts.OCP,
+    normalizedProducts.ARO,
+    normalizedProducts.RHOIC,
+  ].includes(product);
+  const showTransferClusterOwnership =
+    cluster.canEdit &&
+    canTransferClusterOwnership &&
+    isAllowedProducts &&
+    get(cluster, 'subscription.status') !== SubscriptionCommonFields.status.ARCHIVED;
   // const showUpgradeTrialCluster = isClusterReady && cluster.canEdit && isProductOSDTrial;
 
   return [
@@ -350,7 +353,7 @@ function actionResolver(
     showArchive && getArchiveClusterProps(),
     // showUnarchive && getUnarchiveClusterProps(),
     showEditSubscriptionSettings && getEditSubscriptionSettingsProps(),
-    // showTransferClusterOwnership && getTransferClusterOwnershipProps(),
+    showTransferClusterOwnership && getTransferClusterOwnershipProps(),
   ].filter(Boolean);
 }
 
@@ -359,21 +362,21 @@ function dropDownItems({
   showConsoleButton,
   openModal,
   canSubscribeOCP,
-  // canTransferClusterOwnership,
+  canTransferClusterOwnership,
   canHibernateCluster,
-  // toggleSubscriptionReleased,
-  // refreshFunc,
+  refreshFunc,
   inClusterList,
+  toggleSubscriptionReleased,
 }) {
   const actions = actionResolver(
     cluster,
     showConsoleButton,
     openModal,
     canSubscribeOCP,
-    // canTransferClusterOwnership,
     canHibernateCluster,
-    // toggleSubscriptionReleased,
-    // refreshFunc,
+    canTransferClusterOwnership,
+    toggleSubscriptionReleased,
+    refreshFunc,
     inClusterList,
   );
 
