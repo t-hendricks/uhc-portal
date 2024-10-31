@@ -73,7 +73,6 @@ class Overview extends React.Component {
       refresh,
       insightsData,
       userAccess,
-      hasNetworkOndemand,
       subscription,
       canSubscribeOCP,
       clusterDetailsLoading,
@@ -103,7 +102,7 @@ class Overview extends React.Component {
       cluster.state === clusterStates.INSTALLING ||
       cluster.state === clusterStates.ERROR ||
       cluster.state === clusterStates.UNINSTALLING ||
-      (hasInflightEgressErrors(cluster) && hasNetworkOndemand);
+      hasInflightEgressErrors(cluster);
 
     const hadInflightErrorKey = `${HAD_INFLIGHT_ERROR_LOCALSTORAGE_KEY}_${cluster.id}`;
     const showInflightErrorIsFixed =
@@ -277,7 +276,6 @@ Overview.propTypes = {
   subscription: PropTypes.object,
   cloudProviders: PropTypes.object.isRequired,
   refresh: PropTypes.func,
-  hasNetworkOndemand: PropTypes.bool,
   insightsData: PropTypes.object,
   region: PropTypes.string,
   clusterDetailsLoading: PropTypes.bool,

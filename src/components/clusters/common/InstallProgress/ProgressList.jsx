@@ -21,12 +21,7 @@ import ActionRequiredLink from './ActionRequiredLink';
 
 import './ProgressList.scss';
 
-function ProgressList({
-  cluster,
-  actionRequiredInitialOpen,
-  hasNetworkOndemand,
-  regionalInstance,
-}) {
+function ProgressList({ cluster, actionRequiredInitialOpen, regionalInstance }) {
   const isROSACluster = isROSA(cluster);
   const isOSDCluster = isOSD(cluster);
   const isOSDGCPPending = isOSDGCPPendingOnHostProject(cluster);
@@ -154,7 +149,7 @@ function ProgressList({
     }
 
     // first steps completed
-    const networkSettings = hasInflightErrors && hasNetworkOndemand ? warning : completed;
+    const networkSettings = hasInflightErrors ? warning : completed;
     if (cluster.state === clusterStates.INSTALLING) {
       if (!cluster.status.dns_ready) {
         return {
@@ -260,7 +255,6 @@ function ProgressList({
 
 ProgressList.propTypes = {
   cluster: PropTypes.object.isRequired,
-  hasNetworkOndemand: PropTypes.bool,
   actionRequiredInitialOpen: PropTypes.bool,
   regionalInstance: PropTypes.shape({
     environment: PropTypes.string,
