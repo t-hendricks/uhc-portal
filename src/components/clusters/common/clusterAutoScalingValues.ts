@@ -4,7 +4,7 @@ import {
   ClusterAutoscaler,
 } from '~/types/clusters_mgmt.v1';
 
-const MAX_NODES_DEFAULT = 180;
+const MAX_NODES_DEFAULT = 249;
 const MAX_CORES_DEFAULT = MAX_NODES_DEFAULT * 64;
 const MAX_MEMORY_DEFAULT = MAX_NODES_DEFAULT * 64 * 20;
 
@@ -174,4 +174,5 @@ export {
   getDefaultClusterAutoScaling,
   getClusterAutoScalingSubmitSettings,
   getCompleteFormClusterAutoscaling,
+  MAX_NODES_DEFAULT,
 };

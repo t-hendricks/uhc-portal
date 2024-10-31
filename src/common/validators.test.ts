@@ -1,4 +1,6 @@
-import { checkHostDomain, composeValidators, validateSecureURL } from './validators';
+import { MAX_NODES_DEFAULT } from '~/components/clusters/common/clusterAutoScalingValues';
+
+import { checkHostDomain, composeValidators, maxNodesTotal, validateSecureURL } from './validators';
 
 describe('validators', () => {
   describe('checkHostDomain', () => {
@@ -45,6 +47,20 @@ describe('validators', () => {
     it('should return the first encountered error string', () => {
       expect(composeValidators(validateFnc1, validateFnc2, validateFnc3)('')).toEqual('Error 1');
       expect(composeValidators(validateFnc3, validateFnc2, validateFnc1)('')).toEqual('Error 2');
+    });
+  });
+
+  describe('Cluster autosacler validators', () => {
+    describe('Max nodes total', () => {
+      it('should not allow a value larger than the max nodes', () => {
+        expect(maxNodesTotal(MAX_NODES_DEFAULT + 5)).toEqual(
+          `Value must not be greater than ${MAX_NODES_DEFAULT}.`,
+        );
+      });
+      it('should allow a value less than or equal to the max nodes', () => {
+        expect(maxNodesTotal(MAX_NODES_DEFAULT - 5)).toEqual(undefined);
+        expect(maxNodesTotal(MAX_NODES_DEFAULT)).toEqual(undefined);
+      });
     });
   });
 });

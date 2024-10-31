@@ -20,6 +20,7 @@ import {
   resourceLimitsFields,
   scaleDownFields,
 } from '~/components/clusters/commonMultiRegion/EditClusterAutoScalingDialog/fieldDefinitions';
+import { MaxNodesTotalPopoverText } from '~/components/clusters/commonMultiRegion/EditClusterAutoScalingDialog/MaxNodesTotalTooltip';
 import {
   logVerbosityValidator,
   numberValidator,
@@ -73,6 +74,18 @@ const getValidator = (field: FieldDefinition) => {
   return validator;
 };
 
+const getTooltip = (field: FieldDefinition) => {
+  let tooltip;
+  switch (field.name) {
+    case 'resource_limits.max_nodes_total':
+      tooltip = MaxNodesTotalPopoverText;
+      break;
+    default:
+      break;
+  }
+  return tooltip;
+};
+
 const mapField = (field: FieldDefinition, isDisabled?: boolean) => {
   if (field.type === 'boolean') {
     return (
@@ -89,6 +102,7 @@ const mapField = (field: FieldDefinition, isDisabled?: boolean) => {
 
   const inputType = field.type === 'number' || field.type === 'min-max' ? 'number' : 'text';
   const validator = getValidator(field);
+  const tooltip = getTooltip(field);
 
   return (
     <TextInputField
@@ -101,6 +115,7 @@ const mapField = (field: FieldDefinition, isDisabled?: boolean) => {
         <span className="custom-help-text">Default value: {`${field.defaultValue}`}</span>
       }
       validate={validator}
+      tooltip={tooltip}
     />
   );
 };

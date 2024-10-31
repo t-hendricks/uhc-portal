@@ -5,6 +5,7 @@ import { ValidationError, Validator } from 'jsonschema';
 import { get, indexOf, inRange } from 'lodash';
 
 import { Subnet } from '~/common/helpers';
+import { MAX_NODES_DEFAULT } from '~/components/clusters/common/clusterAutoScalingValues';
 import { workerNodeVolumeSizeMinGiB } from '~/components/clusters/common/machinePools/constants';
 import { FieldId } from '~/components/clusters/wizards/osd/constants';
 import { clusterService } from '~/services';
@@ -497,6 +498,13 @@ const k8sMinMaxParameter = (
     : 'The minimum cannot be above the maximum value.';
 };
 
+const maxNodesTotal = (num: number | string) => {
+  if (+num > MAX_NODES_DEFAULT) {
+    return `Value must not be greater than ${MAX_NODES_DEFAULT}.`;
+  }
+  return undefined;
+};
+
 const clusterAutoScalingValidators = {
   k8sTimeParameter,
   k8sNumberParameter,
@@ -504,6 +512,7 @@ const clusterAutoScalingValidators = {
   k8sGpuParameter,
   k8sScaleDownUtilizationThresholdParameter,
   k8sLogVerbosityParameter,
+  maxNodesTotal,
 };
 
 /**
@@ -1952,6 +1961,7 @@ export {
   MAX_CUSTOM_OPERATOR_ROLES_PREFIX_LENGTH,
   MAX_CLUSTER_NAME_LENGTH,
   validateSecureURL,
+  maxNodesTotal,
 };
 
 export default validators;
