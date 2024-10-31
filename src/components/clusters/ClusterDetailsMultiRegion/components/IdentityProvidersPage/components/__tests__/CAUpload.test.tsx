@@ -26,6 +26,7 @@ describe('<CAUpload />', () => {
 
   it('properly renders', () => {
     // Act
+    // @ts-ignore
     render(<ConnectedCAUpload {...inputProp} label="label" />);
 
     // Assert
@@ -44,6 +45,7 @@ describe('<CAUpload />', () => {
     const file = new File([fs.readFileSync(path.join(__dirname, './1Kfile'), 'utf8')], 'filename', {
       type: 'text/plain',
     });
+    // @ts-ignore
     render(<ConnectedCAUpload label="label" {...inputProp} maxFileSize={10} />);
     expect(
       screen.queryByText(/Maximum file size exceeded. File size limit/),
@@ -69,6 +71,7 @@ describe('<CAUpload />', () => {
     const file = new File([fs.readFileSync(path.join(__dirname, './1Kfile'), 'utf8')], 'filename', {
       type: 'text/plain',
     });
+    // @ts-ignore
     render(<ConnectedCAUpload label="label" {...inputProp} />);
     expect(onChangeMock).toBeCalledTimes(0);
 
@@ -101,6 +104,7 @@ describe('<CAUpload />', () => {
     const file = new File([fs.readFileSync(path.join(__dirname, './1Kfile'), 'utf8')], 'filename', {
       type: 'text/plain',
     });
+    // @ts-ignore
     render(<ConnectedCAUpload {...inputProp} label="label" maxFileSize={2000} />);
     expect(onChangeMock).toBeCalledTimes(0);
 
@@ -133,6 +137,7 @@ describe('<CAUpload />', () => {
     const file = new File([fs.readFileSync(path.join(__dirname, './1Kfile'), 'utf8')], 'filename', {
       type: 'text/plain',
     });
+    // @ts-ignore
     const { user } = render(<ConnectedCAUpload label="label" {...inputProp} />);
 
     expect(screen.getByRole('button', { name: 'Reveal' })).toBeInTheDocument();
@@ -170,6 +175,7 @@ describe('<CAUpload />', () => {
     const file = new File([fs.readFileSync(path.join(__dirname, './1Kfile'), 'utf8')], 'filename', {
       type: 'text/plain',
     });
+    // @ts-ignore
     const { user } = render(<ConnectedCAUpload label="label" {...inputProp} />);
 
     expect(screen.getByRole('button', { name: 'Reveal' })).toBeInTheDocument();
@@ -218,6 +224,7 @@ describe('<CAUpload />', () => {
         type: 'text/plain',
       },
     );
+    // @ts-ignore
     render(<ConnectedCAUpload label="label" {...inputProp} />);
     await waitFor(() =>
       fireEvent.change(screen.getByTestId('ca-upload-input-file'), {
