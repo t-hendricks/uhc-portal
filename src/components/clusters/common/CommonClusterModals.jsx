@@ -10,6 +10,7 @@ import EditConsoleURLDialogMR from '../commonMultiRegion/EditConsoleURLDialog';
 import EditDisplayNameDialogMR from '../commonMultiRegion/EditDisplayNameDialog';
 import EditSubscriptionSettingsDialogMR from '../commonMultiRegion/EditSubscriptionSettingsDialog/EditSubscriptionSettingsDialog';
 import ScaleClusterDialogMR from '../commonMultiRegion/ScaleClusterDialog';
+import TransferClusterOwnershipDialogMR from '../commonMultiRegion/TransferClusterOwnershipDialog/TransferClusterOwnershipDialog';
 import UpgradeWizardMR from '../commonMultiRegion/Upgrades/UpgradeWizard/UpgradeWizard';
 
 import DeleteProtectionModal from './DeleteProtectionModal/DeleteProtectionModal';
@@ -44,7 +45,6 @@ function CommonClusterModals({
         ModalComponent={isMultiRegionPreviewEnabled ? EditConsoleURLDialogMR : EditConsoleURLDialog}
         onClose={onClose}
       />
-      <ConnectedModal ModalComponent={TransferClusterOwnershipDialog} onClose={onClose} />
       <ConnectedModal
         ModalComponent={
           isMultiRegionPreviewEnabled
@@ -61,6 +61,14 @@ function CommonClusterModals({
 
       <ConnectedModal
         ModalComponent={isMultiRegionPreviewEnabled ? ArchiveClusterDialogMR : ArchiveClusterDialog}
+        onClose={onClose}
+      />
+      <ConnectedModal
+        ModalComponent={
+          isMultiRegionPreviewEnabled
+            ? TransferClusterOwnershipDialogMR
+            : TransferClusterOwnershipDialog
+        }
         onClose={onClose}
       />
       <ConnectedModal ModalComponent={HibernateClusterModal} onClose={onClose} />
