@@ -37,6 +37,8 @@ class ClusterDetails extends Page {
 
   settingsTab = () => cy.get('button[aria-controls="upgradeSettingsTabContent"]');
 
+  clusterHistoryTab = () => cy.get('button[id="pf-tab-4-Cluster history"]');
+
   editDisplaynameConfirm = () =>
     cy.get('div[aria-label="Edit display name"]').find('footer').find('button').first();
 
@@ -190,6 +192,45 @@ class ClusterDetails extends Page {
       .find('tr')
       .eq(index)
       .find('td[data-label="Instance type"]');
+  }
+
+  showBillingMarketplaceAccountLink() {
+    cy.getByTestId('billingMarketplaceAccountLink').click({ force: true });
+  }
+
+  refreshBillingAWSAccountButton() {
+    cy.get('button[data-testid="refresh-aws-accounts"]');
+  }
+
+  clickAWSBillingAccountsDropDown() {
+    cy.get('button[aria-describedby="aws-infra-accounts"]').click();
+  }
+
+  updateAWSBillingAccount() {
+    cy.getByTestId(`Update`).click({ force: true });
+  }
+
+  verifyBillingAccountDocLink(text) {
+    cy.get('a')
+      .contains(text)
+      .should('have.attr', 'href', 'https://console.aws.amazon.com/rosa/home');
+  }
+
+  filterAWSBillingAccount(awsBillingAccount) {
+    cy.get('input[placeholder*="Filter by account ID"]', { timeout: 50000 })
+      .clear()
+      .type(awsBillingAccount);
+  }
+
+  selectAWSBillingAccount(awsBillingAccount) {
+    cy.get('div[label="AWS billing account"]')
+      .find('button')
+      .contains(awsBillingAccount)
+      .click({ force: true });
+  }
+
+  showEditAWSBillingAccountModal() {
+    cy.get('div[id="edit-billing-aws-account-modal"]').click();
   }
 
   getMachinePoolAvailabilityZones(index) {

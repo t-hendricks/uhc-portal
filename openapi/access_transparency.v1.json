@@ -37,8 +37,17 @@
           "type": "string"
         }
       },
+      "order": {
+        "description": "Specifies the order by criteria. The syntax of this parameter is\nsimilar to the syntax of the _order by_ clause of an SQL statement,\nbut using the names of the json attributes / column of the account.\nFor example, in order to retrieve all accounts ordered by username:\n\n```sql\nusername asc\n```\n\nOr in order to retrieve all accounts ordered by username _and_ first name:\n\n```sql\nusername asc, firstName asc\n```\n\nParameters 'orderBy' and 'order' are mutually exclusive. If both \nparameters aren't provided, or if the values are empty, then no \nexplicit ordering will be applied.",
+        "in": "query",
+        "name": "order",
+        "required": false,
+        "schema": {
+          "type": "string"
+        }
+      },
       "orderBy": {
-        "description": "Specifies the order by criteria. The syntax of this parameter is\nsimilar to the syntax of the _order by_ clause of an SQL statement,\nbut using the names of the json attributes / column of the account.\nFor example, in order to retrieve all accounts ordered by username:\n\n```sql\nusername asc\n```\n\nOr in order to retrieve all accounts ordered by username _and_ first name:\n\n```sql\nusername asc, firstName asc\n```\n\nIf the parameter isn't provided, or if the value is empty, then\nno explicit ordering will be applied.",
+        "description": "Specifies the order by criteria. The syntax of this parameter is\nsimilar to the syntax of the _order by_ clause of an SQL statement,\nbut using the names of the json attributes / column of the account.\nFor example, in order to retrieve all accounts ordered by username:\n\n```sql\nusername asc\n```\n\nOr in order to retrieve all accounts ordered by username _and_ first name:\n\n```sql\nusername asc, firstName asc\n```\n\nParameters 'orderBy' and 'order' are mutually exclusive. If both \nparameters aren't provided, or if the values are empty, then no \nexplicit ordering will be applied.",
         "in": "query",
         "name": "orderBy",
         "required": false,
@@ -482,6 +491,9 @@
             "$ref": "#/components/parameters/orderBy"
           },
           {
+            "$ref": "#/components/parameters/order"
+          },
+          {
             "$ref": "#/components/parameters/fields"
           }
         ],
@@ -700,6 +712,9 @@
           },
           {
             "$ref": "#/components/parameters/orderBy"
+          },
+          {
+            "$ref": "#/components/parameters/order"
           },
           {
             "$ref": "#/components/parameters/fields"

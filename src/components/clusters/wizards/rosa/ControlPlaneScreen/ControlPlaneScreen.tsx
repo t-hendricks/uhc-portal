@@ -35,13 +35,20 @@ const ControlPlaneField = ({
   input: { value, onChange },
   hasHostedProductQuota,
 }: ControlPlaneFieldProps) => {
-  const { values: formValues, setValues } = useFormState();
+  const { values: formValues, setValues, setFieldValue } = useFormState();
   const isHostedDisabled = !hasHostedProductQuota;
   const isMultiRegionEnabled = useFeatureGate(MULTIREGION_PREVIEW_ENABLED);
 
   React.useEffect(() => {
     if (isHostedDisabled) {
       onChange('false');
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  React.useEffect(() => {
+    if (value === 'true' && isMultiRegionEnabled) {
+      setFieldValue(FieldId.Region, undefined);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
