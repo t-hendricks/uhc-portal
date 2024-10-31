@@ -50,6 +50,7 @@ describe('<RegisterCluster />', () => {
     });
 
     // Act
+    // @ts-ignore
     const { container } = render(<ConnectedRegisterCluster />);
 
     // Assert
@@ -66,6 +67,7 @@ describe('<RegisterCluster />', () => {
     });
 
     // Act
+    // @ts-ignore
     render(<ConnectedRegisterCluster />);
 
     // Assert
@@ -85,6 +87,7 @@ describe('<RegisterCluster />', () => {
     });
 
     // Act
+    // @ts-ignore
     render(<ConnectedRegisterCluster />);
 
     // Assert
@@ -106,6 +109,7 @@ describe('<RegisterCluster />', () => {
     });
 
     // Act
+    // @ts-ignore
     render(<ConnectedRegisterCluster />);
 
     // Assert

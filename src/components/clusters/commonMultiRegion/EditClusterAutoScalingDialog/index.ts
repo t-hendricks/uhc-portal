@@ -131,7 +131,7 @@ const mapDispatchDay1ToProps = (dispatch: Dispatch) => ({
 export const EditClusterAutoScalerForDay2 = connect(
   day2FormValueSelectorMapper,
   mapDispatchDay2ToProps,
-)(EditClusterAutoScalerDay2Form);
+)(EditClusterAutoScalerDay2Form as any);
 
 export default connect(
   day1FormValueSelectorMapper,
