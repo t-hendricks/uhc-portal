@@ -1,10 +1,14 @@
 import React from 'react';
 import { To } from 'react-router-dom';
 
-import { useGlobalState } from '~/redux/hooks';
+import { useFetchAccessRequest } from '~/queries/ClusterDetailsQueries/AccessRequestTab/useFetchAccessRequest';
 import { checkAccessibility, render, screen } from '~/testUtils';
 
 import AccessRequestNavigate from '../AccessRequestNavigate';
+
+jest.mock('~/queries/ClusterDetailsQueries/AccessRequestTab/useFetchAccessRequest', () => ({
+  useFetchAccessRequest: jest.fn(),
+}));
 
 jest.mock('~/components/App/LoadingPage', () => () => <div data-testid="loading-page-mock" />);
 jest.mock('~/components/App/NotFoundError', () => () => <div data-testid="not-found-error-mock" />);
@@ -21,10 +25,7 @@ jest.mock('react-router-dom', () => ({
   ),
 }));
 
-jest.mock('~/redux/hooks', () => ({
-  useGlobalState: jest.fn(),
-}));
-const useGlobalStateMock = useGlobalState as jest.Mock;
+const useFetchAccessRequestMock = useFetchAccessRequest as jest.Mock;
 
 describe('AccessRequestNavigate', () => {
   beforeEach(() => {
@@ -34,7 +35,11 @@ describe('AccessRequestNavigate', () => {
   describe('is accessible', () => {
     it('when error', async () => {
       // Arrange
-      useGlobalStateMock.mockReturnValue({ error: true });
+      useFetchAccessRequestMock.mockReturnValue({
+        isError: true,
+        isLoading: false,
+        data: undefined,
+      });
 
       // Act
       const { container } = render(<AccessRequestNavigate />);
@@ -45,7 +50,7 @@ describe('AccessRequestNavigate', () => {
 
     it('when empty state', async () => {
       // Arrange
-      useGlobalStateMock.mockReturnValue({});
+      useFetchAccessRequestMock.mockReturnValue({});
 
       // Act
       const { container } = render(<AccessRequestNavigate />);
@@ -58,7 +63,11 @@ describe('AccessRequestNavigate', () => {
   describe('is properly rendering', () => {
     it('when error', () => {
       // Arrange
-      useGlobalStateMock.mockReturnValue({ error: true });
+      useFetchAccessRequestMock.mockReturnValue({
+        isError: true,
+        isLoading: false,
+        data: undefined,
+      });
 
       // Act
       render(<AccessRequestNavigate />);
@@ -69,7 +78,7 @@ describe('AccessRequestNavigate', () => {
 
     it('when empty state', () => {
       // Arrange
-      useGlobalStateMock.mockReturnValue({});
+      useFetchAccessRequestMock.mockReturnValue({ isLoading: true });
 
       // Act
       render(<AccessRequestNavigate />);
@@ -80,7 +89,12 @@ describe('AccessRequestNavigate', () => {
 
     it('when subscription id', () => {
       // Arrange
-      useGlobalStateMock.mockReturnValue({ subscription_id: 'subscriptionId1' });
+      useFetchAccessRequestMock.mockReturnValue({
+        isLoading: false,
+        isError: false,
+        error: null,
+        data: { subscription_id: 'subscriptionId1' },
+      });
 
       // Act
       render(<AccessRequestNavigate />);

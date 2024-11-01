@@ -10,12 +10,11 @@ import ExternalLink from '~/components/common/ExternalLink';
 import ConnectedModal from '~/components/common/Modal/ConnectedModal';
 import { modalActions } from '~/components/common/Modal/ModalActions';
 import modals from '~/components/common/Modal/modals';
+import { useFetchAccessRequest } from '~/queries/ClusterDetailsQueries/AccessRequestTab/useFetchAccessRequest';
 import {
-  getAccessRequests,
-  getPendingAccessRequests,
-  resetAccessRequest,
-  resetPostAccessRequestDecision,
-} from '~/redux/actions/accessRequestActions';
+  refetchAccessRequests,
+  useFetchAccessRequests,
+} from '~/queries/ClusterDetailsQueries/AccessRequestTab/useFetchAccessRequests';
 import { viewActions } from '~/redux/actions/viewOptionsActions';
 import { viewConstants } from '~/redux/constants';
 import { useGlobalState } from '~/redux/hooks';
@@ -35,20 +34,28 @@ type AccessRequestProps = {
 const AccessRequest = ({ subscriptionId }: AccessRequestProps) => {
   const dispatch = useDispatch();
   const viewType = viewConstants.ACCESS_REQUESTS_VIEW;
-
   const viewOptions = useGlobalState((state) => state.viewOptions[viewType]);
-  const accessRequestsState = useGlobalState((state) => state.accessRequest.accessRequests);
-  const accessRequestState = useGlobalState((state) => state.accessRequest.accessRequest);
-  const postAccessRequestDecisionState = useGlobalState(
-    (state) => state.accessRequest.postAccessRequestDecision,
+
+  const {
+    data: accessRequest,
+    isLoading: isAccessRequestLoading,
+    isError: isAccessRequestError,
+    isSuccess: isAccessRequestSuccess,
+  } = useFetchAccessRequest(subscriptionId!!);
+
+  const { data: accessRequests, isLoading: isAccessRequestsLoading } = useFetchAccessRequests(
+    subscriptionId!!,
+    viewOptions,
+    false,
+    { enabled: true },
   );
 
   const [previousViewOptions, setPreviousViewOptions] = useState(viewOptions);
 
-  const isPending = useMemo(() => accessRequestsState.pending, [accessRequestsState.pending]);
+  const isPending = useMemo(() => isAccessRequestsLoading, [isAccessRequestsLoading]);
   const isPendingNoData = useMemo(
-    () => isPending || !accessRequestsState?.items?.length,
-    [isPending, accessRequestsState],
+    () => isPending || !accessRequests?.items?.length,
+    [isPending, accessRequests],
   );
   const sortBy = useMemo(
     () => ({
@@ -69,8 +76,7 @@ const AccessRequest = ({ subscriptionId }: AccessRequestProps) => {
         modalActions.openModal(modals.ACCESS_REQUEST_DETAILS, {
           accessRequest: accessRequestElement,
           onClose: () => {
-            dispatch(resetAccessRequest());
-            dispatch(resetPostAccessRequestDecision());
+            refetchAccessRequests();
           },
         }),
       ),
@@ -78,36 +84,26 @@ const AccessRequest = ({ subscriptionId }: AccessRequestProps) => {
   );
 
   useEffect(() => {
-    if (subscriptionId !== undefined) {
-      dispatch(getAccessRequests(subscriptionId, viewOptions));
+    if (isAccessRequestSuccess && !isAccessRequestLoading && !isAccessRequestError) {
+      openAccessRequest(accessRequest);
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [subscriptionId]);
-
-  useEffect(() => {
-    if (subscriptionId !== undefined && postAccessRequestDecisionState.fulfilled) {
-      dispatch(getAccessRequests(subscriptionId, viewOptions));
-      dispatch(getPendingAccessRequests(subscriptionId));
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [postAccessRequestDecisionState.fulfilled]);
-
-  useEffect(() => {
-    if (accessRequestState.fulfilled) {
-      openAccessRequest(accessRequestState);
-    }
-  }, [accessRequestState, openAccessRequest]);
+  }, [
+    accessRequest,
+    openAccessRequest,
+    isAccessRequestSuccess,
+    isAccessRequestLoading,
+    isAccessRequestError,
+  ]);
 
   useEffect(() => {
     if (
       viewPropsChanged(viewOptions, previousViewOptions) &&
-      !accessRequestsState.pending &&
+      !isAccessRequestsLoading &&
       subscriptionId !== undefined
     ) {
-      dispatch(getAccessRequests(subscriptionId, viewOptions));
       setPreviousViewOptions(viewOptions);
     }
-  }, [accessRequestsState.pending, dispatch, previousViewOptions, subscriptionId, viewOptions]);
+  }, [isAccessRequestsLoading, previousViewOptions, subscriptionId, viewOptions]);
 
   return (
     <>
@@ -135,7 +131,7 @@ const AccessRequest = ({ subscriptionId }: AccessRequestProps) => {
           />
 
           <AccessRequestTable
-            accessRequestItems={accessRequestsState.items}
+            accessRequestItems={accessRequests?.items}
             setSorting={setSorting}
             openDetailsAction={openAccessRequest}
             sortBy={sortBy}
