@@ -48,7 +48,7 @@ const UpgradeWizard = () => {
   } = useFetchClusterDetails(subscriptionID);
 
   const clusterID = cluster?.id;
-  const region = cluster?.subscription?.xcm_id;
+  const region = cluster?.subscription?.rh_region_id;
   const isHypershift = isHypershiftCluster(cluster);
 
   const { data: schedules } = useGetSchedules(clusterID, isHypershift, region);

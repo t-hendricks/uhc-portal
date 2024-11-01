@@ -21,7 +21,7 @@ type OverviewBillingAccountModalProps = {
 export function OverviewBillingAccountModal(props: OverviewBillingAccountModalProps) {
   const { onClose, billingAccount, isOpen = true, cluster } = props;
 
-  const region = cluster?.subscription?.xcm_id;
+  const region = cluster?.subscription?.rh_region_id;
   const {
     isPending: isClusterEditPending,
     isError: isClusterEditError,

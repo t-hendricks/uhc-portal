@@ -152,7 +152,7 @@ const ClusterDetails = (props) => {
     isLoading: isClusterIdentityProvidersLoading,
     clusterIdentityProviders,
     isError: clusterIdentityProvidersError,
-  } = useFetchClusterIdentityProviders(cluster?.id, cluster?.subscription?.xcm_id);
+  } = useFetchClusterIdentityProviders(cluster?.id, cluster?.subscription?.rh_region_id);
 
   const {
     isLoading: isCloudProvidersLoading,
@@ -604,7 +604,7 @@ const ClusterDetails = (props) => {
           <ErrorBoundary>
             <Overview
               cluster={cluster}
-              region={cluster.subscription.xcm_id}
+              region={cluster.subscription.rh_region_id}
               clusterDetailsLoading={isClusterDetailsLoading}
               subscription={cluster.subscription}
               cloudProviders={cloudProviders}
@@ -660,7 +660,7 @@ const ClusterDetails = (props) => {
               <AccessControl
                 cluster={cluster}
                 refreshEvent={refreshEvent}
-                region={cluster.subscription.xcm_id}
+                region={cluster.subscription.rh_region_id}
               />
             </ErrorBoundary>
           </TabContent>
@@ -677,7 +677,7 @@ const ClusterDetails = (props) => {
               <AddOns
                 clusterID={cluster.id}
                 isHypershift={isHypershift}
-                region={cluster.subscription.xcm_id}
+                region={cluster.subscription.rh_region_id}
                 cluster={cluster}
               />
             </ErrorBoundary>
@@ -695,7 +695,7 @@ const ClusterDetails = (props) => {
               <ClusterLogs
                 externalClusterID={cluster.external_id}
                 clusterID={cluster.id}
-                region={cluster.subscription?.xcm_id}
+                region={cluster.subscription?.rh_region_id}
                 createdAt={cluster.creation_timestamp}
                 refreshEvent={{
                   type: refreshEvent.type,
@@ -749,7 +749,7 @@ const ClusterDetails = (props) => {
                 refreshCluster={refresh}
                 cluster={cluster}
                 isManaged={cluster.managed}
-                region={cluster.subscription.xcm_id}
+                region={cluster.subscription.rh_region_id}
               />
             </ErrorBoundary>
           </TabContent>

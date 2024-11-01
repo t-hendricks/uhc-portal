@@ -50,7 +50,7 @@ export type SubscriptionCommonFields = ObjectReference & {
    */
   trial_end_date?: string;
   usage?: SubscriptionCommonFields.usage;
-  xcm_id?: string;
+  rh_region_id?: string;
 };
 export namespace SubscriptionCommonFields {
   export enum product_bundle {

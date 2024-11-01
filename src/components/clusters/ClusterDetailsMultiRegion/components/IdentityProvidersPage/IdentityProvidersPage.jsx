@@ -68,7 +68,7 @@ const IdentityProvidersPage = (props) => {
   const isManaged = cluster?.managed;
   const clusterID = cluster?.id;
   const subscriptionStatus = cluster?.subscription.status;
-  const region = cluster?.subscription?.xcm_id;
+  const region = cluster?.subscription?.rh_region_id;
 
   const {
     clusterIdentityProviders: clusterIDPs,

@@ -38,7 +38,7 @@ describe('<EditConsoleURLDialog />', () => {
         subscription: {
           id: 'my-subscription-id',
           display_name: 'my-cluster-name',
-          // xcm_id:'myRegion'
+          // rh_region_id:'myRegion'
         },
         shouldDisplayClusterName: true,
       },
@@ -121,7 +121,7 @@ describe('<EditConsoleURLDialog />', () => {
       ...defaultState,
     };
 
-    newState.modal.data.subscription.xcm_id = 'myRegion';
+    newState.modal.data.subscription.rh_region_id = 'myRegion';
 
     const { user } = withState(newState, true).render(<EditConsoleURLDialog {...defaultProps} />);
 

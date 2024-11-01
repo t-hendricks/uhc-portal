@@ -20,8 +20,8 @@ export const useFetchCluster = (
   const { isLoading, data, isError, error, isFetching } = useQuery({
     queryKey: [mainQueryKey, 'clusterService', clusterID, subscription],
     queryFn: async () => {
-      if (subscription?.xcm_id) {
-        const clusterService = getClusterServiceForRegion(subscription?.xcm_id);
+      if (subscription?.rh_region_id) {
+        const clusterService = getClusterServiceForRegion(subscription?.rh_region_id);
         const response = await clusterService.getClusterDetails(clusterID);
         return response;
       }

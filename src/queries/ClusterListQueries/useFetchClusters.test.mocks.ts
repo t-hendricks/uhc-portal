@@ -37,7 +37,7 @@ export const managedSubscriptions = [
     managed: true,
     status: 'Active',
     plan: { id: 'ROSA', type: 'ROSA' },
-    xcm_id: 'myRegion',
+    rh_region_id: 'myRegion',
   },
 ] as Subscription[];
 

@@ -36,7 +36,7 @@ const canConfigureAdditionalRouter = (clusterVersionRawId) =>
 
 const EditClusterIngressDialog = ({ provider, cluster, refreshCluster, clusterRoutersData }) => {
   const clusterID = cluster?.id;
-  const region = cluster?.subscription?.xcm_id;
+  const region = cluster?.subscription?.rh_region_id;
   const {
     isPending,
     isError,

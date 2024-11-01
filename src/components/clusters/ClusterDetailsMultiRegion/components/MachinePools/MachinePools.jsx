@@ -117,7 +117,7 @@ const MachinePools = ({ cluster }) => {
 
   const canBypassPIDsLimit = hasOrgLevelBypassPIDsLimitCapability(organization?.details);
   const isHypershift = isHypershiftCluster(cluster);
-  const region = cluster?.subscription?.xcm_id;
+  const region = cluster?.subscription?.rh_region_id;
   const clusterID = cluster?.id;
   const clusterVersionID = cluster?.version?.id;
   // Initial state

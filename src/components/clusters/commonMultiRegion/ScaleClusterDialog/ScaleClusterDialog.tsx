@@ -48,7 +48,7 @@ const ScaleClusterDialog = ({ handleSubmit, initialValues, pristine }: ScaleClus
   ) as unknown as ClusterFromSubscription;
 
   const consoleURL = get(modalData, 'console.url', null);
-  const region = get(modalData, 'xcm_id', undefined);
+  const region = get(modalData, 'rh_region_id', undefined);
   const isByoc = modalData.ccs?.enabled;
   const clusterDisplayName = getClusterName(modalData);
   // @ts-ignore

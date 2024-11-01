@@ -26,7 +26,7 @@ import {
 } from './helpers/useFetchClustersHelpers';
 import { useFetchSubscriptions } from './helpers/useFetchSubscriptions';
 
-const REGION_ID = 'xcm_id';
+const REGION_ID = 'rh_region_id';
 
 export const useFetchClusters = (isArchived = false, useManagedEndpoints = true) => {
   const viewOptionsType = isArchived ? ARCHIVED_CLUSTERS_VIEW : CLUSTERS_VIEW;

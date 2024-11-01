@@ -20,8 +20,8 @@ export const useFetchInflightChecks = (
   const { isLoading, data, isError, isFetching } = useQuery({
     queryKey: [mainQueryKey, 'inflightChecks', 'clusterService', clusterID, subscription],
     queryFn: async () => {
-      if (subscription?.subscription.xcm_id) {
-        const clusterService = getClusterServiceForRegion(subscription?.subscription.xcm_id);
+      if (subscription?.subscription.rh_region_id) {
+        const clusterService = getClusterServiceForRegion(subscription?.subscription.rh_region_id);
         const response = await clusterService.getInflightChecks(clusterID);
         return response;
       }
