@@ -186,14 +186,15 @@ export const useFetchClusterDetails = (subscriptionID: string) => {
     }
 
     if (aiClusterResponse) {
-      aiClusterResponse.canEdit = canEdit;
-      aiClusterResponse.canEditOCMRoles = canEditOCMRoles;
-      aiClusterResponse.canViewOCMRoles = canViewOCMRoles;
-      aiClusterResponse.canDelete = false; // OCP clusters can't be deleted
-      aiClusterResponse.subscription = subscription?.subscription;
+      const aiCluster = { ...aiClusterResponse };
+      aiCluster.canEdit = canEdit;
+      aiCluster.canEditOCMRoles = canEditOCMRoles;
+      aiCluster.canViewOCMRoles = canViewOCMRoles;
+      aiCluster.canDelete = false; // OCP clusters can't be deleted
+      aiCluster.subscription = subscription?.subscription;
       return {
         isLoading: false,
-        cluster: aiClusterResponse,
+        cluster: aiCluster,
         isFetching,
       };
     }
