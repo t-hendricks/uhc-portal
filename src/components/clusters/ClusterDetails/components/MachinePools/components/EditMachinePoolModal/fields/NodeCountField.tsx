@@ -1,8 +1,7 @@
 import * as React from 'react';
 import { useField } from 'formik';
 
-import { FormGroup, Tooltip } from '@patternfly/react-core';
-import { SelectOption as SelectOptionDeprecated } from '@patternfly/react-core/deprecated';
+import { FormGroup, SelectOption, Tooltip } from '@patternfly/react-core';
 
 import { noQuotaTooltip } from '~/common/helpers';
 import links from '~/common/installLinks.mjs';
@@ -51,15 +50,15 @@ const NodeCountField = ({
 
   const selectField = (
     <SelectField
-      value={`${field.value}`}
+      value={`${isMultizoneMachinePool ? field.value / 3 : field.value}`}
       fieldId={fieldId}
       onSelect={(newValue) => onChange(parseInt(newValue as string, 10))}
       isDisabled={notEnoughQuota}
     >
       {options.map((option) => (
-        <SelectOptionDeprecated key={option} value={`${option}`}>
+        <SelectOption key={option} value={`${option}`}>
           {`${isMultizoneMachinePool ? option / 3 : option}`}
-        </SelectOptionDeprecated>
+        </SelectOption>
       ))}
     </SelectField>
   );
