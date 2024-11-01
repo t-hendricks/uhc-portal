@@ -1,7 +1,6 @@
 import * as React from 'react';
 
-import { FormGroup } from '@patternfly/react-core';
-import { SelectOption as SelectOptionDeprecated } from '@patternfly/react-core/deprecated';
+import { FormGroup, SelectOption } from '@patternfly/react-core';
 
 import { isHypershiftCluster } from '~/components/clusters/common/clusterStates';
 import TextField from '~/components/common/formik/TextField';
@@ -30,9 +29,9 @@ const EditDetailsSection = ({
     <FormGroup fieldId="machine-pool" label="Machine pool">
       <SelectField fieldId="machine-pool" onSelect={setCurrentMPId} value={currentMPId}>
         {machinePools.map((mp) => (
-          <SelectOptionDeprecated key={mp.id} value={mp.id}>
+          <SelectOption key={mp.id} value={mp.id}>
             {mp.id || ''}
-          </SelectOptionDeprecated>
+          </SelectOption>
         ))}
       </SelectField>
     </FormGroup>
