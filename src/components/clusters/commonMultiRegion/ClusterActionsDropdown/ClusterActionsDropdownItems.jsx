@@ -284,27 +284,27 @@ function actionResolver(
     return transferClusterOwnershipProps;
   };
 
-  // const getUpgradeTrialClusterProps = () => {
-  //   const upgradeTrialClusterData = {
-  //     clusterID: cluster.id,
-  //     cluster,
-  //   };
-  //   const upgradeTrialClusterProps = {
-  //     ...baseProps,
-  //     title: 'Upgrade cluster from Trial',
-  //     key: getKey('upgradetrialcluster'),
-  //   };
-  //   return {
-  //     ...upgradeTrialClusterProps,
-  //     ...disableIfTooltip(readOnlyMessage, {
-  //       onClick: () =>
-  //         openModal(modals.UPGRADE_TRIAL_CLUSTER, {
-  //           ...upgradeTrialClusterData,
-  //           shouldDisplayClusterName: inClusterList,
-  //         }),
-  //     }),
-  //   };
-  // };
+  const getUpgradeTrialClusterProps = () => {
+    const upgradeTrialClusterData = {
+      clusterID: cluster.id,
+      cluster,
+    };
+    const upgradeTrialClusterProps = {
+      ...baseProps,
+      title: 'Upgrade cluster from Trial',
+      key: getKey('upgradetrialcluster'),
+    };
+    return {
+      ...upgradeTrialClusterProps,
+      ...disableIfTooltip(readOnlyMessage, {
+        onClick: () =>
+          openModal(modals.UPGRADE_TRIAL_CLUSTER, {
+            ...upgradeTrialClusterData,
+            shouldDisplayClusterName: inClusterList,
+          }),
+      }),
+    };
+  };
 
   // const showDelete = cluster.canDelete && cluster.managed;
   const showScale = cluster.canEdit && cluster.managed && !cluster.ccs?.enabled;
@@ -339,7 +339,7 @@ function actionResolver(
     canTransferClusterOwnership &&
     isAllowedProducts &&
     get(cluster, 'subscription.status') !== SubscriptionCommonFields.status.ARCHIVED;
-  // const showUpgradeTrialCluster = isClusterReady && cluster.canEdit && isProductOSDTrial;
+  const showUpgradeTrialCluster = isClusterReady && cluster.canEdit && isProductOSDTrial;
 
   return [
     showConsoleButton && getAdminConsoleProps(),
@@ -348,7 +348,7 @@ function actionResolver(
     showScale && getScaleClusterProps(),
     showHibernateCluster && getHibernateClusterProps(),
     showEditMachinePool && getEditMachinePoolProps(),
-    // showUpgradeTrialCluster && getUpgradeTrialClusterProps(),
+    showUpgradeTrialCluster && getUpgradeTrialClusterProps(),
     // showDelete && getDeleteItemProps(),
     showArchive && getArchiveClusterProps(),
     // showUnarchive && getUnarchiveClusterProps(),

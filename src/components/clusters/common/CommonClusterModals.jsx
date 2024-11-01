@@ -12,6 +12,7 @@ import EditSubscriptionSettingsDialogMR from '../commonMultiRegion/EditSubscript
 import ScaleClusterDialogMR from '../commonMultiRegion/ScaleClusterDialog';
 import TransferClusterOwnershipDialogMR from '../commonMultiRegion/TransferClusterOwnershipDialog/TransferClusterOwnershipDialog';
 import UpgradeWizardMR from '../commonMultiRegion/Upgrades/UpgradeWizard/UpgradeWizard';
+import UpgradeTrialClusterDialogMR from '../commonMultiRegion/UpgradeTrialClusterDialog';
 
 import DeleteProtectionModal from './DeleteProtectionModal/DeleteProtectionModal';
 import EditSubscriptionSettingsDialog from './EditSubscriptionSettingsDialog/EditSubscriptionSettingsDialog';
@@ -74,7 +75,12 @@ function CommonClusterModals({
       <ConnectedModal ModalComponent={HibernateClusterModal} onClose={onClose} />
       <ConnectedModal ModalComponent={ResumeClusterModal} onClose={onClose} />
       <ConnectedModal ModalComponent={UnarchiveClusterDialog} onClose={onClose} />
-      <ConnectedModal ModalComponent={UpgradeTrialClusterDialog} onClose={onClose} />
+      <ConnectedModal
+        ModalComponent={
+          isMultiRegionPreviewEnabled ? UpgradeTrialClusterDialogMR : UpgradeTrialClusterDialog
+        }
+        onClose={onClose}
+      />
       <ConnectedModal
         ModalComponent={isMultiRegionPreviewEnabled ? UpgradeWizardMR : UpgradeWizard}
       />
