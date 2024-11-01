@@ -24,7 +24,7 @@ function AccessControl({ cluster, refreshEvent = null }) {
 
   const clusterID = cluster?.id;
   const subscriptionID = cluster?.subscription?.id;
-  const region = cluster?.subscription?.xcm_id;
+  const region = cluster?.subscription?.rh_region_id;
   const canUpdateClusterResource = cluster?.canUpdateClusterResource;
 
   // class for whether display vertical tabs (wider screen)

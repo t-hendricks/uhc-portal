@@ -39,7 +39,7 @@ const VPCDetailsCard = ({ cluster }) => {
   const isBYOVPC = cluster.aws?.subnet_ids || cluster.gcp_network;
   const gcpPrivateServiceConnect = cluster.gcp?.private_service_connect?.service_attachment_subnet;
 
-  const region = cluster.subscription?.xcm_id;
+  const region = cluster.subscription?.rh_region_id;
 
   const isPrivateLinkInitialized = typeof privateLink !== 'undefined';
 

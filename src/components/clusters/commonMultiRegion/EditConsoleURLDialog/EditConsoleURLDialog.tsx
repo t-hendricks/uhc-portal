@@ -39,7 +39,7 @@ const EditConsoleURLDialog = ({ onClose }: EditConsoleURLDialogProps) => {
   const consoleURL = modalData?.console_url || modalData?.console?.url || '';
   // @ts-ignore
   const shouldDisplayClusterName = modalData?.shouldDisplayClusterName || false;
-  const region = modalData?.subscription?.xcm_id;
+  const region = modalData?.subscription?.rh_region_id;
   const clusterDisplayName = getClusterName(modalData);
 
   const [currentConsoleUrl, setCurrentConsoleUrl] = React.useState(consoleURL);

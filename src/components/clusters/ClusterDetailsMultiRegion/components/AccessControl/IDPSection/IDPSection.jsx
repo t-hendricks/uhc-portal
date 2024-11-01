@@ -56,7 +56,7 @@ const IDPSection = (props) => {
   const dispatch = useDispatch();
   const [dropdownOpen, setDropdownOpen] = React.useState(false);
 
-  const region = cluster?.subscription?.xcm_id;
+  const region = cluster?.subscription?.rh_region_id;
 
   const {
     clusterIdentityProviders: identityProvidersData,

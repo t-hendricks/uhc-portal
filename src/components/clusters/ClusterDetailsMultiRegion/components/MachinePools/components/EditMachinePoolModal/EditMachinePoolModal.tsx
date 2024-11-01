@@ -292,7 +292,7 @@ export const ConnectedEditMachinePoolModal = ({
   const hypershiftCluster = isHypershiftCluster(cluster);
   const clusterID = cluster?.id;
   const clusterVersionID = cluster?.version?.id;
-  const region = cluster?.subscription?.xcm_id;
+  const region = cluster?.subscription?.rh_region_id;
 
   const {
     data: machineTypes,

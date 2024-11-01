@@ -34,7 +34,7 @@ const HibernateClusterModal = ({ onClose }: HibernateClusterModalProps) => {
   const modalData: any = useGlobalState((state) => state.modal.data);
 
   const clusterID = modalData.clusterID || '';
-  const region = modalData.xcm_id;
+  const region = modalData.rh_region_id;
   const clusterName = modalData.clusterName || '';
   const subscriptionID = modalData.subscriptionID || '';
   const shouldDisplayClusterName = !!modalData.shouldDisplayClusterName;
