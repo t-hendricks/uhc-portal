@@ -1,33 +1,28 @@
-import React, { useEffect } from 'react';
-import { useDispatch } from 'react-redux';
+import React from 'react';
 import { useParams } from 'react-router-dom';
 
 import { Navigate } from '~/common/routing';
 import LoadingPage from '~/components/App/LoadingPage';
 import NotFoundError from '~/components/App/NotFoundError';
-import { getAccessRequest } from '~/redux/actions/accessRequestActions';
-import { useGlobalState } from '~/redux/hooks';
+import { useFetchAccessRequest } from '~/queries/ClusterDetailsQueries/AccessRequestTab/useFetchAccessRequest';
 
 const AccessRequestNavigate = () => {
   const { id: accessRequestId } = useParams<{ id: string }>();
-  const dispatch = useDispatch();
 
-  const accessRequestState = useGlobalState((state) => state.accessRequest.accessRequest);
+  const {
+    data: accessRequest,
+    isLoading: isAccessRequestLoading,
+    isError: isAccessRequestError,
+  } = useFetchAccessRequest(accessRequestId!!);
 
-  useEffect(() => {
-    if (!accessRequestState.subscription_id && accessRequestId) {
-      dispatch(getAccessRequest(accessRequestId));
-    }
-  }, [dispatch, accessRequestId, accessRequestState.subscription_id]);
-
-  if (accessRequestState.error) {
+  if (isAccessRequestError) {
     return <NotFoundError />;
   }
 
-  return !accessRequestState.subscription_id ? (
+  return isAccessRequestLoading || !accessRequest?.subscription_id ? (
     <LoadingPage />
   ) : (
-    <Navigate replace to={`/details/s/${accessRequestState.subscription_id}#accessRequest`} />
+    <Navigate replace to={`/details/s/${accessRequest.subscription_id}#accessRequest`} />
   );
 };
 
