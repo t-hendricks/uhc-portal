@@ -155,7 +155,7 @@ function OCMRolesSection({
   useEffect(() => {
     if (isOcmRolesLoading) {
       setErrorBox(null);
-    } else if (isFetchOcmRolesSuccess) {
+    } else if (!isOcmRolesLoading && !isOcmRolesError) {
       // update the rows
       setPageLoading(false);
       const items = ocmRoles?.items ?? [];

@@ -19,7 +19,7 @@ export const useFetchOCMRoles = (
       const response = await accountsService.getSubscriptionRoleBindings(subID);
       return response;
     },
-    enabled: !!subID && canViewOCMRoles && canEditOCMRoles,
+    enabled: !!subID && (canViewOCMRoles || canEditOCMRoles),
   });
 
   if (isError) {
