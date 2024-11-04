@@ -114,7 +114,7 @@ const HibernateClusterModal = ({ onClose }: HibernateClusterModalProps) => {
 
   const onPrimaryClick = () => {
     if (isHibernateEnabled) {
-      hibernateCluster(clusterID, region);
+      hibernateCluster({ clusterID, region });
     } else {
       cancelHibernateCluster();
     }
