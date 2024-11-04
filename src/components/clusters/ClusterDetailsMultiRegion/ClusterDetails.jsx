@@ -456,7 +456,7 @@ const ClusterDetails = (props) => {
     : cluster.managed &&
       // The (managed) cluster has not yet reported its cluster ID to AMS
       // eslint-disable-next-line camelcase
-      cluster.subscription?.external_cluster_id === undefined;
+      cluster.external_id === undefined;
   const displaySupportTab = !hideSupportTab && !isOSDTrial;
   const displayUpgradeSettingsTab =
     cluster.managed && !isAROCluster && cluster.canEdit && !isArchived;
