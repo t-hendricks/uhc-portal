@@ -307,6 +307,11 @@ export const createClusterRequest = ({ isWizard = true, cloudProviderID, product
           kms_key_service_account: formData.kms_service_account,
         };
       }
+      if (formData.private_service_connect && formData.psc_subnet && isInstallExistingVPC) {
+        clusterRequest.gcp.private_service_connect = {
+          service_attachment_subnet: formData.psc_subnet,
+        };
+      }
     }
 
     // For ROSA, GCP and AWS OSD with byoc

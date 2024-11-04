@@ -23,6 +23,8 @@ export enum FieldId {
   ClusterVersion = 'cluster_version',
   ComputeSubnet = 'compute_subnet',
   ConfigureProxy = 'configure_proxy',
+  PrivateServiceConnect = 'private_service_connect',
+  PSCSubnet = 'psc_subnet',
   ControlPlaneSubnet = 'control_plane_subnet',
   CustomerManagedKey = 'customer_managed_key',
   CustomOperatorRolesPrefix = 'custom_operator_roles_prefix',

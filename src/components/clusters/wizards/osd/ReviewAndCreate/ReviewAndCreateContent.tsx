@@ -25,7 +25,9 @@ import { FieldId, StepId } from '~/components/clusters/wizards/osd/constants';
 import config from '~/config';
 import useCanClusterAutoscale from '~/hooks/useCanClusterAutoscale';
 import { useFeatureGate } from '~/hooks/useFeatureGate';
-import { OSD_GCP_WIF } from '~/redux/constants/featureConstants';
+import { OCMUI_PRIVATE_SERVICE_CONNECT, OSD_GCP_WIF } from '~/redux/constants/featureConstants';
+
+import { ClusterPrivacyType } from '../Networking/constants';
 
 interface ReviewAndCreateContentProps {
   isPending: boolean;
@@ -54,6 +56,7 @@ export const ReviewAndCreateContent = ({ isPending }: ReviewAndCreateContentProp
   const canAutoScale = useCanClusterAutoscale(product, billingModel);
   const autoscalingEnabled = canAutoScale && !!formValues[FieldId.AutoscalingEnabled];
   const isWifEnabled = useFeatureGate(OSD_GCP_WIF);
+  const hasPSCFeatureGate = useFeatureGate(OCMUI_PRIVATE_SERVICE_CONNECT);
 
   const isByoc = byoc === 'true';
   const isAWS = cloudProvider === CloudProviderType.Aws;
@@ -61,7 +64,8 @@ export const ReviewAndCreateContent = ({ isPending }: ReviewAndCreateContentProp
 
   const hasSecurityGroups = isByoc && hasSelectedSecurityGroups(securityGroups);
   const hasGcpAuthType = isWifEnabled && isGCP && isByoc;
-
+  const isGCPPrivateClusterInstalltoVPC =
+    clusterPrivacy === ClusterPrivacyType.Internal && installToVpc && isGCP;
   const clusterSettingsFields = [
     FieldId.CloudProvider,
     ...(hasGcpAuthType ? [FieldId.GcpAuthType] : []),
@@ -76,6 +80,7 @@ export const ReviewAndCreateContent = ({ isPending }: ReviewAndCreateContentProp
     ...(isByoc && isAWS ? [FieldId.DisableScpChecks] : []),
     FieldId.EtcdEncryption,
     FieldId.FipsCryptography,
+    ...(isGCPPrivateClusterInstalltoVPC ? [FieldId.PrivateServiceConnect] : []),
   ];
 
   if (isPending) {
@@ -145,6 +150,9 @@ export const ReviewAndCreateContent = ({ isPending }: ReviewAndCreateContentProp
         {isByoc && clusterPrivacy === 'internal' && installToVpc && (
           <ReviewItem name={FieldId.UsePrivateLink} formValues={formValues} />
         )}
+        {isGCPPrivateClusterInstalltoVPC && hasPSCFeatureGate && (
+          <ReviewItem name={FieldId.PrivateServiceConnect} formValues={formValues} />
+        )}
         {isByoc && isGCP && installToSharedVpc && (
           <ReviewItem name={FieldId.SharedHostProjectID} formValues={formValues} />
         )}
@@ -163,6 +171,7 @@ export const ReviewAndCreateContent = ({ isPending }: ReviewAndCreateContentProp
             <ReviewItem name={FieldId.AdditionalTrustBundle} formValues={formValues} />
           </>
         )}
+
         <ReviewItem name={FieldId.NetworkMachineCidr} formValues={formValues} />
         <ReviewItem name={FieldId.NetworkServiceCidr} formValues={formValues} />
         <ReviewItem name={FieldId.NetworkPodCidr} formValues={formValues} />

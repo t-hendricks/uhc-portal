@@ -8,6 +8,7 @@ import { humanizeValueWithUnitGiB } from '~/common/units';
 import { routeSelectorsAsString } from '~/components/clusters/ClusterDetails/components/Networking/NetworkingSelector';
 import parseUpdateSchedule from '~/components/clusters/common/Upgrades/parseUpdateSchedule';
 import { IMDSType } from '~/components/clusters/wizards/common';
+import { ClusterPrivacyType } from '~/components/clusters/wizards/osd//Networking/constants';
 import { GCPAuthType } from '~/components/clusters/wizards/osd/ClusterSettings/CloudProvider/types';
 import { FieldId } from '~/components/clusters/wizards/osd/constants';
 
@@ -373,27 +374,46 @@ const reviewValues = {
   },
   gpc_vpc: {
     title: 'VPC subnet settings',
-    valueTransform: (value, allValues) => (
-      <Grid>
-        <GridItem md={3}>
-          <strong>Existing VPC name</strong>
-        </GridItem>
-        <GridItem md={3}>
-          <strong>Control plane subnet name</strong>
-        </GridItem>
-        <GridItem md={3}>
-          <strong>Compute subnet name</strong>
-        </GridItem>
-        <GridItem md={3} />
-        <GridItem md={3}>{allValues.vpc_name}</GridItem>
-        <GridItem md={3}>{allValues.control_plane_subnet}</GridItem>
-        <GridItem md={3}>{allValues.compute_subnet}</GridItem>
-        <GridItem md={3} />
-      </Grid>
-    ),
+    valueTransform: (value, allValues) => {
+      const isPscCluster =
+        allValues.cluster_privacy === ClusterPrivacyType.Internal &&
+        allValues.install_to_vpc &&
+        allValues.private_service_connect;
+      return (
+        <Grid>
+          <GridItem md={3}>
+            <strong>Existing VPC name</strong>
+          </GridItem>
+          <GridItem md={3}>
+            <strong>Control plane subnet name</strong>
+          </GridItem>
+          <GridItem md={3}>
+            <strong>Compute subnet name</strong>
+          </GridItem>
+          {isPscCluster && (
+            <GridItem md={3}>
+              <strong>Private service connect subnet name</strong>
+            </GridItem>
+          )}
+          <GridItem md={3}>{allValues.vpc_name}</GridItem>
+          <GridItem md={3}>{allValues.control_plane_subnet}</GridItem>
+          <GridItem md={3}>{allValues.compute_subnet}</GridItem>
+          {isPscCluster && <GridItem md={3}>{allValues.psc_subnet}</GridItem>}
+          <GridItem md={3} />
+        </Grid>
+      );
+    },
   },
   configure_proxy: {
     title: 'Cluster-wide proxy',
+    isBoolean: true,
+    values: {
+      true: 'Enabled',
+      false: 'Disabled',
+    },
+  },
+  private_service_connect: {
+    title: 'Private service connect',
     isBoolean: true,
     values: {
       true: 'Enabled',
