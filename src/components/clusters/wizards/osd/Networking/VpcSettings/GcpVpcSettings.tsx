@@ -21,6 +21,7 @@ export const GcpVpcSettings = () => {
     values: {
       [FieldId.ClusterVersion]: clusterVersion,
       [FieldId.InstallToSharedVpc]: installToSharedVpc,
+      [FieldId.PrivateServiceConnect]: privateServiceConnect,
     },
     getFieldProps,
     getFieldMeta,
@@ -201,6 +202,31 @@ export const GcpVpcSettings = () => {
           />
         )}
       </GridItem>
+      {privateServiceConnect ? (
+        <GridItem md={3}>
+          {installToSharedVpc ? (
+            <TextInputField
+              name={FieldId.PSCSubnet}
+              label="Private service connect subnet name"
+              validate={validateGCPSubnet}
+            />
+          ) : (
+            <Field
+              component={GcpVpcSubnetSelectField}
+              name={FieldId.PSCSubnet}
+              validate={required}
+              label="Private service connect subnet name"
+              placeholder="Select subnet name"
+              emptyPlaceholder="No subnet names"
+              input={{
+                ...getFieldProps(FieldId.PSCSubnet),
+                onChange: (value: string) => setFieldValue(FieldId.PSCSubnet, value),
+              }}
+              meta={getFieldMeta(FieldId.PSCSubnet)}
+            />
+          )}
+        </GridItem>
+      ) : null}
 
       {installToSharedVpc && (
         <GridItem span={9}>
