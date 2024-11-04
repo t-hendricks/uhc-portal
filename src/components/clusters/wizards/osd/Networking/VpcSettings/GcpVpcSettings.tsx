@@ -80,6 +80,7 @@ export const GcpVpcSettings = () => {
     return null;
   }, [clusterVersion?.raw_id, goToStepById, installToSharedVpc]);
 
+  const showPSCSubnet = privateServiceConnect && clusterPrivacy === ClusterPrivacyType.Internal;
   return (
     <>
       <GridItem span={8}>
@@ -204,12 +205,12 @@ export const GcpVpcSettings = () => {
           />
         )}
       </GridItem>
-      {privateServiceConnect && clusterPrivacy === ClusterPrivacyType.Internal ? (
+      {showPSCSubnet ? (
         <GridItem md={3}>
           {installToSharedVpc ? (
             <TextInputField
               name={FieldId.PSCSubnet}
-              label="Private service connect subnet name"
+              label="Private Service Connect subnet name"
               validate={validateGCPSubnet}
             />
           ) : (
@@ -217,7 +218,7 @@ export const GcpVpcSettings = () => {
               component={GcpVpcSubnetSelectField}
               name={FieldId.PSCSubnet}
               validate={required}
-              label="Private service connect subnet name"
+              label="Private Service Connect subnet name"
               placeholder="Select subnet name"
               emptyPlaceholder="No subnet names"
               input={{
@@ -236,7 +237,7 @@ export const GcpVpcSettings = () => {
             <Alert
               variant="info"
               isInline
-              title="For successful installation, be sure your Host project ID, Existing VPC name, Control plane subnet name, and Compute subnet name are correct."
+              title={`For successful installation, be sure your Host project ID, Existing VPC name, Control plane subnet name, ${showPSCSubnet ? 'Compute subnet name, and Private Service subnet' : 'and Compute subnet name'} are correct.`}
             />
           </div>
         </GridItem>

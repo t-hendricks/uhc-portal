@@ -392,7 +392,7 @@ const reviewValues = {
           </GridItem>
           {isPscCluster ? (
             <GridItem md={3}>
-              <strong>Private service connect subnet name</strong>
+              <strong>Private Service Connect subnet name</strong>
             </GridItem>
           ) : (
             <GridItem md={3} />
