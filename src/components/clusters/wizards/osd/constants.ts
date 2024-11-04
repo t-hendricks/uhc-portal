@@ -122,6 +122,8 @@ export const initialValues: FormikValues = {
   [FieldId.HasDomainPrefix]: false,
   [FieldId.GcpAuthType]: GCPAuthType.ServiceAccounts,
   [FieldId.GcpWifConfig]: '',
+  [FieldId.PrivateServiceConnect]: false,
+  [FieldId.PSCSubnet]: '',
 };
 
 export const initialTouched = {

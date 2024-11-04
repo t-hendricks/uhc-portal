@@ -267,6 +267,10 @@ const trackEvents: { [key: string]: TrackEvent } = {
     event: eventNames.CHECKBOX_CLICKED,
     link_name: 'configure-cluster-wide-proxy',
   },
+  PrivateServiceConnect: {
+    event: eventNames.CHECKBOX_CLICKED,
+    link_name: 'private-service-connect',
+  },
   RosaCreationMode: {
     event: eventNames.RADIOBUTTON_CLICKED,
     link_name: 'rosa-creation-mode',
