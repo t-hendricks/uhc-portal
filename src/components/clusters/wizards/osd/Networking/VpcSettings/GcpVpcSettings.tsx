@@ -12,6 +12,7 @@ import ExternalLink from '~/components/common/ExternalLink';
 import PopoverHint from '~/components/common/PopoverHint';
 
 import { CheckboxField, TextInputField } from '../../../form';
+import { ClusterPrivacyType } from '../constants';
 
 import { GcpVpcNameSelectField } from './GcpVpcNameSelectField';
 import { GcpVpcSubnetSelectField } from './GcpVpcSubnetSelectField';
@@ -22,6 +23,7 @@ export const GcpVpcSettings = () => {
       [FieldId.ClusterVersion]: clusterVersion,
       [FieldId.InstallToSharedVpc]: installToSharedVpc,
       [FieldId.PrivateServiceConnect]: privateServiceConnect,
+      [FieldId.ClusterPrivacy]: clusterPrivacy,
     },
     getFieldProps,
     getFieldMeta,
@@ -202,7 +204,7 @@ export const GcpVpcSettings = () => {
           />
         )}
       </GridItem>
-      {privateServiceConnect ? (
+      {privateServiceConnect && clusterPrivacy === ClusterPrivacyType.Internal ? (
         <GridItem md={3}>
           {installToSharedVpc ? (
             <TextInputField

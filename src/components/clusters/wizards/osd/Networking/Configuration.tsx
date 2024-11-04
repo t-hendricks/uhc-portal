@@ -153,7 +153,7 @@ export const Configuration = () => {
     setFieldValue(FieldId.InstallToVpc, checked);
     clearSecurityGroups();
     trackCheckedState(trackEvents.InstallIntoVPC, checked);
-    if (showPrivateServiceConnect && checked) {
+    if (showPrivateServiceConnect && checked && isPrivateCluster) {
       setFieldValue(FieldId.PrivateServiceConnect, checked);
     }
   };
