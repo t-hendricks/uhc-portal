@@ -112,3 +112,6 @@ export const canSelectImds = (clusterVersionRawId: string): boolean => {
 
 export const canConfigureDayOneManagedIngress = (clusterVersionRawId: string): boolean =>
   isMajorMinorEqualOrGreater(clusterVersionRawId, 4, 14);
+
+export const canConfigureDayOnePrivateServiceConnect = (clusterVersionRawId: string): boolean =>
+  isMajorMinorEqualOrGreater(clusterVersionRawId, 4, 17);

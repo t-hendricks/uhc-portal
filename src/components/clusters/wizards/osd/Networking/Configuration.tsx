@@ -11,6 +11,7 @@ import { isExactMajorMinor } from '~/common/versionHelpers';
 import { constants } from '~/components/clusters/common/CreateOSDFormConstants';
 import {
   canConfigureDayOneManagedIngress,
+  canConfigureDayOnePrivateServiceConnect,
   CloudProviderType,
 } from '~/components/clusters/wizards/common/constants';
 import {
@@ -60,6 +61,7 @@ export const Configuration = () => {
     isByoc &&
     isGCP &&
     [normalizedProducts.OSD, normalizedProducts.OSDTRIAL].includes(product) &&
+    canConfigureDayOnePrivateServiceConnect(clusterVersion.raw_id) &&
     hasPSCFeatureGate;
   const isWifAuth = authTypeFormValue === GCPAuthType.WorkloadIdentityFederation;
   const PSCPrivateWifWarning =
@@ -75,11 +77,11 @@ export const Configuration = () => {
   const isOcp413 = isExactMajorMinor(clusterVersion.raw_id, 4, 13);
 
   React.useEffect(() => {
-    if (isWifAuth && isGCP && isPrivateCluster) {
+    if (isWifAuth && showPrivateServiceConnect && isPrivateCluster) {
       setFieldValue(FieldId.InstallToVpc, true);
       setFieldValue(FieldId.PrivateServiceConnect, true);
     }
-  }, [isWifAuth, isGCP, isPrivateCluster, installToVpc, setFieldValue]);
+  }, [isWifAuth, showPrivateServiceConnect, isPrivateCluster, installToVpc, setFieldValue]);
 
   const trackCheckedState = (trackEvent: TrackEvent, checked: boolean) =>
     track(trackEvent, {
@@ -115,7 +117,7 @@ export const Configuration = () => {
       }
       trackCheckedState(trackEvents.PrivateServiceConnect, false);
       setFieldValue(FieldId.PrivateServiceConnect, false);
-    } else if (hasPSCFeatureGate && isGCP) {
+    } else if (showPrivateServiceConnect) {
       trackCheckedState(trackEvents.PrivateServiceConnect, true);
       setFieldValue(FieldId.PrivateServiceConnect, true);
       setFieldValue(FieldId.InstallToVpc, true);
