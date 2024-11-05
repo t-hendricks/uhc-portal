@@ -396,22 +396,19 @@ class CreateRosaCluster extends Page {
   }
 
   selectAWSInfrastructureAccount(accountID) {
-    cy.get('button[aria-describedby="aws-infra-accounts"]').first().click();
+    cy.get('button[id="associated_aws_id"]').click();
     cy.get('input[placeholder*="Filter by account ID"]', { timeout: 50000 })
       .clear()
       .type(accountID);
-    cy.get('div[label="Associated AWS infrastructure account"]')
-      .find('button')
-      .contains(accountID)
-      .click();
+    cy.get('li').contains(accountID).click();
   }
 
   selectAWSBillingAccount(accountID) {
-    cy.get('button[aria-describedby="aws-infra-accounts"]').last().click();
+    cy.get('button[id="billing_account_id"]').click();
     cy.get('input[placeholder*="Filter by account ID"]', { timeout: 50000 })
       .clear()
       .type(accountID);
-    cy.get('div[label="AWS billing account"]').find('button').contains(accountID).click();
+    cy.get('li').contains(accountID).click();
   }
 
   waitForARNList() {
