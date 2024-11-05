@@ -147,13 +147,17 @@ export const Configuration = () => {
   ) => {
     trackCheckedState(trackEvents.PrivateServiceConnect, checked);
     setFieldValue(FieldId.PrivateServiceConnect, checked);
+    if (checked && !installToVpc) {
+      setFieldValue(FieldId.InstallToVpc, true);
+      trackCheckedState(trackEvents.InstallIntoVPC, checked);
+    }
   };
 
   const onInstallIntoVPCchange = (_event: React.FormEvent<HTMLInputElement>, checked: boolean) => {
     setFieldValue(FieldId.InstallToVpc, checked);
     clearSecurityGroups();
     trackCheckedState(trackEvents.InstallIntoVPC, checked);
-    if (showPrivateServiceConnect && checked) {
+    if (showPrivateServiceConnect && isPrivateCluster) {
       setFieldValue(FieldId.PrivateServiceConnect, checked);
     }
   };
@@ -273,7 +277,7 @@ export const Configuration = () => {
                     <div className="pf-v5-u-mt-md">
                       <CheckboxField
                         name={FieldId.PrivateServiceConnect}
-                        label="Use private service connect"
+                        label="Use Private Service Connect"
                         input={{
                           onChange: onPrivateServiceConnectChange,
                           description: constants.privateServiceConnectHint,

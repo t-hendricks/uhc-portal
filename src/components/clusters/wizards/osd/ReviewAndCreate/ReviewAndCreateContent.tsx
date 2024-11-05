@@ -147,7 +147,7 @@ export const ReviewAndCreateContent = ({ isPending }: ReviewAndCreateContentProp
       >
         <ReviewItem name={FieldId.ClusterPrivacy} formValues={formValues} />
         {isByoc && <ReviewItem name={FieldId.InstallToVpc} formValues={formValues} />}
-        {isByoc && clusterPrivacy === 'internal' && installToVpc && (
+        {isByoc && clusterPrivacy === ClusterPrivacyType.Internal && installToVpc && isAWS && (
           <ReviewItem name={FieldId.UsePrivateLink} formValues={formValues} />
         )}
         {isGCPPrivateClusterInstalltoVPC && hasPSCFeatureGate && (

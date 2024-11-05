@@ -390,16 +390,17 @@ const reviewValues = {
           <GridItem md={3}>
             <strong>Compute subnet name</strong>
           </GridItem>
-          {isPscCluster && (
+          {isPscCluster ? (
             <GridItem md={3}>
-              <strong>Private service connect subnet name</strong>
+              <strong>Private Service Connect subnet name</strong>
             </GridItem>
+          ) : (
+            <GridItem md={3} />
           )}
           <GridItem md={3}>{allValues.vpc_name}</GridItem>
           <GridItem md={3}>{allValues.control_plane_subnet}</GridItem>
           <GridItem md={3}>{allValues.compute_subnet}</GridItem>
-          {isPscCluster && <GridItem md={3}>{allValues.psc_subnet}</GridItem>}
-          <GridItem md={3} />
+          {isPscCluster ? <GridItem md={3}>{allValues.psc_subnet}</GridItem> : <GridItem md={3} />}
         </Grid>
       );
     },
