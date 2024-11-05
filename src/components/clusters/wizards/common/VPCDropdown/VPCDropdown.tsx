@@ -76,8 +76,8 @@ const VPCDropdown = ({
     [vpcResponse.data?.items],
   );
 
-  const onToggle = () => {
-    setIsOpen(!isOpen);
+  const onToggle: FuzzySelectProps['onOpenChange'] = (openStatus) => {
+    setIsOpen(openStatus);
   };
 
   const onSelect: FuzzySelectProps['onSelect'] = (_event, selectedVPCID) => {
