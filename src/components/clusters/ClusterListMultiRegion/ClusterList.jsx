@@ -166,11 +166,10 @@ const ClusterList = ({
 
   /* Set total clusters in Redux */
   React.useEffect(() => {
-    if (!isLoading || data?.itemsCount > 0) {
+    if (!isLoading && data?.itemsCount !== undefined && data.itemsCount !== clustersTotal) {
       dispatch(onSetTotalClusters(data?.itemsCount, viewType));
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [data?.itemsCount]);
+  }, [clustersTotal, data?.itemsCount, dispatch, isLoading, viewType]);
 
   /* Format error details */
   const errorDetails = (errors || []).reduce((errorArray, error) => {
