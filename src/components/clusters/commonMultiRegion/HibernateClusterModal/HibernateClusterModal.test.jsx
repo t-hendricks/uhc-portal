@@ -71,7 +71,7 @@ describe('<HibernateClusterModal />', () => {
     mockedUseHibernateCluster.mockReturnValue({
       ...useHibernateClusterReturnData,
       isError: true,
-      error: { response: { data: { reason: 'I am an error', operation_id: 'error_id' } } },
+      error: { errorMessage: 'I am an error', operationID: 'error_id' },
     });
     withState(defaultReduxState).render(<HibernateClusterModal {...defaultProps} />);
     expect(screen.getByTestId('alert-error')).toBeInTheDocument();

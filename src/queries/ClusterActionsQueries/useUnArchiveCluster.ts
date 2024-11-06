@@ -7,17 +7,12 @@ import { getClusterServiceForRegion } from '~/services/clusterService';
 
 import { formatErrorData } from '../helpers';
 
-export const buildArchiveNotifications = (name: string, archived: boolean) => ({
-  variant: 'success',
-  title: `Cluster ${name} has been ${archived ? 'archived' : 'unarchived'}`,
-  dismissDelay: 8000,
-  dismissable: false,
-});
+import { buildArchiveNotifications } from './useArchiveCluster';
 
-export const useArchiveCluster = () => {
+export const useUnArchiveCluster = () => {
   const dispatch = useDispatch();
   const { isSuccess, error, isError, isPending, mutate, reset } = useMutation({
-    mutationKey: ['clusterService', 'archiveCluster'],
+    mutationKey: ['clusterService', 'unarchiveCluster'],
     mutationFn: ({
       subscriptionID,
       displayName,
@@ -27,14 +22,14 @@ export const useArchiveCluster = () => {
       displayName: string;
       region?: string;
     }) => {
-      // archiveCluster is actually a call to accounts management
+      // unarchiveCluster is actually a call to accounts management
       // so region isn't required
 
       const clusterService = getClusterServiceForRegion(region);
 
-      return clusterService.archiveCluster(subscriptionID).then((response) => {
+      return clusterService.unarchiveCluster(subscriptionID).then((response) => {
         // @ts-ignore
-        dispatch(addNotification(buildArchiveNotifications(displayName, true)));
+        dispatch(addNotification(buildArchiveNotifications(displayName, false)));
         return response;
       });
     },

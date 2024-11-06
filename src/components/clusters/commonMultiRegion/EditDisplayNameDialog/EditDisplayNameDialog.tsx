@@ -58,17 +58,6 @@ const EditDisplayNameDialog = ({ onClose }: EditDisplayNameDialogProps) => {
     closeNameModal();
   };
 
-  const formatError = (errorData: { reason: string; code: string; operation_id: string }) => ({
-    errorMessage: errorData?.reason,
-    errorCode: errorData?.code,
-    operationID: errorData?.operation_id,
-  });
-
-  const hasError = isError && (
-    // @ts-ignore
-    <ErrorBox message="Error changing display name" response={formatError(error?.response?.data)} />
-  );
-
   const validationMessage = checkClusterDisplayName(currentDisplayName);
   const handleSubmit = () => {
     if (!validationMessage) {
@@ -90,7 +79,8 @@ const EditDisplayNameDialog = ({ onClose }: EditDisplayNameDialogProps) => {
       isPending={isPending}
     >
       <>
-        {hasError}
+        {isError ? <ErrorBox message="Error changing display name" response={error || {}} /> : null}
+
         <Form
           onSubmit={(e) => {
             handleSubmit();

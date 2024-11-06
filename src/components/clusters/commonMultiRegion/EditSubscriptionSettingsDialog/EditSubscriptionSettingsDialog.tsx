@@ -23,12 +23,6 @@ type EditSubscriptionSettingsDialogProps = {
   onClose: () => void;
 };
 
-const formatError = (errorData: { reason: string; code: string; operation_id: string }) => ({
-  errorMessage: errorData?.reason,
-  errorCode: errorData?.code,
-  operationID: errorData?.operation_id,
-});
-
 const EditSubscriptionSettingsDialog = ({ onClose }: EditSubscriptionSettingsDialogProps) => {
   const dispatch = useDispatch();
 
@@ -91,11 +85,7 @@ const EditSubscriptionSettingsDialog = ({ onClose }: EditSubscriptionSettingsDia
       isPending={isPending}
     >
       {isError ? (
-        <ErrorBox
-          message="Error updating subscription settings"
-          // @ts-ignore
-          response={formatError(error?.response?.data)}
-        />
+        <ErrorBox message="Error updating subscription settings" response={error || {}} />
       ) : null}
       <Form
         onSubmit={(e) => {

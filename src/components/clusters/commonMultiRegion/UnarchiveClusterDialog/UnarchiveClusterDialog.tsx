@@ -3,7 +3,7 @@ import { useDispatch } from 'react-redux';
 
 import { Form } from '@patternfly/react-core';
 
-import { useArchiveCluster } from '~/queries/ClusterActionsQueries/useArchiveCluster';
+import { useUnArchiveCluster } from '~/queries/ClusterActionsQueries/useUnArchiveCluster';
 import { useGlobalState } from '~/redux/hooks';
 
 import ErrorBox from '../../../common/ErrorBox';
@@ -11,7 +11,7 @@ import Modal from '../../../common/Modal/Modal';
 import { closeModal } from '../../../common/Modal/ModalActions';
 import modals from '../../../common/Modal/modals';
 
-const ArchiveClusterDialog = ({ onClose }: { onClose: () => void }) => {
+const UnarchiveClusterDialog = ({ onClose }: { onClose: () => void }) => {
   const modalData = useGlobalState((state) => state.modal.data) as {
     subscriptionID: string;
     name: string;
@@ -22,7 +22,7 @@ const ArchiveClusterDialog = ({ onClose }: { onClose: () => void }) => {
   const shouldDisplayClusterName = !!modalData?.shouldDisplayClusterName;
 
   const dispatch = useDispatch();
-  const closeArchiveModal = () => {
+  const closeUnArchiveModal = () => {
     dispatch(closeModal());
   };
 
@@ -33,53 +33,44 @@ const ArchiveClusterDialog = ({ onClose }: { onClose: () => void }) => {
     isPending,
     mutate,
     reset: resetResponse,
-  } = useArchiveCluster();
+  } = useUnArchiveCluster();
 
   if (isSuccess) {
     resetResponse();
     onClose();
-    closeArchiveModal();
+    closeUnArchiveModal();
   }
 
   const cancelEdit = () => {
     resetResponse();
-    closeArchiveModal();
+    closeUnArchiveModal();
   };
 
   const submit = () => mutate({ subscriptionID, displayName });
 
   return (
     <Modal
-      title="Archive cluster"
+      title="Unarchive cluster"
       secondaryTitle={shouldDisplayClusterName ? displayName : undefined}
-      data-testid="archive-cluster-dialog"
+      data-testid="unarchive-cluster-dialog"
       onClose={cancelEdit}
-      primaryText="Archive cluster"
-      onPrimaryClick={() => {
-        submit();
-      }}
+      primaryText="Unarchive cluster"
+      onPrimaryClick={() => submit()}
       isPending={isPending}
       onSecondaryClick={cancelEdit}
     >
       <>
-        {isError ? <ErrorBox message="Error archiving cluster" response={error || {}} /> : null}
-
+        {isError ? (
+          <ErrorBox
+            message="Error un-archiving cluster"
+            // @ts-ignore
+            response={error || {}}
+          />
+        ) : null}
         <Form onSubmit={() => submit()}>
           <p>
-            Archiving a cluster will remove it from the cluster list and remove the cluster from
-            subscription management.
-          </p>
-          <p>
-            This action will not delete the cluster, only remove it from OpenShift Cluster
-            Manager.&nbsp;
-            <a
-              href="https://access.redhat.com/articles/4397891"
-              target="_blank"
-              rel="noreferrer noopener"
-            >
-              Instructions
-            </a>
-            &nbsp;for deleting a cluster may be found in the knowledge base.
+            Un-archiving a cluster will make it visible in the active (default) cluster list. You
+            may need to manage subscriptions if the cluster is active.
           </p>
         </Form>
       </>
@@ -87,6 +78,6 @@ const ArchiveClusterDialog = ({ onClose }: { onClose: () => void }) => {
   );
 };
 
-ArchiveClusterDialog.modalName = modals.ARCHIVE_CLUSTER;
+UnarchiveClusterDialog.modalName = modals.UNARCHIVE_CLUSTER;
 
-export default ArchiveClusterDialog;
+export default UnarchiveClusterDialog;

@@ -22,12 +22,6 @@ import HibernateClusterUpgradeScheduled from './HibernateClusterUpgradeScheduled
 
 type HibernateClusterModalProps = { onClose: () => void };
 
-const formatError = (errorData: { reason: string; code: string; operation_id: string }) => ({
-  errorMessage: errorData?.reason,
-  errorCode: errorData?.code,
-  operationID: errorData?.operation_id,
-});
-
 const HibernateClusterModal = ({ onClose }: HibernateClusterModalProps) => {
   const dispatch = useDispatch();
 
@@ -68,11 +62,7 @@ const HibernateClusterModal = ({ onClose }: HibernateClusterModalProps) => {
   }, [closeHibernateModal, hibernateClusterSuccess, onClose, resetResponse]);
 
   const errorMessage = hibernateClusterIsError ? (
-    <ErrorBox
-      message="Error hibernating cluster"
-      // @ts-ignore
-      response={formatError(hibernateClusterError?.response?.data)}
-    />
+    <ErrorBox message="Error hibernating cluster" response={hibernateClusterError || {}} />
   ) : null;
 
   const { data: clusterUpgrades, isLoading: clusterUpgradesLoading } = useGetSchedules(
