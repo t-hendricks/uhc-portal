@@ -1,10 +1,10 @@
 import React from 'react';
 import * as reactRedux from 'react-redux';
 
-import * as useArchiveCluster from '~/queries/ClusterActionsQueries/useArchiveCluster';
+import * as useUnArchiveCluster from '~/queries/ClusterActionsQueries/useUnArchiveCluster';
 import { checkAccessibility, screen, withState } from '~/testUtils';
 
-import ArchiveClusterDialog from './ArchiveClusterDialog';
+import UnarchiveClusterDialog from './UnarchiveClusterDialog';
 
 jest.mock('react-redux', () => {
   const config = {
@@ -14,9 +14,9 @@ jest.mock('react-redux', () => {
   return config;
 });
 
-const mockedUseArchiveCluster = jest.spyOn(useArchiveCluster, 'useArchiveCluster');
+const mockedUseUnArchiveCluster = jest.spyOn(useUnArchiveCluster, 'useUnArchiveCluster');
 
-describe('<ArchiveClusterDialog />', () => {
+describe('<UnarchiveClusterDialog />', () => {
   const onClose = jest.fn();
   const reset = jest.fn();
   const mutate = jest.fn();
@@ -29,7 +29,7 @@ describe('<ArchiveClusterDialog />', () => {
     onClose,
   };
 
-  const defaultUseArchiveClusterResponse = {
+  const defaultUseUnArchiveClusterResponse = {
     isSuccess: false,
     error: null,
     isError: false,
@@ -61,20 +61,20 @@ describe('<ArchiveClusterDialog />', () => {
   });
 
   it('is accessible', async () => {
-    mockedUseArchiveCluster.mockReturnValue(defaultUseArchiveClusterResponse);
+    mockedUseUnArchiveCluster.mockReturnValue(defaultUseUnArchiveClusterResponse);
 
     const { container } = withState(defaultReduxState).render(
-      <ArchiveClusterDialog {...defaultProps} />,
+      <UnarchiveClusterDialog {...defaultProps} />,
     );
     expect(screen.getByRole('dialog')).toBeInTheDocument();
     await checkAccessibility(container);
   });
 
   it('Does not call onClose prop when cancelled (using cancel button)', async () => {
-    mockedUseArchiveCluster.mockReturnValue(defaultUseArchiveClusterResponse);
+    mockedUseUnArchiveCluster.mockReturnValue(defaultUseUnArchiveClusterResponse);
 
     const { user } = withState(defaultReduxState).render(
-      <ArchiveClusterDialog {...defaultProps} />,
+      <UnarchiveClusterDialog {...defaultProps} />,
     );
 
     checkForNoCalls();
@@ -89,10 +89,10 @@ describe('<ArchiveClusterDialog />', () => {
   });
 
   it('Does not call onClose prop when cancelled (using X button)', async () => {
-    mockedUseArchiveCluster.mockReturnValue(defaultUseArchiveClusterResponse);
+    mockedUseUnArchiveCluster.mockReturnValue(defaultUseUnArchiveClusterResponse);
 
     const { user } = withState(defaultReduxState).render(
-      <ArchiveClusterDialog {...defaultProps} />,
+      <UnarchiveClusterDialog {...defaultProps} />,
     );
 
     checkForNoCalls();
@@ -106,15 +106,15 @@ describe('<ArchiveClusterDialog />', () => {
   });
 
   it('calls mutate (which would call the API) when user clicks on primary button', async () => {
-    mockedUseArchiveCluster.mockReturnValue(defaultUseArchiveClusterResponse);
+    mockedUseUnArchiveCluster.mockReturnValue(defaultUseUnArchiveClusterResponse);
 
     const { user } = withState(defaultReduxState).render(
-      <ArchiveClusterDialog {...defaultProps} />,
+      <UnarchiveClusterDialog {...defaultProps} />,
     );
 
     checkForNoCalls();
 
-    await user.click(screen.getByRole('button', { name: 'Archive cluster' }));
+    await user.click(screen.getByRole('button', { name: 'Unarchive cluster' }));
 
     expect(mutate).toHaveBeenCalledWith({
       displayName: 'myClusterName',
@@ -123,13 +123,13 @@ describe('<ArchiveClusterDialog />', () => {
   });
 
   it('closes the modal on success', async () => {
-    const newUseArchiveClusterResponse = { ...defaultUseArchiveClusterResponse, isSuccess: true };
+    const newUseArchiveClusterResponse = { ...defaultUseUnArchiveClusterResponse, isSuccess: true };
 
-    mockedUseArchiveCluster.mockReturnValue(newUseArchiveClusterResponse);
+    mockedUseUnArchiveCluster.mockReturnValue(newUseArchiveClusterResponse);
 
     checkForNoCalls();
 
-    withState(defaultReduxState).render(<ArchiveClusterDialog {...defaultProps} />);
+    withState(defaultReduxState).render(<UnarchiveClusterDialog {...defaultProps} />);
 
     expect(mockedDispatch).toHaveBeenCalled();
     expect(mockedDispatch.mock.calls[0][0].type).toEqual('CLOSE_MODAL');
@@ -139,17 +139,17 @@ describe('<ArchiveClusterDialog />', () => {
 
   it('displays an error', async () => {
     const newUseArchiveClusterResponse = {
-      ...defaultUseArchiveClusterResponse,
+      ...defaultUseUnArchiveClusterResponse,
       isError: true,
       error: { errorMessage: 'I am an error', operationID: 'error_id' },
     };
 
     // @ts-ignore
-    mockedUseArchiveCluster.mockReturnValue(newUseArchiveClusterResponse);
+    mockedUseUnArchiveCluster.mockReturnValue(newUseArchiveClusterResponse);
 
     checkForNoCalls();
 
-    withState(defaultReduxState).render(<ArchiveClusterDialog {...defaultProps} />);
+    withState(defaultReduxState).render(<UnarchiveClusterDialog {...defaultProps} />);
 
     expect(screen.getByTestId('alert-error')).toBeInTheDocument();
     expect(screen.getByText('I am an error')).toBeInTheDocument();
@@ -157,14 +157,14 @@ describe('<ArchiveClusterDialog />', () => {
 
   it('displays spinner when pending', async () => {
     const newUseArchiveClusterResponse = {
-      ...defaultUseArchiveClusterResponse,
+      ...defaultUseUnArchiveClusterResponse,
       isPending: true,
     };
 
     // @ts-ignore
-    mockedUseArchiveCluster.mockReturnValue(newUseArchiveClusterResponse);
+    mockedUseUnArchiveCluster.mockReturnValue(newUseArchiveClusterResponse);
 
-    withState(defaultReduxState).render(<ArchiveClusterDialog {...defaultProps} />);
+    withState(defaultReduxState).render(<UnarchiveClusterDialog {...defaultProps} />);
 
     expect(screen.getByRole('status')).toBeInTheDocument();
     expect(screen.getByText('Loading...')).toBeInTheDocument();

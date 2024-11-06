@@ -104,7 +104,7 @@ describe('<LoadBalancersDropdown />', () => {
         isPending: false,
         isFetched: true,
         isError: true,
-        error: { response: { data: { reason: 'This is an error message' } } },
+        error: { errorMessage: 'This is an error message', operationID: 'error_id' },
         data: undefined,
       });
 

@@ -55,17 +55,6 @@ const EditConsoleURLDialog = ({ onClose }: EditConsoleURLDialogProps) => {
     closeURLModal();
   };
 
-  const formatError = (errorData: { reason: string; code: string; operation_id: string }) => ({
-    errorMessage: errorData?.reason,
-    errorCode: errorData?.code,
-    operationID: errorData?.operation_id,
-  });
-
-  const hasError = isError && (
-    // @ts-ignore
-    <ErrorBox message="Error changing console URL" response={formatError(error?.response?.data)} />
-  );
-
   const validationMessage = checkClusterConsoleURL(currentConsoleUrl, true);
 
   const handleSubmit = () => {
@@ -96,7 +85,7 @@ const EditConsoleURLDialog = ({ onClose }: EditConsoleURLDialogProps) => {
       isPending={isPending}
     >
       <>
-        {hasError}
+        {isError ? <ErrorBox message="Error changing console URL" response={error || {}} /> : null}
         {!consoleURL && (
           <p>
             Adding a cluster&apos;s web console URL will allow you to&nbsp; launch the web console

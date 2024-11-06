@@ -18,12 +18,6 @@ import { availableQuota } from '../../common/quotaSelectors';
 
 import { filterPersistentStorageValuesByQuota } from './PersistentStorageDropDownHelper';
 
-const formatError = (errorData: { reason: string; code: string; operation_id: string }) => ({
-  errorMessage: errorData?.reason,
-  errorCode: errorData?.code,
-  operationID: errorData?.operation_id,
-});
-
 type PersistentStorageDropdownProps = {
   input: any;
   disabled: boolean;
@@ -124,8 +118,7 @@ const PersistentStorageDropdown = ({
   return persistentStorageIsError || quotaIsError ? (
     <ErrorBox
       message="Error loading persistent storage list"
-      // @ts-ignore
-      response={formatError(persistentStorageError?.response?.data || quotaError?.response?.data)}
+      response={persistentStorageError || quotaError || {}}
     />
   ) : (
     <>

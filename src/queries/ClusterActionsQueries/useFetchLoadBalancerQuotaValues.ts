@@ -2,6 +2,7 @@ import { useQuery } from '@tanstack/react-query';
 
 import { getClusterServiceForRegion } from '~/services/clusterService';
 
+import { formatErrorData } from '../helpers';
 import { queryConstants } from '../queriesConstants';
 
 export const useFetchLoadBalancerQuotaValues = (region?: string) => {
@@ -15,5 +16,11 @@ export const useFetchLoadBalancerQuotaValues = (region?: string) => {
     },
     staleTime: queryConstants.STALE_TIME_60_SEC,
   });
-  return { isPending, isFetched, isError, error, data };
+  return {
+    isPending,
+    isFetched,
+    isError,
+    error: isError && error ? formatErrorData(isPending, isError, error)?.error : null,
+    data,
+  };
 };

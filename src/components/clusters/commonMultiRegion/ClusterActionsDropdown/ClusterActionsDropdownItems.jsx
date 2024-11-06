@@ -198,27 +198,27 @@ function actionResolver(
     };
   };
 
-  // const getUnarchiveClusterProps = () => {
-  //   const baseArchiveProps = {
-  //     ...baseProps,
-  //     title: 'Unarchive cluster',
-  //     key: getKey('unarchivecluster'),
-  //   };
-  //   const unarchiveModalData = {
-  //     subscriptionID: cluster.subscription ? cluster.subscription.id : '',
-  //     name: clusterName,
-  //   };
-  //   return {
-  //     ...baseArchiveProps,
-  //     ...disableIfTooltip(readOnlyMessage, {
-  //       onClick: () =>
-  //         openModal(modals.UNARCHIVE_CLUSTER, {
-  //           ...unarchiveModalData,
-  //           shouldDisplayClusterName: inClusterList,
-  //         }),
-  //     }),
-  //   };
-  // };
+  const getUnarchiveClusterProps = () => {
+    const baseArchiveProps = {
+      ...baseProps,
+      title: 'Unarchive cluster',
+      key: getKey('unarchivecluster'),
+    };
+    const unarchiveModalData = {
+      subscriptionID: cluster.subscription ? cluster.subscription.id : '',
+      name: clusterName,
+    };
+    return {
+      ...baseArchiveProps,
+      ...disableIfTooltip(readOnlyMessage, {
+        onClick: () =>
+          openModal(modals.UNARCHIVE_CLUSTER, {
+            ...unarchiveModalData,
+            shouldDisplayClusterName: inClusterList,
+          }),
+      }),
+    };
+  };
 
   const getEditConsoleURLProps = () => ({
     ...baseProps,
@@ -318,7 +318,7 @@ function actionResolver(
   const isArchived =
     get(cluster, 'subscription.status', false) === SubscriptionCommonFields.status.ARCHIVED;
   const showArchive = cluster.canEdit && !cluster.managed && cluster.subscription && !isArchived;
-  // const showUnarchive = cluster.canEdit && !cluster.managed && cluster.subscription && isArchived;
+  const showUnarchive = cluster.canEdit && !cluster.managed && cluster.subscription && isArchived;
   const showEditURL =
     !cluster.managed &&
     cluster.canEdit &&
@@ -351,9 +351,9 @@ function actionResolver(
     showUpgradeTrialCluster && getUpgradeTrialClusterProps(),
     // showDelete && getDeleteItemProps(),
     showArchive && getArchiveClusterProps(),
-    // showUnarchive && getUnarchiveClusterProps(),
     showEditSubscriptionSettings && getEditSubscriptionSettingsProps(),
     showTransferClusterOwnership && getTransferClusterOwnershipProps(),
+    showUnarchive && getUnarchiveClusterProps(),
   ].filter(Boolean);
 }
 
