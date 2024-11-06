@@ -237,7 +237,7 @@ export const GcpVpcSettings = () => {
             <Alert
               variant="info"
               isInline
-              title={`For successful installation, be sure your Host project ID, Existing VPC name, Control plane subnet name, ${showPSCSubnet ? 'Compute subnet name, and Private Service Connect subnet' : 'and Compute subnet name'} are correct.`}
+              title={`For successful installation, be sure your Host project ID, Existing VPC name, Control plane subnet name, ${showPSCSubnet ? 'Compute subnet name, and Private Service Connect subnet name' : 'and Compute subnet name'} are correct.`}
             />
           </div>
         </GridItem>
