@@ -80,8 +80,6 @@ const MAX_CLUSTER_DISPLAY_NAME_LENGTH = 63;
 const GCP_PROJECT_ID_REGEX = /^[a-z][-a-z0-9]{4,28}[a-z0-9]{1}$/;
 
 const GCP_SUBNET_NAME_MAXLEN = 63;
-// Maximum node count
-const MAX_NODE_COUNT = 180;
 
 const AWS_USER_OR_GROUP_ARN_REGEX = /^arn:aws([-\w]+)?:iam::\d{12}:(user|group)\/\S+/;
 const AWS_ROLE_ARN_REGEX = /^arn:aws([-\w]+)?:iam::\d{12}:role\/\S+/;
@@ -1207,36 +1205,6 @@ const hostPrefix = (value?: string): string | undefined => {
   return undefined;
 };
 
-/**
- * Function to validate number of nodes.
- *
- * @param {(string|number)} value - node count to validate.
- * @param {*} min - object ontaining int 'value' of minimum node count,
- * and a string 'validationMsg' with an error message.
- * @param {number} [max=MAX_NODE_COUNT] - maximum allowed number of nodes.
- */
-const nodes = (
-  value: string | number,
-  min: { value: number; validationMsg?: string },
-  max = MAX_NODE_COUNT,
-): string | undefined => {
-  if (value === undefined || +value < min.value) {
-    return min.validationMsg || `The minimum number of nodes is ${min.value}.`;
-  }
-  if (+value > max) {
-    return `Maximum number allowed is ${max}.`;
-  }
-
-  if (
-    (typeof value === 'string' && Number.isNaN(parseInt(value, 10))) ||
-    Math.floor(Number(value)) !== Number(value)
-  ) {
-    // Using Math.floor to check for valid int because Number.isInteger doesn't work on IE.
-    return `'${value}' is not a valid number of nodes.`;
-  }
-  return undefined;
-};
-
 const nodesMultiAz = (value: string | number): string | undefined => {
   if (Number(value) % 3 > 0) {
     return 'Number of nodes must be multiple of 3 for Multi AZ cluster.';
@@ -1290,16 +1258,6 @@ const checkDisconnectedSockets = (value?: string) => validateNumericInput(value,
 
 const checkDisconnectedMemCapacity = (value?: string) =>
   validateNumericInput(value, { allowDecimal: true, max: 256000 });
-
-const checkDisconnectedNodeCount = (value?: string): string | undefined => {
-  if (value === '') {
-    return undefined;
-  }
-  if (Number.isNaN(Number(value))) {
-    return 'Input must be a number.';
-  }
-  return nodes(Number(value), { value: 0 }, 250);
-};
 
 const validateARN = (value: string, regExp: RegExp, arnFormat: string): string | undefined => {
   if (!value) {
@@ -1858,7 +1816,6 @@ const validators = {
   privateAddress,
   awsSubnetMask,
   hostPrefix,
-  nodes,
   nodesMultiAz,
   validateNumericInput,
   validateLabelKey,
@@ -1871,7 +1828,6 @@ const validators = {
   checkDisconnectedvCPU,
   checkDisconnectedSockets,
   checkDisconnectedMemCapacity,
-  checkDisconnectedNodeCount,
   checkCustomOperatorRolesPrefix,
   checkHostDomain,
   AWS_MACHINE_CIDR_MIN,
@@ -1910,7 +1866,6 @@ export {
   checkDisconnectedvCPU,
   checkDisconnectedSockets,
   checkDisconnectedMemCapacity,
-  checkDisconnectedNodeCount,
   clusterAutoScalingValidators,
   validateARN,
   validateUserOrGroupARN,

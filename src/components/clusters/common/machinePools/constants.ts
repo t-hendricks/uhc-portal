@@ -1,6 +1,6 @@
 import { splitVersion } from '~/common/versionHelpers';
 
-export const MAX_NODES = 180;
+export const MAX_NODES = 249;
 export const MAX_NODES_HCP = 250;
 export const MAX_NODES_HCP_INSUFFICIEN_VERSION = 90;
 export const MAX_NODES_HCP_500 = 500;
