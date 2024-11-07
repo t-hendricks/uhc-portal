@@ -84,7 +84,6 @@ export const initialValuesHypershift = (isHypershift: boolean, isMultiRegionEnab
         [FieldId.NodeLabels]: [{ id: getRandomID() }],
         [FieldId.SharedVpc]: { is_allowed: false },
         [FieldId.UpgradePolicy]: 'automatic',
-        [FieldId.WorkerVolumeSizeGib]: undefined,
         [FieldId.Region]: isMultiRegionEnabled ? undefined : AWS_DEFAULT_REGION,
       }
     : {
@@ -102,7 +101,6 @@ export const initialValuesHypershift = (isHypershift: boolean, isMultiRegionEnab
           hosted_zone_role_arn: '',
         },
         [FieldId.UpgradePolicy]: 'manual',
-        [FieldId.WorkerVolumeSizeGib]: defaultWorkerNodeVolumeSizeGiB,
       };
 
 export const initialValues: (hypershiftDefault?: boolean) => FormikValues = (
@@ -146,6 +144,7 @@ export const initialValues: (hypershiftDefault?: boolean) => FormikValues = (
   [FieldId.UsePrivateLink]: false,
   [FieldId.EnableExteranlAuthentication]: false,
   [FieldId.RegionalInstance]: {},
+  [FieldId.WorkerVolumeSizeGib]: defaultWorkerNodeVolumeSizeGiB,
 
   // Optional fields based on whether Hypershift is selected or not
   ...initialValuesHypershift(hypershiftDefault),
