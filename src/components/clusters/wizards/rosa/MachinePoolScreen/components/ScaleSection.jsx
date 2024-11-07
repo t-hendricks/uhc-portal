@@ -135,16 +135,15 @@ function ScaleSection() {
   );
 
   const WorkerNodeVolumeSizeSectionComponent = useCallback(
-    () =>
-      !isHypershiftSelected ? (
-        <>
-          <GridItem md={6}>
-            <WorkerNodeVolumeSizeSection maxWorkerVolumeSizeGiB={maxWorkerVolumeSizeGiB} />
-          </GridItem>
-          <GridItem md={6} />
-        </>
-      ) : null,
-    [isHypershiftSelected, maxWorkerVolumeSizeGiB],
+    () => (
+      <>
+        <GridItem md={6}>
+          <WorkerNodeVolumeSizeSection maxWorkerVolumeSizeGiB={maxWorkerVolumeSizeGiB} />
+        </GridItem>
+        <GridItem md={6} />
+      </>
+    ),
+    [maxWorkerVolumeSizeGiB],
   );
 
   return (
