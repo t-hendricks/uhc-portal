@@ -7,6 +7,7 @@ const clusterProfiles = [
   'osd-ccs-gcp-public-multizone-serviceaccount',
   'osd-ccs-gcp-private-multizone-serviceaccount',
   'osd-ccs-gcp-public-multizone-wif',
+  'osd-ccs-gcp-private-multizone-wif',
 ];
 describe('OSD CCS GCP - delete clusters', { tags: ['day3', 'osd', 'ccs', 'gcp', 'public'] }, () => {
   it.each(clusterProfiles)('Delete the  %s cluster profile', (clusterProfile) => {

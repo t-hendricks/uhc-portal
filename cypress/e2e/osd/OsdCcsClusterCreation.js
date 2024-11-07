@@ -21,13 +21,18 @@ describe(
       let authType = clusterProperties.CloudProvider.includes('Google Cloud Platform')
         ? `-${clusterProperties.AuthenticationType} `
         : '';
+      let isPscEnabled =
+        clusterProperties.hasOwnProperty('UsePrivateServiceConnect') &&
+        clusterProperties.UsePrivateServiceConnect.includes('Enabled')
+          ? 'PrivateServiceConnect'
+          : '';
 
       it(`Launch OSD - ${clusterProperties.CloudProvider} cluster wizard`, () => {
         CreateOSDWizardPage.osdCreateClusterButton().click();
         CreateOSDWizardPage.isCreateOSDPage();
       });
 
-      it(`OSD ${clusterProperties.CloudProvider} ${authType} wizard - Billing model and its definitions`, () => {
+      it(`OSD ${clusterProperties.CloudProvider} ${authType} ${isPscEnabled} wizard - Billing model and its definitions`, () => {
         CreateOSDWizardPage.isBillingModelScreen();
         CreateOSDWizardPage.subscriptionTypeAnnualFixedCapacityRadio().should('be.checked');
         CreateOSDWizardPage.infrastructureTypeClusterCloudSubscriptionRadio().check({
@@ -36,7 +41,7 @@ describe(
         cy.get(CreateOSDWizardPage.primaryButton).click();
       });
 
-      it(`OSD ${clusterProperties.CloudProvider} ${authType} wizard - Cluster Settings - Cloud provider definitions`, () => {
+      it(`OSD ${clusterProperties.CloudProvider} ${authType} ${isPscEnabled} wizard - Cluster Settings - Cloud provider definitions`, () => {
         CreateOSDWizardPage.isCloudProviderSelectionScreen();
         CreateOSDWizardPage.selectCloudProvider(clusterProperties.CloudProvider);
 
@@ -58,7 +63,7 @@ describe(
         cy.get(CreateOSDWizardPage.primaryButton).click();
       });
 
-      it(`OSD ${clusterProperties.CloudProvider} ${authType} wizard - Cluster Settings - Cluster details definitions`, () => {
+      it(`OSD ${clusterProperties.CloudProvider} ${authType} ${isPscEnabled} wizard - Cluster Settings - Cluster details definitions`, () => {
         CreateOSDWizardPage.isClusterDetailsScreen();
         CreateOSDWizardPage.createCustomDomainPrefixCheckbox().scrollIntoView().check();
         CreateOSDWizardPage.setClusterName(clusterProperties.ClusterName);
@@ -74,7 +79,7 @@ describe(
         cy.get(CreateOSDWizardPage.primaryButton).click();
       });
 
-      it(`OSD ${clusterProperties.CloudProvider} ${authType} wizard - Cluster Settings - Default machinepool definitions`, () => {
+      it(`OSD ${clusterProperties.CloudProvider} ${authType} ${isPscEnabled} wizard - Cluster Settings - Default machinepool definitions`, () => {
         CreateOSDWizardPage.isMachinePoolScreen();
         CreateOSDWizardPage.selectComputeNodeType(clusterProperties.MachinePools[0].InstanceType);
 
@@ -86,15 +91,42 @@ describe(
         cy.get(CreateOSDWizardPage.primaryButton).click();
       });
 
-      it(`OSD ${clusterProperties.CloudProvider} ${authType}  wizard - Networking configuration - cluster privacy definitions`, () => {
+      it(`OSD ${clusterProperties.CloudProvider} ${authType} ${isPscEnabled} wizard - Networking configuration - cluster privacy definitions`, () => {
         CreateOSDWizardPage.isNetworkingScreen();
         CreateOSDWizardPage.clusterPrivacyPublicRadio().should('be.checked');
         CreateOSDWizardPage.applicationIngressDefaultSettingsRadio().should('be.checked');
-
+        CreateOSDWizardPage.selectClusterPrivacy(clusterProperties.ClusterPrivacy);
+        if (
+          clusterProperties.ClusterPrivacy.includes('Private') &&
+          clusterProperties.CloudProvider.includes('GCP')
+        ) {
+          CreateOSDWizardPage.installIntoExistingVpcCheckBox().should('be.checked');
+          CreateOSDWizardPage.usePrivateServiceConnectCheckBox().should('be.checked');
+        } else {
+          CreateOSDWizardPage.installIntoExistingVpcCheckBox().should('not.be.checked');
+        }
         cy.get(CreateOSDWizardPage.primaryButton).click();
       });
-
-      it(`OSD ${clusterProperties.CloudProvider} ${authType} wizard - CIDR configuration - cidr definitions`, () => {
+      if (
+        clusterProperties.ClusterPrivacy.includes('Private') &&
+        clusterProperties.UsePrivateServiceConnect.includes('Enabled')
+      ) {
+        it(`OSD wizard - ${clusterProperties.CloudProvider} ${authType} ${isPscEnabled} : VPC Settings definitions`, () => {
+          CreateOSDWizardPage.isVPCSubnetScreen();
+          CreateOSDWizardPage.selectGcpVPC(Cypress.env('QE_INFRA_GCP')['PSC_INFRA']['VPC_NAME']);
+          CreateOSDWizardPage.selectControlPlaneSubnetName(
+            Cypress.env('QE_INFRA_GCP')['PSC_INFRA']['CONTROLPLANE_SUBNET'],
+          );
+          CreateOSDWizardPage.selectComputeSubnetName(
+            Cypress.env('QE_INFRA_GCP')['PSC_INFRA']['COMPUTE_SUBNET'],
+          );
+          CreateOSDWizardPage.selectPrivateServiceConnectSubnetName(
+            Cypress.env('QE_INFRA_GCP')['PSC_INFRA']['PRIVATE_SERVICE_CONNECT_SUBNET'],
+          );
+          CreateOSDWizardPage.wizardNextButton().click();
+        });
+      }
+      it(`OSD ${clusterProperties.CloudProvider} ${authType} ${isPscEnabled} wizard - CIDR configuration - cidr definitions`, () => {
         CreateOSDWizardPage.isCIDRScreen();
         CreateOSDWizardPage.cidrDefaultValuesCheckBox().should('be.checked');
         CreateOSDWizardPage.machineCIDRInput().should('have.value', clusterProperties.MachineCIDR);
@@ -104,14 +136,14 @@ describe(
         cy.get(CreateOSDWizardPage.primaryButton).click();
       });
 
-      it(`OSD ${clusterProperties.CloudProvider} ${authType} wizard - Cluster updates definitions`, () => {
+      it(`OSD ${clusterProperties.CloudProvider} ${authType} ${isPscEnabled} wizard - Cluster updates definitions`, () => {
         CreateOSDWizardPage.isUpdatesScreen();
         CreateOSDWizardPage.updateStrategyIndividualRadio().should('be.checked');
         CreateOSDWizardPage.selectNodeDraining(clusterProperties.NodeDraining);
         cy.get(CreateOSDWizardPage.primaryButton).click();
       });
 
-      it(`OSD ${clusterProperties.CloudProvider} ${authType} wizard - Review and create page and its definitions`, () => {
+      it(`OSD ${clusterProperties.CloudProvider} ${authType} ${isPscEnabled} wizard - Review and create page and its definitions`, () => {
         CreateOSDWizardPage.isReviewScreen();
         CreateOSDWizardPage.subscriptionTypeValue().contains(clusterProperties.SubscriptionType);
         CreateOSDWizardPage.infrastructureTypeValue().contains(
@@ -158,6 +190,11 @@ describe(
         CreateOSDWizardPage.installIntoExistingVpcValue().contains(
           clusterProperties.InstallIntoExistingVPC,
         );
+        if (clusterProperties.hasOwnProperty('UsePrivateServiceConnect')) {
+          CreateOSDWizardPage.privateServiceConnectValue().contains(
+            clusterProperties.UsePrivateServiceConnect,
+          );
+        }
         CreateOSDWizardPage.applicationIngressValue().contains(
           clusterProperties.ApplicationIngress,
         );
@@ -176,7 +213,7 @@ describe(
         );
       });
 
-      it(`OSD ${clusterProperties.CloudProvider} ${authType} wizard - Cluster submission & overview definitions`, () => {
+      it(`OSD ${clusterProperties.CloudProvider} ${authType} ${isPscEnabled} wizard - Cluster submission & overview definitions`, () => {
         CreateOSDWizardPage.createClusterButton().click();
         ClusterDetailsPage.waitForInstallerScreenToLoad();
         ClusterDetailsPage.clusterNameTitle().contains(clusterProperties.ClusterName);
@@ -216,7 +253,7 @@ describe(
         }
       });
 
-      it(`Delete OSD ${clusterProperties.CloudProvider} ${authType}  cluster`, () => {
+      it(`Delete OSD ${clusterProperties.CloudProvider} ${authType}  ${isPscEnabled} cluster`, () => {
         ClusterDetailsPage.actionsDropdownToggle().click();
         ClusterDetailsPage.deleteClusterDropdownItem().click();
         ClusterDetailsPage.deleteClusterNameInput().clear().type(clusterProperties.ClusterName);

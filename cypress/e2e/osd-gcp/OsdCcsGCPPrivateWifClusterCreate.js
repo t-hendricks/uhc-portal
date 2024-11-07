@@ -2,13 +2,11 @@ import ClusterDetailsPage from '../../pageobjects/ClusterDetails.page';
 import CreateOSDWizardPage from '../../pageobjects/CreateOSDWizard.page';
 
 const clusterProfiles = require('../../fixtures/osd-gcp/OsdCcsGCPClusterCreate.json');
-const clusterProperties =
-  clusterProfiles['osd-ccs-gcp-private-multizone-serviceaccount']['day1-profile'];
-const QE_GCP = Cypress.env('QE_GCP_OSDCCSADMIN_JSON');
+const clusterProperties = clusterProfiles['osd-ccs-gcp-private-multizone-wif']['day1-profile'];
 
 describe(
-  'OSD GCP (service account) private advanced cluster creation tests()',
-  { tags: ['osd', 'ccs', 'gcp', 'private', 'serviceaccount', 'multizone'] },
+  'OSD GCP (Workload identity federation) private PSC advanced cluster creation tests()',
+  { tags: ['osd', 'ccs', 'gcp', 'private', 'wif', 'multizone', 'psc'] },
   () => {
     before(() => {
       cy.visit('/create');
@@ -19,7 +17,7 @@ describe(
       CreateOSDWizardPage.isCreateOSDPage();
     });
 
-    it(`OSD ${clusterProperties.CloudProvider} wizard - Billing model and its definitions`, () => {
+    it(`OSD ${clusterProperties.CloudProvider} - WIF - Private Service Connect wizard - Billing model and its definitions`, () => {
       CreateOSDWizardPage.isBillingModelScreen();
       CreateOSDWizardPage.subscriptionTypeAnnualFixedCapacityRadio().should('be.checked');
       CreateOSDWizardPage.infrastructureTypeClusterCloudSubscriptionRadio().check({
@@ -28,20 +26,17 @@ describe(
       CreateOSDWizardPage.wizardNextButton().click();
     });
 
-    it(`OSD ${clusterProperties.CloudProvider} wizard - Cluster Settings - Cloud provider definitions`, () => {
+    it(`OSD ${clusterProperties.CloudProvider} WIF - Private Service Connect wizard - Cluster Settings - Cloud provider definitions`, () => {
       CreateOSDWizardPage.isCloudProviderSelectionScreen();
       CreateOSDWizardPage.selectCloudProvider(clusterProperties.CloudProvider);
-      if (clusterProperties.AuthenticationType.includes('Service Account')) {
-        CreateOSDWizardPage.uploadGCPServiceAccountJSON(JSON.stringify(QE_GCP));
-      } else {
-        CreateOSDWizardPage.workloadIdentityFederationButton().click();
-        CreateOSDWizardPage.selectWorkloadIdentityConfiguration(Cypress.env('QE_GCP_WIF_CONFIG'));
-      }
+      CreateOSDWizardPage.workloadIdentityFederationButton().click();
+      CreateOSDWizardPage.selectWorkloadIdentityConfiguration(Cypress.env('QE_GCP_WIF_CONFIG'));
+
       CreateOSDWizardPage.acknowlegePrerequisitesCheckbox().check();
       CreateOSDWizardPage.wizardNextButton().click();
     });
 
-    it(`OSD ${clusterProperties.CloudProvider} wizard - Cluster Settings - Cluster details definitions`, () => {
+    it(`OSD ${clusterProperties.CloudProvider} WIF - Private Service Connect wizard - Cluster Settings - Cluster details definitions`, () => {
       CreateOSDWizardPage.isClusterDetailsScreen();
       CreateOSDWizardPage.createCustomDomainPrefixCheckbox().scrollIntoView().check();
       CreateOSDWizardPage.setClusterName(clusterProperties.ClusterName);
@@ -50,6 +45,9 @@ describe(
       CreateOSDWizardPage.closePopoverDialogs();
       CreateOSDWizardPage.selectAvailabilityZone(clusterProperties.Availability);
       CreateOSDWizardPage.selectRegion(clusterProperties.Region);
+      if (clusterProperties.hasOwnProperty('Version')) {
+        CreateOSDWizardPage.selectVersion(clusterProperties.Version);
+      }
       if (clusterProperties.CloudProvider.includes('GCP')) {
         CreateOSDWizardPage.enableSecureBootSupportForSchieldedVMs(true);
       }
@@ -75,7 +73,7 @@ describe(
       CreateOSDWizardPage.wizardNextButton().click();
     });
 
-    it(`OSD ${clusterProperties.CloudProvider} wizard - Cluster Settings - Default machinepool definitions`, () => {
+    it(`OSD ${clusterProperties.CloudProvider} WIF - Private Service Connect wizard - Cluster Settings - Default machinepool definitions`, () => {
       CreateOSDWizardPage.isMachinePoolScreen();
       CreateOSDWizardPage.selectComputeNodeType(clusterProperties.MachinePools.InstanceType);
       if (clusterProperties.MachinePools.Autoscaling.includes('Enabled')) {
@@ -97,12 +95,11 @@ describe(
       CreateOSDWizardPage.wizardNextButton().click();
     });
 
-    it(`OSD ${clusterProperties.CloudProvider}  wizard - Networking configuration - cluster privacy definitions`, () => {
+    it(`OSD ${clusterProperties.CloudProvider} WIF - Private Service Connect wizard - Networking configuration - cluster privacy definitions`, () => {
       CreateOSDWizardPage.isNetworkingScreen();
       CreateOSDWizardPage.selectClusterPrivacy(clusterProperties.ClusterPrivacy);
       CreateOSDWizardPage.installIntoExistingVpcCheckBox().should('be.checked');
       CreateOSDWizardPage.usePrivateServiceConnectCheckBox().should('be.checked');
-      CreateOSDWizardPage.usePrivateServiceConnectCheckBox().uncheck();
 
       if (clusterProperties.ApplicationIngress.includes('Custom settings')) {
         CreateOSDWizardPage.applicationIngressCustomSettingsRadio().check();
@@ -121,16 +118,23 @@ describe(
       }
       CreateOSDWizardPage.wizardNextButton().click();
     });
+
     it(`OSD ${clusterProperties.CloudProvider}  wizard - Networking configuration- VPC and subnet definitions`, () => {
       CreateOSDWizardPage.isVPCSubnetScreen();
-      CreateOSDWizardPage.selectGcpVPC(Cypress.env('QE_INFRA_GCP')['VPC_NAME']);
+      CreateOSDWizardPage.selectGcpVPC(Cypress.env('QE_INFRA_GCP')['PSC_INFRA']['VPC_NAME']);
       CreateOSDWizardPage.selectControlPlaneSubnetName(
-        Cypress.env('QE_INFRA_GCP')['CONTROLPLANE_SUBNET'],
+        Cypress.env('QE_INFRA_GCP')['PSC_INFRA']['CONTROLPLANE_SUBNET'],
       );
-      CreateOSDWizardPage.selectComputeSubnetName(Cypress.env('QE_INFRA_GCP')['COMPUTE_SUBNET']);
+      CreateOSDWizardPage.selectComputeSubnetName(
+        Cypress.env('QE_INFRA_GCP')['PSC_INFRA']['COMPUTE_SUBNET'],
+      );
+      CreateOSDWizardPage.selectPrivateServiceConnectSubnetName(
+        Cypress.env('QE_INFRA_GCP')['PSC_INFRA']['PRIVATE_SERVICE_CONNECT_SUBNET'],
+      );
       CreateOSDWizardPage.wizardNextButton().click();
     });
-    it(`OSD ${clusterProperties.CloudProvider}  wizard - CIDR configuration - cidr definitions`, () => {
+
+    it(`OSD ${clusterProperties.CloudProvider} WIF - Private Service Connect wizard - CIDR configuration - cidr definitions`, () => {
       CreateOSDWizardPage.isCIDRScreen();
       CreateOSDWizardPage.cidrDefaultValuesCheckBox().uncheck();
       CreateOSDWizardPage.machineCIDRInput().clear().type(clusterProperties.MachineCIDR);
@@ -140,14 +144,14 @@ describe(
       CreateOSDWizardPage.wizardNextButton().click();
     });
 
-    it(`OSD ${clusterProperties.CloudProvider}  wizard - Cluster updates definitions`, () => {
+    it(`OSD ${clusterProperties.CloudProvider} WIF - Private Service Connect wizard - Cluster updates definitions`, () => {
       CreateOSDWizardPage.isUpdatesScreen();
       CreateOSDWizardPage.updateStrategyIndividualRadio().should('be.checked');
       CreateOSDWizardPage.selectNodeDraining(clusterProperties.NodeDraining);
       CreateOSDWizardPage.wizardNextButton().click();
     });
 
-    it(`OSD ${clusterProperties.CloudProvider}  wizard - Review and create page and its definitions`, () => {
+    it(`OSD ${clusterProperties.CloudProvider} WIF - Private Service Connect wizard - Review and create page and its definitions`, () => {
       CreateOSDWizardPage.isReviewScreen();
       CreateOSDWizardPage.subscriptionTypeValue().contains(clusterProperties.SubscriptionType);
       CreateOSDWizardPage.infrastructureTypeValue().contains(clusterProperties.InfrastructureType);
@@ -211,7 +215,7 @@ describe(
       );
     });
 
-    it(`OSD ${clusterProperties.CloudProvider}  wizard - Cluster submission & overview definitions`, () => {
+    it(`OSD ${clusterProperties.CloudProvider} WIF - Private Service Connect wizard - Cluster submission & overview definitions`, () => {
       CreateOSDWizardPage.createClusterButton().click();
       ClusterDetailsPage.waitForInstallerScreenToLoad();
       ClusterDetailsPage.clusterNameTitle().contains(clusterProperties.ClusterName);
