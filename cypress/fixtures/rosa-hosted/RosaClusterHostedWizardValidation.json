@@ -51,6 +51,10 @@
           "UpperLimitError": "Input cannot be more than 500",
           "MinAndMaxLimitDependencyError": "Max nodes cannot be less than min nodes"
         }
+      },
+      "RootDiskSize": {
+        "LimitError": "The worker root disk size must be between 75 GiB and 16384 GiB.",
+        "NonSupportedValue": "Decimals are not allowed for the worker root disk size"
       }
     }
   },
