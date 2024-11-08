@@ -6,6 +6,7 @@ import ConnectedModal from '../../common/Modal/ConnectedModal';
 import { ConnectedEditMachinePoolModal } from '../ClusterDetails/components/MachinePools/components/EditMachinePoolModal/EditMachinePoolModal';
 import { ConnectedEditMachinePoolModal as ConnectedEditMachinePoolModalMR } from '../ClusterDetailsMultiRegion/components/MachinePools/components/EditMachinePoolModal/EditMachinePoolModal';
 import ArchiveClusterDialogMR from '../commonMultiRegion/ArchiveClusterDialog';
+import DeleteClusterDialogMR from '../commonMultiRegion/DeleteClusterDialog';
 import EditConsoleURLDialogMR from '../commonMultiRegion/EditConsoleURLDialog';
 import EditDisplayNameDialogMR from '../commonMultiRegion/EditDisplayNameDialog';
 import EditSubscriptionSettingsDialogMR from '../commonMultiRegion/EditSubscriptionSettingsDialog/EditSubscriptionSettingsDialog';
@@ -96,9 +97,11 @@ function CommonClusterModals({
       <ConnectedModal
         ModalComponent={isMultiRegionPreviewEnabled ? UpgradeWizardMR : UpgradeWizard}
       />
+
       <ConnectedModal ModalComponent={DeleteProtectionModal} onClose={onClose} />
+
       <ConnectedModal
-        ModalComponent={DeleteClusterDialog}
+        ModalComponent={isMultiRegionPreviewEnabled ? DeleteClusterDialogMR : DeleteClusterDialog}
         onClose={(clusterDeleted) => {
           if (clusterDeleted) {
             if (onClusterDeleted) {

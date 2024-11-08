@@ -15,7 +15,7 @@ const menuItemsText = [
   'Edit load balancers and persistent storage',
   'Hibernate cluster',
   'Edit machine pool',
-  // 'Delete cluster',
+  'Delete cluster',
 ];
 
 describe('Cluster Actions Dropdown Items', () => {

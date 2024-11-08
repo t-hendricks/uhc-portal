@@ -76,12 +76,12 @@ function actionResolver(
     <span>This operation is not available during maintenance</span>
   );
 
-  // const deleteProtectionMessage = cluster.delete_protection?.enabled && (
-  //   <span>
-  //     Cluster is locked and cannot be deleted. To unlock, go to cluster details and disable deletion
-  //     protection.
-  //   </span>
-  // );
+  const deleteProtectionMessage = cluster.delete_protection?.enabled && (
+    <span>
+      Cluster is locked and cannot be deleted. To unlock, go to cluster details and disable deletion
+      protection.
+    </span>
+  );
 
   const consoleURL = get(cluster, 'console.url', false);
   const consoleDisabledMessage = !consoleURL && (
@@ -230,22 +230,23 @@ function actionResolver(
     }),
   });
 
-  // const getDeleteItemProps = () => ({
-  //   ...baseProps,
-  //   title: 'Delete cluster',
-  //   key: getKey('deletecluster'),
-  //   ...disableIfTooltip(
-  //     uninstallingMessage || readOnlyMessage || hibernatingMessage || deleteProtectionMessage,
-  //     {
-  //       onClick: () =>
-  //         openModal(modals.DELETE_CLUSTER, {
-  //           clusterID: cluster.id,
-  //           clusterName,
-  //           shouldDisplayClusterName: inClusterList,
-  //         }),
-  //     },
-  //   ),
-  // });
+  const getDeleteItemProps = () => ({
+    ...baseProps,
+    title: 'Delete cluster',
+    key: getKey('deletecluster'),
+    ...disableIfTooltip(
+      uninstallingMessage || readOnlyMessage || hibernatingMessage || deleteProtectionMessage,
+      {
+        onClick: () =>
+          openModal(modals.DELETE_CLUSTER, {
+            clusterID: cluster.id,
+            clusterName,
+            shouldDisplayClusterName: inClusterList,
+            region: cluster?.subscription?.xcm_id,
+          }),
+      },
+    ),
+  });
 
   const getEditSubscriptionSettingsProps = () => {
     const editSubscriptionSettingsProps = {
@@ -306,7 +307,7 @@ function actionResolver(
     };
   };
 
-  // const showDelete = cluster.canDelete && cluster.managed;
+  const showDelete = cluster.canDelete && cluster.managed;
   const showScale = cluster.canEdit && cluster.managed && !cluster.ccs?.enabled;
   const showHibernateCluster =
     cluster.canEdit &&
@@ -349,7 +350,7 @@ function actionResolver(
     showHibernateCluster && getHibernateClusterProps(),
     showEditMachinePool && getEditMachinePoolProps(),
     showUpgradeTrialCluster && getUpgradeTrialClusterProps(),
-    // showDelete && getDeleteItemProps(),
+    showDelete && getDeleteItemProps(),
     showArchive && getArchiveClusterProps(),
     showEditSubscriptionSettings && getEditSubscriptionSettingsProps(),
     showTransferClusterOwnership && getTransferClusterOwnershipProps(),
