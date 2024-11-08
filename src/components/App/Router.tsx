@@ -23,6 +23,7 @@ import { UILibRoutes as AssistedInstallerRoutes } from '@openshift-assisted/ui-l
 import useChrome from '@redhat-cloud-services/frontend-components/useChrome';
 
 import { Navigate, ocmBaseName } from '~/common/routing';
+import ClusterDetailsClusterOrExternalIdMR from '~/components/clusters/ClusterDetailsMultiRegion/ClusterDetailsClusterOrExternalId';
 import config from '~/config';
 import { useFeatureGate } from '~/hooks/useFeatureGate';
 import { isRestrictedEnv } from '~/restrictedEnv';
@@ -407,7 +408,16 @@ const Router: React.FC<RouterProps> = ({ planType, clusterId, externalClusterId 
           path="/details/:id/insights/:reportId/:errorKey"
           element={<InsightsAdvisorRedirector />}
         />
-        <Route path="/details/:id" element={<ClusterDetailsClusterOrExternalId />} />
+        <Route
+          path="/details/:id"
+          element={
+            config.multiRegion && isMultiRegionPreviewEnabled ? (
+              <ClusterDetailsClusterOrExternalIdMR />
+            ) : (
+              <ClusterDetailsClusterOrExternalId />
+            )
+          }
+        />
         <Route path="/register" element={<RegisterCluster />} />
         <Route path="/quota/resource-limits" element={<Quota marketplace />} />
         <Route path="/quota" element={<Quota />} />
