@@ -308,6 +308,14 @@ const viewOptionsReducer = (
       };
       return { ...state, ...updateState };
 
+    case viewPaginationConstants.VIEW_RESET_FILTERS_AND_FLAGS:
+      updateState[action.payload.viewType] = {
+        ...state[action.payload.viewType],
+        flags: INITIAL_OSL_VIEW_STATE.flags,
+        filter: INITIAL_OSL_VIEW_STATE.filter,
+      };
+      return { ...state, ...updateState };
+
     default:
       return state;
   }

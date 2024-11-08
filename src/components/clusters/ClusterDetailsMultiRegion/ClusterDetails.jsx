@@ -50,7 +50,7 @@ import {
 } from '~/redux/actions/accessRequestActions';
 import { clearListVpcs } from '~/redux/actions/ccsInquiriesActions';
 import { clusterAutoscalerActions } from '~/redux/actions/clusterAutoscalerActions';
-import { onClearFiltersAndFlags } from '~/redux/actions/viewOptionsActions';
+import { onResetFiltersAndFlags } from '~/redux/actions/viewOptionsActions';
 import { useGlobalState } from '~/redux/hooks/useGlobalState';
 import { isRestrictedEnv } from '~/restrictedEnv';
 // TODO: Commented out for respective tabs stories
@@ -238,8 +238,8 @@ const ClusterDetails = (props) => {
   // PrevProps replication using refs
   const prevClusterId = React.useRef(cluster?.id);
 
-  const clearFiltersAndFlags = () => {
-    dispatch(onClearFiltersAndFlags(viewConstants.CLUSTER_LOGS_VIEW));
+  const resetFiltersAndFlags = () => {
+    dispatch(onResetFiltersAndFlags(viewConstants.CLUSTER_LOGS_VIEW));
   };
   const onDialogClose = () => {
     if (isValid(subscriptionID)) {
@@ -351,7 +351,7 @@ const ClusterDetails = (props) => {
 
       dispatch(clearGetMachinePoolsResponse());
       dispatch(clusterAutoscalerActions.clearClusterAutoscalerResponse());
-      clearFiltersAndFlags();
+      resetFiltersAndFlags();
       dispatch(clearListVpcs());
     };
     // Should run only once on mount and once on unmount

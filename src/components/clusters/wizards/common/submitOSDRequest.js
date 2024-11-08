@@ -17,7 +17,10 @@ import { DEFAULT_FLAVOUR_ID } from '~/redux/actions/flavourActions';
 import { NamespaceOwnershipPolicy } from '~/types/clusters_mgmt.v1/models/NamespaceOwnershipPolicy';
 import { WildcardPolicy } from '~/types/clusters_mgmt.v1/models/WildcardPolicy';
 
-import { canConfigureDayOneManagedIngress } from './constants';
+import {
+  canConfigureDayOneManagedIngress,
+  canConfigureDayOnePrivateServiceConnect,
+} from './constants';
 import * as submitRequestHelpers from './submitOSDRequestHelper';
 
 export const createClusterRequest = ({ isWizard = true, cloudProviderID, product }, formData) => {
@@ -304,6 +307,16 @@ export const createClusterRequest = ({ isWizard = true, cloudProviderID, product
           key_ring: formData.key_ring,
           key_location: formData.key_location,
           kms_key_service_account: formData.kms_service_account,
+        };
+      }
+      if (
+        formData.private_service_connect &&
+        formData.psc_subnet &&
+        isInstallExistingVPC &&
+        canConfigureDayOnePrivateServiceConnect(formData.cluster_version?.raw_id)
+      ) {
+        clusterRequest.gcp.private_service_connect = {
+          service_attachment_subnet: formData.psc_subnet,
         };
       }
     }

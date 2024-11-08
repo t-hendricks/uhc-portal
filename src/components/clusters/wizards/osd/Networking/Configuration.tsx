@@ -11,6 +11,7 @@ import { isExactMajorMinor } from '~/common/versionHelpers';
 import { constants } from '~/components/clusters/common/CreateOSDFormConstants';
 import {
   canConfigureDayOneManagedIngress,
+  canConfigureDayOnePrivateServiceConnect,
   CloudProviderType,
 } from '~/components/clusters/wizards/common/constants';
 import {
@@ -19,9 +20,12 @@ import {
   RadioGroupOption,
 } from '~/components/clusters/wizards/form';
 import { useFormState } from '~/components/clusters/wizards/hooks';
+import { GCPAuthType } from '~/components/clusters/wizards/osd/ClusterSettings/CloudProvider/types';
 import { FieldId } from '~/components/clusters/wizards/osd/constants';
 import ExternalLink from '~/components/common/ExternalLink';
 import useAnalytics from '~/hooks/useAnalytics';
+import { useFeatureGate } from '~/hooks/useFeatureGate';
+import { OCMUI_PRIVATE_SERVICE_CONNECT } from '~/redux/constants/featureConstants';
 
 import { ApplicationIngressType, ClusterPrivacyType } from './constants';
 import { DefaultIngressFields } from './DefaultIngressFields';
@@ -40,22 +44,44 @@ export const Configuration = () => {
       [FieldId.UsePrivateLink]: usePrivateLink,
       [FieldId.ApplicationIngress]: applicationIngress,
       [FieldId.MachinePoolsSubnets]: machinePoolSubnets,
+      [FieldId.GcpAuthType]: authTypeFormValue,
     },
     values,
     setFieldValue,
   } = useFormState();
   const isByoc = byoc === 'true';
+  const isGCP = cloudProvider === CloudProviderType.Gcp;
+  const hasPSCFeatureGate = useFeatureGate(OCMUI_PRIVATE_SERVICE_CONNECT);
   const isPrivateCluster = clusterPrivacy === ClusterPrivacyType.Internal;
   const showClusterPrivacy =
     cloudProvider === CloudProviderType.Aws || (cloudProvider === CloudProviderType.Gcp && isByoc);
   const showConfigureProxy =
     isByoc && [normalizedProducts.OSD, normalizedProducts.OSDTRIAL].includes(product);
+  const showPrivateServiceConnect =
+    isByoc &&
+    isGCP &&
+    [normalizedProducts.OSD, normalizedProducts.OSDTRIAL].includes(product) &&
+    canConfigureDayOnePrivateServiceConnect(clusterVersion.raw_id) &&
+    hasPSCFeatureGate;
+  const isWifAuth = authTypeFormValue === GCPAuthType.WorkloadIdentityFederation;
+  const PSCPrivateWifWarning =
+    isGCP && isPrivateCluster && isWifAuth && hasPSCFeatureGate
+      ? 'Private clusters deployed using Workload Identity Federation must be deployed into an existing VPC.'
+      : '';
+
   const trackOcmResourceType =
     product === normalizedProducts.ROSA ? ocmResourceType.MOA : ocmResourceType.OSD;
 
   const showIngressSection = isByoc;
   const isManagedIngressAllowed = canConfigureDayOneManagedIngress(clusterVersion.raw_id);
   const isOcp413 = isExactMajorMinor(clusterVersion.raw_id, 4, 13);
+
+  React.useEffect(() => {
+    if (isWifAuth && showPrivateServiceConnect && isPrivateCluster) {
+      setFieldValue(FieldId.InstallToVpc, true);
+      setFieldValue(FieldId.PrivateServiceConnect, true);
+    }
+  }, [isWifAuth, showPrivateServiceConnect, isPrivateCluster, installToVpc, setFieldValue]);
 
   const trackCheckedState = (trackEvent: TrackEvent, checked: boolean) =>
     track(trackEvent, {
@@ -89,6 +115,13 @@ export const Configuration = () => {
           setFieldValue(FieldId.ConfigureProxy, false);
         }
       }
+      trackCheckedState(trackEvents.PrivateServiceConnect, false);
+      setFieldValue(FieldId.PrivateServiceConnect, false);
+    } else if (showPrivateServiceConnect) {
+      trackCheckedState(trackEvents.PrivateServiceConnect, true);
+      setFieldValue(FieldId.PrivateServiceConnect, true);
+      setFieldValue(FieldId.InstallToVpc, true);
+      trackCheckedState(trackEvents.InstallIntoVPC, true);
     }
   };
 
@@ -110,10 +143,25 @@ export const Configuration = () => {
     }
   };
 
+  const onPrivateServiceConnectChange = (
+    _event: React.FormEvent<HTMLInputElement>,
+    checked: boolean,
+  ) => {
+    trackCheckedState(trackEvents.PrivateServiceConnect, checked);
+    setFieldValue(FieldId.PrivateServiceConnect, checked);
+    if (checked && !installToVpc) {
+      setFieldValue(FieldId.InstallToVpc, true);
+      trackCheckedState(trackEvents.InstallIntoVPC, checked);
+    }
+  };
+
   const onInstallIntoVPCchange = (_event: React.FormEvent<HTMLInputElement>, checked: boolean) => {
     setFieldValue(FieldId.InstallToVpc, checked);
     clearSecurityGroups();
     trackCheckedState(trackEvents.InstallIntoVPC, checked);
+    if (showPrivateServiceConnect && isPrivateCluster) {
+      setFieldValue(FieldId.PrivateServiceConnect, checked);
+    }
   };
 
   const onApplicationIngressChange = (value: string) => {
@@ -178,7 +226,7 @@ export const Configuration = () => {
                 <Alert
                   isInline
                   variant="warning"
-                  title="You will not be able to access your cluster until you edit network settings in your cloud provider."
+                  title={`${PSCPrivateWifWarning} You will not be able to access your cluster until you properly configure private network connectivity to your cloud provider.`}
                 >
                   {cloudProvider === CloudProviderType.Aws && (
                     <ExternalLink href={links.OSD_AWS_PRIVATE_CONNECTIONS}>
@@ -209,7 +257,11 @@ export const Configuration = () => {
                   name={FieldId.InstallToVpc}
                   label="Install into an existing VPC"
                   input={{ onChange: onInstallIntoVPCchange }}
-                  isDisabled={usePrivateLink || configureProxy}
+                  isDisabled={
+                    usePrivateLink ||
+                    configureProxy ||
+                    (isPrivateCluster && isWifAuth && hasPSCFeatureGate)
+                  }
                 />
 
                 <div className="pf-v5-u-ml-lg pf-v5-u-mt-md">
@@ -222,6 +274,28 @@ export const Configuration = () => {
                         description: constants.privateLinkHint,
                       }}
                     />
+                  )}
+                  {isPrivateCluster && showPrivateServiceConnect && (
+                    <div className="pf-v5-u-mt-md">
+                      <CheckboxField
+                        name={FieldId.PrivateServiceConnect}
+                        label="Use Private Service Connect"
+                        input={{
+                          onChange: onPrivateServiceConnectChange,
+                          description: constants.privateServiceConnectHint,
+                        }}
+                        isDisabled={isWifAuth}
+                        tooltip={
+                          <p>
+                            Red Hat recommends using Private Service Connect when deploying a
+                            Private OpenShift Dedicated cluster on Google Cloud. Private Service
+                            Connect ensures there is a secured, private connectivity between Red Hat
+                            infrastructure, Site Reliability Engineering (SRE) and private OpenShift
+                            clusters.
+                          </p>
+                        }
+                      />
+                    </div>
                   )}
                   {showConfigureProxy && (
                     <div className="pf-v5-u-mt-md">

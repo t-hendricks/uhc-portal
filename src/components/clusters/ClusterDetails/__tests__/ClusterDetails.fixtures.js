@@ -49,7 +49,7 @@ const funcs = () => ({
   getUserAccess: jest.fn(),
   fetchUpgradeGates: jest.fn(),
   clearListVpcs: jest.fn(),
-  clearFiltersAndFlags: jest.fn(),
+  resetFiltersAndFlags: jest.fn(),
   getOrganizationPendingAccessRequests: jest.fn(),
   resetOrganizationPendingAccessRequests: jest.fn(),
   resetAccessProtection: jest.fn(),

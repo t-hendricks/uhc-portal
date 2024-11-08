@@ -266,7 +266,7 @@ class CreateRosaCluster extends Page {
   }
 
   isAssociateAccountsDrawer() {
-    cy.contains('span', 'How to associate a new AWS account').should('have.focus');
+    cy.contains('span', 'How to associate a new AWS account').should('be.visible');
     cy.contains('continue to step');
   }
 
@@ -396,22 +396,19 @@ class CreateRosaCluster extends Page {
   }
 
   selectAWSInfrastructureAccount(accountID) {
-    cy.get('button[aria-describedby="aws-infra-accounts"]').first().click();
+    cy.get('button[id="associated_aws_id"]').click();
     cy.get('input[placeholder*="Filter by account ID"]', { timeout: 50000 })
       .clear()
       .type(accountID);
-    cy.get('div[label="Associated AWS infrastructure account"]')
-      .find('button')
-      .contains(accountID)
-      .click();
+    cy.get('li').contains(accountID).click();
   }
 
   selectAWSBillingAccount(accountID) {
-    cy.get('button[aria-describedby="aws-infra-accounts"]').last().click();
+    cy.get('button[id="billing_account_id"]').click();
     cy.get('input[placeholder*="Filter by account ID"]', { timeout: 50000 })
       .clear()
       .type(accountID);
-    cy.get('div[label="AWS billing account"]').find('button').contains(accountID).click();
+    cy.get('li').contains(accountID).click();
   }
 
   waitForARNList() {
@@ -420,28 +417,12 @@ class CreateRosaCluster extends Page {
   }
 
   selectInstallerRole(roleName) {
-    cy.get('.pf-v5-c-form__label-text')
-      .contains('Installer role')
-      .parent()
-      .parent()
-      .siblings()
-      .find('div')
-      .find('button.pf-v5-c-select__toggle')
-      .then(($btn) => {
-        if ($btn.is(':disabled')) {
-          cy.log('Installer ARN button is disabled there is only one option. Continuing..');
-        } else {
-          cy.get('.pf-v5-c-form__label-text')
-            .contains('Installer role')
-            .parent()
-            .parent()
-            .siblings()
-            .find('div')
-            .find('button.pf-v5-c-select__toggle')
-            .click();
-          cy.get('ul[id="installer_role_arn"]').find('button').contains(roleName).click();
-        }
-      });
+    cy.get('button').contains(new RegExp(`Installer-Role$`)).click();
+    cy.get('div[id="installer_role_arn"]')
+      .find('button')
+      .contains(roleName)
+      .scrollIntoView()
+      .click({ force: true });
   }
 
   selectVPC(vpcName) {
@@ -485,11 +466,11 @@ class CreateRosaCluster extends Page {
   }
 
   setClusterName(clusterName) {
-    cy.get(this.clusterNameInput).scrollIntoView().type('{selectAll}').type(clusterName);
+    cy.get(this.clusterNameInput).scrollIntoView().type('{selectAll}').type(clusterName).blur();
   }
 
   setDomainPrefix(domainPrefix) {
-    this.domainPrefixInput().scrollIntoView().type('{selectAll}').type(domainPrefix);
+    this.domainPrefixInput().scrollIntoView().type('{selectAll}').type(domainPrefix).blur();
   }
 
   selectClusterVersion(version) {

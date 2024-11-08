@@ -546,7 +546,7 @@ class CreateOSDCluster extends Page {
     cy.get('textarea[aria-label="File upload"]').type(' {backspace}');
   }
   selectWorkloadIdentityConfiguration(wifConfig) {
-    cy.get('button[aria-labelledby=" gcp_wif_config"]').click();
+    cy.get('button[id="gcp_wif_config"]').click();
     cy.get('input[placeholder="Filter by name / ID"]').clear().type(wifConfig);
     cy.contains(wifConfig).scrollIntoView().click();
   }

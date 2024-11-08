@@ -9,7 +9,7 @@ import { accessProtectionActions } from '~/redux/actions/accessProtectionActions
 import { accessRequestActions } from '~/redux/actions/accessRequestActions';
 import { clearListVpcs } from '~/redux/actions/ccsInquiriesActions';
 import { clusterAutoscalerActions } from '~/redux/actions/clusterAutoscalerActions';
-import { onClearFiltersAndFlags } from '~/redux/actions/viewOptionsActions';
+import { onResetFiltersAndFlags } from '~/redux/actions/viewOptionsActions';
 import { NETWORK_VALIDATOR_ONDEMAND_FEATURE } from '~/redux/constants/featureConstants';
 
 import { userActions } from '../../../redux/actions';
@@ -130,7 +130,7 @@ const mapDispatchToProps = (dispatch) =>
       getUserAccess,
       addNotification,
       fetchUpgradeGates,
-      clearFiltersAndFlags: () => onClearFiltersAndFlags(viewConstants.CLUSTER_LOGS_VIEW),
+      resetFiltersAndFlags: () => onResetFiltersAndFlags(viewConstants.CLUSTER_LOGS_VIEW),
     },
     dispatch,
   );

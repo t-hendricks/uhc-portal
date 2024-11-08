@@ -12,6 +12,7 @@ import ExternalLink from '~/components/common/ExternalLink';
 import PopoverHint from '~/components/common/PopoverHint';
 
 import { CheckboxField, TextInputField } from '../../../form';
+import { ClusterPrivacyType } from '../constants';
 
 import { GcpVpcNameSelectField } from './GcpVpcNameSelectField';
 import { GcpVpcSubnetSelectField } from './GcpVpcSubnetSelectField';
@@ -21,6 +22,8 @@ export const GcpVpcSettings = () => {
     values: {
       [FieldId.ClusterVersion]: clusterVersion,
       [FieldId.InstallToSharedVpc]: installToSharedVpc,
+      [FieldId.PrivateServiceConnect]: privateServiceConnect,
+      [FieldId.ClusterPrivacy]: clusterPrivacy,
     },
     getFieldProps,
     getFieldMeta,
@@ -77,6 +80,7 @@ export const GcpVpcSettings = () => {
     return null;
   }, [clusterVersion?.raw_id, goToStepById, installToSharedVpc]);
 
+  const showPSCSubnet = privateServiceConnect && clusterPrivacy === ClusterPrivacyType.Internal;
   return (
     <>
       <GridItem span={8}>
@@ -201,6 +205,31 @@ export const GcpVpcSettings = () => {
           />
         )}
       </GridItem>
+      {showPSCSubnet ? (
+        <GridItem md={3}>
+          {installToSharedVpc ? (
+            <TextInputField
+              name={FieldId.PSCSubnet}
+              label="Private Service Connect subnet name"
+              validate={validateGCPSubnet}
+            />
+          ) : (
+            <Field
+              component={GcpVpcSubnetSelectField}
+              name={FieldId.PSCSubnet}
+              validate={required}
+              label="Private Service Connect subnet name"
+              placeholder="Select subnet name"
+              emptyPlaceholder="No subnet names"
+              input={{
+                ...getFieldProps(FieldId.PSCSubnet),
+                onChange: (value: string) => setFieldValue(FieldId.PSCSubnet, value),
+              }}
+              meta={getFieldMeta(FieldId.PSCSubnet)}
+            />
+          )}
+        </GridItem>
+      ) : null}
 
       {installToSharedVpc && (
         <GridItem span={9}>
@@ -208,7 +237,7 @@ export const GcpVpcSettings = () => {
             <Alert
               variant="info"
               isInline
-              title="For successful installation, be sure your Host project ID, Existing VPC name, Control plane subnet name, and Compute subnet name are correct."
+              title={`For successful installation, be sure your Host project ID, Existing VPC name, Control plane subnet name, ${showPSCSubnet ? 'Compute subnet name, and Private Service Connect subnet name' : 'and Compute subnet name'} are correct.`}
             />
           </div>
         </GridItem>
