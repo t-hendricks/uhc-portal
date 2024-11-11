@@ -1,7 +1,7 @@
 import VideoImg from '~/styles/images/AdvancedClusterSecurityExplanationVideoImg.png';
 import { render, screen } from '~/testUtils';
 
-import AdvancedClusterSecurityDrawerPanelBody from '../../components/common/DrawerPanelContents/AdvancedClusterSecurity/DrawerPanelBody';
+import { AdvancedClusterSecurityDrawerPanelBody } from '../../components/common/DrawerPanelContents/AdvancedClusterSecurity/DrawerPanelBody';
 
 import '@testing-library/jest-dom';
 

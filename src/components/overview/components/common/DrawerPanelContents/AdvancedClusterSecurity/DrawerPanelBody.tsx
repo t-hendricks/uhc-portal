@@ -121,4 +121,4 @@ const AdvancedClusterSecurityDrawerPanelBody = (
   </Stack>
 );
 
-export default AdvancedClusterSecurityDrawerPanelBody;
+export { AdvancedClusterSecurityDrawerPanelBody };

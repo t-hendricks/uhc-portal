@@ -110,4 +110,4 @@ const ServiceMeshDrawerPanelBody = (
   </Stack>
 );
 
-export default ServiceMeshDrawerPanelBody;
+export { ServiceMeshDrawerPanelBody };
