@@ -66,4 +66,4 @@ const GitopsDrawerPanelBody = (
   </Stack>
 );
 
-export default GitopsDrawerPanelBody;
+export { GitopsDrawerPanelBody };
