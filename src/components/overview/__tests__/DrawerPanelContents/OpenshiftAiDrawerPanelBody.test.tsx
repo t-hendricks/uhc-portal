@@ -1,14 +1,14 @@
 import VideoImg from '~/styles/images/OpenshiftAiExplanationVideoImg.png';
 import { render, screen } from '~/testUtils';
 
-import OpenshiftAiDrawerPanelBody from '../../components/common/DrawerPanelContents/OpenshiftAi/DrawerPanelBody';
+import { OpenShiftAiDrawerPanelBody } from '../../components/common/DrawerPanelContents/OpenshiftAi/DrawerPanelBody';
 
 import '@testing-library/jest-dom';
 
-describe('<OpenshiftAiDrawerPanelBody />', () => {
+describe('<OpenShiftAiDrawerPanelBody />', () => {
   it('renders elements', async () => {
     // Arrange
-    render(OpenshiftAiDrawerPanelBody);
+    render(OpenShiftAiDrawerPanelBody);
 
     // Assert
     expect(

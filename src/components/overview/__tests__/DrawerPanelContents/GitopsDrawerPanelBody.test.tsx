@@ -1,6 +1,6 @@
 import { checkAccessibility, render, screen } from '~/testUtils';
 
-import GitopsDrawerPanelBody from '../../components/common/DrawerPanelContents/Gitops/DrawerPanelBody';
+import { GitopsDrawerPanelBody } from '../../components/common/DrawerPanelContents/Gitops/DrawerPanelBody';
 
 import '@testing-library/jest-dom';
 
