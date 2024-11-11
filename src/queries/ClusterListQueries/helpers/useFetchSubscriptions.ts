@@ -56,7 +56,7 @@ const fetchGlobalSubscriptions = async (
     subscriptionMap,
     managedSubscriptions,
     page: subscriptions?.data?.page || 0,
-    total: subscriptions?.data?.total || 0,
+    total: subscriptions?.data?.total || items?.length || 0, // Setting total to items.length if total is 0 is temp fix until OCM-12366 is resolved
   };
 };
 

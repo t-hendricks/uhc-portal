@@ -102,6 +102,23 @@ describe('useFetchSubscriptions', () => {
     expect(params).toEqual(expectedParams);
   });
 
+  it('returns number of clusters when total is reporting 0 (workaround for OCM-12366)', async () => {
+    apiRequestMock.get.mockResolvedValueOnce({
+      data: { items: subscriptions, page: 1, size: 10, total: 0 },
+    });
+    const { result } = renderHook(() =>
+      useFetchSubscriptions({
+        enabled: true,
+        viewOptions,
+        userName: 'myUserName',
+      }),
+    );
+    await waitFor(() => {
+      expect(result.current.data).not.toBeUndefined();
+    });
+    expect(result.current.data.total).toEqual(subscriptions.length);
+  });
+
   it('returns expected data', async () => {
     apiRequestMock.get.mockResolvedValueOnce({
       data: { items: subscriptions, page: 1, size: 10, total: 20 },
