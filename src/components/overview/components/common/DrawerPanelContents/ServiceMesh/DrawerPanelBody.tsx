@@ -12,6 +12,7 @@ import {
 } from '@patternfly/react-core';
 
 import ExternalLink from '~/components/common/ExternalLink';
+import ServiceMeshThumbnail from '~/styles/images/ServiceMeshThumbnail.png';
 
 const ServiceMeshDrawerPanelBody = (
   <Stack hasGutter className="drawer-panel-content-body">
@@ -39,6 +40,18 @@ const ServiceMeshDrawerPanelBody = (
           </ExternalLink>
           for managing logging, metrics, and distributed tracing.
         </Text>
+      </TextContent>
+    </StackItem>
+    <StackItem>
+      <ExternalLink href="https://www.youtube.com/watch?v=6nyVOg2BZek" noIcon>
+        <img
+          src={ServiceMeshThumbnail}
+          alt="explanation-video"
+          className="drawer-panel-content__explanation-video"
+        />
+      </ExternalLink>
+      <TextContent>
+        <Text component={TextVariants.small}>Video duration 3:08</Text>
       </TextContent>
     </StackItem>
     <StackItem>
@@ -91,7 +104,9 @@ const ServiceMeshDrawerPanelBody = (
             'Service-to-service authentication',
             'Failure recovery',
           ].map((item) => (
-            <TextListItem data-testid="use-cases-list-item">{item}</TextListItem>
+            <TextListItem data-testid="use-cases-list-item" key={item}>
+              {item}
+            </TextListItem>
           ))}
         </TextList>
       </TextContent>
