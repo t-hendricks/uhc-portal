@@ -64,6 +64,7 @@ function OCMRolesDialog({ onSubmit, row, productId }: OCMRolesDialogProps) {
   const handleClose = () => {
     dispatch(closeModal());
     dispatch(OCMRolesActions.clearGrantOCMRoleResponse());
+    setIsDropdownOpen(false);
   };
 
   // close the dialog if submit is successful.
@@ -121,6 +122,7 @@ function OCMRolesDialog({ onSubmit, row, productId }: OCMRolesDialogProps) {
   const handleSubmit = () => {
     if (validateUsername(username)) {
       onSubmit(row, username, roleID);
+      setIsDropdownOpen(false);
     }
   };
 
@@ -215,9 +217,10 @@ function OCMRolesDialog({ onSubmit, row, productId }: OCMRolesDialogProps) {
             isOpen={isDropdownOpen}
             selected={roleID}
             toggle={toggle}
+            onOpenChange={(isDropdownOpen) => setIsDropdownOpen(isDropdownOpen)}
             onSelect={(e, selection) => {
               setRoleID(selection as string);
-              setIsDropdownOpen(false);
+              setIsDropdownOpen(!isDropdownOpen);
             }}
           >
             <SelectList aria-label="roles">
