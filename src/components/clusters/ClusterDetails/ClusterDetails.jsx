@@ -488,6 +488,7 @@ const ClusterDetails = (props) => {
             openDrawer={openDrawer}
             closeDrawer={closeDrawer}
             selectedCardTitle={selectedCardTitle}
+            hasNetworkOndemand={hasNetworkOndemand}
           >
             <TabsRow
               tabsInfo={{
@@ -551,7 +552,6 @@ const ClusterDetails = (props) => {
                 refresh={refresh}
                 openModal={openModal}
                 insightsData={insightsData[cluster.external_id]}
-                hasNetworkOndemand={hasNetworkOndemand}
                 userAccess={userAccess}
                 chromeHistory={chromeHistory}
               />

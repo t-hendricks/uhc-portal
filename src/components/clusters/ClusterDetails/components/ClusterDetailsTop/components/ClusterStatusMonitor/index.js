@@ -8,7 +8,7 @@ import {
   getInflightChecks,
   getRerunInflightChecks,
   rerunInflightChecks,
-} from '../../../../../../redux/actions/clustersActions';
+} from '~/redux/actions/clustersActions';
 
 import ClusterStatusMonitor from './ClusterStatusMonitor';
 

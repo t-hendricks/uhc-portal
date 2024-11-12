@@ -8,7 +8,7 @@ import {
 } from '~/queries/ClusterDetailsQueries/ClusterStatusMonitor/useFetchInflightChecks';
 import { render, screen, within } from '~/testUtils';
 
-import fixtures from '../../../__tests__/ClusterDetails.fixtures';
+import fixtures from '../../../../__tests__/ClusterDetails.fixtures';
 
 import ClusterStatusMonitor from './ClusterStatusMonitor';
 

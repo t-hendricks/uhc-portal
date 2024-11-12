@@ -32,7 +32,6 @@ import ResourceUsage from '../../../common/ResourceUsage/ResourceUsage';
 import { hasResourceUsageMetrics } from '../Monitoring/monitoringHelper';
 
 import InsightsAdvisor from './InsightsAdvisor/InsightsAdvisor';
-import ClusterStatusMonitor from './ClusterStatusMonitor';
 import CostBreakdownCard from './CostBreakdownCard';
 import DetailsLeft from './DetailsLeft';
 import DetailsRight from './DetailsRight';
@@ -54,7 +53,6 @@ const Overview = (props) => {
     canSubscribeOCP,
     clusterDetailsLoading,
     isSubscriptionSettingsRequestPending,
-    region,
   } = props;
 
   const [showInstallSuccessAlert, setShowInstallSuccessAlert] = useState(false);
@@ -184,10 +182,6 @@ const Overview = (props) => {
               }
             />
           )}
-          {/* TODO: Part of installation story */}
-          {shouldMonitorStatus && (
-            <ClusterStatusMonitor region={region} refresh={refresh} cluster={cluster} />
-          )}
           {showAssistedInstallerDetailCard && (
             <AssistedInstallerDetailCard
               permissions={getClusterAIPermissions(cluster)}
@@ -276,7 +270,6 @@ Overview.propTypes = {
   cloudProviders: PropTypes.object.isRequired,
   refresh: PropTypes.func,
   insightsData: PropTypes.object,
-  region: PropTypes.string,
   clusterDetailsLoading: PropTypes.bool,
   isSubscriptionSettingsRequestPending: PropTypes.bool,
   userAccess: PropTypes.shape({

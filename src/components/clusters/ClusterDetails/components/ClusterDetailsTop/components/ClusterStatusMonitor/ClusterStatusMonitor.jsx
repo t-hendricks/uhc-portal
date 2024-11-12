@@ -9,20 +9,19 @@ import MinusCircleIcon from '@patternfly/react-icons/dist/esm/icons/minus-circle
 import PlusCircleIcon from '@patternfly/react-icons/dist/esm/icons/plus-circle-icon';
 import { Table, TableVariant, Tbody, Td, Th, Thead, Tr } from '@patternfly/react-table';
 
+import getClusterName from '~/common/getClusterName';
 import { HAD_INFLIGHT_ERROR_LOCALSTORAGE_KEY } from '~/common/localStorageConstants';
 import { emailRegex } from '~/common/regularExpressions';
 import { useNavigate } from '~/common/routing';
-import ClusterStatusErrorDisplay from '~/components/clusters/common/ClusterStatusErrorDisplay';
-import { InflightCheckState } from '~/types/clusters_mgmt.v1';
-
-import getClusterName from '../../../../../../common/getClusterName';
-import { usePreviousProps } from '../../../../../../hooks/usePreviousProps';
-import ErrorModal from '../../../../../common/ErrorModal';
-import ExternalLink from '../../../../../common/ExternalLink';
 import clusterStates, {
   hasInflightEgressErrors,
   isOSDGCPWaitingForRolesOnHostProject,
-} from '../../../../common/clusterStates';
+} from '~/components/clusters/common/clusterStates';
+import ClusterStatusErrorDisplay from '~/components/clusters/common/ClusterStatusErrorDisplay';
+import ErrorModal from '~/components/common/ErrorModal';
+import ExternalLink from '~/components/common/ExternalLink';
+import { usePreviousProps } from '~/hooks/usePreviousProps';
+import { InflightCheckState } from '~/types/clusters_mgmt.v1';
 
 const ClusterStatusMonitor = (props) => {
   const {
@@ -95,10 +94,12 @@ const ClusterStatusMonitor = (props) => {
 
       // final state is READY
       const isClusterInstalling = (state) =>
-        state === clusterStates.INSTALLING ||
-        state === clusterStates.PENDING ||
-        state === clusterStates.VALIDATING ||
-        state === clusterStates.WAITING;
+        [
+          clusterStates.INSTALLING,
+          clusterStates.PENDING,
+          clusterStates.VALIDATING,
+          clusterStates.WAITING,
+        ].includes(state);
 
       // if not running any checks final state is success
       const shouldUpdateInflightChecks = () =>
@@ -289,7 +290,7 @@ const ClusterStatusMonitor = (props) => {
         // show spinner on rerun button
         const runningInflightCheck = wasRunClicked || isValidatorRunning;
         return (
-          <Alert variant="warning" isInline title="User action required">
+          <Alert variant="warning" isInline title="User action required" className="pf-v5-u-mt-md">
             <Flex direction={{ default: 'column' }}>
               <FlexItem>{`${reason}`}</FlexItem>
               {inflightTable && <FlexItem>{inflightTable}</FlexItem>}
@@ -369,7 +370,7 @@ const ClusterStatusMonitor = (props) => {
       reason.push(<strong>Compute Security Administrator, </strong>);
       reason.push(<strong>DNS Administrator.</strong>);
       return (
-        <Alert variant="warning" isInline title="Permissions needed:">
+        <Alert variant="warning" isInline title="Permissions needed:" className="pf-v5-u-mt-md">
           <Flex direction={{ default: 'column' }}>
             <FlexItem>{reason}</FlexItem>
             <FlexItem>
@@ -391,7 +392,12 @@ const ClusterStatusMonitor = (props) => {
     // Cluster install failure
     if (status.status.state === clusterStates.ERROR) {
       alerts.push(
-        <Alert variant="danger" isInline title={`${errorCode} Cluster installation failed`}>
+        <Alert
+          variant="danger"
+          isInline
+          title={`${errorCode} Cluster installation failed`}
+          className="pf-v5-u-mt-md"
+        >
           <p>
             This cluster cannot be recovered, however you can use the logs and network validation to
             diagnose the problem:
@@ -420,6 +426,7 @@ const ClusterStatusMonitor = (props) => {
           isInline
           title={`${errorCode} Installation is taking longer than expected`}
           data-testid="alert-long-install"
+          className="pf-v5-u-mt-md"
         >
           <ClusterStatusErrorDisplay clusterStatus={status.status} />
         </Alert>,
