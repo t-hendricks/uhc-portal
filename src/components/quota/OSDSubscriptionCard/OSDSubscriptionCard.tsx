@@ -137,11 +137,11 @@ const OSDSubscriptionCard = ({ quotaCost, marketplace, organizationID, fetchQuot
       rows.push([
         get(relatedResources[0], 'resource_type'),
         resourceName,
-        { title: getZoneType(get(relatedResources[0], 'availability_zone_type')) },
+        getZoneType(get(relatedResources[0], 'availability_zone_type')),
         getPlanType(get(relatedResources[0], 'byoc')),
         startCase(get(relatedResources[0], 'product')),
         `${quotaItem.consumed} of ${quotaItem.allowed}`,
-        { title: getCapacityIcon(quotaItem.consumed, quotaItem.allowed) },
+        getCapacityIcon(quotaItem.consumed, quotaItem.allowed),
       ]);
     });
   }
