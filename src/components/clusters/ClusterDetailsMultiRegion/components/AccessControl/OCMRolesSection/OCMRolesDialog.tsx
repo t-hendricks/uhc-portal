@@ -75,6 +75,7 @@ function OCMRolesDialog({
 
   const handleClose = () => {
     dispatch(closeModal());
+    setIsDropdownOpen(false);
   };
 
   // close the dialog if submit is successful.
@@ -132,6 +133,7 @@ function OCMRolesDialog({
   const handleSubmit = (username: string, role: string) => {
     if (validateUsername(username)) {
       onSubmit(row, username, roleID);
+      setIsDropdownOpen(false);
     }
   };
 
@@ -233,10 +235,11 @@ function OCMRolesDialog({
                 isOpen={isDropdownOpen}
                 selected={roleID}
                 toggle={toggle}
+                onOpenChange={(isDropdownOpen) => setIsDropdownOpen(isDropdownOpen)}
                 onSelect={(e, selection) => {
                   formik.setFieldValue('role', selection as string);
                   setRoleID(selection as string);
-                  setIsDropdownOpen(false);
+                  setIsDropdownOpen(!isDropdownOpen);
                 }}
               >
                 <SelectList aria-label="roles">
