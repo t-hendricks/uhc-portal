@@ -223,6 +223,8 @@ const editClusterConsoleURL = (id: string, subscriptionID: string, consoleURL: s
  * @param {*} items A collection of items
  * @param {string} field The field containing the ID to collect for the search
  */
+
+/* ************** START ARCHIVED CODE - DO NOT USE ********************* */
 const buildSearchQuery = (items: { [field: string]: unknown }[], field: string): string => {
   const IDs = new Set();
   items.forEach((item) => {
@@ -396,12 +398,16 @@ const fetchClustersAction = (params: Parameters<typeof fetchClustersAndPermissio
 const fetchClusters =
   (params: Parameters<typeof fetchClustersAndPermissions>[0]): AppThunk =>
   (dispatch, getState) => {
+    // eslint-disable-next-line no-console
+    console.warn('The fetchClusters action is deprecated and should not be used');
     // Fetch tech preview if not already in state
     if (!techPreviewStatusSelector(getState(), 'rosa', 'hcp')) {
       dispatchTechPreviewStatus(dispatch, 'rosa', 'hcp');
     }
     dispatch(fetchClustersAction(params));
   };
+
+/* ************** END ARCHIVED CODE - DO NOT USE ********************* */
 
 const fetchSingleClusterAndPermissions = async (
   subscriptionID: string,
@@ -707,7 +713,7 @@ type ClusterAction = ActionType<
   | typeof unarchiveCluster
   | typeof clearClusterUnarchiveResponse
   | typeof editClusterConsoleURL
-  | typeof fetchClustersAction
+  | typeof fetchClustersAction /* ARCHIVED CODE - DO NOT USE */
   | typeof fetchClusterDetails
   | typeof clearClusterDetails
   | typeof resetCreatedClusterResponse
@@ -725,7 +731,7 @@ const clustersActions = {
   createCluster,
   registerDisconnectedCluster,
   editCluster,
-  fetchClusters,
+  fetchClusters /* ARCHIVED CODE - DO NOT USE */,
   fetchClusterDetails,
   setClusterDetails,
   clearClusterDetails,
@@ -760,7 +766,7 @@ export {
   editClusterConsoleURL,
   editClusterDisplayName,
   fetchClusterDetails,
-  fetchClusters,
+  fetchClusters /* ARCHIVED CODE - DO NOT USE */,
   getClusterStatus,
   getInflightChecks,
   getRerunInflightChecks,

@@ -1,7 +1,6 @@
 import get from 'lodash/get';
 import { connect } from 'react-redux';
 
-import { fetchClusters } from '../../redux/actions/clustersActions';
 import { getUserAccess } from '../../redux/actions/costActions';
 import { getSummaryDashboard, getUnhealthyClusters } from '../../redux/actions/dashboardsActions';
 import { invalidateSubscriptions } from '../../redux/actions/subscriptionsActions';
@@ -12,7 +11,6 @@ import { fetchOrganizationInsights } from '../clusters/ClusterDetails/components
 import Dashboard from './Dashboard';
 
 const mapDispatchToProps = {
-  fetchClusters,
   getSummaryDashboard,
   getUnhealthyClusters,
   getUserAccess,
@@ -25,7 +23,6 @@ const mapStateToProps = (state) => ({
   summaryDashboard: state.dashboards.summary,
   unhealthyClusters: state.dashboards.unhealthyClusters,
   viewOptions: state.viewOptions[viewConstants.OVERVIEW_VIEW],
-  clusters: state.clusters.clusters,
   insightsOverview: state.insightsData.overview,
   userAccess: state.cost.userAccess,
   organization: state.userProfile.organization,
