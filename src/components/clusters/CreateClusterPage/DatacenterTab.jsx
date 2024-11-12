@@ -12,11 +12,7 @@ import {
   Title,
 } from '@patternfly/react-core';
 import OutlinedQuestionCircleIcon from '@patternfly/react-icons/dist/esm/icons/outlined-question-circle-icon';
-import {
-  Table as TableDeprecated,
-  TableBody as TableBodyDeprecated,
-  TableHeader as TableHeaderDeprecated,
-} from '@patternfly/react-table/deprecated';
+import { Table, Tbody, Td, Th, Thead, Tr } from '@patternfly/react-table';
 
 import { Link } from '~/common/routing';
 
@@ -121,15 +117,21 @@ const DatacenterTab = () => (
           installer program.
         </StackItem>
         <StackItem>
-          <TableDeprecated
-            className="install-options-table"
-            aria-label="Installation options table"
-            cells={ocpTableColumns}
-            rows={ocpTableRows}
-          >
-            <TableHeaderDeprecated />
-            <TableBodyDeprecated />
-          </TableDeprecated>
+          <Table className="install-options-table" aria-label="Installation options table">
+            <Thead>
+              {ocpTableColumns.map((column) => (
+                <Th>{column}</Th>
+              ))}
+            </Thead>
+            <Tbody>
+              {ocpTableRows.map((row) => (
+                <Tr>
+                  <Td>{row[0]}</Td>
+                  <Td>{row[1]}</Td>
+                </Tr>
+              ))}
+            </Tbody>
+          </Table>
         </StackItem>
       </Stack>
     </PageSection>
