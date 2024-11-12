@@ -34,6 +34,7 @@ import { shouldShowLogs } from '../Overview/InstallationLogView';
 
 import ClusterNonEditableAlert from './components/ClusterNonEditableAlert';
 import ClusterProgressCard from './components/ClusterProgressCard';
+import ClusterStatusMonitor from './components/ClusterStatusMonitor';
 import ExpirationAlert from './components/ExpirationAlert';
 import GcpOrgPolicyAlert from './components/GcpOrgPolicyAlert';
 import LimitedSupportAlert from './components/LimitedSupportAlert';
@@ -92,6 +93,7 @@ function ClusterDetailsTop(props) {
     openDrawer,
     closeDrawer,
     selectedCardTitle,
+    hasNetworkOndemand,
   } = props;
 
   const hasAlertBeenDismissed = localStorage.getItem(
@@ -241,6 +243,16 @@ function ClusterDetailsTop(props) {
     cluster.state !== clusterStates.READY &&
     cluster.state !== clusterStates.UNINSTALLING;
 
+  const shouldShowStatusMonitor =
+    [
+      clusterStates.WAITING,
+      clusterStates.PENDING,
+      clusterStates.INSTALLING,
+      clusterStates.ERROR,
+      clusterStates.UNINSTALLING,
+    ].includes(cluster.state) ||
+    (hasInflightEgressErrors(cluster) && hasNetworkOndemand);
+
   return (
     <div id="cl-details-top" className="top-row">
       <Split>
@@ -297,6 +309,10 @@ function ClusterDetailsTop(props) {
         isOSD={isOSD}
         isROSA={isROSA}
       />
+
+      {shouldShowStatusMonitor ? (
+        <ClusterStatusMonitor refresh={refreshFunc} cluster={cluster} />
+      ) : null}
 
       {showIDPMessage && (
         <Split>
@@ -368,6 +384,7 @@ ClusterDetailsTop.propTypes = {
   openDrawer: PropTypes.func,
   closeDrawer: PropTypes.func,
   selectedCardTitle: PropTypes.string,
+  hasNetworkOndemand: PropTypes.bool,
 };
 
 export default ClusterDetailsTop;

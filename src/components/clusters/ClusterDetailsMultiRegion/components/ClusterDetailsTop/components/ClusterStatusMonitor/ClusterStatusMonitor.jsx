@@ -11,10 +11,17 @@ import PlusCircleIcon from '@patternfly/react-icons/dist/esm/icons/plus-circle-i
 import { Table, TableVariant, Tbody, Td, Th, Thead, Tr } from '@patternfly/react-table';
 import { addNotification } from '@redhat-cloud-services/frontend-components-notifications/redux';
 
+import getClusterName from '~/common/getClusterName';
 import { HAD_INFLIGHT_ERROR_LOCALSTORAGE_KEY } from '~/common/localStorageConstants';
 import { emailRegex } from '~/common/regularExpressions';
 import { useNavigate } from '~/common/routing';
+import clusterStates, {
+  hasInflightEgressErrors,
+  isOSDGCPWaitingForRolesOnHostProject,
+} from '~/components/clusters/common/clusterStates';
 import ClusterStatusErrorDisplay from '~/components/clusters/commonMultiRegion/ClusterStatusErrorDisplay';
+import ErrorModal from '~/components/common/ErrorModal';
+import ExternalLink from '~/components/common/ExternalLink';
 import {
   useFetchClusterStatus,
   useInvalidateFetchClusterStatus,
@@ -27,14 +34,6 @@ import {
   useMutateRerunInflightChecks,
 } from '~/queries/ClusterDetailsQueries/ClusterStatusMonitor/useFetchInflightChecks';
 import { InflightCheckState } from '~/types/clusters_mgmt.v1';
-
-import getClusterName from '../../../../../../common/getClusterName';
-import ErrorModal from '../../../../../common/ErrorModal';
-import ExternalLink from '../../../../../common/ExternalLink';
-import clusterStates, {
-  hasInflightEgressErrors,
-  isOSDGCPWaitingForRolesOnHostProject,
-} from '../../../../common/clusterStates';
 
 // TODO: Part of the installation story
 const ClusterStatusMonitor = (props) => {
@@ -96,10 +95,12 @@ const ClusterStatusMonitor = (props) => {
     if (!isClusterStatusLoading && !isInflightChecksLoading && clusterStatus && inflightChecks) {
       // final state is READY
       const isClusterInstalling = (state) =>
-        state === clusterStates.INSTALLING ||
-        state === clusterStates.PENDING ||
-        state === clusterStates.VALIDATING ||
-        state === clusterStates.WAITING;
+        [
+          clusterStates.INSTALLING,
+          clusterStates.PENDING,
+          clusterStates.VALIDATING,
+          clusterStates.WAITING,
+        ].includes(state);
       setRefetchInterval(false);
       // if not running any checks final state is success
       const shouldUpdateInflightChecks = () =>
