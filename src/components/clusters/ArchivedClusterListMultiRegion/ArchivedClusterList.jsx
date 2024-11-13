@@ -278,7 +278,7 @@ const ClusterList = ({
                 {/* <ClusterListActions /> */}
                 <ViewOnlyMyClustersToggle
                   view={ARCHIVED_CLUSTERS_VIEW}
-                  bodyContent="Show only the clusters you previously created, or all clusters in your organization."
+                  bodyContent="Show only the clusters you previously archived, or all archived clusters in your organization."
                   localStorageKey={ONLY_MY_CLUSTERS_TOGGLE_CLUSTER_ARCHIVES_LIST}
                 />
                 <ToolbarItem className="pf-v5-l-split__item split-margin-left">
