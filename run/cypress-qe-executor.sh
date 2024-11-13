@@ -68,7 +68,13 @@ cat > cypress.env.json << EOF
 "QE_INFRA_GCP": {
   "VPC_NAME" : "ocmui-cypress-vpc",
   "CONTROLPLANE_SUBNET" : "ocmui-cypress-first-subnet",
-  "COMPUTE_SUBNET":"ocmui-cypress-second-subnet"
+  "COMPUTE_SUBNET":"ocmui-cypress-second-subnet",
+  "PSC_INFRA" : {
+    "VPC_NAME" : "ocmui-cypress-auto-psc-vpc",
+    "CONTROLPLANE_SUBNET" : "ocmui-cypress-auto-psc-control-plane",
+    "COMPUTE_SUBNET":"ocmui-cypress-auto-psc-worker",
+    "PRIVATE_SERVICE_CONNECT_SUBNET" : "ocmui-cypress-auto-psc-psc"
+  }
   }
 }
 EOF

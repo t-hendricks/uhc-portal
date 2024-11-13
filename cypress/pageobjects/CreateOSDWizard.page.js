@@ -209,6 +209,8 @@ class CreateOSDCluster extends Page {
 
   installIntoExistingVpcValue = () => cy.getByTestId('Install-into-existing-VPC').find('div');
 
+  privateServiceConnectValue = () => cy.getByTestId('Private-service-connect').find('div');
+
   applicationIngressValue = () => cy.getByTestId('Application-ingress').find('div');
 
   routeSelectorsValue = () => cy.getByTestId('Route-selectors').find('div');
@@ -248,6 +250,8 @@ class CreateOSDCluster extends Page {
   addNodeLabelLink = () => cy.get('span').contains('Add node labels');
 
   installIntoExistingVpcCheckBox = () => cy.get('input[id="install_to_vpc"]');
+
+  usePrivateServiceConnectCheckBox = () => cy.get('input[id="private_service_connect"]');
 
   applicationIngressDefaultSettingsRadio = () =>
     cy.get('input[id="form-radiobutton-applicationIngress-default-field"]');
@@ -334,6 +338,9 @@ class CreateOSDCluster extends Page {
     cy.get('select[aria-label="Compute subnet name"]').select(subnetName);
   }
 
+  selectPrivateServiceConnectSubnetName(pscName) {
+    cy.get('select[aria-label="Private Service Connect subnet name"]').select(pscName);
+  }
   selectKeylocation(location) {
     cy.get('select[aria-label="KMS location"]').select(location);
   }
@@ -444,9 +451,9 @@ class CreateOSDCluster extends Page {
 
   selectClusterPrivacy(privacy) {
     if (privacy.toLowerCase() == 'private') {
-      this.clusterPrivacyPrivateRadio().check();
+      this.clusterPrivacyPrivateRadio().check({ force: true });
     } else {
-      this.clusterPrivacyPublicRadio().check();
+      this.clusterPrivacyPublicRadio().check({ force: true });
     }
   }
 
