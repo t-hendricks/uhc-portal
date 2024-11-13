@@ -7,6 +7,7 @@ const clusterProfiles = [
   'osd-ccs-gcp-public-multizone-serviceaccount',
   'osd-ccs-gcp-private-multizone-serviceaccount',
   'osd-ccs-gcp-public-multizone-wif',
+  'osd-ccs-gcp-private-multizone-wif',
 ];
 
 describe(

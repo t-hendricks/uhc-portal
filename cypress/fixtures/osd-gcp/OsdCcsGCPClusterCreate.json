@@ -124,6 +124,7 @@
       },
       "ClusterAutoscaling": "Enabled",
       "InstallIntoExistingVPC": "Enabled",
+      "UsePrivateServiceConnect": "Disabled",
       "ClusterPrivacy": "Private",
       "MachineCIDR": "10.0.0.0/22",
       "ServiceCIDR": "172.30.0.0/16",
@@ -131,7 +132,7 @@
       "HostPrefix": "/23",
       "ApplicationIngress": "Custom settings",
       "RouteSelector": {
-        "KeyValue": "ocmcypress-tests-routerkey=cyp-osd-ccs-gcp-public"
+        "KeyValue": "ocmcypress-tests-routerkey=cyp-osd-ccs-gcp-private"
       },
       "ExcludedNamespaces": {
         "Values": "availability,multi-zone,namespaces"
@@ -208,6 +209,66 @@
           {
             "Key": "name",
             "Value": "cyp-ccs-gcp-public-mz-wif-profile"
+          }
+        ]
+      }
+    },
+    "day2-profile": {
+      "Overview": {}
+    }
+  },
+  "osd-ccs-gcp-private-multizone-wif": {
+    "day1-profile": {
+      "Description": "osd ccs gcp private PSC (WIF) cluster with custom configuration",
+      "Type": "OSD",
+      "CloudProvider": "Google Cloud Platform (GCP)",
+      "SubscriptionType": "Annual: Fixed capacity subscription from Red Hat",
+      "SubscriptionBillingModel": "Annual Red Hat subscriptions",
+      "InfrastructureType": "Customer cloud subscription",
+      "AuthenticationType": "Workload Identity Federation",
+      "DomainPrefix": "cypgcppscwif",
+      "ClusterName": "cyp-ccs-gcp-private-psc-wif-profile",
+      "Region": "us-central1, Council Bluffs, Iowa, USA",
+      "Availability": "Multi-zone",
+      "AdditionalEncryption": "Enabled",
+      "FIPSCryptography": "Enabled",
+      "SecureBootSupportForShieldedVMs": "Enabled",
+      "UserWorkloadMonitoring": "Enabled",
+      "EncryptVolumesWithCustomKeys": "Enabled",
+      "EncryptCustomKeys": {
+        "KeyRingLocation": "global",
+        "KeyRing": "xueliring",
+        "KeyName": "xuelikey",
+        "KmsServiceAccount": "***REMOVED***"
+      },
+      "ClusterAutoscaling": "Enabled",
+      "InstallIntoExistingVPC": "Enabled",
+      "UsePrivateServiceConnect": "Enabled",
+      "ClusterPrivacy": "Private",
+      "MachineCIDR": "10.0.0.0/16",
+      "ServiceCIDR": "172.30.0.0/16",
+      "PodCIDR": "10.128.0.0/14",
+      "HostPrefix": "/23",
+      "ApplicationIngress": "Custom settings",
+      "RouteSelector": {
+        "KeyValue": "ocmcypress-tests-routerkey=cyp-osd-ccs-gcp-wif-private-psc"
+      },
+      "ExcludedNamespaces": {
+        "Values": "availability,multi-zone,namespaces,wif,psc"
+      },
+      "WildcardPolicy": "Disallowed",
+      "NamespaceOwnershipPolicy": "Strict namespace ownership",
+      "UpdateStrategy": "Individual updates",
+      "NodeDraining": "1 hour",
+      "MachinePools": {
+        "InstanceType": "custom-4-16384",
+        "Autoscaling": "Enabled",
+        "MinimumNodeCount": "3",
+        "MaximumNodeCount": "4",
+        "NodeLabel": [
+          {
+            "Key": "name",
+            "Value": "cyp-ccs-gcp-private-psc-mz-wif-profile"
           }
         ]
       }
