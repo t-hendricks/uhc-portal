@@ -83,14 +83,18 @@ const ControlPlaneField = ({
   };
 
   return (
-    <>
-      <HostedTile
-        handleChange={handleChange}
-        isSelected={value === 'true'}
-        isHostedDisabled={isHostedDisabled}
-      />
-      <StandAloneTile handleChange={handleChange} isSelected={value === 'false'} />
-    </>
+    <Grid hasGutter span={3}>
+      <GridItem>
+        <HostedTile
+          handleChange={handleChange}
+          isSelected={value === 'true'}
+          isHostedDisabled={isHostedDisabled}
+        />
+      </GridItem>
+      <GridItem>
+        <StandAloneTile handleChange={handleChange} isSelected={value === 'false'} />
+      </GridItem>
+    </Grid>
   );
 };
 
