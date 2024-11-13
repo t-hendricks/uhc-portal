@@ -95,18 +95,16 @@ describe('OSD Wizard validation tests(OCP-54134,OCP-73204)', { tags: ['smoke'] }
           );
           CreateOSDWizardPage.awsAccountIDInput()
             .clear()
-            .type(
-              ClustersValidation.ClusterSettings.CloudProvider.AWS.InValidAWSAccountIdValues[0],
-            );
+            .type(ClustersValidation.ClusterSettings.CloudProvider.AWS.InValidAWSAccountIdValues[0])
+            .blur();
           CreateOSDWizardPage.isTextContainsInPage(
             ClustersValidation.ClusterSettings.CloudProvider.AWS.InValidAWSAccountIdError,
           );
           CreateOSDWizardPage.wizardNextButton().click();
           CreateOSDWizardPage.awsAccountIDInput()
             .clear()
-            .type(
-              ClustersValidation.ClusterSettings.CloudProvider.AWS.InValidAWSAccountIdValues[1],
-            );
+            .type(ClustersValidation.ClusterSettings.CloudProvider.AWS.InValidAWSAccountIdValues[1])
+            .blur();
           CreateOSDWizardPage.wizardNextButton().click();
           CreateOSDWizardPage.isTextContainsInPage(
             ClustersValidation.ClusterSettings.CloudProvider.AWS.InValidAWSAccountIdError,
@@ -143,6 +141,7 @@ describe('OSD Wizard validation tests(OCP-54134,OCP-73204)', { tags: ['smoke'] }
       CreateOSDWizardPage.isTextContainsInPage(
         ClustersValidation.ClusterSettings.Details.Common.InvalidClusterNamesErrors[2],
       );
+      cy.get(CreateOSDWizardPage.clusterNameInput).clear().type('wizardvalid').blur();
       CreateOSDWizardPage.createCustomDomainPrefixCheckbox().scrollIntoView().check();
       CreateOSDWizardPage.domainPrefixInput()
         .scrollIntoView()
@@ -197,7 +196,6 @@ describe('OSD Wizard validation tests(OCP-54134,OCP-73204)', { tags: ['smoke'] }
           CreateOSDWizardPage.useDefaultKMSKeyRadio().check();
         }
       }
-      cy.get(CreateOSDWizardPage.clusterNameInput).clear().type('wizardvalid');
       CreateOSDWizardPage.wizardNextButton().click();
     });
     it(`OSD wizard - ${clusterProperties.CloudProvider} -${clusterProperties.SubscriptionType}-${clusterProperties.InfrastructureType} : Cluster Settings - Machinepool(nodes) field validations`, () => {
@@ -209,16 +207,14 @@ describe('OSD Wizard validation tests(OCP-54134,OCP-73204)', { tags: ['smoke'] }
           ? ClustersValidation.ClusterSettings.Machinepool.NodeCount.CCS
           : ClustersValidation.ClusterSettings.Machinepool.NodeCount.NonCCS;
       CreateOSDWizardPage.isTextContainsInPage(machinePoolProperties.SingleZone.LowerLimitError);
-      CreateOSDWizardPage.setMinimumNodeCount('200');
+      CreateOSDWizardPage.setMinimumNodeCount('500');
       CreateOSDWizardPage.isTextContainsInPage(machinePoolProperties.SingleZone.UpperLimitError);
       CreateOSDWizardPage.isTextContainsInPage(
         machinePoolProperties.SingleZone.MinAndMaxLimitDependencyError,
       );
       CreateOSDWizardPage.setMinimumNodeCount(isCCSCluster === true ? '2' : '4');
-      CreateOSDWizardPage.setMaximumNodeCount('200');
-      CreateOSDWizardPage.isTextContainsInPage(
-        machinePoolProperties.SingleZone.MinAndMaxLimitDependencyError,
-      );
+      CreateOSDWizardPage.setMaximumNodeCount('500');
+      CreateOSDWizardPage.isTextContainsInPage(machinePoolProperties.SingleZone.UpperLimitError);
       CreateOSDWizardPage.setMaximumNodeCount('0');
       CreateOSDWizardPage.isTextContainsInPage(machinePoolProperties.SingleZone.LowerLimitError);
       CreateOSDWizardPage.setMaximumNodeCount(isCCSCluster === true ? '2' : '4');
@@ -238,16 +234,14 @@ describe('OSD Wizard validation tests(OCP-54134,OCP-73204)', { tags: ['smoke'] }
 
       CreateOSDWizardPage.setMinimumNodeCount('0');
       CreateOSDWizardPage.isTextContainsInPage(machinePoolProperties.MultiZone.LowerLimitError);
-      CreateOSDWizardPage.setMinimumNodeCount('200');
+      CreateOSDWizardPage.setMinimumNodeCount('500');
       CreateOSDWizardPage.isTextContainsInPage(machinePoolProperties.MultiZone.UpperLimitError);
       CreateOSDWizardPage.isTextContainsInPage(
         machinePoolProperties.MultiZone.MinAndMaxLimitDependencyError,
       );
       CreateOSDWizardPage.setMinimumNodeCount(isCCSCluster === true ? '2' : '3');
-      CreateOSDWizardPage.setMaximumNodeCount('200');
-      CreateOSDWizardPage.isTextContainsInPage(
-        machinePoolProperties.MultiZone.MinAndMaxLimitDependencyError,
-      );
+      CreateOSDWizardPage.setMaximumNodeCount('500');
+      CreateOSDWizardPage.isTextContainsInPage(machinePoolProperties.MultiZone.UpperLimitError);
       CreateOSDWizardPage.setMaximumNodeCount('0');
       CreateOSDWizardPage.isTextContainsInPage(machinePoolProperties.MultiZone.LowerLimitError);
       CreateOSDWizardPage.setMaximumNodeCount(isCCSCluster === true ? '2' : '3');
@@ -323,7 +317,7 @@ describe('OSD Wizard validation tests(OCP-54134,OCP-73204)', { tags: ['smoke'] }
         0,
       );
       CreateOSDWizardPage.isTextContainsInPage(
-        ClustersValidation.ClusterSettings.Machinepool.Common.NodeLabel[2].KeyError,
+        ClustersValidation.ClusterSettings.Machinepool.Common.NodeLabel[2].LabelError,
       );
       CreateOSDWizardPage.addNodeLabelKeyAndValue(
         'example12-ing.com/MyName',
