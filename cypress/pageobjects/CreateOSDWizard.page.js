@@ -543,8 +543,8 @@ class CreateOSDCluster extends Page {
   }
 
   addNodeLabelKeyAndValue(key, value = '', index = 0) {
-    cy.get(`input[id="node_labels.${index}.key"]`).clear().type(key);
-    cy.get(`input[id="node_labels.${index}.value"]`).clear().type(value);
+    cy.get(`input[id="node_labels.${index}.key"]`).clear().type(key).blur();
+    cy.get(`input[id="node_labels.${index}.value"]`).clear().type(value).blur();
   }
 
   selectNodeDraining(nodeDrain) {
@@ -554,15 +554,12 @@ class CreateOSDCluster extends Page {
 
   isTextContainsInPage(text, present = true) {
     if (present) {
-      cy.get('body').then(($body) => {
-        if ($body.text().includes(text)) {
-          cy.contains(text).scrollIntoView().should('be.visible');
-        }
-      });
+      cy.contains(text).should('be.exist').should('be.visible');
     } else {
       cy.contains(text).should('not.exist');
     }
   }
+
   uploadGCPServiceAccountJSON(jsonContent) {
     cy.get('textarea[aria-label="File upload"]')
       .clear()

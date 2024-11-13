@@ -172,6 +172,9 @@ class CreateRosaCluster extends Page {
   clusterAutoscalingMemoryTotalMaxInput = () =>
     cy.get('input[id="cluster_autoscaling.resource_limits.memory.max"]');
 
+  clusterAutoscalingMaxNodesTotalInput = () =>
+    cy.get('input[id="cluster_autoscaling.resource_limits.max_nodes_total"]');
+
   clusterAutoscalingGPUsInput = () =>
     cy.get('input[id="cluster_autoscaling.resource_limits.gpus"]');
 
@@ -230,18 +233,6 @@ class CreateRosaCluster extends Page {
 
   isCreateRosaPage() {
     super.assertUrlIncludes('/openshift/create/rosa/wizard');
-  }
-
-  isTextContainsInPage(text, present = true) {
-    if (present) {
-      cy.get('body').then(($body) => {
-        if ($body.text().includes(text)) {
-          cy.contains(text).scrollIntoView().should('be.visible');
-        }
-      });
-    } else {
-      cy.contains(text).should('not.exist');
-    }
   }
 
   isAccountsAndRolesScreen() {
@@ -335,11 +326,7 @@ class CreateRosaCluster extends Page {
 
   isTextContainsInPage(text, present = true) {
     if (present) {
-      cy.get('body').then(($body) => {
-        if ($body.text().includes(text)) {
-          cy.contains(text).scrollIntoView().should('be.visible');
-        }
-      });
+      cy.contains(text).should('be.exist').should('be.visible');
     } else {
       cy.contains(text).should('not.exist');
     }
@@ -455,7 +442,7 @@ class CreateRosaCluster extends Page {
   }
 
   waitForVPCList() {
-    cy.get('span.pf-v5-c-button__progress', { timeout: 80000 }).should('not.exist');
+    cy.get('span.pf-v5-c-button__progress', { timeout: 100000 }).should('not.exist');
     cy.getByTestId('refresh-vpcs', { timeout: 80000 }).should('not.be.disabled');
   }
 
