@@ -20,8 +20,8 @@ const StandAloneTile = ({ handleChange, isSelected }: StandAloneTileProps) => (
     data-testid="standalone-control-planes"
   >
     <Text component={TextVariants.p} className={defaultMarginBottomSpacing}>
-      Run an OpenShift cluster where the control plane and data plane are coupled. The control plane
-      is hosted by a dedicated group of physical or virtual nodes and the network stack is shared.
+      Run an OpenShift cluster with a coupled control and data plane, hosted on dedicated nodes with
+      a shared network
     </Text>
     <List isPlain className={defaultMarginBottomSpacing}>
       <ListItem>Control plane resources are hosted in your own AWS account</ListItem>
