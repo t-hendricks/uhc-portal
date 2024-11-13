@@ -70,6 +70,8 @@ describe('Rosa hosted(Hypershift) cluster wizard validations', { tags: ['smoke',
     CreateRosaWizardPage.isTextContainsInPage(
       clusterFieldValidations.ClusterSettings.Details.InvalidClusterNamesErrors[2],
     );
+    CreateRosaWizardPage.setClusterName(clusterName);
+    CreateRosaWizardPage.closePopoverDialogs();
     CreateRosaWizardPage.createCustomDomainPrefixCheckbox().scrollIntoView().check();
     CreateRosaWizardPage.setDomainPrefix(
       clusterFieldValidations.ClusterSettings.Details.InvalidDomainPrefixValues[0],
@@ -93,8 +95,6 @@ describe('Rosa hosted(Hypershift) cluster wizard validations', { tags: ['smoke',
       clusterFieldValidations.ClusterSettings.Details.InvalidDomainPrefixErrors[2],
     );
     CreateRosaWizardPage.createCustomDomainPrefixCheckbox().uncheck();
-    CreateRosaWizardPage.setClusterName(clusterName);
-    CreateRosaWizardPage.closePopoverDialogs();
     CreateRosaWizardPage.advancedEncryptionLink().click();
     CreateRosaWizardPage.useCustomKMSKeyRadio().check();
     CreateRosaWizardPage.rosaNextButton().click({ force: true });
