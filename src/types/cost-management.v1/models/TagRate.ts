@@ -5,12 +5,12 @@
 export type TagRate = {
   readonly uuid?: string;
   metric: Record<string, any>;
-  cost_type?: TagRate.cost_type;
+  'cost-type'?: TagRate.CostType;
   description?: string;
   tag_rates?: any;
 };
 export namespace TagRate {
-  export enum cost_type {
+  export enum CostType {
     INFRASTRUCTURE = 'Infrastructure',
     SUPPLEMENTARY = 'Supplementary',
   }
