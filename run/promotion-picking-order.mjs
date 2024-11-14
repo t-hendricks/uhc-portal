@@ -631,7 +631,7 @@ async function reportOrder(jiraToken, branch, verbose) {
       heldBackNotes.reverse().forEach((note) => console.log(note));
     }
 
-    console.log('\n\n===========================BLOCKERS==============================');
+    console.log('\n\n================ ===========BLOCKERS==============================');
     if (Object.keys(allBlockingCommits).length) {
       console.log('\nThese commit approvals are holding back these commits.\n');
       Object.entries(allBlockingCommits).forEach(([key, set]) => {
