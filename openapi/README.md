@@ -5,7 +5,6 @@ Run `make openapi` (at the root level) to grab new ones and `yarn gen-types` to 
 
 As of this writing we must do a few manual changes on the generated Type definitions:
 
-- cost-management.v1/models/TagRate.ts and cost-management.v1/models/TieredRate.ts: Revert the lines for `cost-type` that use a bad syntax.
 - insights-results-aggregator.(v1|v2)/models/reportData.ts: Revert the definitions of `user_vote` to avoid a syntax `enum user_vote { _1 = '-1', _0 = '0', _1 = '1', }`
 - insights-results-aggregator.v2/models/systemWideRuleDisableList.ts: Revert the line for `updated_at` with missing type
 - accounts_mgmt.v1/models/SelfAccessReview.ts: Do not remove the entries on `resource_type` for `Idp`, `ClusterAutoscaler` and `MachinePool`
