@@ -94,7 +94,11 @@ export const createClusterRequest = ({ isWizard = true, cloudProviderID, product
         max_replicas: maxNodes * formData.machinePoolsSubnets.length,
       };
     } else {
-      clusterRequest.autoscaler = getClusterAutoScalingSubmitSettings(formData.cluster_autoscaling);
+      if (formData.byoc === 'true') {
+        clusterRequest.autoscaler = getClusterAutoScalingSubmitSettings(
+          formData.cluster_autoscaling,
+        );
+      }
       clusterRequest.nodes.autoscale_compute = {
         min_replicas: isMultiAz ? minNodes * 3 : minNodes,
         max_replicas: isMultiAz ? maxNodes * 3 : maxNodes,
