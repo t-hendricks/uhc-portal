@@ -365,7 +365,7 @@ class CreateRosaCluster extends Page {
   }
 
   selectStandaloneControlPlaneTypeOption() {
-    cy.getByTestId('standalone-control-planes').click();
+    cy.getByTestId('standalone-control-planes').click({ force: true });
     cy.getByTestId('standalone-control-planes')
       .should('have.attr', 'aria-selected')
       .then((isSelected) => {
@@ -374,7 +374,7 @@ class CreateRosaCluster extends Page {
   }
 
   selectHostedControlPlaneTypeOption() {
-    cy.getByTestId('hosted-control-planes').click();
+    cy.getByTestId('hosted-control-planes').click({ force: true });
     cy.getByTestId('hosted-control-planes')
       .should('have.attr', 'aria-selected')
       .then((isSelected) => {
