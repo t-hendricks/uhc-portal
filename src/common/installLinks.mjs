@@ -62,6 +62,9 @@ const MIRROR_MIRROR_REGISTRY_LATEST = 'https://mirror.openshift.com/pub/cgw/mirr
 const ARGO_CD_CLI_LATEST =
   'https://developers.redhat.com/content-gateway/rest/browse/pub/openshift-v4/clients/openshift-gitops/latest/';
 
+const SHP_CLI_LATEST =
+  'https://developers.redhat.com/content-gateway/rest/browse/pub/openshift-v4/clients/openshift-builds/latest/';
+
 const DOCS_BASE = 'https://docs.openshift.com/container-platform/4.17';
 const OSD_DOCS_BASE = 'https://docs.openshift.com/dedicated';
 const ROSA_DOCS_BASE = 'https://docs.openshift.com/rosa';
@@ -281,6 +284,8 @@ const links = {
 
   ARGO_CD_DOCS: `https://docs.openshift.com/gitops/1.13/installing_gitops/installing-argocd-gitops-cli.html`,
 
+  SHP_CLI_DOCS: `https://docs.redhat.com/en/documentation/builds_for_red_hat_openshift/1.1/html-single/work_with_builds/index`,
+
   INSTALL_MIRROR_REGISTRY_LEARN_MORE: `${DOCS_BASE}/disconnected/mirroring/installing-mirroring-installation-images.html#installation-about-mirror-registry_installing-mirroring-installation-images`,
   INSTALL_OC_MIRROR_PLUGIN_LEARN_MORE: `${DOCS_BASE}/disconnected/mirroring/installing-mirroring-installation-images.html`,
 
@@ -392,6 +397,7 @@ const tools = {
   TKN: 'tkn',
   COPY_PULLREQUEST: 'copy-pull-secret',
   ARGO_CD: 'argo-cd',
+  SHP_CLI: 'shp-cli',
 };
 
 const channels = {
@@ -895,6 +901,16 @@ const urls = {
       [architectures.arm]: {
         [operatingSystems.linux]: `${ARGO_CD_CLI_LATEST}argocd-linux-arm64.tar.gz`,
         [operatingSystems.mac]: `${ARGO_CD_CLI_LATEST}argocd-macos-arm64.tar.gz`,
+      },
+    },
+  },
+
+  [tools.SHP_CLI]: {
+    [channels.STABLE]: {
+      [architectures.x86]: {
+        [operatingSystems.linux]: `${SHP_CLI_LATEST}shp-linux-amd64.tar.gz`,
+        [operatingSystems.windows]: `${SHP_CLI_LATEST}shp-windows-amd64.zip`,
+        [operatingSystems.mac]: `${SHP_CLI_LATEST}shp-darwin-amd64.tar.gz`,
       },
     },
   },
