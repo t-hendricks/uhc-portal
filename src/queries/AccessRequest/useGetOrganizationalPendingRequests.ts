@@ -33,7 +33,6 @@ export const useGetOrganizationalPendingRequests = (
     queryKey,
     enabled: !!isOrganizationAccessProtectionEnabled && !!organizationId,
     queryFn: () => accessRequestService.getAccessRequests(apiParams),
-    staleTime: queryConstants.STALE_TIME,
   });
 
   return {

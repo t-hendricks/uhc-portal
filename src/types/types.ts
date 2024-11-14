@@ -120,6 +120,7 @@ export type ErrorState = {
   pending: boolean;
   fulfilled: false;
   error: true;
+  reason?: string;
   errorCode?: number;
   internalErrorCode?: string;
   errorMessage?: string;
@@ -150,14 +151,6 @@ export type ListAPIParams = {
   search?: string;
   fields?: string;
   orderBy?: string;
-};
-
-type StaticRegionalItem = {
-  url: string;
-};
-
-export type StaticRegionalItems = {
-  [key: string]: StaticRegionalItem;
 };
 
 export type ToggleEvent = React.MouseEvent | React.ChangeEvent | React.KeyboardEvent | Event;

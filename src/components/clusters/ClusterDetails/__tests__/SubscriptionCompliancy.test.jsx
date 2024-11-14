@@ -4,7 +4,7 @@ import { checkAccessibility, render, screen } from '~/testUtils';
 
 import { subscriptionSettings } from '../../../../common/subscriptionTypes';
 import { SubscriptionCommonFields } from '../../../../types/accounts_mgmt.v1';
-import SubscriptionCompliancy from '../components/SubscriptionCompliancy';
+import SubscriptionCompliancy from '../components/ClusterDetailsTop/components/SubscriptionCompliancy';
 
 import fixtures from './ClusterDetails.fixtures';
 

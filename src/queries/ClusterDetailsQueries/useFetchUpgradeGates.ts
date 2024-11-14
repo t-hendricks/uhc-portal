@@ -20,7 +20,14 @@ export const useFetchUpgradeGates = (
   mainQueryKey: string,
 ) => {
   const { isLoading, data } = useQuery({
-    queryKey: [mainQueryKey, 'upgradeGates', 'clusterService', clusterID, subscription],
+    queryKey: [
+      queryConstants.FETCH_CLUSTER_DETAILS_QUERY_KEY,
+      mainQueryKey,
+      'upgradeGates',
+      'clusterService',
+      clusterID,
+      subscription,
+    ],
     queryFn: async () => {
       if (subscription?.subscription.xcm_id) {
         const clusterService = getClusterServiceForRegion(subscription?.subscription.xcm_id);
@@ -30,7 +37,6 @@ export const useFetchUpgradeGates = (
       const response = await clusterService.getClusterGateAgreements(clusterID);
       return response;
     },
-    staleTime: queryConstants.STALE_TIME,
     enabled:
       !!subscription &&
       subscription.subscription.status !== SubscriptionCommonFields.status.DEPROVISIONED &&

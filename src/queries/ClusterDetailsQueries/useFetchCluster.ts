@@ -3,8 +3,6 @@ import { useQuery } from '@tanstack/react-query';
 import clusterService, { getClusterServiceForRegion } from '~/services/clusterService';
 import { Subscription, SubscriptionCommonFields } from '~/types/accounts_mgmt.v1';
 
-import { queryConstants } from '../queriesConstants';
-
 /**
  * Query to fetch cluster details based on subscription
  * @param clusterID clusterID from subscription
@@ -31,7 +29,6 @@ export const useFetchCluster = (
       return response;
     },
     retry: false,
-    staleTime: queryConstants.STALE_TIME,
     enabled:
       !!subscription &&
       subscription.status !== SubscriptionCommonFields.status.DEPROVISIONED &&

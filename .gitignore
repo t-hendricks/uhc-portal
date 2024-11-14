@@ -28,3 +28,5 @@ yalc.lock
 candidateBranch.txt
 masterBranch.txt
 output.txt
+
+*.patch

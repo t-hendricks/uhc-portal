@@ -5,7 +5,7 @@ import { checkAccessibility, render, screen } from '~/testUtils';
 import { SubscriptionCommonFields } from '~/types/accounts_mgmt.v1';
 
 import { normalizedProducts } from '../../../../../common/subscriptionTypes';
-import TransferClusterOwnershipInfo from '../TransferClusterOwnershipInfo';
+import TransferClusterOwnershipInfo from '../ClusterDetailsTop/components/TransferClusterOwnershipInfo';
 
 describe('<TransferClusterOwnershipInfo />', () => {
   it.each([

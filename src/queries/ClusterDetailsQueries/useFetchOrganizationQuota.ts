@@ -12,14 +12,18 @@ import { queryConstants } from '../queriesConstants';
  */
 export const useFetchOrganizationQuota = (organizationID: string) => {
   const { isLoading, data, isError, error, isFetching, refetch } = useQuery({
-    queryKey: ['accountsService', 'getOrganizationQuota', organizationID],
+    queryKey: [
+      queryConstants.FETCH_CLUSTER_DETAILS_QUERY_KEY,
+      'accountsService',
+      'getOrganizationQuota',
+      organizationID,
+    ],
     queryFn: async () => {
       const organizationQuota = await accountsService.getOrganizationQuota(organizationID);
       return {
         organizationQuota: organizationQuota.data,
       };
     },
-    staleTime: queryConstants.STALE_TIME,
   });
 
   return isError

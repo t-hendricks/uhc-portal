@@ -5,9 +5,7 @@ import clusterStates, {
 } from '~/components/clusters/common/clusterStates';
 import { ClusterResource, Subscription, SubscriptionCommonFields } from '~/types/accounts_mgmt.v1';
 import { Cluster } from '~/types/clusters_mgmt.v1';
-import { ClusterFromSubscription, StaticRegionalItems } from '~/types/types';
-
-import staticRegionalInstances from '../../../../mockdata/api/clusters_mgmt/v1/aws_inquiries/static_regional_instances.json';
+import { ClusterFromSubscription } from '~/types/types';
 
 const hasCpuAndMemory = (cpu: ClusterResource | undefined, memory: ClusterResource | undefined) =>
   !(
@@ -36,14 +34,6 @@ const isMPoolAz = (cluster: Cluster, mpAvailZones: number | undefined): boolean 
     return true;
   }
   return false;
-};
-
-const regionalInstanceUrl = (region: string) => {
-  const regionalInstances = staticRegionalInstances as StaticRegionalItems;
-  const instance =
-    regionalInstances[region as keyof StaticRegionalItems] || regionalInstances.global;
-
-  return instance?.url;
 };
 
 /**
@@ -92,6 +82,12 @@ const isReadyForAwsAccessActions = <E extends ClusterFromSubscription>(cluster: 
 const isReadyForIdpActions = <E extends ClusterFromSubscription>(cluster: E): boolean =>
   hasValidStatusForActions(cluster, !isHypershiftCluster(cluster));
 
+const isReadyForExternalActions = <E extends ClusterFromSubscription>(cluster: E): boolean =>
+  hasValidStatusForActions(cluster, false);
+
+const isExtenalAuthenicationActive = <E extends ClusterFromSubscription>(cluster: E): boolean =>
+  (cluster?.external_auth_config?.enabled ?? false) && isHypershiftCluster(cluster);
+
 const eventTypes = {
   CLICKED: 'clicked',
   AUTO: 'auto',
@@ -106,8 +102,9 @@ export {
   isHypershiftCluster,
   isMPoolAz,
   isMultiAZ,
-  regionalInstanceUrl,
   isReadyForAwsAccessActions,
   isReadyForIdpActions,
   isReadyForRoleAccessActions,
+  isReadyForExternalActions,
+  isExtenalAuthenicationActive,
 };

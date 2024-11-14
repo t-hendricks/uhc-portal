@@ -3,7 +3,7 @@ import React from 'react';
 import { checkAccessibility, render, screen, waitFor, within } from '~/testUtils';
 
 import clusterStates from '../../common/clusterStates';
-import ClusterDetailsTop from '../components/ClusterDetailsTop';
+import ClusterDetailsTop from '../components/ClusterDetailsTop/ClusterDetailsTop';
 
 import fixtures, { funcs } from './ClusterDetails.fixtures';
 

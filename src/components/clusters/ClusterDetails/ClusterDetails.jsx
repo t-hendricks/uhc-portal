@@ -48,7 +48,7 @@ import AccessControl from './components/AccessControl/AccessControl';
 import AddGrantModal from './components/AccessControl/NetworkSelfServiceSection/AddGrantModal';
 import AccessRequest from './components/AccessRequest';
 import AddOns from './components/AddOns';
-import ClusterDetailsTop from './components/ClusterDetailsTop';
+import ClusterDetailsTop from './components/ClusterDetailsTop/ClusterDetailsTop';
 import ClusterLogs from './components/ClusterLogs/ClusterLogs';
 import { ClusterTabsId } from './components/common/ClusterTabIds';
 import DeleteIDPDialog from './components/DeleteIDPDialog';

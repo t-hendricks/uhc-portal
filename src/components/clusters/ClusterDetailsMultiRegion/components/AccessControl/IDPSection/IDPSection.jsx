@@ -1,5 +1,6 @@
 import React, { useRef } from 'react';
 import PropTypes from 'prop-types';
+import { useDispatch } from 'react-redux';
 
 import {
   Card,
@@ -28,9 +29,11 @@ import {
 import Skeleton from '@redhat-cloud-services/frontend-components/Skeleton';
 
 import { useNavigate } from '~/common/routing';
+import { useFetchClusterIdentityProviders } from '~/queries/ClusterDetailsQueries/useFetchClusterIdentityProviders';
 
 import links from '../../../../../../common/installLinks.mjs';
 import ClipboardCopyLinkButton from '../../../../../common/ClipboardCopyLinkButton';
+import { modalActions } from '../../../../../common/Modal/ModalActions';
 import {
   getOauthCallbackURL,
   IDPformValues,
@@ -38,19 +41,30 @@ import {
   IDPTypeNames,
 } from '../../IdentityProvidersPage/IdentityProvidersHelper';
 
-const IDPSection = ({
-  clusterID,
-  subscriptionID,
-  clusterUrls,
-  identityProviders,
-  openModal,
-  idpActions = {},
-  clusterHibernating,
-  isReadOnly,
-  isHypershift,
-}) => {
+const IDPSection = (props) => {
+  const {
+    clusterID,
+    clusterUrls,
+    idpActions = {},
+    clusterHibernating,
+    isReadOnly,
+    isHypershift,
+    subscriptionID,
+    cluster,
+  } = props;
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const [dropdownOpen, setDropdownOpen] = React.useState(false);
+
+  const region = cluster?.subscription?.xcm_id;
+
+  const {
+    clusterIdentityProviders: identityProvidersData,
+    isLoading: isIdentityProvidersLoading,
+    isError: isIdentityProvidersError,
+  } = useFetchClusterIdentityProviders(clusterID, region);
+
+  const identityProviders = identityProvidersData?.items;
 
   const learnMoreLink = (
     <a rel="noopener noreferrer" href={links.UNDERSTANDING_IDENTITY_PROVIDER} target="_blank">
@@ -58,10 +72,9 @@ const IDPSection = ({
     </a>
   );
 
-  const pending =
-    (!identityProviders.fulfilled && !identityProviders.error) || identityProviders.pending;
+  const pending = isIdentityProvidersLoading && !isIdentityProvidersError;
 
-  const hasIDPs = !!identityProviders.clusterIDPList.length;
+  const hasIDPs = !!identityProviders?.length;
 
   const readOnlyReason = isReadOnly && 'This operation is not available during maintenance';
   const hibernatingReason =
@@ -76,7 +89,15 @@ const IDPSection = ({
       {Object.values(IDPTypeNames).map((idpName) => (
         <DropdownItem
           key={idpName}
-          onClick={() => navigate(`/details/s/${subscriptionID}/add-idp/${idpName.toLowerCase()}`)}
+          onClick={() =>
+            navigate(`/details/s/${subscriptionID}/add-idp/${idpName.toLowerCase()}`, {
+              state: {
+                cluster,
+                clusterIDPs: identityProviders,
+                subscriptionID,
+              },
+            })
+          }
         >
           {idpName}
         </DropdownItem>
@@ -132,12 +153,15 @@ const IDPSection = ({
       title: 'Delete',
       isAriaDisabled: !idpActions.delete,
       onClick: () => {
-        openModal('delete-idp', {
-          clusterID,
-          idpID: idp.id,
-          idpName: idp.name,
-          idpType: IDPTypeNames[idp.type],
-        });
+        dispatch(
+          modalActions.openModal('delete-idp', {
+            clusterID,
+            idpID: idp.id,
+            idpName: idp.name,
+            idpType: IDPTypeNames[idp.type],
+            region,
+          }),
+        );
       },
     };
     if (IDPTypeNames[idp.type] === IDPTypeNames[IDPformValues.HTPASSWD]) {
@@ -207,7 +231,7 @@ const IDPSection = ({
                     <Th screenReaderText="Action" />
                   </Tr>
                 </Thead>
-                <Tbody>{identityProviders.clusterIDPList.map(idpRow)}</Tbody>
+                <Tbody>{identityProviders.map(idpRow)}</Tbody>
               </Table>
             )}
           </StackItem>
@@ -218,24 +242,23 @@ const IDPSection = ({
 };
 
 IDPSection.propTypes = {
-  clusterID: PropTypes.string.isRequired,
-  subscriptionID: PropTypes.string,
+  cluster: PropTypes.object,
+  clusterID: PropTypes.string,
   clusterUrls: PropTypes.shape({
     console: PropTypes.string,
     api: PropTypes.string,
-  }).isRequired,
-  identityProviders: PropTypes.object.isRequired,
-  openModal: PropTypes.func.isRequired,
+  }),
   idpActions: PropTypes.shape({
     get: PropTypes.bool,
     list: PropTypes.bool,
     create: PropTypes.bool,
     update: PropTypes.bool,
     delete: PropTypes.bool,
-  }).isRequired,
-  clusterHibernating: PropTypes.bool.isRequired,
-  isReadOnly: PropTypes.bool.isRequired,
-  isHypershift: PropTypes.bool.isRequired,
+  }),
+  clusterHibernating: PropTypes.bool,
+  isReadOnly: PropTypes.bool,
+  isHypershift: PropTypes.bool,
+  subscriptionID: PropTypes.string,
 };
 
 export default IDPSection;

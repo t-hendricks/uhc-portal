@@ -7,13 +7,12 @@ import { queryConstants } from '../queriesConstants';
 
 export const useFetchUpgradeGatesFromApi = (isManaged: boolean, region?: string) => {
   const { data, isLoading, isError, error } = useQuery({
-    queryKey: ['upgradeGatesFromApi'],
+    queryKey: [queryConstants.FETCH_CLUSTER_DETAILS_QUERY_KEY, 'upgradeGatesFromApi'],
     queryFn: async () => {
       const clusterServiceFunc = region ? getClusterServiceForRegion(region) : clusterService;
       const response = clusterServiceFunc.getUpgradeGates();
       return response;
     },
-    staleTime: queryConstants.STALE_TIME,
     enabled: isManaged,
   });
 

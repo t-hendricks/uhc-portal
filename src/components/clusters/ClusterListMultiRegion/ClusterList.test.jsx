@@ -8,6 +8,7 @@ import { mockRestrictedEnv, screen, within, withState } from '~/testUtils';
 
 import { normalizedProducts } from '../../../common/subscriptionTypes';
 import { viewConstants } from '../../../redux/constants';
+import { SET_TOTAL_ITEMS } from '../../../redux/constants/viewPaginationConstants';
 import fixtures, { funcs } from '../ClusterDetailsMultiRegion/__tests__/ClusterDetails.fixtures';
 
 import ClusterList from './ClusterList';
@@ -180,6 +181,50 @@ describe('<ClusterList />', () => {
     await user.click(screen.getByRole('button', { name: 'Refresh' }));
 
     expect(refetch).toHaveBeenCalled();
+  });
+
+  it('sets new cluster total into Redux', () => {
+    const useDispatchMock = jest.spyOn(reactRedux, 'useDispatch');
+    const mockedDispatch = jest.fn();
+    useDispatchMock.mockReturnValue(mockedDispatch);
+
+    const refetch = jest.fn();
+    mockedGetFetchedClusters.mockReturnValue({
+      data: { items: [fixtures.clusterDetails.cluster], itemsCount: 1 },
+      refetch,
+      errors: [],
+    });
+    withState({}, true).render(<ClusterList {...props} />);
+
+    expect(mockedDispatch).toHaveBeenCalled();
+    expect(mockedDispatch.mock.calls[0][0].type).toEqual(SET_TOTAL_ITEMS);
+    expect(mockedDispatch.mock.calls[0][0].payload).toEqual({
+      totalCount: 1,
+      viewType: 'CLUSTERS_VIEW',
+    });
+  });
+
+  it('sets new cluster total when total is changed to 0', () => {
+    const useDispatchMock = jest.spyOn(reactRedux, 'useDispatch');
+    const mockedDispatch = jest.fn();
+    useDispatchMock.mockReturnValue(mockedDispatch);
+
+    const refetch = jest.fn();
+    mockedGetFetchedClusters.mockReturnValue({
+      data: { items: [], itemsCount: 0 },
+      refetch,
+      errors: [],
+    });
+    withState({ viewOptions: { CLUSTERS_VIEW: { totalCount: 1 } } }, true).render(
+      <ClusterList {...props} />,
+    );
+
+    expect(mockedDispatch).toHaveBeenCalled();
+    expect(mockedDispatch.mock.calls[0][0].type).toEqual(SET_TOTAL_ITEMS);
+    expect(mockedDispatch.mock.calls[0][0].payload).toEqual({
+      totalCount: 0,
+      viewType: 'CLUSTERS_VIEW',
+    });
   });
 
   describe('Access Request Pending Alert', () => {
@@ -360,8 +405,8 @@ describe('<ClusterList />', () => {
       isRestrictedEnv.mockReturnValue(true);
       withState({}, true).render(<ClusterList {...props} />);
       expect(mockedDispatch).toHaveBeenCalled();
-      expect(mockedDispatch.mock.calls).toHaveLength(2);
-      const args = mockedDispatch.mock.calls[1];
+      expect(mockedDispatch.mock.calls).toHaveLength(1);
+      const args = mockedDispatch.mock.calls[0];
 
       expect(args[0].type).toEqual('VIEW_SET_LIST_FLAGS');
 

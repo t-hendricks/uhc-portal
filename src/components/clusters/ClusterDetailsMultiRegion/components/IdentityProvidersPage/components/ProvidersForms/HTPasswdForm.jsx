@@ -5,19 +5,17 @@ import { Alert, GridItem, HelperText, HelperTextItem } from '@patternfly/react-c
 import { CheckCircleIcon } from '@patternfly/react-icons/dist/esm/icons/check-circle-icon';
 import { ExclamationCircleIcon } from '@patternfly/react-icons/dist/esm/icons/exclamation-circle-icon';
 
-import { useGlobalState } from '~/redux/hooks/useGlobalState';
+import { useFormState } from '~/components/clusters/wizards/hooks';
+import { CompoundFieldArray } from '~/components/common/FormikFormComponents/FormikFieldArray/CompoundFieldArray';
 
 import {
+  composeValidators,
   required,
   validateHTPasswdPassword,
-  validateHTPasswdPasswordConfirm,
   validateHTPasswdUsername,
   validateUniqueHTPasswdUsername,
 } from '../../../../../../../common/validators';
-import {
-  ReduxFieldArray,
-  RenderCompoundArrayFields,
-} from '../../../../../../common/ReduxFormComponents';
+import { FieldId } from '../../constants';
 
 import './HTPasswdForm.scss';
 
@@ -135,14 +133,8 @@ HelpTextPassword.propTypes = {
   }),
 };
 
-const HTPasswdForm = ({ isPending, HTPasswdErrors, change }) => {
-  const getHelpText = (index) => {
-    const passwordErrors = HTPasswdErrors?.[index]?.password;
-    return <HelpTextPassword passwordErrors={passwordErrors} />;
-  };
-
-  const isError = !!useGlobalState((state) => state.form?.CreateIdentityProvider?.syncErrors);
-
+const HTPasswdForm = ({ isPending }) => {
+  const { getFieldMeta, setFieldValue } = useFormState();
   const getAutocompleteText = (value) => (
     <div>
       Use suggested password:
@@ -152,15 +144,22 @@ const HTPasswdForm = ({ isPending, HTPasswdErrors, change }) => {
   );
 
   const onAutocomplete = (value, pwdField) => {
-    change(`${pwdField}-confirm`, value);
+    setFieldValue(pwdField, value);
+    setFieldValue(`${pwdField}-confirm`, value);
   };
+
+  const getHelpText = (index) => {
+    const { error } = getFieldMeta(`users.${index}.password`);
+    return <HelpTextPassword passwordErrors={error} />;
+  };
+
+  const { error } = getFieldMeta(FieldId.USERS);
+  const addMoreButtonDisabled = error && error?.length !== 0;
 
   return (
     <>
-      <ReduxFieldArray
-        fieldName="users"
+      <CompoundFieldArray
         fieldSpan={11}
-        component={RenderCompoundArrayFields}
         compoundFields={[
           {
             name: 'username',
@@ -169,7 +168,7 @@ const HTPasswdForm = ({ isPending, HTPasswdErrors, change }) => {
             helpText: 'Unique name of the user within the cluster.',
             isRequired: true,
             getPlaceholderText: (index) => `Unique username ${index + 1}`,
-            validate: [required, validateHTPasswdUsername],
+            validate: composeValidators(required, validateHTPasswdUsername),
           },
           {
             name: 'password',
@@ -188,7 +187,6 @@ const HTPasswdForm = ({ isPending, HTPasswdErrors, change }) => {
             type: 'password',
             isRequired: true,
             helpText: 'Retype the password to confirm.',
-            validate: [required, validateHTPasswdPasswordConfirm],
           },
         ]}
         label="Users list"
@@ -196,7 +194,7 @@ const HTPasswdForm = ({ isPending, HTPasswdErrors, change }) => {
         isRequired
         disabled={isPending}
         validate={[validateUniqueHTPasswdUsername]}
-        addMoreButtonDisabled={isError}
+        addMoreButtonDisabled={addMoreButtonDisabled}
         minusButtonDisabledMessage="To delete the static user, add another user first."
       />
       <GridItem span={11}>
@@ -210,19 +208,6 @@ const HTPasswdForm = ({ isPending, HTPasswdErrors, change }) => {
 
 HTPasswdForm.propTypes = {
   isPending: PropTypes.bool,
-  change: PropTypes.func.isRequired,
-  HTPasswdErrors: PropTypes.arrayOf(
-    PropTypes.shape({
-      password: PropTypes.shape({
-        emptyPassword: PropTypes.bool,
-        baseRequirements: PropTypes.bool,
-        uppercase: PropTypes.bool,
-        lowercase: PropTypes.bool,
-        numbers: PropTypes.bool,
-        numbersOrSymbols: PropTypes.bool,
-      }),
-    }),
-  ),
 };
 
 HTPasswdForm.defaultProps = {

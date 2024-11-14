@@ -1,8 +1,15 @@
 import React from 'react';
 
+import { useFetchClusterIdentityProviders } from '~/queries/ClusterDetailsQueries/useFetchClusterIdentityProviders';
 import { checkAccessibility, render, screen } from '~/testUtils';
 
+import fixtures from '../../../__tests__/ClusterDetails.fixtures';
+
 import IDPSection from './IDPSection';
+
+jest.mock('~/queries/ClusterDetailsQueries/useFetchClusterIdentityProviders', () => ({
+  useFetchClusterIdentityProviders: jest.fn(),
+}));
 
 const baseIDPs = {
   clusterIDPList: [],
@@ -18,11 +25,12 @@ const clusterUrls = {
 
 const openModal = jest.fn();
 const props = {
+  cluster: fixtures.clusterDetails.cluster,
   idpActions: {
     list: true,
   },
-  clusterID: 'fake id',
-  subscriptionID: 'fake sub',
+  clusterID: '1i4counta3holamvo1g5tp6n8p3a03bq',
+  subscriptionID: '1msoogsgTLQ4PePjrTOt3UqvMzX',
   identityProviders: baseIDPs,
   clusterHibernating: false,
   isReadOnly: false,
@@ -32,7 +40,17 @@ const props = {
 };
 
 describe('<IDPSection />', () => {
+  beforeEach(() => {
+    jest.clearAllMocks();
+  });
+  const useFetchClusterIdentityProvidersMock = useFetchClusterIdentityProviders;
+
   it('should render (no IDPs)', async () => {
+    useFetchClusterIdentityProvidersMock.mockReturnValue({
+      clusterIdentityProviders: [],
+      isLoading: false,
+      isError: false,
+    });
     const { container } = render(<IDPSection {...props} />);
     expect(screen.queryByRole('grid')).not.toBeInTheDocument();
     expect(container.querySelectorAll('.pf-v5-c-skeleton').length).toBe(0);
@@ -40,39 +58,38 @@ describe('<IDPSection />', () => {
   });
 
   it('should render (IDPs pending)', async () => {
-    const IDPs = {
-      ...baseIDPs,
-      pending: true,
-      fulfilled: false,
-    };
+    useFetchClusterIdentityProvidersMock.mockReturnValue({
+      clusterIdentityProviders: [],
+      isLoading: true,
+      isError: false,
+    });
 
-    const newProps = { ...props, identityProviders: IDPs };
-    const { container } = render(<IDPSection {...newProps} />);
+    const { container } = render(<IDPSection {...props} />);
     expect(container.querySelectorAll('.pf-v5-c-skeleton').length).toBeGreaterThan(0);
     await checkAccessibility(container);
   });
 
   describe('should render (with IDPs)', () => {
-    const IDPs = {
-      ...baseIDPs,
-      clusterIDPList: [
-        {
-          name: 'hello',
-          type: 'GithubIdentityProvider',
-          id: 'id',
-        },
-        {
-          name: 'hi',
-          type: 'GoogleIdentityProvider',
-          id: 'id',
-        },
-      ],
-      fulfilled: true,
-    };
-
     it('non-Hypershift cluster', async () => {
-      const newProps = { ...props, identityProviders: IDPs };
-      const { container } = render(<IDPSection {...newProps} />);
+      useFetchClusterIdentityProvidersMock.mockReturnValue({
+        clusterIdentityProviders: {
+          items: [
+            {
+              name: 'hello',
+              type: 'GithubIdentityProvider',
+              id: 'id1',
+            },
+            {
+              name: 'hi',
+              type: 'GoogleIdentityProvider',
+              id: 'id2',
+            },
+          ],
+        },
+        isLoading: false,
+        isError: false,
+      });
+      const { container } = render(<IDPSection {...props} />);
       expect(await screen.findByRole('grid')).toBeInTheDocument();
       expect(await screen.findByRole('cell', { name: 'hi' })).toBeInTheDocument();
       expect(await screen.findByRole('cell', { name: 'hello' })).toBeInTheDocument();
@@ -82,7 +99,25 @@ describe('<IDPSection />', () => {
     });
 
     it('Hypershift cluster', async () => {
-      const newProps = { ...props, identityProviders: IDPs, isHypershift: true };
+      useFetchClusterIdentityProvidersMock.mockReturnValue({
+        clusterIdentityProviders: {
+          items: [
+            {
+              name: 'hello',
+              type: 'GithubIdentityProvider',
+              id: 'id1',
+            },
+            {
+              name: 'hi',
+              type: 'GoogleIdentityProvider',
+              id: 'id2',
+            },
+          ],
+        },
+        isLoading: false,
+        isError: false,
+      });
+      const newProps = { ...props, isHypershift: true };
       const { container } = render(<IDPSection {...newProps} />);
       expect(await screen.findByRole('grid')).toBeInTheDocument();
       expect(await screen.findByRole('cell', { name: 'hi' })).toBeInTheDocument();

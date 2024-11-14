@@ -1,7 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
 
 import { createViewQueryObject } from '~/common/queryHelpers';
-import { queryConstants } from '~/queries/queriesConstants';
 import { getSubscriptionQueryType } from '~/services/accountsService';
 import { SubscriptionCommonFields } from '~/types/accounts_mgmt.v1';
 import { ViewOptions } from '~/types/types';
@@ -57,7 +56,7 @@ const fetchGlobalSubscriptions = async (
     subscriptionMap,
     managedSubscriptions,
     page: subscriptions?.data?.page || 0,
-    total: subscriptions?.data?.total || 0,
+    total: subscriptions?.data?.total || items?.length || 0, // Setting total to items.length if total is 0 is temp fix until OCM-12366 is resolved
   };
 };
 
@@ -78,8 +77,6 @@ export const useFetchSubscriptions = ({
     queryKey,
     enabled,
     queryFn: () => fetchGlobalSubscriptions(viewOptions, userName, isArchived),
-    staleTime: queryConstants.STALE_TIME,
-    refetchInterval: queryConstants.REFETCH_INTERVAL,
   });
 
   return {

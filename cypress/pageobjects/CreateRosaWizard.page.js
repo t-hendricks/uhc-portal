@@ -172,6 +172,9 @@ class CreateRosaCluster extends Page {
   clusterAutoscalingMemoryTotalMaxInput = () =>
     cy.get('input[id="cluster_autoscaling.resource_limits.memory.max"]');
 
+  clusterAutoscalingMaxNodesTotalInput = () =>
+    cy.get('input[id="cluster_autoscaling.resource_limits.max_nodes_total"]');
+
   clusterAutoscalingGPUsInput = () =>
     cy.get('input[id="cluster_autoscaling.resource_limits.gpus"]');
 
@@ -230,18 +233,6 @@ class CreateRosaCluster extends Page {
 
   isCreateRosaPage() {
     super.assertUrlIncludes('/openshift/create/rosa/wizard');
-  }
-
-  isTextContainsInPage(text, present = true) {
-    if (present) {
-      cy.get('body').then(($body) => {
-        if ($body.text().includes(text)) {
-          cy.contains(text).scrollIntoView().should('be.visible');
-        }
-      });
-    } else {
-      cy.contains(text).should('not.exist');
-    }
   }
 
   isAccountsAndRolesScreen() {
@@ -335,11 +326,7 @@ class CreateRosaCluster extends Page {
 
   isTextContainsInPage(text, present = true) {
     if (present) {
-      cy.get('body').then(($body) => {
-        if ($body.text().includes(text)) {
-          cy.contains(text).scrollIntoView().should('be.visible');
-        }
-      });
+      cy.contains(text).should('be.exist').should('be.visible');
     } else {
       cy.contains(text).should('not.exist');
     }
@@ -455,7 +442,7 @@ class CreateRosaCluster extends Page {
   }
 
   waitForVPCList() {
-    cy.get('span.pf-v5-c-button__progress', { timeout: 80000 }).should('not.exist');
+    cy.get('span.pf-v5-c-button__progress', { timeout: 100000 }).should('not.exist');
     cy.getByTestId('refresh-vpcs', { timeout: 80000 }).should('not.be.disabled');
   }
 
@@ -476,6 +463,11 @@ class CreateRosaCluster extends Page {
   selectClusterVersion(version) {
     cy.get('div[name="cluster_version"]').find('button.pf-v5-c-select__toggle').click();
     cy.get('ul[label="Version"]').find('button').contains(version).click();
+  }
+
+  selectClusterVersionFedRamp(version) {
+    cy.get('div[name="cluster_version"]').click();
+    cy.get('button').contains(version).click();
   }
 
   addNodeLabelKeyAndValue(key, value = '', index = 0) {
@@ -660,14 +652,19 @@ class CreateRosaCluster extends Page {
     cy.get('#with-web').click();
   }
 
-  selectAvailabilityZoneRegion(avilabilityZoneRegion) {
+  selectAvailabilityZoneRegion(availabilityZoneRegion) {
     cy.get(".pf-v5-c-select__menu:contains('Select availability zone')").within(() => {
-      cy.get('li').contains(avilabilityZoneRegion).click();
+      cy.get('li').contains(availabilityZoneRegion).click();
     });
   }
 
   inputPrivateSubnetId(subnetId) {
     cy.get('#private_subnet_id_0').type(subnetId);
+  }
+
+  inputPrivateSubnetIdFedRamp(subnetId) {
+    cy.get('button').contains('Select private subnet').click({ force: true });
+    this.clickButtonContainingText(subnetId);
   }
 
   enableCustomerManageKeys() {

@@ -8,8 +8,6 @@ import { type Subscription } from '~/types/accounts_mgmt.v1';
 import { Cluster } from '~/types/clusters_mgmt.v1';
 import { ClusterWithPermissions } from '~/types/types';
 
-import { queryConstants } from '../queriesConstants';
-
 import {
   createResponseForFetchClusters,
   ErrorResponse,
@@ -107,8 +105,6 @@ export const useFetchClusters = (isArchived = false, useManagedEndpoints = true)
       {
         queryKey: aiQueryKey,
         queryFn: () => fetchAIClusters(subscriptionIds),
-        staleTime: queryConstants.STALE_TIME,
-        refetchInterval: queryConstants.REFETCH_INTERVAL,
       },
     ]);
   }
@@ -151,8 +147,6 @@ export const useFetchClusters = (isArchived = false, useManagedEndpoints = true)
       {
         queryKey: regionQueryKey,
         queryFn: async () => fetchManagedClusters(managedClusters[region], region),
-        staleTime: queryConstants.STALE_TIME,
-        refetchInterval: queryConstants.REFETCH_INTERVAL,
       },
     ];
   }, [] as any);

@@ -87,24 +87,24 @@
           "CCS": {
             "SingleZone": {
               "LowerLimitError": "Input cannot be less than 2",
-              "UpperLimitError": "Input cannot be more than 180",
+              "UpperLimitError": "Input cannot be more than 249",
               "MinAndMaxLimitDependencyError": "Max nodes cannot be less than min nodes"
             },
             "MultiZone": {
               "LowerLimitError": "Input cannot be less than 1",
-              "UpperLimitError": "Input cannot be more than 60",
+              "UpperLimitError": "Input cannot be more than 83",
               "MinAndMaxLimitDependencyError": "Max nodes cannot be less than min nodes"
             }
           },
           "NonCCS": {
             "SingleZone": {
               "LowerLimitError": "Input cannot be less than 4",
-              "UpperLimitError": "Input cannot be more than 180",
+              "UpperLimitError": "Input cannot be more than 249",
               "MinAndMaxLimitDependencyError": "Max nodes cannot be less than min nodes"
             },
             "MultiZone": {
               "LowerLimitError": "Input cannot be less than 3",
-              "UpperLimitError": "Input cannot be more than 60",
+              "UpperLimitError": "Input cannot be more than 83",
               "MinAndMaxLimitDependencyError": "Max nodes cannot be less than min nodes"
             }
           }
@@ -135,7 +135,8 @@
             },
             {
               "InvalidValue": "example.com/MyName/",
-              "KeyError": "A qualified name must consist of alphanumeric characters, '-', '_' or '.', and must start and end with an alphanumeric character with an optional DNS subdomain prefix and '/' (e.g. 'example.com/MyName')"
+              "KeyError": "A qualified name must consist of alphanumeric characters, '-', '_' or '.', and must start and end with an alphanumeric character with an optional DNS subdomain prefix and '/' (e.g. 'example.com/MyName')",
+              "LabelError": "A valid value must consist of alphanumeric characters, '-', '.' or '_' and must start and end with an alphanumeric character"
             }
           ]
         }
@@ -197,7 +198,7 @@
           "HostPrefix": [
             {
               "Value": "hello",
-              "Error": "The value 'hello' isn't a valid subnet mask. It must follow the RFC-4632 format: '/16'"
+              "Error": "The value '/hello' isn't a valid subnet mask. It must follow the RFC-4632 format: '/16'"
             },
             {
               "Value": "28",

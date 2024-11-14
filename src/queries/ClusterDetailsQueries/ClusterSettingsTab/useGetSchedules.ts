@@ -13,7 +13,7 @@ export const refetchSchedules = () => {
 
 export const useGetSchedules = (clusterID: string, isHypershift: boolean, region?: string) => {
   const { data, isLoading, isError, error } = useQuery({
-    queryKey: ['getSchedules'],
+    queryKey: [queryConstants.FETCH_CLUSTER_DETAILS_QUERY_KEY, 'getSchedules'],
     queryFn: async () => {
       if (region) {
         const clusterService = getClusterServiceForRegion(region);
@@ -72,7 +72,7 @@ export const useGetSchedules = (clusterID: string, isHypershift: boolean, region
 
       return response;
     },
-    staleTime: queryConstants.STALE_TIME,
+
     enabled: !!clusterID,
   });
 

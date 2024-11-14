@@ -146,7 +146,7 @@ function CustomerOIDCConfiguration({
     [oidcConfigs],
   );
 
-  const rosaRegionLoginCommand = `rosa login --url https://${regionalInstance?.url}`;
+  const rosaRegionLoginCommand = `rosa login --url ${regionalInstance?.url}`;
 
   return (
     <Instructions wide>

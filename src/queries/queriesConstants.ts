@@ -1,7 +1,6 @@
 export const queryConstants = {
-  STALE_TIME: 30000,
   STALE_TIME_60_SEC: 60000,
-  REFETCH_INTERVAL: undefined, // never refetch
+  AlWAYS_GET_NEW_DATA_STALE_TIME: 0,
   API_PAGE_SIZE: 500,
   FETCH_CLUSTERS_QUERY_KEY: 'fetchClusters',
   FETCH_CLUSTER_DETAILS_QUERY_KEY: 'fetchClusterDetails',
@@ -14,4 +13,6 @@ export const queryConstants = {
   FETCH_GET_OCM_ROLE: 'fetchGetOCMRole',
   FETCH_GET_USER_OIDC_CONFIGURATIONS: 'fetchGetOidcConfigurations',
   FETCH_ACCESS_TRANSPARENCY: 'fetchAccessTransparency',
+  FETCH_GET_AVAILABLE_REGIONAL_INSTANCES: 'fetchGetAvailableRegionalInstances',
+  FETCH_MULTI_REGION_AVAILABLE_REGIONS: 'fetchGetMultiRegionAvailableRegions',
 };

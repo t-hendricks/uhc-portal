@@ -4,6 +4,7 @@ import authorizationsService from '../../services/authorizationsService';
 import {
   CLI_SSO_AUTHORIZATION,
   CLUSTER_OWNERSHIP_TRANSFER,
+  CREATE_CLUSTER_YAML_EDITOR,
   ENABLE_MACHINE_CONFIGURATION,
   HCP_ROSA_GETTING_STARTED_PAGE,
   HCP_USE_UNMANAGED,
@@ -44,6 +45,7 @@ export const features = [
   getSimpleUnleashFeature('multi-region-support', MULTIREGION_PREVIEW_ENABLED),
   getSimpleUnleashFeature('cluster-ownership-transfer', CLUSTER_OWNERSHIP_TRANSFER),
   getSimpleUnleashFeature('gcp-workload-identity-federation', OSD_GCP_WIF),
+  getSimpleUnleashFeature('enable-create-cluster-yaml-editor', CREATE_CLUSTER_YAML_EDITOR),
   getSimpleUnleashFeature('max-compute-nodes-500', MAX_COMPUTE_NODES_500),
 ];
 

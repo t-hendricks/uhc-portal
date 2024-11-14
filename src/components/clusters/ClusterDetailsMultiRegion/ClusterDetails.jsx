@@ -31,7 +31,7 @@ import {
   useFetchClusterDetails,
 } from '~/queries/ClusterDetailsQueries/useFetchClusterDetails';
 import {
-  invalidateClusterIdentityProviders,
+  refetchClusterIdentityProviders,
   useFetchClusterIdentityProviders,
 } from '~/queries/ClusterDetailsQueries/useFetchClusterIdentityProviders';
 import { refetchClusterLogsQueries } from '~/queries/ClusterLogsQueries/useFetchClusterLogs';
@@ -39,6 +39,8 @@ import {
   invalidateCloudProviders,
   useFetchCloudProviders,
 } from '~/queries/common/useFetchCloudProviders';
+import { findRegionalInstance } from '~/queries/helpers';
+import { useFetchGetAvailableRegionalInstances } from '~/queries/RosaWizardQueries/useFetchGetAvailableRegionalInstances';
 import {
   accessProtectionActions,
   getAccessProtection,
@@ -55,9 +57,10 @@ import { useGlobalState } from '~/redux/hooks/useGlobalState';
 import { isRestrictedEnv } from '~/restrictedEnv';
 // TODO: Commented out for respective tabs stories
 // import UpgradeSettingsTab from '../ClusterDetailsMultiRegion/components/UpgradeSettings';
-// import AccessControl from '../ClusterDetailsMultiRegion/components/AccessControl/AccessControl';
 import { SubscriptionCommonFields } from '~/types/accounts_mgmt.v1';
 
+// TODO: Commented out for respective tabs stories
+// import UpgradeSettingsTab from '../ClusterDetailsMultiRegion/components/UpgradeSettings';
 import getClusterName from '../../../common/getClusterName';
 import { isValid, shouldRefetchQuota } from '../../../common/helpers';
 import {
@@ -95,26 +98,16 @@ import { canTransferClusterOwnershipMultiRegion } from '../common/TransferCluste
 import { getSchedules } from '../common/Upgrades/clusterUpgradeActions';
 import CancelUpgradeModal from '../commonMultiRegion/Upgrades/CancelUpgradeModal';
 
-import AddGrantModal from './components/AccessControl/NetworkSelfServiceSection/AddGrantModal';
+import AccessControl from './components/AccessControl/AccessControl';
 import { getGrants } from './components/AccessControl/NetworkSelfServiceSection/NetworkSelfServiceActions';
 import usersActions from './components/AccessControl/UsersSection/UsersActions';
-// import AccessControl from '../ClusterDetailsMultiRegion/components/AccessControl/AccessControl';
-// import Networking from '../ClusterDetailsMultiRegion/components/Networking';
-// import Monitoring from '../ClusterDetailsMultiRegion/components/Monitoring';
-// import MachinePools from '../ClusterDetailsMultiRegion/components/MachinePools';
 import AddOns from './components/AddOns';
 import { getAddOns, getClusterAddOns } from './components/AddOns/AddOnsActions';
-import ClusterDetailsTop from './components/ClusterDetailsTop';
-// import AddOns from '../ClusterDetailsMultiRegion/components/AddOns';
+import ClusterDetailsTop from './components/ClusterDetailsTop/ClusterDetailsTop';
 import ClusterLogs from './components/ClusterLogs/ClusterLogs';
 import { ClusterTabsId } from './components/common/ClusterTabIds';
 import DeleteIDPDialog from './components/DeleteIDPDialog';
 import { fetchClusterInsights } from './components/Insights/InsightsActions';
-// TODO: Commented out for respective tabs stories
-// import UpgradeSettingsTab from '../ClusterDetailsMultiRegion/components/UpgradeSettings';
-// import AccessControl from '../ClusterDetailsMultiRegion/components/AccessControl/AccessControl';
-// import Support from '../ClusterDetailsMultiRegion/components/Support';
-// import Networking from '../ClusterDetailsMultiRegion/components/Networking';
 import MachinePools from './components/MachinePools';
 import {
   clearGetMachinePoolsResponse,
@@ -177,6 +170,13 @@ const ClusterDetails = (props) => {
     error: addNotificationContactError,
     status: addNotificationStatus,
   } = useAddNotificationContact(subscriptionID);
+
+  const { data: availableRegionalInstances } = useFetchGetAvailableRegionalInstances(
+    isMultiRegionPreviewEnabled,
+  );
+
+  const regionId = cluster?.region?.id;
+  const regionalInstance = findRegionalInstance(regionId, availableRegionalInstances);
 
   const externalClusterID = get(cluster, 'external_id');
 
@@ -263,7 +263,7 @@ const ClusterDetails = (props) => {
       !isClusterIdentityProvidersLoading &&
       !clusterIdentityProvidersError
     ) {
-      invalidateClusterIdentityProviders(clusterID);
+      refetchClusterIdentityProviders(clusterID);
     }
   };
 
@@ -342,7 +342,7 @@ const ClusterDetails = (props) => {
     dispatch(getUserAccess({ type: 'OCP' }));
 
     return () => {
-      invalidateClusterIdentityProviders();
+      refetchClusterIdentityProviders();
       dispatch(modalActions.closeModal());
       refetchClusterLogsQueries();
 
@@ -495,7 +495,7 @@ const ClusterDetails = (props) => {
     : cluster.managed &&
       // The (managed) cluster has not yet reported its cluster ID to AMS
       // eslint-disable-next-line camelcase
-      cluster.subscription?.external_cluster_id === undefined;
+      cluster.external_id === undefined;
   const displaySupportTab = !hideSupportTab && !isOSDTrial;
   const displayUpgradeSettingsTab =
     cluster.managed && !isAROCluster && cluster.canEdit && !isArchived;
@@ -538,6 +538,7 @@ const ClusterDetails = (props) => {
           isClusterIdentityProvidersLoading={isClusterIdentityProvidersLoading}
           clusterIdentityProvidersError={clusterIdentityProvidersError}
           gcpOrgPolicyWarning={gcpOrgPolicyWarning}
+          regionalInstance={regionalInstance}
         >
           <TabsRow
             tabsInfo={{
@@ -549,7 +550,7 @@ const ClusterDetails = (props) => {
               },
               accessControl: {
                 ref: accessControlTabRef,
-                show: !isMultiRegionPreviewEnabled && displayAccessControlTab,
+                show: displayAccessControlTab,
               },
               addOns: { ref: addOnsTabRef, show: displayAddOnsTab },
               clusterHistory: {
@@ -654,9 +655,6 @@ const ClusterDetails = (props) => {
             </ErrorBoundary>
           </TabContent>
         )}
-        {/* TODO: Commented out for respective tabs stories */}
-        {/* 
-        
         {displayAccessControlTab && (
           <TabContent
             eventKey={2}
@@ -666,12 +664,14 @@ const ClusterDetails = (props) => {
             hidden
           >
             <ErrorBoundary>
-              <AccessControl cluster={cluster} refreshEvent={refreshEvent} />
+              <AccessControl
+                cluster={cluster}
+                refreshEvent={refreshEvent}
+                region={cluster.subscription.xcm_id}
+              />
             </ErrorBoundary>
           </TabContent>
         )}
-       
-        */}
         {isManaged && (
           <TabContent
             eventKey={3}
@@ -826,12 +826,7 @@ const ClusterDetails = (props) => {
             addNotificationContactError={addNotificationContactError}
           />
         ) : null}
-        <AddGrantModal clusterID={cluster.id} />
-        <CancelUpgradeModal
-          isHypershift={isHypershift}
-          clusterID={cluster.id}
-          region={cluster.subscription?.xcm_id}
-        />
+        <CancelUpgradeModal isHypershift={isHypershift} />
       </PageSection>
     </AppPage>
   );

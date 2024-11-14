@@ -42,6 +42,7 @@ import ClusterDetailsSubscriptionId from '../clusters/ClusterDetails/ClusterDeta
 import AccessRequestNavigate from '../clusters/ClusterDetails/components/AccessRequest/components/AccessRequestNavigate';
 import IdentityProvidersPage from '../clusters/ClusterDetails/components/IdentityProvidersPage';
 import ClusterDetailsSubscriptionIdMultiRegion from '../clusters/ClusterDetailsMultiRegion/ClusterDetailsSubscriptionIdMultiRegion';
+import IdentityProviderPageMultiregion from '../clusters/ClusterDetailsMultiRegion/components/IdentityProvidersPage/index';
 import ClustersList from '../clusters/ClusterList';
 import ClusterListMultiRegion from '../clusters/ClusterListMultiRegion';
 import CreateClusterPage from '../clusters/CreateClusterPage';
@@ -366,10 +367,25 @@ const Router: React.FC<RouterProps> = ({ planType, clusterId, externalClusterId 
           path="/details/s/:id/insights/:reportId/:errorKey"
           element={<InsightsAdvisorRedirector />}
         />
-        <Route path="/details/s/:id/add-idp/:idpTypeName" element={<IdentityProvidersPage />} />
+        <Route
+          path="/details/s/:id/add-idp/:idpTypeName"
+          element={
+            config.multiRegion && isMultiRegionPreviewEnabled ? (
+              <IdentityProviderPageMultiregion />
+            ) : (
+              <IdentityProvidersPage />
+            )
+          }
+        />
         <Route
           path="/details/s/:id/edit-idp/:idpName"
-          element={<IdentityProvidersPage isEditForm />}
+          element={
+            config.multiRegion && isMultiRegionPreviewEnabled ? (
+              <IdentityProviderPageMultiregion isEditForm />
+            ) : (
+              <IdentityProvidersPage isEditForm />
+            )
+          }
         />
         {/* WARNING! The "/details/s/:id" route is used by catchpoint tests which determine
         'Operational' or 'Major Outage' status for "OpenShift Cluster Manager" on the

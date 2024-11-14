@@ -12,7 +12,7 @@ export const refetchClusterAutoscalerData = (clusterID: string) => {
 
 export const useFetchClusterAutoscaler = (clusterID: string, region?: string) => {
   const { isLoading, data, isError, error, refetch, isStale, isRefetching } = useQuery({
-    queryKey: ['clusterAutoscaler'],
+    queryKey: [queryConstants.FETCH_CLUSTER_DETAILS_QUERY_KEY, 'clusterAutoscaler'],
     queryFn: async () => {
       if (region) {
         const clusterService = getClusterServiceForRegion(region);
@@ -33,7 +33,6 @@ export const useFetchClusterAutoscaler = (clusterID: string, region?: string) =>
       };
     },
     retry: false,
-    staleTime: queryConstants.STALE_TIME,
     enabled: !!clusterID,
   });
   if (isError) {
