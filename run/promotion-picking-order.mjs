@@ -103,6 +103,7 @@ async function reportOrder(jiraToken, branch, verbose) {
 
   console.log('\nGetting QE statuses...');
   const jiraMap = new Map();
+  let hasAstericks = '';
   masterCommits.forEach(async ({ hash }, inx) => {
     const commit = masterCommitMap[hash];
     const jira = {
@@ -135,9 +136,10 @@ async function reportOrder(jiraToken, branch, verbose) {
         } = jiraStatus;
         jira.priority = priority.name;
         jira.issuetype = issuetype.name;
-        jira.qacontact = customfield_12315948?.emailAddress || 'unassigned';
-
         commit.noQE = labels.includes('no-qe');
+        if (!customfield_12315948?.emailAddress && !commit.noQE) hasAstericks = '**';
+        jira.qacontact = customfield_12315948?.emailAddress || `unassigned ${hasAstericks}`;
+
         const doNotPromoteFlag = labels.includes('do-not-promote');
         const behindFeatureFlag = labels.includes('behind-feature-flag');
         if (behindFeatureFlag && !doNotPromoteFlag && !qeApproved.includes(status.name)) {
@@ -223,6 +225,12 @@ async function reportOrder(jiraToken, branch, verbose) {
       )} ${chalk.green(commit.author_email)} ${chalk.whiteBright(message)} ${commit.jira.qeStatus}`,
     );
   });
+
+  if (hasAstericks) {
+    console.log(
+      `\n   ${chalk.red('** These jiras are unassigned to QE. If QE is not required, add the "non-qe" label to the jira issue')}`,
+    );
+  }
 
   // --- GET REQUIREMENTS ---
 
@@ -629,6 +637,11 @@ async function reportOrder(jiraToken, branch, verbose) {
       console.log('| revision | ticket | description | MR | reason |');
       console.log('| --- | --- | --- | --- | --- |');
       heldBackNotes.reverse().forEach((note) => console.log(note));
+    }
+    if (hasAstericks) {
+      console.log(
+        `\n   ${chalk.red('** These jiras are unassigned to QE. If QE is not required, add the "non-qe" label to the jira issue')}`,
+      );
     }
 
     console.log('\n\n================ ===========BLOCKERS==============================');
