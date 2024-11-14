@@ -8002,7 +8002,7 @@
               "display_name": "Compute usage Rate"
             }
           },
-          "cost-type": {
+          "cost_type": {
             "type": "string",
             "enum": [
               "Infrastructure",
@@ -8063,7 +8063,7 @@
               "display_name": "Compute usage Rate"
             }
           },
-          "cost-type": {
+          "cost_type": {
             "type": "string",
             "enum": [
               "Infrastructure",
