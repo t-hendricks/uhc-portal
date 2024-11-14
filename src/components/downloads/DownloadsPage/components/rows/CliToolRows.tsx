@@ -147,6 +147,19 @@ const CliToolRows = ({
               </Text>
             }
           />
+
+          <ToolAndDescriptionRows
+            {...commonProps}
+            tool={tools.SHP_CLI}
+            channel={channels.STABLE}
+            name="Shipwright command-line interface for Builds for OpenShift (shp)"
+            description={
+              <Text>
+                Manage and interact with Shipwright Builds on OpenShift using the Shipwright CLI.{' '}
+                <ExternalLink href={links.SHP_CLI_DOCS}>Get started</ExternalLink>
+              </Text>
+            }
+          />
         </>
       )}
     </>
