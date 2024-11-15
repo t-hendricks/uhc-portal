@@ -1,5 +1,7 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
+import { SchemasSettings } from 'monaco-yaml';
 
+import { Language } from '@patternfly/react-code-editor';
 import {
   Alert,
   Button,
@@ -17,6 +19,7 @@ import {
   Tabs,
   TabTitleText,
   Title,
+  Tooltip,
 } from '@patternfly/react-core';
 import { DownloadIcon } from '@patternfly/react-icons/dist/esm/icons/download-icon';
 
@@ -24,6 +27,7 @@ import { ConfirmationDialog } from '~/common/modals/ConfirmationDialog';
 
 import { SyncEditor } from './SyncEditor';
 import { SyncEditorSchema } from './SyncEditorSchema';
+import { SyncEditorToolbar } from './SyncEditorToolbar';
 
 import './SyncEditorModal.scss';
 
@@ -31,16 +35,17 @@ type SyncEditorModalProps = {
   isOpen: boolean;
   closeCallback: () => void;
   content: string;
-  schema: string;
+  schema: SchemasSettings;
   submitButtonLabel: string;
   downloadFileName: string;
   onSubmit: (values: object | string) => void;
-  translatorToObject?: (yaml: string) => object;
+  translatorToObject?: (content: string) => object;
   isRequestPending?: boolean;
   isRequestFulfilled?: boolean;
   requestErrorMessage?: string;
   requestPendingMessage?: string;
   closeWarningMessage?: string;
+  readOnlyMessage?: string;
 };
 
 const SyncEditorModal = ({
@@ -57,19 +62,23 @@ const SyncEditorModal = ({
   requestErrorMessage,
   requestPendingMessage,
   closeWarningMessage,
+  readOnlyMessage = 'Cannot edit on read-only.',
 }: SyncEditorModalProps) => {
-  const [isContentValid] = useState(true);
-  const [isConfirmationDialogOpen, setIsConfirmationDialogOpen] = useState(false);
+  const [isContentValid, setIsContentValid] = useState(true);
   const [editorContent, setEditorContent] = useState(content);
+  const [isSideBarVisible, setIsSideBarVisible] = useState(true);
+  const [isConfirmationDialogOpen, setIsConfirmationDialogOpen] = useState(false);
   const contentHasChanged = useMemo(() => content !== editorContent, [editorContent, content]);
 
   const download = useCallback(() => {
-    const element = document.createElement('a');
-    const file = new Blob([editorContent], { type: 'text' });
-    element.href = URL.createObjectURL(file);
-    element.download = downloadFileName;
-    document.body.appendChild(element); // Required for this to work in FireFox
-    element.click();
+    if (editorContent) {
+      const element = document.createElement('a');
+      const file = new Blob([editorContent], { type: 'text' });
+      element.href = URL.createObjectURL(file);
+      element.download = downloadFileName;
+      document.body.appendChild(element); // Required for this to work in FireFox
+      element.click();
+    }
   }, [downloadFileName, editorContent]);
 
   const handleClose = useCallback(() => {
@@ -80,10 +89,11 @@ const SyncEditorModal = ({
     }
   }, [closeCallback, contentHasChanged]);
 
-  const handleSubmit = useCallback(
-    () => onSubmit(translatorToObject ? translatorToObject(editorContent) : editorContent),
-    [editorContent, onSubmit, translatorToObject],
-  );
+  const handleSubmit = useCallback(() => {
+    if (editorContent) {
+      onSubmit(translatorToObject ? translatorToObject(editorContent) : editorContent);
+    }
+  }, [editorContent, onSubmit, translatorToObject]);
 
   const onEscapePress = useCallback(
     (_event: KeyboardEvent) => {
@@ -100,6 +110,11 @@ const SyncEditorModal = ({
     }
   }, [closeCallback, isRequestFulfilled]);
 
+  const toggleSideBar = useCallback(
+    () => setIsSideBarVisible(!isSideBarVisible),
+    [isSideBarVisible],
+  );
+
   return (
     <Modal
       title="Edit YAML"
@@ -112,15 +127,22 @@ const SyncEditorModal = ({
       footer={
         <Flex>
           <FlexItem>
-            <Button
-              onClick={handleSubmit}
-              className="pf-v5-u-mr-md"
-              data-testid="submit-btn"
-              isDisabled={isRequestPending || !isContentValid}
-              isLoading={isRequestPending}
+            <Tooltip
+              trigger={isContentValid ? 'manual' : 'mouseenter'}
+              content="There are validation errors. Please fix them before submitting the cluster
+                  creation request"
             >
-              {submitButtonLabel}
-            </Button>
+              <Button
+                isAriaDisabled={isRequestPending || !isContentValid}
+                onClick={handleSubmit}
+                className="pf-v5-u-mr-md"
+                data-testid="submit-btn"
+                isLoading={isRequestPending}
+              >
+                {submitButtonLabel}
+              </Button>
+            </Tooltip>
+
             <Button variant="secondary" onClick={handleClose} isDisabled={isRequestPending}>
               Cancel
             </Button>
@@ -131,7 +153,12 @@ const SyncEditorModal = ({
             ) : null}
           </FlexItem>
           <FlexItem align={{ default: 'alignRight' }}>
-            <Button variant="primary" icon={<DownloadIcon />} onClick={download}>
+            <Button
+              variant="primary"
+              isDisabled={!editorContent}
+              icon={<DownloadIcon />}
+              onClick={download}
+            >
               Download
             </Button>
           </FlexItem>
@@ -141,39 +168,52 @@ const SyncEditorModal = ({
       <>
         <Sidebar hasBorder isPanelRight>
           <SidebarContent>
-            {isRequestPending && requestPendingMessage ? (
-              <Alert variant="info" title={requestPendingMessage} />
-            ) : null}
-            {requestErrorMessage ? <Alert variant="danger" title={requestErrorMessage} /> : null}
+            <SyncEditorToolbar
+              {...{ isRequestPending, requestPendingMessage, requestErrorMessage, isContentValid }}
+              isSideBarVisible={isSideBarVisible}
+              toggleSideBar={toggleSideBar}
+            />
           </SidebarContent>
-          <SidebarPanel width={{ default: 'width_25' }} variant="sticky">
-            <Title headingLevel="h2" className="pf-v5-u-pl-sm">
-              ROSA cluster creation
-            </Title>
-          </SidebarPanel>
+
+          {isSideBarVisible ? (
+            <SidebarPanel width={{ default: 'width_25' }} variant="sticky">
+              <Title headingLevel="h2" className="pf-v5-u-pl-sm">
+                ROSA cluster creation
+              </Title>
+            </SidebarPanel>
+          ) : null}
         </Sidebar>
         <Sidebar style={{ overflow: 'auto' }} tabIndex={0} hasBorder isPanelRight>
           <SidebarContent style={{ height: '600px' }}>
             <SyncEditor
               content={editorContent}
               onChange={setEditorContent}
-              downloadFileName={downloadFileName}
               isReadOnly={isRequestPending}
+              readOnlyMessage={{ value: readOnlyMessage }}
+              schemas={[schema]}
+              isSideBarVisible={isSideBarVisible}
+              isDarkTheme
+              language={Language.yaml}
+              setValidationErrors={(validationErrors) =>
+                setIsContentValid(validationErrors.length === 0)
+              }
             />
           </SidebarContent>
-          <SidebarPanel width={{ default: 'width_25' }} variant="sticky">
-            <Tabs activeKey={0}>
-              <Tab eventKey={0} title={<TabTitleText>Schema</TabTitleText>}>
-                <Panel>
-                  <PanelMain>
-                    <PanelMainBody>
-                      <SyncEditorSchema schema={schema} />
-                    </PanelMainBody>
-                  </PanelMain>
-                </Panel>
-              </Tab>
-            </Tabs>
-          </SidebarPanel>
+          {isSideBarVisible ? (
+            <SidebarPanel width={{ default: 'width_25' }} variant="sticky">
+              <Tabs activeKey={0}>
+                <Tab eventKey={0} title={<TabTitleText>Schema</TabTitleText>}>
+                  <Panel>
+                    <PanelMain>
+                      <PanelMainBody>
+                        <SyncEditorSchema schema={JSON.stringify(schema)} />
+                      </PanelMainBody>
+                    </PanelMain>
+                  </Panel>
+                </Tab>
+              </Tabs>
+            </SidebarPanel>
+          ) : null}
         </Sidebar>
         <ConfirmationDialog
           title="Close editor without saving?"
