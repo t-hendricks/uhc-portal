@@ -48,7 +48,7 @@ class ClusterList extends Page {
   }
 
   clickClusterTypeFilters() {
-    cy.getByTestId('cluster-list-filter-dropdown').click();
+    cy.get('button').contains('Cluster type').click();
   }
 
   clickClusterTypes(type) {
