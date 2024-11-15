@@ -49,7 +49,7 @@ const UpdateGraph = ({ currentVersion, updateVersion, hasMore }) => (
         {`Additional versions available between ${currentVersion} and ${updateVersion}`}
       </div>
     )}
-    <UpgradeAcknowledgeWarning isPlain isInfo showConfirm />
+    <UpgradeAcknowledgeWarning isPlain isInfo showConfirm showUpgradeWarning />
     <MinorVersionUpgradeConfirm />
   </div>
 );

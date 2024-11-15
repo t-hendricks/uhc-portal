@@ -1,7 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { Alert, AlertActionLink, Button } from '@patternfly/react-core';
+import { Alert, AlertActionLink, Button, Icon } from '@patternfly/react-core';
+import { ExclamationTriangleIcon } from '@patternfly/react-icons/dist/esm/icons/exclamation-triangle-icon';
 import { InfoCircleIcon } from '@patternfly/react-icons/dist/esm/icons/info-circle-icon';
 
 import UpgradeAcknowledgeModal from '../UpgradeAcknowledgeModal';
@@ -19,8 +20,10 @@ const UpgradeAcknowledgeWarning = (props) => {
     isManual,
     isInfo,
     showConfirm,
+    showUpgradeWarning,
     openshiftVersion,
     hasScheduledManual,
+    showManualUpgradeNeededWarning,
   } = props;
 
   const handleButtonClick = () => {
@@ -85,7 +88,15 @@ const UpgradeAcknowledgeWarning = (props) => {
           ) : null}
         </>
       ) : null}
-
+      {showUpgradeWarning && showManualUpgradeNeededWarning ? (
+        <div className="ocm-upgrade-additional-versions-available" data-testid="confirmAckReceived">
+          <Icon status="warning">
+            <ExclamationTriangleIcon />
+          </Icon>{' '}
+          Your update strategy is currently set to recurring updates. Update {toVersion} is a Y
+          steam update and must be individually updated.
+        </div>
+      ) : null}
       {showConfirmMessage ? (
         <div className="ocm-upgrade-additional-versions-available" data-testid="confirmAckReceived">
           <InfoCircleIcon />
@@ -108,6 +119,8 @@ UpgradeAcknowledgeWarning.propTypes = {
   toVersion: PropTypes.string,
   getAcks: PropTypes.array,
   isManual: PropTypes.bool,
+  showManualUpgradeNeededWarning: PropTypes.bool,
+  showUpgradeWarning: PropTypes.bool,
 };
 
 UpgradeAcknowledgeWarning.defaultProps = {

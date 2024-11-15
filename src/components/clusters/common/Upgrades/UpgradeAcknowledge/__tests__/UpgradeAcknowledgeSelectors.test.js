@@ -2,6 +2,7 @@ import {
   getAutomaticUpgradePolicyId,
   getClusterAcks,
   getToVersionFromState,
+  isManualUpdateSchedulingRequired,
 } from '../UpgradeAcknowledgeSelectors';
 
 describe('Upgrade Acknowledge Selectors', () => {
@@ -86,7 +87,15 @@ describe('Upgrade Acknowledge Selectors', () => {
       },
       clusterUpgrades: {
         schedules: {
-          items: [{ schedule_type: 'automatic', version: '', id: 'myUpgradePolicyID' }],
+          items: [
+            {
+              enable_minor_version_upgrades: false,
+              schedule_type: 'automatic',
+              version: '',
+              id: 'myUpgradePolicyID',
+              state: { value: 'pending' },
+            },
+          ],
         },
       },
     };
@@ -299,6 +308,17 @@ describe('Upgrade Acknowledge Selectors', () => {
     it('Returns undefined, for manual', () => {
       state.clusterUpgrades.schedules.items[0].schedule_type = 'manual';
       expect(getAutomaticUpgradePolicyId(state)).toBeUndefined();
+    });
+  });
+
+  describe('isManualUpdateSchedulingRequired tests', () => {
+    it('Returns true for pending updatePolicy with minor updates disabled', () => {
+      expect(isManualUpdateSchedulingRequired(state)).toEqual(true);
+    });
+
+    it('Returns false for updatePolicy with minor updates enabled', () => {
+      state.clusterUpgrades.schedules.items[0].enable_minor_version_upgrades = 'true';
+      expect(isManualUpdateSchedulingRequired(state)).toEqual(false);
     });
   });
 });

@@ -9,6 +9,7 @@ import {
   getHasScheduledManual,
   getIsManual,
   getToVersionFromState,
+  isManualUpdateSchedulingRequired,
 } from '../UpgradeAcknowledgeSelectors';
 
 import UpgradeAcknowledgeWarning from './UpgradeAcknowledgeWarning';
@@ -21,6 +22,7 @@ const mapStateToProps = (state) => ({
   isManual: getIsManual(state),
   getAcks: getClusterAcks(state),
   hasScheduledManual: getHasScheduledManual(state),
+  showManualUpgradeNeededWarning: isManualUpdateSchedulingRequired(state),
 });
 
 const mapDispatchToProps = {
