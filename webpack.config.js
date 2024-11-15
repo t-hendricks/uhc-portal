@@ -25,6 +25,7 @@ const CopyWebpackPlugin = require('copy-webpack-plugin');
 const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
 const FederationPlugin = require('@redhat-cloud-services/frontend-components-config-utilities/federated-modules');
 const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
+const MonacoWebpackPlugin = require('monaco-editor-webpack-plugin');
 const { insights } = require('./package.json');
 
 const name = insights.appname;
@@ -143,6 +144,19 @@ module.exports = async (_env, argv) => {
         ],
       }),
       bundleAnalyzer,
+      new MonacoWebpackPlugin({
+        languages: ['yaml'],
+        customLanguages: [
+          {
+            label: 'yaml',
+            entry: 'monaco-yaml',
+            worker: {
+              id: 'monaco-yaml/yamlWorker',
+              entry: 'monaco-yaml/yaml.worker',
+            },
+          },
+        ],
+      }),
     ].filter(Boolean),
 
     module: {
@@ -216,6 +230,11 @@ module.exports = async (_env, argv) => {
               },
             },
           ],
+        },
+        {
+          // Monaco editor uses .ttf icons.
+          test: /\.(svg|ttf)$/,
+          type: 'asset/resource',
         },
       ],
     },
@@ -309,9 +328,7 @@ module.exports = async (_env, argv) => {
             },
             runAIinStandalone
               ? {
-                  context: [
-                    '/apps/assisted-installer-app/**',
-                  ],
+                  context: ['/apps/assisted-installer-app/**'],
                   target: 'http://127.0.0.1:8003',
                   logLevel: 'debug',
                   secure: false,
@@ -321,12 +338,7 @@ module.exports = async (_env, argv) => {
             {
               // docs: https://github.com/chimurai/http-proxy-middleware#http-proxy-options
               // proxy everything except our own app, mimicking insights-proxy behaviour
-              context: [
-                '**',
-                '!/mockdata/**',
-                '!/src/**',
-                `!/apps/${insights.appname}/**`,
-              ],
+              context: ['**', '!/mockdata/**', '!/src/**', `!/apps/${insights.appname}/**`],
               target: 'https://console.redhat.com',
               // replace the "host" header's URL origin with the origin from the target URL
               changeOrigin: true,
