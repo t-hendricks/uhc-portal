@@ -6,16 +6,14 @@ import { defaultMarginBottomSpacing, hypershiftValue, ListItem } from './Control
 
 type StandAloneTileProps = {
   handleChange: (string: hypershiftValue) => void;
-  isSelected: boolean;
 };
 
-const StandAloneTile = ({ handleChange, isSelected }: StandAloneTileProps) => (
+const StandAloneTile = ({ handleChange }: StandAloneTileProps) => (
   <Tile
     title="Classic"
     isDisplayLarge
     isStacked
     onClick={() => handleChange('false')}
-    isSelected={isSelected}
     className="controlPlaneScreenTile"
     data-testid="standalone-control-planes"
   >
