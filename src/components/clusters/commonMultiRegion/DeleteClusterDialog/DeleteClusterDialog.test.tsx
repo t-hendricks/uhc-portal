@@ -127,7 +127,7 @@ describe('<DeleteClusterDialog />', () => {
     expect(mockedDispatch).toHaveBeenCalled();
     expect(mockedDispatch.mock.calls[0][0].type).toEqual('CLOSE_MODAL');
     expect(reset).toHaveBeenCalled();
-    expect(onClose).toHaveBeenCalled();
+    expect(onClose).toHaveBeenCalledWith(true);
   });
 
   it('displays an error', async () => {

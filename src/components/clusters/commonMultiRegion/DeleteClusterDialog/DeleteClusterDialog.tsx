@@ -12,7 +12,7 @@ import Modal from '../../../common/Modal/Modal';
 import modals from '../../../common/Modal/modals';
 
 type DeleteCusterDialogProps = {
-  onClose: () => void;
+  onClose: (clusterDeleted?: boolean) => void;
   shouldDisplayClusterName?: boolean;
   textContent?: string;
   title?: string;
@@ -58,7 +58,7 @@ const DeleteClusterDialog = ({
 
   if (isSuccess) {
     resetResponse();
-    onClose();
+    onClose(true);
     closeDeleteModal();
   }
 
