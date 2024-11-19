@@ -1,4 +1,4 @@
-import { billingModels, subscriptionSettings } from '~/common/subscriptionTypes';
+import { subscriptionSettings } from '~/common/subscriptionTypes';
 import { defaultSubscription } from '~/components/clusters/common/__tests__/defaultClusterFromSubscription.fixtures';
 import { Subscription, SubscriptionCommonFields } from '~/types/accounts_mgmt.v1';
 
@@ -127,18 +127,18 @@ describe('getOptions', () => {
       const subscription: Subscription = {
         ...defaultSubscription,
         id: '123',
-        cluster_billing_model: billingModels.MARKETPLACE,
+        cluster_billing_model: SubscriptionCommonFields.cluster_billing_model.MARKETPLACE,
       };
       const options = getOptions(subscription, subscriptionSettings.CLUSTER_BILLING_MODEL, true);
 
       expect(options).toEqual([
         {
           label: 'Annual: Fixed capacity subscription from Red Hat',
-          value: billingModels.STANDARD,
+          value: SubscriptionCommonFields.cluster_billing_model.STANDARD,
         },
         {
           label: 'On-Demand (Hourly): Flexible usage billed through Red Hat Marketplace',
-          value: billingModels.MARKETPLACE,
+          value: SubscriptionCommonFields.cluster_billing_model.MARKETPLACE,
           isDefault: true,
           isChecked: true,
         },
@@ -148,20 +148,20 @@ describe('getOptions', () => {
       const subscription: Subscription = {
         ...defaultSubscription,
         id: '123',
-        cluster_billing_model: billingModels.STANDARD,
+        cluster_billing_model: SubscriptionCommonFields.cluster_billing_model.STANDARD,
       };
       const options = getOptions(subscription, subscriptionSettings.CLUSTER_BILLING_MODEL);
 
       expect(options).toEqual([
         {
           label: 'Annual: Fixed capacity subscription from Red Hat',
-          value: billingModels.STANDARD,
+          value: SubscriptionCommonFields.cluster_billing_model.STANDARD,
           isDefault: true,
           isChecked: true,
         },
         {
           label: 'On-Demand (Hourly): Flexible usage billed through Red Hat Marketplace',
-          value: billingModels.MARKETPLACE,
+          value: SubscriptionCommonFields.cluster_billing_model.MARKETPLACE,
         },
       ]);
     });
@@ -175,7 +175,7 @@ describe('resetOptions', () => {
       id: '123',
       support_level: SubscriptionCommonFields.support_level.PREMIUM,
       usage: SubscriptionCommonFields.usage.PRODUCTION,
-      cluster_billing_model: billingModels.STANDARD,
+      cluster_billing_model: SubscriptionCommonFields.cluster_billing_model.STANDARD,
       system_units: SubscriptionCommonFields.system_units.CORES_V_CPU,
     };
 
@@ -213,13 +213,13 @@ describe('resetOptions', () => {
       cluster_billing_model: [
         {
           label: 'Annual: Fixed capacity subscription from Red Hat',
-          value: billingModels.STANDARD,
+          value: SubscriptionCommonFields.cluster_billing_model.STANDARD,
           isDefault: true,
           isChecked: true,
         },
         {
           label: 'On-Demand (Hourly): Flexible usage billed through Red Hat Marketplace',
-          value: billingModels.MARKETPLACE,
+          value: SubscriptionCommonFields.cluster_billing_model.MARKETPLACE,
         },
       ],
       system_units: [

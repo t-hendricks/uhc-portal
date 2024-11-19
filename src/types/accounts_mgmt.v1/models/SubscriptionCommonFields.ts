@@ -12,7 +12,7 @@ export type SubscriptionCommonFields = ObjectReference & {
   billing_marketplace_account?: string;
   cloud_account_id?: string;
   cloud_provider_id?: string;
-  cluster_billing_model?: string;
+  cluster_billing_model?: SubscriptionCommonFields.cluster_billing_model;
   cluster_id?: string;
   console_url?: string;
   consumer_uuid?: string;
@@ -53,6 +53,14 @@ export type SubscriptionCommonFields = ObjectReference & {
   rh_region_id?: string;
 };
 export namespace SubscriptionCommonFields {
+  export enum cluster_billing_model {
+    STANDARD = 'standard',
+    MARKETPLACE = 'marketplace',
+    MARKETPLACE_AWS = 'marketplace-aws',
+    MARKETPLACE_AZURE = 'marketplace-azure',
+    MARKETPLACE_RHM = 'marketplace-rhm',
+    MARKETPLACE_GCP = 'marketplace-gcp',
+  }
   export enum product_bundle {
     OPENSHIFT = 'Openshift',
     JBOSS_MIDDLEWARE = 'JBoss-Middleware',

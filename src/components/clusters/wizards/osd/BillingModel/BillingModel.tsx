@@ -15,7 +15,7 @@ import {
 import OutlinedQuestionCircleIcon from '@patternfly/react-icons/dist/esm/icons/outlined-question-circle-icon';
 
 import { deleteQueryParam, getQueryParam } from '~/common/queryHelpers';
-import { billingModels, normalizedProducts } from '~/common/subscriptionTypes';
+import { normalizedProducts, STANDARD_TRIAL_BILLING_MODEL_TYPE } from '~/common/subscriptionTypes';
 import {
   getMinReplicasCount,
   getNodesCount,
@@ -28,6 +28,7 @@ import ExternalLink from '~/components/common/ExternalLink';
 import { clustersActions } from '~/redux/actions';
 import { useGlobalState } from '~/redux/hooks';
 import CreateOSDWizardIntro from '~/styles/images/CreateOSDWizard-intro.png';
+import { SubscriptionCommonFields } from '~/types/accounts_mgmt.v1';
 
 import { MarketplaceSelectField } from './MarketplaceSelectField';
 import { useGetBillingQuotas } from './useGetBillingQuotas';
@@ -72,16 +73,16 @@ export const BillingModel = () => {
 
   const marketplaceQuotaDescription = (
     <>
-      {selectedMarketplace === billingModels.MARKETPLACE && (
+      {selectedMarketplace === SubscriptionCommonFields.cluster_billing_model.MARKETPLACE && (
         <p>Use Red Hat Marketplace to subscribe and pay based on the services you use</p>
       )}
-      {selectedMarketplace === billingModels.MARKETPLACE_GCP && (
+      {selectedMarketplace === SubscriptionCommonFields.cluster_billing_model.MARKETPLACE_GCP && (
         <p>Use Google Cloud Marketplace to subscribe and pay based on the services you use</p>
       )}
-      {!(selectedMarketplace === billingModels.MARKETPLACE) &&
-        !(selectedMarketplace === billingModels.MARKETPLACE_GCP) && (
-          <p>Use your cloud marketplace to subscribe and pay based on the services you use</p>
-        )}
+      {!(selectedMarketplace === SubscriptionCommonFields.cluster_billing_model.MARKETPLACE) &&
+        !(
+          selectedMarketplace === SubscriptionCommonFields.cluster_billing_model.MARKETPLACE_GCP
+        ) && <p>Use your cloud marketplace to subscribe and pay based on the services you use</p>}
     </>
   );
 
@@ -130,7 +131,7 @@ export const BillingModel = () => {
     ...(showOsdTrial
       ? [
           {
-            value: billingModels.STANDARD_TRIAL,
+            value: STANDARD_TRIAL_BILLING_MODEL_TYPE,
             label: 'Free trial (upgradeable)',
             // 60 days may be updated later based on an account capability
             // https://issues.redhat.com/browse/SDB-1846
@@ -140,7 +141,7 @@ export const BillingModel = () => {
       : []),
     {
       disabled: !quotas.standardOsd,
-      value: billingModels.STANDARD,
+      value: SubscriptionCommonFields.cluster_billing_model.STANDARD,
       label: 'Annual: Fixed capacity subscription from Red Hat',
       description: 'Use the quota pre-purchased by your organization',
     },
@@ -171,7 +172,7 @@ export const BillingModel = () => {
   React.useEffect(() => {
     if (product === normalizedProducts.OSDTRIAL) {
       if (showOsdTrial) {
-        setFieldValue(FieldId.BillingModel, billingModels.STANDARD_TRIAL);
+        setFieldValue(FieldId.BillingModel, STANDARD_TRIAL_BILLING_MODEL_TYPE);
         setFieldValue(FieldId.Byoc, 'true');
       } else {
         setFieldValue(FieldId.Product, normalizedProducts.OSD);
@@ -182,12 +183,15 @@ export const BillingModel = () => {
     // Also, if the selected default billing model is disabled
     // Default to marketplace
     if (
-      (!showOsdTrial || billingModel === billingModels.STANDARD) &&
+      (!showOsdTrial || billingModel === SubscriptionCommonFields.cluster_billing_model.STANDARD) &&
       quotas.marketplace &&
       !quotas.standardOsd &&
-      !billingModel.startsWith(billingModels.MARKETPLACE)
+      !billingModel.startsWith(SubscriptionCommonFields.cluster_billing_model.MARKETPLACE)
     ) {
-      setFieldValue(FieldId.BillingModel, billingModels.MARKETPLACE);
+      setFieldValue(
+        FieldId.BillingModel,
+        SubscriptionCommonFields.cluster_billing_model.MARKETPLACE,
+      );
     }
 
     clearPreviousVersionsReponse();
@@ -203,12 +207,20 @@ export const BillingModel = () => {
 
   React.useEffect(() => {
     if (sourceIsGCP) {
-      setFieldValue(FieldId.MarketplaceSelection, billingModels.MARKETPLACE_GCP, false);
+      setFieldValue(
+        FieldId.MarketplaceSelection,
+        SubscriptionCommonFields.cluster_billing_model.MARKETPLACE_GCP,
+        false,
+      );
       setFieldValue(FieldId.CloudProvider, CloudProviderType.Gcp, false);
 
       // it's possible the select was used before the parent radio button was selected
       // ensure the parent radio button is selected and the correct values are set
-      setFieldValue(FieldId.BillingModel, billingModels.MARKETPLACE_GCP, false);
+      setFieldValue(
+        FieldId.BillingModel,
+        SubscriptionCommonFields.cluster_billing_model.MARKETPLACE_GCP,
+        false,
+      );
       setFieldValue(FieldId.Byoc, 'true', false);
       setFieldValue(FieldId.Product, normalizedProducts.OSD, false);
       deleteQueryParam('source');
@@ -219,7 +231,7 @@ export const BillingModel = () => {
   let isRhInfraQuotaDisabled = false;
   let isByocQuotaDisabled = false;
 
-  if (billingModel.startsWith(billingModels.MARKETPLACE)) {
+  if (billingModel.startsWith(SubscriptionCommonFields.cluster_billing_model.MARKETPLACE)) {
     isRhInfraQuotaDisabled = !quotas.marketplaceRhInfra;
     isByocQuotaDisabled = !quotas.marketplaceByoc;
   } else {
@@ -245,11 +257,11 @@ export const BillingModel = () => {
   const onBillingModelChange = (_event: React.FormEvent<HTMLDivElement>, value: string) => {
     let selectedProduct = normalizedProducts.OSD;
 
-    if (value !== billingModels.STANDARD) {
+    if (value !== SubscriptionCommonFields.cluster_billing_model.STANDARD) {
       setFieldValue(FieldId.Byoc, 'true');
     }
 
-    if (value === billingModels.STANDARD_TRIAL) {
+    if (value === STANDARD_TRIAL_BILLING_MODEL_TYPE) {
       selectedProduct = normalizedProducts.OSDTRIAL;
     }
 

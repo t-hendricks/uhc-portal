@@ -13,7 +13,7 @@ import isAssistedInstallSubscription, {
 } from '~/common/isAssistedInstallerCluster';
 import { HAS_USER_DISMISSED_RECOMMENDED_OPERATORS_ALERT } from '~/common/localStorageConstants';
 import { useNavigate } from '~/common/routing';
-import { billingModels, normalizedProducts } from '~/common/subscriptionTypes';
+import { normalizedProducts } from '~/common/subscriptionTypes';
 import { PreviewLabel } from '~/components/clusters/common/PreviewLabel';
 import Breadcrumbs from '~/components/common/Breadcrumbs';
 import ButtonWithTooltip from '~/components/common/ButtonWithTooltip';
@@ -118,7 +118,8 @@ function ClusterDetailsTop(props) {
     get(cluster, 'subscription.plan.type', '') === normalizedProducts.OSDTRIAL;
   const isProductOSDRHM =
     get(cluster, 'subscription.plan.type', '') === normalizedProducts.OSD &&
-    get(cluster, 'subscription.cluster_billing_model', '') === billingModels.MARKETPLACE;
+    get(cluster, 'subscription.cluster_billing_model', '') ===
+      SubscriptionCommonFields.cluster_billing_model.MARKETPLACE;
   const isOSD = get(cluster, 'subscription.plan.type') === normalizedProducts.OSD;
   const isROSA = get(cluster, 'subscription.plan.type') === normalizedProducts.ROSA;
   const clusterName = getClusterName(cluster);

@@ -1,5 +1,4 @@
 import { ClusterAuthorizationRequest } from '~/types/accounts_mgmt.v1';
-import { BillingModel } from '~/types/clusters_mgmt.v1';
 
 /**
  * names of all subscriptioin settings
@@ -128,14 +127,7 @@ const productFilterOptions = [
   { key: ClusterAuthorizationRequest.product_id.RHOIC, label: 'RHOIC', plansToQuery: ['RHOIC'] },
 ];
 
-/**
- * The cluster_billing_model field on subscription indicates what kind
- * of quota this subscription is using.
- */
-const billingModels = {
-  ...BillingModel,
-  STANDARD_TRIAL: 'standard-trial',
-};
+const STANDARD_TRIAL_BILLING_MODEL_TYPE = 'standard-trial';
 
 type OcmRoleItem = {
   id: string;
@@ -184,11 +176,11 @@ const ocmRoles: Record<string, OcmRoleItem> = {
 
 export {
   allowedProducts,
-  billingModels,
   clustersServiceProducts,
   knownProducts,
   normalizedProducts,
   ocmRoles,
   productFilterOptions,
+  STANDARD_TRIAL_BILLING_MODEL_TYPE,
   subscriptionSettings,
 };
