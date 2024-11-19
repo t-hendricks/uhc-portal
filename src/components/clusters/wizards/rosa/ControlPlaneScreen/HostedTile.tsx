@@ -16,15 +16,17 @@ import {
 type HostedTileProps = {
   handleChange: (string: hypershiftValue) => void;
   isHostedDisabled: boolean;
+  isSelected: boolean;
 };
 
-const HostedTile = ({ handleChange, isHostedDisabled }: HostedTileProps) => (
+const HostedTile = ({ handleChange, isHostedDisabled, isSelected }: HostedTileProps) => (
   <Tile
     title="Hosted"
     isDisplayLarge
     isStacked
     onClick={() => !isHostedDisabled && handleChange('true')}
     isDisabled={isHostedDisabled}
+    isSelected={isSelected}
     className="controlPlaneScreenTile"
     data-testid="hosted-control-planes"
   >
