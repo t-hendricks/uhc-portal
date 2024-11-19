@@ -13,6 +13,7 @@ export type IDPBasicFieldsProps = {
 const IDPBasicFields = ({ isPending = false }: IDPBasicFieldsProps) => (
   <>
     <GridItem span={8}>
+      {/* @ts-ignore */}
       <Field
         component={ReduxVerticalFormGroup}
         name="client_id"
@@ -24,6 +25,7 @@ const IDPBasicFields = ({ isPending = false }: IDPBasicFieldsProps) => (
       />
     </GridItem>
     <GridItem span={8}>
+      {/* @ts-ignore */}
       <Field
         component={ReduxVerticalFormGroup}
         name="client_secret"

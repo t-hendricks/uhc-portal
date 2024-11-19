@@ -155,6 +155,7 @@ const ScaleClusterDialog = ({ handleSubmit, initialValues, pristine }: ScaleClus
               <>
                 <GridItem span={8}>
                   <FormGroup fieldId="load_balancers" label="Load balancers">
+                    {/* @ts-ignore */}
                     <Field
                       label="Load balancers"
                       name="load_balancers"
@@ -174,6 +175,7 @@ const ScaleClusterDialog = ({ handleSubmit, initialValues, pristine }: ScaleClus
                 {showLoadBalancerAlert && scalingAlert}
                 <GridItem span={8}>
                   <FormGroup fieldId="persistent_storage" label="Persistent storage">
+                    {/* @ts-ignore */}
                     <Field
                       label="Persistent storage"
                       name="persistent_storage"

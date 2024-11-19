@@ -197,6 +197,7 @@ function EditClusterAutoScalingDialog({
                   labelIcon={<AutoscalerIgnoredLabelsPopover />}
                   isStack
                 >
+                  {/* @ts-ignore */}
                   <Field
                     component={ReduxVerticalFormGroup}
                     name="cluster_autoscaling.balancing_ignored_labels"
@@ -226,6 +227,7 @@ function EditClusterAutoScalingDialog({
                   labelIcon={<AutoscalerGpuPopover />}
                   isStack
                 >
+                  {/* @ts-ignore */}
                   <Field
                     component={ReduxVerticalFormGroup}
                     name="cluster_autoscaling.resource_limits.gpus"

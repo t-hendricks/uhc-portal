@@ -102,6 +102,7 @@ export const fieldItemMapper = (field: FieldDefinition, isDisabled?: boolean) =>
   }
 
   return (
+    // @ts-ignore
     <Field
       component={ReduxVerticalFormGroup}
       name={`cluster_autoscaling.${field.name}`}
