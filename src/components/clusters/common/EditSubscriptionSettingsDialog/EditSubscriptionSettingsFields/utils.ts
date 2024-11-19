@@ -1,6 +1,5 @@
 import { get, pick } from 'lodash';
 
-import { billingModels } from '~/common/subscriptionTypes';
 import { Subscription, SubscriptionCommonFields } from '~/types/accounts_mgmt.v1';
 
 import { EditSubcriptionOption } from './model/EditSubcriptionOption';
@@ -54,9 +53,10 @@ const getBillingModelAlertText = (
 ) => {
   if (!isBillingModelVisible) {
     switch (true) {
-      case cluterBillingModel === billingModels.STANDARD:
+      case cluterBillingModel === SubscriptionCommonFields.cluster_billing_model.STANDARD:
         return `Cluster subscription type is ${STANDARD_BILLING_MODEL_LABEL}`;
-      case cluterBillingModel === billingModels.MARKETPLACE || canSubscribeMarketplaceOCP:
+      case cluterBillingModel === SubscriptionCommonFields.cluster_billing_model.MARKETPLACE ||
+        canSubscribeMarketplaceOCP:
         return `Cluster subscription type is ${MARKETPLACE_BILLING_MODEL_LABEL}`;
       case isDisconnected:
         return `Disconnected clusters subscription type is ${STANDARD_BILLING_MODEL_LABEL}`;

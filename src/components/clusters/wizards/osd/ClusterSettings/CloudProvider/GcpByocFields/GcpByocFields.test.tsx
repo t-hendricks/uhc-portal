@@ -4,7 +4,6 @@ import { Formik, FormikValues } from 'formik';
 
 import { waitFor } from '@testing-library/react';
 
-import { billingModels } from '~/common/subscriptionTypes';
 import { fakeWifConfigs } from '~/components/clusters/wizards/osd/ClusterSettings/CloudProvider/GcpByocFields/GcpByocFields.fixtures';
 import {
   GCPAuthType,
@@ -12,6 +11,7 @@ import {
 } from '~/components/clusters/wizards/osd/ClusterSettings/CloudProvider/types';
 import { OSD_GCP_WIF } from '~/redux/constants/featureConstants';
 import { checkAccessibility, mockUseFeatureGate, render, screen } from '~/testUtils';
+import { SubscriptionCommonFields } from '~/types/accounts_mgmt.v1';
 
 import { FieldId, initialValues } from '../../../constants';
 
@@ -61,7 +61,11 @@ describe('<GcpByocFields />', () => {
 
   describe('Test billing model prerequisites', () => {
     it('should not show the Google terms prerequisite if the billing model is not marketplace-gcp', async () => {
-      render(prepareComponent({ [FieldId.BillingModel]: billingModels.MARKETPLACE }));
+      render(
+        prepareComponent({
+          [FieldId.BillingModel]: SubscriptionCommonFields.cluster_billing_model.MARKETPLACE,
+        }),
+      );
 
       await waitFor(() => {
         expect(
@@ -71,7 +75,11 @@ describe('<GcpByocFields />', () => {
     });
 
     it('should show the Google terms prerequisite if the billing model is marketplace-gcp', async () => {
-      render(prepareComponent({ [FieldId.BillingModel]: billingModels.MARKETPLACE_GCP }));
+      render(
+        prepareComponent({
+          [FieldId.BillingModel]: SubscriptionCommonFields.cluster_billing_model.MARKETPLACE_GCP,
+        }),
+      );
 
       expect(await screen.findByText('Have you prepared your Google account?')).toBeInTheDocument();
     });

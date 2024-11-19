@@ -2,7 +2,7 @@ import { FormikTouched, FormikValues } from 'formik';
 
 import { getRandomID } from '~/common/helpers';
 import { getDefaultSecurityGroupsSettings } from '~/common/securityGroupsHelpers';
-import { billingModels, normalizedProducts } from '~/common/subscriptionTypes';
+import { normalizedProducts } from '~/common/subscriptionTypes';
 import { getDefaultClusterAutoScaling } from '~/components/clusters/common/clusterAutoScalingValues';
 import { defaultWorkerNodeVolumeSizeGiB } from '~/components/clusters/common/machinePools/constants';
 import {
@@ -22,6 +22,7 @@ import {
   ApplicationIngressType,
   ClusterPrivacyType,
 } from '~/components/clusters/wizards/osd/Networking/constants';
+import { SubscriptionCommonFields } from '~/types/accounts_mgmt.v1';
 
 export enum RosaFieldId {
   AssociatedAwsId = 'associated_aws_id',
@@ -77,7 +78,7 @@ const hypershiftDefaultSelected = true;
 export const initialValuesHypershift = (isHypershift: boolean, isMultiRegionEnabled?: boolean) =>
   isHypershift
     ? {
-        [FieldId.BillingModel]: billingModels.MARKETPLACE_AWS,
+        [FieldId.BillingModel]: SubscriptionCommonFields.cluster_billing_model.MARKETPLACE_AWS,
         [FieldId.ClusterAutoscaling]: null,
         [FieldId.ClusterPrivacyPublicSubnetId]: '',
         [FieldId.InstallToVpc]: true,
@@ -87,7 +88,7 @@ export const initialValuesHypershift = (isHypershift: boolean, isMultiRegionEnab
         [FieldId.Region]: isMultiRegionEnabled ? undefined : AWS_DEFAULT_REGION,
       }
     : {
-        [FieldId.BillingModel]: billingModels.STANDARD,
+        [FieldId.BillingModel]: SubscriptionCommonFields.cluster_billing_model.STANDARD,
         [FieldId.ClusterAutoscaling]: getDefaultClusterAutoScaling(),
         [FieldId.ClusterPrivacyPublicSubnetId]: '',
         [FieldId.EnableUserWorkloadMonitoring]: true,

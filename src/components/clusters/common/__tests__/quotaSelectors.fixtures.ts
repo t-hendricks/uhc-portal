@@ -2,7 +2,12 @@ import { AxiosHeaders } from 'axios';
 
 import { ANY } from '~/common/matchUtils';
 import { userActions } from '~/redux/actions';
-import { QuotaCost, QuotaCostList, RelatedResource } from '~/types/accounts_mgmt.v1';
+import {
+  QuotaCost,
+  QuotaCostList,
+  RelatedResource,
+  SubscriptionCommonFields,
+} from '~/types/accounts_mgmt.v1';
 import { ClusterFromSubscription } from '~/types/types';
 
 import * as mockQuotaCost from '../../../../../mockdata/api/accounts_mgmt/v1/organizations/1HAXGgCYqHpednsRDiwWsZBmDlA/quota_cost.json';
@@ -241,7 +246,7 @@ export const cluster: ClusterFromSubscription = {
     plan: {
       type: 'OCP',
     },
-    cluster_billing_model: RelatedResource.billing_model.MARKETPLACE,
+    cluster_billing_model: SubscriptionCommonFields.cluster_billing_model.MARKETPLACE,
   },
   cloud_provider: {
     id: 'cloud_provider_id',
@@ -255,7 +260,8 @@ export const clusterNonExistingBillingModel: ClusterFromSubscription = {
   ...defaultClusterFromSubscription,
   subscription: {
     ...defaultSubscription,
-    cluster_billing_model: 'cluster_billing_model',
+    cluster_billing_model:
+      'cluster_billing_model' as SubscriptionCommonFields.cluster_billing_model,
   },
   ccs: {
     enabled: false,
@@ -280,7 +286,7 @@ export const expectedNonDefault: QuotaParams = {
 
 export const expectedNonExistingBillingModel: QuotaParams = {
   product: undefined,
-  billingModel: 'cluster_billing_model' as any,
+  billingModel: RelatedResource.billing_model.STANDARD,
   cloudProviderID: ANY,
   isBYOC: false,
   isMultiAz: false,

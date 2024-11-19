@@ -2919,10 +2919,7 @@
                 "enum": [
                   "standard",
                   "marketplace",
-                  "marketplace-aws",
-                  "marketplace-rhm",
-                  "marketplace-azure",
-                  "marketplace-gcp"
+                  "any"
                 ],
                 "type": "string"
               },
@@ -3775,6 +3772,14 @@
                 "type": "string"
               },
               "cluster_billing_model": {
+                "enum": [
+                  "standard",
+                  "marketplace",
+                  "marketplace-aws",
+                  "marketplace-azure",
+                  "marketplace-rhm",
+                  "marketplace-gcp"
+                ],
                 "type": "string"
               },
               "cluster_id": {

@@ -4,10 +4,10 @@ import { useField } from 'formik';
 import { GridItem } from '@patternfly/react-core';
 
 import { normalizeProductID } from '~/common/normalize';
-import { billingModels } from '~/common/subscriptionTypes';
 import { isMultiAZ } from '~/components/clusters/ClusterDetails/clusterDetailsHelper';
 import MachineTypeSelection from '~/components/clusters/common/ScaleSection/MachineTypeSelection';
 import useFormikOnChange from '~/hooks/useFormikOnChange';
+import { SubscriptionCommonFields } from '~/types/accounts_mgmt.v1';
 import { Cluster } from '~/types/clusters_mgmt.v1';
 
 const fieldId = 'instanceType';
@@ -52,7 +52,9 @@ const InstanceTypeField = ({ cluster }: InstanceTypeFieldProps) => {
         cloudProviderID={cluster.cloud_provider?.id as 'aws' | 'gcp' | undefined}
         product={normalizeProductID(cluster.product?.id)}
         isMachinePool
-        billingModel={cluster.billing_model || billingModels.STANDARD}
+        billingModel={
+          cluster.billing_model || SubscriptionCommonFields.cluster_billing_model.STANDARD
+        }
         inModal
         menuAppendTo={document.getElementById('edit-mp-modal')}
       />

@@ -1,10 +1,14 @@
 import get from 'lodash/get';
 
-import { billingModels } from '~/common/subscriptionTypes';
 import { QuotaParams } from '~/components/clusters/common/quotaModel';
 import { OrganizationState } from '~/redux/reducers/userReducer';
 import { PromiseReducerState } from '~/redux/types';
-import { Organization, QuotaCostList, RelatedResource } from '~/types/accounts_mgmt.v1';
+import {
+  Organization,
+  QuotaCostList,
+  RelatedResource,
+  SubscriptionCommonFields,
+} from '~/types/accounts_mgmt.v1';
 import { MachineType } from '~/types/clusters_mgmt.v1';
 import { ClusterFromSubscription } from '~/types/types';
 
@@ -45,7 +49,7 @@ const hasMachinePoolsQuotaSelector = <E extends ClusterFromSubscription>(
       get(
         cluster,
         'subscription.cluster_billing_model',
-        billingModels.STANDARD,
+        SubscriptionCommonFields.cluster_billing_model.STANDARD,
       ) as keyof typeof RelatedResource.billing_model
     ];
 

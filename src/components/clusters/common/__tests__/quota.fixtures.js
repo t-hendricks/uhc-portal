@@ -1,5 +1,5 @@
 import { normalizedProducts } from '~/common/subscriptionTypes';
-import { RelatedResource } from '~/types/accounts_mgmt.v1';
+import { RelatedResource, SubscriptionCommonFields } from '~/types/accounts_mgmt.v1';
 
 // This is the quota we use in mockdata mode, pretty much everything is allowed.
 import * as mockQuotaCost from '../../../../../mockdata/api/accounts_mgmt/v1/organizations/1HAXGgCYqHpednsRDiwWsZBmDlA/quota_cost.json';
@@ -196,7 +196,7 @@ export const paramsROSA = {
 };
 export const paramsGCP = {
   ...paramsRhInfra,
-  billingModel: RelatedResource.billing_model.MARKETPLACE_GCP,
+  billingModel: SubscriptionCommonFields.cluster_billing_model.MARKETPLACE_GCP,
 };
 
 export const paramsAddons = {

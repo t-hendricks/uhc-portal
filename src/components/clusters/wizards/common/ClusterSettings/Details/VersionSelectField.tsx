@@ -5,7 +5,6 @@ import { useDispatch } from 'react-redux';
 import { FormGroup } from '@patternfly/react-core';
 import { Spinner } from '@redhat-cloud-services/frontend-components/Spinner';
 
-import { billingModels } from '~/common/subscriptionTypes';
 import { versionComparator } from '~/common/versionComparator';
 import { FieldId } from '~/components/clusters/wizards/common/constants';
 import { useFormState } from '~/components/clusters/wizards/hooks';
@@ -19,6 +18,7 @@ import { useFeatureGate } from '~/hooks/useFeatureGate';
 import { clustersActions } from '~/redux/actions';
 import { UNSTABLE_CLUSTER_VERSIONS } from '~/redux/constants/featureConstants';
 import { useGlobalState } from '~/redux/hooks';
+import { SubscriptionCommonFields } from '~/types/accounts_mgmt.v1';
 import { Version } from '~/types/clusters_mgmt.v1';
 
 import { getVersionsData, hasUnstableVersionsCapability } from './versionSelectHelper';
@@ -62,7 +62,8 @@ export const VersionSelectField = ({
     return acc;
   }, {});
 
-  const isMarketplaceGcp = billingModel === billingModels.MARKETPLACE_GCP;
+  const isMarketplaceGcp =
+    billingModel === SubscriptionCommonFields.cluster_billing_model.MARKETPLACE_GCP;
   const isWIF = gcpAuthType === GCPAuthType.WorkloadIdentityFederation;
 
   const getInstallableVersions = useCallback(

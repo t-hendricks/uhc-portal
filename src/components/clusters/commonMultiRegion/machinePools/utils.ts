@@ -141,7 +141,7 @@ export const getAvailableQuota = ({
     isBYOC: isByoc,
     isMultiAz,
     resourceName,
-    billingModel: clusterBillingModelToRelatedResource(billingModel), // TODO: it should handle marketplace-* -> marketplace in future
+    billingModel: clusterBillingModelToRelatedResource(billingModel),
   };
   return availableNodesFromQuota(quota as QuotaCostList, quotaParams);
 };

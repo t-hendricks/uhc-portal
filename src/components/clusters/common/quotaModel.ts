@@ -16,7 +16,6 @@ export type QuotaParams = {
   resourceType?: string;
   resourceName?: string;
   product?: string;
-  // eslint-disable-next-line camelcase
   billingModel?: RelatedResource.billing_model;
   cloudProviderID?: string;
   isBYOC?: boolean;
