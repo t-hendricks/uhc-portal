@@ -253,6 +253,7 @@ export const useFetchClusters = (isArchived = false, useManagedEndpoints = true)
     isError: isCanUpdateDeleteError || isSubscriptionsError || isClustersError,
     errors: [...canEditDeleteErrors, ...subscriptionsError, ...clustersError],
     refetch,
+    isClustersFetched,
   };
 };
 
