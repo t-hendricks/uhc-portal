@@ -152,6 +152,7 @@ const RegisterCluster = ({ handleSubmit }: RegisterClusterProps) => {
                 </TextContent>
                 {quotaResponse?.fulfilled ? (
                   <Form onSubmit={handleSubmit(onSubmit)} className="subscription-settings form">
+                    {/* @ts-ignore */}
                     <Field
                       component={ReduxVerticalFormGroup}
                       name="cluster_id"
@@ -162,6 +163,7 @@ const RegisterCluster = ({ handleSubmit }: RegisterClusterProps) => {
                       validate={checkClusterUUID}
                       isRequired
                     />
+                    {/* @ts-ignore */}
                     <Field
                       component={ReduxVerticalFormGroup}
                       name="display_name"
@@ -170,6 +172,7 @@ const RegisterCluster = ({ handleSubmit }: RegisterClusterProps) => {
                       disabled={registerClusterResponse.pending}
                       validate={checkClusterDisplayName}
                     />
+                    {/* @ts-ignore */}
                     <Field
                       component={ReduxVerticalFormGroup}
                       name="web_console_url"

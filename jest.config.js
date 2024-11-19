@@ -21,14 +21,14 @@ const config = {
     /* Map Assisted UI lib translations to a mock file too */
     '@openshift-assisted/locales/([a-z]{2,3}/translation.json)':
       '<rootDir>/__mocks__/assistedUiTranslationMock.json',
-    '^react-markdown$': '<rootDir>/node_modules/react-markdown/react-markdown.min.js',
+    '^react-markdown$': '<rootDir>/__mocks__/markdownMock.tsx',
     '^axios$': '<rootDir>/node_modules/axios/dist/node/axios.cjs',
     '\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$':
       '<rootDir>/__mocks__/fileMock.js',
     '\\.(css|less|scss)$': '<rootDir>/__mocks__/styleMock.js',
     '^~/(.*)$': '<rootDir>/src/$1',
     '^src/components/common/TechnologyPreview$': '<rootDir>/__mocks__/technologyPreviewFake.tsx',
-    '@scalprum/react-core':'<rootDir>/__mocks__/scalprumComponentMock.tsx'
+    '@scalprum/react-core': '<rootDir>/__mocks__/scalprumComponentMock.tsx',
   },
   globals: {
     APP_DEVMODE: false,

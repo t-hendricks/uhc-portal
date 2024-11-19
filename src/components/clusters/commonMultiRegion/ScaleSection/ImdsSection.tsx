@@ -31,6 +31,7 @@ const ImdsSection = ({
       {isDisabled ? (
         <ImdsSectionAlert />
       ) : (
+        // @ts-ignore
         <Field
           component={RadioButtons}
           name="imds"

@@ -8,7 +8,6 @@ import { OutlinedCircleIcon } from '@patternfly/react-icons/dist/esm/icons/outli
 import { ResourcesAlmostEmptyIcon } from '@patternfly/react-icons/dist/esm/icons/resources-almost-empty-icon';
 import { ResourcesAlmostFullIcon } from '@patternfly/react-icons/dist/esm/icons/resources-almost-full-icon';
 import { ResourcesFullIcon } from '@patternfly/react-icons/dist/esm/icons/resources-full-icon';
-import { IRowCell } from '@patternfly/react-table';
 
 import { Link } from '~/common/routing';
 import type { GlobalState } from '~/redux/store';
@@ -76,7 +75,7 @@ const OSDSubscriptionCard = ({ quotaCost, marketplace, organizationID, fetchQuot
   }, []);
 
   let content: React.ReactNode;
-  const rows: (React.ReactNode | IRowCell)[][] = [];
+  const rows: React.ReactNode[][] = [];
 
   let subscriptionLink = <Link to="/quota/resource-limits">Dedicated (On-Demand Limits)</Link>;
   let subscriptionsDescription =

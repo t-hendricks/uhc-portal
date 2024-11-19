@@ -101,7 +101,7 @@ export const SubnetSelectField = ({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [withAutoSelect, hasOptions, subnetList, selectedSubnetId]);
 
-  const onSelect: FuzzySelectProps['onSelect'] = useCallback(
+  const onSelect: NonNullable<FuzzySelectProps['onSelect']> = useCallback(
     (_event, selectedSubnetId) => {
       input.onChange(selectedSubnetId as string);
       setIsExpanded(false);
