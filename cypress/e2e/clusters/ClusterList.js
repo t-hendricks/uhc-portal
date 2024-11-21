@@ -35,6 +35,7 @@ describe(
           ClusterListPage.clickClusterTypes('ROSA');
           ClusterListPage.clickClusterTypes('ARO');
           ClusterListPage.clickClusterTypes('RHOIC');
+          ClusterListPage.clickClusterTypeFilters();
           ClusterListPage.isCreateClusterBtnVisible();
           ClusterListPage.createClusterButton().click();
           CreateClusterPage.isCreateClusterPageHeaderVisible();

@@ -12,6 +12,7 @@ import { GCPAuthType } from '~/components/clusters/wizards/osd/ClusterSettings/C
 import { FieldId } from '~/components/clusters/wizards/osd/constants';
 import { ApplicationIngressType } from '~/components/clusters/wizards/osd/Networking/constants';
 import config from '~/config';
+import { regionalizedClusterId } from '~/queries/helpers';
 import { createCluster } from '~/redux/actions/clustersActions';
 import { DEFAULT_FLAVOUR_ID } from '~/redux/actions/flavourActions';
 import { NamespaceOwnershipPolicy } from '~/types/clusters_mgmt.v1/models/NamespaceOwnershipPolicy';
@@ -413,10 +414,11 @@ export const upgradeScheduleRequest = (formData) =>
 
 // Returning a function that takes (formData) is convenient for redux-form `onSubmit` prop.
 const submitOSDRequest = (dispatch, params) => (formData) => {
+  const regionalId = regionalizedClusterId(formData);
   const { isWizard, cloudProviderID, product } = params;
   const clusterRequest = createClusterRequest({ isWizard, cloudProviderID, product }, formData);
   const upgradeSchedule = upgradeScheduleRequest(formData);
-  dispatch(createCluster(clusterRequest, upgradeSchedule));
+  dispatch(createCluster(clusterRequest, upgradeSchedule, regionalId));
 };
 
 export default submitOSDRequest;

@@ -17,10 +17,10 @@ import {
 import links from '~/common/installLinks.mjs';
 import { AWS_ACCOUNT_ROSA_LOCALSTORAGE_KEY } from '~/common/localStorageConstants';
 import { FormGroupHelperText } from '~/components/common/FormGroupHelperText';
+import { FuzzyDataType, FuzzyEntryType } from '~/components/common/FuzzySelect/types';
 import { CloudAccount } from '~/types/accounts_mgmt.v1';
-import { ToggleEvent } from '~/types/types';
 
-import FuzzySelect, { FuzzyDataType, FuzzyEntryType } from '../../../../common/FuzzySelect';
+import { FuzzySelect } from '../../../../common/FuzzySelect/FuzzySelect';
 import PopoverHint from '../../../../common/PopoverHint';
 
 import { useAssociateAWSAccountDrawer } from './AssociateAWSAccountDrawer/AssociateAWSAccountDrawer';
@@ -108,7 +108,7 @@ function AWSAccountSelection({
   }, [isOpen, hasAWSAccounts]);
 
   const onToggle = useCallback(
-    (_: ToggleEvent, toggleOpenValue: boolean | ((prevState: boolean) => boolean)) => {
+    (toggleOpenValue: boolean) => {
       setIsOpen(toggleOpenValue);
     },
     [setIsOpen],
@@ -179,22 +179,23 @@ function AWSAccountSelection({
       <Flex>
         <FlexItem grow={{ default: 'grow' }}>
           <FuzzySelect
-            label={label}
             isOpen={isOpen}
             selectedEntryId={hasAWSAccounts ? selectedAWSAccountID : ''}
             selectionData={selectionData}
-            onToggle={onToggle}
+            onOpenChange={onToggle}
             onSelect={onSelect}
             sortFn={sortFn}
             isDisabled={isDisabled}
             placeholderText={AWS_ACCT_ID_PLACEHOLDER}
             inlineFilterPlaceholderText="Filter by account ID"
             filterValidate={{ pattern: /^\d*$/, message: 'Please enter numeric digits only.' }}
-            validated={touched && error ? 'error' : undefined}
+            validated={touched && error ? 'danger' : undefined}
             footer={footer}
             aria-describedby="aws-infra-accounts"
             toggleId={name}
-            menuAppendTo={() => document.body}
+            popperProps={{
+              appendTo: document.body,
+            }}
           />
         </FlexItem>
         {onRefresh && (

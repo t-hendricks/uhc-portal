@@ -1,13 +1,13 @@
-import React, { ChangeEvent, MouseEvent, useCallback, useEffect, useMemo, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { FieldInputProps, FieldMetaProps } from 'formik';
 import { WrappedFieldInputProps, WrappedFieldMetaProps } from 'redux-form';
 
 import { Flex, FlexItem, FormGroup, FormSelectProps } from '@patternfly/react-core';
-import { SelectOptionObject as SelectOptionObjectDeprecated } from '@patternfly/react-core/deprecated';
 
 import { isSubnetMatchingPrivacy } from '~/common/vpcHelpers';
 import { FormGroupHelperText } from '~/components/common/FormGroupHelperText';
-import FuzzySelect, { FuzzyDataType, FuzzyEntryType } from '~/components/common/FuzzySelect';
+import { FuzzySelect, FuzzySelectProps } from '~/components/common/FuzzySelect/FuzzySelect';
+import { FuzzyDataType, FuzzyEntryType } from '~/components/common/FuzzySelect/types';
 import { CloudVPC, Subnetwork } from '~/types/clusters_mgmt.v1';
 
 const TRUNCATE_THRESHOLD = 40;
@@ -101,8 +101,8 @@ export const SubnetSelectField = ({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [withAutoSelect, hasOptions, subnetList, selectedSubnetId]);
 
-  const onSelect = useCallback(
-    (_: MouseEvent | ChangeEvent, selectedSubnetId: string | SelectOptionObjectDeprecated) => {
+  const onSelect: FuzzySelectProps['onSelect'] = useCallback(
+    (_event, selectedSubnetId) => {
       input.onChange(selectedSubnetId as string);
       setIsExpanded(false);
     },
@@ -125,10 +125,9 @@ export const SubnetSelectField = ({
       <Flex>
         <FlexItem grow={{ default: 'grow' }}>
           <FuzzySelect
-            label={label}
             aria-label={label}
             isOpen={isExpanded}
-            onToggle={(_, isExpanded) => setIsExpanded(isExpanded)}
+            onOpenChange={(isExpanded) => setIsExpanded(isExpanded)}
             onSelect={onSelect}
             selectedEntryId={selectedSubnetId}
             selectionData={subnetsByAZ}
@@ -136,7 +135,7 @@ export const SubnetSelectField = ({
             placeholderText={placeholderText}
             truncation={TRUNCATE_THRESHOLD}
             inlineFilterPlaceholderText="Filter by subnet ID / name"
-            validated={inputError ? 'error' : undefined}
+            validated={inputError ? 'danger' : undefined}
             isPopover
             toggleId={name || input.name}
           />

@@ -14,7 +14,7 @@ import {
 import ExternalLink from '~/components/common/ExternalLink';
 import VideoImg from '~/styles/images/OpenshiftAiExplanationVideoImg.png';
 
-const AdvancedClusterSecurityDrawerPanelBody = (
+const OpenShiftAiDrawerPanelBody = (
   <Stack hasGutter className="drawer-panel-content-body">
     <StackItem>
       <TextContent>
@@ -150,4 +150,4 @@ const AdvancedClusterSecurityDrawerPanelBody = (
   </Stack>
 );
 
-export default AdvancedClusterSecurityDrawerPanelBody;
+export { OpenShiftAiDrawerPanelBody };

@@ -147,21 +147,9 @@ export const updateAllMachinePools = async (
     return clusterService.postNodePoolUpgradeSchedule(clusterId, pool.id || '', schedule);
   });
 
-  // @ts-ignore  error due to using an older compiler
   const results = await Promise.allSettled(promisesArray);
 
-  interface PromiseFulfilledResult<T> {
-    status: 'fulfilled';
-    value: T;
-  }
-  interface PromiseRejectedResult {
-    status: 'rejected';
-    reason: any;
-  }
-
-  type PromiseSettledResult<T> = PromiseFulfilledResult<T> | PromiseRejectedResult;
-
-  results.forEach((result: PromiseSettledResult<string>) => {
+  results.forEach((result) => {
     if (result.status === 'rejected') {
       errors.push(`${result.reason.response.data.code} - ${result.reason.response.data.reason}`);
     }

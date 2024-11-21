@@ -209,6 +209,8 @@ class CreateOSDCluster extends Page {
 
   installIntoExistingVpcValue = () => cy.getByTestId('Install-into-existing-VPC').find('div');
 
+  privateServiceConnectValue = () => cy.getByTestId('Private-service-connect').find('div');
+
   applicationIngressValue = () => cy.getByTestId('Application-ingress').find('div');
 
   routeSelectorsValue = () => cy.getByTestId('Route-selectors').find('div');
@@ -248,6 +250,8 @@ class CreateOSDCluster extends Page {
   addNodeLabelLink = () => cy.get('span').contains('Add node labels');
 
   installIntoExistingVpcCheckBox = () => cy.get('input[id="install_to_vpc"]');
+
+  usePrivateServiceConnectCheckBox = () => cy.get('input[id="private_service_connect"]');
 
   applicationIngressDefaultSettingsRadio = () =>
     cy.get('input[id="form-radiobutton-applicationIngress-default-field"]');
@@ -322,6 +326,32 @@ class CreateOSDCluster extends Page {
       .type(vpcName);
     cy.contains(vpcName).scrollIntoView().click();
   }
+  selectGcpVPC(vpcName) {
+    cy.get('select[aria-label="Existing VPC name"]').select(vpcName);
+  }
+
+  selectControlPlaneSubnetName(subnetName) {
+    cy.get('select[aria-label="Control plane subnet name"]').select(subnetName);
+  }
+
+  selectComputeSubnetName(subnetName) {
+    cy.get('select[aria-label="Compute subnet name"]').select(subnetName);
+  }
+
+  selectPrivateServiceConnectSubnetName(pscName) {
+    cy.get('select[aria-label="Private Service Connect subnet name"]').select(pscName);
+  }
+  selectKeylocation(location) {
+    cy.get('select[aria-label="KMS location"]').select(location);
+  }
+
+  selectKeyRing(keyring) {
+    cy.get('select[aria-label="Key ring"]').select(keyring);
+  }
+
+  selectKeyName(keyname) {
+    cy.get('select[aria-label="Key name"]').select(keyname);
+  }
 
   selectPrivateSubnet(index = 0, privateSubnetNameOrId) {
     cy.get(`button[id="machinePoolsSubnets[${index}].privateSubnetId"]`).click();
@@ -382,6 +412,8 @@ class CreateOSDCluster extends Page {
 
   securityGroupsValue = () => cy.getByTestId('Security-groups').find('div');
 
+  kmsServiceAccountInput = () => cy.get('input[id="kms_service_account"]');
+
   closePopoverDialogs() {
     cy.get('body').then(($body) => {
       if ($body.find('button[aria-label="Close"]').filter(':visible').length > 0) {
@@ -419,9 +451,9 @@ class CreateOSDCluster extends Page {
 
   selectClusterPrivacy(privacy) {
     if (privacy.toLowerCase() == 'private') {
-      this.clusterPrivacyPrivateRadio().check();
+      this.clusterPrivacyPrivateRadio().check({ force: true });
     } else {
-      this.clusterPrivacyPublicRadio().check();
+      this.clusterPrivacyPublicRadio().check({ force: true });
     }
   }
 

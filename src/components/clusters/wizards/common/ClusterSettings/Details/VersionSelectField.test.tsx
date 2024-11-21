@@ -190,7 +190,7 @@ describe('<VersionSelectField />', () => {
   });
 
   it('handles opening the toggle', async () => {
-    const { container, user } = withState(loadedState).render(
+    const { user } = withState(loadedState).render(
       <Formik initialValues={standardValues} onSubmit={() => {}}>
         <VersionSelectField {...defaultProps} />
       </Formik>,
@@ -198,10 +198,17 @@ describe('<VersionSelectField />', () => {
 
     expect(clusterService.getInstallableVersions).not.toHaveBeenCalled();
     expect(screen.queryByText('Version')).toBeInTheDocument();
-    expect(container.querySelector('fieldset')).not.toBeInTheDocument();
-    const menuToggle = container.querySelector('#version-selector')!;
-    expect(menuToggle).toBeInTheDocument();
-    await user.click(menuToggle);
-    expect(container.querySelector('fieldset')).toBeInTheDocument();
+    expect(screen.queryByText('Full support')).not.toBeInTheDocument();
+    expect(
+      screen.getByRole('button', {
+        name: /options menu/i,
+      }),
+    ).toBeInTheDocument();
+    await user.click(
+      screen.getByRole('button', {
+        name: /options menu/i,
+      }),
+    );
+    expect(screen.getByText('Full support')).toBeInTheDocument();
   });
 });
