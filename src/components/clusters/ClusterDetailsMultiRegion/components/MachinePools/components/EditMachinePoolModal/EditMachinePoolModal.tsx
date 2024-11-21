@@ -20,8 +20,8 @@ import { useFetchMachineOrNodePools } from '~/queries/ClusterDetailsQueries/Mach
 import { MachineTypesResponse } from '~/queries/types';
 import { MAX_COMPUTE_NODES_500 } from '~/redux/constants/featureConstants';
 import { useGlobalState } from '~/redux/hooks';
-import { Cluster, MachinePool } from '~/types/clusters_mgmt.v1';
-import { ErrorState } from '~/types/types';
+import { MachinePool } from '~/types/clusters_mgmt.v1';
+import { ClusterFromSubscription, ErrorState } from '~/types/types';
 
 import { clearGetMachinePoolsResponse } from '../../MachinePoolsActions';
 import { canUseSpotInstances } from '../../machinePoolsHelper';
@@ -39,7 +39,7 @@ const modalDescription =
   'A machine pool is a group of machines that are all clones of the same configuration, that can be used on demand by an application running on a pod.';
 
 type EditMachinePoolModalProps = {
-  cluster: Cluster;
+  cluster: ClusterFromSubscription;
   region?: string;
   onClose: () => void;
   onSave?: () => void;
@@ -79,6 +79,7 @@ const EditMachinePoolModal = ({
     () => !!isInitEdit || !!machinePoolId,
     [isInitEdit, machinePoolId],
   );
+
   const [submitError, setSubmitError] = React.useState<AxiosError<any>>();
   const [currentMachinePool, setCurrentMachinePool] = React.useState<MachinePool>();
   const [isEdit, setIsEdit] = React.useState<boolean>(getIsEditValue());

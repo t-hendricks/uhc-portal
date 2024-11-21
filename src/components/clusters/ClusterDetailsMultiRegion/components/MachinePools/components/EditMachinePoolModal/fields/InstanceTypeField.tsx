@@ -10,6 +10,7 @@ import useFormikOnChange from '~/hooks/useFormikOnChange';
 import { MachineTypesResponse } from '~/queries/types';
 import { SubscriptionCommonFields } from '~/types/accounts_mgmt.v1';
 import { Cluster } from '~/types/clusters_mgmt.v1';
+import { ClusterFromSubscription } from '~/types/types';
 
 const fieldId = 'instanceType';
 
@@ -21,7 +22,7 @@ const forceChoiceInput = {
 };
 
 type InstanceTypeFieldProps = {
-  cluster: Cluster;
+  cluster: ClusterFromSubscription;
   machineTypesResponse: MachineTypesResponse;
 };
 
@@ -56,7 +57,10 @@ const InstanceTypeField = ({ cluster, machineTypesResponse }: InstanceTypeFieldP
         product={normalizeProductID(cluster.product?.id)}
         isMachinePool
         billingModel={
-          cluster.billing_model || SubscriptionCommonFields.cluster_billing_model.STANDARD
+          (cluster as Cluster).billing_model ||
+          ((cluster as ClusterFromSubscription).subscription
+            ?.cluster_billing_model as Cluster['billing_model']) ||
+          SubscriptionCommonFields.cluster_billing_model.STANDARD
         }
         inModal
         menuAppendTo={document.getElementById('edit-mp-modal')}

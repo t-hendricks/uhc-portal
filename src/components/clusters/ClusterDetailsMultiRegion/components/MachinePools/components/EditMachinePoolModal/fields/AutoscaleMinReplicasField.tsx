@@ -6,10 +6,10 @@ import { FormGroup, NumberInput } from '@patternfly/react-core';
 import { isMPoolAz } from '~/components/clusters/ClusterDetails/clusterDetailsHelper';
 import { FormGroupHelperText } from '~/components/common/FormGroupHelperText';
 import useFormikOnChange from '~/hooks/useFormikOnChange';
-import { Cluster } from '~/types/clusters_mgmt.v1';
+import { ClusterFromSubscription } from '~/types/types';
 
 type AutoscaleMinReplicasFieldProps = {
-  cluster: Cluster;
+  cluster: ClusterFromSubscription;
   minNodes: number;
   mpAvailZones?: number;
   options: number[];
