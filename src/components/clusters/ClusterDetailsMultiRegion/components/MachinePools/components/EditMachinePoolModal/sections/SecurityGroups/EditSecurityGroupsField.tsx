@@ -13,10 +13,10 @@ import { isHypershiftCluster, isROSA } from '~/components/clusters/common/cluste
 import { useAWSVPCFromCluster } from '~/components/clusters/commonMultiRegion/useAWSVPCFromCluster';
 import { FieldId } from '~/components/clusters/wizards/common';
 import { useFormState } from '~/components/clusters/wizards/hooks';
-import { Cluster } from '~/types/clusters_mgmt.v1';
+import { ClusterFromSubscription } from '~/types/types';
 
 export interface EditSecurityGroupsFieldProps {
-  cluster: Cluster;
+  cluster: ClusterFromSubscription;
   isReadOnly: boolean;
 }
 

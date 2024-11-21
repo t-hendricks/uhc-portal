@@ -5,11 +5,11 @@ import { Alert, Spinner } from '@patternfly/react-core';
 
 import { SubnetSelectField } from '~/components/clusters/common/SubnetSelectField';
 import { useAWSVPCFromCluster } from '~/components/clusters/common/useAWSVPCFromCluster';
-import { Cluster } from '~/types/clusters_mgmt.v1';
+import { ClusterFromSubscription } from '~/types/types';
 
 const fieldId = 'privateSubnetId';
 
-const SubnetField = ({ cluster }: { cluster: Cluster }) => {
+const SubnetField = ({ cluster }: { cluster: ClusterFromSubscription }) => {
   const [inputField, metaField, { setValue }] = useField<string | undefined>(fieldId);
   const { clusterVpc, isLoading, hasError } = useAWSVPCFromCluster(cluster);
   const fieldProps = React.useMemo(

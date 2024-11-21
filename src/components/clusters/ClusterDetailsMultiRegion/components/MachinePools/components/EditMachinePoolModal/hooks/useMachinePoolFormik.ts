@@ -22,7 +22,8 @@ import { getNodeOptions } from '~/components/clusters/commonMultiRegion/machineP
 import { useFeatureGate } from '~/hooks/useFeatureGate';
 import { MachineTypesResponse } from '~/queries/types';
 import { MAX_COMPUTE_NODES_500 } from '~/redux/constants/featureConstants';
-import { Cluster, MachinePool, NodePool } from '~/types/clusters_mgmt.v1';
+import { MachinePool, NodePool } from '~/types/clusters_mgmt.v1';
+import { ClusterFromSubscription } from '~/types/types';
 
 import { getClusterMinNodes } from '../../../machinePoolsHelper';
 import { TaintEffect } from '../fields/TaintEffectField';
@@ -48,7 +49,7 @@ export type EditMachinePoolValues = {
 
 type UseMachinePoolFormikArgs = {
   machinePool: MachinePool | undefined;
-  cluster: Cluster;
+  cluster: ClusterFromSubscription;
   machineTypes: MachineTypesResponse;
   machinePools: MachinePool[];
 };

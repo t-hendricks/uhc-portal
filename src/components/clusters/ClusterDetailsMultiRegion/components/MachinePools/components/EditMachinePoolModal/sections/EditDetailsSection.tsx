@@ -5,14 +5,15 @@ import { FormGroup, SelectOption } from '@patternfly/react-core';
 import { isHypershiftCluster } from '~/components/clusters/common/clusterStates';
 import TextField from '~/components/common/formik/TextField';
 import { MachineTypesResponse } from '~/queries/types';
-import { Cluster, MachinePool } from '~/types/clusters_mgmt.v1';
+import { MachinePool } from '~/types/clusters_mgmt.v1';
+import { ClusterFromSubscription } from '~/types/types';
 
 import InstanceTypeField from '../fields/InstanceTypeField';
 import SelectField from '../fields/SelectField';
 import SubnetField from '../fields/SubnetField';
 
 type EditDetailsSectionProps = {
-  cluster: Cluster;
+  cluster: ClusterFromSubscription;
   isEdit: boolean;
   machinePools: MachinePool[];
   currentMPId: string | undefined;

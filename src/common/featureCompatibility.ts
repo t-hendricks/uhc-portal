@@ -1,10 +1,10 @@
-import { Cluster } from '~/types/clusters_mgmt.v1';
+import { ClusterFromSubscription } from '~/types/types';
 
 enum SupportedFeature {
   SECURITY_GROUPS = 'securityGroups',
   AWS_SHARED_VPC = 'sharedVPC',
 }
-type ClusterParams = Partial<Cluster>;
+type ClusterParams = Partial<ClusterFromSubscription>;
 
 const checkAWSSecurityGroupsCompatibility = (clusterParams: ClusterParams) => {
   const cloudProvider = clusterParams?.cloud_provider?.id;

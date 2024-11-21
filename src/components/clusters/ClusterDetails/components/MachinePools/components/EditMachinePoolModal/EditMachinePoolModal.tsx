@@ -20,8 +20,8 @@ import { useGlobalState } from '~/redux/hooks';
 import { GlobalState } from '~/redux/store';
 import { PromiseReducerState } from '~/redux/types';
 import { clusterService } from '~/services';
-import { Cluster, MachinePool } from '~/types/clusters_mgmt.v1';
-import { ErrorState } from '~/types/types';
+import { MachinePool } from '~/types/clusters_mgmt.v1';
+import { ClusterFromSubscription, ErrorState } from '~/types/types';
 
 import { clearGetMachinePoolsResponse, getMachineOrNodePools } from '../../MachinePoolsActions';
 import { canUseSpotInstances, normalizeNodePool } from '../../machinePoolsHelper';
@@ -47,7 +47,7 @@ const submitEdit = ({
   currentMPId,
   currentMachinePool,
 }: {
-  cluster: Cluster;
+  cluster: ClusterFromSubscription;
   values: EditMachinePoolValues;
   currentMPId?: string;
   currentMachinePool: MachinePool | undefined;
@@ -78,7 +78,7 @@ const submitEdit = ({
 };
 
 type EditMachinePoolModalProps = {
-  cluster: Cluster;
+  cluster: ClusterFromSubscription;
   onClose: () => void;
   onSave?: () => void;
   machinePoolId?: string;
@@ -354,4 +354,4 @@ const ConnectedEditMachinePoolModal = ({
 
 ConnectedEditMachinePoolModal.modalName = modals.EDIT_MACHINE_POOL;
 
-export { EditMachinePoolModal, ConnectedEditMachinePoolModal };
+export { ConnectedEditMachinePoolModal, EditMachinePoolModal };
