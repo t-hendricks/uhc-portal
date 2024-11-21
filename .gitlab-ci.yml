@@ -135,7 +135,7 @@ stages:
     entrypoint: ['']
   stage: test
   tags:
-    - shared-podman
+    - shared
   cache:
     # inherit all global cache settings
     <<: *global_cache
