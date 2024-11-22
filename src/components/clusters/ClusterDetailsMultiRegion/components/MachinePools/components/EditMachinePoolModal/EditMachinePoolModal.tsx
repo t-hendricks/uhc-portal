@@ -7,6 +7,7 @@ import { useDispatch } from 'react-redux';
 import { Button, ExpandableSection, Form, Stack, StackItem, Tooltip } from '@patternfly/react-core';
 
 import { getErrorMessage } from '~/common/errors';
+import getClusterName from '~/common/getClusterName';
 import { isHypershiftCluster } from '~/components/clusters/common/clusterStates';
 import { getMaxNodesHCP, getNodeCount } from '~/components/clusters/common/machinePools/utils';
 import ErrorBox from '~/components/common/ErrorBox';
@@ -80,6 +81,7 @@ const EditMachinePoolModal = ({
     [isInitEdit, machinePoolId],
   );
 
+  const clusterName = getClusterName(cluster);
   const [submitError, setSubmitError] = React.useState<AxiosError<any>>();
   const [currentMachinePool, setCurrentMachinePool] = React.useState<MachinePool>();
   const [isEdit, setIsEdit] = React.useState<boolean>(getIsEditValue());
@@ -155,7 +157,7 @@ const EditMachinePoolModal = ({
         <Modal
           id="edit-mp-modal"
           title={isEdit ? 'Edit machine pool' : 'Add machine pool'}
-          secondaryTitle={shouldDisplayClusterName ? cluster.name : undefined}
+          secondaryTitle={shouldDisplayClusterName ? clusterName : undefined}
           onClose={isSubmitting ? undefined : onClose}
           isPending={
             machinePoolsLoading ||

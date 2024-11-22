@@ -59,6 +59,14 @@ const commonProps = {
   machineTypesResponse,
 };
 
+const testCluster = {
+  name: 'test-cluster-name',
+  domain_prefix: 'domainPre1',
+  subscription: {
+    display_name: 'test-cluster-display-name',
+  },
+};
+
 describe('<EditMachinePoolModal />', () => {
   describe('error state', () => {
     it('Shows alert if machine pools failed to load', async () => {
@@ -145,6 +153,20 @@ describe('<EditMachinePoolModal />', () => {
   });
 
   describe('edit machine pool', () => {
+    it('shows subscription display name when displayClusterName is true', async () => {
+      render(
+        <EditMachinePoolModal
+          cluster={testCluster as unknown as ClusterFromSubscription}
+          onClose={() => {}}
+          shouldDisplayClusterName
+          {...commonProps}
+        />,
+      );
+
+      expect(screen.queryByText('test-cluster-name')).not.toBeInTheDocument();
+      expect(await screen.findByText('test-cluster-display-name')).toBeInTheDocument();
+    });
+
     it('Submit button shows `Save`', async () => {
       const { rerender } = render(
         <EditMachinePoolModal
