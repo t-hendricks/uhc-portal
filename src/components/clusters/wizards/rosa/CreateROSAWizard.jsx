@@ -152,7 +152,7 @@ const CreateROSAWizardInternal = ({
 
   React.useEffect(() => {
     // On component mount
-    if (shouldRefetchQuota(organization)) {
+    if (shouldRefetchQuota(organization, false)) {
       getOrganizationAndQuota();
     }
     if (!cloudProviders.fulfilled && !cloudProviders.pending) {
