@@ -6,6 +6,7 @@ import helpers, {
   parseReduxFormKeyValueList,
   parseReduxFormTaints,
   scrollToFirstField,
+  shouldRefetchQuota,
   strToKeyValueObject,
   truncateTextWithEllipsis,
 } from '../helpers';
@@ -182,5 +183,37 @@ describe('scrollToFirstField', () => {
 
     // Assert
     expect(document.activeElement.id).toBe(expectedId);
+  });
+});
+
+describe('shouldRefetchQuota', () => {
+  it.each([
+    ['is pending', { pending: true }, undefined, false],
+    ['is not pending and not fulfilled', { pending: false, fulfilled: false }, undefined, true],
+    ['is not pending and fulfilled', { pending: false, fulfilled: true }, undefined, false],
+    [
+      'is not pending and fulfilled and timestamp out the gap',
+      { pending: false, fulfilled: true, timestamp: 0 },
+      undefined,
+      true,
+    ],
+    [
+      'is not pending and fulfilled and timestamp in the gap',
+      { pending: false, fulfilled: true, timestamp: new Date().getTime() },
+      undefined,
+      false,
+    ],
+    [
+      'is not pending and fulfilled and timestamp out the gap, not consider the gap',
+      { pending: false, fulfilled: true, timestamp: new Date().getTime() },
+      false,
+      true,
+    ],
+  ])('%s', (_title, organizationState, checkTimeSinceRefresh, expectedResult) => {
+    // Act
+    const result = shouldRefetchQuota(organizationState, checkTimeSinceRefresh);
+
+    // Assert
+    expect(result).toBe(expectedResult);
   });
 });

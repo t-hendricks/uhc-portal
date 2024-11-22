@@ -2,6 +2,9 @@
 import isEmpty from 'lodash/isEmpty';
 import semver from 'semver';
 
+import { OrganizationState } from '~/redux/reducers/userReducer';
+import { PromiseReducerState } from '~/redux/types';
+
 const noop = Function.prototype;
 
 const isValid = (id?: string | boolean): boolean =>
@@ -123,12 +126,17 @@ const helpers = {
   nestedIsEmpty,
 };
 
-// TODO correct type once reducers have migrated to typescript
-const shouldRefetchQuota = (organization: any) => {
-  const lastFetchedQuota = organization.timestamp;
+const shouldRefetchQuota = (
+  organizationState: PromiseReducerState<OrganizationState>,
+  checkTimeSinceRefresh = true,
+) => {
   const now = new Date().getTime();
+  const lastFetchedQuota = organizationState.timestamp ?? now;
   const TWO_MINUTES = 1000 * 60 * 2;
-  return !organization.pending && (!organization.fulfilled || now - lastFetchedQuota > TWO_MINUTES);
+  return (
+    !organizationState.pending &&
+    (!organizationState.fulfilled || !checkTimeSinceRefresh || now - lastFetchedQuota > TWO_MINUTES)
+  );
 };
 
 /**
