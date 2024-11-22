@@ -1,6 +1,7 @@
 import React from 'react';
 import get from 'lodash/get';
 import PropTypes from 'prop-types';
+import { useDispatch } from 'react-redux';
 
 import { Alert, Button } from '@patternfly/react-core';
 import { DateFormat } from '@redhat-cloud-services/frontend-components/DateFormat';
@@ -13,6 +14,7 @@ import { SubscriptionCommonFields } from '~/types/accounts_mgmt.v1';
 import { getSubscriptionLastReconciledDate } from '../../../clusterDetailsHelper';
 
 function SubscriptionCompliancy({ cluster, openModal, canSubscribeOCP = false }) {
+  const dispatch = useDispatch();
   const subscription = get(cluster, 'subscription');
 
   const product = get(subscription, 'plan.type');
@@ -50,7 +52,7 @@ function SubscriptionCompliancy({ cluster, openModal, canSubscribeOCP = false })
   );
 
   const handleEditSettings = () => {
-    openModal(modals.EDIT_SUBSCRIPTION_SETTINGS, { subscription });
+    dispatch(openModal(modals.EDIT_SUBSCRIPTION_SETTINGS, { subscription }));
   };
 
   const handleArchiveCluster = () => {
