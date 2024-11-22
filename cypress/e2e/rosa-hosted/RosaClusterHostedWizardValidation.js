@@ -252,6 +252,7 @@ describe('Rosa hosted(Hypershift) cluster wizard validations', { tags: ['smoke',
     CreateRosaWizardPage.isTextContainsInPage(
       clusterFieldValidations.Networking.ClusterProxy.EmptyProxyError,
     );
+    CreateRosaWizardPage.rosaNextButton().scrollIntoView();
     CreateRosaWizardPage.isTextContainsInPage(
       clusterFieldValidations.Networking.ClusterProxy.EmptyProxyValuesInformationText,
     );
