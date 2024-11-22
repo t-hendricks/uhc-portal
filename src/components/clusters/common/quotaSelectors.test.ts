@@ -82,7 +82,7 @@ describe('quotaSelectors', () => {
   describe('availableQuota', () => {
     it.each([
       ['RH Infra should be 0', emptyQuotaCostList, paramsRhInfra, 0],
-      ['GCP should be Infinity', emptyQuotaCostList, paramsGCP as any as QuotaParams, Infinity],
+      ['GCP should be 0', emptyQuotaCostList, paramsGCP as any as QuotaParams, 0],
     ])(
       '%p',
       (title: string, quotaList: QuotaCostList, quotaParams: QuotaParams, expected: number) => {

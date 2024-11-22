@@ -100,18 +100,17 @@ const availableQuota = (quotaList: QuotaCostList | undefined, quotaParams: Quota
   if (!quotaList) {
     return 0;
   }
-  // remove quota cost checks for marketplace-gcp
-  // ultimately we should filter for quota_id: "cluster|byoc|osd|gcp|marketplace"
-  // TODO: OCMUI-2690
-  if (
-    quotaParams.billingModel ===
-    (SubscriptionCommonFields.cluster_billing_model
-      .MARKETPLACE_GCP as any as RelatedResource.billing_model)
-  ) {
-    return Infinity;
-  }
 
-  const query = queryFromQuotaParams(quotaParams);
+  const queryParams: QuotaParams = {
+    ...quotaParams,
+    billingModel:
+      quotaParams.billingModel &&
+      quotaParams.billingModel.startsWith(RelatedResource.billing_model.MARKETPLACE)
+        ? RelatedResource.billing_model.MARKETPLACE
+        : quotaParams.billingModel,
+  };
+
+  const query = queryFromQuotaParams(queryParams);
   return (quotaList?.items || []).reduce(
     (acc, curr) => acc + availableFromQuotaCostItem(curr, query),
     0,
