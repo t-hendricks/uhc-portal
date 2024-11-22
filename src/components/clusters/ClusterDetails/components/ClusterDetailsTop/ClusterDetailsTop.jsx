@@ -93,7 +93,6 @@ function ClusterDetailsTop(props) {
     openDrawer,
     closeDrawer,
     selectedCardTitle,
-    hasNetworkOndemand,
   } = props;
 
   const hasAlertBeenDismissed = localStorage.getItem(
@@ -251,8 +250,7 @@ function ClusterDetailsTop(props) {
       clusterStates.INSTALLING,
       clusterStates.ERROR,
       clusterStates.UNINSTALLING,
-    ].includes(cluster.state) ||
-    (hasInflightEgressErrors(cluster) && hasNetworkOndemand);
+    ].includes(cluster.state) || hasInflightEgressErrors(cluster);
 
   return (
     <div id="cl-details-top" className="top-row">
@@ -385,7 +383,6 @@ ClusterDetailsTop.propTypes = {
   openDrawer: PropTypes.func,
   closeDrawer: PropTypes.func,
   selectedCardTitle: PropTypes.string,
-  hasNetworkOndemand: PropTypes.bool,
 };
 
 export default ClusterDetailsTop;
