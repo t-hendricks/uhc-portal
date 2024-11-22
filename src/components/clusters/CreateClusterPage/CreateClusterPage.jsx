@@ -47,7 +47,7 @@ const CreateCluster = ({
   const navigate = useNavigate();
 
   React.useEffect(() => {
-    if (shouldRefetchQuota(organization)) {
+    if (shouldRefetchQuota(organization, false)) {
       getOrganizationAndQuota();
     }
     getAuthToken();
