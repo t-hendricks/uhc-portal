@@ -30,7 +30,6 @@ const ClusterStatusMonitor = (props) => {
     getClusterStatus,
     getInflightChecks,
     getRerunInflightChecks,
-    hasNetworkOndemand,
     status,
     inflightChecks,
     rerunInflightChecks,
@@ -408,9 +407,7 @@ const ClusterStatusMonitor = (props) => {
     }
 
     // Rosa inflight error check found urls missing from byo vpc firewall
-    if (hasNetworkOndemand) {
-      alerts.push(showMissingURLList());
-    }
+    alerts.push(showMissingURLList());
 
     // OSD GCP is waiting on roles to be added to dynamically generated service account for a shared vpc project
     alerts.push(showRequiredGCPRoles());
@@ -477,7 +474,6 @@ ClusterStatusMonitor.propTypes = {
     error: PropTypes.bool,
     checks: PropTypes.array,
   }),
-  hasNetworkOndemand: PropTypes.bool,
   status: PropTypes.shape({
     pending: PropTypes.bool,
     fulfilled: PropTypes.bool,

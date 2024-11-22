@@ -1151,7 +1151,6 @@ const fixtures = {
   clusterRouters,
   clusterLogsViewOptions: {},
   addOns: {},
-  hasNetworkOndemand: false,
   supportCases: {},
   notificationContacts: {},
   initTabOpen: '',
