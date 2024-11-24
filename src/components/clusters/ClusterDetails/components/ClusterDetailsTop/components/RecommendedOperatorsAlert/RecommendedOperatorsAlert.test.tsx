@@ -12,7 +12,7 @@ import '@testing-library/jest-dom';
 describe('<RecommendedOperatorsAlert />', () => {
   const openLearnMore = jest.fn();
   const closeDrawer = jest.fn();
-  const hideRecommendedOperatorsAlert = jest.fn();
+  const onDismissAlertCallback = jest.fn();
 
   test.each`
     clusterState                 | title                                         | description
@@ -31,8 +31,7 @@ describe('<RecommendedOperatorsAlert />', () => {
           clusterState={clusterState}
           openLearnMore={openLearnMore}
           closeDrawer={closeDrawer}
-          hideRecommendedOperatorsAlert={hideRecommendedOperatorsAlert}
-          isArchived={false}
+          onDismissAlertCallback={onDismissAlertCallback}
         />,
       );
 
@@ -51,9 +50,8 @@ describe('<RecommendedOperatorsAlert />', () => {
         clusterState={clusterStates.READY}
         openLearnMore={openLearnMore}
         closeDrawer={closeDrawer}
-        hideRecommendedOperatorsAlert={hideRecommendedOperatorsAlert}
+        onDismissAlertCallback={onDismissAlertCallback}
         consoleURL="someLink"
-        isArchived={false}
       />,
     );
 
@@ -80,8 +78,7 @@ describe('<RecommendedOperatorsAlert />', () => {
         clusterState={clusterStates.READY}
         openLearnMore={openLearnMore}
         closeDrawer={closeDrawer}
-        hideRecommendedOperatorsAlert={hideRecommendedOperatorsAlert}
-        isArchived={false}
+        onDismissAlertCallback={onDismissAlertCallback}
       />,
     );
 
@@ -98,9 +95,8 @@ describe('<RecommendedOperatorsAlert />', () => {
           clusterState={clusterStates.INSTALLING}
           openLearnMore={openLearnMore}
           closeDrawer={closeDrawer}
-          hideRecommendedOperatorsAlert={hideRecommendedOperatorsAlert}
+          onDismissAlertCallback={onDismissAlertCallback}
           consoleURL="someLink"
-          isArchived={false}
         />,
       );
 
@@ -133,9 +129,8 @@ describe('<RecommendedOperatorsAlert />', () => {
         clusterState={clusterStates.INSTALLING}
         openLearnMore={openLearnMore}
         closeDrawer={closeDrawer}
-        hideRecommendedOperatorsAlert={hideRecommendedOperatorsAlert}
+        onDismissAlertCallback={onDismissAlertCallback}
         consoleURL="someLink"
-        isArchived={false}
       />,
     );
 
@@ -151,67 +146,55 @@ describe('<RecommendedOperatorsAlert />', () => {
       expect(productOverviewCards[i]).not.toHaveClass('pf-m-selected-raised');
   });
 
-  // isArchived tests:
+  it('Should call `onDismissAlertCallback` when the alert is dismissed', async () => {
+    // Arrange
+    render(
+      <RecommendedOperatorsAlert
+        clusterState={clusterStates.INSTALLING}
+        openLearnMore={openLearnMore}
+        closeDrawer={closeDrawer}
+        onDismissAlertCallback={onDismissAlertCallback}
+      />,
+    );
 
-  test.each`
-    clusterState                 | title                                         | description
-    ${clusterStates.WAITING}     | ${STATIC_ALERT_MESSAGES.actionRequired.title} | ${STATIC_ALERT_MESSAGES.actionRequired.description}
-    ${clusterStates.PENDING}     | ${STATIC_ALERT_MESSAGES.installing.title}     | ${STATIC_ALERT_MESSAGES.installing.description}
-    ${clusterStates.VALIDATING}  | ${STATIC_ALERT_MESSAGES.installing.title}     | ${STATIC_ALERT_MESSAGES.installing.description}
-    ${clusterStates.INSTALLING}  | ${STATIC_ALERT_MESSAGES.installing.title}     | ${STATIC_ALERT_MESSAGES.installing.description}
-    ${clusterStates.HIBERNATING} | ${STATIC_ALERT_MESSAGES.hibernating.title}    | ${STATIC_ALERT_MESSAGES.hibernating.description}
-    ${clusterStates.ERROR}       | ${STATIC_ALERT_MESSAGES.error.title}          | ${STATIC_ALERT_MESSAGES.error.description}
-  `(
-    `should not show "$clusterState" message for an ${clusterStates.ARCHIVED} cluster`,
-    ({ title, description }) => {
-      // Arrange
-      render(
-        <RecommendedOperatorsAlert
-          clusterState={clusterStates.ARCHIVED}
-          openLearnMore={openLearnMore}
-          closeDrawer={closeDrawer}
-          hideRecommendedOperatorsAlert={hideRecommendedOperatorsAlert}
-          consoleURL="someLink"
-          isArchived
-        />,
-      );
+    // Assert
+    const allBtns = screen.getAllByRole('button');
+    // find dismiss button (the 'X')
+    const dismissBtn = allBtns[0];
+    await userEvent.click(dismissBtn);
 
-      // Assert
-      expect(screen.queryByText(title)).not.toBeInTheDocument();
-      expect(screen.queryByText(description)).not.toBeInTheDocument();
+    expect(onDismissAlertCallback).toHaveBeenCalled();
+  });
 
-      expect(
-        screen.queryByTestId('alert-description-with-consoleURL-provided'),
-      ).not.toBeInTheDocument();
-    },
-  );
+  it('Should show correct message for expanding and collapsing the alert and should also call `closeDrawer` when the alert has collasped', async () => {
+    // Arrange
+    render(
+      <RecommendedOperatorsAlert
+        clusterState={clusterStates.INSTALLING}
+        openLearnMore={openLearnMore}
+        closeDrawer={closeDrawer}
+        onDismissAlertCallback={onDismissAlertCallback}
+      />,
+    );
 
-  it.each(TEST_CASES)(
-    `should not show "$title" ProductCard for an ${clusterStates.ARCHIVED} cluster`,
-    async ({ title, description, drawerPanelContent, index }) => {
-      // Arrange
-      render(
-        <RecommendedOperatorsAlert
-          clusterState={clusterStates.INSTALLING}
-          openLearnMore={openLearnMore}
-          closeDrawer={closeDrawer}
-          hideRecommendedOperatorsAlert={hideRecommendedOperatorsAlert}
-          isArchived
-        />,
-      );
+    const getExpectedMsg = (prefix: string) => `${prefix} recommended operators`;
+    const expandMsg = getExpectedMsg('Show');
+    const collapseMsg = getExpectedMsg('Hide');
 
-      // Assert
-      // Card Info:
-      const learnMoreBtns = screen.queryByText('Learn more');
-      expect(learnMoreBtns).toBe(null);
+    // Assert
 
-      const productOverviewCards = screen.queryByText('product-overview-card');
-      expect(productOverviewCards).toBe(null);
+    // expand alert
+    const expandBtn = screen.getByText(expandMsg);
+    await userEvent.click(expandBtn);
 
-      expect(screen.queryByText(`${title}`)).not.toBeInTheDocument();
-      expect(screen.queryByText(`${description}`)).not.toBeInTheDocument();
-    },
-  );
+    // Alert has been opened -> should present collapsing message
+
+    // collapse alert
+    const collapseBtn = screen.getByText(collapseMsg);
+    await userEvent.click(collapseBtn);
+
+    expect(closeDrawer).toHaveBeenCalled();
+  });
 
   it(`should pass accessibility check`, async () => {
     // Arrange
@@ -220,9 +203,8 @@ describe('<RecommendedOperatorsAlert />', () => {
         clusterState={clusterStates.INSTALLING}
         openLearnMore={openLearnMore}
         closeDrawer={closeDrawer}
-        hideRecommendedOperatorsAlert={hideRecommendedOperatorsAlert}
+        onDismissAlertCallback={onDismissAlertCallback}
         consoleURL="someLink"
-        isArchived={false}
       />,
     );
 

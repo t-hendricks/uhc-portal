@@ -96,8 +96,14 @@ function ClusterDetailsTop(props) {
   const hasAlertBeenDismissed = localStorage.getItem(
     HAS_USER_DISMISSED_RECOMMENDED_OPERATORS_ALERT,
   );
-  const [showRecommendedOperatorsAlert, setShowRecommendedOperatorsAlert] =
-    useState(!hasAlertBeenDismissed);
+  const isArchived =
+    get(cluster, 'subscription.status', false) === SubscriptionCommonFields.status.ARCHIVED;
+  const isDeprovisioned =
+    get(cluster, 'subscription.status', false) === SubscriptionCommonFields.status.DEPROVISIONED;
+
+  const [showRecommendedOperatorsAlert, setShowRecommendedOperatorsAlert] = useState(
+    !hasAlertBeenDismissed && !isArchived && !isDeprovisioned,
+  );
 
   let topCard = null;
 
@@ -137,11 +143,6 @@ function ClusterDetailsTop(props) {
     !clusterIdentityProvidersError &&
     !hasIdentityProviders;
 
-  const isArchived =
-    get(cluster, 'subscription.status', false) === SubscriptionCommonFields.status.ARCHIVED;
-
-  const isDeprovisioned =
-    get(cluster, 'subscription.status', false) === SubscriptionCommonFields.status.DEPROVISIONED;
   const canUpgradeTrial = cluster.state === clusterStates.READY && cluster.canEdit;
   const trialExpirationUpgradeProps = canUpgradeTrial
     ? {
@@ -353,10 +354,9 @@ function ClusterDetailsTop(props) {
           openLearnMore={openDrawer}
           selectedCardTitle={selectedCardTitle}
           closeDrawer={closeDrawer}
-          hideRecommendedOperatorsAlert={() => setShowRecommendedOperatorsAlert(false)}
+          onDismissAlertCallback={() => setShowRecommendedOperatorsAlert(false)}
           clusterState={cluster.state}
           consoleURL={consoleURL}
-          isArchived={isArchived}
         />
       ) : null}
       {children}
