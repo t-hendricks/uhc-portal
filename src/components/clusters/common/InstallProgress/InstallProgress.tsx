@@ -18,7 +18,8 @@ const InstallProgress = ({ cluster, hasInflightErrors, regionalInstance }: Insta
   cluster.state === clusterStates.INSTALLING ||
   cluster.state === clusterStates.PENDING ||
   cluster.state === clusterStates.VALIDATING ||
-  cluster.state === clusterStates.WAITING ? (
+  cluster.state === clusterStates.WAITING ||
+  cluster.state === clusterStates.ERROR ? (
     <ProgressList cluster={cluster} actionRequiredInitialOpen regionalInstance={regionalInstance} />
   ) : null;
 
