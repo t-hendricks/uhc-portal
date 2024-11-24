@@ -35,7 +35,7 @@ const STATIC_ALERT_MESSAGES = {
     description: 'Please address the issue before considering recommended operators.',
   },
   installing: {
-    title: 'Your cluster is being created. It typically takes 30-60 minutes to complete.',
+    title: 'Your cluster is being created.',
     description:
       'While you wait, learn how to optimize your cluster with Operators. You can go to other pages, just come back here to check on your cluster.',
   },
