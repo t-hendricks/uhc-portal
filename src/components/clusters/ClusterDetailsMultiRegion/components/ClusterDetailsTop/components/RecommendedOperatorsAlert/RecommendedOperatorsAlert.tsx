@@ -24,9 +24,8 @@ type RecommendedOperatorsAlertProps = {
   selectedCardTitle?: string;
   clusterState: clusterStates;
   closeDrawer: () => void;
-  hideRecommendedOperatorsAlert: () => void;
+  onDismissAlertCallback: () => void;
   consoleURL?: string;
-  isArchived: boolean;
 };
 
 const STATIC_ALERT_MESSAGES = {
@@ -59,9 +58,8 @@ const RecommendedOperatorsAlert = ({
   selectedCardTitle = '',
   clusterState,
   closeDrawer,
-  hideRecommendedOperatorsAlert,
+  onDismissAlertCallback,
   consoleURL,
-  isArchived,
 }: RecommendedOperatorsAlertProps) => {
   const [isExpanded, setIsExpanded] = useState(false);
   const onToggle = (_event: React.MouseEvent, isExpanded: boolean) => {
@@ -80,29 +78,32 @@ const RecommendedOperatorsAlert = ({
     // When the user dismisses the Alert, the value is saved in the user's LocalStorage
     localStorage.setItem(HAS_USER_DISMISSED_RECOMMENDED_OPERATORS_ALERT, 'true');
 
-    hideRecommendedOperatorsAlert();
+    onDismissAlertCallback();
   };
 
   // if consoleURL is not provided, present a static "console" without a link
-  const alertMessages = {
-    ...STATIC_ALERT_MESSAGES,
-    ...(consoleURL
-      ? {
-          ready: {
-            title: 'Optimize your cluster with operators.',
-            description: (
-              <Text data-testid="alert-description-with-consoleURL-provided">
-                Check out our recommended operators for you, or view all operators in the{' '}
-                <ExternalLink noIcon href={consoleURL}>
-                  console
-                </ExternalLink>
-                .
-              </Text>
-            ),
-          },
-        }
-      : {}),
-  };
+  const alertMessages = useMemo(
+    () => ({
+      ...STATIC_ALERT_MESSAGES,
+      ...(consoleURL
+        ? {
+            ready: {
+              title: 'Optimize your cluster with operators.',
+              description: (
+                <Text data-testid="alert-description-with-consoleURL-provided">
+                  Check out our recommended operators for you, or view all operators in the{' '}
+                  <ExternalLink noIcon href={consoleURL}>
+                    console
+                  </ExternalLink>
+                  .
+                </Text>
+              ),
+            },
+          }
+        : {}),
+    }),
+    [consoleURL],
+  );
 
   const { title, description } = useMemo(() => {
     switch (true) {
@@ -119,16 +120,9 @@ const RecommendedOperatorsAlert = ({
       default:
         return alertMessages.ready;
     }
-  }, [
-    alertMessages.actionRequired,
-    alertMessages.hibernating,
-    alertMessages.error,
-    alertMessages.installing,
-    alertMessages.ready,
-    clusterState,
-  ]);
+  }, [alertMessages, clusterState]);
 
-  return !isArchived ? (
+  return (
     <Alert
       variant="info"
       title={title}
@@ -150,7 +144,7 @@ const RecommendedOperatorsAlert = ({
         />
       </ExpandableSection>
     </Alert>
-  ) : null;
+  );
 };
 
 export { RecommendedOperatorsAlert, STATIC_ALERT_MESSAGES };
