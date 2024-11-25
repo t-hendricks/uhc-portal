@@ -9,7 +9,9 @@ import clusterService, { getClusterServiceForRegion } from '~/services/clusterSe
 import { AddOn } from '~/types/clusters_mgmt.v1';
 
 export const refetchClusterAddOns = () => {
-  queryClient.invalidateQueries({ queryKey: ['clusterAddOns'] });
+  queryClient.invalidateQueries({
+    queryKey: [queryConstants.FETCH_CLUSTER_DETAILS_QUERY_KEY, 'clusterAddOns'],
+  });
 };
 
 export const useFetchClusterAddOns = (clusterID: string, region?: string) => {

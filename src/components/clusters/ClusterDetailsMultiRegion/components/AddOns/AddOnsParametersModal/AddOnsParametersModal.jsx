@@ -12,6 +12,7 @@ import ErrorBox from '~/components/common/ErrorBox';
 import { AddOnsFormDropdown } from '~/components/common/formik/AddOnsFormDropdown';
 import TextField from '~/components/common/formik/TextField';
 import Modal from '~/components/common/Modal/Modal';
+import { refetchClusterAddOns } from '~/queries/ClusterDetailsQueries/AddOnsTab/useFetchClusterAddOns';
 import { getOrganizationAndQuota } from '~/redux/actions/userActions';
 import { useGlobalState } from '~/redux/hooks';
 
@@ -105,6 +106,7 @@ const AddOnsParametersModal = ({
           onSuccess: () => {
             dispatch(getOrganizationAndQuota());
             handleClose(formik);
+            refetchClusterAddOns();
             dispatch(
               setAddonsDrawer({
                 open: false,
@@ -121,6 +123,7 @@ const AddOnsParametersModal = ({
           onSuccess: () => {
             dispatch(getOrganizationAndQuota());
             handleClose(formik);
+            refetchClusterAddOns();
             dispatch(
               setAddonsDrawer({
                 open: false,
