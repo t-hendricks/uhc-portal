@@ -231,10 +231,12 @@ function ClusterDetailsTop(props) {
     <ButtonWithTooltip
       variant="secondary"
       onClick={() => {
-        openModal(modals.UNARCHIVE_CLUSTER, {
-          subscriptionID: cluster.subscription ? cluster.subscription.id : '',
-          name: clusterName,
-        });
+        dispatch(
+          openModal(modals.UNARCHIVE_CLUSTER, {
+            subscriptionID: cluster.subscription ? cluster.subscription.id : '',
+            name: clusterName,
+          }),
+        );
       }}
       disableReason={canNotEditReason}
     >
