@@ -110,6 +110,7 @@ function ClusterListTable(props) {
     activeSortDirection,
     setSort,
     refreshFunc,
+    isClustersFetched,
   } = props;
 
   const multiRegionFeatureGate = useFeatureGate(MULTIREGION_PREVIEW_ENABLED);
@@ -186,6 +187,10 @@ function ClusterListTable(props) {
     const clusterName = linkToClusterDetails(cluster, getClusterName(cluster));
 
     const clusterStatus = () => {
+      if (!getClusterStateAndDescription(cluster).state && !isClustersFetched) {
+        // cluster status may not be loaded.
+        return null;
+      }
       if (isAISubscriptionWithoutMetrics(cluster.subscription)) {
         return <AIClusterStatus status={cluster.state} className="clusterstate" />;
       }
@@ -380,6 +385,7 @@ ClusterListTable.propTypes = {
   setSort: PropTypes.func,
   isPending: PropTypes.bool,
   refreshFunc: PropTypes.func.isRequired,
+  isClustersFetched: PropTypes.bool,
 };
 
 export default ClusterListTable;

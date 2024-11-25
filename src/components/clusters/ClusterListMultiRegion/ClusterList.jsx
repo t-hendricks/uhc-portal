@@ -156,10 +156,8 @@ const ClusterList = ({
 
   /* Get Cluster Data */
   const isArchived = false;
-  const { isLoading, data, refetch, isError, errors, isFetching, isFetched } = useFetchClusters(
-    isArchived,
-    getMultiRegion,
-  );
+  const { isLoading, data, refetch, isError, errors, isFetching, isFetched, isClustersFetched } =
+    useFetchClusters(isArchived, getMultiRegion);
 
   const clusters = data?.items;
   const clustersTotal = useSelector((state) => state.viewOptions[viewType]?.totalCount);
@@ -422,6 +420,7 @@ const ClusterList = ({
                   openModal={openModal}
                   clusters={clusters || []}
                   isPending={isPendingNoData}
+                  isClustersFetched={isClustersFetched}
                   activeSortIndex={activeSortIndex}
                   activeSortDirection={activeSortDirection}
                   setSort={(index, direction) => {
