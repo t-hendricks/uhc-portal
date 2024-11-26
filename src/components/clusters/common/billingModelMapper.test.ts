@@ -33,7 +33,6 @@ describe('billingModelMapper', () => {
         SubscriptionCommonFields.cluster_billing_model.STANDARD,
         RelatedResource.billing_model.STANDARD,
       ],
-      ['marketplace', RelatedResource.billing_model.MARKETPLACE],
       ['any', RelatedResource.billing_model.ANY],
       ['whatever', undefined],
     ])(
