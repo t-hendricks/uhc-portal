@@ -1,9 +1,9 @@
 import React from 'react';
-import { Field, Form, Formik } from 'formik';
+import { Field, Formik } from 'formik';
 import PropTypes from 'prop-types';
 import { useDispatch } from 'react-redux';
 
-import { Button, FormGroup } from '@patternfly/react-core';
+import { Button, Form, FormGroup } from '@patternfly/react-core';
 import { LevelUpAltIcon } from '@patternfly/react-icons/dist/esm/icons/level-up-alt-icon';
 
 import { CheckboxField, TextInputField } from '~/components/clusters/wizards/form';
@@ -265,7 +265,13 @@ const AddOnsParametersModal = ({
               response={updateClusterAddOnError || addClusterAddOnError}
             />
           )}
-          <Form id={`form-addon-${addOn.id}`}>
+          <Form
+            id={`form-addon-${addOn.id}`}
+            onSubmit={(e) => {
+              formik.submitForm();
+              e.preventDefault();
+            }}
+          >
             {getParameters(addOn).map((param) => (
               <FormGroup key={param.id}>
                 {fieldForParam(param, formik)}
