@@ -163,6 +163,7 @@ export const useFetchClusters = (isArchived = false, useManagedEndpoints = true)
     errors: clustersError,
     isFetching: isClustersFetching,
     isFetched: isClustersFetched,
+    isPending: isClustersDataPending,
   } = useQueries({
     queries,
     // @ts-ignore
@@ -215,6 +216,7 @@ export const useFetchClusters = (isArchived = false, useManagedEndpoints = true)
           isLoading: results.some((result) => result.isLoading),
           isFetching: results.some((result) => result.isFetching),
           isFetched: results.every((result) => result.isFetched),
+          isPending: results.some((result) => result.isPending),
           isError: results.some((result) => result.isError),
           data: {
             clusters,
@@ -253,7 +255,7 @@ export const useFetchClusters = (isArchived = false, useManagedEndpoints = true)
     isError: isCanUpdateDeleteError || isSubscriptionsError || isClustersError,
     errors: [...canEditDeleteErrors, ...subscriptionsError, ...clustersError],
     refetch,
-    isClustersFetched,
+    isClustersDataPending,
   };
 };
 

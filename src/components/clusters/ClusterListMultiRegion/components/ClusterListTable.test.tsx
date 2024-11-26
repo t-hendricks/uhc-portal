@@ -10,7 +10,7 @@ const initialProps = {
   openModal: () => {},
   isPending: false,
   refreshFunc: () => {},
-  isClustersFetched: true,
+  isClustersDataPending: false,
 };
 
 describe('<ClusterListTable />', () => {
@@ -33,7 +33,7 @@ describe('<ClusterListTable />', () => {
   it('show status when still fetching cluster details but status is  known', () => {
     const newProps = {
       ...initialProps,
-      isClustersFetched: false,
+      isClustersDataPending: true,
       clusters: [{ ...mockedClusters[0] }],
     };
     render(<ClusterListTable {...newProps} />);
@@ -46,7 +46,7 @@ describe('<ClusterListTable />', () => {
   it('does not show status when still fetching cluster details and status is not known', () => {
     const newProps = {
       ...initialProps,
-      isClustersFetched: false,
+      isClustersDataPending: true,
       clusters: [{ ...mockedClusters[0], state: undefined }],
     };
     render(<ClusterListTable {...newProps} />);
@@ -59,7 +59,7 @@ describe('<ClusterListTable />', () => {
   it('shows unknown status when fetching cluster details is done but status is not known', () => {
     const newProps = {
       ...initialProps,
-      isClustersFetched: true,
+      isClustersDataPending: false,
       clusters: [{ ...mockedClusters[0], state: undefined }],
     };
     render(<ClusterListTable {...newProps} />);

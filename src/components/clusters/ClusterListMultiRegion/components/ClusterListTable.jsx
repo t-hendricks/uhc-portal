@@ -110,7 +110,7 @@ function ClusterListTable(props) {
     activeSortDirection,
     setSort,
     refreshFunc,
-    isClustersFetched,
+    isClustersDataPending,
   } = props;
 
   const multiRegionFeatureGate = useFeatureGate(MULTIREGION_PREVIEW_ENABLED);
@@ -187,7 +187,7 @@ function ClusterListTable(props) {
     const clusterName = linkToClusterDetails(cluster, getClusterName(cluster));
 
     const clusterStatus = () => {
-      if (!getClusterStateAndDescription(cluster).state && !isClustersFetched) {
+      if (!getClusterStateAndDescription(cluster).state && isClustersDataPending) {
         // cluster status may not be loaded.
         return null;
       }
@@ -385,7 +385,7 @@ ClusterListTable.propTypes = {
   setSort: PropTypes.func,
   isPending: PropTypes.bool,
   refreshFunc: PropTypes.func.isRequired,
-  isClustersFetched: PropTypes.bool,
+  isClustersDataPending: PropTypes.bool,
 };
 
 export default ClusterListTable;
