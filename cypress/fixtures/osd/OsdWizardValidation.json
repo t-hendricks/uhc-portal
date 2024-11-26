@@ -109,7 +109,7 @@
             }
           }
         },
-        "AWS": {
+        "Common": {
           "ClusterAutoscaling": {
             "LogVerbosityLimitError": "Value must be between 1 and 6",
             "ThreasholdLimitError": "Value must be between 0 and 1",
@@ -118,10 +118,10 @@
             "EmptyLabelValueError": "Empty labels are not allowed",
             "MinMaxLimitError": "The minimum cannot be above the maximum value",
             "InvalidGPUValueError": "Invalid params",
-            "RequiredFieldError": "Field is required"
-          }
-        },
-        "Common": {
+            "RequiredFieldError": "Field is required",
+            "MaxNodesValueLimitError": "Value must not be greater than 249",
+            "NegativeValueError": "Value cannot be a negative number"
+          },
           "NodeLabel": [
             {
               "UpperCharacterLimitValue": "characterslimtgreaterthan60testingssssssssssssssssssssssssssssssssssssssssssssssssssssssss",

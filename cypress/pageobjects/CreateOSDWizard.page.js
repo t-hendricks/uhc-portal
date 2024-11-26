@@ -247,6 +247,56 @@ class CreateOSDCluster extends Page {
 
   rootDiskSizeInput = () => cy.get('input[name="worker_volume_size_gib"]');
 
+  editClusterAutoscalingSettingsButton = () =>
+    cy.getByTestId('set-cluster-autoscaling-btn', { timeout: 80000 });
+
+  clusterAutoscalingLogVerbosityInput = () =>
+    cy.get('input[id="cluster_autoscaling.log_verbosity"]');
+
+  clusterAutoscalingMaxNodeProvisionTimeInput = () =>
+    cy.get('input[id="cluster_autoscaling.max_node_provision_time"]');
+
+  clusterAutoscalingBalancingIgnoredLabelsInput = () =>
+    cy.get('input[id="cluster_autoscaling.balancing_ignored_labels"]');
+
+  clusterAutoscalingCoresTotalMinInput = () =>
+    cy.get('input[id="cluster_autoscaling.resource_limits.cores.min"]');
+
+  clusterAutoscalingCoresTotalMaxInput = () =>
+    cy.get('input[id="cluster_autoscaling.resource_limits.cores.max"]');
+
+  clusterAutoscalingMemoryTotalMinInput = () =>
+    cy.get('input[id="cluster_autoscaling.resource_limits.memory.min"]');
+
+  clusterAutoscalingMemoryTotalMaxInput = () =>
+    cy.get('input[id="cluster_autoscaling.resource_limits.memory.max"]');
+
+  clusterAutoscalingMaxNodesTotalInput = () =>
+    cy.get('input[id="cluster_autoscaling.resource_limits.max_nodes_total"]');
+
+  clusterAutoscalingGPUsInput = () =>
+    cy.get('input[id="cluster_autoscaling.resource_limits.gpus"]');
+
+  clusterAutoscalingScaleDownUtilizationThresholdInput = () =>
+    cy.get('input[id="cluster_autoscaling.scale_down.utilization_threshold"]');
+
+  clusterAutoscalingScaleDownUnneededTimeInput = () =>
+    cy.get('input[id="cluster_autoscaling.scale_down.unneeded_time"]');
+
+  clusterAutoscalingScaleDownDelayAfterAddInput = () =>
+    cy.get('input[id="cluster_autoscaling.scale_down.delay_after_add"]');
+
+  clusterAutoscalingScaleDownDelayAfterDeleteInput = () =>
+    cy.get('input[id="cluster_autoscaling.scale_down.delay_after_delete"]');
+
+  clusterAutoscalingScaleDownDelayAfterFailureInput = () =>
+    cy.get('input[id="cluster_autoscaling.scale_down.delay_after_failure"]');
+
+  clusterAutoscalingRevertAllToDefaultsButton = () =>
+    cy.get('button').contains('Revert all to defaults');
+
+  clusterAutoscalingCloseButton = () => cy.get('button').contains('Close');
+
   addNodeLabelLink = () => cy.get('span').contains('Add node labels');
 
   installIntoExistingVpcCheckBox = () => cy.get('input[id="install_to_vpc"]');
