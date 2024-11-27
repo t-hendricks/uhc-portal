@@ -35,6 +35,7 @@ type DefaultIngressFieldsFormikProps = {
   canEditLoadBalancer?: boolean;
   canShowLoadBalancer?: boolean;
   isHypershiftCluster?: boolean;
+  values?: any;
 };
 
 export const DefaultIngressFieldsFormik: React.FC<DefaultIngressFieldsFormikProps> = ({
@@ -45,6 +46,7 @@ export const DefaultIngressFieldsFormik: React.FC<DefaultIngressFieldsFormikProp
   canEditLoadBalancer,
   canShowLoadBalancer,
   isHypershiftCluster,
+  values,
 }) => {
   const {
     getFieldProps, // Access: name, value, onBlur, onChange for a <Field>, useful for mapping to a field that expects the redux-form props
@@ -126,7 +128,7 @@ export const DefaultIngressFieldsFormik: React.FC<DefaultIngressFieldsFormikProp
               component={ReduxVerticalFormGroup}
               name="clusterRoutesTlsSecretRef"
               type="text"
-              validate={validateTlsSecretName}
+              validate={(value: string) => validateTlsSecretName(value, values)}
               disabled={areFieldsDisabled}
               helpText="The name of a secret holding custom TLS certificate, in the openshift-config namespace. Optional."
               showHelpTextOnError={false}
@@ -141,7 +143,7 @@ export const DefaultIngressFieldsFormik: React.FC<DefaultIngressFieldsFormikProp
               component={ReduxVerticalFormGroup}
               name="clusterRoutesHostname"
               type="text"
-              validate={validateTlsHostname}
+              validate={(value: string) => validateTlsHostname(value, values)}
               disabled={areFieldsDisabled}
               helpText="The cluster routes hostname the TLS certificate is issued for."
               showHelpTextOnError={false}
