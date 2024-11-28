@@ -755,6 +755,42 @@
         }
       }
     },
+    "/api/clusters_mgmt/v1/aws_inquiries/oidc_thumbprint": {
+      "post": {
+        "description": "Fetches/creates an OIDC Config Thumbprint from either a cluster ID, or an oidc config ID.",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/OidcThumbprintInput"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Success.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OidcThumbprint"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Error.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/clusters_mgmt/v1/aws_inquiries/regions": {
       "post": {
         "description": "Retrieves the list of available regions of the cloud provider.\nIMPORTANT: This list doesn't currently support paging or searching, so the returned\n`page` will always be 1 and `size` and `total` will always be the total number of available regions\nof the provider.",
@@ -3147,6 +3183,92 @@
         }
       }
     },
+    "/api/clusters_mgmt/v1/clusters/{cluster_id}/aws/role_policy_bindings": {
+      "get": {
+        "parameters": [
+          {
+            "name": "cluster_id",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          },
+          {
+            "name": "fetchCurrent",
+            "description": "If true, retrieves role policy binding states from AWS.",
+            "in": "query",
+            "schema": {
+              "type": "boolean"
+            }
+          },
+          {
+            "name": "page",
+            "description": "Index of the requested page, where one corresponds to the first page.",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "size",
+            "description": "Number of items contained in the returned page.",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "items": {
+                      "description": "Retrieved list of role policy bindings.",
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/RolePolicyBinding"
+                      }
+                    },
+                    "page": {
+                      "description": "Index of the requested page, where one corresponds to the first page.",
+                      "type": "integer",
+                      "format": "int32"
+                    },
+                    "size": {
+                      "description": "Number of items contained in the returned page.",
+                      "type": "integer",
+                      "format": "int32"
+                    },
+                    "total": {
+                      "description": "Total number of items of the collection.",
+                      "type": "integer",
+                      "format": "int32"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Error.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/clusters_mgmt/v1/clusters/{cluster_id}/aws_infrastructure_access_role_grants": {
       "post": {
         "description": "Create a new AWS infrastructure access role grant and add it to the collection of\nAWS infrastructure access role grants on the cluster.",
@@ -3441,7 +3563,7 @@
         }
       },
       "get": {
-        "description": "Retrieves the list of break glass credentials.\n\nIMPORTANT: This collection doesn't currently support paging or searching, so the returned\n`page` will always be 1 and `size` and `total` will always be the total number of break \nglass credentials for this cluster.",
+        "description": "Retrieves the list of break glass credentials.",
         "parameters": [
           {
             "name": "cluster_id",
@@ -3452,12 +3574,28 @@
             "required": true
           },
           {
+            "name": "order",
+            "description": "Order criteria.\n\nThe syntax of this parameter is similar to the syntax of the _order by_ clause of\na SQL statement, but using the names of the attributes of the break glass credentials\ninstead of the the names of the columns of a table. For example, in order to sort the\ncredentials descending by identifier the value should be:\n\n```sql\nid desc\n```\n\nIf the parameter isn't provided, or if the value is empty, then the order of the\nresults is undefined.",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
             "name": "page",
             "description": "Index of the requested page, where one corresponds to the first page.",
             "in": "query",
             "schema": {
               "type": "integer",
               "format": "int32"
+            }
+          },
+          {
+            "name": "search",
+            "description": "Search criteria.\n\nThe syntax of this parameter is similar to the syntax of the _where_ clause of a\nSQL statement, but using the names of the attributes of the break glass credentials\ninstead of the names of the columns of a table. For example, in order to retrieve all\nthe credentials with a specific username and status the following is required:\n\n```sql\nusername='user1' AND status='expired'\n```\n\nIf the parameter isn't provided, or if the value is empty, then all the\nbreak glass credentials that the user has permission to see will be returned.",
+            "in": "query",
+            "schema": {
+              "type": "string"
             }
           },
           {
@@ -6938,6 +7076,262 @@
         }
       }
     },
+    "/api/clusters_mgmt/v1/clusters/{cluster_id}/kubelet_configs": {
+      "post": {
+        "description": "Adds a new KubeletConfig to the cluster.",
+        "parameters": [
+          {
+            "name": "cluster_id",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/KubeletConfig"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Success.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/KubeletConfig"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Error.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "description": "Retrieves the list of KubeletConfigs for the cluster.",
+        "parameters": [
+          {
+            "name": "cluster_id",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          },
+          {
+            "name": "page",
+            "description": "Index of the requested page, where one corresponds to the first page.",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "size",
+            "description": "Number of items contained in the returned page.",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "items": {
+                      "description": "Retrieved list of KubeletConfigs.",
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/KubeletConfig"
+                      }
+                    },
+                    "page": {
+                      "description": "Index of the requested page, where one corresponds to the first page.",
+                      "type": "integer",
+                      "format": "int32"
+                    },
+                    "size": {
+                      "description": "Number of items contained in the returned page.",
+                      "type": "integer",
+                      "format": "int32"
+                    },
+                    "total": {
+                      "description": "Total number of items of the collection.",
+                      "type": "integer",
+                      "format": "int32"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Error.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/clusters_mgmt/v1/clusters/{cluster_id}/kubelet_configs/{kubelet_config_id}": {
+      "delete": {
+        "description": "Deletes the KubeletConfig specified by the id.",
+        "parameters": [
+          {
+            "name": "cluster_id",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          },
+          {
+            "name": "kubelet_config_id",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Success."
+          },
+          "default": {
+            "description": "Error.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "description": "Retrieves the KubeletConfig specified by the id.",
+        "parameters": [
+          {
+            "name": "cluster_id",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          },
+          {
+            "name": "kubelet_config_id",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/KubeletConfig"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Error.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      },
+      "patch": {
+        "description": "Updates the KubeletConfig specified by the id.",
+        "parameters": [
+          {
+            "name": "cluster_id",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          },
+          {
+            "name": "kubelet_config_id",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/KubeletConfig"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/KubeletConfig"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Error.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/clusters_mgmt/v1/clusters/{cluster_id}/limited_support_reasons": {
       "post": {
         "description": "Adds a new reason to the cluster.",
@@ -9839,6 +10233,200 @@
         }
       }
     },
+    "/api/clusters_mgmt/v1/gcp/wif_configs": {
+      "post": {
+        "description": "Provision a new wif_config resource and add it to the collection of wif_configs.",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/WifConfig"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Success.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/WifConfig"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Error.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "description": "Retrieves the list of wif_configs",
+        "parameters": [
+          {
+            "name": "order",
+            "description": "Order criteria.\n\nThe syntax of this parameter is similar to the syntax of the _order by_ clause of\na SQL statement, but using the names of the attributes of the cluster instead of\nthe names of the columns of a table. For example, in order to sort the clusters\ndescending by region identifier the value should be:\n\n```sql\nregion.id desc\n```\n\nIf the parameter isn't provided, or if the value is empty, then the order of the\nresults is undefined.",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "page",
+            "description": "Index of the requested page, where one corresponds to the first page.",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "search",
+            "description": "Search criteria.\n\nThe syntax of this parameter is similar to the syntax of the _where_ clause of a\nSQL statement, but using the names of the attributes of the cluster instead of\nthe names of the columns of a table. For example, in order to retrieve all the\nclusters with a name starting with `my` in the `us-east-1` region the value\nshould be:\n\n```sql\nname like 'my%' and region.id = 'us-east-1'\n```\n\nIf the parameter isn't provided, or if the value is empty, then all the\nwif_configs that the user has permission to see will be returned.",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "size",
+            "description": "Maximum number of items that will be contained in the returned page.",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "items": {
+                      "description": "Retrieved list of wif_configs.",
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/WifConfig"
+                      }
+                    },
+                    "page": {
+                      "description": "Index of the requested page, where one corresponds to the first page.",
+                      "type": "integer",
+                      "format": "int32"
+                    },
+                    "size": {
+                      "description": "Maximum number of items that will be contained in the returned page.",
+                      "type": "integer",
+                      "format": "int32"
+                    },
+                    "total": {
+                      "description": "Total number of items of the collection that match the search criteria,\nregardless of the size of the page.",
+                      "type": "integer",
+                      "format": "int32"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Error.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/clusters_mgmt/v1/gcp/wif_configs/{wif_config_id}": {
+      "delete": {
+        "description": "Deletes the wif_config.",
+        "parameters": [
+          {
+            "name": "wif_config_id",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          },
+          {
+            "name": "dry_run",
+            "description": "Dry run flag is used to check if the operation can be completed, but won't delete.",
+            "in": "query",
+            "schema": {
+              "type": "boolean"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Success."
+          },
+          "default": {
+            "description": "Error.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "description": "Retrieves the details of the WifConfig.",
+        "parameters": [
+          {
+            "name": "wif_config_id",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/WifConfig"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Error.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/clusters_mgmt/v1/gcp_inquiries/encryption_keys": {
       "post": {
         "description": "Retrieves the list of encryption keys.\nIMPORTANT: This collection doesn't currently support paging or searching, so the returned\n`page` will always be 1 and `size` and `total` will always be the total number of available regions\nof the provider.",
@@ -11623,6 +12211,263 @@
         }
       }
     },
+    "/api/clusters_mgmt/v1/registry_allowlists": {
+      "post": {
+        "description": "Adds a new break registry allowlist.",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RegistryAllowlist"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Success.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RegistryAllowlist"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Error.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "description": "Retrieves the list of registry allowlists.",
+        "parameters": [
+          {
+            "name": "order",
+            "description": "Order criteria.\n\nThe syntax of this parameter is similar to the syntax of the _order by_ clause of\na SQL statement, but using the names of the attributes of the registry allowlists\ninstead of the the names of the columns of a table. For example, in order to sort the\nallowlists descending by identifier the value should be:\n\n```sql\ncreation_timestamp desc\n```\n\nIf the parameter isn't provided, or if the value is empty, then the order of the\nresults is undefined.",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "page",
+            "description": "Index of the requested page, where one corresponds to the first page.",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "search",
+            "description": "Search criteria.\n\nThe syntax of this parameter is similar to the syntax of the _where_ clause of a\nSQL statement, but using the names of the attributes of the registry allowlists\ninstead of the names of the columns of a table. For example, in order to retrieve all\nthe allowlists with a specific cloud provider and creation time the following is required:\n\n```sql\ncloud_provider.id='aws' and creation_timestamp > '2023-03-01T00:00:00Z'\n```\n\nIf the parameter isn't provided, or if the value is empty, then all the\nregistry allowlists that the user has permission to see will be returned.",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "size",
+            "description": "Number of items contained in the returned page.",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "items": {
+                      "description": "Retrieved list of registry allowlists.",
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/RegistryAllowlist"
+                      }
+                    },
+                    "page": {
+                      "description": "Index of the requested page, where one corresponds to the first page.",
+                      "type": "integer",
+                      "format": "int32"
+                    },
+                    "size": {
+                      "description": "Number of items contained in the returned page.",
+                      "type": "integer",
+                      "format": "int32"
+                    },
+                    "total": {
+                      "description": "Total number of items of the collection.",
+                      "type": "integer",
+                      "format": "int32"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Error.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/clusters_mgmt/v1/registry_allowlists/{registry_allowlist_id}": {
+      "delete": {
+        "description": "Deletes the allowlist.",
+        "parameters": [
+          {
+            "name": "registry_allowlist_id",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Success."
+          },
+          "default": {
+            "description": "Error.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "description": "Retrieves the details of the allowlist.",
+        "parameters": [
+          {
+            "name": "registry_allowlist_id",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RegistryAllowlist"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Error.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/clusters_mgmt/v1/storage_quota_values": {
+      "get": {
+        "description": "Retrieves the list of Storage Quota Values.",
+        "parameters": [
+          {
+            "name": "page",
+            "description": "Index of the requested page, where one corresponds to the first page.",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "size",
+            "description": "Number of items contained in the returned page.",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "items": {
+                      "description": "Retrieved list of values.",
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/StorageQuota"
+                      }
+                    },
+                    "page": {
+                      "description": "Index of the requested page, where one corresponds to the first page.",
+                      "type": "integer",
+                      "format": "int32"
+                    },
+                    "size": {
+                      "description": "Number of items contained in the returned page.",
+                      "type": "integer",
+                      "format": "int32"
+                    },
+                    "total": {
+                      "description": "Total number of items of the collection.",
+                      "type": "integer",
+                      "format": "int32"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Error.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/clusters_mgmt/v1/trusted_ip_addresses": {
       "get": {
         "description": "Retrieves the list of trusted ip addresses.",
@@ -12064,6 +12909,13 @@
             "description": "AWS account identifier.",
             "type": "string"
           },
+          "additional_allowed_principals": {
+            "description": "Additional allowed principal ARNs to be added to the hosted control plane's VPC Endpoint Service.",
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
           "additional_compute_security_group_ids": {
             "description": "Additional AWS Security Groups to be added to default worker (compute) machine pool.",
             "type": "array",
@@ -12101,6 +12953,10 @@
             "description": "Related etcd encryption configuration",
             "$ref": "#/components/schemas/AwsEtcdEncryption"
           },
+          "hcp_internal_communication_hosted_zone_id": {
+            "description": "ID of local private hosted zone for hypershift internal communication.",
+            "type": "string"
+          },
           "private_hosted_zone_id": {
             "description": "ID of private hosted zone.",
             "type": "string"
@@ -12134,6 +12990,10 @@
             "additionalProperties": {
               "type": "string"
             }
+          },
+          "vpc_endpoint_role_arn": {
+            "description": "Role ARN for VPC Endpoint Service cross account role.",
+            "type": "string"
           }
         }
       },
@@ -12291,6 +13151,13 @@
             "additionalProperties": {
               "type": "string"
             }
+          },
+          "tags": {
+            "description": "Optional keys and values that the machine pool provisioner will add as AWS tags to all AWS resources it creates.\n\nAWS tags must conform to the following standards:\n- Each resource may have a maximum of 25 tags\n- Tags beginning with \"aws:\" are reserved for system use and may not be set\n- Tag keys may be between 1 and 128 characters in length\n- Tag values may be between 0 and 256 characters in length\n- Tags may only contain letters, numbers, spaces, and the following characters: [_ . : / = + - @]",
+            "type": "object",
+            "additionalProperties": {
+              "type": "string"
+            }
           }
         }
       },
@@ -12323,6 +13190,10 @@
               "type": "string"
             }
           },
+          "ec2_metadata_http_tokens": {
+            "description": "Which Ec2MetadataHttpTokens to use for metadata service interaction options for EC2 instances",
+            "$ref": "#/components/schemas/Ec2MetadataHttpTokens"
+          },
           "instance_profile": {
             "description": "InstanceProfile is the AWS EC2 instance profile, which is a container for an IAM role that the EC2 instance uses.",
             "type": "string"
@@ -12330,6 +13201,10 @@
           "instance_type": {
             "description": "InstanceType is an ec2 instance type for node instances (e.g. m5.large).",
             "type": "string"
+          },
+          "root_volume": {
+            "description": "AWS Volume specification to be used to set custom worker disk size",
+            "$ref": "#/components/schemas/AWSVolume"
           },
           "subnet_outposts": {
             "description": "Associates nodepool subnets with AWS Outposts.",
@@ -12339,9 +13214,21 @@
             }
           },
           "tags": {
-            "description": "Optional keys and values that the installer will add as tags to all AWS resources it creates.",
+            "description": "Optional keys and values that the installer will add as tags to all AWS resources it creates.\n\nAWS tags must conform to the following standards:\n- Each resource may have a maximum of 25 tags\n- Tags beginning with \"aws:\" are reserved for system use and may not be set\n- Tag keys may be between 1 and 128 characters in length\n- Tag values may be between 0 and 256 characters in length\n- Tags may only contain letters, numbers, spaces, and the following characters: [_ . : / = + - @]",
             "type": "object",
             "additionalProperties": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "AWSShard": {
+        "description": "Config for AWS provision shards",
+        "properties": {
+          "ecr_repository_urls": {
+            "description": "ECR repository URLs of the provision shard",
+            "type": "array",
+            "items": {
               "type": "string"
             }
           }
@@ -12538,6 +13425,10 @@
             "description": "Link to the cluster that is registered with the DNS domain (optional).",
             "$ref": "#/components/schemas/ClusterLink"
           },
+          "cluster_arch": {
+            "description": "Signals which cluster architecture the domain is ready for.",
+            "$ref": "#/components/schemas/ClusterArchitecture"
+          },
           "organization": {
             "description": "Link to the organization that reserved the DNS domain.",
             "$ref": "#/components/schemas/OrganizationLink"
@@ -12564,6 +13455,10 @@
             "description": "GCP Authentication provider x509 certificate url",
             "type": "string"
           },
+          "authentication": {
+            "description": "GCP Authentication Method",
+            "$ref": "#/components/schemas/GcpAuthentication"
+          },
           "client_id": {
             "description": "GCP client identifier",
             "type": "string"
@@ -12583,6 +13478,10 @@
           "private_key_id": {
             "description": "GCP private key identifier",
             "type": "string"
+          },
+          "private_service_connect": {
+            "description": "GCP PrivateServiceConnect configuration",
+            "$ref": "#/components/schemas/GcpPrivateServiceConnect"
           },
           "project_id": {
             "description": "GCP project identifier.",
@@ -13736,6 +14635,148 @@
           }
         }
       },
+      "Azure": {
+        "description": "Microsoft Azure settings of a cluster.",
+        "properties": {
+          "managed_resource_group_name": {
+            "description": "The desired name of the Azure Resource Group where the Azure Resources related\nto the cluster are created. It must not previously exist. The Azure Resource\nGroup is created with the given value, within the Azure Subscription\n`subscription_id` of the cluster.\n`managed_resource_group_name` cannot be equal to the value of `managed_resource_group`.\n`managed_resource_group_name` is located in the same Azure location as the\ncluster's region.\nNot to be confused with `resource_group_name`, which is the Azure Resource Group Name\nwhere the own Azure Resource associated to the cluster resides.\nRequired during creation.\nImmutable.",
+            "type": "string"
+          },
+          "network_security_group_resource_id": {
+            "description": "The Azure Resource ID of a pre-existing Azure Network Security Group.\nThe Network Security Group specified in network_security_group_resource_id\nmust already be associated to the Azure Subnet `subnet_resource_id`.\nIt is the Azure Network Security Group associated to the cluster's subnet\nspecified in `subnet_resource_id`.\n`network_security_group_resource_id` must be located in the same Azure\nlocation as the cluster's region.\nThe Azure Subscription specified as part of\n`network_security_group_resource_id` must be located in the same Azure\nSubscription as `subscription_id`.\nThe Azure Resource Group Name specified as part of `network_security_group_resource_id`\nmust belong to the Azure Subscription `subscription_id`, and in the same\nAzure location as the cluster's region.\nThe Azure Resource Group Name specified as part of `network_security_group_resource_id`\nmust be a different Resource Group Name than the one specified in\n`managed_resource_group_name`.\nThe Azure Resource Group Name specified as part of `network_security_group_resource_id`\ncan be the same, or a different one than the one specified in\n`resource_group_name`.\nRequired during creation.\nImmutable.",
+            "type": "string"
+          },
+          "operators_authentication": {
+            "description": "Defines how the operators of the cluster authenticate to Azure.\nRequired during creation.\nImmutable.",
+            "$ref": "#/components/schemas/AzureOperatorsAuthentication"
+          },
+          "resource_group_name": {
+            "description": "The Azure Resource Group Name of the cluster. It must be a pre-existing\nAzure Resource Group and it must exist within the Azure Subscription\n`subscription_id` of the cluster.\n`resource_group_name` is located in the same Azure location as the\ncluster's region.\nRequired during creation.\nImmutable.",
+            "type": "string"
+          },
+          "resource_name": {
+            "description": "The Azure Resource Name of the cluster. It must be within the\nAzure Resource Group Name `resource_group_name`.\n`resource_name` is located in the same Azure location as the cluster's region.\nRequired during creation.\nImmutable.",
+            "type": "string"
+          },
+          "subnet_resource_id": {
+            "description": "The Azure Resource ID of a pre-existing Azure Subnet. It is an Azure\nSubnet used for the Data Plane of the cluster. `subnet_resource_id`\nmust be located in the same Azure location as the cluster's region.\nThe Azure Subscription specified as part of the `subnet_resource_id`\nmust be located in the same Azure Subscription as `subscription_id`.\nThe Azure Resource Group Name specified as part of `subnet_resource_id`\nmust belong to the Azure Subscription `subscription_id`, and in the same\nAzure location as the cluster's region.\nThe Azure Resource Group Name specified as part of `subnet_resource_id`\nmust be a different Resource Group Name than the one specified in\n`managed_resource_group_name`.\nThe Azure Resource Group Name specified as part of the `subnet_resource_id`\ncan be the same, or a different one than the one specified in\n`resource_group_name`.\nRequired during creation.\nImmutable.",
+            "type": "string"
+          },
+          "subscription_id": {
+            "description": "The Azure Subscription ID associated with the cluster. It must belong to\nthe Microsoft Entra Tenant ID `tenant_id`.\nRequired during creation.\nImmutable.",
+            "type": "string"
+          },
+          "tenant_id": {
+            "description": "The Microsoft Entra Tenant ID where the cluster belongs.\nRequired during creation.\nImmutable.",
+            "type": "string"
+          }
+        }
+      },
+      "AzureControlPlaneManagedIdentity": {
+        "description": "Represents the information associated to an Azure User-Assigned\nManaged Identity belonging to the Control Plane of the cluster.",
+        "properties": {
+          "client_id": {
+            "description": "The Client ID associated to the Azure User-Assigned Managed Identity.\nReadonly.",
+            "type": "string"
+          },
+          "principal_id": {
+            "description": "The Principal ID associated to the Azure User-Assigned Identity.\nReadonly.",
+            "type": "string"
+          },
+          "resource_id": {
+            "description": "The Azure Resource ID of the Azure User-Assigned Managed\nIdentity. The managed identity represented must exist before\ncreating the cluster.\nThe Azure Resource Group Name specified as part of the Resource ID\nmust belong to the Azure Subscription specified in `.azure.subscription_id`,\nand in the same Azure location as the cluster's region.\nThe Azure Resource Group Name specified as part of the Resource ID\nmust be a different Resource Group Name than the one specified in\n`.azure.managed_resource_group_name`.\nThe Azure Resource Group Name specified as part of the Resource ID\ncan be the same, or a different one than the one specified in\n`.azure.resource_group_name`.\nRequired during creation.\nImmutable.",
+            "type": "string"
+          }
+        }
+      },
+      "AzureDataPlaneManagedIdentity": {
+        "description": "Represents the information associated to an Azure User-Assigned\nManaged Identity belonging to the Data Plane of the cluster.",
+        "properties": {
+          "resource_id": {
+            "description": "The Azure Resource ID of the Azure User-Assigned Managed\nIdentity. The managed identity represented must exist before\ncreating the cluster.\nThe Azure Resource Group Name specified as part of the Resource ID\nmust belong to the Azure Subscription specified in `.azure.subscription_id`,\nand in the same Azure location as the cluster's region.\nThe Azure Resource Group Name specified as part of the Resource ID\nmust be a different Resource Group Name than the one specified in\n`.azure.managed_resource_group_name`.\nThe Azure Resource Group Name specified as part of the Resource ID\ncan be the same, or a different one than the one specified in\n`.azure.resource_group_name`.\nRequired during creation.\nImmutable.",
+            "type": "string"
+          }
+        }
+      },
+      "AzureNodePool": {
+        "description": "Representation of azure node pool specific parameters.",
+        "properties": {
+          "os_disk_size_gibibytes": {
+            "description": "The size in GiB to assign to the OS disks of the\nNodes in the Node Pool. The property\nis the number of bytes x 1024^3.\nIf not specified, OS disk size is 30 GiB.",
+            "type": "integer",
+            "format": "int32"
+          },
+          "os_disk_storage_account_type": {
+            "description": "The disk storage account type to use for the OS disks of the Nodes in the\nNode Pool. Valid values are:\n* Standard_LRS: HDD\n* StandardSSD_LRS: Standard SSD\n* Premium_LRS: Premium SDD\n* UltraSSD_LRS: Ultra SDD\n\nIf not specified, `Premium_LRS` is used.",
+            "type": "string"
+          },
+          "vm_size": {
+            "description": "The Azure Virtual Machine size identifier used for the\nNodes of the Node Pool.\nAvailability of VM sizes are dependent on the Azure Location\nof the parent Cluster.\nRequired during creation.",
+            "type": "string"
+          },
+          "ephemeral_os_disk_enabled": {
+            "description": "Enables Ephemeral OS Disks for the Nodes in the Node Pool.\nIf not specified, no Ephemeral OS Disks are used.",
+            "type": "boolean"
+          },
+          "resource_name": {
+            "description": "ResourceName is the Azure Resource Name of the NodePool.\nResourceName must be within the Azure Resource Group Name of the parent\nCluster it belongs to.\nResourceName must be located in the same Azure Location as the parent\nCluster it belongs to.\nResourceName must be located in the same Azure Subscription as the parent\nCluster it belongs to.\nResourceName must belong to the same Microsoft Entra Tenant ID as the parent\nCluster it belongs to.\nRequired during creation.\nImmutable.",
+            "type": "string"
+          }
+        }
+      },
+      "AzureOperatorsAuthentication": {
+        "description": "The configuration that the operators of the\ncluster have to authenticate to Azure.",
+        "properties": {
+          "managed_identities": {
+            "description": "The authentication configuration to authenticate\nto Azure using Azure User-Assigned Managed Identities.\nRequired during creation.",
+            "$ref": "#/components/schemas/AzureOperatorsAuthenticationManagedIdentities"
+          }
+        }
+      },
+      "AzureOperatorsAuthenticationManagedIdentities": {
+        "description": "Represents the information related to Azure User-Assigned managed identities\nneeded to perform Operators authentication based on Azure User-Assigned\nManaged Identities",
+        "properties": {
+          "control_plane_operators_managed_identities": {
+            "description": "The set of Azure User-Assigned Managed Identities leveraged for the\nControl Plane operators of the cluster. The set of required managed\nidentities is dependent on the Cluster's OpenShift version.\nImmutable",
+            "type": "object",
+            "additionalProperties": {
+              "$ref": "#/components/schemas/AzureControlPlaneManagedIdentity"
+            }
+          },
+          "data_plane_operators_managed_identities": {
+            "description": "The set of Azure User-Assigned Managed Identities leveraged for the\nData Plane operators of the cluster. The set of required managed\nidentities is dependent on the Cluster's OpenShift version.\nImmutable.",
+            "type": "object",
+            "additionalProperties": {
+              "$ref": "#/components/schemas/AzureDataPlaneManagedIdentity"
+            }
+          },
+          "managed_identities_data_plane_identity_url": {
+            "description": "The Managed Identities Data Plane Identity URL associated with the\ncluster. It is the URL that will be used to communicate with the\nManaged Identities Resource Provider (MI RP).\nRequired during creation.\nImmutable.",
+            "type": "string"
+          },
+          "service_managed_identity": {
+            "description": "The Azure User-Assigned Managed Identity used to perform service\nlevel actions. Specifically:\n- Add Federated Identity Credentials to the identities in\n  `data_plane_operators_managed_identities` that belong to Data\n  Plane Cluster Operators\n- Perform permissions validation for the BYOVNet related resources\n  associated to the Cluster\nRequired during creation.\nImmutable.",
+            "$ref": "#/components/schemas/AzureServiceManagedIdentity"
+          }
+        }
+      },
+      "AzureServiceManagedIdentity": {
+        "description": "Represents the information associated to an Azure User-Assigned\nManaged Identity whose purpose is to perform service level actions.",
+        "properties": {
+          "client_id": {
+            "description": "The Client ID associated to the Azure User-Assigned Managed Identity.\nReadonly.",
+            "type": "string"
+          },
+          "principal_id": {
+            "description": "The Principal ID associated to the Azure User-Assigned Managed Identity.\nReadonly.",
+            "type": "string"
+          },
+          "resource_id": {
+            "description": "The Azure Resource ID of the Azure User-Assigned Managed\nIdentity. The managed identity represented must exist before\ncreating the cluster.\nThe Azure Resource Group Name specified as part of the Resource ID\nmust belong to the Azure Subscription specified in `.azure.subscription_id`,\nand in the same Azure location as the cluster's region.\nThe Azure Resource Group Name specified as part of the Resource ID\nmust be a different Resource Group Name than the one specified in\n`.azure.managed_resource_group_name`.\nThe Azure Resource Group Name specified as part of the Resource ID\ncan be the same, or a different one than the one specified in\n`.azure.resource_group_name`.\nRequired during creation.\nImmutable.",
+            "type": "string"
+          }
+        }
+      },
       "BillingModel": {
         "description": "Billing model for cluster resources.",
         "type": "string",
@@ -14104,6 +15145,10 @@
             "description": "Link to an optional _ClusterAutoscaler_ that is coupled with the cluster.",
             "$ref": "#/components/schemas/ClusterAutoscaler"
           },
+          "azure": {
+            "description": "Microsoft Azure settings of the cluster.",
+            "$ref": "#/components/schemas/Azure"
+          },
           "billing_model": {
             "description": "Billing model for cluster resources.",
             "$ref": "#/components/schemas/BillingModel"
@@ -14234,6 +15279,10 @@
             "description": "Flag indicating if the cluster should be created with nodes in\ndifferent availability zones or all the nodes in a single one\nrandomly selected.",
             "type": "boolean"
           },
+          "multi_arch_enabled": {
+            "description": "Indicate whether the cluster is enabled for multi arch workers",
+            "type": "boolean"
+          },
           "name": {
             "description": "Name of the cluster. This name is assigned by the user when the\ncluster is created. This is used to uniquely identify the cluster",
             "type": "string"
@@ -14284,6 +15333,10 @@
             "description": "Link to the cloud provider region where the cluster is installed.",
             "$ref": "#/components/schemas/CloudRegion"
           },
+          "registry_config": {
+            "description": "Registry configuration for the cluster",
+            "$ref": "#/components/schemas/ClusterRegistryConfig"
+          },
           "state": {
             "description": "Overall state of the cluster.",
             "$ref": "#/components/schemas/ClusterState"
@@ -14318,6 +15371,14 @@
             "$ref": "#/components/schemas/ListeningMethod"
           }
         }
+      },
+      "ClusterArchitecture": {
+        "description": "Possible cluster architectures.",
+        "type": "string",
+        "enum": [
+          "classic",
+          "hcp"
+        ]
       },
       "ClusterAutoscaler": {
         "description": "Cluster-wide autoscaling configuration.",
@@ -14593,6 +15654,33 @@
           "subscription_id": {
             "description": "Subscription identifier of the cluster generated by the account\nmanager.",
             "type": "string"
+          }
+        }
+      },
+      "ClusterRegistryConfig": {
+        "description": "ClusterRegistryConfig describes the configuration of registries for the cluster.\nIts format reflects the OpenShift Image Configuration, for which docs are available on\n[docs.openshift.com](https://docs.openshift.com/container-platform/4.16/openshift_images/image-configuration.html)\n```json\n{\n   \"registry_config\": {\n     \"registry_sources\": {\n       \"blocked_registries\": [\n         \"badregistry.io\",\n         \"badregistry8.io\"\n       ]\n     }\n   }\n}\n```\n",
+        "properties": {
+          "additional_trusted_ca": {
+            "description": "A map containing the registry hostname as the key, and the PEM-encoded certificate as the value,\nfor each additional registry CA to trust.",
+            "type": "object",
+            "additionalProperties": {
+              "type": "string"
+            }
+          },
+          "allowed_registries_for_import": {
+            "description": "AllowedRegistriesForImport limits the container image registries that normal users may import\nimages from. Set this list to the registries that you trust to contain valid Docker\nimages and that you want applications to be able to import from. Users with\npermission to create Images or ImageStreamMappings via the API are not affected by\nthis policy - typically only administrators or system integrations will have those\npermissions.",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/RegistryLocation"
+            }
+          },
+          "platform_allowlist": {
+            "description": "PlatformAllowlist contains a reference to a RegistryAllowlist which is a list of internal registries\nwhich needs to be whitelisted for the platform to work. It can be omitted at creation and \nupdating and its lifecycle can be managed separately if needed.",
+            "$ref": "#/components/schemas/RegistryAllowlist"
+          },
+          "registry_sources": {
+            "description": "RegistrySources contains configuration that determines how the container runtime\nshould treat individual registries when accessing images for builds+pods. (e.g.\nwhether or not to allow insecure access). It does not contain configuration for the\ninternal cluster registry.",
+            "$ref": "#/components/schemas/RegistrySources"
           }
         }
       },
@@ -15063,6 +16151,32 @@
           }
         }
       },
+      "GcpAuthentication": {
+        "description": "Google cloud platform authentication method of a cluster.",
+        "properties": {
+          "href": {
+            "description": "Self link",
+            "type": "string"
+          },
+          "id": {
+            "description": "Unique identifier of the object",
+            "type": "string"
+          },
+          "kind": {
+            "description": "Indicates the type of this object",
+            "type": "string"
+          }
+        }
+      },
+      "GcpPrivateServiceConnect": {
+        "description": "Google cloud platform private service connect configuration of a cluster.",
+        "properties": {
+          "service_attachment_subnet": {
+            "description": "The name of the subnet where the PSC service attachment is created",
+            "type": "string"
+          }
+        }
+      },
       "GcpSecurity": {
         "description": "Google cloud platform security settings of a cluster.",
         "properties": {
@@ -15193,6 +16307,10 @@
       "HypershiftConfig": {
         "description": "Hypershift configuration.",
         "properties": {
+          "hcp_namespace": {
+            "description": "Contains the name of the hcp namespace for this Hypershift cluster.\nEmpty for non Hypershift clusters.",
+            "type": "string"
+          },
           "enabled": {
             "description": "Boolean flag indicating if the cluster should be creating using _Hypershift_.\n\nBy default this is `false`.\n\nTo enable it the cluster needs to be ROSA cluster and the organization of the user needs\nto have the `hypershift` capability enabled.",
             "type": "boolean"
@@ -15488,8 +16606,12 @@
             "description": "Self link.",
             "type": "string"
           },
+          "name": {
+            "description": "Allows the user to specify the name to be used to identify this KubeletConfig.\nOptional. A name will be generated if not provided.",
+            "type": "string"
+          },
           "pod_pids_limit": {
-            "description": "Allows user to specify the podPidsLimit to be applied via KubeletConfig.\nUseful if workloads have greater PIDs limit requirements than the OCP default.",
+            "description": "Allows the user to specify the podPidsLimit to be applied via KubeletConfig.\nUseful if workloads have greater PIDs limit requirements than the OCP default.",
             "type": "integer",
             "format": "int32"
           }
@@ -15548,6 +16670,10 @@
             "description": "Indicates if the reason was detected automatically or manually.\nWhen creating a new reason this field should be empty or \"manual\".",
             "$ref": "#/components/schemas/DetectionType"
           },
+          "override": {
+            "description": "Indicates if the override is enabled",
+            "$ref": "#/components/schemas/LimitedSupportReasonOverride"
+          },
           "summary": {
             "description": "Summary of the reason.",
             "type": "string"
@@ -15555,6 +16681,27 @@
           "template": {
             "description": "Optional link to a template with summary and details.",
             "$ref": "#/components/schemas/LimitedSupportReasonTemplate"
+          }
+        }
+      },
+      "LimitedSupportReasonOverride": {
+        "description": "Representation of the limited support reason override.",
+        "properties": {
+          "kind": {
+            "description": "Indicates the type of this object. Will be 'LimitedSupportReasonOverride' if this is a complete object or 'LimitedSupportReasonOverrideLink' if it is just a link.",
+            "type": "string"
+          },
+          "id": {
+            "description": "Unique identifier of the object.",
+            "type": "string"
+          },
+          "href": {
+            "description": "Self link.",
+            "type": "string"
+          },
+          "enabled": {
+            "description": "Indicates if the override is enabled",
+            "type": "boolean"
           }
         }
       },
@@ -15754,6 +16901,10 @@
             "description": "The amount of cpu's of the machine type.",
             "$ref": "#/components/schemas/Value"
           },
+          "architecture": {
+            "description": "The architecture of the machine type.",
+            "$ref": "#/components/schemas/ProcessorType"
+          },
           "category": {
             "description": "The category which the machine type is suitable for.",
             "$ref": "#/components/schemas/MachineTypeCategory"
@@ -15822,6 +16973,24 @@
           "href": {
             "description": "Self link.",
             "type": "string"
+          },
+          "creation_timestamp": {
+            "description": "Date and time when the manifest got created in OCM database.",
+            "type": "string",
+            "format": "date-time"
+          },
+          "live_resource": {
+            "description": "Transient value to represent the underlying live resource.",
+            "type": "object"
+          },
+          "spec": {
+            "description": "Spec of Manifest Work object from open cluster management\nFor more info please check https://open-cluster-management.io/concepts/manifestwork.",
+            "type": "object"
+          },
+          "updated_timestamp": {
+            "description": "Date and time when the manifest got updated in OCM database.",
+            "type": "string",
+            "format": "date-time"
           },
           "workloads": {
             "description": "List of k8s objects to deploy on a hosted cluster.",
@@ -15939,12 +17108,27 @@
             "description": "The availability zone upon which the node is created.",
             "type": "string"
           },
+          "azure_node_pool": {
+            "description": "Azure specific parameters.",
+            "$ref": "#/components/schemas/AzureNodePool"
+          },
+          "kubelet_configs": {
+            "description": "The names of the KubeletConfigs for this node pool.",
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
           "labels": {
             "description": "The labels set on the Nodes created.",
             "type": "object",
             "additionalProperties": {
               "type": "string"
             }
+          },
+          "management_upgrade": {
+            "description": "Management parameters (Optional).",
+            "$ref": "#/components/schemas/NodePoolManagementUpgrade"
           },
           "node_drain_grace_period": {
             "description": "Time to wait for a NodePool to drain when it is upgraded or replaced before it is forcibly removed.",
@@ -16007,6 +17191,35 @@
             "description": "The minimum number of replicas for the node pool.",
             "type": "integer",
             "format": "int32"
+          }
+        }
+      },
+      "NodePoolManagementUpgrade": {
+        "description": "Representation of node pool management.",
+        "properties": {
+          "kind": {
+            "description": "Indicates the type of this object. Will be 'NodePoolManagementUpgrade' if this is a complete object or 'NodePoolManagementUpgradeLink' if it is just a link.",
+            "type": "string"
+          },
+          "id": {
+            "description": "Unique identifier of the object.",
+            "type": "string"
+          },
+          "href": {
+            "description": "Self link.",
+            "type": "string"
+          },
+          "max_surge": {
+            "description": "Maximum number of nodes in the NodePool of a ROSA HCP cluster that can be scheduled above the desired number of nodes during the upgrade.",
+            "type": "string"
+          },
+          "max_unavailable": {
+            "description": "Maximum number of nodes in the NodePool of a ROSA HCP cluster that can be unavailable during the upgrade.",
+            "type": "string"
+          },
+          "type": {
+            "description": "Type of strategy for handling upgrades.",
+            "type": "string"
           }
         }
       },
@@ -16168,6 +17381,44 @@
           },
           "secret_arn": {
             "description": "Secrets Manager ARN for the OIDC private key, supplied in request. It is only to be used in Unmanaged Oidc Config.",
+            "type": "string"
+          }
+        }
+      },
+      "OidcThumbprint": {
+        "description": "Contains the necessary attributes to support oidc configuration thumbprint operations such as fetching/creation of a thumbprint",
+        "properties": {
+          "href": {
+            "description": "HREF for the oidc config thumbprint, filled in response.",
+            "type": "string"
+          },
+          "cluster_id": {
+            "description": "ClusterId is the for the cluster used, filled in response.",
+            "type": "string"
+          },
+          "kind": {
+            "description": "Kind is the resource type, filled in response.",
+            "type": "string"
+          },
+          "oidc_config_id": {
+            "description": "OidcConfigId is the ID for the oidc config used, filled in response.",
+            "type": "string"
+          },
+          "thumbprint": {
+            "description": "Thumbprint is the thumbprint itself, filled in response.",
+            "type": "string"
+          }
+        }
+      },
+      "OidcThumbprintInput": {
+        "description": "Contains the necessary attributes to fetch an OIDC Configuration thumbprint",
+        "properties": {
+          "cluster_id": {
+            "description": "ClusterId is the for the cluster used, exclusive from OidcConfigId.",
+            "type": "string"
+          },
+          "oidc_config_id": {
+            "description": "OidcConfigId is the ID for the oidc config used, exclusive from ClusterId.",
             "type": "string"
           }
         }
@@ -16388,6 +17639,14 @@
           }
         }
       },
+      "ProcessorType": {
+        "description": "Processor type category.",
+        "type": "string",
+        "enum": [
+          "amd64",
+          "arm64"
+        ]
+      },
       "Product": {
         "description": "Representation of an product that can be selected as a cluster type.",
         "properties": {
@@ -16556,6 +17815,105 @@
           }
         }
       },
+      "RegistryAllowlist": {
+        "description": "RegistryAllowlist represents a single registry allowlist.",
+        "properties": {
+          "kind": {
+            "description": "Indicates the type of this object. Will be 'RegistryAllowlist' if this is a complete object or 'RegistryAllowlistLink' if it is just a link.",
+            "type": "string"
+          },
+          "id": {
+            "description": "Unique identifier of the object.",
+            "type": "string"
+          },
+          "href": {
+            "description": "Self link.",
+            "type": "string"
+          },
+          "cloud_provider": {
+            "description": "CloudProvider is the cloud provider for which this allowlist is valid.",
+            "$ref": "#/components/schemas/CloudProvider"
+          },
+          "creation_timestamp": {
+            "description": "CreationTimestamp is the date and time when the allow list has been created.",
+            "type": "string",
+            "format": "date-time"
+          },
+          "registries": {
+            "description": "Registries is the list of registries contained in this Allowlist.",
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "RegistryLocation": {
+        "description": "RegistryLocation contains a location of the registry specified by the registry domain\nname. The domain name might include wildcards, like '*' or '??'.",
+        "properties": {
+          "domain_name": {
+            "description": "domainName specifies a domain name for the registry\nIn case the registry use non-standard (80 or 443) port, the port should be included\nin the domain name as well.",
+            "type": "string"
+          },
+          "insecure": {
+            "description": "insecure indicates whether the registry is secure (https) or insecure (http)\nBy default (if not specified) the registry is assumed as secure.",
+            "type": "boolean"
+          }
+        }
+      },
+      "RegistrySources": {
+        "description": "RegistrySources contains configuration that determines how the container runtime should treat individual\nregistries when accessing images for builds and pods. For instance, whether or not to allow insecure access.\nIt does not contain configuration for the internal cluster registry.",
+        "properties": {
+          "allowed_registries": {
+            "description": "AllowedRegistries: registries for which image pull and push actions are allowed.\nTo specify all subdomains, add the asterisk (*) wildcard character as a prefix to the domain name.\nFor example, *.example.com. You can specify an individual repository within a registry.\nFor example: reg1.io/myrepo/myapp:latest. All other registries are blocked.\nMutually exclusive with `BlockedRegistries`",
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "blocked_registries": {
+            "description": "BlockedRegistries: registries for which image pull and push actions are denied.\nTo specify all subdomains, add the asterisk (*) wildcard character as a prefix to the domain name.\nFor example, *.example.com. You can specify an individual repository within a registry.\nFor example: reg1.io/myrepo/myapp:latest. All other registries are allowed.\nMutually exclusive with `AllowedRegistries`",
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "insecure_registries": {
+            "description": "InsecureRegistries are registries which do not have a valid TLS certificate or only support HTTP connections.\nTo specify all subdomains, add the asterisk (*) wildcard character as a prefix to the domain name.\nFor example, *.example.com. You can specify an individual repository within a registry.\nFor example: reg1.io/myrepo/myapp:latest.",
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "ReleaseImageDetails": {
+        "properties": {
+          "available_upgrades": {
+            "description": "AvailableUpgrades is the list of versions this version can be upgraded to.",
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "release_image": {
+            "description": "ReleaseImage contains the URI of Openshift release image.",
+            "type": "string"
+          }
+        }
+      },
+      "ReleaseImages": {
+        "properties": {
+          "arm64": {
+            "description": "Arm64 will contain the reference for the arm64 image which will be used for cluster deployments",
+            "$ref": "#/components/schemas/ReleaseImageDetails"
+          },
+          "multi": {
+            "description": "Multi will contain the reference for the multi image which will be used for cluster deployments",
+            "$ref": "#/components/schemas/ReleaseImageDetails"
+          }
+        }
+      },
       "ResourceRange": {
         "properties": {
           "max": {
@@ -16565,6 +17923,59 @@
           "min": {
             "type": "integer",
             "format": "int32"
+          }
+        }
+      },
+      "RolePolicy": {
+        "properties": {
+          "arn": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "type": {
+            "type": "string"
+          }
+        }
+      },
+      "RolePolicyBinding": {
+        "properties": {
+          "arn": {
+            "type": "string"
+          },
+          "creation_timestamp": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "last_update_timestamp": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "name": {
+            "type": "string"
+          },
+          "policies": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/RolePolicy"
+            }
+          },
+          "status": {
+            "$ref": "#/components/schemas/RolePolicyBindingStatus"
+          },
+          "type": {
+            "type": "string"
+          }
+        }
+      },
+      "RolePolicyBindingStatus": {
+        "properties": {
+          "description": {
+            "type": "string"
+          },
+          "value": {
+            "type": "string"
           }
         }
       },
@@ -16621,6 +18032,10 @@
             "description": "Self link.",
             "type": "string"
           },
+          "aws_shard": {
+            "description": "Config for AWS provision shards",
+            "$ref": "#/components/schemas/AWSShard"
+          },
           "kubeconfig": {
             "description": "The kubeconfig of the server.",
             "type": "string"
@@ -16668,6 +18083,20 @@
             "items": {
               "$ref": "#/components/schemas/SocketTotalNodeRoleOSMetricNode"
             }
+          }
+        }
+      },
+      "StorageQuota": {
+        "description": "Representation of a storage quota ",
+        "properties": {
+          "unit": {
+            "description": "Unit of storage",
+            "type": "string"
+          },
+          "value": {
+            "description": "Numerical value",
+            "type": "number",
+            "format": "float"
           }
         }
       },
@@ -17103,8 +18532,16 @@
             "type": "string"
           },
           "release_image": {
-            "description": "ReleaseImage contains the URI of Openshift release image.",
+            "description": "ReleaseImage contains the URI of Openshift release image for amd64 architecture.",
             "type": "string"
+          },
+          "release_images": {
+            "description": "ReleaseImages contains the URI of OpenShift release images for arm64 and multi architectures.",
+            "$ref": "#/components/schemas/ReleaseImages"
+          },
+          "wif_enabled": {
+            "description": "WifEnabled is a flag that indicates whether this version is enabled for Workload Identity Federation.",
+            "type": "boolean"
           }
         }
       },
@@ -17181,6 +18618,194 @@
           "version_gate": {
             "description": "link to the version gate that the user agreed to",
             "$ref": "#/components/schemas/VersionGate"
+          }
+        }
+      },
+      "WifAccessMethod": {
+        "type": "string",
+        "enum": [
+          "impersonate",
+          "vm",
+          "wif"
+        ]
+      },
+      "WifConfig": {
+        "description": "Definition of an wif_config resource.",
+        "properties": {
+          "kind": {
+            "description": "Indicates the type of this object. Will be 'WifConfig' if this is a complete object or 'WifConfigLink' if it is just a link.",
+            "type": "string"
+          },
+          "id": {
+            "description": "Unique identifier of the object.",
+            "type": "string"
+          },
+          "href": {
+            "description": "Self link.",
+            "type": "string"
+          },
+          "display_name": {
+            "description": "The name OCM clients will display for this wif_config.",
+            "type": "string"
+          },
+          "gcp": {
+            "description": "Holds GCP related data.",
+            "$ref": "#/components/schemas/WifGcp"
+          },
+          "organization": {
+            "description": "The OCM organization that this wif_config resource belongs to.",
+            "$ref": "#/components/schemas/OrganizationLink"
+          },
+          "wif_templates": {
+            "description": "Wif template(s) used to configure IAM resources",
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "WifCredentialRequest": {
+        "properties": {
+          "secret_ref": {
+            "$ref": "#/components/schemas/WifSecretRef"
+          },
+          "service_account_names": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "WifGcp": {
+        "properties": {
+          "impersonator_email": {
+            "description": "This is the service account email that OCM will use to access other SAs. ",
+            "type": "string"
+          },
+          "project_id": {
+            "description": "This represents the GCP project ID in which the wif resources will be configured.",
+            "type": "string"
+          },
+          "project_number": {
+            "description": "This represents the GCP project number in which the wif resources will be configured.",
+            "type": "string"
+          },
+          "role_prefix": {
+            "description": "Prefix for naming GCP custom roles configured.",
+            "type": "string"
+          },
+          "service_accounts": {
+            "description": "The list of service accounts and their associated roles that will need to be\nconfigured on the user's GCP project.",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/WifServiceAccount"
+            }
+          },
+          "support": {
+            "description": "Defines the access configuration for support.",
+            "$ref": "#/components/schemas/WifSupport"
+          },
+          "workload_identity_pool": {
+            "description": "The workload identity configuration data that will be used to create the\nworkload identity pool on the user's account.",
+            "$ref": "#/components/schemas/WifPool"
+          }
+        }
+      },
+      "WifIdentityProvider": {
+        "properties": {
+          "allowed_audiences": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "identity_provider_id": {
+            "type": "string"
+          },
+          "issuer_url": {
+            "type": "string"
+          },
+          "jwks": {
+            "type": "string"
+          }
+        }
+      },
+      "WifPool": {
+        "properties": {
+          "identity_provider": {
+            "description": "Identity provider configuration data that will be created as part of the\nworkload identity pool.",
+            "$ref": "#/components/schemas/WifIdentityProvider"
+          },
+          "pool_id": {
+            "description": "The Id of the workload identity pool.",
+            "type": "string"
+          },
+          "pool_name": {
+            "description": "The display name of the workload identity pool.",
+            "type": "string"
+          }
+        }
+      },
+      "WifRole": {
+        "properties": {
+          "permissions": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "predefined": {
+            "type": "boolean"
+          },
+          "role_id": {
+            "type": "string"
+          }
+        }
+      },
+      "WifSecretRef": {
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "namespace": {
+            "type": "string"
+          }
+        }
+      },
+      "WifServiceAccount": {
+        "properties": {
+          "access_method": {
+            "$ref": "#/components/schemas/WifAccessMethod"
+          },
+          "credential_request": {
+            "$ref": "#/components/schemas/WifCredentialRequest"
+          },
+          "osd_role": {
+            "type": "string"
+          },
+          "roles": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/WifRole"
+            }
+          },
+          "service_account_id": {
+            "type": "string"
+          }
+        }
+      },
+      "WifSupport": {
+        "properties": {
+          "principal": {
+            "type": "string"
+          },
+          "roles": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/WifRole"
+            }
           }
         }
       },

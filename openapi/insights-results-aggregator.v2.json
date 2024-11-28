@@ -1509,6 +1509,60 @@
         ]
       }
     },
+    "/groups": {
+      "get": {
+        "description": "This simply redirects to an endpoint of the same name of a service called insights-content-service",
+        "operationId": "getRuleGroups",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "groups": {
+                      "items": {
+                        "properties": {
+                          "description": {
+                            "type": "string"
+                          },
+                          "tags": {
+                            "items": {
+                              "type": "string"
+                            },
+                            "type": "array"
+                          },
+                          "title": {
+                            "type": "string"
+                          }
+                        },
+                        "type": "object"
+                      },
+                      "type": "array"
+                    },
+                    "status": {
+                      "example": "ok",
+                      "type": "string"
+                    }
+                  },
+                  "type": "object"
+                }
+              }
+            },
+            "description": "A JSON array of groups."
+          },
+          "503": {
+            "content": {
+              "text/plain": {}
+            },
+            "description": "Content service is unavailable"
+          }
+        },
+        "summary": "Get all rule groups and their relevant information",
+        "tags": [
+          "prod"
+        ]
+      }
+    },
     "/info": {
       "get": {
         "description": "InfoEndpoint returns basic information about Smart Proxy, Insights Results Aggregator, and Content Service version, utils repository version, commit hash etc.",
@@ -1734,6 +1788,11 @@
                           "objects": {
                             "items": {
                               "properties": {
+                                "display_name": {
+                                  "description": "A human-readable name for the cluster",
+                                  "example": "Production cluster 1",
+                                  "type": "string"
+                                },
                                 "kind": {
                                   "description": "The kind/category of the object.",
                                   "type": "string"

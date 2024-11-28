@@ -3,6 +3,7 @@
 /* tslint:disable */
 /* eslint-disable */
 import type { ImageOverrides } from './ImageOverrides';
+import type { ReleaseImages } from './ReleaseImages';
 /**
  * Representation of an _OpenShift_ version.
  */
@@ -69,7 +70,15 @@ export type Version = {
    */
   raw_id?: string;
   /**
-   * ReleaseImage contains the URI of Openshift release image.
+   * ReleaseImage contains the URI of Openshift release image for amd64 architecture.
    */
   release_image?: string;
+  /**
+   * ReleaseImages contains the URI of OpenShift release images for arm64 and multi architectures.
+   */
+  release_images?: ReleaseImages;
+  /**
+   * WifEnabled is a flag that indicates whether this version is enabled for Workload Identity Federation.
+   */
+  wif_enabled?: boolean;
 };

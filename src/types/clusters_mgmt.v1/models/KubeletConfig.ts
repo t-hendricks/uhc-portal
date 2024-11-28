@@ -20,7 +20,12 @@ export type KubeletConfig = {
    */
   href?: string;
   /**
-   * Allows user to specify the podPidsLimit to be applied via KubeletConfig.
+   * Allows the user to specify the name to be used to identify this KubeletConfig.
+   * Optional. A name will be generated if not provided.
+   */
+  name?: string;
+  /**
+   * Allows the user to specify the podPidsLimit to be applied via KubeletConfig.
    * Useful if workloads have greater PIDs limit requirements than the OCP default.
    */
   pod_pids_limit?: number;

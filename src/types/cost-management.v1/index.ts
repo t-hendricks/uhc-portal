@@ -3,7 +3,6 @@
 /* tslint:disable */
 /* eslint-disable */
 
-export type { cluster } from './models/cluster';
 export type { CostGroupsResponse } from './models/CostGroupsResponse';
 export { CostModel } from './models/CostModel';
 export type { CostModelOut } from './models/CostModelOut';
@@ -40,6 +39,7 @@ export type { PutAccountSettingRequestBody } from './models/PutAccountSettingReq
 export type { QueryAccount } from './models/QueryAccount';
 export type { QueryDelta } from './models/QueryDelta';
 export type { QueryEndDate } from './models/QueryEndDate';
+export type { QueryExclude } from './models/QueryExclude';
 export type { QueryFilter } from './models/QueryFilter';
 export type { QueryGroupBy } from './models/QueryGroupBy';
 export type { QueryKey } from './models/QueryKey';
@@ -53,6 +53,9 @@ export type { QueryStartDate } from './models/QueryStartDate';
 export type { QueryType } from './models/QueryType';
 export type { QueryValue } from './models/QueryValue';
 export type { Report } from './models/Report';
+export { ReportAWSEC2ComputeFilter } from './models/ReportAWSEC2ComputeFilter';
+export { ReportAWSEC2ComputeOrdering } from './models/ReportAWSEC2ComputeOrdering';
+export type { ReportAWSEC2InstanceInventory } from './models/ReportAWSEC2InstanceInventory';
 export type { ReportAzureFilter } from './models/ReportAzureFilter';
 export type { ReportAzureGrouping } from './models/ReportAzureGrouping';
 export { ReportAzureOrdering } from './models/ReportAzureOrdering';
@@ -64,6 +67,8 @@ export type { ReportFilter } from './models/ReportFilter';
 export type { ReportGrouping } from './models/ReportGrouping';
 export type { ReportInstanceInventory } from './models/ReportInstanceInventory';
 export { ReportInventoryOpenShiftOrdering } from './models/ReportInventoryOpenShiftOrdering';
+export type { ReportMetaTotal } from './models/ReportMetaTotal';
+export type { ReportMetaTotalItem } from './models/ReportMetaTotalItem';
 export type { ReportOpenShiftAllInstanceInventory } from './models/ReportOpenShiftAllInstanceInventory';
 export type { ReportOpenShiftAllStorageInventory } from './models/ReportOpenShiftAllStorageInventory';
 export type { ReportOpenShiftAWSFilter } from './models/ReportOpenShiftAWSFilter';
@@ -80,6 +85,7 @@ export type { ReportOpenShiftCpu } from './models/ReportOpenShiftCpu';
 export type { ReportOpenShiftFilter } from './models/ReportOpenShiftFilter';
 export type { ReportOpenShiftGrouping } from './models/ReportOpenShiftGrouping';
 export type { ReportOpenShiftMemory } from './models/ReportOpenShiftMemory';
+export type { ReportOpenShiftVirtualMachine } from './models/ReportOpenShiftVirtualMachine';
 export type { ReportOpenShiftVolume } from './models/ReportOpenShiftVolume';
 export { ReportOrdering } from './models/ReportOrdering';
 export type { ReportPaginationMeta } from './models/ReportPaginationMeta';
@@ -89,6 +95,7 @@ export { ReportResourceScope } from './models/ReportResourceScope';
 export type { ReportStorageInventory } from './models/ReportStorageInventory';
 export { ReportTimeScopeUnits } from './models/ReportTimeScopeUnits';
 export { ReportTimeScopeValue } from './models/ReportTimeScopeValue';
+export type { ReportValueUnit } from './models/ReportValueUnit';
 export type { ResourceTypeAwsCategories } from './models/ResourceTypeAwsCategories';
 export type { ResourceTypeListOut } from './models/ResourceTypeListOut';
 export type { ResourceTypeListPagination } from './models/ResourceTypeListPagination';

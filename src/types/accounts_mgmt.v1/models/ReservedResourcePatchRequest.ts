@@ -4,6 +4,7 @@
 /* eslint-disable */
 export type ReservedResourcePatchRequest = {
   billing_model?: ReservedResourcePatchRequest.billing_model;
+  scope?: string;
 };
 export namespace ReservedResourcePatchRequest {
   export enum billing_model {

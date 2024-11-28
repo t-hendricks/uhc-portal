@@ -7,6 +7,11 @@
  */
 export type HypershiftConfig = {
   /**
+   * Contains the name of the hcp namespace for this Hypershift cluster.
+   * Empty for non Hypershift clusters.
+   */
+  hcp_namespace?: string;
+  /**
    * Boolean flag indicating if the cluster should be creating using _Hypershift_.
    *
    * By default this is `false`.
