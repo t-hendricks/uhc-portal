@@ -3,6 +3,7 @@
 /* tslint:disable */
 /* eslint-disable */
 import type { DetectionType } from './DetectionType';
+import type { LimitedSupportReasonOverride } from './LimitedSupportReasonOverride';
 import type { LimitedSupportReasonTemplate } from './LimitedSupportReasonTemplate';
 /**
  * A reason that a cluster is in limited support.
@@ -33,6 +34,10 @@ export type LimitedSupportReason = {
    * When creating a new reason this field should be empty or "manual".
    */
   detection_type?: DetectionType;
+  /**
+   * Indicates if the override is enabled
+   */
+  override?: LimitedSupportReasonOverride;
   /**
    * Summary of the reason.
    */

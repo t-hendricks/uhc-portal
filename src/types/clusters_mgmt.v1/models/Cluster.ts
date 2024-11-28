@@ -5,6 +5,7 @@
 import type { AddOnInstallation } from './AddOnInstallation';
 import type { AWS } from './AWS';
 import type { AWSInfrastructureAccessRoleGrant } from './AWSInfrastructureAccessRoleGrant';
+import type { Azure } from './Azure';
 import type { BillingModel } from './BillingModel';
 import type { ByoOidc } from './ByoOidc';
 import type { CCS } from './CCS';
@@ -15,6 +16,7 @@ import type { ClusterAutoscaler } from './ClusterAutoscaler';
 import type { ClusterConsole } from './ClusterConsole';
 import type { ClusterHealthState } from './ClusterHealthState';
 import type { ClusterNodes } from './ClusterNodes';
+import type { ClusterRegistryConfig } from './ClusterRegistryConfig';
 import type { ClusterState } from './ClusterState';
 import type { ClusterStatus } from './ClusterStatus';
 import type { DeleteProtection } from './DeleteProtection';
@@ -141,6 +143,10 @@ export type Cluster = {
    */
   autoscaler?: ClusterAutoscaler;
   /**
+   * Microsoft Azure settings of the cluster.
+   */
+  azure?: Azure;
+  /**
    * Billing model for cluster resources.
    */
   billing_model?: BillingModel;
@@ -264,6 +270,10 @@ export type Cluster = {
    */
   multi_az?: boolean;
   /**
+   * Indicate whether the cluster is enabled for multi arch workers
+   */
+  multi_arch_enabled?: boolean;
+  /**
    * Name of the cluster. This name is assigned by the user when the
    * cluster is created. This is used to uniquely identify the cluster
    */
@@ -314,6 +324,10 @@ export type Cluster = {
    * Link to the cloud provider region where the cluster is installed.
    */
   region?: CloudRegion;
+  /**
+   * Registry configuration for the cluster
+   */
+  registry_config?: ClusterRegistryConfig;
   /**
    * Overall state of the cluster.
    */

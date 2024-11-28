@@ -2,6 +2,8 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
+import type { GcpAuthentication } from './GcpAuthentication';
+import type { GcpPrivateServiceConnect } from './GcpPrivateServiceConnect';
 import type { GcpSecurity } from './GcpSecurity';
 /**
  * Google cloud platform settings of a cluster.
@@ -15,6 +17,10 @@ export type GCP = {
    * GCP Authentication provider x509 certificate url
    */
   auth_provider_x509_cert_url?: string;
+  /**
+   * GCP Authentication Method
+   */
+  authentication?: GcpAuthentication;
   /**
    * GCP client identifier
    */
@@ -35,6 +41,10 @@ export type GCP = {
    * GCP private key identifier
    */
   private_key_id?: string;
+  /**
+   * GCP PrivateServiceConnect configuration
+   */
+  private_service_connect?: GcpPrivateServiceConnect;
   /**
    * GCP project identifier.
    */

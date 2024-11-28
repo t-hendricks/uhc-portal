@@ -1032,7 +1032,7 @@
     },
     "/groups": {
       "get": {
-        "description": "This simply redirects to an endpoint of the same name of a service called insights-operator-service",
+        "description": "This simply redirects to an endpoint of the same name of a service called insights-content-service",
         "operationId": "getRuleGroups",
         "responses": {
           "200": {
@@ -1262,7 +1262,7 @@
             "name": "orgId",
             "required": true,
             "schema": {
-              "format": "int64",
+              "format": "int32",
               "minimum": 0,
               "type": "integer"
             }

@@ -3,7 +3,9 @@
 /* tslint:disable */
 /* eslint-disable */
 import type { AWSNodePool } from './AWSNodePool';
+import type { AzureNodePool } from './AzureNodePool';
 import type { NodePoolAutoscaling } from './NodePoolAutoscaling';
+import type { NodePoolManagementUpgrade } from './NodePoolManagementUpgrade';
 import type { NodePoolStatus } from './NodePoolStatus';
 import type { Taint } from './Taint';
 import type { Value } from './Value';
@@ -42,9 +44,21 @@ export type NodePool = {
    */
   availability_zone?: string;
   /**
+   * Azure specific parameters.
+   */
+  azure_node_pool?: AzureNodePool;
+  /**
+   * The names of the KubeletConfigs for this node pool.
+   */
+  kubelet_configs?: Array<string>;
+  /**
    * The labels set on the Nodes created.
    */
   labels?: Record<string, string>;
+  /**
+   * Management parameters (Optional).
+   */
+  management_upgrade?: NodePoolManagementUpgrade;
   /**
    * Time to wait for a NodePool to drain when it is upgraded or replaced before it is forcibly removed.
    */

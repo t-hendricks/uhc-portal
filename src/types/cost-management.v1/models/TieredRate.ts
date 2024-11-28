@@ -5,12 +5,12 @@
 export type TieredRate = {
   readonly uuid?: string;
   metric: Record<string, any>;
-  'cost-type'?: TieredRate.CostType;
+  cost_type?: TieredRate.cost_type;
   description?: string;
   tiered_rates?: Array<any>;
 };
 export namespace TieredRate {
-  export enum CostType {
+  export enum cost_type {
     INFRASTRUCTURE = 'Infrastructure',
     SUPPLEMENTARY = 'Supplementary',
   }

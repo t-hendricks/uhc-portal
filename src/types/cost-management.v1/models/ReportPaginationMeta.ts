@@ -10,6 +10,7 @@ import type { ReportDelta } from './ReportDelta';
 import type { ReportFilter } from './ReportFilter';
 import type { ReportGrouping } from './ReportGrouping';
 import type { ReportInventoryOpenShiftOrdering } from './ReportInventoryOpenShiftOrdering';
+import type { ReportMetaTotal } from './ReportMetaTotal';
 import type { ReportOpenShiftAWSFilter } from './ReportOpenShiftAWSFilter';
 import type { ReportOpenShiftAWSGrouping } from './ReportOpenShiftAWSGrouping';
 import type { ReportOpenShiftAWSOrdering } from './ReportOpenShiftAWSOrdering';
@@ -41,8 +42,5 @@ export type ReportPaginationMeta = {
     | ReportOpenShiftFilter
     | ReportOpenShiftAWSFilter
     | ReportOpenShiftAzureFilter;
-  /**
-   * The units for the output data.
-   */
-  units?: string;
+  total?: ReportMetaTotal;
 };

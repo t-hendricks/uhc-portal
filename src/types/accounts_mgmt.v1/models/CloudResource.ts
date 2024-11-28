@@ -12,6 +12,7 @@ export type CloudResource = ObjectReference & {
   cpu_cores?: number;
   created_at?: string;
   generic_name?: string;
+  hcp_only?: boolean;
   memory?: number;
   memory_pretty?: string;
   name_pretty?: string;

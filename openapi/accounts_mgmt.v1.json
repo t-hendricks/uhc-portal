@@ -1101,6 +1101,9 @@
               "generic_name": {
                 "type": "string"
               },
+              "hcp_only": {
+                "type": "boolean"
+              },
               "memory": {
                 "format": "int64",
                 "type": "integer"
@@ -1225,6 +1228,9 @@
               "$ref": "#/components/schemas/ReservedResource"
             },
             "type": "array"
+          },
+          "rh_region_id": {
+            "type": "string"
           },
           "scope": {
             "type": "string"
@@ -1400,6 +1406,9 @@
                   "Rescinded",
                   "Completed"
                 ],
+                "type": "string"
+              },
+              "status_description": {
                 "type": "string"
               },
               "updated_at": {
@@ -1657,6 +1666,76 @@
             "type": "object"
           }
         ]
+      },
+      "EntitlementCertificate": {
+        "properties": {
+          "cert": {
+            "type": "string"
+          },
+          "id": {
+            "type": "string"
+          },
+          "key": {
+            "type": "string"
+          },
+          "metadata": {
+            "additionalProperties": {
+              "type": "string"
+            },
+            "type": "object"
+          },
+          "organization_id": {
+            "type": "string"
+          },
+          "serial": {
+            "$ref": "#/components/schemas/CertificateSerial"
+          }
+        },
+        "required": [
+          "id",
+          "organization_id",
+          "metadata",
+          "key",
+          "cert",
+          "serial"
+        ],
+        "type": "object"
+      },
+      "EntitlementCertificatesRequest": {
+        "properties": {
+          "arch": {
+            "example": [
+              "x86",
+              "x86_64",
+              "ppc"
+            ],
+            "items": {
+              "enum": [
+                "x86",
+                "x86_64",
+                "ppc",
+                "ppc64",
+                "ppc64le",
+                "s390",
+                "s390x",
+                "ia64",
+                "aarch64"
+              ],
+              "type": "string"
+            },
+            "type": "array"
+          },
+          "type": {
+            "enum": [
+              "sca"
+            ],
+            "type": "string"
+          }
+        },
+        "required": [
+          "type"
+        ],
+        "type": "object"
       },
       "EphemeralResourceQuota": {
         "properties": {
@@ -2131,6 +2210,77 @@
             "type": "string"
           },
           "kind": {
+            "type": "string"
+          }
+        },
+        "type": "object"
+      },
+      "OndemandMetrics": {
+        "properties": {
+          "alerts": {
+            "items": {
+              "$ref": "#/components/schemas/OndemandMetricsAlerts"
+            },
+            "type": "array"
+          },
+          "cluster_operators": {
+            "items": {
+              "$ref": "#/components/schemas/OndemandMetricsClusterOperators"
+            },
+            "type": "array"
+          },
+          "nodes": {
+            "items": {
+              "$ref": "#/components/schemas/OndemandMetricsAlerts"
+            },
+            "type": "array"
+          }
+        },
+        "type": "object"
+      },
+      "OndemandMetricsAlerts": {
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "severity": {
+            "type": "string"
+          }
+        },
+        "type": "object"
+      },
+      "OndemandMetricsClusterOperators": {
+        "properties": {
+          "condition": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "reason": {
+            "type": "string"
+          },
+          "time": {
+            "type": "string"
+          },
+          "version": {
+            "type": "string"
+          }
+        },
+        "type": "object"
+      },
+      "OndemandMetricsNodes": {
+        "properties": {
+          "hostname": {
+            "type": "string"
+          },
+          "internal_ip": {
+            "type": "string"
+          },
+          "time": {
+            "type": "string"
+          },
+          "up": {
             "type": "string"
           }
         },
@@ -2723,6 +2873,98 @@
           }
         ]
       },
+      "Region": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/ObjectReference"
+          },
+          {
+            "properties": {
+              "cloud_provider_id": {
+                "type": "string"
+              },
+              "id": {
+                "type": "string"
+              },
+              "url": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "id",
+              "cloud_provider_id",
+              "url"
+            ],
+            "type": "object"
+          }
+        ]
+      },
+      "RegionList": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/List"
+          },
+          {
+            "properties": {
+              "items": {
+                "items": {
+                  "$ref": "#/components/schemas/Region"
+                },
+                "type": "array"
+              }
+            },
+            "type": "object"
+          }
+        ]
+      },
+      "RegionSummary": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/ObjectReference"
+          },
+          {
+            "properties": {
+              "cloud_provider_id": {
+                "type": "string"
+              },
+              "count": {
+                "type": "integer"
+              },
+              "region_id": {
+                "type": "string"
+              },
+              "url": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "region_id",
+              "cloud_provider_id",
+              "url",
+              "count"
+            ],
+            "type": "object"
+          }
+        ]
+      },
+      "RegionSummaryList": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/List"
+          },
+          {
+            "properties": {
+              "items": {
+                "items": {
+                  "$ref": "#/components/schemas/RegionSummary"
+                },
+                "type": "array"
+              }
+            },
+            "type": "object"
+          }
+        ]
+      },
       "Registry": {
         "allOf": [
           {
@@ -3067,6 +3309,9 @@
               "marketplace-azure",
               "marketplace-gcp"
             ],
+            "type": "string"
+          },
+          "scope": {
             "type": "string"
           }
         },
@@ -3846,6 +4091,9 @@
               },
               "released": {
                 "type": "boolean"
+              },
+              "rh_region_id": {
+                "type": "string"
               },
               "service_level": {
                 "enum": [
@@ -7371,6 +7619,95 @@
         }
       ]
     },
+    "/api/accounts_mgmt/v1/entitlement_certificates": {
+      "post": {
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/EntitlementCertificatesRequest"
+              }
+            }
+          },
+          "description": "# The payload depends on the type of the requested certificates\n  The examples for supported types:\n* {\"type\": \"sca\", \"arch\": [\"x86\",\"x86_64\",\"ppc\"]}\n",
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "items": {
+                    "$ref": "#/components/schemas/EntitlementCertificate"
+                  },
+                  "type": "array"
+                }
+              }
+            },
+            "description": "The certificates associated with the organization"
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            },
+            "description": "Validation errors occurred"
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            },
+            "description": "Auth token is invalid"
+          },
+          "403": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            },
+            "description": "Unauthorized to perform operation"
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            },
+            "description": "The certificate is not avaialbe for the organization"
+          },
+          "500": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            },
+            "description": "Unexpected error occurred"
+          }
+        },
+        "security": [
+          {
+            "Bearer": []
+          },
+          {
+            "AccessToken": []
+          }
+        ],
+        "summary": "Fetch all certificates of a particular type based on the architectures"
+      }
+    },
     "/api/accounts_mgmt/v1/errors": {
       "get": {
         "responses": {
@@ -10563,6 +10900,110 @@
         "summary": "Update a quota"
       }
     },
+    "/api/accounts_mgmt/v1/regions": {
+      "get": {
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RegionList"
+                }
+              }
+            },
+            "description": "A JSON array of Region objects"
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            },
+            "description": "Auth token is invalid"
+          },
+          "403": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            },
+            "description": "Unauthorized to perform operation"
+          },
+          "500": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            },
+            "description": "An unexpected error occurred when getting this resource"
+          }
+        },
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
+        "summary": "Returns a list of regions to which a user has access"
+      }
+    },
+    "/api/accounts_mgmt/v1/regions/summary": {
+      "get": {
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RegionSummaryList"
+                }
+              }
+            },
+            "description": "A JSON array of RegionSummary objects"
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            },
+            "description": "Auth token is invalid"
+          },
+          "403": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            },
+            "description": "Unauthorized to perform operation"
+          },
+          "500": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            },
+            "description": "An unexpected error occurred when getting this resource"
+          }
+        },
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
+        "summary": "Returns a summary of clusters by region"
+      }
+    },
     "/api/accounts_mgmt/v1/registries": {
       "get": {
         "parameters": [
@@ -13022,6 +13463,73 @@
           "$ref": "#/components/parameters/fields"
         }
       ]
+    },
+    "/api/accounts_mgmt/v1/subscriptions/{id}/ondemand_metrics": {
+      "get": {
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/id"
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OndemandMetrics"
+                }
+              }
+            },
+            "description": "Metrics found"
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            },
+            "description": "Auth token is invalid"
+          },
+          "403": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            },
+            "description": "Unauthorized to perform operation"
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            },
+            "description": "No subscription with specified id exists"
+          },
+          "500": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            },
+            "description": "Unexpected error occurred"
+          }
+        },
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
+        "summary": "Get an ondemand metrics of a subscription by id"
+      }
     },
     "/api/accounts_mgmt/v1/subscriptions/{id}/reserved_resources": {
       "get": {

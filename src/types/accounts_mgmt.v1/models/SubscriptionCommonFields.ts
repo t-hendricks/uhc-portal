@@ -40,6 +40,7 @@ export type SubscriptionCommonFields = ObjectReference & {
   provenance?: string;
   region_id?: string;
   released?: boolean;
+  rh_region_id?: string;
   service_level?: SubscriptionCommonFields.service_level;
   socket_total?: number;
   status?: SubscriptionCommonFields.status;
@@ -50,7 +51,7 @@ export type SubscriptionCommonFields = ObjectReference & {
    */
   trial_end_date?: string;
   usage?: SubscriptionCommonFields.usage;
-  rh_region_id?: string;
+  xcm_id?: string;
 };
 export namespace SubscriptionCommonFields {
   export enum cluster_billing_model {

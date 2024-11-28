@@ -2,6 +2,7 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
+import type { AWSShard } from './AWSShard';
 import type { ProvisionShardTopology } from './ProvisionShardTopology';
 /**
  * Representation of a server config
@@ -19,6 +20,10 @@ export type ServerConfig = {
    * Self link.
    */
   href?: string;
+  /**
+   * Config for AWS provision shards
+   */
+  aws_shard?: AWSShard;
   /**
    * The kubeconfig of the server.
    */

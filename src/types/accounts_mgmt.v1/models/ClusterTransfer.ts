@@ -12,6 +12,7 @@ export type ClusterTransfer = ObjectReference & {
   recipient?: string;
   secret?: string;
   status?: ClusterTransfer.status;
+  status_description?: string;
   updated_at?: string;
 };
 export namespace ClusterTransfer {
