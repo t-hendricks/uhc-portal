@@ -6,8 +6,8 @@ import { Form, FormSection, Grid, GridItem, Text } from '@patternfly/react-core'
 import installLinks from '~/common/installLinks.mjs';
 import {
   clusterAutoScalingValidators,
-  maxNodesTotal,
   validateListOfBalancingLabels,
+  validateMaxNodes,
 } from '~/common/validators';
 import { getDefaultClusterAutoScaling } from '~/components/clusters/common/clusterAutoScalingValues';
 import {
@@ -21,7 +21,7 @@ import {
 import {
   balancerFields,
   FieldDefinition,
-  resourceLimitsFields,
+  resourceLimitsFieldsWizard,
   scaleDownFields,
 } from '~/components/clusters/common/EditClusterAutoScalingDialog/fieldDefinitions';
 import { MaxNodesTotalPopoverText } from '~/components/clusters/common/EditClusterAutoScalingDialog/MaxNodesTotalTooltip';
@@ -63,7 +63,7 @@ const getValidator = (field: FieldDefinition) => {
       validator = utilizationThresholdValidator;
       break;
     case 'resource_limits.max_nodes_total':
-      validator = maxNodesTotal;
+      validator = validateMaxNodes;
       break;
     default:
       break;
@@ -216,7 +216,7 @@ const ClusterAutoScaleSettingsDialog = ({
           </FormSection>
           <FormSection title="Resource limits">
             <Grid hasGutter>
-              {resourceLimitsFields.map((field) => (
+              {resourceLimitsFieldsWizard.map((field) => (
                 <GridItem span={6} key={field.name}>
                   {mapField(field)}
                 </GridItem>

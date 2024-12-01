@@ -496,12 +496,8 @@ const k8sMinMaxParameter = (
     : 'The minimum cannot be above the maximum value.';
 };
 
-const maxNodesTotal = (num: number | string) => {
-  if (+num > MAX_NODES_DEFAULT) {
-    return `Value must not be greater than ${MAX_NODES_DEFAULT}.`;
-  }
-  return undefined;
-};
+const validateMaxNodes = (num: number | string, maxNodes: number | string = MAX_NODES_DEFAULT) =>
+  +num > +maxNodes ? `Value must not be greater than ${maxNodes}.` : undefined;
 
 const clusterAutoScalingValidators = {
   k8sTimeParameter,
@@ -510,7 +506,7 @@ const clusterAutoScalingValidators = {
   k8sGpuParameter,
   k8sScaleDownUtilizationThresholdParameter,
   k8sLogVerbosityParameter,
-  maxNodesTotal,
+  validateMaxNodes,
 };
 
 /**
@@ -1916,7 +1912,7 @@ export {
   MAX_CUSTOM_OPERATOR_ROLES_PREFIX_LENGTH,
   MAX_CLUSTER_NAME_LENGTH,
   validateSecureURL,
-  maxNodesTotal,
+  validateMaxNodes,
 };
 
 export default validators;

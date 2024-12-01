@@ -6,9 +6,7 @@ import { FieldDefinition } from '~/components/clusters/common/EditClusterAutoSca
 import ReduxBooleanField from '~/components/common/ReduxFormComponents/ReduxBooleanField';
 import ReduxVerticalFormGroup from '~/components/common/ReduxFormComponents/ReduxVerticalFormGroup';
 
-import { MaxNodesTotalPopoverText } from './MaxNodesTotalTooltip';
-
-const numberParser = (defaultValue: number) => (val: string) =>
+export const numberParser = (defaultValue: number) => (val: string) =>
   Number.isNaN(val) ? defaultValue : Number(val);
 
 interface ClusterAutoScalingValues {
@@ -50,8 +48,6 @@ const getFieldProps = (field: FieldDefinition) => {
         validate = clusterAutoScalingValidators.k8sLogVerbosityParameter;
       } else if (field.name === 'pod_priority_threshold') {
         validate = undefined;
-      } else if (field.name === 'resource_limits.max_nodes_total') {
-        validate = clusterAutoScalingValidators.maxNodesTotal;
       } else {
         validate = clusterAutoScalingValidators.k8sNumberParameter;
       }
@@ -72,14 +68,6 @@ const getFieldProps = (field: FieldDefinition) => {
       };
       break;
     }
-    default:
-      break;
-  }
-
-  switch (field.name) {
-    case 'resource_limits.max_nodes_total':
-      props.extendedHelpText = MaxNodesTotalPopoverText;
-      break;
     default:
       break;
   }

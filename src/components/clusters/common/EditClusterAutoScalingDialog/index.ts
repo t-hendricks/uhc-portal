@@ -39,6 +39,7 @@ type Day2Props = {
       errorMessage?: string;
     };
   };
+  maxNodesTotalDefault: number;
 };
 
 type ScalingFormData = {
@@ -72,9 +73,9 @@ const day2FormValueSelectorMapper = (
 ): EditClusterAutoScalingDialogProps => {
   const formErrors = getFormSyncErrors(DAY2_SELECTOR)(state) as FormErrors<ScalingFormData>;
   const valueSelector = formValueSelector(DAY2_SELECTOR) || {};
-
   const baseData =
-    ownProps.clusterAutoscalerResponse.getAutoscaler.data || getDefaultClusterAutoScaling();
+    ownProps.clusterAutoscalerResponse.getAutoscaler.data ||
+    getDefaultClusterAutoScaling(ownProps.maxNodesTotalDefault);
 
   const currentAutoscaler = {
     ...baseData,
@@ -101,7 +102,12 @@ const mapDispatchDay2ToProps = (dispatch: Dispatch, ownProps: Day2Props) => ({
       const { clusterId } = ownProps;
       switch (action) {
         case 'enable': {
-          dispatch(clusterAutoscalerActions.enableClusterAutoscaler(clusterId));
+          dispatch(
+            clusterAutoscalerActions.enableClusterAutoscaler(
+              clusterId,
+              ownProps.maxNodesTotalDefault,
+            ),
+          );
           break;
         }
         case 'disable': {

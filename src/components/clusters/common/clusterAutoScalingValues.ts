@@ -36,7 +36,9 @@ export type ClusterAutoScalingForm = Omit<
  *
  * @returns ClusterAutoscaler object with correct defaults
  */
-const getDefaultClusterAutoScaling = (): ClusterAutoScalingForm => ({
+const getDefaultClusterAutoScaling = (
+  maxNodesTotal = MAX_NODES_DEFAULT,
+): ClusterAutoScalingForm => ({
   // UI General settings (not grouped on the API object definition)
   balance_similar_node_groups: false,
 
@@ -54,7 +56,7 @@ const getDefaultClusterAutoScaling = (): ClusterAutoScalingForm => ({
 
   // UI Resource limits section
   resource_limits: {
-    max_nodes_total: MAX_NODES_DEFAULT,
+    max_nodes_total: maxNodesTotal,
     cores: {
       min: 0,
       max: MAX_CORES_DEFAULT,

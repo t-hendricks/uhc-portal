@@ -216,5 +216,65 @@ describe('machinePools utils', () => {
         },
       );
     });
+    describe('getMaxNodes', () => {
+      it.each([
+        [
+          'returns 249 + masterNodes + infraNodes for 4.15.0 single AZ',
+          '4.15.0',
+          false,
+          249 + 3 + 2,
+        ],
+        ['returns 249 + masterNodes + infraNodes for 4.15.0 multi AZ', '4.15.0', true, 249 + 3 + 3],
+        [
+          'returns 249 + masterNodes + infraNodes for 4.14.16 single AZ',
+          '4.14.16',
+          false,
+          249 + 3 + 2,
+        ],
+        [
+          'returns 249 + masterNodes + infraNodes for 4.14.16 multi AZ',
+          '4.14.16',
+          true,
+          249 + 3 + 3,
+        ],
+        [
+          'returns 249 + masterNodes + infraNodes for 4.14.14 single AZ',
+          '4.14.14',
+          false,
+          249 + 3 + 2,
+        ],
+        [
+          'returns 249 + masterNodes + infraNodes for 4.14.14 multi AZ',
+          '4.14.14',
+          true,
+          249 + 3 + 3,
+        ],
+        [
+          'returns 180 + masterNodes + infraNodes for 4.14.12 single AZ',
+          '4.14.12',
+          false,
+          180 + 3 + 2,
+        ],
+        [
+          'returns 180 + masterNodes + infraNodes for 4.14.12 multi AZ',
+          '4.14.12',
+          true,
+          180 + 3 + 3,
+        ],
+        [
+          'returns 180 + masterNodes + infraNodes for 4.13.0 single AZ',
+          '4.13.0',
+          false,
+          180 + 3 + 2,
+        ],
+        ['returns 180 + masterNodes + infraNodes for 4.13.0 multi AZ', '4.13.0', true, 180 + 3 + 3],
+      ])('%s', (_title: string, version: string, isMultiAZ: boolean, exptected: number) => {
+        // Act
+        const result = utils.getMaxNodesDefault(version, isMultiAZ);
+
+        // Assert
+        expect(result).toEqual(exptected);
+      });
+    });
   });
 });
