@@ -81,6 +81,34 @@ const resourceLimitsFields: FieldDefinition[] = [
     type: 'min-max',
     defaultValue: get(defaultValues, 'resource_limits.memory.max', 0),
   },
+];
+
+const resourceLimitsFieldsWizard: FieldDefinition[] = [
+  {
+    label: 'cores-total-min',
+    name: 'resource_limits.cores.min',
+    type: 'min-max',
+    defaultValue: defaultValues.resource_limits.cores.min,
+  },
+  {
+    label: 'cores-total-max',
+    name: 'resource_limits.cores.max',
+    type: 'min-max',
+    defaultValue: defaultValues.resource_limits.cores.max,
+  },
+  {
+    label: 'memory-total-min',
+    name: 'resource_limits.memory.min',
+    type: 'min-max',
+    defaultValue: get(defaultValues, 'resource_limits.memory.min', 0),
+  },
+  {
+    label: 'memory-total-max',
+    name: 'resource_limits.memory.max',
+    type: 'min-max',
+    defaultValue: get(defaultValues, 'resource_limits.memory.max', 0),
+  },
+
   {
     label: 'max-nodes-total',
     name: 'resource_limits.max_nodes_total',
@@ -127,4 +155,4 @@ const scaleDownFields: FieldDefinition[] = [
     defaultValue: defaultValues.scale_down.delay_after_failure,
   },
 ];
-export { balancerFields, scaleDownFields, resourceLimitsFields };
+export { balancerFields, scaleDownFields, resourceLimitsFields, resourceLimitsFieldsWizard };

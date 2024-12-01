@@ -44,6 +44,7 @@ const initalPropsWithoutAutoscalingMachinePools = {
   dirty: false,
   hasAutoscalingMachinePools: false,
   isClusterAutoscalerRefetching: false,
+  maxNodesTotalDefault: 180,
 };
 
 const dirtyForm = {

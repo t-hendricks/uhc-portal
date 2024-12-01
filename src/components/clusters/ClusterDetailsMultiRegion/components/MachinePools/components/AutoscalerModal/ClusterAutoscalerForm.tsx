@@ -21,6 +21,7 @@ type ClusterAutoscalerFormProps = {
   region?: string;
   clusterAutoscalerData: ClusterAutoscalerResponseType;
   isClusterAutoscalerRefetching: boolean;
+  maxNodesTotalDefault: number;
 };
 
 export const ClusterAutoscalerForm = ({
@@ -31,6 +32,7 @@ export const ClusterAutoscalerForm = ({
   region,
   clusterAutoscalerData,
   isClusterAutoscalerRefetching,
+  maxNodesTotalDefault,
 }: ClusterAutoscalerFormProps) => {
   const isOpen = useGlobalState(
     (state) => state.modal.modalName === modals.EDIT_CLUSTER_AUTOSCALING_V2,
@@ -44,7 +46,7 @@ export const ClusterAutoscalerForm = ({
       validateOnMount
       initialValues={{
         [FieldId.ClusterAutoscaling]: !hasClusterAutoscaler
-          ? getDefaultClusterAutoScaling()
+          ? getDefaultClusterAutoScaling(maxNodesTotalDefault)
           : clusterAutoscalerData.data,
       }}
       validate={() => {}}
@@ -66,6 +68,7 @@ export const ClusterAutoscalerForm = ({
           dirty={dirty}
           hasAutoscalingMachinePools={hasAutoscalingMachinePools}
           isClusterAutoscalerRefetching={isClusterAutoscalerRefetching}
+          maxNodesTotalDefault={maxNodesTotalDefault}
         />
       )}
     </Formik>

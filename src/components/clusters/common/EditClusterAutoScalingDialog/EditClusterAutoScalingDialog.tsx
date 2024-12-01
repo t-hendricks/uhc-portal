@@ -1,11 +1,15 @@
-import React, { FormEvent } from 'react';
+import React, { FormEvent, useCallback } from 'react';
 import { useDispatch } from 'react-redux';
 import { Field } from 'redux-form';
 
 import { Form, FormGroup, FormSection, Grid, GridItem, Switch, Text } from '@patternfly/react-core';
 
 import installLinks from '~/common/installLinks.mjs';
-import { clusterAutoScalingValidators, validateListOfBalancingLabels } from '~/common/validators';
+import {
+  clusterAutoScalingValidators,
+  validateListOfBalancingLabels,
+  validateMaxNodes,
+} from '~/common/validators';
 import { getDefaultClusterAutoScaling } from '~/components/clusters/common/clusterAutoScalingValues';
 import {
   AutoscalerGpuHelpText,
@@ -27,7 +31,8 @@ import ReduxVerticalFormGroup from '../../../common/ReduxFormComponents/ReduxVer
 import MachinePoolsAutoScalingWarning from '../../ClusterDetails/components/MachinePools/MachinePoolAutoscalingWarning';
 
 import { balancerFields, resourceLimitsFields, scaleDownFields } from './fieldDefinitions';
-import { fieldItemMapper } from './fieldItemMapper';
+import { fieldItemMapper, numberParser } from './fieldItemMapper';
+import { MaxNodesTotalPopoverText } from './MaxNodesTotalTooltip';
 
 import './EditClusterAutoScalingDialog.scss';
 
@@ -46,6 +51,7 @@ export interface EditClusterAutoScalingDialogProps {
   hasAutoscalingMachinePools: boolean;
   editAction?: ErrorState;
   clusterId: string;
+  maxNodesTotalDefault: number;
 }
 
 /**
@@ -71,6 +77,7 @@ function EditClusterAutoScalingDialog({
   hasAutoscalingMachinePools,
   editAction,
   clusterId,
+  maxNodesTotalDefault,
 }: EditClusterAutoScalingDialogProps) {
   const hasAutoScalingErrors = autoScalingErrors && Object.keys(autoScalingErrors).length > 0;
   const isScaleDownDisabled = autoScalingValues.scale_down?.enabled === false;
@@ -115,12 +122,17 @@ function EditClusterAutoScalingDialog({
   };
 
   const handleReset = () => {
-    const defaultAutoscaler = getDefaultClusterAutoScaling();
+    const defaultAutoscaler = getDefaultClusterAutoScaling(maxNodesTotalDefault);
     change('cluster_autoscaling', {
       ...defaultAutoscaler,
       isSelected: autoScalingValues.isSelected,
     });
   };
+
+  const validateMaxNodesTotal = useCallback(
+    (value: string) => validateMaxNodes(value, maxNodesTotalDefault),
+    [maxNodesTotalDefault],
+  );
 
   return (
     <Modal
@@ -220,6 +232,25 @@ function EditClusterAutoScalingDialog({
                   {fieldItemMapper(field, isFormDisabled)}
                 </GridItem>
               ))}
+              <GridItem span={6} key="resource_limits.max_nodes_total">
+                {/* @ts-ignore */}
+                <Field
+                  component={ReduxVerticalFormGroup}
+                  name="cluster_autoscaling.resource_limits.max_nodes_total"
+                  label="max-nodes-total"
+                  type="number"
+                  parse={numberParser(maxNodesTotalDefault as number)}
+                  validate={validateMaxNodesTotal}
+                  extendedHelpText={MaxNodesTotalPopoverText}
+                  isRequired
+                  props={{
+                    disabled: isFormDisabled,
+                  }}
+                  helpText={
+                    <span className="custom-help-text">Default value: {maxNodesTotalDefault}</span>
+                  }
+                />
+              </GridItem>
               <GridItem span={6}>
                 <FormGroup
                   fieldId="cluster_autoscaling.resource_limits.gpus"

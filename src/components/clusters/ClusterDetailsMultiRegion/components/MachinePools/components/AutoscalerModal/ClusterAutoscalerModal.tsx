@@ -4,7 +4,11 @@ import { useDispatch } from 'react-redux';
 import { Form, FormSection, Grid, GridItem, Switch, Text } from '@patternfly/react-core';
 
 import installLinks from '~/common/installLinks.mjs';
-import { clusterAutoScalingValidators, validateListOfBalancingLabels } from '~/common/validators';
+import {
+  clusterAutoScalingValidators,
+  validateListOfBalancingLabels,
+  validateMaxNodes,
+} from '~/common/validators';
 import { getDefaultClusterAutoScaling } from '~/components/clusters/common/clusterAutoScalingValues';
 import {
   AutoscalerGpuHelpText,
@@ -74,18 +78,6 @@ const getValidator = (field: FieldDefinition) => {
   return validator;
 };
 
-const getTooltip = (field: FieldDefinition) => {
-  let tooltip;
-  switch (field.name) {
-    case 'resource_limits.max_nodes_total':
-      tooltip = MaxNodesTotalPopoverText;
-      break;
-    default:
-      break;
-  }
-  return tooltip;
-};
-
 const mapField = (field: FieldDefinition, isDisabled?: boolean) => {
   if (field.type === 'boolean') {
     return (
@@ -102,7 +94,6 @@ const mapField = (field: FieldDefinition, isDisabled?: boolean) => {
 
   const inputType = field.type === 'number' || field.type === 'min-max' ? 'number' : 'text';
   const validator = getValidator(field);
-  const tooltip = getTooltip(field);
 
   return (
     <TextInputField
@@ -115,7 +106,6 @@ const mapField = (field: FieldDefinition, isDisabled?: boolean) => {
         <span className="custom-help-text">Default value: {`${field.defaultValue}`}</span>
       }
       validate={validator}
-      tooltip={tooltip}
     />
   );
 };
@@ -132,6 +122,7 @@ type ClusterAutoscalerDialogProps = {
   hasAutoscalingMachinePools: boolean;
   isClusterAutoscalerRefetching: boolean;
   region?: string;
+  maxNodesTotalDefault: number;
 };
 
 export const ClusterAutoscalerModal = ({
@@ -146,6 +137,7 @@ export const ClusterAutoscalerModal = ({
   hasAutoscalingMachinePools,
   region,
   isClusterAutoscalerRefetching,
+  maxNodesTotalDefault,
 }: ClusterAutoscalerDialogProps) => {
   const {
     mutate: mutateDisableClusterAutoscaler,
@@ -158,7 +150,7 @@ export const ClusterAutoscalerModal = ({
     isPending: isEnableClusterAutoscalerPending,
     isError: isEnableClusterAutoscalerError,
     error: enableClusterAutoscalerError,
-  } = useEnableClusterAutoscaler(clusterId, region);
+  } = useEnableClusterAutoscaler(clusterId, maxNodesTotalDefault, region);
   const dispatch = useDispatch();
   const {
     values: { [FieldId.ClusterAutoscaling]: clusterAutoScaling },
@@ -177,9 +169,12 @@ export const ClusterAutoscalerModal = ({
   const isFormDisabled =
     !hasClusterAutoscaler || isUpdateClusterAutoscalerPending || isClusterAutoscalerRefetching;
 
-  const handleReset = () => {
-    setFieldValue(FieldId.ClusterAutoscaling, getDefaultClusterAutoScaling(), true);
-  };
+  const handleReset = () =>
+    setFieldValue(
+      FieldId.ClusterAutoscaling,
+      getDefaultClusterAutoScaling(maxNodesTotalDefault),
+      true,
+    );
 
   const toggleClusterAutoScaling = () => {
     if (!hasClusterAutoscaler) {
@@ -296,6 +291,20 @@ export const ClusterAutoscalerModal = ({
                   {mapField(field, isFormDisabled)}
                 </GridItem>
               ))}
+              <GridItem span={6} key="resource_limits.max_nodes_total">
+                <TextInputField
+                  name="cluster_autoscaling.resource_limits.max_nodes_total"
+                  label="max-nodes-total"
+                  type="number"
+                  isDisabled={isFormDisabled}
+                  showHelpTextOnError
+                  helperText={
+                    <span className="custom-help-text">Default value: {maxNodesTotalDefault}</span>
+                  }
+                  validate={(value) => validateMaxNodes(value, maxNodesTotalDefault)}
+                  tooltip={MaxNodesTotalPopoverText}
+                />
+              </GridItem>
               <GridItem span={6}>
                 <TextInputField
                   name="cluster_autoscaling.resource_limits.gpus"

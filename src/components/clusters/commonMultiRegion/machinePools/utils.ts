@@ -28,7 +28,20 @@ import {
   MAX_NODES_HCP_INSUFFICIEN_VERSION,
 } from './constants';
 
-// Minimal versions to allow more then 90 nodes - 4.15.15, 4.14.28
+// OSD and ROSA classic - minimal version to allow 249 worker nodes - 4.14.14
+export const getMaxNodesDefault = (clusterVersionRawId: string, isMultiAz: boolean) => {
+  const MASTER_NODES = 3;
+  const infraNodes = isMultiAz ? 3 : 2;
+  const majorMinor = parseFloat(clusterVersionRawId);
+  const versionPatch = Number(clusterVersionRawId.split('.')[2]);
+  let maxWorkerNodes = 180;
+  if (majorMinor > 4.14 || (majorMinor === 4.14 && versionPatch >= 14)) {
+    maxWorkerNodes = 249;
+  }
+  return maxWorkerNodes + MASTER_NODES + infraNodes;
+};
+
+// HCP - Minimal versions to allow more then 90 nodes - 4.15.15, 4.14.28
 const isOcpVersionSufficient = (ocpVersion: string) => {
   const majorMinor = parseFloat(ocpVersion);
   const versionPatch = Number(ocpVersion.split('.')[2]);

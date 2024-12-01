@@ -51,7 +51,7 @@ const getFieldProps = (field: FieldDefinition) => {
       } else if (field.name === 'pod_priority_threshold') {
         validate = undefined;
       } else if (field.name === 'resource_limits.max_nodes_total') {
-        validate = clusterAutoScalingValidators.maxNodesTotal;
+        validate = clusterAutoScalingValidators.validateMaxNodes;
       } else {
         validate = clusterAutoScalingValidators.k8sNumberParameter;
       }
@@ -59,6 +59,7 @@ const getFieldProps = (field: FieldDefinition) => {
       props = {
         type: 'number',
         parse: numberParser(field.defaultValue as number),
+        // @ts-ignore
         validate,
       };
       break;
