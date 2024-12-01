@@ -1,8 +1,4 @@
-<<<<<<< HEAD
 import React, { useEffect, useMemo } from 'react';
-=======
-import React, { useMemo } from 'react';
->>>>>>> 0dbab0e9a (OCMUI-2743: UI calculations for cluster autoscaler max node total - day1)
 import { useDispatch } from 'react-redux';
 
 import { Button, FormGroup, GridItem } from '@patternfly/react-core';
@@ -11,7 +7,7 @@ import links from '~/common/installLinks.mjs';
 import { normalizedProducts } from '~/common/subscriptionTypes';
 import { getDefaultClusterAutoScaling } from '~/components/clusters/common/clusterAutoScalingValues';
 import { constants } from '~/components/clusters/common/CreateOSDFormConstants';
-import { getMaxNodesDefault } from '~/components/clusters/common/machinePools/utils';
+import { getMaxNodesTotalDefaultAutoscaler } from '~/components/clusters/common/machinePools/utils';
 import { CheckboxField } from '~/components/clusters/wizards/form/CheckboxField';
 import { useFormState } from '~/components/clusters/wizards/hooks';
 import { FieldId as RosaFieldId } from '~/components/clusters/wizards/rosa/constants';
@@ -45,7 +41,7 @@ export const AutoScale = () => {
   const isByoc = byoc === 'true';
   const isRosaClassicOrOsdCcs = !isHypershiftSelected && isByoc;
   const maxNodesTotalDefault = useMemo(
-    () => getMaxNodesDefault(ClusterVersion.raw_id, multiAz === 'true'),
+    () => getMaxNodesTotalDefaultAutoscaler(ClusterVersion.raw_id, multiAz === 'true'),
     [ClusterVersion.raw_id, multiAz],
   );
   const defaultAutoscalerValues = useMemo(

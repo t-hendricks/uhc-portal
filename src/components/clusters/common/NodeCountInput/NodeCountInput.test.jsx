@@ -5,10 +5,12 @@ import { checkAccessibility, render, screen } from '~/testUtils';
 import { SubscriptionCommonFields } from '~/types/accounts_mgmt.v1';
 
 import { normalizedProducts } from '../../../../common/subscriptionTypes';
-import { MAX_NODES, MAX_NODES_HCP } from '../machinePools/constants';
+import { MAX_NODES_HCP } from '../machinePools/constants';
 import * as quotaSelectors from '../quotaSelectors';
 
 import NodeCountInput from './NodeCountInput';
+
+const MAX_NODES = 180; // mock data
 
 const includedNodes = ({ isByoc, isMultiAz, isMachinePool }) => {
   if (isByoc || isMachinePool) {

@@ -44,6 +44,7 @@ export const MachinePool = () => {
       [FieldId.NodesCompute]: nodesCompute,
       [FieldId.NodeLabels]: nodeLabels,
       [FieldId.Region]: region,
+      [FieldId.ClusterVersion]: version,
     },
     values,
     errors,
@@ -260,6 +261,7 @@ export const MachinePool = () => {
                   {},
                   { isDefaultMachinePool: true, isByoc, isMultiAz },
                 )}
+                clusterVersion={version.raw_id}
               />
             </GridItem>
             {imdsSection}

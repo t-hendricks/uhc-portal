@@ -1,5 +1,6 @@
-import { MAX_NODES } from './constants';
 import * as utils from './utils';
+
+const MAX_NODES = 249; // mock data
 
 describe('machinePools utils', () => {
   describe('getNodeOptions', () => {
@@ -270,7 +271,7 @@ describe('machinePools utils', () => {
         ['returns 180 + masterNodes + infraNodes for 4.13.0 multi AZ', '4.13.0', true, 180 + 3 + 3],
       ])('%s', (_title: string, version: string, isMultiAZ: boolean, exptected: number) => {
         // Act
-        const result = utils.getMaxNodesDefault(version, isMultiAZ);
+        const result = utils.getMaxNodesTotalDefaultAutoscaler(version, isMultiAZ);
 
         // Assert
         expect(result).toEqual(exptected);
