@@ -13,7 +13,6 @@ import modals from '../../../common/Modal/modals';
 
 type DeleteCusterDialogProps = {
   onClose: (clusterDeleted?: boolean) => void;
-  shouldDisplayClusterName?: boolean;
   textContent?: string;
   title?: string;
 };
@@ -21,6 +20,7 @@ type DeleteCusterDialogProps = {
 type ModalData = {
   clusterName: string;
   clusterID: string;
+  shouldDisplayClusterName: boolean | undefined;
   region: string | undefined;
 };
 
@@ -28,16 +28,11 @@ type ErrorType = {
   errorMessage?: string | undefined;
 };
 
-const DeleteClusterDialog = ({
-  onClose,
-  shouldDisplayClusterName,
-  textContent,
-  title,
-}: DeleteCusterDialogProps) => {
+const DeleteClusterDialog = ({ onClose, textContent, title }: DeleteCusterDialogProps) => {
   const [clusterNameInput, setClusterNameInput] = React.useState<string>('');
   const modalData = useGlobalState((state) => state.modal.data) as ModalData;
 
-  const { clusterID, clusterName, region } = modalData;
+  const { clusterID, clusterName, shouldDisplayClusterName, region } = modalData;
 
   const dispatch = useDispatch();
 
