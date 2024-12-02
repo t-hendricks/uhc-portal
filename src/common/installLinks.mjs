@@ -68,6 +68,7 @@ const SHP_CLI_LATEST =
 const DOCS_BASE = 'https://docs.openshift.com/container-platform/4.17';
 const OSD_DOCS_BASE = 'https://docs.openshift.com/dedicated';
 const ROSA_DOCS_BASE = 'https://docs.openshift.com/rosa';
+const ROSA_HCP_DOCS_BASE = `${ROSA_DOCS_BASE}/rosa_hcp`;
 const ROSA_CP_DOCS_BASE =
   'https://access.redhat.com/documentation/en-us/red_hat_openshift_service_on_aws/4/html';
 
@@ -333,6 +334,8 @@ const links = {
   AWS_CONSOLE_HOSTED_ZONES: 'https://console.aws.amazon.com/route53/v2/hostedzones',
   AWS_CONSOLE_SECURITY_GROUPS: 'https://console.aws.amazon.com/ec2/home#SecurityGroups',
   AWS_CLI: 'https://aws.amazon.com/cli/',
+  AWS_CLI_CONFIGURATION_INSTRUCTIONS:
+    'https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-configure.html',
   AWS_CLI_INSTRUCTIONS:
     'https://docs.aws.amazon.com/ROSA/latest/userguide/getting-started-sts-auto.html',
   AWS_CLI_GETTING_STARTED_MANUAL:
@@ -367,6 +370,14 @@ const links = {
   VIRTUAL_PRIVATE_CLOUD_URL:
     'https://docs.openshift.com/rosa/rosa_planning/rosa-sts-aws-prereqs.html#rosa-vpc_rosa-sts-aws-prereqs',
   AWS_CONTROL_PLANE_URL: `${DOCS_BASE}/architecture/control-plane.html#hosted-control-planes-architecture_control-plane`,
+
+  ROSA_AWS_FEDRAMP: 'https://docs.aws.amazon.com/govcloud-us/latest/UserGuide/govcloud-rosa.html',
+  FEDRAMP_ACCESS_REQUEST_FORM: 'https://console.redhat.com/openshift/create/rosa/govcloud',
+  TERRAFORM_ROSA_HCP_URL: `${ROSA_HCP_DOCS_BASE}/terraform/rosa-hcp-creating-a-cluster-quickly-terraform.html`,
+  TERRAFORM_REGISTRY_ROSA_HCP:
+    'https://registry.terraform.io/providers/terraform-redhat/rhcs/latest/docs/guides/hosted-control-planes',
+  ROSA_HCP_CLI_URL: `${ROSA_HCP_DOCS_BASE}/rosa-hcp-sts-creating-a-cluster-quickly.html#rosa-hcp-sts-creating-a-cluster-cli_rosa-hcp-sts-creating-a-cluster-quickly`,
+  ROSA_CREATE_NETWORK: `${ROSA_DOCS_BASE}/cli_reference/rosa_cli/rosa-manage-objects-cli.html#rosa-create-network_rosa-managing-objects-cli`,
 };
 
 // Tool identifiers are public — e.g. for linking to specific tool in DownloadsPage.
