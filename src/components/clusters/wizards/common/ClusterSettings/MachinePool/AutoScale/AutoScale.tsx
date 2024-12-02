@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 import React, { useEffect, useMemo } from 'react';
+=======
+import React, { useMemo } from 'react';
+>>>>>>> 0dbab0e9a (OCMUI-2743: UI calculations for cluster autoscaler max node total - day1)
 import { useDispatch } from 'react-redux';
 
 import { Button, FormGroup, GridItem } from '@patternfly/react-core';
