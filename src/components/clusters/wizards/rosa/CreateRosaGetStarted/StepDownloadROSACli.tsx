@@ -23,9 +23,11 @@ const StepDownloadROSACli = () => (
         </Text>
       </TextListItem>
       <TextListItem>
-        <Text component={TextVariants.p}>Download the AWS CLI version 2</Text>
+        <Text component={TextVariants.p}>Download, setup and configure the AWS CLI version 2</Text>
         <Text component={TextVariants.p} className="pf-v5-u-mt-md">
-          <ExternalLink href={links.AWS_CLI}>Instructions to install the AWS CLI</ExternalLink>
+          Learn more about <ExternalLink href={links.AWS_CLI}>installing</ExternalLink> and{' '}
+          <ExternalLink href={links.AWS_CLI_CONFIGURATION_INSTRUCTIONS}>configuring</ExternalLink>{' '}
+          the AWS CLI.
         </Text>
       </TextListItem>
     </TextList>
