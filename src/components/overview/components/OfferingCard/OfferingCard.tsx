@@ -39,6 +39,7 @@ type OfferingCardProps = {
 
 const createRosaClusterURL = '/create/rosa/getstarted';
 const rosaServicePageURL = '/overview/rosa';
+const OSDServicePageURL = '/overview/osd';
 const createOSDClusterURL = '/create/osd';
 const createClusterURL = '/create';
 const registerClusterURL = '/register';
@@ -76,6 +77,11 @@ function OfferingCard(props: OfferingCardProps) {
 
   const RHOCPOfferingCardDocLinkComponent = useCallback(
     (props: any) => <Link to={registerClusterURL}>Register cluster</Link>,
+    [],
+  );
+
+  const RHOSDOfferingCardDocLinkComponent = useCallback(
+    (props: any) => <Link to={OSDServicePageURL}>View details</Link>,
     [],
   );
 
@@ -131,7 +137,7 @@ function OfferingCard(props: OfferingCardProps) {
     case 'RHOSD':
       offeringCardTitle = 'Red Hat OpenShift Dedicated';
       offeringCardDescriptionList = [
-        { descriptionListTerm: 'Runs on', descriptionListDescription: 'AWS or Google Cloud' },
+        { descriptionListTerm: 'Runs on', descriptionListDescription: 'Google Cloud or AWS' },
         { descriptionListTerm: 'Purchase through', descriptionListDescription: 'Red Hat' },
         { descriptionListTerm: 'Billing type', descriptionListDescription: 'Flexible or fixed' },
       ];
@@ -146,7 +152,12 @@ function OfferingCard(props: OfferingCardProps) {
         </InternalTrackingLink>
       );
       offeringCardDocLink = (
-        <ExternalLink href={docLinks.OPENSHIFT_DEDICATED_LEARN_MORE}>Learn more</ExternalLink>
+        <InternalTrackingLink
+          isButton
+          variant={ButtonVariant.link}
+          to={OSDServicePageURL}
+          component={RHOSDOfferingCardDocLinkComponent}
+        />
       );
       cardLogo = <RHLogo className="offering-logo" />;
       break;
