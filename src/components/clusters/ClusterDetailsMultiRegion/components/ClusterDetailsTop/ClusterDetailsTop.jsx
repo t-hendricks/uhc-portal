@@ -13,6 +13,7 @@ import isAssistedInstallSubscription, {
   isUninstalledAICluster,
 } from '~/common/isAssistedInstallerCluster';
 import { HAS_USER_DISMISSED_RECOMMENDED_OPERATORS_ALERT } from '~/common/localStorageConstants';
+import { useNavigate } from '~/common/routing';
 import { normalizedProducts } from '~/common/subscriptionTypes';
 import { PreviewLabel } from '~/components/clusters/common/PreviewLabel';
 import Breadcrumbs from '~/components/common/Breadcrumbs';
@@ -44,27 +45,33 @@ import SubscriptionCompliancy from './components/SubscriptionCompliancy';
 import TermsAlert from './components/TermsAlert';
 import TransferClusterOwnershipInfo from './components/TransferClusterOwnershipInfo';
 
-const IdentityProvidersHint = () => (
-  <Alert
-    id="idpHint"
-    className="pf-v5-u-mt-md"
-    variant="warning"
-    isInline
-    title="Missing identity providers"
-  >
-    Identity providers determine how users log into the cluster.
-    <Button
-      variant="link"
+const IdentityProvidersHint = () => {
+  const navigate = useNavigate();
+  return (
+    <Alert
+      id="idpHint"
+      className="pf-v5-u-mt-md"
       isInline
-      onClick={() => {
-        window.location.hash = 'accessControl';
-      }}
+      title="Create an identity provider to access cluster"
     >
-      Add OAuth configuration
-    </Button>{' '}
-    to allow others to log in.
-  </Alert>
-);
+      Identity providers determine how you can log into the cluster. You&apos;ll need to set this up
+      so you can access your cluster{' '}
+      <p>
+        <Button
+          variant="link"
+          isInline
+          onClick={() =>
+            navigate({
+              hash: '#accessControl',
+            })
+          }
+        >
+          Create identity provider
+        </Button>{' '}
+      </p>
+    </Alert>
+  );
+};
 
 function ClusterDetailsTop(props) {
   const {
