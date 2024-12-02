@@ -115,7 +115,7 @@ import Overview from '../overview';
 import Quota from '../quota';
 import Releases from '../releases';
 import RosaHandsOnPage from '../RosaHandsOn/RosaHandsOnPage';
-import RosaServicePage from '../services/rosa/RosaServicePage';
+import { ServicePage } from '../services/servicePage/ServicePage';
 
 import ApiError from './ApiError';
 import { AppPage } from './AppPage';
@@ -418,7 +418,8 @@ const Router: React.FC<RouterProps> = ({ planType, clusterId, externalClusterId 
         />
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/overview/rosa/hands-on" element={<RosaHandsOnPage />} />
-        <Route path="/overview/rosa" element={<RosaServicePage />} />
+        <Route path="/overview/rosa" element={<ServicePage serviceName="ROSA" />} />
+        <Route path="/overview/osd" element={<ServicePage serviceName="OSD" />} />
         <Route path="/overview" element={<Overview />} />
         <Route path="/releases" element={<Releases />} />
         <Route
