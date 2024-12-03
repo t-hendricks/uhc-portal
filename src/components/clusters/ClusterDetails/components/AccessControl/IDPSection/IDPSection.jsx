@@ -150,7 +150,9 @@ const IDPSection = ({
     const actions = idpActionResolver(idp);
     return (
       <Tr key={idp.id}>
-        <Td dataLabel={columnNames.name}>{idp.name}</Td>
+        <Td dataLabel={columnNames.name} modifier="truncate">
+          {idp.name}
+        </Td>
         <Td dataLabel={columnNames.type}>{IDPTypeNames[idp.type] ?? idp.type}</Td>
         <Td dataLabel={columnNames.callbackUrl}>
           {IDPNeedsOAuthURL(idp.type) ? (

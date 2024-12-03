@@ -64,7 +64,7 @@ describe('<IDPSection />', () => {
         {
           name: 'hi',
           type: 'GoogleIdentityProvider',
-          id: 'id',
+          id: 'id2',
         },
       ],
       fulfilled: true,
