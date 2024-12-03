@@ -181,7 +181,9 @@ class UsersSection extends React.Component {
         </Tr>
       ) : (
         <Tr key={user.id}>
-          <Td dataLabel={columnNames.userId}>{user.id}</Td>
+          <Td dataLabel={columnNames.userId} modifier="truncate">
+            {user.id}
+          </Td>
           <Td dataLabel={columnNames.group}>{user.group}</Td>
           <Td isActionCell>
             <ActionsColumn
