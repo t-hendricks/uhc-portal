@@ -1,11 +1,13 @@
-import React from 'react';
+import React, { useEffect, useMemo } from 'react';
 import { useDispatch } from 'react-redux';
 
 import { Button, FormGroup, GridItem } from '@patternfly/react-core';
 
 import links from '~/common/installLinks.mjs';
 import { normalizedProducts } from '~/common/subscriptionTypes';
+import { getDefaultClusterAutoScaling } from '~/components/clusters/common/clusterAutoScalingValues';
 import { constants } from '~/components/clusters/common/CreateOSDFormConstants';
+import { getMaxNodesDefault } from '~/components/clusters/common/machinePools/utils';
 import { CheckboxField } from '~/components/clusters/wizards/form/CheckboxField';
 import { useFormState } from '~/components/clusters/wizards/hooks';
 import { FieldId as RosaFieldId } from '~/components/clusters/wizards/rosa/constants';
@@ -24,7 +26,10 @@ export const AutoScale = () => {
       [RosaFieldId.Byoc]: byoc,
       [RosaFieldId.AutoscalingEnabled]: autoscalingEnabled,
       [RosaFieldId.Product]: product,
+      [RosaFieldId.MultiAz]: multiAz,
+      [RosaFieldId.ClusterVersion]: ClusterVersion,
     },
+    setFieldValue,
   } = useFormState();
 
   const dispatch = useDispatch();
@@ -35,6 +40,18 @@ export const AutoScale = () => {
   const isHypershiftSelected = isHypershift === 'true';
   const isByoc = byoc === 'true';
   const isRosaClassicOrOsdCcs = !isHypershiftSelected && isByoc;
+  const maxNodesTotalDefault = useMemo(
+    () => getMaxNodesDefault(ClusterVersion.raw_id, multiAz === 'true'),
+    [ClusterVersion.raw_id, multiAz],
+  );
+  const defaultAutoscalerValues = useMemo(
+    () => getDefaultClusterAutoScaling(maxNodesTotalDefault),
+    [maxNodesTotalDefault],
+  );
+
+  useEffect(() => {
+    setFieldValue(RosaFieldId.ClusterAutoscaling, defaultAutoscalerValues);
+  }, [setFieldValue, defaultAutoscalerValues, autoscalingEnabled]);
 
   return (
     <GridItem id="autoscaling">
@@ -79,7 +96,11 @@ export const AutoScale = () => {
           </Button>
         </GridItem>
       ) : null}
-      <ClusterAutoScaleSettingsDialog isWizard isRosa={isRosa} />
+      <ClusterAutoScaleSettingsDialog
+        isWizard
+        isRosa={isRosa}
+        maxNodesTotalDefault={maxNodesTotalDefault}
+      />
       {autoscalingEnabled ? <AutoScaleEnabledInputs /> : null}
     </GridItem>
   );

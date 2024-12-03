@@ -21,7 +21,7 @@ import {
 import {
   balancerFields,
   FieldDefinition,
-  resourceLimitsFieldsWizard,
+  resourceLimitsFields,
   scaleDownFields,
 } from '~/components/clusters/common/EditClusterAutoScalingDialog/fieldDefinitions';
 import { MaxNodesTotalPopoverText } from '~/components/clusters/common/EditClusterAutoScalingDialog/MaxNodesTotalTooltip';
@@ -47,6 +47,7 @@ import './ClusterAutoScaleSettingsDialog.scss';
 interface ClusterAutoScaleSettingsDialogProps {
   isWizard: boolean;
   isRosa: boolean;
+  maxNodesTotalDefault: number;
 }
 
 const getValidator = (field: FieldDefinition) => {
@@ -134,6 +135,7 @@ const mapField = (field: FieldDefinition, isDisabled?: boolean) => {
 const ClusterAutoScaleSettingsDialog = ({
   isWizard,
   isRosa,
+  maxNodesTotalDefault,
 }: ClusterAutoScaleSettingsDialogProps) => {
   const dispatch = useDispatch();
   const closeScalerModal = () => dispatch(closeModal());
@@ -158,7 +160,11 @@ const ClusterAutoScaleSettingsDialog = ({
   };
 
   const handleReset = () => {
-    setFieldValue(FieldId.ClusterAutoscaling, getDefaultClusterAutoScaling(), true);
+    setFieldValue(
+      FieldId.ClusterAutoscaling,
+      getDefaultClusterAutoScaling(maxNodesTotalDefault),
+      true,
+    );
   };
 
   const hasAutoScalingErrors = Object.keys(autoScalingErrors || {}).length > 0;
@@ -216,11 +222,24 @@ const ClusterAutoScaleSettingsDialog = ({
           </FormSection>
           <FormSection title="Resource limits">
             <Grid hasGutter>
-              {resourceLimitsFieldsWizard.map((field) => (
+              {resourceLimitsFields.map((field) => (
                 <GridItem span={6} key={field.name}>
                   {mapField(field)}
                 </GridItem>
               ))}
+              <GridItem span={6} key="resource_limits.max_nodes_total">
+                <TextInputField
+                  name="cluster_autoscaling.resource_limits.max_nodes_total"
+                  label="max-nodes-total"
+                  type="number"
+                  showHelpTextOnError
+                  helperText={
+                    <span className="custom-help-text">Default value: {maxNodesTotalDefault}</span>
+                  }
+                  validate={(value) => validateMaxNodes(value, maxNodesTotalDefault)}
+                  tooltip={MaxNodesTotalPopoverText}
+                />
+              </GridItem>
               <GridItem span={6}>
                 <TextInputField
                   name="cluster_autoscaling.resource_limits.gpus"

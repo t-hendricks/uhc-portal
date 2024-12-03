@@ -43,7 +43,7 @@ const buildTestComponent = (values?: Partial<ClusterAutoscaler>) => {
       initialTouched={{ [testInputFieldId]: true }} // so that it shows the errors if it's invalid initially
       onSubmit={() => {}}
     >
-      <ClusterAutoScaleSettingsDialog isWizard isRosa={false} />
+      <ClusterAutoScaleSettingsDialog isWizard isRosa={false} maxNodesTotalDefault={249} />
     </Formik>
   );
 };

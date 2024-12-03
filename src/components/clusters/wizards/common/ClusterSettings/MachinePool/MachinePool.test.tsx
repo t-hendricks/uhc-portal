@@ -17,6 +17,7 @@ describe('<MachinePool />', () => {
           [FieldId.BillingModel]: 'marketplace-aws',
           [FieldId.Product]: 'ROSA',
           [FieldId.CloudProvider]: 'aws',
+          [FieldId.ClusterVersion]: { raw_id: '4.17.1' },
         }}
         onSubmit={() => {}}
       >
@@ -41,6 +42,7 @@ describe('<MachinePool />', () => {
           [FieldId.Product]: 'OSD',
           [FieldId.CloudProvider]: 'GCP',
           [FieldId.Byoc]: 'true',
+          [FieldId.ClusterVersion]: { raw_id: '4.17.1' },
         }}
         onSubmit={() => {}}
       >
