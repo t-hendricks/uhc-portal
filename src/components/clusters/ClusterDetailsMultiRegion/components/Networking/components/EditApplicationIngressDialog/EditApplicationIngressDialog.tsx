@@ -104,7 +104,7 @@ const EditApplicationIngressDialog: React.FC<EditApplicationIngressDialogProps> 
         );
       }}
     >
-      {({ dirty, errors, handleSubmit }) => (
+      {({ dirty, errors, handleSubmit, values }) => (
         <Modal
           variant={ModalVariant.medium}
           primaryText="Save"
@@ -125,6 +125,7 @@ const EditApplicationIngressDialog: React.FC<EditApplicationIngressDialogProps> 
               canShowLoadBalancer={canShowLoadBalancer}
               areFieldsDisabled={isHypershiftCluster}
               isHypershiftCluster={isHypershiftCluster}
+              values={values}
             />
           </Form>
         </Modal>
