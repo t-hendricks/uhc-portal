@@ -10,7 +10,10 @@ import {
   getNodeIncrement,
   getNodeIncrementHypershift,
 } from '~/components/clusters/ClusterDetails/components/MachinePools/machinePoolsHelper';
-import { getWorkerNodeVolumeSizeMaxGiB } from '~/components/clusters/common/machinePools/constants';
+import {
+  getWorkerNodeVolumeSizeMaxGiB,
+  getWorkerNodeVolumeSizeMinGiB,
+} from '~/components/clusters/common/machinePools/utils';
 import NodeCountInput from '~/components/clusters/common/NodeCountInput';
 import { computeNodeHintText } from '~/components/clusters/common/ScaleSection/AutoScaleSection/AutoScaleHelper';
 import MachineTypeSelection from '~/components/clusters/common/ScaleSection/MachineTypeSelection';
@@ -70,10 +73,11 @@ function ScaleSection() {
     [poolsLength, isHypershiftSelected, isByoc, isMultiAzSelected],
   );
 
-  const maxWorkerVolumeSizeGiB = useMemo(
-    () => getWorkerNodeVolumeSizeMaxGiB(clusterVersionRawId),
-    [clusterVersionRawId],
-  );
+  const { minWorkerVolumeSizeGiB, maxWorkerVolumeSizeGiB } = useMemo(() => {
+    const minWorkerVolumeSizeGiB = getWorkerNodeVolumeSizeMinGiB(isHypershiftSelected);
+    const maxWorkerVolumeSizeGiB = getWorkerNodeVolumeSizeMaxGiB(clusterVersionRawId);
+    return { minWorkerVolumeSizeGiB, maxWorkerVolumeSizeGiB };
+  }, [isHypershiftSelected, clusterVersionRawId]);
 
   const billingModel = useMemo(
     () => billingModelFieldValue ?? SubscriptionCommonFields.cluster_billing_model.STANDARD,
@@ -138,12 +142,15 @@ function ScaleSection() {
     () => (
       <>
         <GridItem md={6}>
-          <WorkerNodeVolumeSizeSection maxWorkerVolumeSizeGiB={maxWorkerVolumeSizeGiB} />
+          <WorkerNodeVolumeSizeSection
+            minWorkerVolumeSizeGiB={minWorkerVolumeSizeGiB}
+            maxWorkerVolumeSizeGiB={maxWorkerVolumeSizeGiB}
+          />
         </GridItem>
         <GridItem md={6} />
       </>
     ),
-    [maxWorkerVolumeSizeGiB],
+    [minWorkerVolumeSizeGiB, maxWorkerVolumeSizeGiB],
   );
 
   return (

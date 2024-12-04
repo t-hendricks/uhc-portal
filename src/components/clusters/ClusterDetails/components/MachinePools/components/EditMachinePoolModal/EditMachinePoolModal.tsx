@@ -16,7 +16,7 @@ import Modal from '~/components/common/Modal/Modal';
 import { closeModal } from '~/components/common/Modal/ModalActions';
 import modals from '~/components/common/Modal/modals';
 import { useFeatureGate } from '~/hooks/useFeatureGate';
-import { MAX_COMPUTE_NODES_500 } from '~/redux/constants/featureConstants';
+import { HCP_ROOT_DISK_SIZE, MAX_COMPUTE_NODES_500 } from '~/redux/constants/featureConstants';
 import { useGlobalState } from '~/redux/hooks';
 import { GlobalState } from '~/redux/store';
 import { PromiseReducerState } from '~/redux/types';
@@ -47,11 +47,13 @@ const submitEdit = ({
   values,
   currentMPId,
   currentMachinePool,
+  hasHcpRootDiskSizeFeature,
 }: {
   cluster: ClusterFromSubscription;
   values: EditMachinePoolValues;
   currentMPId?: string;
   currentMachinePool: MachinePool | undefined;
+  hasHcpRootDiskSizeFeature: boolean;
 }) => {
   const isHypershift = isHypershiftCluster(cluster);
   const isMultiZoneMachinePool = isMPoolAz(cluster, currentMachinePool?.availability_zones?.length);
@@ -60,6 +62,7 @@ const submitEdit = ({
     ? buildNodePoolRequest(values, {
         isEdit: !!currentMPId,
         isMultiZoneMachinePool,
+        hasHcpRootDiskSizeFeature,
       })
     : buildMachinePoolRequest(values, {
         isEdit: !!currentMPId,
@@ -119,6 +122,7 @@ const EditMachinePoolModal = ({
     machineTypes: machineTypesResponse,
   });
   const allow500Nodes = useFeatureGate(MAX_COMPUTE_NODES_500);
+  const hasHcpRootDiskSizeFeature = useFeatureGate(HCP_ROOT_DISK_SIZE);
 
   const setCurrentMPId = React.useCallback(
     (id: string) => setCurrentMachinePool(machinePoolsResponse.data?.find((mp) => mp.id === id)),
@@ -168,6 +172,7 @@ const EditMachinePoolModal = ({
             values,
             currentMPId: currentMachinePool?.id,
             currentMachinePool,
+            hasHcpRootDiskSizeFeature,
           });
           onSave?.();
           onClose();

@@ -14,14 +14,16 @@ import { isMPoolAz } from '~/components/clusters/ClusterDetailsMultiRegion/clust
 import { isHypershiftCluster, isROSA } from '~/components/clusters/common/clusterStates';
 import {
   defaultWorkerNodeVolumeSizeGiB,
-  getWorkerNodeVolumeSizeMaxGiB,
   SPOT_MIN_PRICE,
-  workerNodeVolumeSizeMinGiB,
 } from '~/components/clusters/commonMultiRegion/machinePools/constants';
-import { getNodeOptions } from '~/components/clusters/commonMultiRegion/machinePools/utils';
+import {
+  getNodeOptions,
+  getWorkerNodeVolumeSizeMaxGiB,
+  getWorkerNodeVolumeSizeMinGiB,
+} from '~/components/clusters/commonMultiRegion/machinePools/utils';
 import { useFeatureGate } from '~/hooks/useFeatureGate';
 import { MachineTypesResponse } from '~/queries/types';
-import { MAX_COMPUTE_NODES_500 } from '~/redux/constants/featureConstants';
+import { HCP_ROOT_DISK_SIZE, MAX_COMPUTE_NODES_500 } from '~/redux/constants/featureConstants';
 import { MachinePool, NodePool } from '~/types/clusters_mgmt.v1';
 import { ClusterFromSubscription } from '~/types/types';
 
@@ -48,14 +50,16 @@ export type EditMachinePoolValues = {
 };
 
 type UseMachinePoolFormikArgs = {
-  machinePool: MachinePool | undefined;
+  machinePool: MachinePool | NodePool | undefined;
   cluster: ClusterFromSubscription;
   machineTypes: MachineTypesResponse;
-  machinePools: MachinePool[];
+  machinePools: (MachinePool | NodePool)[];
 };
 
 const isMachinePool = (pool?: MachinePool | NodePool): pool is MachinePool =>
   pool?.kind === 'MachinePool';
+
+const isNodePool = (pool?: MachinePool | NodePool): pool is NodePool => pool?.kind === 'NodePool';
 
 const useMachinePoolFormik = ({
   machinePool,
@@ -63,7 +67,12 @@ const useMachinePoolFormik = ({
   machineTypes,
   machinePools,
 }: UseMachinePoolFormikArgs) => {
-  const isMachinePoolMz = isMPoolAz(cluster, machinePool?.availability_zones?.length);
+  const hasHcpRootDiskSizeFeature = useFeatureGate(HCP_ROOT_DISK_SIZE);
+
+  const isMachinePoolMz = isMPoolAz(
+    cluster,
+    (machinePool as MachinePool)?.availability_zones?.length,
+  );
   const rosa = isROSA(cluster);
 
   const minNodesRequired = getClusterMinNodes({
@@ -81,9 +90,9 @@ const useMachinePoolFormik = ({
     let maxPrice;
     let diskSize;
 
-    autoscaleMin = machinePool?.autoscaling?.min_replicas || minNodesRequired;
-    autoscaleMax = machinePool?.autoscaling?.max_replicas || minNodesRequired;
-    const instanceType = machinePool?.instance_type;
+    autoscaleMin = (machinePool as MachinePool)?.autoscaling?.min_replicas || minNodesRequired;
+    autoscaleMax = (machinePool as MachinePool)?.autoscaling?.max_replicas || minNodesRequired;
+    const instanceType = (machinePool as MachinePool)?.instance_type;
 
     if (isMachinePool(machinePool)) {
       useSpotInstances = !!machinePool.aws?.spot_market_options;
@@ -91,6 +100,8 @@ const useMachinePoolFormik = ({
 
       maxPrice = machinePool.aws?.spot_market_options?.max_price;
       diskSize = machinePool.root_volume?.aws?.size || machinePool.root_volume?.gcp?.size;
+    } else if (isNodePool(machinePool)) {
+      diskSize = hasHcpRootDiskSizeFeature && machinePool.aws_node_pool?.root_volume?.size;
     }
 
     if (isMachinePoolMz) {
@@ -122,14 +133,15 @@ const useMachinePoolFormik = ({
       instanceType,
       privateSubnetId: undefined,
       securityGroupIds:
-        machinePool?.aws?.additional_security_group_ids ||
+        (machinePool as MachinePool)?.aws?.additional_security_group_ids ||
         (machinePool as NodePool)?.aws_node_pool?.additional_security_group_ids ||
         [],
     };
-  }, [machinePool, isMachinePoolMz, minNodesRequired]);
+  }, [machinePool, isMachinePoolMz, minNodesRequired, hasHcpRootDiskSizeFeature]);
 
   const isHypershift = isHypershiftCluster(cluster);
 
+  const minDiskSize = getWorkerNodeVolumeSizeMinGiB(isHypershift);
   const maxDiskSize = getWorkerNodeVolumeSizeMaxGiB(cluster.version?.raw_id || '');
 
   const hasMachinePool = !!machinePool;
@@ -263,10 +275,7 @@ const useMachinePoolFormik = ({
           autoscaling: Yup.boolean(),
           diskSize: rosa
             ? Yup.number()
-                .min(
-                  workerNodeVolumeSizeMinGiB,
-                  `Disk size must be at least ${workerNodeVolumeSizeMinGiB} GiB`,
-                )
+                .min(minDiskSize, `Disk size must be at least ${minDiskSize} GiB`)
                 .max(maxDiskSize, `Disk size can not be more than ${maxDiskSize} GiB`)
                 .test(
                   'whole-number',
@@ -308,6 +317,7 @@ const useMachinePoolFormik = ({
       machineTypes,
       organization.quotaList,
       rosa,
+      minDiskSize,
       maxDiskSize,
       hasMachinePool,
       isHypershift,
