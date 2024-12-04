@@ -139,6 +139,8 @@ const config = {
         : {}),
       insightsGateway:
         data.insightsGateway?.replace('$SELF_PATH$', window.location.host) || undefined,
+      fedrampGateway:
+        data.insightsGateway?.replace('$SELF_PATH$', window.location.host) || undefined,
     };
 
     const simulatedRestrictedEnv = !!localStorage.getItem(RESTRICTED_ENV_OVERRIDE_LOCALSTORAGE_KEY);
