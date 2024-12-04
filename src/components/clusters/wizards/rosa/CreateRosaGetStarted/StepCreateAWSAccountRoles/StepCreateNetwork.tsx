@@ -51,10 +51,9 @@ const StepCreateNetwork = () => (
         </InstructionCommand>
       </ListItem>
     </List>
-
-    <ExternalLink href={links.ROSA_CREATE_NETWORK}>
-      Learn more about the create network command
-    </ExternalLink>
+    Learn more about the{' '}
+    <ExternalLink href={links.ROSA_CREATE_NETWORK}>create network command</ExternalLink> and other
+    ways to <ExternalLink href={links.CREATE_VPC_WAYS}>create a VPC</ExternalLink>
   </>
 );
 

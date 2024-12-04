@@ -387,7 +387,8 @@ const links = {
   TERRAFORM_REGISTRY_ROSA_HCP:
     'https://registry.terraform.io/providers/terraform-redhat/rhcs/latest/docs/guides/hosted-control-planes',
   ROSA_HCP_CLI_URL: `${ROSA_HCP_DOCS_BASE}/rosa-hcp-sts-creating-a-cluster-quickly.html#rosa-hcp-sts-creating-a-cluster-cli_rosa-hcp-sts-creating-a-cluster-quickly`,
-  ROSA_CREATE_NETWORK: `${ROSA_DOCS_BASE}/cli_reference/rosa_cli/rosa-manage-objects-cli.html#rosa-create-network_rosa-managing-objects-cli`,
+  ROSA_CREATE_NETWORK: `https://access.redhat.com/articles/7096266`,
+  CREATE_VPC_WAYS: `https://docs.aws.amazon.com/rosa/latest/userguide/getting-started-hcp.html#create-vpc-hcp`,
 };
 
 // Tool identifiers are public — e.g. for linking to specific tool in DownloadsPage.
