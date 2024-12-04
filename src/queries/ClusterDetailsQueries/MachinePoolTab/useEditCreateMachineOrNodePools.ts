@@ -5,6 +5,8 @@ import { isMPoolAz } from '~/components/clusters/ClusterDetailsMultiRegion/clust
 import { EditMachinePoolValues } from '~/components/clusters/ClusterDetailsMultiRegion/components/MachinePools/components/EditMachinePoolModal/hooks/useMachinePoolFormik';
 import { buildNodePoolRequest } from '~/components/clusters/ClusterDetailsMultiRegion/components/MachinePools/components/EditMachinePoolModal/utils';
 import { isROSA } from '~/components/clusters/common/clusterStates';
+import { useFeatureGate } from '~/hooks/useFeatureGate';
+import { HCP_ROOT_DISK_SIZE } from '~/redux/constants/featureConstants';
 import { getClusterService, getClusterServiceForRegion } from '~/services/clusterService';
 import { MachinePool } from '~/types/clusters_mgmt.v1';
 import { ClusterFromSubscription } from '~/types/types';
@@ -14,6 +16,8 @@ export const useEditCreateMachineOrNodePools = (
   cluster: ClusterFromSubscription,
   currentMachinePool?: MachinePool,
 ) => {
+  const hasHcpRootDiskSizeFeature = useFeatureGate(HCP_ROOT_DISK_SIZE);
+
   const { data, isPending, isError, isSuccess, mutate, mutateAsync } = useMutation({
     mutationKey: ['createOrEditMachineOrNodePool', 'clusterService'],
     mutationFn: async ({
@@ -34,6 +38,7 @@ export const useEditCreateMachineOrNodePools = (
         ? buildNodePoolRequest(values, {
             isEdit: !!currentMPId,
             isMultiZoneMachinePool,
+            hasHcpRootDiskSizeFeature,
           })
         : buildMachinePoolRequest(values, {
             isEdit: !!currentMPId,

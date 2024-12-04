@@ -99,9 +99,11 @@ export const buildNodePoolRequest = (
   {
     isEdit,
     isMultiZoneMachinePool,
+    hasHcpRootDiskSizeFeature,
   }: {
     isEdit: boolean;
     isMultiZoneMachinePool: boolean;
+    hasHcpRootDiskSizeFeature?: boolean;
   },
 ): NodePool => {
   const nodePool: NodePool = {
@@ -117,6 +119,11 @@ export const buildNodePoolRequest = (
       instance_type: values.instanceType,
       additional_security_group_ids: values.securityGroupIds,
     };
+    if (hasHcpRootDiskSizeFeature) {
+      nodePool.aws_node_pool.root_volume = {
+        size: values.diskSize,
+      };
+    }
   }
   return nodePool;
 };

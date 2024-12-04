@@ -136,6 +136,16 @@ describe('buildNodePoolRequest', () => {
       expect(nodePool.aws_node_pool?.additional_security_group_ids).toStrictEqual(['sg-1']);
     });
 
+    it('add diskSize for ROSA Hypershift clusters', () => {
+      const nodePool = buildNodePoolRequest(defaultValues, {
+        isEdit: false,
+        isMultiZoneMachinePool: false,
+        hasHcpRootDiskSizeFeature: true,
+      });
+
+      expect(nodePool.aws_node_pool?.root_volume?.size).toEqual(333);
+    });
+
     it('does not add specific ROSA classic fields', () => {
       const nodePool = buildNodePoolRequest(defaultValues, {
         isEdit: false,

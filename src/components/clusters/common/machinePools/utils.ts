@@ -1,5 +1,6 @@
 import range from 'lodash/range';
 
+import { splitVersion } from '~/common/versionHelpers';
 import { isMPoolAz, isMultiAZ } from '~/components/clusters/ClusterDetails/clusterDetailsHelper';
 import { isHypershiftCluster } from '~/components/clusters/common/clusterStates';
 import { availableNodesFromQuota } from '~/components/clusters/common/quotaSelectors';
@@ -22,6 +23,8 @@ import {
   MAX_NODES_HCP as MAX_NODES_HCP_DEFAULT,
   MAX_NODES_HCP_500,
   MAX_NODES_HCP_INSUFFICIEN_VERSION,
+  workerNodeVolumeSizeMinGiB,
+  workerNodeVolumeSizeMinGiBHcp,
 } from './constants';
 
 // OSD and ROSA classic - minimal version to allow 249 worker nodes - 4.14.14
@@ -250,4 +253,16 @@ export const getNodeOptions = ({
     clusterVersion: cluster.version?.raw_id,
     allow500Nodes,
   });
+};
+
+export const getWorkerNodeVolumeSizeMinGiB = (isHypershift: boolean): number =>
+  isHypershift ? workerNodeVolumeSizeMinGiBHcp : workerNodeVolumeSizeMinGiB;
+
+/**
+ * Returns ROSA/AWS OSD max worker node volume size, varies per cluster version.
+ * In GiB.
+ */
+export const getWorkerNodeVolumeSizeMaxGiB = (clusterVersionRawId: string): number => {
+  const [major, minor] = splitVersion(clusterVersionRawId);
+  return (major > 4 || (major === 4 && minor >= 14) ? 16 : 1) * 1024;
 };

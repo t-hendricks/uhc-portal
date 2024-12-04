@@ -25,7 +25,7 @@ import { FieldId } from '~/components/clusters/wizards/osd/constants';
 import ExternalLink from '~/components/common/ExternalLink';
 import useAnalytics from '~/hooks/useAnalytics';
 import { useFeatureGate } from '~/hooks/useFeatureGate';
-import { OCMUI_PRIVATE_SERVICE_CONNECT } from '~/redux/constants/featureConstants';
+import { PRIVATE_SERVICE_CONNECT } from '~/redux/constants/featureConstants';
 
 import { ApplicationIngressType, ClusterPrivacyType } from './constants';
 import { DefaultIngressFields } from './DefaultIngressFields';
@@ -51,7 +51,7 @@ export const Configuration = () => {
   } = useFormState();
   const isByoc = byoc === 'true';
   const isGCP = cloudProvider === CloudProviderType.Gcp;
-  const hasPSCFeatureGate = useFeatureGate(OCMUI_PRIVATE_SERVICE_CONNECT);
+  const hasPSCFeatureGate = useFeatureGate(PRIVATE_SERVICE_CONNECT);
   const isPrivateCluster = clusterPrivacy === ClusterPrivacyType.Internal;
   const showClusterPrivacy =
     cloudProvider === CloudProviderType.Aws || (cloudProvider === CloudProviderType.Gcp && isByoc);

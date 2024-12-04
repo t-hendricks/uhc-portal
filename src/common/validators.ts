@@ -6,7 +6,6 @@ import { get, indexOf, inRange } from 'lodash';
 
 import { Subnet } from '~/common/helpers';
 import { MAX_NODES_DEFAULT } from '~/components/clusters/common/clusterAutoScalingValues';
-import { workerNodeVolumeSizeMinGiB } from '~/components/clusters/common/machinePools/constants';
 import { FieldId } from '~/components/clusters/wizards/osd/constants';
 import { clusterService } from '~/services';
 import type { GCP, Taint } from '~/types/clusters_mgmt.v1';
@@ -1747,10 +1746,13 @@ const validateNamespacesList = (value = '') => {
 const validateWorkerVolumeSize = (
   size: number,
   allValues: object,
-  { maxWorkerVolumeSizeGiB }: { maxWorkerVolumeSizeGiB: number },
+  {
+    minWorkerVolumeSizeGiB,
+    maxWorkerVolumeSizeGiB,
+  }: { minWorkerVolumeSizeGiB: number; maxWorkerVolumeSizeGiB: number },
 ) => {
-  if (size < workerNodeVolumeSizeMinGiB || size > maxWorkerVolumeSizeGiB) {
-    return `The worker root disk size must be between ${workerNodeVolumeSizeMinGiB} GiB and ${maxWorkerVolumeSizeGiB} GiB.`;
+  if (size < minWorkerVolumeSizeGiB || size > maxWorkerVolumeSizeGiB) {
+    return `The worker root disk size must be between ${minWorkerVolumeSizeGiB} GiB and ${maxWorkerVolumeSizeGiB} GiB.`;
   }
 
   return size === Math.floor(size)
