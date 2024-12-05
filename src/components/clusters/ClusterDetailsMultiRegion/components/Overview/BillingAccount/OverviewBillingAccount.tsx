@@ -21,8 +21,10 @@ import { isHypershiftCluster } from '../../../clusterDetailsHelper';
 import { OverviewBillingAccountModal } from './OverviewBillingAccountModal';
 
 export function OverviewBillingAccount() {
-  const [isModalOpen, setIsModalOpen] = React.useState(false);
+  const [isBillingModalOpen, setIsBillingModalOpen] = React.useState(false);
+
   const params = useParams();
+
   const { cluster } = useFetchClusterDetails(params.id || '');
 
   const hasFeatureGate = useFeatureGate(OCMUI_EDIT_BILLING_ACCOUNT);
@@ -34,10 +36,10 @@ export function OverviewBillingAccount() {
     cluster?.aws?.billing_account_id || cluster?.subscription?.billing_marketplace_account || '';
   return (
     <>
-      {isModalOpen && (
+      {isBillingModalOpen && (
         <OverviewBillingAccountModal
           onClose={() => {
-            setIsModalOpen(false);
+            setIsBillingModalOpen(false);
           }}
           billingAccount={billingAccount}
           cluster={cluster}
@@ -55,7 +57,7 @@ export function OverviewBillingAccount() {
                   isDisabled={!cluster?.canEdit} // This won't show disabled currently, but setting the tooltip anyway
                   variant="link"
                   isInline
-                  onClick={() => setIsModalOpen(true)}
+                  onClick={() => setIsBillingModalOpen(true)}
                   disableReason={disableChangeReason}
                   isAriaDisabled={!!disableChangeReason}
                 >

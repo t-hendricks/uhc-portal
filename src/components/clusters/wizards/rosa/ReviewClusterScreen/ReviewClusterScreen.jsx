@@ -37,6 +37,7 @@ import {
 
 import { ClusterRequestTranslatorFactory } from '../../common/ClusterRequestTranslator/ClusterRequestTranslatorFactory';
 import { DebugClusterRequest } from '../../common/DebugClusterRequest';
+import { MESSAGES } from '../../common/messages';
 import ReviewSection, {
   FormikReviewItem as ReviewItem,
 } from '../../common/ReviewCluster/ReviewSection';
@@ -45,9 +46,6 @@ import { createClusterRequest, upgradeScheduleRequest } from '../../common/submi
 import ReviewRoleItem from './ReviewRoleItem';
 
 import './ReviewClusterScreen.scss';
-
-const CREATE_CLUSTER_REQUEST_PENDING_MESSAGE =
-  'Creating your cluster. Do not refresh this page. This request may take a moment...';
 
 const ReviewClusterScreen = ({
   getUserRole,
@@ -153,7 +151,7 @@ const ReviewClusterScreen = ({
           isRequestPending={createClusterResponse.pending}
           isRequestFulfilled={createClusterResponse.fulfilled}
           requestErrorMessage={createClusterResponse.errorMessage}
-          requestPendingMessage={CREATE_CLUSTER_REQUEST_PENDING_MESSAGE}
+          requestPendingMessage={MESSAGES.INITIATE_CREATE_CLUSTER_REQUEST}
           closeWarningMessage="You won't be able to view or download the YAML after cluster creation begins."
         />
       ) : null,
@@ -248,7 +246,7 @@ const ReviewClusterScreen = ({
           </Bullseye>
         </StackItem>
         <StackItem>
-          <Bullseye>{CREATE_CLUSTER_REQUEST_PENDING_MESSAGE}</Bullseye>
+          <Bullseye>{MESSAGES.INITIATE_CREATE_CLUSTER_REQUEST}</Bullseye>
         </StackItem>
       </Stack>
     </Bullseye>

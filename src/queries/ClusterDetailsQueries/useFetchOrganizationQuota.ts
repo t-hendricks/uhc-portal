@@ -20,10 +20,12 @@ export const useFetchOrganizationQuota = (organizationID: string) => {
     ],
     queryFn: async () => {
       const organizationQuota = await accountsService.getOrganizationQuota(organizationID);
+
       return {
         organizationQuota: organizationQuota.data,
       };
     },
+    enabled: !!organizationID,
   });
 
   return isError

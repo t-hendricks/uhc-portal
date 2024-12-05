@@ -21,9 +21,7 @@ import clusterStates, {
 import DownloadOcCliButton from '~/components/clusters/common/InstallProgress/DownloadOcCliButton';
 import InstallProgress from '~/components/clusters/common/InstallProgress/InstallProgress';
 import UninstallProgress from '~/components/clusters/common/UninstallProgress';
-import { useFeatureGate } from '~/hooks/useFeatureGate';
 import { AvailableRegionalInstance } from '~/queries/types';
-import { NETWORK_VALIDATOR_ONDEMAND_FEATURE } from '~/redux/constants/featureConstants';
 import { ClusterFromSubscription } from '~/types/types';
 
 import InstallationLogView from '../../Overview/InstallationLogView';
@@ -47,7 +45,6 @@ const ClusterProgressCard = ({ cluster, regionalInstance }: ClusterProgressCardP
   const inProgress = (installationInProgress || isUninstalling) && !isError;
   const estCompletionTime = isHypershiftCluster(cluster) ? '10' : '30 to 60';
   const hasInflightErrors = hasInflightEgressErrors(cluster);
-  const hasNetworkOndemand = useFeatureGate(NETWORK_VALIDATOR_ONDEMAND_FEATURE);
 
   let titleText;
   if (isError) {
@@ -98,7 +95,6 @@ const ClusterProgressCard = ({ cluster, regionalInstance }: ClusterProgressCardP
         ) : (
           <InstallProgress
             cluster={cluster}
-            hasNetworkOndemand={hasNetworkOndemand}
             hasInflightErrors={hasInflightErrors}
             regionalInstance={regionalInstance}
           />

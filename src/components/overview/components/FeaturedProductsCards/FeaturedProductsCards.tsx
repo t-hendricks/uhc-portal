@@ -2,8 +2,8 @@ import React from 'react';
 
 import { Flex, FlexItem, Title } from '@patternfly/react-core';
 
+import { ProductCard } from '../../../common/ProductCard/ProductCard';
 import { DRAWER_PANEL_CONTENT, DrawerPanelContentNode } from '../common/DrawerPanelContent';
-import ProductCard from '../common/ProductCard/ProductCard';
 import PRODUCT_CARD_LOGOS from '../common/ProductCardLogos';
 
 const TITLE = 'Featured products';
@@ -37,6 +37,8 @@ type FeaturedProductsCardsProps = {
   openLearnMore: (title: string, content?: DrawerPanelContentNode) => void;
   selectedCardTitle: string;
 };
+
+// TODO: This component can be refactored and simplified when using ProductCardView component (a generic ProductCard view in a Flex Layout) - LInk to ticket: https://issues.redhat.com/browse/OCMUI-2414
 
 const FeaturedProductsCards = ({
   openLearnMore,

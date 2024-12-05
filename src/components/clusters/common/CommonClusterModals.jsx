@@ -4,6 +4,12 @@ import PropTypes from 'prop-types';
 
 import ConnectedModal from '../../common/Modal/ConnectedModal';
 import { ConnectedEditMachinePoolModal } from '../ClusterDetails/components/MachinePools/components/EditMachinePoolModal/EditMachinePoolModal';
+import { ConnectedEditMachinePoolModal as ConnectedEditMachinePoolModalMR } from '../ClusterDetailsMultiRegion/components/MachinePools/components/EditMachinePoolModal/EditMachinePoolModal';
+import ArchiveClusterDialogMR from '../commonMultiRegion/ArchiveClusterDialog';
+import EditConsoleURLDialogMR from '../commonMultiRegion/EditConsoleURLDialog';
+import EditDisplayNameDialogMR from '../commonMultiRegion/EditDisplayNameDialog';
+import EditSubscriptionSettingsDialogMR from '../commonMultiRegion/EditSubscriptionSettingsDialog/EditSubscriptionSettingsDialog';
+import ScaleClusterDialogMR from '../commonMultiRegion/ScaleClusterDialog';
 import UpgradeWizardMR from '../commonMultiRegion/Upgrades/UpgradeWizard/UpgradeWizard';
 
 import DeleteProtectionModal from './DeleteProtectionModal/DeleteProtectionModal';
@@ -28,12 +34,35 @@ function CommonClusterModals({
 }) {
   return (
     <>
-      <ConnectedModal ModalComponent={EditDisplayNameDialog} onClose={onClose} />
-      <ConnectedModal ModalComponent={EditConsoleURLDialog} onClose={onClose} />
+      <ConnectedModal
+        ModalComponent={
+          isMultiRegionPreviewEnabled ? EditDisplayNameDialogMR : EditDisplayNameDialog
+        }
+        onClose={onClose}
+      />
+      <ConnectedModal
+        ModalComponent={isMultiRegionPreviewEnabled ? EditConsoleURLDialogMR : EditConsoleURLDialog}
+        onClose={onClose}
+      />
       <ConnectedModal ModalComponent={TransferClusterOwnershipDialog} onClose={onClose} />
-      <ConnectedModal ModalComponent={EditSubscriptionSettingsDialog} onClose={onClose} isDialog />
-      <ConnectedModal ModalComponent={ScaleClusterDialog} onClose={onClose} />
-      <ConnectedModal ModalComponent={ArchiveClusterDialog} onClose={onClose} />
+      <ConnectedModal
+        ModalComponent={
+          isMultiRegionPreviewEnabled
+            ? EditSubscriptionSettingsDialogMR
+            : EditSubscriptionSettingsDialog
+        }
+        onClose={onClose}
+        isDialog
+      />
+      <ConnectedModal
+        ModalComponent={isMultiRegionPreviewEnabled ? ScaleClusterDialogMR : ScaleClusterDialog}
+        onClose={onClose}
+      />
+
+      <ConnectedModal
+        ModalComponent={isMultiRegionPreviewEnabled ? ArchiveClusterDialogMR : ArchiveClusterDialog}
+        onClose={onClose}
+      />
       <ConnectedModal ModalComponent={HibernateClusterModal} onClose={onClose} />
       <ConnectedModal ModalComponent={ResumeClusterModal} onClose={onClose} />
       <ConnectedModal ModalComponent={UnarchiveClusterDialog} onClose={onClose} />
@@ -55,7 +84,11 @@ function CommonClusterModals({
         }}
       />
       <ConnectedModal
-        ModalComponent={ConnectedEditMachinePoolModal}
+        ModalComponent={
+          isMultiRegionPreviewEnabled
+            ? ConnectedEditMachinePoolModalMR
+            : ConnectedEditMachinePoolModal
+        }
         clearMachinePools={clearMachinePools}
       />
     </>

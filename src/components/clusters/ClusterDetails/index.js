@@ -4,13 +4,11 @@ import { bindActionCreators } from 'redux';
 
 import { addNotification } from '@redhat-cloud-services/frontend-components-notifications/redux';
 
-import { featureGateSelector } from '~/hooks/useFeatureGate';
 import { accessProtectionActions } from '~/redux/actions/accessProtectionActions';
 import { accessRequestActions } from '~/redux/actions/accessRequestActions';
 import { clearListVpcs } from '~/redux/actions/ccsInquiriesActions';
 import { clusterAutoscalerActions } from '~/redux/actions/clusterAutoscalerActions';
 import { onResetFiltersAndFlags } from '~/redux/actions/viewOptionsActions';
-import { NETWORK_VALIDATOR_ONDEMAND_FEATURE } from '~/redux/constants/featureConstants';
 
 import { userActions } from '../../../redux/actions';
 import { cloudProviderActions } from '../../../redux/actions/cloudProviderActions';
@@ -86,7 +84,6 @@ const mapStateToProps = (state) => {
     userAccess: state.cost.userAccess,
     gotRouters: get(clusterRouters, 'getRouters.routers.length', 0) > 0,
     upgradeGates: getUpgradeGates(state),
-    hasNetworkOndemand: featureGateSelector(state, NETWORK_VALIDATOR_ONDEMAND_FEATURE),
     accessProtectionState: state.accessProtection.accessProtection,
   };
 };

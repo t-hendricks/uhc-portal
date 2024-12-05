@@ -262,9 +262,14 @@ export const CreateOsdWizard = ({ product }: CreateOsdWizardProps) => {
   usePreventBrowserNav();
 
   React.useEffect(() => {
-    if (shouldRefetchQuota(organization)) {
+    if (shouldRefetchQuota(organization, false)) {
       dispatch(getOrganizationAndQuota() as any);
     }
+    // just on getting into the component
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  React.useEffect(() => {
     if (!persistentStorageValues.fulfilled && !persistentStorageValues.pending) {
       dispatch(getPersistentStorageValues());
     }
@@ -278,7 +283,6 @@ export const CreateOsdWizard = ({ product }: CreateOsdWizardProps) => {
     dispatch,
     loadBalancerValues.fulfilled,
     loadBalancerValues.pending,
-    organization,
     persistentStorageValues.fulfilled,
     persistentStorageValues.pending,
   ]);

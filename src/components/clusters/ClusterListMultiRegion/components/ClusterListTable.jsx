@@ -51,11 +51,12 @@ import ClusterTypeLabel from '../../common/ClusterTypeLabel';
 import ClusterUpdateLink from '../../common/ClusterUpdateLink';
 import { canSubscribeOCPListFromClusters } from '../../common/EditSubscriptionSettingsDialog/canSubscribeOCPListSelector';
 import getClusterVersion from '../../common/getClusterVersion';
-import { useCanHibernateClusterListFromClusters } from '../../common/HibernateClusterModal/HibernateClusterModalSelectors';
 import ActionRequiredLink from '../../common/InstallProgress/ActionRequiredLink';
 import ProgressList from '../../common/InstallProgress/ProgressList';
 import { canTransferClusterOwnershipListFromClusters } from '../../common/TransferClusterOwnershipDialog/utils/transferClusterOwnershipDialogSelectors';
+import { actionResolver as multiRegionActionResolver } from '../../commonMultiRegion/ClusterActionsDropdown/ClusterActionsDropdownItems';
 import { ClusterLocationLabel } from '../../commonMultiRegion/ClusterLocationLabel';
+import { useCanHibernateClusterListFromClusters } from '../../commonMultiRegion/HibernateClusterModal/HibernateClusterModalSelectors';
 
 import ClusterCreatedIndicator from './ClusterCreatedIndicator';
 
@@ -112,6 +113,7 @@ function ClusterListTable(props) {
   } = props;
 
   const multiRegionFeatureGate = useFeatureGate(MULTIREGION_PREVIEW_ENABLED);
+  const multiRegionReactQueryActionsEnabled = multiRegionFeatureGate && config.multiRegion;
 
   const dispatch = useDispatch();
   const canSubscribeOCPList = canSubscribeOCPListFromClusters(clusters);
@@ -321,7 +323,7 @@ function ClusterListTable(props) {
         </Td>
         <Td isActionCell>
           {/* Hide actions column if viewing in multiRegion mode */}
-          {!isPending && cluster && (!multiRegionFeatureGate || !config.multiRegion) ? (
+          {!isPending && cluster && !multiRegionReactQueryActionsEnabled ? (
             <ActionsColumn
               items={actionResolver(
                 cluster,
@@ -335,6 +337,23 @@ function ClusterListTable(props) {
                 refreshFunc,
                 true,
                 cluster.delete_protection?.enabled,
+              )}
+            />
+          ) : null}
+          {!isPending && cluster && multiRegionReactQueryActionsEnabled ? (
+            <ActionsColumn
+              items={multiRegionActionResolver(
+                cluster,
+                true, // showConsoleButton
+                openModal,
+                canSubscribeOCPList[cluster.id] || false,
+                // canTransferClusterOwnershipList[cluster.id] || false,
+                canHibernateClusterList[cluster.id] || false,
+                // (subscriptionId, released) =>
+                //   dispatch(toggleSubscriptionReleased(subscriptionId, released)),
+                // refreshFunc,
+                true, // inClusterList
+                // cluster.delete_protection?.enabled, // this doesn't appear to be used
               )}
             />
           ) : null}

@@ -76,7 +76,7 @@ const UpgradeSettingsTab = ({ cluster }) => {
   // a superset of hibernatingReason.
   const notReadyReason = cluster.state !== clusterStates.READY && 'This cluster is not ready';
   const formDisableReason = readOnlyReason || hibernatingReason;
-  const region = cluster?.subscription?.xcm_id;
+  const region = cluster?.subscription?.rh_region_id;
   const clusterID = cluster?.id;
 
   const { data: upgradeGates } = useFetchUpgradeGatesFromApi(cluster.managed, region);
@@ -461,7 +461,7 @@ UpgradeSettingsTab.propTypes = {
     subscription: PropTypes.shape({
       id: PropTypes.string,
       plan: PropTypes.shape({ type: PropTypes.string }),
-      xcm_id: PropTypes.string,
+      rh_region_id: PropTypes.string,
     }),
     version: PropTypes.shape({
       channel_group: PropTypes.string,

@@ -80,7 +80,7 @@ const fetchGlobalSubscriptions = async (
     userName,
   );
 
-  const multiRegionFilter = getMultiRegion ? "(xcm_id='' OR xcm_id IS NULL) AND " : '';
+  const multiRegionFilter = getMultiRegion ? "(rh_region_id='' OR rh_region_id IS NULL) AND " : '';
 
   params.filter = `${multiRegionFilter}${params.filter}`;
 

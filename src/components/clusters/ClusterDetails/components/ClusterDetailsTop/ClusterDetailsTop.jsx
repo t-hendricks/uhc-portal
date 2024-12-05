@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import get from 'lodash/get';
 import PropTypes from 'prop-types';
 
@@ -11,6 +11,7 @@ import isAssistedInstallSubscription, {
   isAvailableAssistedInstallCluster,
   isUninstalledAICluster,
 } from '~/common/isAssistedInstallerCluster';
+import { HAS_USER_DISMISSED_RECOMMENDED_OPERATORS_ALERT } from '~/common/localStorageConstants';
 import { useNavigate } from '~/common/routing';
 import { billingModels, normalizedProducts } from '~/common/subscriptionTypes';
 import { PreviewLabel } from '~/components/clusters/common/PreviewLabel';
@@ -36,6 +37,7 @@ import ClusterProgressCard from './components/ClusterProgressCard';
 import ExpirationAlert from './components/ExpirationAlert';
 import GcpOrgPolicyAlert from './components/GcpOrgPolicyAlert';
 import LimitedSupportAlert from './components/LimitedSupportAlert';
+import { RecommendedOperatorsAlert } from './components/RecommendedOperatorsAlert/RecommendedOperatorsAlert';
 import SubscriptionCompliancy from './components/SubscriptionCompliancy';
 import TermsAlert from './components/TermsAlert';
 import TransferClusterOwnershipInfo from './components/TransferClusterOwnershipInfo';
@@ -87,7 +89,16 @@ function ClusterDetailsTop(props) {
     toggleSubscriptionReleased,
     showPreviewLabel,
     logs,
+    openDrawer,
+    closeDrawer,
+    selectedCardTitle,
   } = props;
+
+  const hasAlertBeenDismissed = localStorage.getItem(
+    HAS_USER_DISMISSED_RECOMMENDED_OPERATORS_ALERT,
+  );
+  const [showRecommendedOperatorsAlert, setShowRecommendedOperatorsAlert] =
+    useState(!hasAlertBeenDismissed);
 
   let topCard = null;
 
@@ -315,6 +326,17 @@ function ClusterDetailsTop(props) {
       )}
       <TransferClusterOwnershipInfo subscription={cluster.subscription} />
       <TermsAlert subscription={cluster.subscription} />
+      {showRecommendedOperatorsAlert ? (
+        <RecommendedOperatorsAlert
+          openLearnMore={openDrawer}
+          selectedCardTitle={selectedCardTitle}
+          closeDrawer={closeDrawer}
+          hideRecommendedOperatorsAlert={() => setShowRecommendedOperatorsAlert(false)}
+          clusterState={cluster.state}
+          consoleURL={consoleURL}
+          isArchived={isArchived}
+        />
+      ) : null}
       {children}
     </div>
   );
@@ -343,6 +365,9 @@ ClusterDetailsTop.propTypes = {
       description: PropTypes.string,
     }),
   ),
+  openDrawer: PropTypes.func,
+  closeDrawer: PropTypes.func,
+  selectedCardTitle: PropTypes.string,
 };
 
 export default ClusterDetailsTop;

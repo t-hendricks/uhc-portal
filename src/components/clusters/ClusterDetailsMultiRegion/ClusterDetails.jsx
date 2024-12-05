@@ -24,7 +24,7 @@ import { Spinner } from '@redhat-cloud-services/frontend-components/Spinner';
 import { Navigate, useNavigate } from '~/common/routing';
 import { AppPage } from '~/components/App/AppPage';
 import { modalActions } from '~/components/common/Modal/ModalActions';
-import { featureGateSelector, useFeatureGate } from '~/hooks/useFeatureGate';
+import { useFeatureGate } from '~/hooks/useFeatureGate';
 import { useAddNotificationContact } from '~/queries/ClusterDetailsQueries/ClusterSupportTab/useAddNotificationContact';
 import {
   invalidateClusterDetailsQueries,
@@ -75,10 +75,7 @@ import { clearGlobalError, setGlobalError } from '../../../redux/actions/globalE
 import { getNotificationContacts } from '../../../redux/actions/supportActions';
 import { fetchUpgradeGates } from '../../../redux/actions/upgradeGateActions';
 import { viewConstants } from '../../../redux/constants';
-import {
-  MULTIREGION_PREVIEW_ENABLED,
-  NETWORK_VALIDATOR_ONDEMAND_FEATURE,
-} from '../../../redux/constants/featureConstants';
+import { MULTIREGION_PREVIEW_ENABLED } from '../../../redux/constants/featureConstants';
 import ErrorBoundary from '../../App/ErrorBoundary';
 import Unavailable from '../../common/Unavailable';
 // import Monitoring from '../ClusterDetailsMultiRegion/components/Monitoring';
@@ -92,10 +89,10 @@ import clusterStates, {
 } from '../common/clusterStates';
 import CommonClusterModals from '../common/CommonClusterModals';
 import { canSubscribeOCPMultiRegion } from '../common/EditSubscriptionSettingsDialog/canSubscribeOCPSelector';
-import { userCanHibernateClustersSelector } from '../common/HibernateClusterModal/HibernateClusterModalSelectors';
 import ReadOnlyBanner from '../common/ReadOnlyBanner';
 import { canTransferClusterOwnershipMultiRegion } from '../common/TransferClusterOwnershipDialog/utils/transferClusterOwnershipDialogSelectors';
 import { getSchedules } from '../common/Upgrades/clusterUpgradeActions';
+import { userCanHibernateClustersSelector } from '../commonMultiRegion/HibernateClusterModal/HibernateClusterModalSelectors';
 import CancelUpgradeModal from '../commonMultiRegion/Upgrades/CancelUpgradeModal';
 
 import AccessControl from './components/AccessControl/AccessControl';
@@ -155,7 +152,7 @@ const ClusterDetails = (props) => {
     isLoading: isClusterIdentityProvidersLoading,
     clusterIdentityProviders,
     isError: clusterIdentityProvidersError,
-  } = useFetchClusterIdentityProviders(cluster?.id, cluster?.subscription?.xcm_id);
+  } = useFetchClusterIdentityProviders(cluster?.id, cluster?.subscription?.rh_region_id);
 
   const {
     isLoading: isCloudProvidersLoading,
@@ -202,9 +199,6 @@ const ClusterDetails = (props) => {
   const anyModalOpen = useSelector((state) => !!state.modal.modalName);
   const userAccess = useSelector((state) => state.cost.userAccess);
   const gotRouters = get(clusterRouters, 'getRouters.routers.length', 0) > 0;
-  const hasNetworkOndemand = useSelector((state) =>
-    featureGateSelector(state, NETWORK_VALIDATOR_ONDEMAND_FEATURE),
-  );
 
   const initTabOpen = location.hash.replace('#', '');
   const [selectedTab, setSelectedTab] = React.useState('');
@@ -610,13 +604,12 @@ const ClusterDetails = (props) => {
           <ErrorBoundary>
             <Overview
               cluster={cluster}
-              region={cluster.subscription.xcm_id}
+              region={cluster.subscription.rh_region_id}
               clusterDetailsLoading={isClusterDetailsLoading}
               subscription={cluster.subscription}
               cloudProviders={cloudProviders}
               refresh={refresh}
               insightsData={insightsData[cluster.external_id]}
-              hasNetworkOndemand={hasNetworkOndemand}
               userAccess={userAccess}
               canSubscribeOCP={canSubscribeOCP}
               isSubscriptionSettingsRequestPending={isSubscriptionSettingsRequestPending}
@@ -667,7 +660,7 @@ const ClusterDetails = (props) => {
               <AccessControl
                 cluster={cluster}
                 refreshEvent={refreshEvent}
-                region={cluster.subscription.xcm_id}
+                region={cluster.subscription.rh_region_id}
               />
             </ErrorBoundary>
           </TabContent>
@@ -684,7 +677,7 @@ const ClusterDetails = (props) => {
               <AddOns
                 clusterID={cluster.id}
                 isHypershift={isHypershift}
-                region={cluster.subscription.xcm_id}
+                region={cluster.subscription.rh_region_id}
                 cluster={cluster}
               />
             </ErrorBoundary>
@@ -702,7 +695,7 @@ const ClusterDetails = (props) => {
               <ClusterLogs
                 externalClusterID={cluster.external_id}
                 clusterID={cluster.id}
-                region={cluster.subscription?.xcm_id}
+                region={cluster.subscription?.rh_region_id}
                 createdAt={cluster.creation_timestamp}
                 refreshEvent={{
                   type: refreshEvent.type,
@@ -756,7 +749,7 @@ const ClusterDetails = (props) => {
                 refreshCluster={refresh}
                 cluster={cluster}
                 isManaged={cluster.managed}
-                region={cluster.subscription.xcm_id}
+                region={cluster.subscription.rh_region_id}
               />
             </ErrorBoundary>
           </TabContent>

@@ -15,7 +15,6 @@ import { HAD_INFLIGHT_ERROR_LOCALSTORAGE_KEY } from '~/common/localStorageConsta
 import { emailRegex } from '~/common/regularExpressions';
 import { useNavigate } from '~/common/routing';
 import ClusterStatusErrorDisplay from '~/components/clusters/commonMultiRegion/ClusterStatusErrorDisplay';
-import { useFeatureGate } from '~/hooks/useFeatureGate';
 import {
   useFetchClusterStatus,
   useInvalidateFetchClusterStatus,
@@ -27,7 +26,6 @@ import {
   useInvalidateFetchRerunInflightChecks,
   useMutateRerunInflightChecks,
 } from '~/queries/ClusterDetailsQueries/ClusterStatusMonitor/useFetchInflightChecks';
-import { NETWORK_VALIDATOR_ONDEMAND_FEATURE } from '~/redux/constants/featureConstants';
 import { InflightCheckState } from '~/types/clusters_mgmt.v1';
 
 import getClusterName from '../../../../../../common/getClusterName';
@@ -42,7 +40,6 @@ import clusterStates, {
 const ClusterStatusMonitor = (props) => {
   const { cluster, refresh, region } = props;
 
-  const hasNetworkOndemand = useFeatureGate(NETWORK_VALIDATOR_ONDEMAND_FEATURE);
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [refetchInterval, setRefetchInterval] = React.useState(false);
@@ -391,9 +388,7 @@ const ClusterStatusMonitor = (props) => {
       }
 
       // Rosa inflight error check found urls missing from byo vpc firewall
-      if (hasNetworkOndemand) {
-        alerts.push(showMissingURLList());
-      }
+      alerts.push(showMissingURLList());
 
       // OSD GCP is waiting on roles to be added to dynamically generated service account for a shared vpc project
       alerts.push(showRequiredGCPRoles());

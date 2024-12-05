@@ -15,7 +15,7 @@ jest.mock('react-router-dom', () => ({
   }),
   Navigate: ({ to, replace }: { to: To; replace?: boolean }) => (
     <>
-      <div>to: {to}</div>
+      <div>to: {`${to}`}</div>
       <div>replace: {replace ? 'true' : 'false'}</div>
     </>
   ),

@@ -86,7 +86,7 @@ export const DeleteExternalAuthProviderModal = (props: DeleteExternalAuthProvide
           />
         </Form>
       </Flex>
-      {error && (
+      {error ? (
         <Stack hasGutter>
           <StackItem>
             <ErrorBox
@@ -98,7 +98,7 @@ export const DeleteExternalAuthProviderModal = (props: DeleteExternalAuthProvide
             />
           </StackItem>
         </Stack>
-      )}
+      ) : null}
     </Modal>
   );
 };

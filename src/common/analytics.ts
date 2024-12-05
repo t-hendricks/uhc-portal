@@ -234,6 +234,11 @@ const trackEvents: { [key: string]: TrackEvent } = {
     link_name: 'copy-ocm-create-rosa-account-roles',
     ocm_resource_type: ocmResourceType.MOA,
   },
+  CopyCreateNetwork: {
+    event: eventNames.BUTTON_CLICKED,
+    link_name: 'copy-ocm-create-rosa-network',
+    ocm_resource_type: ocmResourceType.MOA,
+  },
   CopyOCMRoleCreateAdmin: {
     event: eventNames.BUTTON_CLICKED,
     link_name: 'copy-ocm-role-create-admin',

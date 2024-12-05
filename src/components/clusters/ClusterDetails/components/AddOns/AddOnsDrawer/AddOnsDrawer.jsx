@@ -50,6 +50,7 @@ class AddOnsDrawer extends React.Component {
       submitClusterAddOnResponse,
       drawer,
       setAddonsDrawer,
+      clusterAddOns,
     } = this.props;
 
     if (
@@ -64,6 +65,10 @@ class AddOnsDrawer extends React.Component {
           activeCard: null,
         });
       }
+    }
+
+    if (clusterAddOns !== prevProps.clusterAddOns && drawer.open) {
+      this.setDrawerContent(drawer.activeCard);
     }
   }
 
@@ -89,19 +94,11 @@ class AddOnsDrawer extends React.Component {
     event.preventDefault();
   };
 
-  // handles card click
-  handleCardClick = (addOn) => () => {
-    const { clusterAddOns, quota, setAddonsDrawer, drawer } = this.props;
-
-    // if activeCard is clicked again close drawer
-    if (addOn.id === drawer.activeCard?.id) {
-      this.handleCloseDrawer();
-      return;
-    }
+  setDrawerContent = (addOn) => {
+    const { clusterAddOns, quota, setAddonsDrawer } = this.props;
 
     // get installedAddon
     const installedAddOn = getInstalled(addOn, clusterAddOns);
-
     // get addOn requirements
     const requirements = validateAddOnRequirements(addOn);
 
@@ -122,6 +119,19 @@ class AddOnsDrawer extends React.Component {
       open: true,
       activeTabKey: 0,
     });
+  };
+
+  // handles card click
+  handleCardClick = (addOn) => () => {
+    const { drawer } = this.props;
+
+    // if activeCard is clicked again close drawer
+    if (addOn.id === drawer.activeCard?.id) {
+      this.handleCloseDrawer();
+      return;
+    }
+
+    this.setDrawerContent(addOn);
   };
 
   // handle close drawer, reset state back to null

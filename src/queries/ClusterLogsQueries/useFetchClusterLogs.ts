@@ -14,7 +14,7 @@ import { queryConstants } from '../queriesConstants';
  * @param clusterUUID clusterUUID from cluster
  * @param clusterID clusterID from cluster
  * @param params cluster history params
- * @param region result of xcm_id
+ * @param region result of rh_region_id
  * @param page page number from pagination
  * @returns query states. Loading, pending, error and cluster logs
  */

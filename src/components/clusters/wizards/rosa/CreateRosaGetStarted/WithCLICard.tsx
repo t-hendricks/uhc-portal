@@ -38,8 +38,9 @@ const WithCLICard = () => (
       </InstructionCommand>
     </CardBody>
     <CardFooter>
-      <ExternalLink href={links.AWS_CLI_INSTRUCTIONS}>
-        More information on CLI instruction
+      Learn how to{' '}
+      <ExternalLink href={links.ROSA_HCP_CLI_URL}>
+        deploy ROSA clusters with the ROSA CLI
       </ExternalLink>
     </CardFooter>
   </Card>

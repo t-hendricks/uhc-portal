@@ -36,7 +36,7 @@ type TDispatchProps = {
   onSubmit: (formData: FormDataType, clusterRouters: ClusterRouters, clusterID: string) => void;
 };
 
-const reduxFormEditIngress = reduxForm(reduxFormConfig)(EditApplicationIngressDialog);
+const reduxFormEditIngress = reduxForm(reduxFormConfig)(EditApplicationIngressDialog as any);
 
 const mapStateToProps = (state: GlobalState) => {
   const { cluster } = state.clusters?.details ?? {};
@@ -123,4 +123,8 @@ const mergeProps: MergeProps<
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps, mergeProps)(reduxFormEditIngress);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+  mergeProps,
+)(reduxFormEditIngress as any);

@@ -180,6 +180,15 @@ const ClusterLogsDatePicker = ({ setFilter, currentFilter, createdAt }) => {
 
   const isValid = (dateStr) => isValidDate(new Date(dateStr));
 
+  const handleInvalidDateFormatState = (dateStr, callback) => {
+    callback(false);
+    if (!isValid(dateStr) || !dateFormatRegex.test(dateStr)) {
+      callback(true);
+      return false;
+    }
+    return true;
+  };
+
   const inputOnChangeFrom = (dateStr, date) => {
     setInvalidDateFormatFrom(false);
     setSelected(optionValues.Custom);
@@ -192,8 +201,7 @@ const ClusterLogsDatePicker = ({ setFilter, currentFilter, createdAt }) => {
       return;
     }
     // Throw error if dateStr is invalid or for Chrome and Safari if it does not satisfy regex YYYY-MM-DD
-    if (!isValid(dateStr) || !dateFormatRegex.test(dateStr)) {
-      setInvalidDateFormatFrom(true);
+    if (!handleInvalidDateFormatState(dateStr, setInvalidDateFormatFrom)) {
       return;
     }
     onDateChangeFrom(dateStr, date);
@@ -212,8 +220,7 @@ const ClusterLogsDatePicker = ({ setFilter, currentFilter, createdAt }) => {
     }
 
     // Throw error if dateStr is invalid or for Chrome and Safari if it does not satisfy regex YYYY-MM-DD
-    if (!isValid(dateStr) || !dateFormatRegex.test(dateStr)) {
-      setInvalidDateFormatTo(true);
+    if (!handleInvalidDateFormatState(dateStr, setInvalidDateFormatTo)) {
       return;
     }
     onDateChangeTo(dateStr, date);
@@ -283,6 +290,8 @@ const ClusterLogsDatePicker = ({ setFilter, currentFilter, createdAt }) => {
         // Ignore when a user selects Custom
         return;
     }
+    handleInvalidDateFormatState(dateFormat(newStartDate), setInvalidDateFormatFrom);
+    handleInvalidDateFormatState(dateFormat(now), setInvalidDateFormatTo);
     setStartDateStr(dateFormat(newStartDate));
     setEndDateStr(dateFormat(now));
     onDateChange([

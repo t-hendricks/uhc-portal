@@ -27,6 +27,7 @@ import useCanClusterAutoscale from '~/hooks/useCanClusterAutoscale';
 import { useFeatureGate } from '~/hooks/useFeatureGate';
 import { OCMUI_PRIVATE_SERVICE_CONNECT, OSD_GCP_WIF } from '~/redux/constants/featureConstants';
 
+import { MESSAGES } from '../../common/messages';
 import { ClusterPrivacyType } from '../Networking/constants';
 
 interface ReviewAndCreateContentProps {
@@ -93,9 +94,7 @@ export const ReviewAndCreateContent = ({ isPending }: ReviewAndCreateContentProp
             </Bullseye>
           </StackItem>
           <StackItem>
-            <Bullseye>
-              Creating your cluster. Do not refresh this page. This request may take a moment...
-            </Bullseye>
+            <Bullseye>{MESSAGES.INITIATE_CREATE_CLUSTER_REQUEST}</Bullseye>
           </StackItem>
         </Stack>
       </Bullseye>

@@ -20,8 +20,8 @@ export const useFetchLimitedSupportReasons = (
   const { isLoading, data, isFetching } = useQuery({
     queryKey: [mainQueryKey, 'limitedSupportReasons', 'clusterService', clusterID, subscription],
     queryFn: async () => {
-      if (subscription?.subscription.xcm_id) {
-        const clusterService = getClusterServiceForRegion(subscription?.subscription.xcm_id);
+      if (subscription?.subscription.rh_region_id) {
+        const clusterService = getClusterServiceForRegion(subscription?.subscription.rh_region_id);
         const response = await clusterService.getLimitedSupportReasons(clusterID);
         return response;
       }

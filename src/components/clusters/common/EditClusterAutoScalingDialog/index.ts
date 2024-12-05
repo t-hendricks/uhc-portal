@@ -53,7 +53,7 @@ const EditClusterAutoScalerDay2Form = reduxForm<ScalingFormData, EditClusterAuto
     form: DAY2_SELECTOR,
     enableReinitialize: true,
   },
-)(EditClusterAutoScalingDialog);
+)(EditClusterAutoScalingDialog as any);
 
 const day1FormValueSelectorMapper = (state: GlobalState): EditClusterAutoScalingDialogProps => {
   const formErrors = getFormSyncErrors(DAY1_SELECTOR)(state) as FormErrors<ScalingFormData>;
@@ -130,7 +130,7 @@ const mapDispatchDay1ToProps = (dispatch: Dispatch) => ({
 export const EditClusterAutoScalerForDay2 = connect(
   day2FormValueSelectorMapper,
   mapDispatchDay2ToProps,
-)(EditClusterAutoScalerDay2Form);
+)(EditClusterAutoScalerDay2Form as any);
 
 export default connect(
   day1FormValueSelectorMapper,

@@ -4576,12 +4576,12 @@ cidr-regex@^3.1.1:
   dependencies:
     ip-regex "^4.1.0"
 
-cidr-tools@^10.0.0:
-  version "10.0.1"
-  resolved "https://registry.yarnpkg.com/cidr-tools/-/cidr-tools-10.0.1.tgz#4e34224bac746d6398e011bb6ad82390aafa1805"
-  integrity sha512-10wPVOLZG1JhmzymDYzLSRZBMYoTAFnS3M6WS/Lt4lFg25TihvCO4fr0EEU4F4QD8/pPRWAdIFqvinQcXU+E6g==
+cidr-tools@^11.0.0:
+  version "11.0.2"
+  resolved "https://registry.yarnpkg.com/cidr-tools/-/cidr-tools-11.0.2.tgz#8f55d944e676b62123d3925e3c1e82a77102ec49"
+  integrity sha512-OLeM9EOXybbhMsGGBNRLCMjn8e+wFOXARIShF/sZwmJLsxWywqfE0By4BMftT6BFWpbcETWpW7TfM2KGCtrZDg==
   dependencies:
-    ip-bigint "^8.1.0"
+    ip-bigint "^8.2.0"
 
 cidr-tools@^4.3.0:
   version "4.3.0"
@@ -7428,7 +7428,7 @@ ip-address@^8.1.0:
     jsbn "1.1.0"
     sprintf-js "1.1.2"
 
-ip-bigint@^8.1.0:
+ip-bigint@^8.2.0:
   version "8.2.0"
   resolved "https://registry.yarnpkg.com/ip-bigint/-/ip-bigint-8.2.0.tgz#8b4c0ffe0d834edd61e34b6b72cf50b7946e12ff"
   integrity sha512-46EAEKzGNxojH5JaGEeCix49tL4h1W8ia5mhogZ68HroVAfyLj1E+SFFid4GuyK0mdIKjwcAITLqwg1wlkx2iQ==
