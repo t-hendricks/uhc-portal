@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import get from 'lodash/get';
 import isEmpty from 'lodash/isEmpty';
 import PropTypes from 'prop-types';
@@ -200,6 +200,11 @@ const MachinePools = ({ cluster }) => {
     machinePoolOrNodePoolsRefetch,
     refetchClusterAutoscalerData,
   ]);
+
+  const maxNodesTotalDefault = useMemo(
+    () => getMaxNodesTotalDefaultAutoscaler(cluster.version?.raw_id, cluster.multi_az),
+    [cluster.version?.raw_id, cluster.multi_az],
+  );
 
   const onCollapse = (event, rowKey, isOpen, rowData) => {
     let rows = [];
@@ -431,7 +436,7 @@ const MachinePools = ({ cluster }) => {
     rows[deletedRowIndex] = skeletonRow;
   }
   const openAutoScalingModal = () => dispatch(openModal(modals.EDIT_CLUSTER_AUTOSCALING_V2));
-  const initialValues = getDefaultClusterAutoScaling();
+  const initialValues = getDefaultClusterAutoScaling(maxNodesTotalDefault);
   return (
     <>
       {showSkeleton ? (
@@ -580,10 +585,7 @@ const MachinePools = ({ cluster }) => {
           isWizard={false}
           hasAutoscalingMachinePools={hasAutoscalingMachinePools}
           isClusterAutoscalerRefetching={isClusterAutoscalerRefetching}
-          maxNodesTotalDefault={getMaxNodesTotalDefaultAutoscaler(
-            cluster.version.raw_id,
-            cluster.multi_az,
-          )}
+          maxNodesTotalDefault={maxNodesTotalDefault}
         />
       )}
       {showMachinePoolsConfigModal && (
