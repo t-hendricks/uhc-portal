@@ -1,7 +1,5 @@
 import * as utils from './utils';
 
-const MAX_NODES = 249; // mock data
-
 describe('machinePools utils', () => {
   describe('getNodeOptions', () => {
     const selectedMPNodes = 1;
@@ -89,7 +87,7 @@ describe('machinePools utils', () => {
 
         const options = utils.getNodeOptions(newMachinePoolArgsNotHCP);
 
-        const expectedLargestOption = MAX_NODES;
+        const expectedLargestOption = utils.getMaxWorkerNodes(defaultArgs.cluster.version?.raw_id);
         expect(options).toHaveLength(expectedLargestOption);
         expect(options[options.length - 1]).toBe(expectedLargestOption);
       });
@@ -113,7 +111,7 @@ describe('machinePools utils', () => {
 
         const options = utils.getNodeOptions(newMachinePoolArgsNotHCP);
 
-        const expectedLargestOption = MAX_NODES;
+        const expectedLargestOption = utils.getMaxWorkerNodes(defaultArgs.cluster.version?.raw_id);
         expect(options).toHaveLength(expectedLargestOption);
         expect(options[options.length - 1]).toBe(expectedLargestOption);
       });
@@ -161,7 +159,7 @@ describe('machinePools utils', () => {
 
         const options = utils.getNodeOptions(newMachinePoolArgsNotHCP);
 
-        const expectedLargestOption = MAX_NODES;
+        const expectedLargestOption = utils.getMaxWorkerNodes(defaultArgs.cluster.version?.raw_id);
         expect(options).toHaveLength(expectedLargestOption);
         expect(options[options.length - 1]).toBe(expectedLargestOption);
       });
@@ -185,7 +183,7 @@ describe('machinePools utils', () => {
 
         const options = utils.getNodeOptions(newMachinePoolArgsNotHCP);
 
-        const expectedLargestOption = MAX_NODES;
+        const expectedLargestOption = utils.getMaxWorkerNodes(defaultArgs.cluster.version?.raw_id);
         expect(options).toHaveLength(expectedLargestOption);
         expect(options[options.length - 1]).toBe(expectedLargestOption);
       });

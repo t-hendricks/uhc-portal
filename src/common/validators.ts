@@ -5,7 +5,6 @@ import { ValidationError, Validator } from 'jsonschema';
 import { get, indexOf, inRange } from 'lodash';
 
 import { Subnet } from '~/common/helpers';
-import { MAX_NODES_DEFAULT } from '~/components/clusters/common/clusterAutoScalingValues';
 import { FieldId } from '~/components/clusters/wizards/osd/constants';
 import { clusterService } from '~/services';
 import type { GCP, Taint } from '~/types/clusters_mgmt.v1';
@@ -495,7 +494,7 @@ const k8sMinMaxParameter = (
     : 'The minimum cannot be above the maximum value.';
 };
 
-const validateMaxNodes = (num: number | string, maxNodes: number | string = MAX_NODES_DEFAULT) =>
+const validateMaxNodes = (num: number | string, maxNodes: number | string) =>
   +num > +maxNodes ? `Value must not be greater than ${maxNodes}.` : undefined;
 
 const clusterAutoScalingValidators = {

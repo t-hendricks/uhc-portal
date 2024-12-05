@@ -41,8 +41,8 @@ export const AutoScale = () => {
   const isByoc = byoc === 'true';
   const isRosaClassicOrOsdCcs = !isHypershiftSelected && isByoc;
   const maxNodesTotalDefault = useMemo(
-    () => getMaxNodesTotalDefaultAutoscaler(ClusterVersion.raw_id, multiAz === 'true'),
-    [ClusterVersion.raw_id, multiAz],
+    () => getMaxNodesTotalDefaultAutoscaler(ClusterVersion?.raw_id, multiAz === 'true'),
+    [ClusterVersion?.raw_id, multiAz],
   );
   const defaultAutoscalerValues = useMemo(
     () => getDefaultClusterAutoScaling(maxNodesTotalDefault),
