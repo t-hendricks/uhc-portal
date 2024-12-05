@@ -49,7 +49,7 @@ export const IdentityProvidersPageFormInitialValues = (selectedIDP: string) => {
         [FieldId.LDAP_CA]: '',
         [FieldId.LDAP_EMAIL]: [''],
         [FieldId.LDAP_ID]: [''],
-        [FieldId.LDAP_INSECURE]: '',
+        [FieldId.LDAP_INSECURE]: false,
         [FieldId.LDAP_NAME]: [''],
         [FieldId.LDAP_PREFFERED_USERNAME]: [''],
         [FieldId.LDAP_URL]: '',
