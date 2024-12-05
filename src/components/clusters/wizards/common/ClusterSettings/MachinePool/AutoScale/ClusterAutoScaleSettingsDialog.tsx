@@ -63,9 +63,6 @@ const getValidator = (field: FieldDefinition) => {
     case 'scale_down.utilization_threshold':
       validator = utilizationThresholdValidator;
       break;
-    case 'resource_limits.max_nodes_total':
-      validator = validateMaxNodes;
-      break;
     default:
       break;
   }

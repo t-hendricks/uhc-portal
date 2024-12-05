@@ -24,6 +24,7 @@ import { QuotaParams } from '../../common/quotaModel';
 
 import {
   MAX_NODES,
+  MAX_NODES_4_14_14,
   MAX_NODES_HCP as MAX_NODES_HCP_DEFAULT,
   MAX_NODES_HCP_500,
   MAX_NODES_HCP_INSUFFICIEN_VERSION,
@@ -32,16 +33,25 @@ import {
 } from './constants';
 
 // OSD and ROSA classic - minimal version to allow 249 worker nodes - 4.14.14
-export const getMaxNodesDefault = (clusterVersionRawId: string, isMultiAz: boolean) => {
+export const getMaxWorkerNodes = (clusterVersionRawId: string | undefined) => {
+  if (clusterVersionRawId) {
+    const majorMinor = parseFloat(clusterVersionRawId);
+    const versionPatch = Number(clusterVersionRawId.split('.')[2]);
+
+    if (majorMinor > 4.14 || (majorMinor === 4.14 && versionPatch >= 14)) {
+      return MAX_NODES;
+    }
+  }
+  return MAX_NODES_4_14_14;
+};
+
+export const getMaxNodesTotalDefaultAutoscaler = (
+  clusterVersionRawId: string | undefined,
+  isMultiAz: boolean,
+) => {
   const MASTER_NODES = 3;
   const infraNodes = isMultiAz ? 3 : 2;
-  const majorMinor = parseFloat(clusterVersionRawId);
-  const versionPatch = Number(clusterVersionRawId.split('.')[2]);
-  let maxWorkerNodes = 180;
-  if (majorMinor > 4.14 || (majorMinor === 4.14 && versionPatch >= 14)) {
-    maxWorkerNodes = 249;
-  }
-  return maxWorkerNodes + MASTER_NODES + infraNodes;
+  return getMaxWorkerNodes(clusterVersionRawId) + MASTER_NODES + infraNodes;
 };
 
 // HCP - Minimal versions to allow more then 90 nodes - 4.15.15, 4.14.28
@@ -96,6 +106,7 @@ export const buildOptions = ({
   isHypershift,
   clusterVersion,
   allow500Nodes,
+  isMultiAz,
 }: {
   available: number;
   isEditingCluster: boolean;
@@ -104,15 +115,16 @@ export const buildOptions = ({
   increment: number;
   included: number;
   isHypershift?: boolean;
-  clusterVersion?: string;
+  clusterVersion: string | undefined;
   allow500Nodes?: boolean;
+  isMultiAz: boolean;
 }) => {
   const maxNodesHCP = getMaxNodesHCP(clusterVersion, allow500Nodes);
   // no extra node quota = only base cluster size is available
   const optionsAvailable = available > 0 || isEditingCluster;
   let maxValue = isEditingCluster ? available + currentNodeCount : available + included;
 
-  const maxNumberOfNodes = isHypershift ? maxNodesHCP : MAX_NODES;
+  const maxNumberOfNodes = isHypershift ? maxNodesHCP : getMaxWorkerNodes(clusterVersion);
   if (maxValue > maxNumberOfNodes) {
     maxValue = maxNumberOfNodes;
   }
@@ -254,6 +266,7 @@ export const getNodeOptions = ({
     isHypershift: isHypershiftCluster(cluster),
     clusterVersion: cluster.version?.raw_id,
     allow500Nodes,
+    isMultiAz,
   });
 };
 

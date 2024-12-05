@@ -30,7 +30,7 @@ import { versionFormatter } from '~/common/versionHelpers';
 import { isMultiAZ } from '~/components/clusters/ClusterDetails/clusterDetailsHelper';
 import { EditClusterAutoScalerForDay2 } from '~/components/clusters/common/EditClusterAutoScalingDialog';
 import { MachineConfiguration } from '~/components/clusters/common/MachineConfiguration';
-import { getMaxNodesDefault } from '~/components/clusters/common/machinePools/utils';
+import { getMaxNodesTotalDefaultAutoscaler } from '~/components/clusters/common/machinePools/utils';
 import { clusterService } from '~/services';
 
 import ButtonWithTooltip from '../../../../common/ButtonWithTooltip';
@@ -539,7 +539,10 @@ class MachinePools extends React.Component {
             clusterId={cluster.id}
             hasAutoscalingMachinePools={hasAutoscalingMachinePools}
             clusterAutoscalerResponse={clusterAutoscalerResponse}
-            maxNodesTotalDefault={getMaxNodesDefault(cluster.version.raw_id, cluster.multi_az)}
+            maxNodesTotalDefault={getMaxNodesTotalDefaultAutoscaler(
+              cluster.version.raw_id,
+              cluster.multi_az,
+            )}
           />
         )}
         {showMachinePoolsConfigModal && (

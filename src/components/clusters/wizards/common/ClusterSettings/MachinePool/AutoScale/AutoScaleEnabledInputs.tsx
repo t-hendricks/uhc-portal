@@ -8,8 +8,7 @@ import { normalizedProducts } from '~/common/subscriptionTypes';
 import { required, validateNumericInput } from '~/common/validators';
 import { getMinNodesRequired } from '~/components/clusters/ClusterDetails/components/MachinePools/machinePoolsHelper';
 import { constants } from '~/components/clusters/common/CreateOSDFormConstants';
-import { MAX_NODES } from '~/components/clusters/common/machinePools/constants';
-import { getMaxNodesHCP } from '~/components/clusters/common/machinePools/utils';
+import { getMaxNodesHCP, getMaxWorkerNodes } from '~/components/clusters/common/machinePools/utils';
 import getMinNodesAllowed from '~/components/clusters/common/ScaleSection/AutoScaleSection/AutoScaleHelper';
 import { useFormState } from '~/components/clusters/wizards/hooks';
 import { FieldId as RosaFieldId } from '~/components/clusters/wizards/rosa/constants';
@@ -121,13 +120,14 @@ export const AutoScaleEnabledInputs = () => {
   }, [product, isByoc, isMultiAz, defaultMinAllowed, isHypershiftSelected]);
 
   const maxNodes = useMemo(() => {
+    const maxWorkerNodes = getMaxWorkerNodes(clusterVersion.raw_id);
     if (isHypershiftSelected) {
       return Math.floor(getMaxNodesHCP(clusterVersion?.raw_id, allow500Nodes) / poolsLength);
     }
     if (isMultiAz) {
-      return MAX_NODES / 3;
+      return maxWorkerNodes / 3;
     }
-    return MAX_NODES;
+    return maxWorkerNodes;
   }, [isMultiAz, isHypershiftSelected, poolsLength, allow500Nodes, clusterVersion?.raw_id]);
 
   useEffect(() => {

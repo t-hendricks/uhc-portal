@@ -30,7 +30,7 @@ import { versionFormatter } from '~/common/versionHelpers';
 import { isMultiAZ } from '~/components/clusters/ClusterDetailsMultiRegion/clusterDetailsHelper';
 import { getDefaultClusterAutoScaling } from '~/components/clusters/common/clusterAutoScalingValues';
 import { MachineConfiguration } from '~/components/clusters/common/MachineConfiguration';
-import { getMaxNodesDefault } from '~/components/clusters/commonMultiRegion/machinePools/utils';
+import { getMaxNodesTotalDefaultAutoscaler } from '~/components/clusters/commonMultiRegion/machinePools/utils';
 import { useFeatureGate } from '~/hooks/useFeatureGate';
 import {
   refetchClusterAutoscalerData,
@@ -580,7 +580,10 @@ const MachinePools = ({ cluster }) => {
           isWizard={false}
           hasAutoscalingMachinePools={hasAutoscalingMachinePools}
           isClusterAutoscalerRefetching={isClusterAutoscalerRefetching}
-          maxNodesTotalDefault={getMaxNodesDefault(cluster.version.raw_id, cluster.multi_az)}
+          maxNodesTotalDefault={getMaxNodesTotalDefaultAutoscaler(
+            cluster.version.raw_id,
+            cluster.multi_az,
+          )}
         />
       )}
       {showMachinePoolsConfigModal && (

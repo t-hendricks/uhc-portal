@@ -1,4 +1,3 @@
-import { MAX_NODES } from './constants';
 import * as utils from './utils';
 
 describe('machinePools utils', () => {
@@ -88,7 +87,7 @@ describe('machinePools utils', () => {
 
         const options = utils.getNodeOptions(newMachinePoolArgsNotHCP);
 
-        const expectedLargestOption = MAX_NODES;
+        const expectedLargestOption = utils.getMaxWorkerNodes(defaultArgs.cluster.version?.raw_id);
         expect(options).toHaveLength(expectedLargestOption);
         expect(options[options.length - 1]).toBe(expectedLargestOption);
       });
@@ -112,7 +111,7 @@ describe('machinePools utils', () => {
 
         const options = utils.getNodeOptions(newMachinePoolArgsNotHCP);
 
-        const expectedLargestOption = MAX_NODES;
+        const expectedLargestOption = utils.getMaxWorkerNodes(defaultArgs.cluster.version?.raw_id);
         expect(options).toHaveLength(expectedLargestOption);
         expect(options[options.length - 1]).toBe(expectedLargestOption);
       });
@@ -160,7 +159,7 @@ describe('machinePools utils', () => {
 
         const options = utils.getNodeOptions(newMachinePoolArgsNotHCP);
 
-        const expectedLargestOption = MAX_NODES;
+        const expectedLargestOption = utils.getMaxWorkerNodes(defaultArgs.cluster.version?.raw_id);
         expect(options).toHaveLength(expectedLargestOption);
         expect(options[options.length - 1]).toBe(expectedLargestOption);
       });
@@ -184,7 +183,7 @@ describe('machinePools utils', () => {
 
         const options = utils.getNodeOptions(newMachinePoolArgsNotHCP);
 
-        const expectedLargestOption = MAX_NODES;
+        const expectedLargestOption = utils.getMaxWorkerNodes(defaultArgs.cluster.version?.raw_id);
         expect(options).toHaveLength(expectedLargestOption);
         expect(options[options.length - 1]).toBe(expectedLargestOption);
       });
@@ -270,7 +269,7 @@ describe('machinePools utils', () => {
         ['returns 180 + masterNodes + infraNodes for 4.13.0 multi AZ', '4.13.0', true, 180 + 3 + 3],
       ])('%s', (_title: string, version: string, isMultiAZ: boolean, exptected: number) => {
         // Act
-        const result = utils.getMaxNodesDefault(version, isMultiAZ);
+        const result = utils.getMaxNodesTotalDefaultAutoscaler(version, isMultiAZ);
 
         // Assert
         expect(result).toEqual(exptected);

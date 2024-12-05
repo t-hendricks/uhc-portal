@@ -4,6 +4,8 @@ import { List, ListItem, Text, TextContent } from '@patternfly/react-core';
 
 import PopoverHint from '~/components/common/PopoverHint';
 
+import { MAX_NODES, MAX_NODES_4_14_14 } from '../machinePools/constants';
+
 export const MaxNodesTotalPopoverText = (
   <TextContent>
     <Text>
@@ -20,10 +22,10 @@ export const MaxNodesTotalPopoverText = (
           <b>Maximum worker node count</b>, based on the cluster version:
           <List>
             <ListItem>
-              <b>180</b> for clusters below Openshift v14.14.14
+              <b>{MAX_NODES_4_14_14}</b> for clusters below Openshift v14.14.14
             </ListItem>
             <ListItem>
-              <b>249</b> for clusters at or above Openshift v14.14.14
+              <b>{MAX_NODES}</b> for clusters at or above Openshift v14.14.14
             </ListItem>
           </List>
         </ListItem>
