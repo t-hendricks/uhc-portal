@@ -75,6 +75,11 @@ describe(
       CreateRosaWizardPage.enableAutoScaling();
       CreateRosaWizardPage.disabledAutoScaling();
       CreateRosaWizardPage.selectComputeNodeCount(clusterProperties.MachinePools[0].NodeCount);
+      CreateRosaWizardPage.rootDiskSizeInput().should('have.value', '300');
+      CreateRosaWizardPage.rootDiskSizeInput()
+        .clear()
+        .type('{selectAll}')
+        .type(clusterProperties.MachinePools[0].RootDiskSize);
       CreateRosaWizardPage.rosaNextButton().click();
     });
 
@@ -161,6 +166,10 @@ describe(
       CreateRosaWizardPage.isClusterPropertyMatchesValue(
         'Compute node count',
         clusterProperties.MachinePools[0].NodeCount,
+      );
+      CreateRosaWizardPage.isClusterPropertyMatchesValue(
+        'Worker root disk size',
+        `${clusterProperties.MachinePools[0].RootDiskSize} GiB`,
       );
       CreateRosaWizardPage.isClusterPropertyMatchesValue(
         'Install to selected VPC',
