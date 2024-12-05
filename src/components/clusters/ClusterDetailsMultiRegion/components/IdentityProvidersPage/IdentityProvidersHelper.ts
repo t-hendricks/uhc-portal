@@ -405,9 +405,9 @@ const getInitialValuesForEditing = (idpEdited: IdentityProvider, editedType: IDP
       return {
         ...baseValues,
         ldap_id: idpEdited[editedType]?.attributes?.id ?? [''],
-        ldap_preferred_username: idpEdited[editedType]?.attributes?.preferred_username ?? {},
-        ldap_name: idpEdited[editedType]?.attributes?.name ?? {},
-        ldap_email: idpEdited[editedType]?.attributes?.email ?? {},
+        ldap_preferred_username: idpEdited[editedType]?.attributes?.preferred_username ?? [''],
+        ldap_name: idpEdited[editedType]?.attributes?.name ?? [''],
+        ldap_email: idpEdited[editedType]?.attributes?.email ?? [''],
         ldap_url: idpEdited[editedType]?.url,
         bind_dn: idpEdited[editedType]?.bind_dn,
         bind_password: idpEdited[editedType]?.bind_dn ? 'BIND_PASSWORD' : '',
