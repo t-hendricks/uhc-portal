@@ -606,6 +606,7 @@ const ClusterDetails = (props) => {
                 cluster={cluster}
                 region={cluster.subscription.rh_region_id}
                 clusterDetailsLoading={isClusterDetailsLoading}
+                clusterDetailsFetching={isFetching}
                 subscription={cluster.subscription}
                 cloudProviders={cloudProviders}
                 refresh={refresh}

@@ -42,7 +42,7 @@ import ClusterNetwork from '../ClusterNetwork';
 import DeleteProtection from './DeleteProtection/DeleteProtection';
 import { ClusterStatus } from './ClusterStatus';
 
-function DetailsRight({ cluster, hasAutoscaleCluster, isDeprovisioned, clusterDetailsLoading }) {
+function DetailsRight({ cluster, hasAutoscaleCluster, isDeprovisioned, clusterDetailsFetching }) {
   const machinePools = useGlobalState((state) => state.machinePools.getMachinePools.data);
 
   const nodesSectionData = totalNodesDataSelector(cluster, machinePools);
@@ -131,9 +131,10 @@ function DetailsRight({ cluster, hasAutoscaleCluster, isDeprovisioned, clusterDe
       {showDeleteProtection ? (
         <DeleteProtection
           clusterID={cluster.id}
+          region={cluster.subscription?.rh_region_id}
           protectionEnabled={cluster.delete_protection?.enabled}
           canToggle={cluster.canUpdateClusterResource}
-          pending={clusterDetailsLoading}
+          pending={clusterDetailsFetching}
           isUninstalling={isClusterUninstalling}
         />
       ) : null}
@@ -423,7 +424,7 @@ DetailsRight.propTypes = {
   cluster: PropTypes.any,
   isDeprovisioned: PropTypes.bool,
   hasAutoscaleCluster: PropTypes.bool,
-  clusterDetailsLoading: PropTypes.bool,
+  clusterDetailsFetching: PropTypes.bool,
 };
 
 export default DetailsRight;
