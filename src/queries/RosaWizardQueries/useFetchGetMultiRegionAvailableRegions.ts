@@ -53,23 +53,28 @@ export const useFetchGetMultiRegionAvailableRegions = () => {
               const availableRegionName = isProduction ? extractRegionName : extractRegionName[1];
 
               const regionalService = getClusterServiceForRegion(availableRegion.id);
-              // eslint-disable-next-line no-await-in-loop
-              const regionalCloudProvidersResponse = await regionalService.getCloudProviders();
 
-              const regionalCloudProvidersItems = regionalCloudProvidersResponse?.data?.items;
+              try {
+                // eslint-disable-next-line no-await-in-loop
+                const regionalCloudProvidersResponse = await regionalService.getCloudProviders();
 
-              regionalCloudProvidersItems?.forEach((provider: any) => {
-                if (provider.id === 'aws' && provider.regions !== undefined) {
-                  const findOwnRegion = provider.regions.find(
-                    (region: any) => region.id === availableRegionName,
-                  );
+                const regionalCloudProvidersItems = regionalCloudProvidersResponse?.data?.items;
 
-                  if (findOwnRegion && findOwnRegion.supports_hypershift) {
-                    const region = createRegionalizedCloudRegionEntry(findOwnRegion, true);
-                    result.push(region);
+                regionalCloudProvidersItems?.forEach((provider: any) => {
+                  if (provider.id === 'aws' && provider.regions !== undefined) {
+                    const findOwnRegion = provider.regions.find(
+                      (region: any) => region.id === availableRegionName,
+                    );
+
+                    if (findOwnRegion && findOwnRegion.supports_hypershift) {
+                      const region = createRegionalizedCloudRegionEntry(findOwnRegion, true);
+                      result.push(region);
+                    }
                   }
-                }
-              });
+                });
+              } catch (error) {
+                return result;
+              }
             }
           }
         }
