@@ -53,6 +53,7 @@ const Overview = (props) => {
     canSubscribeOCP,
     clusterDetailsLoading,
     isSubscriptionSettingsRequestPending,
+    clusterDetailsFetching,
   } = props;
 
   const [showInstallSuccessAlert, setShowInstallSuccessAlert] = useState(false);
@@ -211,6 +212,7 @@ const Overview = (props) => {
                       cluster={{ ...cluster }}
                       isDeprovisioned={isDeprovisioned}
                       hasAutoscaleCluster={!!cluster?.autoscaler}
+                      clusterDetailsFetching={clusterDetailsFetching}
                     />
                   </GridItem>
                 </Grid>
@@ -277,6 +279,7 @@ Overview.propTypes = {
     pending: PropTypes.bool,
     fulfilled: PropTypes.bool,
   }).isRequired,
+  clusterDetailsFetching: PropTypes.bool,
 };
 
 export default Overview;
