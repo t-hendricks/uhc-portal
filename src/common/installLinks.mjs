@@ -862,6 +862,9 @@ const urls = {
       [architectures.ppc]: {
         [operatingSystems.linux]: `${MIRROR_MIRROR_REGISTRY_LATEST}/mirror-registry-ppc64le.tar.gz`,
       },
+      [architectures.s390x]: {
+        [operatingSystems.linux]: `${MIRROR_MIRROR_REGISTRY_LATEST}/mirror-registry-s390x.tar.gz`,
+      },
     },
   },
   [tools.OC_MIRROR_PLUGIN]: {
