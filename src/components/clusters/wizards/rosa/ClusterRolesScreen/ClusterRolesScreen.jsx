@@ -123,7 +123,6 @@ const ClusterRolesScreen = () => {
   useEffect(() => {
     // clearing the ocm_role_response results in ocm role being re-fetched
     // when navigating to this step (from Next or Back)
-    setFieldValue(FieldId.DetectedOcmRole, false);
     refetchGetOCMRole();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -139,8 +138,9 @@ const ClusterRolesScreen = () => {
     if (isGetOCMRolePending) {
       setGetOCMRoleErrorBox(null);
     } else if (isGetOCMRoleSuccess) {
-      setFieldValue(FieldId.RosaCreatorArn, getOCMRoleData.data?.arn);
-      setFieldValue(FieldId.DetectedOcmRole, true);
+      if (FieldId.RosaCreatorArn !== getOCMRoleData.data?.arn) {
+        setFieldValue(FieldId.RosaCreatorArn, getOCMRoleData.data?.arn);
+      }
       const isAdmin = getOCMRoleData.data?.isAdmin;
       setIsAutoModeAvailable(isAdmin);
       setGetOCMRoleErrorBox(null);
