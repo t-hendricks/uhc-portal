@@ -30,4 +30,17 @@ describe('<VPCDetailsCard />', () => {
       expect(screen.queryByText('Edit cluster-wide proxy')).not.toBeInTheDocument();
     });
   });
+
+  describe('When Private Service Connect Subnet is provided', () => {
+    const props = {
+      ...defaultProps,
+      gcpPrivateServiceConnect: 'gcpPrivateServiceConnect',
+    };
+
+    it('renders Private Service Connect Subnet', async () => {
+      render(<VPCDetailsCard {...props} />);
+      expect(screen.queryByText('Private Service Connect Subnet')).toBeInTheDocument();
+      expect(screen.queryByText('gcpPrivateServiceConnect')).toBeInTheDocument();
+    });
+  });
 });
