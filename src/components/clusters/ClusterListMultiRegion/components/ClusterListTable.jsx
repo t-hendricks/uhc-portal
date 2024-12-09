@@ -37,7 +37,7 @@ import { useFetchGetAvailableRegionalInstances } from '~/queries/RosaWizardQueri
 import { toggleSubscriptionReleased } from '~/redux/actions/subscriptionReleasedActions';
 import { MULTIREGION_PREVIEW_ENABLED } from '~/redux/constants/featureConstants';
 
-import getClusterName from '../../../../common/getClusterName';
+import getClusterName, { UNNAMED_CLUSTER } from '../../../../common/getClusterName';
 import { isAISubscriptionWithoutMetrics } from '../../../../common/isAssistedInstallerCluster';
 import { actionResolver } from '../../common/ClusterActionsDropdown/ClusterActionsDropdownItems';
 import ClusterStateIcon from '../../common/ClusterStateIcon';
@@ -184,7 +184,13 @@ function ClusterListTable(props) {
   const clusterRow = (cluster) => {
     const provider = get(cluster, 'cloud_provider.id', 'N/A');
 
-    const clusterName = linkToClusterDetails(cluster, getClusterName(cluster));
+    const clusterNameText = getClusterName(cluster);
+    const clusterName =
+      isClustersDataPending && clusterNameText === UNNAMED_CLUSTER ? (
+        <Skeleton screenreaderText="loading cluster name" />
+      ) : (
+        linkToClusterDetails(cluster, clusterNameText)
+      );
 
     const clusterStatus = () => {
       if (!getClusterStateAndDescription(cluster).state && isClustersDataPending) {

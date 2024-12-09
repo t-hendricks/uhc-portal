@@ -72,4 +72,64 @@ describe('<ClusterListTable />', () => {
       row.getElementsByTagName('td')[1].querySelector('[ data-icon-type="unknown"]'),
     ).toBeInTheDocument();
   });
+
+  describe('cluster name', () => {
+    it('shows cluster name', () => {
+      const newProps = {
+        ...initialProps,
+
+        clusters: [{ ...mockedClusters[0] }],
+      };
+
+      const displayName = mockedClusters[0].subscription.display_name;
+
+      render(<ClusterListTable {...newProps} />);
+
+      const row = screen.getAllByRole('row')[1];
+      const nameCell = row.getElementsByTagName('td')[0];
+
+      expect(nameCell).toHaveTextContent(displayName);
+    });
+
+    it('shows skeleton if cluster name is unknown and cluster information is still loading', () => {
+      const unNamedCluster = { ...mockedClusters[0] };
+      // @ts-ignore - This normally wouldn't happen, but the code checks for undefined
+      unNamedCluster.subscription.display_name = undefined;
+      // @ts-ignore- This normally wouldn't happen, but the code checks for undefined
+      unNamedCluster.subscription.id = undefined;
+
+      const newProps = {
+        ...initialProps,
+        clusters: [unNamedCluster],
+        isClustersDataPending: true,
+      };
+      render(<ClusterListTable {...newProps} />);
+
+      const row = screen.getAllByRole('row')[1];
+      const nameCell = row.getElementsByTagName('td')[0];
+
+      // NOTE: This is actually the screen-reader text of the skeleton
+      expect(nameCell).toHaveTextContent('loading cluster name');
+    });
+
+    it('shows default text if cluster name is not known and loading is complete', () => {
+      const unNamedCluster = { ...mockedClusters[0] };
+      // @ts-ignore - This normally wouldn't happen, but the code checks for undefined
+      unNamedCluster.subscription.display_name = undefined;
+      // @ts-ignore- This normally wouldn't happen, but the code checks for undefined
+      unNamedCluster.subscription.id = undefined;
+
+      const newProps = {
+        ...initialProps,
+        clusters: [unNamedCluster],
+        isClustersDataPending: false,
+      };
+      render(<ClusterListTable {...newProps} />);
+
+      const row = screen.getAllByRole('row')[1];
+      const nameCell = row.getElementsByTagName('td')[0];
+
+      expect(nameCell).toHaveTextContent('Unnamed Cluster');
+    });
+  });
 });
