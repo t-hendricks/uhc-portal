@@ -1,12 +1,13 @@
 import { useMutation } from '@tanstack/react-query';
 
-import { queryClient } from '~/components/App/queryClient';
 import {
   getClusterAutoScalingSubmitSettings,
   getDefaultClusterAutoScaling,
 } from '~/components/clusters/common/clusterAutoScalingValues';
 import { formatErrorData } from '~/queries/helpers';
 import clusterService, { getClusterServiceForRegion } from '~/services/clusterService';
+
+import { refetchClusterAutoscalerData } from './useFetchClusterAutoscaler';
 
 export const useEnableClusterAutoscaler = (
   clusterID: string,
@@ -32,7 +33,7 @@ export const useEnableClusterAutoscaler = (
       return response;
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['clusterAutoscaler'] });
+      refetchClusterAutoscalerData(clusterID);
     },
   });
   const errorData = formatErrorData(isPending, isError, error);
