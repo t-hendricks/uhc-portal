@@ -40,6 +40,8 @@ class CreateRosaCluster extends Page {
 
   noProxyDomainsInput = () => cy.get('input[id="no_proxy_domains"]');
 
+  selectVersionValue = () => cy.get('button[id="cluster_version"]').find('span');
+
   customOperatorPrefixInput = () => cy.get('input[id="custom_operator_roles_prefix"]');
 
   singleZoneAvilabilityRadio = () =>
@@ -461,8 +463,8 @@ class CreateRosaCluster extends Page {
   }
 
   selectClusterVersion(version) {
-    cy.get('div[name="cluster_version"]').find('button.pf-v5-c-select__toggle').click();
-    cy.get('ul[label="Version"]').find('button').contains(version).click();
+    cy.get('button[id="cluster_version"]').click();
+    cy.get('button').contains(version).click();
   }
 
   selectClusterVersionFedRamp(version) {

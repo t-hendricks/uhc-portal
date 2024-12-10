@@ -119,7 +119,10 @@
             "MinMaxLimitError": "The minimum cannot be above the maximum value",
             "InvalidGPUValueError": "Invalid params",
             "RequiredFieldError": "Field is required",
-            "MaxNodesValueLimitError": "Value must not be greater than 249",
+            "MaxNodesValueMultizoneLimitError": "Value must not be greater than 255",
+            "MaxNodesValueSinglezoneLimitError": "Value must not be greater than 254",
+            "MaxNodesValueOcpLower41414MultizoneLimitError": "Value must not be greater than 186",
+            "MaxNodesValueOcpLower41414SinglezoneLimitError": "Value must not be greater than 185",
             "NegativeValueError": "Value cannot be a negative number"
           },
           "NodeLabel": [

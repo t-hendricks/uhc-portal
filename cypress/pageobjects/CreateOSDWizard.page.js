@@ -364,7 +364,11 @@ class CreateOSDCluster extends Page {
 
   selectVersion(version) {
     cy.get('button[id="version-selector"]').click();
-    cy.get('button').contains(version).click();
+    if (version === '') {
+      cy.get('button[id^="openshift-"]').first().click();
+    } else {
+      cy.get('button').contains(version).click();
+    }
   }
 
   selectVPC(vpcName) {
