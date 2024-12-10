@@ -23,7 +23,7 @@ const WithWizard = () => {
   );
 
   return (
-    <Card isFlat isFullHeight>
+    <Card isFlat isFullHeight data-testid="deploy-with-webinterface-card">
       <CardTitle>
         <Title headingLevel="h3" size="lg">
           <DesktopIcon className="ocm-c-wizard-get-started--card-icon" />

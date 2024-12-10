@@ -71,13 +71,13 @@ const StepCreateAWSAccountRoles = ({
 
   return (
     <>
-      <Title headingLevel="h3">
+      <Title headingLevel="h3" data-testid="rosa-cli-header">
         Log in to the ROSA CLI with your Red Hat account token and create AWS account roles and
         policies
       </Title>
       {!restrictedEnv && showDeprecationMessage ? <OfflineTokensAlert /> : null}
-      <List component={ListComponent.ol} type={OrderType.number}>
-        <ListItem className="pf-v5-u-mb-lg">
+      <List component={ListComponent.ol} type={OrderType.number} data-testid="rosa-cli-definition">
+        <ListItem className="pf-v5-u-mb-lg" data-testid="rosa-cli-sub-definition-1">
           To authenticate, run this command:
           <div className="pf-v5-u-mt-md">
             <ROSALoginCommand
@@ -89,7 +89,7 @@ const StepCreateAWSAccountRoles = ({
             />
           </div>
         </ListItem>
-        <ListItem>
+        <ListItem data-testid="rosa-cli-sub-definition-2">
           To create the necessary account-wide roles and policies quickly, use the default auto
           method that&apos;s provided in the ROSA CLI:
           <InstructionCommand
