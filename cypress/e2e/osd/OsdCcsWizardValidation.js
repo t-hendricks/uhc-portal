@@ -38,7 +38,7 @@ describe('OSD Wizard validation tests(OCP-54134,OCP-73204)', { tags: ['smoke'] }
         CreateOSDWizardPage.acknowlegePrerequisitesCheckbox().check();
 
         if (clusterProperties.CloudProvider.includes('GCP')) {
-          if (clusterProperties.AuthenticationType.includes('ServiceAccount')) {
+          if (clusterProperties.AuthenticationType.includes('Service Account')) {
             CreateOSDWizardPage.wizardNextButton().click();
             CreateOSDWizardPage.isTextContainsInPage(
               ClustersValidation.ClusterSettings.CloudProvider.GCP.EmptyGCPServiceJSONFieldError,
@@ -404,16 +404,72 @@ describe('OSD Wizard validation tests(OCP-54134,OCP-73204)', { tags: ['smoke'] }
             .NegativeValueError,
           false,
         );
-        CreateOSDWizardPage.clusterAutoscalingMaxNodesTotalInput().should('have.value', '249');
+        CreateOSDWizardPage.clusterAutoscalingMaxNodesTotalInput().should('have.value', '255');
         CreateOSDWizardPage.clusterAutoscalingMaxNodesTotalInput()
           .type('{selectAll}')
-          .type('250')
+          .type('257')
           .blur();
         CreateOSDWizardPage.isTextContainsInPage(
           ClustersValidation.ClusterSettings.Machinepool.Common.ClusterAutoscaling
-            .MaxNodesValueLimitError,
+            .MaxNodesValueMultizoneLimitError,
         );
-
+        CreateOSDWizardPage.clusterAutoscalingRevertAllToDefaultsButton().click();
+        CreateOSDWizardPage.clusterAutoscalingCloseButton().click();
+        CreateOSDWizardPage.wizardBackButton().click();
+        CreateOSDWizardPage.selectAvailabilityZone('Single Zone');
+        CreateOSDWizardPage.wizardNextButton().click();
+        CreateOSDWizardPage.editClusterAutoscalingSettingsButton().click();
+        CreateOSDWizardPage.clusterAutoscalingMaxNodesTotalInput().should('have.value', '254');
+        CreateOSDWizardPage.clusterAutoscalingMaxNodesTotalInput()
+          .type('{selectAll}')
+          .type('255')
+          .blur();
+        CreateOSDWizardPage.isTextContainsInPage(
+          ClustersValidation.ClusterSettings.Machinepool.Common.ClusterAutoscaling
+            .MaxNodesValueSinglezoneLimitError,
+        );
+        if (
+          clusterProperties.CloudProvider.includes('AWS') ||
+          (clusterProperties.CloudProvider.includes('GCP') &&
+            clusterProperties.AuthenticationType.includes('Service Account'))
+        ) {
+          CreateOSDWizardPage.clusterAutoscalingRevertAllToDefaultsButton().click();
+          CreateOSDWizardPage.clusterAutoscalingCloseButton().click();
+          CreateOSDWizardPage.wizardBackButton().click();
+          CreateOSDWizardPage.selectVersion('4.14.0');
+          CreateOSDWizardPage.wizardNextButton().click();
+          CreateOSDWizardPage.editClusterAutoscalingSettingsButton().click();
+          CreateOSDWizardPage.clusterAutoscalingMaxNodesTotalInput().should('have.value', '185');
+          CreateOSDWizardPage.clusterAutoscalingMaxNodesTotalInput()
+            .type('{selectAll}')
+            .type('186')
+            .blur();
+          CreateOSDWizardPage.isTextContainsInPage(
+            ClustersValidation.ClusterSettings.Machinepool.Common.ClusterAutoscaling
+              .MaxNodesValueOcpLower41414SinglezoneLimitError,
+          );
+          CreateOSDWizardPage.clusterAutoscalingRevertAllToDefaultsButton().click();
+          CreateOSDWizardPage.clusterAutoscalingCloseButton().click();
+          CreateOSDWizardPage.wizardBackButton().click();
+          CreateOSDWizardPage.selectAvailabilityZone('Multi-zone');
+          CreateOSDWizardPage.wizardNextButton().click();
+          CreateOSDWizardPage.editClusterAutoscalingSettingsButton().click();
+          CreateOSDWizardPage.clusterAutoscalingMaxNodesTotalInput().should('have.value', '186');
+          CreateOSDWizardPage.clusterAutoscalingMaxNodesTotalInput()
+            .type('{selectAll}')
+            .type('187')
+            .blur();
+          CreateOSDWizardPage.isTextContainsInPage(
+            ClustersValidation.ClusterSettings.Machinepool.Common.ClusterAutoscaling
+              .MaxNodesValueOcpLower41414MultizoneLimitError,
+          );
+          CreateOSDWizardPage.clusterAutoscalingRevertAllToDefaultsButton().click();
+          CreateOSDWizardPage.clusterAutoscalingCloseButton().click();
+          CreateOSDWizardPage.wizardBackButton().click();
+          CreateOSDWizardPage.selectVersion('');
+          CreateOSDWizardPage.wizardNextButton().click();
+          CreateOSDWizardPage.editClusterAutoscalingSettingsButton().click();
+        }
         CreateOSDWizardPage.clusterAutoscalingGPUsInput().type('{selectAll}').type('test').blur();
         CreateOSDWizardPage.isTextContainsInPage(
           ClustersValidation.ClusterSettings.Machinepool.Common.ClusterAutoscaling
