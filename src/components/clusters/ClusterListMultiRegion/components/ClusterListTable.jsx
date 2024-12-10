@@ -187,9 +187,9 @@ function ClusterListTable(props) {
     const clusterName = linkToClusterDetails(cluster, getClusterName(cluster));
 
     const clusterStatus = () => {
-      if (!getClusterStateAndDescription(cluster).state && isClustersDataPending) {
+      if (isClustersDataPending) {
         // cluster status may not be loaded.
-        return null;
+        return <Skeleton screenreaderText="loading cluster status" />;
       }
       if (isAISubscriptionWithoutMetrics(cluster.subscription)) {
         return <AIClusterStatus status={cluster.state} className="clusterstate" />;
