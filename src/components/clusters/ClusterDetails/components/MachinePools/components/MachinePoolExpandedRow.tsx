@@ -9,7 +9,8 @@ import { NodePool, SecurityGroup } from '~/types/clusters_mgmt.v1';
 import { MachinePool } from '~/types/clusters_mgmt.v1/models/MachinePool';
 import { ClusterFromSubscription } from '~/types/types';
 
-import { isMPoolAz } from '../../../clusterDetailsHelper';
+import { isHypershiftCluster, isMPoolAz } from '../../../clusterDetailsHelper';
+import MachinePoolAutoRepairDetail from '../MachinePoolAutoRepairDetail';
 import MachinePoolAutoScalingDetail from '../MachinePoolAutoscalingDetail';
 import { getSubnetIds, hasSubnets } from '../machinePoolsHelper';
 
@@ -86,6 +87,8 @@ const MachinePoolExpandedRow = ({
     (machinePool as NodePool)?.aws_node_pool?.additional_security_group_ids ||
     [];
   const isMultiZoneMachinePool = isMPoolAz(cluster, machinePool.availability_zones?.length);
+  const isHypershift = isHypershiftCluster(cluster);
+  const isAutoRepairEnabled = (machinePool as NodePool)?.auto_repair;
 
   return (
     <Grid hasGutter>
@@ -119,6 +122,11 @@ const MachinePoolExpandedRow = ({
             isMultiZoneCluster={isMultiZoneCluster}
             autoscaling={machinePool.autoscaling}
           />
+        </GridItem>
+      )}
+      {isHypershift && (
+        <GridItem md={6}>
+          <MachinePoolAutoRepairDetail isAutoRepairEnabled={isAutoRepairEnabled} />
         </GridItem>
       )}
       {spotMarketOptions && (
