@@ -73,11 +73,14 @@ const CreateRosaGetStarted = () => (
         component="h2"
         title={<>ROSA in AWS GovCloud (US) with FedRAMP</>}
       >
-        <ExternalLink href={links.ROSA_AWS_FEDRAMP}>
+        <ExternalLink data-testid="rosa-aws-fedramp" href={links.ROSA_AWS_FEDRAMP}>
           Learn more about ROSA in AWS GovCloud (US) with FedRAMP
         </ExternalLink>
         or start the onboarding process with the
-        <ExternalLink href={links.FEDRAMP_ACCESS_REQUEST_FORM}>
+        <ExternalLink
+          data-testid="fedramp-access-request-form"
+          href={links.FEDRAMP_ACCESS_REQUEST_FORM}
+        >
           FedRAMP access request form
         </ExternalLink>
       </Alert>
