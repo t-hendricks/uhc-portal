@@ -6,7 +6,7 @@ import { Cluster } from '~/types/clusters_mgmt.v1';
 import { formatErrorData } from '../helpers';
 
 export const useEditCluster = (clusterID: string, region?: string) => {
-  const { data, isPending, isError, error, isSuccess, mutate } = useMutation({
+  const { data, isPending, isError, error, isSuccess, mutate, reset } = useMutation({
     mutationKey: ['editCluster'],
     mutationFn: async (cluster: Cluster) => {
       if (region) {
@@ -29,6 +29,7 @@ export const useEditCluster = (clusterID: string, region?: string) => {
       error: formattedError.error,
       mutate,
       isSuccess,
+      reset,
     };
   }
 
@@ -39,5 +40,6 @@ export const useEditCluster = (clusterID: string, region?: string) => {
     error,
     mutate,
     isSuccess,
+    reset,
   };
 };

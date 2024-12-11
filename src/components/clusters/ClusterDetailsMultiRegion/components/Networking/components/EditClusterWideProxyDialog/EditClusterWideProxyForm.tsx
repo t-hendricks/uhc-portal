@@ -191,7 +191,6 @@ const EditClusterWideProxyForm = ({
               label="No Proxy domains"
               placeholder={noUrlValues ? DISABLED_NO_PROXY_PLACEHOLDER : NO_PROXY_PLACEHOLDER}
               type="text"
-              normalize={(value: string) => stringToArray(value)}
               validate={checkNoProxyDomains}
               helpText={NO_PROXY_HELPER_TEXT}
               showHelpTextOnError={false}
@@ -200,7 +199,7 @@ const EditClusterWideProxyForm = ({
               input={{
                 ...getFieldProps(FormFieldId.NoProxyDomains),
                 onChange: (_: React.MouseEvent | React.ChangeEvent, value: string) => {
-                  setFieldValue(FormFieldId.NoProxyDomains, value);
+                  setFieldValue(FormFieldId.NoProxyDomains, stringToArray(value));
                   setTimeout(() => setFieldTouched(FormFieldId.NoProxyDomains), 1);
                 },
                 onBlur: (event: any) => {
