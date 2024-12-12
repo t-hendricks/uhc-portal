@@ -1,7 +1,6 @@
 import React from 'react';
 import * as reactRedux from 'react-redux';
 
-import wizardConnector from '~/components/clusters/wizards/common/WizardConnector';
 import * as useFetchLoadBalancerQuotaValues from '~/queries/ClusterActionsQueries/useFetchLoadBalancerQuotaValues';
 import * as useFetchStorageQuotaValues from '~/queries/ClusterActionsQueries/useFetchStorageQuotaValues';
 import * as useEditCluster from '~/queries/ClusterDetailsQueries/useEditCluster';
@@ -119,22 +118,6 @@ describe('<ScaleClusterDialog />', () => {
   const useDispatchMock = jest.spyOn(reactRedux, 'useDispatch');
   const mockedDispatch = jest.fn();
   useDispatchMock.mockReturnValue(mockedDispatch);
-  const ConnectedScaleClusterDialog = wizardConnector(ScaleClusterDialog);
-
-  const internalOnSubmit = jest.fn();
-  const handleSubmit = jest.fn();
-  handleSubmit.mockReturnValue(internalOnSubmit);
-
-  const defaultProps = {
-    handleSubmit,
-    initialValues: {
-      id: 'test-id',
-      nodes_compute: 4,
-      load_balancers: 4,
-      persistent_storage: 107374182400,
-    },
-    pristine: false,
-  };
 
   // need to set form values
   const defaultState = {
@@ -153,36 +136,6 @@ describe('<ScaleClusterDialog />', () => {
         cloud_provider: { id: 'aws' },
         multi_az: true,
         id: 'test-id',
-      },
-      form: {
-        form: {
-          ScaleCluster: {
-            values: {
-              id: 'test-id',
-              nodes_compute: 4,
-              load_balancers: 4,
-              persistent_storage: 107374182400,
-            },
-            initial: {
-              id: 'test-id',
-              nodes_compute: 4,
-              load_balancers: 4,
-              persistent_storage: 107374182400,
-            },
-            registeredFields: {
-              load_balancers: {
-                name: 'load_balancers',
-                type: 'Field',
-                count: 1,
-              },
-              persistent_storage: {
-                name: 'persistent_storage',
-                type: 'Field',
-                count: 1,
-              },
-            },
-          },
-        },
       },
     },
   };
@@ -220,9 +173,7 @@ describe('<ScaleClusterDialog />', () => {
   it('is accessible', async () => {
     setMockingValues();
 
-    const { container } = withState(defaultState, true).render(
-      <ConnectedScaleClusterDialog {...defaultProps} />,
-    );
+    const { container } = withState(defaultState, true).render(<ScaleClusterDialog />);
     expect(await screen.findByText('Load balancers')).toBeInTheDocument();
 
     await checkAccessibility(container);
@@ -235,7 +186,7 @@ describe('<ScaleClusterDialog />', () => {
       expect(mockedUseFetchOrganizationAndQuota).not.toHaveBeenCalled();
       expect(mockedUseFetchStorageQuotaValues).not.toHaveBeenCalled();
 
-      withState(defaultState, true).render(<ConnectedScaleClusterDialog {...defaultProps} />);
+      withState(defaultState, true).render(<ScaleClusterDialog />);
 
       expect(mockedUseFetchLoadBalancerQuotaValues).toHaveBeenCalled();
       expect(mockedUseFetchOrganizationAndQuota).toHaveBeenCalled();
@@ -246,9 +197,7 @@ describe('<ScaleClusterDialog />', () => {
   it('when cancelled, closes modal', async () => {
     setMockingValues();
 
-    const { user } = withState(defaultState, true).render(
-      <ConnectedScaleClusterDialog {...defaultProps} />,
-    );
+    const { user } = withState(defaultState, true).render(<ScaleClusterDialog />);
 
     expect(mockedDispatch).not.toHaveBeenCalled();
     expect(mockMutate).not.toHaveBeenCalled();
@@ -262,11 +211,9 @@ describe('<ScaleClusterDialog />', () => {
     setMockingValues();
 
     expect(mockedDispatch).not.toHaveBeenCalled();
-    expect(internalOnSubmit).not.toHaveBeenCalled();
+    expect(mockMutate).not.toHaveBeenCalled();
 
-    const { user } = withState(defaultState, true).render(
-      <ConnectedScaleClusterDialog {...defaultProps} />,
-    );
+    const { user } = withState(defaultState, true).render(<ScaleClusterDialog />);
 
     await user.selectOptions(
       screen.getByRole('combobox', { name: 'Load Balancers' }),
@@ -277,7 +224,7 @@ describe('<ScaleClusterDialog />', () => {
     await user.click(screen.getByRole('button', { name: 'Apply' }));
 
     expect(mockedDispatch).not.toHaveBeenCalled();
-    expect(internalOnSubmit).toHaveBeenCalled();
+    expect(mockMutate).toHaveBeenCalled();
   });
 
   it.skip('when fulfilled, closes dialog', async () => {
@@ -294,9 +241,9 @@ describe('<ScaleClusterDialog />', () => {
       error: { errorMessage: 'I am an error' },
     });
     expect(mockedDispatch).not.toHaveBeenCalled();
-    expect(internalOnSubmit).not.toHaveBeenCalled();
+    expect(mockMutate).not.toHaveBeenCalled();
 
-    withState(defaultState, true).render(<ConnectedScaleClusterDialog {...defaultProps} />);
+    withState(defaultState, true).render(<ScaleClusterDialog />);
 
     expect(await screen.findByText('Load balancers')).toBeInTheDocument();
 
