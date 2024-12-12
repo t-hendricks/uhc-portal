@@ -1,15 +1,15 @@
 import React from 'react';
+import { Field, Formik } from 'formik';
 import get from 'lodash/get';
 import { useDispatch } from 'react-redux';
-import { Field } from 'redux-form';
 
 import { Alert, Form, FormGroup, Grid, GridItem } from '@patternfly/react-core';
 
 import getClusterName from '~/common/getClusterName';
 import { useEditCluster } from '~/queries/ClusterDetailsQueries/useEditCluster';
+import { invalidateClusterDetailsQueries } from '~/queries/ClusterDetailsQueries/useFetchClusterDetails';
 import { useGlobalState } from '~/redux/hooks';
 import { Cluster } from '~/types/clusters_mgmt.v1';
-import { ClusterFromSubscription } from '~/types/types';
 
 import ErrorBox from '../../../common/ErrorBox';
 import Modal from '../../../common/Modal/Modal';
@@ -22,18 +22,7 @@ import {
 import LoadBalancersDropdown from '../LoadBalancersDropdown';
 import PersistentStorageDropdown from '../PersistentStorageDropdown';
 
-type ScaleClusterDialogProps = {
-  handleSubmit: () => void | undefined;
-  pristine: boolean;
-  initialValues: {
-    id: string;
-    nodes_compute: number | null;
-    load_balancers: number;
-    persistent_storage: number;
-  };
-};
-
-const ScaleClusterDialog = ({ handleSubmit, initialValues, pristine }: ScaleClusterDialogProps) => {
+const ScaleClusterDialog = () => {
   const dispatch = useDispatch();
 
   const closeScaleClusterModal = () => dispatch(closeModal());
@@ -43,9 +32,7 @@ const ScaleClusterDialog = ({ handleSubmit, initialValues, pristine }: ScaleClus
   const showPersistentStorageAlert = useGlobalState((state) => shouldShowStorageQuotaAlert(state));
 
   /* Cluster data */
-  const modalData = useGlobalState(
-    (state) => state.modal.data,
-  ) as unknown as ClusterFromSubscription;
+  const modalData = useGlobalState((state) => state.modal.data) as any;
 
   const consoleURL = get(modalData, 'console.url', null);
   const region = get(modalData, 'rh_region_id', undefined);
@@ -89,6 +76,7 @@ const ScaleClusterDialog = ({ handleSubmit, initialValues, pristine }: ScaleClus
     mutate(clusterRequest as Cluster, {
       onSuccess: () => {
         dispatch(closeModal());
+        invalidateClusterDetailsQueries();
       },
     });
   };
@@ -133,72 +121,100 @@ const ScaleClusterDialog = ({ handleSubmit, initialValues, pristine }: ScaleClus
   const className = isByoc ? 'edit-cluster-modal' : 'edit-cluster-modal edit-cluster-modal-rhinfra';
   const title = 'Edit load balancers and persistent storage';
   return (
-    <Modal
-      className={className}
-      title={title}
-      secondaryTitle={shouldDisplayClusterName ? clusterDisplayName : undefined}
-      onClose={cancelEdit}
-      primaryText="Apply"
-      // @ts-ignore
-      onPrimaryClick={handleSubmit(onSubmit)}
-      onSecondaryClick={cancelEdit}
-      isPrimaryDisabled={pending || pristine}
-      isPending={pending}
-      isSmall
+    <Formik
+      initialValues={{
+        id: modalData.id,
+        nodes_compute: modalData.nodes ? modalData.nodes.compute : null,
+        load_balancers: modalData.load_balancer_quota ? modalData.load_balancer_quota : 0,
+        persistent_storage: modalData.storage_quota ? modalData.storage_quota.value : 107374182400,
+      }}
+      onSubmit={(values) => onSubmit(values)}
     >
-      <>
-        {error}
-        {/* @ts-ignore */}
-        <Form onSubmit={handleSubmit(onSubmit)}>
-          <Grid hasGutter>
-            {!isByoc && (
-              <>
-                <GridItem span={8}>
-                  <FormGroup fieldId="load_balancers" label="Load balancers">
-                    {/* @ts-ignore */}
-                    <Field
-                      label="Load balancers"
-                      name="load_balancers"
-                      component={LoadBalancersDropdown}
-                      disabled={pending}
-                      currentValue={initialValues.load_balancers}
-                      cloudProviderID={cloudProviderID}
-                      billingModel={billingModel}
-                      product={product}
-                      isBYOC={isByoc}
-                      isMultiAZ={isMultiAZ}
-                      region={region}
-                    />
-                  </FormGroup>
-                </GridItem>
-                <GridItem span={4} />
-                {showLoadBalancerAlert && scalingAlert}
-                <GridItem span={8}>
-                  <FormGroup fieldId="persistent_storage" label="Persistent storage">
-                    {/* @ts-ignore */}
-                    <Field
-                      label="Persistent storage"
-                      name="persistent_storage"
-                      component={PersistentStorageDropdown}
-                      disabled={pending}
-                      currentValue={initialValues.persistent_storage}
-                      cloudProviderID={cloudProviderID}
-                      billingModel={billingModel}
-                      product={product}
-                      isBYOC={isByoc}
-                      isMultiAZ={isMultiAZ}
-                      region={region}
-                    />
-                  </FormGroup>
-                </GridItem>
-                <GridItem span={4} />
-                {showPersistentStorageAlert && scalingAlert}
-              </>
-            )}
-          </Grid>
-        </Form>
-      </>
-    </Modal>
+      {({ submitForm, getFieldMeta, getFieldProps, setFieldValue, values, dirty }) => (
+        <Modal
+          className={className}
+          title={title}
+          secondaryTitle={shouldDisplayClusterName ? clusterDisplayName : undefined}
+          onClose={cancelEdit}
+          primaryText="Apply"
+          // @ts-ignore
+          onPrimaryClick={submitForm}
+          onSecondaryClick={cancelEdit}
+          isPrimaryDisabled={pending || !dirty}
+          isPending={pending}
+          isSmall
+        >
+          <>
+            {error}
+
+            <Form onSubmit={submitForm}>
+              <Grid hasGutter>
+                {!isByoc && (
+                  <>
+                    <GridItem span={8}>
+                      <FormGroup fieldId="load_balancers" label="Load balancers">
+                        {/* @ts-ignore */}
+                        <Field
+                          label="Load balancers"
+                          name="load_balancers"
+                          component={LoadBalancersDropdown}
+                          input={{
+                            // name, value, onBlur, onChange
+                            ...getFieldProps('load_balancers'),
+                            onChange: (value: string) => {
+                              setFieldValue('load_balancers', value);
+                            },
+                          }}
+                          meta={getFieldMeta('load_balancers')}
+                          currentValue={values.load_balancers}
+                          disabled={pending}
+                          cloudProviderID={cloudProviderID}
+                          billingModel={billingModel}
+                          product={product}
+                          isBYOC={isByoc}
+                          isMultiAZ={isMultiAZ}
+                          region={region}
+                        />
+                      </FormGroup>
+                    </GridItem>
+                    <GridItem span={4} />
+                    {showLoadBalancerAlert && scalingAlert}
+                    <GridItem span={8}>
+                      <FormGroup fieldId="persistent_storage" label="Persistent storage">
+                        {/* @ts-ignore */}
+                        <Field
+                          label="Persistent storage"
+                          name="persistent_storage"
+                          component={PersistentStorageDropdown}
+                          input={{
+                            // name, value, onBlur, onChange
+                            ...getFieldProps('persistent_storage'),
+                            onChange: (value: string) => {
+                              setFieldValue('persistent_storage', value);
+                            },
+                          }}
+                          meta={getFieldMeta('persistent_storage')}
+                          disabled={pending}
+                          currentValue={values.persistent_storage}
+                          cloudProviderID={cloudProviderID}
+                          billingModel={billingModel}
+                          product={product}
+                          isBYOC={isByoc}
+                          isMultiAZ={isMultiAZ}
+                          region={region}
+                        />
+                      </FormGroup>
+                    </GridItem>
+                    <GridItem span={4} />
+                    {showPersistentStorageAlert && scalingAlert}
+                  </>
+                )}
+              </Grid>
+            </Form>
+          </>
+        </Modal>
+      )}
+    </Formik>
   );
 };
 
