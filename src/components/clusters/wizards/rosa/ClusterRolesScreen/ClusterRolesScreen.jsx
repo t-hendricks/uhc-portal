@@ -24,7 +24,6 @@ import {
   getOperatorRolesCommand,
 } from '~/components/clusters/wizards/rosa/ClusterRolesScreen/clusterRolesHelper';
 import { FieldId } from '~/components/clusters/wizards/rosa/constants';
-import ReduxHiddenCheckbox from '~/components/common/FormikFormComponents/HiddenCheckbox';
 import useAnalytics from '~/hooks/useAnalytics';
 import { useFeatureGate } from '~/hooks/useFeatureGate';
 import {
@@ -291,7 +290,6 @@ const ClusterRolesScreen = () => {
             </GridItem>
           </>
         )}
-        <ReduxHiddenCheckbox name="detected_ocm_role" />
         {getOCMRoleErrorBox && <GridItem>{getOCMRoleErrorBox}</GridItem>}
         {isGetOCMRolePending && (
           <GridItem>
