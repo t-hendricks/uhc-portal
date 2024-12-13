@@ -34,6 +34,10 @@
             "group": ["@patternfly/react-tokens/dist/js**"],
             "message": "Import using the full esm path `@patternfly/react-tokens/dist/esm/icons/<icon>` instead",
           },
+          {
+            "group":["*/*do_not_use*/*","~/*/*/*do_not_use*/*"], 
+            "message":"Files in a 'do not use' directory are archived and should not be used",
+          },
         ],
         "paths": [
           {

@@ -42,6 +42,7 @@ import {
 import type { PromiseActionType, PromiseReducerState } from '../types';
 
 type State = {
+  /* START ARCHIVED CODE - DO NOT USE */
   clusters: PromiseReducerState & {
     valid: boolean;
     meta: {
@@ -56,6 +57,7 @@ type State = {
       order?: string | undefined;
     };
   };
+  /* END ARCHIVED CODE - DO NOT USE */
   clusterStatus: PromiseReducerState & {
     status: ClusterStatus;
   };
@@ -109,6 +111,7 @@ const emptyCluster = {
 };
 
 const initialState: State = {
+  /* START ARCHIVED CODE - DO NOT USE */
   clusters: {
     ...baseState,
     valid: false,
@@ -119,6 +122,7 @@ const initialState: State = {
       page_size: 0,
     },
   },
+  /* END ARCHIVED CODE - DO NOT USE */
   clusterStatus: {
     ...baseState,
     status: {},
@@ -194,6 +198,7 @@ const clustersReducer = (
   // eslint-disable-next-line consistent-return
   produce(state, (draft) => {
     switch (action.type) {
+      /* START ARCHIVED CODE - DO NOT USE */
       // GET_CLUSTERS
       case INVALIDATE_ACTION(clustersConstants.GET_CLUSTERS):
         draft.clusters = { ...initialState.clusters };
@@ -236,6 +241,7 @@ const clustersReducer = (
         };
         break;
       }
+      /* END ARCHIVED CODE - DO NOT USE */
       case clustersConstants.SET_CLUSTER_DETAILS: {
         const { cluster, mergeDetails } = action.payload;
         draft.details = {

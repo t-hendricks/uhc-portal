@@ -16,7 +16,7 @@ import {
 import { FormGroupHelperText } from '~/components/common/FormGroupHelperText';
 
 import { noQuotaTooltip } from '../../../../common/helpers';
-import { billingModels, normalizedProducts } from '../../../../common/subscriptionTypes';
+import { normalizedProducts } from '../../../../common/subscriptionTypes';
 import PopoverHint from '../../../common/PopoverHint';
 
 const incrementValue = ({ isHypershiftWizard, poolNumber, isMultiAz }) =>
@@ -319,7 +319,7 @@ NodeCountInput.propTypes = {
   }),
   cloudProviderID: PropTypes.string.isRequired,
   product: PropTypes.oneOf(Object.keys(normalizedProducts)).isRequired,
-  billingModel: PropTypes.oneOf(Object.values(billingModels)).isRequired,
+  billingModel: PropTypes.string.isRequired,
   increment: PropTypes.number,
   isHypershiftWizard: PropTypes.bool,
   poolNumber: PropTypes.number,

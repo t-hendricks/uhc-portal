@@ -14,14 +14,14 @@ import { FormGroupHelperText } from '~/components/common/FormGroupHelperText';
 import PopoverHint from '~/components/common/PopoverHint';
 import WithTooltip from '~/components/common/WithTooltip';
 import useFormikOnChange from '~/hooks/useFormikOnChange';
-import { Cluster } from '~/types/clusters_mgmt.v1';
+import { ClusterFromSubscription } from '~/types/types';
 
 import './DiskSizeField.scss';
 
 const fieldId = 'diskSize';
 
 type DiskSizeFieldProps = {
-  cluster: Cluster;
+  cluster: ClusterFromSubscription;
   isEdit: boolean;
 };
 

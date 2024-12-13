@@ -6,7 +6,6 @@ import utc from 'dayjs/plugin/utc';
 import {
   ENV_OVERRIDE_LOCALSTORAGE_KEY,
   MULTIREGION_LOCALSTORAGE_KEY,
-  NEW_CLUSTER_LIST_LOCALSTORAGE_KEY,
   RESTRICTED_ENV_OVERRIDE_LOCALSTORAGE_KEY,
 } from './common/localStorageConstants';
 import { Chrome } from './types/types';
@@ -103,24 +102,6 @@ const parseMultiRegionQueryParam = () => {
   return ret;
 };
 
-const parseNewClusterListParam = () => {
-  let ret;
-  window.location.search
-    .substring(1)
-    .split('&')
-    .forEach((queryString) => {
-      const [key, val] = queryString.split('=');
-      if (key.toLowerCase() === 'newclusterlist') {
-        if (val === 'true') {
-          ret = true;
-        } else if (val === 'false') {
-          ret = false;
-        }
-      }
-    });
-  return ret;
-};
-
 const parseRestrictedQueryParam = () => {
   let ret = false;
   window.location.search
@@ -197,19 +178,6 @@ const config = {
         localStorage.getItem(MULTIREGION_LOCALSTORAGE_KEY)
       ) {
         that.multiRegion = localStorage.getItem(MULTIREGION_LOCALSTORAGE_KEY) === 'true';
-      }
-
-      if (parseNewClusterListParam()) {
-        that.newClusterList = true;
-        localStorage.setItem(NEW_CLUSTER_LIST_LOCALSTORAGE_KEY, 'true');
-      } else if (parseNewClusterListParam() === false) {
-        that.newClusterList = false;
-        localStorage.removeItem(NEW_CLUSTER_LIST_LOCALSTORAGE_KEY);
-      } else if (
-        parseNewClusterListParam() === undefined &&
-        localStorage.getItem(NEW_CLUSTER_LIST_LOCALSTORAGE_KEY)
-      ) {
-        that.newClusterList = localStorage.getItem(NEW_CLUSTER_LIST_LOCALSTORAGE_KEY) === 'true';
       }
 
       if (parseRestrictedQueryParam()) {

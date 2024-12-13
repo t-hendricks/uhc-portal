@@ -110,6 +110,7 @@ function ClusterListTable(props) {
     activeSortDirection,
     setSort,
     refreshFunc,
+    isClustersDataPending,
   } = props;
 
   const multiRegionFeatureGate = useFeatureGate(MULTIREGION_PREVIEW_ENABLED);
@@ -186,6 +187,10 @@ function ClusterListTable(props) {
     const clusterName = linkToClusterDetails(cluster, getClusterName(cluster));
 
     const clusterStatus = () => {
+      if (!getClusterStateAndDescription(cluster).state && isClustersDataPending) {
+        // cluster status may not be loaded.
+        return null;
+      }
       if (isAISubscriptionWithoutMetrics(cluster.subscription)) {
         return <AIClusterStatus status={cluster.state} className="clusterstate" />;
       }
@@ -336,7 +341,6 @@ function ClusterListTable(props) {
                   dispatch(toggleSubscriptionReleased(subscriptionId, released)),
                 refreshFunc,
                 true,
-                cluster.delete_protection?.enabled,
               )}
             />
           ) : null}
@@ -344,16 +348,15 @@ function ClusterListTable(props) {
             <ActionsColumn
               items={multiRegionActionResolver(
                 cluster,
-                true, // showConsoleButton
+                true,
                 openModal,
                 canSubscribeOCPList[cluster.id] || false,
-                // canTransferClusterOwnershipList[cluster.id] || false,
                 canHibernateClusterList[cluster.id] || false,
-                // (subscriptionId, released) =>
-                //   dispatch(toggleSubscriptionReleased(subscriptionId, released)),
-                // refreshFunc,
-                true, // inClusterList
-                // cluster.delete_protection?.enabled, // this doesn't appear to be used
+                canTransferClusterOwnershipList[cluster.id] || false,
+                (subscriptionId, released) =>
+                  dispatch(toggleSubscriptionReleased(subscriptionId, released)),
+                refreshFunc,
+                true,
               )}
             />
           ) : null}
@@ -382,6 +385,7 @@ ClusterListTable.propTypes = {
   setSort: PropTypes.func,
   isPending: PropTypes.bool,
   refreshFunc: PropTypes.func.isRequired,
+  isClustersDataPending: PropTypes.bool,
 };
 
 export default ClusterListTable;

@@ -222,6 +222,21 @@ describe('Rosa hosted(Hypershift) cluster wizard validations', { tags: ['smoke',
         .MinAndMaxLimitDependencyError,
       false,
     );
+  });
+  it('Step - Machine pool- Root disk size - widget validations', () => {
+    CreateRosaWizardPage.rootDiskSizeInput().type('{selectAll}').type('73');
+    CreateRosaWizardPage.isTextContainsInPage(
+      clusterFieldValidations.ClusterSettings.Machinepool.RootDiskSize.LimitError,
+    );
+    CreateRosaWizardPage.rootDiskSizeInput().type('{selectAll}').type('16385');
+    CreateRosaWizardPage.isTextContainsInPage(
+      clusterFieldValidations.ClusterSettings.Machinepool.RootDiskSize.LimitError,
+    );
+    CreateRosaWizardPage.rootDiskSizeInput().clear().type('{selectAll}').type('test');
+    CreateRosaWizardPage.isTextContainsInPage(
+      clusterFieldValidations.ClusterSettings.Machinepool.RootDiskSize.NonSupportedValue,
+    );
+    CreateRosaWizardPage.rootDiskSizeInput().clear().type('{selectAll}').type('555');
     CreateRosaWizardPage.rosaNextButton().click();
   });
 

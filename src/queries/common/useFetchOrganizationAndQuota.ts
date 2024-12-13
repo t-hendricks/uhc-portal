@@ -3,6 +3,7 @@ import { useQuery, UseQueryResult } from '@tanstack/react-query';
 import { accountsService } from '~/services';
 
 import { useFetchOrganizationQuota } from '../ClusterDetailsQueries/useFetchOrganizationQuota';
+import { formatErrorData } from '../helpers';
 import { queryConstants } from '../queriesConstants';
 
 export type FetchQueryResults = UseQueryResult & {
@@ -13,18 +14,24 @@ export type FetchQueryResults = UseQueryResult & {
 };
 
 export const useFetchOrganizationAndQuota = () => {
-  const { isLoading, isError, data, error, isFetched } = useQuery({
+  const {
+    isLoading: isOrgIdLoading,
+    isError: isOrgIdError,
+    data: orgIdData,
+    error: orgIdError,
+    isFetched: isOrgIdFetched,
+  } = useQuery({
     queryKey: [queryConstants.FETCH_ORG_AND_QUOTA, 'getCurrentOrganizationId'],
     queryFn: () => accountsService.getCurrentAccount(),
   });
 
-  const orgID = data?.data?.organization?.id;
+  const orgID = orgIdData?.data?.organization?.id;
 
   const {
     isLoading: quotaIsLoading,
     isError: quotaIsError,
     data: quotaData,
-    error: quotaError,
+    rawError: quotaError,
     // @ts-ignore technically orgID cannot be undefined, but the queryFn isn't run unless orgID has a value = see enabled inside of useFetchOrganizationQuota
   } = useFetchOrganizationQuota(orgID);
 
@@ -41,11 +48,15 @@ export const useFetchOrganizationAndQuota = () => {
     enabled: !!orgID,
   });
 
+  const isLoading = isOrgIdLoading || quotaIsLoading || orgIsLoading;
+  const isError = isOrgIdError || quotaIsError || orgIsError;
+  const error = orgIdError || quotaError || orgError;
+
   return {
-    isLoading: isLoading || quotaIsLoading || orgIsLoading,
-    isError: isError || quotaIsError || orgIsError,
-    error: error || quotaError || orgError,
-    isFetched: isFetched && !quotaIsLoading && orgIsFetched,
+    isLoading,
+    isError,
+    error: isError && error ? formatErrorData(isLoading, isError, error)?.error : null,
+    isFetched: isOrgIdFetched && !quotaIsLoading && orgIsFetched,
     id: orgID,
     quota: quotaData?.organizationQuota,
     organization: orgData,

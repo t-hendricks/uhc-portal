@@ -24,12 +24,13 @@ const StepCreateNetwork = () => (
   <>
     <Split hasGutter>
       <SplitItem>
-        <Title headingLevel="h3">
+        <Title headingLevel="h3" data-testid="create-vpc-networking-title">
           Create a Virtual Private Network (VPC) and necessary networking components.
         </Title>
       </SplitItem>
       <SplitItem>
         <Label
+          data-testid="create-vpc-networking-hcp-label"
           variant="outline"
           color="red"
           icon={<ExclamationTriangleIcon color={warningColor.value} />}
@@ -38,8 +39,12 @@ const StepCreateNetwork = () => (
         </Label>
       </SplitItem>
     </Split>
-    <List component={ListComponent.ol} type={OrderType.number}>
-      <ListItem>
+    <List
+      component={ListComponent.ol}
+      type={OrderType.number}
+      data-testid="create-vpc-networking-definition"
+    >
+      <ListItem data-testid="create-vpc-networking-definition-item1">
         To create a Virtual Private Network (VPC) and all the neccesary components, run this
         command:
         <InstructionCommand
@@ -51,10 +56,9 @@ const StepCreateNetwork = () => (
         </InstructionCommand>
       </ListItem>
     </List>
-
-    <ExternalLink href={links.ROSA_CREATE_NETWORK}>
-      Learn more about the create network command
-    </ExternalLink>
+    Learn more about the{' '}
+    <ExternalLink href={links.ROSA_CREATE_NETWORK}>create network command</ExternalLink> and other
+    ways to <ExternalLink href={links.CREATE_VPC_WAYS}>create a VPC</ExternalLink>
   </>
 );
 

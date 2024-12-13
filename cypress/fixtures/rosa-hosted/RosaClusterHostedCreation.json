@@ -28,7 +28,8 @@
       "InstanceType": "m6id.xlarge",
       "AvailabilityZones": "us-west-2a",
       "NodeCount": "4",
-      "Autoscaling": "Disabled"
+      "Autoscaling": "Disabled",
+      "RootDiskSize": "555"
     }
   ],
   "networking": {

@@ -23,7 +23,8 @@ import { useFeatureGate } from '~/hooks/useFeatureGate';
 import { MAX_COMPUTE_NODES_500 } from '~/redux/constants/featureConstants';
 import { GlobalState } from '~/redux/store';
 import { PromiseReducerState } from '~/redux/types';
-import { Cluster, MachinePool, NodePool } from '~/types/clusters_mgmt.v1';
+import { MachinePool, NodePool } from '~/types/clusters_mgmt.v1';
+import { ClusterFromSubscription } from '~/types/types';
 
 import { getClusterMinNodes } from '../../../machinePoolsHelper';
 import { TaintEffect } from '../fields/TaintEffectField';
@@ -49,7 +50,7 @@ export type EditMachinePoolValues = {
 
 type UseMachinePoolFormikArgs = {
   machinePool: MachinePool | undefined;
-  cluster: Cluster;
+  cluster: ClusterFromSubscription;
   machineTypes: GlobalState['machineTypes'];
   machinePools: PromiseReducerState<{
     data: MachinePool[];

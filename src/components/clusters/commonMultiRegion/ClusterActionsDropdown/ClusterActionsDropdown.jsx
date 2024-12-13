@@ -5,6 +5,8 @@ import { useDispatch } from 'react-redux';
 import { Dropdown, MenuToggle, Tooltip } from '@patternfly/react-core';
 import EllipsisVIcon from '@patternfly/react-icons/dist/esm/icons/ellipsis-v-icon';
 
+import { useToggleSubscriptionReleased } from '~/queries/ClusterActionsQueries/useToggleSubscriptionReleased';
+
 import { openModal } from '../../../common/Modal/ModalActions';
 
 import { dropDownItems } from './ClusterActionsDropdownItems';
@@ -21,7 +23,6 @@ const ClusterActionsDropdown = (props) => {
     disabled,
     canSubscribeOCP,
     canTransferClusterOwnership,
-    toggleSubscriptionReleased,
     canHibernateCluster,
     refreshFunc,
   } = props;
@@ -34,6 +35,8 @@ const ClusterActionsDropdown = (props) => {
     setIsOpen(false);
   };
 
+  const { mutate: toggleSubscriptionReleased } = useToggleSubscriptionReleased();
+
   const menuItems = dropDownItems({
     cluster,
     showConsoleButton,
@@ -41,9 +44,9 @@ const ClusterActionsDropdown = (props) => {
     canSubscribeOCP,
     canTransferClusterOwnership,
     canHibernateCluster,
-    toggleSubscriptionReleased,
     refreshFunc,
     inClusterList: false,
+    toggleSubscriptionReleased,
   });
 
   const toggleRef = useRef();
@@ -95,7 +98,6 @@ ClusterActionsDropdown.propTypes = {
   canSubscribeOCP: PropTypes.bool.isRequired,
   canTransferClusterOwnership: PropTypes.bool.isRequired,
   canHibernateCluster: PropTypes.bool.isRequired,
-  toggleSubscriptionReleased: PropTypes.func.isRequired,
   refreshFunc: PropTypes.func.isRequired,
 };
 

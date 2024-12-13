@@ -33,7 +33,6 @@ import ResourceUsage from '../../../common/ResourceUsage/ResourceUsage';
 import { hasResourceUsageMetrics } from '../Monitoring/monitoringHelper';
 
 import InsightsAdvisor from './InsightsAdvisor/InsightsAdvisor';
-import ClusterStatusMonitor from './ClusterStatusMonitor';
 import CostBreakdownCard from './CostBreakdownCard';
 import DetailsLeft from './DetailsLeft';
 import DetailsRight from './DetailsRight';
@@ -45,15 +44,7 @@ import './Overview.scss';
 const { AssistedInstallerDetailCard } = OCM;
 
 const Overview = (props) => {
-  const {
-    cluster,
-    cloudProviders,
-    refresh,
-    insightsData,
-    userAccess,
-    hasNetworkOndemand,
-    chromeHistory,
-  } = props;
+  const { cluster, cloudProviders, refresh, insightsData, userAccess, chromeHistory } = props;
 
   const [showInstallSuccessAlert, setShowInstallSuccessAlert] = useState(false);
 
@@ -93,16 +84,6 @@ const Overview = (props) => {
   const metricsStatusMessage = isArchived
     ? metricsStatusMessages.archived
     : metricsStatusMessages[cluster.state] || metricsStatusMessages.default;
-
-  const shouldMonitorStatus =
-    [
-      clusterStates.WAITING,
-      clusterStates.PENDING,
-      clusterStates.INSTALLING,
-      clusterStates.ERROR,
-      clusterStates.UNINSTALLING,
-    ].includes(cluster.state) ||
-    (hasInflightEgressErrors(cluster) && hasNetworkOndemand);
 
   const hadInflightErrorKey = `${HAD_INFLIGHT_ERROR_LOCALSTORAGE_KEY}_${cluster.id}`;
   const showInflightErrorIsFixed =
@@ -182,7 +163,6 @@ const Overview = (props) => {
               }
             />
           )}
-          {shouldMonitorStatus && <ClusterStatusMonitor refresh={refresh} cluster={cluster} />}
 
           {showAssistedInstallerDetailCard && (
             <AssistedInstallerDetailCard
@@ -260,7 +240,6 @@ Overview.propTypes = {
   cluster: PropTypes.object,
   cloudProviders: PropTypes.object.isRequired,
   refresh: PropTypes.func,
-  hasNetworkOndemand: PropTypes.bool,
   insightsData: PropTypes.object,
   userAccess: PropTypes.shape({
     data: PropTypes.bool,

@@ -17,12 +17,6 @@ import { availableQuota } from '../../common/quotaSelectors';
 
 import { filterLoadBalancerValuesByQuota } from './LoadBalancersDropdownHelper';
 
-const formatError = (errorData: { reason: string; code: string; operation_id: string }) => ({
-  errorMessage: errorData?.reason,
-  errorCode: errorData?.code,
-  operationID: errorData?.operation_id,
-});
-
 type LoadBalancersDropdownProps = {
   input: any;
   disabled: boolean;
@@ -103,10 +97,7 @@ const LoadBalancersDropdown = ({
   return loadBalancerValuesIsError || quotaListIsError ? (
     <ErrorBox
       message="Error loading load balancers list"
-      response={formatError(
-        // @ts-ignore
-        loadBalancerValuesError?.response?.data || quotaListError?.response?.data,
-      )}
+      response={loadBalancerValuesError || {}}
     />
   ) : (
     <>

@@ -12,14 +12,12 @@ import { IRowCell } from '@patternfly/react-table';
 
 import { Link } from '~/common/routing';
 import type { GlobalState } from '~/redux/store';
+import { RelatedResource } from '~/types/accounts_mgmt.v1';
 
-import { billingModels } from '../../../common/subscriptionTypes';
 import ExternalLink from '../../common/ExternalLink';
 import SubscriptionNotFulfilled from '../SubscriptionNotFulfilled';
 
 import OSDSubscriptionTable from './OSDSubscriptionTable';
-
-const { MARKETPLACE } = billingModels;
 
 type Props = {
   organizationID: string;
@@ -114,14 +112,15 @@ const OSDSubscriptionCard = ({ quotaCost, marketplace, organizationID, fetchQuot
       // and explicitly allow addon-open-data-hub on the marketplace quota page
       const billingModel = get(relatedResources[0], 'billing_model');
       let resourceName = get(relatedResources[0], 'resource_name');
-      if (marketplace && billingModel !== MARKETPLACE) {
+      if (marketplace && billingModel !== RelatedResource.billing_model.MARKETPLACE) {
         if (resourceName !== 'addon-open-data-hub') {
           return;
         }
       }
       if (
         !marketplace &&
-        (billingModel === MARKETPLACE || resourceName === 'addon-open-data-hub')
+        (billingModel === RelatedResource.billing_model.MARKETPLACE ||
+          resourceName === 'addon-open-data-hub')
       ) {
         return;
       }

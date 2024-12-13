@@ -18,7 +18,6 @@ import {
 import { SupportedFeature } from '~/common/featureCompatibility';
 import { noQuotaTooltip } from '~/common/helpers';
 import links from '~/common/installLinks.mjs';
-import { billingModels } from '~/common/subscriptionTypes';
 import {
   asyncValidateClusterName,
   asyncValidateDomainPrefix,
@@ -62,7 +61,7 @@ import ExternalLink from '~/components/common/ExternalLink';
 import PopoverHint from '~/components/common/PopoverHint';
 import { getCloudProviders } from '~/redux/actions/cloudProviderActions';
 import { useGlobalState } from '~/redux/hooks/useGlobalState';
-import { QuotaCostList } from '~/types/accounts_mgmt.v1';
+import { QuotaCostList, SubscriptionCommonFields } from '~/types/accounts_mgmt.v1';
 import { Version } from '~/types/clusters_mgmt.v1';
 
 function Details() {
@@ -319,7 +318,7 @@ function Details() {
             <VersionSelectField
               name={FieldId.ClusterVersion}
               label={
-                billingModel === billingModels.MARKETPLACE_GCP
+                billingModel === SubscriptionCommonFields.cluster_billing_model.MARKETPLACE_GCP
                   ? 'Version (Google Cloud Marketplace enabled)'
                   : 'Version'
               }

@@ -26,7 +26,6 @@ import modals from '~/components/common/Modal/modals';
 import { SubscriptionCommonFields } from '~/types/accounts_mgmt.v1';
 
 import {
-  billingModels,
   normalizedProducts,
   subscriptionSettings,
 } from '../../../../../../common/subscriptionTypes';
@@ -73,9 +72,9 @@ function SubscriptionSettings({
   // the rest
   const billingModel = get(subscription, subscriptionSettings.CLUSTER_BILLING_MODEL);
   let billingModelStr = 'Not set';
-  if (billingModel === billingModels.STANDARD) {
+  if (billingModel === SubscriptionCommonFields.cluster_billing_model.STANDARD) {
     billingModelStr = 'Annual: Fixed capacity subscription from Red Hat';
-  } else if (billingModel === billingModels.MARKETPLACE) {
+  } else if (billingModel === SubscriptionCommonFields.cluster_billing_model.MARKETPLACE) {
     billingModelStr = 'On-Demand (Hourly)';
   }
   const usageStr = get(subscription, subscriptionSettings.USAGE, 'Not set');

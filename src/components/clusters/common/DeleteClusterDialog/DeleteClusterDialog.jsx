@@ -44,13 +44,12 @@ class DeleteClusterDialog extends React.Component {
       modalData,
       deleteCluster,
       deleteClusterResponse,
-      shouldDisplayClusterName,
       textContent,
       title,
       titleIconVariant,
     } = this.props;
 
-    const { clusterID, clusterName } = modalData;
+    const { clusterID, clusterName, shouldDisplayClusterName } = modalData;
 
     const { clusterNameInput } = this.state;
 
@@ -111,13 +110,13 @@ DeleteClusterDialog.propTypes = {
   modalData: PropTypes.shape({
     clusterName: PropTypes.string,
     clusterID: PropTypes.string,
+    shouldDisplayClusterName: PropTypes.bool,
   }),
   clearDeleteClusterResponse: PropTypes.func.isRequired,
   close: PropTypes.func.isRequired,
   deleteCluster: PropTypes.func.isRequired,
   deleteClusterResponse: PropTypes.object,
   onClose: PropTypes.func,
-  shouldDisplayClusterName: PropTypes.bool,
   textContent: PropTypes.string,
   title: PropTypes.string,
   titleIconVariant: PropTypes.string,

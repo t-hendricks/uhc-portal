@@ -29,6 +29,12 @@ export const useFetchOrganizationQuota = (organizationID: string) => {
   });
 
   return isError
-    ? { isLoading, data, isError, error: formatErrorData(isLoading, isError, error) }
-    : { isLoading, data, isError, error, isFetching, refetch };
+    ? {
+        isLoading,
+        data,
+        isError,
+        error: formatErrorData(isLoading, isError, error),
+        rawError: error,
+      }
+    : { isLoading, data, isError, error, isFetching, refetch, rawError: error };
 };

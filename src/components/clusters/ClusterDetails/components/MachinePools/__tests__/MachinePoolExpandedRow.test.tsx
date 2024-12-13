@@ -1,7 +1,8 @@
 import React from 'react';
 
 import { render, screen } from '~/testUtils';
-import { Cluster, MachinePool } from '~/types/clusters_mgmt.v1';
+import { MachinePool } from '~/types/clusters_mgmt.v1';
+import { ClusterFromSubscription } from '~/types/types';
 
 import MachinePoolExpandedRow from '../components/MachinePoolExpandedRow';
 
@@ -39,7 +40,7 @@ const defaultMachinePool: MachinePool = {
   autoscaling: { min_replicas: 0, max_replicas: 4 },
 };
 
-const cluster = { id: 'my-cluster-id' } as Cluster;
+const cluster = { id: 'my-cluster-id' } as ClusterFromSubscription;
 
 const getDefaultProps = (machinePoolProps: Partial<MachinePool>) => ({
   cluster,

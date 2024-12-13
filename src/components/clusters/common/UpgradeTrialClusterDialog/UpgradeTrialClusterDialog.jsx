@@ -5,9 +5,10 @@ import PropTypes from 'prop-types';
 import { Alert, Button, Form } from '@patternfly/react-core';
 
 import { Link } from '~/common/routing';
+import { SubscriptionCommonFields } from '~/types/accounts_mgmt.v1';
 
 import links from '../../../../common/installLinks.mjs';
-import { billingModels, normalizedProducts } from '../../../../common/subscriptionTypes';
+import { normalizedProducts } from '../../../../common/subscriptionTypes';
 import MechTraining from '../../../../styles/images/RH_BRAND_7764_01_MECH_Training.svg';
 import ErrorBox from '../../../common/ErrorBox';
 import ExternalLink from '../../../common/ExternalLink';
@@ -47,7 +48,6 @@ class UpgradeTrialClusterDialog extends Component {
       machinePools,
     } = this.props;
     const { OSD } = normalizedProducts;
-    const { STANDARD, MARKETPLACE } = billingModels;
 
     // OSD Trial is always CCS
     const isBYOC = true;
@@ -78,7 +78,7 @@ class UpgradeTrialClusterDialog extends Component {
         resourceName: key,
         isBYOC,
         isMultiAz,
-        billingModel: STANDARD,
+        billingModel: SubscriptionCommonFields.cluster_billing_model.STANDARD,
       };
 
       const standardClusters = availableClustersFromQuota(quotaList, quotaParams);
@@ -87,7 +87,7 @@ class UpgradeTrialClusterDialog extends Component {
       quota.STANDARD =
         quota.STANDARD && standardNodes >= machinePoolTypes[key] && standardClusters > 0;
 
-      quotaParams.billingModel = MARKETPLACE;
+      quotaParams.billingModel = SubscriptionCommonFields.cluster_billing_model.MARKETPLACE;
       const marketClusters = availableClustersFromQuota(quotaList, quotaParams);
       const marketNodes = availableNodesFromQuota(quotaList, quotaParams);
       quota.MARKETPLACE =
@@ -99,7 +99,6 @@ class UpgradeTrialClusterDialog extends Component {
 
   primaryButton(availableQuota) {
     const { submit, clusterID } = this.props;
-    const { STANDARD, MARKETPLACE } = billingModels;
     const marketplaceQuotaEnabled = availableQuota.MARKETPLACE;
     const button = {
       primaryText: 'Contact sales',
@@ -112,14 +111,16 @@ class UpgradeTrialClusterDialog extends Component {
     if (availableQuota.STANDARD && !availableQuota.MARKETPLACE) {
       button.primaryText = 'Upgrade using quota';
       button.primaryLink = null;
-      button.onPrimaryClick = () => submit(clusterID, STANDARD);
+      button.onPrimaryClick = () =>
+        submit(clusterID, SubscriptionCommonFields.cluster_billing_model.STANDARD);
       return button;
     }
 
     if (marketplaceQuotaEnabled) {
       button.primaryText = 'Upgrade using Marketplace billing';
       button.primaryLink = null;
-      button.onPrimaryClick = () => submit(clusterID, MARKETPLACE);
+      button.onPrimaryClick = () =>
+        submit(clusterID, SubscriptionCommonFields.cluster_billing_model.MARKETPLACE);
       return button;
     }
 
@@ -128,7 +129,6 @@ class UpgradeTrialClusterDialog extends Component {
 
   secondaryButton(availableQuota) {
     const { submit, clusterID } = this.props;
-    const { STANDARD } = billingModels;
     const button = {
       showSecondary: false,
     };
@@ -142,7 +142,8 @@ class UpgradeTrialClusterDialog extends Component {
 
     if (availableQuota.MARKETPLACE && availableQuota.STANDARD) {
       button.secondaryText = 'Upgrade using quota';
-      button.onSecondaryClick = () => submit(clusterID, STANDARD);
+      button.onSecondaryClick = () =>
+        submit(clusterID, SubscriptionCommonFields.cluster_billing_model.STANDARD);
     }
 
     if (availableQuota.MARKETPLACE && !availableQuota.STANDARD) {

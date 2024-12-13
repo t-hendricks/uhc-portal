@@ -82,6 +82,17 @@ const fetchSubscriptionByExternalId = (clusterExternalID: string) =>
     },
   });
 
+const fetchSubscriptionByClusterId = (clusterID: string) =>
+  apiRequest.get<SubscriptionList>('/api/accounts_mgmt/v1/subscriptions', {
+    params: {
+      search: `cluster_id='${clusterID}'`,
+      fetchAccounts: true,
+      fetchCpuAndSocket: true,
+      fetchCapabilities: true,
+      fetchMetrics: true,
+    },
+  });
+
 const getUnhealthyClusters = (
   organizationID: string,
   params: {
@@ -266,6 +277,7 @@ const accountsService = {
   getCredentialRequests,
   searchSubscriptions,
   getRegionalInstances,
+  fetchSubscriptionByClusterId,
 };
 
 export default accountsService;

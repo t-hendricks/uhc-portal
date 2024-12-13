@@ -1,7 +1,7 @@
 import React from 'react';
 import { findIndex, get } from 'lodash';
 
-import { billingModels, subscriptionSettings } from '~/common/subscriptionTypes';
+import { subscriptionSettings } from '~/common/subscriptionTypes';
 import { Subscription, SubscriptionCommonFields } from '~/types/accounts_mgmt.v1';
 
 import { EditSubcriptionOption } from './model/EditSubcriptionOption';
@@ -69,8 +69,14 @@ const getOptions = (
       break;
     case subscriptionSettings.CLUSTER_BILLING_MODEL:
       options = [
-        { label: STANDARD_BILLING_MODEL_LABEL, value: billingModels.STANDARD },
-        { label: MARKETPLACE_BILLING_MODEL_LABEL, value: billingModels.MARKETPLACE },
+        {
+          label: STANDARD_BILLING_MODEL_LABEL,
+          value: SubscriptionCommonFields.cluster_billing_model.STANDARD,
+        },
+        {
+          label: MARKETPLACE_BILLING_MODEL_LABEL,
+          value: SubscriptionCommonFields.cluster_billing_model.MARKETPLACE,
+        },
       ];
       if (canSubscribeMarketplaceOCP) {
         options[1].isDefault = true;
@@ -103,4 +109,4 @@ const resetOptions = (
     {},
   );
 
-export { resetOptions, getOptions };
+export { getOptions, resetOptions };

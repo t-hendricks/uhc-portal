@@ -1,15 +1,24 @@
 import * as React from 'react';
 
 import { render, screen, within } from '~/testUtils';
+import { ClusterFromSubscription } from '~/types/types';
 
 import { EditMachinePoolModal } from './EditMachinePoolModal';
+
+const testCluster = {
+  name: 'test-cluster-name',
+  domain_prefix: 'domainPre1',
+  subscription: {
+    display_name: 'test-cluster-display-name',
+  },
+};
 
 describe('<EditMachinePoolModal />', () => {
   describe('error state', () => {
     it('Shows alert if machine pools failed to load', async () => {
       render(
         <EditMachinePoolModal
-          cluster={{}}
+          cluster={{} as ClusterFromSubscription}
           onClose={() => {}}
           machinePoolsResponse={{
             error: true,
@@ -40,7 +49,7 @@ describe('<EditMachinePoolModal />', () => {
     it('Shows alert if machine types failed to load', async () => {
       render(
         <EditMachinePoolModal
-          cluster={{}}
+          cluster={{} as ClusterFromSubscription}
           onClose={() => {}}
           machinePoolsResponse={{
             error: true,
@@ -79,7 +88,7 @@ describe('<EditMachinePoolModal />', () => {
     it('Shows loading if machine pools are loading', async () => {
       render(
         <EditMachinePoolModal
-          cluster={{}}
+          cluster={{} as ClusterFromSubscription}
           onClose={() => {}}
           machinePoolsResponse={{
             error: false,
@@ -101,7 +110,7 @@ describe('<EditMachinePoolModal />', () => {
     it('Shows loading if machine types are loading', async () => {
       render(
         <EditMachinePoolModal
-          cluster={{}}
+          cluster={{} as ClusterFromSubscription}
           onClose={() => {}}
           machinePoolsResponse={{
             error: false,
@@ -124,7 +133,7 @@ describe('<EditMachinePoolModal />', () => {
     it('Submit button shows `Add machine pool`', async () => {
       render(
         <EditMachinePoolModal
-          cluster={{}}
+          cluster={{} as ClusterFromSubscription}
           onClose={() => {}}
           machinePoolsResponse={{
             error: false,
@@ -148,10 +157,37 @@ describe('<EditMachinePoolModal />', () => {
   });
 
   describe('edit machine pool', () => {
+    it('shows subscription display name when displayClusterName is true', async () => {
+      render(
+        <EditMachinePoolModal
+          cluster={testCluster as unknown as ClusterFromSubscription}
+          onClose={() => {}}
+          shouldDisplayClusterName
+          machinePoolsResponse={{
+            error: false,
+            fulfilled: true,
+            pending: false,
+            data: [],
+          }}
+          machineTypesResponse={{
+            error: false,
+            pending: false,
+            fulfilled: true,
+            types: {},
+            typesByID: {},
+          }}
+          isEdit
+        />,
+      );
+
+      expect(screen.queryByText('test-cluster-name')).not.toBeInTheDocument();
+      expect(await screen.findByText('test-cluster-display-name')).toBeInTheDocument();
+    });
+
     it('Submit button shows `Save`', async () => {
       const { rerender } = render(
         <EditMachinePoolModal
-          cluster={{}}
+          cluster={{} as ClusterFromSubscription}
           onClose={() => {}}
           machinePoolsResponse={{
             error: false,
@@ -174,7 +210,7 @@ describe('<EditMachinePoolModal />', () => {
 
       rerender(
         <EditMachinePoolModal
-          cluster={{}}
+          cluster={{} as ClusterFromSubscription}
           onClose={() => {}}
           machinePoolsResponse={{
             error: false,
@@ -200,7 +236,7 @@ describe('<EditMachinePoolModal />', () => {
       it('Loaded state with single zone machinepool', async () => {
         render(
           <EditMachinePoolModal
-            cluster={{ multi_az: true }}
+            cluster={{ multi_az: true } as ClusterFromSubscription}
             onClose={() => {}}
             machinePoolsResponse={{
               error: false,
@@ -236,7 +272,7 @@ describe('<EditMachinePoolModal />', () => {
       it('Loaded state with multi zone machinepool', async () => {
         render(
           <EditMachinePoolModal
-            cluster={{ multi_az: true }}
+            cluster={{ multi_az: true } as ClusterFromSubscription}
             onClose={() => {}}
             machinePoolsResponse={{
               error: false,
@@ -276,7 +312,13 @@ describe('<EditMachinePoolModal />', () => {
       // Render
       const { user } = render(
         <EditMachinePoolModal
-          cluster={{ multi_az: false, hypershift: { enabled: true }, product: { id: 'ROSA' } }}
+          cluster={
+            {
+              multi_az: false,
+              hypershift: { enabled: true },
+              product: { id: 'ROSA' },
+            } as ClusterFromSubscription
+          }
           onClose={() => {}}
           isHypershift
           machinePoolsResponse={{

@@ -3,7 +3,7 @@ import { isEqual } from 'lodash';
 
 import { FormGroup } from '@patternfly/react-core';
 
-import { billingModels, subscriptionSettings } from '~/common/subscriptionTypes';
+import { subscriptionSettings } from '~/common/subscriptionTypes';
 import { FormGroupHelperText } from '~/components/common/FormGroupHelperText';
 import { ReduxFormRadioGroup } from '~/components/common/ReduxFormComponents';
 import { SubscriptionCommonFields } from '~/types/accounts_mgmt.v1';
@@ -51,7 +51,8 @@ const EditSubscriptionSettingsFields = ({
     [canSubscribeMarketplaceOCP, canSubscribeStandardOCP],
   );
   const isDisabledByBillingModel = useMemo(
-    () => settings.cluster_billing_model === billingModels.MARKETPLACE,
+    () =>
+      settings.cluster_billing_model === SubscriptionCommonFields.cluster_billing_model.MARKETPLACE,
     [settings.cluster_billing_model],
   );
   const isDisabledBySupportLevel = useMemo(
@@ -71,8 +72,10 @@ const EditSubscriptionSettingsFields = ({
     () =>
       canSubscribeStandardOCP &&
       canSubscribeMarketplaceOCP &&
-      billingModels.STANDARD !== initialSettings.cluster_billing_model &&
-      billingModels.MARKETPLACE !== initialSettings.cluster_billing_model,
+      SubscriptionCommonFields.cluster_billing_model.STANDARD !==
+        initialSettings.cluster_billing_model &&
+      SubscriptionCommonFields.cluster_billing_model.MARKETPLACE !==
+        initialSettings.cluster_billing_model,
     [canSubscribeMarketplaceOCP, canSubscribeStandardOCP, initialSettings.cluster_billing_model],
   );
   const systemUnitsNumericErrorMsg = useMemo(
@@ -146,7 +149,7 @@ const EditSubscriptionSettingsFields = ({
     ) => {
       if (
         settingName === subscriptionSettings.SUPPORT_LEVEL &&
-        value === billingModels.MARKETPLACE
+        value === SubscriptionCommonFields.cluster_billing_model.MARKETPLACE
       ) {
         // preset values for marketplace
         const subSettings: EditSubsriptionSettingsFieldsValues = {
@@ -155,7 +158,7 @@ const EditSubscriptionSettingsFields = ({
           service_level: SubscriptionCommonFields.service_level.L1_L3,
           usage: SubscriptionCommonFields.usage.PRODUCTION,
           system_units: SubscriptionCommonFields.system_units.CORES_V_CPU,
-          cluster_billing_model: billingModels.MARKETPLACE,
+          cluster_billing_model: SubscriptionCommonFields.cluster_billing_model.MARKETPLACE,
         };
         setOptions(resetOptions(subSettings));
         publishChange(options, subSettings);
@@ -182,11 +185,14 @@ const EditSubscriptionSettingsFields = ({
       }
       setOptions(options);
 
-      if (settings.cluster_billing_model === billingModels.MARKETPLACE) {
+      if (
+        settings.cluster_billing_model ===
+        SubscriptionCommonFields.cluster_billing_model.MARKETPLACE
+      ) {
         handleChange(
           options,
           subscriptionSettings.CLUSTER_BILLING_MODEL,
-          billingModels.MARKETPLACE,
+          SubscriptionCommonFields.cluster_billing_model.MARKETPLACE,
         );
       } else {
         publishChange(options, settings);

@@ -609,7 +609,7 @@ export const providersExpectedFormData = [
     idpId: '2aa828nuogqdntjaglps8u9r2pqv9bs6',
     ldap_ca:
       '-----BEGIN CERTIFICATE-----\ntesttesttesttesttesttesttesttesttesttesttesttest\ntesttesttesttesttesttesttesttesttesttesttesttest\ntesttesttesttesttesttesttesttesttesttesttesttest\n-----END CERTIFICATE-----',
-    ldap_email: {},
+    ldap_email: [''],
     ldap_id: ['dn'],
     ldap_insecure: false,
     ldap_name: ['cn'],

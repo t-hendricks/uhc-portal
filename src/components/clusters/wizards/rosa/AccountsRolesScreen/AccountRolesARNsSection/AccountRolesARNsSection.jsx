@@ -390,13 +390,9 @@ function AccountRolesARNsSection({
                   helpText=""
                   extendedHelpText={
                     <>
-                      An IAM role used by the ROSA installer.
-                      <br />
-                      For more information see{' '}
-                      <ExternalLink href={links.ROSA_AWS_IAM_ROLES}>
-                        Table 1 about the installer role policy
-                      </ExternalLink>
-                      .
+                      An IAM role used by the ROSA installer. The role is used with the
+                      corresponding policy resource to provide the installer with the permissions
+                      required to complete cluster installation tasks.
                     </>
                   }
                 />
@@ -418,13 +414,9 @@ function AccountRolesARNsSection({
                   extendedHelpText={
                     <>
                       An IAM role used by the Red Hat Site Reliability Engineering (SRE) support
-                      team.
-                      <br />
-                      For more information see{' '}
-                      <ExternalLink href={links.ROSA_AWS_IAM_ROLES}>
-                        Table 4 about the support role policy
-                      </ExternalLink>
-                      .
+                      team. The role is used with the corresponding policy resource to provide the
+                      Red Hat SRE support team with the permissions required to support ROSA
+                      clusters.
                     </>
                   }
                   isDisabled
@@ -445,13 +437,9 @@ function AccountRolesARNsSection({
                   isRequired
                   extendedHelpText={
                     <>
-                      An IAM role used by the ROSA compute instances.
-                      <br />
-                      For more information see{' '}
-                      <ExternalLink href={links.ROSA_AWS_IAM_ROLES}>
-                        Table 3 about the worker/compute role policy
-                      </ExternalLink>
-                      .
+                      An IAM role used by the ROSA compute instances. The role is used with the
+                      corresponding policy resource to provide the compute instances with the
+                      permissions required to manage their components.
                     </>
                   }
                   isDisabled
@@ -475,13 +463,9 @@ function AccountRolesARNsSection({
                       isRequired
                       extendedHelpText={
                         <>
-                          An IAM role used by the ROSA control plane.
-                          <br />
-                          For more information see{' '}
-                          <ExternalLink href={links.ROSA_AWS_IAM_ROLES}>
-                            Table 2 about the control plane role policy
-                          </ExternalLink>
-                          .
+                          An IAM role used by the ROSA control plane. The role is used with the
+                          corresponding policy resource to provide the control plane with the
+                          permissions required to manage its components.
                         </>
                       }
                       isDisabled

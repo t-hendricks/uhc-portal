@@ -23,6 +23,7 @@ import { UILibRoutes as AssistedInstallerRoutes } from '@openshift-assisted/ui-l
 import useChrome from '@redhat-cloud-services/frontend-components/useChrome';
 
 import { Navigate, ocmBaseName } from '~/common/routing';
+import ClusterDetailsClusterOrExternalIdMR from '~/components/clusters/ClusterDetailsMultiRegion/ClusterDetailsClusterOrExternalId';
 import config from '~/config';
 import { useFeatureGate } from '~/hooks/useFeatureGate';
 import { isRestrictedEnv } from '~/restrictedEnv';
@@ -35,7 +36,6 @@ import {
   MULTIREGION_PREVIEW_ENABLED,
 } from '../../redux/constants/featureConstants';
 import CLILoginPage from '../CLILoginPage/CLILoginPage';
-import ArchivedClusterList from '../clusters/ArchivedClusterList';
 import ArchivedClusterListMultiRegion from '../clusters/ArchivedClusterListMultiRegion';
 import ClusterDetailsClusterOrExternalId from '../clusters/ClusterDetails/ClusterDetailsClusterOrExternalId';
 import ClusterDetailsSubscriptionId from '../clusters/ClusterDetails/ClusterDetailsSubscriptionId';
@@ -43,7 +43,6 @@ import AccessRequestNavigate from '../clusters/ClusterDetails/components/AccessR
 import IdentityProvidersPage from '../clusters/ClusterDetails/components/IdentityProvidersPage';
 import ClusterDetailsSubscriptionIdMultiRegion from '../clusters/ClusterDetailsMultiRegion/ClusterDetailsSubscriptionIdMultiRegion';
 import IdentityProviderPageMultiregion from '../clusters/ClusterDetailsMultiRegion/components/IdentityProvidersPage/index';
-import ClustersList from '../clusters/ClusterList';
 import ClusterListMultiRegion from '../clusters/ClusterListMultiRegion';
 import CreateClusterPage from '../clusters/CreateClusterPage';
 import GovCloudPage from '../clusters/GovCloud/GovCloudPage';
@@ -166,17 +165,6 @@ const Router: React.FC<RouterProps> = ({ planType, clusterId, externalClusterId 
       ...(is404() ? { title: '404 Not Found' } : {}),
     });
   }, [pathname, planType, clusterId, externalClusterId, setPageMetadata]);
-
-  const getClusterListElement = () => {
-    if (config.newClusterList) {
-      return <ClusterListMultiRegion getMultiRegion={false} />;
-    }
-    if (config.multiRegion && isMultiRegionPreviewEnabled) {
-      return <ClusterListMultiRegion getMultiRegion />;
-    }
-    // @ts-ignore
-    return <ClustersList />;
-  };
 
   return (
     <ApiError apiRequest={apiRequest}>
@@ -407,21 +395,25 @@ const Router: React.FC<RouterProps> = ({ planType, clusterId, externalClusterId 
           path="/details/:id/insights/:reportId/:errorKey"
           element={<InsightsAdvisorRedirector />}
         />
-        <Route path="/details/:id" element={<ClusterDetailsClusterOrExternalId />} />
+        <Route
+          path="/details/:id"
+          element={
+            config.multiRegion && isMultiRegionPreviewEnabled ? (
+              <ClusterDetailsClusterOrExternalIdMR />
+            ) : (
+              <ClusterDetailsClusterOrExternalId />
+            )
+          }
+        />
         <Route path="/register" element={<RegisterCluster />} />
         <Route path="/quota/resource-limits" element={<Quota marketplace />} />
         <Route path="/quota" element={<Quota />} />
         <Route
           path="/archived"
           element={
-            config.newClusterList || (config.multiRegion && isMultiRegionPreviewEnabled) ? (
-              <ArchivedClusterListMultiRegion
-                getMultiRegion={config.multiRegion && isMultiRegionPreviewEnabled}
-              />
-            ) : (
-              // @ts-ignore
-              <ArchivedClusterList />
-            )
+            <ArchivedClusterListMultiRegion
+              getMultiRegion={config.multiRegion && isMultiRegionPreviewEnabled}
+            />
           }
         />
         <Route path="/dashboard" element={<Dashboard />} />
@@ -457,7 +449,14 @@ const Router: React.FC<RouterProps> = ({ planType, clusterId, externalClusterId 
         'Operational' or 'Major Outage' status for "OpenShift Cluster Manager" on the
         'http:///status.redhat.com' site. If this route is changed, then the related catchpoint
         tests must be updated. For more info. see: https://issues.redhat.com/browse/OCMUI-2398 */}
-        <Route path="/cluster-list" element={getClusterListElement()} />
+        <Route
+          path="/cluster-list"
+          element={
+            <ClusterListMultiRegion
+              getMultiRegion={config.multiRegion && isMultiRegionPreviewEnabled}
+            />
+          }
+        />
         <Route
           path="/"
           element={<Navigate replace to={isRestrictedEnv() ? '/cluster-list' : '/overview'} />}

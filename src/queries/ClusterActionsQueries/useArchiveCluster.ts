@@ -5,7 +5,9 @@ import { useMutation } from '@tanstack/react-query';
 
 import { getClusterServiceForRegion } from '~/services/clusterService';
 
-const buildArchiveNotifications = (name: string, archived: boolean) => ({
+import { formatErrorData } from '../helpers';
+
+export const buildArchiveNotifications = (name: string, archived: boolean) => ({
   variant: 'success',
   title: `Cluster ${name} has been ${archived ? 'archived' : 'unarchived'}`,
   dismissDelay: 8000,
@@ -38,5 +40,12 @@ export const useArchiveCluster = () => {
     },
   });
 
-  return { isSuccess, error, isError, isPending, mutate, reset };
+  return {
+    isSuccess,
+    error: isError && error ? formatErrorData(isPending, isError, error)?.error : null,
+    isError,
+    isPending,
+    mutate,
+    reset,
+  };
 };

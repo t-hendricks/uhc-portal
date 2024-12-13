@@ -141,7 +141,7 @@ describe('<ArchiveClusterDialog />', () => {
     const newUseArchiveClusterResponse = {
       ...defaultUseArchiveClusterResponse,
       isError: true,
-      error: { response: { data: { reason: 'I am an error', operation_id: 'error_id' } } },
+      error: { errorMessage: 'I am an error', operationID: 'error_id' },
     };
 
     // @ts-ignore

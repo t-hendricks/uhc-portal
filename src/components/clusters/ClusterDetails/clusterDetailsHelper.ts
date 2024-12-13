@@ -4,7 +4,6 @@ import clusterStates, {
   isHypershiftCluster,
 } from '~/components/clusters/common/clusterStates';
 import { ClusterResource, Subscription, SubscriptionCommonFields } from '~/types/accounts_mgmt.v1';
-import { Cluster } from '~/types/clusters_mgmt.v1';
 import { ClusterFromSubscription } from '~/types/types';
 
 const hasCpuAndMemory = (cpu: ClusterResource | undefined, memory: ClusterResource | undefined) =>
@@ -22,10 +21,10 @@ const getSubscriptionLastReconciledDate = (subscription: Subscription) =>
     ? new Date(subscription.last_reconcile_date).toLocaleString()
     : false;
 
-const isMultiAZ = (cluster: Cluster): boolean =>
+const isMultiAZ = (cluster: ClusterFromSubscription): boolean =>
   !isHypershiftCluster(cluster) && cluster.multi_az === true;
 
-const isMPoolAz = (cluster: Cluster, mpAvailZones: number | undefined): boolean => {
+const isMPoolAz = (cluster: ClusterFromSubscription, mpAvailZones: number | undefined): boolean => {
   // Checks if it is multizone cluster and multi zone machinepool
   if (
     (isMultiAZ(cluster) && mpAvailZones && mpAvailZones > 1) ||

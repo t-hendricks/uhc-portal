@@ -1,6 +1,8 @@
 import { produce } from 'immer';
 
-import { billingModels, normalizedProducts } from '../../../../common/subscriptionTypes';
+import { SubscriptionCommonFields } from '~/types/accounts_mgmt.v1';
+
+import { normalizedProducts } from '../../../../common/subscriptionTypes';
 import clusterStates from '../../common/clusterStates';
 
 const match = { params: { id: '1msoogsgTLQ4PePjrTOt3UqvMzX' } };
@@ -451,7 +453,8 @@ const OSDRHMClusterDetails = produce(CCSClusterDetails, (draft) => {
     id: normalizedProducts.OSD,
     type: normalizedProducts.OSD,
   };
-  draft.cluster.subscription.cluster_billing_model = billingModels.MARKETPLACE;
+  draft.cluster.subscription.cluster_billing_model =
+    SubscriptionCommonFields.cluster_billing_model.MARKETPLACE;
 });
 
 const OSDGCPClusterDetails = produce(CCSClusterDetails, (draft) => {
@@ -460,7 +463,8 @@ const OSDGCPClusterDetails = produce(CCSClusterDetails, (draft) => {
     id: normalizedProducts.OSD,
     type: normalizedProducts.OSD,
   };
-  draft.cluster.subscription.cluster_billing_model = billingModels.MARKETPLACE_GCP;
+  draft.cluster.subscription.cluster_billing_model =
+    SubscriptionCommonFields.cluster_billing_model.MARKETPLACE_GCP;
 });
 
 const ROSAClusterDetails = produce(CCSClusterDetails, (draft) => {
@@ -1147,7 +1151,6 @@ const fixtures = {
   clusterRouters,
   clusterLogsViewOptions: {},
   addOns: {},
-  hasNetworkOndemand: false,
   supportCases: {},
   notificationContacts: {},
   initTabOpen: '',

@@ -9,11 +9,12 @@ import ErrorBox from '~/components/common/ErrorBox';
 import Modal from '~/components/common/Modal/Modal';
 import { closeModal } from '~/components/common/Modal/ModalActions';
 import modals from '~/components/common/Modal/modals';
+import { refetchAccessRequests } from '~/queries/ClusterDetailsQueries/AccessRequestTab/useFetchAccessRequests';
+import { refetchPendingAccessRequests } from '~/queries/ClusterDetailsQueries/AccessRequestTab/useFetchPendingAccessRequests';
 import {
-  canMakeDecision,
-  postAccessRequestDecision,
-  resetCanMakeDecision,
-} from '~/redux/actions/accessRequestActions';
+  useCanMakeDecision,
+  usePostAccessRequestDecision,
+} from '~/queries/ClusterDetailsQueries/AccessRequestTab/usePostAccessRequestDecision';
 import { useGlobalState } from '~/redux/hooks';
 import { AccessRequest, Decision } from '~/types/access_transparency.v1';
 
@@ -31,10 +32,6 @@ const AccessRequestModalForm = () => {
     accessRequest?: AccessRequest;
     onClose: () => void;
   };
-  const postAccessRequestDecisionState = useGlobalState(
-    (state) => state.accessRequest.postAccessRequestDecision,
-  );
-  const canMakeDecisionState = useGlobalState((state) => state.accessRequest.canMakeDecision);
   const organizationId = useGlobalState((state) => state.userProfile?.organization?.details?.id);
 
   const [isLoading, setIsLoading] = useState(true);
@@ -44,44 +41,39 @@ const AccessRequestModalForm = () => {
     [accessRequest],
   );
 
+  const {
+    mutate: postAccessRequestDecision,
+    isPending: isPostAccessRequestDecisionPending,
+    isError: isPostAccessRequestDecisionError,
+    error: postAccessRequestDecisionError,
+    isSuccess: isPostAccessRequestDecisionSuccess,
+  } = usePostAccessRequestDecision(accessRequest?.id!!);
+
+  const {
+    data: canMakeDecision,
+    isLoading: isCanMakeDecisionLoading,
+    isError: isCanMakeDecisionError,
+    error: canMakeDecisionError,
+  } = useCanMakeDecision(accessRequest?.subscription_id!!, organizationId!!, isEditMode);
+
   const handleClose = useCallback(() => {
     dispatch(closeModal());
     onClose();
   }, [dispatch, onClose]);
 
   useEffect(
-    () => () => {
-      dispatch(resetCanMakeDecision());
-    },
-    [dispatch],
-  );
-
-  useEffect(() => {
-    if (isEditMode && accessRequest?.subscription_id && organizationId) {
-      dispatch(canMakeDecision(accessRequest.subscription_id, organizationId));
-    }
-  }, [accessRequest?.subscription_id, organizationId, isEditMode, dispatch]);
-
-  useEffect(
     () =>
       setIsLoading(
-        !accessRequest?.id ||
-          canMakeDecisionState.pending ||
-          postAccessRequestDecisionState.pending,
+        !accessRequest?.id || isCanMakeDecisionLoading || isPostAccessRequestDecisionPending,
       ),
-    [
-      setIsLoading,
-      accessRequest?.id,
-      canMakeDecisionState.pending,
-      postAccessRequestDecisionState.pending,
-    ],
+    [setIsLoading, accessRequest?.id, isCanMakeDecisionLoading, isPostAccessRequestDecisionPending],
   );
 
   useEffect(() => {
-    if (postAccessRequestDecisionState.fulfilled) {
+    if (isPostAccessRequestDecisionSuccess) {
       handleClose();
     }
-  }, [handleClose, postAccessRequestDecisionState.fulfilled]);
+  }, [handleClose, isPostAccessRequestDecisionSuccess]);
 
   return accessRequest ? (
     <Formik
@@ -105,14 +97,20 @@ const AccessRequestModalForm = () => {
       })}
       onSubmit={async (values) => {
         const decision = values[AccessRequestFieldId.State] as Decision.decision;
-        dispatch(
-          postAccessRequestDecision(accessRequest.id!!, {
+        postAccessRequestDecision(
+          {
             decision,
             justification:
               decision === Decision.decision.DENIED
                 ? values[AccessRequestFieldId.Justification]
                 : undefined,
-          }),
+          },
+          {
+            onSuccess: () => {
+              refetchAccessRequests();
+              refetchPendingAccessRequests();
+            },
+          },
         );
       }}
     >
@@ -130,35 +128,35 @@ const AccessRequestModalForm = () => {
             (!formik.isValid ||
               !formik.dirty ||
               formik.isSubmitting ||
-              postAccessRequestDecisionState.pending)
+              isPostAccessRequestDecisionPending)
           }
           id="access-request-modal"
           isPending={isLoading}
           help={<AccessRequestStateIcon accessRequest={accessRequest} />}
           footer={
-            !postAccessRequestDecisionState.error && !canMakeDecisionState.error ? null : (
+            !isPostAccessRequestDecisionError && !isCanMakeDecisionError ? null : (
               <>
-                {postAccessRequestDecisionState.error ? (
+                {isPostAccessRequestDecisionError ? (
                   <Stack hasGutter>
                     <StackItem>
                       <ErrorBox
                         message="A problem occurred while saving access request"
                         response={{
-                          errorMessage: postAccessRequestDecisionState.errorMessage,
-                          errorDetails: postAccessRequestDecisionState.errorDetails,
+                          errorMessage: postAccessRequestDecisionError?.error.errorMessage,
+                          errorDetails: postAccessRequestDecisionError?.error.errorDetails,
                         }}
                       />
                     </StackItem>
                   </Stack>
                 ) : null}
-                {canMakeDecisionState.error ? (
+                {isCanMakeDecisionError ? (
                   <Stack hasGutter>
                     <StackItem>
                       <ErrorBox
                         message="A problem occurred while retrieving rights for making a decision"
                         response={{
-                          errorMessage: canMakeDecisionState.errorMessage,
-                          errorDetails: canMakeDecisionState.errorDetails,
+                          errorMessage: canMakeDecisionError?.error.errorMessage,
+                          errorDetails: canMakeDecisionError?.error.errorDetails,
                         }}
                       />
                     </StackItem>
@@ -168,10 +166,10 @@ const AccessRequestModalForm = () => {
             )
           }
         >
-          {isEditMode && !postAccessRequestDecisionState.error ? (
+          {isEditMode && !isPostAccessRequestDecisionError ? (
             <AccessRequestEdit
               accessRequest={accessRequest}
-              userDecisionRights={canMakeDecisionState.allowed}
+              userDecisionRights={canMakeDecision?.allowed}
             />
           ) : (
             <AccessRequestDetails accessRequest={accessRequest} />

@@ -11,12 +11,6 @@ import Modal from '../../../common/Modal/Modal';
 import { closeModal } from '../../../common/Modal/ModalActions';
 import modals from '../../../common/Modal/modals';
 
-const formatError = (errorData: { reason: string; code: string; operation_id: string }) => ({
-  errorMessage: errorData?.reason,
-  errorCode: errorData?.code,
-  operationID: errorData?.operation_id,
-});
-
 const ArchiveClusterDialog = ({ onClose }: { onClose: () => void }) => {
   const modalData = useGlobalState((state) => state.modal.data) as {
     subscriptionID: string;
@@ -68,13 +62,7 @@ const ArchiveClusterDialog = ({ onClose }: { onClose: () => void }) => {
       onSecondaryClick={cancelEdit}
     >
       <>
-        {isError ? (
-          <ErrorBox
-            message="Error archiving cluster"
-            // @ts-ignore
-            response={formatError(error?.response?.data)}
-          />
-        ) : null}
+        {isError ? <ErrorBox message="Error archiving cluster" response={error || {}} /> : null}
 
         <Form onSubmit={() => submit()}>
           <p>

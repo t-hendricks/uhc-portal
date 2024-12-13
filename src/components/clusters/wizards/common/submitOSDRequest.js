@@ -6,7 +6,6 @@ import {
   stringToArrayTrimmed,
   strToKeyValueObject,
 } from '~/common/helpers';
-import { billingModels } from '~/common/subscriptionTypes';
 import { getClusterAutoScalingSubmitSettings } from '~/components/clusters/common/clusterAutoScalingValues';
 import { GCPAuthType } from '~/components/clusters/wizards/osd/ClusterSettings/CloudProvider/types';
 import { FieldId } from '~/components/clusters/wizards/osd/constants';
@@ -15,6 +14,7 @@ import config from '~/config';
 import { regionalizedClusterId } from '~/queries/helpers';
 import { createCluster } from '~/redux/actions/clustersActions';
 import { DEFAULT_FLAVOUR_ID } from '~/redux/actions/flavourActions';
+import { SubscriptionCommonFields } from '~/types/accounts_mgmt.v1';
 import { NamespaceOwnershipPolicy } from '~/types/clusters_mgmt.v1/models/NamespaceOwnershipPolicy';
 import { WildcardPolicy } from '~/types/clusters_mgmt.v1/models/WildcardPolicy';
 
@@ -53,7 +53,7 @@ export const createClusterRequest = ({ isWizard = true, cloudProviderID, product
     },
     multi_az: isMultiAz,
     etcd_encryption: formData.etcd_encryption,
-    billing_model: billingModels.STANDARD,
+    billing_model: SubscriptionCommonFields.cluster_billing_model.STANDARD,
     disable_user_workload_monitoring:
       isHypershiftSelected || !formData.enable_user_workload_monitoring,
     ...(!isHypershiftSelected && { fips: !!formData.fips }),
@@ -70,14 +70,16 @@ export const createClusterRequest = ({ isWizard = true, cloudProviderID, product
     };
   }
   if (isHypershiftSelected) {
-    clusterRequest.billing_model = billingModels.MARKETPLACE_AWS;
-  } else if (formData.billing_model === billingModels.MARKETPLACE_GCP) {
-    clusterRequest.billing_model = billingModels.MARKETPLACE_GCP;
+    clusterRequest.billing_model = SubscriptionCommonFields.cluster_billing_model.MARKETPLACE_AWS;
+  } else if (
+    formData.billing_model === SubscriptionCommonFields.cluster_billing_model.MARKETPLACE_GCP
+  ) {
+    clusterRequest.billing_model = SubscriptionCommonFields.cluster_billing_model.MARKETPLACE_GCP;
   } else if (formData.billing_model) {
     const [billing] = formData.billing_model.split('-');
     clusterRequest.billing_model = billing;
   } else {
-    clusterRequest.billing_model = billingModels.STANDARD;
+    clusterRequest.billing_model = SubscriptionCommonFields.cluster_billing_model.STANDARD;
   }
 
   if (formData.cluster_version) {

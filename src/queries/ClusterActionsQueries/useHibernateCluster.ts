@@ -2,6 +2,8 @@ import { useMutation } from '@tanstack/react-query';
 
 import { getClusterServiceForRegion } from '~/services/clusterService';
 
+import { formatErrorData } from '../helpers';
+
 export const useHibernateCluster = () => {
   const { isSuccess, error, isError, isPending, mutate, reset } = useMutation({
     mutationKey: ['clusterService', 'hibernate_cluster'],
@@ -11,5 +13,12 @@ export const useHibernateCluster = () => {
     },
   });
 
-  return { isSuccess, error, isError, isPending, mutate, reset };
+  return {
+    isSuccess,
+    error: isError && error ? formatErrorData(isPending, isError, error)?.error : null,
+    isError,
+    isPending,
+    mutate,
+    reset,
+  };
 };

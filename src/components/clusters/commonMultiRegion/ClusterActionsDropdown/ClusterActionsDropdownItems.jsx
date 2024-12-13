@@ -39,10 +39,10 @@ function actionResolver(
   showConsoleButton,
   openModal,
   canSubscribeOCP,
-  // canTransferClusterOwnership,
   canHibernateCluster,
-  // toggleSubscriptionReleased,
-  // refreshFunc,
+  canTransferClusterOwnership,
+  toggleSubscriptionReleased,
+  refreshFunc,
   inClusterList,
 ) {
   const baseProps = {};
@@ -76,12 +76,12 @@ function actionResolver(
     <span>This operation is not available during maintenance</span>
   );
 
-  // const deleteProtectionMessage = cluster.delete_protection?.enabled && (
-  //   <span>
-  //     Cluster is locked and cannot be deleted. To unlock, go to cluster details and disable deletion
-  //     protection.
-  //   </span>
-  // );
+  const deleteProtectionMessage = cluster.delete_protection?.enabled && (
+    <span>
+      Cluster is locked and cannot be deleted. To unlock, go to cluster details and disable deletion
+      protection.
+    </span>
+  );
 
   const consoleURL = get(cluster, 'console.url', false);
   const consoleDisabledMessage = !consoleURL && (
@@ -198,27 +198,27 @@ function actionResolver(
     };
   };
 
-  // const getUnarchiveClusterProps = () => {
-  //   const baseArchiveProps = {
-  //     ...baseProps,
-  //     title: 'Unarchive cluster',
-  //     key: getKey('unarchivecluster'),
-  //   };
-  //   const unarchiveModalData = {
-  //     subscriptionID: cluster.subscription ? cluster.subscription.id : '',
-  //     name: clusterName,
-  //   };
-  //   return {
-  //     ...baseArchiveProps,
-  //     ...disableIfTooltip(readOnlyMessage, {
-  //       onClick: () =>
-  //         openModal(modals.UNARCHIVE_CLUSTER, {
-  //           ...unarchiveModalData,
-  //           shouldDisplayClusterName: inClusterList,
-  //         }),
-  //     }),
-  //   };
-  // };
+  const getUnarchiveClusterProps = () => {
+    const baseArchiveProps = {
+      ...baseProps,
+      title: 'Unarchive cluster',
+      key: getKey('unarchivecluster'),
+    };
+    const unarchiveModalData = {
+      subscriptionID: cluster.subscription ? cluster.subscription.id : '',
+      name: clusterName,
+    };
+    return {
+      ...baseArchiveProps,
+      ...disableIfTooltip(readOnlyMessage, {
+        onClick: () =>
+          openModal(modals.UNARCHIVE_CLUSTER, {
+            ...unarchiveModalData,
+            shouldDisplayClusterName: inClusterList,
+          }),
+      }),
+    };
+  };
 
   const getEditConsoleURLProps = () => ({
     ...baseProps,
@@ -230,22 +230,23 @@ function actionResolver(
     }),
   });
 
-  // const getDeleteItemProps = () => ({
-  //   ...baseProps,
-  //   title: 'Delete cluster',
-  //   key: getKey('deletecluster'),
-  //   ...disableIfTooltip(
-  //     uninstallingMessage || readOnlyMessage || hibernatingMessage || deleteProtectionMessage,
-  //     {
-  //       onClick: () =>
-  //         openModal(modals.DELETE_CLUSTER, {
-  //           clusterID: cluster.id,
-  //           clusterName,
-  //           shouldDisplayClusterName: inClusterList,
-  //         }),
-  //     },
-  //   ),
-  // });
+  const getDeleteItemProps = () => ({
+    ...baseProps,
+    title: 'Delete cluster',
+    key: getKey('deletecluster'),
+    ...disableIfTooltip(
+      uninstallingMessage || readOnlyMessage || hibernatingMessage || deleteProtectionMessage,
+      {
+        onClick: () =>
+          openModal(modals.DELETE_CLUSTER, {
+            clusterID: cluster.id,
+            clusterName,
+            shouldDisplayClusterName: inClusterList,
+            region: cluster?.subscription?.xcm_id,
+          }),
+      },
+    ),
+  });
 
   const getEditSubscriptionSettingsProps = () => {
     const editSubscriptionSettingsProps = {
@@ -261,51 +262,52 @@ function actionResolver(
     return editSubscriptionSettingsProps;
   };
 
-  // const getTransferClusterOwnershipProps = () => {
-  //   const isReleased = get(cluster, 'subscription.released', false);
-  //   const title = isReleased ? 'Cancel ownership transfer' : 'Transfer cluster ownership';
-  //   const transferClusterOwnershipProps = {
-  //     ...baseProps,
-  //     title,
-  //     key: getKey('transferclusterownership'),
-  //     onClick: () => {
-  //       if (isReleased) {
-  //         toggleSubscriptionReleased(get(cluster, 'subscription.id'), false);
-  //         refreshFunc();
-  //       } else {
-  //         openModal(modals.TRANSFER_CLUSTER_OWNERSHIP, {
-  //           subscription: cluster.subscription,
-  //           shouldDisplayClusterName: inClusterList,
-  //         });
-  //       }
-  //     },
-  //   };
-  //   return transferClusterOwnershipProps;
-  // };
+  const getTransferClusterOwnershipProps = () => {
+    const isReleased = get(cluster, 'subscription.released', false);
+    const title = isReleased ? 'Cancel ownership transfer' : 'Transfer cluster ownership';
+    const transferClusterOwnershipProps = {
+      ...baseProps,
+      title,
+      key: getKey('transferclusterownership'),
+      onClick: () => {
+        if (isReleased) {
+          toggleSubscriptionReleased({ subscriptionID: cluster.subscription.id, released: false });
+          refreshFunc();
+        } else {
+          openModal(modals.TRANSFER_CLUSTER_OWNERSHIP, {
+            subscription: cluster.subscription,
+            shouldDisplayClusterName: inClusterList,
+            region: cluster.subscription.xcm_id,
+          });
+        }
+      },
+    };
+    return transferClusterOwnershipProps;
+  };
 
-  // const getUpgradeTrialClusterProps = () => {
-  //   const upgradeTrialClusterData = {
-  //     clusterID: cluster.id,
-  //     cluster,
-  //   };
-  //   const upgradeTrialClusterProps = {
-  //     ...baseProps,
-  //     title: 'Upgrade cluster from Trial',
-  //     key: getKey('upgradetrialcluster'),
-  //   };
-  //   return {
-  //     ...upgradeTrialClusterProps,
-  //     ...disableIfTooltip(readOnlyMessage, {
-  //       onClick: () =>
-  //         openModal(modals.UPGRADE_TRIAL_CLUSTER, {
-  //           ...upgradeTrialClusterData,
-  //           shouldDisplayClusterName: inClusterList,
-  //         }),
-  //     }),
-  //   };
-  // };
+  const getUpgradeTrialClusterProps = () => {
+    const upgradeTrialClusterData = {
+      clusterID: cluster.id,
+      cluster,
+    };
+    const upgradeTrialClusterProps = {
+      ...baseProps,
+      title: 'Upgrade cluster from Trial',
+      key: getKey('upgradetrialcluster'),
+    };
+    return {
+      ...upgradeTrialClusterProps,
+      ...disableIfTooltip(readOnlyMessage, {
+        onClick: () =>
+          openModal(modals.UPGRADE_TRIAL_CLUSTER, {
+            ...upgradeTrialClusterData,
+            shouldDisplayClusterName: inClusterList,
+          }),
+      }),
+    };
+  };
 
-  // const showDelete = cluster.canDelete && cluster.managed;
+  const showDelete = cluster.canDelete && cluster.managed;
   const showScale = cluster.canEdit && cluster.managed && !cluster.ccs?.enabled;
   const showHibernateCluster =
     cluster.canEdit &&
@@ -317,7 +319,7 @@ function actionResolver(
   const isArchived =
     get(cluster, 'subscription.status', false) === SubscriptionCommonFields.status.ARCHIVED;
   const showArchive = cluster.canEdit && !cluster.managed && cluster.subscription && !isArchived;
-  // const showUnarchive = cluster.canEdit && !cluster.managed && cluster.subscription && isArchived;
+  const showUnarchive = cluster.canEdit && !cluster.managed && cluster.subscription && isArchived;
   const showEditURL =
     !cluster.managed &&
     cluster.canEdit &&
@@ -326,17 +328,19 @@ function actionResolver(
   const product = get(cluster, 'subscription.plan.type', '');
   const showEditSubscriptionSettings =
     product === normalizedProducts.OCP && cluster.canEdit && canSubscribeOCP;
-  // const isAllowedProducts = [
-  //   normalizedProducts.OCP,
-  //   normalizedProducts.ARO,
-  //   normalizedProducts.RHOIC,
-  // ].includes(product);
-  // const showTransferClusterOwnership =
-  //   cluster.canEdit &&
-  //   canTransferClusterOwnership &&
-  //   isAllowedProducts &&
-  //   get(cluster, 'subscription.status') !== SubscriptionCommonFields.status.ARCHIVED;
-  // const showUpgradeTrialCluster = isClusterReady && cluster.canEdit && isProductOSDTrial;
+  // const showEditSubscriptionSettings =
+  //   product === normalizedProducts.OCP && cluster.canEdit && canSubscribeOCP;
+  const isAllowedProducts = [
+    normalizedProducts.OCP,
+    normalizedProducts.ARO,
+    normalizedProducts.RHOIC,
+  ].includes(product);
+  const showTransferClusterOwnership =
+    cluster.canEdit &&
+    canTransferClusterOwnership &&
+    isAllowedProducts &&
+    get(cluster, 'subscription.status') !== SubscriptionCommonFields.status.ARCHIVED;
+  const showUpgradeTrialCluster = isClusterReady && cluster.canEdit && isProductOSDTrial;
 
   return [
     showConsoleButton && getAdminConsoleProps(),
@@ -345,12 +349,12 @@ function actionResolver(
     showScale && getScaleClusterProps(),
     showHibernateCluster && getHibernateClusterProps(),
     showEditMachinePool && getEditMachinePoolProps(),
-    // showUpgradeTrialCluster && getUpgradeTrialClusterProps(),
-    // showDelete && getDeleteItemProps(),
+    showUpgradeTrialCluster && getUpgradeTrialClusterProps(),
+    showDelete && getDeleteItemProps(),
     showArchive && getArchiveClusterProps(),
-    // showUnarchive && getUnarchiveClusterProps(),
     showEditSubscriptionSettings && getEditSubscriptionSettingsProps(),
-    // showTransferClusterOwnership && getTransferClusterOwnershipProps(),
+    showTransferClusterOwnership && getTransferClusterOwnershipProps(),
+    showUnarchive && getUnarchiveClusterProps(),
   ].filter(Boolean);
 }
 
@@ -359,21 +363,21 @@ function dropDownItems({
   showConsoleButton,
   openModal,
   canSubscribeOCP,
-  // canTransferClusterOwnership,
+  canTransferClusterOwnership,
   canHibernateCluster,
-  // toggleSubscriptionReleased,
-  // refreshFunc,
+  refreshFunc,
   inClusterList,
+  toggleSubscriptionReleased,
 }) {
   const actions = actionResolver(
     cluster,
     showConsoleButton,
     openModal,
     canSubscribeOCP,
-    // canTransferClusterOwnership,
     canHibernateCluster,
-    // toggleSubscriptionReleased,
-    // refreshFunc,
+    canTransferClusterOwnership,
+    toggleSubscriptionReleased,
+    refreshFunc,
     inClusterList,
   );
 

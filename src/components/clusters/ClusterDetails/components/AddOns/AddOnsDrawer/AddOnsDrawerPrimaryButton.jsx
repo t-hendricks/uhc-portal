@@ -10,6 +10,8 @@ import clusterStates, { isHibernating } from '../../../../common/clusterStates';
 import AddOnsConstants from '../AddOnsConstants';
 import { hasParameters } from '../AddOnsHelper';
 
+import { NO_QUOTA } from './AddOnsTypes';
+
 import './AddOnsDrawer.scss';
 
 function AddOnsPrimaryButton(props) {
@@ -72,7 +74,7 @@ function AddOnsPrimaryButton(props) {
   // a superset of hibernatingReason.
   const notReadyReason = cluster.state !== clusterStates.READY && 'This cluster is not ready';
   const requirementsReason = !activeCardRequirementsFulfilled && 'Prerequisites not met';
-  const quotaReason = (!hasQuota || subscription?.billingModel === 'no-quota') && noQuotaTooltip;
+  const quotaReason = (!hasQuota || subscription?.billingModel === NO_QUOTA) && noQuotaTooltip;
   const billingReason =
     subscription?.billingModel === 'marketplace' && 'Select a subscription type';
   const unchangedReason =

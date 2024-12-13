@@ -13,11 +13,11 @@ import ExternalLink from '~/components/common/ExternalLink';
 import { FormGroupHelperText } from '~/components/common/FormGroupHelperText';
 import PopoverHint from '~/components/common/PopoverHint';
 import useFormikOnChange from '~/hooks/useFormikOnChange';
-import { Cluster } from '~/types/clusters_mgmt.v1';
+import { ClusterFromSubscription } from '~/types/types';
 
 type AutoscaleMaxReplicasFieldProps = {
   minNodes: number;
-  cluster: Cluster;
+  cluster: ClusterFromSubscription;
   options: number[];
   mpAvailZones?: number;
 };

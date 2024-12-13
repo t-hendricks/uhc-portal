@@ -255,6 +255,7 @@ const IdentityProvidersPage = (props) => {
                         isHypershift={isHypershiftCluster(cluster)}
                         HTPasswdErrors={formik.errors?.users}
                         isClusterIDPsLoading={isClusterIDPsLoading}
+                        isEditForm={isEditForm}
                       />
                     ) : (
                       <Spinner />
