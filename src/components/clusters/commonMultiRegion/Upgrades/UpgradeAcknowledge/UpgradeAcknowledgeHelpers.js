@@ -79,3 +79,35 @@ export const getHasUnMetClusterAcks = (schedules, cluster, upgradeGates, upgrade
 export const getHasScheduledManual = (schedules, cluster) =>
   !schedules?.items.some((policy) => policy.schedule_type === 'automatic') &&
   schedules?.items.some((schedule) => schedule.version !== getFromVersionFromHelper(cluster));
+
+export const isManualUpdateSchedulingRequired = (schedules, cluster) => {
+  // is this a minor or greater version upgrade?
+  const toVersion = getToVersionFromHelper(schedules, cluster);
+  const fromVersion = getFromVersionFromHelper(cluster);
+  const [toMajor, toMinor] = splitVersion(toVersion);
+  const [fromMajor, fromMinor] = splitVersion(fromVersion);
+  if (!toMajor || !toMinor || !fromMajor || !fromMinor) {
+    return false;
+  }
+  const minorPlusUpgrade = toMajor > fromMajor || toMinor > fromMinor;
+
+  // is the ControlPlaneUpgradePolicy schedule type automatic and is enable_minor_version_upgrades true?
+  const automaticUpdatePolicyExists = !!schedules?.items.find(
+    (policy) => policy?.schedule_type === 'automatic',
+  );
+  const enableMinorVersionUpgrade = !!schedules?.items.find(
+    (policy) => policy?.enable_minor_version_upgrades === 'true',
+  );
+
+  // is the ControlPlaneUpgradePolicy pending?
+  const upgradePolicyPending = !!schedules?.items.find(
+    (policy) => policy?.state?.value === 'pending',
+  );
+
+  return (
+    minorPlusUpgrade &&
+    automaticUpdatePolicyExists &&
+    !enableMinorVersionUpgrade &&
+    upgradePolicyPending
+  );
+};

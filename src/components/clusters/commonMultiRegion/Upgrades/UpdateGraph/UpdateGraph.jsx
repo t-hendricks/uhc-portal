@@ -60,6 +60,7 @@ const UpdateGraph = ({
       isPlain
       isInfo
       showConfirm
+      showUpgradeWarning
       schedules={schedules}
       upgradeGates={upgradeGates}
       cluster={cluster}

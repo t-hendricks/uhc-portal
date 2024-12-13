@@ -357,6 +357,48 @@ describe('<UpgradeAcknowledgeWarning>', () => {
     expect(screen.getByRole('button', { name: 'Provide approval' })).toBeInTheDocument();
   });
 
+  it('Display alert if individual update is required', () => {
+    const newProps = {
+      ...defaultProps,
+      cluster: {
+        id: 'muClusterId2',
+        openshift_version: 'my.openshift.version',
+        version: {
+          raw_id: '4.2.10',
+          available_upgrades: ['4.4.10'],
+        },
+        upgradeGates: [{ version_gate: { id: 'oldGate' } }],
+      },
+      schedules: {
+        items: [
+          {
+            id: 'myUpgradePolicyID',
+            version: '4.4.10',
+            schedule_type: 'automatic',
+            state: { value: 'pending' },
+            enable_minor_version_upgrades: false,
+          },
+        ],
+      },
+      upgradeGates: [
+        {
+          id: '1',
+          version_raw_id_prefix: '4.2',
+          title: 'upgrade to 4.2',
+          sts_only: false,
+        },
+      ],
+      isInfo: true,
+    };
+    const { container } = render(<UpgradeAcknowledgeWarning showUpgradeWarning {...newProps} />);
+    console.log(container.innerHTML);
+    expect(
+      screen.getByText(
+        'Your update strategy is currently set to recurring updates. Update 4.4.10 is a Y steam update and must be individually updated.',
+      ),
+    ).toBeInTheDocument();
+  });
+
   it('Set correct info when opening modal', () => {
     const newProps = {
       ...defaultProps,

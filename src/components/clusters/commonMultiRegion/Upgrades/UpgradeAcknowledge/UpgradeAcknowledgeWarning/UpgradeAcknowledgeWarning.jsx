@@ -2,7 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { useDispatch } from 'react-redux';
 
-import { Alert, AlertActionLink, Button } from '@patternfly/react-core';
+import { Alert, AlertActionLink, Button, Icon } from '@patternfly/react-core';
+import { ExclamationTriangleIcon } from '@patternfly/react-icons/dist/esm/icons/exclamation-triangle-icon';
 import { InfoCircleIcon } from '@patternfly/react-icons/dist/esm/icons/info-circle-icon';
 
 import { modalActions } from '~/components/common/Modal/ModalActions';
@@ -11,6 +12,7 @@ import {
   getClusterAcks,
   getHasScheduledManual,
   getToVersionFromHelper,
+  isManualUpdateSchedulingRequired,
 } from '../UpgradeAcknowledgeHelpers';
 import UpgradeAcknowledgeModal from '../UpgradeAcknowledgeModal';
 
@@ -27,6 +29,7 @@ const UpgradeAcknowledgeWarning = (props) => {
     schedules,
     upgradeGates,
     cluster,
+    showUpgradeWarning,
   } = props;
 
   const clusterId = cluster?.id;
@@ -37,6 +40,7 @@ const UpgradeAcknowledgeWarning = (props) => {
   const isManual = !schedules?.items.some((policy) => policy.schedule_type === 'automatic');
   const getAcks = getClusterAcks(schedules, cluster, upgradeGates);
   const hasScheduledManual = getHasScheduledManual(schedules, cluster);
+  const showManualUpgradeWarning = isManualUpdateSchedulingRequired(schedules, cluster);
 
   const handleButtonClick = () => {
     const [clusterUnmetAcks] = getAcks;
@@ -108,7 +112,15 @@ const UpgradeAcknowledgeWarning = (props) => {
           ) : null}
         </>
       ) : null}
-
+      {showUpgradeWarning && showManualUpgradeWarning ? (
+        <div className="ocm-upgrade-additional-versions-available" data-testid="confirmAckReceived">
+          <Icon status="warning">
+            <ExclamationTriangleIcon />
+          </Icon>{' '}
+          Your update strategy is currently set to recurring updates. Update {toVersion} is a Y
+          steam update and must be individually updated.
+        </div>
+      ) : null}
       {showConfirmMessage ? (
         <div className="ocm-upgrade-additional-versions-available" data-testid="confirmAckReceived">
           <InfoCircleIcon />
@@ -128,6 +140,7 @@ UpgradeAcknowledgeWarning.propTypes = {
   schedules: PropTypes.object,
   upgradeGates: PropTypes.array,
   cluster: PropTypes.object,
+  showUpgradeWarning: PropTypes.bool,
 };
 
 UpgradeAcknowledgeWarning.defaultProps = {
