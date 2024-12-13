@@ -23,7 +23,7 @@ import { useAWSVPCFromCluster } from '~/components/clusters/commonMultiRegion/us
 import { IMDSType } from '~/components/clusters/wizards/common';
 import AIClusterStatus from '~/components/common/AIClusterStatus';
 import useCanClusterAutoscale from '~/hooks/useCanClusterAutoscale';
-import { useGlobalState } from '~/redux/hooks';
+import { useFetchMachineOrNodePools } from '~/queries/ClusterDetailsQueries/MachinePoolTab/useFetchMachineOrNodePools';
 import { isRestrictedEnv } from '~/restrictedEnv';
 import { SubscriptionCommonFields } from '~/types/accounts_mgmt.v1';
 
@@ -43,7 +43,17 @@ import DeleteProtection from './DeleteProtection/DeleteProtection';
 import { ClusterStatus } from './ClusterStatus';
 
 function DetailsRight({ cluster, hasAutoscaleCluster, isDeprovisioned, clusterDetailsFetching }) {
-  const machinePools = useGlobalState((state) => state.machinePools.getMachinePools.data);
+  const isHypershift = isHypershiftCluster(cluster);
+  const region = cluster?.subscription?.rh_region_id;
+  const clusterID = cluster?.id;
+  const clusterVersionID = cluster?.version?.id;
+
+  const { data: machinePools } = useFetchMachineOrNodePools(
+    clusterID,
+    isHypershift,
+    clusterVersionID,
+    region,
+  );
 
   const nodesSectionData = totalNodesDataSelector(cluster, machinePools);
 
@@ -78,7 +88,6 @@ function DetailsRight({ cluster, hasAutoscaleCluster, isDeprovisioned, clusterDe
   );
   const isAWS = cluster.subscription?.cloud_provider_id === 'aws';
   const isGCP = cluster.subscription?.cloud_provider_id === 'gcp';
-  const isHypershift = isHypershiftCluster(cluster);
   const isROSACluster = isROSA(cluster);
   const infraAccount = cluster.subscription?.cloud_account_id || null;
   const hypershiftEtcdEncryptionKey = isHypershift && cluster.aws?.etcd_encryption?.kms_key_arn;

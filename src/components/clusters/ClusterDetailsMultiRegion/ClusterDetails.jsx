@@ -97,10 +97,6 @@ import { ClusterTabsId } from './components/common/ClusterTabIds';
 import DeleteIDPDialog from './components/DeleteIDPDialog';
 import { fetchClusterInsights } from './components/Insights/InsightsActions';
 import MachinePools from './components/MachinePools';
-import {
-  clearGetMachinePoolsResponse,
-  getMachineOrNodePools,
-} from './components/MachinePools/MachinePoolsActions';
 import Monitoring from './components/Monitoring';
 import { getOnDemandMetrics } from './components/Monitoring/MonitoringActions';
 import { issuesAndWarningsSelector } from './components/Monitoring/MonitoringSelectors';
@@ -279,7 +275,6 @@ const ClusterDetails = (props) => {
       https://issues.redhat.com/browse/SDA-2249
       */
     const clusterID = get(cluster, 'id');
-    const clusterVersion = cluster?.version?.id;
     const isManaged = get(cluster, 'managed', false);
     if (shouldRefetchQuota(organization)) {
       dispatch(userActions.getOrganizationAndQuota());
@@ -303,7 +298,6 @@ const ClusterDetails = (props) => {
       dispatch(usersActions.getUsers(clusterID));
       dispatch(getClusterRouters(clusterID));
       refreshIDP();
-      dispatch(getMachineOrNodePools(clusterID, isHypershiftCluster(cluster), clusterVersion));
       dispatch(getSchedules(clusterID, isHypershiftCluster(cluster)));
       dispatch(fetchUpgradeGates());
       if (get(cluster, 'cloud_provider.id') !== 'gcp') {
@@ -345,8 +339,6 @@ const ClusterDetails = (props) => {
       refetchClusterIdentityProviders();
       dispatch(modalActions.closeModal());
       refetchClusterLogsQueries();
-
-      dispatch(clearGetMachinePoolsResponse());
       dispatch(clusterAutoscalerActions.clearClusterAutoscalerResponse());
       resetFiltersAndFlags();
       dispatch(clearListVpcs());
