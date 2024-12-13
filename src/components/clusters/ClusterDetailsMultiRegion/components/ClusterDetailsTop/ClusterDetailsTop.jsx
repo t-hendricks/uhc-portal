@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import get from 'lodash/get';
 import PropTypes from 'prop-types';
 import { useDispatch } from 'react-redux';
@@ -12,7 +12,9 @@ import isAssistedInstallSubscription, {
   isAvailableAssistedInstallCluster,
   isUninstalledAICluster,
 } from '~/common/isAssistedInstallerCluster';
-import { billingModels, normalizedProducts } from '~/common/subscriptionTypes';
+import { HAS_USER_DISMISSED_RECOMMENDED_OPERATORS_ALERT } from '~/common/localStorageConstants';
+import { useNavigate } from '~/common/routing';
+import { normalizedProducts } from '~/common/subscriptionTypes';
 import { PreviewLabel } from '~/components/clusters/common/PreviewLabel';
 import Breadcrumbs from '~/components/common/Breadcrumbs';
 import ButtonWithTooltip from '~/components/common/ButtonWithTooltip';
@@ -34,34 +36,42 @@ import { shouldShowLogs } from '../Overview/InstallationLogView';
 
 import ClusterNonEditableAlert from './components/ClusterNonEditableAlert';
 import ClusterProgressCard from './components/ClusterProgressCard';
+import ClusterStatusMonitor from './components/ClusterStatusMonitor';
 import ExpirationAlert from './components/ExpirationAlert';
 import GcpOrgPolicyAlert from './components/GcpOrgPolicyAlert';
 import LimitedSupportAlert from './components/LimitedSupportAlert';
+import { RecommendedOperatorsAlert } from './components/RecommendedOperatorsAlert/RecommendedOperatorsAlert';
 import SubscriptionCompliancy from './components/SubscriptionCompliancy';
 import TermsAlert from './components/TermsAlert';
 import TransferClusterOwnershipInfo from './components/TransferClusterOwnershipInfo';
 
-const IdentityProvidersHint = () => (
-  <Alert
-    id="idpHint"
-    className="pf-v5-u-mt-md"
-    variant="warning"
-    isInline
-    title="Missing identity providers"
-  >
-    Identity providers determine how users log into the cluster.
-    <Button
-      variant="link"
+const IdentityProvidersHint = () => {
+  const navigate = useNavigate();
+  return (
+    <Alert
+      id="idpHint"
+      className="pf-v5-u-mt-md"
       isInline
-      onClick={() => {
-        window.location.hash = 'accessControl';
-      }}
+      title="Create an identity provider to access cluster"
     >
-      Add OAuth configuration
-    </Button>{' '}
-    to allow others to log in.
-  </Alert>
-);
+      Identity providers determine how you can log into the cluster. You&apos;ll need to set this up
+      so you can access your cluster{' '}
+      <p>
+        <Button
+          variant="link"
+          isInline
+          onClick={() =>
+            navigate({
+              hash: '#accessControl',
+            })
+          }
+        >
+          Create identity provider
+        </Button>{' '}
+      </p>
+    </Alert>
+  );
+};
 
 function ClusterDetailsTop(props) {
   const {
@@ -83,7 +93,24 @@ function ClusterDetailsTop(props) {
     isRefetching,
     gcpOrgPolicyWarning,
     regionalInstance,
+    openDrawer,
+    closeDrawer,
+    selectedCardTitle,
+    refreshFunc,
+    region,
   } = props;
+
+  const hasAlertBeenDismissed = localStorage.getItem(
+    HAS_USER_DISMISSED_RECOMMENDED_OPERATORS_ALERT,
+  );
+  const isArchived =
+    get(cluster, 'subscription.status', false) === SubscriptionCommonFields.status.ARCHIVED;
+  const isDeprovisioned =
+    get(cluster, 'subscription.status', false) === SubscriptionCommonFields.status.DEPROVISIONED;
+
+  const [showRecommendedOperatorsAlert, setShowRecommendedOperatorsAlert] = useState(
+    !hasAlertBeenDismissed && !isArchived && !isDeprovisioned,
+  );
 
   let topCard = null;
 
@@ -106,7 +133,8 @@ function ClusterDetailsTop(props) {
     get(cluster, 'subscription.plan.type', '') === normalizedProducts.OSDTRIAL;
   const isProductOSDRHM =
     get(cluster, 'subscription.plan.type', '') === normalizedProducts.OSD &&
-    get(cluster, 'subscription.cluster_billing_model', '') === billingModels.MARKETPLACE;
+    get(cluster, 'subscription.cluster_billing_model', '') ===
+      SubscriptionCommonFields.cluster_billing_model.MARKETPLACE;
   const isOSD = get(cluster, 'subscription.plan.type') === normalizedProducts.OSD;
   const isROSA = get(cluster, 'subscription.plan.type') === normalizedProducts.ROSA;
   const clusterName = getClusterName(cluster);
@@ -122,11 +150,6 @@ function ClusterDetailsTop(props) {
     !clusterIdentityProvidersError &&
     !hasIdentityProviders;
 
-  const isArchived =
-    get(cluster, 'subscription.status', false) === SubscriptionCommonFields.status.ARCHIVED;
-
-  const isDeprovisioned =
-    get(cluster, 'subscription.status', false) === SubscriptionCommonFields.status.DEPROVISIONED;
   const canUpgradeTrial = cluster.state === clusterStates.READY && cluster.canEdit;
   const trialExpirationUpgradeProps = canUpgradeTrial
     ? {
@@ -234,6 +257,17 @@ function ClusterDetailsTop(props) {
     cluster.state !== clusterStates.READY &&
     cluster.state !== clusterStates.UNINSTALLING;
 
+  // TODO: Part of ClusterStatusMonitor story (installation)
+  // eslint-disable-next-line no-unused-vars
+  const shouldShowStatusMonitor =
+    [
+      clusterStates.WAITING,
+      clusterStates.PENDING,
+      clusterStates.INSTALLING,
+      clusterStates.ERROR,
+      clusterStates.UNINSTALLING,
+    ].includes(cluster.state) || hasInflightEgressErrors(cluster);
+
   return (
     <div id="cl-details-top" className="top-row">
       <Split>
@@ -291,6 +325,11 @@ function ClusterDetailsTop(props) {
         isROSA={isROSA}
       />
 
+      {/* TODO: Part of installation story */}
+      {shouldShowStatusMonitor ? (
+        <ClusterStatusMonitor region={region} refresh={refreshFunc} cluster={cluster} />
+      ) : null}
+
       {showIDPMessage && (
         <Split>
           <SplitItem isFilled>
@@ -319,6 +358,16 @@ function ClusterDetailsTop(props) {
       )}
       <TransferClusterOwnershipInfo subscription={cluster.subscription} />
       <TermsAlert subscription={cluster.subscription} />
+      {showRecommendedOperatorsAlert ? (
+        <RecommendedOperatorsAlert
+          openLearnMore={openDrawer}
+          selectedCardTitle={selectedCardTitle}
+          closeDrawer={closeDrawer}
+          onDismissAlertCallback={() => setShowRecommendedOperatorsAlert(false)}
+          clusterState={cluster.state}
+          consoleURL={consoleURL}
+        />
+      ) : null}
       {children}
     </div>
   );
@@ -348,6 +397,11 @@ ClusterDetailsTop.propTypes = {
     isDefault: PropTypes.bool,
     url: PropTypes.string,
   }),
+  openDrawer: PropTypes.func,
+  closeDrawer: PropTypes.func,
+  selectedCardTitle: PropTypes.string,
+  refreshFunc: PropTypes.func,
+  region: PropTypes.string,
 };
 
 export default ClusterDetailsTop;

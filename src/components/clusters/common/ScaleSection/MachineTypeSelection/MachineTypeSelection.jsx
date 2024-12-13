@@ -17,7 +17,7 @@ import {
 import ExclamationTriangleIcon from '@patternfly/react-icons/dist/esm/icons/exclamation-triangle-icon';
 
 import { noMachineTypes } from '~/common/helpers';
-import { billingModels, normalizedProducts } from '~/common/subscriptionTypes';
+import { normalizedProducts } from '~/common/subscriptionTypes';
 import { humanizeValueWithUnit } from '~/common/units';
 import { constants } from '~/components/clusters/common/CreateOSDFormConstants';
 import {
@@ -474,7 +474,7 @@ MachineTypeSelection.propTypes = {
   inModal: PropTypes.bool,
   cloudProviderID: PropTypes.string,
   product: PropTypes.oneOf(Object.keys(normalizedProducts)).isRequired,
-  billingModel: PropTypes.oneOf(Object.values(billingModels)).isRequired,
+  billingModel: PropTypes.string.isRequired,
   quota: PropTypes.object.isRequired,
   organization: PropTypes.object.isRequired,
   menuAppendTo: PropTypes.object,

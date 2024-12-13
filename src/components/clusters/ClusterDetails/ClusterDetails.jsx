@@ -123,7 +123,6 @@ const ClusterDetails = (props) => {
     toggleSubscriptionReleased,
     userAccess,
     gotRouters,
-    hasNetworkOndemand,
     accessProtectionState,
     chromeHistory,
   } = props;
@@ -551,7 +550,6 @@ const ClusterDetails = (props) => {
                 refresh={refresh}
                 openModal={openModal}
                 insightsData={insightsData[cluster.external_id]}
-                hasNetworkOndemand={hasNetworkOndemand}
                 userAccess={userAccess}
                 chromeHistory={chromeHistory}
               />
@@ -777,7 +775,6 @@ ClusterDetails.propTypes = {
   toggleSubscriptionReleased: PropTypes.func.isRequired,
   notificationContacts: PropTypes.object.isRequired,
   getNotificationContacts: PropTypes.func.isRequired,
-  hasNetworkOndemand: PropTypes.bool.isRequired,
   getSchedules: PropTypes.func,
   getUserAccess: PropTypes.func.isRequired,
   userAccess: PropTypes.shape({

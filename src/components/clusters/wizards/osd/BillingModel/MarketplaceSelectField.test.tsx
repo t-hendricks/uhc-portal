@@ -1,9 +1,9 @@
 import * as React from 'react';
 import { Form, Formik } from 'formik';
 
-import { billingModels } from '~/common/subscriptionTypes';
 import { CloudProviderType } from '~/components/clusters/wizards/osd/ClusterSettings/CloudProvider/types';
 import { render, screen } from '~/testUtils';
+import { SubscriptionCommonFields } from '~/types/accounts_mgmt.v1';
 
 import { FieldId, initialValues } from '../constants';
 
@@ -34,8 +34,9 @@ describe('<MarketplaceSelectField />', () => {
   it('shows a previously selected marketplace', async () => {
     const formValues = {
       ...initialValues,
-      [FieldId.BillingModel]: billingModels.MARKETPLACE,
-      [FieldId.MarketplaceSelection]: billingModels.MARKETPLACE_GCP,
+      [FieldId.BillingModel]: SubscriptionCommonFields.cluster_billing_model.MARKETPLACE,
+      [FieldId.MarketplaceSelection]:
+        SubscriptionCommonFields.cluster_billing_model.MARKETPLACE_GCP,
     };
     render(
       <Formik initialValues={formValues} onSubmit={() => {}}>
@@ -50,8 +51,9 @@ describe('<MarketplaceSelectField />', () => {
   it('resets the marketplace value when billing model is not "on-demand" (marketplace)', async () => {
     const formValues = {
       ...initialValues,
-      [FieldId.BillingModel]: billingModels.STANDARD,
-      [FieldId.MarketplaceSelection]: billingModels.MARKETPLACE_GCP,
+      [FieldId.BillingModel]: SubscriptionCommonFields.cluster_billing_model.STANDARD,
+      [FieldId.MarketplaceSelection]:
+        SubscriptionCommonFields.cluster_billing_model.MARKETPLACE_GCP,
       [FieldId.CloudProvider]: CloudProviderType.Gcp,
     };
     const handleSubmit = jest.fn();
@@ -73,7 +75,7 @@ describe('<MarketplaceSelectField />', () => {
     // was wrongfully reset too
     expect(handleSubmit).toHaveBeenCalledWith(
       expect.objectContaining({
-        [FieldId.BillingModel]: billingModels.STANDARD,
+        [FieldId.BillingModel]: SubscriptionCommonFields.cluster_billing_model.STANDARD,
         [FieldId.MarketplaceSelection]: null,
         [FieldId.CloudProvider]: CloudProviderType.Gcp,
       }),

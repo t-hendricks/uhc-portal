@@ -12,6 +12,7 @@ import {
   MachineType,
   Product,
 } from '~/types/clusters_mgmt.v1';
+import { ClusterFromSubscription } from '~/types/types';
 
 import { clusterBillingModelToRelatedResource } from '../billingModelMapper';
 import { QuotaParams } from '../quotaModel';
@@ -137,7 +138,7 @@ export const getAvailableQuota = ({
     isBYOC: isByoc,
     isMultiAz,
     resourceName,
-    billingModel: clusterBillingModelToRelatedResource(billingModel), // TODO: it should handle marketplace-* -> marketplace in future
+    billingModel: clusterBillingModelToRelatedResource(billingModel),
   };
   return availableNodesFromQuota(quota as QuotaCostList, quotaParams);
 };
@@ -170,7 +171,7 @@ export const getNodeCount = (
   }, 0);
 
 export type getNodeOptionsType = {
-  cluster: Cluster;
+  cluster: ClusterFromSubscription;
   quota: GlobalState['userProfile']['organization']['quotaList'];
   machineTypes: GlobalState['machineTypes'];
   machineTypeId: string | undefined;
@@ -202,7 +203,10 @@ export const getNodeOptions = ({
     isMultiAz,
     isByoc: !!cluster.ccs?.enabled,
     cloudProviderID: cluster.cloud_provider?.id,
-    billingModel: cluster.billing_model,
+    billingModel:
+      (cluster as Cluster).billing_model ??
+      ((cluster as ClusterFromSubscription).subscription
+        ?.cluster_billing_model as Cluster['billing_model']),
     product: cluster.product?.id,
   });
 

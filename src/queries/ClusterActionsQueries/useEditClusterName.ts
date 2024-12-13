@@ -14,5 +14,12 @@ export const useEditClusterName = () => {
       subscriptionID,
       data: { display_name: displayName },
     });
-  return { isSuccess, error, isError, isPending, mutate: setClusterName, reset };
+  return {
+    isSuccess,
+    error,
+    isError,
+    isPending,
+    mutate: setClusterName,
+    reset,
+  };
 };

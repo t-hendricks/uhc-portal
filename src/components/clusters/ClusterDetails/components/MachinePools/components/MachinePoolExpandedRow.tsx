@@ -5,8 +5,9 @@ import { Grid, GridItem, Label, Title } from '@patternfly/react-core';
 
 import { truncateTextWithEllipsis } from '~/common/helpers';
 import { useAWSVPCFromCluster } from '~/components/clusters/common/useAWSVPCFromCluster';
-import { Cluster, NodePool, SecurityGroup } from '~/types/clusters_mgmt.v1';
+import { NodePool, SecurityGroup } from '~/types/clusters_mgmt.v1';
 import { MachinePool } from '~/types/clusters_mgmt.v1/models/MachinePool';
+import { ClusterFromSubscription } from '~/types/types';
 
 import { isMPoolAz } from '../../../clusterDetailsHelper';
 import MachinePoolAutoScalingDetail from '../MachinePoolAutoscalingDetail';
@@ -74,7 +75,7 @@ const MachinePoolExpandedRow = ({
   isMultiZoneCluster,
   machinePool,
 }: {
-  cluster: Cluster;
+  cluster: ClusterFromSubscription;
   isMultiZoneCluster: boolean;
   machinePool: MachinePool;
 }) => {

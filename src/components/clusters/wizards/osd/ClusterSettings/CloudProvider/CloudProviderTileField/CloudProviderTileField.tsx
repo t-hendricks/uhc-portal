@@ -4,7 +4,6 @@ import classNames from 'classnames';
 import { Tile, Tooltip } from '@patternfly/react-core';
 
 import { noQuotaTooltip } from '~/common/helpers';
-import { billingModels } from '~/common/subscriptionTypes';
 import {
   AWS_DEFAULT_REGION,
   CloudProviderType,
@@ -15,6 +14,7 @@ import { useGetBillingQuotas } from '~/components/clusters/wizards/osd/BillingMo
 import { FieldId } from '~/components/clusters/wizards/osd/constants';
 import AWSLogo from '~/styles/images/AWSLogo';
 import GCPLogo from '~/styles/images/GCPLogo';
+import { SubscriptionCommonFields } from '~/types/accounts_mgmt.v1';
 
 import './cloudProviderTileField.scss';
 
@@ -35,9 +35,11 @@ export const CloudProviderTileField = () => {
   });
   const hasGcpResources = quotas.gcpResources;
   const hasAwsResources =
-    billingModel === billingModels.MARKETPLACE_GCP ? false : quotas.awsResources;
+    billingModel === SubscriptionCommonFields.cluster_billing_model.MARKETPLACE_GCP
+      ? false
+      : quotas.awsResources;
   const notAvailableTooltip =
-    billingModel === billingModels.MARKETPLACE_GCP
+    billingModel === SubscriptionCommonFields.cluster_billing_model.MARKETPLACE_GCP
       ? 'OpenShift Dedicated purchased through the Google Cloud marketplace can only be provisioned on GCP.'
       : noQuotaTooltip;
 

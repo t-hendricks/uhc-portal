@@ -8,7 +8,7 @@ import ExternalLink from '~/components/common/ExternalLink';
 import TerraformLogo from './TerraformLogo';
 
 const WithTerraform = () => (
-  <Card isFlat isFullHeight>
+  <Card isFlat isFullHeight data-testid="deploy-with-terraform-card">
     <CardTitle>
       <Title headingLevel="h3" size="lg">
         <TerraformLogo className="ocm-c-wizard-get-started-terraform--card-icon " />

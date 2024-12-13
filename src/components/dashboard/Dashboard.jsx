@@ -19,7 +19,7 @@ import Spinner from '@redhat-cloud-services/frontend-components/Spinner';
 
 import { createOverviewQueryObject } from '../../common/queryHelpers';
 import { AppPage } from '../App/AppPage';
-import ClusterListActions from '../clusters/ClusterList/components/ClusterListActions/ClusterListActions';
+import ClusterListActions from '../clusters/ClusterListMultiRegion/components/ClusterListActions/ClusterListActions';
 import ArchiveClusterDialog from '../clusters/common/ArchiveClusterDialog';
 import EditSubscriptionSettingsDialog from '../clusters/common/EditSubscriptionSettingsDialog/EditSubscriptionSettingsDialog';
 import SmallClusterChart from '../clusters/common/ResourceUsage/SmallClusterChart';

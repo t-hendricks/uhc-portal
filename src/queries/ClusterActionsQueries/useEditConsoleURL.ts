@@ -3,17 +3,25 @@ import { useMutation } from '@tanstack/react-query';
 import { getClusterServiceForRegion } from '~/services/clusterService';
 
 import { useEditSubscription } from '../common/useEditSubscription';
+import { formatErrorData } from '../helpers';
 
 export const useEditConsoleURL = () => {
   const {
     mutate: mutateSubscription,
     isSuccess: isSubscriptionSuccess,
-    error: subscriptionError,
+    rawError: subscriptionError,
     isError: isSubscriptionError,
     isPending: isSubscriptionPending,
     reset: subscriptionReset,
   } = useEditSubscription();
-  const { isSuccess, error, isError, isPending, mutate, reset } = useMutation({
+  const {
+    isSuccess: isClusterSuccess,
+    error: clusterError,
+    isError: isClusterError,
+    isPending: isClusterPending,
+    mutate: clusterMutate,
+    reset: clusterReset,
+  } = useMutation({
     mutationKey: ['accountService', 'clusterService', 'edit_cluster_url'],
     mutationFn: ({
       subscriptionID,
@@ -38,14 +46,19 @@ export const useEditConsoleURL = () => {
         .then(() => mutateSubscription({ subscriptionID, data: { console_url: sanitizedURL } }));
     },
   });
+
+  const isError = isClusterError || isSubscriptionError;
+  const isPending = isClusterPending || isSubscriptionPending;
+  const error = clusterError || subscriptionError;
+
   return {
-    isSuccess: isSuccess && isSubscriptionSuccess,
-    error: error || subscriptionError,
-    isError: isError || isSubscriptionError,
-    isPending: isPending || isSubscriptionPending,
-    mutate,
+    isSuccess: isClusterSuccess && isSubscriptionSuccess,
+    error: isError && error ? formatErrorData(isPending, isError, error)?.error : null,
+    isError,
+    isPending,
+    mutate: clusterMutate,
     reset: () => {
-      reset();
+      clusterReset();
       subscriptionReset();
     },
   };

@@ -410,7 +410,7 @@ describe('<ClusterList />', () => {
 
       expect(args[0].type).toEqual('VIEW_SET_LIST_FLAGS');
 
-      expect(args[0].payload.key).toBe('subscriptionFilter'); // KKD - it fails here (key is undefined)
+      expect(args[0].payload.key).toBe('subscriptionFilter');
       expect(args[0].payload.value).toStrictEqual({ plan_id: [normalizedProducts.ROSA] });
       expect(args[0].payload.viewType).toBe(viewConstants.CLUSTERS_VIEW);
 

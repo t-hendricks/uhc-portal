@@ -1,4 +1,4 @@
-import { billingModels } from '~/common/subscriptionTypes';
+import { SubscriptionCommonFields } from '~/types/accounts_mgmt.v1';
 
 import { MARKETPLACE_BILLING_MODEL_LABEL, STANDARD_BILLING_MODEL_LABEL } from '../constants';
 import {
@@ -124,15 +124,25 @@ describe('getSettingsBasedOnOptions', () => {
     });
 
     it('should return standard subscription type message when clusterBillingModel is STANDARD and isBillingModelVisible is false', () => {
-      expect(getBillingModelAlertText(false, billingModels.STANDARD, false, false)).toBe(
-        `Cluster subscription type is ${STANDARD_BILLING_MODEL_LABEL}`,
-      );
+      expect(
+        getBillingModelAlertText(
+          false,
+          SubscriptionCommonFields.cluster_billing_model.STANDARD,
+          false,
+          false,
+        ),
+      ).toBe(`Cluster subscription type is ${STANDARD_BILLING_MODEL_LABEL}`);
     });
 
     it('should return marketplace subscription type message when clusterBillingModel is MARKETPLACE and isBillingModelVisible is false', () => {
-      expect(getBillingModelAlertText(true, billingModels.MARKETPLACE, false, false)).toBe(
-        `Cluster subscription type is ${MARKETPLACE_BILLING_MODEL_LABEL}`,
-      );
+      expect(
+        getBillingModelAlertText(
+          true,
+          SubscriptionCommonFields.cluster_billing_model.MARKETPLACE,
+          false,
+          false,
+        ),
+      ).toBe(`Cluster subscription type is ${MARKETPLACE_BILLING_MODEL_LABEL}`);
     });
 
     it('should return marketplace subscription type message when canSubscribeMarketplaceOCP is true and isBillingModelVisible is false', () => {

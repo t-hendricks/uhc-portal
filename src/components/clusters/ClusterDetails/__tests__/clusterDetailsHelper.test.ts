@@ -1,6 +1,6 @@
 import { isHibernating, isHypershiftCluster } from '~/components/clusters/common/clusterStates';
 import { ClusterResource, Subscription, SubscriptionCommonFields } from '~/types/accounts_mgmt.v1';
-import { Cluster, ClusterState } from '~/types/clusters_mgmt.v1';
+import { ClusterState } from '~/types/clusters_mgmt.v1';
 import { ClusterFromSubscription } from '~/types/types';
 
 import {
@@ -81,9 +81,9 @@ describe('clusterDetailsHelper', () => {
         multiAz: boolean | undefined,
         expectedResult: boolean,
       ) => {
-        const defaultCluster: Readonly<Cluster> = {
+        const defaultCluster: Readonly<ClusterFromSubscription> = {
           multi_az: multiAz,
-        };
+        } as ClusterFromSubscription;
         isHypershiftClusterMock.mockReturnValueOnce(isHypershiftClusterResult);
         expect(isMultiAZ(defaultCluster)).toBe(expectedResult);
       },

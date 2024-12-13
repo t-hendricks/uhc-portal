@@ -112,6 +112,7 @@ function actionResolver(
       clusterID: cluster.id,
       clusterName,
       subscriptionID: cluster.subscription ? cluster.subscription.id : '',
+      rh_region_id: cluster.subscription?.rh_region_id,
       shouldDisplayClusterName: inClusterList,
     };
     const hibernateClusterProps = {

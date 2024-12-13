@@ -2,8 +2,9 @@ import React from 'react';
 
 import { getMinNodesRequired } from '~/components/clusters/ClusterDetails/components/MachinePools/machinePoolsHelper';
 import { checkAccessibility, render, screen } from '~/testUtils';
+import { SubscriptionCommonFields } from '~/types/accounts_mgmt.v1';
 
-import { billingModels, normalizedProducts } from '../../../../common/subscriptionTypes';
+import { normalizedProducts } from '../../../../common/subscriptionTypes';
 import { MAX_NODES, MAX_NODES_HCP } from '../machinePools/constants';
 import * as quotaSelectors from '../quotaSelectors';
 
@@ -33,7 +34,7 @@ const baseProps = ({ isByoc, isMultiAz }) => ({
   },
   cloudProviderID: 'aws',
   product: normalizedProducts.OSD,
-  billingModel: billingModels.STANDARD,
+  billingModel: SubscriptionCommonFields.cluster_billing_model.STANDARD,
 
   minNodes: getMinNodesRequired(false, undefined, {
     isDefaultMachinePool: true,

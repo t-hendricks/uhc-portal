@@ -7,7 +7,8 @@ import { isHypershiftCluster } from '~/components/clusters/common/clusterStates'
 import { getNodeOptions } from '~/components/clusters/commonMultiRegion/machinePools/utils';
 import { MachineTypesResponse } from '~/queries/types';
 import { useGlobalState } from '~/redux/hooks';
-import { Cluster, MachinePool } from '~/types/clusters_mgmt.v1';
+import { MachinePool } from '~/types/clusters_mgmt.v1';
+import { ClusterFromSubscription } from '~/types/types';
 
 import MachinePoolsAutoScalingWarning from '../../../MachinePoolAutoscalingWarning';
 import { getClusterMinNodes } from '../../../machinePoolsHelper';
@@ -21,7 +22,7 @@ import { EditMachinePoolValues } from '../hooks/useMachinePoolFormik';
 type EditNodeCountSectionProps = {
   machinePool: MachinePool | undefined;
   machinePools: MachinePool[];
-  cluster: Cluster;
+  cluster: ClusterFromSubscription;
   machineTypes: MachineTypesResponse;
   allow500Nodes: boolean;
 };

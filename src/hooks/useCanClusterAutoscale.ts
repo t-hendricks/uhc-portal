@@ -1,6 +1,6 @@
-import { billingModels, normalizedProducts } from '~/common/subscriptionTypes';
+import { normalizedProducts } from '~/common/subscriptionTypes';
 import { useGlobalState } from '~/redux/hooks';
-import { Capability } from '~/types/accounts_mgmt.v1';
+import { Capability, SubscriptionCommonFields } from '~/types/accounts_mgmt.v1';
 import { Product } from '~/types/clusters_mgmt.v1';
 
 import { hasOrgLevelAutoscaleCapability } from '../components/clusters/ClusterDetails/components/MachinePools/machinePoolsSelectors';
@@ -23,9 +23,9 @@ const useCanClusterAutoscale = (
   return (
     product === normalizedProducts.ROSA ||
     (product === normalizedProducts.OSD &&
-      (billingModel === billingModels.MARKETPLACE ||
-        billingModel === billingModels.MARKETPLACE_AWS ||
-        billingModel === billingModels.MARKETPLACE_GCP ||
+      (billingModel === SubscriptionCommonFields.cluster_billing_model.MARKETPLACE ||
+        billingModel === SubscriptionCommonFields.cluster_billing_model.MARKETPLACE_AWS ||
+        billingModel === SubscriptionCommonFields.cluster_billing_model.MARKETPLACE_GCP ||
         hasAutoScaleCapability))
   );
 };

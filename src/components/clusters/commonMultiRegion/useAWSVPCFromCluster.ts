@@ -5,7 +5,8 @@ import { isHypershiftCluster } from '~/components/clusters/common/clusterStates'
 import { CloudProviderVPCRequest } from '~/redux/actions/ccsInquiriesActions';
 import { securityGroupsSort } from '~/redux/reducers/ccsInquiriesReducer';
 import clusterService, { getClusterServiceForRegion } from '~/services/clusterService';
-import { CloudVPC, Cluster } from '~/types/clusters_mgmt.v1';
+import { CloudVPC } from '~/types/clusters_mgmt.v1';
+import { ClusterFromSubscription } from '~/types/types';
 
 // const { getAWSVPCDetails } = clusterService;
 
@@ -85,7 +86,7 @@ const fetchVpcByStsCredentials = async (
  * @param cluster the cluster to retrieve the VPC for
  * @returns vpc details.
  */
-export const useAWSVPCFromCluster = (cluster: Cluster, region?: string) => {
+export const useAWSVPCFromCluster = (cluster: ClusterFromSubscription, region?: string) => {
   const [clusterVpc, setClusterVpc] = React.useState<CloudVPC | undefined>();
   const [isLoading, setIsLoading] = React.useState<boolean>(!!cluster.id);
   const [hasError, setHasError] = React.useState<boolean>(false);

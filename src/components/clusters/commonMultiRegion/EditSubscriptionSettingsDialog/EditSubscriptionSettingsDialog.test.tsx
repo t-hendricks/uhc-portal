@@ -35,6 +35,7 @@ describe('<EditSubscriptionSettingsDialog />', () => {
   const defaultUseEditSubscriptionReturn = {
     isSuccess: false,
     error: null,
+    rawError: null,
     isError: false,
     isPending: false,
     mutate: mutateMock,

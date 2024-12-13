@@ -1,4 +1,5 @@
-import { billingModels, normalizedProducts } from '~/common/subscriptionTypes';
+import { normalizedProducts } from '~/common/subscriptionTypes';
+import { SubscriptionCommonFields } from '~/types/accounts_mgmt.v1';
 import { ClusterFromSubscription } from '~/types/types';
 
 import {
@@ -11,33 +12,73 @@ describe('getBillingModelLabel', () => {
   it.each([
     [normalizedProducts.OSDTRIAL, undefined, undefined, 'Free trial, upgradeable'],
     [normalizedProducts.OSD, undefined, undefined, 'Standard'],
-    [normalizedProducts.OSD, billingModels.STANDARD, undefined, 'Annual Red Hat subscriptions'],
-    [normalizedProducts.OSD, billingModels.MARKETPLACE, undefined, 'N/A'],
-    [normalizedProducts.OSD, billingModels.MARKETPLACE_AWS, undefined, 'N/A'],
-    [normalizedProducts.OSD, billingModels.MARKETPLACE_GCP, undefined, 'N/A'],
-    [normalizedProducts.OSD, billingModels.MARKETPLACE, true, 'On-demand via Red Hat Marketplace'],
     [
       normalizedProducts.OSD,
-      billingModels.MARKETPLACE_AWS,
+      SubscriptionCommonFields.cluster_billing_model.STANDARD,
+      undefined,
+      'Annual Red Hat subscriptions',
+    ],
+    [
+      normalizedProducts.OSD,
+      SubscriptionCommonFields.cluster_billing_model.MARKETPLACE,
+      undefined,
+      'N/A',
+    ],
+    [
+      normalizedProducts.OSD,
+      SubscriptionCommonFields.cluster_billing_model.MARKETPLACE_AWS,
+      undefined,
+      'N/A',
+    ],
+    [
+      normalizedProducts.OSD,
+      SubscriptionCommonFields.cluster_billing_model.MARKETPLACE_GCP,
+      undefined,
+      'N/A',
+    ],
+    [
+      normalizedProducts.OSD,
+      SubscriptionCommonFields.cluster_billing_model.MARKETPLACE,
       true,
       'On-demand via Red Hat Marketplace',
     ],
     [
       normalizedProducts.OSD,
-      billingModels.MARKETPLACE_GCP,
+      SubscriptionCommonFields.cluster_billing_model.MARKETPLACE_AWS,
+      true,
+      'On-demand via Red Hat Marketplace',
+    ],
+    [
+      normalizedProducts.OSD,
+      SubscriptionCommonFields.cluster_billing_model.MARKETPLACE_GCP,
       true,
       'On-demand via Google Cloud Marketplace',
     ],
-    [normalizedProducts.OSD, billingModels.MARKETPLACE, false, 'Standard'],
-    [normalizedProducts.OSD, billingModels.MARKETPLACE_AWS, false, 'Standard'],
-    [normalizedProducts.OSD, billingModels.MARKETPLACE_GCP, false, 'Standard'],
+    [
+      normalizedProducts.OSD,
+      SubscriptionCommonFields.cluster_billing_model.MARKETPLACE,
+      false,
+      'Standard',
+    ],
+    [
+      normalizedProducts.OSD,
+      SubscriptionCommonFields.cluster_billing_model.MARKETPLACE_AWS,
+      false,
+      'Standard',
+    ],
+    [
+      normalizedProducts.OSD,
+      SubscriptionCommonFields.cluster_billing_model.MARKETPLACE_GCP,
+      false,
+      'Standard',
+    ],
     [normalizedProducts.ARO, undefined, undefined, 'Standard'],
     [undefined, undefined, undefined, 'Standard'],
   ])(
     'when plan type is %p, billing model %p and CCS enabled is %p should return %p',
     (
       planType: string | undefined,
-      billingModel: string | undefined,
+      billingModel: SubscriptionCommonFields.cluster_billing_model | undefined,
       ccsEnabled: boolean | undefined,
       expectedResult: string,
     ) => {

@@ -1,11 +1,20 @@
 import get from 'lodash/get';
 
 import { ANY, match, matchCaseInsensitively } from '~/common/matchUtils';
-import { ConsumedQuota, QuotaCost, QuotaCostList, RelatedResource } from '~/types/accounts_mgmt.v1';
+import {
+  ConsumedQuota,
+  QuotaCost,
+  QuotaCostList,
+  RelatedResource,
+  SubscriptionCommonFields,
+} from '~/types/accounts_mgmt.v1';
 import { BillingModel } from '~/types/clusters_mgmt.v1';
 import { ClusterFromSubscription } from '~/types/types';
 
-import { billingModels, normalizedProducts } from '../../../common/subscriptionTypes';
+import {
+  normalizedProducts,
+  STANDARD_TRIAL_BILLING_MODEL_TYPE,
+} from '../../../common/subscriptionTypes';
 
 import { clusterBillingModelToRelatedResource } from './billingModelMapper';
 import { BillingQuota, defaultQuotaQuery, QuotaParams, QuotaQuery, QuotaTypes } from './quotaModel';
@@ -72,7 +81,7 @@ const queryFromQuotaParams = (quotaParams: QuotaParams): QuotaQuery => ({
   resource_type: quotaParams.resourceType || ANY,
   product: quotaParams.product || normalizedProducts.ANY,
   billing_model:
-    quotaParams.billingModel?.toString() === 'standard-trial'
+    quotaParams.billingModel?.toString() === STANDARD_TRIAL_BILLING_MODEL_TYPE // TODO: to remove standar trial billing model by OCMUI-2689
       ? RelatedResource.billing_model.STANDARD
       : quotaParams.billingModel || RelatedResource.billing_model.ANY,
   cloud_provider: quotaParams.cloudProviderID || ANY,
@@ -93,7 +102,12 @@ const availableQuota = (quotaList: QuotaCostList | undefined, quotaParams: Quota
   }
   // remove quota cost checks for marketplace-gcp
   // ultimately we should filter for quota_id: "cluster|byoc|osd|gcp|marketplace"
-  if (quotaParams.billingModel === RelatedResource.billing_model.MARKETPLACE_GCP) {
+  // TODO: OCMUI-2690
+  if (
+    quotaParams.billingModel ===
+    (SubscriptionCommonFields.cluster_billing_model
+      .MARKETPLACE_GCP as any as RelatedResource.billing_model)
+  ) {
     return Infinity;
   }
 
@@ -117,7 +131,11 @@ const addOnBillingQuota = (quotaList: QuotaCostList, quotaParams: QuotaParams): 
   quotaList.items?.forEach((quotaCostItem) => {
     quotaCostItem.related_resources?.forEach((resource) => {
       if (relatedResourceMatches(resource, query)) {
-        if ([ANY, billingModels.STANDARD].includes(resource.billing_model)) {
+        if (
+          [ANY, SubscriptionCommonFields.cluster_billing_model.STANDARD].includes(
+            resource.billing_model,
+          )
+        ) {
           if (!models.standard) {
             models.standard = {
               cost: resource.cost,
@@ -125,7 +143,10 @@ const addOnBillingQuota = (quotaList: QuotaCostList, quotaParams: QuotaParams): 
               consumed: quotaCostItem.consumed,
             };
           }
-        } else if (resource.billing_model === billingModels.MARKETPLACE && !models.marketplace) {
+        } else if (
+          resource.billing_model === RelatedResource.billing_model.MARKETPLACE &&
+          !models.marketplace
+        ) {
           models.marketplace = {
             cost: resource.cost,
             cloudAccounts: {
@@ -161,7 +182,6 @@ const hasPotentialQuota = (quotaList: QuotaCostList, quotaParams: QuotaParams): 
 /**
  * Returns partial query object for availableQuota() matching an existing cluster.
  */
-// TODO: it should handle marketplace-* -> marketplace in future
 const queryFromCluster = <E extends ClusterFromSubscription>(cluster: E): QuotaParams => ({
   product: cluster.subscription?.plan?.type,
   billingModel:
@@ -205,15 +225,15 @@ const getAwsBillingAccountsFromQuota = (items?: QuotaCost[]) =>
     ?.cloud_accounts?.filter((account) => account.cloud_provider_id === 'aws') || [];
 
 export {
-  availableFromQuotaCostItem,
-  availableQuota,
-  hasPotentialQuota,
-  queryFromCluster,
-  hasManagedQuotaSelector,
-  hasHostedQuotaSelector,
-  availableClustersFromQuota,
-  availableNodesFromQuota,
   addOnBillingQuota,
+  availableClustersFromQuota,
+  availableFromQuotaCostItem,
+  availableNodesFromQuota,
+  availableQuota,
   getAwsBillingAccountsFromQuota,
   getBillingQuotaModel,
+  hasHostedQuotaSelector,
+  hasManagedQuotaSelector,
+  hasPotentialQuota,
+  queryFromCluster,
 };

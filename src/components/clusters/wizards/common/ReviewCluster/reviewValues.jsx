@@ -3,7 +3,7 @@ import React from 'react';
 import { Grid, GridItem, Label, LabelGroup } from '@patternfly/react-core';
 
 import { arrayToString, stringToArrayTrimmed, strToKeyValueObject } from '~/common/helpers';
-import { billingModels } from '~/common/subscriptionTypes';
+import { STANDARD_TRIAL_BILLING_MODEL_TYPE } from '~/common/subscriptionTypes';
 import { humanizeValueWithUnitGiB } from '~/common/units';
 import { routeSelectorsAsString } from '~/components/clusters/ClusterDetails/components/Networking/NetworkingSelector';
 import parseUpdateSchedule from '~/components/clusters/common/Upgrades/parseUpdateSchedule';
@@ -11,6 +11,7 @@ import { IMDSType } from '~/components/clusters/wizards/common';
 import { ClusterPrivacyType } from '~/components/clusters/wizards/osd//Networking/constants';
 import { GCPAuthType } from '~/components/clusters/wizards/osd/ClusterSettings/CloudProvider/types';
 import { FieldId } from '~/components/clusters/wizards/osd/constants';
+import { SubscriptionCommonFields } from '~/types/accounts_mgmt.v1';
 
 import AwsVpcTable from './AwsVpcTable';
 import SecurityGroupsTable from './SecurityGroupsTable';
@@ -38,11 +39,13 @@ const reviewValues = {
   billing_model: {
     title: 'Subscription type',
     values: {
-      [billingModels.STANDARD]: 'Annual: Fixed capacity subscription from Red Hat',
-      [billingModels.MARKETPLACE]: 'On-Demand: Flexible usage billed through Red Hat Marketplace',
-      [billingModels.MARKETPLACE_GCP]:
+      [SubscriptionCommonFields.cluster_billing_model.STANDARD]:
+        'Annual: Fixed capacity subscription from Red Hat',
+      [SubscriptionCommonFields.cluster_billing_model.MARKETPLACE]:
+        'On-Demand: Flexible usage billed through Red Hat Marketplace',
+      [SubscriptionCommonFields.cluster_billing_model.MARKETPLACE_GCP]:
         'On-Demand: Flexible usage billed through Google Cloud Marketplace',
-      'standard-trial': 'Free trial (upgradeable)',
+      [STANDARD_TRIAL_BILLING_MODEL_TYPE]: 'Free trial (upgradeable)',
     },
   },
   byoc: {

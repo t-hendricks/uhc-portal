@@ -27,17 +27,11 @@ describe('OCM Overview Page tests (OCP-65189)', { tags: ['smoke'] }, () => {
       .opensExpectedPage('Create an OpenShift Dedicated Cluster');
     card.shouldHaveLabel('Managed service');
     card.cardDetails({
-      [runOn]: 'AWS or Google Cloud',
+      [runOn]: 'Google Cloud or AWS',
       [purchaseThrough]: 'Red Hat',
       [billingType]: 'Flexible or fixed',
     });
-    card
-      .checkLink(
-        'Learn more',
-        'https://www.redhat.com/en/technologies/cloud-computing/openshift/dedicated',
-      )
-      .opensInRightTab()
-      .successfullyOpens();
+    card.checkLink('View details', '/openshift/overview/osd').opensInRightTab();
 
     card = Overview.centralSectionCard('offering-card_AWS');
     card.cyObj.contains('Red Hat OpenShift Service on AWS (ROSA)');

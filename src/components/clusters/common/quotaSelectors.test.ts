@@ -2,7 +2,7 @@ import { QuotaCost, QuotaCostList } from '~/types/accounts_mgmt.v1';
 import { BillingModel } from '~/types/clusters_mgmt.v1';
 import { ClusterFromSubscription } from '~/types/types';
 
-import { billingModels, normalizedProducts } from '../../../common/subscriptionTypes';
+import { normalizedProducts } from '../../../common/subscriptionTypes';
 
 import { defaultClusterFromSubscription } from './__tests__/defaultClusterFromSubscription.fixtures';
 import {
@@ -69,7 +69,7 @@ describe('quotaSelectors', () => {
 
   describe('getBillingQuotaModel', () => {
     it.each([
-      [BillingModel.MARKETPLACE_AWS, billingModels.MARKETPLACE],
+      [BillingModel.MARKETPLACE_AWS, BillingModel.MARKETPLACE],
       [BillingModel.MARKETPLACE, BillingModel.MARKETPLACE],
       [BillingModel.MARKETPLACE_AZURE, BillingModel.MARKETPLACE_AZURE],
       [BillingModel.MARKETPLACE_GCP, BillingModel.MARKETPLACE_GCP],
@@ -82,7 +82,7 @@ describe('quotaSelectors', () => {
   describe('availableQuota', () => {
     it.each([
       ['RH Infra should be 0', emptyQuotaCostList, paramsRhInfra, 0],
-      ['GCP should be Infinity', emptyQuotaCostList, paramsGCP, Infinity],
+      ['GCP should be Infinity', emptyQuotaCostList, paramsGCP as any as QuotaParams, Infinity],
     ])(
       '%p',
       (title: string, quotaList: QuotaCostList, quotaParams: QuotaParams, expected: number) => {

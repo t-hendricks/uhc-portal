@@ -7,6 +7,7 @@ import { useDispatch } from 'react-redux';
 import { Button, ExpandableSection, Form, Stack, StackItem, Tooltip } from '@patternfly/react-core';
 
 import { getErrorMessage } from '~/common/errors';
+import getClusterName from '~/common/getClusterName';
 import { isMPoolAz } from '~/components/clusters/ClusterDetails/clusterDetailsHelper';
 import { isHypershiftCluster, isROSA } from '~/components/clusters/common/clusterStates';
 import { getMaxNodesHCP, getNodeCount } from '~/components/clusters/common/machinePools/utils';
@@ -20,8 +21,8 @@ import { useGlobalState } from '~/redux/hooks';
 import { GlobalState } from '~/redux/store';
 import { PromiseReducerState } from '~/redux/types';
 import { clusterService } from '~/services';
-import { Cluster, MachinePool } from '~/types/clusters_mgmt.v1';
-import { ErrorState } from '~/types/types';
+import { MachinePool } from '~/types/clusters_mgmt.v1';
+import { ClusterFromSubscription, ErrorState } from '~/types/types';
 
 import { clearGetMachinePoolsResponse, getMachineOrNodePools } from '../../MachinePoolsActions';
 import { canUseSpotInstances, normalizeNodePool } from '../../machinePoolsHelper';
@@ -47,7 +48,7 @@ const submitEdit = ({
   currentMPId,
   currentMachinePool,
 }: {
-  cluster: Cluster;
+  cluster: ClusterFromSubscription;
   values: EditMachinePoolValues;
   currentMPId?: string;
   currentMachinePool: MachinePool | undefined;
@@ -78,7 +79,7 @@ const submitEdit = ({
 };
 
 type EditMachinePoolModalProps = {
-  cluster: Cluster;
+  cluster: ClusterFromSubscription;
   onClose: () => void;
   onSave?: () => void;
   machinePoolId?: string;
@@ -107,6 +108,7 @@ const EditMachinePoolModal = ({
     [isInitEdit, machinePoolId],
   );
 
+  const clusterName = getClusterName(cluster);
   const [submitError, setSubmitError] = React.useState<AxiosError<any>>();
   const [currentMachinePool, setCurrentMachinePool] = React.useState<MachinePool>();
   const [isEdit, setIsEdit] = React.useState<boolean>(getIsEditValue());
@@ -182,7 +184,7 @@ const EditMachinePoolModal = ({
         <Modal
           id="edit-mp-modal"
           title={isEdit ? 'Edit machine pool' : 'Add machine pool'}
-          secondaryTitle={shouldDisplayClusterName ? cluster.name : undefined}
+          secondaryTitle={shouldDisplayClusterName ? clusterName : undefined}
           onClose={isSubmitting ? undefined : onClose}
           isPending={
             machinePoolsResponse.pending ||
@@ -354,4 +356,4 @@ const ConnectedEditMachinePoolModal = ({
 
 ConnectedEditMachinePoolModal.modalName = modals.EDIT_MACHINE_POOL;
 
-export { EditMachinePoolModal, ConnectedEditMachinePoolModal };
+export { ConnectedEditMachinePoolModal, EditMachinePoolModal };

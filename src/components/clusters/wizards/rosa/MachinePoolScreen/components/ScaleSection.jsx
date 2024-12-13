@@ -4,7 +4,6 @@ import { Field, FieldArray } from 'formik';
 import { ExpandableSection, GridItem, Text, TextVariants, Title } from '@patternfly/react-core';
 
 import links from '~/common/installLinks.mjs';
-import { billingModels } from '~/common/subscriptionTypes';
 import { required } from '~/common/validators';
 import {
   getMinNodesRequired,
@@ -24,6 +23,7 @@ import FormKeyValueList from '~/components/common/FormikFormComponents/FormKeyVa
 import useCanClusterAutoscale from '~/hooks/useCanClusterAutoscale';
 import { useFeatureGate } from '~/hooks/useFeatureGate';
 import { MAX_COMPUTE_NODES_500 } from '~/redux/constants/featureConstants';
+import { SubscriptionCommonFields } from '~/types/accounts_mgmt.v1';
 
 import WorkerNodeVolumeSizeSection from './WorkerNodeVolumeSizeSection/WorkerNodeVolumeSizeSection';
 import ImdsSection from './ImdsSection';
@@ -76,7 +76,7 @@ function ScaleSection() {
   );
 
   const billingModel = useMemo(
-    () => billingModelFieldValue ?? billingModels.STANDARD,
+    () => billingModelFieldValue ?? SubscriptionCommonFields.cluster_billing_model.STANDARD,
     [billingModelFieldValue],
   );
   const nodeIncrement = useMemo(
@@ -135,16 +135,15 @@ function ScaleSection() {
   );
 
   const WorkerNodeVolumeSizeSectionComponent = useCallback(
-    () =>
-      !isHypershiftSelected ? (
-        <>
-          <GridItem md={6}>
-            <WorkerNodeVolumeSizeSection maxWorkerVolumeSizeGiB={maxWorkerVolumeSizeGiB} />
-          </GridItem>
-          <GridItem md={6} />
-        </>
-      ) : null,
-    [isHypershiftSelected, maxWorkerVolumeSizeGiB],
+    () => (
+      <>
+        <GridItem md={6}>
+          <WorkerNodeVolumeSizeSection maxWorkerVolumeSizeGiB={maxWorkerVolumeSizeGiB} />
+        </GridItem>
+        <GridItem md={6} />
+      </>
+    ),
+    [maxWorkerVolumeSizeGiB],
   );
 
   return (

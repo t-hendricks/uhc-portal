@@ -13,7 +13,7 @@ import isAssistedInstallSubscription, {
 } from '~/common/isAssistedInstallerCluster';
 import { HAS_USER_DISMISSED_RECOMMENDED_OPERATORS_ALERT } from '~/common/localStorageConstants';
 import { useNavigate } from '~/common/routing';
-import { billingModels, normalizedProducts } from '~/common/subscriptionTypes';
+import { normalizedProducts } from '~/common/subscriptionTypes';
 import { PreviewLabel } from '~/components/clusters/common/PreviewLabel';
 import Breadcrumbs from '~/components/common/Breadcrumbs';
 import ButtonWithTooltip from '~/components/common/ButtonWithTooltip';
@@ -34,6 +34,7 @@ import { shouldShowLogs } from '../Overview/InstallationLogView';
 
 import ClusterNonEditableAlert from './components/ClusterNonEditableAlert';
 import ClusterProgressCard from './components/ClusterProgressCard';
+import ClusterStatusMonitor from './components/ClusterStatusMonitor';
 import ExpirationAlert from './components/ExpirationAlert';
 import GcpOrgPolicyAlert from './components/GcpOrgPolicyAlert';
 import LimitedSupportAlert from './components/LimitedSupportAlert';
@@ -97,8 +98,14 @@ function ClusterDetailsTop(props) {
   const hasAlertBeenDismissed = localStorage.getItem(
     HAS_USER_DISMISSED_RECOMMENDED_OPERATORS_ALERT,
   );
-  const [showRecommendedOperatorsAlert, setShowRecommendedOperatorsAlert] =
-    useState(!hasAlertBeenDismissed);
+  const isArchived =
+    get(cluster, 'subscription.status', false) === SubscriptionCommonFields.status.ARCHIVED;
+  const isDeprovisioned =
+    get(cluster, 'subscription.status', false) === SubscriptionCommonFields.status.DEPROVISIONED;
+
+  const [showRecommendedOperatorsAlert, setShowRecommendedOperatorsAlert] = useState(
+    !hasAlertBeenDismissed && !isArchived && !isDeprovisioned,
+  );
 
   let topCard = null;
 
@@ -116,7 +123,8 @@ function ClusterDetailsTop(props) {
     get(cluster, 'subscription.plan.type', '') === normalizedProducts.OSDTRIAL;
   const isProductOSDRHM =
     get(cluster, 'subscription.plan.type', '') === normalizedProducts.OSD &&
-    get(cluster, 'subscription.cluster_billing_model', '') === billingModels.MARKETPLACE;
+    get(cluster, 'subscription.cluster_billing_model', '') ===
+      SubscriptionCommonFields.cluster_billing_model.MARKETPLACE;
   const isOSD = get(cluster, 'subscription.plan.type') === normalizedProducts.OSD;
   const isROSA = get(cluster, 'subscription.plan.type') === normalizedProducts.ROSA;
   const clusterName = getClusterName(cluster);
@@ -132,11 +140,6 @@ function ClusterDetailsTop(props) {
     !hasIdentityProviders &&
     !isExtenalAuthenicationActive(cluster);
 
-  const isArchived =
-    get(cluster, 'subscription.status', false) === SubscriptionCommonFields.status.ARCHIVED;
-
-  const isDeprovisioned =
-    get(cluster, 'subscription.status', false) === SubscriptionCommonFields.status.DEPROVISIONED;
   const canUpgradeTrial = cluster.state === clusterStates.READY && cluster.canEdit;
   const trialExpirationUpgradeProps = canUpgradeTrial
     ? {
@@ -241,6 +244,15 @@ function ClusterDetailsTop(props) {
     cluster.state !== clusterStates.READY &&
     cluster.state !== clusterStates.UNINSTALLING;
 
+  const shouldShowStatusMonitor =
+    [
+      clusterStates.WAITING,
+      clusterStates.PENDING,
+      clusterStates.INSTALLING,
+      clusterStates.ERROR,
+      clusterStates.UNINSTALLING,
+    ].includes(cluster.state) || hasInflightEgressErrors(cluster);
+
   return (
     <div id="cl-details-top" className="top-row">
       <Split>
@@ -298,6 +310,10 @@ function ClusterDetailsTop(props) {
         isROSA={isROSA}
       />
 
+      {shouldShowStatusMonitor ? (
+        <ClusterStatusMonitor refresh={refreshFunc} cluster={cluster} />
+      ) : null}
+
       {showIDPMessage && (
         <Split>
           <SplitItem isFilled>
@@ -331,10 +347,9 @@ function ClusterDetailsTop(props) {
           openLearnMore={openDrawer}
           selectedCardTitle={selectedCardTitle}
           closeDrawer={closeDrawer}
-          hideRecommendedOperatorsAlert={() => setShowRecommendedOperatorsAlert(false)}
+          onDismissAlertCallback={() => setShowRecommendedOperatorsAlert(false)}
           clusterState={cluster.state}
           consoleURL={consoleURL}
-          isArchived={isArchived}
         />
       ) : null}
       {children}
