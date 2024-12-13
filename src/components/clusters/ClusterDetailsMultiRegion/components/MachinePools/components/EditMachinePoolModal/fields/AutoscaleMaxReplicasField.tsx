@@ -8,7 +8,7 @@ import { normalizeProductID } from '~/common/normalize';
 import { normalizedProducts } from '~/common/subscriptionTypes';
 import { isMPoolAz } from '~/components/clusters/ClusterDetails/clusterDetailsHelper';
 import { isHypershiftCluster } from '~/components/clusters/common/clusterStates';
-import { computeNodeHintText } from '~/components/clusters/commonMultiRegion/ScaleSection/AutoScaleSection/AutoScaleHelper';
+import { computeNodeHintText } from '~/components/clusters/common/ScaleSection/AutoScaleSection/AutoScaleHelper';
 import ExternalLink from '~/components/common/ExternalLink';
 import { FormGroupHelperText } from '~/components/common/FormGroupHelperText';
 import PopoverHint from '~/components/common/PopoverHint';
