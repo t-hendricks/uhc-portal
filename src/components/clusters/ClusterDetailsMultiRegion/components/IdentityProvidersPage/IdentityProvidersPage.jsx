@@ -74,7 +74,7 @@ const IdentityProvidersPage = (props) => {
     clusterIdentityProviders: clusterIDPs,
     isLoading: isClusterIDPsLoading,
     isSuccess: isClusterIDPsSuccess,
-  } = useFetchClusterIdentityProviders(cluster?.id);
+  } = useFetchClusterIdentityProviders(cluster?.id, region);
 
   const {
     isPending: isPostIDPFormPending,
