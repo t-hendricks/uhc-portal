@@ -112,7 +112,7 @@ const UpgradeTrialClusterDialog = ({ onClose }) => {
     }, {});
 
     const quota = { MARKETPLACE: true, STANDARD: true };
-    Object.keys(machinePoolTypes).forEach((key) => {
+    Object.keys(machinePoolTypes || {}).forEach((key) => {
       const quotaParams = {
         product: OSD,
         cloudProviderID,
