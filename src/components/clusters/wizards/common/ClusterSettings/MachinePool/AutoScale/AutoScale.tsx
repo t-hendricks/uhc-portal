@@ -50,7 +50,9 @@ export const AutoScale = () => {
   );
 
   useEffect(() => {
-    setFieldValue(RosaFieldId.ClusterAutoscaling, defaultAutoscalerValues);
+    if (!autoscalingEnabled) {
+      setFieldValue(RosaFieldId.ClusterAutoscaling, defaultAutoscalerValues);
+    }
   }, [setFieldValue, defaultAutoscalerValues, autoscalingEnabled]);
 
   return (
