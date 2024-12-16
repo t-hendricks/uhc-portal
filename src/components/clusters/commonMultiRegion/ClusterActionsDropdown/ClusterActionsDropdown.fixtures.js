@@ -129,6 +129,7 @@ const selfManagedProps = {
     },
     canEdit: true,
     canDelete: true,
+    subscription: { plan: { type: 'OCP' } },
   },
   subscription: {
     items: [

@@ -47,6 +47,7 @@ const ClusterActionsDropdown = (props) => {
     refreshFunc,
     inClusterList: false,
     toggleSubscriptionReleased,
+    dispatch,
   });
 
   const toggleRef = useRef();

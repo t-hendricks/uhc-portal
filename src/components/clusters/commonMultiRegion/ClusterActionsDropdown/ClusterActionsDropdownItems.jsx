@@ -2,6 +2,7 @@ import React from 'react';
 import get from 'lodash/get';
 
 import { DropdownItem, DropdownList } from '@patternfly/react-core';
+import { addNotification } from '@redhat-cloud-services/frontend-components-notifications';
 
 import { SubscriptionCommonFields } from '~/types/accounts_mgmt.v1';
 
@@ -44,6 +45,7 @@ function actionResolver(
   toggleSubscriptionReleased,
   refreshFunc,
   inClusterList,
+  dispatch,
 ) {
   const baseProps = {};
   const isClusterUninstalling = cluster.state === clusterStates.UNINSTALLING;
@@ -271,8 +273,24 @@ function actionResolver(
       key: getKey('transferclusterownership'),
       onClick: () => {
         if (isReleased) {
-          toggleSubscriptionReleased({ subscriptionID: cluster.subscription.id, released: false });
-          refreshFunc();
+          toggleSubscriptionReleased(
+            {
+              subscriptionID: cluster.subscription.id,
+              released: false,
+            },
+            {
+              onSuccess: () => {
+                dispatch(
+                  addNotification({
+                    variant: 'success',
+                    title: 'Cluster ownership transfer canceled',
+                    dismissable: false,
+                  }),
+                );
+                refreshFunc();
+              },
+            },
+          );
         } else {
           openModal(modals.TRANSFER_CLUSTER_OWNERSHIP, {
             subscription: cluster.subscription,
@@ -368,6 +386,7 @@ function dropDownItems({
   refreshFunc,
   inClusterList,
   toggleSubscriptionReleased,
+  dispatch,
 }) {
   const actions = actionResolver(
     cluster,
@@ -379,6 +398,7 @@ function dropDownItems({
     toggleSubscriptionReleased,
     refreshFunc,
     inClusterList,
+    dispatch,
   );
 
   const renderMenuItem = ({ title, ...restOfProps }) => (

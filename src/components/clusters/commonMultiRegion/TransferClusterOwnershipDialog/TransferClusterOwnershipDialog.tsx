@@ -68,6 +68,11 @@ const TransferClusterOwnershipDialog = ({ onClose }: TransferClusterOwnershipDia
       toggleSubscriptionReleased(
         { subscriptionID: subscription.id, released: !isReleased },
         {
+          // NOTE - it doesn't appear that this dialog is ever called when
+          // cancelling a transfer
+          // Keeping code just in case this is wrong
+          // See src/components/clusters/commonMultiRegion/ClusterActionsDropdown/ClusterActionsDropdownItems.jsx
+          // for the code that is called on the cluster actions
           onSuccess: () => {
             if (isReleased) {
               dispatch(

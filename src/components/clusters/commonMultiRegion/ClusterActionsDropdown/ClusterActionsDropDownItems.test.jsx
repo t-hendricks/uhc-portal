@@ -305,4 +305,28 @@ describe('Cluster Actions Dropdown Items', () => {
       }
     });
   });
+
+  describe('Can transfer ownership', () => {
+    it('shows transfer ownership option', () => {
+      const newProps = { ...Fixtures.selfManagedProps, canTransferClusterOwnership: true };
+      render(<DropDownItemsRenderHelper {...newProps} />);
+
+      expect(
+        screen.getByRole('menuitem', { name: 'Transfer cluster ownership' }),
+      ).not.toHaveAttribute('aria-disabled');
+    });
+
+    it('shows cancel transfer ownership option', () => {
+      const cluster = {
+        ...Fixtures.selfManagedProps.cluster,
+        subscription: { ...Fixtures.selfManagedProps.cluster.subscription, released: true },
+      };
+      const newProps = { ...Fixtures.selfManagedProps, cluster, canTransferClusterOwnership: true };
+      render(<DropDownItemsRenderHelper {...newProps} />);
+
+      expect(
+        screen.getByRole('menuitem', { name: 'Cancel ownership transfer' }),
+      ).not.toHaveAttribute('aria-disabled');
+    });
+  });
 });

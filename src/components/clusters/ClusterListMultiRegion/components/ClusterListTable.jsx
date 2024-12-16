@@ -32,6 +32,7 @@ import { Link } from '~/common/routing';
 import AIClusterStatus from '~/components/common/AIClusterStatus';
 import config from '~/config';
 import { useFeatureGate } from '~/hooks/useFeatureGate';
+import { useToggleSubscriptionReleased } from '~/queries/ClusterActionsQueries/useToggleSubscriptionReleased';
 import { findRegionalInstance } from '~/queries/helpers';
 import { useFetchGetAvailableRegionalInstances } from '~/queries/RosaWizardQueries/useFetchGetAvailableRegionalInstances';
 import { toggleSubscriptionReleased } from '~/redux/actions/subscriptionReleasedActions';
@@ -120,6 +121,8 @@ function ClusterListTable(props) {
   const canSubscribeOCPList = canSubscribeOCPListFromClusters(clusters);
   const canTransferClusterOwnershipList = canTransferClusterOwnershipListFromClusters(clusters);
   const canHibernateClusterList = useCanHibernateClusterListFromClusters(clusters);
+
+  const { mutate: toggleSubscriptionReleasedMultiRegion } = useToggleSubscriptionReleased();
 
   const { data: availableRegionalInstances } =
     useFetchGetAvailableRegionalInstances(multiRegionFeatureGate);
@@ -353,10 +356,10 @@ function ClusterListTable(props) {
                 canSubscribeOCPList[cluster.id] || false,
                 canHibernateClusterList[cluster.id] || false,
                 canTransferClusterOwnershipList[cluster.id] || false,
-                (subscriptionId, released) =>
-                  dispatch(toggleSubscriptionReleased(subscriptionId, released)),
+                toggleSubscriptionReleasedMultiRegion,
                 refreshFunc,
                 true,
+                dispatch,
               )}
             />
           ) : null}
