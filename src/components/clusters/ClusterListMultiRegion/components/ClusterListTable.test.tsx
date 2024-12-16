@@ -38,22 +38,11 @@ describe('<ClusterListTable />', () => {
     };
     render(<ClusterListTable {...newProps} />);
 
-    // Get the text of the first data row and the second cell - this is the status cell
-    const row = screen.getAllByRole('row')[1];
-    expect(row.getElementsByTagName('td')[1]).toHaveTextContent('Ready');
-  });
+    const dataRow = screen.getAllByRole('row')[1];
+    const statusCell = dataRow.getElementsByTagName('td')[1];
 
-  it('does not show status when still fetching cluster details and status is not known', () => {
-    const newProps = {
-      ...initialProps,
-      isClustersDataPending: true,
-      clusters: [{ ...mockedClusters[0], state: undefined }],
-    };
-    render(<ClusterListTable {...newProps} />);
-
-    // Get the text of the first data row and the second cell - this is the status cell
-    const row = screen.getAllByRole('row')[1];
-    expect(row.getElementsByTagName('td')[1]).toHaveTextContent('');
+    // This is actually the aria text for the skeleton
+    expect(statusCell).toHaveTextContent('loading cluster status');
   });
 
   it('shows unknown status when fetching cluster details is done but status is not known', () => {
@@ -64,13 +53,11 @@ describe('<ClusterListTable />', () => {
     };
     render(<ClusterListTable {...newProps} />);
 
-    // Get the text of the first data row and the second cell - this is the status cell
-    const row = screen.getAllByRole('row')[1];
-    expect(row.getElementsByTagName('td')[1]).toHaveTextContent('');
+    const dataRow = screen.getAllByRole('row')[1];
+    const statusCell = dataRow.getElementsByTagName('td')[1];
+    expect(statusCell).toHaveTextContent('');
 
-    expect(
-      row.getElementsByTagName('td')[1].querySelector('[ data-icon-type="unknown"]'),
-    ).toBeInTheDocument();
+    expect(statusCell.querySelector('[ data-icon-type="unknown"]')).toBeInTheDocument();
   });
 
   describe('cluster name', () => {
