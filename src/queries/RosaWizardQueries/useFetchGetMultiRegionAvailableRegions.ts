@@ -4,8 +4,9 @@ import { queryClient } from '~/components/App/queryClient';
 import { accountsService } from '~/services';
 import clusterService, { getClusterServiceForRegion } from '~/services/clusterService';
 import { CloudRegion } from '~/types/clusters_mgmt.v1';
+import { ErrorState } from '~/types/types';
 
-import { currentEnvironment, formatErrorData, getProdRegionalInstances } from '../helpers';
+import { currentEnvironment, getProdRegionalInstances } from '../helpers';
 import { queryConstants } from '../queriesConstants';
 import { AvailableRegionalInstance, RegionalizedCloudRegion } from '../types';
 
@@ -23,8 +24,10 @@ const createRegionalizedCloudRegionEntry = (cloudRegion: CloudRegion, isRegional
   return region;
 };
 
+let isFailedRegionalizedRegions = false;
+
 export const useFetchGetMultiRegionAvailableRegions = () => {
-  const { data, error, isError, isLoading, isFetching, isSuccess } = useQuery({
+  const { data, error, isError, isPending, isFetching, isSuccess } = useQuery({
     queryKey: [queryConstants.FETCH_MULTI_REGION_AVAILABLE_REGIONS],
     queryFn: async () => {
       const createResponseForRegionalizedRegions = async () => {
@@ -73,6 +76,7 @@ export const useFetchGetMultiRegionAvailableRegions = () => {
                   }
                 });
               } catch (error) {
+                isFailedRegionalizedRegions = true;
                 return result;
               }
             }
@@ -84,8 +88,8 @@ export const useFetchGetMultiRegionAvailableRegions = () => {
 
       const createResponseForGlobalRegions = async () => {
         const result: RegionalizedCloudRegion[] = [];
-        const response = await clusterService.getCloudProviders();
 
+        const response = await clusterService.getCloudProviders();
         response.data.items?.forEach((provider) => {
           if (provider.id === 'aws' && provider.regions !== undefined) {
             provider.regions.forEach((cloudRegion) => {
@@ -97,6 +101,7 @@ export const useFetchGetMultiRegionAvailableRegions = () => {
             });
           }
         });
+
         return result;
       };
 
@@ -127,14 +132,31 @@ export const useFetchGetMultiRegionAvailableRegions = () => {
     retry: false,
   });
 
-  const errorData = formatErrorData(isLoading, isError, error);
+  const formatErrorDetails = (isError: boolean, error: any) => {
+    if (isError) {
+      const errorData: ErrorState = {
+        pending: isPending,
+        error: isError,
+        fulfilled: false,
+        errorCode: error?.code,
+        errorMessage: error?.message,
+        operationID: error?.operation_id,
+      };
+      return errorData;
+    }
+    return null;
+  };
+
+  const errorData = formatErrorDetails(isError, error);
 
   return {
     data,
-    error: errorData?.error,
+    error: errorData?.error ? formatErrorDetails(isError, error) : null,
     isError,
     isFetching,
     isSuccess,
+    isPending,
+    isFailedRegionalizedRegions,
   };
 };
 
