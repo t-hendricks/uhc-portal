@@ -7,7 +7,7 @@ import { Alert, Form, FormGroup, Grid, GridItem } from '@patternfly/react-core';
 
 import getClusterName from '~/common/getClusterName';
 import { useEditCluster } from '~/queries/ClusterDetailsQueries/useEditCluster';
-import { invalidateClusterDetailsQueries } from '~/queries/ClusterDetailsQueries/useFetchClusterDetails';
+import { refreshQueries } from '~/queries/refreshEntireCache';
 import { useGlobalState } from '~/redux/hooks';
 import { Cluster } from '~/types/clusters_mgmt.v1';
 
@@ -76,7 +76,7 @@ const ScaleClusterDialog = () => {
     mutate(clusterRequest as Cluster, {
       onSuccess: () => {
         dispatch(closeModal());
-        invalidateClusterDetailsQueries();
+        refreshQueries();
       },
     });
   };
