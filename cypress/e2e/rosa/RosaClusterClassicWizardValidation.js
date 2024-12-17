@@ -211,6 +211,8 @@ describe('Rosa Classic cluster wizard validations', { tags: ['smoke'] }, () => {
     );
   });
   it('Step - Cluster Settings - machine pool- Cluster autoscaling section - widget validations', () => {
+    CreateRosaWizardPage.disabledAutoScaling();
+    CreateRosaWizardPage.enableAutoScaling();
     CreateRosaWizardPage.editClusterAutoscalingSettingsButton().click();
     CreateRosaWizardPage.clusterAutoscalingLogVerbosityInput().type('{selectAll}').type('0').blur();
     CreateRosaWizardPage.isTextContainsInPage(
@@ -328,6 +330,8 @@ describe('Rosa Classic cluster wizard validations', { tags: ['smoke'] }, () => {
       });
     CreateRosaWizardPage.selectAvailabilityZone('Single Zone');
     CreateRosaWizardPage.rosaNextButton().click();
+    CreateRosaWizardPage.disabledAutoScaling();
+    CreateRosaWizardPage.enableAutoScaling();
     CreateRosaWizardPage.editClusterAutoscalingSettingsButton().click();
     CreateRosaWizardPage.clusterAutoscalingMaxNodesTotalInput().should('have.value', '254');
     CreateRosaWizardPage.clusterAutoscalingMaxNodesTotalInput()
@@ -344,6 +348,8 @@ describe('Rosa Classic cluster wizard validations', { tags: ['smoke'] }, () => {
     CreateRosaWizardPage.rosaBackButton().click();
     CreateRosaWizardPage.selectClusterVersion('4.14.0');
     CreateRosaWizardPage.rosaNextButton().click();
+    CreateRosaWizardPage.disabledAutoScaling();
+    CreateRosaWizardPage.enableAutoScaling();
     CreateRosaWizardPage.editClusterAutoscalingSettingsButton().click();
     CreateRosaWizardPage.clusterAutoscalingMaxNodesTotalInput().should('have.value', '185');
     CreateRosaWizardPage.clusterAutoscalingMaxNodesTotalInput()
@@ -359,6 +365,8 @@ describe('Rosa Classic cluster wizard validations', { tags: ['smoke'] }, () => {
     CreateRosaWizardPage.rosaBackButton().click();
     CreateRosaWizardPage.selectAvailabilityZone('Multi-zone');
     CreateRosaWizardPage.rosaNextButton().click();
+    CreateRosaWizardPage.disabledAutoScaling();
+    CreateRosaWizardPage.enableAutoScaling();
     CreateRosaWizardPage.editClusterAutoscalingSettingsButton().click();
     CreateRosaWizardPage.clusterAutoscalingMaxNodesTotalInput().should('have.value', '186');
     CreateRosaWizardPage.clusterAutoscalingMaxNodesTotalInput()
@@ -377,6 +385,8 @@ describe('Rosa Classic cluster wizard validations', { tags: ['smoke'] }, () => {
       CreateRosaWizardPage.selectClusterVersion(originalClusterVersion);
     });
     CreateRosaWizardPage.rosaNextButton().click();
+    CreateRosaWizardPage.disabledAutoScaling();
+    CreateRosaWizardPage.enableAutoScaling();
     CreateRosaWizardPage.editClusterAutoscalingSettingsButton().click();
 
     CreateRosaWizardPage.clusterAutoscalingGPUsInput().type('{selectAll}').type('test').blur();
