@@ -42,7 +42,6 @@ const LoadBalancersDropdown = ({
 }: LoadBalancersDropdownProps) => {
   const {
     data: loadBalancerValues,
-    isFetched: loadBalancerValuesFetched,
     isError: loadBalancerValuesIsError,
     error: loadBalancerValuesError,
   } = useFetchLoadBalancerQuotaValues(region);
@@ -57,7 +56,7 @@ const LoadBalancersDropdown = ({
     <FormSelectOption key={value} value={value} label={value} />
   );
 
-  if (loadBalancerValuesFetched && !loadBalancerValuesIsError && !!quotaList && !quotaListError) {
+  if (loadBalancerValues && !loadBalancerValuesIsError && quotaList && !quotaListError) {
     const query = {
       resourceType: QuotaTypes.LOAD_BALANCER,
       billingModel,
