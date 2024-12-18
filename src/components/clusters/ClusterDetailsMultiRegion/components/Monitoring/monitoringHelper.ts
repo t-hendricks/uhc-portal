@@ -1,6 +1,11 @@
 import dayjs from 'dayjs';
 
-import { ClusterResource, SubscriptionCommonFields } from '~/types/accounts_mgmt.v1';
+import {
+  ClusterResource,
+  OndemandMetricsAlerts,
+  OndemandMetricsClusterOperators,
+  SubscriptionCommonFields,
+} from '~/types/accounts_mgmt.v1';
 import { ClusterConsole } from '~/types/clusters_mgmt.v1';
 import { ClusterFromSubscription } from '~/types/types';
 
@@ -50,6 +55,31 @@ type monitoringItemLinkType = {
   rel: typeof baseURLProps.rel;
   target: typeof baseURLProps.target;
   href: string;
+};
+
+type CommonMetricsData = {
+  hasData: boolean;
+  numOfIssues: number | null;
+  numOfWarnings: number | null;
+};
+
+type OperatorMetricsData = CommonMetricsData & {
+  data?: Array<OndemandMetricsClusterOperators>;
+};
+
+type OndemandMetricsNodes = {
+  up: boolean;
+  hostname: string;
+  internal_ip: string;
+  time: string;
+};
+
+type NodeMetricsData = CommonMetricsData & {
+  data?: Array<OndemandMetricsNodes>;
+};
+
+type AlertsMetricsData = CommonMetricsData & {
+  data?: Array<OndemandMetricsAlerts>;
 };
 
 /**
@@ -154,7 +184,7 @@ const consoleURLSetup = (clusterConsole?: ClusterConsole) => {
 function monitoringItemLinkProps(
   clusterConsole: ClusterConsole | undefined,
   itemType: monitoringItemTypes | undefined,
-  itemName: string,
+  itemName?: string,
 ): monitoringItemLinkType | null {
   const consoleURL = consoleURLSetup(clusterConsole);
   let href;
@@ -190,4 +220,9 @@ export {
   operatorsStatuses,
   resourceUsageIssuesHelper,
   thresholds,
+  OperatorMetricsData,
+  NodeMetricsData,
+  AlertsMetricsData,
+  CommonMetricsData,
+  OndemandMetricsNodes,
 };

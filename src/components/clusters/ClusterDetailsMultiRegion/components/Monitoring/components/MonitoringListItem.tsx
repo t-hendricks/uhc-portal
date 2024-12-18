@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 
 import {
   DataListCell,
@@ -14,59 +13,62 @@ import { CheckCircleIcon } from '@patternfly/react-icons/dist/esm/icons/check-ci
 import { ExclamationCircleIcon } from '@patternfly/react-icons/dist/esm/icons/exclamation-circle-icon';
 import { ExclamationTriangleIcon } from '@patternfly/react-icons/dist/esm/icons/exclamation-triangle-icon';
 
-function MonitoringListItem({
+type MonitoringListItemProps = {
+  title: string;
+  numOfIssues: number | null;
+  numOfWarnings?: number | null;
+  toggle: (id: string) => void;
+  expanded: string[];
+  hasData: boolean;
+  children: React.ReactNode;
+};
+
+const MonitoringListItem = ({
   title = '',
-  numOfIssues = null,
-  numOfWarnings = null,
+  numOfIssues,
+  numOfWarnings,
   toggle,
   expanded,
   hasData,
   children,
-}) {
+}: MonitoringListItemProps) => {
   const id = title.replace(/\s+/g, '-').toLowerCase();
 
   const getSummary = () => {
-    // no metrics
-    if (!hasData) {
-      return (
-        <>
-          <ExclamationTriangleIcon className="status-icon warning" />
-          <span>Metrics not available</span>
-        </>
-      );
+    switch (true) {
+      case !hasData:
+        return (
+          <>
+            <ExclamationTriangleIcon className="status-icon warning" />
+            <span>Metrics not available</span>
+          </>
+        );
+      case numOfIssues && numOfIssues > 0:
+        return (
+          <>
+            <ExclamationCircleIcon className="status-icon danger" />
+            <span>
+              {numOfIssues} discovered {numOfIssues === 1 ? 'issue' : 'issues'}
+            </span>
+          </>
+        );
+      case numOfWarnings && numOfWarnings > 0:
+        return (
+          <>
+            <ExclamationTriangleIcon className="status-icon warning" />
+            <span>
+              {numOfWarnings} {numOfWarnings === 1 ? 'warning' : 'warnings'}
+            </span>
+          </>
+        );
+      default:
+        return (
+          <>
+            <CheckCircleIcon className="status-icon success" />
+            <span>{numOfIssues} discovered issues</span>
+          </>
+        );
     }
-
-    // discovered issues summary
-    if (numOfIssues > 0) {
-      return (
-        <>
-          <ExclamationCircleIcon className="status-icon danger" />
-          <span>
-            {numOfIssues} discovered {numOfIssues === 1 ? 'issue' : 'issues'}
-          </span>
-        </>
-      );
-    }
-
-    // warnings summary
-    if (numOfWarnings > 0) {
-      return (
-        <>
-          <ExclamationTriangleIcon className="status-icon warning" />
-          <span>
-            {numOfWarnings} {numOfWarnings === 1 ? 'warning' : 'warnings'}
-          </span>
-        </>
-      );
-    }
-
-    // no issues
-    return (
-      <>
-        <CheckCircleIcon className="status-icon success" />
-        <span>{numOfIssues} discovered issues</span>
-      </>
-    );
   };
 
   return (
@@ -100,20 +102,6 @@ function MonitoringListItem({
       </DataListContent>
     </DataListItem>
   );
-}
-
-MonitoringListItem.propTypes = {
-  title: PropTypes.string,
-  numOfIssues: PropTypes.number,
-  numOfWarnings: PropTypes.number,
-  expanded: PropTypes.array,
-  toggle: PropTypes.func,
-  children: PropTypes.node,
-  hasData: PropTypes.bool,
 };
 
-MonitoringListItem.defaultProps = {
-  expanded: [],
-};
-
-export default MonitoringListItem;
+export { MonitoringListItem };

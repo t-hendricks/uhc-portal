@@ -1,10 +1,13 @@
+import { ClusterFromSubscription } from '~/types/types';
+
 import { isClusterUpgrading } from '../../../../common/clusterStates';
+import { MonitoringReducerType } from '../model/MonitoringReducerType';
 import { monitoringStatuses } from '../monitoringHelper';
 import {
   clusterHealthSelector,
   issuesAndWarningsSelector,
   lastCheckInSelector,
-} from '../MonitoringSelectors';
+} from '../monitoringSelectors';
 
 import {
   makeFreshCheckIn,
@@ -20,9 +23,11 @@ import {
 
 jest.mock('../../../../common/clusterStates');
 
+const isClusterUpgradingMock = isClusterUpgrading as jest.Mock;
+
 describe('lastCheckInSelector', () => {
   it('returns something valid if activity_timestamp is missing (unrealistic)', () => {
-    const checkIn = lastCheckInSelector({});
+    const checkIn = lastCheckInSelector({} as ClusterFromSubscription);
     expect(checkIn).toBeInstanceOf(Date);
     expect(checkIn.getTime() < new Date('1900-01-01').getTime()); // far in the past.
   });
@@ -49,19 +54,19 @@ describe('clusterHealthSelector', () => {
     });
 
     it('should return UPGRADING when metrics are running', () => {
-      isClusterUpgrading.mockReturnValueOnce(true);
+      isClusterUpgradingMock.mockReturnValueOnce(true);
       const result = clusterHealthSelector(mockOCPActiveClusterDetails, makeFreshCheckIn(), 0);
       expect(result).toBe(monitoringStatuses.UPGRADING);
     });
 
     it('should return HEALTHY when metrics are fresh & good', () => {
-      isClusterUpgrading.mockReturnValueOnce(false);
+      isClusterUpgradingMock.mockReturnValueOnce(false);
       const result = clusterHealthSelector(mockOCPActiveClusterDetails, makeFreshCheckIn(), 0);
       expect(result).toBe(monitoringStatuses.HEALTHY);
     });
 
     it("handles timestamp in future (relative to browser's clock)", () => {
-      isClusterUpgrading.mockReturnValueOnce(false);
+      isClusterUpgradingMock.mockReturnValueOnce(false);
       const result = clusterHealthSelector(mockOCPActiveClusterDetails, makeFutureDate(), 0);
       expect(result).toBe(monitoringStatuses.HEALTHY);
     });
@@ -81,13 +86,13 @@ describe('clusterHealthSelector', () => {
           updated_timestamp: new Date().toISOString(),
         },
       },
-    };
+    } as ClusterFromSubscription;
 
     const monitoring = {
       alerts: mockAlerts,
       nodes: { data: [...mockNodes.data.slice(0, 2)] },
       operators: mockOperators,
-    };
+    } as MonitoringReducerType;
 
     it('should count issues, warnings and total issues', () => {
       const expected = {
