@@ -418,6 +418,8 @@ describe('OSD Wizard validation tests(OCP-54134,OCP-73204)', { tags: ['smoke'] }
         CreateOSDWizardPage.wizardBackButton().click();
         CreateOSDWizardPage.selectAvailabilityZone('Single Zone');
         CreateOSDWizardPage.wizardNextButton().click();
+        CreateOSDWizardPage.enableAutoscalingCheckbox().uncheck();
+        CreateOSDWizardPage.enableAutoscalingCheckbox().check();
         CreateOSDWizardPage.editClusterAutoscalingSettingsButton().click();
         CreateOSDWizardPage.clusterAutoscalingMaxNodesTotalInput().should('have.value', '254');
         CreateOSDWizardPage.clusterAutoscalingMaxNodesTotalInput()
@@ -438,6 +440,8 @@ describe('OSD Wizard validation tests(OCP-54134,OCP-73204)', { tags: ['smoke'] }
           CreateOSDWizardPage.wizardBackButton().click();
           CreateOSDWizardPage.selectVersion('4.14.0');
           CreateOSDWizardPage.wizardNextButton().click();
+          CreateOSDWizardPage.enableAutoscalingCheckbox().uncheck();
+          CreateOSDWizardPage.enableAutoscalingCheckbox().check();
           CreateOSDWizardPage.editClusterAutoscalingSettingsButton().click();
           CreateOSDWizardPage.clusterAutoscalingMaxNodesTotalInput().should('have.value', '185');
           CreateOSDWizardPage.clusterAutoscalingMaxNodesTotalInput()
@@ -453,6 +457,8 @@ describe('OSD Wizard validation tests(OCP-54134,OCP-73204)', { tags: ['smoke'] }
           CreateOSDWizardPage.wizardBackButton().click();
           CreateOSDWizardPage.selectAvailabilityZone('Multi-zone');
           CreateOSDWizardPage.wizardNextButton().click();
+          CreateOSDWizardPage.enableAutoscalingCheckbox().uncheck();
+          CreateOSDWizardPage.enableAutoscalingCheckbox().check();
           CreateOSDWizardPage.editClusterAutoscalingSettingsButton().click();
           CreateOSDWizardPage.clusterAutoscalingMaxNodesTotalInput().should('have.value', '186');
           CreateOSDWizardPage.clusterAutoscalingMaxNodesTotalInput()
@@ -468,6 +474,8 @@ describe('OSD Wizard validation tests(OCP-54134,OCP-73204)', { tags: ['smoke'] }
           CreateOSDWizardPage.wizardBackButton().click();
           CreateOSDWizardPage.selectVersion('');
           CreateOSDWizardPage.wizardNextButton().click();
+          CreateOSDWizardPage.enableAutoscalingCheckbox().uncheck();
+          CreateOSDWizardPage.enableAutoscalingCheckbox().check();
           CreateOSDWizardPage.editClusterAutoscalingSettingsButton().click();
         }
         CreateOSDWizardPage.clusterAutoscalingGPUsInput().type('{selectAll}').type('test').blur();
