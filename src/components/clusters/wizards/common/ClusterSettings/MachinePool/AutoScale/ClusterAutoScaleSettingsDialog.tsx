@@ -4,11 +4,7 @@ import { useDispatch } from 'react-redux';
 import { Form, FormSection, Grid, GridItem, Text } from '@patternfly/react-core';
 
 import installLinks from '~/common/installLinks.mjs';
-import {
-  clusterAutoScalingValidators,
-  validateListOfBalancingLabels,
-  validateMaxNodes,
-} from '~/common/validators';
+import { clusterAutoScalingValidators, validateListOfBalancingLabels } from '~/common/validators';
 import { getDefaultClusterAutoScaling } from '~/components/clusters/common/clusterAutoScalingValues';
 import {
   AutoscalerGpuHelpText,
@@ -33,6 +29,7 @@ import ExternalLink from '~/components/common/ExternalLink';
 import Modal from '~/components/common/Modal/Modal';
 import { closeModal } from '~/components/common/Modal/ModalActions';
 import modals from '~/components/common/Modal/modals';
+import useValidateBypassComputeNodeCountLimit from '~/hooks/useValidateBypassComputeNodeCountLimit';
 import { useGlobalState } from '~/redux/hooks';
 
 import {
@@ -167,6 +164,9 @@ const ClusterAutoScaleSettingsDialog = ({
   const hasAutoScalingErrors = Object.keys(autoScalingErrors || {}).length > 0;
   const isScaleDownDisabled = clusterAutoScaling?.scale_down?.enabled === false;
 
+  const validateBypassComputeNodeCountLimitClassicOsdGcpFlag =
+    useValidateBypassComputeNodeCountLimit(maxNodesTotalDefault);
+
   return (
     <Modal
       variant="large"
@@ -233,7 +233,7 @@ const ClusterAutoScaleSettingsDialog = ({
                   helperText={
                     <span className="custom-help-text">Default value: {maxNodesTotalDefault}</span>
                   }
-                  validate={(value) => validateMaxNodes(value, maxNodesTotalDefault)}
+                  validate={validateBypassComputeNodeCountLimitClassicOsdGcpFlag}
                   tooltip={MaxNodesTotalPopoverText}
                 />
               </GridItem>

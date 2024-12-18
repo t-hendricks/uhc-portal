@@ -1,15 +1,11 @@
-import React, { FormEvent, useCallback } from 'react';
+import React, { FormEvent } from 'react';
 import { useDispatch } from 'react-redux';
 import { Field } from 'redux-form';
 
 import { Form, FormGroup, FormSection, Grid, GridItem, Switch, Text } from '@patternfly/react-core';
 
 import installLinks from '~/common/installLinks.mjs';
-import {
-  clusterAutoScalingValidators,
-  validateListOfBalancingLabels,
-  validateMaxNodes,
-} from '~/common/validators';
+import { clusterAutoScalingValidators, validateListOfBalancingLabels } from '~/common/validators';
 import { getDefaultClusterAutoScaling } from '~/components/clusters/common/clusterAutoScalingValues';
 import {
   AutoscalerGpuHelpText,
@@ -20,6 +16,7 @@ import {
   AutoscalerIgnoredLabelsPopover,
 } from '~/components/clusters/common/EditClusterAutoScalingDialog/AutoscalerIgnoredLabelsTooltip';
 import ErrorBox from '~/components/common/ErrorBox';
+import useValidateBypassComputeNodeCountLimit from '~/hooks/useValidateBypassComputeNodeCountLimit';
 import { clusterAutoscalerActions } from '~/redux/actions/clusterAutoscalerActions';
 import { ClusterAutoscaler } from '~/types/clusters_mgmt.v1';
 import { ErrorState } from '~/types/types';
@@ -129,10 +126,8 @@ function EditClusterAutoScalingDialog({
     });
   };
 
-  const validateMaxNodesTotal = useCallback(
-    (value: string) => validateMaxNodes(value, maxNodesTotalDefault),
-    [maxNodesTotalDefault],
-  );
+  const validateBypassComputeNodeCountLimitClassicOsdGcpFlag =
+    useValidateBypassComputeNodeCountLimit(maxNodesTotalDefault);
 
   return (
     <Modal
@@ -240,7 +235,7 @@ function EditClusterAutoScalingDialog({
                   label="max-nodes-total"
                   type="number"
                   parse={numberParser(maxNodesTotalDefault as number)}
-                  validate={validateMaxNodesTotal}
+                  validate={validateBypassComputeNodeCountLimitClassicOsdGcpFlag}
                   extendedHelpText={MaxNodesTotalPopoverText}
                   isRequired
                   props={{
