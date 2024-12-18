@@ -235,6 +235,8 @@ const ClusterList = ({
         ),
       );
     }
+    // This dispatch can  be removed once the multiRegion version cluster details is the default version
+    dispatch(clustersActions.clearClusterDetails());
 
     const planIDFilter = getQueryParam('plan_id') || '';
 

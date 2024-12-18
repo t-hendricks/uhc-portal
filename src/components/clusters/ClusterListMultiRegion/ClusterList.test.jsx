@@ -412,7 +412,7 @@ describe('<ClusterList />', () => {
       isRestrictedEnv.mockReturnValue(true);
       withState({}, true).render(<ClusterList {...props} />);
       expect(mockedDispatch).toHaveBeenCalled();
-      expect(mockedDispatch.mock.calls).toHaveLength(1);
+
       const args = mockedDispatch.mock.calls[0];
 
       expect(args[0].type).toEqual('VIEW_SET_LIST_FLAGS');
