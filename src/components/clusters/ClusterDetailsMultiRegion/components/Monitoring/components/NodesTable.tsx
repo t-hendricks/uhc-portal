@@ -1,29 +1,36 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 
 import { CheckCircleIcon } from '@patternfly/react-icons/dist/esm/icons/check-circle-icon';
 import { ExclamationCircleIcon } from '@patternfly/react-icons/dist/esm/icons/exclamation-circle-icon';
 import { Table, TableVariant, Tbody, Td, Th, Thead, Tr } from '@patternfly/react-table';
 
-import { monitoringItemLinkProps, monitoringItemTypes } from '../monitoringHelper';
+import { ClusterConsole } from '~/types/clusters_mgmt.v1';
 
-function NodesTable({ nodes = [], clusterConsole }) {
-  const nodeStatus = (isUp) => {
-    if (isUp) {
-      return (
-        <>
-          <CheckCircleIcon className="status-icon success" />
-          <span>Ready</span>
-        </>
-      );
-    }
-    return (
+import {
+  monitoringItemLinkProps,
+  monitoringItemTypes,
+  OndemandMetricsNodes,
+} from '../monitoringHelper';
+
+type NodesTableProps = {
+  // OnDemandMetricsAlers is used in api but it has no hostname
+  nodes?: OndemandMetricsNodes[];
+  clusterConsole?: ClusterConsole;
+};
+
+const NodesTable = ({ nodes = [], clusterConsole }: NodesTableProps) => {
+  const nodeStatus = (isUp: boolean) =>
+    isUp ? (
+      <>
+        <CheckCircleIcon className="status-icon success" />
+        <span>Ready</span>
+      </>
+    ) : (
       <>
         <ExclamationCircleIcon className="status-icon danger" />
         <span>Not Ready</span>{' '}
       </>
     );
-  };
 
   const rows = nodes.map((node) => {
     const nodeLinkProps = monitoringItemLinkProps(
@@ -65,11 +72,6 @@ function NodesTable({ nodes = [], clusterConsole }) {
       </Tbody>
     </Table>
   );
-}
-
-NodesTable.propTypes = {
-  nodes: PropTypes.array,
-  clusterConsole: PropTypes.object,
 };
 
-export default NodesTable;
+export { NodesTable };

@@ -2,11 +2,11 @@ import React from 'react';
 
 import { checkAccessibility, render } from '~/testUtils';
 
-import MonitoringList from '../components/MonitoringList';
+import { ClusterOperators } from '../components/ClusterOperators';
 
-describe('<MonitoringList />', () => {
+describe('<ClusterOperators />', () => {
   it('is accessible', async () => {
-    const { container } = render(<MonitoringList />);
+    const { container } = render(<ClusterOperators />);
     await checkAccessibility(container);
   });
 });

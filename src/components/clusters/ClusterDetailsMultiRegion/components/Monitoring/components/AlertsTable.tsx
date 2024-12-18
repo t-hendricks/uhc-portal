@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 
 import { EmptyState, EmptyStateHeader, EmptyStateIcon } from '@patternfly/react-core';
 import { CheckCircleIcon } from '@patternfly/react-icons/dist/esm/icons/check-circle-icon';
@@ -8,9 +7,17 @@ import { ExclamationTriangleIcon } from '@patternfly/react-icons/dist/esm/icons/
 import { InfoCircleIcon } from '@patternfly/react-icons/dist/esm/icons/info-circle-icon';
 import { Table, TableVariant, Tbody, Td, Th, Thead, Tr } from '@patternfly/react-table';
 
+import { OndemandMetricsAlerts } from '~/types/accounts_mgmt.v1';
+import { ClusterConsole } from '~/types/clusters_mgmt.v1';
+
 import { alertsSeverity, monitoringItemLinkProps, monitoringItemTypes } from '../monitoringHelper';
 
-function AlertsTable({ alerts = [], clusterConsole }) {
+type AlertsTableProps = {
+  alerts?: Array<OndemandMetricsAlerts>;
+  clusterConsole?: ClusterConsole;
+};
+
+function AlertsTable({ alerts = [], clusterConsole }: AlertsTableProps) {
   const errorIcon = (
     <>
       <ExclamationCircleIcon className="status-icon danger" />
@@ -31,7 +38,7 @@ function AlertsTable({ alerts = [], clusterConsole }) {
     </>
   );
 
-  const isNotRealAlert = (name) => name === 'Watchdog' || name === 'DeadMansSwitch';
+  const isNotRealAlert = (name?: string) => name === 'Watchdog' || name === 'DeadMansSwitch';
 
   if (alerts.every((alert) => isNotRealAlert(alert.name))) {
     return (
@@ -89,26 +96,14 @@ function AlertsTable({ alerts = [], clusterConsole }) {
       </Thead>
       <Tbody>
         {rows.map((row) => (
-          <Tr key={row.alertKey}>
-            <Td>{row.alertName}</Td>
-            <Td>{row.severityIcon}</Td>
+          <Tr key={row?.alertKey}>
+            <Td>{row?.alertName}</Td>
+            <Td>{row?.severityIcon}</Td>
           </Tr>
         ))}
       </Tbody>
     </Table>
   );
 }
-
-AlertsTable.propTypes = {
-  alerts: PropTypes.arrayOf(
-    PropTypes.shape({
-      name: PropTypes.string.isRequired,
-      severity: PropTypes.string,
-    }),
-  ),
-  clusterConsole: PropTypes.shape({
-    url: PropTypes.string,
-  }),
-};
 
 export default AlertsTable;

@@ -103,7 +103,7 @@ import {
 } from './components/MachinePools/MachinePoolsActions';
 import Monitoring from './components/Monitoring';
 import { getOnDemandMetrics } from './components/Monitoring/MonitoringActions';
-import { issuesAndWarningsSelector } from './components/Monitoring/MonitoringSelectors';
+import { issuesAndWarningsSelector } from './components/Monitoring/monitoringSelectors';
 import Networking from './components/Networking';
 import { getClusterRouters } from './components/Networking/NetworkingActions';
 import Overview from './components/Overview/Overview';
