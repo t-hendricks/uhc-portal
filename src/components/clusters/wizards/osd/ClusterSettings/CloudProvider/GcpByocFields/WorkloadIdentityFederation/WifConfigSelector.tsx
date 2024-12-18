@@ -2,9 +2,9 @@ import React, { useCallback, useMemo, useState } from 'react';
 
 import { Button, Flex, FlexItem, FormGroup } from '@patternfly/react-core';
 
-import { WifConfig } from '~/components/clusters/wizards/osd/ClusterSettings/CloudProvider/tempWifTypes/WifConfig';
 import { FormGroupHelperText } from '~/components/common/FormGroupHelperText';
 import { FuzzySelect, FuzzySelectProps } from '~/components/common/FuzzySelect/FuzzySelect';
+import { WifConfig } from '~/types/clusters_mgmt.v1';
 
 interface WifConfigSelectorProps {
   wifConfigs: WifConfig[];
