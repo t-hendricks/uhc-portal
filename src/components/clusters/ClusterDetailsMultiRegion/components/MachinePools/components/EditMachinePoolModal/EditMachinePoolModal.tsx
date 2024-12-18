@@ -24,7 +24,6 @@ import { useGlobalState } from '~/redux/hooks';
 import { MachinePool } from '~/types/clusters_mgmt.v1';
 import { ClusterFromSubscription, ErrorState } from '~/types/types';
 
-import { clearGetMachinePoolsResponse } from '../../MachinePoolsActions';
 import { canUseSpotInstances } from '../../machinePoolsHelper';
 
 import DiskSizeField from './fields/DiskSizeField';
@@ -287,9 +286,6 @@ export const ConnectedEditMachinePoolModal = ({
 
   const onModalClose = () => {
     dispatch(closeModal());
-    if (clearMachinePools) {
-      clearGetMachinePoolsResponse()(dispatch);
-    }
   };
   const { cluster, shouldDisplayClusterName } = data as any;
   const hypershiftCluster = isHypershiftCluster(cluster);
