@@ -2,6 +2,7 @@ import { action, ActionType } from 'typesafe-actions';
 
 import authorizationsService from '../../services/authorizationsService';
 import {
+  BYPASS_COMPUTE_NODE_COUNT_LIMIT_CLASSIC_OSD_GCP,
   CLI_SSO_AUTHORIZATION,
   CLUSTER_OWNERSHIP_TRANSFER,
   CREATE_CLUSTER_YAML_EDITOR,
@@ -45,6 +46,10 @@ export const features = [
   getSimpleUnleashFeature('enable-create-cluster-yaml-editor', CREATE_CLUSTER_YAML_EDITOR),
   getSimpleUnleashFeature('max-compute-nodes-500', MAX_COMPUTE_NODES_500),
   getSimpleUnleashFeature('ocmui-hcp-root-disk-size', HCP_ROOT_DISK_SIZE),
+  getSimpleUnleashFeature(
+    'bypass-compute-node-count-limit-classic-osd-gcp',
+    BYPASS_COMPUTE_NODE_COUNT_LIMIT_CLASSIC_OSD_GCP,
+  ),
 ];
 
 export const detectFeatures = (): AppThunk => (dispatch) => {
