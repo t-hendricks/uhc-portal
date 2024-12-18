@@ -17,9 +17,9 @@ import { FieldId } from '~/components/clusters/wizards/common/constants';
 import { useFormState } from '~/components/clusters/wizards/hooks';
 import { useGetWifConfigs } from '~/components/clusters/wizards/osd/ClusterSettings/CloudProvider/GcpByocFields/WorkloadIdentityFederation/useWifConfigs';
 import { WifConfigSelector } from '~/components/clusters/wizards/osd/ClusterSettings/CloudProvider/GcpByocFields/WorkloadIdentityFederation/WifConfigSelector';
-import { WifConfig } from '~/components/clusters/wizards/osd/ClusterSettings/CloudProvider/tempWifTypes/WifConfig';
 import { WifConfigList } from '~/components/clusters/wizards/osd/ClusterSettings/CloudProvider/types';
 import ExternalLink from '~/components/common/ExternalLink';
+import { WifConfig } from '~/types/clusters_mgmt.v1';
 
 export interface WorkloadIdentityFederationProps {
   getWifConfigsService: (projectId: string) => Promise<AxiosResponse<WifConfigList>>;
