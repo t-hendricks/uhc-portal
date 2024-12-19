@@ -27,7 +27,6 @@ import Skeleton from '@redhat-cloud-services/frontend-components/Skeleton';
 
 import { noQuotaTooltip } from '~/common/helpers';
 import { versionFormatter } from '~/common/versionHelpers';
-import { isMultiAZ } from '~/components/clusters/ClusterDetails/clusterDetailsHelper';
 import { EditClusterAutoScalerForDay2 } from '~/components/clusters/common/EditClusterAutoScalingDialog';
 import { MachineConfiguration } from '~/components/clusters/common/MachineConfiguration';
 import { getMaxNodesTotalDefaultAutoscaler } from '~/components/clusters/common/machinePools/utils';
@@ -44,6 +43,7 @@ import clusterStates, {
   isOSD,
   isROSA,
 } from '../../../common/clusterStates';
+import { isMultiAZ } from '../../clusterDetailsHelper';
 
 import DeleteMachinePoolModal from './components/DeleteMachinePoolModal/DeleteMachinePoolModal';
 import MachinePoolExpandedRow from './components/MachinePoolExpandedRow';

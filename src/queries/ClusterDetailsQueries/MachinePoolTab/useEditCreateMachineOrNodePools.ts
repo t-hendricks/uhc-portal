@@ -1,9 +1,11 @@
 import { useMutation } from '@tanstack/react-query';
 
-import { buildMachinePoolRequest } from '~/components/clusters/ClusterDetails/components/MachinePools/components/EditMachinePoolModal/utils';
 import { isMPoolAz } from '~/components/clusters/ClusterDetailsMultiRegion/clusterDetailsHelper';
 import { EditMachinePoolValues } from '~/components/clusters/ClusterDetailsMultiRegion/components/MachinePools/components/EditMachinePoolModal/hooks/useMachinePoolFormik';
-import { buildNodePoolRequest } from '~/components/clusters/ClusterDetailsMultiRegion/components/MachinePools/components/EditMachinePoolModal/utils';
+import {
+  buildMachinePoolRequest,
+  buildNodePoolRequest,
+} from '~/components/clusters/ClusterDetailsMultiRegion/components/MachinePools/components/EditMachinePoolModal/utils';
 import { isROSA } from '~/components/clusters/common/clusterStates';
 import { useFeatureGate } from '~/hooks/useFeatureGate';
 import { HCP_ROOT_DISK_SIZE } from '~/redux/constants/featureConstants';

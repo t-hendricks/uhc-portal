@@ -5,7 +5,7 @@ import { Grid, GridItem, Label, LabelGroup } from '@patternfly/react-core';
 import { arrayToString, stringToArrayTrimmed, strToKeyValueObject } from '~/common/helpers';
 import { STANDARD_TRIAL_BILLING_MODEL_TYPE } from '~/common/subscriptionTypes';
 import { humanizeValueWithUnitGiB } from '~/common/units';
-import { routeSelectorsAsString } from '~/components/clusters/ClusterDetails/components/Networking/NetworkingSelector';
+import { routeSelectorsAsString } from '~/components/clusters/ClusterDetailsMultiRegion/components/Networking/NetworkingSelector';
 import parseUpdateSchedule from '~/components/clusters/common/Upgrades/parseUpdateSchedule';
 import { IMDSType } from '~/components/clusters/wizards/common';
 import { ClusterPrivacyType } from '~/components/clusters/wizards/osd//Networking/constants';

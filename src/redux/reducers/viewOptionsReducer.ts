@@ -4,8 +4,6 @@ import {
 } from '~/common/localStorageConstants';
 import { ViewOptions } from '~/types/types';
 
-import { ClusterLogAction } from '../../components/clusters/ClusterDetails/components/ClusterLogs/clusterLogActions';
-import { GET_CLUSTER_LOGS } from '../../components/clusters/ClusterDetails/components/ClusterLogs/clusterLogConstants';
 import { AccessRequestAction } from '../actions/accessRequestActions';
 import type { ClusterAction } from '../actions/clustersActions';
 import type { DashboardsAction } from '../actions/dashboardsActions';
@@ -126,7 +124,7 @@ const viewOptionsReducer = (
     | DashboardsAction
     | ClusterAction
     | SubscriptionsAction
-    | ClusterLogAction
+
     // TODO create typescript action
     | {
         type: 'VIEW_MY_CLUSTERS_ONLY_CHANGED';
@@ -258,14 +256,6 @@ const viewOptionsReducer = (
 
     case REJECTED_ACTION(GET_ACCESS_REQUESTS):
       updatePageCounts(viewConstants.ACCESS_REQUESTS_VIEW, 0);
-      return { ...state, ...updateState };
-
-    case FULFILLED_ACTION(GET_CLUSTER_LOGS):
-      updatePageCounts(viewConstants.CLUSTER_LOGS_VIEW, action.payload.logs.data.total);
-      return { ...state, ...updateState };
-
-    case REJECTED_ACTION(GET_CLUSTER_LOGS):
-      updatePageCounts(viewConstants.CLUSTER_LOGS_VIEW, 0);
       return { ...state, ...updateState };
 
     case viewPaginationConstants.VIEW_SET_LIST_FILTER:

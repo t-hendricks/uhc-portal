@@ -10,7 +10,6 @@ import {
   checkTaintValue,
   validateSecurityGroups,
 } from '~/common/validators';
-import { isMPoolAz } from '~/components/clusters/ClusterDetails/clusterDetailsHelper';
 import { isHypershiftCluster, isROSA } from '~/components/clusters/common/clusterStates';
 import {
   defaultWorkerNodeVolumeSizeGiB,
@@ -28,6 +27,7 @@ import { PromiseReducerState } from '~/redux/types';
 import { MachinePool, NodePool } from '~/types/clusters_mgmt.v1';
 import { ClusterFromSubscription } from '~/types/types';
 
+import { isMPoolAz } from '../../../../../clusterDetailsHelper';
 import { getClusterMinNodes } from '../../../machinePoolsHelper';
 import { TaintEffect } from '../fields/TaintEffectField';
 

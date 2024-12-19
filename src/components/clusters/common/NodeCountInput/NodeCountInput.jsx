@@ -6,7 +6,7 @@ import { FormGroup, FormSelect, FormSelectOption, Tooltip } from '@patternfly/re
 import {
   getNodeIncrement,
   getNodeIncrementHypershift,
-} from '~/components/clusters/ClusterDetails/components/MachinePools/machinePoolsHelper';
+} from '~/components/clusters/ClusterDetailsMultiRegion/components/MachinePools/machinePoolsHelper';
 import {
   buildOptions,
   getAvailableQuota as getAvailableQuotaUtil,

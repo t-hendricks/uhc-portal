@@ -8,7 +8,6 @@ import { Button, ExpandableSection, Form, Stack, StackItem, Tooltip } from '@pat
 
 import { getErrorMessage } from '~/common/errors';
 import getClusterName from '~/common/getClusterName';
-import { isMPoolAz } from '~/components/clusters/ClusterDetails/clusterDetailsHelper';
 import { isHypershiftCluster, isROSA } from '~/components/clusters/common/clusterStates';
 import { getMaxNodesHCP, getNodeCount } from '~/components/clusters/common/machinePools/utils';
 import ErrorBox from '~/components/common/ErrorBox';
@@ -24,6 +23,7 @@ import { clusterService } from '~/services';
 import { MachinePool } from '~/types/clusters_mgmt.v1';
 import { ClusterFromSubscription, ErrorState } from '~/types/types';
 
+import { isMPoolAz } from '../../../../clusterDetailsHelper';
 import { clearGetMachinePoolsResponse, getMachineOrNodePools } from '../../MachinePoolsActions';
 import { canUseSpotInstances, normalizeNodePool } from '../../machinePoolsHelper';
 

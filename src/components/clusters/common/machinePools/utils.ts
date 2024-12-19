@@ -1,7 +1,10 @@
 import range from 'lodash/range';
 
 import { splitVersion } from '~/common/versionHelpers';
-import { isMPoolAz, isMultiAZ } from '~/components/clusters/ClusterDetails/clusterDetailsHelper';
+import {
+  isMPoolAz,
+  isMultiAZ,
+} from '~/components/clusters/ClusterDetailsMultiRegion/clusterDetailsHelper';
 import { isHypershiftCluster } from '~/components/clusters/common/clusterStates';
 import { availableNodesFromQuota } from '~/components/clusters/common/quotaSelectors';
 import { GlobalState } from '~/redux/store';

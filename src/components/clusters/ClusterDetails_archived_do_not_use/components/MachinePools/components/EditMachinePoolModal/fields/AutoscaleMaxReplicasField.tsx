@@ -6,7 +6,6 @@ import { FormGroup, NumberInput } from '@patternfly/react-core';
 import links from '~/common/installLinks.mjs';
 import { normalizeProductID } from '~/common/normalize';
 import { normalizedProducts } from '~/common/subscriptionTypes';
-import { isMPoolAz } from '~/components/clusters/ClusterDetails/clusterDetailsHelper';
 import { isHypershiftCluster } from '~/components/clusters/common/clusterStates';
 import { computeNodeHintText } from '~/components/clusters/common/ScaleSection/AutoScaleSection/AutoScaleHelper';
 import ExternalLink from '~/components/common/ExternalLink';
@@ -14,6 +13,8 @@ import { FormGroupHelperText } from '~/components/common/FormGroupHelperText';
 import PopoverHint from '~/components/common/PopoverHint';
 import useFormikOnChange from '~/hooks/useFormikOnChange';
 import { ClusterFromSubscription } from '~/types/types';
+
+import { isMPoolAz } from '../../../../../clusterDetailsHelper';
 
 type AutoscaleMaxReplicasFieldProps = {
   minNodes: number;

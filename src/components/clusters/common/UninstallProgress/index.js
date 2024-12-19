@@ -1,8 +1,8 @@
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
-import { getClusterAddOns } from '../../ClusterDetails/components/AddOns/AddOnsActions';
-import { getLogs } from '../../ClusterDetails/components/Overview/InstallationLogView/InstallationLogActions';
+import { getClusterAddOns } from '../../ClusterDetailsMultiRegion/components/AddOns/AddOnsActions';
+import { getLogs } from '../../ClusterDetailsMultiRegion/components/Overview/InstallationLogView/InstallationLogActions';
 
 import UninstallProgress from './UninstallProgress';
 

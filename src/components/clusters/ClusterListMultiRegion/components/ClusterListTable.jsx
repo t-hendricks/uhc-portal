@@ -30,17 +30,12 @@ import { global_warning_color_100 as warningColor } from '@patternfly/react-toke
 
 import { Link } from '~/common/routing';
 import AIClusterStatus from '~/components/common/AIClusterStatus';
-import config from '~/config';
-import { useFeatureGate } from '~/hooks/useFeatureGate';
 import { useToggleSubscriptionReleased } from '~/queries/ClusterActionsQueries/useToggleSubscriptionReleased';
 import { findRegionalInstance } from '~/queries/helpers';
 import { useFetchGetAvailableRegionalInstances } from '~/queries/RosaWizardQueries/useFetchGetAvailableRegionalInstances';
-import { toggleSubscriptionReleased } from '~/redux/actions/subscriptionReleasedActions';
-import { MULTIREGION_PREVIEW_ENABLED } from '~/redux/constants/featureConstants';
 
 import getClusterName, { UNNAMED_CLUSTER } from '../../../../common/getClusterName';
 import { isAISubscriptionWithoutMetrics } from '../../../../common/isAssistedInstallerCluster';
-import { actionResolver } from '../../common/ClusterActionsDropdown/ClusterActionsDropdownItems';
 import ClusterStateIcon from '../../common/ClusterStateIcon';
 import clusterStates, {
   getClusterStateAndDescription,
@@ -114,9 +109,6 @@ function ClusterListTable(props) {
     isClustersDataPending,
   } = props;
 
-  const multiRegionFeatureGate = useFeatureGate(MULTIREGION_PREVIEW_ENABLED);
-  const multiRegionReactQueryActionsEnabled = multiRegionFeatureGate && config.multiRegion;
-
   const dispatch = useDispatch();
   const canSubscribeOCPList = canSubscribeOCPListFromClusters(clusters);
   const canTransferClusterOwnershipList = canTransferClusterOwnershipListFromClusters(clusters);
@@ -124,8 +116,7 @@ function ClusterListTable(props) {
 
   const { mutate: toggleSubscriptionReleasedMultiRegion } = useToggleSubscriptionReleased();
 
-  const { data: availableRegionalInstances } =
-    useFetchGetAvailableRegionalInstances(multiRegionFeatureGate);
+  const { data: availableRegionalInstances } = useFetchGetAvailableRegionalInstances(true);
 
   const getSortParams = (columnIndex) => ({
     sortBy: {
@@ -336,24 +327,7 @@ function ClusterListTable(props) {
           />
         </Td>
         <Td isActionCell>
-          {/* Hide actions column if viewing in multiRegion mode */}
-          {!isPending && cluster && !multiRegionReactQueryActionsEnabled ? (
-            <ActionsColumn
-              items={actionResolver(
-                cluster,
-                true,
-                openModal,
-                canSubscribeOCPList[cluster.id] || false,
-                canTransferClusterOwnershipList[cluster.id] || false,
-                canHibernateClusterList[cluster.id] || false,
-                (subscriptionId, released) =>
-                  dispatch(toggleSubscriptionReleased(subscriptionId, released)),
-                refreshFunc,
-                true,
-              )}
-            />
-          ) : null}
-          {!isPending && cluster && multiRegionReactQueryActionsEnabled ? (
+          {!isPending && cluster ? (
             <ActionsColumn
               items={multiRegionActionResolver(
                 cluster,

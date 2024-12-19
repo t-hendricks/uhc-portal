@@ -1,5 +1,3 @@
-import * as clusterLogConstants from '../../components/clusters/ClusterDetails/components/ClusterLogs/clusterLogConstants';
-
 import * as accessRequestConstants from './accessRequestConstants';
 import * as cloudProviderConstants from './cloudProviderConstants';
 import * as clusterAutoscalerConstants from './clusterAutoscalerConstants';
@@ -27,7 +25,6 @@ export {
   viewOptionsConstants,
   viewPaginationConstants,
   userConstants,
-  clusterLogConstants,
   cloudProviderConstants,
   costConstants,
   flavourConstants,

@@ -3,7 +3,7 @@ import React from 'react';
 import { checkAccessibility, render, screen } from '~/testUtils';
 
 import { normalizedProducts } from '../../../../common/subscriptionTypes';
-import fixtures from '../../ClusterDetails/__tests__/ClusterDetails.fixtures';
+import fixtures from '../../ClusterDetailsMultiRegion/__tests__/ClusterDetails.fixtures';
 import clusterStates from '../clusterStates';
 
 import ProgressList from './ProgressList';

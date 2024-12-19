@@ -5,7 +5,7 @@ import clusterService from '~/services/clusterService';
 import { checkAccessibility, mockUseFeatureGate, render, screen } from '~/testUtils';
 
 import { MULTIREGION_PREVIEW_ENABLED } from '../../../../redux/constants/featureConstants';
-import fixtures from '../../ClusterDetails/__tests__/ClusterDetails.fixtures';
+import fixtures from '../../ClusterDetailsMultiRegion/__tests__/ClusterDetails.fixtures';
 
 import ActionRequiredModal from './ActionRequiredModal';
 
