@@ -6,6 +6,8 @@ import { Form } from '@patternfly/react-core';
 import { DateFormat } from '@redhat-cloud-services/frontend-components/DateFormat';
 
 import { useDeleteSchedule } from '~/queries/ClusterDetailsQueries/ClusterSettingsTab/useDeleteSchedule';
+import { refetchSchedules } from '~/queries/ClusterDetailsQueries/ClusterSettingsTab/useGetSchedules';
+import { invalidateClusterDetailsQueries } from '~/queries/ClusterDetailsQueries/useFetchClusterDetails';
 import { useGlobalState } from '~/redux/hooks/useGlobalState';
 
 import ErrorBox from '../../../../common/ErrorBox';
@@ -13,8 +15,10 @@ import Modal from '../../../../common/Modal/Modal';
 import { closeModal } from '../../../../common/Modal/ModalActions';
 import shouldShowModal from '../../../../common/Modal/ModalSelectors';
 
-const CancelUpgradeModal = ({ isHypershift, clusterID, region }) => {
+const CancelUpgradeModal = ({ isHypershift }) => {
   const dispatch = useDispatch();
+  const isOpen = useGlobalState((state) => shouldShowModal(state, 'cancel-upgrade'));
+  const { clusterID, region, schedule } = useGlobalState((state) => state.modal.data);
 
   const {
     isPending: isDeleteSchedulePending,
@@ -24,9 +28,6 @@ const CancelUpgradeModal = ({ isHypershift, clusterID, region }) => {
     reset: resetDeleteSchedules,
     isSuccess: isDeleteSchedulesSuccess,
   } = useDeleteSchedule(clusterID, isHypershift, region);
-
-  const isOpen = useGlobalState((state) => shouldShowModal(state, 'cancel-upgrade'));
-  const schedule = useGlobalState((state) => state.modal.data.schedule);
 
   const close = () => {
     resetDeleteSchedules();
@@ -42,7 +43,12 @@ const CancelUpgradeModal = ({ isHypershift, clusterID, region }) => {
   }, [isDeleteSchedulesSuccess, isDeleteSchedulePending]);
 
   const deleteScheduleFunc = () => {
-    deleteScheduleMutate(schedule.id);
+    deleteScheduleMutate(schedule.id, {
+      onSuccess: () => {
+        invalidateClusterDetailsQueries();
+        refetchSchedules();
+      },
+    });
   };
 
   const error = isDeleteScheduleError ? (
@@ -76,8 +82,6 @@ const CancelUpgradeModal = ({ isHypershift, clusterID, region }) => {
 
 CancelUpgradeModal.propTypes = {
   isHypershift: PropTypes.bool.isRequired,
-  clusterID: PropTypes.string,
-  region: PropTypes.string,
 };
 
 export default CancelUpgradeModal;
