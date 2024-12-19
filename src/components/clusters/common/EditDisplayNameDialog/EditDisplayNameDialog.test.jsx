@@ -105,22 +105,18 @@ describe('<EditDisplayNameDialog />', () => {
     expect(mutate).toHaveBeenCalledWith({ displayName: 'my-new-name', subscriptionID: '' });
   });
 
-  it('does not allow blank whitespace to be entered', async () => {
-    mockedUseEditClusterName.mockReturnValue({
-      isError: false,
-      isPending: false,
-      mutate,
-    });
+  it('does not allow blank whitespace to be entered when field is empty', async () => {
     const { user } = render(<EditDisplayNameDialog {...defaultProps} />);
 
     expect(screen.getByRole('button', { name: 'Edit' })).toHaveAttribute('aria-disabled', 'true');
 
     await user.clear(screen.getByRole('textbox'));
-    await user.type(screen.getByRole('textbox'), '  my-new-name  ');
+    await user.type(screen.getByRole('textbox'), '    ');
 
     expect(screen.getByRole('button', { name: 'Edit' })).toHaveAttribute('aria-disabled', 'false');
     expect(mutate).not.toHaveBeenCalled();
 
+    await user.type(screen.getByRole('textbox'), '   my-new-name');
     await user.click(screen.getByRole('button', { name: 'Edit' }));
     expect(mutate).toHaveBeenCalledWith({ displayName: 'my-new-name', subscriptionID: '' });
   });
