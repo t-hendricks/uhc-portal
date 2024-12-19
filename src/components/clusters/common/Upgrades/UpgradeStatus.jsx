@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { useDispatch } from 'react-redux';
 
 import {
   Button,
@@ -13,6 +14,8 @@ import { InProgressIcon } from '@patternfly/react-icons/dist/esm/icons/in-progre
 import { OutlinedArrowAltCircleUpIcon } from '@patternfly/react-icons/dist/esm/icons/outlined-arrow-alt-circle-up-icon';
 import { DateFormat } from '@redhat-cloud-services/frontend-components/DateFormat';
 
+import { modalActions } from '../../../common/Modal/ModalActions';
+
 import UpdateGraph from './UpdateGraph/UpdateGraph';
 
 import './UpgradeStatus.scss';
@@ -24,8 +27,11 @@ function UpgradeStatus({
   scheduledUpgrade,
   availableUpgrades = [],
   onCancelClick,
-  openModal,
+  upgradeGates,
+  schedules,
+  cluster,
 }) {
+  const dispatch = useDispatch();
   const hasAvailableUpgrades = availableUpgrades.length > 0;
 
   const isManualUpgradeScheduled = scheduledUpgrade?.schedule_type === 'manual';
@@ -87,6 +93,9 @@ function UpgradeStatus({
           currentVersion={clusterVersion}
           updateVersion={updateVersion()}
           hasMore={!isManualUpgradeScheduled && availableUpgrades.length > 1}
+          upgradeGates={upgradeGates}
+          schedules={schedules}
+          cluster={cluster}
         />
 
         {scheduledUpgrade && upgradeState !== 'started' && upgradeState !== 'pending' && (
@@ -104,7 +113,9 @@ function UpgradeStatus({
             if (onCancelClick) {
               onCancelClick();
             }
-            openModal('cancel-upgrade', { clusterID, schedule: scheduledUpgrade });
+            dispatch(
+              modalActions.openModal('cancel-upgrade', { clusterID, schedule: scheduledUpgrade }),
+            );
           }}
         >
           Cancel this update
@@ -116,6 +127,9 @@ function UpgradeStatus({
 
 UpgradeStatus.propTypes = {
   clusterID: PropTypes.string.isRequired,
+  upgradeGates: PropTypes.object,
+  schedules: PropTypes.object,
+  cluster: PropTypes.object,
   canEdit: PropTypes.bool,
   clusterVersion: PropTypes.string,
   scheduledUpgrade: PropTypes.shape({
@@ -127,7 +141,6 @@ UpgradeStatus.propTypes = {
     schedule_type: PropTypes.string,
   }),
   onCancelClick: PropTypes.func,
-  openModal: PropTypes.func,
   availableUpgrades: PropTypes.arrayOf(PropTypes.string),
 };
 

@@ -21,7 +21,7 @@ import modals from '~/components/common/Modal/modals';
 import RefreshButton from '~/components/common/RefreshButton/RefreshButton';
 import { SubscriptionCommonFields } from '~/types/accounts_mgmt.v1';
 
-import ClusterActionsDropdown from '../../../common/ClusterActionsDropdown';
+import ClusterActionsDropdown from '../../../common/archived_do_not_use/ClusterActionsDropdown';
 import clusterStates, {
   hasInflightEgressErrors,
   isHibernating,

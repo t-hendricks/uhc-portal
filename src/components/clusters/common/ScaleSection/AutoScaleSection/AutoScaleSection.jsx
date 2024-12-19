@@ -273,6 +273,7 @@ class AutoScaleSection extends React.Component {
       isHypershiftMachinePool,
       numPools,
       openEditClusterAutoScalingModal,
+      clusterId,
     } = this.props;
     const { minErrorMessage, maxErrorMessage } = this.state;
 
@@ -456,7 +457,12 @@ class AutoScaleSection extends React.Component {
                 Edit cluster autoscaling settings
               </Button>
             </GridItem>
-            <EditClusterAutoScalingDialog isWizard change={change} isRosa={isRosa} />
+            <EditClusterAutoScalingDialog
+              isWizard
+              change={change}
+              isRosa={isRosa}
+              clusterId={clusterId}
+            />
           </>
         )}
 
@@ -468,6 +474,7 @@ class AutoScaleSection extends React.Component {
 
 AutoScaleSection.propTypes = {
   autoscalingEnabled: PropTypes.bool.isRequired,
+  clusterId: PropTypes.string.isRequired,
   openEditClusterAutoScalingModal: PropTypes.func,
   isMultiAz: PropTypes.bool.isRequired,
   autoScaleMinNodesValue: PropTypes.string,

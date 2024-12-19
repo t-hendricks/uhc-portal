@@ -39,7 +39,6 @@ type Day2Props = {
       errorMessage?: string;
     };
   };
-  maxNodesTotalDefault: number;
 };
 
 type ScalingFormData = {
@@ -54,7 +53,7 @@ const EditClusterAutoScalerDay2Form = reduxForm<ScalingFormData, EditClusterAuto
     form: DAY2_SELECTOR,
     enableReinitialize: true,
   },
-)(EditClusterAutoScalingDialog as any);
+)(EditClusterAutoScalingDialog);
 
 const day1FormValueSelectorMapper = (state: GlobalState): EditClusterAutoScalingDialogProps => {
   const formErrors = getFormSyncErrors(DAY1_SELECTOR)(state) as FormErrors<ScalingFormData>;
@@ -73,9 +72,9 @@ const day2FormValueSelectorMapper = (
 ): EditClusterAutoScalingDialogProps => {
   const formErrors = getFormSyncErrors(DAY2_SELECTOR)(state) as FormErrors<ScalingFormData>;
   const valueSelector = formValueSelector(DAY2_SELECTOR) || {};
+
   const baseData =
-    ownProps.clusterAutoscalerResponse.getAutoscaler.data ||
-    getDefaultClusterAutoScaling(ownProps.maxNodesTotalDefault);
+    ownProps.clusterAutoscalerResponse.getAutoscaler.data || getDefaultClusterAutoScaling();
 
   const currentAutoscaler = {
     ...baseData,
@@ -88,6 +87,7 @@ const day2FormValueSelectorMapper = (
     autoScalingErrors: formErrors.cluster_autoscaling || {},
     initialValues: { cluster_autoscaling: currentAutoscaler },
     editAction: ownProps.clusterAutoscalerResponse.editAction,
+    clusterId: ownProps.clusterId,
   } as unknown as EditClusterAutoScalingDialogProps;
 };
 
@@ -102,12 +102,7 @@ const mapDispatchDay2ToProps = (dispatch: Dispatch, ownProps: Day2Props) => ({
       const { clusterId } = ownProps;
       switch (action) {
         case 'enable': {
-          dispatch(
-            clusterAutoscalerActions.enableClusterAutoscaler(
-              clusterId,
-              ownProps.maxNodesTotalDefault,
-            ),
-          );
+          dispatch(clusterAutoscalerActions.enableClusterAutoscaler(clusterId));
           break;
         }
         case 'disable': {

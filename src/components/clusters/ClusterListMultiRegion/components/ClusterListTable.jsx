@@ -36,6 +36,8 @@ import { useFetchGetAvailableRegionalInstances } from '~/queries/RosaWizardQueri
 
 import getClusterName, { UNNAMED_CLUSTER } from '../../../../common/getClusterName';
 import { isAISubscriptionWithoutMetrics } from '../../../../common/isAssistedInstallerCluster';
+import { actionResolver as multiRegionActionResolver } from '../../common/ClusterActionsDropdown/ClusterActionsDropdownItems';
+import { ClusterLocationLabel } from '../../common/ClusterLocationLabel';
 import ClusterStateIcon from '../../common/ClusterStateIcon';
 import clusterStates, {
   getClusterStateAndDescription,
@@ -47,12 +49,10 @@ import ClusterTypeLabel from '../../common/ClusterTypeLabel';
 import ClusterUpdateLink from '../../common/ClusterUpdateLink';
 import { canSubscribeOCPListFromClusters } from '../../common/EditSubscriptionSettingsDialog/canSubscribeOCPListSelector';
 import getClusterVersion from '../../common/getClusterVersion';
+import { useCanHibernateClusterListFromClusters } from '../../common/HibernateClusterModal/HibernateClusterModalSelectors';
 import ActionRequiredLink from '../../common/InstallProgress/ActionRequiredLink';
 import ProgressList from '../../common/InstallProgress/ProgressList';
 import { canTransferClusterOwnershipListFromClusters } from '../../common/TransferClusterOwnershipDialog/utils/transferClusterOwnershipDialogSelectors';
-import { actionResolver as multiRegionActionResolver } from '../../commonMultiRegion/ClusterActionsDropdown/ClusterActionsDropdownItems';
-import { ClusterLocationLabel } from '../../commonMultiRegion/ClusterLocationLabel';
-import { useCanHibernateClusterListFromClusters } from '../../commonMultiRegion/HibernateClusterModal/HibernateClusterModalSelectors';
 
 import ClusterCreatedIndicator from './ClusterCreatedIndicator';
 

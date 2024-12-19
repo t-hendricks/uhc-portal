@@ -19,7 +19,7 @@ import clusterStates, {
   hasInflightEgressErrors,
   isOSDGCPWaitingForRolesOnHostProject,
 } from '~/components/clusters/common/clusterStates';
-import ClusterStatusErrorDisplay from '~/components/clusters/commonMultiRegion/ClusterStatusErrorDisplay';
+import ClusterStatusErrorDisplay from '~/components/clusters/common/ClusterStatusErrorDisplay';
 import ErrorModal from '~/components/common/ErrorModal';
 import ExternalLink from '~/components/common/ExternalLink';
 import {

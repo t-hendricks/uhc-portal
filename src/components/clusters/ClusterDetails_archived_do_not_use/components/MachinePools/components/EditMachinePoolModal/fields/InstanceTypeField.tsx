@@ -4,7 +4,7 @@ import { useField } from 'formik';
 import { GridItem } from '@patternfly/react-core';
 
 import { normalizeProductID } from '~/common/normalize';
-import MachineTypeSelection from '~/components/clusters/common/ScaleSection/MachineTypeSelection';
+import MachineTypeSelection from '~/components/clusters/common/archived_do_not_use/ScaleSection/MachineTypeSelection';
 import useFormikOnChange from '~/hooks/useFormikOnChange';
 import { SubscriptionCommonFields } from '~/types/accounts_mgmt.v1';
 import { Cluster } from '~/types/clusters_mgmt.v1';

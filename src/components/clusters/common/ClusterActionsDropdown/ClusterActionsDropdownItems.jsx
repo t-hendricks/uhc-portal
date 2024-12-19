@@ -2,6 +2,7 @@ import React from 'react';
 import get from 'lodash/get';
 
 import { DropdownItem, DropdownList } from '@patternfly/react-core';
+import { addNotification } from '@redhat-cloud-services/frontend-components-notifications';
 
 import { SubscriptionCommonFields } from '~/types/accounts_mgmt.v1';
 
@@ -39,11 +40,12 @@ function actionResolver(
   showConsoleButton,
   openModal,
   canSubscribeOCP,
-  canTransferClusterOwnership,
   canHibernateCluster,
+  canTransferClusterOwnership,
   toggleSubscriptionReleased,
   refreshFunc,
   inClusterList,
+  dispatch,
 ) {
   const baseProps = {};
   const isClusterUninstalling = cluster.state === clusterStates.UNINSTALLING;
@@ -112,7 +114,6 @@ function actionResolver(
       clusterID: cluster.id,
       clusterName,
       subscriptionID: cluster.subscription ? cluster.subscription.id : '',
-      rh_region_id: cluster.subscription?.rh_region_id,
       shouldDisplayClusterName: inClusterList,
     };
     const hibernateClusterProps = {
@@ -243,6 +244,7 @@ function actionResolver(
             clusterID: cluster.id,
             clusterName,
             shouldDisplayClusterName: inClusterList,
+            region: cluster?.subscription?.xcm_id,
           }),
       },
     ),
@@ -271,12 +273,29 @@ function actionResolver(
       key: getKey('transferclusterownership'),
       onClick: () => {
         if (isReleased) {
-          toggleSubscriptionReleased(get(cluster, 'subscription.id'), false);
-          refreshFunc();
+          toggleSubscriptionReleased(
+            {
+              subscriptionID: cluster.subscription.id,
+              released: false,
+            },
+            {
+              onSuccess: () => {
+                dispatch(
+                  addNotification({
+                    variant: 'success',
+                    title: 'Cluster ownership transfer canceled',
+                    dismissable: false,
+                  }),
+                );
+                refreshFunc();
+              },
+            },
+          );
         } else {
           openModal(modals.TRANSFER_CLUSTER_OWNERSHIP, {
             subscription: cluster.subscription,
             shouldDisplayClusterName: inClusterList,
+            region: cluster.subscription.xcm_id,
           });
         }
       },
@@ -327,6 +346,8 @@ function actionResolver(
   const product = get(cluster, 'subscription.plan.type', '');
   const showEditSubscriptionSettings =
     product === normalizedProducts.OCP && cluster.canEdit && canSubscribeOCP;
+  // const showEditSubscriptionSettings =
+  //   product === normalizedProducts.OCP && cluster.canEdit && canSubscribeOCP;
   const isAllowedProducts = [
     normalizedProducts.OCP,
     normalizedProducts.ARO,
@@ -344,14 +365,14 @@ function actionResolver(
     cluster.canEdit && getEditDisplayNameProps(),
     showEditURL && getEditConsoleURLProps(),
     showScale && getScaleClusterProps(),
-    showEditMachinePool && getEditMachinePoolProps(),
     showHibernateCluster && getHibernateClusterProps(),
+    showEditMachinePool && getEditMachinePoolProps(),
     showUpgradeTrialCluster && getUpgradeTrialClusterProps(),
     showDelete && getDeleteItemProps(),
     showArchive && getArchiveClusterProps(),
-    showUnarchive && getUnarchiveClusterProps(),
     showEditSubscriptionSettings && getEditSubscriptionSettingsProps(),
     showTransferClusterOwnership && getTransferClusterOwnershipProps(),
+    showUnarchive && getUnarchiveClusterProps(),
   ].filter(Boolean);
 }
 
@@ -362,20 +383,22 @@ function dropDownItems({
   canSubscribeOCP,
   canTransferClusterOwnership,
   canHibernateCluster,
-  toggleSubscriptionReleased,
   refreshFunc,
   inClusterList,
+  toggleSubscriptionReleased,
+  dispatch,
 }) {
   const actions = actionResolver(
     cluster,
     showConsoleButton,
     openModal,
     canSubscribeOCP,
-    canTransferClusterOwnership,
     canHibernateCluster,
+    canTransferClusterOwnership,
     toggleSubscriptionReleased,
     refreshFunc,
     inClusterList,
+    dispatch,
   );
 
   const renderMenuItem = ({ title, ...restOfProps }) => (

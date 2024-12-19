@@ -4,7 +4,7 @@ import isEmpty from 'lodash/isEmpty';
 import { Grid, GridItem, Label, Title } from '@patternfly/react-core';
 
 import { truncateTextWithEllipsis } from '~/common/helpers';
-import { useAWSVPCFromCluster } from '~/components/clusters/common/useAWSVPCFromCluster';
+import { useAWSVPCFromCluster } from '~/components/clusters/common/archived_do_not_use/useAWSVPCFromCluster';
 import { NodePool, SecurityGroup } from '~/types/clusters_mgmt.v1';
 import { MachinePool } from '~/types/clusters_mgmt.v1/models/MachinePool';
 import { ClusterFromSubscription } from '~/types/types';

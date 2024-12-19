@@ -1,7 +1,7 @@
 import { subscriptionSettings } from '~/common/subscriptionTypes';
+import { defaultSubscription } from '~/components/clusters/common/__tests__/defaultClusterFromSubscription.fixtures';
 import { Subscription, SubscriptionCommonFields } from '~/types/accounts_mgmt.v1';
 
-import { defaultSubscription } from '../../../__tests__/defaultClusterFromSubscription.fixtures';
 import { getOptions, resetOptions } from '../optionUtils';
 
 describe('getOptions', () => {

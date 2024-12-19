@@ -17,7 +17,6 @@ import { MonitoringReducer } from '../../components/clusters/ClusterDetailsMulti
 import { NetworkingReducer } from '../../components/clusters/ClusterDetailsMultiRegion/components/Networking/NetworkingReducer';
 import { deleteProtectionReducer } from '../../components/clusters/ClusterDetailsMultiRegion/components/Overview/DetailsRight/DeleteProtection/deleteProtectionReducer';
 import { InstallationLogReducer } from '../../components/clusters/ClusterDetailsMultiRegion/components/Overview/InstallationLogView/InstallationLogReducer';
-import { deleteClusterDialogReducer } from '../../components/clusters/common/DeleteClusterDialog/DeleteClusterDialogReducer';
 import clusterUpgrades from '../../components/clusters/common/Upgrades/clusterUpgradeReducer';
 import modalReducer from '../../components/common/Modal/ModalReducer';
 
@@ -54,7 +53,7 @@ const reducers = {
   accessRequest: accessRequestReducer,
   accessProtection: accessProtectionReducer,
   clusters: clustersReducer,
-  deleteCluster: deleteClusterDialogReducer,
+
   cloudProviders: cloudProvidersReducer,
   viewOptions: viewOptionsReducer,
   userProfile: userReducer,

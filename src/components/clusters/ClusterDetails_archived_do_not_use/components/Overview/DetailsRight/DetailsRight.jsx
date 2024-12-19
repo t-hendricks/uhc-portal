@@ -12,13 +12,13 @@ import {
 
 import { getQueryParam } from '~/common/queryHelpers';
 import { hasSecurityGroupIds } from '~/common/securityGroupsHelpers';
+import ClusterStatusErrorDisplay from '~/components/clusters/common/archived_do_not_use/ClusterStatusErrorDisplay';
+import { useAWSVPCFromCluster } from '~/components/clusters/common/archived_do_not_use/useAWSVPCFromCluster';
 import clusterStates, {
   canViewMachinePoolTab,
   isHypershiftCluster,
   isROSA,
 } from '~/components/clusters/common/clusterStates';
-import ClusterStatusErrorDisplay from '~/components/clusters/common/ClusterStatusErrorDisplay';
-import { useAWSVPCFromCluster } from '~/components/clusters/common/useAWSVPCFromCluster';
 import { IMDSType } from '~/components/clusters/wizards/common';
 import AIClusterStatus from '~/components/common/AIClusterStatus';
 import useCanClusterAutoscale from '~/hooks/useCanClusterAutoscale';

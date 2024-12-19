@@ -40,10 +40,10 @@ import Unavailable from '../../common/Unavailable';
 import ClusterListFilterChipGroup from '../ClusterListMultiRegion/components/ClusterListFilterChipGroup/ClusterListFilterChipGroup';
 import ClusterListFilterDropDown from '../ClusterListMultiRegion/components/ClusterListFilterDropdown';
 import ViewOnlyMyClustersToggle from '../ClusterListMultiRegion/components/ViewOnlyMyClustersToggle';
+import UnarchiveClusterDialog from '../common/archived_do_not_use/UnarchiveClusterDialog';
 import ClusterListFilter from '../common/ClusterListFilter';
 import ErrorTriangle from '../common/ErrorTriangle';
 import GlobalErrorBox from '../common/GlobalErrorBox/GlobalErrorBox';
-import UnarchiveClusterDialog from '../common/UnarchiveClusterDialog';
 import ViewPaginationRow from '../common/ViewPaginationRow/viewPaginationRow';
 
 import ArchivedClusterListTable from './components/ArchiveClusterListTable/ArchivedClusterListTable';

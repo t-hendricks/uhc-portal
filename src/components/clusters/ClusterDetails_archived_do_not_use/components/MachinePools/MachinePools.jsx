@@ -27,7 +27,7 @@ import Skeleton from '@redhat-cloud-services/frontend-components/Skeleton';
 
 import { noQuotaTooltip } from '~/common/helpers';
 import { versionFormatter } from '~/common/versionHelpers';
-import { EditClusterAutoScalerForDay2 } from '~/components/clusters/common/EditClusterAutoScalingDialog';
+import { EditClusterAutoScalerForDay2 } from '~/components/clusters/common/archived_do_not_use/EditClusterAutoScalingDialog';
 import { MachineConfiguration } from '~/components/clusters/common/MachineConfiguration';
 import { getMaxNodesTotalDefaultAutoscaler } from '~/components/clusters/common/machinePools/utils';
 import { clusterService } from '~/services';

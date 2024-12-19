@@ -20,11 +20,11 @@ import { getNotificationContacts, getSupportCases } from '../../../redux/actions
 import { fetchUpgradeGates } from '../../../redux/actions/upgradeGateActions';
 import { viewConstants } from '../../../redux/constants';
 import { modalActions } from '../../common/Modal/ModalActions';
-import { canSubscribeOCPSelector } from '../common/EditSubscriptionSettingsDialog/canSubscribeOCPSelector';
-import { userCanHibernateClustersSelector } from '../common/HibernateClusterModal/HibernateClusterModalSelectors';
-import { canTransferClusterOwnershipSelector } from '../common/TransferClusterOwnershipDialog/utils/transferClusterOwnershipDialogSelectors';
-import { getSchedules } from '../common/Upgrades/clusterUpgradeActions';
-import { getUpgradeGates } from '../common/Upgrades/UpgradeAcknowledge/UpgradeAcknowledgeSelectors';
+import { canSubscribeOCPSelector } from '../common/archived_do_not_use/EditSubscriptionSettingsDialog/canSubscribeOCPSelector';
+import { userCanHibernateClustersSelector } from '../common/archived_do_not_use/HibernateClusterModal/HibernateClusterModalSelectors';
+import { canTransferClusterOwnershipSelector } from '../common/archived_do_not_use/TransferClusterOwnershipDialog/utils/transferClusterOwnershipDialogSelectors';
+import { getSchedules } from '../common/archived_do_not_use/Upgrades/clusterUpgradeActions';
+import { getUpgradeGates } from '../common/archived_do_not_use/Upgrades/UpgradeAcknowledge/UpgradeAcknowledgeSelectors';
 
 import { getGrants } from './components/AccessControl/NetworkSelfServiceSection/NetworkSelfServiceActions';
 import usersActions from './components/AccessControl/UsersSection/UsersActions';

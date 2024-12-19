@@ -13,11 +13,11 @@ import getClusterName from '~/common/getClusterName';
 import { HAD_INFLIGHT_ERROR_LOCALSTORAGE_KEY } from '~/common/localStorageConstants';
 import { emailRegex } from '~/common/regularExpressions';
 import { useNavigate } from '~/common/routing';
+import ClusterStatusErrorDisplay from '~/components/clusters/common/archived_do_not_use/ClusterStatusErrorDisplay';
 import clusterStates, {
   hasInflightEgressErrors,
   isOSDGCPWaitingForRolesOnHostProject,
 } from '~/components/clusters/common/clusterStates';
-import ClusterStatusErrorDisplay from '~/components/clusters/common/ClusterStatusErrorDisplay';
 import ErrorModal from '~/components/common/ErrorModal';
 import ExternalLink from '~/components/common/ExternalLink';
 import { usePreviousProps } from '~/hooks/usePreviousProps';

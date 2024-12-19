@@ -77,11 +77,11 @@ import clusterStates, {
 } from '../common/clusterStates';
 import CommonClusterModals from '../common/CommonClusterModals';
 import { canSubscribeOCPMultiRegion } from '../common/EditSubscriptionSettingsDialog/canSubscribeOCPSelector';
+import { userCanHibernateClustersSelector } from '../common/HibernateClusterModal/HibernateClusterModalSelectors';
 import ReadOnlyBanner from '../common/ReadOnlyBanner';
 import { canTransferClusterOwnershipMultiRegion } from '../common/TransferClusterOwnershipDialog/utils/transferClusterOwnershipDialogSelectors';
+import CancelUpgradeModal from '../common/Upgrades/CancelUpgradeModal';
 import { getSchedules } from '../common/Upgrades/clusterUpgradeActions';
-import { userCanHibernateClustersSelector } from '../commonMultiRegion/HibernateClusterModal/HibernateClusterModalSelectors';
-import CancelUpgradeModal from '../commonMultiRegion/Upgrades/CancelUpgradeModal';
 
 import AccessControl from './components/AccessControl/AccessControl';
 import { getGrants } from './components/AccessControl/NetworkSelfServiceSection/NetworkSelfServiceActions';

@@ -14,8 +14,8 @@ import { useGetSchedules } from '~/queries/ClusterDetailsQueries/ClusterSettings
 import { useFetchUpgradeGatesFromApi } from '~/queries/ClusterDetailsQueries/useFetchUpgadeGatesFromApi';
 
 import ClusterUpdateLink from '../../../../common/ClusterUpdateLink';
-import UpgradeAcknowledgeLink from '../../../../commonMultiRegion/Upgrades/UpgradeAcknowledge/UpgradeAcknowledgeLink';
-import UpgradeStatus from '../../../../commonMultiRegion/Upgrades/UpgradeStatus';
+import UpgradeAcknowledgeLink from '../../../../common/Upgrades/UpgradeAcknowledge/UpgradeAcknowledgeLink';
+import UpgradeStatus from '../../../../common/Upgrades/UpgradeStatus';
 import SupportStatusLabel from '../SupportStatusLabel';
 
 // TODO: Part of the upgrade tab

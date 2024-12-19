@@ -11,7 +11,6 @@ import {
   fetchClusterDetails,
 } from '../../../../../redux/actions/clustersActions';
 import { openModal } from '../../../../common/Modal/ModalActions';
-import { isHibernating, isHypershiftCluster } from '../../../common/clusterStates';
 import {
   clearDeleteScheduleResponse,
   clearPostedUpgradeScheduleResponse,
@@ -20,7 +19,8 @@ import {
   getSchedules,
   postSchedule,
   replaceSchedule,
-} from '../../../common/Upgrades/clusterUpgradeActions';
+} from '../../../common/archived_do_not_use/Upgrades/clusterUpgradeActions';
+import { isHibernating, isHypershiftCluster } from '../../../common/clusterStates';
 
 import UpgradeSettingsTab from './UpgradeSettingsTab';
 

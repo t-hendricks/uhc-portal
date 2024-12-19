@@ -4,7 +4,7 @@ import { openModal } from '../../../../../common/Modal/ModalActions';
 import {
   clearSchedulesResponse,
   getSchedules,
-} from '../../../../common/Upgrades/clusterUpgradeActions';
+} from '../../../../common/archived_do_not_use/Upgrades/clusterUpgradeActions';
 
 import ClusterVersionInfo from './ClusterVersionInfo';
 

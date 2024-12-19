@@ -16,7 +16,6 @@ import {
   AutoscalerIgnoredLabelsPopover,
 } from '~/components/clusters/common/EditClusterAutoScalingDialog/AutoscalerIgnoredLabelsTooltip';
 import ErrorBox from '~/components/common/ErrorBox';
-import useValidateMaxNodesTotal from '~/hooks/useValidateMaxNodesTotal';
 import { clusterAutoscalerActions } from '~/redux/actions/clusterAutoscalerActions';
 import { ClusterAutoscaler } from '~/types/clusters_mgmt.v1';
 import { ErrorState } from '~/types/types';
@@ -28,8 +27,7 @@ import ReduxVerticalFormGroup from '../../../common/ReduxFormComponents/ReduxVer
 import MachinePoolsAutoScalingWarning from '../../ClusterDetailsMultiRegion/components/MachinePools/MachinePoolAutoscalingWarning';
 
 import { balancerFields, resourceLimitsFields, scaleDownFields } from './fieldDefinitions';
-import { fieldItemMapper, numberParser } from './fieldItemMapper';
-import { MaxNodesTotalPopoverText } from './MaxNodesTotalTooltip';
+import { fieldItemMapper } from './fieldItemMapper';
 
 import './EditClusterAutoScalingDialog.scss';
 
@@ -48,7 +46,6 @@ export interface EditClusterAutoScalingDialogProps {
   hasAutoscalingMachinePools: boolean;
   editAction?: ErrorState;
   clusterId: string;
-  maxNodesTotalDefault: number;
 }
 
 /**
@@ -74,7 +71,6 @@ function EditClusterAutoScalingDialog({
   hasAutoscalingMachinePools,
   editAction,
   clusterId,
-  maxNodesTotalDefault,
 }: EditClusterAutoScalingDialogProps) {
   const hasAutoScalingErrors = autoScalingErrors && Object.keys(autoScalingErrors).length > 0;
   const isScaleDownDisabled = autoScalingValues.scale_down?.enabled === false;
@@ -119,7 +115,7 @@ function EditClusterAutoScalingDialog({
   };
 
   const handleReset = () => {
-    const defaultAutoscaler = getDefaultClusterAutoScaling(maxNodesTotalDefault);
+    const defaultAutoscaler = getDefaultClusterAutoScaling();
     change('cluster_autoscaling', {
       ...defaultAutoscaler,
       isSelected: autoScalingValues.isSelected,
@@ -224,25 +220,6 @@ function EditClusterAutoScalingDialog({
                   {fieldItemMapper(field, isFormDisabled)}
                 </GridItem>
               ))}
-              <GridItem span={6} key="resource_limits.max_nodes_total">
-                {/* @ts-ignore */}
-                <Field
-                  component={ReduxVerticalFormGroup}
-                  name="cluster_autoscaling.resource_limits.max_nodes_total"
-                  label="max-nodes-total"
-                  type="number"
-                  parse={numberParser(maxNodesTotalDefault as number)}
-                  validate={useValidateMaxNodesTotal(maxNodesTotalDefault)}
-                  extendedHelpText={MaxNodesTotalPopoverText}
-                  isRequired
-                  props={{
-                    disabled: isFormDisabled,
-                  }}
-                  helpText={
-                    <span className="custom-help-text">Default value: {maxNodesTotalDefault}</span>
-                  }
-                />
-              </GridItem>
               <GridItem span={6}>
                 <FormGroup
                   fieldId="cluster_autoscaling.resource_limits.gpus"

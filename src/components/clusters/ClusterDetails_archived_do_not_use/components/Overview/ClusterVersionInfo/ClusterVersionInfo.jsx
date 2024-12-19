@@ -11,9 +11,9 @@ import clusterStates, {
 } from '~/components/clusters/common/clusterStates';
 import getClusterVersion from '~/components/clusters/common/getClusterVersion';
 
+import UpgradeAcknowledgeLink from '../../../../common/archived_do_not_use/Upgrades/UpgradeAcknowledge/UpgradeAcknowledgeLink';
+import UpgradeStatus from '../../../../common/archived_do_not_use/Upgrades/UpgradeStatus';
 import ClusterUpdateLink from '../../../../common/ClusterUpdateLink';
-import UpgradeAcknowledgeLink from '../../../../common/Upgrades/UpgradeAcknowledge/UpgradeAcknowledgeLink';
-import UpgradeStatus from '../../../../common/Upgrades/UpgradeStatus';
 import SupportStatusLabel from '../SupportStatusLabel';
 
 class ClusterVersionInfo extends React.Component {

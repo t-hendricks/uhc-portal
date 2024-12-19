@@ -3,8 +3,8 @@ import { useField } from 'formik';
 
 import { Alert, Spinner } from '@patternfly/react-core';
 
+import { useAWSVPCFromCluster } from '~/components/clusters/common/archived_do_not_use/useAWSVPCFromCluster';
 import { SubnetSelectField } from '~/components/clusters/common/SubnetSelectField';
-import { useAWSVPCFromCluster } from '~/components/clusters/common/useAWSVPCFromCluster';
 import { ClusterFromSubscription } from '~/types/types';
 
 const fieldId = 'privateSubnetId';

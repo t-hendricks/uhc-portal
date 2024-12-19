@@ -30,7 +30,7 @@ import { versionFormatter } from '~/common/versionHelpers';
 import { isMultiAZ } from '~/components/clusters/ClusterDetailsMultiRegion/clusterDetailsHelper';
 import { getDefaultClusterAutoScaling } from '~/components/clusters/common/clusterAutoScalingValues';
 import { MachineConfiguration } from '~/components/clusters/common/MachineConfiguration';
-import { getMaxNodesTotalDefaultAutoscaler } from '~/components/clusters/commonMultiRegion/machinePools/utils';
+import { getMaxNodesTotalDefaultAutoscaler } from '~/components/clusters/common/machinePools/utils';
 import { useFeatureGate } from '~/hooks/useFeatureGate';
 import {
   refetchClusterAutoscalerData,
