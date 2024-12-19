@@ -36,6 +36,7 @@ import { hasCapability, subscriptionCapabilities } from '../../../common/subscri
 import { knownProducts } from '../../../common/subscriptionTypes';
 import ErrorBoundary from '../../App/ErrorBoundary';
 import Unavailable from '../../common/Unavailable';
+import CancelUpgradeModal from '../common/archived_do_not_use/Upgrades/CancelUpgradeModal';
 import clusterStates, {
   canViewMachinePoolTab,
   isHibernating,
@@ -43,7 +44,6 @@ import clusterStates, {
 } from '../common/clusterStates';
 import CommonClusterModals from '../common/CommonClusterModals';
 import ReadOnlyBanner from '../common/ReadOnlyBanner';
-import CancelUpgradeModal from '../common/Upgrades/CancelUpgradeModal';
 
 import AccessControl from './components/AccessControl/AccessControl';
 import AddGrantModal from './components/AccessControl/NetworkSelfServiceSection/AddGrantModal';

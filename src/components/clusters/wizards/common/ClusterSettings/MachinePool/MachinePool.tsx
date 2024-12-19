@@ -11,7 +11,7 @@ import { getMinNodesRequired } from '~/components/clusters/ClusterDetailsMultiRe
 import { constants } from '~/components/clusters/common/CreateOSDFormConstants';
 import NodeCountInput from '~/components/clusters/common/NodeCountInput';
 import { getNodesCount } from '~/components/clusters/common/ScaleSection/AutoScaleSection/AutoScaleHelper';
-import MachineTypeSelection from '~/components/clusters/common/ScaleSection/MachineTypeSelection';
+import MachineTypeSelection from '~/components/clusters/common/ScaleSection-deprecated/MachineTypeSelection';
 import { CloudProviderType, FieldId } from '~/components/clusters/wizards/common/constants';
 import { useFormState } from '~/components/clusters/wizards/hooks';
 import ExternalLink from '~/components/common/ExternalLink';

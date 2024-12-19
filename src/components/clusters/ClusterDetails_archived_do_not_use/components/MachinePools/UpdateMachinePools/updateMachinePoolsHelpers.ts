@@ -1,8 +1,8 @@
 import { useSelector } from 'react-redux';
 import semver from 'semver';
 
+import { updateStartedSelector } from '~/components/clusters/common/archived_do_not_use/Upgrades/upgradeHelpers';
 import { isHypershiftCluster } from '~/components/clusters/common/clusterStates';
-import { updateStartedSelector } from '~/components/clusters/common/Upgrades/upgradeHelpers';
 import { GlobalState } from '~/redux/store';
 import clusterService from '~/services/clusterService';
 import { ScheduleType, UpgradeType } from '~/types/clusters_mgmt.v1';

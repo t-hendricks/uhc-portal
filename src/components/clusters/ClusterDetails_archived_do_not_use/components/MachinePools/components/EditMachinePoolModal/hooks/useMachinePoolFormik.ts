@@ -10,16 +10,16 @@ import {
   checkTaintValue,
   validateSecurityGroups,
 } from '~/common/validators';
-import { isHypershiftCluster, isROSA } from '~/components/clusters/common/clusterStates';
 import {
   defaultWorkerNodeVolumeSizeGiB,
   SPOT_MIN_PRICE,
-} from '~/components/clusters/common/machinePools/constants';
+} from '~/components/clusters/common/archived_do_not_use/machinePools/constants';
 import {
   getNodeOptions,
   getWorkerNodeVolumeSizeMaxGiB,
   getWorkerNodeVolumeSizeMinGiB,
-} from '~/components/clusters/common/machinePools/utils';
+} from '~/components/clusters/common/archived_do_not_use/machinePools/utils';
+import { isHypershiftCluster, isROSA } from '~/components/clusters/common/clusterStates';
 import { useFeatureGate } from '~/hooks/useFeatureGate';
 import { HCP_ROOT_DISK_SIZE, MAX_COMPUTE_NODES_500 } from '~/redux/constants/featureConstants';
 import { GlobalState } from '~/redux/store';

@@ -5,8 +5,3 @@ export const subscription = {
   released: false,
   status: SubscriptionCommonFields.status.ACTIVE,
 };
-export const requestState = {
-  fulfilled: false,
-  error: false,
-  pending: false,
-};

@@ -51,6 +51,7 @@ describe('machinePools utils', () => {
       };
       it('returns expected options if hypershift and all same machine type', () => {
         const options = utils.getNodeOptions(newMachinePoolArgs);
+
         const expectedLargestOption = maxNodesHCP - existingNodes;
         expect(options).toHaveLength(expectedLargestOption);
         expect(options[options.length - 1]).toBe(expectedLargestOption);
@@ -214,7 +215,6 @@ describe('machinePools utils', () => {
         },
       );
     });
-
     describe('getMaxNodes', () => {
       it.each([
         [

@@ -24,7 +24,14 @@ const VersionDot = ({ current }) => (
   <div className={`ocm-upgrade-graph-version-dot ${current ? 'ocm-upgrade-current' : ''}`} />
 );
 
-const UpdateGraph = ({ currentVersion, updateVersion, hasMore }) => (
+const UpdateGraph = ({
+  currentVersion,
+  updateVersion,
+  hasMore,
+  upgradeGates,
+  schedules,
+  cluster,
+}) => (
   <div className="ocm-upgrade-graph">
     <GraphContainer>
       <GraphPath current>
@@ -49,8 +56,20 @@ const UpdateGraph = ({ currentVersion, updateVersion, hasMore }) => (
         {`Additional versions available between ${currentVersion} and ${updateVersion}`}
       </div>
     )}
-    <UpgradeAcknowledgeWarning isPlain isInfo showConfirm showUpgradeWarning />
-    <MinorVersionUpgradeConfirm />
+    <UpgradeAcknowledgeWarning
+      isPlain
+      isInfo
+      showConfirm
+      showUpgradeWarning
+      schedules={schedules}
+      upgradeGates={upgradeGates}
+      cluster={cluster}
+    />
+    <MinorVersionUpgradeConfirm
+      upgradeGates={upgradeGates}
+      schedules={schedules}
+      cluster={cluster}
+    />
   </div>
 );
 
@@ -78,6 +97,9 @@ UpdateGraph.propTypes = {
   currentVersion: PropTypes.node,
   updateVersion: PropTypes.node,
   hasMore: PropTypes.bool,
+  upgradeGates: PropTypes.object,
+  schedules: PropTypes.object,
+  cluster: PropTypes.object,
 };
 
 export default UpdateGraph;

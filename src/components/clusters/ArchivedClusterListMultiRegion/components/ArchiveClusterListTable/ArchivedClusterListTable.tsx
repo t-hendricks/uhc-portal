@@ -18,7 +18,7 @@ import { ClusterWithPermissions, ViewSorting } from '~/types/types';
 import getClusterName from '../../../../../common/getClusterName';
 import ButtonWithTooltip from '../../../../common/ButtonWithTooltip';
 import modals from '../../../../common/Modal/modals';
-import ClusterLocationLabel from '../../../common/ClusterLocationLabel';
+import { ClusterLocationLabel } from '../../../common/ClusterLocationLabel';
 import { getClusterStateAndDescription } from '../../../common/clusterStates';
 import ClusterTypeLabel from '../../../common/ClusterTypeLabel';
 

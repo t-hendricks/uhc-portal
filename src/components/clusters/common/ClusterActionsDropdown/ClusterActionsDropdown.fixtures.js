@@ -41,6 +41,7 @@ const props = {
   openModal: jest.fn(),
   toggleSubscriptionReleased: jest.fn(),
   refreshFunc: jest.fn(),
+  inClusterList: false,
 };
 
 const managedReadyProps = {
@@ -128,6 +129,7 @@ const selfManagedProps = {
     },
     canEdit: true,
     canDelete: true,
+    subscription: { plan: { type: 'OCP' } },
   },
   subscription: {
     items: [

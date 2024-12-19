@@ -22,15 +22,15 @@ import getClusterName from '../../../../../common/getClusterName';
 import ButtonWithTooltip from '../../../../common/ButtonWithTooltip';
 import ErrorBox from '../../../../common/ErrorBox';
 import modals from '../../../../common/Modal/modals';
+import MinorVersionUpgradeAlert from '../../../common/archived_do_not_use/Upgrades/MinorVersionUpgradeAlert';
+import UpgradeAcknowledgeWarning from '../../../common/archived_do_not_use/Upgrades/UpgradeAcknowledge/UpgradeAcknowledgeWarning';
+import UpgradeSettingsFields from '../../../common/archived_do_not_use/Upgrades/UpgradeSettingsFields';
+import UpgradeStatus from '../../../common/archived_do_not_use/Upgrades/UpgradeStatus';
 import clusterStates, { isHypershiftCluster } from '../../../common/clusterStates';
-import MinorVersionUpgradeAlert from '../../../common/Upgrades/MinorVersionUpgradeAlert';
-import UpgradeAcknowledgeWarning from '../../../common/Upgrades/UpgradeAcknowledge/UpgradeAcknowledgeWarning';
-import UpgradeSettingsFields from '../../../common/Upgrades/UpgradeSettingsFields';
-import UpgradeStatus from '../../../common/Upgrades/UpgradeStatus';
 import UserWorkloadMonitoringSection from '../../../common/UserWorkloadMonitoringSection';
 import { UpdateAllMachinePools } from '../MachinePools/UpdateMachinePools';
 
-import '../../../common/Upgrades/UpgradeSettingsFields.scss';
+import '../../../common/archived_do_not_use/Upgrades/UpgradeSettingsFields.scss';
 
 class UpgradeSettingsTab extends React.Component {
   state = { confirmationModalOpen: false };

@@ -7,6 +7,7 @@ import {
 } from '~/components/clusters/ClusterDetailsMultiRegion/clusterDetailsHelper';
 import { isHypershiftCluster } from '~/components/clusters/common/clusterStates';
 import { availableNodesFromQuota } from '~/components/clusters/common/quotaSelectors';
+import { MachineTypesResponse } from '~/queries/types';
 import { GlobalState } from '~/redux/store';
 import { QuotaCostList } from '~/types/accounts_mgmt.v1';
 import {
@@ -105,6 +106,7 @@ export const buildOptions = ({
   isHypershift,
   clusterVersion,
   allow500Nodes,
+  isMultiAz,
 }: {
   available: number;
   isEditingCluster: boolean;
@@ -144,7 +146,7 @@ export const getAvailableQuota = ({
   product,
   billingModel,
 }: {
-  machineTypes: GlobalState['machineTypes'];
+  machineTypes: MachineTypesResponse;
   machineTypeId: MachineType['id'];
   isByoc: boolean;
   isMultiAz: boolean;
@@ -203,7 +205,7 @@ export const getNodeCount = (
 export type getNodeOptionsType = {
   cluster: ClusterFromSubscription;
   quota: GlobalState['userProfile']['organization']['quotaList'];
-  machineTypes: GlobalState['machineTypes'];
+  machineTypes: MachineTypesResponse;
   machineTypeId: string | undefined;
   machinePools: MachinePool[];
   machinePool: MachinePool | undefined;

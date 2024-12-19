@@ -9,18 +9,18 @@ import { getDefaultClusterAutoScaling } from '~/components/clusters/common/clust
 import {
   AutoscalerGpuHelpText,
   AutoscalerGpuPopoverText,
-} from '~/components/clusters/commonMultiRegion/EditClusterAutoScalingDialog/AutoscalerGpuTooltip';
+} from '~/components/clusters/common/EditClusterAutoScalingDialog/AutoscalerGpuTooltip';
 import {
   AutoscalerIgnoredLabelsHelpText,
   AutoscalerIgnoredLabelsPopoverText,
-} from '~/components/clusters/commonMultiRegion/EditClusterAutoScalingDialog/AutoscalerIgnoredLabelsTooltip';
+} from '~/components/clusters/common/EditClusterAutoScalingDialog/AutoscalerIgnoredLabelsTooltip';
 import {
   balancerFields,
   FieldDefinition,
   resourceLimitsFields,
   scaleDownFields,
-} from '~/components/clusters/commonMultiRegion/EditClusterAutoScalingDialog/fieldDefinitions';
-import { MaxNodesTotalPopoverText } from '~/components/clusters/commonMultiRegion/EditClusterAutoScalingDialog/MaxNodesTotalTooltip';
+} from '~/components/clusters/common/EditClusterAutoScalingDialog/fieldDefinitions';
+import { MaxNodesTotalPopoverText } from '~/components/clusters/common/EditClusterAutoScalingDialog/MaxNodesTotalTooltip';
 import {
   logVerbosityValidator,
   numberValidator,

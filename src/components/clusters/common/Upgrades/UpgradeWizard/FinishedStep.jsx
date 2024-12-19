@@ -18,15 +18,22 @@ import { Spinner } from '@redhat-cloud-services/frontend-components/Spinner';
 
 import ErrorBox from '../../../../common/ErrorBox';
 
-function FinishedStep({ requestStatus, close, scheduleType, upgradeTimestamp }) {
-  if (requestStatus.error) {
+function FinishedStep({
+  close,
+  scheduleType,
+  upgradeTimestamp,
+  isPostScheduleError,
+  postScheduleError,
+  isPostSchedulePending,
+}) {
+  if (isPostScheduleError) {
     return (
       <Bullseye>
-        <ErrorBox message="Failed to schedule upgrade" response={requestStatus} />
+        <ErrorBox message="Failed to schedule upgrade" response={postScheduleError} />
       </Bullseye>
     );
   }
-  if (requestStatus.pending || !requestStatus.fulfilled) {
+  if (isPostSchedulePending) {
     return <Spinner className="wizard-step-body" centered />;
   }
   return (
@@ -57,11 +64,9 @@ function FinishedStep({ requestStatus, close, scheduleType, upgradeTimestamp }) 
 }
 
 FinishedStep.propTypes = {
-  requestStatus: PropTypes.shape({
-    fulfilled: PropTypes.bool,
-    error: PropTypes.bool,
-    pending: PropTypes.bool,
-  }).isRequired,
+  isPostScheduleError: PropTypes.bool,
+  postScheduleError: PropTypes.object,
+  isPostSchedulePending: PropTypes.bool,
   close: PropTypes.func.isRequired,
   scheduleType: PropTypes.string,
   upgradeTimestamp: PropTypes.string,

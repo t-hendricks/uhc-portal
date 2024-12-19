@@ -5,11 +5,11 @@ import { FormGroup, NumberInput } from '@patternfly/react-core';
 
 import { normalizeProductID } from '~/common/normalize';
 import { normalizedProducts } from '~/common/subscriptionTypes';
-import { isHypershiftCluster } from '~/components/clusters/common/clusterStates';
 import {
   getWorkerNodeVolumeSizeMaxGiB,
   getWorkerNodeVolumeSizeMinGiB,
-} from '~/components/clusters/common/machinePools/utils';
+} from '~/components/clusters/common/archived_do_not_use/machinePools/utils';
+import { isHypershiftCluster } from '~/components/clusters/common/clusterStates';
 import { FormGroupHelperText } from '~/components/common/FormGroupHelperText';
 import PopoverHint from '~/components/common/PopoverHint';
 import WithTooltip from '~/components/common/WithTooltip';

@@ -107,7 +107,7 @@ const MachineTypeSelection = ({
   machine_type_force_choice: machineTypeForceChoice,
   getDefaultFlavour,
   flavours,
-  machineTypes,
+  machineTypesResponse,
   machineTypesByRegion,
   isMultiAz,
   isBYOC,
@@ -131,12 +131,12 @@ const MachineTypeSelection = ({
   const previousSelectionFromUnfilteredSet =
     machineTypesByRegion.fulfilled &&
     !machineTypesByRegion?.typesByID[machineType.input.value]?.id &&
-    machineTypes?.typesByID[machineType.input.value]?.id;
+    machineTypesResponse?.typesByID[machineType.input.value]?.id;
 
   /** Checks whether required data arrived. */
   const isDataReady =
     organization.fulfilled &&
-    machineTypes.fulfilled &&
+    machineTypesResponse &&
     // Tolerate flavours error gracefully.
     (flavours.fulfilled || flavours.error);
 
@@ -158,7 +158,7 @@ const MachineTypeSelection = ({
   const activeMachineTypes =
     isRegionSpecificDataReady && useRegionFilteredData && isMachineTypeFilteredByRegion
       ? machineTypesByRegion
-      : machineTypes;
+      : machineTypesResponse;
 
   /**
    * Checks whether type can be offered, based on quota and ccs_only.
@@ -273,7 +273,7 @@ const MachineTypeSelection = ({
   }, [
     input.value,
     isDataReady,
-    activeMachineTypes.typesByID,
+    activeMachineTypes?.typesByID,
     useRegionFilteredData,
     isRegionSpecificDataReady,
     isTypeAvailable,
@@ -435,7 +435,7 @@ const MachineTypeSelection = ({
     );
   }
 
-  return activeMachineTypes.error ? (
+  return activeMachineTypes?.error ? (
     <ErrorBox message="Error loading node types" response={activeMachineTypes} />
   ) : (
     <>
@@ -462,11 +462,11 @@ const inputMetaPropTypes = PropTypes.shape({
 });
 
 MachineTypeSelection.propTypes = {
+  machineTypesResponse: PropTypes.object,
   machine_type: inputMetaPropTypes,
   machine_type_force_choice: inputMetaPropTypes,
   getDefaultFlavour: PropTypes.func.isRequired,
   flavours: PropTypes.object.isRequired,
-  machineTypes: PropTypes.object.isRequired,
   machineTypesByRegion: PropTypes.object.isRequired,
   isMultiAz: PropTypes.bool.isRequired,
   isBYOC: PropTypes.bool.isRequired,

@@ -5,7 +5,7 @@ import { GridItem } from '@patternfly/react-core';
 
 import { normalizeProductID } from '~/common/normalize';
 import { isMultiAZ } from '~/components/clusters/ClusterDetailsMultiRegion/clusterDetailsHelper';
-import MachineTypeSelection from '~/components/clusters/commonMultiRegion/ScaleSection/MachineTypeSelection';
+import MachineTypeSelection from '~/components/clusters/common/ScaleSection/MachineTypeSelection';
 import useFormikOnChange from '~/hooks/useFormikOnChange';
 import { MachineTypesResponse } from '~/queries/types';
 import { SubscriptionCommonFields } from '~/types/accounts_mgmt.v1';

@@ -43,11 +43,11 @@ import clusterStates, {
   isHypershiftCluster,
   isROSA,
 } from '../../../common/clusterStates';
+import MinorVersionUpgradeAlert from '../../../common/Upgrades/MinorVersionUpgradeAlert';
+import UpgradeAcknowledgeWarning from '../../../common/Upgrades/UpgradeAcknowledge/UpgradeAcknowledgeWarning';
+import UpgradeSettingsFields from '../../../common/Upgrades/UpgradeSettingsFields';
+import UpgradeStatus from '../../../common/Upgrades/UpgradeStatus';
 import UserWorkloadMonitoringSection from '../../../common/UserWorkloadMonitoringSectionMultiRegion';
-import MinorVersionUpgradeAlert from '../../../commonMultiRegion/Upgrades/MinorVersionUpgradeAlert';
-import UpgradeAcknowledgeWarning from '../../../commonMultiRegion/Upgrades/UpgradeAcknowledge/UpgradeAcknowledgeWarning';
-import UpgradeSettingsFields from '../../../commonMultiRegion/Upgrades/UpgradeSettingsFields';
-import UpgradeStatus from '../../../commonMultiRegion/Upgrades/UpgradeStatus';
 import { UpdateAllMachinePools } from '../MachinePools/UpdateMachinePools';
 
 const UpgradeSettingsTab = ({ cluster }) => {

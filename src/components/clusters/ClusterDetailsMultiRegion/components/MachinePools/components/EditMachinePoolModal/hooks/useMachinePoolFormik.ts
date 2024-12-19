@@ -15,12 +15,12 @@ import { isHypershiftCluster, isROSA } from '~/components/clusters/common/cluste
 import {
   defaultWorkerNodeVolumeSizeGiB,
   SPOT_MIN_PRICE,
-} from '~/components/clusters/commonMultiRegion/machinePools/constants';
+} from '~/components/clusters/common/machinePools/constants';
 import {
   getNodeOptions,
   getWorkerNodeVolumeSizeMaxGiB,
   getWorkerNodeVolumeSizeMinGiB,
-} from '~/components/clusters/commonMultiRegion/machinePools/utils';
+} from '~/components/clusters/common/machinePools/utils';
 import { useFeatureGate } from '~/hooks/useFeatureGate';
 import { MachineTypesResponse } from '~/queries/types';
 import { HCP_ROOT_DISK_SIZE, MAX_COMPUTE_NODES_500 } from '~/redux/constants/featureConstants';

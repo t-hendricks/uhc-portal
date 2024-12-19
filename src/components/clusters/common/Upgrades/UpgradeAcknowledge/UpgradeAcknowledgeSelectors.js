@@ -106,35 +106,3 @@ export const getAutomaticUpgradePolicyId = (state) => {
   );
   return automaticPolicy?.id;
 };
-
-export const isManualUpdateSchedulingRequired = (state, upgradeVersion) => {
-  // is this a minor or greater version upgrade?
-  const toVersion = upgradeVersion || getToVersionFromState(state);
-  const fromVersion = getFromVersionFromState(state);
-  const [toMajor, toMinor] = splitVersion(toVersion);
-  const [fromMajor, fromMinor] = splitVersion(fromVersion);
-  if (!toMajor || !toMinor || !fromMajor || !fromMinor) {
-    return false;
-  }
-  const minorPlusUpgrade = toMajor > fromMajor || toMinor > fromMinor;
-
-  // is the ControlPlaneUpgradePolicy schedule type automatic and is enable_minor_version_upgrades true?
-  const automaticUpdatePolicyExists = !!state?.clusterUpgrades?.schedules?.items.find(
-    (policy) => policy?.schedule_type === 'automatic',
-  );
-  const enableMinorVersionUpgrade = !!state?.clusterUpgrades?.schedules?.items.find(
-    (policy) => policy?.enable_minor_version_upgrades === 'true',
-  );
-
-  // is the ControlPlaneUpgradePolicy pending?
-  const upgradePolicyPending = !!state?.clusterUpgrades?.schedules?.items.find(
-    (policy) => policy?.state?.value === 'pending',
-  );
-
-  return (
-    minorPlusUpgrade &&
-    automaticUpdatePolicyExists &&
-    !enableMinorVersionUpgrade &&
-    upgradePolicyPending
-  );
-};

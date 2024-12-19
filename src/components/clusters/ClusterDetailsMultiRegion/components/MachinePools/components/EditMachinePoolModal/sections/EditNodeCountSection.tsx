@@ -4,7 +4,7 @@ import { useFormikContext } from 'formik';
 import { Grid, GridItem, Spinner } from '@patternfly/react-core';
 
 import { isHypershiftCluster } from '~/components/clusters/common/clusterStates';
-import { getNodeOptions } from '~/components/clusters/commonMultiRegion/machinePools/utils';
+import { getNodeOptions } from '~/components/clusters/common/machinePools/utils';
 import { MachineTypesResponse } from '~/queries/types';
 import { useGlobalState } from '~/redux/hooks';
 import { MachinePool } from '~/types/clusters_mgmt.v1';
