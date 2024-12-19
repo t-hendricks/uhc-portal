@@ -4,6 +4,7 @@ import {
   checkHostDomain,
   composeValidators,
   validateMaxNodes,
+  validatePositive,
   validateSecureURL,
 } from './validators';
 
@@ -67,5 +68,15 @@ describe('validators', () => {
         expect(validateMaxNodes(MAX_NODES_DEFAULT, MAX_NODES_DEFAULT)).toEqual(undefined);
       });
     });
+  });
+
+  describe('validatePositive', () => {
+    it.each([
+      ['should not allow a negative value', -5, 'Input must be a positive number.'],
+      ['should not allow 0', 0, 'Input must be a positive number.'],
+      ['should allow a positive value', 5, undefined],
+    ])('%s', (_title: string, value: number | string, expected: string | undefined) =>
+      expect(validatePositive(value)).toBe(expected),
+    );
   });
 });

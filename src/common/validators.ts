@@ -497,6 +497,9 @@ const k8sMinMaxParameter = (
 const validateMaxNodes = (num: number | string, maxNodes: number | string) =>
   +num > +maxNodes ? `Value must not be greater than ${maxNodes}.` : undefined;
 
+const validatePositive = (num: number | string) =>
+  Number(num) <= 0 ? `Input must be a positive number.` : undefined;
+
 const clusterAutoScalingValidators = {
   k8sTimeParameter,
   k8sNumberParameter,
@@ -1914,6 +1917,7 @@ export {
   MAX_CLUSTER_NAME_LENGTH,
   validateSecureURL,
   validateMaxNodes,
+  validatePositive,
 };
 
 export default validators;

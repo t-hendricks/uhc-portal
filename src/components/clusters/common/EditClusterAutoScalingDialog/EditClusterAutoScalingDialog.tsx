@@ -16,7 +16,7 @@ import {
   AutoscalerIgnoredLabelsPopover,
 } from '~/components/clusters/common/EditClusterAutoScalingDialog/AutoscalerIgnoredLabelsTooltip';
 import ErrorBox from '~/components/common/ErrorBox';
-import useValidateBypassComputeNodeCountLimit from '~/hooks/useValidateBypassComputeNodeCountLimit';
+import useValidateMaxNodesTotal from '~/hooks/useValidateMaxNodesTotal';
 import { clusterAutoscalerActions } from '~/redux/actions/clusterAutoscalerActions';
 import { ClusterAutoscaler } from '~/types/clusters_mgmt.v1';
 import { ErrorState } from '~/types/types';
@@ -126,9 +126,6 @@ function EditClusterAutoScalingDialog({
     });
   };
 
-  const validateBypassComputeNodeCountLimitClassicOsdGcpFlag =
-    useValidateBypassComputeNodeCountLimit(maxNodesTotalDefault);
-
   return (
     <Modal
       variant="large"
@@ -235,7 +232,7 @@ function EditClusterAutoScalingDialog({
                   label="max-nodes-total"
                   type="number"
                   parse={numberParser(maxNodesTotalDefault as number)}
-                  validate={validateBypassComputeNodeCountLimitClassicOsdGcpFlag}
+                  validate={useValidateMaxNodesTotal(maxNodesTotalDefault)}
                   extendedHelpText={MaxNodesTotalPopoverText}
                   isRequired
                   props={{
