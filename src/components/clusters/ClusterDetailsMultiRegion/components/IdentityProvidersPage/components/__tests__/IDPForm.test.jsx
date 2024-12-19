@@ -1,8 +1,8 @@
 import React from 'react';
 import { reduxForm } from 'redux-form';
 
-import { reduxFormConfig } from '~/components/clusters/ClusterDetails/components/IdentityProvidersPage';
-import IDPForm from '~/components/clusters/ClusterDetails/components/IdentityProvidersPage/components/IDPForm';
+import { reduxFormConfig } from '~/components/clusters/ClusterDetailsMultiRegion/components/IdentityProvidersPage';
+import IDPForm from '~/components/clusters/ClusterDetailsMultiRegion/components/IdentityProvidersPage/components/IDPForm';
 import { checkAccessibility, render, screen } from '~/testUtils';
 
 const defaultProps = {

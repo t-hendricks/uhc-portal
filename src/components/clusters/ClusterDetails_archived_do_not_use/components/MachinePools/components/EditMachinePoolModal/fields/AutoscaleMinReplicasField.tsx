@@ -3,10 +3,11 @@ import { useField } from 'formik';
 
 import { FormGroup, NumberInput } from '@patternfly/react-core';
 
-import { isMPoolAz } from '~/components/clusters/ClusterDetails/clusterDetailsHelper';
 import { FormGroupHelperText } from '~/components/common/FormGroupHelperText';
 import useFormikOnChange from '~/hooks/useFormikOnChange';
 import { ClusterFromSubscription } from '~/types/types';
+
+import { isMPoolAz } from '../../../../../clusterDetailsHelper';
 
 type AutoscaleMinReplicasFieldProps = {
   cluster: ClusterFromSubscription;

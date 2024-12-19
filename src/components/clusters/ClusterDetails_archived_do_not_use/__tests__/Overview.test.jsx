@@ -1,7 +1,5 @@
 import React from 'react';
 
-import * as subscriptionFixture from '~/components/clusters/ClusterDetails/components/Overview/SubscriptionSettings/SubscriptionSettings.fixtures';
-
 import {
   checkAccessibility,
   mockRestrictedEnv,
@@ -11,6 +9,7 @@ import {
 } from '../../../../testUtils';
 import { SubscriptionCommonFields } from '../../../../types/accounts_mgmt.v1';
 import Overview from '../components/Overview/Overview';
+import * as subscriptionFixture from '../components/Overview/SubscriptionSettings/SubscriptionSettings.fixtures';
 
 import fixtures from './ClusterDetails.fixtures';
 

@@ -3,7 +3,7 @@ import React from 'react';
 import { render } from '~/testUtils';
 
 import { SubscriptionCommonFields } from '../../../../types/accounts_mgmt.v1';
-import fixtures from '../../ClusterDetails/__tests__/ClusterDetails.fixtures';
+import fixtures from '../../ClusterDetailsMultiRegion/__tests__/ClusterDetails.fixtures';
 import InfrastructureModelLabel from '../InfrastructureModelLabel';
 
 describe('InfrastructureModelLabel', () => {

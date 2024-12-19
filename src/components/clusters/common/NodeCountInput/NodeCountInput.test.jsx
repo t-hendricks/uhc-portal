@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { getMinNodesRequired } from '~/components/clusters/ClusterDetails/components/MachinePools/machinePoolsHelper';
+import { getMinNodesRequired } from '~/components/clusters/ClusterDetailsMultiRegion/components/MachinePools/machinePoolsHelper';
 import { checkAccessibility, render, screen } from '~/testUtils';
 import { SubscriptionCommonFields } from '~/types/accounts_mgmt.v1';
 

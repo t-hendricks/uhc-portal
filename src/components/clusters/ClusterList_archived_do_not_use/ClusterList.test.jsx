@@ -5,7 +5,7 @@ import * as usePreviousProps from '~/hooks/usePreviousProps';
 import { normalizedProducts } from '../../../common/subscriptionTypes';
 import { viewConstants } from '../../../redux/constants';
 import { mockRestrictedEnv, render, screen } from '../../../testUtils';
-import fixtures, { funcs } from '../ClusterDetails/__tests__/ClusterDetails.fixtures';
+import fixtures, { funcs } from '../ClusterDetailsMultiRegion/__tests__/ClusterDetails.fixtures';
 
 import ClusterList from './ClusterList';
 
@@ -50,6 +50,8 @@ describe('<ClusterList />', () => {
       setListFlag: jest.fn(),
       setSorting: jest.fn(),
       getMachineTypes: jest.fn(),
+      resetOrganizationAccessProtection: jest.fn(),
+      getOrganizationAccessProtection: jest.fn(),
     };
     afterEach(() => {
       isRestrictedEnv.mockReturnValue(false);

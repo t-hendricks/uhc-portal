@@ -6,14 +6,15 @@ import { Alert, AlertVariant, Spinner } from '@patternfly/react-core';
 import { SupportedFeature } from '~/common/featureCompatibility';
 import { validateSecurityGroups } from '~/common/validators';
 import { getIncompatibleVersionReason } from '~/common/versionCompatibility';
-import EditSecurityGroups from '~/components/clusters/ClusterDetails/components/SecurityGroups/EditSecurityGroups';
-import SecurityGroupsEmptyAlert from '~/components/clusters/ClusterDetails/components/SecurityGroups/SecurityGroupsEmptyAlert';
-import SecurityGroupsNoChangeAlert from '~/components/clusters/ClusterDetails/components/SecurityGroups/SecurityGroupsNoChangeAlert';
 import { isHypershiftCluster, isROSA } from '~/components/clusters/common/clusterStates';
 import { useAWSVPCFromCluster } from '~/components/clusters/common/useAWSVPCFromCluster';
 import { FieldId } from '~/components/clusters/wizards/common';
 import { useFormState } from '~/components/clusters/wizards/hooks';
 import { ClusterFromSubscription } from '~/types/types';
+
+import EditSecurityGroups from '../../../../../SecurityGroups/EditSecurityGroups';
+import SecurityGroupsEmptyAlert from '../../../../../SecurityGroups/SecurityGroupsEmptyAlert';
+import SecurityGroupsNoChangeAlert from '../../../../../SecurityGroups/SecurityGroupsNoChangeAlert';
 
 export interface EditSecurityGroupsFieldProps {
   cluster: ClusterFromSubscription;

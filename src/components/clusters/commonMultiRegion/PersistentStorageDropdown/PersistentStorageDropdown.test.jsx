@@ -4,7 +4,7 @@ import * as useFetchStorageQuotaValues from '~/queries/ClusterActionsQueries/use
 import * as useFetchOrganizationAndQuota from '~/queries/common/useFetchOrganizationAndQuota';
 import { checkAccessibility, render, screen, within } from '~/testUtils';
 
-import fixtures from '../../ClusterDetails/__tests__/ClusterDetails.fixtures';
+import fixtures from '../../ClusterDetailsMultiRegion/__tests__/ClusterDetails.fixtures';
 
 import PersistentStorageDropdown from './PersistentStorageDropdown';
 

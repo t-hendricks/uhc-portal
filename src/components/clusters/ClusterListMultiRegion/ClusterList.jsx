@@ -460,11 +460,7 @@ const ClusterList = ({
               onPerPageSelect={onPerPageChange}
               onPageChange={onPageChange}
             />
-            <CommonClusterModals
-              onClose={() => refetch()}
-              clearMachinePools
-              isMultiRegionPreviewEnabled
-            />
+            <CommonClusterModals onClose={() => refetch()} clearMachinePools />
           </div>
         </Card>
       </PageSection>

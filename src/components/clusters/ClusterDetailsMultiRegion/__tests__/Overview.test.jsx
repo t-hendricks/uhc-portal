@@ -1,6 +1,6 @@
 import React from 'react';
 
-import * as subscriptionFixture from '~/components/clusters/ClusterDetails/components/Overview/SubscriptionSettings/SubscriptionSettings.fixtures';
+import * as subscriptionFixture from '~/components/clusters/ClusterDetailsMultiRegion/components/Overview/SubscriptionSettings/SubscriptionSettings.fixtures';
 
 import {
   checkAccessibility,

@@ -1,9 +1,8 @@
 import { normalizedProducts } from '~/common/subscriptionTypes';
+import { hasOrgLevelAutoscaleCapability } from '~/components/clusters/ClusterDetailsMultiRegion/components/MachinePools/machinePoolsSelectors';
 import { useGlobalState } from '~/redux/hooks';
 import { Capability, SubscriptionCommonFields } from '~/types/accounts_mgmt.v1';
 import { Product } from '~/types/clusters_mgmt.v1';
-
-import { hasOrgLevelAutoscaleCapability } from '../components/clusters/ClusterDetails/components/MachinePools/machinePoolsSelectors';
 
 const useCanClusterAutoscale = (
   product: Product['id'],

@@ -3,8 +3,12 @@ import { action, ActionType } from 'typesafe-actions';
 import { ViewOptions } from '~/types/types';
 
 import { createServiceLogQueryObject } from '../../../../../common/queryHelpers';
-import { clusterLogConstants } from '../../../../../redux/constants';
 import serviceLogService from '../../../../../services/serviceLogService';
+
+import { GET_CLUSTER_LOGS, RESET_CLUSTER_HISTORY } from './clusterLogConstants';
+
+/* ARCHIVED DO NOT USE */
+/* This file exists to support unused files that are currently archived.  No new imports from this page */
 
 const getClusterHistory = (
   externalClusterID: string | undefined,
@@ -12,7 +16,7 @@ const getClusterHistory = (
   params: ViewOptions,
 ) =>
   action(
-    clusterLogConstants.GET_CLUSTER_LOGS,
+    GET_CLUSTER_LOGS,
     serviceLogService
       .getClusterHistory(externalClusterID, clusterID, createServiceLogQueryObject(params))
       .then((response) => ({
@@ -21,7 +25,7 @@ const getClusterHistory = (
       })),
   );
 
-const resetClusterHistory = () => action(clusterLogConstants.RESET_CLUSTER_HISTORY);
+const resetClusterHistory = () => action(RESET_CLUSTER_HISTORY);
 
 const clusterLogActions = {
   getClusterHistory,
@@ -32,3 +36,4 @@ export type ClusterLogAction = ActionType<
   (typeof clusterLogActions)[keyof typeof clusterLogActions]
 >;
 export { clusterLogActions };
+/* ARCHIVED DO NOT USE */

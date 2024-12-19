@@ -25,7 +25,7 @@ import ExternalLink from '../../../common/ExternalLink';
 import Modal from '../../../common/Modal/Modal';
 import modals from '../../../common/Modal/modals';
 import ReduxVerticalFormGroup from '../../../common/ReduxFormComponents/ReduxVerticalFormGroup';
-import MachinePoolsAutoScalingWarning from '../../ClusterDetails/components/MachinePools/MachinePoolAutoscalingWarning';
+import MachinePoolsAutoScalingWarning from '../../ClusterDetailsMultiRegion/components/MachinePools/MachinePoolAutoscalingWarning';
 
 import { balancerFields, resourceLimitsFields, scaleDownFields } from './fieldDefinitions';
 import { fieldItemMapper, numberParser } from './fieldItemMapper';

@@ -1,9 +1,10 @@
 import React from 'react';
 import { reduxForm } from 'redux-form';
 
-import { reduxFormConfig } from '~/components/clusters/ClusterDetails/components/IdentityProvidersPage';
-import IDPForm from '~/components/clusters/ClusterDetails/components/IdentityProvidersPage/components/IDPForm';
 import { checkAccessibility, render, screen } from '~/testUtils';
+
+import { reduxFormConfig } from '../..';
+import IDPForm from '../IDPForm';
 
 const defaultProps = {
   selectedIDP: 'GithubIdentityProvider',

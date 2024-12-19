@@ -23,7 +23,7 @@ import {
 import {
   ACCEPT,
   MAX_FILE_SIZE,
-} from '~/components/clusters/ClusterDetails/components/IdentityProvidersPage/components/CAUpload';
+} from '~/components/clusters/ClusterDetailsMultiRegion/components/IdentityProvidersPage/components/CAUpload';
 import { constants } from '~/components/clusters/common/CreateOSDFormConstants';
 import {
   DISABLED_NO_PROXY_PLACEHOLDER,

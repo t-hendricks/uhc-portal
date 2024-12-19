@@ -1,11 +1,12 @@
 import React from 'react';
 
 import { Link } from '~/common/routing';
+import { MachinePool, NodePool, SecurityGroup } from '~/types/clusters_mgmt.v1';
+
 import {
   MachinePoolItemList,
   securityGroupsRenderer,
-} from '~/components/clusters/ClusterDetails/components/MachinePools/components/MachinePoolExpandedRow';
-import { MachinePool, NodePool, SecurityGroup } from '~/types/clusters_mgmt.v1';
+} from '../MachinePools/components/MachinePoolExpandedRow';
 
 const getCombinedMachinePoolSecurityGroupIds = (
   machinePoolData: MachinePool[] | NodePool[],

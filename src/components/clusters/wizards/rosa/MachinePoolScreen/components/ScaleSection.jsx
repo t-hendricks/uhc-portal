@@ -9,7 +9,7 @@ import {
   getMinNodesRequired,
   getNodeIncrement,
   getNodeIncrementHypershift,
-} from '~/components/clusters/ClusterDetails/components/MachinePools/machinePoolsHelper';
+} from '~/components/clusters/ClusterDetailsMultiRegion/components/MachinePools/machinePoolsHelper';
 import {
   getWorkerNodeVolumeSizeMaxGiB,
   getWorkerNodeVolumeSizeMinGiB,

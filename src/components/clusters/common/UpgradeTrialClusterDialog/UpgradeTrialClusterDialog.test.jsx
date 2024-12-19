@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { render, screen } from '../../../../testUtils';
-import fixtures from '../../ClusterDetails/__tests__/ClusterDetails.fixtures';
+import fixtures from '../../ClusterDetailsMultiRegion/__tests__/ClusterDetails.fixtures';
 import { emptyQuotaList, mockQuotaList } from '../__tests__/quota.fixtures';
 
 import UpgradeTrialClusterDialog from './UpgradeTrialClusterDialog';

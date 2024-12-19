@@ -4,7 +4,7 @@ import * as useFetchLoadBalancerQuotaValues from '~/queries/ClusterActionsQuerie
 import * as useFetchOrganizationAndQuota from '~/queries/common/useFetchOrganizationAndQuota';
 import { checkAccessibility, render, screen, waitFor, within } from '~/testUtils';
 
-import fixtures from '../../ClusterDetails/__tests__/ClusterDetails.fixtures';
+import fixtures from '../../ClusterDetailsMultiRegion/__tests__/ClusterDetails.fixtures';
 
 import LoadBalancersDropdown from './LoadBalancersDropdown';
 

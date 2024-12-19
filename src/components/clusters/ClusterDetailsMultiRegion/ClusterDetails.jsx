@@ -25,7 +25,6 @@ import { Navigate, useNavigate } from '~/common/routing';
 import { AppPage } from '~/components/App/AppPage';
 import { modalActions } from '~/components/common/Modal/ModalActions';
 import DrawerPanel from '~/components/overview/components/common/DrawerPanel';
-import { useFeatureGate } from '~/hooks/useFeatureGate';
 import {
   refetchAccessProtection,
   useFetchAccessProtection,
@@ -69,7 +68,6 @@ import { clearGlobalError, setGlobalError } from '../../../redux/actions/globalE
 import { getNotificationContacts } from '../../../redux/actions/supportActions';
 import { fetchUpgradeGates } from '../../../redux/actions/upgradeGateActions';
 import { viewConstants } from '../../../redux/constants';
-import { MULTIREGION_PREVIEW_ENABLED } from '../../../redux/constants/featureConstants';
 import ErrorBoundary from '../../App/ErrorBoundary';
 import Unavailable from '../../common/Unavailable';
 import clusterStates, {
@@ -119,7 +117,7 @@ const ClusterDetails = (props) => {
   const [gcpOrgPolicyWarning, setGcpOrgPolicyWarning] = React.useState('');
   const monitoring = useGlobalState((state) => state.monitoring);
 
-  const isMultiRegionPreviewEnabled = useFeatureGate(MULTIREGION_PREVIEW_ENABLED);
+  const isMultiRegionPreviewEnabled = true;
   const canHibernateCluster = useGlobalState((state) => userCanHibernateClustersSelector(state));
   const anyModalOpen = useGlobalState((state) => !!state.modal.modalName);
   const userAccess = useGlobalState((state) => state.cost.userAccess);
@@ -780,7 +778,6 @@ const ClusterDetails = (props) => {
           ) : null}
 
           <CommonClusterModals
-            isMultiRegionPreviewEnabled={isMultiRegionPreviewEnabled}
             onClose={onDialogClose}
             onClusterDeleted={() => {
               invalidateClusterDetailsQueries();

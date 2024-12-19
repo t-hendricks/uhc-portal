@@ -47,11 +47,13 @@ const clusterLogReducer = (
           ...baseRequestState,
           fulfilled: true,
         };
+        /* @ts-ignore */
         draft.logs = action.payload.logs.data.items;
         draft.fetchedClusterLogsAt = new Date();
         break;
 
       case REJECTED_ACTION(GET_CLUSTER_LOGS):
+        /* @ts-ignore */
         draft.requestState = { ...getErrorState(action) };
         draft.fetchedClusterLogsAt = new Date();
         break;

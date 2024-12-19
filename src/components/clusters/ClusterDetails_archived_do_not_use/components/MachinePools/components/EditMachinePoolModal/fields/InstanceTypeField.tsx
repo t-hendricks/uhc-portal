@@ -4,12 +4,13 @@ import { useField } from 'formik';
 import { GridItem } from '@patternfly/react-core';
 
 import { normalizeProductID } from '~/common/normalize';
-import { isMultiAZ } from '~/components/clusters/ClusterDetails/clusterDetailsHelper';
 import MachineTypeSelection from '~/components/clusters/common/ScaleSection/MachineTypeSelection';
 import useFormikOnChange from '~/hooks/useFormikOnChange';
 import { SubscriptionCommonFields } from '~/types/accounts_mgmt.v1';
 import { Cluster } from '~/types/clusters_mgmt.v1';
 import { ClusterFromSubscription } from '~/types/types';
+
+import { isMultiAZ } from '../../../../../clusterDetailsHelper';
 
 const fieldId = 'instanceType';
 
