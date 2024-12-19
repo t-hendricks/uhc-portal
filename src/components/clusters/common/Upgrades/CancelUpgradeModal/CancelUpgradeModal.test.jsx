@@ -31,10 +31,12 @@ describe('<CancelUpgradeModal />', () => {
   const useDispatchMock = jest.spyOn(reactRedux, 'useDispatch');
 
   const scheduleMock = {
-    id: 'myScheduleId',
     cluster_id: 'myClusterId',
-    version: 'v1.2.3',
-    next_run: new Date('2020-11-02').toISOString(),
+    schedule: {
+      id: 'myScheduleId',
+      version: 'v1.2.3',
+      next_run: new Date('2020-11-02').toISOString(),
+    },
   };
   const shouldShowModal = true;
 
@@ -93,7 +95,7 @@ describe('<CancelUpgradeModal />', () => {
       isSuccess: true,
     });
 
-    render(<CancelUpgradeModal isHypershift={false} clusterId="mockedID" />);
+    render(<CancelUpgradeModal isHypershift={false} />);
 
     // Assert that the dispatch functions are called when fulfilled
     expect(mockReset).toHaveBeenCalled();

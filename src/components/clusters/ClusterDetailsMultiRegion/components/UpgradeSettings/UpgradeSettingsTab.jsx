@@ -53,6 +53,10 @@ import { UpdateAllMachinePools } from '../MachinePools/UpdateMachinePools';
 const UpgradeSettingsTab = ({ cluster }) => {
   const dispatch = useDispatch();
 
+  const region = cluster?.subscription?.rh_region_id;
+  const clusterID = cluster.id;
+  const { canEdit } = cluster;
+
   const isHypershift = isHypershiftCluster(cluster);
   const clusterVersion = getClusterVersion(cluster);
   const isRosa = isROSA(cluster);
@@ -60,6 +64,7 @@ const UpgradeSettingsTab = ({ cluster }) => {
   const { data: schedules, isLoading: isGetShcedulesLoading } = useGetSchedules(
     cluster.id,
     isHypershift,
+    region,
   );
 
   const isPrevAutomatic = schedules?.items?.some((policy) => policy.schedule_type === 'automatic');
@@ -76,8 +81,6 @@ const UpgradeSettingsTab = ({ cluster }) => {
   // a superset of hibernatingReason.
   const notReadyReason = cluster.state !== clusterStates.READY && 'This cluster is not ready';
   const formDisableReason = readOnlyReason || hibernatingReason;
-  const region = cluster?.subscription?.rh_region_id;
-  const clusterID = cluster?.id;
 
   const { data: upgradeGates } = useFetchUpgradeGatesFromApi(cluster.managed, region);
   const {
@@ -409,14 +412,15 @@ const UpgradeSettingsTab = ({ cluster }) => {
           <CardTitle>Update status</CardTitle>
           <CardBody>
             <UpgradeStatus
-              clusterID={cluster.id}
-              canEdit={cluster.canEdit}
+              clusterID={clusterID}
+              canEdit={canEdit}
               clusterVersion={clusterVersion}
               scheduledUpgrade={scheduledUpgrade}
               availableUpgrades={availableUpgrades}
               upgradeGates={upgradeGates}
               schedules={schedules}
               cluster={cluster}
+              region={region}
             />
             {showUpdateButton && (
               <Button
