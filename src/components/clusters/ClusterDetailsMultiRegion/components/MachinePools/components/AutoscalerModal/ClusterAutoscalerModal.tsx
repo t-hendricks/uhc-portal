@@ -35,7 +35,7 @@ import ErrorBox from '~/components/common/ErrorBox';
 import ExternalLink from '~/components/common/ExternalLink';
 import Modal from '~/components/common/Modal/Modal';
 import { modalActions } from '~/components/common/Modal/ModalActions';
-import useValidateBypassComputeNodeCountLimit from '~/hooks/useValidateBypassComputeNodeCountLimit';
+import useValidateMaxNodesTotal from '~/hooks/useValidateMaxNodesTotal';
 import { useDisableClusterAutoscaler } from '~/queries/ClusterDetailsQueries/MachinePoolTab/ClusterAutoscaler/useDisableClusterAutoscaler';
 import { useEnableClusterAutoscaler } from '~/queries/ClusterDetailsQueries/MachinePoolTab/ClusterAutoscaler/useEnableClusterAutoscaler';
 
@@ -200,9 +200,6 @@ export const ClusterAutoscalerModal = ({
     primaryButtonProps = { text: 'Save', isClose: false, isDisabled: hasAutoScalingErrors };
   }
 
-  const validateBypassComputeNodeCountLimitClassicOsdGcpFlag =
-    useValidateBypassComputeNodeCountLimit(maxNodesTotalDefault);
-
   return (
     <Modal
       variant="large"
@@ -302,7 +299,7 @@ export const ClusterAutoscalerModal = ({
                   helperText={
                     <span className="custom-help-text">Default value: {maxNodesTotalDefault}</span>
                   }
-                  validate={validateBypassComputeNodeCountLimitClassicOsdGcpFlag}
+                  validate={useValidateMaxNodesTotal(maxNodesTotalDefault)}
                   tooltip={MaxNodesTotalPopoverText}
                 />
               </GridItem>

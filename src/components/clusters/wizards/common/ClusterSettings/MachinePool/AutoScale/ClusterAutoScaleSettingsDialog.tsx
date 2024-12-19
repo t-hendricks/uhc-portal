@@ -29,7 +29,7 @@ import ExternalLink from '~/components/common/ExternalLink';
 import Modal from '~/components/common/Modal/Modal';
 import { closeModal } from '~/components/common/Modal/ModalActions';
 import modals from '~/components/common/Modal/modals';
-import useValidateBypassComputeNodeCountLimit from '~/hooks/useValidateBypassComputeNodeCountLimit';
+import useValidateMaxNodesTotal from '~/hooks/useValidateMaxNodesTotal';
 import { useGlobalState } from '~/redux/hooks';
 
 import {
@@ -164,9 +164,6 @@ const ClusterAutoScaleSettingsDialog = ({
   const hasAutoScalingErrors = Object.keys(autoScalingErrors || {}).length > 0;
   const isScaleDownDisabled = clusterAutoScaling?.scale_down?.enabled === false;
 
-  const validateBypassComputeNodeCountLimitClassicOsdGcpFlag =
-    useValidateBypassComputeNodeCountLimit(maxNodesTotalDefault);
-
   return (
     <Modal
       variant="large"
@@ -233,7 +230,7 @@ const ClusterAutoScaleSettingsDialog = ({
                   helperText={
                     <span className="custom-help-text">Default value: {maxNodesTotalDefault}</span>
                   }
-                  validate={validateBypassComputeNodeCountLimitClassicOsdGcpFlag}
+                  validate={useValidateMaxNodesTotal(maxNodesTotalDefault)}
                   tooltip={MaxNodesTotalPopoverText}
                 />
               </GridItem>
