@@ -93,7 +93,11 @@ const EditDisplayNameDialog = ({ onClose }: EditDisplayNameDialogProps) => {
               validated={!validationMessage ? 'default' : 'error'}
               value={currentDisplayName}
               placeholder="Enter display name"
-              onChange={(_event, newValue) => setCurrentDisplayName(newValue.trim())}
+              onChange={(_event, newValue) =>
+                currentDisplayName === ''
+                  ? setCurrentDisplayName(newValue.trim())
+                  : setCurrentDisplayName(newValue)
+              }
               aria-label="Edit display name"
               id="edit-display-name-input"
             />

@@ -92,7 +92,9 @@ class EditDisplayNameDialog extends Component {
                 validated={!validationMessage ? 'default' : 'error'}
                 value={currentValue}
                 placeholder="Enter display name"
-                onChange={(_event, newValue) => this.setValue(newValue.trim())}
+                onChange={(_event, newValue) =>
+                  currentValue === '' ? this.setValue(newValue.trim()) : this.setValue(newValue)
+                }
                 aria-label="Edit display name"
                 id="edit-display-name-input"
               />

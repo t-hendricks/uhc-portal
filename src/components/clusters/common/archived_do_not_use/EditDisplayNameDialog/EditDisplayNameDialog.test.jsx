@@ -82,16 +82,18 @@ describe('<EditDisplayNameDialog />', () => {
     expect(submit).toBeCalledWith('my-subscription-id', 'my-new-name');
   });
 
-  it('does not allow blank whitespace to be entered', async () => {
+  it('does not allow blank whitespace to be entered when field is empty', async () => {
     const { user } = render(<EditDisplayNameDialog {...defaultProps} />);
 
     expect(screen.getByRole('button', { name: 'Edit' })).toHaveAttribute('aria-disabled', 'true');
+
     await user.clear(screen.getByRole('textbox'));
-    await user.type(screen.getByRole('textbox'), '  my-new-name  ');
+    await user.type(screen.getByRole('textbox'), '    ');
 
     expect(screen.getByRole('button', { name: 'Edit' })).toHaveAttribute('aria-disabled', 'false');
     expect(submit).not.toBeCalled();
 
+    await user.type(screen.getByRole('textbox'), '   my-new-name');
     await user.click(screen.getByRole('button', { name: 'Edit' }));
     expect(submit).toBeCalledWith('my-subscription-id', 'my-new-name');
   });
