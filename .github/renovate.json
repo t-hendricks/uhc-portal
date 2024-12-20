@@ -13,6 +13,12 @@
       "groupName": "openshift-assisted dependencies",
       "matchPackagePatterns": ["^@openshift-assisted"],
       "enabled": false
+    },
+    {
+      "groupName": "patternfly packages",
+      "matchPackageNames": [
+        "@patternfly/**"
+      ]
     }
   ],
   "ignorePaths": ["babel-plugins/**"],
