@@ -17,6 +17,8 @@ on:
       - 'docs/**'
       - 'run/**'
       - 'qe-images/**'
+      - .gitlab-ci.yml
+      - .gitlab/**
 
 jobs:
   install:
