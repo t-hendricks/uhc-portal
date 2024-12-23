@@ -1,3 +1,7 @@
+# [- This repository (service/uhc-portal) has been migrated to GitHub at github.com/RedHatInsights/uhc-portal -]
+# [- MR approval/merging has been disabled in the GitLab master branch -]
+# [- Please contact the OCMUI team at #forum-openshift-experiences if you have any questions -]
+
 # Summary
 
 <!-- add a summarized description of the MR content -->
