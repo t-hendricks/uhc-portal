@@ -22,10 +22,10 @@ export const MaxNodesTotalPopoverText = (
           <b>Maximum worker node count</b>, based on the cluster version:
           <List>
             <ListItem>
-              <b>{MAX_NODES_4_14_14}</b> for clusters below Openshift v14.14.14
+              <b>{MAX_NODES_4_14_14}</b> for clusters below Openshift v4.14.14
             </ListItem>
             <ListItem>
-              <b>{MAX_NODES}</b> for clusters at or above Openshift v14.14.14
+              <b>{MAX_NODES}</b> for clusters at or above Openshift v4.14.14
             </ListItem>
           </List>
         </ListItem>
