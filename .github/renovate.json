@@ -6,19 +6,17 @@
     {
       "groupName": "all non-major dependencies",
       "groupSlug": "all-minor-patch",
-      "matchPackagePatterns": ["*"],
-      "matchUpdateTypes": ["minor", "patch"]
+      "matchUpdateTypes": ["minor", "patch"],
+      "matchPackageNames": ["*"]
     },
     {
       "groupName": "openshift-assisted dependencies",
-      "matchPackagePatterns": ["^@openshift-assisted"],
-      "enabled": false
+      "enabled": false,
+      "matchPackageNames": ["/^@openshift-assisted/"]
     },
     {
       "groupName": "patternfly packages",
-      "matchPackageNames": [
-        "@patternfly/**"
-      ]
+      "matchPackageNames": ["@patternfly/**"]
     }
   ],
   "ignorePaths": ["babel-plugins/**"],
