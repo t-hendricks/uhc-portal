@@ -1,7 +1,7 @@
 name: Pull Request CI
 
 on:
-  pull_request_target:
+  pull_request:
     types: [opened, synchronize, reopened, ready_for_review]
     paths-ignore:
       - 'LICENSE'
@@ -19,6 +19,7 @@ on:
       - 'qe-images/**'
       - .gitlab-ci.yml
       - .gitlab/**
+      - cypress/**
 
 jobs:
   install:
@@ -34,6 +35,8 @@ jobs:
     runs-on: ${{ matrix.os }}
     steps:
       - uses: actions/checkout@v4
+        with:
+          ref: "${{ github.event.pull_request.merge_commit_sha }}"
       - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v4
         with:
@@ -65,6 +68,8 @@ jobs:
     runs-on: ${{ matrix.os }}
     steps:
       - uses: actions/checkout@v4
+        with:
+          ref: "${{ github.event.pull_request.merge_commit_sha }}"
       - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v4
         with:
@@ -92,6 +97,8 @@ jobs:
     runs-on: ${{ matrix.os }}
     steps:
       - uses: actions/checkout@v4
+        with:
+          ref: "${{ github.event.pull_request.merge_commit_sha }}"
       - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v4
         with:
@@ -119,6 +126,8 @@ jobs:
     runs-on: ${{ matrix.os }}
     steps:
       - uses: actions/checkout@v4
+        with:
+          ref: "${{ github.event.pull_request.merge_commit_sha }}"
       - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v4
         with:
@@ -132,48 +141,3 @@ jobs:
         uses: borales/actions-yarn@v4
         with:
           cmd: test
-  e2e-test:
-    name: ${{ matrix.os }} - e2e Tests - Node ${{ matrix.node-version }}
-    concurrency:
-      group: e2e-test-${{ github.event_name }}-${{ github.head_ref }}-${{ matrix.os }}-${{ matrix.node-version }}
-      cancel-in-progress: true
-    needs: [build]
-    strategy:
-      matrix:
-        os: [ubuntu-latest]
-        node-version: [22.x]
-      fail-fast: false
-    runs-on: ${{ matrix.os }}
-    steps:
-      - uses: actions/checkout@v4
-      - name: Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v4
-        with:
-          node-version: ${{ matrix.node-version }}
-      - uses: actions/cache@v4
-        with:
-          path: './node_modules'
-          key: ${{ runner.os }}-${{ matrix.node-version }}-${{ hashFiles('**/yarn.lock') }}
-      - name: Install
-        uses: borales/actions-yarn@v4
-        with:
-          cmd: install
-      - name: Add hosts
-        run: make dev-env-setup
-      - name: Check hosts
-        run: cat /etc/hosts
-      - name: Install cypress
-        run: npx cypress install
-      - name: Execute tests
-        run: |
-          yarn start --env logging=quiet --no-client-overlay &
-          NODE_TLS_REJECT_UNAUTHORIZED=0 yarn wait-on -i 5000 https://prod.foo.redhat.com:1337/openshift/
-          CYPRESS_TEST_WITHQUOTA_USER=${{ secrets.CYPRESS_TEST_WITHQUOTA_USER }} CYPRESS_TEST_WITHQUOTA_PASSWORD=${{ secrets.CYPRESS_TEST_WITHQUOTA_PASSWORD }} TERM=xterm LC_ALL=C.UTF-8 LANG=C.UTF-8 yarn e2e-test
-      - uses: actions/upload-artifact@v4
-        if: ${{ failure() }}
-        with:
-          name: 2e2-facts
-          retention-days: 5
-          path: |
-            cypress/screenshots/
-            cypress/videos/
