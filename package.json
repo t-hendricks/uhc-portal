@@ -81,7 +81,7 @@
     "typesafe-actions": "^5.1.0",
     "urijs": "^1.19.11",
     "url": "^0.11.0",
-    "uuid": "^9.0.0",
+    "uuid": "^11.0.0",
     "yup": "^1.4.0"
   },
   "devDependencies": {
@@ -121,7 +121,6 @@
     "@types/semver": "^7.5.8",
     "@types/sprintf-js": "^1.1.2",
     "@types/urijs": "^1.19.19",
-    "@types/uuid": "^8.3.4",
     "@typescript-eslint/eslint-plugin": "^6.21.0",
     "@typescript-eslint/parser": "^6.21.0",
     "babel-jest": "^29.7.0",
