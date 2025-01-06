@@ -64,6 +64,7 @@ const UsersSection = (props) => {
     error: addUserError,
     mutate: addUserMutate,
     isSuccess: isAddUserSuccess,
+    reset: resetAddUserMutate,
   } = useAddUser(cluster.id, region);
   const {
     isError: isDeleteUserError,
@@ -254,6 +255,7 @@ const UsersSection = (props) => {
         {addUserBtn}
         <AddUserDialog
           addUserMutate={addUserMutate}
+          resetAddUserMutate={resetAddUserMutate}
           isAddUserSuccess={isAddUserSuccess}
           isAddUserPending={isAddUserPending}
           isAddUserError={isAddUserError}

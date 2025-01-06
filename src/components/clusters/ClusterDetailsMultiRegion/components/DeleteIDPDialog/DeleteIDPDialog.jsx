@@ -60,8 +60,8 @@ const DeleteIDPDialog = (props) => {
         onPrimaryClick={() =>
           deleteIDPMutate(idpID, {
             onSuccess: () => {
+              refetchClusterIdentityProviders(clusterID, region);
               closeDialog(true);
-              refetchClusterIdentityProviders(clusterID);
             },
           })
         }
