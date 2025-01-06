@@ -59,6 +59,12 @@ const ReduxVerticalFormGroup = ({
   const redoId = `${extraProps.id || ''}-redo`;
   const isValid = hasOtherValidation || !touched || !error;
 
+  const regenerateAutocomplete = () => {
+    if (getAutocompleteValue) {
+      setAutocompleteValue(getAutocompleteValue());
+    }
+  };
+
   let { onFocus } = input;
   let { onBlur } = input;
   let autocomplete;
@@ -68,6 +74,7 @@ const ReduxVerticalFormGroup = ({
       input.onChange(autocompleteValue);
       if (onAutocomplete) {
         onAutocomplete(autocompleteValue, input.name);
+        regenerateAutocomplete();
       }
       setIsAutocompleteOpen(false);
     };
@@ -88,12 +95,6 @@ const ReduxVerticalFormGroup = ({
       }
       if (input.onBlur) {
         input.onBlur(...args);
-      }
-    };
-
-    const regenerateAutocomplete = () => {
-      if (getAutocompleteValue) {
-        setAutocompleteValue(getAutocompleteValue());
       }
     };
 
