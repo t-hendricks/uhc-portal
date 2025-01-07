@@ -79,7 +79,6 @@ function OCMRolesDialog({
     dispatch(closeModal());
     setIsDropdownOpen(false);
     setUsernameValidationMsg('');
-    setAPIErrorMsg('');
   };
 
   // close the dialog if submit is successful.
