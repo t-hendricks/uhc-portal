@@ -236,7 +236,6 @@ const UsersSection = (props) => {
           Grant permission to manage this cluster to users defined in your identity provider.{' '}
           <ExternalLink href={links.OSD_DEDICATED_ADMIN_ROLE}>Learn more.</ExternalLink>
         </p>
-        {isAddUserError && <ErrorBox message="Error adding user" response={addUserError.error} />}
         {isDeleteUserError && (
           <ErrorBox message="Error deleting user" response={deleteUserError.error} />
         )}

@@ -3,7 +3,7 @@ import React from 'react';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
 import { formatErrorData } from '~/queries/helpers';
-import { act, renderHook, waitFor } from '~/testUtils';
+import { renderHook, waitFor } from '~/testUtils';
 
 import clusterService, { getClusterServiceForRegion } from '../../../../services/clusterService';
 
@@ -48,9 +48,7 @@ describe('useAddUser', () => {
 
     const { result } = renderHook(() => useAddUser(clusterID));
 
-    await act(async () => {
-      result.current.mutate({ selectedGroup, userId });
-    });
+    await result.current.mutate({ selectedGroup, userId });
 
     await waitFor(() => {
       expect(result.current.data).toBe('success');
@@ -70,9 +68,7 @@ describe('useAddUser', () => {
 
     const { result } = renderHook(() => useAddUser(clusterID, region), { wrapper });
 
-    await act(async () => {
-      result.current.mutate({ selectedGroup, userId });
-    });
+    await result.current.mutate({ selectedGroup, userId });
 
     await waitFor(() => {
       expect(result.current.data).toBe('success');
@@ -94,9 +90,7 @@ describe('useAddUser', () => {
 
     const { result } = renderHook(() => useAddUser(clusterID), { wrapper });
 
-    await act(async () => {
-      result.current.mutate({ selectedGroup, userId });
-    });
+    await result.current.mutate({ selectedGroup, userId });
 
     await waitFor(() => {
       expect(result.current.isError).toBe(true);
