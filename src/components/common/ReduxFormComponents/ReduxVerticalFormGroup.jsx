@@ -74,6 +74,8 @@ const ReduxVerticalFormGroup = ({
       input.onChange(autocompleteValue);
       if (onAutocomplete) {
         onAutocomplete(autocompleteValue, input.name);
+
+        // Temporary bugfix for OCMUI-2823
         regenerateAutocomplete();
       }
       setIsAutocompleteOpen(false);
