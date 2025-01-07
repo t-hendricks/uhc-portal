@@ -2222,23 +2222,23 @@
     "@nodelib/fs.scandir" "2.1.5"
     fastq "^1.6.0"
 
-"@openshift-assisted/locales@2.37.0":
-  version "2.37.0"
-  resolved "https://registry.yarnpkg.com/@openshift-assisted/locales/-/locales-2.37.0.tgz#1bc7cd72234311392d71fda17b6255098ad135cc"
-  integrity sha512-4fVy011jMDU6C/SsqIhO7BHFIr0rBWkEQTzQB9vtfv6d2ekc6cK9wbRwf7s34V53sjqN6pMIChVaKGdFuN1A9Q==
+"@openshift-assisted/locales@2.37.2":
+  version "2.37.2"
+  resolved "https://registry.yarnpkg.com/@openshift-assisted/locales/-/locales-2.37.2.tgz#53d8dad09cb7d00aa43eb5251eb1f74f143bad54"
+  integrity sha512-ILY8CfF2IJbedLHW/6UwhZUU1sIckO+GwqZL8LY/g3WgBRVdNXjvDQhxeYDn0o0ITvQo+kfkd3IUSIbmhf6eyA==
 
-"@openshift-assisted/types@2.37.0":
-  version "2.37.0"
-  resolved "https://registry.yarnpkg.com/@openshift-assisted/types/-/types-2.37.0.tgz#11cf52c391728cf5d0fbd640bc5f216b211c9b89"
-  integrity sha512-BlqU/0enGuz1mo04Vlw3+3vySOD14+G7ZOJP9tVDRU4WJN9td1nWAMvTpntPdb+qLtLbUxV3y6PjIGRZdHgI/Q==
+"@openshift-assisted/types@2.37.2":
+  version "2.37.2"
+  resolved "https://registry.yarnpkg.com/@openshift-assisted/types/-/types-2.37.2.tgz#024c6899fb2c85cdb0a2314c06f298fe15815769"
+  integrity sha512-TcxUlEj+ib6NnfMESjCDYY6sj1NgSAkDc0rgBQTfTMrb9ZuHque73esQv7YnrT+ID+AMejOSuc2ufX3go94quQ==
 
-"@openshift-assisted/ui-lib@2.37.0":
-  version "2.37.0"
-  resolved "https://registry.yarnpkg.com/@openshift-assisted/ui-lib/-/ui-lib-2.37.0.tgz#aec42de9c7c1e4f6a8ba171f8e022ed96323fcb7"
-  integrity sha512-rkjSwOK3LTQONQPSy94w0NijNb4HvA6g7izfsTnDU1YXHPkBaX1R3xqu2qf0S79UV4IJCtlklxH0C9gqh/C0pw==
+"@openshift-assisted/ui-lib@2.37.2":
+  version "2.37.2"
+  resolved "https://registry.yarnpkg.com/@openshift-assisted/ui-lib/-/ui-lib-2.37.2.tgz#182c4a239447c7a9d72a7407a5832f7335347509"
+  integrity sha512-4ijrXeeIJnkgOf12TtufaUl0SpRCIy+xEhE8hQF/vDbtEAB+55ejK/SkHkPWd3FFm1I9zMz0s+QSHb22FFlJyg==
   dependencies:
-    "@openshift-assisted/locales" "2.37.0"
-    "@openshift-assisted/types" "2.37.0"
+    "@openshift-assisted/locales" "2.37.2"
+    "@openshift-assisted/types" "2.37.2"
     "@openshift-console/dynamic-plugin-sdk" "0.0.3"
     "@patternfly/patternfly" "5.2.0"
     "@patternfly/react-code-editor" "5.2.0"
