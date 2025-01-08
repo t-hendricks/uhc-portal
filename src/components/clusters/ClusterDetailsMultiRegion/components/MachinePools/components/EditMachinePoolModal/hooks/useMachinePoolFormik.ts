@@ -23,7 +23,11 @@ import {
 } from '~/components/clusters/common/machinePools/utils';
 import { useFeatureGate } from '~/hooks/useFeatureGate';
 import { MachineTypesResponse } from '~/queries/types';
-import { HCP_ROOT_DISK_SIZE, MAX_COMPUTE_NODES_500 } from '~/redux/constants/featureConstants';
+import {
+  HCP_ROOT_DISK_SIZE,
+  MAX_COMPUTE_NODES_500,
+  OCMUI_MAX_NODES_TOTAL_249,
+} from '~/redux/constants/featureConstants';
 import { MachinePool, NodePool } from '~/types/clusters_mgmt.v1';
 import { ClusterFromSubscription } from '~/types/types';
 
@@ -148,7 +152,8 @@ const useMachinePoolFormik = ({
 
   const organization = useOrganization();
 
-  const allow500Nodes = useFeatureGate(MAX_COMPUTE_NODES_500);
+  const allow500NodesHCP = useFeatureGate(MAX_COMPUTE_NODES_500);
+  const allow249NodesOSDCCSROSA = useFeatureGate(OCMUI_MAX_NODES_TOTAL_249);
 
   const validationSchema = React.useMemo(
     () =>
@@ -164,7 +169,8 @@ const useMachinePoolFormik = ({
           minNodes: minNodesRequired,
           machineTypeId: values.instanceType,
           editMachinePoolId: values.name,
-          allow500Nodes,
+          allow500NodesHCP,
+          allow249NodesOSDCCSROSA,
         });
         const maxNodes = nodeOptions.length ? nodeOptions[nodeOptions.length - 1] : 0;
 
@@ -321,7 +327,8 @@ const useMachinePoolFormik = ({
       maxDiskSize,
       hasMachinePool,
       isHypershift,
-      allow500Nodes,
+      allow500NodesHCP,
+      allow249NodesOSDCCSROSA,
     ],
   );
 

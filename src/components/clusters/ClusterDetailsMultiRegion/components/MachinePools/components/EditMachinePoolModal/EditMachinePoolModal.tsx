@@ -19,7 +19,10 @@ import { useFetchMachineTypes } from '~/queries/ClusterDetailsQueries/MachinePoo
 import { useEditCreateMachineOrNodePools } from '~/queries/ClusterDetailsQueries/MachinePoolTab/useEditCreateMachineOrNodePools';
 import { useFetchMachineOrNodePools } from '~/queries/ClusterDetailsQueries/MachinePoolTab/useFetchMachineOrNodePools';
 import { MachineTypesResponse } from '~/queries/types';
-import { MAX_COMPUTE_NODES_500 } from '~/redux/constants/featureConstants';
+import {
+  MAX_COMPUTE_NODES_500,
+  OCMUI_MAX_NODES_TOTAL_249,
+} from '~/redux/constants/featureConstants';
 import { useGlobalState } from '~/redux/hooks';
 import { MachinePool } from '~/types/clusters_mgmt.v1';
 import { ClusterFromSubscription, ErrorState } from '~/types/types';
@@ -91,7 +94,8 @@ const EditMachinePoolModal = ({
     machineTypes: machineTypesResponse,
   });
 
-  const allow500Nodes = useFeatureGate(MAX_COMPUTE_NODES_500);
+  const allow500NodesHCP = useFeatureGate(MAX_COMPUTE_NODES_500);
+  const allow249NodesOSDCCSROSA = useFeatureGate(OCMUI_MAX_NODES_TOTAL_249);
 
   const setCurrentMPId = React.useCallback(
     (id: string) => setCurrentMachinePool(machinePoolsResponse?.find((mp) => mp.id === id)),
@@ -123,7 +127,7 @@ const EditMachinePoolModal = ({
       isHypershift,
       currentMachinePool?.id,
       currentMachinePool?.instance_type,
-    ) === getMaxNodesHCP(cluster.version?.raw_id, allow500Nodes);
+    ) === getMaxNodesHCP(cluster.version?.raw_id, allow500NodesHCP);
 
   const { mutateAsync: editCreateMachineOrNodePoolMutation } = useEditCreateMachineOrNodePools(
     isHypershift,
@@ -252,7 +256,8 @@ const EditMachinePoolModal = ({
                 machinePool={currentMachinePool}
                 machinePools={machinePoolsResponse || []}
                 machineTypes={machineTypesResponse}
-                allow500Nodes={allow500Nodes}
+                allow500NodesHCP={allow500NodesHCP}
+                allow249NodesOSDCCSROSA={allow249NodesOSDCCSROSA}
               />
               <DiskSizeField cluster={cluster} isEdit={isEdit} />
               <ExpandableSection toggleText="Edit node labels and taints">

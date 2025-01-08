@@ -7,6 +7,7 @@ import links from '~/common/installLinks.mjs';
 import { normalizedProducts } from '~/common/subscriptionTypes';
 import { getDefaultClusterAutoScaling } from '~/components/clusters/common/clusterAutoScalingValues';
 import { constants } from '~/components/clusters/common/CreateOSDFormConstants';
+import { MAX_NODES_4_14_14 as MAX_NODES_180 } from '~/components/clusters/common/machinePools/constants';
 import { getMaxNodesTotalDefaultAutoscaler } from '~/components/clusters/common/machinePools/utils';
 import { CheckboxField } from '~/components/clusters/wizards/form/CheckboxField';
 import { useFormState } from '~/components/clusters/wizards/hooks';
@@ -15,6 +16,8 @@ import ExternalLink from '~/components/common/ExternalLink';
 import { openModal } from '~/components/common/Modal/ModalActions';
 import modals from '~/components/common/Modal/modals';
 import PopoverHint from '~/components/common/PopoverHint';
+import { useFeatureGate } from '~/hooks/useFeatureGate';
+import { OCMUI_MAX_NODES_TOTAL_249 } from '~/redux/constants/featureConstants';
 
 import { AutoScaleEnabledInputs } from './AutoScaleEnabledInputs';
 import ClusterAutoScaleSettingsDialog from './ClusterAutoScaleSettingsDialog';
@@ -31,7 +34,7 @@ export const AutoScale = () => {
     },
     setFieldValue,
   } = useFormState();
-
+  const allow249Nodes = useFeatureGate(OCMUI_MAX_NODES_TOTAL_249);
   const dispatch = useDispatch();
   const openAutoScalingModal = () => dispatch(openModal(modals.EDIT_CLUSTER_AUTOSCALING_V2));
 
@@ -41,8 +44,11 @@ export const AutoScale = () => {
   const isByoc = byoc === 'true';
   const isRosaClassicOrOsdCcs = !isHypershiftSelected && isByoc;
   const maxNodesTotalDefault = useMemo(
-    () => getMaxNodesTotalDefaultAutoscaler(ClusterVersion?.raw_id, multiAz === 'true'),
-    [ClusterVersion?.raw_id, multiAz],
+    () =>
+      allow249Nodes
+        ? getMaxNodesTotalDefaultAutoscaler(ClusterVersion?.raw_id, multiAz === 'true')
+        : MAX_NODES_180,
+    [allow249Nodes, ClusterVersion?.raw_id, multiAz],
   );
   const defaultAutoscalerValues = useMemo(
     () => getDefaultClusterAutoScaling(maxNodesTotalDefault),

@@ -16,11 +16,13 @@ import { CloudProviderType, FieldId } from '~/components/clusters/wizards/common
 import { useFormState } from '~/components/clusters/wizards/hooks';
 import ExternalLink from '~/components/common/ExternalLink';
 import useCanClusterAutoscale from '~/hooks/useCanClusterAutoscale';
+import { useFeatureGate } from '~/hooks/useFeatureGate';
 import {
   clearMachineTypesByRegion,
   getMachineTypes,
   getMachineTypesByRegion,
 } from '~/redux/actions/machineTypesActions';
+import { OCMUI_MAX_NODES_TOTAL_249 } from '~/redux/constants/featureConstants';
 import { GlobalState } from '~/redux/store';
 import { AWSCredentials } from '~/types/types';
 
@@ -53,6 +55,7 @@ export const MachinePool = () => {
     getFieldMeta,
     setFieldTouched,
   } = useFormState();
+  const allow249Nodes = useFeatureGate(OCMUI_MAX_NODES_TOTAL_249);
   const isMultiAz = multiAz === 'true';
   const isByoc = byoc === 'true';
   const isRosa = product === normalizedProducts.ROSA;
@@ -262,6 +265,7 @@ export const MachinePool = () => {
                   { isDefaultMachinePool: true, isByoc, isMultiAz },
                 )}
                 clusterVersion={version.raw_id}
+                allow249NodesOSDCCSROSA={allow249Nodes}
               />
             </GridItem>
             {imdsSection}

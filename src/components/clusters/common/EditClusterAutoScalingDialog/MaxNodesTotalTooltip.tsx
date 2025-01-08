@@ -3,37 +3,49 @@ import React from 'react';
 import { List, ListItem, Text, TextContent } from '@patternfly/react-core';
 
 import PopoverHint from '~/components/common/PopoverHint';
+import { useFeatureGate } from '~/hooks/useFeatureGate';
+import { OCMUI_MAX_NODES_TOTAL_249 } from '~/redux/constants/featureConstants';
 
 import { MAX_NODES, MAX_NODES_4_14_14 } from '../machinePools/constants';
 
-export const MaxNodesTotalPopoverText = (
-  <TextContent>
-    <Text>
-      The total number of master, infrastructure, and worker nodes of a single cluster. The maximum
-      value for max-nodes-total should be the sum of:
-      <List>
-        <ListItem>
-          <b>3 master nodes</b>
-        </ListItem>
-        <ListItem>
-          <b>2 (single AZ) or 3 infrastructure nodes (multiple AZ)</b>
-        </ListItem>
-        <ListItem>
-          <b>Maximum worker node count</b>, based on the cluster version:
-          <List>
+export const MaxNodesTotalPopoverText = () => {
+  const allow249NodesOSDCCSROSA = useFeatureGate(OCMUI_MAX_NODES_TOTAL_249);
+
+  return (
+    <TextContent>
+      <Text>
+        The total number of master, infrastructure, and worker nodes of a single cluster. The
+        maximum value for max-nodes-total should be the sum of:
+        <List>
+          <ListItem>
+            <b>3 master nodes</b>
+          </ListItem>
+          <ListItem>
+            <b>2 (single AZ) or 3 infrastructure nodes (multiple AZ)</b>
+          </ListItem>
+          {allow249NodesOSDCCSROSA ? (
             <ListItem>
-              <b>{MAX_NODES_4_14_14}</b> for clusters below Openshift v4.14.14
+              <b>Maximum worker node count</b>, based on the cluster version:
+              <List>
+                <ListItem>
+                  <b>{MAX_NODES_4_14_14}</b> for clusters below Openshift v4.14.14
+                </ListItem>
+                <ListItem>
+                  <b>{MAX_NODES}</b> for clusters at or above Openshift v4.14.14
+                </ListItem>
+              </List>
             </ListItem>
+          ) : (
             <ListItem>
-              <b>{MAX_NODES}</b> for clusters at or above Openshift v4.14.14
+              <b>Maximum worker node count ({MAX_NODES_4_14_14})</b>
             </ListItem>
-          </List>
-        </ListItem>
-      </List>
-    </Text>
-  </TextContent>
-);
+          )}
+        </List>
+      </Text>
+    </TextContent>
+  );
+};
 
 export const MaxNodesTotalPopover = () => (
-  <PopoverHint title="Max nodes total" hint={MaxNodesTotalPopoverText} />
+  <PopoverHint title="Max nodes total" hint={<MaxNodesTotalPopoverText />} />
 );

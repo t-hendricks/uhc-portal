@@ -300,7 +300,7 @@ export const ClusterAutoscalerModal = ({
                     <span className="custom-help-text">Default value: {maxNodesTotalDefault}</span>
                   }
                   validate={useValidateMaxNodesTotal(maxNodesTotalDefault)}
-                  tooltip={MaxNodesTotalPopoverText}
+                  tooltip={<MaxNodesTotalPopoverText />}
                 />
               </GridItem>
               <GridItem span={6}>

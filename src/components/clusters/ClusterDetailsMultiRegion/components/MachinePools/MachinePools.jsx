@@ -30,6 +30,7 @@ import { versionFormatter } from '~/common/versionHelpers';
 import { isMultiAZ } from '~/components/clusters/ClusterDetailsMultiRegion/clusterDetailsHelper';
 import { getDefaultClusterAutoScaling } from '~/components/clusters/common/clusterAutoScalingValues';
 import { MachineConfiguration } from '~/components/clusters/common/MachineConfiguration';
+import { MAX_NODES_4_14_14 as MAX_NODES_180 } from '~/components/clusters/common/machinePools/constants';
 import { getMaxNodesTotalDefaultAutoscaler } from '~/components/clusters/common/machinePools/utils';
 import { useFeatureGate } from '~/hooks/useFeatureGate';
 import {
@@ -39,7 +40,10 @@ import {
 import { useFetchMachineTypes } from '~/queries/ClusterDetailsQueries/MachinePoolTab/MachineTypes/useFetchMachineTypes';
 import { useDeleteMachinePool } from '~/queries/ClusterDetailsQueries/MachinePoolTab/useDeleteMachinePool';
 import { useFetchMachineOrNodePools } from '~/queries/ClusterDetailsQueries/MachinePoolTab/useFetchMachineOrNodePools';
-import { ENABLE_MACHINE_CONFIGURATION } from '~/redux/constants/featureConstants';
+import {
+  ENABLE_MACHINE_CONFIGURATION,
+  OCMUI_MAX_NODES_TOTAL_249,
+} from '~/redux/constants/featureConstants';
 import { useGlobalState } from '~/redux/hooks';
 import { clusterService } from '~/services';
 import { getClusterServiceForRegion } from '~/services/clusterService';
@@ -103,6 +107,7 @@ const getOpenShiftVersion = (machinePool, isDisabled, isMachinePoolError, isHype
 
 const MachinePools = ({ cluster }) => {
   const dispatch = useDispatch();
+  const allow249NodesOSDCCSROSA = useFeatureGate(OCMUI_MAX_NODES_TOTAL_249);
 
   const isDeleteMachinePoolModalOpen = useGlobalState((state) =>
     shouldShowModal(state, modals.DELETE_MACHINE_POOL),
@@ -202,8 +207,11 @@ const MachinePools = ({ cluster }) => {
   ]);
 
   const maxNodesTotalDefault = useMemo(
-    () => getMaxNodesTotalDefaultAutoscaler(cluster.version?.raw_id, cluster.multi_az),
-    [cluster.version?.raw_id, cluster.multi_az],
+    () =>
+      allow249NodesOSDCCSROSA
+        ? getMaxNodesTotalDefaultAutoscaler(cluster.version?.raw_id, cluster.multi_az)
+        : MAX_NODES_180,
+    [allow249NodesOSDCCSROSA, cluster.version?.raw_id, cluster.multi_az],
   );
 
   const onCollapse = (event, rowKey, isOpen, rowData) => {

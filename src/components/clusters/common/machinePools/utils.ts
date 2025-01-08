@@ -25,6 +25,7 @@ import { QuotaParams } from '../quotaModel';
 import {
   MAX_NODES,
   MAX_NODES_4_14_14,
+  MAX_NODES_4_14_14 as MAX_NODES_180,
   MAX_NODES_HCP as MAX_NODES_HCP_DEFAULT,
   MAX_NODES_HCP_500,
   MAX_NODES_HCP_INSUFFICIEN_VERSION,
@@ -105,8 +106,8 @@ export const buildOptions = ({
   increment,
   isHypershift,
   clusterVersion,
-  allow500Nodes,
-  isMultiAz,
+  allow500NodesHCP,
+  allow249NodesOSDCCSROSA,
 }: {
   available: number;
   isEditingCluster: boolean;
@@ -116,15 +117,20 @@ export const buildOptions = ({
   included: number;
   isHypershift?: boolean;
   clusterVersion: string | undefined;
-  allow500Nodes?: boolean;
-  isMultiAz: boolean;
+  allow500NodesHCP?: boolean;
+  allow249NodesOSDCCSROSA?: boolean;
 }) => {
-  const maxNodesHCP = getMaxNodesHCP(clusterVersion, allow500Nodes);
+  const maxNodesHCP = getMaxNodesHCP(clusterVersion, allow500NodesHCP);
   // no extra node quota = only base cluster size is available
   const optionsAvailable = available > 0 || isEditingCluster;
   let maxValue = isEditingCluster ? available + currentNodeCount : available + included;
 
-  const maxNumberOfNodes = isHypershift ? maxNodesHCP : getMaxWorkerNodes(clusterVersion);
+  // eslint-disable-next-line no-nested-ternary
+  const maxNumberOfNodes = isHypershift
+    ? maxNodesHCP
+    : allow249NodesOSDCCSROSA
+      ? getMaxWorkerNodes(clusterVersion)
+      : MAX_NODES_180;
   if (maxValue > maxNumberOfNodes) {
     maxValue = maxNumberOfNodes;
   }
@@ -211,7 +217,8 @@ export type getNodeOptionsType = {
   machinePool: MachinePool | undefined;
   minNodes: number;
   editMachinePoolId?: string;
-  allow500Nodes?: boolean;
+  allow500NodesHCP?: boolean;
+  allow249NodesOSDCCSROSA?: boolean;
 };
 export const getNodeOptions = ({
   cluster,
@@ -222,7 +229,8 @@ export const getNodeOptions = ({
   machinePool,
   minNodes,
   editMachinePoolId,
-  allow500Nodes,
+  allow500NodesHCP,
+  allow249NodesOSDCCSROSA,
 }: getNodeOptionsType) => {
   const isMultiAz = isMultiAZ(cluster);
 
@@ -265,8 +273,8 @@ export const getNodeOptions = ({
     increment: isMPoolAZ ? 3 : 1,
     isHypershift: isHypershiftCluster(cluster),
     clusterVersion: cluster.version?.raw_id,
-    allow500Nodes,
-    isMultiAz,
+    allow500NodesHCP,
+    allow249NodesOSDCCSROSA,
   });
 };
 

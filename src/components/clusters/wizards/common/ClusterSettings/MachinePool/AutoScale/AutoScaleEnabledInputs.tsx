@@ -8,6 +8,7 @@ import { normalizedProducts } from '~/common/subscriptionTypes';
 import { required, validateNumericInput } from '~/common/validators';
 import { getMinNodesRequired } from '~/components/clusters/ClusterDetailsMultiRegion/components/MachinePools/machinePoolsHelper';
 import { constants } from '~/components/clusters/common/CreateOSDFormConstants';
+import { MAX_NODES_4_14_14 as MAX_NODES_180 } from '~/components/clusters/common/machinePools/constants';
 import { getMaxNodesHCP, getMaxWorkerNodes } from '~/components/clusters/common/machinePools/utils';
 import getMinNodesAllowed from '~/components/clusters/common/ScaleSection/AutoScaleSection/AutoScaleHelper';
 import { useFormState } from '~/components/clusters/wizards/hooks';
@@ -16,7 +17,10 @@ import ExternalLink from '~/components/common/ExternalLink';
 import { FormGroupHelperText } from '~/components/common/FormGroupHelperText';
 import PopoverHint from '~/components/common/PopoverHint';
 import { useFeatureGate } from '~/hooks/useFeatureGate';
-import { MAX_COMPUTE_NODES_500 } from '~/redux/constants/featureConstants';
+import {
+  MAX_COMPUTE_NODES_500,
+  OCMUI_MAX_NODES_TOTAL_249,
+} from '~/redux/constants/featureConstants';
 
 import { NodesInput } from './NodesInput';
 
@@ -39,7 +43,8 @@ export const AutoScaleEnabledInputs = () => {
     },
   } = useFormState();
 
-  const allow500Nodes = useFeatureGate(MAX_COMPUTE_NODES_500);
+  const allow500NodesHCP = useFeatureGate(MAX_COMPUTE_NODES_500);
+  const allow249NodesOSDCCSROSA = useFeatureGate(OCMUI_MAX_NODES_TOTAL_249);
 
   const poolsLength = useMemo(
     () => machinePoolsSubnets?.length ?? 1,
@@ -120,15 +125,24 @@ export const AutoScaleEnabledInputs = () => {
   }, [product, isByoc, isMultiAz, defaultMinAllowed, isHypershiftSelected]);
 
   const maxNodes = useMemo(() => {
-    const maxWorkerNodes = getMaxWorkerNodes(clusterVersion.raw_id);
+    const maxWorkerNodes = allow249NodesOSDCCSROSA
+      ? getMaxWorkerNodes(clusterVersion.raw_id)
+      : MAX_NODES_180;
     if (isHypershiftSelected) {
-      return Math.floor(getMaxNodesHCP(clusterVersion?.raw_id, allow500Nodes) / poolsLength);
+      return Math.floor(getMaxNodesHCP(clusterVersion?.raw_id, allow500NodesHCP) / poolsLength);
     }
     if (isMultiAz) {
       return maxWorkerNodes / 3;
     }
     return maxWorkerNodes;
-  }, [isMultiAz, isHypershiftSelected, poolsLength, allow500Nodes, clusterVersion?.raw_id]);
+  }, [
+    isMultiAz,
+    isHypershiftSelected,
+    poolsLength,
+    allow500NodesHCP,
+    allow249NodesOSDCCSROSA,
+    clusterVersion?.raw_id,
+  ]);
 
   useEffect(() => {
     if (autoscalingEnabled && minNodes) {

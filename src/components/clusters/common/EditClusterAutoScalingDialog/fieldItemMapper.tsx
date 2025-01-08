@@ -6,8 +6,6 @@ import { FieldDefinition } from '~/components/clusters/common/EditClusterAutoSca
 import ReduxBooleanField from '~/components/common/ReduxFormComponents/ReduxBooleanField';
 import ReduxVerticalFormGroup from '~/components/common/ReduxFormComponents/ReduxVerticalFormGroup';
 
-import { MaxNodesTotalPopoverText } from './MaxNodesTotalTooltip';
-
 const numberParser = (defaultValue: number) => (val: string) =>
   Number.isNaN(val) ? defaultValue : Number(val);
 
@@ -76,15 +74,6 @@ const getFieldProps = (field: FieldDefinition) => {
     default:
       break;
   }
-
-  switch (field.name) {
-    case 'resource_limits.max_nodes_total':
-      props.extendedHelpText = MaxNodesTotalPopoverText;
-      break;
-    default:
-      break;
-  }
-
   return props;
 };
 
