@@ -1,8 +1,11 @@
 import * as React from 'react';
 
+import { Ingress } from '~/types/clusters_mgmt.v1';
+import { AugmentedCluster } from '~/types/types';
+
 import { mockRestrictedEnv, render, screen } from '../../../../../../../testUtils';
 
-import ClusterIngressCard from './ClusterIngressCard';
+import { ClusterIngressCard } from './ClusterIngressCard';
 
 describe('<ClusterIngressCard />', () => {
   const cluster = {
@@ -27,7 +30,7 @@ describe('<ClusterIngressCard />', () => {
     hypershift: {
       enabled: true,
     },
-  };
+  } as any as AugmentedCluster;
   const clusterRouters = [
     {
       default: true,
@@ -38,7 +41,7 @@ describe('<ClusterIngressCard />', () => {
       listening: 'external',
       load_balancer_type: 'nlb',
     },
-  ];
+  ] as Ingress[];
   const defaultProps = {
     clusterRoutersData: clusterRouters,
     cluster,
@@ -65,7 +68,7 @@ describe('<ClusterIngressCard />', () => {
           api: {
             listening: 'internal',
           },
-        },
+        } as AugmentedCluster,
       };
 
       render(<ClusterIngressCard {...props} />);
@@ -101,7 +104,7 @@ describe('<ClusterIngressCard />', () => {
           api: {
             listening: 'internal',
           },
-        },
+        } as AugmentedCluster,
       };
       rerender(<ClusterIngressCard {...props} />);
       expect(screen.queryByText('Private API')).toBeInTheDocument();
@@ -121,7 +124,7 @@ describe('<ClusterIngressCard />', () => {
               enabbled: true,
             },
           },
-        },
+        } as AugmentedCluster,
       };
       render(<ClusterIngressCard {...props} />);
       expect(screen.getByTestId('edit-cluster-ingress')).toHaveAttribute('aria-disabled', 'true');

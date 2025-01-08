@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { useDispatch } from 'react-redux';
 
 import {
@@ -20,6 +19,8 @@ import {
 } from '@patternfly/react-core';
 
 import { isRestrictedEnv } from '~/restrictedEnv';
+import { Ingress } from '~/types/clusters_mgmt.v1';
+import { AugmentedCluster } from '~/types/types';
 
 import ButtonWithTooltip from '../../../../../../common/ButtonWithTooltip';
 import { modalActions } from '../../../../../../common/Modal/ModalActions';
@@ -36,6 +37,12 @@ const resolveDisableEditReason = ({
   isSTSEnabled,
   clusterHibernating,
   hypershiftCluster,
+}: {
+  canEdit?: boolean;
+  isReadOnly: boolean;
+  isSTSEnabled: boolean;
+  clusterHibernating: boolean;
+  hypershiftCluster: boolean;
 }) => {
   const readOnlyReason = isReadOnly && 'This operation is not available during maintenance';
   const STSEnabledReason =
@@ -50,8 +57,18 @@ const resolveDisableEditReason = ({
   return STSEnabledReason || readOnlyReason || hibernatingReason || canNotEditReason;
 };
 
-const ClusterIngressCard = ({ refreshCluster, clusterRoutersData, cluster }) => {
-  const provider = cluster.cloud_provider.id ? cluster.cloud_provider.id : 'N/A';
+type ClusterIngressCardProps = {
+  refreshCluster: () => void;
+  clusterRoutersData: Ingress[];
+  cluster: AugmentedCluster;
+};
+
+const ClusterIngressCard = ({
+  refreshCluster,
+  clusterRoutersData,
+  cluster,
+}: ClusterIngressCardProps) => {
+  const provider = cluster.cloud_provider?.id ?? 'N/A';
   const consoleURL = cluster.console?.url;
   const controlPlaneAPIEndpoint = cluster.api?.url;
   const isApiPrivate = cluster.api?.listening === 'internal';
@@ -59,8 +76,8 @@ const ClusterIngressCard = ({ refreshCluster, clusterRoutersData, cluster }) => 
   const hasAdditionalRouter = Object.keys(clusterRouters).length === 2;
 
   const additionalRouterAddress = hasAdditionalRouter
-    ? clusterRouters.additional.address
-    : `apps2${clusterRouters.default.address.substr(4)}`;
+    ? clusterRouters.additional?.address
+    : `apps2${clusterRouters.default?.address?.substr(4)}`;
 
   const additionalRouterLabels = routeSelectorPairsAsStrings(
     clusterRouters?.additional?.routeSelectors,
@@ -183,10 +200,4 @@ const ClusterIngressCard = ({ refreshCluster, clusterRoutersData, cluster }) => 
   );
 };
 
-ClusterIngressCard.propTypes = {
-  refreshCluster: PropTypes.func.isRequired,
-  clusterRoutersData: PropTypes.array,
-  cluster: PropTypes.object,
-};
-
-export default ClusterIngressCard;
+export { ClusterIngressCard };
