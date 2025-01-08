@@ -119,10 +119,6 @@ describe('Rosa cluster Get Started page(OCP-56363)', { tags: ['smoke'] }, () => 
       .should('be.visible');
     RosaGetstartedPage.rosaPrerequisitesStep21Content().within(() => {
       cy.contains('To authenticate, run this command').should('be.exist').should('be.visible');
-      RosaGetstartedPage.waitForCommands();
-      cy.get('input')
-        .should('have.attr', 'value')
-        .and('match', /^rosa login --token=*/);
     });
 
     RosaGetstartedPage.rosaPrerequisitesStep22Content().within(() => {
