@@ -111,6 +111,7 @@ export const buildNodePoolRequest = (
     labels: getLabels(values.labels),
     taints: getTaints(values.taints),
     ...getAutoscalingParams(values, isMultiZoneMachinePool, true),
+    auto_repair: values.auto_repair,
   };
 
   if (!isEdit) {

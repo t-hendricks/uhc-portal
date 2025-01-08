@@ -6,6 +6,7 @@ import { buildMachinePoolRequest, buildNodePoolRequest } from './utils';
 const defaultValues: EditMachinePoolValues = {
   name: 'my-mp',
   autoscaling: false,
+  auto_repair: true,
   autoscaleMin: 2,
   autoscaleMax: 4,
   replicas: 0,
@@ -134,6 +135,7 @@ describe('buildNodePoolRequest', () => {
       expect(nodePool.subnet).toEqual('subnet-id');
       expect(nodePool.aws_node_pool?.instance_type).toEqual('some-instance-type');
       expect(nodePool.aws_node_pool?.additional_security_group_ids).toStrictEqual(['sg-1']);
+      expect(nodePool.auto_repair).toEqual(true);
     });
 
     it('add diskSize for ROSA Hypershift clusters', () => {
@@ -168,6 +170,7 @@ describe('buildNodePoolRequest', () => {
       expect(nodePool.labels).toEqual({});
       expect(nodePool.taints).toEqual([]);
       expect(nodePool.aws_node_pool?.additional_security_group_ids).toBe(undefined);
+      expect(nodePool.auto_repair).toEqual(true);
     });
 
     it('does not add Hypershift values that can be only set at creation time', () => {

@@ -36,6 +36,7 @@ import useOrganization from './useOrganization';
 export type EditMachinePoolValues = {
   name: string;
   autoscaling: boolean;
+  auto_repair: boolean | undefined;
   autoscaleMin: number;
   autoscaleMax: number;
   replicas: number;
@@ -92,6 +93,7 @@ const useMachinePoolFormik = ({
     let spotInstanceType: EditMachinePoolValues['spotInstanceType'] = 'onDemand';
     let maxPrice;
     let diskSize;
+    let autoRepair = true;
 
     autoscaleMin = (machinePool as MachinePool)?.autoscaling?.min_replicas || minNodesRequired;
     autoscaleMax = (machinePool as MachinePool)?.autoscaling?.max_replicas || minNodesRequired;
@@ -105,6 +107,8 @@ const useMachinePoolFormik = ({
       diskSize = machinePool.root_volume?.aws?.size || machinePool.root_volume?.gcp?.size;
     } else if (isNodePool(machinePool)) {
       diskSize = hasHcpRootDiskSizeFeature && machinePool.aws_node_pool?.root_volume?.size;
+      const autoRepairValue = (machinePool as NodePool)?.auto_repair;
+      autoRepair = autoRepairValue === true || autoRepairValue === false ? autoRepairValue : true;
     }
 
     if (isMachinePoolMz) {
@@ -115,6 +119,7 @@ const useMachinePoolFormik = ({
     return {
       name: machinePool?.id || '',
       autoscaling: !!machinePool?.autoscaling,
+      auto_repair: autoRepair,
       autoscaleMin,
       autoscaleMax: autoscaleMax || 1,
       replicas: machinePool?.replicas || minNodesRequired,

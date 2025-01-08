@@ -292,9 +292,14 @@ describe('<EditMachinePoolModal />', () => {
       const autoScalingCheckbox = await screen.findByRole('checkbox', {
         name: 'Enable autoscaling',
       });
+      const autoRepairCheckbox = await screen.findByRole('checkbox', {
+        name: 'Enable AutoRepair',
+      });
+
       await user.click(autoScalingCheckbox);
 
       // Assert
+      expect(autoRepairCheckbox).toBeInTheDocument();
       expect(screen.getAllByRole('button', { name: 'Plus' })[1]).toBeDisabled();
       expect(await screen.findByTestId('submit-btn')).toBeDisabled();
     });
