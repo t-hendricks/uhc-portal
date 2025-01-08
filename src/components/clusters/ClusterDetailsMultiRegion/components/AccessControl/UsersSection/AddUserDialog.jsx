@@ -22,6 +22,7 @@ const AddUserDialog = ({
   isAddUserError,
   addUserError,
   isAddUserSuccess,
+  resetAddUserMutate,
 }) => {
   const dispatch = useDispatch();
 
@@ -53,6 +54,7 @@ const AddUserDialog = ({
 
   const cancelAddUser = () => {
     resetInitialState();
+    resetAddUserMutate();
     dispatch(modalActions.closeModal());
   };
 
@@ -164,6 +166,7 @@ AddUserDialog.propTypes = {
   isOpen: PropTypes.bool,
   canAddClusterAdmin: PropTypes.bool.isRequired,
   addUserMutate: PropTypes.func.isRequired,
+  resetAddUserMutate: PropTypes.func.isRequired,
   isAddUserPending: PropTypes.bool.isRequired,
   isAddUserError: PropTypes.bool.isRequired,
   addUserError: PropTypes.object,
