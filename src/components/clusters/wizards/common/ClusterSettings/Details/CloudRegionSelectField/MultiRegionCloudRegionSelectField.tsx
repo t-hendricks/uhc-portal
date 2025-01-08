@@ -34,6 +34,8 @@ export const MultiRegionCloudRegionSelectField = ({
     error,
     isSuccess,
     isFailedRegionalizedRegions,
+    isFailedGlobalRegions,
+    isFailedRegionalAndGlobal,
   } = useFetchGetMultiRegionAvailableRegions();
 
   React.useEffect(() => {
@@ -52,6 +54,9 @@ export const MultiRegionCloudRegionSelectField = ({
       }
     }
   }, [regions, cloudProviderID, field.value, field.name, setFieldValue, handleCloudRegionChange]);
+
+  const displayWarning =
+    (isFailedRegionalizedRegions || isFailedGlobalRegions) && !isFailedRegionalAndGlobal;
 
   if (isSuccess && !isFetching && regions) {
     return (
@@ -80,7 +85,7 @@ export const MultiRegionCloudRegionSelectField = ({
               />
             ))}
         </FormSelect>
-        {isFailedRegionalizedRegions ? (
+        {displayWarning ? (
           <Alert
             title="Some regions failed to load"
             variant="warning"

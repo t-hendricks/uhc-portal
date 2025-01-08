@@ -25,6 +25,7 @@ const createRegionalizedCloudRegionEntry = (cloudRegion: CloudRegion, isRegional
 };
 
 let isFailedRegionalizedRegions = false;
+let isFailedGlobalRegions = false;
 
 export const useFetchGetMultiRegionAvailableRegions = () => {
   const { data, error, isError, isPending, isFetching, isSuccess } = useQuery({
@@ -89,18 +90,23 @@ export const useFetchGetMultiRegionAvailableRegions = () => {
       const createResponseForGlobalRegions = async () => {
         const result: RegionalizedCloudRegion[] = [];
 
-        const response = await clusterService.getCloudProviders();
-        response.data.items?.forEach((provider) => {
-          if (provider.id === 'aws' && provider.regions !== undefined) {
-            provider.regions.forEach((cloudRegion) => {
-              if (cloudRegion.id && cloudRegion.supports_hypershift) {
-                const region = createRegionalizedCloudRegionEntry(cloudRegion, false);
+        try {
+          const response = await clusterService.getCloudProviders();
+          response.data.items?.forEach((provider) => {
+            if (provider.id === 'aws' && provider.regions !== undefined) {
+              provider.regions.forEach((cloudRegion) => {
+                if (cloudRegion.id && cloudRegion.supports_hypershift) {
+                  const region = createRegionalizedCloudRegionEntry(cloudRegion, false);
 
-                result.push(region);
-              }
-            });
-          }
-        });
+                  result.push(region);
+                }
+              });
+            }
+          });
+        } catch (error) {
+          isFailedGlobalRegions = true;
+          return result;
+        }
 
         return result;
       };
@@ -132,6 +138,8 @@ export const useFetchGetMultiRegionAvailableRegions = () => {
     retry: false,
   });
 
+  const isFailedRegionalAndGlobal = isFailedRegionalizedRegions && isFailedGlobalRegions;
+
   const formatErrorDetails = (isError: boolean, error: any) => {
     if (isError) {
       const errorData: ErrorState = {
@@ -144,6 +152,17 @@ export const useFetchGetMultiRegionAvailableRegions = () => {
       };
       return errorData;
     }
+
+    if (isFailedRegionalAndGlobal) {
+      const errorData: ErrorState = {
+        pending: isPending,
+        error: true,
+        fulfilled: false,
+        errorMessage: 'Network Error',
+        operationID: 'N/A',
+      };
+      return errorData;
+    }
     return null;
   };
 
@@ -152,11 +171,13 @@ export const useFetchGetMultiRegionAvailableRegions = () => {
   return {
     data,
     error: errorData?.error ? formatErrorDetails(isError, error) : null,
-    isError,
+    isError: isFailedRegionalAndGlobal ? true : isError,
     isFetching,
-    isSuccess,
+    isSuccess: isFailedRegionalAndGlobal ? false : isSuccess,
     isPending,
     isFailedRegionalizedRegions,
+    isFailedGlobalRegions,
+    isFailedRegionalAndGlobal,
   };
 };
 
