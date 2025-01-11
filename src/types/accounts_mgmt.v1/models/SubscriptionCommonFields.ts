@@ -51,7 +51,6 @@ export type SubscriptionCommonFields = ObjectReference & {
    */
   trial_end_date?: string;
   usage?: SubscriptionCommonFields.usage;
-  xcm_id?: string;
 };
 export namespace SubscriptionCommonFields {
   export enum cluster_billing_model {

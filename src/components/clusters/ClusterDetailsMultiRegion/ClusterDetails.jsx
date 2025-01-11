@@ -650,7 +650,7 @@ const ClusterDetails = (props) => {
                 <AddOns
                   clusterID={cluster.id}
                   isHypershift={isHypershift}
-                  region={cluster.subscription.xcm_id}
+                  region={cluster.subscription.rh_region_id}
                   cluster={cluster}
                 />
               </ErrorBoundary>
@@ -696,7 +696,7 @@ const ClusterDetails = (props) => {
                   refreshCluster={refresh}
                   cluster={cluster}
                   isManaged={cluster.managed}
-                  region={cluster.subscription.xcm_id}
+                  region={cluster.subscription.rh_region_id}
                 />
               </ErrorBoundary>
             </TabContent>

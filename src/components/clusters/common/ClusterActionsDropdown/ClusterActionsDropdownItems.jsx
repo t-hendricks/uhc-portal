@@ -244,7 +244,7 @@ function actionResolver(
             clusterID: cluster.id,
             clusterName,
             shouldDisplayClusterName: inClusterList,
-            region: cluster?.subscription?.xcm_id,
+            region: cluster?.subscription?.rh_region_id,
           }),
       },
     ),
@@ -295,7 +295,7 @@ function actionResolver(
           openModal(modals.TRANSFER_CLUSTER_OWNERSHIP, {
             subscription: cluster.subscription,
             shouldDisplayClusterName: inClusterList,
-            region: cluster.subscription.xcm_id,
+            region: cluster.subscription.rh_region_id,
           });
         }
       },

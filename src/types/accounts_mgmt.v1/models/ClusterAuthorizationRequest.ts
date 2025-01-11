@@ -21,7 +21,6 @@ export type ClusterAuthorizationRequest = {
   resources?: Array<ReservedResource>;
   rh_region_id?: string;
   scope?: string;
-  xcm_id?: string;
 };
 export namespace ClusterAuthorizationRequest {
   export enum product_category {
