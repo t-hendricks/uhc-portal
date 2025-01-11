@@ -18,12 +18,13 @@ import links from '~/common/installLinks.mjs';
 import { normalizedProducts } from '~/common/subscriptionTypes';
 import { required, validateNumericInput } from '~/common/validators';
 import { constants } from '~/components/clusters/common/CreateOSDFormConstants';
-import EditClusterAutoScalingDialog from '~/components/clusters/common/EditClusterAutoScalingDialog';
 import { MAX_NODES, MAX_NODES_HCP } from '~/components/clusters/common/machinePools/constants';
 import ExternalLink from '~/components/common/ExternalLink';
 import { FormGroupHelperText } from '~/components/common/FormGroupHelperText';
 import PopoverHint from '~/components/common/PopoverHint';
-import ReduxCheckbox from '~/components/common/ReduxFormComponents/ReduxCheckbox';
+import ReduxCheckbox from '~/components/common/ReduxFormComponents_deprecated/ReduxCheckbox';
+
+import EditClusterAutoScalingDialog from '../../EditClusterAutoScalingDialog';
 
 import getMinNodesAllowed, { computeNodeHintText } from './AutoScaleHelper';
 

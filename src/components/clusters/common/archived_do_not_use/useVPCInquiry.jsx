@@ -2,14 +2,12 @@ import { useEffect } from 'react';
 import isEqual from 'lodash/isEqual';
 import { useDispatch, useSelector } from 'react-redux';
 
-import {
-  vpcInquiryRequestSelector,
-  vpcsSelector,
-} from '~/components/clusters/common/v1VpcSelectors';
 import { useFormState } from '~/components/clusters/wizards/hooks';
 import { FieldId as OsdFieldId } from '~/components/clusters/wizards/osd/constants';
 import { FieldId as RosaFieldId } from '~/components/clusters/wizards/rosa/constants';
 import { clearListVpcs, getAWSCloudProviderVPCs } from '~/redux/actions/ccsInquiriesActions';
+
+import { vpcInquiryRequestSelector, vpcsSelector } from './v1VpcSelectors';
 
 export const lastVpcRequestIsInEffect = (vpcs, newRequest) => {
   if (!vpcs.fulfilled) {

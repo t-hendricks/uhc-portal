@@ -1,10 +1,10 @@
 import React from 'react';
-import { Field } from 'redux-form';
+import { Field } from 'formik';
 
 import { clusterAutoScalingValidators } from '~/common/validators';
 import { FieldDefinition } from '~/components/clusters/common/EditClusterAutoScalingDialog/fieldDefinitions';
-import ReduxBooleanField from '~/components/common/ReduxFormComponents/ReduxBooleanField';
-import ReduxVerticalFormGroup from '~/components/common/ReduxFormComponents/ReduxVerticalFormGroup';
+import ReduxBooleanField from '~/components/common/ReduxFormComponents_deprecated/ReduxBooleanField';
+import ReduxVerticalFormGroup from '~/components/common/ReduxFormComponents_deprecated/ReduxVerticalFormGroup';
 
 const numberParser = (defaultValue: number) => (val: string) =>
   Number.isNaN(val) ? defaultValue : Number(val);

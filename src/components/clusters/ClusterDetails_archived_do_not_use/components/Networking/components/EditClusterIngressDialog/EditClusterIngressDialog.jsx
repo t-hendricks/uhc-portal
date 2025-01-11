@@ -20,7 +20,7 @@ import Modal from '../../../../../../common/Modal/Modal';
 import {
   ReduxCheckbox,
   ReduxVerticalFormGroup,
-} from '../../../../../../common/ReduxFormComponents';
+} from '../../../../../../common/ReduxFormComponents_deprecated';
 
 class EditClusterIngressDialog extends React.Component {
   componentDidUpdate(prevProps) {

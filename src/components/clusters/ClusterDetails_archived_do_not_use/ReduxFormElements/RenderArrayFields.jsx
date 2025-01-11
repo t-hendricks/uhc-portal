@@ -7,10 +7,9 @@ import { Button, GridItem } from '@patternfly/react-core';
 import { MinusCircleIcon } from '@patternfly/react-icons/dist/esm/icons/minus-circle-icon';
 import { PlusCircleIcon } from '@patternfly/react-icons/dist/esm/icons/plus-circle-icon';
 
-import { getRandomID } from '../../../common/helpers';
-import ButtonWithTooltip from '../ButtonWithTooltip';
-
-import ReduxVerticalFormGroup from './ReduxVerticalFormGroup';
+import { getRandomID } from '~/common/helpers';
+import ButtonWithTooltip from '~/components/common/ButtonWithTooltip';
+import ReduxVerticalFormGroup from '~/components/common/ReduxFormComponents_deprecated/ReduxVerticalFormGroup';
 
 import './RenderArrayFields.scss';
 

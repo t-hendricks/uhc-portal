@@ -1,6 +1,6 @@
 import React from 'react';
 import classNames from 'classnames';
-import { Field } from 'redux-form';
+import { Field } from 'formik';
 
 import { FormGroup } from '@patternfly/react-core';
 
@@ -22,7 +22,10 @@ import {
 import { WildcardPolicyPopover } from '~/components/clusters/ClusterDetailsMultiRegion/components/Networking/components/ApplicationIngressCard/WildcardsPolicyPopover';
 import { LoadBalancerFlavorLabel } from '~/components/clusters/ClusterDetailsMultiRegion/components/Networking/components/constants';
 import LoadBalancerPopover from '~/components/clusters/ClusterDetailsMultiRegion/components/Networking/components/LoadBalancerPopover';
-import { ReduxCheckbox, ReduxVerticalFormGroup } from '~/components/common/ReduxFormComponents';
+import {
+  ReduxCheckbox,
+  ReduxVerticalFormGroup,
+} from '~/components/common/ReduxFormComponents_deprecated';
 import { LoadBalancerFlavor } from '~/types/clusters_mgmt.v1';
 
 type DefaultIngressFieldsProps = {

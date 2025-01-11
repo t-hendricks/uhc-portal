@@ -11,10 +11,10 @@ import ErrorBox from '~/components/common/ErrorBox';
 import Modal from '~/components/common/Modal/Modal';
 import {
   ReduxCheckbox,
-  ReduxFormDropdown,
   ReduxVerticalFormGroup,
-} from '~/components/common/ReduxFormComponents';
+} from '~/components/common/ReduxFormComponents_deprecated';
 
+import ReduxFormDropdown from '../../../ReduxFormElements/ReduxFormDropdown';
 import { getParameters, getParameterValue, quotaCostOptions } from '../AddOnsHelper';
 
 import '../AddOns.scss';

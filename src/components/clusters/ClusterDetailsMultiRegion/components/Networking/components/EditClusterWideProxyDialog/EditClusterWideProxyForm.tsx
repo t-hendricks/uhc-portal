@@ -23,8 +23,8 @@ import { useFormState } from '~/components/clusters/wizards/hooks';
 import ErrorBox from '~/components/common/ErrorBox';
 import ExternalLink from '~/components/common/ExternalLink';
 import Modal from '~/components/common/Modal/Modal';
-import ReduxFileUpload from '~/components/common/ReduxFormComponents/ReduxFileUpload';
-import ReduxVerticalFormGroup from '~/components/common/ReduxFormComponents/ReduxVerticalFormGroup';
+import ReduxFileUpload from '~/components/common/ReduxFormComponents_deprecated/ReduxFileUpload';
+import ReduxVerticalFormGroup from '~/components/common/ReduxFormComponents_deprecated/ReduxVerticalFormGroup';
 import { ErrorState } from '~/types/types';
 
 import { ACCEPT, MAX_FILE_SIZE } from '../../../IdentityProvidersPage/components/CAUpload';
@@ -54,8 +54,8 @@ const EditClusterWideProxyForm = ({
   const {
     setFieldTouched,
     setFieldValue, // Set value of form field directly
-    getFieldProps, // Access: name, value, onBlur, onChange for a <Field>, useful for mapping to a field that expects the redux-form props
-    getFieldMeta, // Access: error, touched for a <Field>, useful for mapping to a field that expects the redux-form props
+    getFieldProps, // Access: name, value, onBlur, onChange for a <Field>, useful for mapping to a field
+    getFieldMeta, // Access: error, touched for a <Field>, useful for mapping to a field
     values: {
       [FormFieldId.HttpProxyURL]: httpProxyUrl,
       [FormFieldId.HttpsProxyURL]: httpsProxyUrl,

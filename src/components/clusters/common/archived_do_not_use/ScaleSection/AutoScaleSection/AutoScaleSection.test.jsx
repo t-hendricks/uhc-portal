@@ -1,8 +1,9 @@
 import React from 'react';
 
+// eslint-disable-next-line no-restricted-imports
+import wizardConnector from '~/components/clusters/ClusterDetails_archived_do_not_use/WizardConnector';
 import { constants } from '~/components/clusters/common/CreateOSDFormConstants';
 import { MAX_NODES_HCP } from '~/components/clusters/common/machinePools/constants';
-import wizardConnector from '~/components/clusters/wizards/common/WizardConnector';
 import { checkAccessibility, render, screen, within } from '~/testUtils';
 
 import AutoScaleSection from './AutoScaleSection';

@@ -26,8 +26,8 @@ import MinorVersionUpgradeAlert from '../../../common/archived_do_not_use/Upgrad
 import UpgradeAcknowledgeWarning from '../../../common/archived_do_not_use/Upgrades/UpgradeAcknowledge/UpgradeAcknowledgeWarning';
 import UpgradeSettingsFields from '../../../common/archived_do_not_use/Upgrades/UpgradeSettingsFields';
 import UpgradeStatus from '../../../common/archived_do_not_use/Upgrades/UpgradeStatus';
+import UserWorkloadMonitoringSection from '../../../common/archived_do_not_use/UserWorkloadMonitoringSection';
 import clusterStates, { isHypershiftCluster } from '../../../common/clusterStates';
-import UserWorkloadMonitoringSection from '../../../common/UserWorkloadMonitoringSection';
 import { UpdateAllMachinePools } from '../MachinePools/UpdateMachinePools';
 
 import '../../../common/archived_do_not_use/Upgrades/UpgradeSettingsFields.scss';

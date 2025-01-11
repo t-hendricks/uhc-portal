@@ -15,10 +15,8 @@ import links from '../../../../../../common/installLinks.mjs';
 import { checkIdentityProviderName } from '../../../../../../common/validators';
 import ErrorBox from '../../../../../common/ErrorBox';
 import ExternalLink from '../../../../../common/ExternalLink';
-import {
-  ReduxFormDropdown,
-  ReduxVerticalFormGroup,
-} from '../../../../../common/ReduxFormComponents';
+import { ReduxVerticalFormGroup } from '../../../../../common/ReduxFormComponents_deprecated';
+import ReduxFormDropdown from '../../../ReduxFormElements/ReduxFormDropdown';
 import {
   generateIDPName,
   getOauthCallbackURL,

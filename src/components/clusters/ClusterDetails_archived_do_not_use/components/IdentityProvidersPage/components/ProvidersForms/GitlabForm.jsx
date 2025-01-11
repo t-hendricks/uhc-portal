@@ -5,7 +5,7 @@ import { Field } from 'redux-form';
 import { GridItem } from '@patternfly/react-core';
 
 import { required, validateUrlHttpsAndHttp } from '../../../../../../../common/validators';
-import ReduxVerticalFormGroup from '../../../../../../common/ReduxFormComponents/ReduxVerticalFormGroup';
+import ReduxVerticalFormGroup from '../../../../../../common/ReduxFormComponents_deprecated/ReduxVerticalFormGroup';
 import CAUpload from '../CAUpload';
 
 import IDPBasicFields from './IDPBasicFields';

@@ -1,6 +1,5 @@
 // MachineTypeSelection renders a series of radio buttons for all available node types,
 // allowing the user to select just one.
-// It is meant to be used in a redux-form <Field> and expects an onChange callback.
 
 import React from 'react';
 import PropTypes from 'prop-types';

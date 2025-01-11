@@ -1,13 +1,13 @@
 import React from 'react';
-import { Field } from 'redux-form';
+import { Field } from 'formik';
 
-import { acknowledgePrerequisites } from '../../../../common/validators';
-import ReduxCheckbox from '../../../common/ReduxFormComponents/ReduxCheckbox';
+import { acknowledgePrerequisites } from '../../../../../common/validators';
+import Checkbox from '../../../../common/ReduxFormComponents_deprecated/ReduxCheckbox';
 
 function AcknowledgePrerequisites() {
   return (
     <Field
-      component={ReduxCheckbox}
+      component={Checkbox}
       name="acknowledge_prerequisites"
       label="I’ve read and completed all the prerequisites and am ready to continue creating my cluster."
       validate={acknowledgePrerequisites}

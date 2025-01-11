@@ -20,8 +20,8 @@ import ErrorBox from '~/components/common/ErrorBox';
 import ExternalLink from '~/components/common/ExternalLink';
 import Modal from '~/components/common/Modal/Modal';
 import PopoverHint from '~/components/common/PopoverHint';
-import ReduxFileUpload from '~/components/common/ReduxFormComponents/ReduxFileUpload';
-import ReduxVerticalFormGroup from '~/components/common/ReduxFormComponents/ReduxVerticalFormGroup';
+import ReduxFileUpload from '~/components/common/ReduxFormComponents_deprecated/ReduxFileUpload';
+import ReduxVerticalFormGroup from '~/components/common/ReduxFormComponents_deprecated/ReduxVerticalFormGroup';
 
 import { ACCEPT, MAX_FILE_SIZE } from '../../../IdentityProvidersPage/components/CAUpload';
 

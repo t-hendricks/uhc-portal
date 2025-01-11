@@ -1,5 +1,5 @@
 import React from 'react';
-import { WrappedFieldInputProps, WrappedFieldMetaProps } from 'redux-form';
+import { FieldInputProps, FieldMetaProps } from 'formik';
 
 import {
   Flex,
@@ -28,8 +28,8 @@ interface ReduxSelectDropdownProps {
   options: ReduxSelectOption[];
   label: string;
   helpText: string;
-  meta: WrappedFieldMetaProps;
-  input: WrappedFieldInputProps;
+  meta: FieldMetaProps<string>;
+  input: FieldInputProps<string>;
   isDisabled: boolean;
   isFormGroup: boolean;
   isRequired: boolean;

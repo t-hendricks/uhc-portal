@@ -43,7 +43,7 @@ import {
 } from '../../../common/validators';
 import Breadcrumbs from '../../common/Breadcrumbs';
 import ErrorModal from '../../common/ErrorModal';
-import ReduxVerticalFormGroup from '../../common/ReduxFormComponents/ReduxVerticalFormGroup';
+import ReduxVerticalFormGroup from '../../common/ReduxFormComponents_deprecated/ReduxVerticalFormGroup';
 import Unavailable from '../../common/Unavailable';
 
 import EditSubscriptionSettings from './EditSubscriptionSettings';

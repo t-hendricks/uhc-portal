@@ -358,7 +358,6 @@ const findFirstFailureMessage = (populatedValidation: Validations | undefined) =
  * executes cluster-name async validations.
  * to be used at the form level hook (asyncValidate).
  *
- * @see asyncValidate in the wizard's redux-form config.
  * @param value the value to be validated
  * @returns {Promise<void>} a promise which resolves quietly, or rejects with a form errors map.
  */
@@ -517,7 +516,7 @@ const clusterAutoScalingValidators = {
  * @param validationProvider {function(*, object, object, object): array}
  *        a function that returns a collection of validations,
  *        and can be passed to a Field's validation attribute.
- *        first argument is the value, second is allValues, etc. (see the redux-form docs).
+ *        first argument is the value, second is allValues, etc.
  * @returns {function(*): *} a validator function that exits on the first failed validation,
  *          outputting its error message.
  */
@@ -1300,7 +1299,7 @@ const validateGCPHostProjectId = (value: string) => {
  * - this function is not like other validators, it's a function that returns a function,
  * so you can specify the field name.
  *
- * @param {*} values array of value objects, from redux-form
+ * @param {*} values array of value objects
  */
 const atLeastOneRequired =
   (fieldName: string, isEmpty?: (value: unknown) => boolean) => (fields: { name: string }[]) => {

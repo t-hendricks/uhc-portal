@@ -4,7 +4,8 @@ import { Field } from 'redux-form';
 
 import { GridItem } from '@patternfly/react-core';
 
-import ReduxVerticalFormGroup from './ReduxVerticalFormGroup';
+import ReduxVerticalFormGroup from '~/components/common/ReduxFormComponents_deprecated/ReduxVerticalFormGroup';
+
 import RenderArrayFields from './RenderArrayFields';
 
 const CompoundFieldGridItem = ({

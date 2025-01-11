@@ -4,7 +4,7 @@ import { Field } from 'redux-form';
 
 import { GridItem } from '@patternfly/react-core';
 
-import ReduxVerticalFormGroup from '../../../../../../common/ReduxFormComponents/ReduxVerticalFormGroup';
+import ReduxVerticalFormGroup from '../../../../../../common/ReduxFormComponents_deprecated/ReduxVerticalFormGroup';
 import CAUpload from '../CAUpload';
 
 function OpenIDForm({ isPending, isEditForm, idpEdited }) {

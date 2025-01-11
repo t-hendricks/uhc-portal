@@ -23,7 +23,6 @@ import { FormGroupHelperText } from '~/components/common/FormGroupHelperText';
 
 import PopoverHint from '../PopoverHint';
 
-// To be used inside redux-form Field component.
 function ReduxCheckbox(props) {
   const {
     label,
@@ -79,7 +78,6 @@ function ReduxCheckbox(props) {
 
 ReduxCheckbox.propTypes = {
   label: PropTypes.string.isRequired,
-  // props passed by redux-form
   input: PropTypes.object.isRequired,
   meta: PropTypes.object.isRequired,
   isSwitch: PropTypes.bool,

@@ -9,7 +9,7 @@ import { normalizedProducts } from '~/common/subscriptionTypes';
 import { useFormState } from '~/components/clusters/wizards/hooks';
 import { FieldId } from '~/components/clusters/wizards/rosa/constants';
 import { CheckboxDescription } from '~/components/common/CheckboxDescription';
-import ReduxCheckbox from '~/components/common/ReduxFormComponents/ReduxCheckbox';
+import ReduxCheckbox from '~/components/common/ReduxFormComponents_deprecated/ReduxCheckbox';
 
 import ExternalLink from '../../common/ExternalLink';
 

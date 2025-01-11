@@ -15,7 +15,7 @@ import {
 } from '~/components/clusters/ClusterDetailsMultiRegion/components/Networking/components/ApplicationIngressCard/RouteSelectorsPopover';
 import { WildcardPolicyPopover } from '~/components/clusters/ClusterDetailsMultiRegion/components/Networking/components/ApplicationIngressCard/WildcardsPolicyPopover';
 import { FormGroupHelperText } from '~/components/common/FormGroupHelperText';
-import { ReduxCheckbox } from '~/components/common/ReduxFormComponents';
+import { ReduxCheckbox } from '~/components/common/ReduxFormComponents_deprecated';
 
 import { useFormState } from '../../hooks';
 import { FieldId } from '../constants';

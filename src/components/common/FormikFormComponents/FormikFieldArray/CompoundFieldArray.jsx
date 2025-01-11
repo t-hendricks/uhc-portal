@@ -10,7 +10,7 @@ import { FieldId } from '~/components/clusters/ClusterDetailsMultiRegion/compone
 import { useFormState } from '~/components/clusters/wizards/hooks';
 
 import ButtonWithTooltip from '../../ButtonWithTooltip';
-import { ReduxVerticalFormGroup } from '../../ReduxFormComponents';
+import { ReduxVerticalFormGroup } from '../../ReduxFormComponents_deprecated';
 
 export const LabelGridItem = ({ fieldSpan, label, isRequired, helpText }) => (
   <GridItem className="field-array-title" span={fieldSpan}>

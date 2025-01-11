@@ -1,6 +1,5 @@
 // LoadBalancersDropdown shows a selection of load balancer
 // options for setting on the installed a cluster.
-// it is meant to be used in a redux-form <Field> and expects an onChange callback.
 
 import React from 'react';
 

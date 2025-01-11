@@ -7,11 +7,10 @@ import { GridItem, Title } from '@patternfly/react-core';
 import links from '~/common/installLinks.mjs';
 import { normalizedProducts } from '~/common/subscriptionTypes';
 import { CheckboxDescription } from '~/components/common/CheckboxDescription';
-import ReduxCheckbox from '~/components/common/ReduxFormComponents/ReduxCheckbox';
+import ReduxCheckbox from '~/components/common/ReduxFormComponents_deprecated/ReduxCheckbox';
 
-import ExternalLink from '../../common/ExternalLink';
-
-import { constants } from './CreateOSDFormConstants';
+import ExternalLink from '../../../common/ExternalLink';
+import { constants } from '../CreateOSDFormConstants';
 
 function UserWorkloadMonitoringSection({ parent, disableUVM, planType }) {
   const title = <Title headingLevel="h4"> Monitoring </Title>;

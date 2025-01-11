@@ -6,7 +6,7 @@ import { GridItem } from '@patternfly/react-core';
 import { useFormState } from '~/components/clusters/wizards/hooks';
 
 import { required } from '../../../../../../../common/validators';
-import ReduxVerticalFormGroup from '../../../../../../common/ReduxFormComponents/ReduxVerticalFormGroup';
+import ReduxVerticalFormGroup from '../../../../../../common/ReduxFormComponents_deprecated/ReduxVerticalFormGroup';
 import { FieldId } from '../../constants';
 
 export type IDPBasicFieldsProps = {

@@ -17,7 +17,7 @@ import {
 import links from '../../../../../common/installLinks.mjs';
 import { normalizedProducts } from '../../../../../common/subscriptionTypes';
 import ExternalLink from '../../../../common/ExternalLink';
-import RadioButtons from '../../../../common/ReduxFormComponents/RadioButtons';
+import RadioButtons from '../../../../common/ReduxFormComponents_deprecated/RadioButtons';
 
 import PodDistruptionBudgetGraceSelect from './PodDistruptionBudgetGraceSelect';
 import UpgradeScheduleSelection from './UpgradeScheduleSelection';

@@ -4,7 +4,7 @@ import { Field } from 'redux-form';
 
 import { GridItem } from '@patternfly/react-core';
 
-import { ReduxCheckbox } from '../../../../../../common/ReduxFormComponents';
+import { ReduxCheckbox } from '../../../../../../common/ReduxFormComponents_deprecated';
 import CAUpload from '../CAUpload';
 
 class LDAPForm extends React.Component {

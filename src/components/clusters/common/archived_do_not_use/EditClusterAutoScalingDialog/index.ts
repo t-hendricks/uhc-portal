@@ -13,7 +13,6 @@ import {
   getClusterAutoScalingSubmitSettings,
   getDefaultClusterAutoScaling,
 } from '~/components/clusters/common/clusterAutoScalingValues';
-import modals from '~/components/common/Modal/modals';
 import shouldShowModal from '~/components/common/Modal/ModalSelectors';
 import { clusterAutoscalerActions } from '~/redux/actions/clusterAutoscalerActions';
 import { GlobalState } from '~/redux/store';
@@ -61,7 +60,7 @@ const day1FormValueSelectorMapper = (state: GlobalState): EditClusterAutoScaling
   const valueSelector = formValueSelector(DAY1_SELECTOR) || {};
 
   return {
-    isOpen: shouldShowModal(state, modals.EDIT_CLUSTER_AUTOSCALING_V1),
+    isOpen: shouldShowModal(state, 'edit-cluster-autoscaling-v1'),
     autoScalingValues: valueSelector(state, 'cluster_autoscaling'),
     autoScalingErrors: formErrors.cluster_autoscaling || {},
   } as EditClusterAutoScalingDialogProps;
@@ -83,7 +82,7 @@ const day2FormValueSelectorMapper = (
   };
 
   return {
-    isOpen: shouldShowModal(state, modals.EDIT_CLUSTER_AUTOSCALING_V1),
+    isOpen: shouldShowModal(state, 'edit-cluster-autoscaling-v1'),
     autoScalingValues: valueSelector(state, 'cluster_autoscaling') || currentAutoscaler,
     autoScalingErrors: formErrors.cluster_autoscaling || {},
     initialValues: { cluster_autoscaling: currentAutoscaler },

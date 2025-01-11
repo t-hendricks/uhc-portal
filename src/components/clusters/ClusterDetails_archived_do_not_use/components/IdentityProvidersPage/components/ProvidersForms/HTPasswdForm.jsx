@@ -14,10 +14,8 @@ import {
   validateHTPasswdUsername,
   validateUniqueHTPasswdUsername,
 } from '../../../../../../../common/validators';
-import {
-  ReduxFieldArray,
-  RenderCompoundArrayFields,
-} from '../../../../../../common/ReduxFormComponents';
+import ReduxFieldArray from '../../../../ReduxFormElements/ReduxFieldArray';
+import RenderCompoundArrayFields from '../../../../ReduxFormElements/RenderCompoundArrayFields';
 
 import './HTPasswdForm.scss';
 

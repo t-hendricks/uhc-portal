@@ -8,7 +8,7 @@ import links from '~/common/installLinks.mjs';
 import { getIncompatibleVersionReason } from '~/common/versionCompatibility';
 import { useFormState } from '~/components/clusters/wizards/hooks';
 import ExternalLink from '~/components/common/ExternalLink';
-import { ReduxCheckbox } from '~/components/common/ReduxFormComponents';
+import { ReduxCheckbox } from '~/components/common/ReduxFormComponents_deprecated';
 
 import SharedVPCField from './SharedVPCField';
 

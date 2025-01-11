@@ -1,7 +1,8 @@
 import React from 'react';
 
 import { normalizedProducts } from '~/common/subscriptionTypes';
-import wizardConnector from '~/components/clusters/wizards/common/WizardConnector';
+// eslint-disable-next-line no-restricted-imports
+import wizardConnector from '~/components/clusters/ClusterDetails_archived_do_not_use/WizardConnector';
 import { checkAccessibility, render, screen } from '~/testUtils';
 
 import AutoScaleSection from '../AutoScaleSection';

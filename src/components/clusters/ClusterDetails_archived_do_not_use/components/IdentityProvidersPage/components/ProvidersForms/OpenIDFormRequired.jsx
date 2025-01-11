@@ -5,8 +5,8 @@ import { Field } from 'redux-form';
 import { GridItem } from '@patternfly/react-core';
 
 import { checkOpenIDIssuer } from '../../../../../../../common/validators';
-import ReduxFieldArray from '../../../../../../common/ReduxFormComponents/ReduxFieldArray';
-import ReduxVerticalFormGroup from '../../../../../../common/ReduxFormComponents/ReduxVerticalFormGroup';
+import ReduxVerticalFormGroup from '../../../../../../common/ReduxFormComponents_deprecated/ReduxVerticalFormGroup';
+import ReduxFieldArray from '../../../../ReduxFormElements/ReduxFieldArray';
 import { isEmptyReduxArray } from '../../IdentityProvidersHelper';
 
 import IDPBasicFields from './IDPBasicFields';

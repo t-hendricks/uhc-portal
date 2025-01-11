@@ -5,7 +5,7 @@ import { FormGroup } from '@patternfly/react-core';
 
 import { subscriptionSettings } from '~/common/subscriptionTypes';
 import { FormGroupHelperText } from '~/components/common/FormGroupHelperText';
-import { ReduxFormRadioGroup } from '~/components/common/ReduxFormComponents';
+import { ReduxFormRadioGroup } from '~/components/common/ReduxFormComponents_deprecated';
 import { SubscriptionCommonFields } from '~/types/accounts_mgmt.v1';
 
 import BillingModelAlert from './components/BillingModelAlert';

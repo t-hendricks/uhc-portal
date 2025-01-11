@@ -418,7 +418,6 @@ export const upgradeScheduleRequest = (formData) =>
         schedule: formData.automatic_upgrade_schedule,
       };
 
-// Returning a function that takes (formData) is convenient for redux-form `onSubmit` prop.
 const submitOSDRequest = (dispatch, params) => (formData) => {
   const regionalId = regionalizedClusterId(formData);
   const { isWizard, cloudProviderID, product } = params;

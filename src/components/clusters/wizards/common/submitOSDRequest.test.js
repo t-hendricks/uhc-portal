@@ -515,10 +515,6 @@ describe('createClusterRequest', () => {
   });
 
   describe('CreateROSAWizard', () => {
-    // ROSA wizard has no choice about `product` or `cloud_provider` or 'byoc'.
-    // For code uniformity, it initializes these fields in redux-form state
-    // (without registering them or connecting to an actual Field component).
-
     describe('ROSA button', () => {
       const hcpSubnetDetails = {
         selected_vpc: awsRosaOsdVPCData,

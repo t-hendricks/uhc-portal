@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 
 import { FormGroup, Radio } from '@patternfly/react-core';
 
-// To be used inside redux-form Field component.
 class ReduxFormRadioGroup extends React.Component {
   state = { value: null };
 

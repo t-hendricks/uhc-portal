@@ -20,7 +20,7 @@ import ExternalLink from '../../../../../common/ExternalLink';
 import {
   ReduxSelectDropdown,
   ReduxVerticalFormGroup,
-} from '../../../../../common/ReduxFormComponents';
+} from '../../../../../common/ReduxFormComponents_deprecated';
 import { FieldId } from '../constants';
 import {
   generateIDPName,

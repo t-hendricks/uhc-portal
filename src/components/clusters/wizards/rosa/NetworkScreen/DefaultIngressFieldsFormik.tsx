@@ -24,7 +24,10 @@ import { WildcardPolicyPopover } from '~/components/clusters/ClusterDetailsMulti
 import { LoadBalancerFlavorLabel } from '~/components/clusters/ClusterDetailsMultiRegion/components/Networking/components/constants';
 import LoadBalancerPopover from '~/components/clusters/ClusterDetailsMultiRegion/components/Networking/components/LoadBalancerPopover';
 import { useFormState } from '~/components/clusters/wizards/hooks';
-import { ReduxCheckbox, ReduxVerticalFormGroup } from '~/components/common/ReduxFormComponents';
+import {
+  ReduxCheckbox,
+  ReduxVerticalFormGroup,
+} from '~/components/common/ReduxFormComponents_deprecated';
 import { LoadBalancerFlavor } from '~/types/clusters_mgmt.v1';
 
 type DefaultIngressFieldsFormikProps = {
@@ -49,8 +52,8 @@ export const DefaultIngressFieldsFormik: React.FC<DefaultIngressFieldsFormikProp
   values,
 }) => {
   const {
-    getFieldProps, // Access: name, value, onBlur, onChange for a <Field>, useful for mapping to a field that expects the redux-form props
-    getFieldMeta, // Access: error, touched for a <Field>, useful for mapping to a field that expects the redux-form props
+    getFieldProps, // Access: name, value, onBlur, onChange for a <Field>, useful for mapping to a field
+    getFieldMeta, // Access: error, touched for a <Field>, useful for mapping to a field
   } = useFormState();
 
   return (

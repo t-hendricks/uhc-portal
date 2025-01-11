@@ -14,7 +14,7 @@ import {
   TextArea,
 } from '@patternfly/react-core';
 
-import { RadioButtons } from '~/components/common/ReduxFormComponents';
+import { RadioButtons } from '~/components/common/ReduxFormComponents_deprecated';
 import { AccessRequest } from '~/types/access_transparency.v1';
 
 import { AccessRequestFieldId } from '../model/AccessRequestFieldId';

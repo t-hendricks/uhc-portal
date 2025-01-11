@@ -24,7 +24,6 @@ import { FormGroupHelperText } from '~/components/common/FormGroupHelperText';
 
 import PopoverHint from '../PopoverHint';
 
-// To be used inside redux-form Field component.
 const ReduxVerticalFormGroup = ({
   label,
   helpText,
@@ -198,10 +197,9 @@ ReduxVerticalFormGroup.propTypes = {
   helpText: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
   extendedHelpText: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
   disabled: PropTypes.bool,
-  // props passed by redux-form
-  // collection of redux-form callbacks to be destructured into an html input element
+
   input: PropTypes.object.isRequired,
-  // redux-form metadata like error or active states
+
   meta: PropTypes.object.isRequired,
   // is this a required field?
   isRequired: PropTypes.bool,

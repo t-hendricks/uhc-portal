@@ -15,8 +15,7 @@ import { ErrorState } from '~/types/types';
 
 import ExternalLink from '../../../../common/ExternalLink';
 import Modal from '../../../../common/Modal/Modal';
-import modals from '../../../../common/Modal/modals';
-import ReduxVerticalFormGroup from '../../../../common/ReduxFormComponents/ReduxVerticalFormGroup';
+import ReduxVerticalFormGroup from '../../../../common/ReduxFormComponents_deprecated/ReduxVerticalFormGroup';
 import MachinePoolsAutoScalingWarning from '../../../ClusterDetailsMultiRegion/components/MachinePools/MachinePoolAutoscalingWarning';
 
 import { AutoscalerGpuHelpText, AutoscalerGpuPopover } from './AutoscalerGpuTooltip';
@@ -282,6 +281,6 @@ function EditClusterAutoScalingDialog({
   );
 }
 
-EditClusterAutoScalingDialog.modalName = modals.EDIT_CLUSTER_AUTOSCALING_V1;
+EditClusterAutoScalingDialog.modalName = 'edit-cluster-autoscaling-v1';
 
 export default EditClusterAutoScalingDialog;

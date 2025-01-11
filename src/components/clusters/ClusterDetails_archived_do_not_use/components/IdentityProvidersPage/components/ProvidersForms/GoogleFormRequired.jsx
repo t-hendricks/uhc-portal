@@ -5,7 +5,7 @@ import { Field } from 'redux-form';
 import { GridItem } from '@patternfly/react-core';
 
 import { checkHostDomain } from '../../../../../../../common/validators';
-import ReduxVerticalFormGroup from '../../../../../../common/ReduxFormComponents/ReduxVerticalFormGroup';
+import ReduxVerticalFormGroup from '../../../../../../common/ReduxFormComponents_deprecated/ReduxVerticalFormGroup';
 
 import IDPBasicFields from './IDPBasicFields';
 

@@ -10,9 +10,9 @@ import {
   checkGithubTeams,
   required,
 } from '../../../../../../../common/validators';
-import RadioButtons from '../../../../../../common/ReduxFormComponents/RadioButtons';
-import ReduxFieldArray from '../../../../../../common/ReduxFormComponents/ReduxFieldArray';
-import ReduxVerticalFormGroup from '../../../../../../common/ReduxFormComponents/ReduxVerticalFormGroup';
+import RadioButtons from '../../../../../../common/ReduxFormComponents_deprecated/RadioButtons';
+import ReduxVerticalFormGroup from '../../../../../../common/ReduxFormComponents_deprecated/ReduxVerticalFormGroup';
+import ReduxFieldArray from '../../../../ReduxFormElements/ReduxFieldArray';
 import CAUpload from '../CAUpload';
 
 import IDPBasicFields from './IDPBasicFields';

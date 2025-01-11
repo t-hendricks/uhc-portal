@@ -38,7 +38,7 @@ import ErrorBox from '../../../../common/ErrorBox';
 import ExternalLink from '../../../../common/ExternalLink';
 import InstructionCommand from '../../../../common/InstructionCommand';
 import PopoverHint from '../../../../common/PopoverHint';
-import RadioButtons from '../../../../common/ReduxFormComponents/RadioButtons';
+import RadioButtons from '../../../../common/ReduxFormComponents_deprecated/RadioButtons';
 import { BackToAssociateAwsAccountLink } from '../common/BackToAssociateAwsAccountLink';
 
 import CustomerOIDCConfiguration from './CustomerOIDCConfiguration';

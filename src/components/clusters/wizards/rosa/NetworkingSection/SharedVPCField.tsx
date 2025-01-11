@@ -9,7 +9,7 @@ import { useFormState } from '~/components/clusters/wizards/hooks';
 import ExternalLink from '~/components/common/ExternalLink';
 import Instruction from '~/components/common/Instruction';
 import Instructions from '~/components/common/Instructions';
-import { ReduxVerticalFormGroup } from '~/components/common/ReduxFormComponents';
+import { ReduxVerticalFormGroup } from '~/components/common/ReduxFormComponents_deprecated';
 
 import { FieldId } from '../constants';
 
