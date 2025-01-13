@@ -104,7 +104,7 @@ module.exports = async (_env, argv) => {
       hashFunction: 'xxhash64', // default md4 not allowed on recent NodeJS/OpenSSL
       publicPath,
     },
-    devtool: 'source-map',
+    devtool: devMode ? 'eval-source-map' : 'source-map',
 
     plugins: [
       new ForkTsCheckerWebpackPlugin(),
