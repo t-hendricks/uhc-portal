@@ -25,7 +25,11 @@ fs.readdir(sourceDir, (err, files) => {
   files.forEach((file) => {
     const filepath = path.resolve(sourceDir, file);
     const ext = path.extname(file);
-    if (ext === '.json' && !fs.statSync(filepath).isDirectory()) {
+    if (
+      ext === '.json' &&
+      !fs.statSync(filepath).isDirectory() &&
+      !['upgrades_info.v1.json'].includes(file)
+    ) {
       const output = path.resolve(targetDir, path.basename(file, ext));
       console.log('Reading', filepath, '-> Generating', output);
       // fs.rmSync(output, { recursive: true, force: true });
