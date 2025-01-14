@@ -15,7 +15,7 @@ import Modal from '~/components/common/Modal/Modal';
 import { closeModal } from '~/components/common/Modal/ModalActions';
 import modals from '~/components/common/Modal/modals';
 import { useFeatureGate } from '~/hooks/useFeatureGate';
-import { HCP_ROOT_DISK_SIZE, MAX_COMPUTE_NODES_500 } from '~/redux/constants/featureConstants';
+import { HCP_ROOT_DISK_SIZE } from '~/redux/constants/featureConstants';
 import { useGlobalState } from '~/redux/hooks';
 import { GlobalState } from '~/redux/store';
 import { PromiseReducerState } from '~/redux/types';
@@ -121,7 +121,6 @@ const EditMachinePoolModal = ({
     machinePools: machinePoolsResponse,
     machineTypes: machineTypesResponse,
   });
-  const allow500NodesHCP = useFeatureGate(MAX_COMPUTE_NODES_500);
   const hasHcpRootDiskSizeFeature = useFeatureGate(HCP_ROOT_DISK_SIZE);
 
   const setCurrentMPId = React.useCallback(
@@ -160,7 +159,7 @@ const EditMachinePoolModal = ({
       isHypershift,
       currentMachinePool?.id,
       currentMachinePool?.instance_type,
-    ) === getMaxNodesHCP(cluster.version?.raw_id, allow500NodesHCP);
+    ) === getMaxNodesHCP(cluster.version?.raw_id);
 
   return (
     <Formik<EditMachinePoolValues>
@@ -289,7 +288,6 @@ const EditMachinePoolModal = ({
                 machinePool={currentMachinePool}
                 machinePools={machinePoolsResponse.data || []}
                 machineTypes={machineTypesResponse}
-                allow500NodesHCP={allow500NodesHCP}
               />
               <DiskSizeField cluster={cluster} isEdit={isEdit} />
               <ExpandableSection toggleText="Edit node labels and taints">

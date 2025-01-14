@@ -8,7 +8,7 @@ import { normalizedProducts } from '~/common/subscriptionTypes';
 import { required, validateNumericInput } from '~/common/validators';
 import { getMinNodesRequired } from '~/components/clusters/ClusterDetailsMultiRegion/components/MachinePools/machinePoolsHelper';
 import { constants } from '~/components/clusters/common/CreateOSDFormConstants';
-import { MAX_NODES_4_14_14 as MAX_NODES_180 } from '~/components/clusters/common/machinePools/constants';
+import { MAX_NODES_INSUFFICIEN_VERSION as MAX_NODES_180 } from '~/components/clusters/common/machinePools/constants';
 import { getMaxNodesHCP, getMaxWorkerNodes } from '~/components/clusters/common/machinePools/utils';
 import getMinNodesAllowed from '~/components/clusters/common/ScaleSection/AutoScaleSection/AutoScaleHelper';
 import { useFormState } from '~/components/clusters/wizards/hooks';
@@ -17,10 +17,7 @@ import ExternalLink from '~/components/common/ExternalLink';
 import { FormGroupHelperText } from '~/components/common/FormGroupHelperText';
 import PopoverHint from '~/components/common/PopoverHint';
 import { useFeatureGate } from '~/hooks/useFeatureGate';
-import {
-  MAX_COMPUTE_NODES_500,
-  OCMUI_MAX_NODES_TOTAL_249,
-} from '~/redux/constants/featureConstants';
+import { OCMUI_MAX_NODES_TOTAL_249 } from '~/redux/constants/featureConstants';
 
 import { NodesInput } from './NodesInput';
 
@@ -43,7 +40,6 @@ export const AutoScaleEnabledInputs = () => {
     },
   } = useFormState();
 
-  const allow500NodesHCP = useFeatureGate(MAX_COMPUTE_NODES_500);
   const allow249NodesOSDCCSROSA = useFeatureGate(OCMUI_MAX_NODES_TOTAL_249);
 
   const poolsLength = useMemo(
@@ -129,7 +125,7 @@ export const AutoScaleEnabledInputs = () => {
       ? getMaxWorkerNodes(clusterVersion.raw_id)
       : MAX_NODES_180;
     if (isHypershiftSelected) {
-      return Math.floor(getMaxNodesHCP(clusterVersion?.raw_id, allow500NodesHCP) / poolsLength);
+      return Math.floor(getMaxNodesHCP(clusterVersion?.raw_id) / poolsLength);
     }
     if (isMultiAz) {
       return maxWorkerNodes / 3;
@@ -139,7 +135,6 @@ export const AutoScaleEnabledInputs = () => {
     isMultiAz,
     isHypershiftSelected,
     poolsLength,
-    allow500NodesHCP,
     allow249NodesOSDCCSROSA,
     clusterVersion?.raw_id,
   ]);

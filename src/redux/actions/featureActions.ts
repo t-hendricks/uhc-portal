@@ -11,7 +11,6 @@ import {
   HCP_ROOT_DISK_SIZE,
   HCP_USE_UNMANAGED,
   HYPERSHIFT_WIZARD_FEATURE,
-  MAX_COMPUTE_NODES_500,
   MULTIREGION_PREVIEW_ENABLED,
   OCMUI_MAX_NODES_TOTAL_249,
   OSD_GCP_WIF,
@@ -45,7 +44,6 @@ export const features = [
   getSimpleUnleashFeature('cluster-ownership-transfer', CLUSTER_OWNERSHIP_TRANSFER),
   getSimpleUnleashFeature('gcp-workload-identity-federation', OSD_GCP_WIF),
   getSimpleUnleashFeature('enable-create-cluster-yaml-editor', CREATE_CLUSTER_YAML_EDITOR),
-  getSimpleUnleashFeature('max-compute-nodes-500', MAX_COMPUTE_NODES_500),
   getSimpleUnleashFeature('ocmui-max-nodes-total-249', OCMUI_MAX_NODES_TOTAL_249),
   getSimpleUnleashFeature('ocmui-hcp-root-disk-size', HCP_ROOT_DISK_SIZE),
   getSimpleUnleashFeature(

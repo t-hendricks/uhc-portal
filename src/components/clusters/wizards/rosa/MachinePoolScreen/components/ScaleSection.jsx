@@ -25,10 +25,7 @@ import ExternalLink from '~/components/common/ExternalLink';
 import FormKeyValueList from '~/components/common/FormikFormComponents/FormKeyValueList';
 import useCanClusterAutoscale from '~/hooks/useCanClusterAutoscale';
 import { useFeatureGate } from '~/hooks/useFeatureGate';
-import {
-  MAX_COMPUTE_NODES_500,
-  OCMUI_MAX_NODES_TOTAL_249,
-} from '~/redux/constants/featureConstants';
+import { OCMUI_MAX_NODES_TOTAL_249 } from '~/redux/constants/featureConstants';
 import { SubscriptionCommonFields } from '~/types/accounts_mgmt.v1';
 
 import WorkerNodeVolumeSizeSection from './WorkerNodeVolumeSizeSection/WorkerNodeVolumeSizeSection';
@@ -63,7 +60,6 @@ function ScaleSection() {
   const hasNodeLabels = nodeLabels?.[0]?.key ?? false;
   const [isNodeLabelsExpanded, setIsNodeLabelsExpanded] = useState(!!hasNodeLabels);
   const canAutoScale = useCanClusterAutoscale(product, billingModelFieldValue) ?? false;
-  const allow500NodesHCP = useFeatureGate(MAX_COMPUTE_NODES_500);
   const allow249NodesOSDCCSROSA = useFeatureGate(OCMUI_MAX_NODES_TOTAL_249);
   const clusterVersionRawId = clusterVersion?.raw_id;
 
@@ -238,7 +234,6 @@ function ScaleSection() {
               isHypershiftWizard={isHypershiftSelected}
               poolNumber={poolsLength}
               clusterVersion={clusterVersionRawId}
-              allow500NodesHCP={allow500NodesHCP}
               allow249NodesOSDCCSROSA={allow249NodesOSDCCSROSA}
               input={{
                 ...getFieldProps(FieldId.NodesCompute),

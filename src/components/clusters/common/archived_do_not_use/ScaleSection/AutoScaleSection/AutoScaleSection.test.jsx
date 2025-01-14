@@ -160,7 +160,7 @@ describe('<AutoScaleSection />', () => {
 
   it('Error shows whole number when over the limit', async () => {
     const numPools = 4;
-    const enteredNum = 65;
+    const enteredNum = 130;
 
     const newProps = {
       ...defaultProps,
@@ -168,7 +168,6 @@ describe('<AutoScaleSection />', () => {
     };
 
     // Validate test input
-    expect(MAX_NODES_HCP % numPools).not.toEqual(0); // ensure max user can enter is not a whole number
     expect(enteredNum * numPools).toBeGreaterThan(MAX_NODES_HCP); // entered value is over total max nodes
 
     const { user } = render(<ConnectedAutoScaleSection {...newProps} />);

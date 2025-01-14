@@ -6,7 +6,7 @@ import PopoverHint from '~/components/common/PopoverHint';
 import { useFeatureGate } from '~/hooks/useFeatureGate';
 import { OCMUI_MAX_NODES_TOTAL_249 } from '~/redux/constants/featureConstants';
 
-import { MAX_NODES, MAX_NODES_4_14_14 } from '../machinePools/constants';
+import { MAX_NODES, MAX_NODES_INSUFFICIEN_VERSION } from '../machinePools/constants';
 
 export const MaxNodesTotalPopoverText = () => {
   const allow249NodesOSDCCSROSA = useFeatureGate(OCMUI_MAX_NODES_TOTAL_249);
@@ -28,7 +28,7 @@ export const MaxNodesTotalPopoverText = () => {
               <b>Maximum worker node count</b>, based on the cluster version:
               <List>
                 <ListItem>
-                  <b>{MAX_NODES_4_14_14}</b> for clusters below Openshift v4.14.14
+                  <b>{MAX_NODES_INSUFFICIEN_VERSION}</b> for clusters below Openshift v4.14.14
                 </ListItem>
                 <ListItem>
                   <b>{MAX_NODES}</b> for clusters at or above Openshift v4.14.14
@@ -37,7 +37,7 @@ export const MaxNodesTotalPopoverText = () => {
             </ListItem>
           ) : (
             <ListItem>
-              <b>Maximum worker node count ({MAX_NODES_4_14_14})</b>
+              <b>Maximum worker node count ({MAX_NODES_INSUFFICIEN_VERSION})</b>
             </ListItem>
           )}
         </List>

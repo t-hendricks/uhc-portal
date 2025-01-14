@@ -1,5 +1,6 @@
 import * as React from 'react';
 
+import { MAX_NODES_HCP } from '~/components/clusters/common/machinePools/constants';
 import { render, screen, within } from '~/testUtils';
 import { ClusterFromSubscription } from '~/types/types';
 
@@ -332,7 +333,7 @@ describe('<EditMachinePoolModal />', () => {
                 id: 'fooId',
                 instance_type: 'm5.xlarge',
                 kind: 'MachinePool',
-                replicas: 249,
+                replicas: MAX_NODES_HCP,
                 root_volume: { aws: { size: 300 } },
               },
               {

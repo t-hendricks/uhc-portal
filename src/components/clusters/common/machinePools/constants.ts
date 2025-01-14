@@ -1,8 +1,7 @@
 export const MAX_NODES = 249;
-export const MAX_NODES_4_14_14 = 180; // max nodes supported for OCP version < 4.14.14
-export const MAX_NODES_HCP = 250;
-export const MAX_NODES_HCP_INSUFFICIEN_VERSION = 90;
-export const MAX_NODES_HCP_500 = 500;
+export const MAX_NODES_INSUFFICIEN_VERSION = 180; // OSD CCS & ROSA classic clusters - Minimal OCP version to allow more then 180 nodes - 4.14.14
+export const MAX_NODES_HCP = 500;
+export const MAX_NODES_HCP_INSUFFICIEN_VERSION = 90; // HCP clusters - Minimal OCP versions to allow more then 90 nodes - 4.15.15, 4.14.28
 
 export const SPOT_MIN_PRICE = 0.01;
 

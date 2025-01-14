@@ -25,7 +25,6 @@ type EditNodeCountSectionProps = {
   machinePools: MachinePool[];
   cluster: ClusterFromSubscription;
   machineTypes: GlobalState['machineTypes'];
-  allow500NodesHCP: boolean;
 };
 
 const EditNodeCountSection = ({
@@ -33,7 +32,6 @@ const EditNodeCountSection = ({
   machinePools,
   cluster,
   machineTypes,
-  allow500NodesHCP,
 }: EditNodeCountSectionProps) => {
   const { values } = useFormikContext<EditMachinePoolValues>();
 
@@ -58,7 +56,6 @@ const EditNodeCountSection = ({
         quota: organization.quotaList,
         minNodes: minNodesRequired,
         editMachinePoolId: machinePool?.id,
-        allow500NodesHCP,
       }),
     [
       cluster,
@@ -68,7 +65,6 @@ const EditNodeCountSection = ({
       machineTypes,
       organization.quotaList,
       minNodesRequired,
-      allow500NodesHCP,
     ],
   );
 

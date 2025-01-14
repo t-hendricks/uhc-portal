@@ -24,11 +24,10 @@ import { QuotaParams } from '../quotaModel';
 
 import {
   MAX_NODES,
-  MAX_NODES_4_14_14,
-  MAX_NODES_4_14_14 as MAX_NODES_180,
   MAX_NODES_HCP as MAX_NODES_HCP_DEFAULT,
-  MAX_NODES_HCP_500,
   MAX_NODES_HCP_INSUFFICIEN_VERSION,
+  MAX_NODES_INSUFFICIEN_VERSION as MAX_NODES_180,
+  MAX_NODES_INSUFFICIEN_VERSION,
   workerNodeVolumeSizeMinGiB,
   workerNodeVolumeSizeMinGiBHcp,
 } from './constants';
@@ -43,7 +42,7 @@ export const getMaxWorkerNodes = (clusterVersionRawId: string | undefined) => {
       return MAX_NODES;
     }
   }
-  return MAX_NODES_4_14_14;
+  return MAX_NODES_INSUFFICIEN_VERSION;
 };
 
 export const getMaxNodesTotalDefaultAutoscaler = (
@@ -74,12 +73,9 @@ const isOcpVersionSufficient = (ocpVersion: string) => {
   return true;
 };
 
-export const getMaxNodesHCP = (ocpVersion?: string, allow500Nodes?: boolean) => {
+export const getMaxNodesHCP = (ocpVersion?: string) => {
   if (ocpVersion && !isOcpVersionSufficient(ocpVersion)) {
     return MAX_NODES_HCP_INSUFFICIEN_VERSION;
-  }
-  if (allow500Nodes) {
-    return MAX_NODES_HCP_500;
   }
   return MAX_NODES_HCP_DEFAULT;
 };
@@ -106,7 +102,6 @@ export const buildOptions = ({
   increment,
   isHypershift,
   clusterVersion,
-  allow500NodesHCP,
   allow249NodesOSDCCSROSA,
 }: {
   available: number;
@@ -117,10 +112,9 @@ export const buildOptions = ({
   included: number;
   isHypershift?: boolean;
   clusterVersion: string | undefined;
-  allow500NodesHCP?: boolean;
   allow249NodesOSDCCSROSA?: boolean;
 }) => {
-  const maxNodesHCP = getMaxNodesHCP(clusterVersion, allow500NodesHCP);
+  const maxNodesHCP = getMaxNodesHCP(clusterVersion);
   // no extra node quota = only base cluster size is available
   const optionsAvailable = available > 0 || isEditingCluster;
   let maxValue = isEditingCluster ? available + currentNodeCount : available + included;
@@ -217,7 +211,6 @@ export type getNodeOptionsType = {
   machinePool: MachinePool | undefined;
   minNodes: number;
   editMachinePoolId?: string;
-  allow500NodesHCP?: boolean;
   allow249NodesOSDCCSROSA?: boolean;
 };
 export const getNodeOptions = ({
@@ -229,7 +222,6 @@ export const getNodeOptions = ({
   machinePool,
   minNodes,
   editMachinePoolId,
-  allow500NodesHCP,
   allow249NodesOSDCCSROSA,
 }: getNodeOptionsType) => {
   const isMultiAz = isMultiAZ(cluster);
@@ -273,7 +265,6 @@ export const getNodeOptions = ({
     increment: isMPoolAZ ? 3 : 1,
     isHypershift: isHypershiftCluster(cluster),
     clusterVersion: cluster.version?.raw_id,
-    allow500NodesHCP,
     allow249NodesOSDCCSROSA,
   });
 };

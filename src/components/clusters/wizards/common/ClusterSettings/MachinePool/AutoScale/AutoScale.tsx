@@ -7,7 +7,7 @@ import links from '~/common/installLinks.mjs';
 import { normalizedProducts } from '~/common/subscriptionTypes';
 import { getDefaultClusterAutoScaling } from '~/components/clusters/common/clusterAutoScalingValues';
 import { constants } from '~/components/clusters/common/CreateOSDFormConstants';
-import { MAX_NODES_4_14_14 as MAX_NODES_180 } from '~/components/clusters/common/machinePools/constants';
+import { MAX_NODES_INSUFFICIEN_VERSION as MAX_NODES_180 } from '~/components/clusters/common/machinePools/constants';
 import { getMaxNodesTotalDefaultAutoscaler } from '~/components/clusters/common/machinePools/utils';
 import { CheckboxField } from '~/components/clusters/wizards/form/CheckboxField';
 import { useFormState } from '~/components/clusters/wizards/hooks';

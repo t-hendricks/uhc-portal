@@ -37,7 +37,7 @@ describe('machinePools utils', () => {
       editMachinePoolId: 'workers-1',
     } as unknown as utils.getNodeOptionsType;
 
-    const maxNodesHCP = utils.getMaxNodesHCP(defaultArgs.cluster.version?.raw_id, false);
+    const maxNodesHCP = utils.getMaxNodesHCP(defaultArgs.cluster.version?.raw_id);
 
     // In order to make  testing a little easier, mocking quota method
     const getAvailableQuotaMock = jest.spyOn(utils, 'getAvailableQuota').mockReturnValue(50990);
@@ -195,29 +195,21 @@ describe('machinePools utils', () => {
 
     describe('getMaxNodesHCP', () => {
       it.each([
-        ['returns the default max nodes for HCP', '4.16.0', false, 250],
-        ['version 4.14.19 gets insufficient version', '4.14.19', false, 90],
-        ['version 4.15.14 gets insufficient version', '4.15.14', false, 90],
-        ['version 4.14.19 gets insufficient version and max nodes', '4.14.19', false, 90],
-        ['version 4.15.14 gets insufficient version and max nodes', '4.15.14', false, 90],
-        ['version 4.16.0 allows 500 nodes', '4.16.0', true, 500],
-        ['undefined version and undefined options gets default version', undefined, undefined, 250],
-        ['undefined version and max nodes 500', undefined, true, 500],
-      ])(
-        '%s',
-        (
-          _title: string,
-          version: string | undefined,
-          allow500: boolean | undefined,
-          exptected: number,
-        ) => {
-          // Act
-          const result = utils.getMaxNodesHCP(version, allow500);
+        ['returns the default max nodes for HCP', '4.16.0', 500],
+        ['version 4.14.19 gets insufficient version', '4.14.19', 90],
+        ['version 4.15.14 gets insufficient version', '4.15.14', 90],
+        ['version 4.14.19 gets insufficient version and max nodes', '4.14.19', 90],
+        ['version 4.15.14 gets insufficient version and max nodes', '4.15.14', 90],
+        ['version 4.16.0 allows 500 nodes', '4.16.0', 500],
+        ['undefined version and undefined options gets default version', undefined, 500],
+        ['undefined version and max nodes 500', undefined, 500],
+      ])('%s', (_title: string, version: string | undefined, exptected: number) => {
+        // Act
+        const result = utils.getMaxNodesHCP(version);
 
-          // Assert
-          expect(result).toEqual(exptected);
-        },
-      );
+        // Assert
+        expect(result).toEqual(exptected);
+      });
     });
     describe('getMaxNodes', () => {
       it.each([

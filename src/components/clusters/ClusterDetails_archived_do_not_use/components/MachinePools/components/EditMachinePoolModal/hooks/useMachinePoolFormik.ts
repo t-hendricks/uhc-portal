@@ -21,7 +21,7 @@ import {
 } from '~/components/clusters/common/archived_do_not_use/machinePools/utils';
 import { isHypershiftCluster, isROSA } from '~/components/clusters/common/clusterStates';
 import { useFeatureGate } from '~/hooks/useFeatureGate';
-import { HCP_ROOT_DISK_SIZE, MAX_COMPUTE_NODES_500 } from '~/redux/constants/featureConstants';
+import { HCP_ROOT_DISK_SIZE } from '~/redux/constants/featureConstants';
 import { GlobalState } from '~/redux/store';
 import { PromiseReducerState } from '~/redux/types';
 import { MachinePool, NodePool } from '~/types/clusters_mgmt.v1';
@@ -156,8 +156,6 @@ const useMachinePoolFormik = ({
 
   const organization = useOrganization();
 
-  const allow500Nodes = useFeatureGate(MAX_COMPUTE_NODES_500);
-
   const validationSchema = React.useMemo(
     () =>
       Yup.lazy((values) => {
@@ -172,7 +170,6 @@ const useMachinePoolFormik = ({
           minNodes: minNodesRequired,
           machineTypeId: values.instanceType,
           editMachinePoolId: values.name,
-          allow500Nodes,
         });
         const maxNodes = nodeOptions.length ? nodeOptions[nodeOptions.length - 1] : 0;
 
@@ -329,7 +326,6 @@ const useMachinePoolFormik = ({
       maxDiskSize,
       hasMachinePool,
       isHypershift,
-      allow500Nodes,
     ],
   );
 
