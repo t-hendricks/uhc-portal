@@ -6,6 +6,9 @@ import { viewPaginationConstants } from '../constants';
 const onSetTotalClusters = (totalCount: number | undefined, viewType: string) =>
   action(viewPaginationConstants.SET_TOTAL_ITEMS, { viewType, totalCount: totalCount || 0 });
 
+const onSetTotal = (totalCount: number | undefined, viewType: string) =>
+  action(viewPaginationConstants.SET_TOTAL_ITEMS, { viewType, totalCount: totalCount || 0 });
+
 const onFirstPage = (viewType: string) =>
   action(viewPaginationConstants.VIEW_FIRST_PAGE, { viewType });
 
@@ -71,4 +74,5 @@ export {
   onResetFiltersAndFlags,
   ViewOptionsAction,
   onSetTotalClusters,
+  onSetTotal,
 };
