@@ -8,17 +8,17 @@ See the [Release Notes][change-log], and list of [Held Back items][held-back-log
 
 ## Reviewer 1 < name >
 
-- [ ] Verified the MR's Commits list only contains commits with messages "Merge ... to master"; any other commits must have good reasoning
-- [ ] Verified the MR's Commits list matches the Release Notes wiki
+- [ ] Verified the PR's Commits list only contains commits with messages "Merge ... to master"; any other commits must have good reasoning
+- [ ] Verified the PR's Commits list matches the Release Notes wiki
 - [ ] Closed threads I started after the author made changes or added an explanation
 
 ## Reviewer 2 < name >
 
-- [ ] Verified the MR's Commits list only contains commits with messages "Merge ... to master"; any other commits must have good reasoning
-- [ ] Verified the MR's Commits list matches the Release Notes wiki
+- [ ] Verified the PR's Commits list only contains commits with messages "Merge ... to master"; any other commits must have good reasoning
+- [ ] Verified the PR's Commits list matches the Release Notes wiki
 - [ ] Closed threads I started after the author made changes or added an explanation
 
-NOTE: The author of the MR will merge the MR.
+NOTE: The author of the PR will merge the PR.
 
 ## Author
 
@@ -33,5 +33,5 @@ Check the following before merging:
 <!-- TODO: update this link to point to the correct section in the release notes -->
 <!--       by appending the heading permalink, e.g. /Release-Notes#mar-5-1981 -->
 [change-log]: https://github.com/RedHatInsights/uhc-portal/wiki/Release-Notes
-[held-back-log]: https://github.com/RedHatInsights/uhc-portal/wiki/Held-back-Notes
+[held-back-log]: https://github.com/RedHatInsights/uhc-portal/wiki/Held-Back-Notes
 [environment]: https://console.redhat.com/openshift/
