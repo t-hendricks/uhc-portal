@@ -85,7 +85,7 @@ const createClusterAndUpgradeSchedule = async (
   if (upgradeSchedule) {
     const clusterID = clusterResponse.data.id;
     if (clusterID) {
-      dispatch(postSchedule(clusterID, upgradeSchedule, isHypershiftCluster(cluster)));
+      dispatch(postSchedule(clusterID, upgradeSchedule, isHypershiftCluster(cluster), regionalId));
     }
   }
 
