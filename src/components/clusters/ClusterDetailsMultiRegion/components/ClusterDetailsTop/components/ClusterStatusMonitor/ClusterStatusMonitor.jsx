@@ -22,6 +22,7 @@ import clusterStates, {
 import ClusterStatusErrorDisplay from '~/components/clusters/common/ClusterStatusErrorDisplay';
 import ErrorModal from '~/components/common/ErrorModal';
 import ExternalLink from '~/components/common/ExternalLink';
+// import { usePreviousProps } from '~/hooks/usePreviousProps';
 import {
   useFetchClusterStatus,
   useInvalidateFetchClusterStatus,
@@ -128,23 +129,43 @@ const ClusterStatusMonitor = (props) => {
           // if we failed to get the /status endpoint (and we weren't uninstalling)
           // all we can do is look at the state in cluster object and hope for the best
           setRefetchInterval(true);
-        } else if (
-          cluster.state === clusterStates.UNINSTALLING &&
-          clusterStatusError.errorCode === 404
-        ) {
-          dispatch(
-            addNotification({
-              title: `Successfully uninstalled cluster ${getClusterName(cluster)}`,
-              variant: 'success',
-            }),
-          );
-          navigate('/cluster-list');
         }
       }
     }
     // Minified React error #185 if added all dependencies based on linter
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [refetchInterval, inflightChecks, clusterStatus, addNotification]);
+
+  // Redirect once cluster has been deleted
+  React.useEffect(() => {
+    if (
+      !isClusterStatusLoading &&
+      !isInflightChecksLoading &&
+      clusterStatus &&
+      inflightChecks &&
+      isClusterStatusError &&
+      cluster.state === clusterStates.UNINSTALLING &&
+      clusterStatusError.status === 404
+    ) {
+      dispatch(
+        addNotification({
+          title: `Successfully uninstalled cluster ${getClusterName(cluster)}`,
+          variant: 'success',
+        }),
+      );
+      navigate('/cluster-list');
+    }
+  }, [
+    cluster,
+    clusterStatus,
+    clusterStatusError,
+    dispatch,
+    inflightChecks,
+    isClusterStatusError,
+    isClusterStatusLoading,
+    isInflightChecksLoading,
+    navigate,
+  ]);
 
   React.useEffect(() => {
     if (!isRerunInflightChecksMutationPending) {
