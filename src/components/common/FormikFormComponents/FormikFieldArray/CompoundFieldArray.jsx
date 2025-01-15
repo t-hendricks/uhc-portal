@@ -110,7 +110,11 @@ FieldArrayErrorGridItem.propTypes = {
 const FieldGridItemComponent = (props) => {
   const { index, fieldSpan, compoundFields, disabled, onFieldChange } = props;
   const compoundFieldSpan = Math.max(Math.floor(fieldSpan / compoundFields.length), 1);
-  const { getFieldProps, getFieldMeta, setFieldValue } = useFormState();
+  const { getFieldProps, getFieldMeta, setFieldValue, values } = useFormState();
+
+  React.useEffect(() => {
+    setFieldValue(FieldId.USERS, values.users);
+  }, [values, setFieldValue]);
 
   return (
     <>
@@ -281,6 +285,7 @@ export const CompoundFieldArray = (props) => {
       return newFilledStatus;
     });
   };
+
   return (
     <FieldArray
       name={FieldId.USERS}
