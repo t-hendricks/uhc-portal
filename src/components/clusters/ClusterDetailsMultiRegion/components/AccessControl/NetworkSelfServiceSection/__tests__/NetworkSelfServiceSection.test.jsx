@@ -5,6 +5,7 @@ import { addNotification } from '@redhat-cloud-services/frontend-components-noti
 
 import { checkAccessibility, render, screen } from '~/testUtils';
 
+import { useAddGrant } from '../../../../../../../queries/ClusterDetailsQueries/AccessControlTab/NetworkSelfServiceQueries/useAddGrant';
 import { useFetchGrants } from '../../../../../../../queries/ClusterDetailsQueries/AccessControlTab/NetworkSelfServiceQueries/useFetchGrants';
 import { useFetchRoles } from '../../../../../../../queries/ClusterDetailsQueries/AccessControlTab/NetworkSelfServiceQueries/useFetchRoles';
 import NetworkSelfServiceSection from '../NetworkSelfServiceSection';
@@ -30,6 +31,13 @@ jest.mock(
   '../../../../../../../queries/ClusterDetailsQueries/AccessControlTab/NetworkSelfServiceQueries/useFetchGrants',
   () => ({
     useFetchGrants: jest.fn(),
+    refetchGrants: jest.fn(),
+  }),
+);
+jest.mock(
+  '../../../../../../../queries/ClusterDetailsQueries/AccessControlTab/NetworkSelfServiceQueries/useAddGrant',
+  () => ({
+    useAddGrant: jest.fn(),
   }),
 );
 
@@ -40,6 +48,19 @@ jest.mock('react-redux', () => {
   };
   return config;
 });
+
+const fakeAddGrantResponse = {
+  data: {
+    user_arn: 'fake-arn',
+    state: 'failed',
+    role: {
+      id: 'network-mgmt',
+    },
+    id: 'fake-id-1',
+    roleName: 'Network Management',
+    console_url: 'http://example.com',
+  },
+};
 
 const fakeGrants = [
   {
@@ -67,6 +88,7 @@ const fakeGrants = [
 describe('<NetworkSelfServiceSection />', () => {
   const useFetchGrantsMock = useFetchGrants;
   const useFetchRolesMock = useFetchRoles;
+  const useAddGrantMock = useAddGrant;
 
   const deleteGrant = jest.fn();
   const openAddGrantModal = jest.fn();
@@ -84,9 +106,14 @@ describe('<NetworkSelfServiceSection />', () => {
     isReadOnly: false,
   };
 
+  useAddGrantMock.mockReturnValue({
+    data: fakeAddGrantResponse,
+  });
+
   afterEach(() => {
     useFetchGrantsMock.mockClear();
     useFetchRolesMock.mockClear();
+    useAddGrantMock.mockClear();
     deleteGrant.mockClear();
     openAddGrantModal.mockClear();
     addNotification.mockClear();
@@ -179,7 +206,7 @@ describe('<NetworkSelfServiceSection />', () => {
 
     rerender(<NetworkSelfServiceSection {...props} />);
 
-    expect(useFetchGrantsMock).toHaveBeenCalledTimes(2);
+    expect(useFetchGrantsMock).toHaveBeenCalledTimes(3);
   });
 
   it('should call getGrants() when a grant is removed', () => {
@@ -203,7 +230,7 @@ describe('<NetworkSelfServiceSection />', () => {
     });
 
     const { rerender } = render(<NetworkSelfServiceSection {...props} />);
-    expect(useFetchGrantsMock).toHaveBeenCalledTimes(1);
+    expect(useFetchGrantsMock).toHaveBeenCalledTimes(2);
 
     useFetchGrantsMock.mockReturnValue({
       data: [],
@@ -214,7 +241,7 @@ describe('<NetworkSelfServiceSection />', () => {
 
     rerender(<NetworkSelfServiceSection {...props} />);
 
-    expect(useFetchGrantsMock).toHaveBeenCalledTimes(2);
+    expect(useFetchGrantsMock).toHaveBeenCalledTimes(4);
   });
 
   it('should render skeleton when pending and no grants are set', () => {
@@ -252,6 +279,7 @@ describe('<NetworkSelfServiceSection />', () => {
       isError: false,
       error: null,
     });
+
     const { rerender } = render(<NetworkSelfServiceSection {...props} />);
 
     expect(addNotification).not.toHaveBeenCalled();
