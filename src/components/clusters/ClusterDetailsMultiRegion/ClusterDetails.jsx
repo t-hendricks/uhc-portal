@@ -117,7 +117,6 @@ const ClusterDetails = (props) => {
   const [gcpOrgPolicyWarning, setGcpOrgPolicyWarning] = React.useState('');
   const monitoring = useGlobalState((state) => state.monitoring);
 
-  const isMultiRegionPreviewEnabled = true;
   const canHibernateCluster = useGlobalState((state) => userCanHibernateClustersSelector(state));
   const anyModalOpen = useGlobalState((state) => !!state.modal.modalName);
   const userAccess = useGlobalState((state) => state.cost.userAccess);
@@ -168,9 +167,7 @@ const ClusterDetails = (props) => {
     status: addNotificationStatus,
   } = useAddNotificationContact(subscriptionID);
 
-  const { data: availableRegionalInstances } = useFetchGetAvailableRegionalInstances(
-    isMultiRegionPreviewEnabled,
-  );
+  const { data: availableRegionalInstances } = useFetchGetAvailableRegionalInstances(true);
 
   const regionId = cluster?.region?.id;
   const regionalInstance = findRegionalInstance(regionId, availableRegionalInstances);
@@ -559,7 +556,7 @@ const ClusterDetails = (props) => {
                 },
                 addAssisted: {
                   ref: addAssistedTabRef,
-                  show: !isMultiRegionPreviewEnabled && addHostsTabState.showTab,
+                  show: addHostsTabState.showTab,
                   isDisabled: addHostsTabState.isDisabled,
                   tooltip: addHostsTabState.tabTooltip,
                 },
