@@ -321,14 +321,14 @@ describe('UpdateMachinePoolModal', () => {
     });
     it('is hidden when redux state has modal closed', () => {
       const newState = { ...defaultState, modal: { data: {} } };
-      const { container } = withState(newState).render(<UpdateMachinePoolModal />);
+      const { container } = withState(newState).render(<UpdateMachinePoolModal isHypershift />);
 
       expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
       expect(container).toBeEmptyDOMElement();
     });
 
     it('displays modal with machine name', async () => {
-      const { container } = withState(defaultState).render(<UpdateMachinePoolModal />);
+      const { container } = withState(defaultState).render(<UpdateMachinePoolModal isHypershift />);
       expect(screen.getByRole('dialog')).toBeInTheDocument();
       expect(
         screen.getByText('Update machine pool my-machine-pool', { exact: false }),
@@ -341,7 +341,7 @@ describe('UpdateMachinePoolModal', () => {
       useDispatchMock.mockReturnValue(mockedDispatch);
       mockUpdatePools.mockResolvedValue([]);
 
-      const { user } = withState(defaultState).render(<UpdateMachinePoolModal />);
+      const { user } = withState(defaultState).render(<UpdateMachinePoolModal isHypershift />);
       expect(screen.getByRole('dialog')).toBeInTheDocument();
       expect(mockUpdatePools).toBeCalledTimes(0);
 
@@ -360,7 +360,7 @@ describe('UpdateMachinePoolModal', () => {
       const mockedDispatch = jest.fn();
       useDispatchMock.mockReturnValue(mockedDispatch);
 
-      const { user } = withState(defaultState).render(<UpdateMachinePoolModal />);
+      const { user } = withState(defaultState).render(<UpdateMachinePoolModal isHypershift />);
       expect(screen.getByRole('dialog')).toBeInTheDocument();
       expect(mockUpdatePools).toBeCalledTimes(0);
 

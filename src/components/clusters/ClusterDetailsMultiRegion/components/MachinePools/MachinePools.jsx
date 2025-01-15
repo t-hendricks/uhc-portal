@@ -86,8 +86,15 @@ import {
 
 import './MachinePools.scss';
 
-const getOpenShiftVersion = (machinePool, isDisabled, isMachinePoolError, isHypershift) => {
+const getOpenShiftVersion = (
+  machinePool,
+  isDisabled,
+  isMachinePoolError,
+  isHypershift,
+  clusterVersionID,
+) => {
   const extractedVersion = get(machinePool, 'version.id', '');
+
   if (!extractedVersion) {
     return 'N/A';
   }
@@ -99,6 +106,7 @@ const getOpenShiftVersion = (machinePool, isDisabled, isMachinePoolError, isHype
           machinePool={machinePool}
           isMachinePoolError={isMachinePoolError}
           isHypershift={isHypershift}
+          clusterVersionID={clusterVersionID}
         />
       ) : null}
     </>
@@ -332,9 +340,10 @@ const MachinePools = ({ cluster }) => {
         ? {
             title: getOpenShiftVersion(
               machinePool,
+              tableActionsDisabled,
               isMachinePoolError,
               isHypershift,
-              tableActionsDisabled,
+              clusterVersionID,
             ),
           }
         : null,
@@ -445,6 +454,7 @@ const MachinePools = ({ cluster }) => {
   }
   const openAutoScalingModal = () => dispatch(openModal(modals.EDIT_CLUSTER_AUTOSCALING_V2));
   const initialValues = getDefaultClusterAutoScaling(maxNodesTotalDefault);
+
   return (
     <>
       {showSkeleton ? (
@@ -465,6 +475,8 @@ const MachinePools = ({ cluster }) => {
             <UpdateAllMachinePools
               isMachinePoolError={isMachinePoolError}
               isHypershift={isHypershift}
+              clusterVersionID={clusterVersionID}
+              machinePoolData={machinePoolData}
             />
           )}
           <Card className="ocm-c-machine-pools__card">
@@ -583,7 +595,11 @@ const MachinePools = ({ cluster }) => {
           machineTypesErrorResponse={machineTypesError}
         />
       )}
-      <UpdateMachinePoolModal region={region} />
+      <UpdateMachinePoolModal
+        isHypershift={isHypershift}
+        clusterVersionID={clusterVersionID}
+        region={region}
+      />
       {isClusterAutoscalingModalOpen && (
         <ClusterAutoscalerForm
           clusterAutoscalerData={clusterAutoscalerData}

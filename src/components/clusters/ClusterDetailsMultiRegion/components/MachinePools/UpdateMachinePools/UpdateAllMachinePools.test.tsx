@@ -31,6 +31,7 @@ const getApiPatchParams = (index: number) => apiRequestMock.patch.mock.calls[ind
 // ********************* Variables ***********************
 
 const controlPlaneVersion = 'openshift-v4.12.13-candidate';
+const clusterVersionID = 'openshift-v4.12.13';
 const clusterId = 'myClusterId';
 
 const updateAllButtonTestId = 'btn-update-all';
@@ -106,7 +107,11 @@ describe('<UpdateAllMachinePools />', () => {
       };
 
       const { container } = withState(newState).render(
-        <UpdateAllMachinePools isMachinePoolError={false} isHypershift />,
+        <UpdateAllMachinePools
+          isMachinePoolError={false}
+          isHypershift
+          clusterVersionID={clusterVersionID}
+        />,
       );
 
       expectUpdateButtonAbsence(container);
@@ -125,7 +130,11 @@ describe('<UpdateAllMachinePools />', () => {
       };
 
       const { container } = withState(newState).render(
-        <UpdateAllMachinePools isMachinePoolError={false} isHypershift={false} />,
+        <UpdateAllMachinePools
+          isMachinePoolError={false}
+          isHypershift={false}
+          clusterVersionID={clusterVersionID}
+        />,
       );
 
       expectUpdateButtonAbsence(container);
@@ -143,7 +152,11 @@ describe('<UpdateAllMachinePools />', () => {
       };
 
       const { container } = withState(newState).render(
-        <UpdateAllMachinePools isMachinePoolError={false} isHypershift />,
+        <UpdateAllMachinePools
+          isMachinePoolError={false}
+          isHypershift
+          clusterVersionID={clusterVersionID}
+        />,
       );
 
       expectUpdateButtonAbsence(container);
@@ -161,7 +174,11 @@ describe('<UpdateAllMachinePools />', () => {
       };
 
       const { container } = withState(newState).render(
-        <UpdateAllMachinePools isMachinePoolError isHypershift />,
+        <UpdateAllMachinePools
+          isMachinePoolError
+          isHypershift
+          clusterVersionID={clusterVersionID}
+        />,
       );
 
       expectUpdateButtonAbsence(container);
@@ -181,7 +198,7 @@ describe('<UpdateAllMachinePools />', () => {
       };
 
       const { container } = withState(newState).render(
-        <UpdateAllMachinePools isMachinePoolError={false} isHypershift />,
+        <UpdateAllMachinePools isMachinePoolError={false} isHypershift clusterVersionID="" />,
       );
 
       expectUpdateButtonAbsence(container);
@@ -195,7 +212,11 @@ describe('<UpdateAllMachinePools />', () => {
       };
 
       const { container } = withState(newState).render(
-        <UpdateAllMachinePools isMachinePoolError={false} isHypershift />,
+        <UpdateAllMachinePools
+          isMachinePoolError={false}
+          isHypershift
+          clusterVersionID={clusterVersionID}
+        />,
       );
 
       expectUpdateButtonAbsence(container);
@@ -214,7 +235,11 @@ describe('<UpdateAllMachinePools />', () => {
       };
 
       const { container } = withState(newState).render(
-        <UpdateAllMachinePools isMachinePoolError={false} isHypershift />,
+        <UpdateAllMachinePools
+          isMachinePoolError={false}
+          isHypershift
+          clusterVersionID={clusterVersionID}
+        />,
       );
 
       expectUpdateButtonAbsence(container);
@@ -251,7 +276,11 @@ describe('<UpdateAllMachinePools />', () => {
       ).not.toContain(rawControlPlaneVersion?.version);
 
       const { container } = withState(newState).render(
-        <UpdateAllMachinePools isMachinePoolError={false} isHypershift />,
+        <UpdateAllMachinePools
+          isMachinePoolError={false}
+          isHypershift
+          clusterVersionID={clusterVersionID}
+        />,
       );
 
       expectUpdateButtonAbsence(container);
@@ -289,7 +318,11 @@ describe('<UpdateAllMachinePools />', () => {
       );
 
       const { container } = withState(newState).render(
-        <UpdateAllMachinePools isMachinePoolError={false} isHypershift />,
+        <UpdateAllMachinePools
+          isMachinePoolError={false}
+          isHypershift
+          clusterVersionID={clusterVersionID}
+        />,
       );
 
       expectUpdateButtonAbsence(container);
@@ -327,7 +360,11 @@ describe('<UpdateAllMachinePools />', () => {
       );
 
       const { container } = withState(newState).render(
-        <UpdateAllMachinePools isMachinePoolError={false} isHypershift />,
+        <UpdateAllMachinePools
+          isMachinePoolError={false}
+          isHypershift
+          clusterVersionID={clusterVersionID}
+        />,
       );
 
       expectUpdateButtonAbsence(container);
@@ -351,7 +388,11 @@ describe('<UpdateAllMachinePools />', () => {
         };
 
         const { container } = withState(newState).render(
-          <UpdateAllMachinePools isMachinePoolError={false} isHypershift />,
+          <UpdateAllMachinePools
+            isMachinePoolError={false}
+            isHypershift
+            clusterVersionID={clusterVersionID}
+          />,
         );
 
         expectUpdateButtonAbsence(container);
@@ -370,7 +411,11 @@ describe('<UpdateAllMachinePools />', () => {
         };
 
         const { container } = withState(newState).render(
-          <UpdateAllMachinePools isMachinePoolError={false} isHypershift />,
+          <UpdateAllMachinePools
+            isMachinePoolError={false}
+            isHypershift
+            clusterVersionID={clusterVersionID}
+          />,
         );
 
         expectUpdateButtonAbsence(container);
@@ -389,7 +434,11 @@ describe('<UpdateAllMachinePools />', () => {
         };
 
         const { container } = withState(newState).render(
-          <UpdateAllMachinePools isMachinePoolError={false} isHypershift />,
+          <UpdateAllMachinePools
+            isMachinePoolError={false}
+            isHypershift
+            clusterVersionID={clusterVersionID}
+          />,
         );
 
         expectUpdateButtonAbsence(container);
@@ -408,7 +457,11 @@ describe('<UpdateAllMachinePools />', () => {
         };
 
         const { container } = withState(newState).render(
-          <UpdateAllMachinePools isMachinePoolError={false} isHypershift />,
+          <UpdateAllMachinePools
+            isMachinePoolError={false}
+            isHypershift
+            clusterVersionID={clusterVersionID}
+          />,
         );
 
         expectUpdateButtonAbsence(container);
@@ -427,7 +480,11 @@ describe('<UpdateAllMachinePools />', () => {
         };
 
         const { container } = withState(newState).render(
-          <UpdateAllMachinePools isMachinePoolError={false} isHypershift />,
+          <UpdateAllMachinePools
+            isMachinePoolError={false}
+            isHypershift
+            clusterVersionID={clusterVersionID}
+          />,
         );
 
         expectUpdateButtonAbsence(container);
@@ -447,7 +504,11 @@ describe('<UpdateAllMachinePools />', () => {
         },
       };
       const { container } = withState(newState).render(
-        <UpdateAllMachinePools isMachinePoolError={false} isHypershift />,
+        <UpdateAllMachinePools
+          isMachinePoolError={false}
+          isHypershift
+          clusterVersionID={clusterVersionID}
+        />,
       );
 
       expectUpdateButtonPresence();
@@ -468,7 +529,11 @@ describe('<UpdateAllMachinePools />', () => {
       };
 
       const { user } = withState(newState).render(
-        <UpdateAllMachinePools isMachinePoolError={false} isHypershift />,
+        <UpdateAllMachinePools
+          isMachinePoolError={false}
+          isHypershift
+          clusterVersionID={clusterVersionID}
+        />,
       );
       expectUpdateButtonPresence();
 
@@ -506,7 +571,11 @@ describe('<UpdateAllMachinePools />', () => {
       };
 
       const { user } = withState(newState).render(
-        <UpdateAllMachinePools isMachinePoolError={false} isHypershift />,
+        <UpdateAllMachinePools
+          isMachinePoolError={false}
+          isHypershift
+          clusterVersionID={clusterVersionID}
+        />,
       );
       expectUpdateButtonPresence();
 
@@ -554,7 +623,11 @@ describe('<UpdateAllMachinePools />', () => {
       };
 
       const { user } = withState(newState).render(
-        <UpdateAllMachinePools isMachinePoolError={false} isHypershift />,
+        <UpdateAllMachinePools
+          isMachinePoolError={false}
+          isHypershift
+          clusterVersionID={clusterVersionID}
+        />,
       );
 
       expect(apiRequestMock.post).not.toHaveBeenCalled();
@@ -603,6 +676,7 @@ describe('<UpdateAllMachinePools />', () => {
           initialErrorMessage="This is an error"
           isMachinePoolError={false}
           isHypershift
+          clusterVersionID={clusterVersionID}
         />,
       );
       expectUpdateButtonPresence();
@@ -628,7 +702,12 @@ describe('<UpdateAllMachinePools />', () => {
         },
       };
       withState(newState).render(
-        <UpdateAllMachinePools goToMachinePoolTab isMachinePoolError={false} isHypershift />,
+        <UpdateAllMachinePools
+          goToMachinePoolTab
+          isMachinePoolError={false}
+          isHypershift
+          clusterVersionID={clusterVersionID}
+        />,
       );
 
       expectUpdateButtonAbsence();
@@ -649,7 +728,13 @@ describe('<UpdateAllMachinePools />', () => {
           },
         },
       };
-      withState(newState).render(<UpdateAllMachinePools isMachinePoolError={false} isHypershift />);
+      withState(newState).render(
+        <UpdateAllMachinePools
+          isMachinePoolError={false}
+          isHypershift
+          clusterVersionID={clusterVersionID}
+        />,
+      );
 
       expectUpdateButtonPresence();
       expect(

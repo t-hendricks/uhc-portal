@@ -23,25 +23,30 @@ import {
 } from './updateMachinePoolsHelpers';
 
 const UpdateAllMachinePools = ({
-  initialErrorMessage, // introduced for testing purposes
-  goToMachinePoolTab,
   isMachinePoolError,
   isHypershift,
+  clusterVersionID,
+  initialErrorMessage, // introduced for testing purposes
+  goToMachinePoolTab,
+  machinePoolData,
   region,
 }: {
-  initialErrorMessage?: string;
-  goToMachinePoolTab?: boolean;
   isMachinePoolError: boolean;
   isHypershift: boolean;
+  clusterVersionID?: string;
+  initialErrorMessage?: string;
+  goToMachinePoolTab?: boolean;
+  machinePoolData?: NodePool[];
   region?: string;
 }) => {
   const [pending, setPending] = React.useState(false);
   const [errors, setErrors] = React.useState<string[]>(
     initialErrorMessage ? [initialErrorMessage] : [],
   );
-  const controlPlaneVersion = useSelector((state: GlobalState) =>
-    controlPlaneVersionSelector(state),
-  );
+
+  const version = useSelector((state: GlobalState) => controlPlaneVersionSelector(state));
+
+  const controlPlaneVersion = clusterVersionID || version;
 
   const controlPlaneUpdating = useHCPControlPlaneUpdating(
     controlPlaneVersion,
@@ -51,14 +56,17 @@ const UpdateAllMachinePools = ({
 
   const clusterId = useSelector(controlPlaneIdSelector);
 
-  const machinePools = useSelector((state: GlobalState) => state.machinePools?.getMachinePools);
+  const machinePools = useSelector(
+    (state: GlobalState) => state.machinePools?.getMachinePools?.data,
+  );
+  const existingMachinePools = machinePoolData || machinePools;
 
   if (controlPlaneUpdating) {
     return null;
   }
 
   const machinePoolsToUpdate =
-    machinePools.data?.filter(
+    existingMachinePools?.filter(
       (pool: NodePool) =>
         compareIsMachinePoolBehindControlPlane(controlPlaneVersion, pool.version?.id) &&
         isControlPlaneValidForMachinePool(pool, controlPlaneVersion) &&
