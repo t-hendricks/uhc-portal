@@ -7,7 +7,6 @@ As of this writing we must do a few manual changes on the generated Type definit
 
 - _insights-results-aggregator.(v1|v2)/models/reportData.ts_: Revert the definitions of `user_vote` to avoid a 'duplicate declaration' syntax error in `enum user_vote { _1 = '-1', _0 = '0', _1 = '1', }`
 - _accounts_mgmt.v1/models/SelfAccessReview.ts_: Do not remove the entries on `resource_type` for `AccessRequestDecision`, `Idp`, `ClusterAutoscaler` and `MachinePool`
-- _service_logs.v1/models/ClusterLog.ts_: remove duplicate line for `CAPACITY_MANAGEMENT`, just leave the Camel case ones
 - _cost-management.v1/index.ts_: remove
   - `export type { CostType }`
   - remove duplicate `OrganizationFilter`

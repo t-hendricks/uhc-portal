@@ -44,11 +44,11 @@ run/ocm-api-metamodel:
 
 .PHONY: openapi
 openapi: run/ocm-api-model run/ocm-api-metamodel
+	yarn run openapi-typescript https://api.stage.openshift.com/api/service_logs/v1/openapi -o src/types/service_logs.v1/schema.ts --root-types --root-types-no-schema-prefix --enum
 	yarn run openapi-typescript https://api.stage.openshift.com/api/upgrades_info/v1/openapi -o src/types/upgrades_info.v1/index.ts --root-types --root-types-no-schema-prefix --enum
 
 	# Download those we use. See openapi/README.md.
 	curl https://api.stage.openshift.com/api/accounts_mgmt/v1/openapi | jq . > openapi/accounts_mgmt.v1.json
-	curl https://api.stage.openshift.com/api/service_logs/v1/openapi | jq . > openapi/service_logs.v1.json
 	curl https://api.stage.openshift.com/api/access_transparency/v1/openapi | jq . > openapi/access_transparency.v1.json
 	curl https://console.redhat.com/api/insights-results-aggregator/v1/openapi.json | jq . > openapi/insights-results-aggregator.v1.json
 	curl https://console.redhat.com/api/insights-results-aggregator/v2/openapi.json | jq . > openapi/insights-results-aggregator.v2.json
