@@ -1,7 +1,7 @@
 import React from 'react';
 import { Field } from 'formik';
 
-import { Alert, Form, Grid, GridItem, Text } from '@patternfly/react-core';
+import { Alert, Button, Form, Grid, GridItem, Text } from '@patternfly/react-core';
 
 import { stringToArray } from '~/common/helpers';
 import links from '~/common/installLinks.mjs';
@@ -17,12 +17,14 @@ import {
   HTTPS_PROXY_PLACEHOLDER,
   NO_PROXY_HELPER_TEXT,
   NO_PROXY_PLACEHOLDER,
+  TRUST_BUNDLE_HELPER_TEXT,
   TRUST_BUNDLE_PLACEHOLDER,
 } from '~/components/clusters/common/networkingConstants';
 import { useFormState } from '~/components/clusters/wizards/hooks';
 import ErrorBox from '~/components/common/ErrorBox';
 import ExternalLink from '~/components/common/ExternalLink';
 import Modal from '~/components/common/Modal/Modal';
+import PopoverHint from '~/components/common/PopoverHint';
 import ReduxFileUpload from '~/components/common/ReduxFormComponents_deprecated/ReduxFileUpload';
 import ReduxVerticalFormGroup from '~/components/common/ReduxFormComponents_deprecated/ReduxVerticalFormGroup';
 import { ErrorState } from '~/types/types';
@@ -65,6 +67,8 @@ const EditClusterWideProxyForm = ({
 
   const [anyTouched, setAnyTouched] = React.useState(false);
 
+  const [openFileUpload, setOpenFileUpload] = React.useState(!additionalTrustBundle);
+
   React.useEffect(() => () => setAnyTouched(false), []);
 
   const noUrlValues = !httpProxyUrl && !httpsProxyUrl;
@@ -98,6 +102,64 @@ const EditClusterWideProxyForm = ({
 
   const clusterProxyError = isClusterEditError && (
     <ErrorBox message="Error editing cluster-wide proxy" response={clusterEditError} />
+  );
+
+  const uploadTrustBundleField = (
+    <Field
+      component={ReduxFileUpload}
+      name={FormFieldId.AdditionalTrustBundle}
+      label="Additional trust bundle"
+      placeholder={TRUST_BUNDLE_PLACEHOLDER}
+      extendedHelpTitle="Additional trust bundle"
+      extendedHelpText="An additional trust bundle is a PEM encoded X.509 certificate bundle that will be added to the nodes' trusted certificate store."
+      validate={composeValidators(validateCA, validateAtLeastOne)}
+      dropzoneProps={{
+        accept: ACCEPT,
+        maxSize: MAX_FILE_SIZE,
+        onDropRejected: () => setFieldValue(FormFieldId.AdditionalTrustBundle, 'Invalid file'),
+      }}
+      meta={getFieldMeta('additional_trust_bundle')}
+      helpText="Upload or paste a PEM encoded X.509 certificate."
+      input={{
+        ...getFieldProps(FormFieldId.AdditionalTrustBundle),
+        onChange: (value: string) => {
+          setFieldValue(FormFieldId.AdditionalTrustBundle, value);
+          setTimeout(() => setFieldTouched(FormFieldId.AdditionalTrustBundle), 1);
+        },
+        onBlur: (event: any) => {
+          const { onBlur } = getFieldProps(FormFieldId.AdditionalTrustBundle);
+          onTouched();
+          onBlur(event);
+        },
+      }}
+    />
+  );
+
+  const replaceTrustBundle = (
+    <>
+      <Text className="ocm-c-networking-vpc-details__card pf-v5-c-form__label-text pf-v5-c-form__group-label">
+        Additional Trust Bundle{' '}
+        <PopoverHint
+          headerContent="Additional trust bundle"
+          bodyContent={TRUST_BUNDLE_HELPER_TEXT}
+        />
+      </Text>
+      <Text>
+        File Uploaded Successfully{' '}
+        <Button
+          // opens field to replace addition trust bundle
+          onClick={() => {
+            setFieldValue(FormFieldId.AdditionalTrustBundle, undefined);
+            setOpenFileUpload(true);
+          }}
+          variant="link"
+          isInline
+          className="ocm-c-networking-vpc-details__card--replace-button"
+        >
+          Replace file
+        </Button>
+      </Text>
+    </>
   );
 
   return (
@@ -211,35 +273,7 @@ const EditClusterWideProxyForm = ({
             />
           </GridItem>
           <GridItem sm={12} md={10} xl2={11}>
-            <Field
-              component={ReduxFileUpload}
-              name={FormFieldId.AdditionalTrustBundle}
-              label="Additional trust bundle"
-              placeholder={TRUST_BUNDLE_PLACEHOLDER}
-              extendedHelpTitle="Additional trust bundle"
-              extendedHelpText="An additional trust bundle is a PEM encoded X.509 certificate bundle that will be added to the nodes' trusted certificate store."
-              validate={composeValidators(validateCA, validateAtLeastOne)}
-              dropzoneProps={{
-                accept: ACCEPT,
-                maxSize: MAX_FILE_SIZE,
-                onDropRejected: () =>
-                  setFieldValue(FormFieldId.AdditionalTrustBundle, 'Invalid file'),
-              }}
-              meta={getFieldMeta('additional_trust_bundle')}
-              helpText="Upload or paste a PEM encoded X.509 certificate."
-              input={{
-                ...getFieldProps(FormFieldId.AdditionalTrustBundle),
-                onChange: (value: string) => {
-                  setFieldValue(FormFieldId.AdditionalTrustBundle, value);
-                  setTimeout(() => setFieldTouched(FormFieldId.AdditionalTrustBundle), 1);
-                },
-                onBlur: (event: any) => {
-                  const { onBlur } = getFieldProps(FormFieldId.AdditionalTrustBundle);
-                  onTouched();
-                  onBlur(event);
-                },
-              }}
-            />
+            {!openFileUpload ? replaceTrustBundle : uploadTrustBundleField}
           </GridItem>
           <GridItem md={2} xl2={4} />
           <GridItem>{anyTouched && noValues() && atLeastOneAlert}</GridItem>
