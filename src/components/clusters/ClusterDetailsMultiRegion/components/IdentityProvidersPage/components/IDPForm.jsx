@@ -95,7 +95,8 @@ const IDPForm = ({
         setIDPName(generatedName);
       }
     }
-  }, [selectedIDP, idpName, IDPName, IDPList, isEditForm, setFieldValue]);
+    // eslint-disable-next-line  react-hooks/exhaustive-deps
+  }, [selectedIDP, idpName, IDPList, isEditForm, setFieldValue]);
 
   const checkDuplicateName = (IDPName) => {
     const idpNameList = IDPList.map((idp) => idp.name);
