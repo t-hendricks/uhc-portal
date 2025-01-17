@@ -28,7 +28,12 @@ fs.readdir(sourceDir, (err, files) => {
     if (
       ext === '.json' &&
       !fs.statSync(filepath).isDirectory() &&
-      !['upgrades_info.v1.json', 'upgrades_info.v1.json'].includes(file)
+      ![
+        'insights-results-aggregator.v1.json',
+        'insights-results-aggregator.v2.json',
+        'service_logs.v1.json',
+        'upgrades_info.v1.json',
+      ].includes(file)
     ) {
       const output = path.resolve(targetDir, path.basename(file, ext));
       console.log('Reading', filepath, '-> Generating', output);
