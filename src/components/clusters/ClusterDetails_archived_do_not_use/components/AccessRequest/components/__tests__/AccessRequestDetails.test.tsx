@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { checkAccessibility, render, screen, within } from '~/testUtils';
-import { Decision } from '~/types/access_transparency.v1';
+import { DecisionDecision } from '~/types/access_transparency.v1';
 
 import AccessRequestDetails from '../AccessRequestDetails';
 
@@ -45,7 +45,7 @@ describe('AccessRequestDetails', () => {
           accessRequest={{
             decisions: [
               {
-                decision: Decision.decision.APPROVED,
+                decision: DecisionDecision.Approved,
                 created_at: '2022-06-23T00:04:46.521394Z',
                 decided_by: 'whatever the user',
                 justification: 'justx',
@@ -84,13 +84,13 @@ describe('AccessRequestDetails', () => {
           accessRequest={{
             decisions: [
               {
-                decision: Decision.decision.APPROVED,
+                decision: DecisionDecision.Approved,
                 created_at: '2022-06-23T00:04:46.521394Z',
                 decided_by: 'whatever the user',
                 justification: 'whatever',
               },
               {
-                decision: Decision.decision.DENIED,
+                decision: DecisionDecision.Denied,
                 created_at: '2021-02-03T00:04:46.521394Z',
                 decided_by: 'user1',
                 justification: 'just1',
@@ -125,7 +125,7 @@ describe('AccessRequestDetails', () => {
           accessRequest={{
             decisions: [
               {
-                decision: Decision.decision.APPROVED,
+                decision: DecisionDecision.Approved,
                 created_at: '2022-06-23T00:04:46.521394Z',
                 decided_by: 'whatever the user',
               },
@@ -162,7 +162,7 @@ describe('AccessRequestDetails', () => {
           accessRequest={{
             decisions: [
               {
-                decision: Decision.decision.APPROVED,
+                decision: DecisionDecision.Approved,
                 created_at: '2022-06-23T00:04:46.521394Z',
                 decided_by: 'whatever the user',
                 justification: 'whatever',
@@ -227,7 +227,7 @@ describe('AccessRequestDetails', () => {
             accessRequest={{
               decisions: [
                 {
-                  decision: Decision.decision.APPROVED,
+                  decision: DecisionDecision.Approved,
                   created_at: '2022-06-23T00:04:46.521394Z',
                   decided_by: 'whatever the user',
                 },
@@ -248,7 +248,7 @@ describe('AccessRequestDetails', () => {
             accessRequest={{
               decisions: [
                 {
-                  decision: Decision.decision.APPROVED,
+                  decision: DecisionDecision.Approved,
                   created_at: '2022-06-23T00:04:46.521394Z',
                   justification: 'justx',
                 },
@@ -269,7 +269,7 @@ describe('AccessRequestDetails', () => {
             accessRequest={{
               decisions: [
                 {
-                  decision: Decision.decision.APPROVED,
+                  decision: DecisionDecision.Approved,
                   decided_by: 'mockuser',
                   justification: 'justx',
                 },

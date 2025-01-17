@@ -15,10 +15,13 @@ import {
   resetCanMakeDecision,
 } from '~/redux/actions/accessRequestActions';
 import { useGlobalState } from '~/redux/hooks';
-import { AccessRequest, Decision } from '~/types/access_transparency.v1';
+import {
+  AccessRequest,
+  AccessRequestStatusState,
+  DecisionDecision,
+} from '~/types/access_transparency.v1';
 
 import { AccessRequestFieldId } from '../model/AccessRequestFieldId';
-import { AccessRequestState } from '../model/AccessRequestState';
 
 import AccessRequestDetails from './AccessRequestDetails';
 import AccessRequestEdit from './AccessRequestEdit';
@@ -40,7 +43,7 @@ const AccessRequestModalForm = () => {
   const [isLoading, setIsLoading] = useState(true);
 
   const isEditMode = useMemo(
-    () => accessRequest?.status?.state === AccessRequestState.PENDING,
+    () => accessRequest?.status?.state === AccessRequestStatusState.Pending,
     [accessRequest],
   );
 
@@ -99,17 +102,17 @@ const AccessRequestModalForm = () => {
           )
           .max(256, 'Must be 256 characters or less')
           .when([AccessRequestFieldId.State], {
-            is: AccessRequestState.DENIED,
+            is: AccessRequestStatusState.Denied,
             then: (schema) => schema.required('The justification is required in case of denial.'),
           }),
       })}
       onSubmit={async (values) => {
-        const decision = values[AccessRequestFieldId.State] as Decision.decision;
+        const decision = values[AccessRequestFieldId.State] as any as DecisionDecision;
         dispatch(
           postAccessRequestDecision(accessRequest.id!!, {
             decision,
             justification:
-              decision === Decision.decision.DENIED
+              decision === DecisionDecision.Denied
                 ? values[AccessRequestFieldId.Justification]
                 : undefined,
           }),

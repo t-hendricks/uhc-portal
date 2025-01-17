@@ -3,16 +3,15 @@ import React from 'react';
 import { ISortBy } from '@patternfly/react-table';
 
 import { checkAccessibility, render, screen } from '~/testUtils';
-import { AccessRequest } from '~/types/access_transparency.v1';
+import { AccessRequest, AccessRequestStatusState } from '~/types/access_transparency.v1';
 
-import { AccessRequestState } from '../../model/AccessRequestState';
 import AccessRequestTable from '../AccessRequestTable';
 
 jest.mock(
   '../AccessRequestStateIcon',
   () =>
     ({ accessRequest }: { accessRequest: AccessRequest }) => (
-      <div data-testid="access-request-state-icon">{accessRequest.status.state}</div>
+      <div data-testid="access-request-state-icon">{accessRequest.status?.state}</div>
     ),
 );
 
@@ -95,13 +94,13 @@ describe('AccessRequestTable', () => {
             openDetailsAction={jest.fn()}
             accessRequestItems={[
               {
-                status: { state: AccessRequestState.APPROVED },
+                status: { state: AccessRequestStatusState.Approved },
                 created_at: 'created_at1',
                 id: 'id1',
                 support_case_id: 'support_case_id1',
               },
               {
-                status: { state: AccessRequestState.DENIED },
+                status: { state: AccessRequestStatusState.Denied },
                 created_at: 'created_at2',
                 id: 'id2',
               },

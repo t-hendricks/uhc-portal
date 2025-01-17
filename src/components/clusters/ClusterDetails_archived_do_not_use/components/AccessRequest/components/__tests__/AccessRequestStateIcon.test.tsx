@@ -1,8 +1,8 @@
 import React from 'react';
 
 import { checkAccessibility, render, screen } from '~/testUtils';
+import { AccessRequestStatusState } from '~/types/access_transparency.v1';
 
-import { AccessRequestState } from '../../model/AccessRequestState';
 import AccessRequestStateIcon from '../AccessRequestStateIcon';
 
 jest.mock('@patternfly/react-core', () => ({
@@ -39,20 +39,22 @@ describe('AccessRequestStateIcon', () => {
 
   it('is accessible', async () => {
     const { container } = render(
-      <AccessRequestStateIcon accessRequest={{ status: { state: AccessRequestState.APPROVED } }} />,
+      <AccessRequestStateIcon
+        accessRequest={{ status: { state: AccessRequestStatusState.Approved } }}
+      />,
     );
     await checkAccessibility(container);
   });
 
   describe('renders proper state for different states', () => {
     it.each([
-      [AccessRequestState.APPROVED, 'green', 'check-circle-icon'],
-      [AccessRequestState.DENIED, 'red', 'times-circle-icon'],
-      [AccessRequestState.EXPIRED, 'undefined', 'outlined-clock-icon'],
-      [AccessRequestState.PENDING, 'orange', 'exclamation-triangle-icon'],
+      [AccessRequestStatusState.Approved, 'green', 'check-circle-icon'],
+      [AccessRequestStatusState.Denied, 'red', 'times-circle-icon'],
+      [AccessRequestStatusState.Expired, 'undefined', 'outlined-clock-icon'],
+      [AccessRequestStatusState.Pending, 'orange', 'exclamation-triangle-icon'],
     ])(
       '"%s" state',
-      (state: AccessRequestState, expectedColor: string, expectedIconName: string) => {
+      (state: AccessRequestStatusState, expectedColor: string, expectedIconName: string) => {
         // Act
         render(<AccessRequestStateIcon accessRequest={{ status: { state } }} />);
 

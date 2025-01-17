@@ -15,10 +15,9 @@ import {
 } from '@patternfly/react-core';
 
 import { RadioButtons } from '~/components/common/ReduxFormComponents_deprecated';
-import { AccessRequest } from '~/types/access_transparency.v1';
+import { AccessRequest, AccessRequestStatusState } from '~/types/access_transparency.v1';
 
 import { AccessRequestFieldId } from '../model/AccessRequestFieldId';
-import { AccessRequestState } from '../model/AccessRequestState';
 
 import AccessRequestDetails from './AccessRequestDetails';
 
@@ -46,7 +45,7 @@ const AccessRequestEdit = ({ accessRequest, userDecisionRights }: AccessRequestE
   >('default');
 
   useEffect(() => {
-    if (accessRequestState === AccessRequestState.DENIED) {
+    if (accessRequestState === AccessRequestStatusState.Denied) {
       const isJustificationErrorState = errors?.[AccessRequestFieldId.Justification];
       setValidated(isJustificationErrorState ? 'error' : 'success');
       setJustificationHelperText(
@@ -73,21 +72,21 @@ const AccessRequestEdit = ({ accessRequest, userDecisionRights }: AccessRequestE
                 component={RadioButtons}
                 name={AccessRequestFieldId.State}
                 ariaLabel="Decision"
-                onChange={(value: AccessRequestState) =>
+                onChange={(value: AccessRequestStatusState) =>
                   setFieldValue(AccessRequestFieldId.State, value)
                 }
                 input={{
                   ...getFieldProps(AccessRequestFieldId.State),
-                  onChange: (value: AccessRequestState) =>
+                  onChange: (value: AccessRequestStatusState) =>
                     setFieldValue(AccessRequestFieldId.State, value),
                 }}
                 options={[
                   {
-                    value: AccessRequestState.APPROVED,
+                    value: AccessRequestStatusState.Approved,
                     label: 'Approve',
                   },
                   {
-                    value: AccessRequestState.DENIED,
+                    value: AccessRequestStatusState.Denied,
                     label: 'Deny',
                   },
                 ]}
@@ -98,7 +97,7 @@ const AccessRequestEdit = ({ accessRequest, userDecisionRights }: AccessRequestE
           <GridItem sm={12}>
             <FormGroup
               label="Justification"
-              isRequired={accessRequestState === AccessRequestState.DENIED}
+              isRequired={accessRequestState === AccessRequestStatusState.Denied}
               fieldId={AccessRequestFieldId.Justification}
             >
               <TextArea
@@ -110,7 +109,7 @@ const AccessRequestEdit = ({ accessRequest, userDecisionRights }: AccessRequestE
                 isRequired
                 aria-label="access request justification"
                 validated={validated}
-                isDisabled={accessRequestState !== AccessRequestState.DENIED}
+                isDisabled={accessRequestState !== AccessRequestStatusState.Denied}
                 resizeOrientation="vertical"
               />
               <FormHelperText>

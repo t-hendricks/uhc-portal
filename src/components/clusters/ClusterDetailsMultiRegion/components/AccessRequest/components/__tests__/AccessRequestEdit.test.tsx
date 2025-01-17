@@ -2,9 +2,9 @@ import React from 'react';
 import { Formik, FormikValues } from 'formik';
 
 import { act, checkAccessibility, render, screen } from '~/testUtils';
+import { AccessRequestStatusState } from '~/types/access_transparency.v1';
 
 import { AccessRequestFieldId } from '../../model/AccessRequestFieldId';
-import { AccessRequestState } from '../../model/AccessRequestState';
 import AccessRequestEdit from '../AccessRequestEdit';
 
 jest.mock('../AccessRequestDetails', () => () => <div>access request details mock</div>);
@@ -54,7 +54,7 @@ describe('AccessRequestEdit', () => {
       render(
         buildTestComponent(
           {
-            [AccessRequestFieldId.State]: AccessRequestState.APPROVED,
+            [AccessRequestFieldId.State]: AccessRequestStatusState.Approved,
             [AccessRequestFieldId.Justification]: '',
           },
           <AccessRequestEdit accessRequest={{}} />,
@@ -107,7 +107,7 @@ describe('AccessRequestEdit', () => {
         render(
           buildTestComponent(
             {
-              [AccessRequestFieldId.State]: AccessRequestState.APPROVED,
+              [AccessRequestFieldId.State]: AccessRequestStatusState.Approved,
               [AccessRequestFieldId.Justification]: 'whatever the justification',
             },
             <AccessRequestEdit accessRequest={{}} userDecisionRights />,
