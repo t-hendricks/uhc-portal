@@ -37,11 +37,11 @@ describe('<UpgradeAcknowledgeModal> ', () => {
     fromVersion: '1.2.3',
     toVersion: '1.3.4',
     unmetAcknowledgements: [{ id: 'unMetAck1' }, { id: 'unMetAck2' }],
+    isHypershift: false,
+    isSTSEnabled: false,
   };
   const defaultProps = {
     clusterId: 'myClusterId',
-    isHypershift: false,
-    isSTSEnabled: false,
     schedules: {
       items: [
         {
@@ -112,11 +112,7 @@ describe('<UpgradeAcknowledgeModal> ', () => {
 
   it('Error is shown for failed y-stream approval action', async () => {
     useGlobalState.mockReturnValue(modalData);
-    const apiError = {
-      response: {
-        data: { reason: 'an error happened' },
-      },
-    };
+    const apiError = { reason: 'an error happened', errorMessage: 'error message' };
     apiRequest.patch.mockRejectedValue(apiError).mockResolvedValue();
 
     const { rerender } = render(<UpgradeAcknowledgeModal {...defaultProps} />);
@@ -222,15 +218,13 @@ describe('<UpgradeAcknowledgeModal> ', () => {
   });
 
   it('does not set enable_minor_version flag if isSTS', async () => {
-    const updatedProps = {
-      ...defaultProps,
-      isSTSEnabled: true,
-    };
+    useGlobalState.mockReturnValue({ ...modalData, isSTSEnabled: true });
+
     const apiReturnValue = { data: {} };
     apiRequest.patch.mockResolvedValue(apiReturnValue);
     apiRequest.post.mockResolvedValue(apiReturnValue);
 
-    const { user } = render(<UpgradeAcknowledgeModal {...updatedProps} />);
+    const { user } = render(<UpgradeAcknowledgeModal {...defaultProps} />);
 
     await clickSubmitButton(user);
 
@@ -273,11 +267,11 @@ describe('<UpgradeAcknowledgeModal>  with hosted control plane(hypershift)', () 
     fromVersion: '1.2.3',
     toVersion: '1.3.4',
     unmetAcknowledgements: [{ id: 'unMetAck1' }, { id: 'unMetAck2' }],
+    isHypershift: true,
+    isSTSEnabled: false,
   };
   const defaultPropsHypershift = {
     clusterId: 'myClusterId',
-    isHypershift: true,
-    isSTSEnabled: false,
     schedules: {
       items: [
         {
@@ -347,11 +341,7 @@ describe('<UpgradeAcknowledgeModal>  with hosted control plane(hypershift)', () 
 
   it('(HCP) Error is shown for failed y-stream approval action', async () => {
     useGlobalState.mockReturnValue(modalData);
-    const apiError = {
-      response: {
-        data: { reason: 'an error happened' },
-      },
-    };
+    const apiError = { error: { reason: 'an error happened', errorMessage: 'error message' } };
     apiRequest.patch.mockRejectedValueOnce(apiError).mockResolvedValue();
 
     const { rerender } = render(<UpgradeAcknowledgeModal {...defaultPropsHypershift} />);

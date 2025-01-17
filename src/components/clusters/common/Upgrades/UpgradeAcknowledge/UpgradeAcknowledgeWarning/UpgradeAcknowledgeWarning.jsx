@@ -50,6 +50,8 @@ const UpgradeAcknowledgeWarning = (props) => {
         fromVersion,
         unmetAcknowledgements: clusterUnmetAcks,
         clusterId,
+        isHypershift,
+        isSTSEnabled,
       }),
     );
   };

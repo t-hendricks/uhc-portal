@@ -7,7 +7,10 @@ import { ModalVariant } from '@patternfly/react-core';
 import { modalActions } from '~/components/common/Modal/ModalActions';
 import shouldShowModal from '~/components/common/Modal/ModalSelectors';
 import { useEditSchedule } from '~/queries/ClusterDetailsQueries/ClusterSettingsTab/useEditSchedule';
+import { refetchSchedules } from '~/queries/ClusterDetailsQueries/ClusterSettingsTab/useGetSchedules';
 import { usePostClusterGateAgreementAcknowledgeModal } from '~/queries/ClusterDetailsQueries/ClusterSettingsTab/usePostClusterGateAgreement';
+import { formatErrorData } from '~/queries/helpers';
+import { refreshClusterDetails } from '~/queries/refreshEntireCache';
 import { useGlobalState } from '~/redux/hooks';
 
 import ErrorBox from '../../../../../common/ErrorBox';
@@ -16,10 +19,7 @@ import { setAutomaticUpgradePolicy } from '../../clusterUpgradeActions';
 import UpgradeAcknowledgeStep from '../UpgradeAcknowledgeStep';
 
 const UpgradeAcknowledgeModal = (props) => {
-  const { clusterId, isHypershift, isSTSEnabled, schedules, region } = props;
-  const { mutateAsync: editScheduleMutate } = useEditSchedule(clusterId, isHypershift, region);
-  const { mutateAsync: postClusterGateAgreementMutate } =
-    usePostClusterGateAgreementAcknowledgeModal(clusterId, region);
+  const { clusterId, schedules, region } = props;
   const dispatch = useDispatch();
   const [pending, setPending] = useState(false);
   const [confirmed, setConfirmed] = useState(false);
@@ -27,9 +27,15 @@ const UpgradeAcknowledgeModal = (props) => {
   const [unmetAcknowledgements, setUnmetAcknowledgements] = useState([]);
   const [fromVersion, setFromVersion] = useState('');
   const [toVersion, setToVersion] = useState('');
-
+  const [isHypershift, setIsHypershift] = useState(false);
+  const [isSTSEnabled, setIsSTSEnabled] = useState(false);
   const isOpen = useGlobalState((state) => shouldShowModal(state, 'ack-upgrade'));
   const modalData = useGlobalState((state) => state.modal.data);
+
+  const { mutateAsync: editScheduleMutate } = useEditSchedule(clusterId, isHypershift, region);
+  const { mutateAsync: postClusterGateAgreementMutate } =
+    usePostClusterGateAgreementAcknowledgeModal(clusterId, region);
+
   const automaticUpgradePolicyId = schedules?.items?.find(
     (policy) => policy.schedule_type === 'automatic',
   ).id;
@@ -39,6 +45,8 @@ const UpgradeAcknowledgeModal = (props) => {
       setFromVersion(modalData.fromVersion);
       setToVersion(modalData.toVersion);
       setUnmetAcknowledgements(modalData.unmetAcknowledgements);
+      setIsHypershift(modalData.isHypershift);
+      setIsSTSEnabled(modalData.isSTSEnabled);
       setErrors([]);
     }
   }, [isOpen, modalData]);
@@ -61,7 +69,7 @@ const UpgradeAcknowledgeModal = (props) => {
 
         dispatch(setAutomaticUpgradePolicy(response.data));
       } catch (error) {
-        foundErrors.push(error);
+        foundErrors.push(formatErrorData(false, true, error));
       }
     }
 
@@ -72,10 +80,14 @@ const UpgradeAcknowledgeModal = (props) => {
 
       response.forEach((promise) => {
         if (promise.status === 'rejected') {
-          foundErrors.push(promise.reason);
+          foundErrors.push(formatErrorData(false, true, promise.reason));
           if (confirmed) {
             setConfirmed(false);
           }
+        }
+        if (promise.status === 'fulfilled') {
+          refetchSchedules();
+          refreshClusterDetails();
         }
       });
     }
@@ -116,7 +128,7 @@ const UpgradeAcknowledgeModal = (props) => {
             /* eslint-disable-next-line react/no-array-index-key */
             key={`err-${index}`}
             message="Failed to save administrator acknowledgement."
-            response={error}
+            response={error?.error}
           />
         ))
       )}
@@ -126,8 +138,6 @@ const UpgradeAcknowledgeModal = (props) => {
 
 UpgradeAcknowledgeModal.propTypes = {
   clusterId: PropTypes.string,
-  isHypershift: PropTypes.bool,
-  isSTSEnabled: PropTypes.bool,
   schedules: PropTypes.object,
   region: PropTypes.string,
 };
