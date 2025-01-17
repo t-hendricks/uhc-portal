@@ -2,7 +2,6 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
 import { getClusterAddOns } from '../../ClusterDetailsMultiRegion/components/AddOns/AddOnsActions';
-import { getLogs } from '../../ClusterDetailsMultiRegion/components/Overview/InstallationLogView/InstallationLogActions';
 
 import UninstallProgress from './UninstallProgress';
 
@@ -16,7 +15,6 @@ const mapDispatchToProps = (dispatch) =>
   bindActionCreators(
     {
       getClusterAddOns,
-      getLogs,
     },
     dispatch,
   );
