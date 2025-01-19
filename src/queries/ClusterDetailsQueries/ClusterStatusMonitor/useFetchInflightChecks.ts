@@ -109,7 +109,7 @@ export const useFetchRerunInflightChecks = (
 };
 
 export const useMutateRerunInflightChecks = (clusterID: string, region?: string) => {
-  const { data, isPending, isError, isSuccess, mutate, mutateAsync } = useMutation({
+  const { data, isPending, isError, error, isSuccess, mutate, mutateAsync } = useMutation({
     mutationKey: ['rerunInflightChecks', 'clusterService', clusterID],
     mutationFn: () => {
       if (region) {
@@ -122,5 +122,5 @@ export const useMutateRerunInflightChecks = (clusterID: string, region?: string)
     },
   });
 
-  return { data, isPending, isError, isSuccess, mutate, mutateAsync };
+  return { data, isPending, isError, error, isSuccess, mutate, mutateAsync };
 };
