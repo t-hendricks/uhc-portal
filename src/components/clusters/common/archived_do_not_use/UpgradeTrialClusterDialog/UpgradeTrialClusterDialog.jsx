@@ -14,7 +14,8 @@ import ErrorBox from '../../../../common/ErrorBox';
 import ExternalLink from '../../../../common/ExternalLink';
 import Modal from '../../../../common/Modal/Modal';
 import modals from '../../../../common/Modal/modals';
-import { availableClustersFromQuota, availableNodesFromQuota } from '../../quotaSelectors';
+import { QuotaTypes } from '../../quotaModel';
+import { availableQuota } from '../../quotaSelectors';
 
 import './UpgradeTrialClusterDialog.scss';
 
@@ -81,15 +82,28 @@ class UpgradeTrialClusterDialog extends Component {
         billingModel: SubscriptionCommonFields.cluster_billing_model.STANDARD,
       };
 
-      const standardClusters = availableClustersFromQuota(quotaList, quotaParams);
-      const standardNodes = availableNodesFromQuota(quotaList, quotaParams);
+      const standardClusters = availableQuota(quotaList, {
+        ...quotaParams,
+        resourceType: QuotaTypes.CLUSTER,
+      });
+      const standardNodes = availableQuota(quotaList, {
+        ...quotaParams,
+        resourceType: QuotaTypes.NODE,
+      });
 
       quota.STANDARD =
         quota.STANDARD && standardNodes >= machinePoolTypes[key] && standardClusters > 0;
 
       quotaParams.billingModel = SubscriptionCommonFields.cluster_billing_model.MARKETPLACE;
-      const marketClusters = availableClustersFromQuota(quotaList, quotaParams);
-      const marketNodes = availableNodesFromQuota(quotaList, quotaParams);
+      const marketClusters = availableQuota(quotaList, {
+        ...quotaParams,
+        resourceType: QuotaTypes.CLUSTER,
+      });
+      const marketNodes = availableQuota(quotaList, {
+        ...quotaParams,
+        resourceType: QuotaTypes.NODE,
+      });
+
       quota.MARKETPLACE =
         quota.MARKETPLACE && marketNodes >= machinePoolTypes[key] && marketClusters > 0;
     });

@@ -1,8 +1,7 @@
 import { normalizedProducts } from '~/common/subscriptionTypes';
-import { QuotaParams, QuotaTypes } from '~/components/clusters/common/quotaModel';
-import { availableQuota } from '~/components/clusters/common/quotaSelectors';
+import { QuotaTypes } from '~/components/clusters/common/quotaModel';
 import { CloudProviderType } from '~/components/clusters/wizards/common/constants';
-import { QuotaCostList, RelatedResource } from '~/types/accounts_mgmt.v1';
+import { RelatedResource } from '~/types/accounts_mgmt.v1';
 
 export enum QuotaType {
   OsdTrial = 'osdTrial',
@@ -17,9 +16,6 @@ export enum QuotaType {
   SingleAzResources = 'singleAzResources',
   MultiAzResources = 'multiAzResources',
 }
-
-export const hasAvailableQuota = (quotaList: QuotaCostList | undefined, quotaParams: QuotaParams) =>
-  !!quotaList && availableQuota(quotaList, quotaParams) > 0;
 
 export const quotaParams = {
   [QuotaType.OsdTrial]: {

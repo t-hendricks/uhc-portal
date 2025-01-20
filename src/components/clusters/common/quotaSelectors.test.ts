@@ -1,4 +1,4 @@
-import { QuotaCost, QuotaCostList } from '~/types/accounts_mgmt.v1';
+import { QuotaCost, QuotaCostList, RelatedResource } from '~/types/accounts_mgmt.v1';
 import { BillingModel } from '~/types/clusters_mgmt.v1';
 import { ClusterFromSubscription } from '~/types/types';
 
@@ -42,16 +42,13 @@ import {
   simpleQuery,
   TrialQuotaList,
 } from './__tests__/quotaSelectors.fixtures';
-import { QuotaParams, QuotaQuery } from './quotaModel';
+import { QuotaParams, QuotaQuery, QuotaTypes } from './quotaModel';
 import {
   addOnBillingQuota,
-  availableClustersFromQuota,
   availableFromQuotaCostItem,
-  availableNodesFromQuota,
   availableQuota,
   getAwsBillingAccountsFromQuota,
   getBillingQuotaModel,
-  hasManagedQuotaSelector,
   hasPotentialQuota,
   queryFromCluster,
 } from './quotaSelectors';
@@ -91,16 +88,40 @@ describe('quotaSelectors', () => {
     );
   });
 
-  describe('hasManagedQuotaSelector', () => {
+  describe('has quota', () => {
     it.each([
-      [emptyQuotaCostList, normalizedProducts.OSD, false],
-      [ROSAQuotaList, normalizedProducts.OSD, false],
-      [CCSQuotaList, normalizedProducts.OSD, true],
-      [rhQuotaList, normalizedProducts.OSD, true],
-      [mockQuotaList, normalizedProducts.OSD, true],
-      [negativeQuotaList, normalizedProducts.OSD, true],
-    ])('%p', (quotaList: QuotaCostList, product: string, exptected: boolean) =>
-      expect(hasManagedQuotaSelector(quotaList, product)).toBe(exptected),
+      [
+        emptyQuotaCostList,
+        normalizedProducts.OSD,
+        RelatedResource.billing_model.MARKETPLACE,
+        false,
+      ],
+      [emptyQuotaCostList, normalizedProducts.OSD, RelatedResource.billing_model.STANDARD, false],
+      [ROSAQuotaList, normalizedProducts.OSD, RelatedResource.billing_model.MARKETPLACE, false],
+      [ROSAQuotaList, normalizedProducts.OSD, RelatedResource.billing_model.STANDARD, false],
+      [CCSQuotaList, normalizedProducts.OSD, RelatedResource.billing_model.MARKETPLACE, false],
+      [CCSQuotaList, normalizedProducts.OSD, RelatedResource.billing_model.STANDARD, true],
+      [rhQuotaList, normalizedProducts.OSD, RelatedResource.billing_model.MARKETPLACE, false],
+      [rhQuotaList, normalizedProducts.OSD, RelatedResource.billing_model.STANDARD, true],
+      [mockQuotaList, normalizedProducts.OSD, RelatedResource.billing_model.STANDARD, true],
+      [mockQuotaList, normalizedProducts.OSD, RelatedResource.billing_model.MARKETPLACE, true],
+      [negativeQuotaList, normalizedProducts.OSD, RelatedResource.billing_model.STANDARD, true],
+      [negativeQuotaList, normalizedProducts.OSD, RelatedResource.billing_model.MARKETPLACE, false],
+    ])(
+      '%p',
+      (
+        quotaList: QuotaCostList,
+        product: string,
+        billingModel: RelatedResource.billing_model,
+        exptected: boolean,
+      ) =>
+        expect(
+          availableQuota(quotaList, {
+            product,
+            resourceType: QuotaTypes.CLUSTER,
+            billingModel,
+          }) >= 1,
+        ).toBe(exptected),
     );
   });
 
@@ -118,7 +139,7 @@ describe('quotaSelectors', () => {
     );
   });
 
-  describe('availableClustersFromQuota', () => {
+  describe('availableQuota resource type CLUSTER', () => {
     it.each([
       ['empty quota with RH Infra params should be 0', emptyQuotaCostList, paramsRhInfra, 0],
       ['CCS quota with RH Infra params should be 0', CCSQuotaList, paramsRhInfra, 0],
@@ -150,12 +171,14 @@ describe('quotaSelectors', () => {
     ])(
       '%p',
       (title: string, quotaList: QuotaCostList, quotaParams: QuotaParams, expected: number) => {
-        expect(availableClustersFromQuota(quotaList, quotaParams)).toBe(expected);
+        expect(
+          availableQuota(quotaList, { ...quotaParams, resourceType: QuotaTypes.CLUSTER }),
+        ).toBe(expected);
       },
     );
   });
 
-  describe('availableNodesFromQuota', () => {
+  describe('availableQuota resource type NODE', () => {
     it.each([
       ['empty quota with RH Infra params should be 0', emptyQuotaCostList, paramsRhInfra, 0],
       ['CCS quota with RH Infra params should be 0', CCSQuotaList, paramsRhInfra, 0],
@@ -187,7 +210,9 @@ describe('quotaSelectors', () => {
     ])(
       '%p',
       (title: string, quotaList: QuotaCostList, quotaParams: QuotaParams, expected: number) => {
-        expect(availableNodesFromQuota(quotaList, quotaParams)).toBe(expected);
+        expect(availableQuota(quotaList, { ...quotaParams, resourceType: QuotaTypes.NODE })).toBe(
+          expected,
+        );
       },
     );
   });

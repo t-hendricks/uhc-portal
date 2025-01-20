@@ -4,6 +4,9 @@ import { Field } from 'formik';
 import { Form, Grid, GridItem, Text, TextVariants, Title } from '@patternfly/react-core';
 
 import links from '~/common/installLinks.mjs';
+import { normalizedProducts } from '~/common/subscriptionTypes';
+import { QuotaTypes } from '~/components/clusters/common/quotaModel';
+import { availableQuota } from '~/components/clusters/common/quotaSelectors';
 import { emptyAWSSubnet } from '~/components/clusters/wizards/common/constants';
 import { useFormState } from '~/components/clusters/wizards/hooks';
 import { PrerequisitesInfoBox } from '~/components/clusters/wizards/rosa/common/PrerequisitesInfoBox';
@@ -11,6 +14,7 @@ import { WelcomeMessage } from '~/components/clusters/wizards/rosa/common/Welcom
 import ExternalLink from '~/components/common/ExternalLink';
 import { useFeatureGate } from '~/hooks/useFeatureGate';
 import { MULTIREGION_PREVIEW_ENABLED } from '~/redux/constants/featureConstants';
+import { useGlobalState } from '~/redux/hooks';
 import AWSLogo from '~/styles/images/AWS.png';
 import RedHat from '~/styles/images/Logo-Red_Hat-B-Standard-RGB.png';
 
@@ -98,8 +102,26 @@ const ControlPlaneField = ({
   );
 };
 
-const ControlPlaneScreen = ({ hasHostedProductQuota }: { hasHostedProductQuota: boolean }) => {
-  const { setFieldValue, getFieldProps, setFieldTouched } = useFormState();
+const ControlPlaneScreen = () => {
+  const {
+    values: { [FieldId.BillingModel]: billingModel },
+    setFieldValue,
+    getFieldProps,
+    setFieldTouched,
+  } = useFormState();
+
+  const quotaList = useGlobalState((state) => state.userProfile.organization.quotaList);
+
+  const hasHostedProductQuota = React.useMemo(
+    () =>
+      availableQuota(quotaList, {
+        product: normalizedProducts.ROSA,
+        billingModel,
+        resourceType: QuotaTypes.CLUSTER,
+      }) >= 1,
+    [billingModel, quotaList],
+  );
+
   return (
     <Form
       onSubmit={(event) => {

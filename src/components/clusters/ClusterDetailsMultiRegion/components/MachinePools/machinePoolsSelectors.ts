@@ -1,6 +1,6 @@
 import get from 'lodash/get';
 
-import { QuotaParams } from '~/components/clusters/common/quotaModel';
+import { QuotaParams, QuotaTypes } from '~/components/clusters/common/quotaModel';
 import { OrganizationState } from '~/redux/reducers/userReducer';
 import { PromiseReducerState } from '~/redux/types';
 import {
@@ -12,13 +12,12 @@ import {
 import { MachineType } from '~/types/clusters_mgmt.v1';
 import { ClusterFromSubscription } from '~/types/types';
 
-import { availableNodesFromQuota } from '../../../common/quotaSelectors';
+import { availableQuota } from '../../../common/quotaSelectors';
 
 const hasNodesQuotaForType = <E extends ClusterFromSubscription>(
   machineType: MachineType,
   cluster: E,
   cloudProviderID: string,
-  // eslint-disable-next-line camelcase
   billingModel: RelatedResource.billing_model,
   organization: PromiseReducerState<OrganizationState>,
 ) => {
@@ -31,7 +30,12 @@ const hasNodesQuotaForType = <E extends ClusterFromSubscription>(
     billingModel,
   };
 
-  return availableNodesFromQuota(organization?.quotaList as QuotaCostList, quotaParams) >= 1;
+  return (
+    availableQuota(organization?.quotaList as QuotaCostList, {
+      ...quotaParams,
+      resourceType: QuotaTypes.NODE,
+    }) >= 1
+  );
 };
 
 const hasMachinePoolsQuotaSelector = <E extends ClusterFromSubscription>(

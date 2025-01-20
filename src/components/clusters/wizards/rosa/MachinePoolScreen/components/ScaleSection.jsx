@@ -26,7 +26,6 @@ import FormKeyValueList from '~/components/common/FormikFormComponents/FormKeyVa
 import useCanClusterAutoscale from '~/hooks/useCanClusterAutoscale';
 import { useFeatureGate } from '~/hooks/useFeatureGate';
 import { OCMUI_MAX_NODES_TOTAL_249 } from '~/redux/constants/featureConstants';
-import { SubscriptionCommonFields } from '~/types/accounts_mgmt.v1';
 
 import WorkerNodeVolumeSizeSection from './WorkerNodeVolumeSizeSection/WorkerNodeVolumeSizeSection';
 import ImdsSection from './ImdsSection';
@@ -43,7 +42,7 @@ function ScaleSection() {
       [FieldId.NodeLabels]: nodeLabels,
       [FieldId.ClusterVersion]: clusterVersion,
       [FieldId.MachinePoolsSubnets]: machinePoolsSubnets,
-      [FieldId.BillingModel]: billingModelFieldValue,
+      [FieldId.BillingModel]: billingModel,
       [FieldId.IMDS]: imds,
     },
     setFieldValue,
@@ -59,7 +58,7 @@ function ScaleSection() {
   const isAutoscalingEnabled = !!autoscalingEnabled;
   const hasNodeLabels = nodeLabels?.[0]?.key ?? false;
   const [isNodeLabelsExpanded, setIsNodeLabelsExpanded] = useState(!!hasNodeLabels);
-  const canAutoScale = useCanClusterAutoscale(product, billingModelFieldValue) ?? false;
+  const canAutoScale = useCanClusterAutoscale(product, billingModel) ?? false;
   const allow249NodesOSDCCSROSA = useFeatureGate(OCMUI_MAX_NODES_TOTAL_249);
   const clusterVersionRawId = clusterVersion?.raw_id;
 
@@ -79,10 +78,6 @@ function ScaleSection() {
     return { minWorkerVolumeSizeGiB, maxWorkerVolumeSizeGiB };
   }, [isHypershiftSelected, clusterVersionRawId]);
 
-  const billingModel = useMemo(
-    () => billingModelFieldValue ?? SubscriptionCommonFields.cluster_billing_model.STANDARD,
-    [billingModelFieldValue],
-  );
   const nodeIncrement = useMemo(
     () =>
       isHypershiftSelected

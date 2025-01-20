@@ -48,7 +48,7 @@ const baseProps = ({ isByoc, isMultiAz }) => ({
 describe('<NodeCountInput>', () => {
   let mockAvailableNodes;
   beforeEach(() => {
-    mockAvailableNodes = jest.spyOn(quotaSelectors, 'availableNodesFromQuota');
+    mockAvailableNodes = jest.spyOn(quotaSelectors, 'availableQuota');
   });
   afterEach(() => {
     mockAvailableNodes.mockRestore();

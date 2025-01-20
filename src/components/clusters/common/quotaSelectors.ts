@@ -17,7 +17,7 @@ import {
 } from '../../../common/subscriptionTypes';
 
 import { clusterBillingModelToRelatedResource } from './billingModelMapper';
-import { BillingQuota, defaultQuotaQuery, QuotaParams, QuotaQuery, QuotaTypes } from './quotaModel';
+import { BillingQuota, defaultQuotaQuery, QuotaParams, QuotaQuery } from './quotaModel';
 
 /**
  * Performs an explicit mapping from a given billingModel to the billingModel which should be used to check quotas for
@@ -191,33 +191,6 @@ const queryFromCluster = <E extends ClusterFromSubscription>(cluster: E): QuotaP
   isMultiAz: get(cluster, 'multi_az', false), // TODO: multi_az?
 });
 
-/**
- * Returns number of clusters of specific type that can be created/added, from 0 to `Infinity`.
- * Returns 0 if necessary data not fulfilled yet.
- */
-const availableClustersFromQuota = (
-  quotaList: QuotaCostList | undefined,
-  quotaParams: QuotaParams,
-) => availableQuota(quotaList, { ...quotaParams, resourceType: QuotaTypes.CLUSTER });
-
-const hasManagedQuotaSelector = (quotaList: QuotaCostList, product: string): boolean =>
-  availableClustersFromQuota(quotaList, { product }) >= 1;
-
-const hasHostedQuotaSelector = (quotaList?: QuotaCostList): boolean =>
-  availableClustersFromQuota(quotaList, {
-    product: normalizedProducts.ROSA,
-    billingModel: RelatedResource.billing_model.MARKETPLACE,
-  }) >= 1;
-
-/**
- * Returns number of nodes of specific type that can be created/added, from 0 to `Infinity`.
- * Returns 0 if necessary data not fulfilled yet.
- * @param quotaList - `state.userProfile.organization.quotaList`
- * @param quotaParams - {product, cloudProviderID, resourceName, isBYOC,isMultiAz, billingModel}
- */
-const availableNodesFromQuota = (quotaList: QuotaCostList | undefined, quotaParams: QuotaParams) =>
-  availableQuota(quotaList, { ...quotaParams, resourceType: QuotaTypes.NODE });
-
 const getAwsBillingAccountsFromQuota = (items?: QuotaCost[]) =>
   items
     ?.find((quota) => quota.quota_id === 'cluster|byoc|moa|marketplace')
@@ -225,14 +198,10 @@ const getAwsBillingAccountsFromQuota = (items?: QuotaCost[]) =>
 
 export {
   addOnBillingQuota,
-  availableClustersFromQuota,
   availableFromQuotaCostItem,
-  availableNodesFromQuota,
   availableQuota,
   getAwsBillingAccountsFromQuota,
   getBillingQuotaModel,
-  hasHostedQuotaSelector,
-  hasManagedQuotaSelector,
   hasPotentialQuota,
   queryFromCluster,
 };

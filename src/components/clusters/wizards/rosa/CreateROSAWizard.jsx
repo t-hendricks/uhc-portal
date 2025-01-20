@@ -14,6 +14,7 @@ import { Spinner } from '@redhat-cloud-services/frontend-components';
 import { ocmResourceType, trackEvents } from '~/common/analytics';
 import { shouldRefetchQuota } from '~/common/helpers';
 import { Navigate, useNavigate } from '~/common/routing';
+import { normalizedProducts } from '~/common/subscriptionTypes';
 import { AppDrawerContext } from '~/components/App/AppDrawer';
 import { AppPage } from '~/components/App/AppPage';
 import { useFormState } from '~/components/clusters/wizards/hooks';
@@ -29,23 +30,26 @@ import useAnalytics from '~/hooks/useAnalytics';
 import { useFeatureGate } from '~/hooks/useFeatureGate';
 import usePreventBrowserNav from '~/hooks/usePreventBrowserNav';
 import { HYPERSHIFT_WIZARD_FEATURE } from '~/redux/constants/featureConstants';
+import { useGlobalState } from '~/redux/hooks';
 import { isRestrictedEnv } from '~/restrictedEnv';
 
 import ErrorBoundary from '../../../App/ErrorBoundary';
 import Breadcrumbs from '../../../common/Breadcrumbs';
 import PageTitle from '../../../common/PageTitle';
 import Unavailable from '../../../common/Unavailable';
+import { QuotaTypes } from '../../common/quotaModel';
+import { availableQuota } from '../../common/quotaSelectors';
 
 import CIDRScreen from './CIDRScreen/CIDRScreen';
 import ClusterRolesScreen from './ClusterRolesScreen/ClusterRolesScreen';
 import Details from './ClusterSettings/Details/Details';
+import ControlPlaneScreen from './ControlPlaneScreen/ControlPlaneScreen';
 import NetworkScreen from './NetworkScreen/NetworkScreen';
 import UpdatesScreen from './UpdatesScreen/UpdatesScreen';
 import VPCScreen from './VPCScreen/VPCScreen';
 import AccountsRolesScreen from './AccountsRolesScreen';
 import ClusterProxyScreen from './ClusterProxyScreen';
 import { FieldId, initialTouched, initialValues, initialValuesRestrictedEnv } from './constants';
-import ControlPlaneScreen from './ControlPlaneScreen';
 import CreateClusterErrorModal from './CreateClusterErrorModal';
 import CreateRosaWizardFooter from './CreateRosaWizardFooter';
 import MachinePoolScreen from './MachinePoolScreen';
@@ -428,6 +432,7 @@ function CreateROSAWizard(props) {
       [FieldId.ConfigureProxy]: configureProxySelected,
       [FieldId.AssociatedAwsId]: selectedAWSAccountID,
       [FieldId.Hypershift]: hypershiftValue,
+      [FieldId.BillingModel]: billingModel,
     },
     values,
     isValidating,
@@ -444,6 +449,17 @@ function CreateROSAWizard(props) {
     isHypershiftSelected,
   };
   const isHypershiftEnabled = useFeatureGate(HYPERSHIFT_WIZARD_FEATURE) && !isRestrictedEnv();
+  const quotaList = useGlobalState((state) => state.userProfile.organization.quotaList);
+
+  const hasProductQuota = React.useMemo(
+    () =>
+      availableQuota(quotaList, {
+        product: normalizedProducts.ROSA,
+        billingModel,
+        resourceType: QuotaTypes.CLUSTER,
+      }) >= 1,
+    [billingModel, quotaList],
+  );
   return (
     <AppPage title="Create OpenShift ROSA Cluster">
       <AppDrawerContext.Consumer>
@@ -455,6 +471,7 @@ function CreateROSAWizard(props) {
             formValues={values}
             isValidating={isValidating}
             isValid={isValid}
+            hasProductQuota={hasProductQuota}
             resetForm={resetForm}
           />
         )}

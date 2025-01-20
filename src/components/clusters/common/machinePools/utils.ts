@@ -6,7 +6,7 @@ import {
   isMultiAZ,
 } from '~/components/clusters/ClusterDetailsMultiRegion/clusterDetailsHelper';
 import { isHypershiftCluster } from '~/components/clusters/common/clusterStates';
-import { availableNodesFromQuota } from '~/components/clusters/common/quotaSelectors';
+import { availableQuota } from '~/components/clusters/common/quotaSelectors';
 import { MachineTypesResponse } from '~/queries/types';
 import { GlobalState } from '~/redux/store';
 import { QuotaCostList } from '~/types/accounts_mgmt.v1';
@@ -20,7 +20,7 @@ import {
 import { ClusterFromSubscription } from '~/types/types';
 
 import { clusterBillingModelToRelatedResource } from '../billingModelMapper';
-import { QuotaParams } from '../quotaModel';
+import { QuotaParams, QuotaTypes } from '../quotaModel';
 
 import {
   MAX_NODES,
@@ -172,7 +172,10 @@ export const getAvailableQuota = ({
     resourceName,
     billingModel: clusterBillingModelToRelatedResource(billingModel),
   };
-  return availableNodesFromQuota(quota as QuotaCostList, quotaParams);
+  return availableQuota(quota as QuotaCostList, {
+    ...quotaParams,
+    resourceType: QuotaTypes.NODE,
+  });
 };
 
 /**

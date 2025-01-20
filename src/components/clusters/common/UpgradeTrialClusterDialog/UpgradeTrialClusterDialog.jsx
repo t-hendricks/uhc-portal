@@ -24,7 +24,8 @@ import Modal from '../../../common/Modal/Modal';
 import { closeModal } from '../../../common/Modal/ModalActions';
 import modals from '../../../common/Modal/modals';
 import { isHypershiftCluster } from '../clusterStates';
-import { availableClustersFromQuota, availableNodesFromQuota } from '../quotaSelectors';
+import { QuotaTypes } from '../quotaModel';
+import { availableQuota } from '../quotaSelectors';
 
 import './UpgradeTrialClusterDialog.scss';
 
@@ -119,30 +120,46 @@ const UpgradeTrialClusterDialog = ({ onClose }) => {
         resourceName: key,
         isBYOC,
         isMultiAz,
-        billingModel: SubscriptionCommonFields.cluster_billing_model.STANDARD,
       };
 
-      const standardClusters = availableClustersFromQuota(quotaList, quotaParams);
-      const standardNodes = availableNodesFromQuota(quotaList, quotaParams);
+      const standardClusters = availableQuota(quotaList, {
+        ...quotaParams,
+        billingModel: SubscriptionCommonFields.cluster_billing_model.STANDARD,
+        resourceType: QuotaTypes.CLUSTER,
+      });
+      const standardNodes = availableQuota(quotaList, {
+        ...quotaParams,
+        billingModel: SubscriptionCommonFields.cluster_billing_model.STANDARD,
+        resourceType: QuotaTypes.NODE,
+      });
+
       quota.STANDARD =
         quota.STANDARD && standardNodes >= machinePoolTypes[key] && standardClusters > 0;
-      quotaParams.billingModel = SubscriptionCommonFields.cluster_billing_model.MARKETPLACE;
-      const marketClusters = availableClustersFromQuota(quotaList, quotaParams);
-      const marketNodes = availableNodesFromQuota(quotaList, quotaParams);
+
+      const marketClusters = availableQuota(quotaList, {
+        ...quotaParams,
+        billingModel: SubscriptionCommonFields.cluster_billing_model.MARKETPLACE,
+        resourceType: QuotaTypes.CLUSTER,
+      });
+      const marketNodes = availableQuota(quotaList, {
+        ...quotaParams,
+        billingModel: SubscriptionCommonFields.cluster_billing_model.MARKETPLACE,
+        resourceType: QuotaTypes.NODE,
+      });
       quota.MARKETPLACE =
         quota.MARKETPLACE && marketNodes >= machinePoolTypes[key] && marketClusters > 0;
     });
     return quota;
   };
 
-  const getPrimaryButtonProps = (availableQuota) => {
-    const marketplaceQuotaEnabled = availableQuota.MARKETPLACE;
+  const getPrimaryButtonProps = (availableQuotaValue) => {
+    const marketplaceQuotaEnabled = availableQuotaValue.MARKETPLACE;
     const button = {
       primaryText: 'Contact sales',
       onPrimaryClick: () => buttonLinkClick('https://cloud.redhat.com/products/dedicated/contact/'),
     };
 
-    if (availableQuota.STANDARD && !availableQuota.MARKETPLACE) {
+    if (availableQuotaValue.STANDARD && !availableQuotaValue.MARKETPLACE) {
       button.primaryText = 'Upgrade using quota';
       button.primaryLink = null;
       button.onPrimaryClick = () =>
@@ -161,7 +178,7 @@ const UpgradeTrialClusterDialog = ({ onClose }) => {
     return button;
   };
 
-  const getSecondaryButtonProps = (availableQuota) => {
+  const getSecondaryButtonProps = (availableQuotaValue) => {
     const button = {
       showSecondary: false,
     };
@@ -171,13 +188,13 @@ const UpgradeTrialClusterDialog = ({ onClose }) => {
     button.onSecondaryClick = () =>
       buttonLinkClick('https://marketplace.redhat.com/en-us/products/red-hat-openshift-dedicated');
 
-    if (availableQuota.MARKETPLACE && availableQuota.STANDARD) {
+    if (availableQuotaValue.MARKETPLACE && availableQuotaValue.STANDARD) {
       button.secondaryText = 'Upgrade using quota';
       button.onSecondaryClick = () =>
         submitUpgrade(clusterID, SubscriptionCommonFields.cluster_billing_model.STANDARD);
     }
 
-    if (availableQuota.MARKETPLACE && !availableQuota.STANDARD) {
+    if (availableQuotaValue.MARKETPLACE && !availableQuotaValue.STANDARD) {
       button.showSecondary = false;
       button.secondaryLink = null;
     }
@@ -202,11 +219,11 @@ const UpgradeTrialClusterDialog = ({ onClose }) => {
     <ErrorBox message="Error upgrading cluster" response={upgradeFromTrialError} />
   ) : null;
 
-  const availableQuota = upgradeModalQuota();
-  const primaryButton = getPrimaryButtonProps(availableQuota);
-  const secondaryButton = getSecondaryButtonProps(availableQuota);
+  const availableQuotaValue = upgradeModalQuota();
+  const primaryButton = getPrimaryButtonProps(availableQuotaValue);
+  const secondaryButton = getSecondaryButtonProps(availableQuotaValue);
   const tertiaryButton = getTertiaryButtonProps();
-  const noQuota = !(availableQuota.STANDARD || availableQuota.MARKETPLACE);
+  const noQuota = !(availableQuotaValue.STANDARD || availableQuotaValue.MARKETPLACE);
   const modalSize = noQuota ? 'small' : 'medium';
 
   return (

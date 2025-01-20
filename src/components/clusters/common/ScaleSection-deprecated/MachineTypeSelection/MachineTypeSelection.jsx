@@ -19,10 +19,7 @@ import { noMachineTypes } from '~/common/helpers';
 import { normalizedProducts } from '~/common/subscriptionTypes';
 import { humanizeValueWithUnit } from '~/common/units';
 import { constants } from '~/components/clusters/common/CreateOSDFormConstants';
-import {
-  availableClustersFromQuota,
-  availableNodesFromQuota,
-} from '~/components/clusters/common/quotaSelectors';
+import { availableQuota } from '~/components/clusters/common/quotaSelectors';
 import { CloudProviderType } from '~/components/clusters/wizards/common/constants';
 import ErrorBox from '~/components/common/ErrorBox';
 import ExternalLink from '~/components/common/ExternalLink';
@@ -30,6 +27,7 @@ import { FormGroupHelperText } from '~/components/common/FormGroupHelperText';
 import PopoverHint from '~/components/common/PopoverHint';
 import { DEFAULT_FLAVOUR_ID } from '~/redux/actions/flavourActions';
 
+import { QuotaTypes } from '../../quotaModel';
 import sortMachineTypes, {
   machineCategories,
 } from '../../ScaleSection/MachineTypeSelection/sortMachineTypes';
@@ -198,8 +196,14 @@ const MachineTypeSelection = ({
         billingModel,
       };
 
-      const clustersAvailable = availableClustersFromQuota(quota, quotaParams);
-      const nodesAvailable = availableNodesFromQuota(quota, quotaParams);
+      const clustersAvailable = availableQuota(quota, {
+        ...quotaParams,
+        resourceType: QuotaTypes.CLUSTER,
+      });
+      const nodesAvailable = availableQuota(quota, {
+        ...quotaParams,
+        resourceType: QuotaTypes.NODE,
+      });
 
       if (isMachinePool) {
         // TODO: backend does allow creating machine pool with 0 nodes!
