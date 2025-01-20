@@ -1,5 +1,6 @@
 import { useMutation } from '@tanstack/react-query';
 
+import { formatErrorData } from '~/queries/helpers';
 import clusterService, { getClusterServiceForRegion } from '~/services/clusterService';
 import { ClusterAutoscaler } from '~/types/clusters_mgmt.v1';
 
@@ -23,12 +24,14 @@ export const useUpdateClusterAutoscaler = (clusterID: string, region?: string) =
     },
   });
 
+  const errorData = formatErrorData(isPending, isError, error);
+
   return {
     data,
     isPending,
     isSuccess,
     isError,
-    error,
+    error: errorData,
     mutate,
     mutateAsync,
   };

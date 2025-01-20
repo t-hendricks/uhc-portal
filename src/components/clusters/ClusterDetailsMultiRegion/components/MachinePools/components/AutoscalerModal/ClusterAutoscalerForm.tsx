@@ -37,8 +37,12 @@ export const ClusterAutoscalerForm = ({
   const isOpen = useGlobalState(
     (state) => state.modal.modalName === modals.EDIT_CLUSTER_AUTOSCALING_V2,
   );
-  const { mutate: mutateUpdateClusterAutoscaler, isPending: isUpdateClusterAutoscalerPending } =
-    useUpdateClusterAutoscaler(clusterId, region);
+  const {
+    mutate: mutateUpdateClusterAutoscaler,
+    isPending: isUpdateClusterAutoscalerPending,
+    isError: isUpdateAutoscalerFormError,
+    error: updateAutoscalerFormError,
+  } = useUpdateClusterAutoscaler(clusterId, region);
 
   return (
     <Formik
@@ -69,6 +73,8 @@ export const ClusterAutoscalerForm = ({
           hasAutoscalingMachinePools={hasAutoscalingMachinePools}
           isClusterAutoscalerRefetching={isClusterAutoscalerRefetching}
           maxNodesTotalDefault={maxNodesTotalDefault}
+          isUpdateAutoscalerFormError={isUpdateAutoscalerFormError}
+          updateAutoscalerFormError={updateAutoscalerFormError}
         />
       )}
     </Formik>

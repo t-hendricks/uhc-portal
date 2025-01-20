@@ -38,6 +38,7 @@ import { modalActions } from '~/components/common/Modal/ModalActions';
 import useValidateMaxNodesTotal from '~/hooks/useValidateMaxNodesTotal';
 import { useDisableClusterAutoscaler } from '~/queries/ClusterDetailsQueries/MachinePoolTab/ClusterAutoscaler/useDisableClusterAutoscaler';
 import { useEnableClusterAutoscaler } from '~/queries/ClusterDetailsQueries/MachinePoolTab/ClusterAutoscaler/useEnableClusterAutoscaler';
+import { FormattedErrorData } from '~/queries/helpers';
 
 import MachinePoolsAutoScalingWarning from '../../MachinePoolAutoscalingWarning';
 
@@ -120,6 +121,8 @@ type ClusterAutoscalerDialogProps = {
   isClusterAutoscalerRefetching: boolean;
   region?: string;
   maxNodesTotalDefault: number;
+  isUpdateAutoscalerFormError: boolean;
+  updateAutoscalerFormError: FormattedErrorData;
 };
 
 export const ClusterAutoscalerModal = ({
@@ -135,6 +138,8 @@ export const ClusterAutoscalerModal = ({
   region,
   isClusterAutoscalerRefetching,
   maxNodesTotalDefault,
+  isUpdateAutoscalerFormError,
+  updateAutoscalerFormError,
 }: ClusterAutoscalerDialogProps) => {
   const {
     mutate: mutateDisableClusterAutoscaler,
@@ -243,10 +248,16 @@ export const ClusterAutoscalerModal = ({
               isDisabled={isSaving}
               onChange={toggleClusterAutoScaling}
             />
-            {isDisableClusterAutoscalerError || isEnableClusterAutoscalerError ? (
+            {isDisableClusterAutoscalerError ||
+            isEnableClusterAutoscalerError ||
+            isUpdateAutoscalerFormError ? (
               <ErrorBox
                 message="Failed to update autoscaler"
-                response={disableClusterAutoscalerError.error || enableClusterAutoscalerError.error}
+                response={
+                  disableClusterAutoscalerError.error ||
+                  enableClusterAutoscalerError.error ||
+                  updateAutoscalerFormError.error
+                }
               />
             ) : (
               <MachinePoolsAutoScalingWarning
