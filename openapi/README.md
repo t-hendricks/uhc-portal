@@ -6,11 +6,6 @@ Run `make openapi` (at the root level) to grab new ones and `yarn gen-types` to 
 As of this writing we must do a few manual changes on the generated Type definitions:
 
 - _accounts_mgmt.v1/models/SelfAccessReview.ts_: Do not remove the entries on `resource_type` for `AccessRequestDecision`, `Idp`, `ClusterAutoscaler` and `MachinePool`
-- _cost-management.v1/index.ts_: remove
-  - `export type { CostType }`
-  - remove duplicate `OrganizationFilter`
-- _cost-management.v1/models/OrganizationFilter.ts_: revert from `export type OrganizationFilter = OrganizationFilter;` to `export type OrganizationFilter = string;`
-- _cost-management.v1/models/ReportAWSEC2InstanceInventory.ts_: instantiate the type with an empty object, to avoid a syntax error (got emptied after update)
 
 The following open issues are related to these manual changes:
 
