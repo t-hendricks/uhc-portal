@@ -33,7 +33,7 @@ const UpgradeAcknowledgeWarning = (props) => {
   } = props;
 
   const clusterId = cluster?.id;
-  const openshiftVersion = cluster?.openshift_version;
+  const openshiftVersion = isHypershift ? cluster?.openshift_version : cluster?.version.raw_id;
   const region = cluster?.subscription?.rh_region_id;
   const fromVersion = cluster?.version?.raw_id || null;
   const toVersion = getToVersionFromHelper(schedules, cluster);

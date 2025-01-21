@@ -127,6 +127,7 @@ const UpgradeSettingsTab = ({ cluster }) => {
 
   React.useEffect(() => {
     if (cluster.id && !isGetShcedulesLoading) {
+      invalidateClusterDetailsQueries();
       refetchSchedules();
     }
 
@@ -421,6 +422,8 @@ const UpgradeSettingsTab = ({ cluster }) => {
               schedules={schedules}
               cluster={cluster}
               region={region}
+              isHypershift={isHypershift}
+              isSTSEnabled={cluster?.aws?.sts?.enabled}
             />
             {showUpdateButton && (
               <Button

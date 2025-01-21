@@ -31,6 +31,8 @@ const UpdateGraph = ({
   upgradeGates,
   schedules,
   cluster,
+  isHypershift,
+  isSTSEnabled,
 }) => (
   <div className="ocm-upgrade-graph">
     <GraphContainer>
@@ -64,6 +66,8 @@ const UpdateGraph = ({
       schedules={schedules}
       upgradeGates={upgradeGates}
       cluster={cluster}
+      isHypershift={isHypershift}
+      isSTSEnabled={isSTSEnabled}
     />
     <MinorVersionUpgradeConfirm
       upgradeGates={upgradeGates}
@@ -97,6 +101,8 @@ UpdateGraph.propTypes = {
   currentVersion: PropTypes.node,
   updateVersion: PropTypes.node,
   hasMore: PropTypes.bool,
+  isHypershift: PropTypes.bool,
+  isSTSEnabled: PropTypes.bool,
   upgradeGates: PropTypes.object,
   schedules: PropTypes.object,
   cluster: PropTypes.object,

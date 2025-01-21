@@ -30,8 +30,11 @@ function UpgradeStatus({
   upgradeGates,
   schedules,
   cluster,
+  isHypershift,
+  isSTSEnabled,
 }) {
   const dispatch = useDispatch();
+  const region = cluster?.subscription?.rh_region_id;
   const hasAvailableUpgrades = availableUpgrades.length > 0;
 
   const isManualUpgradeScheduled = scheduledUpgrade?.schedule_type === 'manual';
@@ -96,6 +99,8 @@ function UpgradeStatus({
           upgradeGates={upgradeGates}
           schedules={schedules}
           cluster={cluster}
+          isHypershift={isHypershift}
+          isSTSEnabled={isSTSEnabled}
         />
 
         {scheduledUpgrade && upgradeState !== 'started' && upgradeState !== 'pending' && (
@@ -114,7 +119,11 @@ function UpgradeStatus({
               onCancelClick();
             }
             dispatch(
-              modalActions.openModal('cancel-upgrade', { clusterID, schedule: scheduledUpgrade }),
+              modalActions.openModal('cancel-upgrade', {
+                clusterID,
+                schedule: scheduledUpgrade,
+                region,
+              }),
             );
           }}
         >
@@ -131,6 +140,8 @@ UpgradeStatus.propTypes = {
   schedules: PropTypes.object,
   cluster: PropTypes.object,
   canEdit: PropTypes.bool,
+  isHypershift: PropTypes.bool,
+  isSTSEnabled: PropTypes.bool,
   clusterVersion: PropTypes.string,
   scheduledUpgrade: PropTypes.shape({
     version: PropTypes.string,
