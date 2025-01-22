@@ -56,11 +56,11 @@ export const Configuration = () => {
   const showClusterPrivacy =
     cloudProvider === CloudProviderType.Aws || (cloudProvider === CloudProviderType.Gcp && isByoc);
   const showConfigureProxy =
-    isByoc && [normalizedProducts.OSD, normalizedProducts.OSDTRIAL].includes(product);
+    isByoc && [normalizedProducts.OSD, normalizedProducts.OSDTrial].includes(product);
   const showPrivateServiceConnect =
     isByoc &&
     isGCP &&
-    [normalizedProducts.OSD, normalizedProducts.OSDTRIAL].includes(product) &&
+    [normalizedProducts.OSD, normalizedProducts.OSDTrial].includes(product) &&
     canConfigureDayOnePrivateServiceConnect(clusterVersion.raw_id) &&
     hasPSCFeatureGate;
   const isWifAuth = authTypeFormValue === GCPAuthType.WorkloadIdentityFederation;

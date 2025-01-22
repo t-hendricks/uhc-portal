@@ -8,7 +8,7 @@ import {
 } from '~/redux/actions/subscriptionReleasedActions';
 import { useGlobalState } from '~/redux/hooks';
 import { checkAccessibility, render, screen } from '~/testUtils';
-import { SubscriptionCommonFields } from '~/types/accounts_mgmt.v1';
+import { SubscriptionCommonFieldsStatus } from '~/types/accounts_mgmt.v1';
 
 import TransferClusterOwnershipDialog from '../TransferClusterOwnershipDialog';
 
@@ -99,7 +99,7 @@ describe('<TransferClusterOwnershipDialog />', () => {
       subscription: {
         ...subscription,
         released: false,
-        status: SubscriptionCommonFields.status.DISCONNECTED,
+        status: SubscriptionCommonFieldsStatus.Disconnected,
       },
     });
     useGlobalStateMock.mockReturnValueOnce(requestState);
@@ -117,7 +117,7 @@ describe('<TransferClusterOwnershipDialog />', () => {
       subscription: {
         ...subscription,
         released: false,
-        status: SubscriptionCommonFields.status.DISCONNECTED,
+        status: SubscriptionCommonFieldsStatus.Disconnected,
       },
     });
     useGlobalStateMock.mockReturnValueOnce({ error: true, errorMessage: 'this is an error' });

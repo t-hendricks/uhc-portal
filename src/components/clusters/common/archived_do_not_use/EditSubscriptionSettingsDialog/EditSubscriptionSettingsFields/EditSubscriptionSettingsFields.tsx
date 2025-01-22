@@ -6,7 +6,14 @@ import { FormGroup } from '@patternfly/react-core';
 import { subscriptionSettings } from '~/common/subscriptionTypes';
 import { FormGroupHelperText } from '~/components/common/FormGroupHelperText';
 import { ReduxFormRadioGroup } from '~/components/common/ReduxFormComponents_deprecated';
-import { SubscriptionCommonFields } from '~/types/accounts_mgmt.v1';
+import {
+  SubscriptionCommonFieldsCluster_billing_model as SubscriptionCommonFieldsClusterBillingModel,
+  SubscriptionCommonFieldsService_level as SubscriptionCommonFieldsServiceLevel,
+  SubscriptionCommonFieldsStatus,
+  SubscriptionCommonFieldsSupport_level as SubscriptionCommonFieldsSupportLevel,
+  SubscriptionCommonFieldsSystem_units as SubscriptionCommonFieldsSystemUnits,
+  SubscriptionCommonFieldsUsage,
+} from '~/types/accounts_mgmt.v1';
 
 import BillingModelAlert from './components/BillingModelAlert';
 import CpuSocketNumberField from './components/CpuSocketNumberField';
@@ -52,29 +59,29 @@ const EditSubscriptionSettingsFields = ({
   );
   const isDisabledByBillingModel = useMemo(
     () =>
-      settings.cluster_billing_model === SubscriptionCommonFields.cluster_billing_model.MARKETPLACE,
+      settings.cluster_billing_model === SubscriptionCommonFieldsClusterBillingModel.marketplace,
     [settings.cluster_billing_model],
   );
   const isDisabledBySupportLevel = useMemo(
     () =>
       ![
-        SubscriptionCommonFields.support_level.PREMIUM,
-        SubscriptionCommonFields.support_level.STANDARD,
-        SubscriptionCommonFields.support_level.SELF_SUPPORT,
-      ].includes(settings.support_level ?? SubscriptionCommonFields.support_level.NONE),
+        SubscriptionCommonFieldsSupportLevel.Premium,
+        SubscriptionCommonFieldsSupportLevel.Standard,
+        SubscriptionCommonFieldsSupportLevel.Self_Support,
+      ].includes(settings.support_level ?? SubscriptionCommonFieldsSupportLevel.None),
     [settings.support_level],
   );
   const isDisconnected = useMemo(
-    () => settings.status === SubscriptionCommonFields.status.DISCONNECTED || !settings.id,
+    () => settings.status === SubscriptionCommonFieldsStatus.Disconnected || !settings.id,
     [settings.id, settings.status],
   );
   const isBillingModelVisible = useMemo(
     () =>
       canSubscribeStandardOCP &&
       canSubscribeMarketplaceOCP &&
-      SubscriptionCommonFields.cluster_billing_model.STANDARD !==
+      SubscriptionCommonFieldsClusterBillingModel.standard !==
         initialSettings.cluster_billing_model &&
-      SubscriptionCommonFields.cluster_billing_model.MARKETPLACE !==
+      SubscriptionCommonFieldsClusterBillingModel.marketplace !==
         initialSettings.cluster_billing_model,
     [canSubscribeMarketplaceOCP, canSubscribeStandardOCP, initialSettings.cluster_billing_model],
   );
@@ -92,7 +99,7 @@ const EditSubscriptionSettingsFields = ({
   }, [initialSettings.socket_total, isDisconnected, settings.socket_total]);
   const cpuSocketValue = useMemo(
     () =>
-      settings.system_units === SubscriptionCommonFields.system_units.SOCKETS
+      settings.system_units === SubscriptionCommonFieldsSystemUnits.Sockets
         ? socketTotal
         : cpuTotal,
     [cpuTotal, socketTotal, settings.system_units],
@@ -124,10 +131,10 @@ const EditSubscriptionSettingsFields = ({
       let isValid = true;
       if (
         ![
-          SubscriptionCommonFields.support_level.PREMIUM,
-          SubscriptionCommonFields.support_level.STANDARD,
-          SubscriptionCommonFields.support_level.SELF_SUPPORT,
-        ].includes(settings?.support_level ?? SubscriptionCommonFields.support_level.NONE)
+          SubscriptionCommonFieldsSupportLevel.Premium,
+          SubscriptionCommonFieldsSupportLevel.Standard,
+          SubscriptionCommonFieldsSupportLevel.Self_Support,
+        ].includes(settings?.support_level ?? SubscriptionCommonFieldsSupportLevel.None)
       ) {
         isValid = false;
       }
@@ -149,16 +156,16 @@ const EditSubscriptionSettingsFields = ({
     ) => {
       if (
         settingName === subscriptionSettings.SUPPORT_LEVEL &&
-        value === SubscriptionCommonFields.cluster_billing_model.MARKETPLACE
+        value === SubscriptionCommonFieldsClusterBillingModel.marketplace
       ) {
         // preset values for marketplace
         const subSettings: EditSubsriptionSettingsFieldsValues = {
           ...initialSettings,
-          support_level: SubscriptionCommonFields.support_level.PREMIUM,
-          service_level: SubscriptionCommonFields.service_level.L1_L3,
-          usage: SubscriptionCommonFields.usage.PRODUCTION,
-          system_units: SubscriptionCommonFields.system_units.CORES_V_CPU,
-          cluster_billing_model: SubscriptionCommonFields.cluster_billing_model.MARKETPLACE,
+          support_level: SubscriptionCommonFieldsSupportLevel.Premium,
+          service_level: SubscriptionCommonFieldsServiceLevel.L1_L3,
+          usage: SubscriptionCommonFieldsUsage.Production,
+          system_units: SubscriptionCommonFieldsSystemUnits.Cores_vCPU,
+          cluster_billing_model: SubscriptionCommonFieldsClusterBillingModel.marketplace,
         };
         setOptions(resetOptions(subSettings));
         publishChange(options, subSettings);
@@ -186,13 +193,12 @@ const EditSubscriptionSettingsFields = ({
       setOptions(options);
 
       if (
-        settings.cluster_billing_model ===
-        SubscriptionCommonFields.cluster_billing_model.MARKETPLACE
+        settings.cluster_billing_model === SubscriptionCommonFieldsClusterBillingModel.marketplace
       ) {
         handleChange(
           options,
           subscriptionSettings.CLUSTER_BILLING_MODEL,
-          SubscriptionCommonFields.cluster_billing_model.MARKETPLACE,
+          SubscriptionCommonFieldsClusterBillingModel.marketplace,
         );
       } else {
         publishChange(options, settings);
@@ -279,7 +285,7 @@ const EditSubscriptionSettingsFields = ({
       initialCpuSocketTotalSet ? null : (
         <FormGroup
           label={
-            settings.system_units === SubscriptionCommonFields.system_units.SOCKETS
+            settings.system_units === SubscriptionCommonFieldsSystemUnits.Sockets
               ? 'Number of sockets (excluding control plane nodes)'
               : 'Number of compute cores (excluding control plane nodes)'
           }

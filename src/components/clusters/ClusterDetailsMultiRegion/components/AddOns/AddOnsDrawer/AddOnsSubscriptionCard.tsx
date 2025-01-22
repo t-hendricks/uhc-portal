@@ -14,7 +14,7 @@ import {
 
 import { BillingQuotaCloudAccounts } from '~/components/clusters/common/quotaModel';
 import ExternalLink from '~/components/common/ExternalLink';
-import { SubscriptionCommonFields } from '~/types/accounts_mgmt.v1';
+import { SubscriptionCommonFieldsCluster_billing_model as SubscriptionCommonFieldsClusterBillingModel } from '~/types/accounts_mgmt.v1';
 
 import { CloudProviders, SetSubscriptionModel, SubscriptionModels } from './AddOnsTypes';
 
@@ -52,7 +52,7 @@ const AddOnsSubscriptionCard = ({
   isReady: boolean;
   cloudAccounts?: BillingQuotaCloudAccounts;
   installedAddOn: any;
-  billingModel: SubscriptionCommonFields.cluster_billing_model;
+  billingModel: SubscriptionCommonFieldsClusterBillingModel;
   name: string;
   cloudProvider: CloudProviders;
 }) => {

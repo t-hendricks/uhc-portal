@@ -9,7 +9,7 @@ import { Link } from '~/common/routing';
 import { useFetchMachineTypes } from '~/queries/ClusterDetailsQueries/MachinePoolTab/MachineTypes/useFetchMachineTypes';
 import { refreshClusterDetails } from '~/queries/refreshEntireCache';
 import { useGlobalState } from '~/redux/hooks/useGlobalState';
-import { SubscriptionCommonFields } from '~/types/accounts_mgmt.v1';
+import { SubscriptionCommonFieldsCluster_billing_model as SubscriptionCommonFieldsClusterBillingModel } from '~/types/accounts_mgmt.v1';
 
 import getClusterName from '../../../../common/getClusterName';
 import links from '../../../../common/installLinks.mjs';
@@ -124,12 +124,12 @@ const UpgradeTrialClusterDialog = ({ onClose }) => {
 
       const standardClusters = availableQuota(quotaList, {
         ...quotaParams,
-        billingModel: SubscriptionCommonFields.cluster_billing_model.STANDARD,
+        billingModel: SubscriptionCommonFieldsClusterBillingModel.standard,
         resourceType: QuotaTypes.CLUSTER,
       });
       const standardNodes = availableQuota(quotaList, {
         ...quotaParams,
-        billingModel: SubscriptionCommonFields.cluster_billing_model.STANDARD,
+        billingModel: SubscriptionCommonFieldsClusterBillingModel.standard,
         resourceType: QuotaTypes.NODE,
       });
 
@@ -138,14 +138,15 @@ const UpgradeTrialClusterDialog = ({ onClose }) => {
 
       const marketClusters = availableQuota(quotaList, {
         ...quotaParams,
-        billingModel: SubscriptionCommonFields.cluster_billing_model.MARKETPLACE,
+        billingModel: SubscriptionCommonFieldsClusterBillingModel.marketplace,
         resourceType: QuotaTypes.CLUSTER,
       });
       const marketNodes = availableQuota(quotaList, {
         ...quotaParams,
-        billingModel: SubscriptionCommonFields.cluster_billing_model.MARKETPLACE,
+        billingModel: SubscriptionCommonFieldsClusterBillingModel.marketplace,
         resourceType: QuotaTypes.NODE,
       });
+
       quota.MARKETPLACE =
         quota.MARKETPLACE && marketNodes >= machinePoolTypes[key] && marketClusters > 0;
     });
@@ -163,7 +164,7 @@ const UpgradeTrialClusterDialog = ({ onClose }) => {
       button.primaryText = 'Upgrade using quota';
       button.primaryLink = null;
       button.onPrimaryClick = () =>
-        submitUpgrade(clusterID, SubscriptionCommonFields.cluster_billing_model.STANDARD);
+        submitUpgrade(clusterID, SubscriptionCommonFieldsClusterBillingModel.standard);
       return button;
     }
 
@@ -171,7 +172,7 @@ const UpgradeTrialClusterDialog = ({ onClose }) => {
       button.primaryText = 'Upgrade using Marketplace billing';
       button.primaryLink = null;
       button.onPrimaryClick = () =>
-        submitUpgrade(clusterID, SubscriptionCommonFields.cluster_billing_model.MARKETPLACE);
+        submitUpgrade(clusterID, SubscriptionCommonFieldsClusterBillingModel.marketplace);
       return button;
     }
 
@@ -191,7 +192,7 @@ const UpgradeTrialClusterDialog = ({ onClose }) => {
     if (availableQuotaValue.MARKETPLACE && availableQuotaValue.STANDARD) {
       button.secondaryText = 'Upgrade using quota';
       button.onSecondaryClick = () =>
-        submitUpgrade(clusterID, SubscriptionCommonFields.cluster_billing_model.STANDARD);
+        submitUpgrade(clusterID, SubscriptionCommonFieldsClusterBillingModel.standard);
     }
 
     if (availableQuotaValue.MARKETPLACE && !availableQuotaValue.STANDARD) {

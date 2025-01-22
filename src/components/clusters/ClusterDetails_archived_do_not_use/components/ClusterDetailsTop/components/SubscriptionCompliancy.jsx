@@ -8,7 +8,10 @@ import { DateFormat } from '@redhat-cloud-services/frontend-components/DateForma
 import getClusterName from '~/common/getClusterName';
 import { normalizedProducts } from '~/common/subscriptionTypes';
 import modals from '~/components/common/Modal/modals';
-import { SubscriptionCommonFields } from '~/types/accounts_mgmt.v1';
+import {
+  SubscriptionCommonFieldsStatus,
+  SubscriptionCommonFieldsSupport_level as SubscriptionCommonFieldsSupportLevel,
+} from '~/types/accounts_mgmt.v1';
 
 import { getSubscriptionLastReconciledDate } from '../../../clusterDetailsHelper';
 
@@ -22,16 +25,16 @@ function SubscriptionCompliancy({ cluster, openModal, canSubscribeOCP = false })
 
   const supportLevel = get(subscription, 'support_level');
   if (
-    supportLevel !== SubscriptionCommonFields.support_level.EVAL &&
-    supportLevel !== SubscriptionCommonFields.support_level.NONE
+    supportLevel !== SubscriptionCommonFieldsSupportLevel.Eval &&
+    supportLevel !== SubscriptionCommonFieldsSupportLevel.None
   ) {
     return null;
   }
 
   const status = get(subscription, 'status');
   if (
-    status === SubscriptionCommonFields.status.ARCHIVED ||
-    status === SubscriptionCommonFields.status.DEPROVISIONED
+    status === SubscriptionCommonFieldsStatus.Archived ||
+    status === SubscriptionCommonFieldsStatus.Deprovisioned
   ) {
     return null;
   }
@@ -84,7 +87,7 @@ function SubscriptionCompliancy({ cluster, openModal, canSubscribeOCP = false })
     </>
   );
 
-  if (supportLevel === SubscriptionCommonFields.support_level.NONE) {
+  if (supportLevel === SubscriptionCommonFieldsSupportLevel.None) {
     return (
       <Alert
         className="subscription-settings compliancy-alert pf-v5-u-mt-md"

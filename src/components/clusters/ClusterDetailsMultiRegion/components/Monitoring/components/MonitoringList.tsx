@@ -2,7 +2,7 @@ import React from 'react';
 
 import { DataList } from '@patternfly/react-core';
 
-import { SubscriptionCommonFields } from '~/types/accounts_mgmt.v1';
+import { SubscriptionCommonFieldsStatus } from '~/types/accounts_mgmt.v1';
 import { ClusterFromSubscription } from '~/types/types';
 
 import { metricsStatusMessages } from '../../../../common/ResourceUsage/constants';
@@ -49,7 +49,7 @@ const MonitoringList = ({
   };
 
   const metricsAvailable = hasResourceUsageMetrics(cluster);
-  const isArchived = cluster.subscription?.status === SubscriptionCommonFields.status.ARCHIVED;
+  const isArchived = cluster.subscription?.status === SubscriptionCommonFieldsStatus.Archived;
 
   const clusterState = cluster.state ? cluster.state : metricsStatusMessages.default;
   const metricsStatusMessage = isArchived ? metricsStatusMessages.archived : clusterState;

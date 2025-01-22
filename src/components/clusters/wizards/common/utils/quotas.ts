@@ -1,7 +1,7 @@
 import { normalizedProducts } from '~/common/subscriptionTypes';
 import { QuotaTypes } from '~/components/clusters/common/quotaModel';
 import { CloudProviderType } from '~/components/clusters/wizards/common/constants';
-import { RelatedResource } from '~/types/accounts_mgmt.v1';
+import { RelatedResourceBilling_model as RelatedResourceBillingModel } from '~/types/accounts_mgmt.v1';
 
 export enum QuotaType {
   OsdTrial = 'osdTrial',
@@ -20,37 +20,37 @@ export enum QuotaType {
 export const quotaParams = {
   [QuotaType.OsdTrial]: {
     resourceType: QuotaTypes.CLUSTER,
-    product: normalizedProducts.OSDTRIAL,
+    product: normalizedProducts.OSDTrial,
   },
   [QuotaType.StandardOsd]: {
     resourceType: QuotaTypes.CLUSTER,
     product: normalizedProducts.OSD,
-    billingModel: RelatedResource.billing_model.STANDARD,
+    billingModel: RelatedResourceBillingModel.standard,
   },
   [QuotaType.Marketplace]: {
     resourceType: QuotaTypes.CLUSTER,
     product: normalizedProducts.OSD,
-    billingModel: RelatedResource.billing_model.MARKETPLACE,
+    billingModel: RelatedResourceBillingModel.marketplace,
   },
   [QuotaType.Byoc]: {
     resourceType: QuotaTypes.CLUSTER,
-    billingModel: RelatedResource.billing_model.STANDARD,
+    billingModel: RelatedResourceBillingModel.standard,
     isBYOC: true,
   },
   [QuotaType.RhInfra]: {
     resourceType: QuotaTypes.CLUSTER,
-    billingModel: RelatedResource.billing_model.STANDARD,
+    billingModel: RelatedResourceBillingModel.standard,
     isBYOC: false,
   },
   [QuotaType.MarketplaceByoc]: {
     resourceType: QuotaTypes.CLUSTER,
-    billingModel: RelatedResource.billing_model.MARKETPLACE,
+    billingModel: RelatedResourceBillingModel.marketplace,
     product: normalizedProducts.OSD,
     isBYOC: true,
   },
   [QuotaType.MarketplaceRhInfra]: {
     resourceType: QuotaTypes.CLUSTER,
-    billingModel: RelatedResource.billing_model.MARKETPLACE,
+    billingModel: RelatedResourceBillingModel.marketplace,
     product: normalizedProducts.OSD,
     isBYOC: false,
   },

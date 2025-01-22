@@ -2,7 +2,7 @@ import React from 'react';
 import { useParams } from 'react-router-dom';
 
 import { screen, waitFor, withState } from '../../../../testUtils';
-import { SubscriptionCommonFields } from '../../../../types/accounts_mgmt.v1';
+import { SubscriptionCommonFieldsStatus } from '../../../../types/accounts_mgmt.v1';
 import clusterStates from '../../common/clusterStates';
 import ClusterDetails from '../ClusterDetails';
 
@@ -409,7 +409,7 @@ describe('<ClusterDetails />', () => {
           canEdit: true,
           subscription: {
             ...fixtures.clusterDetails.cluster.subscription,
-            status: SubscriptionCommonFields.status.ACTIVE,
+            status: SubscriptionCommonFieldsStatus.Active,
             plan: {
               id: 'OSDTrial',
               kind: 'Plan',
@@ -452,7 +452,7 @@ describe('<ClusterDetails />', () => {
             canEdit: true,
             subscription: {
               ...fixtures.clusterDetails.cluster.subscription,
-              status: SubscriptionCommonFields.status.DEPROVISIONED,
+              status: SubscriptionCommonFieldsStatus.Deprovisioned,
             },
           },
         },
@@ -477,7 +477,7 @@ describe('<ClusterDetails />', () => {
           canEdit: true,
           subscription: {
             ...fixtures.OCPClusterDetails.cluster.subscription,
-            status: SubscriptionCommonFields.status.ARCHIVED,
+            status: SubscriptionCommonFieldsStatus.Archived,
           },
           // this set displayAddAssistedHosts to true if not Archived
           cloud_provider: {

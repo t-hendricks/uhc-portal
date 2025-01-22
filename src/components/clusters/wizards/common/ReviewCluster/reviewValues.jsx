@@ -11,7 +11,7 @@ import { IMDSType } from '~/components/clusters/wizards/common';
 import { ClusterPrivacyType } from '~/components/clusters/wizards/osd//Networking/constants';
 import { GCPAuthType } from '~/components/clusters/wizards/osd/ClusterSettings/CloudProvider/types';
 import { FieldId } from '~/components/clusters/wizards/osd/constants';
-import { SubscriptionCommonFields } from '~/types/accounts_mgmt.v1';
+import { SubscriptionCommonFieldsCluster_billing_model as SubscriptionCommonFieldsClusterBillingModel } from '~/types/accounts_mgmt.v1';
 
 import AwsVpcTable from './AwsVpcTable';
 import SecurityGroupsTable from './SecurityGroupsTable';
@@ -39,11 +39,11 @@ const reviewValues = {
   billing_model: {
     title: 'Subscription type',
     values: {
-      [SubscriptionCommonFields.cluster_billing_model.STANDARD]:
+      [SubscriptionCommonFieldsClusterBillingModel.standard]:
         'Annual: Fixed capacity subscription from Red Hat',
-      [SubscriptionCommonFields.cluster_billing_model.MARKETPLACE]:
+      [SubscriptionCommonFieldsClusterBillingModel.marketplace]:
         'On-Demand: Flexible usage billed through Red Hat Marketplace',
-      [SubscriptionCommonFields.cluster_billing_model.MARKETPLACE_GCP]:
+      [SubscriptionCommonFieldsClusterBillingModel.marketplace_gcp]:
         'On-Demand: Flexible usage billed through Google Cloud Marketplace',
       [STANDARD_TRIAL_BILLING_MODEL_TYPE]: 'Free trial (upgradeable)',
     },

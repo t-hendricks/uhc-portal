@@ -33,7 +33,11 @@ import {
 } from '~/redux/actions/clustersActions';
 import { getOrganizationAndQuota } from '~/redux/actions/userActions';
 import { useGlobalState } from '~/redux/hooks';
-import { SubscriptionCreateRequest } from '~/types/accounts_mgmt.v1';
+import {
+  SubscriptionCreateRequest,
+  SubscriptionCreateRequestPlan_id as SubscriptionCreateRequestPlanId,
+  SubscriptionCreateRequestStatus,
+} from '~/types/accounts_mgmt.v1';
 import { ErrorState } from '~/types/types';
 
 import {
@@ -91,8 +95,8 @@ const RegisterCluster = () => {
     if (isValid) {
       const registrationRequest: SubscriptionCreateRequest = {
         cluster_uuid: values.cluster_id,
-        plan_id: SubscriptionCreateRequest.plan_id.OCP,
-        status: SubscriptionCreateRequest.status.DISCONNECTED,
+        plan_id: SubscriptionCreateRequestPlanId.OCP,
+        status: SubscriptionCreateRequestStatus.Disconnected,
         display_name: values.display_name,
         console_url: values.web_console_url,
       };

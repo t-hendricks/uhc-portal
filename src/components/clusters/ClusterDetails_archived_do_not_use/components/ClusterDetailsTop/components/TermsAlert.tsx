@@ -7,7 +7,7 @@ import getTermsAppLink from '~/common/getTermsAppLink';
 import { normalizedProducts } from '~/common/subscriptionTypes';
 import { selfTermsReview } from '~/redux/actions/userActions';
 import { useGlobalState } from '~/redux/hooks';
-import { Subscription, SubscriptionCommonFields } from '~/types/accounts_mgmt.v1';
+import { Subscription, SubscriptionCommonFieldsStatus } from '~/types/accounts_mgmt.v1';
 
 type TermsAlertProps = {
   subscription: Subscription;
@@ -23,7 +23,7 @@ const TermsAlert = ({ subscription }: TermsAlertProps) => {
     getTermsAppLink(baseURL, window.location.href, window.location.href);
 
   const isTermsReviewRequired = (subscription: Subscription) =>
-    subscription.status !== SubscriptionCommonFields.status.DEPROVISIONED &&
+    subscription.status !== SubscriptionCommonFieldsStatus.Deprovisioned &&
     [normalizedProducts.OSD, normalizedProducts.RHMI, normalizedProducts.ROSA].includes(
       subscription.plan?.type ?? '',
     );

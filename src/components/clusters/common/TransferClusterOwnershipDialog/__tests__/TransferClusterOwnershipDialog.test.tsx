@@ -5,7 +5,7 @@ import getClusterName from '~/common/getClusterName';
 import * as useToggleSubscriptionReleased from '~/queries/ClusterActionsQueries/useToggleSubscriptionReleased';
 import { useGlobalState } from '~/redux/hooks';
 import { checkAccessibility, render, screen, withState } from '~/testUtils';
-import { SubscriptionCommonFields } from '~/types/accounts_mgmt.v1';
+import { SubscriptionCommonFieldsStatus } from '~/types/accounts_mgmt.v1';
 
 import TransferClusterOwnershipDialog from '../TransferClusterOwnershipDialog';
 
@@ -120,7 +120,7 @@ describe('<TransferClusterOwnershipDialog />', () => {
       subscription: {
         ...subscription,
         released: false,
-        status: SubscriptionCommonFields.status.DISCONNECTED,
+        status: SubscriptionCommonFieldsStatus.Disconnected,
       },
     });
 
@@ -137,7 +137,7 @@ describe('<TransferClusterOwnershipDialog />', () => {
       subscription: {
         ...subscription,
         released: false,
-        status: SubscriptionCommonFields.status.DISCONNECTED,
+        status: SubscriptionCommonFieldsStatus.Disconnected,
       },
     });
 

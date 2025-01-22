@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 import { Alert, Button, Form } from '@patternfly/react-core';
 
 import { Link } from '~/common/routing';
-import { SubscriptionCommonFields } from '~/types/accounts_mgmt.v1';
+import { SubscriptionCommonFieldsCluster_billing_model as SubscriptionCommonFieldsClusterBillingModel } from '~/types/accounts_mgmt.v1';
 
 import links from '../../../../../common/installLinks.mjs';
 import { normalizedProducts } from '../../../../../common/subscriptionTypes';
@@ -79,28 +79,30 @@ class UpgradeTrialClusterDialog extends Component {
         resourceName: key,
         isBYOC,
         isMultiAz,
-        billingModel: SubscriptionCommonFields.cluster_billing_model.STANDARD,
       };
 
       const standardClusters = availableQuota(quotaList, {
         ...quotaParams,
+        billingModel: SubscriptionCommonFieldsClusterBillingModel.standard,
         resourceType: QuotaTypes.CLUSTER,
       });
       const standardNodes = availableQuota(quotaList, {
         ...quotaParams,
+        billingModel: SubscriptionCommonFieldsClusterBillingModel.standard,
         resourceType: QuotaTypes.NODE,
       });
 
       quota.STANDARD =
         quota.STANDARD && standardNodes >= machinePoolTypes[key] && standardClusters > 0;
 
-      quotaParams.billingModel = SubscriptionCommonFields.cluster_billing_model.MARKETPLACE;
       const marketClusters = availableQuota(quotaList, {
         ...quotaParams,
+        billingModel: SubscriptionCommonFieldsClusterBillingModel.marketplace,
         resourceType: QuotaTypes.CLUSTER,
       });
       const marketNodes = availableQuota(quotaList, {
         ...quotaParams,
+        billingModel: SubscriptionCommonFieldsClusterBillingModel.marketplace,
         resourceType: QuotaTypes.NODE,
       });
 
@@ -126,7 +128,7 @@ class UpgradeTrialClusterDialog extends Component {
       button.primaryText = 'Upgrade using quota';
       button.primaryLink = null;
       button.onPrimaryClick = () =>
-        submit(clusterID, SubscriptionCommonFields.cluster_billing_model.STANDARD);
+        submit(clusterID, SubscriptionCommonFieldsClusterBillingModel.standard);
       return button;
     }
 
@@ -134,7 +136,7 @@ class UpgradeTrialClusterDialog extends Component {
       button.primaryText = 'Upgrade using Marketplace billing';
       button.primaryLink = null;
       button.onPrimaryClick = () =>
-        submit(clusterID, SubscriptionCommonFields.cluster_billing_model.MARKETPLACE);
+        submit(clusterID, SubscriptionCommonFieldsClusterBillingModel.marketplace);
       return button;
     }
 
@@ -157,7 +159,7 @@ class UpgradeTrialClusterDialog extends Component {
     if (availableQuota.MARKETPLACE && availableQuota.STANDARD) {
       button.secondaryText = 'Upgrade using quota';
       button.onSecondaryClick = () =>
-        submit(clusterID, SubscriptionCommonFields.cluster_billing_model.STANDARD);
+        submit(clusterID, SubscriptionCommonFieldsClusterBillingModel.standard);
     }
 
     if (availableQuota.MARKETPLACE && !availableQuota.STANDARD) {

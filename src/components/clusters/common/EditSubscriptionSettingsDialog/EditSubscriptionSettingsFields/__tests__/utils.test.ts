@@ -1,4 +1,4 @@
-import { SubscriptionCommonFields } from '~/types/accounts_mgmt.v1';
+import { SubscriptionCommonFieldsCluster_billing_model as SubscriptionCommonFieldsClusterBillingModel } from '~/types/accounts_mgmt.v1';
 
 import { MARKETPLACE_BILLING_MODEL_LABEL, STANDARD_BILLING_MODEL_LABEL } from '../constants';
 import {
@@ -127,7 +127,7 @@ describe('getSettingsBasedOnOptions', () => {
       expect(
         getBillingModelAlertText(
           false,
-          SubscriptionCommonFields.cluster_billing_model.STANDARD,
+          SubscriptionCommonFieldsClusterBillingModel.standard,
           false,
           false,
         ),
@@ -138,7 +138,7 @@ describe('getSettingsBasedOnOptions', () => {
       expect(
         getBillingModelAlertText(
           true,
-          SubscriptionCommonFields.cluster_billing_model.MARKETPLACE,
+          SubscriptionCommonFieldsClusterBillingModel.marketplace,
           false,
           false,
         ),

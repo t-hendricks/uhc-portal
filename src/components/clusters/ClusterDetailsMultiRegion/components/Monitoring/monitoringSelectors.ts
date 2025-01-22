@@ -1,5 +1,5 @@
 import { isClusterUpgrading } from '~/components/clusters/common/clusterStates';
-import { SubscriptionCommonFields } from '~/types/accounts_mgmt.v1';
+import { SubscriptionCommonFieldsStatus } from '~/types/accounts_mgmt.v1';
 import { ClusterFromSubscription } from '~/types/types';
 
 import config from '../../../../../config';
@@ -42,7 +42,7 @@ const clusterHealthSelector = (
   switch (true) {
     case invalidDate(lastCheckIn):
       return monitoringStatuses.UNKNOWN;
-    case cluster?.subscription?.status === SubscriptionCommonFields.status.DISCONNECTED:
+    case cluster?.subscription?.status === SubscriptionCommonFieldsStatus.Disconnected:
       return monitoringStatuses.DISCONNECTED;
     case !freshActivity:
       return monitoringStatuses.NO_METRICS;

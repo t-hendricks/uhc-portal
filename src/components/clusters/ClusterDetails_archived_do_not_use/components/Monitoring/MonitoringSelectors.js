@@ -1,7 +1,7 @@
 import get from 'lodash/get';
 
 import { isClusterUpgrading } from '~/components/clusters/common/clusterStates';
-import { SubscriptionCommonFields } from '~/types/accounts_mgmt.v1';
+import { SubscriptionCommonFieldsStatus } from '~/types/accounts_mgmt.v1';
 
 import config from '../../../../../config';
 
@@ -38,7 +38,7 @@ const clusterHealthSelector = (state, lastCheckIn, discoveredIssues) => {
     return monitoringStatuses.UNKNOWN;
   }
 
-  if (get(cluster, 'subscription.status', false) === SubscriptionCommonFields.status.DISCONNECTED) {
+  if (get(cluster, 'subscription.status', false) === SubscriptionCommonFieldsStatus.Disconnected) {
     return monitoringStatuses.DISCONNECTED;
   }
 

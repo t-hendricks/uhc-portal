@@ -44,6 +44,7 @@ run/ocm-api-metamodel:
 
 .PHONY: openapi
 openapi: run/ocm-api-model run/ocm-api-metamodel
+	yarn run openapi-typescript https://api.stage.openshift.com/api/accounts_mgmt/v1/openapi -o src/types/accounts_mgmt.v1/index.ts --root-types --root-types-no-schema-prefix --enum
 	# --root-types-no-schema-prefix can't be used since there schema objects and enums with the same name. It would be good to use it once openapi-ts/openapi-typescript/issues/2099 is solved
 	yarn run openapi-typescript https://console.redhat.com/api/cost-management/v1/openapi.json -o src/types/cost-management.v1/index.ts --root-types --enum
 	yarn run openapi-typescript https://api.stage.openshift.com/api/access_transparency/v1/openapi -o src/types/access_transparency.v1/index.ts --root-types --root-types-no-schema-prefix --enum
@@ -51,9 +52,6 @@ openapi: run/ocm-api-model run/ocm-api-metamodel
 	yarn run openapi-typescript https://console.redhat.com/api/insights-results-aggregator/v2/openapi.json -o src/types/insights-results-aggregator.v2/index.ts --root-types --root-types-no-schema-prefix --enum
 	yarn run openapi-typescript https://api.stage.openshift.com/api/service_logs/v1/openapi -o src/types/service_logs.v1/schema.ts --root-types --root-types-no-schema-prefix --enum
 	yarn run openapi-typescript https://api.stage.openshift.com/api/upgrades_info/v1/openapi -o src/types/upgrades_info.v1/index.ts --root-types --root-types-no-schema-prefix --enum
-
-	# Download those we use. See openapi/README.md.
-	curl https://api.stage.openshift.com/api/accounts_mgmt/v1/openapi | jq . > openapi/accounts_mgmt.v1.json
 
 	# This one will be overwritten, below (if successful).
 	curl https://api.stage.openshift.com/api/clusters_mgmt/v1/openapi | jq . > openapi/clusters_mgmt.v1.json

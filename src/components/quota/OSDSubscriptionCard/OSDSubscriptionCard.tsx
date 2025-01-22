@@ -11,7 +11,7 @@ import { ResourcesFullIcon } from '@patternfly/react-icons/dist/esm/icons/resour
 
 import { Link } from '~/common/routing';
 import type { GlobalState } from '~/redux/store';
-import { RelatedResource } from '~/types/accounts_mgmt.v1';
+import { RelatedResourceBilling_model as RelatedResourceBillingModel } from '~/types/accounts_mgmt.v1';
 
 import ExternalLink from '../../common/ExternalLink';
 import SubscriptionNotFulfilled from '../SubscriptionNotFulfilled';
@@ -111,14 +111,14 @@ const OSDSubscriptionCard = ({ quotaCost, marketplace, organizationID, fetchQuot
       // and explicitly allow addon-open-data-hub on the marketplace quota page
       const billingModel = get(relatedResources[0], 'billing_model');
       let resourceName = get(relatedResources[0], 'resource_name');
-      if (marketplace && billingModel !== RelatedResource.billing_model.MARKETPLACE) {
+      if (marketplace && billingModel !== RelatedResourceBillingModel.marketplace) {
         if (resourceName !== 'addon-open-data-hub') {
           return;
         }
       }
       if (
         !marketplace &&
-        (billingModel === RelatedResource.billing_model.MARKETPLACE ||
+        (billingModel === RelatedResourceBillingModel.marketplace ||
           resourceName === 'addon-open-data-hub')
       ) {
         return;

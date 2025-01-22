@@ -6,7 +6,10 @@ import { queryConstants } from '~/queries/queriesConstants';
 import { authorizationsService } from '~/services';
 import accessRequestService from '~/services/accessTransparency/accessRequestService';
 import { Decision } from '~/types/access_transparency.v1';
-import { SelfAccessReview } from '~/types/accounts_mgmt.v1';
+import {
+  SelfAccessReviewAction,
+  SelfAccessReviewResource_type as SelfAccessReviewResourceType,
+} from '~/types/accounts_mgmt.v1';
 
 export const usePostAccessRequestDecision = (accessRequestID: string) => {
   const { data, isPending, isError, error, mutate, isSuccess } = useMutation({
@@ -45,8 +48,8 @@ export const useCanMakeDecision = (
     queryKey: [queryConstants.FETCH_CLUSTER_DETAILS_QUERY_KEY, 'canMakeDecision'],
     queryFn: async () => {
       const response = await authorizationsService.selfAccessReview({
-        action: SelfAccessReview.action.CREATE,
-        resource_type: SelfAccessReview.resource_type.ACCESS_REQUEST_DECISION,
+        action: SelfAccessReviewAction.create,
+        resource_type: SelfAccessReviewResourceType.AccessRequestDecision,
         subscription_id: subscriptionId,
         organization_id: organizationId,
       });

@@ -17,7 +17,7 @@ import {
 import { HAD_INFLIGHT_ERROR_LOCALSTORAGE_KEY } from '~/common/localStorageConstants';
 import { ocmBaseName } from '~/common/routing';
 import { isRestrictedEnv } from '~/restrictedEnv';
-import { SubscriptionCommonFields } from '~/types/accounts_mgmt.v1';
+import { SubscriptionCommonFieldsStatus } from '~/types/accounts_mgmt.v1';
 
 import isAssistedInstallSubscription, {
   isAvailableAssistedInstallCluster,
@@ -72,9 +72,9 @@ const Overview = (props) => {
   }, [cluster.state, cluster.managed, cluster.id, props]);
 
   const isArchived =
-    get(cluster, 'subscription.status', false) === SubscriptionCommonFields.status.ARCHIVED;
+    get(cluster, 'subscription.status', false) === SubscriptionCommonFieldsStatus.Archived;
   const isDeprovisioned =
-    get(cluster, 'subscription.status', false) === SubscriptionCommonFields.status.DEPROVISIONED;
+    get(cluster, 'subscription.status', false) === SubscriptionCommonFieldsStatus.Deprovisioned;
   const metricsAvailable =
     hasResourceUsageMetrics(cluster) &&
     (cluster.canEdit ||

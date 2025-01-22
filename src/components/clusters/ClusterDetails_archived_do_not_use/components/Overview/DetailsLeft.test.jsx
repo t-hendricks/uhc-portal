@@ -4,7 +4,7 @@ import React from 'react';
 import { OSD_GCP_WIF } from '~/redux/constants/featureConstants';
 import { checkAccessibility, mockUseFeatureGate, render, screen, within } from '~/testUtils';
 
-import { SubscriptionCommonFields } from '../../../../../types/accounts_mgmt.v1';
+import { SubscriptionCommonFieldsStatus } from '../../../../../types/accounts_mgmt.v1';
 import fixtures from '../../__tests__/ClusterDetails.fixtures';
 
 import DetailsLeft from './DetailsLeft';
@@ -732,7 +732,7 @@ describe('<DetailsLeft />', () => {
       // Arrange
       const OSDClusterFixture = {
         ...fixtures.OSDGCPClusterDetails.cluster,
-        state: SubscriptionCommonFields.status.DEPROVISIONED,
+        state: SubscriptionCommonFieldsStatus.Deprovisioned,
         ccs: undefined,
       };
 

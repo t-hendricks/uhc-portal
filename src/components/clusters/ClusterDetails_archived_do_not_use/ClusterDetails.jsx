@@ -24,7 +24,7 @@ import { Navigate, useNavigate } from '~/common/routing';
 import { AppPage } from '~/components/App/AppPage';
 import DrawerPanel from '~/components/overview/components/common/DrawerPanel';
 import { isRestrictedEnv } from '~/restrictedEnv';
-import { SubscriptionCommonFields } from '~/types/accounts_mgmt.v1';
+import { SubscriptionCommonFieldsStatus } from '~/types/accounts_mgmt.v1';
 
 import getClusterName from '../../../common/getClusterName';
 import { isValid, shouldRefetchQuota } from '../../../common/helpers';
@@ -270,10 +270,7 @@ const ClusterDetails = (props) => {
 
     const clusterID = get(cluster, 'id');
     const subscriptionStatus = get(cluster, 'subscription.status');
-    if (
-      isValid(clusterID) &&
-      subscriptionStatus !== SubscriptionCommonFields.status.DEPROVISIONED
-    ) {
+    if (isValid(clusterID) && subscriptionStatus !== SubscriptionCommonFieldsStatus.Deprovisioned) {
       refreshRelatedResources(clicked);
     }
   };
@@ -399,10 +396,10 @@ const ClusterDetails = (props) => {
 
   const clusterHibernating = isHibernating(cluster);
   const isArchived =
-    get(cluster, 'subscription.status', false) === SubscriptionCommonFields.status.ARCHIVED ||
-    get(cluster, 'subscription.status', false) === SubscriptionCommonFields.status.DEPROVISIONED;
+    get(cluster, 'subscription.status', false) === SubscriptionCommonFieldsStatus.Archived ||
+    get(cluster, 'subscription.status', false) === SubscriptionCommonFieldsStatus.Deprovisioned;
   const isAROCluster = get(cluster, 'subscription.plan.type', '') === knownProducts.ARO;
-  const isOSDTrial = get(cluster, 'subscription.plan.type', '') === knownProducts.OSDTRIAL;
+  const isOSDTrial = get(cluster, 'subscription.plan.type', '') === knownProducts.OSDTrial;
   const isRHOIC = get(cluster, 'subscription.plan.type', '') === knownProducts.RHOIC;
 
   const isManaged = cluster.managed;

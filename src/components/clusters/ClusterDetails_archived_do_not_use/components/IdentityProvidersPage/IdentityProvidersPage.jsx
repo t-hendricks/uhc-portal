@@ -22,7 +22,7 @@ import { Spinner } from '@redhat-cloud-services/frontend-components/Spinner';
 import { Link, Navigate } from '~/common/routing';
 import { AppPage } from '~/components/App/AppPage';
 import { isHypershiftCluster } from '~/components/clusters/common/clusterStates';
-import { SubscriptionCommonFields } from '~/types/accounts_mgmt.v1';
+import { SubscriptionCommonFieldsStatus } from '~/types/accounts_mgmt.v1';
 
 import getClusterName from '../../../../../common/getClusterName';
 import { isValid } from '../../../../../common/helpers';
@@ -104,7 +104,7 @@ const IdentityProvidersPage = (props) => {
       const subscriptionStatus = get(cluster, 'subscription.status');
       if (
         isValid(clusterID) &&
-        subscriptionStatus !== SubscriptionCommonFields.status.DEPROVISIONED &&
+        subscriptionStatus !== SubscriptionCommonFieldsStatus.Deprovisioned &&
         isManaged
       ) {
         dispatch(getClusterIdentityProviders(clusterID));

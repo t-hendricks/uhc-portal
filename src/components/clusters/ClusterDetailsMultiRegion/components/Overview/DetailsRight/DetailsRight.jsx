@@ -25,7 +25,7 @@ import AIClusterStatus from '~/components/common/AIClusterStatus';
 import useCanClusterAutoscale from '~/hooks/useCanClusterAutoscale';
 import { useFetchMachineOrNodePools } from '~/queries/ClusterDetailsQueries/MachinePoolTab/useFetchMachineOrNodePools';
 import { isRestrictedEnv } from '~/restrictedEnv';
-import { SubscriptionCommonFields } from '~/types/accounts_mgmt.v1';
+import { SubscriptionCommonFieldsStatus } from '~/types/accounts_mgmt.v1';
 
 import links from '../../../../../../common/installLinks.mjs';
 import { isAISubscriptionWithoutMetrics } from '../../../../../../common/isAssistedInstallerCluster';
@@ -98,7 +98,7 @@ function DetailsRight({ cluster, hasAutoscaleCluster, isDeprovisioned, clusterDe
   );
   const showWorkerNodesTogether = getQueryParam('showWorkerNodesTogether') === 'true';
   const isDisconnected =
-    get(cluster, 'subscription.status', '') === SubscriptionCommonFields.status.DISCONNECTED;
+    get(cluster, 'subscription.status', '') === SubscriptionCommonFieldsStatus.Disconnected;
 
   const billingMarketplaceAccount = get(cluster, 'subscription.billing_marketplace_account', '');
 

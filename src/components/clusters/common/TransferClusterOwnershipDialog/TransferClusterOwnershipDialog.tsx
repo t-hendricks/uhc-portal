@@ -15,7 +15,7 @@ import getClusterName from '~/common/getClusterName';
 import { ocmBaseName } from '~/common/routing';
 import { useToggleSubscriptionReleased } from '~/queries/ClusterActionsQueries/useToggleSubscriptionReleased';
 import { useGlobalState } from '~/redux/hooks';
-import { Subscription, SubscriptionCommonFields } from '~/types/accounts_mgmt.v1';
+import { Subscription, SubscriptionCommonFieldsStatus } from '~/types/accounts_mgmt.v1';
 import { ClusterFromSubscription, ErrorState } from '~/types/types';
 
 import ErrorBox from '../../../common/ErrorBox';
@@ -124,7 +124,7 @@ const TransferClusterOwnershipDialog = ({ onClose }: TransferClusterOwnershipDia
           Transferring cluster ownership will allow another individual to manage this cluster. The
           steps for transferring cluster ownership are:
         </Text>
-        {subscription?.status === SubscriptionCommonFields.status.DISCONNECTED ? (
+        {subscription?.status === SubscriptionCommonFieldsStatus.Disconnected ? (
           <TextList component={TextListVariants.ol}>
             <TextListItem>Initiate transfer</TextListItem>
             <TextListItem>

@@ -2,7 +2,7 @@ import React from 'react';
 
 import { getMinNodesRequired } from '~/components/clusters/ClusterDetailsMultiRegion/components/MachinePools/machinePoolsHelper';
 import { checkAccessibility, render, screen } from '~/testUtils';
-import { SubscriptionCommonFields } from '~/types/accounts_mgmt.v1';
+import { SubscriptionCommonFieldsCluster_billing_model as SubscriptionCommonFieldsClusterBillingModel } from '~/types/accounts_mgmt.v1';
 
 import { normalizedProducts } from '../../../../common/subscriptionTypes';
 import { MAX_NODES_HCP } from '../machinePools/constants';
@@ -36,7 +36,7 @@ const baseProps = ({ isByoc, isMultiAz }) => ({
   },
   cloudProviderID: 'aws',
   product: normalizedProducts.OSD,
-  billingModel: SubscriptionCommonFields.cluster_billing_model.STANDARD,
+  billingModel: SubscriptionCommonFieldsClusterBillingModel.standard,
 
   minNodes: getMinNodesRequired(false, undefined, {
     isDefaultMachinePool: true,

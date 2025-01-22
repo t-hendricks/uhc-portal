@@ -4,7 +4,10 @@ import { useQueries, UseQueryResult } from '@tanstack/react-query';
 
 import { buildPermissionDict } from '~/redux/reduxHelpers';
 import { authorizationsService } from '~/services';
-import { SelfResourceReview, SelfResourceReviewRequest } from '~/types/accounts_mgmt.v1';
+import {
+  SelfResourceReviewRequestAction,
+  SelfResourceReviewRequestResource_type as SelfResourceReviewRequestResourceType,
+} from '~/types/accounts_mgmt.v1';
 
 import { queryConstants } from '../../queriesConstants';
 
@@ -26,12 +29,12 @@ export const useFetchCanEditDelete = ({
           ...queryKey,
           'authorizationsService',
           'selfResourceReview',
-          SelfResourceReviewRequest.action.DELETE,
+          SelfResourceReviewRequestAction.delete,
         ],
         queryFn: async () => {
           const response = await authorizationsService.selfResourceReview({
-            action: SelfResourceReviewRequest.action.DELETE,
-            resource_type: SelfResourceReview.resource_type.CLUSTER,
+            action: SelfResourceReviewRequestAction.delete,
+            resource_type: SelfResourceReviewRequestResourceType.Cluster,
           });
 
           return buildPermissionDict(response);
@@ -42,12 +45,12 @@ export const useFetchCanEditDelete = ({
           ...queryKey,
           'authorizationsService',
           'selfResourceReview',
-          SelfResourceReviewRequest.action.UPDATE,
+          SelfResourceReviewRequestAction.update,
         ],
         queryFn: async () => {
           const response = await authorizationsService.selfResourceReview({
-            action: SelfResourceReviewRequest.action.UPDATE,
-            resource_type: SelfResourceReview.resource_type.CLUSTER,
+            action: SelfResourceReviewRequestAction.update,
+            resource_type: SelfResourceReviewRequestResourceType.Cluster,
           });
 
           return buildPermissionDict(response);

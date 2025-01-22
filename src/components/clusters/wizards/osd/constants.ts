@@ -17,7 +17,7 @@ import {
 } from '~/components/clusters/wizards/common/constants';
 import { GCPAuthType } from '~/components/clusters/wizards/osd/ClusterSettings/CloudProvider/types';
 import { BreadcrumbPath } from '~/components/common/Breadcrumbs';
-import { SubscriptionCommonFields } from '~/types/accounts_mgmt.v1';
+import { SubscriptionCommonFieldsCluster_billing_model as SubscriptionCommonFieldsClusterBillingModel } from '~/types/accounts_mgmt.v1';
 
 import { ApplicationIngressType, ClusterPrivacyType } from './Networking/constants';
 
@@ -92,7 +92,7 @@ export const initialValues: FormikValues = {
   [FieldId.Byoc]: 'true',
   [FieldId.CloudProvider]: CloudProviderType.Aws,
   [FieldId.AcknowledgePrereq]: false,
-  [FieldId.BillingModel]: SubscriptionCommonFields.cluster_billing_model.STANDARD,
+  [FieldId.BillingModel]: SubscriptionCommonFieldsClusterBillingModel.standard,
   [FieldId.MultiAz]: 'false',
   [FieldId.SelectedVpc]: { id: '', name: '' },
   [FieldId.MachinePoolsSubnets]: [emptyAWSSubnet()],

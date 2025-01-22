@@ -7,9 +7,9 @@ import { Link } from '~/common/routing';
 import { normalizedProducts } from '~/common/subscriptionTypes';
 import ExternalLink from '~/components/common/ExternalLink';
 import {
-  ClusterAuthorizationRequest,
+  ClusterAuthorizationRequestProduct_id as ClusterAuthorizationRequestProductId,
   Subscription,
-  SubscriptionCommonFields,
+  SubscriptionCommonFieldsStatus,
 } from '~/types/accounts_mgmt.v1';
 
 type TransferClusterOwnershipInfoProps = {
@@ -18,14 +18,14 @@ type TransferClusterOwnershipInfoProps = {
 
 const TransferClusterOwnershipInfo = ({ subscription }: TransferClusterOwnershipInfoProps) => {
   const isAllowedProducts = [normalizedProducts.OCP, normalizedProducts.ARO].includes(
-    get(subscription, 'plan.type', '') as ClusterAuthorizationRequest.product_id,
+    get(subscription, 'plan.type', '') as ClusterAuthorizationRequestProductId,
   );
   if (!isAllowedProducts || !subscription?.released) {
     return null;
   }
 
   const alertText =
-    subscription.status === SubscriptionCommonFields.status.DISCONNECTED ? (
+    subscription.status === SubscriptionCommonFieldsStatus.Disconnected ? (
       <>
         The transfer process will complete after{' '}
         <Link to="/register" data-testid="link">

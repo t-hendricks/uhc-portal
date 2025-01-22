@@ -22,7 +22,7 @@ import {
   ApplicationIngressType,
   ClusterPrivacyType,
 } from '~/components/clusters/wizards/osd/Networking/constants';
-import { SubscriptionCommonFields } from '~/types/accounts_mgmt.v1';
+import { SubscriptionCommonFieldsCluster_billing_model as SubscriptionCommonFieldsClusterBillingModel } from '~/types/accounts_mgmt.v1';
 
 export enum RosaFieldId {
   AssociatedAwsId = 'associated_aws_id',
@@ -78,7 +78,7 @@ const hypershiftDefaultSelected = true;
 export const initialValuesHypershift = (isHypershift: boolean, isMultiRegionEnabled?: boolean) =>
   isHypershift
     ? {
-        [FieldId.BillingModel]: SubscriptionCommonFields.cluster_billing_model.MARKETPLACE_AWS,
+        [FieldId.BillingModel]: SubscriptionCommonFieldsClusterBillingModel.marketplace_aws,
         [FieldId.ClusterAutoscaling]: null,
         [FieldId.ClusterPrivacyPublicSubnetId]: '',
         [FieldId.InstallToVpc]: true,
@@ -88,7 +88,7 @@ export const initialValuesHypershift = (isHypershift: boolean, isMultiRegionEnab
         [FieldId.Region]: isMultiRegionEnabled ? undefined : AWS_DEFAULT_REGION,
       }
     : {
-        [FieldId.BillingModel]: SubscriptionCommonFields.cluster_billing_model.STANDARD,
+        [FieldId.BillingModel]: SubscriptionCommonFieldsClusterBillingModel.standard,
         [FieldId.ClusterAutoscaling]: getDefaultClusterAutoScaling(),
         [FieldId.ClusterPrivacyPublicSubnetId]: '',
         [FieldId.EnableUserWorkloadMonitoring]: true,

@@ -6,7 +6,7 @@ import { GridItem } from '@patternfly/react-core';
 import { normalizeProductID } from '~/common/normalize';
 import MachineTypeSelection from '~/components/clusters/common/archived_do_not_use/ScaleSection/MachineTypeSelection';
 import useFormikOnChange from '~/hooks/useFormikOnChange';
-import { SubscriptionCommonFields } from '~/types/accounts_mgmt.v1';
+import { SubscriptionCommonFieldsCluster_billing_model as SubscriptionCommonFieldsClusterBillingModel } from '~/types/accounts_mgmt.v1';
 import { Cluster } from '~/types/clusters_mgmt.v1';
 import { ClusterFromSubscription } from '~/types/types';
 
@@ -58,7 +58,7 @@ const InstanceTypeField = ({ cluster }: InstanceTypeFieldProps) => {
           (cluster as Cluster).billing_model ||
           ((cluster as ClusterFromSubscription).subscription
             ?.cluster_billing_model as Cluster['billing_model']) ||
-          SubscriptionCommonFields.cluster_billing_model.STANDARD
+          SubscriptionCommonFieldsClusterBillingModel.standard
         }
         inModal
         menuAppendTo={document.getElementById('edit-mp-modal')}

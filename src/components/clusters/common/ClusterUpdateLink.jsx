@@ -7,7 +7,7 @@ import { InfoCircleIcon } from '@patternfly/react-icons/dist/esm/icons/info-circ
 import { OutlinedArrowAltCircleUpIcon } from '@patternfly/react-icons/dist/esm/icons/outlined-arrow-alt-circle-up-icon';
 
 import getClusterVersion from '~/components/clusters/common/getClusterVersion';
-import { SubscriptionCommonFields } from '~/types/accounts_mgmt.v1';
+import { SubscriptionCommonFieldsStatus } from '~/types/accounts_mgmt.v1';
 
 import getClusterName from '../../../common/getClusterName';
 import links from '../../../common/installLinks.mjs';
@@ -26,7 +26,7 @@ const ClusterUpdateLink = ({ cluster, hideOSDUpdates }) => {
     cluster.version?.available_upgrades?.length > 0 &&
     clusterVersion &&
     !hideOSDUpdates;
-  const isStale = cluster?.subscription?.status === SubscriptionCommonFields.status.STALE;
+  const isStale = cluster?.subscription?.status === SubscriptionCommonFieldsStatus.Stale;
 
   // Show which version the cluster is currently updating to
   if (

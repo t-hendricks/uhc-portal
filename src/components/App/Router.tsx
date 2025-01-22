@@ -305,7 +305,7 @@ const Router: React.FC<RouterProps> = ({ planType, clusterId, externalClusterId 
           path="/create/osdtrial"
           element={
             <TermsGuard gobackPath="/create">
-              <CreateOsdWizard product={normalizedProducts.OSDTRIAL} />
+              <CreateOsdWizard product={normalizedProducts.OSDTrial} />
             </TermsGuard>
           }
         />

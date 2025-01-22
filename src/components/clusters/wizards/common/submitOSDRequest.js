@@ -14,7 +14,7 @@ import config from '~/config';
 import { regionalizedClusterId } from '~/queries/helpers';
 import { createCluster } from '~/redux/actions/clustersActions';
 import { DEFAULT_FLAVOUR_ID } from '~/redux/actions/flavourActions';
-import { SubscriptionCommonFields } from '~/types/accounts_mgmt.v1';
+import { SubscriptionCommonFieldsCluster_billing_model as SubscriptionCommonFieldsClusterBillingModel } from '~/types/accounts_mgmt.v1';
 import { NamespaceOwnershipPolicy } from '~/types/clusters_mgmt.v1/models/NamespaceOwnershipPolicy';
 import { WildcardPolicy } from '~/types/clusters_mgmt.v1/models/WildcardPolicy';
 
@@ -53,7 +53,7 @@ export const createClusterRequest = ({ isWizard = true, cloudProviderID, product
     },
     multi_az: isMultiAz,
     etcd_encryption: formData.etcd_encryption,
-    billing_model: SubscriptionCommonFields.cluster_billing_model.STANDARD,
+    billing_model: SubscriptionCommonFieldsClusterBillingModel.standard,
     disable_user_workload_monitoring:
       isHypershiftSelected || !formData.enable_user_workload_monitoring,
     ...(!isHypershiftSelected && { fips: !!formData.fips }),
@@ -70,16 +70,16 @@ export const createClusterRequest = ({ isWizard = true, cloudProviderID, product
     };
   }
   if (isHypershiftSelected) {
-    clusterRequest.billing_model = SubscriptionCommonFields.cluster_billing_model.MARKETPLACE_AWS;
+    clusterRequest.billing_model = SubscriptionCommonFieldsClusterBillingModel.marketplace_aws;
   } else if (
-    formData.billing_model === SubscriptionCommonFields.cluster_billing_model.MARKETPLACE_GCP
+    formData.billing_model === SubscriptionCommonFieldsClusterBillingModel.marketplace_gcp
   ) {
-    clusterRequest.billing_model = SubscriptionCommonFields.cluster_billing_model.MARKETPLACE_GCP;
+    clusterRequest.billing_model = SubscriptionCommonFieldsClusterBillingModel.marketplace_gcp;
   } else if (formData.billing_model) {
     const [billing] = formData.billing_model.split('-');
     clusterRequest.billing_model = billing;
   } else {
-    clusterRequest.billing_model = SubscriptionCommonFields.cluster_billing_model.STANDARD;
+    clusterRequest.billing_model = SubscriptionCommonFieldsClusterBillingModel.standard;
   }
 
   if (formData.cluster_version) {

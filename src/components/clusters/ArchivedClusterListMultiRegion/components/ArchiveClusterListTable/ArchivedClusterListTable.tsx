@@ -12,7 +12,7 @@ import { SortByDirection, Table, Tbody, Td, Th, Thead, Tr } from '@patternfly/re
 import { ThSortType } from '@patternfly/react-table/dist/esm/components/Table/base/types';
 
 import { Link } from '~/common/routing';
-import { SubscriptionCommonFields } from '~/types/accounts_mgmt.v1';
+import { SubscriptionCommonFieldsStatus } from '~/types/accounts_mgmt.v1';
 import { ClusterWithPermissions, ViewSorting } from '~/types/types';
 
 import getClusterName from '../../../../../common/getClusterName';
@@ -98,7 +98,7 @@ const ArchivedClusterListTable = ({
       </ButtonWithTooltip>
     );
     const unarchiveBtnCondition =
-      cluster.subscription?.status !== SubscriptionCommonFields.status.DEPROVISIONED
+      cluster.subscription?.status !== SubscriptionCommonFieldsStatus.Deprovisioned
         ? unarchiveBtn
         : null;
 

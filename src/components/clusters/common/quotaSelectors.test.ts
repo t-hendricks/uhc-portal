@@ -1,4 +1,8 @@
-import { QuotaCost, QuotaCostList, RelatedResource } from '~/types/accounts_mgmt.v1';
+import {
+  QuotaCost,
+  QuotaCostList,
+  RelatedResourceBilling_model as RelatedResourceBillingModel,
+} from '~/types/accounts_mgmt.v1';
 import { BillingModel } from '~/types/clusters_mgmt.v1';
 import { ClusterFromSubscription } from '~/types/types';
 
@@ -90,29 +94,24 @@ describe('quotaSelectors', () => {
 
   describe('has quota', () => {
     it.each([
-      [
-        emptyQuotaCostList,
-        normalizedProducts.OSD,
-        RelatedResource.billing_model.MARKETPLACE,
-        false,
-      ],
-      [emptyQuotaCostList, normalizedProducts.OSD, RelatedResource.billing_model.STANDARD, false],
-      [ROSAQuotaList, normalizedProducts.OSD, RelatedResource.billing_model.MARKETPLACE, false],
-      [ROSAQuotaList, normalizedProducts.OSD, RelatedResource.billing_model.STANDARD, false],
-      [CCSQuotaList, normalizedProducts.OSD, RelatedResource.billing_model.MARKETPLACE, false],
-      [CCSQuotaList, normalizedProducts.OSD, RelatedResource.billing_model.STANDARD, true],
-      [rhQuotaList, normalizedProducts.OSD, RelatedResource.billing_model.MARKETPLACE, false],
-      [rhQuotaList, normalizedProducts.OSD, RelatedResource.billing_model.STANDARD, true],
-      [mockQuotaList, normalizedProducts.OSD, RelatedResource.billing_model.STANDARD, true],
-      [mockQuotaList, normalizedProducts.OSD, RelatedResource.billing_model.MARKETPLACE, true],
-      [negativeQuotaList, normalizedProducts.OSD, RelatedResource.billing_model.STANDARD, true],
-      [negativeQuotaList, normalizedProducts.OSD, RelatedResource.billing_model.MARKETPLACE, false],
+      [emptyQuotaCostList, normalizedProducts.OSD, RelatedResourceBillingModel.marketplace, false],
+      [emptyQuotaCostList, normalizedProducts.OSD, RelatedResourceBillingModel.standard, false],
+      [ROSAQuotaList, normalizedProducts.OSD, RelatedResourceBillingModel.marketplace, false],
+      [ROSAQuotaList, normalizedProducts.OSD, RelatedResourceBillingModel.standard, false],
+      [CCSQuotaList, normalizedProducts.OSD, RelatedResourceBillingModel.marketplace, false],
+      [CCSQuotaList, normalizedProducts.OSD, RelatedResourceBillingModel.standard, true],
+      [rhQuotaList, normalizedProducts.OSD, RelatedResourceBillingModel.marketplace, false],
+      [rhQuotaList, normalizedProducts.OSD, RelatedResourceBillingModel.standard, true],
+      [mockQuotaList, normalizedProducts.OSD, RelatedResourceBillingModel.standard, true],
+      [mockQuotaList, normalizedProducts.OSD, RelatedResourceBillingModel.marketplace, true],
+      [negativeQuotaList, normalizedProducts.OSD, RelatedResourceBillingModel.standard, true],
+      [negativeQuotaList, normalizedProducts.OSD, RelatedResourceBillingModel.marketplace, false],
     ])(
       '%p',
       (
         quotaList: QuotaCostList,
         product: string,
-        billingModel: RelatedResource.billing_model,
+        billingModel: RelatedResourceBillingModel,
         exptected: boolean,
       ) =>
         expect(

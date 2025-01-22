@@ -1,7 +1,7 @@
 import get from 'lodash/get';
 
 import { QuotaTypes } from '~/components/clusters/common/quotaModel';
-import { RelatedResource } from '~/types/accounts_mgmt.v1';
+import { RelatedResourceBilling_model as RelatedResourceBillingModel } from '~/types/accounts_mgmt.v1';
 
 import {
   addOnBillingQuota,
@@ -26,7 +26,7 @@ const isAvailable = (addOn, cluster, organization, quotaList) => {
       resourceType: QuotaTypes.ADD_ON,
       resourceName: addOn.resource_name,
       // the billing_model field for addon's is addon specific and should not be a filter criteria against the cluster
-      billingModel: RelatedResource.billing_model.ANY,
+      billingModel: RelatedResourceBillingModel.any,
     }) >= 1
   );
 };
@@ -148,7 +148,7 @@ const hasQuota = (addOn, cluster, organization, quotaList) => {
     resourceType: QuotaTypes.ADD_ON,
     resourceName: addOn.resource_name,
     // the billing_model field for addon's is addon specific and should not be a filter criteria against the cluster
-    billingModel: RelatedResource.billing_model.ANY,
+    billingModel: RelatedResourceBillingModel.any,
   });
   return available >= minCount;
 };
@@ -168,7 +168,7 @@ const quotaCostOptions = (resourceName, cluster, quotaList, allOptions, currentV
     resourceType: QuotaTypes.ADD_ON,
     resourceName,
     // the billing_model field for addon's is addon specific and should not be a filter criteria against the cluster
-    billingModel: RelatedResource.billing_model.ANY,
+    billingModel: RelatedResourceBillingModel.any,
   };
 
   if (!hasPotentialQuota(quotaList, query)) {
@@ -259,20 +259,20 @@ const parameterAndValue = (addOnInstallation, addOn) => {
 };
 
 export {
+  availableAddOns,
+  getAddOnBillingQuota,
+  getInstalled,
+  getParameter,
+  getParameters,
+  getParameterValue,
+  hasParameters,
+  hasQuota,
+  hasRequirements,
   isAvailable,
   isInstalled,
-  getInstalled,
-  hasQuota,
-  quotaCostOptions,
-  availableAddOns,
-  validateAddOnRequirements,
-  getParameters,
-  hasParameters,
-  hasRequirements,
-  getParameter,
-  getParameterValue,
-  parameterValuesForEditing,
-  parameterAndValue,
   minQuotaCount,
-  getAddOnBillingQuota,
+  parameterAndValue,
+  parameterValuesForEditing,
+  quotaCostOptions,
+  validateAddOnRequirements,
 };

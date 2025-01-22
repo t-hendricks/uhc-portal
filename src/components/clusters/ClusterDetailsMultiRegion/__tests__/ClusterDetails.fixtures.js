@@ -1,6 +1,6 @@
 import { produce } from 'immer';
 
-import { SubscriptionCommonFields } from '~/types/accounts_mgmt.v1';
+import { SubscriptionCommonFieldsCluster_billing_model as SubscriptionCommonFieldsClusterBillingModel } from '~/types/accounts_mgmt.v1';
 
 import { normalizedProducts } from '../../../../common/subscriptionTypes';
 import clusterStates from '../../common/clusterStates';
@@ -435,10 +435,10 @@ const CCSClusterDetails = produce(clusterDetails, (draft) => {
 });
 
 const OSDTrialClusterDetails = produce(CCSClusterDetails, (draft) => {
-  draft.cluster.product = { id: normalizedProducts.OSDTRIAL };
+  draft.cluster.product = { id: normalizedProducts.OSDTrial };
   draft.cluster.subscription.plan = {
-    id: normalizedProducts.OSDTRIAL,
-    type: normalizedProducts.OSDTRIAL,
+    id: normalizedProducts.OSDTrial,
+    type: normalizedProducts.OSDTrial,
   };
 });
 
@@ -449,7 +449,7 @@ const OSDRHMClusterDetails = produce(CCSClusterDetails, (draft) => {
     type: normalizedProducts.OSD,
   };
   draft.cluster.subscription.cluster_billing_model =
-    SubscriptionCommonFields.cluster_billing_model.MARKETPLACE;
+    SubscriptionCommonFieldsClusterBillingModel.marketplace;
 });
 
 const OSDGCPClusterDetails = produce(CCSClusterDetails, (draft) => {
@@ -459,7 +459,7 @@ const OSDGCPClusterDetails = produce(CCSClusterDetails, (draft) => {
     type: normalizedProducts.OSD,
   };
   draft.cluster.subscription.cluster_billing_model =
-    SubscriptionCommonFields.cluster_billing_model.MARKETPLACE_GCP;
+    SubscriptionCommonFieldsClusterBillingModel.marketplace_gcp;
 });
 
 const ROSAClusterDetails = produce(CCSClusterDetails, (draft) => {
@@ -543,7 +543,7 @@ const AIClusterDetails = produce(CCSClusterDetails, (draft) => {
   draft.cluster.aiCluster = { id: clusterDetails.cluster.id };
   draft.cluster.canEdit = false;
   draft.cluster.subscription.plan = {
-    id: normalizedProducts.OCP_ASSISTED_INSTALL,
+    id: normalizedProducts.OCP_AssistedInstall,
     type: normalizedProducts.OCP,
   };
 });

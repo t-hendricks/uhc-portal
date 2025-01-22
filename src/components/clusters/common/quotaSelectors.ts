@@ -2,11 +2,12 @@ import get from 'lodash/get';
 
 import { ANY, match, matchCaseInsensitively } from '~/common/matchUtils';
 import {
-  ConsumedQuota,
+  ConsumedQuotaBilling_model as ConsumedQuotaBillingModel,
   QuotaCost,
   QuotaCostList,
   RelatedResource,
-  SubscriptionCommonFields,
+  RelatedResourceBilling_model as RelatedResourceBillingModel,
+  SubscriptionCommonFieldsCluster_billing_model as SubscriptionCommonFieldsClusterBillingModel,
 } from '~/types/accounts_mgmt.v1';
 import { BillingModel } from '~/types/clusters_mgmt.v1';
 import { ClusterFromSubscription } from '~/types/types';
@@ -24,11 +25,11 @@ import { BillingQuota, defaultQuotaQuery, QuotaParams, QuotaQuery } from './quot
  */
 /* eslint-disable camelcase */
 const getBillingQuotaModel = (
-  model: ConsumedQuota.billing_model | any,
-): RelatedResource.billing_model => {
+  model: ConsumedQuotaBillingModel | any,
+): RelatedResourceBillingModel => {
   switch (model) {
     case BillingModel.MARKETPLACE_AWS:
-      return RelatedResource.billing_model.MARKETPLACE;
+      return RelatedResourceBillingModel.marketplace;
     default:
       return model;
   }
@@ -82,8 +83,8 @@ const queryFromQuotaParams = (quotaParams: QuotaParams): QuotaQuery => ({
   product: quotaParams.product || normalizedProducts.ANY,
   billing_model:
     quotaParams.billingModel?.toString() === STANDARD_TRIAL_BILLING_MODEL_TYPE // TODO: to remove standar trial billing model by OCMUI-2689
-      ? RelatedResource.billing_model.STANDARD
-      : quotaParams.billingModel || RelatedResource.billing_model.ANY,
+      ? RelatedResourceBillingModel.standard
+      : quotaParams.billingModel || RelatedResourceBillingModel.any,
   cloud_provider: quotaParams.cloudProviderID || ANY,
   byoc: { true: 'byoc', false: 'rhinfra', undefined: ANY }[`${quotaParams.isBYOC}`], // TODO: this is inconsistent string vs boolean
   availability_zone_type: { true: 'multi', false: 'single', undefined: ANY }[
@@ -105,8 +106,8 @@ const availableQuota = (quotaList: QuotaCostList | undefined, quotaParams: Quota
     ...quotaParams,
     billingModel:
       quotaParams.billingModel &&
-      quotaParams.billingModel.startsWith(RelatedResource.billing_model.MARKETPLACE)
-        ? RelatedResource.billing_model.MARKETPLACE
+      quotaParams.billingModel.startsWith(RelatedResourceBillingModel.marketplace)
+        ? RelatedResourceBillingModel.marketplace
         : quotaParams.billingModel,
   };
 
@@ -131,7 +132,7 @@ const addOnBillingQuota = (quotaList: QuotaCostList, quotaParams: QuotaParams): 
     quotaCostItem.related_resources?.forEach((resource) => {
       if (relatedResourceMatches(resource, query)) {
         if (
-          [ANY, SubscriptionCommonFields.cluster_billing_model.STANDARD].includes(
+          [ANY, SubscriptionCommonFieldsClusterBillingModel.standard].includes(
             resource.billing_model,
           )
         ) {
@@ -143,7 +144,7 @@ const addOnBillingQuota = (quotaList: QuotaCostList, quotaParams: QuotaParams): 
             };
           }
         } else if (
-          resource.billing_model === RelatedResource.billing_model.MARKETPLACE &&
+          resource.billing_model === RelatedResourceBillingModel.marketplace &&
           !models.marketplace
         ) {
           models.marketplace = {
@@ -185,7 +186,7 @@ const queryFromCluster = <E extends ClusterFromSubscription>(cluster: E): QuotaP
   product: cluster.subscription?.plan?.type,
   billingModel:
     clusterBillingModelToRelatedResource(cluster.subscription?.cluster_billing_model) ??
-    RelatedResource.billing_model.STANDARD,
+    RelatedResourceBillingModel.standard,
   cloudProviderID: cluster.cloud_provider?.id ?? ANY,
   isBYOC: cluster.ccs?.enabled === true,
   isMultiAz: get(cluster, 'multi_az', false), // TODO: multi_az?

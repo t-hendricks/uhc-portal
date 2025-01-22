@@ -2,7 +2,7 @@ import React from 'react';
 
 import { defaultSubscription } from '~/components/clusters/common/__tests__/clusterStates.fixtures';
 import { checkAccessibility, render, screen } from '~/testUtils';
-import { SubscriptionCommonFields } from '~/types/accounts_mgmt.v1';
+import { SubscriptionCommonFieldsStatus } from '~/types/accounts_mgmt.v1';
 
 import { normalizedProducts } from '../../../../../common/subscriptionTypes';
 import TransferClusterOwnershipInfo from '../ClusterDetailsTop/components/TransferClusterOwnershipInfo';
@@ -49,7 +49,7 @@ describe('<TransferClusterOwnershipInfo />', () => {
     const subscription = {
       plan: { type: normalizedProducts.OCP },
       released: true,
-      status: SubscriptionCommonFields.status.DISCONNECTED,
+      status: SubscriptionCommonFieldsStatus.Disconnected,
     };
 
     // Act

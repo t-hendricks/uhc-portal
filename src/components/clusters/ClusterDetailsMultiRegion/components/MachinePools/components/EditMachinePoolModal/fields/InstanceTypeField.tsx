@@ -8,7 +8,7 @@ import { isMultiAZ } from '~/components/clusters/ClusterDetailsMultiRegion/clust
 import MachineTypeSelection from '~/components/clusters/common/ScaleSection/MachineTypeSelection';
 import useFormikOnChange from '~/hooks/useFormikOnChange';
 import { MachineTypesResponse } from '~/queries/types';
-import { SubscriptionCommonFields } from '~/types/accounts_mgmt.v1';
+import { SubscriptionCommonFieldsCluster_billing_model as SubscriptionCommonFieldsClusterBillingModel } from '~/types/accounts_mgmt.v1';
 import { Cluster } from '~/types/clusters_mgmt.v1';
 import { ClusterFromSubscription } from '~/types/types';
 
@@ -60,7 +60,7 @@ const InstanceTypeField = ({ cluster, machineTypesResponse }: InstanceTypeFieldP
           (cluster as Cluster).billing_model ||
           ((cluster as ClusterFromSubscription).subscription
             ?.cluster_billing_model as Cluster['billing_model']) ||
-          SubscriptionCommonFields.cluster_billing_model.STANDARD
+          SubscriptionCommonFieldsClusterBillingModel.standard
         }
         inModal
         menuAppendTo={document.getElementById('edit-mp-modal')}

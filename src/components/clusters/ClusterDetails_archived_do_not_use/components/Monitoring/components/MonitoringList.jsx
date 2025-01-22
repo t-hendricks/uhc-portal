@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 
 import { DataList } from '@patternfly/react-core';
 
-import { SubscriptionCommonFields } from '~/types/accounts_mgmt.v1';
+import { SubscriptionCommonFieldsStatus } from '~/types/accounts_mgmt.v1';
 
 import { metricsStatusMessages } from '../../../../common/ResourceUsage/constants';
 import ResourceUsage from '../../../../common/ResourceUsage/ResourceUsage';
@@ -37,7 +37,7 @@ class MonitoringList extends React.Component {
 
     const metricsAvailable = hasResourceUsageMetrics(cluster);
     const isArchived =
-      get(cluster, 'subscription.status', false) === SubscriptionCommonFields.status.ARCHIVED;
+      get(cluster, 'subscription.status', false) === SubscriptionCommonFieldsStatus.Archived;
     const metricsStatusMessage = isArchived
       ? metricsStatusMessages.archived
       : metricsStatusMessages[cluster.state] || metricsStatusMessages.default;

@@ -1,4 +1,4 @@
-import { SubscriptionCommonFields } from '~/types/accounts_mgmt.v1';
+import { SubscriptionCommonFieldsCluster_billing_model as SubscriptionCommonFieldsClusterBillingModel } from '~/types/accounts_mgmt.v1';
 
 export type CloudProviders = 'rhm' | 'aws' | 'azure';
 
@@ -13,7 +13,7 @@ export const NO_QUOTA = 'no-quota';
 
 export type SubscriptionModelAddOn = {
   addOn: string;
-  billingModel: SubscriptionCommonFields.cluster_billing_model | typeof NO_QUOTA;
+  billingModel: SubscriptionCommonFieldsClusterBillingModel | typeof NO_QUOTA;
   cloudAccount?: string;
 };
 

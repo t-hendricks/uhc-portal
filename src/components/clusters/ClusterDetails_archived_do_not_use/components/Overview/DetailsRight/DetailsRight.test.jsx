@@ -2,7 +2,7 @@ import React from 'react';
 
 import { checkAccessibility, mockRestrictedEnv, render, screen, within } from '~/testUtils';
 
-import { SubscriptionCommonFields } from '../../../../../../types/accounts_mgmt.v1';
+import { SubscriptionCommonFieldsStatus } from '../../../../../../types/accounts_mgmt.v1';
 import fixtures from '../../../__tests__/ClusterDetails.fixtures';
 
 import DetailsRight from './DetailsRight';
@@ -201,7 +201,7 @@ describe('<DetailsRight />', () => {
     it('shows total VPC if cluster is not disconnected and does not have sockets', () => {
       // Arrange
       expect(defaultProps.cluster.subscription.status).not.toEqual(
-        SubscriptionCommonFields.status.DISCONNECTED,
+        SubscriptionCommonFieldsStatus.Disconnected,
       );
       expect(defaultProps.cluster.metrics.sockets.total.value).toBeFalsy();
 
@@ -225,7 +225,7 @@ describe('<DetailsRight />', () => {
           ...clusterFixture,
           subscription: {
             ...clusterFixture.subscription,
-            status: SubscriptionCommonFields.status.DISCONNECTED,
+            status: SubscriptionCommonFieldsStatus.Disconnected,
           },
         },
       };
@@ -240,7 +240,7 @@ describe('<DetailsRight />', () => {
       // Arrange
       const clusterFixture = defaultProps.cluster;
       expect(clusterFixture.subscription.status).not.toEqual(
-        SubscriptionCommonFields.status.DISCONNECTED,
+        SubscriptionCommonFieldsStatus.Disconnected,
       );
 
       const newProps = {
@@ -274,7 +274,7 @@ describe('<DetailsRight />', () => {
           ...clusterFixture,
           subscription: {
             ...clusterFixture.subscription,
-            status: SubscriptionCommonFields.status.DISCONNECTED,
+            status: SubscriptionCommonFieldsStatus.Disconnected,
           },
         },
       };
@@ -288,7 +288,7 @@ describe('<DetailsRight />', () => {
     it('shows total memory label if cluster is not disconnected', () => {
       // Arrange
       expect(defaultProps.cluster.subscription.status).not.toEqual(
-        SubscriptionCommonFields.status.DISCONNECTED,
+        SubscriptionCommonFieldsStatus.Disconnected,
       );
       const memory = defaultProps.cluster.metrics.memory.total;
       expect(memory.value).toEqual(147469647872);

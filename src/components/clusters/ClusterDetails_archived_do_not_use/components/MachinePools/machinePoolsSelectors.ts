@@ -6,8 +6,8 @@ import { PromiseReducerState } from '~/redux/types';
 import {
   Organization,
   QuotaCostList,
-  RelatedResource,
-  SubscriptionCommonFields,
+  RelatedResourceBilling_model as RelatedResourceBillingModel,
+  SubscriptionCommonFieldsCluster_billing_model as SubscriptionCommonFieldsClusterBillingModel,
 } from '~/types/accounts_mgmt.v1';
 import { MachineType } from '~/types/clusters_mgmt.v1';
 import { ClusterFromSubscription } from '~/types/types';
@@ -18,7 +18,7 @@ const hasNodesQuotaForType = <E extends ClusterFromSubscription>(
   machineType: MachineType,
   cluster: E,
   cloudProviderID: string,
-  billingModel: RelatedResource.billing_model,
+  billingModel: RelatedResourceBillingModel,
   organization: PromiseReducerState<OrganizationState>,
 ) => {
   const quotaParams: QuotaParams = {
@@ -49,12 +49,12 @@ const hasMachinePoolsQuotaSelector = <E extends ClusterFromSubscription>(
 
   const cloudProviderID = cluster?.cloud_provider?.id;
   const billingModel =
-    RelatedResource.billing_model[
+    RelatedResourceBillingModel[
       get(
         cluster,
         'subscription.cluster_billing_model',
-        SubscriptionCommonFields.cluster_billing_model.STANDARD,
-      ) as keyof typeof RelatedResource.billing_model
+        SubscriptionCommonFieldsClusterBillingModel.standard,
+      ) as keyof typeof RelatedResourceBillingModel
     ];
 
   if (cloudProviderID && machineTypes) {

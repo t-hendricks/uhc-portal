@@ -11,7 +11,7 @@ import {
 } from '~/components/clusters/wizards/osd/ClusterSettings/CloudProvider/types';
 import { OSD_GCP_WIF } from '~/redux/constants/featureConstants';
 import { checkAccessibility, mockUseFeatureGate, render, screen } from '~/testUtils';
-import { SubscriptionCommonFields } from '~/types/accounts_mgmt.v1';
+import { SubscriptionCommonFieldsCluster_billing_model as SubscriptionCommonFieldsClusterBillingModel } from '~/types/accounts_mgmt.v1';
 
 import { FieldId, initialValues } from '../../../constants';
 
@@ -63,7 +63,7 @@ describe('<GcpByocFields />', () => {
     it('should not show the Google terms prerequisite if the billing model is not marketplace-gcp', async () => {
       render(
         prepareComponent({
-          [FieldId.BillingModel]: SubscriptionCommonFields.cluster_billing_model.MARKETPLACE,
+          [FieldId.BillingModel]: SubscriptionCommonFieldsClusterBillingModel.marketplace,
         }),
       );
 
@@ -77,7 +77,7 @@ describe('<GcpByocFields />', () => {
     it('should show the Google terms prerequisite if the billing model is marketplace-gcp', async () => {
       render(
         prepareComponent({
-          [FieldId.BillingModel]: SubscriptionCommonFields.cluster_billing_model.MARKETPLACE_GCP,
+          [FieldId.BillingModel]: SubscriptionCommonFieldsClusterBillingModel.marketplace_gcp,
         }),
       );
 

@@ -12,7 +12,7 @@ import {
 } from '@patternfly/react-core';
 
 import { BillingQuota } from '~/components/clusters/common/quotaModel';
-import { SubscriptionCommonFields } from '~/types/accounts_mgmt.v1';
+import { SubscriptionCommonFieldsCluster_billing_model as SubscriptionCommonFieldsClusterBillingModel } from '~/types/accounts_mgmt.v1';
 
 import { setAddonsDrawer } from '../AddOnsActions';
 import AddOnsConstants from '../AddOnsConstants';
@@ -66,7 +66,7 @@ const AddOnsSubscription = ({
   const marketplaceNoBilling = billingQuota.marketplace === undefined;
 
   const getDefaultBillingModel = ():
-    | SubscriptionCommonFields.cluster_billing_model
+    | SubscriptionCommonFieldsClusterBillingModel
     | typeof NO_QUOTA => {
     if (installedAddOn) {
       return installedAddOn.billing.billing_model;
@@ -77,7 +77,7 @@ const AddOnsSubscription = ({
         // marketplace subscription offered but no quota
         return NO_QUOTA;
       }
-      return SubscriptionCommonFields.cluster_billing_model.MARKETPLACE;
+      return SubscriptionCommonFieldsClusterBillingModel.marketplace;
     }
     if (marketplaceNoBilling) {
       // marketplace subscription model not offered for this addon
@@ -85,16 +85,16 @@ const AddOnsSubscription = ({
         // standard subscription offered but no quota
         return NO_QUOTA;
       }
-      return SubscriptionCommonFields.cluster_billing_model.STANDARD;
+      return SubscriptionCommonFieldsClusterBillingModel.standard;
     }
     // both standard and marketplace subscription models are offered, check quota
     if (!hasQuotaStandard) {
       if (!hasQuotaMarketplace) {
         return NO_QUOTA;
       }
-      return SubscriptionCommonFields.cluster_billing_model.MARKETPLACE;
+      return SubscriptionCommonFieldsClusterBillingModel.marketplace;
     }
-    return SubscriptionCommonFields.cluster_billing_model.STANDARD;
+    return SubscriptionCommonFieldsClusterBillingModel.standard;
   };
 
   React.useEffect(() => {
@@ -137,7 +137,7 @@ const AddOnsSubscription = ({
           isReady={isReady}
           cloudAccounts={cloudAccounts}
           installedAddOn={installedAddOn}
-          billingModel={SubscriptionCommonFields.cluster_billing_model.MARKETPLACE_RHM}
+          billingModel={SubscriptionCommonFieldsClusterBillingModel.marketplace_rhm}
           name="Red Hat Marketplace"
           cloudProvider="rhm"
         />
@@ -150,7 +150,7 @@ const AddOnsSubscription = ({
         isReady={isReady}
         cloudAccounts={cloudAccounts}
         installedAddOn={installedAddOn}
-        billingModel={SubscriptionCommonFields.cluster_billing_model.MARKETPLACE_AWS}
+        billingModel={SubscriptionCommonFieldsClusterBillingModel.marketplace_aws}
         name="AWS Marketplace"
         cloudProvider="aws"
       />
@@ -163,7 +163,7 @@ const AddOnsSubscription = ({
           isReady={isReady}
           cloudAccounts={cloudAccounts}
           installedAddOn={installedAddOn}
-          billingModel={SubscriptionCommonFields.cluster_billing_model.MARKETPLACE_AZURE}
+          billingModel={SubscriptionCommonFieldsClusterBillingModel.marketplace_azure}
           name="Azure Marketplace"
           cloudProvider="azure"
         />
@@ -174,11 +174,11 @@ const AddOnsSubscription = ({
   const radioStandard = (disabled = false) => (
     <Radio
       isChecked={
-        activeSubscription?.billingModel === SubscriptionCommonFields.cluster_billing_model.STANDARD
+        activeSubscription?.billingModel === SubscriptionCommonFieldsClusterBillingModel.standard
       }
       name="billing-model"
-      id={SubscriptionCommonFields.cluster_billing_model.STANDARD}
-      value={SubscriptionCommonFields.cluster_billing_model.STANDARD}
+      id={SubscriptionCommonFieldsClusterBillingModel.standard}
+      value={SubscriptionCommonFieldsClusterBillingModel.standard}
       label={
         <div>
           <span className={disabled ? 'pf-v5-u-mr-xs' : ''}>Standard</span>
@@ -190,7 +190,7 @@ const AddOnsSubscription = ({
           ...subscriptionModels,
           [activeCardId]: {
             addOn: activeCardId,
-            billingModel: SubscriptionCommonFields.cluster_billing_model.STANDARD,
+            billingModel: SubscriptionCommonFieldsClusterBillingModel.standard,
             cloudAccount: '',
           },
         });
@@ -200,11 +200,11 @@ const AddOnsSubscription = ({
   const radioMarketplace = (disabled = false) => (
     <Radio
       isChecked={activeSubscription?.billingModel.startsWith(
-        SubscriptionCommonFields.cluster_billing_model.MARKETPLACE,
+        SubscriptionCommonFieldsClusterBillingModel.marketplace,
       )}
       name="billing-model"
-      id={SubscriptionCommonFields.cluster_billing_model.MARKETPLACE}
-      value={SubscriptionCommonFields.cluster_billing_model.MARKETPLACE}
+      id={SubscriptionCommonFieldsClusterBillingModel.marketplace}
+      value={SubscriptionCommonFieldsClusterBillingModel.marketplace}
       label={
         <div>
           <span className={disabled ? 'pf-v5-u-mr-xs' : ''}>Marketplace</span>
@@ -216,7 +216,7 @@ const AddOnsSubscription = ({
           ...subscriptionModels,
           [activeCardId]: {
             addOn: activeCardId,
-            billingModel: SubscriptionCommonFields.cluster_billing_model.MARKETPLACE,
+            billingModel: SubscriptionCommonFieldsClusterBillingModel.marketplace,
             cloudAccount: installedAddOn?.billing?.billing_marketplace_account || '',
           },
         });
@@ -242,10 +242,10 @@ const AddOnsSubscription = ({
           </FormGroup>
         </Form>
       )}
-      {activeSubscription?.billingModel ===
-        SubscriptionCommonFields.cluster_billing_model.STANDARD && standardOptions}
+      {activeSubscription?.billingModel === SubscriptionCommonFieldsClusterBillingModel.standard &&
+        standardOptions}
       {activeSubscription?.billingModel.startsWith(
-        SubscriptionCommonFields.cluster_billing_model.MARKETPLACE,
+        SubscriptionCommonFieldsClusterBillingModel.marketplace,
       ) && marketplaceOptions}
     </>
   );

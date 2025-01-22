@@ -18,7 +18,7 @@ import { useFeatureGate } from '~/hooks/useFeatureGate';
 import { clustersActions } from '~/redux/actions';
 import { UNSTABLE_CLUSTER_VERSIONS } from '~/redux/constants/featureConstants';
 import { useGlobalState } from '~/redux/hooks';
-import { SubscriptionCommonFields } from '~/types/accounts_mgmt.v1';
+import { SubscriptionCommonFieldsCluster_billing_model as SubscriptionCommonFieldsClusterBillingModel } from '~/types/accounts_mgmt.v1';
 import { Version } from '~/types/clusters_mgmt.v1';
 
 import { getVersionsData, hasUnstableVersionsCapability } from './versionSelectHelper';
@@ -63,7 +63,7 @@ export const VersionSelectField = ({
   }, {});
 
   const isMarketplaceGcp =
-    billingModel === SubscriptionCommonFields.cluster_billing_model.MARKETPLACE_GCP;
+    billingModel === SubscriptionCommonFieldsClusterBillingModel.marketplace_gcp;
   const isWIF = gcpAuthType === GCPAuthType.WorkloadIdentityFederation;
 
   const getInstallableVersions = useCallback(

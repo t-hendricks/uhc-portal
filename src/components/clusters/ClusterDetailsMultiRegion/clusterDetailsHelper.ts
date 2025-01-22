@@ -3,7 +3,11 @@ import clusterStates, {
   isHibernating,
   isHypershiftCluster,
 } from '~/components/clusters/common/clusterStates';
-import { ClusterResource, Subscription, SubscriptionCommonFields } from '~/types/accounts_mgmt.v1';
+import {
+  ClusterResource,
+  Subscription,
+  SubscriptionCommonFieldsStatus,
+} from '~/types/accounts_mgmt.v1';
 import { ClusterFromSubscription } from '~/types/types';
 
 const hasCpuAndMemory = (cpu: ClusterResource | undefined, memory: ClusterResource | undefined) =>
@@ -41,8 +45,8 @@ const isMPoolAz = (cluster: ClusterFromSubscription, mpAvailZones: number | unde
  * @returns whether subscription is archived or not
  */
 const isArchivedSubscription = <E extends ClusterFromSubscription>(cluster: E): boolean =>
-  cluster.subscription?.status === SubscriptionCommonFields.status.ARCHIVED ||
-  cluster.subscription?.status === SubscriptionCommonFields.status.DEPROVISIONED;
+  cluster.subscription?.status === SubscriptionCommonFieldsStatus.Archived ||
+  cluster.subscription?.status === SubscriptionCommonFieldsStatus.Deprovisioned;
 
 /**
  *

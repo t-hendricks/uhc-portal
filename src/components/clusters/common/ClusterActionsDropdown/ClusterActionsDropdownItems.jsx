@@ -4,7 +4,7 @@ import get from 'lodash/get';
 import { DropdownItem, DropdownList } from '@patternfly/react-core';
 import { addNotification } from '@redhat-cloud-services/frontend-components-notifications';
 
-import { SubscriptionCommonFields } from '~/types/accounts_mgmt.v1';
+import { SubscriptionCommonFieldsStatus } from '~/types/accounts_mgmt.v1';
 
 import getClusterName from '../../../../common/getClusterName';
 import { isAssistedInstallCluster } from '../../../../common/isAssistedInstallerCluster';
@@ -92,7 +92,7 @@ function actionResolver(
 
   const getKey = (item) => `${cluster.id}.menu.${item}`;
   const clusterName = getClusterName(cluster);
-  const isProductOSDTrial = cluster.product && cluster.product.id === normalizedProducts.OSDTRIAL;
+  const isProductOSDTrial = cluster.product && cluster.product.id === normalizedProducts.OSDTrial;
 
   const getAdminConsoleProps = () => ({
     ...baseProps,
@@ -335,7 +335,7 @@ function actionResolver(
     !isHypershiftCluster(cluster);
   const showEditMachinePool = cluster.canEdit && cluster.managed;
   const isArchived =
-    get(cluster, 'subscription.status', false) === SubscriptionCommonFields.status.ARCHIVED;
+    get(cluster, 'subscription.status', false) === SubscriptionCommonFieldsStatus.Archived;
   const showArchive = cluster.canEdit && !cluster.managed && cluster.subscription && !isArchived;
   const showUnarchive = cluster.canEdit && !cluster.managed && cluster.subscription && isArchived;
   const showEditURL =
@@ -357,7 +357,7 @@ function actionResolver(
     cluster.canEdit &&
     canTransferClusterOwnership &&
     isAllowedProducts &&
-    get(cluster, 'subscription.status') !== SubscriptionCommonFields.status.ARCHIVED;
+    get(cluster, 'subscription.status') !== SubscriptionCommonFieldsStatus.Archived;
   const showUpgradeTrialCluster = isClusterReady && cluster.canEdit && isProductOSDTrial;
 
   return [

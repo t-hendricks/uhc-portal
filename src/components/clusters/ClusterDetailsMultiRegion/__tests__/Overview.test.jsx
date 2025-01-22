@@ -9,7 +9,7 @@ import {
   screen,
   withState,
 } from '../../../../testUtils';
-import { SubscriptionCommonFields } from '../../../../types/accounts_mgmt.v1';
+import { SubscriptionCommonFieldsStatus } from '../../../../types/accounts_mgmt.v1';
 import Overview from '../components/Overview/Overview';
 
 import fixtures from './ClusterDetails.fixtures';
@@ -133,7 +133,7 @@ describe('<Overview />', () => {
         ...fixtures.OCPClusterDetails.cluster,
         subscription: {
           ...fixtures.OCPClusterDetails.cluster.subscription,
-          status: SubscriptionCommonFields.status.ARCHIVED,
+          status: SubscriptionCommonFieldsStatus.Archived,
         },
       },
       cloudProviders: fixtures.cloudProviders,
