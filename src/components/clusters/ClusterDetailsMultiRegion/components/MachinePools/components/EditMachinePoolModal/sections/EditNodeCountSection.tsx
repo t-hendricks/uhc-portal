@@ -13,7 +13,6 @@ import { ClusterFromSubscription } from '~/types/types';
 import MachinePoolsAutoScalingWarning from '../../../MachinePoolAutoscalingWarning';
 import { getClusterMinNodes } from '../../../machinePoolsHelper';
 import ResizingAlert from '../components/ResizingAlert';
-import AutoRepairField from '../fields/AutoRepairField';
 import AutoscaleMaxReplicasField from '../fields/AutoscaleMaxReplicasField';
 import AutoscaleMinReplicasField from '../fields/AutoscaleMinReplicasField';
 import AutoscalingField from '../fields/AutoscalingField';
@@ -75,7 +74,6 @@ const EditNodeCountSection = ({
   return (
     <>
       <AutoscalingField cluster={cluster} />
-      <AutoRepairField cluster={cluster} />
       {organization.pending ? (
         <div>
           <Spinner size="md" />

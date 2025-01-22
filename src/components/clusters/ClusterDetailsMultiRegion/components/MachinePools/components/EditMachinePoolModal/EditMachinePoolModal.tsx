@@ -26,6 +26,7 @@ import { ClusterFromSubscription, ErrorState } from '~/types/types';
 
 import { canUseSpotInstances } from '../../machinePoolsHelper';
 
+import AutoRepairField from './fields/AutoRepairField';
 import DiskSizeField from './fields/DiskSizeField';
 import useMachinePoolFormik, { EditMachinePoolValues } from './hooks/useMachinePoolFormik';
 import EditDetailsSection from './sections/EditDetailsSection';
@@ -254,6 +255,7 @@ const EditMachinePoolModal = ({
                 machineTypes={machineTypesResponse}
                 allow249NodesOSDCCSROSA={allow249NodesOSDCCSROSA}
               />
+              <AutoRepairField cluster={cluster} />
               <DiskSizeField cluster={cluster} isEdit={isEdit} />
               <ExpandableSection toggleText="Edit node labels and taints">
                 <EditLabelsSection />
