@@ -29,6 +29,7 @@ import {
 } from '~/queries/ClusterDetailsQueries/ClusterSettingsTab/useGetSchedules';
 import { usePostSchedule } from '~/queries/ClusterDetailsQueries/ClusterSettingsTab/usePostSchedule';
 import { useReplaceSchedule } from '~/queries/ClusterDetailsQueries/ClusterSettingsTab/useReplaceSchedule';
+import { useFetchMachineOrNodePools } from '~/queries/ClusterDetailsQueries/MachinePoolTab/useFetchMachineOrNodePools';
 import { useEditCluster } from '~/queries/ClusterDetailsQueries/useEditCluster';
 import { invalidateClusterDetailsQueries } from '~/queries/ClusterDetailsQueries/useFetchClusterDetails';
 import { useFetchUpgradeGatesFromApi } from '~/queries/ClusterDetailsQueries/useFetchUpgadeGatesFromApi';
@@ -114,6 +115,12 @@ const UpgradeSettingsTab = ({ cluster }) => {
     mutate: editClusterMutate,
     isSuccess: isEditClusterSuccess,
   } = useEditCluster(clusterID, region);
+  const { data: machinePoolData, isError: isMachinePoolError } = useFetchMachineOrNodePools(
+    clusterID,
+    isHypershift,
+    clusterVersion,
+    region,
+  );
 
   const isDisabled =
     isGetShcedulesLoading ||
@@ -361,7 +368,15 @@ const UpgradeSettingsTab = ({ cluster }) => {
                       cluster={cluster}
                       isHypershift={isHypershift}
                     />
-                    <UpdateAllMachinePools goToMachinePoolTab />
+                    <UpdateAllMachinePools
+                      goToMachinePoolTab
+                      isHypershift={isHypershift}
+                      clusterId={clusterID}
+                      controlPlaneVersion={clusterVersion}
+                      isMachinePoolError={isMachinePoolError}
+                      machinePoolData={machinePoolData}
+                      region={region}
+                    />
 
                     <Form>
                       <Grid hasGutter>

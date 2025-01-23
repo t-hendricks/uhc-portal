@@ -106,7 +106,7 @@ const getOpenShiftVersion = (
           machinePool={machinePool}
           isMachinePoolError={isMachinePoolError}
           isHypershift={isHypershift}
-          clusterVersionID={clusterVersionID}
+          controlPlaneVersion={clusterVersionID}
         />
       ) : null}
     </>
@@ -474,9 +474,12 @@ const MachinePools = ({ cluster }) => {
           {!tableActionsDisabled && (
             <UpdateAllMachinePools
               isMachinePoolError={isMachinePoolError}
+              clusterId={clusterID}
               isHypershift={isHypershift}
-              clusterVersionID={clusterVersionID}
+              controlPlaneVersion={clusterVersionID}
               machinePoolData={machinePoolData}
+              region={region}
+              refreshMachinePools={refreshMachinePools}
             />
           )}
           <Card className="ocm-c-machine-pools__card">
@@ -597,7 +600,9 @@ const MachinePools = ({ cluster }) => {
       )}
       <UpdateMachinePoolModal
         isHypershift={isHypershift}
-        clusterVersionID={clusterVersionID}
+        clusterId={clusterID}
+        refreshMachinePools={refreshMachinePools}
+        controlPlaneVersion={clusterVersionID}
         region={region}
       />
       {isClusterAutoscalingModalOpen && (

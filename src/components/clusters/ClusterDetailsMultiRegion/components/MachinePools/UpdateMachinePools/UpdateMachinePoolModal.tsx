@@ -18,8 +18,6 @@ import { NodePoolWithUpgradePolicies } from '../machinePoolCustomTypes';
 
 import {
   canMachinePoolBeUpgradedSelector,
-  controlPlaneIdSelector,
-  controlPlaneVersionSelector,
   displayControlPlaneVersion,
   isMachinePoolScheduleError,
   isMachinePoolUpgrading,
@@ -33,18 +31,17 @@ export const UpdatePoolButton = ({
   machinePool,
   isMachinePoolError,
   isHypershift,
-  clusterVersionID,
+  controlPlaneVersion,
 }: {
   machinePool: NodePoolWithUpgradePolicies;
   isMachinePoolError: boolean;
   isHypershift: boolean;
-  clusterVersionID?: string;
+  controlPlaneVersion: string;
 }) => {
   const dispatch = useDispatch();
-  const version = useSelector((state: GlobalState) => controlPlaneVersionSelector(state));
-  const controlPlaneVersion = clusterVersionID || version;
 
   const updateSchedules = useGlobalState((state) => state.clusterUpgrades.schedules);
+
   const canBeUpdated = useSelector((state: GlobalState) =>
     canMachinePoolBeUpgradedSelector(
       updateSchedules,
@@ -114,19 +111,19 @@ export const UpdatePoolButton = ({
 
 export const UpdateMachinePoolModal = ({
   isHypershift,
-  clusterVersionID,
+  clusterId,
+  refreshMachinePools,
+  controlPlaneVersion,
   region,
 }: {
   isHypershift: boolean;
-  clusterVersionID?: string;
+  clusterId: string;
+  refreshMachinePools?: () => void;
+  controlPlaneVersion?: string;
   region?: string;
 }) => {
   const [pending, setPending] = React.useState(false);
   const [error, setError] = React.useState('');
-
-  const clusterId = useSelector(controlPlaneIdSelector);
-  const version = useSelector((state: GlobalState) => controlPlaneVersionSelector(state));
-  const controlPlaneVersion = clusterVersionID || version;
 
   const isModalOpen = useSelector((state: GlobalState) => shouldShowModal(state, updateModalId));
   // @ts-ignore - useSelector is return as "any"
@@ -162,7 +159,11 @@ export const UpdateMachinePoolModal = ({
     setPending(false);
     setError(errors[0] || '');
 
-    refetchMachineOrNodePoolsQuery(clusterId, isHypershift, controlPlaneVersion);
+    if (isHypershift && refreshMachinePools) {
+      refreshMachinePools();
+    } else {
+      refetchMachineOrNodePoolsQuery(clusterId, isHypershift, controlPlaneVersion, region);
+    }
 
     if (!errors[0]) {
       dispatch(modalActions.closeModal());

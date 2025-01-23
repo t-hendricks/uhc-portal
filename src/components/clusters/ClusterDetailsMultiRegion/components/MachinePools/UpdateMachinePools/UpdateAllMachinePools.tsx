@@ -13,8 +13,6 @@ import { NodePool } from '~/types/clusters_mgmt.v1/models/NodePool';
 
 import {
   compareIsMachinePoolBehindControlPlane,
-  controlPlaneIdSelector,
-  controlPlaneVersionSelector,
   isControlPlaneValidForMachinePool,
   isMachinePoolScheduleError,
   isMachinePoolUpgrading,
@@ -24,29 +22,29 @@ import {
 
 const UpdateAllMachinePools = ({
   isMachinePoolError,
+  clusterId,
   isHypershift,
-  clusterVersionID,
+  controlPlaneVersion,
   initialErrorMessage, // introduced for testing purposes
   goToMachinePoolTab,
   machinePoolData,
   region,
+  refreshMachinePools,
 }: {
   isMachinePoolError: boolean;
+  clusterId: string;
   isHypershift: boolean;
-  clusterVersionID?: string;
+  controlPlaneVersion: string;
   initialErrorMessage?: string;
   goToMachinePoolTab?: boolean;
   machinePoolData?: NodePool[];
   region?: string;
+  refreshMachinePools?: () => void;
 }) => {
   const [pending, setPending] = React.useState(false);
   const [errors, setErrors] = React.useState<string[]>(
     initialErrorMessage ? [initialErrorMessage] : [],
   );
-
-  const version = useSelector((state: GlobalState) => controlPlaneVersionSelector(state));
-
-  const controlPlaneVersion = clusterVersionID || version;
 
   const controlPlaneUpdating = useHCPControlPlaneUpdating(
     controlPlaneVersion,
@@ -54,11 +52,10 @@ const UpdateAllMachinePools = ({
     isHypershift,
   );
 
-  const clusterId = useSelector(controlPlaneIdSelector);
-
   const machinePools = useSelector(
     (state: GlobalState) => state.machinePools?.getMachinePools?.data,
   );
+
   const existingMachinePools = machinePoolData || machinePools;
 
   if (controlPlaneUpdating) {
@@ -89,7 +86,11 @@ const UpdateAllMachinePools = ({
     setPending(false);
     setErrors(errors);
 
-    refetchMachineOrNodePoolsQuery(clusterId, isHypershift, controlPlaneVersion);
+    if (isHypershift && refreshMachinePools) {
+      refreshMachinePools();
+    } else {
+      refetchMachineOrNodePoolsQuery(clusterId, isHypershift, controlPlaneVersion, region);
+    }
   };
 
   return (

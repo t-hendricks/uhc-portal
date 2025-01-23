@@ -30,7 +30,6 @@ const getApiPatchParams = (index: number) => apiRequestMock.patch.mock.calls[ind
 
 // ********************* Variables ***********************
 
-const controlPlaneVersion = 'openshift-v4.12.13-candidate';
 const clusterVersionID = 'openshift-v4.12.13';
 const clusterId = 'myClusterId';
 
@@ -56,8 +55,8 @@ const clickUpdateButton = async (user: any) => {
 };
 
 // ********************* Default store values ***********************
-const machinePoolUpToDate1 = { version: { id: controlPlaneVersion }, id: 'uptodate1' };
-const machinePoolUpToDate2 = { version: { id: controlPlaneVersion }, id: 'uptodate2' };
+const machinePoolUpToDate1 = { version: { id: clusterVersionID }, id: 'uptodate1' };
+const machinePoolUpToDate2 = { version: { id: clusterVersionID }, id: 'uptodate2' };
 
 const machinePoolBehind1 = { version: { id: 'openshift-v4.12.5' }, id: 'behind1' };
 const machinePoolBehind2 = { version: { id: 'openshift-v4.11.0' }, id: 'behind2' };
@@ -73,7 +72,7 @@ const defaultMachinePools = {
 
 const defaultCluster = {
   id: clusterId,
-  version: { id: controlPlaneVersion, available_upgrades: [] },
+  version: { id: clusterVersionID, available_upgrades: [] },
   hypershift: { enabled: true },
 };
 
@@ -98,19 +97,15 @@ describe('<UpdateAllMachinePools />', () => {
     it('when all machine pools are at the same version as the control plane', () => {
       const newState = {
         ...defaultStore,
-        machinePools: {
-          getMachinePools: {
-            ...defaultMachinePools,
-            data: [machinePoolUpToDate1, machinePoolUpToDate2],
-          },
-        },
       };
 
       const { container } = withState(newState).render(
         <UpdateAllMachinePools
           isMachinePoolError={false}
           isHypershift
-          clusterVersionID={clusterVersionID}
+          controlPlaneVersion={clusterVersionID}
+          clusterId={clusterId}
+          machinePoolData={defaultMachinePools.data}
         />,
       );
 
@@ -133,14 +128,33 @@ describe('<UpdateAllMachinePools />', () => {
         <UpdateAllMachinePools
           isMachinePoolError={false}
           isHypershift={false}
-          clusterVersionID={clusterVersionID}
+          controlPlaneVersion={clusterVersionID}
+          clusterId={clusterId}
         />,
       );
 
       expectUpdateButtonAbsence(container);
     });
 
-    it('when machine pools are still being pulled', () => {
+    it('when machine pools are still being pulled and is HCP', () => {
+      const newState = {
+        ...defaultStore,
+      };
+
+      const { container } = withState(newState).render(
+        <UpdateAllMachinePools
+          isMachinePoolError={false}
+          isHypershift
+          controlPlaneVersion={clusterVersionID}
+          clusterId={clusterId}
+          machinePoolData={[]}
+        />,
+      );
+
+      expectUpdateButtonAbsence(container);
+    });
+
+    it('when machine pools are still being pulled and is not HCP', () => {
       const machinePools = {
         fulfilled: false,
         error: false,
@@ -155,7 +169,8 @@ describe('<UpdateAllMachinePools />', () => {
         <UpdateAllMachinePools
           isMachinePoolError={false}
           isHypershift
-          clusterVersionID={clusterVersionID}
+          controlPlaneVersion={clusterVersionID}
+          clusterId={clusterId}
         />,
       );
 
@@ -177,7 +192,8 @@ describe('<UpdateAllMachinePools />', () => {
         <UpdateAllMachinePools
           isMachinePoolError
           isHypershift
-          clusterVersionID={clusterVersionID}
+          controlPlaneVersion={clusterVersionID}
+          clusterId={clusterId}
         />,
       );
 
@@ -198,7 +214,12 @@ describe('<UpdateAllMachinePools />', () => {
       };
 
       const { container } = withState(newState).render(
-        <UpdateAllMachinePools isMachinePoolError={false} isHypershift clusterVersionID="" />,
+        <UpdateAllMachinePools
+          isMachinePoolError={false}
+          isHypershift
+          controlPlaneVersion=""
+          clusterId={clusterId}
+        />,
       );
 
       expectUpdateButtonAbsence(container);
@@ -215,7 +236,8 @@ describe('<UpdateAllMachinePools />', () => {
         <UpdateAllMachinePools
           isMachinePoolError={false}
           isHypershift
-          clusterVersionID={clusterVersionID}
+          controlPlaneVersion={clusterVersionID}
+          clusterId={clusterId}
         />,
       );
 
@@ -238,7 +260,8 @@ describe('<UpdateAllMachinePools />', () => {
         <UpdateAllMachinePools
           isMachinePoolError={false}
           isHypershift
-          clusterVersionID={clusterVersionID}
+          controlPlaneVersion={clusterVersionID}
+          clusterId={clusterId}
         />,
       );
 
@@ -261,7 +284,7 @@ describe('<UpdateAllMachinePools />', () => {
         },
       };
 
-      const rawControlPlaneVersion = semver.coerce(controlPlaneVersion);
+      const rawControlPlaneVersion = semver.coerce(clusterVersionID);
       // Verify test data that machine pools is behind the control plane
       expect(
         semver.gt(
@@ -279,7 +302,8 @@ describe('<UpdateAllMachinePools />', () => {
         <UpdateAllMachinePools
           isMachinePoolError={false}
           isHypershift
-          clusterVersionID={clusterVersionID}
+          controlPlaneVersion={clusterVersionID}
+          clusterId={clusterId}
         />,
       );
 
@@ -303,7 +327,7 @@ describe('<UpdateAllMachinePools />', () => {
         },
       };
 
-      const rawControlPlaneVersion = semver.coerce(controlPlaneVersion);
+      const rawControlPlaneVersion = semver.coerce(clusterVersionID);
       // Verify test data that machine pools is behind the control plane
       expect(
         semver.gt(
@@ -321,7 +345,8 @@ describe('<UpdateAllMachinePools />', () => {
         <UpdateAllMachinePools
           isMachinePoolError={false}
           isHypershift
-          clusterVersionID={clusterVersionID}
+          controlPlaneVersion={clusterVersionID}
+          clusterId={clusterId}
         />,
       );
 
@@ -345,7 +370,7 @@ describe('<UpdateAllMachinePools />', () => {
         },
       };
 
-      const rawControlPlaneVersion = semver.coerce(controlPlaneVersion);
+      const rawControlPlaneVersion = semver.coerce(clusterVersionID);
       // Verify test data that machine pools is behind the control plane
       expect(
         semver.gt(
@@ -363,7 +388,8 @@ describe('<UpdateAllMachinePools />', () => {
         <UpdateAllMachinePools
           isMachinePoolError={false}
           isHypershift
-          clusterVersionID={clusterVersionID}
+          controlPlaneVersion={clusterVersionID}
+          clusterId={clusterId}
         />,
       );
 
@@ -379,7 +405,7 @@ describe('<UpdateAllMachinePools />', () => {
               cluster: {
                 ...defaultCluster,
                 version: {
-                  id: controlPlaneVersion,
+                  id: clusterVersionID,
                   available_upgrades: ['I am an upgrade object'],
                 },
               },
@@ -391,7 +417,8 @@ describe('<UpdateAllMachinePools />', () => {
           <UpdateAllMachinePools
             isMachinePoolError={false}
             isHypershift
-            clusterVersionID={clusterVersionID}
+            controlPlaneVersion={clusterVersionID}
+            clusterId={clusterId}
           />,
         );
 
@@ -413,8 +440,9 @@ describe('<UpdateAllMachinePools />', () => {
         const { container } = withState(newState).render(
           <UpdateAllMachinePools
             isMachinePoolError={false}
-            isHypershift
-            clusterVersionID={clusterVersionID}
+            isHypershift={false}
+            controlPlaneVersion={clusterVersionID}
+            clusterId={clusterId}
           />,
         );
 
@@ -436,8 +464,9 @@ describe('<UpdateAllMachinePools />', () => {
         const { container } = withState(newState).render(
           <UpdateAllMachinePools
             isMachinePoolError={false}
-            isHypershift
-            clusterVersionID={clusterVersionID}
+            isHypershift={false}
+            controlPlaneVersion={clusterVersionID}
+            clusterId={clusterId}
           />,
         );
 
@@ -459,8 +488,9 @@ describe('<UpdateAllMachinePools />', () => {
         const { container } = withState(newState).render(
           <UpdateAllMachinePools
             isMachinePoolError={false}
-            isHypershift
-            clusterVersionID={clusterVersionID}
+            isHypershift={false}
+            controlPlaneVersion={clusterVersionID}
+            clusterId={clusterId}
           />,
         );
 
@@ -482,8 +512,9 @@ describe('<UpdateAllMachinePools />', () => {
         const { container } = withState(newState).render(
           <UpdateAllMachinePools
             isMachinePoolError={false}
-            isHypershift
-            clusterVersionID={clusterVersionID}
+            isHypershift={false}
+            controlPlaneVersion={clusterVersionID}
+            clusterId={clusterId}
           />,
         );
 
@@ -496,18 +527,14 @@ describe('<UpdateAllMachinePools />', () => {
     it('is accessible when update link is shown', async () => {
       const newState = {
         ...defaultStore,
-        machinePools: {
-          getMachinePools: {
-            ...defaultMachinePools,
-            data: [machinePoolUpToDate1, machinePoolBehind1],
-          },
-        },
       };
       const { container } = withState(newState).render(
         <UpdateAllMachinePools
           isMachinePoolError={false}
           isHypershift
-          clusterVersionID={clusterVersionID}
+          controlPlaneVersion={clusterVersionID}
+          clusterId={clusterId}
+          machinePoolData={[machinePoolBehind1, machinePoolBehind2]}
         />,
       );
 
@@ -520,19 +547,15 @@ describe('<UpdateAllMachinePools />', () => {
 
       const newState = {
         ...defaultStore,
-        machinePools: {
-          getMachinePools: {
-            ...defaultMachinePools,
-            data: [machinePoolUpToDate1, machinePoolBehind1],
-          },
-        },
       };
 
       const { user } = withState(newState).render(
         <UpdateAllMachinePools
           isMachinePoolError={false}
           isHypershift
-          clusterVersionID={clusterVersionID}
+          controlPlaneVersion={clusterVersionID}
+          clusterId={clusterId}
+          machinePoolData={[machinePoolUpToDate1, machinePoolBehind1]}
         />,
       );
       expectUpdateButtonPresence();
@@ -551,30 +574,26 @@ describe('<UpdateAllMachinePools />', () => {
     it('with multiple machine pools behind ', async () => {
       const newState = {
         ...defaultStore,
-        machinePools: {
-          getMachinePools: {
-            ...defaultMachinePools,
-            data: [
-              {
-                ...machinePoolBehind1,
-                version: { id: '4.12.10', available_upgrades: ['4.12.13'] },
-                upgradePolicies: { items: [] },
-              },
-              {
-                ...machinePoolBehind2,
-                version: { id: '4.12.10', available_upgrades: ['4.12.13'] },
-                upgradePolicies: { items: [] },
-              },
-            ],
-          },
-        },
       };
-
+      const machinePoolData = [
+        {
+          ...machinePoolBehind1,
+          version: { id: '4.12.10', available_upgrades: ['4.12.13'] },
+          upgradePolicies: { items: [] },
+        },
+        {
+          ...machinePoolBehind2,
+          version: { id: '4.12.10', available_upgrades: ['4.12.13'] },
+          upgradePolicies: { items: [] },
+        },
+      ];
       const { user } = withState(newState).render(
         <UpdateAllMachinePools
           isMachinePoolError={false}
           isHypershift
-          clusterVersionID={clusterVersionID}
+          controlPlaneVersion={clusterVersionID}
+          clusterId={clusterId}
+          machinePoolData={machinePoolData}
         />,
       );
       expectUpdateButtonPresence();
@@ -607,26 +626,24 @@ describe('<UpdateAllMachinePools />', () => {
 
       const newState = {
         ...defaultStore,
-        machinePools: {
-          getMachinePools: {
-            ...defaultMachinePools,
-            data: [
-              {
-                ...machinePoolBehind1,
-                version: { id: '4.12.10', available_upgrades: ['4.12.13'] },
-                upgradePolicies: { items: [] },
-              },
-              machinePoolUpToDate1,
-            ],
-          },
-        },
       };
+
+      const machinePoolData = [
+        {
+          ...machinePoolBehind1,
+          version: { id: '4.12.10', available_upgrades: ['4.12.13'] },
+          upgradePolicies: { items: [] },
+        },
+        machinePoolUpToDate1,
+      ];
 
       const { user } = withState(newState).render(
         <UpdateAllMachinePools
           isMachinePoolError={false}
           isHypershift
-          clusterVersionID={clusterVersionID}
+          controlPlaneVersion={clusterVersionID}
+          clusterId={clusterId}
+          machinePoolData={machinePoolData}
         />,
       );
 
@@ -676,7 +693,8 @@ describe('<UpdateAllMachinePools />', () => {
           initialErrorMessage="This is an error"
           isMachinePoolError={false}
           isHypershift
-          clusterVersionID={clusterVersionID}
+          controlPlaneVersion={clusterVersionID}
+          clusterId={clusterId}
         />,
       );
       expectUpdateButtonPresence();
@@ -706,7 +724,8 @@ describe('<UpdateAllMachinePools />', () => {
           goToMachinePoolTab
           isMachinePoolError={false}
           isHypershift
-          clusterVersionID={clusterVersionID}
+          controlPlaneVersion={clusterVersionID}
+          clusterId={clusterId}
         />,
       );
 
@@ -732,7 +751,8 @@ describe('<UpdateAllMachinePools />', () => {
         <UpdateAllMachinePools
           isMachinePoolError={false}
           isHypershift
-          clusterVersionID={clusterVersionID}
+          controlPlaneVersion={clusterVersionID}
+          clusterId={clusterId}
         />,
       );
 
