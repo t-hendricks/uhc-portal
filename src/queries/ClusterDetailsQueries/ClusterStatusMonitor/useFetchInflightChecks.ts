@@ -1,6 +1,7 @@
 import { useMutation, useQuery } from '@tanstack/react-query';
 
 import { queryClient } from '~/components/App/queryClient';
+import { formatErrorData } from '~/queries/helpers';
 import { queryConstants } from '~/queries/queriesConstants';
 import { clusterService } from '~/services';
 import { getClusterServiceForRegion } from '~/services/clusterService';
@@ -109,18 +110,27 @@ export const useFetchRerunInflightChecks = (
 };
 
 export const useMutateRerunInflightChecks = (clusterID: string, region?: string) => {
-  const { data, isPending, isError, error, isSuccess, mutate, mutateAsync } = useMutation({
+  const { data, isPending, isError, error, isSuccess, mutate, mutateAsync, reset } = useMutation({
     mutationKey: ['rerunInflightChecks', 'clusterService', clusterID],
-    mutationFn: () => {
+    mutationFn: async () => {
       if (region) {
         const clusterService = getClusterServiceForRegion(region);
-        const response = clusterService.rerunInflightChecks(clusterID);
+        const response = await clusterService.rerunInflightChecks(clusterID);
         return response;
       }
-      const response = clusterService.rerunInflightChecks(clusterID);
+      const response = await clusterService.rerunInflightChecks(clusterID);
       return response;
     },
   });
 
-  return { data, isPending, isError, error, isSuccess, mutate, mutateAsync };
+  return {
+    data,
+    isPending,
+    isError,
+    error: formatErrorData(isPending, isError, error),
+    isSuccess,
+    mutate,
+    mutateAsync,
+    reset,
+  };
 };

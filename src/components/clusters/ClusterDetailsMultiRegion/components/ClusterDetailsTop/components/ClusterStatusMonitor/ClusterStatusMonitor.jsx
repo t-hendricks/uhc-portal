@@ -22,7 +22,6 @@ import clusterStates, {
 import ClusterStatusErrorDisplay from '~/components/clusters/common/ClusterStatusErrorDisplay';
 import ErrorModal from '~/components/common/ErrorModal';
 import ExternalLink from '~/components/common/ExternalLink';
-// import { usePreviousProps } from '~/hooks/usePreviousProps';
 import {
   useFetchClusterStatus,
   useInvalidateFetchClusterStatus,
@@ -67,6 +66,7 @@ const ClusterStatusMonitor = (props) => {
     isError: isRerunInflightChecksMutationError,
     error: rerunInflightChecksMutationError,
     mutateAsync,
+    reset,
   } = useMutateRerunInflightChecks(cluster.id, region);
 
   const [isExpanded, setIsExpanded] = React.useState(false);
@@ -334,8 +334,13 @@ const ClusterStatusMonitor = (props) => {
                     {isErrorOpen && (
                       <ErrorModal
                         title="Error Rerunning Validator "
-                        errorResponse={rerunInflightChecksMutationError}
-                        resetResponse={() => setIsErrorOpen(false)}
+                        errorResponse={rerunInflightChecksMutationError?.error}
+                        resetResponse={() => {
+                          // An error happened when trying to request a network validation
+                          setIsErrorOpen(false);
+                          reset(); // clears out error from mutation so the modal isn't automatically re-opened
+                          setWasRunClicked(false); // Checks were not run due to an error
+                        }}
                       />
                     )}
                   </FlexItem>
