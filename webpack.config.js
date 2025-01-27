@@ -26,6 +26,7 @@ const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
 const FederationPlugin = require('@redhat-cloud-services/frontend-components-config-utilities/federated-modules');
 const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
 const MonacoWebpackPlugin = require('monaco-editor-webpack-plugin');
+const { Agent } = require('https');
 const { insights } = require('./package.json');
 
 const name = insights.appname;
@@ -87,6 +88,14 @@ module.exports = async (_env, argv) => {
       window.onbeforeunload = null;
     });
   }
+
+  const keepAliveAgent = new Agent({
+    maxSockets: 100,
+    keepAlive: true,
+    maxFreeSockets: 10,
+    keepAliveMsecs: 1000,
+    timeout: 60000,
+  });
 
   return {
     mode: argv.mode || 'development',
@@ -324,12 +333,12 @@ module.exports = async (_env, argv) => {
             {
               context: ['/mockdata'],
               pathRewrite: { '^/mockdata': '' },
-              target: 'http://127.0.0.1:8010',
+              target: 'http://[::1]:8010',
             },
             runAIinStandalone
               ? {
                   context: ['/apps/assisted-installer-app/**'],
-                  target: 'http://127.0.0.1:8003',
+                  target: 'http://[::1]:8003',
                   logLevel: 'debug',
                   secure: false,
                   changeOrigin: true,
@@ -340,14 +349,20 @@ module.exports = async (_env, argv) => {
               // proxy everything except our own app, mimicking insights-proxy behaviour
               context: ['**', '!/mockdata/**', '!/src/**', `!/apps/${insights.appname}/**`],
               target: 'https://console.redhat.com',
+              agent: keepAliveAgent,
+              headers: {
+                Connection: 'keep-alive',
+              },
+              proxyTimeout: 17000,
               // replace the "host" header's URL origin with the origin from the target URL
               changeOrigin: true,
               // change the "origin" header of the proxied request to avoid CORS
               // many APIs do not allow the requests from the foreign origin
-              onProxyReq(request) {
-                request.setHeader('origin', 'https://console.redhat.com');
+              onProxyReq(proxyRequest) {
+                proxyRequest.setHeader('origin', 'https://console.redhat.com');
+                proxyRequest.setHeader('Connection', 'keep-alive');
                 if (verboseLogging) {
-                  console.log('  proxying console.redhat.com:', request.path);
+                  console.log('  proxying console.redhat.com:', proxyRequest.path);
                 }
               },
             },
