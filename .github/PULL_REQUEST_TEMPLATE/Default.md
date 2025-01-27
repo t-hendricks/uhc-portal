@@ -40,6 +40,13 @@ See [OCM UI PR into Master/Main process guide](https://docs.google.com/document/
 - [ ] Verified change locally in a browser (downloaded and ran code)
 - [ ] Closed threads I started after the author made changes or added an explanation
 
+## QE Reviewer < name >
+- [ ] Verified change locally in a browser (downloaded and ran code)
+- [ ] Updated/created Polarion test cases which were peer(QE) reviewed
+- [ ] Confirmed 'tc-approved' label was added by dev to JIRA card
+- [ ] (optional) Updated/created Cypress e2e tests
+- [ ] Closed threads I started after the author made changes or added an explanation
+
 NOTE: The author of the PR will merge the PR.
 
 ## Author
@@ -49,7 +56,7 @@ Check the following before merging:
 - [ ] Unit tests have been created and/or modified
 - [ ] All above checkboxes for both reviewers have been checked
 - [ ] All CI tests have passed
-- [ ] Has at least 2 approvals, ready to merge
+- [ ] Has at least 2 dev approvals and 1 QE approval; ready to merge
 - [ ] Verify the 'Squash and merge' option is selected before merging the PR into master (Click on the little arrow on the right of the green merge button, and choose the 'Squash and merge' option)
 
 
