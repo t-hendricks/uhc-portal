@@ -50,7 +50,7 @@ See [OCM UI PR into Master/Main process guide](https://docs.google.com/document/
 NOTE: The author of the PR will merge the PR.
 
 ## Author
-_The PR Author is responsible for keeping this PR rebased and up-to-date with master._
+&#x1F53B _The PR Author is responsible for keeping this PR rebased and up-to-date with master._
 
 Check the following before merging:
 
