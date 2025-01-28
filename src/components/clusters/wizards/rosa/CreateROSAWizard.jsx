@@ -215,13 +215,6 @@ const CreateROSAWizardInternal = ({
     closeDrawer({ skipOnClose: true });
   };
 
-  // RENDERING ////////////////
-  // Not enough quota
-  const orgWasFetched = !organization.pending && organization.fulfilled;
-  if (orgWasFetched && !hasProductQuota) {
-    return <Navigate replace to="/create" />;
-  }
-
   // Needed data requests are pending
   const requests = [
     {
