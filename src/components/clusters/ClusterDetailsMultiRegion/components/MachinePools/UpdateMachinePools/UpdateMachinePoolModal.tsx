@@ -51,7 +51,7 @@ export const UpdatePoolButton = ({
       isHypershift,
     ),
   );
-  const isAvailableVersion = useIsControlPlaneValidForMachinePool(machinePool);
+  const isAvailableVersion = useIsControlPlaneValidForMachinePool(machinePool, controlPlaneVersion);
   const machinePoolUpdating = isMachinePoolUpgrading(machinePool);
 
   if (canBeUpdated && !isMachinePoolError) {
