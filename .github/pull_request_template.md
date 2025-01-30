@@ -52,14 +52,21 @@ NOTE: The author of the PR will merge the PR.
 ## Author
 &#x1F53B; _The PR Author is responsible for keeping this PR rebased and up-to-date with master._
 
-Check the following before merging:
-
+### Check the following before peer review:
 - [ ] Unit tests have been created and/or modified
+- [ ] All CI tests have passed 
+- [ ] Assign 2 Dev Reviewers
+- [ ] Assign ‘QA contact’ from associated JIRA card as the QE Reviewer
+- [ ] &#x1F53B;_When 2 dev approvals, change JIRA status to ‘Review’_
+### Check the following before merging:
 - [ ] All checkboxes for all above reviewers have been checked
-- [ ] All CI tests have passed
-- [ ] Has at least 2 dev approvals and 1 QE approval; ready to merge
-- [ ] Verify the 'Squash and merge' option is selected before merging the PR into master (Click on the little arrow on the right of the green merge button, and choose the 'Squash and merge' option)
-- [ ] _Author tests code again on staging after PR code merged and deployed to staging!_
+- [ ] CI & Jenkins have passed
+- [ ] There are 2 dev approvals and 1 QE approval 
+- [ ] Merge via ‘Squash and merge’ option
+### Check the following after PR has merged:
+- [ ] Verified PR was deployed to staging via build deploy job and #ocm-ui-deploys
+- [ ] Quick test code/feature again on staging (https://console.dev.redhat.com/openshift/).
+
 
 # Ticketing
 
