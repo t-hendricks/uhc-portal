@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { OCMUI_EDIT_BILLING_ACCOUNT } from '~/redux/constants/featureConstants';
+import { EDIT_BILLING_ACCOUNT } from '~/redux/constants/featureConstants';
 import { mockUseFeatureGate, render, screen } from '~/testUtils';
 
 import fixtures from '../../../../__tests__/ClusterDetails.fixtures';
@@ -17,7 +17,7 @@ describe('Overview BillingAccount Component', () => {
 
   beforeEach(() => {
     jest.clearAllMocks();
-    mockUseFeatureGate([[OCMUI_EDIT_BILLING_ACCOUNT, true]]);
+    mockUseFeatureGate([[EDIT_BILLING_ACCOUNT, true]]);
   });
 
   it('Returns static billing account value', async () => {

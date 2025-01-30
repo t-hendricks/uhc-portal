@@ -2,7 +2,7 @@ import React from 'react';
 import * as reactRedux from 'react-redux';
 
 import { render, screen } from '~/testUtils';
-import { SubscriptionCommonFields } from '~/types/accounts_mgmt.v1';
+import { SubscriptionCommonFieldsStatus } from '~/types/accounts_mgmt.v1';
 
 import ClusterDetailsTop from './ClusterDetailsTop';
 
@@ -15,7 +15,7 @@ jest.mock('react-redux', () => {
 });
 
 const defaultProps = {
-  cluster: { subscription: { status: SubscriptionCommonFields.status.ARCHIVED }, canEdit: true },
+  cluster: { subscription: { status: SubscriptionCommonFieldsStatus.Archived }, canEdit: true },
   pending: false,
   clusterIdentityProviders: {},
   organization: {},

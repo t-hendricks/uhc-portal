@@ -14,6 +14,7 @@ import { SubscriptionCommonFields } from '~/types/accounts_mgmt.v1';
 
 import { getTrialEndDate, getTrialExpiresInDays } from '../../../../common/getTrialExpiresDates';
 import { normalizedProducts } from '../../../../common/subscriptionTypes';
+import { SubscriptionCommonFieldsSupport_level as SubscriptionCommonFieldsSupportLevel } from '../../../../types/accounts_mgmt.v1';
 import ExternalLink from '../../../common/ExternalLink';
 
 function ClusterCreatedIndicator({ cluster }) {
@@ -62,8 +63,8 @@ function ClusterCreatedIndicator({ cluster }) {
 
   if (
     managed ||
-    (supportLevel !== SubscriptionCommonFields.support_level.EVAL &&
-      supportLevel !== SubscriptionCommonFields.support_level.NONE)
+    (supportLevel !== SubscriptionCommonFieldsSupportLevel.Eval &&
+      supportLevel !== SubscriptionCommonFieldsSupportLevel.None)
   ) {
     const clusterCreationTime = get(cluster, 'creation_timestamp', false);
     if (clusterCreationTime) {
@@ -73,7 +74,7 @@ function ClusterCreatedIndicator({ cluster }) {
   }
 
   // display error that it has expired
-  if (supportLevel === SubscriptionCommonFields.support_level.NONE) {
+  if (supportLevel === SubscriptionCommonFieldsSupportLevel.None) {
     return (
       <Popover
         position={PopoverPosition.top}

@@ -15,11 +15,10 @@ limitations under the License.
 */
 import { produce } from 'immer';
 
+import { Account, QuotaCost, Subscription } from '~/types/accounts_mgmt.v1';
+
 import { getErrorState } from '../../common/errors';
 import { normalizeQuotaCost } from '../../common/normalize';
-import { Account } from '../../types/accounts_mgmt.v1/models/Account';
-import { QuotaCost } from '../../types/accounts_mgmt.v1/models/QuotaCost';
-import { Subscription } from '../../types/accounts_mgmt.v1/models/Subscription';
 import { SubscriptionsAction } from '../actions/subscriptionsActions';
 import { subscriptionsConstants } from '../constants';
 import {

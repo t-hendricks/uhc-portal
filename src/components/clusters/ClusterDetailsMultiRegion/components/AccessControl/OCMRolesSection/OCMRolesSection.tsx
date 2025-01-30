@@ -81,6 +81,7 @@ function OCMRolesSection({
     error: grantOcmRoleError,
     isSuccess: isGrantOcmRoleSuccess,
     mutate: grantOcmRoleMutate,
+    reset: resetGrantOcmRoleMutation,
   } = useGrantOCMRole(subscriptionID);
   const {
     isPending: isDeleteOcmRolePending,
@@ -389,6 +390,7 @@ function OCMRolesSection({
           isGrantOcmRoleError={isGrantOcmRoleError}
           grantOcmRoleError={grantOcmRoleError}
           isGrantOcmRoleSuccess={isGrantOcmRoleSuccess}
+          resetGrantOcmRoleMutation={resetGrantOcmRoleMutation}
         />
       </CardBody>
     </Card>

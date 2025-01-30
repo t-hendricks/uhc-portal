@@ -138,7 +138,10 @@ const ReviewClusterScreen = ({
           content={ClusterRequestTranslatorFactory.createClusterRequestTranslator(product).toYaml(
             createClusterRequest({ isWizard: true }, formValues),
           )}
-          schema="schema"
+          schema={{
+            uri: 'https://api.openshift.com/api/clusters_mgmt/v1/openapi#/components/schemas/Cluster',
+            fileMatch: ['*'],
+          }}
           submitButtonLabel="Create Cluster"
           downloadFileName={`${product}-cluster-${clusterName}.yaml`}
           onSubmit={(values) => {
@@ -153,6 +156,7 @@ const ReviewClusterScreen = ({
           requestErrorMessage={createClusterResponse.errorMessage}
           requestPendingMessage={MESSAGES.INITIATE_CREATE_CLUSTER_REQUEST}
           closeWarningMessage="You won't be able to view or download the YAML after cluster creation begins."
+          readOnlyMessage="Cannot edit while cluster creation is being processed."
         />
       ) : null,
     [

@@ -278,7 +278,6 @@ function Details() {
     }
   };
 
-  // TODO: ensure billingModel is set by previous screens.
   const hasAzResources = (isMultiAz: boolean) => {
     const params = {
       product: normalizedProducts.ROSA,

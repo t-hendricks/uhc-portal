@@ -1,11 +1,15 @@
 import React from 'react';
 
+import * as clusterService from '~/services/clusterService';
 import { checkAccessibility, render, screen, waitFor, within } from '~/testUtils';
 
 import clusterStates from '../../common/clusterStates';
 import ClusterDetailsTop from '../components/ClusterDetailsTop/ClusterDetailsTop';
 
 import fixtures, { funcs } from './ClusterDetails.fixtures';
+
+const mockGetClusterServiceForRegion = jest.spyOn(clusterService, 'getClusterServiceForRegion');
+const mockedGetLogs = jest.fn();
 
 describe('<ClusterDetailsTop />', () => {
   afterAll(() => {
@@ -65,6 +69,9 @@ describe('<ClusterDetailsTop />', () => {
 
   it('should disable open console button when cluster is unistalling', async () => {
     const cluster = { ...fixtures.clusterDetails.cluster, state: clusterStates.UNINSTALLING };
+    mockedGetLogs.mockResolvedValue('hello world');
+    mockGetClusterServiceForRegion.mockReturnValue({ getLogs: mockedGetLogs });
+
     const newProps = { ...props, cluster };
 
     render(<ClusterDetailsTop {...newProps} />);

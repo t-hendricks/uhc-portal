@@ -82,15 +82,25 @@ const OCP_DOC_BASE =
 
 const links = {
   ROSA_CP_DOCS: 'https://access.redhat.com/documentation/en-us/red_hat_openshift_service_on_aws/4',
+  OSD_GOOGLE_MARKETPLACE:
+    'https://console.cloud.google.com/marketplace/product/redhat-marketplace/red-hat-openshift-dedicated?inv=1&invt=Abh7pg',
   ACCESS_REQUEST_DOC_LINK: `${ROSA_CP_DOCS_BASE}/support/approved-access#approved-access`,
   DOCS_ENTRY: `${DOCS_BASE}/welcome/index.html`,
   ROSA_TROUBLESHOOTING_INSTALLATIONS: `${ROSA_CP_DOCS_BASE}/support/troubleshooting#rosa-troubleshooting-installations`,
   ROSA_DEFINITION_DOC: `${ROSA_CP_DOCS_BASE}/introduction_to_rosa/policies-and-service-definition#rosa-service-definition`,
   WHAT_IS_OPENSHIFT: 'https://www.redhat.com/en/technologies/cloud-computing/openshift',
   WHAT_IS_ROSA: 'https://www.redhat.com/en/technologies/cloud-computing/openshift/aws',
+  WHAT_IS_OSD: 'https://www.redhat.com/en/technologies/cloud-computing/openshift/dedicated',
+  LEARN_MORE_OSD:
+    'https://www.redhat.com/en/products/interactive-walkthrough/install-openshift-dedicated-google-cloud',
   ROSA_COMMUNITY_SLACK: 'https://red.ht/rosa-slack',
   ROSA_QUICKSTART: `${ROSA_CP_DOCS_BASE}/getting_started/rosa-quickstart-guide-ui`,
+  OSD_QUICKSTART: 'https://www.youtube.com/watch?v=p9KBFvMDQJM&feature=youtu.be',
+  OSD_INTERACTIVE_WALKTHROUGH:
+    'https://www.redhat.com/en/products/interactive-walkthrough/install-openshift-dedicated-google-cloud',
   ROSA_PRICING: 'https://aws.amazon.com/rosa/pricing',
+  OSD_PRICING:
+    'https://www.redhat.com/en/technologies/cloud-computing/openshift/dedicated?intcmp=7013a000003DQeVAAW#pricing',
   IDP_HTPASSWD: `${DOCS_BASE}/authentication/identity_providers/configuring-htpasswd-identity-provider.html`,
   IDP_LDAP: `${DOCS_BASE}/authentication/identity_providers/configuring-ldap-identity-provider.html`,
   IDP_GITHUB: `${DOCS_BASE}/authentication/identity_providers/configuring-github-identity-provider.html`,
@@ -873,6 +883,9 @@ const urls = {
       },
       [architectures.ppc]: {
         [operatingSystems.linux]: `${MIRROR_MIRROR_REGISTRY_LATEST}/mirror-registry-ppc64le.tar.gz`,
+      },
+      [architectures.s390x]: {
+        [operatingSystems.linux]: `${MIRROR_MIRROR_REGISTRY_LATEST}/mirror-registry-s390x.tar.gz`,
       },
     },
   },

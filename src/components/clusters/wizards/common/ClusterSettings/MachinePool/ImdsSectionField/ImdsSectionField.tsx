@@ -4,7 +4,7 @@ import { Field } from 'formik';
 import { FormGroup } from '@patternfly/react-core';
 
 import { canSelectImds, FieldId, IMDSType } from '~/components/clusters/wizards/common/constants';
-import RadioButtons from '~/components/common/ReduxFormComponents/RadioButtons';
+import RadioButtons from '~/components/common/ReduxFormComponents_deprecated/RadioButtons';
 
 import { useFormState } from '../../../../hooks';
 

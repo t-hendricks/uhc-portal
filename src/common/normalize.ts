@@ -10,7 +10,7 @@ import {
   type OneMetric,
   type QuotaCost,
   type Subscription,
-  SubscriptionCommonFields,
+  SubscriptionCommonFieldsStatus,
 } from '../types/accounts_mgmt.v1';
 import type { Cluster } from '../types/clusters_mgmt.v1';
 import type { FakeCluster } from '../types/types';
@@ -44,7 +44,7 @@ const normalizeProductID = (id: string | undefined): string => {
     ROSA_HYPERSHIFT: normalizedProducts.ROSA_HyperShift,
     MOA_HOSTEDCONTROLPLANE: normalizedProducts.ROSA_HyperShift,
     ARO: normalizedProducts.ARO,
-    OCP_ASSISTEDINSTALL: normalizedProducts.OCP_ASSISTED_INSTALL,
+    OCP_ASSISTEDINSTALL: normalizedProducts.OCP_AssistedInstall,
     RHACS: normalizedProducts.RHACS,
     RHACSTRIAL: normalizedProducts.RHACSTRIAL,
     RHOSR: normalizedProducts.RHOSR,
@@ -242,7 +242,7 @@ const fakeClusterFromSubscription = (subscription: Subscription): FakeCluster =>
     ccs: {
       // deprovisioned clusters do not have CCS info, so leaving it as 'undefined'
       enabled:
-        subscription.status !== SubscriptionCommonFields.status.DEPROVISIONED ? false : undefined,
+        subscription.status !== SubscriptionCommonFieldsStatus.Deprovisioned ? false : undefined,
     },
     metrics,
   };

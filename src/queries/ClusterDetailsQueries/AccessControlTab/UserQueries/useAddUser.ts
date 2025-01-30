@@ -5,7 +5,7 @@ import { clusterService } from '~/services';
 import { getClusterServiceForRegion } from '~/services/clusterService';
 
 export const useAddUser = (clusterID: string, region?: string) => {
-  const { data, isPending, isError, error, mutate, isSuccess } = useMutation({
+  const { data, isPending, isError, error, mutate, isSuccess, reset } = useMutation({
     mutationKey: ['addUser'],
     mutationFn: async ({ selectedGroup, userId }: { selectedGroup: string; userId: string }) => {
       if (region) {
@@ -28,6 +28,7 @@ export const useAddUser = (clusterID: string, region?: string) => {
       error: formattedError,
       mutate,
       isSuccess,
+      reset,
     };
   }
 
@@ -38,5 +39,6 @@ export const useAddUser = (clusterID: string, region?: string) => {
     error,
     mutate,
     isSuccess,
+    reset,
   };
 };

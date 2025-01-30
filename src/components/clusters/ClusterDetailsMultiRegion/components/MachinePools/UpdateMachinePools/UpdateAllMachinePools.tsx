@@ -13,8 +13,6 @@ import { NodePool } from '~/types/clusters_mgmt.v1/models/NodePool';
 
 import {
   compareIsMachinePoolBehindControlPlane,
-  controlPlaneIdSelector,
-  controlPlaneVersionSelector,
   isControlPlaneValidForMachinePool,
   isMachinePoolScheduleError,
   isMachinePoolUpgrading,
@@ -23,24 +21,29 @@ import {
 } from './updateMachinePoolsHelpers';
 
 const UpdateAllMachinePools = ({
+  isMachinePoolError,
+  clusterId,
+  isHypershift,
+  controlPlaneVersion,
   initialErrorMessage, // introduced for testing purposes
   goToMachinePoolTab,
-  isMachinePoolError,
-  isHypershift,
+  machinePoolData,
   region,
+  refreshMachinePools,
 }: {
+  isMachinePoolError: boolean;
+  clusterId: string;
+  isHypershift: boolean;
+  controlPlaneVersion: string;
   initialErrorMessage?: string;
   goToMachinePoolTab?: boolean;
-  isMachinePoolError: boolean;
-  isHypershift: boolean;
+  machinePoolData?: NodePool[];
   region?: string;
+  refreshMachinePools?: () => void;
 }) => {
   const [pending, setPending] = React.useState(false);
   const [errors, setErrors] = React.useState<string[]>(
     initialErrorMessage ? [initialErrorMessage] : [],
-  );
-  const controlPlaneVersion = useSelector((state: GlobalState) =>
-    controlPlaneVersionSelector(state),
   );
 
   const controlPlaneUpdating = useHCPControlPlaneUpdating(
@@ -49,16 +52,18 @@ const UpdateAllMachinePools = ({
     isHypershift,
   );
 
-  const clusterId = useSelector(controlPlaneIdSelector);
+  const machinePools = useSelector(
+    (state: GlobalState) => state.machinePools?.getMachinePools?.data,
+  );
 
-  const machinePools = useSelector((state: GlobalState) => state.machinePools?.getMachinePools);
+  const existingMachinePools = machinePoolData || machinePools;
 
   if (controlPlaneUpdating) {
     return null;
   }
 
   const machinePoolsToUpdate =
-    machinePools.data?.filter(
+    existingMachinePools?.filter(
       (pool: NodePool) =>
         compareIsMachinePoolBehindControlPlane(controlPlaneVersion, pool.version?.id) &&
         isControlPlaneValidForMachinePool(pool, controlPlaneVersion) &&
@@ -81,7 +86,11 @@ const UpdateAllMachinePools = ({
     setPending(false);
     setErrors(errors);
 
-    refetchMachineOrNodePoolsQuery(clusterId, isHypershift, controlPlaneVersion);
+    if (isHypershift && refreshMachinePools) {
+      refreshMachinePools();
+    } else {
+      refetchMachineOrNodePoolsQuery(clusterId, isHypershift, controlPlaneVersion, region);
+    }
   };
 
   return (

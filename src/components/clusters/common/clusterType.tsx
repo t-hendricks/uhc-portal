@@ -13,7 +13,7 @@ export const clusterType = (cluster: ClusterWithPermissions) => {
       name: 'OCP',
       tooltip: 'Self-managed OpenShift Container Platform (OCP) cluster',
     },
-    [normalizedProducts.OCP_ASSISTED_INSTALL]: {
+    [normalizedProducts.OCP_AssistedInstall]: {
       name: 'OCP',
       tooltip: 'Self-managed OpenShift Container Platform (OCP) cluster',
     },

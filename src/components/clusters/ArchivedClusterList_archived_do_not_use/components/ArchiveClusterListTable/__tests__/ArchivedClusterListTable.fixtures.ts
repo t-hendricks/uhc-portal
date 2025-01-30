@@ -1,4 +1,4 @@
-import { SubscriptionCommonFields } from '~/types/accounts_mgmt.v1';
+import { SubscriptionCommonFieldsStatus } from '~/types/accounts_mgmt.v1';
 import { ClusterWithPermissions } from '~/types/types';
 
 const setSorting = jest.fn();
@@ -12,7 +12,7 @@ const clusters: ClusterWithPermissions[] = [
     subscription: {
       id: '1HAtdkNPWql68fuOI7Kvuyk4OTp',
       managed: false,
-      status: SubscriptionCommonFields.status.ARCHIVED,
+      status: SubscriptionCommonFieldsStatus.Archived,
       provenance: 'Provisioning',
       last_reconcile_date: '0001-01-01T00:00:00Z',
       last_released_at: '0001-01-01T00:00:00Z',

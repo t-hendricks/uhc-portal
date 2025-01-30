@@ -1,5 +1,6 @@
 import * as React from 'react';
 
+import { MAX_NODES_HCP } from '~/components/clusters/common/machinePools/constants';
 import { render, screen, within } from '~/testUtils';
 import { ClusterFromSubscription } from '~/types/types';
 
@@ -266,7 +267,7 @@ describe('<EditMachinePoolModal />', () => {
               id: 'fooId',
               instance_type: 'm5.xlarge',
               kind: 'MachinePool',
-              replicas: 249,
+              replicas: MAX_NODES_HCP,
               root_volume: { aws: { size: 300 } },
             },
             {
@@ -292,9 +293,14 @@ describe('<EditMachinePoolModal />', () => {
       const autoScalingCheckbox = await screen.findByRole('checkbox', {
         name: 'Enable autoscaling',
       });
+      const autoRepairCheckbox = await screen.findByRole('checkbox', {
+        name: 'Enable AutoRepair',
+      });
+
       await user.click(autoScalingCheckbox);
 
       // Assert
+      expect(autoRepairCheckbox).toBeInTheDocument();
       expect(screen.getAllByRole('button', { name: 'Plus' })[1]).toBeDisabled();
       expect(await screen.findByTestId('submit-btn')).toBeDisabled();
     });

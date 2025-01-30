@@ -12,13 +12,13 @@ import { UNSTABLE_CLUSTER_VERSIONS } from '~/redux/constants/featureConstants';
 import clusterService from '~/services/clusterService';
 import getOCPLifeCycleStatus from '~/services/productLifeCycleService';
 import { checkAccessibility, screen, withState } from '~/testUtils';
-import { SubscriptionCommonFields } from '~/types/accounts_mgmt.v1';
+import { SubscriptionCommonFieldsCluster_billing_model as SubscriptionCommonFieldsClusterBillingModel } from '~/types/accounts_mgmt.v1';
 
 jest.mock('~/services/productLifeCycleService');
 jest.mock('~/services/clusterService');
 
 const standardValues: FormikValues = {
-  [FieldId.BillingModel]: SubscriptionCommonFields.cluster_billing_model.STANDARD,
+  [FieldId.BillingModel]: SubscriptionCommonFieldsClusterBillingModel.standard,
 };
 const clusterVersionValue: FormikValues = {
   [FieldId.ClusterVersion]: versionsData[0],
@@ -28,10 +28,10 @@ const standardValuesWithVersion: FormikValues = {
   ...clusterVersionValue,
 };
 const marketplaceGcpValues = {
-  [FieldId.BillingModel]: SubscriptionCommonFields.cluster_billing_model.MARKETPLACE_GCP,
+  [FieldId.BillingModel]: SubscriptionCommonFieldsClusterBillingModel.marketplace_gcp,
 };
 const wifValues = {
-  [FieldId.BillingModel]: SubscriptionCommonFields.cluster_billing_model.STANDARD,
+  [FieldId.BillingModel]: SubscriptionCommonFieldsClusterBillingModel.standard,
   [FieldId.GcpAuthType]: GCPAuthType.WorkloadIdentityFederation,
 };
 

@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { render, screen } from '~/testUtils';
-import { MachinePool } from '~/types/clusters_mgmt.v1';
+import { MachinePool, NodePool } from '~/types/clusters_mgmt.v1';
 import { ClusterFromSubscription } from '~/types/types';
 
 import MachinePoolExpandedRow from '../components/MachinePoolExpandedRow';
@@ -40,7 +40,7 @@ const defaultMachinePool: MachinePool = {
   autoscaling: { min_replicas: 0, max_replicas: 4 },
 };
 
-const cluster = { id: 'my-cluster-id' } as ClusterFromSubscription;
+const cluster = { id: 'my-cluster-id', hypershift: { enabled: true } } as ClusterFromSubscription;
 
 const getDefaultProps = (machinePoolProps: Partial<MachinePool>) => ({
   cluster,
@@ -48,6 +48,28 @@ const getDefaultProps = (machinePoolProps: Partial<MachinePool>) => ({
   machinePool: {
     ...defaultMachinePool,
     ...machinePoolProps,
+  },
+});
+
+const defaultNodePool: NodePool = {
+  labels: {
+    fooLabel: 'barLabel',
+    noValueLabel: '',
+  },
+  taints: [
+    { key: 'fooTaint', value: 'barTaint', effect: 'NoExecute' },
+    { key: 'helloTaint', value: 'worldTaint', effect: 'NoSchedule' },
+  ],
+
+  auto_repair: undefined,
+};
+
+const getNodePoolProps = (nodePoolProps: Partial<NodePool>) => ({
+  cluster,
+  isMultiZoneCluster: false,
+  machinePool: {
+    ...defaultNodePool,
+    ...nodePoolProps,
   },
 });
 
@@ -156,6 +178,18 @@ describe('MachinePoolExpandedRow', () => {
         />,
       );
       expect(screen.queryByText('Autoscaling')).not.toBeInTheDocument();
+    });
+  });
+
+  describe('AutoRepair settings', () => {
+    it('shows Enabled when true', () => {
+      render(<MachinePoolExpandedRow {...getNodePoolProps({ auto_repair: true })} />);
+      expect(screen.getByText('Enabled')).toBeInTheDocument();
+    });
+
+    it('shows Disabled when false', () => {
+      render(<MachinePoolExpandedRow {...getNodePoolProps({ auto_repair: false })} />);
+      expect(screen.getByText('Disabled')).toBeInTheDocument();
     });
   });
 

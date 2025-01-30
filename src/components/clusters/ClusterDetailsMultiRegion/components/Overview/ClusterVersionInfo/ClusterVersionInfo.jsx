@@ -28,9 +28,10 @@ const ClusterVersionInfo = ({ cluster }) => {
   const isHypershift = isHypershiftCluster(cluster);
   const clusterId = cluster?.id;
   const isClusterManaged = cluster?.managed;
+  const region = cluster?.subscription?.rh_region_id;
 
-  const { data: schedules } = useGetSchedules(clusterId, isHypershift);
-  const { data: upgradeGates } = useFetchUpgradeGatesFromApi(isClusterManaged);
+  const { data: schedules } = useGetSchedules(clusterId, isHypershift, region);
+  const { data: upgradeGates } = useFetchUpgradeGatesFromApi(isClusterManaged, region);
 
   const [popoverOpen, setPopoverOpen] = React.useState(false);
 
@@ -118,6 +119,7 @@ const ClusterVersionInfo = ({ cluster }) => {
 
 ClusterVersionInfo.propTypes = {
   cluster: PropTypes.shape({
+    subscription: PropTypes.object,
     id: PropTypes.string.isRequired,
     openshift_version: PropTypes.string,
     managed: PropTypes.bool,

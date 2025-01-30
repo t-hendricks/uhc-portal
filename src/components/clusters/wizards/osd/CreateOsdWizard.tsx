@@ -17,7 +17,7 @@ import { ocmResourceTypeByProduct, TrackEvent, trackEvents } from '~/common/anal
 import { shouldRefetchQuota } from '~/common/helpers';
 import { Navigate, useNavigate } from '~/common/routing';
 import { AppPage } from '~/components/App/AppPage';
-import { availableClustersFromQuota } from '~/components/clusters/common/quotaSelectors';
+import { availableQuota } from '~/components/clusters/common/quotaSelectors';
 import {
   ClusterSettingsMachinePool,
   ClusterUpdates,
@@ -39,6 +39,8 @@ import { getOrganizationAndQuota } from '~/redux/actions/userActions';
 import { useGlobalState } from '~/redux/hooks/useGlobalState';
 import { QuotaCostList } from '~/types/accounts_mgmt.v1';
 import { ErrorState } from '~/types/types';
+
+import { QuotaTypes } from '../../common/quotaModel';
 
 import { CloudProviderType } from './ClusterSettings/CloudProvider/types';
 import { BillingModel } from './BillingModel';
@@ -89,8 +91,9 @@ const CreateOsdWizardInternal = () => {
   const createClusterResponse = useGlobalState((state) => state.clusters.createdCluster);
 
   const hasProductQuota =
-    availableClustersFromQuota(organization.quotaList as QuotaCostList, {
+    availableQuota(organization.quotaList as QuotaCostList, {
       product,
+      resourceType: QuotaTypes.CLUSTER,
     }) >= 1;
 
   const requestErrors = [

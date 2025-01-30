@@ -7,7 +7,7 @@ import { Spinner } from '@redhat-cloud-services/frontend-components/Spinner';
 import { useGetClusterRouters } from '~/queries/ClusterDetailsQueries/NetworkingTab/useGetClusterRouters';
 
 import ApplicationIngressCard from './components/ApplicationIngressCard';
-import ClusterIngressCard from './components/ClusterIngressCard';
+import { ClusterIngressCard } from './components/ClusterIngressCard/ClusterIngressCard';
 import NetworkConfigurationCard from './components/NetworkConfigurationCard';
 import VPCDetailsCard from './components/VPCDetailsCard';
 import VPCSubnetsCard from './components/VPCSubnetsCard';

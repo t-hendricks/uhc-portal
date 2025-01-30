@@ -22,8 +22,12 @@ import { modalActions } from '~/components/common/Modal/ModalActions';
 import modals from '~/components/common/Modal/modals';
 import RefreshButton from '~/components/common/RefreshButton/RefreshButton';
 import { refreshClusterDetails } from '~/queries/refreshEntireCache';
-import { SubscriptionCommonFields } from '~/types/accounts_mgmt.v1';
+import {
+  SubscriptionCommonFieldsCluster_billing_model as SubscriptionCommonFieldsClusterBillingModel,
+  SubscriptionCommonFieldsStatus,
+} from '~/types/accounts_mgmt.v1';
 
+import ClusterActionsDropdown from '../../../common/ClusterActionsDropdown';
 import clusterStates, {
   hasInflightEgressErrors,
   isHibernating,
@@ -31,7 +35,6 @@ import clusterStates, {
 } from '../../../common/clusterStates';
 import ErrorTriangle from '../../../common/ErrorTriangle';
 import HibernatingClusterCard from '../../../common/HibernatingClusterCard/HibernatingClusterCard';
-import ClusterActionsDropdown from '../../../commonMultiRegion/ClusterActionsDropdown';
 import { shouldShowLogs } from '../Overview/InstallationLogView';
 
 import ClusterNonEditableAlert from './components/ClusterNonEditableAlert';
@@ -104,9 +107,9 @@ function ClusterDetailsTop(props) {
     HAS_USER_DISMISSED_RECOMMENDED_OPERATORS_ALERT,
   );
   const isArchived =
-    get(cluster, 'subscription.status', false) === SubscriptionCommonFields.status.ARCHIVED;
+    get(cluster, 'subscription.status', false) === SubscriptionCommonFieldsStatus.Archived;
   const isDeprovisioned =
-    get(cluster, 'subscription.status', false) === SubscriptionCommonFields.status.DEPROVISIONED;
+    get(cluster, 'subscription.status', false) === SubscriptionCommonFieldsStatus.Deprovisioned;
 
   const [showRecommendedOperatorsAlert, setShowRecommendedOperatorsAlert] = useState(
     !hasAlertBeenDismissed && !isArchived && !isDeprovisioned,
@@ -134,7 +137,7 @@ function ClusterDetailsTop(props) {
   const isProductOSDRHM =
     get(cluster, 'subscription.plan.type', '') === normalizedProducts.OSD &&
     get(cluster, 'subscription.cluster_billing_model', '') ===
-      SubscriptionCommonFields.cluster_billing_model.MARKETPLACE;
+      SubscriptionCommonFieldsClusterBillingModel.marketplace;
   const isOSD = get(cluster, 'subscription.plan.type') === normalizedProducts.OSD;
   const isROSA = get(cluster, 'subscription.plan.type') === normalizedProducts.ROSA;
   const clusterName = getClusterName(cluster);

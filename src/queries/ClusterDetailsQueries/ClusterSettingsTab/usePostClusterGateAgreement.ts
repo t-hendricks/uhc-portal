@@ -14,7 +14,7 @@ export const usePostClusterGateAgreementAcknowledgeModal = (clusterId: string, r
       if (region) {
         const clusterService = getClusterServiceForRegion(region);
         const promises = gateIDs.map(async (id) => {
-          const response = clusterService
+          const response = await clusterService
             .postClusterGateAgreement(clusterId, id)
             .then(() => dispatch(setClusterUpgradeGate(id)));
           return response;
@@ -29,7 +29,7 @@ export const usePostClusterGateAgreementAcknowledgeModal = (clusterId: string, r
         return responses;
       }
       const promises = gateIDs.map(async (id) => {
-        const response = clusterService
+        const response = await clusterService
           .postClusterGateAgreement(clusterId, id)
           .then(() => dispatch(setClusterUpgradeGate(id)));
         return response;

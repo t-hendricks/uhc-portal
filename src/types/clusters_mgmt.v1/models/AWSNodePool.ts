@@ -2,6 +2,8 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
+import type { AWSVolume } from './AWSVolume';
+import type { Ec2MetadataHttpTokens } from './Ec2MetadataHttpTokens';
 /**
  * Representation of aws node pool specific parameters.
  */
@@ -27,6 +29,10 @@ export type AWSNodePool = {
    */
   availability_zone_types?: Record<string, string>;
   /**
+   * Which Ec2MetadataHttpTokens to use for metadata service interaction options for EC2 instances
+   */
+  ec2_metadata_http_tokens?: Ec2MetadataHttpTokens;
+  /**
    * InstanceProfile is the AWS EC2 instance profile, which is a container for an IAM role that the EC2 instance uses.
    */
   instance_profile?: string;
@@ -35,11 +41,22 @@ export type AWSNodePool = {
    */
   instance_type?: string;
   /**
+   * AWS Volume specification to be used to set custom worker disk size
+   */
+  root_volume?: AWSVolume;
+  /**
    * Associates nodepool subnets with AWS Outposts.
    */
   subnet_outposts?: Record<string, string>;
   /**
    * Optional keys and values that the installer will add as tags to all AWS resources it creates.
+   *
+   * AWS tags must conform to the following standards:
+   * - Each resource may have a maximum of 25 tags
+   * - Tags beginning with "aws:" are reserved for system use and may not be set
+   * - Tag keys may be between 1 and 128 characters in length
+   * - Tag values may be between 0 and 256 characters in length
+   * - Tags may only contain letters, numbers, spaces, and the following characters: [_ . : / = + - @]
    */
   tags?: Record<string, string>;
 };

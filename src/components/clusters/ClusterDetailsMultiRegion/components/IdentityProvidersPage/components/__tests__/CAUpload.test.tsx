@@ -1,23 +1,18 @@
 /* eslint-disable testing-library/prefer-user-event */
 /* eslint-disable testing-library/no-wait-for-side-effects */
 import React from 'react';
+import { FieldInputProps } from 'formik';
 import fs from 'fs';
 import path from 'path';
-import { reduxForm, WrappedFieldInputProps } from 'redux-form';
 
 import { fireEvent, render, screen, waitFor } from '~/testUtils';
 
-import { IDPFormDataType } from '../../model/IDPFormDataType';
-import CAUpload, { CAUploadProps } from '../CAUpload';
+import CAUpload from '../CAUpload';
 
 describe('<CAUpload />', () => {
-  const ConnectedCAUpload = reduxForm<IDPFormDataType, CAUploadProps, string>({
-    form: 'CAUpload',
-  })(CAUpload);
-
   const onChangeMock = jest.fn();
   const inputProp = {
-    input: { name: 'inputName', onChange: onChangeMock } as unknown as WrappedFieldInputProps,
+    input: { name: 'inputName', onChange: onChangeMock } as unknown as FieldInputProps<string>,
   };
 
   beforeEach(() => {
@@ -27,7 +22,7 @@ describe('<CAUpload />', () => {
   it('properly renders', () => {
     // Act
     // @ts-ignore
-    render(<ConnectedCAUpload {...inputProp} label="label" />);
+    render(<CAUpload {...inputProp} label="label" />);
 
     // Assert
     expect(screen.queryByTestId('ca-upload-form')).toBeInTheDocument();
@@ -46,7 +41,7 @@ describe('<CAUpload />', () => {
       type: 'text/plain',
     });
     // @ts-ignore
-    render(<ConnectedCAUpload label="label" {...inputProp} maxFileSize={10} />);
+    render(<CAUpload label="label" {...inputProp} maxFileSize={10} />);
     expect(
       screen.queryByText(/Maximum file size exceeded. File size limit/),
     ).not.toBeInTheDocument();
@@ -72,7 +67,7 @@ describe('<CAUpload />', () => {
       type: 'text/plain',
     });
     // @ts-ignore
-    render(<ConnectedCAUpload label="label" {...inputProp} />);
+    render(<CAUpload label="label" {...inputProp} />);
     expect(onChangeMock).toBeCalledTimes(0);
 
     // Act
@@ -105,7 +100,7 @@ describe('<CAUpload />', () => {
       type: 'text/plain',
     });
     // @ts-ignore
-    render(<ConnectedCAUpload {...inputProp} label="label" maxFileSize={2000} />);
+    render(<CAUpload {...inputProp} label="label" maxFileSize={2000} />);
     expect(onChangeMock).toBeCalledTimes(0);
 
     // Act
@@ -138,7 +133,7 @@ describe('<CAUpload />', () => {
       type: 'text/plain',
     });
     // @ts-ignore
-    const { user } = render(<ConnectedCAUpload label="label" {...inputProp} />);
+    const { user } = render(<CAUpload label="label" {...inputProp} />);
 
     expect(screen.getByRole('button', { name: 'Reveal' })).toBeInTheDocument();
     expect(screen.getByRole('button', { name: 'Reveal' }).getAttribute('disabled')).toBe('');
@@ -176,7 +171,7 @@ describe('<CAUpload />', () => {
       type: 'text/plain',
     });
     // @ts-ignore
-    const { user } = render(<ConnectedCAUpload label="label" {...inputProp} />);
+    const { user } = render(<CAUpload label="label" {...inputProp} />);
 
     expect(screen.getByRole('button', { name: 'Reveal' })).toBeInTheDocument();
     expect(screen.getByRole('button', { name: 'Reveal' }).getAttribute('disabled')).toBe('');
@@ -225,7 +220,7 @@ describe('<CAUpload />', () => {
       },
     );
     // @ts-ignore
-    render(<ConnectedCAUpload label="label" {...inputProp} />);
+    render(<CAUpload label="label" {...inputProp} />);
     await waitFor(() =>
       fireEvent.change(screen.getByTestId('ca-upload-input-file'), {
         target: { files: [file] },

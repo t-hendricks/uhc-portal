@@ -4,7 +4,7 @@ import { useFormikContext } from 'formik';
 import { Grid, GridItem, Spinner } from '@patternfly/react-core';
 
 import { isHypershiftCluster } from '~/components/clusters/common/clusterStates';
-import { getNodeOptions } from '~/components/clusters/commonMultiRegion/machinePools/utils';
+import { getNodeOptions } from '~/components/clusters/common/machinePools/utils';
 import { MachineTypesResponse } from '~/queries/types';
 import { useGlobalState } from '~/redux/hooks';
 import { MachinePool } from '~/types/clusters_mgmt.v1';
@@ -24,7 +24,7 @@ type EditNodeCountSectionProps = {
   machinePools: MachinePool[];
   cluster: ClusterFromSubscription;
   machineTypes: MachineTypesResponse;
-  allow500Nodes: boolean;
+  allow249NodesOSDCCSROSA: boolean;
 };
 
 const EditNodeCountSection = ({
@@ -32,7 +32,7 @@ const EditNodeCountSection = ({
   machinePools,
   cluster,
   machineTypes,
-  allow500Nodes,
+  allow249NodesOSDCCSROSA,
 }: EditNodeCountSectionProps) => {
   const { values } = useFormikContext<EditMachinePoolValues>();
 
@@ -57,7 +57,7 @@ const EditNodeCountSection = ({
         quota: organization.quotaList,
         minNodes: minNodesRequired,
         editMachinePoolId: machinePool?.id,
-        allow500Nodes,
+        allow249NodesOSDCCSROSA,
       }),
     [
       cluster,
@@ -67,7 +67,7 @@ const EditNodeCountSection = ({
       machineTypes,
       organization.quotaList,
       minNodesRequired,
-      allow500Nodes,
+      allow249NodesOSDCCSROSA,
     ],
   );
 

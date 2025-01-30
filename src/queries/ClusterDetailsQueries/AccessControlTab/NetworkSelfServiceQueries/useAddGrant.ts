@@ -1,23 +1,17 @@
 import { useMutation } from '@tanstack/react-query';
 
 import { formatErrorData } from '~/queries/helpers';
-import clusterService, { getClusterServiceForRegion } from '~/services/clusterService';
+import { getClusterService, getClusterServiceForRegion } from '~/services/clusterService';
 
 export const useAddGrant = (clusterID: string, region?: string) => {
-  const { data, isPending, isError, error, mutate, reset } = useMutation({
+  const { data, isPending, isError, error, mutateAsync, reset } = useMutation({
     mutationKey: ['addGrant'],
     mutationFn: async ({ roleId, arn }: { roleId: string; arn: string }) => {
-      if (region) {
-        const clusterService = getClusterServiceForRegion(region);
-        const response = clusterService.addGrant(clusterID, roleId, arn);
-        return response;
-      }
-
-      const response = clusterService.addGrant(clusterID, roleId, arn);
+      const clusterService = region ? getClusterServiceForRegion(region) : getClusterService();
+      const response = await clusterService.addGrant(clusterID, roleId, arn);
       return response;
     },
   });
-
   if (isError) {
     const formattedError = formatErrorData(isPending, isError, error);
 
@@ -26,7 +20,7 @@ export const useAddGrant = (clusterID: string, region?: string) => {
       isPending,
       isError,
       error: formattedError,
-      mutate,
+      mutateAsync,
       reset,
     };
   }
@@ -36,7 +30,7 @@ export const useAddGrant = (clusterID: string, region?: string) => {
     isPending,
     isError,
     error,
-    mutate,
+    mutateAsync,
     reset,
   };
 };

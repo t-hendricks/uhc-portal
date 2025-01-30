@@ -8,7 +8,7 @@ import { useFormState } from '~/components/clusters/wizards/hooks';
 import { FormikFieldArray } from '~/components/common/FormikFormComponents/FormikFieldArray/FormikFieldArray';
 
 import { required } from '../../../../../../../common/validators';
-import ReduxVerticalFormGroup from '../../../../../../common/ReduxFormComponents/ReduxVerticalFormGroup';
+import ReduxVerticalFormGroup from '../../../../../../common/ReduxFormComponents_deprecated/ReduxVerticalFormGroup';
 import { FieldId } from '../../constants';
 
 const LDAPFormRequired = ({ isEditForm, idpEdited, isPending }) => {

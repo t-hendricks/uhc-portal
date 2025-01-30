@@ -1,5 +1,3 @@
-// a redux-form Field-compatible component for selecting an availability zone
-
 import React from 'react';
 import PropTypes from 'prop-types';
 

@@ -9,8 +9,8 @@ import { FormikFieldArray } from '~/components/common/FormikFormComponents/Formi
 
 import { noop } from '../../../../../../../common/helpers';
 import { required } from '../../../../../../../common/validators';
-import RadioButtons from '../../../../../../common/ReduxFormComponents/RadioButtons';
-import ReduxVerticalFormGroup from '../../../../../../common/ReduxFormComponents/ReduxVerticalFormGroup';
+import RadioButtons from '../../../../../../common/ReduxFormComponents_deprecated/RadioButtons';
+import ReduxVerticalFormGroup from '../../../../../../common/ReduxFormComponents_deprecated/ReduxVerticalFormGroup';
 import { FieldId } from '../../constants';
 import CAUpload from '../CAUpload';
 

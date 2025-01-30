@@ -1,5 +1,9 @@
 import { isHibernating, isHypershiftCluster } from '~/components/clusters/common/clusterStates';
-import { ClusterResource, Subscription, SubscriptionCommonFields } from '~/types/accounts_mgmt.v1';
+import {
+  ClusterResource,
+  Subscription,
+  SubscriptionCommonFieldsStatus,
+} from '~/types/accounts_mgmt.v1';
 import { ClusterState } from '~/types/clusters_mgmt.v1';
 import { ClusterFromSubscription } from '~/types/types';
 
@@ -92,16 +96,16 @@ describe('clusterDetailsHelper', () => {
 
   describe('isArchivedSubscription', () => {
     it.each([
-      [SubscriptionCommonFields.status.ARCHIVED, true],
-      [SubscriptionCommonFields.status.DEPROVISIONED, true],
-      [SubscriptionCommonFields.status.ACTIVE, false],
-      [SubscriptionCommonFields.status.DISCONNECTED, false],
-      [SubscriptionCommonFields.status.RESERVED, false],
-      [SubscriptionCommonFields.status.STALE, false],
+      [SubscriptionCommonFieldsStatus.Archived, true],
+      [SubscriptionCommonFieldsStatus.Deprovisioned, true],
+      [SubscriptionCommonFieldsStatus.Active, false],
+      [SubscriptionCommonFieldsStatus.Disconnected, false],
+      [SubscriptionCommonFieldsStatus.Reserved, false],
+      [SubscriptionCommonFieldsStatus.Stale, false],
       [undefined, false],
     ])(
       'status: %p. It returns %p',
-      (status: SubscriptionCommonFields.status | undefined, expectedResult: boolean) => {
+      (status: SubscriptionCommonFieldsStatus | undefined, expectedResult: boolean) => {
         const defaultCluster: Readonly<ClusterFromSubscription> = {
           ...defaultClusterFromSubscription,
           subscription: {
@@ -146,7 +150,7 @@ describe('clusterDetailsHelper', () => {
           state,
           subscription: {
             ...defaultSubscription,
-            status: isArchivedSubscription ? SubscriptionCommonFields.status.ARCHIVED : undefined,
+            status: isArchivedSubscription ? SubscriptionCommonFieldsStatus.Archived : undefined,
           },
         };
         isHibernatingMock.mockReturnValue(isHibernatingResult);
@@ -187,7 +191,7 @@ describe('clusterDetailsHelper', () => {
           state,
           subscription: {
             ...defaultSubscription,
-            status: isArchivedSubscription ? SubscriptionCommonFields.status.ARCHIVED : undefined,
+            status: isArchivedSubscription ? SubscriptionCommonFieldsStatus.Archived : undefined,
           },
           cloud_provider: {
             id: cloudProviderId,
@@ -229,7 +233,7 @@ describe('clusterDetailsHelper', () => {
           state,
           subscription: {
             ...defaultSubscription,
-            status: isArchivedSubscription ? SubscriptionCommonFields.status.ARCHIVED : undefined,
+            status: isArchivedSubscription ? SubscriptionCommonFieldsStatus.Archived : undefined,
           },
         };
         isHypershiftClusterMock.mockReturnValue(isHypershiftClusterResult);

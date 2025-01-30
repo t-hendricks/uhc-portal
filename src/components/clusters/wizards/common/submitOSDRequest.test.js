@@ -30,9 +30,9 @@ describe('createClusterRequest', () => {
     machine_type: 'PDP-11', // GCP defaults 'custom-4-16384', AWS 'm5.xlarge' not important here.
     cluster_version: {
       kind: 'Version',
-      id: 'openshift-v4.9.11',
-      href: '/api/clusters_mgmt/v1/versions/openshift-v4.9.11',
-      raw_id: '4.9.11',
+      id: 'openshift-v4.17.1',
+      href: '/api/clusters_mgmt/v1/versions/openshift-v4.17.1',
+      raw_id: '4.17.1',
       enabled: true,
       default: true,
       channel_group: 'stable',
@@ -247,7 +247,6 @@ describe('createClusterRequest', () => {
         };
 
         const request = createClusterRequest({ isWizard: true }, data);
-        console.log(request);
         expect(request.billing_model).toEqual(data.billing_model);
         expect(request.product).toEqual({ id: 'osd' });
         expect(request.cloud_provider.id).toEqual(data.cloud_provider);
@@ -284,7 +283,6 @@ describe('createClusterRequest', () => {
         };
 
         const request = createClusterRequest({ isWizard: true }, data);
-        console.log(request);
         expect(request.billing_model).toEqual(data.billing_model);
         expect(request.product).toEqual({ id: 'osd' });
         expect(request.cloud_provider.id).toEqual(data.cloud_provider);
@@ -298,6 +296,26 @@ describe('createClusterRequest', () => {
             secure_boot: data.secure_boot,
           },
         });
+      });
+      it('handles Private Service Connection', () => {
+        const data = {
+          ...baseFormData,
+          billing_model: 'standard',
+          product: normalizedProducts.OSD,
+          cloud_provider: 'gcp',
+          byoc: 'true',
+          ...gcpVPCData,
+          private_service_connect: true,
+          psc_subnet: 'psc_subnet',
+        };
+
+        const request = createClusterRequest({ isWizard: true }, data);
+
+        expect(request.cloud_provider.id).toEqual(data.cloud_provider);
+        expect(request.ccs.enabled).toBeTruthy();
+        expect(request.gcp.private_service_connect?.service_attachment_subnet).toEqual(
+          'psc_subnet',
+        );
       });
     });
 
@@ -497,10 +515,6 @@ describe('createClusterRequest', () => {
   });
 
   describe('CreateROSAWizard', () => {
-    // ROSA wizard has no choice about `product` or `cloud_provider` or 'byoc'.
-    // For code uniformity, it initializes these fields in redux-form state
-    // (without registering them or connecting to an actual Field component).
-
     describe('ROSA button', () => {
       const hcpSubnetDetails = {
         selected_vpc: awsRosaOsdVPCData,

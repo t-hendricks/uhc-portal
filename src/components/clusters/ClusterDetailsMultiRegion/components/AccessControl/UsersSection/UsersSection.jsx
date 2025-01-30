@@ -64,6 +64,7 @@ const UsersSection = (props) => {
     error: addUserError,
     mutate: addUserMutate,
     isSuccess: isAddUserSuccess,
+    reset: resetAddUserMutate,
   } = useAddUser(cluster.id, region);
   const {
     isError: isDeleteUserError,
@@ -235,7 +236,6 @@ const UsersSection = (props) => {
           Grant permission to manage this cluster to users defined in your identity provider.{' '}
           <ExternalLink href={links.OSD_DEDICATED_ADMIN_ROLE}>Learn more.</ExternalLink>
         </p>
-        {isAddUserError && <ErrorBox message="Error adding user" response={addUserError.error} />}
         {isDeleteUserError && (
           <ErrorBox message="Error deleting user" response={deleteUserError.error} />
         )}
@@ -254,6 +254,7 @@ const UsersSection = (props) => {
         {addUserBtn}
         <AddUserDialog
           addUserMutate={addUserMutate}
+          resetAddUserMutate={resetAddUserMutate}
           isAddUserSuccess={isAddUserSuccess}
           isAddUserPending={isAddUserPending}
           isAddUserError={isAddUserError}

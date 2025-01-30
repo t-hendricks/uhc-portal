@@ -1,16 +1,14 @@
-import React, { useCallback, useEffect, useMemo, useState } from 'react';
+import React, { useCallback, useMemo } from 'react';
 import { useDispatch } from 'react-redux';
 
 import { Card, CardBody, CardTitle } from '@patternfly/react-core';
 import { SortByDirection } from '@patternfly/react-table';
 
 import links from '~/common/installLinks.mjs';
-import { viewPropsChanged } from '~/common/queryHelpers';
 import ExternalLink from '~/components/common/ExternalLink';
 import ConnectedModal from '~/components/common/Modal/ConnectedModal';
 import { modalActions } from '~/components/common/Modal/ModalActions';
 import modals from '~/components/common/Modal/modals';
-import { useFetchAccessRequest } from '~/queries/ClusterDetailsQueries/AccessRequestTab/useFetchAccessRequest';
 import {
   refetchAccessRequests,
   useFetchAccessRequests,
@@ -36,21 +34,12 @@ const AccessRequest = ({ subscriptionId }: AccessRequestProps) => {
   const viewType = viewConstants.ACCESS_REQUESTS_VIEW;
   const viewOptions = useGlobalState((state) => state.viewOptions[viewType]);
 
-  const {
-    data: accessRequest,
-    isLoading: isAccessRequestLoading,
-    isError: isAccessRequestError,
-    isSuccess: isAccessRequestSuccess,
-  } = useFetchAccessRequest(subscriptionId!!);
-
   const { data: accessRequests, isLoading: isAccessRequestsLoading } = useFetchAccessRequests(
     subscriptionId!!,
     viewOptions,
     false,
     { enabled: true },
   );
-
-  const [previousViewOptions, setPreviousViewOptions] = useState(viewOptions);
 
   const isPending = useMemo(() => isAccessRequestsLoading, [isAccessRequestsLoading]);
   const isPendingNoData = useMemo(
@@ -82,28 +71,6 @@ const AccessRequest = ({ subscriptionId }: AccessRequestProps) => {
       ),
     [dispatch],
   );
-
-  useEffect(() => {
-    if (isAccessRequestSuccess && !isAccessRequestLoading && !isAccessRequestError) {
-      openAccessRequest(accessRequest);
-    }
-  }, [
-    accessRequest,
-    openAccessRequest,
-    isAccessRequestSuccess,
-    isAccessRequestLoading,
-    isAccessRequestError,
-  ]);
-
-  useEffect(() => {
-    if (
-      viewPropsChanged(viewOptions, previousViewOptions) &&
-      !isAccessRequestsLoading &&
-      subscriptionId !== undefined
-    ) {
-      setPreviousViewOptions(viewOptions);
-    }
-  }, [isAccessRequestsLoading, previousViewOptions, subscriptionId, viewOptions]);
 
   return (
     <>

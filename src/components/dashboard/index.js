@@ -6,7 +6,7 @@ import { getSummaryDashboard, getUnhealthyClusters } from '../../redux/actions/d
 import { invalidateSubscriptions } from '../../redux/actions/subscriptionsActions';
 import { getOrganizationAndQuota } from '../../redux/actions/userActions';
 import { viewConstants } from '../../redux/constants';
-import { fetchOrganizationInsights } from '../clusters/ClusterDetails/components/Insights/InsightsActions';
+import { fetchOrganizationInsights } from '../clusters/ClusterDetailsMultiRegion/components/Insights/InsightsActions';
 
 import Dashboard from './Dashboard';
 

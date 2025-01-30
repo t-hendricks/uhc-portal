@@ -25,7 +25,19 @@ fs.readdir(sourceDir, (err, files) => {
   files.forEach((file) => {
     const filepath = path.resolve(sourceDir, file);
     const ext = path.extname(file);
-    if (ext === '.json' && !fs.statSync(filepath).isDirectory()) {
+    if (
+      ext === '.json' &&
+      !fs.statSync(filepath).isDirectory() &&
+      ![
+        'accounts_mgmt.v1.json',
+        'cost-management.v1.json',
+        'access_transparency.v1.json',
+        'insights-results-aggregator.v1.json',
+        'insights-results-aggregator.v2.json',
+        'service_logs.v1.json',
+        'upgrades_info.v1.json',
+      ].includes(file)
+    ) {
       const output = path.resolve(targetDir, path.basename(file, ext));
       console.log('Reading', filepath, '-> Generating', output);
       // fs.rmSync(output, { recursive: true, force: true });

@@ -10,7 +10,7 @@ import { global_danger_color_100 as dangerColor } from '@patternfly/react-tokens
 import { global_warning_color_100 as warningColor } from '@patternfly/react-tokens/dist/esm/global_warning_color_100';
 import { DateFormat } from '@redhat-cloud-services/frontend-components/DateFormat';
 
-import { SubscriptionCommonFields } from '~/types/accounts_mgmt.v1';
+import { SubscriptionCommonFieldsSupport_level as SubscriptionCommonFieldsSupportLevel } from '~/types/accounts_mgmt.v1';
 
 import { getTrialEndDate, getTrialExpiresInDays } from '../../../../common/getTrialExpiresDates';
 import { normalizedProducts } from '../../../../common/subscriptionTypes';
@@ -62,8 +62,8 @@ function ClusterCreatedIndicator({ cluster }) {
 
   if (
     managed ||
-    (supportLevel !== SubscriptionCommonFields.support_level.EVAL &&
-      supportLevel !== SubscriptionCommonFields.support_level.NONE)
+    (supportLevel !== SubscriptionCommonFieldsSupportLevel.Eval &&
+      supportLevel !== SubscriptionCommonFieldsSupportLevel.None)
   ) {
     const clusterCreationTime = get(cluster, 'creation_timestamp', false);
     if (clusterCreationTime) {
@@ -73,7 +73,7 @@ function ClusterCreatedIndicator({ cluster }) {
   }
 
   // display error that it has expired
-  if (supportLevel === SubscriptionCommonFields.support_level.NONE) {
+  if (supportLevel === SubscriptionCommonFieldsSupportLevel.None) {
     return (
       <Popover
         position={PopoverPosition.top}

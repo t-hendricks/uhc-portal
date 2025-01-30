@@ -6,18 +6,17 @@ import { reducer as formReducer } from 'redux-form';
 import { notificationsReducer } from '@redhat-cloud-services/frontend-components-notifications/redux';
 
 import apiErrorReducer from '../../components/App/ApiError/ApiErrorReducer';
-import NetworkSelfServiceReducer from '../../components/clusters/ClusterDetails/components/AccessControl/NetworkSelfServiceSection/NetworkSelfServiceReducer';
-import clusterUsersReducer from '../../components/clusters/ClusterDetails/components/AccessControl/UsersSection/UsersReducer';
-import addOnsReducer from '../../components/clusters/ClusterDetails/components/AddOns/AddOnsReducer';
-import { clusterLogReducer } from '../../components/clusters/ClusterDetails/components/ClusterLogs/clusterLogReducer';
-import { IdentityProvidersReducer } from '../../components/clusters/ClusterDetails/components/IdentityProvidersPage/IdentityProvidersReducer';
-import insightsReducer from '../../components/clusters/ClusterDetails/components/Insights/InsightsReducer';
-import machinePools from '../../components/clusters/ClusterDetails/components/MachinePools/MachinePoolsReducer';
-import { MonitoringReducer } from '../../components/clusters/ClusterDetails/components/Monitoring/MonitoringReducer';
-import { NetworkingReducer } from '../../components/clusters/ClusterDetails/components/Networking/NetworkingReducer';
-import { deleteProtectionReducer } from '../../components/clusters/ClusterDetails/components/Overview/DetailsRight/DeleteProtection/deleteProtectionReducer';
-import { InstallationLogReducer } from '../../components/clusters/ClusterDetails/components/Overview/InstallationLogView/InstallationLogReducer';
-import { deleteClusterDialogReducer } from '../../components/clusters/common/DeleteClusterDialog/DeleteClusterDialogReducer';
+import machinePools from '../../components/clusters/ClusterDetails_archived_do_not_use/components/MachinePools/MachinePoolsReducer';
+import NetworkSelfServiceReducer from '../../components/clusters/ClusterDetailsMultiRegion/components/AccessControl/NetworkSelfServiceSection/NetworkSelfServiceReducer';
+import clusterUsersReducer from '../../components/clusters/ClusterDetailsMultiRegion/components/AccessControl/UsersSection/UsersReducer';
+import addOnsReducer from '../../components/clusters/ClusterDetailsMultiRegion/components/AddOns/AddOnsReducer';
+import { clusterLogReducer } from '../../components/clusters/ClusterDetailsMultiRegion/components/ClusterLogs/clusterLogReducer';
+import { IdentityProvidersReducer } from '../../components/clusters/ClusterDetailsMultiRegion/components/IdentityProvidersPage/IdentityProvidersReducer';
+import insightsReducer from '../../components/clusters/ClusterDetailsMultiRegion/components/Insights/InsightsReducer';
+import { MonitoringReducer } from '../../components/clusters/ClusterDetailsMultiRegion/components/Monitoring/MonitoringReducer';
+import { NetworkingReducer } from '../../components/clusters/ClusterDetailsMultiRegion/components/Networking/NetworkingReducer';
+import { deleteProtectionReducer } from '../../components/clusters/ClusterDetailsMultiRegion/components/Overview/DetailsRight/DeleteProtection/deleteProtectionReducer';
+import { InstallationLogReducer } from '../../components/clusters/ClusterDetailsMultiRegion/components/Overview/InstallationLogView/InstallationLogReducer';
 import clusterUpgrades from '../../components/clusters/common/Upgrades/clusterUpgradeReducer';
 import modalReducer from '../../components/common/Modal/ModalReducer';
 
@@ -54,7 +53,7 @@ const reducers = {
   accessRequest: accessRequestReducer,
   accessProtection: accessProtectionReducer,
   clusters: clustersReducer,
-  deleteCluster: deleteClusterDialogReducer,
+
   cloudProviders: cloudProvidersReducer,
   viewOptions: viewOptionsReducer,
   userProfile: userReducer,
@@ -76,7 +75,7 @@ const reducers = {
   subscriptions: subscriptionsReducer,
   persistentStorageValues: persistentStorageReducer,
   loadBalancerValues: loadBalancersReducer,
-  clusterLogs: clusterLogReducer,
+  clusterLogs: clusterLogReducer /* Archived  Do not use */,
   notifications: notificationsReducer,
   networkSelfService: NetworkSelfServiceReducer,
   subscriptionSettings: subscriptionSettingsReducer,

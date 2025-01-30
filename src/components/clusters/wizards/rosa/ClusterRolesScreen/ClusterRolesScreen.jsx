@@ -24,7 +24,6 @@ import {
   getOperatorRolesCommand,
 } from '~/components/clusters/wizards/rosa/ClusterRolesScreen/clusterRolesHelper';
 import { FieldId } from '~/components/clusters/wizards/rosa/constants';
-import ReduxHiddenCheckbox from '~/components/common/FormikFormComponents/HiddenCheckbox';
 import useAnalytics from '~/hooks/useAnalytics';
 import { useFeatureGate } from '~/hooks/useFeatureGate';
 import {
@@ -39,7 +38,7 @@ import ErrorBox from '../../../../common/ErrorBox';
 import ExternalLink from '../../../../common/ExternalLink';
 import InstructionCommand from '../../../../common/InstructionCommand';
 import PopoverHint from '../../../../common/PopoverHint';
-import RadioButtons from '../../../../common/ReduxFormComponents/RadioButtons';
+import RadioButtons from '../../../../common/ReduxFormComponents_deprecated/RadioButtons';
 import { BackToAssociateAwsAccountLink } from '../common/BackToAssociateAwsAccountLink';
 
 import CustomerOIDCConfiguration from './CustomerOIDCConfiguration';
@@ -123,7 +122,6 @@ const ClusterRolesScreen = () => {
   useEffect(() => {
     // clearing the ocm_role_response results in ocm role being re-fetched
     // when navigating to this step (from Next or Back)
-    setFieldValue(FieldId.DetectedOcmRole, false);
     refetchGetOCMRole();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -139,8 +137,9 @@ const ClusterRolesScreen = () => {
     if (isGetOCMRolePending) {
       setGetOCMRoleErrorBox(null);
     } else if (isGetOCMRoleSuccess) {
-      setFieldValue(FieldId.RosaCreatorArn, getOCMRoleData.data?.arn);
-      setFieldValue(FieldId.DetectedOcmRole, true);
+      if (FieldId.RosaCreatorArn !== getOCMRoleData.data?.arn) {
+        setFieldValue(FieldId.RosaCreatorArn, getOCMRoleData.data?.arn);
+      }
       const isAdmin = getOCMRoleData.data?.isAdmin;
       setIsAutoModeAvailable(isAdmin);
       setGetOCMRoleErrorBox(null);
@@ -291,7 +290,6 @@ const ClusterRolesScreen = () => {
             </GridItem>
           </>
         )}
-        <ReduxHiddenCheckbox name="detected_ocm_role" />
         {getOCMRoleErrorBox && <GridItem>{getOCMRoleErrorBox}</GridItem>}
         {isGetOCMRolePending && (
           <GridItem>

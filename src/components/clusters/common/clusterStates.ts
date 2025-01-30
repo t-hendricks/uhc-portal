@@ -1,5 +1,8 @@
 import { normalizedProducts } from '~/common/subscriptionTypes';
-import { ClusterAuthorizationRequest, SubscriptionCommonFields } from '~/types/accounts_mgmt.v1';
+import {
+  ClusterAuthorizationRequestProduct_id as ClusterAuthorizationRequestProductId,
+  SubscriptionCommonFieldsStatus,
+} from '~/types/accounts_mgmt.v1';
 import { Cluster, ClusterState, InflightCheck, InflightCheckState } from '~/types/clusters_mgmt.v1';
 import { ClusterFromSubscription, ClusterWithPermissions } from '~/types/types';
 
@@ -53,11 +56,11 @@ const getClusterStateAndDescription = <E extends ClusterFromSubscription>(
 
   // the state is determined by subscriptions.status or cluster.state.
   // the conditions are not mutually exclusive and are ordered by priority, e.g., STALE and READY.
-  if (cluster.subscription?.status === SubscriptionCommonFields.status.DISCONNECTED) {
+  if (cluster.subscription?.status === SubscriptionCommonFieldsStatus.Disconnected) {
     state = clusterStates.DISCONNECTED;
-  } else if (cluster.subscription?.status === SubscriptionCommonFields.status.DEPROVISIONED) {
+  } else if (cluster.subscription?.status === SubscriptionCommonFieldsStatus.Deprovisioned) {
     state = clusterStates.DEPROVISIONED;
-  } else if (cluster.subscription?.status === SubscriptionCommonFields.status.ARCHIVED) {
+  } else if (cluster.subscription?.status === SubscriptionCommonFieldsStatus.Archived) {
     state = clusterStates.ARCHIVED;
   } else if (
     cluster.state === ClusterState.INSTALLING ||
@@ -77,12 +80,12 @@ const getClusterStateAndDescription = <E extends ClusterFromSubscription>(
     state = clusterStates.POWERING_DOWN;
   } else if (cluster.state === ClusterState.RESUMING) {
     state = clusterStates.RESUMING;
-  } else if (cluster.subscription?.status === SubscriptionCommonFields.status.STALE) {
+  } else if (cluster.subscription?.status === SubscriptionCommonFieldsStatus.Stale) {
     state = clusterStates.STALE;
   } else if (isClusterUpgrading(cluster)) {
     state = clusterStates.UPDATING;
   } else if (
-    cluster.subscription?.status === SubscriptionCommonFields.status.ACTIVE ||
+    cluster.subscription?.status === SubscriptionCommonFieldsStatus.Active ||
     cluster.state === ClusterState.READY
   ) {
     state = clusterStates.READY;
@@ -133,8 +136,8 @@ const hasInflightEgressErrors = <E extends ClusterFromSubscription>(cluster: E):
  * @param cluster something extending ClusterFromSubscription since components are using either Cluster or ClusterFromSubscription
  */
 const isOSD = <E extends ClusterFromSubscription>(cluster: E): boolean =>
-  [normalizedProducts.OSD, normalizedProducts.OSDTRIAL].includes(
-    cluster.product?.id! as ClusterAuthorizationRequest.product_id,
+  [normalizedProducts.OSD, normalizedProducts.OSDTrial].includes(
+    cluster.product?.id! as ClusterAuthorizationRequestProductId,
   );
 
 /**
@@ -240,8 +243,8 @@ const getClusterAIPermissions = (cluster: ClusterWithPermissions) => ({
  */
 const canViewMachinePoolTab = (cluster: ClusterFromSubscription): boolean => {
   const isArchived =
-    cluster?.subscription?.status === SubscriptionCommonFields.status.ARCHIVED ||
-    cluster?.subscription?.status === SubscriptionCommonFields.status.DEPROVISIONED;
+    cluster?.subscription?.status === SubscriptionCommonFieldsStatus.Archived ||
+    cluster?.subscription?.status === SubscriptionCommonFieldsStatus.Deprovisioned;
 
   return (
     (cluster?.managed ?? false) &&
@@ -261,18 +264,18 @@ export {
   getStateDescription,
   hasInflightEgressErrors,
   isAWS,
-  isGCP,
   isAWSPrivateCluster,
   isCCS,
   isClusterUpgradeCompleted,
   isClusterUpgrading,
   isErrorSharedGCPVPCValues,
+  isGCP,
   isHibernating,
   isHypershiftCluster,
+  isOffline,
   isOSD,
   isOSDGCPPendingOnHostProject,
   isOSDGCPWaitingForRolesOnHostProject,
-  isOffline,
   isROSA,
   isROSAManualMode,
   isWaitingForOIDCProviderOrOperatorRolesMode,

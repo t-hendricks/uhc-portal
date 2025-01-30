@@ -25,7 +25,6 @@ import { Navigate, useNavigate } from '~/common/routing';
 import { AppPage } from '~/components/App/AppPage';
 import { modalActions } from '~/components/common/Modal/ModalActions';
 import DrawerPanel from '~/components/overview/components/common/DrawerPanel';
-import { useFeatureGate } from '~/hooks/useFeatureGate';
 import {
   refetchAccessProtection,
   useFetchAccessProtection,
@@ -53,7 +52,7 @@ import { clusterAutoscalerActions } from '~/redux/actions/clusterAutoscalerActio
 import { onResetFiltersAndFlags } from '~/redux/actions/viewOptionsActions';
 import { useGlobalState } from '~/redux/hooks/useGlobalState';
 import { isRestrictedEnv } from '~/restrictedEnv';
-import { SubscriptionCommonFields } from '~/types/accounts_mgmt.v1';
+import { SubscriptionCommonFieldsStatus } from '~/types/accounts_mgmt.v1';
 
 import getClusterName from '../../../common/getClusterName';
 import { isValid, shouldRefetchQuota } from '../../../common/helpers';
@@ -69,7 +68,6 @@ import { clearGlobalError, setGlobalError } from '../../../redux/actions/globalE
 import { getNotificationContacts } from '../../../redux/actions/supportActions';
 import { fetchUpgradeGates } from '../../../redux/actions/upgradeGateActions';
 import { viewConstants } from '../../../redux/constants';
-import { MULTIREGION_PREVIEW_ENABLED } from '../../../redux/constants/featureConstants';
 import ErrorBoundary from '../../App/ErrorBoundary';
 import Unavailable from '../../common/Unavailable';
 import clusterStates, {
@@ -79,6 +77,7 @@ import clusterStates, {
 } from '../common/clusterStates';
 import CommonClusterModals from '../common/CommonClusterModals';
 import { canSubscribeOCPMultiRegion } from '../common/EditSubscriptionSettingsDialog/canSubscribeOCPSelector';
+import { userCanHibernateClustersSelector } from '../common/HibernateClusterModal/HibernateClusterModalSelectors';
 import ReadOnlyBanner from '../common/ReadOnlyBanner';
 import { canTransferClusterOwnershipMultiRegion } from '../common/TransferClusterOwnershipDialog/utils/transferClusterOwnershipDialogSelectors';
 import { getSchedules } from '../common/Upgrades/clusterUpgradeActions';
@@ -97,13 +96,9 @@ import { ClusterTabsId } from './components/common/ClusterTabIds';
 import DeleteIDPDialog from './components/DeleteIDPDialog';
 import { fetchClusterInsights } from './components/Insights/InsightsActions';
 import MachinePools from './components/MachinePools';
-import {
-  clearGetMachinePoolsResponse,
-  getMachineOrNodePools,
-} from './components/MachinePools/MachinePoolsActions';
 import Monitoring from './components/Monitoring';
 import { getOnDemandMetrics } from './components/Monitoring/MonitoringActions';
-import { issuesAndWarningsSelector } from './components/Monitoring/MonitoringSelectors';
+import { issuesAndWarningsSelector } from './components/Monitoring/monitoringSelectors';
 import Networking from './components/Networking';
 import { getClusterRouters } from './components/Networking/NetworkingActions';
 import Overview from './components/Overview/Overview';
@@ -123,7 +118,6 @@ const ClusterDetails = (props) => {
   const [gcpOrgPolicyWarning, setGcpOrgPolicyWarning] = React.useState('');
   const monitoring = useGlobalState((state) => state.monitoring);
 
-  const isMultiRegionPreviewEnabled = useFeatureGate(MULTIREGION_PREVIEW_ENABLED);
   const canHibernateCluster = useGlobalState((state) => userCanHibernateClustersSelector(state));
   const anyModalOpen = useGlobalState((state) => !!state.modal.modalName);
   const userAccess = useGlobalState((state) => state.cost.userAccess);
@@ -174,9 +168,7 @@ const ClusterDetails = (props) => {
     status: addNotificationStatus,
   } = useAddNotificationContact(subscriptionID);
 
-  const { data: availableRegionalInstances } = useFetchGetAvailableRegionalInstances(
-    isMultiRegionPreviewEnabled,
-  );
+  const { data: availableRegionalInstances } = useFetchGetAvailableRegionalInstances(true);
 
   const regionId = cluster?.region?.id;
   const regionalInstance = findRegionalInstance(regionId, availableRegionalInstances);
@@ -279,7 +271,6 @@ const ClusterDetails = (props) => {
       https://issues.redhat.com/browse/SDA-2249
       */
     const clusterID = get(cluster, 'id');
-    const clusterVersion = cluster?.version?.id;
     const isManaged = get(cluster, 'managed', false);
     if (shouldRefetchQuota(organization)) {
       dispatch(userActions.getOrganizationAndQuota());
@@ -303,7 +294,6 @@ const ClusterDetails = (props) => {
       dispatch(usersActions.getUsers(clusterID));
       dispatch(getClusterRouters(clusterID));
       refreshIDP();
-      dispatch(getMachineOrNodePools(clusterID, isHypershiftCluster(cluster), clusterVersion));
       dispatch(getSchedules(clusterID, isHypershiftCluster(cluster)));
       dispatch(fetchUpgradeGates());
       if (get(cluster, 'cloud_provider.id') !== 'gcp') {
@@ -325,10 +315,7 @@ const ClusterDetails = (props) => {
     }
     const clusterID = get(cluster, 'id');
     const subscriptionStatus = get(cluster, 'subscription.status');
-    if (
-      isValid(clusterID) &&
-      subscriptionStatus !== SubscriptionCommonFields.status.DEPROVISIONED
-    ) {
+    if (isValid(clusterID) && subscriptionStatus !== SubscriptionCommonFieldsStatus.Deprovisioned) {
       refreshRelatedResources(clicked);
     }
   };
@@ -345,8 +332,6 @@ const ClusterDetails = (props) => {
       refetchClusterIdentityProviders();
       dispatch(modalActions.closeModal());
       refetchClusterLogsQueries();
-
-      dispatch(clearGetMachinePoolsResponse());
       dispatch(clusterAutoscalerActions.clearClusterAutoscalerResponse());
       resetFiltersAndFlags();
       dispatch(clearListVpcs());
@@ -428,8 +413,8 @@ const ClusterDetails = (props) => {
 
   const clusterHibernating = isHibernating(cluster);
   const isArchived =
-    get(cluster, 'subscription.status', false) === SubscriptionCommonFields.status.ARCHIVED ||
-    get(cluster, 'subscription.status', false) === SubscriptionCommonFields.status.DEPROVISIONED;
+    get(cluster, 'subscription.status', false) === SubscriptionCommonFieldsStatus.Archived ||
+    get(cluster, 'subscription.status', false) === SubscriptionCommonFieldsStatus.Deprovisioned;
   const isAROCluster = get(cluster, 'subscription.plan.type', '') === knownProducts.ARO;
   const isOSDTrial = get(cluster, 'subscription.plan.type', '') === knownProducts.OSDTRIAL;
   const isRHOIC = get(cluster, 'subscription.plan.type', '') === knownProducts.RHOIC;
@@ -569,7 +554,7 @@ const ClusterDetails = (props) => {
                 },
                 addAssisted: {
                   ref: addAssistedTabRef,
-                  show: !isMultiRegionPreviewEnabled && addHostsTabState.showTab,
+                  show: addHostsTabState.showTab,
                   isDisabled: addHostsTabState.isDisabled,
                   tooltip: addHostsTabState.tabTooltip,
                 },
@@ -606,6 +591,7 @@ const ClusterDetails = (props) => {
                 cluster={cluster}
                 region={cluster.subscription.rh_region_id}
                 clusterDetailsLoading={isClusterDetailsLoading}
+                clusterDetailsFetching={isFetching}
                 subscription={cluster.subscription}
                 cloudProviders={cloudProviders}
                 refresh={refresh}
@@ -659,7 +645,7 @@ const ClusterDetails = (props) => {
                 <AddOns
                   clusterID={cluster.id}
                   isHypershift={isHypershift}
-                  region={cluster.subscription.xcm_id}
+                  region={cluster.subscription.rh_region_id}
                   cluster={cluster}
                 />
               </ErrorBoundary>
@@ -705,7 +691,7 @@ const ClusterDetails = (props) => {
                   refreshCluster={refresh}
                   cluster={cluster}
                   isManaged={cluster.managed}
-                  region={cluster.subscription.xcm_id}
+                  region={cluster.subscription.rh_region_id}
                 />
               </ErrorBoundary>
             </TabContent>
@@ -787,7 +773,6 @@ const ClusterDetails = (props) => {
           ) : null}
 
           <CommonClusterModals
-            isMultiRegionPreviewEnabled={isMultiRegionPreviewEnabled}
             onClose={onDialogClose}
             onClusterDeleted={() => {
               invalidateClusterDetailsQueries();

@@ -8,7 +8,7 @@ export const refetchGrants = () => {
   queryClient.invalidateQueries({ queryKey: ['fetchGrants'] });
 };
 
-export const useFetchGrants = (cluserID: string, region?: string) => {
+export const useFetchGrants = (cluserID: string, refetchInterval?: boolean, region?: string) => {
   const { data, isLoading, isError, error, isFetching } = useQuery({
     queryKey: ['fetchGrants'],
     queryFn: async () => {
@@ -20,6 +20,7 @@ export const useFetchGrants = (cluserID: string, region?: string) => {
       const response = clusterService.getGrants(cluserID);
       return response;
     },
+    refetchInterval: refetchInterval ? 5000 : undefined,
   });
 
   if (isError) {

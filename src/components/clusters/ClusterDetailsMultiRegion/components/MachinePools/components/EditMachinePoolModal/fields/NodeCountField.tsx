@@ -7,7 +7,7 @@ import { noQuotaTooltip } from '~/common/helpers';
 import links from '~/common/installLinks.mjs';
 import { normalizeProductID } from '~/common/normalize';
 import { normalizedProducts } from '~/common/subscriptionTypes';
-import { isMPoolAz } from '~/components/clusters/ClusterDetails/clusterDetailsHelper';
+import { isMPoolAz } from '~/components/clusters/ClusterDetailsMultiRegion/clusterDetailsHelper';
 import { constants } from '~/components/clusters/common/CreateOSDFormConstants';
 import ExternalLink from '~/components/common/ExternalLink';
 import { FormGroupHelperText } from '~/components/common/FormGroupHelperText';

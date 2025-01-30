@@ -39,6 +39,7 @@ class ClusterLogsToolbar extends React.PureComponent {
       itemsEnd,
       onSetPage,
       onPerPageSelect,
+      region,
     } = this.props;
 
     return (
@@ -70,6 +71,7 @@ class ClusterLogsToolbar extends React.PureComponent {
                 clusterID={clusterID}
                 viewOptions={viewOptions}
                 logs={logs}
+                region={region}
               />
             </ToolbarItem>
             <ToolbarItem align={{ default: 'alignRight' }} variant="pagination">
@@ -129,6 +131,7 @@ ClusterLogsToolbar.propTypes = {
   itemsEnd: PropTypes.number,
   onSetPage: PropTypes.func,
   onPerPageSelect: PropTypes.func,
+  region: PropTypes.string,
 };
 
 export default ClusterLogsToolbar;

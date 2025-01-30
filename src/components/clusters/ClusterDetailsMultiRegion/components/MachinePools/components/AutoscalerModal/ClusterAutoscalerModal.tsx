@@ -9,17 +9,18 @@ import { getDefaultClusterAutoScaling } from '~/components/clusters/common/clust
 import {
   AutoscalerGpuHelpText,
   AutoscalerGpuPopoverText,
-} from '~/components/clusters/commonMultiRegion/EditClusterAutoScalingDialog/AutoscalerGpuTooltip';
+} from '~/components/clusters/common/EditClusterAutoScalingDialog/AutoscalerGpuTooltip';
 import {
   AutoscalerIgnoredLabelsHelpText,
   AutoscalerIgnoredLabelsPopoverText,
-} from '~/components/clusters/commonMultiRegion/EditClusterAutoScalingDialog/AutoscalerIgnoredLabelsTooltip';
+} from '~/components/clusters/common/EditClusterAutoScalingDialog/AutoscalerIgnoredLabelsTooltip';
 import {
   balancerFields,
   FieldDefinition,
   resourceLimitsFields,
   scaleDownFields,
-} from '~/components/clusters/commonMultiRegion/EditClusterAutoScalingDialog/fieldDefinitions';
+} from '~/components/clusters/common/EditClusterAutoScalingDialog/fieldDefinitions';
+import { MaxNodesTotalPopoverText } from '~/components/clusters/common/EditClusterAutoScalingDialog/MaxNodesTotalTooltip';
 import {
   logVerbosityValidator,
   numberValidator,
@@ -34,8 +35,10 @@ import ErrorBox from '~/components/common/ErrorBox';
 import ExternalLink from '~/components/common/ExternalLink';
 import Modal from '~/components/common/Modal/Modal';
 import { modalActions } from '~/components/common/Modal/ModalActions';
+import useValidateMaxNodesTotal from '~/hooks/useValidateMaxNodesTotal';
 import { useDisableClusterAutoscaler } from '~/queries/ClusterDetailsQueries/MachinePoolTab/ClusterAutoscaler/useDisableClusterAutoscaler';
 import { useEnableClusterAutoscaler } from '~/queries/ClusterDetailsQueries/MachinePoolTab/ClusterAutoscaler/useEnableClusterAutoscaler';
+import { FormattedErrorData } from '~/queries/helpers';
 
 import MachinePoolsAutoScalingWarning from '../../MachinePoolAutoscalingWarning';
 
@@ -117,6 +120,9 @@ type ClusterAutoscalerDialogProps = {
   hasAutoscalingMachinePools: boolean;
   isClusterAutoscalerRefetching: boolean;
   region?: string;
+  maxNodesTotalDefault: number;
+  isUpdateAutoscalerFormError: boolean;
+  updateAutoscalerFormError: FormattedErrorData;
 };
 
 export const ClusterAutoscalerModal = ({
@@ -131,6 +137,9 @@ export const ClusterAutoscalerModal = ({
   hasAutoscalingMachinePools,
   region,
   isClusterAutoscalerRefetching,
+  maxNodesTotalDefault,
+  isUpdateAutoscalerFormError,
+  updateAutoscalerFormError,
 }: ClusterAutoscalerDialogProps) => {
   const {
     mutate: mutateDisableClusterAutoscaler,
@@ -143,7 +152,7 @@ export const ClusterAutoscalerModal = ({
     isPending: isEnableClusterAutoscalerPending,
     isError: isEnableClusterAutoscalerError,
     error: enableClusterAutoscalerError,
-  } = useEnableClusterAutoscaler(clusterId, region);
+  } = useEnableClusterAutoscaler(clusterId, maxNodesTotalDefault, region);
   const dispatch = useDispatch();
   const {
     values: { [FieldId.ClusterAutoscaling]: clusterAutoScaling },
@@ -162,9 +171,12 @@ export const ClusterAutoscalerModal = ({
   const isFormDisabled =
     !hasClusterAutoscaler || isUpdateClusterAutoscalerPending || isClusterAutoscalerRefetching;
 
-  const handleReset = () => {
-    setFieldValue(FieldId.ClusterAutoscaling, getDefaultClusterAutoScaling(), true);
-  };
+  const handleReset = () =>
+    setFieldValue(
+      FieldId.ClusterAutoscaling,
+      getDefaultClusterAutoScaling(maxNodesTotalDefault),
+      true,
+    );
 
   const toggleClusterAutoScaling = () => {
     if (!hasClusterAutoscaler) {
@@ -192,6 +204,7 @@ export const ClusterAutoscalerModal = ({
   } else if (dirty && !isUpdateClusterAutoscalerPending && !isClusterAutoscalerRefetching) {
     primaryButtonProps = { text: 'Save', isClose: false, isDisabled: hasAutoScalingErrors };
   }
+
   return (
     <Modal
       variant="large"
@@ -235,10 +248,16 @@ export const ClusterAutoscalerModal = ({
               isDisabled={isSaving}
               onChange={toggleClusterAutoScaling}
             />
-            {isDisableClusterAutoscalerError || isEnableClusterAutoscalerError ? (
+            {isDisableClusterAutoscalerError ||
+            isEnableClusterAutoscalerError ||
+            isUpdateAutoscalerFormError ? (
               <ErrorBox
                 message="Failed to update autoscaler"
-                response={disableClusterAutoscalerError.error || enableClusterAutoscalerError.error}
+                response={
+                  disableClusterAutoscalerError.error ||
+                  enableClusterAutoscalerError.error ||
+                  updateAutoscalerFormError.error
+                }
               />
             ) : (
               <MachinePoolsAutoScalingWarning
@@ -281,6 +300,20 @@ export const ClusterAutoscalerModal = ({
                   {mapField(field, isFormDisabled)}
                 </GridItem>
               ))}
+              <GridItem span={6} key="resource_limits.max_nodes_total">
+                <TextInputField
+                  name="cluster_autoscaling.resource_limits.max_nodes_total"
+                  label="max-nodes-total"
+                  type="number"
+                  isDisabled={isFormDisabled}
+                  showHelpTextOnError
+                  helperText={
+                    <span className="custom-help-text">Default value: {maxNodesTotalDefault}</span>
+                  }
+                  validate={useValidateMaxNodesTotal(maxNodesTotalDefault)}
+                  tooltip={<MaxNodesTotalPopoverText />}
+                />
+              </GridItem>
               <GridItem span={6}>
                 <TextInputField
                   name="cluster_autoscaling.resource_limits.gpus"

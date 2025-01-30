@@ -35,7 +35,7 @@ import { FieldId } from '~/components/clusters/wizards/osd/constants';
 import ExternalLink from '~/components/common/ExternalLink';
 import { useFeatureGate } from '~/hooks/useFeatureGate';
 import { OSD_GCP_WIF } from '~/redux/constants/featureConstants';
-import { SubscriptionCommonFields } from '~/types/accounts_mgmt.v1';
+import { SubscriptionCommonFieldsCluster_billing_model as SubscriptionCommonFieldsClusterBillingModel } from '~/types/accounts_mgmt.v1';
 
 export interface GcpByocFieldsProps extends WorkloadIdentityFederationProps {}
 
@@ -71,7 +71,7 @@ export const GcpByocFields = (props: GcpByocFieldsProps) => {
 
   return (
     <Form isWidthLimited onSubmit={(e) => e.preventDefault()}>
-      {billingModel !== SubscriptionCommonFields.cluster_billing_model.MARKETPLACE_GCP && (
+      {billingModel !== SubscriptionCommonFieldsClusterBillingModel.marketplace_gcp && (
         <FormAlert>
           <Alert variant="info" isInline title="Customer cloud subscription">
             Provision your cluster in a Google Cloud Platform account owned by you or your company
@@ -149,7 +149,7 @@ export const GcpByocFields = (props: GcpByocFieldsProps) => {
           )}
 
           <Prerequisites acknowledgementRequired initiallyExpanded>
-            {billingModel === SubscriptionCommonFields.cluster_billing_model.MARKETPLACE_GCP && (
+            {billingModel === SubscriptionCommonFieldsClusterBillingModel.marketplace_gcp && (
               <Hint className="pf-v5-u-mb-md pf-v5-u-mt-sm">
                 <HintTitle>
                   <strong>{gcpTitle}</strong>

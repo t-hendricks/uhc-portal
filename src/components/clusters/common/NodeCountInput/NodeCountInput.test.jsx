@@ -1,14 +1,16 @@
 import React from 'react';
 
-import { getMinNodesRequired } from '~/components/clusters/ClusterDetails/components/MachinePools/machinePoolsHelper';
+import { getMinNodesRequired } from '~/components/clusters/ClusterDetailsMultiRegion/components/MachinePools/machinePoolsHelper';
 import { checkAccessibility, render, screen } from '~/testUtils';
-import { SubscriptionCommonFields } from '~/types/accounts_mgmt.v1';
+import { SubscriptionCommonFieldsCluster_billing_model as SubscriptionCommonFieldsClusterBillingModel } from '~/types/accounts_mgmt.v1';
 
 import { normalizedProducts } from '../../../../common/subscriptionTypes';
-import { MAX_NODES, MAX_NODES_HCP } from '../machinePools/constants';
+import { MAX_NODES_HCP } from '../machinePools/constants';
 import * as quotaSelectors from '../quotaSelectors';
 
 import NodeCountInput from './NodeCountInput';
+
+const MAX_NODES = 180; // mock data
 
 const includedNodes = ({ isByoc, isMultiAz, isMachinePool }) => {
   if (isByoc || isMachinePool) {
@@ -34,7 +36,7 @@ const baseProps = ({ isByoc, isMultiAz }) => ({
   },
   cloudProviderID: 'aws',
   product: normalizedProducts.OSD,
-  billingModel: SubscriptionCommonFields.cluster_billing_model.STANDARD,
+  billingModel: SubscriptionCommonFieldsClusterBillingModel.standard,
 
   minNodes: getMinNodesRequired(false, undefined, {
     isDefaultMachinePool: true,
@@ -46,7 +48,7 @@ const baseProps = ({ isByoc, isMultiAz }) => ({
 describe('<NodeCountInput>', () => {
   let mockAvailableNodes;
   beforeEach(() => {
-    mockAvailableNodes = jest.spyOn(quotaSelectors, 'availableNodesFromQuota');
+    mockAvailableNodes = jest.spyOn(quotaSelectors, 'availableQuota');
   });
   afterEach(() => {
     mockAvailableNodes.mockRestore();

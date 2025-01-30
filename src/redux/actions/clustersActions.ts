@@ -22,17 +22,16 @@ import * as Sentry from '@sentry/browser';
 
 import { isHypershiftCluster } from '~/components/clusters/common/clusterStates';
 import { getClusterServiceForRegion } from '~/services/clusterService';
-import type {
-  ClusterAuthorizationRequest,
+import {
+  ClusterAuthorizationRequestProduct_id as ClusterAuthorizationRequestProductId,
+  SelfAccessReviewAction,
+  SelfAccessReviewResource_type as SelfAccessReviewResourceType,
+  SelfResourceReviewRequestAction,
+  SelfResourceReviewRequestResource_type as SelfResourceReviewRequestResourceType,
   Subscription,
+  SubscriptionCommonFieldsStatus,
   SubscriptionCreateRequest,
   SubscriptionPatchRequest,
-} from '~/types/accounts_mgmt.v1';
-import {
-  SelfAccessReview,
-  SelfResourceReview,
-  SelfResourceReviewRequest,
-  SubscriptionCommonFields,
 } from '~/types/accounts_mgmt.v1';
 import type { Cluster, UpgradePolicy } from '~/types/clusters_mgmt.v1';
 import type {
@@ -85,7 +84,7 @@ const createClusterAndUpgradeSchedule = async (
   if (upgradeSchedule) {
     const clusterID = clusterResponse.data.id;
     if (clusterID) {
-      dispatch(postSchedule(clusterID, upgradeSchedule, isHypershiftCluster(cluster)));
+      dispatch(postSchedule(clusterID, upgradeSchedule, isHypershiftCluster(cluster), regionalId));
     }
   }
 
@@ -253,7 +252,7 @@ const createResponseForFetchClusters = (
     let cluster: ClusterWithPermissions;
     if (
       entry.subscription.managed &&
-      entry.subscription.status !== SubscriptionCommonFields.status.DEPROVISIONED &&
+      entry.subscription.status !== SubscriptionCommonFieldsStatus.Deprovisioned &&
       !!entry?.cluster &&
       !isEmpty(entry?.cluster)
     ) {
@@ -277,7 +276,7 @@ const createResponseForFetchClusters = (
     cluster.canEdit =
       !cluster.partialCS &&
       (canEdit['*'] || (!!cluster.id && !!canEdit[cluster.id])) &&
-      entry.subscription.status !== SubscriptionCommonFields.status.DEPROVISIONED;
+      entry.subscription.status !== SubscriptionCommonFieldsStatus.Deprovisioned;
     cluster.canDelete =
       !cluster.partialCS && (canDelete['*'] || (!!cluster.id && !!canDelete[cluster.id!]));
     cluster.subscription = entry.subscription;
@@ -295,14 +294,14 @@ const fetchClustersAndPermissions = async (
       .then((response) => mapListResponse(response, normalizeSubscription)),
     authorizationsService
       .selfResourceReview({
-        action: SelfResourceReviewRequest.action.DELETE,
-        resource_type: SelfResourceReview.resource_type.CLUSTER,
+        action: SelfResourceReviewRequestAction.delete,
+        resource_type: SelfResourceReviewRequestResourceType.Cluster,
       })
       .then((response) => buildPermissionDict(response)),
     authorizationsService
       .selfResourceReview({
-        action: SelfResourceReviewRequest.action.UPDATE,
-        resource_type: SelfResourceReview.resource_type.CLUSTER,
+        action: SelfResourceReviewRequestAction.update,
+        resource_type: SelfResourceReviewRequestResourceType.Cluster,
       })
       .then((response) => buildPermissionDict(response)),
   ]);
@@ -357,7 +356,7 @@ const fetchClustersAndPermissions = async (
 
   // clusters-service only needed for managed clusters.
   const managedSubscriptions = items.filter(
-    (s) => s.managed && s.status !== SubscriptionCommonFields.status.DEPROVISIONED,
+    (s) => s.managed && s.status !== SubscriptionCommonFieldsStatus.Deprovisioned,
   );
 
   // fetch managed clusters by subscription
@@ -413,11 +412,11 @@ const fetchSingleClusterAndPermissions = async (
   subscriptionID: string,
 ): Promise<AugmentedClusterResponse> => {
   const actions = [
-    SelfAccessReview.action.CREATE,
-    SelfAccessReview.action.UPDATE,
-    SelfAccessReview.action.GET,
-    SelfAccessReview.action.LIST,
-    SelfAccessReview.action.DELETE,
+    SelfAccessReviewAction.create,
+    SelfAccessReviewAction.update,
+    SelfAccessReviewAction.get,
+    SelfAccessReviewAction.list,
+    SelfAccessReviewAction.delete,
   ];
   let canEdit = false;
   let canEditOCMRoles = false;
@@ -425,7 +424,7 @@ const fetchSingleClusterAndPermissions = async (
   let canViewOCMRoles = false;
   let canUpdateClusterResource = false;
 
-  const buildPermissionsByActionObj = (obj: any, action: SelfAccessReview.action) => {
+  const buildPermissionsByActionObj = (obj: any, action: SelfAccessReviewAction) => {
     // eslint-disable-next-line no-param-reassign
     obj[action] = false;
     return obj;
@@ -433,15 +432,15 @@ const fetchSingleClusterAndPermissions = async (
 
   const idpActions = actions.reduce(
     buildPermissionsByActionObj,
-    {} as Record<SelfAccessReview.action, boolean>,
+    {} as Record<SelfAccessReviewAction, boolean>,
   );
   const machinePoolsActions = actions.reduce(
     buildPermissionsByActionObj,
-    {} as Record<SelfAccessReview.action, boolean>,
+    {} as Record<SelfAccessReviewAction, boolean>,
   );
   const kubeletConfigActions = actions.reduce(
     buildPermissionsByActionObj,
-    {} as Record<SelfAccessReview.action, boolean>,
+    {} as Record<SelfAccessReviewAction, boolean>,
   );
 
   const subscription = await accountsService.getSubscription(subscriptionID);
@@ -449,14 +448,14 @@ const fetchSingleClusterAndPermissions = async (
   const isAROCluster = subscription?.data?.plan?.type === knownProducts.ARO;
   const isROSACluster = ROSA_PRODUCTS.includes(subscription?.data?.plan?.type || '');
   const isOSDCluster = OSD_PRODUCTS.includes(
-    (subscription?.data?.plan?.type || '') as ClusterAuthorizationRequest.product_id,
+    (subscription?.data?.plan?.type || '') as ClusterAuthorizationRequestProductId,
   );
 
-  if (subscription.data.status !== SubscriptionCommonFields.status.DEPROVISIONED) {
+  if (subscription.data.status !== SubscriptionCommonFieldsStatus.Deprovisioned) {
     await authorizationsService
       .selfAccessReview({
-        action: SelfAccessReview.action.UPDATE,
-        resource_type: SelfAccessReview.resource_type.SUBSCRIPTION,
+        action: SelfAccessReviewAction.update,
+        resource_type: SelfAccessReviewResourceType.Subscription,
         subscription_id: subscriptionID,
       })
       .then((response) => {
@@ -466,7 +465,7 @@ const fetchSingleClusterAndPermissions = async (
       await authorizationsService
         .selfAccessReview({
           action,
-          resource_type: SelfAccessReview.resource_type.IDP,
+          resource_type: SelfAccessReviewResourceType.Idp,
           subscription_id: subscriptionID,
         })
         .then((response) => {
@@ -475,8 +474,8 @@ const fetchSingleClusterAndPermissions = async (
     });
     await authorizationsService
       .selfAccessReview({
-        action: SelfAccessReview.action.UPDATE,
-        resource_type: SelfAccessReview.resource_type.CLUSTER_AUTOSCALER,
+        action: SelfAccessReviewAction.update,
+        resource_type: SelfAccessReviewResourceType.ClusterAutoscaler,
         subscription_id: subscriptionID,
       })
       .then((response) => {
@@ -484,8 +483,8 @@ const fetchSingleClusterAndPermissions = async (
       });
     await authorizationsService
       .selfAccessReview({
-        action: SelfAccessReview.action.CREATE,
-        resource_type: SelfAccessReview.resource_type.SUBSCRIPTION_ROLE_BINDING,
+        action: SelfAccessReviewAction.create,
+        resource_type: SelfAccessReviewResourceType.SubscriptionRoleBinding,
         subscription_id: subscriptionID,
       })
       .then((response) => {
@@ -493,8 +492,8 @@ const fetchSingleClusterAndPermissions = async (
       });
     await authorizationsService
       .selfAccessReview({
-        action: SelfAccessReview.action.GET,
-        resource_type: SelfAccessReview.resource_type.SUBSCRIPTION_ROLE_BINDING,
+        action: SelfAccessReviewAction.get,
+        resource_type: SelfAccessReviewResourceType.SubscriptionRoleBinding,
         subscription_id: subscriptionID,
       })
       .then((response) => {
@@ -502,8 +501,8 @@ const fetchSingleClusterAndPermissions = async (
       });
     await authorizationsService
       .selfAccessReview({
-        action: SelfAccessReview.action.UPDATE,
-        resource_type: SelfAccessReview.resource_type.CLUSTER,
+        action: SelfAccessReviewAction.update,
+        resource_type: SelfAccessReviewResourceType.Cluster,
         subscription_id: subscriptionID,
       })
       .then((response) => {
@@ -514,7 +513,7 @@ const fetchSingleClusterAndPermissions = async (
       await authorizationsService
         .selfAccessReview({
           action,
-          resource_type: SelfAccessReview.resource_type.MACHINE_POOL,
+          resource_type: SelfAccessReviewResourceType.MachinePool,
           subscription_id: subscriptionID,
         })
         .then((response) => {
@@ -526,7 +525,7 @@ const fetchSingleClusterAndPermissions = async (
       await authorizationsService
         .selfAccessReview({
           action,
-          resource_type: SelfAccessReview.resource_type.CLUSTER_KUBELET_CONFIG,
+          resource_type: SelfAccessReviewResourceType.ClusterKubeletConfig,
           subscription_id: subscriptionID,
         })
         .then((response) => {
@@ -537,7 +536,7 @@ const fetchSingleClusterAndPermissions = async (
 
   if (
     (subscription.data.managed || isAROCluster) &&
-    subscription.data.status !== SubscriptionCommonFields.status.DEPROVISIONED
+    subscription.data.status !== SubscriptionCommonFieldsStatus.Deprovisioned
   ) {
     // TODO cluster_id is optional in the schema, remove cast
     const clusterResponse = await clusterService.getClusterDetails(
@@ -560,8 +559,8 @@ const fetchSingleClusterAndPermissions = async (
     cluster.data.upgradeGates = upgradeGates.data?.items || [];
 
     const canDeleteAccessReviewResponse = await authorizationsService.selfAccessReview({
-      action: SelfAccessReview.action.DELETE,
-      resource_type: SelfAccessReview.resource_type.CLUSTER,
+      action: SelfAccessReviewAction.delete,
+      resource_type: SelfAccessReviewResourceType.Cluster,
       cluster_id: subscription.data.cluster_id,
     });
 

@@ -44,6 +44,13 @@ const initalPropsWithoutAutoscalingMachinePools = {
   dirty: false,
   hasAutoscalingMachinePools: false,
   isClusterAutoscalerRefetching: false,
+  maxNodesTotalDefault: 180,
+  isUpdateAutoscalerFormError: false,
+  updateAutoscalerFormError: {
+    isLoading: false,
+    isError: false,
+    error: null,
+  },
 };
 
 const dirtyForm = {
@@ -146,5 +153,47 @@ describe('Cluster autoscaler modal', () => {
 
     await userEvent.click(clusterSwitch);
     expect(mutateEnableMock).toHaveBeenCalled();
+  });
+
+  it('Shows an error message', async () => {
+    const mutateEnableMock = jest.fn();
+    useEnableClusterAutoscalerMock.mockReturnValue({
+      isPeding: false,
+      mutate: mutateEnableMock,
+      error: false,
+    });
+    const mutateDisableMock = jest.fn();
+    useDisableClusterAutoscalerMock.mockReturnValue({
+      isPending: false,
+      mutate: mutateDisableMock,
+      error: false,
+    });
+
+    const errorProps = {
+      ...initalPropsWithoutAutoscalingMachinePools,
+      isUpdateAutoscalerFormError: true,
+      updateAutoscalerFormError: {
+        isLoading: false,
+        isError: true,
+        error: {
+          pending: false,
+          error: true,
+          fulfilled: false,
+          errorCode: 400,
+          errorMessage:
+            "CLUSTERS-MGMT-400: The total number of compute nodes for a single cluster '2' cannot exceed the maximum worker nodes allowed by the cluster autoscaler '-4'. Reduce the total compute nodes from the cluster or increase the maximum worker nodes allowed by the cluster autoscaler.",
+          reason:
+            "The total number of compute nodes for a single cluster '2' cannot exceed the maximum worker nodes allowed by the cluster autoscaler '-4'. Reduce the total compute nodes from the cluster or increase the maximum worker nodes allowed by the cluster autoscaler.",
+          internalErrorCode: 'CLUSTERS-MGMT-400',
+          operationID: 'ef56fb84-f6d9-4f9d-9d1d-7400059f24c9',
+        },
+      },
+    };
+    render(
+      <Formik initialValues={{}} onSubmit={() => {}}>
+        <ClusterAutoscalerModal {...errorProps} hasClusterAutoscaler={false} />
+      </Formik>,
+    );
+    expect(screen.getByTestId('alert-error')).toBeInTheDocument();
   });
 });

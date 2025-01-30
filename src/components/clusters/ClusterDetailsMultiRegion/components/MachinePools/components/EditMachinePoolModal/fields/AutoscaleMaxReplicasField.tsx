@@ -6,7 +6,7 @@ import { FormGroup, NumberInput } from '@patternfly/react-core';
 import links from '~/common/installLinks.mjs';
 import { normalizeProductID } from '~/common/normalize';
 import { normalizedProducts } from '~/common/subscriptionTypes';
-import { isMPoolAz } from '~/components/clusters/ClusterDetails/clusterDetailsHelper';
+import { isMPoolAz } from '~/components/clusters/ClusterDetailsMultiRegion/clusterDetailsHelper';
 import { isHypershiftCluster } from '~/components/clusters/common/clusterStates';
 import { computeNodeHintText } from '~/components/clusters/commonMultiRegion/ScaleSection/AutoScaleSection/AutoScaleHelper';
 import ExternalLink from '~/components/common/ExternalLink';

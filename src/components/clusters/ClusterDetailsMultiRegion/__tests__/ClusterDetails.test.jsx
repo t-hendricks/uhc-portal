@@ -9,7 +9,7 @@ import { clearGlobalError, setGlobalError } from '../../../../redux/actions/glob
 import * as userActions from '../../../../redux/actions/userActions';
 import { MULTIREGION_PREVIEW_ENABLED } from '../../../../redux/constants/featureConstants';
 import { mockUseFeatureGate, render, screen, waitFor, withState } from '../../../../testUtils';
-import { SubscriptionCommonFields } from '../../../../types/accounts_mgmt.v1';
+import { SubscriptionCommonFieldsStatus } from '../../../../types/accounts_mgmt.v1';
 import clusterStates from '../../common/clusterStates';
 import ClusterDetails from '../ClusterDetails';
 
@@ -533,7 +533,7 @@ describe('<ClusterDetailsMultiRegion />', () => {
           canEdit: true,
           subscription: {
             ...fixtures.clusterDetails.cluster.subscription,
-            status: SubscriptionCommonFields.status.ACTIVE,
+            status: SubscriptionCommonFieldsStatus.Active,
             plan: {
               id: 'OSDTrial',
               kind: 'Plan',
@@ -577,7 +577,7 @@ describe('<ClusterDetailsMultiRegion />', () => {
             canEdit: true,
             subscription: {
               ...fixtures.clusterDetails.cluster.subscription,
-              status: SubscriptionCommonFields.status.DEPROVISIONED,
+              status: SubscriptionCommonFieldsStatus.Deprovisioned,
             },
           },
         },
@@ -602,7 +602,7 @@ describe('<ClusterDetailsMultiRegion />', () => {
           canEdit: true,
           subscription: {
             ...fixtures.OCPClusterDetails.cluster.subscription,
-            status: SubscriptionCommonFields.status.ARCHIVED,
+            status: SubscriptionCommonFieldsStatus.Archived,
           },
           // together with assistedInstallerEnabled: true,
           // this set displayAddAssistedHosts to true if not Archived

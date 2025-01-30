@@ -28,6 +28,10 @@ export type AWS = {
    */
   account_id?: string;
   /**
+   * Additional allowed principal ARNs to be added to the hosted control plane's VPC Endpoint Service.
+   */
+  additional_allowed_principals?: Array<string>;
+  /**
    * Additional AWS Security Groups to be added to default worker (compute) machine pool.
    */
   additional_compute_security_group_ids?: Array<string>;
@@ -56,6 +60,10 @@ export type AWS = {
    */
   etcd_encryption?: AwsEtcdEncryption;
   /**
+   * ID of local private hosted zone for hypershift internal communication.
+   */
+  hcp_internal_communication_hosted_zone_id?: string;
+  /**
    * ID of private hosted zone.
    */
   private_hosted_zone_id?: string;
@@ -83,4 +91,8 @@ export type AWS = {
    * Optional keys and values that the installer will add as tags to all AWS resources it creates
    */
   tags?: Record<string, string>;
+  /**
+   * Role ARN for VPC Endpoint Service cross account role.
+   */
+  vpc_endpoint_role_arn?: string;
 };

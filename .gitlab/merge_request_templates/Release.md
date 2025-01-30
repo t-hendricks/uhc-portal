@@ -32,6 +32,6 @@ Check the following before merging:
 
 <!-- TODO: update this link to point to the correct section in the release notes -->
 <!--       by appending the heading permalink, e.g. /Release-Notes#mar-5-1981 -->
-[change-log]: https://gitlab.cee.redhat.com/service/uhc-portal/-/wikis/Release-Notes
-[held-back-log]: https://gitlab.cee.redhat.com/service/uhc-portal/-/wikis/Held-back-Notes
+[change-log]: https://github.com/RedHatInsights/uhc-portal/wiki/Release-Notes
+[held-back-log]: https://github.com/RedHatInsights/uhc-portal/wiki/Held-Back-Notes
 [environment]: https://console.redhat.com/openshift/

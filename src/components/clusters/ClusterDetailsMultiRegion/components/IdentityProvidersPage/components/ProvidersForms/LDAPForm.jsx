@@ -6,7 +6,7 @@ import { GridItem } from '@patternfly/react-core';
 
 import { useFormState } from '~/components/clusters/wizards/hooks';
 
-import { ReduxCheckbox } from '../../../../../../common/ReduxFormComponents';
+import { ReduxCheckbox } from '../../../../../../common/ReduxFormComponents_deprecated';
 import { FieldId } from '../../constants';
 import CAUpload from '../CAUpload';
 

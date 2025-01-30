@@ -2,8 +2,9 @@ import React from 'react';
 import get from 'lodash/get';
 
 import { DropdownItem, DropdownList } from '@patternfly/react-core';
+import { addNotification } from '@redhat-cloud-services/frontend-components-notifications';
 
-import { SubscriptionCommonFields } from '~/types/accounts_mgmt.v1';
+import { SubscriptionCommonFieldsStatus } from '~/types/accounts_mgmt.v1';
 
 import getClusterName from '../../../../common/getClusterName';
 import { isAssistedInstallCluster } from '../../../../common/isAssistedInstallerCluster';
@@ -39,11 +40,12 @@ function actionResolver(
   showConsoleButton,
   openModal,
   canSubscribeOCP,
-  canTransferClusterOwnership,
   canHibernateCluster,
+  canTransferClusterOwnership,
   toggleSubscriptionReleased,
   refreshFunc,
   inClusterList,
+  dispatch,
 ) {
   const baseProps = {};
   const isClusterUninstalling = cluster.state === clusterStates.UNINSTALLING;
@@ -243,6 +245,7 @@ function actionResolver(
             clusterID: cluster.id,
             clusterName,
             shouldDisplayClusterName: inClusterList,
+            region: cluster?.subscription?.rh_region_id,
           }),
       },
     ),
@@ -271,12 +274,29 @@ function actionResolver(
       key: getKey('transferclusterownership'),
       onClick: () => {
         if (isReleased) {
-          toggleSubscriptionReleased(get(cluster, 'subscription.id'), false);
-          refreshFunc();
+          toggleSubscriptionReleased(
+            {
+              subscriptionID: cluster.subscription.id,
+              released: false,
+            },
+            {
+              onSuccess: () => {
+                dispatch(
+                  addNotification({
+                    variant: 'success',
+                    title: 'Cluster ownership transfer canceled',
+                    dismissable: false,
+                  }),
+                );
+                refreshFunc();
+              },
+            },
+          );
         } else {
           openModal(modals.TRANSFER_CLUSTER_OWNERSHIP, {
             subscription: cluster.subscription,
             shouldDisplayClusterName: inClusterList,
+            region: cluster.subscription.rh_region_id,
           });
         }
       },
@@ -316,7 +336,7 @@ function actionResolver(
     !isHypershiftCluster(cluster);
   const showEditMachinePool = cluster.canEdit && cluster.managed;
   const isArchived =
-    get(cluster, 'subscription.status', false) === SubscriptionCommonFields.status.ARCHIVED;
+    get(cluster, 'subscription.status', false) === SubscriptionCommonFieldsStatus.Archived;
   const showArchive = cluster.canEdit && !cluster.managed && cluster.subscription && !isArchived;
   const showUnarchive = cluster.canEdit && !cluster.managed && cluster.subscription && isArchived;
   const showEditURL =
@@ -327,6 +347,8 @@ function actionResolver(
   const product = get(cluster, 'subscription.plan.type', '');
   const showEditSubscriptionSettings =
     product === normalizedProducts.OCP && cluster.canEdit && canSubscribeOCP;
+  // const showEditSubscriptionSettings =
+  //   product === normalizedProducts.OCP && cluster.canEdit && canSubscribeOCP;
   const isAllowedProducts = [
     normalizedProducts.OCP,
     normalizedProducts.ARO,
@@ -336,7 +358,7 @@ function actionResolver(
     cluster.canEdit &&
     canTransferClusterOwnership &&
     isAllowedProducts &&
-    get(cluster, 'subscription.status') !== SubscriptionCommonFields.status.ARCHIVED;
+    get(cluster, 'subscription.status') !== SubscriptionCommonFieldsStatus.Archived;
   const showUpgradeTrialCluster = isClusterReady && cluster.canEdit && isProductOSDTrial;
 
   return [
@@ -344,14 +366,14 @@ function actionResolver(
     cluster.canEdit && getEditDisplayNameProps(),
     showEditURL && getEditConsoleURLProps(),
     showScale && getScaleClusterProps(),
-    showEditMachinePool && getEditMachinePoolProps(),
     showHibernateCluster && getHibernateClusterProps(),
+    showEditMachinePool && getEditMachinePoolProps(),
     showUpgradeTrialCluster && getUpgradeTrialClusterProps(),
     showDelete && getDeleteItemProps(),
     showArchive && getArchiveClusterProps(),
-    showUnarchive && getUnarchiveClusterProps(),
     showEditSubscriptionSettings && getEditSubscriptionSettingsProps(),
     showTransferClusterOwnership && getTransferClusterOwnershipProps(),
+    showUnarchive && getUnarchiveClusterProps(),
   ].filter(Boolean);
 }
 
@@ -362,20 +384,22 @@ function dropDownItems({
   canSubscribeOCP,
   canTransferClusterOwnership,
   canHibernateCluster,
-  toggleSubscriptionReleased,
   refreshFunc,
   inClusterList,
+  toggleSubscriptionReleased,
+  dispatch,
 }) {
   const actions = actionResolver(
     cluster,
     showConsoleButton,
     openModal,
     canSubscribeOCP,
-    canTransferClusterOwnership,
     canHibernateCluster,
+    canTransferClusterOwnership,
     toggleSubscriptionReleased,
     refreshFunc,
     inClusterList,
+    dispatch,
   );
 
   const renderMenuItem = ({ title, ...restOfProps }) => (

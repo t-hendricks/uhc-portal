@@ -4,7 +4,7 @@ import * as reactRedux from 'react-redux';
 import { normalizedProducts } from '~/common/subscriptionTypes';
 import { modalActions } from '~/components/common/Modal/ModalActions';
 import { render, screen } from '~/testUtils';
-import { SubscriptionCommonFields } from '~/types/accounts_mgmt.v1';
+import { SubscriptionCommonFieldsSupport_level as SubscriptionCommonFieldsSupportLevel } from '~/types/accounts_mgmt.v1';
 
 import SubscriptionCompliancy from './SubscriptionCompliancy';
 
@@ -27,7 +27,7 @@ const defaultProps = {
     canEdit: true,
     subscription: {
       plan: { type: normalizedProducts.OCP },
-      support_level: SubscriptionCommonFields.support_level.EVAL,
+      support_level: SubscriptionCommonFieldsSupportLevel.Eval,
     },
   },
   openModal,

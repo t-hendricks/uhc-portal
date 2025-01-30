@@ -6,21 +6,21 @@ import { UpgradePolicy } from '~/types/clusters_mgmt.v1';
 
 import { refetchSchedules } from './useGetSchedules';
 
-export const useEditSchedule = (clusterID: string, isHypershift: boolean, region?: string) => {
-  const { data, isPending, isError, error, mutate, mutateAsync } = useMutation({
+export const useEditSchedule = (clusterID: string, isHypershift?: boolean, region?: string) => {
+  const { data, isPending, isError, error, mutate, mutateAsync, isSuccess } = useMutation({
     mutationKey: ['editSchedule'],
     mutationFn: async ({ policyID, schedule }: { policyID: string; schedule: UpgradePolicy }) => {
       if (region) {
         const clusterService = getClusterServiceForRegion(region);
         if (isHypershift) {
-          const response = clusterService.patchControlPlaneUpgradeSchedule(
+          const response = await clusterService.patchControlPlaneUpgradeSchedule(
             clusterID,
             policyID,
             schedule,
           );
           return response;
         }
-        const response = clusterService.patchUpgradeSchedule(clusterID, policyID, schedule);
+        const response = await clusterService.patchUpgradeSchedule(clusterID, policyID, schedule);
         return response;
       }
       if (isHypershift) {
@@ -48,6 +48,7 @@ export const useEditSchedule = (clusterID: string, isHypershift: boolean, region
       error: formattedError.error,
       mutate,
       mutateAsync,
+      isSuccess,
     };
   }
 
@@ -58,5 +59,6 @@ export const useEditSchedule = (clusterID: string, isHypershift: boolean, region
     error,
     mutate,
     mutateAsync,
+    isSuccess,
   };
 };

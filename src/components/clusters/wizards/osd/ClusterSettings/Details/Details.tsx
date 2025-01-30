@@ -34,6 +34,7 @@ import { constants } from '~/components/clusters/common/CreateOSDFormConstants';
 import LoadBalancersDropdown from '~/components/clusters/common/LoadBalancersDropdown';
 import PersistentStorageDropdown from '~/components/clusters/common/PersistentStorageDropdown';
 import { QuotaParams } from '~/components/clusters/common/quotaModel';
+import { availableQuota } from '~/components/clusters/common/quotaSelectors';
 import {
   getMinReplicasCount,
   getNodesCount,
@@ -46,7 +47,7 @@ import {
   CloudProviderType,
   emptyAWSSubnet,
 } from '~/components/clusters/wizards/common/constants';
-import { hasAvailableQuota, quotaParams } from '~/components/clusters/wizards/common/utils/quotas';
+import { quotaParams } from '~/components/clusters/wizards/common/utils/quotas';
 import {
   CheckboxField,
   RadioGroupField,
@@ -61,7 +62,10 @@ import ExternalLink from '~/components/common/ExternalLink';
 import PopoverHint from '~/components/common/PopoverHint';
 import { getCloudProviders } from '~/redux/actions/cloudProviderActions';
 import { useGlobalState } from '~/redux/hooks/useGlobalState';
-import { QuotaCostList, SubscriptionCommonFields } from '~/types/accounts_mgmt.v1';
+import {
+  QuotaCostList,
+  SubscriptionCommonFieldsCluster_billing_model as SubscriptionCommonFieldsClusterBillingModel,
+} from '~/types/accounts_mgmt.v1';
 import { Version } from '~/types/clusters_mgmt.v1';
 
 function Details() {
@@ -145,15 +149,17 @@ function Details() {
     cloudProviderID: cloudProvider,
   } as QuotaParams;
 
-  const hasSingleAzResources = hasAvailableQuota(quotaList as QuotaCostList, {
-    ...quotaParams.singleAzResources,
-    ...azQuotaParams,
-  });
+  const hasSingleAzResources =
+    availableQuota(quotaList as QuotaCostList, {
+      ...quotaParams.singleAzResources,
+      ...azQuotaParams,
+    }) > 0;
 
-  const hasMultiAzResources = hasAvailableQuota(quotaList as QuotaCostList, {
-    ...quotaParams.multiAzResources,
-    ...azQuotaParams,
-  });
+  const hasMultiAzResources =
+    availableQuota(quotaList as QuotaCostList, {
+      ...quotaParams.multiAzResources,
+      ...azQuotaParams,
+    }) > 0;
 
   const handleCloudRegionChange = useCallback(() => {
     // Clears fields related to the region: VPC and machinePoolsSubnets
@@ -318,7 +324,7 @@ function Details() {
             <VersionSelectField
               name={FieldId.ClusterVersion}
               label={
-                billingModel === SubscriptionCommonFields.cluster_billing_model.MARKETPLACE_GCP
+                billingModel === SubscriptionCommonFieldsClusterBillingModel.marketplace_gcp
                   ? 'Version (Google Cloud Marketplace enabled)'
                   : 'Version'
               }

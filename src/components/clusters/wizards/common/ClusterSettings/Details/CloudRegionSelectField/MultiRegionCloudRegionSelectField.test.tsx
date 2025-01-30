@@ -87,4 +87,46 @@ describe('<MultiRegionCloudRegionSeletField />', () => {
     expect(await screen.findByText('ap-southeast-1, Asia Pacific, Singapore')).toBeInTheDocument();
     expect(await screen.findByText('us-west-2, US West, Oregon')).toBeInTheDocument();
   });
+
+  it('displays the warning when regionalized endpoint fails', async () => {
+    (mockedUseFetchGetMultiRegionAvailableRegions as jest.Mock).mockReturnValue({
+      data: multiRegions,
+      error: false,
+      isError: false,
+      isFetching: false,
+      isSuccess: true,
+      isFailedRegionalizedRegions: true,
+      isFailedGlobalRegions: false,
+      isFailedRegionalAndGlobal: false,
+    });
+
+    render(
+      <Formik initialValues={defaultValues} onSubmit={() => {}}>
+        <MultiRegionCloudRegionSelectField {...defaultProps} />
+      </Formik>,
+    );
+
+    expect(await screen.findByText('Some regions failed to load')).toBeInTheDocument();
+  });
+
+  it('displays the warning when global endpoint fails', async () => {
+    (mockedUseFetchGetMultiRegionAvailableRegions as jest.Mock).mockReturnValue({
+      data: multiRegions,
+      error: false,
+      isError: false,
+      isFetching: false,
+      isSuccess: true,
+      isFailedRegionalizedRegions: false,
+      isFailedGlobalRegions: true,
+      isFailedRegionalAndGlobal: false,
+    });
+
+    render(
+      <Formik initialValues={defaultValues} onSubmit={() => {}}>
+        <MultiRegionCloudRegionSelectField {...defaultProps} />
+      </Formik>,
+    );
+
+    expect(await screen.findByText('Some regions failed to load')).toBeInTheDocument();
+  });
 });

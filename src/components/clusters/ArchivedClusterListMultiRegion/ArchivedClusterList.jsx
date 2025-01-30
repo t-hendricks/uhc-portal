@@ -61,6 +61,7 @@ import { PaginationRow } from '../ClusterListMultiRegion/components/PaginationRo
 import { RefreshButton } from '../ClusterListMultiRegion/components/RefreshButton';
 import ViewOnlyMyClustersToggle from '../ClusterListMultiRegion/components/ViewOnlyMyClustersToggle';
 import ClusterListFilter from '../common/ClusterListFilter';
+import { ClusterListFilterHook } from '../common/ClusterListFilterHook';
 import ErrorTriangle from '../common/ErrorTriangle';
 import GlobalErrorBox from '../common/GlobalErrorBox/GlobalErrorBox';
 import ReadOnlyBanner from '../common/ReadOnlyBanner';
@@ -102,6 +103,7 @@ const ClusterList = ({
   getMultiRegion,
 }) => {
   const dispatch = useDispatch();
+
   const viewType = viewConstants.ARCHIVED_CLUSTERS_VIEW;
   const isArchived = true;
   const { isLoading, data, refetch, isError, errors, isFetching, isFetched } = useFetchClusters(
@@ -220,14 +222,17 @@ const ClusterList = ({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const viewOptions = useSelector((state) => state.viewOptions.CLUSTERS_VIEW);
+  const viewOptions = useSelector((state) => state.viewOptions.ARCHIVED_CLUSTERS_VIEW);
   const { showMyClustersOnly, subscriptionFilter } = viewOptions.flags;
+
   const hasNoFilters =
     helpers.nestedIsEmpty(subscriptionFilter) && !showMyClustersOnly && !viewOptions.filter;
 
   const isPendingNoData = !size(clusters) && (isLoading || !isFetched); // Show skeletons
 
   const showSpinner = isFetching || isLoading;
+
+  ClusterListFilterHook(subscriptionFilter);
 
   return (
     <AppPage title={PAGE_TITLE}>

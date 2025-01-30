@@ -17,7 +17,10 @@ import type { AxiosResponse } from 'axios';
 import { action, ActionType } from 'typesafe-actions';
 import { validate as isUuid } from 'uuid';
 
-import { SelfResourceReviewRequest } from '~/types/accounts_mgmt.v1';
+import {
+  SelfResourceReviewRequestAction,
+  SelfResourceReviewRequestResource_type as SelfResourceReviewRequestResourceType,
+} from '~/types/accounts_mgmt.v1';
 import type { SubscriptionWithPermissionsList } from '~/types/types';
 
 import { accountsService, authorizationsService, clusterService } from '../../services';
@@ -32,8 +35,8 @@ const getSubscriptionsAndPermissions = async (
 ) => {
   let canEdit: { [clusterID: string]: boolean } = {};
   const permissionsResponse = await authorizationsService.selfResourceReview({
-    action: SelfResourceReviewRequest.action.UPDATE,
-    resource_type: SelfResourceReviewRequest.resource_type.CLUSTER,
+    action: SelfResourceReviewRequestAction.update,
+    resource_type: SelfResourceReviewRequestResourceType.Cluster,
   });
   canEdit = buildPermissionDict(permissionsResponse);
 
@@ -97,12 +100,12 @@ const subscriptionsActions = {
 type SubscriptionsAction = ActionType<typeof subscriptionsActions>;
 
 export {
-  subscriptionsActions,
+  clearSubscriptionIDForCluster,
   fetchAccount,
   fetchQuotaCost,
+  fetchSubscriptionIDForCluster,
   getSubscriptions,
   invalidateSubscriptions,
-  fetchSubscriptionIDForCluster,
-  clearSubscriptionIDForCluster,
   SubscriptionsAction,
+  subscriptionsActions,
 };

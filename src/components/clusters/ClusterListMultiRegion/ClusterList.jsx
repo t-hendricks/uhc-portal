@@ -58,6 +58,7 @@ import ErrorBox from '../../common/ErrorBox';
 import Unavailable from '../../common/Unavailable';
 import AccessRequestPendingAlert from '../ClusterDetailsMultiRegion/components/AccessRequest/components/AccessRequestPendingAlert';
 import ClusterListFilter from '../common/ClusterListFilter';
+import { ClusterListFilterHook } from '../common/ClusterListFilterHook';
 import CommonClusterModals from '../common/CommonClusterModals';
 import ErrorTriangle from '../common/ErrorTriangle';
 import GlobalErrorBox from '../common/GlobalErrorBox/GlobalErrorBox';
@@ -234,6 +235,8 @@ const ClusterList = ({
         ),
       );
     }
+    // This dispatch can  be removed once the multiRegion version cluster details is the default version
+    dispatch(clustersActions.clearClusterDetails());
 
     const planIDFilter = getQueryParam('plan_id') || '';
 
@@ -301,6 +304,7 @@ const ClusterList = ({
 
   const viewOptions = useSelector((state) => state.viewOptions.CLUSTERS_VIEW);
   const { showMyClustersOnly, subscriptionFilter } = viewOptions.flags;
+
   const hasNoFilters =
     helpers.nestedIsEmpty(subscriptionFilter) && !showMyClustersOnly && !viewOptions.filter;
 
@@ -320,6 +324,8 @@ const ClusterList = ({
   // tests that modify clusters (e.g. create or scale a cluster) should wait
   // for concrete data they expect to see.
   const dataReady = !isPendingNoData;
+
+  ClusterListFilterHook(subscriptionFilter);
 
   if (showEmptyState) {
     return (

@@ -8,6 +8,7 @@ import type { List, OneMetric, Subscription } from './accounts_mgmt.v1';
 import type {
   AWS,
   Cluster,
+  ClusterAPI,
   ClusterState,
   ClusterStatus,
   LimitedSupportReason,
@@ -108,6 +109,7 @@ export type AugmentedCluster = ClusterWithPermissions & {
   limitedSupportReasons?: LimitedSupportReason[];
   aiSupportLevels?: FeaturesSupportsLevel;
   status?: ClusterStatus;
+  api?: ClusterAPI;
 };
 
 export type AugmentedClusterResponse = {

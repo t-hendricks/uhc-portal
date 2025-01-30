@@ -27,7 +27,7 @@ import { FieldId } from '~/components/clusters/wizards/rosa/constants';
 import { DefaultIngressFieldsFormik } from '~/components/clusters/wizards/rosa/NetworkScreen/DefaultIngressFieldsFormik';
 import { CheckboxDescription } from '~/components/common/CheckboxDescription';
 import ExternalLink from '~/components/common/ExternalLink';
-import { RadioButtons, ReduxCheckbox } from '~/components/common/ReduxFormComponents';
+import { RadioButtons, ReduxCheckbox } from '~/components/common/ReduxFormComponents_deprecated';
 import useAnalytics from '~/hooks/useAnalytics';
 import { isRestrictedEnv } from '~/restrictedEnv';
 
@@ -44,8 +44,8 @@ function NetworkScreen(props) {
 
   const {
     setFieldValue, // Set value of form field directly
-    getFieldProps, // Access: name, value, onBlur, onChange for a <Field>, useful for mapping to a field that expects the redux-form props
-    getFieldMeta, // Access: error, touched for a <Field>, useful for mapping to a field that expects the redux-form props
+    getFieldProps, // Access: name, value, onBlur, onChange for a <Field>, useful for mapping to a field
+    getFieldMeta, // Access: error, touched for a <Field>, useful for mapping to a field
     values: {
       [FieldId.CloudProvider]: cloudProviderID,
       [FieldId.ConfigureProxy]: configureProxySelected,

@@ -1,6 +1,5 @@
-import React, { useCallback, useEffect, useMemo, useState } from 'react';
+import React, { ChangeEvent, FocusEvent, useCallback, useEffect, useMemo, useState } from 'react';
 import { FieldInputProps, FieldMetaProps } from 'formik';
-import { WrappedFieldInputProps, WrappedFieldMetaProps } from 'redux-form';
 
 import { Flex, FlexItem, FormGroup, FormSelectProps } from '@patternfly/react-core';
 
@@ -12,15 +11,24 @@ import { CloudVPC, Subnetwork } from '~/types/clusters_mgmt.v1';
 
 const TRUNCATE_THRESHOLD = 40;
 
+// TODO: This should be cleaned up, but it mimics what was used
+// when this component was used for both Redux forms and Formik
+// at the same time.
+type SampleInput = {
+  name: string;
+  onFocus?: FocusEvent<any>;
+  checked?: boolean | undefined;
+  value: any;
+  onBlur?: FocusEvent<any> | ChangeEvent<any>;
+  onChange: (subnetId: string | undefined) => void;
+};
+
 export interface SubnetSelectFieldProps {
   name: string;
   label: string;
-  input:
-    | (Pick<WrappedFieldInputProps, 'value' | 'name'> & {
-        onChange: (subnetId: string | undefined) => void;
-      })
-    | FieldInputProps<FormSelectProps>;
-  meta: Pick<WrappedFieldMetaProps, 'error' | 'touched'> | FieldMetaProps<FormSelectProps>;
+  input: SampleInput | FieldInputProps<FormSelectProps>;
+  // meta: Pick<WrappedFieldMetaProps, 'error' | 'touched'> | FieldMetaProps<FormSelectProps>;
+  meta: Pick<FieldMetaProps<FormSelectProps>, 'error' | 'touched'>;
   isRequired?: boolean;
   className?: string;
   privacy?: 'public' | 'private';
@@ -101,7 +109,7 @@ export const SubnetSelectField = ({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [withAutoSelect, hasOptions, subnetList, selectedSubnetId]);
 
-  const onSelect: FuzzySelectProps['onSelect'] = useCallback(
+  const onSelect: NonNullable<FuzzySelectProps['onSelect']> = useCallback(
     (_event, selectedSubnetId) => {
       input.onChange(selectedSubnetId as string);
       setIsExpanded(false);
@@ -141,7 +149,10 @@ export const SubnetSelectField = ({
           />
         </FlexItem>
       </Flex>
-
+      {/* TODO:  InputError could be a boolean but FormGroupHelperText doesn't accept a boolean.
+      This issue was discovered when changing types from Redux Forms to Formik
+      */}
+      {/* @ts-ignore */}
       <FormGroupHelperText touched={meta.touched} error={inputError} />
     </FormGroup>
   );

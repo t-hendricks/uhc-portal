@@ -12,9 +12,9 @@ import { userActions } from '../../../redux/actions/userActions';
 import { onListFlagsSet, viewActions } from '../../../redux/actions/viewOptionsActions';
 import { viewConstants } from '../../../redux/constants';
 import { modalActions } from '../../common/Modal/ModalActions';
-import canSubscribeOCPListSelector from '../common/EditSubscriptionSettingsDialog/canSubscribeOCPListSelector';
-import { canHibernateClusterListSelector } from '../common/HibernateClusterModal/HibernateClusterModalSelectors';
-import { canTransferClusterOwnershipListSelector } from '../common/TransferClusterOwnershipDialog/utils/transferClusterOwnershipDialogSelectors';
+import canSubscribeOCPListSelector from '../common/archived_do_not_use/EditSubscriptionSettingsDialog/canSubscribeOCPListSelector';
+import { canHibernateClusterListSelector } from '../common/archived_do_not_use/HibernateClusterModal/HibernateClusterModalSelectors';
+import { canTransferClusterOwnershipListSelector } from '../common/archived_do_not_use/TransferClusterOwnershipDialog/utils/transferClusterOwnershipDialogSelectors';
 
 import ClusterList from './ClusterList';
 

@@ -39,6 +39,7 @@ export type OCMRolesDialogProps = {
   isGrantOcmRoleError: boolean;
   isGrantOcmRoleSuccess: boolean;
   grantOcmRoleError: MutationFormattedErrorType | null;
+  resetGrantOcmRoleMutation: () => void;
 };
 
 function OCMRolesDialog({
@@ -49,6 +50,7 @@ function OCMRolesDialog({
   isGrantOcmRoleError,
   isGrantOcmRoleSuccess,
   grantOcmRoleError,
+  resetGrantOcmRoleMutation,
 }: OCMRolesDialogProps) {
   const [username, setUsername] = useState<string>(row.usernameValue || '');
   const [usernameValidationMsg, setUsernameValidationMsg] = useState('');
@@ -76,6 +78,7 @@ function OCMRolesDialog({
   const handleClose = () => {
     dispatch(closeModal());
     setIsDropdownOpen(false);
+    setUsernameValidationMsg('');
   };
 
   // close the dialog if submit is successful.
@@ -168,6 +171,7 @@ function OCMRolesDialog({
 
   return (
     <Formik
+      enableReinitialize
       initialValues={{
         username,
         role: roleID,
@@ -179,11 +183,17 @@ function OCMRolesDialog({
       {(formik) => (
         <Modal
           title={title}
-          onClose={handleClose}
+          onClose={() => {
+            handleClose();
+            resetGrantOcmRoleMutation();
+          }}
           primaryText={btnText}
           secondaryText="Cancel"
           onPrimaryClick={formik.submitForm}
-          onSecondaryClick={handleClose}
+          onSecondaryClick={() => {
+            handleClose();
+            resetGrantOcmRoleMutation();
+          }}
           isPrimaryDisabled={isPrimaryDisabled}
           id="ocm-roles-access-dialog"
         >

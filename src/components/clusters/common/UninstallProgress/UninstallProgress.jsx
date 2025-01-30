@@ -11,7 +11,7 @@ import {
 } from '@patternfly/react-core';
 import { ExclamationCircleIcon } from '@patternfly/react-icons/dist/esm/icons/exclamation-circle-icon';
 
-import AddOnsConstants from '../../ClusterDetails/components/AddOns/AddOnsConstants';
+import AddOnsConstants from '../../ClusterDetailsMultiRegion/components/AddOns/AddOnsConstants';
 import { isHypershiftCluster } from '../clusterStates';
 
 import './UninstallProgress.scss';

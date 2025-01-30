@@ -1,5 +1,5 @@
 import { normalizedProducts } from '~/common/subscriptionTypes';
-import { SubscriptionCommonFields } from '~/types/accounts_mgmt.v1';
+import { SubscriptionCommonFieldsCluster_billing_model as SubscriptionCommonFieldsClusterBillingModel } from '~/types/accounts_mgmt.v1';
 import { ClusterFromSubscription } from '~/types/types';
 
 import {
@@ -14,61 +14,61 @@ describe('getBillingModelLabel', () => {
     [normalizedProducts.OSD, undefined, undefined, 'Standard'],
     [
       normalizedProducts.OSD,
-      SubscriptionCommonFields.cluster_billing_model.STANDARD,
+      SubscriptionCommonFieldsClusterBillingModel.standard,
       undefined,
       'Annual Red Hat subscriptions',
     ],
     [
       normalizedProducts.OSD,
-      SubscriptionCommonFields.cluster_billing_model.MARKETPLACE,
+      SubscriptionCommonFieldsClusterBillingModel.marketplace,
       undefined,
       'N/A',
     ],
     [
       normalizedProducts.OSD,
-      SubscriptionCommonFields.cluster_billing_model.MARKETPLACE_AWS,
+      SubscriptionCommonFieldsClusterBillingModel.marketplace_aws,
       undefined,
       'N/A',
     ],
     [
       normalizedProducts.OSD,
-      SubscriptionCommonFields.cluster_billing_model.MARKETPLACE_GCP,
+      SubscriptionCommonFieldsClusterBillingModel.marketplace_gcp,
       undefined,
       'N/A',
     ],
     [
       normalizedProducts.OSD,
-      SubscriptionCommonFields.cluster_billing_model.MARKETPLACE,
+      SubscriptionCommonFieldsClusterBillingModel.marketplace,
       true,
       'On-demand via Red Hat Marketplace',
     ],
     [
       normalizedProducts.OSD,
-      SubscriptionCommonFields.cluster_billing_model.MARKETPLACE_AWS,
+      SubscriptionCommonFieldsClusterBillingModel.marketplace_aws,
       true,
       'On-demand via Red Hat Marketplace',
     ],
     [
       normalizedProducts.OSD,
-      SubscriptionCommonFields.cluster_billing_model.MARKETPLACE_GCP,
+      SubscriptionCommonFieldsClusterBillingModel.marketplace_gcp,
       true,
       'On-demand via Google Cloud Marketplace',
     ],
     [
       normalizedProducts.OSD,
-      SubscriptionCommonFields.cluster_billing_model.MARKETPLACE,
+      SubscriptionCommonFieldsClusterBillingModel.marketplace,
       false,
       'Standard',
     ],
     [
       normalizedProducts.OSD,
-      SubscriptionCommonFields.cluster_billing_model.MARKETPLACE_AWS,
+      SubscriptionCommonFieldsClusterBillingModel.marketplace_aws,
       false,
       'Standard',
     ],
     [
       normalizedProducts.OSD,
-      SubscriptionCommonFields.cluster_billing_model.MARKETPLACE_GCP,
+      SubscriptionCommonFieldsClusterBillingModel.marketplace_gcp,
       false,
       'Standard',
     ],
@@ -78,7 +78,7 @@ describe('getBillingModelLabel', () => {
     'when plan type is %p, billing model %p and CCS enabled is %p should return %p',
     (
       planType: string | undefined,
-      billingModel: SubscriptionCommonFields.cluster_billing_model | undefined,
+      billingModel: SubscriptionCommonFieldsClusterBillingModel | undefined,
       ccsEnabled: boolean | undefined,
       expectedResult: string,
     ) => {

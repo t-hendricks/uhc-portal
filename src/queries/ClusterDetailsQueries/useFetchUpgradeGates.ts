@@ -2,7 +2,7 @@ import { useQuery } from '@tanstack/react-query';
 
 import { clusterService } from '~/services';
 import { getClusterServiceForRegion } from '~/services/clusterService';
-import { SubscriptionCommonFields } from '~/types/accounts_mgmt.v1';
+import { SubscriptionCommonFieldsStatus } from '~/types/accounts_mgmt.v1';
 
 import { queryConstants } from '../queriesConstants';
 import { SubscriptionResponseType } from '../types';
@@ -39,7 +39,7 @@ export const useFetchUpgradeGates = (
     },
     enabled:
       !!subscription &&
-      subscription.subscription.status !== SubscriptionCommonFields.status.DEPROVISIONED &&
+      subscription.subscription.status !== SubscriptionCommonFieldsStatus.Deprovisioned &&
       (subscription.subscription.managed || subscription.isAROCluster),
   });
   return {

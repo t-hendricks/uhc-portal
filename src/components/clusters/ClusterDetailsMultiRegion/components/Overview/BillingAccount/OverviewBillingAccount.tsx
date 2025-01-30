@@ -13,7 +13,7 @@ import PencilAltIcon from '@patternfly/react-icons/dist/esm/icons/pencil-alt-ico
 
 import { useFeatureGate } from '~/hooks/useFeatureGate';
 import { useFetchClusterDetails } from '~/queries/ClusterDetailsQueries/useFetchClusterDetails';
-import { OCMUI_EDIT_BILLING_ACCOUNT } from '~/redux/constants/featureConstants';
+import { EDIT_BILLING_ACCOUNT } from '~/redux/constants/featureConstants';
 
 import ButtonWithTooltip from '../../../../../common/ButtonWithTooltip';
 import { isHypershiftCluster } from '../../../clusterDetailsHelper';
@@ -27,7 +27,7 @@ export function OverviewBillingAccount() {
 
   const { cluster } = useFetchClusterDetails(params.id || '');
 
-  const hasFeatureGate = useFeatureGate(OCMUI_EDIT_BILLING_ACCOUNT);
+  const hasFeatureGate = useFeatureGate(EDIT_BILLING_ACCOUNT);
   const isHypershift = isHypershiftCluster(cluster);
   const showEditableBillingAccount = cluster?.canEdit && hasFeatureGate && isHypershift;
   const disableChangeReason =

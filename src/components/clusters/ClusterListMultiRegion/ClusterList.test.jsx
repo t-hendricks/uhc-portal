@@ -21,6 +21,13 @@ jest.mock('react-redux', () => {
   return config;
 });
 
+const mockNavigate = jest.fn();
+
+jest.mock('react-router-dom', () => ({
+  ...jest.requireActual('react-router-dom'),
+  useNavigate: () => mockNavigate,
+}));
+
 // Mocking hooks due to the complexity of this custom hook
 // Each hook has its own unit tests to ensure it returns the correct values
 const mockedGetFetchedClusters = jest.spyOn(useFetchClusters, 'useFetchClusters');
@@ -405,7 +412,7 @@ describe('<ClusterList />', () => {
       isRestrictedEnv.mockReturnValue(true);
       withState({}, true).render(<ClusterList {...props} />);
       expect(mockedDispatch).toHaveBeenCalled();
-      expect(mockedDispatch.mock.calls).toHaveLength(1);
+
       const args = mockedDispatch.mock.calls[0];
 
       expect(args[0].type).toEqual('VIEW_SET_LIST_FLAGS');
@@ -426,6 +433,50 @@ describe('<ClusterList />', () => {
       expect(screen.queryByTestId('cluster-list-filter-dropdown')).not.toBeInTheDocument();
 
       expect(await screen.findByRole('button', { name: 'Create cluster' })).toBeInTheDocument();
+    });
+  });
+
+  describe('cluster filter', () => {
+    beforeEach(() => {
+      mockNavigate.mockClear();
+    });
+
+    it('filter by clicking on cluster type', async () => {
+      // Arrange
+      mockedGetFetchedClusters.mockReturnValue({
+        data: { items: [fixtures.clusterDetails.cluster] },
+        errors: [],
+      });
+
+      const { user } = withState({}, true).render(<ClusterList {...props} />);
+
+      // Act
+      await user.click(screen.getByRole('button', { name: 'Cluster type' }));
+      await user.click(screen.getByText('ARO'));
+      await user.click(screen.getByText('RHOIC'));
+
+      // Assert
+      expect(mockNavigate).toHaveBeenLastCalledWith(
+        { search: 'plan_id=ARO,RHOIC' },
+        { replace: true },
+      );
+    });
+
+    it('filter by already set state and URL param reacts accordingly', async () => {
+      // Arrange
+      mockedGetFetchedClusters.mockReturnValue({
+        data: { items: [fixtures.clusterDetails.cluster] },
+        errors: [],
+      });
+
+      // Act
+      withState(
+        { viewOptions: { CLUSTERS_VIEW: { flags: { subscriptionFilter: { plan_id: ['OSD'] } } } } },
+        true,
+      ).render(<ClusterList {...props} />);
+
+      // Assert
+      expect(mockNavigate).toHaveBeenLastCalledWith({ search: 'plan_id=OSD' }, { replace: true });
     });
   });
 });

@@ -3,33 +3,21 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import ConnectedModal from '../../common/Modal/ConnectedModal';
-import { ConnectedEditMachinePoolModal } from '../ClusterDetails/components/MachinePools/components/EditMachinePoolModal/EditMachinePoolModal';
 import { ConnectedEditMachinePoolModal as ConnectedEditMachinePoolModalMR } from '../ClusterDetailsMultiRegion/components/MachinePools/components/EditMachinePoolModal/EditMachinePoolModal';
-import ArchiveClusterDialogMR from '../commonMultiRegion/ArchiveClusterDialog';
-import DeleteClusterDialogMR from '../commonMultiRegion/DeleteClusterDialog';
-import EditConsoleURLDialogMR from '../commonMultiRegion/EditConsoleURLDialog';
-import EditDisplayNameDialogMR from '../commonMultiRegion/EditDisplayNameDialog';
-import EditSubscriptionSettingsDialogMR from '../commonMultiRegion/EditSubscriptionSettingsDialog/EditSubscriptionSettingsDialog';
-import HibernateClusterModalMR from '../commonMultiRegion/HibernateClusterModal';
-import ScaleClusterDialogMR from '../commonMultiRegion/ScaleClusterDialog';
-import TransferClusterOwnershipDialogMR from '../commonMultiRegion/TransferClusterOwnershipDialog/TransferClusterOwnershipDialog';
-import UnarchiveClusterDialogMR from '../commonMultiRegion/UnarchiveClusterDialog';
-import UpgradeWizardMR from '../commonMultiRegion/Upgrades/UpgradeWizard/UpgradeWizard';
-import UpgradeTrialClusterDialogMR from '../commonMultiRegion/UpgradeTrialClusterDialog';
 
-import DeleteProtectionModal from './DeleteProtectionModal/DeleteProtectionModal';
-import EditSubscriptionSettingsDialog from './EditSubscriptionSettingsDialog/EditSubscriptionSettingsDialog';
-import UpgradeWizard from './Upgrades/UpgradeWizard';
-import ArchiveClusterDialog from './ArchiveClusterDialog';
-import DeleteClusterDialog from './DeleteClusterDialog';
-import EditConsoleURLDialog from './EditConsoleURLDialog';
-import EditDisplayNameDialog from './EditDisplayNameDialog';
-import HibernateClusterModal from './HibernateClusterModal';
-import ResumeClusterModal from './ResumeClusterModal';
-import ScaleClusterDialog from './ScaleClusterDialog';
-import TransferClusterOwnershipDialog from './TransferClusterOwnershipDialog';
-import UnarchiveClusterDialog from './UnarchiveClusterDialog';
-import UpgradeTrialClusterDialog from './UpgradeTrialClusterDialog';
+import DeleteProtectionModalMR from './DeleteProtectionModal/DeleteProtectionModal';
+import EditSubscriptionSettingsDialogMR from './EditSubscriptionSettingsDialog/EditSubscriptionSettingsDialog';
+import TransferClusterOwnershipDialogMR from './TransferClusterOwnershipDialog/TransferClusterOwnershipDialog';
+import UpgradeWizardMR from './Upgrades/UpgradeWizard/UpgradeWizard';
+import ArchiveClusterDialogMR from './ArchiveClusterDialog';
+import DeleteClusterDialogMR from './DeleteClusterDialog';
+import EditConsoleURLDialogMR from './EditConsoleURLDialog';
+import EditDisplayNameDialogMR from './EditDisplayNameDialog';
+import HibernateClusterModalMR from './HibernateClusterModal';
+import ResumeClusterModalMR from './ResumeClusterModal';
+import ScaleClusterDialogMR from './ScaleClusterDialog';
+import UnarchiveClusterDialogMR from './UnarchiveClusterDialog';
+import UpgradeTrialClusterDialogMR from './UpgradeTrialClusterDialog';
 
 function CommonClusterModals({
   onClose,
@@ -39,69 +27,27 @@ function CommonClusterModals({
 }) {
   return (
     <>
+      <ConnectedModal ModalComponent={EditDisplayNameDialogMR} onClose={onClose} />
+      <ConnectedModal ModalComponent={EditConsoleURLDialogMR} onClose={onClose} />
       <ConnectedModal
-        ModalComponent={
-          isMultiRegionPreviewEnabled ? EditDisplayNameDialogMR : EditDisplayNameDialog
-        }
-        onClose={onClose}
-      />
-      <ConnectedModal
-        ModalComponent={isMultiRegionPreviewEnabled ? EditConsoleURLDialogMR : EditConsoleURLDialog}
-        onClose={onClose}
-      />
-      <ConnectedModal
-        ModalComponent={
-          isMultiRegionPreviewEnabled
-            ? EditSubscriptionSettingsDialogMR
-            : EditSubscriptionSettingsDialog
-        }
+        ModalComponent={EditSubscriptionSettingsDialogMR}
         onClose={onClose}
         isDialog
       />
-      <ConnectedModal
-        ModalComponent={isMultiRegionPreviewEnabled ? ScaleClusterDialogMR : ScaleClusterDialog}
-        onClose={onClose}
-      />
+      <ConnectedModal ModalComponent={ScaleClusterDialogMR} onClose={onClose} />
+
+      <ConnectedModal ModalComponent={ArchiveClusterDialogMR} onClose={onClose} />
+      <ConnectedModal ModalComponent={TransferClusterOwnershipDialogMR} onClose={onClose} />
+      <ConnectedModal ModalComponent={HibernateClusterModalMR} onClose={onClose} />
+      <ConnectedModal ModalComponent={ResumeClusterModalMR} onClose={onClose} />
+      <ConnectedModal ModalComponent={UpgradeTrialClusterDialogMR} onClose={onClose} />
+      <ConnectedModal ModalComponent={UnarchiveClusterDialogMR} onClose={onClose} />
+      <ConnectedModal ModalComponent={UpgradeWizardMR} />
+
+      <ConnectedModal ModalComponent={DeleteProtectionModalMR} onClose={onClose} />
 
       <ConnectedModal
-        ModalComponent={isMultiRegionPreviewEnabled ? ArchiveClusterDialogMR : ArchiveClusterDialog}
-        onClose={onClose}
-      />
-      <ConnectedModal
-        ModalComponent={
-          isMultiRegionPreviewEnabled
-            ? TransferClusterOwnershipDialogMR
-            : TransferClusterOwnershipDialog
-        }
-        onClose={onClose}
-      />
-      <ConnectedModal
-        ModalComponent={
-          isMultiRegionPreviewEnabled ? HibernateClusterModalMR : HibernateClusterModal
-        }
-        onClose={onClose}
-      />
-      <ConnectedModal ModalComponent={ResumeClusterModal} onClose={onClose} />
-      <ConnectedModal
-        ModalComponent={
-          isMultiRegionPreviewEnabled ? UpgradeTrialClusterDialogMR : UpgradeTrialClusterDialog
-        }
-        onClose={onClose}
-      />
-      <ConnectedModal
-        ModalComponent={
-          isMultiRegionPreviewEnabled ? UnarchiveClusterDialogMR : UnarchiveClusterDialog
-        }
-        onClose={onClose}
-      />
-      <ConnectedModal
-        ModalComponent={isMultiRegionPreviewEnabled ? UpgradeWizardMR : UpgradeWizard}
-      />
-
-      <ConnectedModal ModalComponent={DeleteProtectionModal} onClose={onClose} />
-
-      <ConnectedModal
-        ModalComponent={isMultiRegionPreviewEnabled ? DeleteClusterDialogMR : DeleteClusterDialog}
+        ModalComponent={DeleteClusterDialogMR}
         onClose={(clusterDeleted) => {
           if (clusterDeleted) {
             if (onClusterDeleted) {
@@ -113,11 +59,7 @@ function CommonClusterModals({
         }}
       />
       <ConnectedModal
-        ModalComponent={
-          isMultiRegionPreviewEnabled
-            ? ConnectedEditMachinePoolModalMR
-            : ConnectedEditMachinePoolModal
-        }
+        ModalComponent={ConnectedEditMachinePoolModalMR}
         clearMachinePools={clearMachinePools}
       />
     </>

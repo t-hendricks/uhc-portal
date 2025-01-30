@@ -31,7 +31,7 @@ export const metadataByRoute = (
     return { ocm_resource_type: ocmResourceType.ALL };
   }
   if (pathname.startsWith('/assisted-installer')) {
-    return { ocm_resource_type: ocmResourceType.OCP_ASSISTED_INSTALL };
+    return { ocm_resource_type: ocmResourceType.OCP_AssistedInstall };
   }
   if (pathname.startsWith('/create/osdtrial')) {
     return { ocm_resource_type: ocmResourceType.OSDTRIAL };

@@ -5,7 +5,6 @@ import utc from 'dayjs/plugin/utc';
 
 import {
   ENV_OVERRIDE_LOCALSTORAGE_KEY,
-  MULTIREGION_LOCALSTORAGE_KEY,
   RESTRICTED_ENV_OVERRIDE_LOCALSTORAGE_KEY,
 } from './common/localStorageConstants';
 import { Chrome } from './types/types';
@@ -84,24 +83,6 @@ const parseFakeQueryParam = () => {
   return ret;
 };
 
-const parseMultiRegionQueryParam = () => {
-  let ret;
-  window.location.search
-    .substring(1)
-    .split('&')
-    .forEach((queryString) => {
-      const [key, val] = queryString.split('=');
-      if (key.toLowerCase() === 'multiregion') {
-        if (val === 'true') {
-          ret = true;
-        } else if (val === 'false') {
-          ret = false;
-        }
-      }
-    });
-  return ret;
-};
-
 const parseRestrictedQueryParam = () => {
   let ret = false;
   window.location.search
@@ -165,19 +146,6 @@ const config = {
     return new Promise<void>((resolve) => {
       if (parseFakeQueryParam()) {
         that.fakeOSD = true;
-      }
-
-      if (parseMultiRegionQueryParam()) {
-        that.multiRegion = true;
-        localStorage.setItem(MULTIREGION_LOCALSTORAGE_KEY, 'true');
-      } else if (parseMultiRegionQueryParam() === false) {
-        that.multiRegion = false;
-        localStorage.removeItem(MULTIREGION_LOCALSTORAGE_KEY);
-      } else if (
-        parseMultiRegionQueryParam() === undefined &&
-        localStorage.getItem(MULTIREGION_LOCALSTORAGE_KEY)
-      ) {
-        that.multiRegion = localStorage.getItem(MULTIREGION_LOCALSTORAGE_KEY) === 'true';
       }
 
       if (parseRestrictedQueryParam()) {

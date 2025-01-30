@@ -5,6 +5,7 @@
 import type { CloudProvider } from './CloudProvider';
 import type { MachineTypeCategory } from './MachineTypeCategory';
 import type { MachineTypeSize } from './MachineTypeSize';
+import type { ProcessorType } from './ProcessorType';
 import type { Value } from './Value';
 /**
  * Machine type.
@@ -30,6 +31,10 @@ export type MachineType = {
    * The amount of cpu's of the machine type.
    */
   cpu?: Value;
+  /**
+   * The architecture of the machine type.
+   */
+  architecture?: ProcessorType;
   /**
    * The category which the machine type is suitable for.
    */

@@ -32,8 +32,8 @@ import AIClusterStatus from '~/components/common/AIClusterStatus';
 
 import getClusterName from '../../../../common/getClusterName';
 import { isAISubscriptionWithoutMetrics } from '../../../../common/isAssistedInstallerCluster';
-import { actionResolver } from '../../common/ClusterActionsDropdown/ClusterActionsDropdownItems';
-import ClusterLocationLabel from '../../common/ClusterLocationLabel';
+import { actionResolver } from '../../common/archived_do_not_use/ClusterActionsDropdown/ClusterActionsDropdownItems';
+import ClusterLocationLabel from '../../common/archived_do_not_use/ClusterLocationLabel';
 import ClusterStateIcon from '../../common/ClusterStateIcon';
 import clusterStates, {
   getClusterStateAndDescription,
