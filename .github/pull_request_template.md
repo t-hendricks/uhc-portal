@@ -54,17 +54,17 @@ NOTE: The author of the PR will merge the PR.
 
 ### Check the following before peer review:
 - [ ] Unit tests have been created and/or modified
-- [ ] All CI tests have passed 
+- [ ] All CI tests have passed
 - [ ] Assign 2 Dev Reviewers
 - [ ] Assign ‘QA contact’ from associated JIRA card as the QE Reviewer
-- [ ] &#x1F53B;_When 2 dev approvals, change JIRA status to ‘Review’_
+- [ ] &#x1F53B; _When 2 dev approvals, change JIRA status to ‘Review’_
 ### Check the following before merging:
 - [ ] All checkboxes for all above reviewers have been checked
 - [ ] CI & Jenkins have passed
-- [ ] There are 2 dev approvals and 1 QE approval 
+- [ ] There are 3 approvals (2 Dev, 1 QE)
 - [ ] Merge via ‘Squash and merge’ option
 ### Check the following after PR has merged:
-- [ ] Verified PR was deployed to staging via build deploy job and #ocm-ui-deploys
+- [ ] Verified PR was deployed to staging via [build deploy job](https://ci.int.devshift.net/job/RedHatInsights-uhc-portal-gh-build-stable/) and [#ocm-ui-deploys](https://redhat.enterprise.slack.com/archives/C03GKHGMX7U)
 - [ ] Quick test code/feature again on staging (https://console.dev.redhat.com/openshift/).
 
 
