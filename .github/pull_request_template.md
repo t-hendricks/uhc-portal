@@ -41,9 +41,9 @@ See [OCM UI PR into Master/Main process guide](https://docs.google.com/document/
 - [ ] Closed threads I started after the author made changes or added an explanation
 
 ## QE Reviewer < name >
-- [ ] _Pre-merge testing : Verified change locally in a browser(downloaded and ran code using reviewx tool)_
-- [ ] Updated/created Polarion test cases which were peer(QE) reviewed
-- [ ] Confirmed 'tc-approved' label was added by dev to JIRA card
+- [ ] _Pre-merge testing : Verified change locally in a browser (downloaded and ran code using reviewx tool)_
+- [ ] Updated/created Polarion test cases which were peer QE reviewed
+- [ ] Confirmed 'tc-approved' label was added by dev to the linked JIRA ticket
 - [ ] (optional) Updated/created Cypress e2e tests
 - [ ] Closed threads I started after the author made changes or added an explanation
 
@@ -52,21 +52,19 @@ NOTE: The author of the PR will merge the PR.
 ## Author
 &#x1F53B; _The PR Author is responsible for keeping this PR rebased and up-to-date with master._
 
-### Check the following before peer review:
+### Check the following:
 - [ ] Unit tests have been created and/or modified
-- [ ] All CI tests have passed
+- [ ] All PR Checks have passed
 - [ ] Assign 2 Dev Reviewers
-- [ ] Assign ‘QA contact’ from associated JIRA card as the QE Reviewer
-- [ ] &#x1F53B; _When 2 dev approvals, change JIRA status to ‘Review’_
+- [ ] Assign ‘QA contact’ from associated JIRA ticket as the QE Reviewer
+- [ ] &#x1F53B; _When PR has 2 dev approvals, change JIRA status to ‘Review’_
 ### Check the following before merging:
 - [ ] All checkboxes for all above reviewers have been checked
-- [ ] CI & Jenkins have passed
-- [ ] There are 3 approvals (2 Dev, 1 QE)
-- [ ] Merge via ‘Squash and merge’ option
+- [ ] PR has 3 approvals (2 Dev, 1 QE)
+- [ ] Verify the 'Squash and merge' option is selected before merging the PR into master (Click on the little arrow on the right of the green merge button, and choose the 'Squash and merge' option)
 ### Check the following after PR has merged:
-- [ ] Verified PR was deployed to staging via [build deploy job](https://ci.int.devshift.net/job/RedHatInsights-uhc-portal-gh-build-stable/) and [#ocm-ui-deploys](https://redhat.enterprise.slack.com/archives/C03GKHGMX7U)
+- [ ] Verified PR was deployed to staging via [build deploy job](https://ci.int.devshift.net/job/RedHatInsights-uhc-portal-gh-build-stable/) and the related deployment was mentioned on [#ocm-ui-deploys](https://redhat.enterprise.slack.com/archives/C03GKHGMX7U)  Slack channel
 - [ ] Quick test code/feature again on staging (https://console.dev.redhat.com/openshift/).
-
 
 # Ticketing
 
