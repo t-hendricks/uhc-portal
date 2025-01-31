@@ -19,12 +19,7 @@ import ScaleClusterDialogMR from './ScaleClusterDialog';
 import UnarchiveClusterDialogMR from './UnarchiveClusterDialog';
 import UpgradeTrialClusterDialogMR from './UpgradeTrialClusterDialog';
 
-function CommonClusterModals({
-  onClose,
-  onClusterDeleted,
-  clearMachinePools,
-  isMultiRegionPreviewEnabled,
-}) {
+function CommonClusterModals({ onClose, onClusterDeleted, clearMachinePools }) {
   return (
     <>
       <ConnectedModal ModalComponent={EditDisplayNameDialogMR} onClose={onClose} />
@@ -70,7 +65,6 @@ CommonClusterModals.propTypes = {
   onClose: PropTypes.func.isRequired,
   onClusterDeleted: PropTypes.func,
   clearMachinePools: PropTypes.bool,
-  isMultiRegionPreviewEnabled: PropTypes.bool,
 };
 
 export default CommonClusterModals;
