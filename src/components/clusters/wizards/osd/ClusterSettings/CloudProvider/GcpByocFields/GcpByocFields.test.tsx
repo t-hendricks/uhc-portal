@@ -53,7 +53,7 @@ const prepareComponent = (
 );
 
 describe('<GcpByocFields />', () => {
-  it.skip('is accessible', async () => {
+  it('is accessible', async () => {
     const { container } = render(prepareComponent());
 
     await checkAccessibility(container);
