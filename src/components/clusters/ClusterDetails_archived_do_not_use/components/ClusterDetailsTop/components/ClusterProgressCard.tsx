@@ -27,10 +27,9 @@ import InstallationLogView from '../../Overview/InstallationLogView';
 
 interface ClusterProgressCardProps {
   cluster: ClusterFromSubscription;
-  regionalInstance?: AvailableRegionalInstance;
 }
 
-const ClusterProgressCard = ({ cluster, regionalInstance }: ClusterProgressCardProps) => {
+const ClusterProgressCard = ({ cluster }: ClusterProgressCardProps) => {
   const isError = cluster.state === clusterStates.ERROR;
   const isPending = cluster.state === clusterStates.PENDING;
   const isValidating = cluster.state === clusterStates.VALIDATING;

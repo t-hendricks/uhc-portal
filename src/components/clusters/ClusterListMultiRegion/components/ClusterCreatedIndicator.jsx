@@ -17,7 +17,7 @@ import { normalizedProducts } from '../../../../common/subscriptionTypes';
 import ExternalLink from '../../../common/ExternalLink';
 
 function ClusterCreatedIndicator({ cluster }) {
-  const osdtrial = get(cluster, 'product.id') === normalizedProducts.OSDTRIAL;
+  const osdtrial = get(cluster, 'product.id') === normalizedProducts.OSDTrial;
   const managed = get(cluster, 'managed');
   const supportLevel = get(cluster, 'subscription.support_level');
   const subscription = get(cluster, 'subscription');

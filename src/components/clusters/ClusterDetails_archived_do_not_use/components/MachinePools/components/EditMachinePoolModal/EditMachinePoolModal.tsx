@@ -288,7 +288,6 @@ const EditMachinePoolModal = ({
                 machinePool={currentMachinePool}
                 machinePools={machinePoolsResponse.data || []}
                 machineTypes={machineTypesResponse}
-                allow500Nodes={allow500Nodes}
               />
               <DiskSizeField cluster={cluster} isEdit={isEdit} />
               <ExpandableSection toggleText="Edit node labels and taints">

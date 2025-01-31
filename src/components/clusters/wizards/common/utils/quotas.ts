@@ -20,7 +20,7 @@ export enum QuotaType {
 export const quotaParams = {
   [QuotaType.OsdTrial]: {
     resourceType: QuotaTypes.CLUSTER,
-    product: normalizedProducts.OSDTRIAL,
+    product: normalizedProducts.OSDTrial,
   },
   [QuotaType.StandardOsd]: {
     resourceType: QuotaTypes.CLUSTER,

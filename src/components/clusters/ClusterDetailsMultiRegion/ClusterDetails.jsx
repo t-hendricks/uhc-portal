@@ -80,9 +80,8 @@ import { canSubscribeOCPMultiRegion } from '../common/EditSubscriptionSettingsDi
 import { userCanHibernateClustersSelector } from '../common/HibernateClusterModal/HibernateClusterModalSelectors';
 import ReadOnlyBanner from '../common/ReadOnlyBanner';
 import { canTransferClusterOwnershipMultiRegion } from '../common/TransferClusterOwnershipDialog/utils/transferClusterOwnershipDialogSelectors';
+import CancelUpgradeModal from '../common/Upgrades/CancelUpgradeModal';
 import { getSchedules } from '../common/Upgrades/clusterUpgradeActions';
-import { userCanHibernateClustersSelector } from '../commonMultiRegion/HibernateClusterModal/HibernateClusterModalSelectors';
-import CancelUpgradeModal from '../commonMultiRegion/Upgrades/CancelUpgradeModal';
 
 import AccessControl from './components/AccessControl/AccessControl';
 import { getGrants } from './components/AccessControl/NetworkSelfServiceSection/NetworkSelfServiceActions';
@@ -416,7 +415,7 @@ const ClusterDetails = (props) => {
     get(cluster, 'subscription.status', false) === SubscriptionCommonFieldsStatus.Archived ||
     get(cluster, 'subscription.status', false) === SubscriptionCommonFieldsStatus.Deprovisioned;
   const isAROCluster = get(cluster, 'subscription.plan.type', '') === knownProducts.ARO;
-  const isOSDTrial = get(cluster, 'subscription.plan.type', '') === knownProducts.OSDTRIAL;
+  const isOSDTrial = get(cluster, 'subscription.plan.type', '') === knownProducts.OSDTrial;
   const isRHOIC = get(cluster, 'subscription.plan.type', '') === knownProducts.RHOIC;
   const gotRouters = get(clusterRouters, 'getRouters.routers.length', 0) > 0;
 

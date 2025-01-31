@@ -170,7 +170,7 @@ export const BillingModel = () => {
   ];
 
   React.useEffect(() => {
-    if (product === normalizedProducts.OSDTRIAL) {
+    if (product === normalizedProducts.OSDTrial) {
       if (showOsdTrial) {
         setFieldValue(FieldId.BillingModel, STANDARD_TRIAL_BILLING_MODEL_TYPE);
         setFieldValue(FieldId.Byoc, 'true');

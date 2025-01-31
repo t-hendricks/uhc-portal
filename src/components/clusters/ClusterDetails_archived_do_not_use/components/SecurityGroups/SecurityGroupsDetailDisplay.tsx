@@ -3,7 +3,6 @@ import React from 'react';
 import { Link } from '~/common/routing';
 import { MachinePool, NodePool, SecurityGroup } from '~/types/clusters_mgmt.v1';
 
-import { Link } from '~/common/routing';
 import {
   MachinePoolItemList,
   securityGroupsRenderer,

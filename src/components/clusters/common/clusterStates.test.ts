@@ -267,7 +267,7 @@ describe('getClusterStateAndDescription', () => {
   describe('isOSD', () => {
     it.each([
       [normalizedProducts.OSD, true],
-      [normalizedProducts.OSDTRIAL, true],
+      [normalizedProducts.OSDTrial, true],
       [normalizedProducts.ANY, false],
     ])('productId: %p. It returns %p', (productId: string, expectedResult: boolean) => {
       const cluster: ClusterFromSubscription = {

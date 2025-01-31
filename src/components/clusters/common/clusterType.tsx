@@ -21,7 +21,7 @@ export const clusterType = (cluster: ClusterWithPermissions) => {
       name: 'OSD',
       tooltip: 'OpenShift Dedicated (OSD) cluster managed by Red Hat',
     },
-    [normalizedProducts.OSDTRIAL]: {
+    [normalizedProducts.OSDTrial]: {
       name: 'OSD Trial',
       tooltip: 'OpenShift Dedicated (OSD) cluster trial managed by Red Hat',
     },

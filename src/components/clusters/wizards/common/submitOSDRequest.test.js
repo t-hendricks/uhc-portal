@@ -201,7 +201,7 @@ describe('createClusterRequest', () => {
           // 'standard-trial' is a fake value, a kludge for also initializing product;
           // the backend request only gets the part before '-'.
           billing_model: 'standard-trial',
-          product: normalizedProducts.OSDTRIAL,
+          product: normalizedProducts.OSDTrial,
           byoc: 'true', // forced by OSDTrial.
           gcp_service_account: '{}',
           // CCS also lowers nodes_compute default, but not important for these tests.
@@ -328,7 +328,7 @@ describe('createClusterRequest', () => {
           // 'standard-trial' is a fake value, a kludge for also initializing product;
           // the backend request only gets the part before '-'.
           billing_model: 'standard-trial',
-          product: normalizedProducts.OSDTRIAL,
+          product: normalizedProducts.OSDTrial,
           byoc: 'true', // forced by OSDTrial.
           network_configuration_toggle: 'advanced',
           ...awsRosaOsdVPCData,
@@ -400,7 +400,7 @@ describe('createClusterRequest', () => {
           // 'standard-trial' is a fake value, a kludge for also initializing product;
           // the backend request only gets the part before '-'.
           billing_model: 'standard-trial',
-          product: normalizedProducts.OSDTRIAL,
+          product: normalizedProducts.OSDTrial,
           byoc: 'true', // forced by OSDTrial.
           // CCS also lowers nodes_compute default, but not important for these tests.
           cloud_provider: 'aws',
@@ -469,7 +469,7 @@ describe('createClusterRequest', () => {
           // 'standard-trial' is a fake value, a kludge for also initializing product;
           // the backend request only gets the part before '-'.
           billing_model: 'standard-trial',
-          product: normalizedProducts.OSDTRIAL,
+          product: normalizedProducts.OSDTrial,
           byoc: 'true', // forced by OSDTrial
           cloud_provider: 'gcp',
           gcp_service_account: '{}',

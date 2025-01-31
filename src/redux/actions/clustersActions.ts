@@ -65,7 +65,7 @@ import type { AppThunk, AppThunkDispatch } from '../types';
 import { editSubscriptionSettings } from './subscriptionSettingsActions';
 
 const ROSA_PRODUCTS = [knownProducts.ROSA, knownProducts.ROSA_HyperShift];
-const OSD_PRODUCTS = [knownProducts.OSD, knownProducts.OSDTRIAL];
+const OSD_PRODUCTS = [knownProducts.OSD, knownProducts.OSDTrial];
 
 const invalidateClusters = () => action(INVALIDATE_ACTION(clustersConstants.GET_CLUSTERS));
 

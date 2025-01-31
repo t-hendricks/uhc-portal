@@ -92,7 +92,7 @@ function actionResolver(
 
   const getKey = (item) => `${cluster.id}.menu.${item}`;
   const clusterName = getClusterName(cluster);
-  const isProductOSDTrial = cluster.product && cluster.product.id === normalizedProducts.OSDTRIAL;
+  const isProductOSDTrial = cluster.product && cluster.product.id === normalizedProducts.OSDTrial;
 
   const getAdminConsoleProps = () => ({
     ...baseProps,
@@ -114,7 +114,6 @@ function actionResolver(
       clusterID: cluster.id,
       clusterName,
       subscriptionID: cluster.subscription ? cluster.subscription.id : '',
-      rh_region_id: cluster.subscription?.rh_region_id,
       shouldDisplayClusterName: inClusterList,
     };
     const hibernateClusterProps = {
