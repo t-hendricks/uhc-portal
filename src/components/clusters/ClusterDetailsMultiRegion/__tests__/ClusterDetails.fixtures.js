@@ -435,10 +435,10 @@ const CCSClusterDetails = produce(clusterDetails, (draft) => {
 });
 
 const OSDTrialClusterDetails = produce(CCSClusterDetails, (draft) => {
-  draft.cluster.product = { id: normalizedProducts.OSDTRIAL };
+  draft.cluster.product = { id: normalizedProducts.OSDTrial };
   draft.cluster.subscription.plan = {
-    id: normalizedProducts.OSDTRIAL,
-    type: normalizedProducts.OSDTRIAL,
+    id: normalizedProducts.OSDTrial,
+    type: normalizedProducts.OSDTrial,
   };
 });
 

@@ -133,7 +133,7 @@ function ClusterDetailsTop(props) {
   const dispatch = useDispatch();
 
   const isProductOSDTrial =
-    get(cluster, 'subscription.plan.type', '') === normalizedProducts.OSDTRIAL;
+    get(cluster, 'subscription.plan.type', '') === normalizedProducts.OSDTrial;
   const isProductOSDRHM =
     get(cluster, 'subscription.plan.type', '') === normalizedProducts.OSD &&
     get(cluster, 'subscription.cluster_billing_model', '') ===
