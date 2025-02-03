@@ -1,75 +1,49 @@
 import * as React from 'react';
 
-import { mockRestrictedEnv, render, screen } from '../../../../../../../testUtils';
+import { mockRestrictedEnv, screen, withState } from '../../../../../../../testUtils';
 
 import ClusterIngressCard from './ClusterIngressCard';
 
-describe.skip('<ClusterIngressCard />', () => {
-  const cluster = {
-    openshift_version: '4.13.4',
-    api: { url: 'controlPlaneAPIEndpoint', listening: 'external' },
-    cloud_provider: {
-      id: 'AWS',
-    },
-    console: {
-      url: 'consoleURL',
-    },
-    canEdit: false,
-    status: {
-      configuration_mode: 'active',
-    },
-    aws: {
-      sts: {
-        enabbled: false,
+describe('<ClusterIngressCard />', () => {
+  const loadedState = {
+    clusters: {
+      details: {
+        cluster: { openshift_version: '4.13.4', api: { url: 'controlPlaneAPIEndpoint' } },
       },
     },
-    state: 'ACTIVE',
-    hypershift: {
-      enabled: true,
-    },
   };
-  const clusterRouters = [
-    {
-      default: true,
-      dns_name: 'apps.rosa.re-hcp-1.2njp.s3.devshift.org',
-      href: '/api/clusters_mgmt/v1/clusters/2clvgtqnbndaceirn0q5mkkpp0g4ome8/ingresses/v7m8',
-      id: 'v7m8',
-      kind: 'Ingress',
-      listening: 'external',
-      load_balancer_type: 'nlb',
-    },
-  ];
+
   const defaultProps = {
-    clusterRoutersData: clusterRouters,
-    cluster,
+    isBYOVPC: true,
+    isApiPrivate: true,
+    isAdditionalRouterPrivate: false,
+    hasAdditionalRouter: true,
+    canEdit: false,
+    isReadOnly: false,
+    isSTSEnabled: false,
+    isHypershiftCluster: false,
+    clusterHibernating: false,
+    showConsoleLink: false,
+    openModal: jest.fn(),
     refreshCluster: jest.fn(),
+    controlPlaneAPIEndpoint: '',
+    additionalRouterAddress: '',
   };
 
   describe('in default environment', () => {
     it('renders footer', async () => {
-      render(<ClusterIngressCard {...defaultProps} />);
+      withState(loadedState).render(<ClusterIngressCard {...defaultProps} />);
       expect(screen.queryByText('Edit cluster ingress')).toBeInTheDocument();
     });
 
     it('renders the API as public when isApiPrivate=false', async () => {
-      render(<ClusterIngressCard {...defaultProps} />);
+      withState(loadedState).render(<ClusterIngressCard {...defaultProps} isApiPrivate={false} />);
       expect(screen.queryByText('Public API')).toBeInTheDocument();
       expect(screen.queryByText('Private API')).not.toBeInTheDocument();
     });
 
     it('renders the API as private when isApiPrivate=true', async () => {
-      const props = {
-        ...defaultProps,
-        cluster: {
-          ...defaultProps.cluster,
-          api: {
-            listening: 'internal',
-          },
-        },
-      };
-
-      render(<ClusterIngressCard {...props} />);
-
+      withState(loadedState).render(<ClusterIngressCard {...defaultProps} isApiPrivate />);
       expect(screen.queryByText('Public API')).not.toBeInTheDocument();
       expect(screen.queryByText('Private API')).toBeInTheDocument();
     });
@@ -86,24 +60,17 @@ describe.skip('<ClusterIngressCard />', () => {
     });
 
     it('does not render footer', async () => {
-      render(<ClusterIngressCard {...defaultProps} />);
+      withState(loadedState).render(<ClusterIngressCard {...defaultProps} />);
       expect(screen.queryByText('Edit cluster ingress')).not.toBeInTheDocument();
     });
 
     it('renders the API as private in any case', async () => {
-      const { rerender } = render(<ClusterIngressCard {...defaultProps} />);
+      const { rerender } = withState(loadedState).render(
+        <ClusterIngressCard {...defaultProps} isApiPrivate={false} />,
+      );
       expect(screen.queryByText('Private API')).toBeInTheDocument();
 
-      const props = {
-        ...defaultProps,
-        cluster: {
-          ...defaultProps.cluster,
-          api: {
-            listening: 'internal',
-          },
-        },
-      };
-      rerender(<ClusterIngressCard {...props} />);
+      rerender(<ClusterIngressCard {...defaultProps} isApiPrivate />, {}, loadedState);
       expect(screen.queryByText('Private API')).toBeInTheDocument();
     });
   });
@@ -111,19 +78,10 @@ describe.skip('<ClusterIngressCard />', () => {
     it('disables editing cluster ingress', async () => {
       const props = {
         ...defaultProps,
-        cluster: {
-          ...defaultProps.cluster,
-          hypershift: {
-            enabled: false,
-          },
-          aws: {
-            sts: {
-              enabbled: true,
-            },
-          },
-        },
+        isSTSEnabled: true,
+        isHypershiftCluster: false,
       };
-      render(<ClusterIngressCard {...props} />);
+      withState(loadedState).render(<ClusterIngressCard {...props} />);
       expect(screen.getByTestId('edit-cluster-ingress')).toHaveAttribute('aria-disabled', 'true');
     });
   });

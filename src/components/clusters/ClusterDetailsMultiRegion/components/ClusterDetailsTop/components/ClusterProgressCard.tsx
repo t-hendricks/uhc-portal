@@ -58,7 +58,7 @@ const ClusterProgressCard = ({ cluster, regionalInstance }: ClusterProgressCardP
   }
 
   return (
-    <Card isFlat>
+    <Card>
       {!hasInflightErrors && (
         <CardTitle>
           <Title

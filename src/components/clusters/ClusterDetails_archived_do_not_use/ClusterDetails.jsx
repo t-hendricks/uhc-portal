@@ -399,7 +399,7 @@ const ClusterDetails = (props) => {
     get(cluster, 'subscription.status', false) === SubscriptionCommonFieldsStatus.Archived ||
     get(cluster, 'subscription.status', false) === SubscriptionCommonFieldsStatus.Deprovisioned;
   const isAROCluster = get(cluster, 'subscription.plan.type', '') === knownProducts.ARO;
-  const isOSDTrial = get(cluster, 'subscription.plan.type', '') === knownProducts.OSDTRIAL;
+  const isOSDTrial = get(cluster, 'subscription.plan.type', '') === knownProducts.OSDTrial;
   const isRHOIC = get(cluster, 'subscription.plan.type', '') === knownProducts.RHOIC;
 
   const isManaged = cluster.managed;

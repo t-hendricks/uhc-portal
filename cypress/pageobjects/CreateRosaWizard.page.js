@@ -472,11 +472,6 @@ class CreateRosaCluster extends Page {
     cy.get('button').contains(version).click();
   }
 
-  selectClusterVersionFedRamp(version) {
-    cy.get('div[name="cluster_version"]').click();
-    cy.get('button').contains(version).click();
-  }
-
   addNodeLabelKeyAndValue(key, value = '', index = 0) {
     cy.get('input[aria-label="Key-value list key"]').each(($el, indx) => {
       if (index === indx) {
