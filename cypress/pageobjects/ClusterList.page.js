@@ -33,7 +33,6 @@ class ClusterList extends Page {
   typeColumnsInClusterList = () => cy.get('td[data-label="Type"] span');
 
   filterdClusterTypesValues = () => cy.get('span.pf-v5-c-chip__text');
-  createClusterButton = () => cy.getByTestId('create_cluster_btn');
 
   createClusterButton = () => cy.getByTestId('create_cluster_btn');
 
