@@ -49,7 +49,7 @@ import { viewConstants } from '../../../redux/constants';
 import ErrorBox from '../../common/ErrorBox';
 import RefreshBtn from '../../common/RefreshButton/RefreshButton';
 import Unavailable from '../../common/Unavailable';
-import AccessRequestPendingAlert from '../ClusterDetails/components/AccessRequest/components/AccessRequestPendingAlert';
+import AccessRequestPendingAlert from '../ClusterDetailsMultiRegion/components/AccessRequest/components/AccessRequestPendingAlert';
 import ClusterListFilter from '../common/ClusterListFilter';
 import CommonClusterModals from '../common/CommonClusterModals';
 import ErrorTriangle from '../common/ErrorTriangle';

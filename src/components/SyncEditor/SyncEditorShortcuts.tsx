@@ -1,19 +1,29 @@
 import React from 'react';
 
-import { Chip, Grid, GridItem } from '@patternfly/react-core';
+import {
+  Button,
+  ButtonVariant,
+  Grid,
+  GridItem,
+  HelperText,
+  HelperTextItem,
+  Popover,
+} from '@patternfly/react-core';
+import HelpIcon from '@patternfly/react-icons/dist/esm/icons/help-icon';
 
-import { isMac } from '~/common/navigator';
+import { shortcut } from './model/shortcut';
+import { Shortcut } from './Shortcut';
 
-const shortcuts: { PC: string[]; Mac: string[]; description: string }[] = [
-  {
-    PC: ['Alt', 'F1'],
-    Mac: ['⌥ Opt', 'F1'],
-    description: 'Accessibility helps',
-  },
+const shortcuts: shortcut[] = [
   {
     PC: ['F1'],
     Mac: ['F1'],
     description: 'View all editor shortcuts',
+  },
+  {
+    PC: ['Ctrl', 'F'],
+    Mac: ['⌥ Opt', 'F'],
+    description: 'Search',
   },
   {
     PC: ['Ctrl', 'Space'],
@@ -21,46 +31,41 @@ const shortcuts: { PC: string[]; Mac: string[]; description: string }[] = [
     description: 'Activate auto complete',
   },
   {
-    PC: ['Ctrl', 'Shift', 'M'],
-    Mac: ['⌥ Opt', 'Shift', 'M'],
-    description: 'Toggle Tab action between insert Tab character and move focus of editor',
+    PC: ['Alt', 'Down'],
+    Mac: ['⌥ Opt', 'Down'],
+    description: 'Move a line down',
   },
   {
-    PC: ['Ctrl', 'Shift', '0'],
-    Mac: ['Shift', '⌘ Cmd', '0'],
-    description: 'View document outline',
+    PC: ['Alt', 'Up'],
+    Mac: ['⌥ Opt', 'Up'],
+    description: 'Move a line up',
+  },
+  {
+    PC: ['Alt', 'F8'],
+    Mac: ['⌥ Opt', 'F8'],
+    description: 'View problem',
   },
   {
     PC: ['🖱 Hover'],
     Mac: ['🖱 Hover'],
     description: 'View property descriptions',
   },
-  {
-    PC: ['Ctrl', 'S'],
-    Mac: ['⌘ Cmd', 'S'],
-    description: 'Save',
-  },
 ];
 
-const SyncEditorShortcutsProps = {
+const shortcutsPopoverProps = {
   bodyContent: (
     <Grid span={6} hasGutter key="grid">
       {shortcuts.map((shortcut, index) => (
         // eslint-disable-next-line react/no-array-index-key
         <React.Fragment key={`shortcut-${index}`}>
           <GridItem style={{ textAlign: 'right', marginRight: '1em' }}>
-            {shortcut[isMac ? 'Mac' : 'PC']
-              .map((key) => (
-                <Chip key={key} isReadOnly>
-                  {key}
-                </Chip>
-              ))
-              .reduce((prev, curr) => (
-                // eslint-disable-next-line react/jsx-no-useless-fragment
-                <>{[prev, ' + ', curr]}</>
-              ))}
+            <Shortcut shortcut={shortcut} />
           </GridItem>
-          <GridItem>{shortcut.description}</GridItem>
+          <GridItem>
+            <HelperText>
+              <HelperTextItem variant="indeterminate">{shortcut.description}</HelperTextItem>
+            </HelperText>
+          </GridItem>
         </React.Fragment>
       ))}
     </Grid>
@@ -68,4 +73,18 @@ const SyncEditorShortcutsProps = {
   'aria-label': 'Shortcuts',
 };
 
-export { SyncEditorShortcutsProps };
+type SyncEditorShortcutsProps = {
+  shortcutsPopoverButtonText?: string;
+};
+
+const SyncEditorShortcuts = ({
+  shortcutsPopoverButtonText = 'View Shortcuts',
+}: SyncEditorShortcutsProps) => (
+  <Popover {...shortcutsPopoverProps}>
+    <Button variant={ButtonVariant.link} icon={<HelpIcon />}>
+      {shortcutsPopoverButtonText}
+    </Button>
+  </Popover>
+);
+
+export { SyncEditorShortcuts };

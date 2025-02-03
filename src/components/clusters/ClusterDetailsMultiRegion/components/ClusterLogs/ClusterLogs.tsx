@@ -278,6 +278,7 @@ const ClusterLogs = ({
           itemsEnd={itemsEnd}
           onSetPage={onSetPage}
           onPerPageSelect={onPerPageSelect}
+          region={region}
         />
         {isError && !size(logs) && ignoreErrors ? (
           <PageSection>

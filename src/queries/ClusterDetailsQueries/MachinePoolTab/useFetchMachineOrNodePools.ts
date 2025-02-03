@@ -3,8 +3,8 @@ import semver, { SemVer } from 'semver';
 import { useQuery } from '@tanstack/react-query';
 
 import { queryClient } from '~/components/App/queryClient';
-import { isControlPlaneValidForMachinePool } from '~/components/clusters/ClusterDetails/components/MachinePools/UpdateMachinePools/updateMachinePoolsHelpers';
 import { normalizeNodePool } from '~/components/clusters/ClusterDetailsMultiRegion/components/MachinePools/machinePoolsHelper';
+import { isControlPlaneValidForMachinePool } from '~/components/clusters/ClusterDetailsMultiRegion/components/MachinePools/UpdateMachinePools/updateMachinePoolsHelpers';
 import { formatErrorData } from '~/queries/helpers';
 import { queryConstants } from '~/queries/queriesConstants';
 import { useGlobalState } from '~/redux/hooks';

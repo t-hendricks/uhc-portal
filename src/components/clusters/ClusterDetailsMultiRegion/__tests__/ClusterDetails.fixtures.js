@@ -1,6 +1,6 @@
 import { produce } from 'immer';
 
-import { SubscriptionCommonFields } from '~/types/accounts_mgmt.v1';
+import { SubscriptionCommonFieldsCluster_billing_model as SubscriptionCommonFieldsClusterBillingModel } from '~/types/accounts_mgmt.v1';
 
 import { normalizedProducts } from '../../../../common/subscriptionTypes';
 import clusterStates from '../../common/clusterStates';
@@ -435,10 +435,10 @@ const CCSClusterDetails = produce(clusterDetails, (draft) => {
 });
 
 const OSDTrialClusterDetails = produce(CCSClusterDetails, (draft) => {
-  draft.cluster.product = { id: normalizedProducts.OSDTRIAL };
+  draft.cluster.product = { id: normalizedProducts.OSDTrial };
   draft.cluster.subscription.plan = {
-    id: normalizedProducts.OSDTRIAL,
-    type: normalizedProducts.OSDTRIAL,
+    id: normalizedProducts.OSDTrial,
+    type: normalizedProducts.OSDTrial,
   };
 });
 
@@ -449,7 +449,7 @@ const OSDRHMClusterDetails = produce(CCSClusterDetails, (draft) => {
     type: normalizedProducts.OSD,
   };
   draft.cluster.subscription.cluster_billing_model =
-    SubscriptionCommonFields.cluster_billing_model.MARKETPLACE;
+    SubscriptionCommonFieldsClusterBillingModel.marketplace;
 });
 
 const OSDGCPClusterDetails = produce(CCSClusterDetails, (draft) => {
@@ -459,7 +459,7 @@ const OSDGCPClusterDetails = produce(CCSClusterDetails, (draft) => {
     type: normalizedProducts.OSD,
   };
   draft.cluster.subscription.cluster_billing_model =
-    SubscriptionCommonFields.cluster_billing_model.MARKETPLACE_GCP;
+    SubscriptionCommonFieldsClusterBillingModel.marketplace_gcp;
 });
 
 const ROSAClusterDetails = produce(CCSClusterDetails, (draft) => {
@@ -480,6 +480,35 @@ const ROSAHypershiftClusterDetails = produce(CCSClusterDetails, (draft) => {
     id: normalizedProducts.ROSA_HyperShift,
     type: normalizedProducts.ROSA,
   };
+});
+
+const ROSAHypershiftWaitingClusterDetails = produce(ROSAClusterDetails, (draft) => {
+  draft.cluster.product = { id: normalizedProducts.ROSA };
+  draft.cluster.hypershift = { enabled: true };
+  draft.cluster.subscription.plan = {
+    id: normalizedProducts.ROSA_HyperShift,
+    type: normalizedProducts.ROSA,
+  };
+  draft.cluster.aws = {
+    sts: {
+      auto_mode: false,
+      oidc_endpoint_url:
+        'https://rh-oidc.s3.us-east-1.amazonaws.com/1ricsv5bio0domn5gofgaar07aifjpr0',
+      role_arn: 'arn:aws:iam::123456789012:role/ManagedOpenShift-Installer-Role',
+      operator_iam_roles: [
+        {
+          name: 'myrole',
+          namespace: 'openshift-machine-api',
+          role_arn:
+            'arn:aws:iam::123456789012:role/cluster-test-openshift-machine-api-aws-cloud-credentials',
+        },
+      ],
+      oidc_config: {
+        id: '22qa79chsq8mand8hvmnr',
+      },
+    },
+  };
+  draft.cluster.state = clusterStates.WAITING;
 });
 
 const ROSAManualClusterDetails = produce(ROSAClusterDetails, (draft) => {
@@ -514,7 +543,7 @@ const AIClusterDetails = produce(CCSClusterDetails, (draft) => {
   draft.cluster.aiCluster = { id: clusterDetails.cluster.id };
   draft.cluster.canEdit = false;
   draft.cluster.subscription.plan = {
-    id: normalizedProducts.OCP_ASSISTED_INSTALL,
+    id: normalizedProducts.OCP_AssistedInstall,
     type: normalizedProducts.OCP,
   };
 });
@@ -1087,6 +1116,16 @@ const userAccess = {
   pending: false,
 };
 
+const regionalInstance = {
+  cloud_provider_id: 'aws',
+  href: '/api/accounts_mgmt/v1/regions',
+  id: 'stage',
+  kind: 'Region',
+  url: 'https://api.stage.openshift.com',
+  environment: 'stage',
+  isDefault: true,
+};
+
 const fixtures = {
   match,
   clusterDetails,
@@ -1097,6 +1136,7 @@ const fixtures = {
   ROSAClusterDetails,
   ROSAManualClusterDetails,
   ROSAHypershiftClusterDetails,
+  ROSAHypershiftWaitingClusterDetails,
   RHMIClusterDetails,
   insightsData,
   OCPClusterDetails,
@@ -1119,6 +1159,7 @@ const fixtures = {
   hasIssues: false,
   userAccess,
   upgradeGates: [],
+  regionalInstance,
 };
 
 export { funcs };

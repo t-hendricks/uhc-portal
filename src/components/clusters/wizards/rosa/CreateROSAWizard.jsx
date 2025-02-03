@@ -39,13 +39,13 @@ import Unavailable from '../../../common/Unavailable';
 import CIDRScreen from './CIDRScreen/CIDRScreen';
 import ClusterRolesScreen from './ClusterRolesScreen/ClusterRolesScreen';
 import Details from './ClusterSettings/Details/Details';
+import ControlPlaneScreen from './ControlPlaneScreen/ControlPlaneScreen';
 import NetworkScreen from './NetworkScreen/NetworkScreen';
 import UpdatesScreen from './UpdatesScreen/UpdatesScreen';
 import VPCScreen from './VPCScreen/VPCScreen';
 import AccountsRolesScreen from './AccountsRolesScreen';
 import ClusterProxyScreen from './ClusterProxyScreen';
 import { FieldId, initialTouched, initialValues, initialValuesRestrictedEnv } from './constants';
-import ControlPlaneScreen from './ControlPlaneScreen';
 import CreateClusterErrorModal from './CreateClusterErrorModal';
 import CreateRosaWizardFooter from './CreateRosaWizardFooter';
 import MachinePoolScreen from './MachinePoolScreen';
@@ -93,7 +93,6 @@ const CreateROSAWizardInternal = ({
   configureProxySelected,
   resetResponse,
   closeDrawer,
-  hasProductQuota,
   isErrorModalOpen,
   openModal,
   selectedAWSAccountID,
@@ -210,13 +209,6 @@ const CreateROSAWizardInternal = ({
 
     closeDrawer({ skipOnClose: true });
   };
-
-  // RENDERING ////////////////
-  // Not enough quota
-  const orgWasFetched = !organization.pending && organization.fulfilled;
-  if (orgWasFetched && !hasProductQuota) {
-    return <Navigate replace to="/create" />;
-  }
 
   // Needed data requests are pending
   const requests = [
@@ -444,6 +436,7 @@ function CreateROSAWizard(props) {
     isHypershiftSelected,
   };
   const isHypershiftEnabled = useFeatureGate(HYPERSHIFT_WIZARD_FEATURE) && !isRestrictedEnv();
+
   return (
     <AppPage title="Create OpenShift ROSA Cluster">
       <AppDrawerContext.Consumer>
@@ -503,9 +496,6 @@ CreateROSAWizardInternal.propTypes = {
   resetResponse: PropTypes.func,
   openModal: PropTypes.func,
   getUserRoleResponse: PropTypes.object,
-
-  // for "no quota" redirect
-  hasProductQuota: PropTypes.bool,
 
   // for cancel button
   history: PropTypes.shape({

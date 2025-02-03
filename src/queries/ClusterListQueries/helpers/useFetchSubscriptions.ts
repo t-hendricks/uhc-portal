@@ -2,7 +2,7 @@ import { useQuery } from '@tanstack/react-query';
 
 import { createViewQueryObject } from '~/common/queryHelpers';
 import { getSubscriptionQueryType } from '~/services/accountsService';
-import { SubscriptionCommonFields } from '~/types/accounts_mgmt.v1';
+import { SubscriptionCommonFieldsStatus } from '~/types/accounts_mgmt.v1';
 import { ViewOptions } from '~/types/types';
 
 import isAssistedInstallSubscription from '../../../common/isAssistedInstallerCluster';
@@ -48,7 +48,7 @@ const fetchGlobalSubscriptions = async (
 
   const managedSubscriptions = items.filter(
     (subscription) =>
-      subscription.managed && subscription.status !== SubscriptionCommonFields.status.DEPROVISIONED,
+      subscription.managed && subscription.status !== SubscriptionCommonFieldsStatus.Deprovisioned,
   );
 
   return {

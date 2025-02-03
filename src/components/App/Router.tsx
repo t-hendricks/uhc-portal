@@ -24,7 +24,6 @@ import useChrome from '@redhat-cloud-services/frontend-components/useChrome';
 
 import { Navigate, ocmBaseName } from '~/common/routing';
 import ClusterDetailsClusterOrExternalIdMR from '~/components/clusters/ClusterDetailsMultiRegion/ClusterDetailsClusterOrExternalId';
-import config from '~/config';
 import { useFeatureGate } from '~/hooks/useFeatureGate';
 import { isRestrictedEnv } from '~/restrictedEnv';
 import apiRequest from '~/services/apiRequest';
@@ -33,15 +32,11 @@ import { normalizedProducts } from '../../common/subscriptionTypes';
 import {
   CLUSTER_OWNERSHIP_TRANSFER,
   HYPERSHIFT_WIZARD_FEATURE,
-  MULTIREGION_PREVIEW_ENABLED,
 } from '../../redux/constants/featureConstants';
 import CLILoginPage from '../CLILoginPage/CLILoginPage';
 import ArchivedClusterListMultiRegion from '../clusters/ArchivedClusterListMultiRegion';
-import ClusterDetailsClusterOrExternalId from '../clusters/ClusterDetails/ClusterDetailsClusterOrExternalId';
-import ClusterDetailsSubscriptionId from '../clusters/ClusterDetails/ClusterDetailsSubscriptionId';
-import AccessRequestNavigate from '../clusters/ClusterDetails/components/AccessRequest/components/AccessRequestNavigate';
-import IdentityProvidersPage from '../clusters/ClusterDetails/components/IdentityProvidersPage';
 import ClusterDetailsSubscriptionIdMultiRegion from '../clusters/ClusterDetailsMultiRegion/ClusterDetailsSubscriptionIdMultiRegion';
+import AccessRequestNavigate from '../clusters/ClusterDetailsMultiRegion/components/AccessRequest/components/AccessRequestNavigate';
 import IdentityProviderPageMultiregion from '../clusters/ClusterDetailsMultiRegion/components/IdentityProvidersPage/index';
 import ClusterListMultiRegion from '../clusters/ClusterListMultiRegion';
 import CreateClusterPage from '../clusters/CreateClusterPage';
@@ -115,7 +110,7 @@ import Overview from '../overview';
 import Quota from '../quota';
 import Releases from '../releases';
 import RosaHandsOnPage from '../RosaHandsOn/RosaHandsOnPage';
-import RosaServicePage from '../services/rosa/RosaServicePage';
+import { ServicePage } from '../services/servicePage/ServicePage';
 
 import ApiError from './ApiError';
 import { AppPage } from './AppPage';
@@ -143,9 +138,6 @@ const Router: React.FC<RouterProps> = ({ planType, clusterId, externalClusterId 
   } = useChrome();
 
   const isHypershiftWizardEnabled = useFeatureGate(HYPERSHIFT_WIZARD_FEATURE);
-
-  // MULTIREGION_PREVIEW_ENABLED enabled in staging, disabled in production (via Unleashed)
-  const isMultiRegionPreviewEnabled = useFeatureGate(MULTIREGION_PREVIEW_ENABLED);
 
   const isClusterTransferEnabled = useFeatureGate(CLUSTER_OWNERSHIP_TRANSFER);
 
@@ -313,7 +305,7 @@ const Router: React.FC<RouterProps> = ({ planType, clusterId, externalClusterId 
           path="/create/osdtrial"
           element={
             <TermsGuard gobackPath="/create">
-              <CreateOsdWizard product={normalizedProducts.OSDTRIAL} />
+              <CreateOsdWizard product={normalizedProducts.OSDTrial} />
             </TermsGuard>
           }
         />
@@ -357,68 +349,30 @@ const Router: React.FC<RouterProps> = ({ planType, clusterId, externalClusterId 
         />
         <Route
           path="/details/s/:id/add-idp/:idpTypeName"
-          element={
-            config.multiRegion && isMultiRegionPreviewEnabled ? (
-              <IdentityProviderPageMultiregion />
-            ) : (
-              <IdentityProvidersPage />
-            )
-          }
+          element={<IdentityProviderPageMultiregion />}
         />
         <Route
           path="/details/s/:id/edit-idp/:idpName"
-          element={
-            config.multiRegion && isMultiRegionPreviewEnabled ? (
-              <IdentityProviderPageMultiregion isEditForm />
-            ) : (
-              <IdentityProvidersPage isEditForm />
-            )
-          }
+          element={<IdentityProviderPageMultiregion isEditForm />}
         />
         {/* WARNING! The "/details/s/:id" route is used by catchpoint tests which determine
         'Operational' or 'Major Outage' status for "OpenShift Cluster Manager" on the
         'http:///status.redhat.com' site. If this route is changed, then the related catchpoint
         tests must be updated. For more info. see: https://issues.redhat.com/browse/OCMUI-2398 */}
-        <Route
-          path="/details/s/:id"
-          element={
-            config.multiRegion && isMultiRegionPreviewEnabled ? (
-              <ClusterDetailsSubscriptionIdMultiRegion />
-            ) : (
-              <ClusterDetailsSubscriptionId
-                chromeHistory={chromeHistory as unknown as HistoryRouterProps['history']}
-              />
-            )
-          }
-        />
+        <Route path="/details/s/:id" element={<ClusterDetailsSubscriptionIdMultiRegion />} />
         <Route
           path="/details/:id/insights/:reportId/:errorKey"
           element={<InsightsAdvisorRedirector />}
         />
-        <Route
-          path="/details/:id"
-          element={
-            config.multiRegion && isMultiRegionPreviewEnabled ? (
-              <ClusterDetailsClusterOrExternalIdMR />
-            ) : (
-              <ClusterDetailsClusterOrExternalId />
-            )
-          }
-        />
+        <Route path="/details/:id" element={<ClusterDetailsClusterOrExternalIdMR />} />
         <Route path="/register" element={<RegisterCluster />} />
         <Route path="/quota/resource-limits" element={<Quota marketplace />} />
         <Route path="/quota" element={<Quota />} />
-        <Route
-          path="/archived"
-          element={
-            <ArchivedClusterListMultiRegion
-              getMultiRegion={config.multiRegion && isMultiRegionPreviewEnabled}
-            />
-          }
-        />
+        <Route path="/archived" element={<ArchivedClusterListMultiRegion getMultiRegion />} />
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/overview/rosa/hands-on" element={<RosaHandsOnPage />} />
-        <Route path="/overview/rosa" element={<RosaServicePage />} />
+        <Route path="/overview/rosa" element={<ServicePage serviceName="ROSA" />} />
+        <Route path="/overview/osd" element={<ServicePage serviceName="OSD" />} />
         <Route path="/overview" element={<Overview />} />
         <Route path="/releases" element={<Releases />} />
         <Route
@@ -449,14 +403,7 @@ const Router: React.FC<RouterProps> = ({ planType, clusterId, externalClusterId 
         'Operational' or 'Major Outage' status for "OpenShift Cluster Manager" on the
         'http:///status.redhat.com' site. If this route is changed, then the related catchpoint
         tests must be updated. For more info. see: https://issues.redhat.com/browse/OCMUI-2398 */}
-        <Route
-          path="/cluster-list"
-          element={
-            <ClusterListMultiRegion
-              getMultiRegion={config.multiRegion && isMultiRegionPreviewEnabled}
-            />
-          }
-        />
+        <Route path="/cluster-list" element={<ClusterListMultiRegion getMultiRegion />} />
         <Route
           path="/"
           element={<Navigate replace to={isRestrictedEnv() ? '/cluster-list' : '/overview'} />}

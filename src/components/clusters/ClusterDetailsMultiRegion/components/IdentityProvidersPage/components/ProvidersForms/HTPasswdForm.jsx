@@ -9,8 +9,6 @@ import { useFormState } from '~/components/clusters/wizards/hooks';
 import { CompoundFieldArray } from '~/components/common/FormikFormComponents/FormikFieldArray/CompoundFieldArray';
 
 import {
-  composeValidators,
-  required,
   validateHTPasswdPassword,
   validateHTPasswdUsername,
   validateUniqueHTPasswdUsername,
@@ -168,7 +166,7 @@ const HTPasswdForm = ({ isPending }) => {
             helpText: 'Unique name of the user within the cluster.',
             isRequired: true,
             getPlaceholderText: (index) => `Unique username ${index + 1}`,
-            validate: composeValidators(required, validateHTPasswdUsername),
+            validate: validateHTPasswdUsername,
           },
           {
             name: 'password',

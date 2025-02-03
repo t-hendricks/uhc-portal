@@ -67,7 +67,6 @@ const MachinePoolsSubnets = () => {
           selectedVPC={selectedVPC}
           showRefresh
           isHypershift
-          isRosaV1={false}
           input={{
             ...getFieldProps(FieldId.SelectedVpc),
             onChange: (value: CloudVPC) => setFieldValue(FieldId.SelectedVpc, value),

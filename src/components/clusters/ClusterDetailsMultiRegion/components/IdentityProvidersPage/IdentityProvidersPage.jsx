@@ -33,7 +33,7 @@ import {
 import getClusterName from '../../../../../common/getClusterName';
 import { isValid } from '../../../../../common/helpers';
 import { setGlobalError } from '../../../../../redux/actions/globalErrorActions';
-import { SubscriptionCommonFields } from '../../../../../types/accounts_mgmt.v1';
+import { SubscriptionCommonFieldsStatus } from '../../../../../types/accounts_mgmt.v1';
 import Breadcrumbs from '../../../../common/Breadcrumbs';
 import Unavailable from '../../../../common/Unavailable';
 
@@ -74,7 +74,7 @@ const IdentityProvidersPage = (props) => {
     clusterIdentityProviders: clusterIDPs,
     isLoading: isClusterIDPsLoading,
     isSuccess: isClusterIDPsSuccess,
-  } = useFetchClusterIdentityProviders(cluster?.id);
+  } = useFetchClusterIdentityProviders(cluster?.id, region);
 
   const {
     isPending: isPostIDPFormPending,
@@ -109,7 +109,7 @@ const IdentityProvidersPage = (props) => {
     if (!isClusterDetailsLoading && cluster?.id) {
       if (
         isValid(clusterID) &&
-        subscriptionStatus !== SubscriptionCommonFields.status.DEPROVISIONED &&
+        subscriptionStatus !== SubscriptionCommonFieldsStatus.Deprovisioned &&
         isManaged
       ) {
         refetchClusterIdentityProviders();

@@ -6,10 +6,10 @@ import { Flex, FormGroup } from '@patternfly/react-core';
 import links from '~/common/installLinks.mjs';
 import { normalizedProducts } from '~/common/subscriptionTypes';
 import { required, validateNumericInput } from '~/common/validators';
-import { getMinNodesRequired } from '~/components/clusters/ClusterDetails/components/MachinePools/machinePoolsHelper';
+import { getMinNodesRequired } from '~/components/clusters/ClusterDetailsMultiRegion/components/MachinePools/machinePoolsHelper';
 import { constants } from '~/components/clusters/common/CreateOSDFormConstants';
-import { MAX_NODES } from '~/components/clusters/common/machinePools/constants';
-import { getMaxNodesHCP } from '~/components/clusters/common/machinePools/utils';
+import { MAX_NODES_INSUFFICIEN_VERSION as MAX_NODES_180 } from '~/components/clusters/common/machinePools/constants';
+import { getMaxNodesHCP, getMaxWorkerNodes } from '~/components/clusters/common/machinePools/utils';
 import getMinNodesAllowed from '~/components/clusters/common/ScaleSection/AutoScaleSection/AutoScaleHelper';
 import { useFormState } from '~/components/clusters/wizards/hooks';
 import { FieldId as RosaFieldId } from '~/components/clusters/wizards/rosa/constants';
@@ -17,7 +17,7 @@ import ExternalLink from '~/components/common/ExternalLink';
 import { FormGroupHelperText } from '~/components/common/FormGroupHelperText';
 import PopoverHint from '~/components/common/PopoverHint';
 import { useFeatureGate } from '~/hooks/useFeatureGate';
-import { MAX_COMPUTE_NODES_500 } from '~/redux/constants/featureConstants';
+import { OCMUI_MAX_NODES_TOTAL_249 } from '~/redux/constants/featureConstants';
 
 import { NodesInput } from './NodesInput';
 
@@ -40,7 +40,7 @@ export const AutoScaleEnabledInputs = () => {
     },
   } = useFormState();
 
-  const allow500Nodes = useFeatureGate(MAX_COMPUTE_NODES_500);
+  const allow249NodesOSDCCSROSA = useFeatureGate(OCMUI_MAX_NODES_TOTAL_249);
 
   const poolsLength = useMemo(
     () => machinePoolsSubnets?.length ?? 1,
@@ -121,14 +121,23 @@ export const AutoScaleEnabledInputs = () => {
   }, [product, isByoc, isMultiAz, defaultMinAllowed, isHypershiftSelected]);
 
   const maxNodes = useMemo(() => {
+    const maxWorkerNodes = allow249NodesOSDCCSROSA
+      ? getMaxWorkerNodes(clusterVersion.raw_id)
+      : MAX_NODES_180;
     if (isHypershiftSelected) {
-      return Math.floor(getMaxNodesHCP(clusterVersion?.raw_id, allow500Nodes) / poolsLength);
+      return Math.floor(getMaxNodesHCP(clusterVersion?.raw_id) / poolsLength);
     }
     if (isMultiAz) {
-      return MAX_NODES / 3;
+      return maxWorkerNodes / 3;
     }
-    return MAX_NODES;
-  }, [isMultiAz, isHypershiftSelected, poolsLength, allow500Nodes, clusterVersion?.raw_id]);
+    return maxWorkerNodes;
+  }, [
+    isMultiAz,
+    isHypershiftSelected,
+    poolsLength,
+    allow249NodesOSDCCSROSA,
+    clusterVersion?.raw_id,
+  ]);
 
   useEffect(() => {
     if (autoscalingEnabled && minNodes) {

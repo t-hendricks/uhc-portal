@@ -21,6 +21,7 @@ const useGlobalStateMock = useGlobalState as jest.Mock;
 
 describe('<OCMRolesDialog />', () => {
   useGlobalStateMock.mockReturnValue({ modal: { modalName: modals.OCM_ROLES } });
+  const resetGrantOcmRoleMutation = jest.fn();
   const renderComponent = ({
     submit,
     rolesRow,
@@ -47,6 +48,7 @@ describe('<OCMRolesDialog />', () => {
         isGrantOcmRoleError={isGrantOcmRoleError}
         isGrantOcmRoleSuccess={isGrantOcmRoleSuccess}
         grantOcmRoleError={grantOcmRoleError}
+        resetGrantOcmRoleMutation={resetGrantOcmRoleMutation}
       />,
     );
 

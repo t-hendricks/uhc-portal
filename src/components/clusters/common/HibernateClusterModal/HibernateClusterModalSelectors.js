@@ -10,21 +10,6 @@ const userCanHibernateClustersSelector = (state) => {
   return canHibernateCluster?.value === 'true';
 };
 
-// TOOD this can be removed once clusters.clusters.clusters is removed from Redux
-const canHibernateClusterListSelector = (state) => {
-  const canHibernateClusters = userCanHibernateClustersSelector(state);
-
-  const canHibernateClusterList = {};
-  if (canHibernateClusters) {
-    const clusters = get(state, 'clusters.clusters.clusters', []);
-    clusters.forEach((cluster) => {
-      canHibernateClusterList[cluster.id] = true;
-    });
-  }
-
-  return canHibernateClusterList;
-};
-
 export const useCanHibernateClusterListFromClusters = (clusters) => {
   const canHibernateClusters = useGlobalState((state) => userCanHibernateClustersSelector(state));
 
@@ -38,4 +23,4 @@ export const useCanHibernateClusterListFromClusters = (clusters) => {
   return canHibernateClusterList;
 };
 
-export { userCanHibernateClustersSelector, canHibernateClusterListSelector };
+export { userCanHibernateClustersSelector };

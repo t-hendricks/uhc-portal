@@ -1,8 +1,9 @@
 import { useMutation } from '@tanstack/react-query';
 
-import { queryClient } from '~/components/App/queryClient';
 import { formatErrorData } from '~/queries/helpers';
 import clusterService, { getClusterServiceForRegion } from '~/services/clusterService';
+
+import { refetchClusterAutoscalerData } from './useFetchClusterAutoscaler';
 
 export const useDisableClusterAutoscaler = (clusterID: string, region?: string) => {
   const { data, isPending, isError, error, mutate, mutateAsync, isSuccess } = useMutation({
@@ -18,7 +19,7 @@ export const useDisableClusterAutoscaler = (clusterID: string, region?: string) 
       return response;
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['clusterAutoscaler'] });
+      refetchClusterAutoscalerData(clusterID);
     },
   });
   const errorData = formatErrorData(isPending, isError, error);

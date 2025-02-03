@@ -10,7 +10,7 @@ import {
   type OneMetric,
   type QuotaCost,
   type Subscription,
-  SubscriptionCommonFields,
+  SubscriptionCommonFieldsStatus,
 } from '../types/accounts_mgmt.v1';
 import type { Cluster } from '../types/clusters_mgmt.v1';
 import type { FakeCluster } from '../types/types';
@@ -37,22 +37,22 @@ const normalizeProductID = (id: string | undefined): string => {
   const map: { [key: string]: string } = {
     OCP: normalizedProducts.OCP,
     OSD: normalizedProducts.OSD,
-    OSDTRIAL: normalizedProducts.OSDTRIAL,
+    OSDTRIAL: normalizedProducts.OSDTrial,
     RHMI: normalizedProducts.RHMI,
     MOA: normalizedProducts.ROSA,
     ROSA: normalizedProducts.ROSA,
     ROSA_HYPERSHIFT: normalizedProducts.ROSA_HyperShift,
     MOA_HOSTEDCONTROLPLANE: normalizedProducts.ROSA_HyperShift,
     ARO: normalizedProducts.ARO,
-    OCP_ASSISTEDINSTALL: normalizedProducts.OCP_ASSISTED_INSTALL,
+    OCP_ASSISTEDINSTALL: normalizedProducts.OCP_AssistedInstall,
     RHACS: normalizedProducts.RHACS,
-    RHACSTRIAL: normalizedProducts.RHACSTRIAL,
+    RHACSTRIAL: normalizedProducts.RHACSTrial,
     RHOSR: normalizedProducts.RHOSR,
-    RHOSRTRIAL: normalizedProducts.RHOSRTRIAL,
+    RHOSRTRIAL: normalizedProducts.RHOSRTrial,
     RHOSAK: normalizedProducts.RHOSAK,
-    RHOSAKTRIAL: normalizedProducts.RHOSAKTRIAL,
+    RHOSAKTRIAL: normalizedProducts.RHOSAKTrial,
     RHOSE: normalizedProducts.RHOSE,
-    RHOSETRIAL: normalizedProducts.RHOSETRIAL,
+    RHOSETRIAL: normalizedProducts.RHOSETrial,
     RHOIC: normalizedProducts.RHOIC,
     ANY: normalizedProducts.ANY, // used by account-manager in quota_cost
   };
@@ -242,7 +242,7 @@ const fakeClusterFromSubscription = (subscription: Subscription): FakeCluster =>
     ccs: {
       // deprovisioned clusters do not have CCS info, so leaving it as 'undefined'
       enabled:
-        subscription.status !== SubscriptionCommonFields.status.DEPROVISIONED ? false : undefined,
+        subscription.status !== SubscriptionCommonFieldsStatus.Deprovisioned ? false : undefined,
     },
     metrics,
   };

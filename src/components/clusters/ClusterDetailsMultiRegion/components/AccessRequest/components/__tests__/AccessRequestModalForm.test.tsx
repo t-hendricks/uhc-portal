@@ -8,8 +8,8 @@ import {
 } from '~/queries/ClusterDetailsQueries/AccessRequestTab/usePostAccessRequestDecision';
 import { useGlobalState } from '~/redux/hooks';
 import { act, render, screen, within } from '~/testUtils';
+import { AccessRequestStatusState } from '~/types/access_transparency.v1';
 
-import { AccessRequestState } from '../../model/AccessRequestState';
 import AccessRequestModalForm from '../AccessRequestModalForm';
 
 jest.mock('~/redux/hooks', () => ({
@@ -181,7 +181,10 @@ describe('AccessRequestModalForm', () => {
       // Arrange
       for (let i = 0; i <= REFRESH_TIMES; i += 1) {
         useGlobalStateMock.mockReturnValueOnce({
-          accessRequest: { id: 'accessRequestId', status: { state: AccessRequestState.PENDING } },
+          accessRequest: {
+            id: 'accessRequestId',
+            status: { state: AccessRequestStatusState.Pending },
+          },
         });
         useGlobalStateMock.mockReturnValueOnce('organizationId');
         usePostAccessRequestDecisionMock.mockReturnValueOnce({
@@ -219,7 +222,10 @@ describe('AccessRequestModalForm', () => {
       // Arrange
       for (let i = 0; i <= REFRESH_TIMES; i += 1) {
         useGlobalStateMock.mockReturnValueOnce({
-          accessRequest: { id: 'accessRequestId', status: { state: AccessRequestState.PENDING } },
+          accessRequest: {
+            id: 'accessRequestId',
+            status: { state: AccessRequestStatusState.Pending },
+          },
         });
         useGlobalStateMock.mockReturnValueOnce('organizationId');
         usePostAccessRequestDecisionMock.mockReturnValueOnce({
@@ -259,7 +265,10 @@ describe('AccessRequestModalForm', () => {
 
       for (let i = 0; i <= REFRESH_TIMES; i += 1) {
         useGlobalStateMock.mockReturnValueOnce({
-          accessRequest: { id: 'accessRequestId', status: { state: AccessRequestState.PENDING } },
+          accessRequest: {
+            id: 'accessRequestId',
+            status: { state: AccessRequestStatusState.Pending },
+          },
           onClose: onCloseMock,
         });
         useGlobalStateMock.mockReturnValueOnce('organizationId');
@@ -292,7 +301,10 @@ describe('AccessRequestModalForm', () => {
 
       // Act
       useGlobalStateMock.mockReturnValue({
-        accessRequest: { id: 'accessRequestId', status: { state: AccessRequestState.PENDING } },
+        accessRequest: {
+          id: 'accessRequestId',
+          status: { state: AccessRequestStatusState.Pending },
+        },
         onClose: onCloseMock,
       });
       useGlobalStateMock.mockReturnValueOnce('organizationId');
@@ -330,7 +342,10 @@ describe('AccessRequestModalForm', () => {
       const onCloseMock = jest.fn();
       for (let i = 0; i <= REFRESH_TIMES; i += 1) {
         useGlobalStateMock.mockReturnValueOnce({
-          accessRequest: { id: 'accessRequestId', status: { state: AccessRequestState.PENDING } },
+          accessRequest: {
+            id: 'accessRequestId',
+            status: { state: AccessRequestStatusState.Pending },
+          },
           onClose: onCloseMock,
         });
         useGlobalStateMock.mockReturnValueOnce('organizationId');
@@ -368,7 +383,10 @@ describe('AccessRequestModalForm', () => {
       // Arrange
       for (let i = 0; i <= REFRESH_TIMES; i += 1) {
         useGlobalStateMock.mockReturnValueOnce({
-          accessRequest: { id: 'accessRequestId', status: { state: AccessRequestState.PENDING } },
+          accessRequest: {
+            id: 'accessRequestId',
+            status: { state: AccessRequestStatusState.Pending },
+          },
         });
         usePostAccessRequestDecisionMock.mockReturnValueOnce({
           mutate: jest.fn(),
@@ -407,7 +425,10 @@ describe('AccessRequestModalForm', () => {
       // Arrange
       for (let i = 0; i <= REFRESH_TIMES; i += 1) {
         useGlobalStateMock.mockReturnValueOnce({
-          accessRequest: { id: 'accessRequestId', status: { state: AccessRequestState.PENDING } },
+          accessRequest: {
+            id: 'accessRequestId',
+            status: { state: AccessRequestStatusState.Pending },
+          },
         });
         usePostAccessRequestDecisionMock.mockReturnValueOnce({
           mutate: jest.fn(),
@@ -450,7 +471,10 @@ describe('AccessRequestModalForm', () => {
       // Arrange
       for (let i = 0; i <= REFRESH_TIMES; i += 1) {
         useGlobalStateMock.mockReturnValueOnce({
-          accessRequest: { id: 'accessRequestId', status: { state: AccessRequestState.PENDING } },
+          accessRequest: {
+            id: 'accessRequestId',
+            status: { state: AccessRequestStatusState.Pending },
+          },
         });
         usePostAccessRequestDecisionMock.mockReturnValueOnce({
           mutate: jest.fn(),
@@ -493,7 +517,10 @@ describe('AccessRequestModalForm', () => {
       // Arrange
       for (let i = 0; i <= REFRESH_TIMES; i += 1) {
         useGlobalStateMock.mockReturnValueOnce({
-          accessRequest: { id: 'accessRequestId', status: { state: AccessRequestState.PENDING } },
+          accessRequest: {
+            id: 'accessRequestId',
+            status: { state: AccessRequestStatusState.Pending },
+          },
         });
         usePostAccessRequestDecisionMock.mockReturnValueOnce({
           mutate: jest.fn(),
@@ -545,7 +572,10 @@ describe('AccessRequestModalForm', () => {
         // Arrange
         for (let i = 0; i <= REFRESH_TIMES; i += 1) {
           useGlobalStateMock.mockReturnValueOnce({
-            accessRequest: { id: 'accessRequestId', status: { state: AccessRequestState.PENDING } },
+            accessRequest: {
+              id: 'accessRequestId',
+              status: { state: AccessRequestStatusState.Pending },
+            },
           });
           usePostAccessRequestDecisionMock.mockReturnValueOnce({
             mutate: jest.fn(),
@@ -598,7 +628,10 @@ describe('AccessRequestModalForm', () => {
       const mutateMock = jest.fn();
       for (let i = 0; i <= REFRESH_TIMES; i += 1) {
         useGlobalStateMock.mockReturnValueOnce({
-          accessRequest: { id: 'accessRequestId', status: { state: AccessRequestState.PENDING } },
+          accessRequest: {
+            id: 'accessRequestId',
+            status: { state: AccessRequestStatusState.Pending },
+          },
           onClose: onCloseMock,
         });
         usePostAccessRequestDecisionMock.mockReturnValueOnce({
@@ -650,7 +683,10 @@ describe('AccessRequestModalForm', () => {
       const mutateMock = jest.fn();
       for (let i = 0; i <= REFRESH_TIMES; i += 1) {
         useGlobalStateMock.mockReturnValueOnce({
-          accessRequest: { id: 'accessRequestId', status: { state: AccessRequestState.PENDING } },
+          accessRequest: {
+            id: 'accessRequestId',
+            status: { state: AccessRequestStatusState.Pending },
+          },
           onClose: onCloseMock,
         });
         usePostAccessRequestDecisionMock.mockReturnValueOnce({
@@ -683,7 +719,10 @@ describe('AccessRequestModalForm', () => {
 
       // Act
       useGlobalStateMock.mockReturnValueOnce({
-        accessRequest: { id: 'accessRequestId', status: { state: AccessRequestState.PENDING } },
+        accessRequest: {
+          id: 'accessRequestId',
+          status: { state: AccessRequestStatusState.Pending },
+        },
         onClose: onCloseMock,
       });
       usePostAccessRequestDecisionMock.mockReturnValueOnce({
@@ -715,7 +754,10 @@ describe('AccessRequestModalForm', () => {
       const mutateMock = jest.fn();
       for (let i = 0; i <= REFRESH_TIMES; i += 1) {
         useGlobalStateMock.mockReturnValueOnce({
-          accessRequest: { id: 'accessRequestId', status: { state: AccessRequestState.PENDING } },
+          accessRequest: {
+            id: 'accessRequestId',
+            status: { state: AccessRequestStatusState.Pending },
+          },
         });
         usePostAccessRequestDecisionMock.mockReturnValueOnce({
           mutate: mutateMock,
@@ -821,7 +863,7 @@ describe('AccessRequestModalForm', () => {
           accessRequest: {
             id: 'accessRequestId',
             subscription_id: 'subscriptionId',
-            status: { state: AccessRequestState.PENDING },
+            status: { state: AccessRequestStatusState.Pending },
           },
         });
         usePostAccessRequestDecisionMock.mockReturnValueOnce({
@@ -848,13 +890,13 @@ describe('AccessRequestModalForm', () => {
     });
 
     it.each([
-      [AccessRequestState.APPROVED, 'subscriptionId', 'organizationId'],
-      [AccessRequestState.PENDING, undefined, 'organizationId'],
-      [AccessRequestState.PENDING, 'subscriptionId', undefined],
+      [AccessRequestStatusState.Approved, 'subscriptionId', 'organizationId'],
+      [AccessRequestStatusState.Pending, undefined, 'organizationId'],
+      [AccessRequestStatusState.Pending, 'subscriptionId', undefined],
     ])(
       'is not triggered. Status %p, Subscription ID %p, OrganizationID %p',
       (
-        state: AccessRequestState | undefined,
+        state: AccessRequestStatusState | undefined,
         subscriptionId: string | undefined,
         organizationId: string | undefined,
       ) => {

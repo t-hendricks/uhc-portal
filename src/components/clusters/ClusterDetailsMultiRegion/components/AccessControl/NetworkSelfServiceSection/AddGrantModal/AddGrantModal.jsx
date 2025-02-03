@@ -39,7 +39,6 @@ const AddGrantModal = ({
     setSelectedRole('');
     setArn('');
     setArnTouched(false);
-    resetAddGrantsMutate();
   };
 
   React.useEffect(() => {
@@ -69,9 +68,9 @@ const AddGrantModal = ({
 
   const validationMessage = validateUserOrGroupARN(arn);
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     if (!validationMessage && !!selectedRole) {
-      addGrantsMutate(
+      await addGrantsMutate(
         { roleId: selectedRole, arn },
         {
           onSuccess: () => {

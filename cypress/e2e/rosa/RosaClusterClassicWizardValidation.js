@@ -211,6 +211,8 @@ describe('Rosa Classic cluster wizard validations', { tags: ['smoke'] }, () => {
     );
   });
   it('Step - Cluster Settings - machine pool- Cluster autoscaling section - widget validations', () => {
+    CreateRosaWizardPage.disabledAutoScaling();
+    CreateRosaWizardPage.enableAutoScaling();
     CreateRosaWizardPage.editClusterAutoscalingSettingsButton().click();
     CreateRosaWizardPage.clusterAutoscalingLogVerbosityInput().type('{selectAll}').type('0').blur();
     CreateRosaWizardPage.isTextContainsInPage(
@@ -308,15 +310,84 @@ describe('Rosa Classic cluster wizard validations', { tags: ['smoke'] }, () => {
       clusterFieldValidations.ClusterSettings.Machinepool.ClusterAutoscaling.MinMaxLimitError,
       false,
     );
-    CreateRosaWizardPage.clusterAutoscalingMaxNodesTotalInput().should('have.value', '249');
+    CreateRosaWizardPage.clusterAutoscalingMaxNodesTotalInput().should('have.value', '255');
     CreateRosaWizardPage.clusterAutoscalingMaxNodesTotalInput()
       .type('{selectAll}')
-      .type('250')
+      .type('257')
       .blur();
     CreateRosaWizardPage.isTextContainsInPage(
       clusterFieldValidations.ClusterSettings.Machinepool.ClusterAutoscaling
-        .MaxNodesValueLimitError,
+        .MaxNodesValueMultizoneLimitError,
     );
+
+    CreateRosaWizardPage.clusterAutoscalingRevertAllToDefaultsButton().click();
+    CreateRosaWizardPage.clusterAutoscalingCloseButton().click();
+    CreateRosaWizardPage.rosaBackButton().click();
+    CreateRosaWizardPage.selectVersionValue()
+      .invoke('text')
+      .then((originalClusterVersion) => {
+        cy.wrap(originalClusterVersion).as('originalClusterVersion');
+      });
+    CreateRosaWizardPage.selectAvailabilityZone('Single Zone');
+    CreateRosaWizardPage.rosaNextButton().click();
+    CreateRosaWizardPage.disabledAutoScaling();
+    CreateRosaWizardPage.enableAutoScaling();
+    CreateRosaWizardPage.editClusterAutoscalingSettingsButton().click();
+    CreateRosaWizardPage.clusterAutoscalingMaxNodesTotalInput().should('have.value', '254');
+    CreateRosaWizardPage.clusterAutoscalingMaxNodesTotalInput()
+      .type('{selectAll}')
+      .type('255')
+      .blur();
+    CreateRosaWizardPage.isTextContainsInPage(
+      clusterFieldValidations.ClusterSettings.Machinepool.ClusterAutoscaling
+        .MaxNodesValueSinglezoneLimitError,
+    );
+
+    CreateRosaWizardPage.clusterAutoscalingRevertAllToDefaultsButton().click();
+    CreateRosaWizardPage.clusterAutoscalingCloseButton().click();
+    CreateRosaWizardPage.rosaBackButton().click();
+    CreateRosaWizardPage.selectClusterVersion('4.14.0');
+    CreateRosaWizardPage.rosaNextButton().click();
+    CreateRosaWizardPage.disabledAutoScaling();
+    CreateRosaWizardPage.enableAutoScaling();
+    CreateRosaWizardPage.editClusterAutoscalingSettingsButton().click();
+    CreateRosaWizardPage.clusterAutoscalingMaxNodesTotalInput().should('have.value', '185');
+    CreateRosaWizardPage.clusterAutoscalingMaxNodesTotalInput()
+      .type('{selectAll}')
+      .type('186')
+      .blur();
+    CreateRosaWizardPage.isTextContainsInPage(
+      clusterFieldValidations.ClusterSettings.Machinepool.ClusterAutoscaling
+        .MaxNodesValueOcpLower41414SinglezoneLimitError,
+    );
+    CreateRosaWizardPage.clusterAutoscalingRevertAllToDefaultsButton().click();
+    CreateRosaWizardPage.clusterAutoscalingCloseButton().click();
+    CreateRosaWizardPage.rosaBackButton().click();
+    CreateRosaWizardPage.selectAvailabilityZone('Multi-zone');
+    CreateRosaWizardPage.rosaNextButton().click();
+    CreateRosaWizardPage.disabledAutoScaling();
+    CreateRosaWizardPage.enableAutoScaling();
+    CreateRosaWizardPage.editClusterAutoscalingSettingsButton().click();
+    CreateRosaWizardPage.clusterAutoscalingMaxNodesTotalInput().should('have.value', '186');
+    CreateRosaWizardPage.clusterAutoscalingMaxNodesTotalInput()
+      .type('{selectAll}')
+      .type('187')
+      .blur();
+    CreateRosaWizardPage.isTextContainsInPage(
+      clusterFieldValidations.ClusterSettings.Machinepool.ClusterAutoscaling
+        .MaxNodesValueOcpLower41414MultizoneLimitError,
+    );
+    CreateRosaWizardPage.clusterAutoscalingRevertAllToDefaultsButton().click();
+    CreateRosaWizardPage.clusterAutoscalingCloseButton().click();
+    CreateRosaWizardPage.rosaBackButton().click();
+    cy.get('@originalClusterVersion').then((originalClusterVersion) => {
+      cy.log(originalClusterVersion);
+      CreateRosaWizardPage.selectClusterVersion(originalClusterVersion);
+    });
+    CreateRosaWizardPage.rosaNextButton().click();
+    CreateRosaWizardPage.disabledAutoScaling();
+    CreateRosaWizardPage.enableAutoScaling();
+    CreateRosaWizardPage.editClusterAutoscalingSettingsButton().click();
 
     CreateRosaWizardPage.clusterAutoscalingGPUsInput().type('{selectAll}').type('test').blur();
     CreateRosaWizardPage.isTextContainsInPage(

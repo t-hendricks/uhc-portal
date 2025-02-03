@@ -2,6 +2,7 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
+import type { ClusterArchitecture } from './ClusterArchitecture';
 import type { ClusterLink } from './ClusterLink';
 import type { OrganizationLink } from './OrganizationLink';
 /**
@@ -24,6 +25,10 @@ export type DNSDomain = {
    * Link to the cluster that is registered with the DNS domain (optional).
    */
   cluster?: ClusterLink;
+  /**
+   * Signals which cluster architecture the domain is ready for.
+   */
+  cluster_arch?: ClusterArchitecture;
   /**
    * Link to the organization that reserved the DNS domain.
    */

@@ -171,10 +171,10 @@ export const isControlPlaneValidForMachinePool = (
   );
 };
 
-export const useIsControlPlaneValidForMachinePool = (machinePool: NodePool): boolean => {
-  const controlPlaneVersion = useSelector(controlPlaneVersionSelector);
-  return isControlPlaneValidForMachinePool(machinePool, controlPlaneVersion || '');
-};
+export const useIsControlPlaneValidForMachinePool = (
+  machinePool: NodePool,
+  controlPlaneVersion: string,
+): boolean => isControlPlaneValidForMachinePool(machinePool, controlPlaneVersion || '');
 
 export const isMachinePoolUpgrading = (machinePool: NodePoolWithUpgradePolicies) =>
   !!machinePool.upgradePolicies?.items?.length;

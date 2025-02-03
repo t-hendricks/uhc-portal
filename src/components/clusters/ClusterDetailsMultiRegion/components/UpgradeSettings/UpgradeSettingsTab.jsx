@@ -29,6 +29,7 @@ import {
 } from '~/queries/ClusterDetailsQueries/ClusterSettingsTab/useGetSchedules';
 import { usePostSchedule } from '~/queries/ClusterDetailsQueries/ClusterSettingsTab/usePostSchedule';
 import { useReplaceSchedule } from '~/queries/ClusterDetailsQueries/ClusterSettingsTab/useReplaceSchedule';
+import { useFetchMachineOrNodePools } from '~/queries/ClusterDetailsQueries/MachinePoolTab/useFetchMachineOrNodePools';
 import { useEditCluster } from '~/queries/ClusterDetailsQueries/useEditCluster';
 import { invalidateClusterDetailsQueries } from '~/queries/ClusterDetailsQueries/useFetchClusterDetails';
 import { useFetchUpgradeGatesFromApi } from '~/queries/ClusterDetailsQueries/useFetchUpgadeGatesFromApi';
@@ -43,15 +44,19 @@ import clusterStates, {
   isHypershiftCluster,
   isROSA,
 } from '../../../common/clusterStates';
+import MinorVersionUpgradeAlert from '../../../common/Upgrades/MinorVersionUpgradeAlert';
+import UpgradeAcknowledgeWarning from '../../../common/Upgrades/UpgradeAcknowledge/UpgradeAcknowledgeWarning';
+import UpgradeSettingsFields from '../../../common/Upgrades/UpgradeSettingsFields';
+import UpgradeStatus from '../../../common/Upgrades/UpgradeStatus';
 import UserWorkloadMonitoringSection from '../../../common/UserWorkloadMonitoringSectionMultiRegion';
-import MinorVersionUpgradeAlert from '../../../commonMultiRegion/Upgrades/MinorVersionUpgradeAlert';
-import UpgradeAcknowledgeWarning from '../../../commonMultiRegion/Upgrades/UpgradeAcknowledge/UpgradeAcknowledgeWarning';
-import UpgradeSettingsFields from '../../../commonMultiRegion/Upgrades/UpgradeSettingsFields';
-import UpgradeStatus from '../../../commonMultiRegion/Upgrades/UpgradeStatus';
 import { UpdateAllMachinePools } from '../MachinePools/UpdateMachinePools';
 
 const UpgradeSettingsTab = ({ cluster }) => {
   const dispatch = useDispatch();
+
+  const region = cluster?.subscription?.rh_region_id;
+  const clusterID = cluster.id;
+  const { canEdit } = cluster;
 
   const isHypershift = isHypershiftCluster(cluster);
   const clusterVersion = getClusterVersion(cluster);
@@ -60,6 +65,7 @@ const UpgradeSettingsTab = ({ cluster }) => {
   const { data: schedules, isLoading: isGetShcedulesLoading } = useGetSchedules(
     cluster.id,
     isHypershift,
+    region,
   );
 
   const isPrevAutomatic = schedules?.items?.some((policy) => policy.schedule_type === 'automatic');
@@ -76,8 +82,6 @@ const UpgradeSettingsTab = ({ cluster }) => {
   // a superset of hibernatingReason.
   const notReadyReason = cluster.state !== clusterStates.READY && 'This cluster is not ready';
   const formDisableReason = readOnlyReason || hibernatingReason;
-  const region = cluster?.subscription?.rh_region_id;
-  const clusterID = cluster?.id;
 
   const { data: upgradeGates } = useFetchUpgradeGatesFromApi(cluster.managed, region);
   const {
@@ -111,6 +115,12 @@ const UpgradeSettingsTab = ({ cluster }) => {
     mutate: editClusterMutate,
     isSuccess: isEditClusterSuccess,
   } = useEditCluster(clusterID, region);
+  const { data: machinePoolData, isError: isMachinePoolError } = useFetchMachineOrNodePools(
+    clusterID,
+    isHypershift,
+    clusterVersion,
+    region,
+  );
 
   const isDisabled =
     isGetShcedulesLoading ||
@@ -124,6 +134,7 @@ const UpgradeSettingsTab = ({ cluster }) => {
 
   React.useEffect(() => {
     if (cluster.id && !isGetShcedulesLoading) {
+      invalidateClusterDetailsQueries();
       refetchSchedules();
     }
 
@@ -357,7 +368,15 @@ const UpgradeSettingsTab = ({ cluster }) => {
                       cluster={cluster}
                       isHypershift={isHypershift}
                     />
-                    <UpdateAllMachinePools goToMachinePoolTab />
+                    <UpdateAllMachinePools
+                      goToMachinePoolTab
+                      isHypershift={isHypershift}
+                      clusterId={clusterID}
+                      controlPlaneVersion={clusterVersion}
+                      isMachinePoolError={isMachinePoolError}
+                      machinePoolData={machinePoolData}
+                      region={region}
+                    />
 
                     <Form>
                       <Grid hasGutter>
@@ -409,14 +428,17 @@ const UpgradeSettingsTab = ({ cluster }) => {
           <CardTitle>Update status</CardTitle>
           <CardBody>
             <UpgradeStatus
-              clusterID={cluster.id}
-              canEdit={cluster.canEdit}
+              clusterID={clusterID}
+              canEdit={canEdit}
               clusterVersion={clusterVersion}
               scheduledUpgrade={scheduledUpgrade}
               availableUpgrades={availableUpgrades}
               upgradeGates={upgradeGates}
               schedules={schedules}
               cluster={cluster}
+              region={region}
+              isHypershift={isHypershift}
+              isSTSEnabled={cluster?.aws?.sts?.enabled}
             />
             {showUpdateButton && (
               <Button

@@ -4,7 +4,7 @@ import type { Cluster as AICluster } from '@openshift-assisted/types/assisted-in
 
 import { createViewQueryObject } from '~/common/queryHelpers';
 import { getSubscriptionQueryType } from '~/services/accountsService';
-import { type Subscription, SubscriptionCommonFields } from '~/types/accounts_mgmt.v1';
+import { type Subscription, SubscriptionCommonFieldsStatus } from '~/types/accounts_mgmt.v1';
 import { Cluster } from '~/types/clusters_mgmt.v1';
 import { ViewOptions } from '~/types/types';
 
@@ -111,7 +111,7 @@ const fetchGlobalSubscriptions = async (
   });
 
   const managedSubscriptions = items.filter(
-    (s) => s.managed && s.status !== SubscriptionCommonFields.status.DEPROVISIONED,
+    (s) => s.managed && s.status !== SubscriptionCommonFieldsStatus.Deprovisioned,
   );
 
   return {

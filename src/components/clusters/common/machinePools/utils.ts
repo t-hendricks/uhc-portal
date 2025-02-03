@@ -1,8 +1,13 @@
 import range from 'lodash/range';
 
-import { isMPoolAz, isMultiAZ } from '~/components/clusters/ClusterDetails/clusterDetailsHelper';
+import { splitVersion } from '~/common/versionHelpers';
+import {
+  isMPoolAz,
+  isMultiAZ,
+} from '~/components/clusters/ClusterDetailsMultiRegion/clusterDetailsHelper';
 import { isHypershiftCluster } from '~/components/clusters/common/clusterStates';
-import { availableNodesFromQuota } from '~/components/clusters/common/quotaSelectors';
+import { availableQuota } from '~/components/clusters/common/quotaSelectors';
+import { MachineTypesResponse } from '~/queries/types';
 import { GlobalState } from '~/redux/store';
 import { QuotaCostList } from '~/types/accounts_mgmt.v1';
 import {
@@ -15,16 +20,41 @@ import {
 import { ClusterFromSubscription } from '~/types/types';
 
 import { clusterBillingModelToRelatedResource } from '../billingModelMapper';
-import { QuotaParams } from '../quotaModel';
+import { QuotaParams, QuotaTypes } from '../quotaModel';
 
 import {
   MAX_NODES,
   MAX_NODES_HCP as MAX_NODES_HCP_DEFAULT,
-  MAX_NODES_HCP_500,
   MAX_NODES_HCP_INSUFFICIEN_VERSION,
+  MAX_NODES_INSUFFICIEN_VERSION as MAX_NODES_180,
+  MAX_NODES_INSUFFICIEN_VERSION,
+  workerNodeVolumeSizeMinGiB,
+  workerNodeVolumeSizeMinGiBHcp,
 } from './constants';
 
-// Minimal versions to allow more then 90 nodes - 4.15.15, 4.14.28
+// OSD and ROSA classic - minimal version to allow 249 worker nodes - 4.14.14
+export const getMaxWorkerNodes = (clusterVersionRawId: string | undefined) => {
+  if (clusterVersionRawId) {
+    const majorMinor = parseFloat(clusterVersionRawId);
+    const versionPatch = Number(clusterVersionRawId.split('.')[2]);
+
+    if (majorMinor > 4.14 || (majorMinor === 4.14 && versionPatch >= 14)) {
+      return MAX_NODES;
+    }
+  }
+  return MAX_NODES_INSUFFICIEN_VERSION;
+};
+
+export const getMaxNodesTotalDefaultAutoscaler = (
+  clusterVersionRawId: string | undefined,
+  isMultiAz: boolean,
+) => {
+  const MASTER_NODES = 3;
+  const infraNodes = isMultiAz ? 3 : 2;
+  return getMaxWorkerNodes(clusterVersionRawId) + MASTER_NODES + infraNodes;
+};
+
+// HCP - Minimal versions to allow more then 90 nodes - 4.15.15, 4.14.28
 const isOcpVersionSufficient = (ocpVersion: string) => {
   const majorMinor = parseFloat(ocpVersion);
   const versionPatch = Number(ocpVersion.split('.')[2]);
@@ -43,12 +73,9 @@ const isOcpVersionSufficient = (ocpVersion: string) => {
   return true;
 };
 
-export const getMaxNodesHCP = (ocpVersion?: string, allow500Nodes?: boolean) => {
+export const getMaxNodesHCP = (ocpVersion?: string) => {
   if (ocpVersion && !isOcpVersionSufficient(ocpVersion)) {
     return MAX_NODES_HCP_INSUFFICIEN_VERSION;
-  }
-  if (allow500Nodes) {
-    return MAX_NODES_HCP_500;
   }
   return MAX_NODES_HCP_DEFAULT;
 };
@@ -75,7 +102,7 @@ export const buildOptions = ({
   increment,
   isHypershift,
   clusterVersion,
-  allow500Nodes,
+  allow249NodesOSDCCSROSA,
 }: {
   available: number;
   isEditingCluster: boolean;
@@ -84,15 +111,20 @@ export const buildOptions = ({
   increment: number;
   included: number;
   isHypershift?: boolean;
-  clusterVersion?: string;
-  allow500Nodes?: boolean;
+  clusterVersion: string | undefined;
+  allow249NodesOSDCCSROSA?: boolean;
 }) => {
-  const maxNodesHCP = getMaxNodesHCP(clusterVersion, allow500Nodes);
+  const maxNodesHCP = getMaxNodesHCP(clusterVersion);
   // no extra node quota = only base cluster size is available
   const optionsAvailable = available > 0 || isEditingCluster;
   let maxValue = isEditingCluster ? available + currentNodeCount : available + included;
 
-  const maxNumberOfNodes = isHypershift ? maxNodesHCP : MAX_NODES;
+  // eslint-disable-next-line no-nested-ternary
+  const maxNumberOfNodes = isHypershift
+    ? maxNodesHCP
+    : allow249NodesOSDCCSROSA
+      ? getMaxWorkerNodes(clusterVersion)
+      : MAX_NODES_180;
   if (maxValue > maxNumberOfNodes) {
     maxValue = maxNumberOfNodes;
   }
@@ -114,7 +146,7 @@ export const getAvailableQuota = ({
   product,
   billingModel,
 }: {
-  machineTypes: GlobalState['machineTypes'];
+  machineTypes: MachineTypesResponse;
   machineTypeId: MachineType['id'];
   isByoc: boolean;
   isMultiAz: boolean;
@@ -140,7 +172,10 @@ export const getAvailableQuota = ({
     resourceName,
     billingModel: clusterBillingModelToRelatedResource(billingModel),
   };
-  return availableNodesFromQuota(quota as QuotaCostList, quotaParams);
+  return availableQuota(quota as QuotaCostList, {
+    ...quotaParams,
+    resourceType: QuotaTypes.NODE,
+  });
 };
 
 /**
@@ -173,13 +208,13 @@ export const getNodeCount = (
 export type getNodeOptionsType = {
   cluster: ClusterFromSubscription;
   quota: GlobalState['userProfile']['organization']['quotaList'];
-  machineTypes: GlobalState['machineTypes'];
+  machineTypes: MachineTypesResponse;
   machineTypeId: string | undefined;
   machinePools: MachinePool[];
   machinePool: MachinePool | undefined;
   minNodes: number;
   editMachinePoolId?: string;
-  allow500Nodes?: boolean;
+  allow249NodesOSDCCSROSA?: boolean;
 };
 export const getNodeOptions = ({
   cluster,
@@ -190,7 +225,7 @@ export const getNodeOptions = ({
   machinePool,
   minNodes,
   editMachinePoolId,
-  allow500Nodes,
+  allow249NodesOSDCCSROSA,
 }: getNodeOptionsType) => {
   const isMultiAz = isMultiAZ(cluster);
 
@@ -233,6 +268,18 @@ export const getNodeOptions = ({
     increment: isMPoolAZ ? 3 : 1,
     isHypershift: isHypershiftCluster(cluster),
     clusterVersion: cluster.version?.raw_id,
-    allow500Nodes,
+    allow249NodesOSDCCSROSA,
   });
+};
+
+export const getWorkerNodeVolumeSizeMinGiB = (isHypershift: boolean): number =>
+  isHypershift ? workerNodeVolumeSizeMinGiBHcp : workerNodeVolumeSizeMinGiB;
+
+/**
+ * Returns ROSA/AWS OSD max worker node volume size, varies per cluster version.
+ * In GiB.
+ */
+export const getWorkerNodeVolumeSizeMaxGiB = (clusterVersionRawId: string): number => {
+  const [major, minor] = splitVersion(clusterVersionRawId);
+  return (major > 4 || (major === 4 && minor >= 14) ? 16 : 1) * 1024;
 };

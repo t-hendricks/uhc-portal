@@ -33,6 +33,7 @@ const EditClusterWideProxyDialog = ({ cluster, region }) => {
     http_proxy_url: cluster.proxy?.http_proxy,
     https_proxy_url: cluster.proxy?.https_proxy,
     no_proxy_domains: stringToArray(cluster.proxy?.no_proxy),
+    additional_trust_bundle: cluster.additional_trust_bundle,
   };
 
   const handleClose = useCallback(() => {

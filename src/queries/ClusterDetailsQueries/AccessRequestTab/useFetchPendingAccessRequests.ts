@@ -18,7 +18,11 @@ export const useFetchPendingAccessRequests = (
   params?: { page: number; size: number },
 ) => {
   const { data, isLoading, isError, error, isSuccess } = useQuery({
-    queryKey: [queryConstants.FETCH_CLUSTER_DETAILS_QUERY_KEY, 'fetchPendingAccessRequests'],
+    queryKey: [
+      queryConstants.FETCH_CLUSTER_DETAILS_QUERY_KEY,
+      'fetchPendingAccessRequests',
+      subscriptionId,
+    ],
     queryFn: async () => {
       const response = await accessRequestService.getAccessRequests({
         page: params?.page ?? 0,

@@ -28,7 +28,7 @@ import Modal from '../../../../../../common/Modal/Modal';
 import { modalActions } from '../../../../../../common/Modal/ModalActions';
 import modals from '../../../../../../common/Modal/modals';
 import shouldShowModal from '../../../../../../common/Modal/ModalSelectors';
-import { ReduxVerticalFormGroup } from '../../../../../../common/ReduxFormComponents';
+import { ReduxVerticalFormGroup } from '../../../../../../common/ReduxFormComponents_deprecated';
 import NetworkingSelector, { routeSelectorsAsString } from '../../NetworkingSelector';
 
 const canConfigureAdditionalRouter = (clusterVersionRawId) =>

@@ -5,23 +5,7 @@ Run `make openapi` (at the root level) to grab new ones and `yarn gen-types` to 
 
 As of this writing we must do a few manual changes on the generated Type definitions:
 
-- insights-results-aggregator.(v1|v2)/models/reportData.ts: Revert the definitions of `user_vote` to avoid a syntax `enum user_vote { _1 = '-1', _0 = '0', _1 = '1', }`
-- insights-results-aggregator.v2/models/systemWideRuleDisableList.ts: Revert the line for `updated_at` with missing type
-- accounts_mgmt.v1/models/SelfAccessReview.ts: Do not remove the entries on `resource_type` for `Idp`, `ClusterAutoscaler` and `MachinePool`
-- src/types/service_logs.v1/models/ClusterLog.ts remove duplicate line for `CAPACITY_MANAGEMENT`, just leave the Camel case ones
-- from `cost-management.v1/index.ts`, remove 
-  - `export type { CostType }`
-  - remove duplicate `OrganizationFilter`
-- `cost-management.v1/models/OrganizationFilter.ts` from `export type OrganizationFilter = OrganizationFilter;` to `export type OrganizationFilter = string;`  
-- from `insights-results-aggregator.v1/index.ts`
-  - remove duplicate `export type { clusterId }`
-- `insights-results-aggregator.v1/models/clusterId.ts` from `export type clusterId = clusterId;` to `export type clusterId = string;`
-- `accounts_mgmt.v1/models/AccessTokenCfg.ts` from `auths: Record<string, any>` to `auths: any`
-
-The following open issues are related to these manual changes:
-
-- https://github.com/ferdikoomen/openapi-typescript-codegen/issues/1229
-- https://github.com/ferdikoomen/openapi-typescript-codegen/issues/991
+- _accounts_mgmt.v1/models/SelfAccessReview.ts_: Do not remove the entries on `resource_type` for `AccessRequestDecision`, `Idp`, `ClusterAutoscaler` and `MachinePool`. To be removed once OCM-12554 is solved
 
 # Lifecycle of OpenAPI definitions
 
@@ -40,7 +24,7 @@ they are served live each from its corresponding backend, and owned by the respe
 https://api.stage.openshift.com/api/clusters_mgmt/v1/openapi — served by clusters-service here:
 https://gitlab.cee.redhat.com/service/uhc-clusters-service/-/blob/master/cmd/clusters-service/servecmd/apiserver/static.go
 
-How the OpenAPI jsons get updated in backends varies...  Details (as of this writing) on main ones:
+How the OpenAPI jsons get updated in backends varies... Details (as of this writing) on main ones:
 
 - clusters-service (serving `clusters_mgmt` API) frequently implements APIs before they are documented.
   Source of truth are Go types in https://gitlab.cee.redhat.com/service/uhc-clusters-service/-/blob/master/pkg/api/
@@ -71,5 +55,4 @@ How the OpenAPI jsons get updated in backends varies...  Details (as of this wri
 
   => The resulting 2nd OpenAPI JSON is not served anywhere.
   It's out of date, lower quality (e.g. less details on HTTP response code) and confusingly the types have different names.
-  
   (account-manager does consume ocm-sdk-go but not for its own APIs, only for client calls to clusters-service)

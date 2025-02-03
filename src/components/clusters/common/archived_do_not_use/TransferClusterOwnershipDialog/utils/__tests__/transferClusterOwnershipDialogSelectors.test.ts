@@ -1,0 +1,153 @@
+import { hasCapability, subscriptionCapabilities } from '~/common/subscriptionCapabilities';
+import {
+  defaultClusterFromSubscription,
+  defaultSubscription,
+} from '~/components/clusters/common/__tests__/defaultClusterFromSubscription.fixtures';
+import { GlobalState } from '~/redux/store';
+import { ClusterFromSubscription } from '~/types/types';
+
+import {
+  canTransferClusterOwnershipListSelector,
+  canTransferClusterOwnershipMultiRegion,
+  canTransferClusterOwnershipSelector,
+} from '../transferClusterOwnershipDialogSelectors';
+
+// Mock the hasCapability function
+jest.mock('../../../../../../../common/subscriptionCapabilities', () => ({
+  hasCapability: jest.fn(),
+  subscriptionCapabilities: {
+    RELEASE_OCP_CLUSTERS: 'RELEASE_OCP_CLUSTERS',
+  },
+}));
+
+const hasCapabilityMock = hasCapability as jest.Mock;
+
+describe('Utility functions', () => {
+  describe('canTransferClusterOwnershipSelector', () => {
+    it('should return true when the subscription has the RELEASE_OCP_CLUSTERS capability', () => {
+      const state = {
+        clusters: {
+          details: {
+            cluster: {
+              subscription: {
+                capabilities: [subscriptionCapabilities.RELEASE_OCP_CLUSTERS],
+              },
+            },
+          },
+        },
+      } as any as GlobalState;
+      hasCapabilityMock.mockReturnValue(true);
+
+      const result = canTransferClusterOwnershipSelector(state);
+      expect(result).toBe(true);
+      expect(hasCapability).toHaveBeenCalledWith(
+        { capabilities: [subscriptionCapabilities.RELEASE_OCP_CLUSTERS] },
+        subscriptionCapabilities.RELEASE_OCP_CLUSTERS,
+      );
+    });
+
+    it('should return false when the subscription does not have the RELEASE_OCP_CLUSTERS capability', () => {
+      const state = {
+        clusters: {
+          details: {
+            cluster: {
+              subscription: {
+                capabilities: [],
+              },
+            },
+          },
+        },
+      } as any as GlobalState;
+      hasCapabilityMock.mockReturnValue(false);
+
+      const result = canTransferClusterOwnershipSelector(state);
+      expect(result).toBe(false);
+      expect(hasCapability).toHaveBeenCalledWith(
+        { capabilities: [] },
+        subscriptionCapabilities.RELEASE_OCP_CLUSTERS,
+      );
+    });
+  });
+
+  describe('canTransferClusterOwnershipMultiRegion', () => {
+    it('should return true when the subscription has the RELEASE_OCP_CLUSTERS capability', () => {
+      const cluster: ClusterFromSubscription = {
+        ...defaultClusterFromSubscription,
+        subscription: {
+          ...defaultSubscription,
+          capabilities: [
+            { name: subscriptionCapabilities.RELEASE_OCP_CLUSTERS, inherited: false, value: '' },
+          ],
+        },
+      };
+      hasCapabilityMock.mockReturnValue(true);
+
+      const result = canTransferClusterOwnershipMultiRegion(cluster);
+      expect(result).toBe(true);
+      expect(hasCapability).toHaveBeenCalledWith(
+        { capabilities: [subscriptionCapabilities.RELEASE_OCP_CLUSTERS] },
+        subscriptionCapabilities.RELEASE_OCP_CLUSTERS,
+      );
+    });
+
+    it('should return false when the subscription does not have the RELEASE_OCP_CLUSTERS capability', () => {
+      const cluster = {
+        ...defaultClusterFromSubscription,
+        subscription: {
+          ...defaultSubscription,
+          capabilities: [],
+        },
+      };
+      hasCapabilityMock.mockReturnValue(false);
+
+      const result = canTransferClusterOwnershipMultiRegion(cluster);
+      expect(result).toBe(false);
+      expect(hasCapability).toHaveBeenCalledWith(
+        { capabilities: [] },
+        subscriptionCapabilities.RELEASE_OCP_CLUSTERS,
+      );
+    });
+  });
+
+  describe('canTransferClusterOwnershipListSelector', () => {
+    it('should return an object with cluster ids as keys and true/false based on their capabilities', () => {
+      const state = {
+        clusters: {
+          clusters: {
+            clusters: [
+              {
+                id: 'cluster1',
+                subscription: {
+                  capabilities: [subscriptionCapabilities.RELEASE_OCP_CLUSTERS],
+                },
+              },
+              {
+                id: 'cluster2',
+                subscription: {
+                  capabilities: [],
+                },
+              },
+            ],
+          },
+        },
+      } as any as GlobalState;
+      hasCapabilityMock.mockImplementation((subscription, capability) =>
+        subscription.capabilities.includes(capability),
+      );
+
+      const result = canTransferClusterOwnershipListSelector(state);
+      expect(result).toEqual({
+        cluster1: true,
+        cluster2: false,
+      });
+      expect(hasCapability).toHaveBeenCalledWith(
+        { capabilities: [subscriptionCapabilities.RELEASE_OCP_CLUSTERS] },
+        subscriptionCapabilities.RELEASE_OCP_CLUSTERS,
+      );
+      expect(hasCapability).toHaveBeenCalledWith(
+        { capabilities: [] },
+        subscriptionCapabilities.RELEASE_OCP_CLUSTERS,
+      );
+    });
+  });
+});

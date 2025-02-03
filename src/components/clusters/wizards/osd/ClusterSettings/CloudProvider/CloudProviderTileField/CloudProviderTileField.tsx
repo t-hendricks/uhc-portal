@@ -14,7 +14,7 @@ import { useGetBillingQuotas } from '~/components/clusters/wizards/osd/BillingMo
 import { FieldId } from '~/components/clusters/wizards/osd/constants';
 import AWSLogo from '~/styles/images/AWSLogo';
 import GCPLogo from '~/styles/images/GCPLogo';
-import { SubscriptionCommonFields } from '~/types/accounts_mgmt.v1';
+import { SubscriptionCommonFieldsCluster_billing_model as SubscriptionCommonFieldsClusterBillingModel } from '~/types/accounts_mgmt.v1';
 
 import './cloudProviderTileField.scss';
 
@@ -35,11 +35,11 @@ export const CloudProviderTileField = () => {
   });
   const hasGcpResources = quotas.gcpResources;
   const hasAwsResources =
-    billingModel === SubscriptionCommonFields.cluster_billing_model.MARKETPLACE_GCP
+    billingModel === SubscriptionCommonFieldsClusterBillingModel.marketplace_gcp
       ? false
       : quotas.awsResources;
   const notAvailableTooltip =
-    billingModel === SubscriptionCommonFields.cluster_billing_model.MARKETPLACE_GCP
+    billingModel === SubscriptionCommonFieldsClusterBillingModel.marketplace_gcp
       ? 'OpenShift Dedicated purchased through the Google Cloud marketplace can only be provisioned on GCP.'
       : noQuotaTooltip;
 

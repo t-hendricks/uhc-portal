@@ -1,6 +1,5 @@
 import React, { createRef, useEffect, useReducer, useState } from 'react';
-import { FormikErrors } from 'formik';
-import { WrappedFieldInputProps } from 'redux-form';
+import { FieldInputProps, FormikErrors } from 'formik';
 
 import {
   FormGroup,
@@ -107,7 +106,7 @@ type Props = {
   value?: string;
   name?: string;
   onChange?: (value: string) => void;
-  input?: WrappedFieldInputProps;
+  input?: FieldInputProps<string>;
 };
 
 export const RichInputField = ({

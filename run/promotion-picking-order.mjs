@@ -622,7 +622,7 @@ async function reportOrder(jiraToken, branch, verbose) {
 
     console.log('\n===========================RELEASE NOTES===========================');
     console.log(
-      '\n\nRelease Notes (copy & paste into  https://gitlab.cee.redhat.com/service/uhc-portal/-/wikis/Release-Notes)\n',
+      '\n\nRelease Notes (copy & paste into  https://github.com/RedHatInsights/uhc-portal/wiki/Release-Notes)\n',
     );
     console.log(`\n### ${branchName}\n\n > _status: draft_\n`);
     console.log('| revision | ticket | description | MR |');
@@ -632,7 +632,7 @@ async function reportOrder(jiraToken, branch, verbose) {
     if (heldBackNotes.length) {
       console.log('\n==========================HELD BACK NOTES==========================');
       console.log(
-        '\n\nHeld Back Notes (copy & paste into  https://gitlab.cee.redhat.com/service/uhc-portal/-/wikis/Held-Back-Notes)\n',
+        '\n\nHeld Back Notes (copy & paste into  https://github.com/RedHatInsights/uhc-portal/wiki/Held-Back-Notes)\n',
       );
       console.log(`\n### ${dateName}\n`);
       console.log('| revision | ticket | description | MR | reason |');
@@ -737,7 +737,7 @@ async function logConflicts(
       });
       ourLineNumber += part1.length + 1;
       log.push(
-        `\n     ${chalk.green(`${commit.author_email} ${commit.date}`)}  ${chalk.blue(`https://gitlab.cee.redhat.com/service/uhc-portal/-/merge_requests/${commit.mrID.slice(1)}`)}`,
+        `\n     ${chalk.green(`${commit.author_email} ${commit.date}`)}  ${chalk.blue(`https://github.com/RedHatInsights/uhc-portal/pull/${commit.mrID.slice(1)}`)}`,
       );
     } else {
       log.push(chalk.white('      ~~~empty line~~~'));
@@ -781,7 +781,7 @@ async function logConflicts(
         }
         if (match) {
           description += chalk.blue(
-            `https://gitlab.cee.redhat.com/service/uhc-portal/-/merge_requests/${match[0].slice(1)}`,
+            `https://github.com/RedHatInsights/uhc-portal/pull/${match[0].slice(1)}`,
           );
         } else {
           description += `${chalk.blue(lg.hash.substring(0, 9))} ${lg.date} ${lg.message}`;

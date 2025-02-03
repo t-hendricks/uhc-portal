@@ -30,16 +30,14 @@ import { global_warning_color_100 as warningColor } from '@patternfly/react-toke
 
 import { Link } from '~/common/routing';
 import AIClusterStatus from '~/components/common/AIClusterStatus';
-import config from '~/config';
-import { useFeatureGate } from '~/hooks/useFeatureGate';
+import { useToggleSubscriptionReleased } from '~/queries/ClusterActionsQueries/useToggleSubscriptionReleased';
 import { findRegionalInstance } from '~/queries/helpers';
 import { useFetchGetAvailableRegionalInstances } from '~/queries/RosaWizardQueries/useFetchGetAvailableRegionalInstances';
-import { toggleSubscriptionReleased } from '~/redux/actions/subscriptionReleasedActions';
-import { MULTIREGION_PREVIEW_ENABLED } from '~/redux/constants/featureConstants';
 
-import getClusterName from '../../../../common/getClusterName';
+import getClusterName, { UNNAMED_CLUSTER } from '../../../../common/getClusterName';
 import { isAISubscriptionWithoutMetrics } from '../../../../common/isAssistedInstallerCluster';
-import { actionResolver } from '../../common/ClusterActionsDropdown/ClusterActionsDropdownItems';
+import { actionResolver as multiRegionActionResolver } from '../../common/ClusterActionsDropdown/ClusterActionsDropdownItems';
+import { ClusterLocationLabel } from '../../common/ClusterLocationLabel';
 import ClusterStateIcon from '../../common/ClusterStateIcon';
 import clusterStates, {
   getClusterStateAndDescription,
@@ -51,12 +49,10 @@ import ClusterTypeLabel from '../../common/ClusterTypeLabel';
 import ClusterUpdateLink from '../../common/ClusterUpdateLink';
 import { canSubscribeOCPListFromClusters } from '../../common/EditSubscriptionSettingsDialog/canSubscribeOCPListSelector';
 import getClusterVersion from '../../common/getClusterVersion';
+import { useCanHibernateClusterListFromClusters } from '../../common/HibernateClusterModal/HibernateClusterModalSelectors';
 import ActionRequiredLink from '../../common/InstallProgress/ActionRequiredLink';
 import ProgressList from '../../common/InstallProgress/ProgressList';
 import { canTransferClusterOwnershipListFromClusters } from '../../common/TransferClusterOwnershipDialog/utils/transferClusterOwnershipDialogSelectors';
-import { actionResolver as multiRegionActionResolver } from '../../commonMultiRegion/ClusterActionsDropdown/ClusterActionsDropdownItems';
-import { ClusterLocationLabel } from '../../commonMultiRegion/ClusterLocationLabel';
-import { useCanHibernateClusterListFromClusters } from '../../commonMultiRegion/HibernateClusterModal/HibernateClusterModalSelectors';
 
 import ClusterCreatedIndicator from './ClusterCreatedIndicator';
 
@@ -113,16 +109,14 @@ function ClusterListTable(props) {
     isClustersDataPending,
   } = props;
 
-  const multiRegionFeatureGate = useFeatureGate(MULTIREGION_PREVIEW_ENABLED);
-  const multiRegionReactQueryActionsEnabled = multiRegionFeatureGate && config.multiRegion;
-
   const dispatch = useDispatch();
   const canSubscribeOCPList = canSubscribeOCPListFromClusters(clusters);
   const canTransferClusterOwnershipList = canTransferClusterOwnershipListFromClusters(clusters);
   const canHibernateClusterList = useCanHibernateClusterListFromClusters(clusters);
 
-  const { data: availableRegionalInstances } =
-    useFetchGetAvailableRegionalInstances(multiRegionFeatureGate);
+  const { mutate: toggleSubscriptionReleasedMultiRegion } = useToggleSubscriptionReleased();
+
+  const { data: availableRegionalInstances } = useFetchGetAvailableRegionalInstances(true);
 
   const getSortParams = (columnIndex) => ({
     sortBy: {
@@ -184,12 +178,18 @@ function ClusterListTable(props) {
   const clusterRow = (cluster) => {
     const provider = get(cluster, 'cloud_provider.id', 'N/A');
 
-    const clusterName = linkToClusterDetails(cluster, getClusterName(cluster));
+    const clusterNameText = getClusterName(cluster);
+    const clusterName =
+      isClustersDataPending && clusterNameText === UNNAMED_CLUSTER ? (
+        <Skeleton screenreaderText="loading cluster name" />
+      ) : (
+        linkToClusterDetails(cluster, clusterNameText)
+      );
 
     const clusterStatus = () => {
-      if (!getClusterStateAndDescription(cluster).state && isClustersDataPending) {
+      if (isClustersDataPending) {
         // cluster status may not be loaded.
-        return null;
+        return <Skeleton screenreaderText="loading cluster status" />;
       }
       if (isAISubscriptionWithoutMetrics(cluster.subscription)) {
         return <AIClusterStatus status={cluster.state} className="clusterstate" />;
@@ -327,24 +327,7 @@ function ClusterListTable(props) {
           />
         </Td>
         <Td isActionCell>
-          {/* Hide actions column if viewing in multiRegion mode */}
-          {!isPending && cluster && !multiRegionReactQueryActionsEnabled ? (
-            <ActionsColumn
-              items={actionResolver(
-                cluster,
-                true,
-                openModal,
-                canSubscribeOCPList[cluster.id] || false,
-                canTransferClusterOwnershipList[cluster.id] || false,
-                canHibernateClusterList[cluster.id] || false,
-                (subscriptionId, released) =>
-                  dispatch(toggleSubscriptionReleased(subscriptionId, released)),
-                refreshFunc,
-                true,
-              )}
-            />
-          ) : null}
-          {!isPending && cluster && multiRegionReactQueryActionsEnabled ? (
+          {!isPending && cluster ? (
             <ActionsColumn
               items={multiRegionActionResolver(
                 cluster,
@@ -353,10 +336,10 @@ function ClusterListTable(props) {
                 canSubscribeOCPList[cluster.id] || false,
                 canHibernateClusterList[cluster.id] || false,
                 canTransferClusterOwnershipList[cluster.id] || false,
-                (subscriptionId, released) =>
-                  dispatch(toggleSubscriptionReleased(subscriptionId, released)),
+                toggleSubscriptionReleasedMultiRegion,
                 refreshFunc,
                 true,
+                dispatch,
               )}
             />
           ) : null}

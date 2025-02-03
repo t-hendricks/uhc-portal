@@ -16,7 +16,7 @@ import { CloudProviderType } from '~/components/clusters/wizards/common/constant
 import { useFormState } from '~/components/clusters/wizards/hooks';
 import { FieldId } from '~/components/clusters/wizards/osd/constants';
 import { FormGroupHelperText } from '~/components/common/FormGroupHelperText';
-import { SubscriptionCommonFields } from '~/types/accounts_mgmt.v1';
+import { SubscriptionCommonFieldsCluster_billing_model as SubscriptionCommonFieldsClusterBillingModel } from '~/types/accounts_mgmt.v1';
 
 import './MarketplaceSelectField.scss';
 
@@ -48,13 +48,13 @@ export const MarketplaceSelectField = ({
 
   useEffect(() => {
     // reset if we select a radio button other than the parent radio
-    if (!billingModel.startsWith(SubscriptionCommonFields.cluster_billing_model.MARKETPLACE)) {
+    if (!billingModel.startsWith(SubscriptionCommonFieldsClusterBillingModel.marketplace)) {
       reset();
     }
   }, [billingModel, reset]);
 
   useEffect(() => {
-    if (billingModel.startsWith(SubscriptionCommonFields.cluster_billing_model.MARKETPLACE)) {
+    if (billingModel.startsWith(SubscriptionCommonFieldsClusterBillingModel.marketplace)) {
       validateField(FieldId.MarketplaceSelection);
     }
   }, [billingModel, selectedMarketplace, validateField]);
@@ -75,13 +75,13 @@ export const MarketplaceSelectField = ({
     },
     {
       label: gcmLabel,
-      value: SubscriptionCommonFields.cluster_billing_model.MARKETPLACE_GCP,
+      value: SubscriptionCommonFieldsClusterBillingModel.marketplace_gcp,
       isDisabled: !hasGcpQuota,
       description: !hasGcpQuota ? gcmError : null,
     },
     {
       label: rhmLabel,
-      value: SubscriptionCommonFields.cluster_billing_model.MARKETPLACE,
+      value: SubscriptionCommonFieldsClusterBillingModel.marketplace,
       isDisabled: !hasRhmQuota,
       description: !hasRhmQuota ? rhmError : null,
     },
@@ -113,7 +113,7 @@ export const MarketplaceSelectField = ({
 
       setFieldValue(
         FieldId.CloudProvider,
-        value === SubscriptionCommonFields.cluster_billing_model.MARKETPLACE_GCP
+        value === SubscriptionCommonFieldsClusterBillingModel.marketplace_gcp
           ? CloudProviderType.Gcp
           : CloudProviderType.Aws,
         false,
@@ -132,7 +132,7 @@ export const MarketplaceSelectField = ({
   const validate = (value: string): string | undefined => {
     if (
       (!value || value === 'placeholder') &&
-      billingModel.startsWith(SubscriptionCommonFields.cluster_billing_model.MARKETPLACE)
+      billingModel.startsWith(SubscriptionCommonFieldsClusterBillingModel.marketplace)
     ) {
       return phError;
     }

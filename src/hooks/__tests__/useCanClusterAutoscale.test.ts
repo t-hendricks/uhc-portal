@@ -1,6 +1,6 @@
 import { normalizedProducts } from '~/common/subscriptionTypes';
 import * as reduxHooks from '~/redux/hooks';
-import { SubscriptionCommonFields } from '~/types/accounts_mgmt.v1';
+import { SubscriptionCommonFieldsCluster_billing_model as SubscriptionCommonFieldsClusterBillingModel } from '~/types/accounts_mgmt.v1';
 
 import useCanClusterAutoscale from '../useCanClusterAutoscale';
 
@@ -11,7 +11,7 @@ describe('canAutoScale', () => {
     useGlobalStateMock.mockReturnValue(false);
     const result = useCanClusterAutoscale(
       normalizedProducts.ROSA,
-      SubscriptionCommonFields.cluster_billing_model.MARKETPLACE_AWS,
+      SubscriptionCommonFieldsClusterBillingModel.marketplace,
     );
     expect(result).toBe(true);
   });
@@ -20,11 +20,11 @@ describe('canAutoScale', () => {
     useGlobalStateMock.mockReturnValue(true);
     const resultMarketPlaceRH = useCanClusterAutoscale(
       normalizedProducts.OSD,
-      SubscriptionCommonFields.cluster_billing_model.MARKETPLACE,
+      SubscriptionCommonFieldsClusterBillingModel.marketplace,
     );
     const resultMarketPlaceRHM = useCanClusterAutoscale(
       normalizedProducts.OSD,
-      SubscriptionCommonFields.cluster_billing_model.MARKETPLACE_RHM,
+      SubscriptionCommonFieldsClusterBillingModel.marketplace_rhm,
     );
     expect(resultMarketPlaceRH).toBe(true);
     expect(resultMarketPlaceRHM).toBe(true);
@@ -34,7 +34,7 @@ describe('canAutoScale', () => {
     useGlobalStateMock.mockReturnValue(true);
     const resultMarketPlaceRH = useCanClusterAutoscale(
       normalizedProducts.OSD,
-      SubscriptionCommonFields.cluster_billing_model.STANDARD,
+      SubscriptionCommonFieldsClusterBillingModel.standard,
     );
     expect(resultMarketPlaceRH).toBe(true);
   });
@@ -55,7 +55,7 @@ describe('canAutoScale', () => {
     useGlobalStateMock.mockReturnValue(false);
     const result = useCanClusterAutoscale(
       normalizedProducts.OSD,
-      SubscriptionCommonFields.cluster_billing_model.MARKETPLACE_GCP,
+      SubscriptionCommonFieldsClusterBillingModel.marketplace_gcp,
     );
     expect(result).toBe(true);
   });
@@ -64,7 +64,7 @@ describe('canAutoScale', () => {
     useGlobalStateMock.mockReturnValue(false);
     const result = useCanClusterAutoscale(
       normalizedProducts.OSD,
-      SubscriptionCommonFields.cluster_billing_model.STANDARD,
+      SubscriptionCommonFieldsClusterBillingModel.standard,
     );
     expect(result).toBe(false);
   });
@@ -77,7 +77,7 @@ describe('canAutoScale', () => {
     ];
     const result = useCanClusterAutoscale(
       normalizedProducts.OSD,
-      SubscriptionCommonFields.cluster_billing_model.STANDARD,
+      SubscriptionCommonFieldsClusterBillingModel.standard,
       mockCapabilites,
     );
     expect(result).toBe(false);

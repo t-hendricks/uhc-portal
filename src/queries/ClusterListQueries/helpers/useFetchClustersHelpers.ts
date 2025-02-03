@@ -5,7 +5,7 @@ import { UseQueryOptions, UseQueryResult } from '@tanstack/react-query';
 
 import { queryClient } from '~/components/App/queryClient';
 import { useGlobalState } from '~/redux/hooks';
-import { SubscriptionCommonFields } from '~/types/accounts_mgmt.v1';
+import { SubscriptionCommonFieldsStatus } from '~/types/accounts_mgmt.v1';
 import { ClusterWithPermissions, ViewOptions, ViewOptionsFilter } from '~/types/types';
 
 import { queryConstants } from '../../queriesConstants';
@@ -197,7 +197,7 @@ export const combineClusterQueries = (
       !cluster.partialCS &&
       !!canEditList &&
       (canEditList['*'] || (!!cluster.id && !!canEditList[cluster.id])) &&
-      cluster.subscription?.status !== SubscriptionCommonFields.status.DEPROVISIONED;
+      cluster.subscription?.status !== SubscriptionCommonFieldsStatus.Deprovisioned;
 
     modifiedCluster.canDelete =
       !cluster.partialCS &&

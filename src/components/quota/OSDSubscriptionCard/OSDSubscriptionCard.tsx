@@ -8,11 +8,10 @@ import { OutlinedCircleIcon } from '@patternfly/react-icons/dist/esm/icons/outli
 import { ResourcesAlmostEmptyIcon } from '@patternfly/react-icons/dist/esm/icons/resources-almost-empty-icon';
 import { ResourcesAlmostFullIcon } from '@patternfly/react-icons/dist/esm/icons/resources-almost-full-icon';
 import { ResourcesFullIcon } from '@patternfly/react-icons/dist/esm/icons/resources-full-icon';
-import { IRowCell } from '@patternfly/react-table';
 
 import { Link } from '~/common/routing';
 import type { GlobalState } from '~/redux/store';
-import { RelatedResource } from '~/types/accounts_mgmt.v1';
+import { RelatedResourceBilling_model as RelatedResourceBillingModel } from '~/types/accounts_mgmt.v1';
 
 import ExternalLink from '../../common/ExternalLink';
 import SubscriptionNotFulfilled from '../SubscriptionNotFulfilled';
@@ -76,7 +75,7 @@ const OSDSubscriptionCard = ({ quotaCost, marketplace, organizationID, fetchQuot
   }, []);
 
   let content: React.ReactNode;
-  const rows: (React.ReactNode | IRowCell)[][] = [];
+  const rows: React.ReactNode[][] = [];
 
   let subscriptionLink = <Link to="/quota/resource-limits">Dedicated (On-Demand Limits)</Link>;
   let subscriptionsDescription =
@@ -112,14 +111,14 @@ const OSDSubscriptionCard = ({ quotaCost, marketplace, organizationID, fetchQuot
       // and explicitly allow addon-open-data-hub on the marketplace quota page
       const billingModel = get(relatedResources[0], 'billing_model');
       let resourceName = get(relatedResources[0], 'resource_name');
-      if (marketplace && billingModel !== RelatedResource.billing_model.MARKETPLACE) {
+      if (marketplace && billingModel !== RelatedResourceBillingModel.marketplace) {
         if (resourceName !== 'addon-open-data-hub') {
           return;
         }
       }
       if (
         !marketplace &&
-        (billingModel === RelatedResource.billing_model.MARKETPLACE ||
+        (billingModel === RelatedResourceBillingModel.marketplace ||
           resourceName === 'addon-open-data-hub')
       ) {
         return;

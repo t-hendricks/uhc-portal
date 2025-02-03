@@ -19,7 +19,7 @@ import clusterStates, {
   hasInflightEgressErrors,
   isOSDGCPWaitingForRolesOnHostProject,
 } from '~/components/clusters/common/clusterStates';
-import ClusterStatusErrorDisplay from '~/components/clusters/commonMultiRegion/ClusterStatusErrorDisplay';
+import ClusterStatusErrorDisplay from '~/components/clusters/common/ClusterStatusErrorDisplay';
 import ErrorModal from '~/components/common/ErrorModal';
 import ExternalLink from '~/components/common/ExternalLink';
 import {
@@ -66,6 +66,7 @@ const ClusterStatusMonitor = (props) => {
     isError: isRerunInflightChecksMutationError,
     error: rerunInflightChecksMutationError,
     mutateAsync,
+    reset,
   } = useMutateRerunInflightChecks(cluster.id, region);
 
   const [isExpanded, setIsExpanded] = React.useState(false);
@@ -128,23 +129,43 @@ const ClusterStatusMonitor = (props) => {
           // if we failed to get the /status endpoint (and we weren't uninstalling)
           // all we can do is look at the state in cluster object and hope for the best
           setRefetchInterval(true);
-        } else if (
-          cluster.state === clusterStates.UNINSTALLING &&
-          clusterStatusError.errorCode === 404
-        ) {
-          dispatch(
-            addNotification({
-              title: `Successfully uninstalled cluster ${getClusterName(cluster)}`,
-              variant: 'success',
-            }),
-          );
-          navigate('/cluster-list');
         }
       }
     }
     // Minified React error #185 if added all dependencies based on linter
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [refetchInterval, inflightChecks, clusterStatus, addNotification]);
+
+  // Redirect once cluster has been deleted
+  React.useEffect(() => {
+    if (
+      !isClusterStatusLoading &&
+      !isInflightChecksLoading &&
+      clusterStatus &&
+      inflightChecks &&
+      isClusterStatusError &&
+      cluster.state === clusterStates.UNINSTALLING &&
+      clusterStatusError.status === 404
+    ) {
+      dispatch(
+        addNotification({
+          title: `Successfully uninstalled cluster ${getClusterName(cluster)}`,
+          variant: 'success',
+        }),
+      );
+      navigate('/cluster-list');
+    }
+  }, [
+    cluster,
+    clusterStatus,
+    clusterStatusError,
+    dispatch,
+    inflightChecks,
+    isClusterStatusError,
+    isClusterStatusLoading,
+    isInflightChecksLoading,
+    navigate,
+  ]);
 
   React.useEffect(() => {
     if (!isRerunInflightChecksMutationPending) {
@@ -313,8 +334,13 @@ const ClusterStatusMonitor = (props) => {
                     {isErrorOpen && (
                       <ErrorModal
                         title="Error Rerunning Validator "
-                        errorResponse={rerunInflightChecksMutationError}
-                        resetResponse={() => setIsErrorOpen(false)}
+                        errorResponse={rerunInflightChecksMutationError?.error}
+                        resetResponse={() => {
+                          // An error happened when trying to request a network validation
+                          setIsErrorOpen(false);
+                          reset(); // clears out error from mutation so the modal isn't automatically re-opened
+                          setWasRunClicked(false); // Checks were not run due to an error
+                        }}
                       />
                     )}
                   </FlexItem>

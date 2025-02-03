@@ -4,8 +4,9 @@ import { queryClient } from '~/components/App/queryClient';
 import { accountsService } from '~/services';
 import clusterService, { getClusterServiceForRegion } from '~/services/clusterService';
 import { CloudRegion } from '~/types/clusters_mgmt.v1';
+import { ErrorState } from '~/types/types';
 
-import { currentEnvironment, formatErrorData, getProdRegionalInstances } from '../helpers';
+import { currentEnvironment, getProdRegionalInstances } from '../helpers';
 import { queryConstants } from '../queriesConstants';
 import { AvailableRegionalInstance, RegionalizedCloudRegion } from '../types';
 
@@ -23,8 +24,11 @@ const createRegionalizedCloudRegionEntry = (cloudRegion: CloudRegion, isRegional
   return region;
 };
 
+let isFailedRegionalizedRegions = false;
+let isFailedGlobalRegions = false;
+
 export const useFetchGetMultiRegionAvailableRegions = () => {
-  const { data, error, isError, isLoading, isFetching, isSuccess } = useQuery({
+  const { data, error, isError, isPending, isFetching, isSuccess } = useQuery({
     queryKey: [queryConstants.FETCH_MULTI_REGION_AVAILABLE_REGIONS],
     queryFn: async () => {
       const createResponseForRegionalizedRegions = async () => {
@@ -53,23 +57,29 @@ export const useFetchGetMultiRegionAvailableRegions = () => {
               const availableRegionName = isProduction ? extractRegionName : extractRegionName[1];
 
               const regionalService = getClusterServiceForRegion(availableRegion.id);
-              // eslint-disable-next-line no-await-in-loop
-              const regionalCloudProvidersResponse = await regionalService.getCloudProviders();
 
-              const regionalCloudProvidersItems = regionalCloudProvidersResponse?.data?.items;
+              try {
+                // eslint-disable-next-line no-await-in-loop
+                const regionalCloudProvidersResponse = await regionalService.getCloudProviders();
 
-              regionalCloudProvidersItems?.forEach((provider: any) => {
-                if (provider.id === 'aws' && provider.regions !== undefined) {
-                  const findOwnRegion = provider.regions.find(
-                    (region: any) => region.id === availableRegionName,
-                  );
+                const regionalCloudProvidersItems = regionalCloudProvidersResponse?.data?.items;
 
-                  if (findOwnRegion && findOwnRegion.supports_hypershift) {
-                    const region = createRegionalizedCloudRegionEntry(findOwnRegion, true);
-                    result.push(region);
+                regionalCloudProvidersItems?.forEach((provider: any) => {
+                  if (provider.id === 'aws' && provider.regions !== undefined) {
+                    const findOwnRegion = provider.regions.find(
+                      (region: any) => region.id === availableRegionName,
+                    );
+
+                    if (findOwnRegion && findOwnRegion.supports_hypershift) {
+                      const region = createRegionalizedCloudRegionEntry(findOwnRegion, true);
+                      result.push(region);
+                    }
                   }
-                }
-              });
+                });
+              } catch (error) {
+                isFailedRegionalizedRegions = true;
+                return result;
+              }
             }
           }
         }
@@ -79,19 +89,25 @@ export const useFetchGetMultiRegionAvailableRegions = () => {
 
       const createResponseForGlobalRegions = async () => {
         const result: RegionalizedCloudRegion[] = [];
-        const response = await clusterService.getCloudProviders();
 
-        response.data.items?.forEach((provider) => {
-          if (provider.id === 'aws' && provider.regions !== undefined) {
-            provider.regions.forEach((cloudRegion) => {
-              if (cloudRegion.id && cloudRegion.supports_hypershift) {
-                const region = createRegionalizedCloudRegionEntry(cloudRegion, false);
+        try {
+          const response = await clusterService.getCloudProviders();
+          response.data.items?.forEach((provider) => {
+            if (provider.id === 'aws' && provider.regions !== undefined) {
+              provider.regions.forEach((cloudRegion) => {
+                if (cloudRegion.id && cloudRegion.supports_hypershift) {
+                  const region = createRegionalizedCloudRegionEntry(cloudRegion, false);
 
-                result.push(region);
-              }
-            });
-          }
-        });
+                  result.push(region);
+                }
+              });
+            }
+          });
+        } catch (error) {
+          isFailedGlobalRegions = true;
+          return result;
+        }
+
         return result;
       };
 
@@ -122,14 +138,46 @@ export const useFetchGetMultiRegionAvailableRegions = () => {
     retry: false,
   });
 
-  const errorData = formatErrorData(isLoading, isError, error);
+  const isFailedRegionalAndGlobal = isFailedRegionalizedRegions && isFailedGlobalRegions;
+
+  const formatErrorDetails = (isError: boolean, error: any) => {
+    if (isError) {
+      const errorData: ErrorState = {
+        pending: isPending,
+        error: isError,
+        fulfilled: false,
+        errorCode: error?.code,
+        errorMessage: error?.message,
+        operationID: error?.operation_id,
+      };
+      return errorData;
+    }
+
+    if (isFailedRegionalAndGlobal) {
+      const errorData: ErrorState = {
+        pending: isPending,
+        error: true,
+        fulfilled: false,
+        errorMessage: 'Network Error',
+        operationID: 'N/A',
+      };
+      return errorData;
+    }
+    return null;
+  };
+
+  const errorData = formatErrorDetails(isError, error);
 
   return {
     data,
-    error: errorData?.error,
-    isError,
+    error: errorData?.error ? formatErrorDetails(isError, error) : null,
+    isError: isFailedRegionalAndGlobal ? true : isError,
     isFetching,
-    isSuccess,
+    isSuccess: isFailedRegionalAndGlobal ? false : isSuccess,
+    isPending,
+    isFailedRegionalizedRegions,
+    isFailedGlobalRegions,
+    isFailedRegionalAndGlobal,
   };
 };
 

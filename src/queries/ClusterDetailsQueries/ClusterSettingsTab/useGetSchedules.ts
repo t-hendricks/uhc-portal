@@ -8,7 +8,9 @@ import clusterService, { getClusterServiceForRegion } from '~/services/clusterSe
 import { UpgradePolicyState } from '~/types/clusters_mgmt.v1';
 
 export const refetchSchedules = () => {
-  queryClient.invalidateQueries({ queryKey: ['getSchedules'] });
+  queryClient.invalidateQueries({
+    queryKey: [queryConstants.FETCH_CLUSTER_DETAILS_QUERY_KEY, 'getSchedules'],
+  });
 };
 
 export const useGetSchedules = (clusterID: string, isHypershift: boolean, region?: string) => {

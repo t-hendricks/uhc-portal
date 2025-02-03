@@ -1,6 +1,5 @@
 import { connect } from 'react-redux';
 
-import { normalizedProducts } from '~/common/subscriptionTypes';
 import { getCloudProviders } from '~/redux/actions/cloudProviderActions';
 import {
   clearInstallableVersions,
@@ -13,7 +12,6 @@ import { getOrganizationAndQuota } from '~/redux/actions/userActions';
 
 import { openModal } from '../../../common/Modal/ModalActions';
 import shouldShowModal from '../../../common/Modal/ModalSelectors';
-import { hasManagedQuotaSelector } from '../../common/quotaSelectors';
 import submitOSDRequest from '../common/submitOSDRequest';
 
 import CreateROSAWizard from './CreateROSAWizard';
@@ -29,10 +27,6 @@ const mapStateToProps = (state) => {
     machineTypes: state.machineTypes,
     organization,
     cloudProviders: state.cloudProviders,
-    hasProductQuota: hasManagedQuotaSelector(
-      state.userProfile.organization.quotaList,
-      normalizedProducts.ROSA,
-    ),
     getUserRoleResponse,
     getInstallableVersionsResponse: clusterVersions,
   };

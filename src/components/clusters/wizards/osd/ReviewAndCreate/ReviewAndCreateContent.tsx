@@ -25,7 +25,7 @@ import { FieldId, StepId } from '~/components/clusters/wizards/osd/constants';
 import config from '~/config';
 import useCanClusterAutoscale from '~/hooks/useCanClusterAutoscale';
 import { useFeatureGate } from '~/hooks/useFeatureGate';
-import { OCMUI_PRIVATE_SERVICE_CONNECT, OSD_GCP_WIF } from '~/redux/constants/featureConstants';
+import { OSD_GCP_WIF, PRIVATE_SERVICE_CONNECT } from '~/redux/constants/featureConstants';
 
 import { MESSAGES } from '../../common/messages';
 import { ClusterPrivacyType } from '../Networking/constants';
@@ -57,7 +57,7 @@ export const ReviewAndCreateContent = ({ isPending }: ReviewAndCreateContentProp
   const canAutoScale = useCanClusterAutoscale(product, billingModel);
   const autoscalingEnabled = canAutoScale && !!formValues[FieldId.AutoscalingEnabled];
   const isWifEnabled = useFeatureGate(OSD_GCP_WIF);
-  const hasPSCFeatureGate = useFeatureGate(OCMUI_PRIVATE_SERVICE_CONNECT);
+  const hasPSCFeatureGate = useFeatureGate(PRIVATE_SERVICE_CONNECT);
 
   const isByoc = byoc === 'true';
   const isAWS = cloudProvider === CloudProviderType.Aws;

@@ -33,7 +33,6 @@ import Skeleton from '@redhat-cloud-services/frontend-components/Skeleton';
 import { addNotification } from '@redhat-cloud-services/frontend-components-notifications/redux/actions/notifications';
 
 import ExternalLink from '~/components/common/ExternalLink';
-import { usePreviousProps } from '~/hooks/usePreviousProps';
 import { useAddGrant } from '~/queries/ClusterDetailsQueries/AccessControlTab/NetworkSelfServiceQueries/useAddGrant';
 import { useDeleteGrant } from '~/queries/ClusterDetailsQueries/AccessControlTab/NetworkSelfServiceQueries/useDeleteGrant';
 import {
@@ -60,6 +59,7 @@ const NetworkSelfServiceSection = ({
   const dispatch = useDispatch();
 
   const [deletedRowIndex, setDeletedRowIndex] = React.useState(undefined);
+  const [refetchInterval, setRefetchInterval] = React.useState(false);
 
   const {
     data: grantsData,
@@ -67,14 +67,14 @@ const NetworkSelfServiceSection = ({
     isError: isGrantsError,
     error: grantsError,
     isFetching: isGrantsFetching,
-  } = useFetchGrants(clusterID, region);
+  } = useFetchGrants(clusterID, refetchInterval, region);
   const { data: rolesData } = useFetchRoles(region);
   const {
     data: addGrantsData,
     isPending: isAddGrantsPending,
     isError: isAddGrantsError,
     error: addGrantsError,
-    mutate: addGrantsMutate,
+    mutateAsync: addGrantsMutate,
     reset: resetAddGrantsMutate,
   } = useAddGrant(clusterID, region);
   const {
@@ -92,27 +92,23 @@ const NetworkSelfServiceSection = ({
     [grantsData, rolesData],
   );
 
-  const prevGrantsProps = usePreviousProps(grants);
-  const prevGrantsLoading = usePreviousProps(isGrantsFetching);
+  React.useEffect(() => {
+    grants?.data?.forEach((grant) => {
+      if (grant.state === 'deleting' || grant.state === 'pending') {
+        setRefetchInterval(true);
+      }
+    });
+
+    return () => {
+      setRefetchInterval(false);
+    };
+  }, [setRefetchInterval, grants]);
 
   React.useEffect(() => {
-    if (!isGrantsFetching && prevGrantsLoading && grants?.data?.length !== 0) {
-      const prevGrants = prevGrantsProps?.data;
-      const prevGrantsStates = prevGrants?.reduce(
-        (states, grant) => ({
-          ...states,
-          [grant.id]: grant.state,
-        }),
-        {},
-      );
-
-      grants?.data?.forEach((grant) => {
-        if (
-          prevGrantsStates &&
-          prevGrantsStates[grant.id] &&
-          grant.state !== prevGrantsStates[grant.id]
-        ) {
-          if (grant.state === 'failed') {
+    grants?.data?.forEach((grant) => {
+      if (addGrantsData && grant.user_arn === addGrantsData?.data?.user_arn) {
+        switch (grant.state) {
+          case 'failed':
             dispatch(
               addNotification({
                 variant: 'danger',
@@ -122,7 +118,8 @@ const NetworkSelfServiceSection = ({
                 dismissable: false,
               }),
             );
-          } else if (grant.state === 'ready') {
+            break;
+          case 'ready':
             dispatch(
               addNotification({
                 variant: 'success',
@@ -131,24 +128,24 @@ const NetworkSelfServiceSection = ({
                 dismissable: false,
               }),
             );
-          }
+            break;
+          case 'deleting':
+          case 'pending':
+          default:
+            refetchGrants();
+            break;
         }
-      });
-    }
+      }
+    });
+    // Adding grants as dependency results in infinite API call loop
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [addGrantsData, grantsData, refetchGrants, dispatch]);
+
+  React.useEffect(() => {
     if (deletedRowIndex !== undefined && !isGrantsLoading) {
       setDeletedRowIndex(undefined);
     }
-  }, [
-    clusterID,
-    deletedRowIndex,
-    grantsData,
-    dispatch,
-    grants,
-    prevGrantsLoading,
-    prevGrantsProps,
-    isGrantsFetching,
-    isGrantsLoading,
-  ]);
+  }, [clusterID, deletedRowIndex, grantsData, dispatch, grants, isGrantsFetching, isGrantsLoading]);
 
   const grantStatus = (status, description) => {
     let icon;

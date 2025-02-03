@@ -1,7 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
 
 import clusterService, { getClusterServiceForRegion } from '~/services/clusterService';
-import { Subscription, SubscriptionCommonFields } from '~/types/accounts_mgmt.v1';
+import { Subscription, SubscriptionCommonFieldsStatus } from '~/types/accounts_mgmt.v1';
 
 /**
  * Query to fetch cluster details based on subscription
@@ -31,7 +31,7 @@ export const useFetchCluster = (
     retry: false,
     enabled:
       !!subscription &&
-      subscription.status !== SubscriptionCommonFields.status.DEPROVISIONED &&
+      subscription.status !== SubscriptionCommonFieldsStatus.Deprovisioned &&
       (subscription.managed || isAROCluster),
   });
   return {

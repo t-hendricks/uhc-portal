@@ -1,5 +1,5 @@
 import React from 'react';
-import { WrappedFieldInputProps } from 'redux-form';
+import { FieldInputProps } from 'formik';
 
 import {
   Button,
@@ -23,7 +23,7 @@ export type CAUploadProps = {
   label: string;
   helpText?: string;
   isDisabled?: boolean;
-  input: WrappedFieldInputProps;
+  input: FieldInputProps<string>;
   isRequired?: boolean;
   certValue?: string;
   maxFileSize?: number;

@@ -5,7 +5,6 @@ import { ValidationError, Validator } from 'jsonschema';
 import { get, indexOf, inRange } from 'lodash';
 
 import { Subnet } from '~/common/helpers';
-import { workerNodeVolumeSizeMinGiB } from '~/components/clusters/common/machinePools/constants';
 import { FieldId } from '~/components/clusters/wizards/osd/constants';
 import { clusterService } from '~/services';
 import type { GCP, Taint } from '~/types/clusters_mgmt.v1';
@@ -79,8 +78,6 @@ const MAX_CLUSTER_DISPLAY_NAME_LENGTH = 63;
 const GCP_PROJECT_ID_REGEX = /^[a-z][-a-z0-9]{4,28}[a-z0-9]{1}$/;
 
 const GCP_SUBNET_NAME_MAXLEN = 63;
-// Maximum node count
-const MAX_NODE_COUNT = 180;
 
 const AWS_USER_OR_GROUP_ARN_REGEX = /^arn:aws([-\w]+)?:iam::\d{12}:(user|group)\/\S+/;
 const AWS_ROLE_ARN_REGEX = /^arn:aws([-\w]+)?:iam::\d{12}:role\/\S+/;
@@ -361,7 +358,6 @@ const findFirstFailureMessage = (populatedValidation: Validations | undefined) =
  * executes cluster-name async validations.
  * to be used at the form level hook (asyncValidate).
  *
- * @see asyncValidate in the wizard's redux-form config.
  * @param value the value to be validated
  * @returns {Promise<void>} a promise which resolves quietly, or rejects with a form errors map.
  */
@@ -497,6 +493,12 @@ const k8sMinMaxParameter = (
     : 'The minimum cannot be above the maximum value.';
 };
 
+const validateMaxNodes = (num: number | string, maxNodes: number | string) =>
+  +num > +maxNodes ? `Value must not be greater than ${maxNodes}.` : undefined;
+
+const validatePositive = (num: number | string) =>
+  Number(num) <= 0 ? `Input must be a positive number.` : undefined;
+
 const clusterAutoScalingValidators = {
   k8sTimeParameter,
   k8sNumberParameter,
@@ -504,6 +506,7 @@ const clusterAutoScalingValidators = {
   k8sGpuParameter,
   k8sScaleDownUtilizationThresholdParameter,
   k8sLogVerbosityParameter,
+  validateMaxNodes,
 };
 
 /**
@@ -513,7 +516,7 @@ const clusterAutoScalingValidators = {
  * @param validationProvider {function(*, object, object, object): array}
  *        a function that returns a collection of validations,
  *        and can be passed to a Field's validation attribute.
- *        first argument is the value, second is allValues, etc. (see the redux-form docs).
+ *        first argument is the value, second is allValues, etc.
  * @returns {function(*): *} a validator function that exits on the first failed validation,
  *          outputting its error message.
  */
@@ -1198,36 +1201,6 @@ const hostPrefix = (value?: string): string | undefined => {
   return undefined;
 };
 
-/**
- * Function to validate number of nodes.
- *
- * @param {(string|number)} value - node count to validate.
- * @param {*} min - object ontaining int 'value' of minimum node count,
- * and a string 'validationMsg' with an error message.
- * @param {number} [max=MAX_NODE_COUNT] - maximum allowed number of nodes.
- */
-const nodes = (
-  value: string | number,
-  min: { value: number; validationMsg?: string },
-  max = MAX_NODE_COUNT,
-): string | undefined => {
-  if (value === undefined || +value < min.value) {
-    return min.validationMsg || `The minimum number of nodes is ${min.value}.`;
-  }
-  if (+value > max) {
-    return `Maximum number allowed is ${max}.`;
-  }
-
-  if (
-    (typeof value === 'string' && Number.isNaN(parseInt(value, 10))) ||
-    Math.floor(Number(value)) !== Number(value)
-  ) {
-    // Using Math.floor to check for valid int because Number.isInteger doesn't work on IE.
-    return `'${value}' is not a valid number of nodes.`;
-  }
-  return undefined;
-};
-
 const nodesMultiAz = (value: string | number): string | undefined => {
   if (Number(value) % 3 > 0) {
     return 'Number of nodes must be multiple of 3 for Multi AZ cluster.';
@@ -1282,16 +1255,6 @@ const checkDisconnectedSockets = (value?: string) => validateNumericInput(value,
 const checkDisconnectedMemCapacity = (value?: string) =>
   validateNumericInput(value, { allowDecimal: true, max: 256000 });
 
-const checkDisconnectedNodeCount = (value?: string): string | undefined => {
-  if (value === '') {
-    return undefined;
-  }
-  if (Number.isNaN(Number(value))) {
-    return 'Input must be a number.';
-  }
-  return nodes(Number(value), { value: 0 }, 250);
-};
-
 const validateARN = (value: string, regExp: RegExp, arnFormat: string): string | undefined => {
   if (!value) {
     return 'Field is required.';
@@ -1336,7 +1299,7 @@ const validateGCPHostProjectId = (value: string) => {
  * - this function is not like other validators, it's a function that returns a function,
  * so you can specify the field name.
  *
- * @param {*} values array of value objects, from redux-form
+ * @param {*} values array of value objects
  */
 const atLeastOneRequired =
   (fieldName: string, isEmpty?: (value: unknown) => boolean) => (fields: { name: string }[]) => {
@@ -1784,10 +1747,13 @@ const validateNamespacesList = (value = '') => {
 const validateWorkerVolumeSize = (
   size: number,
   allValues: object,
-  { maxWorkerVolumeSizeGiB }: { maxWorkerVolumeSizeGiB: number },
+  {
+    minWorkerVolumeSizeGiB,
+    maxWorkerVolumeSizeGiB,
+  }: { minWorkerVolumeSizeGiB: number; maxWorkerVolumeSizeGiB: number },
 ) => {
-  if (size < workerNodeVolumeSizeMinGiB || size > maxWorkerVolumeSizeGiB) {
-    return `The worker root disk size must be between ${workerNodeVolumeSizeMinGiB} GiB and ${maxWorkerVolumeSizeGiB} GiB.`;
+  if (size < minWorkerVolumeSizeGiB || size > maxWorkerVolumeSizeGiB) {
+    return `The worker root disk size must be between ${minWorkerVolumeSizeGiB} GiB and ${maxWorkerVolumeSizeGiB} GiB.`;
   }
 
   return size === Math.floor(size)
@@ -1849,7 +1815,6 @@ const validators = {
   privateAddress,
   awsSubnetMask,
   hostPrefix,
-  nodes,
   nodesMultiAz,
   validateNumericInput,
   validateLabelKey,
@@ -1862,7 +1827,6 @@ const validators = {
   checkDisconnectedvCPU,
   checkDisconnectedSockets,
   checkDisconnectedMemCapacity,
-  checkDisconnectedNodeCount,
   checkCustomOperatorRolesPrefix,
   checkHostDomain,
   AWS_MACHINE_CIDR_MIN,
@@ -1901,7 +1865,6 @@ export {
   checkDisconnectedvCPU,
   checkDisconnectedSockets,
   checkDisconnectedMemCapacity,
-  checkDisconnectedNodeCount,
   clusterAutoScalingValidators,
   validateARN,
   validateUserOrGroupARN,
@@ -1952,6 +1915,8 @@ export {
   MAX_CUSTOM_OPERATOR_ROLES_PREFIX_LENGTH,
   MAX_CLUSTER_NAME_LENGTH,
   validateSecureURL,
+  validateMaxNodes,
+  validatePositive,
 };
 
 export default validators;

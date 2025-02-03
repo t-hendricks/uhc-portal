@@ -3,7 +3,7 @@ import { validate as isUuid } from 'uuid';
 
 import { useQuery } from '@tanstack/react-query';
 
-import { SubscriptionList } from '~/types/accounts_mgmt.v1/models/SubscriptionList';
+import { SubscriptionList } from '~/types/accounts_mgmt.v1';
 
 import { accountsService } from '../../services';
 import { formatErrorData } from '../helpers';

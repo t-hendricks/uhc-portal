@@ -6,6 +6,15 @@ import { ErrorState } from '~/types/types';
 
 import { AvailableRegionalInstance, RQApiErrorType, SearchRegionalClusterItems } from './types';
 
+export type FormattedErrorData = {
+  isLoading: boolean;
+  isError: boolean;
+  error:
+    | ErrorState
+    | Pick<ErrorState, 'errorMessage' | 'errorDetails' | 'operationID' | 'errorCode' | 'reason'>
+    | null;
+};
+
 export const formatErrorData = (
   isLoading: boolean,
   isError: boolean,

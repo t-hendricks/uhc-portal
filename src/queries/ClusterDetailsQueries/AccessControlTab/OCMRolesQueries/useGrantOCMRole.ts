@@ -4,7 +4,7 @@ import { formatErrorData } from '~/queries/helpers';
 import { accountsService } from '~/services';
 
 export const useGrantOCMRole = (subID: string = '') => {
-  const { data, isPending, isError, error, isSuccess, mutate } = useMutation({
+  const { data, isPending, isError, error, isSuccess, mutate, reset } = useMutation({
     mutationKey: ['grantOCMRole'],
     mutationFn: async ({ username, roleID }: { username: string; roleID: string }) => {
       const response = accountsService.createSubscriptionRoleBinding(subID, username, roleID);
@@ -21,6 +21,7 @@ export const useGrantOCMRole = (subID: string = '') => {
       error: formattedError,
       isSuccess,
       mutate,
+      reset,
     };
   }
 
@@ -31,5 +32,6 @@ export const useGrantOCMRole = (subID: string = '') => {
     error,
     isSuccess,
     mutate,
+    reset,
   };
 };

@@ -6,7 +6,7 @@ import { FormGroup, FormSelect, FormSelectOption, Tooltip } from '@patternfly/re
 import {
   getNodeIncrement,
   getNodeIncrementHypershift,
-} from '~/components/clusters/ClusterDetails/components/MachinePools/machinePoolsHelper';
+} from '~/components/clusters/ClusterDetailsMultiRegion/components/MachinePools/machinePoolsHelper';
 import {
   buildOptions,
   getAvailableQuota as getAvailableQuotaUtil,
@@ -35,7 +35,7 @@ class NodeCountInput extends React.Component {
       isMultiAz,
       isMachinePool,
       clusterVersion,
-      allow500Nodes,
+      allow249NodesOSDCCSROSA,
     } = this.props;
     const included = getIncludedNodes({ isMultiAz, isHypershift: !isMachinePool });
     const available = this.getAvailableQuota();
@@ -52,7 +52,7 @@ class NodeCountInput extends React.Component {
       optionValueIncrement,
       isHypershift: isHypershiftWizard,
       clusterVersion,
-      allow500Nodes,
+      allow249NodesOSDCCSROSA,
     });
 
     if (!options.includes(Number(input.value))) {
@@ -73,7 +73,7 @@ class NodeCountInput extends React.Component {
       increment,
       isMachinePool,
       clusterVersion,
-      allow500Nodes,
+      allow249NodesOSDCCSROSA,
     } = this.props;
 
     const available = this.getAvailableQuota();
@@ -89,7 +89,7 @@ class NodeCountInput extends React.Component {
       optionValueIncrement,
       isHypershift: isHypershiftWizard,
       clusterVersion,
-      allow500Nodes,
+      allow249NodesOSDCCSROSA,
     });
 
     if (isHypershiftWizard && poolNumber !== prevProps.poolNumber) {
@@ -97,7 +97,7 @@ class NodeCountInput extends React.Component {
       // is less than the minimum total nodes
       const prevSelected = (prevProps.input?.value ?? 0) / prevProps.poolNumber || minNodes;
       const newValue = prevSelected * poolNumber;
-      if (newValue > minNodes && newValue <= getMaxNodesHCP(clusterVersion, allow500Nodes)) {
+      if (newValue > minNodes && newValue <= getMaxNodesHCP(clusterVersion)) {
         input.onChange(newValue);
       } else {
         input.onChange(minNodes);
@@ -157,7 +157,7 @@ class NodeCountInput extends React.Component {
       poolNumber = isMultiAz ? 3 : 1,
       buttonAriaLabel,
       clusterVersion,
-      allow500Nodes,
+      allow249NodesOSDCCSROSA,
     } = this.props;
 
     const optionValueIncrement =
@@ -175,7 +175,7 @@ class NodeCountInput extends React.Component {
       increment: optionValueIncrement,
       isHypershift: isHypershiftWizard,
       clusterVersion,
-      allow500Nodes,
+      allow249NodesOSDCCSROSA,
     });
 
     let notEnoughQuota = options.length < 1;
@@ -279,25 +279,6 @@ const validateClusterVersion = (props, propName, componentName) => {
   return null;
 };
 
-const validateAllow500Nodes = (props, propName, componentName) => {
-  const { isHypershiftWizard } = props;
-
-  if (isHypershiftWizard) {
-    if (typeof props[propName] !== 'boolean') {
-      return new Error(
-        `Prop \`${propName}\` must be a boolean when \`isHypershiftWizard\` is true in \`${componentName}\`.`,
-      );
-    }
-    if (props[propName] === undefined) {
-      return new Error(
-        `Prop \`${propName}\` is required when \`isHypershiftWizard\` is true in \`${componentName}\`.`,
-      );
-    }
-  }
-
-  return null;
-};
-
 NodeCountInput.propTypes = {
   isEditingCluster: PropTypes.bool,
   currentNodeCount: PropTypes.number,
@@ -325,7 +306,7 @@ NodeCountInput.propTypes = {
   poolNumber: PropTypes.number,
   buttonAriaLabel: PropTypes.string,
   clusterVersion: validateClusterVersion,
-  allow500Nodes: validateAllow500Nodes,
+  allow249NodesOSDCCSROSA: PropTypes.bool,
 };
 
 export default NodeCountInput;

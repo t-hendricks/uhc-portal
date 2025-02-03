@@ -1,18 +1,20 @@
-/* eslint-disable camelcase */
 import { ANY } from '~/common/matchUtils';
-import { RelatedResource, SubscriptionCommonFields } from '~/types/accounts_mgmt.v1';
+import {
+  RelatedResourceBilling_model as RelatedResourceBillingModel,
+  SubscriptionCommonFieldsCluster_billing_model as SubscriptionCommonFieldsClusterBillingModel,
+} from '~/types/accounts_mgmt.v1';
 import { BillingModel } from '~/types/clusters_mgmt.v1';
 
 export const clusterBillingModelToRelatedResource = (
-  clusterBillingModel?: SubscriptionCommonFields.cluster_billing_model | BillingModel | string,
-): RelatedResource.billing_model | undefined => {
+  clusterBillingModel?: SubscriptionCommonFieldsClusterBillingModel | BillingModel | string,
+): RelatedResourceBillingModel | undefined => {
   switch (true) {
     case clusterBillingModel?.toLowerCase().startsWith('marketplace'):
-      return RelatedResource.billing_model.MARKETPLACE;
-    case clusterBillingModel === SubscriptionCommonFields.cluster_billing_model.STANDARD:
-      return RelatedResource.billing_model.STANDARD;
+      return RelatedResourceBillingModel.marketplace;
+    case clusterBillingModel === SubscriptionCommonFieldsClusterBillingModel.standard:
+      return RelatedResourceBillingModel.standard;
     case clusterBillingModel === ANY:
-      return RelatedResource.billing_model.ANY;
+      return RelatedResourceBillingModel.any;
     default:
       return undefined;
   }

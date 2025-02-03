@@ -96,24 +96,18 @@ export const linkify = (text, linkFunction, jiraByKey = {}) => {
 
   // Git commits. Shorten on output so it's painless to feed full 40-char hashes into this script.
   text = text.replace(/[0-9a-f]{6,}/g, (match) =>
-    linkFunction(
-      `https://gitlab.cee.redhat.com/service/${REPO}/-/commit/${match}`,
-      match.slice(0, 9),
-    ),
+    linkFunction(`https://github.com/RedHatInsights/${REPO}/-/commit/${match}`, match.slice(0, 9)),
   );
 
   // Merge requests, Gitlab forms: `org/repo!nnn` and just `!nnn`.
   text = text.replace(/(?:service\/(\S+))?!(\d+)/g, (match, repo, id) => {
     repo = repo || REPO;
-    const url = `https://gitlab.cee.redhat.com/service/${repo}/-/merge_requests/${id}`;
+    const url = `https://github.com/RedHatInsights/${repo}/pull/${id}`;
     return linkFunction(url, repo === REPO ? `!${id}` : match);
   });
   // Merge request custom tags
   text = text.replace(/(?:tag: )?MRG\/(\d+)/g, (match, id) =>
-    linkFunction(
-      `https://gitlab.cee.redhat.com/service/${REPO}/-/merge_requests/${id}`,
-      `MRG/${id}`,
-    ),
+    linkFunction(`https://github.com/RedHatInsights/${REPO}/pull/${id}`, `MRG/${id}`),
   );
 
   return text;

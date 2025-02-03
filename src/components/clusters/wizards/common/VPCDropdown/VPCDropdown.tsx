@@ -30,7 +30,6 @@ interface VCPDropdownProps {
   isHypershift?: boolean;
   usePrivateLink?: boolean;
   isOSD?: boolean;
-  isRosaV1?: boolean;
 }
 
 interface UseAWSVPCInquiry {
@@ -61,16 +60,13 @@ const VPCDropdown = ({
   showRefresh = false,
   isHypershift = false,
   isOSD = false,
-  isRosaV1 = true,
+
   usePrivateLink,
 }: VCPDropdownProps) => {
   const dispatch = useDispatch();
   const [isOpen, setIsOpen] = React.useState<boolean>(false);
 
-  const { vpcs: vpcResponse, requestParams } = useAWSVPCInquiry(
-    isOSD,
-    isRosaV1,
-  ) as UseAWSVPCInquiry;
+  const { vpcs: vpcResponse, requestParams } = useAWSVPCInquiry(isOSD) as UseAWSVPCInquiry;
   const originalVPCs = React.useMemo<CloudVPC[]>(
     () => filterOutRedHatManagedVPCs(vpcResponse.data?.items || []),
     [vpcResponse.data?.items],

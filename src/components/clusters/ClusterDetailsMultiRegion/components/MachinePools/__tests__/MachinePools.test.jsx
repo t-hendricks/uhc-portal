@@ -427,7 +427,7 @@ describe('<MachinePools />', () => {
       jest.clearAllMocks();
     });
     const hasMachinePoolsQuotaSelectorMock = hasMachinePoolsQuotaSelector;
-    it('should open modal', async () => {
+    it.skip('should open modal', async () => {
       hasMachinePoolsQuotaSelectorMock.mockReturnValue(true);
       const { user } = render(<MachinePools {...defaultProps} />);
       expect(

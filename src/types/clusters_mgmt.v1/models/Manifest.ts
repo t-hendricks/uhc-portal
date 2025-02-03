@@ -19,6 +19,23 @@ export type Manifest = {
    */
   href?: string;
   /**
+   * Date and time when the manifest got created in OCM database.
+   */
+  creation_timestamp?: string;
+  /**
+   * Transient value to represent the underlying live resource.
+   */
+  live_resource?: Record<string, any>;
+  /**
+   * Spec of Manifest Work object from open cluster management
+   * For more info please check https://open-cluster-management.io/concepts/manifestwork.
+   */
+  spec?: Record<string, any>;
+  /**
+   * Date and time when the manifest got updated in OCM database.
+   */
+  updated_timestamp?: string;
+  /**
    * List of k8s objects to deploy on a hosted cluster.
    */
   workloads?: Array<Record<string, any>>;
