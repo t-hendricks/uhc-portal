@@ -1,7 +1,6 @@
 import React from 'react';
 
 import { checkAccessibility, render, screen } from '~/testUtils';
-import { SubscriptionCommonFields } from '~/types/accounts_mgmt.v1/models/SubscriptionCommonFields';
 
 import { subscriptionSettings } from '../../../../common/subscriptionTypes';
 import { SubscriptionCommonFieldsSupport_level as SubscriptionCommonFieldsSupportLevel } from '../../../../types/accounts_mgmt.v1';

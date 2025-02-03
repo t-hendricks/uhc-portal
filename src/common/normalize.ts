@@ -37,7 +37,7 @@ const normalizeProductID = (id: string | undefined): string => {
   const map: { [key: string]: string } = {
     OCP: normalizedProducts.OCP,
     OSD: normalizedProducts.OSD,
-    OSDTRIAL: normalizedProducts.OSDTRIAL,
+    OSDTRIAL: normalizedProducts.OSDTrial,
     RHMI: normalizedProducts.RHMI,
     MOA: normalizedProducts.ROSA,
     ROSA: normalizedProducts.ROSA,
@@ -46,13 +46,13 @@ const normalizeProductID = (id: string | undefined): string => {
     ARO: normalizedProducts.ARO,
     OCP_ASSISTEDINSTALL: normalizedProducts.OCP_AssistedInstall,
     RHACS: normalizedProducts.RHACS,
-    RHACSTRIAL: normalizedProducts.RHACSTRIAL,
+    RHACSTRIAL: normalizedProducts.RHACSTrial,
     RHOSR: normalizedProducts.RHOSR,
-    RHOSRTRIAL: normalizedProducts.RHOSRTRIAL,
+    RHOSRTRIAL: normalizedProducts.RHOSRTrial,
     RHOSAK: normalizedProducts.RHOSAK,
-    RHOSAKTRIAL: normalizedProducts.RHOSAKTRIAL,
+    RHOSAKTRIAL: normalizedProducts.RHOSAKTrial,
     RHOSE: normalizedProducts.RHOSE,
-    RHOSETRIAL: normalizedProducts.RHOSETRIAL,
+    RHOSETRIAL: normalizedProducts.RHOSETrial,
     RHOIC: normalizedProducts.RHOIC,
     ANY: normalizedProducts.ANY, // used by account-manager in quota_cost
   };

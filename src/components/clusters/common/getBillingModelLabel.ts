@@ -7,7 +7,7 @@ const getBillingModelLabel = (cluster: ClusterFromSubscription): string => {
   const standardLabel = 'Standard';
 
   switch (cluster.subscription?.plan?.type) {
-    case normalizedProducts.OSDTRIAL:
+    case normalizedProducts.OSDTrial:
       return 'Free trial, upgradeable';
     case normalizedProducts.OSD:
       switch (cluster.subscription?.cluster_billing_model) {

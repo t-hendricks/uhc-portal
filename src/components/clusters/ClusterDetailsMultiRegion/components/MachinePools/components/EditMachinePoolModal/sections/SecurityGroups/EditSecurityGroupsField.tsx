@@ -10,7 +10,7 @@ import EditSecurityGroups from '~/components/clusters/ClusterDetailsMultiRegion/
 import SecurityGroupsEmptyAlert from '~/components/clusters/ClusterDetailsMultiRegion/components/SecurityGroups/SecurityGroupsEmptyAlert';
 import SecurityGroupsNoChangeAlert from '~/components/clusters/ClusterDetailsMultiRegion/components/SecurityGroups/SecurityGroupsNoChangeAlert';
 import { isHypershiftCluster, isROSA } from '~/components/clusters/common/clusterStates';
-import { useAWSVPCFromCluster } from '~/components/clusters/commonMultiRegion/useAWSVPCFromCluster';
+import { useAWSVPCFromCluster } from '~/components/clusters/common/useAWSVPCFromCluster';
 import { FieldId } from '~/components/clusters/wizards/common';
 import { useFormState } from '~/components/clusters/wizards/hooks';
 import { ClusterFromSubscription } from '~/types/types';

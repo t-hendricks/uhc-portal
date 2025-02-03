@@ -6,7 +6,7 @@ import { accountsService } from '~/services';
 import { ClusterAuthorizationRequestProduct_id as ClusterAuthorizationRequestProductId } from '~/types/accounts_mgmt.v1';
 
 const ROSA_PRODUCTS = [knownProducts.ROSA, knownProducts.ROSA_HyperShift];
-const OSD_PRODUCTS = [knownProducts.OSD, knownProducts.OSDTRIAL];
+const OSD_PRODUCTS = [knownProducts.OSD, knownProducts.OSDTrial];
 
 /**
  * Query for fetching limited support reasons based on region
