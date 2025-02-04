@@ -62,8 +62,9 @@ NOTE: The author of the PR will merge the PR.
 - [ ] PR has 3 approvals (2 Dev, 1 QE)
 - [ ] Verify the 'Squash and merge' option is selected before merging the PR into master (Click on the little arrow on the right of the green merge button, and choose the 'Squash and merge' option)
 ### Check the following after PR has merged:
-- [ ] Verified PR was deployed to staging via [build deploy job](https://ci.int.devshift.net/job/RedHatInsights-uhc-portal-gh-build-stable/) and the related deployment was mentioned on [#ocm-ui-deploys](https://redhat.enterprise.slack.com/archives/C03GKHGMX7U)  Slack channel
+- [ ] Verified PR was deployed to staging via the [build deploy job](https://ci.int.devshift.net/job/RedHatInsights-uhc-portal-gh-build-stable/) and the [instructions on the Release to Production wiki](https://github.com/RedHatInsights/uhc-portal/wiki/Release-to-Production#ensure-the-stable-branch-build-job-2-completes-successfully).
 - [ ] Quick test code/feature again on staging (https://console.dev.redhat.com/openshift/)
+- [ ] _Change JIRA status to 'Closed'_
 
 # Ticketing
 
