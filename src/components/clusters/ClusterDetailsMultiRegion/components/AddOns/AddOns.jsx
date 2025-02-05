@@ -56,6 +56,7 @@ const AddOns = ({ clusterID, region, cluster, isHypershift }) => {
     error: addClusterAddOnError,
     isSuccess: isAddClusterAddOnSuccess,
     mutate: addClusterAddOn,
+    reset: resetAddClusterAddon,
   } = useAddClusterAddOn(region);
   const {
     isPending: isUpdateClusterAddOnPending,
@@ -148,7 +149,12 @@ const AddOns = ({ clusterID, region, cluster, isHypershift }) => {
   return (
     <>
       {isAddClusterAddOnError && (
-        <ErrorBox message="Error adding add-ons" response={addClusterAddOnError} />
+        <ErrorBox
+          message="Error adding add-ons"
+          response={addClusterAddOnError}
+          showCloseBtn
+          onCloseAlert={resetAddClusterAddon}
+        />
       )}
       <AddOnsDrawer
         addOnsList={addOnsList}
