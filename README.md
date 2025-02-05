@@ -77,3 +77,8 @@ output has all the info you’ll need.
 ## Contributing
 
 For in depth guidance see [the contributing guidelines](docs/contributing.md).
+
+### Release
+
+A detailed explanation of how to make a release can be found on the [Release to Production wiki page](https://github.com/RedHatInsights/uhc-portal/wiki/Release-to-Production)
+
