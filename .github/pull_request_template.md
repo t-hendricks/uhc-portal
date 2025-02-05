@@ -2,12 +2,12 @@
 
 <!-- add a summarized description of the PR content -->
 
-Jira ticket: <!-- add URL to the associated JIRA ticket -->
 
 # Details
 
 <!-- add a detailed list of changes, and link to the relevant commit-revision on each item.
 alternatively, use the below generated text to simply show the PR commits' messages -->
+
 
 # How to Test
 
@@ -65,6 +65,7 @@ NOTE: The author of the PR will merge the PR.
 - [ ] Verified PR was deployed to staging via the [build job](https://ci.int.devshift.net/job/RedHatInsights-uhc-portal-gh-build-master/) or the related deployment was mentioned on [#ocm-ui-deploys](https://redhat.enterprise.slack.com/archives/C03GKHGMX7U)
 - [ ] Quick test code/feature again on staging (https://console.dev.redhat.com/openshift/)
 - [ ] Change JIRA status to 'Closed'
+
 
 # Ticketing
 
