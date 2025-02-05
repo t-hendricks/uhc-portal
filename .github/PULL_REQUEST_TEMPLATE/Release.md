@@ -1,7 +1,7 @@
 
-Move changes from `master` to `stable`, to promote content to [`production`][environment].
+Move changes from `master` to `stable`, to promote content from [Staging][stage-env] to [Production][prod-env].
 
-See the [Release Notes][change-log], and list of [Held Back items][held-back-log].
+See the [Release Notes wiki page][change-log] for the changelog.
 
 
 # Reviews
@@ -27,11 +27,12 @@ Check the following before merging:
 - [ ] All above checkboxes for both reviewers have been checked
 - [ ] All CI tests have passed
 - [ ] Has at least 2 approvals, ready to merge
+- [ ] "Merge pull request" is selected as the merge-method (**not** "Squash and merge" or "Rebase and merge")
 
 
 
 <!-- TODO: update this link to point to the correct section in the release notes -->
 <!--       by appending the heading permalink, e.g. /Release-Notes#mar-5-1981 -->
 [change-log]: https://github.com/RedHatInsights/uhc-portal/wiki/Release-Notes
-[held-back-log]: https://github.com/RedHatInsights/uhc-portal/wiki/Held-Back-Notes
-[environment]: https://console.redhat.com/openshift/
+[prod-env]: https://console.redhat.com/openshift/
+[stage-env]: https://console.dev.redhat.com/openshift/
