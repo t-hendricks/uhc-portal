@@ -32,7 +32,7 @@ export const useFetchPendingAccessRequests = (
 
       return response;
     },
-    enabled: !isAccessProtectionLoading && accessProtection.enabled,
+    enabled: !isAccessProtectionLoading && accessProtection?.enabled,
   });
 
   return {

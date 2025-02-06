@@ -435,7 +435,7 @@ function CreateROSAWizard(props) {
     selectedAWSAccountID,
     isHypershiftSelected,
   };
-  const isHypershiftEnabled = useFeatureGate(HYPERSHIFT_WIZARD_FEATURE) && !isRestrictedEnv();
+  const isHypershiftEnabled = useFeatureGate(HYPERSHIFT_WIZARD_FEATURE);
 
   return (
     <AppPage title="Create OpenShift ROSA Cluster">
