@@ -12,6 +12,7 @@ import {
   HCP_USE_UNMANAGED,
   HYPERSHIFT_WIZARD_FEATURE,
   MULTIREGION_PREVIEW_ENABLED,
+  OCMUI_ENHANCED_HTPASSWRD,
   OCMUI_MAX_NODES_TOTAL_249,
   OSD_GCP_WIF,
   PRIVATE_SERVICE_CONNECT,
@@ -46,6 +47,7 @@ export const features = [
   getSimpleUnleashFeature('enable-create-cluster-yaml-editor', CREATE_CLUSTER_YAML_EDITOR),
   getSimpleUnleashFeature('ocmui-max-nodes-total-249', OCMUI_MAX_NODES_TOTAL_249),
   getSimpleUnleashFeature('ocmui-hcp-root-disk-size', HCP_ROOT_DISK_SIZE),
+  getSimpleUnleashFeature('ocmui-enhanced-htpasswrd', OCMUI_ENHANCED_HTPASSWRD),
   getSimpleUnleashFeature(
     'bypass-compute-node-count-limit-classic-osd-gcp',
     BYPASS_COMPUTE_NODE_COUNT_LIMIT_CLASSIC_OSD_GCP,
