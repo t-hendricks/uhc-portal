@@ -21,6 +21,7 @@ import ReviewSection, {
   ReviewItem,
 } from '~/components/clusters/wizards/common/ReviewCluster/ReviewSection';
 import { useFormState } from '~/components/clusters/wizards/hooks';
+import { GCPAuthType } from '~/components/clusters/wizards/osd/ClusterSettings/CloudProvider/types';
 import { FieldId, StepId } from '~/components/clusters/wizards/osd/constants';
 import config from '~/config';
 import useCanClusterAutoscale from '~/hooks/useCanClusterAutoscale';
@@ -51,6 +52,8 @@ export const ReviewAndCreateContent = ({ isPending }: ReviewAndCreateContentProp
       [FieldId.ApplicationIngress]: applicationIngress,
       [FieldId.SecurityGroups]: securityGroups,
       [FieldId.HasDomainPrefix]: hasDomainPrefix,
+      [FieldId.GcpAuthType]: gcpAuthType,
+      [FieldId.GcpWifConfig]: wifConfig,
     },
     values: formValues,
   } = useFormState();
@@ -65,11 +68,14 @@ export const ReviewAndCreateContent = ({ isPending }: ReviewAndCreateContentProp
 
   const hasSecurityGroups = isByoc && hasSelectedSecurityGroups(securityGroups);
   const hasGcpAuthType = isWifEnabled && isGCP && isByoc;
+  const hasWIFConfiguration =
+    hasGcpAuthType && gcpAuthType === GCPAuthType.WorkloadIdentityFederation && wifConfig;
   const isGCPPrivateClusterInstalltoVPC =
     clusterPrivacy === ClusterPrivacyType.Internal && installToVpc && isGCP;
   const clusterSettingsFields = [
     FieldId.CloudProvider,
     ...(hasGcpAuthType ? [FieldId.GcpAuthType] : []),
+    ...(hasWIFConfiguration ? [FieldId.GcpWifConfig] : []),
     FieldId.ClusterName,
     ...(hasDomainPrefix ? [FieldId.DomainPrefix] : []),
     FieldId.ClusterVersion,

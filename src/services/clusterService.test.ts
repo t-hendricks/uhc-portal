@@ -68,6 +68,15 @@ describe('clusterService', () => {
     expect(getApiGetParams().search.includes("wif_enabled='t'")).toBe(isWIF);
   });
 
+  it('call to get GCP WIF config contains a WIF Id path param', async () => {
+    const wifId = '12345';
+    await clusterService.getGCPWifConfig(wifId);
+
+    expect(apiRequestMock.get).toHaveBeenCalledTimes(1);
+    const mockPostCallParams = apiRequestMock.get.mock.calls[0];
+    expect(mockPostCallParams[0]).toEqual(`/api/clusters_mgmt/v1/gcp/wif_configs/${wifId}`);
+  });
+
   it('call to post a node pool upgrade policy', async () => {
     apiRequestMock.post.mockResolvedValue('success');
     const clusterId = 'myCluster';

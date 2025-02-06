@@ -1,3 +1,4 @@
+import { useFetchGCPWifConfig } from '~/queries/ClusterDetailsQueries/useFetchGCPWifConfig';
 import { AugmentedClusterResponse } from '~/types/types';
 
 import { normalizeCluster, normalizeMetrics } from '../../common/normalize';
@@ -110,13 +111,22 @@ export const useFetchClusterDetails = (subscriptionID: string) => {
     queryConstants.FETCH_CLUSTER_DETAILS_QUERY_KEY,
     subscription?.subscription,
   );
+
+  const wifConfigId = clusterDetailsResponse?.data?.gcp?.authentication?.id;
+  const {
+    data: wifConfig,
+    isLoading: isWifConfigLoading,
+    isFetching: isWifConfigFetching,
+  } = useFetchGCPWifConfig(wifConfigId);
+
   const isFetching =
     isSubscriptionFetching ||
     isActionsPermissionsFetching ||
     isClusterFetching ||
     isInflightChecksFetching ||
     isCanDeleteAccessReviewFetching ||
-    isLimitedSupportReasonsfetching;
+    isLimitedSupportReasonsfetching ||
+    isWifConfigFetching;
   if (
     !subscriptionLoading &&
     !isClusterDetailsLoading &&
@@ -125,7 +135,8 @@ export const useFetchClusterDetails = (subscriptionID: string) => {
     !isClusterGateAgreementsLoading &&
     !isInflightChecksLoading &&
     !isActionQueriesLoading &&
-    !isAIClusterLoading
+    !isAIClusterLoading &&
+    !isWifConfigLoading
   ) {
     // Handles any query if it returns Axios Error
     if (
@@ -178,6 +189,8 @@ export const useFetchClusterDetails = (subscriptionID: string) => {
       cluster.data.machinePoolsActions = machinePoolsActions;
       cluster.data.kubeletConfigActions = kubeletConfigActions;
       cluster.data.canDelete = !!canDeleteAccessReviewResponse?.data?.allowed;
+      cluster.data.wifConfigName = wifConfig?.display_name;
+
       return {
         isLoading: false,
         cluster: cluster.data,

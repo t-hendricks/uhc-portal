@@ -70,6 +70,10 @@ const reviewValues = {
     valueTransform: (value) =>
       value === GCPAuthType.ServiceAccounts ? 'Service Account' : 'Workload Identity Federation',
   },
+  [FieldId.GcpWifConfig]: {
+    title: 'WIF configuration',
+    valueTransform: (value) => value.display_name,
+  },
   name: {
     title: 'Cluster name',
   },

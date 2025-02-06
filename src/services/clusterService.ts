@@ -43,6 +43,7 @@ import type {
   Version,
   VersionGate,
   VersionGateAgreement,
+  WifConfig,
 } from '../types/clusters_mgmt.v1';
 
 const OSDUpgradeType = 'OSD';
@@ -1187,6 +1188,9 @@ export function getClusterService(apiRequest: APIRequest = defaultApiRequest) {
           size: -1,
         },
       }),
+
+    getGCPWifConfig: (id: string): Promise<AxiosResponse<WifConfig>> =>
+      apiRequest.get(`/api/clusters_mgmt/v1/gcp/wif_configs/${id}`),
   };
 }
 
