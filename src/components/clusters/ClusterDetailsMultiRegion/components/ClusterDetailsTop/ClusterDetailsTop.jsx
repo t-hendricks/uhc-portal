@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import { useDispatch } from 'react-redux';
 
 import { Alert, Button, Flex, Spinner, Split, SplitItem, Title } from '@patternfly/react-core';
+import { addNotification } from '@redhat-cloud-services/frontend-components-notifications/redux';
 
 import getClusterName from '~/common/getClusterName';
 import { goZeroTime2Null } from '~/common/helpers';
@@ -20,6 +21,7 @@ import ButtonWithTooltip from '~/components/common/ButtonWithTooltip';
 import { modalActions } from '~/components/common/Modal/ModalActions';
 import modals from '~/components/common/Modal/modals';
 import RefreshButton from '~/components/common/RefreshButton/RefreshButton';
+import { usePreviousProps } from '~/hooks/usePreviousProps';
 import { refreshClusterDetails } from '~/queries/refreshEntireCache';
 import {
   SubscriptionCommonFieldsCluster_billing_model as SubscriptionCommonFieldsClusterBillingModel,
@@ -269,6 +271,27 @@ function ClusterDetailsTop(props) {
       clusterStates.ERROR,
       clusterStates.UNINSTALLING,
     ].includes(cluster.state) || hasInflightEgressErrors(cluster);
+
+  // If cluster is uninstalling - navigate away once the
+  // status monitor is no longer needed
+  const prevClusterState = usePreviousProps(cluster)?.state;
+  const navigate = useNavigate();
+  React.useEffect(() => {
+    if (
+      prevClusterState === clusterStates.UNINSTALLING &&
+      cluster.state !== clusterStates.UNINSTALLING &&
+      !shouldShowStatusMonitor
+    ) {
+      dispatch(
+        addNotification({
+          title: `Successfully uninstalled cluster ${getClusterName(cluster)}`,
+          variant: 'success',
+        }),
+      );
+
+      navigate('/cluster-list');
+    }
+  }, [cluster, cluster.state, dispatch, navigate, prevClusterState, shouldShowStatusMonitor]);
 
   return (
     <div id="cl-details-top" className="top-row">
