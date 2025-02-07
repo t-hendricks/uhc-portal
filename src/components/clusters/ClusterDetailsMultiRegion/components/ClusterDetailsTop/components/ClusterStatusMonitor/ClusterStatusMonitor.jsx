@@ -317,7 +317,7 @@ const ClusterStatusMonitor = (props) => {
                   <FlexItem>
                     {runningInflightCheck && (
                       <span className="pf-v5-u-mr-sm">
-                        <Spinner size="sm" />
+                        <Spinner size="sm" aria-label="Loading..." />
                       </span>
                     )}
                     <Button

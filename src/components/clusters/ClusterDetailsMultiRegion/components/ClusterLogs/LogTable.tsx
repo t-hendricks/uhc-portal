@@ -216,7 +216,7 @@ const LogTable = ({ logs, setSorting, pending, refreshEvent }: LogTableParams) =
   return (
     <Bullseye>
       {showSpinner ? (
-        <Spinner size="lg" />
+        <Spinner size="lg" aria-label="Loading..." />
       ) : (
         <Table aria-label="Expandable table" variant={TableVariant.compact}>
           <Thead>

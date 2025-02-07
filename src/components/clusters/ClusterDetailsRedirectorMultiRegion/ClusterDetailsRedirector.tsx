@@ -29,7 +29,7 @@ const ClusterDetailsRedirector = () => {
   if (!isFetched) {
     return (
       <div className="pf-v5-u-text-align-center">
-        <Spinner />
+        <Spinner aria-label="Loading..." />
       </div>
     );
   }

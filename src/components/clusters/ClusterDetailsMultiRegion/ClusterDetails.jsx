@@ -18,8 +18,7 @@ import { useDispatch } from 'react-redux';
 import { useLocation, useParams } from 'react-router-dom';
 
 import * as OCM from '@openshift-assisted/ui-lib/ocm';
-import { PageSection, TabContent, Tooltip } from '@patternfly/react-core';
-import { Spinner } from '@redhat-cloud-services/frontend-components/Spinner';
+import { PageSection, Spinner, TabContent, Tooltip } from '@patternfly/react-core';
 
 import { Navigate, useNavigate } from '~/common/routing';
 import { AppPage } from '~/components/App/AppPage';
@@ -367,7 +366,7 @@ const ClusterDetails = (props) => {
   const errorState = () => (
     <AppPage title={PAGE_TITLE}>
       <Unavailable message="Error retrieving cluster details" response={error} />
-      {isPending && <Spinner />}
+      {isPending && <Spinner size="lg" aria-label="Loading..." />}
     </AppPage>
   );
 
@@ -378,7 +377,9 @@ const ClusterDetails = (props) => {
       <AppPage title={PAGE_TITLE}>
         <div id="clusterdetails-content">
           <div className="cluster-loading-container">
-            <Spinner centered />
+            <div className="pf-v5-u-text-align-center">
+              <Spinner size="lg" arial-label="Loading..." />
+            </div>
           </div>
         </div>
       </AppPage>

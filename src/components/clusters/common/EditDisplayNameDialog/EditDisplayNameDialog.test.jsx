@@ -59,8 +59,8 @@ describe('<EditDisplayNameDialog />', () => {
     });
     const { container } = render(<EditDisplayNameDialog {...defaultProps} />);
 
-    expect(screen.getByText('Loading...')).toBeInTheDocument();
-    expect(screen.getByRole('status')).toBeInTheDocument();
+    expect(screen.getByRole('progressbar')).toBeInTheDocument();
+    expect(screen.getByLabelText('Loading...')).toBeInTheDocument();
     await checkAccessibility(container);
   });
 

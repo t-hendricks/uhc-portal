@@ -10,6 +10,7 @@ import {
   Grid,
   GridItem,
   Label,
+  Spinner,
   Text,
   TextContent,
   TextList,
@@ -18,7 +19,6 @@ import {
   TextVariants,
   Title,
 } from '@patternfly/react-core';
-import { Spinner } from '@redhat-cloud-services/frontend-components/Spinner';
 
 import { trackEvents } from '~/common/analytics';
 import { formatMinorVersion, isSupportedMinorVersion } from '~/common/helpers';
@@ -333,7 +333,7 @@ function AccountRolesARNsSection({
       {!hasFinishedLoadingRoles && (
         <GridItem>
           <div className="spinner-fit-container">
-            <Spinner />
+            <Spinner size="lg" aria-label="Loading..." />
           </div>
           <div className="spinner-loading-text" data-testid="spinner-loading-arn-text">
             Loading account roles ARNs...

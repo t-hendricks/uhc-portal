@@ -2,7 +2,7 @@ import React from 'react';
 import * as reactRedux from 'react-redux';
 
 import * as useResumeCluster from '~/queries/ClusterActionsQueries/useResumeCluster';
-import { checkAccessibility, screen, within, withState } from '~/testUtils';
+import { checkAccessibility, screen, withState } from '~/testUtils';
 
 import ResumeClusterModal from './ResumeClusterModal';
 
@@ -79,8 +79,8 @@ describe('<ResumeClusterModal />', () => {
     });
     withState(defaultReduxState).render(<ResumeClusterModal {...defaultProps} />);
     expect(screen.getByRole('dialog')).toBeInTheDocument();
-    expect(screen.getByRole('status')).toBeInTheDocument();
-    expect(within(screen.getByRole('status')).getByText('Loading...')).toBeInTheDocument();
+    expect(screen.getByRole('progressbar')).toBeInTheDocument();
+    expect(screen.getByLabelText('Loading...')).toBeInTheDocument();
   });
 
   describe('mounted ', () => {

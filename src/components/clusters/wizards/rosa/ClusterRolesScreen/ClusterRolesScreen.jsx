@@ -8,6 +8,7 @@ import {
   FormGroup,
   Grid,
   GridItem,
+  Spinner,
   Text,
   TextContent,
   TextVariants,
@@ -15,7 +16,6 @@ import {
   ToggleGroup,
   ToggleGroupItem,
 } from '@patternfly/react-core';
-import { Spinner } from '@redhat-cloud-services/frontend-components/Spinner';
 
 import { trackEvents } from '~/common/analytics';
 import { useFormState } from '~/components/clusters/wizards/hooks';
@@ -294,7 +294,7 @@ const ClusterRolesScreen = () => {
         {isGetOCMRolePending && (
           <GridItem>
             <div className="spinner-fit-container">
-              <Spinner />
+              <Spinner size="lg" aria-label="Loading..." />
             </div>
             <div className="spinner-loading-text pf-v5-u-ml-xl">Checking for admin OCM role...</div>
           </GridItem>

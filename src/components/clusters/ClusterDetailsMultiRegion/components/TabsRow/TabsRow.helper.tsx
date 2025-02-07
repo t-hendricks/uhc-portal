@@ -15,7 +15,7 @@ const AccessRequestIcon = ({
   isLoading?: boolean;
 }) =>
   isLoading ? (
-    <Spinner size="sm" />
+    <Spinner size="sm" aria-label="Loading..." />
   ) : (
     <Badge
       screenReaderText="Pending Access Requests"

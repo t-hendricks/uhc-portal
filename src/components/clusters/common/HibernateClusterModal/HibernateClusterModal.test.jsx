@@ -3,7 +3,7 @@ import * as reactRedux from 'react-redux';
 
 import * as useHibernateCluster from '~/queries/ClusterActionsQueries/useHibernateCluster';
 import * as useGetSchedules from '~/queries/ClusterDetailsQueries/ClusterSettingsTab/useGetSchedules';
-import { checkAccessibility, screen, within, withState } from '~/testUtils';
+import { checkAccessibility, screen, withState } from '~/testUtils';
 
 import HibernateClusterModal from './HibernateClusterModal';
 
@@ -86,8 +86,8 @@ describe('<HibernateClusterModal />', () => {
     });
     withState(defaultReduxState).render(<HibernateClusterModal {...defaultProps} />);
     expect(screen.getByRole('dialog')).toBeInTheDocument();
-    expect(screen.getByRole('status')).toBeInTheDocument();
-    expect(within(screen.getByRole('status')).getByText('Loading...')).toBeInTheDocument();
+    expect(screen.getByRole('progressbar')).toBeInTheDocument();
+    expect(screen.getByLabelText('Loading...')).toBeInTheDocument();
   });
 
   describe('mounted ', () => {

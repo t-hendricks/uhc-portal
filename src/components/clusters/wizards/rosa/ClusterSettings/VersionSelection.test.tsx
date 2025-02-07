@@ -531,8 +531,8 @@ describe('<VersionSelection />', () => {
       );
 
       // Assert
-      // There is no role associated with the loading icon
-      expect(screen.getByText(/Loading/)).toBeInTheDocument();
+      expect(screen.getByRole('progressbar')).toBeInTheDocument();
+      expect(screen.getByLabelText('Loading...')).toBeInTheDocument();
       expect(screen.queryByLabelText(componentText.SELECT_TOGGLE.label)).not.toBeInTheDocument();
     });
 

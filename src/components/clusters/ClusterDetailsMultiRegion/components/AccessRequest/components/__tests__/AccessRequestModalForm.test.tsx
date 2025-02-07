@@ -112,7 +112,8 @@ describe('AccessRequestModalForm', () => {
         render(<AccessRequestModalForm />);
 
         // Assert
-        expect(screen.getByText(/Loading.../i)).toBeInTheDocument();
+        expect(screen.getByRole('progressbar')).toBeInTheDocument();
+        expect(screen.getByLabelText('Loading...')).toBeInTheDocument();
       },
     ));
 

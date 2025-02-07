@@ -186,7 +186,7 @@ describe('<ClusterDetailsMultiRegion />', () => {
 
         withState(initialState, true).render(<ClusterDetails {...props} />);
 
-        expect(screen.getByText('Loading...')).toBeInTheDocument();
+        expect(screen.getByRole('progressbar')).toBeInTheDocument();
       });
     });
 

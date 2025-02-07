@@ -1,10 +1,9 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
 
-import { Title } from '@patternfly/react-core';
+import { Spinner, Title } from '@patternfly/react-core';
 import { Wizard as WizardDeprecated } from '@patternfly/react-core/deprecated';
 import { DateFormat } from '@redhat-cloud-services/frontend-components/DateFormat';
-import { Spinner } from '@redhat-cloud-services/frontend-components/Spinner';
 
 import { useFetchUpgradeGatesFromApi } from '~/queries/ClusterDetailsQueries/useFetchUpgadeGatesFromApi';
 
@@ -136,7 +135,9 @@ const UpgradeWizard = () => {
       id: 'select-version',
       name: 'Select version',
       component: isPending ? (
-        <Spinner centered />
+        <div className="pf-v5-u-text-align-center">
+          <Spinner size="lg" aria-label="Loading..." />
+        </div>
       ) : (
         <VersionSelectionGrid
           availableUpgrades={cluster?.version?.available_upgrades}

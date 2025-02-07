@@ -3,8 +3,7 @@ import get from 'lodash/get';
 import PropTypes from 'prop-types';
 import { useDispatch } from 'react-redux';
 
-import { Alert, Button, Flex, Split, SplitItem, Title } from '@patternfly/react-core';
-import { Spinner } from '@redhat-cloud-services/frontend-components/Spinner';
+import { Alert, Button, Flex, Spinner, Split, SplitItem, Title } from '@patternfly/react-core';
 
 import getClusterName from '~/common/getClusterName';
 import { goZeroTime2Null } from '~/common/helpers';
@@ -286,7 +285,7 @@ function ClusterDetailsTop(props) {
           </Title>
         </SplitItem>
         <SplitItem>
-          {isRefreshing && <Spinner className="cluster-details-spinner" />}
+          {isRefreshing && <Spinner size="lg" aria-label="Loading..." className="pf-v5-u-mx-md" />}
           {error && (
             <ErrorTriangle errorMessage={errorMessage} className="cluster-details-warning" />
           )}

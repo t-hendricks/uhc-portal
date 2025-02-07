@@ -13,10 +13,10 @@ import {
   SelectList,
   SelectOption,
   SelectProps,
+  Spinner,
   Switch,
 } from '@patternfly/react-core';
 import { OutlinedQuestionCircleIcon } from '@patternfly/react-icons/dist/esm/icons/outlined-question-circle-icon';
-import { Spinner } from '@redhat-cloud-services/frontend-components/Spinner';
 
 import { isSupportedMinorVersion } from '~/common/helpers';
 import { MIN_MANAGED_POLICY_VERSION } from '~/components/clusters/wizards/rosa/rosaConstants';
@@ -323,7 +323,7 @@ function VersionSelection({
       ) : null}
       {getInstallableVersionsResponse.pending && (
         <div className="spinner-fit-container">
-          <Spinner />
+          <Spinner size="lg" aria-label="Loading..." />
         </div>
       )}
       {getInstallableVersionsResponse.fulfilled && !rosaVersionError && (

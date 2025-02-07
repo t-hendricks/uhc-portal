@@ -6,13 +6,13 @@ import {
   Modal as PfModal,
   ModalProps,
   ModalVariant,
+  Spinner,
   Split,
   SplitItem,
   Stack,
   StackItem,
   Title,
 } from '@patternfly/react-core';
-import { Spinner } from '@redhat-cloud-services/frontend-components/Spinner';
 
 import { NavigateFunction, useNavigate } from '~/common/routing';
 
@@ -176,7 +176,13 @@ const Modal = ({
       }
       {...extraProps}
     >
-      {isPending ? <Spinner centered /> : children}
+      {isPending ? (
+        <div className="pf-v5-u-text-align-center">
+          <Spinner size="lg" aria-label="Loading..." />
+        </div>
+      ) : (
+        children
+      )}
     </PfModal>
   );
 };

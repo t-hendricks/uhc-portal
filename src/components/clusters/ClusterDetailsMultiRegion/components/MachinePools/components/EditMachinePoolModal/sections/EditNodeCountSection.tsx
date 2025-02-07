@@ -76,7 +76,7 @@ const EditNodeCountSection = ({
       <AutoscalingField cluster={cluster} />
       {organization.pending ? (
         <div>
-          <Spinner size="md" />
+          <Spinner size="md" aria-label="Loading..." />
           &nbsp;Loading quota...
         </div>
       ) : (

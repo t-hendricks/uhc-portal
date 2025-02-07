@@ -155,7 +155,7 @@ describe('<PersistentStorageDropdown />', () => {
 
       render(<PersistentStorageDropdown {...defaultProps} />);
 
-      expect(screen.getByRole('status')).toBeInTheDocument();
+      expect(screen.getByRole('progressbar')).toBeInTheDocument();
       expect(screen.getByText('Loading persistent storage list...')).toBeInTheDocument();
     });
   });
