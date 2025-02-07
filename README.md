@@ -74,6 +74,11 @@ Use `./deploy_info.mjs` script to check which versions are now deployed.
 If you want to monitor/debug the deploy jobs, `./deploy_info.mjs --json`
 output has all the info you’ll need.
 
+## Issues/Troubleshooting
+
+If you get a timeout/network connection issue when running `yarn install`, try increasing the timeout e.g.
+`yarn install --network-timeout 600000`.
+
 ## Contributing
 
 For in depth guidance see [the contributing guidelines](docs/contributing.md).
