@@ -61,7 +61,11 @@ const EditDisplayNameDialog = ({ onClose }: EditDisplayNameDialogProps) => {
   const validationMessage = checkClusterDisplayName(currentDisplayName);
   const handleSubmit = () => {
     if (!validationMessage) {
-      mutate({ subscriptionID, displayName: currentDisplayName });
+      if (currentDisplayName === '') {
+        mutate({ subscriptionID, displayName });
+      } else {
+        mutate({ subscriptionID, displayName: currentDisplayName });
+      }
     }
   };
 
