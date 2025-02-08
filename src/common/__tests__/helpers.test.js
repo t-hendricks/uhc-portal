@@ -3,6 +3,7 @@ import path from 'path';
 
 import helpers, {
   goZeroTime2Null,
+  isSupportedMinorVersion,
   parseReduxFormKeyValueList,
   parseReduxFormTaints,
   scrollToFirstField,
@@ -215,5 +216,20 @@ describe('shouldRefetchQuota', () => {
 
     // Assert
     expect(result).toBe(expectedResult);
+  });
+});
+
+// Make a test case for isSupportedMinorVersion
+describe('Test isSupportedMinorVersion', () => {
+  it('should return true for supported minor version', () => {
+    expect(isSupportedMinorVersion('4.17.0-0.nightly', '4.19')).toBeTruthy();
+  });
+
+  it('should return false for unsupported minor version', () => {
+    expect(isSupportedMinorVersion('4.18', '4.17')).toBeFalsy();
+  });
+
+  it('should return false for unsupported major version', () => {
+    expect(isSupportedMinorVersion('4.0', '3.12')).toBeFalsy();
   });
 });

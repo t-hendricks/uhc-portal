@@ -262,9 +262,10 @@ const goZeroTime2Null = (timeStr: string): string | null => {
  */
 const isSupportedMinorVersion = (version: string, maxMinorVersion: string) => {
   const parsedMaxMinorVersion = maxMinorVersion ? semver.coerce(maxMinorVersion) : null;
+  const parsedVersion = semver.coerce(version)?.version || '';
   return parsedMaxMinorVersion
     ? semver.satisfies(
-        version,
+        parsedVersion,
         `<=${semver.major(parsedMaxMinorVersion)}.${semver.minor(parsedMaxMinorVersion)}`,
       )
     : false;
