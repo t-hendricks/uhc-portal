@@ -1,7 +1,7 @@
 
 Move changes from `master` to `stable`, to promote content from [Staging][stage-env] to [Production][prod-env].
 
-See the [Release Notes wiki page][change-log] for the changelog.
+See the [Releases page][change-log] for the changelog.
 
 
 # Reviews
@@ -31,8 +31,6 @@ Check the following before merging:
 
 
 
-<!-- TODO: update this link to point to the correct section in the release notes -->
-<!--       by appending the heading permalink, e.g. /Release-Notes#mar-5-1981 -->
-[change-log]: https://github.com/RedHatInsights/uhc-portal/wiki/Release-Notes
+[change-log]: https://github.com/RedHatInsights/uhc-portal/releases/
 [prod-env]: https://console.redhat.com/openshift/
 [stage-env]: https://console.dev.redhat.com/openshift/
