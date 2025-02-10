@@ -57,10 +57,11 @@ NOTE: The author of the PR will merge the PR.
 - [ ] Assign 2 Dev Reviewers
 - [ ] Assign ‘QA contact’ from associated JIRA ticket as the QE Reviewer
 - [ ] &#x1F53B; _When PR has 2 dev approvals, change JIRA status to ‘Review’_
+
 ### Check the following before merging:
 - [ ] All checkboxes for all above reviewers have been checked
 - [ ] PR has 3 approvals (2 Dev, 1 QE)
-- [ ] Verify the 'Squash and merge' option is selected before merging the PR into master (Click on the little arrow on the right of the green merge button, and choose the 'Squash and merge' option)
+
 ### Check the following after PR has merged:
 - [ ] Verified PR was deployed to staging via the [build job](https://ci.int.devshift.net/job/RedHatInsights-uhc-portal-gh-build-master/) or the related deployment was mentioned on [#ocm-ui-deploys](https://redhat.enterprise.slack.com/archives/C03GKHGMX7U)
 - [ ] Quick test code/feature again on staging (https://console.dev.redhat.com/openshift/)
