@@ -5,6 +5,8 @@ import remarkGfm from 'remark-gfm';
 
 import ExternalLink from '~/components/common/ExternalLink';
 
+import './MarkdownParser.scss';
+
 type MarkdownParserProps = {
   rehypePlugins?: import('unified').PluggableList | undefined;
   children?: string;

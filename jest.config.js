@@ -22,6 +22,8 @@ const config = {
     '@openshift-assisted/locales/([a-z]{2,3}/translation.json)':
       '<rootDir>/__mocks__/assistedUiTranslationMock.json',
     '^react-markdown$': '<rootDir>/__mocks__/markdownMock.tsx',
+    '^rehype-raw$': '<rootDir>/__mocks__/rehype-raw.ts',
+    '^remark-gfm$': '<rootDir>/__mocks__/remark-gfm.ts',
     '^axios$': '<rootDir>/node_modules/axios/dist/node/axios.cjs',
     '\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$':
       '<rootDir>/__mocks__/fileMock.js',
