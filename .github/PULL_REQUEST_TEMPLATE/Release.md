@@ -27,7 +27,6 @@ Check the following before merging:
 - [ ] All above checkboxes for both reviewers have been checked
 - [ ] All CI tests have passed
 - [ ] Has at least 2 approvals, ready to merge
-- [ ] "Merge pull request" is selected as the merge-method (**not** "Squash and merge" or "Rebase and merge")
 
 
 
