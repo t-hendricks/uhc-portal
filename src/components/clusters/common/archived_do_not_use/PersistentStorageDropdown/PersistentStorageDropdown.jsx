@@ -88,7 +88,7 @@ class PersistentStorageDropdown extends React.Component {
           onChange={(_event, value) => onChange(value)}
           {...restInput}
         >
-          {filteredStorageValues.values.map((value) => storageOption(value))}
+          {filteredStorageValues.values.sort((a, b) => a.value - b.value).map(storageOption)}
         </FormSelect>
       );
 

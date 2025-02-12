@@ -124,6 +124,12 @@ function DetailsLeft({ cluster, cloudProviders, showAssistedId }) {
           </DescriptionListDescription>
         </DescriptionListGroup>
       )}
+      {cluster.wifConfigName && (
+        <DescriptionListGroup>
+          <DescriptionListTerm>WIF configuration</DescriptionListTerm>
+          <DescriptionListDescription>{cluster.wifConfigName}</DescriptionListDescription>
+        </DescriptionListGroup>
+      )}
       {cluster.managed && (
         <DescriptionListGroup>
           <DescriptionListTerm>Availability</DescriptionListTerm>

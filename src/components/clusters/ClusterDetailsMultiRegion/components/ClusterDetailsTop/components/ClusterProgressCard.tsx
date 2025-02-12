@@ -67,7 +67,13 @@ const ClusterProgressCard = ({ cluster, regionalInstance }: ClusterProgressCardP
             className="card-title pf-v5-u-display-inline-block pf-v5-u-mr-md"
             data-testid="installation-header"
           >
-            {inProgress && <Spinner size="sm" className="progressing-icon pf-v5-u-mr-md" />}
+            {inProgress && (
+              <Spinner
+                size="sm"
+                aria-label="Loading..."
+                className="progressing-icon pf-v5-u-mr-md"
+              />
+            )}
             {isError && (
               <span className="pf-v5-u-mr-xs">
                 <ExclamationCircleIcon color={dangerColor.value} />{' '}

@@ -5,6 +5,8 @@ import { render, screen } from '~/testUtils';
 import MarkdownParser from '../MarkdownParser';
 
 import {
+  backstickContent,
+  expectedBackstickContent,
   expectedMultipleHtmlElements,
   limitedSupportHtmlWithLinks,
   multipleHtmlElements,
@@ -55,5 +57,14 @@ describe.skip('MarkdownParser', () => {
       </div>,
     );
     expect(screen.getByTestId('parent-div').innerHTML).toBe(expectedMultipleHtmlElements);
+  });
+
+  it('rendering backstick character', () => {
+    render(
+      <div data-testid="parent-div">
+        <MarkdownParser>{backstickContent}</MarkdownParser>
+      </div>,
+    );
+    expect(screen.getByTestId('parent-div').innerHTML).toBe(expectedBackstickContent);
   });
 });

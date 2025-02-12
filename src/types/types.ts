@@ -110,6 +110,8 @@ export type AugmentedCluster = ClusterWithPermissions & {
   aiSupportLevels?: FeaturesSupportsLevel;
   status?: ClusterStatus;
   api?: ClusterAPI;
+  // WIF configuration name for OSD GCP clusters using authentication with Workload Identity Federation
+  wifConfigName?: string;
 };
 
 export type AugmentedClusterResponse = {

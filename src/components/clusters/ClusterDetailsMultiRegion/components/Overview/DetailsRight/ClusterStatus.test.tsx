@@ -27,20 +27,31 @@ const machinePools = [
 
 const machinePoolsAutoScale = [
   {
-    autoscaling: { min_replica: 2, max_replica: 3 },
+    autoscaling: { min_replicas: 2, max_replicas: 3 },
     status: { current_replicas: 2 },
   },
   {
-    autoscaling: { min_replica: 2, max_replica: 3 },
+    autoscaling: { min_replicas: 2, max_replicas: 3 },
     status: { current_replicas: 3 },
   },
   {
-    autoscaling: { min_replica: 2, max_replica: 3 },
+    autoscaling: { min_replicas: 2, max_replicas: 3 },
     status: { current_replicas: 1 },
   },
   {
-    autoscaling: { min_replica: 2, max_replica: 3 },
+    autoscaling: { min_replicas: 2, max_replicas: 3 },
     status: { current_replicas: 4 },
+  },
+];
+
+const machinePoolsAutoScaleReady = [
+  {
+    autoscaling: { min_replicas: 2, max_replicas: 4 },
+    status: { current_replicas: 2 },
+  },
+  {
+    autoscaling: { min_replicas: 2, max_replicas: 4 },
+    status: { current_replicas: 2 },
   },
 ];
 
@@ -135,6 +146,20 @@ describe('<ClusterStatus />', () => {
 
       // Assert
       expect(screen.getByText('Pending 2 / 4')).toBeInTheDocument();
+    });
+
+    it('shows all machine pools are in "ready like" status ', () => {
+      // Arrange
+      render(
+        <ClusterStatus
+          cluster={{ ...cluster, hypershift: { enabled: true } }}
+          limitedSupport={false}
+          machinePools={machinePoolsAutoScaleReady}
+        />,
+      );
+
+      // Assert
+      expect(screen.getByText('Ready 2 / 2')).toBeInTheDocument();
     });
   });
 });

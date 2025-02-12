@@ -8,6 +8,7 @@ import { humanizeValueWithUnitGiB } from '~/common/units';
 import { routeSelectorsAsString } from '~/components/clusters/ClusterDetailsMultiRegion/components/Networking/NetworkingSelector';
 import parseUpdateSchedule from '~/components/clusters/common/Upgrades/parseUpdateSchedule';
 import { IMDSType } from '~/components/clusters/wizards/common';
+import { getVersionNameWithChannel } from '~/components/clusters/wizards/common/ClusterSettings/Details/versionSelectHelper';
 import { ClusterPrivacyType } from '~/components/clusters/wizards/osd//Networking/constants';
 import { GCPAuthType } from '~/components/clusters/wizards/osd/ClusterSettings/CloudProvider/types';
 import { FieldId } from '~/components/clusters/wizards/osd/constants';
@@ -70,6 +71,10 @@ const reviewValues = {
     valueTransform: (value) =>
       value === GCPAuthType.ServiceAccounts ? 'Service Account' : 'Workload Identity Federation',
   },
+  [FieldId.GcpWifConfig]: {
+    title: 'WIF configuration',
+    valueTransform: (value) => value.display_name,
+  },
   name: {
     title: 'Cluster name',
   },
@@ -95,7 +100,7 @@ const reviewValues = {
   },
   cluster_version: {
     title: 'Version',
-    valueTransform: (value) => value?.raw_id,
+    valueTransform: (value) => getVersionNameWithChannel(value),
   },
   hypershift: {
     title: 'Control plane',

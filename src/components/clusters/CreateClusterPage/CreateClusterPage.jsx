@@ -1,11 +1,17 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { PageSection, Tab, Tabs, TabTitleIcon, TabTitleText } from '@patternfly/react-core';
+import {
+  PageSection,
+  Spinner,
+  Tab,
+  Tabs,
+  TabTitleIcon,
+  TabTitleText,
+} from '@patternfly/react-core';
 import { CloudIcon } from '@patternfly/react-icons/dist/esm/icons/cloud-icon';
 import { LaptopIcon } from '@patternfly/react-icons/dist/esm/icons/laptop-icon';
 import { ServerIcon } from '@patternfly/react-icons/dist/esm/icons/server-icon';
-import { Spinner } from '@redhat-cloud-services/frontend-components/Spinner';
 
 import { useNavigate } from '~/common/routing';
 import { AppPage } from '~/components/App/AppPage';
@@ -138,7 +144,9 @@ const CreateCluster = ({
         <>
           {title}
           <PageSection variant="light">
-            <Spinner centered />
+            <div className="pf-v5-u-text-align-center">
+              <Spinner size="lg" aria-label="Loading..." />
+            </div>
           </PageSection>
         </>
       )}

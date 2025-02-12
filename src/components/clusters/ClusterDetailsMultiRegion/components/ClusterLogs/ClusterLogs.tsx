@@ -239,7 +239,7 @@ const ClusterLogs = ({
               {fetchedClusterLogsAt && !isPending ? (
                 <LiveDateFormat timestamp={fetchedClusterLogsAt.getTime()} />
               ) : (
-                <Spinner size="sm" />
+                <Spinner size="sm" aria-label="Loading..." />
               )}
             </>
           ),

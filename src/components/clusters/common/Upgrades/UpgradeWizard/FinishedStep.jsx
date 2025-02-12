@@ -10,11 +10,11 @@ import {
   EmptyStateFooter,
   EmptyStateHeader,
   EmptyStateIcon,
+  Spinner,
 } from '@patternfly/react-core';
 import { CheckCircleIcon } from '@patternfly/react-icons/dist/esm/icons/check-circle-icon';
 import { global_success_color_100 as successColor } from '@patternfly/react-tokens/dist/esm/global_success_color_100';
 import { DateFormat } from '@redhat-cloud-services/frontend-components/DateFormat';
-import { Spinner } from '@redhat-cloud-services/frontend-components/Spinner';
 
 import ErrorBox from '../../../../common/ErrorBox';
 
@@ -34,7 +34,11 @@ function FinishedStep({
     );
   }
   if (isPostSchedulePending) {
-    return <Spinner className="wizard-step-body" centered />;
+    return (
+      <div className="wizard-step-body pf-v5-u-text-align-center">
+        <Spinner size="lg" aria-label="Loading..." />
+      </div>
+    );
   }
   return (
     <EmptyState variant="lg" className="wizard-step-body">

@@ -2,8 +2,7 @@ import React, { useCallback, useEffect, useState } from 'react';
 import { useField } from 'formik';
 import { useDispatch } from 'react-redux';
 
-import { FormGroup } from '@patternfly/react-core';
-import { Spinner } from '@redhat-cloud-services/frontend-components/Spinner';
+import { FormGroup, Spinner } from '@patternfly/react-core';
 
 import { versionComparator } from '~/common/versionComparator';
 import { FieldId } from '~/components/clusters/wizards/common/constants';
@@ -151,7 +150,7 @@ export const VersionSelectField = ({
       {getInstallableVersionsResponse.pending && (
         <>
           <div className="spinner-fit-container">
-            <Spinner />
+            <Spinner size="lg" aria-label="Loading..." />
           </div>
           <div className="spinner-loading-text">Loading...</div>
         </>

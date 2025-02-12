@@ -30,7 +30,7 @@ const EditSecurityGroupsField = ({ cluster, isReadOnly }: EditSecurityGroupsFiel
   const { clusterVpc, isLoading, errorReason } = useAWSVPCFromCluster(cluster);
 
   if (isLoading) {
-    return <Spinner>Loading security groups</Spinner>;
+    return <Spinner aria-label="Loading...">Loading security groups</Spinner>;
   }
 
   if (!clusterVpc) {

@@ -1,6 +1,7 @@
 import { Version } from '~/types/clusters_mgmt.v1';
 
 import {
+  getVersionNameWithChannel,
   getVersionsData,
   hasUnstableVersionsCapability,
   supportStatuses,
@@ -169,5 +170,20 @@ describe('hasUnstableVersionsCapability', () => {
 
   it('should not find the capbility to get non stable versions', () => {
     expect(hasUnstableVersionsCapability(stateWithoutNonStableChannelGroupCapability)).toBe(false);
+  });
+});
+
+describe('getVersionNameWithChannel', () => {
+  it('should have the correct name with channel for select', () => {
+    const version1 = {
+      raw_id: '4.16.8',
+      channel_group: 'candidate',
+    };
+    const version2 = {
+      raw_id: '4.17.8',
+      channel_group: 'stable',
+    };
+    expect(getVersionNameWithChannel(version1)).toBe('4.16.8 (candidate)');
+    expect(getVersionNameWithChannel(version2)).toBe('4.17.8 ');
   });
 });

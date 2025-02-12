@@ -166,7 +166,7 @@ describe('<UnarchiveClusterDialog />', () => {
 
     withState(defaultReduxState).render(<UnarchiveClusterDialog {...defaultProps} />);
 
-    expect(screen.getByRole('status')).toBeInTheDocument();
-    expect(screen.getByText('Loading...')).toBeInTheDocument();
+    expect(screen.getByRole('progressbar')).toBeInTheDocument();
+    expect(screen.getByLabelText('Loading...')).toBeInTheDocument();
   });
 });

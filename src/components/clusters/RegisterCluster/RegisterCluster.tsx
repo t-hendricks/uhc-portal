@@ -12,6 +12,7 @@ import {
   Grid,
   GridItem,
   PageSection,
+  Spinner,
   Text,
   TextContent,
   TextVariants,
@@ -20,7 +21,6 @@ import {
   TooltipPosition,
 } from '@patternfly/react-core';
 import { PageHeader, PageHeaderTitle } from '@redhat-cloud-services/frontend-components/PageHeader';
-import Spinner from '@redhat-cloud-services/frontend-components/Spinner';
 
 import { Link, Navigate } from '~/common/routing';
 import { AppPage } from '~/components/App/AppPage';
@@ -233,7 +233,7 @@ const RegisterCluster = () => {
                         )}
                       </Form>
                     ) : (
-                      <Spinner />
+                      <Spinner size="lg" aria-label="Loading..." />
                     )}
                   </GridItem>
                 </Grid>

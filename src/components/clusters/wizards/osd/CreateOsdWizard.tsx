@@ -6,12 +6,12 @@ import { useDispatch } from 'react-redux';
 import {
   Banner,
   PageSection,
+  Spinner,
   Wizard,
   WizardStep,
   WizardStepChangeScope,
   WizardStepType,
 } from '@patternfly/react-core';
-import { Spinner } from '@redhat-cloud-services/frontend-components';
 
 import { ocmResourceTypeByProduct, TrackEvent, trackEvents } from '~/common/analytics';
 import { shouldRefetchQuota } from '~/common/helpers';
@@ -162,7 +162,9 @@ const CreateOsdWizardInternal = () => {
   ) {
     return (
       <PageSection>
-        <Spinner centered />
+        <div className="pf-v5-u-text-align-center">
+          <Spinner size="lg" arial-label="Loading..." />
+        </div>
       </PageSection>
     );
   }

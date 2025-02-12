@@ -49,7 +49,7 @@ jobs:
           cmd: install
       - name: Check uncommitted changes
         if: ${{ always() }}
-        # Check that Git working tree is clean after running `npm install` via the frontend-maven-plugin.
+        # Check that Git working tree is clean after running `install` command.
         # The `git` command exits with 1 and fails the build if there are any uncommitted changes.
         run: git diff HEAD --exit-code
   build:

@@ -3,7 +3,6 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 import React from 'react';
 import PropTypes from 'prop-types';
-import { useDispatch } from 'react-redux';
 
 import { Alert, Button, ButtonVariant, Flex, FlexItem, Spinner } from '@patternfly/react-core';
 import MinusCircleIcon from '@patternfly/react-icons/dist/esm/icons/minus-circle-icon';
@@ -11,10 +10,8 @@ import PlusCircleIcon from '@patternfly/react-icons/dist/esm/icons/plus-circle-i
 import { Table, TableVariant, Tbody, Td, Th, Thead, Tr } from '@patternfly/react-table';
 import { addNotification } from '@redhat-cloud-services/frontend-components-notifications/redux';
 
-import getClusterName from '~/common/getClusterName';
 import { HAD_INFLIGHT_ERROR_LOCALSTORAGE_KEY } from '~/common/localStorageConstants';
 import { emailRegex } from '~/common/regularExpressions';
-import { useNavigate } from '~/common/routing';
 import clusterStates, {
   hasInflightEgressErrors,
   isOSDGCPWaitingForRolesOnHostProject,
@@ -39,16 +36,14 @@ import { InflightCheckState } from '~/types/clusters_mgmt.v1';
 const ClusterStatusMonitor = (props) => {
   const { cluster, refresh, region } = props;
 
-  const navigate = useNavigate();
-  const dispatch = useDispatch();
   const [refetchInterval, setRefetchInterval] = React.useState(false);
 
   const {
     data: clusterStatus,
     isLoading: isClusterStatusLoading,
     isError: isClusterStatusError,
-    error: clusterStatusError,
   } = useFetchClusterStatus(cluster.id, region, refetchInterval);
+
   const { checks: inflightChecks, isLoading: isInflightChecksLoading } = useFetchInflightChecks(
     cluster.id,
     region,
@@ -56,10 +51,9 @@ const ClusterStatusMonitor = (props) => {
     'fetchClusterStatusMonitorInflightChecks',
   );
 
-  // eslint-disable-next-line no-unused-vars
   const { data: rerunInflightChecksData, isLoading: isRerunInflightChecksLoading } =
     useFetchRerunInflightChecks(cluster?.aws?.subnet_ids, region, refetchInterval);
-  // eslint-disable-next-line no-unused-vars
+
   const {
     data: rerunInflightChecksMutationData,
     isPending: isRerunInflightChecksMutationPending,
@@ -135,37 +129,6 @@ const ClusterStatusMonitor = (props) => {
     // Minified React error #185 if added all dependencies based on linter
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [refetchInterval, inflightChecks, clusterStatus, addNotification]);
-
-  // Redirect once cluster has been deleted
-  React.useEffect(() => {
-    if (
-      !isClusterStatusLoading &&
-      !isInflightChecksLoading &&
-      clusterStatus &&
-      inflightChecks &&
-      isClusterStatusError &&
-      cluster.state === clusterStates.UNINSTALLING &&
-      clusterStatusError.status === 404
-    ) {
-      dispatch(
-        addNotification({
-          title: `Successfully uninstalled cluster ${getClusterName(cluster)}`,
-          variant: 'success',
-        }),
-      );
-      navigate('/cluster-list');
-    }
-  }, [
-    cluster,
-    clusterStatus,
-    clusterStatusError,
-    dispatch,
-    inflightChecks,
-    isClusterStatusError,
-    isClusterStatusLoading,
-    isInflightChecksLoading,
-    navigate,
-  ]);
 
   React.useEffect(() => {
     if (!isRerunInflightChecksMutationPending) {
@@ -317,7 +280,7 @@ const ClusterStatusMonitor = (props) => {
                   <FlexItem>
                     {runningInflightCheck && (
                       <span className="pf-v5-u-mr-sm">
-                        <Spinner size="sm" />
+                        <Spinner size="sm" aria-label="Loading..." />
                       </span>
                     )}
                     <Button

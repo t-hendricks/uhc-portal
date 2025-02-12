@@ -59,8 +59,8 @@ describe('<HibernateClusterModal />', () => {
     };
     render(<HibernateClusterModal {...newProps} />);
     expect(screen.getByRole('dialog')).toBeInTheDocument();
-    expect(screen.getByRole('status')).toBeInTheDocument();
-    expect(within(screen.getByRole('status')).getByText('Loading...')).toBeInTheDocument();
+    expect(screen.getByRole('progressbar')).toBeInTheDocument();
+    expect(screen.getByLabelText('Loading...')).toBeInTheDocument();
   });
 
   describe('mounted ', () => {

@@ -5,11 +5,11 @@ import PropTypes from 'prop-types';
 import {
   Banner,
   PageSection,
+  Spinner,
   Wizard,
   WizardStep,
   WizardStepChangeScope,
 } from '@patternfly/react-core';
-import { Spinner } from '@redhat-cloud-services/frontend-components';
 
 import { ocmResourceType, trackEvents } from '~/common/analytics';
 import { shouldRefetchQuota } from '~/common/helpers';
@@ -227,7 +227,9 @@ const CreateROSAWizardInternal = ({
       <>
         {title}
         <PageSection>
-          <Spinner centered />
+          <div className="pf-v5-u-text-align-center">
+            <Spinner size="lg" arial-label="Loading..." />
+          </div>
         </PageSection>
       </>
     );
@@ -435,7 +437,7 @@ function CreateROSAWizard(props) {
     selectedAWSAccountID,
     isHypershiftSelected,
   };
-  const isHypershiftEnabled = useFeatureGate(HYPERSHIFT_WIZARD_FEATURE) && !isRestrictedEnv();
+  const isHypershiftEnabled = useFeatureGate(HYPERSHIFT_WIZARD_FEATURE);
 
   return (
     <AppPage title="Create OpenShift ROSA Cluster">

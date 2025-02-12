@@ -14,11 +14,11 @@ import {
   Grid,
   GridItem,
   PageSection,
+  Spinner,
   Split,
   SplitItem,
 } from '@patternfly/react-core';
 import { PageHeader, PageHeaderTitle } from '@redhat-cloud-services/frontend-components/PageHeader';
-import { Spinner } from '@redhat-cloud-services/frontend-components/Spinner';
 
 import { Link, Navigate } from '~/common/routing';
 import { AppPage } from '~/components/App/AppPage';
@@ -132,7 +132,9 @@ const IdentityProvidersPage = (props) => {
       <AppPage title={PAGE_TITLE}>
         <div id="clusterdetails-content">
           <div className="cluster-loading-container">
-            <Spinner centered />
+            <div className="pf-v5-u-text-align-center">
+              <Spinner size="lg" aria-label="Loading..." />
+            </div>
           </div>
         </div>
       </AppPage>
@@ -142,7 +144,7 @@ const IdentityProvidersPage = (props) => {
   const errorState = () => (
     <AppPage title={PAGE_TITLE}>
       <Unavailable message="Error retrieving IDP page" response={cluster} />
-      {clusterPending && <Spinner />}
+      {clusterPending && <Spinner size="lg" aria-label="Loading..." />}
     </AppPage>
   );
 
@@ -258,7 +260,7 @@ const IdentityProvidersPage = (props) => {
                         isEditForm={isEditForm}
                       />
                     ) : (
-                      <Spinner />
+                      <Spinner size="lg" aria-label="Loading..." />
                     )}
                   </GridItem>
                 </Grid>

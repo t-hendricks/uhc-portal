@@ -1,9 +1,16 @@
 import React from 'react';
 import { To } from 'react-router-dom';
 
-import { Alert, Card, CardBody, CardTitle, PageSection, Title } from '@patternfly/react-core';
+import {
+  Alert,
+  Card,
+  CardBody,
+  CardTitle,
+  PageSection,
+  Spinner,
+  Title,
+} from '@patternfly/react-core';
 import PageHeader, { PageHeaderTitle } from '@redhat-cloud-services/frontend-components/PageHeader';
-import { Spinner } from '@redhat-cloud-services/frontend-components/Spinner';
 
 import { defaultToOfflineTokens, hasRestrictTokensCapability } from '~/common/restrictTokensHelper';
 import { isRestrictedEnv } from '~/restrictedEnv';
@@ -50,7 +57,7 @@ const CLILoginPage = ({ showToken = false, showPath, isRosa = false }: CLILoginP
     if (isLoading) {
       return (
         <ErrorOrLoadingWrapper>
-          <Spinner />
+          <Spinner size="lg" aria-label="Loading..." />
         </ErrorOrLoadingWrapper>
       );
     }

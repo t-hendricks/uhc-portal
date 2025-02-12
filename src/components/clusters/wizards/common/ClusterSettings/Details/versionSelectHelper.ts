@@ -2,7 +2,7 @@ import { FuzzyEntryType } from '~/components/common/FuzzySelect/types';
 import { Organization } from '~/types/accounts_mgmt.v1';
 import { Version } from '~/types/clusters_mgmt.v1';
 
-const channelGroups = {
+export const channelGroups = {
   STABLE: 'stable',
   CANDIDATE: 'candidate',
   FAST: 'fast',
@@ -104,4 +104,12 @@ const hasUnstableVersionsCapability = (organization?: Organization) =>
       capability.value === 'true',
   );
 
-export { getVersionsData, supportStatuses, hasUnstableVersionsCapability };
+const getVersionNameWithChannel = (version: Version): string =>
+  `${version?.raw_id} ${version?.channel_group !== channelGroups.STABLE ? `(${version?.channel_group})` : ''}`;
+
+export {
+  getVersionsData,
+  supportStatuses,
+  hasUnstableVersionsCapability,
+  getVersionNameWithChannel,
+};

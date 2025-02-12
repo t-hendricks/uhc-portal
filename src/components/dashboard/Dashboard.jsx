@@ -10,12 +10,12 @@ import {
   Grid,
   GridItem,
   PageSection,
+  Spinner,
   Split,
   SplitItem,
   Title,
 } from '@patternfly/react-core';
 import { PageHeader } from '@redhat-cloud-services/frontend-components/PageHeader';
-import Spinner from '@redhat-cloud-services/frontend-components/Spinner';
 
 import { createOverviewQueryObject } from '../../common/queryHelpers';
 import { AppPage } from '../App/AppPage';
@@ -119,7 +119,9 @@ const Dashboard = (props) => {
       <AppPage title={PAGE_TITLE}>
         <EmptyState>
           <EmptyStateBody>
-            <Spinner centered />
+            <div className="pf-v5-u-text-align-center">
+              <Spinner size="lg" aria-label="Loading..." />
+            </div>
           </EmptyStateBody>
         </EmptyState>
       </AppPage>

@@ -218,7 +218,6 @@ export const ClusterAutoscalerModal = ({
       tertiaryText="Cancel"
       onSecondaryClick={handleReset}
       isPrimaryDisabled={hasAutoScalingErrors || primaryButtonProps.isDisabled}
-      isSecondaryDisabled={primaryButtonProps.isDisabled}
       showClose
       showTertiary={!isWizard}
       onClose={closeScalerModal}

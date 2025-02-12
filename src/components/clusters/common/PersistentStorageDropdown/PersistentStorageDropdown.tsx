@@ -3,8 +3,7 @@
 
 import React from 'react';
 
-import { FormSelect, FormSelectOption, Tooltip } from '@patternfly/react-core';
-import { Spinner } from '@redhat-cloud-services/frontend-components/Spinner';
+import { FormSelect, FormSelectOption, Spinner, Tooltip } from '@patternfly/react-core';
 
 import { useFetchStorageQuotaValues } from '~/queries/ClusterActionsQueries/useFetchStorageQuotaValues';
 import { useFetchOrganizationAndQuota } from '~/queries/common/useFetchOrganizationAndQuota';
@@ -100,7 +99,7 @@ const PersistentStorageDropdown = ({
         onChange={(_event, value) => onChange(value)}
         {...restInput}
       >
-        {filteredStorageValues.values.map((value: any) => storageOption(value))}
+        {filteredStorageValues.values.sort((a, b) => a.value - b.value).map(storageOption)}
       </FormSelect>
     );
 
@@ -122,7 +121,7 @@ const PersistentStorageDropdown = ({
   ) : (
     <>
       <div className="spinner-fit-container">
-        <Spinner />
+        <Spinner size="lg" aria-label="Loading..." />
       </div>
       <div className="spinner-loading-text">Loading persistent storage list...</div>
     </>

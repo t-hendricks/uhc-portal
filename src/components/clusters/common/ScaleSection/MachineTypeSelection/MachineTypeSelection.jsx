@@ -444,7 +444,7 @@ const MachineTypeSelection = ({
   ) : (
     <>
       <div className="spinner-fit-container">
-        <Spinner size="md" />
+        <Spinner size="md" aria-label="Loading..." />
       </div>
       <div className="spinner-loading-text">Loading node types...</div>
     </>

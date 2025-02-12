@@ -109,7 +109,8 @@ describe('<EditMachinePoolModal />', () => {
 
   describe('loading state', () => {
     const check = async () => {
-      expect(await screen.findByText('Loading...')).toBeInTheDocument();
+      expect(screen.getByRole('progressbar')).toBeInTheDocument();
+      expect(screen.getByLabelText('Loading...')).toBeInTheDocument();
       expect(screen.getByTestId('submit-btn')).toBeDisabled();
       expect(screen.getByTestId('cancel-btn')).toBeEnabled();
     };

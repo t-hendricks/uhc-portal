@@ -39,6 +39,19 @@ describe('useFeatureGate', () => {
     const { result } = renderHook(() => useFeatureGate('MY_UNKNOWN_GATE'));
     expect(result.current).toBe(false);
   });
+
+  it('Returns true for HYPERSHIFT_WIZARD_FEATURE when restricted flag', () => {
+    const features = { MY_GATE: true, HYPERSHIFT_WIZARD_FEATURE: true };
+    (useGlobalState as jest.Mock).mockReturnValue(features);
+
+    // Cross browser solution to spyon localstorage.
+    // spyOn(localStorage, 'getItem') does not work in Firefox.
+    jest.spyOn(Storage.prototype, 'getItem').mockReturnValue('true');
+
+    const { result } = renderHook(() => useFeatureGate('HYPERSHIFT_WIZARD_FEATURE'));
+
+    expect(result.current).toBe(true);
+  });
 });
 
 describe('featureGateSelector', () => {

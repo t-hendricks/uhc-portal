@@ -67,9 +67,9 @@ const mockedUseFetchStorageQuotaValues = jest.spyOn(
   'useFetchStorageQuotaValues',
 );
 const mockedStorageQuotaReturnedData = [
-  { unit: 'B', value: 107374182400 },
-  { unit: 'B', value: 644245094400 },
   { unit: 'B', value: 1181116006400 },
+  { unit: 'B', value: 644245094400 },
+  { unit: 'B', value: 107374182400 },
 ];
 
 describe('<PersistentStorageDropdown />', () => {
@@ -155,7 +155,7 @@ describe('<PersistentStorageDropdown />', () => {
 
       render(<PersistentStorageDropdown {...defaultProps} />);
 
-      expect(screen.getByRole('status')).toBeInTheDocument();
+      expect(screen.getByRole('progressbar')).toBeInTheDocument();
       expect(screen.getByText('Loading persistent storage list...')).toBeInTheDocument();
     });
   });
@@ -171,6 +171,17 @@ describe('<PersistentStorageDropdown />', () => {
       expect(screen.getByRole('option', { name: '100 GiB' })).toBeInTheDocument();
       expect(screen.getByRole('option', { name: '600 GiB' })).toBeInTheDocument();
       expect(screen.getByRole('option', { name: '1100 GiB' })).toBeInTheDocument();
+    });
+
+    it('displays expected options on expected order', async () => {
+      setMockingValues();
+
+      render(<PersistentStorageDropdown {...defaultProps} />);
+
+      const options = screen.getAllByRole('option');
+      expect(within(options[0]).queryByText('100 GiB')).toBeInTheDocument();
+      expect(within(options[1]).queryByText('600 GiB')).toBeInTheDocument();
+      expect(within(options[2]).queryByText('1100 GiB')).toBeInTheDocument();
     });
   });
 });

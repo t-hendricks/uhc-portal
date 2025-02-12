@@ -20,6 +20,7 @@ const componentText = {
   REGION: { label: 'Region', NA: 'N/A' },
   PROVIDER: { label: 'Provider', NA: 'N/A' },
   AUTHENTICATION_TYPE: { label: 'Authentication type' },
+  WIF_CONFIGURATION: { label: 'WIF configuration' },
   ID: { label: 'Cluster ID', aiLabel: 'Assisted cluster ID / Cluster ID', NA: 'N/A' },
   DOMAIN_PREFIX: {
     label: 'Domain prefix',
@@ -452,6 +453,57 @@ describe('<DetailsLeft />', () => {
 
       // Assert
       checkForValueAbsence(componentText.AUTHENTICATION_TYPE.label);
+    });
+  });
+
+  describe('GCP WIF Configuration', () => {
+    it('shows the WIF name when a WIF configuration is present', async () => {
+      // Arrange
+      mockUseFeatureGate([[OSD_GCP_WIF, true]]);
+      const wifConfigName = 'some-wif-config';
+      const cluster = {
+        ...fixtures.clusterDetails.cluster,
+        cloud_provider: {
+          id: 'gcp',
+        },
+        ccs: { enabled: true },
+        gcp: {
+          authentication: {
+            href: '/api/clusters_mgmt/v1/gcp/wif_configs/123456789123456789',
+            id: '123456789123456789',
+            kind: 'WifConfig',
+          },
+        },
+        wifConfigName,
+      };
+
+      const props = { ...defaultProps, cluster };
+      render(<DetailsLeft {...props} />);
+      await checkIfRendered();
+
+      // Assert
+      checkForValue(componentText.WIF_CONFIGURATION.label, wifConfigName);
+    });
+
+    it('does not show the WIF name when a WIF configuration is absent', async () => {
+      // Arrange
+      mockUseFeatureGate([[OSD_GCP_WIF, true]]);
+      const cluster = {
+        ...fixtures.clusterDetails.cluster,
+        cloud_provider: {
+          id: 'gcp',
+        },
+        ccs: { enabled: true },
+        gcp: {},
+      };
+
+      const wifConfig = { status: 'pending', data: {} };
+      const props = { ...defaultProps, cluster, wifConfig };
+      render(<DetailsLeft {...props} />);
+      await checkIfRendered();
+
+      // Assert
+      checkForValueAbsence(componentText.WIF_CONFIGURATION.label);
     });
   });
 

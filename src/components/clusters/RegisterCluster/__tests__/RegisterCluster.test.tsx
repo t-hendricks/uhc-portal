@@ -66,7 +66,8 @@ describe('<RegisterCluster />', () => {
     render(<RegisterCluster />);
 
     // Assert
-    expect(screen.getByRole('status')).toHaveTextContent('Loading...');
+    expect(screen.getByRole('progressbar')).toBeInTheDocument();
+    expect(screen.getByLabelText('Loading...')).toBeInTheDocument();
     expect(screen.queryByLabelText('Cluster ID', { exact: false })).not.toBeInTheDocument();
     expect(screen.queryByText('Redirected to ', { exact: false })).not.toBeInTheDocument();
   });

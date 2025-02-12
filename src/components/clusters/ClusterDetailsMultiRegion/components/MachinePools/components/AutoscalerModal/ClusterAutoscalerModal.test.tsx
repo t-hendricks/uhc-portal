@@ -196,4 +196,31 @@ describe('Cluster autoscaler modal', () => {
     );
     expect(screen.getByTestId('alert-error')).toBeInTheDocument();
   });
+
+  it('Reset to default resets the form', async () => {
+    render(
+      <Formik initialValues={{}} onSubmit={() => {}}>
+        <ClusterAutoscalerModal
+          {...initalPropsWithoutAutoscalingMachinePools}
+          hasClusterAutoscaler
+          hasAutoscalingMachinePools
+        />
+      </Formik>,
+    );
+
+    const clusterSwitch = screen.getByRole('checkbox', { name: /Autoscale cluster/i });
+
+    await userEvent.click(clusterSwitch);
+
+    const userInputbox = screen.getByRole('textbox', { name: /max-node-provision-time/i });
+    await userEvent.type(userInputbox, 'testValue');
+
+    const revertToDefaultsBtn = screen.getByRole('button', { name: /Revert all to defaults/i });
+    const closeSaveBtn = screen
+      .getAllByRole('button', { name: /Close/i })
+      .find((btn) => btn.getAttribute('type') === 'submit');
+
+    expect(closeSaveBtn).toBeDisabled();
+    expect(revertToDefaultsBtn).not.toBeDisabled();
+  });
 });
