@@ -672,20 +672,14 @@ describe('<UpdateAllMachinePools />', () => {
       expect(refetchMachineOrNodePoolsQuery).toHaveBeenCalledTimes(1);
     });
 
-    it('hides error messages when user clicks on the update machine pool links', async () => {
+    it('hides error messages when user clicks to update all machine pools', async () => {
       // ARRANGE
-      apiRequestMock.patch.mockResolvedValue('success');
+      apiRequestMock.post.mockResolvedValue('success');
       const dummyDispatch = jest.fn();
       useDispatchMock.mockReturnValue(dummyDispatch);
 
       const newState = {
         ...defaultStore,
-        machinePools: {
-          getMachinePools: {
-            ...defaultMachinePools,
-            data: [machinePoolBehind1],
-          },
-        },
       };
 
       const { user } = withState(newState).render(
@@ -695,6 +689,7 @@ describe('<UpdateAllMachinePools />', () => {
           isHypershift
           controlPlaneVersion={clusterVersionID}
           clusterId={clusterId}
+          machinePoolData={[machinePoolBehind1]}
         />,
       );
       expectUpdateButtonPresence();
@@ -712,12 +707,6 @@ describe('<UpdateAllMachinePools />', () => {
     it('shows when goToMachinePoolTab prop is set', () => {
       const newState = {
         ...defaultStore,
-        machinePools: {
-          getMachinePools: {
-            ...defaultMachinePools,
-            data: [machinePoolUpToDate1, machinePoolBehind1],
-          },
-        },
       };
       withState(newState).render(
         <UpdateAllMachinePools
@@ -726,6 +715,7 @@ describe('<UpdateAllMachinePools />', () => {
           isHypershift
           controlPlaneVersion={clusterVersionID}
           clusterId={clusterId}
+          machinePoolData={[machinePoolUpToDate1, machinePoolBehind1]}
         />,
       );
 
@@ -740,12 +730,6 @@ describe('<UpdateAllMachinePools />', () => {
     it('is hidden when goToMachinePoolTab is not set', () => {
       const newState = {
         ...defaultStore,
-        machinePools: {
-          getMachinePools: {
-            ...defaultMachinePools,
-            data: [machinePoolUpToDate1, machinePoolBehind1],
-          },
-        },
       };
       withState(newState).render(
         <UpdateAllMachinePools
@@ -753,6 +737,7 @@ describe('<UpdateAllMachinePools />', () => {
           isHypershift
           controlPlaneVersion={clusterVersionID}
           clusterId={clusterId}
+          machinePoolData={[machinePoolUpToDate1, machinePoolBehind1]}
         />,
       );
 

@@ -1,11 +1,7 @@
 import { useSelector } from 'react-redux';
 import semver from 'semver';
 
-import { isHypershiftCluster } from '~/components/clusters/common/clusterStates';
-import {
-  updateStartedSelector,
-  updateStartedSelectorMultiRegion,
-} from '~/components/clusters/common/Upgrades/upgradeHelpers';
+import { updateStartedSelectorMultiRegion } from '~/components/clusters/common/Upgrades/upgradeHelpers';
 import { GlobalState } from '~/redux/store';
 import clusterService, { getClusterServiceForRegion } from '~/services/clusterService';
 import {
@@ -27,21 +23,6 @@ export const controlPlaneVersionSelector = (state: GlobalState) =>
 export const displayControlPlaneVersion = (controlPlaneVersion: string | undefined) =>
   semver.coerce(controlPlaneVersion)?.version;
 
-export const isHCPControlPlaneUpdating = (state: GlobalState) => {
-  const controlPlaneUpgradeStarted = updateStartedSelector(state);
-  const controlPlaneVersion = controlPlaneVersionSelector(state);
-  const machinePools = state.machinePools?.getMachinePools;
-  const isHypershift = isHypershiftCluster(state.clusters.details.cluster);
-
-  return (
-    !isHypershift ||
-    !controlPlaneVersion ||
-    controlPlaneUpgradeStarted ||
-    !machinePools.data ||
-    !machinePools.fulfilled ||
-    machinePools.error
-  );
-};
 type UpgradePolicyWithState = UpgradePolicy & { state: UpgradePolicyState };
 type Schedules = {
   items: UpgradePolicyWithState[];

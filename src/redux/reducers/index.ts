@@ -6,11 +6,9 @@ import { reducer as formReducer } from 'redux-form';
 import { notificationsReducer } from '@redhat-cloud-services/frontend-components-notifications/redux';
 
 import apiErrorReducer from '../../components/App/ApiError/ApiErrorReducer';
-import machinePools from '../../components/clusters/ClusterDetails_archived_do_not_use/components/MachinePools/MachinePoolsReducer';
 import NetworkSelfServiceReducer from '../../components/clusters/ClusterDetailsMultiRegion/components/AccessControl/NetworkSelfServiceSection/NetworkSelfServiceReducer';
 import clusterUsersReducer from '../../components/clusters/ClusterDetailsMultiRegion/components/AccessControl/UsersSection/UsersReducer';
 import addOnsReducer from '../../components/clusters/ClusterDetailsMultiRegion/components/AddOns/AddOnsReducer';
-import { clusterLogReducer } from '../../components/clusters/ClusterDetailsMultiRegion/components/ClusterLogs/clusterLogReducer';
 import { IdentityProvidersReducer } from '../../components/clusters/ClusterDetailsMultiRegion/components/IdentityProvidersPage/IdentityProvidersReducer';
 import insightsReducer from '../../components/clusters/ClusterDetailsMultiRegion/components/Insights/InsightsReducer';
 import { MonitoringReducer } from '../../components/clusters/ClusterDetailsMultiRegion/components/Monitoring/MonitoringReducer';
@@ -75,7 +73,7 @@ const reducers = {
   subscriptions: subscriptionsReducer,
   persistentStorageValues: persistentStorageReducer,
   loadBalancerValues: loadBalancersReducer,
-  clusterLogs: clusterLogReducer /* Archived  Do not use */,
+
   notifications: notificationsReducer,
   networkSelfService: NetworkSelfServiceReducer,
   subscriptionSettings: subscriptionSettingsReducer,
@@ -89,7 +87,6 @@ const reducers = {
   features: featuresReducer,
   clusterUpgrades,
   apiError: apiErrorReducer,
-  machinePools,
   githubReleases: githubReducer,
   ccsInquiries: ccsInquiriesReducer,
   ocmRoles: ocmRolesReducer,

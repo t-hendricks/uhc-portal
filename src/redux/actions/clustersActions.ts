@@ -14,10 +14,8 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 import axios, { AxiosResponse } from 'axios';
-import isEmpty from 'lodash/isEmpty';
 import { action, ActionType } from 'typesafe-actions';
 
-import type { Cluster as AICluster } from '@openshift-assisted/types/assisted-installer-service';
 import * as Sentry from '@sentry/browser';
 
 import { isHypershiftCluster } from '~/components/clusters/common/clusterStates';
@@ -26,25 +24,17 @@ import {
   ClusterAuthorizationRequestProduct_id as ClusterAuthorizationRequestProductId,
   SelfAccessReviewAction,
   SelfAccessReviewResource_type as SelfAccessReviewResourceType,
-  SelfResourceReviewRequestAction,
-  SelfResourceReviewRequestResource_type as SelfResourceReviewRequestResourceType,
-  Subscription,
   SubscriptionCommonFieldsStatus,
   SubscriptionCreateRequest,
   SubscriptionPatchRequest,
 } from '~/types/accounts_mgmt.v1';
 import type { Cluster, UpgradePolicy } from '~/types/clusters_mgmt.v1';
-import type {
-  AugmentedCluster,
-  AugmentedClusterResponse,
-  ClusterWithPermissions,
-} from '~/types/types';
+import type { AugmentedCluster, AugmentedClusterResponse } from '~/types/types';
 
 import isAssistedInstallSubscription from '../../common/isAssistedInstallerCluster';
 import {
   fakeClusterFromAISubscription,
   fakeClusterFromSubscription,
-  mapListResponse,
   normalizeCluster,
   normalizeMetrics,
   normalizeSubscription,
@@ -58,8 +48,7 @@ import {
   clusterService,
 } from '../../services';
 import { clustersConstants } from '../constants';
-import { dispatchTechPreviewStatus, techPreviewStatusSelector } from '../hooks/clusterHooks';
-import { buildPermissionDict, INVALIDATE_ACTION } from '../reduxHelpers';
+import { INVALIDATE_ACTION } from '../reduxHelpers';
 import type { AppThunk, AppThunkDispatch } from '../types';
 
 import { editSubscriptionSettings } from './subscriptionSettingsActions';
@@ -136,85 +125,6 @@ const registerDisconnectedCluster =
       ),
     );
 
-const clearClusterResponse = () => action(clustersConstants.CLEAR_DISPLAY_NAME_RESPONSE);
-
-const editCluster = (id: string, cluster: Cluster) =>
-  action(clustersConstants.EDIT_CLUSTER, clusterService.editCluster(id, cluster));
-
-// TODO create a new action and separate reducer eg. EDIT_SUBSCRIPTION_DISPLAY_NAME
-const editClusterDisplayName = (subscriptionID: string, displayName: string) =>
-  action(
-    clustersConstants.EDIT_CLUSTER,
-    accountsService.editSubscription(subscriptionID, { display_name: displayName }),
-  );
-
-/** Build a notification
- * Meta object with notifications. Notifications middleware uses it to get prepared to response to:
- * - <type>_PENDING (not used) - notification is sent right after the request was created
- * - <type>_FULFILLED - once promise is resolved
- * - <type>_PENDING (not used) - once promise is rejected
- *
- * @param {string} name - name of a cluster
- * @param {boolean} archived - action to display notification for (archive/unarchive)
- * @returns {object} - notification object
- *
- * @see https://github.com/RedHatInsights/frontend-components/blob/master/packages/notifications/doc/notifications.md
- */
-const buildArchiveNotificationsMeta = (name: string, archived: boolean) => ({
-  notifications: {
-    fulfilled: {
-      variant: 'success',
-      title: `Cluster ${name} has been ${archived ? 'archived' : 'unarchived'}`,
-      dismissDelay: 8000,
-      dismissable: false,
-    },
-  },
-});
-
-const archiveCluster = (id: string, name: string) =>
-  action(
-    clustersConstants.ARCHIVE_CLUSTER,
-    clusterService.archiveCluster(id),
-    buildArchiveNotificationsMeta(name, true),
-  );
-
-const clearClusterArchiveResponse = () => action(clustersConstants.CLEAR_CLUSTER_ARCHIVE_RESPONSE);
-
-const upgradeTrialCluster = (id: string, params: Cluster) =>
-  action(clustersConstants.UPGRADE_TRIAL_CLUSTER, clusterService.upgradeTrialCluster(id, params));
-
-const clearUpgradeTrialClusterResponse = () =>
-  action(clustersConstants.CLEAR_UPGRADE_TRIAL_CLUSTER_RESPONSE);
-
-const hibernateCluster = (id: string) =>
-  action(clustersConstants.HIBERNATE_CLUSTER, clusterService.hibernateCluster(id));
-
-const clearHibernateClusterResponse = () =>
-  action(clustersConstants.CLEAR_CLUSTER_HIBERNATE_RESPONSE);
-
-const resumeCluster = (id: string) =>
-  action(clustersConstants.RESUME_CLUSTER, clusterService.resumeCluster(id));
-
-const clearResumeClusterResponse = () => action(clustersConstants.CLEAR_RESUME_CLUSTER_RESPONSE);
-
-const unarchiveCluster = (id: string, name: string) =>
-  action(
-    clustersConstants.UNARCHIVE_CLUSTER,
-    clusterService.unarchiveCluster(id),
-    buildArchiveNotificationsMeta(name, false),
-  );
-
-const clearClusterUnarchiveResponse = () =>
-  action(clustersConstants.CLEAR_CLUSTER_UNARCHIVE_RESPONSE);
-
-const editClusterConsoleURL = (id: string, subscriptionID: string, consoleURL: string) =>
-  action(
-    clustersConstants.EDIT_CLUSTER,
-    clusterService
-      .editCluster(id, { console: { url: consoleURL } })
-      .then(() => accountsService.editSubscription(subscriptionID, { console_url: consoleURL })),
-  );
-
 /**
  * Collect a list of object IDs and build a SQL-like query searching for these IDs.
  * For example, to collect subscription IDs from clusters, so we can query
@@ -222,191 +132,6 @@ const editClusterConsoleURL = (id: string, subscriptionID: string, consoleURL: s
  * @param {*} items A collection of items
  * @param {string} field The field containing the ID to collect for the search
  */
-
-/* ************** START ARCHIVED CODE - DO NOT USE ********************* */
-const buildSearchQuery = (items: { [field: string]: unknown }[], field: string): string => {
-  const IDs = new Set();
-  items.forEach((item) => {
-    const objectID = item[field];
-    if (objectID) {
-      IDs.add(`'${objectID}'`);
-    }
-  });
-  return `id in (${Array.from(IDs).join(',')})`;
-};
-
-type MapEntry = { aiCluster?: AICluster; cluster?: Cluster; subscription: Subscription };
-
-// Builds an array in the order things were inserted into `subscriptionMap`.
-const createResponseForFetchClusters = (
-  subscriptionMap: Map<string, MapEntry>,
-  canEdit: {
-    [clusterID: string]: boolean;
-  },
-  canDelete: {
-    [clusterID: string]: boolean;
-  },
-) => {
-  const result: ClusterWithPermissions[] = [];
-  subscriptionMap.forEach((entry) => {
-    let cluster: ClusterWithPermissions;
-    if (
-      entry.subscription.managed &&
-      entry.subscription.status !== SubscriptionCommonFieldsStatus.Deprovisioned &&
-      !!entry?.cluster &&
-      !isEmpty(entry?.cluster)
-    ) {
-      // managed cluster, with data from Clusters Service
-      cluster = {
-        ...normalizeCluster(entry.cluster),
-        subscription: entry.subscription,
-        // TODO HAC-2355: entry.subscription.metrics is an array but normalizeMetrics wants a single metric
-        // @ts-ignore
-        metrics: normalizeMetrics(entry.subscription.metrics),
-      };
-    } else {
-      cluster = isAssistedInstallSubscription(entry.subscription)
-        ? fakeClusterFromAISubscription(entry.subscription, entry.aiCluster)
-        : fakeClusterFromSubscription(entry.subscription);
-    }
-
-    // mark this as a clusters service cluster with partial data (happens when CS is down)
-    cluster.partialCS = cluster.managed && (!entry?.cluster || isEmpty(entry?.cluster));
-
-    cluster.canEdit =
-      !cluster.partialCS &&
-      (canEdit['*'] || (!!cluster.id && !!canEdit[cluster.id])) &&
-      entry.subscription.status !== SubscriptionCommonFieldsStatus.Deprovisioned;
-    cluster.canDelete =
-      !cluster.partialCS && (canDelete['*'] || (!!cluster.id && !!canDelete[cluster.id!]));
-    cluster.subscription = entry.subscription;
-    result.push(cluster);
-  });
-  return result;
-};
-
-const fetchClustersAndPermissions = async (
-  clusterRequestParams: Parameters<typeof accountsService.getSubscriptions>[0],
-) => {
-  const [subscriptions, canDelete, canEdit] = await Promise.all([
-    accountsService
-      .getSubscriptions(clusterRequestParams)
-      .then((response) => mapListResponse(response, normalizeSubscription)),
-    authorizationsService
-      .selfResourceReview({
-        action: SelfResourceReviewRequestAction.delete,
-        resource_type: SelfResourceReviewRequestResourceType.Cluster,
-      })
-      .then((response) => buildPermissionDict(response)),
-    authorizationsService
-      .selfResourceReview({
-        action: SelfResourceReviewRequestAction.update,
-        resource_type: SelfResourceReviewRequestResourceType.Cluster,
-      })
-      .then((response) => buildPermissionDict(response)),
-  ]);
-
-  const items = subscriptions?.data?.items;
-
-  if (!items) {
-    return {
-      data: {
-        items: [] as ClusterWithPermissions[],
-        page: 0,
-        total: 0,
-        queryParams: { ...clusterRequestParams },
-      },
-    };
-  }
-
-  // map subscription ID to subscription info
-  // Note: Map keeps order of insertions.
-  // Will display them in order returned by getSubscriptions().
-  const subscriptionMap = new Map<string, MapEntry>();
-  items.forEach((item) => {
-    if (item.cluster_id) {
-      subscriptionMap.set(item.cluster_id, {
-        subscription: item,
-      });
-    }
-  });
-
-  const subscriptionIds: string[] = [];
-  subscriptionMap.forEach(({ subscription }) => {
-    if (isAssistedInstallSubscription(subscription) && subscription.id) {
-      subscriptionIds.push(subscription.id);
-    }
-  });
-
-  if (subscriptionIds.length > 0) {
-    const aiClusters = await assistedService
-      .getAIClustersBySubscription(subscriptionIds)
-      .then((res) => res.data)
-      .catch((error) => {
-        Sentry.captureException(error);
-        return [];
-      });
-    aiClusters.forEach((aiCluster) => {
-      const entry = subscriptionMap.get(aiCluster.id);
-      if (entry) {
-        entry.aiCluster = aiCluster;
-      }
-    });
-  }
-
-  // clusters-service only needed for managed clusters.
-  const managedSubscriptions = items.filter(
-    (s) => s.managed && s.status !== SubscriptionCommonFieldsStatus.Deprovisioned,
-  );
-
-  // fetch managed clusters by subscription
-  let clustersServiceError: unknown;
-  if (managedSubscriptions.length > 0) {
-    const clustersQuery = buildSearchQuery(managedSubscriptions, 'cluster_id');
-    try {
-      await clusterService.searchClusters(clustersQuery).then((response) => {
-        const clusters = response?.data?.items;
-        clusters?.forEach((cluster) => {
-          if (cluster.id) {
-            const entry = subscriptionMap.get(cluster.id);
-            if (entry !== undefined) {
-              // store cluster into subscription map
-              entry.cluster = cluster;
-            }
-          }
-        });
-      });
-    } catch (e) {
-      clustersServiceError = e;
-    }
-  }
-  return {
-    data: {
-      items: createResponseForFetchClusters(subscriptionMap, canEdit, canDelete),
-      page: subscriptions.data.page,
-      total: subscriptions.data.total || 0,
-      queryParams: { ...clusterRequestParams },
-      ...(clustersServiceError ? { meta: { clustersServiceError } } : {}),
-    },
-  };
-};
-
-const fetchClustersAction = (params: Parameters<typeof fetchClustersAndPermissions>[0]) =>
-  action(clustersConstants.GET_CLUSTERS, fetchClustersAndPermissions(params));
-
-const fetchClusters =
-  (params: Parameters<typeof fetchClustersAndPermissions>[0]): AppThunk =>
-  (dispatch, getState) => {
-    // eslint-disable-next-line no-console
-    console.warn('The fetchClusters action is deprecated and should not be used');
-    // Fetch tech preview if not already in state
-    if (!techPreviewStatusSelector(getState(), 'rosa', 'hcp')) {
-      dispatchTechPreviewStatus(dispatch, 'rosa', 'hcp');
-    }
-    dispatch(fetchClustersAction(params));
-  };
-
-/* ************** END ARCHIVED CODE - DO NOT USE ********************* */
 
 const fetchSingleClusterAndPermissions = async (
   subscriptionID: string,
@@ -648,37 +373,8 @@ const clearClusterDetails = () => action(clustersConstants.CLEAR_CLUSTER_DETAILS
 
 const resetCreatedClusterResponse = () => action(clustersConstants.RESET_CREATED_CLUSTER_RESPONSE);
 
-const getClusterStatus = (clusterID: string) =>
-  action(clustersConstants.GET_CLUSTER_STATUS, clusterService.getClusterStatus(clusterID));
-
 const getInflightChecks = (clusterID: string) =>
   action(clustersConstants.GET_INFLIGHT_CHECKS, clusterService.getInflightChecks(clusterID));
-
-const rerunInflightChecks = (clusterID: string) =>
-  action(clustersConstants.RERUN_INFLIGHT_CHECKS, clusterService.rerunInflightChecks(clusterID));
-
-const fetchRerunInflightChecks = async (subnetIds: string[]): Promise<any> => {
-  const results = subnetIds.map((subnetId: string) =>
-    clusterService.getTriggeredInflightCheckState(subnetId),
-  );
-  // @ts-ignore  error due to using an older compiler
-  const response = await Promise.allSettled(results);
-  const items = response
-    .filter((res: { status: string }) => res.status !== 'rejected')
-    .map((item: any) => item?.value?.data);
-  return {
-    data: {
-      items,
-      page: 0,
-      total: 0,
-    },
-  };
-};
-
-const getRerunInflightChecks = (subnetIds: string[]) =>
-  action(clustersConstants.GET_RERUN_INFLIGHT_CHECKS, fetchRerunInflightChecks(subnetIds));
-
-const clearInflightChecks = () => action(clustersConstants.CLEAR_INFLIGHT_CHECKS);
 
 const clearInstallableVersions = () => action(clustersConstants.CLEAR_CLUSTER_VERSIONS_RESPONSE);
 
@@ -698,84 +394,36 @@ type ClusterAction = ActionType<
   | typeof setClusterDetails
   | typeof invalidateClusters
   | typeof createClusterAction
-  | typeof clearClusterResponse
-  | typeof editCluster
-  | typeof editClusterDisplayName
-  | typeof archiveCluster
-  | typeof clearClusterArchiveResponse
-  | typeof upgradeTrialCluster
-  | typeof clearUpgradeTrialClusterResponse
-  | typeof hibernateCluster
-  | typeof clearHibernateClusterResponse
-  | typeof resumeCluster
-  | typeof clearResumeClusterResponse
-  | typeof unarchiveCluster
-  | typeof clearClusterUnarchiveResponse
-  | typeof editClusterConsoleURL
-  | typeof fetchClustersAction /* ARCHIVED CODE - DO NOT USE */
   | typeof fetchClusterDetails
   | typeof clearClusterDetails
   | typeof resetCreatedClusterResponse
-  | typeof getClusterStatus
   | typeof getInflightChecks
-  | typeof rerunInflightChecks
-  | typeof clearInflightChecks
-  | typeof getRerunInflightChecks
   | typeof clearInstallableVersions
   | typeof getInstallableVersions
 >;
 
 const clustersActions = {
-  clearClusterResponse,
   createCluster,
   registerDisconnectedCluster,
-  editCluster,
-  fetchClusters /* ARCHIVED CODE - DO NOT USE */,
   fetchClusterDetails,
   setClusterDetails,
   clearClusterDetails,
   invalidateClusters,
   resetCreatedClusterResponse,
-  editClusterDisplayName,
-  archiveCluster,
-  unarchiveCluster,
-  getClusterStatus,
   getInflightChecks,
-  rerunInflightChecks,
-  clearInflightChecks,
-  getRerunInflightChecks,
   clearInstallableVersions,
   getInstallableVersions,
 };
 
 export {
-  archiveCluster,
-  clearClusterArchiveResponse,
-  clearClusterResponse,
-  clearClusterUnarchiveResponse,
-  clearHibernateClusterResponse,
-  clearInflightChecks,
   clearInstallableVersions,
-  clearResumeClusterResponse,
-  clearUpgradeTrialClusterResponse,
   ClusterAction,
   clustersActions,
   createCluster,
-  editCluster,
-  editClusterConsoleURL,
-  editClusterDisplayName,
   fetchClusterDetails,
-  fetchClusters /* ARCHIVED CODE - DO NOT USE */,
-  getClusterStatus,
   getInflightChecks,
-  getRerunInflightChecks,
-  hibernateCluster,
   invalidateClusters,
   registerDisconnectedCluster,
-  rerunInflightChecks,
   resetCreatedClusterResponse,
-  resumeCluster,
   setClusterDetails,
-  unarchiveCluster,
-  upgradeTrialCluster,
 };

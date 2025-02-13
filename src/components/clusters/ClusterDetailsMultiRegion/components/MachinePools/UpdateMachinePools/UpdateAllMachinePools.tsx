@@ -1,5 +1,4 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
 import semver from 'semver';
 
 import { Alert, AlertActionLink, AlertVariant, Spinner } from '@patternfly/react-core';
@@ -8,7 +7,6 @@ import links from '~/common/installLinks.mjs';
 import { Link } from '~/common/routing';
 import ExternalLink from '~/components/common/ExternalLink';
 import { refetchMachineOrNodePoolsQuery } from '~/queries/ClusterDetailsQueries/MachinePoolTab/useFetchMachineOrNodePools';
-import { GlobalState } from '~/redux/store';
 import { NodePool } from '~/types/clusters_mgmt.v1/models/NodePool';
 
 import {
@@ -52,11 +50,7 @@ const UpdateAllMachinePools = ({
     isHypershift,
   );
 
-  const machinePools = useSelector(
-    (state: GlobalState) => state.machinePools?.getMachinePools?.data,
-  );
-
-  const existingMachinePools = machinePoolData || machinePools;
+  const existingMachinePools = machinePoolData;
 
   if (controlPlaneUpdating) {
     return null;
