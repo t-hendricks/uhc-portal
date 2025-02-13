@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { EDIT_BILLING_ACCOUNT } from '~/redux/constants/featureConstants';
+import { EDIT_BILLING_ACCOUNT } from '~/queries/featureGates/featureConstants';
 import { mockUseFeatureGate, render, screen } from '~/testUtils';
 
 import fixtures from '../../../../__tests__/ClusterDetails.fixtures';

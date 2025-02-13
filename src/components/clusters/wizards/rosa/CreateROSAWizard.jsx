@@ -26,9 +26,9 @@ import {
 import config from '~/config';
 import withAnalytics from '~/hoc/withAnalytics';
 import useAnalytics from '~/hooks/useAnalytics';
-import { useFeatureGate } from '~/hooks/useFeatureGate';
 import usePreventBrowserNav from '~/hooks/usePreventBrowserNav';
-import { HYPERSHIFT_WIZARD_FEATURE } from '~/redux/constants/featureConstants';
+import { HYPERSHIFT_WIZARD_FEATURE } from '~/queries/featureGates/featureConstants';
+import { useFeatureGate } from '~/queries/featureGates/useFetchFeatureGate';
 import { isRestrictedEnv } from '~/restrictedEnv';
 
 import ErrorBoundary from '../../../App/ErrorBoundary';

@@ -29,11 +29,12 @@ import HiddenCheckbox from '~/components/common/FormikFormComponents/HiddenCheck
 import { SyncEditorModal } from '~/components/SyncEditor/SyncEditorModal';
 import config from '~/config';
 import useCanClusterAutoscale from '~/hooks/useCanClusterAutoscale';
-import { useFeatureGate } from '~/hooks/useFeatureGate';
 import {
+  CREATE_CLUSTER_YAML_EDITOR,
   HYPERSHIFT_WIZARD_FEATURE,
   MULTIREGION_PREVIEW_ENABLED,
-} from '~/redux/constants/featureConstants';
+} from '~/queries/featureGates/featureConstants';
+import { useFeatureGate } from '~/queries/featureGates/useFetchFeatureGate';
 
 import { ClusterRequestTranslatorFactory } from '../../common/ClusterRequestTranslator/ClusterRequestTranslatorFactory';
 import { DebugClusterRequest } from '../../common/DebugClusterRequest';
@@ -56,9 +57,9 @@ const ReviewClusterScreen = ({
   clearGetOcmRoleResponse,
   createCluster,
   isSubmitPending,
-  isCreateClusterYamlEditorEnabled,
   createClusterResponse,
 }) => {
+  const isCreateClusterYamlEditorEnabled = useFeatureGate(CREATE_CLUSTER_YAML_EDITOR);
   const {
     values: {
       [FieldId.ApplicationIngress]: applicationIngress,
@@ -429,7 +430,6 @@ ReviewClusterScreen.propTypes = {
   clearGetOcmRoleResponse: PropTypes.func.isRequired,
   createCluster: PropTypes.func.isRequired,
   isSubmitPending: PropTypes.bool,
-  isCreateClusterYamlEditorEnabled: PropTypes.bool,
   createClusterResponse: PropTypes.shape({
     fulfilled: PropTypes.bool,
     error: PropTypes.bool,

@@ -1,7 +1,7 @@
 /* eslint-disable camelcase */
 import React from 'react';
 
-import { OSD_GCP_WIF } from '~/redux/constants/featureConstants';
+import { OSD_GCP_WIF } from '~/queries/featureGates/featureConstants';
 import { checkAccessibility, mockUseFeatureGate, render, screen, within } from '~/testUtils';
 
 import fixtures from '../../__tests__/ClusterDetails.fixtures';

@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { normalizedProducts } from '~/common/subscriptionTypes';
-import { ENABLE_MACHINE_CONFIGURATION } from '~/redux/constants/featureConstants';
+import { ENABLE_MACHINE_CONFIGURATION } from '~/queries/featureGates/featureConstants';
 import { baseRequestState } from '~/redux/reduxHelpers';
 import { checkAccessibility, mockUseFeatureGate, render, screen } from '~/testUtils';
 

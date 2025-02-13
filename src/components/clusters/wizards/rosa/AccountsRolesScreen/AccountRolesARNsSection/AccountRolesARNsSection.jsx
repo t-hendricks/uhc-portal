@@ -32,8 +32,8 @@ import { ReduxSelectDropdown } from '~/components/common/ReduxFormComponents_dep
 import ReduxVerticalFormGroup from '~/components/common/ReduxFormComponents_deprecated/ReduxVerticalFormGroup';
 import { useOCPLatestVersion } from '~/components/releases/hooks';
 import useAnalytics from '~/hooks/useAnalytics';
-import { useFeatureGate } from '~/hooks/useFeatureGate';
-import { HCP_USE_UNMANAGED } from '~/redux/constants/featureConstants';
+import { HCP_USE_UNMANAGED } from '~/queries/featureGates/featureConstants';
+import { useFeatureGate } from '~/queries/featureGates/useFetchFeatureGate';
 
 import { FieldId } from '../../constants';
 import { RosaCliCommand } from '../constants/cliCommands';

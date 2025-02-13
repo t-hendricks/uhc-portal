@@ -33,8 +33,8 @@ import { WorkloadIdentityFederationPrerequisites } from '~/components/clusters/w
 import { GCPAuthType } from '~/components/clusters/wizards/osd/ClusterSettings/CloudProvider/types';
 import { FieldId } from '~/components/clusters/wizards/osd/constants';
 import ExternalLink from '~/components/common/ExternalLink';
-import { useFeatureGate } from '~/hooks/useFeatureGate';
-import { OSD_GCP_WIF } from '~/redux/constants/featureConstants';
+import { OSD_GCP_WIF } from '~/queries/featureGates/featureConstants';
+import { useFeatureGate } from '~/queries/featureGates/useFetchFeatureGate';
 import { SubscriptionCommonFieldsCluster_billing_model as SubscriptionCommonFieldsClusterBillingModel } from '~/types/accounts_mgmt.v1';
 
 export interface GcpByocFieldsProps extends WorkloadIdentityFederationProps {}

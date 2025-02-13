@@ -51,7 +51,8 @@ import VersionSelection from '~/components/clusters/wizards/rosa/ClusterSettings
 import { FieldId } from '~/components/clusters/wizards/rosa/constants';
 import ExternalLink from '~/components/common/ExternalLink';
 import PopoverHint from '~/components/common/PopoverHint';
-import { useFeatureGate } from '~/hooks/useFeatureGate';
+import { MULTIREGION_PREVIEW_ENABLED } from '~/queries/featureGates/featureConstants';
+import { useFeatureGate } from '~/queries/featureGates/useFetchFeatureGate';
 import { findRegionalInstance } from '~/queries/helpers';
 import { useFetchGetAvailableRegionalInstances } from '~/queries/RosaWizardQueries/useFetchGetAvailableRegionalInstances';
 import {
@@ -63,7 +64,6 @@ import {
   useFetchSearchDomainPrefix,
 } from '~/queries/RosaWizardQueries/useFetchSearchDomainPrefix';
 import { getMachineTypesByRegionARN } from '~/redux/actions/machineTypesActions';
-import { MULTIREGION_PREVIEW_ENABLED } from '~/redux/constants/featureConstants';
 import { useGlobalState } from '~/redux/hooks';
 import { QuotaCostList } from '~/types/accounts_mgmt.v1';
 import { Version } from '~/types/clusters_mgmt.v1';

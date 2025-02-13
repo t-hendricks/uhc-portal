@@ -38,9 +38,9 @@ import Skeleton from '@redhat-cloud-services/frontend-components/Skeleton';
 import useChrome from '@redhat-cloud-services/frontend-components/useChrome';
 
 import { Link } from '~/common/routing';
-import { useFeatureGate } from '~/hooks/useFeatureGate';
+import { CLI_SSO_AUTHORIZATION } from '~/queries/featureGates/featureConstants';
+import { useFeatureGate } from '~/queries/featureGates/useFetchFeatureGate';
 import { setOfflineToken } from '~/redux/actions/rosaActions';
-import { CLI_SSO_AUTHORIZATION } from '~/redux/constants/featureConstants';
 import { useGlobalState } from '~/redux/hooks/useGlobalState';
 import { getRefreshToken, isRestrictedEnv } from '~/restrictedEnv';
 import { Chrome } from '~/types/types';

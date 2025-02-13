@@ -3,8 +3,8 @@ import React from 'react';
 import { List, ListItem, Text, TextContent } from '@patternfly/react-core';
 
 import PopoverHint from '~/components/common/PopoverHint';
-import { useFeatureGate } from '~/hooks/useFeatureGate';
-import { OCMUI_MAX_NODES_TOTAL_249 } from '~/redux/constants/featureConstants';
+import { OCMUI_MAX_NODES_TOTAL_249 } from '~/queries/featureGates/featureConstants';
+import { useFeatureGate } from '~/queries/featureGates/useFetchFeatureGate';
 
 import { MAX_NODES, MAX_NODES_INSUFFICIEN_VERSION } from '../machinePools/constants';
 

@@ -28,7 +28,6 @@ import { costReducer } from './costReducer';
 import { dashboardsReducer } from './dashboardsReducer';
 import dnsDomainsReducer from './dnsDomainsReducer';
 import entitlementConfigReducer from './entitlementConfigReducer';
-import featuresReducer from './featuresReducer';
 import flavoursReducer from './flavoursReducer';
 import githubReducer from './githubReducer';
 import globalErrorReducer from './globalErrorReducer';
@@ -84,7 +83,7 @@ const reducers = {
   dashboards: dashboardsReducer,
   supportStatus: supportStatusReducer,
   entitlementConfig: entitlementConfigReducer,
-  features: featuresReducer,
+
   clusterUpgrades,
   apiError: apiErrorReducer,
   githubReleases: githubReducer,

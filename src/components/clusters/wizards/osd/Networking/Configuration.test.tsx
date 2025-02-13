@@ -1,7 +1,7 @@
 import React from 'react';
 import { Formik, FormikValues } from 'formik';
 
-import { PRIVATE_SERVICE_CONNECT } from '~/redux/constants/featureConstants';
+import { PRIVATE_SERVICE_CONNECT } from '~/queries/featureGates/featureConstants';
 import { mockUseFeatureGate, render, screen, waitFor } from '~/testUtils';
 
 import { GCPAuthType } from '../ClusterSettings/CloudProvider/types';
