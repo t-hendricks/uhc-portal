@@ -17,7 +17,7 @@ const mapStateToProps = (state) => ({
     }) >= 1,
   hasOSDTrialQuota:
     availableQuota(state.userProfile.organization.quotaList, {
-      product: normalizedProducts.OSDTRIAL,
+      product: normalizedProducts.OSDTrial,
       resourceType: QuotaTypes.CLUSTER,
     }) >= 1,
   organization: state.userProfile.organization,
