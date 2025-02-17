@@ -129,6 +129,8 @@ const Instructions = (props: Props) => {
     );
   }
 
+  const ocmLoginCommand = `ocm login --token="${token}" ${restrictedEnv ? '--url https://api.***REMOVED***.com --token-url https://sso.***REMOVED***.com/realms/redhat-external/protocol/openid-connect/token --client-id console-dot' : ''}`;
+
   return (
     <Stack hasGutter>
       <StackItem>
@@ -168,7 +170,7 @@ const Instructions = (props: Props) => {
                       ) : (
                         <TokenBox
                           token={token}
-                          command={`${commandName} login --token="{{TOKEN}}"`}
+                          command={ocmLoginCommand}
                           showCommandOnError
                           showInstructionsOnError={false}
                         />
