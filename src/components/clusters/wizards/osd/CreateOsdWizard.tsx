@@ -12,6 +12,7 @@ import {
   WizardStepChangeScope,
   WizardStepType,
 } from '@patternfly/react-core';
+import { WizardContextProps } from '@patternfly/react-core/dist/esm/components/Wizard/WizardContext';
 
 import { ocmResourceTypeByProduct, TrackEvent, trackEvents } from '~/common/analytics';
 import { shouldRefetchQuota } from '~/common/helpers';
@@ -41,6 +42,7 @@ import { QuotaCostList } from '~/types/accounts_mgmt.v1';
 import { ErrorState } from '~/types/types';
 
 import { QuotaTypes } from '../../common/quotaModel';
+import { useClusterWizardResetStepsHook } from '../hooks/useClusterWizardResetStepsHook';
 
 import { CloudProviderType } from './ClusterSettings/CloudProvider/types';
 import { BillingModel } from './BillingModel';
@@ -85,10 +87,24 @@ const CreateOsdWizardInternal = () => {
       [FieldId.ConfigureProxy]: configureProxy,
     },
   } = useFormState();
+  const { values } = useFormState();
+
   const organization = useGlobalState((state) => state.userProfile.organization);
   const loadBalancerValues = useGlobalState((state) => state.loadBalancerValues);
   const persistentStorageValues = useGlobalState((state) => state.persistentStorageValues);
   const createClusterResponse = useGlobalState((state) => state.clusters.createdCluster);
+
+  const [currentStep, setCurrentStep] = React.useState<WizardStepType>();
+
+  const wizardContextRef = React.useRef<Partial<WizardContextProps>>();
+  const onWizardContextChange = ({ steps, setStep, goToStepById }: Partial<WizardContextProps>) => {
+    wizardContextRef.current = {
+      steps,
+      setStep,
+      goToStepById,
+    };
+  };
+  useClusterWizardResetStepsHook({ currentStep, wizardContextRef, values });
 
   const hasProductQuota =
     availableQuota(organization.quotaList as QuotaCostList, {
@@ -133,12 +149,13 @@ const CreateOsdWizardInternal = () => {
   const onClose = () => navigate(UrlPath.CreateCloud);
 
   const onStepChange = (
-    _event: React.MouseEvent<HTMLButtonElement>,
-    { name }: WizardStepType,
-    _prevStep: WizardStepType,
+    event: React.MouseEvent<HTMLButtonElement>,
+    currentStep: WizardStepType,
+    prevStep: WizardStepType,
     scope: WizardStepChangeScope,
   ) => {
     let trackEvent: TrackEvent;
+    setCurrentStep(currentStep);
 
     switch (scope) {
       case WizardStepChangeScope.Next:
@@ -151,7 +168,7 @@ const CreateOsdWizardInternal = () => {
         trackEvent = trackEvents.WizardLinkNav;
     }
 
-    trackStepChange(trackEvent, name?.toString());
+    trackStepChange(trackEvent, currentStep?.name?.toString());
   };
 
   if (
@@ -190,7 +207,12 @@ const CreateOsdWizardInternal = () => {
       id="osd-wizard"
       onClose={onClose}
       onStepChange={onStepChange}
-      footer={<CreateOsdWizardFooter track={() => trackStepChange(trackEvents.WizardSubmit)} />}
+      footer={
+        <CreateOsdWizardFooter
+          track={() => trackStepChange(trackEvents.WizardSubmit)}
+          onWizardContextChange={onWizardContextChange}
+        />
+      }
       nav={{ 'aria-label': `${ariaLabel} steps` }}
       isVisitRequired
     >
@@ -205,7 +227,7 @@ const CreateOsdWizardInternal = () => {
           <WizardStep
             name={StepName.CloudProvider}
             id={StepId.ClusterSettingsCloudProvider}
-            footer={<CloudProviderStepFooter />}
+            footer={<CloudProviderStepFooter onWizardContextChange={onWizardContextChange} />}
           >
             <ClusterSettingsCloudProvider />
           </WizardStep>,
