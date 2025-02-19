@@ -84,6 +84,10 @@ class ClusterDetails extends Page {
 
   clusterIMDSValue = () => cy.getByTestId('instanceMetadataService').should('exist');
 
+  clusterAuthenticationTypeLabelValue = () => cy.getByTestId('authenticationType').should('exist');
+
+  clusterWifConfigurationValue = () => cy.getByTestId('wifConfiguration').should('exist');
+
   clusterFipsCryptographyStatus = () => cy.getByTestId('fipsCryptographyStatus').should('exist');
 
   clusterAdditionalEncryptionStatus = () => cy.getByTestId('etcEncryptionStatus').should('exist');

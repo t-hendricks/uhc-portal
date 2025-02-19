@@ -143,6 +143,9 @@ describe('OSD Marketplace cluster creation tests(OCP-67514)', { tags: ['smoke'] 
         CreateOSDWizardPage.authenticationTypeValue().contains(
           clusterProperties.AuthenticationType,
         );
+        if (clusterProperties.AuthenticationType.includes('Workload Identity Federation')) {
+          CreateOSDWizardPage.wifConfigurationValue().contains(Cypress.env('QE_GCP_WIF_CONFIG'));
+        }
       }
       CreateOSDWizardPage.clusterNameValue().contains(clusterProperties.ClusterName);
       CreateOSDWizardPage.regionValue().contains(clusterProperties.Region.split(',')[0]);
@@ -237,6 +240,14 @@ describe('OSD Marketplace cluster creation tests(OCP-67514)', { tags: ['smoke'] 
         ClusterDetailsPage.clusterSecureBootSupportForShieldedVMsValue().contains(
           clusterProperties.SecureBootSupportForShieldedVMs,
         );
+        ClusterDetailsPage.clusterAuthenticationTypeLabelValue().contains(
+          clusterProperties.AuthenticationType,
+        );
+        if (clusterProperties.AuthenticationType.includes('Workload Identity Federation')) {
+          ClusterDetailsPage.clusterWifConfigurationValue().contains(
+            Cypress.env('QE_GCP_WIF_CONFIG'),
+          );
+        }
       } else {
         ClusterDetailsPage.clusterIMDSValue().contains(clusterProperties.InstanceMetadataService);
         ClusterDetailsPage.clusterInfrastructureAWSaccountLabelValue().contains(awsAccountID);

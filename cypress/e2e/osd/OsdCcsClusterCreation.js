@@ -154,6 +154,9 @@ describe(
           CreateOSDWizardPage.authenticationTypeValue().contains(
             clusterProperties.AuthenticationType,
           );
+          if (clusterProperties.AuthenticationType.includes('Workload Identity Federation')) {
+            CreateOSDWizardPage.wifConfigurationValue().contains(Cypress.env('QE_GCP_WIF_CONFIG'));
+          }
         }
         CreateOSDWizardPage.clusterDomainPrefixLabelValue().contains(
           clusterProperties.ClusterDomainPrefix,
@@ -250,6 +253,14 @@ describe(
           ClusterDetailsPage.clusterSecureBootSupportForShieldedVMsValue().contains(
             clusterProperties.SecureBootSupportForShieldedVMs,
           );
+          ClusterDetailsPage.clusterAuthenticationTypeLabelValue().contains(
+            clusterProperties.AuthenticationType,
+          );
+          if (clusterProperties.AuthenticationType.includes('Workload Identity Federation')) {
+            ClusterDetailsPage.clusterWifConfigurationValue().contains(
+              Cypress.env('QE_GCP_WIF_CONFIG'),
+            );
+          }
         }
       });
 

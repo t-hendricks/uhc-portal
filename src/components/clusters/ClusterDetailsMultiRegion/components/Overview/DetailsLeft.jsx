@@ -120,14 +120,16 @@ function DetailsLeft({ cluster, cloudProviders, showAssistedId }) {
         <DescriptionListGroup>
           <DescriptionListTerm>Authentication type</DescriptionListTerm>
           <DescriptionListDescription>
-            <span>{authenticationType}</span>
+            <span data-testid="authenticationType">{authenticationType}</span>
           </DescriptionListDescription>
         </DescriptionListGroup>
       )}
       {cluster.wifConfigName && (
         <DescriptionListGroup>
           <DescriptionListTerm>WIF configuration</DescriptionListTerm>
-          <DescriptionListDescription>{cluster.wifConfigName}</DescriptionListDescription>
+          <DescriptionListDescription>
+            <span data-testid="wifConfiguration">{cluster.wifConfigName}</span>
+          </DescriptionListDescription>
         </DescriptionListGroup>
       )}
       {cluster.managed && (
