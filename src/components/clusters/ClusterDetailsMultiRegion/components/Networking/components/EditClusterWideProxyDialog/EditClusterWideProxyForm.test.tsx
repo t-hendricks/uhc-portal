@@ -25,8 +25,8 @@ describe('<EditClusterWideProxyForm />', () => {
   const defaultUseFormStateReturn = {
     setFieldTouched: jest.fn(),
     setFieldValue: jest.fn(), // Set value of form field directly
-    getFieldProps: jest.fn(), // Access: name, value, onBlur, onChange for a <Field>, useful for mapping to a field that expects the redux-form props
-    getFieldMeta: jest.fn().mockReturnValue({}), // Access: error, touched for a <Field>, useful for mapping to a field that expects the redux-form props
+    getFieldProps: jest.fn(), // Access: name, value, onBlur, onChange for a <Field>,
+    getFieldMeta: jest.fn().mockReturnValue({}), // Access: error, touched for a <Field>
     values: {
       ...defaultInitialValues,
     },

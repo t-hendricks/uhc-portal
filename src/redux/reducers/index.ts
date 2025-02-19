@@ -1,5 +1,4 @@
 import { combineReducers } from 'redux';
-import { reducer as formReducer } from 'redux-form';
 
 // TODO remove ignore statement once frontend-components-notifications has types
 // @ts-ignore
@@ -54,7 +53,6 @@ const reducers = {
   cloudProviders: cloudProvidersReducer,
   viewOptions: viewOptionsReducer,
   userProfile: userReducer,
-  form: formReducer,
   tollbooth: tollboothReducer,
   modal: modalReducer,
   logs: InstallationLogReducer,
