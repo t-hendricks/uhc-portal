@@ -34,7 +34,7 @@ const TokenBox = ({
           <Spinner size="lg" aria-label="Loading..." />
           <span>Loading token, this might take a minute</span>
         </div>
-        <Skeleton fontSize="md" />
+        <Skeleton fontSize="md" screenreaderText="Loading..." />
       </div>
     );
   }

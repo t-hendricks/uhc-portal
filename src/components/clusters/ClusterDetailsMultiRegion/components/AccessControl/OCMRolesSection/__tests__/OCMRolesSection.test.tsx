@@ -31,6 +31,20 @@ describe('<OCMRolesSection />', () => {
     canViewOCMRoles: true,
   };
 
+  it('shows skeleton while loading', async () => {
+    useFetchOCMRolesMock.mockReturnValue({
+      data: OCMRoles.data,
+      isLoading: true,
+      isError: false,
+      error: null,
+      isSuccess: true,
+    });
+
+    const { container } = render(<OCMRolesSection {...props} />);
+
+    expect(container.querySelectorAll('.pf-v5-c-skeleton').length).toBeGreaterThan(0);
+  });
+
   it('should render', async () => {
     useFetchOCMRolesMock.mockReturnValue({
       data: OCMRoles.data,

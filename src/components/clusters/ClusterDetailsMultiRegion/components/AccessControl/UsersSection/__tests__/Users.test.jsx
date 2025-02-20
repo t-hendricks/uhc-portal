@@ -41,6 +41,19 @@ describe('<Users />', () => {
     getUsers.mockClear();
   });
   const useFetchUsersMock = useFetchUsers;
+  it('shows skeleton while loading', async () => {
+    useFetchUsersMock.mockReturnValue({
+      data: [],
+      isLoading: true,
+      osError: false,
+      error: null,
+      isRefetching: true,
+    });
+
+    const { container } = render(<UsersSection {...props} />);
+
+    expect(container.querySelectorAll('.pf-v5-c-skeleton').length).toBeGreaterThan(0);
+  });
   it('is accessible without users', async () => {
     useFetchUsersMock.mockReturnValue({
       data: [],

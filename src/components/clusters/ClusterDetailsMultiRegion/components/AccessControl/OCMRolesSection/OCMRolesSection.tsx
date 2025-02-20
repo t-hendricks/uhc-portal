@@ -7,11 +7,10 @@ import {
   Button,
   Card,
   CardBody,
-  CardFooter,
-  CardTitle,
   Icon,
   Popover,
   PopoverPosition,
+  Skeleton,
   Title,
 } from '@patternfly/react-core';
 import { HelpIcon } from '@patternfly/react-icons/dist/esm/icons/help-icon';
@@ -26,8 +25,8 @@ import {
   Thead,
   Tr,
 } from '@patternfly/react-table';
-import Skeleton from '@redhat-cloud-services/frontend-components/Skeleton';
 
+import { LoadingSkeletonCard } from '~/components/clusters/common/LoadingSkeletonCard/LoadingSkeletonCard';
 import { useDeleteOCMRole } from '~/queries/ClusterDetailsQueries/AccessControlTab/OCMRolesQueries/useDeleteOCMRole';
 import {
   refetchOcmRoles,
@@ -320,10 +319,10 @@ function OCMRolesSection({
     return role.isCreating || role.isPending ? (
       <Tr key={usernameValue}>
         <Td dataLabel={columnNames.username}>
-          <Skeleton size="md" />
+          <Skeleton fontSize="md" screenreaderText="Loading..." />
         </Td>
         <Td dataLabel={columnNames.role}>
-          <Skeleton size="md" />
+          <Skeleton fontSize="md" screenreaderText="Loading..." />
         </Td>
         <Td isActionCell />
       </Tr>
@@ -339,17 +338,7 @@ function OCMRolesSection({
   };
 
   return pageLoading ? (
-    <Card>
-      <CardTitle>
-        <Skeleton size="md" />
-      </CardTitle>
-      <CardBody>
-        <Skeleton size="lg" />
-      </CardBody>
-      <CardFooter>
-        <Skeleton size="md" />
-      </CardFooter>
-    </Card>
+    <LoadingSkeletonCard />
   ) : (
     <Card>
       <CardBody>

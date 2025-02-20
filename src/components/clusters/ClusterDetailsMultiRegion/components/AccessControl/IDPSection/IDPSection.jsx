@@ -5,8 +5,6 @@ import { useDispatch } from 'react-redux';
 import {
   Card,
   CardBody,
-  CardFooter,
-  CardTitle,
   Dropdown,
   DropdownItem,
   DropdownList,
@@ -26,9 +24,9 @@ import {
   Thead,
   Tr,
 } from '@patternfly/react-table';
-import Skeleton from '@redhat-cloud-services/frontend-components/Skeleton';
 
 import { useNavigate } from '~/common/routing';
+import { LoadingSkeletonCard } from '~/components/clusters/common/LoadingSkeletonCard/LoadingSkeletonCard';
 import { useFetchClusterIdentityProviders } from '~/queries/ClusterDetailsQueries/useFetchClusterIdentityProviders';
 
 import links from '../../../../../../common/installLinks.mjs';
@@ -198,17 +196,7 @@ const IDPSection = (props) => {
   };
 
   return pending ? (
-    <Card>
-      <CardTitle>
-        <Skeleton size="md" />
-      </CardTitle>
-      <CardBody>
-        <Skeleton size="lg" />
-      </CardBody>
-      <CardFooter>
-        <Skeleton size="md" />
-      </CardFooter>
-    </Card>
+    <LoadingSkeletonCard />
   ) : (
     <Card>
       <CardBody>
