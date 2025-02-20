@@ -1,8 +1,8 @@
 import { renderHook } from '@testing-library/react';
 
 import { validateMaxNodes } from '~/common/validators';
+import { useFeatureGate } from '~/queries/featureGates/useFetchFeatureGate';
 
-import { useFeatureGate } from '../useFeatureGate';
 import useValidateMaxNodesTotal from '../useValidateMaxNodesTotal';
 
 jest.mock('~/common/validators', () => ({
@@ -10,7 +10,7 @@ jest.mock('~/common/validators', () => ({
   validatePositive: jest.fn(),
 }));
 
-jest.mock('../useFeatureGate', () => ({
+jest.mock('~/queries/featureGates/useFetchFeatureGate', () => ({
   useFeatureGate: jest.fn(),
 }));
 

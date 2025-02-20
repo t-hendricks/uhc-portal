@@ -5,7 +5,6 @@ import * as clustersConstants from './clustersConstants';
 import * as costConstants from './costConstants';
 import * as dashboardsConstants from './dashboardsConstants';
 import * as dnsDomainsConstants from './dnsDomainsConstants';
-import * as featureConstants from './featureConstants';
 import * as flavourConstants from './flavourConstants';
 import * as loadBalancerConstants from './loadBalancerConstants';
 import * as machineTypesConstants from './machineTypesConstants';
@@ -35,5 +34,4 @@ export {
   subscriptionSettingsConstants,
   dashboardsConstants,
   dnsDomainsConstants,
-  featureConstants,
 };

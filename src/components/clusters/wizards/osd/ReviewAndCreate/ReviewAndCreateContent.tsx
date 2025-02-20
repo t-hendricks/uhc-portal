@@ -25,8 +25,8 @@ import { GCPAuthType } from '~/components/clusters/wizards/osd/ClusterSettings/C
 import { FieldId, StepId } from '~/components/clusters/wizards/osd/constants';
 import config from '~/config';
 import useCanClusterAutoscale from '~/hooks/useCanClusterAutoscale';
-import { useFeatureGate } from '~/hooks/useFeatureGate';
-import { OSD_GCP_WIF, PRIVATE_SERVICE_CONNECT } from '~/redux/constants/featureConstants';
+import { OSD_GCP_WIF, PRIVATE_SERVICE_CONNECT } from '~/queries/featureGates/featureConstants';
+import { useFeatureGate } from '~/queries/featureGates/useFetchFeatureGate';
 
 import { MESSAGES } from '../../common/messages';
 import { ClusterPrivacyType } from '../Networking/constants';

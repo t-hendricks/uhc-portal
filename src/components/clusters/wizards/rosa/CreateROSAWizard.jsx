@@ -26,15 +26,16 @@ import {
 import config from '~/config';
 import withAnalytics from '~/hoc/withAnalytics';
 import useAnalytics from '~/hooks/useAnalytics';
-import { useFeatureGate } from '~/hooks/useFeatureGate';
 import usePreventBrowserNav from '~/hooks/usePreventBrowserNav';
-import { HYPERSHIFT_WIZARD_FEATURE } from '~/redux/constants/featureConstants';
+import { HYPERSHIFT_WIZARD_FEATURE } from '~/queries/featureGates/featureConstants';
+import { useFeatureGate } from '~/queries/featureGates/useFetchFeatureGate';
 import { isRestrictedEnv } from '~/restrictedEnv';
 
 import ErrorBoundary from '../../../App/ErrorBoundary';
 import Breadcrumbs from '../../../common/Breadcrumbs';
 import PageTitle from '../../../common/PageTitle';
 import Unavailable from '../../../common/Unavailable';
+import { useClusterWizardResetStepsHook } from '../hooks/useClusterWizardResetStepsHook';
 
 import CIDRScreen from './CIDRScreen/CIDRScreen';
 import ClusterRolesScreen from './ClusterRolesScreen/ClusterRolesScreen';
@@ -117,37 +118,13 @@ const CreateROSAWizardInternal = ({
       goToStepById,
     };
   };
-
-  React.useEffect(() => {
-    if (!currentStep) {
-      return;
-    }
-
-    const steps = wizardContextRef.current?.steps;
-    const setStep = wizardContextRef.current?.setStep;
-
-    // eslint-disable-next-line no-plusplus
-    for (let i = currentStep.index; i < steps.length; i++) {
-      const nextStep = steps[i];
-      const isParentStep = nextStep.subStepIds !== undefined;
-      if (!isParentStep && !nextStep.isHidden) {
-        if (!nextStep.isVisited) {
-          // can break out early if isVisited is not true for the remainder
-          break;
-        }
-        // unvisit if step is past account roles step and has no assoc. aws acct. selected
-        const noAssocAwsAcct = nextStep.id > accountAndRolesStepId && !selectedAWSAccountID;
-        // unvisit if step is past the current step that has had a form change
-        const afterChangedStep = nextStep.id > currentStepId;
-        // TODO: Not all form changes should cause following steps to be unvisited
-        setStep({
-          ...nextStep,
-          isVisited: !afterChangedStep && !noAssocAwsAcct,
-        });
-      }
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [values]);
+  useClusterWizardResetStepsHook({
+    currentStep,
+    wizardContextRef,
+    values,
+    additionalStepIndex: accountAndRolesStepId,
+    additionalCondition: !selectedAWSAccountID,
+  });
 
   React.useEffect(() => {
     // On component mount

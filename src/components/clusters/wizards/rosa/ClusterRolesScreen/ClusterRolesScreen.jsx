@@ -25,12 +25,12 @@ import {
 } from '~/components/clusters/wizards/rosa/ClusterRolesScreen/clusterRolesHelper';
 import { FieldId } from '~/components/clusters/wizards/rosa/constants';
 import useAnalytics from '~/hooks/useAnalytics';
-import { useFeatureGate } from '~/hooks/useFeatureGate';
+import { MULTIREGION_PREVIEW_ENABLED } from '~/queries/featureGates/featureConstants';
+import { useFeatureGate } from '~/queries/featureGates/useFetchFeatureGate';
 import {
   refetchGetOCMRole,
   useFetchGetOCMRole,
 } from '~/queries/RosaWizardQueries/useFetchGetOCMRole';
-import { MULTIREGION_PREVIEW_ENABLED } from '~/redux/constants/featureConstants';
 
 import links from '../../../../../common/installLinks.mjs';
 import { required } from '../../../../../common/validators';

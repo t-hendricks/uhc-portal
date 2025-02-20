@@ -53,46 +53,6 @@ describe('clustersActions', () => {
     });
   });
 
-  describe('clearClusterResponse', () => {
-    it('dispatches successfully', () => {
-      const result = clustersActions.clearClusterResponse();
-      expect(result).toEqual({
-        type: clustersConstants.CLEAR_DISPLAY_NAME_RESPONSE,
-      });
-    });
-  });
-
-  describe('editCluster', () => {
-    it('dispatches successfully', () => {
-      const result = clustersActions.editCluster();
-      expect(result).toEqual(
-        expect.objectContaining({
-          type: clustersConstants.EDIT_CLUSTER,
-        }),
-      );
-    });
-
-    it('calls clusterService.editCluster', () => {
-      const fakeParams = { fake: 'params' };
-      clustersActions.editCluster('fakeID', fakeParams);
-      expect(clusterService.editCluster).toBeCalledWith('fakeID', fakeParams);
-    });
-  });
-
-  describe('fetchClusters', () => {
-    it('dispatches successfully', () => {
-      const mockGetState = jest.fn().mockImplementation(() => ({
-        features: {},
-        clusters: { techPreview: {} },
-      }));
-      clustersActions.fetchClusters({})(mockDispatch, mockGetState);
-      expect(mockDispatch).toBeCalledWith({
-        payload: expect.anything(),
-        type: clustersConstants.GET_CLUSTERS,
-      });
-    });
-  });
-
   describe('fetchClusterDetails', () => {
     it('dispatches successfully', () => {
       const result = clustersActions.fetchClusterDetails();

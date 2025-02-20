@@ -24,15 +24,15 @@ import useChrome from '@redhat-cloud-services/frontend-components/useChrome';
 
 import { Navigate, ocmBaseName } from '~/common/routing';
 import ClusterDetailsClusterOrExternalIdMR from '~/components/clusters/ClusterDetailsMultiRegion/ClusterDetailsClusterOrExternalId';
-import { useFeatureGate } from '~/hooks/useFeatureGate';
+import {
+  CLUSTER_OWNERSHIP_TRANSFER,
+  HYPERSHIFT_WIZARD_FEATURE,
+} from '~/queries/featureGates/featureConstants';
+import { useFeatureGate } from '~/queries/featureGates/useFetchFeatureGate';
 import { isRestrictedEnv } from '~/restrictedEnv';
 import apiRequest from '~/services/apiRequest';
 
 import { normalizedProducts } from '../../common/subscriptionTypes';
-import {
-  CLUSTER_OWNERSHIP_TRANSFER,
-  HYPERSHIFT_WIZARD_FEATURE,
-} from '../../redux/constants/featureConstants';
 import CLILoginPage from '../CLILoginPage/CLILoginPage';
 import ArchivedClusterListMultiRegion from '../clusters/ArchivedClusterListMultiRegion';
 import ClusterDetailsSubscriptionIdMultiRegion from '../clusters/ClusterDetailsMultiRegion/ClusterDetailsSubscriptionIdMultiRegion';

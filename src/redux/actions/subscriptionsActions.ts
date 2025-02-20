@@ -15,7 +15,6 @@ limitations under the License.
 */
 import type { AxiosResponse } from 'axios';
 import { action, ActionType } from 'typesafe-actions';
-import { validate as isUuid } from 'uuid';
 
 import {
   SelfResourceReviewRequestAction,
@@ -23,7 +22,7 @@ import {
 } from '~/types/accounts_mgmt.v1';
 import type { SubscriptionWithPermissionsList } from '~/types/types';
 
-import { accountsService, authorizationsService, clusterService } from '../../services';
+import { accountsService, authorizationsService } from '../../services';
 import { subscriptionsConstants } from '../constants';
 import { buildPermissionDict, INVALIDATE_ACTION } from '../reduxHelpers';
 
@@ -68,42 +67,18 @@ const fetchQuotaCost = (organizationID: string) =>
     accountsService.getOrganizationQuota(organizationID),
   );
 
-const getSubscriptionIDForCluster = (clusterID: string) => {
-  if (isUuid(clusterID)) {
-    return accountsService
-      .fetchSubscriptionByExternalId(clusterID)
-      .then((result) => result.data?.items?.[0]?.id);
-  }
-  return clusterService.getClusterDetails(clusterID).then((result) => result.data.subscription?.id);
-};
-
-/**
- * Redux action creator, get a subscription ID using a cluster's id / uuid,
- * for redirecting requests from `/details/<id>` to `/details/s/<subscription_id>`
- *
- * @param {String} clusterID Either a Clusters Service cluster ID or a cluster's external_id (uuid)
- */
-const fetchSubscriptionIDForCluster = (clusterID: string) =>
-  action(subscriptionsConstants.GET_SUBSCRIPTION_ID, getSubscriptionIDForCluster(clusterID));
-
-const clearSubscriptionIDForCluster = () => action(subscriptionsConstants.CLEAR_SUBSCRIPTION_ID);
-
 const subscriptionsActions = {
   fetchAccount,
   fetchQuotaCost,
   getSubscriptions,
   invalidateSubscriptions,
-  fetchSubscriptionIDForCluster,
-  clearSubscriptionIDForCluster,
 };
 
 type SubscriptionsAction = ActionType<typeof subscriptionsActions>;
 
 export {
-  clearSubscriptionIDForCluster,
   fetchAccount,
   fetchQuotaCost,
-  fetchSubscriptionIDForCluster,
   getSubscriptions,
   invalidateSubscriptions,
   SubscriptionsAction,

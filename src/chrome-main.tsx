@@ -26,13 +26,12 @@ import * as Sentry from '@sentry/browser';
 import { sessionTimingIntegration } from '@sentry/integrations';
 
 import { trackEvents } from '~/common/analytics';
+import { preFetchAllFeatureGates } from '~/queries/featureGates/useFetchFeatureGate';
 
 import App from './components/App/App';
 import useAnalytics, { Track } from './hooks/useAnalytics';
-import { detectFeatures } from './redux/actions/featureActions';
 import { userInfoResponse } from './redux/actions/userActions';
 import { store } from './redux/store';
-import type { AppThunkDispatch } from './redux/types';
 import { authInterceptor } from './services/apiRequest';
 import { Chrome } from './types/types';
 import config from './config';
@@ -77,7 +76,8 @@ class AppEntry extends React.Component<Props> {
         store.dispatch(userInfoResponse(data.identity.user));
       }
       config.fetchConfig(chrome).then(() => {
-        (store.dispatch as AppThunkDispatch)(detectFeatures());
+        preFetchAllFeatureGates();
+
         this.setState({ ready: true });
         if (!APP_DEV_SERVER && !config.envOverride && config.configData.sentryDSN) {
           Sentry.init({

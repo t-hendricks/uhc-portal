@@ -32,8 +32,9 @@ import { ReduxSelectDropdown } from '~/components/common/ReduxFormComponents_dep
 import ReduxVerticalFormGroup from '~/components/common/ReduxFormComponents_deprecated/ReduxVerticalFormGroup';
 import { useOCPLatestVersion } from '~/components/releases/hooks';
 import useAnalytics from '~/hooks/useAnalytics';
-import { useFeatureGate } from '~/hooks/useFeatureGate';
-import { HCP_USE_UNMANAGED } from '~/redux/constants/featureConstants';
+import { usePreviousProps } from '~/hooks/usePreviousProps';
+import { HCP_USE_UNMANAGED } from '~/queries/featureGates/featureConstants';
+import { useFeatureGate } from '~/queries/featureGates/useFetchFeatureGate';
 
 import { FieldId } from '../../constants';
 import { RosaCliCommand } from '../constants/cliCommands';
@@ -93,14 +94,8 @@ function AccountRolesARNsSection({
   isHypershiftSelected,
   onAccountChanged,
 }) {
-  const {
-    setFieldValue,
-    getFieldProps,
-    getFieldMeta,
-    setFieldTouched,
-    validateForm,
-    values: { [FieldId.AssociatedAwsId]: previouslySelectedAWSAccountID },
-  } = useFormState();
+  const { setFieldValue, getFieldProps, getFieldMeta, setFieldTouched, validateForm } =
+    useFormState();
   const track = useAnalytics();
   const [isExpanded, setIsExpanded] = useState(true);
   const [accountRoles, setAccountRoles] = useState([]);
@@ -113,6 +108,8 @@ function AccountRolesARNsSection({
   const isMissingOCMRole = hasNoTrustedRelationshipOnClusterRoleError(
     getAWSAccountRolesARNsResponse,
   );
+
+  const prevSelected = usePreviousProps(selectedAWSAccountID);
 
   useEffect(() => {
     // this is required to show any validation error messages for the 4 disabled ARNs fields
@@ -144,7 +141,8 @@ function AccountRolesARNsSection({
   };
 
   useEffect(() => {
-    if (selectedAWSAccountID !== previouslySelectedAWSAccountID) {
+    // Skips first render since prevSelected is undefined
+    if (prevSelected && selectedAWSAccountID !== prevSelected) {
       updateRoleArns(null);
     }
     setSelectedInstallerRole(NO_ROLE_DETECTED);

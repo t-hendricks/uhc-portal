@@ -2,12 +2,13 @@ import React from 'react';
 import * as reactRedux from 'react-redux';
 import { useParams } from 'react-router-dom';
 
+import { MULTIREGION_PREVIEW_ENABLED } from '~/queries/featureGates/featureConstants';
+
 import { useFetchClusterDetails } from '../../../../queries/ClusterDetailsQueries/useFetchClusterDetails';
 import { useFetchClusterIdentityProviders } from '../../../../queries/ClusterDetailsQueries/useFetchClusterIdentityProviders';
 import { useFetchCloudProviders } from '../../../../queries/common/useFetchCloudProviders';
 import { clearGlobalError, setGlobalError } from '../../../../redux/actions/globalErrorActions';
 import * as userActions from '../../../../redux/actions/userActions';
-import { MULTIREGION_PREVIEW_ENABLED } from '../../../../redux/constants/featureConstants';
 import { mockUseFeatureGate, render, screen, waitFor, withState } from '../../../../testUtils';
 import { SubscriptionCommonFieldsStatus } from '../../../../types/accounts_mgmt.v1';
 import clusterStates from '../../common/clusterStates';

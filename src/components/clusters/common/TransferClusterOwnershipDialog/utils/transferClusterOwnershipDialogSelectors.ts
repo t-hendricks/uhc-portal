@@ -20,19 +20,6 @@ const canTransferClusterOwnershipSelector = (state: GlobalState) =>
 const canTransferClusterOwnershipMultiRegion = (cluster: ClusterFromSubscription) =>
   hasCapability(cluster?.subscription, subscriptionCapabilities.RELEASE_OCP_CLUSTERS);
 
-// TODO - this can be removed once clusters.clusters.clusters is removed from Redux
-const canTransferClusterOwnershipListSelector = (state: GlobalState) =>
-  (state?.clusters?.clusters?.clusters ?? []).reduce(
-    (acc, cluster) => ({
-      ...acc,
-      [`${cluster.id}`]: hasCapability(
-        cluster.subscription,
-        subscriptionCapabilities.RELEASE_OCP_CLUSTERS,
-      ),
-    }),
-    {},
-  );
-
 const canTransferClusterOwnershipListFromClusters = (clusters: ClusterWithPermissions[] = []) =>
   clusters.reduce(
     (acc, cluster) => ({
@@ -46,7 +33,6 @@ const canTransferClusterOwnershipListFromClusters = (clusters: ClusterWithPermis
   );
 
 export {
-  canTransferClusterOwnershipListSelector,
   canTransferClusterOwnershipMultiRegion,
   canTransferClusterOwnershipSelector,
   canTransferClusterOwnershipListFromClusters,

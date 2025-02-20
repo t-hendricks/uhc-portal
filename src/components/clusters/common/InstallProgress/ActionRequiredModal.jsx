@@ -19,8 +19,8 @@ import {
   TextVariants,
 } from '@patternfly/react-core';
 
-import { useFeatureGate } from '~/hooks/useFeatureGate';
-import { MULTIREGION_PREVIEW_ENABLED } from '~/redux/constants/featureConstants';
+import { MULTIREGION_PREVIEW_ENABLED } from '~/queries/featureGates/featureConstants';
+import { useFeatureGate } from '~/queries/featureGates/useFetchFeatureGate';
 
 import {
   isErrorSharedGCPVPCValues,

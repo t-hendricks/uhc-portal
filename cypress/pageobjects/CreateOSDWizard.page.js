@@ -158,6 +158,8 @@ class CreateOSDCluster extends Page {
 
   authenticationTypeValue = () => cy.getByTestId('Authentication-type').find('div');
 
+  wifConfigurationValue = () => cy.getByTestId('WIF-configuration').find('div');
+
   clusterDomainPrefixLabelValue = () => cy.getByTestId('Domain-prefix').should('exist');
 
   userWorkloadMonitoringValue = () => cy.getByTestId('User-workload-monitoring').find('div');

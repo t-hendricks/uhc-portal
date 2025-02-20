@@ -10,7 +10,6 @@ import type { DashboardsAction } from '../actions/dashboardsActions';
 import type { SubscriptionsAction } from '../actions/subscriptionsActions';
 import type { ViewOptionsAction } from '../actions/viewOptionsActions';
 import {
-  clustersConstants,
   dashboardsConstants,
   subscriptionsConstants,
   viewConstants,
@@ -235,12 +234,6 @@ const viewOptionsReducer = (
       updatePageCounts(action.payload.viewType, action.payload.totalCount);
 
       return { ...state, ...updateState };
-    /* START ARCHIVED CODE - DO NOT USE */
-    case FULFILLED_ACTION(clustersConstants.GET_CLUSTERS):
-      updatePageCounts(viewConstants.CLUSTERS_VIEW, action.payload.data.total);
-      updatePageCounts(viewConstants.ARCHIVED_CLUSTERS_VIEW, action.payload.data.total);
-      return { ...state, ...updateState };
-    /* END ARCHIVED CODE - DO NOT USE */
 
     case FULFILLED_ACTION(dashboardsConstants.GET_UNHEALTHY_CLUSTERS):
       updatePageCounts(viewConstants.OVERVIEW_VIEW, action.payload.data.total);

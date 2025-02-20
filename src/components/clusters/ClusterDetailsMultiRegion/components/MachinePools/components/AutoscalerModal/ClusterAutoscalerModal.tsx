@@ -177,7 +177,6 @@ export const ClusterAutoscalerModal = ({
       getDefaultClusterAutoScaling(maxNodesTotalDefault),
       true,
     );
-
   const toggleClusterAutoScaling = () => {
     if (!hasClusterAutoscaler) {
       mutateEnableClusterAutoscaler();

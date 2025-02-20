@@ -16,8 +16,8 @@ import ExternalLink from '~/components/common/ExternalLink';
 import { openModal } from '~/components/common/Modal/ModalActions';
 import modals from '~/components/common/Modal/modals';
 import PopoverHint from '~/components/common/PopoverHint';
-import { useFeatureGate } from '~/hooks/useFeatureGate';
-import { OCMUI_MAX_NODES_TOTAL_249 } from '~/redux/constants/featureConstants';
+import { OCMUI_MAX_NODES_TOTAL_249 } from '~/queries/featureGates/featureConstants';
+import { useFeatureGate } from '~/queries/featureGates/useFetchFeatureGate';
 
 import { AutoScaleEnabledInputs } from './AutoScaleEnabledInputs';
 import ClusterAutoScaleSettingsDialog from './ClusterAutoScaleSettingsDialog';

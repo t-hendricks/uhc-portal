@@ -16,13 +16,13 @@ import { CloudProviderType, FieldId } from '~/components/clusters/wizards/common
 import { useFormState } from '~/components/clusters/wizards/hooks';
 import ExternalLink from '~/components/common/ExternalLink';
 import useCanClusterAutoscale from '~/hooks/useCanClusterAutoscale';
-import { useFeatureGate } from '~/hooks/useFeatureGate';
+import { OCMUI_MAX_NODES_TOTAL_249 } from '~/queries/featureGates/featureConstants';
+import { useFeatureGate } from '~/queries/featureGates/useFetchFeatureGate';
 import {
   clearMachineTypesByRegion,
   getMachineTypes,
   getMachineTypesByRegion,
 } from '~/redux/actions/machineTypesActions';
-import { OCMUI_MAX_NODES_TOTAL_249 } from '~/redux/constants/featureConstants';
 import { GlobalState } from '~/redux/store';
 import { AWSCredentials } from '~/types/types';
 

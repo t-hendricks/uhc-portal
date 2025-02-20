@@ -28,9 +28,9 @@ import { MIN_MANAGED_POLICY_VERSION } from '~/components/clusters/wizards/rosa/r
 import ErrorBox from '~/components/common/ErrorBox';
 import { FormGroupHelperText } from '~/components/common/FormGroupHelperText';
 import { useOCPLifeCycleStatusData } from '~/components/releases/hooks';
-import { useFeatureGate } from '~/hooks/useFeatureGate';
+import { UNSTABLE_CLUSTER_VERSIONS } from '~/queries/featureGates/featureConstants';
+import { useFeatureGate } from '~/queries/featureGates/useFetchFeatureGate';
 import { clustersActions } from '~/redux/actions';
-import { UNSTABLE_CLUSTER_VERSIONS } from '~/redux/constants/featureConstants';
 import { useGlobalState } from '~/redux/hooks';
 import type { Version } from '~/types/clusters_mgmt.v1';
 

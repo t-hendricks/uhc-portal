@@ -12,8 +12,8 @@ import { RosaCliCommand } from '~/components/clusters/wizards/rosa/AccountsRoles
 import ExternalLink from '~/components/common/ExternalLink';
 import InstructionCommand from '~/components/common/InstructionCommand';
 import OfflineTokensAlert from '~/components/common/OfflineTokensAlert';
-import { useFeatureGate } from '~/hooks/useFeatureGate';
-import { CLI_SSO_AUTHORIZATION } from '~/redux/constants/featureConstants';
+import { CLI_SSO_AUTHORIZATION } from '~/queries/featureGates/featureConstants';
+import { useFeatureGate } from '~/queries/featureGates/useFetchFeatureGate';
 import { getRefreshToken, isRestrictedEnv } from '~/restrictedEnv';
 import { Error } from '~/types/accounts_mgmt.v1';
 import type { Chrome } from '~/types/types';

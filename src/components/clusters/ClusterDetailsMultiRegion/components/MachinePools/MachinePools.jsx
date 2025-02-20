@@ -32,7 +32,6 @@ import { getDefaultClusterAutoScaling } from '~/components/clusters/common/clust
 import { MachineConfiguration } from '~/components/clusters/common/MachineConfiguration';
 import { MAX_NODES_INSUFFICIEN_VERSION as MAX_NODES_180 } from '~/components/clusters/common/machinePools/constants';
 import { getMaxNodesTotalDefaultAutoscaler } from '~/components/clusters/common/machinePools/utils';
-import { useFeatureGate } from '~/hooks/useFeatureGate';
 import {
   refetchClusterAutoscalerData,
   useFetchClusterAutoscaler,
@@ -43,7 +42,8 @@ import { useFetchMachineOrNodePools } from '~/queries/ClusterDetailsQueries/Mach
 import {
   ENABLE_MACHINE_CONFIGURATION,
   OCMUI_MAX_NODES_TOTAL_249,
-} from '~/redux/constants/featureConstants';
+} from '~/queries/featureGates/featureConstants';
+import { useFeatureGate } from '~/queries/featureGates/useFetchFeatureGate';
 import { useGlobalState } from '~/redux/hooks';
 import { clusterService } from '~/services';
 import { getClusterServiceForRegion } from '~/services/clusterService';

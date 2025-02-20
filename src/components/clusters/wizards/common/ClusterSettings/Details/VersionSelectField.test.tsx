@@ -8,7 +8,7 @@ import {
 } from '~/components/clusters/wizards/common/ClusterSettings/Details/VersionSelectField.fixtures';
 import { FieldId } from '~/components/clusters/wizards/common/constants';
 import { GCPAuthType } from '~/components/clusters/wizards/osd/ClusterSettings/CloudProvider/types';
-import { UNSTABLE_CLUSTER_VERSIONS } from '~/redux/constants/featureConstants';
+import { UNSTABLE_CLUSTER_VERSIONS } from '~/queries/featureGates/featureConstants';
 import clusterService from '~/services/clusterService';
 import getOCPLifeCycleStatus from '~/services/productLifeCycleService';
 import { checkAccessibility, screen, withState } from '~/testUtils';

@@ -1,9 +1,8 @@
 import { useCallback } from 'react';
 
 import { validateMaxNodes, validatePositive } from '~/common/validators';
-import { BYPASS_COMPUTE_NODE_COUNT_LIMIT_CLASSIC_OSD_GCP } from '~/redux/constants/featureConstants';
-
-import { useFeatureGate } from './useFeatureGate';
+import { BYPASS_COMPUTE_NODE_COUNT_LIMIT_CLASSIC_OSD_GCP } from '~/queries/featureGates/featureConstants';
+import { useFeatureGate } from '~/queries/featureGates/useFetchFeatureGate';
 
 const useValidateMaxNodesTotal = (maxNodesTotalDefault: number) => {
   const bypassComputeNodeCountLimitClassicOsdGcpFlag = useFeatureGate(

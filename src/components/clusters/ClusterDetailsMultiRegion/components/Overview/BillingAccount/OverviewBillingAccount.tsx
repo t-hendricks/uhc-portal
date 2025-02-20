@@ -11,9 +11,9 @@ import {
 } from '@patternfly/react-core';
 import PencilAltIcon from '@patternfly/react-icons/dist/esm/icons/pencil-alt-icon';
 
-import { useFeatureGate } from '~/hooks/useFeatureGate';
 import { useFetchClusterDetails } from '~/queries/ClusterDetailsQueries/useFetchClusterDetails';
-import { EDIT_BILLING_ACCOUNT } from '~/redux/constants/featureConstants';
+import { EDIT_BILLING_ACCOUNT } from '~/queries/featureGates/featureConstants';
+import { useFeatureGate } from '~/queries/featureGates/useFetchFeatureGate';
 
 import ButtonWithTooltip from '../../../../../common/ButtonWithTooltip';
 import { isHypershiftCluster } from '../../../clusterDetailsHelper';

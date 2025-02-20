@@ -13,9 +13,9 @@ import {
 import { FormGroupHelperText } from '~/components/common/FormGroupHelperText';
 import PopoverHint from '~/components/common/PopoverHint';
 import WithTooltip from '~/components/common/WithTooltip';
-import { useFeatureGate } from '~/hooks/useFeatureGate';
 import useFormikOnChange from '~/hooks/useFormikOnChange';
-import { HCP_ROOT_DISK_SIZE } from '~/redux/constants/featureConstants';
+import { HCP_ROOT_DISK_SIZE } from '~/queries/featureGates/featureConstants';
+import { useFeatureGate } from '~/queries/featureGates/useFetchFeatureGate';
 import { ClusterFromSubscription } from '~/types/types';
 
 import './DiskSizeField.scss';

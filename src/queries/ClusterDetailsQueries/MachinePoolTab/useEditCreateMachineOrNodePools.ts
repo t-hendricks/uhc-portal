@@ -7,8 +7,8 @@ import {
   buildNodePoolRequest,
 } from '~/components/clusters/ClusterDetailsMultiRegion/components/MachinePools/components/EditMachinePoolModal/utils';
 import { isROSA } from '~/components/clusters/common/clusterStates';
-import { useFeatureGate } from '~/hooks/useFeatureGate';
-import { HCP_ROOT_DISK_SIZE } from '~/redux/constants/featureConstants';
+import { HCP_ROOT_DISK_SIZE } from '~/queries/featureGates/featureConstants';
+import { useFeatureGate } from '~/queries/featureGates/useFetchFeatureGate';
 import { getClusterService, getClusterServiceForRegion } from '~/services/clusterService';
 import { MachinePool } from '~/types/clusters_mgmt.v1';
 import { ClusterFromSubscription } from '~/types/types';

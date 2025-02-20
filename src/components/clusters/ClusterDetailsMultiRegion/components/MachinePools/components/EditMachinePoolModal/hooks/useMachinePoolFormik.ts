@@ -21,9 +21,12 @@ import {
   getWorkerNodeVolumeSizeMaxGiB,
   getWorkerNodeVolumeSizeMinGiB,
 } from '~/components/clusters/common/machinePools/utils';
-import { useFeatureGate } from '~/hooks/useFeatureGate';
+import {
+  HCP_ROOT_DISK_SIZE,
+  OCMUI_MAX_NODES_TOTAL_249,
+} from '~/queries/featureGates/featureConstants';
+import { useFeatureGate } from '~/queries/featureGates/useFetchFeatureGate';
 import { MachineTypesResponse } from '~/queries/types';
-import { HCP_ROOT_DISK_SIZE, OCMUI_MAX_NODES_TOTAL_249 } from '~/redux/constants/featureConstants';
 import { MachinePool, NodePool } from '~/types/clusters_mgmt.v1';
 import { ClusterFromSubscription } from '~/types/types';
 

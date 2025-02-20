@@ -16,8 +16,8 @@ import { FieldId as RosaFieldId } from '~/components/clusters/wizards/rosa/const
 import ExternalLink from '~/components/common/ExternalLink';
 import { FormGroupHelperText } from '~/components/common/FormGroupHelperText';
 import PopoverHint from '~/components/common/PopoverHint';
-import { useFeatureGate } from '~/hooks/useFeatureGate';
-import { OCMUI_MAX_NODES_TOTAL_249 } from '~/redux/constants/featureConstants';
+import { OCMUI_MAX_NODES_TOTAL_249 } from '~/queries/featureGates/featureConstants';
+import { useFeatureGate } from '~/queries/featureGates/useFetchFeatureGate';
 
 import { NodesInput } from './NodesInput';
 

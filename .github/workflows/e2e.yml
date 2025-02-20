@@ -3,22 +3,6 @@ name: Pull Request e2e CI
 on:
   pull_request_target:
     types: [opened, synchronize, reopened, ready_for_review]
-    paths-ignore:
-      - 'LICENSE'
-      - 'Makefile'
-      - 'renovate.json'
-      - '*.sh'
-      - '.gitignore'
-      - 'deploy*.sh'
-      - '*.md'
-      - '*.adoc'
-      - '*.txt'
-      - 'mockdata/**'
-      - 'docs/**'
-      - 'run/**'
-      - 'qe-images/**'
-      - .gitlab-ci.yml
-      - .gitlab/**
 
 jobs:
   install:

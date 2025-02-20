@@ -38,9 +38,9 @@ import Skeleton from '@redhat-cloud-services/frontend-components/Skeleton';
 import useChrome from '@redhat-cloud-services/frontend-components/useChrome';
 
 import { Link } from '~/common/routing';
-import { useFeatureGate } from '~/hooks/useFeatureGate';
+import { CLI_SSO_AUTHORIZATION } from '~/queries/featureGates/featureConstants';
+import { useFeatureGate } from '~/queries/featureGates/useFetchFeatureGate';
 import { setOfflineToken } from '~/redux/actions/rosaActions';
-import { CLI_SSO_AUTHORIZATION } from '~/redux/constants/featureConstants';
 import { useGlobalState } from '~/redux/hooks/useGlobalState';
 import { getRefreshToken, isRestrictedEnv } from '~/restrictedEnv';
 import { Chrome } from '~/types/types';
@@ -129,6 +129,8 @@ const Instructions = (props: Props) => {
     );
   }
 
+  const ocmLoginCommand = `ocm login --token="${token}" ${restrictedEnv ? '--url https://api.***REMOVED***.com --token-url https://sso.***REMOVED***.com/realms/redhat-external/protocol/openid-connect/token --client-id console-dot' : ''}`;
+
   return (
     <Stack hasGutter>
       <StackItem>
@@ -168,7 +170,7 @@ const Instructions = (props: Props) => {
                       ) : (
                         <TokenBox
                           token={token}
-                          command={`${commandName} login --token="{{TOKEN}}"`}
+                          command={ocmLoginCommand}
                           showCommandOnError
                           showInstructionsOnError={false}
                         />
