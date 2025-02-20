@@ -1,12 +1,6 @@
 This directory captures snapshots of OpenAPI definitions from backends.
 Run `make openapi` (at the root level) to grab new ones and `yarn gen-types` to generate src/types/ TypeScript from them.
 
-# WARNING: Manual patches
-
-As of this writing we must do a few manual changes on the generated Type definitions:
-
-- _accounts_mgmt.v1/models/SelfAccessReview.ts_: Do not remove the entries on `resource_type` for `AccessRequestDecision`, `Idp`, `ClusterAutoscaler` and `MachinePool`. To be removed once OCM-12554 is solved
-
 # Lifecycle of OpenAPI definitions
 
 OCM uses APIs from 2 places:
