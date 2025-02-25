@@ -5,7 +5,9 @@ import {
   getDefaultClusterAutoScaling,
 } from '~/components/clusters/common/clusterAutoScalingValues';
 import { formatErrorData } from '~/queries/helpers';
-import clusterService, { getClusterServiceForRegion } from '~/services/clusterService';
+import { getClusterServiceForRegion } from '~/services/clusterService';
+
+import { invalidateClusterDetailsQueries } from '../../useFetchClusterDetails';
 
 import { refetchClusterAutoscalerData } from './useFetchClusterAutoscaler';
 
@@ -17,15 +19,7 @@ export const useEnableClusterAutoscaler = (
   const { data, isPending, isSuccess, isError, error, mutate, mutateAsync } = useMutation({
     mutationKey: ['clusterAutoscaler', 'enableClusterAutoscaler', clusterID],
     mutationFn: async () => {
-      if (region) {
-        const clusterService = getClusterServiceForRegion(region);
-        const response = clusterService.enableClusterAutoscaler(
-          clusterID,
-          getClusterAutoScalingSubmitSettings(getDefaultClusterAutoScaling(maxNodesTotalDefault)),
-        );
-        return response;
-      }
-
+      const clusterService = getClusterServiceForRegion(region);
       const response = clusterService.enableClusterAutoscaler(
         clusterID,
         getClusterAutoScalingSubmitSettings(getDefaultClusterAutoScaling(maxNodesTotalDefault)),
@@ -34,6 +28,7 @@ export const useEnableClusterAutoscaler = (
     },
     onSuccess: () => {
       refetchClusterAutoscalerData(clusterID);
+      invalidateClusterDetailsQueries();
     },
   });
   const errorData = formatErrorData(isPending, isError, error);
