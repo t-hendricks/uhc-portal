@@ -11,26 +11,10 @@ import { required } from '../../../../../../../common/validators';
 import ReduxVerticalFormGroup from '../../../../../../common/ReduxFormComponents_deprecated/ReduxVerticalFormGroup';
 import { FieldId } from '../../constants';
 
-const LDAPFormRequired = ({ isEditForm, idpEdited, isPending }) => {
-  const [hasBindDN, setHasBindDN] = React.useState(false);
+const LDAPFormRequired = ({ isPending }) => {
+  const { getFieldProps, setFieldValue, getFieldMeta, values } = useFormState();
 
-  const { getFieldProps, setFieldValue, getFieldMeta } = useFormState();
-
-  React.useEffect(() => {
-    if (isEditForm && idpEdited.ldap.bind_dn && idpEdited.ldap.bind_dn !== '') {
-      setHasBindDN(true);
-    }
-    // Should run only once on mount and once on unmount
-    // eslint-disable-next-line  react-hooks/exhaustive-deps
-  }, []);
-
-  const toggleBindPasswordDisabled = (e, value) => {
-    if (value) {
-      setHasBindDN(true);
-    } else {
-      setHasBindDN(false);
-    }
-  };
+  const hasBindDN = values[FieldId.BIND_DN].trim();
 
   return (
     <>
@@ -63,7 +47,6 @@ const LDAPFormRequired = ({ isEditForm, idpEdited, isPending }) => {
           label="Bind DN"
           type="text"
           disabled={isPending}
-          onChange={toggleBindPasswordDisabled}
           helpText="DN to bind with during the search phase."
         />
       </GridItem>
@@ -135,8 +118,6 @@ const LDAPFormRequired = ({ isEditForm, idpEdited, isPending }) => {
 
 LDAPFormRequired.propTypes = {
   isPending: PropTypes.bool,
-  isEditForm: PropTypes.bool,
-  idpEdited: PropTypes.object,
 };
 
 export default LDAPFormRequired;
