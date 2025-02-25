@@ -190,6 +190,11 @@ export function getClusterService(apiRequest: APIRequest = defaultApiRequest) {
         data,
       ),
 
+    getHtpasswdUsers: (clusterID: string, idpID: string) =>
+      apiRequest.get<unknown>(
+        `/api/clusters_mgmt/v1/clusters/${clusterID}/identity_providers/${idpID}/htpasswd_users`,
+      ),
+
     getClusterGroupUsers: (clusterID: string) =>
       apiRequest.get<{
         /**

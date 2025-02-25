@@ -28,6 +28,8 @@ import {
 import { useNavigate } from '~/common/routing';
 import { LoadingSkeletonCard } from '~/components/clusters/common/LoadingSkeletonCard/LoadingSkeletonCard';
 import { useFetchClusterIdentityProviders } from '~/queries/ClusterDetailsQueries/useFetchClusterIdentityProviders';
+import { OCMUI_ENHANCED_HTPASSWRD } from '~/queries/featureGates/featureConstants';
+import { useFeatureGate } from '~/queries/featureGates/useFetchFeatureGate';
 
 import links from '../../../../../../common/installLinks.mjs';
 import ClipboardCopyLinkButton from '../../../../../common/ClipboardCopyLinkButton';
@@ -50,6 +52,7 @@ const IDPSection = (props) => {
     subscriptionID,
     cluster,
   } = props;
+  const isHTPasswdEnhanced = useFeatureGate(OCMUI_ENHANCED_HTPASSWRD);
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [dropdownOpen, setDropdownOpen] = React.useState(false);
@@ -162,7 +165,7 @@ const IDPSection = (props) => {
         );
       },
     };
-    if (IDPTypeNames[idp.type] === IDPTypeNames[IDPformValues.HTPASSWD]) {
+    if (IDPTypeNames[idp.type] === IDPTypeNames[IDPformValues.HTPASSWD] && !isHTPasswdEnhanced) {
       return [deleteIDPAction];
     }
     return [editIDPAction, deleteIDPAction];
