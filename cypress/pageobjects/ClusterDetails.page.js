@@ -25,17 +25,23 @@ class ClusterDetails extends Page {
 
   editDisplayNameDropdownItem = () => cy.contains('button', 'Edit display name');
 
+  editMachinePoolDropdownItem = () => cy.contains('button', 'Edit Machine pool');
+
   editDisplayNameInput = () => cy.get('input[id="edit-display-name-input"]');
 
   overviewTab = () => cy.get('button[aria-controls="overviewTabContent"]');
 
-  accessControlTab = () => cy.get('button[aria-controls="overviewTabContent"]');
+  accessControlTab = () => cy.get('button[aria-controls="accessControlTabContent"]');
+
+  addonsTab = () => cy.get('button[aria-controls="addOnsTabContent"]');
 
   machinePoolsTab = () => cy.get('button[aria-controls="machinePoolsTabContent"]');
 
   networkingTab = () => cy.get('button[aria-controls="networkingTabContent"]');
 
   settingsTab = () => cy.get('button[aria-controls="upgradeSettingsTabContent"]');
+
+  accessRequestTab = () => cy.get('button[aria-controls="accessRequestContent"]');
 
   clusterHistoryTab = () => cy.get('button[id="pf-tab-4-Cluster history"]');
 
@@ -150,6 +156,14 @@ class ClusterDetails extends Page {
   numberOfCPUsInput = () => cy.get('input[name="cpu_total"]');
 
   saveSubscriptionButton = () => cy.getByTestId('btn-primary');
+
+  actionButton = () => cy.getByTestId('cluster-actions-dropdown');
+
+  editDisplayNameButton = () => cy.get('button').contains('Edit display name');
+
+  editDisplayNameInput = () => cy.get('#edit-display-name-input');
+
+  editButton = () => cy.get('button').contains('Edit');
 
   clusterInfrastructureBillingModelValue = () =>
     cy.getByTestId('infrastructure-billing-model').find('div');
@@ -276,6 +290,10 @@ class ClusterDetails extends Page {
   waitForClusterDetailsLoad = () => {
     cy.get('div.ins-c-spinner.cluster-details-spinner', { timeout: 30000 }).should('not.exist');
   };
+
+  isEditMachinePoolDialogOpened() {
+    cy.get('h1').contains('Edit machine pool').should('be.visible');
+  }
 
   waitForAccountSetupToSuccess() {
     cy.get('li[id="awsAccountSetup"]', { timeout: 80000 }).should('have.class', 'pf-m-success');

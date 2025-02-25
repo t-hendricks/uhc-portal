@@ -3,16 +3,16 @@ import CreateRosaWizardPage from '../../pageobjects/CreateRosaWizard.page';
 import CreateClusterPage from '../../pageobjects/CreateCluster.page';
 import OverviewPage from '../../pageobjects/Overview.page';
 
-const clusterPropertiesFile = require('../../fixtures/rosa/RosaClusterDefaultPublicSingleZoneProperties.json');
-
+const clusterProfiles = require('../../fixtures/rosa/RosaClusterClassicCreatePublic.json');
+const clusterProperties = clusterProfiles['rosa-classic-public']['day1-profile'];
 const awsAccountID = Cypress.env('QE_AWS_ID');
 const rolePrefix = Cypress.env('QE_ACCOUNT_ROLE_PREFIX');
 const installerARN = `arn:aws:iam::${awsAccountID}:role/${rolePrefix}-Installer-Role`;
-const clusterName = clusterPropertiesFile.ClusterName;
+const clusterName = clusterProperties.ClusterName;
 
 describe(
-  'Rosa cluster Creation-singlezone-public-default settings',
-  { tags: ['day1', 'rosa', 'public', 'single-zone', 'default'] },
+  'Rosa cluster Creation singlezone public default settings',
+  { tags: ['day1', 'rosa', 'public', 'single-zone', 'default', 'classic'] },
   () => {
     before(() => {
       OverviewPage.viewAllOpenshiftClusterTypesLink().click();
@@ -42,68 +42,65 @@ describe(
       CreateRosaWizardPage.rosaNextButton().click();
     });
 
-    it('Step - Cluster Settings - Select Cluster name, version, regions', () => {
+    it('Step - Cluster Settings - Select Cluster name, regions', () => {
       CreateRosaWizardPage.isClusterDetailsScreen();
       CreateRosaWizardPage.setClusterName(clusterName);
       CreateRosaWizardPage.closePopoverDialogs();
-      CreateRosaWizardPage.selectClusterVersion(clusterPropertiesFile.Version);
-      CreateRosaWizardPage.selectRegion(clusterPropertiesFile.Region);
-      CreateRosaWizardPage.selectAvailabilityZone(clusterPropertiesFile.Availability);
+      CreateRosaWizardPage.selectRegion(clusterProperties.Region);
+      CreateRosaWizardPage.selectAvailabilityZone(clusterProperties.Availability);
       CreateRosaWizardPage.rosaNextButton().click();
     });
 
     it('Step - Cluster Settings - Select machine pool node type and node count', () => {
       CreateRosaWizardPage.isClusterMachinepoolsScreen();
-      CreateRosaWizardPage.selectComputeNodeType(
-        clusterPropertiesFile.MachinePools[0].InstanceType,
-      );
+      CreateRosaWizardPage.selectComputeNodeType(clusterProperties.MachinePools[0].InstanceType);
       CreateRosaWizardPage.enableAutoScaling();
       CreateRosaWizardPage.disabledAutoScaling();
-      CreateRosaWizardPage.selectComputeNodeCount(clusterPropertiesFile.MachinePools[0].NodeCount);
+      CreateRosaWizardPage.selectComputeNodeCount(clusterProperties.MachinePools[0].NodeCount);
+      CreateRosaWizardPage.editNodeLabelLink().click();
+      CreateRosaWizardPage.addNodeLabelKeyAndValue(
+        clusterProperties.MachinePools[0].NodeLabels[0].Key,
+        clusterProperties.MachinePools[0].NodeLabels[0].Value,
+        0,
+      );
       CreateRosaWizardPage.rosaNextButton().click();
     });
 
     it('Step - Cluster Settings - configuration - Select cluster privacy', () => {
       CreateRosaWizardPage.selectClusterPrivacy('private');
-      CreateRosaWizardPage.selectClusterPrivacy(clusterPropertiesFile.ClusterPrivacy);
+      CreateRosaWizardPage.selectClusterPrivacy(clusterProperties.ClusterPrivacy);
       CreateRosaWizardPage.rosaNextButton().click();
     });
 
     it('Step - Cluster Settings - CIDR Ranges - CIDR default values', () => {
       CreateRosaWizardPage.useCIDRDefaultValues(false);
       CreateRosaWizardPage.useCIDRDefaultValues(true);
-      CreateRosaWizardPage.machineCIDRInput().should(
-        'have.value',
-        clusterPropertiesFile.MachineCIDR,
-      );
-      CreateRosaWizardPage.serviceCIDRInput().should(
-        'have.value',
-        clusterPropertiesFile.ServiceCIDR,
-      );
-      CreateRosaWizardPage.podCIDRInput().should('have.value', clusterPropertiesFile.PodCIDR);
-      CreateRosaWizardPage.hostPrefixInput().should('have.value', clusterPropertiesFile.HostPrefix);
+      CreateRosaWizardPage.machineCIDRInput().should('have.value', clusterProperties.MachineCIDR);
+      CreateRosaWizardPage.serviceCIDRInput().should('have.value', clusterProperties.ServiceCIDR);
+      CreateRosaWizardPage.podCIDRInput().should('have.value', clusterProperties.PodCIDR);
+      CreateRosaWizardPage.hostPrefixInput().should('have.value', clusterProperties.HostPrefix);
       CreateRosaWizardPage.rosaNextButton().click();
     });
 
     it('Step - Cluster roles and policies - role provider mode and its definitions', () => {
-      CreateRosaWizardPage.selectRoleProviderMode(clusterPropertiesFile.RoleProviderMode);
+      CreateRosaWizardPage.selectRoleProviderMode(clusterProperties.RoleProviderMode);
       CreateRosaWizardPage.customOperatorPrefixInput().scrollIntoView().should('be.visible');
       CreateRosaWizardPage.customOperatorPrefixInput()
         .scrollIntoView()
         .invoke('val')
-        .should('include', clusterName);
+        .should('include', clusterName.slice(0, 26));
       CreateRosaWizardPage.rosaNextButton().click();
     });
 
     it('Step - Cluster update - update strategies and its definitions', () => {
-      CreateRosaWizardPage.selectUpdateStratergy(clusterPropertiesFile.UpdateStrategy);
+      CreateRosaWizardPage.selectUpdateStratergy(clusterProperties.UpdateStrategy);
       CreateRosaWizardPage.rosaNextButton().click();
     });
 
     it('Step - Review and create : Accounts and roles definitions', () => {
       CreateRosaWizardPage.isClusterPropertyMatchesValue(
         'Control plane',
-        clusterPropertiesFile.ControlPlaneType,
+        clusterProperties.ControlPlaneType,
       );
       CreateRosaWizardPage.isClusterPropertyMatchesValue(
         'AWS infrastructure account ID',
@@ -114,80 +111,83 @@ describe(
 
     it('Step - Review and create : Cluster Settings definitions', () => {
       CreateRosaWizardPage.isClusterPropertyMatchesValue('Cluster name', clusterName);
-      CreateRosaWizardPage.isClusterPropertyMatchesValue('Version', clusterPropertiesFile.Version);
       CreateRosaWizardPage.isClusterPropertyMatchesValue(
         'Region',
-        clusterPropertiesFile.Region.split(',')[0],
+        clusterProperties.Region.split(',')[0],
       );
       CreateRosaWizardPage.isClusterPropertyMatchesValue(
         'Availability',
-        clusterPropertiesFile.Availability,
+        clusterProperties.Availability,
       );
       CreateRosaWizardPage.isClusterPropertyMatchesValue(
         'Encrypt volumes with customer keys',
-        clusterPropertiesFile.EncryptVolumesWithCustomerKeys,
+        clusterProperties.EncryptVolumesWithCustomerKeys,
       );
       CreateRosaWizardPage.isClusterPropertyMatchesValue(
         'Additional etcd encryption',
-        clusterPropertiesFile.AdditionalEncryption,
+        clusterProperties.AdditionalEncryption,
       );
       CreateRosaWizardPage.isClusterPropertyMatchesValue(
         'FIPS cryptography',
-        clusterPropertiesFile.FIPSCryptography,
+        clusterProperties.FIPSCryptography,
       );
     });
 
     it('Step - Review and create : Machine pool definitions', () => {
       CreateRosaWizardPage.isClusterPropertyMatchesValue(
         'Node instance type',
-        clusterPropertiesFile.MachinePools[0].InstanceType,
+        clusterProperties.MachinePools[0].InstanceType,
       );
       CreateRosaWizardPage.isClusterPropertyMatchesValue(
         'Autoscaling',
-        clusterPropertiesFile.MachinePools[0].Autoscaling,
+        clusterProperties.MachinePools[0].Autoscaling,
       );
       CreateRosaWizardPage.isClusterPropertyMatchesValue(
         'Compute node count',
-        clusterPropertiesFile.MachinePools[0].NodeCount,
+        clusterProperties.MachinePools[0].NodeCount,
       );
       CreateRosaWizardPage.isClusterPropertyMatchesValue(
         'Install into existing VPC',
-        clusterPropertiesFile.InstallIntoExistingVPC,
+        clusterProperties.InstallIntoExistingVPC,
       );
       CreateRosaWizardPage.isClusterPropertyMatchesValue(
         'Instance Metadata Service (IMDS)',
-        clusterPropertiesFile.InstanceMetadataService,
+        clusterProperties.InstanceMetadataService,
+      );
+      CreateRosaWizardPage.isClusterPropertyMatchesValue(
+        'Worker root disk size',
+        `${clusterProperties.RootDiskSize} GiB`,
       );
     });
 
     it('Step - Review and create : Networking definitions', () => {
       CreateRosaWizardPage.isClusterPropertyMatchesValue(
         'Cluster privacy',
-        clusterPropertiesFile.ClusterPrivacy,
+        clusterProperties.ClusterPrivacy,
       );
       CreateRosaWizardPage.isClusterPropertyMatchesValue(
         'Machine CIDR',
-        clusterPropertiesFile.MachineCIDR,
+        clusterProperties.MachineCIDR,
       );
       CreateRosaWizardPage.isClusterPropertyMatchesValue(
         'Service CIDR',
-        clusterPropertiesFile.ServiceCIDR,
+        clusterProperties.ServiceCIDR,
       );
-      CreateRosaWizardPage.isClusterPropertyMatchesValue('Pod CIDR', clusterPropertiesFile.PodCIDR);
+      CreateRosaWizardPage.isClusterPropertyMatchesValue('Pod CIDR', clusterProperties.PodCIDR);
       CreateRosaWizardPage.isClusterPropertyMatchesValue(
         'Host prefix',
-        clusterPropertiesFile.HostPrefix,
+        clusterProperties.HostPrefix,
       );
     });
 
     it('Step - Review and create : cluster roles and update definitions', () => {
       CreateRosaWizardPage.isClusterPropertyMatchesValue(
         'Operator roles and OIDC provider mode',
-        clusterPropertiesFile.RoleProviderMode.toLowerCase(),
+        clusterProperties.RoleProviderMode.toLowerCase(),
       );
       CreateRosaWizardPage.isClusterPropertyMatchesValue(
         'Update strategy',
-        clusterPropertiesFile.UpdateStrategy,
+        clusterProperties.UpdateStrategy,
       );
     });
 
@@ -200,6 +200,7 @@ describe(
       ClusterDetailsPage.clusterDetailsPageRefresh();
       ClusterDetailsPage.checkInstallationStepStatus('Account setup');
       ClusterDetailsPage.checkInstallationStepStatus('OIDC and operator roles');
+      ClusterDetailsPage.checkInstallationStepStatus('Network settings');
       ClusterDetailsPage.checkInstallationStepStatus('DNS setup');
       ClusterDetailsPage.checkInstallationStepStatus('Cluster installation');
     });

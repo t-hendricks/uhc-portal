@@ -2,26 +2,28 @@ import ClusterDetailsPage from '../../pageobjects/ClusterDetails.page';
 import CreateRosaWizardPage from '../../pageobjects/CreateRosaWizard.page';
 import CreateClusterPage from '../../pageobjects/CreateCluster.page';
 import OverviewPage from '../../pageobjects/Overview.page';
-const clusterProfiles = require('../../fixtures/rosa/RosaClusterClassicCreation.json');
-const clusterProperties = clusterProfiles['rosa-classic-smoke-default'];
 
-// awsAccountID,rolePrefix and installerARN are set by prerun script for smoke requirements.
+const clusterProfiles = require('../../fixtures/rosa/RosaClusterClassicCreatePrivate.json');
+const clusterProperties = clusterProfiles['rosa-classic-private-advanced']['day1-profile'];
+
+const region = clusterProperties.Region.split(',')[0];
 const awsAccountID = Cypress.env('QE_AWS_ID');
 const rolePrefix = Cypress.env('QE_ACCOUNT_ROLE_PREFIX');
+const qeInfrastructure = Cypress.env('QE_INFRA_REGIONS')[region][0];
+const securityGroups = qeInfrastructure.SECURITY_GROUPS_NAME;
 const installerARN = `arn:aws:iam::${awsAccountID}:role/${rolePrefix}-Installer-Role`;
-const clusterName = `${clusterProperties.ClusterNamePrefix}-${(Math.random() + 1).toString(36).substring(7)}`;
-const clusterDomainPrefix = `rosa${(Math.random() + 1).toString(36).substring(2)}`;
+const clusterName = clusterProperties.ClusterName;
 
 describe(
-  'Rosa cluster wizard checks and cluster creation tests(OCP-50261)',
-  { tags: ['smoke'] },
+  'Rosa cluster Creation multizone public advanced settings',
+  { tags: ['day1', 'rosa', 'public', 'multi-zone', 'advanced', 'classic'] },
   () => {
     before(() => {
       OverviewPage.viewAllOpenshiftClusterTypesLink().click();
       CreateClusterPage.isCreateClusterPageHeaderVisible();
     });
 
-    it('Open Rosa cluster wizard', () => {
+    it('Open Rosa cluster wizard with advanced settings', () => {
       CreateRosaWizardPage.rosaCreateClusterButton().click();
       CreateRosaWizardPage.rosaClusterWithWeb().should('be.visible').click();
       CreateRosaWizardPage.isCreateRosaPage();
@@ -36,9 +38,6 @@ describe(
 
     it('Step - Accounts and roles - Select Account roles, ARN definitions', () => {
       CreateRosaWizardPage.isAccountsAndRolesScreen();
-      CreateRosaWizardPage.howToAssociateNewAWSAccountButton().click();
-      CreateRosaWizardPage.isAssociateAccountsDrawer();
-      CreateRosaWizardPage.howToAssociateNewAWSAccountDrawerCloseButton().click();
       CreateRosaWizardPage.selectAWSInfrastructureAccount(awsAccountID);
       CreateRosaWizardPage.waitForARNList();
       CreateRosaWizardPage.refreshInfrastructureAWSAccountButton().click();
@@ -47,40 +46,89 @@ describe(
       CreateRosaWizardPage.rosaNextButton().click();
     });
 
-    it('Step - Cluster Settings - Select Cluster name, version, regions', () => {
+    it('Step - Cluster Settings - Select advanced options', () => {
       CreateRosaWizardPage.isClusterDetailsScreen();
       CreateRosaWizardPage.setClusterName(clusterName);
       CreateRosaWizardPage.closePopoverDialogs();
       CreateRosaWizardPage.createCustomDomainPrefixCheckbox().check();
-      CreateRosaWizardPage.setDomainPrefix(clusterDomainPrefix);
+      CreateRosaWizardPage.setDomainPrefix(clusterProperties.DomainPrefix);
       CreateRosaWizardPage.closePopoverDialogs();
       CreateRosaWizardPage.selectRegion(clusterProperties.Region);
+      CreateRosaWizardPage.selectAvailabilityZone(clusterProperties.Availability);
+      CreateRosaWizardPage.advancedEncryptionLink().click();
+      CreateRosaWizardPage.enableAdditionalEtcdEncryptionCheckbox().check();
+      CreateRosaWizardPage.enableFIPSCryptographyCheckbox().check();
+      CreateRosaWizardPage.advancedEncryptionLink().click();
       CreateRosaWizardPage.rosaNextButton().click();
     });
 
-    it('Step - Cluster Settings - Select machine pool node type and node count', () => {
+    it('Step - Cluster Settings - machine pool- Select advanced options', () => {
       CreateRosaWizardPage.isClusterMachinepoolsScreen();
       CreateRosaWizardPage.selectComputeNodeType(clusterProperties.MachinePools[0].InstanceType);
       CreateRosaWizardPage.enableAutoScaling();
-      CreateRosaWizardPage.disabledAutoScaling();
-      CreateRosaWizardPage.selectComputeNodeCount(
-        clusterProperties.MachinePools[0].ComputeNodeCount,
+      CreateRosaWizardPage.setMinimumNodeCount(clusterProperties.MachinePools[0].MinimumNodeCount);
+      cy.get('span').contains('x 3 zones = 6').should('be.visible');
+      CreateRosaWizardPage.setMaximumNodeCount(clusterProperties.MachinePools[0].MaximumNodeCount);
+      cy.get('span').contains('x 3 zones = 9').should('be.visible');
+      CreateRosaWizardPage.useIMDSv2Radio().check();
+      CreateRosaWizardPage.rootDiskSizeInput()
+        .clear()
+        .type('{selectAll}')
+        .type(clusterProperties.RootDiskSize);
+      CreateRosaWizardPage.editNodeLabelLink().click();
+      CreateRosaWizardPage.addNodeLabelKeyAndValue(
+        clusterProperties.MachinePools[0].NodeLabels[0].Key,
+        clusterProperties.MachinePools[0].NodeLabels[0].Value,
+        0,
       );
       CreateRosaWizardPage.rosaNextButton().click();
     });
 
-    it('Step - Cluster Settings - configuration - Select cluster privacy', () => {
-      CreateRosaWizardPage.clusterPrivacyPublicRadio().should('be.checked');
-      CreateRosaWizardPage.clusterPrivacyPrivateRadio().should('not.be.checked');
-      CreateRosaWizardPage.selectClusterPrivacy('private');
+    it('Step - Networking - Configuration settings', () => {
       CreateRosaWizardPage.selectClusterPrivacy(clusterProperties.ClusterPrivacy);
+      CreateRosaWizardPage.installIntoExistingVpcCheckbox().should('be.checked');
+      CreateRosaWizardPage.usePrivateLinkCheckbox().should('be.checked');
+      if (clusterProperties.ApplicationIngress.includes('Custom settings')) {
+        CreateRosaWizardPage.applicationIngressCustomSettingsRadio().check();
+        CreateRosaWizardPage.applicationIngressExcludedNamespacesInput().type(
+          clusterProperties.ExcludedNamespaces,
+        );
+        CreateRosaWizardPage.applicationIngressRouterSelectorsInput().type(
+          clusterProperties.RouteSelector,
+        );
+      } else {
+        CreateRosaWizardPage.applicationIngressDefaultSettingsRadio().check();
+      }
       CreateRosaWizardPage.rosaNextButton().click();
     });
 
-    it('Step - Cluster Settings - CIDR Ranges - CIDR default values', () => {
-      CreateRosaWizardPage.cidrDefaultValuesCheckBox().should('be.checked');
+    it('Step - Networking - VPC Settings', () => {
+      CreateRosaWizardPage.isVPCSettingsScreen();
+      cy.contains(`Select a VPC to install your cluster into your selected region: ${region}`)
+        .scrollIntoView()
+        .should('be.visible');
+      CreateRosaWizardPage.waitForVPCList();
+      CreateRosaWizardPage.selectVPC(qeInfrastructure.VPC_NAME);
+      let i = 0;
+      clusterProperties.MachinePools[0].AvailabilityZones.forEach((zone) => {
+        CreateRosaWizardPage.selectSubnetAvailabilityZone(zone);
+        CreateRosaWizardPage.selectPrivateSubnet(
+          i,
+          qeInfrastructure.SUBNETS.ZONES[zone].PRIVATE_SUBNET_NAME,
+        );
+        i = i + 1;
+      });
+
+      CreateRosaWizardPage.additionalSecurityGroupsLink().click();
+      CreateRosaWizardPage.applySameSecurityGroupsToAllNodeTypes().check();
+      securityGroups.forEach((value) => {
+        CreateRosaWizardPage.selectAdditionalSecurityGroups(value);
+      });
+      CreateRosaWizardPage.rosaNextButton().click();
+    });
+
+    it('Step - Networking - CIDR Ranges - advanced options', () => {
       CreateRosaWizardPage.useCIDRDefaultValues(false);
-      CreateRosaWizardPage.useCIDRDefaultValues(true);
       CreateRosaWizardPage.machineCIDRInput().should('have.value', clusterProperties.MachineCIDR);
       CreateRosaWizardPage.serviceCIDRInput().should('have.value', clusterProperties.ServiceCIDR);
       CreateRosaWizardPage.podCIDRInput().should('have.value', clusterProperties.PodCIDR);
@@ -88,26 +136,28 @@ describe(
       CreateRosaWizardPage.rosaNextButton().click();
     });
 
-    it('Step - Cluster roles and policies - role provider mode and its definitions', () => {
-      CreateRosaWizardPage.createModeAutoRadio().should('be.checked');
-      CreateRosaWizardPage.createModeManualRadio().should('not.be.checked');
-      CreateRosaWizardPage.selectRoleProviderMode('Manual');
+    it('Step - Cluster roles and policies - advanced  options', () => {
       CreateRosaWizardPage.selectRoleProviderMode('Auto');
-      CreateRosaWizardPage.customOperatorPrefixInput().should('be.visible');
+      CreateRosaWizardPage.customOperatorPrefixInput().scrollIntoView().should('be.visible');
       CreateRosaWizardPage.customOperatorPrefixInput()
         .invoke('val')
-        .should('include', clusterName.slice(0, 27));
+        .should('include', clusterName.substring(0, 27));
+      CreateRosaWizardPage.customOperatorPrefixInput()
+        .type('{selectAll}')
+        .type(clusterName.substring(0, 27));
       CreateRosaWizardPage.rosaNextButton().click();
     });
 
-    it('Step - Cluster update - update statergies and its definitions', () => {
-      CreateRosaWizardPage.individualUpdateRadio().should('be.checked');
-      CreateRosaWizardPage.recurringUpdateRadio().should('not.be.checked');
+    it('Step - Cluster update - update strategies - advanced options', () => {
       CreateRosaWizardPage.selectUpdateStratergy(clusterProperties.UpdateStrategy);
+      CreateRosaWizardPage.selectGracePeriod(clusterProperties.NodeDrainingGracePeriod);
       CreateRosaWizardPage.rosaNextButton().click();
     });
 
-    it('Step - Review and create : Accounts and roles definitions', () => {
+    it('Step - Review and create step -its definitions', () => {
+      // Some situation the ARN spinner in progress and blocks cluster creation.
+      cy.get('.pf-v5-c-spinner', { timeout: 30000 }).should('not.exist');
+
       CreateRosaWizardPage.isClusterPropertyMatchesValue(
         'Control plane',
         clusterProperties.ControlPlaneType,
@@ -117,26 +167,20 @@ describe(
         awsAccountID,
       );
       CreateRosaWizardPage.isClusterPropertyMatchesValue('Installer role', installerARN);
-    });
 
-    it('Step - Review and create : Cluster Settings definitions', () => {
-      CreateRosaWizardPage.isClusterPropertyMatchesValue('Cluster name', clusterName);
-      CreateRosaWizardPage.isClusterPropertyMatchesValue('Domain prefix', clusterDomainPrefix);
-      CreateRosaWizardPage.isClusterPropertyMatchesValue(
-        'Region',
-        clusterProperties.Region.split(',')[0],
-      );
       CreateRosaWizardPage.isClusterPropertyMatchesValue(
         'Availability',
         clusterProperties.Availability,
       );
-      CreateRosaWizardPage.isClusterPropertyMatchesValue(
-        'Encrypt volumes with customer keys',
-        clusterProperties.EncryptVolumesWithCustomerKeys,
-      );
+      CreateRosaWizardPage.isClusterPropertyMatchesValue('Cluster name', clusterName);
+
       CreateRosaWizardPage.isClusterPropertyMatchesValue(
         'User workload monitoring',
         clusterProperties.UserWorkloadMonitoring,
+      );
+      CreateRosaWizardPage.isClusterPropertyMatchesValue(
+        'Encrypt volumes with customer keys',
+        'Disabled',
       );
       CreateRosaWizardPage.isClusterPropertyMatchesValue(
         'Additional etcd encryption',
@@ -146,20 +190,23 @@ describe(
         'FIPS cryptography',
         clusterProperties.FIPSCryptography,
       );
-    });
-
-    it('Step - Review and create : Machine pool definitions', () => {
+      CreateRosaWizardPage.isClusterPropertyMatchesValue(
+        'Additional etcd encryption',
+        clusterProperties.AdditionalEncryption,
+      );
       CreateRosaWizardPage.isClusterPropertyMatchesValue(
         'Node instance type',
         clusterProperties.MachinePools[0].InstanceType,
       );
+      CreateRosaWizardPage.computeNodeRangeValue().contains(
+        `Minimum nodes per zone: ${clusterProperties.MachinePools[0].MinimumNodeCount}`,
+      );
+      CreateRosaWizardPage.computeNodeRangeValue().contains(
+        `Maximum nodes per zone: ${clusterProperties.MachinePools[0].MaximumNodeCount}`,
+      );
       CreateRosaWizardPage.isClusterPropertyMatchesValue(
         'Autoscaling',
         clusterProperties.MachinePools[0].Autoscaling,
-      );
-      CreateRosaWizardPage.isClusterPropertyMatchesValue(
-        'Compute node count',
-        clusterProperties.MachinePools[0].ComputeNodeCount,
       );
       CreateRosaWizardPage.isClusterPropertyMatchesValue(
         'Install into existing VPC',
@@ -173,9 +220,6 @@ describe(
         'Worker root disk size',
         `${clusterProperties.RootDiskSize} GiB`,
       );
-    });
-
-    it('Step - Review and create : Networking definitions', () => {
       CreateRosaWizardPage.isClusterPropertyMatchesValue(
         'Cluster privacy',
         clusterProperties.ClusterPrivacy,
@@ -197,9 +241,22 @@ describe(
         'Application ingress',
         clusterProperties.ApplicationIngress,
       );
-    });
-
-    it('Step - Review and create : cluster roles and update definitions', () => {
+      CreateRosaWizardPage.isClusterPropertyMatchesValue(
+        'Route selectors',
+        clusterProperties.RouteSelector,
+      );
+      CreateRosaWizardPage.isClusterPropertyMatchesValue(
+        'Excluded namespaces',
+        clusterProperties.ExcludedNamespaces,
+      );
+      CreateRosaWizardPage.isClusterPropertyMatchesValue(
+        'Wildcard policy',
+        clusterProperties.WildcardPolicy,
+      );
+      CreateRosaWizardPage.isClusterPropertyMatchesValue(
+        'Namespace ownership policy',
+        `${clusterProperties.NamespaceOwnershipPolicy} namespace ownership`,
+      );
       CreateRosaWizardPage.isClusterPropertyMatchesValue(
         'Operator roles and OIDC provider mode',
         clusterProperties.OidcProviderMode,
@@ -212,8 +269,8 @@ describe(
         'Node draining',
         clusterProperties.NodeDrainingGracePeriod,
       );
+      CreateRosaWizardPage.reviewAndCreateTree().click();
     });
-
     it('Create cluster and check the installation progress', () => {
       CreateRosaWizardPage.createClusterButton().click();
       ClusterDetailsPage.waitForInstallerScreenToLoad();
@@ -225,22 +282,6 @@ describe(
       ClusterDetailsPage.checkInstallationStepStatus('OIDC and operator roles');
       ClusterDetailsPage.checkInstallationStepStatus('DNS setup');
       ClusterDetailsPage.checkInstallationStepStatus('Cluster installation');
-      ClusterDetailsPage.clusterTypeLabelValue().contains(clusterProperties.Type);
-      ClusterDetailsPage.clusterDomainPrefixLabelValue().contains(clusterDomainPrefix);
-      ClusterDetailsPage.clusterRegionLabelValue().contains(clusterProperties.Region.split(',')[0]);
-      ClusterDetailsPage.clusterAvailabilityLabelValue().contains(clusterProperties.Availability);
-      ClusterDetailsPage.clusterInfrastructureAWSaccountLabelValue().contains(awsAccountID);
-      ClusterDetailsPage.clusterMachineCIDRLabelValue().contains(clusterProperties.MachineCIDR);
-      ClusterDetailsPage.clusterServiceCIDRLabelValue().contains(clusterProperties.ServiceCIDR);
-      ClusterDetailsPage.clusterPodCIDRLabelValue().contains(clusterProperties.PodCIDR);
-      ClusterDetailsPage.clusterHostPrefixLabelValue().contains('23');
-    });
-    it('Delete the cluster', () => {
-      ClusterDetailsPage.actionsDropdownToggle().click();
-      ClusterDetailsPage.deleteClusterDropdownItem().click();
-      ClusterDetailsPage.deleteClusterNameInput().clear().type(clusterName);
-      ClusterDetailsPage.deleteClusterConfirm().click();
-      ClusterDetailsPage.waitForDeleteClusterActionComplete();
     });
   },
 );

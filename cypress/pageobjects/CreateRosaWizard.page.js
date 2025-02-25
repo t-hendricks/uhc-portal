@@ -52,6 +52,11 @@ class CreateRosaCluster extends Page {
 
   advancedEncryptionLink = () => cy.get('span').contains('Advanced Encryption');
 
+  additionalSecurityGroupsLink = () => cy.get('span').contains('Additional security groups');
+
+  applySameSecurityGroupsToAllNodeTypes = () =>
+    cy.get('input[id="securityGroups.applyControlPlaneToAll"]');
+
   useDefaultKMSKeyRadio = () =>
     cy.get('input[id="form-radiobutton-customer_managed_key-false-field"]').should('be.exist');
 
@@ -135,6 +140,10 @@ class CreateRosaCluster extends Page {
   minimumNodeInput = () => cy.get('input[aria-label="Minimum nodes"]');
 
   maximumNodeInput = () => cy.get('input[aria-label="Maximum nodes"]');
+
+  installIntoExistingVpcCheckbox = () => cy.get('#install_to_vpc');
+
+  usePrivateLinkCheckbox = () => cy.get('#use_privatelink');
 
   clusterNameValidationSuccessIndicator = () =>
     cy.get('button[aria-label="All validation rules met"]');
@@ -233,6 +242,8 @@ class CreateRosaCluster extends Page {
 
   machinePoolLabelValue = () => cy.getByTestId('Machine-pools');
 
+  computeNodeRangeValue = () => cy.getByTestId('Compute-node-range').find('div');
+
   isCreateRosaPage() {
     super.assertUrlIncludes('/openshift/create/rosa/wizard');
   }
@@ -243,6 +254,10 @@ class CreateRosaCluster extends Page {
 
   isClusterDetailsScreen() {
     cy.contains('h3', 'Cluster details');
+  }
+
+  isVPCSettingsScreen() {
+    cy.contains('h3', 'Virtual Private Cloud (VPC) subnet settings');
   }
 
   isClusterMachinepoolsScreen(hosted = false) {
@@ -630,6 +645,17 @@ class CreateRosaCluster extends Page {
     }
   }
 
+  isButtonContainingText(text, options = {}) {
+    if (Object.keys(options).length == 0 && options.constructor === Object) {
+      cy.get(`button:contains('${text}')`)
+        .scrollIntoView()
+        .should('be.visible')
+        .should('be.enabled');
+    } else {
+      cy.get(`button:contains('${text}')`).should('be.enabled').should('be.visible');
+    }
+  }
+
   waitForSpinnerToNotExist() {
     cy.get('.spinner-loading-text').should('not.exist');
   }
@@ -766,7 +792,7 @@ class CreateRosaCluster extends Page {
   }
 
   enableInstallIntoExistingVpc() {
-    cy.get('#install_to_vpc').check().should('be.enabled');
+    this.installIntoExistingVpcCheckbox().check().should('be.enabled');
   }
 
   enableConfigureClusterWideProxy() {
@@ -832,6 +858,52 @@ class CreateRosaCluster extends Page {
         }
       });
     });
+  }
+
+  selectSubnetAvailabilityZone(subnetAvailability) {
+    cy.contains('Select availability zone').first().click();
+    cy.get('ul[aria-label="availability zone list"]').within(() => {
+      cy.contains('button', subnetAvailability).click({ force: true });
+    });
+  }
+
+  isSubnetAvailabilityZoneSelected(zone) {
+    cy.get('button').contains(zone).should('be.visible');
+  }
+
+  isPrivateSubnetSelected(index = 0, privateSubnetNameOrId) {
+    cy.get(`button[id="machinePoolsSubnets[${index}].privateSubnetId"]`)
+      .contains(privateSubnetNameOrId)
+      .should('be.visible');
+  }
+
+  isPubliceSubnetSelected(index = 0, publicSubnetNameOrId) {
+    cy.get(`button[id="machinePoolsSubnets[${index}].publicSubnetId"]`)
+      .contains(publicSubnetNameOrId)
+      .should('be.visible');
+  }
+  selectPrivateSubnet(index = 0, privateSubnetNameOrId) {
+    cy.get(`button[id="machinePoolsSubnets[${index}].privateSubnetId"]`).click();
+    cy.get('input[placeholder="Filter by subnet ID / name"]', { timeout: 50000 })
+      .clear()
+      .type(privateSubnetNameOrId);
+    cy.get('li').contains(privateSubnetNameOrId).scrollIntoView().click();
+    index = index + 1;
+  }
+
+  selectPublicSubnet(index = 0, publicSubnetNameOrId) {
+    cy.get(`button[id="machinePoolsSubnets[${index}].publicSubnetId"]`).click();
+    cy.get('input[placeholder="Filter by subnet ID / name"]', { timeout: 50000 })
+      .clear()
+      .type(publicSubnetNameOrId);
+    cy.contains(publicSubnetNameOrId).scrollIntoView().click();
+    index = index + 1;
+  }
+
+  selectAdditionalSecurityGroups(securityGroups) {
+    cy.get('button').contains('Select security groups').click({ force: true });
+    cy.getByTestId('securitygroups-id').contains(securityGroups).click({ force: true });
+    cy.get('button').contains('Select security groups').click({ force: true });
   }
 }
 
