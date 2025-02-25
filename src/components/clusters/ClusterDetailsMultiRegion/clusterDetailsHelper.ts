@@ -59,7 +59,7 @@ const hasValidStatusForActions = <E extends ClusterFromSubscription>(
 ): boolean =>
   cluster.managed === true &&
   (!needsConsoleUrl || !['', undefined].includes(cluster.console?.url)) &&
-  (cluster.state === clusterStates.READY || isHibernating(cluster)) &&
+  (cluster.state === clusterStates.ready || isHibernating(cluster)) &&
   !isArchivedSubscription(cluster);
 
 /**

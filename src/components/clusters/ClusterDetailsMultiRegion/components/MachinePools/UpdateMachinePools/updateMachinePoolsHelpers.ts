@@ -4,13 +4,8 @@ import semver from 'semver';
 import { updateStartedSelectorMultiRegion } from '~/components/clusters/common/Upgrades/upgradeHelpers';
 import { GlobalState } from '~/redux/store';
 import clusterService, { getClusterServiceForRegion } from '~/services/clusterService';
-import {
-  ScheduleType,
-  UpgradePolicy,
-  UpgradePolicyState,
-  UpgradeType,
-} from '~/types/clusters_mgmt.v1';
-import { NodePool } from '~/types/clusters_mgmt.v1/models/NodePool';
+import { NodePool, UpgradePolicy, UpgradePolicyState } from '~/types/clusters_mgmt.v1';
+import { ScheduleType, UpgradeType } from '~/types/clusters_mgmt.v1/enums';
 
 import { NodePoolWithUpgradePolicies } from '../machinePoolCustomTypes';
 
@@ -114,11 +109,11 @@ export const updateAllMachinePools = async (
     const MINUTES_IN_MS = 1000 * 60;
 
     const schedule = {
-      schedule_type: ScheduleType.MANUAL,
+      schedule_type: ScheduleType.manual,
       next_run: new Date(new Date().getTime() + 6 * MINUTES_IN_MS).toISOString(),
       version: semver.coerce(toBeVersion)?.version,
       node_pool_id: pool.id,
-      upgrade_type: UpgradeType.NODE_POOL,
+      upgrade_type: UpgradeType.NodePool,
     };
 
     if (region) {

@@ -1,4 +1,4 @@
-import { IdentityProvider, OpenIDClaims } from '~/types/clusters_mgmt.v1';
+import { IdentityProvider, OpenIdClaims } from '~/types/clusters_mgmt.v1';
 
 export const githubFormDataTeams = {
   idpId: 'id',
@@ -404,7 +404,7 @@ export const bindPassFormDataExpected = {
   type: 'LDAPIdentityProvider',
 };
 
-export const claims: OpenIDClaims = {
+export const claims: OpenIdClaims = {
   name: ['openIDName 1', 'openIDName 2'],
   email: ['openIDEmail 1', 'openIDEmail 2'],
   preferred_username: ['openIDUserName 1', 'openIDUserName 2'],

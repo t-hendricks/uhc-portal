@@ -12,7 +12,7 @@ import {
 import { useCanUpdateBreakGlassCredentials } from '~/queries/ClusterDetailsQueries/useFetchActionsPermissions';
 import { queryConstants } from '~/queries/queriesConstants';
 import type { BreakGlassCredential } from '~/types/clusters_mgmt.v1';
-import { BreakGlassCredentialStatus } from '~/types/clusters_mgmt.v1';
+import { BreakGlassCredentialStatus } from '~/types/clusters_mgmt.v1/enums';
 
 import ButtonWithTooltip from '../../../../../common/ButtonWithTooltip';
 
@@ -24,28 +24,28 @@ const credentialStatus = (status: BreakGlassCredentialStatus | undefined) => {
   let message: string;
   let helpText: string;
   switch (status) {
-    case BreakGlassCredentialStatus.ISSUED:
+    case BreakGlassCredentialStatus.issued:
       message = 'Credentials issued';
       helpText = 'Credentials issued';
       break;
-    case BreakGlassCredentialStatus.REVOKED:
+    case BreakGlassCredentialStatus.revoked:
       message = 'Revoked';
       helpText = 'Credentials have been manually revoked and are no longer valid.';
       break;
-    case BreakGlassCredentialStatus.AWAITING_REVOCATION:
+    case BreakGlassCredentialStatus.awaiting_revocation:
       message = 'Awaiting Revocation';
       helpText =
         'Credentials are awaiting revocation. No other revocation can occur until this completes.';
       break;
-    case BreakGlassCredentialStatus.EXPIRED:
+    case BreakGlassCredentialStatus.expired:
       message = 'Expired';
       helpText = 'Credentials have passed their expiration date and are no longer valid.';
       break;
-    case BreakGlassCredentialStatus.CREATED:
+    case BreakGlassCredentialStatus.created:
       message = 'Pending';
       helpText = 'Credentials have been created but not yet issued kubeconfig.';
       break;
-    case BreakGlassCredentialStatus.FAILED:
+    case BreakGlassCredentialStatus.failed:
       message = 'Failed';
       helpText = 'Unable to create credentials.';
       break;
@@ -109,9 +109,9 @@ export const BreakGlassCredentialList = ({
   const isValidCred = () =>
     credentialData?.some(
       (cred) =>
-        cred.status === BreakGlassCredentialStatus.ISSUED &&
+        cred.status === BreakGlassCredentialStatus.issued &&
         !credentialData.some(
-          (cred) => cred.status === BreakGlassCredentialStatus.AWAITING_REVOCATION,
+          (cred) => cred.status === BreakGlassCredentialStatus.awaiting_revocation,
         ),
     );
 
@@ -198,14 +198,14 @@ export const BreakGlassCredentialList = ({
                 <Td>{cred.username}</Td>
                 <Td>{new Date(cred.expiration_timestamp as string).toLocaleString('en-CA')}</Td>
                 <Td>
-                  {cred.status === BreakGlassCredentialStatus.ISSUED ? (
+                  {cred.status === BreakGlassCredentialStatus.issued ? (
                     <Tooltip content="Download credentials to access cluster as admin.">
                       <Button variant="link" onClick={() => getCredentials(cred)}>
                         Credentials issued
                       </Button>
                     </Tooltip>
                   ) : (
-                    credentialStatus(cred.status || undefined)
+                    credentialStatus((cred.status as BreakGlassCredentialStatus) || undefined)
                   )}
                 </Td>
               </Tr>

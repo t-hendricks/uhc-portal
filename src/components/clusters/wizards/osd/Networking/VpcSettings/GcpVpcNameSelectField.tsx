@@ -18,7 +18,7 @@ import { FieldId } from '~/components/clusters/wizards/osd/constants';
 import { FormGroupHelperText } from '~/components/common/FormGroupHelperText';
 import { getGCPCloudProviderVPCs, LIST_VPCS } from '~/redux/actions/ccsInquiriesActions';
 import { useGlobalState } from '~/redux/hooks/useGlobalState';
-import { CloudVPC } from '~/types/clusters_mgmt.v1';
+import { CloudVpc } from '~/types/clusters_mgmt.v1';
 
 interface GcpVpcNameSelectFieldProps {
   input: FieldInputProps<FormSelectProps>;
@@ -93,7 +93,7 @@ export const GcpVpcNameSelectField = ({
 
     if (matchesDependencies && vpcs.fulfilled) {
       // Made request and current value is no longer valid.
-      const items: CloudVPC[] = vpcs.data?.items || [];
+      const items: CloudVpc[] = vpcs.data?.items || [];
       return !items.some((item) => item.name === input.value.toString());
     }
 

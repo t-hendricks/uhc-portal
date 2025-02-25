@@ -256,7 +256,7 @@ const MachinePools = ({ cluster }) => {
     hasMachineConfiguration && ((isRosa && !isHypershift) || (isOsd && isCcs && isAws));
   const canEditMachineConfiguration = kubeletConfigActions.create && kubeletConfigActions.update;
   const isMachineConfigurationActionDisabled =
-    cluster?.state !== clusterStates.READY || !canEditMachineConfiguration;
+    cluster?.state !== clusterStates.ready || !canEditMachineConfiguration;
   const isMachineConfigurationActionDisabledReason =
     isMachineConfigurationActionDisabled &&
     (!canEditMachineConfiguration

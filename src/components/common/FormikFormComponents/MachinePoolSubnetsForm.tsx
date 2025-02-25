@@ -11,12 +11,12 @@ import { SubnetSelectField } from '~/components/clusters/common/SubnetSelectFiel
 import { emptyAWSSubnet, FieldId } from '~/components/clusters/wizards/common/constants';
 import { getScrollErrorIds } from '~/components/clusters/wizards/form/utils';
 import { useFormState } from '~/components/clusters/wizards/hooks';
-import { CloudVPC } from '~/types/clusters_mgmt.v1';
+import { CloudVpc } from '~/types/clusters_mgmt.v1';
 
 import './MachinePoolSubnetsForm.scss';
 
 type MachinePoolSubnetsFormProps = {
-  selectedVPC?: CloudVPC;
+  selectedVPC?: CloudVpc;
   warning?: string;
 };
 

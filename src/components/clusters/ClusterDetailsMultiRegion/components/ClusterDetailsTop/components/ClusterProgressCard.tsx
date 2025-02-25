@@ -32,11 +32,11 @@ interface ClusterProgressCardProps {
 }
 
 const ClusterProgressCard = ({ cluster, regionalInstance }: ClusterProgressCardProps) => {
-  const isError = cluster.state === clusterStates.ERROR;
-  const isPending = cluster.state === clusterStates.PENDING;
-  const isValidating = cluster.state === clusterStates.VALIDATING;
-  const isInstalling = cluster.state === clusterStates.INSTALLING;
-  const isUninstalling = cluster.state === clusterStates.UNINSTALLING;
+  const isError = cluster.state === clusterStates.error;
+  const isPending = cluster.state === clusterStates.pending;
+  const isValidating = cluster.state === clusterStates.validating;
+  const isInstalling = cluster.state === clusterStates.installing;
+  const isUninstalling = cluster.state === clusterStates.uninstalling;
   const isWaitingROSAManual = isWaitingROSAManualMode(cluster);
   const isWaitingHypershift = isWaitingHypershiftCluster(cluster);
   const installationInProgress =

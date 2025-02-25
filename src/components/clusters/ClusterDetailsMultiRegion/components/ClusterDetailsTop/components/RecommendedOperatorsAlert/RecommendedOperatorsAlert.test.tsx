@@ -16,12 +16,12 @@ describe('<RecommendedOperatorsAlert />', () => {
 
   test.each`
     clusterState                 | title                                         | description
-    ${clusterStates.WAITING}     | ${STATIC_ALERT_MESSAGES.actionRequired.title} | ${STATIC_ALERT_MESSAGES.actionRequired.description}
-    ${clusterStates.PENDING}     | ${STATIC_ALERT_MESSAGES.installing.title}     | ${STATIC_ALERT_MESSAGES.installing.description}
-    ${clusterStates.VALIDATING}  | ${STATIC_ALERT_MESSAGES.installing.title}     | ${STATIC_ALERT_MESSAGES.installing.description}
-    ${clusterStates.INSTALLING}  | ${STATIC_ALERT_MESSAGES.installing.title}     | ${STATIC_ALERT_MESSAGES.installing.description}
-    ${clusterStates.HIBERNATING} | ${STATIC_ALERT_MESSAGES.hibernating.title}    | ${STATIC_ALERT_MESSAGES.hibernating.description}
-    ${clusterStates.ERROR}       | ${STATIC_ALERT_MESSAGES.error.title}          | ${STATIC_ALERT_MESSAGES.error.description}
+    ${clusterStates.waiting}     | ${STATIC_ALERT_MESSAGES.actionRequired.title} | ${STATIC_ALERT_MESSAGES.actionRequired.description}
+    ${clusterStates.pending}     | ${STATIC_ALERT_MESSAGES.installing.title}     | ${STATIC_ALERT_MESSAGES.installing.description}
+    ${clusterStates.validating}  | ${STATIC_ALERT_MESSAGES.installing.title}     | ${STATIC_ALERT_MESSAGES.installing.description}
+    ${clusterStates.installing}  | ${STATIC_ALERT_MESSAGES.installing.title}     | ${STATIC_ALERT_MESSAGES.installing.description}
+    ${clusterStates.hibernating} | ${STATIC_ALERT_MESSAGES.hibernating.title}    | ${STATIC_ALERT_MESSAGES.hibernating.description}
+    ${clusterStates.error}       | ${STATIC_ALERT_MESSAGES.error.title}          | ${STATIC_ALERT_MESSAGES.error.description}
   `(
     'should show appropriate message for "$clusterState" cluster',
     ({ clusterState, title, description }) => {
@@ -41,13 +41,13 @@ describe('<RecommendedOperatorsAlert />', () => {
     },
   );
 
-  it(`should show appropriate message & should also find console link for ${clusterStates.READY} cluster, when consoleURL link is provided`, () => {
+  it(`should show appropriate message & should also find console link for ${clusterStates.ready} cluster, when consoleURL link is provided`, () => {
     // Arrange
     const { title, description } = ALERT_MESSAGES.ready;
 
     render(
       <RecommendedOperatorsAlert
-        clusterState={clusterStates.READY}
+        clusterState={clusterStates.ready}
         openLearnMore={openLearnMore}
         closeDrawer={closeDrawer}
         onDismissAlertCallback={onDismissAlertCallback}
@@ -69,13 +69,13 @@ describe('<RecommendedOperatorsAlert />', () => {
     expect(consoleLink).toHaveAttribute('href', 'someLink');
   });
 
-  it(`should show appropriate message for ${clusterStates.READY} cluster, when consoleURL link is NOT provided`, () => {
+  it(`should show appropriate message for ${clusterStates.ready} cluster, when consoleURL link is NOT provided`, () => {
     // Arrange
     const { title, description } = ALERT_MESSAGES.ready;
 
     render(
       <RecommendedOperatorsAlert
-        clusterState={clusterStates.READY}
+        clusterState={clusterStates.ready}
         openLearnMore={openLearnMore}
         closeDrawer={closeDrawer}
         onDismissAlertCallback={onDismissAlertCallback}
@@ -92,7 +92,7 @@ describe('<RecommendedOperatorsAlert />', () => {
       // Arrange
       render(
         <RecommendedOperatorsAlert
-          clusterState={clusterStates.INSTALLING}
+          clusterState={clusterStates.installing}
           openLearnMore={openLearnMore}
           closeDrawer={closeDrawer}
           onDismissAlertCallback={onDismissAlertCallback}
@@ -126,7 +126,7 @@ describe('<RecommendedOperatorsAlert />', () => {
     render(
       <RecommendedOperatorsAlert
         selectedCardTitle="Advanced Cluster Security for Kubernetes"
-        clusterState={clusterStates.INSTALLING}
+        clusterState={clusterStates.installing}
         openLearnMore={openLearnMore}
         closeDrawer={closeDrawer}
         onDismissAlertCallback={onDismissAlertCallback}
@@ -150,7 +150,7 @@ describe('<RecommendedOperatorsAlert />', () => {
     // Arrange
     render(
       <RecommendedOperatorsAlert
-        clusterState={clusterStates.INSTALLING}
+        clusterState={clusterStates.installing}
         openLearnMore={openLearnMore}
         closeDrawer={closeDrawer}
         onDismissAlertCallback={onDismissAlertCallback}
@@ -170,7 +170,7 @@ describe('<RecommendedOperatorsAlert />', () => {
     // Arrange
     render(
       <RecommendedOperatorsAlert
-        clusterState={clusterStates.INSTALLING}
+        clusterState={clusterStates.installing}
         openLearnMore={openLearnMore}
         closeDrawer={closeDrawer}
         onDismissAlertCallback={onDismissAlertCallback}
@@ -200,7 +200,7 @@ describe('<RecommendedOperatorsAlert />', () => {
     // Arrange
     const { container } = render(
       <RecommendedOperatorsAlert
-        clusterState={clusterStates.INSTALLING}
+        clusterState={clusterStates.installing}
         openLearnMore={openLearnMore}
         closeDrawer={closeDrawer}
         onDismissAlertCallback={onDismissAlertCallback}

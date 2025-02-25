@@ -3,15 +3,16 @@ import {
   ClusterAuthorizationRequestProduct_id as ClusterAuthorizationRequestProductId,
   SubscriptionCommonFieldsStatus,
 } from '~/types/accounts_mgmt.v1';
-import { Cluster, ClusterState, InflightCheck, InflightCheckState } from '~/types/clusters_mgmt.v1';
+import { Cluster, InflightCheck } from '~/types/clusters_mgmt.v1';
+import { ClusterState, InflightCheckState } from '~/types/clusters_mgmt.v1/enums';
 import { ClusterFromSubscription, ClusterWithPermissions } from '~/types/types';
 
 enum SubscriptionDerivedStates {
-  UPDATING = 'updating',
-  DISCONNECTED = 'disconnected',
-  DEPROVISIONED = 'deprovisioned',
-  ARCHIVED = 'archived',
-  STALE = 'stale',
+  updating = 'updating',
+  disconnected = 'disconnected',
+  deprovisioned = 'deprovisioned',
+  archived = 'archived',
+  stale = 'stale',
 }
 
 // see https://github.com/microsoft/TypeScript/issues/17592
@@ -26,7 +27,7 @@ export type ClusterStateAndDescription = {
 
 const getStateDescription = (state?: clusterStates): string => {
   switch (state) {
-    case clusterStates.DEPROVISIONED:
+    case clusterStates.deprovisioned:
       return 'Deleted';
     default:
       return state ? (state.charAt(0).toUpperCase() + state.slice(1)).replace(/_/g, ' ') : '';
@@ -57,38 +58,38 @@ const getClusterStateAndDescription = <E extends ClusterFromSubscription>(
   // the state is determined by subscriptions.status or cluster.state.
   // the conditions are not mutually exclusive and are ordered by priority, e.g., STALE and READY.
   if (cluster.subscription?.status === SubscriptionCommonFieldsStatus.Disconnected) {
-    state = clusterStates.DISCONNECTED;
+    state = clusterStates.disconnected;
   } else if (cluster.subscription?.status === SubscriptionCommonFieldsStatus.Deprovisioned) {
-    state = clusterStates.DEPROVISIONED;
+    state = clusterStates.deprovisioned;
   } else if (cluster.subscription?.status === SubscriptionCommonFieldsStatus.Archived) {
-    state = clusterStates.ARCHIVED;
+    state = clusterStates.archived;
   } else if (
-    cluster.state === ClusterState.INSTALLING ||
-    cluster.state === ClusterState.VALIDATING ||
-    cluster.state === ClusterState.PENDING
+    cluster.state === ClusterState.installing ||
+    cluster.state === ClusterState.validating ||
+    cluster.state === ClusterState.pending
   ) {
-    state = clusterStates.INSTALLING;
-  } else if (cluster.state === ClusterState.WAITING) {
-    state = clusterStates.WAITING;
-  } else if (cluster.state === ClusterState.UNINSTALLING) {
-    state = clusterStates.UNINSTALLING;
-  } else if (cluster.state === ClusterState.ERROR) {
-    state = clusterStates.ERROR;
-  } else if (cluster.state === ClusterState.HIBERNATING) {
-    state = clusterStates.HIBERNATING;
-  } else if (cluster.state === ClusterState.POWERING_DOWN) {
-    state = clusterStates.POWERING_DOWN;
-  } else if (cluster.state === ClusterState.RESUMING) {
-    state = clusterStates.RESUMING;
+    state = clusterStates.installing;
+  } else if (cluster.state === ClusterState.waiting) {
+    state = clusterStates.waiting;
+  } else if (cluster.state === ClusterState.uninstalling) {
+    state = clusterStates.uninstalling;
+  } else if (cluster.state === ClusterState.error) {
+    state = clusterStates.error;
+  } else if (cluster.state === ClusterState.hibernating) {
+    state = clusterStates.hibernating;
+  } else if (cluster.state === ClusterState.powering_down) {
+    state = clusterStates.powering_down;
+  } else if (cluster.state === ClusterState.resuming) {
+    state = clusterStates.resuming;
   } else if (cluster.subscription?.status === SubscriptionCommonFieldsStatus.Stale) {
-    state = clusterStates.STALE;
+    state = clusterStates.stale;
   } else if (isClusterUpgrading(cluster)) {
-    state = clusterStates.UPDATING;
+    state = clusterStates.updating;
   } else if (
     cluster.subscription?.status === SubscriptionCommonFieldsStatus.Active ||
-    cluster.state === ClusterState.READY
+    cluster.state === ClusterState.ready
   ) {
-    state = clusterStates.READY;
+    state = clusterStates.ready;
   }
 
   return {
@@ -109,9 +110,9 @@ const getInflightChecks = <E extends ClusterFromSubscription>(cluster?: E): Arra
  * @param cluster something extending ClusterFromSubscription since components are using either Cluster or ClusterFromSubscription
  */
 const isHibernating = <E extends ClusterFromSubscription>(cluster: E): boolean =>
-  cluster.state === ClusterState.HIBERNATING ||
-  cluster.state === ClusterState.POWERING_DOWN ||
-  cluster.state === ClusterState.RESUMING;
+  cluster.state === ClusterState.hibernating ||
+  cluster.state === ClusterState.powering_down ||
+  cluster.state === ClusterState.resuming;
 
 /**
  *
@@ -119,7 +120,7 @@ const isHibernating = <E extends ClusterFromSubscription>(cluster: E): boolean =
  */
 const hasInflightEgressErrors = <E extends ClusterFromSubscription>(cluster: E): boolean =>
   getInflightChecks(cluster).some((inflightCheck) => {
-    if (inflightCheck.state !== InflightCheckState.PASSED) {
+    if (inflightCheck.state !== InflightCheckState.passed) {
       const { details = {} } = inflightCheck;
       return Object.keys(details).some(
         (dkey) =>
@@ -153,7 +154,7 @@ const isOSDGCPWaitingForRolesOnHostProject = <E extends ClusterFromSubscription>
     isOSD(cluster) &&
     vpcProjectId !== undefined &&
     statusDescription !== undefined &&
-    cluster?.status?.state === ClusterState.WAITING &&
+    cluster?.status?.state === ClusterState.waiting &&
     statusDescription.indexOf(vpcProjectId) > -1
   );
 };
@@ -173,7 +174,7 @@ const isOSDGCPPendingOnHostProject = <E extends ClusterFromSubscription>(cluster
  */
 const isErrorSharedGCPVPCValues = (cluster: ClusterFromSubscription): boolean =>
   isOSD(cluster) &&
-  cluster.state === ClusterState.WAITING &&
+  cluster.state === ClusterState.waiting &&
   !!cluster?.gcp_network?.vpc_project_id &&
   !!cluster?.status?.description &&
   cluster.status.description.includes(cluster.gcp_network.vpc_project_id) &&
@@ -213,15 +214,15 @@ const isHypershiftCluster = (cluster?: ClusterFromSubscription | Cluster): boole
 // Indicates that cluster is waiting and an oidc_config.id had been specified
 const isWaitingForOIDCProviderOrOperatorRolesMode = (cluster: ClusterFromSubscription): boolean =>
   isROSA(cluster) &&
-  cluster.state === ClusterState.WAITING &&
+  cluster.state === ClusterState.waiting &&
   cluster?.aws?.sts?.oidc_config?.id !== undefined;
 
 // Indicates that this is a Waiting Hypershift cluster
 const isWaitingHypershiftCluster = (cluster: ClusterFromSubscription): boolean =>
-  cluster.state === ClusterState.WAITING && isHypershiftCluster(cluster);
+  cluster.state === ClusterState.waiting && isHypershiftCluster(cluster);
 
 const isWaitingROSAManualMode = (cluster: ClusterFromSubscription): boolean =>
-  cluster.state === ClusterState.WAITING &&
+  cluster.state === ClusterState.waiting &&
   isROSAManualMode(cluster) &&
   !isHypershiftCluster(cluster);
 
@@ -230,7 +231,7 @@ const isWaitingROSAManualMode = (cluster: ClusterFromSubscription): boolean =>
  * @param cluster something extending ClusterFromSubscription since components are using either Cluster or ClusterFromSubscription
  */
 const isOffline = <E extends ClusterFromSubscription>(cluster: E): boolean =>
-  isHibernating(cluster) || cluster.state === ClusterState.UNINSTALLING;
+  isHibernating(cluster) || cluster.state === ClusterState.uninstalling;
 
 const getClusterAIPermissions = (cluster: ClusterWithPermissions) => ({
   canEdit: cluster.canEdit,
@@ -248,7 +249,7 @@ const canViewMachinePoolTab = (cluster: ClusterFromSubscription): boolean => {
 
   return (
     (cluster?.managed ?? false) &&
-    (cluster?.state === clusterStates.READY || isHibernating(cluster)) &&
+    (cluster?.state === clusterStates.ready || isHibernating(cluster)) &&
     !isArchived
   );
 };

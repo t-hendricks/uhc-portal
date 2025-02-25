@@ -11,12 +11,12 @@ import EditSecurityGroups from '~/components/clusters/ClusterDetailsMultiRegion/
 import SecurityGroupsEmptyAlert from '~/components/clusters/ClusterDetailsMultiRegion/components/SecurityGroups/SecurityGroupsEmptyAlert';
 import { useFormState } from '~/components/clusters/wizards/hooks';
 import ReduxCheckbox from '~/components/common/ReduxFormComponents_deprecated/ReduxCheckbox';
-import { CloudVPC } from '~/types/clusters_mgmt.v1';
+import { CloudVpc } from '~/types/clusters_mgmt.v1';
 
 import { FieldId } from '../constants';
 
 type SecurityGroupFieldProps = {
-  selectedVPC: CloudVPC;
+  selectedVPC: CloudVpc;
   label?: string;
   input: { onChange: (selectedGroupIds: string[]) => void; value: string[] };
   isHypershift: boolean;
@@ -44,7 +44,7 @@ const SecurityGroupsSection = ({
   isHypershiftSelected,
 }: {
   openshiftVersion: string;
-  selectedVPC: CloudVPC;
+  selectedVPC: CloudVpc;
   isHypershiftSelected: boolean;
 }) => {
   const {

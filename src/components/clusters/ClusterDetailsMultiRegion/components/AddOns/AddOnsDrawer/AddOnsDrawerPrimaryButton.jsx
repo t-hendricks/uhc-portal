@@ -77,7 +77,7 @@ function AddOnsPrimaryButton(props) {
   const hibernatingReason =
     isHibernating(cluster) && 'This operation is not available while cluster is hibernating';
   // a superset of hibernatingReason.
-  const notReadyReason = cluster.state !== clusterStates.READY && 'This cluster is not ready';
+  const notReadyReason = cluster.state !== clusterStates.ready && 'This cluster is not ready';
   const requirementsReason = !activeCardRequirementsFulfilled && 'Prerequisites not met';
   const quotaReason = (!hasQuota || subscription?.billingModel === NO_QUOTA) && noQuotaTooltip;
   const billingReason =

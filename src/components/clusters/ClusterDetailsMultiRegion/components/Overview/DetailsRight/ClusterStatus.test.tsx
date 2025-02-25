@@ -2,7 +2,7 @@ import React from 'react';
 
 import { defaultClusterFromSubscription } from '~/components/clusters/common/__tests__/defaultClusterFromSubscription.fixtures';
 import { checkAccessibility, render, screen } from '~/testUtils';
-import { ClusterState } from '~/types/clusters_mgmt.v1';
+import { ClusterState } from '~/types/clusters_mgmt.v1/enums';
 import { ClusterFromSubscription } from '~/types/types';
 
 import { ClusterStatus } from './ClusterStatus';
@@ -11,7 +11,7 @@ const cluster: ClusterFromSubscription = {
   ...defaultClusterFromSubscription,
   name: 'Some Cluster',
   id: 'cluster-id',
-  state: ClusterState.READY,
+  state: ClusterState.ready,
 };
 
 const machinePools = [

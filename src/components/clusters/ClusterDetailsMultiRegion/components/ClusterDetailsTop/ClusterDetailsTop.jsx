@@ -149,12 +149,12 @@ function ClusterDetailsTop(props) {
   const showIDPMessage =
     cluster.managed &&
     cluster.idpActions?.create &&
-    cluster.state === clusterStates.READY &&
+    cluster.state === clusterStates.ready &&
     !isClusterIdentityProvidersLoading &&
     !clusterIdentityProvidersError &&
     !hasIdentityProviders;
 
-  const canUpgradeTrial = cluster.state === clusterStates.READY && cluster.canEdit;
+  const canUpgradeTrial = cluster.state === clusterStates.ready && cluster.canEdit;
   const trialExpirationUpgradeProps = canUpgradeTrial
     ? {
         trialExpiration: true,
@@ -186,7 +186,7 @@ function ClusterDetailsTop(props) {
         variant="primary"
         isDisabled
         title={
-          cluster.state === clusterStates.UNINSTALLING
+          cluster.state === clusterStates.uninstalling
             ? 'The cluster is being uninstalled'
             : 'Admin console is not yet available for this cluster'
         }
@@ -258,18 +258,18 @@ function ClusterDetailsTop(props) {
   const showGcpOrgPolicyWarning =
     gcpOrgPolicyWarning &&
     !isDeprovisioned &&
-    cluster.state !== clusterStates.READY &&
-    cluster.state !== clusterStates.UNINSTALLING;
+    cluster.state !== clusterStates.ready &&
+    cluster.state !== clusterStates.uninstalling;
 
   // TODO: Part of ClusterStatusMonitor story (installation)
   // eslint-disable-next-line no-unused-vars
   const shouldShowStatusMonitor =
     [
-      clusterStates.WAITING,
-      clusterStates.PENDING,
-      clusterStates.INSTALLING,
-      clusterStates.ERROR,
-      clusterStates.UNINSTALLING,
+      clusterStates.waiting,
+      clusterStates.pending,
+      clusterStates.installing,
+      clusterStates.error,
+      clusterStates.uninstalling,
     ].includes(cluster.state) || hasInflightEgressErrors(cluster);
 
   // If cluster is uninstalling - navigate away once the
@@ -278,8 +278,8 @@ function ClusterDetailsTop(props) {
   const navigate = useNavigate();
   React.useEffect(() => {
     if (
-      prevClusterState === clusterStates.UNINSTALLING &&
-      cluster.state !== clusterStates.UNINSTALLING &&
+      prevClusterState === clusterStates.uninstalling &&
+      cluster.state !== clusterStates.uninstalling &&
       !shouldShowStatusMonitor
     ) {
       dispatch(

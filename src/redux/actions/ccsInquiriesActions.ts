@@ -2,7 +2,7 @@ import pick from 'lodash/pick';
 import { action, ActionType } from 'typesafe-actions';
 
 import { GCPAuthType } from '~/components/clusters/wizards/osd/ClusterSettings/CloudProvider/types';
-import { GCP } from '~/types/clusters_mgmt.v1';
+import { Gcp } from '~/types/clusters_mgmt.v1';
 import { AWSCredentials } from '~/types/types';
 
 import clusterService from '../../services/clusterService';
@@ -23,7 +23,7 @@ const prepareGcpCredentialsPayload = async (
   authType: GCPAuthType,
   /** gcpCredentials will be the service account JSON string or the WIF config ID depending on GCPAuthType */
   gcpCredentials: string,
-): Promise<GCP> => {
+): Promise<Gcp> => {
   if (authType === GCPAuthType.ServiceAccounts) {
     const parsedCredentials = JSON.parse(gcpCredentials);
     return pick(parsedCredentials, [
@@ -44,8 +44,7 @@ const prepareGcpCredentialsPayload = async (
       kind: 'WifConfig',
       id: gcpCredentials,
     },
-  } as GCP;
-  // @TODO OCMUI-2313 remove type assertion after regenerating types from OpenAPI spec
+  };
 };
 
 export type CloudProviderVPCRequest = {

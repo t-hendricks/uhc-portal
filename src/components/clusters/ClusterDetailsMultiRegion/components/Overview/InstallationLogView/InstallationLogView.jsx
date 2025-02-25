@@ -66,7 +66,7 @@ class LogWindow extends React.Component {
     }
     if (
       (prevProps.errorCode !== 403 && errorCode === 403) ||
-      cluster.state === clusterStates.ERROR
+      cluster.state === clusterStates.error
     ) {
       if (this.updateTimer !== null) {
         window.clearInterval(this.updateTimer);
@@ -170,7 +170,7 @@ class LogWindow extends React.Component {
   update = () => {
     const { getLogs, cluster, lines, len, logType, pending, errorCode } = this.props;
     if (!pending && errorCode !== 403) {
-      const requestLogType = cluster.state !== clusterStates.UNINSTALLING ? 'install' : 'uninstall';
+      const requestLogType = cluster.state !== clusterStates.uninstalling ? 'install' : 'uninstall';
       let offset = lines ? len : 0;
       if (logType !== requestLogType) {
         offset = 0;
@@ -211,7 +211,7 @@ class LogWindow extends React.Component {
     }
 
     let message;
-    if (cluster.state === clusterStates.UNINSTALLING) {
+    if (cluster.state === clusterStates.uninstalling) {
       message =
         errorCode === 403
           ? metricsStatusMessages.uninstalling
@@ -249,7 +249,7 @@ class LogWindow extends React.Component {
             </div>
           </div>
         ) : (
-          cluster.state !== clusterStates.ERROR && <p className="pf-v5-u-mt-sm">{message}</p>
+          cluster.state !== clusterStates.error && <p className="pf-v5-u-mt-sm">{message}</p>
         )}
       </div>
     );

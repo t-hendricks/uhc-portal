@@ -30,7 +30,7 @@ import {
   useInvalidateFetchRerunInflightChecks,
   useMutateRerunInflightChecks,
 } from '~/queries/ClusterDetailsQueries/ClusterStatusMonitor/useFetchInflightChecks';
-import { InflightCheckState } from '~/types/clusters_mgmt.v1';
+import { InflightCheckState } from '~/types/clusters_mgmt.v1/enums';
 
 // TODO: Part of the installation story
 const ClusterStatusMonitor = (props) => {
@@ -91,17 +91,17 @@ const ClusterStatusMonitor = (props) => {
       // final state is READY
       const isClusterInstalling = (state) =>
         [
-          clusterStates.INSTALLING,
-          clusterStates.PENDING,
-          clusterStates.VALIDATING,
-          clusterStates.WAITING,
+          clusterStates.installing,
+          clusterStates.pending,
+          clusterStates.validating,
+          clusterStates.waiting,
         ].includes(state);
       setRefetchInterval(false);
       // if not running any checks final state is success
       const shouldUpdateInflightChecks = () =>
         inflightChecks.items?.some(
           (check) =>
-            check.state === InflightCheckState.RUNNING || check.state === InflightCheckState.FAILED,
+            check.state === InflightCheckState.running || check.state === InflightCheckState.failed,
         );
       if (!isClusterStatusLoading && !isInflightChecksLoading) {
         const clusterState = clusterStatus.state;
@@ -113,7 +113,7 @@ const ClusterStatusMonitor = (props) => {
         // if still installing/uninstalling or running inflight checks, check again in 5s
         if (
           isClusterInstalling(clusterState) ||
-          clusterState === clusterStates.UNINSTALLING ||
+          clusterState === clusterStates.uninstalling ||
           shouldUpdateInflightChecks()
         ) {
           setRefetchInterval(true);
@@ -153,7 +153,7 @@ const ClusterStatusMonitor = (props) => {
     if (!isRerunInflightChecksLoading && rerunInflightChecksData) {
       const isValidatorRunning = rerunInflightChecksData.data.items.some(
         (check) =>
-          check.state === InflightCheckState.RUNNING || check.state === InflightCheckState.PENDING,
+          check.state === InflightCheckState.running || check.state === InflightCheckState.pending,
       );
       setIsValidatorRunning(isValidatorRunning);
     }
@@ -168,10 +168,10 @@ const ClusterStatusMonitor = (props) => {
 
   const showMissingURLList = () => {
     const isClusterValidating =
-      cluster.state === clusterStates.VALIDATING || cluster.state === clusterStates.PENDING;
+      cluster.state === clusterStates.validating || cluster.state === clusterStates.pending;
     if (!isClusterValidating) {
       const inflightError = inflightChecks?.items?.find(
-        (check) => check.state === InflightCheckState.FAILED,
+        (check) => check.state === InflightCheckState.failed,
       );
       if (hasInflightEgressErrors(cluster) && inflightError) {
         let documentLink;
@@ -365,7 +365,7 @@ const ClusterStatusMonitor = (props) => {
       const alerts = [];
 
       // Cluster install failure
-      if (clusterStatus.state === clusterStates.ERROR) {
+      if (clusterStatus.state === clusterStates.error) {
         alerts.push(
           <Alert variant="danger" isInline title={`${errorCode} Cluster installation failed`}>
             <p>
@@ -385,7 +385,7 @@ const ClusterStatusMonitor = (props) => {
 
       // Cluster is taking a lot of time to create
       if (
-        clusterStatus.state !== clusterStates.ERROR &&
+        clusterStatus.state !== clusterStates.error &&
         (clusterStatus.provision_error_code || clusterStatus.provision_error_message)
       ) {
         alerts.push(

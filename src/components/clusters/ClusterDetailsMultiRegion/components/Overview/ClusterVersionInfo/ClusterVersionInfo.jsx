@@ -21,7 +21,7 @@ import SupportStatusLabel from '../SupportStatusLabel';
 // TODO: Part of the upgrade tab
 const ClusterVersionInfo = ({ cluster }) => {
   const isUpgrading = isClusterUpgrading(cluster);
-  const isClusterReady = cluster?.state === clusterStates.READY;
+  const isClusterReady = cluster?.state === clusterStates.ready;
 
   const clusterVersion = getClusterVersion(cluster);
   const channel = get(cluster, 'metrics.channel');

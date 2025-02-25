@@ -48,25 +48,25 @@ function actionResolver(
   dispatch,
 ) {
   const baseProps = {};
-  const isClusterUninstalling = cluster.state === clusterStates.UNINSTALLING;
+  const isClusterUninstalling = cluster.state === clusterStates.uninstalling;
   const uninstallingMessage = isClusterUninstalling && (
     <span>The cluster is being uninstalled</span>
   );
-  const isClusterReady = cluster.state === clusterStates.READY;
+  const isClusterReady = cluster.state === clusterStates.ready;
   // Superset of more specific uninstallingMessage.
   const notReadyMessage = !isClusterReady && <span>This cluster is not ready</span>;
   const isClusterInHibernatingProcess = isHibernating(cluster);
   const hibernatingMessage =
     isClusterInHibernatingProcess &&
-    (cluster.state === clusterStates.RESUMING ? (
+    (cluster.state === clusterStates.resuming ? (
       <>This cluster is resuming; wait for it to be ready in order to perform actions</>
     ) : (
       <>This cluster is hibernating; resume cluster in order to perform actions</>
     ));
 
   const isClusterHibernatingOrPoweringDown =
-    cluster.state === clusterStates.HIBERNATING || cluster.state === clusterStates.POWERING_DOWN;
-  const isClusterPoweringDown = cluster.state === clusterStates.POWERING_DOWN;
+    cluster.state === clusterStates.hibernating || cluster.state === clusterStates.powering_down;
+  const isClusterPoweringDown = cluster.state === clusterStates.powering_down;
   const poweringDownMessage = isClusterPoweringDown && (
     <span>
       This cluster is powering down; you will be able to resume after it reaches hibernating state.

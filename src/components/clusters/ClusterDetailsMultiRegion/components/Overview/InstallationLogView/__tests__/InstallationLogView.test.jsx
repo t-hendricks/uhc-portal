@@ -107,7 +107,7 @@ describe('<InstallationLogView />', () => {
     const { container } = render(
       <InstallationLogView
         {...defaultProps}
-        cluster={{ ...clusterDetails.cluster, state: clusterStates.ERROR }}
+        cluster={{ ...clusterDetails.cluster, state: clusterStates.error }}
       />,
     );
     expect(container).toHaveTextContent('');

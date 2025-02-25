@@ -1,6 +1,7 @@
 import { normalizedProducts } from '~/common/subscriptionTypes';
 import { SubscriptionCommonFieldsStatus } from '~/types/accounts_mgmt.v1';
-import { Cluster, ClusterState } from '~/types/clusters_mgmt.v1';
+import { Cluster } from '~/types/clusters_mgmt.v1';
+import { ClusterState } from '~/types/clusters_mgmt.v1/enums';
 import { ClusterFromSubscription } from '~/types/types';
 
 import {
@@ -67,17 +68,17 @@ describe('getClusterStateAndDescription', () => {
     [{ subStatus: SubscriptionCommonFieldsStatus.Deprovisioned }, 'Deleted'],
     [{ subStatus: SubscriptionCommonFieldsStatus.Disconnected }, 'Disconnected'],
     [{ subStatus: SubscriptionCommonFieldsStatus.Stale }, 'Stale'],
-    [{ state: clusterStates.WAITING }, 'Waiting'],
-    [{ state: clusterStates.INSTALLING }, 'Installing'],
+    [{ state: clusterStates.waiting }, 'Waiting'],
+    [{ state: clusterStates.installing }, 'Installing'],
     [{ state: 'validating' }, 'Installing'],
-    [{ state: clusterStates.VALIDATING }, 'Installing'],
-    [{ state: clusterStates.PENDING }, 'Installing'],
-    [{ state: clusterStates.READY }, 'Ready'],
-    [{ state: clusterStates.UNINSTALLING }, 'Uninstalling'],
-    [{ state: clusterStates.RESUMING }, 'Resuming'],
-    [{ state: clusterStates.HIBERNATING }, 'Hibernating'],
-    [{ state: clusterStates.ERROR }, 'Error'],
-    [{ state: clusterStates.POWERING_DOWN }, 'Powering down'],
+    [{ state: clusterStates.validating }, 'Installing'],
+    [{ state: clusterStates.pending }, 'Installing'],
+    [{ state: clusterStates.ready }, 'Ready'],
+    [{ state: clusterStates.uninstalling }, 'Uninstalling'],
+    [{ state: clusterStates.resuming }, 'Resuming'],
+    [{ state: clusterStates.hibernating }, 'Hibernating'],
+    [{ state: clusterStates.error }, 'Error'],
+    [{ state: clusterStates.powering_down }, 'Powering down'],
     [{}, ''],
     [{ metricsState: 'running' }, 'Updating'],
   ])(
@@ -219,9 +220,9 @@ describe('getClusterStateAndDescription', () => {
 
   describe('isWaitingForOIDCProviderOrOperatorRolesMode', () => {
     it.each([
-      [ClusterState.WAITING, 'whatever', true],
-      [ClusterState.WAITING, undefined, false],
-      [ClusterState.HIBERNATING, 'whatever', false],
+      [ClusterState.waiting, 'whatever', true],
+      [ClusterState.waiting, undefined, false],
+      [ClusterState.hibernating, 'whatever', false],
     ])(
       'state: %p. It returns %p',
       (state: ClusterState, awsStsConfigId: string | undefined, expectedResult: boolean) => {
@@ -244,8 +245,8 @@ describe('getClusterStateAndDescription', () => {
 
   describe('isWaitingHypershiftCluster', () => {
     it.each([
-      [ClusterState.WAITING, true],
-      [ClusterState.HIBERNATING, false],
+      [ClusterState.waiting, true],
+      [ClusterState.hibernating, false],
     ])('state: %p. It returns %p', (state: ClusterState, expectedResult: boolean) => {
       const cluster: ClusterFromSubscription = {
         ...defaultClusterFromSubscription,
@@ -349,12 +350,12 @@ describe('getClusterStateAndDescription', () => {
 
   describe('isHibernating', () => {
     it.each([
-      [ClusterState.HIBERNATING, true],
-      [ClusterState.POWERING_DOWN, true],
-      [ClusterState.RESUMING, true],
+      [ClusterState.hibernating, true],
+      [ClusterState.powering_down, true],
+      [ClusterState.resuming, true],
       ['resuming', true],
-      [ClusterState.READY, false],
-      [ClusterState.READY, false],
+      [ClusterState.ready, false],
+      [ClusterState.ready, false],
       ['ready', false],
       [undefined, false],
     ])(
@@ -371,11 +372,11 @@ describe('getClusterStateAndDescription', () => {
 
   describe('isOffline', () => {
     it.each([
-      [ClusterState.HIBERNATING, true],
-      [ClusterState.POWERING_DOWN, true],
-      [ClusterState.RESUMING, true],
-      [ClusterState.UNINSTALLING, true],
-      [ClusterState.READY, false],
+      [ClusterState.hibernating, true],
+      [ClusterState.powering_down, true],
+      [ClusterState.resuming, true],
+      [ClusterState.uninstalling, true],
+      [ClusterState.ready, false],
     ])('state: %p. It returns %p', (state: ClusterState, expectedResult: boolean) => {
       const cluster: ClusterFromSubscription = {
         ...defaultClusterFromSubscription,
@@ -522,7 +523,7 @@ describe('getClusterStateAndDescription', () => {
         vpc_project_id: gcpProjectID,
       },
       status: {
-        state: ClusterState.WAITING,
+        state: ClusterState.waiting,
         description: `a description with ${gcpProjectID}`,
       },
     };
@@ -569,7 +570,7 @@ describe('getClusterStateAndDescription', () => {
           ...defaultCluster,
           status: {
             ...defaultCluster.status,
-            state: ClusterState.INSTALLING,
+            state: ClusterState.installing,
           },
         },
         false,

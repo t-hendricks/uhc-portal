@@ -12655,12 +12655,12 @@ export interface components {
      * @description State of an AWS infrastructure access role grant.
      * @enum {string}
      */
-    AWSInfrastructureAccessRoleGrantState: 'deleting' | 'failed' | 'pending' | 'ready' | 'removed';
+    AWSInfrastructureAccessRoleGrantState: AWSInfrastructureAccessRoleGrantState;
     /**
      * @description State of an AWS infrastructure access role.
      * @enum {string}
      */
-    AWSInfrastructureAccessRoleState: 'invalid' | 'removed' | 'valid';
+    AWSInfrastructureAccessRoleState: AWSInfrastructureAccessRoleState;
     /** @description Representation of aws machine pool specific parameters. */
     AWSMachinePool: {
       /** @description Indicates the type of this object. Will be 'AWSMachinePool' if this is a complete object or 'AWSMachinePoolLink' if it is just a link. */
@@ -13190,7 +13190,7 @@ export interface components {
      * @description Representation of an add-on InstallMode field.
      * @enum {string}
      */
-    AddOnInstallMode: 'all_namespaces' | 'own_namespace';
+    AddOnInstallMode: AddOnInstallMode;
     /** @description Representation of an add-on installation in a cluster. */
     AddOnInstallation: {
       /** @description Indicates the type of this object. Will be 'AddOnInstallation' if this is a complete object or 'AddOnInstallationLink' if it is just a link. */
@@ -13252,7 +13252,7 @@ export interface components {
      * @description Representation of an add-on installation State field.
      * @enum {string}
      */
-    AddOnInstallationState: 'deleting' | 'failed' | 'installing' | 'pending' | 'ready';
+    AddOnInstallationState: AddOnInstallationState;
     AddOnNamespace: {
       /** @description Indicates the type of this object. Will be 'AddOnNamespace' if this is a complete object or 'AddOnNamespaceLink' if it is just a link. */
       kind?: string;
@@ -13465,7 +13465,7 @@ export interface components {
      * @description Severity of a cluster alert received via telemetry.
      * @enum {string}
      */
-    AlertSeverity: 'critical' | 'none' | 'warning';
+    AlertSeverity: AlertSeverity;
     /** @description Provides information about the alerts firing on the cluster. */
     AlertsInfo: {
       alerts?: components['schemas']['AlertInfo'][];
@@ -13769,13 +13769,7 @@ export interface components {
      * @description Billing model for cluster resources.
      * @enum {string}
      */
-    BillingModel:
-      | 'marketplace'
-      | 'marketplace-aws'
-      | 'marketplace-gcp'
-      | 'marketplace-rhm'
-      | 'marketplace-azure'
-      | 'standard';
+    BillingModel: BillingModel;
     /** @description BillingModelItem represents a billing model */
     BillingModelItem: {
       /** @description Indicates the type of this object. Will be 'BillingModelItem' if this is a complete object or 'BillingModelItemLink' if it is just a link. */
@@ -13822,13 +13816,7 @@ export interface components {
      * @description Status of the break glass credential.
      * @enum {string}
      */
-    BreakGlassCredentialStatus:
-      | 'awaiting_revocation'
-      | 'created'
-      | 'expired'
-      | 'failed'
-      | 'issued'
-      | 'revoked';
+    BreakGlassCredentialStatus: BreakGlassCredentialStatus;
     /** @description ByoOidc configuration. */
     ByoOidc: {
       /** @description Boolean flag indicating if the cluster should be creating using _ByoOidc_.
@@ -14137,7 +14125,7 @@ export interface components {
      * @description Possible cluster architectures.
      * @enum {string}
      */
-    ClusterArchitecture: 'classic' | 'hcp';
+    ClusterArchitecture: ClusterArchitecture;
     /** @description Cluster-wide autoscaling configuration. */
     ClusterAutoscaler: {
       /** @description Indicates the type of this object. Will be 'ClusterAutoscaler' if this is a complete object or 'ClusterAutoscalerLink' if it is just a link. */
@@ -14189,7 +14177,7 @@ export interface components {
      * @description Configuration mode of a cluster.
      * @enum {string}
      */
-    ClusterConfigurationMode: 'full' | 'read_only';
+    ClusterConfigurationMode: ClusterConfigurationMode;
     /** @description Information about the console of a cluster. */
     ClusterConsole: {
       /** @description The URL of the console of the cluster. */
@@ -14221,7 +14209,7 @@ export interface components {
      * @description ClusterHealthState indicates the health of a cluster.
      * @enum {string}
      */
-    ClusterHealthState: 'healthy' | 'unhealthy' | 'unknown';
+    ClusterHealthState: ClusterHealthState;
     /** @description Definition of a cluster link. */
     ClusterLink: {
       /** @description HREF for the cluster, filled in response. */
@@ -14291,7 +14279,7 @@ export interface components {
      * @description Overall state of a cluster operator.
      * @enum {string}
      */
-    ClusterOperatorState: 'available' | 'degraded' | 'failing' | 'upgrading';
+    ClusterOperatorState: ClusterOperatorState;
     /** @description Provides detailed information about the operators installed on the cluster. */
     ClusterOperatorsInfo: {
       operators?: components['schemas']['ClusterOperatorInfo'][];
@@ -14389,18 +14377,7 @@ export interface components {
      * @description Overall state of a cluster.
      * @enum {string}
      */
-    ClusterState:
-      | 'error'
-      | 'hibernating'
-      | 'installing'
-      | 'pending'
-      | 'powering_down'
-      | 'ready'
-      | 'resuming'
-      | 'uninstalling'
-      | 'unknown'
-      | 'validating'
-      | 'waiting';
+    ClusterState: ClusterState;
     /** @description Detailed status of a cluster. */
     ClusterStatus: {
       /** @description Indicates the type of this object. Will be 'ClusterStatus' if this is a complete object or 'ClusterStatusLink' if it is just a link. */
@@ -14451,7 +14428,7 @@ export interface components {
      * @description Type of Component Route.
      * @enum {string}
      */
-    ComponentRouteType: 'console' | 'downloads' | 'oauth';
+    ComponentRouteType: ComponentRouteType;
     /** @description Representation of an upgrade policy that can be set for a cluster. */
     ControlPlaneUpgradePolicy: {
       /** @description Indicates the type of this object. Will be 'ControlPlaneUpgradePolicy' if this is a complete object or 'ControlPlaneUpgradePolicyLink' if it is just a link. */
@@ -14511,12 +14488,12 @@ export interface components {
       enabled?: boolean;
     };
     /** @enum {string} */
-    DetectionType: 'auto' | 'manual';
+    DetectionType: DetectionType;
     /**
      * @description Which Ec2MetadataHttpTokens to use for metadata service interaction options for EC2 instances
      * @enum {string}
      */
-    Ec2MetadataHttpTokens: 'optional' | 'required';
+    Ec2MetadataHttpTokens: Ec2MetadataHttpTokens;
     /** @description Description of a cloud provider encryption key. */
     EncryptionKey: {
       /** @description Indicates the type of this object. Will be 'EncryptionKey' if this is a complete object or 'EncryptionKeyLink' if it is just a link. */
@@ -14787,18 +14764,12 @@ export interface components {
      * @description Controls how mappings are established between provider identities and user objects.
      * @enum {string}
      */
-    IdentityProviderMappingMethod: 'add' | 'claim' | 'generate' | 'lookup';
+    IdentityProviderMappingMethod: IdentityProviderMappingMethod;
     /**
      * @description Type of identity provider.
      * @enum {string}
      */
-    IdentityProviderType:
-      | 'LDAPIdentityProvider'
-      | 'GithubIdentityProvider'
-      | 'GitlabIdentityProvider'
-      | 'GoogleIdentityProvider'
-      | 'HTPasswdIdentityProvider'
-      | 'OpenIDIdentityProvider';
+    IdentityProviderType: IdentityProviderType;
     /** @description ImageOverrides holds the lists of available images per cloud provider. */
     ImageOverrides: {
       /** @description Indicates the type of this object. Will be 'ImageOverrides' if this is a complete object or 'ImageOverridesLink' if it is just a link. */
@@ -14844,7 +14815,7 @@ export interface components {
      * @description State of an inflight check.
      * @enum {string}
      */
-    InflightCheckState: 'failed' | 'passed' | 'pending' | 'running';
+    InflightCheckState: InflightCheckState;
     /** @description Representation of an ingress. */
     Ingress: {
       /** @description Indicates the type of this object. Will be 'Ingress' if this is a complete object or 'IngressLink' if it is just a link. */
@@ -14983,12 +14954,12 @@ export interface components {
      * @description Cluster components listening method.
      * @enum {string}
      */
-    ListeningMethod: 'external' | 'internal';
+    ListeningMethod: ListeningMethod;
     /**
      * @description Type of load balancer for AWS cloud provider parameters.
      * @enum {string}
      */
-    LoadBalancerFlavor: 'classic' | 'nlb';
+    LoadBalancerFlavor: LoadBalancerFlavor;
     /** @description Log of the cluster. */
     Log: {
       /** @description Indicates the type of this object. Will be 'Log' if this is a complete object or 'LogLink' if it is just a link. */
@@ -15096,16 +15067,12 @@ export interface components {
      * @description Machine type category.
      * @enum {string}
      */
-    MachineTypeCategory:
-      | 'accelerated_computing'
-      | 'compute_optimized'
-      | 'general_purpose'
-      | 'memory_optimized';
+    MachineTypeCategory: MachineTypeCategory;
     /**
      * @description Machine type size.
      * @enum {string}
      */
-    MachineTypeSize: 'large' | 'medium' | 'small';
+    MachineTypeSize: MachineTypeSize;
     /** @description Contains the necessary attributes to support role-based authentication on AWS. */
     ManagedService: {
       /** @description Indicates whether the cluster belongs to a managed service
@@ -15143,7 +15110,7 @@ export interface components {
      * @description Type of Namespace Ownership Policy.
      * @enum {string}
      */
-    NamespaceOwnershipPolicy: 'InterNamespaceAllowed' | 'Strict';
+    NamespaceOwnershipPolicy: NamespaceOwnershipPolicy;
     /** @description Network configuration of a cluster. */
     Network: {
       /**
@@ -15325,7 +15292,7 @@ export interface components {
      * @description Type of node received via telemetry.
      * @enum {string}
      */
-    NodeType: 'compute' | 'infra' | 'master';
+    NodeType: NodeType;
     /** @description Provides information about the nodes in the cluster. */
     NodesInfo: {
       nodes?: components['schemas']['NodeInfo'][];
@@ -15458,7 +15425,7 @@ export interface components {
      * @description Representation of an platform type field.
      * @enum {string}
      */
-    Platform: 'aws' | 'aws-classic' | 'aws-hosted-cp' | 'gcp' | 'hostedcluster';
+    Platform: Platform;
     /** @description Manages the configuration for the Private Links. */
     PrivateLinkClusterConfiguration: {
       /** @description List of additional principals for the Private Link */
@@ -15494,7 +15461,7 @@ export interface components {
      * @description Processor type category.
      * @enum {string}
      */
-    ProcessorType: 'amd64' | 'arm64';
+    ProcessorType: ProcessorType;
     /** @description Representation of an product that can be selected as a cluster type. */
     Product: {
       /** @description Indicates the type of this object. Will be 'Product' if this is a complete object or 'ProductLink' if it is just a link. */
@@ -15586,7 +15553,7 @@ export interface components {
       status?: string;
     };
     /** @enum {string} */
-    ProvisionShardTopology: 'dedicated';
+    ProvisionShardTopology: ProvisionShardTopology;
     /** @description Proxy configuration of a cluster. */
     Proxy: {
       /** @description HTTPProxy is the URL of the proxy for HTTP requests. */
@@ -15697,7 +15664,7 @@ export interface components {
      * @description ScheduleType defines which type of scheduling should be used for the upgrade policy.
      * @enum {string}
      */
-    ScheduleType: 'automatic' | 'manual';
+    ScheduleType: ScheduleType;
     /** @description AWS security group object */
     SecurityGroup: {
       /** @description The security group ID. */
@@ -15915,19 +15882,12 @@ export interface components {
      * @description Overall state of a cluster upgrade policy.
      * @enum {string}
      */
-    UpgradePolicyStateValue:
-      | 'cancelled'
-      | 'completed'
-      | 'delayed'
-      | 'failed'
-      | 'pending'
-      | 'scheduled'
-      | 'started';
+    UpgradePolicyStateValue: UpgradePolicyStateValue;
     /**
      * @description UpgradeType defines which type of upgrade should be used.
      * @enum {string}
      */
-    UpgradeType: 'OSD' | 'ADDON' | 'ControlPlane' | 'NodePool';
+    UpgradeType: UpgradeType;
     /** @description Representation of a user. */
     User: {
       /** @description Indicates the type of this object. Will be 'User' if this is a complete object or 'UserLink' if it is just a link. */
@@ -16069,7 +16029,7 @@ export interface components {
       version_gate?: components['schemas']['VersionGate'];
     };
     /** @enum {string} */
-    WifAccessMethod: 'impersonate' | 'vm' | 'wif';
+    WifAccessMethod: WifAccessMethod;
     /** @description Definition of an wif_config resource. */
     WifConfig: {
       /** @description Indicates the type of this object. Will be 'WifConfig' if this is a complete object or 'WifConfigLink' if it is just a link. */
@@ -16159,7 +16119,7 @@ export interface components {
      * @description Type of wildcard policy.
      * @enum {string}
      */
-    WildcardPolicy: 'WildcardsAllowed' | 'WildcardsDisallowed';
+    WildcardPolicy: WildcardPolicy;
     Error: {
       /** @description Indicates the type of this object. Will always be 'Error' */
       kind?: string;
@@ -16186,249 +16146,437 @@ export interface components {
   headers: never;
   pathItems: never;
 }
-export type Metadata = components['schemas']['Metadata'];
-export type AmiOverride = components['schemas']['AMIOverride'];
-export type Aws = components['schemas']['AWS'];
-export type AwsFlavour = components['schemas']['AWSFlavour'];
-export type AwsInfrastructureAccessRole = components['schemas']['AWSInfrastructureAccessRole'];
-export type AwsInfrastructureAccessRoleGrant =
+export type SchemaMetadata = components['schemas']['Metadata'];
+export type SchemaAmiOverride = components['schemas']['AMIOverride'];
+export type SchemaAws = components['schemas']['AWS'];
+export type SchemaAwsFlavour = components['schemas']['AWSFlavour'];
+export type SchemaAwsInfrastructureAccessRole =
+  components['schemas']['AWSInfrastructureAccessRole'];
+export type SchemaAwsInfrastructureAccessRoleGrant =
   components['schemas']['AWSInfrastructureAccessRoleGrant'];
-export type AwsInfrastructureAccessRoleGrantState =
+export type SchemaAwsInfrastructureAccessRoleGrantState =
   components['schemas']['AWSInfrastructureAccessRoleGrantState'];
-export type AwsInfrastructureAccessRoleState =
+export type SchemaAwsInfrastructureAccessRoleState =
   components['schemas']['AWSInfrastructureAccessRoleState'];
-export type AwsMachinePool = components['schemas']['AWSMachinePool'];
-export type AwsNodePool = components['schemas']['AWSNodePool'];
-export type AwsShard = components['schemas']['AWSShard'];
-export type AwsSpotMarketOptions = components['schemas']['AWSSpotMarketOptions'];
-export type AwsVolume = components['schemas']['AWSVolume'];
-export type AwsstsAccountRole = components['schemas']['AWSSTSAccountRole'];
-export type AwsstsPolicy = components['schemas']['AWSSTSPolicy'];
-export type AwsstsRole = components['schemas']['AWSSTSRole'];
-export type Ccs = components['schemas']['CCS'];
-export type CpuTotalNodeRoleOsMetricNode = components['schemas']['CPUTotalNodeRoleOSMetricNode'];
-export type CpuTotalsNodeRoleOsMetricNode = components['schemas']['CPUTotalsNodeRoleOSMetricNode'];
-export type Dns = components['schemas']['DNS'];
-export type DnsDomain = components['schemas']['DNSDomain'];
-export type Gcp = components['schemas']['GCP'];
-export type GcpEncryptionKey = components['schemas']['GCPEncryptionKey'];
-export type GcpFlavour = components['schemas']['GCPFlavour'];
-export type GcpImageOverride = components['schemas']['GCPImageOverride'];
-export type GcpMachinePool = components['schemas']['GCPMachinePool'];
-export type GcpNetwork = components['schemas']['GCPNetwork'];
-export type GcpVolume = components['schemas']['GCPVolume'];
-export type HtPasswdIdentityProvider = components['schemas']['HTPasswdIdentityProvider'];
-export type HtPasswdUser = components['schemas']['HTPasswdUser'];
-export type LdapAttributes = components['schemas']['LDAPAttributes'];
-export type LdapIdentityProvider = components['schemas']['LDAPIdentityProvider'];
-export type Sts = components['schemas']['STS'];
-export type StsCredentialRequest = components['schemas']['STSCredentialRequest'];
-export type StsOperator = components['schemas']['STSOperator'];
-export type AddOn = components['schemas']['AddOn'];
-export type AddOnConfig = components['schemas']['AddOnConfig'];
-export type AddOnEnvironmentVariable = components['schemas']['AddOnEnvironmentVariable'];
-export type AddOnInstallMode = components['schemas']['AddOnInstallMode'];
-export type AddOnInstallation = components['schemas']['AddOnInstallation'];
-export type AddOnInstallationBilling = components['schemas']['AddOnInstallationBilling'];
-export type AddOnInstallationParameter = components['schemas']['AddOnInstallationParameter'];
-export type AddOnInstallationState = components['schemas']['AddOnInstallationState'];
-export type AddOnNamespace = components['schemas']['AddOnNamespace'];
-export type AddOnParameter = components['schemas']['AddOnParameter'];
-export type AddOnParameterOption = components['schemas']['AddOnParameterOption'];
-export type AddOnRequirement = components['schemas']['AddOnRequirement'];
-export type AddOnRequirementStatus = components['schemas']['AddOnRequirementStatus'];
-export type AddOnSecretPropagation = components['schemas']['AddOnSecretPropagation'];
-export type AddOnSubOperator = components['schemas']['AddOnSubOperator'];
-export type AddOnVersion = components['schemas']['AddOnVersion'];
-export type AdditionalCatalogSource = components['schemas']['AdditionalCatalogSource'];
-export type AddonUpgradePolicy = components['schemas']['AddonUpgradePolicy'];
-export type AddonUpgradePolicyState = components['schemas']['AddonUpgradePolicyState'];
-export type AdminCredentials = components['schemas']['AdminCredentials'];
-export type AlertInfo = components['schemas']['AlertInfo'];
-export type AlertSeverity = components['schemas']['AlertSeverity'];
-export type AlertsInfo = components['schemas']['AlertsInfo'];
-export type AuditLog = components['schemas']['AuditLog'];
-export type AutoscalerResourceLimits = components['schemas']['AutoscalerResourceLimits'];
-export type AutoscalerResourceLimitsGpuLimit =
+export type SchemaAwsMachinePool = components['schemas']['AWSMachinePool'];
+export type SchemaAwsNodePool = components['schemas']['AWSNodePool'];
+export type SchemaAwsShard = components['schemas']['AWSShard'];
+export type SchemaAwsSpotMarketOptions = components['schemas']['AWSSpotMarketOptions'];
+export type SchemaAwsVolume = components['schemas']['AWSVolume'];
+export type SchemaAwsstsAccountRole = components['schemas']['AWSSTSAccountRole'];
+export type SchemaAwsstsPolicy = components['schemas']['AWSSTSPolicy'];
+export type SchemaAwsstsRole = components['schemas']['AWSSTSRole'];
+export type SchemaCcs = components['schemas']['CCS'];
+export type SchemaCpuTotalNodeRoleOsMetricNode =
+  components['schemas']['CPUTotalNodeRoleOSMetricNode'];
+export type SchemaCpuTotalsNodeRoleOsMetricNode =
+  components['schemas']['CPUTotalsNodeRoleOSMetricNode'];
+export type SchemaDns = components['schemas']['DNS'];
+export type SchemaDnsDomain = components['schemas']['DNSDomain'];
+export type SchemaGcp = components['schemas']['GCP'];
+export type SchemaGcpEncryptionKey = components['schemas']['GCPEncryptionKey'];
+export type SchemaGcpFlavour = components['schemas']['GCPFlavour'];
+export type SchemaGcpImageOverride = components['schemas']['GCPImageOverride'];
+export type SchemaGcpMachinePool = components['schemas']['GCPMachinePool'];
+export type SchemaGcpNetwork = components['schemas']['GCPNetwork'];
+export type SchemaGcpVolume = components['schemas']['GCPVolume'];
+export type SchemaHtPasswdIdentityProvider = components['schemas']['HTPasswdIdentityProvider'];
+export type SchemaHtPasswdUser = components['schemas']['HTPasswdUser'];
+export type SchemaLdapAttributes = components['schemas']['LDAPAttributes'];
+export type SchemaLdapIdentityProvider = components['schemas']['LDAPIdentityProvider'];
+export type SchemaSts = components['schemas']['STS'];
+export type SchemaStsCredentialRequest = components['schemas']['STSCredentialRequest'];
+export type SchemaStsOperator = components['schemas']['STSOperator'];
+export type SchemaAddOn = components['schemas']['AddOn'];
+export type SchemaAddOnConfig = components['schemas']['AddOnConfig'];
+export type SchemaAddOnEnvironmentVariable = components['schemas']['AddOnEnvironmentVariable'];
+export type SchemaAddOnInstallMode = components['schemas']['AddOnInstallMode'];
+export type SchemaAddOnInstallation = components['schemas']['AddOnInstallation'];
+export type SchemaAddOnInstallationBilling = components['schemas']['AddOnInstallationBilling'];
+export type SchemaAddOnInstallationParameter = components['schemas']['AddOnInstallationParameter'];
+export type SchemaAddOnInstallationState = components['schemas']['AddOnInstallationState'];
+export type SchemaAddOnNamespace = components['schemas']['AddOnNamespace'];
+export type SchemaAddOnParameter = components['schemas']['AddOnParameter'];
+export type SchemaAddOnParameterOption = components['schemas']['AddOnParameterOption'];
+export type SchemaAddOnRequirement = components['schemas']['AddOnRequirement'];
+export type SchemaAddOnRequirementStatus = components['schemas']['AddOnRequirementStatus'];
+export type SchemaAddOnSecretPropagation = components['schemas']['AddOnSecretPropagation'];
+export type SchemaAddOnSubOperator = components['schemas']['AddOnSubOperator'];
+export type SchemaAddOnVersion = components['schemas']['AddOnVersion'];
+export type SchemaAdditionalCatalogSource = components['schemas']['AdditionalCatalogSource'];
+export type SchemaAddonUpgradePolicy = components['schemas']['AddonUpgradePolicy'];
+export type SchemaAddonUpgradePolicyState = components['schemas']['AddonUpgradePolicyState'];
+export type SchemaAdminCredentials = components['schemas']['AdminCredentials'];
+export type SchemaAlertInfo = components['schemas']['AlertInfo'];
+export type SchemaAlertSeverity = components['schemas']['AlertSeverity'];
+export type SchemaAlertsInfo = components['schemas']['AlertsInfo'];
+export type SchemaAuditLog = components['schemas']['AuditLog'];
+export type SchemaAutoscalerResourceLimits = components['schemas']['AutoscalerResourceLimits'];
+export type SchemaAutoscalerResourceLimitsGpuLimit =
   components['schemas']['AutoscalerResourceLimitsGPULimit'];
-export type AutoscalerScaleDownConfig = components['schemas']['AutoscalerScaleDownConfig'];
-export type AwsEtcdEncryption = components['schemas']['AwsEtcdEncryption'];
-export type Azure = components['schemas']['Azure'];
-export type AzureControlPlaneManagedIdentity =
+export type SchemaAutoscalerScaleDownConfig = components['schemas']['AutoscalerScaleDownConfig'];
+export type SchemaAwsEtcdEncryption = components['schemas']['AwsEtcdEncryption'];
+export type SchemaAzure = components['schemas']['Azure'];
+export type SchemaAzureControlPlaneManagedIdentity =
   components['schemas']['AzureControlPlaneManagedIdentity'];
-export type AzureDataPlaneManagedIdentity = components['schemas']['AzureDataPlaneManagedIdentity'];
-export type AzureNodePool = components['schemas']['AzureNodePool'];
-export type AzureNodesOutboundConnectivity =
+export type SchemaAzureDataPlaneManagedIdentity =
+  components['schemas']['AzureDataPlaneManagedIdentity'];
+export type SchemaAzureNodePool = components['schemas']['AzureNodePool'];
+export type SchemaAzureNodesOutboundConnectivity =
   components['schemas']['AzureNodesOutboundConnectivity'];
-export type AzureOperatorsAuthentication = components['schemas']['AzureOperatorsAuthentication'];
-export type AzureOperatorsAuthenticationManagedIdentities =
+export type SchemaAzureOperatorsAuthentication =
+  components['schemas']['AzureOperatorsAuthentication'];
+export type SchemaAzureOperatorsAuthenticationManagedIdentities =
   components['schemas']['AzureOperatorsAuthenticationManagedIdentities'];
-export type AzureServiceManagedIdentity = components['schemas']['AzureServiceManagedIdentity'];
-export type BillingModel = components['schemas']['BillingModel'];
-export type BillingModelItem = components['schemas']['BillingModelItem'];
-export type BreakGlassCredential = components['schemas']['BreakGlassCredential'];
-export type BreakGlassCredentialStatus = components['schemas']['BreakGlassCredentialStatus'];
-export type ByoOidc = components['schemas']['ByoOidc'];
-export type ClientComponent = components['schemas']['ClientComponent'];
-export type CloudVpc = components['schemas']['CloudVPC'];
-export type CloudProvider = components['schemas']['CloudProvider'];
-export type CloudProviderData = components['schemas']['CloudProviderData'];
-export type CloudRegion = components['schemas']['CloudRegion'];
-export type Cluster = components['schemas']['Cluster'];
-export type ClusterApi = components['schemas']['ClusterAPI'];
-export type ClusterArchitecture = components['schemas']['ClusterArchitecture'];
-export type ClusterAutoscaler = components['schemas']['ClusterAutoscaler'];
-export type ClusterConfigurationMode = components['schemas']['ClusterConfigurationMode'];
-export type ClusterConsole = components['schemas']['ClusterConsole'];
-export type ClusterCredentials = components['schemas']['ClusterCredentials'];
-export type ClusterDeployment = components['schemas']['ClusterDeployment'];
-export type ClusterHealthState = components['schemas']['ClusterHealthState'];
-export type ClusterLink = components['schemas']['ClusterLink'];
-export type ClusterNodes = components['schemas']['ClusterNodes'];
-export type ClusterOperatorInfo = components['schemas']['ClusterOperatorInfo'];
-export type ClusterOperatorState = components['schemas']['ClusterOperatorState'];
-export type ClusterOperatorsInfo = components['schemas']['ClusterOperatorsInfo'];
-export type ClusterRegistration = components['schemas']['ClusterRegistration'];
-export type ClusterRegistryConfig = components['schemas']['ClusterRegistryConfig'];
-export type ClusterResources = components['schemas']['ClusterResources'];
-export type ClusterState = components['schemas']['ClusterState'];
-export type ClusterStatus = components['schemas']['ClusterStatus'];
-export type ComponentRoute = components['schemas']['ComponentRoute'];
-export type ComponentRouteType = components['schemas']['ComponentRouteType'];
-export type ControlPlaneUpgradePolicy = components['schemas']['ControlPlaneUpgradePolicy'];
-export type CredentialRequest = components['schemas']['CredentialRequest'];
-export type DeleteProtection = components['schemas']['DeleteProtection'];
-export type DetectionType = components['schemas']['DetectionType'];
-export type Ec2MetadataHttpTokens = components['schemas']['Ec2MetadataHttpTokens'];
-export type EncryptionKey = components['schemas']['EncryptionKey'];
-export type Environment = components['schemas']['Environment'];
-export type Event = components['schemas']['Event'];
-export type ExternalAuth = components['schemas']['ExternalAuth'];
-export type ExternalAuthClaim = components['schemas']['ExternalAuthClaim'];
-export type ExternalAuthClientConfig = components['schemas']['ExternalAuthClientConfig'];
-export type ExternalAuthConfig = components['schemas']['ExternalAuthConfig'];
-export type ExternalConfiguration = components['schemas']['ExternalConfiguration'];
-export type Flavour = components['schemas']['Flavour'];
-export type FlavourNodes = components['schemas']['FlavourNodes'];
-export type GcpAuthentication = components['schemas']['GcpAuthentication'];
-export type GcpPrivateServiceConnect = components['schemas']['GcpPrivateServiceConnect'];
-export type GcpSecurity = components['schemas']['GcpSecurity'];
-export type GithubIdentityProvider = components['schemas']['GithubIdentityProvider'];
-export type GitlabIdentityProvider = components['schemas']['GitlabIdentityProvider'];
-export type GoogleIdentityProvider = components['schemas']['GoogleIdentityProvider'];
-export type Group = components['schemas']['Group'];
-export type GroupsClaim = components['schemas']['GroupsClaim'];
-export type Hypershift = components['schemas']['Hypershift'];
-export type HypershiftConfig = components['schemas']['HypershiftConfig'];
-export type IdentityProvider = components['schemas']['IdentityProvider'];
-export type IdentityProviderMappingMethod = components['schemas']['IdentityProviderMappingMethod'];
-export type IdentityProviderType = components['schemas']['IdentityProviderType'];
-export type ImageOverrides = components['schemas']['ImageOverrides'];
-export type InflightCheck = components['schemas']['InflightCheck'];
-export type InflightCheckState = components['schemas']['InflightCheckState'];
-export type Ingress = components['schemas']['Ingress'];
-export type InstanceIamRoles = components['schemas']['InstanceIAMRoles'];
-export type KeyRing = components['schemas']['KeyRing'];
-export type KubeletConfig = components['schemas']['KubeletConfig'];
-export type Label = components['schemas']['Label'];
-export type LimitedSupportReason = components['schemas']['LimitedSupportReason'];
-export type LimitedSupportReasonOverride = components['schemas']['LimitedSupportReasonOverride'];
-export type LimitedSupportReasonTemplate = components['schemas']['LimitedSupportReasonTemplate'];
-export type ListeningMethod = components['schemas']['ListeningMethod'];
-export type LoadBalancerFlavor = components['schemas']['LoadBalancerFlavor'];
-export type Log = components['schemas']['Log'];
-export type MachinePool = components['schemas']['MachinePool'];
-export type MachinePoolAutoscaling = components['schemas']['MachinePoolAutoscaling'];
-export type MachinePoolSecurityGroupFilter =
+export type SchemaAzureServiceManagedIdentity =
+  components['schemas']['AzureServiceManagedIdentity'];
+export type SchemaBillingModel = components['schemas']['BillingModel'];
+export type SchemaBillingModelItem = components['schemas']['BillingModelItem'];
+export type SchemaBreakGlassCredential = components['schemas']['BreakGlassCredential'];
+export type SchemaBreakGlassCredentialStatus = components['schemas']['BreakGlassCredentialStatus'];
+export type SchemaByoOidc = components['schemas']['ByoOidc'];
+export type SchemaClientComponent = components['schemas']['ClientComponent'];
+export type SchemaCloudVpc = components['schemas']['CloudVPC'];
+export type SchemaCloudProvider = components['schemas']['CloudProvider'];
+export type SchemaCloudProviderData = components['schemas']['CloudProviderData'];
+export type SchemaCloudRegion = components['schemas']['CloudRegion'];
+export type SchemaCluster = components['schemas']['Cluster'];
+export type SchemaClusterApi = components['schemas']['ClusterAPI'];
+export type SchemaClusterArchitecture = components['schemas']['ClusterArchitecture'];
+export type SchemaClusterAutoscaler = components['schemas']['ClusterAutoscaler'];
+export type SchemaClusterConfigurationMode = components['schemas']['ClusterConfigurationMode'];
+export type SchemaClusterConsole = components['schemas']['ClusterConsole'];
+export type SchemaClusterCredentials = components['schemas']['ClusterCredentials'];
+export type SchemaClusterDeployment = components['schemas']['ClusterDeployment'];
+export type SchemaClusterHealthState = components['schemas']['ClusterHealthState'];
+export type SchemaClusterLink = components['schemas']['ClusterLink'];
+export type SchemaClusterNodes = components['schemas']['ClusterNodes'];
+export type SchemaClusterOperatorInfo = components['schemas']['ClusterOperatorInfo'];
+export type SchemaClusterOperatorState = components['schemas']['ClusterOperatorState'];
+export type SchemaClusterOperatorsInfo = components['schemas']['ClusterOperatorsInfo'];
+export type SchemaClusterRegistration = components['schemas']['ClusterRegistration'];
+export type SchemaClusterRegistryConfig = components['schemas']['ClusterRegistryConfig'];
+export type SchemaClusterResources = components['schemas']['ClusterResources'];
+export type SchemaClusterState = components['schemas']['ClusterState'];
+export type SchemaClusterStatus = components['schemas']['ClusterStatus'];
+export type SchemaComponentRoute = components['schemas']['ComponentRoute'];
+export type SchemaComponentRouteType = components['schemas']['ComponentRouteType'];
+export type SchemaControlPlaneUpgradePolicy = components['schemas']['ControlPlaneUpgradePolicy'];
+export type SchemaCredentialRequest = components['schemas']['CredentialRequest'];
+export type SchemaDeleteProtection = components['schemas']['DeleteProtection'];
+export type SchemaDetectionType = components['schemas']['DetectionType'];
+export type SchemaEc2MetadataHttpTokens = components['schemas']['Ec2MetadataHttpTokens'];
+export type SchemaEncryptionKey = components['schemas']['EncryptionKey'];
+export type SchemaEnvironment = components['schemas']['Environment'];
+export type SchemaEvent = components['schemas']['Event'];
+export type SchemaExternalAuth = components['schemas']['ExternalAuth'];
+export type SchemaExternalAuthClaim = components['schemas']['ExternalAuthClaim'];
+export type SchemaExternalAuthClientConfig = components['schemas']['ExternalAuthClientConfig'];
+export type SchemaExternalAuthConfig = components['schemas']['ExternalAuthConfig'];
+export type SchemaExternalConfiguration = components['schemas']['ExternalConfiguration'];
+export type SchemaFlavour = components['schemas']['Flavour'];
+export type SchemaFlavourNodes = components['schemas']['FlavourNodes'];
+export type SchemaGcpAuthentication = components['schemas']['GcpAuthentication'];
+export type SchemaGcpPrivateServiceConnect = components['schemas']['GcpPrivateServiceConnect'];
+export type SchemaGcpSecurity = components['schemas']['GcpSecurity'];
+export type SchemaGithubIdentityProvider = components['schemas']['GithubIdentityProvider'];
+export type SchemaGitlabIdentityProvider = components['schemas']['GitlabIdentityProvider'];
+export type SchemaGoogleIdentityProvider = components['schemas']['GoogleIdentityProvider'];
+export type SchemaGroup = components['schemas']['Group'];
+export type SchemaGroupsClaim = components['schemas']['GroupsClaim'];
+export type SchemaHypershift = components['schemas']['Hypershift'];
+export type SchemaHypershiftConfig = components['schemas']['HypershiftConfig'];
+export type SchemaIdentityProvider = components['schemas']['IdentityProvider'];
+export type SchemaIdentityProviderMappingMethod =
+  components['schemas']['IdentityProviderMappingMethod'];
+export type SchemaIdentityProviderType = components['schemas']['IdentityProviderType'];
+export type SchemaImageOverrides = components['schemas']['ImageOverrides'];
+export type SchemaInflightCheck = components['schemas']['InflightCheck'];
+export type SchemaInflightCheckState = components['schemas']['InflightCheckState'];
+export type SchemaIngress = components['schemas']['Ingress'];
+export type SchemaInstanceIamRoles = components['schemas']['InstanceIAMRoles'];
+export type SchemaKeyRing = components['schemas']['KeyRing'];
+export type SchemaKubeletConfig = components['schemas']['KubeletConfig'];
+export type SchemaLabel = components['schemas']['Label'];
+export type SchemaLimitedSupportReason = components['schemas']['LimitedSupportReason'];
+export type SchemaLimitedSupportReasonOverride =
+  components['schemas']['LimitedSupportReasonOverride'];
+export type SchemaLimitedSupportReasonTemplate =
+  components['schemas']['LimitedSupportReasonTemplate'];
+export type SchemaListeningMethod = components['schemas']['ListeningMethod'];
+export type SchemaLoadBalancerFlavor = components['schemas']['LoadBalancerFlavor'];
+export type SchemaLog = components['schemas']['Log'];
+export type SchemaMachinePool = components['schemas']['MachinePool'];
+export type SchemaMachinePoolAutoscaling = components['schemas']['MachinePoolAutoscaling'];
+export type SchemaMachinePoolSecurityGroupFilter =
   components['schemas']['MachinePoolSecurityGroupFilter'];
-export type MachineType = components['schemas']['MachineType'];
-export type MachineTypeCategory = components['schemas']['MachineTypeCategory'];
-export type MachineTypeSize = components['schemas']['MachineTypeSize'];
-export type ManagedService = components['schemas']['ManagedService'];
-export type Manifest = components['schemas']['Manifest'];
-export type NamespaceOwnershipPolicy = components['schemas']['NamespaceOwnershipPolicy'];
-export type Network = components['schemas']['Network'];
-export type NetworkVerification = components['schemas']['NetworkVerification'];
-export type NodeInfo = components['schemas']['NodeInfo'];
-export type NodePool = components['schemas']['NodePool'];
-export type NodePoolAutoscaling = components['schemas']['NodePoolAutoscaling'];
-export type NodePoolManagementUpgrade = components['schemas']['NodePoolManagementUpgrade'];
-export type NodePoolStatus = components['schemas']['NodePoolStatus'];
-export type NodePoolUpgradePolicy = components['schemas']['NodePoolUpgradePolicy'];
-export type NodeType = components['schemas']['NodeType'];
-export type NodesInfo = components['schemas']['NodesInfo'];
-export type OidcConfig = components['schemas']['OidcConfig'];
-export type OidcThumbprint = components['schemas']['OidcThumbprint'];
-export type OidcThumbprintInput = components['schemas']['OidcThumbprintInput'];
-export type OpenIdClaims = components['schemas']['OpenIDClaims'];
-export type OpenIdIdentityProvider = components['schemas']['OpenIDIdentityProvider'];
-export type OperatorIamRole = components['schemas']['OperatorIAMRole'];
-export type OrganizationLink = components['schemas']['OrganizationLink'];
-export type PendingDeleteCluster = components['schemas']['PendingDeleteCluster'];
-export type Platform = components['schemas']['Platform'];
-export type PrivateLinkClusterConfiguration =
+export type SchemaMachineType = components['schemas']['MachineType'];
+export type SchemaMachineTypeCategory = components['schemas']['MachineTypeCategory'];
+export type SchemaMachineTypeSize = components['schemas']['MachineTypeSize'];
+export type SchemaManagedService = components['schemas']['ManagedService'];
+export type SchemaManifest = components['schemas']['Manifest'];
+export type SchemaNamespaceOwnershipPolicy = components['schemas']['NamespaceOwnershipPolicy'];
+export type SchemaNetwork = components['schemas']['Network'];
+export type SchemaNetworkVerification = components['schemas']['NetworkVerification'];
+export type SchemaNodeInfo = components['schemas']['NodeInfo'];
+export type SchemaNodePool = components['schemas']['NodePool'];
+export type SchemaNodePoolAutoscaling = components['schemas']['NodePoolAutoscaling'];
+export type SchemaNodePoolManagementUpgrade = components['schemas']['NodePoolManagementUpgrade'];
+export type SchemaNodePoolStatus = components['schemas']['NodePoolStatus'];
+export type SchemaNodePoolUpgradePolicy = components['schemas']['NodePoolUpgradePolicy'];
+export type SchemaNodeType = components['schemas']['NodeType'];
+export type SchemaNodesInfo = components['schemas']['NodesInfo'];
+export type SchemaOidcConfig = components['schemas']['OidcConfig'];
+export type SchemaOidcThumbprint = components['schemas']['OidcThumbprint'];
+export type SchemaOidcThumbprintInput = components['schemas']['OidcThumbprintInput'];
+export type SchemaOpenIdClaims = components['schemas']['OpenIDClaims'];
+export type SchemaOpenIdIdentityProvider = components['schemas']['OpenIDIdentityProvider'];
+export type SchemaOperatorIamRole = components['schemas']['OperatorIAMRole'];
+export type SchemaOrganizationLink = components['schemas']['OrganizationLink'];
+export type SchemaPendingDeleteCluster = components['schemas']['PendingDeleteCluster'];
+export type SchemaPlatform = components['schemas']['Platform'];
+export type SchemaPrivateLinkClusterConfiguration =
   components['schemas']['PrivateLinkClusterConfiguration'];
-export type PrivateLinkConfiguration = components['schemas']['PrivateLinkConfiguration'];
-export type PrivateLinkPrincipal = components['schemas']['PrivateLinkPrincipal'];
-export type PrivateLinkPrincipals = components['schemas']['PrivateLinkPrincipals'];
-export type ProcessorType = components['schemas']['ProcessorType'];
-export type Product = components['schemas']['Product'];
-export type ProductMinimalVersion = components['schemas']['ProductMinimalVersion'];
-export type ProductTechnologyPreview = components['schemas']['ProductTechnologyPreview'];
-export type ProvisionShard = components['schemas']['ProvisionShard'];
-export type ProvisionShardTopology = components['schemas']['ProvisionShardTopology'];
-export type Proxy = components['schemas']['Proxy'];
-export type RegistryAllowlist = components['schemas']['RegistryAllowlist'];
-export type RegistryLocation = components['schemas']['RegistryLocation'];
-export type RegistrySources = components['schemas']['RegistrySources'];
-export type ReleaseImageDetails = components['schemas']['ReleaseImageDetails'];
-export type ReleaseImages = components['schemas']['ReleaseImages'];
-export type ResourceRange = components['schemas']['ResourceRange'];
-export type RolePolicy = components['schemas']['RolePolicy'];
-export type RolePolicyBinding = components['schemas']['RolePolicyBinding'];
-export type RolePolicyBindingStatus = components['schemas']['RolePolicyBindingStatus'];
-export type RootVolume = components['schemas']['RootVolume'];
-export type ScheduleType = components['schemas']['ScheduleType'];
-export type SecurityGroup = components['schemas']['SecurityGroup'];
-export type ServerConfig = components['schemas']['ServerConfig'];
-export type SocketTotalNodeRoleOsMetricNode =
+export type SchemaPrivateLinkConfiguration = components['schemas']['PrivateLinkConfiguration'];
+export type SchemaPrivateLinkPrincipal = components['schemas']['PrivateLinkPrincipal'];
+export type SchemaPrivateLinkPrincipals = components['schemas']['PrivateLinkPrincipals'];
+export type SchemaProcessorType = components['schemas']['ProcessorType'];
+export type SchemaProduct = components['schemas']['Product'];
+export type SchemaProductMinimalVersion = components['schemas']['ProductMinimalVersion'];
+export type SchemaProductTechnologyPreview = components['schemas']['ProductTechnologyPreview'];
+export type SchemaProvisionShard = components['schemas']['ProvisionShard'];
+export type SchemaProvisionShardTopology = components['schemas']['ProvisionShardTopology'];
+export type SchemaProxy = components['schemas']['Proxy'];
+export type SchemaRegistryAllowlist = components['schemas']['RegistryAllowlist'];
+export type SchemaRegistryLocation = components['schemas']['RegistryLocation'];
+export type SchemaRegistrySources = components['schemas']['RegistrySources'];
+export type SchemaReleaseImageDetails = components['schemas']['ReleaseImageDetails'];
+export type SchemaReleaseImages = components['schemas']['ReleaseImages'];
+export type SchemaResourceRange = components['schemas']['ResourceRange'];
+export type SchemaRolePolicy = components['schemas']['RolePolicy'];
+export type SchemaRolePolicyBinding = components['schemas']['RolePolicyBinding'];
+export type SchemaRolePolicyBindingStatus = components['schemas']['RolePolicyBindingStatus'];
+export type SchemaRootVolume = components['schemas']['RootVolume'];
+export type SchemaScheduleType = components['schemas']['ScheduleType'];
+export type SchemaSecurityGroup = components['schemas']['SecurityGroup'];
+export type SchemaServerConfig = components['schemas']['ServerConfig'];
+export type SchemaSocketTotalNodeRoleOsMetricNode =
   components['schemas']['SocketTotalNodeRoleOSMetricNode'];
-export type SocketTotalsNodeRoleOsMetricNode =
+export type SchemaSocketTotalsNodeRoleOsMetricNode =
   components['schemas']['SocketTotalsNodeRoleOSMetricNode'];
-export type StorageQuota = components['schemas']['StorageQuota'];
-export type StsSupportJumpRole = components['schemas']['StsSupportJumpRole'];
-export type SubnetNetworkVerification = components['schemas']['SubnetNetworkVerification'];
-export type Subnetwork = components['schemas']['Subnetwork'];
-export type Subscription = components['schemas']['Subscription'];
-export type Syncset = components['schemas']['Syncset'];
-export type Taint = components['schemas']['Taint'];
-export type TokenClaimMappings = components['schemas']['TokenClaimMappings'];
-export type TokenClaimValidationRule = components['schemas']['TokenClaimValidationRule'];
-export type TokenIssuer = components['schemas']['TokenIssuer'];
-export type TrustedIp = components['schemas']['TrustedIp'];
-export type TuningConfig = components['schemas']['TuningConfig'];
-export type UpgradePolicy = components['schemas']['UpgradePolicy'];
-export type UpgradePolicyState = components['schemas']['UpgradePolicyState'];
-export type UpgradePolicyStateValue = components['schemas']['UpgradePolicyStateValue'];
-export type UpgradeType = components['schemas']['UpgradeType'];
-export type User = components['schemas']['User'];
-export type UsernameClaim = components['schemas']['UsernameClaim'];
-export type Value = components['schemas']['Value'];
-export type Version = components['schemas']['Version'];
-export type VersionGate = components['schemas']['VersionGate'];
-export type VersionGateAgreement = components['schemas']['VersionGateAgreement'];
-export type WifAccessMethod = components['schemas']['WifAccessMethod'];
-export type WifConfig = components['schemas']['WifConfig'];
-export type WifConfigStatus = components['schemas']['WifConfigStatus'];
-export type WifCredentialRequest = components['schemas']['WifCredentialRequest'];
-export type WifGcp = components['schemas']['WifGcp'];
-export type WifIdentityProvider = components['schemas']['WifIdentityProvider'];
-export type WifPool = components['schemas']['WifPool'];
-export type WifRole = components['schemas']['WifRole'];
-export type WifSecretRef = components['schemas']['WifSecretRef'];
-export type WifServiceAccount = components['schemas']['WifServiceAccount'];
-export type WifSupport = components['schemas']['WifSupport'];
-export type WildcardPolicy = components['schemas']['WildcardPolicy'];
-export type Error = components['schemas']['Error'];
+export type SchemaStorageQuota = components['schemas']['StorageQuota'];
+export type SchemaStsSupportJumpRole = components['schemas']['StsSupportJumpRole'];
+export type SchemaSubnetNetworkVerification = components['schemas']['SubnetNetworkVerification'];
+export type SchemaSubnetwork = components['schemas']['Subnetwork'];
+export type SchemaSubscription = components['schemas']['Subscription'];
+export type SchemaSyncset = components['schemas']['Syncset'];
+export type SchemaTaint = components['schemas']['Taint'];
+export type SchemaTokenClaimMappings = components['schemas']['TokenClaimMappings'];
+export type SchemaTokenClaimValidationRule = components['schemas']['TokenClaimValidationRule'];
+export type SchemaTokenIssuer = components['schemas']['TokenIssuer'];
+export type SchemaTrustedIp = components['schemas']['TrustedIp'];
+export type SchemaTuningConfig = components['schemas']['TuningConfig'];
+export type SchemaUpgradePolicy = components['schemas']['UpgradePolicy'];
+export type SchemaUpgradePolicyState = components['schemas']['UpgradePolicyState'];
+export type SchemaUpgradePolicyStateValue = components['schemas']['UpgradePolicyStateValue'];
+export type SchemaUpgradeType = components['schemas']['UpgradeType'];
+export type SchemaUser = components['schemas']['User'];
+export type SchemaUsernameClaim = components['schemas']['UsernameClaim'];
+export type SchemaValue = components['schemas']['Value'];
+export type SchemaVersion = components['schemas']['Version'];
+export type SchemaVersionGate = components['schemas']['VersionGate'];
+export type SchemaVersionGateAgreement = components['schemas']['VersionGateAgreement'];
+export type SchemaWifAccessMethod = components['schemas']['WifAccessMethod'];
+export type SchemaWifConfig = components['schemas']['WifConfig'];
+export type SchemaWifConfigStatus = components['schemas']['WifConfigStatus'];
+export type SchemaWifCredentialRequest = components['schemas']['WifCredentialRequest'];
+export type SchemaWifGcp = components['schemas']['WifGcp'];
+export type SchemaWifIdentityProvider = components['schemas']['WifIdentityProvider'];
+export type SchemaWifPool = components['schemas']['WifPool'];
+export type SchemaWifRole = components['schemas']['WifRole'];
+export type SchemaWifSecretRef = components['schemas']['WifSecretRef'];
+export type SchemaWifServiceAccount = components['schemas']['WifServiceAccount'];
+export type SchemaWifSupport = components['schemas']['WifSupport'];
+export type SchemaWildcardPolicy = components['schemas']['WildcardPolicy'];
+export type SchemaError = components['schemas']['Error'];
 export type $defs = Record<string, never>;
+export enum AWSInfrastructureAccessRoleGrantState {
+  deleting = 'deleting',
+  failed = 'failed',
+  pending = 'pending',
+  ready = 'ready',
+  removed = 'removed',
+}
+export enum AWSInfrastructureAccessRoleState {
+  invalid = 'invalid',
+  removed = 'removed',
+  valid = 'valid',
+}
+export enum AddOnInstallMode {
+  all_namespaces = 'all_namespaces',
+  own_namespace = 'own_namespace',
+}
+export enum AddOnInstallationState {
+  deleting = 'deleting',
+  failed = 'failed',
+  installing = 'installing',
+  pending = 'pending',
+  ready = 'ready',
+}
+export enum AlertSeverity {
+  critical = 'critical',
+  none = 'none',
+  warning = 'warning',
+}
+export enum BillingModel {
+  marketplace = 'marketplace',
+  marketplace_aws = 'marketplace-aws',
+  marketplace_gcp = 'marketplace-gcp',
+  marketplace_rhm = 'marketplace-rhm',
+  marketplace_azure = 'marketplace-azure',
+  standard = 'standard',
+}
+export enum BreakGlassCredentialStatus {
+  awaiting_revocation = 'awaiting_revocation',
+  created = 'created',
+  expired = 'expired',
+  failed = 'failed',
+  issued = 'issued',
+  revoked = 'revoked',
+}
+export enum ClusterArchitecture {
+  classic = 'classic',
+  hcp = 'hcp',
+}
+export enum ClusterConfigurationMode {
+  full = 'full',
+  read_only = 'read_only',
+}
+export enum ClusterHealthState {
+  healthy = 'healthy',
+  unhealthy = 'unhealthy',
+  unknown = 'unknown',
+}
+export enum ClusterOperatorState {
+  available = 'available',
+  degraded = 'degraded',
+  failing = 'failing',
+  upgrading = 'upgrading',
+}
+export enum ClusterState {
+  error = 'error',
+  hibernating = 'hibernating',
+  installing = 'installing',
+  pending = 'pending',
+  powering_down = 'powering_down',
+  ready = 'ready',
+  resuming = 'resuming',
+  uninstalling = 'uninstalling',
+  unknown = 'unknown',
+  validating = 'validating',
+  waiting = 'waiting',
+}
+export enum ComponentRouteType {
+  console = 'console',
+  downloads = 'downloads',
+  oauth = 'oauth',
+}
+export enum DetectionType {
+  auto = 'auto',
+  manual = 'manual',
+}
+export enum Ec2MetadataHttpTokens {
+  optional = 'optional',
+  required = 'required',
+}
+export enum IdentityProviderMappingMethod {
+  add = 'add',
+  claim = 'claim',
+  generate = 'generate',
+  lookup = 'lookup',
+}
+export enum IdentityProviderType {
+  LDAPIdentityProvider = 'LDAPIdentityProvider',
+  GithubIdentityProvider = 'GithubIdentityProvider',
+  GitlabIdentityProvider = 'GitlabIdentityProvider',
+  GoogleIdentityProvider = 'GoogleIdentityProvider',
+  HTPasswdIdentityProvider = 'HTPasswdIdentityProvider',
+  OpenIDIdentityProvider = 'OpenIDIdentityProvider',
+}
+export enum InflightCheckState {
+  failed = 'failed',
+  passed = 'passed',
+  pending = 'pending',
+  running = 'running',
+}
+export enum ListeningMethod {
+  external = 'external',
+  internal = 'internal',
+}
+export enum LoadBalancerFlavor {
+  classic = 'classic',
+  nlb = 'nlb',
+}
+export enum MachineTypeCategory {
+  accelerated_computing = 'accelerated_computing',
+  compute_optimized = 'compute_optimized',
+  general_purpose = 'general_purpose',
+  memory_optimized = 'memory_optimized',
+}
+export enum MachineTypeSize {
+  large = 'large',
+  medium = 'medium',
+  small = 'small',
+}
+export enum NamespaceOwnershipPolicy {
+  InterNamespaceAllowed = 'InterNamespaceAllowed',
+  Strict = 'Strict',
+}
+export enum NodeType {
+  compute = 'compute',
+  infra = 'infra',
+  master = 'master',
+}
+export enum Platform {
+  aws = 'aws',
+  aws_classic = 'aws-classic',
+  aws_hosted_cp = 'aws-hosted-cp',
+  gcp = 'gcp',
+  hostedcluster = 'hostedcluster',
+}
+export enum ProcessorType {
+  amd64 = 'amd64',
+  arm64 = 'arm64',
+}
+export enum ProvisionShardTopology {
+  dedicated = 'dedicated',
+}
+export enum ScheduleType {
+  automatic = 'automatic',
+  manual = 'manual',
+}
+export enum UpgradePolicyStateValue {
+  cancelled = 'cancelled',
+  completed = 'completed',
+  delayed = 'delayed',
+  failed = 'failed',
+  pending = 'pending',
+  scheduled = 'scheduled',
+  started = 'started',
+}
+export enum UpgradeType {
+  OSD = 'OSD',
+  ADDON = 'ADDON',
+  ControlPlane = 'ControlPlane',
+  NodePool = 'NodePool',
+}
+export enum WifAccessMethod {
+  impersonate = 'impersonate',
+  vm = 'vm',
+  wif = 'wif',
+}
+export enum WildcardPolicy {
+  WildcardsAllowed = 'WildcardsAllowed',
+  WildcardsDisallowed = 'WildcardsDisallowed',
+}
 export type operations = Record<string, never>;

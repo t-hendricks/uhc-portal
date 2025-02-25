@@ -423,11 +423,11 @@ const ClusterDetails = (props) => {
   // eslint-disable-next-line no-unused-vars
   const isManaged = cluster.managed;
   const isHypershift = isHypershiftCluster(cluster);
-  const isClusterWaiting = cluster.state === clusterStates.WAITING;
-  const isClusterPending = cluster.state === clusterStates.PENDING;
-  const isClusterInstalling = cluster.state === clusterStates.INSTALLING;
-  const isClusterReady = cluster.state === clusterStates.READY;
-  const isClusterUpdating = cluster.state === clusterStates.UPDATING;
+  const isClusterWaiting = cluster.state === clusterStates.waiting;
+  const isClusterPending = cluster.state === clusterStates.pending;
+  const isClusterInstalling = cluster.state === clusterStates.installing;
+  const isClusterReady = cluster.state === clusterStates.ready;
+  const isClusterUpdating = cluster.state === clusterStates.updating;
   const isReadOnly = cluster?.status?.configuration_mode === 'read_only';
   // eslint-disable-next-line no-unused-vars
   const canCreateGCPNonCCSCluster = hasCapability(
@@ -525,7 +525,7 @@ const ClusterDetails = (props) => {
                 monitoring: {
                   ref: monitoringTabRef,
                   show: displayMonitoringTab,
-                  hasIssues: cluster.state !== clusterStates.INSTALLING && hasIssues,
+                  hasIssues: cluster.state !== clusterStates.installing && hasIssues,
                 },
                 accessControl: {
                   ref: accessControlTabRef,

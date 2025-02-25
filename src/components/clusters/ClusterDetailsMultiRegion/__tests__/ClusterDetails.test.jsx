@@ -351,7 +351,7 @@ describe('<ClusterDetailsMultiRegion />', () => {
         ...functions,
         clusterDetails: {
           ...fixtures.clusterDetails,
-          cluster: { ...fixtures.clusterDetails.cluster, state: clusterStates.INSTALLING },
+          cluster: { ...fixtures.clusterDetails.cluster, state: clusterStates.installing },
         },
         hasIssues: true,
       };
@@ -469,7 +469,7 @@ describe('<ClusterDetailsMultiRegion />', () => {
     displayNetworkTabCases.forEach(({ privateLink, description }) => {
       it(description, async () => {
         const cluster = {
-          state: clusterStates.READY,
+          state: clusterStates.ready,
           managed: true,
           cloud_provider: { id: 'aws' },
           ccs: { enabled: true },

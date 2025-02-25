@@ -7,7 +7,7 @@ import links from '~/common/installLinks.mjs';
 import { Link } from '~/common/routing';
 import ExternalLink from '~/components/common/ExternalLink';
 import { refetchMachineOrNodePoolsQuery } from '~/queries/ClusterDetailsQueries/MachinePoolTab/useFetchMachineOrNodePools';
-import { NodePool } from '~/types/clusters_mgmt.v1/models/NodePool';
+import { NodePool } from '~/types/clusters_mgmt.v1';
 
 import {
   compareIsMachinePoolBehindControlPlane,

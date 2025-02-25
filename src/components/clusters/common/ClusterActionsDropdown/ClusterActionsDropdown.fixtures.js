@@ -4,7 +4,7 @@ const cluster = {
   id: 1,
   name: 'test-cluster',
   display_name: 'test-cluster',
-  state: clusterStates.READY,
+  state: clusterStates.ready,
   console: { url: 'www.testuhc.com' },
   managed: true,
   ccs: {
@@ -13,7 +13,7 @@ const cluster = {
   canEdit: true,
   canDelete: true,
   status: {
-    state: clusterStates.READY,
+    state: clusterStates.ready,
     dns_ready: true,
     configuration_mode: 'full',
   },
@@ -73,10 +73,10 @@ const deleteModalData = {
 const clusterHibernatingProps = {
   cluster: {
     ...cluster,
-    state: clusterStates.HIBERNATING,
+    state: clusterStates.hibernating,
     status: {
       ...cluster.status,
-      state: clusterStates.HIBERNATING,
+      state: clusterStates.hibernating,
     },
   },
   ...props,
@@ -85,10 +85,10 @@ const clusterHibernatingProps = {
 const clusterUninstallingProps = {
   cluster: {
     ...cluster,
-    state: clusterStates.UNINSTALLING,
+    state: clusterStates.uninstalling,
     status: {
       ...cluster.status,
-      state: clusterStates.UNINSTALLING,
+      state: clusterStates.uninstalling,
     },
   },
   ...props,
@@ -98,9 +98,9 @@ const clusterNotReadyProps = {
   cluster: {
     ...cluster,
     console: undefined,
-    state: clusterStates.ERROR,
+    state: clusterStates.error,
     status: {
-      state: clusterStates.ERROR,
+      state: clusterStates.error,
       dns_ready: false,
       provision_error_message: 'some message',
       provision_error_code: 'some code',
@@ -122,7 +122,7 @@ const clusterReadOnlyProps = {
 
 const selfManagedProps = {
   cluster: {
-    state: clusterStates.READY,
+    state: clusterStates.ready,
     managed: false,
     ccs: {
       enabled: false,

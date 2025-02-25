@@ -7,7 +7,7 @@ import { isSubnetMatchingPrivacy } from '~/common/vpcHelpers';
 import { FormGroupHelperText } from '~/components/common/FormGroupHelperText';
 import { FuzzySelect, FuzzySelectProps } from '~/components/common/FuzzySelect/FuzzySelect';
 import { FuzzyDataType, FuzzyEntryType } from '~/components/common/FuzzySelect/types';
-import { CloudVPC, Subnetwork } from '~/types/clusters_mgmt.v1';
+import { CloudVpc, Subnetwork } from '~/types/clusters_mgmt.v1';
 
 const TRUNCATE_THRESHOLD = 40;
 
@@ -32,7 +32,7 @@ export interface SubnetSelectFieldProps {
   isRequired?: boolean;
   className?: string;
   privacy?: 'public' | 'private';
-  selectedVPC: CloudVPC;
+  selectedVPC: CloudVpc;
   withAutoSelect?: boolean;
   allowedAZs?: string[];
 }

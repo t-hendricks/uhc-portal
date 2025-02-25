@@ -508,7 +508,7 @@ const ROSAHypershiftWaitingClusterDetails = produce(ROSAClusterDetails, (draft) 
       },
     },
   };
-  draft.cluster.state = clusterStates.WAITING;
+  draft.cluster.state = clusterStates.waiting;
 });
 
 const ROSAManualClusterDetails = produce(ROSAClusterDetails, (draft) => {
@@ -528,7 +528,7 @@ const ROSAManualClusterDetails = produce(ROSAClusterDetails, (draft) => {
       ],
     },
   };
-  draft.cluster.state = clusterStates.WAITING;
+  draft.cluster.state = clusterStates.waiting;
 });
 
 const RHMIClusterDetails = produce(CCSClusterDetails, (draft) => {

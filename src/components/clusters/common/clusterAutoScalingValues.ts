@@ -1,6 +1,6 @@
 import {
   AutoscalerResourceLimits,
-  AutoscalerResourceLimitsGPULimit,
+  AutoscalerResourceLimitsGpuLimit,
   ClusterAutoscaler,
 } from '~/types/clusters_mgmt.v1';
 
@@ -95,7 +95,7 @@ const getClusterAutoScalingSubmitSettings = (
     scaleDown = { enabled: false };
   }
 
-  let apiGpus: AutoscalerResourceLimitsGPULimit[] = [];
+  let apiGpus: AutoscalerResourceLimitsGpuLimit[] = [];
 
   if (formAutoscaler.resource_limits.gpus) {
     const gpuStr = formAutoscaler.resource_limits.gpus || '';
