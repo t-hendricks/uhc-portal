@@ -99,7 +99,7 @@ describe('OCM Overview Page tests (OCP-65189)', { tags: ['smoke'] }, () => {
   });
 
   it('OCM Overview Page - Featured products section', () => {
-    Overview.featuredProductsExpected(2);
+    Overview.featuredProductsExpected(3);
 
     var recommendedOperator = Overview.productsOrOperatorCards(
       'Advanced Cluster Security for Kubernetes',
@@ -115,6 +115,14 @@ describe('OCM Overview Page tests (OCP-65189)', { tags: ['smoke'] }, () => {
     );
     recommendedOperator.click();
     Overview.drawerContentTitle().should('have.text', 'Red Hat OpenShift AI');
+    Overview.drawerCloseButton();
+
+    recommendedOperator = Overview.productsOrOperatorCards(
+      'OpenShift Virtualization',
+      'Streamline your operations and reduce complexity when you run and manage your VMs, containers, and serverless workloads in a single platform',
+    );
+    recommendedOperator.click();
+    Overview.drawerContentTitle().should('have.text', 'OpenShift Virtualization');
     Overview.drawerCloseButton();
   });
 
