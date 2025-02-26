@@ -4,7 +4,7 @@ import {
   Subscription,
   SubscriptionCommonFieldsStatus,
 } from '~/types/accounts_mgmt.v1';
-import { ClusterState } from '~/types/clusters_mgmt.v1';
+import { ClusterState } from '~/types/clusters_mgmt.v1/enums';
 import { ClusterFromSubscription } from '~/types/types';
 
 import {
@@ -124,13 +124,13 @@ describe('clusterDetailsHelper', () => {
     });
 
     it.each([
-      [false, 'consoleurlvalue', ClusterState.READY, true, false, false],
-      [true, 'consoleurlvalue', ClusterState.READY, true, false, true],
-      [true, '', ClusterState.READY, true, false, true],
-      [true, undefined, ClusterState.READY, true, false, true],
+      [false, 'consoleurlvalue', ClusterState.ready, true, false, false],
+      [true, 'consoleurlvalue', ClusterState.ready, true, false, true],
+      [true, '', ClusterState.ready, true, false, true],
+      [true, undefined, ClusterState.ready, true, false, true],
       [true, 'consoleurlvalue', undefined, true, false, true],
       [true, 'consoleurlvalue', undefined, false, false, false],
-      [true, 'consoleurlvalue', ClusterState.READY, true, true, false],
+      [true, 'consoleurlvalue', ClusterState.ready, true, true, false],
     ])(
       'managed: %p, consoleUrl: %p, clusterState: %p, isHibernatingResult: %p, isArchivedSubscription: %p. It returns %p',
       (
@@ -165,11 +165,11 @@ describe('clusterDetailsHelper', () => {
     });
 
     it.each([
-      [true, 'consoleurlvalue', ClusterState.READY, true, false, 'aws', false, true],
-      [true, 'consoleurlvalue', ClusterState.READY, true, false, 'X', false, false],
-      [true, 'consoleurlvalue', ClusterState.READY, true, false, undefined, false, false],
-      [true, 'consoleurlvalue', ClusterState.READY, true, false, 'aws', true, false],
-      [true, 'consoleurlvalue', ClusterState.READY, true, false, 'aws', undefined, true],
+      [true, 'consoleurlvalue', ClusterState.ready, true, false, 'aws', false, true],
+      [true, 'consoleurlvalue', ClusterState.ready, true, false, 'X', false, false],
+      [true, 'consoleurlvalue', ClusterState.ready, true, false, undefined, false, false],
+      [true, 'consoleurlvalue', ClusterState.ready, true, false, 'aws', true, false],
+      [true, 'consoleurlvalue', ClusterState.ready, true, false, 'aws', undefined, true],
     ])(
       'managed: %p, consoleUrl: %p, clusterState: %p, isHibernatingResult: %p, isArchivedSubscription: %p. It returns %p',
       (
@@ -212,8 +212,8 @@ describe('clusterDetailsHelper', () => {
     });
 
     it.each([
-      [true, undefined, ClusterState.READY, true, false, true],
-      [true, undefined, ClusterState.READY, false, false, false],
+      [true, undefined, ClusterState.ready, true, false, true],
+      [true, undefined, ClusterState.ready, false, false, false],
     ])(
       'managed: %p, consoleUrl: %p, clusterState: %p, isHypershiftClusterResult: %p, isArchivedSubscription: %p. It returns %p',
       (

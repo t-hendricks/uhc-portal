@@ -15,8 +15,7 @@ import { regionalizedClusterId } from '~/queries/helpers';
 import { createCluster } from '~/redux/actions/clustersActions';
 import { DEFAULT_FLAVOUR_ID } from '~/redux/actions/flavourActions';
 import { SubscriptionCommonFieldsCluster_billing_model as SubscriptionCommonFieldsClusterBillingModel } from '~/types/accounts_mgmt.v1';
-import { NamespaceOwnershipPolicy } from '~/types/clusters_mgmt.v1/models/NamespaceOwnershipPolicy';
-import { WildcardPolicy } from '~/types/clusters_mgmt.v1/models/WildcardPolicy';
+import { NamespaceOwnershipPolicy, WildcardPolicy } from '~/types/clusters_mgmt.v1/enums';
 
 import {
   canConfigureDayOneManagedIngress,
@@ -342,11 +341,11 @@ export const createClusterRequest = ({ isWizard = true, cloudProviderID, product
               : undefined,
             route_selectors: strToKeyValueObject(formData.defaultRouterSelectors, ''),
             route_wildcard_policy: formData.isDefaultRouterWildcardPolicyAllowed
-              ? WildcardPolicy.WILDCARDS_ALLOWED
-              : WildcardPolicy.WILDCARDS_DISALLOWED,
+              ? WildcardPolicy.WildcardsAllowed
+              : WildcardPolicy.WildcardsDisallowed,
             route_namespace_ownership_policy: formData.isDefaultRouterNamespaceOwnershipPolicyStrict
-              ? NamespaceOwnershipPolicy.STRICT
-              : NamespaceOwnershipPolicy.INTER_NAMESPACE_ALLOWED,
+              ? NamespaceOwnershipPolicy.Strict
+              : NamespaceOwnershipPolicy.InterNamespaceAllowed,
           },
         ],
       };

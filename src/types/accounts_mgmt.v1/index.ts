@@ -1523,9 +1523,9 @@ export interface paths {
         path?: never;
         cookie?: never;
       };
-      /** @description # The payload depends on the type of the requested certificate
-       *     The examples for supported types:
-       *     * {"type": "sca", "arch": "x86_64"}
+      /** @description # The payload depends on sca as the requested certificates.
+       *       The `type` field is now deprecated and will now be defaulted to `sca` type.
+       *     * {"arch": "x86_64"}
        *      */
       requestBody: {
         content: {
@@ -3383,7 +3383,7 @@ export interface paths {
     };
     get?: never;
     put?: never;
-    /** Fetch all certificates of a particular type based on the architectures */
+    /** Fetch all certificates of a sca type based on the architectures */
     post: {
       parameters: {
         query?: never;
@@ -3391,9 +3391,9 @@ export interface paths {
         path?: never;
         cookie?: never;
       };
-      /** @description # The payload depends on the type of the requested certificates
-       *       The examples for supported types:
-       *     * {"type": "sca", "arch": ["x86","x86_64","ppc"]}
+      /** @description # The payload depends on sca as the requested certificates.
+       *       The `type` field is now deprecated and will now be defaulted to `sca` type.
+       *     * {"arch": ["x86","x86_64","ppc"]}
        *      */
       requestBody: {
         content: {
@@ -3407,7 +3407,7 @@ export interface paths {
             [name: string]: unknown;
           };
           content: {
-            'application/json': components['schemas']['EntitlementCertificate'][];
+            'application/json': components['schemas']['EntitlementCertificatesList'];
           };
         };
         /** @description Validation errors occurred */
@@ -12965,9 +12965,12 @@ export interface components {
     };
     CertificatesRequest: {
       /** @enum {string} */
-      arch?: CertificatesRequestArch;
-      /** @enum {string} */
-      type: CertificatesRequestType;
+      arch: CertificatesRequestArch;
+      /**
+       * @deprecated
+       * @enum {string}
+       */
+      type?: CertificatesRequestType;
     };
     CloudAccount: {
       cloud_account_id?: string;
@@ -13145,15 +13148,11 @@ export interface components {
     DeletedSubscriptionList: components['schemas']['List'] & {
       items?: components['schemas']['DeletedSubscription'][];
     };
-    EntitlementCertificate: {
-      cert: string;
-      id: string;
-      key: string;
-      metadata: {
-        [key: string]: string;
-      };
-      organization_id: string;
-      serial: components['schemas']['CertificateSerial'];
+    EntitlementCertificatesList: {
+      items: components['schemas']['Certificate'][];
+      /** @example EntitlementCertificatesList */
+      kind: string;
+      total: number;
     };
     EntitlementCertificatesRequest: {
       /** @example [
@@ -13161,9 +13160,12 @@ export interface components {
        *       "x86_64",
        *       "ppc"
        *     ] */
-      arch?: EntitlementCertificatesRequestArch[];
-      /** @enum {string} */
-      type: EntitlementCertificatesRequestType;
+      arch: EntitlementCertificatesRequestArch[];
+      /**
+       * @deprecated
+       * @enum {string}
+       */
+      type?: EntitlementCertificatesRequestType;
     };
     EphemeralResourceQuota: {
       availability_zone_type?: string;
@@ -14108,7 +14110,7 @@ export type DefaultCapability = components['schemas']['DefaultCapability'];
 export type DefaultCapabilityList = components['schemas']['DefaultCapabilityList'];
 export type DeletedSubscription = components['schemas']['DeletedSubscription'];
 export type DeletedSubscriptionList = components['schemas']['DeletedSubscriptionList'];
-export type EntitlementCertificate = components['schemas']['EntitlementCertificate'];
+export type EntitlementCertificatesList = components['schemas']['EntitlementCertificatesList'];
 export type EntitlementCertificatesRequest =
   components['schemas']['EntitlementCertificatesRequest'];
 export type EphemeralResourceQuota = components['schemas']['EphemeralResourceQuota'];

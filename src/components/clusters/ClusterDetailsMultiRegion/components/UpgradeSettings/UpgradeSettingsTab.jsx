@@ -80,7 +80,7 @@ const UpgradeSettingsTab = ({ cluster }) => {
   const hibernatingReason =
     clusterHibernating && 'This operation is not available while cluster is hibernating';
   // a superset of hibernatingReason.
-  const notReadyReason = cluster.state !== clusterStates.READY && 'This cluster is not ready';
+  const notReadyReason = cluster.state !== clusterStates.ready && 'This cluster is not ready';
   const formDisableReason = readOnlyReason || hibernatingReason;
 
   const { data: upgradeGates } = useFetchUpgradeGatesFromApi(cluster.managed, region);

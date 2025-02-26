@@ -6,12 +6,11 @@ import {
   Button,
   Card,
   CardBody,
-  CardFooter,
-  CardTitle,
   EmptyState,
   Icon,
   Popover,
   PopoverPosition,
+  Skeleton,
   Title,
 } from '@patternfly/react-core';
 import { HelpIcon } from '@patternfly/react-icons/dist/esm/icons/help-icon';
@@ -25,8 +24,8 @@ import {
   Thead,
   Tr,
 } from '@patternfly/react-table';
-import Skeleton from '@redhat-cloud-services/frontend-components/Skeleton';
 
+import { LoadingSkeletonCard } from '~/components/clusters/common/LoadingSkeletonCard/LoadingSkeletonCard';
 import shouldShowModal from '~/components/common/Modal/ModalSelectors';
 import { useAddUser } from '~/queries/ClusterDetailsQueries/AccessControlTab/UserQueries/useAddUser';
 import { useDeleteUser } from '~/queries/ClusterDetailsQueries/AccessControlTab/UserQueries/useDeleteUser';
@@ -174,10 +173,10 @@ const UsersSection = (props) => {
     deletedRowIndex === index ? (
       <Tr key={user.id}>
         <Td dataLabel={columnNames.userId}>
-          <Skeleton size="md" />
+          <Skeleton fontSize="md" screenreaderText="Loading..." />
         </Td>
         <Td dataLabel={columnNames.group}>
-          <Skeleton size="md" />
+          <Skeleton fontSize="md" screenreaderText="Loading..." />
         </Td>
         <Td isActionCell />
       </Tr>
@@ -212,17 +211,7 @@ const UsersSection = (props) => {
     );
 
   return showSkeleton ? (
-    <Card>
-      <CardTitle>
-        <Skeleton size="md" />
-      </CardTitle>
-      <CardBody>
-        <Skeleton size="lg" />
-      </CardBody>
-      <CardFooter>
-        <Skeleton size="md" />
-      </CardFooter>
-    </Card>
+    <LoadingSkeletonCard />
   ) : (
     <Card>
       {isUsersError && (

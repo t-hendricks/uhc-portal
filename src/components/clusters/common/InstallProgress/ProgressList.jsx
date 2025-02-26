@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import { ProgressStep, ProgressStepper, Spinner } from '@patternfly/react-core';
 import UnknownIcon from '@patternfly/react-icons/dist/esm/icons/unknown-icon';
 
-import { InflightCheckState } from '~/types/clusters_mgmt.v1';
+import { InflightCheckState } from '~/types/clusters_mgmt.v1/enums';
 
 import clusterStates, {
   getInflightChecks,
@@ -31,9 +31,9 @@ function ProgressList({ cluster, actionRequiredInitialOpen, regionalInstance }) 
     isWaitingForOIDCProviderOrOperatorRolesMode(cluster);
 
   // helper variables for isPending
-  const isPendingState = cluster.state === clusterStates.PENDING;
-  const isWaitingState = cluster.state === clusterStates.WAITING;
-  const isValidating = cluster.state === clusterStates.VALIDATING;
+  const isPendingState = cluster.state === clusterStates.pending;
+  const isWaitingState = cluster.state === clusterStates.waiting;
+  const isValidating = cluster.state === clusterStates.validating;
   const isAutoMode = cluster?.aws?.sts?.auto_mode;
   const hasOIDCConfig = cluster?.aws?.sts?.oidc_config?.id;
   const doesNotHaveStatusMessage =
@@ -54,7 +54,7 @@ function ProgressList({ cluster, actionRequiredInitialOpen, regionalInstance }) 
     // ROSA this is already created
     if (
       isOSDCluster &&
-      (cluster.state === clusterStates.WAITING || isOSDGCPPending || isOSDGCPWaiting)
+      (cluster.state === clusterStates.waiting || isOSDGCPPending || isOSDGCPWaiting)
     ) {
       const accountSetup = isOSDGCPWaiting
         ? {
@@ -133,7 +133,7 @@ function ProgressList({ cluster, actionRequiredInitialOpen, regionalInstance }) 
       if (
         isPendingState ||
         isValidating ||
-        inflightChecks.some((check) => check.state === InflightCheckState.RUNNING)
+        inflightChecks.some((check) => check.state === InflightCheckState.running)
       ) {
         return {
           awsAccountSetup: completed,
@@ -150,7 +150,7 @@ function ProgressList({ cluster, actionRequiredInitialOpen, regionalInstance }) 
 
     // first steps completed
     const networkSettings = hasInflightErrors ? warning : completed;
-    if (cluster.state === clusterStates.INSTALLING) {
+    if (cluster.state === clusterStates.installing) {
       if (!cluster.status.dns_ready) {
         return {
           awsAccountSetup: completed,
@@ -172,13 +172,13 @@ function ProgressList({ cluster, actionRequiredInitialOpen, regionalInstance }) 
         },
       };
     }
-    if (cluster.state === clusterStates.ERROR || cluster.state === clusterStates.READY) {
+    if (cluster.state === clusterStates.error || cluster.state === clusterStates.ready) {
       return {
         awsAccountSetup: completed,
         oidcAndOperatorRolesSetup: completed,
         DNSSetup: completed,
         networkSettings,
-        clusterInstallation: cluster.state === clusterStates.ERROR ? failed : completed,
+        clusterInstallation: cluster.state === clusterStates.error ? failed : completed,
       };
     }
     return {

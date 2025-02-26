@@ -10,7 +10,7 @@ import InstallProgress from './InstallProgress';
 describe('<InstallProgress />', () => {
   const clusterInstalling = {
     ...fixtures.clusterDetails.cluster,
-    state: clusterStates.INSTALLING,
+    state: clusterStates.installing,
   };
 
   it('is accessible when installing cluster', async () => {
@@ -21,7 +21,7 @@ describe('<InstallProgress />', () => {
   });
 
   it('returns empty component  when uninstalling cluster', () => {
-    const uninstallingCluster = { ...clusterInstalling, state: clusterStates.UNINSTALLING };
+    const uninstallingCluster = { ...clusterInstalling, state: clusterStates.uninstalling };
     const { container } = render(<InstallProgress cluster={uninstallingCluster} />);
 
     expect(container).toBeEmptyDOMElement();

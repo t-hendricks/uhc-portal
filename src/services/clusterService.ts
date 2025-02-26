@@ -8,21 +8,21 @@ import { AWSCredentials, ListAPIParams } from '~/types/types';
 import type {
   AddOn,
   AddOnInstallation,
-  AWSInfrastructureAccessRole,
-  AWSInfrastructureAccessRoleGrant,
+  AwsInfrastructureAccessRole,
+  AwsInfrastructureAccessRoleGrant,
   BreakGlassCredential,
   CloudProvider,
   CloudRegion,
-  CloudVPC,
+  CloudVpc,
   Cluster,
   ClusterAutoscaler,
   ClusterStatus,
   DeleteProtection,
-  DNSDomain,
+  DnsDomain,
   EncryptionKey,
   ExternalAuth,
   Flavour,
-  GCP,
+  Gcp,
   Group,
   IdentityProvider,
   InflightCheck,
@@ -188,6 +188,11 @@ export function getClusterService(apiRequest: APIRequest = defaultApiRequest) {
       apiRequest.patch<IdentityProvider>(
         `/api/clusters_mgmt/v1/clusters/${clusterID}/identity_providers/${data.id}`,
         data,
+      ),
+
+    getHtpasswdUsers: (clusterID: string, idpID: string) =>
+      apiRequest.get<unknown>(
+        `/api/clusters_mgmt/v1/clusters/${clusterID}/identity_providers/${idpID}/htpasswd_users`,
       ),
 
     getClusterGroupUsers: (clusterID: string) =>
@@ -367,7 +372,7 @@ export function getClusterService(apiRequest: APIRequest = defaultApiRequest) {
         /**
          * Retrieved list of add-ons.
          */
-        items?: Array<DNSDomain>;
+        items?: Array<DnsDomain>;
         /**
          * Index of the requested page, where one corresponds to the first page.
          */
@@ -386,7 +391,7 @@ export function getClusterService(apiRequest: APIRequest = defaultApiRequest) {
       });
     },
 
-    createNewDnsDomain: () => apiRequest.post<DNSDomain>('/api/clusters_mgmt/v1/dns_domains', {}),
+    createNewDnsDomain: () => apiRequest.post<DnsDomain>('/api/clusters_mgmt/v1/dns_domains', {}),
 
     deleteDnsDomain: (id: string) =>
       apiRequest.delete<unknown>(`/api/clusters_mgmt/v1/dns_domains/${id}`, {}),
@@ -481,7 +486,7 @@ export function getClusterService(apiRequest: APIRequest = defaultApiRequest) {
         /**
          * Retrieved list of roles.
          */
-        items?: Array<AWSInfrastructureAccessRole>;
+        items?: Array<AwsInfrastructureAccessRole>;
         /**
          * Index of the requested page, where one corresponds to the first page.
          */
@@ -500,9 +505,9 @@ export function getClusterService(apiRequest: APIRequest = defaultApiRequest) {
     getGrants: (clusterID: string) =>
       apiRequest.get<{
         /**
-         * Retrieved list of AWS infrastructure access role grants.
+         * Retrieved list of Aws infrastructure access role grants.
          */
-        items?: Array<AWSInfrastructureAccessRoleGrant>;
+        items?: Array<AwsInfrastructureAccessRoleGrant>;
         /**
          * Index of the requested page, where one corresponds to the first page.
          */
@@ -519,7 +524,7 @@ export function getClusterService(apiRequest: APIRequest = defaultApiRequest) {
       }>(`/api/clusters_mgmt/v1/clusters/${clusterID}/aws_infrastructure_access_role_grants`),
 
     addGrant: (clusterID: string, roleId: string, arn: string) =>
-      apiRequest.post<AWSInfrastructureAccessRoleGrant>(
+      apiRequest.post<AwsInfrastructureAccessRoleGrant>(
         `/api/clusters_mgmt/v1/clusters/${clusterID}/aws_infrastructure_access_role_grants/`,
         {
           role: {
@@ -797,7 +802,7 @@ export function getClusterService(apiRequest: APIRequest = defaultApiRequest) {
      */
     getAWSVPCDetails: (clusterId: string, options?: { includeSecurityGroups: boolean }) => {
       const query = options?.includeSecurityGroups ? '?fetchSecurityGroups=true' : '';
-      return apiRequest.get<CloudVPC>(`/api/clusters_mgmt/v1/clusters/${clusterId}/vpc${query}`);
+      return apiRequest.get<CloudVpc>(`/api/clusters_mgmt/v1/clusters/${clusterId}/vpc${query}`);
     },
 
     /**
@@ -831,7 +836,7 @@ export function getClusterService(apiRequest: APIRequest = defaultApiRequest) {
         /**
          * Retrieved list of cloud VPC.
          */
-        items?: Array<CloudVPC>;
+        items?: Array<CloudVpc>;
         /**
          * Index of the returned page, where one corresponds to the first page. As this
          * collection doesn't support paging the result will always be `1`.
@@ -857,12 +862,12 @@ export function getClusterService(apiRequest: APIRequest = defaultApiRequest) {
         subnets: subnet ? [subnet] : undefined,
       });
     },
-    listGCPVPCs: (credentials: GCP, region: string) =>
+    listGCPVPCs: (credentials: Gcp, region: string) =>
       apiRequest.post<{
         /**
          * Retrieved list of cloud VPC.
          */
-        items?: Array<CloudVPC>;
+        items?: Array<CloudVpc>;
         /**
          * Index of the returned page, where one corresponds to the first page. As this
          * collection doesn't support paging the result will always be `1`.
@@ -890,7 +895,7 @@ export function getClusterService(apiRequest: APIRequest = defaultApiRequest) {
     /** Possible location values depend on region,
      *  see comma-separated kms_location_id from getCloudProviders().
      */
-    listGCPKeyRings: (credentials: GCP, location: string) =>
+    listGCPKeyRings: (credentials: Gcp, location: string) =>
       apiRequest.post<{
         /**
          * Retrieved list of key rings.
@@ -918,7 +923,7 @@ export function getClusterService(apiRequest: APIRequest = defaultApiRequest) {
         key_location: location,
       }),
 
-    listGCPKeys: (credentials: GCP, location: string, ring: string) =>
+    listGCPKeys: (credentials: Gcp, location: string, ring: string) =>
       apiRequest.post<{
         /**
          * Retrieved list of encryption keys.

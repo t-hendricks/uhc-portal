@@ -101,7 +101,7 @@ const defaultCluster = {
   cloud_provider: {
     id: 'aws',
   },
-  state: clusterStates.READY,
+  state: clusterStates.ready,
 };
 
 const defaultProps = {
@@ -1036,7 +1036,7 @@ describe('<MachinePools />', () => {
         hasMachineConfiguration: true,
         cluster: {
           ...defaultCluster,
-          state: clusterStates.HIBERNATING,
+          state: clusterStates.hibernating,
         },
       };
       render(<MachinePools {...props} />);
@@ -1050,7 +1050,7 @@ describe('<MachinePools />', () => {
         hasMachineConfiguration: true,
         cluster: {
           ...defaultCluster,
-          state: clusterStates.HIBERNATING,
+          state: clusterStates.hibernating,
           kubeletConfigActions: {
             ...defaultCluster.kubeletConfigActions,
             create: false,

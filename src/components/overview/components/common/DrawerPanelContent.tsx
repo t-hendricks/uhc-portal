@@ -4,6 +4,7 @@ import { AdvancedClusterSecurityDrawerPanelBody } from './DrawerPanelContents/Ad
 import { GeneralDrawerPanelHead } from './DrawerPanelContents/GeneralDrawerPanelHead';
 import { GitopsDrawerPanelBody } from './DrawerPanelContents/Gitops/DrawerPanelBody';
 import { OpenShiftAiDrawerPanelBody } from './DrawerPanelContents/OpenshiftAi/DrawerPanelBody';
+import { OpenShiftVirtualizationPanelBody } from './DrawerPanelContents/OpenShiftVirtualization/DrawerPanelBody';
 import { PipelinesDrawerPanelBody } from './DrawerPanelContents/Pipelines/DrawerPanelBody';
 import { ServiceMeshDrawerPanelBody } from './DrawerPanelContents/ServiceMesh/DrawerPanelBody';
 import PRODUCT_CARD_LOGOS from './ProductCardLogos';
@@ -45,6 +46,10 @@ const DRAWER_PANEL_CONTENT = {
       />
     ),
     body: OpenShiftAiDrawerPanelBody,
+  },
+  OpenshiftVirtualization: {
+    head: <GeneralDrawerPanelHead {...PRODUCT_CARD_LOGOS.openshiftVirtualization} />,
+    body: OpenShiftVirtualizationPanelBody,
   },
 };
 

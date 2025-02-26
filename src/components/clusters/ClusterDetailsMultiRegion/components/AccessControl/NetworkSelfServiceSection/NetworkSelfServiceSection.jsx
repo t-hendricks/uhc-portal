@@ -6,8 +6,6 @@ import {
   Button,
   Card,
   CardBody,
-  CardFooter,
-  CardTitle,
   EmptyState,
   Icon,
   Popover,
@@ -29,9 +27,9 @@ import {
   Thead,
   Tr,
 } from '@patternfly/react-table';
-import Skeleton from '@redhat-cloud-services/frontend-components/Skeleton';
 import { addNotification } from '@redhat-cloud-services/frontend-components-notifications/redux/actions/notifications';
 
+import { LoadingSkeletonCard } from '~/components/clusters/common/LoadingSkeletonCard/LoadingSkeletonCard';
 import ExternalLink from '~/components/common/ExternalLink';
 import { useAddGrant } from '~/queries/ClusterDetailsQueries/AccessControlTab/NetworkSelfServiceQueries/useAddGrant';
 import { useDeleteGrant } from '~/queries/ClusterDetailsQueries/AccessControlTab/NetworkSelfServiceQueries/useDeleteGrant';
@@ -288,17 +286,7 @@ const NetworkSelfServiceSection = ({
   };
 
   return isGrantsLoading && !hasGrants ? (
-    <Card>
-      <CardTitle>
-        <Skeleton size="md" />
-      </CardTitle>
-      <CardBody>
-        <Skeleton size="lg" />
-      </CardBody>
-      <CardFooter>
-        <Skeleton size="md" />
-      </CardFooter>
-    </Card>
+    <LoadingSkeletonCard />
   ) : (
     <Card id="networkSelfService">
       <CardBody>

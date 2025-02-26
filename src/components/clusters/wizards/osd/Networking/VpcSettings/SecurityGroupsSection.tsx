@@ -12,10 +12,10 @@ import SecurityGroupsEmptyAlert from '~/components/clusters/ClusterDetailsMultiR
 import { CheckboxField } from '~/components/clusters/wizards/form';
 import { useFormState } from '~/components/clusters/wizards/hooks';
 import { FieldId } from '~/components/clusters/wizards/osd/constants';
-import { CloudVPC } from '~/types/clusters_mgmt.v1';
+import { CloudVpc } from '~/types/clusters_mgmt.v1';
 
 type SecurityGroupFieldProps = {
-  selectedVPC: CloudVPC;
+  selectedVPC: CloudVpc;
   label?: string;
   input: { onChange: (selectedGroupIds: string[]) => void; value: string[] };
   isHypershift: boolean;

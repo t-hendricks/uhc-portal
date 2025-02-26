@@ -29,6 +29,7 @@ fs.readdir(sourceDir, (err, files) => {
       ext === '.json' &&
       !fs.statSync(filepath).isDirectory() &&
       ![
+        'clusters_mgmt.v1.json',
         'accounts_mgmt.v1.json',
         'cost-management.v1.json',
         'access_transparency.v1.json',

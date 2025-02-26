@@ -4,7 +4,7 @@ import { Alert, AlertActionCloseButton, ExpandableSection, Text } from '@pattern
 
 import { HAS_USER_DISMISSED_RECOMMENDED_OPERATORS_ALERT } from '~/common/localStorageConstants';
 import ExternalLink from '~/components/common/ExternalLink';
-import { ClusterState } from '~/types/clusters_mgmt.v1/models/ClusterState';
+import { ClusterState } from '~/types/clusters_mgmt.v1/enums';
 
 import { ProductCardNode } from '../../../../../../common/ProductCard/ProductCard';
 import { DrawerPanelContentNode } from '../../../../../../overview/components/common/DrawerPanelContent';
@@ -107,15 +107,15 @@ const RecommendedOperatorsAlert = ({
 
   const { title, description } = useMemo(() => {
     switch (true) {
-      case clusterState === clusterStates.WAITING:
+      case clusterState === clusterStates.waiting:
         return alertMessages.actionRequired;
-      case [clusterStates.INSTALLING, clusterStates.VALIDATING, clusterStates.PENDING].includes(
+      case [clusterStates.installing, clusterStates.validating, clusterStates.pending].includes(
         clusterState as ClusterState,
       ):
         return alertMessages.installing;
-      case clusterState === clusterStates.HIBERNATING:
+      case clusterState === clusterStates.hibernating:
         return alertMessages.hibernating;
-      case clusterState === clusterStates.ERROR:
+      case clusterState === clusterStates.error:
         return alertMessages.error;
       default:
         return alertMessages.ready;

@@ -4,8 +4,8 @@ import isEmpty from 'lodash/isEmpty';
 import {
   GithubIdentityProvider,
   IdentityProvider,
-  LDAPAttributes,
-  OpenIDClaims,
+  LdapAttributes,
+  OpenIdClaims,
 } from '~/types/clusters_mgmt.v1';
 
 import { strToCleanArray } from '../../../../../common/helpers';
@@ -262,8 +262,8 @@ const getCreateIDPRequestData = (formData: IDPFormDataType) => {
 };
 
 const getOpenIdClaims = (
-  claims: OpenIDClaims | undefined,
-  type: keyof OpenIDClaims,
+  claims: OpenIdClaims | undefined,
+  type: keyof OpenIdClaims,
 ): OpenIdClaimsType[] => {
   const claimsToIterate = claims?.[type];
   if (claimsToIterate?.length) {
@@ -293,8 +293,8 @@ const getOpenIdClaims = (
 };
 
 const getldapAttributes = (
-  attributes: LDAPAttributes,
-  type: keyof LDAPAttributes,
+  attributes: LdapAttributes,
+  type: keyof LdapAttributes,
 ): LdapAttributesType[] => {
   const attributeType = attributes ? attributes[type] : undefined;
   if (attributeType) {

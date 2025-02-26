@@ -133,7 +133,7 @@ function DetailsRight({ cluster, hasAutoscaleCluster, isDeprovisioned, clusterDe
   const secureBoot = isGCP && cluster.gcp?.security?.secure_boot;
 
   const showDeleteProtection = cluster.managed && !isArchivedSubscription(cluster);
-  const isClusterUninstalling = cluster.state === clusterStates.UNINSTALLING;
+  const isClusterUninstalling = cluster.state === clusterStates.uninstalling;
 
   return (
     <DescriptionList>

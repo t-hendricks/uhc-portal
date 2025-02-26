@@ -3,7 +3,7 @@ import {
   QuotaCostList,
   RelatedResourceBilling_model as RelatedResourceBillingModel,
 } from '~/types/accounts_mgmt.v1';
-import { BillingModel } from '~/types/clusters_mgmt.v1';
+import { BillingModel } from '~/types/clusters_mgmt.v1/enums';
 import { ClusterFromSubscription } from '~/types/types';
 
 import { normalizedProducts } from '../../../common/subscriptionTypes';
@@ -70,11 +70,11 @@ describe('quotaSelectors', () => {
 
   describe('getBillingQuotaModel', () => {
     it.each([
-      [BillingModel.MARKETPLACE_AWS, BillingModel.MARKETPLACE],
-      [BillingModel.MARKETPLACE, BillingModel.MARKETPLACE],
-      [BillingModel.MARKETPLACE_AZURE, BillingModel.MARKETPLACE_AZURE],
-      [BillingModel.MARKETPLACE_GCP, BillingModel.MARKETPLACE_GCP],
-      [BillingModel.MARKETPLACE_RHM, BillingModel.MARKETPLACE_RHM],
+      [BillingModel.marketplace_aws, BillingModel.marketplace],
+      [BillingModel.marketplace, BillingModel.marketplace],
+      [BillingModel.marketplace_azure, BillingModel.marketplace_azure],
+      [BillingModel.marketplace_gcp, BillingModel.marketplace_gcp],
+      [BillingModel.marketplace_rhm, BillingModel.marketplace_rhm],
     ])('model %p is %p', (model: BillingModel, expected: string) => {
       expect(getBillingQuotaModel(model)).toBe(expected);
     });

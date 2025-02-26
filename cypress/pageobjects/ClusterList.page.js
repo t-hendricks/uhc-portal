@@ -125,7 +125,7 @@ class ClusterList extends Page {
   }
 
   scrollClusterListPageTo(direction) {
-    cy.getByTestId('appDrawerContent').scrollTo(direction);
+    cy.getByTestId('appDrawerContent').scrollTo(direction, { ensureScrollable: false });
   }
 
   scrollToPagination() {

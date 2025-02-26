@@ -9,7 +9,7 @@ import {
   RelatedResourceBilling_model as RelatedResourceBillingModel,
   SubscriptionCommonFieldsCluster_billing_model as SubscriptionCommonFieldsClusterBillingModel,
 } from '~/types/accounts_mgmt.v1';
-import { BillingModel } from '~/types/clusters_mgmt.v1';
+import { BillingModel } from '~/types/clusters_mgmt.v1/enums';
 import { ClusterFromSubscription } from '~/types/types';
 
 import {
@@ -28,7 +28,7 @@ const getBillingQuotaModel = (
   model: ConsumedQuotaBillingModel | any,
 ): RelatedResourceBillingModel => {
   switch (model) {
-    case BillingModel.MARKETPLACE_AWS:
+    case BillingModel.marketplace_aws:
       return RelatedResourceBillingModel.marketplace;
     default:
       return model;

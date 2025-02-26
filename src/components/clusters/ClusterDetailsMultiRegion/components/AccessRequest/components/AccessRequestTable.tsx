@@ -66,7 +66,10 @@ const AccessRequestTable = ({
         ? // it fills 10 elements plenty of Skeleton components
           Array.from(Array(10).keys()).map(() =>
             Array.from(Array(COLUMNS.length).keys()).reduce(
-              (acc: { title: React.ReactNode }[]) => [...acc, { title: <Skeleton /> }],
+              (acc: { title: React.ReactNode }[]) => [
+                ...acc,
+                { title: <Skeleton screenreaderText="Loading..." /> },
+              ],
               [],
             ),
           )

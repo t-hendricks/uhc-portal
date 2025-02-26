@@ -1,4 +1,4 @@
-import { AWSMachinePool, MachinePool, NodePool } from '~/types/clusters_mgmt.v1';
+import { AwsMachinePool, MachinePool, NodePool } from '~/types/clusters_mgmt.v1';
 
 import { EditMachinePoolValues } from './hooks/useMachinePoolFormik';
 
@@ -63,7 +63,7 @@ export const buildMachinePoolRequest = (
   };
 
   if (!isEdit) {
-    const awsConfig: AWSMachinePool = {};
+    const awsConfig: AwsMachinePool = {};
 
     machinePool.instance_type = values.instanceType;
 

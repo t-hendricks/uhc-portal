@@ -5,8 +5,7 @@ import { Grid, GridItem, Label, Title } from '@patternfly/react-core';
 
 import { truncateTextWithEllipsis } from '~/common/helpers';
 import { useAWSVPCFromCluster } from '~/components/clusters/common/useAWSVPCFromCluster';
-import { NodePool, SecurityGroup } from '~/types/clusters_mgmt.v1';
-import { MachinePool } from '~/types/clusters_mgmt.v1/models/MachinePool';
+import { MachinePool, NodePool, SecurityGroup } from '~/types/clusters_mgmt.v1';
 import { ClusterFromSubscription } from '~/types/types';
 
 import { isHypershiftCluster, isMPoolAz } from '../../../clusterDetailsHelper';

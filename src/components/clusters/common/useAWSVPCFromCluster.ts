@@ -5,7 +5,7 @@ import { isHypershiftCluster } from '~/components/clusters/common/clusterStates'
 import { CloudProviderVPCRequest } from '~/redux/actions/ccsInquiriesActions';
 import { securityGroupsSort } from '~/redux/reducers/ccsInquiriesReducer';
 import clusterService, { getClusterServiceForRegion } from '~/services/clusterService';
-import { CloudVPC } from '~/types/clusters_mgmt.v1';
+import { CloudVpc } from '~/types/clusters_mgmt.v1';
 import { ClusterFromSubscription } from '~/types/types';
 
 // const { getAWSVPCDetails } = clusterService;
@@ -18,9 +18,9 @@ import { ClusterFromSubscription } from '~/types/types';
  */
 const readVpcFromList = (
   vpcResponse: AxiosResponse<{
-    items?: CloudVPC[] | undefined;
+    items?: CloudVpc[] | undefined;
   }>,
-): CloudVPC | undefined => {
+): CloudVpc | undefined => {
   const vpcList = vpcResponse.data?.items || [];
   if (vpcList.length === 1) {
     return vpcList[0];
@@ -28,7 +28,7 @@ const readVpcFromList = (
   return undefined;
 };
 
-const adaptVPCDetails = (vpc: CloudVPC) => {
+const adaptVPCDetails = (vpc: CloudVpc) => {
   const securityGroups = (vpc.aws_security_groups || []).filter((sg) => !sg.red_hat_managed);
   securityGroups.sort(securityGroupsSort);
   return { ...vpc, aws_security_groups: securityGroups };
@@ -87,7 +87,7 @@ const fetchVpcByStsCredentials = async (
  * @returns vpc details.
  */
 export const useAWSVPCFromCluster = (cluster: ClusterFromSubscription, region?: string) => {
-  const [clusterVpc, setClusterVpc] = React.useState<CloudVPC | undefined>();
+  const [clusterVpc, setClusterVpc] = React.useState<CloudVpc | undefined>();
   const [isLoading, setIsLoading] = React.useState<boolean>(!!cluster.id);
   const [hasError, setHasError] = React.useState<boolean>(false);
   const [errorReason, setErrorReason] = React.useState<string>();
@@ -96,7 +96,7 @@ export const useAWSVPCFromCluster = (cluster: ClusterFromSubscription, region?: 
   const subnetIds = cluster.aws?.subnet_ids || [];
   const isBYOVPC = subnetIds.length > 0;
 
-  const manageVpcFetch = async (vpcPromise: Promise<CloudVPC | undefined>) => {
+  const manageVpcFetch = async (vpcPromise: Promise<CloudVpc | undefined>) => {
     setHasError(false);
     setIsLoading(true);
     try {

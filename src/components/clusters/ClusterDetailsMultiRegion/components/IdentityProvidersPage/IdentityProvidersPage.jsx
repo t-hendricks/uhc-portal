@@ -29,6 +29,8 @@ import {
   refetchClusterIdentityProviders,
   useFetchClusterIdentityProviders,
 } from '~/queries/ClusterDetailsQueries/useFetchClusterIdentityProviders';
+import { OCMUI_ENHANCED_HTPASSWRD } from '~/queries/featureGates/featureConstants';
+import { useFeatureGate } from '~/queries/featureGates/useFetchFeatureGate';
 
 import getClusterName from '../../../../../common/getClusterName';
 import { isValid } from '../../../../../common/helpers';
@@ -37,6 +39,7 @@ import { SubscriptionCommonFieldsStatus } from '../../../../../types/accounts_mg
 import Breadcrumbs from '../../../../common/Breadcrumbs';
 import Unavailable from '../../../../common/Unavailable';
 
+import HtpasswdDetails from './components/HtpasswdDetails/HtpasswdDetails';
 import {
   IdentityProvidersPageFormInitialValues,
   IdentityProvidersPageValidationSchema,
@@ -57,6 +60,8 @@ const IdentityProvidersPage = (props) => {
   const { isEditForm } = props;
   const params = useParams();
   const subscriptionID = params.id;
+
+  const canViewHtpasswd = useFeatureGate(OCMUI_ENHANCED_HTPASSWRD);
 
   const {
     cluster,
@@ -141,6 +146,10 @@ const IdentityProvidersPage = (props) => {
     );
   }
 
+  const htpasswd = IDPList.find(
+    (idp) => idp.name === params.idpName && idp.type === 'HTPasswdIdentityProvider',
+  );
+
   const errorState = () => (
     <AppPage title={PAGE_TITLE}>
       <Unavailable message="Error retrieving IDP page" response={cluster} />
@@ -217,84 +226,93 @@ const IdentityProvidersPage = (props) => {
         <PageHeaderTitle title={title} />
       </PageHeader>
       <PageSection>
-        <Formik
-          enableReinitialize
-          initialValues={
-            isEditForm
-              ? getInitialValuesForEditing(idpEdited, editedType)
-              : {
-                  ...IdentityProvidersPageFormInitialValues(selectedIDP),
-                }
-          }
-          validationSchema={IdentityProvidersPageValidationSchema(selectedIDP)}
-          onSubmit={async (values) => {
-            const submitRequest = getCreateIDPRequestData(values);
-            postIDPFormMutate(submitRequest, {
-              onSuccess: () => refetchClusterIdentityProviders(clusterID),
-            });
-          }}
-        >
-          {(formik) => (
-            <Card>
-              <CardBody>
-                <Grid>
-                  <GridItem md={8}>
-                    {isClusterIDPsSuccess ? (
-                      <IDPForm
-                        selectedIDP={selectedIDP}
-                        idpTypeName={idpTypeName}
-                        formTitle={secondaryTitle}
-                        clusterUrls={{
-                          console: get(cluster, 'console.url'),
-                          api: get(cluster, 'api.url'),
-                        }}
-                        isPostIDPFormError={isPostIDPFormError}
-                        postIDPFormError={postIDPFormError}
-                        isPostIDPFormPending={isPostIDPFormPending}
-                        IDPList={IDPList}
-                        idpEdited={idpEdited}
-                        idpName={idpTypeName}
-                        isHypershift={isHypershiftCluster(cluster)}
-                        HTPasswdErrors={formik.errors?.users}
-                        isClusterIDPsLoading={isClusterIDPsLoading}
-                        isEditForm={isEditForm}
-                      />
-                    ) : (
-                      <Spinner size="lg" aria-label="Loading..." />
-                    )}
-                  </GridItem>
-                </Grid>
-              </CardBody>
-              <CardFooter>
-                <Split hasGutter>
-                  <SplitItem>
-                    <Button
-                      variant="primary"
-                      type="submit"
-                      isDisabled={!formik.dirty || isFormReadyForSubmit(formik)}
-                      onClick={formik.submitForm}
-                    >
-                      {isEditForm ? 'Save' : 'Add'}
-                    </Button>
-                  </SplitItem>
-                  <SplitItem>
-                    <Button
-                      variant="secondary"
-                      component={(props) => (
-                        <Link
-                          {...props}
-                          to={`/details/s/${cluster.subscription.id}#accessControl`}
+        {htpasswd && canViewHtpasswd ? (
+          <HtpasswdDetails
+            idpName={htpasswd.name}
+            idpId={htpasswd.id}
+            clusterId={cluster.id}
+            region={region}
+          />
+        ) : (
+          <Formik
+            enableReinitialize
+            initialValues={
+              isEditForm
+                ? getInitialValuesForEditing(idpEdited, editedType)
+                : {
+                    ...IdentityProvidersPageFormInitialValues(selectedIDP),
+                  }
+            }
+            validationSchema={IdentityProvidersPageValidationSchema(selectedIDP)}
+            onSubmit={async (values) => {
+              const submitRequest = getCreateIDPRequestData(values);
+              postIDPFormMutate(submitRequest, {
+                onSuccess: () => refetchClusterIdentityProviders(clusterID),
+              });
+            }}
+          >
+            {(formik) => (
+              <Card>
+                <CardBody>
+                  <Grid>
+                    <GridItem md={8}>
+                      {isClusterIDPsSuccess ? (
+                        <IDPForm
+                          selectedIDP={selectedIDP}
+                          idpTypeName={idpTypeName}
+                          formTitle={secondaryTitle}
+                          clusterUrls={{
+                            console: get(cluster, 'console.url'),
+                            api: get(cluster, 'api.url'),
+                          }}
+                          isPostIDPFormError={isPostIDPFormError}
+                          postIDPFormError={postIDPFormError}
+                          isPostIDPFormPending={isPostIDPFormPending}
+                          IDPList={IDPList}
+                          idpEdited={idpEdited}
+                          idpName={idpTypeName}
+                          isHypershift={isHypershiftCluster(cluster)}
+                          HTPasswdErrors={formik.errors?.users}
+                          isClusterIDPsLoading={isClusterIDPsLoading}
+                          isEditForm={isEditForm}
                         />
+                      ) : (
+                        <Spinner size="lg" aria-label="Loading..." />
                       )}
-                    >
-                      Cancel
-                    </Button>
-                  </SplitItem>
-                </Split>
-              </CardFooter>
-            </Card>
-          )}
-        </Formik>
+                    </GridItem>
+                  </Grid>
+                </CardBody>
+                <CardFooter>
+                  <Split hasGutter>
+                    <SplitItem>
+                      <Button
+                        variant="primary"
+                        type="submit"
+                        isDisabled={!formik.dirty || isFormReadyForSubmit(formik)}
+                        onClick={formik.submitForm}
+                      >
+                        {isEditForm ? 'Save' : 'Add'}
+                      </Button>
+                    </SplitItem>
+                    <SplitItem>
+                      <Button
+                        variant="secondary"
+                        component={(props) => (
+                          <Link
+                            {...props}
+                            to={`/details/s/${cluster.subscription.id}#accessControl`}
+                          />
+                        )}
+                      >
+                        Cancel
+                      </Button>
+                    </SplitItem>
+                  </Split>
+                </CardFooter>
+              </Card>
+            )}
+          </Formik>
+        )}
       </PageSection>
     </AppPage>
   );

@@ -8,17 +8,15 @@ See the [Releases page][change-log] for the changelog.
 
 ## Reviewer 1 < name >
 
-- [ ] Verified the PR's Commits list only contains commits with messages "Merge ... to master"; any other commits must have good reasoning
-- [ ] Verified the PR's Commits list matches the Release Notes wiki
+- [ ] Verified changes locally in a browser
 - [ ] Closed threads I started after the author made changes or added an explanation
 
 ## Reviewer 2 < name >
 
-- [ ] Verified the PR's Commits list only contains commits with messages "Merge ... to master"; any other commits must have good reasoning
-- [ ] Verified the PR's Commits list matches the Release Notes wiki
+- [ ] Verified changes locally in a browser
 - [ ] Closed threads I started after the author made changes or added an explanation
 
-NOTE: The author of the PR will merge the PR.
+_NOTE: The author of the PR will merge the PR._
 
 ## Author
 

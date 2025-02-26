@@ -11,15 +11,15 @@ import { FuzzySelect, FuzzySelectProps } from '~/components/common/FuzzySelect/F
 import { FuzzyEntryType } from '~/components/common/FuzzySelect/types';
 import { getAWSCloudProviderVPCs } from '~/redux/actions/ccsInquiriesActions';
 import { VPCResponse } from '~/redux/reducers/ccsInquiriesReducer';
-import { CloudVPC } from '~/types/clusters_mgmt.v1';
+import { CloudVpc } from '~/types/clusters_mgmt.v1';
 import { AWSCredentials, ErrorState } from '~/types/types';
 
 interface VCPDropdownProps {
-  selectedVPC: CloudVPC;
+  selectedVPC: CloudVpc;
   input: {
     name: string;
     value: string;
-    onChange: (selectedVPC: CloudVPC | SelectOptionObjectDeprecated) => void;
+    onChange: (selectedVPC: CloudVpc | SelectOptionObjectDeprecated) => void;
     onBlur: () => void;
   };
   meta: {
@@ -67,7 +67,7 @@ const VPCDropdown = ({
   const [isOpen, setIsOpen] = React.useState<boolean>(false);
 
   const { vpcs: vpcResponse, requestParams } = useAWSVPCInquiry(isOSD) as UseAWSVPCInquiry;
-  const originalVPCs = React.useMemo<CloudVPC[]>(
+  const originalVPCs = React.useMemo<CloudVpc[]>(
     () => filterOutRedHatManagedVPCs(vpcResponse.data?.items || []),
     [vpcResponse.data?.items],
   );

@@ -8,11 +8,10 @@ import {
   ButtonVariant,
   Card,
   CardBody,
-  CardFooter,
-  CardTitle,
   Divider,
   EmptyState,
   Label,
+  Skeleton,
   Toolbar,
   ToolbarContent,
   ToolbarItem,
@@ -23,12 +22,12 @@ import {
   TableBody as TableBodyDeprecated,
   TableHeader as TableHeaderDeprecated,
 } from '@patternfly/react-table/deprecated';
-import Skeleton from '@redhat-cloud-services/frontend-components/Skeleton';
 
 import { noQuotaTooltip } from '~/common/helpers';
 import { versionFormatter } from '~/common/versionHelpers';
 import { isMultiAZ } from '~/components/clusters/ClusterDetailsMultiRegion/clusterDetailsHelper';
 import { getDefaultClusterAutoScaling } from '~/components/clusters/common/clusterAutoScalingValues';
+import { LoadingSkeletonCard } from '~/components/clusters/common/LoadingSkeletonCard/LoadingSkeletonCard';
 import { MachineConfiguration } from '~/components/clusters/common/MachineConfiguration';
 import { MAX_NODES_INSUFFICIEN_VERSION as MAX_NODES_180 } from '~/components/clusters/common/machinePools/constants';
 import { getMaxNodesTotalDefaultAutoscaler } from '~/components/clusters/common/machinePools/utils';
@@ -257,7 +256,7 @@ const MachinePools = ({ cluster }) => {
     hasMachineConfiguration && ((isRosa && !isHypershift) || (isOsd && isCcs && isAws));
   const canEditMachineConfiguration = kubeletConfigActions.create && kubeletConfigActions.update;
   const isMachineConfigurationActionDisabled =
-    cluster?.state !== clusterStates.READY || !canEditMachineConfiguration;
+    cluster?.state !== clusterStates.ready || !canEditMachineConfiguration;
   const isMachineConfigurationActionDisabledReason =
     isMachineConfigurationActionDisabled &&
     (!canEditMachineConfiguration
@@ -435,7 +434,7 @@ const MachinePools = ({ cluster }) => {
     cells: [
       {
         props: { colSpan: 4 },
-        title: <Skeleton size="lg" />,
+        title: <Skeleton fontSize="lg" screenreaderText="Loading..." />,
       },
     ],
   };
@@ -458,17 +457,7 @@ const MachinePools = ({ cluster }) => {
   return (
     <>
       {showSkeleton ? (
-        <Card>
-          <CardTitle>
-            <Skeleton size="lg" />
-          </CardTitle>
-          <CardBody>
-            <Skeleton size="lg" />
-          </CardBody>
-          <CardFooter>
-            <Skeleton size="lg" />
-          </CardFooter>
-        </Card>
+        <LoadingSkeletonCard />
       ) : (
         <>
           {!tableActionsDisabled && (

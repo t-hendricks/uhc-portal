@@ -110,7 +110,7 @@ describe('<ClusterDetailsTop />', () => {
   });
 
   it('should disable open console button when cluster is unistalling', async () => {
-    const cluster = { ...defaultCluster, state: clusterStates.UNINSTALLING };
+    const cluster = { ...defaultCluster, state: clusterStates.uninstalling };
     mockedGetLogs.mockResolvedValue('hello world');
     mockGetClusterServiceForRegion.mockReturnValue({ getLogs: mockedGetLogs });
 

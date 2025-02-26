@@ -27,8 +27,8 @@ const monthNames = [
   'Jun',
   'Jul',
   'Aug',
-  'Sept',
-  'Octr',
+  'Sep',
+  'Oct',
   'Nov',
   'Dec',
 ];
@@ -50,10 +50,9 @@ await jiraLabeler(flags.jiraToken, flags.n);
 async function jiraLabeler(jiraToken, total = 1) {
   const data = await initGit();
   if (!data) return;
+
   const { git, upstreamName } = data;
-
   const stableSha = await git.revparse(['--short', `${upstreamName}/stable`]);
-
   const stableCommits = await gitLog(git, stableSha, ['-n 100']);
   const stableCommitsMap = _.keyBy(stableCommits, 'hash');
   const releases = await gitLog(git, stableSha, ['--first-parent', '-n 100']);
@@ -93,11 +92,7 @@ async function jiraLabeler(jiraToken, total = 1) {
         return n;
       });
 
-      const dateName = new Date(release.commit_date).toLocaleDateString('default', {
-        month: 'long',
-        day: 'numeric',
-        year: 'numeric',
-      });
+      const dateName = new Date(release.commit_date).toDateString();
       console.log(
         `\nFetching JIRA issues for the release on ${chalk.cyan(dateName)} ${chalk.white(release.message)}\n`,
       );

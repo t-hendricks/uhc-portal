@@ -15,11 +15,11 @@ import {
   DescriptionListTerm,
   Grid,
   GridItem,
+  Skeleton,
   Title,
 } from '@patternfly/react-core';
 import { ExclamationCircleIcon } from '@patternfly/react-icons/dist/esm/icons/exclamation-circle-icon';
 import { ExclamationTriangleIcon } from '@patternfly/react-icons/dist/esm/icons/exclamation-triangle-icon';
-import { Skeleton } from '@redhat-cloud-services/frontend-components';
 
 import { modalActions } from '~/components/common/Modal/ModalActions';
 import modals from '~/components/common/Modal/modals';
@@ -146,7 +146,7 @@ function SubscriptionSettings({
       )}
       <CardBody className="ocm-c-overview-subscription-settings__card--body">
         {isLoading ? (
-          <Skeleton />
+          <Skeleton screenreaderText="Loading..." />
         ) : (
           <Grid>
             <GridItem md={6}>

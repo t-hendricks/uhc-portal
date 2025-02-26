@@ -144,7 +144,7 @@ describe('<AccessControl />', () => {
       const hypershiftCluster = buildCluster({
         clusterProps: {
           hypershift: { enabled: true },
-          state: clusterStates.INSTALLING,
+          state: clusterStates.installing,
           idpActions: {
             get: false,
             list: false,

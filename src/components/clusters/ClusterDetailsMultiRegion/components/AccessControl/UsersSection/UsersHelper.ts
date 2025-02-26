@@ -7,7 +7,7 @@ const canAllowAdminHelper = (cluster: AugmentedCluster) => {
   const product = cluster.subscription?.plan?.type || normalizedProducts.OSD;
   const clusterState = cluster.state;
 
-  if (product === normalizedProducts.RHMI || clusterState !== clusterStates.READY) {
+  if (product === normalizedProducts.RHMI || clusterState !== clusterStates.ready) {
     return false;
   }
   const isCssEnabled = cluster.ccs?.enabled || false;

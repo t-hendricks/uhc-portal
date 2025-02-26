@@ -211,7 +211,7 @@ function ClusterListTable(props) {
         availableRegionalInstances,
       );
 
-      if (state === clusterStates.ERROR) {
+      if (state === clusterStates.error) {
         return (
           <span>
             <Popover
@@ -255,10 +255,10 @@ function ClusterListTable(props) {
         );
       }
       if (
-        state === clusterStates.WAITING ||
-        state === clusterStates.PENDING ||
-        state === clusterStates.VALIDATING ||
-        state === clusterStates.INSTALLING
+        state === clusterStates.waiting ||
+        state === clusterStates.pending ||
+        state === clusterStates.validating ||
+        state === clusterStates.installing
       ) {
         return (
           <Popover

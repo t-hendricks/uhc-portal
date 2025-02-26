@@ -59,24 +59,24 @@ export const ClusterStatus = ({ cluster, limitedSupport, machinePools }: Cluster
   }, [cluster]);
 
   const machinePoolsState = () => {
-    if (clusterState?.state === clusterStates.UNINSTALLING) {
-      return clusterStates.UNINSTALLING;
+    if (clusterState?.state === clusterStates.uninstalling) {
+      return clusterStates.uninstalling;
     }
 
     if (machinePools && numberReadyNodePools(machinePools) === 0 && machinePools.length === 0) {
       switch (clusterState?.state) {
-        case clusterStates.WAITING:
-          return clusterStates.WAITING;
-        case clusterStates.INSTALLING:
-        case clusterStates.VALIDATING:
-          return clusterStates.PENDING;
+        case clusterStates.waiting:
+          return clusterStates.waiting;
+        case clusterStates.installing:
+        case clusterStates.validating:
+          return clusterStates.pending;
         default:
-          return clusterStates.DEPROVISIONED;
+          return clusterStates.deprovisioned;
       }
     }
     return machinePools && numberReadyNodePools(machinePools) === machinePools.length
-      ? clusterStates.READY
-      : clusterStates.PENDING;
+      ? clusterStates.ready
+      : clusterStates.pending;
   };
 
   const clusterWideStateIcon = (

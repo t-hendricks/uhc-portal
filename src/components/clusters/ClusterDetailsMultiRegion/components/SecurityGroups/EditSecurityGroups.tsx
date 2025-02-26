@@ -16,7 +16,7 @@ import { truncateTextWithEllipsis } from '~/common/helpers';
 import { validateSecurityGroups } from '~/common/validators';
 import { FormGroupHelperText } from '~/components/common/FormGroupHelperText';
 import { securityGroupsSort } from '~/redux/reducers/ccsInquiriesReducer';
-import { CloudVPC } from '~/types/clusters_mgmt.v1';
+import { CloudVpc } from '~/types/clusters_mgmt.v1';
 
 import SecurityGroupsViewList from './SecurityGroupsViewList';
 
@@ -25,7 +25,7 @@ import './EditSecurityGroups.scss';
 export interface EditSecurityGroupsProps {
   label?: string;
   selectedGroupIds: string[];
-  selectedVPC: CloudVPC;
+  selectedVPC: CloudVpc;
   isReadOnly: boolean;
   isHypershift: boolean;
   onChange: (securityGroupIds: string[]) => void;

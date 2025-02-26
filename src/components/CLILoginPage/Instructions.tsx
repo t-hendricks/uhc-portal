@@ -28,13 +28,13 @@ import {
   CardTitle,
   List,
   ListItem,
+  Skeleton,
   Stack,
   StackItem,
   Text,
   TextContent,
   Title,
 } from '@patternfly/react-core';
-import Skeleton from '@redhat-cloud-services/frontend-components/Skeleton';
 import useChrome from '@redhat-cloud-services/frontend-components/useChrome';
 
 import { Link } from '~/common/routing';
@@ -166,7 +166,7 @@ const Instructions = (props: Props) => {
                       Copy and paste the authentication command in your terminal:
                       <Text component="p" />
                       {offlineToken == null && !restrictedEnv ? (
-                        <Skeleton size="md" />
+                        <Skeleton fontSize="md" screenreaderText="Loading..." />
                       ) : (
                         <TokenBox
                           token={token}

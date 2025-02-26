@@ -26,7 +26,7 @@ import {
   ReduxCheckbox,
   ReduxVerticalFormGroup,
 } from '~/components/common/ReduxFormComponents_deprecated';
-import { LoadBalancerFlavor } from '~/types/clusters_mgmt.v1';
+import { LoadBalancerFlavor } from '~/types/clusters_mgmt.v1/enums';
 
 type DefaultIngressFieldsProps = {
   className?: string;
@@ -192,8 +192,8 @@ export const DefaultIngressFields: React.FC<DefaultIngressFieldsProps> = ({
           component={ReduxCheckbox}
           name="is_nlb_load_balancer"
           disabled={!canEditLoadBalancer}
-          label={LoadBalancerFlavorLabel[LoadBalancerFlavor.NLB]}
-          labelOff={LoadBalancerFlavorLabel[LoadBalancerFlavor.CLASSIC]}
+          label={LoadBalancerFlavorLabel[LoadBalancerFlavor.nlb]}
+          labelOff={LoadBalancerFlavorLabel[LoadBalancerFlavor.classic]}
           isSwitch
         />
       </FormGroup>

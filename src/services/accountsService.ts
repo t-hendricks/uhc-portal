@@ -16,10 +16,10 @@ import type {
   SupportCasesCreatedResponse,
 } from '../types/accounts_mgmt.v1';
 import type {
-  AWSSTSAccountRole,
-  AWSSTSPolicy,
-  AWSSTSRole,
-  STSCredentialRequest,
+  AwsstsAccountRole,
+  AwsstsPolicy,
+  AwsstsRole,
+  StsCredentialRequest,
 } from '../types/clusters_mgmt.v1';
 
 const getCurrentAccount = () => apiRequest.get<Account>('/api/accounts_mgmt/v1/current_account');
@@ -194,12 +194,12 @@ const getOrganizationLabels = (organizationID: string) =>
   apiRequest.get<LabelList>(`/api/accounts_mgmt/v1/organizations/${organizationID}/labels`);
 
 const getAWSAccountARNs = (awsAccountID: string) =>
-  apiRequest.post<AWSSTSAccountRole>('/api/clusters_mgmt/v1/aws_inquiries/sts_account_roles', {
+  apiRequest.post<AwsstsAccountRole>('/api/clusters_mgmt/v1/aws_inquiries/sts_account_roles', {
     account_id: awsAccountID,
   });
 
 const getOCMRole = (awsAccountID: string) =>
-  apiRequest.post<AWSSTSRole>('/api/clusters_mgmt/v1/aws_inquiries/sts_ocm_role', {
+  apiRequest.post<AwsstsRole>('/api/clusters_mgmt/v1/aws_inquiries/sts_ocm_role', {
     account_id: awsAccountID,
   });
 
@@ -211,7 +211,7 @@ const getPolicies = () =>
     /**
      * Retrieved list of policies.
      */
-    items?: Array<AWSSTSPolicy>;
+    items?: Array<AwsstsPolicy>;
     /**
      * Index of the requested page, where one corresponds to the first page.
      */
@@ -232,7 +232,7 @@ const getCredentialRequests = () =>
     /**
      * Retrieved list of CredRequest.
      */
-    items?: Array<STSCredentialRequest>;
+    items?: Array<StsCredentialRequest>;
     /**
      * Index of the requested page, where one corresponds to the first page.
      */

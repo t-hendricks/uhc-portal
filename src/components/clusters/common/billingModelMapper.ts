@@ -3,7 +3,7 @@ import {
   RelatedResourceBilling_model as RelatedResourceBillingModel,
   SubscriptionCommonFieldsCluster_billing_model as SubscriptionCommonFieldsClusterBillingModel,
 } from '~/types/accounts_mgmt.v1';
-import { BillingModel } from '~/types/clusters_mgmt.v1';
+import { BillingModel } from '~/types/clusters_mgmt.v1/enums';
 
 export const clusterBillingModelToRelatedResource = (
   clusterBillingModel?: SubscriptionCommonFieldsClusterBillingModel | BillingModel | string,

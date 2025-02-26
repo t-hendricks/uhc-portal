@@ -62,10 +62,10 @@ const Overview = (props) => {
   useEffect(() => {
     if (
       prevProps.current &&
-      [clusterStates.INSTALLING, clusterStates.PENDING, clusterStates.WAITING].includes(
+      [clusterStates.installing, clusterStates.pending, clusterStates.waiting].includes(
         prevProps.current.cluster.state,
       ) &&
-      cluster.state === clusterStates.READY &&
+      cluster.state === clusterStates.ready &&
       cluster.managed &&
       prevProps.current.cluster.id === cluster.id
     ) {
@@ -87,7 +87,7 @@ const Overview = (props) => {
   const metricsAvailable =
     hasResourceUsageMetrics(cluster) &&
     (cluster.canEdit ||
-      ![clusterStates.WAITING, clusterStates.PENDING, clusterStates.INSTALLING].includes(
+      ![clusterStates.waiting, clusterStates.pending, clusterStates.installing].includes(
         cluster.state,
       ));
   const metricsStatusMessage = isArchived
@@ -98,17 +98,17 @@ const Overview = (props) => {
   // eslint-disable-next-line no-unused-vars
   const shouldMonitorStatus =
     [
-      clusterStates.WAITING,
-      clusterStates.PENDING,
-      clusterStates.INSTALLING,
-      clusterStates.ERROR,
-      clusterStates.UNINSTALLING,
+      clusterStates.waiting,
+      clusterStates.pending,
+      clusterStates.installing,
+      clusterStates.error,
+      clusterStates.uninstalling,
     ].includes(cluster.state) || hasInflightEgressErrors(cluster);
 
   const hadInflightErrorKey = `${HAD_INFLIGHT_ERROR_LOCALSTORAGE_KEY}_${cluster.id}`;
   const showInflightErrorIsFixed =
     !hasInflightEgressErrors(cluster) &&
-    cluster.state !== clusterStates.ERROR &&
+    cluster.state !== clusterStates.error &&
     localStorage.getItem(hadInflightErrorKey) === 'true';
 
   const showInsightsAdvisor =

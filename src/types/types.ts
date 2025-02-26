@@ -6,9 +6,9 @@ import type { ChromeAPI } from '@redhat-cloud-services/types';
 
 import type { List, OneMetric, Subscription } from './accounts_mgmt.v1';
 import type {
-  AWS,
+  Aws,
   Cluster,
-  ClusterAPI,
+  ClusterApi,
   ClusterState,
   ClusterStatus,
   LimitedSupportReason,
@@ -109,7 +109,7 @@ export type AugmentedCluster = ClusterWithPermissions & {
   limitedSupportReasons?: LimitedSupportReason[];
   aiSupportLevels?: FeaturesSupportsLevel;
   status?: ClusterStatus;
-  api?: ClusterAPI;
+  api?: ClusterApi;
   // WIF configuration name for OSD GCP clusters using authentication with Workload Identity Federation
   wifConfigName?: string;
 };
@@ -133,7 +133,7 @@ export type ErrorState = {
 };
 
 export type AWSCredentials = Pick<
-  AWS,
+  Aws,
   'account_id' | 'access_key_id' | 'secret_access_key' | 'sts'
 >;
 

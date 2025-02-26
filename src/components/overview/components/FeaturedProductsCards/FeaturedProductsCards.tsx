@@ -12,7 +12,7 @@ type FeaturedProductsCardsNode = {
   title: string;
   description: string;
   logo: string;
-  labelText: string;
+  labelText?: string;
   drawerPanelContent: DrawerPanelContentNode;
 };
 
@@ -30,6 +30,12 @@ const FEATURED_PRODUCTS_CARDS: FeaturedProductsCardsNode[] = [
       'Create and deliver generative and predictive AI models at scale across on-premise and public cloud environments.',
     labelText: '60-day trial',
     drawerPanelContent: DRAWER_PANEL_CONTENT.OpenshiftAi,
+  },
+  {
+    ...PRODUCT_CARD_LOGOS.openshiftVirtualization,
+    description:
+      'Streamline your operations and reduce complexity when you run and manage your VMs, containers, and serverless workloads in a single platform.',
+    drawerPanelContent: DRAWER_PANEL_CONTENT.OpenshiftVirtualization,
   },
 ];
 

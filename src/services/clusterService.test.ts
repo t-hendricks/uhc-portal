@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 import apiRequest from '~/services/apiRequest';
-import { ScheduleType, UpgradeType } from '~/types/clusters_mgmt.v1';
+import { ScheduleType, UpgradeType } from '~/types/clusters_mgmt.v1/enums';
 
 import clusterService from './clusterService';
 
@@ -84,8 +84,8 @@ describe('clusterService', () => {
     const schedule = {
       next_run: 'now + 6 minutes',
       node_pool_id: nodePoolId,
-      schedule_type: ScheduleType.MANUAL,
-      upgrade_type: UpgradeType.NODE_POOL,
+      schedule_type: ScheduleType.manual,
+      upgrade_type: UpgradeType.NodePool,
       version: '4.14.1',
     };
 
