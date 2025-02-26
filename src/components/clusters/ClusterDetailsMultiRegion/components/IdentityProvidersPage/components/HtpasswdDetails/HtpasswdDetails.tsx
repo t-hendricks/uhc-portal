@@ -15,7 +15,7 @@ import { Table, Tbody, Td, Th, Thead, ThProps, Tr } from '@patternfly/react-tabl
 
 import ErrorBox from '~/components/common/ErrorBox';
 import { useFetchHtpasswdUsers } from '~/queries/ClusterDetailsQueries/AccessControlTab/UserQueries/useFetchHtpasswdUsers';
-import { HTPasswdUser } from '~/types/clusters_mgmt.v1';
+import { HtPasswdUser } from '~/types/clusters_mgmt.v1';
 
 import EmptyState from './EmptyState';
 
@@ -68,10 +68,10 @@ const HtpasswdDetails = ({ idpId, clusterId, region }: Props) => {
   });
 
   // Ensure that the order in the array matches the order of the headers
-  const getSortableUserValues = (user: HTPasswdUser) => [user.username];
+  const getSortableUserValues = (user: HtPasswdUser) => [user.username];
 
   const sortUsers = React.useCallback(
-    (a: HTPasswdUser, b: HTPasswdUser) => {
+    (a: HtPasswdUser, b: HtPasswdUser) => {
       const aValue = getSortableUserValues(a)[activeSortIndex];
       const bValue = getSortableUserValues(b)[activeSortIndex];
 
@@ -114,7 +114,7 @@ const HtpasswdDetails = ({ idpId, clusterId, region }: Props) => {
     </Thead>
   );
 
-  const userRow = (user: HTPasswdUser) => (
+  const userRow = (user: HtPasswdUser) => (
     <Tr key={user.id}>
       <Td>{user.username}</Td>
     </Tr>
@@ -181,7 +181,7 @@ const HtpasswdDetails = ({ idpId, clusterId, region }: Props) => {
           {headerRow}
           <Tbody>
             {filteredUsers.length > 0 ? (
-              filteredUsers.slice(startIndex, endIndex).map((user: HTPasswdUser) => userRow(user))
+              filteredUsers.slice(startIndex, endIndex).map((user: HtPasswdUser) => userRow(user))
             ) : (
               <Tr>
                 <Td colSpan={headers.length}>

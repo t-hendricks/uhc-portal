@@ -1,7 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
 
 import { getClusterServiceForRegion } from '~/services/clusterService';
-import { HTPasswdUser } from '~/types/clusters_mgmt.v1';
+import { HtPasswdUser } from '~/types/clusters_mgmt.v1';
 
 import { formatErrorData } from '../../../helpers';
 
@@ -28,7 +28,7 @@ export const useFetchHtpasswdUsers = (clusterID: string, idpID: string, region?:
     page: number;
     size: number;
     total: number;
-    items: HTPasswdUser[];
+    items: HtPasswdUser[];
   };
 
   const returnData = data?.data as APIResponse;

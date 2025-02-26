@@ -2,7 +2,7 @@ import React from 'react';
 
 import { useFetchHtpasswdUsers } from '~/queries/ClusterDetailsQueries/AccessControlTab/UserQueries/useFetchHtpasswdUsers';
 import { checkAccessibility, render, screen, within } from '~/testUtils';
-import { HTPasswdUser } from '~/types/clusters_mgmt.v1';
+import { HtPasswdUser } from '~/types/clusters_mgmt.v1';
 
 import HtpasswdDetails from './HtpasswdDetails';
 
@@ -15,7 +15,7 @@ jest.mock(
 
 const createUsers = (numberOfUsers: number) => {
   const letters = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j'];
-  const users: HTPasswdUser[] = [];
+  const users: HtPasswdUser[] = [];
 
   let index = 0;
   while (users.length < numberOfUsers) {
