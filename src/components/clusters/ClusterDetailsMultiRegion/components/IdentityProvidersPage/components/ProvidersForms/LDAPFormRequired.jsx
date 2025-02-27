@@ -14,7 +14,7 @@ import { FieldId } from '../../constants';
 const LDAPFormRequired = ({ isPending }) => {
   const { getFieldProps, setFieldValue, getFieldMeta, values } = useFormState();
 
-  const hasBindDN = values[FieldId.BIND_DN].trim();
+  const hasBindDN = values[FieldId.BIND_DN];
 
   return (
     <>
