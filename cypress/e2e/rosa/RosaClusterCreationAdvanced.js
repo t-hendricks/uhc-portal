@@ -213,7 +213,13 @@ describe(
       CreateRosaWizardPage.rosaNextButton().click();
     });
     it('Cluster wizard revisit - Step - Networking VPC settings', () => {
-      CreateRosaWizardPage.isButtonContainingText(qeInfrastructure.VPC_NAME);
+      CreateRosaWizardPage.isVPCSettingsScreen();
+      cy.contains(`Select a VPC to install your cluster into your selected region: ${region}`)
+        .scrollIntoView()
+        .should('be.visible');
+      cy.contains(new RegExp(`^${qeInfrastructure.VPC_NAME}$`, 'g'))
+        .scrollIntoView()
+        .should('be.visible');
       let i = 0;
       clusterProperties.MachinePools[0].AvailabilityZones.forEach((zone) => {
         CreateRosaWizardPage.isSubnetAvailabilityZoneSelected(zone);
