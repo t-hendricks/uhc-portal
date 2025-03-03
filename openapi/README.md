@@ -1,5 +1,5 @@
 This directory captures snapshots of OpenAPI definitions from backends.
-Run `make openapi` (at the root level) to grab new ones and `yarn gen-types` to generate src/types/ TypeScript from them.
+Run `make openapi` (at the root level) to grab new ones and generate src/types/ TypeScript from them.
 
 # Lifecycle of OpenAPI definitions
 

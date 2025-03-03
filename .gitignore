@@ -29,3 +29,5 @@ yalc.lock
 *.patch
 
 *storybook.log
+
+openapi/*.json
