@@ -21,10 +21,7 @@ import {
   getWorkerNodeVolumeSizeMaxGiB,
   getWorkerNodeVolumeSizeMinGiB,
 } from '~/components/clusters/common/machinePools/utils';
-import {
-  HCP_ROOT_DISK_SIZE,
-  OCMUI_MAX_NODES_TOTAL_249,
-} from '~/queries/featureGates/featureConstants';
+import { OCMUI_MAX_NODES_TOTAL_249 } from '~/queries/featureGates/featureConstants';
 import { useFeatureGate } from '~/queries/featureGates/useFetchFeatureGate';
 import { MachineTypesResponse } from '~/queries/types';
 import { MachinePool, NodePool } from '~/types/clusters_mgmt.v1';
@@ -71,8 +68,6 @@ const useMachinePoolFormik = ({
   machineTypes,
   machinePools,
 }: UseMachinePoolFormikArgs) => {
-  const hasHcpRootDiskSizeFeature = useFeatureGate(HCP_ROOT_DISK_SIZE);
-
   const isMachinePoolMz = isMPoolAz(
     cluster,
     (machinePool as MachinePool)?.availability_zones?.length,
@@ -106,7 +101,7 @@ const useMachinePoolFormik = ({
       maxPrice = machinePool.aws?.spot_market_options?.max_price;
       diskSize = machinePool.root_volume?.aws?.size || machinePool.root_volume?.gcp?.size;
     } else if (isNodePool(machinePool)) {
-      diskSize = hasHcpRootDiskSizeFeature && machinePool.aws_node_pool?.root_volume?.size;
+      diskSize = machinePool.aws_node_pool?.root_volume?.size;
       const autoRepairValue = (machinePool as NodePool)?.auto_repair;
       autoRepair = autoRepairValue ?? true;
     }
@@ -145,7 +140,7 @@ const useMachinePoolFormik = ({
         (machinePool as NodePool)?.aws_node_pool?.additional_security_group_ids ||
         [],
     };
-  }, [machinePool, isMachinePoolMz, minNodesRequired, hasHcpRootDiskSizeFeature]);
+  }, [machinePool, isMachinePoolMz, minNodesRequired]);
 
   const isHypershift = isHypershiftCluster(cluster);
 
