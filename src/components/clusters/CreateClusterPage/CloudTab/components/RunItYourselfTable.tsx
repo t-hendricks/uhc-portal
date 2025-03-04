@@ -81,9 +81,7 @@ const RunItYourselfTable = () => {
     },
     {
       key: 'oracle',
-      provider: (
-        <Link to="/install/oracle-cloud">Oracle Cloud Infrastructure (virtual machines)</Link>
-      ),
+      provider: <Link to="/install/oracle-cloud">Oracle Cloud Infrastructure</Link>,
       options: 'Pre-existing infrastructure',
     },
   ];
