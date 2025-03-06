@@ -22,12 +22,12 @@ describe('ARM Bare Metal install', () => {
     );
     expect(screen.getByRole('link', { name: /Learn more about automated/ })).toHaveAttribute(
       'href',
-      `https://docs.openshift.com/container-platform/${version}/installing/installing_bare_metal_ipi/ipi-install-overview.html`,
+      `https://docs.openshift.com/container-platform/${version}/installing/installing_bare_metal/ipi/ipi-install-overview.html`,
     );
 
     expect(screen.getByRole('link', { name: /Learn more about full control/ })).toHaveAttribute(
       'href',
-      `https://docs.openshift.com/container-platform/${version}/installing/installing_bare_metal/installing-bare-metal.html`,
+      `https://docs.openshift.com/container-platform/${version}/installing/installing_bare_metal/upi/installing-bare-metal.html`,
     );
   });
 });

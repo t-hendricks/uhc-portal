@@ -65,7 +65,7 @@ const ARGO_CD_CLI_LATEST =
 const SHP_CLI_LATEST =
   'https://developers.redhat.com/content-gateway/rest/browse/pub/openshift-v4/clients/openshift-builds/latest/';
 
-const DOCS_BASE = 'https://docs.openshift.com/container-platform/4.17';
+const DOCS_BASE = 'https://docs.openshift.com/container-platform/4.18';
 const OSD_DOCS_BASE = 'https://docs.openshift.com/dedicated';
 const ROSA_DOCS_BASE = 'https://docs.openshift.com/rosa';
 const ROSA_HCP_DOCS_BASE = `${ROSA_DOCS_BASE}/rosa_hcp`;
@@ -192,11 +192,11 @@ const links = {
   INSTALL_ASH_CUSTOMIZATIONS: `${DOCS_BASE}/installing/installing_azure_stack_hub/ipi/installing-azure-stack-hub-network-customizations.html`,
   RHCOS_ASHUPI_VHD_X86: `${MIRROR_RHCOS_LATEST_X86}/rhcos-azurestack.x86_64.vhd.gz`,
 
-  INSTALL_BAREMETAL_UPI_GETTING_STARTED: `${DOCS_BASE}/installing/installing_bare_metal/installing-bare-metal.html`,
-  INSTALL_BAREMETAL_IPI_GETTING_STARTED: `${DOCS_BASE}/installing/installing_bare_metal_ipi/ipi-install-installation-workflow.html`,
-  INSTALL_BAREMETAL_IPI_LEARN_MORE: `${DOCS_BASE}/installing/installing_bare_metal_ipi/ipi-install-overview.html`,
-  INSTALL_BAREMETAL_RHCOS_LEARN_MORE: `${DOCS_BASE}/installing/installing_bare_metal/installing-bare-metal.html#creating-machines-bare-metal`,
-  INSTALL_BAREMETAL_CUSTOMIZATIONS: `${DOCS_BASE}/installing/installing_bare_metal/installing-bare-metal-network-customizations.html`,
+  INSTALL_BAREMETAL_UPI_GETTING_STARTED: `${DOCS_BASE}/installing/installing_bare_metal/upi/installing-bare-metal.html`,
+  INSTALL_BAREMETAL_IPI_GETTING_STARTED: `${DOCS_BASE}/installing/installing_bare_metal/ipi/ipi-install-installation-workflow.html`,
+  INSTALL_BAREMETAL_IPI_LEARN_MORE: `${DOCS_BASE}/installing/installing_bare_metal/ipi/ipi-install-overview.html`,
+  INSTALL_BAREMETAL_RHCOS_LEARN_MORE: `${DOCS_BASE}/installing/installing_bare_metal/upi/installing-bare-metal.html#creating-machines-bare-metal`,
+  INSTALL_BAREMETAL_CUSTOMIZATIONS: `${DOCS_BASE}/installing/installing_bare_metal/upi/installing-bare-metal-network-customizations.html`,
   RHCOS_BAREMETAL_ISO_X86: `${MIRROR_RHCOS_LATEST_X86}/rhcos-live.x86_64.iso`,
   RHCOS_BAREMETAL_RAW_X86: `${MIRROR_RHCOS_LATEST_X86}/rhcos-metal.x86_64.raw.gz`,
   INSTALL_BAREMETAL_MULTI_ARCH: `${DOCS_BASE}/post_installation_configuration/configuring-multi-arch-compute-machines/creating-multi-arch-compute-nodes-bare-metal.html`,
@@ -228,10 +228,10 @@ const links = {
   RHCOS_VSPHERE_OVA_X86: `${MIRROR_RHCOS_LATEST_X86}/rhcos-vmware.x86_64.ova`,
 
   INSTALL_IBM_CLOUD_GETTING_STARTED: `${DOCS_BASE}/installing/installing_ibm_cloud/preparing-to-install-on-ibm-cloud.html`,
-  INSTALL_IBMZ_GETTING_STARTED: `${DOCS_BASE}/installing/installing_ibm_z/installing-ibm-z.html`,
-  INSTALL_IBMZ_RHCOS_LEARN_MORE_RHEL_KVM: `${DOCS_BASE}/installing/installing_ibm_z/installing-ibm-z-kvm.html#installation-user-infra-machines-iso-ibm-z_kvm_installing-ibm-z-kvm`,
-  INSTALL_IBMZ_LEARN_MORE_ZVM: `${DOCS_BASE}/installing/installing_ibm_z/installing-ibm-z.html#installation-user-infra-machines-iso-ibm-z_installing-ibm-z`,
-  INSTALL_IBMZ_UPI_GETTING_STARTED: `${DOCS_BASE}/installing/installing_ibm_z/preparing-to-install-on-ibm-z.html`,
+  INSTALL_IBMZ_GETTING_STARTED: `${DOCS_BASE}/installing/installing_ibm_z/upi/installing-ibm-z.html`,
+  INSTALL_IBMZ_RHCOS_LEARN_MORE_RHEL_KVM: `${DOCS_BASE}/installing/installing_ibm_z/upi/installing-ibm-z-kvm.html#installation-user-infra-machines-iso-ibm-z_kvm_installing-ibm-z-kvm`,
+  INSTALL_IBMZ_LEARN_MORE_ZVM: `${DOCS_BASE}/installing/installing_ibm_z/upi/installing-ibm-z.html#installation-user-infra-machines-iso-ibm-z_installing-ibm-z`,
+  INSTALL_IBMZ_UPI_GETTING_STARTED: `${DOCS_BASE}/installing/installing_ibm_z/upi/installing-ibm-z.html`,
   INSTALL_IBMZ_AGENTS_GETTING_STARTED: `${DOCS_BASE}/installing/installing_with_agent_based_installer/prepare-pxe-assets-agent.html#installing-ocp-agent-ibm-z_prepare-pxe-assets-agent`,
   INSTALL_IBMPOWERVS_GETTING_STARTED: `${DOCS_BASE}/installing/installing_ibm_powervs/preparing-to-install-on-ibm-power-vs.html`,
   INSTALL_IBMPOWERVS_PREREQUISITES: `${DOCS_BASE}/installing/installing_ibm_powervs/preparing-to-install-on-ibm-power-vs.html`,

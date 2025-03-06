@@ -25,7 +25,7 @@ describe('InstallIBMZ', () => {
 
     expect(screen.getByRole('link', { name: /Learn more about full control/ })).toHaveAttribute(
       'href',
-      `https://docs.openshift.com/container-platform/${version}/installing/installing_ibm_z/preparing-to-install-on-ibm-z.html`,
+      `https://docs.openshift.com/container-platform/${version}/installing/installing_ibm_z/upi/installing-ibm-z.html`,
     );
   });
 });
