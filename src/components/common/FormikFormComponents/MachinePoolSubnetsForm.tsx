@@ -88,7 +88,7 @@ const MachinePoolSubnetsForm = ({ selectedVPC, warning }: MachinePoolSubnetsForm
         const fieldNameSubnetId = `${FieldId.MachinePoolsSubnets}[${index}].privateSubnetId`;
         return selectedVPC ? (
           // eslint-disable-next-line react/no-array-index-key
-          <React.Fragment key={`${subnet.privateSubnetId}`}>
+          <React.Fragment key={`${subnet.privateSubnetId}_${index}`}>
             <GridItem span={2}>Machine pool {index + 1}</GridItem>
             <GridItem span={4}>
               <Field
