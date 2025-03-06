@@ -1,3 +1,20 @@
+/*
+This file contains all the feature gates used in the OCMUI application.
+
+To add a new feature gate, add an export like this:
+     export const VAR_TO_BE_USED_IN_APP = 'feature-name-used-in-unleash';
+
+Then add this constant to the default export below
+
+NOTE:  When adding a new feature gate or changing who has the feature gate enabled/disabled,
+Be sure to create/update the feature gate in Unleash:
+  * Staging: https://ocm-stage.unleash.devshift.net/projects/default/features
+  * Production: https://ocm.unleash.devshift.net/projects/default/features
+
+In addition, update this spreadsheet used by QE testers:
+https://docs.google.com/spreadsheets/d/16aMLmHXHGenkDQb82nhnCbCj5OEraWENK6pcaDYG7bw/edit?gid=1338784370#gid=1338784370
+*/
+
 export const HYPERSHIFT_WIZARD_FEATURE = 'hypershift-creation-wizard';
 export const HCP_USE_UNMANAGED = 'hcp-use-unmanaged-policies';
 export const ENABLE_MACHINE_CONFIGURATION = 'enable-machine-configuration';
