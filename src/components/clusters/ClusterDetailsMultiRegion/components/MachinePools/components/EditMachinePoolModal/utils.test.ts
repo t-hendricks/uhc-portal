@@ -142,7 +142,6 @@ describe('buildNodePoolRequest', () => {
       const nodePool = buildNodePoolRequest(defaultValues, {
         isEdit: false,
         isMultiZoneMachinePool: false,
-        hasHcpRootDiskSizeFeature: true,
       });
 
       expect(nodePool.aws_node_pool?.root_volume?.size).toEqual(333);

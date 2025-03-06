@@ -9,7 +9,6 @@ export const CREATE_CLUSTER_YAML_EDITOR = 'enable-create-cluster-yaml-editor';
 export const UNSTABLE_CLUSTER_VERSIONS = 'ocmui-unstable-cluster-versions';
 export const EDIT_BILLING_ACCOUNT = 'ocmui-edit-billing-account';
 export const PRIVATE_SERVICE_CONNECT = 'ocmui-gcp-private-service-connect';
-export const HCP_ROOT_DISK_SIZE = 'ocmui-hcp-root-disk-size';
 export const BYPASS_COMPUTE_NODE_COUNT_LIMIT_CLASSIC_OSD_GCP =
   'bypass-compute-node-count-limit-classic-osd-gcp';
 export const OCMUI_MAX_NODES_TOTAL_249 = 'ocmui-max-nodes-total-249';
@@ -27,7 +26,6 @@ export default {
   UNSTABLE_CLUSTER_VERSIONS,
   EDIT_BILLING_ACCOUNT,
   PRIVATE_SERVICE_CONNECT,
-  HCP_ROOT_DISK_SIZE,
   BYPASS_COMPUTE_NODE_COUNT_LIMIT_CLASSIC_OSD_GCP,
   OCMUI_MAX_NODES_TOTAL_249,
   OCMUI_ENHANCED_HTPASSWRD,

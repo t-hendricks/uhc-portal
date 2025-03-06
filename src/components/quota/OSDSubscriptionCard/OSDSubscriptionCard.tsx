@@ -77,9 +77,11 @@ const OSDSubscriptionCard = ({ quotaCost, marketplace, organizationID, fetchQuot
   let content: React.ReactNode;
   const rows: React.ReactNode[][] = [];
 
-  let subscriptionLink = <Link to="/quota/resource-limits">Dedicated (On-Demand Limits)</Link>;
+  let subscriptionLink = <Link to="/subscriptions/usage/openshift">OpenShift Usage</Link>;
+  let subscriptionSubtitle = 'Annual Subscriptions';
   let subscriptionsDescription =
-    'The summary of all annual subscriptions for OpenShift Dedicated purchased by your organization or granted by Red Hat. For On-Demand resources, see';
+    'The summary of all annual subscriptions for OpenShift Dedicated and select add-ons purchased by your organization or granted by Red Hat. For subscription information on OpenShift Container Platform or Red Hat OpenShift Service on AWS (ROSA), see';
+
   if (marketplace) {
     // add link
     subscriptionLink = (
@@ -87,6 +89,8 @@ const OSDSubscriptionCard = ({ quotaCost, marketplace, organizationID, fetchQuot
         Dedicated (On-Demand)
       </ExternalLink>
     );
+    subscriptionSubtitle = 'OpenShift Dedicated';
+
     subscriptionsDescription =
       'Active subscriptions allow your organization to use up to a certain number of OpenShift Dedicated clusters. Overall OSD subscription capacity and usage can be viewed in';
   }
@@ -171,7 +175,7 @@ const OSDSubscriptionCard = ({ quotaCost, marketplace, organizationID, fetchQuot
 
   return (
     <Card>
-      <CardTitle>OpenShift Dedicated</CardTitle>
+      <CardTitle>{subscriptionSubtitle}</CardTitle>
       <CardBody>
         <Stack hasGutter>
           <StackItem>

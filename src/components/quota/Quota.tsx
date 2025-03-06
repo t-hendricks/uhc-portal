@@ -45,7 +45,7 @@ const Quota = ({ invalidateClusters, fetchAccount, account, marketplace }: Props
   }, []);
 
   if (account.fulfilled && account.data.organization && account.data.organization.id) {
-    const title = marketplace ? 'Dedicated (On-Demand Limits)' : 'Dedicated (Annual)';
+    const title = marketplace ? 'Dedicated (On-Demand Limits)' : 'Annual Subscriptions (Managed)';
     const organizationID = account.data.organization.id;
     return (
       <AppPage title={PAGE_TITLE}>
