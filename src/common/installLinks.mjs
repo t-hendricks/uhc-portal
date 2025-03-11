@@ -201,8 +201,8 @@ const links = {
   RHCOS_BAREMETAL_RAW_X86: `${MIRROR_RHCOS_LATEST_X86}/rhcos-metal.x86_64.raw.gz`,
   INSTALL_BAREMETAL_MULTI_ARCH: `${DOCS_BASE}/post_installation_configuration/configuring-multi-arch-compute-machines/creating-multi-arch-compute-nodes-bare-metal.html`,
 
-  INSTALL_CRC_GETTING_STARTED:
-    'https://access.redhat.com/documentation/en-us/red_hat_openshift_local',
+  OPENSHIFT_LOCAL_SUPPORT_AND_COMMUNITY_DOCS:
+    'https://source.redhat.com/groups/public/cooperative_community_support/cooperative_community_support_wiki/codeready_containers_case_response_template',
 
   INSTALL_GCPIPI_GETTING_STARTED: `${DOCS_BASE}/installing/installing_gcp/installing-gcp-account.html`,
   INSTALL_GCPIPI_LEARN_MORE: `${DOCS_BASE}/installing/installing_gcp/installing-gcp-default.html`,
