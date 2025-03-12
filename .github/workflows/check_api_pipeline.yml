@@ -37,8 +37,9 @@ jobs:
       - name: Swap Branch handling
         run: |
           git fetch origin
-          git checkout ${{ env.SWAP_BRANCH_NAME }} || git checkout -b ${{ env.SWAP_BRANCH_NAME }}
+          git checkout origin/${{ env.SWAP_BRANCH_NAME }} || git checkout -b ${{ env.SWAP_BRANCH_NAME }} || git checkout ${{ env.SWAP_BRANCH_NAME }}
           git ls-remote --heads origin ${{ env.SWAP_BRANCH_NAME }} | grep . && git reset origin/${{ env.SWAP_BRANCH_NAME }} --hard
+          git merge origin/master
       - name: Install yarn
         uses: borales/actions-yarn@v4
         with:
