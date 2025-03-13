@@ -6,7 +6,7 @@ import {
   initialSelection,
 } from '../downloadUtils';
 
-const { linux, mac, windows, rhel9_fips: rhel9Fips } = operatingSystems;
+const { linux, mac, windows, rhel9_fips: rhel9Fips, rhel9, rhel8 } = operatingSystems;
 const { arm, ppc, s390x, x86 } = architectures;
 
 describe('allArchitecturesForTool', () => {
@@ -33,6 +33,11 @@ describe('allOperatingSystemsForTool', () => {
   it('includes all OSes for oc', () => {
     const values = allOperatingSystemsForTool(urls, tools.OC, channels.STABLE).map((o) => o.value);
     expect(values).toEqual([linux, mac, windows]);
+  });
+
+  it('includes all OSes for opm', () => {
+    const values = allOperatingSystemsForTool(urls, tools.OPM, channels.STABLE).map((o) => o.value);
+    expect(values).toEqual([linux, rhel9, rhel8, mac, windows]);
   });
 });
 

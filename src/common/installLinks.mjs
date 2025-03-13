@@ -843,17 +843,25 @@ const urls = {
     [channels.STABLE]: {
       [architectures.x86]: {
         [operatingSystems.linux]: `${MIRROR_CLIENTS_STABLE_X86}opm-linux.tar.gz`,
+        [operatingSystems.rhel8]: `${MIRROR_CLIENTS_STABLE_X86}opm-linux.tar.gz`,
+        [operatingSystems.rhel9]: `${MIRROR_CLIENTS_STABLE_X86}opm-linux-rhel9.tar.gz`,
         [operatingSystems.mac]: `${MIRROR_CLIENTS_STABLE_X86}opm-mac.tar.gz`,
         [operatingSystems.windows]: `${MIRROR_CLIENTS_STABLE_X86}opm-windows.tar.gz`,
       },
       [architectures.s390x]: {
         [operatingSystems.linux]: `${MIRROR_CLIENTS_STABLE_IBMZ}opm-linux.tar.gz`,
+        [operatingSystems.rhel8]: `${MIRROR_CLIENTS_STABLE_IBMZ}opm-linux.tar.gz`,
+        [operatingSystems.rhel9]: `${MIRROR_CLIENTS_STABLE_IBMZ}opm-linux-rhel9.tar.gz`,
       },
       [architectures.ppc]: {
         [operatingSystems.linux]: `${MIRROR_CLIENTS_STABLE_PPC}opm-linux.tar.gz`,
+        [operatingSystems.rhel8]: `${MIRROR_CLIENTS_STABLE_PPC}opm-linux.tar.gz`,
+        [operatingSystems.rhel9]: `${MIRROR_CLIENTS_STABLE_PPC}opm-linux-rhel9.tar.gz`,
       },
       [architectures.arm]: {
         [operatingSystems.linux]: `${MIRROR_CLIENTS_STABLE_ARM}opm-linux.tar.gz`,
+        [operatingSystems.rhel8]: `${MIRROR_CLIENTS_STABLE_ARM}opm-linux.tar.gz`,
+        [operatingSystems.rhel9]: `${MIRROR_CLIENTS_STABLE_ARM}opm-linux-rhel9.tar.gz`,
       },
     },
   },
