@@ -16,6 +16,7 @@ import {
 } from '@patternfly/react-core';
 import {
   ActionsColumn,
+  ExpandableRowContent,
   Table,
   TableVariant,
   Tbody,
@@ -27,7 +28,7 @@ import {
 
 import { useNavigate } from '~/common/routing';
 import { LoadingSkeletonCard } from '~/components/clusters/common/LoadingSkeletonCard/LoadingSkeletonCard';
-import { useFetchClusterIdentityProviders } from '~/queries/ClusterDetailsQueries/useFetchClusterIdentityProviders';
+import { useFetchIDPsWithHTPUsers } from '~/queries/ClusterDetailsQueries/AccessControlTab/UserQueries/useFetchIDPsWithHTPUsers';
 import { OCMUI_ENHANCED_HTPASSWRD } from '~/queries/featureGates/featureConstants';
 import { useFeatureGate } from '~/queries/featureGates/useFetchFeatureGate';
 
@@ -56,16 +57,13 @@ const IDPSection = (props) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [dropdownOpen, setDropdownOpen] = React.useState(false);
-
   const region = cluster?.subscription?.rh_region_id;
 
   const {
-    clusterIdentityProviders: identityProvidersData,
+    data: identityProviders,
     isLoading: isIdentityProvidersLoading,
     isError: isIdentityProvidersError,
-  } = useFetchClusterIdentityProviders(clusterID, region);
-
-  const identityProviders = identityProvidersData?.items;
+  } = useFetchIDPsWithHTPUsers(clusterID, region);
 
   const learnMoreLink = (
     <a rel="noopener noreferrer" href={links.UNDERSTANDING_IDENTITY_PROVIDER} target="_blank">
@@ -171,32 +169,14 @@ const IDPSection = (props) => {
     return [editIDPAction, deleteIDPAction];
   };
 
-  const idpRow = (idp) => {
-    const actions = idpActionResolver(idp);
-    return (
-      <Tr key={idp.id}>
-        <Td dataLabel={columnNames.name} modifier="truncate">
-          {idp.name}
-        </Td>
-        <Td dataLabel={columnNames.type}>{IDPTypeNames[idp.type] ?? idp.type}</Td>
-        <Td dataLabel={columnNames.callbackUrl}>
-          {IDPNeedsOAuthURL(idp.type) ? (
-            <ClipboardCopyLinkButton
-              className="access-control-tables-copy"
-              text={getOauthCallbackURL(clusterUrls, idp.name, isHypershift)}
-            >
-              Copy URL to clipboard
-            </ClipboardCopyLinkButton>
-          ) : (
-            'N/A'
-          )}
-        </Td>
-        <Td isActionCell>
-          <ActionsColumn items={actions} isDisabled={!!disableReason} />
-        </Td>
-      </Tr>
-    );
-  };
+  const [expandedIdps, setExpandedIdps] = React.useState([]);
+  const setIdpExpanded = (idp, isExpanding = true) =>
+    setExpandedIdps((prevExpanded) => {
+      const otherExpandedIdps = prevExpanded.filter((r) => r !== idp.id);
+      return isExpanding ? [...otherExpandedIdps, idp.id] : otherExpandedIdps;
+    });
+
+  const isIdpExpanded = (idp) => expandedIdps.includes(idp.id);
 
   return pending ? (
     <LoadingSkeletonCard />
@@ -218,13 +198,75 @@ const IDPSection = (props) => {
               <Table aria-label="Identity Providers" variant={TableVariant.compact}>
                 <Thead>
                   <Tr>
+                    <Th screenReaderText="Row expansion" />
                     <Th width={30}>{columnNames.name}</Th>
                     <Th width={30}>{columnNames.type}</Th>
                     <Th width={30}>{columnNames.callbackUrl}</Th>
                     <Th screenReaderText="Action" />
                   </Tr>
                 </Thead>
-                <Tbody>{identityProviders.map(idpRow)}</Tbody>
+                {identityProviders.map((idp, rowIndex) => {
+                  const actions = idpActionResolver(idp);
+                  const htpUsersCount = idp.htpUsers?.length;
+                  const remainingUsers = htpUsersCount > 5 ? htpUsersCount - 5 : undefined;
+
+                  return (
+                    <Tbody key={idp.key} isExpanded={isIdpExpanded(idp)}>
+                      <Tr>
+                        <Td
+                          expand={
+                            idp?.htpUsers && isHTPasswdEnhanced
+                              ? {
+                                  rowIndex,
+                                  isExpanded: isIdpExpanded(idp),
+                                  onToggle: () => setIdpExpanded(idp, !isIdpExpanded(idp)),
+                                  expandId: idp.id,
+                                }
+                              : undefined
+                          }
+                        />
+                        <Td dataLabel={columnNames.name} modifier="truncate">
+                          {idp.name}
+                        </Td>
+                        <Td dataLabel={columnNames.type}>{IDPTypeNames[idp.type] ?? idp.type}</Td>
+                        <Td dataLabel={columnNames.callbackUrl}>
+                          {IDPNeedsOAuthURL(idp.type) ? (
+                            <ClipboardCopyLinkButton
+                              className="access-control-tables-copy"
+                              text={getOauthCallbackURL(clusterUrls, idp.name, isHypershift)}
+                            >
+                              Copy URL to clipboard
+                            </ClipboardCopyLinkButton>
+                          ) : (
+                            'N/A'
+                          )}
+                        </Td>
+                        <Td isActionCell>
+                          <ActionsColumn items={actions} isDisabled={!!disableReason} />
+                        </Td>
+                      </Tr>
+                      {idp?.htpUsers && isHTPasswdEnhanced ? (
+                        <Tr
+                          key="expandable-row"
+                          isExpanded={isIdpExpanded(idp)}
+                          data-testid="expandable-row"
+                        >
+                          <Td />
+                          <Td dataLabel="Users" noPadding>
+                            <ExpandableRowContent>
+                              <ul className="pf-v5-u-mb-md">
+                                {idp.htpUsers.slice(0, 5).map((user) => (
+                                  <li>{user.username}</li>
+                                ))}
+                                {remainingUsers ? <li> ({remainingUsers} more) </li> : null}
+                              </ul>
+                            </ExpandableRowContent>
+                          </Td>
+                        </Tr>
+                      ) : null}
+                    </Tbody>
+                  );
+                })}
               </Table>
             )}
           </StackItem>

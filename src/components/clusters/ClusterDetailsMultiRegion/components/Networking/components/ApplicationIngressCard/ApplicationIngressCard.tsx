@@ -233,18 +233,20 @@ const ApplicationIngressCard: React.FC<ApplicationIngressCardProps> = ({
           />
         </Form>
       </CardBody>
-      <CardFooter>
-        <ActionList>
-          <ButtonWithTooltip
-            variant="secondary"
-            onClick={handleEditSettings}
-            disableReason={disableEditReason}
-            isAriaDisabled={!!disableEditReason}
-          >
-            Edit application ingress
-          </ButtonWithTooltip>
-        </ActionList>
-      </CardFooter>
+      {!isRestrictedEnv() && (
+        <CardFooter>
+          <ActionList>
+            <ButtonWithTooltip
+              variant="secondary"
+              onClick={handleEditSettings}
+              disableReason={disableEditReason}
+              isAriaDisabled={!!disableEditReason}
+            >
+              Edit application ingress
+            </ButtonWithTooltip>
+          </ActionList>
+        </CardFooter>
+      )}
     </Card>
   );
 };

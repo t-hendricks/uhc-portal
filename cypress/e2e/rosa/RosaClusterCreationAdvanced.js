@@ -12,7 +12,8 @@ const rolePrefix = Cypress.env('QE_ACCOUNT_ROLE_PREFIX');
 const qeInfrastructure = Cypress.env('QE_INFRA_REGIONS')[region][0];
 const securityGroups = qeInfrastructure.SECURITY_GROUPS_NAME;
 const installerARN = `arn:aws:iam::${awsAccountID}:role/${rolePrefix}-Installer-Role`;
-const clusterName = `${clusterProperties.ClusterNamePrefix}-${(Math.random() + 1).toString(36).substring(7)}`;
+const clusterSuffix = (Math.random() + 1).toString(36).substring(7);
+const clusterName = `${clusterProperties.ClusterNamePrefix}-${clusterSuffix}`;
 const clusterDomainPrefix = `rosa${(Math.random() + 1).toString(36).substring(2)}`;
 
 describe(
@@ -145,7 +146,7 @@ describe(
         .should('include', clusterName.substring(0, 27));
       CreateRosaWizardPage.customOperatorPrefixInput()
         .type('{selectAll}')
-        .type(clusterName.substring(0, 27));
+        .type(`${clusterName.substring(0, 27)}${clusterSuffix}`);
       CreateRosaWizardPage.rosaNextButton().click();
     });
 
@@ -250,7 +251,7 @@ describe(
       CreateRosaWizardPage.createModeAutoRadio().should('be.checked');
       CreateRosaWizardPage.customOperatorPrefixInput().should(
         'have.value',
-        clusterName.substring(0, 27),
+        `${clusterName.substring(0, 27)}${clusterSuffix}`,
       );
       CreateRosaWizardPage.rosaNextButton().click();
     });

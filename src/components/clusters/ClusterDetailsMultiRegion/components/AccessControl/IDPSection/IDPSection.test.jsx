@@ -1,7 +1,8 @@
 import React from 'react';
 
-import { useFetchClusterIdentityProviders } from '~/queries/ClusterDetailsQueries/useFetchClusterIdentityProviders';
-import { checkAccessibility, render, screen } from '~/testUtils';
+import { useFetchIDPsWithHTPUsers } from '~/queries/ClusterDetailsQueries/AccessControlTab/UserQueries/useFetchIDPsWithHTPUsers';
+import { OCMUI_ENHANCED_HTPASSWRD } from '~/queries/featureGates/featureConstants';
+import { checkAccessibility, mockUseFeatureGate, render, screen } from '~/testUtils';
 
 import fixtures from '../../../__tests__/ClusterDetails.fixtures';
 
@@ -10,6 +11,13 @@ import IDPSection from './IDPSection';
 jest.mock('~/queries/ClusterDetailsQueries/useFetchClusterIdentityProviders', () => ({
   useFetchClusterIdentityProviders: jest.fn(),
 }));
+
+jest.mock(
+  '~/queries/ClusterDetailsQueries/AccessControlTab/UserQueries/useFetchIDPsWithHTPUsers',
+  () => ({
+    useFetchIDPsWithHTPUsers: jest.fn(),
+  }),
+);
 
 const baseIDPs = {
   clusterIDPList: [],
@@ -43,10 +51,11 @@ describe('<IDPSection />', () => {
   beforeEach(() => {
     jest.clearAllMocks();
   });
-  const useFetchClusterIdentityProvidersMock = useFetchClusterIdentityProviders;
+
+  const useFetchIDPSWithHTPUsersMock = useFetchIDPsWithHTPUsers;
 
   it('should render (no IDPs)', async () => {
-    useFetchClusterIdentityProvidersMock.mockReturnValue({
+    useFetchIDPSWithHTPUsersMock.mockReturnValue({
       clusterIdentityProviders: [],
       isLoading: false,
       isError: false,
@@ -58,7 +67,7 @@ describe('<IDPSection />', () => {
   });
 
   it('should render (IDPs pending)', async () => {
-    useFetchClusterIdentityProvidersMock.mockReturnValue({
+    useFetchIDPSWithHTPUsersMock.mockReturnValue({
       clusterIdentityProviders: [],
       isLoading: true,
       isError: false,
@@ -71,21 +80,20 @@ describe('<IDPSection />', () => {
 
   describe('should render (with IDPs)', () => {
     it('non-Hypershift cluster', async () => {
-      useFetchClusterIdentityProvidersMock.mockReturnValue({
-        clusterIdentityProviders: {
-          items: [
-            {
-              name: 'hello',
-              type: 'GithubIdentityProvider',
-              id: 'id1',
-            },
-            {
-              name: 'hi',
-              type: 'GoogleIdentityProvider',
-              id: 'id2',
-            },
-          ],
-        },
+      useFetchIDPSWithHTPUsersMock.mockReturnValue({
+        data: [
+          {
+            name: 'hello',
+            type: 'GithubIdentityProvider',
+            id: 'id1',
+          },
+          {
+            name: 'hi',
+            type: 'GoogleIdentityProvider',
+            id: 'id2',
+          },
+        ],
+
         isLoading: false,
         isError: false,
       });
@@ -99,21 +107,19 @@ describe('<IDPSection />', () => {
     });
 
     it('Hypershift cluster', async () => {
-      useFetchClusterIdentityProvidersMock.mockReturnValue({
-        clusterIdentityProviders: {
-          items: [
-            {
-              name: 'hello',
-              type: 'GithubIdentityProvider',
-              id: 'id1',
-            },
-            {
-              name: 'hi',
-              type: 'GoogleIdentityProvider',
-              id: 'id2',
-            },
-          ],
-        },
+      useFetchIDPSWithHTPUsersMock.mockReturnValue({
+        data: [
+          {
+            name: 'hello',
+            type: 'GithubIdentityProvider',
+            id: 'id1',
+          },
+          {
+            name: 'hi',
+            type: 'GoogleIdentityProvider',
+            id: 'id2',
+          },
+        ],
         isLoading: false,
         isError: false,
       });
@@ -122,6 +128,53 @@ describe('<IDPSection />', () => {
       expect(await screen.findByRole('grid')).toBeInTheDocument();
       expect(await screen.findByRole('cell', { name: 'hi' })).toBeInTheDocument();
       expect(await screen.findByRole('cell', { name: 'hello' })).toBeInTheDocument();
+      expect(container.querySelectorAll('.pf-v5-c-skeleton').length).toBe(0);
+      await checkAccessibility(container);
+    });
+
+    it('displays expandable section with htpasswd users', async () => {
+      mockUseFeatureGate([[OCMUI_ENHANCED_HTPASSWRD, true]]);
+      useFetchIDPSWithHTPUsersMock.mockReturnValue({
+        data: [
+          {
+            name: 'hello',
+            type: 'HTPasswdIdentityProvider',
+            id: 'id1',
+            htpUsers: [
+              {
+                kind: 'HTPasswdUser',
+                id: 'userId1',
+                username: 'user1',
+              },
+              {
+                kind: 'HTPasswdUser',
+                id: 'userId2',
+                username: 'user2',
+              },
+              {
+                kind: 'HTPasswdUser',
+                id: 'userId3',
+                username: 'user3',
+              },
+            ],
+          },
+          {
+            name: 'hi',
+            type: 'HTPasswdIdentityProvider',
+            id: 'id2',
+          },
+        ],
+        isLoading: false,
+        isError: false,
+      });
+
+      const { container } = render(<IDPSection {...props} />);
+      expect(await screen.findByRole('grid')).toBeInTheDocument();
+      expect(await screen.findByRole('cell', { name: 'hi' })).toBeInTheDocument();
+      expect(await screen.findByRole('cell', { name: 'hello' })).toBeInTheDocument();
+
+      const expandRowToggle = screen.getByTestId('expandable-row');
+      expect(expandRowToggle).toBeInTheDocument();
       expect(container.querySelectorAll('.pf-v5-c-skeleton').length).toBe(0);
       await checkAccessibility(container);
     });

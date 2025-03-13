@@ -40,6 +40,12 @@ export const getClusterAcks = (schedules, cluster, upgradeGatesData, upgradeVers
   }
 
   const possibleGates = upgradeGates.filter((gate) => {
+    if (
+      gate.cluster_condition === `gcp.authentication.wif_config_id != ''` &&
+      !cluster.gcp?.authentication?.id
+    ) {
+      return false;
+    }
     if (gate.sts_only && !isSTSCluster) {
       return false;
     }
