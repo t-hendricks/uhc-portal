@@ -1,9 +1,13 @@
+import { queryClient } from '~/components/App/queryClient';
 import { formatErrorData } from '~/queries/helpers';
 import { renderHook, waitFor } from '~/testUtils';
 
 import clusterService, { getClusterServiceForRegion } from '../../../../services/clusterService';
 
-import { useFetchIDPsWithHTPUsers } from './useFetchIDPsWithHTPUsers';
+import {
+  refetchIdentityProvidersWithHTPUsers,
+  useFetchIDPsWithHTPUsers,
+} from './useFetchIDPsWithHTPUsers';
 
 jest.mock('../../../../services/clusterService', () => ({
   __esModule: true,
@@ -21,6 +25,12 @@ jest.mock('../../../../services/clusterService', () => ({
 
 jest.mock('../../../../services/clusterService', () => ({
   getClusterServiceForRegion: jest.fn(),
+}));
+
+jest.mock('~/components/App/queryClient', () => ({
+  queryClient: {
+    invalidateQueries: jest.fn(),
+  },
 }));
 
 const clusterIDP = {
@@ -137,5 +147,26 @@ describe('useFetchIDPsWithHTPUsers', () => {
       result.current.isError,
       mockError,
     );
+  });
+
+  it('should invalidate queries with clusterID only', () => {
+    const clusterID = 'test-cluster';
+
+    refetchIdentityProvidersWithHTPUsers(clusterID);
+
+    expect(queryClient.invalidateQueries).toHaveBeenCalledWith({
+      queryKey: ['fetchIDPsWithHTPUsers', clusterID, undefined],
+    });
+  });
+
+  it('should invalidate queries with clusterID and region', () => {
+    const clusterID = 'test-cluster';
+    const region = 'us-east-1';
+
+    refetchIdentityProvidersWithHTPUsers(clusterID, region);
+
+    expect(queryClient.invalidateQueries).toHaveBeenCalledWith({
+      queryKey: ['fetchIDPsWithHTPUsers', clusterID, region],
+    });
   });
 });
