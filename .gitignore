@@ -31,3 +31,5 @@ yalc.lock
 *storybook.log
 
 openapi/*.json
+
+.env*
