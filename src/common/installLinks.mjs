@@ -470,16 +470,24 @@ const urls = {
       [architectures.x86]: {
         [operatingSystems.windows]: `${MIRROR_CLIENTS_STABLE_X86}openshift-client-windows.zip`,
         [operatingSystems.linux]: `${MIRROR_CLIENTS_STABLE_X86}openshift-client-linux.tar.gz`,
+        [operatingSystems.rhel8]: `${MIRROR_CLIENTS_STABLE_X86}openshift-client-linux-amd64-rhel8.tar.gz`,
+        [operatingSystems.rhel9]: `${MIRROR_CLIENTS_STABLE_X86}openshift-client-linux-amd64-rhel9.tar.gz`,
         [operatingSystems.mac]: `${MIRROR_CLIENTS_STABLE_X86}openshift-client-mac.tar.gz`,
       },
       [architectures.s390x]: {
         [operatingSystems.linux]: `${MIRROR_CLIENTS_STABLE_IBMZ}openshift-client-linux.tar.gz`,
+        [operatingSystems.rhel8]: `${MIRROR_CLIENTS_STABLE_IBMZ}openshift-client-linux-s390x-rhel8.tar.gz`,
+        [operatingSystems.rhel9]: `${MIRROR_CLIENTS_STABLE_IBMZ}openshift-client-linux-s390x-rhel9.tar.gz`,
       },
       [architectures.ppc]: {
         [operatingSystems.linux]: `${MIRROR_CLIENTS_STABLE_PPC}openshift-client-linux.tar.gz`,
+        [operatingSystems.rhel8]: `${MIRROR_CLIENTS_STABLE_PPC}openshift-client-linux-ppc64le-rhel8.tar.gz`,
+        [operatingSystems.rhel9]: `${MIRROR_CLIENTS_STABLE_PPC}openshift-client-linux-ppc64le-rhel9.tar.gz`,
       },
       [architectures.arm]: {
         [operatingSystems.linux]: `${MIRROR_CLIENTS_STABLE_ARM}openshift-client-linux.tar.gz`,
+        [operatingSystems.rhel8]: `${MIRROR_CLIENTS_STABLE_ARM}openshift-client-linux-arm64-rhel8.tar.gz`,
+        [operatingSystems.rhel9]: `${MIRROR_CLIENTS_STABLE_ARM}openshift-client-linux-arm64-rhel9.tar.gz`,
         [operatingSystems.mac]: `${MIRROR_CLIENTS_STABLE_ARM}openshift-client-mac-arm64.tar.gz`,
       },
     },

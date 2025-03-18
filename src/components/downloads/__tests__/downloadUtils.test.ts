@@ -32,7 +32,7 @@ describe('allOperatingSystemsForTool', () => {
 
   it('includes all OSes for oc', () => {
     const values = allOperatingSystemsForTool(urls, tools.OC, channels.STABLE).map((o) => o.value);
-    expect(values).toEqual([linux, mac, windows]);
+    expect(values).toEqual([linux, rhel9, rhel8, mac, windows]);
   });
 
   it('includes all OSes for opm', () => {
