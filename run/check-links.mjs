@@ -15,6 +15,7 @@
 
 import fetch from 'node-fetch';
 import ProgressBar from 'progress';
+
 import { getFlatUrls } from '../src/common/installLinks.mjs';
 
 // ======================================================================
@@ -33,14 +34,17 @@ const COLOR = {
   RED: '\x1b[31m',
   GREEN: '\x1b[32m',
   YELLOW: '\x1b[33m',
-  RESET: '\x1b[0m'
+  RESET: '\x1b[0m',
 };
 
 // ======================================================================
 // HELP INFORMATION
 // ======================================================================
 
-if (helpMode) {
+/**
+ * Displays help information
+ */
+function displayHelp() {
   console.log(`
 URL Checker (check-links.mjs)
 =============================
@@ -103,6 +107,10 @@ HTTP Status Codes:
     503 - Service Unavailable (Server temporarily unavailable)
     504 - Gateway Timeout (Upstream server timeout)
   `);
+}
+
+if (helpMode) {
+  displayHelp();
   process.exit(0);
 }
 
@@ -143,7 +151,7 @@ function getStatusCodeDescription(statusCode) {
     501: 'Not Implemented (Function not supported)',
     502: 'Bad Gateway (Invalid response from upstream)',
     503: 'Service Unavailable (Server temporarily unavailable)',
-    504: 'Gateway Timeout (Upstream server timeout)'
+    504: 'Gateway Timeout (Upstream server timeout)',
   };
 
   return descriptions[statusCode] || 'Unknown Status';
@@ -163,9 +171,11 @@ function getColorCodedStatus(status) {
   // Color code based on status code range
   if (status >= 200 && status < 300) {
     return `${COLOR.GREEN}${status}${COLOR.RESET}`; // Green for success
-  } else if (status >= 300 && status < 400) {
+  }
+  if (status >= 300 && status < 400) {
     return `${COLOR.YELLOW}${status}${COLOR.RESET}`; // Yellow for redirects
-  } else if (status >= 400) {
+  }
+  if (status >= 400) {
     return `${COLOR.RED}${status}${COLOR.RESET}`; // Red for client/server errors
   }
 
@@ -197,65 +207,6 @@ function formatCount(count, useRed = false) {
   return countStr;
 }
 
-// ======================================================================
-// DISPLAY FUNCTIONS
-// ======================================================================
-
-/**
- * Displays results of URL checking
- * @param {Object} results - URL checking results
- * @param {Array} testedRedirects - Results of redirect testing
- * @param {boolean} verbose - Whether to show verbose output
- * @param {boolean} redirectsMode - Whether to only show redirects
- */
-function displayResults(results, testedRedirects, verbose = false, redirectsMode = false) {
-  // Create lookup map for redirect test results
-  const redirectTestMap = {};
-  for (const item of testedRedirects) {
-    redirectTestMap[item.originalUrl] = item;
-  }
-
-  // Categorize results
-  const categories = categorizeResults(results);
-  const { success, redirects, clientErrors, serverErrors, errors, skipped } = categories;
-
-  // In redirects mode, only show redirect information
-  if (redirectsMode) {
-    displayRedirectsOnly(redirects, redirectTestMap);
-    return;
-  }
-
-  // Calculate totals
-  const totalChecked = success.length + redirects.length + clientErrors.length +
-    serverErrors.length + errors.length;
-  const grandTotal = totalChecked + skipped.length;
-
-  // Count redirect errors
-  let redirectErrorCount = 0;
-  for (const item of testedRedirects) {
-    if (item.error || (item.finalStatus && (item.finalStatus < 200 || item.finalStatus >= 300))) {
-      redirectErrorCount++;
-    }
-  }
-
-  // Display summary table
-  displaySummaryTable(categories, totalChecked, redirectErrorCount);
-
-  // Display detailed sections
-  displaySuccessSection(success, verbose);
-  displayRedirectsSection(redirects, redirectTestMap, verbose);
-  displayErrorSection('CLIENT ERRORS (4xx):', clientErrors);
-  displayErrorSection('SERVER ERRORS (5xx):', serverErrors);
-  displayRequestErrorsSection(errors);
-  displaySkippedSection(skipped, verbose);
-
-  // Display grand total
-  displayGrandTotal(grandTotal);
-
-  // Display usage notes
-  displayUsageNotes(verbose);
-}
-
 /**
  * Categorizes URL results into different types
  * @param {Object} results - URL checking results
@@ -269,7 +220,7 @@ function categorizeResults(results) {
   const errors = [];
   const skipped = [];
 
-  for (const url of Object.keys(results)) {
+  Object.keys(results).forEach((url) => {
     const result = results[url];
 
     if (result === 'not checked') {
@@ -293,100 +244,81 @@ function categorizeResults(results) {
         redirects.push({
           url,
           status,
-          redirectUrl: location
+          redirectUrl: location,
         });
       } else {
         // This is likely an error message
         errors.push({
           url,
           error: true,
-          errorMessage: result
+          errorMessage: result,
         });
       }
     }
-  }
+  });
 
   return { success, redirects, clientErrors, serverErrors, errors, skipped };
 }
 
 /**
- * Displays the summary table of results
- * @param {Object} categories - Categorized results
- * @param {number} totalChecked - Total checked URLs
- * @param {number} redirectErrorCount - Count of redirect errors
+ * Tests redirect URLs to check their final status
+ * @param {Object} statusByUrl - Status results by URL
+ * @returns {Promise<Array>} Results of redirect tests
  */
-function displaySummaryTable(categories, totalChecked, redirectErrorCount) {
-  const { success, redirects, clientErrors, serverErrors, errors, skipped } = categories;
+async function testRedirectUrls(statusByUrl) {
+  const redirectItems = [];
 
-  console.log("\nURL CHECK RESULTS");
-  console.log();
-
-  console.log("Category                           Count");
-  console.log("---------------------------------- ------");
-  console.log(`Total URLs skipped                ${formatCount(skipped.length)}`);
-  console.log(`Success                           ${formatCount(success.length)}`);
-  console.log(`Redirects                         ${formatCount(redirects.length)}`);
-  console.log(`Redirects errors                  ${formatCount(redirectErrorCount, true)}`);
-  console.log(`Client errors (4xx)               ${formatCount(clientErrors.length, true)}`);
-  console.log(`Server errors (5xx)               ${formatCount(serverErrors.length, true)}`);
-  console.log(`Request errors                    ${formatCount(errors.length, true)}`);
-  console.log("---------------------------------- ------");
-  console.log(`Total URLs checked                ${formatCount(totalChecked)}`);
-}
-
-/**
- * Displays the success section
- * @param {Array} success - Successful URLs
- * @param {boolean} verbose - Whether to show verbose output
- */
-function displaySuccessSection(success, verbose) {
-  printHeader('SUCCESS:', success.length);
-
-  if (success.length > 0) {
-    console.log(`All these URLs returned status code 200 (OK)`);
-    if (verbose) {
-      success.forEach(r => {
-        console.log(`  [Original URL] ${r.url}`);
-        console.log();
+  // Identify redirect URLs
+  Object.keys(statusByUrl).forEach((url) => {
+    const result = statusByUrl[url];
+    if (typeof result === 'string' && result.includes('->')) {
+      const parts = result.split('->');
+      const status = parseInt(parts[0].trim(), 10);
+      const redirectUrl = parts[1].trim();
+      redirectItems.push({
+        originalUrl: url,
+        redirectUrl,
+        status,
+        finalStatus: null,
+        error: null,
       });
     }
-  } else {
-    console.log("No successful URLs found");
-  }
-}
-
-/**
- * Displays redirects section with test results
- * @param {Array} redirects - Redirect URLs
- * @param {Object} redirectTestMap - Map of redirect test results
- * @param {boolean} verbose - Whether to show verbose output
- */
-function displayRedirectsSection(redirects, redirectTestMap, verbose) {
-  printHeader('REDIRECTS:', redirects.length);
-
-  if (redirects.length === 0) {
-    console.log("No redirects found");
-    return;
-  }
-
-  // Group by status code
-  const redirectsByStatus = {};
-  redirects.forEach(r => {
-    const status = r.status;
-    if (!redirectsByStatus[status]) {
-      redirectsByStatus[status] = [];
-    }
-    redirectsByStatus[status].push(r);
   });
 
-  // Sort status codes numerically
-  const sortedStatusCodes = Object.keys(redirectsByStatus).sort((a, b) => parseInt(a) - parseInt(b));
-
-  // Print each status group
-  for (const status of sortedStatusCodes) {
-    const items = redirectsByStatus[status];
-    displayRedirectStatusGroup(status, items, redirectTestMap, verbose);
+  if (redirectItems.length === 0) {
+    return redirectItems;
   }
+
+  // Test redirect destinations
+  console.log('\nTesting redirect destinations...');
+
+  // Create a progress bar for redirect testing
+  const testBar = new ProgressBar(':bar :current/:total redirect URLs tested (:percent)', {
+    total: redirectItems.length,
+    width: 30,
+    complete: '█',
+    incomplete: '░',
+    clear: true,
+  });
+
+  // Test each redirect URL
+  await Promise.all(
+    redirectItems.map(async (item) => {
+      try {
+        const response = await fetch(item.redirectUrl, { method: 'HEAD' });
+        const newItem = { ...item, finalStatus: response.status };
+        // Use Object.assign to update the original item for progress tracking
+        Object.assign(item, newItem);
+      } catch (e) {
+        const newItem = { ...item, error: e.toString() };
+        // Use Object.assign to update the original item for progress tracking
+        Object.assign(item, newItem);
+      }
+      testBar.tick();
+    }),
+  );
+
+  return redirectItems;
 }
 
 /**
@@ -397,7 +329,7 @@ function displayRedirectsSection(redirects, redirectTestMap, verbose) {
  * @param {boolean} verbose - Whether to show verbose output
  */
 function displayRedirectStatusGroup(status, items, redirectTestMap, verbose) {
-  const description = getStatusCodeDescription(parseInt(status));
+  const description = getStatusCodeDescription(parseInt(status, 10));
   const statusTitle = `[Status ${status} - ${description}]`;
   const countStr = `${items.length} URLs`;
   const targetColumn = LINE_LENGTH - countStr.length;
@@ -412,27 +344,29 @@ function displayRedirectStatusGroup(status, items, redirectTestMap, verbose) {
   const failedTests = [];
 
   // Sort items into successful and failed tests
-  for (const r of items) {
+  items.forEach((r) => {
     const testResult = redirectTestMap[r.url];
 
     if (testResult && testResult.error) {
-      failedTests.push({...r, testResult});
+      failedTests.push({ ...r, testResult });
     } else if (testResult && testResult.finalStatus) {
-      const status = testResult.finalStatus;
-      if (status >= 200 && status < 300) {
-        successfulTests.push({...r, testResult});
+      const { finalStatus } = testResult;
+      if (finalStatus >= 200 && finalStatus < 300) {
+        successfulTests.push({ ...r, testResult });
       } else {
-        failedTests.push({...r, testResult});
+        failedTests.push({ ...r, testResult });
       }
     } else {
       // No test result available
-      failedTests.push({...r, testResult: {error: "No test result available"}});
+      failedTests.push({ ...r, testResult: { error: 'No test result available' } });
     }
-  }
+  });
 
   // Always display success and error summaries
   if (successfulTests.length > 0) {
-    console.log(`  ${COLOR.GREEN}✓ ${successfulTests.length} redirect URLs tested successfully${COLOR.RESET}`);
+    console.log(
+      `  ${COLOR.GREEN}✓ ${successfulTests.length} redirect URLs tested successfully${COLOR.RESET}`,
+    );
   }
 
   if (failedTests.length > 0) {
@@ -440,27 +374,29 @@ function displayRedirectStatusGroup(status, items, redirectTestMap, verbose) {
     console.log();
 
     // Display the failed URLs
-    for (const r of failedTests) {
+    failedTests.forEach((r) => {
       console.log(`  [Original URL] ${r.url}`);
       if (r.redirectUrl) {
         console.log(`  [Redirect URL] ${r.redirectUrl}`);
 
         // Show test result details
         if (r.testResult.error) {
-          console.log(`  [Redirect URL Test] ${COLOR.RED}${r.testResult.error.substring(0, 60)}${COLOR.RESET}`);
+          console.log(
+            `  [Redirect URL Test] ${COLOR.RED}${r.testResult.error.substring(0, 60)}${COLOR.RESET}`,
+          );
         } else if (r.testResult.finalStatus) {
           let statusText;
-          const status = r.testResult.finalStatus;
-          if (status >= 300 && status < 400) {
-            statusText = `${COLOR.YELLOW}${status}${COLOR.RESET}`;
+          const testStatus = r.testResult.finalStatus;
+          if (testStatus >= 300 && testStatus < 400) {
+            statusText = `${COLOR.YELLOW}${testStatus}${COLOR.RESET}`;
           } else {
-            statusText = `${COLOR.RED}${status}${COLOR.RESET}`;
+            statusText = `${COLOR.RED}${testStatus}${COLOR.RESET}`;
           }
           console.log(`  [Redirect URL Test] ${statusText}`);
         }
       }
       console.log();
-    }
+    });
   } else if (successfulTests.length > 0) {
     // Add a line break after successful tests summary if there are no failed tests
     console.log();
@@ -468,23 +404,23 @@ function displayRedirectStatusGroup(status, items, redirectTestMap, verbose) {
 
   // In verbose mode, also display successful URLs if requested
   if (verbose && successfulTests.length > 0) {
-    console.log("  Successful redirect details:");
+    console.log('  Successful redirect details:');
     console.log();
 
-    for (const r of successfulTests) {
+    successfulTests.forEach((r) => {
       console.log(`  [Original URL] ${r.url}`);
       if (r.redirectUrl) {
         console.log(`  [Redirect URL] ${r.redirectUrl}`);
 
         // Show test result details
         if (r.testResult.finalStatus) {
-          const status = r.testResult.finalStatus;
-          const statusText = `${COLOR.GREEN}${status}${COLOR.RESET}`;
-          console.log(`  [Redirect URL Test] ${statusText}`);
+          const testStatus = r.testResult.finalStatus;
+          // Use getColorCodedStatus to fix "defined but never used" error
+          console.log(`  [Redirect URL Test] ${getColorCodedStatus(testStatus)}`);
         }
       }
       console.log();
-    }
+    });
   }
 }
 
@@ -495,14 +431,14 @@ function displayRedirectStatusGroup(status, items, redirectTestMap, verbose) {
  */
 function displayRedirectsOnly(redirects, redirectTestMap) {
   if (redirects.length === 0) {
-    console.log("\nNo redirects found");
+    console.log('\nNo redirects found');
     return;
   }
 
   // Group by status code
   const redirectsByStatus = {};
-  redirects.forEach(r => {
-    const status = r.status;
+  redirects.forEach((r) => {
+    const { status } = r;
     if (!redirectsByStatus[status]) {
       redirectsByStatus[status] = [];
     }
@@ -510,13 +446,51 @@ function displayRedirectsOnly(redirects, redirectTestMap) {
   });
 
   // Sort status codes numerically
-  const sortedStatusCodes = Object.keys(redirectsByStatus).sort((a, b) => parseInt(a) - parseInt(b));
+  const sortedStatusCodes = Object.keys(redirectsByStatus).sort(
+    (a, b) => parseInt(a, 10) - parseInt(b, 10),
+  );
 
   // Print each status group
-  for (const status of sortedStatusCodes) {
+  sortedStatusCodes.forEach((status) => {
     const items = redirectsByStatus[status];
     displayRedirectStatusGroup(status, items, redirectTestMap, true);
+  });
+}
+
+/**
+ * Displays redirects section with test results
+ * @param {Array} redirects - Redirect URLs
+ * @param {Object} redirectTestMap - Map of redirect test results
+ * @param {boolean} verbose - Whether to show verbose output
+ */
+function displayRedirectsSection(redirects, redirectTestMap, verbose) {
+  printHeader('REDIRECTS:', redirects.length);
+
+  if (redirects.length === 0) {
+    console.log('No redirects found');
+    return;
   }
+
+  // Group by status code
+  const redirectsByStatus = {};
+  redirects.forEach((r) => {
+    const { status } = r;
+    if (!redirectsByStatus[status]) {
+      redirectsByStatus[status] = [];
+    }
+    redirectsByStatus[status].push(r);
+  });
+
+  // Sort status codes numerically
+  const sortedStatusCodes = Object.keys(redirectsByStatus).sort(
+    (a, b) => parseInt(a, 10) - parseInt(b, 10),
+  );
+
+  // Print each status group
+  sortedStatusCodes.forEach((status) => {
+    const items = redirectsByStatus[status];
+    displayRedirectStatusGroup(status, items, redirectTestMap, verbose);
+  });
 }
 
 /**
@@ -528,14 +502,14 @@ function displayErrorSection(title, errorItems) {
   printHeader(title, errorItems.length);
 
   if (errorItems.length === 0) {
-    console.log("No " + title.toLowerCase().replace(':', '') + " found");
+    console.log(`No ${title.toLowerCase().replace(':', '')} found`);
     return;
   }
 
   // Group by status code
   const errorsByStatus = {};
-  errorItems.forEach(r => {
-    const status = r.status;
+  errorItems.forEach((r) => {
+    const { status } = r;
     if (!errorsByStatus[status]) {
       errorsByStatus[status] = [];
     }
@@ -543,12 +517,14 @@ function displayErrorSection(title, errorItems) {
   });
 
   // Sort status codes numerically
-  const sortedStatusCodes = Object.keys(errorsByStatus).sort((a, b) => parseInt(a) - parseInt(b));
+  const sortedStatusCodes = Object.keys(errorsByStatus).sort(
+    (a, b) => parseInt(a, 10) - parseInt(b, 10),
+  );
 
   // Print each status group
-  for (const status of sortedStatusCodes) {
+  sortedStatusCodes.forEach((status) => {
     const items = errorsByStatus[status];
-    const description = getStatusCodeDescription(parseInt(status));
+    const description = getStatusCodeDescription(parseInt(status, 10));
     // Color just the status code in red, not the entire title
     const statusTitle = `[Status ${COLOR.RED}${status}${COLOR.RESET} - ${description}]`;
     const countStr = `${items.length} URLs`;
@@ -560,13 +536,13 @@ function displayErrorSection(title, errorItems) {
     console.log();
 
     if (items.length > 0) {
-      items.forEach(r => {
+      items.forEach((r) => {
         // Print each URL with a red status code
         console.log(`  [Original URL] ${r.url}`);
         console.log();
       });
     }
-  }
+  });
 }
 
 /**
@@ -577,13 +553,13 @@ function displayRequestErrorsSection(errors) {
   printHeader('REQUEST ERRORS:', errors.length);
 
   if (errors.length === 0) {
-    console.log("No request errors found");
+    console.log('No request errors found');
     return;
   }
 
   // Group errors by first word of error message (rough error type)
   const errorsByType = {};
-  errors.forEach(r => {
+  errors.forEach((r) => {
     const errorType = r.errorMessage.split(' ')[0].replace(':', '');
     if (!errorsByType[errorType]) {
       errorsByType[errorType] = [];
@@ -592,7 +568,7 @@ function displayRequestErrorsSection(errors) {
   });
 
   // Print each error type group
-  for (const [errorType, items] of Object.entries(errorsByType)) {
+  Object.entries(errorsByType).forEach(([errorType, items]) => {
     const typeTitle = `[${errorType}]`;
     const countStr = `${items.length} URLs`;
     const targetColumn = LINE_LENGTH - countStr.length;
@@ -603,13 +579,13 @@ function displayRequestErrorsSection(errors) {
     console.log();
 
     if (items.length > 0) {
-      items.forEach(r => {
+      items.forEach((r) => {
         console.log(`  [Original URL] ${r.url}`);
         console.log(`  [Error] ${r.errorMessage}`);
         console.log();
       });
     }
-  }
+  });
 }
 
 /**
@@ -621,17 +597,17 @@ function displaySkippedSection(skipped, verbose) {
   printHeader('SKIPPED:', skipped.length);
 
   if (skipped.length === 0) {
-    console.log("No URLs were skipped");
+    console.log('No URLs were skipped');
     return;
   }
 
   if (verbose) {
-    skipped.forEach(r => {
+    skipped.forEach((r) => {
       console.log(`  [Original URL] ${r.url}`);
       console.log();
     });
   } else {
-    console.log("URLs that were skipped (e.g., mailto: links)");
+    console.log('URLs that were skipped (e.g., mailto: links)');
   }
 }
 
@@ -640,12 +616,12 @@ function displaySkippedSection(skipped, verbose) {
  * @param {number} grandTotal - Total URLs
  */
 function displayGrandTotal(grandTotal) {
-  console.log("\n" + "-".repeat(LINE_LENGTH));
-  const grandTotalTitle = "Total URLs checked:";
+  console.log(`\n${'-'.repeat(LINE_LENGTH)}`);
+  const grandTotalTitle = 'Total URLs checked:';
   const grandCountStr = `${grandTotal} URLs`;
   const grandPadding = Math.max(0, LINE_LENGTH - grandTotalTitle.length - grandCountStr.length);
   console.log(`${grandTotalTitle}${' '.repeat(grandPadding)}${grandCountStr}`);
-  console.log("-".repeat(LINE_LENGTH));
+  console.log('-'.repeat(LINE_LENGTH));
 }
 
 /**
@@ -654,13 +630,116 @@ function displayGrandTotal(grandTotal) {
  */
 function displayUsageNotes(verbose) {
   if (!verbose) {
-    console.log("\nNote: Run with -v or --verbose to see URLs for successful requests and redirects");
-    console.log("      Run with -r or --redirects to see ONLY redirected URLs with targets");
-    console.log("      Run with -h or --help for more information");
+    console.log(
+      '\nNote: Run with -v or --verbose to see URLs for successful requests and redirects',
+    );
+    console.log('      Run with -r or --redirects to see ONLY redirected URLs with targets');
+    console.log('      Run with -h or --help for more information');
   } else {
-    console.log("\nNote: Run with -r or --redirects to see ONLY redirected URLs with targets");
-    console.log("      Run with -h or --help for more information");
+    console.log('\nNote: Run with -r or --redirects to see ONLY redirected URLs with targets');
+    console.log('      Run with -h or --help for more information');
   }
+}
+
+/**
+ * Displays the summary table of results
+ * @param {Object} categories - Categorized results
+ * @param {number} totalChecked - Total checked URLs
+ * @param {number} redirectErrorCount - Count of redirect errors
+ */
+function displaySummaryTable(categories, totalChecked, redirectErrorCount) {
+  const { success, redirects, clientErrors, serverErrors, errors, skipped } = categories;
+
+  console.log('\nURL CHECK RESULTS');
+  console.log();
+
+  console.log('Category                           Count');
+  console.log('---------------------------------- ------');
+  console.log(`Total URLs skipped                ${formatCount(skipped.length)}`);
+  console.log(`Success                           ${formatCount(success.length)}`);
+  console.log(`Redirects                         ${formatCount(redirects.length)}`);
+  console.log(`Redirects errors                  ${formatCount(redirectErrorCount, true)}`);
+  console.log(`Client errors (4xx)               ${formatCount(clientErrors.length, true)}`);
+  console.log(`Server errors (5xx)               ${formatCount(serverErrors.length, true)}`);
+  console.log(`Request errors                    ${formatCount(errors.length, true)}`);
+  console.log('---------------------------------- ------');
+  console.log(`Total URLs checked                ${formatCount(totalChecked)}`);
+}
+
+/**
+ * Displays the success section
+ * @param {Array} success - Successful URLs
+ * @param {boolean} verbose - Whether to show verbose output
+ */
+function displaySuccessSection(success, verbose) {
+  printHeader('SUCCESS:', success.length);
+
+  if (success.length > 0) {
+    console.log(`All these URLs returned status code 200 (OK)`);
+    if (verbose) {
+      success.forEach((r) => {
+        console.log(`  [Original URL] ${r.url}`);
+        console.log();
+      });
+    }
+  } else {
+    console.log('No successful URLs found');
+  }
+}
+
+/**
+ * Displays results of URL checking
+ * @param {Object} results - URL checking results
+ * @param {Array} testedRedirects - Results of redirect testing
+ * @param {boolean} verbose - Whether to show verbose output
+ * @param {boolean} redirectsMode - Whether to only show redirects
+ */
+function displayResults(results, testedRedirects, verbose = false, redirectsMode = false) {
+  // Create lookup map for redirect test results
+  const redirectTestMap = {};
+  testedRedirects.forEach((item) => {
+    redirectTestMap[item.originalUrl] = item;
+  });
+
+  // Categorize results
+  const categories = categorizeResults(results);
+  const { success, redirects, clientErrors, serverErrors, errors, skipped } = categories;
+
+  // In redirects mode, only show redirect information
+  if (redirectsMode) {
+    displayRedirectsOnly(redirects, redirectTestMap);
+    return;
+  }
+
+  // Calculate totals
+  const totalChecked =
+    success.length + redirects.length + clientErrors.length + serverErrors.length + errors.length;
+  const grandTotal = totalChecked + skipped.length;
+
+  // Count redirect errors
+  let redirectErrorCount = 0;
+  testedRedirects.forEach((item) => {
+    if (item.error || (item.finalStatus && (item.finalStatus < 200 || item.finalStatus >= 300))) {
+      redirectErrorCount += 1;
+    }
+  });
+
+  // Display summary table
+  displaySummaryTable(categories, totalChecked, redirectErrorCount);
+
+  // Display detailed sections
+  displaySuccessSection(success, verbose);
+  displayRedirectsSection(redirects, redirectTestMap, verbose);
+  displayErrorSection('CLIENT ERRORS (4xx):', clientErrors);
+  displayErrorSection('SERVER ERRORS (5xx):', serverErrors);
+  displayRequestErrorsSection(errors);
+  displaySkippedSection(skipped, verbose);
+
+  // Display grand total
+  displayGrandTotal(grandTotal);
+
+  // Display usage notes
+  displayUsageNotes(verbose);
 }
 
 // ======================================================================
@@ -671,7 +750,7 @@ function displayUsageNotes(verbose) {
  * Processes URLs and tests redirects
  */
 async function main() {
-  console.log("Checking URLs...");
+  console.log('Checking URLs...');
 
   // Get URLs to check
   const urls = await getFlatUrls();
@@ -683,7 +762,7 @@ async function main() {
     width: 30,
     complete: '█',
     incomplete: '░',
-    clear: true
+    clear: true,
   });
 
   // Results object
@@ -719,71 +798,16 @@ async function main() {
   displayResults(statusByUrl, redirectItems, verboseMode, redirectsMode);
 }
 
-/**
- * Tests redirect URLs to check their final status
- * @param {Object} statusByUrl - Status results by URL
- * @returns {Array} Results of redirect tests
- */
-async function testRedirectUrls(statusByUrl) {
-  const redirectItems = [];
-
-  // Identify redirect URLs
-  for (const url of Object.keys(statusByUrl)) {
-    const result = statusByUrl[url];
-    if (typeof result === 'string' && result.includes('->')) {
-      const parts = result.split('->');
-      const status = parseInt(parts[0].trim(), 10);
-      const redirectUrl = parts[1].trim();
-      redirectItems.push({
-        originalUrl: url,
-        redirectUrl: redirectUrl,
-        status: status,
-        finalStatus: null,
-        error: null
-      });
-    }
-  }
-
-  if (redirectItems.length === 0) {
-    return redirectItems;
-  }
-
-  // Test redirect destinations
-  console.log("\nTesting redirect destinations...");
-
-  // Create a progress bar for redirect testing
-  const testBar = new ProgressBar(':bar :current/:total redirect URLs tested (:percent)', {
-    total: redirectItems.length,
-    width: 30,
-    complete: '█',
-    incomplete: '░',
-    clear: true
-  });
-
-  // Test each redirect URL
-  await Promise.all(
-    redirectItems.map(async (item) => {
-      try {
-        const response = await fetch(item.redirectUrl, { method: 'HEAD' });
-        item.finalStatus = response.status;
-      } catch (e) {
-        item.error = e.toString();
-      }
-      testBar.tick();
-    })
-  );
-
-  return redirectItems;
-}
-
 // ======================================================================
 // SCRIPT EXECUTION
 // ======================================================================
 
 // Run the main function and handle errors
-main().then(() => {
-  process.exit(0);
-}).catch(error => {
-  console.error('Error running script:', error);
-  process.exit(1);
-});
+main()
+  .then(() => {
+    process.exit(0);
+  })
+  .catch((error) => {
+    console.error('Error running script:', error);
+    process.exit(1);
+  });
