@@ -2208,23 +2208,23 @@
     "@nodelib/fs.scandir" "2.1.5"
     fastq "^1.6.0"
 
-"@openshift-assisted/locales@2.37.3":
-  version "2.37.3"
-  resolved "https://registry.yarnpkg.com/@openshift-assisted/locales/-/locales-2.37.3.tgz#1db813ff4077ad5890c17a6e5229e913ad77c590"
-  integrity sha512-Oy5UYifD+wjAl1tyfyUOcfbSGuxY1o2dAnPTDgNkh4BCFfei4iSIQYlYN17u5XuisZ4V5jftQGi4q/LKUDzYeg==
+"@openshift-assisted/locales@2.38.4":
+  version "2.38.4"
+  resolved "https://registry.yarnpkg.com/@openshift-assisted/locales/-/locales-2.38.4.tgz#e1bd1aea798cfeab00f365b3e714d9e5676d9f20"
+  integrity sha512-X92Ca9f9YM/o/8zJeMhIXI+X450RKWaDIAu4KzUz1LHANQBQ7wVrkc3IIuZ/6Uj21UMavkmYlsNwUACzD21Dww==
 
-"@openshift-assisted/types@2.37.3":
-  version "2.37.3"
-  resolved "https://registry.yarnpkg.com/@openshift-assisted/types/-/types-2.37.3.tgz#f6798c1c8fed7defeaeea1f292b75bb1887d1b8d"
-  integrity sha512-LADtbO+bSZaloJjuunK8KPNFIhtuuU3ChTsthL52F0Md4c5FpDP3E16m+ruxu9wC86sQ9dgyTtue+3nGOn3LFQ==
+"@openshift-assisted/types@2.38.4":
+  version "2.38.4"
+  resolved "https://registry.yarnpkg.com/@openshift-assisted/types/-/types-2.38.4.tgz#fa2ae9c601756d953f85880626aeda1bc53d96fa"
+  integrity sha512-nnwpCnSVt/wOIlhFrRnlgm5RCJjIVlW9bxY7zvwAROu36BqxW9je6yIfWDfS7hgXn7am6HH+6XIUIKJgn8b9SQ==
 
-"@openshift-assisted/ui-lib@2.37.3":
-  version "2.37.3"
-  resolved "https://registry.yarnpkg.com/@openshift-assisted/ui-lib/-/ui-lib-2.37.3.tgz#4e108892385fa10257cfa4fb9ef02571ca4324b1"
-  integrity sha512-FdCRw/0e0cVZmWpbCfG4s9IvGVsVvGYzfOvkZroFRZSfz/zwczc5kLlwKPjKM5F897zBjhq8xfb7N+ag/WSO4Q==
+"@openshift-assisted/ui-lib@2.38.4":
+  version "2.38.4"
+  resolved "https://registry.yarnpkg.com/@openshift-assisted/ui-lib/-/ui-lib-2.38.4.tgz#218dcb00bc0bbb16e862ad0d278e58a9448948e3"
+  integrity sha512-F+0r82HeX0j3xa9Ng1FUML3Ln6Ao8yZWsfDXjlqy+Mn1OGwkajQM0uQ4iUkPF9caWdmBJht3msbErGvGsaLUFQ==
   dependencies:
-    "@openshift-assisted/locales" "2.37.3"
-    "@openshift-assisted/types" "2.37.3"
+    "@openshift-assisted/locales" "2.38.4"
+    "@openshift-assisted/types" "2.38.4"
     "@openshift-console/dynamic-plugin-sdk" "0.0.3"
     "@patternfly/patternfly" "5.2.0"
     "@patternfly/react-code-editor" "5.2.0"
@@ -3876,6 +3876,11 @@
   version "4.0.2"
   resolved "https://registry.yarnpkg.com/@types/parse-json/-/parse-json-4.0.2.tgz#5950e50960793055845e956c427fc2b0d70c5239"
   integrity sha512-dISoDXWWQwUquiKsyZ4Ng+HX2KsPL7LyHKHQwgGFEA3IaKac4Obd+h2a/a6waisAoepJlBcx9paWqjA8/HVjCw==
+
+"@types/parse-path@^7.0.0":
+  version "7.0.3"
+  resolved "https://registry.yarnpkg.com/@types/parse-path/-/parse-path-7.0.3.tgz#cec2da2834ab58eb2eb579122d9a1fc13bd7ef36"
+  integrity sha512-LriObC2+KYZD3FzCrgWGv/qufdUy4eXrxcLgQMfYXgPbLIecKIsVBaQgUPmxSSLcjmYbDTQbMgr6qr6l/eb7Bg==
 
 "@types/prop-types@*":
   version "15.7.12"
@@ -11782,10 +11787,25 @@ parse-json@^8.1.0:
     index-to-position "^0.1.2"
     type-fest "^4.7.1"
 
+parse-path@^7.0.0:
+  version "7.0.1"
+  resolved "https://registry.yarnpkg.com/parse-path/-/parse-path-7.0.1.tgz#ae548cd36315fd8881a3610eae99fa08123ee0e2"
+  integrity sha512-6ReLMptznuuOEzLoGEa+I1oWRSj2Zna5jLWC+l6zlfAI4dbbSaIES29ThzuPkbhNahT65dWzfoZEO6cfJw2Ksg==
+  dependencies:
+    protocols "^2.0.0"
+
 parse-srcset@^1.0.2:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/parse-srcset/-/parse-srcset-1.0.2.tgz#f2bd221f6cc970a938d88556abc589caaaa2bde1"
   integrity sha512-/2qh0lav6CmI15FzA3i/2Bzk2zCgQhGMkvhOhKNcBVQ1ldgpbfiNTVslmooUmWJcADi1f1kIeynbDRVzNlfR6Q==
+
+parse-url@^9.2.0:
+  version "9.2.0"
+  resolved "https://registry.yarnpkg.com/parse-url/-/parse-url-9.2.0.tgz#d75da32b3bbade66e4eb0763fb4851d27526b97b"
+  integrity sha512-bCgsFI+GeGWPAvAiUv63ZorMeif3/U0zaXABGJbOWt5OH2KCaPHF6S+0ok4aqM9RuIPGyZdx9tR9l13PsW4AYQ==
+  dependencies:
+    "@types/parse-path" "^7.0.0"
+    parse-path "^7.0.0"
 
 parse5@^7.0.0, parse5@^7.1.1:
   version "7.1.2"
@@ -12129,6 +12149,11 @@ property-information@^6.0.0:
   version "6.4.1"
   resolved "https://registry.yarnpkg.com/property-information/-/property-information-6.4.1.tgz#de8b79a7415fd2107dfbe65758bb2cc9dfcf60ac"
   integrity sha512-OHYtXfu5aI2sS2LWFSN5rgJjrQ4pCy8i1jubJLe2QvMF8JJ++HXTUIVWFLfXJoaOfvYYjk2SN8J2wFUWIGXT4w==
+
+protocols@^2.0.0:
+  version "2.0.2"
+  resolved "https://registry.yarnpkg.com/protocols/-/protocols-2.0.2.tgz#822e8fcdcb3df5356538b3e91bfd890b067fd0a4"
+  integrity sha512-hHVTzba3wboROl0/aWRRG9dMytgH6ow//STBZh43l/wQgmMhYhOFi0EHWAPtoCz9IAUymsyP0TSBHkhgMEGNnQ==
 
 proxy-addr@~2.0.7:
   version "2.0.7"
