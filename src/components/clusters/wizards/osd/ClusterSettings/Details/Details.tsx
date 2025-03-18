@@ -161,6 +161,12 @@ function Details() {
       ...azQuotaParams,
     }) > 0;
 
+  React.useEffect(() => {
+    if (!hasSingleAzResources && hasMultiAzResources) {
+      setFieldValue(FieldId.MultiAz, 'true');
+    }
+  }, [hasSingleAzResources, hasMultiAzResources, setFieldValue]);
+
   const handleCloudRegionChange = useCallback(() => {
     // Clears fields related to the region: VPC and machinePoolsSubnets
     const azCount = isMultiAz ? 3 : 1;

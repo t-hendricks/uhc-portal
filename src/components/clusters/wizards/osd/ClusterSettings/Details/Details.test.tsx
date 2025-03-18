@@ -9,11 +9,13 @@ import {
   noProviders,
   providersResponse,
 } from '~/common/__tests__/regions.fixtures';
+import * as quotaSelectors from '~/components/clusters/common/quotaSelectors';
 import { FieldId, initialValues } from '~/components/clusters/wizards/osd/constants';
 import ocpLifeCycleStatuses from '~/components/releases/__mocks__/ocpLifeCycleStatuses';
+import { UNSTABLE_CLUSTER_VERSIONS } from '~/queries/featureGates/featureConstants';
 import clusterService from '~/services/clusterService';
 import getOCPLifeCycleStatus from '~/services/productLifeCycleService';
-import { render, screen, withState } from '~/testUtils';
+import { mockUseFeatureGate, render, screen, withState } from '~/testUtils';
 
 import Details from './Details';
 
@@ -23,6 +25,9 @@ jest.mock('~/services/productLifeCycleService');
 const version = { id: '4.14.0' };
 
 describe('<Details />', () => {
+  beforeEach(() => {
+    mockUseFeatureGate([[UNSTABLE_CLUSTER_VERSIONS, false]]);
+  });
   const defaultValues = {
     ...initialValues,
     [FieldId.ClusterVersion]: version,
@@ -96,6 +101,31 @@ describe('<Details />', () => {
       );
 
       expect(screen.queryByText('Domain prefix')).toBe(null);
+    });
+  });
+
+  describe('Availability', () => {
+    it('displays the single AZ as selected when there are enough quota', async () => {
+      render(
+        <Formik initialValues={defaultValues} onSubmit={() => {}}>
+          <Details />
+        </Formik>,
+      );
+      const multiAzInput = screen.getByRole('radio', { name: /Single zone/i });
+      expect(multiAzInput).toBeChecked();
+    });
+
+    it('displays the multi AZ as selected when there are not enough quota', async () => {
+      const mockAvailableQuota = jest.spyOn(quotaSelectors, 'availableQuota');
+      mockAvailableQuota.mockReturnValueOnce(0).mockReturnValueOnce(2);
+      render(
+        <Formik initialValues={defaultValues} onSubmit={() => {}}>
+          <Details />
+        </Formik>,
+      );
+
+      const multiAzInput = screen.getByRole('radio', { name: /Multi-zone/i });
+      expect(multiAzInput).toBeChecked();
     });
   });
 });
