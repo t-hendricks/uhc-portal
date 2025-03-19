@@ -12,7 +12,7 @@ const rolePrefix = Cypress.env('QE_ACCOUNT_ROLE_PREFIX');
 const qeInfrastructure = Cypress.env('QE_INFRA_REGIONS')[region][0];
 const securityGroups = qeInfrastructure.SECURITY_GROUPS_NAME;
 const installerARN = `arn:aws:iam::${awsAccountID}:role/${rolePrefix}-Installer-Role`;
-const clusterSuffix = (Math.random() + 1).toString(36).substring(7);
+const clusterSuffix = (Math.random() + 1).toString(36).slice(3, 7);
 const clusterName = `${clusterProperties.ClusterNamePrefix}-${clusterSuffix}`;
 const clusterDomainPrefix = `rosa${(Math.random() + 1).toString(36).substring(2)}`;
 
