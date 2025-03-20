@@ -8,6 +8,12 @@ import { HTPasswdIdpUsers, HTPasswdUser } from '~/queries/types';
 import { getClusterServiceForRegion } from '~/services/clusterService';
 import { IdentityProvider } from '~/types/clusters_mgmt.v1';
 
+export const refetchIdentityProvidersWithHTPUsers = (clusterID: string, region?: string) => {
+  queryClient.invalidateQueries({
+    queryKey: ['fetchIDPsWithHTPUsers', clusterID, region],
+  });
+};
+
 const usersErrors: any = [];
 
 export const useFetchIDPsWithHTPUsers = (clusterID: string, region?: string) => {
@@ -74,10 +80,4 @@ export const useFetchIDPsWithHTPUsers = (clusterID: string, region?: string) => 
     error: formattedError,
     isSuccess,
   };
-};
-
-export const refetchIdentityProvidersWithHTPUsers = (clusterID: string, region?: string) => {
-  queryClient.invalidateQueries({
-    queryKey: ['fetchIDPsWithHTPUsers', clusterID, region],
-  });
 };

@@ -34,16 +34,20 @@ jobs:
         with:
           path: './node_modules'
           key: check_api-${{ env.NODE_VERSION }}-${{ hashFiles('**/yarn.lock') }}
+      - name: Set git identity
+        run: |
+          git config --global user.name "Open API Bot"
+          git config --global user.email "***REMOVED***"
       - name: Swap Branch handling
         run: |
           git fetch origin
-          git checkout origin/${{ env.SWAP_BRANCH_NAME }} || git checkout -b ${{ env.SWAP_BRANCH_NAME }} || git checkout ${{ env.SWAP_BRANCH_NAME }}
+          git checkout origin/${{ env.SWAP_BRANCH_NAME }} -b ${{ env.SWAP_BRANCH_NAME }} || git checkout -b ${{ env.SWAP_BRANCH_NAME }} || git checkout ${{ env.SWAP_BRANCH_NAME }}
           git ls-remote --heads origin ${{ env.SWAP_BRANCH_NAME }} | grep . && git reset origin/${{ env.SWAP_BRANCH_NAME }} --hard
-          git merge origin/master
+          git merge origin/master --allow-unrelated-histories -m "merge with master"
       - name: Install yarn
         uses: borales/actions-yarn@v4
         with:
-          cmd: install --frozen-lockfile --cache-folder .yarn          
+          cmd: install --frozen-lockfile --cache-folder .yarn
       - name: Generating model based on OpenAPI contracts
         run: make openapi
       - name: Diffs Counter
@@ -57,8 +61,6 @@ jobs:
       - name: Create commit
         if: steps.diffs.outputs.counter > 0 
         run: |
-          git config --global user.name "Open API Bot"
-          git config --global user.email "***REMOVED***"
           git commit -m "Open API Changes" --no-verify
       - name: Push changes
         if: steps.diffs.outputs.counter > 0 

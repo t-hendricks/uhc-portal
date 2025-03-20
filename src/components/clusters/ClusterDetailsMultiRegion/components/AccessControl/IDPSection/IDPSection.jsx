@@ -254,7 +254,7 @@ const IDPSection = (props) => {
                           <Td />
                           <Td dataLabel="Users" noPadding>
                             <ExpandableRowContent>
-                              <ul className="pf-v5-u-mb-md">
+                              <ul className="pf-v5-u-mb-md" style={{ wordBreak: 'break-word' }}>
                                 {idp.htpUsers.slice(0, 5).map((user) => (
                                   <li>{user.username}</li>
                                 ))}

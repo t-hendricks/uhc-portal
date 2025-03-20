@@ -102,7 +102,7 @@ browser_image="quay.io/app-sre/ocmui-cypress-tests:updated"
 # ROSA CLI images for pre-requisits containerized runs
 rosacli_image="registry.ci.openshift.org/ci/rosa-aws-cli:latest"
 # QCMQE image for setting up cloud resources for the runs
-cloudutil_image="quay.io/openshifttest/ocmqeaws:new"
+cloudutil_image="quay.io/openshifttest/ocmqeaws:1.2.0"
 
 mkdir -p "${PWD}/cypress/videos"
 mkdir -p "${PWD}/cypress/screenshots"

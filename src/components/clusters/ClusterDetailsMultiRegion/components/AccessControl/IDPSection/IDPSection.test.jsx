@@ -1,8 +1,16 @@
 import React from 'react';
+import * as reactRedux from 'react-redux';
 
 import { useFetchIDPsWithHTPUsers } from '~/queries/ClusterDetailsQueries/AccessControlTab/UserQueries/useFetchIDPsWithHTPUsers';
 import { OCMUI_ENHANCED_HTPASSWRD } from '~/queries/featureGates/featureConstants';
-import { checkAccessibility, mockUseFeatureGate, render, screen } from '~/testUtils';
+import {
+  checkAccessibility,
+  mockUseFeatureGate,
+  render,
+  screen,
+  userEvent,
+  withState,
+} from '~/testUtils';
 
 import fixtures from '../../../__tests__/ClusterDetails.fixtures';
 
@@ -10,6 +18,11 @@ import IDPSection from './IDPSection';
 
 jest.mock('~/queries/ClusterDetailsQueries/useFetchClusterIdentityProviders', () => ({
   useFetchClusterIdentityProviders: jest.fn(),
+}));
+
+jest.mock('react-redux', () => ({
+  ...jest.requireActual('react-redux'),
+  useDispatch: jest.fn(),
 }));
 
 jest.mock(
@@ -36,6 +49,7 @@ const props = {
   cluster: fixtures.clusterDetails.cluster,
   idpActions: {
     list: true,
+    delete: true,
   },
   clusterID: '1i4counta3holamvo1g5tp6n8p3a03bq',
   subscriptionID: '1msoogsgTLQ4PePjrTOt3UqvMzX',
@@ -177,6 +191,63 @@ describe('<IDPSection />', () => {
       expect(expandRowToggle).toBeInTheDocument();
       expect(container.querySelectorAll('.pf-v5-c-skeleton').length).toBe(0);
       await checkAccessibility(container);
+    });
+
+    it('should call open delete IDP modal', async () => {
+      const useDispatchMock = jest.spyOn(reactRedux, 'useDispatch');
+      const mockedDispatch = jest.fn();
+      useDispatchMock.mockReturnValue(mockedDispatch);
+
+      useFetchIDPSWithHTPUsersMock.mockReturnValue({
+        data: [
+          {
+            name: 'hello',
+            type: 'GithubIdentityProvider',
+            id: 'id1',
+          },
+        ],
+
+        isLoading: false,
+        isError: false,
+      });
+
+      const initialState = {
+        modal: {
+          modalName: 'delete-idp',
+          data: {
+            clusterID: 'myclusterid',
+            idpId: 'id1',
+            idpName: 'hello',
+            idpType: 'GithubIdentityProvider',
+          },
+        },
+      };
+
+      withState(initialState, true).render(<IDPSection {...props} />);
+      expect(await screen.findByRole('grid')).toBeInTheDocument();
+      expect(await screen.findByRole('cell', { name: 'hello' })).toBeInTheDocument();
+      const toggleKebab = screen.getByLabelText('Kebab toggle');
+      await userEvent.click(toggleKebab);
+
+      const deleteBtn = screen.getByRole('menuitem', { name: 'Delete' });
+
+      await userEvent.click(deleteBtn);
+
+      expect(mockedDispatch).toHaveBeenCalledWith({
+        error: undefined,
+        meta: undefined,
+        type: 'OPEN_MODAL',
+        payload: {
+          data: {
+            clusterID: '1i4counta3holamvo1g5tp6n8p3a03bq',
+            idpID: 'id1',
+            idpName: 'hello',
+            idpType: 'GitHub',
+            region: undefined,
+          },
+          name: 'delete-idp',
+        },
+      });
     });
   });
 });
