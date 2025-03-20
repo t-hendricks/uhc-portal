@@ -149,19 +149,11 @@ describe('useFetchIDPsWithHTPUsers', () => {
     );
   });
 
-  it('should invalidate queries with clusterID only', () => {
+  it.each([
+    ['clusterID only', undefined],
+    ['clusterID and region', 'us-east-1'],
+  ])('should invalidate queries with %s', (_title: string, region: string | undefined) => {
     const clusterID = 'test-cluster';
-
-    refetchIdentityProvidersWithHTPUsers(clusterID);
-
-    expect(queryClient.invalidateQueries).toHaveBeenCalledWith({
-      queryKey: ['fetchIDPsWithHTPUsers', clusterID, undefined],
-    });
-  });
-
-  it('should invalidate queries with clusterID and region', () => {
-    const clusterID = 'test-cluster';
-    const region = 'us-east-1';
 
     refetchIdentityProvidersWithHTPUsers(clusterID, region);
 
