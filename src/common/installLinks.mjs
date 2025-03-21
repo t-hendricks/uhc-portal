@@ -73,7 +73,7 @@ const ROSA_CP_DOCS_BASE =
   'https://access.redhat.com/documentation/en-us/red_hat_openshift_service_on_aws/4/html';
 
 const COSTMGMT_DOCS_BASE =
-  'https://access.redhat.com/documentation/en-us/cost_management_service/2023';
+  'https://docs.redhat.com/en/documentation/cost_management_service/1-latest/html';
 const OCM_DOCS_BASE =
   'https://access.redhat.com/documentation/en-us/openshift_cluster_manager/2023';
 
@@ -367,7 +367,7 @@ const links = {
   OCM_DOCS_SUBSCRIPTIONS: `${OCM_DOCS_BASE}/html/managing_clusters/assembly-cluster-subscriptions`,
   OCM_DOCS_UPGRADING_OSD_TRIAL: `${OCM_DOCS_BASE}/html/managing_clusters/assembly-cluster-subscriptions#upgrading-osd-trial-cluster_assembly-cluster-subscriptions`,
 
-  COSTMGMT_ADDING_OCP: `${COSTMGMT_DOCS_BASE}/html/adding_an_openshift_container_platform_source_to_cost_management/assembly-adding-openshift-container-platform-source`,
+  COSTMGMT_ADDING_OCP: `${COSTMGMT_DOCS_BASE}/integrating_openshift_container_platform_data_into_cost_management/index`,
 
   FINDING_AWS_ACCOUNT_IDENTIFIERS:
     'https://docs.aws.amazon.com/accounts/latest/reference/manage-acct-identifiers.html',
