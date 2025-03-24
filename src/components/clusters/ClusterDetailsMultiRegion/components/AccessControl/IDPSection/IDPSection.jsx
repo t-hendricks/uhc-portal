@@ -143,11 +143,14 @@ const IDPSection = (props) => {
   const idpActionResolver = (idp) => {
     const editIDPAction = {
       title: 'Edit',
-      isAriaDisabled: !idpActions.update,
       onClick: () => {
         navigate(`/details/s/${subscriptionID}/edit-idp/${idp.name}`);
       },
     };
+    if (!idpActions.update) {
+      editIDPAction.isAriaDisabled = true;
+      editIDPAction.tooltipProps = { content: notAllowedReason('edit') };
+    }
     const deleteIDPAction = {
       title: 'Delete',
       isAriaDisabled: !idpActions.delete,
@@ -163,6 +166,11 @@ const IDPSection = (props) => {
         );
       },
     };
+    if (!idpActions.delete) {
+      deleteIDPAction.isAriaDisabled = true;
+      deleteIDPAction.tooltipProps = { content: notAllowedReason('delete') };
+    }
+
     if (IDPTypeNames[idp.type] === IDPTypeNames[IDPformValues.HTPASSWD] && !isHTPasswdEnhanced) {
       return [deleteIDPAction];
     }
