@@ -121,7 +121,7 @@ describe('<LimitedSupportAlert />', () => {
     expect(singleActionLink).toHaveTextContent(/Learn more/);
     expect(singleActionLink).toHaveAttribute(
       'href',
-      'https://docs.openshift.com/dedicated/osd_architecture/osd_policy/osd-service-definition.html#limited-support_osd-service-definition',
+      'https://docs.redhat.com/en/documentation/openshift_dedicated/4/html/introduction_to_openshift_dedicated/policies-and-service-definition#limited-support_osd-service-definition',
     );
   });
 

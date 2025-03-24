@@ -66,7 +66,7 @@ const SHP_CLI_LATEST =
   'https://developers.redhat.com/content-gateway/rest/browse/pub/openshift-v4/clients/openshift-builds/latest/';
 
 const DOCS_BASE = 'https://docs.openshift.com/container-platform/4.18';
-const OSD_DOCS_BASE = 'https://docs.openshift.com/dedicated';
+const OSD_DOCS_BASE = 'https://docs.redhat.com/en/documentation/openshift_dedicated/4/html';
 const ROSA_DOCS_BASE = 'https://docs.openshift.com/rosa';
 const ROSA_HCP_DOCS_BASE = `${ROSA_DOCS_BASE}/rosa_hcp`;
 const ROSA_CP_DOCS_BASE =
@@ -129,41 +129,41 @@ const links = {
   SUBSCRIPTION_EVAL_INFORMATION: 'https://access.redhat.com/articles/4389911',
   MANAGED_INGRESS_KNOWLEDGE_BASE: 'https://access.redhat.com/articles/7028653',
 
-  OSD_DEDICATED_ADMIN_ROLE: `${OSD_DOCS_BASE}/authentication/osd-admin-roles.html`,
-  OSD_CCS_AWS: `${OSD_DOCS_BASE}/osd_planning/aws-ccs.html`,
-  OSD_CCS_AWS_LIMITS: `${OSD_DOCS_BASE}/osd_planning/aws-ccs.html#aws-limits_aws-ccs`,
-  OSD_CCS_AWS_SCP: `${OSD_DOCS_BASE}/osd_planning/aws-ccs.html#ccs-aws-scp_aws-ccs`,
-  OSD_CCS_AWS_CUSTOMER_REQ: `${OSD_DOCS_BASE}/osd_planning/aws-ccs.html#ccs-aws-customer-requirements_aws-ccs`,
-  OSD_CCS_GCP: `${OSD_DOCS_BASE}/osd_planning/gcp-ccs.html`,
-  OSD_CCS_GCP_LIMITS: `${OSD_DOCS_BASE}/osd_planning/gcp-ccs.html#gcp-limits_gcp-ccs`,
-  OSD_CCS_GCP_SCP: `${OSD_DOCS_BASE}/osd_planning/gcp-ccs.html#ccs-gcp-customer-procedure_gcp-ccs`,
-  OSD_CCS_GCP_SHEILDED_VM: `${OSD_DOCS_BASE}/osd_install_access_delete_cluster/creating-a-gcp-cluster.html#:~:text=constraints/compute.requireShieldedVm`,
+  OSD_DEDICATED_ADMIN_ROLE: `${OSD_DOCS_BASE}/authentication_and_authorization/osd-admin-roles`,
+  OSD_CCS_AWS: `${OSD_DOCS_BASE}/planning_your_environment/aws-ccs`,
+  OSD_CCS_AWS_LIMITS: `${OSD_DOCS_BASE}/planning_your_environment/aws-ccs#aws-limits_aws-ccs`,
+  OSD_CCS_AWS_SCP: `${OSD_DOCS_BASE}/planning_your_environment/aws-ccs#ccs-aws-scp_aws-ccs`,
+  OSD_CCS_AWS_CUSTOMER_REQ: `${OSD_DOCS_BASE}/planning_your_environment/aws-ccs#ccs-aws-customer-requirements_aws-ccs`,
+  OSD_CCS_GCP: `${OSD_DOCS_BASE}/planning_your_environment/gcp-ccs`,
+  OSD_CCS_GCP_LIMITS: `${OSD_DOCS_BASE}/planning_your_environment/gcp-ccs#gcp-limits_gcp-ccs`,
+  OSD_CCS_GCP_SCP: `${OSD_DOCS_BASE}/planning_your_environment/gcp-ccs#ccs-gcp-customer-procedure_gcp-ccs`,
+  OSD_CCS_GCP_SHEILDED_VM: `${OSD_DOCS_BASE}/openshift_dedicated_clusters_on_gcp/osd-creating-a-cluster-on-gcp-with-workload-identity-federation`,
   OSD_CCS_GCP_WIF_GCLOUD_CLI: 'https://cloud.google.com/sdk/docs/install',
   OSD_CCS_GCP_WIF_GCLOUD_CREDENTIALS:
     'https://cloud.google.com/docs/authentication/provide-credentials-adc',
-  OSD_CCS_GCP_WIF_CREATION_LEARN_MORE: `${OSD_DOCS_BASE}/osd_install_access_delete_cluster/creating-a-gcp-cluster-with-workload-identity-federation.html#create-wif-configuration_osd-creating-a-cluster-on-gcp-with-workload-identity-federation`,
-  OSD_LIFE_CYCLE: `${OSD_DOCS_BASE}/osd_architecture/osd_policy/osd-life-cycle.html`,
-  OSD_Z_STREAM: `${OSD_DOCS_BASE}/osd_architecture/osd_policy/osd-life-cycle.html#rosa-patch-versions_osd-life-cycle`,
-  OSD_SERVICE_DEFINITION_COMPUTE: `${OSD_DOCS_BASE}/osd_architecture/osd_policy/osd-service-definition.html#instance-types_osd-service-definition`,
+  OSD_CCS_GCP_WIF_CREATION_LEARN_MORE: `${OSD_DOCS_BASE}/openshift_dedicated_clusters_on_gcp/osd-creating-a-cluster-on-gcp-with-workload-identity-federation#workload-identity-federation-overview_osd-creating-a-cluster-on-gcp-with-workload-identity-federation`,
+  OSD_LIFE_CYCLE: `${OSD_DOCS_BASE}/introduction_to_openshift_dedicated/policies-and-service-definition#osd-life-cycle`,
+  OSD_Z_STREAM: `${OSD_DOCS_BASE}/upgrading/osd-upgrades#upgrade-auto_osd-upgrades`,
+  OSD_SERVICE_DEFINITION_COMPUTE: `${OSD_DOCS_BASE}/introduction_to_openshift_dedicated/policies-and-service-definition#instance-types_osd-service-definition`,
   ROSA_SERVICE_DEFINITION_COMPUTE: `${ROSA_DOCS_BASE}/rosa_architecture/rosa_policy_service_definition/rosa-service-definition.html#rosa-sdpolicy-instance-types_rosa-service-definition`,
-  OSD_ETCD_ENCRYPTION: `${OSD_DOCS_BASE}/osd_architecture/osd_policy/osd-service-definition.html#etcd-encryption_osd-service-definition`,
-  OSD_AWS_PRIVATE_CONNECTIONS: `${OSD_DOCS_BASE}/osd_cluster_admin/osd_private_connections/aws-private-connections.html`,
-  OSD_PRIVATE_CLUSTER: `${OSD_DOCS_BASE}/osd_cluster_admin/osd_private_connections/private-cluster.html`,
-  OSD_CLUSTER_WIDE_PROXY: `${OSD_DOCS_BASE}/networking/configuring-cluster-wide-proxy.html`,
-  OSD_UPGRADES: `${OSD_DOCS_BASE}/upgrading/osd-upgrades.html`,
-  OSD_LIMITED_SUPPORT_DEFINITION: `${OSD_DOCS_BASE}/osd_architecture/osd_policy/osd-service-definition.html#limited-support_osd-service-definition`,
-  OSD_MONITORING_STACK: `${OSD_DOCS_BASE}/monitoring/monitoring-overview.html#understanding-the-monitoring-stack_monitoring-overview`,
-  OSD_CIDR_MACHINE: `${OSD_DOCS_BASE}/networking/cidr-range-definitions.html#machine-cidr-description`,
+  OSD_ETCD_ENCRYPTION: `${OSD_DOCS_BASE}/introduction_to_openshift_dedicated/policies-and-service-definition#etcd-encryption_osd-service-definition_dedicated/policies-and-service-definition#sdpolicy-account-management_osd-service-definition`,
+  OSD_AWS_PRIVATE_CONNECTIONS: `${OSD_DOCS_BASE}/cluster_administration/configuring-private-connections#enable-aws-access`,
+  OSD_PRIVATE_CLUSTER: `${OSD_DOCS_BASE}/cluster_administration/configuring-private-connections#private-cluster`,
+  OSD_CLUSTER_WIDE_PROXY: `${OSD_DOCS_BASE}/networking/configuring-a-cluster-wide-proxy`,
+  OSD_UPGRADES: `${OSD_DOCS_BASE}/upgrading/osd-upgrades`,
+  OSD_LIMITED_SUPPORT_DEFINITION: `${OSD_DOCS_BASE}/introduction_to_openshift_dedicated/policies-and-service-definition#limited-support_osd-service-definition`,
+  OSD_MONITORING_STACK: `${OSD_DOCS_BASE}/monitoring/monitoring-overview#understanding-the-monitoring-stack_monitoring-overview`,
+  OSD_CIDR_MACHINE: `${OSD_DOCS_BASE}/networking/cidr-range-definitions#machine-cidr-description`,
   ROSA_CIDR_MACHINE: `${ROSA_DOCS_BASE}/networking/cidr-range-definitions.html#machine-cidr-description`,
-  OSD_CIDR_SERVICE: `${OSD_DOCS_BASE}/networking/cidr-range-definitions.html#service-cidr-description`,
+  OSD_CIDR_SERVICE: `${OSD_DOCS_BASE}/networking/cidr-range-definitions#service-cidr-description`,
   ROSA_CIDR_SERVICE: `${ROSA_DOCS_BASE}/networking/cidr-range-definitions.html#service-cidr-description`,
-  OSD_CIDR_POD: `${OSD_DOCS_BASE}/networking/cidr-range-definitions.html#pod-cidr-description`,
+  OSD_CIDR_POD: `${OSD_DOCS_BASE}/networking/cidr-range-definitions#pod-cidr-description`,
   ROSA_CIDR_POD: `${ROSA_DOCS_BASE}/networking/cidr-range-definitions.html#pod-cidr-description`,
-  OSD_CIDR_HOST: `${OSD_DOCS_BASE}/networking/cidr-range-definitions.html#host-prefix-description`,
+  OSD_CIDR_HOST: `${OSD_DOCS_BASE}/networking/cidr-range-definitions#host-prefix-description`,
   ROSA_CIDR_HOST: `${ROSA_DOCS_BASE}/networking/cidr-range-definitions.html#host-prefix-description`,
-  OSD_CLUSTER_AUTOSCALING: `${OSD_DOCS_BASE}/osd_cluster_admin/osd-cluster-autoscaling.html`,
+  OSD_CLUSTER_AUTOSCALING: `${OSD_DOCS_BASE}/cluster_administration/osd-cluster-autoscaling`,
   ROSA_CLUSTER_AUTOSCALING: `${ROSA_DOCS_BASE}/rosa_cluster_admin/rosa-cluster-autoscaling.html`,
-  OSD_SECURITY_GROUPS: `${OSD_DOCS_BASE}/osd_planning/aws-ccs.html#osd-security-groups-custom_aws-ccs `,
+  OSD_SECURITY_GROUPS: `${OSD_DOCS_BASE}/planning_your_environment/aws-ccs#osd-security-groups-custom_aws-ccs `,
 
   CLI_TOOLS_OCP_GETTING_STARTED: `${DOCS_BASE}/cli_reference/openshift_cli/getting-started-cli.html`,
 
@@ -373,10 +373,8 @@ const links = {
     'https://docs.aws.amazon.com/accounts/latest/reference/manage-acct-identifiers.html',
   CIDR_RANGE_DEFINITIONS_ROSA:
     'https://docs.openshift.com/rosa/networking/cidr-range-definitions.html',
-  CIDR_RANGE_DEFINITIONS_OSD:
-    'https://docs.openshift.com/dedicated/networking/cidr-range-definitions.html',
-  CONFIGURE_PROXY_URL:
-    'https://docs.openshift.com/dedicated/networking/configuring-cluster-wide-proxy.html',
+  CIDR_RANGE_DEFINITIONS_OSD: `${OSD_DOCS_BASE}/networking/cidr-range-definitions`,
+  CONFIGURE_PROXY_URL: `${OSD_DOCS_BASE}/networking`,
   VIRTUAL_PRIVATE_CLOUD_URL:
     'https://docs.openshift.com/rosa/rosa_planning/rosa-sts-aws-prereqs.html#rosa-vpc_rosa-sts-aws-prereqs',
   AWS_CONTROL_PLANE_URL: `${DOCS_BASE}/architecture/control-plane.html#hosted-control-planes-architecture_control-plane`,
