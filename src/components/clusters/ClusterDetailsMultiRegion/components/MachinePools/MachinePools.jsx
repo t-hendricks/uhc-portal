@@ -40,7 +40,7 @@ import { useDeleteMachinePool } from '~/queries/ClusterDetailsQueries/MachinePoo
 import { useFetchMachineOrNodePools } from '~/queries/ClusterDetailsQueries/MachinePoolTab/useFetchMachineOrNodePools';
 import {
   ENABLE_MACHINE_CONFIGURATION,
-  OCMUI_MAX_NODES_TOTAL_249,
+  MAX_NODES_TOTAL_249,
 } from '~/queries/featureGates/featureConstants';
 import { useFeatureGate } from '~/queries/featureGates/useFetchFeatureGate';
 import { useGlobalState } from '~/redux/hooks';
@@ -114,7 +114,7 @@ const getOpenShiftVersion = (
 
 const MachinePools = ({ cluster }) => {
   const dispatch = useDispatch();
-  const allow249NodesOSDCCSROSA = useFeatureGate(OCMUI_MAX_NODES_TOTAL_249);
+  const allow249NodesOSDCCSROSA = useFeatureGate(MAX_NODES_TOTAL_249);
 
   const isDeleteMachinePoolModalOpen = useGlobalState((state) =>
     shouldShowModal(state, modals.DELETE_MACHINE_POOL),

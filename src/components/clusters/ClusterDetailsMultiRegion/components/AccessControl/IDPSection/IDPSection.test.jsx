@@ -2,7 +2,7 @@ import React from 'react';
 import * as reactRedux from 'react-redux';
 
 import { useFetchIDPsWithHTPUsers } from '~/queries/ClusterDetailsQueries/AccessControlTab/UserQueries/useFetchIDPsWithHTPUsers';
-import { OCMUI_ENHANCED_HTPASSWRD } from '~/queries/featureGates/featureConstants';
+import { ENHANCED_HTPASSWRD } from '~/queries/featureGates/featureConstants';
 import {
   checkAccessibility,
   mockUseFeatureGate,
@@ -147,7 +147,7 @@ describe('<IDPSection />', () => {
     });
 
     it('displays expandable section with htpasswd users', async () => {
-      mockUseFeatureGate([[OCMUI_ENHANCED_HTPASSWRD, true]]);
+      mockUseFeatureGate([[ENHANCED_HTPASSWRD, true]]);
       useFetchIDPSWithHTPUsersMock.mockReturnValue({
         data: [
           {

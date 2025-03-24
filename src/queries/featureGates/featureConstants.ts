@@ -28,8 +28,8 @@ export const EDIT_BILLING_ACCOUNT = 'ocmui-edit-billing-account';
 export const PRIVATE_SERVICE_CONNECT = 'ocmui-gcp-private-service-connect';
 export const BYPASS_COMPUTE_NODE_COUNT_LIMIT_CLASSIC_OSD_GCP =
   'bypass-compute-node-count-limit-classic-osd-gcp';
-export const OCMUI_MAX_NODES_TOTAL_249 = 'ocmui-max-nodes-total-249';
-export const OCMUI_ENHANCED_HTPASSWRD = 'ocmui-enhanced-htpasswrd';
+export const MAX_NODES_TOTAL_249 = 'ocmui-max-nodes-total-249';
+export const ENHANCED_HTPASSWRD = 'ocmui-enhanced-htpasswrd';
 
 export default {
   HYPERSHIFT_WIZARD_FEATURE,
@@ -44,6 +44,6 @@ export default {
   EDIT_BILLING_ACCOUNT,
   PRIVATE_SERVICE_CONNECT,
   BYPASS_COMPUTE_NODE_COUNT_LIMIT_CLASSIC_OSD_GCP,
-  OCMUI_MAX_NODES_TOTAL_249,
-  OCMUI_ENHANCED_HTPASSWRD,
+  MAX_NODES_TOTAL_249,
+  ENHANCED_HTPASSWRD,
 } as const;

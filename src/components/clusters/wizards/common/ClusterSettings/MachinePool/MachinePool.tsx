@@ -16,7 +16,7 @@ import { CloudProviderType, FieldId } from '~/components/clusters/wizards/common
 import { useFormState } from '~/components/clusters/wizards/hooks';
 import ExternalLink from '~/components/common/ExternalLink';
 import useCanClusterAutoscale from '~/hooks/useCanClusterAutoscale';
-import { OCMUI_MAX_NODES_TOTAL_249 } from '~/queries/featureGates/featureConstants';
+import { MAX_NODES_TOTAL_249 } from '~/queries/featureGates/featureConstants';
 import { useFeatureGate } from '~/queries/featureGates/useFetchFeatureGate';
 import {
   clearMachineTypesByRegion,
@@ -55,7 +55,7 @@ export const MachinePool = () => {
     getFieldMeta,
     setFieldTouched,
   } = useFormState();
-  const allow249Nodes = useFeatureGate(OCMUI_MAX_NODES_TOTAL_249);
+  const allow249Nodes = useFeatureGate(MAX_NODES_TOTAL_249);
   const isMultiAz = multiAz === 'true';
   const isByoc = byoc === 'true';
   const isRosa = product === normalizedProducts.ROSA;

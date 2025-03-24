@@ -29,7 +29,7 @@ import {
   refetchClusterIdentityProviders,
   useFetchClusterIdentityProviders,
 } from '~/queries/ClusterDetailsQueries/useFetchClusterIdentityProviders';
-import { OCMUI_ENHANCED_HTPASSWRD } from '~/queries/featureGates/featureConstants';
+import { ENHANCED_HTPASSWRD } from '~/queries/featureGates/featureConstants';
 import { useFeatureGate } from '~/queries/featureGates/useFetchFeatureGate';
 
 import getClusterName from '../../../../../common/getClusterName';
@@ -61,7 +61,7 @@ const IdentityProvidersPage = (props) => {
   const params = useParams();
   const subscriptionID = params.id;
 
-  const canViewHtpasswd = useFeatureGate(OCMUI_ENHANCED_HTPASSWRD);
+  const canViewHtpasswd = useFeatureGate(ENHANCED_HTPASSWRD);
 
   const {
     cluster,

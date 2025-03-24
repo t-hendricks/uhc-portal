@@ -29,7 +29,7 @@ import {
 import { useNavigate } from '~/common/routing';
 import { LoadingSkeletonCard } from '~/components/clusters/common/LoadingSkeletonCard/LoadingSkeletonCard';
 import { useFetchIDPsWithHTPUsers } from '~/queries/ClusterDetailsQueries/AccessControlTab/UserQueries/useFetchIDPsWithHTPUsers';
-import { OCMUI_ENHANCED_HTPASSWRD } from '~/queries/featureGates/featureConstants';
+import { ENHANCED_HTPASSWRD } from '~/queries/featureGates/featureConstants';
 import { useFeatureGate } from '~/queries/featureGates/useFetchFeatureGate';
 
 import links from '../../../../../../common/installLinks.mjs';
@@ -53,7 +53,7 @@ const IDPSection = (props) => {
     subscriptionID,
     cluster,
   } = props;
-  const isHTPasswdEnhanced = useFeatureGate(OCMUI_ENHANCED_HTPASSWRD);
+  const isHTPasswdEnhanced = useFeatureGate(ENHANCED_HTPASSWRD);
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [dropdownOpen, setDropdownOpen] = React.useState(false);

@@ -3,7 +3,7 @@ import * as reactRedux from 'react-redux';
 import * as reactRouter from 'react-router-dom';
 
 import { useFetchHtpasswdUsers } from '~/queries/ClusterDetailsQueries/AccessControlTab/UserQueries/useFetchHtpasswdUsers';
-import { OCMUI_ENHANCED_HTPASSWRD } from '~/queries/featureGates/featureConstants';
+import { ENHANCED_HTPASSWRD } from '~/queries/featureGates/featureConstants';
 import { mockUseFeatureGate, render, screen, waitFor, within } from '~/testUtils';
 
 import IdentityProvidersPage from './IdentityProvidersPage';
@@ -124,7 +124,7 @@ describe('<IdentityProvidersPage />', () => {
   });
 
   it('displays htpasswd page if provided idp is htpasswd', async () => {
-    mockUseFeatureGate([[OCMUI_ENHANCED_HTPASSWRD, true]]);
+    mockUseFeatureGate([[ENHANCED_HTPASSWRD, true]]);
     useParamsMock.mockReturnValue({ id: 'mySubscriptionId', idpName: 'myHTPasswdIDP' });
     render(<IdentityProvidersPage isEditForm />);
 
