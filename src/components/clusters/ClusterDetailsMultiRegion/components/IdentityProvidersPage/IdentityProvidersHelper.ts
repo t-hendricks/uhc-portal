@@ -379,6 +379,7 @@ const getInitialValuesForEditing = (idpEdited: IdentityProvider, editedType: IDP
     case 'gitlab':
       return {
         ...baseValues,
+        gitlab_ca: idpEdited[editedType]?.ca,
         gitlab_url: idpEdited[editedType]?.url,
         client_id: idpEdited[editedType]?.client_id,
       };
