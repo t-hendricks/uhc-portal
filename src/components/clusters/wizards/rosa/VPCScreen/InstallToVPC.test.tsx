@@ -1,8 +1,8 @@
-import React from 'react';
+import React, { ReactNode } from 'react';
 import { Formik } from 'formik';
 
 import links from '~/common/installLinks.mjs';
-import InstallToVPC from '~/components/clusters/wizards/rosa/VPCScreen/InstallToVPC';
+import { InstallToVPC } from '~/components/clusters/wizards/rosa/VPCScreen/InstallToVPC';
 import { render, screen } from '~/testUtils';
 
 import { initialValues } from '../constants';
@@ -16,9 +16,10 @@ const defaultProps = {
   hostedZoneDomainName: 'cluster-name.base-domain-name.devshift.org',
   selectedVPC: { id: '', name: '' },
   selectedAZs: [],
+  openshiftVersion: '1.0.0',
 };
 
-const buildTestComponent = (children, formValues = {}) => (
+const buildTestComponent = (children: ReactNode, formValues = {}) => (
   <Formik
     initialValues={{
       ...initialValues,
