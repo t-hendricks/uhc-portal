@@ -1,6 +1,7 @@
 /* eslint-disable react/no-unstable-nested-components */
 import React from 'react';
 import { Formik } from 'formik';
+import { isEqual } from 'lodash';
 import get from 'lodash/get';
 import PropTypes from 'prop-types';
 import { useDispatch } from 'react-redux';
@@ -29,7 +30,7 @@ import {
   refetchClusterIdentityProviders,
   useFetchClusterIdentityProviders,
 } from '~/queries/ClusterDetailsQueries/useFetchClusterIdentityProviders';
-import { OCMUI_ENHANCED_HTPASSWRD } from '~/queries/featureGates/featureConstants';
+import { ENHANCED_HTPASSWRD } from '~/queries/featureGates/featureConstants';
 import { useFeatureGate } from '~/queries/featureGates/useFetchFeatureGate';
 
 import getClusterName from '../../../../../common/getClusterName';
@@ -61,7 +62,7 @@ const IdentityProvidersPage = (props) => {
   const params = useParams();
   const subscriptionID = params.id;
 
-  const canViewHtpasswd = useFeatureGate(OCMUI_ENHANCED_HTPASSWRD);
+  const canViewHtpasswd = useFeatureGate(ENHANCED_HTPASSWRD);
 
   const {
     cluster,
@@ -251,66 +252,72 @@ const IdentityProvidersPage = (props) => {
               });
             }}
           >
-            {(formik) => (
-              <Card>
-                <CardBody>
-                  <Grid>
-                    <GridItem md={8}>
-                      {isClusterIDPsSuccess ? (
-                        <IDPForm
-                          selectedIDP={selectedIDP}
-                          idpTypeName={idpTypeName}
-                          formTitle={secondaryTitle}
-                          clusterUrls={{
-                            console: get(cluster, 'console.url'),
-                            api: get(cluster, 'api.url'),
-                          }}
-                          isPostIDPFormError={isPostIDPFormError}
-                          postIDPFormError={postIDPFormError}
-                          isPostIDPFormPending={isPostIDPFormPending}
-                          IDPList={IDPList}
-                          idpEdited={idpEdited}
-                          idpName={idpTypeName}
-                          isHypershift={isHypershiftCluster(cluster)}
-                          HTPasswdErrors={formik.errors?.users}
-                          isClusterIDPsLoading={isClusterIDPsLoading}
-                          isEditForm={isEditForm}
-                        />
-                      ) : (
-                        <Spinner size="lg" aria-label="Loading..." />
-                      )}
-                    </GridItem>
-                  </Grid>
-                </CardBody>
-                <CardFooter>
-                  <Split hasGutter>
-                    <SplitItem>
-                      <Button
-                        variant="primary"
-                        type="submit"
-                        isDisabled={!formik.dirty || isFormReadyForSubmit(formik)}
-                        onClick={formik.submitForm}
-                      >
-                        {isEditForm ? 'Save' : 'Add'}
-                      </Button>
-                    </SplitItem>
-                    <SplitItem>
-                      <Button
-                        variant="secondary"
-                        component={(props) => (
-                          <Link
-                            {...props}
-                            to={`/details/s/${cluster.subscription.id}#accessControl`}
+            {(formik) => {
+              const isModified = isEqual(formik.values, formik.initialValues);
+              return (
+                <Card>
+                  <CardBody>
+                    <Grid>
+                      <GridItem md={8}>
+                        {isClusterIDPsSuccess ? (
+                          <IDPForm
+                            selectedIDP={selectedIDP}
+                            idpTypeName={idpTypeName}
+                            formTitle={secondaryTitle}
+                            clusterUrls={{
+                              console: get(cluster, 'console.url'),
+                              api: get(cluster, 'api.url'),
+                            }}
+                            isPostIDPFormError={isPostIDPFormError}
+                            postIDPFormError={postIDPFormError}
+                            isPostIDPFormPending={isPostIDPFormPending}
+                            IDPList={IDPList}
+                            idpEdited={idpEdited}
+                            idpName={idpTypeName}
+                            isHypershift={isHypershiftCluster(cluster)}
+                            HTPasswdErrors={formik.errors?.users}
+                            isClusterIDPsLoading={isClusterIDPsLoading}
+                            isEditForm={isEditForm}
                           />
+                        ) : (
+                          <Spinner size="lg" aria-label="Loading..." />
                         )}
-                      >
-                        Cancel
-                      </Button>
-                    </SplitItem>
-                  </Split>
-                </CardFooter>
-              </Card>
-            )}
+                      </GridItem>
+                    </Grid>
+                  </CardBody>
+                  <CardFooter>
+                    <Split hasGutter>
+                      <SplitItem>
+                        <Button
+                          variant="primary"
+                          type="submit"
+                          isDisabled={
+                            isPostIDPFormPending || isModified || isFormReadyForSubmit(formik)
+                          }
+                          isLoading={isPostIDPFormPending}
+                          onClick={formik.submitForm}
+                        >
+                          {isEditForm ? 'Save' : 'Add'}
+                        </Button>
+                      </SplitItem>
+                      <SplitItem>
+                        <Button
+                          variant="secondary"
+                          component={(props) => (
+                            <Link
+                              {...props}
+                              to={`/details/s/${cluster.subscription.id}#accessControl`}
+                            />
+                          )}
+                        >
+                          Cancel
+                        </Button>
+                      </SplitItem>
+                    </Split>
+                  </CardFooter>
+                </Card>
+              );
+            }}
           </Formik>
         )}
       </PageSection>

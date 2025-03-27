@@ -100,11 +100,7 @@ export const useFetchClusterDetails = (subscriptionID: string) => {
     isLoading: isInflightChecksLoading,
     data: inflightChecksResponse,
     isFetching: isInflightChecksFetching,
-  } = useFetchInflightChecks(
-    subscription?.subscription.cluster_id as string,
-    subscription,
-    queryConstants.FETCH_CLUSTER_DETAILS_QUERY_KEY,
-  );
+  } = useFetchInflightChecks(subscription?.subscription.cluster_id as string, subscription);
 
   const { isLoading: isAIClusterLoading, data: aiClusterResponse } = useFetchAiCluster(
     subscription?.subscription.cluster_id as string,

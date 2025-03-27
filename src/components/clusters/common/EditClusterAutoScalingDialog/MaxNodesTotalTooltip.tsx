@@ -3,13 +3,13 @@ import React from 'react';
 import { List, ListItem, Text, TextContent } from '@patternfly/react-core';
 
 import PopoverHint from '~/components/common/PopoverHint';
-import { OCMUI_MAX_NODES_TOTAL_249 } from '~/queries/featureGates/featureConstants';
+import { MAX_NODES_TOTAL_249 } from '~/queries/featureGates/featureConstants';
 import { useFeatureGate } from '~/queries/featureGates/useFetchFeatureGate';
 
 import { MAX_NODES, MAX_NODES_INSUFFICIEN_VERSION } from '../machinePools/constants';
 
 export const MaxNodesTotalPopoverText = () => {
-  const allow249NodesOSDCCSROSA = useFeatureGate(OCMUI_MAX_NODES_TOTAL_249);
+  const allow249NodesOSDCCSROSA = useFeatureGate(MAX_NODES_TOTAL_249);
 
   return (
     <TextContent>

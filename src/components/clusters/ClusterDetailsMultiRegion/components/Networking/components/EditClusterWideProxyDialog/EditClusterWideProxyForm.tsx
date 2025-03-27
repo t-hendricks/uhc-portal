@@ -1,5 +1,6 @@
 import React from 'react';
 import { Field } from 'formik';
+import { isEqual } from 'lodash';
 
 import { Alert, Button, Form, Grid, GridItem, Text } from '@patternfly/react-core';
 
@@ -63,7 +64,11 @@ const EditClusterWideProxyForm = ({
       [FormFieldId.HttpsProxyURL]: httpsProxyUrl,
       [FormFieldId.AdditionalTrustBundle]: additionalTrustBundle,
     },
+    values,
+    initialValues,
   } = useFormState();
+
+  const isNotModified = isEqual(values, initialValues);
 
   const [anyTouched, setAnyTouched] = React.useState(false);
 
@@ -168,6 +173,7 @@ const EditClusterWideProxyForm = ({
       title="Edit cluster-wide Proxy"
       onPrimaryClick={submitForm}
       primaryText="Save"
+      isPrimaryDisabled={isNotModified}
       onSecondaryClick={handleClose}
       isPending={isClusterEditPending}
       width="max(30%, 600px)"

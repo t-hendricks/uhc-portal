@@ -29,7 +29,7 @@ import {
   useInvalidateFetchInflightChecks,
   useInvalidateFetchRerunInflightChecks,
   useMutateRerunInflightChecks,
-} from '~/queries/ClusterDetailsQueries/ClusterStatusMonitor/useFetchInflightChecks';
+} from '~/queries/ClusterDetailsQueries/useFetchInflightChecks';
 import { InflightCheckState } from '~/types/clusters_mgmt.v1/enums';
 
 // TODO: Part of the installation story
@@ -44,11 +44,13 @@ const ClusterStatusMonitor = (props) => {
     isError: isClusterStatusError,
   } = useFetchClusterStatus(cluster.id, region, refetchInterval);
 
-  const { checks: inflightChecks, isLoading: isInflightChecksLoading } = useFetchInflightChecks(
+  const isClusterStatusMonitor = true;
+  const { data: inflightChecks, isLoading: isInflightChecksLoading } = useFetchInflightChecks(
     cluster.id,
+    cluster.subscription,
     region,
     refetchInterval,
-    'fetchClusterStatusMonitorInflightChecks',
+    isClusterStatusMonitor,
   );
 
   const { data: rerunInflightChecksData, isLoading: isRerunInflightChecksLoading } =
@@ -99,10 +101,11 @@ const ClusterStatusMonitor = (props) => {
       setRefetchInterval(false);
       // if not running any checks final state is success
       const shouldUpdateInflightChecks = () =>
-        inflightChecks.items?.some(
+        inflightChecks?.data?.items?.some(
           (check) =>
             check.state === InflightCheckState.running || check.state === InflightCheckState.failed,
         );
+
       if (!isClusterStatusLoading && !isInflightChecksLoading) {
         const clusterState = clusterStatus.state;
         // refresh main detail page if cluster state changed or if still running inflight checks
@@ -128,7 +131,7 @@ const ClusterStatusMonitor = (props) => {
     }
     // Minified React error #185 if added all dependencies based on linter
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [refetchInterval, inflightChecks, clusterStatus, addNotification]);
+  }, [refetchInterval, clusterStatus, addNotification]);
 
   React.useEffect(() => {
     if (!isRerunInflightChecksMutationPending) {
@@ -170,7 +173,7 @@ const ClusterStatusMonitor = (props) => {
     const isClusterValidating =
       cluster.state === clusterStates.validating || cluster.state === clusterStates.pending;
     if (!isClusterValidating) {
-      const inflightError = inflightChecks?.items?.find(
+      const inflightError = inflightChecks?.data?.items?.find(
         (check) => check.state === InflightCheckState.failed,
       );
       if (hasInflightEgressErrors(cluster) && inflightError) {
@@ -410,6 +413,7 @@ ClusterStatusMonitor.propTypes = {
   region: PropTypes.string,
   cluster: PropTypes.shape({
     id: PropTypes.string,
+    subscription: PropTypes.object,
     state: PropTypes.string,
     status: PropTypes.shape({
       description: PropTypes.string,

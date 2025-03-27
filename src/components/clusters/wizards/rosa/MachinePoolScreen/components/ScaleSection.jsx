@@ -24,7 +24,7 @@ import { FieldId } from '~/components/clusters/wizards/rosa/constants';
 import ExternalLink from '~/components/common/ExternalLink';
 import FormKeyValueList from '~/components/common/FormikFormComponents/FormKeyValueList';
 import useCanClusterAutoscale from '~/hooks/useCanClusterAutoscale';
-import { OCMUI_MAX_NODES_TOTAL_249 } from '~/queries/featureGates/featureConstants';
+import { MAX_NODES_TOTAL_249 } from '~/queries/featureGates/featureConstants';
 import { useFeatureGate } from '~/queries/featureGates/useFetchFeatureGate';
 
 import WorkerNodeVolumeSizeSection from './WorkerNodeVolumeSizeSection/WorkerNodeVolumeSizeSection';
@@ -59,7 +59,7 @@ function ScaleSection() {
   const hasNodeLabels = nodeLabels?.[0]?.key ?? false;
   const [isNodeLabelsExpanded, setIsNodeLabelsExpanded] = useState(!!hasNodeLabels);
   const canAutoScale = useCanClusterAutoscale(product, billingModel) ?? false;
-  const allow249NodesOSDCCSROSA = useFeatureGate(OCMUI_MAX_NODES_TOTAL_249);
+  const allow249NodesOSDCCSROSA = useFeatureGate(MAX_NODES_TOTAL_249);
   const clusterVersionRawId = clusterVersion?.raw_id;
 
   const minNodesRequired = useMemo(

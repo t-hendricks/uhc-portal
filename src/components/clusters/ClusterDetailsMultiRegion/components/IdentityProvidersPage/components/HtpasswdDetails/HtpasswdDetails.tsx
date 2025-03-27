@@ -116,7 +116,7 @@ const HtpasswdDetails = ({ idpId, clusterId, region }: Props) => {
 
   const userRow = (user: HtPasswdUser) => (
     <Tr key={user.id}>
-      <Td>{user.username}</Td>
+      <Td className="pf-v6-u-text-break-word">{user.username}</Td>
     </Tr>
   );
 

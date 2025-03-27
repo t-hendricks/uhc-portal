@@ -17,7 +17,7 @@ import modals from '~/components/common/Modal/modals';
 import { useFetchMachineTypes } from '~/queries/ClusterDetailsQueries/MachinePoolTab/MachineTypes/useFetchMachineTypes';
 import { useEditCreateMachineOrNodePools } from '~/queries/ClusterDetailsQueries/MachinePoolTab/useEditCreateMachineOrNodePools';
 import { useFetchMachineOrNodePools } from '~/queries/ClusterDetailsQueries/MachinePoolTab/useFetchMachineOrNodePools';
-import { OCMUI_MAX_NODES_TOTAL_249 } from '~/queries/featureGates/featureConstants';
+import { MAX_NODES_TOTAL_249 } from '~/queries/featureGates/featureConstants';
 import { useFeatureGate } from '~/queries/featureGates/useFetchFeatureGate';
 import { MachineTypesResponse } from '~/queries/types';
 import { useGlobalState } from '~/redux/hooks';
@@ -92,7 +92,7 @@ const EditMachinePoolModal = ({
     machineTypes: machineTypesResponse,
   });
 
-  const allow249NodesOSDCCSROSA = useFeatureGate(OCMUI_MAX_NODES_TOTAL_249);
+  const allow249NodesOSDCCSROSA = useFeatureGate(MAX_NODES_TOTAL_249);
 
   const setCurrentMPId = React.useCallback(
     (id: string) => setCurrentMachinePool(machinePoolsResponse?.find((mp) => mp.id === id)),

@@ -14,17 +14,19 @@ import SharedVPCField from './SharedVPCField';
 
 import './SharedVPCSection.scss';
 
+type SharedVPCSectionProps = {
+  hostedZoneDomainName?: string;
+  isSelected: boolean;
+  openshiftVersion: string;
+  isHypershiftSelected: boolean;
+};
+
 const SharedVPCSection = ({
   hostedZoneDomainName,
   isSelected,
   openshiftVersion,
   isHypershiftSelected,
-}: {
-  hostedZoneDomainName: string;
-  isSelected: boolean;
-  openshiftVersion: string;
-  isHypershiftSelected: boolean;
-}) => {
+}: SharedVPCSectionProps) => {
   const { getFieldProps, getFieldMeta } = useFormState();
   const incompatibleReason = getIncompatibleVersionReason(
     SupportedFeature.AWS_SHARED_VPC,

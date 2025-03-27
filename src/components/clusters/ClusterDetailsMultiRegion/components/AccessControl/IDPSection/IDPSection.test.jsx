@@ -2,13 +2,14 @@ import React from 'react';
 import * as reactRedux from 'react-redux';
 
 import { useFetchIDPsWithHTPUsers } from '~/queries/ClusterDetailsQueries/AccessControlTab/UserQueries/useFetchIDPsWithHTPUsers';
-import { OCMUI_ENHANCED_HTPASSWRD } from '~/queries/featureGates/featureConstants';
+import { ENHANCED_HTPASSWRD } from '~/queries/featureGates/featureConstants';
 import {
   checkAccessibility,
   mockUseFeatureGate,
   render,
   screen,
   userEvent,
+  within,
   withState,
 } from '~/testUtils';
 
@@ -147,7 +148,7 @@ describe('<IDPSection />', () => {
     });
 
     it('displays expandable section with htpasswd users', async () => {
-      mockUseFeatureGate([[OCMUI_ENHANCED_HTPASSWRD, true]]);
+      mockUseFeatureGate([[ENHANCED_HTPASSWRD, true]]);
       useFetchIDPSWithHTPUsersMock.mockReturnValue({
         data: [
           {
@@ -248,6 +249,52 @@ describe('<IDPSection />', () => {
           name: 'delete-idp',
         },
       });
+    });
+
+    it('shows tooltip for idp actions where the user does not have access', async () => {
+      useFetchIDPSWithHTPUsersMock.mockReturnValue({
+        data: [
+          {
+            name: 'myHtpasswd',
+            type: 'HTPasswdIdentityProvider',
+            id: 'id2',
+          },
+        ],
+        isLoading: false,
+        isError: false,
+      });
+      const newProps = {
+        ...props,
+        isHypershift: true,
+        idpActions: {
+          list: true,
+          update: false,
+          delete: false,
+        },
+      };
+      const { user } = render(<IDPSection {...newProps} />);
+      expect(await screen.findByRole('grid')).toBeInTheDocument();
+      await user.click(screen.getByRole('button', { name: 'Kebab toggle' }));
+
+      expect(screen.getByRole('menuitem', { name: 'Edit' })).toHaveAttribute(
+        'aria-disabled',
+        'true',
+      );
+      expect(screen.getByRole('menuitem', { name: 'Delete' })).toHaveAttribute(
+        'aria-disabled',
+        'true',
+      );
+
+      await user.click(screen.getByRole('menuitem', { name: 'Edit' }));
+
+      expect(
+        within(screen.getByRole('tooltip')).getByText(
+          'You do not have permission to edit an identity provider.',
+          {
+            exact: false,
+          },
+        ),
+      ).toBeInTheDocument();
     });
   });
 });

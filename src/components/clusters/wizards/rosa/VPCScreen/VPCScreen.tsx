@@ -1,17 +1,21 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 
-import { Form, Grid, GridItem, Title } from '@patternfly/react-core';
+import { Alert, AlertVariant, Form, Grid, GridItem, Title } from '@patternfly/react-core';
 
 import { getAllSubnetFieldNames } from '~/common/vpcHelpers';
 import { emptyAWSSubnet } from '~/components/clusters/wizards/common/constants';
 import { useFormState } from '~/components/clusters/wizards/hooks';
 
+import { FormSubnet } from '../../common/FormSubnet';
 import { FieldId } from '../constants';
 
-import InstallToVPC from './InstallToVPC';
+import { InstallToVPC } from './InstallToVPC';
 
-function VPCScreen({ privateLinkSelected }) {
+type VPCScreenProps = {
+  privateLinkSelected: boolean;
+};
+
+const VPCScreen = ({ privateLinkSelected }: VPCScreenProps) => {
   const {
     setFieldValue,
     setFieldTouched,
@@ -31,9 +35,11 @@ function VPCScreen({ privateLinkSelected }) {
   const hostedZoneDomainName = isSharedVpcSelected
     ? `${clusterName}.${sharedVpcSettings.base_dns_domain || '<selected-base-domain>'}`
     : undefined;
-  const selectedAZs = machinePoolsSubnets?.map((subnet) => subnet.availabilityZone);
+  const selectedAZs = (machinePoolsSubnets as FormSubnet[])?.map(
+    (subnet) => subnet.availabilityZone,
+  );
   const isMultiAz = multiAzField === 'true';
-  const openshiftVersion = version.raw_id;
+  const openshiftVersion = version?.raw_id;
   const isHypershiftSelected = isHypershift === 'true';
 
   React.useEffect(() => {
@@ -44,7 +50,7 @@ function VPCScreen({ privateLinkSelected }) {
         subnetReset.push(emptyAWSSubnet());
         subnetReset.push(emptyAWSSubnet());
       }
-      setFieldValue('machinePoolsSubnets', subnetReset);
+      setFieldValue(FieldId.MachinePoolsSubnets, subnetReset);
 
       // Prevent the validation errors from showing - fields have been reset
       const untouchFields = getAllSubnetFieldNames(isMultiAz);
@@ -67,25 +73,35 @@ function VPCScreen({ privateLinkSelected }) {
           <Title headingLevel="h3">Virtual Private Cloud (VPC) subnet settings</Title>
         </GridItem>
 
-        <InstallToVPC
-          isMultiAz={isMultiAz}
-          selectedRegion={selectedRegion}
-          selectedVPC={selectedVPC}
-          selectedAZs={selectedAZs}
-          openshiftVersion={openshiftVersion}
-          isSharedVpcSelected={isSharedVpcSelected}
-          privateLinkSelected={privateLinkSelected}
-          hostedZoneDomainName={hostedZoneDomainName}
-          cloudProviderID={cloudProviderID}
-          isHypershiftSelected={isHypershiftSelected}
-        />
+        {(() => {
+          switch (true) {
+            case !openshiftVersion:
+              return (
+                <Alert variant={AlertVariant.warning} title="No cluster version" isInline>
+                  No cluster version defined. Please select a cluster version before proceeding with
+                  the VPC configuration.
+                </Alert>
+              );
+            default:
+              return (
+                <InstallToVPC
+                  isMultiAz={isMultiAz}
+                  selectedRegion={selectedRegion}
+                  selectedVPC={selectedVPC}
+                  selectedAZs={selectedAZs}
+                  openshiftVersion={openshiftVersion}
+                  isSharedVpcSelected={isSharedVpcSelected}
+                  privateLinkSelected={privateLinkSelected}
+                  hostedZoneDomainName={hostedZoneDomainName}
+                  cloudProviderID={cloudProviderID}
+                  isHypershiftSelected={isHypershiftSelected}
+                />
+              );
+          }
+        })()}
       </Grid>
     </Form>
   );
-}
-
-VPCScreen.propTypes = {
-  privateLinkSelected: PropTypes.bool,
 };
 
-export default VPCScreen;
+export { VPCScreen };

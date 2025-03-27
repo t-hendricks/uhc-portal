@@ -21,7 +21,7 @@ import {
   getWorkerNodeVolumeSizeMaxGiB,
   getWorkerNodeVolumeSizeMinGiB,
 } from '~/components/clusters/common/machinePools/utils';
-import { OCMUI_MAX_NODES_TOTAL_249 } from '~/queries/featureGates/featureConstants';
+import { MAX_NODES_TOTAL_249 } from '~/queries/featureGates/featureConstants';
 import { useFeatureGate } from '~/queries/featureGates/useFetchFeatureGate';
 import { MachineTypesResponse } from '~/queries/types';
 import { MachinePool, NodePool } from '~/types/clusters_mgmt.v1';
@@ -151,7 +151,7 @@ const useMachinePoolFormik = ({
 
   const organization = useOrganization();
 
-  const allow249NodesOSDCCSROSA = useFeatureGate(OCMUI_MAX_NODES_TOTAL_249);
+  const allow249NodesOSDCCSROSA = useFeatureGate(MAX_NODES_TOTAL_249);
 
   const validationSchema = React.useMemo(
     () =>

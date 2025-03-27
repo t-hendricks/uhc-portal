@@ -572,6 +572,8 @@ export const providersExpectedFormData = [
     client_id: 'rewar',
     client_secret: 'CLIENT_SECRET',
     gitlab_url: 'https://gitlab.com/',
+    gitlab_ca:
+      '-----BEGIN CERTIFICATE-----\ntesttesttesttesttesttesttesttesttesttesttesttest\ntesttesttesttesttesttesttesttesttesttesttesttest\ntesttesttesttesttesttesttesttesttesttesttesttest\n-----END CERTIFICATE-----',
     idpId: '2aa991al599m3o48udp3qarolp5hi1q7',
     mappingMethod: 'claim',
     name: 'GitLab',

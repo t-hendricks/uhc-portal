@@ -16,7 +16,7 @@ import { FieldId as RosaFieldId } from '~/components/clusters/wizards/rosa/const
 import ExternalLink from '~/components/common/ExternalLink';
 import { FormGroupHelperText } from '~/components/common/FormGroupHelperText';
 import PopoverHint from '~/components/common/PopoverHint';
-import { OCMUI_MAX_NODES_TOTAL_249 } from '~/queries/featureGates/featureConstants';
+import { MAX_NODES_TOTAL_249 } from '~/queries/featureGates/featureConstants';
 import { useFeatureGate } from '~/queries/featureGates/useFetchFeatureGate';
 
 import { NodesInput } from './NodesInput';
@@ -40,7 +40,7 @@ export const AutoScaleEnabledInputs = () => {
     },
   } = useFormState();
 
-  const allow249NodesOSDCCSROSA = useFeatureGate(OCMUI_MAX_NODES_TOTAL_249);
+  const allow249NodesOSDCCSROSA = useFeatureGate(MAX_NODES_TOTAL_249);
 
   const poolsLength = useMemo(
     () => machinePoolsSubnets?.length ?? 1,

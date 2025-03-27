@@ -20,7 +20,7 @@ Slack channels: `#service-development` for OCM in general, `#ocm-osd-ui` for UI.
 ## Requirements
 
 - [NodeJS](https://nodejs.org/) `>= 18.12.0`
-- [Yarn](https://classic.yarnpkg.com/lang/en/) `1.22.19`
+- [Yarn](https://classic.yarnpkg.com/lang/en/) `1.22.19` - (higher versions are not supported)
 
 ## Building
 

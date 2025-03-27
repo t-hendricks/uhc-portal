@@ -231,6 +231,7 @@ export function ExternalAuthProviderModal(props: ExternalAuthProviderModalProps)
                 onChange: (value: string) => formik.setFieldValue('provider_ca', value),
                 onBlur: formik.handleBlur,
               }}
+              fieldName="provider_ca"
               name="provider_ca"
               label="CA file"
               helpText="PEM encoded certificate bundle to use to validate server certificates for the configured issuer URL."

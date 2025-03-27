@@ -15,20 +15,22 @@ import { FieldId } from '../constants';
 
 import SharedVPCDomainSelect from './SharedVPCDomainSelect';
 
-function HostedZoneHelpText({ domainName }: { domainName: string }) {
-  return (
-    <TextContent>
-      <Text component={TextVariants.small} className="pf-v5-u-color-100">
-        Enter the private hosted zone ID that&apos;s linked to the AWS owner account you want to
-        use. The private hosted zone must have been created with
-        <strong className="pf-v5-u-font-size-md"> {domainName} </strong>as the domain name.
-        <ExternalLink href={links.AWS_CONSOLE_HOSTED_ZONES}> AWS console</ExternalLink>
-      </Text>
-    </TextContent>
-  );
-}
+type HostedZoneHelpTextProps = { domainName?: string };
 
-const SharedVPCField = ({ hostedZoneDomainName }: { hostedZoneDomainName: string }) => {
+const HostedZoneHelpText = ({ domainName }: HostedZoneHelpTextProps) => (
+  <TextContent>
+    <Text component={TextVariants.small} className="pf-v5-u-color-100">
+      Enter the private hosted zone ID that&apos;s linked to the AWS owner account you want to use.
+      The private hosted zone must have been created with
+      <strong className="pf-v5-u-font-size-md"> {domainName} </strong>as the domain name.
+      <ExternalLink href={links.AWS_CONSOLE_HOSTED_ZONES}> AWS console</ExternalLink>
+    </Text>
+  </TextContent>
+);
+
+type SharedVPCFieldProps = { hostedZoneDomainName?: string };
+
+const SharedVPCField = ({ hostedZoneDomainName }: SharedVPCFieldProps) => {
   const { setFieldValue, setFieldTouched, getFieldProps, getFieldMeta } = useFormState();
   const baseDnsDomainFieldName = `${FieldId.SharedVpc}.base_dns_domain`;
   const hostedZoneIdFieldName = `${FieldId.SharedVpc}.hosted_zone_id`;

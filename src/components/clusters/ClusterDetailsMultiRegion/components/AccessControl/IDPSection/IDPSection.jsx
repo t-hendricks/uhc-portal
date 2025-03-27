@@ -29,7 +29,7 @@ import {
 import { useNavigate } from '~/common/routing';
 import { LoadingSkeletonCard } from '~/components/clusters/common/LoadingSkeletonCard/LoadingSkeletonCard';
 import { useFetchIDPsWithHTPUsers } from '~/queries/ClusterDetailsQueries/AccessControlTab/UserQueries/useFetchIDPsWithHTPUsers';
-import { OCMUI_ENHANCED_HTPASSWRD } from '~/queries/featureGates/featureConstants';
+import { ENHANCED_HTPASSWRD } from '~/queries/featureGates/featureConstants';
 import { useFeatureGate } from '~/queries/featureGates/useFetchFeatureGate';
 
 import links from '../../../../../../common/installLinks.mjs';
@@ -53,7 +53,7 @@ const IDPSection = (props) => {
     subscriptionID,
     cluster,
   } = props;
-  const isHTPasswdEnhanced = useFeatureGate(OCMUI_ENHANCED_HTPASSWRD);
+  const isHTPasswdEnhanced = useFeatureGate(ENHANCED_HTPASSWRD);
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [dropdownOpen, setDropdownOpen] = React.useState(false);
@@ -143,11 +143,14 @@ const IDPSection = (props) => {
   const idpActionResolver = (idp) => {
     const editIDPAction = {
       title: 'Edit',
-      isAriaDisabled: !idpActions.update,
       onClick: () => {
         navigate(`/details/s/${subscriptionID}/edit-idp/${idp.name}`);
       },
     };
+    if (!idpActions.update) {
+      editIDPAction.isAriaDisabled = true;
+      editIDPAction.tooltipProps = { content: notAllowedReason('edit') };
+    }
     const deleteIDPAction = {
       title: 'Delete',
       isAriaDisabled: !idpActions.delete,
@@ -163,6 +166,11 @@ const IDPSection = (props) => {
         );
       },
     };
+    if (!idpActions.delete) {
+      deleteIDPAction.isAriaDisabled = true;
+      deleteIDPAction.tooltipProps = { content: notAllowedReason('delete') };
+    }
+
     if (IDPTypeNames[idp.type] === IDPTypeNames[IDPformValues.HTPASSWD] && !isHTPasswdEnhanced) {
       return [deleteIDPAction];
     }
