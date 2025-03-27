@@ -34,41 +34,28 @@ jobs:
         with:
           path: './node_modules'
           key: check_api-${{ env.NODE_VERSION }}-${{ hashFiles('**/yarn.lock') }}
-      - name: Set git identity
-        run: |
-          git config --global user.name "Open API Bot"
-          git config --global user.email "***REMOVED***"
-      - name: Swap Branch handling
-        run: |
-          git fetch origin
-          git checkout origin/${{ env.SWAP_BRANCH_NAME }} -b ${{ env.SWAP_BRANCH_NAME }} || git checkout -b ${{ env.SWAP_BRANCH_NAME }} || git checkout ${{ env.SWAP_BRANCH_NAME }}
-          git ls-remote --heads origin ${{ env.SWAP_BRANCH_NAME }} | grep . && git reset origin/${{ env.SWAP_BRANCH_NAME }} --hard
-          git merge origin/master --allow-unrelated-histories -m "merge with master"
       - name: Install yarn
         uses: borales/actions-yarn@v4
         with:
           cmd: install --frozen-lockfile --cache-folder .yarn
       - name: Generating model based on OpenAPI contracts
         run: make openapi
-      - name: Diffs Counter
-        id: diffs
-        run: echo "counter=$(git --no-pager diff --name-only | grep . | wc -l)" >> $GITHUB_OUTPUT
-      - name: Add files to commit
-        if: steps.diffs.outputs.counter > 0 
-        run: |
-          git add src/types/**
-          git status
-      - name: Create commit
-        if: steps.diffs.outputs.counter > 0 
-        run: |
-          git commit -m "Open API Changes" --no-verify
-      - name: Push changes
-        if: steps.diffs.outputs.counter > 0 
-        run: git push origin ${{ env.SWAP_BRANCH_NAME }}    
       - name: Create Pull Request
-        if: steps.diffs.outputs.counter > 0 
-        run: |
-          echo -e "Automatically created by Github action.\nReviewers should pay attention to changes from src/types/ files have a correspondant change on the Open API related contract.\nAdditionally to it, build and lint output should be checked. In case of build errors, our code should be adapted accordingly." > msg
-          export msg=$(cat msg) ; gh pr create -B ${{ env.BASE_BRANCH_NAME }} -H ${{ env.SWAP_BRANCH_NAME }} --title '[OPEN API] update model' --body "$msg" || true
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        uses: peter-evans/create-pull-request@v7
+        with:
+          # limitation imposed by GitHub Actions that an action cannot trigger other workflows
+          token: ${{ secrets.CHECK_API_TOKEN }}
+          base: ${{ env.BASE_BRANCH_NAME }}
+          branch: ${{ env.SWAP_BRANCH_NAME }}
+          add-paths: |
+            src/types/**
+          commit-message: Update API model
+          committer: ${{ github.actor }} <${{ github.actor_id }}+${{ github.actor }}@users.noreply.github.com>
+          author: ${{ github.actor }} <${{ github.actor_id }}+${{ github.actor }}@users.noreply.github.com>
+          delete-branch: true
+          title: '[OPEN API] update model'
+          body: |
+            Automatically created by Github action.\nReviewers should pay attention to changes from `src/types/` files have a correspondant change on the Open API related contract.
+            Additionally to it, build and lint output should be checked. In case of build errors, our code should be adapted accordingly.
+          labels: |
+            update_open_api
