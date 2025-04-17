@@ -36,6 +36,10 @@ import links from '../../../../../../common/installLinks.mjs';
 import ClipboardCopyLinkButton from '../../../../../common/ClipboardCopyLinkButton';
 import { modalActions } from '../../../../../common/Modal/ModalActions';
 import {
+  isSingleUserHtpasswd,
+  singleUserHtpasswdMessage,
+} from '../../IdentityProvidersPage/components/HtpasswdDetails/htpasswdUtilities';
+import {
   getOauthCallbackURL,
   IDPformValues,
   IDPNeedsOAuthURL,
@@ -147,9 +151,15 @@ const IDPSection = (props) => {
         navigate(`/details/s/${subscriptionID}/edit-idp/${idp.name}`);
       },
     };
-    if (!idpActions.update) {
+
+    if (
+      !idpActions.update ||
+      (idp.type === IDPformValues.HTPASSWD && isSingleUserHtpasswd(idp.htpasswd))
+    ) {
       editIDPAction.isAriaDisabled = true;
-      editIDPAction.tooltipProps = { content: notAllowedReason('edit') };
+      editIDPAction.tooltipProps = {
+        content: !idpActions.update ? notAllowedReason('edit') : singleUserHtpasswdMessage,
+      };
     }
     const deleteIDPAction = {
       title: 'Delete',

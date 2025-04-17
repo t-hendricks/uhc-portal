@@ -41,6 +41,7 @@ import Breadcrumbs from '../../../../common/Breadcrumbs';
 import Unavailable from '../../../../common/Unavailable';
 
 import HtpasswdDetails from './components/HtpasswdDetails/HtpasswdDetails';
+import { isSingleUserHtpasswd } from './components/HtpasswdDetails/htpasswdUtilities';
 import {
   IdentityProvidersPageFormInitialValues,
   IdentityProvidersPageValidationSchema,
@@ -148,7 +149,7 @@ const IdentityProvidersPage = (props) => {
   }
 
   const htpasswd = IDPList.find(
-    (idp) => idp.name === params.idpName && idp.type === 'HTPasswdIdentityProvider',
+    (idp) => idp.name === params.idpName && idp.type === IDPformValues.HTPASSWD,
   );
 
   const errorState = () => (
@@ -236,6 +237,7 @@ const IdentityProvidersPage = (props) => {
             clusterId={cluster.id}
             region={region}
             idpActions={cluster.idpActions}
+            isSingleUserHtpasswd={isSingleUserHtpasswd(htpasswd.htpasswd)}
           />
         ) : (
           <Formik

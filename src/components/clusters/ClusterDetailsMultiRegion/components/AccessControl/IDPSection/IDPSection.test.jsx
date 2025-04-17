@@ -14,6 +14,7 @@ import {
 } from '~/testUtils';
 
 import fixtures from '../../../__tests__/ClusterDetails.fixtures';
+import { singleUserHtpasswdMessage } from '../../IdentityProvidersPage/components/HtpasswdDetails/htpasswdUtilities';
 
 import IDPSection from './IDPSection';
 
@@ -248,6 +249,46 @@ describe('<IDPSection />', () => {
             exact: false,
           },
         ),
+      ).toBeInTheDocument();
+    });
+
+    it('shows tooltip if single user htpasswd', async () => {
+      useFetchIDPSWithHTPUsersMock.mockReturnValue({
+        data: [
+          {
+            name: 'myHtpasswd',
+            type: 'HTPasswdIdentityProvider',
+            id: 'id2',
+            htpasswd: {
+              username: 'mySingleUserName',
+            },
+          },
+        ],
+        isLoading: false,
+        isError: false,
+      });
+      const newProps = {
+        ...props,
+        isHypershift: true,
+        idpActions: {
+          list: true,
+          update: true,
+          delete: true,
+        },
+      };
+      const { user } = render(<IDPSection {...newProps} />);
+      expect(await screen.findByRole('grid')).toBeInTheDocument();
+      await user.click(screen.getByRole('button', { name: 'Kebab toggle' }));
+
+      expect(screen.getByRole('menuitem', { name: 'Edit' })).toHaveAttribute(
+        'aria-disabled',
+        'true',
+      );
+
+      await user.click(screen.getByRole('menuitem', { name: 'Edit' }));
+
+      expect(
+        within(screen.getByRole('tooltip')).getByText(singleUserHtpasswdMessage),
       ).toBeInTheDocument();
     });
   });
