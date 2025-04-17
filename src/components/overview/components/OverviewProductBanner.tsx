@@ -22,7 +22,7 @@ export const OverviewProductBanner = ({
   description,
   dataTestId,
 }: OverviewProductBannerProps) => (
-  <Grid className="overview-product-banner-grid">
+  <Grid className="overview-product-banner-grid" data-testid={dataTestId}>
     <PageHeader
       title={title}
       subtitle={description}
