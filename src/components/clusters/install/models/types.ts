@@ -3,9 +3,10 @@ import React, { ReactNode } from 'react';
 import { BreadcrumbPath } from '~/components/common/Breadcrumbs';
 
 export type ProviderSpecificType = {
-  abi: string[] | ReactNode[];
-  ai: string[] | ReactNode[];
-  upi: string[] | ReactNode[];
+  abi?: string[] | ReactNode[];
+  ai?: string[] | ReactNode[];
+  upi?: string[] | ReactNode[];
+  ipi?: string[] | ReactNode[];
 };
 
 export type InstallCommonType = {
@@ -16,21 +17,24 @@ export type InstallCommonType = {
 
 export type InstructionChooserProps = InstallCommonType & {
   name: string;
-  aiPageLink: string;
-  aiLearnMoreLink: string;
-  hideIPI: boolean;
+  aiPageLink?: string;
+  aiLearnMoreLink?: string;
+  hideIPI?: boolean;
   ipiPageLink: string;
-  hideUPI: boolean;
+  ipiLearnMoreLink?: string;
+  hideUPI?: boolean;
   upiPageLink: string;
-  agentBasedPageLink: string;
-  agentBasedLearnMoreLink: string;
+  upiLearnMoreLink?: string;
+  agentBasedPageLink?: string;
+  agentBasedLearnMoreLink?: string;
   providerSpecificFeatures: ProviderSpecificType;
 };
 
 export type OCPInstructionProps = InstallCommonType & {
-  customizations: string;
+  customizations?: string;
   cloudProviderId: string;
   instructionsMapping: any;
+  isUPI?: boolean;
 };
 
 export type InstallComponentProps =

@@ -29,8 +29,10 @@ export const InstallWithInstructionChooserWrapper = (props: InstructionChooserPr
     aiLearnMoreLink,
     hideIPI,
     ipiPageLink,
+    ipiLearnMoreLink,
     hideUPI,
     upiPageLink,
+    upiLearnMoreLink,
     agentBasedPageLink,
     agentBasedLearnMoreLink,
     providerSpecificFeatures,
@@ -47,16 +49,14 @@ export const InstallWithInstructionChooserWrapper = (props: InstructionChooserPr
           aiPageLink={aiPageLink}
           aiLearnMoreLink={aiLearnMoreLink}
           hideIPI={hideIPI}
+          ipiLearnMoreLink={ipiLearnMoreLink}
           ipiPageLink={ipiPageLink}
           hideUPI={hideUPI}
           upiPageLink={upiPageLink}
+          upiLearnMoreLink={upiLearnMoreLink}
           agentBasedPageLink={agentBasedPageLink}
           agentBasedLearnMoreLink={agentBasedLearnMoreLink}
-          providerSpecificFeatures={{
-            abi: providerSpecificFeatures.abi,
-            ai: providerSpecificFeatures.ai,
-            upi: providerSpecificFeatures.upi,
-          }}
+          providerSpecificFeatures={providerSpecificFeatures}
           name={name}
         />
       </PageSection>
@@ -72,6 +72,7 @@ export const InstallWithOCPInstructionsWrapper = (props: OCPInstructionProps) =>
     cloudProviderId,
     customizations,
     instructionsMapping,
+    isUPI,
   } = props;
   const dispatch = useDispatch();
   React.useEffect(() => {
@@ -92,6 +93,7 @@ export const InstallWithOCPInstructionsWrapper = (props: OCPInstructionProps) =>
           token={token}
           cloudProviderID={cloudProviderId}
           customizations={customizations}
+          isUPI={isUPI}
           {...instructionsMapping}
         />
       </PageSection>
