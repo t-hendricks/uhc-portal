@@ -86,7 +86,6 @@ import CancelUpgradeModal from '../common/Upgrades/CancelUpgradeModal';
 import { getSchedules } from '../common/Upgrades/clusterUpgradeActions';
 
 import AccessControl from './components/AccessControl/AccessControl';
-import { getGrants } from './components/AccessControl/NetworkSelfServiceSection/NetworkSelfServiceActions';
 import usersActions from './components/AccessControl/UsersSection/UsersActions';
 import AccessRequest from './components/AccessRequest';
 import AddOns from './components/AddOns';
@@ -296,11 +295,6 @@ const ClusterDetails = (props) => {
       refreshIDP();
       dispatch(getSchedules(clusterID, isHypershiftCluster(cluster)));
       dispatch(fetchUpgradeGates());
-      if (get(cluster, 'cloud_provider.id') !== 'gcp') {
-        // don't fetch grants if cloud provider is known to be gcp
-
-        dispatch(getGrants(clusterID));
-      }
     } else {
       const subscriptionID = cluster?.subscription?.id;
 

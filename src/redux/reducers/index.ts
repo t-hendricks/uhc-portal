@@ -5,7 +5,6 @@ import { combineReducers } from 'redux';
 import { notificationsReducer } from '@redhat-cloud-services/frontend-components-notifications/redux';
 
 import apiErrorReducer from '../../components/App/ApiError/ApiErrorReducer';
-import NetworkSelfServiceReducer from '../../components/clusters/ClusterDetailsMultiRegion/components/AccessControl/NetworkSelfServiceSection/NetworkSelfServiceReducer';
 import clusterUsersReducer from '../../components/clusters/ClusterDetailsMultiRegion/components/AccessControl/UsersSection/UsersReducer';
 import addOnsReducer from '../../components/clusters/ClusterDetailsMultiRegion/components/AddOns/AddOnsReducer';
 import { IdentityProvidersReducer } from '../../components/clusters/ClusterDetailsMultiRegion/components/IdentityProvidersPage/IdentityProvidersReducer';
@@ -72,7 +71,6 @@ const reducers = {
   loadBalancerValues: loadBalancersReducer,
 
   notifications: notificationsReducer,
-  networkSelfService: NetworkSelfServiceReducer,
   subscriptionSettings: subscriptionSettingsReducer,
   subscriptionReleased: subscriptionReleasedReducer,
   insightsData: insightsReducer,
