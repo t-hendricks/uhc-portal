@@ -56,7 +56,7 @@ const MIRROR_RHCOS_LATEST_PPC =
   'https://mirror.openshift.com/pub/openshift-v4/ppc64le/dependencies/rhcos/latest';
 const MIRROR_RHCOS_LATEST_ARM =
   'https://mirror.openshift.com/pub/openshift-v4/aarch64/dependencies/rhcos/latest';
-const MIRROR_ROSA_LATEST = 'https://mirror.openshift.com/pub/openshift-v4/clients/rosa/latest';
+const MIRROR_ROSA_LATEST = 'https://mirror.openshift.com/pub/cgw/rosa/latest';
 const MIRROR_MIRROR_REGISTRY_LATEST = 'https://mirror.openshift.com/pub/cgw/mirror-registry/latest';
 
 const ARGO_CD_CLI_LATEST =
