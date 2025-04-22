@@ -79,9 +79,9 @@ describe('Rosa cluster Get Started page(OCP-56363)', { tags: ['smoke'] }, () => 
       true,
     );
     const rosaClientOptions = {
-      MacOS: 'https://mirror.openshift.com/pub/openshift-v4/clients/rosa/latest/rosa-macosx.tar.gz',
-      Windows: 'https://mirror.openshift.com/pub/openshift-v4/clients/rosa/latest/rosa-windows.zip',
-      Linux: 'https://mirror.openshift.com/pub/openshift-v4/clients/rosa/latest/rosa-linux.tar.gz',
+      MacOS: 'https://mirror.openshift.com/pub/cgw/rosa/latest/rosa-macosx.tar.gz',
+      Windows: 'https://mirror.openshift.com/pub/cgw/rosa/latest/rosa-windows.zip',
+      Linux: 'https://mirror.openshift.com/pub/cgw/rosa/latest/rosa-linux.tar.gz',
     };
     Object.entries(rosaClientOptions).forEach(([key, value]) => {
       RosaGetstartedPage.rosaClientDropdown().select(key);
