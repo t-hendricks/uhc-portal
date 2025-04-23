@@ -50,7 +50,11 @@ if (APP_DEV_SERVER) {
   configs.mockdata = import(/* webpackMode: "eager" */ './config/mockdata.json');
 }
 
-// select config according to the APP_API_ENV flag (see webpack.config.js)
+// select config according to the environment
+export const APP_API_ENV =
+  window.location.host.includes('dev') || window.location.host.includes('foo')
+    ? 'staging'
+    : 'production';
 configs.default = configs[APP_API_ENV];
 
 const parseEnvQueryParam = (): string | undefined => {

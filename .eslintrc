@@ -181,7 +181,6 @@
   "globals": {
     "insights": "readonly",
     "APP_DEVMODE": "readonly",
-    "APP_API_ENV": "readonly",
     "APP_DEV_SERVER": "readonly",
     "APP_SENTRY_RELEASE_VERSION": "readonly",
     "OCM_SHOW_OLD_METRICS": "readonly"

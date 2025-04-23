@@ -1,7 +1,8 @@
 # :cookie: Release to Production
 
+1. #### Pick the latest commit hash that can be released to Prod from master
 
-1. #### Verify Staging env' is ready to promote
+   Look at commits and pick the last commit that has all pipelines passed. Click on the "copy full SHA" for the commit you chose, and save it for later use.
 
    Ensure all phases of the Staging deployment queue are passing:
 
@@ -11,42 +12,13 @@
 
    Check that the [daily QE smoke-test runs][32] have passed.
 
-
-1. #### [Create a PR][30] to promote content from `master` to `stable`
-
-   Use the link above, and append the release date to the PR title in human-readable form, e.g. _March 5, 2025_.
-
-   Pander for reviewers, and follow the review process of the PR template.
-
-   > :warning: Do not click the "Update branch" button, even if there's a message saying _"This branch is out of date with the base branch"_.
-
-
-1. #### Merge content to `stable`, and note the merge-commit hash
-
-   Once the PR is approved and all checkboxes under the Reviews section are checked, click "Merge pull request".
-
-   After merging, find the comment saying _"\<user\> merged commit \<short-hash\> into ..."_, and click the short-hash link.  Grab the **full hash** from the URL (the last path segment), and save it for later use.
-
-   **Example URL:**
-
-   ```
-                                                       |--- this bit is the full hash --------|
-   https://github.com/RedHatInsights/uhc-portal/commit/18664d516206816f0c0837f3b2c3620c1d69cbc4
-   ```
-
-
-1. #### Ensure the `stable` branch [build-job][14] <sup>[1][footnotes]</sup> completes successfully
-
-   Or wait for a notification on [#ocm-ui-deploys][16].  It would look like this:
-
-   > **sass notifier**  
-   > [sd-uhc] OCM UI build stable - #6 Success after 16 min ([Open][20])
+   <img width="1358" alt="Screenshot 2025-03-20 at 13 33 13" src="https://github.com/user-attachments/assets/aa88b413-6bd9-4f56-b23d-3d4e120c80b2" />
 
 
 1. #### Update [_deploy.yml_ in app-interface][17] to bump the Production deployment-target <sup>[2][footnotes]</sup>
 
    In your app-interface fork, create a new topic branch from `master`.  
-   Under the section `# Production Deployment`, update `ref` to the new full-hash from the release merge-commit.
+   Under the section `# Production Deployment`, update `ref` to the new full-hash from step 1.
 
    Commit and push changes, and create an MR against the upstream repo' ([example MR][9])
 

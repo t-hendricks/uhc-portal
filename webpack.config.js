@@ -42,18 +42,12 @@ module.exports = async (_env, argv) => {
   process.env.DEV_MODE = devMode;
 
   const sentryReleaseVersion = process.env.SENTRY_VERSION || argv.env['sentry-version'];
+
   const isDevServer = process.argv.includes('serve');
 
   const outDir = outputPath
     ? path.resolve(__dirname, outputPath)
     : path.resolve(__dirname, 'dist', insights.appname);
-
-  // Select default API env based on argument if specified.
-  // Otherwise, default to 'development' for backend-proxy users when running in dev server,
-  // or 'production' when it's a real build.
-  const apiEnv = argv.env['api-env'] || (isDevServer ? 'development' : 'production');
-  // eslint-disable-next-line no-console
-  console.log(`Building with apiEnv=${apiEnv}, isDevServer=${isDevServer}`);
 
   const publicPath = `/apps/${insights.appname}/`;
 
@@ -128,7 +122,6 @@ module.exports = async (_env, argv) => {
         APP_DEVMODE: devMode,
         APP_DEV_SERVER: isDevServer,
         APP_SENTRY_RELEASE_VERSION: JSON.stringify(sentryReleaseVersion),
-        APP_API_ENV: JSON.stringify(apiEnv),
         process: { env: {} },
       }),
       new CopyWebpackPlugin({
@@ -331,43 +324,43 @@ module.exports = async (_env, argv) => {
       },
       proxy: noInsightsProxy
         ? [
-            {
-              context: ['/mockdata'],
-              pathRewrite: { '^/mockdata': '' },
-              target: 'http://[::1]:8010',
-            },
-            runAIinStandalone
-              ? {
-                  context: ['/apps/assisted-installer-app/**'],
-                  target: 'http://[::1]:8003',
-                  logLevel: 'debug',
-                  secure: false,
-                  changeOrigin: true,
-                }
-              : {},
-            {
-              // docs: https://github.com/chimurai/http-proxy-middleware#http-proxy-options
-              // proxy everything except our own app, mimicking insights-proxy behaviour
-              context: ['**', '!/mockdata/**', '!/src/**', `!/apps/${insights.appname}/**`],
-              target: 'https://console.redhat.com',
-              agent: keepAliveAgent,
-              headers: {
-                Connection: 'keep-alive',
-              },
-              proxyTimeout: 17000,
-              // replace the "host" header's URL origin with the origin from the target URL
+          {
+            context: ['/mockdata'],
+            pathRewrite: { '^/mockdata': '' },
+            target: 'http://[::1]:8010',
+          },
+          runAIinStandalone
+            ? {
+              context: ['/apps/assisted-installer-app/**'],
+              target: 'http://[::1]:8003',
+              logLevel: 'debug',
+              secure: false,
               changeOrigin: true,
-              // change the "origin" header of the proxied request to avoid CORS
-              // many APIs do not allow the requests from the foreign origin
-              onProxyReq(proxyRequest) {
-                proxyRequest.setHeader('origin', 'https://console.redhat.com');
-                proxyRequest.setHeader('Connection', 'keep-alive');
-                if (verboseLogging) {
-                  console.log('  proxying console.redhat.com:', proxyRequest.path);
-                }
-              },
+            }
+            : {},
+          {
+            // docs: https://github.com/chimurai/http-proxy-middleware#http-proxy-options
+            // proxy everything except our own app, mimicking insights-proxy behaviour
+            context: ['**', '!/mockdata/**', '!/src/**', `!/apps/${insights.appname}/**`],
+            target: 'https://console.redhat.com',
+            agent: keepAliveAgent,
+            headers: {
+              Connection: 'keep-alive',
             },
-          ]
+            proxyTimeout: 17000,
+            // replace the "host" header's URL origin with the origin from the target URL
+            changeOrigin: true,
+            // change the "origin" header of the proxied request to avoid CORS
+            // many APIs do not allow the requests from the foreign origin
+            onProxyReq(proxyRequest) {
+              proxyRequest.setHeader('origin', 'https://console.redhat.com');
+              proxyRequest.setHeader('Connection', 'keep-alive');
+              if (verboseLogging) {
+                console.log('  proxying console.redhat.com:', proxyRequest.path);
+              }
+            },
+          },
+        ]
         : undefined,
       hot: false,
       port: noInsightsProxy ? 1337 : 8001,

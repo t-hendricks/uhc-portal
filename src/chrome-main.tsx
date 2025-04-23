@@ -34,7 +34,7 @@ import { userInfoResponse } from './redux/actions/userActions';
 import { store } from './redux/store';
 import { authInterceptor } from './services/apiRequest';
 import { Chrome } from './types/types';
-import config from './config';
+import config, { APP_API_ENV } from './config';
 
 import './styles/main.scss';
 

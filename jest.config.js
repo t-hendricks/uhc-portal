@@ -36,7 +36,6 @@ const config = {
   globals: {
     APP_DEVMODE: false,
     APP_DEV_SERVER: false,
-    APP_API_ENV: false,
     // Warning! Moving this config to the "ts-jes" transform makes the test slower and close to double the used heap size
     'ts-jest': {
       isolatedModules: true,

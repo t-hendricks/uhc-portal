@@ -24,7 +24,7 @@ node_modules:
 
 .PHONY: app
 app: node_modules
-	yarn build:prod --env api-env=staging
+	yarn build:prod
 
 # Marking git clones .PHONY so we can git pull even if they already exist.
 
