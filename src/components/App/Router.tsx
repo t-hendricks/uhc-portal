@@ -39,13 +39,8 @@ import ClusterListMultiRegion from '../clusters/ClusterListMultiRegion';
 import CreateClusterPage from '../clusters/CreateClusterPage';
 import GovCloudPage from '../clusters/GovCloud/GovCloudPage';
 import InsightsAdvisorRedirector from '../clusters/InsightsAdvisorRedirector';
-import ConnectedInstallArmPreRelease from '../clusters/install/InstallArmPreRelease';
 import InstallASH from '../clusters/install/InstallASH';
-import ConnectedInstallASHIPI from '../clusters/install/InstallASHIPI';
-import ConnectedInstallASHUPI from '../clusters/install/InstallASHUPI';
 import InstallAWS from '../clusters/install/InstallAWS';
-import ConnectedInstallAWSIPI from '../clusters/install/InstallAWSIPI';
-import ConnectedInstallAWSUPI from '../clusters/install/InstallAWSUPI';
 import InstallAzure from '../clusters/install/InstallAzure';
 import ConnectedInstallAzureIPI from '../clusters/install/InstallAzureIPI';
 import ConnectedInstallAzureUPI from '../clusters/install/InstallAzureUPI';
@@ -186,9 +181,6 @@ const Router: React.FC<RouterProps> = ({ planType, clusterId, externalClusterId 
         {InstallRouteMap(routesData)}
         <Route path="/token/show" element={<CLILoginPage showToken />} />
         <Route path="/token" element={<CLILoginPage showToken={false} showPath="/token/show" />} />
-        <Route path="/install/arm/pre-release" element={<ConnectedInstallArmPreRelease />} />
-        <Route path="/install/aws/installer-provisioned" element={<ConnectedInstallAWSIPI />} />
-        <Route path="/install/aws/user-provisioned" element={<ConnectedInstallAWSUPI />} />
         <Route
           path="/install/aws/multi/installer-provisioned"
           element={<ConnectedInstallMultiAWSIPI />}
@@ -215,14 +207,6 @@ const Router: React.FC<RouterProps> = ({ planType, clusterId, externalClusterId 
         <Route path="/install/azure/installer-provisioned" element={<ConnectedInstallAzureIPI />} />
         <Route path="/install/azure/user-provisioned" element={<ConnectedInstallAzureUPI />} />
         <Route path="/install/azure" element={<InstallAzure />} />
-        <Route
-          path="/install/azure-stack-hub/installer-provisioned"
-          element={<ConnectedInstallASHIPI />}
-        />
-        <Route
-          path="/install/azure-stack-hub/user-provisioned"
-          element={<ConnectedInstallASHUPI />}
-        />
         <Route path="/install/azure-stack-hub" element={<InstallASH />} />
         <Route path="/install/metal/user-provisioned" element={<InstallBMUPI />} />
         <Route path="/install/metal/installer-provisioned" element={<InstallBMIPI />} />

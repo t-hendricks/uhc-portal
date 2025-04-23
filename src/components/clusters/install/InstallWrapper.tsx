@@ -12,11 +12,13 @@ import { useGlobalState } from '~/redux/hooks';
 
 import { InstructionsChooser } from './instructions/InstructionsChooser';
 import { InstructionsChooserPageTitle } from './instructions/InstructionsChooserPageTitle';
+import InstructionsPreRelease from './instructions/InstructionsPreRelease';
 import OCPInstructions from './instructions/OCPInstructions';
 import {
   InstallComponentProps,
   InstructionChooserProps,
   OCPInstructionProps,
+  ReleaseInstructionsProps,
   Routes,
 } from './models/types';
 
@@ -101,16 +103,41 @@ export const InstallWithOCPInstructionsWrapper = (props: OCPInstructionProps) =>
   );
 };
 
+export const InstallWithReleaseInstructionsWrapper = (props: ReleaseInstructionsProps) => {
+  const { breadCrumbsPaths, appPageTitle, providerTitle, installer } = props;
+  const dispatch = useDispatch();
+  React.useEffect(() => {
+    dispatch(tollboothActions.createAuthToken());
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  const token = useGlobalState((state) => state.tollbooth.token);
+
+  const breadcrumbs = <Breadcrumbs path={[...breadCrumbsPaths]} />;
+
+  return (
+    <AppPage title={appPageTitle}>
+      <PageTitle title={providerTitle} breadcrumbs={breadcrumbs} />
+      <PageSection>
+        <InstructionsPreRelease token={token} installer={installer} />
+      </PageSection>
+    </AppPage>
+  );
+};
+
 // Wrapper component to choose which type of Install component to render
 export const InstallComponentWrapper = (props: InstallComponentProps) => {
-  const { instructionChooser } = props;
+  const { componentChooser, propsData } = props;
 
-  if (instructionChooser) {
-    const { instructionChooserProps } = props;
-    return <InstallWithInstructionChooserWrapper {...instructionChooserProps} />;
+  switch (componentChooser) {
+    case 'instructionsChooser':
+      return <InstallWithInstructionChooserWrapper {...propsData} />;
+    case 'releaseInstructions':
+      return <InstallWithReleaseInstructionsWrapper {...propsData} />;
+    default:
+      return <InstallWithOCPInstructionsWrapper {...propsData} />;
   }
-  const { ocpInstructionProps } = props;
-  return <InstallWithOCPInstructionsWrapper {...ocpInstructionProps} />;
 };
 
 // Loop through all Install component Routes and render required Install component

@@ -5,11 +5,6 @@ import { checkAccessibility, render, screen } from '~/testUtils';
 import { InstallComponentWrapper } from './InstallWrapper';
 import { AlibabaProps, ArmAWSIPIProps } from './InstallWrapperPropsData';
 
-const GenericWrapperProps = {
-  instructionChooserProps: AlibabaProps,
-  ocpInstructionProps: ArmAWSIPIProps,
-};
-
 describe('Install generic component', () => {
   beforeEach(() => {
     jest.clearAllMocks();
@@ -19,26 +14,29 @@ describe('Install generic component', () => {
   });
 
   describe('Installer wrapper', () => {
+    // html violations in Patternfly component
     it.skip('is accessible', async () => {
-      const { container } = render(<InstallComponentWrapper {...GenericWrapperProps} />);
+      const { container } = render(
+        <InstallComponentWrapper propsData={ArmAWSIPIProps} componentChooser="ocpInstructions" />,
+      );
 
       expect(await screen.findByRole('heading', { level: 1 })).toBeInTheDocument();
       await checkAccessibility(container);
     });
 
     it('renders OCP Instructions component', async () => {
-      render(<InstallComponentWrapper {...GenericWrapperProps} />);
+      render(
+        <InstallComponentWrapper propsData={ArmAWSIPIProps} componentChooser="ocpInstructions" />,
+      );
 
       const title = await screen.findByText('Amazon Web Services (ARM)');
       expect(title).toBeInTheDocument();
     });
 
     it('renders Instruction Chooser component', async () => {
-      const updatedGenericWrapperProps = {
-        ...GenericWrapperProps,
-        instructionChooser: true,
-      };
-      render(<InstallComponentWrapper {...updatedGenericWrapperProps} />);
+      render(
+        <InstallComponentWrapper propsData={AlibabaProps} componentChooser="instructionsChooser" />,
+      );
 
       const title = await screen.findByText('Alibaba Cloud');
       expect(title).toBeInTheDocument();

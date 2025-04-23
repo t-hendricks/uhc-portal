@@ -1,6 +1,6 @@
 import React from 'react';
 
-import links from '~/common/installLinks.mjs';
+import links, { tools } from '~/common/installLinks.mjs';
 import ExternalLink from '~/components/common/ExternalLink';
 
 import instructionsMapping from './instructions/instructionsMapping';
@@ -172,4 +172,75 @@ export const ArmBareMetalUPIProps = {
   ],
   isUPI: true,
   instructionsMapping: instructionsMapping.baremetal.arm.upi,
+};
+
+export const ASHIPIProps = {
+  appPageTitle:
+    'Install OpenShift 4 | Red Hat OpenShift Cluster Manager | Azure Stack Hub Installer-Provisioned Infrastructure',
+  providerTitle: instructionsMapping.ash.ipi.title,
+  cloudProviderId: 'ash',
+  customizations: instructionsMapping.ash.customizations,
+  instructionsMapping: instructionsMapping.ash.ipi,
+  breadCrumbsPaths: [
+    { label: 'Cluster List' },
+    { label: 'Cluster Type', path: '/create' },
+    { label: 'Microsoft Azure Stack Hub', path: '/install/azure-stack-hub' },
+    { label: 'Installer-provisioned infrastructure' },
+  ],
+};
+
+export const ASHUPIProps = {
+  appPageTitle:
+    'Install OpenShift 4 | Red Hat OpenShift Cluster Manager | Azure Stack Hub User-Provisioned Infrastructure',
+  providerTitle: instructionsMapping.ash.upi.title,
+  cloudProviderId: 'ash',
+  isUPI: true,
+  instructionsMapping: instructionsMapping.ash.upi,
+  breadCrumbsPaths: [
+    { label: 'Cluster List' },
+    { label: 'Cluster Type', path: '/create' },
+    { label: 'Microsoft Azure Stack Hub', path: '/install/azure-stack-hub' },
+    { label: 'User-provisioned infrastructure' },
+  ],
+};
+
+export const ArmPreReleaseProps = {
+  appPageTitle: 'Install OpenShift 4 | ARM | Experimental Developer Preview Builds',
+  providerTitle: 'Install OpenShift Container Platform 4 on ARM',
+  installer: tools.ARMINSTALLER,
+  breadCrumbsPaths: [
+    { label: 'Cluster List' },
+    { label: 'Cluster Type', path: '/create' },
+    { label: 'ARM Pre-Release Builds' },
+  ],
+};
+
+export const AWSIPIProps = {
+  appPageTitle:
+    'Install OpenShift 4 | Red Hat OpenShift Cluster Manager | AWS Installer-Provisioned Infrastructure',
+  providerTitle: instructionsMapping.aws.x86.ipi.title,
+  cloudProviderId: 'aws',
+  customizations: instructionsMapping.aws.customizations,
+  instructionsMapping: instructionsMapping.aws.x86.ipi,
+  breadCrumbsPaths: [
+    { label: 'Cluster List' },
+    { label: 'Cluster Type', path: '/create' },
+    { label: 'Amazon Web Services', path: '/install/aws' },
+    { label: 'Installer-provisioned infrastructure' },
+  ],
+};
+
+export const AWSUPIProps = {
+  appPageTitle:
+    'Install OpenShift 4 | Red Hat OpenShift Cluster Manager | AWS User-Provisioned Infrastructure',
+  providerTitle: instructionsMapping.aws.x86.upi.title,
+  cloudProviderId: 'aws',
+  isUPI: true,
+  instructionsMapping: instructionsMapping.aws.x86.upi,
+  breadCrumbsPaths: [
+    { label: 'Cluster List' },
+    { label: 'Cluster Type', path: '/create' },
+    { label: 'Amazon Web Services', path: '/install/aws' },
+    { label: 'User-provisioned infrastructure' },
+  ],
 };

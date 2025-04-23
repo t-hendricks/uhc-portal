@@ -37,9 +37,14 @@ export type OCPInstructionProps = InstallCommonType & {
   isUPI?: boolean;
 };
 
+export type ReleaseInstructionsProps = InstallCommonType & {
+  installer: string;
+};
+
 export type InstallComponentProps =
-  | { instructionChooser: true; instructionChooserProps: InstructionChooserProps }
-  | { instructionChooser?: false; ocpInstructionProps: OCPInstructionProps };
+  | { componentChooser: 'instructionsChooser'; propsData: InstructionChooserProps }
+  | { componentChooser: 'ocpInstructions'; propsData: OCPInstructionProps }
+  | { componentChooser: 'releaseInstructions'; propsData: ReleaseInstructionsProps };
 
 export type Routes = {
   path: string;
