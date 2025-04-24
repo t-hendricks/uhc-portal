@@ -7,7 +7,10 @@ import { ExpandableRowContent, Table, Tbody, Td, Th, Thead, Tr } from '@patternf
 import { Link } from '~/common/routing';
 import CreateClusterDropDown from '~/components/clusters/CreateClusterPage/CloudTab/components/CreateClusterDropDown';
 import links from '~/components/clusters/CreateClusterPage/CreateClusterConsts';
+import CreateManagedClusterTooltip from '~/components/common/CreateManagedClusterTooltip';
 import ExternalLink from '~/components/common/ExternalLink';
+import { useCanCreateManagedCluster } from '~/queries/ClusterDetailsQueries/useFetchActionsPermissions';
+import { queryConstants } from '~/queries/queriesConstants';
 import { isRestrictedEnv } from '~/restrictedEnv';
 import AWSLogo from '~/styles/images/AWS.png';
 import IBMCloudLogo from '~/styles/images/ibm_cloud-icon.png';
@@ -20,6 +23,10 @@ interface ManagedServicesTableProps {
 }
 
 const ManagedServicesTable = (props: ManagedServicesTableProps) => {
+  const { canCreateManagedCluster } = useCanCreateManagedCluster(
+    queryConstants.FETCH_CLUSTER_DETAILS_QUERY_KEY,
+  );
+
   const { hasOSDQuota = false, isTrialEnabled = false } = props;
   const [openRows, setOpenRows] = useState<Array<string>>([]);
   const setRowExpanded = (rowKey: string, isExpanding = true) =>
@@ -45,6 +52,25 @@ const ManagedServicesTable = (props: ManagedServicesTableProps) => {
     rosa: 'rosa',
   };
 
+  const createOSDTrialbutton = (
+    <Button
+      className="create-button"
+      isAriaDisabled={!canCreateManagedCluster}
+      variant={ButtonVariant.primary}
+      component={(props) => (
+        <Link
+          {...props}
+          id="create-trial-cluster"
+          to="/create/osdtrial?trial=osd"
+          data-testid="osd-create-trial-cluster"
+          role="button"
+        />
+      )}
+    >
+      Create trial cluster
+    </Button>
+  );
+
   const osdTrialRow = {
     key: rowKeys.osdTrial,
     logo: <img className="partner-logo" src={RedHatLogo} alt="OSD" />,
@@ -55,25 +81,53 @@ const ManagedServicesTable = (props: ManagedServicesTableProps) => {
     ),
     purchasedThrough: 'Red Hat',
     details: 'Available on AWS and GCP',
-    action: (
-      <Button
-        className="create-button"
-        variant={ButtonVariant.primary}
-        component={(props) => (
-          <Link
-            {...props}
-            id="create-trial-cluster"
-            to="/create/osdtrial?trial=osd"
-            data-testid="osd-create-trial-cluster"
-            role="button"
-          />
-        )}
-      >
-        Create trial cluster
-      </Button>
+    action: !canCreateManagedCluster ? (
+      <CreateManagedClusterTooltip>{createOSDTrialbutton}</CreateManagedClusterTooltip>
+    ) : (
+      createOSDTrialbutton
     ),
     expandedSection: null,
   };
+
+  const createOSDbutton = (
+    <Button
+      className="create-button"
+      isAriaDisabled={!canCreateManagedCluster}
+      variant={ButtonVariant.primary}
+      component={(props) => (
+        <Link
+          {...props}
+          id="create-cluster"
+          to="/create/osd"
+          data-testid="osd-create-cluster-button"
+        />
+      )}
+    >
+      Create cluster
+    </Button>
+  );
+
+  let osdRowaction;
+
+  if (hasOSDQuota) {
+    if (!canCreateManagedCluster) {
+      osdRowaction = <CreateManagedClusterTooltip>{createOSDbutton}</CreateManagedClusterTooltip>;
+    } else {
+      osdRowaction = createOSDbutton;
+    }
+  } else {
+    osdRowaction = (
+      <ExternalLink
+        href={links.OSD_LEARN_MORE}
+        isButton
+        variant={ButtonVariant.secondary}
+        className="create-button"
+        noIcon
+      >
+        <span>Learn more</span>
+      </ExternalLink>
+    );
+  }
 
   const osdRow = {
     key: rowKeys.osd,
@@ -85,32 +139,7 @@ const ManagedServicesTable = (props: ManagedServicesTableProps) => {
     ),
     purchasedThrough: 'Red Hat',
     details: 'Available on AWS and GCP',
-    action: hasOSDQuota ? (
-      <Button
-        className="create-button"
-        variant={ButtonVariant.primary}
-        component={(props) => (
-          <Link
-            {...props}
-            id="create-cluster"
-            to="/create/osd"
-            data-testid="osd-create-cluster-button"
-          />
-        )}
-      >
-        Create cluster
-      </Button>
-    ) : (
-      <ExternalLink
-        href={links.OSD_LEARN_MORE}
-        isButton
-        variant={ButtonVariant.secondary}
-        className="create-button"
-        noIcon
-      >
-        <span>Learn more</span>
-      </ExternalLink>
-    ),
+    action: osdRowaction,
     expandedSection: {
       content: (
         <Stack hasGutter>
@@ -211,6 +240,10 @@ const ManagedServicesTable = (props: ManagedServicesTableProps) => {
     },
   };
 
+  const rosaCreateClusterDropdown = (
+    <CreateClusterDropDown canCreateManagedCluster={canCreateManagedCluster || false} />
+  );
+
   const rosaRow = {
     key: rowKeys.rosa,
     logo: <img className="partner-logo" src={AWSLogo} alt="AWS" />,
@@ -221,7 +254,11 @@ const ManagedServicesTable = (props: ManagedServicesTableProps) => {
     ),
     purchasedThrough: 'Amazon Web Services',
     details: 'Flexible hourly billing',
-    action: <CreateClusterDropDown toggleId="rosa-create-cluster-dropdown" />,
+    action: !canCreateManagedCluster ? (
+      <CreateManagedClusterTooltip wrap>{rosaCreateClusterDropdown}</CreateManagedClusterTooltip>
+    ) : (
+      rosaCreateClusterDropdown
+    ),
     expandedSection: {
       content: (
         <Stack hasGutter>

@@ -23,6 +23,7 @@ import {
 
 import docLinks from '~/common/installLinks.mjs';
 import { Link } from '~/common/routing';
+import CreateManagedClusterTooltip from '~/components/common/CreateManagedClusterTooltip';
 import ExternalLink from '~/components/common/ExternalLink';
 import InternalTrackingLink from '~/components/common/InternalTrackingLink';
 import AWSLogo from '~/styles/images/AWSLogo';
@@ -35,6 +36,7 @@ import './OfferingCard.scss';
 
 type OfferingCardProps = {
   offeringType?: 'AWS' | 'Azure' | 'RHOSD' | 'RHOCP' | 'RHOIBM' | 'DEVSNBX';
+  canCreateManagedCluster?: boolean;
 };
 
 const createRosaClusterURL = '/create/rosa/getstarted';
@@ -63,7 +65,7 @@ const DEVSNBXOfferingCardDocLinkComponent = () => (
 );
 
 function OfferingCard(props: OfferingCardProps) {
-  const { offeringType } = props;
+  const { offeringType, canCreateManagedCluster } = props;
 
   let offeringCardTitle: string | undefined;
   let offeringCardLabel: string = 'Managed service';
@@ -90,6 +92,37 @@ function OfferingCard(props: OfferingCardProps) {
     [],
   );
 
+  const createAWSClusterBtn = (
+    <InternalTrackingLink
+      isButton
+      variant="secondary"
+      to={createRosaClusterURL}
+      component={CreateRosaClusterLink}
+      isAriaDisabled={!canCreateManagedCluster}
+    >
+      Create cluster
+    </InternalTrackingLink>
+  );
+
+  const createOSDBtnCluster = (
+    <InternalTrackingLink
+      isButton
+      variant="secondary"
+      to={createOSDClusterURL}
+      component={CreateOSDCluterLink}
+      isAriaDisabled={!canCreateManagedCluster}
+    >
+      Create cluster
+    </InternalTrackingLink>
+  );
+
+  const getOfferingCardLink = (btn: React.ReactElement) =>
+    !canCreateManagedCluster ? (
+      <CreateManagedClusterTooltip>{btn}</CreateManagedClusterTooltip>
+    ) : (
+      btn
+    );
+
   switch (offeringType) {
     case 'AWS':
       offeringCardTitle = 'Red Hat OpenShift Service on AWS (ROSA)';
@@ -101,16 +134,7 @@ function OfferingCard(props: OfferingCardProps) {
         },
         { descriptionListTerm: 'Billing type', descriptionListDescription: 'Flexible hourly' },
       ];
-      offeringCardCreationLink = (
-        <InternalTrackingLink
-          isButton
-          variant="secondary"
-          to={createRosaClusterURL}
-          component={CreateRosaClusterLink}
-        >
-          Create cluster
-        </InternalTrackingLink>
-      );
+      offeringCardCreationLink = getOfferingCardLink(createAWSClusterBtn);
       offeringCardDocLink = (
         <InternalTrackingLink
           isButton
@@ -141,16 +165,7 @@ function OfferingCard(props: OfferingCardProps) {
         { descriptionListTerm: 'Purchase through', descriptionListDescription: 'Red Hat' },
         { descriptionListTerm: 'Billing type', descriptionListDescription: 'Flexible or fixed' },
       ];
-      offeringCardCreationLink = (
-        <InternalTrackingLink
-          isButton
-          variant="secondary"
-          to={createOSDClusterURL}
-          component={CreateOSDCluterLink}
-        >
-          Create cluster
-        </InternalTrackingLink>
-      );
+      offeringCardCreationLink = getOfferingCardLink(createOSDBtnCluster);
       offeringCardDocLink = (
         <InternalTrackingLink
           isButton

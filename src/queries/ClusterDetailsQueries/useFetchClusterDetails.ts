@@ -56,6 +56,7 @@ export const useFetchClusterDetails = (subscriptionID: string) => {
     subscriptionID,
     queryConstants.FETCH_CLUSTER_DETAILS_QUERY_KEY,
     subscription?.subscription.status,
+    subscription?.subscription.cluster_id as string,
   );
 
   const {

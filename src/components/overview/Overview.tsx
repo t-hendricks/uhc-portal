@@ -4,6 +4,8 @@ import { Flex, FlexItem, PageSection, Title } from '@patternfly/react-core';
 
 import { Link } from '~/common/routing';
 import InternalTrackingLink from '~/components/common/InternalTrackingLink';
+import { useCanCreateManagedCluster } from '~/queries/ClusterDetailsQueries/useFetchActionsPermissions';
+import { queryConstants } from '~/queries/queriesConstants';
 
 import docLinks from '../../common/installLinks.mjs';
 import OpenShiftProductIcon from '../../styles/images/OpenShiftProductIcon.svg';
@@ -34,6 +36,10 @@ const openshiftHeaderContent: OverviewProductBannerProps = {
 const PAGE_TITLE = 'Overview | Red Hat OpenShift Cluster Manager';
 
 function OverviewEmptyState() {
+  const { canCreateManagedCluster } = useCanCreateManagedCluster(
+    queryConstants.FETCH_CLUSTER_DETAILS_QUERY_KEY,
+  );
+
   const createClusterURL = '/create';
   const CreateClusterLink = useCallback(
     (props: any) => <Link {...props} data-testid="create-cluster" to={createClusterURL} />,
@@ -76,10 +82,13 @@ function OverviewEmptyState() {
           </Title>
           <Flex className="pf-v5-u-mb-lg">
             <FlexItem className="pf-v5-u-pt-md" data-testid="offering-card_RHOSD">
-              <OfferingCard offeringType="RHOSD" />
+              <OfferingCard
+                offeringType="RHOSD"
+                canCreateManagedCluster={canCreateManagedCluster}
+              />
             </FlexItem>
             <FlexItem className="pf-v5-u-pt-md" data-testid="offering-card_AWS">
-              <OfferingCard offeringType="AWS" />
+              <OfferingCard offeringType="AWS" canCreateManagedCluster={canCreateManagedCluster} />
             </FlexItem>
             <FlexItem className="pf-v5-u-pt-md" data-testid="offering-card_Azure">
               <OfferingCard offeringType="Azure" />
