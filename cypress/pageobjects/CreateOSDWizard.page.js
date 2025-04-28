@@ -52,10 +52,11 @@ class CreateOSDCluster extends Page {
   showsFakeClusterBanner = () =>
     cy.contains('div', 'On submit, a fake OSD cluster will be created.');
 
-  osdCreateClusterButton = () => cy.getByTestId('osd-create-cluster-button', { timeout: 50000 });
+  osdCreateClusterButton = () =>
+    cy.get('a[data-testid="osd-create-cluster-button"][aria-disabled="false"]', { timeout: 50000 });
 
   osdTrialCreateClusterButton = () =>
-    cy.getByTestId('osd-create-trial-cluster', { timeout: 20000 });
+    cy.get('a[data-testid="osd-create-trial-cluster"][aria-disabled="false"]', { timeout: 20000 });
 
   subscriptionTypeFreeTrialRadio = () =>
     cy.get('input[name="billing_model"][value="standard-trial"]');
