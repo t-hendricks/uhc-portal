@@ -2,7 +2,7 @@ import { useMutation } from '@tanstack/react-query';
 
 import { accountsService } from '~/services';
 
-import { refetchFetchClusterTransfer } from '../ClusterDetailsQueries/AccessControlTab/ClusterTransferOwnership/useFetchClusterTransfer';
+import { refetchFetchClusterTransfer } from '../ClusterDetailsQueries/ClusterTransferOwnership/useFetchClusterTransfer';
 import { formatErrorData } from '../helpers';
 
 export const useCreateClusterTransfer = () => {
@@ -13,17 +13,20 @@ export const useCreateClusterTransfer = () => {
       currentOwner,
       recipient,
       recipientOrgId,
+      recipientAccountId,
     }: {
       clusterExternalID: string;
       currentOwner: string;
       recipient: string;
       recipientOrgId: string | null;
+      recipientAccountId: string | null;
     }) =>
       accountsService.createClusterTransfer(
         clusterExternalID,
         currentOwner,
         recipient,
         recipientOrgId,
+        recipientAccountId,
       ),
     onSuccess: () => {
       refetchFetchClusterTransfer();

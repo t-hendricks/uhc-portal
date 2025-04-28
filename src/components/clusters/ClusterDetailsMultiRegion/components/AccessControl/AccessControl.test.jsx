@@ -2,8 +2,7 @@ import React from 'react';
 
 import { normalizedProducts } from '~/common/subscriptionTypes';
 import clusterStates from '~/components/clusters/common/clusterStates';
-import { AUTO_CLUSTER_TRANSFER_OWNERSHIP } from '~/queries/featureGates/featureConstants';
-import { mockUseFeatureGate, screen, withState } from '~/testUtils';
+import { screen, withState } from '~/testUtils';
 
 import AccessControl from './AccessControl';
 
@@ -192,8 +191,6 @@ describe('<AccessControl />', () => {
   });
 
   describe('Transfer Ownership section', () => {
-    mockUseFeatureGate([[AUTO_CLUSTER_TRANSFER_OWNERSHIP, true]]);
-
     it('is hidden for invalid clusters', () => {
       const testCluster = buildCluster({
         clusterProps: {

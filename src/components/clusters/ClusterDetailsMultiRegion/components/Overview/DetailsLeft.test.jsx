@@ -661,29 +661,6 @@ describe('<DetailsLeft />', () => {
     });
   });
 
-  describe('Owner', () => {
-    // Moved most tests into separate test file for Owner component
-    it('shows "N/A" as the owner if creator name and creator username are not available', async () => {
-      // Arrange
-      const OSDClusterFixture = {
-        ...fixtures.clusterDetails.cluster,
-        subscription: {
-          ...fixtures.clusterDetails.cluster.subscription,
-          creator: { username: undefined, name: undefined },
-        },
-      };
-
-      const props = { ...defaultProps, cluster: OSDClusterFixture };
-      render(<DetailsLeft {...props} />);
-      await checkIfRendered();
-
-      // Assert
-      checkForValue(componentText.OWNER.label, componentText.OWNER.NA);
-
-      // type
-    });
-  });
-
   describe('Subscription and infrastructure headings', () => {
     it('shows subscription type and infrastructure headings if managed and not ROSA', async () => {
       // Arrange

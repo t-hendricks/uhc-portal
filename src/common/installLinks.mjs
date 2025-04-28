@@ -387,6 +387,8 @@ const links = {
   ROSA_HCP_CLI_URL: `${ROSA_HCP_DOCS_BASE}/rosa-hcp-sts-creating-a-cluster-quickly`,
   ROSA_CREATE_NETWORK: `https://access.redhat.com/articles/7096266`,
   CREATE_VPC_WAYS: `https://docs.aws.amazon.com/rosa/latest/userguide/getting-started-hcp.html#create-vpc-hcp`,
+  TRANSFER_CLUSTER_OWNERSHIP:
+    'https://docs.redhat.com/en/documentation/openshift_cluster_manager/1-latest/html-single/managing_clusters/index#transferring-cluster-ownership_downloading-and-updating-pull-secrets',
 };
 
 // Tool identifiers are public — e.g. for linking to specific tool in DownloadsPage.

@@ -16,14 +16,14 @@ import {
   useCreateClusterTransfer,
   useEditClusterTransfer,
 } from '~/queries/ClusterActionsQueries/useClusterTransfer';
-import { useFetchClusterTransfer } from '~/queries/ClusterDetailsQueries/AccessControlTab/ClusterTransferOwnership/useFetchClusterTransfer';
+import { useFetchClusterTransfer } from '~/queries/ClusterDetailsQueries/ClusterTransferOwnership/useFetchClusterTransfer';
 import { useFetchActionsPermissions } from '~/queries/ClusterDetailsQueries/useFetchActionsPermissions';
 import { queryConstants } from '~/queries/queriesConstants';
 import { useGlobalState } from '~/redux/hooks';
 import { ClusterTransferStatus, Subscription } from '~/types/accounts_mgmt.v1';
 import { ClusterFromSubscription, ErrorState } from '~/types/types';
 
-import { TransferDetails } from '../../ClusterDetailsMultiRegion/components/AccessControl/ClusterTransferOwnership/TransferDetails';
+import { TransferDetails } from '../ClusterDetailsMultiRegion/components/AccessControl/ClusterTransferOwnership/TransferDetails';
 
 type AutoTransferClusterOwnershipFormProps = {
   onClose: () => void;
@@ -41,9 +41,9 @@ function AutoTransferClusterOwnershipForm(props: AutoTransferClusterOwnershipFor
   const dispatch = useDispatch();
   const modalData: ModalData = useGlobalState((state) => state.modal.data) as ModalData;
   const {
-    isPending,
-    isError,
-    error,
+    isPending: isPendingEdit,
+    isError: isErrorEdit,
+    error: errorEdit,
     mutate: transferClusterOwnership,
     isSuccess,
     reset,
@@ -57,9 +57,16 @@ function AutoTransferClusterOwnershipForm(props: AutoTransferClusterOwnershipFor
   const cluster: ClusterFromSubscription = React.useMemo(
     () =>
       ({
-        subscription: modalData.subscription,
-      }) as unknown as ClusterFromSubscription,
+        subscription: modalData?.subscription,
+      }) as ClusterFromSubscription,
     [modalData],
+  );
+  const username = useGlobalState((state) => state.userProfile.keycloakProfile.username);
+  const isOwner = cluster.subscription?.creator?.username === username;
+  const { canEdit } = useFetchActionsPermissions(
+    cluster.subscription?.id || '',
+    queryConstants.FETCH_CLUSTER_DETAILS_QUERY_KEY,
+    cluster.subscription?.status,
   );
 
   const clusterExternalID = cluster.subscription?.external_cluster_id || '';
@@ -69,14 +76,17 @@ function AutoTransferClusterOwnershipForm(props: AutoTransferClusterOwnershipFor
   });
   const transfer = data?.items?.[0] || {};
   const isTransferPending = transfer.status === ClusterTransferStatus.Pending.toLowerCase();
-  const username = useGlobalState((state) => state.userProfile.keycloakProfile.username);
-  const isOwner = cluster.subscription?.creator?.username === username;
+  const isTransferAccepted = transfer.status === ClusterTransferStatus.Accepted.toLowerCase();
 
-  const { canEdit } = useFetchActionsPermissions(
-    cluster.subscription?.id || '',
-    queryConstants.FETCH_CLUSTER_DETAILS_QUERY_KEY,
-    cluster.subscription?.status,
-  );
+  const canCancelTransfer =
+    canEdit &&
+    !isPendingEdit &&
+    !isPendingCancel &&
+    !isErrorEdit &&
+    !isErrorCancel &&
+    isOwner &&
+    !isTransferAccepted;
+
   const submitTransfer = async ({
     username,
     accountID,
@@ -86,25 +96,28 @@ function AutoTransferClusterOwnershipForm(props: AutoTransferClusterOwnershipFor
     accountID: string;
     orgID: string;
   }) => {
-    transferClusterOwnership(
-      {
-        clusterExternalID: cluster.subscription?.external_cluster_id || '',
-        currentOwner: cluster.subscription?.creator?.username || '',
-        recipient: username,
-        recipientOrgId: orgID,
-      },
-      {
-        onSuccess: () => {
-          dispatch(
-            addNotification({
-              variant: 'success',
-              title: 'Cluster ownership transfer initiated',
-              dismissable: true,
-            }),
-          );
+    if (clusterExternalID) {
+      transferClusterOwnership(
+        {
+          clusterExternalID,
+          currentOwner: cluster.subscription?.creator?.username || '',
+          recipient: username,
+          recipientOrgId: orgID,
+          recipientAccountId: accountID,
         },
-      },
-    );
+        {
+          onSuccess: () => {
+            dispatch(
+              addNotification({
+                variant: 'success',
+                title: 'Cluster ownership transfer initiated',
+                dismissable: true,
+              }),
+            );
+          },
+        },
+      );
+    }
   };
 
   const handleClose = React.useCallback(() => {
@@ -117,7 +130,7 @@ function AutoTransferClusterOwnershipForm(props: AutoTransferClusterOwnershipFor
     dispatch(
       addNotification({
         variant: 'info',
-        title: 'Cluster ownership transfer rescinded',
+        title: 'Cluster ownership transfer canceled',
         dismissable: true,
       }),
     );
@@ -132,12 +145,12 @@ function AutoTransferClusterOwnershipForm(props: AutoTransferClusterOwnershipFor
   }, [handleClose, onClose, isSuccess]);
 
   const errorNotice =
-    isError || isErrorCancel ? (
+    isErrorEdit || isErrorCancel ? (
       <Stack hasGutter>
         <StackItem>
           <ErrorBox
             message="A problem occurred while transfering cluster ownership"
-            response={(error?.error as ErrorState) || (errorCancel?.error as ErrorState)}
+            response={(errorEdit?.error as ErrorState) || (errorCancel?.error as ErrorState)}
           />
         </StackItem>
       </Stack>
@@ -145,7 +158,7 @@ function AutoTransferClusterOwnershipForm(props: AutoTransferClusterOwnershipFor
   if (isLoading) {
     return null;
   }
-  return isTransferPending ? (
+  return isTransferPending || isTransferAccepted ? (
     <Modal
       id="transfer-in-progress-modal"
       title={`Transfer in progress for ${getClusterName(cluster)}`}
@@ -154,9 +167,10 @@ function AutoTransferClusterOwnershipForm(props: AutoTransferClusterOwnershipFor
       modalSize="medium"
       isSmall={false}
       primaryText="Cancel transfer"
-      isPrimaryDisabled={!canEdit || !isOwner || isPendingCancel}
+      isPrimaryDisabled={!canCancelTransfer}
       secondaryText="Close"
       onSecondaryClick={handleClose}
+      isSecondaryDisabled={isPendingEdit}
       onPrimaryClick={() => {
         handleCancelTransfer();
       }}
@@ -213,39 +227,48 @@ function AutoTransferClusterOwnershipForm(props: AutoTransferClusterOwnershipFor
             !formik.isValid ||
             !formik.dirty ||
             formik.isSubmitting ||
-            isPending ||
+            isPendingEdit ||
             !canEdit ||
-            !isOwner
+            !isOwner ||
+            !clusterExternalID
           }
-          isSecondaryDisabled={formik.isSubmitting || isPending}
+          isSecondaryDisabled={formik.isSubmitting || isPendingEdit}
         >
-          <TextContent>
-            <Text component={TextVariants.small}>
-              You can transfer cluster ownership to another account within or outside of your
-              organization. By doing so, you give up all rights or access to the cluster and its
-              resources. If approved, only the new account will have access to manage the cluster.
-              Learn more about the transfer approval process.
-            </Text>
-            <Text component={TextVariants.p}>Account information</Text>
-            <Text component={TextVariants.small}>
-              When you initiate the transfer, the user specified below will receive an email request
-              to approve the ownership transfer. Keep in mind the transfer request automatically
-              expires 5 days after initiation, and can be canceled at any time.
-            </Text>
-            <Text component={TextVariants.small}>
-              The transfer is complete when the new owner accepts the transfer from their portal.
-            </Text>
-            <Text component={TextVariants.small}>
-              If the transfer is not completed within 5 days, the procedure must be restarted.
-            </Text>
-          </TextContent>
-          <br />
-          <Form>
-            <TextField fieldId="username" label="Username" isRequired />
-            <TextField fieldId="accountID" label="Account ID" isRequired />
-            <TextField fieldId="orgID" label="Organization ID" isRequired />
-          </Form>
-          {errorNotice}
+          {clusterExternalID ? (
+            <>
+              <TextContent>
+                <Text component={TextVariants.small}>
+                  You can transfer ownership of a cluster to another user in your organization or
+                  another organization. By transferring cluster ownership, you give up access to the
+                  cluster and its resources.
+                </Text>
+                <Text component={TextVariants.p}>Account information</Text>
+                <Text component={TextVariants.small}>
+                  After you initiate the transfer, the user that you specify here will receive an
+                  email request to accept the ownership transfer. After the transfer is accepted,
+                  only the new user can access the cluster.
+                </Text>
+                <Text component={TextVariants.small}>
+                  Note that the transfer request automatically expires after 15 days. You can cancel
+                  the transfer at any time before it is accepted.
+                </Text>
+              </TextContent>
+              <br />
+              <Form>
+                <TextField fieldId="username" label="Username" isRequired />
+                <TextField fieldId="accountID" label="Account ID" isRequired />
+                <TextField fieldId="orgID" label="Organization ID" isRequired />
+              </Form>
+              {errorNotice}
+            </>
+          ) : (
+            <TextContent>
+              <Text component={TextVariants.small}>
+                Transfer ownership will be available a few minutes after installation, once the
+                cluster ID is fully registered.
+              </Text>
+            </TextContent>
+          )}
         </Modal>
       )}
     </Formik>

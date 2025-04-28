@@ -10,7 +10,7 @@ import {
   FlexItem,
   Icon,
 } from '@patternfly/react-core';
-import PencilAltIcon from '@patternfly/react-icons/dist/esm/icons/pencil-alt-icon';
+import { AngleDoubleRightIcon } from '@patternfly/react-icons/dist/esm/icons/angle-double-right-icon';
 
 import { isCompatibleFeature, SupportedFeature } from '~/common/featureCompatibility';
 import clusterStates from '~/components/clusters/common/clusterStates';
@@ -45,11 +45,12 @@ export function Owner() {
     cluster?.subscription?.creator?.name || cluster?.subscription?.creator?.username || 'N/A';
   return (
     <DescriptionListGroup>
-      <DescriptionListTerm>Owner</DescriptionListTerm>
+      <DescriptionListTerm>Owner </DescriptionListTerm>
       <DescriptionListDescription>
-        {showOwnershipTransfer ? (
-          <Flex>
-            <FlexItem>
+        {owner}
+        <Flex>
+          <FlexItem>
+            {showOwnershipTransfer ? (
               <ButtonWithTooltip
                 data-testid="ownerTranswerOverviewLink"
                 isDisabled={!cluster?.canEdit}
@@ -65,16 +66,14 @@ export function Owner() {
                 disableReason={disableChangeReason}
                 isAriaDisabled={!!disableChangeReason}
               >
-                {owner}{' '}
-                <Icon>
-                  <PencilAltIcon color="blue" />
+                <span className="pf-v5-u-font-size-xs">Transfer ownership</span>{' '}
+                <Icon size="sm">
+                  <AngleDoubleRightIcon />
                 </Icon>
               </ButtonWithTooltip>
-            </FlexItem>
-          </Flex>
-        ) : (
-          owner
-        )}
+            ) : null}
+          </FlexItem>
+        </Flex>
       </DescriptionListDescription>
     </DescriptionListGroup>
   );

@@ -6,7 +6,7 @@ class CommonPopups extends Page {
   }
 
   isClusterTransferCancelAlertShown() {
-    cy.get('h4').contains('Cluster ownership transfer rescinded').should('be.visible');
+    cy.get('h4').contains('Cluster ownership transfer canceled').should('be.visible');
   }
 
   closeAlert() {

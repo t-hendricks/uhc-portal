@@ -24,7 +24,11 @@ export const useFetchClusterTransfer = ({
   showPendingTransfer?: boolean;
 }) => {
   const { data, isLoading, isError, error } = useQuery({
-    queryKey: [queryConstants.FETCH_CLUSTER_DETAILS_QUERY_KEY, 'fetchClusterTransfer'],
+    queryKey: [
+      queryConstants.FETCH_CLUSTER_DETAILS_QUERY_KEY,
+      'fetchClusterTransfer',
+      filter || clusterExternalID || transferID,
+    ],
     queryFn: async () => {
       if (filter) {
         return accountsService.searchClusterTransfers(filter);
@@ -32,9 +36,10 @@ export const useFetchClusterTransfer = ({
       if (clusterExternalID) {
         return accountsService.getClusterTransferByExternalID(clusterExternalID);
       }
-      return accountsService.searchClusterTransfers(`"id='${transferID}'"`);
+      return accountsService.searchClusterTransfers(`id='${transferID}'`);
     },
     enabled: !!clusterExternalID || !!transferID || !!filter,
+    refetchInterval: queryConstants.STALE_TIME_60_SEC,
   });
 
   if (isError) {
@@ -50,7 +55,8 @@ export const useFetchClusterTransfer = ({
     data?.data?.items?.find(
       (transfer) =>
         transfer.cluster_uuid === clusterExternalID &&
-        transfer.status === ClusterTransferStatus.Pending.toLowerCase(),
+        (transfer.status === ClusterTransferStatus.Pending.toLowerCase() ||
+          transfer.status === ClusterTransferStatus.Accepted.toLowerCase()),
     ) || {};
 
   return {

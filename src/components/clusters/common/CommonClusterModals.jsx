@@ -7,10 +7,10 @@ import EditHtpasswdUserModal from '~/components/clusters/ClusterDetailsMultiRegi
 
 import ConnectedModal from '../../common/Modal/ConnectedModal';
 import { ConnectedEditMachinePoolModal as ConnectedEditMachinePoolModalMR } from '../ClusterDetailsMultiRegion/components/MachinePools/components/EditMachinePoolModal/EditMachinePoolModal';
+import AutoTransferClusterOwnershipFormMR from '../ClusterTransfer/AutoTransferClusterOwnershipForm';
 
 import DeleteProtectionModalMR from './DeleteProtectionModal/DeleteProtectionModal';
 import EditSubscriptionSettingsDialogMR from './EditSubscriptionSettingsDialog/EditSubscriptionSettingsDialog';
-import AutoTransferClusterOwnershipFormMR from './TransferClusterOwnershipDialog/AutoTransferClusterOwnershipForm';
 import TransferClusterOwnershipDialogMR from './TransferClusterOwnershipDialog/TransferClusterOwnershipDialog';
 import UpgradeWizardMR from './Upgrades/UpgradeWizard/UpgradeWizard';
 import ArchiveClusterDialogMR from './ArchiveClusterDialog';

@@ -23,7 +23,10 @@ import useChrome from '@redhat-cloud-services/frontend-components/useChrome';
 
 import { Navigate, ocmBaseName } from '~/common/routing';
 import ClusterDetailsClusterOrExternalIdMR from '~/components/clusters/ClusterDetailsMultiRegion/ClusterDetailsClusterOrExternalId';
-import { HYPERSHIFT_WIZARD_FEATURE } from '~/queries/featureGates/featureConstants';
+import {
+  AUTO_CLUSTER_TRANSFER_OWNERSHIP,
+  HYPERSHIFT_WIZARD_FEATURE,
+} from '~/queries/featureGates/featureConstants';
 import { useFeatureGate } from '~/queries/featureGates/useFetchFeatureGate';
 import { isRestrictedEnv } from '~/restrictedEnv';
 import apiRequest from '~/services/apiRequest';
@@ -36,6 +39,7 @@ import ClusterDetailsSubscriptionIdMultiRegion from '../clusters/ClusterDetailsM
 import AccessRequestNavigate from '../clusters/ClusterDetailsMultiRegion/components/AccessRequest/components/AccessRequestNavigate';
 import IdentityProviderPageMultiregion from '../clusters/ClusterDetailsMultiRegion/components/IdentityProvidersPage/index';
 import ClusterListMultiRegion from '../clusters/ClusterListMultiRegion';
+import ClusterRequestList from '../clusters/ClusterTransfer/ClusterRequest';
 import CreateClusterPage from '../clusters/CreateClusterPage';
 import GovCloudPage from '../clusters/GovCloud/GovCloudPage';
 import InsightsAdvisorRedirector from '../clusters/InsightsAdvisorRedirector';
@@ -116,6 +120,7 @@ const Router: React.FC<RouterProps> = ({ planType, clusterId, externalClusterId 
   } = useChrome();
 
   const isHypershiftWizardEnabled = useFeatureGate(HYPERSHIFT_WIZARD_FEATURE);
+  const isClusterTransferOwnershipEnabled = useFeatureGate(AUTO_CLUSTER_TRANSFER_OWNERSHIP);
 
   // For testing purposes, show which major features are enabled/disabled
   React.useEffect(() => {
@@ -345,6 +350,9 @@ const Router: React.FC<RouterProps> = ({ planType, clusterId, externalClusterId 
         'http:///status.redhat.com' site. If this route is changed, then the related catchpoint
         tests must be updated. For more info. see: https://issues.redhat.com/browse/OCMUI-2398 */}
         <Route path="/cluster-list" element={<ClusterListMultiRegion getMultiRegion />} />
+        {isClusterTransferOwnershipEnabled ? (
+          <Route path="/cluster-request" element={<ClusterRequestList />} />
+        ) : null}
         <Route
           path="/"
           element={<Navigate replace to={isRestrictedEnv() ? '/cluster-list' : '/overview'} />}

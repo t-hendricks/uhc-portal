@@ -9,7 +9,7 @@ import fixtures from '../../../__tests__/ClusterDetails.fixtures';
 import { ClusterTransferSection } from './ClusterTransferSection';
 
 jest.mock(
-  '~/queries/ClusterDetailsQueries/AccessControlTab/ClusterTransferOwnership/useFetchClusterTransfer',
+  '~/queries/ClusterDetailsQueries/ClusterTransferOwnership/useFetchClusterTransfer',
   () => ({
     useFetchClusterTransfer: jest.fn(),
   }),
@@ -32,7 +32,7 @@ describe('Cluster Transfer Section Component', () => {
 
   it('Returns transfer details and cancel transfer button if transfer is in process', async () => {
     const useFetchClusterTransferMock = jest.requireMock(
-      '~/queries/ClusterDetailsQueries/AccessControlTab/ClusterTransferOwnership/useFetchClusterTransfer',
+      '~/queries/ClusterDetailsQueries/ClusterTransferOwnership/useFetchClusterTransfer',
     );
     useFetchClusterTransferMock.useFetchClusterTransfer.mockReturnValue({
       data: {
@@ -63,7 +63,7 @@ describe('Cluster Transfer Section Component', () => {
 
   it('Returns initiate transfer button if no transfer in progress', async () => {
     const useFetchClusterTransferMock = jest.requireMock(
-      '~/queries/ClusterDetailsQueries/AccessControlTab/ClusterTransferOwnership/useFetchClusterTransfer',
+      '~/queries/ClusterDetailsQueries/ClusterTransferOwnership/useFetchClusterTransfer',
     );
     useFetchClusterTransferMock.useFetchClusterTransfer.mockReturnValue({
       data: {

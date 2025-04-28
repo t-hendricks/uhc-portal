@@ -1,23 +1,19 @@
 import React from 'react';
 
 import { AUTO_CLUSTER_TRANSFER_OWNERSHIP } from '~/queries/featureGates/featureConstants';
-import { useGlobalState } from '~/redux/hooks';
-import { mockUseFeatureGate, render, screen } from '~/testUtils';
+import { mockUseFeatureGate, screen, withState } from '~/testUtils';
 
 import fixtures from '../../../__tests__/ClusterDetails.fixtures';
 
 import { Owner } from './Owner';
 
-jest.mock('~/redux/hooks', () => ({
-  useGlobalState: jest.fn(),
-}));
-
 jest.mock('~/queries/ClusterDetailsQueries/useFetchClusterDetails', () => ({
   useFetchClusterDetails: jest.fn(),
 }));
-
-const useGlobalStateMock = useGlobalState as jest.Mock;
-
+const testOwner = 'testOwner';
+const initialState = {
+  userProfile: { keycloakProfile: { username: testOwner } },
+};
 describe('Owner Component', () => {
   afterEach(() => {
     jest.clearAllMocks();
@@ -26,9 +22,35 @@ describe('Owner Component', () => {
   beforeEach(() => {
     jest.clearAllMocks();
     mockUseFeatureGate([[AUTO_CLUSTER_TRANSFER_OWNERSHIP, true]]);
-    useGlobalStateMock.mockReturnValueOnce('testOwner');
   });
+  it('Returns static N/A value when no owner found', async () => {
+    const useParamsMock = jest.requireMock('react-router-dom').useParams;
+    useParamsMock.mockReturnValue({ id: '1msoogsgTLQ4PePjrTOt3UqvMzX' });
 
+    const useFetchClusterDetailsMock = jest.requireMock(
+      '~/queries/ClusterDetailsQueries/useFetchClusterDetails',
+    );
+    useFetchClusterDetailsMock.useFetchClusterDetails.mockReturnValue({
+      cluster: {
+        ...fixtures.clusterDetails.cluster,
+        hypershift: {
+          enabled: false,
+        },
+        subscription: {},
+        product: {
+          id: 'ROSA',
+        },
+      },
+      isLoading: false,
+      isError: false,
+      error: null,
+      isFetching: false,
+    });
+
+    withState(initialState).render(<Owner />);
+    expect(await screen.findByText('N/A')).toBeInTheDocument();
+    expect(screen.queryByText(/Transfer ownership/i)).not.toBeInTheDocument();
+  });
   it('Returns static owner value when HCP ROSA', async () => {
     const useParamsMock = jest.requireMock('react-router-dom').useParams;
     useParamsMock.mockReturnValue({ id: '1msoogsgTLQ4PePjrTOt3UqvMzX' });
@@ -44,7 +66,7 @@ describe('Owner Component', () => {
         },
         subscription: {
           creator: {
-            username: 'testOwner',
+            username: testOwner,
           },
         },
         product: {
@@ -57,8 +79,9 @@ describe('Owner Component', () => {
       isFetching: false,
     });
 
-    render(<Owner />);
-    expect(await screen.findByText('testOwner')).toBeInTheDocument();
+    withState(initialState).render(<Owner />);
+    expect(await screen.findByText(testOwner)).toBeInTheDocument();
+    expect(screen.queryByText(/Transfer ownership/i)).not.toBeInTheDocument();
   });
 
   it('Returns static owner value when OSD', async () => {
@@ -76,7 +99,7 @@ describe('Owner Component', () => {
         },
         subscription: {
           creator: {
-            username: 'testOwner',
+            username: testOwner,
           },
         },
         product: {
@@ -89,10 +112,12 @@ describe('Owner Component', () => {
       isFetching: false,
     });
 
-    render(<Owner />);
-    expect(await screen.findByText('testOwner')).toBeInTheDocument();
+    withState(initialState).render(<Owner />);
+    expect(await screen.findByText(testOwner)).toBeInTheDocument();
+    expect(screen.queryByText(/Transfer ownership/i)).not.toBeInTheDocument();
   });
 
+  // reworking this with UXD - test is currently invalid
   it('Returns modal link to transfer owner', async () => {
     const useParamsMock = jest.requireMock('react-router-dom').useParams;
     useParamsMock.mockReturnValue({ id: '1msoogsgTLQ4PePjrTOt3UqvMzX' });
@@ -105,7 +130,7 @@ describe('Owner Component', () => {
         ...fixtures.clusterDetails.cluster,
         subscription: {
           creator: {
-            username: 'testOwner',
+            username: testOwner,
           },
         },
         hypershift: {
@@ -121,7 +146,7 @@ describe('Owner Component', () => {
       isFetching: false,
     });
 
-    render(<Owner />);
-    expect(await screen.findByRole('button', { name: /testOwner/i })).toBeInTheDocument();
+    withState(initialState).render(<Owner />);
+    expect(await screen.findByRole('button', { name: /Transfer ownership/i })).toBeInTheDocument();
   });
 });

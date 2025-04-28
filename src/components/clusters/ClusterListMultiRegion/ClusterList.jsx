@@ -36,8 +36,13 @@ import { SortByDirection } from '@patternfly/react-table';
 
 import { ONLY_MY_CLUSTERS_TOGGLE_CLUSTERS_LIST } from '~/common/localStorageConstants';
 import { AppPage } from '~/components/App/AppPage';
+import { TransferOwnerPendingAlert } from '~/components/clusters/ClusterTransfer/TransferOwnerPendingAlert';
 import { useGetAccessProtection } from '~/queries/AccessRequest/useGetAccessProtection';
 import { useGetOrganizationalPendingRequests } from '~/queries/AccessRequest/useGetOrganizationalPendingRequests';
+import {
+  refetchClusterTransferDetail,
+  useFetchClusterTransferDetail,
+} from '~/queries/ClusterDetailsQueries/ClusterTransferOwnership/useFetchClusterTransferDetails';
 import { useFetchClusters } from '~/queries/ClusterListQueries/useFetchClusters';
 import { clustersActions } from '~/redux/actions';
 import {
@@ -48,7 +53,9 @@ import {
   viewActions,
 } from '~/redux/actions/viewOptionsActions';
 import { CLUSTERS_VIEW } from '~/redux/constants/viewConstants';
+import { useGlobalState } from '~/redux/hooks';
 import { isRestrictedEnv } from '~/restrictedEnv';
+import { ClusterTransferStatus } from '~/types/accounts_mgmt.v1';
 
 import helpers from '../../../common/helpers';
 import { getQueryParam } from '../../../common/queryHelpers';
@@ -154,7 +161,16 @@ const ClusterList = ({
       organization?.details?.id,
       isOrganizationAccessProtectionEnabled,
     );
-
+  const username = useGlobalState((state) => state.userProfile.keycloakProfile.username);
+  const { data: transferData } = useFetchClusterTransferDetail({ username });
+  const totalPendingTransfers = React.useMemo(
+    () =>
+      transferData?.items?.filter(
+        (transfer) =>
+          transfer.status?.toLowerCase() === ClusterTransferStatus.Pending.toLowerCase(),
+      ).length || 0,
+    [transferData],
+  );
   /* Get Cluster Data */
   const isArchived = false;
   const {
@@ -348,7 +364,10 @@ const ClusterList = ({
         error={isError}
         errorDetails={errorDetails}
         isPendingNoData={isPendingNoData}
-        refresh={refetch}
+        refresh={() => {
+          refetch();
+          refetchClusterTransferDetail();
+        }}
       />
       <PageSection>
         <Card>
@@ -430,6 +449,7 @@ const ClusterList = ({
                   total={pendingRequestsTotal}
                   accessRequests={pendingRequestsItems}
                 />
+                <TransferOwnerPendingAlert total={totalPendingTransfers} />
                 <ClusterListTable
                   openModal={openModal}
                   clusters={clusters || []}
