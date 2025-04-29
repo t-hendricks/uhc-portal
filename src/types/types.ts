@@ -64,6 +64,8 @@ export type FakeCluster = // AICluster &
     | 'gcp_network'
     | 'status'
     | 'multi_az'
+    | 'proxy'
+    | 'additional_trust_bundle'
   > & {
     metrics: OneMetric;
     state?: string | ClusterState;
