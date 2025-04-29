@@ -51,6 +51,7 @@ const Overview = (props) => {
     clusterDetailsLoading,
     isSubscriptionSettingsRequestPending,
     clusterDetailsFetching,
+    wifConfigData,
   } = props;
 
   const [showInstallSuccessAlert, setShowInstallSuccessAlert] = useState(false);
@@ -196,6 +197,7 @@ const Overview = (props) => {
                       cluster={cluster}
                       cloudProviders={cloudProviders}
                       showAssistedId={showAssistedInstallerDetailCard}
+                      wifConfigData={wifConfigData}
                     />
                   </GridItem>
                   <GridItem sm={6}>
@@ -272,6 +274,11 @@ Overview.propTypes = {
     fulfilled: PropTypes.bool,
   }).isRequired,
   clusterDetailsFetching: PropTypes.bool,
+  wifConfigData: PropTypes.shape({
+    displayName: PropTypes.string,
+    isLoading: PropTypes.bool,
+    isSuccess: PropTypes.bool,
+  }),
 };
 
 export default Overview;

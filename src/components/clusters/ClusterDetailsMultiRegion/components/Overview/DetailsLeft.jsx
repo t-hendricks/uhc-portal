@@ -7,6 +7,7 @@ import {
   DescriptionListDescription,
   DescriptionListGroup,
   DescriptionListTerm,
+  Skeleton,
 } from '@patternfly/react-core';
 
 import { Owner } from '~/components/clusters/ClusterDetailsMultiRegion/components/Overview/Owner/Owner';
@@ -34,7 +35,7 @@ const getIdFields = (cluster, showAssistedId) => {
   }
   return { id, idLabel: label };
 };
-function DetailsLeft({ cluster, cloudProviders, showAssistedId }) {
+function DetailsLeft({ cluster, cloudProviders, showAssistedId, wifConfigData }) {
   const cloudProviderId = cluster.cloud_provider ? cluster.cloud_provider.id : null;
   const region = cluster?.region?.id;
   const planType = get(cluster, 'subscription.plan.type');
@@ -48,10 +49,18 @@ function DetailsLeft({ cluster, cloudProviders, showAssistedId }) {
   const hasAuthenticationType = isWifEnabled && isGCP(cluster) && isCCS(cluster);
   // We only have information about the wif configuration, we imply that if a wif config is not used
   // the user chose the other GCP authentication type, the service account
-  const authenticationType =
-    cluster?.gcp?.authentication?.kind === 'WifConfig'
-      ? 'Workload Identity Federation'
-      : 'Service Account';
+  const isWifCluster = hasAuthenticationType && cluster?.gcp?.authentication?.kind === 'WifConfig';
+  const authenticationType = isWifCluster ? 'Workload Identity Federation' : 'Service Account';
+  const wifConfigName = useMemo(() => {
+    switch (true) {
+      case wifConfigData?.isLoading:
+        return <Skeleton fontSize="md" width="10em" screenreaderText="Loading WIF configuration" />;
+      case wifConfigData?.isSuccess:
+        return wifConfigData?.displayName;
+      default:
+        return 'N/A';
+    }
+  }, [wifConfigData]);
 
   let cloudProvider;
   if (cloudProviderId && cloudProviders && cloudProviders[cloudProviderId]) {
@@ -125,11 +134,11 @@ function DetailsLeft({ cluster, cloudProviders, showAssistedId }) {
           </DescriptionListDescription>
         </DescriptionListGroup>
       )}
-      {cluster.wifConfigName && (
+      {isWifCluster && (
         <DescriptionListGroup>
           <DescriptionListTerm>WIF configuration</DescriptionListTerm>
           <DescriptionListDescription>
-            <span data-testid="wifConfiguration">{cluster.wifConfigName}</span>
+            <span data-testid="wifConfiguration">{wifConfigName}</span>
           </DescriptionListDescription>
         </DescriptionListGroup>
       )}
@@ -216,6 +225,11 @@ DetailsLeft.propTypes = {
   cluster: PropTypes.any,
   cloudProviders: PropTypes.object.isRequired,
   showAssistedId: PropTypes.bool.isRequired,
+  wifConfigData: PropTypes.shape({
+    displayName: PropTypes.string,
+    isLoading: PropTypes.bool,
+    isSuccess: PropTypes.bool,
+  }),
 };
 
 export default DetailsLeft;

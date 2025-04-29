@@ -40,6 +40,7 @@ import {
   refetchClusterIdentityProviders,
   useFetchClusterIdentityProviders,
 } from '~/queries/ClusterDetailsQueries/useFetchClusterIdentityProviders';
+import { useFetchGCPWifConfig } from '~/queries/ClusterDetailsQueries/useFetchGCPWifConfig';
 import { refetchClusterLogsQueries } from '~/queries/ClusterLogsQueries/useFetchClusterLogs';
 import {
   invalidateCloudProviders,
@@ -174,6 +175,13 @@ const ClusterDetails = (props) => {
 
   const { data: accessProtection, isLoading: isAccessProtectionLoading } =
     useFetchAccessProtection(subscriptionID);
+
+  const wifConfigId = cluster?.gcp?.authentication?.id;
+  const {
+    data: wifConfigData,
+    isLoading: isWifLoading,
+    isSuccess: isWifSuccess,
+  } = useFetchGCPWifConfig(wifConfigId);
 
   const { data: pendingAccessRequests } = useFetchPendingAccessRequests(
     subscriptionID,
@@ -596,6 +604,11 @@ const ClusterDetails = (props) => {
                 userAccess={userAccess}
                 canSubscribeOCP={canSubscribeOCP}
                 isSubscriptionSettingsRequestPending={isSubscriptionSettingsRequestPending}
+                wifConfigData={{
+                  displayName: wifConfigData?.display_name,
+                  isLoading: isWifLoading,
+                  isSuccess: isWifSuccess,
+                }}
               />
             </ErrorBoundary>
           </TabContent>

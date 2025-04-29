@@ -12,6 +12,11 @@ const defaultProps = {
   cluster: fixtures.clusterDetails.cluster,
   cloudProviders: fixtures.cloudProviders,
   showAssistedId: false,
+  wifConfigData: {
+    isLoading: false,
+    isSuccess: false,
+    displayName: null,
+  },
 };
 
 const componentText = {
@@ -455,27 +460,32 @@ describe('<DetailsLeft />', () => {
   });
 
   describe('GCP WIF Configuration', () => {
+    const cluster = {
+      ...fixtures.clusterDetails.cluster,
+      cloud_provider: {
+        id: 'gcp',
+      },
+      ccs: { enabled: true },
+      gcp: {
+        authentication: {
+          href: '/api/clusters_mgmt/v1/gcp/wif_configs/123456789123456789',
+          id: '123456789123456789',
+          kind: 'WifConfig',
+        },
+      },
+    };
+
     it('shows the WIF name when a WIF configuration is present', async () => {
       // Arrange
       mockUseFeatureGate([[OSD_GCP_WIF, true]]);
       const wifConfigName = 'some-wif-config';
-      const cluster = {
-        ...fixtures.clusterDetails.cluster,
-        cloud_provider: {
-          id: 'gcp',
-        },
-        ccs: { enabled: true },
-        gcp: {
-          authentication: {
-            href: '/api/clusters_mgmt/v1/gcp/wif_configs/123456789123456789',
-            id: '123456789123456789',
-            kind: 'WifConfig',
-          },
-        },
-        wifConfigName,
+      const wifConfigData = {
+        isLoading: false,
+        isSuccess: true,
+        displayName: wifConfigName,
       };
 
-      const props = { ...defaultProps, cluster };
+      const props = { ...defaultProps, cluster, wifConfigData };
       render(<DetailsLeft {...props} />);
       await checkIfRendered();
 
@@ -495,13 +505,46 @@ describe('<DetailsLeft />', () => {
         gcp: {},
       };
 
-      const wifConfig = { status: 'pending', data: {} };
-      const props = { ...defaultProps, cluster, wifConfig };
+      const props = { ...defaultProps, cluster };
       render(<DetailsLeft {...props} />);
       await checkIfRendered();
 
       // Assert
       checkForValueAbsence(componentText.WIF_CONFIGURATION.label);
+    });
+
+    it('shows N/A when a WIF config cannot be retrieved', async () => {
+      // Arrange
+      mockUseFeatureGate([[OSD_GCP_WIF, true]]);
+
+      const wifConfigData = {
+        isLoading: false,
+        isSuccess: false,
+        displayName: null,
+      };
+      const props = { ...defaultProps, cluster, wifConfigData };
+      render(<DetailsLeft {...props} />);
+      await checkIfRendered();
+
+      // Assert
+      checkForValue(componentText.WIF_CONFIGURATION.label, 'N/A');
+    });
+
+    it('shows a skeleton while fetching the WIF config info', async () => {
+      // Arrange
+      mockUseFeatureGate([[OSD_GCP_WIF, true]]);
+
+      const wifConfigData = {
+        isLoading: true,
+        isSuccess: false,
+        displayName: null,
+      };
+      const props = { ...defaultProps, cluster, wifConfigData };
+      render(<DetailsLeft {...props} />);
+      await checkIfRendered();
+
+      // Assert
+      expect(screen.getByText('Loading WIF configuration')).toBeInTheDocument();
     });
   });
 
