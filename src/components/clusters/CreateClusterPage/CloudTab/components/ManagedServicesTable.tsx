@@ -80,7 +80,7 @@ const ManagedServicesTable = (props: ManagedServicesTableProps) => {
       </ExternalLink>
     ),
     purchasedThrough: 'Red Hat',
-    details: 'Available on AWS and GCP',
+    details: 'Available on GCP',
     action: !canCreateManagedCluster ? (
       <CreateManagedClusterTooltip>{createOSDTrialbutton}</CreateManagedClusterTooltip>
     ) : (
@@ -138,7 +138,7 @@ const ManagedServicesTable = (props: ManagedServicesTableProps) => {
       </ExternalLink>
     ),
     purchasedThrough: 'Red Hat',
-    details: 'Available on AWS and GCP',
+    details: 'Available on GCP',
     action: osdRowaction,
     expandedSection: {
       content: (

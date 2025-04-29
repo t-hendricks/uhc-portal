@@ -36,6 +36,7 @@ describe('<Details />', () => {
   });
   const defaultValues = {
     ...initialValues,
+    [FieldId.CloudProvider]: 'aws',
     [FieldId.ClusterVersion]: version,
     [FieldId.Region]: 'eu-north-1',
     [FieldId.HasDomainPrefix]: true,

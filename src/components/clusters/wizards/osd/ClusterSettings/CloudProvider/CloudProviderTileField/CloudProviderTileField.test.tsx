@@ -41,7 +41,7 @@ describe('<CloudProviderTileField />', () => {
     await checkAccessibility(container);
   });
 
-  it('shows AWS and GCP options with AWS as default selection', async () => {
+  it('shows AWS and GCP options with GCP as default selection', async () => {
     render(
       <Formik initialValues={defaultValues} onSubmit={() => {}}>
         <Form>
@@ -50,8 +50,8 @@ describe('<CloudProviderTileField />', () => {
       </Formik>,
     );
 
-    expect(screen.getByRole('option', { name: awsLabel, selected: true })).toBeInTheDocument();
-    expect(screen.getByRole('option', { name: gcpLabel, selected: false })).toBeInTheDocument();
+    expect(screen.getByRole('option', { name: gcpLabel, selected: true })).toBeInTheDocument();
+    expect(screen.getByRole('option', { name: awsLabel, selected: false })).toBeInTheDocument();
   });
 
   it('allows changing provider', async () => {
@@ -65,15 +65,15 @@ describe('<CloudProviderTileField />', () => {
       </Formik>,
     );
 
-    expect(screen.getByRole('option', { name: gcpLabel, selected: false })).toBeInTheDocument();
+    expect(screen.getByRole('option', { name: awsLabel, selected: false })).toBeInTheDocument();
 
-    await user.click(screen.getByRole('option', { name: gcpLabel, selected: false }));
+    await user.click(screen.getByRole('option', { name: awsLabel, selected: false }));
 
-    expect(screen.getByRole('option', { name: gcpLabel, selected: true })).toBeInTheDocument();
+    expect(screen.getByRole('option', { name: awsLabel, selected: true })).toBeInTheDocument();
 
     await user.click(screen.getByRole('button', { name: /submit/i }));
 
-    await waitFor(() => expectCloudProviderToBe(handleSubmit, CloudProviderType.Gcp));
+    await waitFor(() => expectCloudProviderToBe(handleSubmit, CloudProviderType.Aws));
   });
 
   it('allows changing provider with keyboard', async () => {
@@ -87,20 +87,20 @@ describe('<CloudProviderTileField />', () => {
       </Formik>,
     );
 
-    expect(screen.getByRole('option', { name: gcpLabel, selected: false })).toBeInTheDocument();
+    expect(screen.getByRole('option', { name: awsLabel, selected: false })).toBeInTheDocument();
 
-    screen.getByRole('option', { name: gcpLabel, selected: false }).focus();
+    screen.getByRole('option', { name: awsLabel, selected: false }).focus();
 
     await userEvent.type(
-      screen.getByRole('option', { name: gcpLabel, selected: false }),
+      screen.getByRole('option', { name: awsLabel, selected: false }),
       '{enter}',
       { skipClick: true },
     );
 
-    expect(screen.getByRole('option', { name: gcpLabel, selected: true })).toBeInTheDocument();
+    expect(screen.getByRole('option', { name: awsLabel, selected: true })).toBeInTheDocument();
 
     await user.click(screen.getByRole('button', { name: /submit/i }));
 
-    await waitFor(() => expectCloudProviderToBe(handleSubmit, CloudProviderType.Gcp));
+    await waitFor(() => expectCloudProviderToBe(handleSubmit, CloudProviderType.Aws));
   });
 });

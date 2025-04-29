@@ -99,8 +99,8 @@ export const CloudProviderTileField = () => {
 
   return (
     <div role="listbox" aria-label="Providers options">
-      {hasAwsResources ? awsTile : <Tooltip content={notAvailableTooltip}>{awsTile}</Tooltip>}
       {hasGcpResources ? gcpTile : <Tooltip content={noQuotaTooltip}>{gcpTile}</Tooltip>}
+      {hasAwsResources ? awsTile : <Tooltip content={notAvailableTooltip}>{awsTile}</Tooltip>}
     </div>
   );
 };

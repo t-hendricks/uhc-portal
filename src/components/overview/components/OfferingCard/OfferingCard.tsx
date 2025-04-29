@@ -161,7 +161,7 @@ function OfferingCard(props: OfferingCardProps) {
     case 'RHOSD':
       offeringCardTitle = 'Red Hat OpenShift Dedicated';
       offeringCardDescriptionList = [
-        { descriptionListTerm: 'Runs on', descriptionListDescription: 'Google Cloud or AWS' },
+        { descriptionListTerm: 'Runs on', descriptionListDescription: 'Google Cloud' },
         { descriptionListTerm: 'Purchase through', descriptionListDescription: 'Red Hat' },
         { descriptionListTerm: 'Billing type', descriptionListDescription: 'Flexible or fixed' },
       ];

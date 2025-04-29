@@ -20,18 +20,21 @@ import docLinks from '../../../common/installLinks.mjs';
 const pricingData = [
   {
     title: 'Hourly',
-    first: 'Control plane - $0.03/hour',
-    second: 'Worker nodes CPU - As low as $0.171/4vCPU/hour',
+    first: 'Worker nodes CPU',
+    second: 'As low as $0.171/4vCPU/hour',
+    third: 'Equivalent to $1500/year',
   },
   {
     title: '1-Year',
-    first: 'Control plane - $0.03/hour',
-    second: 'Worker nodes CPU - As low as $0.114/4vCPU/hour',
+    first: 'Worker nodes CPU',
+    second: 'As low as $0.114/4vCPU/hour',
+    third: 'Equivalent to $1000/year',
   },
   {
     title: '3-Year',
-    first: 'Control plane - $0.03/hour',
-    second: 'Worker nodes CPU - As low as $0.076/4vCPU/hour',
+    first: 'Worker nodes CPU',
+    second: 'As low as $0.076/4vCPU/hour',
+    third: 'Equivalent to $667/year',
   },
 ];
 
@@ -59,11 +62,7 @@ export const OSDPricingCard = () => (
     </Title>
     <Flex direction={{ default: 'column' }}>
       <FlexItem>
-        <Flex
-          justifyContent={{ default: 'justifyContentSpaceBetween' }}
-          flexWrap={{ default: 'nowrap' }}
-          alignItems={{ default: 'alignItemsStretch' }}
-        >
+        <Flex flexWrap={{ default: 'nowrap' }} alignItems={{ default: 'alignItemsStretch' }}>
           {pricingData.map((card) => (
             <FlexItem>
               <Card>
@@ -75,8 +74,9 @@ export const OSDPricingCard = () => (
                       </CardTitle>
                     </CardHeader>
                     <CardBody>
-                      <Text>{card.first}</Text>
+                      <Title headingLevel="h4">{card.first}</Title>
                       <Text>{card.second}</Text>
+                      <Text>{card.third}</Text>
                     </CardBody>
                   </FlexItem>
                 </Flex>

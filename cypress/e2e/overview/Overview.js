@@ -27,7 +27,7 @@ describe('OCM Overview Page tests (OCP-65189)', { tags: ['smoke'] }, () => {
       .opensExpectedPage('Create an OpenShift Dedicated Cluster');
     card.shouldHaveLabel('Managed service');
     card.cardDetails({
-      [runOn]: 'Google Cloud or AWS',
+      [runOn]: 'Google Cloud',
       [purchaseThrough]: 'Red Hat',
       [billingType]: 'Flexible or fixed',
     });
