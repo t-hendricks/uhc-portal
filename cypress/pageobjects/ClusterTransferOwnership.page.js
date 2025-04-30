@@ -16,7 +16,7 @@ class TransferOwnershipPage extends Page {
   isCancelTransferModel() {
     cy.get('h1').contains('Cancel cluster transfer').should('be.visible');
     cy.get('p')
-      .contains('This action cannot be undone. It will cancel the impending transfer.')
+      .contains('This action cannot be undone. It will cancel the impending transfer for cluster')
       .should('be.visible');
   }
   isTransferDetailsSection(dateOfRequest, username, transferredTo, status) {
@@ -63,7 +63,7 @@ class TransferOwnershipPage extends Page {
     cy.contains('Cluster ownership transfer pending').should('be.visible');
     cy.get('p')
       .contains(
-        'The ownership transfer process will be completed once the request is approved. You can cancel this process at any time. Actions on the cluster are disabled while the transfer is pending',
+        'The cluster ownership transfer process will be completed after the new owner accepts the transfer. You can cancel this process at any time before the transfer is accepted. Actions on the cluster are disabled while the transfer is pending',
       )
       .should('be.visible');
   }
@@ -87,6 +87,10 @@ class TransferOwnershipPage extends Page {
 
   cancelTransferButton = () => cy.get('button').contains('Cancel transfer').should('be.visible');
   cancelTransferButtonFromModel = () =>
-    cy.get('footer').find('button').contains('Cancel transfer').should('be.visible');
+    cy
+      .get('footer')
+      .find('button')
+      .contains(/Cancel Transfer/i)
+      .should('be.visible');
 }
 export default new TransferOwnershipPage();

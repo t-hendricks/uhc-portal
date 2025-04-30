@@ -18,6 +18,10 @@ class ClusterList extends Page {
 
   viewClusterArchives = () => cy.contains('a', 'View cluster archives');
 
+  viewClusterRequests = () => cy.contains('a', 'View cluster requests');
+
+  viewClusterRequestsButton = () => cy.contains('button', 'View cluster requests');
+
   assistedInstallerClusters = () => cy.contains('a', 'Assisted Installer clusters');
 
   registerCluster = () => cy.getByTestId('register-cluster-item');
@@ -37,6 +41,10 @@ class ClusterList extends Page {
   filterdClusterTypesValues = () => cy.get('span.pf-v5-c-chip__text');
 
   createClusterButton = () => cy.getByTestId('create_cluster_btn');
+
+  pendingTransferRequestsBanner = () => cy.get('#pendingTransferOwnerAlert', { timeout: 15000 });
+
+  showPendingTransferRequestsLink = () => cy.get('a').contains('Show pending transfer requests');
 
   isRegisterClusterUrl() {
     super.assertUrlIncludes('/openshift/register');
@@ -115,9 +123,7 @@ class ClusterList extends Page {
   }
 
   clickKebabMenuItem(menuText) {
-    cy.get('div[data-popper-placement="bottom-end"]').within(() => {
-      cy.contains(menuText).click();
-    });
+    cy.get('button').contains(menuText).click();
   }
 
   clickClusterListExtraActions() {
@@ -192,6 +198,22 @@ class ClusterList extends Page {
 
   isCreateClusterBtnVisible() {
     cy.getByTestId('create_cluster_btn').should('be.visible');
+  }
+
+  isPendingTransferRequestsBannerShown(isShown, transferRequests) {
+    if (isShown) {
+      this.pendingTransferRequestsBanner()
+        .should('be.visible')
+        .within(() => {
+          cy.get('h4').contains('Pending Transfer Requests').should('be.visible');
+          cy.contains(`You have ${transferRequests} pending cluster transfer ownership request`);
+          this.showPendingTransferRequestsLink()
+            .invoke('attr', 'href')
+            .should('include', '/openshift/./cluster-request');
+        });
+    } else {
+      this.pendingTransferRequestsBanner().should('not.be.exist');
+    }
   }
 
   checkForDetailsInAnchor() {

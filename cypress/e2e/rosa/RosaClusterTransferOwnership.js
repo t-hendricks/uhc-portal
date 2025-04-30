@@ -3,6 +3,7 @@ import ClusterDetails from '../../pageobjects/ClusterDetails.page';
 import TransferOwnershipPage from '../../pageobjects/ClusterTransferOwnership.page';
 import ClusterActions from '../../pageobjects/ClusterActions.page';
 import CommonPopups from '../../pageobjects/CommonPopups.page';
+import ClusterRequestPage from '../../pageobjects/ClusterRequests.page';
 
 const clusterDetails = require('../../fixtures/rosa/RosaClusterClassicCreatePublic.json');
 const clusterProfiles = ['rosa-classic-public'];
@@ -228,6 +229,69 @@ describe(
         TransferOwnershipPage.transferOwnershipAccountIDInput().clear();
         TransferOwnershipPage.initiateTransferButtonFromModel().should('be.disabled');
         TransferOwnershipPage.cancelButtonFromModel().click();
+      });
+
+      it('Cluster transfer Ownerhip transfer vs cluster transfer requests page', () => {
+        cy.visit('/cluster-list');
+        ClusterListPage.waitForDataReady();
+        ClusterListPage.filterTxtField().should('be.visible').click();
+        ClusterListPage.filterTxtField().clear().type(clusterName);
+        ClusterListPage.waitForClusterInClusterList(clusterName);
+        ClusterListPage.clickClusterKebabIcon(clusterName);
+        ClusterListPage.clickKebabMenuItem('Transfer cluster ownership');
+        TransferOwnershipPage.transferOwnershipUsernameInput().type(
+          transferOwnershipProperties.AccountDetails.Username,
+        );
+        TransferOwnershipPage.transferOwnershipAccountIDInput().type(
+          transferOwnershipProperties.AccountDetails.AccountID,
+        );
+        TransferOwnershipPage.transferOwnershipOrganizationIDInput().type(
+          transferOwnershipProperties.AccountDetails.OrganizationID,
+        );
+        TransferOwnershipPage.transferModelInitiateTransferButton().click();
+        CommonPopups.isClusterTransferAlertShown();
+        CommonPopups.closeAlert();
+        ClusterListPage.isPendingTransferRequestsBannerShown(true, '1');
+        ClusterListPage.clickClusterKebabIcon(clusterName);
+        ClusterListPage.clickKebabMenuItem('Transfer cluster ownership');
+        TransferOwnershipPage.cancelButtonFromModel().click();
+        CommonPopups.isClusterTransferCancelAlertShown();
+        CommonPopups.closeAlert();
+        ClusterListPage.isPendingTransferRequestsBannerShown(false, '0');
+        ClusterListPage.clickClusterKebabIcon(clusterName);
+        ClusterListPage.clickKebabMenuItem('Transfer cluster ownership');
+        TransferOwnershipPage.transferOwnershipUsernameInput().type(
+          transferOwnershipProperties.AccountDetails.Username,
+        );
+        TransferOwnershipPage.transferOwnershipAccountIDInput().type(
+          transferOwnershipProperties.AccountDetails.AccountID,
+        );
+        TransferOwnershipPage.transferOwnershipOrganizationIDInput().type(
+          transferOwnershipProperties.AccountDetails.OrganizationID,
+        );
+        TransferOwnershipPage.transferModelInitiateTransferButton().click();
+        CommonPopups.isClusterTransferAlertShown();
+        CommonPopups.closeAlert();
+        ClusterListPage.showPendingTransferRequestsLink().click();
+        ClusterRequestPage.isClusterRequestsScreen();
+        ClusterRequestPage.checkClusterRequestsRowByClusterName(
+          clusterName,
+          'Pending',
+          'ROSA',
+          Cypress.env('TEST_WITHQUOTA_USER'),
+          transferOwnershipProperties.AccountDetails.Username,
+        );
+      });
+      it('Cluster transfer Ownerhip transfer vs cancel cluster transfer requests', () => {
+        ClusterRequestPage.cancelClusterRequestsByClusterName(clusterName);
+        ClusterRequestPage.checkClusterRequestsRowByClusterName(
+          clusterName,
+          'Closed',
+          'ROSA',
+          Cypress.env('TEST_WITHQUOTA_USER'),
+          transferOwnershipProperties.AccountDetails.Username,
+          'Canceled',
+        );
       });
     });
   },
