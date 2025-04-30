@@ -20,7 +20,7 @@ export type InstructionChooserProps = InstallCommonType & {
   aiPageLink?: string;
   aiLearnMoreLink?: string;
   hideIPI?: boolean;
-  ipiPageLink: string;
+  ipiPageLink?: string;
   ipiLearnMoreLink?: string;
   hideUPI?: boolean;
   upiPageLink: string;

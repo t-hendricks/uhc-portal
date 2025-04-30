@@ -52,14 +52,6 @@ import InstallBareMetal from '../clusters/install/InstallBareMetal';
 import InstallBMABI from '../clusters/install/InstallBareMetalABI';
 import InstallBMIPI from '../clusters/install/InstallBareMetalIPI';
 import InstallBMUPI from '../clusters/install/InstallBareMetalUPI';
-import InstallGCP from '../clusters/install/InstallGCP';
-import ConnectedInstallGCPIPI from '../clusters/install/InstallGCPIPI';
-import ConnectedInstallGCPUPI from '../clusters/install/InstallGCPUPI';
-import ConnectedInstallIBMCloud from '../clusters/install/InstallIBMCloud';
-import InstallIBMZ from '../clusters/install/InstallIBMZ';
-import ConnectedInstallIBMZABI from '../clusters/install/InstallIBMZABI';
-import ConnectedInstallIBMZPreRelease from '../clusters/install/InstallIBMZPreRelease';
-import ConnectedInstallIBMZUPI from '../clusters/install/InstallIBMZUPI';
 import ConnectedInstallMultiAWSIPI from '../clusters/install/InstallMultiAWSIPI';
 import ConnectedInstallMultiAzureIPI from '../clusters/install/InstallMultiAzureIPI';
 import InstallMultiBMUPI from '../clusters/install/InstallMultiBareMetalUPI';
@@ -191,9 +183,6 @@ const Router: React.FC<RouterProps> = ({ planType, clusterId, externalClusterId 
           element={<ConnectedInstallMultiAWSIPI />}
         />
         <Route path="/install/aws" element={<InstallAWS />} />
-        <Route path="/install/gcp/installer-provisioned" element={<ConnectedInstallGCPIPI />} />
-        <Route path="/install/gcp/user-provisioned" element={<ConnectedInstallGCPUPI />} />
-        <Route path="/install/gcp" element={<InstallGCP />} />
         <Route path="/install/nutanix" element={<InstallNutanix />} />
         <Route
           path="/install/nutanix/installer-provisioned"
@@ -226,11 +215,6 @@ const Router: React.FC<RouterProps> = ({ planType, clusterId, externalClusterId 
           path="/install/vsphere/installer-provisioned"
           element={<ConnectedInstallVSphereIPI />}
         />
-        <Route path="/install/ibm-cloud" element={<ConnectedInstallIBMCloud />} />
-        <Route path="/install/ibmz/user-provisioned" element={<ConnectedInstallIBMZUPI />} />
-        <Route path="/install/ibmz/pre-release" element={<ConnectedInstallIBMZPreRelease />} />
-        <Route path="/install/ibmz/agent-based" element={<ConnectedInstallIBMZABI />} />
-        <Route path="/install/ibmz" element={<InstallIBMZ />} />
         <Route path="/install/power/user-provisioned" element={<ConnectedInstallPowerUPI />} />
         <Route path="/install/power/pre-release" element={<ConnectedInstallPowerPreRelease />} />
         <Route path="/install/power/agent-based" element={<ConnectedInstallPowerABI />} />

@@ -17,6 +17,14 @@ import {
   ASHUPIProps,
   AWSIPIProps,
   AWSUPIProps,
+  GCPIPIProps,
+  GCPProps,
+  GCPUPIProps,
+  IBMCloudProps,
+  IBMZABIProps,
+  IBMZPreReleaseProps,
+  IBMZProps,
+  IBMZUPIProps,
 } from './InstallWrapperPropsData';
 
 // Example of generic install component usage
@@ -109,6 +117,53 @@ export const routesData: Routes[] = [
       <InstallComponentWrapper
         propsData={ArmBareMetalUPIProps}
         componentChooser="ocpInstructions"
+      />
+    ),
+  },
+  {
+    path: '/install/gcp',
+    element: (
+      <InstallComponentWrapper propsData={GCPProps} componentChooser="instructionsChooser" />
+    ),
+  },
+  {
+    path: '/install/gcp/installer-provisioned',
+    element: <InstallComponentWrapper propsData={GCPIPIProps} componentChooser="ocpInstructions" />,
+  },
+  {
+    path: '/install/gcp/user-provisioned',
+    element: <InstallComponentWrapper propsData={GCPUPIProps} componentChooser="ocpInstructions" />,
+  },
+  {
+    path: '/install/ibm-cloud',
+    element: (
+      <InstallComponentWrapper propsData={IBMCloudProps} componentChooser="ocpInstructions" />
+    ),
+  },
+  {
+    path: '/install/ibmz',
+    element: (
+      <InstallComponentWrapper propsData={IBMZProps} componentChooser="instructionsChooser" />
+    ),
+  },
+  {
+    path: '/install/ibmz/agent-based',
+    element: (
+      <InstallComponentWrapper propsData={IBMZABIProps} componentChooser="ocpInstructions" />
+    ),
+  },
+  {
+    path: '/install/ibmz/user-provisioned',
+    element: (
+      <InstallComponentWrapper propsData={IBMZUPIProps} componentChooser="ocpInstructions" />
+    ),
+  },
+  {
+    path: '/install/ibmz/pre-release',
+    element: (
+      <InstallComponentWrapper
+        propsData={IBMZPreReleaseProps}
+        componentChooser="releaseInstructions"
       />
     ),
   },

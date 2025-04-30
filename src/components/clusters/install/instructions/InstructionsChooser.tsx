@@ -14,7 +14,7 @@ interface InstructionsChooserProps {
   agentBasedLearnMoreLink?: string;
   hideIPI?: boolean;
   hideUPI?: boolean;
-  ipiPageLink: string;
+  ipiPageLink?: string;
   ipiLearnMoreLink?: string;
   upiPageLink: string;
   upiLearnMoreLink?: string;
