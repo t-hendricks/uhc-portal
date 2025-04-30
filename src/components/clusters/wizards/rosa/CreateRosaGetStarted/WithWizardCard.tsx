@@ -17,7 +17,6 @@ import { DesktopIcon } from '@patternfly/react-icons/dist/esm/icons/desktop-icon
 import { Link } from '~/common/routing';
 import CreateManagedClusterTooltip from '~/components/common/CreateManagedClusterTooltip';
 import { useCanCreateManagedCluster } from '~/queries/ClusterDetailsQueries/useFetchActionsPermissions';
-import { queryConstants } from '~/queries/queriesConstants';
 
 const WithWizard = () => {
   const LinkComponent = useCallback(
@@ -25,9 +24,7 @@ const WithWizard = () => {
     [],
   );
 
-  const { canCreateManagedCluster } = useCanCreateManagedCluster(
-    queryConstants.FETCH_CLUSTER_DETAILS_QUERY_KEY,
-  );
+  const { canCreateManagedCluster } = useCanCreateManagedCluster();
 
   return (
     <Card isFlat isFullHeight data-testid="deploy-with-webinterface-card">

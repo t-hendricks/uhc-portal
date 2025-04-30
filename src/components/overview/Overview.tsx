@@ -5,7 +5,6 @@ import { Flex, FlexItem, PageSection, Title } from '@patternfly/react-core';
 import { Link } from '~/common/routing';
 import InternalTrackingLink from '~/components/common/InternalTrackingLink';
 import { useCanCreateManagedCluster } from '~/queries/ClusterDetailsQueries/useFetchActionsPermissions';
-import { queryConstants } from '~/queries/queriesConstants';
 
 import docLinks from '../../common/installLinks.mjs';
 import OpenShiftProductIcon from '../../styles/images/OpenShiftProductIcon.svg';
@@ -36,9 +35,7 @@ const openshiftHeaderContent: OverviewProductBannerProps = {
 const PAGE_TITLE = 'Overview | Red Hat OpenShift Cluster Manager';
 
 function OverviewEmptyState() {
-  const { canCreateManagedCluster } = useCanCreateManagedCluster(
-    queryConstants.FETCH_CLUSTER_DETAILS_QUERY_KEY,
-  );
+  const { canCreateManagedCluster } = useCanCreateManagedCluster();
 
   const createClusterURL = '/create';
   const CreateClusterLink = useCallback(

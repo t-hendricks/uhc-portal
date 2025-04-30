@@ -17,7 +17,6 @@ import { Link } from '~/common/routing';
 import CreateManagedClusterTooltip from '~/components/common/CreateManagedClusterTooltip';
 import InternalTrackingLink from '~/components/common/InternalTrackingLink';
 import { useCanCreateManagedCluster } from '~/queries/ClusterDetailsQueries/useFetchActionsPermissions';
-import { queryConstants } from '~/queries/queriesConstants';
 
 interface CreateClusterCardProps {
   linkComponentURL: string;
@@ -36,9 +35,7 @@ export const CreateClusterCard = ({
     (props: any) => <Link data-testid="register-cluster" to={linkComponentURL} {...props} />,
     [linkComponentURL],
   );
-  const { canCreateManagedCluster } = useCanCreateManagedCluster(
-    queryConstants.FETCH_CLUSTER_DETAILS_QUERY_KEY,
-  );
+  const { canCreateManagedCluster } = useCanCreateManagedCluster();
 
   const createClusterBtn = (
     <InternalTrackingLink

@@ -10,7 +10,6 @@ import links from '~/components/clusters/CreateClusterPage/CreateClusterConsts';
 import CreateManagedClusterTooltip from '~/components/common/CreateManagedClusterTooltip';
 import ExternalLink from '~/components/common/ExternalLink';
 import { useCanCreateManagedCluster } from '~/queries/ClusterDetailsQueries/useFetchActionsPermissions';
-import { queryConstants } from '~/queries/queriesConstants';
 import { isRestrictedEnv } from '~/restrictedEnv';
 import AWSLogo from '~/styles/images/AWS.png';
 import IBMCloudLogo from '~/styles/images/ibm_cloud-icon.png';
@@ -23,9 +22,7 @@ interface ManagedServicesTableProps {
 }
 
 const ManagedServicesTable = (props: ManagedServicesTableProps) => {
-  const { canCreateManagedCluster } = useCanCreateManagedCluster(
-    queryConstants.FETCH_CLUSTER_DETAILS_QUERY_KEY,
-  );
+  const { canCreateManagedCluster } = useCanCreateManagedCluster();
 
   const { hasOSDQuota = false, isTrialEnabled = false } = props;
   const [openRows, setOpenRows] = useState<Array<string>>([]);

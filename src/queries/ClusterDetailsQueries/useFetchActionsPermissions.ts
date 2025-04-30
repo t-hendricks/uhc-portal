@@ -324,7 +324,7 @@ export const useCanUpdateBreakGlassCredentials = (subscriptionID: string, mainQu
   };
 };
 
-export const useCanCreateManagedCluster = (mainQueryKey: string) => {
+export const useCanCreateManagedCluster = () => {
   const {
     isLoading,
     data: canCreateManagedCluster,
@@ -332,7 +332,6 @@ export const useCanCreateManagedCluster = (mainQueryKey: string) => {
     error,
   } = useQuery({
     queryKey: [
-      mainQueryKey,
       'authorizationService',
       'selfResourceReview',
       SelfAccessReviewAction.create,
