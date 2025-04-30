@@ -150,7 +150,7 @@ const ManagedServicesTable = (props: ManagedServicesTableProps) => {
             Reduce operational complexity and focus on building and scaling applications that add
             more value to your business.
             <br />
-            Hosted on Amazon Web Services (AWS) and Google Cloud.
+            Hosted on Google Cloud.
           </StackItem>
           <StackItem>
             <ExternalLink href={links.OSD_LEARN_MORE}>
