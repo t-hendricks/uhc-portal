@@ -2,8 +2,13 @@ import * as React from 'react';
 import { Form, Formik } from 'formik';
 
 import { CloudProviderType } from '~/components/clusters/wizards/common';
-import { FieldId, initialValues } from '~/components/clusters/wizards/osd/constants';
+import { GCPAuthType } from '~/components/clusters/wizards/osd/ClusterSettings/CloudProvider/types';
+import {
+  FieldId,
+  initialValues as defaultValues,
+} from '~/components/clusters/wizards/osd/constants';
 import { checkAccessibility, render, screen, userEvent, waitFor } from '~/testUtils';
+import { SubscriptionCommonFieldsCluster_billing_model as BillingModel } from '~/types/accounts_mgmt.v1';
 
 import { CloudProviderTileField } from './CloudProviderTileField';
 
@@ -24,10 +29,6 @@ const expectCloudProviderToBe = (submitFn: jest.Mock, value: string) => {
 };
 
 describe('<CloudProviderTileField />', () => {
-  const defaultValues = {
-    ...initialValues,
-  };
-
   const awsLabel = 'Amazon Web Service logo Run on Amazon Web Services';
   const gcpLabel = 'Run on Google Cloud Platform';
 
@@ -102,5 +103,41 @@ describe('<CloudProviderTileField />', () => {
     await user.click(screen.getByRole('button', { name: /submit/i }));
 
     await waitFor(() => expectCloudProviderToBe(handleSubmit, CloudProviderType.Aws));
+  });
+});
+
+describe('CloudProviderTileField visibility logic based on billing model and GCP auth type', () => {
+  it('hides AWS tile when billing model is "On-demand: Flexible usage billed through the Google Cloud Marketplace"', () => {
+    const customValues = {
+      ...defaultValues,
+      [FieldId.BillingModel]: BillingModel.marketplace_gcp,
+    };
+    render(
+      <Formik initialValues={customValues} onSubmit={() => {}}>
+        <Form>
+          <CloudProviderTileField />
+        </Form>
+      </Formik>,
+    );
+
+    expect(screen.getByText(/run on google cloud platform/i)).toBeInTheDocument();
+  });
+
+  it('shows both AWS and GCP tiles when billing model is "Annual: Fixed capacity subscription from Red Hat" and "GCP auth is Service Accounts"', () => {
+    const customValues = {
+      ...defaultValues,
+      [FieldId.BillingModel]: BillingModel.standard,
+      [FieldId.GcpAuthType]: GCPAuthType.ServiceAccounts,
+    };
+    render(
+      <Formik initialValues={customValues} onSubmit={() => {}}>
+        <Form>
+          <CloudProviderTileField />
+        </Form>
+      </Formik>,
+    );
+
+    expect(screen.getByText(/run on amazon web services/i)).toBeInTheDocument();
+    expect(screen.getByText(/run on google cloud platform/i)).toBeInTheDocument();
   });
 });

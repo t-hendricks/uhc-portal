@@ -34,14 +34,14 @@ export const CloudProviderTileField = () => {
     isBYOC,
   });
   const hasGcpResources = quotas.gcpResources;
-  const hasAwsResources =
+  const shouldShowAwsTile = !(
     billingModel === SubscriptionCommonFieldsClusterBillingModel.marketplace_gcp
-      ? false
-      : quotas.awsResources;
+  );
+  const hasAwsResources = shouldShowAwsTile ? quotas.awsResources : false;
   const notAvailableTooltip =
-    billingModel === SubscriptionCommonFieldsClusterBillingModel.marketplace_gcp
-      ? 'OpenShift Dedicated purchased through the Google Cloud marketplace can only be provisioned on GCP.'
-      : noQuotaTooltip;
+    billingModel === shouldShowAwsTile
+      ? noQuotaTooltip
+      : 'OpenShift Dedicated purchased through the Google Cloud marketplace can only be provisioned on GCP.';
 
   const handleChange = (value: string) => {
     // Silently reset some user choices that are now meaningless.
@@ -99,8 +99,9 @@ export const CloudProviderTileField = () => {
 
   return (
     <div role="listbox" aria-label="Providers options">
+      {shouldShowAwsTile &&
+        (hasAwsResources ? awsTile : <Tooltip content={notAvailableTooltip}>{awsTile}</Tooltip>)}
       {hasGcpResources ? gcpTile : <Tooltip content={noQuotaTooltip}>{gcpTile}</Tooltip>}
-      {hasAwsResources ? awsTile : <Tooltip content={notAvailableTooltip}>{awsTile}</Tooltip>}
     </div>
   );
 };
