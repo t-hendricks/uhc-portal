@@ -226,28 +226,13 @@ const IDPSection = (props) => {
                 {identityProviders.map((idp, rowIndex) => {
                   const actions = idpActionResolver(idp);
                   const htpUsersCount = idp.htpUsers?.length;
-                  const remainingUsers = htpUsersCount > 5 ? htpUsersCount - 5 : undefined;
-
-                  const displayRemainingUsersCount = () => {
-                    if (idpActions.update) {
-                      return (
-                        <li>
-                          <Link to={`/details/s/${subscriptionID}/edit-idp/${idp.name}`}>
-                            View all users ({htpUsersCount})
-                          </Link>
-                        </li>
-                      );
-                    }
-
-                    return remainingUsers ? <li> ({remainingUsers} more) </li> : null;
-                  };
 
                   return (
                     <Tbody key={idp.id} isExpanded={isIdpExpanded(idp)}>
                       <Tr>
                         <Td
                           expand={
-                            idp?.htpUsers && isHTPasswdEnhanced
+                            idp?.htpUsers && idpActions.update && isHTPasswdEnhanced
                               ? {
                                   rowIndex,
                                   isExpanded: isIdpExpanded(idp),
@@ -277,7 +262,7 @@ const IDPSection = (props) => {
                           <ActionsColumn items={actions} isDisabled={!!disableReason} />
                         </Td>
                       </Tr>
-                      {idp?.htpUsers && isHTPasswdEnhanced ? (
+                      {idp?.htpUsers && idpActions.update && isHTPasswdEnhanced ? (
                         <Tr
                           key="expandable-row"
                           isExpanded={isIdpExpanded(idp)}
@@ -290,7 +275,11 @@ const IDPSection = (props) => {
                                 {idp.htpUsers.slice(0, 5).map((user) => (
                                   <li key={user.id}>{user.username}</li>
                                 ))}
-                                {displayRemainingUsersCount()}
+                                <li>
+                                  <Link to={`/details/s/${subscriptionID}/edit-idp/${idp.name}`}>
+                                    View all users ({htpUsersCount})
+                                  </Link>
+                                </li>
                               </ul>
                             </ExpandableRowContent>
                           </Td>

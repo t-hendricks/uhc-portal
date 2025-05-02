@@ -93,6 +93,8 @@ const IdentityProvidersPage = (props) => {
 
   const IDPList = clusterIDPs?.items || [];
 
+  const hasIDPUpdateAccess = cluster?.idpActions?.update;
+
   const dispatch = useDispatch();
   let idpEdited = {};
   let editedType = '';
@@ -195,6 +197,11 @@ const IdentityProvidersPage = (props) => {
   ) {
     return <Navigate replace to={`/details/s/${cluster?.subscription.id}#accessControl`} />;
   }
+
+  if (!isClusterDetailsLoading && !hasIDPUpdateAccess && htpasswd && canViewHtpasswd) {
+    return <Navigate replace to={`/details/s/${cluster?.subscription.id}#accessControl`} />;
+  }
+
   const idpTypeName = IDPTypeNames[selectedIDP];
   const title = isEditForm
     ? `Edit identity provider: ${idpEdited.name}`

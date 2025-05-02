@@ -302,6 +302,7 @@ describe('<IDPSection />', () => {
 
     it('displays expandable section with htpasswd users', async () => {
       mockUseFeatureGate([[ENHANCED_HTPASSWRD, true]]);
+
       useFetchIDPSWithHTPUsersMock.mockReturnValue({
         data: [
           {
@@ -320,7 +321,16 @@ describe('<IDPSection />', () => {
         isError: false,
       });
 
-      const { container } = render(<IDPSection {...props} />);
+      const newProps = {
+        ...props,
+        idpActions: {
+          list: true,
+          delete: true,
+          update: true,
+        },
+      };
+
+      const { container } = render(<IDPSection {...newProps} />);
       expect(await screen.findByRole('grid')).toBeInTheDocument();
       expect(await screen.findByRole('cell', { name: 'hi' })).toBeInTheDocument();
       expect(await screen.findByRole('cell', { name: 'hello' })).toBeInTheDocument();
@@ -331,8 +341,9 @@ describe('<IDPSection />', () => {
       await checkAccessibility(container);
     });
 
-    it('does not show how many more users text when there are less than 5 users', async () => {
+    it('does not display expandable section for htpasswd users without update access', async () => {
       mockUseFeatureGate([[ENHANCED_HTPASSWRD, true]]);
+
       useFetchIDPSWithHTPUsersMock.mockReturnValue({
         data: [
           {
@@ -341,42 +352,32 @@ describe('<IDPSection />', () => {
             id: 'id1',
             htpUsers: createUsers(3),
           },
-        ],
-      });
-      const { user } = render(<IDPSection {...props} />);
-
-      await user.click(screen.getByRole('button', { name: 'Details' }));
-      expect(screen.getAllByRole('listitem')).toHaveLength(3);
-    });
-
-    it('shows text of how many more users when does not have update access', async () => {
-      const newProps = {
-        ...props,
-        isHypershift: true,
-        idpActions: {
-          list: true,
-          update: false,
-          delete: false,
-        },
-      };
-      useFetchIDPSWithHTPUsersMock.mockReturnValue({
-        data: [
           {
-            name: 'hello',
+            name: 'hi',
             type: 'HTPasswdIdentityProvider',
-            id: 'id1',
-            htpUsers: createUsers(7),
+            id: 'id2',
           },
         ],
+        isLoading: false,
+        isError: false,
       });
-      const { user } = render(<IDPSection {...newProps} />);
 
-      await user.click(screen.getByRole('button', { name: 'Details' }));
+      const newProps = {
+        ...props,
+        idpActions: {
+          list: true,
+          delete: true,
+          update: false,
+        },
+      };
 
-      const listItems = screen.getAllByRole('listitem');
-      expect(listItems).toHaveLength(6);
+      render(<IDPSection {...newProps} />);
+      expect(await screen.findByRole('grid')).toBeInTheDocument();
+      expect(await screen.findByRole('cell', { name: 'hi' })).toBeInTheDocument();
+      expect(await screen.findByRole('cell', { name: 'hello' })).toBeInTheDocument();
 
-      expect(listItems[listItems.length - 1]).toHaveTextContent('(2 more)');
+      const expandRowToggle = screen.queryByTestId('expandable-row');
+      expect(expandRowToggle).not.toBeInTheDocument();
     });
 
     it('shows link of how may more users when user does have update access ', async () => {
