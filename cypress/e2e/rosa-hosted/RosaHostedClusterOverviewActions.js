@@ -3,8 +3,7 @@ import ClusterDetailsPage from '../../pageobjects/ClusterDetails.page';
 import ClusterHistoryPage from '../../pageobjects/ClusterHistory.page';
 
 const clusterDetails = require('../../fixtures/rosa-hosted/RosaHostedClusterCreatePublic.json');
-const awsBillingAccountId =
-  clusterDetails['rosa-hosted-public']['day1-profile']['AWSBillingAccountId'];
+const awsBillingAccountId = Cypress.env('QE_AWS_BILLING_ID');
 const secondaryAWSBillingAccountId =
   clusterDetails['rosa-hosted-public']['day2-profile']['SecondaryAWSBillingAccountId'];
 const clusterName = clusterDetails['rosa-hosted-public']['day1-profile']['ClusterName'];

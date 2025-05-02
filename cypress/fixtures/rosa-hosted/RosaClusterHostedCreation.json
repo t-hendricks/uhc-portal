@@ -4,7 +4,6 @@
   "DomainPrefix": "smokerosahcp1",
   "Region": "us-west-2, US West, Oregon",
   "Availability": "Multi-zone",
-  "AWSBillingAccountId": "425464789085",
   "AdditionalEncryption": "Disabled",
   "EncryptVolumesWithCustomerKeys": "Disabled",
   "Nodes": {

@@ -7,6 +7,7 @@ const clusterFieldValidations = require('../../fixtures/rosa-hosted/RosaClusterH
 // awsAccountID,rolePrefix and installerARN are set by prerun script for smoke requirements.
 const region = clusterFieldValidations.Region.split(',')[0];
 const awsAccountID = Cypress.env('QE_AWS_ID');
+const awsBillingAccountID = Cypress.env('QE_AWS_BILLING_ID');
 const qeInfrastructure = Cypress.env('QE_INFRA_REGIONS')[region][0];
 const rolePrefix = Cypress.env('QE_ACCOUNT_ROLE_PREFIX');
 const installerARN = `arn:aws:iam::${awsAccountID}:role/${rolePrefix}-HCP-ROSA-Installer-Role`;
@@ -40,7 +41,7 @@ describe('Rosa hosted(Hypershift) cluster wizard validations', { tags: ['smoke',
     CreateRosaWizardPage.waitForARNList();
     CreateRosaWizardPage.refreshInfrastructureAWSAccountButton().click();
     CreateRosaWizardPage.waitForARNList();
-    CreateRosaWizardPage.selectAWSBillingAccount(clusterFieldValidations.AWSBillingAccountId);
+    CreateRosaWizardPage.selectAWSBillingAccount(awsBillingAccountID);
     CreateRosaWizardPage.selectInstallerRole(installerARN);
     CreateRosaWizardPage.rosaNextButton().click();
   });

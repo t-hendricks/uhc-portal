@@ -5,6 +5,10 @@ const clusterProfiles = require('../../fixtures/osd-gcp/OsdCcsGCPClusterCreate.j
 const clusterProperties =
   clusterProfiles['osd-ccs-gcp-public-multizone-serviceaccount']['day1-profile'];
 const QE_GCP = Cypress.env('QE_GCP_OSDCCSADMIN_JSON');
+const gcpKeyRingLocation = Cypress.env('QE_GCP_KEY_RING_LOCATION');
+const gcpKeyRing = Cypress.env('QE_GCP_KEY_RING');
+const gcpKeyName = Cypress.env('QE_GCP_KEY_NAME');
+const gcpKMSServiceAccount = Cypress.env('QE_GCP_KMS_SERVICE_ACCOUNT');
 
 describe(
   'OSD GCP (service account) public advanced cluster creation tests()',
@@ -62,14 +66,10 @@ describe(
         }
         if (clusterProperties.EncryptVolumesWithCustomKeys.includes('Enabled')) {
           CreateOSDWizardPage.useCustomKMSKeyRadio().check();
-          CreateOSDWizardPage.selectKeylocation(
-            clusterProperties.EncryptCustomKeys.KeyRingLocation,
-          );
-          CreateOSDWizardPage.selectKeyRing(clusterProperties.EncryptCustomKeys.KeyRing);
-          CreateOSDWizardPage.selectKeyName(clusterProperties.EncryptCustomKeys.KeyName);
-          CreateOSDWizardPage.kmsServiceAccountInput().type(
-            clusterProperties.EncryptCustomKeys.KmsServiceAccount,
-          );
+          CreateOSDWizardPage.selectKeylocation(gcpKeyRingLocation);
+          CreateOSDWizardPage.selectKeyRing(gcpKeyRing);
+          CreateOSDWizardPage.selectKeyName(gcpKeyName);
+          CreateOSDWizardPage.kmsServiceAccountInput().type(gcpKMSServiceAccount);
         }
       }
       CreateOSDWizardPage.wizardNextButton().click();
