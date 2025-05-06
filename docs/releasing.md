@@ -35,17 +35,6 @@
    For further verification, browse the [app.info.json file in Production][23], and ensure that `src_hash` matches the new merge-commit hash.
 
 
-1. #### Run the _label-release-jira_ script:
-
-   ```
-   ./run/label-release-jira.mjs --jira-token <auth-token>
-   ```
-
-   This script will add labels ([`deployed-production`][12] and `ga-released-<date>`) to the released Jira tickets, to mark them available in production.
-
-   > _:information_source: You can create an auth-token in [Jira, under Profile / Personal Access Tokens][29]_
-
-
 1. #### Create a GitHub-release & release notes
 
    From the [Releases page][35], click _Draft a new release_.
