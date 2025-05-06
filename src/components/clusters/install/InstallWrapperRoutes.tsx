@@ -17,6 +17,14 @@ import {
   ASHUPIProps,
   AWSIPIProps,
   AWSUPIProps,
+  AzureIPIProps,
+  AzureProps,
+  AzureStackHubProps,
+  AzureUPIProps,
+  BareMetalABIProps,
+  BareMetalIPIProps,
+  BareMetalProps,
+  BareMetalUPIProps,
   GCPIPIProps,
   GCPProps,
   GCPUPIProps,
@@ -165,6 +173,57 @@ export const routesData: Routes[] = [
         propsData={IBMZPreReleaseProps}
         componentChooser="releaseInstructions"
       />
+    ),
+  },
+  {
+    path: '/install/azure',
+    element: (
+      <InstallComponentWrapper propsData={AzureProps} componentChooser="instructionsChooser" />
+    ),
+  },
+  {
+    path: '/install/azure/installer-provisioned',
+    element: (
+      <InstallComponentWrapper propsData={AzureIPIProps} componentChooser="ocpInstructions" />
+    ),
+  },
+  {
+    path: '/install/azure/user-provisioned',
+    element: (
+      <InstallComponentWrapper propsData={AzureUPIProps} componentChooser="ocpInstructions" />
+    ),
+  },
+  {
+    path: '/install/azure-stack-hub',
+    element: (
+      <InstallComponentWrapper
+        propsData={AzureStackHubProps}
+        componentChooser="instructionsChooser"
+      />
+    ),
+  },
+  {
+    path: '/install/metal/agent-based',
+    element: (
+      <InstallComponentWrapper propsData={BareMetalABIProps} componentChooser="ocpInstructions" />
+    ),
+  },
+  {
+    path: '/install/metal/installer-provisioned',
+    element: (
+      <InstallComponentWrapper propsData={BareMetalIPIProps} componentChooser="ocpInstructions" />
+    ),
+  },
+  {
+    path: '/install/metal/user-provisioned',
+    element: (
+      <InstallComponentWrapper propsData={BareMetalUPIProps} componentChooser="ocpInstructions" />
+    ),
+  },
+  {
+    path: '/install/metal',
+    element: (
+      <InstallComponentWrapper propsData={BareMetalProps} componentChooser="instructionsChooser" />
     ),
   },
 ];

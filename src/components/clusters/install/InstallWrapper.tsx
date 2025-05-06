@@ -75,6 +75,7 @@ export const InstallWithOCPInstructionsWrapper = (props: OCPInstructionProps) =>
     customizations,
     instructionsMapping,
     isUPI,
+    installationTypeId,
   } = props;
   const dispatch = useDispatch();
   React.useEffect(() => {
@@ -95,6 +96,7 @@ export const InstallWithOCPInstructionsWrapper = (props: OCPInstructionProps) =>
           token={token}
           cloudProviderID={cloudProviderId}
           customizations={customizations}
+          installationTypeId={installationTypeId}
           isUPI={isUPI}
           {...instructionsMapping}
         />

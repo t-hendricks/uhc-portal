@@ -43,15 +43,7 @@ import ClusterRequestList from '../clusters/ClusterTransfer/ClusterRequest';
 import CreateClusterPage from '../clusters/CreateClusterPage';
 import GovCloudPage from '../clusters/GovCloud/GovCloudPage';
 import InsightsAdvisorRedirector from '../clusters/InsightsAdvisorRedirector';
-import InstallASH from '../clusters/install/InstallASH';
 import InstallAWS from '../clusters/install/InstallAWS';
-import InstallAzure from '../clusters/install/InstallAzure';
-import ConnectedInstallAzureIPI from '../clusters/install/InstallAzureIPI';
-import ConnectedInstallAzureUPI from '../clusters/install/InstallAzureUPI';
-import InstallBareMetal from '../clusters/install/InstallBareMetal';
-import InstallBMABI from '../clusters/install/InstallBareMetalABI';
-import InstallBMIPI from '../clusters/install/InstallBareMetalIPI';
-import InstallBMUPI from '../clusters/install/InstallBareMetalUPI';
 import ConnectedInstallMultiAWSIPI from '../clusters/install/InstallMultiAWSIPI';
 import ConnectedInstallMultiAzureIPI from '../clusters/install/InstallMultiAzureIPI';
 import InstallMultiBMUPI from '../clusters/install/InstallMultiBareMetalUPI';
@@ -198,15 +190,7 @@ const Router: React.FC<RouterProps> = ({ planType, clusterId, externalClusterId 
           path="/install/azure/multi/installer-provisioned"
           element={<ConnectedInstallMultiAzureIPI />}
         />
-        <Route path="/install/azure/installer-provisioned" element={<ConnectedInstallAzureIPI />} />
-        <Route path="/install/azure/user-provisioned" element={<ConnectedInstallAzureUPI />} />
-        <Route path="/install/azure" element={<InstallAzure />} />
-        <Route path="/install/azure-stack-hub" element={<InstallASH />} />
-        <Route path="/install/metal/user-provisioned" element={<InstallBMUPI />} />
-        <Route path="/install/metal/installer-provisioned" element={<InstallBMIPI />} />
-        <Route path="/install/metal/agent-based" element={<InstallBMABI />} />
         <Route path="/install/metal/multi" element={<InstallMultiBMUPI />} />
-        <Route path="/install/metal" element={<InstallBareMetal />} />
         <Route path="/install/multi/pre-release" element={<ConnectedInstallMultiPreRelease />} />
         <Route path="/install/vsphere" element={<InstallVSphere />} />
         <Route path="/install/vsphere/agent-based" element={<ConnectedInstallVSphereABI />} />

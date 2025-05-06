@@ -35,6 +35,7 @@ export type OCPInstructionProps = InstallCommonType & {
   cloudProviderId: string;
   instructionsMapping: any;
   isUPI?: boolean;
+  installationTypeId?: string;
 };
 
 export type ReleaseInstructionsProps = InstallCommonType & {
