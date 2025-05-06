@@ -7,7 +7,6 @@ import { notificationsReducer } from '@redhat-cloud-services/frontend-components
 import apiErrorReducer from '../../components/App/ApiError/ApiErrorReducer';
 import clusterUsersReducer from '../../components/clusters/ClusterDetailsMultiRegion/components/AccessControl/UsersSection/UsersReducer';
 import addOnsReducer from '../../components/clusters/ClusterDetailsMultiRegion/components/AddOns/AddOnsReducer';
-import { IdentityProvidersReducer } from '../../components/clusters/ClusterDetailsMultiRegion/components/IdentityProvidersPage/IdentityProvidersReducer';
 import insightsReducer from '../../components/clusters/ClusterDetailsMultiRegion/components/Insights/InsightsReducer';
 import { MonitoringReducer } from '../../components/clusters/ClusterDetailsMultiRegion/components/Monitoring/MonitoringReducer';
 import { NetworkingReducer } from '../../components/clusters/ClusterDetailsMultiRegion/components/Networking/NetworkingReducer';
@@ -55,7 +54,6 @@ const reducers = {
   tollbooth: tollboothReducer,
   modal: modalReducer,
   logs: InstallationLogReducer,
-  identityProviders: IdentityProvidersReducer,
   clusterAutoscaler: clusterAutoscalerReducer,
   clusterUsers: clusterUsersReducer,
   clusterSupport: supportReducer,
