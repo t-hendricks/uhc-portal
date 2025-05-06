@@ -38,7 +38,7 @@ describe('OSD Marketplace cluster creation tests(OCP-67514)', { tags: ['smoke'] 
     it(`OSD wizard - ${clusterProperties.CloudProvider} ${authType} ${isPscEnabled}-${clusterProperties.Marketplace} : Cluster Settings - Cloud provider definitions`, () => {
       CreateOSDWizardPage.isCloudProviderSelectionScreen();
       if (clusterProperties.Marketplace.includes('Google Cloud')) {
-        CreateOSDWizardPage.awsCloudProviderCard().should('have.attr', 'aria-disabled', 'true');
+        CreateOSDWizardPage.awsCloudProviderCard().should('not.exist');
       }
       CreateOSDWizardPage.selectCloudProvider(clusterProperties.CloudProvider);
 
