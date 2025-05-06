@@ -12,7 +12,7 @@ import {
 } from '@patternfly/react-core';
 
 import ExternalLink from '~/components/common/ExternalLink';
-import VideoImg from '~/styles/images/OpenshiftVirtualizationExplanationVideoImg.png';
+import { YoutubePlayer } from '~/components/common/YoutubePlayer/YoutubePlayer';
 
 const OpenShiftVirtualizationPanelBody = (
   <Stack hasGutter className="drawer-panel-content-body">
@@ -26,18 +26,7 @@ const OpenShiftVirtualizationPanelBody = (
     </StackItem>
 
     <StackItem>
-      <ExternalLink
-        href="https://www.youtube.com/watch?v=ZplrufNY9cY&t=5s"
-        noIcon
-        data-testid="drawer-panel-content__explanation-video-parent"
-      >
-        <img
-          src={VideoImg}
-          alt="OpenShift Virtualization video"
-          className="drawer-panel-content__explanation-video"
-          data-testid="drawer-panel-content__explanation-video"
-        />
-      </ExternalLink>
+      <YoutubePlayer videoID="ZplrufNY9cY" />
       <TextContent>
         <Text component={TextVariants.small}>Video duration: 2:08</Text>
       </TextContent>

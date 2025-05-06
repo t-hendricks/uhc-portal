@@ -12,7 +12,7 @@ import {
 } from '@patternfly/react-core';
 
 import ExternalLink from '~/components/common/ExternalLink';
-import ServiceMeshThumbnail from '~/styles/images/ServiceMeshThumbnail.png';
+import { YoutubePlayer } from '~/components/common/YoutubePlayer/YoutubePlayer';
 
 const ServiceMeshDrawerPanelBody = (
   <Stack hasGutter className="drawer-panel-content-body">
@@ -43,13 +43,7 @@ const ServiceMeshDrawerPanelBody = (
       </TextContent>
     </StackItem>
     <StackItem>
-      <ExternalLink href="https://www.youtube.com/watch?v=6nyVOg2BZek" noIcon>
-        <img
-          src={ServiceMeshThumbnail}
-          alt="explanation-video"
-          className="drawer-panel-content__explanation-video"
-        />
-      </ExternalLink>
+      <YoutubePlayer videoID="6nyVOg2BZek" />
       <TextContent>
         <Text component={TextVariants.small}>Video duration 3:08</Text>
       </TextContent>
