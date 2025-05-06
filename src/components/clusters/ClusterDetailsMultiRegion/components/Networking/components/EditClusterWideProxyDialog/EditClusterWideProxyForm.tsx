@@ -41,7 +41,7 @@ const FormFieldId = {
 
 type EditClusterWideProxyFormProps = {
   isClusterEditError: boolean;
-  clusterEditError: Pick<ErrorState, 'errorDetails' | 'errorMessage' | 'operationID'>;
+  clusterEditError: Pick<ErrorState, 'errorDetails' | 'errorMessage' | 'operationID' | 'message'>;
   isClusterEditPending: boolean;
   submitForm: () => void;
   handleClose: () => void;
@@ -106,7 +106,13 @@ const EditClusterWideProxyForm = ({
   }, [noUrlValues]);
 
   const clusterProxyError = isClusterEditError && (
-    <ErrorBox message="Error editing cluster-wide proxy" response={clusterEditError} />
+    <ErrorBox
+      message="Error editing cluster-wide proxy"
+      response={{
+        errorMessage: clusterEditError?.errorMessage || clusterEditError?.message,
+        operationID: clusterEditError?.operationID,
+      }}
+    />
   );
 
   const uploadTrustBundleField = (

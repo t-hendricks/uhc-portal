@@ -114,7 +114,7 @@ const UpgradeSettingsTab = ({ cluster }) => {
     error: editClusterError,
     mutate: editClusterMutate,
     isSuccess: isEditClusterSuccess,
-  } = useEditCluster(clusterID, region);
+  } = useEditCluster(region);
   const { data: machinePoolData, isError: isMachinePoolError } = useFetchMachineOrNodePools(
     clusterID,
     isHypershift,
@@ -206,7 +206,13 @@ const UpgradeSettingsTab = ({ cluster }) => {
     <Grid hasGutter className="ocm-c-upgrade-monitoring">
       {isEditClusterError && (
         <GridItem>
-          <ErrorBox response={editClusterError} message="Error processing request" />
+          <ErrorBox
+            response={{
+              errorMessage: editClusterError?.message || editClusterError?.errorMessage,
+              operationID: editClusterError?.operationID,
+            }}
+            message="Error processing request"
+          />
         </GridItem>
       )}
       <Formik
@@ -283,9 +289,15 @@ const UpgradeSettingsTab = ({ cluster }) => {
             clusterBody.disable_user_workload_monitoring = !values.enable_user_workload_monitoring;
           }
           if (!isEmpty(clusterBody)) {
-            editClusterMutate(clusterBody, {
-              onSuccess: () => invalidateClusterDetailsQueries(),
-            });
+            editClusterMutate(
+              {
+                clusterID: cluster.id,
+                cluster: clusterBody,
+              },
+              {
+                onSuccess: () => invalidateClusterDetailsQueries(),
+              },
+            );
           }
         }}
       >

@@ -5,7 +5,7 @@ import { Button, Modal, StackItem } from '@patternfly/react-core';
 
 import { queryClient } from '~/components/App/queryClient';
 import ErrorBox from '~/components/common/ErrorBox';
-import { useEditCluster } from '~/queries/ClusterDetailsQueries/useEditCluster';
+import { EditClusterInput, useEditCluster } from '~/queries/ClusterDetailsQueries/useEditCluster';
 import { queryConstants } from '~/queries/queriesConstants';
 import { AugmentedCluster } from '~/types/types';
 
@@ -28,7 +28,7 @@ export function OverviewBillingAccountModal(props: OverviewBillingAccountModalPr
     error: clusterEditError,
     mutate: mutateClusterEdit,
     // reset: resetEditClusterResponse,
-  } = useEditCluster(cluster?.id || '', region);
+  } = useEditCluster(region);
 
   const handleClose = () => {
     onClose();
@@ -43,9 +43,12 @@ export function OverviewBillingAccountModal(props: OverviewBillingAccountModalPr
         if (billingAccount === values.billingAccountId) {
           handleClose();
         }
-        const clusterBody = {
-          aws: {
-            billing_account_id: values.billingAccountId,
+        const clusterBody: EditClusterInput = {
+          clusterID: cluster?.id ?? '',
+          cluster: {
+            aws: {
+              billing_account_id: values.billingAccountId,
+            },
           },
         };
         mutateClusterEdit(clusterBody, {
@@ -98,7 +101,8 @@ export function OverviewBillingAccountModal(props: OverviewBillingAccountModalPr
               <ErrorBox
                 message="A problem occurred updating the billing account."
                 response={{
-                  errorMessage: clusterEditError?.errorMessage,
+                  errorMessage: clusterEditError?.message || clusterEditError?.errorMessage,
+                  operationID: clusterEditError?.operationID,
                 }}
               />
             </StackItem>

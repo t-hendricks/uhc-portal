@@ -44,7 +44,7 @@ export const formatErrorData = (
     isError,
     error: error as any as Pick<
       ErrorState,
-      'errorMessage' | 'errorDetails' | 'operationID' | 'errorCode' | 'reason'
+      'errorMessage' | 'errorDetails' | 'operationID' | 'errorCode' | 'reason' | 'message'
     >,
   };
 };

@@ -32,7 +32,7 @@ const EditClusterWideProxyDialog = ({ cluster, region }: EditClusterWideProxyDia
     error: clusterEditError,
     mutate: mutateClusterEdit,
     reset: resetEditClusterResponse,
-  } = useEditCluster(cluster.id || '', region);
+  } = useEditCluster(region);
 
   const spiltStringToArray = (str?: string) => str?.trim().split(',');
 
@@ -76,9 +76,15 @@ const EditClusterWideProxyDialog = ({ cluster, region }: EditClusterWideProxyDia
           ),
         };
 
-        mutateClusterEdit(clusterProxyBody, {
-          onSuccess: () => handleClose(),
-        });
+        mutateClusterEdit(
+          {
+            clusterID: cluster?.id ?? '',
+            cluster: clusterProxyBody,
+          },
+          {
+            onSuccess: () => handleClose(),
+          },
+        );
       }}
     >
       {({ submitForm }) => (
@@ -88,7 +94,7 @@ const EditClusterWideProxyDialog = ({ cluster, region }: EditClusterWideProxyDia
           isClusterEditError={isClusterEditError}
           clusterEditError={{
             errorDetails: clusterEditError?.errorDetails,
-            errorMessage: clusterEditError?.errorMessage,
+            errorMessage: clusterEditError?.errorMessage || clusterEditError?.message,
             operationID: clusterEditError?.operationID,
           }}
           handleClose={handleClose}

@@ -130,6 +130,7 @@ export type ErrorState = {
   errorMessage?: string;
   errorDetails?: ErrorDetail[];
   operationID?: string;
+  message?: string;
 };
 
 export type AWSCredentials = Pick<
