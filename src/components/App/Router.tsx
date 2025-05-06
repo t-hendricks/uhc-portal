@@ -44,10 +44,6 @@ import CreateClusterPage from '../clusters/CreateClusterPage';
 import GovCloudPage from '../clusters/GovCloud/GovCloudPage';
 import InsightsAdvisorRedirector from '../clusters/InsightsAdvisorRedirector';
 import InstallAWS from '../clusters/install/InstallAWS';
-import ConnectedInstallMultiAWSIPI from '../clusters/install/InstallMultiAWSIPI';
-import ConnectedInstallMultiAzureIPI from '../clusters/install/InstallMultiAzureIPI';
-import InstallMultiBMUPI from '../clusters/install/InstallMultiBareMetalUPI';
-import ConnectedInstallMultiPreRelease from '../clusters/install/InstallMultiPreRelease';
 import InstallNutanix from '../clusters/install/InstallNutanix';
 import ConnectedInstallNutanixIPI from '../clusters/install/InstallNutanixIPI';
 import InstallOracleCloud from '../clusters/install/InstallOracleCloud';
@@ -170,10 +166,6 @@ const Router: React.FC<RouterProps> = ({ planType, clusterId, externalClusterId 
         {InstallRouteMap(routesData)}
         <Route path="/token/show" element={<CLILoginPage showToken />} />
         <Route path="/token" element={<CLILoginPage showToken={false} showPath="/token/show" />} />
-        <Route
-          path="/install/aws/multi/installer-provisioned"
-          element={<ConnectedInstallMultiAWSIPI />}
-        />
         <Route path="/install/aws" element={<InstallAWS />} />
         <Route path="/install/nutanix" element={<InstallNutanix />} />
         <Route
@@ -186,12 +178,6 @@ const Router: React.FC<RouterProps> = ({ planType, clusterId, externalClusterId 
         />
         <Route path="/install/openstack/user-provisioned" element={<ConnectedInstallOSPUPI />} />
         <Route path="/install/openstack" element={<InstallOSP />} />
-        <Route
-          path="/install/azure/multi/installer-provisioned"
-          element={<ConnectedInstallMultiAzureIPI />}
-        />
-        <Route path="/install/metal/multi" element={<InstallMultiBMUPI />} />
-        <Route path="/install/multi/pre-release" element={<ConnectedInstallMultiPreRelease />} />
         <Route path="/install/vsphere" element={<InstallVSphere />} />
         <Route path="/install/vsphere/agent-based" element={<ConnectedInstallVSphereABI />} />
         <Route path="/install/vsphere/user-provisioned" element={<ConnectedInstallVSphereUPI />} />

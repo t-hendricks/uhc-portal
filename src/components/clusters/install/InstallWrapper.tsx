@@ -75,6 +75,7 @@ export const InstallWithOCPInstructionsWrapper = (props: OCPInstructionProps) =>
     customizations,
     instructionsMapping,
     isUPI,
+    showPreReleaseDocs,
     installationTypeId,
   } = props;
   const dispatch = useDispatch();
@@ -96,6 +97,7 @@ export const InstallWithOCPInstructionsWrapper = (props: OCPInstructionProps) =>
           token={token}
           cloudProviderID={cloudProviderId}
           customizations={customizations}
+          showPreReleaseDocs={showPreReleaseDocs}
           installationTypeId={installationTypeId}
           isUPI={isUPI}
           {...instructionsMapping}

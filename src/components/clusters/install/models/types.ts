@@ -36,6 +36,7 @@ export type OCPInstructionProps = InstallCommonType & {
   instructionsMapping: any;
   isUPI?: boolean;
   installationTypeId?: string;
+  showPreReleaseDocs?: boolean;
 };
 
 export type ReleaseInstructionsProps = InstallCommonType & {

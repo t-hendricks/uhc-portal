@@ -33,6 +33,10 @@ import {
   IBMZPreReleaseProps,
   IBMZProps,
   IBMZUPIProps,
+  MultiAWSIPIProps,
+  MultiAzureIPIProps,
+  MultiBareMetalUPIProps,
+  MultiPreReleaseProps,
 } from './InstallWrapperPropsData';
 
 // Example of generic install component usage
@@ -125,6 +129,36 @@ export const routesData: Routes[] = [
       <InstallComponentWrapper
         propsData={ArmBareMetalUPIProps}
         componentChooser="ocpInstructions"
+      />
+    ),
+  },
+  {
+    path: '/install/aws/multi/installer-provisioned',
+    element: (
+      <InstallComponentWrapper propsData={MultiAWSIPIProps} componentChooser="ocpInstructions" />
+    ),
+  },
+  {
+    path: '/install/azure/multi/installer-provisioned',
+    element: (
+      <InstallComponentWrapper propsData={MultiAzureIPIProps} componentChooser="ocpInstructions" />
+    ),
+  },
+  {
+    path: '/install/metal/multi',
+    element: (
+      <InstallComponentWrapper
+        propsData={MultiBareMetalUPIProps}
+        componentChooser="ocpInstructions"
+      />
+    ),
+  },
+  {
+    path: '/install/multi/pre-release',
+    element: (
+      <InstallComponentWrapper
+        propsData={MultiPreReleaseProps}
+        componentChooser="releaseInstructions"
       />
     ),
   },
