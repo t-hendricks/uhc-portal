@@ -23,11 +23,12 @@ export type InstructionChooserProps = InstallCommonType & {
   ipiPageLink?: string;
   ipiLearnMoreLink?: string;
   hideUPI?: boolean;
-  upiPageLink: string;
+  upiPageLink?: string;
   upiLearnMoreLink?: string;
   agentBasedPageLink?: string;
   agentBasedLearnMoreLink?: string;
   providerSpecificFeatures: ProviderSpecificType;
+  recommend?: 'ai' | 'ipi';
 };
 
 export type OCPInstructionProps = InstallCommonType & {

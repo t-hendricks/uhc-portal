@@ -37,6 +37,14 @@ import {
   MultiAzureIPIProps,
   MultiBareMetalUPIProps,
   MultiPreReleaseProps,
+  NutanixIPIProps,
+  NutanixProps,
+  OpenStackIPIProps,
+  OpenStackProps,
+  OpenStackUPIProps,
+  PlatformAgnosticABI,
+  PlatformAgnosticProps,
+  PlatformAgnosticUPI,
 } from './InstallWrapperPropsData';
 
 // Example of generic install component usage
@@ -207,6 +215,57 @@ export const routesData: Routes[] = [
         propsData={IBMZPreReleaseProps}
         componentChooser="releaseInstructions"
       />
+    ),
+  },
+  {
+    path: '/install/nutanix',
+    element: (
+      <InstallComponentWrapper propsData={NutanixProps} componentChooser="instructionsChooser" />
+    ),
+  },
+  {
+    path: '/install/nutanix/installer-provisioned',
+    element: (
+      <InstallComponentWrapper propsData={NutanixIPIProps} componentChooser="ocpInstructions" />
+    ),
+  },
+  {
+    path: '/install/openstack',
+    element: (
+      <InstallComponentWrapper propsData={OpenStackProps} componentChooser="instructionsChooser" />
+    ),
+  },
+  {
+    path: '/install/openstack/user-provisioned',
+    element: (
+      <InstallComponentWrapper propsData={OpenStackUPIProps} componentChooser="ocpInstructions" />
+    ),
+  },
+  {
+    path: '/install/openstack/installer-provisioned',
+    element: (
+      <InstallComponentWrapper propsData={OpenStackIPIProps} componentChooser="ocpInstructions" />
+    ),
+  },
+  {
+    path: '/install/platform-agnostic',
+    element: (
+      <InstallComponentWrapper
+        propsData={PlatformAgnosticProps}
+        componentChooser="instructionsChooser"
+      />
+    ),
+  },
+  {
+    path: '/install/platform-agnostic/user-provisioned',
+    element: (
+      <InstallComponentWrapper propsData={PlatformAgnosticUPI} componentChooser="ocpInstructions" />
+    ),
+  },
+  {
+    path: '/install/platform-agnostic/agent-based',
+    element: (
+      <InstallComponentWrapper propsData={PlatformAgnosticABI} componentChooser="ocpInstructions" />
     ),
   },
   {

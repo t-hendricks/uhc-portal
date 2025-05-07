@@ -39,6 +39,7 @@ export const InstallWithInstructionChooserWrapper = (props: InstructionChooserPr
     agentBasedLearnMoreLink,
     providerSpecificFeatures,
     name,
+    recommend,
   } = props;
 
   const breadcrumbs = <Breadcrumbs path={[...breadCrumbsPaths]} />;
@@ -60,6 +61,7 @@ export const InstallWithInstructionChooserWrapper = (props: InstructionChooserPr
           agentBasedLearnMoreLink={agentBasedLearnMoreLink}
           providerSpecificFeatures={providerSpecificFeatures}
           name={name}
+          recommend={recommend}
         />
       </PageSection>
     </AppPage>

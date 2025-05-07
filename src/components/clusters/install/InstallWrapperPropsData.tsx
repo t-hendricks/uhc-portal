@@ -4,6 +4,7 @@ import links, { tools } from '~/common/installLinks.mjs';
 import ExternalLink from '~/components/common/ExternalLink';
 
 import instructionsMapping from './instructions/instructionsMapping';
+import { InstructionChooserProps } from './models/types';
 
 const AlibabaCloudPropsLinks = (
   <>
@@ -468,6 +469,44 @@ export const GCPIPIProps = {
     { label: 'Cluster List' },
     { label: 'Cluster Type', path: '/create' },
     { label: 'Google Cloud Platform', path: '/install/gcp' },
+  ],
+};
+
+export const NutanixProps: InstructionChooserProps = {
+  appPageTitle: 'Install OpenShift 4 | Red Hat OpenShift Cluster Manager | Nutanix AOS',
+  providerTitle: 'Nutanix AOS',
+  aiPageLink: '/assisted-installer/clusters/~new',
+  aiLearnMoreLink: links.INSTALL_ASSISTED_LEARN_MORE,
+  ipiPageLink: '/install/nutanix/installer-provisioned',
+  ipiLearnMoreLink: links.INSTALL_NUTANIXIPI_GETTING_STARTED,
+  upiPageLink: '',
+  agentBasedPageLink: '',
+  hideUPI: true,
+  recommend: 'ipi',
+  providerSpecificFeatures: {
+    ipi: [
+      'Hosts controlled with Nutanix AOS Cloud Provider',
+      'For connected or air-gapped/restricted networks',
+    ],
+  },
+  name: 'nutanix',
+  breadCrumbsPaths: [
+    { label: 'Cluster List' },
+    { label: 'Cluster Type', path: '/create' },
+    { label: 'Nutanix AOS' },
+  ],
+};
+
+export const NutanixIPIProps = {
+  appPageTitle:
+    'Install OpenShift 4 | Red Hat OpenShift Cluster Manager | Nutanix AOS Installer-Provisioned Infrastructure',
+  providerTitle: instructionsMapping.nutanix.ipi.title,
+  cloudProviderId: 'nutanix',
+  instructionsMapping: instructionsMapping.nutanix.ipi,
+  breadCrumbsPaths: [
+    { label: 'Cluster List' },
+    { label: 'Cluster Type', path: '/create' },
+    { label: 'Nutanix AOS', path: '/install/nutanix' },
     { label: 'Installer-provisioned infrastructure' },
   ],
 };
@@ -483,6 +522,38 @@ export const GCPUPIProps = {
     { label: 'Cluster List' },
     { label: 'Cluster Type', path: '/create' },
     { label: 'Google Cloud Platform', path: '/install/gcp' },
+  ],
+};
+
+export const OpenStackProps = {
+  appPageTitle: 'Install OpenShift 4 | Red Hat OpenShift Cluster Manager | OpenStack',
+  providerTitle: 'OpenStack',
+  ipiPageLink: '/install/openstack/installer-provisioned',
+  ipiLearnMoreLink: links.INSTALL_OSPIPI_GETTING_STARTED,
+  upiPageLink: '/install/openstack/user-provisioned',
+  upiLearnMoreLink: links.INSTALL_OSPUPI_GETTING_STARTED,
+  providerSpecificFeatures: {
+    ipi: ['Hosts controlled with OpenStack Provider'],
+  },
+  name: 'openstack',
+  breadCrumbsPaths: [
+    { label: 'Cluster List' },
+    { label: 'Cluster Type', path: '/create' },
+    { label: 'Red Hat OpenStack Platform' },
+  ],
+};
+
+export const OpenStackUPIProps = {
+  appPageTitle:
+    'Install OpenShift 4 | Red Hat OpenShift Cluster Manager | OpenStack User-Provisioned Infrastructure',
+  providerTitle: instructionsMapping.openstack.upi.title,
+  cloudProviderId: 'openstack',
+  isUPI: true,
+  instructionsMapping: instructionsMapping.openstack.upi,
+  breadCrumbsPaths: [
+    { label: 'Cluster List' },
+    { label: 'Cluster Type', path: '/create' },
+    { label: 'Red Hat OpenStack Platform', path: '/install/openstack' },
     { label: 'User-provisioned infrastructure' },
   ],
 };
@@ -565,5 +636,84 @@ export const IBMZPreReleaseProps = {
     { label: 'Cluster Type', path: '/create' },
     { label: 'IBM Z', path: '/install/ibmz/user-provisioned' },
     { label: 'Pre-Release Builds' },
+  ],
+};
+
+export const OpenStackIPIProps = {
+  appPageTitle:
+    'Install OpenShift 4 | Red Hat OpenShift Cluster Manager | OpenStack Installer-Provisioned Infrastructure',
+  providerTitle: instructionsMapping.openstack.ipi.title,
+  cloudProviderId: 'openstack',
+  instructionsMapping: instructionsMapping.openstack.ipi,
+  customizations: instructionsMapping.openstack.customizations,
+  breadCrumbsPaths: [
+    { label: 'Cluster List' },
+    { label: 'Cluster Type', path: '/create' },
+    { label: 'Red Hat OpenStack Platform', path: '/install/openstack' },
+    { label: 'Installer-provisioned infrastructure' },
+  ],
+};
+
+const nonTestedPlatformsLink = (
+  <>
+    For&nbsp;
+    <ExternalLink href={links.INSTALL_GENERIC_NON_TESTED_PLATFORMS} stopClickPropagation>
+      non-tested platforms
+    </ExternalLink>
+  </>
+);
+
+export const PlatformAgnosticProps = {
+  appPageTitle:
+    'Install OpenShift 4 | Red Hat OpenShift Cluster Manager | x86_64 User-Provisioned Infrastructure',
+  providerTitle: 'Platform agnostic (x86_64)',
+  aiPageLink: '/assisted-installer/clusters/~new',
+  aiLearnMoreLink: links.INSTALL_ASSISTED_LEARN_MORE,
+  hideIPI: true,
+  upiPageLink: '/install/platform-agnostic/user-provisioned',
+  upiLearnMoreLink: links.INSTALL_GENERIC_GETTING_STARTED,
+  agentBasedPageLink: '/install/platform-agnostic/agent-based',
+  agentBasedLearnMoreLink: links.INSTALL_AGENT_LEARN_MORE,
+  providerSpecificFeatures: {
+    abi: [nonTestedPlatformsLink, 'For air-gapped/restricted networks'],
+    ai: [nonTestedPlatformsLink],
+    upi: [nonTestedPlatformsLink],
+  },
+  name: 'platform-agnostic',
+  breadCrumbsPaths: [
+    { label: 'Cluster List' },
+    { label: 'Cluster Type', path: '/create' },
+    { label: 'Platform agnostic (x86_64)' },
+  ],
+};
+
+export const PlatformAgnosticUPI = {
+  appPageTitle:
+    'Install OpenShift 4 | Red Hat OpenShift Cluster Manager | x86_64 User-Provisioned Infrastructure',
+  providerTitle: instructionsMapping.generic.upi.title,
+  cloudProviderId: 'generic',
+  isUPI: true,
+  instructionsMapping: instructionsMapping.generic.upi,
+  breadCrumbsPaths: [
+    { label: 'Cluster List' },
+    { label: 'Cluster Type', path: '/create' },
+    { label: 'Platform agnostic (x86_64)', path: '/install/platform-agnostic' },
+    { label: 'x86_64 User-provisioned infrastructure' },
+  ],
+};
+
+export const PlatformAgnosticABI = {
+  appPageTitle:
+    'Install OpenShift 4 | Red Hat OpenShift Cluster Manager | x86_64 Agent-based installer',
+  providerTitle: instructionsMapping.generic.abi.title,
+  cloudProviderId: 'generic',
+  installationTypeId: 'local-agent-based',
+  isUPI: true,
+  instructionsMapping: instructionsMapping.generic.abi,
+  breadCrumbsPaths: [
+    { label: 'Cluster List' },
+    { label: 'Cluster Type', path: '/create' },
+    { label: 'Platform agnostic (x86_64)', path: '/install/platform-agnostic' },
+    { label: 'Local Agent-based' },
   ],
 };

@@ -16,7 +16,7 @@ interface InstructionsChooserProps {
   hideUPI?: boolean;
   ipiPageLink?: string;
   ipiLearnMoreLink?: string;
-  upiPageLink: string;
+  upiPageLink?: string;
   upiLearnMoreLink?: string;
   recommend?: 'ai' | 'ipi';
   providerSpecificFeatures?: {

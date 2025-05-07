@@ -44,15 +44,7 @@ import CreateClusterPage from '../clusters/CreateClusterPage';
 import GovCloudPage from '../clusters/GovCloud/GovCloudPage';
 import InsightsAdvisorRedirector from '../clusters/InsightsAdvisorRedirector';
 import InstallAWS from '../clusters/install/InstallAWS';
-import InstallNutanix from '../clusters/install/InstallNutanix';
-import ConnectedInstallNutanixIPI from '../clusters/install/InstallNutanixIPI';
 import InstallOracleCloud from '../clusters/install/InstallOracleCloud';
-import InstallOSP from '../clusters/install/InstallOSP';
-import ConnectedInstallOSPIPI from '../clusters/install/InstallOSPIPI';
-import ConnectedInstallOSPUPI from '../clusters/install/InstallOSPUPI';
-import InstallPlatformAgnostic from '../clusters/install/InstallPlatformAgnostic';
-import ConnectedInstallPlatformAgnosticABI from '../clusters/install/InstallPlatformAgnosticABI';
-import ConnectedInstallPlatformAgnosticUPI from '../clusters/install/InstallPlatformAgnosticUPI';
 import InstallPower from '../clusters/install/InstallPower';
 import ConnectedInstallPowerABI from '../clusters/install/InstallPowerABI';
 import ConnectedInstallPowerPreRelease from '../clusters/install/InstallPowerPreRelease';
@@ -167,17 +159,6 @@ const Router: React.FC<RouterProps> = ({ planType, clusterId, externalClusterId 
         <Route path="/token/show" element={<CLILoginPage showToken />} />
         <Route path="/token" element={<CLILoginPage showToken={false} showPath="/token/show" />} />
         <Route path="/install/aws" element={<InstallAWS />} />
-        <Route path="/install/nutanix" element={<InstallNutanix />} />
-        <Route
-          path="/install/nutanix/installer-provisioned"
-          element={<ConnectedInstallNutanixIPI />}
-        />
-        <Route
-          path="/install/openstack/installer-provisioned"
-          element={<ConnectedInstallOSPIPI />}
-        />
-        <Route path="/install/openstack/user-provisioned" element={<ConnectedInstallOSPUPI />} />
-        <Route path="/install/openstack" element={<InstallOSP />} />
         <Route path="/install/vsphere" element={<InstallVSphere />} />
         <Route path="/install/vsphere/agent-based" element={<ConnectedInstallVSphereABI />} />
         <Route path="/install/vsphere/user-provisioned" element={<ConnectedInstallVSphereUPI />} />
@@ -190,15 +171,6 @@ const Router: React.FC<RouterProps> = ({ planType, clusterId, externalClusterId 
         <Route path="/install/power/agent-based" element={<ConnectedInstallPowerABI />} />
         <Route path="/install/power" element={<InstallPower />} />
         <Route path="/install/powervs/installer-provisioned" element={<InstallPowerVSIPI />} />
-        <Route
-          path="/install/platform-agnostic/agent-based"
-          element={<ConnectedInstallPlatformAgnosticABI />}
-        />
-        <Route
-          path="/install/platform-agnostic/user-provisioned"
-          element={<ConnectedInstallPlatformAgnosticUPI />}
-        />
-        <Route path="/install/platform-agnostic" element={<InstallPlatformAgnostic />} />
         <Route path="/install/pre-release" element={<ConnectedInstallPreRelease />} />
         <Route path="/install/pull-secret" element={<ConnectedInstallPullSecret />} />
         <Route
