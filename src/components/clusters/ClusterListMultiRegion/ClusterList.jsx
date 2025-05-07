@@ -279,6 +279,7 @@ const ClusterList = ({
       closeModal();
       dispatch(clustersActions.clearClusterDetails());
       clearGlobalError('clusterList');
+      clearGlobalError('clusterDetails');
     };
     // Run only on mount and unmount
     // eslint-disable-next-line react-hooks/exhaustive-deps
