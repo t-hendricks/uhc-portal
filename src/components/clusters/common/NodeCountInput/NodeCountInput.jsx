@@ -52,28 +52,46 @@ const NodeCountInput = (props) => {
     increment || incrementValue({ isHypershiftWizard, poolNumber, isMultiAz });
 
   const included = getIncludedNodes({ isMultiAz, isHypershift: !isMachinePool });
-  const available = getAvailableQuotaUtil({
-    quota,
-    isByoc,
-    billingModel,
-    cloudProviderID,
-    isMultiAz,
-    machineTypes,
-    machineTypeId: machineType,
-    product,
-  });
+  const available = React.useMemo(
+    () =>
+      getAvailableQuotaUtil({
+        quota,
+        isByoc,
+        billingModel,
+        cloudProviderID,
+        isMultiAz,
+        machineTypes,
+        machineTypeId: machineType,
+        product,
+      }),
+    [quota, isByoc, billingModel, cloudProviderID, isMultiAz, machineTypes, machineType, product],
+  );
 
-  const options = buildOptions({
-    included,
-    available,
-    isEditingCluster,
-    currentNodeCount,
-    minNodes,
-    increment: optionValueIncrement,
-    isHypershift: isHypershiftWizard,
-    clusterVersion,
-    allow249NodesOSDCCSROSA,
-  });
+  const options = React.useMemo(
+    () =>
+      buildOptions({
+        included,
+        available,
+        isEditingCluster,
+        currentNodeCount,
+        minNodes,
+        increment: optionValueIncrement,
+        isHypershift: isHypershiftWizard,
+        clusterVersion,
+        allow249NodesOSDCCSROSA,
+      }),
+    [
+      included,
+      available,
+      isEditingCluster,
+      currentNodeCount,
+      minNodes,
+      optionValueIncrement,
+      isHypershiftWizard,
+      clusterVersion,
+      allow249NodesOSDCCSROSA,
+    ],
+  );
 
   const prevPoolNumber = usePreviousProps(poolNumber);
   const prevInputValue = usePreviousProps(input.value);
@@ -108,8 +126,18 @@ const NodeCountInput = (props) => {
       // if the value isn't an option, then just set to minNode (the value the user sees as the setting )
       input.onChange(minNodes);
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [props]);
+  }, [
+    available,
+    clusterVersion,
+    input,
+    isEditingCluster,
+    isHypershiftWizard,
+    minNodes,
+    options,
+    poolNumber,
+    prevInputValue,
+    prevPoolNumber,
+  ]);
 
   let notEnoughQuota = options.length < 1;
 
