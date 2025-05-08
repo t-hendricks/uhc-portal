@@ -55,7 +55,7 @@ const RecommendedOperatorsCards = ({
   selectedCardTitle,
 }: RecommendedOperatorsCardsProps) => (
   <div className="recommended-operators-cards">
-    <Title size="xl" headingLevel="h2" className="pf-v5-u-mt-lg">
+    <Title size="xl" headingLevel="h2" className="pf-v5-u-mt-lg" id="recommended-operators">
       {TITLE}
     </Title>
     <Flex className="pf-v5-u-mb-lg">

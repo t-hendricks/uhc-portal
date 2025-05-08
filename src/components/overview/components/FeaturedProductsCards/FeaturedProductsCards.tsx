@@ -51,7 +51,7 @@ const FeaturedProductsCards = ({
   selectedCardTitle,
 }: FeaturedProductsCardsProps) => (
   <div className="featured-products-cards">
-    <Title size="xl" headingLevel="h2" className="pf-v5-u-mt-lg">
+    <Title size="xl" headingLevel="h2" className="pf-v5-u-mt-lg" id="featured-products">
       {TITLE}
     </Title>
     <Flex className="pf-v5-u-mb-lg">

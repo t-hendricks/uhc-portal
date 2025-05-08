@@ -2,6 +2,7 @@ import React, { useCallback, useState } from 'react';
 
 import { Flex, FlexItem, PageSection, Title } from '@patternfly/react-core';
 
+import { useScrollToAnchor } from '~/common/helpers';
 import { Link } from '~/common/routing';
 import InternalTrackingLink from '~/components/common/InternalTrackingLink';
 import { useCanCreateManagedCluster } from '~/queries/ClusterDetailsQueries/useFetchActionsPermissions';
@@ -35,6 +36,8 @@ const openshiftHeaderContent: OverviewProductBannerProps = {
 const PAGE_TITLE = 'Overview | Red Hat OpenShift Cluster Manager';
 
 function OverviewEmptyState() {
+  useScrollToAnchor();
+
   const { canCreateManagedCluster } = useCanCreateManagedCluster();
 
   const createClusterURL = '/create';
