@@ -285,7 +285,7 @@ const ManagedServicesTable = (props: ManagedServicesTableProps) => {
   rows.push(rosaRow);
 
   return (
-    <Table aria-label="Managed services">
+    <Table aria-label="Managed services" data-testid="managed-service-table">
       <Thead>
         <Tr>
           <Th screenReaderText="Row expansion" />

@@ -87,7 +87,7 @@ const RunItYourselfTable = () => {
   ];
 
   return (
-    <Table aria-label="Run it yourself">
+    <Table aria-label="Run it yourself" data-testid="run-it-yourself">
       <Thead>
         <Tr>
           <Th>{columnNames.cloudProvider}</Th>
