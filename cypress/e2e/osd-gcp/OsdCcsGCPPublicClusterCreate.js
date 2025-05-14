@@ -8,7 +8,7 @@ const QE_GCP = Cypress.env('QE_GCP_OSDCCSADMIN_JSON');
 
 describe(
   'OSD GCP (service account) public default cluster creation tests()',
-  { tags: ['osd', 'ccs', 'gcp', 'public', 'serviceaccount', 'singlezone'] },
+  { tags: ['day1', 'osd', 'ccs', 'gcp', 'public', 'serviceaccount', 'singlezone'] },
   () => {
     before(() => {
       cy.visit('/create');

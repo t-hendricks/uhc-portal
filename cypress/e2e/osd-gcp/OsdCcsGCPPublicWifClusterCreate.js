@@ -10,7 +10,7 @@ const gcpKMSServiceAccount = Cypress.env('QE_GCP_KMS_SERVICE_ACCOUNT');
 
 describe(
   'OSD GCP (Workload identity federation) public advanced cluster creation tests()',
-  { tags: ['osd', 'ccs', 'gcp', 'public', 'wif', 'multizone'] },
+  { tags: ['day1', 'osd', 'ccs', 'gcp', 'public', 'wif', 'multizone'] },
   () => {
     before(() => {
       cy.visit('/create');

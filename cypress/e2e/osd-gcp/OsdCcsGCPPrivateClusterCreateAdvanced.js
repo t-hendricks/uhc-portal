@@ -12,7 +12,7 @@ const gcpKMSServiceAccount = Cypress.env('QE_GCP_KMS_SERVICE_ACCOUNT');
 
 describe(
   'OSD GCP (service account) private advanced cluster creation tests()',
-  { tags: ['osd', 'ccs', 'gcp', 'private', 'serviceaccount', 'multizone'] },
+  { tags: ['day1', 'osd', 'ccs', 'gcp', 'private', 'serviceaccount', 'multizone'] },
   () => {
     before(() => {
       cy.visit('/create');
