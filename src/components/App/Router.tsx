@@ -45,12 +45,6 @@ import GovCloudPage from '../clusters/GovCloud/GovCloudPage';
 import InsightsAdvisorRedirector from '../clusters/InsightsAdvisorRedirector';
 import InstallAWS from '../clusters/install/InstallAWS';
 import InstallOracleCloud from '../clusters/install/InstallOracleCloud';
-import InstallPower from '../clusters/install/InstallPower';
-import ConnectedInstallPowerABI from '../clusters/install/InstallPowerABI';
-import ConnectedInstallPowerPreRelease from '../clusters/install/InstallPowerPreRelease';
-import ConnectedInstallPowerUPI from '../clusters/install/InstallPowerUPI';
-import InstallPowerVSIPI from '../clusters/install/InstallPowerVirtualServerIPI';
-import ConnectedInstallPreRelease from '../clusters/install/InstallPreRelease';
 import ConnectedInstallPullSecret from '../clusters/install/InstallPullSecret';
 import ConnectedInstallPullSecretAzure from '../clusters/install/InstallPullSecretAzure';
 import InstallVSphere from '../clusters/install/InstallVSphere';
@@ -166,12 +160,6 @@ const Router: React.FC<RouterProps> = ({ planType, clusterId, externalClusterId 
           path="/install/vsphere/installer-provisioned"
           element={<ConnectedInstallVSphereIPI />}
         />
-        <Route path="/install/power/user-provisioned" element={<ConnectedInstallPowerUPI />} />
-        <Route path="/install/power/pre-release" element={<ConnectedInstallPowerPreRelease />} />
-        <Route path="/install/power/agent-based" element={<ConnectedInstallPowerABI />} />
-        <Route path="/install/power" element={<InstallPower />} />
-        <Route path="/install/powervs/installer-provisioned" element={<InstallPowerVSIPI />} />
-        <Route path="/install/pre-release" element={<ConnectedInstallPreRelease />} />
         <Route path="/install/pull-secret" element={<ConnectedInstallPullSecret />} />
         <Route
           path="/install/azure/aro-provisioned"

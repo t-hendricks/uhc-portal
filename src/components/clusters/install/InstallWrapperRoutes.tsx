@@ -45,6 +45,12 @@ import {
   PlatformAgnosticABI,
   PlatformAgnosticProps,
   PlatformAgnosticUPI,
+  PowerABIProps,
+  PowerPreReleaseProps,
+  PowerProps,
+  PowerUPIProps,
+  PowerVirtualServerIPIProps,
+  PreReleaseProps,
 } from './InstallWrapperPropsData';
 
 // Example of generic install component usage
@@ -218,6 +224,42 @@ export const routesData: Routes[] = [
     ),
   },
   {
+    path: '/install/power',
+    element: (
+      <InstallComponentWrapper propsData={PowerProps} componentChooser="instructionsChooser" />
+    ),
+  },
+  {
+    path: '/install/power/agent-based',
+    element: (
+      <InstallComponentWrapper propsData={PowerABIProps} componentChooser="ocpInstructions" />
+    ),
+  },
+  {
+    path: '/install/power/pre-release',
+    element: (
+      <InstallComponentWrapper
+        propsData={PowerPreReleaseProps}
+        componentChooser="releaseInstructions"
+      />
+    ),
+  },
+  {
+    path: '/install/power/user-provisioned',
+    element: (
+      <InstallComponentWrapper propsData={PowerUPIProps} componentChooser="ocpInstructions" />
+    ),
+  },
+  {
+    path: '/install/powervs/installer-provisioned',
+    element: (
+      <InstallComponentWrapper
+        propsData={PowerVirtualServerIPIProps}
+        componentChooser="ocpInstructions"
+      />
+    ),
+  },
+  {
     path: '/install/nutanix',
     element: (
       <InstallComponentWrapper propsData={NutanixProps} componentChooser="instructionsChooser" />
@@ -317,6 +359,12 @@ export const routesData: Routes[] = [
     path: '/install/metal',
     element: (
       <InstallComponentWrapper propsData={BareMetalProps} componentChooser="instructionsChooser" />
+    ),
+  },
+  {
+    path: '/install/pre-release',
+    element: (
+      <InstallComponentWrapper propsData={PreReleaseProps} componentChooser="releaseInstructions" />
     ),
   },
 ];
