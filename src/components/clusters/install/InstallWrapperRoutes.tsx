@@ -16,6 +16,7 @@ import {
   ASHIPIProps,
   ASHUPIProps,
   AWSIPIProps,
+  AWSProps,
   AWSUPIProps,
   AzureIPIProps,
   AzureProps,
@@ -42,6 +43,7 @@ import {
   OpenStackIPIProps,
   OpenStackProps,
   OpenStackUPIProps,
+  OracleCloudProps,
   PlatformAgnosticABI,
   PlatformAgnosticProps,
   PlatformAgnosticUPI,
@@ -51,6 +53,11 @@ import {
   PowerUPIProps,
   PowerVirtualServerIPIProps,
   PreReleaseProps,
+  PullSecretProps,
+  VSpehereABIProps,
+  VSphereIPIProps,
+  VSphereProps,
+  VSphereUPIProps,
 } from './InstallWrapperPropsData';
 
 // Example of generic install component usage
@@ -89,6 +96,12 @@ export const routesData: Routes[] = [
   {
     path: '/install/azure-stack-hub/user-provisioned',
     element: <InstallComponentWrapper propsData={ASHUPIProps} componentChooser="ocpInstructions" />,
+  },
+  {
+    path: '/install/aws',
+    element: (
+      <InstallComponentWrapper propsData={AWSProps} componentChooser="instructionsChooser" />
+    ),
   },
   {
     path: '/install/aws/installer-provisioned',
@@ -221,6 +234,39 @@ export const routesData: Routes[] = [
         propsData={IBMZPreReleaseProps}
         componentChooser="releaseInstructions"
       />
+    ),
+  },
+  {
+    path: '/install/pull-secret',
+    element: (
+      <InstallComponentWrapper
+        propsData={PullSecretProps}
+        componentChooser="pullSecretInstructions"
+      />
+    ),
+  },
+  {
+    path: '/install/vsphere',
+    element: (
+      <InstallComponentWrapper propsData={VSphereProps} componentChooser="instructionsChooser" />
+    ),
+  },
+  {
+    path: '/install/vsphere/agent-based',
+    element: (
+      <InstallComponentWrapper propsData={VSpehereABIProps} componentChooser="ocpInstructions" />
+    ),
+  },
+  {
+    path: '/install/vsphere/user-provisioned',
+    element: (
+      <InstallComponentWrapper propsData={VSphereUPIProps} componentChooser="ocpInstructions" />
+    ),
+  },
+  {
+    path: '/install/vsphere/installer-provisioned',
+    element: (
+      <InstallComponentWrapper propsData={VSphereIPIProps} componentChooser="ocpInstructions" />
     ),
   },
   {
@@ -365,6 +411,15 @@ export const routesData: Routes[] = [
     path: '/install/pre-release',
     element: (
       <InstallComponentWrapper propsData={PreReleaseProps} componentChooser="releaseInstructions" />
+    ),
+  },
+  {
+    path: '/install/oracle-cloud',
+    element: (
+      <InstallComponentWrapper
+        propsData={OracleCloudProps}
+        componentChooser="instructionsChooser"
+      />
     ),
   },
 ];

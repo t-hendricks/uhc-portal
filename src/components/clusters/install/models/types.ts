@@ -44,10 +44,13 @@ export type ReleaseInstructionsProps = InstallCommonType & {
   installer: string;
 };
 
+export type PullSecretInstructionsProps = InstallCommonType;
+
 export type InstallComponentProps =
   | { componentChooser: 'instructionsChooser'; propsData: InstructionChooserProps }
   | { componentChooser: 'ocpInstructions'; propsData: OCPInstructionProps }
-  | { componentChooser: 'releaseInstructions'; propsData: ReleaseInstructionsProps };
+  | { componentChooser: 'releaseInstructions'; propsData: ReleaseInstructionsProps }
+  | { componentChooser: 'pullSecretInstructions'; propsData: PullSecretInstructionsProps };
 
 export type Routes = {
   path: string;

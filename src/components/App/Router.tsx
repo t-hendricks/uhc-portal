@@ -43,14 +43,7 @@ import ClusterRequestList from '../clusters/ClusterTransfer/ClusterRequest';
 import CreateClusterPage from '../clusters/CreateClusterPage';
 import GovCloudPage from '../clusters/GovCloud/GovCloudPage';
 import InsightsAdvisorRedirector from '../clusters/InsightsAdvisorRedirector';
-import InstallAWS from '../clusters/install/InstallAWS';
-import InstallOracleCloud from '../clusters/install/InstallOracleCloud';
-import ConnectedInstallPullSecret from '../clusters/install/InstallPullSecret';
-import ConnectedInstallPullSecretAzure from '../clusters/install/InstallPullSecretAzure';
-import InstallVSphere from '../clusters/install/InstallVSphere';
-import ConnectedInstallVSphereABI from '../clusters/install/InstallVSphereABI';
-import ConnectedInstallVSphereIPI from '../clusters/install/InstallVSphereIPI';
-import ConnectedInstallVSphereUPI from '../clusters/install/InstallVSphereUPI';
+import { InstallPullSecretAzure } from '../clusters/install/InstallPullSecretAzure';
 import { InstallRouteMap } from '../clusters/install/InstallWrapper';
 import { routesData } from '../clusters/install/InstallWrapperRoutes';
 import RegisterCluster from '../clusters/RegisterCluster';
@@ -152,20 +145,7 @@ const Router: React.FC<RouterProps> = ({ planType, clusterId, externalClusterId 
         {InstallRouteMap(routesData)}
         <Route path="/token/show" element={<CLILoginPage showToken />} />
         <Route path="/token" element={<CLILoginPage showToken={false} showPath="/token/show" />} />
-        <Route path="/install/aws" element={<InstallAWS />} />
-        <Route path="/install/vsphere" element={<InstallVSphere />} />
-        <Route path="/install/vsphere/agent-based" element={<ConnectedInstallVSphereABI />} />
-        <Route path="/install/vsphere/user-provisioned" element={<ConnectedInstallVSphereUPI />} />
-        <Route
-          path="/install/vsphere/installer-provisioned"
-          element={<ConnectedInstallVSphereIPI />}
-        />
-        <Route path="/install/pull-secret" element={<ConnectedInstallPullSecret />} />
-        <Route
-          path="/install/azure/aro-provisioned"
-          element={<ConnectedInstallPullSecretAzure />}
-        />
-        <Route path="/install/oracle-cloud" element={<InstallOracleCloud />} />
+        <Route path="/install/azure/aro-provisioned" element={<InstallPullSecretAzure />} />
         <Route path="/install" element={<Navigate replace to="/create" />} />
         <Route path="/create/osd/aws" element={<Navigate replace to="/create/osd" />} />
         <Route path="/create/osd/gcp" element={<Navigate replace to="/create/osd" />} />

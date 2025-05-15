@@ -216,6 +216,24 @@ export const ArmPreReleaseProps = {
   ],
 };
 
+export const AWSProps = {
+  appPageTitle: 'Install OpenShift 4 | Red Hat OpenShift Cluster Manager | AWS',
+  providerTitle: 'AWS',
+  ipiPageLink: '/install/aws/installer-provisioned',
+  ipiLearnMoreLink: links.INSTALL_AWSIPI_LEARN_MORE,
+  upiPageLink: '/install/aws/user-provisioned',
+  upiLearnMoreLink: links.INSTALL_AWSUPI_GETTING_STARTED,
+  providerSpecificFeatures: {
+    ipi: ['Hosts controlled with AWS Provider'],
+  },
+  name: 'aws',
+  breadCrumbsPaths: [
+    { label: 'Cluster List' },
+    { label: 'Cluster Type', path: '/create' },
+    { label: 'Amazon Web Services' },
+  ],
+};
+
 export const AWSIPIProps = {
   appPageTitle:
     'Install OpenShift 4 | Red Hat OpenShift Cluster Manager | AWS Installer-Provisioned Infrastructure',
@@ -639,6 +657,85 @@ export const IBMZPreReleaseProps = {
   ],
 };
 
+export const PullSecretProps = {
+  appPageTitle: 'Install OpenShift 4 | Pull Secret',
+  providerTitle: 'Install OpenShift Container Platform 4',
+  breadCrumbsPaths: [{ label: 'Downloads', path: '/downloads' }, { label: 'Pull secret' }],
+};
+
+export const VSphereProps = {
+  appPageTitle: 'Install OpenShift 4 | Red Hat OpenShift Cluster Manager | vSphere',
+  providerTitle: 'VMware vSphere',
+  aiPageLink: '/assisted-installer/clusters/~new',
+  aiLearnMoreLink: links.INSTALL_ASSISTED_LEARN_MORE,
+  ipiPageLink: '/install/vsphere/installer-provisioned',
+  ipiLearnMoreLink: links.INSTALL_VSPHEREIPI_GETTING_STARTED,
+  upiPageLink: '/install/vsphere/user-provisioned',
+  upiLearnMoreLink: links.INSTALL_VSPHEREUPI_GETTING_STARTED,
+  agentBasedPageLink: '/install/vsphere/agent-based',
+  agentBasedLearnMoreLink: links.INSTALL_AGENT_LEARN_MORE,
+  providerSpecificFeatures: {
+    abi: ['For connected or air-gapped/restricted networks'],
+    ipi: [
+      'Hosts controlled with vSphere Cloud Provider',
+      'For connected or air-gapped/restricted networks',
+    ],
+    upi: ['For connected or air-gapped/restricted networks'],
+  },
+  name: 'vsphere',
+  breadCrumbsPaths: [
+    { label: 'Cluster List' },
+    { label: 'Cluster Type', path: '/create' },
+    { label: 'VMware vSphere' },
+  ],
+};
+
+export const VSpehereABIProps = {
+  appPageTitle:
+    'Install OpenShift 4 | Red Hat OpenShift Cluster Manager | vSphere Agent-based installer',
+  providerTitle: instructionsMapping.vsphere.abi.title,
+  cloudProviderId: 'vsphere',
+  installationTypeId: 'local-agent-based',
+  isUPI: true,
+  instructionsMapping: instructionsMapping.vsphere.abi,
+  breadCrumbsPaths: [
+    { label: 'Cluster List' },
+    { label: 'Cluster Type', path: '/create' },
+    { label: 'VMware vSphere', path: '/install/vsphere' },
+    { label: 'Local Agent-based' },
+  ],
+};
+
+export const VSphereUPIProps = {
+  appPageTitle:
+    'Install OpenShift 4 | Red Hat OpenShift Cluster Manager | vSphere User-Provisioned Infrastructure',
+  providerTitle: instructionsMapping.vsphere.upi.title,
+  cloudProviderId: 'vsphere',
+  isUPI: true,
+  instructionsMapping: instructionsMapping.vsphere.upi,
+  breadCrumbsPaths: [
+    { label: 'Cluster List' },
+    { label: 'Cluster Type', path: '/create' },
+    { label: 'VMware vSphere', path: '/install/vsphere' },
+    { label: 'User-provisioned infrastructure' },
+  ],
+};
+
+export const VSphereIPIProps = {
+  appPageTitle:
+    'Install OpenShift 4 | Red Hat OpenShift Cluster Manager | vSphere Installer-Provisioned Infrastructure',
+  providerTitle: instructionsMapping.vsphere.ipi.title,
+  cloudProviderId: 'vsphere',
+  customizations: instructionsMapping.vsphere.customizations,
+  instructionsMapping: instructionsMapping.vsphere.ipi,
+  breadCrumbsPaths: [
+    { label: 'Cluster List' },
+    { label: 'Cluster Type', path: '/create' },
+    { label: 'VMware vSphere', path: '/install/vsphere' },
+    { label: 'Installer-provisioned infrastructure' },
+  ],
+};
+
 export const PowerProps = {
   appPageTitle: 'Install OpenShift 4 | Red Hat OpenShift Cluster Manager | IBM Power (ppc64le)',
   providerTitle: 'IBM Power (ppc64le)',
@@ -808,5 +905,30 @@ export const PreReleaseProps = {
     { label: 'Cluster List' },
     { label: 'Cluster Type', path: '/create' },
     { label: 'Pre-Release Builds' },
+  ],
+};
+
+export const OracleCloudProps = {
+  appPageTitle:
+    'Install OpenShift 4 | Red Hat OpenShift Cluster Manager | Oracle Cloud Infrastructure',
+  providerTitle: 'Oracle Cloud Infrastructure',
+  aiPageLink: '/assisted-installer/clusters/~new',
+  aiLearnMoreLink: links.INSTALL_ASSISTED_LEARN_MORE,
+  hideIPI: true,
+  ipiPageLink: '',
+  hideUPI: true,
+  upiPageLink: '',
+  agentBasedPageLink: '/install/platform-agnostic/agent-based',
+  agentBasedLearnMoreLink: links.INSTALL_AGENT_LEARN_MORE,
+  providerSpecificFeatures: {
+    abi: [nonTestedPlatformsLink, 'For air-gapped/restricted networks'],
+    ai: [nonTestedPlatformsLink],
+    upi: [nonTestedPlatformsLink],
+  },
+  name: 'oracle-cloud',
+  breadCrumbsPaths: [
+    { label: 'Cluster List' },
+    { label: 'Cluster Type', path: '/create' },
+    { label: 'Oracle Cloud Infrastructure' },
   ],
 };

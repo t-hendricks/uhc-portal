@@ -1,5 +1,4 @@
 import React from 'react';
-import { useDispatch } from 'react-redux';
 import { Route } from 'react-router-dom';
 
 import { PageSection } from '@patternfly/react-core';
@@ -7,17 +6,18 @@ import { PageSection } from '@patternfly/react-core';
 import { AppPage } from '~/components/App/AppPage';
 import Breadcrumbs from '~/components/common/Breadcrumbs';
 import PageTitle from '~/components/common/PageTitle';
-import { tollboothActions } from '~/redux/actions';
-import { useGlobalState } from '~/redux/hooks';
+import useAuthToken from '~/hooks/useAuthToken';
 
 import { InstructionsChooser } from './instructions/InstructionsChooser';
 import { InstructionsChooserPageTitle } from './instructions/InstructionsChooserPageTitle';
 import InstructionsPreRelease from './instructions/InstructionsPreRelease';
+import InstructionsPullSecret from './instructions/InstructionsPullSecret';
 import OCPInstructions from './instructions/OCPInstructions';
 import {
   InstallComponentProps,
   InstructionChooserProps,
   OCPInstructionProps,
+  PullSecretInstructionsProps,
   ReleaseInstructionsProps,
   Routes,
 } from './models/types';
@@ -80,14 +80,7 @@ export const InstallWithOCPInstructionsWrapper = (props: OCPInstructionProps) =>
     showPreReleaseDocs,
     installationTypeId,
   } = props;
-  const dispatch = useDispatch();
-  React.useEffect(() => {
-    dispatch(tollboothActions.createAuthToken());
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
-  const token = useGlobalState((state) => state.tollbooth.token);
+  const token = useAuthToken();
 
   const breadcrumbs = <Breadcrumbs path={[...breadCrumbsPaths]} />;
 
@@ -111,14 +104,8 @@ export const InstallWithOCPInstructionsWrapper = (props: OCPInstructionProps) =>
 
 export const InstallWithReleaseInstructionsWrapper = (props: ReleaseInstructionsProps) => {
   const { breadCrumbsPaths, appPageTitle, providerTitle, installer } = props;
-  const dispatch = useDispatch();
-  React.useEffect(() => {
-    dispatch(tollboothActions.createAuthToken());
 
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
-  const token = useGlobalState((state) => state.tollbooth.token);
+  const token = useAuthToken();
 
   const breadcrumbs = <Breadcrumbs path={[...breadCrumbsPaths]} />;
 
@@ -127,6 +114,23 @@ export const InstallWithReleaseInstructionsWrapper = (props: ReleaseInstructions
       <PageTitle title={providerTitle} breadcrumbs={breadcrumbs} />
       <PageSection>
         <InstructionsPreRelease token={token} installer={installer} />
+      </PageSection>
+    </AppPage>
+  );
+};
+
+export const InstallPullSecretInstructionsWrapper = (props: PullSecretInstructionsProps) => {
+  const { breadCrumbsPaths, appPageTitle, providerTitle } = props;
+
+  const token = useAuthToken();
+
+  const breadcrumbs = <Breadcrumbs path={[...breadCrumbsPaths]} />;
+
+  return (
+    <AppPage title={appPageTitle}>
+      <PageTitle title={providerTitle} breadcrumbs={breadcrumbs} />
+      <PageSection className="ocp-instructions">
+        <InstructionsPullSecret token={token} />
       </PageSection>
     </AppPage>
   );
@@ -141,6 +145,8 @@ export const InstallComponentWrapper = (props: InstallComponentProps) => {
       return <InstallWithInstructionChooserWrapper {...propsData} />;
     case 'releaseInstructions':
       return <InstallWithReleaseInstructionsWrapper {...propsData} />;
+    case 'pullSecretInstructions':
+      return <InstallPullSecretInstructionsWrapper {...propsData} />;
     default:
       return <InstallWithOCPInstructionsWrapper {...propsData} />;
   }
