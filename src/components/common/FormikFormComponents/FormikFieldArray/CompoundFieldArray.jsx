@@ -70,7 +70,7 @@ const MinusButtonGridItem = ({ index, fields, onClick, minusButtonDisabledMessag
   const isOnlyItem = index === 0 && fields.length === 1;
   const disableReason = minusButtonDisabledMessage || 'To delete the item, add another item first.';
   return (
-    <GridItem className="field-grid-item minus-button" span={1}>
+    <GridItem data-testid="remove-users" className="field-grid-item minus-button" span={1}>
       <ButtonWithTooltip
         disableReason={isOnlyItem && disableReason}
         tooltipProps={{ position: 'right', distance: 0 }}
