@@ -37,6 +37,12 @@ const FEATURED_PRODUCTS_CARDS: FeaturedProductsCardsNode[] = [
       'Streamline your operations and reduce complexity when you run and manage your VMs, containers, and serverless workloads in a single platform.',
     drawerPanelContent: DRAWER_PANEL_CONTENT.OpenshiftVirtualization,
   },
+  {
+    ...PRODUCT_CARD_LOGOS.advancedClusterManagement,
+    description: 'Manage any Kubernetes cluster in your fleet.',
+    labelText: '60-day trial',
+    drawerPanelContent: DRAWER_PANEL_CONTENT.AdvancedClusterManagement,
+  },
 ];
 
 type FeaturedProductsCardsProps = {
