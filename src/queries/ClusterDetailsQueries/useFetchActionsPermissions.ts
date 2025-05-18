@@ -142,8 +142,8 @@ export const useFetchActionsPermissions = (
           mainQueryKey,
           'authorizationService',
           'selfResourceReview',
-          SelfAccessReviewAction.get,
-          SelfAccessReviewResourceType.SubscriptionRoleBinding,
+          SelfAccessReviewAction.update,
+          SelfAccessReviewResourceType.Cluster,
           subscriptionID,
         ],
         queryFn: async () => {
