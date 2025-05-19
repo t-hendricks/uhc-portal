@@ -99,7 +99,7 @@ describe('OCM Overview Page tests (OCP-65189)', { tags: ['smoke'] }, () => {
   });
 
   it('OCM Overview Page - Featured products section', () => {
-    Overview.featuredProductsExpected(3);
+    Overview.featuredProductsExpected(4);
 
     var recommendedOperator = Overview.productsOrOperatorCards(
       'Advanced Cluster Security for Kubernetes',
@@ -123,6 +123,17 @@ describe('OCM Overview Page tests (OCP-65189)', { tags: ['smoke'] }, () => {
     );
     recommendedOperator.click();
     Overview.drawerContentTitle().should('have.text', 'OpenShift Virtualization');
+    Overview.drawerCloseButton();
+
+    recommendedOperator = Overview.productsOrOperatorCards(
+      'Red Hat Advanced Cluster Management for Kubernetes',
+      'Manage any Kubernetes cluster in your fleet',
+    );
+    recommendedOperator.click();
+    Overview.drawerContentTitle().should(
+      'have.text',
+      'Red Hat Advanced Cluster Management for Kubernetes',
+    );
     Overview.drawerCloseButton();
   });
 
