@@ -26,6 +26,7 @@ import {
 import './TreeViewSelect.scss';
 
 export interface TreeViewData extends TreeViewDataItem {
+  name: React.ReactNode | string;
   category?: string;
   descriptionLabel?: string;
   nameLabel?: string;

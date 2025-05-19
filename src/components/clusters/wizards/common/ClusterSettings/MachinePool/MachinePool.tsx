@@ -198,7 +198,6 @@ export const MachinePool = () => {
             product={product}
             isMachinePool={false}
             billingModel={billingModel}
-            inModal={false}
             machine_type={{
               input: {
                 ...getFieldProps(FieldId.MachineType),
