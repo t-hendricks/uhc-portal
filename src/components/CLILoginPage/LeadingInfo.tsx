@@ -5,7 +5,7 @@ import { Text, Title } from '@patternfly/react-core';
 const LeadingInfo = ({ isRosa, SSOLogin }: { isRosa: boolean; SSOLogin: boolean }) => (
   <>
     <Text component="p">
-      {`Red Hat OpenShift ${isRosa ? 'Service on AWS' : 'Cluster Manager'} is a managed service that makes it easy for you to use OpenShift ${isRosa ? 'on AWS' : ''} without needing to install, operate or upgrade your own OpenShift (Kubernetes) cluster.`}
+      {`Red Hat Single Sign-On centralizes and simplifies login for the OpenShift Cluster Manager ${isRosa ? 'ROSA' : ''} CLI, letting you sign in once and securely access the service without maintaining separate credentials.`}
     </Text>
     {!SSOLogin && (
       <>

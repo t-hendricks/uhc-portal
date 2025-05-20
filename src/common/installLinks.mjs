@@ -387,6 +387,9 @@ const links = {
   ROSA_HCP_CLI_URL: `${ROSA_HCP_DOCS_BASE}/rosa-hcp-sts-creating-a-cluster-quickly`,
   ROSA_CREATE_NETWORK: `https://access.redhat.com/articles/7096266`,
   CREATE_VPC_WAYS: `https://docs.aws.amazon.com/rosa/latest/userguide/getting-started-hcp.html#create-vpc-hcp`,
+  LEARN_MORE_SSO:
+    'https://docs.redhat.com/en/documentation/openshift_cluster_manager/1-latest/html-single/managing_clusters/index#con-ocm-with-rhsso_downloading-and-updating-pull-secrets',
+  LEARN_MORE_SSO_ROSA: `${ROSA_DOCS_BASE}/cli_tools/rosa-cli#rosa-login-sso_rosa-getting-started-cli`,
   TRANSFER_CLUSTER_OWNERSHIP:
     'https://docs.redhat.com/en/documentation/openshift_cluster_manager/1-latest/html-single/managing_clusters/index#transferring-cluster-ownership_downloading-and-updating-pull-secrets',
 };

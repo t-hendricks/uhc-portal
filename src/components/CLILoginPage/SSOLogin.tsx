@@ -17,7 +17,6 @@ import links, { channels, tools } from '../../common/installLinks.mjs';
 import DownloadAndOSSelection from '../clusters/install/instructions/components/DownloadAndOSSelection';
 import ExternalLink from '../common/ExternalLink';
 import InstructionCommand from '../common/InstructionCommand';
-import PopoverHint from '../common/PopoverHint';
 import SupportLevelBadge, { DEV_PREVIEW } from '../common/SupportLevelBadge';
 
 import LeadingInfo from './LeadingInfo';
@@ -43,7 +42,7 @@ const SSOLogin = ({
           <TextContent>
             <LeadingInfo isRosa={isRosa} SSOLogin />
           </TextContent>
-          <TextContent className="pf-v5-u-mt-lg">
+          <TextContent className="pf-v6-u-mt-lg">
             <List component="ol">
               <ListItem>
                 Download and install the <code>{commandName}</code> command-line tool:{' '}
@@ -53,22 +52,21 @@ const SSOLogin = ({
                 <Text component="p" />
               </ListItem>
               <ListItem>
-                {`Make sure your ${commandTool.toUpperCase()} CLI version is ${commandTool === 'ocm' ? '0.1.73' : '1.2.37'} or higher `}
-                <PopoverHint
-                  hint={
-                    <>
-                      {`To check your ${commandTool.toUpperCase()} CLI version, run this command: `}
-                      <code>{`${commandTool} version`}</code>
-                    </>
-                  }
-                />
-                . To authenticate, run this command:
+                To authenticate, run one of these commands:
                 <Text component="p" />
+                <Text component="p">Option 1 (for browsers)</Text>
                 <InstructionCommand
                   className="ocm-c-api-token-limit-width"
-                  outerClassName="pf-v5-u-mt-md"
+                  outerClassName="pf-v6-u-mt-md"
                 >
                   {`${commandName} login --use-auth-code`}
+                </InstructionCommand>
+                <Text component="p">Option 2 (for browserless environment)</Text>
+                <InstructionCommand
+                  className="ocm-c-api-token-limit-width"
+                  outerClassName="pf-v6-u-mt-md"
+                >
+                  {`${commandName} login --use-device-code`}
                 </InstructionCommand>
               </ListItem>
               <ListItem>

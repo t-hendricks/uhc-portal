@@ -38,8 +38,6 @@ import {
 import useChrome from '@redhat-cloud-services/frontend-components/useChrome';
 
 import { Link } from '~/common/routing';
-import { CLI_SSO_AUTHORIZATION } from '~/queries/featureGates/featureConstants';
-import { useFeatureGate } from '~/queries/featureGates/useFetchFeatureGate';
 import { setOfflineToken } from '~/redux/actions/rosaActions';
 import { useGlobalState } from '~/redux/hooks/useGlobalState';
 import { getRefreshToken, isRestrictedEnv } from '~/restrictedEnv';
@@ -74,6 +72,7 @@ type Props = {
   showPath?: To;
   SSOLogin: boolean;
   isRosa: boolean;
+  shouldShowTokens: boolean;
 };
 
 const Instructions = (props: Props) => {
@@ -86,11 +85,11 @@ const Instructions = (props: Props) => {
     blockedByTerms,
     SSOLogin,
     isRosa,
+    shouldShowTokens,
   } = props;
   const offlineToken = useGlobalState((state) => state.rosaReducer.offlineToken);
   const dispatch = useDispatch();
   const chrome = useChrome() as Chrome;
-  const showDeprecationMessage = useFeatureGate(CLI_SSO_AUTHORIZATION) && !SSOLogin;
   const restrictedEnv = isRestrictedEnv();
   const [token, setToken] = React.useState<string>('');
 
@@ -102,7 +101,7 @@ const Instructions = (props: Props) => {
         setToken(offlineToken as string);
       }
     }
-  }, [chrome, restrictedEnv, offlineToken, SSOLogin]);
+  }, [chrome, restrictedEnv, offlineToken, SSOLogin, shouldShowTokens]);
   React.useEffect(() => {
     if (!SSOLogin) {
       // After requesting token, we might need to reload page doing stronger auth;
@@ -123,19 +122,19 @@ const Instructions = (props: Props) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  if (SSOLogin) {
+  if (!shouldShowTokens) {
     return (
       <SSOLoginInstructions isRosa={isRosa} commandName={commandName} commandTool={commandTool} />
     );
   }
 
-  const ocmLoginCommand = `ocm login --token="${token}" ${restrictedEnv ? '--url https://api.***REMOVED***.com --token-url https://sso.***REMOVED***.com/realms/redhat-external/protocol/openid-connect/token --client-id console-dot' : ''}`;
+  const loginCommand = `${commandName} login --token="${token}" ${restrictedEnv ? '--url https://api.***REMOVED***.com --token-url https://sso.***REMOVED***.com/realms/redhat-external/protocol/openid-connect/token --client-id console-dot' : ''}`;
 
   return (
     <Stack hasGutter>
       <StackItem>
         <Card className="ocm-c-api-token__card">
-          {!restrictedEnv && showDeprecationMessage ? (
+          {!restrictedEnv ? (
             <CardTitle>
               <OfflineTokensAlert />
             </CardTitle>
@@ -170,7 +169,7 @@ const Instructions = (props: Props) => {
                       ) : (
                         <TokenBox
                           token={token}
-                          command={ocmLoginCommand}
+                          command={loginCommand}
                           showCommandOnError
                           showInstructionsOnError={false}
                         />

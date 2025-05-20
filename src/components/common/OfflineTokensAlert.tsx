@@ -9,12 +9,13 @@ const OfflineTokensAlert = () => (
     className="pf-v5-u-mt-md"
     variant="warning"
     isInline
-    title="Logging in with offline tokens is deprecated"
+    title="Logging in with offline tokens is being deprecated"
   >
-    Logging in using offline tokens has been deprecated and is no longer getting maintained or
-    enhanced. You can now log in using your Red Hat SSO credentials. Learn more about{' '}
+    Logging in using tokens is being deprecated. You can now long in using your Red Hat SSO
+    credentials.
     <ExternalLink href="https://access.redhat.com/articles/7074172" noIcon>
-      how to log in using your Red Hat SSO credentials and why we’re deprecating tokens.
+      Learn more about how to log in using your Red Hat SSO credentials and why we’re deprecating
+      tokens.
     </ExternalLink>
   </Alert>
 );

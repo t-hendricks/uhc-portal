@@ -42,8 +42,8 @@ describe('<ROSALoginCommand />', () => {
       defaultToOfflineTokens: true,
     };
     render(<ROSALoginCommand {...props} />);
-    const CLICommandBox = screen.getByRole('textbox', { name: 'Copyable ROSA login command' });
-    expect(CLICommandBox).toHaveValue('rosa login --token="fake-token"');
+    const CLICommandBox = screen.getByRole('textbox', { name: 'Copyable input' });
+    expect(CLICommandBox).toHaveValue('rosa login --use-auth-code');
   });
 
   it('defaults to offline tokens if failed to fetch org data', () => {
@@ -63,8 +63,8 @@ describe('<ROSALoginCommand />', () => {
     };
     render(<ROSALoginCommand {...props} />);
 
-    const CLICommandBox = screen.getByRole('textbox', { name: 'Copyable ROSA login command' });
-    expect(CLICommandBox).toHaveValue('rosa login --token="fake-token"');
+    const CLICommandBox = screen.getByRole('textbox', { name: 'Copyable input' });
+    expect(CLICommandBox).toHaveValue('rosa login --use-auth-code');
   });
 
   describe('in Restricted env', () => {
@@ -87,8 +87,8 @@ describe('<ROSALoginCommand />', () => {
       isRestrictedEnv.mockReturnValue(false);
       render(<ROSALoginCommand {...props} />);
 
-      const CLICommandBox = screen.getByRole('textbox', { name: 'Copyable ROSA login command' });
-      expect(CLICommandBox).toHaveValue('rosa login --token="fake-token"');
+      const CLICommandBox = screen.getByRole('textbox', { name: 'Copyable input' });
+      expect(CLICommandBox).toHaveValue('rosa login --use-auth-code');
     });
 
     it('login command includes govcloud switch in restricted environment', () => {
