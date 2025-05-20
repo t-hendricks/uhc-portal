@@ -8,6 +8,8 @@ import { Button, useWizardContext, WizardFooterWrapper } from '@patternfly/react
 import { scrollToFirstField } from '~/common/helpers';
 import { getScrollErrorIds } from '~/components/clusters/wizards/form/utils';
 import { useFormState } from '~/components/clusters/wizards/hooks';
+import CreateManagedClusterTooltip from '~/components/common/CreateManagedClusterTooltip';
+import { useCanCreateManagedCluster } from '~/queries/ClusterDetailsQueries/useFetchActionsPermissions';
 
 import { isUserRoleForSelectedAWSAccount } from './AccountsRolesScreen/AccountsRolesScreen';
 import { FieldId } from './constants';
@@ -38,6 +40,8 @@ const CreateRosaWizardFooter = ({
   // used to determine the actions' disabled state.
   // (as a more exclusive rule than isValidating, which relying upon would block progress to the next step)
   const [isNextDeferred, setIsNextDeferred] = useState(false);
+
+  const { canCreateManagedCluster } = useCanCreateManagedCluster();
 
   useEffect(() => {
     // callback to pass updated context back up
@@ -112,27 +116,41 @@ const CreateRosaWizardFooter = ({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isValidating, isNextDeferred]);
 
+  const primaryBtnCommonProps = {
+    variant: 'primary',
+    className: canCreateManagedCluster ? '' : 'pf-v5-u-mr-md',
+    'data-testid': 'wizard-next-button',
+  };
+
+  const primaryBtn =
+    activeStep.id === stepId.REVIEW_AND_CREATE ? (
+      <Button
+        {...primaryBtnCommonProps}
+        onClick={() => submitForm()}
+        isDisabled={!canCreateManagedCluster}
+      >
+        Create cluster
+      </Button>
+    ) : (
+      <Button
+        {...primaryBtnCommonProps}
+        onClick={onValidateNext}
+        isLoading={hasLoadingState(activeStep.id) && isButtonLoading}
+        isDisabled={
+          !canCreateManagedCluster || (hasLoadingState(activeStep.id) && isButtonDisabled)
+        }
+      >
+        Next
+      </Button>
+    );
+
   return isSubmitting ? null : (
     <WizardFooterWrapper>
       <>
-        {activeStep.id === stepId.REVIEW_AND_CREATE ? (
-          <Button
-            variant="primary"
-            data-testid="create-cluster-button"
-            onClick={() => submitForm()}
-          >
-            Create cluster
-          </Button>
+        {canCreateManagedCluster ? (
+          primaryBtn
         ) : (
-          <Button
-            variant="primary"
-            data-testid="wizard-next-button"
-            onClick={onValidateNext}
-            isLoading={hasLoadingState(activeStep.id) && isButtonLoading}
-            isDisabled={hasLoadingState(activeStep.id) && isButtonDisabled}
-          >
-            Next
-          </Button>
+          <CreateManagedClusterTooltip wrap>{primaryBtn}</CreateManagedClusterTooltip>
         )}
         <Button
           variant="secondary"

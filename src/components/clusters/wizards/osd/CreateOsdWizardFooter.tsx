@@ -1,13 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import { setNestedObjectValues } from 'formik';
 
-import { Button, useWizardContext, WizardFooterWrapper } from '@patternfly/react-core';
+import { Button, ButtonProps, useWizardContext, WizardFooterWrapper } from '@patternfly/react-core';
 import { WizardContextProps } from '@patternfly/react-core/dist/esm/components/Wizard/WizardContext';
 
 import { scrollToFirstField } from '~/common/helpers';
 import { getScrollErrorIds } from '~/components/clusters/wizards/form/utils';
 import { useFormState } from '~/components/clusters/wizards/hooks';
 import { StepId } from '~/components/clusters/wizards/osd/constants';
+import CreateManagedClusterTooltip from '~/components/common/CreateManagedClusterTooltip';
+import { useCanCreateManagedCluster } from '~/queries/ClusterDetailsQueries/useFetchActionsPermissions';
 import { useGlobalState } from '~/redux/hooks/useGlobalState';
 
 interface CreateOsdWizardFooterProps {
@@ -30,6 +32,8 @@ export const CreateOsdWizardFooter = ({
   // (as a more exclusive rule than isValidating, which relying upon would block progress to the next step)
   const [isNextDeferred, setIsNextDeferred] = useState<boolean>(false);
 
+  const { canCreateManagedCluster } = useCanCreateManagedCluster();
+
   useEffect(() => {
     // callback to pass updated context back up
     onWizardContextChange({
@@ -43,7 +47,7 @@ export const CreateOsdWizardFooter = ({
   const isSubmitting = createClusterResponse.pending;
 
   const isButtonLoading = isValidating || isLoading;
-  const isButtonDisabled = isNextDeferred || isLoading;
+  const isButtonDisabled = !canCreateManagedCluster || isNextDeferred || isLoading;
 
   const onValidateNext = async () => {
     // defer execution until any ongoing validation is done
@@ -76,31 +80,40 @@ export const CreateOsdWizardFooter = ({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isValidating, isNextDeferred]);
 
+  const primaryBtnCommonProps: Pick<
+    ButtonProps & { 'data-testid': string },
+    'variant' | 'data-testid' | 'isLoading' | 'isDisabled' | 'className'
+  > = {
+    variant: 'primary',
+    isLoading: isButtonLoading,
+    isDisabled: isButtonDisabled,
+    className: canCreateManagedCluster ? '' : 'pf-v5-u-mr-md',
+    'data-testid': 'wizard-next-button',
+  };
+
+  const primaryBtn =
+    activeStep.id === StepId.Review ? (
+      <Button
+        {...primaryBtnCommonProps}
+        onClick={() => {
+          submitForm();
+          track();
+        }}
+      >
+        Create cluster
+      </Button>
+    ) : (
+      <Button {...primaryBtnCommonProps} onClick={onValidateNext}>
+        Next
+      </Button>
+    );
+
   return isSubmitting ? null : (
     <WizardFooterWrapper>
-      {activeStep.id === StepId.Review ? (
-        <Button
-          variant="primary"
-          data-testid="wizard-create-cluster-button"
-          onClick={() => {
-            submitForm();
-            track();
-          }}
-          isLoading={isButtonLoading}
-          isDisabled={isButtonDisabled}
-        >
-          Create cluster
-        </Button>
+      {canCreateManagedCluster ? (
+        primaryBtn
       ) : (
-        <Button
-          variant="primary"
-          data-testid="wizard-next-button"
-          onClick={onValidateNext}
-          isLoading={isButtonLoading}
-          isDisabled={isButtonDisabled}
-        >
-          Next
-        </Button>
+        <CreateManagedClusterTooltip wrap>{primaryBtn}</CreateManagedClusterTooltip>
       )}
       <Button
         variant="secondary"
