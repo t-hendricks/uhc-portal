@@ -60,7 +60,7 @@ const HtpasswdDetails = ({
   const [perPage, setPerPage] = React.useState(20);
   const [searchValue, setSearchValue] = React.useState('');
 
-  const [filteredUsers, setFilteredUsers] = React.useState(users);
+  const [filteredUsers, setFilteredUsers] = React.useState<HtPasswdUser[]>(users);
 
   const refreshHtpasswdUsers = () => {
     if (!isLoading && !isError) {
@@ -82,7 +82,7 @@ const HtpasswdDetails = ({
     newPage: number,
   ) => {
     setPerPage(newPerPage);
-    setPage(newPage);
+    setPage(newPage < 1 ? 1 : newPage);
   };
 
   // Sorting
@@ -118,19 +118,23 @@ const HtpasswdDetails = ({
 
   // Filtering
   React.useEffect(() => {
-    let newFilteredUsers = [...users];
-
-    if (searchValue !== '') {
-      newFilteredUsers = newFilteredUsers.filter((user) => user.username?.includes(searchValue));
+    if (users.length > 0) {
+      if (searchValue !== '') {
+        setFilteredUsers(
+          users.filter((user) => user.username?.includes(searchValue)).sort(sortUsers),
+        );
+      } else {
+        setFilteredUsers([...users.sort(sortUsers)]);
+      }
 
       // if current page no longer exists - then go to the last available page
-
-      if (newFilteredUsers.length < (page - 1) * perPage) {
-        setPage(Math.floor(newFilteredUsers.length / perPage) || 1);
+      if (filteredUsers.length <= (page - 1) * perPage) {
+        setPage(Math.floor(filteredUsers.length / perPage) || 1);
       }
+    } else if (filteredUsers.length !== 0) {
+      setFilteredUsers([]);
     }
-    setFilteredUsers(newFilteredUsers.sort(sortUsers));
-  }, [page, perPage, searchValue, sortUsers, users]);
+  }, [filteredUsers.length, page, perPage, searchValue, sortUsers, users, activeSortDirection]);
 
   const headers = [{ name: 'Username', sortable: true }];
 

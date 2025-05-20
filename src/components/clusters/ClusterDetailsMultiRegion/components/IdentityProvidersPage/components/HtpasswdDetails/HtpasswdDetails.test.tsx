@@ -446,6 +446,43 @@ describe('<HtpasswdDetails />', () => {
       });
       expect(pageTextBox).toHaveValue(1);
     });
+
+    it('it goes to last existing page when current page no longer exists after filtering so results exactly fits a page', async () => {
+      // Create 21 users, go to second page
+      // Filter so only 20 user are returned
+      // Verify the app is only showing 1 page
+      const users = [];
+      while (users.length < 20) {
+        users.push({ username: `user-1-${users.length}`, id: `user-1-${users.length}` });
+      }
+
+      expect(users).toHaveLength(20);
+
+      users.push({ username: `odd-user}`, id: `odd-user` });
+
+      useFetchHtpasswdUsersMocked.mockReturnValue({
+        isLoading: false,
+        users,
+        isError: false,
+        error: null,
+      });
+
+      const { user } = render(<HtpasswdDetails {...defaultProps} />);
+
+      await user.click(screen.getAllByRole('button', { name: 'Go to next page' })[0]);
+
+      let pageTextBox = screen.getByRole('spinbutton', {
+        name: 'Current page',
+      });
+      expect(pageTextBox).toHaveValue(2);
+
+      await user.type(screen.getByLabelText('Filter by username'), 'user-1');
+
+      pageTextBox = screen.getByRole('spinbutton', {
+        name: 'Current page',
+      });
+      expect(pageTextBox).toHaveValue(1);
+    });
   });
 
   describe('add user', () => {
