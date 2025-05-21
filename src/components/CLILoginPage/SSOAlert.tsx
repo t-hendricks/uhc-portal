@@ -14,7 +14,7 @@ type SSOAlertProps = {
 
 export const SSOAlert = ({ isRosa, setShouldShowTokens }: SSOAlertProps) => (
   <Alert
-    className="pf-v6-u-mt-md"
+    className="pf-v6-u-m-md"
     variant="warning"
     isInline
     title="Still need access to API tokens to authenticate?"

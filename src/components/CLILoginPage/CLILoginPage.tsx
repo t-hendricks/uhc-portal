@@ -21,7 +21,6 @@ import Breadcrumbs from '../common/Breadcrumbs';
 
 import InstructionsOCM from './Instructions';
 import InstructionsROSA from './InstructionsROSA';
-import { SSOAlert } from './SSOAlert';
 import useOrganization from './useOrganization';
 
 const ErrorOrLoadingWrapper = ({ children }: { children: React.ReactElement }) => (
@@ -86,8 +85,8 @@ const CLILoginPage = ({ showToken = false, showPath, isRosa = false }: CLILoginP
   }
 
   const pageTitle = isRosa
-    ? `Red Hat OpenShift Service on AWS (ROSA) ${restrictTokens || !shouldShowTokens ? 'SSO login' : 'API Token'}`
-    : `OpenShift Cluster Manager ${restrictTokens || !shouldShowTokens ? 'SSO login' : 'API Token'}`;
+    ? `Red Hat OpenShift Service on AWS (ROSA) ${!restrictedEnv && (restrictTokens || !shouldShowTokens) ? 'SSO login' : 'API Token'}`
+    : `OpenShift Cluster Manager ${!restrictedEnv && (restrictTokens || !shouldShowTokens) ? 'SSO login' : 'API Token'}`;
   const Instructions = isRosa ? InstructionsROSA : InstructionsOCM;
 
   return (
@@ -104,10 +103,8 @@ const CLILoginPage = ({ showToken = false, showPath, isRosa = false }: CLILoginP
         }
       />
       <PageSection>
-        {!restrictTokens && !shouldShowTokens ? (
-          <SSOAlert isRosa={isRosa} setShouldShowTokens={setShouldShowTokens} />
-        ) : null}
         <Instructions
+          setShouldShowTokens={setShouldShowTokens}
           shouldShowTokens={shouldShowTokens}
           show={showToken}
           showPath={showPath}

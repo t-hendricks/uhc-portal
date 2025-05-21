@@ -47,6 +47,8 @@ describe('<Tokens />', () => {
     },
   });
 
+  const setShouldShowTokens = jest.fn();
+
   it('is accessible with button', async () => {
     const { container } = render(
       <Tokens
@@ -55,6 +57,7 @@ describe('<Tokens />', () => {
         SSOLogin={false}
         showPath="/token/show"
         shouldShowTokens
+        setShouldShowTokens={setShouldShowTokens}
       />,
     );
 
@@ -65,7 +68,14 @@ describe('<Tokens />', () => {
 
   it('is accessible with token', async () => {
     const { container } = render(
-      <Tokens show showPath="/token/show" isRosa={false} SSOLogin={false} shouldShowTokens />,
+      <Tokens
+        show
+        showPath="/token/show"
+        isRosa={false}
+        SSOLogin={false}
+        shouldShowTokens
+        setShouldShowTokens={setShouldShowTokens}
+      />,
     );
 
     expect(await screen.findByRole('link', { name: 'Download ocm CLI' })).toBeInTheDocument();
@@ -73,7 +83,15 @@ describe('<Tokens />', () => {
   });
 
   it('Renders loading screen', async () => {
-    const { container } = render(<Tokens show isRosa={false} SSOLogin={false} shouldShowTokens />);
+    const { container } = render(
+      <Tokens
+        show
+        isRosa={false}
+        SSOLogin={false}
+        shouldShowTokens
+        setShouldShowTokens={setShouldShowTokens}
+      />,
+    );
 
     expect(
       await screen.findByText('Copy and paste the authentication command in your terminal:'),
@@ -84,7 +102,15 @@ describe('<Tokens />', () => {
   it('Calls getOfflineToken', async () => {
     expect(getOfflineTokenMock).not.toHaveBeenCalled();
 
-    render(<Tokens show isRosa={false} SSOLogin={false} shouldShowTokens />);
+    render(
+      <Tokens
+        show
+        isRosa={false}
+        SSOLogin={false}
+        shouldShowTokens
+        setShouldShowTokens={setShouldShowTokens}
+      />,
+    );
     expect(getOfflineTokenMock).toHaveBeenCalled();
     expect(await screen.findByRole('link', { name: 'Download ocm CLI' })).toBeInTheDocument();
   });
@@ -95,10 +121,19 @@ describe('<Tokens />', () => {
       isRestrictedEnv.mockReturnValue(false);
     });
 
+    const setShouldShowTokens = jest.fn();
+
     it('Renders screen with refresh token', async () => {
       isRestrictedEnv.mockReturnValue(true);
       render(
-        <Tokens show isRosa={false} SSOLogin={false} showPath="myshowpath" shouldShowTokens />,
+        <Tokens
+          show
+          isRosa={false}
+          SSOLogin={false}
+          showPath="myshowpath"
+          shouldShowTokens
+          setShouldShowTokens={setShouldShowTokens}
+        />,
       );
 
       expect(await screen.findByText('Your API token')).toBeInTheDocument();

@@ -73,6 +73,7 @@ type Props = {
   SSOLogin: boolean;
   isRosa: boolean;
   shouldShowTokens: boolean;
+  setShouldShowTokens: (v: boolean) => void;
 };
 
 const Instructions = (props: Props) => {
@@ -86,6 +87,7 @@ const Instructions = (props: Props) => {
     SSOLogin,
     isRosa,
     shouldShowTokens,
+    setShouldShowTokens,
   } = props;
   const offlineToken = useGlobalState((state) => state.rosaReducer.offlineToken);
   const dispatch = useDispatch();
@@ -122,9 +124,15 @@ const Instructions = (props: Props) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  if (!shouldShowTokens) {
+  if (!restrictedEnv && !shouldShowTokens) {
     return (
-      <SSOLoginInstructions isRosa={isRosa} commandName={commandName} commandTool={commandTool} />
+      <SSOLoginInstructions
+        isRosa={isRosa}
+        commandName={commandName}
+        commandTool={commandTool}
+        SSOLogin={SSOLogin}
+        setShouldShowTokens={setShouldShowTokens}
+      />
     );
   }
 
@@ -144,6 +152,7 @@ const Instructions = (props: Props) => {
               {`Connect with ${restrictedEnv ? 'refresh' : 'offline'} tokens`}
             </Title>
           </CardTitle>
+
           <CardBody className="ocm-c-api-token__card--body">
             <TextContent>
               <LeadingInfo isRosa={isRosa} SSOLogin={false} />

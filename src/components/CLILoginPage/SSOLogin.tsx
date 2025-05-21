@@ -20,6 +20,7 @@ import InstructionCommand from '../common/InstructionCommand';
 import SupportLevelBadge, { DEV_PREVIEW } from '../common/SupportLevelBadge';
 
 import LeadingInfo from './LeadingInfo';
+import { SSOAlert } from './SSOAlert';
 
 import './Instructions.scss';
 
@@ -27,14 +28,19 @@ const SSOLogin = ({
   isRosa,
   commandName,
   commandTool,
+  SSOLogin,
+  setShouldShowTokens,
 }: {
   isRosa: boolean;
   commandName: string;
   commandTool: string;
+  SSOLogin: boolean;
+  setShouldShowTokens: (v: boolean) => void;
 }) => (
   <Stack hasGutter>
     <StackItem>
       <Card className="ocm-c-api-token__card">
+        {!SSOLogin ? <SSOAlert isRosa={isRosa} setShouldShowTokens={setShouldShowTokens} /> : null}
         <CardTitle>
           <Title headingLevel="h2">SSO Login</Title>
         </CardTitle>
