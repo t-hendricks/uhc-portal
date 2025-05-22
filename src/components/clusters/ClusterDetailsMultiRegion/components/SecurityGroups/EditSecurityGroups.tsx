@@ -51,18 +51,8 @@ const EditSecurityGroups = ({
   const [isOpen, setIsOpen] = React.useState<boolean>(false);
 
   const vpcSecurityGroups = selectedVPC.aws_security_groups || [];
-  const selectedGroupsBelongToAnotherVpc =
-    !isReadOnly && selectedGroupIds.some((sgId) => vpcSecurityGroups.every((sg) => sg.id !== sgId));
   const selectedOptions = vpcSecurityGroups.filter((sg) => selectedGroupIds.includes(sg.id || ''));
   selectedOptions.sort(securityGroupsSort);
-
-  React.useEffect(() => {
-    // When the VPC changes while in edit mode,
-    // the previously selected security groups become invalid and should be cleared
-    if (selectedGroupsBelongToAnotherVpc) {
-      onChange([]);
-    }
-  }, [onChange, selectedGroupsBelongToAnotherVpc]);
 
   if (isReadOnly) {
     // Shows read-only chips, or an empty message if no SGs are selected

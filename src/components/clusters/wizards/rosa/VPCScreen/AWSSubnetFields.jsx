@@ -129,6 +129,10 @@ const AWSSubnetFields = ({
   privateLinkSelected,
 }) => {
   const { setFieldValue, getFieldProps, getFieldMeta } = useFormState();
+  const controlPlaneFieldName = `${FieldId.SecurityGroups}.controlPlane`;
+  const infraFieldName = `${FieldId.SecurityGroups}.infra`;
+  const workerFieldName = `${FieldId.SecurityGroups}.worker`;
+
   return (
     <>
       <Field
@@ -141,7 +145,12 @@ const AWSSubnetFields = ({
         usePrivateLink={privateLinkSelected}
         input={{
           ...getFieldProps(FieldId.SelectedVpc),
-          onChange: (value) => setFieldValue(FieldId.SelectedVpc, value),
+          onChange: (newVpcValue) => {
+            setFieldValue(FieldId.SelectedVpc, newVpcValue);
+            setFieldValue(controlPlaneFieldName, []);
+            setFieldValue(infraFieldName, []);
+            setFieldValue(workerFieldName, []);
+          },
         }}
         meta={getFieldMeta(FieldId.SelectedVpc)}
       />
