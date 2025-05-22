@@ -421,12 +421,20 @@ class CreateRosaCluster extends Page {
   }
 
   selectInstallerRole(roleName) {
-    cy.get('button').contains(new RegExp(`Installer-Role$`)).click();
-    cy.get('div[id="installer_role_arn"]')
-      .find('button')
-      .contains(roleName)
-      .scrollIntoView()
-      .click({ force: true });
+    cy.get('button')
+      .contains(new RegExp(`Installer-Role$`))
+      .then(($btn) => {
+        if ($btn.text().includes(roleName)) {
+          cy.log(`Installer ARN ${roleName} already selected from the list.`);
+        } else {
+          $btn.click();
+          cy.get('div[id="installer_role_arn"]')
+            .find('button')
+            .contains(roleName)
+            .scrollIntoView()
+            .click({ force: true });
+        }
+      });
   }
 
   selectVPC(vpcName) {
