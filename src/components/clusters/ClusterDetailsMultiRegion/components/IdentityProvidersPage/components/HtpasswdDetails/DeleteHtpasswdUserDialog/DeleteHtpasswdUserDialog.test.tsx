@@ -24,6 +24,7 @@ const mockedUseGlobalState = jest.spyOn(useGlobalState, 'useGlobalState');
 
 describe('<DeleteHtpasswdUserDialog />', () => {
   const refreshHtpasswdUsers = jest.fn();
+  const onSuccess = jest.fn();
   const mutate = jest.fn();
   const reset = jest.fn();
   const useDispatchMock = jest.spyOn(reactRedux, 'useDispatch');
@@ -31,6 +32,7 @@ describe('<DeleteHtpasswdUserDialog />', () => {
   useDispatchMock.mockReturnValue(mockedDispatch);
 
   const defaultProps = {
+    onSuccess,
     refreshHtpasswdUsers,
   };
 
@@ -78,8 +80,7 @@ describe('<DeleteHtpasswdUserDialog />', () => {
     await checkAccessibility(container);
   });
 
-  // skipping as a mocking issue is occuring
-  it.skip('does not call onClose prop when cancelled (using cancel button)', async () => {
+  it('does not call onClose prop when cancelled (using cancel button)', async () => {
     // @ts-ignore
     mockedUseDeleteHtpasswdUser.mockReturnValue(defaultUseDeleteHtpasswdUserResponse);
     mockedUseGlobalState.mockReturnValueOnce(true);

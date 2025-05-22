@@ -24,6 +24,7 @@ import { useFetchHtpasswdUsers } from '~/queries/ClusterDetailsQueries/AccessCon
 import { HtPasswdUser } from '~/types/clusters_mgmt.v1';
 
 import AddUserModal from './AddUserModal';
+import BulkDeleteUserModal from './BulkDeleteUserModal';
 import DeleteHtpasswdUserDialog from './DeleteHtpasswdUserDialog';
 import EditUserModal from './EditUserModal';
 import EmptyState from './EmptyState';
@@ -61,6 +62,7 @@ const HtpasswdDetails = ({
   const [searchValue, setSearchValue] = React.useState('');
 
   const [filteredUsers, setFilteredUsers] = React.useState<HtPasswdUser[]>(users);
+  const [userToBeDeletedId, setUserToBeDeletedId] = React.useState<string | undefined>('');
 
   const refreshHtpasswdUsers = () => {
     if (!isLoading && !isError) {
@@ -136,11 +138,49 @@ const HtpasswdDetails = ({
     }
   }, [filteredUsers.length, page, perPage, searchValue, sortUsers, users, activeSortDirection]);
 
+  // Selecting
+  const selectableUsers = filteredUsers;
+
+  const [selectedUsers, setSelectedUsers] = React.useState<HtPasswdUser[]>([]);
+  const selectableUserIds = selectableUsers.map((user) => user.id);
+  const selectedUserIds = selectedUsers.map((user) => user.id);
+
+  const setUserSelected = (user: HtPasswdUser, isSelecting = true) =>
+    setSelectedUsers((prevSelected: HtPasswdUser[]) => {
+      const otherSelectedUsers = prevSelected.filter((u) => u.id !== user.id);
+      return isSelecting ? [...otherSelectedUsers, user] : otherSelectedUsers;
+    });
+
+  const selectAllUsers = (isSelecting = true) =>
+    setSelectedUsers(isSelecting ? selectableUsers.map((user: HtPasswdUser) => user) : []);
+
+  const areAllUsersSelected = selectedUserIds.length === selectableUserIds.length;
+  const isUserSelected = (user: HtPasswdUser) => selectedUserIds.includes(user.id);
+
+  const onSelectUser = (user: HtPasswdUser, isSelecting: boolean) => {
+    setUserSelected(user, isSelecting);
+  };
+
+  const startIndex = (page - 1) * perPage;
+  const endIndex = page * perPage;
+
+  const currentPageUsers = filteredUsers.slice(startIndex, endIndex);
+  const deleteableUsers = currentPageUsers.filter((user) => selectedUserIds.includes(user.id));
+
   const headers = [{ name: 'Username', sortable: true }];
 
   const headerRow = (
     <Thead>
       <Tr>
+        {idpActions?.update && filteredUsers.length > 0 ? (
+          <Th
+            select={{
+              onSelect: (_event, isSelecting) => selectAllUsers(isSelecting),
+              isSelected: areAllUsersSelected,
+            }}
+            aria-label="Row select"
+          />
+        ) : null}
         {headers.map((header, index) => (
           <Th key={header.name} sort={header.sortable ? getSortParams(index) : undefined}>
             {header.name}
@@ -151,7 +191,7 @@ const HtpasswdDetails = ({
     </Thead>
   );
 
-  const userRow = (user: HtPasswdUser) => {
+  const userRow = (user: HtPasswdUser, rowIndex: any) => {
     const actions = [
       {
         title: 'Change password',
@@ -163,7 +203,7 @@ const HtpasswdDetails = ({
         title: 'Delete',
         onClick: () => {
           dispatch(
-            modalActions.openModal('delete-htpasswd-user', {
+            modalActions.openModal(modals.DELETE_HTPASSWD_USER, {
               clusterId,
               idpId,
               idpName,
@@ -172,11 +212,21 @@ const HtpasswdDetails = ({
               region,
             }),
           );
+          setUserToBeDeletedId(user.id);
         },
       },
     ];
     return (
       <Tr key={user.id}>
+        {idpActions?.update && filteredUsers.length > 0 ? (
+          <Td
+            select={{
+              rowIndex,
+              onSelect: (_event, isSelecting) => onSelectUser(user, isSelecting),
+              isSelected: isUserSelected(user),
+            }}
+          />
+        ) : null}
         <Td className="pf-v6-u-text-break-word">{user.username}</Td>
         <Td isActionCell>
           {actions && idpActions?.update && !isSingleUserHtpasswd ? (
@@ -213,9 +263,6 @@ const HtpasswdDetails = ({
     );
   }
 
-  const startIndex = (page - 1) * perPage;
-  const endIndex = page * perPage;
-
   const paginationProps = {
     itemCount: filteredUsers.length,
     perPage,
@@ -225,82 +272,124 @@ const HtpasswdDetails = ({
   };
 
   return (
-    <>
-      <Card>
-        <CardBody>
-          <Toolbar>
-            <ToolbarContent>
-              <ToolbarItem>
-                <SearchInput
-                  placeholder="Filter by username"
-                  value={searchValue}
-                  onChange={(_event, value) => setSearchValue(value)}
-                  onClear={() => setSearchValue('')}
-                  aria-label="Filter by username"
-                />
-              </ToolbarItem>
-              {idpActions?.update && !isSingleUserHtpasswd ? (
+    <Card>
+      <CardBody>
+        <Toolbar>
+          <ToolbarContent>
+            <ToolbarItem>
+              <SearchInput
+                placeholder="Filter by username"
+                value={searchValue}
+                onChange={(_event, value) => setSearchValue(value)}
+                onClear={() => setSearchValue('')}
+                aria-label="Filter by username"
+              />
+            </ToolbarItem>
+            {idpActions?.update && !isSingleUserHtpasswd ? (
+              <>
                 <ToolbarItem>
                   <Button
                     variant={ButtonVariant.secondary}
                     onClick={() => {
                       dispatch(
-                        openModal(modals.ADD_HTPASSWD_USER, { idpName, clusterId, idpId, region }),
+                        openModal(modals.BULK_DELETE_HTPASSWD_USER, {
+                          idpName,
+                          clusterId,
+                          idpId,
+                          region,
+                          selectedUsers: deleteableUsers,
+                        }),
+                      );
+                    }}
+                    isDisabled={deleteableUsers?.length === 0}
+                  >
+                    Delete
+                  </Button>
+                </ToolbarItem>
+                <ToolbarItem>
+                  <Button
+                    variant={ButtonVariant.secondary}
+                    onClick={() => {
+                      dispatch(
+                        openModal(modals.ADD_HTPASSWD_USER, {
+                          idpName,
+                          clusterId,
+                          idpId,
+                          region,
+                        }),
                       );
                     }}
                   >
                     Add user
                   </Button>
                 </ToolbarItem>
-              ) : null}
-              <ToolbarItem align={{ default: 'alignRight' }} variant="pagination">
-                <Pagination {...paginationProps} isCompact aria-label="Pagination top" />
-              </ToolbarItem>
-            </ToolbarContent>
-          </Toolbar>
+              </>
+            ) : null}
+            <ToolbarItem align={{ default: 'alignRight' }} variant="pagination">
+              <Pagination {...paginationProps} isCompact aria-label="Pagination top" />
+            </ToolbarItem>
+          </ToolbarContent>
+        </Toolbar>
 
-          <Table>
-            {headerRow}
-            <Tbody>
-              {filteredUsers.length > 0 ? (
-                filteredUsers.slice(startIndex, endIndex).map((user: HtPasswdUser) => userRow(user))
-              ) : (
-                <Tr>
-                  <Td colSpan={headers.length}>
-                    <EmptyState
-                      showClearFilterButton={!!searchValue}
-                      resetFilters={setSearchValue}
-                    />
-                  </Td>
-                </Tr>
-              )}
-            </Tbody>
-          </Table>
-          <Pagination
-            {...paginationProps}
-            variant={PaginationVariant.bottom}
-            titles={{ paginationAriaLabel: 'Pagination bottom' }}
-          />
-        </CardBody>
-
-        <ConnectedModal
-          // @ts-ignore
-          ModalComponent={AddUserModal}
-          onSuccess={() => {
-            refetch();
-          }}
+        <Table>
+          {headerRow}
+          <Tbody>
+            {filteredUsers.length > 0 ? (
+              filteredUsers
+                .slice(startIndex, endIndex)
+                .map((user: HtPasswdUser, rowIndex) => userRow(user, rowIndex))
+            ) : (
+              <Tr>
+                <Td colSpan={headers.length}>
+                  <EmptyState showClearFilterButton={!!searchValue} resetFilters={setSearchValue} />
+                </Td>
+              </Tr>
+            )}
+          </Tbody>
+        </Table>
+        <Pagination
+          {...paginationProps}
+          variant={PaginationVariant.bottom}
+          titles={{ paginationAriaLabel: 'Pagination bottom' }}
         />
+      </CardBody>
 
-        <ConnectedModal
-          // @ts-ignore
-          ModalComponent={EditUserModal}
-          onSuccess={() => {
-            refetch();
-          }}
-        />
-      </Card>
-      <DeleteHtpasswdUserDialog refreshHtpasswdUsers={refreshHtpasswdUsers} />
-    </>
+      <ConnectedModal
+        // @ts-ignore
+        ModalComponent={AddUserModal}
+        onSuccess={() => {
+          refetch();
+        }}
+      />
+
+      <ConnectedModal
+        // @ts-ignore
+        ModalComponent={EditUserModal}
+        onSuccess={() => {
+          refetch();
+        }}
+      />
+
+      <ConnectedModal
+        // @ts-ignore
+        ModalComponent={BulkDeleteUserModal}
+        onSuccess={() => {
+          refetch();
+        }}
+        refreshHtpasswdUsers={refreshHtpasswdUsers}
+      />
+
+      <ConnectedModal
+        // @ts-ignore
+        ModalComponent={DeleteHtpasswdUserDialog}
+        onSuccess={() => {
+          if (selectedUsers.length > 0) {
+            setSelectedUsers(selectedUsers.filter((user) => user.id !== userToBeDeletedId));
+          }
+        }}
+        refreshHtpasswdUsers={refreshHtpasswdUsers}
+      />
+    </Card>
   );
 };
 

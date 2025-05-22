@@ -6,11 +6,12 @@ import { Spinner } from '@patternfly/react-core';
 import ErrorBox from '~/components/common/ErrorBox';
 import Modal from '~/components/common/Modal/Modal';
 import { modalActions } from '~/components/common/Modal/ModalActions';
-import shouldShowModal from '~/components/common/Modal/ModalSelectors';
+import modals from '~/components/common/Modal/modals';
 import { useDeleteHtpasswdUser } from '~/queries/ClusterDetailsQueries/AccessControlTab/UserQueries/useDeleteHtpasswdUser';
 import { useGlobalState } from '~/redux/hooks';
 
 type DeleteHtpasswdUserDialogProps = {
+  onSuccess: () => void;
   refreshHtpasswdUsers: () => void;
 };
 
@@ -23,13 +24,15 @@ type ModalData = {
   region: string | undefined;
 };
 
-const DeleteHtpasswdUserDialog = ({ refreshHtpasswdUsers }: DeleteHtpasswdUserDialogProps) => {
+const DeleteHtpasswdUserDialog = ({
+  onSuccess,
+  refreshHtpasswdUsers,
+}: DeleteHtpasswdUserDialogProps) => {
   const modalData = useGlobalState((state) => state.modal.data) as ModalData;
 
   const { clusterId, idpId, idpName, htpasswdUserId, htpasswdUserName, region } = modalData;
 
   const dispatch = useDispatch();
-  const isOpen = useGlobalState((state) => shouldShowModal(state, 'delete-htpasswd-user'));
 
   const {
     isPending,
@@ -58,39 +61,40 @@ const DeleteHtpasswdUserDialog = ({ refreshHtpasswdUsers }: DeleteHtpasswdUserDi
   );
 
   return (
-    isOpen && (
-      <Modal
-        onClose={closeModal}
-        primaryText="Remove user"
-        primaryVariant="danger"
-        onPrimaryClick={() =>
-          mutate(htpasswdUserId, {
-            onSuccess: () => {
-              closeModal();
-              refreshHtpasswdUsers();
-            },
-          })
-        }
-        onSecondaryClick={closeModal}
-        title="Remove htpasswd user"
-        isPending={isPending}
-        data-testid="delete-htpasswd-user-dialog"
-      >
-        {errorContainer}
-        {isPending ? (
-          <Spinner size="xl" aria-label="Deleting user" />
-        ) : (
-          <>
-            <p>
-              You are about to remove <strong>{htpasswdUserName}</strong> from the identity provider{' '}
-              <strong>{idpName}</strong>.
-            </p>
-            <p>This user will lose access to this cluster.</p>
-          </>
-        )}
-      </Modal>
-    )
+    <Modal
+      onClose={closeModal}
+      primaryText="Remove user"
+      primaryVariant="danger"
+      onPrimaryClick={() =>
+        mutate(htpasswdUserId, {
+          onSuccess: () => {
+            closeModal();
+            refreshHtpasswdUsers();
+            onSuccess();
+          },
+        })
+      }
+      onSecondaryClick={closeModal}
+      title="Remove htpasswd user"
+      isPending={isPending}
+      data-testid="delete-htpasswd-user-dialog"
+    >
+      {errorContainer}
+      {isPending ? (
+        <Spinner size="xl" aria-label="Deleting user" />
+      ) : (
+        <>
+          <p>
+            You are about to remove <strong>{htpasswdUserName}</strong> from the identity provider{' '}
+            <strong>{idpName}</strong>.
+          </p>
+          <p>This user will lose access to this cluster.</p>
+        </>
+      )}
+    </Modal>
   );
 };
+
+DeleteHtpasswdUserDialog.modalName = modals.DELETE_HTPASSWD_USER;
 
 export default DeleteHtpasswdUserDialog;

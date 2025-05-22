@@ -102,3 +102,8 @@ export type HTPasswdIdpUsers = {
   idpId: string;
   htpUsers: HTPasswdUser[];
 };
+
+export type BulkDeleteHtpasswdUserError = {
+  username?: string;
+  error: { errorMessage?: string; operationID?: string };
+};

@@ -6,7 +6,7 @@ import { useDeleteHtpasswdUser } from './useDeleteHtpasswdUser';
 const mockGetClusterServiceForRegion = jest.spyOn(clusterService, 'getClusterServiceForRegion');
 const mockedDeleteHtpasswdUser = jest.fn();
 
-describe('useDeleteCluster', () => {
+describe('useDeleteHtpasswdUser', () => {
   afterEach(() => {
     jest.clearAllMocks();
   });
