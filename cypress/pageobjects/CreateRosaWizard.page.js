@@ -81,7 +81,7 @@ class CreateRosaCluster extends Page {
 
   addAdditionalLabelLink = () => cy.contains('Add additional label').should('be.exist');
 
-  createClusterButton = () => cy.getByTestId('create-cluster-button');
+  createClusterButton = () => cy.getByTestId('wizard-next-button');
 
   rosaListOcmField = () => cy.getByTestId('copy-rosa-list-ocm-role');
 
