@@ -9913,6 +9913,8 @@ export interface paths {
           fetchLabels?: components['parameters']['fetchLabels'];
           /** @description If true, includes the capabilities on a subscription in the output. Could slow request response time. */
           fetchCapabilities?: components['parameters']['fetchCapabilities'];
+          /** @description If true, returns either an empty result set or a valid ClusterTransfer list on a subscription in the output. Could slow request response time. */
+          fetchClusterTransfers?: components['parameters']['fetchClusterTransfers'];
           /** @description If true, fetches, from the clusters service, the total numbers of CPU's and sockets under an obligation, and includes in the output. Could slow request response time. */
           fetchCpuAndSocket?: components['parameters']['fetchCpuAndSocket'];
         };
@@ -13721,6 +13723,7 @@ export interface components {
     };
     Subscription: components['schemas']['SubscriptionCommonFields'] & {
       capabilities?: components['schemas']['Capability'][];
+      cluster_transfers?: components['schemas']['ClusterTransfer'][];
       /** Format: date-time */
       created_at?: string;
       creator?: components['schemas']['AccountReference'];
@@ -13955,6 +13958,8 @@ export interface components {
     fetchCapabilities: boolean;
     /** @description If true, includes the marketplace cloud accounts in the output. Could slow request response time. */
     fetchCloudAccounts: boolean;
+    /** @description If true, returns either an empty result set or a valid ClusterTransfer list on a subscription in the output. Could slow request response time. */
+    fetchClusterTransfers: boolean;
     /** @description If true, fetches, from the clusters service, the total numbers of CPU's and sockets under an obligation, and includes in the output. Could slow request response time. */
     fetchCpuAndSocket: boolean;
     /** @description If true, includes the labels on a subscription/organization/account in the output. Could slow request response time. */
@@ -14243,6 +14248,7 @@ export type ParameterExternalResourceId = components['parameters']['externalReso
 export type ParameterFetchAccounts = components['parameters']['fetchAccounts'];
 export type ParameterFetchCapabilities = components['parameters']['fetchCapabilities'];
 export type ParameterFetchCloudAccounts = components['parameters']['fetchCloudAccounts'];
+export type ParameterFetchClusterTransfers = components['parameters']['fetchClusterTransfers'];
 export type ParameterFetchCpuAndSocket = components['parameters']['fetchCpuAndSocket'];
 export type ParameterFetchLabels = components['parameters']['fetchLabels'];
 export type ParameterFetchOrganization = components['parameters']['fetchOrganization'];
