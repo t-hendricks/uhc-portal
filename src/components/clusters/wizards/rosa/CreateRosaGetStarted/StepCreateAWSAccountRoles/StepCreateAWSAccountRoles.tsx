@@ -80,7 +80,7 @@ const StepCreateAWSAccountRoles = ({
       </Title>
       <List component={ListComponent.ol} type={OrderType.number} data-testid="rosa-cli-definition">
         <ListItem className="pf-v5-u-mb-lg" data-testid="rosa-cli-sub-definition-1">
-          To authenticate, run this command and enter your Red Hat login credentials via SSO:
+          {`To authenticate, run this command ${!restrictedEnv ? 'and enter your Red Hat login credentials via SSO' : ''}: `}
           <div className="pf-v5-u-mt-md">
             <ROSALoginCommand
               restrictTokens={restrictTokens}
@@ -90,12 +90,14 @@ const StepCreateAWSAccountRoles = ({
               defaultToOfflineTokens={defaultToOfflineTokens}
             />
           </div>
-          <Text component="p">
-            Learn more about{' '}
-            <ExternalLink href={links.LEARN_MORE_SSO_ROSA}>
-              logging into OpenShift Cluster Manager ROSA CLI with Red Hat single sign-on{' '}
-            </ExternalLink>
-          </Text>
+          {!restrictedEnv ? (
+            <Text component="p">
+              Learn more about{' '}
+              <ExternalLink href={links.LEARN_MORE_SSO_ROSA}>
+                logging into OpenShift Cluster Manager ROSA CLI with Red Hat single sign-on{' '}
+              </ExternalLink>
+            </Text>
+          ) : null}
         </ListItem>
         <ListItem data-testid="rosa-cli-sub-definition-2">
           To create the necessary account-wide roles and policies quickly, use the default auto
