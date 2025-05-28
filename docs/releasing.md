@@ -2,28 +2,23 @@
 
 1. #### Pick the latest commit hash that can be released to Prod from master
 
+   Go to https://github.com/RedHatInsights/uhc-portal/commits/master/
+
    Look at commits and pick the last commit that has all pipelines passed. Click on the "copy full SHA" for the commit you chose, and save it for later use.
 
-   Ensure all phases of the Staging deployment queue are passing:
+   Check that the [daily QE smoke-test runs][32] have passed. If failures, ensure that QE is aware of the failure and a fix is already planned/in progress.
 
-    - [`master` branch build-job][31] <sup>[1][footnotes]</sup>
-    - [Qontract-reconcile pipeline][33]
-    - [OpenShift-SaaS deployment pipeline][34]
-
-   Check that the [daily QE smoke-test runs][32] have passed.
-
-   <img width="1358" alt="Screenshot 2025-03-20 at 13 33 13" src="https://github.com/user-attachments/assets/aa88b413-6bd9-4f56-b23d-3d4e120c80b2" />
-
-
-1. #### Update [_deploy.yml_ in app-interface][17] to bump the Production deployment-target <sup>[2][footnotes]</sup>
+1. #### Update [_deploy.yml_ in app-interface][17] to bump the Production deployment-target <sup>[1][footnotes]</sup>
 
    In your app-interface fork, create a new topic branch from `master`.  
-   Under the section `# Production Deployment`, update `ref` to the new full-hash from step 1.
+   
+   Under the section `# Production Deployment`, update `ref` to the new full-hash from step 2.
 
    Commit and push changes, and create an MR against the upstream repo' ([example MR][9])
-
-   Note that this MR will get merged automatically <sup>[3][footnotes]</sup>, once approvers post a `/lgtm` comment.  Also note, that **you** are on the approvers list, which means you can self-approve.
-
+      
+   Note this MR will get merged automatically <sup>[2][footnotes]</sup>, once approvers post a `/lgtm` comment.  Also note, that **you** are on the approvers list, which means you can self-approve.
+    
+   * There might be a period of time when the MR will show repeating errors (cannot merge, must rebase) a number of times.  Don't Panic!  The MR should eventually resolve itself and auto-merge (assuming /lgtm has been applied)
 
 1. #### Ensure the [deployment pipeline][22] completes successfully
 
@@ -32,21 +27,17 @@
    > **sass notifier**  
    > 🟢 SaaS file uhc-portal deployment to environment insights-production: Success ([Open][19]). Reason: https://gitlab.cee.redhat.com/service/app-interface/commit/c69b541ba3e23e0e9787b7e780a937a9151212cf triggered by _openshift-saas-deploy-trigger-configs_
 
-   For further verification, browse the [app.info.json file in Production][23], and ensure that `src_hash` matches the new merge-commit hash.
-
-
 1. #### Create a GitHub-release & release notes
 
    From the [Releases page][35], click _Draft a new release_.
 
-   For the title, enter the release date in full, human-readable form, e.g. _March 5, 2025_.
+   For the 'Release title', enter the release date in full, human-readable form, e.g. _March 5, 2025_.
 
-   In the tag dropdown, enter tag name as date in abbreviated form, e.g. _mar-5-2025_, and choose _Create new tag on publish_.  Under _Previous tag_, select the previous release's tag.
+   - In the 'Choose a tag' dropdown, enter a tag name as date using the yyyy-mm-dd format (e.g. 2025-03-05-release), and click on '_+ Create new tag on publish_' at the bottom of the dropdown.  
+   - In the 'Target: Master' dropdown, select 'Previous commits' tab and paste the commit SHA from step 2 into the filter, then select the SHA from the dropdown.
+   - You can leave the _Previous tag_, as `auto`.
 
    Click _Generate release notes_, and then _Publish release_.
-
-   <img width="952" alt="Screenshot 2025-03-31 at 15 50 21" src="https://github.com/user-attachments/assets/ad114c49-fe2a-40d7-86dc-ae28b94e6c8d" />
-
 
 1. #### Announce the release on the [#ocm-osd-ui][13] public slack forum
 
@@ -62,30 +53,11 @@
 
 <br/>
 
-# :dart: Troubleshooting
-
-
-### Deployment-pipeline is not running
-
-The deployment-queue consists of two pipelines: [app-interface Qontract-reconcile][21] and [OpenShift-SaaS][22].
-
-The [Qontract-reconcile][28] pipeline picks up changes to configs (templates) from app-interface, and introduces (applies) them to deployment clusters.  The OpenShift-SaaS pipeline then gets triggered in response, and does the actual publish to _console.redhat.com/openshift_.
-
-Ensure the reconcile pipeline is working first, and if not, check that the MR to app-interface was merged properly.  If it was, try to revive the pipeline-run by triggering a new build in the `stable` build [job][14].
-
-Otherwise, ping @emalka or someone from <abbr title="TODO - find the appropriate channel (is it #sd-appsre?)">#_____</abbr> for help.
-
-
-<br/>
-
 # :pencil2: Footnotes
 
+_<sup>1</sup> Updating this hash will trigger the deployment-queue, which publishes the newly built container-image to the Production env'._
 
-_<sup>1</sup> This job will build the app in a container, and push a container-image to [quay.io/uhc-portal][15], tagging it with the short-hash (first few chars) of the relevant commit from its branch._
-
-_<sup>2</sup> Updating this hash will trigger the deployment-queue, which publishes the newly built container-image to the Production env'._
-
-_<sup>3</sup> App-interface offers "self-service" in many areas; it will spawn a bot on self-serviceable MRs, which will resolve the required reviewers ("approvers"), and post that list in a comment.  Once the MR gets a LGTM from every group on the approvers list, it will get merged.
+_<sup>2</sup> App-interface offers "self-service" in many areas; it will spawn a bot on self-serviceable MRs, which will resolve the required reviewers ("approvers"), and post that list in a comment.  Once the MR gets a LGTM from every group on the approvers list, it will get merged.
 For more details on self-service, see [User Content Approval Process][25] and [Granular Permission Model][26] on app-interface docs._
 
 
@@ -96,7 +68,6 @@ For more details on self-service, see [User Content Approval Process][25] and [G
 [9]: https://gitlab.cee.redhat.com/service/app-interface/-/merge_requests/116437
 [12]: https://issues.redhat.com/issues/?jql=labels+%3D+deployed-production
 [13]: https://redhat.enterprise.slack.com/archives/C01G3PL29SS
-[14]: https://ci.int.devshift.net/job/RedHatInsights-uhc-portal-gh-build-stable/
 [15]: https://quay.io/repository/app-sre/uhc-portal?tab=tags
 [16]: https://redhat.enterprise.slack.com/archives/C03GKHGMX7U
 [17]: https://gitlab.cee.redhat.com/service/app-interface/-/blob/master/data/services/ocm/ui/cicd/deploy.yml
@@ -104,7 +75,6 @@ For more details on self-service, see [User Content Approval Process][25] and [G
 [20]: https://ci.int.devshift.net/job/RedHatInsights-uhc-portal-gh-build-stable/3/display/redirect
 [21]: https://console-openshift-console.***REMOVED***/k8s/ns/ocm-ui-pipelines/tekton.dev~v1~Pipeline/o-saas-deploy-uhc-portal/Runs?name=uhc-portal-insights-production
 [22]: https://***REMOVED***/k8s/ns/frontends/deployments/openshift-frontend
-[23]: https://console.redhat.com/apps/openshift/app.info.json
 [24]: https://console.redhat.com/openshift
 [25]: https://gitlab.cee.redhat.com/service/app-interface/-/blob/master/docs/app-sre/continuous-delivery-in-app-interface.md?#user-content-approval-process
 [26]: https://gitlab.cee.redhat.com/service/app-interface/-/blob/master/docs/app-sre/change-types.md#granular-permission-model.md
