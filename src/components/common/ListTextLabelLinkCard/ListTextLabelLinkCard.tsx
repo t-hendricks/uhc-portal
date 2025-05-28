@@ -19,7 +19,7 @@ export function ListTextLabelLinkCard(props: ListTextLabelLinkCardProps) {
   const { cardClassName, textLabelLinkItems } = props;
 
   return (
-    <Card className={cardClassName}>
+    <Card className={cardClassName} data-testid="recommended-content">
       <List isPlain isBordered>
         {textLabelLinkItems.length &&
           textLabelLinkItems.map(

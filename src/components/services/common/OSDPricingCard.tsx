@@ -65,7 +65,7 @@ export const OSDPricingCard = () => (
         <Flex flexWrap={{ default: 'nowrap' }} alignItems={{ default: 'alignItemsStretch' }}>
           {pricingData.map((card) => (
             <FlexItem>
-              <Card>
+              <Card data-testid="pricing-card">
                 <Flex>
                   <FlexItem>
                     <CardHeader>
@@ -99,7 +99,7 @@ export const OSDPricingCard = () => (
     <Flex flexWrap={{ default: 'nowrap' }} alignItems={{ default: 'alignItemsStretch' }}>
       {recommendationsData.map((card) => (
         <FlexItem>
-          <Card style={{ height: '100%' }}>
+          <Card style={{ height: '100%' }} data-testid="recommendations-card">
             <CardHeader>
               <CardTitle>
                 <Title headingLevel="h3">{card.title}</Title>

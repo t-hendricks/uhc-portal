@@ -51,7 +51,7 @@ export const CreateClusterCard = ({
   );
 
   return (
-    <Card>
+    <Card data-testid="create-cluster-card">
       <Flex justifyContent={{ default: 'justifyContentSpaceBetween' }}>
         <FlexItem>
           <CardHeader>

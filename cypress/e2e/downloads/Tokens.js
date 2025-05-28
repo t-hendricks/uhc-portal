@@ -1,17 +1,25 @@
 import TokenPages from '../../pageobjects/Tokens.page';
 
 describe('Token pages', { tags: ['ci', 'smoke'] }, () => {
-  it('ocm-cli sso page', () => {
+  it('ocm-cli token page', () => {
     TokenPages.navigateToOCMToken();
-    TokenPages.waitSSOIsLoaded();
+    TokenPages.waitTokenPageIsLoaded();
     TokenPages.isOCMTokenPage();
-    TokenPages.ocmSSOCLI();
+    cy.getByTestId('load-token-btn').should('exist');
   });
-
-  it('rosa-cli sso page', () => {
+  it('rosa token page', () => {
     TokenPages.navigateToROSAToken();
-    TokenPages.waitSSOIsLoaded();
+    TokenPages.waitTokenPageIsLoaded();
     TokenPages.isROSATokenPage();
-    TokenPages.ocmROSACLI();
+    cy.getByTestId('load-token-btn').should('exist');
+  });
+  it('ocm and rosa revoke token page (OCP-23060)', () => {
+    //TODO: Check on loading new token creation, currentlyit creates issues with offline tokens
+    cy.visit('/token', { retryOnNetworkFailure: true });
+    TokenPages.waitTokenPageIsLoaded();
+    TokenPages.checkRevokePrevousToken();
+    TokenPages.navigateToROSAToken();
+    TokenPages.waitTokenPageIsLoaded();
+    TokenPages.checkRevokePrevousToken();
   });
 });
