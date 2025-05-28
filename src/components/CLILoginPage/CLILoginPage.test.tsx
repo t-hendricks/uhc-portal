@@ -1,6 +1,13 @@
 import React from 'react';
 
-import { checkAccessibility, mockRestrictedEnv, render, screen } from '~/testUtils';
+import { CLI_SSO_AUTHORIZATION } from '~/queries/featureGates/featureConstants';
+import {
+  checkAccessibility,
+  mockRestrictedEnv,
+  mockUseFeatureGate,
+  render,
+  screen,
+} from '~/testUtils';
 
 import CLILoginPage from './CLILoginPage';
 import useOrganization from './useOrganization';
@@ -13,6 +20,7 @@ describe('CLILoginPage tests', () => {
   });
   const mockUseOrganization = useOrganization as jest.Mock;
   const isRestrictedEnv = mockRestrictedEnv();
+  mockUseFeatureGate([[CLI_SSO_AUTHORIZATION, true]]);
 
   it('is accessible', async () => {
     mockUseOrganization.mockReturnValue({

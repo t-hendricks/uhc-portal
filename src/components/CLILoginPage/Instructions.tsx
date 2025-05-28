@@ -38,6 +38,8 @@ import {
 import useChrome from '@redhat-cloud-services/frontend-components/useChrome';
 
 import { Link } from '~/common/routing';
+import { CLI_SSO_AUTHORIZATION } from '~/queries/featureGates/featureConstants';
+import { useFeatureGate } from '~/queries/featureGates/useFetchFeatureGate';
 import { setOfflineToken } from '~/redux/actions/rosaActions';
 import { useGlobalState } from '~/redux/hooks/useGlobalState';
 import { getRefreshToken, isRestrictedEnv } from '~/restrictedEnv';
@@ -90,6 +92,7 @@ const Instructions = (props: Props) => {
     setShouldShowTokens,
   } = props;
   const offlineToken = useGlobalState((state) => state.rosaReducer.offlineToken);
+  const showDeprecationMessage = useFeatureGate(CLI_SSO_AUTHORIZATION);
   const dispatch = useDispatch();
   const chrome = useChrome() as Chrome;
   const restrictedEnv = isRestrictedEnv();
@@ -124,7 +127,7 @@ const Instructions = (props: Props) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  if (!restrictedEnv && !shouldShowTokens) {
+  if (showDeprecationMessage && !restrictedEnv && !shouldShowTokens) {
     return (
       <SSOLoginInstructions
         isRosa={isRosa}
@@ -142,7 +145,7 @@ const Instructions = (props: Props) => {
     <Stack hasGutter>
       <StackItem>
         <Card className="ocm-c-api-token__card">
-          {!restrictedEnv ? (
+          {showDeprecationMessage && !restrictedEnv ? (
             <CardTitle>
               <OfflineTokensAlert />
             </CardTitle>

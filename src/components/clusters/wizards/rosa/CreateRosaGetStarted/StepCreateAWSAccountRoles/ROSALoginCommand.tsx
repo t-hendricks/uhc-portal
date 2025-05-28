@@ -6,6 +6,8 @@ import useChrome from '@redhat-cloud-services/frontend-components/useChrome';
 import { trackEvents } from '~/common/analytics';
 import TokenBox from '~/components/CLILoginPage/TokenBox';
 import InstructionCommand from '~/components/common/InstructionCommand';
+import { CLI_SSO_AUTHORIZATION } from '~/queries/featureGates/featureConstants';
+import { useFeatureGate } from '~/queries/featureGates/useFetchFeatureGate';
 import { isRestrictedEnv } from '~/restrictedEnv';
 import { Error } from '~/types/accounts_mgmt.v1';
 
@@ -15,6 +17,7 @@ type ROSALoginCommandProps = {
   isLoading: boolean;
   token: string;
   defaultToOfflineTokens: boolean;
+  showTokens: boolean;
 };
 
 const ROSALoginCommand = ({
@@ -23,9 +26,11 @@ const ROSALoginCommand = ({
   isLoading,
   token,
   defaultToOfflineTokens,
+  showTokens,
 }: ROSALoginCommandProps) => {
   const chrome = useChrome();
   const restrictedEnv = isRestrictedEnv();
+  const showDeprecationMessage = useFeatureGate(CLI_SSO_AUTHORIZATION);
 
   const getEnv = () => {
     const env = chrome.getEnvironment();
@@ -66,11 +71,15 @@ const ROSALoginCommand = ({
     );
   }
 
-  return (
-    <InstructionCommand className="ocm-c-api-token-limit-width" outerClassName="pf-v6-u-mt-md">
-      rosa login --use-auth-code
-    </InstructionCommand>
-  );
+  if (showDeprecationMessage && !restrictTokens && !showTokens) {
+    return (
+      <InstructionCommand className="ocm-c-api-token-limit-width" outerClassName="pf-v6-u-mt-md">
+        rosa login --use-auth-code
+      </InstructionCommand>
+    );
+  }
+
+  return ROSALoginWithToken;
 };
 
 export default ROSALoginCommand;

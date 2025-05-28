@@ -14,11 +14,15 @@ import useChrome from '@redhat-cloud-services/frontend-components/useChrome';
 import { trackEvents } from '~/common/analytics';
 import links from '~/common/installLinks.mjs';
 import { defaultToOfflineTokens, hasRestrictTokensCapability } from '~/common/restrictTokensHelper';
+import { SSOAlert } from '~/components/CLILoginPage/SSOAlert';
 import { loadOfflineToken } from '~/components/CLILoginPage/TokenUtils';
 import useOrganization from '~/components/CLILoginPage/useOrganization';
 import { RosaCliCommand } from '~/components/clusters/wizards/rosa/AccountsRolesScreen/constants/cliCommands';
 import ExternalLink from '~/components/common/ExternalLink';
 import InstructionCommand from '~/components/common/InstructionCommand';
+import OfflineTokensAlert from '~/components/common/OfflineTokensAlert';
+import { CLI_SSO_AUTHORIZATION } from '~/queries/featureGates/featureConstants';
+import { useFeatureGate } from '~/queries/featureGates/useFetchFeatureGate';
 import { getRefreshToken, isRestrictedEnv } from '~/restrictedEnv';
 import { Error } from '~/types/accounts_mgmt.v1';
 import type { Chrome } from '~/types/types';
@@ -36,8 +40,10 @@ const StepCreateAWSAccountRoles = ({
 }: StepCreateAWSAccountRolesProps) => {
   const chrome = useChrome() as Chrome;
   const restrictedEnv = isRestrictedEnv();
+  const showDeprecationMessage = useFeatureGate(CLI_SSO_AUTHORIZATION);
   const { organization, isLoading, error } = useOrganization();
   const [token, setToken] = React.useState<string>('');
+  const [showTokens, setShowTokens] = React.useState<boolean>(false);
   const [restrictTokens, setRestrictTokens] = React.useState<boolean | undefined>(undefined);
   const errorData = error as Error;
 
@@ -78,9 +84,13 @@ const StepCreateAWSAccountRoles = ({
       <Title headingLevel="h3" data-testid="rosa-cli-header">
         Log in to the ROSA CLI with your Red Hat account and create AWS account roles and policies.
       </Title>
+      {showDeprecationMessage && !restrictedEnv && !restrictTokens && !showTokens ? (
+        <SSOAlert setShouldShowTokens={setShowTokens} gettingStartedPage />
+      ) : null}
+      {!restrictedEnv && !restrictedEnv && showTokens ? <OfflineTokensAlert /> : null}
       <List component={ListComponent.ol} type={OrderType.number} data-testid="rosa-cli-definition">
         <ListItem className="pf-v5-u-mb-lg" data-testid="rosa-cli-sub-definition-1">
-          {`To authenticate, run this command ${!restrictedEnv ? 'and enter your Red Hat login credentials via SSO' : ''}: `}
+          {`To authenticate, run this command ${showDeprecationMessage && !restrictedEnv && !showTokens ? 'and enter your Red Hat login credentials via SSO' : ''}: `}
           <div className="pf-v5-u-mt-md">
             <ROSALoginCommand
               restrictTokens={restrictTokens}
@@ -88,9 +98,10 @@ const StepCreateAWSAccountRoles = ({
               error={errorData}
               token={token}
               defaultToOfflineTokens={defaultToOfflineTokens}
+              showTokens={showTokens}
             />
           </div>
-          {!restrictedEnv ? (
+          {showDeprecationMessage && !restrictedEnv && !showTokens ? (
             <Text component="p">
               Learn more about{' '}
               <ExternalLink href={links.LEARN_MORE_SSO_ROSA}>
