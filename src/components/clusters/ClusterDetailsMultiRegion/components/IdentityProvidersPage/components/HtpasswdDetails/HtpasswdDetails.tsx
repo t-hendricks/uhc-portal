@@ -166,6 +166,7 @@ const HtpasswdDetails = ({
 
   const currentPageUsers = filteredUsers.slice(startIndex, endIndex);
   const deleteableUsers = currentPageUsers.filter((user) => selectedUserIds.includes(user.id));
+  const deleteableUserIds = deleteableUsers.map((user) => user.id);
 
   const headers = [{ name: 'Username', sortable: true }];
 
@@ -374,6 +375,7 @@ const HtpasswdDetails = ({
         // @ts-ignore
         ModalComponent={BulkDeleteUserModal}
         onSuccess={() => {
+          setSelectedUsers(selectedUsers.filter((user) => !deleteableUserIds.includes(user.id)));
           refetch();
         }}
         refreshHtpasswdUsers={refreshHtpasswdUsers}
@@ -383,9 +385,8 @@ const HtpasswdDetails = ({
         // @ts-ignore
         ModalComponent={DeleteHtpasswdUserDialog}
         onSuccess={() => {
-          if (selectedUsers.length > 0) {
-            setSelectedUsers(selectedUsers.filter((user) => user.id !== userToBeDeletedId));
-          }
+          setSelectedUsers(selectedUsers.filter((user) => user.id !== userToBeDeletedId));
+          setUserToBeDeletedId('');
         }}
         refreshHtpasswdUsers={refreshHtpasswdUsers}
       />
