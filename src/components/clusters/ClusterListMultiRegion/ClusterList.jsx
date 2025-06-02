@@ -255,6 +255,7 @@ const ClusterList = ({
     dispatch(clustersActions.clearClusterDetails());
 
     const planIDFilter = getQueryParam('plan_id') || '';
+    const savedClusterTypes = sessionStorage.getItem('clusterListSelectedTypes');
 
     if (!isEmpty(planIDFilter)) {
       const allowedProducts = {};
@@ -272,6 +273,19 @@ const ClusterList = ({
           viewType,
         ),
       );
+    } else if (savedClusterTypes && savedClusterTypes !== '[]') {
+      const planId = JSON.parse(savedClusterTypes);
+      if (Array.isArray(planId) && planId.length > 0) {
+        dispatch(
+          onListFlagsSet(
+            'subscriptionFilter',
+            {
+              plan_id: planId,
+            },
+            viewType,
+          ),
+        );
+      }
     }
 
     // componentWillUnmount
@@ -321,6 +335,17 @@ const ClusterList = ({
 
   const viewOptions = useSelector((state) => state.viewOptions.CLUSTERS_VIEW);
   const { showMyClustersOnly, subscriptionFilter } = viewOptions.flags;
+
+  React.useEffect(() => {
+    if (subscriptionFilter?.plan_id) {
+      sessionStorage.setItem(
+        'clusterListSelectedTypes',
+        JSON.stringify(subscriptionFilter.plan_id),
+      );
+    } else {
+      sessionStorage.removeItem('clusterListSelectedTypes');
+    }
+  }, [subscriptionFilter?.plan_id]);
 
   const hasNoFilters =
     helpers.nestedIsEmpty(subscriptionFilter) && !showMyClustersOnly && !viewOptions.filter;
