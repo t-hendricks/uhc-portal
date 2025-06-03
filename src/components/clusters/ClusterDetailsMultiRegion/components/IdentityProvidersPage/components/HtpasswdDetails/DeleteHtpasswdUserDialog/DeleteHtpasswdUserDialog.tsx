@@ -2,6 +2,7 @@ import React from 'react';
 import { useDispatch } from 'react-redux';
 
 import { Spinner } from '@patternfly/react-core';
+import { addNotification } from '@redhat-cloud-services/frontend-components-notifications';
 
 import ErrorBox from '~/components/common/ErrorBox';
 import Modal from '~/components/common/Modal/Modal';
@@ -71,6 +72,13 @@ const DeleteHtpasswdUserDialog = ({
             closeModal();
             refreshHtpasswdUsers();
             onSuccess();
+            dispatch(
+              addNotification({
+                variant: 'success',
+                title: `Successfully deleted user ${htpasswdUserName}`,
+                dismissable: true,
+              }),
+            );
           },
         })
       }

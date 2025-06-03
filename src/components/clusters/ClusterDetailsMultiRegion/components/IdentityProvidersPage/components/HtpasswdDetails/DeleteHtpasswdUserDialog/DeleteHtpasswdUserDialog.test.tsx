@@ -3,7 +3,7 @@ import * as reactRedux from 'react-redux';
 
 import * as useDeleteHtpasswdUser from '~/queries/ClusterDetailsQueries/AccessControlTab/UserQueries/useDeleteHtpasswdUser';
 import * as useGlobalState from '~/redux/hooks/useGlobalState';
-import { checkAccessibility, screen, withState } from '~/testUtils';
+import { checkAccessibility, screen, waitFor, withState } from '~/testUtils';
 
 import DeleteHtpasswdUserDialog from './DeleteHtpasswdUserDialog';
 
@@ -99,19 +99,27 @@ describe('<DeleteHtpasswdUserDialog />', () => {
   });
 
   it('closes the modal on success', async () => {
-    const newUseDeleteHtpasswdUserResponse = {
-      ...defaultUseDeleteHtpasswdUserResponse,
-      isSuccess: true,
-      reset,
-    };
     mockedUseGlobalState.mockReturnValueOnce(true);
     // @ts-ignore
-    mockedUseDeleteHtpasswdUser.mockReturnValue(newUseDeleteHtpasswdUserResponse);
+    mockedUseDeleteHtpasswdUser.mockReturnValue({
+      ...defaultUseDeleteHtpasswdUserResponse,
+      isSuccess: true,
+    });
 
     checkForNoCalls();
 
-    withState(defaultReduxState).render(<DeleteHtpasswdUserDialog {...defaultProps} />);
+    const { user } = withState(defaultReduxState).render(
+      <DeleteHtpasswdUserDialog {...defaultProps} />,
+    );
+
+    await waitFor(() => {
+      expect(screen.getByRole('button', { name: 'Remove user' })).toBeInTheDocument();
+    });
+
+    await user.click(screen.getByRole('button', { name: 'Remove user' }));
     expect(mockedDispatch).toHaveBeenCalled();
+    expect(reset).toHaveBeenCalled();
+    expect(mutate).toHaveBeenCalled();
     expect(mockedDispatch.mock.calls[0][0].type).toEqual('CLOSE_MODAL');
     expect(refreshHtpasswdUsers).toHaveBeenCalled();
   });

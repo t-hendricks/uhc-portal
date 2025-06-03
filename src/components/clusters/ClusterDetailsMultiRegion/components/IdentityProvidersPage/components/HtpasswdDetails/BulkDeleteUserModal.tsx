@@ -2,6 +2,7 @@ import React from 'react';
 import { useDispatch } from 'react-redux';
 
 import { Spinner, Stack, StackItem, Text, TextContent, TextVariants } from '@patternfly/react-core';
+import { addNotification } from '@redhat-cloud-services/frontend-components-notifications';
 
 import ErrorBox from '~/components/common/ErrorBox';
 import Modal from '~/components/common/Modal/Modal';
@@ -59,6 +60,13 @@ const BulkDeleteUserModal = ({
               closeBulkDeleteUserModal();
               refreshHtpasswdUsers();
               onSuccess();
+              dispatch(
+                addNotification({
+                  variant: 'success',
+                  title: `Successfully deleted ${selectedUsers.length} users`,
+                  dismissable: true,
+                }),
+              );
             }
           },
         })

@@ -116,6 +116,17 @@ describe('<AddUserModal />', () => {
 
     expect(reset).toHaveBeenCalled();
     expect(mockedDispatch.mock.calls[0][0].type).toEqual('CLOSE_MODAL');
+
+    const notificationAction = mockedDispatch.mock.calls[1][0];
+
+    expect(notificationAction.type).toEqual('@@INSIGHTS-CORE/NOTIFICATIONS/ADD_NOTIFICATION');
+    expect(notificationAction.payload).toEqual(
+      expect.objectContaining({
+        dismissable: true,
+        title: 'Successfully added user ',
+        variant: 'success',
+      }),
+    );
   });
 
   it('shows error when add user results in an error', () => {
