@@ -211,6 +211,7 @@ const links = {
   INSTALL_GCPUPI_RHCOS_LEARN_MORE: `${DOCS_BASE}/installing_on_gcp/installing-gcp-user-infra#installation-gcp-project_installing-gcp-user-infra`,
   INSTALL_GCP_CUSTOMIZATIONS: `${DOCS_BASE}/installing_on_gcp/installing-gcp-customizations`,
   INSTALL_GCP_VPC: `${DOCS_BASE}/installing_on_gcp/installing-gcp-vpc`,
+  INSTALL_GCP_SHARED_VPC: `${DOCS_BASE}/installing_on_gcp/installing-gcp-shared-vpc`,
   RHCOS_GCPUPI_TAR_X86: `${MIRROR_RHCOS_LATEST_X86}/rhcos-gcp.x86_64.tar.gz`,
 
   INSTALL_NUTANIXIPI_GETTING_STARTED: `${DOCS_BASE}/installing_on_nutanix/preparing-to-install-on-nutanix`,

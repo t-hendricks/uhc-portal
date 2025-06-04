@@ -94,7 +94,7 @@ export const GcpVpcSettings = () => {
             tooltip={
               <>
                 <p>Install into a VPC shared by another account in your GCP organization.</p>
-                <ExternalLink href={links.INSTALL_GCP_VPC}>
+                <ExternalLink href={links.INSTALL_GCP_SHARED_VPC}>
                   Learn more about GCP shared VPC.
                 </ExternalLink>
               </>
