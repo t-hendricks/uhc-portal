@@ -33,6 +33,7 @@ import ImdsSection from './ImdsSection';
 function ScaleSection() {
   const {
     values: {
+      [FieldId.SelectedVpc]: selectedVpc,
       [FieldId.Hypershift]: isHypershift,
       [FieldId.MultiAz]: isMultiAz,
       [FieldId.MachineType]: machineType,
@@ -42,6 +43,8 @@ function ScaleSection() {
       [FieldId.NodeLabels]: nodeLabels,
       [FieldId.ClusterVersion]: clusterVersion,
       [FieldId.MachinePoolsSubnets]: machinePoolsSubnets,
+      [FieldId.InstallerRoleArn]: installerRoleArn,
+      [FieldId.Region]: region,
       [FieldId.BillingModel]: billingModel,
       [FieldId.IMDS]: imds,
     },
@@ -50,7 +53,6 @@ function ScaleSection() {
     getFieldProps,
     getFieldMeta,
   } = useFormState();
-
   const isByoc = true;
   const poolsLength = machinePoolsSubnets?.length;
   const isMultiAzSelected = isMultiAz === 'true';
@@ -169,7 +171,10 @@ function ScaleSection() {
       <GridItem md={6}>
         <Field
           component={MachineTypeSelection}
+          selectedVpc={selectedVpc}
           name={FieldId.MachineType}
+          installerRoleArn={installerRoleArn}
+          region={region}
           validate={required}
           isMultiAz={isMultiAzSelected}
           isBYOC={isByoc}

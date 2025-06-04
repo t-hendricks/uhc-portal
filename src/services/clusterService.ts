@@ -319,7 +319,7 @@ export function getClusterService(apiRequest: APIRequest = defaultApiRequest) {
         },
       ),
 
-    getMachineTypesByRegionARN: (roleARN: string, region: string) =>
+    getMachineTypesByRegionARN: (roleARN: string, region: string, availabilityZones?: string[]) =>
       apiRequest.post<{
         /**
          * Retrieved list of cloud providers.
@@ -349,6 +349,7 @@ export function getClusterService(apiRequest: APIRequest = defaultApiRequest) {
           region: {
             id: region,
           },
+          availability_zones: availabilityZones,
         },
         {
           params: {
