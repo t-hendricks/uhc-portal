@@ -6,6 +6,8 @@ import { useScrollToAnchor } from '~/common/helpers';
 import { Link } from '~/common/routing';
 import InternalTrackingLink from '~/components/common/InternalTrackingLink';
 import { useCanCreateManagedCluster } from '~/queries/ClusterDetailsQueries/useFetchActionsPermissions';
+import { ASSISTED_MIGRATION_ENABLED } from '~/queries/featureGates/featureConstants';
+import { useFeatureGate } from '~/queries/featureGates/useFetchFeatureGate';
 
 import docLinks from '../../common/installLinks.mjs';
 import OpenShiftProductIcon from '../../styles/images/OpenShiftProductIcon.svg';
@@ -67,6 +69,8 @@ function OverviewEmptyState() {
     setSelectedCardTitle('');
   };
 
+  const isAssistedMigrationEnabled = useFeatureGate(ASSISTED_MIGRATION_ENABLED);
+
   return (
     <DrawerPanel
       title={drawerInfo?.title}
@@ -102,6 +106,11 @@ function OverviewEmptyState() {
             <FlexItem className="pf-v5-u-pt-md" data-testid="offering-card_DEVSNBX">
               <OfferingCard offeringType="DEVSNBX" />
             </FlexItem>
+            {isAssistedMigrationEnabled && (
+              <FlexItem className="pf-v5-u-pt-md" data-testid="offering-card_MIGRATION">
+                <OfferingCard offeringType="MIGRATION" />
+              </FlexItem>
+            )}
           </Flex>
           <InternalTrackingLink
             to={createClusterURL}

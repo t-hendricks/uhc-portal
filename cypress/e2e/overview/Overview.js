@@ -15,7 +15,7 @@ describe('OCM Overview Page tests (OCP-65189)', { tags: ['smoke'] }, () => {
       .opensInRightTab()
       .successfullyOpens();
 
-    Overview.centralSectionCardsExpected(6);
+    Overview.centralSectionCardsExpected(7);
 
     const runOn = 'Runs on',
       purchaseThrough = 'Purchase through',
@@ -91,6 +91,11 @@ describe('OCM Overview Page tests (OCP-65189)', { tags: ['smoke'] }, () => {
     card.cyObj.contains('Developer Sandbox');
     card.shouldHaveLabel('Managed service');
     card.checkLink('View details', '/openshift/sandbox').opensInRightTab();
+
+    card = Overview.centralSectionCard('offering-card_MIGRATION');
+    card.cyObj.contains('Evaluate VMware to Openshift Migration');
+    card.shouldHaveLabel('Self-managed service');
+    card.checkLink('Start evaluation', '/openshift/migration-assessment').opensInRightTab();
 
     Overview.centralSectionFooterLinkExists(
       'View all OpenShift cluster types',

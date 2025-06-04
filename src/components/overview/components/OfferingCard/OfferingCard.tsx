@@ -35,7 +35,7 @@ import RHLogo from '~/styles/images/RedHatLogo';
 import './OfferingCard.scss';
 
 type OfferingCardProps = {
-  offeringType?: 'AWS' | 'Azure' | 'RHOSD' | 'RHOCP' | 'RHOIBM' | 'DEVSNBX';
+  offeringType?: 'AWS' | 'Azure' | 'RHOSD' | 'RHOCP' | 'RHOIBM' | 'DEVSNBX' | 'MIGRATION';
   canCreateManagedCluster?: boolean;
 };
 
@@ -45,6 +45,7 @@ const OSDServicePageURL = '/overview/osd';
 const createOSDClusterURL = '/create/osd';
 const createClusterURL = '/create';
 const registerClusterURL = '/register';
+const openMigrationWizard = '/migration-assessment';
 
 const CreateRosaClusterLink = (props: any) => (
   <Link {...props} data-testid="create-cluster" to={createRosaClusterURL} />
@@ -62,6 +63,12 @@ const DEVSNBXOfferingCardDocLinkComponent = () => (
   <ExternalLink noTarget noIcon href="/openshift/sandbox">
     View details
   </ExternalLink>
+);
+
+const CreateMigrationLink = (props: any) => (
+  <Link {...props} href={openMigrationWizard}>
+    Start evaluation
+  </Link>
 );
 
 function OfferingCard(props: OfferingCardProps) {
@@ -234,6 +241,25 @@ function OfferingCard(props: OfferingCardProps) {
         </Button>
       );
       cardLogo = <RHLogo className="offering-logo" />;
+      break;
+    case 'MIGRATION':
+      offeringCardTitle = 'Evaluate VMware to Openshift Migration';
+      offeringCardLabel = 'Self-managed service';
+      offeringCardTextBody =
+        'Discover your VMware environment, select a target cluster and create a migration plan.';
+      offeringCardCreationLink = (
+        <InternalTrackingLink
+          isButton
+          variant="secondary"
+          to={openMigrationWizard}
+          component={CreateMigrationLink}
+        >
+          Start evaluation
+        </InternalTrackingLink>
+      );
+      cardLogo = (
+        <img className="offering-logo" src={OpenShiftProductIcon} alt="OpenShift product logo" />
+      );
       break;
     default:
       break;
