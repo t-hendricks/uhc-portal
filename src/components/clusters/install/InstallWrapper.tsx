@@ -13,20 +13,20 @@ import { InstructionsChooserPageTitle } from './instructions/InstructionsChooser
 import InstructionsPreRelease from './instructions/InstructionsPreRelease';
 import InstructionsPullSecret from './instructions/InstructionsPullSecret';
 import OCPInstructions from './instructions/OCPInstructions';
-import {
-  InstallComponentProps,
-  InstructionChooserProps,
-  OCPInstructionProps,
-  PullSecretInstructionsProps,
-  ReleaseInstructionsProps,
-  Routes,
-} from './models/types';
+import { InstallComponentProps, Routes } from './models/types';
 
-export const InstallWithInstructionChooserWrapper = (props: InstructionChooserProps) => {
+export const InstallComponentWrapper = (props: InstallComponentProps) => {
+  const { componentChooser, propsData } = props;
   const {
     breadCrumbsPaths,
     appPageTitle,
     providerTitle,
+    cloudProviderId,
+    customizations,
+    instructionsMapping,
+    isUPI,
+    showPreReleaseDocs,
+    installationTypeId,
     aiPageLink,
     aiLearnMoreLink,
     hideIPI,
@@ -40,116 +40,65 @@ export const InstallWithInstructionChooserWrapper = (props: InstructionChooserPr
     providerSpecificFeatures,
     name,
     recommend,
-  } = props;
-
-  const breadcrumbs = <Breadcrumbs path={[...breadCrumbsPaths]} />;
-
-  return (
-    <AppPage title={appPageTitle}>
-      <InstructionsChooserPageTitle cloudName={providerTitle} breadcrumbs={breadcrumbs} />
-      <PageSection>
-        <InstructionsChooser
-          aiPageLink={aiPageLink}
-          aiLearnMoreLink={aiLearnMoreLink}
-          hideIPI={hideIPI}
-          ipiLearnMoreLink={ipiLearnMoreLink}
-          ipiPageLink={ipiPageLink}
-          hideUPI={hideUPI}
-          upiPageLink={upiPageLink}
-          upiLearnMoreLink={upiLearnMoreLink}
-          agentBasedPageLink={agentBasedPageLink}
-          agentBasedLearnMoreLink={agentBasedLearnMoreLink}
-          providerSpecificFeatures={providerSpecificFeatures}
-          name={name}
-          recommend={recommend}
-        />
-      </PageSection>
-    </AppPage>
-  );
-};
-
-export const InstallWithOCPInstructionsWrapper = (props: OCPInstructionProps) => {
-  const {
-    breadCrumbsPaths,
-    appPageTitle,
-    providerTitle,
-    cloudProviderId,
-    customizations,
-    instructionsMapping,
-    isUPI,
-    showPreReleaseDocs,
-    installationTypeId,
-  } = props;
-  const token = useAuthToken();
-
-  const breadcrumbs = <Breadcrumbs path={[...breadCrumbsPaths]} />;
-
-  return (
-    <AppPage title={appPageTitle}>
-      <PageTitle title={providerTitle} breadcrumbs={breadcrumbs} />
-      <PageSection>
-        <OCPInstructions
-          token={token}
-          cloudProviderID={cloudProviderId}
-          customizations={customizations}
-          showPreReleaseDocs={showPreReleaseDocs}
-          installationTypeId={installationTypeId}
-          isUPI={isUPI}
-          {...instructionsMapping}
-        />
-      </PageSection>
-    </AppPage>
-  );
-};
-
-export const InstallWithReleaseInstructionsWrapper = (props: ReleaseInstructionsProps) => {
-  const { breadCrumbsPaths, appPageTitle, providerTitle, installer } = props;
+    installer,
+  } = propsData;
 
   const token = useAuthToken();
 
   const breadcrumbs = <Breadcrumbs path={[...breadCrumbsPaths]} />;
 
+  const chooseComponentToRender = (componentChooser: string) => {
+    switch (componentChooser) {
+      case 'pullSecretInstructions':
+        return <InstructionsPullSecret token={token} />;
+      case 'ocpInstructions':
+        return (
+          <OCPInstructions
+            token={token}
+            cloudProviderID={cloudProviderId}
+            customizations={customizations}
+            showPreReleaseDocs={showPreReleaseDocs}
+            installationTypeId={installationTypeId}
+            isUPI={isUPI}
+            {...instructionsMapping}
+          />
+        );
+      case 'instructionsChooser':
+        return (
+          <InstructionsChooser
+            aiPageLink={aiPageLink}
+            aiLearnMoreLink={aiLearnMoreLink}
+            hideIPI={hideIPI}
+            ipiLearnMoreLink={ipiLearnMoreLink}
+            ipiPageLink={ipiPageLink}
+            hideUPI={hideUPI}
+            upiPageLink={upiPageLink}
+            upiLearnMoreLink={upiLearnMoreLink}
+            agentBasedPageLink={agentBasedPageLink}
+            agentBasedLearnMoreLink={agentBasedLearnMoreLink}
+            providerSpecificFeatures={providerSpecificFeatures}
+            name={name}
+            recommend={recommend}
+          />
+        );
+
+      default:
+        return <InstructionsPreRelease token={token} installer={installer} />;
+    }
+  };
+
   return (
     <AppPage title={appPageTitle}>
-      <PageTitle title={providerTitle} breadcrumbs={breadcrumbs} />
-      <PageSection>
-        <InstructionsPreRelease token={token} installer={installer} />
-      </PageSection>
-    </AppPage>
-  );
-};
-
-export const InstallPullSecretInstructionsWrapper = (props: PullSecretInstructionsProps) => {
-  const { breadCrumbsPaths, appPageTitle, providerTitle } = props;
-
-  const token = useAuthToken();
-
-  const breadcrumbs = <Breadcrumbs path={[...breadCrumbsPaths]} />;
-
-  return (
-    <AppPage title={appPageTitle}>
-      <PageTitle title={providerTitle} breadcrumbs={breadcrumbs} />
+      {componentChooser === 'instructionsChooser' ? (
+        <InstructionsChooserPageTitle cloudName={providerTitle} breadcrumbs={breadcrumbs} />
+      ) : (
+        <PageTitle title={providerTitle} breadcrumbs={breadcrumbs} />
+      )}
       <PageSection className="ocp-instructions">
-        <InstructionsPullSecret token={token} />
+        {chooseComponentToRender(componentChooser)}
       </PageSection>
     </AppPage>
   );
-};
-
-// Wrapper component to choose which type of Install component to render
-export const InstallComponentWrapper = (props: InstallComponentProps) => {
-  const { componentChooser, propsData } = props;
-
-  switch (componentChooser) {
-    case 'instructionsChooser':
-      return <InstallWithInstructionChooserWrapper {...propsData} />;
-    case 'releaseInstructions':
-      return <InstallWithReleaseInstructionsWrapper {...propsData} />;
-    case 'pullSecretInstructions':
-      return <InstallPullSecretInstructionsWrapper {...propsData} />;
-    default:
-      return <InstallWithOCPInstructionsWrapper {...propsData} />;
-  }
 };
 
 // Loop through all Install component Routes and render required Install component

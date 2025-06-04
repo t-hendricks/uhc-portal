@@ -9,14 +9,11 @@ export type ProviderSpecificType = {
   ipi?: string[] | ReactNode[];
 };
 
-export type InstallCommonType = {
+export type InstallProps = {
   appPageTitle: string;
   providerTitle: string;
   breadCrumbsPaths: BreadcrumbPath[];
-};
-
-export type InstructionChooserProps = InstallCommonType & {
-  name: string;
+  name?: string;
   aiPageLink?: string;
   aiLearnMoreLink?: string;
   hideIPI?: boolean;
@@ -27,30 +24,18 @@ export type InstructionChooserProps = InstallCommonType & {
   upiLearnMoreLink?: string;
   agentBasedPageLink?: string;
   agentBasedLearnMoreLink?: string;
-  providerSpecificFeatures: ProviderSpecificType;
+  providerSpecificFeatures?: ProviderSpecificType;
   recommend?: 'ai' | 'ipi';
-};
-
-export type OCPInstructionProps = InstallCommonType & {
   customizations?: string;
-  cloudProviderId: string;
-  instructionsMapping: any;
+  cloudProviderId?: string;
+  instructionsMapping?: any;
   isUPI?: boolean;
   installationTypeId?: string;
   showPreReleaseDocs?: boolean;
+  installer?: string;
 };
 
-export type ReleaseInstructionsProps = InstallCommonType & {
-  installer: string;
-};
-
-export type PullSecretInstructionsProps = InstallCommonType;
-
-export type InstallComponentProps =
-  | { componentChooser: 'instructionsChooser'; propsData: InstructionChooserProps }
-  | { componentChooser: 'ocpInstructions'; propsData: OCPInstructionProps }
-  | { componentChooser: 'releaseInstructions'; propsData: ReleaseInstructionsProps }
-  | { componentChooser: 'pullSecretInstructions'; propsData: PullSecretInstructionsProps };
+export type InstallComponentProps = { componentChooser: string; propsData: InstallProps };
 
 export type Routes = {
   path: string;

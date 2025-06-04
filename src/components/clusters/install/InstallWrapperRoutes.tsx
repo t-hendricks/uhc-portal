@@ -1,9 +1,6 @@
 import React from 'react';
 
-import { Routes } from './models/types';
-import { InstallComponentWrapper } from './InstallWrapper';
 import {
-  AlibabaProps,
   ArmAWSIPIProps,
   ArmAwsProps,
   ArmAWSUPIProps,
@@ -13,52 +10,68 @@ import {
   ArmBareMetalProps,
   ArmBareMetalUPIProps,
   ArmPreReleaseProps,
+} from './InstallProps/InstallArmPropsData';
+import { AWSIPIProps, AWSProps, AWSUPIProps } from './InstallProps/InstallAWSPropsData';
+import {
   ASHIPIProps,
   ASHUPIProps,
-  AWSIPIProps,
-  AWSProps,
-  AWSUPIProps,
   AzureIPIProps,
   AzureProps,
   AzureStackHubProps,
   AzureUPIProps,
+} from './InstallProps/InstallAzurePropsData';
+import {
   BareMetalABIProps,
   BareMetalIPIProps,
   BareMetalProps,
   BareMetalUPIProps,
-  GCPIPIProps,
-  GCPProps,
-  GCPUPIProps,
+} from './InstallProps/InstallBareMetalPropsData';
+import { GCPIPIProps, GCPProps, GCPUPIProps } from './InstallProps/InstallGCPPropsData';
+import {
   IBMCloudProps,
   IBMZABIProps,
   IBMZPreReleaseProps,
   IBMZProps,
   IBMZUPIProps,
+} from './InstallProps/InstallIBMPropsData';
+import {
   MultiAWSIPIProps,
   MultiAzureIPIProps,
   MultiBareMetalUPIProps,
   MultiPreReleaseProps,
-  NutanixIPIProps,
-  NutanixProps,
+} from './InstallProps/InstallMultiPropsData';
+import { NutanixIPIProps, NutanixProps } from './InstallProps/InstallNutanixPropsData';
+import {
   OpenStackIPIProps,
   OpenStackProps,
   OpenStackUPIProps,
-  OracleCloudProps,
+} from './InstallProps/InstallOpenStackPropsData';
+import {
   PlatformAgnosticABI,
   PlatformAgnosticProps,
   PlatformAgnosticUPI,
+} from './InstallProps/InstallPlatformAgnosticPropsData';
+import {
   PowerABIProps,
   PowerPreReleaseProps,
   PowerProps,
   PowerUPIProps,
   PowerVirtualServerIPIProps,
-  PreReleaseProps,
-  PullSecretProps,
+} from './InstallProps/InstallPowerPropsData';
+import {
   VSpehereABIProps,
   VSphereIPIProps,
   VSphereProps,
   VSphereUPIProps,
-} from './InstallWrapperPropsData';
+} from './InstallProps/InstallVSpherePropsData';
+import {
+  AlibabaProps,
+  OracleCloudProps,
+  PreReleaseProps,
+  PullSecretProps,
+} from './InstallProps/InstallWrapperPropsData';
+import { Routes } from './models/types';
+import { InstallComponentWrapper } from './InstallWrapper';
 
 // Example of generic install component usage
 export const routesData: Routes[] = [
