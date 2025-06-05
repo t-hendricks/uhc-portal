@@ -32,6 +32,7 @@ export const BYPASS_COMPUTE_NODE_COUNT_LIMIT_CLASSIC_OSD_GCP =
 export const MAX_NODES_TOTAL_249 = 'ocmui-max-nodes-total-249';
 export const ENHANCED_HTPASSWRD = 'ocmui-enhanced-htpasswrd';
 export const ASSISTED_MIGRATION_ENABLED = 'assisted-migration';
+export const GCP_SECURE_BOOT = 'ocmui-gcp-secure-boot';
 
 export default {
   AUTO_CLUSTER_TRANSFER_OWNERSHIP,
@@ -50,4 +51,5 @@ export default {
   MAX_NODES_TOTAL_249,
   ENHANCED_HTPASSWRD,
   ASSISTED_MIGRATION_ENABLED,
+  GCP_SECURE_BOOT,
 } as const;
