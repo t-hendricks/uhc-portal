@@ -6,13 +6,13 @@
 /dist/
 /build/
 /node_modules/
-/run/ocm-api-model/
-/run/ocm-api-metamodel/
 /run/insights-proxy/
 
 # No longer `git clone`d, kept here in case anyone has them checked out:
 /run/cucushift/
 /run/verification-tests/
+/run/ocm-api-model/
+/run/ocm-api-metamodel/
 
 /run/output
 /vendor/
