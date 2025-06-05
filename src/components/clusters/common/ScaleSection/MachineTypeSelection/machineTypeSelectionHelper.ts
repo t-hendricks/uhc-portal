@@ -7,7 +7,7 @@ import { machineCategories } from './sortMachineTypes';
 const isMachineTypeIncludedInFilteredSet = (
   machineTypeID: string | undefined,
   filteredMachineTypes: MachineTypesByRegionState,
-) => machineTypeID && !!filteredMachineTypes?.typesByID?.[machineTypeID];
+) => !!machineTypeID && !!filteredMachineTypes?.typesByID?.[machineTypeID];
 
 const groupedMachineTypes = (machines: MachineType[]): { [index: string]: MachineType[] } =>
   machineCategories.reduce(

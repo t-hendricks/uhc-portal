@@ -14,7 +14,7 @@ import { machineCategories } from './sortMachineTypes';
 
 describe('machineTypeSelectionHelper', () => {
   describe('isMachineTypeIncludedInFilteredSet', () => {
-    it('should return true for a Machine Type which does exist on the list', () => {
+    it('should return true for a Machine Type which exists on the list', () => {
       // Arrange
       const machineTypeID = '1';
       const machineTypes: MachineTypesByRegionState = {
@@ -31,7 +31,7 @@ describe('machineTypeSelectionHelper', () => {
       expect(result).toBe(true);
     });
 
-    it('should return false for a Machine Type which does not exists on the list', () => {
+    it('should return false for a Machine Type which does not exist on the list', () => {
       // Arrange
       const machineTypeID = '0';
       const machineTypes: MachineTypesByRegionState = {
@@ -47,8 +47,26 @@ describe('machineTypeSelectionHelper', () => {
       // Assert
       expect(result).toBe(false);
     });
+
+    it('should return false in case of a missing MachineTypeID', () => {
+      // Arrange
+      const machineTypeID = undefined;
+      const machineTypes: MachineTypesByRegionState = {
+        ...baseRequestState,
+        types: { '1': [] as MachineType[] },
+        typesByID: { '1': 'some_type' },
+        region: undefined,
+      };
+
+      // Act
+      const result = isMachineTypeIncludedInFilteredSet(machineTypeID, machineTypes);
+
+      // Assert
+      expect(result).toBe(false);
+    });
   });
 
+  /** Returns a map kind of object containing the lists of MachineTypes filtered by their MachineTypeCategory */
   describe('groupedMachineTypes', () => {
     it('returns the Machine Types grouped by categories according to the given Machine Types', () => {
       // Arrange
@@ -138,7 +156,7 @@ describe('machineTypeSelectionHelper', () => {
       expect(result).toStrictEqual('4 vCPU 8 GiB RAM (1 GPU)');
     });
 
-    it('should output an empty label for an empty Machine Type or an empty Machine Type', () => {
+    it('should output an empty label for an empty Machine Type', () => {
       // Arrange
       const machineType = {} as MachineType;
 
@@ -149,7 +167,7 @@ describe('machineTypeSelectionHelper', () => {
       expect(result).toBe('');
     });
 
-    it('should output an empty label for an empty Machine Type or a MachineType missing a `value` in the `memory` property', () => {
+    it('should output an empty label for a MachineType missing a `value` in the `memory` property', () => {
       // Arrange
       const machineType = {
         memory: {
@@ -164,7 +182,7 @@ describe('machineTypeSelectionHelper', () => {
       expect(result).toBe('');
     });
 
-    it('should output an empty label for an empty Machine Type or a MachineType missing a `unit` in the `memory` property', () => {
+    it('should output an empty label for a Machine Type missing a `unit` in the `memory` property', () => {
       // Arrange
       const machineType = {
         memory: {
@@ -194,7 +212,7 @@ describe('machineTypeSelectionHelper', () => {
       expect(result).toBe('1');
     });
 
-    it('returns an empty string in case a MachineType id is missing', () => {
+    it('returns an empty string in case an id is missing inside the MachineType', () => {
       // Arrange
       const machineType = {} as MachineType;
 
