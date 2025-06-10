@@ -91,6 +91,7 @@ const getOpenShiftVersion = (
   isMachinePoolError,
   isHypershift,
   clusterVersionID,
+  clusterVersionRawID,
 ) => {
   const extractedVersion = get(machinePool, 'version.id', '');
 
@@ -106,6 +107,7 @@ const getOpenShiftVersion = (
           isMachinePoolError={isMachinePoolError}
           isHypershift={isHypershift}
           controlPlaneVersion={clusterVersionID}
+          controlPlaneRawVersion={clusterVersionRawID}
         />
       ) : null}
     </>
@@ -133,6 +135,7 @@ const MachinePools = ({ cluster }) => {
   const region = cluster?.subscription?.rh_region_id;
   const clusterID = cluster?.id;
   const clusterVersionID = cluster?.version?.id;
+  const clusterRawVersionID = cluster?.version?.raw_id;
   // Initial state
   const [deletedRowIndex, setDeletedRowIndex] = React.useState(null);
   const [openedRows, setOpenedRows] = React.useState([]);
@@ -155,7 +158,13 @@ const MachinePools = ({ cluster }) => {
     isError: isMachinePoolError,
     error: machinePoolError,
     refetch: machinePoolOrNodePoolsRefetch,
-  } = useFetchMachineOrNodePools(clusterID, isHypershift, clusterVersionID, region);
+  } = useFetchMachineOrNodePools(
+    clusterID,
+    isHypershift,
+    clusterVersionID,
+    region,
+    clusterRawVersionID,
+  );
 
   const {
     data: clusterAutoscalerData,
@@ -343,6 +352,7 @@ const MachinePools = ({ cluster }) => {
               isMachinePoolError,
               isHypershift,
               clusterVersionID,
+              clusterRawVersionID,
             ),
           }
         : null,
@@ -466,6 +476,7 @@ const MachinePools = ({ cluster }) => {
               clusterId={clusterID}
               isHypershift={isHypershift}
               controlPlaneVersion={clusterVersionID}
+              controlPlaneRawVersion={clusterRawVersionID}
               machinePoolData={machinePoolData}
               region={region}
               refreshMachinePools={refreshMachinePools}
@@ -545,6 +556,7 @@ const MachinePools = ({ cluster }) => {
                         rowData.machinePool,
                         isMachinePoolError,
                         isHypershift,
+                        clusterRawVersionID || '',
                       )
                         ? onClickUpdateAction
                         : undefined,
@@ -592,6 +604,7 @@ const MachinePools = ({ cluster }) => {
         clusterId={clusterID}
         refreshMachinePools={refreshMachinePools}
         controlPlaneVersion={clusterVersionID}
+        controlPlaneRawVersion={clusterRawVersionID}
         region={region}
       />
       {isClusterAutoscalingModalOpen && (

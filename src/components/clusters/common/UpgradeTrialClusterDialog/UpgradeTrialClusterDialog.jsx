@@ -41,6 +41,7 @@ const UpgradeTrialClusterDialog = ({ onClose }) => {
 
   const isHypershift = isHypershiftCluster(cluster);
   const clusterVersionID = cluster?.version?.id;
+  const clusterRawVersionID = cluster?.version?.raw_id;
   const region = cluster?.subscription?.rh_region_id;
 
   const { data: machinePools } = useFetchMachineOrNodePools(
@@ -48,6 +49,7 @@ const UpgradeTrialClusterDialog = ({ onClose }) => {
     isHypershift,
     clusterVersionID,
     region,
+    clusterRawVersionID,
   );
 
   const { data } = useFetchMachineTypes(region);

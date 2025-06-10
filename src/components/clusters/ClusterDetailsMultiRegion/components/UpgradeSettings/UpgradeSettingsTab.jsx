@@ -120,6 +120,7 @@ const UpgradeSettingsTab = ({ cluster }) => {
     isHypershift,
     clusterVersion,
     region,
+    cluster?.version?.raw_id,
   );
 
   const isDisabled =
@@ -385,6 +386,7 @@ const UpgradeSettingsTab = ({ cluster }) => {
                       isHypershift={isHypershift}
                       clusterId={clusterID}
                       controlPlaneVersion={clusterVersion}
+                      controlPlaneRawVersion={cluster.version.raw_id}
                       isMachinePoolError={isMachinePoolError}
                       machinePoolData={machinePoolData}
                       region={region}

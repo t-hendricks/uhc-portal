@@ -32,26 +32,30 @@ export const UpdatePoolButton = ({
   isMachinePoolError,
   isHypershift,
   controlPlaneVersion,
+  controlPlaneRawVersion,
 }: {
   machinePool: NodePoolWithUpgradePolicies;
   isMachinePoolError: boolean;
   isHypershift: boolean;
   controlPlaneVersion: string;
+  controlPlaneRawVersion: string;
 }) => {
   const dispatch = useDispatch();
 
   const updateSchedules = useGlobalState((state) => state.clusterUpgrades.schedules);
 
-  const canBeUpdated = useSelector((state: GlobalState) =>
-    canMachinePoolBeUpgradedSelector(
-      updateSchedules,
-      controlPlaneVersion,
-      machinePool,
-      isMachinePoolError,
-      isHypershift,
-    ),
+  const canBeUpdated = canMachinePoolBeUpgradedSelector(
+    updateSchedules,
+    controlPlaneVersion,
+    machinePool,
+    isMachinePoolError,
+    isHypershift,
+    controlPlaneRawVersion,
   );
-  const isAvailableVersion = useIsControlPlaneValidForMachinePool(machinePool, controlPlaneVersion);
+  const isAvailableVersion = useIsControlPlaneValidForMachinePool(
+    machinePool,
+    controlPlaneRawVersion,
+  );
   const machinePoolUpdating = isMachinePoolUpgrading(machinePool);
 
   if (canBeUpdated && !isMachinePoolError) {
@@ -114,12 +118,14 @@ export const UpdateMachinePoolModal = ({
   clusterId,
   refreshMachinePools,
   controlPlaneVersion,
+  controlPlaneRawVersion,
   region,
 }: {
   isHypershift: boolean;
   clusterId: string;
   refreshMachinePools?: () => void;
   controlPlaneVersion?: string;
+  controlPlaneRawVersion?: string;
   region?: string;
 }) => {
   const [pending, setPending] = React.useState(false);
@@ -154,7 +160,7 @@ export const UpdateMachinePoolModal = ({
 
   const updateNodePool = async () => {
     setPending(true);
-    const errors = await updatePool([machinePool], clusterId, controlPlaneVersion || '', region);
+    const errors = await updatePool([machinePool], clusterId, controlPlaneRawVersion || '', region);
 
     setPending(false);
     setError(errors[0] || '');

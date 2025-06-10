@@ -47,12 +47,14 @@ function DetailsRight({ cluster, hasAutoscaleCluster, isDeprovisioned, clusterDe
   const region = cluster?.subscription?.rh_region_id;
   const clusterID = cluster?.id;
   const clusterVersionID = cluster?.version?.id;
+  const clusterRawVersionID = cluster?.version?.raw_id;
 
   const { data: machinePools } = useFetchMachineOrNodePools(
     clusterID,
     isHypershift,
     clusterVersionID,
     region,
+    clusterRawVersionID,
   );
 
   const nodesSectionData = totalNodesDataSelector(cluster, machinePools);

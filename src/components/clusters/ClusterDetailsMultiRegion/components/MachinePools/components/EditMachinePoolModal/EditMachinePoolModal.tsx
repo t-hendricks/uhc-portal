@@ -293,6 +293,7 @@ export const ConnectedEditMachinePoolModal = ({
   const hypershiftCluster = isHypershiftCluster(cluster);
   const clusterID = cluster?.id;
   const clusterVersionID = cluster?.version?.id;
+  const clusterRawVersionID = cluster?.version?.raw_id;
   const region = cluster?.subscription?.rh_region_id;
 
   const {
@@ -308,7 +309,13 @@ export const ConnectedEditMachinePoolModal = ({
     isError: isMachinePoolError,
     error: machinePoolError,
     refetch: machinePoolOrNodePoolsRefetch,
-  } = useFetchMachineOrNodePools(clusterID, hypershiftCluster, clusterVersionID, region);
+  } = useFetchMachineOrNodePools(
+    clusterID,
+    hypershiftCluster,
+    clusterVersionID,
+    region,
+    clusterRawVersionID,
+  );
 
   const isHypershift = isHypershiftCluster(cluster);
   return cluster ? (

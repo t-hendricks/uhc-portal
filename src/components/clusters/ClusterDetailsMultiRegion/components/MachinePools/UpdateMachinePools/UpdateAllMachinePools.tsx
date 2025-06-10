@@ -23,6 +23,7 @@ const UpdateAllMachinePools = ({
   clusterId,
   isHypershift,
   controlPlaneVersion,
+  controlPlaneRawVersion,
   initialErrorMessage, // introduced for testing purposes
   goToMachinePoolTab,
   machinePoolData,
@@ -33,6 +34,7 @@ const UpdateAllMachinePools = ({
   clusterId: string;
   isHypershift: boolean;
   controlPlaneVersion: string;
+  controlPlaneRawVersion: string;
   initialErrorMessage?: string;
   goToMachinePoolTab?: boolean;
   machinePoolData?: NodePool[];
@@ -59,8 +61,8 @@ const UpdateAllMachinePools = ({
   const machinePoolsToUpdate =
     existingMachinePools?.filter(
       (pool: NodePool) =>
-        compareIsMachinePoolBehindControlPlane(controlPlaneVersion, pool.version?.id) &&
-        isControlPlaneValidForMachinePool(pool, controlPlaneVersion) &&
+        compareIsMachinePoolBehindControlPlane(controlPlaneRawVersion, pool.version?.raw_id) &&
+        isControlPlaneValidForMachinePool(pool, controlPlaneRawVersion) &&
         !isMachinePoolScheduleError(pool) &&
         !isMachinePoolUpgrading(pool),
     ) || [];
@@ -74,7 +76,7 @@ const UpdateAllMachinePools = ({
     const errors = await updateAllPools(
       machinePoolsToUpdate,
       clusterId,
-      controlPlaneVersion,
+      controlPlaneRawVersion,
       region,
     );
     setPending(false);
@@ -140,5 +142,4 @@ const UpdateAllMachinePools = ({
     </>
   );
 };
-
 export default UpdateAllMachinePools;
