@@ -13,8 +13,6 @@ import {
 } from '@patternfly/react-core';
 
 import { defaultToOfflineTokens, hasRestrictTokensCapability } from '~/common/restrictTokensHelper';
-import { CLI_SSO_AUTHORIZATION } from '~/queries/featureGates/featureConstants';
-import { useFeatureGate } from '~/queries/featureGates/useFetchFeatureGate';
 import { isRestrictedEnv } from '~/restrictedEnv';
 import { Error } from '~/types/accounts_mgmt.v1';
 
@@ -47,7 +45,6 @@ type CLILoginPageProps = {
 
 const CLILoginPage = ({ showToken = false, showPath, isRosa = false }: CLILoginPageProps) => {
   const { organization, isLoading, error } = useOrganization();
-  const showDeprecationMessage = useFeatureGate(CLI_SSO_AUTHORIZATION);
 
   const [shouldShowTokens, setShouldShowTokens] = React.useState<boolean>(false);
 
@@ -88,8 +85,8 @@ const CLILoginPage = ({ showToken = false, showPath, isRosa = false }: CLILoginP
   }
 
   const pageTitle = isRosa
-    ? `Red Hat OpenShift Service on AWS (ROSA) ${showDeprecationMessage && !restrictedEnv && (restrictTokens || !shouldShowTokens) ? 'SSO login' : 'API Token'}`
-    : `OpenShift Cluster Manager ${showDeprecationMessage && !restrictedEnv && (restrictTokens || !shouldShowTokens) ? 'SSO login' : 'API Token'}`;
+    ? `Red Hat OpenShift Service on AWS (ROSA) ${!restrictedEnv && (restrictTokens || !shouldShowTokens) ? 'SSO login' : 'API Token'}`
+    : `OpenShift Cluster Manager ${!restrictedEnv && (restrictTokens || !shouldShowTokens) ? 'SSO login' : 'API Token'}`;
   const Instructions = isRosa ? InstructionsROSA : InstructionsOCM;
 
   return (

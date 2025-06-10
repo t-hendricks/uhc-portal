@@ -26,15 +26,9 @@ export const SSOAlert = ({
   >
     For enhanced security, we recommend authenticating with your SSO credentials. If needed, you can
     still{' '}
-    {gettingStartedPage ? (
-      <Link to="/create/rosa/getstarted" onClick={() => setShouldShowTokens(true)}>
-        use API tokens to authenticate
-      </Link>
-    ) : (
-      <Link to={isRosa ? '/token/rosa' : '/token'} onClick={() => setShouldShowTokens(true)}>
-        use API tokens to authenticate
-      </Link>
-    )}{' '}
+    <Link to={isRosa ? '/token/rosa' : '/token'} onClick={() => setShouldShowTokens(true)}>
+      use API tokens to authenticate
+    </Link>{' '}
     against Red Hat OpenShift Cluster Manager account.{' '}
     <ExternalLink href={isRosa ? links.LEARN_MORE_SSO_ROSA : links.LEARN_MORE_SSO} noIcon>
       Learn more about logging into OpenShift Cluster Manager CLI with Red Hat single sign-on.
