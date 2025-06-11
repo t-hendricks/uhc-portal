@@ -12,6 +12,14 @@ const useClusterTransferMock = jest.requireMock(
 );
 const useEditClusterTransferMock = useClusterTransferMock.useEditClusterTransfer;
 
+const fakeError = {
+  pending: false,
+  fulfilled: false,
+  error: { operationID: 'Test operation ID' },
+  errorMessage: 'Test error',
+  reason: 'Test reason',
+  errorCode: 'Test code',
+};
 describe('<AcceptDeclineTransferModal />', () => {
   const defaultProps = {
     transferId: 'test-id',
@@ -19,6 +27,8 @@ describe('<AcceptDeclineTransferModal />', () => {
     isOpen: true,
   };
   const mutateEdit = jest.fn();
+  const editClusterTransfer = jest.fn();
+  const reset = jest.fn();
 
   beforeEach(() => {});
 
@@ -47,8 +57,6 @@ describe('<AcceptDeclineTransferModal />', () => {
 
     render(<AcceptDeclineClusterTransferModal {...defaultProps} />);
     expect(screen.getByRole('button', { name: 'Accept/Decline' })).toBeInTheDocument();
-    // expect(screen.getByRole('button', { name: 'Decline Transfer' })).toBeInTheDocument();
-    // expect(screen.getByRole('button', { name: 'Cancel' })).toBeInTheDocument();
   });
   it('has expected buttons when modal is open', async () => {
     useEditClusterTransferMock.mockReturnValue({
@@ -65,5 +73,75 @@ describe('<AcceptDeclineTransferModal />', () => {
     expect(screen.getByRole('button', { name: 'Accept Transfer' })).toBeInTheDocument();
     expect(screen.getByRole('button', { name: 'Decline Transfer' })).toBeInTheDocument();
     expect(screen.getByRole('button', { name: 'Cancel' })).toBeInTheDocument();
+  });
+
+  it('Accept transfer triggers error', async () => {
+    useEditClusterTransferMock.mockReturnValue({
+      isPending: false,
+      isError: true,
+      error: fakeError,
+      mutate: editClusterTransfer,
+    });
+
+    render(<AcceptDeclineClusterTransferModal {...defaultProps} />);
+    await userEvent.click(screen.getByRole('button', { name: 'Accept/Decline' }));
+    await userEvent.click(screen.getByRole('button', { name: 'Accept Transfer' }));
+    expect(editClusterTransfer).toHaveBeenCalled();
+    expect(screen.getByText('Operation ID: Test operation ID')).toBeInTheDocument();
+  });
+
+  it('Decline transfer triggers error', async () => {
+    useEditClusterTransferMock.mockReturnValue({
+      isPending: false,
+      isError: true,
+      error: fakeError,
+      mutate: editClusterTransfer,
+    });
+
+    render(<AcceptDeclineClusterTransferModal {...defaultProps} />);
+    await userEvent.click(screen.getByRole('button', { name: 'Accept/Decline' }));
+    await userEvent.click(screen.getByRole('button', { name: 'Decline Transfer' }));
+    expect(editClusterTransfer).toHaveBeenCalled();
+    expect(screen.getByText('Operation ID: Test operation ID')).toBeInTheDocument();
+  });
+  it('Accept transfer click works properly', async () => {
+    useEditClusterTransferMock.mockReturnValue({
+      isPending: false,
+      isError: false,
+      error: null,
+      mutate: editClusterTransfer,
+    });
+
+    render(<AcceptDeclineClusterTransferModal {...defaultProps} />);
+    await userEvent.click(screen.getByRole('button', { name: 'Accept/Decline' }));
+    await userEvent.click(screen.getByRole('button', { name: 'Accept Transfer' }));
+    expect(editClusterTransfer).toHaveBeenCalled();
+  });
+  it('Decline transfer click works properly', async () => {
+    useEditClusterTransferMock.mockReturnValue({
+      isPending: false,
+      isError: false,
+      error: null,
+      mutate: editClusterTransfer,
+    });
+
+    render(<AcceptDeclineClusterTransferModal {...defaultProps} />);
+    await userEvent.click(screen.getByRole('button', { name: 'Accept/Decline' }));
+    await userEvent.click(screen.getByRole('button', { name: 'Decline Transfer' }));
+    expect(editClusterTransfer).toHaveBeenCalled();
+  });
+  it('should close modal on close button click', async () => {
+    useEditClusterTransferMock.mockReturnValue({
+      isPending: false,
+      isError: false,
+      error: null,
+      mutateEdit,
+      reset,
+    });
+
+    render(<AcceptDeclineClusterTransferModal {...defaultProps} />);
+    await userEvent.click(screen.getByRole('button', { name: 'Accept/Decline' }));
+    await userEvent.click(screen.getByRole('button', { name: 'Cancel' }));
+    expect(reset).toHaveBeenCalled();
   });
 });

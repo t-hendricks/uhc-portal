@@ -6,6 +6,7 @@ import { addNotification } from '@redhat-cloud-services/frontend-components-noti
 
 import ErrorBox from '~/components/common/ErrorBox';
 import { useEditClusterTransfer } from '~/queries/ClusterActionsQueries/useClusterTransfer';
+import { ClusterTransferStatus } from '~/types/accounts_mgmt.v1';
 import { ErrorState } from '~/types/types';
 
 type AcceptDeclineClusterTransferModalProps = {
@@ -27,16 +28,16 @@ export const AcceptDeclineClusterTransferModal = (
   } = useEditClusterTransfer();
   const dispatch = useDispatch();
 
-  const handleClose = (status?: string) => {
+  const handleClose = (status?: ClusterTransferStatus) => {
     reset();
     if (status) {
       dispatch(
         addNotification({
           variant: 'info',
           title:
-            status === 'accepted'
+            status === ClusterTransferStatus.Accepted.toLowerCase()
               ? 'Cluster ownership transfer was approved. It can take up to 24 hours for the transfer to complete.'
-              : `Cluster ownership transfer was ${status}`,
+              : `Cluster ownership transfer was ${status.toLowerCase()}.`,
           dismissable: true,
         }),
       );
@@ -45,12 +46,24 @@ export const AcceptDeclineClusterTransferModal = (
   };
 
   const approveTransfer = (id: string) => {
-    editClusterTransfer({ transferID: id, updatedStatus: 'accepted' });
-    handleClose('accepted');
+    editClusterTransfer(
+      { transferID: id, updatedStatus: ClusterTransferStatus.Accepted.toLowerCase() },
+      {
+        onSuccess: () => {
+          handleClose(ClusterTransferStatus.Accepted);
+        },
+      },
+    );
   };
   const declineTransfer = (id: string) => {
-    editClusterTransfer({ transferID: id, updatedStatus: 'declined' });
-    handleClose('declined');
+    editClusterTransfer(
+      { transferID: id, updatedStatus: ClusterTransferStatus.Declined.toLowerCase() },
+      {
+        onSuccess: () => {
+          handleClose(ClusterTransferStatus.Declined);
+        },
+      },
+    );
   };
 
   return (
@@ -100,7 +113,7 @@ export const AcceptDeclineClusterTransferModal = (
       >
         {isError ? (
           <ErrorBox
-            message="A problem occurred while canceling the transfer."
+            message="A problem occurred while processing the transfer."
             response={error?.error as ErrorState}
           />
         ) : (

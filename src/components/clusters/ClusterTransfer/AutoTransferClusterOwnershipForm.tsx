@@ -79,13 +79,7 @@ function AutoTransferClusterOwnershipForm(props: AutoTransferClusterOwnershipFor
   const isTransferAccepted = transfer.status === ClusterTransferStatus.Accepted.toLowerCase();
 
   const canCancelTransfer =
-    canEdit &&
-    !isPendingEdit &&
-    !isPendingCancel &&
-    !isErrorEdit &&
-    !isErrorCancel &&
-    isOwner &&
-    !isTransferAccepted;
+    canEdit && !isPendingEdit && !isPendingCancel && !isErrorEdit && isOwner && !isTransferAccepted;
 
   const submitTransfer = async ({
     username,
@@ -126,15 +120,24 @@ function AutoTransferClusterOwnershipForm(props: AutoTransferClusterOwnershipFor
   }, [dispatch, reset]);
 
   const handleCancelTransfer = () => {
-    cancelClusterTransfer({ transferID: transfer.id || '', updatedStatus: 'rescinded' });
-    dispatch(
-      addNotification({
-        variant: 'info',
-        title: 'Cluster ownership transfer canceled',
-        dismissable: true,
-      }),
+    cancelClusterTransfer(
+      {
+        transferID: transfer.id || '',
+        updatedStatus: ClusterTransferStatus.Rescinded.toLowerCase(),
+      },
+      {
+        onSuccess: () => {
+          dispatch(
+            addNotification({
+              variant: 'info',
+              title: 'Cluster ownership transfer canceled',
+              dismissable: true,
+            }),
+          );
+          handleClose();
+        },
+      },
     );
-    handleClose();
   };
 
   React.useEffect(() => {
@@ -149,7 +152,7 @@ function AutoTransferClusterOwnershipForm(props: AutoTransferClusterOwnershipFor
       <Stack hasGutter>
         <StackItem>
           <ErrorBox
-            message="A problem occurred while transfering cluster ownership"
+            message={`A problem occurred while ${isErrorCancel ? 'canceling transfer' : 'transfering cluster ownership'} `}
             response={(errorEdit?.error as ErrorState) || (errorCancel?.error as ErrorState)}
           />
         </StackItem>
@@ -175,8 +178,8 @@ function AutoTransferClusterOwnershipForm(props: AutoTransferClusterOwnershipFor
         handleCancelTransfer();
       }}
     >
-      <TransferDetails transfer={transfer} />
       {errorNotice}
+      <TransferDetails transfer={transfer} />
     </Modal>
   ) : (
     <Formik

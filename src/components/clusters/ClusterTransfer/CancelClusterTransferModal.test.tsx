@@ -11,6 +11,14 @@ const useClusterTransferMock = jest.requireMock(
   '~/queries/ClusterActionsQueries/useClusterTransfer',
 );
 const useEditClusterTransferMock = useClusterTransferMock.useEditClusterTransfer;
+const fakeError = {
+  pending: false,
+  fulfilled: false,
+  error: { operationID: 'Test operation ID' },
+  errorMessage: 'Test error',
+  reason: 'Test reason',
+  errorCode: 'Test code',
+};
 
 describe('<CancelTransferModal />', () => {
   const defaultProps = {
@@ -19,6 +27,7 @@ describe('<CancelTransferModal />', () => {
     isOpen: true,
   };
   const mutateEdit = jest.fn();
+  const cancelClusterTransfer = jest.fn();
 
   beforeEach(() => {});
 
@@ -62,5 +71,19 @@ describe('<CancelTransferModal />', () => {
     await userEvent.click(screen.getByRole('button', { name: 'Cancel' }));
     expect(screen.getByRole('button', { name: 'Cancel Transfer' })).toBeInTheDocument();
     expect(screen.getByRole('button', { name: 'Close' })).toBeInTheDocument();
+  });
+  it('Cancel transfer triggers error', async () => {
+    useEditClusterTransferMock.mockReturnValue({
+      isPending: false,
+      isError: true,
+      error: fakeError,
+      mutate: cancelClusterTransfer,
+    });
+
+    render(<CancelClusterTransferModal {...defaultProps} />);
+    await userEvent.click(screen.getByRole('button', { name: 'Cancel' }));
+    await userEvent.click(screen.getByRole('button', { name: 'Cancel Transfer' }));
+    expect(cancelClusterTransfer).toHaveBeenCalled();
+    expect(screen.getByText('Operation ID: Test operation ID')).toBeInTheDocument();
   });
 });

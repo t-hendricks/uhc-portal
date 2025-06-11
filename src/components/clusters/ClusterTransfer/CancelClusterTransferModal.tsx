@@ -7,6 +7,7 @@ import { addNotification } from '@redhat-cloud-services/frontend-components-noti
 import ButtonWithTooltip from '~/components/common/ButtonWithTooltip';
 import ErrorBox from '~/components/common/ErrorBox';
 import { useEditClusterTransfer } from '~/queries/ClusterActionsQueries/useClusterTransfer';
+import { ClusterTransferStatus } from '~/types/accounts_mgmt.v1';
 import { ErrorState } from '~/types/types';
 
 type CancelClusterTransferModalProps = {
@@ -57,16 +58,25 @@ export const CancelClusterTransferModal = (props: CancelClusterTransferModalProp
             isDisabled={isPending}
             isLoading={isPending}
             onClick={() => {
-              cancelClusterTransfer({ transferID: transferId, updatedStatus: 'rescinded' });
-              dispatch(
-                addNotification({
-                  variant: 'info',
-                  title: 'Cluster ownership transfer canceled',
-                  dismissable: true,
-                }),
-              );
+              cancelClusterTransfer(
+                {
+                  transferID: transferId,
+                  updatedStatus: ClusterTransferStatus.Rescinded.toLowerCase(),
+                },
+                {
+                  onSuccess: () => {
+                    dispatch(
+                      addNotification({
+                        variant: 'info',
+                        title: 'Cluster ownership transfer canceled',
+                        dismissable: true,
+                      }),
+                    );
 
-              handleClose();
+                    handleClose();
+                  },
+                },
+              );
             }}
           >
             Cancel Transfer
