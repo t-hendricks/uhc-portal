@@ -1,5 +1,6 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { Field } from 'formik';
+import isEqual from 'lodash/isEqual';
 
 import { Flex, FormGroup } from '@patternfly/react-core';
 
@@ -16,6 +17,7 @@ import { FieldId as RosaFieldId } from '~/components/clusters/wizards/rosa/const
 import ExternalLink from '~/components/common/ExternalLink';
 import { FormGroupHelperText } from '~/components/common/FormGroupHelperText';
 import PopoverHint from '~/components/common/PopoverHint';
+import { usePreviousProps } from '~/hooks/usePreviousProps';
 import { MAX_NODES_TOTAL_249 } from '~/queries/featureGates/featureConstants';
 import { useFeatureGate } from '~/queries/featureGates/useFetchFeatureGate';
 
@@ -27,6 +29,7 @@ export const AutoScaleEnabledInputs = () => {
     setFieldTouched,
     getFieldProps,
     getFieldMeta,
+    validateForm,
     values: {
       [RosaFieldId.Hypershift]: hypershiftValue,
       [RosaFieldId.AutoscalingEnabled]: autoscalingEnabled,
@@ -140,20 +143,6 @@ export const AutoScaleEnabledInputs = () => {
   ]);
 
   useEffect(() => {
-    if (autoscalingEnabled && minNodes) {
-      const minAutoscaleValue = minReplicas ? parseInt(minReplicas, 10) : 0;
-      const min = minAutoscaleValue < minNodes ? minNodes : minAutoscaleValue;
-      if (min) {
-        setFieldValue(RosaFieldId.MinReplicas, min);
-      }
-      if (!maxReplicas) {
-        setFieldValue(RosaFieldId.MaxReplicas, min);
-      }
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [autoscalingEnabled, isMultiAz, minNodes, setFieldValue]);
-
-  useEffect(() => {
     if (maxReplicas) {
       // to trigger MaxReplicas field validation
       setFieldValue(RosaFieldId.MaxReplicas, maxReplicas, true);
@@ -184,6 +173,34 @@ export const AutoScaleEnabledInputs = () => {
       ? 'Max nodes cannot be less than min nodes.'
       : undefined;
   };
+
+  const prevMachinePoolsSubnets = usePreviousProps(machinePoolsSubnets);
+
+  // Validate max nodes on subnetChanges
+  React.useEffect(() => {
+    if (!isEqual(machinePoolsSubnets, prevMachinePoolsSubnets)) {
+      setMaxErrorMessage(validateMaxNodes(maxReplicas));
+      validateForm();
+    }
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [machinePoolsSubnets, prevMachinePoolsSubnets, maxReplicas]);
+
+  useEffect(() => {
+    if (autoscalingEnabled && minNodes) {
+      const minAutoscaleValue = minReplicas ? parseInt(minReplicas, 10) : 0;
+      const min = minAutoscaleValue < minNodes ? minNodes : minAutoscaleValue;
+
+      if (min) {
+        setFieldValue(RosaFieldId.MinReplicas, min);
+      }
+      if (!maxReplicas || (maxReplicas < min && maxReplicas < minNodes)) {
+        setFieldValue(RosaFieldId.MaxReplicas, minNodes, true);
+        setMaxErrorMessage(validateMaxNodes(maxReplicas));
+      }
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [autoscalingEnabled, isMultiAz, minNodes, setFieldValue]);
 
   return (
     <Flex
