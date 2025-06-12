@@ -114,11 +114,22 @@ describe('Rosa cluster Get Started page(OCP-56363)', { tags: ['smoke'] }, () => 
     RosaGetstartedPage.rosaPrerequisitesStep2Section()
       .scrollIntoView()
       .contains(
-        'Log in to the ROSA CLI with your Red Hat account token and create AWS account roles and policies',
+        'Log in to the ROSA CLI with your Red Hat account and create AWS account roles and policies',
       )
       .should('be.visible');
     RosaGetstartedPage.rosaPrerequisitesStep21Content().within(() => {
-      cy.contains('To authenticate, run this command').should('be.exist').should('be.visible');
+      cy.contains(
+        'To authenticate, run this command and enter your Red Hat login credentials via SSO',
+      )
+        .should('be.exist')
+        .should('be.visible');
+      cy.get('input').should('have.value', 'rosa login --use-auth-code');
+      RosaGetstartedPage.checkAnchorProperties(
+        cy.get('a'),
+        'logging into OpenShift Cluster Manager ROSA CLI with Red Hat single sign-on',
+        'https://docs.redhat.com/en/documentation/red_hat_openshift_service_on_aws/4/html/cli_tools/rosa-cli#rosa-login-sso_rosa-getting-started-cli',
+        true,
+      );
     });
 
     RosaGetstartedPage.rosaPrerequisitesStep22Content().within(() => {
