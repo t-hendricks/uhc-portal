@@ -8,13 +8,12 @@ import {
   CardTitle,
   EmptyState,
   EmptyStateBody,
+  Flex,
+  FlexItem,
   Grid,
   GridItem,
   PageSection,
   Spinner,
-  Split,
-  SplitItem,
-  Title,
 } from '@patternfly/react-core';
 
 import { createOverviewQueryObject } from '../../common/queryHelpers';
@@ -139,24 +138,15 @@ const Dashboard = (props) => {
 
   return (
     <AppPage title={PAGE_TITLE}>
-      <PageHeader>
-        <Split hasGutter>
-          <SplitItem>
-            <Title
-              headingLevel="h1"
-              size="2xl"
-              className="page-title"
-              widget-type="InsightsPageHeaderTitle"
-            >
-              Dashboard
-            </Title>
-          </SplitItem>
-          <SplitItem isFilled />
-          <SplitItem>
-            <ClusterListActions isDashboardView />
-          </SplitItem>
-        </Split>
-      </PageHeader>
+      <Flex hasGutter className="pf-v6-u-mt-xl">
+        <FlexItem>
+          <PageHeader title="Dashboard" />
+        </FlexItem>
+        <FlexItem isFilled align={{ default: 'alignRight' }} />
+        <FlexItem>
+          <ClusterListActions isDashboardView />
+        </FlexItem>
+      </Flex>
       <PageSection>
         <Grid hasGutter className="ocm-c-overview">
           <TopOverviewSection
