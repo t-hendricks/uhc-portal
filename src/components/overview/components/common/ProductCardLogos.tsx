@@ -1,5 +1,5 @@
+import AdvancedClusterManagementLogo from '~/styles/images/ACMLogo.svg';
 import AdvancedClusterSecurityForKubernetesLogo from '~/styles/images/AdvancedClusterSecurityForKubernetesLogo.svg';
-import AdvancedClusterManagementLogo from '~/styles/images/Logo-Red_Hat-Hat_icon-Standard-RGB.svg';
 import RedHatOpenShiftAILogo from '~/styles/images/RedHatOpenShiftAILogo.svg';
 import RedHatOpenShiftGitOpsLogo from '~/styles/images/RedHatOpenShiftGitOpsLogo.svg';
 import RedHatOpenShiftPipelinesLogo from '~/styles/images/RedHatOpenShiftPipelinesLogo.svg';
