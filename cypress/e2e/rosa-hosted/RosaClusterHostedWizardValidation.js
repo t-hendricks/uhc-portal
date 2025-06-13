@@ -1,5 +1,4 @@
 import CreateRosaWizardPage from '../../pageobjects/CreateRosaWizard.page';
-import LeaveCreateClusterPrompt from '../../pageobjects/LeaveCreateClusterPrompt';
 import CreateClusterPage from '../../pageobjects/CreateCluster.page';
 import OverviewPage from '../../pageobjects/Overview.page';
 
@@ -222,6 +221,87 @@ describe('Rosa hosted(Hypershift) cluster wizard validations', { tags: ['smoke',
         .MinAndMaxLimitDependencyError,
       false,
     );
+    // Check for validation errors in machine pool node counts fields after subnet changes.
+    CreateRosaWizardPage.addMachinePoolLink().click();
+    CreateRosaWizardPage.selectMachinePoolPrivateSubnet(
+      qeInfrastructure.SUBNETS.ZONES[clusterFieldValidations.MachinePools[1].AvailabilityZones]
+        .PRIVATE_SUBNET_NAME,
+      2,
+    );
+    CreateRosaWizardPage.maximumNodeCountMinusButton().click();
+    CreateRosaWizardPage.selectMachinePoolPrivateSubnet(
+      qeInfrastructure.SUBNETS.ZONES[clusterFieldValidations.MachinePools[2].AvailabilityZones]
+        .PRIVATE_SUBNET_NAME,
+      2,
+    );
+    CreateRosaWizardPage.isTextContainsInPage(
+      clusterFieldValidations.ClusterSettings.Machinepool.NodeCount.MultiZone
+        .MinAndMaxLimitDependencyError,
+    );
+    CreateRosaWizardPage.minimumNodeCountMinusButton().click();
+    CreateRosaWizardPage.isTextContainsInPage(
+      clusterFieldValidations.ClusterSettings.Machinepool.NodeCount.MultiZone.LowerLimitError,
+      false,
+    );
+    CreateRosaWizardPage.isTextContainsInPage(
+      clusterFieldValidations.ClusterSettings.Machinepool.NodeCount.MultiZone
+        .MinAndMaxLimitDependencyError,
+      false,
+    );
+    // check for minimum and maximum node counts when both fields set to minimum value(i.e 1) per machine pool and overall machine pool count reduced to 1.
+    CreateRosaWizardPage.removeMachinePool(2);
+    CreateRosaWizardPage.isTextContainsInPage(
+      clusterFieldValidations.ClusterSettings.Machinepool.NodeCount.MultiZone
+        .MinAndMaxLimitDependencyError,
+      false,
+    );
+    CreateRosaWizardPage.minimumNodeInput().should('have.value', '2');
+    CreateRosaWizardPage.maximumNodeInput().should('have.value', '2');
+    // check for minimum and maximum node count when both fields set to > minimum value(i.e 1) per machine pool and overall machine pool count reduced to 1.
+    CreateRosaWizardPage.addMachinePoolLink().click();
+    CreateRosaWizardPage.selectMachinePoolPrivateSubnet(
+      qeInfrastructure.SUBNETS.ZONES[clusterFieldValidations.MachinePools[2].AvailabilityZones]
+        .PRIVATE_SUBNET_NAME,
+      2,
+    );
+    CreateRosaWizardPage.setMinimumNodeCount('3');
+    CreateRosaWizardPage.removeMachinePool(2);
+    CreateRosaWizardPage.minimumNodeInput().should('have.value', '3');
+    CreateRosaWizardPage.maximumNodeInput().should('have.value', '2');
+    CreateRosaWizardPage.isTextContainsInPage(
+      clusterFieldValidations.ClusterSettings.Machinepool.NodeCount.MultiZone
+        .MinAndMaxLimitDependencyError,
+    );
+
+    // check for minimum and maximum node count, validation errors when minimum node count > maximum node count,maximum node count= minimum value(i.e 1) and overall machine pool count reduced to 1.
+    CreateRosaWizardPage.addMachinePoolLink().click();
+    CreateRosaWizardPage.selectMachinePoolPrivateSubnet(
+      qeInfrastructure.SUBNETS.ZONES[clusterFieldValidations.MachinePools[1].AvailabilityZones]
+        .PRIVATE_SUBNET_NAME,
+      2,
+    );
+    CreateRosaWizardPage.addMachinePoolLink().click();
+    CreateRosaWizardPage.selectMachinePoolPrivateSubnet(
+      qeInfrastructure.SUBNETS.ZONES[clusterFieldValidations.MachinePools[2].AvailabilityZones]
+        .PRIVATE_SUBNET_NAME,
+      3,
+    );
+    CreateRosaWizardPage.setMinimumNodeCount('3');
+    CreateRosaWizardPage.setMaximumNodeCount('1');
+    CreateRosaWizardPage.removeMachinePool(2);
+    CreateRosaWizardPage.removeMachinePool(2);
+    CreateRosaWizardPage.minimumNodeInput().should('have.value', '3');
+    CreateRosaWizardPage.maximumNodeInput().should('have.value', '2');
+    CreateRosaWizardPage.isTextContainsInPage(
+      clusterFieldValidations.ClusterSettings.Machinepool.NodeCount.MultiZone.LowerLimitError,
+      false,
+    );
+    CreateRosaWizardPage.isTextContainsInPage(
+      clusterFieldValidations.ClusterSettings.Machinepool.NodeCount.MultiZone
+        .MinAndMaxLimitDependencyError,
+    );
+    CreateRosaWizardPage.setMinimumNodeCount('2');
+    CreateRosaWizardPage.setMinimumNodeCount('2');
   });
   it('Step - Machine pool- Root disk size - widget validations', () => {
     CreateRosaWizardPage.rootDiskSizeInput().type('{selectAll}').type('73');

@@ -343,7 +343,7 @@ class CreateRosaCluster extends Page {
 
   isTextContainsInPage(text, present = true) {
     if (present) {
-      cy.contains(text).should('be.exist').should('be.visible');
+      cy.contains(text).scrollIntoView().should('be.exist').should('be.visible');
     } else {
       cy.contains(text).should('not.exist');
     }
