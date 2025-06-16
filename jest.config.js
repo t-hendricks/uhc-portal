@@ -53,6 +53,7 @@ const config = {
     '<rootDir>/src/.*styles.*',
     '<rootDir>/src/.*types.*',
     '<rootDir>/src/.*constants.*',
+    '<rootDir>/src/services/apiRequest.*',
   ],
   coverageDirectory: 'unitTestCoverage',
   coverageReporters: ['html', 'json-summary', 'text-summary'],
