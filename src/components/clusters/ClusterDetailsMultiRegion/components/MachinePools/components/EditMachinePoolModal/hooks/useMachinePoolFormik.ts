@@ -21,6 +21,7 @@ import {
   getWorkerNodeVolumeSizeMaxGiB,
   getWorkerNodeVolumeSizeMinGiB,
 } from '~/components/clusters/common/machinePools/utils';
+import { CloudProviderType } from '~/components/clusters/wizards/common';
 import { MAX_NODES_TOTAL_249 } from '~/queries/featureGates/featureConstants';
 import { useFeatureGate } from '~/queries/featureGates/useFetchFeatureGate';
 import { MachineTypesResponse } from '~/queries/types';
@@ -48,6 +49,7 @@ export type EditMachinePoolValues = {
   instanceType: string | undefined;
   privateSubnetId: string | undefined;
   securityGroupIds: string[];
+  secure_boot?: boolean;
 };
 
 type UseMachinePoolFormikArgs = {
@@ -62,6 +64,13 @@ const isMachinePool = (pool?: MachinePool | NodePool): pool is MachinePool =>
 
 const isNodePool = (pool?: MachinePool | NodePool): pool is NodePool => pool?.kind === 'NodePool';
 
+const shieldedVmSecureBoot = (machinePool: MachinePool, cluster: ClusterFromSubscription) => {
+  if (!(machinePool as MachinePool)?.gcp) {
+    return cluster.gcp?.security?.secure_boot;
+  }
+  return (machinePool as MachinePool)?.gcp?.secure_boot !== false;
+};
+
 const useMachinePoolFormik = ({
   machinePool,
   cluster,
@@ -73,6 +82,7 @@ const useMachinePoolFormik = ({
     (machinePool as MachinePool)?.availability_zones?.length,
   );
   const rosa = isROSA(cluster);
+  const isGCP = cluster?.cloud_provider?.id === CloudProviderType.Gcp;
 
   const minNodesRequired = getClusterMinNodes({
     cluster,
@@ -111,7 +121,7 @@ const useMachinePoolFormik = ({
       autoscaleMax /= 3;
     }
 
-    return {
+    const machinePoolData: EditMachinePoolValues = {
       name: machinePool?.id || '',
       autoscaling: !!machinePool?.autoscaling,
       auto_repair: autoRepair,
@@ -140,7 +150,13 @@ const useMachinePoolFormik = ({
         (machinePool as NodePool)?.aws_node_pool?.additional_security_group_ids ||
         [],
     };
-  }, [machinePool, isMachinePoolMz, minNodesRequired]);
+
+    if (isGCP) {
+      machinePoolData.secure_boot = shieldedVmSecureBoot(machinePool as MachinePool, cluster);
+    }
+
+    return machinePoolData;
+  }, [machinePool, isMachinePoolMz, minNodesRequired, cluster, isGCP]);
 
   const isHypershift = isHypershiftCluster(cluster);
 

@@ -61,6 +61,7 @@ export type FakeCluster = // AICluster &
     | 'version'
     | 'hypershift'
     | 'aws'
+    | 'gcp'
     | 'gcp_network'
     | 'status'
     | 'multi_az'

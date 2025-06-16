@@ -68,6 +68,7 @@ import {
 } from '~/types/accounts_mgmt.v1';
 import { Version } from '~/types/clusters_mgmt.v1';
 
+import { ShieldedVM } from '../../../common/ShieldedVM';
 import { ClusterPrivacyType } from '../../Networking/constants';
 
 function Details() {
@@ -422,23 +423,12 @@ function Details() {
             </>
           )}
           {isGCP && (
-            <GridItem>
-              <FormGroup label="Shielded VM" fieldId={FieldId.SecureBoot}>
-                <Split hasGutter className="pf-u-mb-0">
-                  <SplitItem>
-                    <CheckboxField
-                      name={FieldId.SecureBoot}
-                      label="Enable Secure Boot support for Shielded VMs"
-                      isDisabled={isIncompatibleSecureBootVersion}
-                    />
-                  </SplitItem>
-                  <SplitItem>
-                    <PopoverHint hint={constants.enableSecureBootHint} />
-                  </SplitItem>
-                </Split>
-                {showSecureBootAlert && secureBootAlert}
-              </FormGroup>
-            </GridItem>
+            <ShieldedVM
+              isEditModal={false}
+              showSecureBootAlert={showSecureBootAlert}
+              secureBootAlert={secureBootAlert}
+              isIncompatibleSecureBootVersion={isIncompatibleSecureBootVersion}
+            />
           )}
           <GridItem>
             <Title headingLevel="h4">Monitoring</Title>

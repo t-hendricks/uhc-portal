@@ -1,7 +1,9 @@
 import * as React from 'react';
 
+import fixtures from '~/components/clusters/ClusterDetailsMultiRegion/__tests__/ClusterDetails.fixtures';
 import { MAX_NODES_HCP } from '~/components/clusters/common/machinePools/constants';
-import { render, screen, within } from '~/testUtils';
+import { GCP_SECURE_BOOT } from '~/queries/featureGates/featureConstants';
+import { mockUseFeatureGate, render, screen, within } from '~/testUtils';
 import { ClusterFromSubscription } from '~/types/types';
 
 import EditMachinePoolModal from './EditMachinePoolModal';
@@ -30,6 +32,17 @@ const machinePoolsResponse = [
       id: 'openshift-v4.12.5-candidate',
       href: '/api/clusters_mgmt/v1/versions/openshift-v4.12.5-candidate',
     },
+  },
+];
+
+const gcpMachinePoolResponse = [
+  {
+    availability_zones: ['us-east1-b'],
+    href: '/api/clusters_mgmt/v1/clusters/2j6c15idtf09ql5atgcbnop8tm1pr474/machine_pools/novm',
+    id: 'novm',
+    instance_type: 'n2-highmem-4',
+    kind: 'MachinePool',
+    replicas: 0,
   },
 ];
 
@@ -304,6 +317,65 @@ describe('<EditMachinePoolModal />', () => {
       expect(autoRepairCheckbox).toBeInTheDocument();
       expect(screen.getAllByRole('button', { name: 'Plus' })[1]).toBeDisabled();
       expect(await screen.findByTestId('submit-btn')).toBeDisabled();
+    });
+  });
+
+  describe('GCP cluster machine pool', () => {
+    mockUseFeatureGate([[GCP_SECURE_BOOT, true]]);
+    const { OSDGCPClusterDetails } = fixtures;
+
+    const GCPClusterWithSecureBoot = {
+      ...OSDGCPClusterDetails.cluster,
+      cloud_provider: {
+        id: 'gcp',
+      },
+      gcp: {
+        security: {
+          secure_boot: true,
+        },
+      },
+    };
+    it('Add machine pool inherits secure boot in case of GCP cluster', async () => {
+      render(
+        <EditMachinePoolModal
+          cluster={GCPClusterWithSecureBoot as unknown as ClusterFromSubscription}
+          onClose={() => {}}
+          {...commonProps}
+          machinePoolsResponse={gcpMachinePoolResponse}
+        />,
+      );
+
+      expect(
+        await screen.findByLabelText('Enable Secure Boot support for Shielded VMs'),
+      ).toBeInTheDocument();
+      const check = await screen.findByRole('checkbox', {
+        name: /Shielded VM Enable Secure Boot support for Shielded VMs/i,
+      });
+
+      expect(check).toBeChecked();
+      expect(check).not.toBeDisabled();
+    });
+
+    it('Edit machine pool GCP Secure boot inherited by the cluster', async () => {
+      render(
+        <EditMachinePoolModal
+          cluster={GCPClusterWithSecureBoot as unknown as ClusterFromSubscription}
+          onClose={() => {}}
+          {...commonProps}
+          machinePoolId="novm"
+          machinePoolsResponse={gcpMachinePoolResponse}
+        />,
+      );
+
+      expect(
+        await screen.findByLabelText('Enable Secure Boot support for Shielded VMs'),
+      ).toBeInTheDocument();
+      const check = await screen.findByRole('checkbox', {
+        name: /Shielded VM Enable Secure Boot support for Shielded VMs/i,
+      });
+
+      expect(check).toBeChecked();
+      expect(check).toBeDisabled();
     });
   });
 });

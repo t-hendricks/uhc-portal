@@ -27,6 +27,7 @@ export const useEditCreateMachineOrNodePools = (
       values: EditMachinePoolValues;
       currentMPId?: string;
     }) => {
+      const updatedSecureBoot = cluster.gcp?.security?.secure_boot === values.secure_boot;
       const clusterService = region ? getClusterServiceForRegion(region) : getClusterService();
       const isMultiZoneMachinePool = isMPoolAz(
         cluster,
@@ -41,6 +42,7 @@ export const useEditCreateMachineOrNodePools = (
             isEdit: !!currentMPId,
             isMultiZoneMachinePool,
             isROSACluster: isROSA(cluster),
+            isSecureBootUpdated: updatedSecureBoot,
           });
       if (currentMPId) {
         const request = isHypershift
@@ -49,7 +51,6 @@ export const useEditCreateMachineOrNodePools = (
         const response = await request(cluster.id || '', currentMPId, pool);
         return response;
       }
-
       const request = isHypershift ? clusterService.addNodePool : clusterService.addMachinePool;
       const response = await request(cluster.id || '', pool);
       return response;

@@ -7,9 +7,11 @@ import useMachinePoolFormik from './useMachinePoolFormik';
 import {
   defaultCluster,
   defaultExpectedInitialValues,
+  defaultGCPCluster,
   defaultMachinePool,
   defaultMachinePools,
   defaultMachineTypes,
+  gcpSecureBootExpectedInitialValues,
   hyperShiftCluster,
   hyperShiftExpectedInitialValues,
 } from './useMachinePoolFormik.fixtures';
@@ -42,6 +44,11 @@ describe('useMachinePoolFormik', () => {
       'should return different autoscale min/max and replicas initial values on hypershift enabled cluster',
       hyperShiftCluster,
       hyperShiftExpectedInitialValues,
+    ],
+    [
+      'should return default secure boot value for gcp cluster inherited from cluster',
+      defaultGCPCluster,
+      gcpSecureBootExpectedInitialValues,
     ],
   ])('%s', (_title, cluster, expected) => {
     const { initialValues } = renderHook(() =>

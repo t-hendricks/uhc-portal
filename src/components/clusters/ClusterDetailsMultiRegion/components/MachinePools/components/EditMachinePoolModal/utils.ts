@@ -49,10 +49,12 @@ export const buildMachinePoolRequest = (
     isEdit,
     isMultiZoneMachinePool,
     isROSACluster,
+    isSecureBootUpdated,
   }: {
     isEdit: boolean;
     isMultiZoneMachinePool: boolean;
     isROSACluster: boolean;
+    isSecureBootUpdated?: boolean;
   },
 ): MachinePool => {
   const machinePool: MachinePool = {
@@ -84,6 +86,12 @@ export const buildMachinePoolRequest = (
         aws: {
           size: values.diskSize,
         },
+      };
+    }
+
+    if (!isSecureBootUpdated) {
+      machinePool.gcp = {
+        secure_boot: values.secure_boot,
       };
     }
 

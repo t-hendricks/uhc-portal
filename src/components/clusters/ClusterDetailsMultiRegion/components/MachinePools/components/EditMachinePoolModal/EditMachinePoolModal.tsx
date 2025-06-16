@@ -10,6 +10,8 @@ import { getErrorMessage } from '~/common/errors';
 import getClusterName from '~/common/getClusterName';
 import { isHypershiftCluster } from '~/components/clusters/common/clusterStates';
 import { getMaxNodesHCP, getNodeCount } from '~/components/clusters/common/machinePools/utils';
+import { CloudProviderType } from '~/components/clusters/wizards/common';
+import { ShieldedVM } from '~/components/clusters/wizards/common/ShieldedVM';
 import ErrorBox from '~/components/common/ErrorBox';
 import Modal from '~/components/common/Modal/Modal';
 import { closeModal } from '~/components/common/Modal/ModalActions';
@@ -17,7 +19,7 @@ import modals from '~/components/common/Modal/modals';
 import { useFetchMachineTypes } from '~/queries/ClusterDetailsQueries/MachinePoolTab/MachineTypes/useFetchMachineTypes';
 import { useEditCreateMachineOrNodePools } from '~/queries/ClusterDetailsQueries/MachinePoolTab/useEditCreateMachineOrNodePools';
 import { useFetchMachineOrNodePools } from '~/queries/ClusterDetailsQueries/MachinePoolTab/useFetchMachineOrNodePools';
-import { MAX_NODES_TOTAL_249 } from '~/queries/featureGates/featureConstants';
+import { GCP_SECURE_BOOT, MAX_NODES_TOTAL_249 } from '~/queries/featureGates/featureConstants';
 import { useFeatureGate } from '~/queries/featureGates/useFetchFeatureGate';
 import { MachineTypesResponse } from '~/queries/types';
 import { useGlobalState } from '~/redux/hooks';
@@ -92,7 +94,10 @@ const EditMachinePoolModal = ({
     machineTypes: machineTypesResponse,
   });
 
+  const isGCP = cluster?.cloud_provider?.id === CloudProviderType.Gcp;
+
   const allow249NodesOSDCCSROSA = useFeatureGate(MAX_NODES_TOTAL_249);
+  const isSecureBootEnabled = useFeatureGate(GCP_SECURE_BOOT);
 
   const setCurrentMPId = React.useCallback(
     (id: string) => setCurrentMachinePool(machinePoolsResponse?.find((mp) => mp.id === id)),
@@ -266,6 +271,7 @@ const EditMachinePoolModal = ({
                   machineTypes={machineTypesResponse}
                 />
               </ExpandableSection>
+              {isGCP && isSecureBootEnabled ? <ShieldedVM isEditModal={!!isEdit} /> : null}
               <EditSecurityGroupsSection cluster={cluster} isReadOnly={isEdit} />
               {canUseSpotInstances(cluster) && <SpotInstancesSection isEdit={isEdit} />}
             </Form>

@@ -118,6 +118,19 @@ export const defaultCluster: Readonly<ClusterFromSubscription> = {
   metrics: defaultMetric,
 };
 
+export const defaultGCPCluster: Readonly<ClusterFromSubscription> = {
+  subscription: { ...defaultSubscription },
+  metrics: defaultMetric,
+  cloud_provider: {
+    id: 'gcp',
+  },
+  gcp: {
+    security: {
+      secure_boot: true,
+    },
+  },
+};
+
 export const defaultMachinePool: Readonly<MachinePool | NodePool> = {};
 
 export const hyperShiftCluster: Readonly<ClusterFromSubscription> = {
@@ -169,4 +182,9 @@ export const hyperShiftExpectedInitialValues = {
   autoscaleMax: 2,
   autoscaleMin: 2,
   replicas: 2,
+};
+
+export const gcpSecureBootExpectedInitialValues = {
+  ...defaultExpectedInitialValues,
+  secure_boot: true,
 };
