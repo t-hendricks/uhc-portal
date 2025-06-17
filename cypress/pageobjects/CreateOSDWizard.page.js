@@ -550,6 +550,7 @@ class CreateOSDCluster extends Page {
 
   selectMarketplaceSubscription(marketplace) {
     cy.get('div[name="marketplace_selection"]').find('button').click();
+    cy.contains('button', 'Red Hat Marketplace').should('not.exist');
     cy.get('button').contains(marketplace).click();
   }
 
