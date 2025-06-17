@@ -33,6 +33,7 @@ export const MAX_NODES_TOTAL_249 = 'ocmui-max-nodes-total-249';
 export const ENHANCED_HTPASSWRD = 'ocmui-enhanced-htpasswrd';
 export const ASSISTED_MIGRATION_ENABLED = 'assisted-migration';
 export const GCP_SECURE_BOOT = 'ocmui-gcp-secure-boot';
+export const HIDE_RH_MARKETPLACE = 'OCMUI-hide-rh-marketplace';
 
 export default {
   AUTO_CLUSTER_TRANSFER_OWNERSHIP,
@@ -52,4 +53,5 @@ export default {
   ENHANCED_HTPASSWRD,
   ASSISTED_MIGRATION_ENABLED,
   GCP_SECURE_BOOT,
+  HIDE_RH_MARKETPLACE,
 } as const;
