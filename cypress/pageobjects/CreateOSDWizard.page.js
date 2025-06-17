@@ -18,6 +18,12 @@ class CreateOSDCluster extends Page {
   }
 
   isClusterDetailsScreen() {
+    // Inline snippet to avoid flaky behavior around cluster version dropdown.
+    this.clusterVersionPane()
+      .scrollIntoView()
+      .within(() => {
+        cy.get('button[id="version-selector"]', { timeout: 40000 }).should('be.visible');
+      });
     cy.contains('h3', 'Cluster details');
   }
 
@@ -96,6 +102,8 @@ class CreateOSDCluster extends Page {
   createCustomDomainPrefixCheckbox = () => cy.get('input[id="has_domain_prefix"]');
 
   domainPrefixInput = () => cy.get('input[id="domain_prefix"]');
+
+  clusterVersionPane = () => cy.get('div[name="cluster_version"]');
 
   singleZoneAvilabilityRadio = () => cy.get('input[id="form-radiobutton-multi_az-false-field"]');
 

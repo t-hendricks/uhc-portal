@@ -207,6 +207,8 @@ class CreateRosaCluster extends Page {
   clusterAutoscalingRevertAllToDefaultsButton = () =>
     cy.get('button').contains('Revert all to defaults');
 
+  clusterVersionPane = () => cy.get('div[name="cluster_version"]');
+
   clusterAutoscalingCloseButton = () => cy.get('button').contains('Close');
 
   cidrDefaultValuesCheckBox = () => cy.get('input[id="cidr_default_values_toggle"]');
@@ -253,6 +255,12 @@ class CreateRosaCluster extends Page {
   }
 
   isClusterDetailsScreen() {
+    // Inline snippet to avoid flaky behavior around cluster version dropdown.
+    this.clusterVersionPane()
+      .scrollIntoView()
+      .within(() => {
+        cy.get('button[id="cluster_version"]', { timeout: 40000 }).should('be.visible');
+      });
     cy.contains('h3', 'Cluster details');
   }
 
@@ -285,10 +293,6 @@ class CreateRosaCluster extends Page {
 
   cancelWizard() {
     cy.contains('button', 'Cancel').click();
-  }
-
-  isClusterDetailsScreen() {
-    cy.contains('h3', 'Cluster details');
   }
 
   isMachinePoolScreen() {
