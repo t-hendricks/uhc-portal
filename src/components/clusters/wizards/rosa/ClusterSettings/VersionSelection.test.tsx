@@ -518,6 +518,54 @@ describe('<VersionSelection />', () => {
       expect(onChangeMock).not.toHaveBeenCalledWith(latestVersion);
       expect(onChangeMock).toHaveBeenCalledWith(newVersions[1]);
     });
+    it('shows all versions when hypershift regardless of ARN maxOS version settings', async () => {
+      const newVersions = [
+        {
+          ami_overrides: [],
+          channel_group: 'stable',
+          default: false,
+          enabled: true,
+          end_of_life_timestamp: '2025-03-17T00:00:00Z',
+          hosted_control_plane_enabled: true,
+          href: '/api/clusters_mgmt/v1/versions/openshift-v4.18.1',
+          id: 'openshift-v4.18.1',
+          kind: 'Version',
+          raw_id: '4.18.1',
+          release_image: 'quay.io/openshift-release-dev/ocp-release@sha256:mock1234',
+          rosa_enabled: true,
+        },
+        ...versions,
+      ];
+      const fulfilledUpdatedVersionsState: GlobalState['clusters']['clusterVersions'] = {
+        error: false,
+        pending: false,
+        fulfilled: true,
+        params: {},
+        versions: newVersions,
+      };
+      // Arrange
+      const state = {
+        clusters: {
+          clusterVersions: { ...fulfilledUpdatedVersionsState, params: { product: 'hcp' } },
+        },
+      };
+      const newFields = {
+        ...defaultFields,
+        [FieldId.RosaMaxOsVersion]: '4.16',
+        [FieldId.Hypershift]: 'true',
+      };
+      withState(state).render(
+        <Formik onSubmit={() => {}} initialValues={newFields}>
+          <VersionSelection {...defaultProps} />
+        </Formik>,
+      );
+
+      // Assert
+      expect(await screen.findByText(defaultProps.label)).toBeInTheDocument();
+      newVersions.forEach((version) => {
+        expect(screen.getByRole('option', { name: version.raw_id })).toBeInTheDocument();
+      });
+    });
   });
 
   describe('all clusters', () => {

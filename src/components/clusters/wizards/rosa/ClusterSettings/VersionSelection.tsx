@@ -88,18 +88,9 @@ function VersionSelection({ label, onChange }: VersionSelectionProps) {
   );
   const isValidRosaVersion = React.useCallback(
     (version: Version) =>
-      isSupportedMinorVersion(version?.raw_id || '', rosaMaxOSVersion) && version.rosa_enabled,
-    [rosaMaxOSVersion],
-  );
-
-  const isValidHypershiftVersion = React.useCallback(
-    // rosaMaxOSVersion - is actually the max version allowed by the chosen AccountRoles
-    // if Hypershift is used outside of ROSA, the logic to determine the max version (aka rosaMaxOSVersion)
-    // may need to change
-    (version: Version) =>
-      isSupportedMinorVersion(version?.raw_id || '', rosaMaxOSVersion) &&
-      version.hosted_control_plane_enabled,
-    [rosaMaxOSVersion],
+      version.rosa_enabled &&
+      (isHypershiftSelected || isSupportedMinorVersion(version?.raw_id || '', rosaMaxOSVersion)),
+    [rosaMaxOSVersion, isHypershiftSelected], // rosaMaxOSVersion is actually the max version allowed by the chosen AccountRoles,
   );
 
   const toggleCompatibleVersions = (
@@ -210,7 +201,7 @@ function VersionSelection({ label, onChange }: VersionSelectionProps) {
         isHypershiftSelected &&
         versions.find(
           (version) =>
-            isValidHypershiftVersion(version) && version.channel_group === channelGroups.STABLE,
+            version.hosted_control_plane_enabled && version.channel_group === channelGroups.STABLE,
         );
 
       if (!defaultRosaVersion || (isHypershiftSelected && !defaultHypershiftVersion)) {
@@ -233,7 +224,6 @@ function VersionSelection({ label, onChange }: VersionSelectionProps) {
     onChange,
     isHypershiftSelected,
     isValidRosaVersion,
-    isValidHypershiftVersion,
   ]);
 
   const onSelect: SelectProps['onSelect'] = (_event, selection) => {
