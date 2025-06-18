@@ -554,11 +554,13 @@ describe('<VersionSelection />', () => {
         [FieldId.RosaMaxOsVersion]: '4.16',
         [FieldId.Hypershift]: 'true',
       };
-      withState(state).render(
+      const { user } = withState(state).render(
         <Formik onSubmit={() => {}} initialValues={newFields}>
           <VersionSelection {...defaultProps} />
         </Formik>,
       );
+
+      await user.click(screen.getByRole('button', { name: componentText.SELECT_TOGGLE.label }));
 
       // Assert
       expect(await screen.findByText(defaultProps.label)).toBeInTheDocument();
