@@ -65,7 +65,7 @@ const ARGO_CD_CLI_LATEST =
 const SHP_CLI_LATEST =
   'https://developers.redhat.com/content-gateway/rest/browse/pub/openshift-v4/clients/openshift-builds/latest/';
 
-const DOCS_BASE = 'https://docs.redhat.com/en/documentation/openshift_container_platform/4.18/html';
+const DOCS_BASE = 'https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html';
 const OSD_DOCS_BASE = 'https://docs.redhat.com/en/documentation/openshift_dedicated/4/html';
 const ROSA_DOCS_BASE =
   'https://docs.redhat.com/en/documentation/red_hat_openshift_service_on_aws/4/html';
@@ -86,7 +86,7 @@ const links = {
   OSD_GOOGLE_MARKETPLACE:
     'https://console.cloud.google.com/marketplace/product/redhat-marketplace/red-hat-openshift-dedicated?inv=1&invt=Abh7pg',
   ACCESS_REQUEST_DOC_LINK: `${ROSA_CP_DOCS_BASE}/support/approved-access#approved-access`,
-  DOCS_ENTRY: `${DOCS_BASE}/about/welcome-index`,
+  DOCS_ENTRY: `${DOCS_BASE}/overview/welcome-index`,
   ROSA_TROUBLESHOOTING_INSTALLATIONS: `${ROSA_CP_DOCS_BASE}/support/troubleshooting#rosa-troubleshooting-installations`,
   ROSA_DEFINITION_DOC: `${ROSA_CP_DOCS_BASE}/introduction_to_rosa/policies-and-service-definition#rosa-service-definition`,
   WHAT_IS_OPENSHIFT: 'https://www.redhat.com/en/technologies/cloud-computing/openshift',
@@ -114,7 +114,7 @@ const links = {
   APPLYING_AUTOSCALING: `${DOCS_BASE}//machine_management/applying-autoscaling`,
   APPLYING_AUTOSCALING_API_DETAIL: `${DOCS_BASE}/autoscale_apis/clusterautoscaler-autoscaling-openshift-io-v1`,
   AWS_SPOT_INSTANCES: `${DOCS_BASE}/machine_management/managing-compute-machines-with-the-machine-api#machineset-non-guaranteed-instance_creating-machineset-aws`,
-  ENCRYPTING_ETCD: `${DOCS_BASE}/security_and_compliance/encrypting-etcd`,
+  ENCRYPTING_ETCD: `${DOCS_BASE}-single/etcd/index#enabling-etcd-encryption`,
   GETTING_SUPPORT: `${DOCS_BASE}/support/getting-support`,
   TELEMETRY_INFORMATION: `${DOCS_BASE}/support/remote-health-monitoring-with-connected-clusters#about-remote-health-monitoring`,
   REMOTE_HEALTH_INSIGHTS: `${DOCS_BASE}/support/remote-health-monitoring-with-connected-clusters#insights-operator-advisor-overview_using-insights-to-identify-issues-with-your-cluster`,
@@ -174,7 +174,7 @@ const links = {
   INSTALL_AGENT_LEARN_MORE: `${DOCS_BASE}/installing_an_on-premise_cluster_with_the_agent-based_installer/preparing-to-install-with-agent-based-installer`,
 
   INSTALL_AWSIPI_DOCS_LANDING: `${DOCS_BASE}/installing_on_aws/installing-aws-account`,
-  INSTALL_AWSIPI_DOCS_ENTRY: `${DOCS_BASE}/about/welcome-index`,
+  INSTALL_AWSIPI_DOCS_ENTRY: `${DOCS_BASE}/overview/welcome-index`,
   INSTALL_AWSIPI_LEARN_MORE: `${DOCS_BASE}/installing_on_aws/installer-provisioned-infrastructure#prerequisites`,
   INSTALL_AWSUPI_GETTING_STARTED: `${DOCS_BASE}/installing_on_aws/user-provisioned-infrastructure#installing-aws-user-infra`,
   INSTALL_AWS_CUSTOMIZATIONS: `${DOCS_BASE}/installing_on_aws/installer-provisioned-infrastructure#installing-aws-customizations`,
@@ -289,7 +289,7 @@ const links = {
 
   OPM_DOCS: `${DOCS_BASE}/cli_tools/opm-cli#olm-about-opm_cli-opm-install`,
 
-  OSDK_DOCS: `${DOCS_BASE}/cli_tools/operator-sdk#cli-osdk-install`,
+  OSDK_REMOVAL_DOCS: `${DOCS_BASE}/release_notes/ocp-4-19-release-notes#ocp-4-19-removed-osdk_release-notes`,
 
   BUTANE_DOCS: `${DOCS_BASE}/installation_configuration/installing-customizing`,
 
