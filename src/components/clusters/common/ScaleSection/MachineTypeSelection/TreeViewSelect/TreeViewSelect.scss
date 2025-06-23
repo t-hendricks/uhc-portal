@@ -34,3 +34,9 @@
 .tree-view-custom-class .pf-v5-c-tree-view__node-text {
   width: 100%;
 }
+
+.tree-view-select-search-fullwidth {
+  width: 100%;
+  min-width: 0;
+  box-sizing: border-box;
+}

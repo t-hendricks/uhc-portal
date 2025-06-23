@@ -195,7 +195,7 @@ export function TreeViewSelect(props: TreeViewSelectProps) {
         <ToolbarItem widths={{ default: '100%' }}>
           <TreeViewSearch
             autoComplete="off"
-            className="pf-u-pt-sm pf-u-pb-sm pf-u-pl-sm pf-u-pr-sm pf-u-w-inherit"
+            className="tree-view-select-search-fullwidth pf-u-pt-sm pf-u-pb-sm pf-u-pl-sm pf-u-pr-sm pf-u-w-inherit"
             placeholder={searchPlaceholder}
             onSearch={onSearch}
             aria-label={ariaLabel && `${ariaLabel} search field`}
