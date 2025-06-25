@@ -124,6 +124,7 @@ export const buildNodePoolRequest = (
     nodePool.subnet = values.privateSubnetId;
     nodePool.aws_node_pool = {
       instance_type: values.instanceType,
+      ec2_metadata_http_tokens: values.imds,
       additional_security_group_ids: values.securityGroupIds,
       root_volume: {
         size: values.diskSize,

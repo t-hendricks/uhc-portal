@@ -21,7 +21,7 @@ import {
   getWorkerNodeVolumeSizeMaxGiB,
   getWorkerNodeVolumeSizeMinGiB,
 } from '~/components/clusters/common/machinePools/utils';
-import { CloudProviderType } from '~/components/clusters/wizards/common';
+import { CloudProviderType, IMDSType } from '~/components/clusters/wizards/common';
 import { MAX_NODES_TOTAL_249 } from '~/queries/featureGates/featureConstants';
 import { useFeatureGate } from '~/queries/featureGates/useFetchFeatureGate';
 import { MachineTypesResponse } from '~/queries/types';
@@ -50,6 +50,7 @@ export type EditMachinePoolValues = {
   privateSubnetId: string | undefined;
   securityGroupIds: string[];
   secure_boot?: boolean;
+  imds: IMDSType;
 };
 
 type UseMachinePoolFormikArgs = {
@@ -145,6 +146,7 @@ const useMachinePoolFormik = ({
       diskSize: diskSize || defaultWorkerNodeVolumeSizeGiB,
       instanceType,
       privateSubnetId: undefined,
+      imds: IMDSType.V1AndV2,
       securityGroupIds:
         (machinePool as MachinePool)?.aws?.additional_security_group_ids ||
         (machinePool as NodePool)?.aws_node_pool?.additional_security_group_ids ||

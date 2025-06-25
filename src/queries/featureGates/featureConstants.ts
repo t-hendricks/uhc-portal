@@ -34,6 +34,7 @@ export const ENHANCED_HTPASSWRD = 'ocmui-enhanced-htpasswrd';
 export const ASSISTED_MIGRATION_ENABLED = 'assisted-migration';
 export const GCP_SECURE_BOOT = 'ocmui-gcp-secure-boot';
 export const HIDE_RH_MARKETPLACE = 'OCMUI-hide-rh-marketplace';
+export const IMDS_SELECTION = 'ocmui-imds-selection';
 
 export default {
   AUTO_CLUSTER_TRANSFER_OWNERSHIP,
@@ -54,4 +55,5 @@ export default {
   ASSISTED_MIGRATION_ENABLED,
   GCP_SECURE_BOOT,
   HIDE_RH_MARKETPLACE,
+  IMDS_SELECTION,
 } as const;

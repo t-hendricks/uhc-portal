@@ -1,3 +1,4 @@
+import { IMDSType } from '~/components/clusters/wizards/common';
 import { GlobalState } from '~/redux/store';
 import type { OneMetric, Subscription } from '~/types/accounts_mgmt.v1';
 import type { MachinePool, NodePool } from '~/types/clusters_mgmt.v1';
@@ -155,6 +156,7 @@ export const defaultExpectedInitialValues = {
   autoscaling: false,
   diskSize: 300,
   instanceType: undefined,
+  imds: IMDSType.V1AndV2,
   labels: [
     {
       key: '',

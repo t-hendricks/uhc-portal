@@ -2,7 +2,7 @@ import * as React from 'react';
 
 import fixtures from '~/components/clusters/ClusterDetailsMultiRegion/__tests__/ClusterDetails.fixtures';
 import { MAX_NODES_HCP } from '~/components/clusters/common/machinePools/constants';
-import { GCP_SECURE_BOOT } from '~/queries/featureGates/featureConstants';
+import { GCP_SECURE_BOOT, IMDS_SELECTION } from '~/queries/featureGates/featureConstants';
 import { mockUseFeatureGate, render, screen, within } from '~/testUtils';
 import { ClusterFromSubscription } from '~/types/types';
 
@@ -165,6 +165,28 @@ describe('<EditMachinePoolModal />', () => {
 
       expect(await screen.findByRole('button', { name: 'Add machine pool' })).toBeInTheDocument();
     });
+    it('Shows IMDS radio buttons with enabled feature gate', async () => {
+      mockUseFeatureGate([[IMDS_SELECTION, true]]);
+      const { user } = render(
+        <EditMachinePoolModal
+          cluster={{} as ClusterFromSubscription}
+          isHypershift
+          onClose={() => {}}
+          {...commonProps}
+        />,
+      );
+
+      const imdsV1AndV2Radio = screen.getByRole('radio', { name: /Use both IMDSv1 and IMDSv2/i });
+      const imdsV2Radio = screen.getByRole('radio', { name: /Use IMDSv2 only/i });
+
+      expect(imdsV1AndV2Radio).toBeChecked();
+      expect(imdsV2Radio).not.toBeChecked();
+
+      await user.click(imdsV2Radio);
+
+      expect(imdsV2Radio).toBeChecked();
+      expect(imdsV1AndV2Radio).not.toBeChecked();
+    });
   });
 
   describe('edit machine pool', () => {
@@ -321,7 +343,10 @@ describe('<EditMachinePoolModal />', () => {
   });
 
   describe('GCP cluster machine pool', () => {
-    mockUseFeatureGate([[GCP_SECURE_BOOT, true]]);
+    beforeEach(() => {
+      mockUseFeatureGate([[GCP_SECURE_BOOT, true]]);
+    });
+
     const { OSDGCPClusterDetails } = fixtures;
 
     const GCPClusterWithSecureBoot = {
