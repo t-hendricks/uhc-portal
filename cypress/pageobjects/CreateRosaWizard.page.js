@@ -40,7 +40,7 @@ class CreateRosaCluster extends Page {
 
   noProxyDomainsInput = () => cy.get('input[id="no_proxy_domains"]');
 
-  selectVersionValue = () => cy.get('button[id="cluster_version"]').find('span');
+  selectVersionValue = () => cy.get('button[id="version-selector"]').find('span');
 
   customOperatorPrefixInput = () => cy.get('input[id="custom_operator_roles_prefix"]');
 
@@ -259,7 +259,7 @@ class CreateRosaCluster extends Page {
     this.clusterVersionPane()
       .scrollIntoView()
       .within(() => {
-        cy.get('button[id="cluster_version"]', { timeout: 40000 }).should('be.visible');
+        cy.get('button[id="version-selector"]', { timeout: 40000 }).should('be.visible');
       });
     cy.contains('h3', 'Cluster details');
   }
@@ -502,12 +502,12 @@ class CreateRosaCluster extends Page {
   }
 
   selectClusterVersion(version) {
-    cy.get('button[id="cluster_version"]').click();
+    cy.get('button[id="version-selector"]').click();
     cy.get('button').contains(version).click();
   }
 
   selectClusterVersionFedRamp(version) {
-    cy.get('div[name="cluster_version"]').click();
+    cy.get('div[name="version-selector"]').click();
     cy.get('button').contains(version).click();
   }
 

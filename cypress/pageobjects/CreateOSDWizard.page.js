@@ -28,6 +28,10 @@ class CreateOSDCluster extends Page {
   }
 
   isMachinePoolScreen() {
+    cy.get('button[aria-label="Machine type select toggle"]', { timeout: 40000 })
+      .should('exist')
+      .scrollIntoView()
+      .should('be.visible');
     cy.contains('h3', 'Default machine pool');
   }
 
