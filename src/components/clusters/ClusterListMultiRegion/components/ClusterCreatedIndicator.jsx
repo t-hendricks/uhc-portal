@@ -47,6 +47,7 @@ function ClusterCreatedIndicator({ cluster }) {
         <Button
           variant="link"
           isInline
+          className="pf-v6-u-display-inline-flex"
           icon={
             <Icon>
               <ExclamationTriangleIcon color={warningColor.value} />
@@ -83,6 +84,7 @@ function ClusterCreatedIndicator({ cluster }) {
         <Button
           variant="link"
           isInline
+          className="pf-v6-u-display-inline-flex"
           icon={
             <Icon>
               <ExclamationCircleIcon color={dangerColor.value} />
@@ -135,6 +137,7 @@ function ClusterCreatedIndicator({ cluster }) {
       <Button
         variant="link"
         isInline
+        className="pf-v6-u-display-inline-flex"
         icon={
           <Icon>
             <ExclamationTriangleIcon color={warningColor.value} />
