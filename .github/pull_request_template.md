@@ -2,6 +2,9 @@
 
 <!-- add a summarized description of the PR content -->
 
+<!-- add information about AI usage if substantial contributions are generated/assisted by AI tools -->
+<!-- for example: Assisted by: Cursor/gemini-2.5-pro -->
+
 # Jira
 
 <!-- link to the corresponding Jira item -->
