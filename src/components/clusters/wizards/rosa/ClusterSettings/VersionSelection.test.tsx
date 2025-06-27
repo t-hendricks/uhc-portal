@@ -833,6 +833,50 @@ describe('<VersionSelection />', () => {
       expect(onChangeMock).toHaveBeenCalledWith(latestVersion);
     });
 
+    it('parses displays and selects version 4.20.0 if it is latest version', async () => {
+      const newVersions = [...versions];
+
+      const latestVersion = {
+        ...versions[0],
+        raw_id: '4.20.0',
+        id: 'openshift-v4.20.0',
+        default: false,
+        enabled: true,
+        rosa_enabled: true,
+        hosted_control_plane_enabled: true,
+      };
+
+      newVersions.unshift(latestVersion);
+
+      const state = {
+        clusters: { clusterVersions: { ...fulfilledAllVersionsState, versions: newVersions } },
+      };
+      const newProps = {
+        ...defaultProps,
+        input: { onChange: onChangeMock },
+      };
+      const newFields = {
+        ...defaultFields,
+        [FieldId.RosaMaxOsVersion]: '4.20.0',
+      };
+
+      const { user } = withState(state).render(
+        <Formik onSubmit={() => {}} initialValues={newFields}>
+          <VersionSelection {...newProps} />
+        </Formik>,
+      );
+
+      await user.click(screen.getByRole('button', { name: componentText.SELECT_TOGGLE.label }));
+
+      expect(await screen.findByText(defaultProps.label)).toBeInTheDocument();
+      expect(screen.queryByRole('option', { name: '4.2' })).not.toBeInTheDocument();
+      expect(screen.queryByRole('option', { name: '4.2.0' })).not.toBeInTheDocument();
+      expect(screen.getByRole('option', { name: '4.20.0' })).toBeInTheDocument();
+      // onChange is called on render to set the default version
+      expect(onChangeMock).toHaveBeenCalled();
+      expect(onChangeMock).toHaveBeenCalledWith(latestVersion);
+    });
+
     it('Selects the first rosa enabled version when the latest version is not rosa enabled', async () => {
       const newVersions = [...versions];
 

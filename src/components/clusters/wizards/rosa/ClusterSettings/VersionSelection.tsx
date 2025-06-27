@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useField } from 'formik';
 import { useDispatch } from 'react-redux';
+import semver from 'semver';
 
 import { Button, FormGroup, Popover, SelectProps, Spinner, Switch } from '@patternfly/react-core';
 import { OutlinedQuestionCircleIcon } from '@patternfly/react-icons/dist/esm/icons/outlined-question-circle-icon';
@@ -86,6 +87,7 @@ function VersionSelection({ label, onChange }: VersionSelectionProps) {
     // version.name is 'major.minor' string e.g. '4.11'.
     statusVersions.map((version) => [version.name, version.type]),
   );
+
   const isValidRosaVersion = React.useCallback(
     (version: Version) =>
       version.rosa_enabled &&
@@ -102,13 +104,6 @@ function VersionSelection({ label, onChange }: VersionSelectionProps) {
     setShowOnlyCompatibleVersions(showCompatible);
   };
 
-  // HACK: This relies on parseFloat of '4.11.3' to return 4.11 ignoring trailing '.3'.
-  // BUG(OCMUI-1736): Comparisons may be wrong e.g. 4.9 > 4.11!
-  // BUG(OCMUI-1736): We later rely on converting float back to exactly '4.11'
-  //   for indexing `supportVersionMap`.  Float round-tripping is fragile.
-  //   Will break when parseFloat('4.20.0').toString() returns '4.2' not '4.20'!
-  const versionName = (version: Version) => parseFloat(version.raw_id || '');
-
   const isHostedDisabled = React.useCallback(
     (version: Version) => isHypershiftSelected && !version.hosted_control_plane_enabled,
     [isHypershiftSelected],
@@ -124,17 +119,8 @@ function VersionSelection({ label, onChange }: VersionSelectionProps) {
         return 'This version is not compatible with a Hosted control plane';
       }
 
-      const minManagedPolicyVersionName = parseFloat(MIN_MANAGED_POLICY_VERSION);
-
-      const versionPatch = Number(version.raw_id.split('.')[2]);
-
-      const minManagedPolicyVersionPatch = Number(MIN_MANAGED_POLICY_VERSION.split('.')[2]);
-
       const isIncompatibleManagedVersion =
-        hasManagedArnsSelected &&
-        (versionName(version) < minManagedPolicyVersionName ||
-          (versionName(version) === minManagedPolicyVersionName &&
-            versionPatch < minManagedPolicyVersionPatch));
+        hasManagedArnsSelected && semver.lt(version.raw_id, MIN_MANAGED_POLICY_VERSION);
 
       if (!isValidRosaVersion(version) || isIncompatibleManagedVersion) {
         return 'This version is not compatible with the selected ARNs in previous step';
