@@ -4,7 +4,6 @@ import PropTypes from 'prop-types';
 import { FormGroup, MenuToggle, Select, SelectList, SelectOption } from '@patternfly/react-core';
 
 import { FormGroupHelperText } from '~/components/common/FormGroupHelperText';
-import { usePreviousProps } from '~/hooks/usePreviousProps';
 
 import './AvailabilityZoneSelection.scss';
 
@@ -24,13 +23,13 @@ const AvailabilityZoneSelection = ({
 }) => {
   const [isOpen, setIsOpen] = React.useState(false);
 
-  const prevVpcId = usePreviousProps(newVpcId);
+  const prevVpc = React.useRef(newVpcId);
 
   React.useEffect(() => {
-    if (prevVpcId !== newVpcId && input.value) {
+    if (prevVpc.current !== newVpcId && input.value) {
       input.onChange('');
     }
-  }, [input, newVpcId, prevVpcId]);
+  }, [input, newVpcId, prevVpc]);
 
   const onToggle = (isOpen) => {
     setIsOpen(isOpen);
