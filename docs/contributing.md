@@ -9,6 +9,7 @@
 - [Testing](#testing)
   - [Unit tests](#unit-tests)
   - [End-to-end tests](#end-to-end-tests)
+- [Code assistants](#code-assistants)
 - [OpenAPI types definitions](#openapi-types-definitions)
 - [Storybook](#storybook)
 - [Merge request review](#merge-request-review)
@@ -97,6 +98,30 @@ See the [unit test guidelines](./unit-testing.md) for in-depth guidance on writi
 End-to-end tests are written using [Cypress](https://www.cypress.io/).
 
 You can read more in the [dedicated `README`](../cypress/README.md) inside the `/cypress` folder.
+
+## Code assistants
+
+### Usage
+
+When using AI tools to write, modify, or generate code or documentation make sure to always follow these guidelines:
+
+* Treat AI-generated code as suggestions, not final code. Review all the generated code and modify as appropriate. Thoroughly review and test all code that you intend to integrate into your work.
+* Do not blindly trust AI-generated or assisted code. Always apply your own judgment and expertise. AI coding assistants can introduce security vulnerabilities if not used carefully, and AI models can sometimes hallucinate and provide incorrect or non-functional code.
+* Make sure you thoroughly understand any AI-generated code. If the generated code you intend to incorporate in your work is outside your expertise, consult with someone knowledgeable in the area prior to making it available to others.
+* Never input confidential, personal or proprietary data, such as API keys, customer data, or protected content like passwords and credentials directly into code assistants.
+
+### "Marking" generated code
+
+Any nontrivial and substantial AI-generated or AI-assisted content needs to be “marked” in appropriate cases.
+
+You have to mark at least two places: 
+* the PR description field
+* the commit message when squashing and merging the PR
+
+You should use a message like “Assisted-by:” or “Generated-by:”. For example: "Assisted-by: Cursor/gemini-2.5-pro". You can eventually elaborate on how the code assistant was used if necessary.
+
+When a significant portion of code inside a file is generated or assisted, you should add a source file comment to indicate it.
+
 
 ## OpenAPI types definitions
 
