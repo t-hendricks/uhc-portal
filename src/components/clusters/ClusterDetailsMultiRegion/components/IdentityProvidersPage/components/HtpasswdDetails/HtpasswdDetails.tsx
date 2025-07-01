@@ -359,6 +359,7 @@ const HtpasswdDetails = ({
         // @ts-ignore
         ModalComponent={AddUserModal}
         onSuccess={() => {
+          setSearchValue('');
           refetch();
         }}
       />
