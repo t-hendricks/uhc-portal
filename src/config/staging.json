@@ -1,6 +1,5 @@
 {
   "apiGateway": "https://api.stage.openshift.com",
-  "apiRegionalGatewayHardcode": "https://***REMOVED***",
   "apiRegionalGatewayTemplate": "https://api.$REGION$.openshift.com",
   "insightsGateway": "https://$SELF_PATH$/api",
   "fedrampGateway": "https://$SELF_PATH$/api",
