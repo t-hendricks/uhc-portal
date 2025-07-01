@@ -63,16 +63,9 @@ By default, UI run Assisted Installer without standalone mode. To run with Assis
 | `master`          | https://console.dev.redhat.com/openshift                | stable version  | staging         |
 | `stable`          | https://console.redhat.com/openshift                    | stable version  | production      |
 
-On every update to the above branches, the code gets deployed into the relevant
-enviroment(s) using the `push_to_insights.sh` script. This script is
-called via git hooks. See the script for more details.
-
 So for a regular weekly deploy, we open an merge request master -> candidate,
 followed by candidate -> stable.
 
-Use `./deploy_info.mjs` script to check which versions are now deployed.
-If you want to monitor/debug the deploy jobs, `./deploy_info.mjs --json`
-output has all the info you’ll need.
 
 ## Issues/Troubleshooting
 
