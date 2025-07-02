@@ -7,6 +7,7 @@ import { PlusCircleIcon } from '@patternfly/react-icons/dist/esm/icons/plus-circ
 
 import { scrollToFirstField } from '~/common/helpers';
 import { validateMultipleMachinePoolsSubnets } from '~/common/validators';
+import { getMatchingAvailabilityZones } from '~/common/vpcHelpers';
 import { SubnetSelectField } from '~/components/clusters/common/SubnetSelectField';
 import { emptyAWSSubnet, FieldId } from '~/components/clusters/wizards/common/constants';
 import { FormSubnet } from '~/components/clusters/wizards/common/FormSubnet';
@@ -50,6 +51,26 @@ const MachinePoolSubnetsForm = ({ selectedVPC, warning }: MachinePoolSubnetsForm
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [machinePoolsSubnets, setTouched, validateForm],
   );
+
+  // Helper to infer region if not present
+  const inferRegionFromSubnets = (vpc: CloudVpc) => {
+    const azLetters = ['a', 'b', 'c', 'd', 'e', 'f'];
+    const availabilityZone = vpc.aws_subnets?.find(
+      (subnet) => subnet.availability_zone,
+    )?.availability_zone;
+
+    const regionPrefix = availabilityZone?.split('-').slice(0, 3).join('-');
+    const region =
+      regionPrefix && azLetters.includes(regionPrefix.slice(-1))
+        ? regionPrefix.slice(0, -1)
+        : regionPrefix;
+
+    return region;
+  };
+
+  const region = selectedVPC ? inferRegionFromSubnets(selectedVPC) : undefined;
+  const allowedAZs =
+    region && selectedVPC ? getMatchingAvailabilityZones(region, selectedVPC, ['private']) : [];
 
   const addMachinePool = (machinePoolSubnet: FormSubnet) =>
     setFieldValue(FieldId.MachinePoolsSubnets, [...machinePoolsSubnets, machinePoolSubnet], false);
@@ -101,6 +122,7 @@ const MachinePoolSubnetsForm = ({ selectedVPC, warning }: MachinePoolSubnetsForm
                 isRequired
                 privacy="private"
                 selectedVPC={selectedVPC}
+                allowedAZs={allowedAZs}
                 withAutoSelect={false}
                 isNewCluster
                 input={{
