@@ -8,7 +8,11 @@ import {
   RESTRICTED_ENV_OVERRIDE_LOCALSTORAGE_KEY,
 } from './common/localStorageConstants';
 import { Chrome } from './types/types';
-import { getRestrictedEnvApi, isRestrictedEnv } from './restrictedEnv';
+import {
+  resolveIsRestrictedEnv,
+  resolveRestrictedEnvApi,
+  resolveRestrictedEnvSso,
+} from './restrictedEnv';
 
 export type Config = {
   configData: EnvConfigWithFedRamp;
@@ -34,6 +38,7 @@ type EnvConfig = {
 type EnvConfigWithFedRamp = {
   restrictedEnv: boolean;
   restrictedEnvApi: string;
+  restrictedEnvSso: string;
 } & EnvConfig;
 
 const configs: { [env: string]: Promise<EnvConfig> | undefined } = {};
@@ -130,10 +135,10 @@ const config = {
 
     const simulatedRestrictedEnv = !!localStorage.getItem(RESTRICTED_ENV_OVERRIDE_LOCALSTORAGE_KEY);
     const fedRampConfig = {
-      restrictedEnv: simulatedRestrictedEnv || isRestrictedEnv(chrome),
-      restrictedEnvApi: simulatedRestrictedEnv
-        ? configData.apiGateway
-        : getRestrictedEnvApi(chrome),
+      restrictedEnv: simulatedRestrictedEnv || resolveIsRestrictedEnv(chrome),
+      restrictedEnvApi: simulatedRestrictedEnv ? configData.apiGateway : resolveRestrictedEnvApi(),
+      // restricted-env sso domain cannot be inferred in simulated restricted-env, so leave it empty
+      restrictedEnvSso: simulatedRestrictedEnv ? '' : resolveRestrictedEnvSso(),
     };
 
     this.configData = {

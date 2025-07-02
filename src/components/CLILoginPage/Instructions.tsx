@@ -40,7 +40,12 @@ import useChrome from '@redhat-cloud-services/frontend-components/useChrome';
 import { Link } from '~/common/routing';
 import { setOfflineToken } from '~/redux/actions/rosaActions';
 import { useGlobalState } from '~/redux/hooks/useGlobalState';
-import { getRefreshToken, isRestrictedEnv } from '~/restrictedEnv';
+import {
+  getRefreshToken,
+  getRestrictedEnvApi,
+  getRestrictedEnvSso,
+  isRestrictedEnv,
+} from '~/restrictedEnv';
 import { Chrome } from '~/types/types';
 
 import links, { channels, tools } from '../../common/installLinks.mjs';
@@ -136,7 +141,11 @@ const Instructions = (props: Props) => {
     );
   }
 
-  const loginCommand = `${commandName} login --token="${token}" ${restrictedEnv ? '--url https://api.***REMOVED***.com --token-url https://sso.***REMOVED***.com/realms/redhat-external/protocol/openid-connect/token --client-id console-dot' : ''}`;
+  const loginCommand = `${commandName} login --token="${token}" ${
+    restrictedEnv
+      ? `--url ${getRestrictedEnvApi()} --token-url ${getRestrictedEnvSso()}/realms/redhat-external/protocol/openid-connect/token --client-id console-dot`
+      : ''
+  }`;
 
   return (
     <Stack hasGutter>
