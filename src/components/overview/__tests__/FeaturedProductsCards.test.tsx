@@ -81,6 +81,9 @@ describe('<FeaturedProductsCards />', () => {
     const labelTexts = screen.getAllByText(/60-day trial/i);
     expect(labelTexts).toHaveLength(3);
 
+    const includedLabelText = screen.getAllByText(/Included/i);
+    expect(includedLabelText).toHaveLength(1);
+
     const openRightDrawerIcons = screen.getAllByTestId('open-right-drawer-icon');
     expect(openRightDrawerIcons).toHaveLength(4);
 

@@ -23,20 +23,20 @@ const RECOMMENDED_OPERATORS_CARDS: RecommendedOperatorsCardsNode[] = [
     ...PRODUCT_CARD_LOGOS.gitops,
     description:
       'Integrate git repositories, continuous integration/continuous delivery (CI/CD) tools, and Kubernetes.',
-    labelText: 'Free',
+    labelText: 'Included',
     drawerPanelContent: DRAWER_PANEL_CONTENT.gitops,
   },
   {
     ...PRODUCT_CARD_LOGOS.pipelines,
     description:
       'Automate your application delivery using a continuous integration and continuous deployment (CI/CD) framework.',
-    labelText: 'Free',
+    labelText: 'Included',
     drawerPanelContent: DRAWER_PANEL_CONTENT.pipelines,
   },
   {
     ...PRODUCT_CARD_LOGOS.serviceMesh,
     description: 'Connect, manage, and observe microservices-based applications in a uniform way.',
-    labelText: 'Free',
+    labelText: 'Included',
     drawerPanelContent: DRAWER_PANEL_CONTENT.serviceMesh,
   },
 ];

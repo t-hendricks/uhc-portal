@@ -35,6 +35,7 @@ const FEATURED_PRODUCTS_CARDS: FeaturedProductsCardsNode[] = [
     ...PRODUCT_CARD_LOGOS.openshiftVirtualization,
     description:
       'Streamline your operations and reduce complexity when you run and manage your VMs, containers, and serverless workloads in a single platform.',
+    labelText: 'Included',
     drawerPanelContent: DRAWER_PANEL_CONTENT.OpenshiftVirtualization,
   },
   {
