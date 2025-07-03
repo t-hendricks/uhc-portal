@@ -402,5 +402,29 @@ describe('<EditMachinePoolModal />', () => {
       expect(check).toBeChecked();
       expect(check).toBeDisabled();
     });
+
+    it('Disabled shieldedVm checkbox with tooltip', async () => {
+      const { user } = render(
+        <EditMachinePoolModal
+          cluster={GCPClusterWithSecureBoot as unknown as ClusterFromSubscription}
+          onClose={() => {}}
+          {...commonProps}
+          machinePoolId="novm"
+          machinePoolsResponse={gcpMachinePoolResponse}
+        />,
+      );
+
+      const hoverableText = await screen.findByLabelText(
+        'Enable Secure Boot support for Shielded VMs',
+      );
+
+      await user.hover(hoverableText);
+
+      expect(
+        screen.getByText(
+          'Secure Boot settings can only be modified during machine pool creation and are not editable afterward',
+        ),
+      );
+    });
   });
 });
