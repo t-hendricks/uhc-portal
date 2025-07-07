@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import { render, screen, UserEventType, within } from '~/testUtils';
+import { render, screen, UserEvent, within } from '~/testUtils';
 
 import EditSecurityGroups from './EditSecurityGroups';
 
@@ -24,7 +24,7 @@ const clusterVpc = {
   ],
 };
 
-const openPFSecurityGroupsSelect = async (user: UserEventType) => {
+const openPFSecurityGroupsSelect = async (user: UserEvent) => {
   await user.click(screen.getByRole('button', { name: 'Options menu' }));
 };
 
