@@ -21,7 +21,7 @@ type ImdsSectionProps = {
 };
 
 const ImdsSection = ({ isDisabled, onChangeImds, imds }: ImdsSectionProps) => {
-  const { setFieldValue, getFieldProps, getFieldMeta } = useFormState();
+  const { setFieldValue, getFieldProps } = useFormState();
 
   React.useEffect(() => {
     if (isDisabled && imds !== IMDSType.V1AndV2) {
@@ -40,10 +40,6 @@ const ImdsSection = ({ isDisabled, onChangeImds, imds }: ImdsSectionProps) => {
           component={RadioButtons}
           name={FieldId.IMDS}
           ariaLabel="Instance Metadata Service"
-          props={{
-            value: imds,
-            onChange: onChangeImds,
-          }}
           isDisabled={isDisabled}
           className="pf-v5-u-mb-md"
           options={imdsOptions}
@@ -52,7 +48,6 @@ const ImdsSection = ({ isDisabled, onChangeImds, imds }: ImdsSectionProps) => {
             ...getFieldProps(FieldId.IMDS),
             onChange: (value: ImdsOptionType) => setFieldValue(FieldId.IMDS, value, false),
           }}
-          meta={getFieldMeta(FieldId.IMDS)}
         />
       )}
     </FormGroup>
