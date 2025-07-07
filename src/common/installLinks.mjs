@@ -313,7 +313,7 @@ const links = {
   ROSA_DOCS_ENTRY: `${ROSA_DOCS_BASE}/about/welcome-index`,
   ROSA_MONITORING: `${ROSA_DOCS_BASE}/monitoring/monitoring-overview#understanding-the-monitoring-stack_monitoring-overview`,
   ROSA_AUTOSCALING: `${ROSA_DOCS_BASE}/cluster_administration/manage-nodes-using-machine-pools#rosa-nodes-about-autoscaling-nodes`,
-  ROSA_SECURITY_GROUPS: `${ROSA_DOCS_BASE}/prepare_your_environment/rosa-sts-aws-prereqs`,
+  ROSA_SECURITY_GROUPS: `${ROSA_DOCS_BASE}/prepare_your_environment/rosa-sts-aws-prereqs#rosa-security-groups_rosa-sts-aws-prereqs`,
   ROSA_CLI_DOCS: `${ROSA_CP_DOCS_BASE}/rosa_cli/rosa-get-started-cli`,
   ROSA_AWS_PREREQUISITES: `${ROSA_DOCS_BASE}/install_rosa_classic_clusters/deploying-rosa-without-aws-sts#prerequisites`,
   ROSA_INSTALLING: `${ROSA_DOCS_BASE}/install_rosa_classic_clusters/deploying-rosa-without-aws-sts`,
