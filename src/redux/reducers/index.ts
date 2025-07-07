@@ -16,7 +16,6 @@ import clusterUpgrades from '../../components/clusters/common/Upgrades/clusterUp
 import modalReducer from '../../components/common/Modal/ModalReducer';
 
 import { accessProtectionReducer } from './accessProtectionReducer';
-import { accessRequestReducer } from './accessRequestReducer';
 import ccsInquiriesReducer from './ccsInquiriesReducer';
 import { cloudProvidersReducer } from './cloudProvidersReducer';
 import { clusterAutoscalerReducer } from './clusterAutoscalerReducer';
@@ -44,7 +43,6 @@ import userReducer from './userReducer';
 import { viewOptionsReducer } from './viewOptionsReducer';
 
 const reducers = {
-  accessRequest: accessRequestReducer,
   accessProtection: accessProtectionReducer,
   clusters: clustersReducer,
 
