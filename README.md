@@ -63,13 +63,10 @@ By default, UI run Assisted Installer without standalone mode. To run with Assis
 
 ## Environments and Deployments
 
-| uhc-portal branch | deployed env                                            | insights-chrome | default backend |
-| ----------------- | ------------------------------------------------------- | --------------- | --------------- |
-| `master`          | https://console.dev.redhat.com/openshift                | stable version  | staging         |
-| `stable`          | https://console.redhat.com/openshift                    | stable version  | production      |
-
-So for a regular weekly deploy, we open an merge request master -> candidate,
-followed by candidate -> stable.
+| uhc-portal branch            | deployed env                                            | insights-chrome | default backend |
+|------------------------------| ------------------------------------------------------- | --------------- | --------------- |
+| `master`                     | https://console.dev.redhat.com/openshift                | stable version  | staging         |
+| `master` (specific revision) | https://console.redhat.com/openshift                    | stable version  | production      |
 
 
 ## Issues/Troubleshooting

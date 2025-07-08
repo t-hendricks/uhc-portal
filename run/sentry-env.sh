@@ -7,7 +7,7 @@
 # . run/sentry-env.sh && yarn build:saas
 #
 # @see package.json#scripts.sentry:sourcemaps-release:saas
-# @see https://glitchtip.devshift.net/ocm/issues?project=65 (production/stable)
+# @see https://glitchtip.devshift.net/ocm/issues?project=65 (production)
 
 
 # don't set up sentry-env on preview builds;
