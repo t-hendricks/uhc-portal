@@ -2,6 +2,7 @@
 
 ## Table of contents
 
+- [Setup](#setup)
 - [Insights "Chrome" Architecture](#insights-chrome-architecture)
 - [Code Style](#code-style)
   - [Linting](#linting)
@@ -13,6 +14,20 @@
 - [OpenAPI types definitions](#openapi-types-definitions)
 - [Storybook](#storybook)
 - [Merge request review](#merge-request-review)
+- [Information security](#information-security)
+
+## Setup
+
+Following [RedHat's Information Security guidelines](https://source.redhat.com/departments/it/it_information_security/blog/prevent_costly_leaks_with_rh_pre_commit), contributors need to install the _rh-pre-commit_ git-hook, which scans for sensitive data.  
+To install, follow the [_quickstart-install_ section of the rh-pre-commit repo docs](https://gitlab.cee.redhat.com/infosec-public/developer-workbench/tools/-/tree/main/rh-pre-commit#quickstart-install) (which is part of the general [LeakTK rh-pre-commit installation guide](https://source.redhat.com/departments/operations/it-information-security/leaktk/leaktk_guides/rh_pre_commit_installation)).
+
+See the [Information security](#information-security) section below for details on what constitutes sensitive data.
+                   
+> [!NOTE]
+> 
+> When running the quickstart.sh installation script, make sure to use the `-r` flag with the local repo path as value; If omitted, the hook will be installed for all existing repos under the home dir.
+> 
+> Note that regardless of that flag, any future repo-clones on your system will have the hook installed automatically.
 
 ## Insights "Chrome" Architecture
 
@@ -150,11 +165,19 @@ You can have a look at storybook docs for more info about [how to write stories]
 ## Merge Request review
 
 - For external contributors: If you need a merge request review, please message the OCM UI team at the `#ocm-osd-ui` slack channel.
-
 - Code that changes behavior requires a test
-
 - When you touch a component without tests add one
-
 - Large merge requests should be resubmitted in smaller chunks
-
 - Test broad changes locally
+                                                              
+## Information security
+
+When proposing changes, take care to:
+
+- Not include any sensitive client or QE data in the source-code (e.g. account IDs, emails, passwords)
+- Not refer to any sensitive data in the docs (e.g. readme, wiki), including references to specific customers, or references to nonpublic Red Hat strategies/product plans
+- Not include any source-code obtained from a vendor/partner/customer, or through an acquisition
+- According to FedRAMP guidance, not include any instances of in-boundary names (e.g. domains, URLs)
+
+If you have any doubts on whether data is sensitive or not, please reach out to OCM UI Core team or Infosec team first, before pushing any code.
+
