@@ -243,8 +243,7 @@ export const createClusterRequest = ({ isWizard = true, cloudProviderID, product
         }
       }
 
-      if (formData.imds && !isHypershiftSelected) {
-        // ROSA Classic and OSD CCS only
+      if (formData.imds) {
         clusterRequest.aws.ec2_metadata_http_tokens = formData.imds;
       }
 

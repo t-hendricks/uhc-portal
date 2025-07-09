@@ -1,10 +1,12 @@
 import React from 'react';
 import { Formik } from 'formik';
 
+import { IMDSType } from '~/components/clusters/wizards/common/constants';
 import * as wizardHooks from '~/components/clusters/wizards/hooks';
 import { FieldId } from '~/components/clusters/wizards/rosa/constants';
 import * as useCanClusterAutoscale from '~/hooks/useCanClusterAutoscale';
-import { checkAccessibility, render, screen, userEvent } from '~/testUtils';
+import { IMDS_SELECTION } from '~/queries/featureGates/featureConstants';
+import { checkAccessibility, mockUseFeatureGate, render, screen, userEvent } from '~/testUtils';
 
 import ScaleSection from './ScaleSection';
 
@@ -26,7 +28,7 @@ const formStateBaseMock = {
     [FieldId.InstallerRoleArn]: null,
     [FieldId.Region]: null,
     [FieldId.BillingModel]: null,
-    [FieldId.IMDS]: null,
+    [FieldId.IMDS]: IMDSType.V1AndV2,
   },
   errors: {},
   validateForm: jest.fn(),
@@ -40,11 +42,13 @@ describe('<ScaleSection />', () => {
   beforeEach(() => {
     useFormStateMock.mockReturnValue(formStateBaseMock);
     useCanClusterAutoscaleMock.mockReturnValue(false);
+    jest.clearAllMocks();
   });
 
   afterEach(() => {
     useFormStateMock.mockClear();
     useCanClusterAutoscaleMock.mockClear();
+    jest.clearAllMocks();
   });
 
   it('is accessible', async () => {
@@ -156,7 +160,9 @@ describe('<ScaleSection />', () => {
   });
 
   describe('"imds" section', () => {
-    it('is not rendered when "hypershift" form value is checked', () => {
+    it('is not rendered when "hypershift" form value is checked and feature gate is disabled', () => {
+      // Disable the IMDS_SELECTION feature gate
+      mockUseFeatureGate([[IMDS_SELECTION, false]]);
       useFormStateMock.mockReturnValue({
         ...formStateBaseMock,
         values: {
@@ -173,7 +179,27 @@ describe('<ScaleSection />', () => {
       expect(imdsSection).not.toBeInTheDocument();
     });
 
+    it('is rendered when "hypershift" form value is checked and feature gate is enabled', () => {
+      // Enable the IMDS_SELECTION feature gate
+      mockUseFeatureGate([[IMDS_SELECTION, true]]);
+      useFormStateMock.mockReturnValue({
+        ...formStateBaseMock,
+        values: {
+          ...formStateBaseMock.values,
+          [FieldId.Hypershift]: 'true',
+        },
+      });
+      render(
+        <Formik initialValues={{}} onSubmit={() => {}}>
+          <ScaleSection />
+        </Formik>,
+      );
+      const imdsSection = screen.queryByText('Instance Metadata Service');
+      expect(imdsSection).toBeInTheDocument();
+    });
+
     it('is not rendered when "hypershift" form value is checked and "imds" form value is selected', () => {
+      mockUseFeatureGate([[IMDS_SELECTION, false]]);
       useFormStateMock.mockReturnValue({
         ...formStateBaseMock,
         values: {

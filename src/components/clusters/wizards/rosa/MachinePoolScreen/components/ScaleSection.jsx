@@ -24,7 +24,7 @@ import { FieldId } from '~/components/clusters/wizards/rosa/constants';
 import ExternalLink from '~/components/common/ExternalLink';
 import FormKeyValueList from '~/components/common/FormikFormComponents/FormKeyValueList';
 import useCanClusterAutoscale from '~/hooks/useCanClusterAutoscale';
-import { MAX_NODES_TOTAL_249 } from '~/queries/featureGates/featureConstants';
+import { IMDS_SELECTION, MAX_NODES_TOTAL_249 } from '~/queries/featureGates/featureConstants';
 import { useFeatureGate } from '~/queries/featureGates/useFetchFeatureGate';
 
 import WorkerNodeVolumeSizeSection from './WorkerNodeVolumeSizeSection/WorkerNodeVolumeSizeSection';
@@ -53,6 +53,9 @@ function ScaleSection() {
     getFieldProps,
     getFieldMeta,
   } = useFormState();
+
+  const isImdsEnabledHypershift = useFeatureGate(IMDS_SELECTION);
+
   const isByoc = true;
   const poolsLength = machinePoolsSubnets?.length;
   const isMultiAzSelected = isMultiAz === 'true';
@@ -120,7 +123,7 @@ function ScaleSection() {
 
   const ImdsSectionComponent = useCallback(
     () =>
-      !isHypershiftSelected && imds ? (
+      imds ? (
         <>
           <GridItem md={8}>
             <ImdsSection
@@ -132,7 +135,7 @@ function ScaleSection() {
           <GridItem md={4} />
         </>
       ) : null,
-    [clusterVersionRawId, imds, isHypershiftSelected, setFieldValue],
+    [clusterVersionRawId, imds, setFieldValue],
   );
 
   const WorkerNodeVolumeSizeSectionComponent = useCallback(
@@ -246,7 +249,8 @@ function ScaleSection() {
       ) : null}
 
       {/* IMDS */}
-      <ImdsSectionComponent />
+      {isImdsEnabledHypershift && isHypershiftSelected ? <ImdsSectionComponent /> : null}
+      {!isHypershiftSelected ? <ImdsSectionComponent /> : null}
       {/* Worker node disk size */}
       <WorkerNodeVolumeSizeSectionComponent />
       {/* Labels */}
