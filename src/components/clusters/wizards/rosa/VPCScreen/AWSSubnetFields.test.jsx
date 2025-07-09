@@ -107,6 +107,7 @@ describe('<AWSSubnetFields />', () => {
     name: fieldName,
   }));
   const mockGetFieldMeta = jest.fn(() => ({ touched: false, error: '' }));
+  const mockValidateField = jest.fn();
 
   beforeEach(() => {
     mockSetFieldValue.mockClear();
@@ -122,6 +123,7 @@ describe('<AWSSubnetFields />', () => {
         [FieldId.MachinePoolsSubnets]: testInitialValues[FieldId.MachinePoolsSubnets],
         [FieldId.SecurityGroups]: testInitialValues[FieldId.SecurityGroups],
       },
+      validateField: mockValidateField,
     });
   });
 
@@ -261,6 +263,24 @@ describe('<AWSSubnetFields />', () => {
       // Public subnets should exist
       await user.click(dropdownButtons[9]);
       expect(screen.getByText('myVPC-subnet-public-myRegiona')).toBeInTheDocument();
+    });
+
+    it('validateField is called on mount', () => {
+      const newProps = {
+        ...defaultProps,
+        isMultiAz: true,
+        // Regions "a" and "e" have private and public subnets, Region "c" has only public subnets
+        selectedAZs: ['myRegione', 'myRegionc', 'myRegiona'],
+      };
+      const newValues = {
+        machinePoolsSubnets: [
+          { availabilityZone: 'myRegione', privateSubnetId: '' },
+          { availabilityZone: 'myRegionc', privateSubnetId: '' },
+          { availabilityZone: 'myRegiona', privateSubnetId: '' },
+        ],
+      };
+      render(buildTestComponent(<AWSSubnetFields {...newProps} />, newValues));
+      expect(mockValidateField).toHaveBeenCalled();
     });
   });
 

@@ -27,6 +27,7 @@ const SingleSubnetFieldsRow = ({
     setFieldValue,
     getFieldProps,
     getFieldMeta,
+    validateField,
     values: { [FieldId.MachinePoolsSubnets]: machinePoolsSubnets },
   } = useFormState();
   const azFieldName = `${FieldId.MachinePoolsSubnets}[${index}].availabilityZone`;
@@ -35,6 +36,14 @@ const SingleSubnetFieldsRow = ({
 
   const azValidations = (value) =>
     required(value) || (isMultiAz && validateUniqueAZ(value, { machinePoolsSubnets }));
+
+  React.useEffect(() => {
+    if (selectedAZ) {
+      validateField(azFieldName);
+    }
+    // Only run on mount
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const showLabels = index === 0;
   let disabledSubnetReason;
