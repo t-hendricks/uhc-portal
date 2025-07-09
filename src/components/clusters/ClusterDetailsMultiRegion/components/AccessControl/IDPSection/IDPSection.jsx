@@ -56,6 +56,7 @@ const IDPSection = (props) => {
     isHypershift,
     subscriptionID,
     cluster,
+    isROSA,
   } = props;
   const isHTPasswdEnhanced = useFeatureGate(ENHANCED_HTPASSWRD);
   const navigate = useNavigate();
@@ -70,7 +71,13 @@ const IDPSection = (props) => {
   } = useFetchIDPsWithHTPUsers(clusterID, region);
 
   const learnMoreLink = (
-    <a rel="noopener noreferrer" href={links.UNDERSTANDING_IDENTITY_PROVIDER} target="_blank">
+    <a
+      rel="noopener noreferrer"
+      href={
+        isROSA ? links.ROSA_UNDERSTANDING_IDENTITY_PROVIDER : links.UNDERSTANDING_IDENTITY_PROVIDER
+      }
+      target="_blank"
+    >
       Learn more.
     </a>
   );
@@ -315,6 +322,7 @@ IDPSection.propTypes = {
   isReadOnly: PropTypes.bool,
   isHypershift: PropTypes.bool,
   subscriptionID: PropTypes.string,
+  isROSA: PropTypes.bool.isRequired,
 };
 
 export default IDPSection;

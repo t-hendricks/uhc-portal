@@ -29,6 +29,7 @@ function AccessControl({
   cluster,
   refreshEvent = null,
   isAutoClusterTransferOwnershipEnabled = false,
+  isROSA,
 }) {
   const [activeKey, setActiveKey] = React.useState(0);
 
@@ -129,6 +130,7 @@ function AccessControl({
               isReadOnly={isReadOnly}
               subscriptionID={subscriptionID}
               cluster={cluster}
+              isROSA={isROSA}
             />
           </Tab>
           <Tab
@@ -142,6 +144,7 @@ function AccessControl({
               clusterHibernating={isHibernating(cluster)}
               isReadOnly={isReadOnly}
               region={region}
+              isROSA={isROSA}
             />
           </Tab>
           <Tab
@@ -205,6 +208,7 @@ AccessControl.propTypes = {
   cluster: PropTypes.object.isRequired,
   refreshEvent: PropTypes.object,
   isAutoClusterTransferOwnershipEnabled: PropTypes.bool,
+  isROSA: PropTypes.bool.isRequired,
 };
 
 export default AccessControl;

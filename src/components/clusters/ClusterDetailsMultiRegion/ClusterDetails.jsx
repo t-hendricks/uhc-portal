@@ -21,6 +21,7 @@ import { getAddHostsTabState } from '@openshift-assisted/ui-lib/ocm';
 import { PageSection, Spinner, TabContent, Tooltip } from '@patternfly/react-core';
 
 import { Navigate, useNavigate } from '~/common/routing';
+import { knownProducts, normalizedProducts } from '~/common/subscriptionTypes';
 import AIHostsClusterDetailTab from '~/components/AIComponents/AIHostsClusterDetailTab';
 import { AppPage } from '~/components/App/AppPage';
 import { modalActions } from '~/components/common/Modal/ModalActions';
@@ -64,7 +65,6 @@ import {
   isUninstalledAICluster,
 } from '../../../common/isAssistedInstallerCluster';
 import { hasCapability, subscriptionCapabilities } from '../../../common/subscriptionCapabilities';
-import { knownProducts } from '../../../common/subscriptionTypes';
 import { userActions } from '../../../redux/actions';
 import { getUserAccess } from '../../../redux/actions/costActions';
 import { clearGlobalError, setGlobalError } from '../../../redux/actions/globalErrorActions';
@@ -423,6 +423,7 @@ const ClusterDetails = (props) => {
   const isOSDTrial = get(cluster, 'subscription.plan.type', '') === knownProducts.OSDTrial;
   const isRHOIC = get(cluster, 'subscription.plan.type', '') === knownProducts.RHOIC;
   const gotRouters = get(clusterRouters, 'getRouters.routers.length', 0) > 0;
+  const isROSA = get(cluster, 'subscription.plan.type') === normalizedProducts.ROSA;
 
   // eslint-disable-next-line no-unused-vars
   const isManaged = cluster.managed;
@@ -640,6 +641,7 @@ const ClusterDetails = (props) => {
                   refreshEvent={refreshEvent}
                   region={cluster.subscription.rh_region_id}
                   isAutoClusterTransferOwnershipEnabled={isAutoClusterTransferOwnershipEnabled}
+                  isROSA={isROSA}
                 />
               </ErrorBoundary>
             </TabContent>

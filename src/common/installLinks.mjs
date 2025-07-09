@@ -111,6 +111,7 @@ const links = {
   CCO_MANUAL_MODE: `${DOCS_BASE}/authentication_and_authorization/managing-cloud-provider-credentials#cco-mode-manual`,
   UNDERSTANDING_AUTHENTICATION: `${DOCS_BASE}/authentication_and_authorization/understanding-authentication`,
   UNDERSTANDING_IDENTITY_PROVIDER: `${DOCS_BASE}/authentication_and_authorization/understanding-identity-provider`,
+  ROSA_UNDERSTANDING_IDENTITY_PROVIDER: `${ROSA_DOCS_BASE}/authentication_and_authorization/sd-configuring-identity-providers`,
   APPLYING_AUTOSCALING: `${DOCS_BASE}//machine_management/applying-autoscaling`,
   APPLYING_AUTOSCALING_API_DETAIL: `${DOCS_BASE}/autoscale_apis/clusterautoscaler-autoscaling-openshift-io-v1`,
   AWS_SPOT_INSTANCES: `${DOCS_BASE}/machine_management/managing-compute-machines-with-the-machine-api#machineset-non-guaranteed-instance_creating-machineset-aws`,
@@ -131,6 +132,7 @@ const links = {
   MANAGED_INGRESS_KNOWLEDGE_BASE: 'https://access.redhat.com/articles/7028653',
 
   OSD_DEDICATED_ADMIN_ROLE: `${OSD_DOCS_BASE}/authentication_and_authorization/osd-admin-roles`,
+  ROSA_ADMIN_ROLE: `${ROSA_DOCS_BASE}/introduction_to_rosa/rosa-sts-about-iam-resources#rosa-sts-operator-roles_rosa-sts-about-iam-resources`,
   OSD_CCS_AWS: `${OSD_DOCS_BASE}/planning_your_environment/aws-ccs`,
   OSD_CCS_AWS_LIMITS: `${OSD_DOCS_BASE}/planning_your_environment/aws-ccs#aws-limits_aws-ccs`,
   OSD_CCS_AWS_SCP: `${OSD_DOCS_BASE}/planning_your_environment/aws-ccs#ccs-aws-scp_aws-ccs`,

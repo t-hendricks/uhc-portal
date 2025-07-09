@@ -45,7 +45,7 @@ import AddUserDialog from './AddUserDialog';
 import canAllowAdminHelper from './UsersHelper';
 
 const UsersSection = (props) => {
-  const { cluster, clusterHibernating, isReadOnly, region } = props;
+  const { cluster, clusterHibernating, isReadOnly, region, isROSA } = props;
 
   const dispatch = useDispatch();
 
@@ -223,7 +223,9 @@ const UsersSection = (props) => {
         </Title>
         <p>
           Grant permission to manage this cluster to users defined in your identity provider.{' '}
-          <ExternalLink href={links.OSD_DEDICATED_ADMIN_ROLE}>Learn more.</ExternalLink>
+          <ExternalLink href={isROSA ? links.ROSA_ADMIN_ROLE : links.OSD_DEDICATED_ADMIN_ROLE}>
+            Learn more.
+          </ExternalLink>
         </p>
         {isDeleteUserError && (
           <ErrorBox message="Error deleting user" response={deleteUserError.error} />
@@ -251,6 +253,7 @@ const UsersSection = (props) => {
           isOpen={isAddUserModalOpen}
           clusterID={cluster.id}
           canAddClusterAdmin={canAddClusterAdmin}
+          isROSA={isROSA}
         />
       </CardBody>
     </Card>
@@ -262,6 +265,7 @@ UsersSection.propTypes = {
   cluster: PropTypes.object.isRequired,
   clusterHibernating: PropTypes.bool.isRequired,
   isReadOnly: PropTypes.bool.isRequired,
+  isROSA: PropTypes.bool.isRequired,
 };
 
 export default UsersSection;
