@@ -11,6 +11,7 @@
     "Infra": "2/2",
     "Compute": "3/3"
   },
+  "InstanceMetadataService": "IMDSv2",
   "ClusterAutoscaling": "Disabled",
   "ClusterPrivacy": "Public",
   "ClusterWideProxy": "Disabled",

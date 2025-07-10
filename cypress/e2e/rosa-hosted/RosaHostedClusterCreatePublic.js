@@ -101,6 +101,11 @@ describe(
         CreateRosaWizardPage.disabledAutoScaling();
         CreateRosaWizardPage.selectComputeNodeCount(clusterProperties.MachinePools.NodeCount);
       }
+      if (clusterProperties.InstanceMetadataService.includes('IMDSv1')) {
+        CreateRosaWizardPage.useBothIMDSv1AndIMDSv2Radio().check();
+      } else {
+        CreateRosaWizardPage.useIMDSv2Radio().check();
+      }
       CreateRosaWizardPage.rosaNextButton().click();
     });
 
@@ -236,6 +241,10 @@ describe(
               .PRIVATE_SUBNET_NAME,
           );
       }
+      CreateRosaWizardPage.isClusterPropertyMatchesValue(
+        'Instance Metadata Service (IMDS)',
+        clusterProperties.InstanceMetadataService,
+      );
     });
 
     it('Step - Review and create : Networking definitions', () => {

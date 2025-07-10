@@ -76,6 +76,8 @@ describe(
       CreateRosaWizardPage.enableAutoScaling();
       CreateRosaWizardPage.disabledAutoScaling();
       CreateRosaWizardPage.selectComputeNodeCount(clusterProperties.MachinePools[0].NodeCount);
+      CreateRosaWizardPage.useBothIMDSv1AndIMDSv2Radio().should('be.checked');
+      CreateRosaWizardPage.useIMDSv2Radio().check();
       CreateRosaWizardPage.rootDiskSizeInput().should('have.value', '300');
       CreateRosaWizardPage.rootDiskSizeInput()
         .clear()
@@ -175,6 +177,10 @@ describe(
       CreateRosaWizardPage.isClusterPropertyMatchesValue(
         'Install to selected VPC',
         qeInfrastructure.VPC_NAME,
+      );
+      CreateRosaWizardPage.isClusterPropertyMatchesValue(
+        'Instance Metadata Service (IMDS)',
+        clusterProperties.InstanceMetadataService,
       );
     });
 
