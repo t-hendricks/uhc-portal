@@ -45,6 +45,7 @@ export const ServicePage = ({ serviceName }: ServicePageProps) => {
           featuresExpandableContents: osdFeaturesExpandableContents,
           linkTextLabelLinkCardContents: osdLinkTextLabelLinkCardContents,
           getStartedSection: osdGetStartedSectionData,
+          breadcrumbsLabel: 'Red Hat OpenShift Dedicated',
         };
       case 'ROSA':
       default:
@@ -54,6 +55,7 @@ export const ServicePage = ({ serviceName }: ServicePageProps) => {
           featuresExpandableContents: rosaFeaturesExpandableContents,
           linkTextLabelLinkCardContents: rosaLinkTextLabelLinkCardContents,
           getStartedSection: rosaGetStartedSectionData,
+          breadcrumbsLabel: 'Red Hat OpenShift Service on AWS',
         };
     }
   }, [serviceName]);
@@ -71,7 +73,7 @@ export const ServicePage = ({ serviceName }: ServicePageProps) => {
             path={[
               { label: 'Overview', path: `/overview` },
               {
-                label: 'Red Hat OpenShift Dedicated',
+                label: data.breadcrumbsLabel,
               },
             ]}
           />

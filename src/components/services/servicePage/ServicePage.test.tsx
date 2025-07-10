@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { checkAccessibility, render, screen } from '~/testUtils';
+import { checkAccessibility, getByText, render, screen } from '~/testUtils';
 
 import { ServicePage } from './ServicePage';
 
@@ -9,6 +9,13 @@ describe('Service page unit tests', () => {
     it('is accessible', async () => {
       const { container } = render(<ServicePage serviceName="ROSA" />);
       await checkAccessibility(container);
+    });
+
+    it('has the right breadcrumb text', () => {
+      render(<ServicePage serviceName="ROSA" />);
+
+      const breadcrumbsNav = screen.getByRole('navigation', { name: 'Breadcrumb' });
+      expect(getByText(breadcrumbsNav, 'Red Hat OpenShift Service on AWS')).toBeInTheDocument();
     });
 
     it('has a link for "begin setup"', () => {
@@ -125,6 +132,13 @@ describe('Service page unit tests', () => {
     it('is accessible', async () => {
       const { container } = render(<ServicePage serviceName="OSD" />);
       await checkAccessibility(container);
+    });
+
+    it('has the right breadcrumb text', () => {
+      render(<ServicePage serviceName="OSD" />);
+
+      const breadcrumbsNav = screen.getByRole('navigation', { name: 'Breadcrumb' });
+      expect(getByText(breadcrumbsNav, 'Red Hat OpenShift Dedicated')).toBeInTheDocument();
     });
 
     it('has a link for "create OSD cluster"', () => {
