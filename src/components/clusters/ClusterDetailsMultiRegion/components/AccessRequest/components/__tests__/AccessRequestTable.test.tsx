@@ -44,7 +44,7 @@ describe('AccessRequestTable', () => {
 
       // Assert
       expect(container.querySelectorAll('tbody tr')).toHaveLength(10);
-      expect(container.querySelectorAll('.pf-v5-c-skeleton').length).toBe(40);
+      expect(container.querySelectorAll('.pf-v5-c-skeleton').length).toBe(10);
     });
 
     describe('isPeding false', () => {
