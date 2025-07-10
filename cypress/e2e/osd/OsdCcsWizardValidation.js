@@ -200,6 +200,7 @@ describe('OSD Wizard validation tests(OCP-54134,OCP-73204)', { tags: ['smoke'] }
     });
     it(`OSD wizard - ${clusterProperties.CloudProvider} -${clusterProperties.SubscriptionType}-${clusterProperties.InfrastructureType} : Cluster Settings - Machinepool(nodes) field validations`, () => {
       CreateOSDWizardPage.isMachinePoolScreen();
+      CreateOSDWizardPage.selectComputeNodeType(clusterProperties.InstanceType);
       CreateOSDWizardPage.computeNodeCountSelect()
         .get('option')
         .first()
@@ -236,6 +237,7 @@ describe('OSD Wizard validation tests(OCP-54134,OCP-73204)', { tags: ['smoke'] }
       CreateOSDWizardPage.wizardBackButton().click();
       CreateOSDWizardPage.selectAvailabilityZone('Multi-zone');
       CreateOSDWizardPage.wizardNextButton().click();
+      CreateOSDWizardPage.selectComputeNodeType(clusterProperties.InstanceType);
       CreateOSDWizardPage.selectAutoScaling('disabled');
       CreateOSDWizardPage.computeNodeCountSelect()
         .get('option')
@@ -418,6 +420,7 @@ describe('OSD Wizard validation tests(OCP-54134,OCP-73204)', { tags: ['smoke'] }
         CreateOSDWizardPage.wizardBackButton().click();
         CreateOSDWizardPage.selectAvailabilityZone('Single Zone');
         CreateOSDWizardPage.wizardNextButton().click();
+        CreateOSDWizardPage.selectComputeNodeType(clusterProperties.InstanceType);
         CreateOSDWizardPage.enableAutoscalingCheckbox().uncheck();
         CreateOSDWizardPage.enableAutoscalingCheckbox().check();
         CreateOSDWizardPage.editClusterAutoscalingSettingsButton().click();
@@ -439,6 +442,7 @@ describe('OSD Wizard validation tests(OCP-54134,OCP-73204)', { tags: ['smoke'] }
           CreateOSDWizardPage.wizardBackButton().click();
           CreateOSDWizardPage.selectAvailabilityZone('Multi-zone');
           CreateOSDWizardPage.wizardNextButton().click();
+          CreateOSDWizardPage.selectComputeNodeType(clusterProperties.InstanceType);
           CreateOSDWizardPage.enableAutoscalingCheckbox().uncheck();
           CreateOSDWizardPage.enableAutoscalingCheckbox().check();
           CreateOSDWizardPage.editClusterAutoscalingSettingsButton().click();

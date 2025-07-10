@@ -604,7 +604,11 @@ class CreateOSDCluster extends Page {
   }
 
   selectComputeNodeType(computeNodeType) {
-    cy.get('button[aria-label="Machine type select toggle"]').click();
+    cy.get('button[aria-label="Machine type select toggle"]', { timeout: 40000 })
+      .should('exist')
+      .scrollIntoView()
+      .should('be.visible')
+      .click();
     cy.get('input[aria-label="Machine type select search field"]').clear().type(computeNodeType);
     cy.get('div').contains(computeNodeType).click();
   }
@@ -631,7 +635,7 @@ class CreateOSDCluster extends Page {
 
   isTextContainsInPage(text, present = true) {
     if (present) {
-      cy.contains(text).should('be.exist').should('be.visible');
+      cy.contains(text).should('exist').scrollIntoView().should('be.visible');
     } else {
       cy.contains(text).should('not.exist');
     }
