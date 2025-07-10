@@ -171,6 +171,27 @@ describe('createClusterRequest', () => {
     universe_domain: 'googleapis.com',
   };
 
+  describe('custom CIDR values', () => {
+    it('select bare host-prefix', () => {
+      const data = {
+        ...baseFormData,
+        ...CIDRData,
+      };
+      const request = createClusterRequest({}, data);
+      expectCIDR(request);
+    });
+
+    it('select host-prefix with a leading slash', () => {
+      const data = {
+        ...baseFormData,
+        ...CIDRData,
+        network_host_prefix: '/24',
+      };
+      const request = createClusterRequest({}, data);
+      expectCIDR(request);
+    });
+  });
+
   // TODO: this can be removed, but some scenarios tested here e.g. gcpVPCData
   //   are worth moving to wizards tests?
   describe('CreateOSDForm', () => {

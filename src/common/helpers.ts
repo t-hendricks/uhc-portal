@@ -400,6 +400,14 @@ const useScrollToAnchor = () => {
   return null;
 };
 
+const parseCIDRSubnetLength = (value?: string): number | undefined => {
+  if (!value) {
+    return undefined;
+  }
+
+  return parseInt(value.split('/').pop() ?? '', 10);
+};
+
 export {
   noop,
   isValid,
@@ -428,6 +436,7 @@ export {
   constructSelectedSubnets,
   Subnet,
   useScrollToAnchor,
+  parseCIDRSubnetLength,
 };
 
 export default helpers;

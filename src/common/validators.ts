@@ -4,7 +4,7 @@ import IPCIDR from 'ip-cidr';
 import { ValidationError, Validator } from 'jsonschema';
 import { get, indexOf, inRange } from 'lodash';
 
-import { Subnet } from '~/common/helpers';
+import { parseCIDRSubnetLength, Subnet } from '~/common/helpers';
 import { FormSubnet } from '~/components/clusters/wizards/common/FormSubnet';
 import { FieldId } from '~/components/clusters/wizards/osd/constants';
 import { clusterService } from '~/services';
@@ -883,14 +883,6 @@ const cidr = (value?: string): string | undefined => {
   return undefined;
 };
 
-const getCIDRSubnetLength = (value?: string): number | undefined => {
-  if (!value) {
-    return undefined;
-  }
-
-  return parseInt(value.split('/').pop() ?? '', 10);
-};
-
 const subnetCidrs = (
   value?: string,
   formData?: Record<string, string>,
@@ -983,7 +975,7 @@ const awsMachineCidr = (value?: string, formData?: Record<string, string>): stri
   }
 
   const isMultiAz = formData?.multi_az === 'true';
-  const prefixLength = getCIDRSubnetLength(value);
+  const prefixLength = parseCIDRSubnetLength(value);
 
   if (prefixLength != null) {
     if (prefixLength < AWS_MACHINE_CIDR_MIN) {
@@ -1011,7 +1003,7 @@ const gcpMachineCidr = (value?: string, formData?: Record<string, string>): stri
   }
 
   const isMultiAz = formData?.multi_az === 'true';
-  const prefixLength = getCIDRSubnetLength(value);
+  const prefixLength = parseCIDRSubnetLength(value);
 
   if (prefixLength != null) {
     if (isMultiAz && prefixLength > GCP_MACHINE_CIDR_MAX) {
@@ -1035,7 +1027,7 @@ const serviceCidr = (value?: string): string | undefined => {
     return undefined;
   }
 
-  const prefixLength = getCIDRSubnetLength(value);
+  const prefixLength = parseCIDRSubnetLength(value);
 
   if (prefixLength != null) {
     if (prefixLength > SERVICE_CIDR_MAX) {
@@ -1052,13 +1044,13 @@ const podCidr = (value?: string, formData?: Record<string, string>): string | un
     return undefined;
   }
 
-  const prefixLength = getCIDRSubnetLength(value);
+  const prefixLength = parseCIDRSubnetLength(value);
   if (prefixLength != null) {
     if (prefixLength > POD_CIDR_MAX) {
       return `The subnet mask can't be smaller than /${POD_CIDR_MAX}.`;
     }
 
-    const hostPrefix = getCIDRSubnetLength(formData?.network_host_prefix) || 23;
+    const hostPrefix = parseCIDRSubnetLength(formData?.network_host_prefix) || 23;
     const maxPodIPs = 2 ** (32 - hostPrefix);
     const maxPodNodes = Math.floor(2 ** (32 - prefixLength) / maxPodIPs);
     if (maxPodNodes < POD_NODES_MIN) {
@@ -1186,7 +1178,7 @@ const hostPrefix = (value?: string): string | undefined => {
     return `The value '${value}' isn't a valid subnet mask. It must follow the RFC-4632 format: '/16'.`;
   }
 
-  const prefixLength = getCIDRSubnetLength(value);
+  const prefixLength = parseCIDRSubnetLength(value);
 
   if (prefixLength != null) {
     if (prefixLength < HOST_PREFIX_MIN) {
