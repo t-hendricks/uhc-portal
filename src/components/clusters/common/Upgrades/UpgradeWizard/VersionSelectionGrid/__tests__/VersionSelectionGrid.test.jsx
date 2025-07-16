@@ -56,7 +56,7 @@ describe('<VersionSelectionGrid />', () => {
     getUnMetClusterAcknowledgements,
   };
 
-  const getCards = (container) => container.querySelectorAll('.pf-v5-c-card');
+  const getCards = (container) => container.querySelectorAll('.pf-v6-c-card');
 
   afterEach(() => {
     jest.clearAllMocks();

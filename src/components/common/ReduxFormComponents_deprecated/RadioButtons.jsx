@@ -56,7 +56,7 @@ const RadioButtons = ({
     <>
       {options.map((option) => {
         const button = (
-          <SplitItem className="pf-v5-u-mr-sm">
+          <SplitItem className="pf-v6-u-mr-sm">
             <Radio
               className={className || ''}
               isChecked={input.value === option.value}

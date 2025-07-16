@@ -11,7 +11,7 @@ import {
   Title,
 } from '@patternfly/react-core';
 import ExclamationTriangleIcon from '@patternfly/react-icons/dist/esm/icons/exclamation-triangle-icon';
-import { global_warning_color_100 as warningColor } from '@patternfly/react-tokens/dist/esm/global_warning_color_100';
+import { t_global_icon_color_status_warning_default as warningColor } from '@patternfly/react-tokens/dist/esm/t_global_icon_color_status_warning_default';
 
 import { trackEvents } from '~/common/analytics';
 import links from '~/common/installLinks.mjs';
@@ -50,15 +50,17 @@ const StepCreateNetwork = () => (
         <InstructionCommand
           trackEvent={trackEvents.CopyCreateAccountRoles}
           textAriaLabel="Copyable ROSA create account-roles command"
-          className="pf-v5-u-mt-md"
+          className="pf-v6-u-mt-md"
         >
           {RosaCliCommand.CreateNetwork}
         </InstructionCommand>
       </ListItem>
     </List>
-    Learn more about the{' '}
-    <ExternalLink href={links.ROSA_CREATE_NETWORK}>create network command</ExternalLink> and other
-    ways to <ExternalLink href={links.CREATE_VPC_WAYS}>create a VPC</ExternalLink>
+    <div className="pf-v6-u-mt-md">
+      Learn more about the{' '}
+      <ExternalLink href={links.ROSA_CREATE_NETWORK}>create network command</ExternalLink> and other
+      ways to <ExternalLink href={links.CREATE_VPC_WAYS}>create a VPC</ExternalLink>
+    </div>
   </>
 );
 

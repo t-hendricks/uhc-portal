@@ -57,8 +57,8 @@ export const CreateClusterCard = ({
           <CardHeader>
             <CardTitle>
               <Title headingLevel="h3">
-                <Icon size="md">
-                  <CubeIcon className="pf-v5-u-mr-sm rosa-cube-icon" />
+                <Icon className="pf-v6-u-mr-sm" size="md">
+                  <CubeIcon className="rosa-cube-icon" />
                 </Icon>
                 {title}
               </Title>

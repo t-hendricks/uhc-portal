@@ -234,7 +234,7 @@ const LogWindow = ({
           </div>
         </div>
       ) : (
-        cluster.state !== clusterStates.error && <p className="pf-v5-u-mt-sm">{message}</p>
+        cluster.state !== clusterStates.error && <p className="pf-v6-u-mt-sm">{message}</p>
       )}
     </div>
   );
@@ -245,7 +245,6 @@ const LogWindow = ({
       toggleTextExpanded="Hide logs"
       onToggle={(_event, isExpanded) => setIsExpanded(isExpanded)}
       isExpanded={isExpanded}
-      isActive={!isFullScreen}
     >
       {view}
     </ExpandableSection>

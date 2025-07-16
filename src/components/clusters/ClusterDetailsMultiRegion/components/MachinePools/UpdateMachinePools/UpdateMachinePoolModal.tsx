@@ -61,11 +61,12 @@ export const UpdatePoolButton = ({
   if (canBeUpdated && !isMachinePoolError) {
     return (
       <Button
+        icon={<OutlinedArrowAltCircleUpIcon />}
         variant={ButtonVariant.link}
         isInline
         onClick={() => dispatch(modalActions.openModal(updateModalId, { machinePool }))}
       >
-        Update <OutlinedArrowAltCircleUpIcon />
+        Update
       </Button>
     );
   }
@@ -73,7 +74,7 @@ export const UpdatePoolButton = ({
   if (isMachinePoolScheduleError(machinePool)) {
     return (
       <PopoverHint
-        iconClassName="pf-v5-u-ml-sm"
+        iconClassName="pf-v6-u-ml-sm"
         isError
         hint={machinePool.upgradePolicies?.errorMessage}
       />
@@ -83,7 +84,7 @@ export const UpdatePoolButton = ({
   if (!isAvailableVersion) {
     return (
       <PopoverHint
-        iconClassName="pf-v5-u-ml-sm"
+        iconClassName="pf-v6-u-ml-sm"
         hint={`This machine pool cannot be updated because there isn't a migration path to version ${controlPlaneVersion}`}
       />
     );
@@ -97,7 +98,7 @@ export const UpdatePoolButton = ({
     if (schedule?.next_run && schedule?.version) {
       return (
         <PopoverHint
-          iconClassName="pf-v5-u-ml-sm"
+          iconClassName="pf-v6-u-ml-sm"
           hint={
             <>
               {scheduledMessage} at <DateFormat type="exact" date={Date.parse(schedule.next_run)} />{' '}
@@ -108,7 +109,7 @@ export const UpdatePoolButton = ({
       );
     }
 
-    return <PopoverHint iconClassName="pf-v5-u-ml-sm" hint={scheduledMessage} />;
+    return <PopoverHint iconClassName="pf-v6-u-ml-sm" hint={scheduledMessage} />;
   }
   return null;
 };
@@ -195,7 +196,7 @@ export const UpdateMachinePoolModal = ({
           isExpandable
           isInline
           role="alert"
-          className="pf-v5-u-mt-md"
+          className="pf-v6-u-mt-md"
         >
           <p>{error}</p>
         </Alert>

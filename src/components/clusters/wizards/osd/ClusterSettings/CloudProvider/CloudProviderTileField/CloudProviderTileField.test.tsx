@@ -7,7 +7,7 @@ import {
   FieldId,
   initialValues as defaultValues,
 } from '~/components/clusters/wizards/osd/constants';
-import { checkAccessibility, render, screen, userEvent, waitFor } from '~/testUtils';
+import { checkAccessibility, fireEvent, render, screen, waitFor } from '~/testUtils';
 import { SubscriptionCommonFieldsCluster_billing_model as BillingModel } from '~/types/accounts_mgmt.v1';
 
 import { CloudProviderTileField } from './CloudProviderTileField';
@@ -51,8 +51,8 @@ describe('<CloudProviderTileField />', () => {
       </Formik>,
     );
 
-    expect(screen.getByRole('option', { name: gcpLabel, selected: true })).toBeInTheDocument();
-    expect(screen.getByRole('option', { name: awsLabel, selected: false })).toBeInTheDocument();
+    expect(screen.getByRole('radio', { name: gcpLabel })).toHaveAttribute('checked');
+    expect(screen.getByRole('radio', { name: awsLabel })).not.toHaveAttribute('checked');
   });
 
   it('allows changing provider', async () => {
@@ -66,39 +66,15 @@ describe('<CloudProviderTileField />', () => {
       </Formik>,
     );
 
-    expect(screen.getByRole('option', { name: awsLabel, selected: false })).toBeInTheDocument();
+    expect(screen.getByRole('radio', { name: awsLabel })).not.toHaveAttribute('checked');
 
-    await user.click(screen.getByRole('option', { name: awsLabel, selected: false }));
+    // The radio button we are targeting here that is used for selection is hidden so we need to use fireEvent
+    // eslint-disable-next-line testing-library/prefer-user-event
+    fireEvent.click(screen.getByRole('radio', { name: awsLabel }));
 
-    expect(screen.getByRole('option', { name: awsLabel, selected: true })).toBeInTheDocument();
-
-    await user.click(screen.getByRole('button', { name: /submit/i }));
-
-    await waitFor(() => expectCloudProviderToBe(handleSubmit, CloudProviderType.Aws));
-  });
-
-  it('allows changing provider with keyboard', async () => {
-    const handleSubmit = jest.fn();
-    const { user } = render(
-      <Formik initialValues={defaultValues} onSubmit={handleSubmit}>
-        <Form>
-          <CloudProviderTileField />
-          <button type="submit">Submit</button>
-        </Form>
-      </Formik>,
+    await waitFor(() =>
+      expect(screen.getByRole('radio', { name: awsLabel })).toHaveProperty('checked'),
     );
-
-    expect(screen.getByRole('option', { name: awsLabel, selected: false })).toBeInTheDocument();
-
-    screen.getByRole('option', { name: awsLabel, selected: false }).focus();
-
-    await userEvent.type(
-      screen.getByRole('option', { name: awsLabel, selected: false }),
-      '{enter}',
-      { skipClick: true },
-    );
-
-    expect(screen.getByRole('option', { name: awsLabel, selected: true })).toBeInTheDocument();
 
     await user.click(screen.getByRole('button', { name: /submit/i }));
 

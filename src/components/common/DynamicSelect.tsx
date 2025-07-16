@@ -4,12 +4,11 @@ import { FieldInputProps, FieldMetaProps } from 'formik';
 import {
   Alert,
   Button,
+  Content,
   FormGroup,
   FormSelect,
   FormSelectOption,
   FormSelectProps,
-  Text,
-  TextContent,
 } from '@patternfly/react-core';
 
 import { FormGroupHelperText } from '~/components/common/FormGroupHelperText';
@@ -111,16 +110,16 @@ const DynamicSelect = ({
     } else {
       error = (
         <Alert isInline variant="danger" title={emptyAlertTitle} role="alert">
-          <TextContent>
+          <Content>
             {emptyAlertBody}
             {refreshButtonText && (
-              <Text>
+              <Content component="p">
                 <Button variant="secondary" onClick={loadData}>
                   {refreshButtonText}
                 </Button>
-              </Text>
+              </Content>
             )}
-          </TextContent>
+          </Content>
         </Alert>
       );
       options = <FormSelectOption isDisabled isPlaceholder value="" label="" />;
@@ -141,7 +140,7 @@ const DynamicSelect = ({
   const { onChange, ...restInput } = input;
 
   return (
-    <FormGroup label={label} labelIcon={labelIcon} fieldId={input.name} isRequired={isRequired}>
+    <FormGroup label={label} labelHelp={labelIcon} fieldId={input.name} isRequired={isRequired}>
       {error}
       <FormSelect
         aria-label={label}

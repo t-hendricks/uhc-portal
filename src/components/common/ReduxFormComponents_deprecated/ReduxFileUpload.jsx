@@ -58,7 +58,7 @@ const ReduxFileUpload = ({
     <FormGroup
       fieldId={input.name}
       label={label}
-      labelIcon={
+      labelHelp={
         extendedHelpText && <PopoverHint title={extendedHelpTitle} hint={extendedHelpText} />
       }
       isRequired={isRequired}

@@ -26,7 +26,7 @@ import useOrganization from './useOrganization';
 const ErrorOrLoadingWrapper = ({ children }: { children: React.ReactElement }) => (
   <AppPage title="OpenShift Cluster Manager">
     <PageHeader title="OpenShift Cluster Manager" subtitle="" />
-    <PageSection>
+    <PageSection hasBodyWrapper={false}>
       <Card>
         <CardTitle>
           <Title headingLevel="h2">OpenShift Cluster Manager CLI login</Title>
@@ -102,7 +102,7 @@ const CLILoginPage = ({ showToken = false, showPath, isRosa = false }: CLILoginP
           )
         }
       />
-      <PageSection>
+      <PageSection hasBodyWrapper={false}>
         <Instructions
           setShouldShowTokens={setShouldShowTokens}
           shouldShowTokens={shouldShowTokens}

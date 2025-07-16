@@ -8,7 +8,7 @@ import {
   TableBody as TableBodyDeprecated,
   TableHeader as TableHeaderDeprecated,
 } from '@patternfly/react-table/deprecated';
-import { addNotification } from '@redhat-cloud-services/frontend-components-notifications/redux';
+import { useAddNotification } from '@redhat-cloud-services/frontend-components-notifications';
 
 import ErrorBox from '~/components/common/ErrorBox';
 import { usePreviousProps } from '~/hooks/usePreviousProps';
@@ -37,6 +37,7 @@ const NotificationContactsCard = ({
   addNotificationStatus,
 }: NotificationContactsCardProps) => {
   const dispatch = useDispatch();
+  const addNotification = useAddNotification();
   const { notificationContacts, refetch } = useFetchNotificationContacts(subscriptionID);
   const {
     mutate,
@@ -66,13 +67,11 @@ const NotificationContactsCard = ({
       //     ? 'Notification contact added successfully'
       //     : `${addContactResponse.count} notification contacts added successfully`;
 
-      dispatch(
-        addNotification({
-          variant: 'success',
-          title,
-          dismissable: false,
-        }),
-      );
+      addNotification({
+        variant: 'success',
+        title,
+        dismissable: false,
+      });
     }
 
     // fetch contacts again if we just added/deleted one.
@@ -94,6 +93,7 @@ const NotificationContactsCard = ({
     previousAddContactResponsePending,
     previousDeleteContactResponsePending,
     subscriptionID,
+    addNotification,
   ]);
 
   const actions: IActions = useMemo(
@@ -110,20 +110,18 @@ const NotificationContactsCard = ({
           mutate(rowData.userID);
           const title = 'Notification contact deleted successfully';
           if (!isDeleteNotificationError) {
-            dispatch(
-              addNotification({
-                variant: 'success',
-                title,
-                dismissable: false,
-              }),
-            );
+            addNotification({
+              variant: 'success',
+              title,
+              dismissable: false,
+            });
             buildNotificationsMeta('Notification contact deleted successfully', rowData.userID);
           }
         },
         className: 'hand-pointer',
       },
     ],
-    [isDeleteNotificationError, dispatch, mutate],
+    [dispatch, mutate, isDeleteNotificationError, addNotification],
   );
 
   const rows = useMemo(

@@ -1,7 +1,8 @@
 import React from 'react';
 import { Formik } from 'formik';
 
-import { Button, Modal, StackItem } from '@patternfly/react-core';
+import { Button, StackItem } from '@patternfly/react-core';
+import { Modal } from '@patternfly/react-core/deprecated';
 
 import { queryClient } from '~/components/App/queryClient';
 import ErrorBox from '~/components/common/ErrorBox';

@@ -277,7 +277,7 @@ function Details() {
   };
 
   const secureBootAlert = (
-    <div className="pf-v5-u-mt-sm">
+    <div className="pf-v6-u-mt-sm">
       <Alert
         isInline
         variant="danger"
@@ -308,7 +308,7 @@ function Details() {
           </GridItem>
 
           <GridItem>
-            <Split hasGutter className="pf-u-mb-0">
+            <Split hasGutter className="pf-v6-u-mb-0">
               <SplitItem>
                 <CheckboxField name={FieldId.HasDomainPrefix} label="Create custom domain prefix" />
               </SplitItem>
@@ -350,7 +350,7 @@ function Details() {
               label="Region"
               isRequired
               fieldId={FieldId.Region}
-              labelIcon={<PopoverHint hint={constants.regionHint} />}
+              labelHelp={<PopoverHint hint={constants.regionHint} />}
             >
               <Field
                 component={CloudRegionSelectField}
@@ -380,7 +380,7 @@ function Details() {
                 <FormGroup
                   label="Persistent storage"
                   fieldId={FieldId.PersistentStorage}
-                  labelIcon={<PopoverHint hint={constants.persistentStorageHint} />}
+                  labelHelp={<PopoverHint hint={constants.persistentStorageHint} />}
                 >
                   <Field
                     name={FieldId.PersistentStorage}
@@ -402,7 +402,7 @@ function Details() {
                 <FormGroup
                   label="Load balancers"
                   fieldId={FieldId.LoadBalancers}
-                  labelIcon={<PopoverHint hint={constants.loadBalancersHint} />}
+                  labelHelp={<PopoverHint hint={constants.loadBalancersHint} />}
                 >
                   <Field
                     name={FieldId.LoadBalancers}
@@ -434,7 +434,7 @@ function Details() {
             <Title headingLevel="h4">Monitoring</Title>
           </GridItem>
 
-          <Split hasGutter className="pf-v5-u-mb-0">
+          <Split hasGutter className="pf-v6-u-mb-0">
             <SplitItem>
               <CheckboxField
                 name={FieldId.EnableUserWorkloadMonitoring}

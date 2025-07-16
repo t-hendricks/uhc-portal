@@ -338,7 +338,7 @@ const MachineTypeSelection = ({
         label="Compute node instance type"
         isRequired
         fieldId="node_type"
-        labelIcon={<PopoverHint hint={constants.computeNodeInstanceTypeHint} />}
+        labelHelp={<PopoverHint hint={constants.computeNodeInstanceTypeHint} />}
       >
         <TreeViewSelect
           treeViewSelectionMap={machineTypeMap}
@@ -351,9 +351,7 @@ const MachineTypeSelection = ({
           helperText={
             currentSelectionPossiblyUnavailable && (
               <HelperText>
-                <HelperTextItem variant="warning" hasIcon>
-                  {machineTypeUnavailableWarning}
-                </HelperTextItem>
+                <HelperTextItem variant="warning">{machineTypeUnavailableWarning}</HelperTextItem>
               </HelperText>
             )
           }
@@ -361,7 +359,6 @@ const MachineTypeSelection = ({
           searchPlaceholder="Find an instance size"
           includeFilterSwitch={useRegionFilteredData}
           switchLabelOnText="Include types that might be unavailable to your account or region"
-          switchLabelOffText="Include types that might be unavailable to your account or region"
           allExpanded={allExpanded}
           ariaLabel="Machine type select"
         />

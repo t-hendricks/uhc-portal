@@ -240,7 +240,7 @@ const reviewValues = {
           {allValues.multi_az === 'true' && allValues.hypershift !== 'true' ? ' per zone' : ''}:
         </span>{' '}
         {value || 0}
-        <span className="pf-v5-u-ml-lg">
+        <span className="pf-v6-u-ml-lg">
           Maximum nodes
           {allValues.hypershift === 'true' ? ' per machine pool' : ''}
           {allValues.multi_az === 'true' && allValues.hypershift !== 'true' ? ' per zone' : ''}:

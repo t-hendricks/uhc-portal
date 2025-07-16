@@ -79,22 +79,22 @@ export const ServicePage = ({ serviceName }: ServicePageProps) => {
           />
         }
       />
-      <PageSection>
+      <PageSection hasBodyWrapper={false}>
         <GetStartedSection {...data.getStartedSection} />
 
-        <Title className="pf-v5-u-mt-lg pf-v5-u-mb-lg" headingLevel="h2">
+        <Title className="pf-v6-u-mt-lg pf-v6-u-mb-lg" headingLevel="h2">
           Benefits
         </Title>
         <ExpandableListCard items={data.benefitsExpandableContents} />
 
-        <Title className="pf-v5-u-mt-lg pf-v5-u-mb-lg" headingLevel="h2">
+        <Title className="pf-v6-u-mt-lg pf-v6-u-mb-lg" headingLevel="h2">
           Features
         </Title>
         <ExpandableListCard items={data.featuresExpandableContents} />
 
         {serviceName === 'OSD' ? <OSDPricingCard /> : null}
         {serviceName === 'ROSA' ? <RosaPricingCard /> : null}
-        <Title headingLevel="h2" className="pf-v5-u-mt-lg pf-v5-u-mb-lg">
+        <Title headingLevel="h2" className="pf-v6-u-mt-lg pf-v6-u-mb-lg">
           Recommended content
         </Title>
 

@@ -1,8 +1,8 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
 
-import { Spinner, Stack, StackItem, Text, TextContent, TextVariants } from '@patternfly/react-core';
-import { addNotification } from '@redhat-cloud-services/frontend-components-notifications';
+import { Content, ContentVariants, Spinner, Stack, StackItem } from '@patternfly/react-core';
+import { useAddNotification } from '@redhat-cloud-services/frontend-components-notifications';
 
 import ErrorBox from '~/components/common/ErrorBox';
 import Modal from '~/components/common/Modal/Modal';
@@ -39,6 +39,7 @@ const BulkDeleteUserModal = ({
   const hasFailedDeletions = failedDeletions?.length > 0;
 
   const dispatch = useDispatch();
+  const addNotification = useAddNotification();
 
   const closeBulkDeleteUserModal = React.useCallback(() => {
     reset();
@@ -60,13 +61,12 @@ const BulkDeleteUserModal = ({
               closeBulkDeleteUserModal();
               refreshHtpasswdUsers();
               onSuccess();
-              dispatch(
-                addNotification({
-                  variant: 'success',
-                  title: `Successfully deleted ${selectedUsers.length} users`,
-                  dismissable: true,
-                }),
-              );
+
+              addNotification({
+                variant: 'success',
+                title: `Successfully deleted ${selectedUsers.length} users`,
+                dismissable: true,
+              });
             }
           },
         })
@@ -89,15 +89,15 @@ const BulkDeleteUserModal = ({
         ) : (
           <Stack hasGutter>
             <StackItem>
-              <TextContent>
-                <Text component={TextVariants.p}>
+              <Content>
+                <Content component={ContentVariants.p}>
                   You are about to remove <strong>{selectedUsers.length} users</strong> from the
                   identity provider <strong>{idpName}</strong>.
-                </Text>
-              </TextContent>
+                </Content>
+              </Content>
             </StackItem>
             <StackItem>
-              <ul className="pf-v5-u-mb-md" style={{ wordBreak: 'break-word' }}>
+              <ul className="pf-v6-u-mb-md" style={{ wordBreak: 'break-word' }}>
                 {selectedUsers.slice(0, 5).map((user) => (
                   <li key={user.id}>* {user.username}</li>
                 ))}
@@ -105,11 +105,11 @@ const BulkDeleteUserModal = ({
               </ul>
             </StackItem>
             <StackItem>
-              <TextContent>
-                <Text component={TextVariants.p}>
+              <Content>
+                <Content component={ContentVariants.p}>
                   These users will lose access to this cluster.
-                </Text>
-              </TextContent>
+                </Content>
+              </Content>
             </StackItem>
           </Stack>
         )}

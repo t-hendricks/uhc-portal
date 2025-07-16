@@ -25,6 +25,6 @@ describe('<OfferingCard />', () => {
       canCreateManagedCluster: true,
     });
     render(<OfferingCard offeringType="AWS" canCreateManagedCluster />);
-    expect(screen.getByTestId('create-cluster')).toHaveAttribute('aria-disabled', 'false');
+    expect(screen.getByTestId('create-cluster')).not.toHaveAttribute('aria-disabled');
   });
 });

@@ -19,6 +19,7 @@ import { Provider } from 'react-redux';
 import * as OCM from '@openshift-assisted/ui-lib/ocm';
 import { GenerateId } from '@patternfly/react-core';
 import useChrome from '@redhat-cloud-services/frontend-components/useChrome';
+import { NotificationsProvider } from '@redhat-cloud-services/frontend-components-notifications';
 // No type definitions
 // @ts-ignore
 import NotificationPortal from '@redhat-cloud-services/frontend-components-notifications/NotificationPortal';
@@ -123,8 +124,10 @@ class AppEntry extends React.Component<Props> {
     if (ready) {
       return (
         <Provider store={store}>
-          <NotificationPortal />
-          <App />
+          {/* <NotificationPortal /> */}
+          <NotificationsProvider>
+            <App />
+          </NotificationsProvider>
         </Provider>
       );
     }

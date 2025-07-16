@@ -78,7 +78,7 @@ describe('<IDPSection />', () => {
     });
     const { container } = render(<IDPSection {...props} />);
     expect(screen.queryByRole('grid')).not.toBeInTheDocument();
-    expect(container.querySelectorAll('.pf-v5-c-skeleton').length).toBe(0);
+    expect(container.querySelectorAll('.pf-v6-c-skeleton').length).toBe(0);
     await checkAccessibility(container);
   });
 
@@ -90,7 +90,7 @@ describe('<IDPSection />', () => {
     });
 
     const { container } = render(<IDPSection {...props} />);
-    expect(container.querySelectorAll('.pf-v5-c-skeleton').length).toBeGreaterThan(0);
+    expect(container.querySelectorAll('.pf-v6-c-skeleton').length).toBeGreaterThan(0);
     await checkAccessibility(container);
   });
 
@@ -117,7 +117,7 @@ describe('<IDPSection />', () => {
       expect(await screen.findByRole('grid')).toBeInTheDocument();
       expect(await screen.findByRole('cell', { name: 'hi' })).toBeInTheDocument();
       expect(await screen.findByRole('cell', { name: 'hello' })).toBeInTheDocument();
-      expect(container.querySelectorAll('.pf-v5-c-skeleton').length).toBe(0);
+      expect(container.querySelectorAll('.pf-v6-c-skeleton').length).toBe(0);
 
       await checkAccessibility(container);
     });
@@ -144,7 +144,7 @@ describe('<IDPSection />', () => {
       expect(await screen.findByRole('grid')).toBeInTheDocument();
       expect(await screen.findByRole('cell', { name: 'hi' })).toBeInTheDocument();
       expect(await screen.findByRole('cell', { name: 'hello' })).toBeInTheDocument();
-      expect(container.querySelectorAll('.pf-v5-c-skeleton').length).toBe(0);
+      expect(container.querySelectorAll('.pf-v6-c-skeleton').length).toBe(0);
       await checkAccessibility(container);
     });
 
@@ -337,7 +337,7 @@ describe('<IDPSection />', () => {
 
       const expandRowToggle = screen.getByTestId('expandable-row');
       expect(expandRowToggle).toBeInTheDocument();
-      expect(container.querySelectorAll('.pf-v5-c-skeleton').length).toBe(0);
+      expect(container.querySelectorAll('.pf-v6-c-skeleton').length).toBe(0);
       await checkAccessibility(container);
     });
 

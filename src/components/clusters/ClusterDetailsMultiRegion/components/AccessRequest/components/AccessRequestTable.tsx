@@ -1,13 +1,6 @@
 import React, { useCallback } from 'react';
 
-import {
-  Button,
-  EmptyState,
-  EmptyStateHeader,
-  EmptyStateIcon,
-  PageSection,
-  Skeleton,
-} from '@patternfly/react-core';
+import { Button, EmptyState, PageSection, Skeleton } from '@patternfly/react-core';
 import { EyeIcon } from '@patternfly/react-icons/dist/esm/icons/eye-icon';
 import SearchIcon from '@patternfly/react-icons/dist/esm/icons/search-icon';
 import { ISortBy, SortByDirection, Table, Tbody, Td, Th, Thead, Tr } from '@patternfly/react-table';
@@ -107,7 +100,7 @@ const AccessRequestTable = ({
         key={index}
       >
         {columnOptions.screenReaderText ? (
-          <span className="pf-v5-screen-reader">{columnOptions.screenReaderText}</span>
+          <span className="pf-v6-screen-reader">{columnOptions.screenReaderText}</span>
         ) : null}
         {columnOptions.title}
       </Th>
@@ -117,13 +110,11 @@ const AccessRequestTable = ({
   if (!isPending && (!accessRequestItems || accessRequestItems.length === 0)) {
     return (
       <PageSection>
-        <EmptyState>
-          <EmptyStateHeader
-            titleText="No access request entries found"
-            icon={<EmptyStateIcon icon={SearchIcon} />}
-            headingLevel="h4"
-          />
-        </EmptyState>
+        <EmptyState
+          headingLevel="h4"
+          icon={SearchIcon}
+          titleText="No access request entries found"
+        />
       </PageSection>
     );
   }

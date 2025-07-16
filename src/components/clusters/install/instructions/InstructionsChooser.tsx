@@ -44,7 +44,7 @@ export const InstructionsChooser = ({
   name,
 }: InstructionsChooserProps) => (
   <div
-    className="pf-v5-c-content ocm-page instructions-chooser"
+    className="pf-v6-c-content ocm-page instructions-chooser"
     data-ouia-component-id={`${name}-instructions-chooser`}
   >
     {aiPageLink && (

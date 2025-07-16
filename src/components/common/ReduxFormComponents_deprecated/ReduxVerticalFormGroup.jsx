@@ -170,7 +170,7 @@ const ReduxVerticalFormGroup = ({
       fieldId={input.name}
       label={label}
       isRequired={isRequired}
-      labelIcon={extendedHelpText && <PopoverHint hint={extendedHelpText} />}
+      labelHelp={extendedHelpText && <PopoverHint hint={extendedHelpText} />}
       className={formGroupClass}
     >
       {getAutocompleteValue && (

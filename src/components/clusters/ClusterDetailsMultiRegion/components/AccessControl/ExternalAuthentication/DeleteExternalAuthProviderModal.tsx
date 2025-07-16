@@ -1,6 +1,7 @@
 import React from 'react';
 
-import { Button, Flex, Form, Modal, Stack, StackItem, TextInput } from '@patternfly/react-core';
+import { Button, Flex, Form, Stack, StackItem, TextInput } from '@patternfly/react-core';
+import { Modal } from '@patternfly/react-core/deprecated';
 
 import ErrorBox from '~/components/common/ErrorBox';
 import { useDeleteExternalAuth } from '~/queries/ClusterDetailsQueries/AccessControlTab/ExternalAuthenticationQueries/useDeleteExternalAuth';

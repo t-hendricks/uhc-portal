@@ -155,7 +155,7 @@ function DetailsLeft({ cluster, cloudProviders, showAssistedId, wifConfigData })
           Version
           {isHypershift && (
             <PopoverHint
-              iconClassName="pf-v5-u-ml-sm"
+              iconClassName="pf-v6-u-ml-sm"
               hint="This version is only for the control plane. Worker nodes may have a different version."
             />
           )}
@@ -176,7 +176,7 @@ function DetailsLeft({ cluster, cloudProviders, showAssistedId, wifConfigData })
         <DescriptionListGroup>
           <DescriptionListTerm>Encryption level</DescriptionListTerm>
           <DescriptionListDescription>
-            <dl className="pf-v5-l-stack">
+            <dl className="pf-v6-l-stack">
               <dt data-testid="fipsCryptographyStatus">FIPS Cryptography enabled</dt>
             </dl>
           </DescriptionListDescription>

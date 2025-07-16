@@ -3,8 +3,6 @@ import PropTypes from 'prop-types';
 import { useDispatch } from 'react-redux';
 
 import {
-  Card,
-  CardBody,
   Dropdown,
   DropdownItem,
   DropdownList,
@@ -206,101 +204,95 @@ const IDPSection = (props) => {
   return pending ? (
     <LoadingSkeletonCard />
   ) : (
-    <Card>
-      <CardBody>
-        <Stack hasGutter>
-          <StackItem>
-            <Title headingLevel="h2" size="lg" className="card-title">
-              Identity providers
-            </Title>
-            <p>
-              Configure identity providers to allow users to log into the cluster. {learnMoreLink}
-            </p>
-          </StackItem>
-          <StackItem>{addIDPDropdown}</StackItem>
-          <StackItem>
-            {hasIDPs && idpActions.list && (
-              <Table aria-label="Identity Providers" variant={TableVariant.compact}>
-                <Thead>
-                  <Tr>
-                    <Th screenReaderText="Row expansion" />
-                    <Th width={30}>{columnNames.name}</Th>
-                    <Th width={30}>{columnNames.type}</Th>
-                    <Th width={30}>{columnNames.callbackUrl}</Th>
-                    <Th screenReaderText="Action" />
-                  </Tr>
-                </Thead>
-                {identityProviders.map((idp, rowIndex) => {
-                  const actions = idpActionResolver(idp);
-                  const htpUsersCount = idp.htpUsers?.length;
+    <Stack hasGutter>
+      <StackItem>
+        <Title headingLevel="h2" size="lg" className="card-title">
+          Identity providers
+        </Title>
+        <p>Configure identity providers to allow users to log into the cluster. {learnMoreLink}</p>
+      </StackItem>
+      <StackItem>{addIDPDropdown}</StackItem>
+      <StackItem>
+        {hasIDPs && idpActions.list && (
+          <Table aria-label="Identity Providers" variant={TableVariant.compact}>
+            <Thead>
+              <Tr>
+                <Th screenReaderText="Row expansion" />
+                <Th width={30}>{columnNames.name}</Th>
+                <Th width={30}>{columnNames.type}</Th>
+                <Th width={30}>{columnNames.callbackUrl}</Th>
+                <Th screenReaderText="Action" />
+              </Tr>
+            </Thead>
+            {identityProviders.map((idp, rowIndex) => {
+              const actions = idpActionResolver(idp);
+              const htpUsersCount = idp.htpUsers?.length;
 
-                  return (
-                    <Tbody key={idp.id} isExpanded={isIdpExpanded(idp)}>
-                      <Tr>
-                        <Td
-                          expand={
-                            idp?.htpUsers && idpActions.update && isHTPasswdEnhanced
-                              ? {
-                                  rowIndex,
-                                  isExpanded: isIdpExpanded(idp),
-                                  onToggle: () => setIdpExpanded(idp, !isIdpExpanded(idp)),
-                                  expandId: idp.id,
-                                }
-                              : undefined
-                          }
-                        />
-                        <Td dataLabel={columnNames.name} modifier="truncate">
-                          {idp.name}
-                        </Td>
-                        <Td dataLabel={columnNames.type}>{IDPTypeNames[idp.type] ?? idp.type}</Td>
-                        <Td dataLabel={columnNames.callbackUrl}>
-                          {IDPNeedsOAuthURL(idp.type) ? (
-                            <ClipboardCopyLinkButton
-                              className="access-control-tables-copy"
-                              text={getOauthCallbackURL(clusterUrls, idp.name, isHypershift)}
-                            >
-                              Copy URL to clipboard
-                            </ClipboardCopyLinkButton>
-                          ) : (
-                            'N/A'
-                          )}
-                        </Td>
-                        <Td isActionCell>
-                          <ActionsColumn items={actions} isDisabled={!!disableReason} />
-                        </Td>
-                      </Tr>
-                      {idp?.htpUsers && idpActions.update && isHTPasswdEnhanced ? (
-                        <Tr
-                          key="expandable-row"
-                          isExpanded={isIdpExpanded(idp)}
-                          data-testid="expandable-row"
+              return (
+                <Tbody key={idp.id} isExpanded={isIdpExpanded(idp)}>
+                  <Tr>
+                    <Td
+                      expand={
+                        idp?.htpUsers && idpActions.update && isHTPasswdEnhanced
+                          ? {
+                              rowIndex,
+                              isExpanded: isIdpExpanded(idp),
+                              onToggle: () => setIdpExpanded(idp, !isIdpExpanded(idp)),
+                              expandId: idp.id,
+                            }
+                          : undefined
+                      }
+                    />
+                    <Td dataLabel={columnNames.name} modifier="truncate">
+                      {idp.name}
+                    </Td>
+                    <Td dataLabel={columnNames.type}>{IDPTypeNames[idp.type] ?? idp.type}</Td>
+                    <Td dataLabel={columnNames.callbackUrl}>
+                      {IDPNeedsOAuthURL(idp.type) ? (
+                        <ClipboardCopyLinkButton
+                          className="access-control-tables-copy"
+                          text={getOauthCallbackURL(clusterUrls, idp.name, isHypershift)}
                         >
-                          <Td />
-                          <Td dataLabel="Users" noPadding>
-                            <ExpandableRowContent>
-                              <ul className="pf-v5-u-mb-md" style={{ wordBreak: 'break-word' }}>
-                                {idp.htpUsers.slice(0, 5).map((user) => (
-                                  <li key={user.id}>{user.username}</li>
-                                ))}
-                                <li>
-                                  <Link to={`/details/s/${subscriptionID}/edit-idp/${idp.name}`}>
-                                    View all users ({htpUsersCount})
-                                  </Link>
-                                </li>
-                              </ul>
-                            </ExpandableRowContent>
-                          </Td>
-                        </Tr>
-                      ) : null}
-                    </Tbody>
-                  );
-                })}
-              </Table>
-            )}
-          </StackItem>
-        </Stack>
-      </CardBody>
-    </Card>
+                          Copy URL to clipboard
+                        </ClipboardCopyLinkButton>
+                      ) : (
+                        'N/A'
+                      )}
+                    </Td>
+                    <Td isActionCell>
+                      <ActionsColumn items={actions} isDisabled={!!disableReason} />
+                    </Td>
+                  </Tr>
+                  {idp?.htpUsers && idpActions.update && isHTPasswdEnhanced ? (
+                    <Tr
+                      key="expandable-row"
+                      isExpanded={isIdpExpanded(idp)}
+                      data-testid="expandable-row"
+                    >
+                      <Td />
+                      <Td dataLabel="Users" noPadding colSpan={4}>
+                        <ExpandableRowContent>
+                          <ul className="pf-v6-u-mb-md" style={{ wordBreak: 'break-word' }}>
+                            {idp.htpUsers.slice(0, 5).map((user) => (
+                              <li key={user.id}>{user.username}</li>
+                            ))}
+                            <li>
+                              <Link to={`/details/s/${subscriptionID}/edit-idp/${idp.name}`}>
+                                View all users ({htpUsersCount})
+                              </Link>
+                            </li>
+                          </ul>
+                        </ExpandableRowContent>
+                      </Td>
+                    </Tr>
+                  ) : null}
+                </Tbody>
+              );
+            })}
+          </Table>
+        )}
+      </StackItem>
+    </Stack>
   );
 };
 

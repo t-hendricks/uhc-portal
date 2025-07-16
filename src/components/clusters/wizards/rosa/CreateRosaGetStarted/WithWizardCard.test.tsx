@@ -18,13 +18,18 @@ describe('<WithWizard />', () => {
       canCreateManagedCluster: false,
     });
     render(<WithWizard />);
-    expect(screen.getByText('Create with web interface')).toHaveAttribute('aria-disabled', 'true');
+    expect(screen.getByText('Create with web interface').parentElement).toHaveAttribute(
+      'aria-disabled',
+      'true',
+    );
   });
   it('Enables "Create with web interface" button if user has permissions', async () => {
     (useCanCreateManagedCluster as jest.Mock).mockReturnValue({
       canCreateManagedCluster: true,
     });
     render(<WithWizard />);
-    expect(screen.getByText('Create with web interface')).toHaveAttribute('aria-disabled', 'false');
+    expect(screen.getByText('Create with web interface').parentElement).not.toHaveAttribute(
+      'aria-disabled',
+    );
   });
 });

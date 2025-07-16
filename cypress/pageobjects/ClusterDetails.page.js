@@ -55,7 +55,7 @@ class ClusterDetails extends Page {
   archiveClusterDialogConfirm = () =>
     cy.get('div[aria-label="Archive cluster"]').find('footer').find('button').first();
 
-  successNotification = () => cy.get('div.pf-v5-c-alert.pf-m-success.notification-item');
+  successNotification = () => cy.get('div.pf-v6-c-alert.pf-m-success.notification-item');
 
   unarchiveClusterButton = () =>
     cy.get('[id="cl-details-btns"]').contains('button', 'Unarchive', { timeout: 15000 });
@@ -324,7 +324,7 @@ class ClusterDetails extends Page {
 
   checkInstallationStepStatus(step, status = '') {
     let installStep = cy
-      .get('div.pf-v5-c-progress-stepper__step-title', { timeout: 80000 })
+      .get('div.pf-v6-c-progress-stepper__step-title', { timeout: 80000 })
       .contains(step);
     if (status == '') {
       installStep.should('be.visible');
@@ -334,7 +334,7 @@ class ClusterDetails extends Page {
   }
 
   waitForInstallerScreenToLoad = () => {
-    cy.get('li.pf-v5-c-wizard__nav-item', { timeout: 30000 }).should('not.exist');
+    cy.get('li.pf-v6-c-wizard__nav-item', { timeout: 30000 }).should('not.exist');
     cy.get('div.cluster-loading-container', { timeout: 100000 }).should('not.exist');
   };
 

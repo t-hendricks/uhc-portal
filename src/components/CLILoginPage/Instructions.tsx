@@ -26,13 +26,12 @@ import {
   Card,
   CardBody,
   CardTitle,
+  Content,
   List,
   ListItem,
   Skeleton,
   Stack,
   StackItem,
-  Text,
-  TextContent,
   Title,
 } from '@patternfly/react-core';
 import useChrome from '@redhat-cloud-services/frontend-components/useChrome';
@@ -163,25 +162,25 @@ const Instructions = (props: Props) => {
           </CardTitle>
 
           <CardBody className="ocm-c-api-token__card--body">
-            <TextContent>
+            <Content>
               <LeadingInfo isRosa={isRosa} SSOLogin={false} />
-            </TextContent>
+            </Content>
             {show || token ? (
               <>
                 <TokenBox token={token} />
-                <TextContent className="pf-v5-u-mt-lg">
+                <Content className="pf-v6-u-mt-lg">
                   <Title headingLevel="h3">Using your token in the command line</Title>
                   <List component="ol">
                     <ListItem>
                       Download and install the <code>{commandName}</code> command-line tool:{' '}
                       {commandTool === tools.OCM && <SupportLevelBadge {...DEV_PREVIEW} />}
-                      <Text component="p" />
+                      <Content component="p" />
                       <DownloadAndOSSelection tool={commandTool} channel={channels.STABLE} />
-                      <Text component="p" />
+                      <Content component="p" />
                     </ListItem>
                     <ListItem>
                       Copy and paste the authentication command in your terminal:
-                      <Text component="p" />
+                      <Content component="p" />
                       {offlineToken == null && !restrictedEnv ? (
                         <Skeleton fontSize="md" screenreaderText="Loading..." />
                       ) : (
@@ -198,18 +197,18 @@ const Instructions = (props: Props) => {
                   <Title headingLevel="h3">
                     {`Need help connecting with your ${restrictedEnv ? 'refresh' : 'offline'} token?`}
                   </Title>
-                  <Text component="p">
+                  <Content component="p">
                     Run <code>{commandName} login --help</code> for in-terminal guidance, or{' '}
                     {docsLink} for more information about setting up the <code>{commandName}</code>{' '}
                     CLI.
-                  </Text>
-                </TextContent>
+                  </Content>
+                </Content>
               </>
             ) : (
               <Link to={showPath}>
                 <Button
                   variant="primary"
-                  className="pf-v5-u-mt-md"
+                  className="pf-v6-u-mt-md"
                   data-testid="load-token-btn"
                   onClick={() =>
                     loadOfflineToken(

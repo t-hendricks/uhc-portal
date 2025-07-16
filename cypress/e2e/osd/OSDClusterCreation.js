@@ -17,7 +17,7 @@ describe('OSD cluster tests', { tags: ['ci'] }, () => {
     it('navigates to create OSD cluster', () => {
       cy.getByTestId('create_cluster_btn').click();
       CreateClusterPage.isCreateClusterPage();
-      cy.get('a[data-testid="osd-create-cluster-button"][aria-disabled="false"]', {
+      cy.get('a[data-testid="osd-create-cluster-button"]', {
         timeout: 15000,
       }).click();
       CreateOSDWizardPage.isCreateOSDPage();
@@ -32,9 +32,9 @@ describe('OSD cluster tests', { tags: ['ci'] }, () => {
       cy.get(CreateOSDWizardPage.primaryButton).click();
 
       CreateOSDWizardPage.isClusterDetailsScreen();
-      cy.get(CreateOSDWizardPage.clusterNameInput).type(
-        'aaaaaaaaaaaaaaaa-aaaaaaaaaaaaaaaa-aaaaaaaaaaaaaaaa-aaaaaaaa',
-      );
+      cy.get(CreateOSDWizardPage.clusterNameInput)
+        .scrollIntoView()
+        .type('aaaaaaaaaaaaaaaa-aaaaaaaaaaaaaaaa-aaaaaaaaaaaaaaaa-aaaaaaaa');
       cy.get(CreateOSDWizardPage.clusterNameInputError).contains('1 - 54 characters');
       cy.get(CreateOSDWizardPage.clusterNameInput).clear();
       cy.get(CreateOSDWizardPage.clusterNameInputError).should('have.length', 4);

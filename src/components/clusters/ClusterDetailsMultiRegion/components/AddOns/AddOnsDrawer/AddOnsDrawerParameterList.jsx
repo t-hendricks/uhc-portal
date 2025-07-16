@@ -42,7 +42,7 @@ function AddOnsParameterList(props) {
     return (
       <FlexItem>
         <p className="ocm-addons-tab--configuration-title">
-          Configuration
+          Configuration{' '}
           <Button
             aria-label="edit configuration"
             ouiaId={`update-addon-${activeCardID}`}

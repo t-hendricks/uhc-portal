@@ -6,8 +6,8 @@ import PropTypes from 'prop-types';
 import { Button, Icon, Popover, PopoverPosition } from '@patternfly/react-core';
 import { ExclamationCircleIcon } from '@patternfly/react-icons/dist/esm/icons/exclamation-circle-icon';
 import { ExclamationTriangleIcon } from '@patternfly/react-icons/dist/esm/icons/exclamation-triangle-icon';
-import { global_danger_color_100 as dangerColor } from '@patternfly/react-tokens/dist/esm/global_danger_color_100';
-import { global_warning_color_100 as warningColor } from '@patternfly/react-tokens/dist/esm/global_warning_color_100';
+import { t_global_icon_color_status_danger_default as dangerColor } from '@patternfly/react-tokens/dist/esm/t_global_icon_color_status_danger_default';
+import { t_global_icon_color_status_warning_default as warningColor } from '@patternfly/react-tokens/dist/esm/t_global_icon_color_status_warning_default';
 import { DateFormat } from '@redhat-cloud-services/frontend-components/DateFormat';
 
 import { SubscriptionCommonFieldsSupport_level as SubscriptionCommonFieldsSupportLevel } from '~/types/accounts_mgmt.v1';

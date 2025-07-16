@@ -1,7 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import { setNestedObjectValues } from 'formik';
 
-import { Button, ButtonProps, useWizardContext, WizardFooterWrapper } from '@patternfly/react-core';
+import {
+  ActionList,
+  ActionListGroup,
+  ActionListItem,
+  Button,
+  ButtonProps,
+  useWizardContext,
+  WizardFooterWrapper,
+} from '@patternfly/react-core';
 import { WizardContextProps } from '@patternfly/react-core/dist/esm/components/Wizard/WizardContext';
 
 import { scrollToFirstField } from '~/common/helpers';
@@ -87,7 +95,7 @@ export const CreateOsdWizardFooter = ({
     variant: 'primary',
     isLoading: isButtonLoading,
     isDisabled: isButtonDisabled,
-    className: canCreateManagedCluster ? '' : 'pf-v5-u-mr-md',
+    className: canCreateManagedCluster ? '' : 'pf-v6-u-mr-md',
     'data-testid': 'wizard-next-button',
   };
 
@@ -110,27 +118,37 @@ export const CreateOsdWizardFooter = ({
 
   return isSubmitting ? null : (
     <WizardFooterWrapper>
-      {canCreateManagedCluster ? (
-        primaryBtn
-      ) : (
-        <CreateManagedClusterTooltip wrap>{primaryBtn}</CreateManagedClusterTooltip>
-      )}
-      <Button
-        variant="secondary"
-        data-testid="wizard-back-button"
-        onClick={goToPrevStep}
-        isDisabled={isButtonDisabled || steps.indexOf(activeStep) === 0}
-      >
-        Back
-      </Button>
-      <Button
-        variant="link"
-        data-testid="wizard-cancel-button"
-        onClick={close}
-        isDisabled={isButtonDisabled}
-      >
-        Cancel
-      </Button>
+      <ActionList>
+        <ActionListGroup>
+          {canCreateManagedCluster ? (
+            primaryBtn
+          ) : (
+            <CreateManagedClusterTooltip wrap>{primaryBtn}</CreateManagedClusterTooltip>
+          )}
+          <ActionListItem>
+            <Button
+              variant="secondary"
+              data-testid="wizard-back-button"
+              onClick={goToPrevStep}
+              isDisabled={isButtonDisabled || steps.indexOf(activeStep) === 0}
+            >
+              Back
+            </Button>
+          </ActionListItem>
+        </ActionListGroup>
+        <ActionListGroup>
+          <ActionListItem>
+            <Button
+              variant="link"
+              data-testid="wizard-cancel-button"
+              onClick={close}
+              isDisabled={isButtonDisabled}
+            >
+              Cancel
+            </Button>
+          </ActionListItem>
+        </ActionListGroup>
+      </ActionList>
     </WizardFooterWrapper>
   );
 };

@@ -3,7 +3,7 @@ import { Formik } from 'formik';
 import { useDispatch } from 'react-redux';
 
 import { Form } from '@patternfly/react-core';
-import { addNotification } from '@redhat-cloud-services/frontend-components-notifications';
+import { useAddNotification } from '@redhat-cloud-services/frontend-components-notifications';
 
 import { useFormState } from '~/components/clusters/wizards/hooks';
 import ErrorBox from '~/components/common/ErrorBox';
@@ -39,6 +39,7 @@ const EditUserForm = ({ onSuccess }: { onSuccess: () => void }) => {
   } = useCreateEditHtpasswdUser(clusterId, idpId, region);
 
   const dispatch = useDispatch();
+  const addNotification = useAddNotification();
 
   const closeAddUserModal = React.useCallback(() => {
     reset();
@@ -53,13 +54,12 @@ const EditUserForm = ({ onSuccess }: { onSuccess: () => void }) => {
     if (isSuccess) {
       onSuccess();
       closeAddUserModal();
-      dispatch(
-        addNotification({
-          variant: 'success',
-          title: `Successfully edited user ${username}`,
-          dismissable: true,
-        }),
-      );
+
+      addNotification({
+        variant: 'success',
+        title: `Successfully edited user ${username}`,
+        dismissable: true,
+      });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [closeAddUserModal, isSuccess, onSuccess]);

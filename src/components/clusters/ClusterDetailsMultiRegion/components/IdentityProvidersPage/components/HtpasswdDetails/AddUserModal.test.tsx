@@ -11,6 +11,14 @@ jest.mock('react-redux', () => ({
   ...jest.requireActual('react-redux'),
 }));
 
+const mockedAddNotification = jest.fn();
+
+jest.mock('@redhat-cloud-services/frontend-components-notifications', () => ({
+  __esModule: true,
+  ...jest.requireActual('@redhat-cloud-services/frontend-components-notifications'),
+  useAddNotification: () => mockedAddNotification,
+}));
+
 const mockedAddUser = jest.spyOn(useCreateEditHtpasswdUser, 'useCreateEditHtpasswdUser');
 
 const initialState = {
@@ -117,16 +125,11 @@ describe('<AddUserModal />', () => {
     expect(reset).toHaveBeenCalled();
     expect(mockedDispatch.mock.calls[0][0].type).toEqual('CLOSE_MODAL');
 
-    const notificationAction = mockedDispatch.mock.calls[1][0];
-
-    expect(notificationAction.type).toEqual('@@INSIGHTS-CORE/NOTIFICATIONS/ADD_NOTIFICATION');
-    expect(notificationAction.payload).toEqual(
-      expect.objectContaining({
-        dismissable: true,
-        title: 'Successfully added user ',
-        variant: 'success',
-      }),
-    );
+    expect(mockedAddNotification).toHaveBeenCalledWith({
+      dismissable: true,
+      title: 'Successfully added user ',
+      variant: 'success',
+    });
   });
 
   it('shows error when add user results in an error', () => {

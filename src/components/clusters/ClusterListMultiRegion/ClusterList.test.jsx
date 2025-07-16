@@ -166,10 +166,7 @@ describe('<ClusterList />', () => {
     });
     withState({}, true).render(<ClusterList {...props} />);
 
-    expect(screen.getByRole('button', { name: 'Refresh' })).toHaveAttribute(
-      'aria-disabled',
-      'false',
-    );
+    expect(screen.getByRole('button', { name: 'Refresh' })).not.toHaveAttribute('aria-disabled');
 
     expect(
       screen.queryByRole('progressbar', { name: 'Loading cluster list data' }),

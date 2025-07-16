@@ -35,7 +35,7 @@ const TransferOwnerStatus = ({
   const isExpired = now.isAfter(expirationTime);
 
   const bodyContent = (
-    <div className="pf-v5-u-font-family-text">
+    <div className="pf-v6-u-font-family-text">
       If you don&apos;t accept the transfer in <strong>{timeUntilExpiryString}</strong>, the request
       will expire.{' '}
       <ExternalLink href={links.TRANSFER_CLUSTER_OWNERSHIP}>

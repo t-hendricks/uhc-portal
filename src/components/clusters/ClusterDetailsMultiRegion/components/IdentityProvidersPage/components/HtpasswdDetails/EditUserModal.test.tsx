@@ -1,6 +1,8 @@
 import React from 'react';
 import * as reactRedux from 'react-redux';
 
+import * as notifications from '@redhat-cloud-services/frontend-components-notifications';
+
 import * as useCreateEditHtpasswdUser from '~/queries/ClusterDetailsQueries/AccessControlTab/UserQueries/useCreateEditHtpasswdUser';
 import { screen, waitFor, withState } from '~/testUtils';
 
@@ -10,6 +12,14 @@ jest.mock('react-redux', () => ({
   __esModule: true,
   ...jest.requireActual('react-redux'),
 }));
+
+jest.mock('@redhat-cloud-services/frontend-components-notifications', () => {
+  const config = {
+    __esModule: true,
+    ...jest.requireActual('@redhat-cloud-services/frontend-components-notifications'),
+  };
+  return config;
+});
 
 const mockedAddUser = jest.spyOn(useCreateEditHtpasswdUser, 'useCreateEditHtpasswdUser');
 
@@ -31,6 +41,10 @@ describe('<EditUserModal />', () => {
   const useDispatchMock = jest.spyOn(reactRedux, 'useDispatch');
   const mockedDispatch = jest.fn();
   useDispatchMock.mockReturnValue(mockedDispatch);
+
+  const useAddNotificationsMock = jest.spyOn(notifications, 'useAddNotification');
+  const mockedAddNotification = jest.fn();
+  useAddNotificationsMock.mockReturnValue(mockedAddNotification);
 
   const mutate = jest.fn();
   const reset = jest.fn();
@@ -120,16 +134,11 @@ describe('<EditUserModal />', () => {
     expect(reset).toHaveBeenCalled();
     expect(mockedDispatch.mock.calls[0][0].type).toEqual('CLOSE_MODAL');
 
-    const notificationAction = mockedDispatch.mock.calls[1][0];
-
-    expect(notificationAction.type).toEqual('@@INSIGHTS-CORE/NOTIFICATIONS/ADD_NOTIFICATION');
-    expect(notificationAction.payload).toEqual(
-      expect.objectContaining({
-        dismissable: true,
-        title: 'Successfully edited user myUserName',
-        variant: 'success',
-      }),
-    );
+    expect(mockedAddNotification).toHaveBeenCalledWith({
+      dismissable: true,
+      title: 'Successfully edited user myUserName',
+      variant: 'success',
+    });
   });
 
   it('shows error when add user results in an error', () => {

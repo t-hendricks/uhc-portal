@@ -11,7 +11,11 @@ import { ResourcesFullIcon } from '@patternfly/react-icons/dist/esm/icons/resour
 
 import { Link } from '~/common/routing';
 import type { GlobalState } from '~/redux/store';
-import { RelatedResourceBilling_model as RelatedResourceBillingModel } from '~/types/accounts_mgmt.v1';
+import {
+  QuotaCost,
+  RelatedResource,
+  RelatedResourceBilling_model as RelatedResourceBillingModel,
+} from '~/types/accounts_mgmt.v1';
 
 import ExternalLink from '../../common/ExternalLink';
 import SubscriptionNotFulfilled from '../SubscriptionNotFulfilled';
@@ -96,7 +100,7 @@ const OSDSubscriptionCard = ({ quotaCost, marketplace, organizationID, fetchQuot
   }
 
   if (quotaCost.fulfilled) {
-    quotaCost.items?.forEach((quotaItem) => {
+    quotaCost.items?.forEach((quotaItem: QuotaCost) => {
       // filter out quota you neither have nor consume
       if (quotaItem.consumed === 0 && quotaItem.allowed === 0) {
         return;
@@ -104,7 +108,7 @@ const OSDSubscriptionCard = ({ quotaCost, marketplace, organizationID, fetchQuot
 
       // filter out zero cost related resources
       const relatedResources = get(quotaItem, 'related_resources', []).filter(
-        (resource) => resource.cost !== 0,
+        (resource: RelatedResource) => resource.cost !== 0,
       );
       if (relatedResources.length === 0) {
         return;

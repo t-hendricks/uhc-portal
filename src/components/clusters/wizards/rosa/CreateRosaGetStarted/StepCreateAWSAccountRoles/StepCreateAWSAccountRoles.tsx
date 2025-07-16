@@ -2,11 +2,11 @@ import React from 'react';
 
 import {
   Alert,
+  Content,
   List,
   ListComponent,
   ListItem,
   OrderType,
-  Text,
   Title,
 } from '@patternfly/react-core';
 import useChrome from '@redhat-cloud-services/frontend-components/useChrome';
@@ -79,9 +79,9 @@ const StepCreateAWSAccountRoles = ({
         Log in to the ROSA CLI with your Red Hat account and create AWS account roles and policies.
       </Title>
       <List component={ListComponent.ol} type={OrderType.number} data-testid="rosa-cli-definition">
-        <ListItem className="pf-v5-u-mb-lg" data-testid="rosa-cli-sub-definition-1">
+        <ListItem className="pf-v6-u-mb-lg" data-testid="rosa-cli-sub-definition-1">
           {`To authenticate, run this command ${!restrictedEnv ? 'and enter your Red Hat login credentials via SSO' : ''}: `}
-          <div className="pf-v5-u-mt-md">
+          <div className="pf-v6-u-mt-md">
             <ROSALoginCommand
               restrictTokens={restrictTokens}
               isLoading={isLoading}
@@ -91,12 +91,12 @@ const StepCreateAWSAccountRoles = ({
             />
           </div>
           {!restrictedEnv ? (
-            <Text component="p">
+            <Content component="p">
               Learn more about{' '}
               <ExternalLink href={links.LEARN_MORE_SSO_ROSA}>
                 logging into OpenShift Cluster Manager ROSA CLI with Red Hat single sign-on{' '}
               </ExternalLink>
-            </Text>
+            </Content>
           ) : null}
         </ListItem>
         <ListItem data-testid="rosa-cli-sub-definition-2">
@@ -105,7 +105,7 @@ const StepCreateAWSAccountRoles = ({
           <InstructionCommand
             trackEvent={trackEvents.CopyCreateAccountRoles}
             textAriaLabel="Copyable ROSA create account-roles command"
-            className="pf-v5-u-mt-md"
+            className="pf-v6-u-mt-md"
           >
             {RosaCliCommand.CreateAccountRoles}
           </InstructionCommand>

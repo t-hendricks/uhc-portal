@@ -178,8 +178,8 @@ const CreateOsdWizardInternal = () => {
     (!organization.fulfilled && !organization.error)
   ) {
     return (
-      <PageSection>
-        <div className="pf-v5-u-text-align-center">
+      <PageSection hasBodyWrapper={false}>
+        <div className="pf-v6-u-text-align-center">
           <Spinner size="lg" arial-label="Loading..." />
         </div>
       </PageSection>
@@ -196,7 +196,7 @@ const CreateOsdWizardInternal = () => {
 
   if (requestErrors.length > 0) {
     return (
-      <PageSection>
+      <PageSection hasBodyWrapper={false}>
         <Unavailable errors={requestErrors} />
       </PageSection>
     );
@@ -340,9 +340,9 @@ export const CreateOsdWizard = ({ product }: CreateOsdWizardProps) => {
             title="Create an OpenShift Dedicated Cluster"
             breadcrumbs={<Breadcrumbs path={breadcrumbs} />}
           />
-          <PageSection>
+          <PageSection hasBodyWrapper={false}>
             {config.fakeOSD && (
-              <Banner variant="gold">On submit, a fake OSD cluster will be created.</Banner>
+              <Banner color="yellow">On submit, a fake OSD cluster will be created.</Banner>
             )}
             <CreateOsdWizardInternal />
           </PageSection>

@@ -2,7 +2,6 @@ import React from 'react';
 import get from 'lodash/get';
 
 import { DropdownItem, DropdownList } from '@patternfly/react-core';
-import { addNotification } from '@redhat-cloud-services/frontend-components-notifications';
 
 import { isCompatibleFeature, SupportedFeature } from '~/common/featureCompatibility';
 import { SubscriptionCommonFieldsStatus } from '~/types/accounts_mgmt.v1';
@@ -48,7 +47,8 @@ function actionResolver(
   toggleSubscriptionReleased,
   refreshFunc,
   inClusterList,
-  dispatch,
+  addNotification,
+  // dispatch,
 ) {
   const baseProps = {};
   const isClusterUninstalling = cluster.state === clusterStates.uninstalling;
@@ -285,13 +285,11 @@ function actionResolver(
             },
             {
               onSuccess: () => {
-                dispatch(
-                  addNotification({
-                    variant: 'success',
-                    title: 'Cluster ownership transfer canceled',
-                    dismissable: false,
-                  }),
-                );
+                addNotification({
+                  variant: 'success',
+                  title: 'Cluster ownership transfer canceled',
+                  dismissable: false,
+                });
                 refreshFunc();
               },
             },
@@ -400,7 +398,7 @@ function dropDownItems({
   refreshFunc,
   inClusterList,
   toggleSubscriptionReleased,
-  dispatch,
+  addNotification,
 }) {
   const actions = actionResolver(
     cluster,
@@ -414,7 +412,7 @@ function dropDownItems({
     toggleSubscriptionReleased,
     refreshFunc,
     inClusterList,
-    dispatch,
+    addNotification,
   );
 
   const renderMenuItem = ({ title, ...restOfProps }) => (

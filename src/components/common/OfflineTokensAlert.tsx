@@ -12,7 +12,7 @@ type OfflineTokensAlertProps = {
 
 const OfflineTokensAlert = ({ isRosa, setShouldShowTokens }: OfflineTokensAlertProps) => (
   <Alert
-    className="pf-v5-u-mt-md"
+    className="pf-v6-u-mt-md"
     variant="warning"
     isInline
     title="Logging in with offline tokens is being deprecated"

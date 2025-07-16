@@ -119,7 +119,7 @@ const AddOnsSubscription = ({
   const standardOptions = (
     <Card
       id="standard-rh"
-      isSelectableRaised
+      isSelectable
       isSelected={activeSubscription?.billingModel === 'standard'}
       isDisabled={!hasQuotaStandard || !isReady}
     >
@@ -185,7 +185,7 @@ const AddOnsSubscription = ({
       value={SubscriptionCommonFieldsClusterBillingModel.standard}
       label={
         <div>
-          <span className={disabled ? 'pf-v5-u-mr-xs' : ''}>Standard</span>
+          <span className={disabled ? 'pf-v6-u-mr-xs' : ''}>Standard</span>
         </div>
       }
       isDisabled={disabled}
@@ -211,7 +211,7 @@ const AddOnsSubscription = ({
       value={SubscriptionCommonFieldsClusterBillingModel.marketplace}
       label={
         <div>
-          <span className={disabled ? 'pf-v5-u-mr-xs' : ''}>Marketplace</span>
+          <span className={disabled ? 'pf-v6-u-mr-xs' : ''}>Marketplace</span>
         </div>
       }
       isDisabled={disabled}
@@ -231,7 +231,7 @@ const AddOnsSubscription = ({
     <>
       <div
         className={
-          billingQuota.standard && billingQuota.marketplace ? 'pf-v5-u-mb-sm' : 'pf-v5-u-mb-lg'
+          billingQuota.standard && billingQuota.marketplace ? 'pf-v6-u-mb-sm' : 'pf-v6-u-mb-lg'
         }
       >
         <strong>

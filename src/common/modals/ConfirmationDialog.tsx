@@ -1,6 +1,7 @@
 import React, { ReactNode } from 'react';
 
-import { Button, Modal } from '@patternfly/react-core';
+import { Button } from '@patternfly/react-core';
+import { Modal } from '@patternfly/react-core/deprecated';
 
 type ConfirmationDialogProps = {
   title: string;

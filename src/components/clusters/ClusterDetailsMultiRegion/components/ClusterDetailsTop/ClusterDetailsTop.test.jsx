@@ -1,6 +1,8 @@
 import React from 'react';
 import * as reactRedux from 'react-redux';
 
+import * as notifications from '@redhat-cloud-services/frontend-components-notifications';
+
 import { normalizedProducts } from '~/common/subscriptionTypes';
 import * as clusterService from '~/services/clusterService';
 import { checkAccessibility, render, screen, within } from '~/testUtils';
@@ -29,10 +31,22 @@ jest.mock('react-redux', () => {
   return config;
 });
 
+jest.mock('@redhat-cloud-services/frontend-components-notifications', () => {
+  const config = {
+    __esModule: true,
+    ...jest.requireActual('@redhat-cloud-services/frontend-components-notifications'),
+  };
+  return config;
+});
+
 describe('<ClusterDetailsTop />', () => {
   const useDispatchMock = jest.spyOn(reactRedux, 'useDispatch');
   const mockedDispatch = jest.fn();
   useDispatchMock.mockReturnValue(mockedDispatch);
+
+  const useAddNotificationsMock = jest.spyOn(notifications, 'useAddNotification');
+  const mockedAddNotification = jest.fn();
+  useAddNotificationsMock.mockReturnValue(mockedAddNotification);
 
   afterEach(() => {
     jest.clearAllMocks();
@@ -90,9 +104,8 @@ describe('<ClusterDetailsTop />', () => {
 
   it('should enable open console button when cluster has console url and cluster is not uninstalling', async () => {
     render(<ClusterDetailsTop {...props} />);
-    expect(await screen.findByRole('button', { name: 'Open console' })).toHaveAttribute(
+    expect(await screen.findByRole('button', { name: 'Open console' })).not.toHaveAttribute(
       'aria-disabled',
-      'false',
     );
   });
 
@@ -103,10 +116,7 @@ describe('<ClusterDetailsTop />', () => {
     };
 
     render(<ClusterDetailsTop {...newProps} />);
-    expect(await screen.findByRole('button', { name: 'Open console' })).toHaveAttribute(
-      'aria-disabled',
-      'true',
-    );
+    expect(await screen.findByRole('button', { name: 'Open console' })).not.toBeEnabled();
   });
 
   it('should disable open console button when cluster is unistalling', async () => {
@@ -117,10 +127,7 @@ describe('<ClusterDetailsTop />', () => {
     const newProps = { ...props, cluster };
 
     render(<ClusterDetailsTop {...newProps} />);
-    expect(await screen.findByRole('button', { name: 'Open console' })).toHaveAttribute(
-      'aria-disabled',
-      'true',
-    );
+    expect(await screen.findByRole('button', { name: 'Open console' })).not.toBeEnabled();
   });
 
   it('should show error icon if an error occurred', async () => {
@@ -184,9 +191,11 @@ describe('<ClusterDetailsTop />', () => {
 
     rerender(<ClusterDetailsTop {...endProps} />);
     expect(mockNavigate).toHaveBeenCalledWith('/openshift/cluster-list', undefined);
-    const dispatchCall = mockedDispatch.mock.calls[0][0];
-    expect(dispatchCall.type).toEqual('@@INSIGHTS-CORE/NOTIFICATIONS/ADD_NOTIFICATION');
-    expect(dispatchCall.payload.title).toEqual('Successfully uninstalled cluster Unnamed Cluster');
+
+    expect(mockedAddNotification).toHaveBeenCalledWith({
+      title: 'Successfully uninstalled cluster Unnamed Cluster',
+      variant: 'success',
+    });
   });
 
   it('should show expiration alert based on expiration_time', async () => {

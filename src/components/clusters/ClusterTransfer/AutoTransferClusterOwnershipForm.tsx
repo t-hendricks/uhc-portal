@@ -3,8 +3,8 @@ import { Formik } from 'formik';
 import { useDispatch } from 'react-redux';
 import * as Yup from 'yup';
 
-import { Form, Stack, StackItem, Text, TextContent, TextVariants } from '@patternfly/react-core';
-import { addNotification } from '@redhat-cloud-services/frontend-components-notifications';
+import { Content, ContentVariants, Form, Stack, StackItem } from '@patternfly/react-core';
+import { useAddNotification } from '@redhat-cloud-services/frontend-components-notifications';
 
 import getClusterName from '~/common/getClusterName';
 import ErrorBox from '~/components/common/ErrorBox';
@@ -39,6 +39,7 @@ function AutoTransferClusterOwnershipForm(props: AutoTransferClusterOwnershipFor
   const { onClose } = props;
 
   const dispatch = useDispatch();
+  const addNotification = useAddNotification();
   const modalData: ModalData = useGlobalState((state) => state.modal.data) as ModalData;
   const {
     isPending: isPendingEdit,
@@ -101,13 +102,11 @@ function AutoTransferClusterOwnershipForm(props: AutoTransferClusterOwnershipFor
         },
         {
           onSuccess: () => {
-            dispatch(
-              addNotification({
-                variant: 'success',
-                title: 'Cluster ownership transfer initiated',
-                dismissable: true,
-              }),
-            );
+            addNotification({
+              variant: 'success',
+              title: 'Cluster ownership transfer initiated',
+              dismissable: true,
+            });
           },
         },
       );
@@ -127,13 +126,11 @@ function AutoTransferClusterOwnershipForm(props: AutoTransferClusterOwnershipFor
       },
       {
         onSuccess: () => {
-          dispatch(
-            addNotification({
-              variant: 'info',
-              title: 'Cluster ownership transfer canceled',
-              dismissable: true,
-            }),
-          );
+          addNotification({
+            variant: 'info',
+            title: 'Cluster ownership transfer canceled',
+            dismissable: true,
+          });
           handleClose();
         },
       },
@@ -239,23 +236,23 @@ function AutoTransferClusterOwnershipForm(props: AutoTransferClusterOwnershipFor
         >
           {clusterExternalID ? (
             <>
-              <TextContent>
-                <Text component={TextVariants.small}>
+              <Content>
+                <Content component={ContentVariants.small}>
                   You can transfer ownership of a cluster to another user in your organization or
                   another organization. By transferring cluster ownership, you give up access to the
                   cluster and its resources.
-                </Text>
-                <Text component={TextVariants.p}>Account information</Text>
-                <Text component={TextVariants.small}>
+                </Content>
+                <Content component={ContentVariants.p}>Account information</Content>
+                <Content component={ContentVariants.small}>
                   After you initiate the transfer, the user that you specify here will receive an
                   email request to accept the ownership transfer. After the transfer is accepted,
                   only the new user can access the cluster.
-                </Text>
-                <Text component={TextVariants.small}>
+                </Content>
+                <Content component={ContentVariants.small}>
                   Note that the transfer request automatically expires after 15 days. You can cancel
                   the transfer at any time before it is accepted.
-                </Text>
-              </TextContent>
+                </Content>
+              </Content>
               <br />
               <Form>
                 <TextField fieldId="username" label="Username" isRequired />
@@ -265,12 +262,12 @@ function AutoTransferClusterOwnershipForm(props: AutoTransferClusterOwnershipFor
               {errorNotice}
             </>
           ) : (
-            <TextContent>
-              <Text component={TextVariants.small}>
+            <Content>
+              <Content component={ContentVariants.small}>
                 Transfer ownership will be available a few minutes after installation, once the
                 cluster ID is fully registered.
-              </Text>
-            </TextContent>
+              </Content>
+            </Content>
           )}
         </Modal>
       )}

@@ -4,13 +4,10 @@ import {
   Card,
   EmptyState,
   EmptyStateBody,
-  EmptyStateHeader,
-  EmptyStateIcon,
   Flex,
   FlexItem,
   Icon,
   PageSection,
-  PageSectionVariants,
   Spinner,
   Title,
   Toolbar,
@@ -77,10 +74,9 @@ const ClusterListPageHeader = ({
         <Toolbar id="cluster-list-refresh-toolbar" isFullHeight inset={{ default: 'insetNone' }}>
           <ToolbarContent>
             <ToolbarGroup
-              variant="icon-button-group"
-              align={{ default: 'alignRight' }}
-              spacer={{ default: 'spacerNone', md: 'spacerNone' }}
-              spaceItems={{ default: 'spaceItemsMd' }}
+              variant="action-group-plain"
+              align={{ default: 'alignEnd' }}
+              gap={{ default: 'gapNone', md: 'gapNone' }}
             >
               {showSpinner && (
                 <ToolbarItem>
@@ -96,7 +92,7 @@ const ClusterListPageHeader = ({
                   <ErrorTriangle errorMessage={error} item="clusters" />
                 </ToolbarItem>
               )}
-              <ToolbarItem spacer={{ default: 'spacerNone' }}>
+              <ToolbarItem gap={{ default: 'gapNone' }}>
                 <RefreshButton isDisabled={showSpinner} refreshFunc={refresh} />
               </ToolbarItem>
             </ToolbarGroup>
@@ -257,20 +253,15 @@ const ClusterTransferList = () => {
     );
   };
   const emptyPage = (
-    <EmptyState>
-      <EmptyStateHeader
-        titleText="No cluster transfers found."
-        icon={<EmptyStateIcon icon={SearchIcon} />}
-        headingLevel="h4"
-      />
+    <EmptyState headingLevel="h4" icon={SearchIcon} titleText="No cluster transfers found.">
       <EmptyStateBody>
         There are no clusters for your user that are actively being transferred.
       </EmptyStateBody>
     </EmptyState>
   );
   return (
-    <PageSection>
-      <PageSection variant={PageSectionVariants.light}>
+    <PageSection hasBodyWrapper={false}>
+      <PageSection hasBodyWrapper={false}>
         <ClusterListPageHeader
           showSpinner={isLoading}
           isError={isError}

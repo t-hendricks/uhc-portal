@@ -2,13 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { useDispatch } from 'react-redux';
 
-import {
-  Button,
-  EmptyState,
-  EmptyStateBody,
-  EmptyStateHeader,
-  EmptyStateVariant,
-} from '@patternfly/react-core';
+import { Button, EmptyState, EmptyStateBody, EmptyStateVariant } from '@patternfly/react-core';
 import { CheckCircleIcon } from '@patternfly/react-icons/dist/esm/icons/check-circle-icon';
 import { InProgressIcon } from '@patternfly/react-icons/dist/esm/icons/in-progress-icon';
 import { OutlinedArrowAltCircleUpIcon } from '@patternfly/react-icons/dist/esm/icons/outlined-arrow-alt-circle-up-icon';
@@ -81,8 +75,11 @@ function UpgradeStatus({
 
   if (!clusterVersion) {
     return (
-      <EmptyState variant={EmptyStateVariant.xs}>
-        <EmptyStateHeader titleText="Update status is not available" headingLevel="h4" />
+      <EmptyState
+        headingLevel="h4"
+        titleText="Update status is not available"
+        variant={EmptyStateVariant.xs}
+      >
         <EmptyStateBody>Update status is not available. Try again later.</EmptyStateBody>
       </EmptyState>
     );

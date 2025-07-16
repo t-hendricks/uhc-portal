@@ -4,6 +4,7 @@ import { useDispatch } from 'react-redux';
 
 import { Dropdown, MenuToggle, Tooltip } from '@patternfly/react-core';
 import EllipsisVIcon from '@patternfly/react-icons/dist/esm/icons/ellipsis-v-icon';
+import { useAddNotification } from '@redhat-cloud-services/frontend-components-notifications';
 
 import { useToggleSubscriptionReleased } from '~/queries/ClusterActionsQueries/useToggleSubscriptionReleased';
 import { useGlobalState } from '~/redux/hooks';
@@ -16,6 +17,7 @@ const ClusterActionsDropdown = (props) => {
   const [isOpen, setIsOpen] = useState(false);
 
   const dispatch = useDispatch();
+  const addNotification = useAddNotification();
   const username = useGlobalState((state) => state.userProfile.keycloakProfile.username);
 
   const {
@@ -54,7 +56,7 @@ const ClusterActionsDropdown = (props) => {
     refreshFunc,
     inClusterList: false,
     toggleSubscriptionReleased,
-    dispatch,
+    addNotification,
   });
 
   const toggleRef = useRef();

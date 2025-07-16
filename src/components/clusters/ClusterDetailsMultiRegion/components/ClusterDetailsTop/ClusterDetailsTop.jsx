@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import { useDispatch } from 'react-redux';
 
 import { Alert, Button, Flex, Spinner, Split, SplitItem, Title } from '@patternfly/react-core';
-import { addNotification } from '@redhat-cloud-services/frontend-components-notifications/redux';
+import { useAddNotification } from '@redhat-cloud-services/frontend-components-notifications';
 
 import getClusterName from '~/common/getClusterName';
 import { goZeroTime2Null } from '~/common/helpers';
@@ -54,7 +54,7 @@ const IdentityProvidersHint = () => {
   return (
     <Alert
       id="idpHint"
-      className="pf-v5-u-mt-md"
+      className="pf-v6-u-mt-md"
       isInline
       title="Create an identity provider to access cluster"
     >
@@ -134,6 +134,7 @@ function ClusterDetailsTop(props) {
 
   const dispatch = useDispatch();
 
+  const addNotification = useAddNotification();
   const isProductOSDTrial =
     get(cluster, 'subscription.plan.type', '') === normalizedProducts.OSDTrial;
   const isProductOSDRHM =
@@ -284,33 +285,39 @@ function ClusterDetailsTop(props) {
       cluster.state !== clusterStates.uninstalling &&
       !shouldShowStatusMonitor
     ) {
-      dispatch(
-        addNotification({
-          title: `Successfully uninstalled cluster ${getClusterName(cluster)}`,
-          variant: 'success',
-        }),
-      );
+      addNotification({
+        title: `Successfully uninstalled cluster ${getClusterName(cluster)}`,
+        variant: 'success',
+      });
 
       navigate('/cluster-list');
     }
-  }, [cluster, cluster.state, dispatch, navigate, prevClusterState, shouldShowStatusMonitor]);
+  }, [
+    addNotification,
+    cluster,
+    cluster.state,
+    dispatch,
+    navigate,
+    prevClusterState,
+    shouldShowStatusMonitor,
+  ]);
 
   return (
     <div id="cl-details-top" className="top-row">
       <Split>
-        <SplitItem className="pf-v5-u-pb-md">{breadcrumbs}</SplitItem>
+        <SplitItem className="pf-v6-u-pb-md">{breadcrumbs}</SplitItem>
       </Split>
       <Split id="cl-details-top-row">
         <SplitItem>
           <Title size="2xl" headingLevel="h1" className="cl-details-page-title">
             {clusterName}
             {showPreviewLabel && (
-              <PreviewLabel creationDateStr={creationDateStr} className="pf-v5-u-ml-sm" />
+              <PreviewLabel creationDateStr={creationDateStr} className="pf-v6-u-ml-sm" />
             )}
           </Title>
         </SplitItem>
         <SplitItem>
-          {isRefreshing && <Spinner size="lg" aria-label="Loading..." className="pf-v5-u-mx-md" />}
+          {isRefreshing && <Spinner size="lg" aria-label="Loading..." className="pf-v6-u-mx-md" />}
           {error && (
             <ErrorTriangle errorMessage={errorMessage} className="cluster-details-warning" />
           )}

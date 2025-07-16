@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Modal, ModalVariant } from '@patternfly/react-core';
+import { Modal, ModalVariant } from '@patternfly/react-core/deprecated';
 
 interface MachineConfigurationModalProps {
   children: React.ReactNode;

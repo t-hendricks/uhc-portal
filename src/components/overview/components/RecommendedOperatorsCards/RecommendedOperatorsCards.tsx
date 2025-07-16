@@ -55,12 +55,12 @@ const RecommendedOperatorsCards = ({
   selectedCardTitle,
 }: RecommendedOperatorsCardsProps) => (
   <div className="recommended-operators-cards">
-    <Title size="xl" headingLevel="h2" className="pf-v5-u-mt-lg" id="recommended-operators">
+    <Title size="xl" headingLevel="h2" className="pf-v6-u-mt-lg" id="recommended-operators">
       {TITLE}
     </Title>
-    <Flex className="pf-v5-u-mb-lg">
+    <Flex className="pf-v6-u-mb-lg">
       {RECOMMENDED_OPERATORS_CARDS.map((card) => (
-        <FlexItem className="pf-v5-u-pt-md" data-testid="product-overview-card-flex-item">
+        <FlexItem className="pf-v6-u-pt-md" data-testid="product-overview-card-flex-item">
           <ProductCard
             {...card}
             openLearnMore={openLearnMore}

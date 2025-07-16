@@ -66,7 +66,7 @@ export const AutoScale = () => {
       <FormGroup
         fieldId="autoscaling"
         label="Autoscaling"
-        labelIcon={
+        labelHelp={
           <PopoverHint
             hint={
               <>
@@ -96,7 +96,7 @@ export const AutoScale = () => {
           <Button
             data-testid="set-cluster-autoscaling-btn"
             variant="secondary"
-            className="pf-v5-u-mt-md"
+            className="pf-v6-u-mt-md"
             onClick={openAutoScalingModal}
             isDisabled={!autoscalingEnabled}
           >

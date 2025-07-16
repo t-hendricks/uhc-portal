@@ -6,6 +6,7 @@ import {
   Card,
   CardBody,
   CardFooter,
+  CardHeader,
   CardTitle,
   Label,
   Split,
@@ -26,7 +27,7 @@ const getReleaseNotesLink = (version) => {
   }
   const docURL = `https://docs.redhat.com/en/documentation/openshift_container_platform/${major}.${minor}/html/release_notes/ocp-${major}-${minor}-release-notes.html#ocp-${major}-${minor}-${revision}`;
   return (
-    <ExternalLink href={docURL} className="pf-c-button pf-m-link card-footer-button">
+    <ExternalLink href={docURL} className="pf-v6-c-button pf-m-link card-footer-button">
       View release notes
     </ExternalLink>
   );
@@ -36,9 +37,7 @@ const VersionAcknowledgementPopover = (version) => (
   <Tooltip
     content={`All clusters require an administrator acknowledgement before updating to OpenShift Container Platform ${version}`}
   >
-    <Button variant="link" isInline aria-label="more information">
-      <InfoCircleIcon />
-    </Button>
+    <Button icon={<InfoCircleIcon />} variant="link" isInline aria-label="more information" />
   </Tooltip>
 );
 
@@ -57,30 +56,40 @@ const VersionCard = (props) => {
     <Card
       className="version-card"
       id={version}
+      tabIndex={0}
       onKeyDown={onKeyDown}
       onClick={onClick}
-      isSelectableRaised
       isCompact
+      isSelectable
+      isClickable
       isSelected={isSelected}
     >
-      <CardTitle>
-        <Split>
-          <SplitItem>
-            {version}{' '}
-            {getUnMetClusterAcknowledgements(version).length > 0
-              ? VersionAcknowledgementPopover(version)
-              : null}
-          </SplitItem>
-          <SplitItem isFilled />
-          {isRecommended && (
+      <CardHeader
+        selectableActions={{
+          name: 'upgrade-version',
+          variant: 'single',
+          selectableActionAriaLabelledby: version,
+        }}
+      >
+        <CardTitle id={`card-title-${version}`}>
+          <Split>
             <SplitItem>
-              <Label color="blue" icon={<StarIcon />}>
-                Recommended
-              </Label>
+              {version}{' '}
+              {getUnMetClusterAcknowledgements(version).length > 0
+                ? VersionAcknowledgementPopover(version)
+                : null}
             </SplitItem>
-          )}
-        </Split>
-      </CardTitle>
+            <SplitItem isFilled />
+            {isRecommended && (
+              <SplitItem>
+                <Label color="blue" icon={<StarIcon />}>
+                  Recommended
+                </Label>
+              </SplitItem>
+            )}
+          </Split>
+        </CardTitle>
+      </CardHeader>
       {children && <CardBody>{children}</CardBody>}
       <CardFooter>{getReleaseNotesLink(version)}</CardFooter>
     </Card>

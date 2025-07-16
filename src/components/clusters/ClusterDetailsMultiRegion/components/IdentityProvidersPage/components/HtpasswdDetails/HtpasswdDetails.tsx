@@ -242,7 +242,7 @@ const HtpasswdDetails = ({
     return (
       <Card>
         <CardBody>
-          <Spinner className="pf-v5-u-text-align-center" />
+          <Spinner className="pf-v6-u-text-align-center" />
         </CardBody>
       </Card>
     );
@@ -326,7 +326,7 @@ const HtpasswdDetails = ({
                 </ToolbarItem>
               </>
             ) : null}
-            <ToolbarItem align={{ default: 'alignRight' }} variant="pagination">
+            <ToolbarItem align={{ default: 'alignEnd' }} variant="pagination">
               <Pagination {...paginationProps} isCompact aria-label="Pagination top" />
             </ToolbarItem>
           </ToolbarContent>
@@ -341,7 +341,7 @@ const HtpasswdDetails = ({
                 .map((user: HtPasswdUser, rowIndex) => userRow(user, rowIndex))
             ) : (
               <Tr>
-                <Td colSpan={headers.length}>
+                <Td colSpan={headers.length + 1}>
                   <EmptyState showClearFilterButton={!!searchValue} resetFilters={setSearchValue} />
                 </Td>
               </Tr>

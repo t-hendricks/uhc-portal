@@ -2,6 +2,7 @@ import React from 'react';
 
 import {
   Alert,
+  Button,
   Flex,
   FlexItem,
   Form,
@@ -73,7 +74,7 @@ export const GcpByocFields = (props: GcpByocFieldsProps) => {
     <Form isWidthLimited onSubmit={(e) => e.preventDefault()}>
       {billingModel !== SubscriptionCommonFieldsClusterBillingModel.marketplace_gcp && (
         <FormAlert>
-          <Alert variant="info" isInline title="Customer cloud subscription">
+          <Alert variant="info" isInline isPlain title="Customer cloud subscription">
             Provision your cluster in a Google Cloud Platform account owned by you or your company
             to leverage your existing relationship and pay Google Cloud Platform directly for public
             cloud costs.
@@ -84,19 +85,19 @@ export const GcpByocFields = (props: GcpByocFieldsProps) => {
       <Flex direction={{ default: 'column' }} spaceItems={{ default: 'spaceItemsLg' }}>
         {isWifEnabled && (
           <FlexItem>
-            <Title headingLevel="h3" className="pf-v5-u-mb-sm">
+            <Title headingLevel="h3" className="pf-v6-u-mb-sm">
               GCP account details
             </Title>
             <FormGroup
               label="Authentication type"
-              labelIcon={
+              labelHelp={
                 <Popover
                   bodyContent={
                     <div>
                       <div>
                         Workload Identity Federation (WIF) uses short-lived credentials which is
                         more secure. Use of WIF requires an OSD cluster running OpenShift{' '}
-                        <span className="pf-v5-u-font-family-monospace">4.17</span> or later.
+                        <span className="pf-v6-u-font-family-monospace">4.17</span> or later.
                       </div>
                       <br />
                       <div>
@@ -105,14 +106,13 @@ export const GcpByocFields = (props: GcpByocFieldsProps) => {
                     </div>
                   }
                 >
-                  <button
-                    type="button"
+                  <Button
+                    variant="plain"
                     aria-label="More info for authentication types"
-                    onClick={(e) => e.preventDefault()}
+                    onClick={(e: { preventDefault: () => any }) => e.preventDefault()}
+                    icon={<HelpIcon />}
                     className={styles.formGroupLabelHelp}
-                  >
-                    <HelpIcon />
-                  </button>
+                  />
                 </Popover>
               }
             >
@@ -137,20 +137,20 @@ export const GcpByocFields = (props: GcpByocFieldsProps) => {
         )}
         <FlexItem>
           {isWifEnabled ? (
-            <Title headingLevel="h4" className="pf-v5-u-mb-sm">
+            <Title headingLevel="h4" className="pf-v6-u-mb-sm">
               {authType === GCPAuthType.WorkloadIdentityFederation
                 ? 'Workload Identity Federation'
                 : 'Service Account'}
             </Title>
           ) : (
-            <Title headingLevel="h3" className="pf-v5-u-mb-sm">
+            <Title headingLevel="h3" className="pf-v6-u-mb-sm">
               GCP Service account
             </Title>
           )}
 
           <Prerequisites acknowledgementRequired initiallyExpanded>
             {billingModel === SubscriptionCommonFieldsClusterBillingModel.marketplace_gcp && (
-              <Hint className="pf-v5-u-mb-md pf-v5-u-mt-sm">
+              <Hint className="pf-v6-u-mb-md pf-v6-u-mt-sm">
                 <HintTitle>
                   <strong>{gcpTitle}</strong>
                 </HintTitle>

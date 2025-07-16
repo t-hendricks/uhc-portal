@@ -2,7 +2,8 @@ import React from 'react';
 import { Formik } from 'formik';
 import { useDispatch } from 'react-redux';
 
-import { Form, ModalVariant } from '@patternfly/react-core';
+import { Form } from '@patternfly/react-core';
+import { ModalVariant } from '@patternfly/react-core/deprecated';
 
 import { DefaultIngressFieldsFormik } from '~/components/clusters/wizards/rosa/NetworkScreen/DefaultIngressFieldsFormik';
 import ErrorBox from '~/components/common/ErrorBox';

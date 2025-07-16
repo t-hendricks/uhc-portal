@@ -381,7 +381,7 @@ const ClusterDetails = (props) => {
       <AppPage title={PAGE_TITLE}>
         <div id="clusterdetails-content">
           <div className="cluster-loading-container">
-            <div className="pf-v5-u-text-align-center">
+            <div className="pf-v6-u-text-align-center">
               <Spinner size="lg" arial-label="Loading..." />
             </div>
           </div>
@@ -499,7 +499,7 @@ const ClusterDetails = (props) => {
     >
       <AppPage title={PAGE_TITLE}>
         <ReadOnlyBanner isReadOnly={isReadOnly} />
-        <PageSection id="clusterdetails-content">
+        <PageSection hasBodyWrapper={false} id="clusterdetails-content">
           <ClusterDetailsTop
             cluster={cluster}
             isRefetching={isFetching}

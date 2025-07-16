@@ -21,7 +21,7 @@ type FormikFieldArrayProps = {
 const FieldArrayErrorGridItem = ({ isLast, errorMessage, touched, isGroupError }: any) => {
   if (errorMessage && isLast && (touched || isGroupError)) {
     return (
-      <GridItem className="field-grid-item pf-v5-c-form__helper-text pf-m-error">
+      <GridItem className="field-grid-item pf-v6-c-form__helper-text pf-m-error">
         {errorMessage}
       </GridItem>
     );

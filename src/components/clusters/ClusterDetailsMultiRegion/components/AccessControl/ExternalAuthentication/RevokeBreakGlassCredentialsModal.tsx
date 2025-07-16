@@ -1,6 +1,7 @@
 import React from 'react';
 
-import { Button, Flex, Modal } from '@patternfly/react-core';
+import { Button, Flex } from '@patternfly/react-core';
+import { Modal } from '@patternfly/react-core/deprecated';
 
 import ErrorBox from '~/components/common/ErrorBox';
 import { useRevokeBreakGlassCredentials } from '~/queries/ClusterDetailsQueries/AccessControlTab/ExternalAuthenticationQueries/useRevokeBreakGlassCredentials';

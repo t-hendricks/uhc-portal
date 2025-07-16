@@ -2,7 +2,7 @@ import React from 'react';
 import { Field } from 'formik';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { ExpandableSection, Form, Grid, GridItem, Text, Title } from '@patternfly/react-core';
+import { Content, ExpandableSection, Form, Grid, GridItem, Title } from '@patternfly/react-core';
 
 import links from '~/common/installLinks.mjs';
 import { normalizedProducts } from '~/common/subscriptionTypes';
@@ -154,13 +154,13 @@ export const MachinePool = () => {
   const nodeLabelsExpandableSection = (
     <ExpandableSection
       toggleText="Add node labels"
-      className="pf-v5-u-mt-md"
+      className="pf-v6-u-mt-md"
       onToggle={(_event, isExpanded) => setIsNodeLabelsExpanded(isExpanded)}
       isExpanded={isNodeLabelsExpanded}
       data-testid="node-labels-toggle"
     >
       <Title headingLevel="h3">Node labels (optional)</Title>
-      <p className="pf-v5-u-mb-md">
+      <p className="pf-v6-u-mb-md">
         Configure labels that will apply to all nodes in this machine pool.
       </p>
       <NodeLabelsFieldArray />
@@ -180,10 +180,10 @@ export const MachinePool = () => {
     <Form>
       <GridItem>
         <Title headingLevel="h3">Default machine pool</Title>
-        <Text component="p" className="pf-v5-u-mt-sm">
+        <Content component="p" className="pf-v6-u-mt-sm">
           Select a compute node instance type and count for your default machine pool. After cluster
           creation, your selected default machine pool instance type is permanent.
-        </Text>
+        </Content>
       </GridItem>
 
       <Grid hasGutter>

@@ -124,7 +124,7 @@ describe('ReduxFileUpload', () => {
       expect(baseProps.input.onChange).not.toHaveBeenCalled();
       await user.upload(fileInput, file);
       expect(baseProps.input.onChange).toHaveBeenCalledWith(
-        expect.objectContaining({ path: 'hello.png' }),
+        expect.objectContaining({ path: './hello.png' }),
       );
       expect(baseProps.input.onChange).toHaveBeenCalledWith('hello');
     });

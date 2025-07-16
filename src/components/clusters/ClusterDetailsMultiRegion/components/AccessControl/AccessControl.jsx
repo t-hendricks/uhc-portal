@@ -25,6 +25,8 @@ import NetworkSelfServiceSection from './NetworkSelfServiceSection';
 import OCMRolesSection from './OCMRolesSection';
 import UsersSection from './UsersSection';
 
+import './AccessControl.scss';
+
 function AccessControl({
   cluster,
   refreshEvent = null,
@@ -102,7 +104,9 @@ function AccessControl({
 
     // hide the tab title if there is only one tab ("OCM Roles and Access").
     const isSingleTab = hideRolesActions && hideIdpActions && hideAwsInfrastructureAccess;
-    setBodyClass(isSingleTab ? 'single-tab' : '');
+    setBodyClass(
+      isSingleTab ? 'single-tab access-control-tab-content' : 'access-control-tab-content',
+    );
   }, [cluster, isAutoClusterTransferOwnershipEnabled]);
 
   return (
@@ -113,7 +117,6 @@ function AccessControl({
           onSelect={(event, key) => setActiveKey(key)}
           isVertical={isVerticalTab}
           className={tabClass}
-          isBox
         >
           <Tab
             eventKey={0}

@@ -41,7 +41,7 @@ const ClusterVersionInfo = ({ cluster }) => {
 
   return (
     <div>
-      <dl className="pf-v5-l-stack">
+      <dl className="pf-v6-l-stack">
         <Flex>
           <dt>OpenShift: </dt>
           <dd>
@@ -86,8 +86,12 @@ const ClusterVersionInfo = ({ cluster }) => {
                     />
                   }
                 >
-                  <Button variant="link" className="cluster-inline-link pf-v5-u-mt-0">
-                    View details <OutlinedQuestionCircleIcon />
+                  <Button
+                    icon={<OutlinedQuestionCircleIcon />}
+                    variant="link"
+                    className="cluster-inline-link pf-v6-u-mt-0"
+                  >
+                    View details
                   </Button>
                 </Popover>
               </dd>

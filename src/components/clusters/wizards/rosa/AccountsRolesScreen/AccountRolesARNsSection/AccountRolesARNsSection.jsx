@@ -6,17 +6,13 @@ import PropTypes from 'prop-types';
 import {
   Alert,
   Button,
+  Content,
+  ContentVariants,
   ExpandableSection,
   Grid,
   GridItem,
   Label,
   Spinner,
-  Text,
-  TextContent,
-  TextList,
-  TextListItem,
-  TextListVariants,
-  TextVariants,
   Title,
 } from '@patternfly/react-core';
 
@@ -345,13 +341,13 @@ function AccountRolesARNsSection({
             onToggle={onToggle}
             toggleText="Account roles ARNs"
           >
-            <Text component={TextVariants.p}>
+            <Content component={ContentVariants.p}>
               The following roles were detected in your AWS account.{' '}
               <ExternalLink href={links.ROSA_AWS_IAM_RESOURCES}>
                 Learn more about account roles
               </ExternalLink>
               .
-            </Text>
+            </Content>
             <br />
             <Button
               variant="secondary"
@@ -481,30 +477,30 @@ function AccountRolesARNsSection({
                     title={arnCompatibilityAlertTitle}
                   >
                     {rolesOutOfDate && !(hasStandaloneManagedRole || isHypershiftSelected) && (
-                      <TextContent>
-                        <Text component={TextVariants.p} className="pf-v5-u-mt-sm">
+                      <Content>
+                        <Content component={ContentVariants.p} className="pf-v6-u-mt-sm">
                           <strong>
                             To update account roles to the latest OpenShift version (
                             {formatMinorVersion(latestOCPVersion)}):
                           </strong>
-                        </Text>
-                        <TextList component={TextListVariants.ol}>
-                          <TextListItem>
-                            <Text component={TextVariants.p}>
+                        </Content>
+                        <Content component={ContentVariants.ol}>
+                          <Content component="li">
+                            <Content component={ContentVariants.p}>
                               Download latest ({formatMinorVersion(latestOCPVersion)}){' '}
                               <Link to="/downloads#tool-ocm">ocm</Link> and{' '}
                               <Link to="/downloads#tool-rosa">rosa</Link> CLIs
-                            </Text>
-                          </TextListItem>
-                          <TextListItem className="pf-v5-u-mb-sm">
-                            <Text component={TextVariants.p}>Recreate ARNs using</Text>
-                            <Text component={TextVariants.p}>
+                            </Content>
+                          </Content>
+                          <Content component="li" className="pf-v6-u-mb-sm">
+                            <Content component={ContentVariants.p}>Recreate ARNs using</Content>
+                            <Content component={ContentVariants.p}>
                               <InstructionCommand textAriaLabel="Copyable ROSA create account-roles command">
                                 {RosaCliCommand.CreateAccountRoles}
                               </InstructionCommand>
-                            </Text>
-                          </TextListItem>
-                        </TextList>
+                            </Content>
+                          </Content>
+                        </Content>
                         {/*
                         // TODO restore this when we have a doc URL (see https://issues.redhat.com/browse/OSDOCS-4138)
                         <Text component={TextVariants.p}>
@@ -513,7 +509,7 @@ function AccountRolesARNsSection({
                           </ExternalLink>
                         </Text>
                         */}
-                      </TextContent>
+                      </Content>
                     )}
                   </Alert>
                 </GridItem>

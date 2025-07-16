@@ -80,34 +80,34 @@ function OverviewEmptyState() {
     >
       <AppPage title={PAGE_TITLE}>
         <OverviewProductBanner {...openshiftHeaderContent} />
-        <PageSection>
+        <PageSection hasBodyWrapper={false}>
           <Title size="xl" headingLevel="h2">
             Featured OpenShift cluster types
           </Title>
-          <Flex className="pf-v5-u-mb-lg">
-            <FlexItem className="pf-v5-u-pt-md" data-testid="offering-card_RHOSD">
+          <Flex className="pf-v6-u-mb-lg">
+            <FlexItem className="pf-v6-u-pt-md" data-testid="offering-card_RHOSD">
               <OfferingCard
                 offeringType="RHOSD"
                 canCreateManagedCluster={canCreateManagedCluster}
               />
             </FlexItem>
-            <FlexItem className="pf-v5-u-pt-md" data-testid="offering-card_AWS">
+            <FlexItem className="pf-v6-u-pt-md" data-testid="offering-card_AWS">
               <OfferingCard offeringType="AWS" canCreateManagedCluster={canCreateManagedCluster} />
             </FlexItem>
-            <FlexItem className="pf-v5-u-pt-md" data-testid="offering-card_Azure">
+            <FlexItem className="pf-v6-u-pt-md" data-testid="offering-card_Azure">
               <OfferingCard offeringType="Azure" />
             </FlexItem>
-            <FlexItem className="pf-v5-u-pt-md" data-testid="offering-card_RHOCP">
+            <FlexItem className="pf-v6-u-pt-md" data-testid="offering-card_RHOCP">
               <OfferingCard offeringType="RHOCP" />
             </FlexItem>
-            <FlexItem className="pf-v5-u-pt-md" data-testid="offering-card_RHOIBM">
+            <FlexItem className="pf-v6-u-pt-md" data-testid="offering-card_RHOIBM">
               <OfferingCard offeringType="RHOIBM" />
             </FlexItem>
-            <FlexItem className="pf-v5-u-pt-md" data-testid="offering-card_DEVSNBX">
+            <FlexItem className="pf-v6-u-pt-md" data-testid="offering-card_DEVSNBX">
               <OfferingCard offeringType="DEVSNBX" />
             </FlexItem>
             {isAssistedMigrationEnabled && (
-              <FlexItem className="pf-v5-u-pt-md" data-testid="offering-card_MIGRATION">
+              <FlexItem className="pf-v6-u-pt-md" data-testid="offering-card_MIGRATION">
                 <OfferingCard offeringType="MIGRATION" />
               </FlexItem>
             )}

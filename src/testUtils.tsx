@@ -8,7 +8,6 @@ import { AnyAction } from 'redux';
 import promiseMiddleware from 'redux-promise-middleware';
 
 import * as useChromeHook from '@redhat-cloud-services/frontend-components/useChrome';
-import notificationsMiddleware from '@redhat-cloud-services/frontend-components-notifications/notificationsMiddleware';
 import { configureStore, Middleware } from '@reduxjs/toolkit';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { act, render, renderHook, RenderOptions } from '@testing-library/react';
@@ -76,10 +75,6 @@ const withState = (initialState?: any, mergeWithGlobalState?: boolean): TestStat
     newState = merge({ ...globalStore.getState() }, initialState);
   }
 
-  const defaultOptions = {
-    dispatchDefaultFailure: false, // automatic error notifications
-  };
-
   // NOTE: This should match what is set in src/redux/store.ts
   // BUT also includes an preloadedState key
   const store = initialState
@@ -93,7 +88,6 @@ const withState = (initialState?: any, mergeWithGlobalState?: boolean): TestStat
           })
             .concat(promiseRejectionMiddleware as Middleware)
             .concat(promiseMiddleware)
-            .concat(notificationsMiddleware({ ...defaultOptions }) as Middleware) // TODO: remove type convertion as soon as @redhat-cloud-services incorporates RTK
             .concat(sentryMiddleware as Middleware),
       })
     : globalStore;

@@ -2,7 +2,7 @@ import React, { ComponentProps } from 'react';
 
 import { Title } from '@patternfly/react-core';
 import { ExclamationCircleIcon } from '@patternfly/react-icons/dist/esm/icons/exclamation-circle-icon';
-import { global_danger_color_100 as dangerColor } from '@patternfly/react-tokens/dist/esm/global_danger_color_100';
+import { t_global_icon_color_status_danger_default as dangerColor } from '@patternfly/react-tokens/dist/esm/t_global_icon_color_status_danger_default';
 
 import ErrorDetailsDisplay from '~/components/common/ErrorDetailsDisplay';
 import { ErrorState } from '~/types/types';

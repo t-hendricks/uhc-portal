@@ -14,12 +14,12 @@ import { ReduxVerticalFormGroup } from '../../ReduxFormComponents_deprecated';
 
 export const LabelGridItem = ({ fieldSpan, label, isRequired, helpText }) => (
   <GridItem className="field-array-title" span={fieldSpan}>
-    <p className="pf-v5-c-form__label-text" id="field-array-label">
+    <p className="pf-v6-c-form__label-text" id="field-array-label">
       {label}
-      {isRequired ? <span className="pf-v5-c-form__label-required">*</span> : null}
+      {isRequired ? <span className="pf-v6-c-form__label-required">*</span> : null}
     </p>
     {helpText ? (
-      <p className="pf-v5-c-form__helper-text" id="field-array-help-text">
+      <p className="pf-v6-c-form__helper-text" id="field-array-help-text">
         {helpText}
       </p>
     ) : null}
@@ -93,7 +93,7 @@ MinusButtonGridItem.propTypes = {
 const FieldArrayErrorGridItem = ({ isLast, errorMessage, touched, isGroupError }) => {
   if (errorMessage && isLast && (touched || isGroupError)) {
     return (
-      <GridItem className="field-grid-item pf-v5-c-form__helper-text pf-m-error">
+      <GridItem className="field-grid-item pf-v6-c-form__helper-text pf-m-error">
         {errorMessage}
       </GridItem>
     );

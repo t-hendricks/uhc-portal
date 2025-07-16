@@ -2,7 +2,8 @@ import React from 'react';
 import { Field, Formik } from 'formik';
 import * as Yup from 'yup';
 
-import { Button, Form, Modal, Stack, StackItem } from '@patternfly/react-core';
+import { Button, Form, Stack, StackItem } from '@patternfly/react-core';
+import { Modal } from '@patternfly/react-core/deprecated';
 
 import { getErrorMessage } from '~/common/errors';
 import { validateSecureURL } from '~/common/validators';

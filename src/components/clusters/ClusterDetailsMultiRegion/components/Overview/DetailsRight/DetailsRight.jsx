@@ -254,7 +254,7 @@ function DetailsRight({ cluster, hasAutoscaleCluster, isDeprovisioned, clusterDe
               />
             </DescriptionListTerm>
             <DescriptionListDescription>
-              <dl className="pf-v5-l-stack">
+              <dl className="pf-v6-l-stack">
                 {!isHypershift && (
                   <Flex data-testid="controlPlaneNodesCountContainer">
                     <dt>Control plane: </dt>
@@ -290,7 +290,7 @@ function DetailsRight({ cluster, hasAutoscaleCluster, isDeprovisioned, clusterDe
           <DescriptionListGroup>
             <DescriptionListTerm>Nodes</DescriptionListTerm>
             <DescriptionListDescription>
-              <dl className="pf-v5-l-stack">
+              <dl className="pf-v6-l-stack">
                 {!isHypershift && (
                   <Flex data-testid="controlPlaneNodesCountContainer">
                     <dt>Control plane: </dt>
@@ -316,7 +316,7 @@ function DetailsRight({ cluster, hasAutoscaleCluster, isDeprovisioned, clusterDe
         <DescriptionListGroup>
           <DescriptionListTerm>Additional security groups</DescriptionListTerm>
           <DescriptionListDescription>
-            <dl className="pf-l-stack" data-testid="securityGroupsByNode">
+            <dl className="pf-v6-l-stack" data-testid="securityGroupsByNode">
               <SecurityGroupsDisplayByNode
                 securityGroups={clusterVpc?.aws_security_groups || []}
                 securityGroupIdsForControl={
@@ -380,7 +380,7 @@ function DetailsRight({ cluster, hasAutoscaleCluster, isDeprovisioned, clusterDe
           <DescriptionListDescription>Enabled</DescriptionListDescription>
           <DescriptionListDescription>
             <span className="autoscale-data-t">Min:</span> {totalMinNodesCount}
-            <span className="pf-v5-u-ml-lg autoscale-data-t">Max: </span>
+            <span className="pf-v6-u-ml-lg autoscale-data-t">Max: </span>
             {totalMaxNodesCount}
           </DescriptionListDescription>
         </DescriptionListGroup>
@@ -414,7 +414,7 @@ function DetailsRight({ cluster, hasAutoscaleCluster, isDeprovisioned, clusterDe
         <DescriptionListGroup>
           <DescriptionListTerm>OIDC Configuration</DescriptionListTerm>
           <DescriptionListDescription>
-            <dl className="pf-v5-l-stack">
+            <dl className="pf-v6-l-stack">
               <Flex>
                 <dt>Type:</dt>
                 <dd>{oidcConfig?.managed ? 'Red Hat managed' : 'Self-managed'}</dd>

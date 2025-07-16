@@ -3,7 +3,14 @@ import { setNestedObjectValues } from 'formik';
 import PropTypes from 'prop-types';
 import { useSelector } from 'react-redux';
 
-import { Button, useWizardContext, WizardFooterWrapper } from '@patternfly/react-core';
+import {
+  ActionList,
+  ActionListGroup,
+  ActionListItem,
+  Button,
+  useWizardContext,
+  WizardFooterWrapper,
+} from '@patternfly/react-core';
 
 import { scrollToFirstField } from '~/common/helpers';
 import { getScrollErrorIds } from '~/components/clusters/wizards/form/utils';
@@ -118,7 +125,7 @@ const CreateRosaWizardFooter = ({
 
   const primaryBtnCommonProps = {
     variant: 'primary',
-    className: canCreateManagedCluster ? '' : 'pf-v5-u-mr-md',
+    className: canCreateManagedCluster ? '' : 'pf-v6-u-mr-md',
     'data-testid': 'wizard-next-button',
   };
 
@@ -146,24 +153,33 @@ const CreateRosaWizardFooter = ({
 
   return isSubmitting ? null : (
     <WizardFooterWrapper>
-      <>
-        {canCreateManagedCluster ? (
-          primaryBtn
-        ) : (
-          <CreateManagedClusterTooltip wrap>{primaryBtn}</CreateManagedClusterTooltip>
-        )}
-        <Button
-          variant="secondary"
-          data-testid="wizard-back-button"
-          onClick={goToPrevStep}
-          isDisabled={steps.indexOf(activeStep) === 0}
-        >
-          Back
-        </Button>
-        <Button variant="link" data-testid="wizard-cancel-button" onClick={close}>
-          Cancel
-        </Button>
-      </>
+      <ActionList>
+        <ActionListGroup>
+          {canCreateManagedCluster ? (
+            primaryBtn
+          ) : (
+            <CreateManagedClusterTooltip wrap>{primaryBtn}</CreateManagedClusterTooltip>
+          )}
+
+          <ActionListItem>
+            <Button
+              variant="secondary"
+              data-testid="wizard-back-button"
+              onClick={goToPrevStep}
+              isDisabled={steps.indexOf(activeStep) === 0}
+            >
+              Back
+            </Button>
+          </ActionListItem>
+        </ActionListGroup>
+        <ActionListGroup>
+          <ActionListItem>
+            <Button variant="link" data-testid="wizard-cancel-button" onClick={close}>
+              Cancel
+            </Button>
+          </ActionListItem>
+        </ActionListGroup>
+      </ActionList>
     </WizardFooterWrapper>
   );
 };

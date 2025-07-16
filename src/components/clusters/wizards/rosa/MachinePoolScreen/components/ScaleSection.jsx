@@ -1,7 +1,13 @@
 import React, { useCallback, useMemo, useState } from 'react';
 import { Field, FieldArray } from 'formik';
 
-import { ExpandableSection, GridItem, Text, TextVariants, Title } from '@patternfly/react-core';
+import {
+  Content,
+  ContentVariants,
+  ExpandableSection,
+  GridItem,
+  Title,
+} from '@patternfly/react-core';
 
 import links from '~/common/installLinks.mjs';
 import { required } from '~/common/validators';
@@ -108,7 +114,7 @@ function ScaleSection() {
           onToggle={(_event, val) => setIsNodeLabelsExpanded(val)}
         >
           <Title headingLevel="h3">Node labels (optional)</Title>
-          <p className="pf-v5-u-mb-md">
+          <p className="pf-v6-u-mb-md">
             Configure labels that will apply to all nodes in this machine pool.
           </p>
           <FieldArray
@@ -162,11 +168,11 @@ function ScaleSection() {
             <Title headingLevel="h3">Machine pools settings</Title>
           </GridItem>
           <GridItem md={12}>
-            <Text component={TextVariants.p}>
+            <Content component={ContentVariants.p}>
               These settings apply to all created machine pools. After cluster creation, you can
               alter your compute machine count at any time, but your selected default machine pool
               instance type is permanent.
-            </Text>
+            </Content>
           </GridItem>
         </>
       )}

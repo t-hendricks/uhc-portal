@@ -98,7 +98,7 @@ describe('<UpgradeWizard />', () => {
       expect(nextButton).toBeInTheDocument();
     });
 
-    expect(nextButton).toHaveAttribute('aria-disabled', 'true');
+    expect(nextButton).toBeDisabled();
   });
 
   it('displays the appropriate steps', async () => {

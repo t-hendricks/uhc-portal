@@ -98,7 +98,7 @@ const UpdateAllMachinePools = ({
           isExpandable
           isInline
           role="alert"
-          className="pf-v5-u-mt-md"
+          className="pf-v6-u-mt-md"
           data-testid="alert-danger"
         >
           {errors.map((error, index) => (
@@ -109,7 +109,7 @@ const UpdateAllMachinePools = ({
         </Alert>
       ) : null}
       <Alert
-        className={goToMachinePoolTab ? 'pf-v5-u-mb-lg' : 'pf-v5-u-mt-lg'}
+        className={goToMachinePoolTab ? 'pf-v6-u-mb-lg' : 'pf-v6-u-mt-lg'}
         isExpandable
         isInline
         role="alert"

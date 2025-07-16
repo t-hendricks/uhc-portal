@@ -1,8 +1,8 @@
 import React from 'react';
-import { useDispatch } from 'react-redux';
 
-import { Button, Flex, Modal } from '@patternfly/react-core';
-import { addNotification } from '@redhat-cloud-services/frontend-components-notifications';
+import { Button, Flex } from '@patternfly/react-core';
+import { Modal } from '@patternfly/react-core/deprecated';
+import { useAddNotification } from '@redhat-cloud-services/frontend-components-notifications';
 
 import ButtonWithTooltip from '~/components/common/ButtonWithTooltip';
 import ErrorBox from '~/components/common/ErrorBox';
@@ -28,7 +28,8 @@ export const CancelClusterTransferModal = (props: CancelClusterTransferModalProp
     mutate: cancelClusterTransfer,
     reset,
   } = useEditClusterTransfer();
-  const dispatch = useDispatch();
+
+  const addNotification = useAddNotification();
 
   const handleClose = () => {
     reset();
@@ -65,13 +66,11 @@ export const CancelClusterTransferModal = (props: CancelClusterTransferModalProp
                 },
                 {
                   onSuccess: () => {
-                    dispatch(
-                      addNotification({
-                        variant: 'info',
-                        title: 'Cluster ownership transfer canceled',
-                        dismissable: true,
-                      }),
-                    );
+                    addNotification({
+                      variant: 'info',
+                      title: 'Cluster ownership transfer canceled',
+                      dismissable: true,
+                    });
 
                     handleClose();
                   },

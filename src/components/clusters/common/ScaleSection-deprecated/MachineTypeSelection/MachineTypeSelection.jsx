@@ -417,7 +417,7 @@ const MachineTypeSelection = ({
         label="Compute node instance type"
         isRequired
         fieldId="node_type"
-        labelIcon={<PopoverHint hint={constants.computeNodeInstanceTypeHint} />}
+        labelHelp={<PopoverHint hint={constants.computeNodeInstanceTypeHint} />}
       >
         <TreeViewSelect
           treeViewSelectionMap={machineTypeMap}
@@ -437,9 +437,7 @@ const MachineTypeSelection = ({
           helperText={
             currentSelectionPossiblyUnavailable && (
               <HelperText>
-                <HelperTextItem variant="warning" hasIcon>
-                  {machineTypeUnavailableWarning}
-                </HelperTextItem>
+                <HelperTextItem variant="warning">{machineTypeUnavailableWarning}</HelperTextItem>
               </HelperText>
             )
           }

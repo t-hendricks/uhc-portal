@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { useDispatch } from 'react-redux';
 
-import { ModalVariant } from '@patternfly/react-core';
+import { ModalVariant } from '@patternfly/react-core/deprecated';
 
 import { modalActions } from '~/components/common/Modal/ModalActions';
 import shouldShowModal from '~/components/common/Modal/ModalSelectors';

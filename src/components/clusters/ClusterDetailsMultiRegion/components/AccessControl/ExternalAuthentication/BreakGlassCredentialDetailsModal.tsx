@@ -1,12 +1,7 @@
 import React from 'react';
 
-import {
-  Button,
-  ClipboardCopy,
-  ClipboardCopyVariant,
-  Modal,
-  StackItem,
-} from '@patternfly/react-core';
+import { Button, ClipboardCopy, ClipboardCopyVariant, StackItem } from '@patternfly/react-core';
+import { Modal } from '@patternfly/react-core/deprecated';
 
 import ErrorBox from '~/components/common/ErrorBox';
 import { useFetchBreakGlassCredentialDetails } from '~/queries/ClusterDetailsQueries/AccessControlTab/ExternalAuthenticationQueries/useFetchBreakGlassCredentialDetails';

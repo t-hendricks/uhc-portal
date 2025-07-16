@@ -262,7 +262,7 @@ const ReviewClusterScreen = ({
       <div className="ocm-create-osd-review-screen">
         <Flex>
           <FlexItem>
-            <Title headingLevel="h2" className="pf-v5-u-pb-md">
+            <Title headingLevel="h2" className="pf-v6-u-pb-md">
               Review your ROSA cluster
             </Title>
           </FlexItem>

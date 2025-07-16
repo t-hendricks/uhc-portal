@@ -58,12 +58,12 @@ const FeaturedProductsCards = ({
   selectedCardTitle,
 }: FeaturedProductsCardsProps) => (
   <div className="featured-products-cards">
-    <Title size="xl" headingLevel="h2" className="pf-v5-u-mt-lg" id="featured-products">
+    <Title size="xl" headingLevel="h2" className="pf-v6-u-mt-lg" id="featured-products">
       {TITLE}
     </Title>
-    <Flex className="pf-v5-u-mb-lg">
+    <Flex className="pf-v6-u-mb-lg">
       {FEATURED_PRODUCTS_CARDS.map((card) => (
-        <FlexItem className="pf-v5-u-pt-md" data-testid="product-overview-card-flex-item">
+        <FlexItem className="pf-v6-u-pt-md" data-testid="product-overview-card-flex-item">
           <ProductCard
             {...card}
             openLearnMore={openLearnMore}

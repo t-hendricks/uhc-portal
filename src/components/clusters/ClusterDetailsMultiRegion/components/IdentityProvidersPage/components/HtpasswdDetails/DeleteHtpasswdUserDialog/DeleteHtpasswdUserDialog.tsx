@@ -2,7 +2,7 @@ import React from 'react';
 import { useDispatch } from 'react-redux';
 
 import { Spinner } from '@patternfly/react-core';
-import { addNotification } from '@redhat-cloud-services/frontend-components-notifications';
+import { useAddNotification } from '@redhat-cloud-services/frontend-components-notifications';
 
 import ErrorBox from '~/components/common/ErrorBox';
 import Modal from '~/components/common/Modal/Modal';
@@ -34,6 +34,7 @@ const DeleteHtpasswdUserDialog = ({
   const { clusterId, idpId, idpName, htpasswdUserId, htpasswdUserName, region } = modalData;
 
   const dispatch = useDispatch();
+  const addNotification = useAddNotification();
 
   const {
     isPending,
@@ -72,13 +73,12 @@ const DeleteHtpasswdUserDialog = ({
             closeModal();
             refreshHtpasswdUsers();
             onSuccess();
-            dispatch(
-              addNotification({
-                variant: 'success',
-                title: `Successfully deleted user ${htpasswdUserName}`,
-                dismissable: true,
-              }),
-            );
+
+            addNotification({
+              variant: 'success',
+              title: `Successfully deleted user ${htpasswdUserName}`,
+              dismissable: true,
+            });
           },
         })
       }

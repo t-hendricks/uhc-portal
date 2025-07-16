@@ -122,7 +122,7 @@ export const AddOnsFormDropdown = ({
       fieldId={name}
       label={label}
       isRequired={isRequired}
-      labelIcon={extendedHelpText ? <PopoverHint hint={extendedHelpText} /> : undefined}
+      labelHelp={extendedHelpText ? <PopoverHint hint={extendedHelpText} /> : undefined}
     >
       {formSelect}
       <FormGroupHelperText

@@ -4,12 +4,11 @@ import {
   Card,
   CardBody,
   CardTitle,
+  Content,
   List,
   ListItem,
   Stack,
   StackItem,
-  Text,
-  TextContent,
   Title,
 } from '@patternfly/react-core';
 
@@ -45,29 +44,29 @@ const SSOLogin = ({
           <Title headingLevel="h2">SSO Login</Title>
         </CardTitle>
         <CardBody className="ocm-c-api-token__card--body">
-          <TextContent>
+          <Content>
             <LeadingInfo isRosa={isRosa} SSOLogin />
-          </TextContent>
-          <TextContent className="pf-v6-u-mt-lg">
+          </Content>
+          <Content className="pf-v6-u-mt-lg">
             <List component="ol">
               <ListItem>
                 Download and install the <code>{commandName}</code> command-line tool:{' '}
                 {commandTool === tools.OCM && <SupportLevelBadge {...DEV_PREVIEW} />}
-                <Text component="p" />
+                <Content component="p" />
                 <DownloadAndOSSelection tool={commandTool} channel={channels.STABLE} />
-                <Text component="p" />
+                <Content component="p" />
               </ListItem>
               <ListItem>
                 To authenticate, run one of these commands:
-                <Text component="p" />
-                <Text component="p">Option 1 (for browsers)</Text>
+                <Content component="p" />
+                <Content component="p">Option 1 (for browsers)</Content>
                 <InstructionCommand
                   className="ocm-c-api-token-limit-width"
                   outerClassName="pf-v6-u-mt-md"
                 >
                   {`${commandName} login --use-auth-code`}
                 </InstructionCommand>
-                <Text component="p">Option 2 (for browserless environment)</Text>
+                <Content component="p">Option 2 (for browserless environment)</Content>
                 <InstructionCommand
                   className="ocm-c-api-token-limit-width"
                   outerClassName="pf-v6-u-mt-md"
@@ -79,7 +78,7 @@ const SSOLogin = ({
                 Enter your Red Hat login credentials via SSO in the browser window.
               </ListItem>
             </List>
-          </TextContent>
+          </Content>
         </CardBody>
       </Card>
     </StackItem>
@@ -89,7 +88,7 @@ const SSOLogin = ({
           <Title headingLevel="h2">Additional resources:</Title>
         </CardTitle>
         <CardBody>
-          <TextContent>
+          <Content>
             You can find documentation for these related products and services here:
             <List>
               <ListItem>
@@ -98,7 +97,7 @@ const SSOLogin = ({
                 </ExternalLink>
               </ListItem>
             </List>
-          </TextContent>
+          </Content>
         </CardBody>
       </Card>
     </StackItem>

@@ -92,6 +92,7 @@ export const FuzzySelect: React.FC<FuzzySelectProps> = (props) => {
     className,
     additionalFilterControls,
     includeDisabledInSearchResults = false,
+    isScrollable = true,
     ...rest
   } = props;
 
@@ -381,8 +382,7 @@ export const FuzzySelect: React.FC<FuzzySelectProps> = (props) => {
     isPopover,
   ]);
 
-  const scrollableClass =
-    props?.isScrollable && footer ? ' fuzzy-select--scrollable-with-footer' : '';
+  const scrollableClass = isScrollable && footer ? ' fuzzy-select--scrollable-with-footer' : '';
 
   return (
     <Select
@@ -398,6 +398,7 @@ export const FuzzySelect: React.FC<FuzzySelectProps> = (props) => {
       shouldFocusFirstItemOnOpen={false}
       onOpenChangeKeys={['Escape']}
       className={`${className ?? ''}${scrollableClass}`}
+      isScrollable={isScrollable}
       {...rest}
     >
       <MenuSearch>

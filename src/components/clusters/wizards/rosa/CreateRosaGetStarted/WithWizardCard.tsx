@@ -8,8 +8,8 @@ import {
   CardBody,
   CardFooter,
   CardTitle,
-  Text,
-  TextVariants,
+  Content,
+  ContentVariants,
   Title,
 } from '@patternfly/react-core';
 import { DesktopIcon } from '@patternfly/react-icons/dist/esm/icons/desktop-icon';
@@ -27,7 +27,7 @@ const WithWizard = () => {
   const { canCreateManagedCluster } = useCanCreateManagedCluster();
 
   return (
-    <Card isFlat isFullHeight data-testid="deploy-with-webinterface-card">
+    <Card isFullHeight data-testid="deploy-with-webinterface-card">
       <CardTitle>
         <Title headingLevel="h3" size="lg">
           <DesktopIcon className="ocm-c-wizard-get-started--card-icon" />
@@ -35,9 +35,9 @@ const WithWizard = () => {
         </Title>
       </CardTitle>
       <CardBody>
-        <Text component={TextVariants.p} className="pf-v5-u-mb-sm">
+        <Content component={ContentVariants.p} className="pf-v6-u-mb-sm">
           You can deploy your cluster with the web interface.
-        </Text>
+        </Content>
         {/* TODO: PatternFly incorrectly puts the content of an alert as a h4 - this text should not be a heading */}
         <Alert
           variant="info"
@@ -50,10 +50,11 @@ const WithWizard = () => {
         <CreateManagedClusterTooltip>
           <Button
             variant={ButtonVariant.secondary}
+            icon={<DesktopIcon />}
             component={LinkComponent}
             isAriaDisabled={!canCreateManagedCluster}
           >
-            <DesktopIcon /> Create with web interface
+            Create with web interface
           </Button>
         </CreateManagedClusterTooltip>
       </CardFooter>

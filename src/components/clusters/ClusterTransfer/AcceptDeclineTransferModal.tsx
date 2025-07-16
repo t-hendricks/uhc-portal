@@ -1,8 +1,8 @@
 import React from 'react';
-import { useDispatch } from 'react-redux';
 
-import { Button, Flex, Modal } from '@patternfly/react-core';
-import { addNotification } from '@redhat-cloud-services/frontend-components-notifications';
+import { Button, Flex } from '@patternfly/react-core';
+import { Modal } from '@patternfly/react-core/deprecated';
+import { useAddNotification } from '@redhat-cloud-services/frontend-components-notifications';
 
 import ErrorBox from '~/components/common/ErrorBox';
 import { useEditClusterTransfer } from '~/queries/ClusterActionsQueries/useClusterTransfer';
@@ -26,21 +26,20 @@ export const AcceptDeclineClusterTransferModal = (
     mutate: editClusterTransfer,
     reset,
   } = useEditClusterTransfer();
-  const dispatch = useDispatch();
+
+  const addNotification = useAddNotification();
 
   const handleClose = (status?: ClusterTransferStatus) => {
     reset();
     if (status) {
-      dispatch(
-        addNotification({
-          variant: 'info',
-          title:
-            status === ClusterTransferStatus.Accepted.toLowerCase()
-              ? 'Cluster ownership transfer was approved. It can take up to 24 hours for the transfer to complete.'
-              : `Cluster ownership transfer was ${status.toLowerCase()}.`,
-          dismissable: true,
-        }),
-      );
+      addNotification({
+        variant: 'info',
+        title:
+          status === ClusterTransferStatus.Accepted.toLowerCase()
+            ? 'Cluster ownership transfer was approved. It can take up to 24 hours for the transfer to complete.'
+            : `Cluster ownership transfer was ${status.toLowerCase()}.`,
+        dismissable: true,
+      });
     }
     setIsOpen(false);
   };

@@ -1,7 +1,7 @@
 import React from 'react';
 import { Field } from 'formik';
 
-import { Alert, AlertActionLink, AlertVariant } from '@patternfly/react-core';
+import { Alert, AlertActionLink, AlertVariant, Flex, FlexItem } from '@patternfly/react-core';
 
 import { SupportedFeature } from '~/common/featureCompatibility';
 import { validateSecurityGroups } from '~/common/validators';
@@ -58,26 +58,30 @@ const EditSecurityGroupsField = ({ cluster, isReadOnly }: EditSecurityGroupsFiel
       <AlertActionLink onClick={refreshVPC}>Refresh Security Groups</AlertActionLink>
     </Alert>
   ) : (
-    <>
-      <SecurityGroupsNoChangeAlert isRosa={isROSA(cluster)} />
-      <Field
-        component={EditSecurityGroups}
-        name={FieldId.SecurityGroupIds}
-        onChange={(values: string[]) => {
-          setFieldValue(FieldId.SecurityGroupIds, values, true);
-          setFieldTouched(FieldId.SecurityGroupIds, true, false);
-        }}
-        validate={(securityGroupIds: string[]) =>
-          validateSecurityGroups(securityGroupIds, isHypershift)
-        }
-        selectedVPC={clusterVpc}
-        isReadOnly={isReadOnly}
-        selectedGroupIds={selectedGroupIds}
-        isHypershift={isHypershift}
-        refreshVPCCallback={refreshVPC}
-        isVPCLoading={isLoading}
-      />
-    </>
+    <Flex direction={{ default: 'column' }}>
+      <FlexItem>
+        <SecurityGroupsNoChangeAlert isRosa={isROSA(cluster)} />
+      </FlexItem>
+      <FlexItem>
+        <Field
+          component={EditSecurityGroups}
+          name={FieldId.SecurityGroupIds}
+          onChange={(values: string[]) => {
+            setFieldValue(FieldId.SecurityGroupIds, values, true);
+            setFieldTouched(FieldId.SecurityGroupIds, true, false);
+          }}
+          validate={(securityGroupIds: string[]) =>
+            validateSecurityGroups(securityGroupIds, isHypershift)
+          }
+          selectedVPC={clusterVpc}
+          isReadOnly={isReadOnly}
+          selectedGroupIds={selectedGroupIds}
+          isHypershift={isHypershift}
+          refreshVPCCallback={refreshVPC}
+          isVPCLoading={isLoading}
+        />
+      </FlexItem>
+    </Flex>
   );
 };
 

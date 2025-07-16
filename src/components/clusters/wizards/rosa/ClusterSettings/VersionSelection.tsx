@@ -152,7 +152,7 @@ function VersionSelection({ label, onChange }: VersionSelectionProps) {
         const versions = getInstallableVersionsResponse?.versions ?? [];
 
         const selectedVersionInVersionList = versions.find(
-          (ver) => ver.id === selectedClusterVersion?.id,
+          (ver: Version) => ver.id === selectedClusterVersion?.id,
         );
 
         if (
@@ -272,7 +272,7 @@ function VersionSelection({ label, onChange }: VersionSelectionProps) {
 
   const compatibleVersionsSwitchControl = hasIncompatibleVersions ? (
     <Switch
-      className="pf-v5-u-mx-md pf-v5-u-mt-md pf-v5-u-font-size-sm"
+      className="pf-v6-u-mx-md pf-v6-u-mt-md pf-v6-u-font-size-sm"
       id="view-only-compatible-versions"
       aria-label="View only compatible versions"
       key={`compatible-switch-${showOnlyCompatibleVersions}`}
@@ -287,9 +287,11 @@ function VersionSelection({ label, onChange }: VersionSelectionProps) {
             }
             enableFlip={false}
           >
-            <Button variant="plain" className="pf-v5-u-p-0 pf-v5-u-ml-md">
-              <OutlinedQuestionCircleIcon />
-            </Button>
+            <Button
+              icon={<OutlinedQuestionCircleIcon />}
+              variant="plain"
+              className="pf-v6-u-p-0 pf-v6-u-ml-md"
+            />
           </Popover>
         </>
       }

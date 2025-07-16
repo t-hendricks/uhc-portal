@@ -85,7 +85,7 @@ const UpgradeTimeSelection = ({
     setTimeout(() => {
       requestAnimationFrame(() => {
         const selected = document.querySelector(
-          '#upgrade-time-select-dropdown .pf-v5-c-menu__item.pf-m-selected',
+          '#upgrade-time-select-dropdown .pf-v6-c-menu__item.pf-m-selected',
         );
         if (selected) {
           selected.scrollIntoView({ block: 'center' });

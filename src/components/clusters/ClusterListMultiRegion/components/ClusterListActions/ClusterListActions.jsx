@@ -56,7 +56,7 @@ const useMediaQuery = (query) => {
 
 const dropdownRegisterCluster = (
   <DropdownItem key="registercluster" data-testid="register-cluster-item">
-    <Link to="/register" className="pf-v5-c-dropdown__menu-item">
+    <Link to="/register" className="pf-v6-c-dropdown__menu-item">
       Register disconnected cluster
     </Link>
   </DropdownItem>
@@ -73,7 +73,7 @@ const toolbarViewRequest = (
 );
 const dropdownRequest = (
   <DropdownItem key="cluster-request-dropdown" data-testid="cluster-request-dropdown-item">
-    <Link to="/cluster-request" className="pf-v5-c-dropdown__menu-item">
+    <Link to="/cluster-request" className="pf-v6-c-dropdown__menu-item">
       View cluster requests
     </Link>
   </DropdownItem>
@@ -81,7 +81,7 @@ const dropdownRequest = (
 
 const dropdownArchived = (
   <DropdownItem key="archived" data-testid="archived-cluster-item">
-    <Link to="/archived" className="pf-v5-c-dropdown__menu-item">
+    <Link to="/archived" className="pf-v6-c-dropdown__menu-item">
       View cluster archives
     </Link>
   </DropdownItem>
@@ -91,7 +91,7 @@ const toolbarCreateCluster = (
     <Link
       to="/create"
       role="button"
-      className="pf-v5-c-button pf-m-primary"
+      className="pf-v6-c-button pf-m-primary"
       data-testid="create_cluster_btn"
     >
       Create cluster

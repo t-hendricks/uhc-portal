@@ -12,8 +12,8 @@ import { FolderOpenIcon } from '@patternfly/react-icons/dist/esm/icons/folder-op
 import { InProgressIcon } from '@patternfly/react-icons/dist/esm/icons/in-progress-icon';
 import { NotStartedIcon } from '@patternfly/react-icons/dist/esm/icons/not-started-icon';
 import { UnknownIcon } from '@patternfly/react-icons/dist/esm/icons/unknown-icon';
-import { global_danger_color_100 as dangerColor } from '@patternfly/react-tokens/dist/esm/global_danger_color_100';
-import { global_success_color_100 as successColor } from '@patternfly/react-tokens/dist/esm/global_success_color_100';
+import { t_global_icon_color_status_danger_default as dangerColor } from '@patternfly/react-tokens/dist/esm/t_global_icon_color_status_danger_default';
+import { t_global_icon_color_status_success_default as successColor } from '@patternfly/react-tokens/dist/esm/t_global_icon_color_status_success_default';
 
 import clusterStates from './clusterStates';
 

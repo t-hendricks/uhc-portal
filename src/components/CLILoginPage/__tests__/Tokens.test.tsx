@@ -96,7 +96,7 @@ describe('<Tokens />', () => {
     expect(
       await screen.findByText('Copy and paste the authentication command in your terminal:'),
     ).toBeInTheDocument();
-    expect(container.querySelector('.pf-v5-c-skeleton')).toBeInTheDocument();
+    expect(container.querySelector('.pf-v6-c-skeleton')).toBeInTheDocument();
   });
 
   it('Calls getOfflineToken', async () => {

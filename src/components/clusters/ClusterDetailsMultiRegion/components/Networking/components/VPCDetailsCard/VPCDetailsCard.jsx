@@ -85,15 +85,15 @@ const VPCDetailsCard = ({ cluster }) => {
           Virtual Private Cloud (VPC)
         </Title>
       </CardTitle>
-      <CardBody className="ocm-c-networking-vpc-details__card--body pf-v5-l-stack pf-m-gutter">
+      <CardBody className="ocm-c-networking-vpc-details__card--body pf-v6-l-stack pf-m-gutter">
         {gcpVPCName || isPrivateLinkInitialized || gcpPrivateServiceConnect ? (
           <>
-            <Title headingLevel="h3" className="pf-v5-l-stack__item">
+            <Title headingLevel="h3" className="pf-v6-l-stack__item">
               VPC Details
             </Title>
             <DescriptionList
               isHorizontal
-              className="pf-v5-l-stack__item pf-m-auto-column-widths details-card-dl"
+              className="pf-v6-l-stack__item pf-m-auto-column-widths details-card-dl"
             >
               {gcpVPCName ? (
                 <DescriptionListGroup>
@@ -120,10 +120,10 @@ const VPCDetailsCard = ({ cluster }) => {
             </DescriptionList>
           </>
         ) : null}
-        <Title headingLevel="h3" className="pf-v5-l-stack__item --">
+        <Title headingLevel="h3" className="pf-v6-l-stack__item --">
           Cluster-wide Proxy
         </Title>
-        <DescriptionList isHorizontal className="pf-v5-l-stack__item details-card-dl">
+        <DescriptionList isHorizontal className="pf-v6-l-stack__item details-card-dl">
           <DescriptionListGroup>
             <DescriptionListTerm>HTTP proxy URL</DescriptionListTerm>
             <DescriptionListDescription>{httpProxyUrl || 'N/A'}</DescriptionListDescription>

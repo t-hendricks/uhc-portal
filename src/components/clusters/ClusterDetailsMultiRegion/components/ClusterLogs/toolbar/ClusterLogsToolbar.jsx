@@ -67,7 +67,7 @@ const ClusterLogsToolbar = ({
             region={region}
           />
         </ToolbarItem>
-        <ToolbarItem align={{ default: 'alignRight' }} variant="pagination">
+        <ToolbarItem align={{ default: 'alignEnd' }} variant="pagination">
           <ClusterLogsPagination
             itemCount={itemCount}
             isDisabled={isPendingNoData}

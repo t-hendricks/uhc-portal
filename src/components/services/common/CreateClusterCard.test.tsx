@@ -33,6 +33,6 @@ describe('<CreateClusterCard />', () => {
       canCreateManagedCluster: true,
     });
     render(<CreateClusterCard {...props} />);
-    expect(screen.getByTestId('register-cluster')).toHaveAttribute('aria-disabled', 'false');
+    expect(screen.getByTestId('register-cluster')).not.toHaveAttribute('aria-disabled');
   });
 });

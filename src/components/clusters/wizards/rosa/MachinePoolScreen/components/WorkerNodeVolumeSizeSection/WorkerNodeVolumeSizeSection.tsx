@@ -41,7 +41,7 @@ const WorkerNodeVolumeSizeSection = ({
       label="Root disk size"
       isRequired
       fieldId={FieldId.WorkerVolumeSizeGib}
-      labelIcon={
+      labelHelp={
         <PopoverHint
           hint={`Root disks are AWS EBS volumes attached as the primary disk for AWS EC2 instances. The root disk size for this machine pool group of nodes must be between ${minWorkerVolumeSizeGiB}GiB and ${maxWorkerVolumeSizeGiB}GiB.`}
         />

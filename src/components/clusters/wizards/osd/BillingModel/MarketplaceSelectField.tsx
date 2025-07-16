@@ -181,7 +181,7 @@ export const MarketplaceSelectField = ({
   return (
     <Field name={FieldId.MarketplaceSelection} validate={validate}>
       {({ field, form, meta }: FieldProps) => (
-        <FormGroup {...input} fieldId={field.name} isRequired className="pf-v5-u-mt-sm">
+        <FormGroup {...input} fieldId={field.name} isRequired className="pf-v6-u-mt-sm">
           <Select
             isOpen={isOpen}
             selected={selectedMarketplace}

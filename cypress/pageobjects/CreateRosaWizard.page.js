@@ -2,7 +2,7 @@ import Page from './page';
 
 class CreateRosaCluster extends Page {
   clusterDetailsTree = () =>
-    cy.get('li.pf-v5-c-wizard__nav-item').find('button').contains('Details');
+    cy.get('li.pf-v6-c-wizard__nav-item').find('button').contains('Details');
 
   rosaCreateClusterButton = () => cy.getByTestId('rosa-create-cluster-button', { timeout: 50000 });
 
@@ -20,7 +20,7 @@ class CreateRosaCluster extends Page {
     cy.get('button').contains('Back to the networking configuration');
 
   reviewAndCreateTree = () =>
-    cy.get('li.pf-v5-c-wizard__nav-item').find('button').contains('Review and create');
+    cy.get('li.pf-v6-c-wizard__nav-item').find('button').contains('Review and create');
 
   createCustomDomainPrefixCheckbox = () => cy.get('input[id="has_domain_prefix"]');
 
@@ -339,7 +339,7 @@ class CreateRosaCluster extends Page {
   showsNoAssociatedAccounts = () => cy.getByTestId('no_associated_accounts').should('be.visible');
 
   isSelectedVersion = (testVersion) => {
-    cy.get('button.pf-v5-c-select__menu-item.pf-m-selected')
+    cy.get('button.pf-v6-c-select__menu-item.pf-m-selected')
       .scrollIntoView()
       .invoke('text')
       .should('eq', testVersion);
@@ -358,19 +358,19 @@ class CreateRosaCluster extends Page {
   }
 
   get accountIdMenuItem() {
-    return '.pf-v5-c-select__menu-item';
+    return '.pf-v6-c-select__menu-item';
   }
 
   get associatedAccountsDropdown() {
-    return 'button.pf-v5-c-select__toggle:not(.pf-m-disabled)[aria-describedby="aws-infra-accounts"]';
+    return 'button.pf-v6-c-select__toggle:not(.pf-m-disabled)[aria-describedby="aws-infra-accounts"]';
   }
 
   get versionsDropdown() {
-    return 'div[name="cluster_version"] button.pf-v5-c-select__toggle';
+    return 'div[name="cluster_version"] button.pf-v6-c-select__toggle';
   }
 
   get ARNFieldRequiredMsg() {
-    return '.pf-v5-c-expandable-section.pf-m-expanded .pf-v5-c-helper-text__item.pf-m-error';
+    return '.pf-v6-c-expandable-section.pf-m-expanded .pf-v6-c-helper-text__item.pf-m-error';
   }
 
   get clusterNameInput() {
@@ -378,11 +378,11 @@ class CreateRosaCluster extends Page {
   }
 
   get clusterNameInputError() {
-    return 'ul#rich-input-popover-name li.pf-v5-c-helper-text__item.pf-m-error.pf-m-dynamic';
+    return 'ul#rich-input-popover-name li.pf-v6-c-helper-text__item.pf-m-error.pf-m-dynamic';
   }
 
   get primaryButton() {
-    return '.rosa-wizard button.pf-v5-c-button.pf-m-primary';
+    return '.rosa-wizard button.pf-v6-c-button.pf-m-primary';
   }
 
   selectStandaloneControlPlaneTypeOption() {
@@ -420,7 +420,7 @@ class CreateRosaCluster extends Page {
   }
 
   waitForARNList() {
-    cy.get('span.pf-v5-c-button__progress', { timeout: 80000 }).should('not.exist');
+    cy.get('span.pf-v6-c-button__progress', { timeout: 80000 }).should('not.exist');
     cy.getByTestId('spinner-loading-arn-text', { timeout: 80000 }).should('not.exist');
   }
 
@@ -483,7 +483,7 @@ class CreateRosaCluster extends Page {
   }
 
   waitForVPCList() {
-    cy.get('span.pf-v5-c-button__progress', { timeout: 100000 }).should('not.exist');
+    cy.get('span.pf-v6-c-button__progress', { timeout: 100000 }).should('not.exist');
     cy.getByTestId('refresh-vpcs', { timeout: 80000 }).should('not.be.disabled');
   }
 
@@ -626,7 +626,7 @@ class CreateRosaCluster extends Page {
   }
 
   isClusterPropertyMatchesValue(property, value) {
-    cy.get('span.pf-v5-c-description-list__text')
+    cy.get('span.pf-v6-c-description-list__text')
       .contains(property)
       .parent()
       .siblings()
@@ -650,7 +650,7 @@ class CreateRosaCluster extends Page {
 
   waitForClusterReady() {
     // Wait up to 1 hour for cluster to be Ready
-    cy.get('.pf-v5-u-ml-xs', { timeout: 3600000 }).should('contain', 'Ready');
+    cy.get('.pf-v6-u-ml-xs', { timeout: 3600000 }).should('contain', 'Ready');
   }
 
   waitForButtonContainingTextToBeEnabled(text, timeout = 30000) {
@@ -705,7 +705,7 @@ class CreateRosaCluster extends Page {
   }
 
   selectAvailabilityZoneRegion(availabilityZoneRegion) {
-    cy.get(".pf-v5-c-select__menu:contains('Select availability zone')").within(() => {
+    cy.get(".pf-v6-c-select__menu:contains('Select availability zone')").within(() => {
       cy.get('li').contains(availabilityZoneRegion).click();
     });
   }

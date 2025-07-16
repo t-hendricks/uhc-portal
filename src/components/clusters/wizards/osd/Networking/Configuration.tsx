@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Alert, Form, FormGroup, Grid, GridItem, Text, Title } from '@patternfly/react-core';
+import { Alert, Content, Form, FormGroup, Grid, GridItem, Title } from '@patternfly/react-core';
 
 import { ocmResourceType, TrackEvent, trackEvents } from '~/common/analytics';
 import links from '~/common/installLinks.mjs';
@@ -202,7 +202,9 @@ export const Configuration = () => {
       <Grid hasGutter>
         <GridItem>
           <Title headingLevel="h3">Networking configuration</Title>
-          <Text className="pf-v5-u-mt-sm">Configure network access for your cluster.</Text>
+          <Content component="p" className="pf-v6-u-mt-sm">
+            Configure network access for your cluster.
+          </Content>
         </GridItem>
 
         {showClusterPrivacy && (
@@ -211,10 +213,10 @@ export const Configuration = () => {
               <Title headingLevel="h4" size="xl" className="privacy-heading">
                 Cluster privacy
               </Title>
-              <Text className="pf-v5-u-mt-sm">
+              <Content component="p" className="pf-v6-u-mt-sm">
                 Install your cluster with all public or private API endpoints and application
                 routes.
-              </Text>
+              </Content>
             </GridItem>
 
             <GridItem span={6}>
@@ -249,10 +251,10 @@ export const Configuration = () => {
               <Title headingLevel="h4" size="xl" className="privacy-heading">
                 Virtual Private Cloud (VPC)
               </Title>
-              <Text className="pf-v5-u-mt-sm">
+              <Content component="p" className="pf-v6-u-mt-sm">
                 By default, a new VPC will be created for your cluster. Alternatively, you may opt
                 to install to an existing VPC below.
-              </Text>
+              </Content>
             </GridItem>
 
             <GridItem span={6}>
@@ -268,7 +270,7 @@ export const Configuration = () => {
                   }
                 />
 
-                <div className="pf-v5-u-ml-lg pf-v5-u-mt-md">
+                <div className="pf-v6-u-ml-lg pf-v6-u-mt-md">
                   {isPrivateCluster && cloudProvider === CloudProviderType.Aws && (
                     <CheckboxField
                       name={FieldId.UsePrivateLink}
@@ -280,7 +282,7 @@ export const Configuration = () => {
                     />
                   )}
                   {isPrivateCluster && showPrivateServiceConnect && (
-                    <div className="pf-v5-u-mt-md">
+                    <div className="pf-v6-u-mt-md">
                       <CheckboxField
                         name={FieldId.PrivateServiceConnect}
                         label="Use Private Service Connect"
@@ -302,7 +304,7 @@ export const Configuration = () => {
                     </div>
                   )}
                   {showConfigureProxy && (
-                    <div className="pf-v5-u-mt-md">
+                    <div className="pf-v6-u-mt-md">
                       <CheckboxField
                         name={FieldId.ConfigureProxy}
                         label="Configure a cluster-wide proxy"
@@ -325,7 +327,7 @@ export const Configuration = () => {
               <Title headingLevel="h4" size="xl">
                 Application ingress settings
               </Title>
-              <Text className="pf-v5-u-mt-sm">
+              <Content component="p" className="pf-v6-u-mt-sm">
                 Ingress is configured by default.{' '}
                 {isManagedIngressAllowed
                   ? 'Customize settings if needed.'
@@ -340,7 +342,7 @@ export const Configuration = () => {
                     .
                   </>
                 )}
-              </Text>
+              </Content>
             </GridItem>
 
             {isManagedIngressAllowed && (

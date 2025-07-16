@@ -66,7 +66,7 @@ describe('<CreateRosaWizardFooter />', () => {
     });
     mockedUseFormState.mockReturnValue(useFormStateReturnValue);
     render(<CreateRosaWizardFooter {...props} />);
-    expect(screen.getByTestId(wizardPrimaryBtnTestId)).toHaveAttribute('aria-disabled', 'true');
+    expect(screen.getByTestId(wizardPrimaryBtnTestId)).toHaveAttribute('disabled');
   });
 
   it('Enables "Next" button if user has permissions to create a managed cluster', async () => {
@@ -75,6 +75,6 @@ describe('<CreateRosaWizardFooter />', () => {
     });
     mockedUseFormState.mockReturnValue(useFormStateReturnValue);
     render(<CreateRosaWizardFooter {...props} />);
-    expect(screen.getByTestId(wizardPrimaryBtnTestId)).toHaveAttribute('aria-disabled', 'false');
+    expect(screen.getByTestId(wizardPrimaryBtnTestId)).not.toHaveAttribute('aria-disabled');
   });
 });

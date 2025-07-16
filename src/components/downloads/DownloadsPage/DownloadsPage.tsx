@@ -5,11 +5,11 @@ import { useLocation } from 'react-router-dom';
 
 import PageHeader from '@patternfly/react-component-groups/dist/dynamic/PageHeader';
 import {
+  Content,
   ExpandableSectionToggle,
   PageSection,
   Split,
   SplitItem,
-  Text,
 } from '@patternfly/react-core';
 import { Th, Thead, Tr } from '@patternfly/react-table';
 import { Table as TableDeprecated } from '@patternfly/react-table/deprecated';
@@ -201,9 +201,9 @@ const DownloadsPage = () => {
         </Split>
       </PageHeader>
 
-      <PageSection className="downloads-page-body">
+      <PageSection hasBodyWrapper={false} className="downloads-page-body">
         <PageSection
-          variant="light"
+          hasBodyWrapper={false}
           padding={{ default: 'noPadding' }}
           className="downloads-page-body"
         >
@@ -211,9 +211,9 @@ const DownloadsPage = () => {
             selectedCategory={selectedCategory}
             category="CLI"
             description={
-              <Text>
+              <Content component="p">
                 Download command line tools to manage and work with OpenShift from your terminal.
-              </Text>
+              </Content>
             }
           >
             <TableDeprecated aria-label="CLI tools table" cells={[]} rows={[]}>
@@ -228,13 +228,13 @@ const DownloadsPage = () => {
                 selectedCategory={selectedCategory}
                 category="DEV"
                 description={
-                  <Text>
+                  <Content component="p">
                     Access all the powers of Kubernetes through a simplified workflow with Red Hat’s
                     developer tools.{' '}
                     <ExternalLink href="https://developers.redhat.com/topics/developer-tools">
                       Learn more
                     </ExternalLink>
-                  </Text>
+                  </Content>
                 }
               >
                 <TableDeprecated aria-label="Developer tools table">
@@ -246,13 +246,13 @@ const DownloadsPage = () => {
                 selectedCategory={selectedCategory}
                 category="INSTALLATION"
                 description={
-                  <Text>
+                  <Content component="p">
                     Install OpenShift based on your infrastructure. For the installer matching your
                     infrastructure type, select the operating system and architecture on which you
                     wish to run the installer. Then follow the steps provided within your
                     infrastructure&apos;s tab on the <Link to="/create">create cluster</Link> page
                     to install an OpenShift cluster.
-                  </Text>
+                  </Content>
                 }
               >
                 <TableDeprecated aria-label="OpenShift installation table">
@@ -265,9 +265,9 @@ const DownloadsPage = () => {
                 selectedCategory={selectedCategory}
                 category="DISCONNECTED_INSTALLATION"
                 description={
-                  <Text>
+                  <Content component="p">
                     Utilities to simplify preparation of disconnected cluster installations.
-                  </Text>
+                  </Content>
                 }
               >
                 <TableDeprecated aria-label="OpenShift disconnected installation tools table">
@@ -280,10 +280,10 @@ const DownloadsPage = () => {
                 selectedCategory={selectedCategory}
                 category="CUSTOM_INSTALLATION"
                 description={
-                  <Text>
+                  <Content component="p">
                     Customize OpenShift and Red Hat Enterprise Linux CoreOS (RHCOS) installation
                     with these tools.
-                  </Text>
+                  </Content>
                 }
               >
                 <TableDeprecated aria-label="OpenShift installation customization downloads table">

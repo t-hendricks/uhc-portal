@@ -23,7 +23,7 @@ class Releases extends Page {
         cy.contains(`${support_type}`).should('exist');
       });
     cy.get('@link_to_version')
-      .parentsUntil('.pf-v5-c-card__body', 'dl')
+      .parentsUntil('.pf-v6-c-card__body', 'dl')
       .within(() => {
         cy.get('button[aria-label="More information"]').scrollIntoView().click({ force: true });
       });

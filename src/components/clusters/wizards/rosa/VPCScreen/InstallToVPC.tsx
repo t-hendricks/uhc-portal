@@ -14,7 +14,7 @@ import SharedVPCSection from '../NetworkingSection/SharedVPCSection';
 import AWSSubnetFields from './AWSSubnetFields';
 
 type InstallIntoVPCProps = {
-  hostedZoneDomainName?: string;
+  hostedZoneDomainName: string;
   selectedRegion?: string;
   selectedVPC: CloudVpc;
   selectedAZs: string[];
@@ -43,7 +43,7 @@ const InstallToVPC = ({
         <Title headingLevel="h4" size="md">
           Install into an existing VPC
           <PopoverHint
-            iconClassName="pf-v5-u-ml-sm"
+            iconClassName="pf-v6-u-ml-sm"
             hint={
               <>
                 Your VPC must have public and private subnets. Public subnets are associated with

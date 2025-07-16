@@ -3,7 +3,7 @@ import { ReactElementLike, ReactNodeLike } from 'prop-types';
 
 import { Icon, Tooltip } from '@patternfly/react-core';
 import { ExclamationTriangleIcon } from '@patternfly/react-icons/dist/esm/icons/exclamation-triangle-icon';
-import { global_warning_color_100 as warningColor } from '@patternfly/react-tokens/dist/esm/global_warning_color_100';
+import { t_global_icon_color_status_warning_default as warningColor } from '@patternfly/react-tokens/dist/esm/t_global_icon_color_status_warning_default';
 
 type ErrorTriangleProps = {
   item?: string;

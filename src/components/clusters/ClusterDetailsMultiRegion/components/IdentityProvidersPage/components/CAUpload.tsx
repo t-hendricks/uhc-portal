@@ -42,7 +42,7 @@ const CAUpload = ({
   fieldName,
 }: CAUploadProps) => {
   const { setFieldValue } = useFormState();
-  const baseButtonClass = 'pf-v5-c-button pf-m-tertiary co-btn-file';
+  const baseButtonClass = 'pf-v6-c-button pf-m-tertiary co-btn-file';
   const [fileName, setFileName] = React.useState('');
   const [errorMessage, setErrorMessage] = React.useState('');
   const [certValueState, setCertValueState] = React.useState<string | ArrayBuffer | null>('');
@@ -116,6 +116,7 @@ const CAUpload = ({
       label={label}
       isRequired={isRequired}
       data-testid="ca-upload-form"
+      isStack
     >
       <InputGroup>
         <InputGroupItem isFill>
@@ -139,7 +140,7 @@ const CAUpload = ({
             />
             Browse&hellip;
           </span>
-          <Button onClick={onClearClick} className="pf-v5-u-ml-md">
+          <Button onClick={onClearClick} className="pf-v6-u-ml-md">
             Clear
           </Button>
         </InputGroupItem>
@@ -161,13 +162,15 @@ const CAUpload = ({
           />
         </>
       ) : (
-        <Button
-          variant="link"
-          onClick={() => revealValue(true)}
-          isDisabled={certValueState === '' || isDisabled}
-        >
-          Reveal
-        </Button>
+        <div>
+          <Button
+            variant="link"
+            onClick={() => revealValue(true)}
+            isDisabled={certValueState === '' || isDisabled}
+          >
+            Reveal
+          </Button>
+        </div>
       )}
 
       <FormGroupHelperText touched error={errorMessage}>

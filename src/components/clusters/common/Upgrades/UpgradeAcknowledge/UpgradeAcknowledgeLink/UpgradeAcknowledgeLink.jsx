@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 import { Icon } from '@patternfly/react-core';
 import { ExclamationTriangleIcon } from '@patternfly/react-icons/dist/esm/icons/exclamation-triangle-icon';
-import { global_warning_color_100 as warningColor } from '@patternfly/react-tokens/dist/esm/global_warning_color_100';
+import { t_global_icon_color_status_warning_default as warningColor } from '@patternfly/react-tokens/dist/esm/t_global_icon_color_status_warning_default';
 
 import { Link } from '~/common/routing';
 
@@ -24,7 +24,7 @@ const UpgradeAcknowledgeLink = (props) => {
       <Icon>
         <ExclamationTriangleIcon color={warningColor.value} />
       </Icon>
-      <span className="pf-v5-u-screen-reader">Warning</span> Approval required
+      <span className="pf-v6-u-screen-reader">Warning</span> Approval required
     </Link>
   ) : null;
 };

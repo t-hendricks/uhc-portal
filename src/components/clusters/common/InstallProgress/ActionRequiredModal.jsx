@@ -4,20 +4,16 @@ import PropTypes from 'prop-types';
 import {
   ClipboardCopy,
   ClipboardCopyVariant,
-  Modal,
-  ModalVariant,
+  Content,
+  ContentVariants,
   Stack,
   StackItem,
   Tab,
   TabContent,
   Tabs,
   TabTitleText,
-  Text,
-  TextContent,
-  TextList,
-  TextListItem,
-  TextVariants,
 } from '@patternfly/react-core';
+import { Modal, ModalVariant } from '@patternfly/react-core/deprecated';
 
 import { MULTIREGION_PREVIEW_ENABLED } from '~/queries/featureGates/featureConstants';
 import { useFeatureGate } from '~/queries/featureGates/useFetchFeatureGate';
@@ -59,19 +55,19 @@ function ActionRequiredModal({ cluster, isOpen, onClose, regionalInstance }) {
     return (
       <Stack hasGutter>
         <StackItem>
-          <TextContent className="pf-v5-u-pb-md">
-            <Text component={TextVariants.p}>
+          <Content className="pf-v6-u-pb-md">
+            <Content component={ContentVariants.p}>
               Your cluster will proceed to ready state only after the operator roles and OIDC
               provider are created.
-            </Text>
-          </TextContent>
+            </Content>
+          </Content>
         </StackItem>
         {isMultiRegionEnabled ? (
           <StackItem>
-            <TextContent>
-              <Text component={TextVariants.p}>
+            <Content>
+              <Content component={ContentVariants.p}>
                 To log in to your cluster&apos;s region, run the following command:
-              </Text>
+              </Content>
               <ClipboardCopy
                 textAriaLabel="Copyable ROSA region login"
                 variant={ClipboardCopyVariant.expansion}
@@ -79,14 +75,14 @@ function ActionRequiredModal({ cluster, isOpen, onClose, regionalInstance }) {
               >
                 {rosaRegionLoginCommand}
               </ClipboardCopy>
-            </TextContent>
+            </Content>
           </StackItem>
         ) : null}
         <StackItem>
-          <TextContent>
-            <Text component={TextVariants.p}>
+          <Content>
+            <Content component={ContentVariants.p}>
               To create the operator roles, run the following command:
-            </Text>
+            </Content>
             <ClipboardCopy
               textAriaLabel="Copyable ROSA create operator-roles"
               variant={ClipboardCopyVariant.expansion}
@@ -94,14 +90,14 @@ function ActionRequiredModal({ cluster, isOpen, onClose, regionalInstance }) {
             >
               {operatorRolesCliCommand}
             </ClipboardCopy>
-          </TextContent>
+          </Content>
         </StackItem>
         <StackItem>
-          <TextContent className="pf-v5-u-pb-md">
-            <Text component={TextVariants.p}>
+          <Content className="pf-v6-u-pb-md">
+            <Content component={ContentVariants.p}>
               {' '}
               To create an OIDC provider, run the following command:
-            </Text>
+            </Content>
             <ClipboardCopy
               textAriaLabel="Copyable ROSA OIDC provider"
               variant={ClipboardCopyVariant.expansion}
@@ -109,7 +105,7 @@ function ActionRequiredModal({ cluster, isOpen, onClose, regionalInstance }) {
             >
               {oidcProviderCliCommand}
             </ClipboardCopy>
-          </TextContent>
+          </Content>
         </StackItem>
       </Stack>
     );
@@ -183,21 +179,21 @@ function ActionRequiredModal({ cluster, isOpen, onClose, regionalInstance }) {
   const showGCPVPCSharedError = (
     <Stack hasGutter>
       <StackItem>
-        <TextContent className="pf-v5-u-pb-md">
-          <Text component={TextVariants.p}>{cluster?.status?.description}</Text>
-          <Text component={TextVariants.p}>You entered these values:</Text>
-        </TextContent>
-        <TextContent>
-          <TextList>
-            <TextListItem>{`Existing VPC name: ${cluster.gcp_network?.vpc_name}`}</TextListItem>
-            <TextListItem>
+        <Content className="pf-v6-u-pb-md">
+          <Content component={ContentVariants.p}>{cluster?.status?.description}</Content>
+          <Content component={ContentVariants.p}>You entered these values:</Content>
+        </Content>
+        <Content>
+          <Content component="ul">
+            <Content component="li">{`Existing VPC name: ${cluster.gcp_network?.vpc_name}`}</Content>
+            <Content component="li">
               {`Control plane subnet name: ${cluster.gcp_network?.control_plane_subnet}`}
-            </TextListItem>
-            <TextListItem>
+            </Content>
+            <Content component="li">
               {`Compute subnet name: ${cluster.gcp_network?.compute_subnet}`}
-            </TextListItem>
-          </TextList>
-        </TextContent>
+            </Content>
+          </Content>
+        </Content>
       </StackItem>
     </Stack>
   );

@@ -94,7 +94,7 @@ describe('<VPCDetailsCard />', () => {
 
     it('Edit button is disabled', () => {
       render(<VPCDetailsCard {...props} />);
-      expect(screen.queryByText('Edit cluster-wide proxy')).toHaveAttribute(
+      expect(screen.queryByText('Edit cluster-wide proxy').parentElement).toHaveAttribute(
         'aria-disabled',
         'true',
       );
@@ -115,7 +115,7 @@ describe('<VPCDetailsCard />', () => {
 
     it('Edit button is enabled', () => {
       render(<VPCDetailsCard {...props} />);
-      expect(screen.queryByText('Edit cluster-wide proxy')).toHaveAttribute(
+      expect(screen.queryByText('Edit cluster-wide proxy')).not.toHaveAttribute(
         'aria-disabled',
         'false',
       );

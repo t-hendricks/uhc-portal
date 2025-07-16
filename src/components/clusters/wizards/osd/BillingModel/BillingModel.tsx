@@ -3,13 +3,13 @@ import { useDispatch } from 'react-redux';
 
 import {
   Button,
+  Content,
   Flex,
   FlexItem,
   Popover,
   PopoverPosition,
   Stack,
   StackItem,
-  Text,
   Title,
 } from '@patternfly/react-core';
 import OutlinedQuestionCircleIcon from '@patternfly/react-icons/dist/esm/icons/outlined-question-circle-icon';
@@ -123,8 +123,8 @@ export const BillingModel = () => {
           }
           aria-label="help"
         >
-          <Button variant="link">
-            <OutlinedQuestionCircleIcon /> How can I purchase a subscription?
+          <Button icon={<OutlinedQuestionCircleIcon />} variant="link">
+            How can I purchase a subscription?
           </Button>
         </Popover>
       </div>
@@ -289,19 +289,19 @@ export const BillingModel = () => {
     <Flex alignItems={{ default: 'alignItemsFlexStart' }}>
       <FlexItem flex={{ default: 'flex_3' }}>
         <Stack hasGutter>
-          <StackItem className="pf-v5-u-mb-xl">
-            <Title headingLevel="h2" className="pf-v5-u-pb-md">
+          <StackItem className="pf-v6-u-mb-xl">
+            <Title headingLevel="h2" className="pf-v6-u-pb-md">
               Welcome to Red Hat OpenShift Dedicated
             </Title>
-            <Text component="p" id="welcome-osd-text">
+            <Content component="p" id="welcome-osd-text">
               Reduce operational complexity and focus on building applications that add more value
               to your business with Red Hat OpenShift Dedicated, a fully-managed service of Red Hat
               OpenShift on Google Cloud.
-            </Text>
+            </Content>
           </StackItem>
 
           <StackItem>
-            <Title headingLevel="h3" className="pf-v5-u-mb-sm">
+            <Title headingLevel="h3" className="pf-v6-u-mb-sm">
               Subscription type
             </Title>
             <RadioGroupField
@@ -312,7 +312,7 @@ export const BillingModel = () => {
           </StackItem>
 
           <StackItem>
-            <Title headingLevel="h3" className="pf-v5-u-mb-sm">
+            <Title headingLevel="h3" className="pf-v6-u-mb-sm">
               Infrastructure type
             </Title>
 

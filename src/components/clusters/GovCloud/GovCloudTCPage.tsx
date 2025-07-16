@@ -1,16 +1,9 @@
 import * as React from 'react';
 
-import {
-  Button,
-  EmptyState,
-  EmptyStateBody,
-  EmptyStateHeader,
-  EmptyStateIcon,
-  Icon,
-} from '@patternfly/react-core';
+import { Button, EmptyState, EmptyStateBody, Icon } from '@patternfly/react-core';
 import { ExclamationCircleIcon } from '@patternfly/react-icons/dist/esm/icons/exclamation-circle-icon';
 import { ExternalLinkAltIcon } from '@patternfly/react-icons/dist/esm/icons/external-link-alt-icon';
-import { global_danger_color_100 as dangerColor } from '@patternfly/react-tokens/dist/esm/global_danger_color_100';
+import { t_global_icon_color_status_danger_default as dangerColor } from '@patternfly/react-tokens/dist/esm/t_global_icon_color_status_danger_default';
 
 const EmptyIcon = (props: any) => (
   <Icon>
@@ -19,12 +12,7 @@ const EmptyIcon = (props: any) => (
 );
 
 const GovCloudTCPage = ({ redirectURL }: { redirectURL: string }) => (
-  <EmptyState>
-    <EmptyStateHeader
-      titleText="Signed agreement not detected"
-      icon={<EmptyStateIcon icon={EmptyIcon} />}
-      headingLevel="h4"
-    />
+  <EmptyState headingLevel="h4" icon={EmptyIcon} titleText="Signed agreement not detected">
     <EmptyStateBody>
       You need to sign the Enterprise agreement and Appendix4 to proceed
       <br />

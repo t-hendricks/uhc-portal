@@ -93,7 +93,7 @@ const GithubFormRequired = ({ isEditForm, idpEdited, isPending }) => {
 
       <GridItem span={8}>
         <Divider />
-        <Title headingLevel="h3" size="xl" className="pf-v5-u-mt-lg">
+        <Title headingLevel="h3" size="xl" className="pf-v6-u-mt-lg">
           Organizations or teams
         </Title>
         <p>

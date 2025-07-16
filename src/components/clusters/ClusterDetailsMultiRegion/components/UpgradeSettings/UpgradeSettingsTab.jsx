@@ -16,8 +16,8 @@ import {
   Form,
   Grid,
   GridItem,
-  Modal,
 } from '@patternfly/react-core';
+import { Modal } from '@patternfly/react-core/deprecated';
 
 import { knownProducts } from '~/common/subscriptionTypes';
 import getClusterVersion from '~/components/clusters/common/getClusterVersion';
@@ -196,7 +196,7 @@ const UpgradeSettingsTab = ({ cluster }) => {
   const hibernatingClusterInfo = (
     <Alert
       variant="info"
-      className="pf-v5-u-mb-md"
+      className="pf-v6-u-mb-md"
       isInline
       title="Version updates will not occur while this cluster is Hibernating.
           Once resumed, updates will start according to the selected updates strategy."
@@ -425,6 +425,7 @@ const UpgradeSettingsTab = ({ cluster }) => {
                           isDisabled={!formik.dirty}
                           variant="link"
                           onClick={formik.resetForm}
+                          isInline={false}
                         >
                           Cancel
                         </ButtonWithTooltip>

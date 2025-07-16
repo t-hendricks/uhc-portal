@@ -92,7 +92,7 @@ const VPCScreen = ({ privateLinkSelected }: VPCScreenProps) => {
                   openshiftVersion={openshiftVersion}
                   isSharedVpcSelected={isSharedVpcSelected}
                   privateLinkSelected={privateLinkSelected}
-                  hostedZoneDomainName={hostedZoneDomainName}
+                  hostedZoneDomainName={hostedZoneDomainName as string}
                   cloudProviderID={cloudProviderID}
                   isHypershiftSelected={isHypershiftSelected}
                 />

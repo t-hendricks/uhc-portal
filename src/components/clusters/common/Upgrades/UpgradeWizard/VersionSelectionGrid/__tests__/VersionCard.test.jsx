@@ -21,7 +21,7 @@ describe('<VersionCard>', () => {
     jest.clearAllMocks();
   });
 
-  const getCard = (container) => container.querySelector('.pf-v5-c-card');
+  const getCard = (container) => container.querySelector('.pf-v6-c-card');
 
   it('is accessible when recommended', async () => {
     const { container } = render(<VersionCard {...defaultProps} />);
@@ -29,7 +29,7 @@ describe('<VersionCard>', () => {
     expect(screen.getByText('Recommended')).toBeInTheDocument();
     const card = getCard(container);
 
-    expect(card).not.toHaveClass('pf-m-selected-raised');
+    expect(card).not.toHaveClass('pf-m-selected');
 
     await checkAccessibility(container);
   });
@@ -41,12 +41,11 @@ describe('<VersionCard>', () => {
       version: '4.5.16',
       isRecommended: false,
     };
-    const { container } = render(<VersionCard {...newProps} />);
+    render(<VersionCard {...newProps} />);
 
     expect(screen.queryByText('Recommended')).not.toBeInTheDocument();
-    const card = getCard(container);
 
-    expect(card).toHaveClass('pf-m-selected-raised');
+    expect(screen.getByRole('radio')).toBeChecked();
   });
 
   it('should not render a tooltip without any unmet cluster acknowledgements', () => {

@@ -118,7 +118,7 @@ const Dashboard = (props) => {
       <AppPage title={PAGE_TITLE}>
         <EmptyState>
           <EmptyStateBody>
-            <div className="pf-v5-u-text-align-center">
+            <div className="pf-v6-u-text-align-center">
               <Spinner size="lg" aria-label="Loading..." />
             </div>
           </EmptyStateBody>
@@ -147,7 +147,7 @@ const Dashboard = (props) => {
           <ClusterListActions isDashboardView />
         </FlexItem>
       </Flex>
-      <PageSection>
+      <PageSection hasBodyWrapper={false}>
         <Grid hasGutter className="ocm-c-overview">
           <TopOverviewSection
             isError={summaryDashboard.error}

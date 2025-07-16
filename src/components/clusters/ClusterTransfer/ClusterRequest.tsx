@@ -1,14 +1,6 @@
 import React from 'react';
 
-import {
-  Flex,
-  FlexItem,
-  PageSection,
-  PageSectionVariants,
-  Split,
-  SplitItem,
-  Title,
-} from '@patternfly/react-core';
+import { Flex, FlexItem, PageSection, Split, SplitItem, Title } from '@patternfly/react-core';
 
 import { AppPage } from '~/components/App/AppPage';
 import Breadcrumbs from '~/components/common/Breadcrumbs';
@@ -23,9 +15,9 @@ const ClusterRequestList = () => {
 
   return (
     <AppPage title={PAGE_TITLE}>
-      <PageSection variant={PageSectionVariants.light}>
+      <PageSection hasBodyWrapper={false}>
         <Split>
-          <SplitItem className="pf-v5-u-pb-md">{breadCrumbs}</SplitItem>
+          <SplitItem className="pf-v6-u-pb-md">{breadCrumbs}</SplitItem>
         </Split>
         <Flex>
           <FlexItem grow={{ default: 'grow' }}>

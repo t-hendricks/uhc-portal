@@ -1,14 +1,11 @@
 import React from 'react';
 import get from 'lodash/get';
 import PropTypes from 'prop-types';
-import { useDispatch } from 'react-redux';
 
 import {
   Button,
   EmptyState,
   EmptyStateBody,
-  EmptyStateHeader,
-  EmptyStateIcon,
   Label,
   Popover,
   PopoverPosition,
@@ -26,7 +23,8 @@ import {
   Thead,
   Tr,
 } from '@patternfly/react-table';
-import { global_warning_color_100 as warningColor } from '@patternfly/react-tokens/dist/esm/global_warning_color_100';
+import { t_global_icon_color_status_warning_default as warningColor } from '@patternfly/react-tokens/dist/esm/t_global_icon_color_status_warning_default';
+import { useAddNotification } from '@redhat-cloud-services/frontend-components-notifications';
 
 import { Link } from '~/common/routing';
 import AIClusterStatus from '~/components/AIComponents/AIClusterStatus';
@@ -112,7 +110,7 @@ function ClusterListTable(props) {
     isClustersDataPending,
   } = props;
 
-  const dispatch = useDispatch();
+  const addNotification = useAddNotification();
   const canSubscribeOCPList = canSubscribeOCPListFromClusters(clusters);
   const canTransferClusterOwnershipList = canTransferClusterOwnershipListFromClusters(clusters);
   const canHibernateClusterList = useCanHibernateClusterListFromClusters(clusters);
@@ -137,12 +135,7 @@ function ClusterListTable(props) {
 
   if (!isPending && (!clusters || clusters.length === 0)) {
     return (
-      <EmptyState>
-        <EmptyStateHeader
-          titleText="No clusters found."
-          icon={<EmptyStateIcon icon={SearchIcon} />}
-          headingLevel="h4"
-        />
+      <EmptyState headingLevel="h4" icon={SearchIcon} titleText="No clusters found.">
         <EmptyStateBody>
           This filter criteria matches no clusters.
           <br />
@@ -169,7 +162,7 @@ function ClusterListTable(props) {
         key={index}
       >
         {columnOptions.screenReaderText ? (
-          <span className="pf-v5-screen-reader">{columnOptions.screenReaderText}</span>
+          <span className="pf-v6-screen-reader">{columnOptions.screenReaderText}</span>
         ) : null}
         {columnOptions.title}
       </Th>
@@ -291,7 +284,7 @@ function ClusterListTable(props) {
           {hasLimitedSupport
             ? linkToClusterDetails(
                 cluster,
-                <Label color="red" className="pf-v5-u-ml-xs">
+                <Label color="red" className="pf-v6-u-ml-xs">
                   Limited support
                 </Label>,
               )
@@ -347,7 +340,7 @@ function ClusterListTable(props) {
                 toggleSubscriptionReleasedMultiRegion,
                 refreshFunc,
                 true,
-                dispatch,
+                addNotification,
               )}
             />
           ) : null}

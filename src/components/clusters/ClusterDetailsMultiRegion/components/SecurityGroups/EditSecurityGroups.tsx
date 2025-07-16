@@ -77,12 +77,11 @@ const EditSecurityGroups = ({
   }, [vpcSecurityGroups, selectedGroupIds, onChange]);
 
   if (isReadOnly) {
-    // Shows read-only chips, or an empty message if no SGs are selected
+    // Shows read-only label, or an empty message if no SGs are selected
     return (
       <SecurityGroupsViewList
         securityGroups={selectedOptions}
         emptyMessage="This machine pool does not have additional security groups."
-        isReadOnly
       />
     );
   }
@@ -137,11 +136,7 @@ const EditSecurityGroups = ({
       <FormGroup fieldId="securityGroupIds" label={label} className="pf-v5-u-mt-md">
         <Grid>
           <GridItem span={10}>
-            <SecurityGroupsViewList
-              securityGroups={selectedOptions}
-              isReadOnly={false}
-              onClickItem={onDeleteGroup}
-            />
+            <SecurityGroupsViewList securityGroups={selectedOptions} onCloseItem={onDeleteGroup} />
             <Select
               role="menu"
               isOpen={isOpen}

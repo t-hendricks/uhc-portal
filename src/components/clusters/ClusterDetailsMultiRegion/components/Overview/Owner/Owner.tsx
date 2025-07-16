@@ -66,7 +66,7 @@ export function Owner() {
                 disableReason={disableChangeReason}
                 isAriaDisabled={!!disableChangeReason}
               >
-                <span className="pf-v5-u-font-size-xs">Transfer ownership</span>{' '}
+                <span className="pf-v6-u-font-size-xs">Transfer ownership</span>{' '}
                 <Icon size="sm">
                   <AngleDoubleRightIcon />
                 </Icon>

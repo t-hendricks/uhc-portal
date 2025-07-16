@@ -91,7 +91,7 @@ export const AutoScaleEnabledInputs = () => {
     message: React.ReactNode,
     variant: 'default' | 'indeterminate' | 'warning' | 'success' | 'error' = 'default',
   ) => (
-    <FormGroupHelperText touched variant={variant} hasIcon={variant === 'error'}>
+    <FormGroupHelperText touched variant={variant}>
       {message}
     </FormGroupHelperText>
   );
@@ -206,7 +206,7 @@ export const AutoScaleEnabledInputs = () => {
     <Flex
       flexWrap={{ default: 'nowrap' }}
       spaceItems={{ default: 'spaceItemsMd' }}
-      className="pf-v5-u-mt-md"
+      className="pf-v6-u-mt-md"
     >
       <FormGroup
         label={minNodesLabel}
@@ -242,7 +242,7 @@ export const AutoScaleEnabledInputs = () => {
         isRequired
         fieldId="nodes_max"
         className="autoscaling__nodes-formGroup"
-        labelIcon={
+        labelHelp={
           <PopoverHint
             hint={
               <>

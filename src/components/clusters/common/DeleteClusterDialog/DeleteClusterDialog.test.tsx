@@ -101,19 +101,16 @@ describe('<DeleteClusterDialog />', () => {
 
   it('enables delete button after inputting the cluster name', async () => {
     const { user } = withState(defaultReduxState).render(<DeleteClusterDialog {...defaultProps} />);
-    expect(screen.getByRole('button', { name: 'Delete' })).toHaveAttribute('aria-disabled', 'true');
+    expect(screen.getByRole('button', { name: 'Delete' })).not.toBeEnabled();
 
     await user.type(screen.getByRole('textbox'), 'wrong_name');
 
-    expect(screen.getByRole('button', { name: 'Delete' })).toHaveAttribute('aria-disabled', 'true');
+    expect(screen.getByRole('button', { name: 'Delete' })).not.toBeEnabled();
 
     await user.clear(screen.getByRole('textbox'));
     await user.type(screen.getByRole('textbox'), 'mockedClusterName');
 
-    expect(screen.getByRole('button', { name: 'Delete' })).toHaveAttribute(
-      'aria-disabled',
-      'false',
-    );
+    expect(screen.getByRole('button', { name: 'Delete' })).not.toHaveAttribute('aria-disabled');
   });
 
   it('closes the modal on success', async () => {

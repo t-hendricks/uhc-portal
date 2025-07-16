@@ -45,7 +45,7 @@ export const GcpVpcSettings = () => {
       return (
         <>
           {wrongVersion && (
-            <div className="pf-v5-u-mt-md">
+            <div className="pf-v6-u-mt-md">
               <Alert
                 variant="danger"
                 isInline
@@ -58,14 +58,14 @@ export const GcpVpcSettings = () => {
               />
             </div>
           )}
-          <div className="pf-v5-u-mt-md" style={{ display: wrongVersion ? 'none' : 'block' }}>
+          <div className="pf-v6-u-mt-md" style={{ display: wrongVersion ? 'none' : 'block' }}>
             <TextInputField
               name={FieldId.SharedHostProjectID}
               label="Host project ID"
               validate={validateGCPHostProjectId}
             />
 
-            <div className="pf-v5-u-mt-md">
+            <div className="pf-v6-u-mt-md">
               <Alert
                 variant="info"
                 isInline
@@ -87,7 +87,7 @@ export const GcpVpcSettings = () => {
         <Title headingLevel="h4" size="md">
           GCP shared VPC
         </Title>
-        <div className="pf-v5-u-mt-md  pf-v5-u-mb-lg">
+        <div className="pf-v6-u-mt-md  pf-v6-u-mb-lg">
           <CheckboxField
             name={FieldId.InstallToSharedVpc}
             label="Install into GCP Shared VPC"
@@ -109,7 +109,7 @@ export const GcpVpcSettings = () => {
         <Title headingLevel="h4" size="md">
           Existing VPC
           <PopoverHint
-            iconClassName="pf-v5-u-ml-sm"
+            iconClassName="pf-v6-u-ml-sm"
             hint={
               <>
                 Install into a non-default subnet shared by another account in your CP organization
@@ -121,14 +121,14 @@ export const GcpVpcSettings = () => {
           />
         </Title>
         <div
-          className="pf-v5-u-ml-sm pf-v5-u-mt-md  pf-v5-u-mb-lg"
+          className="pf-v6-u-ml-sm pf-v6-u-mt-md  pf-v6-u-mb-lg"
           style={{ width: 'fit-content' }}
         >
-          <p className="pf-v5-u-mt-sm">
+          <p className="pf-v6-u-mt-sm">
             To install into an existing VPC, you need to ensure that your VPC is configured with a
             control plane subnet and compute subnet.
           </p>
-          <p className="pf-v5-u-mt-sm">
+          <p className="pf-v6-u-mt-sm">
             You&#39;ll also need to match these VPC subnets when you define the CIDR ranges.
           </p>
         </div>
@@ -233,7 +233,7 @@ export const GcpVpcSettings = () => {
 
       {installToSharedVpc && (
         <GridItem span={9}>
-          <div className="pf-v5-u-mt-md  pf-v5-u-mb-lg">
+          <div className="pf-v6-u-mt-md  pf-v6-u-mb-lg">
             <Alert
               variant="info"
               isInline

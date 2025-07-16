@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { Grid, GridItem, Text } from '@patternfly/react-core';
+import { Content, Grid, GridItem } from '@patternfly/react-core';
 
 import { downloadChoice } from '~/components/downloads/downloadChoice';
 import { detectOS } from '~/components/downloads/downloadUtils';
@@ -16,22 +16,22 @@ import {
 
 const crcInstructionsMapping = {
   [operatingSystems.linux]: (
-    <Text>
+    <Content component="p">
       Download and extract the OpenShift Local archive for your operating system and place the
       binary in your <code>$PATH</code> .
-    </Text>
+    </Content>
   ),
   [operatingSystems.mac]: (
-    <Text>
+    <Content component="p">
       Download and open the OpenShift Local file. Opening the file will automatically start a
       step-by-step installation guide.
-    </Text>
+    </Content>
   ),
   [operatingSystems.windows]: (
-    <Text>
+    <Content component="p">
       Download and extract the OpenShift Local archive on your computer and open the installer.
       Opening the installer will automatically start a step-by-step installation guide.
-    </Text>
+    </Content>
   ),
 };
 

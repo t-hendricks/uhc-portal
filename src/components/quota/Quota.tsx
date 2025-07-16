@@ -50,7 +50,7 @@ const Quota = ({ invalidateClusters, fetchAccount, account, marketplace }: Props
     return (
       <AppPage title={PAGE_TITLE}>
         <PageHeader title={title} subtitle="" />
-        <PageSection className="ocm-p-subscriptions">
+        <PageSection hasBodyWrapper={false} className="ocm-p-subscriptions">
           <Stack hasGutter>
             <StackItem className="ocm-l-osd-subscription__section">
               <OSDSubscriptionCard organizationID={organizationID} marketplace={marketplace} />

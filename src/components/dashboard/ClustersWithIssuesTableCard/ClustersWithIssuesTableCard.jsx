@@ -1,15 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import {
-  Card,
-  CardBody,
-  CardTitle,
-  EmptyState,
-  EmptyStateBody,
-  EmptyStateHeader,
-  EmptyStateIcon,
-} from '@patternfly/react-core';
+import { Card, CardBody, CardTitle, EmptyState, EmptyStateBody } from '@patternfly/react-core';
 import { CheckCircleIcon } from '@patternfly/react-icons/dist/esm/icons/check-circle-icon';
 import { TableVariant, textCenter } from '@patternfly/react-table';
 import {
@@ -17,7 +9,6 @@ import {
   TableBody as TableBodyDeprecated,
   TableHeader as TableHeaderDeprecated,
 } from '@patternfly/react-table/deprecated';
-import { global_success_color_100 as successColor } from '@patternfly/react-tokens/dist/esm/global_success_color_100';
 
 import { Link } from '~/common/routing';
 import { usePreviousProps } from '~/hooks/usePreviousProps';
@@ -47,10 +38,7 @@ const ClustersWithIssuesTableCard = (props) => {
       <Card className="ocm-overview-clusters__card">
         <CardTitle>Clusters with issues</CardTitle>
         <CardBody>
-          <EmptyState>
-            <EmptyStateHeader
-              icon={<EmptyStateIcon icon={CheckCircleIcon} color={successColor.value} />}
-            />
+          <EmptyState status="success" icon={CheckCircleIcon}>
             <EmptyStateBody>No issues detected</EmptyStateBody>
           </EmptyState>
         </CardBody>

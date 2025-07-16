@@ -31,16 +31,16 @@ export const InstallPullSecretAzure = () => {
   return (
     <AppPage title="Install OpenShift 4 | Pull Secret">
       <PageTitle title="Azure Red Hat OpenShift" />
-      <PageSection className="ocp-instructions">
+      <PageSection hasBodyWrapper={false} className="ocp-instructions">
         <>
           <Title headingLevel="h3" size="2xl" className="pf-v6-u-mb-xl">
             Red Hat content access
           </Title>
           <Card>
-            <div className="pf-v5-l-grid pf-m-gutter ocm-page pf-v6-u-m-xl">
+            <div className="pf-v6-l-grid pf-m-gutter ocm-page pf-v6-u-m-xl">
               {isErrorStateObj(token) && token.error && <TokenErrorAlert token={token} />}
-              <div className="pf-v5-c-content">
-                <h3 className="pf-v5-c-title pf-m-md downloads-subtitle">Pull secret</h3>
+              <div className="pf-v6-c-content">
+                <h3 className="pf-v6-c-title pf-m-md downloads-subtitle">Pull secret</h3>
                 <PullSecretSection token={token} text={azureText} />
                 <Alert
                   variant="info"

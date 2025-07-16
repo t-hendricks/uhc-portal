@@ -8,7 +8,6 @@ import { Alert, Button, ButtonVariant, Flex, FlexItem, Spinner } from '@patternf
 import MinusCircleIcon from '@patternfly/react-icons/dist/esm/icons/minus-circle-icon';
 import PlusCircleIcon from '@patternfly/react-icons/dist/esm/icons/plus-circle-icon';
 import { Table, TableVariant, Tbody, Td, Th, Thead, Tr } from '@patternfly/react-table';
-import { addNotification } from '@redhat-cloud-services/frontend-components-notifications/redux';
 
 import { HAD_INFLIGHT_ERROR_LOCALSTORAGE_KEY } from '~/common/localStorageConstants';
 import { emailRegex } from '~/common/regularExpressions';
@@ -131,7 +130,7 @@ const ClusterStatusMonitor = (props) => {
     }
     // Minified React error #185 if added all dependencies based on linter
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [refetchInterval, clusterStatus, addNotification]);
+  }, [refetchInterval, clusterStatus]);
 
   React.useEffect(() => {
     if (!isRerunInflightChecksMutationPending) {
@@ -282,7 +281,7 @@ const ClusterStatusMonitor = (props) => {
                   </FlexItem>
                   <FlexItem>
                     {runningInflightCheck && (
-                      <span className="pf-v5-u-mr-sm">
+                      <span className="pf-v6-u-mr-sm">
                         <Spinner size="sm" aria-label="Loading..." />
                       </span>
                     )}

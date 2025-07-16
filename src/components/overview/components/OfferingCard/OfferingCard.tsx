@@ -7,6 +7,7 @@ import {
   CardBody,
   CardFooter,
   CardHeader,
+  Content,
   DescriptionList,
   DescriptionListDescription,
   DescriptionListGroup,
@@ -16,8 +17,6 @@ import {
   Label,
   Split,
   SplitItem,
-  Text,
-  TextContent,
   Title,
 } from '@patternfly/react-core';
 
@@ -281,9 +280,9 @@ function OfferingCard(props: OfferingCardProps) {
       <CardBody className="card-title">
         <Title headingLevel="h2">{offeringCardTitle}</Title>
       </CardBody>
-      <CardBody className="pf-v5-u-mt-md">
-        <TextContent>
-          {offeringCardTextBody && <Text>{offeringCardTextBody}</Text>}
+      <CardBody className="pf-v6-u-mt-md">
+        <Content>
+          {offeringCardTextBody && <Content component="p">{offeringCardTextBody}</Content>}
           {offeringCardDescriptionList?.length && (
             <DescriptionList isHorizontal isCompact isAutoFit>
               <DescriptionListGroup>
@@ -291,10 +290,10 @@ function OfferingCard(props: OfferingCardProps) {
                   ({ descriptionListTerm, descriptionListDescription }) => (
                     <React.Fragment key={descriptionListTerm}>
                       <DescriptionListTerm>
-                        <Text component="small">{descriptionListTerm}</Text>
+                        <Content component="small">{descriptionListTerm}</Content>
                       </DescriptionListTerm>
                       <DescriptionListDescription>
-                        <Text component="small">{descriptionListDescription}</Text>
+                        <Content component="small">{descriptionListDescription}</Content>
                       </DescriptionListDescription>
                     </React.Fragment>
                   ),
@@ -302,7 +301,7 @@ function OfferingCard(props: OfferingCardProps) {
               </DescriptionListGroup>
             </DescriptionList>
           )}
-        </TextContent>
+        </Content>
       </CardBody>
       <CardFooter>
         <Flex>

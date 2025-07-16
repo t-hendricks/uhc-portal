@@ -1,7 +1,7 @@
 import React from 'react';
 import { Field } from 'formik';
 
-import { Form, Grid, GridItem, Text, TextVariants, Title } from '@patternfly/react-core';
+import { Content, ContentVariants, Form, Grid, GridItem, Title } from '@patternfly/react-core';
 
 import links from '~/common/installLinks.mjs';
 import { normalizedProducts } from '~/common/subscriptionTypes';
@@ -134,7 +134,7 @@ const ControlPlaneScreen = () => {
         <img src={RedHat} className="ocm-c-wizard-intro-image-top" aria-hidden="true" alt="" />
         <img src={AWSLogo} className="ocm-c-wizard-intro-image-bottom" aria-hidden="true" alt="" />
       </div>
-      <Grid hasGutter className="pf-v5-u-mt-md">
+      <Grid hasGutter className="pf-v6-u-mt-md">
         <GridItem span={10}>
           <WelcomeMessage />
         </GridItem>
@@ -142,15 +142,15 @@ const ControlPlaneScreen = () => {
           <PrerequisitesInfoBox />
         </GridItem>
         <GridItem span={10}>
-          <Title headingLevel="h3" className="pf-v5-u-mb-sm">
+          <Title headingLevel="h3" className="pf-v6-u-mb-sm">
             Select an AWS control plane type
           </Title>
-          <Text component={TextVariants.p}>
+          <Content component={ContentVariants.p}>
             Not sure what to choose?{' '}
             <ExternalLink href={links.AWS_CONTROL_PLANE_URL}>
               Learn more about AWS control plane types
             </ExternalLink>
-          </Text>
+          </Content>
         </GridItem>
       </Grid>
       <Field

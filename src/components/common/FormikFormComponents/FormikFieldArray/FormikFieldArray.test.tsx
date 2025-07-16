@@ -36,7 +36,7 @@ describe('Formik array fields', () => {
   it('shows enabled Add more while fields are populated and error free', async () => {
     render(buildTestComponent(<FormikFieldArray {...defaultProps} />));
 
-    expect(screen.getByText('Add more').getAttribute('disabled')).toBe('');
+    expect(screen.getByText('Add more').parentElement).toBeDisabled();
   });
 
   it('Adds more fields in field array', async () => {

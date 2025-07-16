@@ -349,15 +349,15 @@ class CreateOSDCluster extends Page {
   wizardCancelButton = () => cy.getByTestId('wizard-cancel-button');
 
   get clusterNameInput() {
-    return 'input#name';
+    return 'input[name="name"]';
   }
 
   get clusterNameInputError() {
-    return 'ul#rich-input-popover-name li.pf-v5-c-helper-text__item.pf-m-error.pf-m-dynamic';
+    return 'ul#rich-input-popover-name li.pf-v6-c-helper-text__item.pf-m-error';
   }
 
   get primaryButton() {
-    return '#osd-wizard button.pf-v5-c-button.pf-m-primary';
+    return '#osd-wizard button.pf-v6-c-button.pf-m-primary';
   }
 
   get CCSSelected() {
@@ -374,7 +374,7 @@ class CreateOSDCluster extends Page {
 
   waitForVPCRefresh() {
     cy.getByTestId('refresh-vpcs').should('be.disabled');
-    cy.get('span.pf-v5-c-button__progress', { timeout: 80000 }).should('not.exist');
+    cy.get('span.pf-v6-c-button__progress', { timeout: 80000 }).should('not.exist');
   }
 
   selectVersion(version) {
@@ -441,7 +441,7 @@ class CreateOSDCluster extends Page {
   }
   selectSubnetAvailabilityZone(subnetAvailability) {
     cy.contains('Select availability zone').first().click();
-    cy.get('.pf-v5-c-menu__list').within(() => {
+    cy.get('.pf-v6-c-menu__list').within(() => {
       cy.contains('li button', subnetAvailability).click({ force: true });
     });
   }

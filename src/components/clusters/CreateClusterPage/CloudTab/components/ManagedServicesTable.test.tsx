@@ -29,13 +29,7 @@ describe('<ManagedServicesTable />', () => {
       canCreateManagedCluster: true,
     });
     render(<ManagedServicesTable hasOSDQuota isTrialEnabled />);
-    expect(screen.getByTestId('osd-create-trial-cluster')).toHaveAttribute(
-      'aria-disabled',
-      'false',
-    );
-    expect(screen.getByTestId('osd-create-cluster-button')).toHaveAttribute(
-      'aria-disabled',
-      'false',
-    );
+    expect(screen.getByTestId('osd-create-trial-cluster')).not.toHaveAttribute('aria-disabled');
+    expect(screen.getByTestId('osd-create-cluster-button')).not.toHaveAttribute('aria-disabled');
   });
 });

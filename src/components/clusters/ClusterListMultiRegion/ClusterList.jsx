@@ -20,11 +20,9 @@ import PropTypes from 'prop-types';
 import { useDispatch, useSelector } from 'react-redux';
 
 import {
-  Card,
   Flex,
   FlexItem,
   PageSection,
-  PageSectionVariants,
   Spinner,
   Title,
   Toolbar,
@@ -87,7 +85,7 @@ const PAGE_TITLE = 'Cluster List | Red Hat OpenShift Cluster Manager';
 const ClusterListPageHeader = ({ someReadOnly, showSpinner, error, refresh }) => (
   <>
     <ReadOnlyBanner someReadOnly={someReadOnly} />
-    <PageSection variant={PageSectionVariants.light}>
+    <PageSection hasBodyWrapper={false}>
       <Flex>
         <FlexItem grow={{ default: 'grow' }}>
           <Title headingLevel="h1">Cluster List</Title>
@@ -95,10 +93,9 @@ const ClusterListPageHeader = ({ someReadOnly, showSpinner, error, refresh }) =>
         <Toolbar id="cluster-list-refresh-toolbar" isFullHeight inset={{ default: 'insetNone' }}>
           <ToolbarContent>
             <ToolbarGroup
-              variant="icon-button-group"
-              align={{ default: 'alignRight' }}
-              spacer={{ default: 'spacerNone', md: 'spacerNone' }}
-              spaceItems={{ default: 'spaceItemsMd' }}
+              variant="action-group-plain"
+              align={{ default: 'alignEnd' }}
+              gap={{ default: 'gapNone', md: 'gapNone' }}
             >
               {showSpinner && (
                 <ToolbarItem>
@@ -114,7 +111,7 @@ const ClusterListPageHeader = ({ someReadOnly, showSpinner, error, refresh }) =>
                   <ErrorTriangle className="cluster-list-warning" item="clusters" />
                 </ToolbarItem>
               )}
-              <ToolbarItem spacer={{ default: 'spacerNone' }}>
+              <ToolbarItem gap={{ default: 'gapNone' }}>
                 <RefreshButton isDisabled={showSpinner} refreshFunc={refresh} />
               </ToolbarItem>
             </ToolbarGroup>
@@ -372,7 +369,7 @@ const ClusterList = ({
   if (showEmptyState) {
     return (
       <AppPage title={PAGE_TITLE}>
-        <PageSection>
+        <PageSection hasBodyWrapper={false}>
           <GlobalErrorBox />
           <div data-ready>
             <ClusterListEmptyState />
@@ -395,120 +392,118 @@ const ClusterList = ({
           refetchClusterTransferDetail();
         }}
       />
-      <PageSection>
-        <Card>
-          <div className="cluster-list" data-ready={dataReady}>
-            <GlobalErrorBox />
-            {isError && clusters.length > 0 && (
-              <ErrorBox
-                variant="warning"
-                message="Some operations are unavailable, try again later"
-                response={{
-                  errorDetails: [{ items: errorDetails }],
-                }}
-                isExpandable
-                hideOperationID
-                forceAsAlert
-              />
-            )}
-
-            <Toolbar id="cluster-list-toolbar">
-              <ToolbarContent>
-                <ToolbarItem className="ocm-c-toolbar__item-cluster-filter-list">
-                  <ClusterListFilter
-                    isDisabled={isPendingNoData && hasNoFilters}
-                    view={CLUSTERS_VIEW}
-                  />
-                </ToolbarItem>
-                {isRestrictedEnv() ? null : (
-                  <ToolbarItem
-                    className="ocm-c-toolbar__item-cluster-list-filter-dropdown"
-                    data-testid="cluster-list-filter-dropdown"
-                  >
-                    {/* Cluster type */}
-                    <ClusterListFilterDropdown
-                      view={CLUSTERS_VIEW}
-                      isDisabled={isLoading || isFetching}
-                    />
-                  </ToolbarItem>
-                )}
-                <ClusterListActions />
-                <ViewOnlyMyClustersToggle
-                  view={CLUSTERS_VIEW}
-                  bodyContent="Show only the clusters you previously created, or all clusters in your organization."
-                  localStorageKey={ONLY_MY_CLUSTERS_TOGGLE_CLUSTERS_LIST}
-                />
-
-                <ToolbarItem
-                  align={{ default: 'alignRight' }}
-                  variant="pagination"
-                  className="pf-m-hidden visible-on-lgplus"
-                >
-                  <PaginationRow
-                    currentPage={currentPage}
-                    pageSize={pageSize}
-                    itemCount={clustersTotal}
-                    variant="top"
-                    isDisabled={isPendingNoData}
-                    itemsStart={itemsStart}
-                    itemsEnd={itemsEnd}
-                    onPerPageSelect={onPerPageChange}
-                    onPageChange={onPageChange}
-                  />
-                </ToolbarItem>
-              </ToolbarContent>
-            </Toolbar>
-            {isRestrictedEnv() ? null : <ClusterListFilterChipGroup />}
-            {isError && !size(clusters) && isFetched ? (
-              <Unavailable
-                message="Error retrieving clusters"
-                response={{
-                  errorMessage: '',
-                  operationID: '',
-                  errorCode: '',
-                  errorDetails,
-                }}
-              />
-            ) : (
-              <>
-                <AccessRequestPendingAlert
-                  total={pendingRequestsTotal}
-                  accessRequests={pendingRequestsItems}
-                />
-                <TransferOwnerPendingAlert total={totalPendingTransfers} />
-                <ClusterListTable
-                  openModal={openModal}
-                  clusters={clusters || []}
-                  isPending={isPendingNoData}
-                  isClustersDataPending={isClustersDataPending}
-                  activeSortIndex={activeSortIndex}
-                  activeSortDirection={activeSortDirection}
-                  setSort={(index, direction) => {
-                    const sorting = {
-                      isAscending: direction === SortByDirection.asc,
-                      sortField: index,
-                    };
-
-                    dispatch(viewActions.onListSortBy(sorting, viewType));
-                  }}
-                  refreshFunc={refetch}
-                />
-              </>
-            )}
-            <PaginationRow
-              currentPage={currentPage}
-              pageSize={pageSize}
-              itemCount={clustersTotal}
-              variant="bottom"
-              isDisabled={isPendingNoData}
-              itemsStart={itemsStart}
-              itemsEnd={itemsEnd}
-              onPerPageSelect={onPerPageChange}
-              onPageChange={onPageChange}
+      <PageSection hasBodyWrapper={false}>
+        <div className="cluster-list" data-ready={dataReady}>
+          <GlobalErrorBox />
+          {isError && clusters.length > 0 && (
+            <ErrorBox
+              variant="warning"
+              message="Some operations are unavailable, try again later"
+              response={{
+                errorDetails: [{ items: errorDetails }],
+              }}
+              isExpandable
+              hideOperationID
+              forceAsAlert
             />
-            <CommonClusterModals onClose={() => refetch()} clearMachinePools />
-          </div>
-        </Card>
+          )}
+
+          <Toolbar id="cluster-list-toolbar">
+            <ToolbarContent>
+              <ToolbarItem className="ocm-c-toolbar__item-cluster-filter-list">
+                <ClusterListFilter
+                  isDisabled={isPendingNoData && hasNoFilters}
+                  view={CLUSTERS_VIEW}
+                />
+              </ToolbarItem>
+              {isRestrictedEnv() ? null : (
+                <ToolbarItem
+                  className="ocm-c-toolbar__item-cluster-list-filter-dropdown"
+                  data-testid="cluster-list-filter-dropdown"
+                >
+                  {/* Cluster type */}
+                  <ClusterListFilterDropdown
+                    view={CLUSTERS_VIEW}
+                    isDisabled={isLoading || isFetching}
+                  />
+                </ToolbarItem>
+              )}
+              <ClusterListActions />
+              <ViewOnlyMyClustersToggle
+                view={CLUSTERS_VIEW}
+                bodyContent="Show only the clusters you previously created, or all clusters in your organization."
+                localStorageKey={ONLY_MY_CLUSTERS_TOGGLE_CLUSTERS_LIST}
+              />
+
+              <ToolbarItem
+                align={{ default: 'alignEnd' }}
+                variant="pagination"
+                className="pf-m-hidden visible-on-lgplus"
+              >
+                <PaginationRow
+                  currentPage={currentPage}
+                  pageSize={pageSize}
+                  itemCount={clustersTotal}
+                  variant="top"
+                  isDisabled={isPendingNoData}
+                  itemsStart={itemsStart}
+                  itemsEnd={itemsEnd}
+                  onPerPageSelect={onPerPageChange}
+                  onPageChange={onPageChange}
+                />
+              </ToolbarItem>
+            </ToolbarContent>
+          </Toolbar>
+          {isRestrictedEnv() ? null : <ClusterListFilterChipGroup />}
+          {isError && !size(clusters) && isFetched ? (
+            <Unavailable
+              message="Error retrieving clusters"
+              response={{
+                errorMessage: '',
+                operationID: '',
+                errorCode: '',
+                errorDetails,
+              }}
+            />
+          ) : (
+            <>
+              <AccessRequestPendingAlert
+                total={pendingRequestsTotal}
+                accessRequests={pendingRequestsItems}
+              />
+              <TransferOwnerPendingAlert total={totalPendingTransfers} />
+              <ClusterListTable
+                openModal={openModal}
+                clusters={clusters || []}
+                isPending={isPendingNoData}
+                isClustersDataPending={isClustersDataPending}
+                activeSortIndex={activeSortIndex}
+                activeSortDirection={activeSortDirection}
+                setSort={(index, direction) => {
+                  const sorting = {
+                    isAscending: direction === SortByDirection.asc,
+                    sortField: index,
+                  };
+
+                  dispatch(viewActions.onListSortBy(sorting, viewType));
+                }}
+                refreshFunc={refetch}
+              />
+            </>
+          )}
+          <PaginationRow
+            currentPage={currentPage}
+            pageSize={pageSize}
+            itemCount={clustersTotal}
+            variant="bottom"
+            isDisabled={isPendingNoData}
+            itemsStart={itemsStart}
+            itemsEnd={itemsEnd}
+            onPerPageSelect={onPerPageChange}
+            onPageChange={onPageChange}
+          />
+          <CommonClusterModals onClose={() => refetch()} clearMachinePools />
+        </div>
       </PageSection>
     </AppPage>
   );

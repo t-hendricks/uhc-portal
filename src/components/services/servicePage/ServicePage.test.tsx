@@ -21,7 +21,7 @@ describe('Service page unit tests', () => {
     it('has a link for "begin setup"', () => {
       render(<ServicePage serviceName="ROSA" />);
 
-      expect(screen.getByText('Begin setup', { selector: 'a' })).toHaveAttribute(
+      expect(screen.getByText('Begin setup', { selector: 'span' }).parentElement).toHaveAttribute(
         'href',
         '/openshift/create/rosa/getstarted',
       );
@@ -144,10 +144,9 @@ describe('Service page unit tests', () => {
     it('has a link for "create OSD cluster"', () => {
       render(<ServicePage serviceName="OSD" />);
 
-      expect(screen.getByText('Create cluster', { selector: 'a' })).toHaveAttribute(
-        'href',
-        '/openshift/create/osd',
-      );
+      expect(
+        screen.getByText('Create cluster', { selector: 'span' }).parentElement,
+      ).toHaveAttribute('href', '/openshift/create/osd');
     });
 
     it('has a link for "interactive walkthrough"', () => {

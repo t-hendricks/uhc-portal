@@ -7,8 +7,6 @@ import {
   Button,
   Flex,
   FlexItem,
-  Modal,
-  ModalVariant,
   Panel,
   PanelMain,
   PanelMainBody,
@@ -21,6 +19,7 @@ import {
   Title,
   Tooltip,
 } from '@patternfly/react-core';
+import { Modal, ModalVariant } from '@patternfly/react-core/deprecated';
 import { DownloadIcon } from '@patternfly/react-icons/dist/esm/icons/download-icon';
 
 import { ConfirmationDialog } from '~/common/modals/ConfirmationDialog';
@@ -135,7 +134,7 @@ const SyncEditorModal = ({
               <Button
                 isAriaDisabled={isRequestPending || !isContentValid}
                 onClick={handleSubmit}
-                className="pf-v5-u-mr-md"
+                className="pf-v6-u-mr-md"
                 data-testid="submit-btn"
                 isLoading={isRequestPending}
               >
@@ -177,7 +176,7 @@ const SyncEditorModal = ({
 
           {isSideBarVisible ? (
             <SidebarPanel width={{ default: 'width_25' }} variant="sticky">
-              <Title headingLevel="h2" className="pf-v5-u-pl-sm">
+              <Title headingLevel="h2" className="pf-v6-u-pl-sm">
                 ROSA cluster creation
               </Title>
             </SidebarPanel>

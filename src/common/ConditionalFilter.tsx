@@ -50,7 +50,7 @@ const SearchInputBox = ({
   onChange: any;
   ariaLabel?: string;
 }) => (
-  <ToolbarItem variant="search-filter">
+  <ToolbarItem>
     <SearchInput
       placeholder={`Filter by ${label}`}
       value={value}

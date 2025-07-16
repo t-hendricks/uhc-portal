@@ -94,7 +94,7 @@ export const InstallComponentWrapper = (props: InstallComponentProps) => {
       ) : (
         <PageTitle title={providerTitle} breadcrumbs={breadcrumbs} />
       )}
-      <PageSection className="ocp-instructions">
+      <PageSection hasBodyWrapper={false} className="ocp-instructions">
         {chooseComponentToRender(componentChooser)}
       </PageSection>
     </AppPage>

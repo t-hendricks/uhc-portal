@@ -1,7 +1,8 @@
 import React from 'react';
 import dayjs from 'dayjs';
 
-import { Alert, Button, FormGroup, Modal, Radio, Stack, StackItem } from '@patternfly/react-core';
+import { Alert, Button, FormGroup, Radio, Stack, StackItem } from '@patternfly/react-core';
+import { Modal } from '@patternfly/react-core/deprecated';
 
 import { createServiceLogQueryObject } from '~/common/queryHelpers';
 import { serviceLogService } from '~/services';

@@ -14,7 +14,7 @@ class ClusterList extends Page {
 
   viewOnlyMyClusterHelp = () => cy.get('label[for="view-only-my-clusters"]').find('button').first();
 
-  tooltipviewOnlyMyCluster = () => cy.get('div.pf-v5-c-popover__body');
+  tooltipviewOnlyMyCluster = () => cy.get('div.pf-v6-c-popover__body');
 
   viewClusterArchives = () => cy.contains('a', 'View cluster archives');
 
@@ -38,7 +38,7 @@ class ClusterList extends Page {
 
   typeColumnsInClusterList = () => cy.get('td[data-label="Type"] span');
 
-  filterdClusterTypesValues = () => cy.get('span.pf-v5-c-chip__text');
+  filterdClusterTypesValues = () => cy.get('span.pf-v6-c-chip__text');
 
   createClusterButton = () => cy.getByTestId('create_cluster_btn');
 
@@ -131,7 +131,7 @@ class ClusterList extends Page {
   }
 
   clickClusterListExtraActions() {
-    cy.get('button.pf-v5-c-dropdown__toggle').should('be.visible').click();
+    cy.get('button.pf-v6-c-dropdown__toggle').should('be.visible').click();
   }
 
   clickClusterListTableHeader(header) {
@@ -163,7 +163,7 @@ class ClusterList extends Page {
   searchForClusterWithStatus(status) {
     cy.contains('td[data-label="Status"]', status)
       .siblings()
-      .get('td.pf-v5-c-table__action > div')
+      .get('td.pf-v6-c-table__action > div')
       .first()
       .click();
   }
@@ -217,7 +217,7 @@ class ClusterList extends Page {
   }
 
   checkForDetailsInAnchor() {
-    cy.get('tbody.pf-v5-c-table__tbody tr')
+    cy.get('tbody.pf-v6-c-table__tbody tr')
       .find('td[data-label="Name"] a')
       .should('have.length.greaterThan', 0)
       .each((anchor) => {
@@ -226,7 +226,7 @@ class ClusterList extends Page {
   }
 
   checkIfFirstAnchorNavigatesToCorrectRoute() {
-    cy.get('tbody.pf-v5-c-table__tbody tr')
+    cy.get('tbody.pf-v6-c-table__tbody tr')
       .find('td[data-label="Name"] a')
       .first()
       .then((anchor) => {

@@ -32,7 +32,7 @@ const ImdsSection = ({ isDisabled, onChangeImds, imds }: ImdsSectionProps) => {
   }, [isDisabled, imds]);
 
   return (
-    <FormGroup label="Instance Metadata Service" fieldId="imds" labelIcon={<ImdsSectionHint />}>
+    <FormGroup label="Instance Metadata Service" fieldId="imds" labelHelp={<ImdsSectionHint />}>
       {isDisabled ? (
         <ImdsSectionAlert />
       ) : (
@@ -41,7 +41,7 @@ const ImdsSection = ({ isDisabled, onChangeImds, imds }: ImdsSectionProps) => {
           name={FieldId.IMDS}
           ariaLabel="Instance Metadata Service"
           isDisabled={isDisabled}
-          className="pf-v5-u-mb-md"
+          className="pf-v6-u-mb-md"
           options={imdsOptions}
           disableDefaultValueHandling
           input={{

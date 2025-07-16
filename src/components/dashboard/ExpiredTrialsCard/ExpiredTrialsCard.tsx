@@ -1,14 +1,7 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import { useDispatch } from 'react-redux';
 
-import {
-  Card,
-  CardBody,
-  CardTitle,
-  EmptyState,
-  EmptyStateBody,
-  EmptyStateHeader,
-} from '@patternfly/react-core';
+import { Card, CardBody, CardTitle, EmptyState, EmptyStateBody } from '@patternfly/react-core';
 import { TableVariant } from '@patternfly/react-table';
 import {
   Table as TableDeprecated,
@@ -49,7 +42,7 @@ const ExpiredTrialsCard = () => {
     () =>
       showSkeleton
         ? skeletonRows(viewOptions.pageSize)
-        : subscriptionsState.items?.map((subscription) => ({
+        : subscriptionsState.items?.map((subscription: Subscription) => ({
             cells: [
               {
                 title: (
@@ -112,8 +105,7 @@ const ExpiredTrialsCard = () => {
       <Card className="ocm-overview-clusters__card">
         <CardTitle>Expired Trials</CardTitle>
         <CardBody>
-          <EmptyState>
-            <EmptyStateHeader titleText="No data available" headingLevel="h2" />
+          <EmptyState headingLevel="h2" titleText="No data available">
             <EmptyStateBody>
               There was an error fetching the data. Try refreshing the page.
             </EmptyStateBody>

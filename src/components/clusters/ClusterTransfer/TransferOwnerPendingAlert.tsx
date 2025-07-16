@@ -12,7 +12,7 @@ export const TransferOwnerPendingAlert = ({ total }: TransferOwnerPendingAlertPr
   return total ? (
     <Alert
       id="pendingTransferOwnerAlert"
-      className="pf-v5-u-mt-md"
+      className="pf-v6-u-mt-md"
       variant="warning"
       isInline
       title="Pending Transfer Requests"

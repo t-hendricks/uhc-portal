@@ -97,10 +97,10 @@ const MachinePoolSubnetsForm = ({ selectedVPC, warning }: MachinePoolSubnetsForm
           <Alert variant="warning" isPlain isInline title={warning} />
         </GridItem>
       )}
-      <GridItem span={2} className="pf-v5-c-form__label pf-v5-c-form__label-text">
+      <GridItem span={2} className="pf-v6-c-form__label pf-v6-c-form__label-text">
         Machine pool
       </GridItem>
-      <GridItem span={4} className="pf-v5-c-form__label pf-v5-c-form__label-text">
+      <GridItem span={4} className="pf-v6-c-form__label pf-v6-c-form__label-text">
         Private subnet name
       </GridItem>
       <GridItem span={6} />

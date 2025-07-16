@@ -201,7 +201,7 @@ const NodeCountInput = (props) => {
     <FormGroup
       fieldId={input.name}
       label={label}
-      labelIcon={
+      labelHelp={
         extendedHelpText && (
           <PopoverHint hint={extendedHelpText} buttonAriaLabel={buttonAriaLabel} />
         )

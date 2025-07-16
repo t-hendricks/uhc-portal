@@ -203,8 +203,8 @@ const CreateROSAWizardInternal = ({
     return (
       <>
         {title}
-        <PageSection>
-          <div className="pf-v5-u-text-align-center">
+        <PageSection hasBodyWrapper={false}>
+          <div className="pf-v6-u-text-align-center">
             <Spinner size="lg" arial-label="Loading..." />
           </div>
         </PageSection>
@@ -217,7 +217,7 @@ const CreateROSAWizardInternal = ({
 
   if (anyErrors) {
     return (
-      <PageSection>
+      <PageSection hasBodyWrapper={false}>
         <Unavailable
           errors={requests
             .filter((request) => request.data.error)
@@ -240,14 +240,14 @@ const CreateROSAWizardInternal = ({
   return (
     <>
       {title}
-      <PageSection>
+      <PageSection hasBodyWrapper={false}>
         {config.fakeOSD && ( // TODO Is ?fake=true supported for ROSA clusters?
-          <Banner variant="gold">On submit, a fake ROSA cluster will be created.</Banner>
+          <Banner color="yellow">On submit, a fake ROSA cluster will be created.</Banner>
         )}
-        <div className="ocm-page pf-v5-u-display-flex">
+        <div className="ocm-page pf-v6-u-display-flex">
           <Wizard
             id="rosa-wizard"
-            className="rosa-wizard pf-v5-u-flex-1"
+            className="rosa-wizard pf-v6-u-flex-1"
             onClose={onClose}
             onStepChange={onStepChange}
             footer={

@@ -86,7 +86,7 @@ describe('<EditSecurityGroups />', () => {
 
       const securityGroupChips = screen.getAllByRole('listitem');
       expect(
-        within(securityGroupChips[0]).getByRole('button', { name: /close hello xyz/ }),
+        within(securityGroupChips[0]).getByRole('button', { name: /Close hello xyz/ }),
       ).toBeInTheDocument();
     });
 

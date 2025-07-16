@@ -103,28 +103,24 @@ const HelpTextPassword = ({ passwordErrors }: { passwordErrors: PasswordError })
   return (
     <HelperText>
       <HelperTextItem
-        isDynamic
         variant={helpTextItemVariant('baseRequirements')}
         icon={helpTextItemIcon('baseRequirements')}
       >
         At least 14 characters (ASCII-standard) without whitespaces
       </HelperTextItem>
       <HelperTextItem
-        isDynamic
         variant={helpTextItemVariant('lowercase')}
         icon={helpTextItemIcon('lowercase')}
       >
         Include lowercase letters
       </HelperTextItem>
       <HelperTextItem
-        isDynamic
         variant={helpTextItemVariant('uppercase')}
         icon={helpTextItemIcon('uppercase')}
       >
         Include uppercase letters
       </HelperTextItem>
       <HelperTextItem
-        isDynamic
         variant={helpTextItemVariant('numbersOrSymbols')}
         icon={helpTextItemIcon('numbersOrSymbols')}
       >
