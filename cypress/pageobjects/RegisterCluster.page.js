@@ -13,7 +13,7 @@ class RegisterCluster extends Page {
 
   clusterURLError = () => cy.get('div[id="web_console_url-helper"]');
 
-  cancelButton = () => cy.get('button.pf-v6-c-button.pf-m-secondary');
+  cancelButton = () => cy.contains('button', 'Cancel');
 
   submitButton = () => cy.get('button[type="submit"]');
 }

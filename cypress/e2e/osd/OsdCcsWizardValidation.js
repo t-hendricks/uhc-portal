@@ -239,6 +239,7 @@ describe('OSD Wizard validation tests(OCP-54134,OCP-73204)', { tags: ['smoke'] }
       CreateOSDWizardPage.wizardNextButton().click();
       CreateOSDWizardPage.selectComputeNodeType(clusterProperties.InstanceType);
       CreateOSDWizardPage.selectAutoScaling('disabled');
+      CreateOSDWizardPage.computeNodeCountSelect().should('not.have.attr', 'disabled');
       CreateOSDWizardPage.computeNodeCountSelect()
         .get('option')
         .first()
@@ -582,7 +583,7 @@ describe('OSD Wizard validation tests(OCP-54134,OCP-73204)', { tags: ['smoke'] }
       });
     }
     it(`OSD wizard - ${clusterProperties.CloudProvider} -${clusterProperties.SubscriptionType}-${clusterProperties.InfrastructureType} : Cluster Settings - Machinepool(Labels) field validations`, () => {
-      CreateOSDWizardPage.addNodeLabelLink().click();
+      CreateOSDWizardPage.addNodeLabelLink().scrollIntoView().click();
       CreateOSDWizardPage.addNodeLabelKeyAndValue(
         ClustersValidation.ClusterSettings.Machinepool.Common.NodeLabel[0].UpperCharacterLimitValue,
         'test',

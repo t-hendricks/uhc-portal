@@ -28,7 +28,11 @@ describe(
           : '';
 
       it(`Launch OSD - ${clusterProperties.CloudProvider} cluster wizard`, () => {
-        CreateOSDWizardPage.osdCreateClusterButton().click();
+        CreateOSDWizardPage.osdCreateClusterButton()
+          .should('exist')
+          .should('not.be.disabled')
+          .scrollIntoView()
+          .click();
         CreateOSDWizardPage.isCreateOSDPage();
       });
 

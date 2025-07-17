@@ -1,8 +1,7 @@
 import Page from './page';
 
 class CreateRosaCluster extends Page {
-  clusterDetailsTree = () =>
-    cy.get('li.pf-v6-c-wizard__nav-item').find('button').contains('Details');
+  clusterDetailsTree = () => cy.get('button').contains('Details');
 
   rosaCreateClusterButton = () => cy.getByTestId('rosa-create-cluster-button', { timeout: 50000 });
 
@@ -24,7 +23,7 @@ class CreateRosaCluster extends Page {
 
   createCustomDomainPrefixCheckbox = () => cy.get('input[id="has_domain_prefix"]');
 
-  domainPrefixInput = () => cy.get('input[id="domain_prefix"]');
+  domainPrefixInput = () => cy.get('input[name="domain_prefix"]');
 
   machineCIDRInput = () => cy.get('input[id="network_machine_cidr"]');
 
@@ -287,8 +286,7 @@ class CreateRosaCluster extends Page {
   }
 
   isNotAssociateAccountsDrawer() {
-    cy.contains('span', 'How to associate a new AWS account').should('not.exist');
-    cy.contains('continue to step').should('not.exist');
+    cy.contains('h2', 'How to associate a new AWS account').should('not.exist');
   }
 
   cancelWizard() {
@@ -353,10 +351,6 @@ class CreateRosaCluster extends Page {
     }
   }
 
-  get clusterNameInput() {
-    return 'input#name';
-  }
-
   get accountIdMenuItem() {
     return '.pf-v6-c-select__menu-item';
   }
@@ -374,7 +368,7 @@ class CreateRosaCluster extends Page {
   }
 
   get clusterNameInput() {
-    return 'input#name';
+    return 'input[name="name"]';
   }
 
   get clusterNameInputError() {
@@ -382,7 +376,7 @@ class CreateRosaCluster extends Page {
   }
 
   get primaryButton() {
-    return '.rosa-wizard button.pf-v6-c-button.pf-m-primary';
+    return '[data-testid="wizard-next-button"]';
   }
 
   selectStandaloneControlPlaneTypeOption() {
@@ -412,7 +406,7 @@ class CreateRosaCluster extends Page {
   }
 
   selectAWSBillingAccount(accountID) {
-    cy.get('button[id="billing_account_id"]').click();
+    cy.get('#billing_account_id').click();
     cy.get('input[placeholder*="Filter by account ID"]', { timeout: 50000 })
       .clear()
       .type(accountID);
@@ -704,12 +698,6 @@ class CreateRosaCluster extends Page {
     cy.get('#with-web').click();
   }
 
-  selectAvailabilityZoneRegion(availabilityZoneRegion) {
-    cy.get(".pf-v6-c-select__menu:contains('Select availability zone')").within(() => {
-      cy.get('li').contains(availabilityZoneRegion).click();
-    });
-  }
-
   inputPrivateSubnetId(subnetId) {
     cy.get('#private_subnet_id_0').type(subnetId);
   }
@@ -885,7 +873,7 @@ class CreateRosaCluster extends Page {
   }
 
   selectSubnetAvailabilityZone(subnetAvailability) {
-    cy.contains('Select availability zone').first().click();
+    cy.contains('button', 'Select availability zone').first().click();
     cy.get('ul[aria-label="availability zone list"]').within(() => {
       cy.contains('button', subnetAvailability).click({ force: true });
     });

@@ -53,7 +53,7 @@ class ClusterTypes extends Page {
         .and('contain', '/installing')
         .and('contain', clusterType);
     });
-    cy.get('#select-automated').click();
+    cy.get('button:contains(Automated)').click();
     cy.get('h1')
       .contains(
         'Install OpenShift on ' +
@@ -92,7 +92,7 @@ class ClusterTypes extends Page {
         .and('contain', '/installing')
         .and('contain', clusterType);
     });
-    cy.get('#select-full-control').click();
+    cy.get('button:contains(Full control)').click();
     cy.get('h1')
       .contains(
         'Install OpenShift on ' +
@@ -109,7 +109,7 @@ class ClusterTypes extends Page {
 
   isInteractive(nonTested, recommended) {
     cy.get('#select-interactive').within(() => {
-      cy.get('h2:contains(Interactive)').should('be.visible');
+      cy.get('h2:contains(Interactive)').scrollIntoView().should('be.visible');
       if (recommended == true)
         () => {
           cy.get('span:contains(Recommended)').should('be.visible');
@@ -129,14 +129,14 @@ class ClusterTypes extends Page {
         .should('have.attr', 'href')
         .and('contain', 'installing-on-prem-assisted');
     });
-    cy.get('#select-interactive').click();
+    cy.get('button:contains(Interactive)').scrollIntoView().click();
     cy.get('h1').contains('Install OpenShift with the Assisted Installer');
     cy.go('back');
   }
 
   isLocalAgentBased(clusterHeader, clusterArch, nonTested, recommended) {
     cy.get('#select-agent-based').within(() => {
-      cy.get('h2:contains("Local Agent-based")').should('be.visible');
+      cy.get('h2:contains("Local Agent-based")').scrollIntoView().should('be.visible');
       if (recommended == true)
         () => {
           cy.get('span:contains(Recommended)').should('be.visible');
@@ -156,7 +156,7 @@ class ClusterTypes extends Page {
         .should('have.attr', 'href')
         .and('contain', 'preparing-to-install-with-agent-based-installer');
     });
-    cy.get('#select-agent-based').click();
+    cy.get('button:contains(Local Agent-based)').click();
     cy.get('h1')
       .contains(
         'Install OpenShift on ' + clusterHeader + ' locally ' + clusterArch + 'with Agent',

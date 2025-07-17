@@ -38,7 +38,7 @@ class ClusterList extends Page {
 
   typeColumnsInClusterList = () => cy.get('td[data-label="Type"] span');
 
-  filterdClusterTypesValues = () => cy.get('span.pf-v6-c-chip__text');
+  filterdClusterTypesValues = () => cy.get('span.pf-v6-c-label__text');
 
   createClusterButton = () => cy.getByTestId('create_cluster_btn');
 
@@ -217,7 +217,7 @@ class ClusterList extends Page {
   }
 
   checkForDetailsInAnchor() {
-    cy.get('tbody.pf-v6-c-table__tbody tr')
+    cy.get('tr.pf-v6-c-table__tr')
       .find('td[data-label="Name"] a')
       .should('have.length.greaterThan', 0)
       .each((anchor) => {
@@ -226,7 +226,7 @@ class ClusterList extends Page {
   }
 
   checkIfFirstAnchorNavigatesToCorrectRoute() {
-    cy.get('tbody.pf-v6-c-table__tbody tr')
+    cy.get('tr.pf-v6-c-table__tr')
       .find('td[data-label="Name"] a')
       .first()
       .then((anchor) => {

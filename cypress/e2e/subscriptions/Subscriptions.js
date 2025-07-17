@@ -118,9 +118,11 @@ describe('Subscription page (OCP-25171)', { tags: ['smoke'] }, () => {
     Subscription.isDedicatedOnDemandPage();
     cy.contains('Marketplace On-Demand subscriptions not detected').should('be.visible');
     Subscription.enableMarketplaceLink()
+      .closest('a')
       .should('have.attr', 'href')
       .and('include', 'https://marketplace.redhat.com/en-us/products/red-hat-openshift-dedicated');
     Subscription.learnMoreLink()
+      .closest('a')
       .should('have.attr', 'href')
       .and(
         'include',

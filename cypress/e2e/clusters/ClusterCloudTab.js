@@ -23,7 +23,7 @@ describe(
       GlobalNav.breadcrumbItem('Cluster Type').should('exist');
     });
 
-    it('Chech OSD Trial section contents', () => {
+    it('Checks OSD Trial section contents', () => {
       cy.contains('h1', 'Select an OpenShift cluster type to create');
 
       ClusterCloudTab.managedServices()

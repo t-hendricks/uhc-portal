@@ -76,7 +76,6 @@ describe('OSD Trial cluster tests', () => {
   describe('View Create OSD Trial cluster page', () => {
     it('navigates to create OSD Trial cluster and CCS is selected', () => {
       GlobalNav.breadcrumbItem('Cluster List').click({ force: true }); // need force=true to get past 'element detached from dom' error
-      LeaveCreateClusterPrompt.submit();
 
       ClusterListPage.waitForDataReady();
 

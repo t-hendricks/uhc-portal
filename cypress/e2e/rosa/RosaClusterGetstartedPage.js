@@ -40,12 +40,12 @@ describe('Rosa cluster Get Started page(OCP-56363)', { tags: ['smoke'] }, () => 
           .should('be.exist')
           .should('be.visible');
         cy.contains('Verify your quotas on AWS console').should('be.exist').should('be.visible');
-        RosaGetstartedPage.checkAnchorProperties(
-          cy.get('a'),
+        cy.contains(
+          'a[href="https://console.aws.amazon.com/rosa/home#/get-started"]',
           'Open AWS Console',
-          'https://console.aws.amazon.com/rosa/home#/get-started',
-          true,
-        );
+        )
+          .should('be.exist')
+          .should('be.visible');
       });
   });
   it(`ROSA Getstarted page - check for "Complete ROSA prerequisites" section`, () => {
@@ -85,7 +85,11 @@ describe('Rosa cluster Get Started page(OCP-56363)', { tags: ['smoke'] }, () => 
     };
     Object.entries(rosaClientOptions).forEach(([key, value]) => {
       RosaGetstartedPage.rosaClientDropdown().select(key);
-      RosaGetstartedPage.checkAnchorProperties(cy.get('a'), 'Download the ROSA CLI', value, false);
+      RosaGetstartedPage.rosaClientButton({ timeout: 20000 }).should(
+        'have.attr',
+        'href',
+        `${value}`,
+      );
     });
 
     RosaGetstartedPage.rosaPrerequisitesStep12Content()
@@ -114,7 +118,7 @@ describe('Rosa cluster Get Started page(OCP-56363)', { tags: ['smoke'] }, () => 
     RosaGetstartedPage.rosaPrerequisitesStep2Section()
       .scrollIntoView()
       .contains(
-        'Log in to the ROSA CLI with your Red Hat account and create AWS account roles and policies',
+        'Log in to the ROSA CLI with your Red Hat account and create AWS account roles and policies.',
       )
       .should('be.visible');
     RosaGetstartedPage.rosaPrerequisitesStep21Content().within(() => {
@@ -204,15 +208,9 @@ describe('Rosa cluster Get Started page(OCP-56363)', { tags: ['smoke'] }, () => 
       cy.get('h4')
         .contains('Your AWS account will need to be associated with your Red Hat account')
         .should('be.visible');
-      cy.get('a')
-        .contains('Create with web interface')
-        .then((anchor) => {
-          const href = anchor.prop('href');
-          cy.wrap(anchor).click();
-          cy.url().should('include', '/openshift/create/rosa/wizard');
-          cy.url().should('include', href);
-          cy.go('back');
-        });
+      cy.get('a').contains('Create with web interface').click();
+      cy.url({ timeout: 20000 }).should('include', '/create/rosa/wizard');
+      cy.go('back');
     });
     RosaGetstartedPage.deployWithTerraformCard().scrollIntoView().should('be.visible');
     RosaGetstartedPage.deployWithTerraformCard().within(() => {

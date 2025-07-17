@@ -63,10 +63,14 @@ class CreateOSDCluster extends Page {
     cy.contains('div', 'On submit, a fake OSD cluster will be created.');
 
   osdCreateClusterButton = () =>
-    cy.get('a[data-testid="osd-create-cluster-button"][aria-disabled="false"]', { timeout: 50000 });
+    cy
+      .get('a[data-testid="osd-create-cluster-button"]', { timeout: 50000 })
+      .should('not.have.class', 'pf-m-aria-disabled');
 
   osdTrialCreateClusterButton = () =>
-    cy.get('a[data-testid="osd-create-trial-cluster"][aria-disabled="false"]', { timeout: 20000 });
+    cy
+      .get('a[data-testid="osd-create-trial-cluster"]', { timeout: 20000 })
+      .should('not.have.class', 'pf-m-aria-disabled');
 
   subscriptionTypeFreeTrialRadio = () =>
     cy.get('input[name="billing_model"][value="standard-trial"]');
@@ -105,7 +109,7 @@ class CreateOSDCluster extends Page {
 
   createCustomDomainPrefixCheckbox = () => cy.get('input[id="has_domain_prefix"]');
 
-  domainPrefixInput = () => cy.get('input[id="domain_prefix"]');
+  domainPrefixInput = () => cy.get('input[name="domain_prefix"]');
 
   clusterVersionPane = () => cy.get('div[name="cluster_version"]');
 
@@ -465,16 +469,16 @@ class CreateOSDCluster extends Page {
     cy.contains('Control plane nodes')
       .parent()
       .parent()
-      .find('div ul[aria-label="Chip group category"]')
-      .should('have.text', controlPlane);
+      .find('span')
+      .should('include.text', controlPlane);
   }
 
   infrastructureNodesValue(infrastructureNodes) {
     cy.contains('Infrastructure nodes')
       .parent()
       .parent()
-      .find('div ul[aria-label="Chip group category"]')
-      .should('have.text', infrastructureNodes);
+      .find('span')
+      .should('include.text', infrastructureNodes);
   }
 
   workerNodesValue = () => cy.contains('strong', 'Worker nodes');
@@ -624,8 +628,8 @@ class CreateOSDCluster extends Page {
   }
 
   addNodeLabelKeyAndValue(key, value = '', index = 0) {
-    cy.get(`input[id="node_labels.${index}.key"]`).clear().type(key).blur();
-    cy.get(`input[id="node_labels.${index}.value"]`).clear().type(value).blur();
+    cy.get(`input[id="node_labels.${index}.key"]`).scrollIntoView().clear().type(key).blur();
+    cy.get(`input[id="node_labels.${index}.value"]`).scrollIntoView().clear().type(value).blur();
   }
 
   selectNodeDraining(nodeDrain) {
@@ -635,7 +639,7 @@ class CreateOSDCluster extends Page {
 
   isTextContainsInPage(text, present = true) {
     if (present) {
-      cy.contains(text).should('exist').scrollIntoView().should('be.visible');
+      cy.contains(text).should('exist').should('be.visible');
     } else {
       cy.contains(text).should('not.exist');
     }

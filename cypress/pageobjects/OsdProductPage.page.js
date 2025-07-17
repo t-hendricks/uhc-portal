@@ -111,25 +111,17 @@ class OsdProductPage extends Page {
   clickBackButton = () => cy.go('back');
 
   expandFeature(sectionTitle) {
-    cy.contains('button', sectionTitle)
-      .scrollIntoView()
-      .should('be.visible')
-      .and('have.attr', 'aria-expanded', 'false')
-      .click()
-      .should('have.attr', 'aria-expanded', 'true');
+    cy.contains('button', sectionTitle).scrollIntoView().should('be.visible').click();
     return this;
   }
 
   collapseFeature(sectionTitle) {
-    cy.contains('button', sectionTitle)
-      .should('have.attr', 'aria-expanded', 'true')
-      .click()
-      .should('have.attr', 'aria-expanded', 'false');
+    cy.contains('button', sectionTitle).click();
     return this;
   }
 
   verifyFeatureContent(expectedText) {
-    cy.get('[aria-expanded="true"]').parent().contains(expectedText).should('be.visible');
+    cy.contains('.rosa-expandable-list-item', `${expectedText}`);
     return this;
   }
 

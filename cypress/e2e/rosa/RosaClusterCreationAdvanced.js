@@ -234,6 +234,7 @@ describe(
         );
         i = i + 1;
       });
+
       securityGroups.forEach((value) => {
         cy.contains(value).scrollIntoView().should('be.visible').should('be.exist');
       });
