@@ -51,7 +51,7 @@ Here is the process to move a PR from draft to merged:
 
 1. :pencil2: If the PR contains substantial AI contributions, author adds the "Generated-by:" or "Assisted-by:" formula inside the commit message when squashing the PR
 
-1. :pencil2: Author verifies the change was deployed to staging by looking at the [build job](https://ci.int.devshift.net/job/RedHatInsights-uhc-portal-gh-build-master/) or the related deployment was mentioned on [#ocm-ui-deploys](https://redhat.enterprise.slack.com/archives/C03GKHGMX7U)
+1. :pencil2: Author verifies the change was deployed to staging by waiting for the related deployment to be mentioned on [#ocm-ui-deploys](https://redhat.enterprise.slack.com/archives/C03GKHGMX7U)
 
 1. :pencil2: Author tests the feature in the staging environment
 
