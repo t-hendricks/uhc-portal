@@ -93,13 +93,25 @@ export const MachinePoolsTable = ({
   const isMultiZoneCluster = React.useMemo(() => isMultiAZ(cluster), [cluster]);
 
   const isExpandable = React.useCallback(
-    (machinePool = {}) =>
-      !isEmpty(machinePool.labels) ||
-      machinePool.taints?.length > 0 ||
-      machinePool.autoscaling ||
-      machinePool.aws ||
-      hasSubnets(machinePool),
-    [],
+    (machinePool = {}) => {
+      const securityGroupIds =
+        machinePool?.aws?.additional_security_group_ids ||
+        machinePool?.aws_node_pool?.additional_security_group_ids ||
+        [];
+      const spotMarketOptions = machinePool?.aws?.spot_market_options;
+      const hasAutoRepair = isHypershift;
+
+      return (
+        !isEmpty(machinePool.labels) ||
+        machinePool.taints?.length > 0 ||
+        machinePool.autoscaling ||
+        securityGroupIds.length > 0 ||
+        !!spotMarketOptions ||
+        hasAutoRepair ||
+        hasSubnets(machinePool)
+      );
+    },
+    [isHypershift],
   );
 
   React.useEffect(() => {
