@@ -4,7 +4,16 @@ import { Formik } from 'formik';
 import isEqual from 'lodash/isEqual';
 import { useDispatch } from 'react-redux';
 
-import { Button, ExpandableSection, Form, Stack, StackItem, Tooltip } from '@patternfly/react-core';
+import {
+  Button,
+  ExpandableSection,
+  Form,
+  ModalVariant,
+  Stack,
+  StackItem,
+  Tabs,
+  Tooltip,
+} from '@patternfly/react-core';
 
 import { getErrorMessage } from '~/common/errors';
 import getClusterName from '~/common/getClusterName';
@@ -25,6 +34,7 @@ import {
   GCP_SECURE_BOOT,
   IMDS_SELECTION,
   MAX_NODES_TOTAL_249,
+  TABBED_MACHINE_POOL_MODAL,
 } from '~/queries/featureGates/featureConstants';
 import { useFeatureGate } from '~/queries/featureGates/useFetchFeatureGate';
 import { MachineTypesResponse } from '~/queries/types';
@@ -43,6 +53,11 @@ import EditNodeCountSection from './sections/EditNodeCountSection';
 import EditTaintsSection from './sections/EditTaintsSection';
 import EditSecurityGroupsSection from './sections/SecurityGroups/EditSecurityGroupsSection';
 import SpotInstancesSection from './sections/SpotInstancesSection';
+import { useCostSavingsSubTab } from './subtabs/CostSavingsSubTab';
+import { useLabelsTagsTaintsSubTab } from './subtabs/LabelsTagsTaintsSubTab';
+import { useMaintenanceSubTab } from './subtabs/MaintenanceSubTab';
+import { useOverviewSubTab } from './subtabs/OverviewSubTab';
+import { useSecurityGroupsSubTab } from './subtabs/SecurityGroupsSubTab';
 
 const modalDescription =
   'A machine pool is a group of machines that are all clones of the same configuration, that can be used on demand by an application running on a pod.';
@@ -84,6 +99,9 @@ const EditMachinePoolModal = ({
   machineTypesErrorResponse,
   machinePoolsErrorResponse,
 }: EditMachinePoolModalProps) => {
+  const tabbedMachinePoolModalFeature = useFeatureGate(TABBED_MACHINE_POOL_MODAL);
+
+  const STARTING_TAB_KEY: number = 1;
   const getIsEditValue = React.useCallback(
     () => !!isInitEdit || !!machinePoolId,
     [isInitEdit, machinePoolId],
@@ -93,6 +111,7 @@ const EditMachinePoolModal = ({
   const [submitError, setSubmitError] = React.useState<AxiosError<any>>();
   const [currentMachinePool, setCurrentMachinePool] = React.useState<MachinePool>();
   const [isEdit, setIsEdit] = React.useState<boolean>(getIsEditValue());
+  const [activeTabKey, setActiveTabKey] = React.useState<string | number>(STARTING_TAB_KEY);
   const { initialValues, validationSchema } = useMachinePoolFormik({
     machinePool: currentMachinePool,
     cluster,
@@ -144,6 +163,48 @@ const EditMachinePoolModal = ({
     currentMachinePool,
   );
 
+  const [overviewTab, overviewContent] = useOverviewSubTab({
+    cluster,
+    machinePools: machinePoolsResponse || [],
+    isEdit,
+    region,
+    currentMachinePool,
+    setCurrentMPId,
+    machineTypesResponse,
+    machineTypesLoading,
+    tabKey: 1,
+    initialTabContentShown: STARTING_TAB_KEY === 1,
+  });
+
+  const [maintenanceTab, maintenanceContent] = useMaintenanceSubTab({
+    cluster,
+    tabKey: 2,
+    initialTabContentShown: STARTING_TAB_KEY === 2,
+  });
+
+  const [labelsTagsTaintsTab, labelsTagsTaintsContent] = useLabelsTagsTaintsSubTab({
+    cluster,
+    machinePools: machinePoolsResponse || [],
+    currentMachinePoolId: currentMachinePool?.id,
+    machineTypes: machineTypesResponse,
+    tabKey: 3,
+    initialTabContentShown: STARTING_TAB_KEY === 3,
+  });
+
+  const [securityGroupsTab, securityGroupsContent] = useSecurityGroupsSubTab({
+    cluster,
+    isReadOnly: isEdit,
+    tabKey: 4,
+    initialTabContentShown: STARTING_TAB_KEY === 4,
+  });
+
+  const [costSavingsTab, costSavingsContent] = useCostSavingsSubTab({
+    cluster,
+    isEdit,
+    tabKey: 5,
+    initialTabContentShown: STARTING_TAB_KEY === 5,
+  });
+
   return (
     <Formik<EditMachinePoolValues>
       onSubmit={async (values) => {
@@ -165,7 +226,7 @@ const EditMachinePoolModal = ({
       enableReinitialize
       validateOnMount
     >
-      {({ isValid, submitForm, isSubmitting, values, setFieldValue }) => (
+      {({ isValid, submitForm, isSubmitting, values, setFieldValue, errors }) => (
         <Modal
           id="edit-mp-modal"
           title={isEdit ? 'Edit machine pool' : 'Add machine pool'}
@@ -177,7 +238,7 @@ const EditMachinePoolModal = ({
             (!machineTypesError && machineTypesLoading) ||
             (isEdit && machineTypesResponse && machinePoolsResponse && !currentMachinePool)
           }
-          modalSize="large"
+          variant={ModalVariant.medium}
           description={!isEdit && modalDescription}
           footer={
             <Stack hasGutter>
@@ -249,46 +310,72 @@ const EditMachinePoolModal = ({
               response={machinePoolsError ? machinePoolsErrorResponse : machineTypesErrorResponse}
             />
           ) : (
-            <Form>
-              <EditDetailsSection
-                cluster={cluster}
-                machinePools={machinePoolsResponse || []}
-                isEdit={isEdit}
-                region={region}
-                currentMPId={currentMachinePool?.id}
-                setCurrentMPId={setCurrentMPId}
-                machineTypesResponse={machineTypesResponse}
-                machineTypesLoading={machineTypesLoading}
-              />
-              <EditNodeCountSection
-                cluster={cluster}
-                machinePool={currentMachinePool}
-                machinePools={machinePoolsResponse || []}
-                machineTypes={machineTypesResponse}
-                allow249NodesOSDCCSROSA={allow249NodesOSDCCSROSA}
-              />
-              <AutoRepairField cluster={cluster} />
-              {imdsSectionFeature && !isEdit && isHypershift ? (
-                <ImdsSection
-                  imds={values.imds}
-                  isDisabled={false}
-                  onChangeImds={(value) => setFieldValue(FieldId.IMDS, value)}
-                />
-              ) : null}
-              <DiskSizeField cluster={cluster} isEdit={isEdit} />
-              <ExpandableSection toggleText="Edit node labels and taints">
-                <EditLabelsSection />
-                <EditTaintsSection
-                  cluster={cluster}
-                  machinePools={machinePoolsResponse || []}
-                  machinePoolId={currentMachinePool?.id}
-                  machineTypes={machineTypesResponse}
-                />
-              </ExpandableSection>
-              {isGCP && isSecureBootEnabled ? <ShieldedVM isEditModal={!!isEdit} /> : null}
-              <EditSecurityGroupsSection cluster={cluster} isReadOnly={isEdit} />
-              {canUseSpotInstances(cluster) && <SpotInstancesSection isEdit={isEdit} />}
-            </Form>
+            <div>
+              {tabbedMachinePoolModalFeature ? (
+                <>
+                  <Tabs
+                    activeKey={activeTabKey}
+                    onSelect={(_e, tabIndex) => setActiveTabKey(tabIndex)}
+                    // @ts-ignore  isSubtab is PF6
+                    isSubtab
+                    // @ts-ignore   isSecondary is PF5
+                    isSecondary
+                  >
+                    {overviewTab(errors)}
+                    {maintenanceTab(errors)}
+                    {labelsTagsTaintsTab(errors)}
+                    {securityGroupsTab(errors)}
+                    {costSavingsTab(errors)}
+                  </Tabs>
+                  {overviewContent({ setFieldValue, imdsValue: values.imds })}
+                  {maintenanceContent()}
+                  {labelsTagsTaintsContent()}
+                  {securityGroupsContent()}
+                  {costSavingsContent()}
+                </>
+              ) : (
+                <Form>
+                  <EditDetailsSection
+                    cluster={cluster}
+                    machinePools={machinePoolsResponse || []}
+                    isEdit={isEdit}
+                    region={region}
+                    currentMPId={currentMachinePool?.id}
+                    setCurrentMPId={setCurrentMPId}
+                    machineTypesResponse={machineTypesResponse}
+                    machineTypesLoading={machineTypesLoading}
+                  />
+                  <EditNodeCountSection
+                    cluster={cluster}
+                    machinePool={currentMachinePool}
+                    machinePools={machinePoolsResponse || []}
+                    machineTypes={machineTypesResponse}
+                    allow249NodesOSDCCSROSA={allow249NodesOSDCCSROSA}
+                  />
+                  <AutoRepairField cluster={cluster} />
+                  {imdsSectionFeature && !isEdit && isHypershift ? (
+                    <ImdsSection
+                      imds={values.imds}
+                      isDisabled={false}
+                      onChangeImds={(value) => setFieldValue(FieldId.IMDS, value)}
+                    />
+                  ) : null}
+                  <DiskSizeField cluster={cluster} isEdit={isEdit} />
+                  <ExpandableSection toggleText="Edit node labels and taints">
+                    <EditLabelsSection />
+                    <EditTaintsSection
+                      cluster={cluster}
+                      machinePools={machinePoolsResponse || []}
+                      machinePoolId={currentMachinePool?.id}
+                      machineTypes={machineTypesResponse}
+                    />
+                  </ExpandableSection>
+                  {isGCP && isSecureBootEnabled ? <ShieldedVM isEditModal={!!isEdit} /> : null}
+                  <EditSecurityGroupsSection cluster={cluster} isReadOnly={isEdit} isExpandable />
+                  {canUseSpotInstances(cluster) && <SpotInstancesSection isEdit={isEdit} />}
+                </Form>
+              )}
+            </div>
           )}
         </Modal>
       )}

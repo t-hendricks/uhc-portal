@@ -35,6 +35,8 @@ export const ASSISTED_MIGRATION_ENABLED = 'assisted-migration';
 export const GCP_SECURE_BOOT = 'ocmui-gcp-secure-boot';
 export const HIDE_RH_MARKETPLACE = 'OCMUI-hide-rh-marketplace';
 export const IMDS_SELECTION = 'ocmui-imds-selection';
+export const AWS_TAGS_NEW_MP = 'ocmui-aws-tags-new-mp';
+export const TABBED_MACHINE_POOL_MODAL = 'ocmui-tabbed-machine-pool-modal';
 
 export default {
   AUTO_CLUSTER_TRANSFER_OWNERSHIP,
@@ -56,4 +58,6 @@ export default {
   GCP_SECURE_BOOT,
   HIDE_RH_MARKETPLACE,
   IMDS_SELECTION,
+  AWS_TAGS_NEW_MP,
+  TABBED_MACHINE_POOL_MODAL,
 } as const;
