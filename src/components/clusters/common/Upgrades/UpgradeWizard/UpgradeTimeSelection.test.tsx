@@ -84,4 +84,26 @@ describe('<UpgradeTimeSelection />', () => {
 
     expect(screen.getByText("Invalid date format. Use 'YYYY-MM-DD' format.")).toBeInTheDocument();
   });
+
+  it('displays 30 minute and 00 minute time options', async () => {
+    const { user } = render(
+      <UpgradeTimeSelection type="time" timestamp="2025-06-06T22:00:00.000Z" onSet={mockOnSet} />,
+    );
+
+    const radioButton = screen.getByRole('radio', { name: /Schedule a different time/i });
+    expect(radioButton).toBeChecked();
+    await user.click(radioButton);
+
+    const timeSelectButton = screen.getByRole('button', { name: /Upgrade time menu/i });
+
+    await user.click(timeSelectButton);
+    expect(screen.getByText('14:00')).toBeInTheDocument();
+    expect(screen.getByText('14:30')).toBeInTheDocument();
+    expect(screen.getByText('15:00')).toBeInTheDocument();
+    expect(screen.getByText('15:30')).toBeInTheDocument();
+    expect(screen.getByText('16:00')).toBeInTheDocument();
+    expect(screen.getByText('16:30')).toBeInTheDocument();
+    expect(screen.getByText('17:00')).toBeInTheDocument();
+    expect(screen.getByText('17:30')).toBeInTheDocument();
+  });
 });

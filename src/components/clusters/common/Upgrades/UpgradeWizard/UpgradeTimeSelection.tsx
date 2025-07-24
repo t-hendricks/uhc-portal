@@ -97,13 +97,25 @@ const UpgradeTimeSelection = ({
   const makeSelectOptions = () => {
     const ret = [];
     for (let hour = 0; hour < 24; hour += 1) {
-      const value = `${hour.toString().padStart(2, '0')}:00`;
-      const date = new Date(timestamp);
-      date.setHours(hour);
-      date.setMinutes(0);
+      const value00 = `${hour.toString().padStart(2, '0')}:00`;
+      const date00 = new Date(timestamp);
+
+      date00.setHours(hour);
+      date00.setMinutes(0);
       ret.push(
-        <SelectOption value={value} key={value} isDisabled={getDefaultTimestamp() > date}>
-          {value}
+        <SelectOption value={value00} key={value00} isDisabled={getDefaultTimestamp() > date00}>
+          {value00}
+        </SelectOption>,
+      );
+
+      const value30 = `${hour.toString().padStart(2, '0')}:30`;
+      const date30 = new Date(timestamp);
+
+      date30.setHours(hour);
+      date30.setMinutes(30);
+      ret.push(
+        <SelectOption value={value30} key={value30} isDisabled={getDefaultTimestamp() > date30}>
+          {value30}
         </SelectOption>,
       );
     }
