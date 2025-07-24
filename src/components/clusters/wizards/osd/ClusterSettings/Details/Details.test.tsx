@@ -58,13 +58,14 @@ describe('<Details />', () => {
       // Even if we already have data ^, Details makes a request on mount.
       (clusterService.getCloudProviders as jest.Mock).mockResolvedValue(providersResponse);
 
-      const { user } = withState(loadedState).render(
+      const { user, container } = withState(loadedState).render(
         <Formik initialValues={defaultValues} onSubmit={() => {}}>
           <Details />
         </Formik>,
       );
 
-      await user.click(screen.getByRole('textbox', { name: /cluster name/i }));
+      const clusterNameInput = container.querySelector('input[name="name"]')!;
+      await user.click(clusterNameInput);
       await user.click(screen.getByRole('checkbox', { name: /enable user workload monitoring/i }));
 
       expect(screen.getByText('Field is required')).toBeInTheDocument();
