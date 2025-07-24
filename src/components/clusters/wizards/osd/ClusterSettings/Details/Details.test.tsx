@@ -42,6 +42,35 @@ describe('<Details />', () => {
     [FieldId.HasDomainPrefix]: true,
   };
 
+  describe('Cluster name', () => {
+    beforeEach(() => {
+      jest.resetAllMocks();
+      (clusterService.getInstallableVersions as jest.Mock).mockResolvedValue({
+        data: { items: [version] },
+      });
+      (getOCPLifeCycleStatus as jest.Mock).mockResolvedValue(ocpLifeCycleStatuses);
+    });
+
+    it('displays field is required error message when input is an empty string', async () => {
+      const loadedState = {
+        cloudProviders: fulfilledProviders,
+      };
+      // Even if we already have data ^, Details makes a request on mount.
+      (clusterService.getCloudProviders as jest.Mock).mockResolvedValue(providersResponse);
+
+      const { user } = withState(loadedState).render(
+        <Formik initialValues={defaultValues} onSubmit={() => {}}>
+          <Details />
+        </Formik>,
+      );
+
+      await user.click(screen.getByRole('textbox', { name: /cluster name/i }));
+      await user.click(screen.getByRole('checkbox', { name: /enable user workload monitoring/i }));
+
+      expect(screen.getByText('Field is required')).toBeInTheDocument();
+    });
+  });
+
   describe('Region dropdown', () => {
     beforeEach(() => {
       jest.resetAllMocks();

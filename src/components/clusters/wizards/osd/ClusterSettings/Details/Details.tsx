@@ -26,6 +26,7 @@ import {
   createPessimisticValidator,
   domainPrefixAsyncValidation,
   domainPrefixValidation,
+  required,
   validateAWSKMSKeyARN,
 } from '~/common/validators';
 import { versionComparator } from '~/common/versionComparator';
@@ -242,6 +243,11 @@ function Details() {
   ];
 
   const validateClusterName = async (value: string) => {
+    const requiredError = required(value);
+    if (requiredError) {
+      return requiredError;
+    }
+
     const syncError = createPessimisticValidator(clusterNameValidation)(
       value,
       clusterNameMaxLength,
