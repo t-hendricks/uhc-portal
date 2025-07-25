@@ -89,7 +89,7 @@ describe('<BulkDeleteUserModal />', () => {
     );
 
     await waitFor(() => {
-      expect(screen.getByRole('button', { name: 'Remove users' })).toBeInTheDocument();
+      expect(screen.getByRole('button', { name: 'Delete users' })).toBeInTheDocument();
     });
     expect(reset).not.toHaveBeenCalled();
     expect(mockedDispatch).not.toHaveBeenCalled();
@@ -108,7 +108,7 @@ describe('<BulkDeleteUserModal />', () => {
     );
 
     await waitFor(() => {
-      expect(screen.getByRole('button', { name: 'Remove users' })).toBeInTheDocument();
+      expect(screen.getByRole('button', { name: 'Delete users' })).toBeInTheDocument();
     });
 
     expect(screen.getByText('* user1')).toBeInTheDocument();
@@ -127,12 +127,12 @@ describe('<BulkDeleteUserModal />', () => {
     );
 
     await waitFor(() => {
-      expect(screen.getByRole('button', { name: 'Remove users' })).toBeInTheDocument();
+      expect(screen.getByRole('button', { name: 'Delete users' })).toBeInTheDocument();
     });
 
-    expect(screen.getByRole('button', { name: 'Remove users' })).not.toBeDisabled();
+    expect(screen.getByRole('button', { name: 'Delete users' })).not.toBeDisabled();
 
-    await user.click(screen.getByRole('button', { name: 'Remove users' }));
+    await user.click(screen.getByRole('button', { name: 'Delete users' }));
     expect(mutate).toHaveBeenCalled();
   }, 20000);
 

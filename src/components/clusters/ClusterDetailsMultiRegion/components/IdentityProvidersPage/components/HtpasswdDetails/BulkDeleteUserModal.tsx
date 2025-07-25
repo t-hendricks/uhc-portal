@@ -50,10 +50,10 @@ const BulkDeleteUserModal = ({
 
   return (
     <Modal
-      title="Remove htpasswd users"
+      title="Delete htpasswd users"
       secondaryTitle={undefined}
       onClose={closeBulkDeleteUserModal}
-      primaryText="Remove users"
+      primaryText="Delete users"
       onPrimaryClick={() =>
         mutate(selectedUsers, {
           onSuccess: () => {
@@ -91,7 +91,7 @@ const BulkDeleteUserModal = ({
             <StackItem>
               <Content>
                 <Content component={ContentVariants.p}>
-                  You are about to remove <strong>{selectedUsers.length} users</strong> from the
+                  You are about to delete <strong>{selectedUsers.length} users</strong> from the
                   identity provider <strong>{idpName}</strong>.
                 </Content>
               </Content>

@@ -65,7 +65,7 @@ const DeleteHtpasswdUserDialog = ({
   return (
     <Modal
       onClose={closeModal}
-      primaryText="Remove user"
+      primaryText="Delete user"
       primaryVariant="danger"
       onPrimaryClick={() =>
         mutate(htpasswdUserId, {
@@ -83,7 +83,7 @@ const DeleteHtpasswdUserDialog = ({
         })
       }
       onSecondaryClick={closeModal}
-      title="Remove htpasswd user"
+      title="Delete htpasswd user"
       isPending={isPending}
       data-testid="delete-htpasswd-user-dialog"
     >
@@ -93,7 +93,7 @@ const DeleteHtpasswdUserDialog = ({
       ) : (
         <>
           <p>
-            You are about to remove <strong>{htpasswdUserName}</strong> from the identity provider{' '}
+            You are about to delete <strong>{htpasswdUserName}</strong> from the identity provider{' '}
             <strong>{idpName}</strong>.
           </p>
           <p>This user will lose access to this cluster.</p>

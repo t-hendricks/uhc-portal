@@ -113,10 +113,10 @@ describe('<DeleteHtpasswdUserDialog />', () => {
     );
 
     await waitFor(() => {
-      expect(screen.getByRole('button', { name: 'Remove user' })).toBeInTheDocument();
+      expect(screen.getByRole('button', { name: 'Delete user' })).toBeInTheDocument();
     });
 
-    await user.click(screen.getByRole('button', { name: 'Remove user' }));
+    await user.click(screen.getByRole('button', { name: 'Delete user' }));
     expect(mockedDispatch).toHaveBeenCalled();
     expect(reset).toHaveBeenCalled();
     expect(mutate).toHaveBeenCalled();
