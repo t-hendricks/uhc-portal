@@ -39,6 +39,8 @@ class ClusterDetails extends Page {
 
   machinePoolsTab = () => cy.get('button[aria-controls="machinePoolsTabContent"]');
 
+  supportTab = () => cy.get('button[aria-controls="supportTabContent"]');
+
   networkingTab = () => cy.get('button[aria-controls="networkingTabContent"]');
 
   settingsTab = () => cy.get('button[aria-controls="upgradeSettingsTabContent"]');
