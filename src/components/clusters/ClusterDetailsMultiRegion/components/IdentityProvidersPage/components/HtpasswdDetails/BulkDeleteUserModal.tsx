@@ -54,6 +54,7 @@ const BulkDeleteUserModal = ({
       secondaryTitle={undefined}
       onClose={closeBulkDeleteUserModal}
       primaryText="Delete users"
+      primaryVariant="danger"
       onPrimaryClick={() =>
         mutate(selectedUsers, {
           onSuccess: () => {
