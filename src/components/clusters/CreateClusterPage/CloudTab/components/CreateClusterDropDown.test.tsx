@@ -16,7 +16,7 @@ describe('<CreateClusterDropDown />', () => {
 
   it('is accessible', async () => {
     // Arrange
-    const { container } = render(<CreateClusterDropDown canCreateManagedCluster />);
+    const { container } = render(<CreateClusterDropDown isDisabled={false} />);
 
     // Assert
     await checkAccessibility(container);
@@ -24,7 +24,7 @@ describe('<CreateClusterDropDown />', () => {
 
   it('is accessible expanded', async () => {
     // Arrange
-    const { container, user } = render(<CreateClusterDropDown canCreateManagedCluster />);
+    const { container, user } = render(<CreateClusterDropDown isDisabled={false} />);
 
     // Act
     await user.click(screen.getByRole('button', { name: 'Create cluster' }));
@@ -35,12 +35,12 @@ describe('<CreateClusterDropDown />', () => {
   });
 
   it('disables the create cluster button when user has no permissions', async () => {
-    render(<CreateClusterDropDown canCreateManagedCluster={false} />);
+    render(<CreateClusterDropDown isDisabled />);
     expect(screen.getByRole('button', { name: 'Create cluster' })).toHaveAttribute('disabled');
   });
 
   it('enables the create cluster button when user has permissions', async () => {
-    render(<CreateClusterDropDown canCreateManagedCluster />);
+    render(<CreateClusterDropDown isDisabled={false} />);
     expect(screen.getByRole('button', { name: 'Create cluster' })).not.toHaveAttribute('disabled');
   });
 
@@ -49,7 +49,7 @@ describe('<CreateClusterDropDown />', () => {
     const history = createMemoryHistory();
     const { user } = render(
       <Router location={history.location} navigator={history}>
-        <CreateClusterDropDown canCreateManagedCluster />
+        <CreateClusterDropDown isDisabled={false} />
       </Router>,
       { withRouter: false }, // set to false so we can wrap with router to check routing
     );
@@ -69,7 +69,7 @@ describe('<CreateClusterDropDown />', () => {
     const { user } = render(
       // @ts-ignore
       <Router location={history.location} navigator={history}>
-        <CreateClusterDropDown canCreateManagedCluster />
+        <CreateClusterDropDown isDisabled={false} />
       </Router>,
       { withRouter: false },
     );
@@ -87,7 +87,7 @@ describe('<CreateClusterDropDown />', () => {
     const history = createMemoryHistory();
     const { user } = render(
       <Router location={history.location} navigator={history}>
-        <CreateClusterDropDown canCreateManagedCluster />
+        <CreateClusterDropDown isDisabled={false} />
       </Router>,
       { withRouter: false }, // set to false so we can wrap with router to check routing
     );

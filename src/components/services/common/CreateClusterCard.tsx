@@ -14,7 +14,7 @@ import {
 import CubeIcon from '@patternfly/react-icons/dist/esm/icons/cube-icon';
 
 import { Link } from '~/common/routing';
-import CreateManagedClusterTooltip from '~/components/common/CreateManagedClusterTooltip';
+import { CreateManagedClusterButtonWithTooltip } from '~/components/common/CreateManagedClusterTooltip';
 import InternalTrackingLink from '~/components/common/InternalTrackingLink';
 import { useCanCreateManagedCluster } from '~/queries/ClusterDetailsQueries/useFetchActionsPermissions';
 
@@ -68,11 +68,9 @@ export const CreateClusterCard = ({
           <CardFooter>
             <Flex>
               <FlexItem>
-                {!canCreateManagedCluster ? (
-                  <CreateManagedClusterTooltip>{createClusterBtn}</CreateManagedClusterTooltip>
-                ) : (
-                  createClusterBtn
-                )}
+                <CreateManagedClusterButtonWithTooltip wrap>
+                  {createClusterBtn}
+                </CreateManagedClusterButtonWithTooltip>
               </FlexItem>
             </Flex>
           </CardFooter>

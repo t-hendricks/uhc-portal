@@ -22,7 +22,7 @@ import {
 
 import docLinks from '~/common/installLinks.mjs';
 import { Link } from '~/common/routing';
-import CreateManagedClusterTooltip from '~/components/common/CreateManagedClusterTooltip';
+import { CreateManagedClusterButtonWithTooltip } from '~/components/common/CreateManagedClusterTooltip';
 import ExternalLink from '~/components/common/ExternalLink';
 import InternalTrackingLink from '~/components/common/InternalTrackingLink';
 import AWSLogo from '~/styles/images/AWSLogo';
@@ -122,13 +122,6 @@ function OfferingCard(props: OfferingCardProps) {
     </InternalTrackingLink>
   );
 
-  const getOfferingCardLink = (btn: React.ReactElement) =>
-    !canCreateManagedCluster ? (
-      <CreateManagedClusterTooltip>{btn}</CreateManagedClusterTooltip>
-    ) : (
-      btn
-    );
-
   switch (offeringType) {
     case 'AWS':
       offeringCardTitle = 'Red Hat OpenShift Service on AWS (ROSA)';
@@ -140,7 +133,11 @@ function OfferingCard(props: OfferingCardProps) {
         },
         { descriptionListTerm: 'Billing type', descriptionListDescription: 'Flexible hourly' },
       ];
-      offeringCardCreationLink = getOfferingCardLink(createAWSClusterBtn);
+      offeringCardCreationLink = (
+        <CreateManagedClusterButtonWithTooltip wrap>
+          {createAWSClusterBtn}
+        </CreateManagedClusterButtonWithTooltip>
+      );
       offeringCardDocLink = (
         <InternalTrackingLink
           isButton
@@ -171,7 +168,11 @@ function OfferingCard(props: OfferingCardProps) {
         { descriptionListTerm: 'Purchase through', descriptionListDescription: 'Red Hat' },
         { descriptionListTerm: 'Billing type', descriptionListDescription: 'Flexible or fixed' },
       ];
-      offeringCardCreationLink = getOfferingCardLink(createOSDBtnCluster);
+      offeringCardCreationLink = (
+        <CreateManagedClusterButtonWithTooltip wrap>
+          {createOSDBtnCluster}
+        </CreateManagedClusterButtonWithTooltip>
+      );
       offeringCardDocLink = (
         <InternalTrackingLink
           isButton

@@ -16,7 +16,7 @@ import { scrollToFirstField } from '~/common/helpers';
 import { getScrollErrorIds } from '~/components/clusters/wizards/form/utils';
 import { useFormState } from '~/components/clusters/wizards/hooks';
 import { StepId } from '~/components/clusters/wizards/osd/constants';
-import CreateManagedClusterTooltip from '~/components/common/CreateManagedClusterTooltip';
+import { CreateManagedClusterButtonWithTooltip } from '~/components/common/CreateManagedClusterTooltip';
 import { useCanCreateManagedCluster } from '~/queries/ClusterDetailsQueries/useFetchActionsPermissions';
 import { useGlobalState } from '~/redux/hooks/useGlobalState';
 
@@ -120,11 +120,9 @@ export const CreateOsdWizardFooter = ({
     <WizardFooterWrapper>
       <ActionList>
         <ActionListGroup>
-          {canCreateManagedCluster ? (
-            primaryBtn
-          ) : (
-            <CreateManagedClusterTooltip wrap>{primaryBtn}</CreateManagedClusterTooltip>
-          )}
+          <CreateManagedClusterButtonWithTooltip wrap>
+            {primaryBtn}
+          </CreateManagedClusterButtonWithTooltip>
           <ActionListItem>
             <Button
               variant="secondary"

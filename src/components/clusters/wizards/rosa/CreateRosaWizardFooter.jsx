@@ -15,7 +15,7 @@ import {
 import { scrollToFirstField } from '~/common/helpers';
 import { getScrollErrorIds } from '~/components/clusters/wizards/form/utils';
 import { useFormState } from '~/components/clusters/wizards/hooks';
-import CreateManagedClusterTooltip from '~/components/common/CreateManagedClusterTooltip';
+import { CreateManagedClusterButtonWithTooltip } from '~/components/common/CreateManagedClusterTooltip';
 import { useCanCreateManagedCluster } from '~/queries/ClusterDetailsQueries/useFetchActionsPermissions';
 
 import { isUserRoleForSelectedAWSAccount } from './AccountsRolesScreen/AccountsRolesScreen';
@@ -155,11 +155,9 @@ const CreateRosaWizardFooter = ({
     <WizardFooterWrapper>
       <ActionList>
         <ActionListGroup>
-          {canCreateManagedCluster ? (
-            primaryBtn
-          ) : (
-            <CreateManagedClusterTooltip wrap>{primaryBtn}</CreateManagedClusterTooltip>
-          )}
+          <CreateManagedClusterButtonWithTooltip wrap>
+            {primaryBtn}
+          </CreateManagedClusterButtonWithTooltip>
 
           <ActionListItem>
             <Button

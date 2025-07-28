@@ -7,7 +7,7 @@ import { ExpandableRowContent, Table, Tbody, Td, Th, Thead, Tr } from '@patternf
 import { Link } from '~/common/routing';
 import CreateClusterDropDown from '~/components/clusters/CreateClusterPage/CloudTab/components/CreateClusterDropDown';
 import links from '~/components/clusters/CreateClusterPage/CreateClusterConsts';
-import CreateManagedClusterTooltip from '~/components/common/CreateManagedClusterTooltip';
+import { CreateManagedClusterButtonWithTooltip } from '~/components/common/CreateManagedClusterTooltip';
 import ExternalLink from '~/components/common/ExternalLink';
 import { useCanCreateManagedCluster } from '~/queries/ClusterDetailsQueries/useFetchActionsPermissions';
 import { isRestrictedEnv } from '~/restrictedEnv';
@@ -49,25 +49,6 @@ const ManagedServicesTable = (props: ManagedServicesTableProps) => {
     rosa: 'rosa',
   };
 
-  const createOSDTrialbutton = (
-    <Button
-      className="create-button"
-      isAriaDisabled={!canCreateManagedCluster}
-      variant={ButtonVariant.primary}
-      component={(props) => (
-        <Link
-          {...props}
-          id="create-trial-cluster"
-          to="/create/osdtrial?trial=osd"
-          data-testid="osd-create-trial-cluster"
-          role="button"
-        />
-      )}
-    >
-      Create trial cluster
-    </Button>
-  );
-
   const osdTrialRow = {
     key: rowKeys.osdTrial,
     logo: <img className="partner-logo" src={RedHatLogo} alt="OSD" />,
@@ -78,40 +59,49 @@ const ManagedServicesTable = (props: ManagedServicesTableProps) => {
     ),
     purchasedThrough: 'Red Hat',
     details: 'Available on GCP',
-    action: !canCreateManagedCluster ? (
-      <CreateManagedClusterTooltip>{createOSDTrialbutton}</CreateManagedClusterTooltip>
-    ) : (
-      createOSDTrialbutton
+    action: (
+      <CreateManagedClusterButtonWithTooltip
+        childComponent={Button}
+        className="create-button"
+        isAriaDisabled={!canCreateManagedCluster}
+        variant={ButtonVariant.primary}
+        component={(props: any) => (
+          <Link
+            {...props}
+            id="create-trial-cluster"
+            to="/create/osdtrial?trial=osd"
+            data-testid="osd-create-trial-cluster"
+            role="button"
+          />
+        )}
+      >
+        Create trial cluster
+      </CreateManagedClusterButtonWithTooltip>
     ),
     expandedSection: null,
   };
 
-  const createOSDbutton = (
-    <Button
-      className="create-button"
-      isAriaDisabled={!canCreateManagedCluster}
-      variant={ButtonVariant.primary}
-      component={(props) => (
-        <Link
-          {...props}
-          id="create-cluster"
-          to="/create/osd"
-          data-testid="osd-create-cluster-button"
-        />
-      )}
-    >
-      Create cluster
-    </Button>
-  );
-
   let osdRowaction;
 
   if (hasOSDQuota) {
-    if (!canCreateManagedCluster) {
-      osdRowaction = <CreateManagedClusterTooltip>{createOSDbutton}</CreateManagedClusterTooltip>;
-    } else {
-      osdRowaction = createOSDbutton;
-    }
+    osdRowaction = (
+      <CreateManagedClusterButtonWithTooltip
+        childComponent={Button}
+        className="create-button"
+        isAriaDisabled={!canCreateManagedCluster}
+        variant={ButtonVariant.primary}
+        component={(props: any) => (
+          <Link
+            {...props}
+            id="create-cluster"
+            to="/create/osd"
+            data-testid="osd-create-cluster-button"
+          />
+        )}
+      >
+        Create cluster
+      </CreateManagedClusterButtonWithTooltip>
+    );
   } else {
     osdRowaction = (
       <ExternalLink
@@ -237,10 +227,6 @@ const ManagedServicesTable = (props: ManagedServicesTableProps) => {
     },
   };
 
-  const rosaCreateClusterDropdown = (
-    <CreateClusterDropDown canCreateManagedCluster={canCreateManagedCluster || false} />
-  );
-
   const rosaRow = {
     key: rowKeys.rosa,
     logo: <img className="partner-logo" src={AWSLogo} alt="AWS" />,
@@ -251,10 +237,13 @@ const ManagedServicesTable = (props: ManagedServicesTableProps) => {
     ),
     purchasedThrough: 'Amazon Web Services',
     details: 'Flexible hourly billing',
-    action: !canCreateManagedCluster ? (
-      <CreateManagedClusterTooltip wrap>{rosaCreateClusterDropdown}</CreateManagedClusterTooltip>
-    ) : (
-      rosaCreateClusterDropdown
+
+    action: (
+      <CreateManagedClusterButtonWithTooltip
+        childComponent={CreateClusterDropDown}
+        isDisabled={!canCreateManagedCluster}
+        wrap
+      />
     ),
     expandedSection: {
       content: (

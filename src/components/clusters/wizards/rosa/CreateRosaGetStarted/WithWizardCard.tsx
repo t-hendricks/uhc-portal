@@ -15,7 +15,7 @@ import {
 import { DesktopIcon } from '@patternfly/react-icons/dist/esm/icons/desktop-icon';
 
 import { Link } from '~/common/routing';
-import CreateManagedClusterTooltip from '~/components/common/CreateManagedClusterTooltip';
+import { CreateManagedClusterButtonWithTooltip } from '~/components/common/CreateManagedClusterTooltip';
 import { useCanCreateManagedCluster } from '~/queries/ClusterDetailsQueries/useFetchActionsPermissions';
 
 const WithWizard = () => {
@@ -47,16 +47,15 @@ const WithWizard = () => {
         />
       </CardBody>
       <CardFooter>
-        <CreateManagedClusterTooltip>
-          <Button
-            variant={ButtonVariant.secondary}
-            icon={<DesktopIcon />}
-            component={LinkComponent}
-            isAriaDisabled={!canCreateManagedCluster}
-          >
-            Create with web interface
-          </Button>
-        </CreateManagedClusterTooltip>
+        <CreateManagedClusterButtonWithTooltip
+          childComponent={Button}
+          variant={ButtonVariant.secondary}
+          icon={<DesktopIcon />}
+          component={LinkComponent}
+          isAriaDisabled={!canCreateManagedCluster}
+        >
+          Create with web interface
+        </CreateManagedClusterButtonWithTooltip>
       </CardFooter>
     </Card>
   );
