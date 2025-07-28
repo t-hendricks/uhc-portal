@@ -47,13 +47,6 @@ function CIDRFields({
     return value;
   };
 
-  const normalizeHostPrefix = (value) => {
-    if (value && value.charAt(0) === '/') {
-      return value.substring(1);
-    }
-    return value;
-  };
-
   const selectedSubnets = constructSelectedSubnets(formValues);
 
   const cidrValidators = (value) =>
@@ -242,12 +235,13 @@ function CIDRFields({
           label="Host prefix"
           placeholder={HOST_PREFIX_DEFAULT}
           type="text"
-          format={formatHostPrefix}
-          normalize={normalizeHostPrefix}
           validate={hostValidators}
           disabled={isFieldDisabled}
           input={getFieldProps(FieldId.NetworkHostPrefix)}
           meta={getFieldMeta(FieldId.NetworkHostPrefix)}
+          onChange={(_event, value) =>
+            setFieldValue(FieldId.NetworkHostPrefix, formatHostPrefix(value))
+          }
           helpText={`Must be between /${validators.HOST_PREFIX_MIN} and /${validators.HOST_PREFIX_MAX}.`}
           extendedHelpText={
             <>
