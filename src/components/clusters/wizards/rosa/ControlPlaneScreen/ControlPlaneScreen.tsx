@@ -5,6 +5,7 @@ import { Content, ContentVariants, Form, Grid, GridItem, Title } from '@patternf
 
 import links from '~/common/installLinks.mjs';
 import { normalizedProducts } from '~/common/subscriptionTypes';
+import { clusterBillingModelToRelatedResource } from '~/components/clusters/common/billingModelMapper';
 import { QuotaTypes } from '~/components/clusters/common/quotaModel';
 import { availableQuota } from '~/components/clusters/common/quotaSelectors';
 import { emptyAWSSubnet } from '~/components/clusters/wizards/common/constants';
@@ -17,6 +18,7 @@ import { useFeatureGate } from '~/queries/featureGates/useFetchFeatureGate';
 import { useGlobalState } from '~/redux/hooks';
 import AWSLogo from '~/styles/images/AWS.png';
 import RedHat from '~/styles/images/Logo-Red_Hat-B-Standard-RGB.png';
+import { SubscriptionCommonFieldsCluster_billing_model as SubscriptionCommonFieldsClusterBillingModel } from '~/types/accounts_mgmt.v1';
 
 import { NO_ROLE_DETECTED } from '../AccountsRolesScreen/AccountRolesARNsSection/AccountRolesARNsSection';
 import { FieldId, initialValuesHypershift } from '../constants';
@@ -103,12 +105,7 @@ const ControlPlaneField = ({
 };
 
 const ControlPlaneScreen = () => {
-  const {
-    values: { [FieldId.BillingModel]: billingModel },
-    setFieldValue,
-    getFieldProps,
-    setFieldTouched,
-  } = useFormState();
+  const { setFieldValue, getFieldProps, setFieldTouched } = useFormState();
 
   const quotaList = useGlobalState((state) => state.userProfile.organization.quotaList);
 
@@ -116,10 +113,13 @@ const ControlPlaneScreen = () => {
     () =>
       availableQuota(quotaList, {
         product: normalizedProducts.ROSA,
-        billingModel,
+        // marketplace_aws is the ROSA HCP billing model
+        billingModel: clusterBillingModelToRelatedResource(
+          SubscriptionCommonFieldsClusterBillingModel.marketplace_aws,
+        ),
         resourceType: QuotaTypes.CLUSTER,
       }) >= 1,
-    [billingModel, quotaList],
+    [quotaList],
   );
 
   return (

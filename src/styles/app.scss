@@ -411,9 +411,11 @@ h1 .badged-resource-pf .badged-resource-pf-icon {
   padding-top: 0;
 }
 
-// Disabled tiles should still allow for tooltips
+// workarounds for Tile components in 'disabled' state
 .pf-v6-c-tile.pf-m-disabled {
+  // allow triggering tooltips, or interacting with actionable content like links
   pointer-events: all;
+  // re-hide the bottom border, which indicates interactive state (e.g. 'active', 'hover', 'focus')
   &::after {
     background-color: transparent;
   }
