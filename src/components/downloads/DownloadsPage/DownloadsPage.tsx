@@ -11,8 +11,7 @@ import {
   Split,
   SplitItem,
 } from '@patternfly/react-core';
-import { Th, Thead, Tr } from '@patternfly/react-table';
-import { Table as TableDeprecated } from '@patternfly/react-table/deprecated';
+import { Table, Th, Thead, Tr } from '@patternfly/react-table';
 
 import { hasRestrictTokensCapability } from '~/common/restrictTokensHelper';
 import { Link, useNavigate } from '~/common/routing';
@@ -216,10 +215,10 @@ const DownloadsPage = () => {
               </Content>
             }
           >
-            <TableDeprecated aria-label="CLI tools table" cells={[]} rows={[]}>
+            <Table aria-label="CLI tools table">
               <DownloadsPageColumnHeadings />
               <CliToolRows {...commonPropsRowsComponents} />
-            </TableDeprecated>
+            </Table>
           </DownloadsSection>
 
           {!restrictedEnv && (
@@ -237,10 +236,10 @@ const DownloadsPage = () => {
                   </Content>
                 }
               >
-                <TableDeprecated aria-label="Developer tools table">
+                <Table aria-label="Developer tools table">
                   <DownloadsPageColumnHeadings />
                   <DevToolRows {...commonPropsRowsComponents} />
-                </TableDeprecated>
+                </Table>
               </DownloadsSection>
               <DownloadsSection
                 selectedCategory={selectedCategory}
@@ -255,10 +254,10 @@ const DownloadsPage = () => {
                   </Content>
                 }
               >
-                <TableDeprecated aria-label="OpenShift installation table">
+                <Table aria-label="OpenShift installation table">
                   <DownloadsPageColumnHeadings />
                   <InstallationRows {...commonPropsRowsComponents} />
-                </TableDeprecated>
+                </Table>
               </DownloadsSection>
 
               <DownloadsSection
@@ -270,10 +269,10 @@ const DownloadsPage = () => {
                   </Content>
                 }
               >
-                <TableDeprecated aria-label="OpenShift disconnected installation tools table">
+                <Table aria-label="OpenShift disconnected installation tools table">
                   <DownloadsPageColumnHeadings />
                   <DisconnectedInstallationRows {...commonPropsRowsComponents} />
-                </TableDeprecated>
+                </Table>
               </DownloadsSection>
 
               <DownloadsSection
@@ -286,22 +285,23 @@ const DownloadsPage = () => {
                   </Content>
                 }
               >
-                <TableDeprecated aria-label="OpenShift installation customization downloads table">
+                <Table aria-label="OpenShift installation customization downloads table">
                   <DownloadsPageColumnHeadings />
                   <CustomInstallationRows {...commonPropsRowsComponents} />
-                </TableDeprecated>
+                </Table>
               </DownloadsSection>
             </>
           )}
           <DownloadsSection category="TOKENS" selectedCategory={selectedCategory}>
-            <TableDeprecated aria-label="Tokens table">
+            <Table aria-label="Tokens table">
               <Thead>
                 <Tr>
-                  <Th width={10} />
-                  <Th width={90} />
-                  <Th width={10} />
+                  <Th width={10} aria-label="Expand for more information" />
+                  <Th width={90} aria-label="Token type" />
+                  <Th width={10} aria-label="Download or view token" />
                 </Tr>
-              </Thead>{' '}
+              </Thead>
+
               <TokenRows
                 expanded={expanded}
                 setExpanded={setExpandedState}
@@ -311,7 +311,7 @@ const DownloadsPage = () => {
                 orgRequest={{ isLoading, error: error as any }}
                 restrictedEnv={restrictedEnv}
               />
-            </TableDeprecated>
+            </Table>
           </DownloadsSection>
         </PageSection>
       </PageSection>
