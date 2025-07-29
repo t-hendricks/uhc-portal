@@ -2,7 +2,7 @@
   "rosa-hosted-public": {
     "day1-profile": {
       "Description": "rosa hosted public cluster with base configuration",
-      "ControlPlaneType": "Hosted",
+      "ControlPlaneType": "Hosted architecture",
       "Type": "ROSA",
       "DomainPrefix": "rosahcppublic",
       "ClusterName": "cyp-rosa-hosted-public",
@@ -107,7 +107,7 @@
   "rosa-hosted-public-advanced": {
     "day1-profile": {
       "Description": "rosa hosted public cluster with autoscaling, proxy etc",
-      "ControlPlaneType": "Hosted",
+      "ControlPlaneType": "Hosted architecture",
       "Type": "ROSA",
       "DomainPrefix": "rosahcpubad",
       "ClusterName": "cyp-rosa-hosted-public-advanced",

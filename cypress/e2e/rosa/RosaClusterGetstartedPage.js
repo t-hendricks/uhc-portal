@@ -33,7 +33,9 @@ describe('Rosa cluster Get Started page(OCP-56363)', { tags: ['smoke'] }, () => 
       .scrollIntoView()
       .within(() => {
         cy.contains('Enable AWS').should('be.exist').should('be.visible');
-        cy.contains('Set up a VPC for ROSA HCP clusters (optional for ROSA classic clusters)')
+        cy.contains(
+          'Set up a VPC for ROSA hosted control plane architecture (HCP) clusters (optional for ROSA classic architecture clusters)',
+        )
           .should('be.exist')
           .should('be.visible');
         cy.contains('Configure Elastic Load Balancer (ELB)')

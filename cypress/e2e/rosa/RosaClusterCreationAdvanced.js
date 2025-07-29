@@ -375,6 +375,9 @@ describe(
       ClusterDetailsPage.clusterTypeLabelValue().contains(clusterProperties.Type);
       ClusterDetailsPage.clusterAvailabilityLabelValue().contains(clusterProperties.Availability);
       ClusterDetailsPage.clusterDomainPrefixLabelValue().contains(clusterDomainPrefix);
+      ClusterDetailsPage.clusterControlPlaneTypeLabelValue()
+        .scrollIntoView()
+        .contains(clusterProperties.ControlPlaneType);
       ClusterDetailsPage.clusterInfrastructureAWSaccountLabelValue().contains(awsAccountID);
       ClusterDetailsPage.clusterFipsCryptographyStatus().contains('FIPS Cryptography enabled');
       ClusterDetailsPage.clusterIMDSValue().contains(clusterProperties.InstanceMetadataService);

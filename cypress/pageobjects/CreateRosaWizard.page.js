@@ -277,7 +277,7 @@ class CreateRosaCluster extends Page {
 
   isControlPlaneTypeScreen() {
     cy.contains('h2', 'Welcome to Red Hat OpenShift Service on AWS (ROSA)', { timeout: 30000 });
-    cy.contains('h3', 'Select an AWS control plane type');
+    cy.contains('h3', 'Select the ROSA architecture based on your control plane requirements');
   }
 
   isAssociateAccountsDrawer() {

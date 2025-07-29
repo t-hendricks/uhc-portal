@@ -4,7 +4,7 @@
       "Description": "rosa classic public cluster with base configuration",
 
       "ClusterName": "cyp-rosa-classic-default-sz-public-profile",
-      "ControlPlaneType": "Classic",
+      "ControlPlaneType": "Classic architecture",
       "Type": "ROSA",
       "Region": "us-west-2, US West, Oregon",
       "Availability": "Single zone",
@@ -74,7 +74,7 @@
     "day1-profile": {
       "Description": "rosa classic public cluster with advanced configuration",
 
-      "ControlPlaneType": "Classic",
+      "ControlPlaneType": "Classic architecture",
       "Type": "ROSA",
       "ClusterName": "cyp-rosa-classic-advanced-mz-public-profile",
       "DomainPrefix": "rosamzoubaz",

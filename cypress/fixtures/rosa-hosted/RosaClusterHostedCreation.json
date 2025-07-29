@@ -1,5 +1,5 @@
 {
-  "ControlPlaneType": "Hosted",
+  "ControlPlaneType": "Hosted architecture",
   "Type": "ROSA",
   "DomainPrefix": "smokerosahcp1",
   "Region": "us-west-2, US West, Oregon",
