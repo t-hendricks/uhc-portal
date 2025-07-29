@@ -34,8 +34,8 @@ import { RosaArchitectureRenamingAlert } from '../common/Banners/RosaArchitectur
 import { FieldId, initialValuesHypershift } from '../constants';
 
 import { hypershiftValue } from './ControlPlaneCommon';
-import HostedTile from './HostedTile';
-import StandAloneTile from './StandAloneTile';
+import { HostedTile } from './HostedTile';
+import { StandAloneTile } from './StandAloneTile';
 
 import './controlPlaneScreen.scss';
 
@@ -153,7 +153,7 @@ const ControlPlaneScreen = () => {
         </GridItem>
         <GridItem span={10}>
           <Title headingLevel="h3" className="pf-v6-u-mb-sm">
-            Select an AWS control plane type
+            Select the ROSA architecture based on your control plane requirements
           </Title>
           <Stack hasGutter>
             <StackItem>
@@ -163,7 +163,7 @@ const ControlPlaneScreen = () => {
               <Content component={ContentVariants.p}>
                 Not sure what to choose?{' '}
                 <ExternalLink href={links.AWS_CONTROL_PLANE_URL}>
-                  Learn more about AWS control plane types
+                  Learn more about control plane architecture
                 </ExternalLink>
               </Content>
             </StackItem>

@@ -20,7 +20,11 @@ const defaultProps = {
 };
 
 const componentText = {
-  CONTROL_PLANE: { label: 'Control plane type', hosted: 'Hosted' },
+  CONTROL_PLANE: {
+    label: 'Control plane type',
+    hosted: 'Hosted architecture',
+    classic: 'Classic architecture',
+  },
   AVAILABILITY: { label: 'Availability', multi: 'Multi-zone', single: 'Single zone', NA: 'N/A' },
   REGION: { label: 'Region', NA: 'N/A' },
   PROVIDER: { label: 'Provider', NA: 'N/A' },
@@ -162,7 +166,7 @@ describe('<DetailsLeft />', () => {
   });
 
   describe('Control plane', () => {
-    it('shows control plane type as Hosted if hypershift', async () => {
+    it('shows control plane type as Hosted architecture if hypershift', async () => {
       // Arrange
       const ROSAHypershiftClusterFixture = fixtures.ROSAHypershiftClusterDetails.cluster;
       expect(ROSAHypershiftClusterFixture.hypershift.enabled).toBeTruthy();
@@ -175,7 +179,7 @@ describe('<DetailsLeft />', () => {
       checkForValue(componentText.CONTROL_PLANE.label, componentText.CONTROL_PLANE.hosted);
     });
 
-    it('hides control plane type if not hypershift', async () => {
+    it('hides control plane type if OSD', async () => {
       // Arrange
       const OSDClusterFixture = fixtures.clusterDetails.cluster;
       expect(OSDClusterFixture.hypershift?.enabled).toBeFalsy();
@@ -186,6 +190,19 @@ describe('<DetailsLeft />', () => {
 
       // Assert
       checkForValueAbsence(componentText.CONTROL_PLANE.label, componentText.CONTROL_PLANE.hosted);
+    });
+
+    it('shows control plane type as Classic architecture if ROSA Classic', async () => {
+      // Arrange
+      const ROSAClusterFixture = fixtures.ROSAClusterDetails.cluster;
+      expect(ROSAClusterFixture.hypershift?.enabled).toBeFalsy();
+
+      const props = { ...defaultProps, cluster: ROSAClusterFixture };
+      render(<DetailsLeft {...props} />);
+      await checkIfRendered();
+
+      // Assert
+      checkForValue(componentText.CONTROL_PLANE.label, componentText.CONTROL_PLANE.classic);
     });
   });
 

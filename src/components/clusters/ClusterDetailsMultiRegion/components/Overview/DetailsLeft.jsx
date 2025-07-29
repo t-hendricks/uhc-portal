@@ -70,7 +70,7 @@ function DetailsLeft({ cluster, cloudProviders, showAssistedId, wifConfigData })
   }
 
   const { id, idLabel } = getIdFields(cluster, showAssistedId);
-  const controlPlaneType = isHypershift ? 'Hosted' : 'Classic';
+  const controlPlaneType = `${isHypershift ? 'Hosted' : 'Classic'} architecture`;
   const sharedVpcZoneId = get(cluster, 'aws.private_hosted_zone_id', false);
   const domainPrefix = cluster?.domain_prefix;
   const availabilityLabel = useMemo(() => {
@@ -102,7 +102,7 @@ function DetailsLeft({ cluster, cloudProviders, showAssistedId, wifConfigData })
           <ClusterTypeLabel cluster={cluster} />
         </DescriptionListDescription>
       </DescriptionListGroup>
-      {isHypershift && (
+      {isROSA && (
         <DescriptionListGroup>
           <DescriptionListTerm>Control plane type</DescriptionListTerm>
           <DescriptionListDescription data-testid="controlType">

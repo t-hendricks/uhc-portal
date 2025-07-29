@@ -335,7 +335,7 @@ function AccountRolesARNsSection({
 
   const arnCompatibilityAlertTitle = React.useMemo(() => {
     if (isHypershiftSelected)
-      return 'The selected account-wide roles are compatible with all OpenShift versions which support hosted control planes.';
+      return 'The selected account-wide roles are compatible with all OpenShift versions which support a hosted control plane.';
     if (hasStandaloneManagedRole)
       return `The selected account-wide roles are preferred and compatible with OpenShift version ${MIN_MANAGED_POLICY_VERSION} and newer.`;
 

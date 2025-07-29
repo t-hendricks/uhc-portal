@@ -111,7 +111,8 @@ const CreateRosaGetStarted = () => (
                 <GridItem span={6}>
                   <Content component="ul">
                     <Content component="li">
-                      Set up a VPC for ROSA HCP clusters (optional for ROSA classic clusters)
+                      Set up a VPC for ROSA hosted control plane architecture (HCP) clusters
+                      (optional for ROSA classic architecture clusters)
                     </Content>
                     <Content component="li">Verify your quotas on AWS console</Content>
                   </Content>

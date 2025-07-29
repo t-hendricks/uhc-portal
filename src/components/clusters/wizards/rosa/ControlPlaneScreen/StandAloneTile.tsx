@@ -12,7 +12,7 @@ type StandAloneTileProps = {
 
 const StandAloneTile = ({ handleChange, isSelected }: StandAloneTileProps) => (
   <Tile
-    title="Classic"
+    title="ROSA classic architecture"
     isDisplayLarge
     isStacked
     isSelected={isSelected}
@@ -21,8 +21,8 @@ const StandAloneTile = ({ handleChange, isSelected }: StandAloneTileProps) => (
     data-testid="standalone-control-planes"
   >
     <Content component={ContentVariants.p} className={defaultMarginBottomSpacing}>
-      Run an OpenShift cluster with a coupled control and data plane, hosted on dedicated nodes with
-      a shared network
+      The Red Hat OpenShift Service on AWS (classic architecture) runs an OpenShift cluster with a
+      coupled control and data plane, hosted on dedicated nodes with a shared network.
     </Content>
     <List isPlain className={defaultMarginBottomSpacing}>
       <ListItem>Control plane resources are hosted in your own AWS account</ListItem>
@@ -32,4 +32,4 @@ const StandAloneTile = ({ handleChange, isSelected }: StandAloneTileProps) => (
   </Tile>
 );
 
-export default StandAloneTile;
+export { StandAloneTile };

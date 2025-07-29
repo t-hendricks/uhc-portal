@@ -22,7 +22,7 @@ type HostedTileProps = {
 
 const HostedTile = ({ handleChange, isHostedDisabled, isSelected }: HostedTileProps) => (
   <Tile
-    title="Hosted"
+    title="ROSA hosted architecture"
     isDisplayLarge
     isStacked
     onClick={() => !isHostedDisabled && handleChange('true')}
@@ -55,7 +55,8 @@ const HostedTile = ({ handleChange, isHostedDisabled, isSelected }: HostedTilePr
     )}
 
     <Content component={ContentVariants.p} className={defaultMarginBottomSpacing}>
-      Run an OpenShift cluster with a decoupled control plane as a multi-tenant workload and a data
+      The Red Hat OpenShift Service on AWS with a hosted control plane architecture (ROSA HCP) runs
+      an OpenShift cluster with a decoupled control plane as a multi-tenant workload and a data
       plane on a separate network for segmented management and workload traffic.
     </Content>
     <List isPlain className={defaultMarginBottomSpacing}>
@@ -81,4 +82,4 @@ const HostedTile = ({ handleChange, isHostedDisabled, isSelected }: HostedTilePr
   </Tile>
 );
 
-export default HostedTile;
+export { HostedTile };
