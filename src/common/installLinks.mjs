@@ -395,6 +395,8 @@ const links = {
   LEARN_MORE_SSO_ROSA: `${ROSA_DOCS_BASE}/cli_tools/rosa-cli#rosa-login-sso_rosa-getting-started-cli`,
   TRANSFER_CLUSTER_OWNERSHIP:
     'https://docs.redhat.com/en/documentation/openshift_cluster_manager/1-latest/html-single/managing_clusters/index#transferring-cluster-ownership_downloading-and-updating-pull-secrets',
+
+  ROSA_ARCHITECTURE_RENAMING_KNOWLEDGE_BASE_ARTICLE: 'https://access.redhat.com/articles/7123990',
 };
 
 // Tool identifiers are public — e.g. for linking to specific tool in DownloadsPage.

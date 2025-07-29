@@ -37,6 +37,7 @@ export const HIDE_RH_MARKETPLACE = 'OCMUI-hide-rh-marketplace';
 export const IMDS_SELECTION = 'ocmui-imds-selection';
 export const AWS_TAGS_NEW_MP = 'ocmui-aws-tags-new-mp';
 export const TABBED_MACHINE_POOL_MODAL = 'ocmui-tabbed-machine-pool-modal';
+export const ROSA_ARCHITECTURE_RENAMING_ALERT = 'ocmui-rosa-architecture-renaming-alert';
 
 export default {
   AUTO_CLUSTER_TRANSFER_OWNERSHIP,
@@ -60,4 +61,5 @@ export default {
   IMDS_SELECTION,
   AWS_TAGS_NEW_MP,
   TABBED_MACHINE_POOL_MODAL,
+  ROSA_ARCHITECTURE_RENAMING_ALERT,
 } as const;

@@ -1,7 +1,16 @@
 import React from 'react';
 import { Field } from 'formik';
 
-import { Content, ContentVariants, Form, Grid, GridItem, Title } from '@patternfly/react-core';
+import {
+  Content,
+  ContentVariants,
+  Form,
+  Grid,
+  GridItem,
+  Stack,
+  StackItem,
+  Title,
+} from '@patternfly/react-core';
 
 import links from '~/common/installLinks.mjs';
 import { normalizedProducts } from '~/common/subscriptionTypes';
@@ -21,6 +30,7 @@ import RedHat from '~/styles/images/Logo-Red_Hat-B-Standard-RGB.png';
 import { SubscriptionCommonFieldsCluster_billing_model as SubscriptionCommonFieldsClusterBillingModel } from '~/types/accounts_mgmt.v1';
 
 import { NO_ROLE_DETECTED } from '../AccountsRolesScreen/AccountRolesARNsSection/AccountRolesARNsSection';
+import { RosaArchitectureRenamingAlert } from '../common/Banners/RosaArchitectureRenamingAlert';
 import { FieldId, initialValuesHypershift } from '../constants';
 
 import { hypershiftValue } from './ControlPlaneCommon';
@@ -145,12 +155,19 @@ const ControlPlaneScreen = () => {
           <Title headingLevel="h3" className="pf-v6-u-mb-sm">
             Select an AWS control plane type
           </Title>
-          <Content component={ContentVariants.p}>
-            Not sure what to choose?{' '}
-            <ExternalLink href={links.AWS_CONTROL_PLANE_URL}>
-              Learn more about AWS control plane types
-            </ExternalLink>
-          </Content>
+          <Stack hasGutter>
+            <StackItem>
+              <RosaArchitectureRenamingAlert />
+            </StackItem>
+            <StackItem>
+              <Content component={ContentVariants.p}>
+                Not sure what to choose?{' '}
+                <ExternalLink href={links.AWS_CONTROL_PLANE_URL}>
+                  Learn more about AWS control plane types
+                </ExternalLink>
+              </Content>
+            </StackItem>
+          </Stack>
         </GridItem>
       </Grid>
       <Field
