@@ -2,6 +2,8 @@
 # it was created following console-dot's containerized-FE migration guide:
 # https://consoledot.pages.redhat.com/docs/dev/containerized-frontends/migration/migration.html#_step_5_create_the_frontend_resource_yaml
 
+# yaml-language-server: $schema=https://raw.githubusercontent.com/RedHatInsights/frontend-components/refs/heads/master/packages/config-utils/src/feo/spec/frontend-crd.schema.json
+
 apiVersion: v1
 kind: Template
 metadata:
@@ -12,6 +14,7 @@ objects:
     metadata:
       name: openshift
     spec:
+      feoConfigEnabled: true
       envName: ${ENV_NAME}
       title: OCM UI
       deploymentRepo: https://github.com/RedHatInsights/uhc-portal
@@ -22,13 +25,45 @@ objects:
         paths:
           - /apps/openshift
       image: ${IMAGE}:${IMAGE_TAG}
-      navItems:
-        - appId: "openshift"
-          title: "Clusters"
-          href: "/openshift"
-          product: "Red Hat OpenShift Cluster Manager"
+      # navItems:
+      #   - appId: "openshift"
+      #     title: "Clusters"
+      #     href: "/openshift"
+      #     product: "Red Hat OpenShift Cluster Manager"
+      bundleSegments:
+        - segmentId: openshift
+          bundleId: openshift
+          position: 100
+          navItems: 
+            - id: overview
+              title: Overview
+              href: /openshift/overview
+              product: Red Hat OpenShift Cluster Manager
+            - id: cluster_management
+              groupId: cluster_management
+              title: Cluster Management
+              navItems:
+                - id: dashboard
+                  title: Dashboard
+                  href: /openshift/dashboard
+                  product: Red Hat OpenShift Cluster Manager
+                - id: clusters
+                  title: Cluster List
+                  href: /openshift/cluster-list
+                  product: Red Hat OpenShift Cluster Manager
+                - id: advisor
+                  title: Advisor
+                  expandable: true
+                  routes:
+                    - id: recommendations
+                      title: Recommendations
+                      href: /openshift/insights/advisor/recommendations
+                      product: Red Hat OpenShift Cluster Manager
       module:
         manifestLocation: "/apps/openshift/fed-mods.json"
+        moduleConfig:
+          ssoScopes:
+            - rhfull
         modules:
           - id: "openshift"
             module: "./RootApp"
