@@ -39,8 +39,8 @@ objects:
               title: Overview
               href: /openshift/overview
               product: Red Hat OpenShift Cluster Manager
-            - id: cluster_management
-              groupId: cluster_management
+            - id: cluster-management
+              groupId: cluster-management
               title: Cluster Management
               navItems:
                 - id: dashboard
@@ -59,6 +59,84 @@ objects:
                       title: Recommendations
                       href: /openshift/insights/advisor/recommendations
                       product: Red Hat OpenShift Cluster Manager
+                    - id: advisor-clusters
+                      title: Clusters
+                      href: /openshift/insights/advisor/clusters
+                      product: Red Hat OpenShift Cluster Manager
+                    - id: workloads
+                      title: Workloads
+                      href: /openshift/insights/advisor/workloads
+                      product: Red Hat OpenShift Cluster Manager
+                      permissions:
+                        - method: featureFlag
+                          args: ["ocp-advisor-ui-workloads", true]
+                        - method: featureFlag
+                          args: ["ocp-advisor-workloads-release", true]
+                - id: vulnerability-dashboard
+                  title: Vulnerability Dashboard
+                  expandable: true
+                  routes:
+                    - id: cves
+                      title: CVEs
+                      href: /openshift/insights/vulnerability/cves
+                      product: Red Hat OpenShift Cluster Manager
+                    - id: vulnerability-clusters
+                      title: Clusters
+                      href: /openshift/insights/vulnerability/clusters
+                      product: Red Hat OpenShift Cluster Manager
+                - id: subscriptions
+                  title: Subscriptions
+                  expandable: true
+                  routes:
+                    - id: subscriptions-usage
+                      title: OpenShift Usage
+                      href: /subscriptions/usage/openshift
+                    - id: annual-subscriptions
+                      title: Annual Subscriptions
+                      href: /openshift/quota
+                - id: cost-management
+                  title: Cost Management
+                  expandable: true
+                  routes:
+                    - id: cost-management-overview
+                      title: Overview
+                      href: /openshift/cost-management
+                      product: Red Hat Cost Management
+                    - id: systems
+                      title: Systems
+                      href: /openshift/cost-management/systems
+                      product: Red Hat Cost Management
+                      permissions:
+                        - method: featureFlag
+                          args: ["cost-management.ui.systems", true]
+                    - id: cost-management-optimizations
+                      title: Optimizations
+                      href: /openshift/cost-management/optimizations
+                      product: Red Hat Cost Management
+                    - id: cost-management-openshift
+                      title: Openshift
+                      href: /openshift/cost-management/ocp
+                      product: Red Hat Cost Management
+                    - id: amazon-web-services
+                      title: Amazon Web Services
+                      href: /openshift/cost-management/aws
+                      product: Red Hat Cost Management
+                    - id: google-cloud-platform
+                      title: Google Cloud Platform
+                      href: /openshift/cost-management/gcp
+                      product: Red Hat Cost Management
+                    - id: microsoft-azure
+                      title: Microsoft Azure
+                      href: /openshift/cost-management/azure
+                      product: Red Hat Cost Management
+                    - id: cost-explorer
+                      title: Cost Explorer
+                      href: /openshift/cost-management/explorer
+                      product: Red Hat Cost Management
+                    - id: settings
+                      title: Settings
+                      href: /openshift/cost-management/settings
+                      product: Red Hat Cost Management
       module:
         manifestLocation: "/apps/openshift/fed-mods.json"
         moduleConfig:
