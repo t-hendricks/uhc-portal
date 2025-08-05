@@ -152,6 +152,34 @@ objects:
                     - id: clusterOverview
                       title: Overview
                       href: /openshift/acs/overview
+                    - id: acs-getting-started
+                      title: Getting Started
+                      href: /openshift/acs/getting-started 
+                    - id: acs-instances
+                      title: ACS Instances
+                      href: /openshift/acs/instances
+                    - id: clusters-documentation
+                      title: Documentation
+                      href: https://docs.redhat.com/en/documentation/red_hat_advanced_cluster_security_for_kubernetes
+                      isExternal: true
+                - id: openshift-ai
+                  title: OpenShift AI
+                  expandable: true
+                  routes:
+                    - id: developer-sandbox-trial
+                      title: Developer Sandbox | OpenShift AI
+                      href: /openshift/sandbox
+                    - id: sixty-day-trial
+                      title: 60-Day Product Trial | OpenShift AI
+                      href: https://www.redhat.com/en/technologies/cloud-computing/openshift/openshift-ai/trial
+                      isExternal: true
+                - id: openshift-virtualization
+                  title: OpenShift Virtualization
+                  href: https://catalog.redhat.com/software/container-stacks/detail/5ec53f218b6f188e53644c4f
+                  isExternal: true
+                - id: operators
+                  title: Operators
+                  href: /openshift/overview#recommended-operators
       module:
         manifestLocation: "/apps/openshift/fed-mods.json"
         moduleConfig:
