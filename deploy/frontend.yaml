@@ -180,6 +180,23 @@ objects:
                 - id: operators
                   title: Operators
                   href: /openshift/overview#recommended-operators
+            - id: resources
+              groupId: resources
+              title: Resources
+              navItems:
+                - id: learning-resources
+                  title: Learning Resources
+                  href: /openshift/learning-resources
+                - id: developer-sandbox
+                  title: Developer Sandbox
+                  href: /openshift/sandbox
+                - id: downloads
+                  title: Downloads
+                  href: /openshift/downloads
+                  product: Red Hat OpenShift Cluster Manager
+                - id: releases
+                  title: Releases
+                  href: /openshift/releases
       module:
         manifestLocation: "/apps/openshift/fed-mods.json"
         moduleConfig:
