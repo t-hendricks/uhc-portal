@@ -137,6 +137,21 @@ objects:
                       title: Settings
                       href: /openshift/cost-management/settings
                       product: Red Hat Cost Management
+            - id: products
+              groupId: products
+              title: Products
+              navItems:
+                - id: acm
+                  title: Advanced Cluster Management
+                  href: https://catalog.redhat.com/software/container-stacks/detail/5ec54aa3535cb70ab8c02996
+                  isExternal: true
+                - id: acs-section
+                  title: Advanced Cluster Security
+                  expandable: true
+                  routes:
+                    - id: clusterOverview
+                      title: Overview
+                      href: /openshift/acs/overview
       module:
         manifestLocation: "/apps/openshift/fed-mods.json"
         moduleConfig:
