@@ -13,7 +13,7 @@ module.exports = {
   hotReload: process.env.HOT === 'true',
   debug: true,
   devtool: process.env.NODE_ENV !== 'production' ? 'cheap-module-source-map' : 'source-map',
-  useProxy: true,
+  useProxy: process.env.MODE !== 'prod',
   proxyVerbose: true,
   interceptChromeConfig: false,
   customProxy: [
