@@ -1,11 +1,20 @@
 const path = require('path');
 const webpack = require('webpack');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
+const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
 const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
 const MonacoWebpackPlugin = require('monaco-editor-webpack-plugin');
 const { insights } = require('./package.json');
 
 const name = insights.appname;
+let bundleAnalyzer = null;
+if (process.env.BUNDLE_ANALYZER) {
+  bundleAnalyzer = new BundleAnalyzerPlugin({
+    analyzerMode: 'static',
+    reportFilename: 'report.html',
+    openAnalyzer: false,
+  });
+}
 
 module.exports = {
   appUrl: `/${name}`,
@@ -33,6 +42,7 @@ module.exports = {
     new CopyWebpackPlugin({
       patterns: [{ from: 'public', to: path.resolve(__dirname, 'dist', name), toType: 'dir' }],
     }),
+    bundleAnalyzer,
     new MonacoWebpackPlugin({
       languages: ['yaml'],
       customLanguages: [
@@ -46,7 +56,7 @@ module.exports = {
         },
       ],
     }),
-  ],
+  ].filter(Boolean),
   resolve: {
     modules: [path.resolve(__dirname, 'src'), 'node_modules'],
     alias: {
