@@ -36,5 +36,3 @@ openapi/*.json
 .env*
 
 /unitTestCoverage
-
-.cache/
