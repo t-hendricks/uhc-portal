@@ -68,13 +68,6 @@ module.exports = async (_env, argv) => {
   // Variable to run assisted-ui in standalone mode. You need to take a look to README to see instructions when ai_standalone=true
   const runAIinStandalone = !!argv.env.ai_standalone;
 
-  const chromeTemplateUrl = `https://console.redhat.com/apps/chrome/index.html`;
-  const getChromeTemplate = async () => {
-    const result = await axios.get(chromeTemplateUrl);
-    return result.data;
-  };
-  const chromeTemplate = await getChromeTemplate();
-
   // For hot reloads while developing, reset window's onbeforeunload event
   // to prevent browser confirmation dialogs.
   if (module.hot && typeof module.hot.dispose === 'function') {
@@ -88,8 +81,18 @@ module.exports = async (_env, argv) => {
     keepAlive: true,
     maxFreeSockets: 10,
     keepAliveMsecs: 1000,
-    timeout: 60000,
+    timeout: 120000,
   });
+
+  const chromeTemplateUrl = `https://console.redhat.com/apps/chrome/index.html`;
+  const getChromeTemplate = async () => {
+    const result = await axios.get(chromeTemplateUrl, {
+      timeout: 90000,
+      httpsAgent: keepAliveAgent,
+    });
+    return result.data;
+  };
+  const chromeTemplate = await getChromeTemplate();
 
   return {
     mode: argv.mode || 'development',
@@ -347,7 +350,7 @@ module.exports = async (_env, argv) => {
             headers: {
               Connection: 'keep-alive',
             },
-            proxyTimeout: 17000,
+            proxyTimeout: 90000,
             // replace the "host" header's URL origin with the origin from the target URL
             changeOrigin: true,
             // change the "origin" header of the proxied request to avoid CORS
