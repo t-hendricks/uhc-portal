@@ -97,7 +97,7 @@ jobs:
 
           echo "==== traceroute to console.redhat.com ====" traceroute -n console.redhat.com || true
 
-          echo "==== quick TCP test (telnet-style) to prod.foo.redhat.com:1337 ====" (echo > /dev/tcp/$(getent hosts prod.foo.redhat.com | awk '{print $1}'):1337) >/dev/null 2>&1 && echo "TCP CONNECT OK" || echo "TCP CONNECT FAILED" || true
+          echo "==== quick TCP test (safe) to prod.foo.redhat.com:1337 ====" ip=$(getent hosts prod.foo.redhat.com | awk '{print $1}' || true) if [ -z "$ip" ]; then echo "Could not resolve prod.foo.redhat.com to an IP" else echo "Resolved prod.foo.redhat.com -> $ip" timeout 5 bash -c "cat < /dev/tcp/$ip/1337" >/dev/null 2>&1 && echo "TCP CONNECT OK" || { echo "/dev/tcp connect failed, trying nc..." if command -v nc >/dev/null 2>&1; then nc -vz -w 5 "$ip" 1337 && echo "TCP CONNECT OK (nc)" || echo "TCP CONNECT FAILED (nc)" else echo "nc not found; TCP test inconclusive" fi } fi
 
           echo "==== End diagnostics ===="
       - name: Install cypress
