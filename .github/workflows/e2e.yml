@@ -72,6 +72,34 @@ jobs:
         run: make dev-env-setup
       - name: Check hosts
         run: cat /etc/hosts
+      - name: Network diagnostics 
+        shell: bash 
+        run: | 
+          set -o errexit set -o pipefail set -x
+
+          sudo apt-get update -y sudo apt-get install -y dnsutils traceroute iproute2 net-tools curl || true
+
+          echo "==== /etc/resolv.conf ====" cat /etc/resolv.conf || true
+
+          echo "==== /etc/hosts ====" cat /etc/hosts || true
+
+          echo "==== Proxy environment variables ====" env | grep -i proxy || true
+
+          echo "==== IP routing ====" ip route || true
+
+          echo "==== DNS lookup: console.redhat.com ====" dig +time=3 +tries=1 console.redhat.com A || nslookup console.redhat.com || true
+
+          echo "==== DNS lookup: prod.foo.redhat.com ====" dig +time=3 +tries=1 prod.foo.redhat.com A || nslookup prod.foo.redhat.com || true
+
+          echo "==== curl -I to console.redhat.com (5s connect timeout, 15s max) ====" curl -v --connect-timeout 5 --max-time 15 -I https://console.redhat.com/ || true
+
+          echo "==== curl to proxied URL used by dev-server ====" curl -v --connect-timeout 5 --max-time 15 http://prod.foo.redhat.com:1337/openshift/ || true
+
+          echo "==== traceroute to console.redhat.com ====" traceroute -n console.redhat.com || true
+
+          echo "==== quick TCP test (telnet-style) to prod.foo.redhat.com:1337 ====" (echo > /dev/tcp/$(getent hosts prod.foo.redhat.com | awk '{print $1}'):1337) >/dev/null 2>&1 && echo "TCP CONNECT OK" || echo "TCP CONNECT FAILED" || true
+
+          echo "==== End diagnostics ===="
       - name: Install cypress
         run: npx cypress install
       - name: Execute tests
