@@ -34,6 +34,11 @@ module.exports = {
       target: 'http://[::1]:8010',
     },
   ],
+  routes: {
+    '/mockdata': {
+      host: 'http://localhost:8010',
+    },
+  },
   plugins: [
     new ForkTsCheckerWebpackPlugin(),
     new webpack.DefinePlugin({
