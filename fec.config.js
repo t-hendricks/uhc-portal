@@ -19,7 +19,7 @@ if (process.env.BUNDLE_ANALYZER) {
 module.exports = {
   appUrl: `/${name}`,
   appEntry: path.resolve(__dirname, 'src/bootstrap.ts'),
-  chromePort: process.env.FEC_CHROME_PORT ?? undefined,
+  chromePort: process.env.FEC_CHROME_PORT ?? 9990,
   hotReload: process.env.HOT === 'true',
   stripAllPfStyles: process.env.NODE_ENV !== 'production',
   debug: true,
