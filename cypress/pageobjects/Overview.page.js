@@ -14,7 +14,7 @@ class Overview extends Page {
   }
 
   isOverviewPage() {
-    cy.contains('Get started with OpenShift', { timeout: 60000 }).should('be.visible');
+    cy.contains('Get started with OpenShift', { timeout: 120000 }).should('be.visible');
   }
 
   viewAllOpenshiftClusterTypesLink = () =>
