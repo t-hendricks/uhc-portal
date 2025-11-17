@@ -187,7 +187,6 @@
     "sass": "^1.77.2",
     "sass-loader": "^14.0.1",
     "simple-git": "3.25.0",
-    "sol-sc-explorer": "^1.1.1",
     "sprintf-js": "^1.1.2",
     "storybook": "8.4.4",
     "style-loader": "4.0.0",
