@@ -3,7 +3,7 @@ import { useField } from 'formik';
 
 import { FormGroup, FormSelect, FormSelectOption } from '@patternfly/react-core';
 
-import installLinks from '~/common/installLinks.mjs';
+import docLinks from '~/common/docLinks.mjs';
 import { FieldId } from '~/components/clusters/wizards/common';
 import ExternalLink from '~/components/common/ExternalLink';
 import PopoverHint from '~/components/common/PopoverHint';
@@ -34,7 +34,7 @@ export const ChannelSelectField = ({ clusterVersion }: ChannelSelectFieldProps) 
           For example, if your cluster was using the Channel group EUS, it will be migrated to your
           current cluster minor version; that is, if your cluster is on version 4.18.29, the Channel
           will default to eus-4.18.{' '}
-          <ExternalLink href={installLinks.OCP_UPDATE_CHANNELS}>Learn more</ExternalLink>
+          <ExternalLink href={docLinks.OCP_UPDATE_CHANNELS}>Learn more</ExternalLink>
         </>
       }
     />

@@ -217,8 +217,6 @@ const links = {
 
   OCM_CLI_RELEASES_LATEST:
     'https://developers.redhat.com/content-gateway/rest/browse/pub/cgw/ocm/latest',
-
-  OCP_UPDATE_CHANNELS: `${OCP_DOCS_BASE}/updating_clusters/understanding-openshift-updates-1#understanding-update-channels-releases`,
 };
 
 // Tool identifiers are public — e.g. for linking to specific tool in DownloadsPage.
