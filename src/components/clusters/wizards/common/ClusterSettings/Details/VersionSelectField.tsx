@@ -123,9 +123,11 @@ export const VersionSelectField = ({
   useEffect(() => {
     if (versions.length && !selectedClusterVersion?.raw_id) {
       const versionIndex = versions.findIndex((version) => version.default === true);
-      setFieldValue(name, versions[versionIndex !== -1 ? versionIndex : 0]);
+      const defaultVersion = versions[versionIndex !== -1 ? versionIndex : 0];
+      setFieldValue(name, defaultVersion);
+      onChange(defaultVersion);
     }
-  }, [versions, selectedClusterVersion?.raw_id, name, setFieldValue]);
+  }, [versions, selectedClusterVersion?.raw_id, name, setFieldValue, onChange]);
 
   const onToggle: FuzzySelectProps['onOpenChange'] = (isExpanded) => {
     setIsOpen(isExpanded);

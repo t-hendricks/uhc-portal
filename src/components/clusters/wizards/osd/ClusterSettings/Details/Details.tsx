@@ -282,15 +282,22 @@ function Details() {
             )
           : null;
 
-      const versionToSet = foundVersion ?? availableVersions[0];
-
-      setFieldValue(FieldId.ClusterVersion, versionToSet);
       if (isYStreamChannelEnabled) {
-        setFieldValue(FieldId.VersionChannel, versionToSet?.available_channels?.[0] ?? '');
+        // Version selector owns default version (stable); only sync channel when we have a selection
+        if (foundVersion) {
+          setFieldValue(FieldId.VersionChannel, foundVersion?.available_channels?.[0] ?? '');
+        }
+      } else {
+        setFieldValue(FieldId.ClusterVersion, foundVersion ?? availableVersions[0]);
       }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [channelGroup, cloudProvider]);
+  }, [
+    channelGroup,
+    cloudProvider,
+    // Re-run when versions load so default channel is set even when user keeps all defaults
+    getInstallableVersionsResponse.fulfilled,
+  ]);
 
   React.useEffect(() => {
     if (isEUSChannelEnabled) {
