@@ -249,11 +249,13 @@ function Details() {
         worker: [],
       });
     }
-    if (!canConfigureDayOnePrivateServiceConnect(clusterVersion?.raw_id || '')) {
-      setFieldValue(FieldId.PrivateServiceConnect, false);
-    } else if (clusterPrivacy === ClusterPrivacyType.Internal) {
-      setFieldValue(FieldId.PrivateServiceConnect, true);
-      setFieldValue(FieldId.InstallToVpc, true);
+    if (clusterPrivacy === ClusterPrivacyType.Internal) {
+      if (!canConfigureDayOnePrivateServiceConnect(clusterVersion?.raw_id || '')) {
+        setFieldValue(FieldId.PrivateServiceConnect, false);
+      } else {
+        setFieldValue(FieldId.PrivateServiceConnect, true);
+        setFieldValue(FieldId.InstallToVpc, true);
+      }
     }
 
     resetMaxNodesTotal({ clusterVersion });
