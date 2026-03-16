@@ -147,7 +147,7 @@ function Details() {
       if (isYStreamChannelEnabled) {
         // Version selector owns default version (stable); only sync channel when we have a selection
         if (foundVersion) {
-          setFieldValue(FieldId.VersionChannel, foundVersion?.available_channels?.[0] ?? '');
+          setFieldValue(FieldId.VersionChannel, foundVersion?.available_channels?.at(-1) ?? '');
         }
       } else {
         setFieldValue(FieldId.ClusterVersion, foundVersion ?? availableVersions[0]);
@@ -313,7 +313,7 @@ function Details() {
 
     if (isYStreamChannelEnabled) {
       // @ts-ignore - `available_channels` isn't available in API schemas yet
-      setFieldValue(FieldId.VersionChannel, clusterVersion?.available_channels?.[0] ?? '');
+      setFieldValue(FieldId.VersionChannel, clusterVersion?.available_channels?.at(-1) ?? '');
     }
   };
 
