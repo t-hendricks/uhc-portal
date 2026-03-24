@@ -261,8 +261,7 @@ function Details() {
     resetMaxNodesTotal({ clusterVersion });
 
     if (isYStreamChannelEnabled) {
-      // @ts-ignore - `available_channels` isn't available in API schemas yet
-      setFieldValue(FieldId.VersionChannel, clusterVersion?.available_channels?.at(-1) ?? '');
+      setFieldValue(FieldId.VersionChannel, '');
     }
   };
 
@@ -284,12 +283,7 @@ function Details() {
             )
           : null;
 
-      if (isYStreamChannelEnabled) {
-        // Version selector owns default version (stable); only sync channel when we have a selection
-        if (foundVersion) {
-          setFieldValue(FieldId.VersionChannel, foundVersion?.available_channels?.at(-1) ?? '');
-        }
-      } else {
+      if (!isYStreamChannelEnabled) {
         setFieldValue(FieldId.ClusterVersion, foundVersion ?? availableVersions[0]);
       }
     }

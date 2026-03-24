@@ -41,12 +41,7 @@ export const ChannelSelectField = ({ clusterVersion }: ChannelSelectFieldProps) 
   );
 
   return (
-    <FormGroup
-      label="Channel"
-      labelHelp={popoverHint}
-      fieldId={FieldId.VersionChannel}
-      isRequired={hasChannels}
-    >
+    <FormGroup label="Channel" labelHelp={popoverHint} fieldId={FieldId.VersionChannel}>
       <FormSelect
         {...input}
         aria-label="Channel"
@@ -54,9 +49,12 @@ export const ChannelSelectField = ({ clusterVersion }: ChannelSelectFieldProps) 
         aria-disabled={!hasChannels}
       >
         {hasChannels ? (
-          versionChannels?.map((channel: string) => (
-            <FormSelectOption key={channel} value={channel} label={channel} />
-          ))
+          <>
+            <FormSelectOption label="Select a channel" isPlaceholder isDisabled />
+            {versionChannels?.map((channel: string) => (
+              <FormSelectOption key={channel} value={channel} label={channel} />
+            ))}
+          </>
         ) : (
           <FormSelectOption
             label={clusterVersion ? 'No channels available for the selected version' : ''}
