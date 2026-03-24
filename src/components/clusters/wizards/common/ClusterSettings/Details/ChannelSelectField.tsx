@@ -10,13 +10,12 @@ import PopoverHint from '~/components/common/PopoverHint';
 import { Version } from '~/types/clusters_mgmt.v1';
 
 export type ChannelSelectFieldProps = {
-  clusterVersion?: Version;
+  clusterVersion?: Version & { available_channels?: string[] };
 };
 
 export const ChannelSelectField = ({ clusterVersion }: ChannelSelectFieldProps) => {
   const [input] = useField(FieldId.VersionChannel);
 
-  // @ts-ignore - `available_channels` isn't available in API schemas yet
   const versionChannels = clusterVersion?.available_channels;
   const hasChannels = !!versionChannels?.length;
 

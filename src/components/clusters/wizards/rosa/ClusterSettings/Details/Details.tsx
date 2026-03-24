@@ -307,7 +307,6 @@ function Details() {
     }
 
     if (isYStreamChannelEnabled) {
-      // @ts-ignore - `available_channels` isn't available in API schemas yet
       setFieldValue(FieldId.VersionChannel, '');
     }
   };

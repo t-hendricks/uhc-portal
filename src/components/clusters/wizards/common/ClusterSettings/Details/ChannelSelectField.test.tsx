@@ -6,7 +6,7 @@ import { Version } from '~/types/clusters_mgmt.v1';
 
 import { ChannelSelectField, ChannelSelectFieldProps } from './ChannelSelectField';
 
-const defaultVersion: Version = {
+const defaultVersion: Version & { available_channels?: string[] } = {
   kind: 'Version',
   id: 'openshift-v4.19.7-fast',
   href: '/api/clusters_mgmt/v1/versions/openshift-v4.19.7-fast',
@@ -14,7 +14,6 @@ const defaultVersion: Version = {
   enabled: true,
   default: false,
   channel_group: 'fast',
-  // @ts-ignore - `available_channels` isn't available in API schemas yet
   available_channels: [
     'candidate-4.19',
     'candidate-4.20',
