@@ -272,16 +272,13 @@ function Details() {
       );
 
   React.useEffect(() => {
-    if (isEUSChannelEnabled) {
+    if (isEUSChannelEnabled && availableVersions.length > 0) {
       const parseVersion = (version: string | undefined) => semver.valid(semver.coerce(version));
 
-      const foundVersion =
-        availableVersions.length > 0
-          ? availableVersions?.find(
-              (version: Version) =>
-                parseVersion(version?.raw_id) === parseVersion(selectedVersion?.raw_id),
-            )
-          : null;
+      const foundVersion = availableVersions?.find(
+        (version: Version) =>
+          parseVersion(version?.raw_id) === parseVersion(selectedVersion?.raw_id),
+      );
 
       if (!isYStreamChannelEnabled) {
         setFieldValue(FieldId.ClusterVersion, foundVersion ?? availableVersions[0]);
@@ -290,24 +287,9 @@ function Details() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [
     channelGroup,
-    cloudProvider,
     // Re-run when versions load so default channel is set even when user keeps all defaults
     getInstallableVersionsResponse.fulfilled,
   ]);
-
-  React.useEffect(() => {
-    if (isEUSChannelEnabled) {
-      setFieldValue(FieldId.ClusterVersion, selectedVersion);
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
-  React.useEffect(() => {
-    if (isEUSChannelEnabled) {
-      setFieldValue(FieldId.ClusterVersion, availableVersions[0]);
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [cloudProvider]);
 
   const availabilityZoneOptions: RadioGroupOption[] = [
     {
