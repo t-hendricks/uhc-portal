@@ -49,7 +49,7 @@ export const ChannelSelectField = ({ clusterVersion }: ChannelSelectFieldProps) 
       >
         {hasChannels ? (
           <>
-            <FormSelectOption label="Select a channel" isPlaceholder isDisabled />
+            <FormSelectOption label="Select a channel" value="" isPlaceholder />
             {versionChannels?.map((channel: string) => (
               <FormSelectOption key={channel} value={channel} label={channel} />
             ))}

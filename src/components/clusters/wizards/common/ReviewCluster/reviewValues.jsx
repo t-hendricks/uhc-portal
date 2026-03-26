@@ -110,6 +110,7 @@ const reviewValues = {
   },
   version_channel: {
     title: 'Channel',
+    valueTransform: (value) => value || 'None specified',
   },
   hypershift: {
     title: 'Control plane',
