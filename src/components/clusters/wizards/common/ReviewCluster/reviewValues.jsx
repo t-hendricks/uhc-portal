@@ -110,7 +110,13 @@ const reviewValues = {
   },
   version_channel: {
     title: 'Channel',
-    valueTransform: (value) => value || 'None specified',
+    valueTransform: (value, formValues) => {
+      const channels = formValues?.cluster_version?.available_channels;
+      if (Array.isArray(channels) && channels.length === 0 && !value) {
+        return 'No channels available for the selected version';
+      }
+      return value || 'None specified';
+    },
   },
   hypershift: {
     title: 'Control plane',

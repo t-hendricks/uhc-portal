@@ -294,5 +294,29 @@ describe('<ReviewAndCreate />', () => {
         expect(screen.queryByText('Channel')).not.toBeInTheDocument();
       });
     });
+
+    it('shows no channels message when the version has no available channels', async () => {
+      mockUseFeatureGate([[Y_STREAM_CHANNEL, true]]);
+
+      const values = {
+        ...formValues,
+        cluster_version: {
+          ...formValues.cluster_version,
+          available_channels: [] as string[],
+        },
+        version_channel: '',
+      };
+
+      render(
+        <Formik initialValues={values} onSubmit={() => {}}>
+          <ReviewAndCreate />
+        </Formik>,
+      );
+
+      expect(await screen.findByText('Channel')).toBeInTheDocument();
+      expect(
+        screen.getByText('No channels available for the selected version'),
+      ).toBeInTheDocument();
+    });
   });
 });

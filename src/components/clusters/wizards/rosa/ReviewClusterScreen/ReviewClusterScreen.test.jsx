@@ -499,5 +499,24 @@ describe('<ReviewClusterScreen />', () => {
         expect(screen.queryByText('Channel')).not.toBeInTheDocument();
       });
     });
+
+    it('shows no channels message when the version has no available channels', async () => {
+      mockUseFeatureGate([[Y_STREAM_CHANNEL, true]]);
+
+      render(
+        buildTestComponent(<ReviewClusterScreen {...defaultProps} />, {
+          cluster_version: {
+            ...sampleFormData.values.cluster_version,
+            available_channels: [],
+          },
+          version_channel: '',
+        }),
+      );
+
+      expect(await screen.findByText('Channel')).toBeInTheDocument();
+      expect(
+        screen.getByText('No channels available for the selected version'),
+      ).toBeInTheDocument();
+    });
   });
 });

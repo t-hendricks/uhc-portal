@@ -324,7 +324,11 @@ const ReviewClusterScreen = ({
           title={getStepName('CLUSTER_SETTINGS')}
           onGoToStep={() => goToStepByIndex(getStepIndex('CLUSTER_SETTINGS'))}
         >
-          {clusterSettingsFields.map((fieldName) => ReviewItem(fieldName))}
+          {clusterSettingsFields.map((fieldName) =>
+            fieldName === FieldId.VersionChannel
+              ? ReviewItem(fieldName, { cluster_version: clusterVersion })
+              : ReviewItem(fieldName),
+          )}
         </ReviewSection>
         <ReviewSection
           title="Default machine pool"
