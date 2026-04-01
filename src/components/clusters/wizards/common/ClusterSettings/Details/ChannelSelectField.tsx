@@ -24,11 +24,10 @@ export const ChannelSelectField = ({ clusterVersion }: ChannelSelectFieldProps) 
       buttonAriaLabel="Update channels information"
       hint={
         <>
-          Channels are the mechanism by which you declare the Red Hat OpenShift Service on AWS minor
-          version that you intend to upgrade the cluster to. The version number in the channel
-          represents the target minor version that the cluster will eventually be upgraded to. This
-          differs from Channel groups, which only showed the available z-stream updates within a
-          particular minor version.
+          Channels provide recommended release versions and help control the pace of updates. Update
+          channels align to a minor version, for example 4.20. To update to the next minor release,
+          you might need to change the channel. This differs from Channel groups, which only showed
+          the available z-stream updates within a particular minor version.
           <br />
           For example, if your cluster was using the Channel group EUS, it will be migrated to your
           current cluster minor version; that is, if your cluster is on version 4.18.29, the Channel
