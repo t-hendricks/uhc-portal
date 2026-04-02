@@ -26,12 +26,7 @@ export const ChannelSelectField = ({ clusterVersion }: ChannelSelectFieldProps) 
         <>
           Channels provide recommended release versions and help control the pace of updates. Update
           channels align to a minor version, for example 4.20. To update to the next minor release,
-          you might need to change the channel. This differs from Channel groups, which only showed
-          the available z-stream updates within a particular minor version.
-          <br />
-          For example, if your cluster was using the Channel group EUS, it will be migrated to your
-          current cluster minor version; that is, if your cluster is on version 4.18.29, the Channel
-          will default to eus-4.18.{' '}
+          you might need to change the channel.{' '}
           <ExternalLink href={docLinks.OCP_UPDATE_CHANNELS}>Learn more</ExternalLink>
         </>
       }
