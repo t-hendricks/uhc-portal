@@ -19,6 +19,7 @@ import { AppDrawerContext } from '~/components/App/AppDrawer';
 import { AppPage } from '~/components/App/AppPage';
 import { useFormState } from '~/components/clusters/wizards/hooks';
 import { rosaWizardFormValidator } from '~/components/clusters/wizards/rosa/formValidators';
+import { LogForwardingScreen } from '~/components/clusters/wizards/rosa/LogForwarding/LogForwardingScreen';
 import {
   getAccountAndRolesStepId,
   stepId,
@@ -28,7 +29,10 @@ import config from '~/config';
 import withAnalytics from '~/hoc/withAnalytics';
 import useAnalytics from '~/hooks/useAnalytics';
 import usePreventBrowserNav from '~/hooks/usePreventBrowserNav';
-import { HYPERSHIFT_WIZARD_FEATURE } from '~/queries/featureGates/featureConstants';
+import {
+  HCP_LOG_FORWARDING,
+  HYPERSHIFT_WIZARD_FEATURE,
+} from '~/queries/featureGates/featureConstants';
 import { useFeatureGate } from '~/queries/featureGates/useFetchFeatureGate';
 import { isRestrictedEnv } from '~/restrictedEnv';
 
@@ -77,7 +81,9 @@ const trackWizardNavigation = (track, event, currentStepId = '') => {
 };
 
 const CreateROSAWizardInternal = ({
+  onActiveStepIdChange,
   isHypershiftEnabled,
+  isHcpLogForwardingEnabled,
   isHypershiftSelected,
   getOrganizationAndQuota,
   organization,
@@ -166,9 +172,10 @@ const CreateROSAWizardInternal = ({
       },
     });
 
-  const onStepChange = (_event, currentStep, _prevStep, scope) => {
+  const onStepChange = (_event, currentStep, prevStep, scope) => {
     setCurrentStep(currentStep);
     setCurrentStepId(currentStep.id);
+    onActiveStepIdChange(currentStep.id);
 
     let trackEvent;
 
@@ -262,6 +269,19 @@ const CreateROSAWizardInternal = ({
                   getUserRoleInfo={() => getUserRole()}
                   isSubmitting={createClusterResponse.pending}
                   onWizardContextChange={onWizardContextChange}
+                  onValidNextStep={(fromStepId) => {
+                    const logForwardingConfigured =
+                      values[FieldId.LogForwardingS3Enabled] ||
+                      values[FieldId.LogForwardingCloudWatchEnabled];
+                    if (
+                      fromStepId === stepId.CLUSTER_ADDITIONAL_SETTINGS__LOG_FORWARDING &&
+                      isHcpLogForwardingEnabled &&
+                      isHypershiftSelected &&
+                      logForwardingConfigured
+                    ) {
+                      track('Log Forwarding Configured', { context: 'cluster_creation' });
+                    }
+                  }}
                 />
               </>
             }
@@ -371,11 +391,31 @@ const CreateROSAWizardInternal = ({
               </ErrorBoundary>
             </WizardStep>
 
-            <WizardStep id={stepId.CLUSTER_UPDATES} name={stepNameById[stepId.CLUSTER_UPDATES]}>
-              <ErrorBoundary>
-                <UpdatesScreen />
-              </ErrorBoundary>
-            </WizardStep>
+            <WizardStep
+              id={stepId.CLUSTER_ADDITIONAL_SETTINGS}
+              name={stepNameById[stepId.CLUSTER_ADDITIONAL_SETTINGS]}
+              isExpandable
+              steps={[
+                <WizardStep
+                  id={stepId.CLUSTER_ADDITIONAL_SETTINGS__UPDATES}
+                  name={stepNameById[stepId.CLUSTER_ADDITIONAL_SETTINGS__UPDATES]}
+                >
+                  <ErrorBoundary>
+                    <UpdatesScreen />
+                  </ErrorBoundary>
+                </WizardStep>,
+
+                <WizardStep
+                  id={stepId.CLUSTER_ADDITIONAL_SETTINGS__LOG_FORWARDING}
+                  name={stepNameById[stepId.CLUSTER_ADDITIONAL_SETTINGS__LOG_FORWARDING]}
+                  isHidden={!isHypershiftSelected || !isHcpLogForwardingEnabled}
+                >
+                  <ErrorBoundary>
+                    <LogForwardingScreen />
+                  </ErrorBoundary>
+                </WizardStep>,
+              ]}
+            />
 
             <WizardStep id={stepId.REVIEW_AND_CREATE} name={stepNameById[stepId.REVIEW_AND_CREATE]}>
               <ReviewClusterScreen
@@ -416,6 +456,7 @@ function CreateROSAWizard(props) {
     isHypershiftSelected,
   };
   const isHypershiftEnabled = useFeatureGate(HYPERSHIFT_WIZARD_FEATURE);
+  const isHcpLogForwardingEnabled = useFeatureGate(HCP_LOG_FORWARDING);
 
   return (
     <AppPage title="Create OpenShift ROSA Cluster">
@@ -425,6 +466,7 @@ function CreateROSAWizard(props) {
             {...combinedProps}
             closeDrawer={closeDrawer}
             isHypershiftEnabled={isHypershiftEnabled}
+            isHcpLogForwardingEnabled={isHcpLogForwardingEnabled}
             formValues={values}
             isValidating={isValidating}
             isValid={isValid}
@@ -443,9 +485,11 @@ const requestStatePropTypes = PropTypes.shape({
 });
 
 CreateROSAWizardInternal.propTypes = {
+  onActiveStepIdChange: PropTypes.func.isRequired,
   installToVPCSelected: PropTypes.bool,
   privateLinkSelected: PropTypes.bool,
   configureProxySelected: PropTypes.bool,
+  isHcpLogForwardingEnabled: PropTypes.bool,
   isErrorModalOpen: PropTypes.bool,
 
   createClusterResponse: PropTypes.shape({
@@ -488,18 +532,22 @@ CreateROSAWizardInternal.propTypes = {
 
 const CreateROSAWizardFormik = (props) => {
   const { onSubmit, track } = props;
+  const activeStepIdRef = React.useRef();
+  const onActiveStepIdChange = React.useCallback((id) => {
+    activeStepIdRef.current = id;
+  }, []);
   return (
     <Formik
       initialValues={isRestrictedEnv() ? initialValuesRestrictedEnv : initialValues()}
       initialTouched={initialTouched}
-      validate={rosaWizardFormValidator}
+      validate={(values) => rosaWizardFormValidator(values, activeStepIdRef.current)}
       validateOnChange
       onSubmit={(formikValues) => {
         trackWizardNavigation(track, trackEvents.WizardSubmit);
         onSubmit(formikValues);
       }}
     >
-      <CreateROSAWizard {...props} />
+      <CreateROSAWizard {...props} onActiveStepIdChange={onActiveStepIdChange} />
     </Formik>
   );
 };

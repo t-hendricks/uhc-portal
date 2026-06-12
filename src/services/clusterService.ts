@@ -32,6 +32,8 @@ import type {
   KubeletConfig,
   LimitedSupportReason,
   Log,
+  LogForwarderApplication,
+  LogForwarderGroupVersions,
   MachinePool,
   MachineType,
   NodePool,
@@ -1263,6 +1265,32 @@ export function getClusterService(apiRequest: APIRequest = defaultApiRequest) {
 
     getGCPWifConfig: (id: string): Promise<AxiosResponse<WifConfig>> =>
       apiRequest.get(`/api/clusters_mgmt/v1/gcp/wif_configs/${id}`),
+
+    getLogForwardingGroups: (params?: {
+      order?: string;
+      page?: number;
+      search?: string;
+      size?: number;
+    }) =>
+      apiRequest.get<{
+        items?: LogForwarderGroupVersions[];
+        page?: number;
+        size?: number;
+        total?: number;
+      }>('/api/clusters_mgmt/v1/log_forwarding/groups', { params }),
+
+    getLogForwardingApplications: (params?: {
+      order?: string;
+      page?: number;
+      search?: string;
+      size?: number;
+    }) =>
+      apiRequest.get<{
+        items?: LogForwarderApplication[];
+        page?: number;
+        size?: number;
+        total?: number;
+      }>('/api/clusters_mgmt/v1/log_forwarding/applications', { params }),
   };
 }
 

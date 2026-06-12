@@ -24,6 +24,8 @@ import { canSelectImds } from '~/components/clusters/wizards/common/constants';
 import { useFormState } from '~/components/clusters/wizards/hooks';
 import { getUserRoleForSelectedAWSAccount } from '~/components/clusters/wizards/rosa/AccountsRolesScreen/AccountsRolesScreen';
 import { FieldId } from '~/components/clusters/wizards/rosa/constants';
+import { LogForwardingReviewDetails } from '~/components/clusters/wizards/rosa/LogForwarding/LogForwardingReviewDetails';
+import { getLogForwardingTreeForClusterRequest } from '~/components/clusters/wizards/rosa/LogForwarding/logForwardingTreeFromQueryClient';
 import {
   stepId as rosaStepId,
   stepNameById as rosaStepNameById,
@@ -36,6 +38,7 @@ import {
   ALLOW_EUS_CHANNEL,
   CREATE_CLUSTER_YAML_EDITOR,
   FIPS_FOR_HYPERSHIFT,
+  HCP_LOG_FORWARDING,
   HYPERSHIFT_WIZARD_FEATURE,
   IMDS_SELECTION,
   MULTIREGION_PREVIEW_ENABLED,
@@ -122,6 +125,7 @@ const ReviewClusterScreen = ({
   const isEUSChannelEnabled = useFeatureGate(ALLOW_EUS_CHANNEL);
   const isYStreamChannelEnabled = useFeatureGate(Y_STREAM_CHANNEL);
   const isFipsForHypershiftEnabled = useFeatureGate(FIPS_FOR_HYPERSHIFT);
+  const isHcpLogForwardingEnabled = useFeatureGate(HCP_LOG_FORWARDING);
 
   const clusterSettingsFields = [
     FieldId.ClusterName,
@@ -154,7 +158,12 @@ const ReviewClusterScreen = ({
           isOpen={isSyncEditorModalOpen}
           closeCallback={() => setIsSyncEditorModalOpen(false)}
           content={ClusterRequestTranslatorFactory.createClusterRequestTranslator(product).toYaml(
-            createClusterRequest({ isWizard: true }, formValues),
+            createClusterRequest({ isWizard: true }, formValues, {
+              logForwardingTree: getLogForwardingTreeForClusterRequest(
+                { product, cloudProviderID: formValues.cloud_provider },
+                formValues,
+              ),
+            }),
           )}
           schema={{
             uri: 'https://api.openshift.com/api/clusters_mgmt/v1/openapi#/components/schemas/Cluster',
@@ -446,13 +455,24 @@ const ReviewClusterScreen = ({
           {ReviewItem(FieldId.CustomOperatorRolesPrefix)}
         </ReviewSection>
         <ReviewSection
-          title="Updates"
-          onGoToStep={() => goToStepByIndex(getStepIndex('CLUSTER_UPDATES'))}
+          title={getStepName('CLUSTER_ADDITIONAL_SETTINGS__UPDATES')}
+          onGoToStep={() => goToStepByIndex(getStepIndex('CLUSTER_ADDITIONAL_SETTINGS__UPDATES'))}
         >
           {ReviewItem(FieldId.UpgradePolicy)}
           {upgradePolicy === 'automatic' && ReviewItem(FieldId.AutomaticUpgradeSchedule)}
           {!isHypershiftSelected && ReviewItem(FieldId.NodeDrainGracePeriod)}
         </ReviewSection>
+
+        {isHypershiftSelected && isHcpLogForwardingEnabled && (
+          <ReviewSection
+            title={getStepName('CLUSTER_ADDITIONAL_SETTINGS__LOG_FORWARDING')}
+            onGoToStep={() =>
+              goToStepByIndex(getStepIndex('CLUSTER_ADDITIONAL_SETTINGS__LOG_FORWARDING'))
+            }
+          >
+            <LogForwardingReviewDetails formValues={formValues} />
+          </ReviewSection>
+        )}
 
         {config.fakeOSD && (
           <DebugClusterRequest
