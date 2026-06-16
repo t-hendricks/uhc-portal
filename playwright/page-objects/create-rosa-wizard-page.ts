@@ -528,6 +528,28 @@ export class CreateRosaWizardPage extends BasePage {
     }
   }
 
+  versionSelectorToggle(): Locator {
+    return this.page.locator('#version-selector');
+  }
+
+  /** Version dropdown (FuzzySelect) — option labels like "4.16.0 (fast)". */
+  versionOptionsByChannel(channel: string): Locator {
+    return this.page.getByRole('option', {
+      name: new RegExp(`\\(${this.escapeRegExp(channel)}\\)`),
+    });
+  }
+
+  channelSelect(): Locator {
+    return this.page.getByRole('combobox', { name: 'Channel' });
+  }
+
+  /** Channel combobox (FormSelect) — option labels like "fast-4.16". */
+  channelSelectOptionsByPrefix(prefix: string): Locator {
+    return this.channelSelect().getByRole('option', {
+      name: new RegExp(`^${this.escapeRegExp(prefix)}-`),
+    });
+  }
+
   async selectMachinePoolPrivateSubnet(
     privateSubnetNameOrId: string,
     machinePoolIndex: number = 1,
