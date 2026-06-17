@@ -34,6 +34,7 @@ import {
   HYPERSHIFT_WIZARD_FEATURE,
 } from '~/queries/featureGates/featureConstants';
 import { useFeatureGate } from '~/queries/featureGates/useFetchFeatureGate';
+import { useIsNoConsoleRole } from '~/queries/RosaWizardQueries/useIsNoConsoleRole';
 import { isRestrictedEnv } from '~/restrictedEnv';
 
 import ErrorBoundary from '../../../App/ErrorBoundary';
@@ -112,6 +113,8 @@ const CreateROSAWizardInternal = ({
 
   const accountAndRolesStepId = getAccountAndRolesStepId(isHypershiftEnabled);
   const firstStepId = isHypershiftEnabled ? stepId.CONTROL_PLANE : accountAndRolesStepId;
+
+  const { isNoConsoleRole } = useIsNoConsoleRole(selectedAWSAccountID);
 
   const [currentStepId, setCurrentStepId] = React.useState(firstStepId);
   const [currentStep, setCurrentStep] = React.useState();
@@ -310,6 +313,7 @@ const CreateROSAWizardInternal = ({
               id={stepId.CLUSTER_SETTINGS}
               name={stepNameById[stepId.CLUSTER_SETTINGS]}
               isExpandable
+              isDisabled={isNoConsoleRole}
               steps={[
                 <WizardStep
                   id={stepId.CLUSTER_SETTINGS__DETAILS}
@@ -335,6 +339,7 @@ const CreateROSAWizardInternal = ({
               id={stepId.NETWORKING}
               name={stepNameById[stepId.NETWORKING]}
               isExpandable
+              isDisabled={isNoConsoleRole}
               steps={[
                 <WizardStep
                   id={stepId.NETWORKING__CONFIGURATION}
@@ -385,6 +390,7 @@ const CreateROSAWizardInternal = ({
             <WizardStep
               id={stepId.CLUSTER_ROLES_AND_POLICIES}
               name={stepNameById[stepId.CLUSTER_ROLES_AND_POLICIES]}
+              isDisabled={isNoConsoleRole}
             >
               <ErrorBoundary>
                 <ClusterRolesScreen />
@@ -395,6 +401,7 @@ const CreateROSAWizardInternal = ({
               id={stepId.CLUSTER_ADDITIONAL_SETTINGS}
               name={stepNameById[stepId.CLUSTER_ADDITIONAL_SETTINGS]}
               isExpandable
+              isDisabled={isNoConsoleRole}
               steps={[
                 <WizardStep
                   id={stepId.CLUSTER_ADDITIONAL_SETTINGS__UPDATES}
@@ -417,7 +424,11 @@ const CreateROSAWizardInternal = ({
               ]}
             />
 
-            <WizardStep id={stepId.REVIEW_AND_CREATE} name={stepNameById[stepId.REVIEW_AND_CREATE]}>
+            <WizardStep
+              id={stepId.REVIEW_AND_CREATE}
+              name={stepNameById[stepId.REVIEW_AND_CREATE]}
+              isDisabled={isNoConsoleRole}
+            >
               <ReviewClusterScreen
                 createCluster={createCluster}
                 isSubmitPending={createClusterResponse?.pending}
