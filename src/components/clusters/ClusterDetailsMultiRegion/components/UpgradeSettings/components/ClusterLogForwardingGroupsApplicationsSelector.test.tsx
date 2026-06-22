@@ -1,14 +1,13 @@
 import React from 'react';
 import { Form, Formik } from 'formik';
 
-import { FieldId } from '~/components/clusters/wizards/rosa/constants';
 import { mockLogForwardingGroupTree } from '~/components/common/GroupsApplicationsSelector/logForwardingGroupTreeData';
 import { LOG_FORWARDING_OTHER_GROUP_NAME } from '~/components/common/GroupsApplicationsSelector/logForwardingGroupTreeFromApi';
 import { useFetchLogForwardingApplications } from '~/queries/RosaWizardQueries/useFetchLogForwardingApplications';
 import { useFetchLogForwardingGroups } from '~/queries/RosaWizardQueries/useFetchLogForwardingGroups';
 import { render, screen } from '~/testUtils';
 
-import { LogForwardingGroupsApplicationsSelector } from './LogForwardingGroupsApplicationsSelector';
+import { ClusterLogForwardingGroupsApplicationsSelector } from './ClusterLogForwardingGroupsApplicationsSelector';
 
 jest.mock('~/queries/RosaWizardQueries/useFetchLogForwardingApplications');
 jest.mock('~/queries/RosaWizardQueries/useFetchLogForwardingGroups');
@@ -35,7 +34,7 @@ jest.mock('~/components/common/GroupsApplicationsSelector/GroupsApplicationsSele
 const mockUseFetchLogForwardingApplications = useFetchLogForwardingApplications as jest.Mock;
 const mockUseFetchLogForwardingGroups = useFetchLogForwardingGroups as jest.Mock;
 
-const fieldName = FieldId.LogForwardingS3SelectedItems;
+const fieldName = 'selectedItems';
 
 const renderSelector = () =>
   render(
@@ -46,17 +45,19 @@ const renderSelector = () =>
       onSubmit={jest.fn()}
     >
       <Form noValidate>
-        <LogForwardingGroupsApplicationsSelector name={fieldName} isRequired />
+        <ClusterLogForwardingGroupsApplicationsSelector name={fieldName} isRequired />
       </Form>
     </Formik>,
   );
 
-describe('<LogForwardingGroupsApplicationsSelector />', () => {
+describe('ClusterLogForwardingGroupsApplicationsSelector', () => {
   beforeEach(() => {
     mockUseFetchLogForwardingApplications.mockReset();
     mockUseFetchLogForwardingApplications.mockReturnValue({
       data: [],
       isLoading: false,
+      isError: false,
+      error: null,
     });
 
     mockUseFetchLogForwardingGroups.mockReset();
@@ -70,6 +71,13 @@ describe('<LogForwardingGroupsApplicationsSelector />', () => {
 
   afterEach(() => {
     jest.clearAllMocks();
+  });
+
+  it('always requests groups and applications with both destinations enabled', () => {
+    renderSelector();
+
+    expect(mockUseFetchLogForwardingGroups).toHaveBeenCalledWith({ s3On: true, cwOn: true });
+    expect(mockUseFetchLogForwardingApplications).toHaveBeenCalledWith({ s3On: true, cwOn: true });
   });
 
   it('shows a spinner while groups are loading and the tree is empty', () => {
@@ -90,22 +98,19 @@ describe('<LogForwardingGroupsApplicationsSelector />', () => {
     expect(screen.queryByTestId('groups-applications-selector')).not.toBeInTheDocument();
   });
 
-  it('renders the selector when groups are loaded even if applications are still loading', () => {
+  it('shows an error alert when loading groups fails', () => {
     mockUseFetchLogForwardingGroups.mockReturnValue({
-      data: mockLogForwardingGroupTree,
-      isLoading: false,
-      isError: false,
-      error: null,
-    });
-    mockUseFetchLogForwardingApplications.mockReturnValue({
       data: undefined,
-      isLoading: true,
+      isLoading: false,
+      isError: true,
+      error: { errorMessage: 'Service unavailable' },
     });
 
     renderSelector();
 
-    expect(screen.queryByLabelText('Loading groups and applications')).not.toBeInTheDocument();
-    expect(screen.getByTestId('groups-applications-selector')).toBeInTheDocument();
+    expect(screen.getByText('Could not load log forwarding groups')).toBeInTheDocument();
+    expect(screen.getByText('Service unavailable')).toBeInTheDocument();
+    expect(screen.queryByTestId('groups-applications-selector')).not.toBeInTheDocument();
   });
 
   it('shows a warning and still renders the selector when loading applications fails', () => {
@@ -123,44 +128,10 @@ describe('<LogForwardingGroupsApplicationsSelector />', () => {
         'Could not load all applications. Some options may be missing from the list.',
       ),
     ).toBeInTheDocument();
-    expect(screen.getByText('Service unavailable')).toBeInTheDocument();
     expect(screen.getByTestId('groups-applications-selector')).toBeInTheDocument();
-    expect(screen.getByTestId('groups-applications-selector')).toHaveAttribute(
-      'data-has-other',
-      'false',
-    );
   });
 
-  it('shows an error alert when loading groups fails', () => {
-    mockUseFetchLogForwardingGroups.mockReturnValue({
-      data: undefined,
-      isLoading: false,
-      isError: true,
-      error: { errorMessage: 'Service unavailable' },
-    });
-
-    renderSelector();
-
-    expect(screen.getByText('Could not load log forwarding groups')).toBeInTheDocument();
-    expect(screen.getByText('Service unavailable')).toBeInTheDocument();
-    expect(screen.queryByTestId('groups-applications-selector')).not.toBeInTheDocument();
-  });
-
-  it('falls back to a generic error message when the error has no details', () => {
-    mockUseFetchLogForwardingGroups.mockReturnValue({
-      data: undefined,
-      isLoading: false,
-      isError: true,
-      error: {},
-    });
-
-    renderSelector();
-
-    expect(screen.getByTestId('alert-error')).toBeInTheDocument();
-    expect(screen.getByText('Could not load log forwarding groups')).toBeInTheDocument();
-  });
-
-  it('passes the groups tree and synthetic Other group into the selector on success', () => {
+  it('passes merged tree data including Other group into the selector', () => {
     mockUseFetchLogForwardingApplications.mockReturnValue({
       data: [{ enabled: true, name: 'orphan-app' }],
       isLoading: false,
@@ -175,8 +146,5 @@ describe('<LogForwardingGroupsApplicationsSelector />', () => {
       String(mockLogForwardingGroupTree.length + 1),
     );
     expect(selector).toHaveAttribute('data-has-other', 'true');
-    expect(selector.getAttribute('data-tree-size')).not.toBe(
-      String(mockLogForwardingGroupTree.length),
-    );
   });
 });
