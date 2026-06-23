@@ -1,7 +1,11 @@
 import React from 'react';
 
 import docLinks from '~/common/docLinks.mjs';
-import { ALLOW_EUS_CHANNEL, ENABLE_AUTO_NODE } from '~/queries/featureGates/featureConstants';
+import {
+  ALLOW_EUS_CHANNEL,
+  ENABLE_AUTO_NODE,
+  HCP_LOG_FORWARDING,
+} from '~/queries/featureGates/featureConstants';
 import {
   checkAccessibility,
   mockRestrictedEnv,
@@ -29,6 +33,10 @@ const defaultProps = {
 jest.mock(
   '../../../../../../queries/ClusterDetailsQueries/MachinePoolTab/useFetchMachineOrNodePools',
 );
+
+jest.mock('../../../../../../queries/ClusterDetailsQueries/useFetchLogForwarders', () => ({
+  useFetchLogForwarders: jest.fn(() => ({ data: [] })),
+}));
 
 jest.mock('~/hooks/useAnalytics', () => () => jest.fn());
 
@@ -2097,6 +2105,36 @@ describe('<DetailsRight />', () => {
 
       const link = screen.getByText('Learn more');
       expect(link).toHaveAttribute('href', docLinks.ROSA_AUTONODE);
+    });
+  });
+
+  describe('Control plane log forwarding', () => {
+    beforeEach(() => {
+      useFetchMachineOrNodePools.mockReturnValue({ data: [] });
+    });
+
+    it('hides section when feature gate is disabled', () => {
+      mockUseFeatureGate([[HCP_LOG_FORWARDING, false]]);
+
+      const newProps = {
+        ...defaultProps,
+        cluster: fixtures.ROSAHypershiftClusterDetails.cluster,
+      };
+      render(<DetailsRight {...newProps} />);
+
+      expect(screen.queryByText('Control plane log forwarding')).not.toBeInTheDocument();
+    });
+
+    it('hides section for non hypershift clusters', () => {
+      mockUseFeatureGate([[HCP_LOG_FORWARDING, true]]);
+
+      const newProps = {
+        ...defaultProps,
+        cluster: fixtures.ROSAClusterDetails.cluster,
+      };
+      render(<DetailsRight {...newProps} />);
+
+      expect(screen.queryByText('Control plane log forwarding')).not.toBeInTheDocument();
     });
   });
 
