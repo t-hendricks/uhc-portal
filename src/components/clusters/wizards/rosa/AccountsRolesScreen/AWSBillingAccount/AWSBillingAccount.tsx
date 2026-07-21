@@ -130,6 +130,8 @@ const AWSBillingAccount = ({
 
   useEffect(() => {
     onContractCheckChange?.(hasWarning);
+    // clear the wizard-owned warning when this component is no longer rendered
+    return () => onContractCheckChange?.(false);
   }, [hasWarning, onContractCheckChange]);
 
   return (
