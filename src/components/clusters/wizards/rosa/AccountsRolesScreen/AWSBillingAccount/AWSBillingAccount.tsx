@@ -187,6 +187,7 @@ const AWSBillingAccount = ({
         )}
         {showContractWarning && (
           <Alert
+            isLiveRegion
             isInline
             variant={AlertVariant.warning}
             title="No contract on selected billing account"
