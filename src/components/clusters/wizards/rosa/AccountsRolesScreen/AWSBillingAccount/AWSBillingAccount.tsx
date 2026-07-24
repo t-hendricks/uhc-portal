@@ -185,35 +185,40 @@ const AWSBillingAccount = ({
         ) : (
           connectNewAcctBtn
         )}
-        {showContractWarning && (
-          <Alert
-            isLiveRegion
-            isInline
-            variant={AlertVariant.warning}
-            title="No contract on selected billing account"
-            className="pf-v6-u-mt-md"
-          >
-            The selected account <strong>{selectedAWSBillingAccountID}</strong> does not have any
-            pre-purchased ROSA capacity contracted. However, at least one other billing account
-            linked to your Red Hat account has an active contract. You may want to review your
-            selection.
-          </Alert>
-        )}
       </GridItem>
       <GridItem span={7} />
       <GridItem sm={12} md={12}>
-        {selectedAWSBillingAccountID !== selectedAWSAccountID &&
-        selectedAWSBillingAccountID &&
-        selectedAWSAccountID ? (
-          <Alert
-            isInline
-            variant={AlertVariant.info}
-            component="p"
-            role="alert"
-            title="The selected AWS billing account is a different account than your AWS infrastructure account.
-            The AWS billing account will be charged for subscription usage.  The AWS infrastructure account will be used for managing the cluster."
-          />
-        ) : null}
+        <Stack hasGutter>
+          {showContractWarning && (
+            <StackItem>
+              <Alert
+                isLiveRegion
+                isInline
+                variant={AlertVariant.warning}
+                title="No contract on selected billing account"
+              >
+                The selected account <strong>{selectedAWSBillingAccountID}</strong> does not have
+                any pre-purchased ROSA capacity contracted. However, at least one other billing
+                account linked to your Red Hat account has an active contract. You may want to
+                review your selection.
+              </Alert>
+            </StackItem>
+          )}
+          {selectedAWSBillingAccountID !== selectedAWSAccountID &&
+          selectedAWSBillingAccountID &&
+          selectedAWSAccountID ? (
+            <StackItem>
+              <Alert
+                isInline
+                variant={AlertVariant.info}
+                component="p"
+                role="alert"
+                title="The selected AWS billing account is a different account than your AWS infrastructure account.
+                The AWS billing account will be charged for subscription usage.  The AWS infrastructure account will be used for managing the cluster."
+              />
+            </StackItem>
+          ) : null}
+        </Stack>
       </GridItem>
     </>
   );
