@@ -58,4 +58,3 @@ When opening a pull request, follow the PR template in [`.github/pull_request_te
 
 When reviewing a pull request, follow the process in [`docs/pull-request-process.md`](docs/pull-request-process.md) and verify the code adheres to [`docs/code-guide.md`](docs/code-guide.md) and [`docs/unit-testing.md`](docs/unit-testing.md).
 
-
