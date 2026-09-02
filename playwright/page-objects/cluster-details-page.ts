@@ -1,5 +1,4 @@
 import { Page, Locator, expect } from '@playwright/test';
-
 import {
   clearQuotaCostMock as clearQuotaCostRouteMock,
   mockQuotaCostWithBillingContract as mockQuotaCostRouteWithBillingContract,
@@ -88,6 +87,7 @@ export class ClusterDetailsPage extends BasePage {
       name: /Success alert: Cluster .* has been unarchived$/,
     });
   }
+
   unarchiveClusterButton(): Locator {
     return this.page.locator('[id="cl-details-btns"]').getByRole('button', { name: 'Unarchive' });
   }
@@ -452,6 +452,32 @@ export class ClusterDetailsPage extends BasePage {
   // Additional cluster property getters for persistent storage
   clusterPersistentStorageLabelValue(): Locator {
     return this.page.getByTestId('persistent-storage');
+  }
+
+  clusterLoadBalancersValue(): Locator {
+    return this.page.getByLabel('Load balancers', { exact: true });
+  }
+
+  clusterComputeNodeCountValue(): Locator {
+    return this.page.getByTestId('computeNodeCount');
+  }
+
+  overviewNodesDescription(): Locator {
+    return this.page.getByLabel('Nodes', { exact: true });
+  }
+
+  async hasOverviewNodeMetrics(): Promise<boolean> {
+    const nodesText = await this.overviewNodesDescription().innerText();
+    // Stub/fake clusters often report master=0 and compute N/A when metrics are absent.
+    return !/Compute:\s*N\/A/i.test(nodesText) && !/Control plane:\s*0\b/.test(nodesText);
+  }
+
+  clusterTotalvCPUValue(): Locator {
+    return this.page.getByLabel('Total vCPU', { exact: true });
+  }
+
+  clusterTotalMemoryValue(): Locator {
+    return this.page.getByLabel('Total memory', { exact: true });
   }
 
   // ── Autonode (Red Hat build of Karpenter) ────────────────────────────────
