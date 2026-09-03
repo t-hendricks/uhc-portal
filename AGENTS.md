@@ -7,7 +7,9 @@ These guidelines serve to:
 - Improve code reviews by setting clear expectations
 - Maintain a consistent, maintainable codebase
 
-Use these guidelines during development and code reviews. When in doubt or if a scenario isn't covered, ask the team for help.
+## Code review rules
+
+When reviewing or writing code, enforce these rules:
 
 ## General Conventions
 
