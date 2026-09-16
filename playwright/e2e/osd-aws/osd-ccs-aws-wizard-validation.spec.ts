@@ -1,4 +1,8 @@
 import { test, expect } from '../../fixtures/pages';
+import {
+  computeNodeUpperLimitError,
+  getComputeNodeCountMax,
+} from '../../support/wizard-validation-helper';
 // Test data - importing as modules since JSON imports need special config
 const testData = require('../../fixtures/osd-aws/osd-ccs-aws-wizard-validation.spec.json');
 const clusterProperties = testData.Clusters;
@@ -207,14 +211,14 @@ test.describe.serial(
       await createOSDWizardPage.wizardNextButton().click();
     });
 
-    test(`Machine pool nodes field validations`, async ({ createOSDWizardPage }) => {
+    test(`Machine pool nodes field validations`, async ({ page, createOSDWizardPage }) => {
       const machinePoolProperties = ClustersValidation.ClusterSettings.Machinepool.NodeCount.CCS;
 
       await createOSDWizardPage.isMachinePoolScreen();
       await createOSDWizardPage.selectComputeNodeType(clusterProperties.InstanceType);
 
       var minNodes = '2';
-      var maxNodes = '249';
+      var maxNodes: string;
       await expect(createOSDWizardPage.computeNodeCountInput()).toHaveValue(minNodes);
       await expect(createOSDWizardPage.computeNodeCountDecrementButton()).not.toBeEnabled();
       await createOSDWizardPage.computeNodeCountInput().fill((parseInt(minNodes) - 1).toString());
@@ -226,16 +230,23 @@ test.describe.serial(
         machinePoolProperties.SingleZone.LowerLimitError,
         false,
       );
+      maxNodes = (
+        await getComputeNodeCountMax(
+          page,
+          createOSDWizardPage.computeNodeCountInput(),
+          machinePoolProperties.SingleZone.KnownMaxNodes,
+        )
+      ).toString();
       await createOSDWizardPage.computeNodeCountInput().fill(maxNodes);
       await expect(createOSDWizardPage.computeNodeCountIncrementButton()).not.toBeEnabled();
       await expect(createOSDWizardPage.computeNodeCountDecrementButton()).toBeEnabled();
       await createOSDWizardPage.computeNodeCountInput().fill((parseInt(maxNodes) + 1).toString());
       await createOSDWizardPage.isTextContainsInPage(
-        machinePoolProperties.SingleZone.UpperLimitError,
+        computeNodeUpperLimitError(parseInt(maxNodes)),
       );
       await createOSDWizardPage.computeNodeCountDecrementButton().click();
       await createOSDWizardPage.isTextContainsInPage(
-        machinePoolProperties.SingleZone.UpperLimitError,
+        computeNodeUpperLimitError(parseInt(maxNodes)),
         false,
       );
 
@@ -283,7 +294,6 @@ test.describe.serial(
       await createOSDWizardPage.selectAutoScaling('disabled');
 
       minNodes = '1';
-      maxNodes = '83';
       await expect(createOSDWizardPage.computeNodeCountInput()).toHaveValue(minNodes);
       await expect(createOSDWizardPage.computeNodeCountDecrementButton()).not.toBeEnabled();
       await createOSDWizardPage.computeNodeCountInput().fill((parseInt(minNodes) - 1).toString());
@@ -295,16 +305,23 @@ test.describe.serial(
         machinePoolProperties.MultiZone.LowerLimitError,
         false,
       );
+      maxNodes = (
+        await getComputeNodeCountMax(
+          page,
+          createOSDWizardPage.computeNodeCountInput(),
+          machinePoolProperties.MultiZone.KnownMaxNodes,
+        )
+      ).toString();
       await createOSDWizardPage.computeNodeCountInput().fill(maxNodes);
       await expect(createOSDWizardPage.computeNodeCountIncrementButton()).not.toBeEnabled();
       await expect(createOSDWizardPage.computeNodeCountDecrementButton()).toBeEnabled();
       await createOSDWizardPage.computeNodeCountInput().fill((parseInt(maxNodes) + 1).toString());
       await createOSDWizardPage.isTextContainsInPage(
-        machinePoolProperties.MultiZone.UpperLimitError,
+        computeNodeUpperLimitError(parseInt(maxNodes)),
       );
       await createOSDWizardPage.computeNodeCountDecrementButton().click();
       await createOSDWizardPage.isTextContainsInPage(
-        machinePoolProperties.MultiZone.UpperLimitError,
+        computeNodeUpperLimitError(parseInt(maxNodes)),
         false,
       );
 
@@ -861,11 +878,29 @@ test.describe.serial(
       );
 
       await createOSDWizardPage.applicationIngressExcludedNamespacesInput().clear();
+      await createOSDWizardPage
+        .applicationIngressExcludedNamespacesInput()
+        .fill(
+          ClustersValidation.Networking.Configuration.Common.IngressSettings.CustomSettings
+            .ExcludedNamespaces[2].InvalidValue,
+        );
+      await page.getByText('Route selector').click();
+      await createOSDWizardPage.isTextContainsInPage(
+        ClustersValidation.Networking.Configuration.Common.IngressSettings.CustomSettings
+          .ExcludedNamespaces[2].Error,
+      );
+
+      await createOSDWizardPage.applicationIngressExcludedNamespacesInput().clear();
       await createOSDWizardPage.applicationIngressExcludedNamespacesInput().fill('abc-123');
       await page.getByText('Route selector').click();
       await createOSDWizardPage.isTextContainsInPage(
         ClustersValidation.Networking.Configuration.Common.IngressSettings.CustomSettings
           .ExcludedNamespaces[1].Error,
+        false,
+      );
+      await createOSDWizardPage.isTextContainsInPage(
+        ClustersValidation.Networking.Configuration.Common.IngressSettings.CustomSettings
+          .ExcludedNamespaces[2].Error,
         false,
       );
 
