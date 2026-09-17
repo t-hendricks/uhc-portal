@@ -217,8 +217,7 @@ test.describe.serial(
       await createOSDWizardPage.isMachinePoolScreen();
       await createOSDWizardPage.selectComputeNodeType(clusterProperties.InstanceType);
 
-      var minNodes = '2';
-      var maxNodes: string;
+      let minNodes = '2';
       await expect(createOSDWizardPage.computeNodeCountInput()).toHaveValue(minNodes);
       await expect(createOSDWizardPage.computeNodeCountDecrementButton()).not.toBeEnabled();
       await createOSDWizardPage.computeNodeCountInput().fill((parseInt(minNodes) - 1).toString());
@@ -230,7 +229,7 @@ test.describe.serial(
         machinePoolProperties.SingleZone.LowerLimitError,
         false,
       );
-      maxNodes = (
+      let maxNodes = (
         await getComputeNodeCountMax(
           page,
           createOSDWizardPage.computeNodeCountInput(),
