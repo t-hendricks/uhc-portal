@@ -75,13 +75,11 @@
             "SingleZone": {
               "LowerLimitError": "Input cannot be less than 2",
               "UpperLimitError": "Input cannot be more than 249",
-              "KnownMaxNodes": [52, 249],
               "MinAndMaxLimitDependencyError": "Max nodes cannot be less than min nodes"
             },
             "MultiZone": {
               "LowerLimitError": "Input cannot be less than 1",
               "UpperLimitError": "Input cannot be more than 83",
-              "KnownMaxNodes": [17, 19, 83],
               "MinAndMaxLimitDependencyError": "Max nodes cannot be less than min nodes"
             }
           }

@@ -1,8 +1,4 @@
 import { test, expect } from '../../fixtures/pages';
-import {
-  computeNodeUpperLimitError,
-  getComputeNodeCountMax,
-} from '../../support/wizard-validation-helper';
 // Test data - importing as modules since JSON imports need special config
 const testData = require('../../fixtures/osd-aws/osd-ccs-aws-wizard-validation.spec.json');
 const clusterProperties = testData.Clusters;
@@ -211,13 +207,14 @@ test.describe.serial(
       await createOSDWizardPage.wizardNextButton().click();
     });
 
-    test(`Machine pool nodes field validations`, async ({ page, createOSDWizardPage }) => {
+    test(`Machine pool nodes field validations`, async ({ createOSDWizardPage }) => {
       const machinePoolProperties = ClustersValidation.ClusterSettings.Machinepool.NodeCount.CCS;
 
       await createOSDWizardPage.isMachinePoolScreen();
       await createOSDWizardPage.selectComputeNodeType(clusterProperties.InstanceType);
 
-      let minNodes = '2';
+      var minNodes = '2';
+      var maxNodes = '249';
       await expect(createOSDWizardPage.computeNodeCountInput()).toHaveValue(minNodes);
       await expect(createOSDWizardPage.computeNodeCountDecrementButton()).not.toBeEnabled();
       await createOSDWizardPage.computeNodeCountInput().fill((parseInt(minNodes) - 1).toString());
@@ -229,23 +226,16 @@ test.describe.serial(
         machinePoolProperties.SingleZone.LowerLimitError,
         false,
       );
-      let maxNodes = (
-        await getComputeNodeCountMax(
-          page,
-          createOSDWizardPage.computeNodeCountInput(),
-          machinePoolProperties.SingleZone.KnownMaxNodes,
-        )
-      ).toString();
       await createOSDWizardPage.computeNodeCountInput().fill(maxNodes);
       await expect(createOSDWizardPage.computeNodeCountIncrementButton()).not.toBeEnabled();
       await expect(createOSDWizardPage.computeNodeCountDecrementButton()).toBeEnabled();
       await createOSDWizardPage.computeNodeCountInput().fill((parseInt(maxNodes) + 1).toString());
       await createOSDWizardPage.isTextContainsInPage(
-        computeNodeUpperLimitError(parseInt(maxNodes)),
+        machinePoolProperties.SingleZone.UpperLimitError,
       );
       await createOSDWizardPage.computeNodeCountDecrementButton().click();
       await createOSDWizardPage.isTextContainsInPage(
-        computeNodeUpperLimitError(parseInt(maxNodes)),
+        machinePoolProperties.SingleZone.UpperLimitError,
         false,
       );
 
@@ -293,6 +283,7 @@ test.describe.serial(
       await createOSDWizardPage.selectAutoScaling('disabled');
 
       minNodes = '1';
+      maxNodes = '83';
       await expect(createOSDWizardPage.computeNodeCountInput()).toHaveValue(minNodes);
       await expect(createOSDWizardPage.computeNodeCountDecrementButton()).not.toBeEnabled();
       await createOSDWizardPage.computeNodeCountInput().fill((parseInt(minNodes) - 1).toString());
@@ -304,23 +295,16 @@ test.describe.serial(
         machinePoolProperties.MultiZone.LowerLimitError,
         false,
       );
-      maxNodes = (
-        await getComputeNodeCountMax(
-          page,
-          createOSDWizardPage.computeNodeCountInput(),
-          machinePoolProperties.MultiZone.KnownMaxNodes,
-        )
-      ).toString();
       await createOSDWizardPage.computeNodeCountInput().fill(maxNodes);
       await expect(createOSDWizardPage.computeNodeCountIncrementButton()).not.toBeEnabled();
       await expect(createOSDWizardPage.computeNodeCountDecrementButton()).toBeEnabled();
       await createOSDWizardPage.computeNodeCountInput().fill((parseInt(maxNodes) + 1).toString());
       await createOSDWizardPage.isTextContainsInPage(
-        computeNodeUpperLimitError(parseInt(maxNodes)),
+        machinePoolProperties.MultiZone.UpperLimitError,
       );
       await createOSDWizardPage.computeNodeCountDecrementButton().click();
       await createOSDWizardPage.isTextContainsInPage(
-        computeNodeUpperLimitError(parseInt(maxNodes)),
+        machinePoolProperties.MultiZone.UpperLimitError,
         false,
       );
 
