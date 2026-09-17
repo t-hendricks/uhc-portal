@@ -36,6 +36,9 @@ describe('DefaultIngressFields', () => {
         `input[name="${FieldId.DefaultRouterExcludedNamespacesFlag}"]`,
       );
       expect(excludedNamespacesInput).toBeInTheDocument();
+      if (!excludedNamespacesInput) {
+        throw new Error('Excluded namespaces input not found');
+      }
 
       await user.type(excludedNamespacesInput, 'openshift');
       await user.tab();
