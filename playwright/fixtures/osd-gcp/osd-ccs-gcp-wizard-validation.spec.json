@@ -155,6 +155,10 @@
                 {
                   "InvalidValue": "openshift",
                   "Error": "Excluded namespaces value 'openshift' must not include 'openshift' or 'kube'"
+                },
+                {
+                  "InvalidValue": "kube",
+                  "Error": "Excluded namespaces value 'kube' must not include 'openshift' or 'kube'"
                 }
               ]
             }
