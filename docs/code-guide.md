@@ -139,7 +139,7 @@ The following import rules are enforced by ESLint:
 
 Import order is enforced by `simple-import-sort`:
 
-1. `react`, then packages starting with a letter
+1. `react`, `next`, then packages starting with a letter
 2. Packages starting with `@`
 3. Packages starting with `~` (src alias)
 4. Relative `../` imports
