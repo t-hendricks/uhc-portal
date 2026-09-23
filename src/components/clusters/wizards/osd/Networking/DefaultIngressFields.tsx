@@ -16,7 +16,6 @@ import {
   checkRouteSelectors,
   validateExcludeNamespaceSelectorKey,
   validateExcludeNamespaceSelectorValue,
-  validateNamespacesList,
 } from '~/common/validators';
 import {
   ExcludedNamespacesHelpText,
@@ -33,6 +32,7 @@ import {
 } from '~/components/clusters/ClusterDetailsMultiRegion/components/Networking/components/ApplicationIngressCard/RouteSelectorsPopover';
 import { WildcardPolicyPopover } from '~/components/clusters/ClusterDetailsMultiRegion/components/Networking/components/ApplicationIngressCard/WildcardsPolicyPopover';
 import { CloudProviderType } from '~/components/clusters/wizards/common/constants';
+import { validateNamespacesList } from '~/components/clusters/wizards/common/NetworkingSection/networkingValidators';
 import { FormGroupHelperText } from '~/components/common/FormGroupHelperText';
 import FormKeyValueList from '~/components/common/FormikFormComponents/FormKeyValueList';
 import { ReduxCheckbox } from '~/components/common/ReduxFormComponents_deprecated';
