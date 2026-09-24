@@ -43,8 +43,10 @@ const MIRROR_ROSA_LATEST = 'https://mirror.openshift.com/pub/cgw/rosa/latest';
 const MIRROR_MIRROR_REGISTRY_LATEST = 'https://mirror.openshift.com/pub/cgw/mirror-registry/latest';
 const MIRROR_OC_MIRROR_LATEST = 'https://mirror.openshift.com/pub/cgw/oc-mirror/latest';
 
+// OpenShift GitOps has moved under /cgw/; pin to the latest published release
+// (no cgw/.../latest/ pointer exists, and openshift-v4/.../latest/ is empty).
 const ARGO_CD_CLI_LATEST =
-  'https://developers.redhat.com/content-gateway/rest/browse/pub/cgw/openshift-gitops/pre-release/';
+  'https://developers.redhat.com/content-gateway/rest/browse/pub/cgw/openshift-gitops/1.21.0/';
 
 const SHP_CLI_LATEST =
   'https://developers.redhat.com/content-gateway/rest/browse/pub/cgw/openshift-builds/latest/';
