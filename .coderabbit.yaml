@@ -6,7 +6,7 @@ knowledge_base:
   code_guidelines:
     enabled: true
     filePatterns:
-      - files: "docs/code-guide.md"
+      - files: "docs/agent-code-guide.md"
         applyTo: "src/**/*.{ts,tsx,js,jsx}"
       - files: "docs/unit-testing.md"
         applyTo: "src/**/*.test.{ts,tsx,js,jsx}"
